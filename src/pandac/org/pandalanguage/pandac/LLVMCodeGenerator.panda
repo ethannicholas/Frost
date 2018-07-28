@@ -388,6 +388,9 @@ class LLVMCodeGenerator : CodeGenerator {
                 return llvmType(t.subtypes[0])
             when Type.Kind.GENERIC:
                 if t.subtypes[0].name = "panda.unsafe.Pointer" {
+                    if t.subtypes[1].isMethod() {
+                        return llvmMethodType(t.subtypes[1], null)
+                    }
                     return llvmType(t.subtypes[1]) + "*"
                 }
                 def cl := compiler.getClass(t)
@@ -422,7 +425,7 @@ class LLVMCodeGenerator : CodeGenerator {
     @pre(t.typeKind = Type.Kind.FUNCTION | t.typeKind = Type.Kind.METHOD |
             t.typeKind = Type.Kind.IMMUTABLE_FUNCTION | t.typeKind = Type.Kind.IMMUTABLE_METHOD |
             t.typeKind = Type.Kind.NULLABLE)
-    method methodType(t:Type, selfType:Type?):String {
+    method llvmMethodType(t:Type, selfType:Type?):String {
         def result := MutableString(llvmType(t.subtypes[t.subtypes.count - 1]))
         result.append(" (")
         var separator := ""
@@ -717,7 +720,7 @@ class LLVMCodeGenerator : CodeGenerator {
             resultType.append(")*")
             return Pair<String, String>(resultName, resultType.finish())
         }
-        return Pair<String, String>(resultName, methodType(inherited, null))
+        return Pair<String, String>(resultName, llvmMethodType(inherited, null))
     }
 
     method getClassConstant(cl:ClassDecl):ClassConstant {
@@ -774,6 +777,7 @@ class LLVMCodeGenerator : CodeGenerator {
         return result
     }
 
+    @pre(!cl.type.isPointer())
     method getWrapperClassConstant(cl:ClassDecl):ClassConstant {
         if !compiler.resolve(cl) {
             return ClassConstant("<error>", "<error>")
@@ -1079,6 +1083,9 @@ class LLVMCodeGenerator : CodeGenerator {
                 }
             }
         }
+        else if src.isPointer() | target.isPointer() {
+            op := "bitcast"
+        }
         else {
             def srcClass := compiler.getClass(src)
             assert srcClass != null, "class \{src} not found"
@@ -1294,6 +1301,11 @@ class LLVMCodeGenerator : CodeGenerator {
                 return value.convert()
             when IR.Value.LOCAL(index, _):
                 return "%local\{index}"
+            when IR.Value.METHOD_POINTER(m, _):
+                if m.owner.external {
+                    writeDeclaration(m)
+                }
+                return getName(m)
             when IR.Value.NULL(type):
                 return getNullReference(type)
             when IR.Value.PARAMETER(index, _):
@@ -1480,8 +1492,11 @@ class LLVMCodeGenerator : CodeGenerator {
     }
 
     method writeDynamicCall(id:IR.Statement.ID, m:IR.Value, args:ListView<IR.Value>) {
-        def type := m.type()
-        def returnType := type.subtypes[type.subtypes.count - 1]
+        var type := m.type()
+        if type.isPointer() {
+            type := type.subtypes[1]
+        }
+        def returnType := type.returnType()
         if returnType != Type.Void() {
             def result := nextVar()
             out.print("\{result} = ")
@@ -1541,7 +1556,7 @@ class LLVMCodeGenerator : CodeGenerator {
 
     method writeGetInterfaceMethod(id:IR.Statement.ID, value:IR.Value, cl:ClassDecl, index:Int, 
             type:Type) {
-        def methodTypeString := methodType(type, null)
+        def methodTypeString := llvmMethodType(type, null)
         -- load class constant entry
         def entry := nextLabel()
         out.printLine("br label %\{entry}")
@@ -1612,7 +1627,7 @@ class LLVMCodeGenerator : CodeGenerator {
         def load := nextVar()
         out.printLine("\{load} = load i8*, i8** \{ptr}")
         def result := nextVar()
-        out.printLine("\{result} = bitcast i8* \{load} to \{methodType(type, null)}")
+        out.printLine("\{result} = bitcast i8* \{load} to \{llvmMethodType(type, null)}")
         refs[id] := result
     }
 

@@ -12,6 +12,20 @@ class Pair<A, B> {
 
     @override
     function convert():String {
-        return "(\{first}, \{second})"
+        def firstString:String
+        if first != null {
+            firstString := first.convert()
+        }
+        else {
+            firstString := "<null>"
+        }
+        def secondString:String
+        if second != null {
+            secondString := second.convert()
+        }
+        else {
+            secondString := "<null>"
+        }
+        return "(\{firstString}, \{secondString})"
     }
 }

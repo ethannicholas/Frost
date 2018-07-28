@@ -296,6 +296,13 @@ class Compiler {
     @private
     var atPreBlock:IR.Block.ID? := null
 
+    @private
+    -- MethodDecl is the method *containing* the closure, not the closure itself
+    def captures := Stack<Pair<MethodDecl, Map<String, Variable>>>()
+
+    @private
+    var writeCode := true
+
     init(errorQueue:MessageQueue<Error>, codeGenerator:CodeGenerator, settings:Settings) {
         self.settings := settings
         self.scanner := Scanner(self)
@@ -1935,6 +1942,8 @@ class Compiler {
                 def a := Array<Type>() -- FIXME literal
                 a.add(node.type())
                 return a
+            when ASTNode.METHOD(position, _, _, kind, _, _, parameters, returnType, _):
+                return null
             when ASTNode.NULL:
                 def a := Array<Type>() -- FIXME literal
                 a.add(Type.Any())
@@ -2664,6 +2673,50 @@ class Compiler {
         if value.type() = target {
             return value
         }
+        match value {
+            when IR.Value.METHOD(targetObj, m):
+                if coercionCost(m.type(), target) = null {
+                    return null
+                }
+                def args := Array<ASTNode>()
+                def pandaType := inheritedType(m)
+                def irType := Type.pointerTo(pandaType)
+                args.add(ASTNode.IR_WRAPPER(position, cast(IR.Value.METHOD_POINTER(m, irType),
+                        Type.pointerTo(Type.Int8()))))
+                if m.annotations.isClass() {
+                    assert targetObj.type().isClassLiteral()
+                    args.add(ASTNode.NULL(position))
+                }
+                else {
+                    args.add(ASTNode.IR_WRAPPER(position, targetObj))
+                }
+                return cast(call(position, IR.Value.TYPE(Type.Method()), args,
+                        TypeContext.UNSPECIFIED), pandaType)
+            when IR.Value.METHODS(targetObj, methods):
+                def best := Array<MethodDecl>()
+                var bestCost := Int.MAX
+                for m in methods {
+                    if resolve(m) {
+                        def cost := coercionCost(m.type(), target)
+                        if cost != null {
+                            if cost < bestCost {
+                                best.clear()
+                                bestCost := cost
+                            }
+                            if cost = bestCost {
+                                best.add(m)
+                            }
+                        }
+                    }
+                }
+                if best.count = 1 {
+                    return coerce(position, IR.Value.METHOD(targetObj, best[0]), target)
+                }
+                if best.count > 1 {
+                    error(position, "ambiguous method reference")
+                    return null
+                }
+        }
         if coercionCost(value.type(), target) != null {
             def cl := getClass(target)
             if cl = null {
@@ -3068,6 +3121,33 @@ class Compiler {
                 error(position, "no match for \{methods[0].name}(\{argTypes.join(", ")})" +
                         type.description())
                 return null
+            when IR.Value.REF(_, t):
+                if !t.isMethod() {
+                    error(position, "value of type '\{t}' is not a method")
+                    return null
+                }
+                if t.parameterCount != args.count {
+                    error(position, "method of type '\{t}' expected \{t.parameterCount} " +
+                            "argument\{t.parameterCount = 1:|s}, but found \{args.count}")
+                    return null
+                }
+                def finalArgs := Array<IR.Value>(args.count)
+                for i in 0 .. args.count {
+                    def compiled := compileExpression(args[i], TypeContext.TYPE(t.parameterType(i)))
+                    if compiled == null {
+                        return null
+                    }
+                    finalArgs.add(compiled)
+                }
+                def pointerField := getSymbolTable(getClass(Type.Method()))["pointer"]->FieldDecl
+                def methodObj := cast(m, Type.Method())
+                def methodPtrPtr := ir.add(IR.Statement.GET_FIELD_POINTER(methodObj, pointerField))
+                def methodPtr := ir.add(IR.Statement.LOAD(IR.Value.REF(methodPtrPtr,
+                        Type.pointerTo(Type.Int8()))))
+                def castedPtr := cast(IR.Value.REF(methodPtr, Type.pointerTo(Type.Int8())),
+                        Type.pointerTo(t))
+                def result := ir.add(IR.Statement.DYNAMIC_CALL(castedPtr, finalArgs.finish()))
+                return coerce(position, IR.Value.REF(result, t.returnType()), type)
             when IR.Value.TYPE(t):
                 def finalType:Type
                 if t.typeKind = Type.Kind.GENERIC & t.subtypes[0] = Type.Class() {
@@ -3483,7 +3563,7 @@ class Compiler {
         if cc != null {
             return compileChoiceCaseReference(position, cc, args, type)
         }
-        def compiledM := compileExpression(m)
+        def compiledM := compileMethodExpression(m, TypeContext.NON_VOID)
         if compiledM = null {
             return null
         }
@@ -3492,6 +3572,95 @@ class Compiler {
 
     method compileCast(position:Position, value:ASTNode, target:Type):IR.Value? {
         return compileExpression(value, TypeContext.TYPE(target))
+    }
+
+    method compileClosure(position:Position, kind:MethodDecl.Kind,
+            rawParameters:ImmutableArray<ASTNode>, rawReturnType:ASTNode?,
+            body:ImmutableArray<ASTNode>, type:TypeContext):IR.Value? {
+        closureCount += 1
+        def name := "$anonymous\{closureCount}"
+        def parameters := Array<MethodDecl.Parameter>()
+        for p in rawParameters {
+            match p {
+                when ASTNode.PARAMETER(_, name, type):
+                    def type := resolve(scanner.convertType(type))
+                    if type = null {
+                        return null
+                    }
+                    parameters.add(MethodDecl.Parameter(name, type))
+                otherwise:
+                    assert false
+            }
+        }
+        def returnType:Type
+        if rawReturnType != null {
+            returnType := resolve(scanner.convertType(rawReturnType))
+            if returnType = null {
+                return null
+            }
+        }
+        else {
+            returnType := Type.Void()
+            if kind = MethodDecl.Kind.FUNCTION {
+                error(position, "functions must have a return type")
+                return null
+            }
+        }
+        def currentCaptures := Pair<MethodDecl, Map<String, Variable>>(currentMethod[0],
+                HashMap<String, Variable>())
+        captures.push(currentCaptures)
+        def annotations := Annotations(Annotations.Flag.CLASS)
+        def methodDecl := MethodDecl(currentClass[0], position, null, annotations, kind, name, null,
+                parameters, returnType, body)
+        def oldWriteCode := writeCode
+        -- need to scan through the method to determine captures, but we don't actually want to
+        -- output it yet - if it has captures, we need to put it into a closure class
+        writeCode := false
+        compile(methodDecl, symbolTable)
+
+        def target:ASTNode?
+        writeCode := true
+        if currentCaptures.second.count != 0 {
+            -- we have captures, need to build an actual closure for it
+            def cl := createClosureClass(methodDecl, currentCaptures.second.values().all())
+            def args := Array<ASTNode>()
+            for capture in currentCaptures.second.keys() { -- FIXME map
+                args.add(ASTNode.IDENTIFIER(position, capture))
+            }
+            captures.pop(currentCaptures)
+            pendingClasses.add(cl)
+            def rawTarget := call(position, IR.Value.TYPE(cl.type), args.finish(),
+                    TypeContext.UNSPECIFIED)
+            if rawTarget = null {
+                return null
+            }
+            target := ASTNode.IR_WRAPPER(position, rawTarget)
+        }
+        else {
+            -- no captures, method is already good
+            compile(methodDecl, symbolTable)
+            if !methodDecl.annotations.isClass() {
+                def rawTarget := compileSelf(position)
+                if rawTarget = null {
+                    return null
+                }
+                target := ASTNode.IR_WRAPPER(position, rawTarget)
+            }
+            else {
+                target := ASTNode.NULL(position)
+            }
+            captures.pop(currentCaptures)
+        }
+        writeCode := oldWriteCode
+        def args := Array<ASTNode>()
+        def pandaType := inheritedType(methodDecl)
+        def irType := Type.pointerTo(pandaType)
+        args.add(ASTNode.IR_WRAPPER(position, cast(IR.Value.METHOD_POINTER(methodDecl,
+                irType), Type.pointerTo(Type.Int8()))))
+        args.add(target)
+        def construct := cast(call(position, IR.Value.TYPE(Type.Method()), args,
+                TypeContext.UNSPECIFIED), pandaType)
+        return coerce(position, construct, type)
     }
 
     method compileDot(position:Position, target:IR.Value, name:String):IR.Value? {
@@ -3806,8 +3975,14 @@ class Compiler {
         }
     }
 
+    ================================================================================================
+    Compiles an expression without fully resolving method references. That is,
+    `compileMethodExpression` on `Console.printLine` returns an IR.Value.METHOD, whereas fully
+    resolving this expression using `compileExpression` will result in an actual `ImmutableMethod`
+    object constructor.
+    ================================================================================================
     @post(typeMatch(@return, type) & (@return != null | errorCount > 0))
-    method compileExpression(expr:ASTNode, type:TypeContext):IR.Value? {
+    method compileMethodExpression(expr:ASTNode, type:TypeContext):IR.Value? {
         match expr {
             when ASTNode.AT_PRE(position, expr):
                 return compileAtPre(position, expr)
@@ -3839,6 +4014,8 @@ class Compiler {
                 return compileInt(position, value, type)
             when ASTNode.IR_WRAPPER(_, value):
                 return coerce(expr.position(), value, type)
+            when ASTNode.METHOD(position, _, _, kind, _, _, parameters, returnType, body):
+                return compileClosure(position, kind, parameters, returnType, body, type)
             when ASTNode.NULL(position):
                 return compileNull(position, type)
             when ASTNode.PREFIX(position, op, operand):
@@ -3869,6 +4046,64 @@ class Compiler {
                 return IR.Value.TYPE(type)
             otherwise:
                 assert false, "unsupported expression \{expr}:\{expr.position()}"
+        }
+    }
+
+    @post(typeMatch(@return, type) & (@return != null | errorCount > 0))
+    method compileExpression(expr:ASTNode, type:TypeContext):IR.Value? {
+        def unresolved := compileMethodExpression(expr, type)
+        if unresolved == null {
+            return null
+        }
+        match unresolved {
+            when IR.Value.METHOD(target, m):
+                def position := expr.position()
+                def args := Array<ASTNode>()
+                def pandaType := inheritedType(m)
+                def irType := Type.pointerTo(pandaType)
+                args.add(ASTNode.IR_WRAPPER(position,
+                        cast(IR.Value.METHOD_POINTER(m, irType), Type.pointerTo(Type.Int8()))))
+                args.add(ASTNode.IR_WRAPPER(position, target))
+                def construct := cast(call(position, IR.Value.TYPE(Type.MutableMethod()), args,
+                        TypeContext.UNSPECIFIED), pandaType)
+                return coerce(position, construct, type)
+            when IR.Value.METHODS(target, methods):
+                match type {
+                    when TypeContext.TYPE(t):
+                        if !t.isMethod() {
+                            error(expr.position(), "unresolved method reference cannot possibly " +
+                                    "be an instance of '\{t}'")
+                        }
+                        def best := Array<MethodDecl>()
+                        var bestCost := Int.MAX
+                        for m in methods {
+                            if resolve(m) {
+                                def cost := coercionCost(m.type(), t)
+                                if cost != null {
+                                    if cost < bestCost {
+                                        bestCost := cost
+                                        best.clear()
+                                    }
+                                    if cost = bestCost {
+                                        best.add(m)
+                                    }
+                                }
+                            }
+                        }
+                        if best.count = 1 {
+                            return compileExpression(ASTNode.IR_WRAPPER(expr.position(),
+                                    IR.Value.METHOD(target, best[0])), type)
+                        }
+                        if best.count = 0 {
+                            error(expr.position(), "no method '\{methods[0].name}' matching " +
+                                    "expected type '\{t}'")
+                            return null
+                        }
+                }
+                error(expr.position(), "ambiguous reference to method '\{methods[0].name}'")
+                return null
+            otherwise:
+                return unresolved
         }
     }
 
@@ -4953,19 +5188,23 @@ class Compiler {
                 def value:IR.Value?
                 def type:Type
                 if rawValue != null {
-                    def preferred := preferredType(rawValue)
-                    if preferred = null {
-                        -- force error to be reported
-                        compileExpression(rawValue, TypeContext.NON_VOID)
-                        return null
+                    var preferred := preferredType(rawValue)
+                    if preferred == null {
+                        value := compileExpression(rawValue, TypeContext.NON_VOID)
+                        if value == null {
+                            return null
+                        }
+                        preferred := value.type()
                     }
-                    value := compileExpression(rawValue, TypeContext.TYPE(preferred))
-                    if value = null {
+                    else {
+                        value := compileExpression(rawValue, TypeContext.TYPE(preferred))
+                    }
+                    if value == null {
                         return null
                     }
                     type := value.type()
                 }
-                else if valueType != null {
+                else if valueType !== null {
                     type := valueType
                 }
                 else {
@@ -5516,6 +5755,10 @@ class Compiler {
     }
 
     method compile(m:MethodDecl) {
+        compile(m, null)
+    }
+
+    method compile(m:MethodDecl, enclosingContext:SymbolTable?) {
         if !resolve(m) {
             return
         }
@@ -5523,9 +5766,13 @@ class Compiler {
         checkAnnotations(m)
         assert atPreBlock == null
         if m.body != null {
+            def oldIR := ir
             ir := IR()
             {
                 def auto := AutoScope(self)
+                if enclosingContext != null {
+                    symbolTable.parents.add(enclosingContext)
+                }
                 if m.name = "main" {
                     if m.methodKind != MethodDecl.Kind.METHOD {
                         error(m.position, "'main' must be a method")
@@ -5613,7 +5860,10 @@ class Compiler {
                 }
                 atPreBlock := null
             }
-            codeGenerator.write(m, ir)
+            if writeCode {
+                codeGenerator.write(m, ir)
+            }
+            ir := oldIR
         }
         else {
             codeGenerator.writeDeclaration(m)

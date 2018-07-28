@@ -263,6 +263,7 @@ class IR {
         INT(UInt64, Type)
         -- value is a *pointer to* the given type
         LOCAL(Int, Type)
+        METHOD_POINTER(MethodDecl, Type)
         NULL(Type)
         PARAMETER(Int, Type)
         REAL(Real64, Type)
@@ -282,6 +283,8 @@ class IR {
                     return type
                 when LOCAL(_, type):
                     return type -- note that the actual IR type is a pointer to this type
+                when METHOD_POINTER(_, type):
+                    return type
                 when NULL(type):
                     return type
                 when PARAMETER(_, type):
@@ -311,7 +314,9 @@ class IR {
                 when LOCAL(slot, type):
                     return "LOCAL(\{slot}:\{type}*)"
                 when NULL(type):
-                    return "null->\{type}"
+                    return "NULL(\{type})"
+                when METHOD_POINTER(m, _):
+                    return "METHOD_POINTER(\{m.declaration()})"
                 when PARAMETER(index, type):
                     return "PARAMETER(\{index}:\{type})"
                 when REAL(value, _):
@@ -322,14 +327,14 @@ class IR {
                     return s.format("panda")
                 when METHOD(target, m):
                     if target != null {
-                        return "\{target}.\{m.declaration}"
+                        return "METHOD(\{target}, \{m.declaration()})"
                     }
                     return m.declaration()
                 when METHODS(target, m):
                     if target != null {
-                        return "\{target}.\{m}"
+                        return "METHODS(\{target}, \{m})"
                     }
-                    return m.convert()
+                    return "METHODS(<null>, \{m})"
                 when TYPE(type):
                     return type.convert()
             }
