@@ -1,0 +1,4 @@
+method main() {
+    def nested := x:Int => (y:Int => x + y)(10)
+    Console.printLine(nested(5))
+}

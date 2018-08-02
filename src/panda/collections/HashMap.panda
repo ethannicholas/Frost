@@ -229,6 +229,7 @@ class HashMap<K:Key<K>, V> : Map<K, V> {
         }
     }
     
+    @override
     method remove(key:K) {
         changeCount += 1
         def index := indexFor(key)

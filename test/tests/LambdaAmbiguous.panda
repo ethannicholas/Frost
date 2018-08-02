@@ -1,0 +1,11 @@
+method test(f:(Int8)=>(Int8)):Int8 {
+    return f(12)
+}
+
+method test(f:(Int16)=>(Int16)):Int16 {
+    return f(12)
+}
+
+method main() {
+    Console.printLine(test(x => x * 2))
+}

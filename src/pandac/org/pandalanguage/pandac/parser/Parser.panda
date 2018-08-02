@@ -666,6 +666,9 @@ class Parser {
                 if name = "@pre" {
                     expect(Token.Kind.LPAREN, "'('")
                     def expr := expression()
+                    if expr == null {
+                        return null
+                    }
                     expect(Token.Kind.RPAREN, "')'")
                     return ASTNode.AT_PRE(t.position, expr)
                 }

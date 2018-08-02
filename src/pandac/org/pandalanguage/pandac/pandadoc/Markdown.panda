@@ -1004,7 +1004,7 @@ class Markdown {
                                                    ")",
                                                    RegularExpression.DOTALL)
         markup.replace(referenceShortcut, function(groups:ListView<String?>):Object {
-            var replacementText:String
+            var replacementText:String?
             def wholeMatch := groups[1]
             def linkText := groups[2]
             var id := linkText -- FIXME .toLowerCase()

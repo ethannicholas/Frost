@@ -35,6 +35,12 @@ class Scanner {
                     finalArgs.add(convertType(arg))
                 }
                 return Type.generic(Type(base, Type.Kind.CLASS, type.position()), finalArgs)
+            when ASTNode.IR_WRAPPER(_, type):
+                match type {
+                    when IR.Value.TYPE(t):
+                        return t
+                }
+                assert false
             when ASTNode.METHOD_TYPE(position, kind, rawParameters, rawReturnType):
                 def typeKind:Type.Kind
                 match kind {

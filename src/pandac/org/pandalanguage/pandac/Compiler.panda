@@ -205,11 +205,6 @@ class Compiler {
         }
     }
 
-    constant POINTER_NAME := "panda.unsafe.Pointer"
-    constant WEAK_NAME := "panda.core.Weak"
-    constant RANGE_NAME := "panda.core.Range"
-    constant STEPPED_RANGE_NAME := "panda.core.SteppedRange"
-
     class Settings : Immutable {
         def pandaHome:File
 
@@ -227,7 +222,32 @@ class Compiler {
         }
     }
 
+    choice Capture {
+        VARIABLE(Variable)
+        FIELD(FieldDecl)
+        SELF
+    }
+
+    constant POINTER_NAME := "panda.unsafe.Pointer"
+    
+    constant WEAK_NAME := "panda.core.Weak"
+    
+    constant RANGE_NAME := "panda.core.Range"
+    
+    constant STEPPED_RANGE_NAME := "panda.core.SteppedRange"
+    
+    constant SELF_NAME := "self"
+    
+    -- name of the field in which we store captured "self"
+    constant CAPTURED_SELF_NAME := "$self"
+
+    -- within closures, 'self' is normally interpreted as the captured $self object. $force_self is
+    -- always a reference to the actual 'self' - in a closure, this will be the closure object
+    -- itself.
+    constant FORCE_SELF_NAME := "$force_self"
+    
     constant NONNULLABLE_TO_NULLABLE_CAST_COST := 1
+    
     constant NULLABLE_TO_NONNULLABLE_CAST_COST := 2
 
     def settings:Settings
@@ -264,7 +284,7 @@ class Compiler {
     def codeGenerator:CodeGenerator
 
     @private
-    def errorQueue:MessageQueue<Error>
+    var errorQueue:MessageQueue<Error>
 
     @private
     def enclosingContexts := Stack<EnclosingContext>()
@@ -296,12 +316,21 @@ class Compiler {
     @private
     var atPreBlock:IR.Block.ID? := null
 
-    @private
     -- MethodDecl is the method *containing* the closure, not the closure itself
-    def captures := Stack<Pair<MethodDecl, Map<String, Variable>>>()
+    @private
+    def captures := Stack<Pair<MethodDecl, Map<String, Capture>>>()
 
     @private
     var writeCode := true
+
+    -- Sometimes we need to resolve an untyped lambda against several different types, such as when
+    -- calling an overloaded method which can take different types of functions. If, say, the lambda
+    -- only successfully resolves for one particular type of function, then we know the type of
+    -- lambda we're dealing with. But if it fails for *all* of them, it could be that the lambda
+    -- simply contains an error. So we keep track of all of the types we attempted to resolve a
+    -- given lambda as for error reporting purposes.
+    @private
+    def lambdaTypes := IdentityMap<ASTNode, HashSet<Type>>()
 
     init(errorQueue:MessageQueue<Error>, codeGenerator:CodeGenerator, settings:Settings) {
         self.settings := settings
@@ -625,7 +654,8 @@ class Compiler {
         }
     }
 
-    @post(currentClass.count = @pre(currentClass.count) & (@return | errorCount > 0))
+    @post(currentClass.count = @pre(currentClass.count) &
+            (@return | errorCount > 0 | !reportErrors))
     method resolve(cl:ClassDecl):Bit {
         if cl.resolved = Resolution.UNRESOLVED {
             cl.resolved := Resolution.IN_PROGRESS
@@ -797,7 +827,7 @@ class Compiler {
         return m.resolved = Resolution.RESOLVED
     }
 
-    @post(f.type != Type.Void() & f.type.resolved | errorCount > 0)
+    @post(f.type != Type.Void() & f.type.resolved | errorCount > 0 | !reportErrors)
     method determineRawType(f:FieldDecl) {
         currentClass.push(f.owner)
         def auto := AutoScope(self, getSymbolTable(f.owner))
@@ -828,7 +858,7 @@ class Compiler {
         currentClass.pop()
     }
 
-    @post(@return | errorCount > 0)
+    @post(@return | errorCount > 0 | !reportErrors)
     method resolve(f:FieldDecl):Bit {
         if f.resolved = Resolution.UNRESOLVED {
             f.resolved := Resolution.IN_PROGRESS
@@ -1575,7 +1605,8 @@ class Compiler {
             type:TypeContext):Pair<ListView<Type>, Int>? {
         var bestCost := Int.MAX
         def best := Array<Type>()
-        outer: for m in methodTypes {
+        outer: for raw in methodTypes {
+            def m := raw.nonnullable()
             if m.typeKind != Type.Kind.METHOD &
                     m.typeKind != Type.Kind.FUNCTION &
                     m.typeKind != Type.Kind.IMMUTABLE_METHOD &
@@ -1831,6 +1862,9 @@ class Compiler {
                         if type = null {
                             return null
                         }
+                        if coercionCost(left, type) == null {
+                            return null
+                        }
                         def result := Array<Type>() -- FIXME literal
                         result.add(type)
                         return result
@@ -1970,9 +2004,14 @@ class Compiler {
                 a.add(Type.RegularExpression())
                 return a
             when ASTNode.SELF:
-                def a := Array<Type>() -- FIXME literal
-                a.add(currentClass[0].type)
-                return a
+                var s := symbolTable[CAPTURED_SELF_NAME]
+                if s = null {
+                    s := symbolTable[SELF_NAME]
+                }
+                if s = null {
+                    return null
+                }
+                return symbolType(null, s)
             when ASTNode.STRING(_, text):
                 def result := Array<Type>() -- FIXME literal
                 result.add(Type.StringType())
@@ -1987,6 +2026,28 @@ class Compiler {
                     result.add(Type.Char32())
                 }
                 return result
+            when ASTNode.TYPED_LAMBDA(position, parameters, body):
+                def parameterTypes := Array<Type>()
+                for p in parameters {
+                    match p {
+                        when ASTNode.PARAMETER(_, _, type):
+                            def resolved := resolve(scanner.convertType(type))
+                            if resolved == null {
+                                return null
+                            }
+                            parameterTypes.add(resolved)
+                    }
+                }
+                def returnType := typedLambdaReturnType(parameters, body, TypeContext.NON_VOID)
+                if returnType == null {
+                    return null
+                }
+                def result := Array<Type>() -- FIXME literal
+                result.add(Type.methodType(position, Type.Kind.FUNCTION, parameterTypes,
+                        returnType))
+                return result
+            when ASTNode.UNTYPED_LAMBDA:
+                return null
             otherwise:
                 assert false, "unsupported possibleType: \{value}:\{value.position()}"
         }
@@ -1996,6 +2057,9 @@ class Compiler {
         if op = Token.Kind.CAST {
             def target := resolve(scanner.convertType(right))
             if target = null {
+                return null
+            }
+            if coercionCost(left, target) == null {
                 return null
             }
             return coercionCost(target, type)
@@ -2062,6 +2126,79 @@ class Compiler {
             return null
         }
         return coercionCost(type, target)
+    }
+
+    method typedLambdaCoercionCost(parameters:ListView<ASTNode>, body:ASTNode, target:Type):Int? {
+        if !target.nonnullable().isMethod() {
+            return coercionCost(Type.MutableMethod(), target)
+        }
+        if target.typeKind = Type.Kind.NULLABLE {
+            def result := typedLambdaCoercionCost(parameters, body, target.nonnullable())
+            if result == null {
+                return null
+            }
+            return result + NONNULLABLE_TO_NULLABLE_CAST_COST
+        }
+        if target.parameterCount != parameters.count {
+            return null
+        }
+        var cost := 0
+        for i in 0 .. parameters.count {
+            match parameters[i] {
+                when ASTNode.PARAMETER(_, _, type):
+                    def resolved := resolve(scanner.convertType(type))
+                    if resolved == null {
+                        return null
+                    }
+                    def parameterCost := coercionCost(target.parameterType(i), resolved)
+                    if parameterCost == null {
+                        return null
+                    }
+                    cost += parameterCost
+            }
+        }
+        def returnType := typedLambdaReturnType(parameters, body, TypeContext.TYPE(target))
+        if returnType == null {
+            return null
+        }
+        cost += coercionCost(returnType, target.returnType())
+        return cost
+    }
+
+    method untypedLambdaCoercionCost(parameters:ListView<ASTNode>, body:ASTNode, target:Type):Int? {
+        if !target.nonnullable().isMethod() {
+            return coercionCost(Type.MutableMethod(), target)
+        }
+        if target.typeKind = Type.Kind.NULLABLE {
+            def result := untypedLambdaCoercionCost(parameters, body, target.nonnullable())
+            if result == null {
+                return null
+            }
+            return result + NONNULLABLE_TO_NULLABLE_CAST_COST
+        }
+        if target.parameterCount != parameters.count {
+            return null
+        }
+        def typedParameters := Array<ASTNode>()
+        for i in 0 .. parameters.count {
+            match parameters[i] {
+                when ASTNode.IDENTIFIER(position, name):
+                    typedParameters.add(ASTNode.PARAMETER(position, name,
+                            ASTNode.IR_WRAPPER(position, IR.Value.TYPE(target.parameterType(i)))))
+                otherwise:
+                    assert false
+            }
+        }
+        def result := typedLambdaCoercionCost(typedParameters, body, target)
+        if result == null {
+            var list := lambdaTypes[body]
+            if list == null {
+                list := HashSet<Type>()
+                lambdaTypes[body] := list
+            }
+            list.add(target)
+        }
+        return result
     }
 
     @pre(target.resolved)
@@ -2203,6 +2340,10 @@ class Compiler {
                     return null
                 }
                 return coercionCost(Type.StringType(), target)
+            when ASTNode.TYPED_LAMBDA(_, parameters, body):
+                return typedLambdaCoercionCost(parameters, body, target)
+            when ASTNode.UNTYPED_LAMBDA(_, parameters, body):
+                return untypedLambdaCoercionCost(parameters, body, target)
             otherwise:
                 assert false, "unsupported coercionCost: \{expr}"
         }
@@ -2235,7 +2376,7 @@ class Compiler {
     }
 
     method canCast(type:Type, target:Type):Bit {
-        if type.isPointer() & (target.isPointer() | target.isMethod()) {
+        if type.isPointer() & (target.isPointer() | target.nonnullable().isMethod()) {
             return true
         }
         if coercionCost(type, target) != null {
@@ -2460,24 +2601,75 @@ class Compiler {
         }
     }
 
-    method createClosureClass(m:MethodDecl, captures:ListView<Variable>):ClassDecl {
+    function capturedSelfType():Type {
+        var cl := currentClass[0]
+        loop {
+            if !cl.annotations.isSynthetic() {
+                return cl.type
+            }
+            assert cl.owner != null, "no non-synthetic owner for \{currentClass[0].name}"
+            cl := cl.owner
+        }
+    }
+
+    method createClosureClass(m:MethodDecl, captures:CollectionView<Capture>):ClassDecl {
         def p := m.position
         m.annotations := Annotations(0)
         closureCount += 1
+        def supers := Array<Type>()
+        if isImmutable(currentClass[0].type) {
+            supers.add(Type.Immutable())
+            for c in captures {
+                match c {
+                    when Capture.VARIABLE(v):
+                        if !isImmutable(v.type) {
+                            supers.clear()
+                            break
+                        }
+                    when Capture.SELF:
+                        if !isImmutable(capturedSelfType()) {
+                            supers.clear()
+                            break
+                        }
+                    otherwise:
+                        assert false, c.convert()
+                }
+            }
+        }
         def result := ClassDecl(currentClass[0].source, p, HashMap<String, String>(), null,
                 Annotations(Annotations.Flag.SYNTHETIC), ClassDecl.Kind.CLASS,
-                "\{currentClass[0].name}._Closure\{closureCount}", Array<Type>(),
+                "\{currentClass[0].name}._Closure\{closureCount}", supers,
                 Array<ClassDecl.GenericParameter>(), root)
         result.external := false
 
         -- create init method
         def statements := Array<ASTNode>()
         def parameters := Array<MethodDecl.Parameter>()
-        for v in captures {
-            parameters.add(MethodDecl.Parameter(v.name, v.type))
-            -- self.parameterName := parameterName
-            statements.add(ASTNode.BINARY(p, ASTNode.DOT(p, ASTNode.SELF(p), v.name),
-                    Token.Kind.ASSIGNMENT, ASTNode.IDENTIFIER(p, v.name)))
+        for c in captures {
+            match c {
+                when Capture.VARIABLE(v):
+                    parameters.add(MethodDecl.Parameter(v.name, v.type))
+                    -- self.parameterName := parameterName
+                    statements.add(ASTNode.BINARY(p,
+                            ASTNode.DOT(p, ASTNode.IDENTIFIER(p, FORCE_SELF_NAME), v.name),
+                            Token.Kind.ASSIGNMENT,
+                            ASTNode.IDENTIFIER(p, v.name)))
+                when Capture.FIELD(f):
+                    parameters.add(MethodDecl.Parameter(f.name, f.type))
+                    -- self.parameterName := parameterName
+                    statements.add(ASTNode.BINARY(p,
+                            ASTNode.DOT(p, ASTNode.IDENTIFIER(p, FORCE_SELF_NAME), f.name),
+                            Token.Kind.ASSIGNMENT,
+                            ASTNode.IDENTIFIER(p, f.name)))
+                when Capture.SELF:
+                    parameters.add(MethodDecl.Parameter(CAPTURED_SELF_NAME, capturedSelfType()))
+                    -- self.$self := $self
+                    statements.add(ASTNode.BINARY(p,
+                            ASTNode.DOT(p, ASTNode.IDENTIFIER(p, FORCE_SELF_NAME),
+                                CAPTURED_SELF_NAME),
+                            Token.Kind.ASSIGNMENT,
+                            ASTNode.IDENTIFIER(p, CAPTURED_SELF_NAME)))
+            }
         }
         def initMethod := MethodDecl(result, p, null,
                 Annotations(Annotations.Flag.SYNTHETIC), MethodDecl.Kind.INIT, "init",
@@ -2495,12 +2687,29 @@ class Compiler {
         result.symbolTable.add(defaultCleanup)
 
         -- create fields
-        for v in captures {
-            def field := FieldDecl(result, p, null,
-                    Annotations(Annotations.Flag.SYNTHETIC), FieldDecl.Kind.DEF, v.name, v.type,
-                    null)
-            result.symbolTable.add(field)
-            result.fields.add(field)
+        for c in captures {
+            match c {
+                when Capture.VARIABLE(v):
+                    def field := FieldDecl(result, p, null,
+                            Annotations(Annotations.Flag.SYNTHETIC), FieldDecl.Kind.DEF, v.name,
+                            v.type, null)
+                    result.symbolTable.add(field)
+                    result.fields.add(field)
+                when Capture.FIELD(f):
+                    def field := FieldDecl(result, p, null,
+                            Annotations(Annotations.Flag.SYNTHETIC), FieldDecl.Kind.DEF, f.name,
+                            f.type, null)
+                    result.symbolTable.add(field)
+                    result.fields.add(field)
+                when Capture.SELF:
+                    def field := FieldDecl(result, p, null,
+                            Annotations(Annotations.Flag.SYNTHETIC), FieldDecl.Kind.DEF,
+                            CAPTURED_SELF_NAME, capturedSelfType(), null)
+                    result.symbolTable.add(field)
+                    result.fields.add(field)
+                otherwise:
+                    assert false, c.convert()
+            }
         }
         m.owner := result
         result.methods.add(m)
@@ -2623,7 +2832,37 @@ class Compiler {
         assert false, "field '\{f}' not found in \{f.owner.name}"
     }
 
-    @post(@return != null | errorCount > 0)
+    method capture(position:Position, v:Variable) {
+        if v.name = SELF_NAME {
+            for c in captures {
+                c.second[SELF_NAME] := Capture.SELF
+                if !c.first.annotations.isSynthetic() {
+                    return
+                }
+            }
+        }
+        for c in captures {
+            if v.varKind = Variable.Kind.VAR {
+                error(position, "closure cannot capture 'var \{v}'; use 'def' instead")
+                break
+            }
+            c.second[v.name] := Capture.VARIABLE(v)
+            if v.owner == c.first {
+                break
+            }
+        }
+    }
+
+    method capture(position:Position, f:FieldDecl) {
+        for c in captures {
+            c.second[f.name] := Capture.FIELD(f)
+            if f.owner == c.first.owner {
+                break
+            }
+        }
+    }
+
+    @post(@return != null | errorCount > 0 | !reportErrors)
     method symbolRef(position:Position, target:IR.Value?, s:Symbol):IR.Value? {
         match s.kind {
             when Symbol.Kind.ALIAS:
@@ -2639,6 +2878,9 @@ class Compiler {
                 return IR.Value.METHODS(target, s->Methods.methods)
             when Symbol.Kind.VARIABLE:
                 def v := s->Variable
+                if v.owner !== null & v.owner !== currentMethod[0] {
+                    capture(position, v)
+                }
                 match v.storage {
                     when Variable.Storage.LOCAL(slot):
                         def result := ir.add(IR.Statement.LOAD(IR.Value.LOCAL(slot, v.type)))
@@ -2650,8 +2892,12 @@ class Compiler {
                         assert false
                 }
             when Symbol.Kind.FIELD:
-                if resolve(s->FieldDecl) {
-                    return FieldLValue(self, position, target, s->FieldDecl).compileLoad()
+                def f := s->FieldDecl
+                if resolve(f) {
+                    if f.annotations.isSynthetic() {
+                        capture(position, f)
+                    }
+                    return FieldLValue(self, position, target, f).compileLoad()
                 }
                 return null
             when Symbol.Kind.CHOICE_CASE:
@@ -2746,6 +2992,25 @@ class Compiler {
                 effectiveType)
     }
 
+    function explainCoerceFailure(m:MethodDecl, target:Type):String {
+        if m.parameters.count != target.parameterCount {
+            return "wrong parameter count"
+        }
+        for i in 0 .. m.parameters.count {
+            if coercionCost(target.parameterType(i), m.parameters[i].type) == null {
+                return "parameter \{i + 1} cannot be converted from '\{target.parameterType(i)}' " +
+                        "to '\{m.parameters[i].type}'"
+            }
+        }
+        if coercionCost(m.returnType, target.returnType()) == null {
+            return "return type '\{m.returnType}' cannot be converted to '\{target.returnType}'"
+        }
+        if m.methodKind = MethodDecl.Kind.METHOD & (target.typeKind = Type.Kind.FUNCTION |
+                target.typeKind = Type.Kind.IMMUTABLE_FUNCTION) {
+            return "cannot use a method where a function is expected"
+        }
+    }
+
     @pre(target != Type.Void())
     method coerce(position:Position, value:IR.Value?, target:Type):IR.Value? {
         if value == null {
@@ -2786,6 +3051,13 @@ class Compiler {
                     error(position, "ambiguous method reference")
                     return null
                 }
+                def msg := MutableString("reference to method '\{methods[0].name}' cannot be " +
+                        "used as type '\{target}'. None of the following methods match this type:")
+                for m in methods {
+                    msg.append("\n    \{m.declaration()} (\{explainCoerceFailure(m, target)})")
+                }
+                error(position, msg.finish())
+                return null
         }
         if coercionCost(value.type(), target) != null {
             def cl := getClass(target)
@@ -2956,7 +3228,8 @@ class Compiler {
         return Pair<Bit, IR.Value?>(false, null)
     }
 
-    @post((m.returnType = Type.Void() & @return = null) | @return != null | errorCount > 0)
+    @post((m.returnType = Type.Void() & @return = null) | @return != null | errorCount > 0 |
+            !reportErrors)
     method call(position:Position, target:IR.Value?, m:MethodRef, args:ListView<ASTNode>,
             type:TypeContext):IR.Value? {
         if args.count != m.parameterCount {
@@ -3024,7 +3297,8 @@ class Compiler {
                 }
             }
             else {
-                finalTarget := coerce(position, compileSelf(position), actualType.parameterType(0))
+                finalTarget := coerce(position, compileSelf(position, false),
+                        actualType.parameterType(0))
                 if finalTarget = null {
                     return null
                 }
@@ -3047,13 +3321,16 @@ class Compiler {
             result := ir.add(IR.Statement.STATIC_CALL(m.value, finalArgs.finish()))
         }
         if m.returnType != Type.Void() {
-            var resultCast := IR.Value.REF(result, actualType.returnType())
+            var resultCast:IR.Value? := IR.Value.REF(result, actualType.returnType())
             if isRefCounted(actualType.returnType()) {
                 statementUnrefs.add(resultCast)
             }
             if m.value.methodKind != MethodDecl.Kind.INIT &
                     effectiveType.returnType() != actualType.returnType() {
                 resultCast := cast(resultCast, effectiveType.returnType())
+                if resultCast == null {
+                    return null
+                }
             }
             resultCast := coerce(position, resultCast, type)
             return resultCast
@@ -3153,7 +3430,7 @@ class Compiler {
 
     method callMethodObject(position:Position, m:IR.Value, args:ListView<ASTNode>,
             type:TypeContext):IR.Value? {
-        def t := m.type()
+        def t := m.type().nonnullable()
         if !t.isMethod() {
             error(position, "value of type '\{t}' is not a method")
             return null
@@ -3180,15 +3457,24 @@ class Compiler {
         else {
             result := null
         }
-        def st := getSymbolTable(getClass(Type.Method()))
+        def methodType:Type
+        def targetType:Type
+        if isImmutable(m.type()) {
+            methodType := Type.Method()
+            targetType := Type.Immutable()
+        }
+        else {
+            methodType := Type.MutableMethod()
+            targetType := Type.Object()
+        }
+        def st := getSymbolTable(getClass(methodType))
         def pointerField := st["pointer"]->FieldDecl
-        def methodObj := cast(m, Type.Method())
+        def methodObj := cast(m, methodType)
         def methodPtrPtr := ir.add(IR.Statement.GET_FIELD_POINTER(methodObj, pointerField))
         def methodPtr := ir.add(IR.Statement.LOAD(IR.Value.REF(methodPtrPtr,
                 Type.pointerTo(Type.Int8()))))
         def targetField := st["target"]->FieldDecl
         def targetPtr := ir.add(IR.Statement.GET_FIELD_POINTER(methodObj, targetField))
-        def targetType := Type.Immutable()
         def target := ir.add(IR.Statement.LOAD(IR.Value.REF(targetPtr, targetType)))
         def targetNonNull := ir.add(IR.Statement.BINARY(IR.Value.REF(target, targetType),
                 Token.Kind.NIDENTITY, IR.Value.NULL(targetType), Type.BuiltinBit()))
@@ -3231,6 +3517,18 @@ class Compiler {
         return null
     }
 
+    @pre(methods.count > 1)
+    method reportAmbiguousMatch(position:Position, methods:ListView<MethodRef>,
+            args:ListView<ASTNode>, type:TypeContext) {
+        def msg := MutableString("call to '\{methods[0].value.name}' is ambiguous. The following " +
+                "methods are equally good matches:")
+        for m in methods {
+            msg.append("\n    \{m.value.declaration()} (\{m.value.owner.source.name()}:" +
+                    "\{m.value.position})")
+        }
+        error(position, msg.finish())
+    }
+
     method call(position:Position, m:IR.Value, args:ListView<ASTNode>,
             type:TypeContext):IR.Value? {
         match m {
@@ -3252,7 +3550,10 @@ class Compiler {
             when IR.Value.METHODS(target, methods):
                 def best := findBestMethod(position, target, methods, args, type)
                 if best != null {
-                    assert best.first.count = 1, "ambiguous match: \{best.first} at \{position}"
+                    if best.first.count > 1 {
+                        reportAmbiguousMatch(position, best.first, args, type)
+                        return null
+                    }
                     return call(position, target, best.first[0], args, type)
                 }
                 -- no match
@@ -3603,6 +3904,9 @@ class Compiler {
                     def found := findType(possibleTypes(left), matches.first[0].value.owner)
                     assert found != null
                     def target := compileExpression(left, TypeContext.TYPE(found))
+                    if target == null {
+                        return null
+                    }
                     args.add(right)
                     return call(position, IR.Value.METHOD(target, matches.first[0].value), args,
                             type)
@@ -3731,26 +4035,39 @@ class Compiler {
                 return null
             }
         }
-        def currentCaptures := Pair<MethodDecl, Map<String, Variable>>(currentMethod[0],
-                HashMap<String, Variable>())
+        def currentCaptures := Pair<MethodDecl, Map<String, Capture>>(currentMethod[0],
+                HashMap<String, Capture>())
         captures.push(currentCaptures)
         def annotations := Annotations(Annotations.Flag.CLASS)
         def methodDecl := MethodDecl(currentClass[0], position, null, annotations, kind, name, null,
                 parameters, returnType, body)
-        def oldWriteCode := writeCode
         -- need to scan through the method to determine captures, but we don't actually want to
         -- output it yet - if it has captures, we need to put it into a closure class
+        def oldWriteCode := writeCode
+        def oldReportErrors := reportErrors
         writeCode := false
+        reportErrors := false
         compile(methodDecl, symbolTable)
+        writeCode := oldWriteCode
+        reportErrors := oldReportErrors
 
+        def immutable:Bit
         def target:ASTNode?
-        writeCode := true
         if currentCaptures.second.count != 0 {
             -- we have captures, need to build an actual closure for it
             def cl := createClosureClass(methodDecl, currentCaptures.second.values().all())
             def args := Array<ASTNode>()
-            for capture in currentCaptures.second.keys() { -- FIXME map
-                args.add(ASTNode.IDENTIFIER(position, capture))
+            for capture in currentCaptures.second.values() {
+                match capture {
+                    when Capture.VARIABLE(v):
+                        args.add(ASTNode.IDENTIFIER(position, v.name))
+                    when Capture.SELF:
+                        args.add(ASTNode.SELF(position))
+                    when Capture.FIELD(f):
+                        args.add(ASTNode.DOT(position,
+                                ASTNode.IDENTIFIER(position, FORCE_SELF_NAME),
+                                f.name))
+                }
             }
             captures.pop(currentCaptures)
             pendingClasses.add(cl)
@@ -3760,31 +4077,36 @@ class Compiler {
                 return null
             }
             target := ASTNode.IR_WRAPPER(position, rawTarget)
+            immutable := isImmutable(cl.type)
         }
         else {
             -- no captures, method is already good
-            compile(methodDecl, symbolTable)
-            if !methodDecl.annotations.isClass() {
-                def rawTarget := compileSelf(position)
-                if rawTarget = null {
-                    return null
-                }
-                target := ASTNode.IR_WRAPPER(position, rawTarget)
-            }
-            else {
-                target := ASTNode.NULL(position)
-            }
             captures.pop(currentCaptures)
+            compile(methodDecl, symbolTable)
+            target := ASTNode.NULL(position)
+            immutable := true
         }
-        writeCode := oldWriteCode
         def args := Array<ASTNode>()
-        def pandaType := inheritedType(methodDecl)
+        def pandaType:Type
+        if methodDecl.annotations.isClass() {
+            pandaType := methodDecl.type()
+        }
+        else {
+            pandaType := declaredTypeWithSelf(methodDecl, methodDecl.owner.type)
+        }
         def irType := Type.pointerTo(pandaType)
         args.add(ASTNode.IR_WRAPPER(position, cast(IR.Value.METHOD_POINTER(methodDecl,
                 irType), Type.pointerTo(Type.Int8()))))
         args.add(target)
-        def construct := cast(call(position, IR.Value.TYPE(Type.Method()), args,
-                TypeContext.UNSPECIFIED), pandaType)
+        def methodType:Type
+        if immutable {
+            methodType := Type.Method()
+        }
+        else {
+            methodType := Type.MutableMethod()
+        }
+        def construct := cast(call(position, IR.Value.TYPE(methodType), args,
+                TypeContext.UNSPECIFIED), methodDecl.type())
         return coerce(position, construct, type)
     }
 
@@ -3818,6 +4140,11 @@ class Compiler {
     }
 
     method compileIdentifier(position:Position, name:String):IR.Value? {
+        if name = FORCE_SELF_NAME {
+            def s := symbolTable[SELF_NAME]
+            assert s != null, "no 'self' in symboltable"
+            return symbolRef(position, null, s)
+        }
         def s := symbolTable[name]
         if s = null {
             def cl := tryResolveClass(name)
@@ -4074,14 +4401,145 @@ class Compiler {
                 TypeContext.UNSPECIFIED)
     }
 
-    method compileSelf(position:Position):IR.Value? {
+    method compileSelf(position:Position, explicit:Bit):IR.Value? {
+        if captures.count > 0 {
+            for c in captures {
+                c.second[SELF_NAME] := Capture.SELF
+            }
+            var cl := captures[0].first.owner
+            while cl.annotations.isSynthetic() {
+                assert cl.owner != null
+                cl := cl.owner
+            }
+            return IR.Value.REF(IR.Statement.ID(-1), cl.type)
+        }
+        if explicit {
+            def s := symbolTable[CAPTURED_SELF_NAME]
+            if s != null {
+                def actualSelf := symbolTable[SELF_NAME]
+                assert actualSelf != null, "no 'self' in symboltable"
+                return symbolRef(position, symbolRef(position, null, actualSelf), s)
+            }
+        }
         if currentMethod[0].annotations.isClass() {
             error(position, "cannot reference 'self' from a @class context")
             return null
         }
-        def s := symbolTable["self"]
+        def s := symbolTable[SELF_NAME]
         assert s != null, "no 'self' in symboltable"
         return symbolRef(position, null, s)
+    }
+
+    method typedLambdaReturnType(rawParameters:ListView<ASTNode>, expr:ASTNode,
+            type:TypeContext):Type? {
+        def scope := AutoScope(self)
+        for i in 0 .. rawParameters.count {
+            def p := rawParameters[i]
+            match p {
+                when ASTNode.PARAMETER(position, name, rawType):
+                    var type := scanner.convertType(rawType)
+                    if type = null {
+                        return null
+                    }
+                    type := resolve(type)
+                    if type = null {
+                        return null
+                    }
+                    symbolTable.add(Variable(position, Variable.Kind.DEF, name, type,
+                            Variable.Storage.PARAMETER(-1)))
+            }
+        }
+        def bodyContext:TypeContext
+        match type {
+            when TypeContext.TYPE(t):
+                if t.nonnullable().isMethod() {
+                    if coercionCost(expr, t.returnType()) == null {
+                        return null
+                    }
+                    return t.nonnullable().returnType()
+                }
+        }
+        return preferredType(expr)
+    }
+
+    @post(@return != null | errorCount > 0 | !reportErrors)
+    method compileTypedLambda(position:Position, rawParameters:ImmutableArray<ASTNode>,
+            expr:ASTNode, type:TypeContext):IR.Value? {
+        var returnType := typedLambdaReturnType(rawParameters, expr, type)
+        if returnType == null {
+            -- this shouldn't happen with a valid lambda. push ahead and expect an error during
+            -- compilation.
+            returnType := Type.Any()
+            match type {
+                when TypeContext.TYPE(t):
+                    if t.nonnullable().isMethod() {
+                        returnType := t.nonnullable().returnType()
+                    }
+            }
+        }
+        def body := Array<ASTNode>() -- FIXME literal
+        body.add(ASTNode.RETURN(position, expr))
+        return compileClosure(position, MethodDecl.Kind.FUNCTION, rawParameters,
+                ASTNode.IR_WRAPPER(position, IR.Value.TYPE(returnType)),
+                body.finish(), type)
+    }
+
+    @post(@return != null | errorCount > 0 | !reportErrors)
+    method compileUntypedLambda(position:Position, rawParameters:ImmutableArray<ASTNode>,
+            expr:ASTNode, type:TypeContext):IR.Value? {
+        match type {
+            when TypeContext.TYPE(t):
+                def methodType := t.nonnullable()
+                if methodType.isMethod() {
+                    if rawParameters.count != methodType.parameterCount {
+                        error(position, "expected '\{t}', but found lambda with wrong number of " +
+                                "parameters")
+                        return null
+                    }
+                    def parameters := Array<ASTNode>()
+                    for i in 0 .. rawParameters.count {
+                        match rawParameters[i] {
+                            when ASTNode.IDENTIFIER(position, name):
+                                parameters.add(ASTNode.PARAMETER(position, name,
+                                        ASTNode.IR_WRAPPER(position,
+                                            IR.Value.TYPE(methodType.parameterType(i)))))
+                            otherwise:
+                                assert false
+                        }
+                    }
+                    def returnType := t.nonnullable().returnType()
+                    def body := Array<ASTNode>() -- FIXME literal
+                    body.add(ASTNode.RETURN(position, expr))
+                    return compileClosure(position, MethodDecl.Kind.FUNCTION, parameters.finish(),
+                            ASTNode.IR_WRAPPER(position, IR.Value.TYPE(returnType)),
+                            body.finish(), type)
+
+                }
+        }
+        def attempts := lambdaTypes[expr]
+        if attempts !== null {
+            if attempts.count > 1 {
+                def msg := MutableString("lambda error")
+                def old := errorQueue
+                for t in attempts {
+                    msg.append("\n    when interpreted as '\{t}':")
+                    errorQueue := MessageQueue<Error>()
+                    compileUntypedLambda(position, rawParameters, expr, TypeContext.TYPE(t))
+                    assert errorQueue.hasMessage()
+                    msg.append("\n        \{errorQueue.getMessage().message}")
+                }
+                errorQueue := old
+                error(position, msg.finish())
+                return null
+            }
+            else {
+                compileUntypedLambda(position, rawParameters, expr,
+                        TypeContext.TYPE(attempts.iterator().next()))
+                return null
+            }
+        }
+        error(position, "lambda type was not specified and cannot be determined from context")
+        return null
     }
 
     method typeMatch(value:IR.Value?, type:TypeContext):Bit {
@@ -4106,7 +4564,7 @@ class Compiler {
     resolving this expression using `compileExpression` will result in an actual `ImmutableMethod`
     object constructor.
     ================================================================================================
-    @post(typeMatch(@return, type) & (@return != null | errorCount > 0))
+    @post(typeMatch(@return, type) & (@return != null | errorCount > 0 | !reportErrors))
     method compileMethodExpression(expr:ASTNode, type:TypeContext):IR.Value? {
         match expr {
             when ASTNode.AT_PRE(position, expr):
@@ -4150,7 +4608,7 @@ class Compiler {
             when ASTNode.REGEX(position, text):
                 return compileRegex(position, text)
             when ASTNode.SELF(position):
-                return coerce(position, compileSelf(position), type)
+                return coerce(position, compileSelf(position, true), type)
             when ASTNode.STRING(position, text):
                 match type {
                     when TypeContext.TYPE(t):
@@ -4169,12 +4627,16 @@ class Compiler {
                     return null
                 }
                 return IR.Value.TYPE(type)
+            when ASTNode.TYPED_LAMBDA(position, parameters, body):
+                return compileTypedLambda(position, parameters, body, type)
+            when ASTNode.UNTYPED_LAMBDA(position, parameters, body):
+                return compileUntypedLambda(position, parameters, body, type)
             otherwise:
                 assert false, "unsupported expression \{expr}:\{expr.position()}"
         }
     }
 
-    @post(typeMatch(@return, type) & (@return != null | errorCount > 0))
+    @post(typeMatch(@return, type) & (@return != null | errorCount > 0 | !reportErrors))
     method compileExpression(expr:ASTNode, type:TypeContext):IR.Value? {
         def unresolved := compileMethodExpression(expr, type)
         if unresolved == null {
@@ -4186,7 +4648,7 @@ class Compiler {
             when IR.Value.METHODS(target, methods):
                 match type {
                     when TypeContext.TYPE(t):
-                        if !t.isMethod() {
+                        if !t.nonnullable().isMethod() {
                             error(expr.position(), "unresolved method reference cannot possibly " +
                                     "be an instance of '\{t}'")
                         }
@@ -4302,7 +4764,13 @@ class Compiler {
                 self.target := target
             }
             else if !field.annotations.isClass() {
-                self.target := compiler.compileSelf(position)
+                if field.owner.annotations.isSynthetic() & !compiler.reportErrors {
+                    -- nested closure capture during pre-scan
+                    self.target := IR.Value.REF(IR.Statement.ID(-1), field.owner.type)
+                }
+                else {
+                    self.target := compiler.compileSelf(position, false)
+                }
             }
             rawType := field.type
             if self.target != null {
@@ -4330,6 +4798,10 @@ class Compiler {
                 compiler.currentClass.pop()
                 return result
             }
+            if target == null {
+                -- should have already reported an error
+                return null
+            }
             var result:IR.Value
             if field.fieldKind = FieldDecl.Kind.PROPERTY {
                 result := compiler.call(position, target, "get_\{field.name}",
@@ -4354,6 +4826,10 @@ class Compiler {
 
         @override
         method compileStore(value:IR.Value) {
+            if target == null {
+                -- should have already reported an error
+                return
+            }
             def cast:IR.Value
             if effectiveType != rawType {
                 cast := compiler.cast(value, rawType)
@@ -5329,6 +5805,7 @@ class Compiler {
                 }
                 def v := Variable(position, kind, name, type,
                         Variable.Storage.LOCAL(ir.locals.count))
+                v.owner := currentMethod[0]
                 if isRefCounted(v.type) {
                     enclosingContexts.push(EnclosingContext.VARIABLE_SCOPE(v))
                 }
@@ -5352,6 +5829,7 @@ class Compiler {
                 }
                 def v := Variable(position, kind, name, type,
                         Variable.Storage.LOCAL(ir.locals.count))
+                v.owner := currentMethod[0]
                 if isRefCounted(v.type) {
                     enclosingContexts.push(EnclosingContext.VARIABLE_SCOPE(v))
                 }
@@ -5556,7 +6034,13 @@ class Compiler {
             for f in currentMethod[0].owner.fields {
                 if resolve(f) & !f.annotations.isClass() & f.fieldKind != FieldDecl.Kind.PROPERTY &
                         isRefCounted(f.type) {
-                    def load := FieldLValue(self, position, compileSelf(position), f).compileLoad()
+                    def load := FieldLValue(self, position,
+                            compileExpression(ASTNode.IDENTIFIER(position, FORCE_SELF_NAME),
+                                TypeContext.UNSPECIFIED),
+                            f).compileLoad()
+                    if load == null {
+                        return
+                    }
                     compileUnref(load)
                 }
             }
@@ -5908,14 +6392,14 @@ class Compiler {
                 }
                 var index := 0
                 if hasSelfParam(m) {
-                    def selfParam := Variable(m.position, Variable.Kind.DEF, "self", m.owner.type,
-                            Variable.Storage.PARAMETER(index))
+                    def selfParam := Variable(m.position, Variable.Kind.DEF, SELF_NAME,
+                            m.owner.type, Variable.Storage.PARAMETER(index))
                     index += 1
                     selfParam.owner := m
                     symbolTable.add(selfParam)
                 }
                 else if !m.annotations.isClass() {
-                    def selfVar := Variable(m.position, Variable.Kind.DEF, "self", m.owner.type,
+                    def selfVar := Variable(m.position, Variable.Kind.DEF, SELF_NAME, m.owner.type,
                             Variable.Storage.LOCAL(0))
                     selfVar.owner := m
                     ir.locals.add(selfVar.type)
