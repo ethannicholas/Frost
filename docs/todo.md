@@ -4,10 +4,10 @@ Rearchitecture
 method shims
 @class binary overloads Int[1 .. 10]
 boolean short circuiting
-lambdas / inner methods
 @weak / Weak
-inlining
 JSON test
+C output
+inlining
 
 Immediate
 =========

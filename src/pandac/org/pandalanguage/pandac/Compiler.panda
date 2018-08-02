@@ -5756,6 +5756,21 @@ class Compiler {
         ir.setCurrentBlock(endBlock)
     }
 
+    method compileInnerMethod(position:Position, kind:MethodDecl.Kind, name:String,
+            rawParameters:ImmutableArray<ASTNode>, rawReturnType:ASTNode?,
+            body:ImmutableArray<ASTNode>) {
+        def methodRef := compileClosure(position, kind, rawParameters, rawReturnType, body,
+                TypeContext.NON_VOID)
+        if methodRef == null {
+            return
+        }
+        def decl := ASTNode.DECLARATION(position, ASTNode.IDENTIFIER(position, name),
+                ASTNode.IR_WRAPPER(position, methodRef))
+        def decls := Array<ASTNode>() -- FIXME literal
+        decls.add(decl)
+        compileStatement(ASTNode.VAR(position, Variable.Kind.DEF, decls.finish()))
+    }
+
     method compileLoop(position:Position, label:String?, statements:ImmutableArray<ASTNode>) {
         def bodyBlock := ir.newBlock("loop body")
         def endBlock := ir.newBlock("loop end")
@@ -6149,6 +6164,8 @@ class Compiler {
                 compileLoop(position, label, statements)
             when ASTNode.MATCH(position, value, whens, other):
                 compileMatch(position, value, whens, other)
+            when ASTNode.METHOD(position, _, _, kind, name, _, parameters, returnType, body):
+                compileInnerMethod(position, kind, name, parameters, returnType, body)
             when ASTNode.RETURN(position, value):
                 compileReturn(position, value)
             when ASTNode.VAR(position, kind, decls):
