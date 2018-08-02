@@ -1,0 +1,36 @@
+method noisyTrue():Bit {
+    Console.printLine("noisyTrue!")
+    return true
+}
+
+method noisyFalse():Bit {
+    Console.printLine("noisyFalse!")
+    return false
+}
+
+method main() {
+    if noisyTrue() | noisyTrue() {
+        Console.printLine("true | true")
+    }
+    if noisyTrue() | noisyFalse() {
+        Console.printLine("true | false")
+    }
+    if noisyFalse() | noisyTrue() {
+        Console.printLine("false | true")
+    }
+    if noisyFalse() | noisyFalse() {
+        Console.printLine("false | false")
+    }
+    if noisyTrue() & noisyTrue() {
+        Console.printLine("true & true")
+    }
+    if noisyTrue() & noisyFalse() {
+        Console.printLine("true & false")
+    }
+    if noisyFalse() & noisyTrue() {
+        Console.printLine("false & true")
+    }
+    if noisyFalse() & noisyFalse() {
+        Console.printLine("false & false")
+    }
+}

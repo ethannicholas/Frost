@@ -3873,6 +3873,60 @@ class Compiler {
         return returnValue
     }
 
+    method compileAnd(position:Position, left:ASTNode, right:ASTNode, type:TypeContext):IR.Value? {
+        -- FIXME should add phis so we can avoid using a local
+        def result := IR.Value.LOCAL(ir.locals.count, Type.Bit())
+        ir.locals.add(Type.Bit())
+        def compiledLeft := compileExpression(left, TypeContext.TYPE(Type.Bit()))
+        if compiledLeft == null {
+            return null
+        }
+        def ifTrue := ir.newBlock("and true")
+        def ifFalse := ir.newBlock("and false")
+        def merge := ir.newBlock("and merge")
+        ir.add(IR.Statement.CONDITIONAL_BRANCH(extractBuiltinBit(compiledLeft), ifTrue, ifFalse))
+        ir.setCurrentBlock(ifTrue)
+        def compiledRight := compileExpression(right, TypeContext.TYPE(Type.Bit()))
+        if compiledRight == null {
+            return null
+        }
+        ir.add(IR.Statement.STORE(compiledRight, result))
+        ir.add(IR.Statement.BRANCH(merge))
+        ir.setCurrentBlock(ifFalse)
+        ir.add(IR.Statement.STORE(compiledLeft, result))
+        ir.add(IR.Statement.BRANCH(merge))
+        ir.setCurrentBlock(merge)
+        def load := ir.add(IR.Statement.LOAD(result))
+        return IR.Value.REF(load, Type.Bit())
+    }
+
+    method compileOr(position:Position, left:ASTNode, right:ASTNode, type:TypeContext):IR.Value? {
+        -- FIXME should add phis so we can avoid using a local
+        def result := IR.Value.LOCAL(ir.locals.count, Type.Bit())
+        ir.locals.add(Type.Bit())
+        def compiledLeft := compileExpression(left, TypeContext.TYPE(Type.Bit()))
+        if compiledLeft == null {
+            return null
+        }
+        def ifTrue := ir.newBlock("or true")
+        def ifFalse := ir.newBlock("or false")
+        def merge := ir.newBlock("or merge")
+        ir.add(IR.Statement.CONDITIONAL_BRANCH(extractBuiltinBit(compiledLeft), ifTrue, ifFalse))
+        ir.setCurrentBlock(ifTrue)
+        ir.add(IR.Statement.STORE(compiledLeft, result))
+        ir.add(IR.Statement.BRANCH(merge))
+        ir.setCurrentBlock(ifFalse)
+        def compiledRight := compileExpression(right, TypeContext.TYPE(Type.Bit()))
+        if compiledRight == null {
+            return null
+        }
+        ir.add(IR.Statement.STORE(compiledRight, result))
+        ir.add(IR.Statement.BRANCH(merge))
+        ir.setCurrentBlock(merge)
+        def load := ir.add(IR.Statement.LOAD(result))
+        return IR.Value.REF(load, Type.Bit())
+    }
+
     method compileBinary(position:Position, left:ASTNode, op:Token.Kind, right:ASTNode,
             type:TypeContext):IR.Value? {
         def folded := fold(left, op, right)
@@ -3895,21 +3949,29 @@ class Compiler {
                             "ambiguous call: \{matches.first} on \{left}, \{right} with expected " +
                                     "\{type} at \{position}"
                     def args := Array<ASTNode>() -- FIXME literal
-                    if matches.first[0].value.annotations.isClass() {
+                    def m := matches.first[0].value
+                    if m.annotations.isClass() {
                         args.add(left)
                         args.add(right)
-                        return call(position, IR.Value.METHOD(null, matches.first[0].value), args,
+                        return call(position, IR.Value.METHOD(null, m), args,
                                 type)
                     }
-                    def found := findType(possibleTypes(left), matches.first[0].value.owner)
+                    if m.owner.name = "panda.core.Bit" {
+                        if m.name = "&" {
+                            return compileAnd(position, left, right, type)
+                        }
+                        if m.name = "|" {
+                            return compileOr(position, left, right, type)
+                        }
+                    }
+                    def found := findType(possibleTypes(left), m.owner)
                     assert found != null
                     def target := compileExpression(left, TypeContext.TYPE(found))
                     if target == null {
                         return null
                     }
                     args.add(right)
-                    return call(position, IR.Value.METHOD(target, matches.first[0].value), args,
-                            type)
+                    return call(position, IR.Value.METHOD(target, m), args, type)
                 }
                 -- generate errors
                 def compiledLeft := compileExpression(left, TypeContext.NON_VOID)
