@@ -930,7 +930,7 @@ class UInt16 : Value, Key<UInt16>, Comparable<UInt16>, Formattable, ListView<Bit
     @pre(radix >= 2 & radix <= 36)
     function parse(str:String, radix:Int):UInt16? {
         def result := Panda.parse(str, radix)
-        if result = null {
+        if result == null {
             return null
         }
         return result.convert()->UInt16

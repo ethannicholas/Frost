@@ -142,7 +142,7 @@ class ClassDecl {
 
     function simpleName():String {
         def index := name.lastIndexOf(".")
-        if index = null {
+        if index == null {
             return name
         }
         return name[name.next(index)..]
@@ -167,7 +167,7 @@ class ClassDecl {
     function convert():String {
         def result := MutableString("\{annotations}class \{name}")
         var separator := " : "
-        if rawSuper != null {
+        if rawSuper !== null {
             result.append("\{separator}\{rawSuper}")
             separator := ", "
         }

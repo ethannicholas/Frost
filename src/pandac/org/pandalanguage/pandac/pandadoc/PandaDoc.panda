@@ -53,7 +53,7 @@ class PandaDoc {
         match t.typeKind {
             when Type.Kind.CLASS, Type.Kind.GENERIC_PARAMETER:
                 def index := t.name.lastIndexOf(".")
-                if index = null {
+                if index == null {
                     return t.name
                 }
                 return t.name[t.name.next(index)..]
@@ -108,7 +108,7 @@ class PandaDoc {
         out.write("simpleName", escape(simpleName(t)))
         if t.isClass() {
             def cl := compiler.getClass(t)
-            if cl != null {
+            if cl !== null {
                 if cl.isSpecialization() {
                     -- link to base
                     out.write("url", linkTo(compiler.getClass(t.subtypes[0])))
@@ -144,7 +144,7 @@ class PandaDoc {
         if a.isWeak() {
             out.write("annotation", "@weak")
         }
-        if a.expressions != null {
+        if a.expressions !== null {
             for expr in a.expressions {
                 match expr {
                     when Annotations.Expression.PRE(text, _):
@@ -193,7 +193,7 @@ class PandaDoc {
             }
             else {
                 def parsed := s.parse(/(?s)@(\w*)\s*(.*)/)
-                if parsed != null {
+                if parsed !== null {
                 result.add(Pair<String, String>(parsed[0], parsed[1])) }
             }
         }
@@ -207,7 +207,7 @@ class PandaDoc {
     method writeDoc(doccomment:String) {
         def summary:String
         def index := doccomment.indexOf(".")
-        if index != null {
+        if index !== null {
             summary := doccomment.substring(...index)
         }
         else {
@@ -260,7 +260,7 @@ class PandaDoc {
     }
 
     method writeDoc(f:FieldDecl) {
-        if f.doccomment != null {
+        if f.doccomment !== null {
             def split := splitDoc(f.doccomment)
             writeDoc(split[0].second)
             for tag in split[1..] {
@@ -281,7 +281,7 @@ class PandaDoc {
         }
         out.open("class")
         write(cl.type)
-        if cl.doccomment != null {
+        if cl.doccomment !== null {
             writeDoc(cl.doccomment)
         }
         out.close("class")
@@ -317,15 +317,15 @@ class PandaDoc {
     }
 
     method getDocComment(m:MethodDecl):String? {
-        if m.doccomment != null & m.doccomment.trim() = "@inherit" {
+        if m.doccomment !== null & m.doccomment.trim() = "@inherit" {
             def overridden := compiler.getOverriddenMethod(m)
-            if overridden = null {
+            if overridden == null {
                 compiler.error(m.position, "method specifies '@inherit', but no matching method " +
                         "found among its ancestors")
                 return null
             }
             def result := getDocComment(overridden)
-            if result = null {
+            if result == null {
                 compiler.error(m.position, "method specifies '@inherit', but " +
                         "\{overridden.declaration()} does not have any documentation")
                 return null
@@ -337,7 +337,7 @@ class PandaDoc {
 
     function stripParagraph(s:String):String {
         def parsed := s.parse(/(?s)<p>(.*)<\/p>\s*/)
-        if parsed != null {
+        if parsed !== null {
             return parsed[0]
         }
         return s
@@ -345,7 +345,7 @@ class PandaDoc {
 
     method writeDoc(m:MethodDecl) {
         def c := getDocComment(m)
-        if c = null {
+        if c == null {
             return
         }
         def split := splitDoc(c)
@@ -354,7 +354,7 @@ class PandaDoc {
             match tag.first {
                 when "param":
                     def split := tag.second.parse(/(?s)(\S+)\s+(.+)/)
-                    if split = null {
+                    if split == null {
                         compiler.error(m.position, "invalid '@param' contents '\{tag.second}'")
                         continue
                     }
@@ -403,7 +403,7 @@ class PandaDoc {
             out.write("name", p.name)
             write(p.type)
             def desc := params[p.name]
-            if desc != null {
+            if desc !== null {
                 out.write("description", desc)
             }
             out.close("param")
@@ -412,7 +412,7 @@ class PandaDoc {
         if m.returnType != Type.Void() {
             out.open("return")
             write(m.returnType)
-            if returns != null {
+            if returns !== null {
                 out.write("description", returns)
             }
             out.close("return")
@@ -426,10 +426,10 @@ class PandaDoc {
         }
         out.open("ancestors")
         var ancestor := cl.rawSuper
-        while ancestor != null {
+        while ancestor !== null {
             write(ancestor)
             def ancestorClass := compiler.getClass(ancestor)
-            if ancestorClass = null {
+            if ancestorClass == null {
                 return
             }
             ancestor := ancestorClass.rawSuper
@@ -452,9 +452,9 @@ class PandaDoc {
     method writeInheritedFields(cl:ClassDecl) {
         def fields := Array<FieldDecl>()
         var ancestor := cl.rawSuper
-        while ancestor != null {
+        while ancestor !== null {
             def ancestorClass := compiler.getClass(ancestor)
-            if ancestorClass = null {
+            if ancestorClass == null {
                 return
             }
             for f in ancestorClass.fields {
@@ -482,12 +482,12 @@ class PandaDoc {
     method addInheritedMethods(t:Type, methods:Array<MethodDecl>,
             overridden:HashSet<String>) {
         def cl := compiler.getClass(t)
-        if cl = null {
+        if cl == null {
             return
         }
         for m in cl.methods {
             var base := compiler.getOverriddenMethod(m)
-            if base = null {
+            if base == null {
                 base := m
             }
             if m.methodKind != MethodDecl.Kind.INIT & visible(m) &
@@ -499,7 +499,7 @@ class PandaDoc {
                 overridden.add(base.signature())
             }
         }
-        if cl.rawSuper != null {
+        if cl.rawSuper !== null {
             addInheritedMethods(cl.rawSuper, methods, overridden)
         }
         for intf in cl.rawInterfaces {
@@ -527,7 +527,7 @@ class PandaDoc {
         def overridden := HashSet<String>()
         for m in cl.methods {
             def o := compiler.getOverriddenMethod(m)
-            if o != null {
+            if o !== null {
                 overridden.add(o.signature())
             }
             else {
@@ -550,7 +550,7 @@ class PandaDoc {
     }
 
     method writeDoc(cl:ClassDecl) {
-        if cl.doccomment != null {
+        if cl.doccomment !== null {
             def split := splitDoc(cl.doccomment)
             writeDoc(split[0].second)
             for tag in split[1..] {
@@ -575,9 +575,9 @@ class PandaDoc {
             }
             name += component
             var child := current.children[component]
-            if child = null {
+            if child == null {
                 def url:String
-                if compiler.getClass(name) != null {
+                if compiler.getClass(name) !== null {
                     url := name.replace(".", "/") + ".html"
                 }
                 else {
@@ -628,7 +628,7 @@ class PandaDoc {
                     compiler.resolve(cc)
                     out.open("case")
                     out.write("name", cc.name)
-                    if cc.doccomment != null {
+                    if cc.doccomment !== null {
                         writeDoc(cc.doccomment)
                     }
                     if cc.fields.count > 0 {
@@ -642,7 +642,7 @@ class PandaDoc {
                 }
         }
         var base := cl
-        while base.owner != null {
+        while base.owner !== null {
             base := base.owner
         }
         out.write("source", "../" * (cl.name.find(".").count() + 1) + "source/" +
@@ -670,13 +670,13 @@ class PandaDoc {
         out.open("contents")
         for c in node.children.values() {
             def cl := compiler.getClass(c.name)
-            if cl = null {
+            if cl == null {
                 writePackage(c)
             }
             else {
                 out.open("class")
                 write(cl.type)
-                if cl.doccomment != null {
+                if cl.doccomment !== null {
                     writeDoc(cl.doccomment)
                 }
                 out.close("class")
@@ -687,7 +687,7 @@ class PandaDoc {
     }
 
     method writePackages(node:TableOfContentsNode) {
-        if compiler.getClass(node.name) = null {
+        if compiler.getClass(node.name) == null {
             def dest := outDir.resolve(node.name.replace(".", "/")).resolve("index.xml")
             Console.printLine(dest)
             out := XMLWriter(dest.openOutputStream())

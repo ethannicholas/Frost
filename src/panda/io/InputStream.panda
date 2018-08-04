@@ -25,12 +25,12 @@ class InputStream {
 
         @override
         function get_done():Bit {
-            return _next = null
+            return _next == null
         }
 
         @override
         method next():String {
-            assert _next != null
+            assert _next !== null
             def result := _next
             readNext()
             return result
@@ -54,7 +54,7 @@ class InputStream {
     ================================================================================================
     method read():UInt16? {
         def result:Int16 := read()
-        if result != null {
+        if result !== null {
             return result.convert()->UInt16
         }
         return null
@@ -66,7 +66,7 @@ class InputStream {
     ================================================================================================
     method read():UInt32? {
         def result:Int32 := read()
-        if result != null {
+        if result !== null {
             return result.convert()->UInt32
         }
         return null
@@ -78,7 +78,7 @@ class InputStream {
     ================================================================================================
     method read():UInt64? {
         def result:Int64 := read()
-        if result != null {
+        if result !== null {
             return result.convert()->UInt64
         }
         return null
@@ -89,7 +89,7 @@ class InputStream {
     ================================================================================================
     method read():Int8? {
         def result:UInt8? := read()
-        if result != null {
+        if result !== null {
             return result.convert()->Int8
         }
         return null
@@ -101,11 +101,11 @@ class InputStream {
     ================================================================================================
     method read():Int16? {
         def a:UInt8? := read()
-        if a = null {
+        if a == null {
             return null
         }
         def b:UInt8? := read()
-        if b = null {
+        if b == null {
             return null
         }
         if byteOrder = ByteOrder.LITTLE_ENDIAN {
@@ -122,11 +122,11 @@ class InputStream {
     ================================================================================================
     method read():Int32? {
         def a:Int16? := read()
-        if a = null {
+        if a == null {
             return null
         }
         def b:Int16? := read()
-        if b = null {
+        if b == null {
             return null
         }
         if byteOrder = ByteOrder.LITTLE_ENDIAN {
@@ -143,11 +143,11 @@ class InputStream {
     ================================================================================================
     method read():Int64? {
         def a:Int32? := read()
-        if a = null {
+        if a == null {
             return null
         }
         def b:Int32? := read()
-        if b = null {
+        if b == null {
             return null
         }
         if byteOrder = ByteOrder.LITTLE_ENDIAN {
@@ -163,7 +163,7 @@ class InputStream {
     ================================================================================================
     method read():Char8? {
         def result:UInt8? := read()
-        if result != null {
+        if result !== null {
             return Char8(result)
         }
         return null
@@ -179,7 +179,7 @@ class InputStream {
         var i := 0
         while i < max {
             def next:UInt8? := read()
-            if next = null {
+            if next == null {
                 break
             }
             buffer[i] := next
@@ -232,7 +232,7 @@ class InputStream {
         def result := MutableString()
         loop {
             def c:Char8? := read()
-            if c = null {
+            if c == null {
                 if result._length = 0 {
                     return null
                 }

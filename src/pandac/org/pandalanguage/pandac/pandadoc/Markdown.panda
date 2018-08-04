@@ -57,7 +57,7 @@ class Protector {
 
     method encode(s:String):String {
         var result := encodeMap[s]
-        if result = null {
+        if result == null {
             result := randomToken()
             encodeMap[s] := result
             decodeMap[result] := s
@@ -181,7 +181,7 @@ class Markdown {
             var title:String?
             if groups.count > 3 {
                 title := groups[3]
-                if title = null {
+                if title == null {
                     title := ""
                 }
                 title := title.replace("\"", "&quot;")
@@ -341,7 +341,7 @@ class Markdown {
         for i in 0 .. paragraphs.count {
             def paragraph := paragraphs[i]
             def decoded := htmlProtector.decode(paragraph)
-            if decoded != null {
+            if decoded !== null {
                 paragraphs[i] := decoded
             }
             else {
@@ -569,7 +569,7 @@ class Markdown {
         def text := ed.convert().trim()
         parser.start(source, text)
         def file := parser.file()
-        if file != null & errorQueue.pendingMessages() = 0 {
+        if file !== null & errorQueue.pendingMessages() = 0 {
             ed[..] := prettyPrint(parser)
             return
         }
@@ -744,7 +744,7 @@ class Markdown {
 
     @class
     function isEmptyString(leadingLine:String?):Bit {
-        return leadingLine = null | leadingLine = ""
+        return leadingLine == null | leadingLine = ""
     }
 
     method doHeaders(markup:MutableString) {
@@ -887,13 +887,13 @@ class Markdown {
 
             -- imageDefinition is the same as linkDefinition
             def defn := linkDefinitions[id]
-            if defn != null {
+            if defn !== null {
                 var url := defn.url
                 url := url.replace(/\\*/, charProtector.encode("*"))
                 url := url.replace(/_/, charProtector.encode("_"))
                 def title := defn.title
                 var titleTag := ""
-                if title != null & title != "" {
+                if title !== null & title != "" {
                     title := title.replace(/\\*/, charProtector.encode("*"))
                     title := title.replace(/_/, charProtector.encode("_"))
                     titleTag := " alt=\"\{altText}\" title=\"\{title}\""
@@ -924,14 +924,14 @@ class Markdown {
             }
 
             def defn := linkDefinitions[id]
-            if defn != null {
+            if defn !== null {
                 var url := defn.url
                 -- protect emphasis (* and _) within urls
                 url := url.replace("\\*", charProtector.encode("*"))
                 url := url.replace("_", charProtector.encode("_"))
                 def title := defn.title
                 var titleTag := ""
-                if title != null & title != "" {
+                if title !== null & title != "" {
                     -- protect emphasis (* and _) within urls
                     title := title.replace("\\*", charProtector.encode("*"))
                     title := title.replace("_", charProtector.encode("_"))
@@ -965,9 +965,9 @@ class Markdown {
             var url := groups[3]
             def title := groups[6]
             -- protect emphasis (* and _) within urls
-            if linkResolver != null {
+            if linkResolver !== null {
                 def newURL := linkResolver(url)
-                if newURL = null {
+                if newURL == null {
                     Console.errorStream().printLine("error: unable to resolve link '\{url}'")
                     newURL := "(error)"
                 }
@@ -980,7 +980,7 @@ class Markdown {
             url := url.replace(/_/, charProtector.encode("_"))
             def result := MutableString()
             result.append("<a href=\"\{url}\"")
-            if title != null {
+            if title !== null {
                 -- protect emphasis (* and _) within urls
                 title := title.replace("\\*", charProtector.encode("*"))
                 title := title.replace("_", charProtector.encode("_"))
@@ -1010,14 +1010,14 @@ class Markdown {
             var id := linkText -- FIXME .toLowerCase()
             id := id.replace(/[ ]?\\n/, " ") -- change embedded newlines into spaces
             def defn := linkDefinitions[id]
-            if defn != null {
+            if defn !== null {
                 var url := defn.url
                 -- protect emphasis (* and _) within urls
                 url := url.replace("\\*", charProtector.encode("*"))
                 url := url.replace("_", charProtector.encode("_"))
                 var title := defn.title
                 var titleTag := ""
-                if title != null & title != "" {
+                if title !== null & title != "" {
                     -- protect emphasis (* and _) within urls
                     title := title.replace("\\*", charProtector.encode("*"))
                     title := title.replace("_", charProtector.encode("_"))
@@ -1026,9 +1026,9 @@ class Markdown {
                 replacementText := "<a href=\"\{url}\"\{titleTag}>\{linkText}</a>"
             }
             else {
-                if linkResolver != null {
+                if linkResolver !== null {
                     replacementText := linkResolver(linkText)
-                    if replacementText != null {
+                    if replacementText !== null {
                         def escaped := linkText.replace("&", "&amp;").replace("<", "&lt;")
                         replacementText := "<a href=\"\{replacementText}\"><code>\{escaped}</code></a>"
                     }

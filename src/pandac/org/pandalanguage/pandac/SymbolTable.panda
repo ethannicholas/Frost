@@ -30,7 +30,7 @@ class SymbolTable {
     method add(s:Symbol, name:String) {
         merged.remove(name)
         def old := symbols[name]
-        if old = null {
+        if old == null {
             symbols[name] := s
             return
         }
@@ -70,10 +70,10 @@ class SymbolTable {
 
     @private
     function merge(symbol:Symbol?, inherited:Symbol?):Symbol? {
-        if inherited = null {
+        if inherited == null {
             return symbol
         }
-        if symbol = null {
+        if symbol == null {
             return inherited
         }
         if symbol == inherited {
@@ -129,12 +129,12 @@ class SymbolTable {
 
     function [](name:String):Symbol? {
         var result := merged[name]
-        if result = null {
+        if result == null {
             result := symbols[name]
             for p in parents {
                 result := merge(result, p[name])
             }
-            if result != null {
+            if result !== null {
                 merged[name] := result
             }
         }

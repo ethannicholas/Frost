@@ -68,7 +68,7 @@ class HTMLProcessor {
         def parser := Parser(errors)
         parser.syntaxHighlighter := SyntaxHighlighter()
         parser.start(input, input.readFully())
-        if parser.file() = null {
+        if parser.file() == null {
             while errors.hasMessage() {
                 Console.printLine(errors.getMessage())
             }

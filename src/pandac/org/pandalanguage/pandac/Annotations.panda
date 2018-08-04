@@ -53,7 +53,7 @@ class Annotations {
 
     init(flags:Int, expressions:ListView<Expression>?) {
         self.flags := flags
-        if expressions != null {
+        if expressions !== null {
             self.expressions := Array<Expression>(expressions)
         }
         else {
@@ -169,7 +169,7 @@ class Annotations {
         if isDefault() {
             result.append("@default\n")
         }
-        if expressions != null {
+        if expressions !== null {
             for expr in expressions {
                 result.append("\{expr}\n")
             }

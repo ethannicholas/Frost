@@ -13,14 +13,14 @@ class Pair<A, B> {
     @override
     function convert():String {
         def firstString:String
-        if first != null {
+        if first !== null {
             firstString := first.convert()
         }
         else {
             firstString := "<null>"
         }
         def secondString:String
-        if second != null {
+        if second !== null {
             secondString := second.convert()
         }
         else {

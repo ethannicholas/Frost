@@ -683,7 +683,7 @@ class UInt64 : Value, Key<UInt64>, Comparable<UInt64>, Formattable, ListView<Bit
     @pre(radix >= 2 & radix <= 36)
     function parse(str:String, radix:Int):UInt64? {
         def result := Panda.parse(str, radix)
-        if result = null {
+        if result == null {
             return null
         }
         return result

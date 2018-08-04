@@ -47,7 +47,7 @@ class FieldDecl : Symbol {
         result.append(name)
         result.append(":")
         result.append(type)
-        if rawValue != null {
+        if rawValue !== null {
             result.append(" := ")
             result.append(rawValue)
         }

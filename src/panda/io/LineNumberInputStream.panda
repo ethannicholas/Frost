@@ -37,7 +37,7 @@ class LineNumberInputStream : InputStream {
     @override
     method read():UInt8? {
         def result:UInt8? := source.read()
-        if result = null {
+        if result == null {
             return null
         }
         match result {

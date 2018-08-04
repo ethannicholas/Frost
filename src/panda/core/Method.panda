@@ -40,7 +40,7 @@ class Method : Immutable {
 
     @override
     function convert():String {
-        if target != null {
+        if target !== null {
             return "Method<\{Panda.pointerConvert(pointer->Pointer<Object?>)}, \{target}>"
         }
         return "Method<\{Panda.pointerConvert(pointer->Pointer<Object?>)}>"

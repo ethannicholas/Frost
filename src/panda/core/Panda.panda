@@ -42,7 +42,7 @@ class Panda {
     method countAllocation(cl:Class) {
         def name := allocationName(cl)
         var old := allocations[name]
-        if old = null {
+        if old == null {
             old := 0
         }
         allocations[name] := old + 1
@@ -51,7 +51,7 @@ class Panda {
     method countDeallocation(cl:Class) {
         def name := allocationName(cl)
         var old := allocations[name]
-        if old = null {
+        if old == null {
             old := 0
         }
         allocations[name] := old - 1
@@ -82,7 +82,7 @@ class Panda {
 
     method countTrace(s:String) {
         var old := traces[s]
-        if old = null {
+        if old == null {
             old := 0
         }
         traces[s] := old + 1
@@ -139,7 +139,7 @@ class Panda {
         var index := str.start()
         while index != str.end() {
             def value := digit(str[index])
-            if value = null | value >= radix {
+            if value == null | value >= radix {
                 return null
             }
             result := result * radix + value

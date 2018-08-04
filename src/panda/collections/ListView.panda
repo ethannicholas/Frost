@@ -72,7 +72,7 @@ interface ListView<T> : CollectionView<T> {
     @default
     function [](r:Range<Int?>):ListView<T> {
         def start:Int
-        if r.min != null {
+        if r.min !== null {
             start := r.min
         }
         else {
@@ -80,7 +80,7 @@ interface ListView<T> : CollectionView<T> {
         }
 
         var end:Int
-        if r.max != null {
+        if r.max !== null {
             end := r.max
         }
         else {
@@ -103,7 +103,7 @@ interface ListView<T> : CollectionView<T> {
         def step := r.step
 
         def current:Int
-        if r.start != null {
+        if r.start !== null {
             current := r.start
         }
         else if step > 0 {
@@ -114,7 +114,7 @@ interface ListView<T> : CollectionView<T> {
         }
 
         def end:Int
-        if r.end != null {
+        if r.end !== null {
             end := r.end
         }
         else if step > 0 {
@@ -138,7 +138,7 @@ interface ListView<T> : CollectionView<T> {
                 current += step
             }
         }
-        if (r.inclusive | r.end = null) & current = end & end < count {
+        if (r.inclusive | r.end == null) & current = end & end < count {
             result.add(self[current])
         }
         return result

@@ -74,7 +74,7 @@ choice JSON {
                     index := path.next(index)
                 }
                 def parsed := path.substring(indexStart .. index).convert()->Int?
-                if parsed = null {
+                if parsed == null {
                     return null
                 }
                 return PathKey.INDEX(parsed, path.next(index))
@@ -102,13 +102,13 @@ choice JSON {
         var end := path.end()
         var current := self
         while index != end {
-            assert nextPathKey(path, index) != null, "invalid JSON path '\{path}'"
+            assert nextPathKey(path, index) !== null, "invalid JSON path '\{path}'"
             match nextPathKey(path, index) {
                 when PathKey.FIELD(field, next):
                     match current {
                         when OBJECT(fields):
                             current := fields[field]
-                            if current = null {
+                            if current == null {
                                 return null
                             }
                         otherwise:
@@ -133,7 +133,7 @@ choice JSON {
     ================================================================================================
     function getInt(path:String):Int64? {
         def result := get(path)
-        if result = null {
+        if result == null {
             return null
         }
         match result {
@@ -149,7 +149,7 @@ choice JSON {
     ================================================================================================
     function getReal(path:String):Real64? {
         def result := get(path)
-        if result = null {
+        if result == null {
             return null
         }
         match result {
@@ -165,7 +165,7 @@ choice JSON {
     ================================================================================================
     function getBit(path:String):Bit? {
         def result := get(path)
-        if result = null {
+        if result == null {
             return null
         }
         match result {
@@ -181,7 +181,7 @@ choice JSON {
     ================================================================================================
     function getString(path:String):String? {
         def result := get(path)
-        if result = null {
+        if result == null {
             return null
         }
         match result {
@@ -197,7 +197,7 @@ choice JSON {
     ================================================================================================
     function getArray(path:String):ListView<JSON>? {
         def result := get(path)
-        if result = null {
+        if result == null {
             return null
         }
         match result {
@@ -213,7 +213,7 @@ choice JSON {
     ================================================================================================
     function getObject(path:String):MapView<String, JSON>? {
         def result := get(path)
-        if result = null {
+        if result == null {
             return null
         }
         match result {

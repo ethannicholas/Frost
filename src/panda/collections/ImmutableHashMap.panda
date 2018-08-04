@@ -37,7 +37,7 @@ class ImmutableHashMap<K:Key<K>, V> : MapView<K, V> {
 
         init(map:ImmutableHashMap<K, V>) {
             self.map := map
-            while bucket < map.bucketCount & map.contents[bucket] = null {
+            while bucket < map.bucketCount & map.contents[bucket] == null {
                 bucket += 1
             }
             if bucket < map.bucketCount {
@@ -47,16 +47,16 @@ class ImmutableHashMap<K:Key<K>, V> : MapView<K, V> {
 
         @override
         function get_done():Bit {
-            return bucket = map.bucketCount & entry = null
+            return bucket = map.bucketCount & entry == null
         }
 
         @override
         method next():Entry<K, V> {
-            assert entry != null
+            assert entry !== null
             assert bucket < map.bucketCount
             def result := entry
             entry := entry.next
-            while entry = null {
+            while entry == null {
                 bucket += 1
                 if bucket = map.bucketCount {
                     break
@@ -136,7 +136,7 @@ class ImmutableHashMap<K:Key<K>, V> : MapView<K, V> {
     @override
     method cleanup() {
         for i in 0 .. bucketCount {
-            if contents[i] != null {
+            if contents[i] !== null {
                 Panda.unref(contents[i])
             }
         }
@@ -149,7 +149,7 @@ class ImmutableHashMap<K:Key<K>, V> : MapView<K, V> {
     @private
     function indexFor(key:K):Int {
         var h:Int
-        if key = null {
+        if key == null {
             h := 0
         }
         else {
@@ -171,10 +171,10 @@ class ImmutableHashMap<K:Key<K>, V> : MapView<K, V> {
         }
         def index := indexFor(key)
         var e := contents[index]
-        while e != null & e.key != key {
+        while e !== null & e.key != key {
             e := e.next
         }
-        if e != null {
+        if e !== null {
             return e.value
         }
         else {
@@ -188,10 +188,10 @@ class ImmutableHashMap<K:Key<K>, V> : MapView<K, V> {
         }
         def index := indexFor(key)
         var e := contents[index]
-        while e != null & e.key != key {
+        while e !== null & e.key != key {
             e := e.next
         }
-        return e != null
+        return e !== null
     }
 
     @override
@@ -222,16 +222,16 @@ class ImmutableHashMap<K:Key<K>, V> : MapView<K, V> {
         var separator := ""
         for i in 0 .. bucketCount {
             var entry := contents[i]
-            while entry != null {
+            while entry !== null {
                 result.append(separator)
-                if entry.key != null {
+                if entry.key !== null {
                     result.append(entry.key)
                 }
                 else {
                     result.append("null")
                 }
                 result.append(":")
-                if entry.value != null {
+                if entry.value !== null {
                     result.append(entry.value)
                 }
                 else {

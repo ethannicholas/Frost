@@ -12,6 +12,9 @@ codepoints 0 to 65535) may be used wherever a `Char16` is expected. That is, it 
 ====================================================================================================
 @final
 class Char16 : Value, Key<Char16>, Comparable<Char16> {
+    @private
+    def value:builtin_uint16
+
     init(value:UInt16) {
         self.value := value.value
     }
@@ -126,7 +129,4 @@ class Char16 : Value, Key<Char16>, Comparable<Char16> {
         data[2] := Char8(UInt8((value && 0b111111 || 0b10000000)->builtin_uint8))
         return String(data, 3)
     }
-
-    @private
-    def value:builtin_uint16
 }

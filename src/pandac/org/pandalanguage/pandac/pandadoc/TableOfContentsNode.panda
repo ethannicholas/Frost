@@ -66,9 +66,9 @@ class TableOfContentsNode {
 
     method write(apiRelativePath:String, out:XMLWriter) {
         out.open("entry")
-        if name != null {
+        if name !== null {
             var index := name.lastIndexOf(".")
-            if index != null {
+            if index !== null {
                 index := name.next(index)
             }
             else {

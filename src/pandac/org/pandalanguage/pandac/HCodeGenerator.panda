@@ -88,7 +88,7 @@ class HCodeGenerator : CodeGenerator {
             when Type.Kind.CLASS:
                 def name := "\{escapeName(t.name)}"
                 def cl := compiler.getClass(t)
-                assert cl != null
+                assert cl !== null
                 if !compiler.isValue(cl) {
                     if !imports.contains(name) {
                         importStream.printLine("typedef struct \{name} \{name};")
@@ -104,7 +104,7 @@ class HCodeGenerator : CodeGenerator {
                 return name
             when Type.Kind.NULLABLE:
                 def cl := compiler.getClass(t)
-                assert cl != null
+                assert cl !== null
                 if compiler.isValue(cl) {
                     return type(t.subtypes[0]) + "$nullable"
                 }
@@ -117,7 +117,7 @@ class HCodeGenerator : CodeGenerator {
                 if cl.isSpecialization() {
                     def name := "\{escapeName(t.name)}"
                     def cl := compiler.getClass(t)
-                    assert cl != null
+                    assert cl !== null
                     if !compiler.isValue(cl) {
                         if !imports.contains(name) {
                             importStream.printLine("typedef struct \{name} \{name};")

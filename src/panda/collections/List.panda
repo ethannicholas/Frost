@@ -27,12 +27,12 @@ interface List<T> : ListView<T>, ListWriter<T>, Collection<T> {
     @default
     method []:=(range:Range<Int?>, list:ListView<T>) {
         var min := range.min
-        if min = null {
+        if min == null {
             min := 0
         }
 
         var max := range.max
-        if max = null {
+        if max == null {
             max := count
         }
 

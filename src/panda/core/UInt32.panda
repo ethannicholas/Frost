@@ -885,7 +885,7 @@ class UInt32 : Value, Key<UInt32>, Comparable<UInt32>, Formattable, ListView<Bit
     @pre(radix >= 2 & radix <= 36)
     function parse(str:String, radix:Int):UInt32? {
         def result := Panda.parse(str, radix)
-        if result = null {
+        if result == null {
             return null
         }
         return result.convert()->UInt32

@@ -60,7 +60,7 @@ class Scanner {
                     parameters.add(convertType(p))
                 }
                 def returnType:Type
-                if rawReturnType != null {
+                if rawReturnType !== null {
                     returnType := convertType(rawReturnType)
                 }
                 else {
@@ -83,7 +83,7 @@ class Scanner {
         var flags := 0
         var expressions:Array<Annotations.Expression>? := null
         method checkExpression(scanner:Scanner, position:Position, text:String, expr:ASTNode?):Bit {
-            if expr != null {
+            if expr !== null {
                 return true
             }
             scanner.error(position, "annotation '\{text}' requires an expression")
@@ -109,7 +109,7 @@ class Scanner {
                         when "@unsafeImmutable": flags := add(p, flags, Annotations.Flag.UNSAFE_IMMUTABLE)
                         when "@default":         flags := add(p, flags, Annotations.Flag.DEFAULT)
                         when "@pre":
-                            if expressions = null {
+                            if expressions == null {
                                 expressions := Array<Annotations.Expression>()
                             }
                             if checkExpression(self, p, text, expr) {
@@ -117,7 +117,7 @@ class Scanner {
                                 expr := null
                             }
                         when "@preOr":
-                            if expressions = null {
+                            if expressions == null {
                                 expressions := Array<Annotations.Expression>()
                             }
                             if checkExpression(self, p, text, expr) {
@@ -125,7 +125,7 @@ class Scanner {
                                 expr := null
                             }
                         when "@post":
-                            if expressions = null {
+                            if expressions == null {
                                 expressions := Array<Annotations.Expression>()
                             }
                             if checkExpression(self, p, text, expr) {
@@ -133,7 +133,7 @@ class Scanner {
                                 expr := null
                             }
                         when "@postAnd":
-                            if expressions = null {
+                            if expressions == null {
                                 expressions := Array<Annotations.Expression>()
                             }
                             if checkExpression(self, p, text, expr) {
@@ -141,7 +141,7 @@ class Scanner {
                                 expr := null
                             }
                         when "@priority":
-                            if expressions = null {
+                            if expressions == null {
                                 expressions := Array<Annotations.Expression>()
                             }
                             if checkExpression(self, p, text, expr) {
@@ -151,7 +151,7 @@ class Scanner {
                         otherwise:
                             error(p, "unrecognized annotation '\{text}'")
                     }
-                    if expr != null {
+                    if expr !== null {
                         error(p, "'\{text}' annotation does not accept parameters")
                     }
                 otherwise:
@@ -165,7 +165,7 @@ class Scanner {
                 rawAnnotations:ImmutableArray<ASTNode>, varDecl:ASTNode) {
         def doccomment:String?
         -- FIXME should be able to match against null too
-        if rawDoccomment = null {
+        if rawDoccomment == null {
             doccomment := null
         }
         else {
@@ -207,7 +207,7 @@ class Scanner {
                                     assert false
                             }
                             def value:ASTNode?
-                            if rawValue = null & annotations.isWeak() &
+                            if rawValue == null & annotations.isWeak() &
                                     type.typeKind = Type.Kind.NULLABLE {
                                 value := ASTNode.NULL(declPosition)
                             }
@@ -259,7 +259,7 @@ class Scanner {
             when ASTNode.CONTINUE:
                 return 1
             when ASTNode.DECLARATION(_, _, value):
-                if value = null {
+                if value == null {
                     return 0
                 }
                 return complexity(value)
@@ -286,7 +286,7 @@ class Scanner {
                 for s in ifTrue {
                     result += complexity(s)
                 }
-                if ifFalse != null {
+                if ifFalse !== null {
                     result += complexity(ifFalse)
                 }
                 return result
@@ -303,7 +303,7 @@ class Scanner {
                 for w in whens {
                     result += complexity(w)
                 }
-                if other != null {
+                if other !== null {
                     for s in other {
                         result += complexity(s)
                     }
@@ -324,7 +324,7 @@ class Scanner {
             when ASTNode.REGEX:
                 return 1
             when ASTNode.RETURN(_, value):
-                if value = null {
+                if value == null {
                     return 0
                 }
                 return complexity(value)
@@ -387,7 +387,7 @@ class Scanner {
             rawReturnType:ASTNode?, statements:ImmutableArray<ASTNode>?):MethodDecl? {
         def doccomment:String?
         -- FIXME should be able to match against null too
-        if rawDoccomment = null {
+        if rawDoccomment == null {
             doccomment := null
         }
         else {
@@ -403,7 +403,7 @@ class Scanner {
             annotations.flags ||= Annotations.Flag.FINAL
         }
         def generics:Array<ClassDecl.GenericParameter>?
-        if rawGenerics != null {
+        if rawGenerics !== null {
             generics := Array<ClassDecl.GenericParameter>()
             def fullName := "\{owner.name}.\{name}"
             for p in rawGenerics {
@@ -436,7 +436,7 @@ class Scanner {
             }
         }
         def returnType:Type
-        if rawReturnType != null{
+        if rawReturnType !== null{
             returnType := convertType(rawReturnType)
         }
         else {
@@ -445,10 +445,10 @@ class Scanner {
         if kind = MethodDecl.Kind.FUNCTION & returnType = Type.Void() {
             error(position, "functions must have a return type")
         }
-        if statements != null & shouldInline(annotations, statements) {
+        if statements !== null & shouldInline(annotations, statements) {
             annotations.flags ||= Annotations.Flag.INLINE
         }
-        if statements = null & owner.classKind = ClassDecl.Kind.INTERFACE {
+        if statements == null & owner.classKind = ClassDecl.Kind.INTERFACE {
             if annotations.flags && Annotations.Flag.ABSTRACT != 0 {
                 error(position,  "interface methods are abstract by default and may not have an " +
                         "explicit '@abstract' annotation")
@@ -467,7 +467,7 @@ class Scanner {
                     returnType, statements):
                 def m := scanMethod(cl, position, dc, annotations, kind, name, generics, parameters,
                         returnType, statements)
-                if m != null {
+                if m !== null {
                     cl.symbolTable.add(m)
                     cl.methods.add(m)
                 }
@@ -475,7 +475,7 @@ class Scanner {
                     members):
                 def inner := scanClass(cl.source, cl.aliases, cl.name, position, dc, annotations,
                         kind, name, generics, supertypes, members)
-                if inner != null {
+                if inner !== null {
                     inner.owner := cl
                     cl.classes.add(inner)
                     assert inner.name.startsWith(cl.name + ".")
@@ -494,7 +494,7 @@ class Scanner {
             rawFields:ImmutableArray<ASTNode>?) {
         def doccomment:String?
         -- FIXME should be able to match against null too
-        if rawDoccomment = null {
+        if rawDoccomment == null {
             doccomment := null
         }
         else {
@@ -528,7 +528,7 @@ class Scanner {
         }
         def doccomment:String?
         -- FIXME should be able to match against null too
-        if rawDoccomment = null {
+        if rawDoccomment == null {
             doccomment := null
         }
         else {
@@ -541,7 +541,7 @@ class Scanner {
         }
         def annotations := convertAnnotations(rawAnnotations)
         def parameters := Array<ClassDecl.GenericParameter>()
-        if generics != null {
+        if generics !== null {
             for p in generics {
                 def name:String
                 def bound:Type
@@ -559,7 +559,7 @@ class Scanner {
             }
         }
         def supertypes := Array<Type>()
-        if rawSupertypes != null {
+        if rawSupertypes !== null {
             if kind = ClassDecl.Kind.CHOICE {
                 error(position, "choices may not specify supertypes")
             }
@@ -660,7 +660,7 @@ class Scanner {
 
     method createBareCodeClass(source:File, aliases:MapView<String, String>, contextName:String,
             classes:List<ClassDecl>) {
-        if bareCodeClass = null {
+        if bareCodeClass == null {
             def fullName:String
             if contextName != "" {
                 fullName := "\{contextName}.BareCode"
@@ -687,7 +687,7 @@ class Scanner {
         }
     }
 
-    @pre(source != null)
+    @pre(source !== null)
     method error(position:Position, msg:String) {
         compiler.error(source, position, msg)
     }
@@ -706,7 +706,7 @@ class Scanner {
                         when ASTNode.USES(_, fullName):
                             def idx := fullName.lastIndexOf(".")
                             def alias:String
-                            if idx != null {
+                            if idx !== null {
                                 alias := fullName[fullName.next(idx)..]
                             }
                             else {
@@ -717,7 +717,7 @@ class Scanner {
                                 supertypes, members):
                             def cl := scanClass(source, aliases, currentPackage, position, dc,
                                     annotations, kind, name, generics, supertypes, members)
-                            if cl != null {
+                            if cl !== null {
                                 addClass(cl, result)
                             }
                         when ASTNode.METHOD(position, dc, annotations, kind, rawName, generics,
@@ -750,7 +750,7 @@ class Scanner {
                                         ASTNode.DOT(position, bareConstruct, name),
                                         mainArguments.finish()))
                                 def returnType:Type
-                                if rawReturnType != null {
+                                if rawReturnType !== null {
                                     returnType := convertType(rawReturnType)
                                 }
                                 else {

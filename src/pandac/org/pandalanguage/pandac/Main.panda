@@ -182,7 +182,7 @@ class Main {
                     Console.inputStream().sendTo(path.openOutputStream())
                     sources.add(path)
                 when "-o":
-                    if outFile != null {
+                    if outFile !== null {
                         err.printLine("'-o' may only be specified once")
                         System.exit(1)
                     }
@@ -203,7 +203,7 @@ class Main {
                         System.exit(1)
                     }
                 when "-f":
-                    if format != null {
+                    if format !== null {
                         err.printLine("'-f' may only be specified once")
                         System.exit(1)
                     }
@@ -241,10 +241,10 @@ class Main {
             err.printLine("no input files specified")
             System.exit(1)
         }
-        if format = null {
+        if format == null {
             format := Format.EXECUTABLE
         }
-        if outFile = null {
+        if outFile == null {
             if sources.count = 1 {
                 def extension:String
                 match format {
@@ -269,13 +269,13 @@ class Main {
             }
         }
         if format = Format.HTML {
-            if root = null {
+            if root == null {
                 root := "."
             }
             HTMLProcessor().process(sources[0], outFile, root)
             return
         }
-        if root != null {
+        if root !== null {
             err.printLine("--root requires 'html' output format")
             System.exit(1)
         }

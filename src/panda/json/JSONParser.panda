@@ -32,7 +32,7 @@ class JSONParser {
 
     @private
     method next():Token {
-        if pushbackToken != null {
+        if pushbackToken !== null {
             def result := pushbackToken
             pushbackToken := null
             return result
@@ -46,7 +46,7 @@ class JSONParser {
 
     @private
     method pushback(token:Token) {
-        assert pushbackToken = null
+        assert pushbackToken == null
         pushbackToken := token
     }
 
@@ -74,7 +74,7 @@ class JSONParser {
 
     @private
     method array():JSON {
-        if checkNext(Token.Kind.RBRACKET) != null {
+        if checkNext(Token.Kind.RBRACKET) !== null {
             return JSON.ARRAY(ImmutableArray<JSON>()) -- FIXME literal
         }
         def result := Array<JSON>()
@@ -93,7 +93,7 @@ class JSONParser {
 
     @private
     method object():JSON {
-        if checkNext(Token.Kind.RBRACE) != null {
+        if checkNext(Token.Kind.RBRACE) !== null {
             return JSON.OBJECT(ImmutableHashMap<String, JSON>()) -- FIXME literal
         }
         def result := HashMap<String, JSON>()

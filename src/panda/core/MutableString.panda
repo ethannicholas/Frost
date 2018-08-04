@@ -287,7 +287,7 @@ class MutableString {
     Returns `true` if this string contains at least one occurrence of the given substring.
     ================================================================================================
     function contains(s:String):Bit {
-        return indexOf(s) != null
+        return indexOf(s) !== null
     }
 
     function startsWith(other:String):Bit {
@@ -531,7 +531,7 @@ class MutableString {
     -- FIXME @self
     method []:=(r:Range<Index?>, s:String) {
         def min:Index
-        if r.min != null {
+        if r.min !== null {
             min := r.min
         }
         else {
@@ -539,7 +539,7 @@ class MutableString {
         }
         var inclusive := r.inclusive
         def max:Index
-        if r.max != null {
+        if r.max !== null {
             max := r.max
         }
         else {
@@ -552,7 +552,7 @@ class MutableString {
     -- FIXME @self
     method []:=(r:Range<Int?>, s:String) {
         def min:Index
-        if r.min != null {
+        if r.min !== null {
             min := offset(start(), r.min)
         }
         else {
@@ -560,7 +560,7 @@ class MutableString {
         }
         var inclusive := r.inclusive
         def max:Index
-        if r.max != null {
+        if r.max !== null {
             max := offset(start(), r.max)
         }
         else {
@@ -575,7 +575,7 @@ class MutableString {
         var index := start()
         loop {
             def next := indexOf(search, index)
-            if next = null {
+            if next == null {
                 break
             }
             self[next .. Index(next.value + search.byteLength())] := replacement

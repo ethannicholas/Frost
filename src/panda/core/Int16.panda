@@ -944,14 +944,14 @@ class Int16 : Value, Key<Int16>, Comparable<Int16>, Formattable, ListView<Bit> {
     function parse(str:String, radix:Int):Int16? {
         if str.startsWith("-") {
             def abs := Panda.parse(str[1..], radix)
-            if abs = null {
+            if abs == null {
                 return null
             }
             return -(abs.convert()->Int16)
         }
         else {
             def result := Panda.parse(str, radix)
-            if result = null {
+            if result == null {
                 return null
             }
             return result.convert()->Int16

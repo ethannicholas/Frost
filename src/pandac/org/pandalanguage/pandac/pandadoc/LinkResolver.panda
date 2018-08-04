@@ -43,7 +43,7 @@ class LinkResolver {
 
     function linkTo(cl:ClassDecl):String {
         def base:String
-        if context != null {
+        if context !== null {
             base := "../" * context.name.find(".").count()
         }
         else {
@@ -92,22 +92,22 @@ class LinkResolver {
             return link
         }
         var cl := compiler.tryResolveClass(link)
-        if cl != null {
+        if cl !== null {
             return linkTo(cl)
         }
-        if context != null & link.matches(/\w+/) {
+        if context !== null & link.matches(/\w+/) {
             def s := compiler.getSymbolTable(context)[link]
-            if s != null {
+            if s !== null {
                 return linkTo(s)
             }
         }
         if link.matches(/\w+(?:\.\w+)*/) {
             def index := link.lastIndexOf(".")
-            if index != null {
+            if index !== null {
                 cl := compiler.tryResolveClass(link[..index])
-                if cl != null {
+                if cl !== null {
                     def s := compiler.getSymbolTable(cl)[link[link.next(index)..]]
-                    if s = null {
+                    if s == null {
                         return null
                     }
                     return linkTo(s)
@@ -115,23 +115,23 @@ class LinkResolver {
             }
         }
         def parsed := link.parse(/(\w+(?:\.\w+)*)\((.*)\)/)
-        if parsed != null {
+        if parsed !== null {
             def parameters := Array<Type>()
             if parsed[1].trim() != "" {
                 compiler.parser.start(File(parsed[1]), parsed[1])
                 loop {
                     def type := compiler.parser.type()
-                    if type = null {
+                    if type == null {
                         Console.printLine("could not parse: \{parsed[1]}")
                         return null
                     }
                     def converted := compiler.scanner.convertType(type)
                     def resolved := compiler.resolve(converted)
-                    if resolved = null {
+                    if resolved == null {
                         return null
                     }
                     parameters.add(resolved)
-                    if compiler.parser.checkNext(Token.Kind.COMMA) = null {
+                    if compiler.parser.checkNext(Token.Kind.COMMA) == null {
                         break
                     }
                 }
@@ -139,7 +139,7 @@ class LinkResolver {
             def name := parsed[0]
             def index := name.lastIndexOf(".")
             def symbolName:String
-            if index != null {
+            if index !== null {
                 cl := compiler.tryResolveClass(name[..index])
                 symbolName := name[name.next(index)..]
             }
@@ -147,9 +147,9 @@ class LinkResolver {
                 cl := context
                 symbolName := name
             }
-            if cl != null {
+            if cl !== null {
                 def s := compiler.getSymbolTable(cl)[symbolName]
-                if s = null {
+                if s == null {
                     return null
                 }
                 match s.kind {

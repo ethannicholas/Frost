@@ -116,7 +116,7 @@ class File : Immutable, Key<File> {
     ================================================================================================
     function parent():File? {
         def result := normalize(resolve("..").path)
-        if result = null {
+        if result == null {
             return null
         }
         return File(result)
@@ -130,7 +130,7 @@ class File : Immutable, Key<File> {
     ================================================================================================
     function name():String {
         def index := path.lastIndexOf("/")
-        if index != null {
+        if index !== null {
             return path[path.next(index)..]
         }
         else {
@@ -148,7 +148,7 @@ class File : Immutable, Key<File> {
     function simpleName():String {
         def result := name()
         def index := result.lastIndexOf(".")
-        if index = null {
+        if index == null {
             return result
         }
         return result[..index]
@@ -210,7 +210,7 @@ class File : Immutable, Key<File> {
     ================================================================================================
     method createDirectories() {
         def p := parent()
-        if p != null & !p.exists() {
+        if p !== null & !p.exists() {
             p.createDirectories()
         }
         createDirectory()

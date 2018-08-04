@@ -122,7 +122,7 @@ class SpecializedArray<T> : List<T> {
     ================================================================================================
     function [](r:Range<Int?>):SpecializedArray<T> {
         def start:Int
-        if r.min != null {
+        if r.min !== null {
             start := r.min
         }
         else {
@@ -130,7 +130,7 @@ class SpecializedArray<T> : List<T> {
         }
 
         var end:Int
-        if r.max != null {
+        if r.max !== null {
             end := r.max
         }
         else {
@@ -152,7 +152,7 @@ class SpecializedArray<T> : List<T> {
         def step := r.step
 
         def current:Int
-        if r.start != null {
+        if r.start !== null {
             current := r.start
         }
         else if step > 0 {
@@ -163,7 +163,7 @@ class SpecializedArray<T> : List<T> {
         }
 
         def end:Int
-        if r.end != null {
+        if r.end !== null {
             end := r.end
         }
         else if step > 0 {
@@ -187,7 +187,7 @@ class SpecializedArray<T> : List<T> {
                 current -= step
             }
         }
-        if (r.inclusive | r.end = null) & current = end & end < _count {
+        if (r.inclusive | r.end == null) & current = end & end < _count {
             result.add(self[current])
         }
         return result
@@ -258,7 +258,7 @@ class SpecializedArray<T> : List<T> {
         for v in self {
             result.append(separator)
             separator := ", "
-            if v != null {
+            if v !== null {
                 result.append(v)
             }
             else {

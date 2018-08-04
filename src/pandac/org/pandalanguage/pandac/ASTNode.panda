@@ -192,12 +192,12 @@ choice ASTNode {
     function convert():String {
         match self {
             when ANNOTATION(_, name, _, expr):
-                if expr != null {
+                if expr !== null {
                     return "\{name}(\{expr})"
                 }
                 return name
             when ASSERT(_, test, msg):
-                if msg = null {
+                if msg == null {
                     return "assert \{test}"
                 }
                 return "assert \{test}, \{msg}"
@@ -217,7 +217,7 @@ choice ASTNode {
                 result.append("}")
                 return result.finish()
             when BREAK(_, label):
-                if label != null {
+                if label !== null {
                     return "break \{label}"
                 }
                 return "break"
@@ -225,7 +225,7 @@ choice ASTNode {
                 return "\{target}(\{args.join()})"
             when CHOICE_CASE(_, dc, name, fields):
                 def result := MutableString()
-                if dc != null {
+                if dc !== null {
                     result.append(dc + "\n")
                 }
                 result.append("\{name}(\{fields.join()})")
@@ -234,7 +234,7 @@ choice ASTNode {
                 return "\{base}.\{ce}(\{index})"
             when CLASS(_, dc, annotations, kind, name, generics, supertypes, members):
                 def result := MutableString()
-                if dc != null {
+                if dc !== null {
                     result.append(dc + "\n")
                 }
                 for a in annotations {
@@ -246,10 +246,10 @@ choice ASTNode {
                     when ClassDecl.Kind.CHOICE:    result.append("choice ")
                 }
                 result.append(name)
-                if generics != null {
+                if generics !== null {
                     result.append("<\{generics.join()}>")
                 }
-                if supertypes != null {
+                if supertypes !== null {
                     result.append(": \{supertypes.join()}")
                 }
                 result.append(" {\n")
@@ -259,18 +259,18 @@ choice ASTNode {
                 result.append("}")
                 return result.finish()
             when CONTINUE(_, label):
-                if label != null {
+                if label !== null {
                     return "continue \{label}"
                 }
                 return "continue"
             when DECLARATION(_, target, value):
-                if value != null {
+                if value !== null {
                     return "\{target} := \{value}"
                 }
                 return target.convert()
             when DO(_, label, statements, test):
                 def result := MutableString()
-                if label != null {
+                if label !== null {
                     result.append("\{label}:")
                 }
                 result.append("do {\n")
@@ -283,7 +283,7 @@ choice ASTNode {
                 return "\{base}.\{field}"
             when FIELD(_, dc, annotations, decl):
                 def result := MutableString()
-                if dc != null {
+                if dc !== null {
                     result.append(dc + "\n")
                 }
                 for a in annotations {
@@ -299,7 +299,7 @@ choice ASTNode {
                 return result.finish()
             when FOR(_, label, target, list, statements):
                 def result := MutableString()
-                if label != null {
+                if label !== null {
                     result.append(label + ": ")
                 }
                 result.append("for \{target} in \{list} {\n")
@@ -318,7 +318,7 @@ choice ASTNode {
                     result.append(s + "\n")
                 }
                 result.append("}")
-                if ifFalse != null {
+                if ifFalse !== null {
                     result.append("\nelse \{ifFalse}")
                 }
                 return result.finish()
@@ -328,7 +328,7 @@ choice ASTNode {
                 return value.convert()
             when LOOP(_, label, statements):
                 def result := MutableString()
-                if label != null {
+                if label !== null {
                     result.append("\{label}:")
                 }
                 result.append("loop {\n")
@@ -342,14 +342,14 @@ choice ASTNode {
                 for w in whens {
                     result.append(w + "\n")
                 }
-                if other != null {
+                if other !== null {
                     result.append(other + "\n")
                 }
                 result.append("}")
                 return result.finish()
             when METHOD(_, dc, annotations, kind, name, generics, parameters, returnType, statements):
                 def result := MutableString()
-                if dc != null {
+                if dc !== null {
                     result.append(dc + "\n")
                 }
                 for a in annotations {
@@ -361,14 +361,14 @@ choice ASTNode {
                     when MethodDecl.Kind.INIT:     -- do nothing
                 }
                 result.append(name)
-                if generics != null {
+                if generics !== null {
                     result.append("<\{generics.join()}>")
                 }
                 result.append("(\{parameters.join()})")
-                if returnType != null {
+                if returnType !== null {
                     result.append(":\{returnType}")
                 }
-                if statements != null {
+                if statements !== null {
                     result.append(" {\n")
                     for s in statements {
                         result.append(s + "\n")
@@ -389,7 +389,7 @@ choice ASTNode {
                         yield := "=&>*"
                 }
                 def partial := "(\{paramTypes.join()})\{yield}"
-                if returnType != null {
+                if returnType !== null {
                     return "\{partial}(\{returnType})"
                 }
                 return "\{partial}()"
@@ -405,7 +405,7 @@ choice ASTNode {
                 return "\{kind}\{base}"
             when RANGE(_, start, inclusive, end, step):
                 def result := MutableString()
-                if start != null {
+                if start !== null {
                     result.append(start)
                 }
                 if inclusive {
@@ -414,10 +414,10 @@ choice ASTNode {
                 else {
                     result.append("..")
                 }
-                if end != null {
+                if end !== null {
                     result.append(end)
                 }
-                if step != null {
+                if step !== null {
                     result.append(" by " + step)
                 }
                 return result.finish()
@@ -426,7 +426,7 @@ choice ASTNode {
             when REGEX(_, src):
                 return "/\{src}/"
             when RETURN(_, value):
-                if value != null {
+                if value !== null {
                     return "return \{value}"
                 }
                 return "return"
@@ -443,7 +443,7 @@ choice ASTNode {
             when TYPE(_, name):
                 return name
             when TYPED_IDENTIFIER(_, name, type):
-                if type != null {
+                if type !== null {
                     return "\{name}:\{type}"
                 }
                 return name
@@ -476,7 +476,7 @@ choice ASTNode {
                 return result.finish()
             when WHILE(_, label, test, statements):
                 def result := MutableString()
-                if label != null {
+                if label !== null {
                     result.append("\{label}:")
                 }
                 result.append("while \{test} {\n")

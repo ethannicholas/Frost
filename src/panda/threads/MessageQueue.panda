@@ -21,7 +21,7 @@ class MessageQueue<T:Immutable> : Immutable {
 
         @override
         function convert():String {
-            if next != null {
+            if next !== null {
                 return "Message(\{payload}, \{next})"
             }
             return "Message(\{payload})"
@@ -50,8 +50,8 @@ class MessageQueue<T:Immutable> : Immutable {
     ================================================================================================
     method post(data:T) {
         def scope := ScopedLock(lock)
-        if tail != null {
-            assert head != null
+        if tail !== null {
+            assert head !== null
             tail.next := Message<T>(data)
             tail := tail.next
         }
@@ -97,12 +97,12 @@ class MessageQueue<T:Immutable> : Immutable {
     ================================================================================================
     method getMessage():T {
         def scope := ScopedLock(lock)
-        while head = null {
+        while head == null {
             notifier.wait()
         }
         def result := head.payload
         head := head.next
-        if head = null {
+        if head == null {
             tail := null
         }
         count -= 1

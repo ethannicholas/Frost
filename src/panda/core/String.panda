@@ -227,7 +227,7 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
 
         @override
         function get_done():Bit {
-            return nextMatch = null
+            return nextMatch == null
         }
 
         @override
@@ -406,7 +406,7 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
     @override
     @private
     method cleanup() {
-        if owner = null {
+        if owner == null {
             data.destroy()
         }
     }
@@ -643,7 +643,7 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
     ================================================================================================
     function substring(r:Range<Index?>):String {
         def min:Index
-        if r.min != null {
+        if r.min !== null {
             min := r.min
         }
         else {
@@ -652,7 +652,7 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
 
         var inclusive := r.inclusive
         def max:Index
-        if r.max != null {
+        if r.max !== null {
             max := r.max
         }
         else {
@@ -705,7 +705,7 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
             return ""
         }
         def min:Index
-        if r.min != null {
+        if r.min !== null {
             min := r.min
         }
         else {
@@ -714,7 +714,7 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
 
         var inclusive := r.inclusive
         def max:Index
-        if r.max != null {
+        if r.max !== null {
             max := r.max
         }
         else {
@@ -743,7 +743,7 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
         def step := r.step
 
         def current:Int
-        if r.start != null {
+        if r.start !== null {
             current := r.start.value
         }
         else if step > 0 {
@@ -754,7 +754,7 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
         }
 
         def end:Int
-        if r.end != null {
+        if r.end !== null {
             end := r.end.value
         }
         else if step > 0 {
@@ -820,7 +820,7 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
                 }
             }
         }
-        if (r.inclusive | r.end = null) & current = end & end < _length {
+        if (r.inclusive | r.end == null) & current = end & end < _length {
             def c := data[current]
             result.append(c)
             current += 1
@@ -846,14 +846,14 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
     ================================================================================================
     function [](r:Range<Int?>):String {
         def start:Index?
-        if r.min != null {
+        if r.min !== null {
             start := offset(self.start(), r.min)
         }
         else {
             start := null
         }
         def end:Index?
-        if r.max != null {
+        if r.max !== null {
             end := offset(self.start(), r.max)
         }
         else {
@@ -869,14 +869,14 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
     ================================================================================================
     function [](r:SteppedRange<Int?, Int>):String {
         def start:Index?
-        if r.start != null {
+        if r.start !== null {
             start := offset(self.start(), r.start)
         }
         else {
             start := null
         }
         def end:Index?
-        if r.end != null {
+        if r.end !== null {
             end := offset(self.start(), r.end)
         }
         else {
@@ -901,7 +901,7 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
     Returns `true` if this string contains at least one occurrence of the given substring.
     ================================================================================================
     function contains(s:String):Bit {
-        return indexOf(s) != null
+        return indexOf(s) !== null
     }
 
     ================================================================================================
@@ -1032,7 +1032,7 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
         var index := start()
         loop {
             def nextIndex := indexOf(search, index)
-            if nextIndex = null {
+            if nextIndex == null {
                 result.append(self[index..])
                 break
             }
@@ -1335,7 +1335,7 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
             else {
                 nextIndex := indexOf(delimiter, index)
             }
-            if nextIndex = null | result.count = maxResults - 1 {
+            if nextIndex == null | result.count = maxResults - 1 {
                 result.add(self[index..])
                 break
             }

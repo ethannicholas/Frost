@@ -95,7 +95,7 @@ class CCodeGenerator : CodeGenerator {
     method cType(t:Type):String {
         if t.isClass() {
             def cl := compiler.getClass(t)
-            assert cl != null
+            assert cl !== null
             writeImport(cl)
         }
         if t.typeKind = Type.Kind.METHOD | t.typeKind = Type.Kind.FUNCTION {
@@ -118,7 +118,7 @@ class CCodeGenerator : CodeGenerator {
         code.append(result)
         code.append(")(")
         var separator := ""
-        if selfType != null {
+        if selfType !== null {
             code.append(cType(selfType))
             separator := ", "
         }
@@ -230,7 +230,7 @@ class CCodeGenerator : CodeGenerator {
 
     method getChoiceDataSize(cl:ClassDecl):Int {
         var result := choiceDataSizes[cl]
-        if result = null {
+        if result == null {
             result := 0
             for entry in cl.choiceCases {
                 compiler.resolve(entry)
@@ -265,7 +265,7 @@ class CCodeGenerator : CodeGenerator {
             return 1
         }
         def cl := compiler.getClass(t)
-        assert cl != null
+        assert cl !== null
         if !compiler.isValue(cl) | cl.name = "panda.unsafe.Pointer" {
             return POINTER_SIZE
         }
@@ -310,7 +310,7 @@ class CCodeGenerator : CodeGenerator {
 
     function sizeOfWrapper(t:Type):Int {
         def cl := compiler.getClass(t)
-        assert cl != null & compiler.isValue(cl)
+        assert cl !== null & compiler.isValue(cl)
         var result := sizeOf(Type.Object())
         for f in compiler.instanceFields(cl) {
             compiler.resolve(f)
@@ -413,7 +413,7 @@ class CCodeGenerator : CodeGenerator {
         def outBuffer := MemoryOutputStream()
         out := IndentedOutputStream(outBuffer)
         def found := methodShims[raw]
-        if found != null {
+        if found !== null {
             return found
         }
         assert effective.isMethod()
@@ -542,7 +542,7 @@ class CCodeGenerator : CodeGenerator {
 
     method getClassConstant(cl:ClassDecl):ClassConstant {
         var result := classConstants[cl.name]
-        if result = null {
+        if result == null {
             writeImport(cl)
             compiler.resolve(cl)
             def type:String
@@ -557,7 +557,7 @@ class CCodeGenerator : CodeGenerator {
             result := ClassConstant("\{escapeName(cl.type.name)}$class", "<error>")
             classConstants[cl.name] := result
             def superPtr:String
-            if cl.rawSuper != null {
+            if cl.rawSuper !== null {
                 def superCC := getClassConstant(compiler.getClass(cl.rawSuper))
                 superPtr := "(panda$core$Class*) &\{superCC.name}"
             }
@@ -592,7 +592,7 @@ class CCodeGenerator : CodeGenerator {
     method getWrapperClassConstant(cl:ClassDecl):ClassConstant {
         def name := "\{escapeName(cl.name)}$wrapperclass"
         var result := classConstants[name]
-        if result = null {
+        if result == null {
             if isExternal(cl) {
                 cType(Type.Class())
                 def type := "%panda$core$Class"
@@ -632,7 +632,7 @@ class CCodeGenerator : CodeGenerator {
             return "p_\{v.name}"
         }
         var result := variableNames[v]
-        if result = null {
+        if result == null {
             varCount += 1
             result := "\{v.name}\{varCount}"
             variableNames[v] := result
@@ -768,7 +768,7 @@ class CCodeGenerator : CodeGenerator {
     method getMethodReference(target:String?, m:MethodDecl, isSuper:Bit,
             out:IndentedOutputStream):String {
         if !isSuper & m.isVirtual() {
-            assert target != null, "calling instance \{m.signature()} without a target"
+            assert target !== null, "calling instance \{m.signature()} without a target"
             if m.owner.classKind = ClassDecl.Kind.INTERFACE {
                 return getInterfaceMethodReference(target, m, out)
             }
@@ -798,7 +798,7 @@ class CCodeGenerator : CodeGenerator {
             out.printLine("}")
             out.printLine("else {")
             out.level += 1
-            out.printLine("\{result} = NULL;")
+            out.printLine("\{result} == null;")
             out.level -= 1
             out.printLine("}")
             return result
@@ -818,7 +818,7 @@ class CCodeGenerator : CodeGenerator {
             out.printLine("}")
             out.printLine("else {")
             out.level += 1
-            out.printLine("\{wrapped} = NULL;")
+            out.printLine("\{wrapped} == null;")
             out.level -= 1
             out.printLine("}")
         }
@@ -831,7 +831,7 @@ class CCodeGenerator : CodeGenerator {
             -- casting nullable wrapper to nullable value, need to special-case null
             def wrapped := unwrapValue(value, srcType, dstType.subtypes[0], out)
             def nonNullValue := toNullableValue(wrapped, dstType.subtypes[0], dstType, out)
-            return "(\{value} != NULL ? \{nonNullValue} : (\{cType(dstType)}) { .nonnull = 0 })"
+            return "(\{value} !== null ? \{nonNullValue} : (\{cType(dstType)}) { .nonnull = 0 })"
         }
         return result
     }
@@ -853,9 +853,9 @@ class CCodeGenerator : CodeGenerator {
         }
         else {
             def srcClass := compiler.getClass(src)
-            assert srcClass != null
+            assert srcClass !== null
             def targetClass := compiler.getClass(target)
-            assert targetClass != null
+            assert targetClass !== null
             if compiler.isValue(srcClass) & !compiler.isValue(targetClass) {
                 return wrapValue(value, src, target, out)
             }
@@ -918,7 +918,7 @@ class CCodeGenerator : CodeGenerator {
     method getNullReference(t:Type):String {
         assert t.typeKind = Type.Kind.NULLABLE
         def cl := compiler.getClass(t.subtypes[0])
-        assert cl != null
+        assert cl !== null
         if compiler.isValue(cl) {
             return "((\{nullableType(t)}) { .nonnull = false })"
         }
@@ -947,7 +947,7 @@ class CCodeGenerator : CodeGenerator {
             when IR.Value.REAL(value, type):
                 return getRealReference(type, value)
             when IR.Value.REF(id, _):
-                assert refs[id] != null, "id \{id} has not been defined"
+                assert refs[id] !== null, "id \{id} has not been defined"
                 return refs[id]
             when IR.Value.STRING(s):
                 return getStringReference(s)
@@ -1004,7 +1004,7 @@ class CCodeGenerator : CodeGenerator {
             }
         }
         else {
-            bit := "\{ref} != NULL"
+            bit := "\{ref} !== null"
         }
         refs[id] := "((panda$core$Bit) { \{bit} })"
     }
@@ -1212,7 +1212,7 @@ class CCodeGenerator : CodeGenerator {
     }
 
     method writeReturn(value:IR.Value?) {
-        if value != null {
+        if value !== null {
             out.printLine("return \{getReference(value)};")
         }
         else {
@@ -1306,7 +1306,7 @@ class CCodeGenerator : CodeGenerator {
             def type := cType(ir.locals[i])
             out.print("\{type} \{name}")
             if compiler.isRefCounted(ir.locals[i]) {
-                out.print(" = NULL")
+                out.print(" == null")
             }
             out.printLine(";")
         }
@@ -1357,7 +1357,7 @@ class CCodeGenerator : CodeGenerator {
 
     @override
     method start(cl:ClassDecl) {
-        assert currentClass = null
+        assert currentClass == null
         currentClass := cl
         imports.clear()
         strings.clear()

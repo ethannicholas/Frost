@@ -72,6 +72,11 @@ class IR {
         LOAD(Value)
 
         ============================================================================================
+        Negates numbers, or inverts bits.
+        ============================================================================================
+        NEGATE(Value)
+
+        ============================================================================================
         Allocates memory and returns a raw pointer to it. Only POINTER_ operations are legal on a
         raw pointer.
         ============================================================================================
@@ -199,7 +204,7 @@ class IR {
                 when POINTER_SET_INDEX(value, ptr, index):
                     return "pointer_set_index \{value}, \{ptr}, \{index}"
                 when RETURN(value):
-                    if value != null {
+                    if value !== null {
                         return "return \{value}"
                     }
                     return "return"
@@ -326,12 +331,12 @@ class IR {
                 when STRING(s):
                     return s.format("panda")
                 when METHOD(target, m):
-                    if target != null {
+                    if target !== null {
                         return "METHOD(\{target}, \{m.declaration()})"
                     }
                     return m.declaration()
                 when METHODS(target, m):
-                    if target != null {
+                    if target !== null {
                         return "METHODS(\{target}, \{m})"
                     }
                     return "METHODS(<null>, \{m})"

@@ -145,7 +145,7 @@ class LLVMCodeGenerator : CodeGenerator {
             return 1
         }
         def cl := compiler.getClass(t)
-        assert cl != null
+        assert cl !== null
         if !compiler.isValue(cl) | cl.name = "panda.unsafe.Pointer" {
             return POINTER_SIZE
         }
@@ -184,12 +184,12 @@ class LLVMCodeGenerator : CodeGenerator {
             return fieldSize(t)
         }
         def cl := compiler.getClass(t)
-        assert cl != null
+        assert cl !== null
         if cl.name = "panda.unsafe.Pointer" {
             return POINTER_SIZE
         }
         var cached := sizes[cl]
-        if cached != null {
+        if cached !== null {
             return cached
         }
         var result := 0
@@ -227,7 +227,7 @@ class LLVMCodeGenerator : CodeGenerator {
 
     function sizeOfWrapper(t:Type):Int {
         def cl := compiler.getClass(t)
-        assert cl != null & compiler.isValue(cl)
+        assert cl !== null & compiler.isValue(cl)
         var result := sizeOf(Type.Object())
         for f in compiler.instanceFields(cl) {
             compiler.resolve(f)
@@ -253,7 +253,7 @@ class LLVMCodeGenerator : CodeGenerator {
 
     method getChoiceDataSize(cl:ClassDecl):Int {
         var result := choiceDataSizes[cl]
-        if result = null {
+        if result == null {
             result := 0
             for entry in cl.choiceCases {
                 compiler.resolve(entry)
@@ -280,7 +280,7 @@ class LLVMCodeGenerator : CodeGenerator {
         }
         writtenTypes.add(t.name)
         def cl := compiler.getClass(t)
-        assert cl != null
+        assert cl !== null
         assert !cl.annotations.isSpecialize()
         compiler.resolve(cl)
         if cl.resolved != Compiler.Resolution.RESOLVED {
@@ -289,7 +289,7 @@ class LLVMCodeGenerator : CodeGenerator {
         }
         def code := MutableString("%\{escapeName(t.name)} = type { ")
         compiler.currentClass.push(cl)
-        assert cl != null
+        assert cl !== null
         var separator := ""
         for f in compiler.instanceFields(cl) {
             compiler.resolve(f)
@@ -336,7 +336,7 @@ class LLVMCodeGenerator : CodeGenerator {
         writtenWrappers.add(t.name)
         def code := MutableString("\{llvmType(t)}$wrapper = type { ")
         def object := compiler.getClass(Type.Object())
-        assert object != null
+        assert object !== null
         var separator := ""
         for f in compiler.instanceFields(object) {
             compiler.resolve(f)
@@ -374,14 +374,14 @@ class LLVMCodeGenerator : CodeGenerator {
                 writeType(t)
                 def name := "%\{escapeName(t.name)}"
                 def cl := compiler.getClass(t)
-                assert cl != null
+                assert cl !== null
                 if !compiler.isValue(cl) {
                     return name + "*"
                 }
                 return name
             when Type.Kind.NULLABLE:
                 def cl := compiler.getClass(t)
-                assert cl != null
+                assert cl !== null
                 if compiler.isValue(cl) {
                     return nullableType(t)
                 }
@@ -397,7 +397,7 @@ class LLVMCodeGenerator : CodeGenerator {
                 if cl.isSpecialization() {
                     def name := "%\{escapeName(t.name)}"
                     def cl := compiler.getClass(t)
-                    assert cl != null
+                    assert cl !== null
                     if !compiler.isValue(cl) {
                         return name + "*"
                     }
@@ -429,7 +429,7 @@ class LLVMCodeGenerator : CodeGenerator {
         def result := MutableString(llvmType(t.subtypes[t.subtypes.count - 1]))
         result.append(" (")
         var separator := ""
-        if selfType != null {
+        if selfType !== null {
             result.append(llvmType(selfType))
             separator := ", "
         }
@@ -523,7 +523,7 @@ class LLVMCodeGenerator : CodeGenerator {
 
     method createMethodShim(raw:MethodDecl, effective:Type):MethodShim {
         def found := methodShims[raw]
-        if found != null {
+        if found !== null {
             return found
         }
         def oldOut := out
@@ -726,7 +726,7 @@ class LLVMCodeGenerator : CodeGenerator {
     method getClassConstant(cl:ClassDecl):ClassConstant {
         assert !cl.annotations.isSpecialize()
         var result := classConstants[cl.name]
-        if result = null {
+        if result == null {
             compiler.resolve(cl)
             def type:String
             if cl.external {
@@ -742,7 +742,7 @@ class LLVMCodeGenerator : CodeGenerator {
                     "%$itable*, [\{vtable.count} x i8*] }")
             classConstants[cl.name] := result
             def superPtr:String
-            if cl.rawSuper != null {
+            if cl.rawSuper !== null {
                 def superCC := getClassConstant(compiler.getClass(cl.rawSuper))
                 superPtr := "bitcast(\{superCC.type}* \{superCC.name} to %panda$core$Class*)"
             }
@@ -784,7 +784,7 @@ class LLVMCodeGenerator : CodeGenerator {
         }
         def name := "@\{escapeName(cl.name)}$wrapperclass"
         var result := classConstants[name]
-        if result = null {
+        if result == null {
             if cl.external {
                 llvmType(Type.Class())
                 def type := "%panda$core$Class"
@@ -934,7 +934,7 @@ class LLVMCodeGenerator : CodeGenerator {
 
     method wrapValue(value:String, srcType:Type, dstType:Type, out:OutputStream):String {
         def src := compiler.getClass(srcType)
-        assert src != null
+        assert src !== null
         if srcType.typeKind = Type.Kind.NULLABLE {
             -- casting nullable value to nullable wrapper, need to special-case null
             def testStart := currentBlock
@@ -983,7 +983,7 @@ class LLVMCodeGenerator : CodeGenerator {
 
     method unwrapValue(value:String, srcType:Type, dstType:Type, out:OutputStream):String {
         def target := compiler.getClass(dstType)
-        assert target != null
+        assert target !== null
         if dstType.typeKind = Type.Kind.NULLABLE {
             -- casting nullable wrapper to nullable value, need to special-case null
             def testStart := currentBlock
@@ -1088,9 +1088,9 @@ class LLVMCodeGenerator : CodeGenerator {
         }
         else {
             def srcClass := compiler.getClass(src)
-            assert srcClass != null, "class \{src} not found"
+            assert srcClass !== null, "class \{src} not found"
             def targetClass := compiler.getClass(target)
-            assert targetClass != null, "class \{target} not found"
+            assert targetClass !== null, "class \{target} not found"
             if compiler.isValue(srcClass) & !compiler.isValue(targetClass) {
                 return wrapValue(value, src, target, out)
             }
@@ -1142,7 +1142,7 @@ class LLVMCodeGenerator : CodeGenerator {
         labelCount += 1
         def result := "@$str\{labelCount}"
         def string := compiler.getClass(Type.StringType())
-        assert string != null
+        assert string !== null
         def cc := getClassConstant(string)
         strings.printLine("\{result} = private unnamed_addr constant %panda$core$String { " +
                 "i8* bitcast(\{cc.type}* \{cc.name} to " +
@@ -1180,7 +1180,7 @@ class LLVMCodeGenerator : CodeGenerator {
     %self is always a pointer.
     ================================================================================================
     method getSelfValue(out:OutputStream):String {
-        assert compiler.currentMethod[0] != null
+        assert compiler.currentMethod[0] !== null
         if haveSelfValuePointer() {
             def load := nextVar()
             out.printLine("\{load} = load \{llvmType(compiler.currentMethod[0].owner.type)}, " +
@@ -1193,7 +1193,7 @@ class LLVMCodeGenerator : CodeGenerator {
     method getNullReference(t:Type):String {
         assert t.typeKind = Type.Kind.NULLABLE
         def cl := compiler.getClass(t.subtypes[0])
-        assert cl != null
+        assert cl !== null
         if compiler.isValue(cl) {
             return "{ \{llvmType(t.subtypes[0])} undef, i1 0 }"
         }
@@ -1271,7 +1271,7 @@ class LLVMCodeGenerator : CodeGenerator {
             when IR.Value.REAL(value, type):
                 return getRealReference(type, value)
             when IR.Value.REF(id, _):
-                assert refs[id] != null, "id \{id} has not been defined"
+                assert refs[id] !== null, "id \{id} has not been defined"
                 return refs[id]
             when IR.Value.STRING(s):
                 return getStringReference(s)
@@ -1642,7 +1642,7 @@ class LLVMCodeGenerator : CodeGenerator {
     }
 
     method writeReturn(value:IR.Value?) {
-        if value != null {
+        if value !== null {
             out.printLine("ret \{getTypedReference(value)}")
         }
         else {
@@ -1680,7 +1680,7 @@ class LLVMCodeGenerator : CodeGenerator {
         }
         out.printLine(")")
         if indirect {
-            assert result != null
+            assert result !== null
             def load := nextVar()
             out.printLine("\{load} = load \{actualResultType}, \{actualResultType}* " +
                         result)
