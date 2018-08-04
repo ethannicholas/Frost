@@ -739,6 +739,7 @@ class UInt32 : Value, Key<UInt32>, Comparable<UInt32>, Formattable, ListView<Bit
     }
 
     ===Returns the smaller (closest to negative infinity) of this number and another number.===
+    @priority(1)
     function min(other:UInt32):UInt32 {
         if value < other.value {
             return value
@@ -796,6 +797,7 @@ class UInt32 : Value, Key<UInt32>, Comparable<UInt32>, Formattable, ListView<Bit
     }
 
     ===Returns the larger (closest to positive infinity) of this number and another number.===
+    @priority(1)
     function max(other:UInt32):UInt32 {
         if value > other.value {
             return value

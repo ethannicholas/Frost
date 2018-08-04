@@ -41,7 +41,9 @@ class Token : Value {
                 when TRUE: return "TRUE"
                 when FALSE: return "FALSE"
                 when RBRACE: return "RBRACE"
+                when EOF: return "EOF"
                 when SHIFTRIGHT: return ">>"
+                when REGEX: return "REGEX"
             }
         }
     }

@@ -325,7 +325,7 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
     def _length:Int
 
     @private
-    def _hash:Int := 0
+    def dummy:Int := 0
 
     ================================================================================================
     For dependent substrings, points to the parent String.
@@ -1454,12 +1454,10 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
     ================================================================================================
     @override
     function hash():Int {
-        if _hash = 0 {
-            var h := 1
-            for i in 0 .. _length {
-                h := h * 101 + Int64(data[i].value->builtin_int64)
-            }
-            _hash := h
+        var h := 1
+        for i in 0 .. _length {
+            h := h * 101 + Int64(data[i].value->builtin_int64)
+        }
 -*
             -- FNV-1a hash, thanks to Fowler, Landon, and Vo. This algorithm is in the public
             -- domain: http://www.isthe.com/chongo/tech/comp/fnv/index.html#public_domain
@@ -1468,9 +1466,7 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
                 h ~~= data[i].convert()
                 h *= 0x100000001b3
             }
-            _hash := h
 *-
-        }
-        return _hash
+        return h
     }
 }

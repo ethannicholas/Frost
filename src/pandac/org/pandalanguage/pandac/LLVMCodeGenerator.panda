@@ -1117,15 +1117,7 @@ class LLVMCodeGenerator : CodeGenerator {
         return result
     }
 
-    method getIntReference(int:UInt64, out:OutputStream):String {
-        return int.convert()
-    }
-
-    method getNegatedIntReference(int:UInt64, out:OutputStream):String {
-        return "-" + int.convert()
-    }
-
-    method getRealReference(t:Type, r64:Real64, out:OutputStream):String {
+    method getRealReference(t:Type, r64:Real64):String {
         if t.size() = 32 {
             -- LLVM has a bizarre representation of float. You still use a double, but must ensure
             -- that said double is exactly representable as a float. We convert through Real32 to
@@ -1134,23 +1126,6 @@ class LLVMCodeGenerator : CodeGenerator {
             return "0x\{Panda.floatToIntBits(r32):x}"
         }
         return "0x\{Panda.floatToIntBits(r64):x}"
-    }
-
-    method getBitReference(bit:Bit, out:OutputStream):String {
-        if bit {
-            return "true"
-        }
-        return "false"
-    }
-
-    method getVariableReference(v:Variable, out:OutputStream):String {
-        if v.storage = Variable.Storage.PARAMETER {
-            return getName(v)
-        }
-        def result := nextVar()
-        def t := llvmType(v.type)
-        out.printLine("\{result} = load \{t}, \{t}* \{getName(v)}")
-        return result
     }
 
     method getStringReference(s:String):String {
@@ -1215,18 +1190,6 @@ class LLVMCodeGenerator : CodeGenerator {
         return "%self"
     }
 
-    method getSelfReference(out:OutputStream):String {
-        return getSelfValue(out)
-    }
-
-    method getSuperReference(t:Type, out:OutputStream):String {
-        def ref := getSelfReference(out)
-        def result := nextVar()
-        out.printLine("\{result} = bitcast \{selfType(compiler.currentMethod[0])} \{ref} to " +
-                "\{llvmType(t)}")
-        return result
-    }
-
     method getNullReference(t:Type):String {
         assert t.typeKind = Type.Kind.NULLABLE
         def cl := compiler.getClass(t.subtypes[0])
@@ -1237,11 +1200,6 @@ class LLVMCodeGenerator : CodeGenerator {
         else {
             return "null"
         }
-    }
-
-    method getTypeReference(type:Type, out:OutputStream):String {
-        def cc := getClassConstant(compiler.getClass(type))
-        return "bitcast(\{cc.type}* \{cc.name} to %panda$core$Class*)"
     }
 
     method getChoiceFieldOffset(e:ChoiceCase, index:Int):Int {
@@ -1310,6 +1268,8 @@ class LLVMCodeGenerator : CodeGenerator {
                 return getNullReference(type)
             when IR.Value.PARAMETER(index, _):
                 return "%param\{index}"
+            when IR.Value.REAL(value, type):
+                return getRealReference(type, value)
             when IR.Value.REF(id, _):
                 assert refs[id] != null, "id \{id} has not been defined"
                 return refs[id]

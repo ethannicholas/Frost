@@ -585,6 +585,7 @@ class Int64 : Value, Key<Int64>, Comparable<Int64>, Formattable, ListView<Bit> {
     }
 
     ===Returns the smaller (closest to negative infinity) of this number and another number.===
+    @priority(1)
     function min(other:Int64):Int64 {
         if value < other.value {
             return value
@@ -621,6 +622,7 @@ class Int64 : Value, Key<Int64>, Comparable<Int64>, Formattable, ListView<Bit> {
     }
 
     ===Returns the larger (closest to positive infinity) of this number and another number.===
+    @priority(1)
     function max(other:Int64):Int64 {
         if value > other.value {
             return value

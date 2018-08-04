@@ -76,7 +76,7 @@ class TestRunner {
         Console.print(compileResult)
         if compiler.waitFor() != 0 {
             Console.printLine("C compiler error")
-            assert !compileResult.contains("pandaMain"), "\{cCompiler} \{args.join(" ")}"
+            System.exit(1)
             return false
         }
         return true
@@ -150,9 +150,10 @@ class TestRunner {
     method runTest(pandac:File, cLibs:ListView<String>, workingDir:File, test:String,
             mode:Mode):Bit {
         Console.print("Testing \{test} (\{mode})...")
--*        if mode = Mode.C {
-            return runTestC(pandac, cLibs, workingDir, test)
-        }*-
+        match mode {
+            when Mode.C:
+                return runTestC(pandac, cLibs, workingDir, test)
+        }
         def expected := workingDir.resolve(test + ".expected").readFully()
         def exe := File("/tmp/test.out")
         if exe.exists() {
@@ -264,18 +265,18 @@ class TestRunner {
             if file.path.endsWith("JSON.panda") { continue }
             if file.path.endsWith(".panda") {
                 def name := file.changeExtension("").name()
--*                total += 1
+                total += 1
                 if runTest(pandac, cLibs, tests, name, Mode.O0) {
                     success += 1
-                }*-
-                total += 1
+                }
+-*                total += 1
                 if runTest(pandac, cLibs, tests, name, Mode.O3) {
                     success += 1
                 }
---                total += 1
---                if runTest(pandac, cLibs, tests, name, Mode.C) {
---                    success += 1
---                }
+                total += 1
+                if runTest(pandac, cLibs, tests, name, Mode.C) {
+                    success += 1
+                }*-
                 Console.printLine("Passed \{success} / \{total} tests.")
             }
         }

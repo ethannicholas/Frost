@@ -39,6 +39,7 @@ class Type : Symbol, Key<Type> {
         init(name, typeKind, position, false)
     }
 
+    @pre(typeKind != Kind.GENERIC_PARAMETER)
     init(name:String, typeKind:Kind, position:Position, resolved:Bit) {
         self.typeKind := typeKind
         self.position := position
@@ -47,6 +48,7 @@ class Type : Symbol, Key<Type> {
         super.init(Symbol.Kind.TYPE, position, name)
     }
 
+    @pre(typeKind != Kind.GENERIC_PARAMETER)
     init(name:String, typeKind:Kind, size:Int) {
         assert !name.endsWith("?")
         self.typeKind := typeKind
@@ -56,6 +58,7 @@ class Type : Symbol, Key<Type> {
         super.init(Symbol.Kind.TYPE, position, name)
     }
 
+    @pre(typeKind != Kind.GENERIC_PARAMETER)
     init(name:String, typeKind:Kind, position:Position, subtypes:ListView<Type>, resolved:Bit) {
         assert (typeKind = Kind.NULLABLE) = name.endsWith("?"),
                 "invalid type: name=\{name}, nullable=\{typeKind = Kind.NULLABLE}"

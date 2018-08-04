@@ -566,6 +566,7 @@ class UInt64 : Value, Key<UInt64>, Comparable<UInt64>, Formattable, ListView<Bit
     }
 
     ===Returns the smaller (closest to negative infinity) of this number and another number.===
+    @priority(1)
     function min(other:UInt64):UInt64 {
         if value < other.value {
             return value
@@ -602,6 +603,7 @@ class UInt64 : Value, Key<UInt64>, Comparable<UInt64>, Formattable, ListView<Bit
     }
 
     ===Returns the larger (closest to positive infinity) of this number and another number.===
+    @priority(1)
     function max(other:UInt64):UInt64 {
         if value > other.value {
             return value

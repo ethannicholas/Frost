@@ -277,7 +277,7 @@ class HCodeGenerator : CodeGenerator {
         else {
             body.print("\{type(m.returnType)} \{getName(m)}(")
         }
-        if !m.annotations.isClass() {
+        if !m.annotations.isClass() & !compiler.isValueInit(m) {
             body.print("\{separator}\{selfType(m)} self")
             separator := ", "
         }
@@ -296,10 +296,10 @@ class HCodeGenerator : CodeGenerator {
 
     @override
     method end(cl:ClassDecl) {
-        typesOut.printLine(typeImportStream.finish())
-        typesOut.printLine(typesBuffer.finish())
-        out.printLine(bodyImportStream.finish())
-        out.printLine(bodyBuffer.finish())
+        typesOut.printLine(typeImportStream)
+        typesOut.printLine(typesBuffer)
+        out.printLine(bodyImportStream)
+        out.printLine(bodyBuffer)
     }
 
     @override

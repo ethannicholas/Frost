@@ -746,6 +746,7 @@ class Int8 : Value, Key<Int8>, Comparable<Int8>, Formattable, ListView<Bit> {
     }
 
     ===Returns the smaller (closest to negative infinity) of this number and another number.===
+    @priority(1)
     function min(other:Int8):Int32 {
         if value->builtin_int32 < other.value->builtin_int32 {
             return value->builtin_int32
@@ -803,6 +804,7 @@ class Int8 : Value, Key<Int8>, Comparable<Int8>, Formattable, ListView<Bit> {
 
 
     ===Returns the larger (closest to positive infinity) of this number and another number.===
+    @priority(1)
     function max(other:Int8):Int32 {
         if value->builtin_int32 > other.value->builtin_int32 {
             return value->builtin_int32

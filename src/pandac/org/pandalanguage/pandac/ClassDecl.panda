@@ -154,8 +154,7 @@ class ClassDecl {
         }
         def finalParameters := Array<Type>()
         for p in parameters {
-            finalParameters.add(Type(self.name + "." + p.name, Type.Kind.GENERIC_PARAMETER,
-                    Position(), true))
+            finalParameters.add(Type(p))
         }
         return Type.generic(type, finalParameters)
     }

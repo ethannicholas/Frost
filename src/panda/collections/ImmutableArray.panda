@@ -33,16 +33,16 @@ class ImmutableArray<T> : Immutable, ListView<T> {
     def dummy:Int -- for binary compatibility with Array
 
     @private
-    def data:Pointer<T>
+    def data:Pointer<T?>
 
     init() {
         self._count := 0
-        data := Pointer<T>.alloc(0)
+        data := Pointer<T?>.alloc(0)
     }
 
     init(data:ListView<T>) {
         self._count := data.count
-        self.data := Pointer<T>.alloc(_count)
+        self.data := Pointer<T?>.alloc(_count)
         for i in 0 .. count {
             self.data[i] := data[i]
         }
@@ -50,7 +50,7 @@ class ImmutableArray<T> : Immutable, ListView<T> {
 
     @private
     init(data:Pointer<T>, count:Int) {
-        self.data := data
+        self.data := data->Pointer<T?>
         self._count := count
     }
 
@@ -65,7 +65,7 @@ class ImmutableArray<T> : Immutable, ListView<T> {
     @override
     function [](index:Int):T {
         assert index >= 0 & index < count
-        return data[index]
+        return data[index]->T
     }
 
     @override
@@ -97,7 +97,7 @@ class ImmutableArray<T> : Immutable, ListView<T> {
     ================================================================================================
     function [](r:Range<Int?>):ImmutableArray<T> {
         def start:Int
-        if r.min != null {
+        if r.min !== null {
             start := r.min
         }
         else {
@@ -105,7 +105,7 @@ class ImmutableArray<T> : Immutable, ListView<T> {
         }
 
         var end:Int
-        if r.max != null {
+        if r.max !== null {
             end := r.max
         }
         else {
@@ -124,7 +124,7 @@ class ImmutableArray<T> : Immutable, ListView<T> {
         def step := r.step
 
         def current:Int
-        if r.start != null {
+        if r.start !== null {
             current := r.start
         }
         else if step > 0 {
@@ -135,7 +135,7 @@ class ImmutableArray<T> : Immutable, ListView<T> {
         }
 
         def end:Int
-        if r.end != null {
+        if r.end !== null {
             end := r.end
         }
         else if step > 0 {
@@ -159,7 +159,7 @@ class ImmutableArray<T> : Immutable, ListView<T> {
                 current -= step
             }
         }
-        if (r.inclusive | r.end = null) & current = end & end < _count {
+        if (r.inclusive | r.end == null) & current = end & end < _count {
             result.add(self[current])
         }
         return ImmutableArray<T>(result)

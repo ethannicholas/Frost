@@ -295,6 +295,9 @@ class WriteInts {
         }
         out.printLine("    ===Returns the larger (closest to positive infinity) of this number " +
                 "and another number.===")
+        if leftType = rightType {
+            out.printLine("    @priority(1)")
+        }
         out.printLine("    function max(other:\{object(rightType)}):\{object(resultType)} {")
         out.printLine("        if value\{cast(leftType, resultType)} > " +
                 "other.value\{cast(rightType, resultType)} {")
@@ -325,6 +328,9 @@ class WriteInts {
         }
         out.printLine("    ===Returns the smaller (closest to negative infinity) of this number " +
                 "and another number.===")
+        if leftType = rightType {
+            out.printLine("    @priority(1)")
+        }
         out.printLine("    function min(other:\{object(rightType)}):\{object(resultType)} {")
         out.printLine("        if value\{cast(leftType, resultType)} < " +
                 "other.value\{cast(rightType, resultType)} {")

@@ -764,6 +764,7 @@ class Int16 : Value, Key<Int16>, Comparable<Int16>, Formattable, ListView<Bit> {
     }
 
     ===Returns the smaller (closest to negative infinity) of this number and another number.===
+    @priority(1)
     function min(other:Int16):Int32 {
         if value->builtin_int32 < other.value->builtin_int32 {
             return value->builtin_int32
@@ -821,6 +822,7 @@ class Int16 : Value, Key<Int16>, Comparable<Int16>, Formattable, ListView<Bit> {
     }
 
     ===Returns the larger (closest to positive infinity) of this number and another number.===
+    @priority(1)
     function max(other:Int16):Int32 {
         if value->builtin_int32 > other.value->builtin_int32 {
             return value->builtin_int32

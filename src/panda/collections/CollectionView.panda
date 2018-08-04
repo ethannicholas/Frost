@@ -49,7 +49,7 @@ interface CollectionView<T> : Iterable<T> {
             else {
                 result.append(separator)
             }
-            if v != null {
+            if v !== null {
                 result.append(v)
             }
             else {
