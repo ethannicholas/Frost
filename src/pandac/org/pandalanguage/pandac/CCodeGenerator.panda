@@ -767,7 +767,7 @@ class CCodeGenerator : CodeGenerator {
 
     method getMethodReference(target:String?, m:MethodDecl, isSuper:Bit,
             out:IndentedOutputStream):String {
-        if !isSuper & m.isVirtual() {
+        if !isSuper & m.isVirtual {
             assert target !== null, "calling instance \{m.signature()} without a target"
             if m.owner.classKind = ClassDecl.Kind.INTERFACE {
                 return getInterfaceMethodReference(target, m, out)

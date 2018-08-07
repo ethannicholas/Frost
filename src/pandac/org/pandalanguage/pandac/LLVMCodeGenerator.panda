@@ -1598,6 +1598,18 @@ class LLVMCodeGenerator : CodeGenerator {
         refs[id] := result
     }
 
+    method writeNegate(id:IR.Statement.ID, value:IR.Value) {
+        def result := nextVar()
+        out.printLine("\{result} = sub \{getTypedReference(value)}, 0")
+        refs[id] := result
+    }
+
+    method writeNot(id:IR.Statement.ID, value:IR.Value) {
+        def result := nextVar()
+        out.printLine("\{result} = xor \{getTypedReference(value)}, -1")
+        refs[id] := result
+    }
+
     method writePointerAlloc(id:IR.Statement.ID, count:IR.Value, type:Type) {
         def countRef := getTypedReference(count)
         def elementSize := stride(type)
@@ -1721,6 +1733,10 @@ class LLVMCodeGenerator : CodeGenerator {
                 writeGetVirtualMethod(id, value, index, type)
             when IR.Statement.LOAD(ptr):
                 writeLoad(id, ptr)
+            when IR.Statement.NEGATE(value):
+                writeNegate(id, value)
+            when IR.Statement.NOT(value):
+                writeNot(id, value)
             when IR.Statement.POINTER_ALLOC(count, type):
                 writePointerAlloc(id, count, type)
             when IR.Statement.POINTER_DESTROY(ptr):

@@ -51,6 +51,8 @@ class MethodDecl : Symbol {
     @weak
     var overridden:MethodDecl? := null
 
+    property isVirtual:Bit
+
     init(owner:ClassDecl, position:Position, doccomment:String?, annotations:Annotations,
             methodKind:Kind, name:String, genericParameters:Array<ClassDecl.GenericParameter>?,
             parameters:Array<Parameter>, returnType:Type,
@@ -74,7 +76,7 @@ class MethodDecl : Symbol {
         return methodKind != Kind.INIT
     }
 
-    function isVirtual():Bit {
+    function get_isVirtual():Bit {
         return !annotations.isClass() & methodKind != Kind.INIT & !annotations.isFinal()
     }
 

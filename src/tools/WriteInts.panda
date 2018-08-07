@@ -383,14 +383,7 @@ class WriteInts {
                 "ListView<\{object(type)}> {")
         out.printLine("        return org.pandalanguage.panda.\{object(type)}List(range)")
         out.printLine("    }")
-        writeIndex(type, Type.INT8,   out)
-        writeIndex(type, Type.INT16,  out)
-        writeIndex(type, Type.INT32,  out)
         writeIndex(type, Type.INT64,  out)
-        writeIndex(type, Type.UINT8,  out)
-        writeIndex(type, Type.UINT16, out)
-        writeIndex(type, Type.UINT32, out)
-        writeIndex(type, Type.UINT64, out)
     }
 
     @class
@@ -566,14 +559,14 @@ class WriteInts {
         if signed(type) {
             out.printLine("        if str.startsWith(\"-\") {")
             out.printLine("            def abs := Panda.parse(str[1..], radix)")
-            out.printLine("            if abs = null {")
+            out.printLine("            if abs == null {")
             out.printLine("                return null")
             out.printLine("            }")
             out.printLine("            return -(abs\{castInt(Type.UINT64, type)})")
             out.printLine("        }")
             out.printLine("        else {")
             out.printLine("            def result := Panda.parse(str, radix)")
-            out.printLine("            if result = null {")
+            out.printLine("            if result == null {")
             out.printLine("                return null")
             out.printLine("            }")
             out.printLine("            return result\{castInt(Type.UINT64, type)}")
@@ -581,7 +574,7 @@ class WriteInts {
         }
         else {
             out.printLine("        def result := Panda.parse(str, radix)")
-            out.printLine("        if result = null {")
+            out.printLine("        if result == null {")
             out.printLine("            return null")
             out.printLine("        }")
             out.printLine("        return result\{castInt(Type.UINT64, type)}")

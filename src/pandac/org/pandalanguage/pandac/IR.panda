@@ -72,9 +72,14 @@ class IR {
         LOAD(Value)
 
         ============================================================================================
-        Negates numbers, or inverts bits.
+        Negates a number.
         ============================================================================================
         NEGATE(Value)
+
+        ============================================================================================
+        Bitwise inverts a number or bit.
+        ============================================================================================
+        NOT(Value)
 
         ============================================================================================
         Allocates memory and returns a raw pointer to it. Only POINTER_ operations are legal on a
@@ -187,6 +192,10 @@ class IR {
                     return "get_virtual_method \{value}, \{id}, \{type}"
                 when LOAD(ptr):
                     return "load \{ptr}"
+                when NEGATE(value):
+                    return "negate \{value}"
+                when NOT(value):
+                    return "not \{value}"
                 when POINTER_ALLOC(count, type):
                     return "pointer_alloc \{count}, \{type}"
                 when POINTER_DESTROY(ptr):
@@ -278,6 +287,7 @@ class IR {
         -- intermediate values; these never show up in finished IR sent to the code generator
         METHOD(Value? -* target *-, MethodDecl)
         METHODS(Value? -* target *-, ImmutableArray<MethodDecl>)
+        SUPER(Type)
         TYPE(Type)
 
         function type():Type {
@@ -304,6 +314,8 @@ class IR {
                     return m.type()
                 when METHODS:
                     return Type.Invalid()
+                when SUPER(type):
+                    return type
                 when TYPE(type):
                     return Type.ClassLiteral(type)
             }

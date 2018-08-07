@@ -872,43 +872,8 @@ class Int8 : Value, Key<Int8>, Comparable<Int8>, Formattable, ListView<Bit> {
     }
 
     ===Returns a single bit from this number, where index 0 is the least significant bit.===
-    function [](index:Int8):Bit {
-        return self && (1 << index) != 0
-    }
-
-    ===Returns a single bit from this number, where index 0 is the least significant bit.===
-    function [](index:Int16):Bit {
-        return self && (1 << index) != 0
-    }
-
-    ===Returns a single bit from this number, where index 0 is the least significant bit.===
-    function [](index:Int32):Bit {
-        return self && (1 << index) != 0
-    }
-
-    ===Returns a single bit from this number, where index 0 is the least significant bit.===
     @override
     function [](index:Int64):Bit {
-        return self && (1 << index) != 0
-    }
-
-    ===Returns a single bit from this number, where index 0 is the least significant bit.===
-    function [](index:UInt8):Bit {
-        return self && (1 << index) != 0
-    }
-
-    ===Returns a single bit from this number, where index 0 is the least significant bit.===
-    function [](index:UInt16):Bit {
-        return self && (1 << index) != 0
-    }
-
-    ===Returns a single bit from this number, where index 0 is the least significant bit.===
-    function [](index:UInt32):Bit {
-        return self && (1 << index) != 0
-    }
-
-    ===Returns a single bit from this number, where index 0 is the least significant bit.===
-    function [](index:UInt64):Bit {
         return self && (1 << index) != 0
     }
 

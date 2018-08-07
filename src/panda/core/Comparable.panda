@@ -10,7 +10,7 @@ interface Comparable<T:Comparable<T>> : Equatable<T> {
 
     @default
     function <(other:T):Bit {
-        return other > self
+        return other > self->T
     }
 
     @default

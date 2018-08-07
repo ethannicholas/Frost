@@ -11,7 +11,42 @@ class Real64 : Value, Key<Real64>, Comparable<Real64> {
     }
 
     @implicit
+    init(value:Int8) {
+        self.value := value.value->builtin_float64
+    }
+
+    @implicit
+    init(value:Int16) {
+        self.value := value.value->builtin_float64
+    }
+
+    @implicit
+    init(value:Int32) {
+        self.value := value.value->builtin_float64
+    }
+
+    @implicit
     init(value:Int64) {
+        self.value := value.value->builtin_float64
+    }
+
+    @implicit
+    init(value:UInt8) {
+        self.value := value.value->builtin_float64
+    }
+
+    @implicit
+    init(value:UInt16) {
+        self.value := value.value->builtin_float64
+    }
+
+    @implicit
+    init(value:UInt32) {
+        self.value := value.value->builtin_float64
+    }
+
+    @implicit
+    init(value:UInt64) {
         self.value := value.value->builtin_float64
     }
 
