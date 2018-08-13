@@ -1,5 +1,7 @@
 package org.pandalanguage.pandac
 
+uses org.pandalanguage.pandac.parser.Token
+
 @final
 class MethodDecl : Symbol {
     choice Kind {
@@ -50,6 +52,8 @@ class MethodDecl : Symbol {
 
     @weak
     var overridden:MethodDecl? := null
+
+    property priority:Int
 
     property isVirtual:Bit
 
@@ -104,6 +108,28 @@ class MethodDecl : Symbol {
         return true
     }
 
+    function get_priority():Int {
+        if annotations.expressions !== null {
+            for a in annotations.expressions {
+                match a {
+                    when Annotations.Expression.PRIORITY(_, expr):
+                        match expr {
+                            when ASTNode.INT(_, value):
+                                return value.convert()
+                            when ASTNode.PREFIX(_, op, base):
+                                if op = Token.Kind.SUB {
+                                    match base {
+                                        when ASTNode.INT(_, value):
+                                            return -(value.convert()->Int)
+                                    }
+                                }
+                        }
+                }
+            }
+        }
+        return 0
+    }
+
     function type():Type {
         def paramTypes := Array<Type>(parameters.count) -- FIXME use map
         for p in parameters {
@@ -116,7 +142,7 @@ class MethodDecl : Symbol {
          else {
             kind := Type.Kind.IMMUTABLE_METHOD
         }
-        return Type.methodType(position, kind, paramTypes, returnType)
+        return Type.methodType(position, kind, paramTypes, returnType, priority)
     }
 
     function signature():String {

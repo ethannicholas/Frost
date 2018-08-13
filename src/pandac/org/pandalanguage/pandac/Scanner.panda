@@ -66,7 +66,8 @@ class Scanner {
                 else {
                     returnType := Type.Void()
                 }
-                return Type.methodType(type.position(), typeKind, parameters.finish(), returnType)
+                return Type.methodType(type.position(), typeKind, parameters.finish(), returnType,
+                        0)
             otherwise:
                 assert false, "unsupported type \{type}(\{type.$rawValue})"
         }

@@ -30,6 +30,9 @@ class Type : Symbol, Key<Type> {
 
     def subtypes:Array<Type>?
 
+    -- @priority from methods (0 if not a method / no @priority)
+    def priority:Int
+
     property parameterCount:Int
 
     @weak
@@ -58,8 +61,13 @@ class Type : Symbol, Key<Type> {
         super.init(Symbol.Kind.TYPE, position, name)
     }
 
-    @pre(typeKind != Kind.GENERIC_PARAMETER)
     init(name:String, typeKind:Kind, position:Position, subtypes:ListView<Type>, resolved:Bit) {
+        init(name, typeKind, position, subtypes, resolved, 0)
+    }
+
+    @pre(typeKind != Kind.GENERIC_PARAMETER)
+    init(name:String, typeKind:Kind, position:Position, subtypes:ListView<Type>, resolved:Bit,
+            priority:Int) {
         assert (typeKind = Kind.NULLABLE) = name.endsWith("?"),
                 "invalid type: name=\{name}, nullable=\{typeKind = Kind.NULLABLE}"
         assert (typeKind = Kind.GENERIC) = name.endsWith(">"),
@@ -68,6 +76,7 @@ class Type : Symbol, Key<Type> {
         self.typeKind := typeKind
         self.position := position
         self.resolved := resolved
+        self.priority := priority
         self.subtypes := Array<Type>(subtypes)
         super.init(Symbol.Kind.TYPE, position, name)
     }
@@ -118,7 +127,7 @@ class Type : Symbol, Key<Type> {
 
     @class
     function methodType(position:Position, kind:Type.Kind, parameterTypes:ListView<Type>,
-            returnType:Type):Type {
+            returnType:Type, priority:Int):Type {
         var resolved := returnType.resolved
         def name := MutableString("(")
         def subtypes := Array<Type>()
@@ -147,7 +156,7 @@ class Type : Symbol, Key<Type> {
             name.append(returnType.name)
         }
         name.append(")")
-        return Type(name.finish(), kind, position, subtypes.finish(), resolved)
+        return Type(name.finish(), kind, position, subtypes.finish(), resolved, priority)
     }
 
     function size():Int {
@@ -655,7 +664,7 @@ class Type : Symbol, Key<Type> {
                     parameters.add(subtypes[i].remap(types))
                 }
                 return methodType(position, typeKind, parameters,
-                        subtypes[subtypes.count - 1].remap(types))
+                        subtypes[subtypes.count - 1].remap(types), priority)
             otherwise: return self
         }
     }

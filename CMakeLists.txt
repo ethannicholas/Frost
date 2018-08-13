@@ -385,10 +385,10 @@ add_library(panda
 )
 
 add_custom_command(
-    OUTPUT writeInts
-    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/bootstrap ${BOOTSTRAP_ARGS} -o writeInts
-            ${CMAKE_CURRENT_SOURCE_DIR}/src/tools/WriteInts.panda
-    DEPENDS bootstrap src/tools/WriteInts.panda
+    OUTPUT writeNumbers
+    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/bootstrap ${BOOTSTRAP_ARGS} -o writeNumbers
+            ${CMAKE_CURRENT_SOURCE_DIR}/src/tools/WriteNumbers.panda
+    DEPENDS bootstrap src/tools/WriteNumbers.panda
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
 
@@ -401,8 +401,8 @@ add_custom_command(
            src/panda/core/UInt16.panda
            src/panda/core/UInt32.panda
            src/panda/core/UInt64.panda
-    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/writeInts
-    DEPENDS writeInts
+    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/writeNumbers
+    DEPENDS writeNumbers
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
 

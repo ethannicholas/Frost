@@ -624,7 +624,7 @@ class Compiler {
                 if returnType == null {
                     return null
                 }
-                return Type.methodType(type.position, type.typeKind, params, returnType)
+                return Type.methodType(type.position, type.typeKind, params, returnType, 0)
             otherwise:
                 assert false, "cannot resolve \{type}"
         }
@@ -974,7 +974,7 @@ class Compiler {
         currentClass.pop()
     }
 
-    method isValue(cl:ClassDecl):Bit {
+    method isValue(cl:ClassDecl?):Bit {
         if !resolve(cl) {
             return false
         }
@@ -1450,7 +1450,24 @@ class Compiler {
             return null
         }
         if possible.count = 1 {
-            return possible[0]
+            return possible.iterator().next()
+        }
+        def best := Array<Type>()
+        def bestCost := Int.MAX
+        for t in possible {
+            def cost := coercionCost(expr, t)
+            assert cost !== null
+            if cost < bestCost {
+                bestCost := cost
+                best.clear()
+            }
+            if cost = bestCost {
+                best.add(t)
+            }
+        }
+        assert best.count != 0
+        if best.count = 1 {
+            return best[0]
         }
         return null
     }
@@ -1582,7 +1599,7 @@ class Compiler {
             if m.annotations.isImplicit() & m.parameters.count = 1 {
                 resolve(m)
                 if type = m.parameters[0].type {
-                    return 2
+                    return 6 - m.priority
                 }
             }
         }
@@ -1630,7 +1647,7 @@ class Compiler {
         }
     }
 
-    method coercionCost(types:ListView<Type>, target:Type):Int? {
+    method coercionCost(types:CollectionView<Type>, target:Type):Int? {
         def best := Int.MAX
         for t in types {
             def cost := coercionCost(t, target)
@@ -1644,8 +1661,8 @@ class Compiler {
         return null
     }
 
-    method possibleMatches(methodTypes:ListView<Type>, args:ListView<ASTNode>,
-            type:TypeContext):Pair<ListView<Type>, Int>? {
+    method possibleMatches(methodTypes:CollectionView<Type>, args:ListView<ASTNode>,
+            type:TypeContext):Pair<CollectionView<Type>, Int>? {
         var bestCost := Int.MAX
         def best := Array<Type>()
         outer: for raw in methodTypes {
@@ -1659,7 +1676,7 @@ class Compiler {
             if m.subtypes.count != args.count + 1 {
                 continue
             }
-            var cost := 0
+            var cost := -m.priority
             for i in 0 .. args.count {
                 def argCost := coercionCost(args[i], m.subtypes[i])
                 if argCost == null {
@@ -1695,10 +1712,10 @@ class Compiler {
         if best.count = 0 {
             return null
         }
-        return Pair<ListView<Type>, Int>(best, bestCost)
+        return Pair<CollectionView<Type>, Int>(best, bestCost)
     }
 
-    method callCost(methodTypes:ListView<Type>, args:ListView<ASTNode>,
+    method callCost(methodTypes:CollectionView<Type>, args:ListView<ASTNode>,
             type:TypeContext):Int? {
         def result := possibleMatches(methodTypes, args, type)
         if result !== null {
@@ -1978,7 +1995,7 @@ class Compiler {
     This method never generates errors.
     ================================================================================================
     @post((@return == null | @return.count >= 1) & errorCount = @pre(errorCount))
-    method possibleTypes(value:ASTNode):ListView<Type>? {
+    method possibleTypes(value:ASTNode):CollectionView<Type>? {
         match value {
             when ASTNode.AT_PRE(_, expr):
                 return possibleTypes(expr)
@@ -1998,25 +2015,27 @@ class Compiler {
                 if methodTypes == null {
                     return null
                 }
-                if methodTypes.count = 1 & methodTypes[0].isClass() {
-                    def cl := getClass(methodTypes[0])
-                    if cl !== null & cl.classKind = ClassDecl.Kind.CHOICE {
-                        -- choice case
+                if methodTypes.count = 1 {
+                    def t := methodTypes.iterator().next()
+                    if t.isClass() {
+                        def cl := getClass(t)
+                        if cl !== null & cl.classKind = ClassDecl.Kind.CHOICE {
+                            -- choice case
+                            def result := Array<Type>() -- FIXME literal
+                            result.add(t)
+                            return result
+                        }
+                    }
+                    if t.typeKind = Type.Kind.GENERIC & t.subtypes[0] = Type.Class() {
+                        -- calling a class literal, this is actually object construction
                         def result := Array<Type>() -- FIXME literal
-                        result.add(methodTypes[0])
+                        result.add(t.subtypes[1])
                         return result
                     }
                 }
-                if methodTypes.count = 1 & methodTypes[0].typeKind = Type.Kind.GENERIC &
-                        methodTypes[0].subtypes[0] = Type.Class() {
-                    -- calling a class literal, this is actually object construction
-                    def result := Array<Type>() -- FIXME literal
-                    result.add(methodTypes[0].subtypes[1])
-                    return result
-                }
                 def result := possibleMatches(methodTypes, args, TypeContext.NON_VOID)
                 if result !== null {
-                    def resultTypes := Array<Type>() -- FIXME literal
+                    def resultTypes := HashSet<Type>()
                     for m in result.first {
                         resultTypes.add(m.returnType())
                     }
@@ -2055,23 +2074,36 @@ class Compiler {
                 return result
             when ASTNode.IDENTIFIER(_, name):
                 return identifierType(name)
-            when ASTNode.INT:
+            when ASTNode.INT(_, value):
                 def result := Array<Type>() -- FIXME literal
-                result.add(Type.BuiltinInt8())
-                result.add(Type.BuiltinInt16())
-                result.add(Type.BuiltinInt32())
+                def signedValue := value.convert()->Int64
+                if signedValue >= Int8.MIN.convert() & signedValue <= Int8.MAX.convert() {
+                    result.add(Type.BuiltinInt8())
+                    result.add(Type.Int8())
+                }
+                if signedValue >= Int16.MIN.convert() & signedValue <= Int16.MAX.convert() {
+                    result.add(Type.BuiltinInt16())
+                    result.add(Type.Int16())
+                }
+                if signedValue >= Int32.MIN.convert() & signedValue <= Int32.MAX.convert() {
+                    result.add(Type.BuiltinInt32())
+                    result.add(Type.Int32())
+                }
                 result.add(Type.BuiltinInt64())
-                result.add(Type.BuiltinUInt8())
-                result.add(Type.BuiltinUInt16())
-                result.add(Type.BuiltinUInt32())
-                result.add(Type.BuiltinUInt64())
-                result.add(Type.Int8())
-                result.add(Type.Int16())
-                result.add(Type.Int32())
                 result.add(Type.Int64())
-                result.add(Type.UInt8())
-                result.add(Type.UInt16())
-                result.add(Type.UInt32())
+                if value >= UInt8.MIN.convert() & value <= UInt8.MAX.convert() {
+                    result.add(Type.BuiltinUInt8())
+                    result.add(Type.UInt8())
+                }
+                if value >= UInt16.MIN.convert() & value <= UInt16.MAX.convert() {
+                    result.add(Type.BuiltinUInt16())
+                    result.add(Type.UInt16())
+                }
+                if value >= UInt32.MIN.convert() & value <= UInt32.MAX.convert() {
+                    result.add(Type.BuiltinUInt32())
+                    result.add(Type.UInt32())
+                }
+                result.add(Type.BuiltinUInt64())
                 result.add(Type.UInt64())
                 result.add(Type.Real32())
                 result.add(Type.Real64())
@@ -2080,7 +2112,7 @@ class Compiler {
                 def a := Array<Type>() -- FIXME literal
                 a.add(node.type())
                 return a
-            when ASTNode.METHOD(position, _, _, kind, _, _, parameters, returnType, _):
+            when ASTNode.METHOD:
                 return null
             when ASTNode.NULL:
                 def a := Array<Type>() -- FIXME literal
@@ -2100,6 +2132,8 @@ class Compiler {
                 return a
             when ASTNode.REAL:
                 def result := Array<Type>() -- FIXME literal
+                result.add(Type.BuiltinFloat32())
+                result.add(Type.BuiltinFloat64())
                 result.add(Type.Real32())
                 result.add(Type.Real64())
                 return result
@@ -2164,7 +2198,7 @@ class Compiler {
                 }
                 def result := Array<Type>() -- FIXME literal
                 result.add(Type.methodType(position, Type.Kind.FUNCTION, parameterTypes,
-                        returnType))
+                        returnType, 0))
                 return result
             when ASTNode.UNTYPED_LAMBDA:
                 return null
@@ -2360,20 +2394,23 @@ class Compiler {
                 if methodTypes == null {
                     return null
                 }
-                if methodTypes.count = 1 & methodTypes[0].isClassLiteral() {
-                    def resultCost := coercionCost(methodTypes[0].subtypes[1], target)
-                    if resultCost == null {
-                        return null
+                if methodTypes.count = 1 {
+                    def t := methodTypes.iterator().next()
+                    if t.isClassLiteral() {
+                        def resultCost := coercionCost(t.subtypes[1], target)
+                        if resultCost == null {
+                            return null
+                        }
+                        methodTypes := possibleTypes(ASTNode.DOT(m.position(), m, "init"))
+                        if methodTypes == null {
+                            return null
+                        }
+                        def callCost := callCost(methodTypes, args, TypeContext.UNSPECIFIED)
+                        if callCost == null {
+                            return null
+                        }
+                        return callCost + resultCost
                     }
-                    methodTypes := possibleTypes(ASTNode.DOT(m.position(), m, "init"))
-                    if methodTypes == null {
-                        return null
-                    }
-                    def callCost := callCost(methodTypes, args, TypeContext.UNSPECIFIED)
-                    if callCost == null {
-                        return null
-                    }
-                    return callCost + resultCost
                 }
                 return callCost(methodTypes, args, TypeContext.TYPE(target))
             when ASTNode.DOT:
@@ -2396,10 +2433,10 @@ class Compiler {
                     return 0
                 }
                 if target.typeKind = Type.Kind.BUILTIN_FLOAT {
-                    return 2
+                    return 1
                 }
                 if target.isNumber() {
-                    return 1
+                    return 2
                 }
                 def preferred := preferredType(expr)
                 assert preferred !== null
@@ -2442,7 +2479,7 @@ class Compiler {
                     typeKind := Type.Kind.IMMUTABLE_METHOD
                 }
                 return coercionCost(Type.methodType(position, typeKind, paramTypes,
-                        resolvedReturnType), target)
+                        resolvedReturnType, 0), target)
             when ASTNode.NULL:
                 if target.typeKind = Type.Kind.NULLABLE {
                     return 0
@@ -3560,25 +3597,7 @@ class Compiler {
                     }
                     cost += returnCost
             }
-            if m.annotations.expressions !== null {
-                for a in m.annotations.expressions {
-                    match a {
-                        when Annotations.Expression.PRIORITY(_, expr):
-                            match expr {
-                                when ASTNode.INT(_, value):
-                                    cost -= value.convert()
-                                    break
-                                when ASTNode.PREFIX(_, op, base):
-                                    if op = Token.Kind.SUB {
-                                        match base {
-                                            when ASTNode.INT(_, value):
-                                                cost += value.convert()
-                                        }
-                                    }
-                            }
-                    }
-                }
-            }
+            cost -= m.priority
             if cost < bestCost {
                 bestCost := cost
                 best.clear()
@@ -3589,6 +3608,9 @@ class Compiler {
         }
         if best.count = 0 {
             return null
+        }
+        if best.count > 1 {
+            Console.printLine("ambiguous \{methods[0].name}(\{args}): \{best}")
         }
         return Pair<ListView<MethodRef>, Int>(best, bestCost)
     }
@@ -3664,7 +3686,7 @@ class Compiler {
             targetParams.add(t.parameterType(i))
         }
         def haveTargetType := Type.methodType(position, t.typeKind, targetParams,
-                t.returnType())
+                t.returnType(), 0)
         def haveTargetCast := cast(IR.Value.REF(methodPtr, Type.pointerTo(Type.Int8())),
                 Type.pointerTo(haveTargetType))
         finalArgs.insert(0, IR.Value.REF(target, targetType))
@@ -3860,12 +3882,18 @@ class Compiler {
             def best:Pair<ListView<MethodRef>, Int>? := null
             for t in leftTypes {
                 def selfCost := coercionCost(left, t)
-                assert selfCost !== null, "failed self cast \{left}->\{t}"
+                assert selfCost !== null, "failed self cast \{left}->\{t} at \{left.position()}"
                 def ops := findOverloadedOperator(t, op, right, type)
                 if ops !== null {
                     def cost := ops.second + selfCost
                     if best == null | cost < best.second {
                         best := Pair<ListView<MethodRef>, Int>(ops.first, cost)
+                    }
+                    else if cost = best.second {
+                        def a := Array<MethodRef>()
+                        a.addAll(best.first)
+                        a.addAll(ops.first)
+                        best := Pair<ListView<MethodRef>, Int>(a, cost)
                     }
                 }
             }
@@ -3909,7 +3937,7 @@ class Compiler {
         return null
     }
 
-    function findType(start:ListView<Type>, target:ClassDecl):Type? {
+    function findType(start:CollectionView<Type>, target:ClassDecl):Type? {
         for t in start {
             def result := findType(t, target)
             if result !== null {
@@ -4888,14 +4916,6 @@ class Compiler {
     ================================================================================================
     @post(typeMatch(@return, type) & (@return !== null | errorCount > 0 | !reportErrors))
     method compileMethodExpression(expr:ASTNode, type:TypeContext):IR.Value? {
-        def result := doCompileMethodExpression(expr, type)
-        if !(typeMatch(result, type) & (result !== null | errorCount > 0 | !reportErrors)) {
-            Console.printLine("FAILED ON: \{expr}:\{expr.position()} (\{result.type()}, \{type})")
-        }
-        return result
-    }
-
-    method doCompileMethodExpression(expr:ASTNode, type:TypeContext):IR.Value? {
         match expr {
             when ASTNode.AT_PRE(position, expr):
                 return compileAtPre(position, expr)
@@ -5221,7 +5241,7 @@ class Compiler {
                 return Type.Any()
             }
             assert types.count = 1 -- FIXME handle ambiguous matches
-            return types[0]
+            return types.iterator().next()
         }
 
         @override
@@ -5803,6 +5823,7 @@ class Compiler {
             if stepType.name.startsWith("panda.core.Int") {
                 def args := Array<ASTNode>() -- FIXME literal
                 args.add(ASTNode.INT(position, 0))
+                Console.printLine("checking \{step} >= \{args}")
                 direction := extractBuiltinBit(call(position, step, ">=", args,
                         TypeContext.TYPE(Type.Bit())))
             }

@@ -54,6 +54,10 @@ typedef struct UInt8 {
     uint8_t value;
 } UInt8;
 
+typedef struct Real32 {
+    double value;
+} Real32;
+
 typedef struct Real64 {
     double value;
 } Real64;
@@ -546,6 +550,15 @@ void panda$core$Panda$toReal64$panda$core$String$R$panda$core$Real64(Real64* res
     char* cstr = pandaGetCString(s);
     result->value = atof(cstr);
     pandaFree(cstr);
+}
+
+String* panda$core$Real32$convert$R$panda$core$String(Real32 d) {
+    size_t len = snprintf(NULL, 0, "%g", d.value);
+    char* chars = (char*) pandaAlloc(len + 1);
+    snprintf(chars, len + 1, "%g", d.value);
+    String* result = pandaNewString(chars, len);
+    pandaFree(chars);
+    return result;
 }
 
 String* panda$core$Real64$convert$R$panda$core$String(Real64 d) {
