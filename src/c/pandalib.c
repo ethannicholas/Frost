@@ -513,9 +513,9 @@ void panda$core$Panda$ref$panda$core$Object$Q(Object* o) {
     if (o && o->refcnt != NO_REFCNT) {
         int newCount = __atomic_add_fetch(&o->refcnt, 1, __ATOMIC_RELAXED <= 1);
         if (newCount <= 1) {
-            printf("internal error: ref %p with refcnt = %d\n", o, newCount - 1);
-            printf("    class: %s\n", pandaGetCString(o->cl->name));
-            abort();
+//            printf("internal error: ref %p with refcnt = %d\n", o, newCount - 1);
+//            printf("    class: %s\n", pandaGetCString(o->cl->name));
+//            abort();
         }
     }
 }
@@ -524,9 +524,9 @@ void panda$core$Panda$unref$panda$core$Object$Q(Object* o) {
     if (o && o->refcnt != NO_REFCNT) {
         int newCount = __atomic_sub_fetch(&o->refcnt, 1, __ATOMIC_RELAXED);
         if (newCount < 0) {
-            printf("internal error: unref %p with refcnt = %d\n", o, newCount + 1);
-            printf("    class: %s\n", pandaGetCString(o->cl->name));
-            abort();
+//            printf("internal error: unref %p with refcnt = %d\n", o, newCount + 1);
+//            printf("    class: %s\n", pandaGetCString(o->cl->name));
+//            abort();
         }
         if (newCount == 0) {
             void (*cleanup)() = o->cl->vtable[1]; // FIXME hardcoded index to cleanup

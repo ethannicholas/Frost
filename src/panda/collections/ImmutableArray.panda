@@ -73,98 +73,6 @@ class ImmutableArray<T> : Immutable, ListView<T> {
         return _count
     }
 
-    ================================================================================================
-    Returns a slice of the array, containing all of the elements specified by the range.
-    ================================================================================================
-    function [](r:Range<Int>):ImmutableArray<T> {
-        var max := r.max
-        if r.inclusive {
-            max += 1
-        }
-        def count := max - r.min
-        def result := Pointer<T>.alloc(count)
-        for i in 0 .. count {
-            result[i] := self[r.min + i]
-        }
-        return ImmutableArray<T>(result, count)
-    }
-
-    ================================================================================================
-    Returns a slice of the array, containing all of the elements specified by the range.
-
-    As usual for `Range`, a null `min` starts from the beginning of the array, and a null `max` ends
-    at the end of the array.
-    ================================================================================================
-    function [](r:Range<Int?>):ImmutableArray<T> {
-        def start:Int
-        if r.min !== null {
-            start := r.min
-        }
-        else {
-            start := 0
-        }
-
-        var end:Int
-        if r.max !== null {
-            end := r.max
-        }
-        else {
-            end := _count
-            if r.inclusive {
-                end -= 1
-            }
-        }
-        return self[Range<Int>(start, end, r.inclusive)]
-    }
-
-    ================================================================================================
-    Returns a slice of the array, containing all of the elements specified by the range.
-    ================================================================================================
-    function [](r:SteppedRange<Int?, Int>):ImmutableArray<T> {
-        def step := r.step
-
-        def current:Int
-        if r.start !== null {
-            current := r.start
-        }
-        else if step > 0 {
-            current := 0
-        }
-        else {
-            current := _count - 1
-        }
-
-        def end:Int
-        if r.end !== null {
-            end := r.end
-        }
-        else if step > 0 {
-            end := _count
-        }
-        else {
-            end := 0
-        }
-
-        def result := Array<T>()
-        if r.step > 0 {
-            while current < end {
-                result.add(self[current])
-                current += step
-            }
-        }
-        else {
-            assert r.step < 0
-            while current > end {
-                result.add(self[current])
-                current -= step
-            }
-        }
-        if (r.inclusive | r.end == null) & current = end & end < _count {
-            result.add(self[current])
-        }
-        return ImmutableArray<T>(result)
-    }
-
     @override
     function iterator():Iterator<T> {
         return ImmutableArrayIterator<T>(self)
@@ -178,7 +86,12 @@ class ImmutableArray<T> : Immutable, ListView<T> {
         for v in self {
             result.append(separator)
             separator := ", "
-            result.append(v)
+            if v !== null {
+                result.append(v)
+            }
+            else {
+                result.append("<null>")
+            }
         }
         result.append("]")
         return result.finish()

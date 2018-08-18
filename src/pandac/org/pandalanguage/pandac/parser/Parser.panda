@@ -502,7 +502,11 @@ class Parser {
                         if nextExpr == null {
                             return null
                         }
-                        validLambda &= (nextExpr = ASTNode.IDENTIFIER)
+                        match nextExpr {
+                            when ASTNode.IDENTIFIER:
+                            otherwise:
+                                validLambda := false
+                        }
                         parameters.add(nextExpr)
                     } while checkNext(Token.Kind.COMMA) !== null
                     if expect(Token.Kind.RPAREN, "')'") == null {

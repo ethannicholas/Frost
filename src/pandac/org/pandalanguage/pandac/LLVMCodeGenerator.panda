@@ -1325,6 +1325,14 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
+    function isNull(v:IR.Value):Bit {
+        match v {
+            when IR.Value.NULL:
+                return true
+        }
+        return false
+    }
+
     method writeBinary(id:IR.Statement.ID, left:IR.Value, op:Token.Kind, right:IR.Value,
             type:Type) {
         def llvmOp:String
@@ -1391,21 +1399,21 @@ class LLVMCodeGenerator : CodeGenerator {
             when OpClass.CLASS:
                 match op {
                     when Token.Kind.IDENTITY:
-                        if left = IR.Value.NULL {
+                        if isNull(left) {
                             writeIsNull(id, right)
                             return
                         }
-                        if right = IR.Value.NULL {
+                        if isNull(right) {
                             writeIsNull(id, left)
                             return
                         }
                         llvmOp := "icmp eq"
                     when Token.Kind.NIDENTITY:
-                        if left = IR.Value.NULL {
+                        if isNull(left) {
                             writeIsNonNull(id, right)
                             return
                         }
-                        if right = IR.Value.NULL {
+                        if isNull(right) {
                             writeIsNonNull(id, left)
                             return
                         }
@@ -1624,9 +1632,9 @@ class LLVMCodeGenerator : CodeGenerator {
     }
 
     method writePointerDestroy(ptr:IR.Value) {
-        def ptr := getTypedReference(ptr)
+        def ptrRef := getTypedReference(ptr)
         def cast := nextVar()
-        out.printLine("\{cast} = bitcast \{ptr} to i8*")
+        out.printLine("\{cast} = bitcast \{ptrRef} to i8*")
         out.printLine("call void @pandaFree(i8* \{cast})")
     }
 
@@ -1639,6 +1647,28 @@ class LLVMCodeGenerator : CodeGenerator {
                 "\{base}, \{indexRef}")
         def result := nextVar()
         out.printLine("\{result} = load \{baseType}, \{baseType}* \{offset}")
+        refs[id] := result
+    }
+
+    method writePointerRealloc(id:IR.Statement.ID, ptr:IR.Value, oldCount:IR.Value,
+            newCount:IR.Value) {
+        def ptrRef := getTypedReference(ptr)
+        def cast := nextVar()
+        out.printLine("\{cast} = bitcast \{ptrRef} to i8*")
+        def oldCountRef := getTypedReference(oldCount)
+        def newCountRef := getTypedReference(newCount)
+        def elementSize := stride(ptr.type())
+        assert elementSize > 0, "invalid size for type \{ptr.type()}"
+        def oldSize := nextVar()
+        out.printLine("\{oldSize} = mul \{oldCountRef}, \{elementSize}")
+        def newSize := nextVar()
+        out.printLine("\{newSize} = mul \{newCountRef}, \{elementSize}")
+        def realloc := nextVar()
+        out.printLine("\{realloc} = (\{llvmType(ptr.type())}) @pandaRealloc(\{ptrRef}, " +
+                "\{SIZE_TYPE} \{oldSize}, \{SIZE_TYPE} \{newSize})")
+        def result := nextVar()
+        out.printLine("\{result} = bitcast i8* \{realloc} to " +
+                llvmType(Type.pointerTo(ptr.type())))
         refs[id] := result
     }
 
@@ -1743,6 +1773,8 @@ class LLVMCodeGenerator : CodeGenerator {
                 writePointerDestroy(ptr)
             when IR.Statement.POINTER_GET_INDEX(ptr, index):
                 writePointerGetIndex(id, ptr, index)
+            when IR.Statement.POINTER_REALLOC(ptr, oldCount, newCount):
+                writePointerRealloc(id, ptr, oldCount, newCount)
             when IR.Statement.POINTER_SET_INDEX(value, ptr, index):
                 writePointerSetIndex(value, ptr, index)
             when IR.Statement.RETURN(value):

@@ -721,6 +721,9 @@ class WriteNumbers {
         out.printLine()
         out.printLine("    @private")
         out.printLine("    @implicit")
+        if type = Type.INT64 {
+            out.printLine("    @priority(1)")
+        }
         out.printLine("    init(value:\{builtin(type)}) {")
         out.printLine("        self.value := value")
         out.printLine("    }")

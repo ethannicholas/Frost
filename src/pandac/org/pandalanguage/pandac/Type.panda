@@ -28,7 +28,7 @@ class Type : Symbol, Key<Type> {
 
     def typeKind:Kind
 
-    def subtypes:Array<Type>?
+    def subtypes:ImmutableArray<Type>?
 
     -- @priority from methods (0 if not a method / no @priority)
     def priority:Int
@@ -42,7 +42,8 @@ class Type : Symbol, Key<Type> {
         init(name, typeKind, position, false)
     }
 
-    @pre(typeKind != Kind.GENERIC_PARAMETER)
+    @pre(typeKind != Kind.GENERIC_PARAMETER & typeKind != Kind.METHOD & typeKind != Kind.FUNCTION &
+            typeKind != Kind.IMMUTABLE_METHOD & typeKind != Kind.IMMUTABLE_FUNCTION)
     init(name:String, typeKind:Kind, position:Position, resolved:Bit) {
         self.typeKind := typeKind
         self.position := position
@@ -51,7 +52,8 @@ class Type : Symbol, Key<Type> {
         super.init(Symbol.Kind.TYPE, position, name)
     }
 
-    @pre(typeKind != Kind.GENERIC_PARAMETER)
+    @pre(typeKind != Kind.GENERIC_PARAMETER & typeKind != Kind.METHOD & typeKind != Kind.FUNCTION &
+            typeKind != Kind.IMMUTABLE_METHOD & typeKind != Kind.IMMUTABLE_FUNCTION)
     init(name:String, typeKind:Kind, size:Int) {
         assert !name.endsWith("?")
         self.typeKind := typeKind
@@ -77,13 +79,14 @@ class Type : Symbol, Key<Type> {
         self.position := position
         self.resolved := resolved
         self.priority := priority
-        self.subtypes := Array<Type>(subtypes)
+        self.subtypes := ImmutableArray<Type>(subtypes)
         super.init(Symbol.Kind.TYPE, position, name)
+        panda.core.Panda.ref(self) -- FIXME hack yet another bootstrap memory management workaround
     }
 
     init(subtypes:ListView<Type>) {
         self.typeKind := Kind.UNRESOLVED
-        self.subtypes := Array<Type>(subtypes)
+        self.subtypes := ImmutableArray<Type>(subtypes)
         def name := MutableString("unresolved<")
         var separator := ""
         self.resolved := true
@@ -122,7 +125,7 @@ class Type : Symbol, Key<Type> {
         def subtypes := Array<Type>()
         subtypes.add(base)
         subtypes.addAll(arguments)
-        return Type(name.finish(), Kind.GENERIC, base.position, subtypes.finish(), resolved)
+        return Type(name.finish(), Kind.GENERIC, base.position, subtypes, resolved)
     }
 
     @class
@@ -516,6 +519,10 @@ class Type : Symbol, Key<Type> {
         return name.startsWith("panda.core.SteppedRange<")
     }
 
+    function isNullable():Bit {
+        return typeKind = Kind.NULLABLE
+    }
+
     function nullable():Type {
         if typeKind = Kind.NULLABLE {
             return self
@@ -607,9 +614,9 @@ class Type : Symbol, Key<Type> {
             def ancestors := HashSet<Type>()
             var t := self
             var cl := compiler.getClass(t1)
-            while cl != null {
+            while cl !== null {
                 ancestors.add(t)
-                if cl.rawSuper != null {
+                if cl.rawSuper !== null {
                     t := compiler.remapType(t, cl.rawSuper)
                     cl := compiler.getClass(t)
                 }
@@ -619,11 +626,11 @@ class Type : Symbol, Key<Type> {
             }
             t := other
             cl := compiler.getClass(t2)
-            while cl != null {
+            while cl !== null {
                 if ancestors.contains(t) {
                     return t
                 }
-                if cl.rawSuper != null {
+                if cl.rawSuper !== null {
                     t := compiler.remapType(t, cl.rawSuper)
                     cl := compiler.getClass(t)
                 }
@@ -644,7 +651,7 @@ class Type : Symbol, Key<Type> {
         match typeKind {
             when Kind.GENERIC_PARAMETER:
                 def found := types[name]
-                if found != null {
+                if found !== null {
                     return found
                 }
                 return self

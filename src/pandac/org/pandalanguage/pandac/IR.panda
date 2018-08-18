@@ -108,9 +108,9 @@ class IR {
         POINTER_OFFSET(Value -* pointer *-, Value -* index *-)
 
         ============================================================================================
-        Equivalent to the C realloc function.
+        Equivalent to the C realloc function (other than additionally requiring the old size).
         ============================================================================================
-        POINTER_REALLOC(Value -* pointer *-, Value -* size *-)
+        POINTER_REALLOC(Value -* pointer *-, Value -* oldSize *-, Value -* newSize *-)
 
         ============================================================================================
         Writes to a raw pointer.
@@ -206,8 +206,8 @@ class IR {
                     return "pointer_get_index \{ptr}, \{index}"
                 when POINTER_OFFSET(ptr, index):
                     return "pointer_offset \{ptr}, \{index}"
-                when POINTER_REALLOC(ptr, size):
-                    return "pointer_realloc \{ptr}, \{size}"
+                when POINTER_REALLOC(ptr, oldSize, newSize):
+                    return "pointer_realloc \{ptr}, \{oldSize}, \{newSize}"
                 when POINTER_SET(value, ptr):
                     return "pointer_set \{value}, \{ptr}"
                 when POINTER_SET_INDEX(value, ptr, index):
@@ -310,6 +310,7 @@ class IR {
                     return type
                 when STRING:
                     return Type.StringType()
+
                 when METHOD(_, m):
                     return m.type()
                 when METHODS:
@@ -342,6 +343,7 @@ class IR {
                     return "REF(\{id}:\{type})"
                 when STRING(s):
                     return s.format("panda")
+
                 when METHOD(target, m):
                     if target !== null {
                         return "METHOD(\{target}, \{m.declaration()})"
@@ -352,6 +354,8 @@ class IR {
                         return "METHODS(\{target}, \{m})"
                     }
                     return "METHODS(<null>, \{m})"
+                when SUPER(type):
+                    return "SUPER(\{type})"
                 when TYPE(type):
                     return type.convert()
             }

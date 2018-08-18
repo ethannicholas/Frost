@@ -183,10 +183,12 @@ class Compiler {
 
         @override
         method cleanup() {
-            for v in compiler.statementUnrefs {
-                compiler.compileUnref(v)
+            if !compiler.ir.currentBlockFinished() {
+                for v in compiler.statementUnrefs {
+                    compiler.compileUnref(v)
+                }
+                compiler.statementUnrefs := old
             }
-            compiler.statementUnrefs := old
         }
     }
 
@@ -279,6 +281,9 @@ class Compiler {
 
     @private
     var symbolTable:SymbolTable
+
+    @private
+    var methodSymbolTable:SymbolTable
 
     @private
     def codeGenerator:CodeGenerator
@@ -657,7 +662,7 @@ class Compiler {
     @pre(cl.classKind = ClassDecl.Kind.CHOICE)
     method createChoiceEqualsIfNeeded(cl:ClassDecl) {
         def equatable := getClass("panda.core.Equatable")
-        assert equatable != null
+        assert equatable !== null
         for cc in cl.choiceCases {
             assert cc.resolved != Resolution.UNRESOLVED
             if cc.resolved != Resolution.RESOLVED {
@@ -685,7 +690,6 @@ class Compiler {
         body.add(ASTNode.RETURN(p, ASTNode.BIT(p, true)))
         def eq := MethodDecl(cl, p, null, Annotations(Annotations.Flag.OVERRIDE),
                 MethodDecl.Kind.FUNCTION, "=", null, parameters, Type.Bit(), body.finish())
-        Console.printLine("need to check choice fields")
         cl.methods.add(eq)
     }
 
@@ -1188,7 +1192,6 @@ class Compiler {
                 return getClass(Type.Method())
             otherwise:
                 error(type.position, "type '\{type}' is not a class")
-                System.crash()
                 return null
         }
         if result !== null & result.annotations.isSpecialize() {
@@ -1442,6 +1445,8 @@ class Compiler {
                             ASTNode.DOT(p, ASTNode.IR_WRAPPER(p, target), operatorName(op)),
                             ImmutableArray<ASTNode>()))
                 }
+            when ASTNode.REAL:
+                return Type.Real64()
             when ASTNode.STRING:
                 return Type.StringType()
         }
@@ -1454,7 +1459,11 @@ class Compiler {
         }
         def best := Array<Type>()
         def bestCost := Int.MAX
+        var foundInt := false
         for t in possible {
+            if t = Type.Int64() {
+                foundInt := true
+            }
             def cost := coercionCost(expr, t)
             assert cost !== null
             if cost < bestCost {
@@ -1468,6 +1477,9 @@ class Compiler {
         assert best.count != 0
         if best.count = 1 {
             return best[0]
+        }
+        if foundInt {
+            return Type.Int64()
         }
         return null
     }
@@ -1738,15 +1750,28 @@ class Compiler {
                 result.add(Type.ClassLiteral(cl.type))
             when Symbol.Kind.CHOICE_CASE:
                 def cc := s->ChoiceCase
-                result.add(cc.owner.type)
+                if cc.fields.count > 0 {
+                    result.add(Type.methodType(s.position, Type.Kind.IMMUTABLE_FUNCTION, cc.fields,
+                            cc.owner.type, 0))
+                }
+                else {
+                    result.add(cc.owner.type)
+                }
             when Symbol.Kind.FIELD:
                 def f := s->FieldDecl
                 if resolve(f) {
-                    if target !== null {
-                        result.add(remapType(target, f.type))
+                    def type:Type
+                    if f.annotations.isWeak() {
+                        type := f.type.subtypes[1]
                     }
                     else {
-                        result.add(f.type)
+                        type := f.type
+                    }
+                    if target !== null {
+                        result.add(remapType(target, type))
+                    }
+                    else {
+                        result.add(type)
                     }
                 }
                 else {
@@ -1915,12 +1940,51 @@ class Compiler {
     function binaryType(left:ASTNode, op:Token.Kind, right:ASTNode):ListView<Type>? {
         match op {
             when Token.Kind.CAST:
-                def type := tryResolveType(right)
-                if type == null {
+                def rawTarget := scanner.convertType(right)
+                def index := rawTarget.name.lastIndexOf(".")
+                if rawTarget.typeKind = Type.Kind.CLASS & index !== null {
+                    -- we have a dotted name which might not be entirely a type - for example we
+                    -- might have 'o->String.length'. This is obviously meant to be a cast to String
+                    -- followed by a call to get_length(), but syntactically it could just as easily
+                    -- be a cast to a class named String.length. We need to disambiguate these cases
+                    -- here.
+                    def old := reportErrors
+                    reportErrors := false
+                    def type := resolve(rawTarget)
+                    reportErrors := old
+                    if type == null {
+                        def base := binaryType(left, op,
+                                ASTNode.TYPE(rawTarget.position, rawTarget.name[..index]))
+                        if base == null {
+                            return null
+                        }
+                        def result := Array<Type>()
+                        for t in base {
+                            def types := dotTypes(t, rawTarget.name[rawTarget.name.next(index)..])
+                            if types !== null {
+                                result.addAll(types)
+                            }
+                        }
+                        if result.count = 0 {
+                            return null
+                        }
+                        return result
+                    }
+                }
+                def target := tryResolveType(right)
+                if target == null {
                     return null
                 }
-                if coercionCost(left, type) == null {
-                    if type.isBuiltinNumber() {
+                def types := possibleTypes(left)
+                var found := false
+                for t in types {
+                    if canCast(t, target) {
+                        found := true
+                        break
+                    }
+                }
+                if !found {
+                    if target.isBuiltinNumber() {
                         def preferred := preferredType(left)
                         if preferred == null | !preferred.isBuiltinNumber() {
                             return null
@@ -1931,7 +1995,7 @@ class Compiler {
                     }
                 }
                 def result := Array<Type>() -- FIXME literal
-                result.add(type)
+                result.add(target)
                 return result
             when Token.Kind.IDENTITY, Token.Kind.NIDENTITY:
                 def result := Array<Type>() -- FIXME literal
@@ -1992,9 +2056,9 @@ class Compiler {
     calls and field accesses against it. This is not always (nor could it reasonably be) an
     exhaustive list.
 
-    This method never generates errors.
+    This method does not generate errors for the expression in question, but may generate other
+    one-time errors (for instance, it may be unable to load a class or resolve a field).
     ================================================================================================
-    @post((@return == null | @return.count >= 1) & errorCount = @pre(errorCount))
     method possibleTypes(value:ASTNode):CollectionView<Type>? {
         match value {
             when ASTNode.AT_PRE(_, expr):
@@ -2377,11 +2441,11 @@ class Compiler {
             when ASTNode.BINARY(_, left, op, right):
                 match op {
                     when Token.Kind.CAST:
-                        def type := tryResolveType(right)
-                        if type == null {
+                        def types := possibleTypes(expr)
+                        if types == null {
                             return null
                         }
-                        return coercionCost(type, target)
+                        return coercionCost(types, target)
                     when Token.Kind.IDENTITY, Token.Kind.NIDENTITY:
                         return coercionCost(Type.Bit(), target)
                     otherwise:
@@ -2487,7 +2551,7 @@ class Compiler {
                 return null
             when ASTNode.PREFIX(position, op, operand):
                 def preferred := preferredType(operand)
-                if preferred != null & (preferred = Type.BuiltinBit() |
+                if preferred !== null & (preferred = Type.BuiltinBit() |
                         preferred.isBuiltinNumber()) {
                     return coercionCost(preferred, target)
                 }
@@ -3000,7 +3064,8 @@ class Compiler {
                 error(m.position, "expected '@default' method '\{m.name}' to have a body")
             }
         }
-        else if m.kind != MethodDecl.Kind.INIT & m.owner.classKind = ClassDecl.Kind.INTERFACE &
+        else if m.methodKind != MethodDecl.Kind.INIT &
+                m.owner.classKind = ClassDecl.Kind.INTERFACE &
                 !m.annotations.isClass() & m.body !== null {
             error(m.position, "non-abstract interface method '\{m.name}' must be annotated with " +
                     "'@default'")
@@ -3363,13 +3428,17 @@ class Compiler {
     method compileIntrinsic(target:IR.Value?, m:MethodRef,
             args:ListView<ASTNode>):Pair<Bit, IR.Value?> {
         if m.target.isPointer() | m.target.isClassLiteral() & m.target.subtypes[1].isPointer() {
-            def pointerType:Type
+            def pointerType:Type?
             if m.target.isPointer() {
-                pointerType := m.target.subtypes[1]
+                pointerType := resolve(m.target.subtypes[1])
             }
             else {
-                pointerType := m.target.subtypes[1].subtypes[1]
+                pointerType := resolve(m.target.subtypes[1].subtypes[1])
             }
+            if pointerType == null {
+                return Pair<Bit, IR.Value?>(false, null)
+            }
+            Console.printLine(pointerType)
             assert m.target.typeKind = Type.Kind.GENERIC
             match m.value.name {
                 when "alloc":
@@ -3387,12 +3456,17 @@ class Compiler {
                     return Pair<Bit, IR.Value?>(true, null)
                 when "realloc":
                     assert target !== null
-                    def count := compileExpression(args[0], TypeContext.TYPE(Type.Int64()))
-                    if count == null {
+                    def oldCount := compileExpression(args[0], TypeContext.TYPE(Type.Int64()))
+                    if oldCount == null {
+                        return Pair<Bit, IR.Value?>(false, null)
+                    }
+                    def newCount := compileExpression(args[1], TypeContext.TYPE(Type.Int64()))
+                    if newCount == null {
                         return Pair<Bit, IR.Value?>(false, null)
                     }
                     def realloc := ir.add(IR.Statement.POINTER_REALLOC(target,
-                                extractBuiltinInt(count)))
+                            extractBuiltinInt(oldCount),
+                            extractBuiltinInt(newCount)))
                     return Pair<Bit, IR.Value?>(true,
                             IR.Value.REF(realloc, Type.pointerTo(pointerType)))
                 when "get":
@@ -3555,8 +3629,12 @@ class Compiler {
         return call(position, ref, args, type)
     }
 
+    @post(@return == null | @return.first.count > 0)
     method findBestMethod(position:Position, target:IR.Value?, methods:ListView<MethodDecl>,
             args:ListView<ASTNode>, type:TypeContext):Pair<ListView<MethodRef>, Int>? {
+        if methods.count = 0 {
+            return null
+        }
         var bestCost := Int.MAX
         var best := Array<MethodRef>()
         outer: for m in methods {
@@ -3609,9 +3687,6 @@ class Compiler {
         if best.count = 0 {
             return null
         }
-        if best.count > 1 {
-            Console.printLine("ambiguous \{methods[0].name}(\{args}): \{best}")
-        }
         return Pair<ListView<MethodRef>, Int>(best, bestCost)
     }
 
@@ -3656,15 +3731,21 @@ class Compiler {
         }
         def st := getSymbolTable(getClass(methodType))
         def pointerField := st["pointer"]->FieldDecl
+        if !resolve(pointerField) {
+            return null
+        }
         def methodObj := cast(m, methodType)
         def methodPtrPtr := ir.add(IR.Statement.GET_FIELD_POINTER(methodObj, pointerField))
         def methodPtr := ir.add(IR.Statement.LOAD(IR.Value.REF(methodPtrPtr,
                 Type.pointerTo(Type.Int8()))))
         def targetField := st["target"]->FieldDecl
+        if !resolve(targetField) {
+            return null
+        }
         def targetPtr := ir.add(IR.Statement.GET_FIELD_POINTER(methodObj, targetField))
         def target := ir.add(IR.Statement.LOAD(IR.Value.REF(targetPtr, targetType)))
         def targetNonNull := ir.add(IR.Statement.BINARY(IR.Value.REF(target, targetType),
-                Token.Kind.NIDENTITY, IR.Value.NULL(targetType), Type.BuiltinBit()))
+                Token.Kind.NIDENTITY, IR.Value.NULL(targetType.nullable()), Type.BuiltinBit()))
         def haveTargetBlock := ir.newBlock("dynamic call with target")
         def noTargetBlock := ir.newBlock("dynamic call without target")
         def mergeBlock := ir.newBlock("dynamic call merge")
@@ -3729,7 +3810,7 @@ class Compiler {
                 }
                 else {
                     def found := findType(currentClass[0].type, m.owner)
-                    assert found != null,
+                    assert found !== null,
                             "could not find \{currentClass[0].type} in \{m.owner.name}"
                     targetType := found
                 }
@@ -3769,7 +3850,7 @@ class Compiler {
                 return callMethodObject(position, m, args, type)
             when IR.Value.TYPE(t):
                 def finalType:Type
-                if t.typeKind = Type.Kind.GENERIC & t.subtypes[0] = Type.Class() {
+                if t.isClassLiteral() {
                     finalType := t.subtypes[1]
                 }
                 else {
@@ -4153,10 +4234,7 @@ class Compiler {
         }
         match op {
             when Token.Kind.CAST:
-                def target := resolve(scanner.convertType(right))
-                if target == null {
-                    return null
-                }
+                def target := scanner.convertType(right)
                 return coerce(position, compileCast(position, left, target), type)
             when Token.Kind.IDENTITY, Token.Kind.NIDENTITY:
                 return compileIdentityComparison(position, left, op, right, type)
@@ -4207,7 +4285,7 @@ class Compiler {
                         compiledLeft.type().isBuiltinNumber()) {
                     def resultType := preferredType(ASTNode.BINARY(position, left, op,
                              right))
-                    if resultType != null {
+                    if resultType !== null {
                         def result := ir.add(IR.Statement.BINARY(compiledLeft, op,
                                 compiledRight, resultType))
                         return coerce(position, IR.Value.REF(result, resultType), type)
@@ -4220,7 +4298,7 @@ class Compiler {
         }
     }
 
-    method compileChoiceCaseReference(position:Position, cc:ChoiceCase,
+    method compileChoiceCaseReference(position:Position, owner:Type, cc:ChoiceCase,
             args:ImmutableArray<ASTNode>, type:TypeContext):IR.Value? {
         resolve(cc)
         def initMethod := cc.initMethod
@@ -4239,7 +4317,7 @@ class Compiler {
         }
         else {
             def construct := ir.add(IR.Statement.CONSTRUCT(cc.owner))
-            def constructRef := IR.Value.REF(construct, cc.owner.type)
+            def constructRef := IR.Value.REF(construct, owner)
             statementUnrefs.add(constructRef)
             call(position, symbolRef(position, constructRef, initMethod), finalArgs,
                     TypeContext.UNSPECIFIED)
@@ -4248,26 +4326,26 @@ class Compiler {
     }
 
     ================================================================================================
-    If `node` is a reference to a [ChoiceCase], returns it. Otherwise, returns `null`.
+    If `node` is a reference to a [ChoiceCase], returns it. Otherwise, returns `null` without
+    reporting an error.
     ================================================================================================
-    method getChoiceCase(node:ASTNode):ChoiceCase? {
+    method getChoiceCase(node:ASTNode):Pair<Type, ChoiceCase>? {
         match node {
             when ASTNode.IDENTIFIER(_, text):
                 if currentClass[0].classKind = ClassDecl.Kind.CHOICE {
                     def s := getSymbolTable(currentClass[0])[text]
                     if s !== null & s.kind = Symbol.Kind.CHOICE_CASE {
-                        return s->ChoiceCase
+                        return Pair<Type, ChoiceCase>(currentClass[0].type, s->ChoiceCase)
                     }
                 }
             when ASTNode.DOT(_, base, text):
                 def baseType := preferredType(base)
-                if baseType !== null & baseType.typeKind = Type.Kind.GENERIC &
-                        baseType.subtypes[0] = Type.Class() {
+                if baseType !== null & baseType.isClassLiteral() {
                     def cl := getClass(baseType.subtypes[1])
                     if cl !== null & cl.classKind = ClassDecl.Kind.CHOICE {
                         def s := getSymbolTable(cl)[text]
                         if s !== null & s.kind = Symbol.Kind.CHOICE_CASE {
-                            return s->ChoiceCase
+                            return Pair<Type, ChoiceCase>(baseType.subtypes[1], s->ChoiceCase)
                         }
                     }
                 }
@@ -4287,7 +4365,7 @@ class Compiler {
         }
         def cc := getChoiceCase(m)
         if cc !== null {
-            return compileChoiceCaseReference(position, cc, args, type)
+            return compileChoiceCaseReference(position, cc.first, cc.second, args, type)
         }
         match m {
             when ASTNode.DOT(position, base, name):
@@ -4317,7 +4395,30 @@ class Compiler {
         return call(position, compiledM, args, type)
     }
 
-    method compileCast(position:Position, value:ASTNode, target:Type):IR.Value? {
+    method compileCast(position:Position, value:ASTNode, rawTarget:Type):IR.Value? {
+        def index := rawTarget.name.lastIndexOf(".")
+        if rawTarget.typeKind = Type.Kind.CLASS & index !== null {
+            -- we have a dotted name which might not be entirely a type - for example we might have
+            -- 'o->String.length'. This is obviously meant to be a cast to String followed by a
+            -- call to get_length(), but syntactically it could just as easily be a cast to a class
+            -- named String.length. We need to disambiguate these cases here.
+            def old := reportErrors
+            reportErrors := false
+            def type := resolve(rawTarget)
+            reportErrors := old
+            if type == null {
+                def base := compileCast(position, value,
+                        Type(rawTarget.name[..index], Type.Kind.CLASS, position))
+                if base == null {
+                    return null
+                }
+                return compileDot(position, base, rawTarget.name[rawTarget.name.next(index)..])
+            }
+        }
+        def target := resolve(rawTarget)
+        if target == null {
+            return null
+        }
         if coercionCost(value, target) !== null {
             return compileExpression(value, TypeContext.TYPE(target))
         }
@@ -4333,11 +4434,11 @@ class Compiler {
         for p in rawParameters {
             match p {
                 when ASTNode.PARAMETER(_, name, type):
-                    def type := resolve(scanner.convertType(type))
-                    if type == null {
+                    def resolved := resolve(scanner.convertType(type))
+                    if resolved == null {
                         return null
                     }
-                    parameters.add(MethodDecl.Parameter(name, type))
+                    parameters.add(MethodDecl.Parameter(name, resolved))
                 otherwise:
                     assert false
             }
@@ -4481,6 +4582,14 @@ class Compiler {
         return null
     }
 
+    function isNull(v:IR.Value):Bit {
+        match v {
+            when IR.Value.NULL:
+                return true
+        }
+        return false
+    }
+
     @pre(op = Token.Kind.IDENTITY | op = Token.Kind.NIDENTITY)
     method compileIdentityComparison(position:Position, left:ASTNode, op:Token.Kind, right:ASTNode,
             type:TypeContext):IR.Value? {
@@ -4492,7 +4601,7 @@ class Compiler {
         if compiledRight == null {
             return null
         }
-        if compiledLeft.type().typeKind != Type.Kind.NULLABLE & compiledRight = IR.Value.NULL {
+        if compiledLeft.type().typeKind != Type.Kind.NULLABLE & isNull(compiledRight) {
             if op = Token.Kind.IDENTITY {
                 return coerce(position, coerce(position, IR.Value.BIT(false),
                         TypeContext.TYPE(Type.Bit())), type)
@@ -4500,7 +4609,7 @@ class Compiler {
             return coerce(position, coerce(position, IR.Value.BIT(true),
                     TypeContext.TYPE(Type.Bit())), type)
         }
-        if compiledRight.type().typeKind != Type.Kind.NULLABLE & compiledLeft = IR.Value.NULL {
+        if compiledRight.type().typeKind != Type.Kind.NULLABLE & isNull(compiledLeft) {
             if op = Token.Kind.IDENTITY {
                 return coerce(position, coerce(position, IR.Value.BIT(false),
                         TypeContext.TYPE(Type.Bit())), type)
@@ -4514,8 +4623,8 @@ class Compiler {
                     "'\{compiledLeft.type()}' and '\{compiledRight.type()}'")
             return null
         }
-        if isValue(compiledLeft.type()) & compiledRight != IR.Value.NULL |
-                isValue(compiledRight.type()) & compiledLeft != IR.Value.NULL {
+        if isValue(compiledLeft.type()) & !isNull(compiledRight) |
+                isValue(compiledRight.type()) & !isNull(compiledLeft) {
             error(position, "'\{operatorName(op)}' cannot operate on value types")
             return null
         }
@@ -4683,14 +4792,14 @@ class Compiler {
             error(position, "range endpoints must be value types, but found '\{endpointType}'")
         }
         if compiledStart == null {
-            if endpointType.typeKind != Type.Kind.NULLABLE {
+            if !endpointType.isNullable() {
                 error(position, "expected '\{endpointType}', but found 'null'")
                 return null
             }
             compiledStart := IR.Value.NULL(endpointType)
         }
         if compiledEnd == null {
-            if endpointType.typeKind != Type.Kind.NULLABLE {
+            if !endpointType.isNullable() {
                 error(position, "expected '\{endpointType}', but found 'null'")
                 return null
             }
@@ -5128,11 +5237,18 @@ class Compiler {
                 }
             }
             rawType := field.type
-            if self.target !== null {
-                effectiveType := compiler.remapType(self.target.type(), rawType)
+            def base:Type
+            if field.annotations.isWeak() {
+                base := rawType.subtypes[1]
             }
             else {
-                effectiveType := rawType
+                base := rawType
+            }
+            if self.target !== null {
+                effectiveType := compiler.remapType(self.target.type(), base)
+            }
+            else {
+                effectiveType := base
             }
             if self.target !== null {
                 self.target := compiler.coerce(position, self.target, field.owner.type)
@@ -5173,19 +5289,35 @@ class Compiler {
                 }
                 result := IR.Value.REF(load, rawType)
             }
-            if effectiveType != rawType {
+            if field.annotations.isWeak() {
+                def auto := AutoUnrefs(compiler)
+                result := compiler.call(position, result, "get", ImmutableArray<ASTNode>(),
+                        TypeContext.UNSPECIFIED)
+            }
+            if effectiveType != result.type() {
                 result := compiler.cast(result, effectiveType)
             }
             return result
         }
 
         @override
-        method compileStore(value:IR.Value) {
+        method compileStore(rawValue:IR.Value) {
             if target == null {
                 -- should have already reported an error
                 return
             }
             def cast:IR.Value
+            def value:IR.Value
+            if field.annotations.isWeak() {
+                def args := Array<ASTNode>() -- FIXME literal
+                args.add(ASTNode.IR_WRAPPER(position, rawValue))
+                value := compiler.compileExpression(ASTNode.CALL(position,
+                        ASTNode.IR_WRAPPER(position, IR.Value.TYPE(Type.WeakOf(effectiveType))),
+                        args.finish()))
+            }
+            else {
+                value := rawValue
+            }
             if effectiveType != rawType {
                 cast := compiler.cast(value, rawType)
                 if cast == null {
@@ -5202,13 +5334,49 @@ class Compiler {
                         TypeContext.TYPE(rawType))
             }
             else {
-                if compiler.isRefCounted(type()) {
-                    compiler.compileUnref(compileLoad())
+                if compiler.isRefCounted(rawType) {
+                    compileUnref()
                     compiler.compileRef(value)
                 }
                 def ptr := IR.Value.REF(compiler.ir.add(IR.Statement.GET_FIELD_POINTER(target,
                         field)), rawType)
                 compiler.ir.add(IR.Statement.STORE(cast, ptr))
+            }
+        }
+
+        method compileUnref() {
+            var result:IR.Value
+            if field.fieldKind = FieldDecl.Kind.PROPERTY {
+                return
+            }
+            def load:IR.Statement.ID
+            if compiler.isValue(field.owner) {
+                load := compiler.ir.add(IR.Statement.EXTRACT_FIELD(target, field))
+            }
+            else {
+                def ptr := compiler.ir.add(IR.Statement.GET_FIELD_POINTER(target, field))
+                load := compiler.ir.add(IR.Statement.LOAD(IR.Value.REF(ptr, rawType)))
+            }
+            result := IR.Value.REF(load, rawType)
+            if field.annotations.isWeak() {
+                def nonNullBlock := compiler.ir.newBlock("unref non-null")
+                def mergeBlock := compiler.ir.newBlock("unref merge")
+                def nonNullTest := compiler.ir.add(IR.Statement.BINARY(result, Token.Kind.NIDENTITY,
+                        IR.Value.NULL(rawType.nullable()), Type.BuiltinBit()))
+                compiler.ir.add(IR.Statement.CONDITIONAL_BRANCH(IR.Value.REF(nonNullTest,
+                        Type.BuiltinBit()), nonNullBlock, mergeBlock))
+                compiler.ir.setCurrentBlock(nonNullBlock)
+                {
+                    def auto := AutoUnrefs(compiler)
+                    def get := compiler.call(position, result, "get", ImmutableArray<ASTNode>(),
+                            TypeContext.UNSPECIFIED)
+                    compiler.compileUnref(get)
+                }
+                compiler.ir.add(IR.Statement.BRANCH(mergeBlock))
+                compiler.ir.setCurrentBlock(mergeBlock)
+            }
+            else {
+                compiler.compileUnref(result)
             }
         }
     }
@@ -5361,19 +5529,27 @@ class Compiler {
                 return ChoiceFieldLValue(self, compiledBase, cc, index)
             when ASTNode.DOT(_, base, name):
                 def compiledBase:IR.Value
-                if base = ASTNode.SELF & isValue(currentClass[0]) {
-                    if currentMethod[0].methodKind != MethodDecl.Kind.INIT {
-                        error(expr.position(),
-                                "cannot modify value fields outside of an init method")
-                        return null
-                    }
-                    compiledBase := IR.Value.LOCAL(0, currentClass[0].type)
-                }
-                else {
-                    compiledBase := compileExpression(base)
-                    if compiledBase == null {
-                        return null
-                    }
+                match base {
+                    when ASTNode.SELF:
+                        if isValue(currentClass[0]) {
+                            if currentMethod[0].methodKind != MethodDecl.Kind.INIT {
+                                error(expr.position(),
+                                        "cannot modify value fields outside of an init method")
+                                return null
+                            }
+                            compiledBase := IR.Value.LOCAL(0, currentClass[0].type)
+                        }
+                        else {
+                            compiledBase := compileExpression(base)
+                            if compiledBase == null {
+                                return null
+                            }
+                        }
+                    otherwise:
+                        compiledBase := compileExpression(base)
+                        if compiledBase == null {
+                            return null
+                        }
                 }
                 def cl := getClass(compiledBase.type())
                 if cl == null {
@@ -5501,7 +5677,6 @@ class Compiler {
     }
 
     method compileBreak(position:Position, label:String?) {
-        ir.add(IR.Statement.COMMENT("break"))
         def l := findAndLeaveLoopScope(position, label)
         if l !== null {
             match l {
@@ -5636,8 +5811,7 @@ class Compiler {
             otherwise:
                 assert false
         }
-        def indexType := range.type().subtypes[1]
-        assert indexType.typeKind != Type.Kind.NULLABLE
+        def indexType := range.type().subtypes[1].nonnullable()
         def rangeClass := getClass(range.type())
         if rangeClass == null {
             return
@@ -5645,15 +5819,15 @@ class Compiler {
         def rangeFields := instanceFields(rangeClass)
 
         -- extract start value from range
-        def start := IR.Value.REF(ir.add(IR.Statement.EXTRACT_FIELD(range, rangeFields[0])),
-                indexType)
+        def start := coerce(position, IR.Value.REF(ir.add(IR.Statement.EXTRACT_FIELD(range,
+                rangeFields[0])), range.type().subtypes[1]), indexType)
 
         -- store start value
         ir.add(IR.Statement.STORE(start, IR.Value.LOCAL(indexSlot, indexType)))
 
         -- extract end value from range
-        def end := IR.Value.REF(ir.add(IR.Statement.EXTRACT_FIELD(range, rangeFields[1])),
-                indexType)
+        def end := coerce(position, IR.Value.REF(ir.add(IR.Statement.EXTRACT_FIELD(range,
+                rangeFields[1])), range.type().subtypes[1]), indexType)
 
         -- extract inclusive / exclusive from range
         def inclusive := extractBuiltinBit(IR.Value.REF(ir.add(IR.Statement.EXTRACT_FIELD(range,
@@ -5823,7 +5997,6 @@ class Compiler {
             if stepType.name.startsWith("panda.core.Int") {
                 def args := Array<ASTNode>() -- FIXME literal
                 args.add(ASTNode.INT(position, 0))
-                Console.printLine("checking \{step} >= \{args}")
                 direction := extractBuiltinBit(call(position, step, ">=", args,
                         TypeContext.TYPE(Type.Bit())))
             }
@@ -5998,10 +6171,10 @@ class Compiler {
             otherwise:
                 def preferred := preferredType(rawList)
                 var type := TypeContext.NON_VOID
-                if preferred != null & preferred.isRange() {
+                if preferred !== null & preferred.isRange() {
                     type := TypeContext.TYPE(Type.RangeOf(preferred.subtypes[1].nonnullable()))
                 }
-                else if preferred != null & preferred.isSteppedRange() {
+                else if preferred !== null & preferred.isSteppedRange() {
                     type := TypeContext.TYPE(Type.SteppedRangeOf(
                             preferred.subtypes[1].nonnullable(), preferred.subtypes[2]))
                 }
@@ -6058,11 +6231,11 @@ class Compiler {
 
     method compileFor(position:Position, label:String?, rawTarget:ASTNode, rawList:ASTNode,
             statements:ListView<ASTNode>) {
-        if rawList = ASTNode.RANGE {
-            -- need to resolve unresolved range in terms of its target, as for i:Int8 in 0 .. 10 and
-            -- for i:Int64 in 0 .. 10 result in different kinds of ranges
-            compileRangeFor(position, label, rawTarget, rawList, statements)
-            return
+        match rawList {
+            when ASTNode.RANGE:
+                -- need to resolve unresolved range in terms of its target, as for i:Int8 in 0 .. 10
+                -- and for i:Int64 in 0 .. 10 result in different kinds of ranges
+                compileRangeFor(position, label, rawTarget, rawList, statements)
         }
         def list := compileExpression(rawList)
         if list == null {
@@ -6239,12 +6412,12 @@ class Compiler {
 
     method compileDeclaration(position:Position, target:ASTNode, value:ASTNode?,
             varKind:Variable.Kind) {
-        def target := compileTarget(target, varKind, value, null)
-        if target == null {
+        def compiledTarget := compileTarget(target, varKind, value, null)
+        if compiledTarget == null {
             return
         }
-        if target.second !== null {
-            VariableLValue(self, target.first).compileStore(target.second)
+        if compiledTarget.second !== null {
+            VariableLValue(self, compiledTarget.first).compileStore(compiledTarget.second)
         }
     }
 
@@ -6289,55 +6462,61 @@ class Compiler {
                         match t {
                             when ASTNode.CALL(position, base, args):
                                 def cc := getChoiceCase(base)
-                                if checkChoiceMatch(base.position(), cc, choiceClass, value) {
-                                    if tests.count != 1 {
-                                        error(position, "destructuring choice 'when' cannot be " +
-                                                "used together with other 'when' comparisons")
-                                        return
-                                    }
-                                    if args.count != cc.fields.count {
-                                        error(position, "choice '\{cc}' requires " +
-                                                cc.fields.count +
-                                                " argument\{cc.fields.count = 1:|s}, but found " +
-                                                args.count)
-                                        return
-                                    }
-                                    if choiceRawValue == null {
-                                        error(position, "'\{value.type()}' is not an instance " +
-                                                "of '\{cc.owner.name}'")
-                                        return
-                                    }
-                                    def eqArgs := Array<ASTNode>() -- FIXME literal
-                                    eqArgs.add(ASTNode.INT(base.position(), cc.rawValue.convert()))
-                                    def test := call(base.position(), choiceRawValue, "=", eqArgs,
-                                            TypeContext.TYPE(Type.Bit()))
-                                    assert test !== null
-                                    ir.add(IR.Statement.CONDITIONAL_BRANCH(extractBuiltinBit(test),
-                                            testSuccess, nextBlock))
-                                    ir.setCurrentBlock(testSuccess)
-                                    for i in 0 .. args.count {
-                                        def ptr := ir.add(IR.Statement.GET_CHOICE_FIELD_POINTER(
-                                                value, cc, i))
-                                        def load := ir.add(IR.Statement.LOAD(IR.Value.REF(ptr,
-                                                cc.fields[i])))
-                                        if getText(args[i]) = "_" {
-                                            continue
+                                if cc !== null {
+                                    if checkChoiceMatch(base.position(), cc.second, choiceClass,
+                                            value) {
+                                        if tests.count != 1 {
+                                            error(position, "destructuring choice 'when' cannot " +
+                                                    "be used together with other 'when' " +
+                                                    "comparisons")
+                                            return
                                         }
-                                        def target := compileTarget(args[i], Variable.Kind.DEF,
-                                                ASTNode.IR_WRAPPER(position,
-                                                        IR.Value.REF(load, cc.fields[i])),
-                                                        null)
-                                        VariableLValue(self, target.first).compileStore(
-                                                IR.Value.REF(load, cc.fields[i]))
+                                        if args.count != cc.second.fields.count {
+                                            error(position, "choice '\{cc.second}' requires " +
+                                                    cc.second.fields.count +
+                                                    " argument\{cc.second.fields.count = 1:|s}, " +
+                                                    "but found " + args.count)
+                                            return
+                                        }
+                                        if choiceRawValue == null {
+                                            error(position, "'\{value.type()}' is not an " +
+                                                    "instance of '\{cc.second.owner.name}'")
+                                            return
+                                        }
+                                        def eqArgs := Array<ASTNode>() -- FIXME literal
+                                        eqArgs.add(ASTNode.INT(base.position(),
+                                                cc.second.rawValue.convert()))
+                                        def test := call(base.position(), choiceRawValue, "=",
+                                                eqArgs, TypeContext.TYPE(Type.Bit()))
+                                        assert test !== null
+                                        ir.add(IR.Statement.CONDITIONAL_BRANCH(
+                                                extractBuiltinBit(test), testSuccess, nextBlock))
+                                        ir.setCurrentBlock(testSuccess)
+                                        for i in 0 .. args.count {
+                                            def ptr := ir.add(IR.Statement.GET_CHOICE_FIELD_POINTER(
+                                                    value, cc.second, i))
+                                            def load := ir.add(IR.Statement.LOAD(IR.Value.REF(ptr,
+                                                    cc.second.fields[i])))
+                                            if getText(args[i]) = "_" {
+                                                continue
+                                            }
+                                            def target := compileTarget(args[i], Variable.Kind.DEF,
+                                                    ASTNode.IR_WRAPPER(position,
+                                                            IR.Value.REF(load,
+                                                                cc.second.fields[i])),
+                                                            null)
+                                            VariableLValue(self, target.first).compileStore(
+                                                    IR.Value.REF(load, cc.second.fields[i]))
+                                        }
+                                        continue
                                     }
-                                    continue
                                 }
                         }
                         def test:IR.Value?
                         def cc := getChoiceCase(t)
                         if cc !== null {
                             def args := Array<ASTNode>() -- FIXME literal
-                            args.add(ASTNode.INT(t.position(), cc.rawValue.convert()))
+                            args.add(ASTNode.INT(t.position(), cc.second.rawValue.convert()))
                             test := call(t.position(), choiceRawValue, "=", args,
                                     TypeContext.TYPE(Type.Bit()))
                             if test == null {
@@ -6686,6 +6865,7 @@ class Compiler {
     }
 
     method compilePostconditions() {
+        def auto := AutoScope(self, methodSymbolTable)
         def m := currentMethod[0]
         var success:IR.Block.ID? := null
         var fail:IR.Block.ID? := null
@@ -6782,6 +6962,7 @@ class Compiler {
             ir := IR()
             {
                 def auto := AutoScope(self)
+                methodSymbolTable := symbolTable
                 if enclosingContext !== null {
                     symbolTable.parents.add(enclosingContext)
                 }

@@ -91,8 +91,8 @@ class CCodeGenerator : CodeGenerator {
         }
     }
 
-    @pre(t.resolved)
     method cType(t:Type):String {
+        assert t.resolved, "unresolved type \{t}"
         if t.isClass() {
             def cl := compiler.getClass(t)
             assert cl !== null
@@ -628,8 +628,9 @@ class CCodeGenerator : CodeGenerator {
     }
 
     function getName(v:Variable):String {
-        if v.storage = Variable.Storage.PARAMETER {
-            return "p_\{v.name}"
+        match v.storage {
+            when Variable.Storage.PARAMETER:
+                return "p_\{v.name}"
         }
         var result := variableNames[v]
         if result == null {
@@ -916,7 +917,7 @@ class CCodeGenerator : CodeGenerator {
     }
 
     method getNullReference(t:Type):String {
-        assert t.typeKind = Type.Kind.NULLABLE
+        assert t.typeKind = Type.Kind.NULLABLE, "not nullable: \{t}"
         def cl := compiler.getClass(t.subtypes[0])
         assert cl !== null
         if compiler.isValue(cl) {
@@ -1029,9 +1030,9 @@ class CCodeGenerator : CodeGenerator {
                 cOp := "<<"
             when Token.Kind.SHIFTRIGHT:
                 cOp := ">>"
-            when Token.Kind.BITWISEAND:
+            when Token.Kind.AND, Token.Kind.BITWISEAND:
                 cOp := "&"
-            when Token.Kind.BITWISEOR:
+            when Token.Kind.OR, Token.Kind.BITWISEOR:
                 cOp := "|"
             when Token.Kind.XOR, Token.Kind.BITWISEXOR: 
                 cOp := "^"
@@ -1168,6 +1169,18 @@ class CCodeGenerator : CodeGenerator {
         refs[id] := result
     }
 
+    method writeNegate(id:IR.Statement.ID, value:IR.Value) {
+        def result := nextVar()
+        out.printLine("\{cType(value.type())} \{result} = !\{getReference(value)};")
+        refs[id] := result
+    }
+
+    method writeNot(id:IR.Statement.ID, value:IR.Value) {
+        def result := nextVar()
+        out.printLine("\{cType(value.type())} \{result} = -\{getReference(value)};")
+        refs[id] := result
+    }
+
     method writePointerAlloc(id:IR.Statement.ID, count:IR.Value, type:Type) {
         def countRef := getReference(count)
         def elementSize := stride(type)
@@ -1182,9 +1195,9 @@ class CCodeGenerator : CodeGenerator {
     }
 
     method writePointerDestroy(ptr:IR.Value) {
-        def ptr := getReference(ptr)
+        def ptrRef := getReference(ptr)
         def cast := nextVar()
-        out.printLine("\{cast} = bitcast \{ptr} to i8*")
+        out.printLine("\{cast} = bitcast \{ptrRef} to i8*")
         out.printLine("call void @pandaFree(i8* \{cast})")
     }
 
@@ -1197,6 +1210,27 @@ class CCodeGenerator : CodeGenerator {
                 "\{base}, \{indexRef}")
         def result := nextVar()
         out.printLine("\{result} = load \{baseType}, \{baseType}* \{offset}")
+        refs[id] := result
+    }
+
+    method writePointerOffset(id:IR.Statement.ID, ptr:IR.Value, offset:IR.Value) {
+        def base := getReference(ptr)
+        def offsetRef := getReference(offset)
+        def result := nextVar()
+        out.printLine("\{cType(ptr.type())} \{result} = \{ptr} + \{offsetRef}")
+        refs[id] := result
+    }
+
+    method writePointerRealloc(id:IR.Statement.ID, ptr:IR.Value, oldCount:IR.Value,
+            newCount:IR.Value) {
+        def ptrRef := getReference(ptr)
+        def oldCountRef := getReference(oldCount)
+        def newCountRef := getReference(newCount)
+        def elementSize := stride(ptr.type())
+        assert elementSize > 0, "invalid size for type \{ptr.type()}"
+        def result := nextVar()
+        out.printLine("\{result} = (\{cType(ptr.type())}) @pandaRealloc(\{ptrRef}, " +
+                "\{oldCountRef} * \{elementSize}, \{newCountRef} * \{elementSize});")
         refs[id] := result
     }
 
@@ -1274,12 +1308,20 @@ class CCodeGenerator : CodeGenerator {
                 writeGetVirtualMethod(id, value, index, type)
             when IR.Statement.LOAD(ptr):
                 writeLoad(id, ptr)
+            when IR.Statement.NEGATE(value):
+                writeNegate(id, value)
+            when IR.Statement.NOT(value):
+                writeNot(id, value)
             when IR.Statement.POINTER_ALLOC(count, type):
                 writePointerAlloc(id, count, type)
             when IR.Statement.POINTER_DESTROY(ptr):
                 writePointerDestroy(ptr)
             when IR.Statement.POINTER_GET_INDEX(ptr, index):
                 writePointerGetIndex(id, ptr, index)
+            when IR.Statement.POINTER_OFFSET(ptr, offset):
+                writePointerOffset(id, ptr, offset)
+            when IR.Statement.POINTER_REALLOC(ptr, oldCount, newCount):
+                writePointerRealloc(id, ptr, oldCount, newCount)
             when IR.Statement.POINTER_SET_INDEX(value, ptr, index):
                 writePointerSetIndex(value, ptr, index)
             when IR.Statement.RETURN(value):

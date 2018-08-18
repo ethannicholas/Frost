@@ -52,11 +52,11 @@ class LinkResolver {
         return base + cl.name.replace(".", "/") + ".html"
     }
 
-    function linkTo(f:FieldDecl):String {
+    function linkTo(f:FieldDecl):String? {
         return linkTo(f.owner) + "#\{f.name}"
     }
 
-    function linkTo(m:MethodDecl):String {
+    function linkTo(m:MethodDecl):String? {
         compiler.resolve(m)
         def result := MutableString(linkTo(m.owner))
         result.append("#")

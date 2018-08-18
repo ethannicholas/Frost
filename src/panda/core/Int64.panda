@@ -26,6 +26,7 @@ class Int64 : Value, Key<Int64>, Comparable<Int64>, Formattable, ListView<Bit> {
 
     @private
     @implicit
+    @priority(1)
     init(value:builtin_int64) {
         self.value := value
     }

@@ -177,7 +177,7 @@ class Markdown {
         text.replace(p, function(groups:ListView<String?>):String {
             def id := groups[1] -- FIXME .toLowerCase()
             def url := MutableString(groups[2])
-            encodeAmpsAndAngles(url)
+            self.encodeAmpsAndAngles(url)
             var title:String?
             if groups.count > 3 {
                 title := groups[3]
@@ -190,7 +190,7 @@ class Markdown {
                 title := ""
             }
 
-            linkDefinitions[id] := LinkDefinition(url.finish(), title)
+            self.linkDefinitions[id] := LinkDefinition(url.finish(), title)
             return ""
         })
     }
@@ -276,7 +276,7 @@ class Markdown {
 
         function protectHTML(groups:ListView<String?>):String {
             def literal := groups[0]
-            return "\n\n\{htmlProtector.encode(literal)}\n\n"
+            return "\n\n\{self.htmlProtector.encode(literal)}\n\n"
         }
         text.replace(p1, protectHTML)
 
@@ -359,9 +359,9 @@ class Markdown {
         markup.replace(email, function(groups:ListView<String?>):String {
             def address := groups[1]
             def ed := MutableString(address)
-            unescapeSpecialChars(ed)
-            def addr := encodeEmail(ed.convert())
-            def url := encodeEmail("mailto:\{ed}")
+            self.unescapeSpecialChars(ed)
+            def addr := self.encodeEmail(ed.convert())
+            def url := self.encodeEmail("mailto:\{ed}")
             return "<a href=\"\{url}\">\{addr}</a>"
         })
     }
@@ -409,7 +409,7 @@ class Markdown {
             def blockQuote := MutableString(groups[1])
             blockQuote.replace(/(?m)^[ \t]*>[ \t]?/, "")
             blockQuote.replace(/(?m)^[ \t]+$/, "")
-            runBlockGamut(blockQuote)
+            self.runBlockGamut(blockQuote)
             blockQuote.replace("^", "  ")
 
             def p1 := RegularExpression("(\\s*<pre>.*?</pre>)", RegularExpression.DOTALL)
@@ -616,25 +616,28 @@ class Markdown {
     method doLists(text:MutableString) {
         def lessThanTab := TAB_WIDTH - 1
 
-        def wholeList :=
-                "(" +
-                "(" +
-                "[ ]{0,\{lessThanTab}}" +
-                "((?:[-+*]|\\d+[.]))" + -- $3 is first list item marker
-                "[ ]+" +
-                ")" +
-                "(?s:.+?)" +
-                "(" +
-                "\\z" + -- End of input is OK
-                "|" +
-                "\\n{2,}" +
-                "(?=\\S)" + -- If not end of input, then a new para
-                "(?![ ]*" +
-                "(?:[-+*]|\\d+[.])" +
-                "[ ]+" +
-                ")" + -- negative lookahead for another list marker
-                ")" +
-                ")"
+        def wholeList:String :=
+                "(([ ]{0,\{lessThanTab}}((?:[-+*]|\\d+[.]))[ ]+)(?s:.+?)(\\z|\\n{2,}" +
+                "(?=\\S)(?![ ]*(?:[-+*]|\\d+[.])[ ]+)))" -- FIXME use commented-out version below
+
+--                "(" +
+--                "(" +
+--                "[ ]{0,\{lessThanTab}}" +
+--                "((?:[-+*]|\\d+[.]))" + -- $3 is first list item marker
+--                "[ ]+" +
+--                ")" +
+--                "(?s:.+?)" +
+--                "(" +
+--                "\\z" + -- End of input is OK
+--                "|" +
+--                "\\n{2,}" +
+--                "(?=\\S)" + -- If not end of input, then a new para
+--                "(?![ ]*" +
+--                "(?:[-+*]|\\d+[.])" +
+--                "[ ]+" +
+--                ")" + -- negative lookahead for another list marker
+--                ")" +
+--                ")"
 
         if listLevel > 0 {
             def matchStartOfLine := RegularExpression("(?m)^\{wholeList}")
@@ -653,7 +656,7 @@ class Markdown {
                 -- paragraph for the last item in a list, if necessary:
                 list := list.replace(/\\n{2,}/, "\n\n\n")
 
-                var result := processListItems(list)
+                var result := self.processListItems(list)
 
                 -- Trim any trailing whitespace, to put the closing `</ol>` or `</ul>` up on the
                 -- preceding line, to get it past the current stupid HTML block parser. This is a
@@ -680,7 +683,7 @@ class Markdown {
                 -- last item in a list, if necessary:
                 list := list.replace(/\n{2,}/, "\n\n\n")
 
-                def result := processListItems(list)
+                def result := self.processListItems(list)
                 return "<\{listType}>\n\{result}</\{listType}>\n"
             })
         }
@@ -720,15 +723,15 @@ class Markdown {
             def text := groups[4]
             def item := MutableString(text)
             def leadingLine := groups[1]
-            if !isEmptyString(leadingLine) | hasParagraphBreak(item) {
-                outdent(item)
-                runBlockGamut(item)
+            if !Markdown.isEmptyString(leadingLine) | Markdown.hasParagraphBreak(item) { -- FIXME shouldn't need "Markdown."
+                Markdown.outdent(item) -- FIXME shouldn't need "Markdown."
+                self.runBlockGamut(item)
             }
             else {
                 -- Recurse sub-lists
-                outdent(item)
-                doLists(item)
-                runSpanGamut(item)
+                Markdown.outdent(item) -- FIXME shouldn't need "Markdown."
+                self.doLists(item)
+                self.runSpanGamut(item)
             }
             item.trim()
             return "<li>\{item}</li>\n"
@@ -751,12 +754,12 @@ class Markdown {
         -- setext-style headers
         markup.replace(/(?m)^(.*)\n====+$/, function(groups:ListView<String?>):String {
             def result := MutableString(groups[1])
-            runSpanGamut(result)
+            self.runSpanGamut(result)
             return "<a name=\"\{groups[1]}\"></a><h1>\{result}</h1>"
         })
         markup.replace(/(?m)^(.*)\n----+$/, function(groups:ListView<String?>):String {
             def result := MutableString(groups[1])
-            runSpanGamut(result)
+            self.runSpanGamut(result)
             return "<a name=\"\{groups[1]}\"></a><h2>\{result}</h2>"
         })
 
@@ -765,7 +768,7 @@ class Markdown {
         markup.replace(p, function(groups:ListView<String?>):Object {
             def marker := groups[1]
             def heading := MutableString(groups[2])
-            runSpanGamut(heading)
+            self.runSpanGamut(heading)
             def level := marker.length()
             def tag := "h" + level
             return "<\{tag}>\{heading}</\{tag}>\n"
@@ -886,16 +889,16 @@ class Markdown {
             }
 
             -- imageDefinition is the same as linkDefinition
-            def defn := linkDefinitions[id]
+            def defn := self.linkDefinitions[id]
             if defn !== null {
                 var url := defn.url
-                url := url.replace(/\\*/, charProtector.encode("*"))
-                url := url.replace(/_/, charProtector.encode("_"))
+                url := url.replace(/\\*/, self.charProtector.encode("*"))
+                url := url.replace(/_/, self.charProtector.encode("_"))
                 def title := defn.title
                 var titleTag := ""
                 if title !== null & title != "" {
-                    title := title.replace(/\\*/, charProtector.encode("*"))
-                    title := title.replace(/_/, charProtector.encode("_"))
+                    title := title.replace(/\\*/, self.charProtector.encode("*"))
+                    title := title.replace(/_/, self.charProtector.encode("_"))
                     titleTag := " alt=\"\{altText}\" title=\"\{title}\""
                 }
                 replacementText := "<img src=\"\{url}\"\{titleTag}/>"
@@ -923,18 +926,18 @@ class Markdown {
                 id := linkText -- .toLowerCase()
             }
 
-            def defn := linkDefinitions[id]
+            def defn := self.linkDefinitions[id]
             if defn !== null {
                 var url := defn.url
                 -- protect emphasis (* and _) within urls
-                url := url.replace("\\*", charProtector.encode("*"))
-                url := url.replace("_", charProtector.encode("_"))
+                url := url.replace("\\*", self.charProtector.encode("*"))
+                url := url.replace("_", self.charProtector.encode("_"))
                 def title := defn.title
                 var titleTag := ""
                 if title !== null & title != "" {
                     -- protect emphasis (* and _) within urls
-                    title := title.replace("\\*", charProtector.encode("*"))
-                    title := title.replace("_", charProtector.encode("_"))
+                    title := title.replace("\\*", self.charProtector.encode("*"))
+                    title := title.replace("_", self.charProtector.encode("_"))
                     titleTag := " title=\"\{title}\""
                 }
                 replacementText := "<a href=\"\{url}\"\{titleTag}>\{linkText}</a>"
@@ -965,8 +968,8 @@ class Markdown {
             var url := groups[3]
             def title := groups[6]
             -- protect emphasis (* and _) within urls
-            if linkResolver !== null {
-                def newURL := linkResolver(url)
+            if self.linkResolver !== null {
+                def newURL := self.linkResolver(url)
                 if newURL == null {
                     Console.errorStream().printLine("error: unable to resolve link '\{url}'")
                     newURL := "(error)"
@@ -976,14 +979,14 @@ class Markdown {
             else {
                 url := "[no link resolver]"
             }
-            url := url.replace(/\*/, charProtector.encode("*"))
-            url := url.replace(/_/, charProtector.encode("_"))
+            url := url.replace(/\*/, self.charProtector.encode("*"))
+            url := url.replace(/_/, self.charProtector.encode("_"))
             def result := MutableString()
             result.append("<a href=\"\{url}\"")
             if title !== null {
                 -- protect emphasis (* and _) within urls
-                title := title.replace("\\*", charProtector.encode("*"))
-                title := title.replace("_", charProtector.encode("_"))
+                title := title.replace("\\*", self.charProtector.encode("*"))
+                title := title.replace("_", self.charProtector.encode("_"))
                 title := title.replace("\"", "&quot;")
                 result.append(" title=\"")
                 result.append(title)
@@ -1009,25 +1012,25 @@ class Markdown {
             def linkText := groups[2]
             var id := linkText -- FIXME .toLowerCase()
             id := id.replace(/[ ]?\\n/, " ") -- change embedded newlines into spaces
-            def defn := linkDefinitions[id]
+            def defn := self.linkDefinitions[id]
             if defn !== null {
                 var url := defn.url
                 -- protect emphasis (* and _) within urls
-                url := url.replace("\\*", charProtector.encode("*"))
-                url := url.replace("_", charProtector.encode("_"))
+                url := url.replace("\\*", self.charProtector.encode("*"))
+                url := url.replace("_", self.charProtector.encode("_"))
                 var title := defn.title
                 var titleTag := ""
                 if title !== null & title != "" {
                     -- protect emphasis (* and _) within urls
-                    title := title.replace("\\*", charProtector.encode("*"))
-                    title := title.replace("_", charProtector.encode("_"))
+                    title := title.replace("\\*", self.charProtector.encode("*"))
+                    title := title.replace("_", self.charProtector.encode("_"))
                     titleTag := " title=\"\{title}\""
                 }
                 replacementText := "<a href=\"\{url}\"\{titleTag}>\{linkText}</a>"
             }
             else {
-                if linkResolver !== null {
-                    replacementText := linkResolver(linkText)
+                if self.linkResolver !== null {
+                    replacementText := self.linkResolver(linkText)
                     if replacementText !== null {
                         def escaped := linkText.replace("&", "&amp;").replace("<", "&lt;")
                         replacementText := "<a href=\"\{replacementText}\"><code>\{escaped}</code></a>"
@@ -1063,7 +1066,7 @@ class Markdown {
                 def sub := MutableString(code)
                 sub.replace(/^[ \t]+/, "")
                 sub.replace(/[ \t]+$/, "")
-                encodeCode(sub)
+                self.encodeCode(sub)
                 return "<code>\{sub}</code>"
             }
         )
