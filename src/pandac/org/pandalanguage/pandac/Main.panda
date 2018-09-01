@@ -343,6 +343,7 @@ class Main {
 
     @class
     method main(args:ListView<String>) {
+        Panda.disableRefErrorReporting()
         Main().run(args)
     }
 }

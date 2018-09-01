@@ -187,8 +187,8 @@ class Compiler {
                 for v in compiler.statementUnrefs {
                     compiler.compileUnref(v)
                 }
-                compiler.statementUnrefs := old
             }
+            compiler.statementUnrefs := old
         }
     }
 
@@ -292,7 +292,7 @@ class Compiler {
     var errorQueue:MessageQueue<Error>
 
     @private
-    def enclosingContexts := Stack<EnclosingContext>()
+    var enclosingContexts := Stack<EnclosingContext>()
 
     @private
     var errorCount := 0
@@ -3193,8 +3193,10 @@ class Compiler {
     method implicitInit(position:Position, value:IR.Value, m:MethodDecl):IR.Value {
         def cl := m.owner
         assert isValue(cl)
+        def coerced := coerce(position, value, m.parameters[0].type)
+        assert coerced !== null
         def args := Array<IR.Value>() -- FIXME literal
-        args.add(value)
+        args.add(coerced)
         def result := ir.add(IR.Statement.STATIC_CALL(m, args.finish()))
         return IR.Value.REF(result, m.owner.type)
     }
@@ -3438,7 +3440,6 @@ class Compiler {
             if pointerType == null {
                 return Pair<Bit, IR.Value?>(false, null)
             }
-            Console.printLine(pointerType)
             assert m.target.typeKind = Type.Kind.GENERIC
             match m.value.name {
                 when "alloc":
@@ -3476,7 +3477,8 @@ class Compiler {
                 when "offset":
                     assert target !== null
                     def value := compileExpression(args[0], TypeContext.TYPE(Type.Int64()))
-                    def offset := ir.add(IR.Statement.POINTER_OFFSET(target, value))
+                    def offset := ir.add(IR.Statement.POINTER_OFFSET(target,
+                            extractBuiltinInt(value)))
                     return Pair<Bit, IR.Value?>(true, IR.Value.REF(offset,
                             Type.pointerTo(pointerType)))
                 when "[]":
@@ -3495,7 +3497,13 @@ class Compiler {
                     if index == null | value == null {
                         return Pair<Bit, IR.Value?>(false, null)
                     }
-                    ir.add(IR.Statement.POINTER_SET_INDEX(value, target, extractBuiltinInt(index)))
+                    def indexValue := extractBuiltinInt(index)
+                    if isRefCounted(value.type()) {
+                        def load := ir.add(IR.Statement.POINTER_GET_INDEX(target, indexValue))
+                        compileUnref(IR.Value.REF(load, value.type()))
+                        compileRef(value)
+                    }
+                    ir.add(IR.Statement.POINTER_SET_INDEX(value, target, indexValue))
                     return Pair<Bit, IR.Value?>(true, null)
                 otherwise:
                     assert false, "unsupported pointer intrinsic: \{m.value.name}"
@@ -3525,19 +3533,17 @@ class Compiler {
         if intrinsic.first {
             return coerce(position, intrinsic.second, type)
         }
-        def finalArgs := Array<IR.Value>(args.count)
+        def isSuper:Bit
         if target !== null {
             match target {
-                when IR.Value.TYPE:
-                    -- do nothing
+                when IR.Value.SUPER:
+                    isSuper := true
                 otherwise:
-                    if m.value.owner.name = POINTER_NAME {
-                        finalArgs.add(target)
-                    }
-                    else {
-                        finalArgs.add(coerce(position, target, m.value.owner.type))
-                    }
+                    isSuper := false
             }
+        }
+        else {
+            isSuper := false
         }
         -- actualType always has a "self", even for a @class method. This will probably be tightened
         -- up in the future, but it simplifies the logic a bit here.
@@ -3549,6 +3555,36 @@ class Compiler {
             actualType := declaredTypeWithSelf(m.value, m.value.owner.type)
         }
         def effectiveType := m.effectiveType
+        def finalArgs := Array<IR.Value>(args.count)
+        def finalTarget:IR.Value?
+        if target !== null {
+            match target {
+                when IR.Value.TYPE:
+                    -- do nothing
+                otherwise:
+                    if m.value.owner.name = POINTER_NAME {
+                        finalTarget := coerce(position, target, actualType.parameterType(0))
+                    }
+                    else if isSuper {
+                        finalTarget := coerce(position, compileSelf(position, false),
+                                m.value.owner.type)
+                    }
+                    else {
+                        finalTarget := coerce(position, target, m.value.owner.type)
+                    }
+                    if finalTarget == null {
+                        return null
+                    }
+                    finalArgs.add(finalTarget)
+            }
+        }
+        else if !m.value.annotations.isClass() & !isValueInit(m.value) {
+            finalTarget := coerce(position, compileSelf(position, false), m.value.owner.type)
+            finalArgs.add(finalTarget)
+        }
+        else {
+            finalTarget := null
+        }
         for i in 0 .. args.count {
             var a := compileExpression(args[i],
                     TypeContext.TYPE(effectiveType.parameterType(i)))
@@ -3564,22 +3600,7 @@ class Compiler {
             finalArgs.add(a)
         }
         var result:IR.Statement.ID
-        if m.value.isVirtual {
-            def finalTarget:IR.Value?
-            if target !== null {
-                finalTarget := coerce(position, target, actualType.parameterType(0))
-                if finalTarget == null {
-                    return null
-                }
-            }
-            else {
-                finalTarget := coerce(position, compileSelf(position, false),
-                        actualType.parameterType(0))
-                if finalTarget == null {
-                    return null
-                }
-                finalArgs.insert(0, finalTarget)
-            }
+        if !isSuper & m.value.isVirtual {
             def mref:IR.Statement.ID
             if m.value.owner.classKind = ClassDecl.Kind.INTERFACE {
                 mref := ir.add(IR.Statement.GET_INTERFACE_METHOD(finalTarget, m.value.owner,
@@ -3780,7 +3801,11 @@ class Compiler {
         ir.setCurrentBlock(mergeBlock)
         if result !== null {
             def resultLoad := ir.add(IR.Statement.LOAD(result))
-            return coerce(position, IR.Value.REF(resultLoad, t.returnType()), type)
+            def loadRef := IR.Value.REF(resultLoad, t.returnType())
+            if isRefCounted(t.returnType()) {
+                statementUnrefs.add(loadRef)
+            }
+            return coerce(position, loadRef, type)
         }
         return null
     }
@@ -4469,7 +4494,10 @@ class Compiler {
         def oldReportErrors := reportErrors
         writeCode := false
         reportErrors := false
+        def oldContexts := enclosingContexts
+        enclosingContexts := Stack<EnclosingContext>()
         compile(methodDecl, symbolTable)
+        enclosingContexts := oldContexts
         writeCode := oldWriteCode
         reportErrors := oldReportErrors
 
@@ -4504,7 +4532,9 @@ class Compiler {
         else {
             -- no captures, method is already good
             captures.pop(currentCaptures)
+            enclosingContexts := Stack<EnclosingContext>()
             compile(methodDecl, symbolTable)
+            enclosingContexts := oldContexts
             target := ASTNode.NULL(position)
             immutable := true
         }
@@ -4885,7 +4915,7 @@ class Compiler {
             return null
         }
         def s := symbolTable[SELF_NAME]
-        assert s !== null, "no 'self' in symboltable"
+        assert s !== null, "no 'self' in symboltable at \{position}"
         return symbolRef(position, null, s)
     }
 
@@ -6127,7 +6157,7 @@ class Compiler {
             return
         }
         def scope := AutoScope(self)
-        def target := compileTarget(astTarget, Variable.Kind.DEF, null, elementType)
+        def target := compileTarget(astTarget, Variable.Kind.DEF, null, elementType.nonnullable())
         if target == null {
             return
         }
@@ -6236,6 +6266,7 @@ class Compiler {
                 -- need to resolve unresolved range in terms of its target, as for i:Int8 in 0 .. 10
                 -- and for i:Int64 in 0 .. 10 result in different kinds of ranges
                 compileRangeFor(position, label, rawTarget, rawList, statements)
+                return
         }
         def list := compileExpression(rawList)
         if list == null {
@@ -6377,6 +6408,8 @@ class Compiler {
                 v.owner := currentMethod[0]
                 if isRefCounted(v.type) {
                     enclosingContexts.push(EnclosingContext.VARIABLE_SCOPE(v))
+                    ir.add(IR.Statement.STORE(IR.Value.NULL(v.type.nullable()),
+                            IR.Value.LOCAL(ir.locals.count, v.type)))
                 }
                 ir.locals.add(v.type)
                 symbolTable.add(v)
@@ -6401,6 +6434,8 @@ class Compiler {
                 v.owner := currentMethod[0]
                 if isRefCounted(v.type) {
                     enclosingContexts.push(EnclosingContext.VARIABLE_SCOPE(v))
+                    ir.add(IR.Statement.STORE(IR.Value.NULL(v.type.nullable()),
+                            IR.Value.LOCAL(ir.locals.count, v.type)))
                 }
                 ir.locals.add(v.type)
                 symbolTable.add(v)
@@ -6544,6 +6579,15 @@ class Compiler {
                     }
                 otherwise:
                     assert false
+            }
+        }
+        if other !== null {
+            ir.setCurrentBlock(nextBlock)
+            for s in other {
+                compileStatement(s)
+            }
+            if !ir.currentBlockFinished() {
+                ir.add(IR.Statement.BRANCH(end))
             }
         }
         ir.setCurrentBlock(end)
@@ -6698,6 +6742,7 @@ class Compiler {
 
     @post(symbolTable == @pre(symbolTable))
     method compileStatement(s:ASTNode) {
+        ir.add(IR.Statement.COMMENT("line \{s.position().line}"))
         def unrefs := AutoUnrefs(self)
         match s {
             when ASTNode.ASSERT(position, test, msg):
@@ -6865,6 +6910,9 @@ class Compiler {
     }
 
     method compilePostconditions() {
+        if true {
+            return
+        }
         def auto := AutoScope(self, methodSymbolTable)
         def m := currentMethod[0]
         var success:IR.Block.ID? := null

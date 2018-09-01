@@ -264,4 +264,8 @@ class Panda {
     @class
     @external
     method pointerConvert(p:Pointer<Object?>):String
+
+    @class
+    @external
+    method disableRefErrorReporting()
 }

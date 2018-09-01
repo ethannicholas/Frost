@@ -10,6 +10,7 @@ inlining
 Immediate
 =========
 
+Add iterator.done property (currently just get_done)
 Detect and error on parameter reassignment
 Proper lambda / inner method errors
 Documentation (still need: fix bug with * in operators.md, fix links with parentheses...)

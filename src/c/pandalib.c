@@ -14,10 +14,12 @@
 
 #include "unicode/uregex.h"
 
+typedef uint8_t bool;
+
 #define true 1
 #define false 0
 
-#define DEBUG_ALLOCS 0
+#define DEBUG_ALLOCS 1
 
 struct Class;
 struct String;
@@ -220,8 +222,10 @@ static pthread_mutex_t preventsExitThreadsMutex = PTHREAD_MUTEX_INITIALIZER;
 
 Object* panda = NULL;
 
+static bool refErrorReporting = true;
+
 #if DEBUG_ALLOCS
-uint8_t debugAllocs = true;
+bool debugAllocs = true;
 #endif
 
 void* pandaAlloc(size_t size) {
@@ -265,7 +269,7 @@ void* pandaRealloc(void* ptr, size_t oldSize, size_t newSize) {
 void pandaFree(void* ptr) {
     allocations--;
 #if !DEBUG_ALLOCS
-    //free(ptr);
+//    free(ptr);
 #endif
 }
 
@@ -342,16 +346,21 @@ int main(int argc, char** argv) {
 #if DEBUG_ALLOCS
     debugAllocs = false;
 #endif
-    if (panda) {
-        panda$core$Panda$dumpReport(panda);
+    if (refErrorReporting) {
+        if (panda) {
+            panda$core$Panda$dumpReport(panda);
+            panda$core$Panda$unref$panda$core$Object$Q(panda);
+        }
+        if (allocations && allocations != 1) {
+            printf("warning: %d objects were still in memory on exit\n", allocations);
+        }
+        else if (allocations == 1) {
+            printf("warning: 1 object was still in memory on exit\n");
+        }
+    }
+    else if (panda) {
         panda$core$Panda$unref$panda$core$Object$Q(panda);
     }
-/*    if (allocations && allocations != 1) {
-        printf("warning: %d objects were still in memory on exit\n", allocations);
-    }
-    else if (allocations == 1) {
-        printf("warning: 1 object was still in memory on exit\n");
-    }*/
     return 0;
 }
 
@@ -512,10 +521,10 @@ void panda$core$Panda$trace$panda$core$String(String* s) {
 void panda$core$Panda$ref$panda$core$Object$Q(Object* o) {
     if (o && o->refcnt != NO_REFCNT) {
         int newCount = __atomic_add_fetch(&o->refcnt, 1, __ATOMIC_RELAXED <= 1);
-        if (newCount <= 1) {
-//            printf("internal error: ref %p with refcnt = %d\n", o, newCount - 1);
-//            printf("    class: %s\n", pandaGetCString(o->cl->name));
-//            abort();
+        if (newCount <= 1 && refErrorReporting) {
+            printf("internal error: ref %p with refcnt = %d\n", o, newCount - 1);
+            printf("    class: %s\n", pandaGetCString(o->cl->name));
+            abort();
         }
     }
 }
@@ -523,10 +532,10 @@ void panda$core$Panda$ref$panda$core$Object$Q(Object* o) {
 void panda$core$Panda$unref$panda$core$Object$Q(Object* o) {
     if (o && o->refcnt != NO_REFCNT) {
         int newCount = __atomic_sub_fetch(&o->refcnt, 1, __ATOMIC_RELAXED);
-        if (newCount < 0) {
-//            printf("internal error: unref %p with refcnt = %d\n", o, newCount + 1);
-//            printf("    class: %s\n", pandaGetCString(o->cl->name));
-//            abort();
+        if (newCount < 0 && refErrorReporting) {
+            printf("internal error: unref %p with refcnt = %d\n", o, newCount + 1);
+            printf("    class: %s\n", pandaGetCString(o->cl->name));
+            abort();
         }
         if (newCount == 0) {
             void (*cleanup)() = o->cl->vtable[1]; // FIXME hardcoded index to cleanup
@@ -590,6 +599,10 @@ int64_t panda$core$Panda$currentTime$R$builtin_int64() {
     }
     return ((int64_t) t.tv_sec) * 1000 + ((int64_t) t.tv_usec) / 1000;
     
+}
+
+void panda$core$Panda$disableRefErrorReporting() {
+    refErrorReporting = false;
 }
 
 // RegularExpression

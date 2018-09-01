@@ -98,11 +98,15 @@ class CCodeGenerator : CodeGenerator {
             assert cl !== null
             writeImport(cl)
         }
-        if t.typeKind = Type.Kind.METHOD | t.typeKind = Type.Kind.FUNCTION {
-            return cType(Type.MutableMethod())
-        }
-        if t.typeKind = Type.Kind.IMMUTABLE_METHOD | t.typeKind = Type.Kind.IMMUTABLE_FUNCTION {
-            return cType(Type.Method())
+        match t.typeKind {
+            when Type.Kind.METHOD, Type.Kind.FUNCTION:
+                return cType(Type.MutableMethod())
+            when Type.Kind.IMMUTABLE_METHOD, Type.Kind.IMMUTABLE_FUNCTION:
+                return cType(Type.Method())
+            when Type.Kind.GENERIC:
+                if t.subtypes[0].name = "panda.unsafe.Pointer" & t.subtypes[1].isMethod() {
+                    return cMethodType(t.subtypes[1], null)
+                }
         }
         return hCodeGen.type(t)
     }
@@ -221,11 +225,6 @@ class CCodeGenerator : CodeGenerator {
     method nextLabel():String {
         varCount += 1
         return "$l\{varCount}"
-    }
-
-    method createBlock(label:String, out:IndentedOutputStream) {
-        out.printLine("\{label}:;")
-        currentBlock := label
     }
 
     method getChoiceDataSize(cl:ClassDecl):Int {
@@ -408,14 +407,15 @@ class CCodeGenerator : CodeGenerator {
         return previous
     }
 
+    @post(out == @pre(out))
     method createMethodShim(raw:MethodDecl, effective:Type):MethodShim {
-        def old := out
-        def outBuffer := MemoryOutputStream()
-        out := IndentedOutputStream(outBuffer)
         def found := methodShims[raw]
         if found !== null {
             return found
         }
+        def old := out
+        def outBuffer := MemoryOutputStream()
+        out := IndentedOutputStream(outBuffer)
         assert effective.isMethod()
         assert effective.subtypes.count = raw.parameters.count + 2 -- self and return
         assert raw.isInstance()
@@ -799,7 +799,7 @@ class CCodeGenerator : CodeGenerator {
             out.printLine("}")
             out.printLine("else {")
             out.level += 1
-            out.printLine("\{result} == null;")
+            out.printLine("\{result} = NULL;")
             out.level -= 1
             out.printLine("}")
             return result
@@ -819,7 +819,7 @@ class CCodeGenerator : CodeGenerator {
             out.printLine("}")
             out.printLine("else {")
             out.level += 1
-            out.printLine("\{wrapped} == null;")
+            out.printLine("\{wrapped} = null;")
             out.level -= 1
             out.printLine("}")
         }
@@ -832,7 +832,7 @@ class CCodeGenerator : CodeGenerator {
             -- casting nullable wrapper to nullable value, need to special-case null
             def wrapped := unwrapValue(value, srcType, dstType.subtypes[0], out)
             def nonNullValue := toNullableValue(wrapped, dstType.subtypes[0], dstType, out)
-            return "(\{value} !== null ? \{nonNullValue} : (\{cType(dstType)}) { .nonnull = 0 })"
+            return "(\{value} != NULL ? \{nonNullValue} : (\{cType(dstType)}) { .nonnull = 0 })"
         }
         return result
     }
@@ -924,7 +924,7 @@ class CCodeGenerator : CodeGenerator {
             return "((\{nullableType(t)}) { .nonnull = false })"
         }
         else {
-            return "NULL"
+            return "((\{cType(t)}) NULL)"
         }
     }
 
@@ -935,7 +935,7 @@ class CCodeGenerator : CodeGenerator {
             when IR.Value.INT(value, _):
                 return value.convert()
             when IR.Value.LOCAL(index, _):
-                return "&local\{index}"
+                return "(&local\{index})"
             when IR.Value.METHOD_POINTER(m, _):
                 if m.owner.external {
                     writeDeclaration(m)
@@ -948,7 +948,10 @@ class CCodeGenerator : CodeGenerator {
             when IR.Value.REAL(value, type):
                 return getRealReference(type, value)
             when IR.Value.REF(id, _):
-                assert refs[id] !== null, "id \{id} has not been defined"
+--                assert refs[id] !== null, "id \{id} has not been defined"
+                if refs[id] == null {
+                    return "undefined ref: \{id}"
+                }
                 return refs[id]
             when IR.Value.STRING(s):
                 return getStringReference(s)
@@ -977,6 +980,7 @@ class CCodeGenerator : CodeGenerator {
     method writeIsNull(id:IR.Statement.ID, value:IR.Value) {
         def ref := getReference(value)
         def cl := compiler.getClass(value.type())
+        assert cl !== null
         def bit:String
         if compiler.isValue(cl) {
             if value.type().typeKind != Type.Kind.NULLABLE {
@@ -989,12 +993,13 @@ class CCodeGenerator : CodeGenerator {
         else {
             bit := "\{ref} == NULL"
         }
-        refs[id] := "((panda$core$Bit) { \{bit} })"
+        refs[id] := bit
     }
 
     method writeIsNonNull(id:IR.Statement.ID, value:IR.Value) {
         def ref := getReference(value)
         def cl := compiler.getClass(value.type())
+        assert cl !== null
         def bit:String
         if compiler.isValue(cl) {
             if value.type().typeKind != Type.Kind.NULLABLE {
@@ -1005,15 +1010,45 @@ class CCodeGenerator : CodeGenerator {
             }
         }
         else {
-            bit := "\{ref} !== null"
+            bit := "\{ref} != NULL"
         }
-        refs[id] := "((panda$core$Bit) { \{bit} })"
+        refs[id] := bit
+    }
+
+    function isNull(v:IR.Value):Bit {
+        match v {
+            when IR.Value.NULL:
+                return true
+        }
+        return false
     }
 
     method writeBinary(id:IR.Statement.ID, left:IR.Value, op:Token.Kind, right:IR.Value,
             type:Type) {
         def leftRef := getReference(left)
         def rightRef := getReference(right)
+        if left.type().isNullable() {
+            match op {
+                when Token.Kind.IDENTITY:
+                    if isNull(left) {
+                        writeIsNull(id, right)
+                        return
+                    }
+                    if isNull(right) {
+                        writeIsNull(id, left)
+                        return
+                    }
+                when Token.Kind.NIDENTITY:
+                    if isNull(left) {
+                        writeIsNonNull(id, right)
+                        return
+                    }
+                    if isNull(right) {
+                        writeIsNonNull(id, left)
+                        return
+                    }
+            }
+        }
         def cOp:String
         match op {
             when Token.Kind.ADD:
@@ -1120,16 +1155,11 @@ class CCodeGenerator : CodeGenerator {
         assert data.name = ClassDecl.CHOICE_DATA_NAME
         def targetRef := getReference(target)
         def fieldIndex := compiler.getIndex(data)
-        def dataPointer := nextVar()
-        out.printLine("\{dataPointer} = getelementptr \{typeName(target.type())}, " +
-                "\{typeName(target.type())}* \{targetRef}, i64 0, i32 \{fieldIndex}")
-        def size := getChoiceDataSize(cc.owner)
-        def offset := nextVar()
-        out.printLine("\{offset} = getelementptr [\{size} x i8], [\{size} x i8]* \{dataPointer}," +
-                " i64 0, i64 \{getChoiceFieldOffset(cc, index)}")
-        def cast := nextVar()
-        out.printLine("\{cast} = bitcast i8* \{offset} to \{cType(cc.fields[index])}*")
-        refs[id] := cast
+        def result := nextVar()
+        def type := cType(cc.fields[index])
+        out.printLine("\{type}* \{result} = (\{type}*) (\{targetRef}->$data " +
+                "+ \{getChoiceFieldOffset(cc, index)});")
+        refs[id] := result
     }
 
     method writeGetFieldPointer(id:IR.Statement.ID, target:IR.Value, field:FieldDecl) {
@@ -1171,45 +1201,36 @@ class CCodeGenerator : CodeGenerator {
 
     method writeNegate(id:IR.Statement.ID, value:IR.Value) {
         def result := nextVar()
-        out.printLine("\{cType(value.type())} \{result} = !\{getReference(value)};")
+        out.printLine("\{cType(value.type())} \{result} = -\{getReference(value)};")
         refs[id] := result
     }
 
     method writeNot(id:IR.Statement.ID, value:IR.Value) {
         def result := nextVar()
-        out.printLine("\{cType(value.type())} \{result} = -\{getReference(value)};")
+        out.printLine("\{cType(value.type())} \{result} = !\{getReference(value)};")
         refs[id] := result
     }
 
-    method writePointerAlloc(id:IR.Statement.ID, count:IR.Value, type:Type) {
+    method writePointerAlloc(id:IR.Statement.ID, count:IR.Value, t:Type) {
         def countRef := getReference(count)
-        def elementSize := stride(type)
-        assert elementSize > 0, "invalid size for type \{type}"
-        def size := nextVar()
-        out.printLine("\{size} = mul \{countRef}, \{elementSize}")
-        def malloc := nextVar()
-        out.printLine("\{malloc} = call i8* @pandaZAlloc(\{SIZE_TYPE} \{size})")
+        def elementSize := stride(t)
+        def type := cType(t)
         def result := nextVar()
-        out.printLine("\{result} = bitcast i8* \{malloc} to \{cType(Type.pointerTo(type))}")
+        out.printLine("\{type}* \{result} = ((\{type}*) pandaZAlloc(\{countRef} * " +
+                "\{elementSize}));")
         refs[id] := result
     }
 
     method writePointerDestroy(ptr:IR.Value) {
         def ptrRef := getReference(ptr)
-        def cast := nextVar()
-        out.printLine("\{cast} = bitcast \{ptrRef} to i8*")
-        out.printLine("call void @pandaFree(i8* \{cast})")
+        out.printLine("pandaFree(\{ptrRef});")
     }
 
     method writePointerGetIndex(id:IR.Statement.ID, ptr:IR.Value, index:IR.Value) {
         def base := getReference(ptr)
         def indexRef := getReference(index)
-        def baseType := cType(ptr.type().subtypes[1])
-        def offset := nextVar()
-        out.printLine("\{offset} = getelementptr inbounds \{baseType}, " +
-                "\{base}, \{indexRef}")
         def result := nextVar()
-        out.printLine("\{result} = load \{baseType}, \{baseType}* \{offset}")
+        out.printLine("\{cType(ptr.type().subtypes[1])} \{result} = \{base}[\{indexRef}];")
         refs[id] := result
     }
 
@@ -1217,7 +1238,7 @@ class CCodeGenerator : CodeGenerator {
         def base := getReference(ptr)
         def offsetRef := getReference(offset)
         def result := nextVar()
-        out.printLine("\{cType(ptr.type())} \{result} = \{ptr} + \{offsetRef}")
+        out.printLine("\{cType(ptr.type())} \{result} = \{base} + \{offsetRef};")
         refs[id] := result
     }
 
@@ -1229,8 +1250,8 @@ class CCodeGenerator : CodeGenerator {
         def elementSize := stride(ptr.type())
         assert elementSize > 0, "invalid size for type \{ptr.type()}"
         def result := nextVar()
-        out.printLine("\{result} = (\{cType(ptr.type())}) @pandaRealloc(\{ptrRef}, " +
-                "\{oldCountRef} * \{elementSize}, \{newCountRef} * \{elementSize});")
+        out.printLine("\{cType(ptr.type())} \{result} = (\{cType(ptr.type())}) pandaRealloc(" +
+                "\{ptrRef}, \{oldCountRef} * \{elementSize}, \{newCountRef} * \{elementSize});")
         refs[id] := result
     }
 
@@ -1238,11 +1259,7 @@ class CCodeGenerator : CodeGenerator {
         def base := getReference(ptr)
         def indexRef := getReference(index)
         def valueRef := getReference(value)
-        def baseType := cType(ptr.type().subtypes[1])
-        def offset := nextVar()
-        out.printLine("\{offset} = getelementptr inbounds \{baseType}, " +
-                "\{base}, \{indexRef}")
-        out.printLine("store \{valueRef}, \{baseType}* \{offset}")
+        out.printLine("\{base}[\{indexRef}] = \{valueRef};")
     }
 
     method writeReturn(value:IR.Value?) {
@@ -1264,10 +1281,19 @@ class CCodeGenerator : CodeGenerator {
         def result:String?
         if m.returnType != Type.Void() {
             result := nextVar()
-            out.print("\{actualResultType} \{result} = ")
+            if indirect {
+                out.printLine("\{actualResultType} \{result};")
+            }
+            else {
+                out.print("\{actualResultType} \{result} = ")
+            }
             refs[id] := result
         }
         out.print("\{getName(m)}(")
+        if indirect {
+            out.print("&\{result}")
+            separator := ", "
+        }
         for a in args {
             out.print(separator)
             out.print(getReference(a))
@@ -1289,7 +1315,7 @@ class CCodeGenerator : CodeGenerator {
             when IR.Statement.CAST(value, type):
                 writeCast(id, value, type)
             when IR.Statement.COMMENT(text):
-                out.printLine("; \{text}")
+                out.printLine("// \{text}")
             when IR.Statement.CONDITIONAL_BRANCH(test, ifTrue, ifFalse):
                 writeConditionalBranch(test, ifTrue, ifFalse)
             when IR.Statement.CONSTRUCT(cl):
@@ -1331,7 +1357,7 @@ class CCodeGenerator : CodeGenerator {
             when IR.Statement.STORE(value, slot):
                 writeStore(value, slot)
             when IR.Statement.UNREACHABLE:
-                out.printLine("unreachable")
+                out.printLine("abort(); // unreachable")
             otherwise:
                 assert false, "unsupported statement \{s}"
         }
@@ -1348,7 +1374,7 @@ class CCodeGenerator : CodeGenerator {
             def type := cType(ir.locals[i])
             out.print("\{type} \{name}")
             if compiler.isRefCounted(ir.locals[i]) {
-                out.print(" == null")
+                out.print(" = NULL")
             }
             out.printLine(";")
         }
@@ -1356,7 +1382,7 @@ class CCodeGenerator : CodeGenerator {
             def block := ir.blocks[i]
             if i != 0 {
                 currentBlock := "\{block.id}"
-                out.printLine("\{currentBlock}: // \{block.comment}")
+                out.printLine("\{currentBlock}:; // \{block.comment}")
             }
             else {
                 currentBlock := "0"
@@ -1367,13 +1393,13 @@ class CCodeGenerator : CodeGenerator {
         }
     }
 
+    @postAnd(out == @pre(out))
     @override
     method write(m:MethodDecl, ir:IR) {
         def old := out
         out := methods
         methodHeaderBuffer.clear()
         self.ir := ir
-        varCount := 0
         out.print("\{cType(m.returnType)} \{getName(m)}(")
         var separator := ""
         var index := 0
@@ -1417,6 +1443,7 @@ class CCodeGenerator : CodeGenerator {
         def path := hCodeGen.getPath(cl, ".c")
         path.parent().createDirectories()
         out := IndentedOutputStream(path.openOutputStream())
+        out.flush()
         getClassConstant(cl)
         if compiler.isValue(cl) {
             getWrapperClassConstant(cl)
