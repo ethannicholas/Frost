@@ -5750,12 +5750,14 @@ class Compiler {
         def bodyBlock := ir.newBlock("do body")
         def testBlock := ir.newBlock("do test")
         def endBlock := ir.newBlock("do end")
-        def context := AutoContext(self, EnclosingContext.LOOP(label, endBlock, testBlock))
-        def scope := AutoScope(self)
-        ir.add(IR.Statement.BRANCH(bodyBlock))
-        ir.setCurrentBlock(bodyBlock)
-        for s in statements {
-            compileStatement(s)
+        {
+            def context := AutoContext(self, EnclosingContext.LOOP(label, endBlock, testBlock))
+            def scope := AutoScope(self)
+            ir.add(IR.Statement.BRANCH(bodyBlock))
+            ir.setCurrentBlock(bodyBlock)
+            for s in statements {
+                compileStatement(s)
+            }
         }
         if !ir.currentBlockFinished() {
             ir.add(IR.Statement.BRANCH(testBlock))
@@ -6359,12 +6361,14 @@ class Compiler {
     method compileLoop(position:Position, label:String?, statements:ImmutableArray<ASTNode>) {
         def bodyBlock := ir.newBlock("loop body")
         def endBlock := ir.newBlock("loop end")
-        def auto := AutoContext(self, EnclosingContext.LOOP(label, endBlock, bodyBlock))
-        def scope := AutoScope(self)
-        ir.add(IR.Statement.BRANCH(bodyBlock))
-        ir.setCurrentBlock(bodyBlock)
-        for s in statements {
-            compileStatement(s)
+        {
+            def auto := AutoContext(self, EnclosingContext.LOOP(label, endBlock, bodyBlock))
+            def scope := AutoScope(self)
+            ir.add(IR.Statement.BRANCH(bodyBlock))
+            ir.setCurrentBlock(bodyBlock)
+            for s in statements {
+                compileStatement(s)
+            }
         }
         if !ir.currentBlockFinished() {
             ir.add(IR.Statement.BRANCH(bodyBlock))
@@ -6629,6 +6633,7 @@ class Compiler {
                 def ref := symbolRef(v.position, null, v)
                 assert ref !== null
                 compileUnref(ref)
+                ir.add(IR.Statement.COMMENT("unreffing \{v}"))
                 match v.storage {
                     when Variable.Storage.LOCAL(slot):
                         ir.add(IR.Statement.STORE(
@@ -6716,23 +6721,25 @@ class Compiler {
         def testBlock := ir.newBlock("while test")
         def bodyBlock := ir.newBlock("while body")
         def endBlock := ir.newBlock("while end")
-        def context := AutoContext(self, EnclosingContext.LOOP(label, endBlock, testBlock))
-        def scope := AutoScope(self)
-        ir.add(IR.Statement.BRANCH(testBlock))
-        ir.setCurrentBlock(testBlock)
-        def compiledTest:IR.Value?
         {
-            def unrefs := AutoUnrefs(self)
-            compiledTest := compileExpression(test, TypeContext.TYPE(Type.Bit()))
-            if compiledTest == null {
-                return
+            def context := AutoContext(self, EnclosingContext.LOOP(label, endBlock, testBlock))
+            def scope := AutoScope(self)
+            ir.add(IR.Statement.BRANCH(testBlock))
+            ir.setCurrentBlock(testBlock)
+            def compiledTest:IR.Value?
+            {
+                def unrefs := AutoUnrefs(self)
+                compiledTest := compileExpression(test, TypeContext.TYPE(Type.Bit()))
+                if compiledTest == null {
+                    return
+                }
             }
-        }
-        ir.add(IR.Statement.CONDITIONAL_BRANCH(extractBuiltinBit(compiledTest), bodyBlock,
-                endBlock))
-        ir.setCurrentBlock(bodyBlock)
-        for s in statements {
-            compileStatement(s)
+            ir.add(IR.Statement.CONDITIONAL_BRANCH(extractBuiltinBit(compiledTest), bodyBlock,
+                    endBlock))
+            ir.setCurrentBlock(bodyBlock)
+            for s in statements {
+                compileStatement(s)
+            }
         }
         if !ir.currentBlockFinished() {
             ir.add(IR.Statement.BRANCH(testBlock))
