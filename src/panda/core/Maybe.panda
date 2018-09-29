@@ -50,4 +50,14 @@ choice Maybe<T> {
                 return false
         }
     }
+
+    @override
+    function convert():String {
+        match self {
+            when SUCCESS(v):
+                return "SUCCESS(\{v})"
+            when ERROR(e):
+                return "ERROR(\{e})"
+        }
+    }
 }

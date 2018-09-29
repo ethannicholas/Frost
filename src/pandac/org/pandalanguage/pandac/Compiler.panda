@@ -230,6 +230,27 @@ class Compiler {
         SELF
     }
 
+    class CoercionKey : Key<CoercionKey> {
+        def expr:ASTNode
+
+        def target:Type
+
+        init(expr:ASTNode, target:Type) {
+            self.expr := expr
+            self.target := target
+        }
+
+        @override
+        function =(other:CoercionKey):Bit {
+            return expr == other.expr & target = other.target
+        }
+
+        @override
+        function hash():Int {
+            return Panda.addressOf(expr) ~~ target.hash()
+        }
+    }
+
     constant POINTER_NAME := "panda.unsafe.Pointer"
     
     constant WEAK_NAME := "panda.core.Weak"
@@ -327,6 +348,12 @@ class Compiler {
 
     @private
     var writeCode := true
+
+    @private
+    var inFieldCleanup := false
+
+    @private
+    def coercionCosts := HashMap<CoercionKey, Int>()
 
     -- Sometimes we need to resolve an untyped lambda against several different types, such as when
     -- calling an overloaded method which can take different types of functions. If, say, the lambda
@@ -2432,7 +2459,7 @@ class Compiler {
     }
 
     @pre(target.resolved)
-    method coercionCost(expr:ASTNode, target:Type):Int? {
+    method computeCoercionCost(expr:ASTNode, target:Type):Int? {
         match expr {
             when ASTNode.AT_PRE(_, expr):
                 return coercionCost(expr, target)
@@ -2597,6 +2624,23 @@ class Compiler {
             otherwise:
                 assert false, "unsupported coercionCost: \{expr}"
         }
+    }
+
+    @pre(target.resolved)
+    method coercionCost(expr:ASTNode, target:Type):Int? {
+        def key := CoercionKey(expr, target)
+        var cached := coercionCosts[key]
+        if cached !== null {
+            if cached = -1 {
+                return null
+            }
+            return cached
+        }
+        def result := computeCoercionCost(expr, target)
+        if result == null {
+            coercionCosts[key] := -1
+        }
+        return result
     }
 
     function requiredSize(value:Int64):Int {
@@ -3427,87 +3471,135 @@ class Compiler {
         call(Position(), IR.Value.TYPE(Type.Panda()), "unref", args, TypeContext.UNSPECIFIED)
     }
 
+    method compilePointerIntrinsic(target:IR.Value?, m:MethodRef,
+            args:ListView<ASTNode>):Pair<Bit, IR.Value?> {
+        def pointerType:Type?
+        if m.target.isPointer() {
+            pointerType := resolve(m.target.subtypes[1])
+        }
+        else {
+            pointerType := resolve(m.target.subtypes[1].subtypes[1])
+        }
+        if pointerType == null {
+            return Pair<Bit, IR.Value?>(false, null)
+        }
+        assert m.target.typeKind = Type.Kind.GENERIC
+        match m.value.name {
+            when "alloc":
+                def count := compileExpression(args[0], TypeContext.TYPE(Type.Int64()))
+                if count == null {
+                    return Pair<Bit, IR.Value?>(false, null)
+                }
+                def alloc := ir.add(IR.Statement.POINTER_ALLOC(extractBuiltinInt(count),
+                            pointerType))
+                return Pair<Bit, IR.Value?>(true,
+                        IR.Value.REF(alloc, Type.pointerTo(pointerType)))
+            when "destroy":
+                assert target !== null
+                ir.add(IR.Statement.POINTER_DESTROY(target))
+                return Pair<Bit, IR.Value?>(true, null)
+            when "realloc":
+                assert target !== null
+                def oldCount := compileExpression(args[0], TypeContext.TYPE(Type.Int64()))
+                if oldCount == null {
+                    return Pair<Bit, IR.Value?>(false, null)
+                }
+                def newCount := compileExpression(args[1], TypeContext.TYPE(Type.Int64()))
+                if newCount == null {
+                    return Pair<Bit, IR.Value?>(false, null)
+                }
+                def realloc := ir.add(IR.Statement.POINTER_REALLOC(target,
+                        extractBuiltinInt(oldCount),
+                        extractBuiltinInt(newCount)))
+                return Pair<Bit, IR.Value?>(true,
+                        IR.Value.REF(realloc, Type.pointerTo(pointerType)))
+            when "get":
+                assert target !== null
+                def get := ir.add(IR.Statement.POINTER_GET(target))
+                return Pair<Bit, IR.Value?>(true, IR.Value.REF(get, pointerType))
+            when "offset":
+                assert target !== null
+                def value := compileExpression(args[0], TypeContext.TYPE(Type.Int64()))
+                def offset := ir.add(IR.Statement.POINTER_OFFSET(target,
+                        extractBuiltinInt(value)))
+                return Pair<Bit, IR.Value?>(true, IR.Value.REF(offset,
+                        Type.pointerTo(pointerType)))
+            when "[]":
+                assert target !== null
+                def index := compileExpression(args[0], TypeContext.TYPE(Type.Int64()))
+                if index == null {
+                    return Pair<Bit, IR.Value?>(false, null)
+                }
+                def get := ir.add(IR.Statement.POINTER_GET_INDEX(target,
+                        extractBuiltinInt(index)))
+                return Pair<Bit, IR.Value?>(true, IR.Value.REF(get, pointerType))
+            when "[]:=":
+                assert target !== null
+                def index := compileExpression(args[0], TypeContext.TYPE(Type.Int64()))
+                def value := compileExpression(args[1], TypeContext.TYPE(pointerType))
+                if index == null | value == null {
+                    return Pair<Bit, IR.Value?>(false, null)
+                }
+                def indexValue := extractBuiltinInt(index)
+                if isRefCounted(value.type()) {
+                    def load := ir.add(IR.Statement.POINTER_GET_INDEX(target, indexValue))
+                    compileUnref(IR.Value.REF(load, value.type()))
+                    compileRef(value)
+                }
+                ir.add(IR.Statement.POINTER_SET_INDEX(value, target, indexValue))
+                return Pair<Bit, IR.Value?>(true, null)
+            otherwise:
+                assert false, "unsupported pointer intrinsic: \{m.value.name}"
+        }
+    }
+
+    method compileNumberIntrinsic(target:IR.Value, op:Token.Kind, args:ListView<ASTNode>,
+            resultType:Type):Pair<Bit, IR.Value?> {
+        if args.count != 1 {
+            return Pair<Bit, IR.Value?>(false, null)
+        }
+        def position := args[0].position()
+        def left := coerce(position, target, resultType)
+        if left == null {
+            return Pair<Bit, IR.Value?>(false, null)
+        }
+        def right := compileExpression(args[0], TypeContext.TYPE(resultType))
+        if right == null {
+            return Pair<Bit, IR.Value?>(false, null)
+        }
+        def builtinLeft := extractBuiltinInt(left)
+        def builtin := ir.add(IR.Statement.BINARY(builtinLeft, op,
+                extractBuiltinInt(right), builtinLeft.type()))
+        def constructArgs := Array<ASTNode>()
+        constructArgs.add(ASTNode.IR_WRAPPER(position, IR.Value.REF(builtin, builtinLeft.type())))
+        def construct := call(position, IR.Value.TYPE(resultType), constructArgs,
+                TypeContext.TYPE(resultType))
+        assert construct !== null
+        return Pair<Bit, IR.Value?>(true, construct)
+    }
+
+    method compileNumberIntrinsic(target:IR.Value?, m:MethodRef,
+            args:ListView<ASTNode>):Pair<Bit, IR.Value?> {
+        match m.value.name {
+            when "+":
+                return compileNumberIntrinsic(target, Token.Kind.ADD, args, m.returnType)
+            when "-":
+                return compileNumberIntrinsic(target, Token.Kind.SUB, args, m.returnType)
+            when "*":
+                return compileNumberIntrinsic(target, Token.Kind.MUL, args, m.returnType)
+            when "//":
+                return compileNumberIntrinsic(target, Token.Kind.INTDIV, args, m.returnType)
+        }
+        return Pair<Bit, IR.Value?>(false, null)
+    }
+
     method compileIntrinsic(target:IR.Value?, m:MethodRef,
             args:ListView<ASTNode>):Pair<Bit, IR.Value?> {
         if m.target.isPointer() | m.target.isClassLiteral() & m.target.subtypes[1].isPointer() {
-            def pointerType:Type?
-            if m.target.isPointer() {
-                pointerType := resolve(m.target.subtypes[1])
-            }
-            else {
-                pointerType := resolve(m.target.subtypes[1].subtypes[1])
-            }
-            if pointerType == null {
-                return Pair<Bit, IR.Value?>(false, null)
-            }
-            assert m.target.typeKind = Type.Kind.GENERIC
-            match m.value.name {
-                when "alloc":
-                    def count := compileExpression(args[0], TypeContext.TYPE(Type.Int64()))
-                    if count == null {
-                        return Pair<Bit, IR.Value?>(false, null)
-                    }
-                    def alloc := ir.add(IR.Statement.POINTER_ALLOC(extractBuiltinInt(count),
-                                pointerType))
-                    return Pair<Bit, IR.Value?>(true,
-                            IR.Value.REF(alloc, Type.pointerTo(pointerType)))
-                when "destroy":
-                    assert target !== null
-                    ir.add(IR.Statement.POINTER_DESTROY(target))
-                    return Pair<Bit, IR.Value?>(true, null)
-                when "realloc":
-                    assert target !== null
-                    def oldCount := compileExpression(args[0], TypeContext.TYPE(Type.Int64()))
-                    if oldCount == null {
-                        return Pair<Bit, IR.Value?>(false, null)
-                    }
-                    def newCount := compileExpression(args[1], TypeContext.TYPE(Type.Int64()))
-                    if newCount == null {
-                        return Pair<Bit, IR.Value?>(false, null)
-                    }
-                    def realloc := ir.add(IR.Statement.POINTER_REALLOC(target,
-                            extractBuiltinInt(oldCount),
-                            extractBuiltinInt(newCount)))
-                    return Pair<Bit, IR.Value?>(true,
-                            IR.Value.REF(realloc, Type.pointerTo(pointerType)))
-                when "get":
-                    assert target !== null
-                    def get := ir.add(IR.Statement.POINTER_GET(target))
-                    return Pair<Bit, IR.Value?>(true, IR.Value.REF(get, pointerType))
-                when "offset":
-                    assert target !== null
-                    def value := compileExpression(args[0], TypeContext.TYPE(Type.Int64()))
-                    def offset := ir.add(IR.Statement.POINTER_OFFSET(target,
-                            extractBuiltinInt(value)))
-                    return Pair<Bit, IR.Value?>(true, IR.Value.REF(offset,
-                            Type.pointerTo(pointerType)))
-                when "[]":
-                    assert target !== null
-                    def index := compileExpression(args[0], TypeContext.TYPE(Type.Int64()))
-                    if index == null {
-                        return Pair<Bit, IR.Value?>(false, null)
-                    }
-                    def get := ir.add(IR.Statement.POINTER_GET_INDEX(target,
-                            extractBuiltinInt(index)))
-                    return Pair<Bit, IR.Value?>(true, IR.Value.REF(get, pointerType))
-                when "[]:=":
-                    assert target !== null
-                    def index := compileExpression(args[0], TypeContext.TYPE(Type.Int64()))
-                    def value := compileExpression(args[1], TypeContext.TYPE(pointerType))
-                    if index == null | value == null {
-                        return Pair<Bit, IR.Value?>(false, null)
-                    }
-                    def indexValue := extractBuiltinInt(index)
-                    if isRefCounted(value.type()) {
-                        def load := ir.add(IR.Statement.POINTER_GET_INDEX(target, indexValue))
-                        compileUnref(IR.Value.REF(load, value.type()))
-                        compileRef(value)
-                    }
-                    ir.add(IR.Statement.POINTER_SET_INDEX(value, target, indexValue))
-                    return Pair<Bit, IR.Value?>(true, null)
-                otherwise:
-                    assert false, "unsupported pointer intrinsic: \{m.value.name}"
-            }
+            return compilePointerIntrinsic(target, m, args)
+        }
+        if m.target.isNumber() {
+            return compileNumberIntrinsic(target, m, args)
         }
         return Pair<Bit, IR.Value?>(false, null)
     }
@@ -5268,7 +5360,7 @@ class Compiler {
             }
             rawType := field.type
             def base:Type
-            if field.annotations.isWeak() {
+            if !compiler.inFieldCleanup & field.annotations.isWeak() {
                 base := rawType.subtypes[1]
             }
             else {
@@ -5319,7 +5411,7 @@ class Compiler {
                 }
                 result := IR.Value.REF(load, rawType)
             }
-            if field.annotations.isWeak() {
+            if !compiler.inFieldCleanup & field.annotations.isWeak() {
                 def auto := AutoUnrefs(compiler)
                 result := compiler.call(position, result, "get", ImmutableArray<ASTNode>(),
                         TypeContext.UNSPECIFIED)
@@ -5338,7 +5430,7 @@ class Compiler {
             }
             def cast:IR.Value
             def value:IR.Value
-            if field.annotations.isWeak() {
+            if !compiler.inFieldCleanup & field.annotations.isWeak() {
                 def args := Array<ASTNode>() -- FIXME literal
                 args.add(ASTNode.IR_WRAPPER(position, rawValue))
                 value := compiler.compileExpression(ASTNode.CALL(position,
@@ -5364,7 +5456,7 @@ class Compiler {
                         TypeContext.TYPE(rawType))
             }
             else {
-                if compiler.isRefCounted(rawType) {
+                if compiler.isRefCounted(rawType) & field.owner.name != "panda.core.Weak" {
                     compileUnref()
                     compiler.compileRef(value)
                 }
@@ -5388,7 +5480,7 @@ class Compiler {
                 load := compiler.ir.add(IR.Statement.LOAD(IR.Value.REF(ptr, rawType)))
             }
             result := IR.Value.REF(load, rawType)
-            if field.annotations.isWeak() {
+            if !compiler.inFieldCleanup & field.annotations.isWeak() {
                 def nonNullBlock := compiler.ir.newBlock("unref non-null")
                 def mergeBlock := compiler.ir.newBlock("unref merge")
                 def nonNullTest := compiler.ir.add(IR.Statement.BINARY(result, Token.Kind.NIDENTITY,
@@ -5535,6 +5627,9 @@ class Compiler {
 
         @override
         method compileStore(value:IR.Value) {
+            if compiler.isRefCounted(type()) {
+                compiler.compileRef(value)
+            }
             def ptr := compiler.ir.add(IR.Statement.GET_CHOICE_FIELD_POINTER(target, choiceCase,
                     index))
             compiler.ir.add(IR.Statement.STORE(value, IR.Value.REF(ptr, choiceCase.fields[index])))
@@ -5738,11 +5833,12 @@ class Compiler {
         return IR.Value.REF(result, Type.BuiltinBit())
     }
 
-    @pre(int.type() = Type.Int64())
     method extractBuiltinInt(int:IR.Value):IR.Value {
-        def result := ir.add(IR.Statement.EXTRACT_FIELD(int,
-                getSymbolTable(getClass(Type.Int64()))["value"]->FieldDecl))
-        return IR.Value.REF(result, Type.BuiltinInt64())
+        def field := getSymbolTable(getClass(int.type()))["value"]->FieldDecl
+        assert field !== null
+        resolve(field)
+        def result := ir.add(IR.Statement.EXTRACT_FIELD(int, field))
+        return IR.Value.REF(result, field.type)
     }
 
     method compileDo(position:Position, label:String?, statements:ImmutableArray<ASTNode>,
@@ -6486,97 +6582,102 @@ class Compiler {
             def w := whens[i]
             match w {
                 when ASTNode.WHEN(position, tests, statements):
-                    def auto := AutoScope(self)
-                    ir.setCurrentBlock(nextBlock)
-                    var testSuccess := ir.newBlock("test success")
-                    for j in 0 .. tests.count {
-                        ir.setCurrentBlock(nextBlock)
-                        if j < tests.count - 1 | i < whens.count - 1 | other !== null {
-                            nextBlock := ir.newBlock("match")
-                        }
-                        else {
-                            nextBlock := end
-                        }
-                        def t := tests[j]
-                        match t {
-                            when ASTNode.CALL(position, base, args):
-                                def cc := getChoiceCase(base)
-                                if cc !== null {
-                                    if checkChoiceMatch(base.position(), cc.second, choiceClass,
-                                            value) {
-                                        if tests.count != 1 {
-                                            error(position, "destructuring choice 'when' cannot " +
-                                                    "be used together with other 'when' " +
-                                                    "comparisons")
-                                            return
-                                        }
-                                        if args.count != cc.second.fields.count {
-                                            error(position, "choice '\{cc.second}' requires " +
-                                                    cc.second.fields.count +
-                                                    " argument\{cc.second.fields.count = 1:|s}, " +
-                                                    "but found " + args.count)
-                                            return
-                                        }
-                                        if choiceRawValue == null {
-                                            error(position, "'\{value.type()}' is not an " +
-                                                    "instance of '\{cc.second.owner.name}'")
-                                            return
-                                        }
-                                        def eqArgs := Array<ASTNode>() -- FIXME literal
-                                        eqArgs.add(ASTNode.INT(base.position(),
-                                                cc.second.rawValue.convert()))
-                                        def test := call(base.position(), choiceRawValue, "=",
-                                                eqArgs, TypeContext.TYPE(Type.Bit()))
-                                        assert test !== null
-                                        ir.add(IR.Statement.CONDITIONAL_BRANCH(
-                                                extractBuiltinBit(test), testSuccess, nextBlock))
-                                        ir.setCurrentBlock(testSuccess)
-                                        for i in 0 .. args.count {
-                                            def ptr := ir.add(IR.Statement.GET_CHOICE_FIELD_POINTER(
-                                                    value, cc.second, i))
-                                            def load := ir.add(IR.Statement.LOAD(IR.Value.REF(ptr,
-                                                    cc.second.fields[i])))
-                                            if getText(args[i]) = "_" {
-                                                continue
+                    {
+                        def auto := AutoScope(self)
+                        def unrefs := AutoUnrefs(self)
+                        var testSuccess := ir.newBlock("test success")
+                        for j in 0 .. tests.count {
+                            if nextBlock != ir.currentBlock.id {
+                                ir.setCurrentBlock(nextBlock)
+                            }
+                            if j < tests.count - 1 | i < whens.count - 1 | other !== null {
+                                nextBlock := ir.newBlock("match")
+                            }
+                            else {
+                                nextBlock := end
+                            }
+                            def t := tests[j]
+                            match t {
+                                when ASTNode.CALL(position, base, args):
+                                    def cc := getChoiceCase(base)
+                                    if cc !== null {
+                                        if checkChoiceMatch(base.position(), cc.second, choiceClass,
+                                                value) {
+                                            if tests.count != 1 {
+                                                error(position, "destructuring choice 'when' " +
+                                                        "cannot be used together with other " +
+                                                        "'when' comparisons")
+                                                return
                                             }
-                                            def target := compileTarget(args[i], Variable.Kind.DEF,
-                                                    ASTNode.IR_WRAPPER(position,
-                                                            IR.Value.REF(load,
-                                                                cc.second.fields[i])),
-                                                            null)
-                                            VariableLValue(self, target.first).compileStore(
-                                                    IR.Value.REF(load, cc.second.fields[i]))
+                                            if args.count != cc.second.fields.count {
+                                                error(position, "choice '\{cc.second}' requires " +
+                                                        cc.second.fields.count +
+                                                        " argument\{cc.second.fields.count = 1:|s}, " +
+                                                        "but found " + args.count)
+                                                return
+                                            }
+                                            if choiceRawValue == null {
+                                                error(position, "'\{value.type()}' is not an " +
+                                                        "instance of '\{cc.second.owner.name}'")
+                                                return
+                                            }
+                                            def eqArgs := Array<ASTNode>() -- FIXME literal
+                                            eqArgs.add(ASTNode.INT(base.position(),
+                                                    cc.second.rawValue.convert()))
+                                            def test := call(base.position(), choiceRawValue, "=",
+                                                    eqArgs, TypeContext.TYPE(Type.Bit()))
+                                            assert test !== null
+                                            ir.add(IR.Statement.CONDITIONAL_BRANCH(
+                                                    extractBuiltinBit(test), testSuccess, nextBlock))
+                                            ir.setCurrentBlock(testSuccess)
+                                            for i in 0 .. args.count {
+                                                def ptr := ir.add(
+                                                        IR.Statement.GET_CHOICE_FIELD_POINTER(
+                                                            value, cc.second, i))
+                                                def load := ir.add(IR.Statement.LOAD(IR.Value.REF(
+                                                        ptr, cc.second.fields[i])))
+                                                if getText(args[i]) = "_" {
+                                                    continue
+                                                }
+                                                def target := compileTarget(args[i], Variable.Kind.DEF,
+                                                        ASTNode.IR_WRAPPER(position,
+                                                                IR.Value.REF(load,
+                                                                    cc.second.fields[i])),
+                                                                null)
+                                                VariableLValue(self, target.first).compileStore(
+                                                        IR.Value.REF(load, cc.second.fields[i]))
+                                            }
+                                            continue
                                         }
-                                        continue
                                     }
+                            }
+                            def test:IR.Value?
+                            def cc := getChoiceCase(t)
+                            if cc !== null {
+                                def args := Array<ASTNode>() -- FIXME literal
+                                args.add(ASTNode.INT(t.position(), cc.second.rawValue.convert()))
+                                test := call(t.position(), choiceRawValue, "=", args,
+                                        TypeContext.TYPE(Type.Bit()))
+                                if test == null {
+                                    return
                                 }
-                        }
-                        def test:IR.Value?
-                        def cc := getChoiceCase(t)
-                        if cc !== null {
-                            def args := Array<ASTNode>() -- FIXME literal
-                            args.add(ASTNode.INT(t.position(), cc.second.rawValue.convert()))
-                            test := call(t.position(), choiceRawValue, "=", args,
-                                    TypeContext.TYPE(Type.Bit()))
-                            if test == null {
-                                return
                             }
-                        }
-                        else {
-                            def args := Array<ASTNode>() -- FIXME literal
-                            args.add(t)
-                            test := call(t.position(), value, "=", args,
-                                    TypeContext.TYPE(Type.Bit()))
-                            if test == null {
-                                return
+                            else {
+                                def args := Array<ASTNode>() -- FIXME literal
+                                args.add(t)
+                                test := call(t.position(), value, "=", args,
+                                        TypeContext.TYPE(Type.Bit()))
+                                if test == null {
+                                    return
+                                }
                             }
+                            ir.add(IR.Statement.CONDITIONAL_BRANCH(extractBuiltinBit(test),
+                                    testSuccess, nextBlock))
                         }
-                        ir.add(IR.Statement.CONDITIONAL_BRANCH(extractBuiltinBit(test), testSuccess,
-                                nextBlock))
-                    }
-                    ir.setCurrentBlock(testSuccess)
-                    for s in statements {
-                        compileStatement(s)
+                        ir.setCurrentBlock(testSuccess)
+                        for s in statements {
+                            compileStatement(s)
+                        }
                     }
                     if !ir.currentBlockFinished() {
                         ir.add(IR.Statement.BRANCH(end))
@@ -6655,6 +6756,9 @@ class Compiler {
     method compileReturn(position:Position, value:ASTNode?) {
         if currentMethod[0].name = "cleanup" & currentMethod[0].parameters.count = 0 &
                 currentMethod[0].owner.name != WEAK_NAME {
+            -- unref fields
+            assert !inFieldCleanup
+            inFieldCleanup := true
             for f in currentMethod[0].owner.fields {
                 if resolve(f) & !f.annotations.isClass() & f.fieldKind != FieldDecl.Kind.PROPERTY &
                         isRefCounted(f.type) {
@@ -6668,6 +6772,8 @@ class Compiler {
                     compileUnref(load)
                 }
             }
+            assert inFieldCleanup
+            inFieldCleanup := false
         }
         if value !== null {
             if currentMethod[0].returnType = Type.Void() {
@@ -7009,6 +7115,7 @@ class Compiler {
         if !resolve(m) {
             return
         }
+        coercionCosts.clear()
         currentMethod.push(m)
         checkAnnotations(m)
         assert atPreBlock == null

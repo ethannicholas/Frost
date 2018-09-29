@@ -248,20 +248,17 @@ class IR {
 
         def id:ID
 
-        def comment:String
-
         def ids := Array<Statement.ID>()
 
         def statements := Array<Statement>()
 
-        init(id:ID, comment:String) {
+        init(id:ID) {
             self.id := id
-            self.comment := comment
         }
 
         @override
         function convert():String {
-            def result := MutableString("\{id}: -- \{comment}\n")
+            def result := MutableString("\{id}:\n")
             for i in 0 .. statements.count {
                 result.append(ids[i])
                 result.append(": ")
@@ -370,11 +367,13 @@ class IR {
     var currentStatementId := -1
 
     @private
+    var currentBlockID := -1
+
+    @private
     def currentBlock:Block
 
     init() {
-        newBlock("start")
-        currentBlock := blocks[0]
+        setCurrentBlock(newBlock("start"))
     }
 
     ================================================================================================
@@ -393,13 +392,21 @@ class IR {
     Creates (but does not make current!) a new block and returns its id.
     ================================================================================================
     method newBlock(comment:String):Block.ID {
-        def result := Block.ID(blocks.count)
-        blocks.add(Block(result, comment))
-        return result
+        currentBlockID += 1
+        return Block.ID(currentBlockID)
     }
 
     method setCurrentBlock(id:Block.ID) {
-        currentBlock := blocks[id.value]
+        for b in blocks {
+            if b.id = id {
+                -- FIXME should be an error to go back to an already-written block
+                currentBlock := b
+                return
+            }
+        }
+        def newBlock := Block(id)
+        blocks.add(newBlock)
+        currentBlock := newBlock
     }
 
     function currentBlockFinished():Bit {
@@ -407,7 +414,8 @@ class IR {
             return false
         }
         match currentBlock.statements[currentBlock.statements.count - 1] {
-            when Statement.BRANCH, Statement.CONDITIONAL_BRANCH, Statement.RETURN:
+            when Statement.BRANCH, Statement.CONDITIONAL_BRANCH, Statement.RETURN,
+                    Statement.UNREACHABLE:
                 return true
             otherwise:
                 return false

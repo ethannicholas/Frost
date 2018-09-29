@@ -1357,7 +1357,7 @@ class LLVMCodeGenerator : CodeGenerator {
                     when Token.Kind.GTEQ:       llvmOp := "icmp sge"
                     when Token.Kind.LTEQ:       llvmOp := "icmp sle"
                     otherwise:
-                        assert false
+                        assert false, "unsupported signed operator \{op}"
                 }
             when OpClass.UNSIGNED:
                 match op {
@@ -1368,8 +1368,10 @@ class LLVMCodeGenerator : CodeGenerator {
                     when Token.Kind.REM:        llvmOp := "urem"
                     when Token.Kind.SHIFTLEFT:  llvmOp := "shl"
                     when Token.Kind.SHIFTRIGHT: llvmOp := "lshr"
-                    when Token.Kind.BITWISEAND: llvmOp := "and"
-                    when Token.Kind.BITWISEOR:  llvmOp := "or"
+                    when Token.Kind.BITWISEAND, Token.Kind.AND:
+                                                llvmOp := "and"
+                    when Token.Kind.BITWISEOR, Token.Kind.OR:
+                                                llvmOp := "or"
                     when Token.Kind.XOR, Token.Kind.BITWISEXOR: 
                                                 llvmOp := "xor"
                     when Token.Kind.EQ:         llvmOp := "icmp eq"
@@ -1379,7 +1381,7 @@ class LLVMCodeGenerator : CodeGenerator {
                     when Token.Kind.GTEQ:       llvmOp := "icmp uge"
                     when Token.Kind.LTEQ:       llvmOp := "icmp ule"
                     otherwise:
-                        assert false
+                        assert false, "unsupported unsigned operator \{op}"
                 }
             when OpClass.FLOAT:
                 match op {
@@ -1394,7 +1396,7 @@ class LLVMCodeGenerator : CodeGenerator {
                     when Token.Kind.GTEQ:       llvmOp := "fcmp oge"
                     when Token.Kind.LTEQ:       llvmOp := "fcmp ole"
                     otherwise:
-                        assert false
+                        assert false, "unsupported float operator \{op}"
                 }
             when OpClass.CLASS:
                 match op {
@@ -1495,8 +1497,8 @@ class LLVMCodeGenerator : CodeGenerator {
         def targetRef := getReference(target)
         def fieldIndex := compiler.getIndex(data)
         def dataPointer := nextVar()
-        out.printLine("\{dataPointer} = getelementptr \{typeName(target.type())}, " +
-                "\{typeName(target.type())}* \{targetRef}, i64 0, i32 \{fieldIndex}")
+        out.printLine("\{dataPointer} = getelementptr \{typeName(cc.owner.type)}, " +
+                "\{typeName(cc.owner.type)}* \{targetRef}, i64 0, i32 \{fieldIndex}")
         def size := getChoiceDataSize(cc.owner)
         def offset := nextVar()
         out.printLine("\{offset} = getelementptr [\{size} x i8], [\{size} x i8]* \{dataPointer}," +
@@ -1608,7 +1610,12 @@ class LLVMCodeGenerator : CodeGenerator {
 
     method writeNegate(id:IR.Statement.ID, value:IR.Value) {
         def result := nextVar()
-        out.printLine("\{result} = sub \{getTypedReference(value)}, 0")
+        if value.type().typeKind = Type.Kind.BUILTIN_FLOAT {
+            out.print("\{result} = fsub \{getTypedReference(value)}, 0x0")
+        }
+        else {
+            out.print("\{result} = sub \{getTypedReference(value)}, 0")
+        }
         refs[id] := result
     }
 
@@ -1650,6 +1657,16 @@ class LLVMCodeGenerator : CodeGenerator {
         refs[id] := result
     }
 
+    method writePointerOffset(id:IR.Statement.ID, ptr:IR.Value, offset:IR.Value) {
+        def base := getTypedReference(ptr)
+        def offsetRef := getTypedReference(offset)
+        def baseType := llvmType(ptr.type().subtypes[1])
+        def result := nextVar()
+        out.printLine("\{result} = getelementptr inbounds \{baseType}, " +
+                "\{base}, \{offsetRef}")
+        refs[id] := result
+    }
+
     method writePointerRealloc(id:IR.Statement.ID, ptr:IR.Value, oldCount:IR.Value,
             newCount:IR.Value) {
         def ptrRef := getTypedReference(ptr)
@@ -1664,11 +1681,11 @@ class LLVMCodeGenerator : CodeGenerator {
         def newSize := nextVar()
         out.printLine("\{newSize} = mul \{newCountRef}, \{elementSize}")
         def realloc := nextVar()
-        out.printLine("\{realloc} = (\{llvmType(ptr.type())}) @pandaRealloc(\{ptrRef}, " +
+        out.printLine("\{realloc} = call i8* @pandaRealloc(i8* \{cast}, " +
                 "\{SIZE_TYPE} \{oldSize}, \{SIZE_TYPE} \{newSize})")
         def result := nextVar()
         out.printLine("\{result} = bitcast i8* \{realloc} to " +
-                llvmType(Type.pointerTo(ptr.type())))
+                llvmType(ptr.type()))
         refs[id] := result
     }
 
@@ -1773,6 +1790,8 @@ class LLVMCodeGenerator : CodeGenerator {
                 writePointerDestroy(ptr)
             when IR.Statement.POINTER_GET_INDEX(ptr, index):
                 writePointerGetIndex(id, ptr, index)
+            when IR.Statement.POINTER_OFFSET(ptr, offset):
+                writePointerOffset(id, ptr, offset)
             when IR.Statement.POINTER_REALLOC(ptr, oldCount, newCount):
                 writePointerRealloc(id, ptr, oldCount, newCount)
             when IR.Statement.POINTER_SET_INDEX(value, ptr, index):
@@ -1803,7 +1822,7 @@ class LLVMCodeGenerator : CodeGenerator {
             def block := ir.blocks[i]
             if i != 0 {
                 currentBlock := "\{block.id}"
-                out.printLine(currentBlock + ": ; \{block.comment}")
+                out.printLine(currentBlock + ":")
             }
             else {
                 currentBlock := "0"

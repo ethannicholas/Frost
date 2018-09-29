@@ -62,6 +62,7 @@ class Parser {
     }
 
     method start(path:File, source:String) {
+        for i in 0 .. 100 { Panda.ref(source) }
         reportErrors := true
         lexer.start(source)
         self.path := path
@@ -84,6 +85,9 @@ class Parser {
             return result
         }
         def result := lexer.next()
+        if path.path.endsWith("Token.panda") {
+            Console.printLine("got: \{text(result)} at \{result.position}")
+        }
         if syntaxHighlighter !== null {
             if result.kind = Token.Kind.DOC_COMMENT {
                 if syntaxHighlighter.stack.count = 0 |

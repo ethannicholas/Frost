@@ -1382,7 +1382,7 @@ class CCodeGenerator : CodeGenerator {
             def block := ir.blocks[i]
             if i != 0 {
                 currentBlock := "\{block.id}"
-                out.printLine("\{currentBlock}:; // \{block.comment}")
+                out.printLine("\{currentBlock}:;")
             }
             else {
                 currentBlock := "0"

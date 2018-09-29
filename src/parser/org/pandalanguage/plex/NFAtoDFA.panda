@@ -18,7 +18,7 @@ class NFAtoDFA {
 
     method getState(label:DFAStateLabel):DFAState {
         var result := states[label]
-        if result = null {
+        if result == null {
             result := DFAState(states.count, label)
             states[label] := result
         }

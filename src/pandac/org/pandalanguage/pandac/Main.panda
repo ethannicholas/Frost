@@ -177,6 +177,8 @@ class Main {
         while !args.get_done() {
             def a := args.next()
             match a {
+                when "--mem":
+                    
                 when "--fuzz":
                     def path := File("/tmp/fuzz.panda")
                     Console.inputStream().sendTo(path.openOutputStream())
@@ -343,7 +345,9 @@ class Main {
 
     @class
     method main(args:ListView<String>) {
-        Panda.disableRefErrorReporting()
+        if args[1] != "--mem" {
+            Panda.disableRefErrorReporting()
+        }
         Main().run(args)
     }
 }

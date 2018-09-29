@@ -160,7 +160,7 @@ class Regex {
     @private
     method set() {
         expect(Char8(91))
-        def MARKER := SingleChar(Char8(33))
+        def MARKER:Node := SingleChar(Char8(33))
         stack.push(MARKER)
         def set := SetNode()
         if peek() = Char8(94) {
