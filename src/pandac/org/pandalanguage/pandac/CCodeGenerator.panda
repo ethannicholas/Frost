@@ -1308,55 +1308,55 @@ class CCodeGenerator : CodeGenerator {
 
     method writeStatement(id:IR.Statement.ID, s:IR.Statement) {
         match s {
-            when IR.Statement.BINARY(left, op, right, type):
+            when IR.Statement.BINARY(position, left, op, right, type):
                 writeBinary(id, left, op, right, type)
-            when IR.Statement.BRANCH(target):
+            when IR.Statement.BRANCH(position, target):
                 writeBranch(target)
-            when IR.Statement.CAST(value, type):
+            when IR.Statement.CAST(position, value, type):
                 writeCast(id, value, type)
             when IR.Statement.COMMENT(text):
                 out.printLine("// \{text}")
-            when IR.Statement.CONDITIONAL_BRANCH(test, ifTrue, ifFalse):
+            when IR.Statement.CONDITIONAL_BRANCH(position, test, ifTrue, ifFalse):
                 writeConditionalBranch(test, ifTrue, ifFalse)
-            when IR.Statement.CONSTRUCT(cl):
+            when IR.Statement.CONSTRUCT(position, cl):
                 writeConstruct(id, cl)
-            when IR.Statement.DYNAMIC_CALL(m, args):
+            when IR.Statement.DYNAMIC_CALL(position, m, args):
                 writeDynamicCall(id, m, args)
-            when IR.Statement.EXTRACT_FIELD(target, field):
+            when IR.Statement.EXTRACT_FIELD(position, target, field):
                 writeExtractField(id, target, field)
-            when IR.Statement.GET_CHOICE_FIELD_POINTER(target, cc, index):
+            when IR.Statement.GET_CHOICE_FIELD_POINTER(position, target, cc, index):
                 writeGetChoiceFieldPointer(id, target, cc, index)
-            when IR.Statement.GET_FIELD_POINTER(target, field):
+            when IR.Statement.GET_FIELD_POINTER(position, target, field):
                 writeGetFieldPointer(id, target, field)
-            when IR.Statement.GET_INTERFACE_METHOD(value, cl, index, type):
+            when IR.Statement.GET_INTERFACE_METHOD(position, value, cl, index, type):
                 writeGetInterfaceMethod(id, value, cl, index, type)
-            when IR.Statement.GET_VIRTUAL_METHOD(value, index, type):
+            when IR.Statement.GET_VIRTUAL_METHOD(position, value, index, type):
                 writeGetVirtualMethod(id, value, index, type)
-            when IR.Statement.LOAD(ptr):
+            when IR.Statement.LOAD(position, ptr):
                 writeLoad(id, ptr)
-            when IR.Statement.NEGATE(value):
+            when IR.Statement.NEGATE(position, value):
                 writeNegate(id, value)
-            when IR.Statement.NOT(value):
+            when IR.Statement.NOT(position, value):
                 writeNot(id, value)
-            when IR.Statement.POINTER_ALLOC(count, type):
+            when IR.Statement.POINTER_ALLOC(position, count, type):
                 writePointerAlloc(id, count, type)
-            when IR.Statement.POINTER_DESTROY(ptr):
+            when IR.Statement.POINTER_DESTROY(position, ptr):
                 writePointerDestroy(ptr)
-            when IR.Statement.POINTER_GET_INDEX(ptr, index):
+            when IR.Statement.POINTER_GET_INDEX(position, ptr, index):
                 writePointerGetIndex(id, ptr, index)
-            when IR.Statement.POINTER_OFFSET(ptr, offset):
+            when IR.Statement.POINTER_OFFSET(position, ptr, offset):
                 writePointerOffset(id, ptr, offset)
-            when IR.Statement.POINTER_REALLOC(ptr, oldCount, newCount):
+            when IR.Statement.POINTER_REALLOC(position, ptr, oldCount, newCount):
                 writePointerRealloc(id, ptr, oldCount, newCount)
-            when IR.Statement.POINTER_SET_INDEX(value, ptr, index):
+            when IR.Statement.POINTER_SET_INDEX(position, value, ptr, index):
                 writePointerSetIndex(value, ptr, index)
-            when IR.Statement.RETURN(value):
+            when IR.Statement.RETURN(position, value):
                 writeReturn(value)
-            when IR.Statement.STATIC_CALL(m, args):
+            when IR.Statement.STATIC_CALL(position, m, args):
                 writeStaticCall(id, m, args)
-            when IR.Statement.STORE(value, slot):
+            when IR.Statement.STORE(position, value, slot):
                 writeStore(value, slot)
-            when IR.Statement.UNREACHABLE:
+            when IR.Statement.UNREACHABLE(position):
                 out.printLine("abort(); // unreachable")
             otherwise:
                 assert false, "unsupported statement \{s}"

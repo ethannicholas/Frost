@@ -216,11 +216,15 @@ class Compiler {
 
         def safetyLevel:Int
 
-        init(pandaHome:File, importDirs:ListView<File>, optimizationLevel:Int, safetyLevel:Int) {
+        def debug:Bit
+
+        init(pandaHome:File, importDirs:ListView<File>, optimizationLevel:Int, safetyLevel:Int,
+             debug:Bit) {
             self.pandaHome := pandaHome
             self.importDirs := ImmutableArray<File>(importDirs)
             self.optimizationLevel := optimizationLevel
             self.safetyLevel := safetyLevel
+            self.debug := debug
         }
     }
 
@@ -3178,7 +3182,8 @@ class Compiler {
                 }
                 match v.storage {
                     when Variable.Storage.LOCAL(slot):
-                        def result := ir.add(IR.Statement.LOAD(IR.Value.LOCAL(slot, v.type)))
+                        def result := ir.add(IR.Statement.LOAD(position,
+                                IR.Value.LOCAL(slot, v.type)))
                         return IR.Value.REF(result, v.type)
                     when Variable.Storage.PARAMETER(index):
                         assert s->Variable.type.resolved
@@ -3215,7 +3220,7 @@ class Compiler {
                             TypeContext.UNSPECIFIED)
                 }
                 else {
-                    def construct := ir.add(IR.Statement.CONSTRUCT(cc.owner))
+                    def construct := ir.add(IR.Statement.CONSTRUCT(position, cc.owner))
                     def constructRef := IR.Value.REF(construct, cc.owner.type)
                     statementUnrefs.add(constructRef)
                     call(position, symbolRef(position, constructRef, inits), args,
@@ -3241,7 +3246,7 @@ class Compiler {
         assert coerced !== null
         def args := Array<IR.Value>() -- FIXME literal
         args.add(coerced)
-        def result := ir.add(IR.Statement.STATIC_CALL(m, args.finish()))
+        def result := ir.add(IR.Statement.STATIC_CALL(position, m, args.finish()))
         return IR.Value.REF(result, m.owner.type)
     }
 
@@ -3270,7 +3275,7 @@ class Compiler {
             }
         }
         def args := Array<ASTNode>()
-        args.add(ASTNode.IR_WRAPPER(position, cast(IR.Value.METHOD_POINTER(m, irType),
+        args.add(ASTNode.IR_WRAPPER(position, cast(position, IR.Value.METHOD_POINTER(m, irType),
                 Type.pointerTo(Type.Int8()))))
         if m.annotations.isClass() {
             args.add(ASTNode.NULL(position))
@@ -3285,8 +3290,8 @@ class Compiler {
         else {
             methodType := Type.Method()
         }
-        return cast(call(position, IR.Value.TYPE(methodType), args, TypeContext.UNSPECIFIED),
-                effectiveType)
+        return cast(position, call(position, IR.Value.TYPE(methodType), args,
+                TypeContext.UNSPECIFIED), effectiveType)
     }
 
     function explainCoerceFailure(m:MethodDecl, target:Type):String {
@@ -3387,7 +3392,7 @@ class Compiler {
                     }
             }
             assert value.type().isClass()
-            def result := IR.Value.REF(ir.add(IR.Statement.CAST(value, target)), target)
+            def result := IR.Value.REF(ir.add(IR.Statement.CAST(position, value, target)), target)
             if !isRefCounted(value.type()) & isRefCounted(target) {
                 statementUnrefs.add(result)
             }
@@ -3418,7 +3423,7 @@ class Compiler {
     }
 
     @pre(target != Type.Void() & target.resolved)
-    method cast(value:IR.Value?, target:Type):IR.Value? {
+    method cast(position:Position, value:IR.Value?, target:Type):IR.Value? {
         if value == null {
             return null
         }
@@ -3428,7 +3433,7 @@ class Compiler {
         if coercionCost(value.type(), target) !== null {
             return coerce(Position(), value, TypeContext.TYPE(target))
         }
-        def result := IR.Value.REF(ir.add(IR.Statement.CAST(value, target)), target)
+        def result := IR.Value.REF(ir.add(IR.Statement.CAST(position, value, target)), target)
         if !isRefCounted(value.type()) & isRefCounted(target) {
             statementUnrefs.add(result)
         }
@@ -3471,7 +3476,7 @@ class Compiler {
         call(Position(), IR.Value.TYPE(Type.Panda()), "unref", args, TypeContext.UNSPECIFIED)
     }
 
-    method compilePointerIntrinsic(target:IR.Value?, m:MethodRef,
+    method compilePointerIntrinsic(position:Position, target:IR.Value?, m:MethodRef,
             args:ListView<ASTNode>):Pair<Bit, IR.Value?> {
         def pointerType:Type?
         if m.target.isPointer() {
@@ -3490,13 +3495,13 @@ class Compiler {
                 if count == null {
                     return Pair<Bit, IR.Value?>(false, null)
                 }
-                def alloc := ir.add(IR.Statement.POINTER_ALLOC(extractBuiltinInt(count),
-                            pointerType))
+                def alloc := ir.add(IR.Statement.POINTER_ALLOC(position,
+                        extractBuiltinInt(position, count), pointerType))
                 return Pair<Bit, IR.Value?>(true,
                         IR.Value.REF(alloc, Type.pointerTo(pointerType)))
             when "destroy":
                 assert target !== null
-                ir.add(IR.Statement.POINTER_DESTROY(target))
+                ir.add(IR.Statement.POINTER_DESTROY(position, target))
                 return Pair<Bit, IR.Value?>(true, null)
             when "realloc":
                 assert target !== null
@@ -3508,20 +3513,20 @@ class Compiler {
                 if newCount == null {
                     return Pair<Bit, IR.Value?>(false, null)
                 }
-                def realloc := ir.add(IR.Statement.POINTER_REALLOC(target,
-                        extractBuiltinInt(oldCount),
-                        extractBuiltinInt(newCount)))
+                def realloc := ir.add(IR.Statement.POINTER_REALLOC(position, target,
+                        extractBuiltinInt(position, oldCount),
+                        extractBuiltinInt(position, newCount)))
                 return Pair<Bit, IR.Value?>(true,
                         IR.Value.REF(realloc, Type.pointerTo(pointerType)))
             when "get":
                 assert target !== null
-                def get := ir.add(IR.Statement.POINTER_GET(target))
+                def get := ir.add(IR.Statement.POINTER_GET(position, target))
                 return Pair<Bit, IR.Value?>(true, IR.Value.REF(get, pointerType))
             when "offset":
                 assert target !== null
                 def value := compileExpression(args[0], TypeContext.TYPE(Type.Int64()))
-                def offset := ir.add(IR.Statement.POINTER_OFFSET(target,
-                        extractBuiltinInt(value)))
+                def offset := ir.add(IR.Statement.POINTER_OFFSET(position, target,
+                        extractBuiltinInt(position, value)))
                 return Pair<Bit, IR.Value?>(true, IR.Value.REF(offset,
                         Type.pointerTo(pointerType)))
             when "[]":
@@ -3530,8 +3535,8 @@ class Compiler {
                 if index == null {
                     return Pair<Bit, IR.Value?>(false, null)
                 }
-                def get := ir.add(IR.Statement.POINTER_GET_INDEX(target,
-                        extractBuiltinInt(index)))
+                def get := ir.add(IR.Statement.POINTER_GET_INDEX(position, target,
+                        extractBuiltinInt(position, index)))
                 return Pair<Bit, IR.Value?>(true, IR.Value.REF(get, pointerType))
             when "[]:=":
                 assert target !== null
@@ -3540,25 +3545,24 @@ class Compiler {
                 if index == null | value == null {
                     return Pair<Bit, IR.Value?>(false, null)
                 }
-                def indexValue := extractBuiltinInt(index)
+                def indexValue := extractBuiltinInt(position, index)
                 if isRefCounted(value.type()) {
-                    def load := ir.add(IR.Statement.POINTER_GET_INDEX(target, indexValue))
+                    def load := ir.add(IR.Statement.POINTER_GET_INDEX(position, target, indexValue))
                     compileUnref(IR.Value.REF(load, value.type()))
                     compileRef(value)
                 }
-                ir.add(IR.Statement.POINTER_SET_INDEX(value, target, indexValue))
+                ir.add(IR.Statement.POINTER_SET_INDEX(position, value, target, indexValue))
                 return Pair<Bit, IR.Value?>(true, null)
             otherwise:
                 assert false, "unsupported pointer intrinsic: \{m.value.name}"
         }
     }
 
-    method compileNumberIntrinsic(target:IR.Value, op:Token.Kind, args:ListView<ASTNode>,
-            resultType:Type):Pair<Bit, IR.Value?> {
+    method compileNumberIntrinsic(position:Position, target:IR.Value, op:Token.Kind,
+            args:ListView<ASTNode>, resultType:Type):Pair<Bit, IR.Value?> {
         if args.count != 1 {
             return Pair<Bit, IR.Value?>(false, null)
         }
-        def position := args[0].position()
         def left := coerce(position, target, resultType)
         if left == null {
             return Pair<Bit, IR.Value?>(false, null)
@@ -3567,9 +3571,9 @@ class Compiler {
         if right == null {
             return Pair<Bit, IR.Value?>(false, null)
         }
-        def builtinLeft := extractBuiltinInt(left)
-        def builtin := ir.add(IR.Statement.BINARY(builtinLeft, op,
-                extractBuiltinInt(right), builtinLeft.type()))
+        def builtinLeft := extractBuiltinInt(position, left)
+        def builtin := ir.add(IR.Statement.BINARY(position, builtinLeft, op,
+                extractBuiltinInt(position, right), builtinLeft.type()))
         def constructArgs := Array<ASTNode>()
         constructArgs.add(ASTNode.IR_WRAPPER(position, IR.Value.REF(builtin, builtinLeft.type())))
         def construct := call(position, IR.Value.TYPE(resultType), constructArgs,
@@ -3578,28 +3582,28 @@ class Compiler {
         return Pair<Bit, IR.Value?>(true, construct)
     }
 
-    method compileNumberIntrinsic(target:IR.Value?, m:MethodRef,
+    method compileNumberIntrinsic(position:Position, target:IR.Value?, m:MethodRef,
             args:ListView<ASTNode>):Pair<Bit, IR.Value?> {
         match m.value.name {
             when "+":
-                return compileNumberIntrinsic(target, Token.Kind.ADD, args, m.returnType)
+                return compileNumberIntrinsic(position, target, Token.Kind.ADD, args, m.returnType)
             when "-":
-                return compileNumberIntrinsic(target, Token.Kind.SUB, args, m.returnType)
+                return compileNumberIntrinsic(position, target, Token.Kind.SUB, args, m.returnType)
             when "*":
-                return compileNumberIntrinsic(target, Token.Kind.MUL, args, m.returnType)
+                return compileNumberIntrinsic(position, target, Token.Kind.MUL, args, m.returnType)
             when "//":
-                return compileNumberIntrinsic(target, Token.Kind.INTDIV, args, m.returnType)
+                return compileNumberIntrinsic(position, target, Token.Kind.INTDIV, args, m.returnType)
         }
         return Pair<Bit, IR.Value?>(false, null)
     }
 
-    method compileIntrinsic(target:IR.Value?, m:MethodRef,
+    method compileIntrinsic(position:Position, target:IR.Value?, m:MethodRef,
             args:ListView<ASTNode>):Pair<Bit, IR.Value?> {
         if m.target.isPointer() | m.target.isClassLiteral() & m.target.subtypes[1].isPointer() {
-            return compilePointerIntrinsic(target, m, args)
+            return compilePointerIntrinsic(position, target, m, args)
         }
         if m.target.isNumber() {
-            return compileNumberIntrinsic(target, m, args)
+            return compileNumberIntrinsic(position, target, m, args)
         }
         return Pair<Bit, IR.Value?>(false, null)
     }
@@ -3621,7 +3625,7 @@ class Compiler {
                     error(position, "cannot call class \{m.value.declaration()} on an instance")
             }
         }
-        var intrinsic := compileIntrinsic(target, m, args)
+        var intrinsic := compileIntrinsic(position, target, m, args)
         if intrinsic.first {
             return coerce(position, intrinsic.second, type)
         }
@@ -3684,7 +3688,7 @@ class Compiler {
                 return null
             }
             if a.type() != actualType.parameterType(i + 1) {
-                a := cast(a, actualType.parameterType(i + 1))
+                a := cast(position, a, actualType.parameterType(i + 1))
             }
             if a == null {
                 return null
@@ -3695,19 +3699,20 @@ class Compiler {
         if !isSuper & m.value.isVirtual {
             def mref:IR.Statement.ID
             if m.value.owner.classKind = ClassDecl.Kind.INTERFACE {
-                mref := ir.add(IR.Statement.GET_INTERFACE_METHOD(finalTarget, m.value.owner,
+                mref := ir.add(IR.Statement.GET_INTERFACE_METHOD(position, finalTarget,
+                        m.value.owner,
                         getVTableIndex(m.value) - getVTable(getClass(Type.Object())).count,
                         actualType))
             }
             else {
-                mref := ir.add(IR.Statement.GET_VIRTUAL_METHOD(finalTarget, getVTableIndex(m.value),
-                        actualType))
+                mref := ir.add(IR.Statement.GET_VIRTUAL_METHOD(position, finalTarget,
+                        getVTableIndex(m.value), actualType))
             }
-            result := ir.add(IR.Statement.DYNAMIC_CALL(IR.Value.REF(mref, actualType),
+            result := ir.add(IR.Statement.DYNAMIC_CALL(position, IR.Value.REF(mref, actualType),
                     finalArgs.finish()))
         }
         else {
-            result := ir.add(IR.Statement.STATIC_CALL(m.value, finalArgs.finish()))
+            result := ir.add(IR.Statement.STATIC_CALL(position, m.value, finalArgs.finish()))
         }
         if m.returnType != Type.Void() {
             var resultCast:IR.Value? := IR.Value.REF(result, actualType.returnType())
@@ -3716,7 +3721,7 @@ class Compiler {
             }
             if m.value.methodKind != MethodDecl.Kind.INIT &
                     effectiveType.returnType() != actualType.returnType() {
-                resultCast := cast(resultCast, effectiveType.returnType())
+                resultCast := cast(position, resultCast, effectiveType.returnType())
                 if resultCast == null {
                     return null
                 }
@@ -3847,32 +3852,34 @@ class Compiler {
         if !resolve(pointerField) {
             return null
         }
-        def methodObj := cast(m, methodType)
-        def methodPtrPtr := ir.add(IR.Statement.GET_FIELD_POINTER(methodObj, pointerField))
-        def methodPtr := ir.add(IR.Statement.LOAD(IR.Value.REF(methodPtrPtr,
+        def methodObj := cast(position, m, methodType)
+        def methodPtrPtr := ir.add(IR.Statement.GET_FIELD_POINTER(position, methodObj,
+                pointerField))
+        def methodPtr := ir.add(IR.Statement.LOAD(position, IR.Value.REF(methodPtrPtr,
                 Type.pointerTo(Type.Int8()))))
         def targetField := st["target"]->FieldDecl
         if !resolve(targetField) {
             return null
         }
-        def targetPtr := ir.add(IR.Statement.GET_FIELD_POINTER(methodObj, targetField))
-        def target := ir.add(IR.Statement.LOAD(IR.Value.REF(targetPtr, targetType)))
-        def targetNonNull := ir.add(IR.Statement.BINARY(IR.Value.REF(target, targetType),
+        def targetPtr := ir.add(IR.Statement.GET_FIELD_POINTER(position, methodObj, targetField))
+        def target := ir.add(IR.Statement.LOAD(position, IR.Value.REF(targetPtr, targetType)))
+        def targetNonNull := ir.add(IR.Statement.BINARY(position, IR.Value.REF(target, targetType),
                 Token.Kind.NIDENTITY, IR.Value.NULL(targetType.nullable()), Type.BuiltinBit()))
         def haveTargetBlock := ir.newBlock("dynamic call with target")
         def noTargetBlock := ir.newBlock("dynamic call without target")
         def mergeBlock := ir.newBlock("dynamic call merge")
-        ir.add(IR.Statement.CONDITIONAL_BRANCH(IR.Value.REF(targetNonNull,
+        ir.add(IR.Statement.CONDITIONAL_BRANCH(position, IR.Value.REF(targetNonNull,
                 Type.BuiltinBit()), haveTargetBlock, noTargetBlock))
         ir.setCurrentBlock(noTargetBlock)
-        def noTargetCast := cast(IR.Value.REF(methodPtr, Type.pointerTo(Type.Int8())),
+        def noTargetCast := cast(position, IR.Value.REF(methodPtr, Type.pointerTo(Type.Int8())),
                 Type.pointerTo(t))
-        def noTargetResult := ir.add(IR.Statement.DYNAMIC_CALL(noTargetCast,
+        def noTargetResult := ir.add(IR.Statement.DYNAMIC_CALL(position, noTargetCast,
                 ImmutableArray<IR.Value>(finalArgs)))
         if result !== null {
-            ir.add(IR.Statement.STORE(IR.Value.REF(noTargetResult, t.returnType()), result))
+            ir.add(IR.Statement.STORE(position, IR.Value.REF(noTargetResult, t.returnType()),
+                    result))
         }
-        ir.add(IR.Statement.BRANCH(mergeBlock))
+        ir.add(IR.Statement.BRANCH(position, mergeBlock))
         ir.setCurrentBlock(haveTargetBlock)
         def targetParams := Array<Type>()
         targetParams.add(targetType)
@@ -3881,18 +3888,19 @@ class Compiler {
         }
         def haveTargetType := Type.methodType(position, t.typeKind, targetParams,
                 t.returnType(), 0)
-        def haveTargetCast := cast(IR.Value.REF(methodPtr, Type.pointerTo(Type.Int8())),
+        def haveTargetCast := cast(position, IR.Value.REF(methodPtr, Type.pointerTo(Type.Int8())),
                 Type.pointerTo(haveTargetType))
         finalArgs.insert(0, IR.Value.REF(target, targetType))
-        def haveTargetResult := ir.add(IR.Statement.DYNAMIC_CALL(haveTargetCast,
+        def haveTargetResult := ir.add(IR.Statement.DYNAMIC_CALL(position, haveTargetCast,
                 ImmutableArray<IR.Value>(finalArgs)))
         if result !== null {
-            ir.add(IR.Statement.STORE(IR.Value.REF(haveTargetResult, t.returnType()), result))
+            ir.add(IR.Statement.STORE(position, IR.Value.REF(haveTargetResult, t.returnType()),
+                    result))
         }
-        ir.add(IR.Statement.BRANCH(mergeBlock))
+        ir.add(IR.Statement.BRANCH(position, mergeBlock))
         ir.setCurrentBlock(mergeBlock)
         if result !== null {
-            def resultLoad := ir.add(IR.Statement.LOAD(result))
+            def resultLoad := ir.add(IR.Statement.LOAD(position, result))
             def loadRef := IR.Value.REF(resultLoad, t.returnType())
             if isRefCounted(t.returnType()) {
                 statementUnrefs.add(loadRef)
@@ -3980,10 +3988,10 @@ class Compiler {
                 def inits := getSymbolTable(cl)["init"]
                 assert inits !== null, "no init for \{cl.name}"
                 if isValue(cl) {
-                    return coerce(position, cast(call(position, symbolRef(position, null, inits),
-                            args, type), finalType), type)
+                    return coerce(position, cast(position, call(position, symbolRef(position, null,
+                            inits), args, type), finalType), type)
                 }
-                def construct := ir.add(IR.Statement.CONSTRUCT(cl))
+                def construct := ir.add(IR.Statement.CONSTRUCT(position, cl))
                 def constructRef := IR.Value.REF(construct, finalType)
                 assert statementUnrefs !== null
                 statementUnrefs.add(constructRef)
@@ -4288,7 +4296,8 @@ class Compiler {
         def ifTrue := ir.newBlock("and true")
         def ifFalse := ir.newBlock("and false")
         def merge := ir.newBlock("and merge")
-        ir.add(IR.Statement.CONDITIONAL_BRANCH(extractBuiltinBit(compiledLeft), ifTrue, ifFalse))
+        ir.add(IR.Statement.CONDITIONAL_BRANCH(position, extractBuiltinBit(position, compiledLeft),
+                ifTrue, ifFalse))
         ir.setCurrentBlock(ifTrue)
         def compiledRight:IR.Value?
         {
@@ -4298,13 +4307,13 @@ class Compiler {
                 return null
             }
         }
-        ir.add(IR.Statement.STORE(compiledRight, result))
-        ir.add(IR.Statement.BRANCH(merge))
+        ir.add(IR.Statement.STORE(position, compiledRight, result))
+        ir.add(IR.Statement.BRANCH(position, merge))
         ir.setCurrentBlock(ifFalse)
-        ir.add(IR.Statement.STORE(compiledLeft, result))
-        ir.add(IR.Statement.BRANCH(merge))
+        ir.add(IR.Statement.STORE(position, compiledLeft, result))
+        ir.add(IR.Statement.BRANCH(position, merge))
         ir.setCurrentBlock(merge)
-        def load := ir.add(IR.Statement.LOAD(result))
+        def load := ir.add(IR.Statement.LOAD(position, result))
         return IR.Value.REF(load, Type.Bit())
     }
 
@@ -4323,10 +4332,11 @@ class Compiler {
         def ifTrue := ir.newBlock("or true")
         def ifFalse := ir.newBlock("or false")
         def merge := ir.newBlock("or merge")
-        ir.add(IR.Statement.CONDITIONAL_BRANCH(extractBuiltinBit(compiledLeft), ifTrue, ifFalse))
+        ir.add(IR.Statement.CONDITIONAL_BRANCH(position, extractBuiltinBit(position, compiledLeft),
+                ifTrue, ifFalse))
         ir.setCurrentBlock(ifTrue)
-        ir.add(IR.Statement.STORE(compiledLeft, result))
-        ir.add(IR.Statement.BRANCH(merge))
+        ir.add(IR.Statement.STORE(position, compiledLeft, result))
+        ir.add(IR.Statement.BRANCH(position, merge))
         ir.setCurrentBlock(ifFalse)
         def compiledRight:IR.Value?
         {
@@ -4336,10 +4346,10 @@ class Compiler {
                 return null
             }
         }
-        ir.add(IR.Statement.STORE(compiledRight, result))
-        ir.add(IR.Statement.BRANCH(merge))
+        ir.add(IR.Statement.STORE(position, compiledRight, result))
+        ir.add(IR.Statement.BRANCH(position, merge))
         ir.setCurrentBlock(merge)
-        def load := ir.add(IR.Statement.LOAD(result))
+        def load := ir.add(IR.Statement.LOAD(position, result))
         return IR.Value.REF(load, Type.Bit())
     }
 
@@ -4403,7 +4413,7 @@ class Compiler {
                     def resultType := preferredType(ASTNode.BINARY(position, left, op,
                              right))
                     if resultType !== null {
-                        def result := ir.add(IR.Statement.BINARY(compiledLeft, op,
+                        def result := ir.add(IR.Statement.BINARY(position, compiledLeft, op,
                                 compiledRight, resultType))
                         return coerce(position, IR.Value.REF(result, resultType), type)
                     }
@@ -4433,7 +4443,7 @@ class Compiler {
                     finalArgs, TypeContext.UNSPECIFIED), type)
         }
         else {
-            def construct := ir.add(IR.Statement.CONSTRUCT(cc.owner))
+            def construct := ir.add(IR.Statement.CONSTRUCT(position, cc.owner))
             def constructRef := IR.Value.REF(construct, owner)
             statementUnrefs.add(constructRef)
             call(position, symbolRef(position, constructRef, initMethod), finalArgs,
@@ -4539,7 +4549,7 @@ class Compiler {
         if coercionCost(value, target) !== null {
             return compileExpression(value, TypeContext.TYPE(target))
         }
-        return cast(compileExpression(value, TypeContext.NON_VOID), target)
+        return cast(position, compileExpression(value, TypeContext.NON_VOID), target)
     }
 
     method compileClosure(position:Position, kind:MethodDecl.Kind,
@@ -4639,7 +4649,7 @@ class Compiler {
             pandaType := declaredTypeWithSelf(methodDecl, methodDecl.owner.type)
         }
         def irType := Type.pointerTo(pandaType)
-        args.add(ASTNode.IR_WRAPPER(position, cast(IR.Value.METHOD_POINTER(methodDecl,
+        args.add(ASTNode.IR_WRAPPER(position, cast(position, IR.Value.METHOD_POINTER(methodDecl,
                 irType), Type.pointerTo(Type.Int8()))))
         args.add(target)
         def methodType:Type
@@ -4649,7 +4659,7 @@ class Compiler {
         else {
             methodType := Type.MutableMethod()
         }
-        def construct := cast(call(position, IR.Value.TYPE(methodType), args,
+        def construct := cast(position, call(position, IR.Value.TYPE(methodType), args,
                 TypeContext.UNSPECIFIED), methodDecl.type())
         return coerce(position, construct, type)
     }
@@ -4750,7 +4760,7 @@ class Compiler {
             error(position, "'\{operatorName(op)}' cannot operate on value types")
             return null
         }
-        def builtinBit := ir.add(IR.Statement.BINARY(compiledLeft, op, compiledRight,
+        def builtinBit := ir.add(IR.Statement.BINARY(position, compiledLeft, op, compiledRight,
                 Type.BuiltinBit()))
         def bit := coerce(position, IR.Value.REF(builtinBit, Type.BuiltinBit()),
                 TypeContext.TYPE(Type.Bit()))
@@ -4811,7 +4821,7 @@ class Compiler {
                     return null
                 }
                 if target.type().isBuiltinNumber() {
-                    def result := ir.add(IR.Statement.NEGATE(target))
+                    def result := ir.add(IR.Statement.NEGATE(position, target))
                     return coerce(position, IR.Value.REF(result, target.type()), type)
                 }
                 return call(position, target, "-", Array<ASTNode>() -* FIXME literal *-, type)
@@ -4821,7 +4831,7 @@ class Compiler {
                     return null
                 }
                 if target.type() = Type.BuiltinBit() {
-                    def result := ir.add(IR.Statement.NOT(target))
+                    def result := ir.add(IR.Statement.NOT(position, target))
                     return coerce(position, IR.Value.REF(result, Type.BuiltinBit()), type)
                 }
                 return call(position, target, "!", Array<ASTNode>() -* FIXME literal *-, type)
@@ -4831,7 +4841,7 @@ class Compiler {
                     return null
                 }
                 if target.type().isBuiltinNumber() {
-                    def result := ir.add(IR.Statement.NOT(target))
+                    def result := ir.add(IR.Statement.NOT(position, target))
                     return coerce(position, IR.Value.REF(result, target.type()), type)
                 }
                 return call(position, target, "!!", Array<ASTNode>() -* FIXME literal *-, type)
@@ -5295,9 +5305,11 @@ class Compiler {
     class VariableLValue : LValue {
         def compiler:Compiler
 
+        def position:Position
+
         def slot:Int
 
-        init(compiler:Compiler, variable:Variable) {
+        init(compiler:Compiler, position:Position, variable:Variable) {
             self.compiler := compiler
             match variable.storage {
                 when Variable.Storage.LOCAL(slot):
@@ -5305,6 +5317,7 @@ class Compiler {
                 otherwise:
                     assert false
             }
+            self.position := position
         }
 
         @override
@@ -5314,7 +5327,7 @@ class Compiler {
 
         @override
         method compileLoad():IR.Value? {
-            def result := compiler.ir.add(IR.Statement.LOAD(IR.Value.LOCAL(slot, type())))
+            def result := compiler.ir.add(IR.Statement.LOAD(position, IR.Value.LOCAL(slot, type())))
             return IR.Value.REF(result, compiler.ir.locals[slot])
         }
 
@@ -5324,7 +5337,7 @@ class Compiler {
                 compiler.compileUnref(compileLoad())
                 compiler.compileRef(value)
             }
-            compiler.ir.add(IR.Statement.STORE(value, IR.Value.LOCAL(slot, type())))
+            compiler.ir.add(IR.Statement.STORE(position, value, IR.Value.LOCAL(slot, type())))
         }
     }
 
@@ -5403,11 +5416,12 @@ class Compiler {
             else {
                 def load:IR.Statement.ID
                 if compiler.isValue(field.owner) {
-                    load := compiler.ir.add(IR.Statement.EXTRACT_FIELD(target, field))
+                    load := compiler.ir.add(IR.Statement.EXTRACT_FIELD(position, target, field))
                 }
                 else {
-                    def ptr := compiler.ir.add(IR.Statement.GET_FIELD_POINTER(target, field))
-                    load := compiler.ir.add(IR.Statement.LOAD(IR.Value.REF(ptr, rawType)))
+                    def ptr := compiler.ir.add(IR.Statement.GET_FIELD_POINTER(position, target,
+                            field))
+                    load := compiler.ir.add(IR.Statement.LOAD(position, IR.Value.REF(ptr, rawType)))
                 }
                 result := IR.Value.REF(load, rawType)
             }
@@ -5417,7 +5431,7 @@ class Compiler {
                         TypeContext.UNSPECIFIED)
             }
             if effectiveType != result.type() {
-                result := compiler.cast(result, effectiveType)
+                result := compiler.cast(position, result, effectiveType)
             }
             return result
         }
@@ -5441,7 +5455,7 @@ class Compiler {
                 value := rawValue
             }
             if effectiveType != rawType {
-                cast := compiler.cast(value, rawType)
+                cast := compiler.cast(position, value, rawType)
                 if cast == null {
                     return
                 }
@@ -5460,9 +5474,9 @@ class Compiler {
                     compileUnref()
                     compiler.compileRef(value)
                 }
-                def ptr := IR.Value.REF(compiler.ir.add(IR.Statement.GET_FIELD_POINTER(target,
-                        field)), rawType)
-                compiler.ir.add(IR.Statement.STORE(cast, ptr))
+                def ptr := IR.Value.REF(compiler.ir.add(IR.Statement.GET_FIELD_POINTER(position,
+                        target, field)), rawType)
+                compiler.ir.add(IR.Statement.STORE(position, cast, ptr))
             }
         }
 
@@ -5473,19 +5487,19 @@ class Compiler {
             }
             def load:IR.Statement.ID
             if compiler.isValue(field.owner) {
-                load := compiler.ir.add(IR.Statement.EXTRACT_FIELD(target, field))
+                load := compiler.ir.add(IR.Statement.EXTRACT_FIELD(position, target, field))
             }
             else {
-                def ptr := compiler.ir.add(IR.Statement.GET_FIELD_POINTER(target, field))
-                load := compiler.ir.add(IR.Statement.LOAD(IR.Value.REF(ptr, rawType)))
+                def ptr := compiler.ir.add(IR.Statement.GET_FIELD_POINTER(position, target, field))
+                load := compiler.ir.add(IR.Statement.LOAD(position, IR.Value.REF(ptr, rawType)))
             }
             result := IR.Value.REF(load, rawType)
             if !compiler.inFieldCleanup & field.annotations.isWeak() {
                 def nonNullBlock := compiler.ir.newBlock("unref non-null")
                 def mergeBlock := compiler.ir.newBlock("unref merge")
-                def nonNullTest := compiler.ir.add(IR.Statement.BINARY(result, Token.Kind.NIDENTITY,
-                        IR.Value.NULL(rawType.nullable()), Type.BuiltinBit()))
-                compiler.ir.add(IR.Statement.CONDITIONAL_BRANCH(IR.Value.REF(nonNullTest,
+                def nonNullTest := compiler.ir.add(IR.Statement.BINARY(position, result,
+                        Token.Kind.NIDENTITY, IR.Value.NULL(rawType.nullable()), Type.BuiltinBit()))
+                compiler.ir.add(IR.Statement.CONDITIONAL_BRANCH(position, IR.Value.REF(nonNullTest,
                         Type.BuiltinBit()), nonNullBlock, mergeBlock))
                 compiler.ir.setCurrentBlock(nonNullBlock)
                 {
@@ -5494,7 +5508,7 @@ class Compiler {
                             TypeContext.UNSPECIFIED)
                     compiler.compileUnref(get)
                 }
-                compiler.ir.add(IR.Statement.BRANCH(mergeBlock))
+                compiler.ir.add(IR.Statement.BRANCH(position, mergeBlock))
                 compiler.ir.setCurrentBlock(mergeBlock)
             }
             else {
@@ -5602,13 +5616,16 @@ class Compiler {
     class ChoiceFieldLValue : LValue {
         def compiler:Compiler
 
+        def position:Position
+
         def target:IR.Value
 
         def choiceCase:ChoiceCase
 
         def index:Int
 
-        init(compiler:Compiler, target:IR.Value, choiceCase:ChoiceCase, index:Int) {
+        init(compiler:Compiler, position:Position, target:IR.Value, choiceCase:ChoiceCase,
+                index:Int) {
             self.compiler := compiler
             self.target := target
             self.choiceCase := choiceCase
@@ -5630,9 +5647,10 @@ class Compiler {
             if compiler.isRefCounted(type()) {
                 compiler.compileRef(value)
             }
-            def ptr := compiler.ir.add(IR.Statement.GET_CHOICE_FIELD_POINTER(target, choiceCase,
-                    index))
-            compiler.ir.add(IR.Statement.STORE(value, IR.Value.REF(ptr, choiceCase.fields[index])))
+            def ptr := compiler.ir.add(IR.Statement.GET_CHOICE_FIELD_POINTER(position, target,
+                    choiceCase, index))
+            compiler.ir.add(IR.Statement.STORE(position, value, IR.Value.REF(ptr,
+                    choiceCase.fields[index])))
         }
     }
 
@@ -5646,12 +5664,12 @@ class Compiler {
                     }
                     return IndexLValue(self, position, target, right)
                 }
-            when ASTNode.CHOICE_FIELD_REFERENCE(_, base, cc, index):
+            when ASTNode.CHOICE_FIELD_REFERENCE(position, base, cc, index):
                 def compiledBase := compileExpression(base)
                 if compiledBase == null {
                     return null
                 }
-                return ChoiceFieldLValue(self, compiledBase, cc, index)
+                return ChoiceFieldLValue(self, position, compiledBase, cc, index)
             when ASTNode.DOT(_, base, name):
                 def compiledBase:IR.Value
                 match base {
@@ -5698,25 +5716,25 @@ class Compiler {
                 }
                 error(expr.position(), "class '\{cl.name}' does not have a member named '\{name}'")
                 return null
-            when ASTNode.IDENTIFIER(_, id):
+            when ASTNode.IDENTIFIER(position, id):
                 def symbol := symbolTable[id]
                 if symbol !== null {
                     match symbol.kind {
                         when Symbol.Kind.VARIABLE:
-                            return VariableLValue(self, symbol->Variable)
+                            return VariableLValue(self, position, symbol->Variable)
                         when Symbol.Kind.FIELD:
                             def f := symbol->FieldDecl
                             if !f.annotations.isClass() {
-                                return compileLValue(ASTNode.DOT(expr.position(),
-                                        ASTNode.SELF(expr.position()), f.name))
+                                return compileLValue(ASTNode.DOT(position, ASTNode.SELF(position),
+                                        f.name))
                             }
                             if resolve(f) {
-                                return FieldLValue(self, expr.position(), null, f)
+                                return FieldLValue(self, position, null, f)
                             }
                             return null
                     }
                 }
-                error(expr.position(), "unknown identifier")
+                error(position, "unknown identifier")
                 return null
         }
         error(expr.position(), "cannot assign to this expression)")
@@ -5742,7 +5760,7 @@ class Compiler {
             def unrefs := AutoUnrefs(self)
             call(position, null, MethodRef(self, Type.Panda(), m), args, TypeContext.UNSPECIFIED)
         }
-        ir.add(IR.Statement.UNREACHABLE)
+        ir.add(IR.Statement.UNREACHABLE(position))
     }
 
     method compileAssert(position:Position, test:ASTNode, msg:ASTNode?) {
@@ -5752,7 +5770,8 @@ class Compiler {
         }
         def success := ir.newBlock("assert success")
         def failure := ir.newBlock("assert failure")
-        ir.add(IR.Statement.CONDITIONAL_BRANCH(extractBuiltinBit(compiledTest), success, failure))
+        ir.add(IR.Statement.CONDITIONAL_BRANCH(position, extractBuiltinBit(position, compiledTest),
+                success, failure))
         ir.setCurrentBlock(failure)
         compileAssertFail(position, msg)
         ir.setCurrentBlock(success)
@@ -5806,7 +5825,7 @@ class Compiler {
         if l !== null {
             match l {
                 when EnclosingContext.LOOP(_, breakTarget, _):
-                    ir.add(IR.Statement.BRANCH(breakTarget))
+                    ir.add(IR.Statement.BRANCH(position, breakTarget))
                 otherwise:
                     assert false
             }
@@ -5818,7 +5837,7 @@ class Compiler {
         if l !== null {
             match l {
                 when EnclosingContext.LOOP(_, _, continueTarget):
-                    ir.add(IR.Statement.BRANCH(continueTarget))
+                    ir.add(IR.Statement.BRANCH(position, continueTarget))
                 otherwise:
                     assert false
             }
@@ -5826,18 +5845,18 @@ class Compiler {
     }
 
     @pre(bit.type() = Type.Bit())
-    method extractBuiltinBit(bit:IR.Value):IR.Value {
+    method extractBuiltinBit(position:Position, bit:IR.Value):IR.Value {
         Panda.ref(bit) -- FIXME bootstrap refcounting apparently broken
-        def result := ir.add(IR.Statement.EXTRACT_FIELD(bit,
+        def result := ir.add(IR.Statement.EXTRACT_FIELD(position, bit,
                 getSymbolTable(getClass(Type.Bit()))["value"]->FieldDecl))
         return IR.Value.REF(result, Type.BuiltinBit())
     }
 
-    method extractBuiltinInt(int:IR.Value):IR.Value {
+    method extractBuiltinInt(position:Position, int:IR.Value):IR.Value {
         def field := getSymbolTable(getClass(int.type()))["value"]->FieldDecl
         assert field !== null
         resolve(field)
-        def result := ir.add(IR.Statement.EXTRACT_FIELD(int, field))
+        def result := ir.add(IR.Statement.EXTRACT_FIELD(position, int, field))
         return IR.Value.REF(result, field.type)
     }
 
@@ -5849,14 +5868,14 @@ class Compiler {
         {
             def context := AutoContext(self, EnclosingContext.LOOP(label, endBlock, testBlock))
             def scope := AutoScope(self)
-            ir.add(IR.Statement.BRANCH(bodyBlock))
+            ir.add(IR.Statement.BRANCH(position, bodyBlock))
             ir.setCurrentBlock(bodyBlock)
             for s in statements {
                 compileStatement(s)
             }
         }
         if !ir.currentBlockFinished() {
-            ir.add(IR.Statement.BRANCH(testBlock))
+            ir.add(IR.Statement.BRANCH(position, testBlock))
         }
         ir.setCurrentBlock(testBlock)
         def compiledTest:IR.Value?
@@ -5867,8 +5886,8 @@ class Compiler {
                 return
             }
         }
-        ir.add(IR.Statement.CONDITIONAL_BRANCH(extractBuiltinBit(compiledTest), bodyBlock,
-                endBlock))
+        ir.add(IR.Statement.CONDITIONAL_BRANCH(position, extractBuiltinBit(position, compiledTest),
+                bodyBlock, endBlock))
         ir.setCurrentBlock(endBlock)
     }
 
@@ -5947,19 +5966,19 @@ class Compiler {
         def rangeFields := instanceFields(rangeClass)
 
         -- extract start value from range
-        def start := coerce(position, IR.Value.REF(ir.add(IR.Statement.EXTRACT_FIELD(range,
-                rangeFields[0])), range.type().subtypes[1]), indexType)
+        def start := coerce(position, IR.Value.REF(ir.add(IR.Statement.EXTRACT_FIELD(position,
+                range, rangeFields[0])), range.type().subtypes[1]), indexType)
 
         -- store start value
-        ir.add(IR.Statement.STORE(start, IR.Value.LOCAL(indexSlot, indexType)))
+        ir.add(IR.Statement.STORE(position, start, IR.Value.LOCAL(indexSlot, indexType)))
 
         -- extract end value from range
-        def end := coerce(position, IR.Value.REF(ir.add(IR.Statement.EXTRACT_FIELD(range,
+        def end := coerce(position, IR.Value.REF(ir.add(IR.Statement.EXTRACT_FIELD(position, range,
                 rangeFields[1])), range.type().subtypes[1]), indexType)
 
         -- extract inclusive / exclusive from range
-        def inclusive := extractBuiltinBit(IR.Value.REF(ir.add(IR.Statement.EXTRACT_FIELD(range,
-                rangeFields[2])), Type.Bit()))
+        def inclusive := extractBuiltinBit(position, IR.Value.REF(ir.add(IR.Statement.EXTRACT_FIELD(
+                position, range, rangeFields[2])), Type.Bit()))
 
         def step := compileExpression(ASTNode.INT(position, 1), TypeContext.TYPE(indexType))
         def stepComparison:IR.Value
@@ -5979,28 +5998,31 @@ class Compiler {
         def context := AutoContext(self, EnclosingContext.LOOP(label, loopEnd, loopTest))
         {
             def scope := AutoScope(self)
-            ir.add(IR.Statement.CONDITIONAL_BRANCH(inclusive, entryInclusive, entryExclusive))
+            ir.add(IR.Statement.CONDITIONAL_BRANCH(position, inclusive, entryInclusive,
+                    entryExclusive))
             ir.setCurrentBlock(entryInclusive)
-            def entryInclusiveTest := extractBuiltinBit(call(position, start, "<=", arg(end),
-                        TypeContext.TYPE(Type.Bit())))
-            ir.add(IR.Statement.CONDITIONAL_BRANCH(entryInclusiveTest, loopStart, loopEnd))
+            def entryInclusiveTest := extractBuiltinBit(position, call(position, start, "<=",
+                    arg(end), TypeContext.TYPE(Type.Bit())))
+            ir.add(IR.Statement.CONDITIONAL_BRANCH(position, entryInclusiveTest, loopStart,
+                    loopEnd))
             ir.setCurrentBlock(entryExclusive)
-            def entryExclusiveTest := extractBuiltinBit(call(position, start, "<", arg(end),
-                        TypeContext.TYPE(Type.Bit())))
-            ir.add(IR.Statement.CONDITIONAL_BRANCH(entryExclusiveTest, loopStart, loopEnd))
+            def entryExclusiveTest := extractBuiltinBit(position, call(position, start, "<",
+                    arg(end), TypeContext.TYPE(Type.Bit())))
+            ir.add(IR.Statement.CONDITIONAL_BRANCH(position, entryExclusiveTest, loopStart,
+                    loopEnd))
             ir.setCurrentBlock(loopStart)
             for s in statements {
                 compileStatement(s)
             }
         }
         if !ir.currentBlockFinished() {
-            ir.add(IR.Statement.BRANCH(loopTest))
+            ir.add(IR.Statement.BRANCH(position, loopTest))
         }
         ir.setCurrentBlock(loopTest)
         def loopInc := ir.newBlock("loopInc")
         -- perform the test by subtracting index from end and then comparing to step, to avoid
         -- overflows near the maximum value
-        def indexLoad := IR.Value.REF(ir.add(IR.Statement.LOAD(IR.Value.LOCAL(indexSlot,
+        def indexLoad := IR.Value.REF(ir.add(IR.Statement.LOAD(position, IR.Value.LOCAL(indexSlot,
                 indexType))), indexType)
         -- always use unsigned comparison to avoid overflow; we know both the delta and the step are
         -- the same sign
@@ -6010,25 +6032,25 @@ class Compiler {
 
         def inclusiveTest := ir.newBlock("inclusiveTest")
         def exclusiveTest := ir.newBlock("exclusiveTest")
-        ir.add(IR.Statement.CONDITIONAL_BRANCH(inclusive, inclusiveTest, exclusiveTest))
+        ir.add(IR.Statement.CONDITIONAL_BRANCH(position, inclusive, inclusiveTest, exclusiveTest))
 
         -- inclusive test
         ir.setCurrentBlock(inclusiveTest)
-        def inclusiveTestBit := extractBuiltinBit(call(position, delta, ">=", arg(stepComparison),
-                TypeContext.TYPE(Type.Bit())))
-        ir.add(IR.Statement.CONDITIONAL_BRANCH(inclusiveTestBit, loopInc, loopEnd))
+        def inclusiveTestBit := extractBuiltinBit(position, call(position, delta, ">=",
+                arg(stepComparison), TypeContext.TYPE(Type.Bit())))
+        ir.add(IR.Statement.CONDITIONAL_BRANCH(position, inclusiveTestBit, loopInc, loopEnd))
 
         -- exclusive test
         ir.setCurrentBlock(exclusiveTest)
-        def exclusiveTestBit := extractBuiltinBit(call(position, delta, ">", arg(stepComparison),
-                TypeContext.TYPE(Type.Bit())))
-        ir.add(IR.Statement.CONDITIONAL_BRANCH(exclusiveTestBit, loopInc, loopEnd))
+        def exclusiveTestBit := extractBuiltinBit(position, call(position, delta, ">",
+                arg(stepComparison), TypeContext.TYPE(Type.Bit())))
+        ir.add(IR.Statement.CONDITIONAL_BRANCH(position, exclusiveTestBit, loopInc, loopEnd))
 
         ir.setCurrentBlock(loopInc)
         def inc := convert(call(position, indexLoad, "+", arg(step), TypeContext.NON_VOID),
                 indexType)
-        ir.add(IR.Statement.STORE(inc, IR.Value.LOCAL(indexSlot, indexType)))
-        ir.add(IR.Statement.BRANCH(loopStart))
+        ir.add(IR.Statement.STORE(position, inc, IR.Value.LOCAL(indexSlot, indexType)))
+        ir.add(IR.Statement.BRANCH(position, loopStart))
 
         ir.setCurrentBlock(loopEnd)
     }
@@ -6078,19 +6100,19 @@ class Compiler {
         def rangeFields := instanceFields(rangeClass)
 
         -- extract start value from range
-        def start := IR.Value.REF(ir.add(IR.Statement.EXTRACT_FIELD(range, rangeFields[0])),
-                indexType)
+        def start := IR.Value.REF(ir.add(IR.Statement.EXTRACT_FIELD(position, range,
+                rangeFields[0])), indexType)
 
         -- store start value
-        ir.add(IR.Statement.STORE(start, IR.Value.LOCAL(indexSlot, indexType)))
+        ir.add(IR.Statement.STORE(position, start, IR.Value.LOCAL(indexSlot, indexType)))
 
         -- extract end value from range
-        def end := IR.Value.REF(ir.add(IR.Statement.EXTRACT_FIELD(range, rangeFields[1])),
+        def end := IR.Value.REF(ir.add(IR.Statement.EXTRACT_FIELD(position, range, rangeFields[1])),
                 indexType)
 
         -- extract step value from range
-        def step := IR.Value.REF(ir.add(IR.Statement.EXTRACT_FIELD(range, rangeFields[2])),
-                stepType)
+        def step := IR.Value.REF(ir.add(IR.Statement.EXTRACT_FIELD(position, range,
+                rangeFields[2])), stepType)
         def stepComparison:IR.Value
         if step.type() = Type.Int64() {
             stepComparison := convert(step, Type.UInt64())
@@ -6109,8 +6131,8 @@ class Compiler {
         }
 
         -- extract inclusive / exclusive from range
-        def inclusive := extractBuiltinBit(IR.Value.REF(ir.add(IR.Statement.EXTRACT_FIELD(range,
-                rangeFields[3])), Type.Bit()))
+        def inclusive := extractBuiltinBit(position, IR.Value.REF(ir.add(IR.Statement.EXTRACT_FIELD(
+                position, range, rangeFields[3])), Type.Bit()))
 
         -- start block
         def loopStart := ir.newBlock("loopStart")
@@ -6125,56 +6147,60 @@ class Compiler {
             if stepType.name.startsWith("panda.core.Int") {
                 def args := Array<ASTNode>() -- FIXME literal
                 args.add(ASTNode.INT(position, 0))
-                direction := extractBuiltinBit(call(position, step, ">=", args,
+                direction := extractBuiltinBit(position, call(position, step, ">=", args,
                         TypeContext.TYPE(Type.Bit())))
             }
             else {
                 assert stepType.name.startsWith("panda.core.UInt")
                 direction := IR.Value.BIT(true)
             }
-            ir.add(IR.Statement.CONDITIONAL_BRANCH(direction, forwardEntry, backwardEntry))
+            ir.add(IR.Statement.CONDITIONAL_BRANCH(position, direction, forwardEntry, backwardEntry))
             ir.setCurrentBlock(forwardEntry)
             def forwardEntryInclusive := ir.newBlock("forwardEntryInclusive")
             def forwardEntryExclusive := ir.newBlock("forwardEntryExclusive")
-            ir.add(IR.Statement.CONDITIONAL_BRANCH(inclusive, forwardEntryInclusive,
+            ir.add(IR.Statement.CONDITIONAL_BRANCH(position, inclusive, forwardEntryInclusive,
                     forwardEntryExclusive))
             ir.setCurrentBlock(forwardEntryInclusive)
-            def forwardEntryInclusiveTest := extractBuiltinBit(call(position, start, "<=", arg(end),
-                        TypeContext.TYPE(Type.Bit())))
-            ir.add(IR.Statement.CONDITIONAL_BRANCH(forwardEntryInclusiveTest, loopStart, loopEnd))
+            def forwardEntryInclusiveTest := extractBuiltinBit(position, call(position, start, "<=",
+                    arg(end), TypeContext.TYPE(Type.Bit())))
+            ir.add(IR.Statement.CONDITIONAL_BRANCH(position, forwardEntryInclusiveTest, loopStart,
+                    loopEnd))
             ir.setCurrentBlock(forwardEntryExclusive)
-            def forwardEntryExclusiveTest := extractBuiltinBit(call(position, start, "<", arg(end),
-                        TypeContext.TYPE(Type.Bit())))
-            ir.add(IR.Statement.CONDITIONAL_BRANCH(forwardEntryExclusiveTest, loopStart, loopEnd))
+            def forwardEntryExclusiveTest := extractBuiltinBit(position, call(position, start, "<",
+                    arg(end), TypeContext.TYPE(Type.Bit())))
+            ir.add(IR.Statement.CONDITIONAL_BRANCH(position, forwardEntryExclusiveTest, loopStart,
+                    loopEnd))
             ir.setCurrentBlock(backwardEntry)
             def backwardEntryInclusive := ir.newBlock("backwardEntryInclusive")
             def backwardEntryExclusive := ir.newBlock("backwardEntryExclusive")
-            ir.add(IR.Statement.CONDITIONAL_BRANCH(inclusive, backwardEntryInclusive,
+            ir.add(IR.Statement.CONDITIONAL_BRANCH(position, inclusive, backwardEntryInclusive,
                     backwardEntryExclusive))
             ir.setCurrentBlock(backwardEntryInclusive)
-            def backwardEntryInclusiveTest := extractBuiltinBit(call(position, start, ">=", arg(end),
-                        TypeContext.TYPE(Type.Bit())))
-            ir.add(IR.Statement.CONDITIONAL_BRANCH(backwardEntryInclusiveTest, loopStart, loopEnd))
+            def backwardEntryInclusiveTest := extractBuiltinBit(position, call(position, start,
+                    ">=", arg(end), TypeContext.TYPE(Type.Bit())))
+            ir.add(IR.Statement.CONDITIONAL_BRANCH(position, backwardEntryInclusiveTest, loopStart,
+                    loopEnd))
             ir.setCurrentBlock(backwardEntryExclusive)
-            def backwardEntryExclusiveTest := extractBuiltinBit(call(position, start, ">", arg(end),
-                        TypeContext.TYPE(Type.Bit())))
-            ir.add(IR.Statement.CONDITIONAL_BRANCH(backwardEntryExclusiveTest, loopStart, loopEnd))
+            def backwardEntryExclusiveTest := extractBuiltinBit(position, call(position, start, ">",
+                    arg(end), TypeContext.TYPE(Type.Bit())))
+            ir.add(IR.Statement.CONDITIONAL_BRANCH(position, backwardEntryExclusiveTest, loopStart,
+                    loopEnd))
             ir.setCurrentBlock(loopStart)
             for s in statements {
                 compileStatement(s)
             }
         }
         if !ir.currentBlockFinished() {
-            ir.add(IR.Statement.BRANCH(loopTest))
+            ir.add(IR.Statement.BRANCH(position, loopTest))
         }
         ir.setCurrentBlock(loopTest)
         def loopInc := ir.newBlock("loopInc")
         -- beginning of loop test, load index and determine direction
-        def indexLoad := IR.Value.REF(ir.add(IR.Statement.LOAD(IR.Value.LOCAL(indexSlot,
+        def indexLoad := IR.Value.REF(ir.add(IR.Statement.LOAD(position, IR.Value.LOCAL(indexSlot,
                 indexType))), indexType)
         def forwardTest := ir.newBlock("forwardTest")
         def backwardTest := ir.newBlock("backwardTest")
-        ir.add(IR.Statement.CONDITIONAL_BRANCH(direction, forwardTest, backwardTest))
+        ir.add(IR.Statement.CONDITIONAL_BRANCH(position, direction, forwardTest, backwardTest))
 
         -- forward loop; perform the test by subtracting index from end and then comparing to step,
         -- to avoid overflows near the maximum value
@@ -6187,20 +6213,20 @@ class Compiler {
         -- forward loop; determine inclusive / exclusive
         def forwardInclusiveTest := ir.newBlock("forwardInclusiveTest")
         def forwardExclusiveTest := ir.newBlock("forwardExclusiveTest")
-        ir.add(IR.Statement.CONDITIONAL_BRANCH(inclusive, forwardInclusiveTest,
+        ir.add(IR.Statement.CONDITIONAL_BRANCH(position, inclusive, forwardInclusiveTest,
                 forwardExclusiveTest))
 
         -- forward inclusive test
         ir.setCurrentBlock(forwardInclusiveTest)
-        def forwardInclusiveTestBit := extractBuiltinBit(call(position, forwardDelta, ">=",
+        def forwardInclusiveTestBit := extractBuiltinBit(position, call(position, forwardDelta, ">=",
                 arg(stepComparison), TypeContext.TYPE(Type.Bit())))
-        ir.add(IR.Statement.CONDITIONAL_BRANCH(forwardInclusiveTestBit, loopInc, loopEnd))
+        ir.add(IR.Statement.CONDITIONAL_BRANCH(position, forwardInclusiveTestBit, loopInc, loopEnd))
 
         -- forward exclusive test
         ir.setCurrentBlock(forwardExclusiveTest)
-        def forwardExclusiveTestBit := extractBuiltinBit(call(position, forwardDelta, ">",
+        def forwardExclusiveTestBit := extractBuiltinBit(position, call(position, forwardDelta, ">",
                 arg(stepComparison), TypeContext.TYPE(Type.Bit())))
-        ir.add(IR.Statement.CONDITIONAL_BRANCH(forwardExclusiveTestBit, loopInc, loopEnd))
+        ir.add(IR.Statement.CONDITIONAL_BRANCH(position, forwardExclusiveTestBit, loopInc, loopEnd))
 
         -- backward loop; perform the test by subtracting end from index and then comparing to
         -- -step, to avoid overflows near the minimum value
@@ -6211,26 +6237,28 @@ class Compiler {
         -- backward loop; determine inclusive / exclusive
         def backwardInclusiveTest := ir.newBlock("backwardInclusiveTest")
         def backwardExclusiveTest := ir.newBlock("backwardExclusiveTest")
-        ir.add(IR.Statement.CONDITIONAL_BRANCH(inclusive, backwardInclusiveTest,
+        ir.add(IR.Statement.CONDITIONAL_BRANCH(position, inclusive, backwardInclusiveTest,
                 backwardExclusiveTest))
 
         -- backward inclusive test
         ir.setCurrentBlock(backwardInclusiveTest)
-        def backwardInclusiveTestBit := extractBuiltinBit(call(position, backwardDelta, ">=",
-                arg(negStepComparison), TypeContext.TYPE(Type.Bit())))
-        ir.add(IR.Statement.CONDITIONAL_BRANCH(backwardInclusiveTestBit, loopInc, loopEnd))
+        def backwardInclusiveTestBit := extractBuiltinBit(position, call(position, backwardDelta,
+                ">=", arg(negStepComparison), TypeContext.TYPE(Type.Bit())))
+        ir.add(IR.Statement.CONDITIONAL_BRANCH(position, backwardInclusiveTestBit, loopInc,
+                loopEnd))
 
         -- backward exclusive test
         ir.setCurrentBlock(backwardExclusiveTest)
-        def backwardExclusiveTestBit := extractBuiltinBit(call(position, backwardDelta, ">",
-                arg(negStepComparison), TypeContext.TYPE(Type.Bit())))
-        ir.add(IR.Statement.CONDITIONAL_BRANCH(backwardExclusiveTestBit, loopInc, loopEnd))
+        def backwardExclusiveTestBit := extractBuiltinBit(position, call(position, backwardDelta,
+                ">", arg(negStepComparison), TypeContext.TYPE(Type.Bit())))
+        ir.add(IR.Statement.CONDITIONAL_BRANCH(position, backwardExclusiveTestBit, loopInc,
+                loopEnd))
 
         ir.setCurrentBlock(loopInc)
         def inc := convert(call(position, indexLoad, "+", arg(step), TypeContext.NON_VOID),
                 indexType)
-        ir.add(IR.Statement.STORE(inc, IR.Value.LOCAL(indexSlot, indexType)))
-        ir.add(IR.Statement.BRANCH(loopStart))
+        ir.add(IR.Statement.STORE(position, inc, IR.Value.LOCAL(indexSlot, indexType)))
+        ir.add(IR.Statement.BRANCH(position, loopStart))
 
         ir.setCurrentBlock(loopEnd)
     }
@@ -6322,15 +6350,15 @@ class Compiler {
         def context := AutoContext(self, EnclosingContext.LOOP(label, endBlock, testBlock))
         assert iterator.type().typeKind = Type.Kind.GENERIC &
                 iterator.type().subtypes[0] = Type.Iterator()
-        ir.add(IR.Statement.BRANCH(testBlock))
+        ir.add(IR.Statement.BRANCH(position, testBlock))
         ir.setCurrentBlock(testBlock)
         def compiledTest := call(position, iterator, "get_done", Array<ASTNode>(),
                 TypeContext.TYPE(Type.Bit()))
         if compiledTest == null {
             return
         }
-        ir.add(IR.Statement.CONDITIONAL_BRANCH(extractBuiltinBit(compiledTest), endBlock,
-                bodyBlock))
+        ir.add(IR.Statement.CONDITIONAL_BRANCH(position, extractBuiltinBit(position, compiledTest),
+                endBlock, bodyBlock))
         ir.setCurrentBlock(bodyBlock)
         {
             def auto := AutoScope(self)
@@ -6346,13 +6374,13 @@ class Compiler {
             if next == null {
                 return
             }
-            VariableLValue(self, compiledTarget.first).compileStore(next)
+            VariableLValue(self, position, compiledTarget.first).compileStore(next)
             for s in statements {
                 compileStatement(s)
             }
         }
         if !ir.currentBlockFinished() {
-            ir.add(IR.Statement.BRANCH(testBlock))
+            ir.add(IR.Statement.BRANCH(position, testBlock))
         }
         ir.setCurrentBlock(endBlock)
     }
@@ -6417,8 +6445,8 @@ class Compiler {
         else {
             ifFalseBlock := endBlock
         }
-        ir.add(IR.Statement.CONDITIONAL_BRANCH(extractBuiltinBit(compiledTest), ifTrueBlock,
-                ifFalseBlock))
+        ir.add(IR.Statement.CONDITIONAL_BRANCH(position, extractBuiltinBit(position, compiledTest),
+                ifTrueBlock, ifFalseBlock))
         ir.setCurrentBlock(ifTrueBlock)
         {
             def scope := AutoScope(self)
@@ -6427,13 +6455,13 @@ class Compiler {
             }
         }
         if !ir.currentBlockFinished() {
-            ir.add(IR.Statement.BRANCH(endBlock))
+            ir.add(IR.Statement.BRANCH(position, endBlock))
         }
         if ifFalse !== null {
             ir.setCurrentBlock(ifFalseBlock)
             compileStatement(ifFalse)
             if !ir.currentBlockFinished() {
-                ir.add(IR.Statement.BRANCH(endBlock))
+                ir.add(IR.Statement.BRANCH(position, endBlock))
             }
         }
         ir.setCurrentBlock(endBlock)
@@ -6460,14 +6488,14 @@ class Compiler {
         {
             def auto := AutoContext(self, EnclosingContext.LOOP(label, endBlock, bodyBlock))
             def scope := AutoScope(self)
-            ir.add(IR.Statement.BRANCH(bodyBlock))
+            ir.add(IR.Statement.BRANCH(position, bodyBlock))
             ir.setCurrentBlock(bodyBlock)
             for s in statements {
                 compileStatement(s)
             }
         }
         if !ir.currentBlockFinished() {
-            ir.add(IR.Statement.BRANCH(bodyBlock))
+            ir.add(IR.Statement.BRANCH(position, bodyBlock))
         }
         ir.setCurrentBlock(endBlock)
     }
@@ -6508,7 +6536,7 @@ class Compiler {
                 v.owner := currentMethod[0]
                 if isRefCounted(v.type) {
                     enclosingContexts.push(EnclosingContext.VARIABLE_SCOPE(v))
-                    ir.add(IR.Statement.STORE(IR.Value.NULL(v.type.nullable()),
+                    ir.add(IR.Statement.STORE(position, IR.Value.NULL(v.type.nullable()),
                             IR.Value.LOCAL(ir.locals.count, v.type)))
                 }
                 ir.locals.add(v.type)
@@ -6534,7 +6562,7 @@ class Compiler {
                 v.owner := currentMethod[0]
                 if isRefCounted(v.type) {
                     enclosingContexts.push(EnclosingContext.VARIABLE_SCOPE(v))
-                    ir.add(IR.Statement.STORE(IR.Value.NULL(v.type.nullable()),
+                    ir.add(IR.Statement.STORE(position, IR.Value.NULL(v.type.nullable()),
                             IR.Value.LOCAL(ir.locals.count, v.type)))
                 }
                 ir.locals.add(v.type)
@@ -6552,7 +6580,7 @@ class Compiler {
             return
         }
         if compiledTarget.second !== null {
-            VariableLValue(self, compiledTarget.first).compileStore(compiledTarget.second)
+            VariableLValue(self, position, compiledTarget.first).compileStore(compiledTarget.second)
         }
     }
 
@@ -6574,8 +6602,9 @@ class Compiler {
     }
 
     @pre(whens.count > 0 | other !== null)
-    method compileChainedIfMatch(value:IR.Value, choiceClass:ClassDecl?, choiceRawValue:IR.Value?,
-            whens:ImmutableArray<ASTNode>, other:ImmutableArray<ASTNode>?) {
+    method compileChainedIfMatch(position:Position, value:IR.Value, choiceClass:ClassDecl?,
+            choiceRawValue:IR.Value?, whens:ImmutableArray<ASTNode>,
+            other:ImmutableArray<ASTNode>?) {
         def end := ir.newBlock("match end")
         var nextBlock := ir.currentBlock.id
         for i in 0 .. whens.count {
@@ -6627,15 +6656,16 @@ class Compiler {
                                             def test := call(base.position(), choiceRawValue, "=",
                                                     eqArgs, TypeContext.TYPE(Type.Bit()))
                                             assert test !== null
-                                            ir.add(IR.Statement.CONDITIONAL_BRANCH(
-                                                    extractBuiltinBit(test), testSuccess, nextBlock))
+                                            ir.add(IR.Statement.CONDITIONAL_BRANCH(position,
+                                                    extractBuiltinBit(position, test), testSuccess,
+                                                    nextBlock))
                                             ir.setCurrentBlock(testSuccess)
                                             for i in 0 .. args.count {
                                                 def ptr := ir.add(
                                                         IR.Statement.GET_CHOICE_FIELD_POINTER(
-                                                            value, cc.second, i))
-                                                def load := ir.add(IR.Statement.LOAD(IR.Value.REF(
-                                                        ptr, cc.second.fields[i])))
+                                                            position, value, cc.second, i))
+                                                def load := ir.add(IR.Statement.LOAD(position,
+                                                        IR.Value.REF(ptr, cc.second.fields[i])))
                                                 if getText(args[i]) = "_" {
                                                     continue
                                                 }
@@ -6644,8 +6674,9 @@ class Compiler {
                                                                 IR.Value.REF(load,
                                                                     cc.second.fields[i])),
                                                                 null)
-                                                VariableLValue(self, target.first).compileStore(
-                                                        IR.Value.REF(load, cc.second.fields[i]))
+                                                VariableLValue(self, position,
+                                                        target.first).compileStore(
+                                                            IR.Value.REF(load, cc.second.fields[i]))
                                             }
                                             continue
                                         }
@@ -6671,8 +6702,8 @@ class Compiler {
                                     return
                                 }
                             }
-                            ir.add(IR.Statement.CONDITIONAL_BRANCH(extractBuiltinBit(test),
-                                    testSuccess, nextBlock))
+                            ir.add(IR.Statement.CONDITIONAL_BRANCH(position,
+                                    extractBuiltinBit(position, test), testSuccess, nextBlock))
                         }
                         ir.setCurrentBlock(testSuccess)
                         for s in statements {
@@ -6680,7 +6711,7 @@ class Compiler {
                         }
                     }
                     if !ir.currentBlockFinished() {
-                        ir.add(IR.Statement.BRANCH(end))
+                        ir.add(IR.Statement.BRANCH(position, end))
                     }
                 otherwise:
                     assert false
@@ -6692,7 +6723,7 @@ class Compiler {
                 compileStatement(s)
             }
             if !ir.currentBlockFinished() {
-                ir.add(IR.Statement.BRANCH(end))
+                ir.add(IR.Statement.BRANCH(position, end))
             }
         }
         ir.setCurrentBlock(end)
@@ -6721,7 +6752,7 @@ class Compiler {
         else {
             choiceRawValue := null
         }
-        compileChainedIfMatch(compiledValue, choiceClass, choiceRawValue, whens, other)
+        compileChainedIfMatch(position, compiledValue, choiceClass, choiceRawValue, whens, other)
     }
 
     method leaveScope(c:EnclosingContext) {
@@ -6737,7 +6768,7 @@ class Compiler {
                 ir.add(IR.Statement.COMMENT("unreffing \{v}"))
                 match v.storage {
                     when Variable.Storage.LOCAL(slot):
-                        ir.add(IR.Statement.STORE(
+                        ir.add(IR.Statement.STORE(v.position,
                                 IR.Value.NULL(v.type.nullable()),
                                 IR.Value.LOCAL(slot, v.type.nullable())))
                     otherwise:
@@ -6794,7 +6825,7 @@ class Compiler {
             }
             leaveAllScopes()
             compilePostconditions()
-            ir.add(IR.Statement.RETURN(compiled))
+            ir.add(IR.Statement.RETURN(position, compiled))
             returnValue := null
         }
         else {
@@ -6807,7 +6838,7 @@ class Compiler {
             }
             leaveAllScopes()
             compilePostconditions()
-            ir.add(IR.Statement.RETURN(null))
+            ir.add(IR.Statement.RETURN(position, null))
         }
     }
 
@@ -6830,7 +6861,7 @@ class Compiler {
         {
             def context := AutoContext(self, EnclosingContext.LOOP(label, endBlock, testBlock))
             def scope := AutoScope(self)
-            ir.add(IR.Statement.BRANCH(testBlock))
+            ir.add(IR.Statement.BRANCH(position, testBlock))
             ir.setCurrentBlock(testBlock)
             def compiledTest:IR.Value?
             {
@@ -6840,15 +6871,15 @@ class Compiler {
                     return
                 }
             }
-            ir.add(IR.Statement.CONDITIONAL_BRANCH(extractBuiltinBit(compiledTest), bodyBlock,
-                    endBlock))
+            ir.add(IR.Statement.CONDITIONAL_BRANCH(position, extractBuiltinBit(position,
+                    compiledTest), bodyBlock, endBlock))
             ir.setCurrentBlock(bodyBlock)
             for s in statements {
                 compileStatement(s)
             }
         }
         if !ir.currentBlockFinished() {
-            ir.add(IR.Statement.BRANCH(testBlock))
+            ir.add(IR.Statement.BRANCH(position, testBlock))
         }
         ir.setCurrentBlock(endBlock)
     }
@@ -6979,8 +7010,8 @@ class Compiler {
                                 start := ir.newBlock("precondition success")
                             }
                             fail := ir.newBlock("precondition fail")
-                            ir.add(IR.Statement.CONDITIONAL_BRANCH(extractBuiltinBit(value), start,
-                                    fail))
+                            ir.add(IR.Statement.CONDITIONAL_BRANCH(m.position,
+                                    extractBuiltinBit(m.position, value), start, fail))
                             ir.setCurrentBlock(fail)
                         when Annotations.Expression.PRE_OR(_, expr):
                             if current == m {
@@ -7003,8 +7034,8 @@ class Compiler {
                                 start := ir.newBlock("precondition success")
                             }
                             fail := ir.newBlock("precondition fail")
-                            ir.add(IR.Statement.CONDITIONAL_BRANCH(extractBuiltinBit(value), start,
-                                    fail))
+                            ir.add(IR.Statement.CONDITIONAL_BRANCH(m.position,
+                                    extractBuiltinBit(m.position, value), start, fail))
                             ir.setCurrentBlock(fail)
                     }
                 }
@@ -7064,8 +7095,8 @@ class Compiler {
                                         "postcondition failure for \{m.declaration()}"))
                                 ir.setCurrentBlock(old)
                             }
-                            ir.add(IR.Statement.CONDITIONAL_BRANCH(extractBuiltinBit(value),
-                                    success, fail))
+                            ir.add(IR.Statement.CONDITIONAL_BRANCH(m.position,
+                                    extractBuiltinBit(m.position, value), success, fail))
                             ir.setCurrentBlock(success)
                         when Annotations.Expression.POST_AND(_, expr):
                             if current == m {
@@ -7094,8 +7125,8 @@ class Compiler {
                                 compileAssertFail(m.position, ASTNode.STRING(m.position,
                                         "postcondition failure for \{m.declaration()}"))
                             }
-                            ir.add(IR.Statement.CONDITIONAL_BRANCH(extractBuiltinBit(value),
-                                    success, fail))
+                            ir.add(IR.Statement.CONDITIONAL_BRANCH(m.position,
+                                    extractBuiltinBit(m.position, value), success, fail))
                             ir.setCurrentBlock(success)
                     }
                 }
@@ -7190,7 +7221,7 @@ class Compiler {
                         compileAssert(m.position, ASTNode.BIT(m.position, false),
                                 ASTNode.STRING(m.position,
                                     "\{m.declaration()} exited without returning"))
-                        ir.add(IR.Statement.UNREACHABLE)
+                        ir.add(IR.Statement.UNREACHABLE(m.position))
                     }
                 }
             }
@@ -7205,7 +7236,7 @@ class Compiler {
                 assert index !== null
                 if ir.blocks[index].statements.count > 0 {
                     ir.setCurrentBlock(atPreBlock)
-                    ir.add(IR.Statement.BRANCH(ir.blocks[0].id))
+                    ir.add(IR.Statement.BRANCH(m.position, ir.blocks[0].id))
                     def tmp := ir.blocks[0]
                     ir.blocks[0] := ir.blocks[index]
                     ir.blocks[index] := tmp

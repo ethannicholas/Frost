@@ -1,6 +1,7 @@
 package org.pandalanguage.pandac
 
 uses org.pandalanguage.pandac.parser.Token
+uses org.pandalanguage.pandac.parser.Token.Kind -- FIXME shouldn't need
 
 choice ASTNode {
     ANNOTATION             (Position, String, String? -* expr text *-, ASTNode? -* expr *-)

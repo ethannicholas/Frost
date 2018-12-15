@@ -84,12 +84,12 @@ method main(args:ListView<String>) {
     def input := File(args[1])
     def root := File(args[2])
     def apiRelativePath := args[3] + "/"
-    def tmpOutput := System.tempDir().resolve("pandadoc-tmp")
-    def tocFile := System.tempDir().resolve("pandadoc-toc.xml")
+    def tmpOutput := System.temporaryDirectory().resolve("pandadoc-tmp")
+    def tocFile := System.temporaryDirectory().resolve("pandadoc-toc.xml")
     def imports := Array<File>() -- FIXME literal
     imports.add(File(Config.pandaSourceDir()))
     imports.add(input)
-    def settings := Settings(File(Config.pandaSourceDir()), imports, 0, 0)
+    def settings := Settings(File(Config.pandaSourceDir()), imports, 0, 0, true)
     def compiler := Compiler(MessageQueue<Error>(), DummyCodeGenerator(), settings)
     def pandadoc := PandaDoc(compiler, tmpOutput, tocFile, apiRelativePath)
     process(input, pandadoc)

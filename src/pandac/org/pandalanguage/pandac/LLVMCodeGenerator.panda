@@ -55,6 +55,8 @@ class LLVMCodeGenerator : CodeGenerator {
 
     def strings := MemoryOutputStream()
 
+    def metadata := MemoryOutputStream()
+
     def declared := HashSet<String>()
 
     def writtenTypes := HashSet<String>()
@@ -66,6 +68,14 @@ class LLVMCodeGenerator : CodeGenerator {
     var varCount := 0
 
     var labelCount := 0
+
+    var metadataCount := 0
+
+    var currentFileMetadata := "!error"
+
+    var currentMethodMetadata := "!error"
+
+    var lastDebugPosition := Position()
 
     var currentBlock := ""
 
@@ -105,6 +115,7 @@ class LLVMCodeGenerator : CodeGenerator {
         physicalOut.print(declarations.finish())
         physicalOut.print(shims.finish())
         physicalOut.print(methods.finish())
+        physicalOut.print(metadata.finish())
     }
 
     method nextVar():String {
@@ -115,6 +126,11 @@ class LLVMCodeGenerator : CodeGenerator {
     method nextLabel():String {
         labelCount += 1
         return "$l\{labelCount}"
+    }
+
+    method nextMetadata():String {
+        metadataCount += 1
+        return "!\{metadataCount}"
     }
 
     method createBlock(label:String, out:OutputStream) {
@@ -561,7 +577,7 @@ class LLVMCodeGenerator : CodeGenerator {
                 rawType := raw.parameters[i - 1].type
             }
             if rawType != effective.subtypes[i] {
-                def cast := getCastReference(p, effective.subtypes[i], rawType)
+                def cast := getCastReference(raw.position, p, effective.subtypes[i], rawType)
                 casts.add(cast)
                 if compiler.isValue(effective.subtypes[i]) & !compiler.isValue(rawType) {
                     labelCount += 1
@@ -601,7 +617,7 @@ class LLVMCodeGenerator : CodeGenerator {
         out.printLine(")")
         if raw.returnType != Type.Void() {
             returnValue := llvmType(effectiveReturnType) + " " +
-                    getCastReference(returnValue, raw.returnType, effectiveReturnType)
+                    getCastReference(raw.position, returnValue, raw.returnType, effectiveReturnType)
         }
         out.printLine(unrefs)
         out.printLine("ret \{returnValue}")
@@ -932,21 +948,24 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
-    method wrapValue(value:String, srcType:Type, dstType:Type, out:OutputStream):String {
+    method wrapValue(position:Position, value:String, srcType:Type, dstType:Type,
+            out:OutputStream):String {
         def src := compiler.getClass(srcType)
         assert src !== null
         if srcType.typeKind = Type.Kind.NULLABLE {
             -- casting nullable value to nullable wrapper, need to special-case null
             def testStart := currentBlock
             def isNonNull := nextVar()
-            out.printLine("\{isNonNull} = extractvalue \{nullableType(srcType)} \{value}, 1")
+            out.printLine("\{isNonNull} = extractvalue \{nullableType(srcType)} \{value}, 1" +
+                    debugInfo(position))
             def nonNullLabel := nextLabel()
             def endLabel := nextLabel()
-            out.printLine("br i1 \{isNonNull}, label %\{nonNullLabel}, label %\{endLabel}")
+            out.printLine("br i1 \{isNonNull}, label %\{nonNullLabel}, label %\{endLabel}" +
+                    debugInfo(position))
             createBlock(nonNullLabel, out)
-            def unwrapped := toNonNullableValue(value, srcType, srcType.subtypes[0], out)
-            def nonNullValue := wrapValue(unwrapped, srcType.subtypes[0], dstType, out)
-            out.printLine("br label %\{endLabel}")
+            def unwrapped := toNonNullableValue(position, value, srcType, srcType.subtypes[0], out)
+            def nonNullValue := wrapValue(position, unwrapped, srcType.subtypes[0], dstType, out)
+            out.printLine("br label %\{endLabel}\{debugInfo(position)}")
             createBlock(endLabel, out)
             def result := nextVar()
             out.printLine("\{result} = phi \{llvmType(dstType)} [null, %\{testStart}], " +
@@ -963,39 +982,46 @@ class LLVMCodeGenerator : CodeGenerator {
         }
         def mallocRef := nextVar()
         out.printLine("\{mallocRef} = call i8* @pandaObjectAlloc(" +
-                "i64 \{sizeOfWrapper(src.type)}, %panda$core$Class* \{ccCast})")
+                "i64 \{sizeOfWrapper(src.type)}, %panda$core$Class* \{ccCast})" +
+                debugInfo(position))
         def wrapperTypeName := wrapperTypeName(src.type)
         def wrapperType := wrapperType(src.type)
         def wrapperCast := nextVar()
-        out.printLine("\{wrapperCast} = bitcast i8* \{mallocRef} to \{wrapperType}")
+        out.printLine("\{wrapperCast} = bitcast i8* \{mallocRef} to \{wrapperType}" +
+                debugInfo(position))
         def target := nextVar()
         out.printLine("\{target} = getelementptr \{wrapperTypeName}, " +
-                "\{wrapperType} \{wrapperCast}, i64 0, i32 2")
-        out.printLine("store \{llvmType(srcType)} \{value}, \{llvmType(srcType)}* \{target}")
+                "\{wrapperType} \{wrapperCast}, i64 0, i32 2\{debugInfo(position)}")
+        out.printLine("store \{llvmType(srcType)} \{value}, \{llvmType(srcType)}* \{target}" +
+                debugInfo(position))
         if wrapperType != llvmType(dstType) {
             def result := nextVar()
             out.printLine("\{result} = bitcast \{wrapperType} \{wrapperCast} to " +
-                    llvmType(dstType))
+                    llvmType(dstType) + debugInfo(position))
             return result
         }
         return wrapperCast
     }
 
-    method unwrapValue(value:String, srcType:Type, dstType:Type, out:OutputStream):String {
+    method unwrapValue(position:Position, value:String, srcType:Type, dstType:Type,
+            out:OutputStream):String {
         def target := compiler.getClass(dstType)
         assert target !== null
         if dstType.typeKind = Type.Kind.NULLABLE {
             -- casting nullable wrapper to nullable value, need to special-case null
             def testStart := currentBlock
             def isNonNull := nextVar()
-            out.printLine("\{isNonNull} = icmp ne \{llvmType(srcType)} \{value}, null")
+            out.printLine("\{isNonNull} = icmp ne \{llvmType(srcType)} \{value}, null" +
+                    debugInfo(position))
             def nonNullLabel := nextLabel()
             def endLabel := nextLabel()
-            out.printLine("br i1 \{isNonNull}, label %\{nonNullLabel}, label %\{endLabel}")
+            out.printLine("br i1 \{isNonNull}, label %\{nonNullLabel}, label %\{endLabel}" +
+                    debugInfo(position))
             createBlock(nonNullLabel, out)
-            def wrapped := unwrapValue(value, srcType, dstType.subtypes[0], out)
-            def nonNullValue := toNullableValue(wrapped, dstType.subtypes[0], dstType, out)
-            out.printLine("br label %\{endLabel}")
+            def wrapped := unwrapValue(position, value, srcType, dstType.subtypes[0], out)
+            def nonNullValue := toNullableValue(position, wrapped, dstType.subtypes[0], dstType,
+                    out)
+            out.printLine("br label %\{endLabel}\{debugInfo(position)}")
             createBlock(endLabel, out)
             def result := nextVar()
             out.printLine("\{result} = phi \{llvmType(dstType)} " +
@@ -1007,31 +1033,36 @@ class LLVMCodeGenerator : CodeGenerator {
         def wrapperTypeName := wrapperTypeName(dstType)
         def wrapperType := wrapperType(dstType)
         def srcCast := nextVar()
-        out.printLine("\{srcCast} = bitcast \{llvmType(srcType)} \{value} to \{wrapperType}")
+        out.printLine("\{srcCast} = bitcast \{llvmType(srcType)} \{value} to \{wrapperType}" +
+                debugInfo(position))
         def load := nextVar()
-        out.printLine("\{load} = load \{wrapperTypeName}, \{wrapperType} \{srcCast}")
+        out.printLine("\{load} = load \{wrapperTypeName}, \{wrapperType} \{srcCast}" +
+                debugInfo(position))
         def result := nextVar()
-        out.printLine("\{result} = extractvalue \{wrapperTypeName} \{load}, \{OBJECT_FIELD_COUNT}")
+        out.printLine("\{result} = extractvalue \{wrapperTypeName} \{load}, \{OBJECT_FIELD_COUNT}" +
+                debugInfo(position))
         return result
     }
 
-    method toNullableValue(value:String, srcType:Type, dstType:Type,
+    method toNullableValue(position:Position, value:String, srcType:Type, dstType:Type,
             out:OutputStream):String {
         def nullableType := nullableType(dstType)
         def result := nextVar()
         out.printLine("\{result} = insertvalue \{nullableType} " +
-                "{ \{llvmType(srcType)} undef, i1 true }, \{llvmType(srcType)} \{value}, 0")
+                "{ \{llvmType(srcType)} undef, i1 true }, \{llvmType(srcType)} \{value}, 0" +
+                debugInfo(position))
         return result
     }
 
-    method toNonNullableValue(value:String, srcType:Type, dstType:Type,
+    method toNonNullableValue(position:Position, value:String, srcType:Type, dstType:Type,
             out:OutputStream):String {
         def result := nextVar()
-        out.printLine("\{result} = extractvalue \{llvmType(srcType)} \{value}, 0")
+        out.printLine("\{result} = extractvalue \{llvmType(srcType)} \{value}, 0" +
+                debugInfo(position))
         return result
     }
 
-    method getCastReference(value:String, src:Type, target:Type):String {
+    method getCastReference(position:Position, value:String, src:Type, target:Type):String {
         def op:String
         if target.isBuiltinNumber() {
             assert src.isBuiltinNumber()
@@ -1092,18 +1123,18 @@ class LLVMCodeGenerator : CodeGenerator {
             def targetClass := compiler.getClass(target)
             assert targetClass !== null, "class \{target} not found"
             if compiler.isValue(srcClass) & !compiler.isValue(targetClass) {
-                return wrapValue(value, src, target, out)
+                return wrapValue(position, value, src, target, out)
             }
             else if !compiler.isValue(srcClass) & compiler.isValue(targetClass) {
-                return unwrapValue(value, src, target, out)
+                return unwrapValue(position, value, src, target, out)
             }
             else if compiler.isValue(srcClass) & target.typeKind = Type.Kind.NULLABLE &
                     target.subtypes[0] = src {
-                return toNullableValue(value, src, target, out)
+                return toNullableValue(position, value, src, target, out)
             }
             else if compiler.isValue(targetClass) & src.typeKind = Type.Kind.NULLABLE &
                     src.subtypes[0] = target {
-                return toNonNullableValue(value, src, target, out)
+                return toNonNullableValue(position, value, src, target, out)
             }
             op := "bitcast"
         }
@@ -1113,7 +1144,7 @@ class LLVMCodeGenerator : CodeGenerator {
             return value
         }
         def result := nextVar()
-        out.printLine("\{result} = \{op} \{srcType} \{value} to \{dstType}")
+        out.printLine("\{result} = \{op} \{srcType} \{value} to \{dstType}\{debugInfo(position)}")
         return result
     }
 
@@ -1284,7 +1315,20 @@ class LLVMCodeGenerator : CodeGenerator {
         return "\{llvmType(v.type())} \{getReference(v)}"
     }
 
-    method writeIsNull(id:IR.Statement.ID, value:IR.Value) {
+    method debugInfo(position:Position):String {
+        if compiler.settings.debug & position != lastDebugPosition {
+            def result := nextMetadata()
+            metadata.printLine("\{result} = !DILocation(line: \{position.line}, column: " +
+                    "\{position.column}, scope: \{currentMethodMetadata})")
+            lastDebugPosition := position
+            return ", !dbg \{result}"
+        }
+        else {
+            return ""
+        }
+    }
+
+    method writeIsNull(position:Position, id:IR.Statement.ID, value:IR.Value) {
         def valueRef := getTypedReference(value)
         def cl := compiler.getClass(value.type())
         def resultValue:String
@@ -1294,19 +1338,19 @@ class LLVMCodeGenerator : CodeGenerator {
                 return
             }
             def field := nextVar()
-            out.printLine("\{field} = extractvalue \{valueRef}, 1")
+            out.printLine("\{field} = extractvalue \{valueRef}, 1\{debugInfo(position)}")
             def result := nextVar()
-            out.printLine("\{result} = xor i1 \{field}, -1")
+            out.printLine("\{result} = xor i1 \{field}, -1\{debugInfo(position)}")
             refs[id] := result
         }
         else {
             def result := nextVar()
-            out.printLine("\{result} = icmp eq \{valueRef}, null")
+            out.printLine("\{result} = icmp eq \{valueRef}, null\{debugInfo(position)}")
             refs[id] := result
         }
     }
 
-    method writeIsNonNull(id:IR.Statement.ID, value:IR.Value) {
+    method writeIsNonNull(position:Position, id:IR.Statement.ID, value:IR.Value) {
         def valueRef := getTypedReference(value)
         def cl := compiler.getClass(value.type())
         if compiler.isValue(cl) {
@@ -1315,12 +1359,12 @@ class LLVMCodeGenerator : CodeGenerator {
                 return
             }
             def result := nextVar()
-            out.printLine("\{result} = extractvalue \{valueRef}, 1")
+            out.printLine("\{result} = extractvalue \{valueRef}, 1\{debugInfo(position)}")
             refs[id] := result
         }
         else {
             def result := nextVar()
-            out.printLine("\{result} = icmp ne \{valueRef}, null")
+            out.printLine("\{result} = icmp ne \{valueRef}, null\{debugInfo(position)}")
             refs[id] := result
         }
     }
@@ -1333,8 +1377,8 @@ class LLVMCodeGenerator : CodeGenerator {
         return false
     }
 
-    method writeBinary(id:IR.Statement.ID, left:IR.Value, op:Token.Kind, right:IR.Value,
-            type:Type) {
+    method writeBinary(position:Position, id:IR.Statement.ID, left:IR.Value, op:Token.Kind,
+            right:IR.Value, type:Type) {
         def llvmOp:String
         match opClass(left.type()) {
             when OpClass.SIGNED:
@@ -1402,21 +1446,21 @@ class LLVMCodeGenerator : CodeGenerator {
                 match op {
                     when Token.Kind.IDENTITY:
                         if isNull(left) {
-                            writeIsNull(id, right)
+                            writeIsNull(position, id, right)
                             return
                         }
                         if isNull(right) {
-                            writeIsNull(id, left)
+                            writeIsNull(position, id, left)
                             return
                         }
                         llvmOp := "icmp eq"
                     when Token.Kind.NIDENTITY:
                         if isNull(left) {
-                            writeIsNonNull(id, right)
+                            writeIsNonNull(position, id, right)
                             return
                         }
                         if isNull(right) {
-                            writeIsNonNull(id, left)
+                            writeIsNonNull(position, id, left)
                             return
                         }
                         llvmOp := "icmp ne"
@@ -1425,24 +1469,26 @@ class LLVMCodeGenerator : CodeGenerator {
         def result := nextVar()
         def leftRef := getReference(left)
         def rightRef := getReference(right)
-        out.printLine("\{result} = \{llvmOp} \{llvmType(left.type())} \{leftRef}, \{rightRef}")
+        out.printLine("\{result} = \{llvmOp} \{llvmType(left.type())} \{leftRef}, \{rightRef}" +
+                debugInfo(position))
         refs[id] := result
     }
 
-    method writeBranch(target:IR.Block.ID) {
-        out.printLine("br label %\{target}")
+    method writeBranch(position:Position, target:IR.Block.ID) {
+        out.printLine("br label %\{target}\{debugInfo(position)}")
     }
 
-    method writeCast(id:IR.Statement.ID, value:IR.Value, target:Type) {
-        refs[id] := getCastReference(getReference(value), value.type(), target)
+    method writeCast(position:Position, id:IR.Statement.ID, value:IR.Value, target:Type) {
+        refs[id] := getCastReference(position, getReference(value), value.type(), target)
     }
 
-    method writeConditionalBranch(test:IR.Value, ifTrue:IR.Block.ID, ifFalse:IR.Block.ID) {
+    method writeConditionalBranch(position:Position, test:IR.Value, ifTrue:IR.Block.ID,
+                                  ifFalse:IR.Block.ID) {
         out.printLine("br \{getTypedReference(test)}, label %\{ifTrue}, " +
-                "label %\{ifFalse}")
+                "label %\{ifFalse}\{debugInfo(position)}")
     }
 
-    method writeConstruct(id:IR.Statement.ID, cl:ClassDecl) {
+    method writeConstruct(position:Position, id:IR.Statement.ID, cl:ClassDecl) {
         assert !compiler.isValue(cl)
         def cc := getClassConstant(cl)
         def ccCast:String
@@ -1455,13 +1501,15 @@ class LLVMCodeGenerator : CodeGenerator {
         def callRef := nextVar()
         def target := cl.type
         out.printLine("\{callRef} = call i8* @pandaObjectAlloc(i64 \{sizeOf(target)}, " +
-                "%panda$core$Class* \{ccCast})")
+                "%panda$core$Class* \{ccCast})\{debugInfo(position)}")
         def result := nextVar()
-        out.printLine("\{result} = bitcast i8* \{callRef} to \{llvmType(target)}")
+        out.printLine("\{result} = bitcast i8* \{callRef} to \{llvmType(target)}" +
+                debugInfo(position))
         refs[id] := result
     }
 
-    method writeDynamicCall(id:IR.Statement.ID, m:IR.Value, args:ListView<IR.Value>) {
+    method writeDynamicCall(position:Position, id:IR.Statement.ID, m:IR.Value,
+            args:ListView<IR.Value>) {
         var type := m.type()
         if type.isPointer() {
             type := type.subtypes[1]
@@ -1479,53 +1527,59 @@ class LLVMCodeGenerator : CodeGenerator {
             out.print(getTypedReference(a))
             separator := ", "
         }
-        out.printLine(")")
+        out.printLine(")\{debugInfo(position)}")
     }
 
-    method writeExtractField(id:IR.Statement.ID, target:IR.Value, field:FieldDecl) {
+    method writeExtractField(position:Position, id:IR.Statement.ID, target:IR.Value,
+            field:FieldDecl) {
         var targetRef := getTypedReference(target)
         def index := compiler.getIndex(field)
         def result := nextVar()
-        out.printLine("\{result} = extractvalue \{targetRef}, \{index}")
+        out.printLine("\{result} = extractvalue \{targetRef}, \{index}\{debugInfo(position)}")
         refs[id] := result
     }
 
-    method writeGetChoiceFieldPointer(id:IR.Statement.ID, target:IR.Value, cc:ChoiceCase,
-            index:Int) {
+    method writeGetChoiceFieldPointer(position:Position, id:IR.Statement.ID, target:IR.Value,
+            cc:ChoiceCase, index:Int) {
         def data := cc.owner.fields[1]
         assert data.name = ClassDecl.CHOICE_DATA_NAME
         def targetRef := getReference(target)
         def fieldIndex := compiler.getIndex(data)
         def dataPointer := nextVar()
         out.printLine("\{dataPointer} = getelementptr \{typeName(cc.owner.type)}, " +
-                "\{typeName(cc.owner.type)}* \{targetRef}, i64 0, i32 \{fieldIndex}")
+                "\{typeName(cc.owner.type)}* \{targetRef}, i64 0, i32 \{fieldIndex}" +
+                debugInfo(position))
         def size := getChoiceDataSize(cc.owner)
         def offset := nextVar()
         out.printLine("\{offset} = getelementptr [\{size} x i8], [\{size} x i8]* \{dataPointer}," +
-                " i64 0, i64 \{getChoiceFieldOffset(cc, index)}")
+                " i64 0, i64 \{getChoiceFieldOffset(cc, index)}\{debugInfo(position)}")
         def cast := nextVar()
-        out.printLine("\{cast} = bitcast i8* \{offset} to \{llvmType(cc.fields[index])}*")
+        out.printLine("\{cast} = bitcast i8* \{offset} to \{llvmType(cc.fields[index])}*" +
+                debugInfo(position))
         refs[id] := cast
     }
 
-    method writeGetFieldPointer(id:IR.Statement.ID, target:IR.Value, field:FieldDecl) {
+    method writeGetFieldPointer(position:Position, id:IR.Statement.ID, target:IR.Value,
+            field:FieldDecl) {
         def targetRef := getReference(target)
         def index := compiler.getIndex(field)
         def result := nextVar()
         out.printLine("\{result} = getelementptr \{typeName(target.type())}, " +
-                "\{typeName(target.type())}* \{targetRef}, i64 0, i32 \{index}")
+                "\{typeName(target.type())}* \{targetRef}, i64 0, i32 \{index}" +
+                debugInfo(position))
         if compiler.isValue(field.type) {
             refs[id] := result
         }
         else {
             def cast := nextVar()
-            out.printLine("\{cast} = bitcast i8** \{result} to \{llvmType(field.type)}*")
+            out.printLine("\{cast} = bitcast i8** \{result} to \{llvmType(field.type)}*" +
+                    debugInfo(position))
             refs[id] := cast
         }
     }
 
-    method writeGetInterfaceMethod(id:IR.Statement.ID, value:IR.Value, cl:ClassDecl, index:Int, 
-            type:Type) {
+    method writeGetInterfaceMethod(position:Position, id:IR.Statement.ID, value:IR.Value,
+            cl:ClassDecl, index:Int, type:Type) {
         def methodTypeString := llvmMethodType(type, null)
         -- load class constant entry
         def entry := nextLabel()
@@ -1533,15 +1587,18 @@ class LLVMCodeGenerator : CodeGenerator {
         createBlock(entry, out)
         def rawClassPointer := nextVar()
         out.printLine("\{rawClassPointer} = getelementptr inbounds \{typeName(cl.type)}, " +
-                "\{getTypedReference(value)}, \{SIZE_TYPE} 0, i32 \{CLASS_POINTER_INDEX}")
+                "\{getTypedReference(value)}, \{SIZE_TYPE} 0, i32 \{CLASS_POINTER_INDEX}" +
+                debugInfo(position))
         def classPointer := nextVar()
         def classType := typeName(Type.Class())
-        out.printLine("\{classPointer} = bitcast i8** \{rawClassPointer} to \{classType}**")
+        out.printLine("\{classPointer} = bitcast i8** \{rawClassPointer} to \{classType}**" +
+                debugInfo(position))
         def loadedClass := nextVar()
-        out.printLine("\{loadedClass} = load \{classType}*, \{classType}** \{classPointer}")
+        out.printLine("\{loadedClass} = load \{classType}*, \{classType}** \{classPointer}" +
+                debugInfo(position))
         def itableFirst := nextVar()
         out.printLine("\{itableFirst} = getelementptr inbounds \{classType}, \{classType}* " +
-                "\{loadedClass}, \{SIZE_TYPE} 0, i32 \{ITABLE_INDEX}")
+                "\{loadedClass}, \{SIZE_TYPE} 0, i32 \{ITABLE_INDEX}\{debugInfo(position)}")
         def next := nextLabel()
         out.printLine("br label %\{next}")
         def leavingEntryLabel := currentBlock
@@ -1553,163 +1610,174 @@ class LLVMCodeGenerator : CodeGenerator {
         out.printLine("\{itablePtrPtr} = phi %$itable** [ \{itableFirst}, %\{leavingEntryLabel}]," +
                 " [ \{itableNext}, %\{fail} ]")
         def itablePtr := nextVar()
-        out.printLine("\{itablePtr} = load %$itable*, %$itable** \{itablePtrPtr}")
+        out.printLine("\{itablePtr} = load %$itable*, %$itable** \{itablePtrPtr}" +
+                debugInfo(position))
         def itableClassPtr := nextVar()
         out.printLine("\{itableClassPtr} = getelementptr inbounds %$itable, %$itable* " +
-                "\{itablePtr}, \{SIZE_TYPE} 0, i32 0")
+                "\{itablePtr}, \{SIZE_TYPE} 0, i32 0\{debugInfo(position)}")
         def itableClass := nextVar()
-        out.printLine("\{itableClass} = load \{classType}*, \{classType}** \{itableClassPtr}")
+        out.printLine("\{itableClass} = load \{classType}*, \{classType}** \{itableClassPtr}" +
+                debugInfo(position))
         def test := nextVar()
         def intfCC := getClassConstant(cl)
         out.printLine("\{test} = icmp eq \{classType}* bitcast(\{intfCC.type}* \{intfCC.name} to " +
-                "\{classType}*), \{itableClass}")
+                "\{classType}*), \{itableClass}\{debugInfo(position)}")
         def success := nextLabel()
-        out.printLine("br i1 \{test}, label %\{success}, label %\{fail}")
+        out.printLine("br i1 \{test}, label %\{success}, label %\{fail}\{debugInfo(position)}")
 
         createBlock(fail, out)
         out.printLine("\{itableNext} = getelementptr inbounds %$itable, %$itable* \{itablePtr}, " +
-                "\{SIZE_TYPE} 0, i32 1")
+                "\{SIZE_TYPE} 0, i32 1\{debugInfo(position)}")
         out.printLine("br label %\{next}")
 
         createBlock(success, out)
         def methodPtrPtr := nextVar()
         out.printLine("\{methodPtrPtr} = getelementptr inbounds %$itable, %$itable* " +
-                "\{itablePtr}, \{SIZE_TYPE} 0, i32 2, i32 \{index}")
+                "\{itablePtr}, \{SIZE_TYPE} 0, i32 2, i32 \{index}\{debugInfo(position)}")
         def cast := nextVar()
-        out.printLine("\{cast} = bitcast i8** \{methodPtrPtr} to \{methodTypeString}*")
+        out.printLine("\{cast} = bitcast i8** \{methodPtrPtr} to \{methodTypeString}*" +
+                debugInfo(position))
         def methodPtr := nextVar()
-        out.printLine("\{methodPtr} = load \{methodTypeString}, \{methodTypeString}* \{cast}")
+        out.printLine("\{methodPtr} = load \{methodTypeString}, \{methodTypeString}* \{cast}" +
+                debugInfo(position))
         refs[id] := methodPtr
     }
 
-    method writeGetVirtualMethod(id:IR.Statement.ID, value:IR.Value, index:Int, type:Type) {
+    method writeGetVirtualMethod(position:Position, id:IR.Statement.ID, value:IR.Value, index:Int,
+            type:Type) {
         def classPtrPtr := nextVar()
         out.printLine("\{classPtrPtr} = getelementptr inbounds \{typeName(value.type())}, " +
-                "\{getTypedReference(value)}, i64 0, i32 0")
+                "\{getTypedReference(value)}, i64 0, i32 0\{debugInfo(position)}")
         def classPtr := nextVar()
-        out.printLine("\{classPtr} = load i8*, i8** \{classPtrPtr}")
+        out.printLine("\{classPtr} = load i8*, i8** \{classPtrPtr}\{debugInfo(position)}")
         def cast := nextVar()
         def classType := typeName(Type.Class())
-        out.printLine("\{cast} = bitcast i8* \{classPtr} to \{classType}*")
+        out.printLine("\{cast} = bitcast i8* \{classPtr} to \{classType}*\{debugInfo(position)}")
         def ptr := nextVar()
         out.printLine("\{ptr} = getelementptr inbounds \{classType}, \{classType}* \{cast}, " +
-                "i64 0, i32 \{VTABLE_INDEX}, i64 \{index}")
+                "i64 0, i32 \{VTABLE_INDEX}, i64 \{index}\{debugInfo(position)}")
         def load := nextVar()
-        out.printLine("\{load} = load i8*, i8** \{ptr}")
+        out.printLine("\{load} = load i8*, i8** \{ptr}\{debugInfo(position)}")
         def result := nextVar()
-        out.printLine("\{result} = bitcast i8* \{load} to \{llvmMethodType(type, null)}")
+        out.printLine("\{result} = bitcast i8* \{load} to \{llvmMethodType(type, null)}" +
+                debugInfo(position))
         refs[id] := result
     }
 
-    method writeLoad(id:IR.Statement.ID, ptr:IR.Value) {
+    method writeLoad(position:Position, id:IR.Statement.ID, ptr:IR.Value) {
         def result := nextVar()
         out.printLine("\{result} = load \{llvmType(ptr.type())}, \{llvmType(ptr.type())}* " +
-                getReference(ptr))
+                getReference(ptr) + debugInfo(position))
         refs[id] := result
     }
 
-    method writeNegate(id:IR.Statement.ID, value:IR.Value) {
+    method writeNegate(position:Position, id:IR.Statement.ID, value:IR.Value) {
         def result := nextVar()
         if value.type().typeKind = Type.Kind.BUILTIN_FLOAT {
-            out.print("\{result} = fsub \{getTypedReference(value)}, 0x0")
+            out.print("\{result} = fsub \{getTypedReference(value)}, 0x0\{debugInfo(position)}")
         }
         else {
-            out.print("\{result} = sub \{getTypedReference(value)}, 0")
+            out.print("\{result} = sub \{getTypedReference(value)}, 0\{debugInfo(position)}")
         }
         refs[id] := result
     }
 
-    method writeNot(id:IR.Statement.ID, value:IR.Value) {
+    method writeNot(position:Position, id:IR.Statement.ID, value:IR.Value) {
         def result := nextVar()
-        out.printLine("\{result} = xor \{getTypedReference(value)}, -1")
+        out.printLine("\{result} = xor \{getTypedReference(value)}, -1\{debugInfo(position)}")
         refs[id] := result
     }
 
-    method writePointerAlloc(id:IR.Statement.ID, count:IR.Value, type:Type) {
+    method writePointerAlloc(position:Position, id:IR.Statement.ID, count:IR.Value, type:Type) {
         def countRef := getTypedReference(count)
         def elementSize := stride(type)
         assert elementSize > 0, "invalid size for type \{type}"
         def size := nextVar()
-        out.printLine("\{size} = mul \{countRef}, \{elementSize}")
+        out.printLine("\{size} = mul \{countRef}, \{elementSize}\{debugInfo(position)}")
         def malloc := nextVar()
-        out.printLine("\{malloc} = call i8* @pandaZAlloc(\{SIZE_TYPE} \{size})")
+        out.printLine("\{malloc} = call i8* @pandaZAlloc(\{SIZE_TYPE} \{size})" +
+                debugInfo(position))
         def result := nextVar()
-        out.printLine("\{result} = bitcast i8* \{malloc} to \{llvmType(Type.pointerTo(type))}")
+        out.printLine("\{result} = bitcast i8* \{malloc} to \{llvmType(Type.pointerTo(type))}" +
+                debugInfo(position))
         refs[id] := result
     }
 
-    method writePointerDestroy(ptr:IR.Value) {
+    method writePointerDestroy(position:Position, ptr:IR.Value) {
         def ptrRef := getTypedReference(ptr)
         def cast := nextVar()
-        out.printLine("\{cast} = bitcast \{ptrRef} to i8*")
-        out.printLine("call void @pandaFree(i8* \{cast})")
+        out.printLine("\{cast} = bitcast \{ptrRef} to i8*\{debugInfo(position)}")
+        out.printLine("call void @pandaFree(i8* \{cast})\{debugInfo(position)}")
     }
 
-    method writePointerGetIndex(id:IR.Statement.ID, ptr:IR.Value, index:IR.Value) {
+    method writePointerGetIndex(position:Position, id:IR.Statement.ID, ptr:IR.Value,
+            index:IR.Value) {
         def base := getTypedReference(ptr)
         def indexRef := getTypedReference(index)
         def baseType := llvmType(ptr.type().subtypes[1])
         def offset := nextVar()
         out.printLine("\{offset} = getelementptr inbounds \{baseType}, " +
-                "\{base}, \{indexRef}")
+                "\{base}, \{indexRef}\{debugInfo(position)}")
         def result := nextVar()
-        out.printLine("\{result} = load \{baseType}, \{baseType}* \{offset}")
+        out.printLine("\{result} = load \{baseType}, \{baseType}* \{offset}\{debugInfo(position)}")
         refs[id] := result
     }
 
-    method writePointerOffset(id:IR.Statement.ID, ptr:IR.Value, offset:IR.Value) {
+    method writePointerOffset(position:Position, id:IR.Statement.ID, ptr:IR.Value,
+            offset:IR.Value) {
         def base := getTypedReference(ptr)
         def offsetRef := getTypedReference(offset)
         def baseType := llvmType(ptr.type().subtypes[1])
         def result := nextVar()
         out.printLine("\{result} = getelementptr inbounds \{baseType}, " +
-                "\{base}, \{offsetRef}")
+                "\{base}, \{offsetRef}\{debugInfo(position)}")
         refs[id] := result
     }
 
-    method writePointerRealloc(id:IR.Statement.ID, ptr:IR.Value, oldCount:IR.Value,
-            newCount:IR.Value) {
+    method writePointerRealloc(position:Position, id:IR.Statement.ID, ptr:IR.Value,
+            oldCount:IR.Value, newCount:IR.Value) {
         def ptrRef := getTypedReference(ptr)
         def cast := nextVar()
-        out.printLine("\{cast} = bitcast \{ptrRef} to i8*")
+        out.printLine("\{cast} = bitcast \{ptrRef} to i8*\{debugInfo(position)}")
         def oldCountRef := getTypedReference(oldCount)
         def newCountRef := getTypedReference(newCount)
         def elementSize := stride(ptr.type())
         assert elementSize > 0, "invalid size for type \{ptr.type()}"
         def oldSize := nextVar()
-        out.printLine("\{oldSize} = mul \{oldCountRef}, \{elementSize}")
+        out.printLine("\{oldSize} = mul \{oldCountRef}, \{elementSize}\{debugInfo(position)}")
         def newSize := nextVar()
-        out.printLine("\{newSize} = mul \{newCountRef}, \{elementSize}")
+        out.printLine("\{newSize} = mul \{newCountRef}, \{elementSize}\{debugInfo(position)}")
         def realloc := nextVar()
         out.printLine("\{realloc} = call i8* @pandaRealloc(i8* \{cast}, " +
-                "\{SIZE_TYPE} \{oldSize}, \{SIZE_TYPE} \{newSize})")
+                "\{SIZE_TYPE} \{oldSize}, \{SIZE_TYPE} \{newSize})\{debugInfo(position)}")
         def result := nextVar()
-        out.printLine("\{result} = bitcast i8* \{realloc} to " +
-                llvmType(ptr.type()))
+        out.printLine("\{result} = bitcast i8* \{realloc} to \{llvmType(ptr.type())}" +
+                debugInfo(position))
         refs[id] := result
     }
 
-    method writePointerSetIndex(value:IR.Value, ptr:IR.Value, index:IR.Value) {
+    method writePointerSetIndex(position:Position, value:IR.Value, ptr:IR.Value, index:IR.Value) {
         def base := getTypedReference(ptr)
         def indexRef := getTypedReference(index)
         def valueRef := getTypedReference(value)
         def baseType := llvmType(ptr.type().subtypes[1])
         def offset := nextVar()
-        out.printLine("\{offset} = getelementptr inbounds \{baseType}, " +
-                "\{base}, \{indexRef}")
-        out.printLine("store \{valueRef}, \{baseType}* \{offset}")
+        out.printLine("\{offset} = getelementptr inbounds \{baseType}, \{base}, \{indexRef}" +
+                debugInfo(position))
+        out.printLine("store \{valueRef}, \{baseType}* \{offset}\{debugInfo(position)}")
     }
 
-    method writeReturn(value:IR.Value?) {
+    method writeReturn(position:Position, value:IR.Value?) {
         if value !== null {
-            out.printLine("ret \{getTypedReference(value)}")
+            out.printLine("ret \{getTypedReference(value)}\{debugInfo(position)}")
         }
         else {
-            out.printLine("ret void")
+            out.printLine("ret void\{debugInfo(position)}")
         }
     }
 
-    method writeStaticCall(id:IR.Statement.ID, m:MethodDecl, args:ListView<IR.Value>) {
+    method writeStaticCall(position:Position, id:IR.Statement.ID, m:MethodDecl,
+            args:ListView<IR.Value>) {
         if m.owner.external {
             writeDeclaration(m)
         }
@@ -1737,7 +1805,7 @@ class LLVMCodeGenerator : CodeGenerator {
             out.print(getTypedReference(a))
             separator := ", "
         }
-        out.printLine(")")
+        out.printLine(")\{debugInfo(position)}")
         if indirect {
             assert result !== null
             def load := nextVar()
@@ -1747,63 +1815,63 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
-    method writeStore(value:IR.Value, ptr:IR.Value) {
+    method writeStore(position:Position, value:IR.Value, ptr:IR.Value) {
         out.printLine("store \{getTypedReference(value)}, \{llvmType(ptr.type())}* " +
-                getReference(ptr))
+                getReference(ptr) + debugInfo(position))
     }
 
     method writeStatement(id:IR.Statement.ID, s:IR.Statement) {
         match s {
-            when IR.Statement.BINARY(left, op, right, type):
-                writeBinary(id, left, op, right, type)
-            when IR.Statement.BRANCH(target):
-                writeBranch(target)
-            when IR.Statement.CAST(value, type):
-                writeCast(id, value, type)
+            when IR.Statement.BINARY(position, left, op, right, type):
+                writeBinary(position, id, left, op, right, type)
+            when IR.Statement.BRANCH(position, target):
+                writeBranch(position, target)
+            when IR.Statement.CAST(position, value, type):
+                writeCast(position, id, value, type)
             when IR.Statement.COMMENT(text):
                 out.printLine("; \{text}")
-            when IR.Statement.CONDITIONAL_BRANCH(test, ifTrue, ifFalse):
-                writeConditionalBranch(test, ifTrue, ifFalse)
-            when IR.Statement.CONSTRUCT(cl):
-                writeConstruct(id, cl)
-            when IR.Statement.DYNAMIC_CALL(m, args):
-                writeDynamicCall(id, m, args)
-            when IR.Statement.EXTRACT_FIELD(target, field):
-                writeExtractField(id, target, field)
-            when IR.Statement.GET_CHOICE_FIELD_POINTER(target, cc, index):
-                writeGetChoiceFieldPointer(id, target, cc, index)
-            when IR.Statement.GET_FIELD_POINTER(target, field):
-                writeGetFieldPointer(id, target, field)
-            when IR.Statement.GET_INTERFACE_METHOD(value, cl, index, type):
-                writeGetInterfaceMethod(id, value, cl, index, type)
-            when IR.Statement.GET_VIRTUAL_METHOD(value, index, type):
-                writeGetVirtualMethod(id, value, index, type)
-            when IR.Statement.LOAD(ptr):
-                writeLoad(id, ptr)
-            when IR.Statement.NEGATE(value):
-                writeNegate(id, value)
-            when IR.Statement.NOT(value):
-                writeNot(id, value)
-            when IR.Statement.POINTER_ALLOC(count, type):
-                writePointerAlloc(id, count, type)
-            when IR.Statement.POINTER_DESTROY(ptr):
-                writePointerDestroy(ptr)
-            when IR.Statement.POINTER_GET_INDEX(ptr, index):
-                writePointerGetIndex(id, ptr, index)
-            when IR.Statement.POINTER_OFFSET(ptr, offset):
-                writePointerOffset(id, ptr, offset)
-            when IR.Statement.POINTER_REALLOC(ptr, oldCount, newCount):
-                writePointerRealloc(id, ptr, oldCount, newCount)
-            when IR.Statement.POINTER_SET_INDEX(value, ptr, index):
-                writePointerSetIndex(value, ptr, index)
-            when IR.Statement.RETURN(value):
-                writeReturn(value)
-            when IR.Statement.STATIC_CALL(m, args):
-                writeStaticCall(id, m, args)
-            when IR.Statement.STORE(value, slot):
-                writeStore(value, slot)
-            when IR.Statement.UNREACHABLE:
-                out.printLine("unreachable")
+            when IR.Statement.CONDITIONAL_BRANCH(position, test, ifTrue, ifFalse):
+                writeConditionalBranch(position, test, ifTrue, ifFalse)
+            when IR.Statement.CONSTRUCT(position, cl):
+                writeConstruct(position, id, cl)
+            when IR.Statement.DYNAMIC_CALL(position, m, args):
+                writeDynamicCall(position, id, m, args)
+            when IR.Statement.EXTRACT_FIELD(position, target, field):
+                writeExtractField(position, id, target, field)
+            when IR.Statement.GET_CHOICE_FIELD_POINTER(position, target, cc, index):
+                writeGetChoiceFieldPointer(position, id, target, cc, index)
+            when IR.Statement.GET_FIELD_POINTER(position, target, field):
+                writeGetFieldPointer(position, id, target, field)
+            when IR.Statement.GET_INTERFACE_METHOD(position, value, cl, index, type):
+                writeGetInterfaceMethod(position, id, value, cl, index, type)
+            when IR.Statement.GET_VIRTUAL_METHOD(position, value, index, type):
+                writeGetVirtualMethod(position, id, value, index, type)
+            when IR.Statement.LOAD(position, ptr):
+                writeLoad(position, id, ptr)
+            when IR.Statement.NEGATE(position, value):
+                writeNegate(position, id, value)
+            when IR.Statement.NOT(position, value):
+                writeNot(position, id, value)
+            when IR.Statement.POINTER_ALLOC(position, count, type):
+                writePointerAlloc(position, id, count, type)
+            when IR.Statement.POINTER_DESTROY(position, ptr):
+                writePointerDestroy(position, ptr)
+            when IR.Statement.POINTER_GET_INDEX(position, ptr, index):
+                writePointerGetIndex(position, id, ptr, index)
+            when IR.Statement.POINTER_OFFSET(position, ptr, offset):
+                writePointerOffset(position, id, ptr, offset)
+            when IR.Statement.POINTER_REALLOC(position, ptr, oldCount, newCount):
+                writePointerRealloc(position, id, ptr, oldCount, newCount)
+            when IR.Statement.POINTER_SET_INDEX(position, value, ptr, index):
+                writePointerSetIndex(position, value, ptr, index)
+            when IR.Statement.RETURN(position, value):
+                writeReturn(position, value)
+            when IR.Statement.STATIC_CALL(position, m, args):
+                writeStaticCall(position, id, m, args)
+            when IR.Statement.STORE(position, value, slot):
+                writeStore(position, value, slot)
+            when IR.Statement.UNREACHABLE(position):
+                out.printLine("unreachable\{debugInfo(position)}")
             otherwise:
                 assert false, "unsupported statement \{s}"
         }
@@ -1856,7 +1924,14 @@ class LLVMCodeGenerator : CodeGenerator {
             index += 1
             separator := ", "
         }
-        out.printLine(") {")
+        out.print(")")
+        if compiler.settings.debug {
+            currentMethodMetadata := nextMetadata()
+            metadata.printLine("\{currentMethodMetadata} = distinct !DISubprogram(name: " +
+                    "\"\{m.name}\", file: \{currentFileMetadata}, unit: !0, scopeLine: " +
+                    "\{m.position.line})")
+        }
+        out.printLine(" {")
         out := MemoryOutputStream()
         writeIR(ir)
         methods.printLine(methodHeader)
@@ -1868,6 +1943,22 @@ class LLVMCodeGenerator : CodeGenerator {
     method start(cl:ClassDecl) {
         if cl.annotations.isSpecialize() {
             return
+        }
+        if compiler.settings.debug {
+            currentFileMetadata := nextMetadata()
+            metadata.printLine("\{currentFileMetadata} = distinct !DIFile(" +
+                    "filename: \"\{cl.source}\", directory: \"\{System.workingDirectory()}\")")
+            metadata.printLine("!llvm.dbg.cu = !{!0}")
+            def dwarfVersion := nextMetadata()
+            metadata.printLine("\{dwarfVersion} = !{i32 2, !\"Dwarf Version\", i32 4}")
+            def debugVersion := nextMetadata()
+            metadata.printLine("\{debugVersion} = !{i32 2, !\"Debug Info Version\", i32 3}")
+            metadata.printLine("!llvm.module.flags = !{\{dwarfVersion}, \{debugVersion}}")
+            if currentFileMetadata = "!1" {
+                metadata.printLine("!0 = distinct !DICompileUnit(language:DW_LANG_C89, " +
+                        "producer:\"pandac\", file: \{currentFileMetadata}, isOptimized: false, " +
+                        "runtimeVersion: 0, emissionKind: FullDebug)")
+            }
         }
         writeType(cl.type)
         getClassConstant(cl)

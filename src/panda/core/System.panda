@@ -40,11 +40,18 @@ class System {
     }
 
     ================================================================================================
+    Returns the current working directory.
+    ================================================================================================
+    @class
+    @external
+    method workingDirectory():File
+
+    ================================================================================================
     Returns a path to a directory suitable for storing temporary files.
     ================================================================================================
     @class
     @external
-    method tempDir():File
+    method temporaryDirectory():File
 
     ================================================================================================
     Causes the program to immediately stop running, returning the indicated exit status to the

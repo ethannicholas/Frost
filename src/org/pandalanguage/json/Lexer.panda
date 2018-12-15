@@ -17,6 +17,7 @@ class Lexer {
 
     method start(source:String) {
         dfa := DFA(source, 31, transitions, accepts)
+        Panda.ref(source)
     }
 
     @class

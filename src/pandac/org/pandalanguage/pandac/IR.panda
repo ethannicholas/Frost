@@ -10,27 +10,27 @@ class IR {
         builtin float types. Class types support the IDENTITY and NIDENTITY operations. The left and
         right types must match on all comparisons other than IDENTITY and NIDENTITY.
         ============================================================================================
-        BINARY(Value, Token.Kind, Value, Type)
+        BINARY(Position, Value, Token.Kind, Value, Type)
 
         ============================================================================================
         Unconditionally branch to the given block.
         ============================================================================================
-        BRANCH(Block.ID)
+        BRANCH(Position, Block.ID)
 
         ============================================================================================
         Casts a value of one type to another type. This handles bitcasting, truncating / extending,
         wrapping, unwrapping, and nullable->non-nullable value / vice versa as needed.
         ============================================================================================
-        CAST(Value, Type)
+        CAST(Position, Value, Type)
 
         COMMENT(String)
 
-        GET_CHOICE_FIELD_POINTER(Value, ChoiceCase, Int)
+        GET_CHOICE_FIELD_POINTER(Position, Value, ChoiceCase, Int)
 
         ============================================================================================
         Conditionally branch to the first block if true, the second block if false.
         ============================================================================================
-        CONDITIONAL_BRANCH(Value, Block.ID, Block.ID)
+        CONDITIONAL_BRANCH(Position, Value, Block.ID, Block.ID)
 
         ============================================================================================
         Constructs a new object instance. The object will have an initialized class pointer and a
@@ -38,107 +38,107 @@ class IR {
         `STATIC_CALL` statements. `CONSTRUCT` is used only for non-`Value` objects; `Value`s are
         directly returned by their `init` methods (non-`Value` `init` methods instead return void).
         ============================================================================================
-        CONSTRUCT(ClassDecl)
+        CONSTRUCT(Position, ClassDecl)
 
         ============================================================================================
         Dynamically calls a method reference. `args` is the actual, IR-level arguments, meaning that
         `self` (if any) appears explicitly as `args[0]`.
         ============================================================================================
-        DYNAMIC_CALL(Value -* method *-, ImmutableArray<Value> -* args *-)
+        DYNAMIC_CALL(Position, Value -* method *-, ImmutableArray<Value> -* args *-)
 
         ============================================================================================
         Given a value, returns the value of a field within the value.
         ============================================================================================
-        EXTRACT_FIELD(Value, FieldDecl)
+        EXTRACT_FIELD(Position, Value, FieldDecl)
 
         ============================================================================================
         Given a pointer to an object, returns a pointer to a field within the object.
         ============================================================================================
-        GET_FIELD_POINTER(Value, FieldDecl)
+        GET_FIELD_POINTER(Position, Value, FieldDecl)
 
         ============================================================================================
         Gets a reference to a virtual method from an object, by its vtable index.
         ============================================================================================
-        GET_VIRTUAL_METHOD(Value, Int, Type)
+        GET_VIRTUAL_METHOD(Position, Value, Int, Type)
 
         ============================================================================================
         Gets a reference to an interface method from an object, by its class and itable index.
         ============================================================================================
-        GET_INTERFACE_METHOD(Value, ClassDecl, Int, Type)
+        GET_INTERFACE_METHOD(Position, Value, ClassDecl, Int, Type)
 
         ============================================================================================
         Loads the value of the given pointer.
         ============================================================================================
-        LOAD(Value)
+        LOAD(Position, Value)
 
         ============================================================================================
         Negates a number.
         ============================================================================================
-        NEGATE(Value)
+        NEGATE(Position, Value)
 
         ============================================================================================
         Bitwise inverts a number or bit.
         ============================================================================================
-        NOT(Value)
+        NOT(Position, Value)
 
         ============================================================================================
         Allocates memory and returns a raw pointer to it. Only POINTER_ operations are legal on a
         raw pointer.
         ============================================================================================
-        POINTER_ALLOC(Value -* count *-, Type)
+        POINTER_ALLOC(Position, Value -* count *-, Type)
 
         ============================================================================================
         Deallocates a pointer
         ============================================================================================
-        POINTER_DESTROY(Value -* pointer *-)
+        POINTER_DESTROY(Position, Value -* pointer *-)
 
         ============================================================================================
         Dereferences a raw pointer.
         ============================================================================================
-        POINTER_GET(Value)
+        POINTER_GET(Position, Value)
 
         ============================================================================================
         Reads from `pointer + index * sizeof(type)`.
         ============================================================================================
-        POINTER_GET_INDEX(Value -* pointer *-, Value -* index *-)
+        POINTER_GET_INDEX(Position, Value -* pointer *-, Value -* index *-)
 
         ============================================================================================
         Returns `pointer + index * sizeof(type)`.
         ============================================================================================
-        POINTER_OFFSET(Value -* pointer *-, Value -* index *-)
+        POINTER_OFFSET(Position, Value -* pointer *-, Value -* index *-)
 
         ============================================================================================
         Equivalent to the C realloc function (other than additionally requiring the old size).
         ============================================================================================
-        POINTER_REALLOC(Value -* pointer *-, Value -* oldSize *-, Value -* newSize *-)
+        POINTER_REALLOC(Position, Value -* pointer *-, Value -* oldSize *-, Value -* newSize *-)
 
         ============================================================================================
         Writes to a raw pointer.
         ============================================================================================
-        POINTER_SET(Value -* value *-, Value -* pointer *-)
+        POINTER_SET(Position, Value -* value *-, Value -* pointer *-)
 
         ============================================================================================
         Writes to `pointer + index * sizeof(type)`.
         ============================================================================================
-        POINTER_SET_INDEX(Value -* value *-, Value -* pointer *-, Value -* index *-)
+        POINTER_SET_INDEX(Position, Value -* value *-, Value -* pointer *-, Value -* index *-)
 
         ============================================================================================
         A `return` statement.
         ============================================================================================
-        RETURN(IR.Value?)
+        RETURN(Position, IR.Value?)
 
         ============================================================================================
         A static (non-virtual, non-dynamic) call to a method. `args` is the actual, IR-level
         arguments, meaning that `self` (if any) appears explicitly as `args[0]`.
         ============================================================================================
-        STATIC_CALL(MethodDecl, ImmutableArray<Value> -* args *-)
+        STATIC_CALL(Position, MethodDecl, ImmutableArray<Value> -* args *-)
 
         ============================================================================================
         Writes a value to the target of the given pointer.
         ============================================================================================
-        STORE(Value -* value *-, Value -* dest pointer *-)
+        STORE(Position, Value -* value *-, Value -* dest pointer *-)
 
-        UNREACHABLE
+        UNREACHABLE(Position)
 
         class ID : panda.core.Value, Key<ID> {
             def value:Int
@@ -166,62 +166,62 @@ class IR {
         @override
         function convert():String {
             match self {
-                when BINARY(left, op, right, type):
+                when BINARY(position, left, op, right, type):
                     return "binary \{left}, \{op}, \{right}, \{type}"
-                when BRANCH(id):
+                when BRANCH(position, id):
                     return "branch \{id}"
-                when CAST(value, type):
+                when CAST(position, value, type):
                     return "cast \{value}->\{type}"
                 when COMMENT(text):
                     return "-- \{text}"
-                when CONDITIONAL_BRANCH(test, ifTrue, ifFalse):
+                when CONDITIONAL_BRANCH(position, test, ifTrue, ifFalse):
                     return "branch \{test}, \{ifTrue}, \{ifFalse}"
-                when CONSTRUCT(cl):
+                when CONSTRUCT(position, cl):
                     return "construct \{cl.name}"
-                when DYNAMIC_CALL(m, args):
+                when DYNAMIC_CALL(position, m, args):
                     return "dynamic_call \{m}(\{args.join(", ")})"
-                when EXTRACT_FIELD(value, field):
+                when EXTRACT_FIELD(position, value, field):
                     return "load_field \{value}, \{field.owner.name}.\{field.name}"
-                when GET_CHOICE_FIELD_POINTER(target, cc, index):
+                when GET_CHOICE_FIELD_POINTER(position, target, cc, index):
                     return "get_choice_field_pointer \{target}, \{cc.name}, \{index}"
-                when GET_FIELD_POINTER(ptr, field):
+                when GET_FIELD_POINTER(position, ptr, field):
                     return "get_field_pointer \{ptr}, \{field.owner.name}.\{field.name}"
-                when GET_INTERFACE_METHOD(value, cl, id, type):
+                when GET_INTERFACE_METHOD(position, value, cl, id, type):
                     return "get_interface_method \{value}, \{cl.name}, \{id}, \{type}"
-                when GET_VIRTUAL_METHOD(value, id, type):
+                when GET_VIRTUAL_METHOD(position, value, id, type):
                     return "get_virtual_method \{value}, \{id}, \{type}"
-                when LOAD(ptr):
+                when LOAD(position, ptr):
                     return "load \{ptr}"
-                when NEGATE(value):
+                when NEGATE(position, value):
                     return "negate \{value}"
-                when NOT(value):
+                when NOT(position, value):
                     return "not \{value}"
-                when POINTER_ALLOC(count, type):
+                when POINTER_ALLOC(position, count, type):
                     return "pointer_alloc \{count}, \{type}"
-                when POINTER_DESTROY(ptr):
+                when POINTER_DESTROY(position, ptr):
                     return "pointer_destroy \{ptr}"
-                when POINTER_GET(ptr):
+                when POINTER_GET(position, ptr):
                     return "pointer_get \{ptr}"
-                when POINTER_GET_INDEX(ptr, index):
+                when POINTER_GET_INDEX(position, ptr, index):
                     return "pointer_get_index \{ptr}, \{index}"
-                when POINTER_OFFSET(ptr, index):
+                when POINTER_OFFSET(position, ptr, index):
                     return "pointer_offset \{ptr}, \{index}"
-                when POINTER_REALLOC(ptr, oldSize, newSize):
+                when POINTER_REALLOC(position, ptr, oldSize, newSize):
                     return "pointer_realloc \{ptr}, \{oldSize}, \{newSize}"
-                when POINTER_SET(value, ptr):
+                when POINTER_SET(position, value, ptr):
                     return "pointer_set \{value}, \{ptr}"
-                when POINTER_SET_INDEX(value, ptr, index):
+                when POINTER_SET_INDEX(position, value, ptr, index):
                     return "pointer_set_index \{value}, \{ptr}, \{index}"
-                when RETURN(value):
+                when RETURN(position, value):
                     if value !== null {
                         return "return \{value}"
                     }
                     return "return"
-                when STATIC_CALL(m, args):
+                when STATIC_CALL(position, m, args):
                     return "static_call \{m.declaration()}(\{args.join(", ")})"
-                when STORE(value, ptr):
+                when STORE(position, value, ptr):
                     return "store \{value}, \{ptr}"
-                when UNREACHABLE:
+                when UNREACHABLE(position):
                     return "unreachable"
             }
         }

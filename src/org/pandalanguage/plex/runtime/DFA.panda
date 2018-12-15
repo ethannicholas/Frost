@@ -49,6 +49,7 @@ class DFA {
         def startColumn := column
         while offset != sourceEnd {
             def c := source[offset]
+--            Console.printLine("checking '\{c}' at \{startLine}:\{startColumn}(\{offset})")
             if c.convert()->UInt8 > END_CHAR {
                 Console.printLine("invalid token \{c.convert()->UInt8}")
                 System.exit(1)

@@ -22,7 +22,7 @@ method main(args:ListView<String>) {
     def pandacArgs := Array<String>() -- FIXME literal
     pandacArgs.add(args[1])
     pandacArgs.add("-o")
-    def out := System.tempDir().resolve("panda-tmp")
+    def out := System.temporaryDirectory().resolve("panda-tmp")
     pandacArgs.add(out.path)
     def pandacProcess := System.exec(pandac, pandacArgs)
     Thread.unsafeStart(StreamSender(pandacProcess.output, Console.outputStream()).send)

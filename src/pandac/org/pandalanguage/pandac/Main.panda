@@ -16,10 +16,9 @@ class Main {
         HTML
     }
 
-    var opt:File
-    var llc:File
-    var gcc:File
+    var clang:File
     def pandaHome:File
+    var debug:Bit := true
 
     init() {
         pandaHome := File(Config.pandaSourceDir())
@@ -56,38 +55,19 @@ class Main {
         }
     }
 
-    method optimize(llvm:File, level:Int, preserveTemporaries:Bit):File {
-        if level = 0 {
-            return llvm
-        }
-        def dest := llvm.changeExtension(".opt")
-        def args := Array<String>() -- FIXME literal
-        args.add("-lint")
-        args.add("-O\{level}")
-        args.add("-S")
-        args.add(llvm.path)
-        args.add("-o")
-        args.add(dest.path)
-        def p := System.exec(opt, args)
-        Console.errorStream().print(p.error.readFully())
-        def exitCode := p.waitFor()
-        if !preserveTemporaries {
---            llvm.delete()
-        }
-        if exitCode != 0 {
-            System.exit(1)
-        }
-        return dest
-    }
-
-    method toAssembly(llvm:File, preserveTemporaries:Bit):File {
-        def dest := llvm.changeExtension(".s")
+    method toObject(llvm:File, dest:File, preserveTemporaries:Bit):File {
         def args := Array<String>() -- FIXME literal
         args.add(llvm.path)
-        args.add("-relocation-model=pic")
+        args.add("-m64")
+        args.add("-fPIC")
+        args.add("-c")
+        if debug {
+            args.add("-g")
+        }
         args.add("-o")
         args.add(dest.path)
-        def p := System.exec(llc, args)
+        def p := System.exec(clang, args)
+        Console.errorStream().print(p.output.readFully())
         Console.errorStream().print(p.error.readFully())
         def exitCode := p.waitFor()
         if !preserveTemporaries {
@@ -99,30 +79,9 @@ class Main {
         return dest
     }
 
-    method toObject(assembly:File, dest:File, preserveTemporaries:Bit):File {
+    method toExecutable(llvm:File, dest:File, preserveTemporaries:Bit):File {
         def args := Array<String>() -- FIXME literal
-        args.add(assembly.path)
-        args.add("-m64")
-        args.add("-fPIC")
-        args.add("-c")
-        args.add("-o")
-        args.add(dest.path)
-        def p := System.exec(gcc, args)
-        Console.errorStream().print(p.output.readFully())
-        Console.errorStream().print(p.error.readFully())
-        def exitCode := p.waitFor()
-        if !preserveTemporaries {
-            assembly.delete()
-        }
-        if exitCode != 0 {
-            System.exit(1)
-        }
-        return dest
-    }
-
-    method toExecutable(assembly:File, dest:File, preserveTemporaries:Bit):File {
-        def args := Array<String>() -- FIXME literal
-        args.add(assembly.path)
+        args.add(llvm.path)
         args.add("-L\{Config.pandaLibDir()}")
         args.add("-lpanda")
         args.add("-lm")
@@ -138,14 +97,17 @@ class Main {
         }
         args.add("-m64")
         args.add("-fPIC")
+        if debug {
+            args.add("-g")
+        }
         args.add("-o")
         args.add(dest.path)
-        def p := System.exec(gcc, args)
+        def p := System.exec(clang, args)
         Console.errorStream().print(p.output.readFully())
         Console.errorStream().print(p.error.readFully())
         def exitCode := p.waitFor()
         if !preserveTemporaries {
-            assembly.delete()
+            llvm.delete()
         }
         if exitCode != 0 {
             System.exit(1)
@@ -172,7 +134,7 @@ class Main {
         var safetyLevel := 3
         var format:Format? := null
         var root:String? := null
-        var preserveTemporaries := false
+        var preserveTemporaries := true
         def err := Console.errorStream()
         while !args.get_done() {
             def a := args.next()
@@ -236,9 +198,7 @@ class Main {
             }
         }
         def llvmDir := File(Config.llvmDir())
-        opt := llvmDir.resolve("bin/opt")
-        llc := llvmDir.resolve("bin/llc")
-        gcc := File("/usr/bin/gcc")
+        clang := File("/usr/bin/clang")
         if sources.count = 0 {
             err.printLine("no input files specified")
             System.exit(1)
@@ -295,7 +255,8 @@ class Main {
                 otherwise:
                     assert false
             }
-            def settings := Compiler.Settings(pandaHome, imports, optimizationLevel, safetyLevel)
+            def settings := Compiler.Settings(pandaHome, imports, optimizationLevel, safetyLevel,
+                    debug)
             def errorQueue := MessageQueue<Compiler.Error>()
             def compiler := Compiler(errorQueue, cg, settings)
             for s in sources {
@@ -316,15 +277,9 @@ class Main {
         if errorCount = 0 {
             match format {
                 when Format.EXECUTABLE:
-                    def optimized := optimize(outFile.changeExtension(".ll"), optimizationLevel,
-                            preserveTemporaries)
-                    def assembly := toAssembly(optimized, preserveTemporaries)
-                    toExecutable(assembly, outFile, preserveTemporaries)
+                    toExecutable(outFile.changeExtension(".ll"), outFile, preserveTemporaries)
                 when Format.OBJECT:
-                    def optimized := optimize(outFile.changeExtension(".ll"), optimizationLevel,
-                            preserveTemporaries)
-                    def assembly := toAssembly(optimized, preserveTemporaries)
-                    toObject(assembly, outFile, preserveTemporaries)
+                    toObject(outFile.changeExtension(".ll"), outFile, preserveTemporaries)
             }
         }
         else {
@@ -348,6 +303,7 @@ class Main {
         if args[1] != "--mem" {
             Panda.disableRefErrorReporting()
         }
+        Console.printLine("Warning: there are some manual Panda.ref()s still in the code, until refcounting is finished")
         Main().run(args)
     }
 }

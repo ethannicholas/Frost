@@ -325,6 +325,9 @@ void* pandaGetInterfaceMethod(Object* o, Class* intf, int index) {
 void pandaMain(Array* args);
 
 int main(int argc, char** argv) {
+#if DEBUG_ALLOCS
+    printf("Warning: memory tracing is enabled. This will severely impact performance.\n");
+#endif
     Array* args = pandaObjectAlloc(sizeof(Array), &panda$collections$Array$class);
     args->count = argc;
     args->capacity = argc;
@@ -470,7 +473,16 @@ void panda$core$System$Process$waitFor$R$panda$core$Int64(Int64* result, Process
     result->value = WEXITSTATUS(status);
 }
 
-File* panda$core$System$tempDir$R$panda$io$File() {
+File* panda$core$System$workingDirectory$R$panda$io$File() {
+    char dir[PATH_MAX];
+    getcwd(dir, PATH_MAX);
+    String* path = pandaNewString(dir, strlen(dir));
+    File* file = pandaObjectAlloc(sizeof(File), &panda$io$File$class);
+    file->path = path;
+    return file;
+}
+
+File* panda$core$System$temporaryDirectory$R$panda$io$File() {
     const char* tmpdir = getenv("TMPDIR");
     if (!tmpdir) {
         tmpdir = "/tmp";
