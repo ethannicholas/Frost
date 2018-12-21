@@ -303,7 +303,7 @@ class Main {
         if args[1] != "--mem" {
             Panda.disableRefErrorReporting()
         }
-        Console.printLine("Warning: there are some manual Panda.ref()s still in the code, until refcounting is finished")
+--        Console.printLine("Warning: there are some manual Panda.ref()s still in the code, until refcounting is finished")
         Main().run(args)
     }
 }

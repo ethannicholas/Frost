@@ -1,2 +1,2 @@
-ParameterizedNonGeneric2.panda:4:22: error: 'anonymous.ParameterizedNonGeneric2' expected 0 generic parameters, but found 1
+ParameterizedNonGeneric2.panda:4:22: error: 'anonymous.ParameterizedNonGeneric2' expected 0 generic arguments, but found 1
 1 error

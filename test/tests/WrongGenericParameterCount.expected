@@ -1,3 +1,0 @@
-WrongGenericParameterCount.panda:1:7: error: 'panda.collections.Array' expected 1 generic argument, but found 2
-WrongGenericParameterCount.panda:3:7: error: 'panda.collections.HashMap' expected 2 generic arguments, but found 1
-2 errors

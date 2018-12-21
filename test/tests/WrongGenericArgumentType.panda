@@ -1,0 +1,6 @@
+class WrongGenericArgumentType<T:Value> {
+    @class
+    method main() {
+        def w := WrongGenericArgumentType<Object>()
+    }
+}

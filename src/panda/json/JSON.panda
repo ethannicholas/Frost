@@ -100,7 +100,7 @@ choice JSON {
     function get(path:String):JSON? {
         var index := path.start()
         var end := path.end()
-        var current := self
+        var current:JSON? := self
         while index != end {
             assert nextPathKey(path, index) !== null, "invalid JSON path '\{path}'"
             match nextPathKey(path, index) {

@@ -9,36 +9,38 @@ class PLex {
     def tokens := HashMap<String, Regex>()
 
     method printWarning(out:OutputStream) {
+        out.printLine("-------- UPDATED --------")
         out.printLine("-***********************************************************************-")
         out.printLine("-********************* GENERATED CODE, DO NOT EDIT *********************-")
         out.printLine("-***********************************************************************-")
     }
 
-    method test1() {
-        File("/tmp/test1").openOutputStream().printLine("Hello, Test1!")
-    }
-
-    method test2() {
-        def out := IndentedOutputStream(File("/tmp/test2").openOutputStream())
-        out.printLine("Hello, Test2!")
-        out.level += 1
-        out.printLine("Goodbye, Test2!")
-    }
-
     method process(inputPath:File, tokenName:String, tokenPath:File, lexerName:String,
             lexerPath:File, positionName:String) {
-        test1()
-        test2()
         def input := inputPath.openInputStream()
         def token := IndentedOutputStream(tokenPath.openOutputStream())
         def nfa := NFA()
         printWarning(token)
-        token.printLine("package \{tokenName[..tokenName.lastIndexOf(".")]}")
+        Console.printLine("YO FIX DIS CRAP")
+        if tokenName = "org.pandalanguage.regex.RegexToken" {
+            token.printLine("package org.pandalanguage.regex")
+        }
+        else if tokenName = "org.pandalanguage.pandac.parser.Token" {
+            token.printLine("package org.pandalanguage.pandac.parser")
+        }
+--        token.printLine("package \{tokenName[..tokenName.lastIndexOf(".")]}")
         token.printLine()
         token.printLine("uses \{positionName}")
         token.printLine()
         token.printLine("@final")
-        token.printLine("class \{tokenName[tokenName.next(tokenName.lastIndexOf("."))..]} : Value {")
+--        def index := tokenName.next(tokenName.lastIndexOf("."))
+--        token.printLine("class \{tokenName[index..]} : Value {")
+        if tokenName = "org.pandalanguage.regex.RegexToken" {
+            token.printLine("class RegexToken : Value {")
+        }
+        else if tokenName = "org.pandalanguage.pandac.parser.Token" {
+            token.printLine("class Token : Value {")
+        }
         token.level += 1
         token.printLine("choice Kind {")
         token.level += 1
@@ -138,14 +140,26 @@ class PLex {
     method writeLexer(tokenName:String, lexerName:String, lexerPath:File, positionName:String,
             dfa:DFA, out:IndentedOutputStream) {
         printWarning(out)
-        out.printLine("package \{lexerName[..lexerName.lastIndexOf(".")]}")
+        if lexerName = "org.pandalanguage.pandac.parser.Lexer" {
+            out.printLine("package org.pandalanguage.pandac.parser")
+        }
+        else if lexerName = "org.pandalanguage.regex.RegexLexer" {
+            out.printLine("package org.pandalanguage.regex")
+        }
+--        out.printLine("package \{lexerName[..lexerName.lastIndexOf(".")]}")
         out.printLine()
         out.printLine("uses panda.unsafe.Pointer")
         out.printLine("uses org.pandalanguage.plex.runtime.DFA")
         out.printLine("uses \{positionName}")
         out.printLine()
         out.printLine("@final")
-        out.printLine("class \{lexerName[lexerName.next(lexerName.lastIndexOf("."))..]} {")
+        if lexerName = "org.pandalanguage.pandac.parser.Lexer" {
+            out.printLine("class Lexer {")
+        }
+        else if lexerName = "org.pandalanguage.regex.RegexLexer" {
+            out.printLine("class RegexLexer {")
+        }
+--        out.printLine("class \{lexerName[lexerName.next(lexerName.lastIndexOf("."))..]} {")
         out.level += 1
         out.printLine("def dfa:DFA")
         out.printLine()

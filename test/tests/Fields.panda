@@ -10,8 +10,7 @@ class Point2D {
 
 class Point3D : Point2D {
     init(x:Int64, y:Int64, z:Int64) {
-        self.x := x
-        self.y := y
+        super.init(x, y)
         self.z := z
     }
 

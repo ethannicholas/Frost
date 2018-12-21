@@ -1,2 +1,2 @@
-NonParameterizedGeneric2.panda:4:22: error: 'panda.collections.List' expected 1 generic parameter, but found 0
+NonParameterizedGeneric2.panda:4:22: error: 'panda.collections.List' expected 1 generic argument, but found 0
 1 error

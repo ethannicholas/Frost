@@ -73,7 +73,7 @@ class LLVMCodeGenerator : CodeGenerator {
 
     var currentFileMetadata := "!error"
 
-    var currentMethodMetadata := "!error"
+    var currentMethodMetadata:String?
 
     var lastDebugPosition := Position()
 
@@ -1316,9 +1316,10 @@ class LLVMCodeGenerator : CodeGenerator {
     }
 
     method debugInfo(position:Position):String {
-        if compiler.settings.debug & position != lastDebugPosition {
+        if compiler.settings.debug & position != lastDebugPosition &
+                currentMethodMetadata !== null {
             def result := nextMetadata()
-            metadata.printLine("\{result} = !DILocation(line: \{position.line}, column: " +
+            metadata.print("\{result} = !DILocation(line: \{position.line}, column: " +
                     "\{position.column}, scope: \{currentMethodMetadata})")
             lastDebugPosition := position
             return ", !dbg \{result}"
@@ -1948,16 +1949,16 @@ class LLVMCodeGenerator : CodeGenerator {
             currentFileMetadata := nextMetadata()
             metadata.printLine("\{currentFileMetadata} = distinct !DIFile(" +
                     "filename: \"\{cl.source}\", directory: \"\{System.workingDirectory()}\")")
-            metadata.printLine("!llvm.dbg.cu = !{!0}")
-            def dwarfVersion := nextMetadata()
-            metadata.printLine("\{dwarfVersion} = !{i32 2, !\"Dwarf Version\", i32 4}")
-            def debugVersion := nextMetadata()
-            metadata.printLine("\{debugVersion} = !{i32 2, !\"Debug Info Version\", i32 3}")
-            metadata.printLine("!llvm.module.flags = !{\{dwarfVersion}, \{debugVersion}}")
             if currentFileMetadata = "!1" {
                 metadata.printLine("!0 = distinct !DICompileUnit(language:DW_LANG_C89, " +
                         "producer:\"pandac\", file: \{currentFileMetadata}, isOptimized: false, " +
                         "runtimeVersion: 0, emissionKind: FullDebug)")
+                metadata.printLine("!llvm.dbg.cu = !{!0}")
+                def dwarfVersion := nextMetadata()
+                metadata.printLine("\{dwarfVersion} = !{i32 2, !\"Dwarf Version\", i32 4}")
+                def debugVersion := nextMetadata()
+                metadata.printLine("\{debugVersion} = !{i32 2, !\"Debug Info Version\", i32 3}")
+                metadata.printLine("!llvm.module.flags = !{\{dwarfVersion}, \{debugVersion}}")
             }
         }
         writeType(cl.type)

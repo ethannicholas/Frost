@@ -699,7 +699,10 @@ class PandaDoc {
     }
 
     method finish() {
-        classes.apply(process)
+--        classes.apply(process)
+        for cl in classes {
+            process(cl)
+        }
         writePackages(tableOfContents)
         out := XMLWriter(tocFile.openOutputStream())
         tableOfContents.write(apiRelativePath, out)

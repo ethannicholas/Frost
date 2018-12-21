@@ -578,7 +578,7 @@ class Compiler {
                 continue
             }
             if coercionCost(foundTypes[i], remapType(type, bound)) == null {
-                error(position, "generic parameter '\{cl.name}.\{cl.parameters[i].name}' must be " +
+                error(position, "generic argument '\{cl.name}.\{cl.parameters[i].name}' must be " +
                         "of type '\{cl.parameters[i].bound}', but found '\{foundTypes[i]}'")
                 return false
             }
@@ -1068,7 +1068,11 @@ class Compiler {
                 if !f.annotations.isClass() & f.fieldKind != FieldDecl.Kind.PROPERTY {
                     result.add(f)
                 }
+                else {
+                }
             }
+        }
+        else {
         }
         return result
     }
@@ -2531,7 +2535,12 @@ class Compiler {
                     return 1
                 }
                 if target.isNumber() {
-                    return 2
+                    def cl := getClass(target)
+                    assert cl != null
+                    def initMethod := cl.methods[0]
+                    assert initMethod.methodKind = MethodDecl.Kind.INIT
+                    assert initMethod.annotations.isImplicit()
+                    return -initMethod.priority
                 }
                 def preferred := preferredType(expr)
                 assert preferred !== null
@@ -2581,6 +2590,22 @@ class Compiler {
                 }
                 return null
             when ASTNode.PREFIX(position, op, operand):
+                -- need to special-case things like -128, which can fit into an Int8 despite 128 not
+                -- doing so
+                if op = Token.Kind.SUB {
+                    match operand {
+                        when ASTNode.INT(_, value):
+                            if value = 128 {
+                                return coercionCost(Type.BuiltinInt8(), target)
+                            }
+                            if value = 32768 {
+                                return coercionCost(Type.BuiltinInt16(), target)
+                            }
+                            if value = 2147483648 {
+                                return coercionCost(Type.BuiltinInt32(), target)
+                            }
+                    }
+                }
                 def preferred := preferredType(operand)
                 if preferred !== null & (preferred = Type.BuiltinBit() |
                         preferred.isBuiltinNumber()) {
@@ -3613,8 +3638,8 @@ class Compiler {
     method call(position:Position, target:IR.Value?, m:MethodRef, args:ListView<ASTNode>,
             type:TypeContext):IR.Value? {
         if args.count != m.parameterCount {
-            error(position, "\{m.value.declaration()} expects \{m.parameterCount}" +
-                    "\{m.parameterCount = 1:|s} argument, but found \{args.count}")
+            error(position, "\{m.value.declaration()} expects \{m.parameterCount} " +
+                    "argument\{m.parameterCount = 1:|s}, but found \{args.count}")
             return null
         }
         if target !== null & m.value.annotations.isClass() {
@@ -4098,7 +4123,14 @@ class Compiler {
                     else if cost = best.second {
                         def a := Array<MethodRef>()
                         a.addAll(best.first)
-                        a.addAll(ops.first)
+                        outer: for op in ops.first {
+                            for old in best.first {
+                                if old.value == op.value {
+                                    continue outer
+                                }
+                            }
+                            a.add(op)
+                        }
                         best := Pair<ListView<MethodRef>, Int>(a, cost)
                     }
                 }
@@ -4922,6 +4954,7 @@ class Compiler {
         }
         if !isValue(cl) {
             error(position, "range endpoints must be value types, but found '\{endpointType}'")
+            return null
         }
         if compiledStart == null {
             if !endpointType.isNullable() {
@@ -5044,7 +5077,11 @@ class Compiler {
         match type {
             when TypeContext.TYPE(t):
                 if t.nonnullable().isMethod() {
-                    if coercionCost(expr, t.returnType()) == null {
+                    def target := t.returnType()
+                    -- we call computeCoercion directly, as we can't used the cached cost. When
+                    -- evaluating untyped lambdas we may repeatedly reevaluate the same expr->target
+                    -- coercion with different symbol definitions
+                    if computeCoercionCost(expr, target) == null {
                         return null
                     }
                     return t.nonnullable().returnType()
@@ -5116,7 +5153,8 @@ class Compiler {
                     msg.append("\n    when interpreted as '\{t}':")
                     errorQueue := MessageQueue<Error>()
                     compileUntypedLambda(position, rawParameters, expr, TypeContext.TYPE(t))
-                    assert errorQueue.hasMessage()
+                    assert errorQueue.hasMessage(), "did not receive expected error compiling " +
+                            "lambda at \{position} with type \{t}"
                     msg.append("\n        \{errorQueue.getMessage().message}")
                 }
                 errorQueue := old
@@ -6937,7 +6975,7 @@ class Compiler {
         return !isValue(m.owner)
     }
 
-    function callsOtherSelf(body:ImmutableArray<ASTNode>):Bit {
+    function callsSelfInit(body:ImmutableArray<ASTNode>):Bit {
         if body.count = 0 {
             return false
         }
@@ -6946,9 +6984,40 @@ class Compiler {
                 match target {
                     when ASTNode.IDENTIFIER(_, text):
                         return text = "init"
+                    when ASTNode.DOT(_, base, text):
+                        if text != "init" {
+                            return false
+                        }
+                        match base {
+                            when ASTNode.SELF:
+                                return true
+                        }
+                        return false
                 }
         }
         return false
+    }
+
+    function callsSuperInit(body:ImmutableArray<ASTNode>):Bit {
+        if body.count = 0 {
+            return false
+        }
+        match body[0] {
+            when ASTNode.CALL(_, target, _):
+                match target {
+                    when ASTNode.DOT(_, base, text):
+                        if text != "init" {
+                            return false
+                        }
+                        match base {
+                            when ASTNode.SUPER:
+                                return true
+                        }
+                        return false
+                }
+        }
+        return false
+
     }
 
     ================================================================================================
@@ -7191,14 +7260,21 @@ class Compiler {
                     ir.locals.add(selfVar.type)
                     symbolTable.add(selfVar)
                 }
-                if m.methodKind = MethodDecl.Kind.INIT & !callsOtherSelf(m.body) {
-                    for f in m.owner.fields {
-                        if f.rawValue !== null & !f.annotations.isClass() {
-                            def p := f.rawValue.position()
-                            compileStatement(ASTNode.BINARY(p,
-                                    ASTNode.DOT(p, ASTNode.SELF(p), f.name),
-                                    Token.Kind.ASSIGNMENT,
-                                    f.rawValue))
+                if m.methodKind = MethodDecl.Kind.INIT {
+                    if !callsSelfInit(m.body) {
+                        for f in m.owner.fields {
+                            if f.rawValue !== null & !f.annotations.isClass() {
+                                def p := f.rawValue.position()
+                                compileStatement(ASTNode.BINARY(p,
+                                        ASTNode.DOT(p, ASTNode.SELF(p), f.name),
+                                        Token.Kind.ASSIGNMENT,
+                                        f.rawValue))
+                            }
+                        }
+                        if !callsSuperInit(m.body) {
+                            def p := m.position
+                            compileStatement(ASTNode.CALL(p, ASTNode.DOT(p, ASTNode.SUPER(p),
+                                    "init"), ImmutableArray<ASTNode>() -* FIXME literal *-))
                         }
                     }
                 }
