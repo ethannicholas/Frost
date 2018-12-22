@@ -74,7 +74,7 @@ class HTMLProcessor {
             }
         }
         def lines := prettyPrint(parser).split("\n")
-        def width := lines.count.convert()->String.length()
+        def width := lines.count.convert()->String.length
         def highlighted := MutableString()
         for i in 0 .. lines.count {
             def lineNumber := (i + 1).convert()->String.rightAlign(width)

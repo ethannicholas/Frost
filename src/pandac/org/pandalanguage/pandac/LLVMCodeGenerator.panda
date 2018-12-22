@@ -850,9 +850,9 @@ class LLVMCodeGenerator : CodeGenerator {
     }
 
     function escapeName(s:String):String {
-        def result := MutableString(s.byteLength() * 2)
-        var current := s.start()
-        def end := s.end()
+        def result := MutableString(s.byteLength * 2)
+        var current := s.start
+        def end := s.end
         while current != end {
             def c := s[current]
             match c {
@@ -1162,10 +1162,10 @@ class LLVMCodeGenerator : CodeGenerator {
     method getStringReference(s:String):String {
         labelCount += 1
         def chars := "@$chars\{labelCount}"
-        def charsType := "[\{s.utf8().count} x i8]"
+        def charsType := "[\{s.utf8.count} x i8]"
         strings.print("\{chars} = private unnamed_addr constant \{charsType} [ ")
         var separator := ""
-        for c in s.utf8() {
+        for c in s.utf8 {
             strings.print("\{separator}i8 \{c.convert()->Int8}")
             separator := ", "
         }
@@ -1180,8 +1180,8 @@ class LLVMCodeGenerator : CodeGenerator {
                 "i8*), %panda$core$Int32 insertvalue(%panda$core$Int32 " +
                 "{ i32 undef }, i32 \{NO_REFCNT}, 0), " +
                 "%panda$core$Char8* bitcast(\{charsType}* \{chars} " +
-                "to %panda$core$Char8*), %panda$core$Int64 { i64 \{s.utf8().count} }, " +
-                "%panda$core$Int64 { i64 \{s.hash()} }, i8* null }")
+                "to %panda$core$Char8*), %panda$core$Int64 { i64 \{s.utf8.count} }, " +
+                "%panda$core$Int64 { i64 \{s.hash} }, i8* null }")
         return result
     }
 

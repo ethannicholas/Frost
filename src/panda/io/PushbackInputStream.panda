@@ -101,6 +101,6 @@ class PushbackInputStream : InputStream {
     @param s the string to push
     ============================================================================
     method pushback(s:String) {
-        pushback(s.utf8())
+        pushback(s.utf8)
     }
 }

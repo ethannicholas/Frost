@@ -174,12 +174,12 @@ class PandaDoc {
         }
         var spaces := Int.MAX
         for line in lines {
-            if line.trim() != "" {
-                spaces := spaces.min(line.parse(/( *).*/)[0].byteLength())
+            if line.trimmed != "" {
+                spaces := spaces.min(line.parse(/( *).*/)[0].byteLength)
             }
         }
         for i in 0 .. lines.count { -- FIXME use map
-            if lines[i].trim() != "" {
+            if lines[i].trimmed != "" {
                 lines[i] := lines[i][spaces..]
             }
         }
@@ -187,7 +187,7 @@ class PandaDoc {
         def result := Array<Pair<String, String>>()
         def split := lines.join("\n").split(/(?m)^(?=[ \t]*@\w+)/)
         for raw in split {
-            def s := raw.trim()
+            def s := raw.trimmed
             if !s.startsWith("@") {
                 result.add(Pair<String, String>("", s))
             }
@@ -317,7 +317,7 @@ class PandaDoc {
     }
 
     method getDocComment(m:MethodDecl):String? {
-        if m.doccomment !== null & m.doccomment.trim() = "@inherit" {
+        if m.doccomment !== null & m.doccomment.trimmed = "@inherit" {
             def overridden := compiler.getOverriddenMethod(m)
             if overridden == null {
                 compiler.error(m.position, "method specifies '@inherit', but no matching method " +

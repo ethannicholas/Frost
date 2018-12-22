@@ -34,7 +34,7 @@ class MutableString {
         }
 
         @override
-        function hash():Int {
+        function get_hash():Int {
             return value
         }
     }
@@ -507,7 +507,7 @@ class MutableString {
         def newLength := _length - rangeLength + s._length
         ensureCapacity(newLength)
         def offset := s._length - rangeLength
-        if s.byteLength() > rangeLength {
+        if s.byteLength > rangeLength {
             for i in _length - 1 ... max by -1 {
                 data[i + offset] := data[i]
             }
@@ -578,8 +578,8 @@ class MutableString {
             if next == null {
                 break
             }
-            self[next .. Index(next.value + search.byteLength())] := replacement
-            index := Index(next.value + replacement.byteLength().max(1))
+            self[next .. Index(next.value + search.byteLength)] := replacement
+            index := Index(next.value + replacement.byteLength.max(1))
         }
     }
 

@@ -77,7 +77,7 @@ class Char32 : Value, Key<Char32>, Comparable<Char32> {
     }
 
     @override
-    function hash():Int {
+    function get_hash():Int {
         return convert()
     }
 

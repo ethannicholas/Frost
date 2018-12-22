@@ -16,10 +16,10 @@ class Regex {
 
     @private
     function peek():Char8 {
-        if index = source.utf8().count {
+        if index = source.utf8.count {
             return EOF
         }
-        return source.utf8()[index]
+        return source.utf8[index]
     }
 
     @private

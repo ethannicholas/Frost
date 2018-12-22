@@ -122,7 +122,7 @@ class JSONParser {
             assert false, "expected string, but found '\{text(token)}'"
         }
         def s := text(token)
-        return s.substring(s.next(s.start()) .. s.previous(s.end()))
+        return s.substring(s.next(s.start) .. s.previous(s.end))
     }
 
     @private
@@ -135,7 +135,7 @@ class JSONParser {
                 return array()
             when Token.Kind.STRING:
                 def s := text(token)
-                return JSON.STRING(s.substring(s.next(s.start()) .. s.previous(s.end())))
+                return JSON.STRING(s.substring(s.next(s.start) .. s.previous(s.end)))
             when Token.Kind.INT:
                 return JSON.INT(text(token).convert())
             when Token.Kind.REAL:

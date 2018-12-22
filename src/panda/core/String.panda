@@ -75,7 +75,7 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
         @inherit
         ============================================================================================
         @override
-        function hash():Int {
+        function get_hash():Int {
             return value
         }
     }
@@ -120,7 +120,7 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
         }
 
         @override
-        function next():Char8 {
+        method next():Char8 {
             index += 1
             return str.data[index - 1]
         }
@@ -143,7 +143,7 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
         }
 
         @override
-        function next():Char16 {
+        method next():Char16 {
             index += 1
             return Char16(1)
         }
@@ -165,7 +165,7 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
         }
 
         @override
-        function next():Char32 {
+        method next():Char32 {
             assert index < str._length
             def c := str.data[index]
             var result:Int32 := c.convert()
@@ -238,7 +238,7 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
                 start := haystack.next(start)
             }
             else {
-                start := String.Index(nextMatch.value + needle.byteLength())
+                start := String.Index(nextMatch.value + needle.byteLength)
             }
             nextMatch := haystack.indexOf(needle, start)
             return result
@@ -308,7 +308,7 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
             def result := Match(matcher)
             def start:String.Index
             if allowOverlaps {
-                start := haystack.next(matcher.get_start())
+                start := haystack.next(matcher.start)
             }
             else {
                 start := matcher.get_end()
@@ -326,6 +326,20 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
 
     @private
     def dummy:Int := 0
+   
+    property utf8:ListView<Char8>
+
+    property utf16:Iterator<Char16>
+
+    property length:Int
+
+    property byteLength:Int
+
+    property start:Index
+
+    property end:Index
+
+    property trimmed:String
 
     ================================================================================================
     For dependent substrings, points to the parent String.
@@ -378,7 +392,7 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
                 return self
             when "panda":
                 def result := MutableString('"')
-                for c in utf8() {
+                for c in utf8 {
                     match c {
                         when "\"": result.append("\\\"")
                         when "\\": result.append("\\\\")
@@ -414,7 +428,7 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
     ================================================================================================
     Returns a list of the bytes in this string's UTF-8 representation.
     ================================================================================================
-    function utf8():ListView<Char8> {
+    function get_utf8():ListView<Char8> {
         return UTF8List(self)
     }
 
@@ -423,7 +437,7 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
     all Unicode codepoints fit into a single UTF-16 code unit, the returned code units may contain
     surrogate pairs.
     ================================================================================================
-    function utf16():Iterator<Char16> {
+    function get_utf16():Iterator<Char16> {
         return UTF16Iterator(self)
     }
 
@@ -441,14 +455,14 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
     codepoints in the string can be a relatively expensive operation for long strings (linear with
     respect to the size of the string).
     ================================================================================================
-    function length():Int {
+    function get_length():Int {
         return iterator().count()
     }
 
     ================================================================================================
     Returns the number of bytes of storage taken up by this string's internal UTF-8 encoding.
     ================================================================================================
-    function byteLength():Int {
+    function get_byteLength():Int {
         return _length
     }
 
@@ -481,7 +495,7 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
 
     @returns a trimmed version of this string
     ================================================================================================
-    function trim():String {
+    function get_trimmed():String {
         if _length = 0 {
             return self
         }
@@ -609,7 +623,7 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
     (internally UTF-8) string from the beginning to find the correct index.
     ================================================================================================
     function [](index:Int):Char32 {
-        return self[offset(start(), index)]
+        return self[offset(start, index)]
     }
 
     ================================================================================================
@@ -647,7 +661,7 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
             min := r.min
         }
         else {
-            min := start()
+            min := start
         }
 
         var inclusive := r.inclusive
@@ -656,7 +670,7 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
             max := r.max
         }
         else {
-            max := self.end()
+            max := end
             inclusive := false
         }
         return substring(Range<Index>(min, max, inclusive))
@@ -709,7 +723,7 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
             min := r.min
         }
         else {
-            min := start()
+            min := start
         }
 
         var inclusive := r.inclusive
@@ -718,7 +732,7 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
             max := r.max
         }
         else {
-            max := self.end()
+            max := end
             inclusive := false
         }
         return self[Range<Index>(min, max, inclusive)]
@@ -747,10 +761,10 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
             current := r.start.value
         }
         else if step > 0 {
-            current := start().value
+            current := start.value
         }
         else {
-            current := previous(end()).value
+            current := previous(end).value
         }
 
         def end:Int
@@ -758,10 +772,10 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
             end := r.end.value
         }
         else if step > 0 {
-            end := self.end().value
+            end := self.end.value
         }
         else {
-            end := self.start().value
+            end := self.start.value
         }
 
         def result := MutableString()
@@ -847,14 +861,14 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
     function [](r:Range<Int?>):String {
         def start:Index?
         if r.min !== null {
-            start := offset(self.start(), r.min)
+            start := offset(self.start, r.min)
         }
         else {
             start := null
         }
         def end:Index?
         if r.max !== null {
-            end := offset(self.start(), r.max)
+            end := offset(self.start, r.max)
         }
         else {
             end := null
@@ -870,14 +884,14 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
     function [](r:SteppedRange<Int?, Int>):String {
         def start:Index?
         if r.start !== null {
-            start := offset(self.start(), r.start)
+            start := offset(self.start, r.start)
         }
         else {
             start := null
         }
         def end:Index?
         if r.end !== null {
-            end := offset(self.start(), r.end)
+            end := offset(self.start, r.end)
         }
         else {
             end := null
@@ -912,7 +926,7 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
     @returns the index of the match, or `null` if not found
     ================================================================================================
     function indexOf(s:String):Index? {
-        return indexOf(s, start())
+        return indexOf(s, start)
     }
 
     ================================================================================================
@@ -946,7 +960,7 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
     @returns the index of the match, or `null` if not found
     ================================================================================================
     function lastIndexOf(s:String):Index? {
-        return lastIndexOf(s, end())
+        return lastIndexOf(s, end)
     }
 
     ================================================================================================
@@ -1029,7 +1043,7 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
             return self
         }
         def result := MutableString()
-        var index := start()
+        var index := start
         loop {
             def nextIndex := indexOf(search, index)
             if nextIndex == null {
@@ -1138,14 +1152,14 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
     ================================================================================================
     Returns the index of the first character in the string.
     ================================================================================================
-    function start():Index {
+    function get_start():Index {
         return Index(0)
     }
 
     ================================================================================================
     Returns the index just past the end of the string.
     ================================================================================================
-    function end():Index {
+    function get_end():Index {
         return Index(_length)
     }
 
@@ -1231,10 +1245,10 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
     @returns a string at least `width` characters long
     ============================================================================
     function leftAlign(width:Int, fill:Char32):String {
-        if length() >= width {
+        if length >= width {
             return self
         }
-        return self + fill * (width - length())
+        return self + fill * (width - length)
     }
 
     ================================================================================================
@@ -1261,10 +1275,10 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
     @returns a string at least `width` characters long
     ================================================================================================
     function rightAlign(width:Int, fill:Char32):String {
-        if length() >= width {
+        if length >= width {
             return self
         }
-        return fill * (width - length()) + self
+        return fill * (width - length) + self
     }
 
     ================================================================================================
@@ -1295,10 +1309,10 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
     @returns a string at least `width` characters long
     ================================================================================================
     function centerAlign(width:Int, fill:Char32):String {
-        if length() >= width {
+        if length >= width {
             return self
         }
-        def pad := width - length()
+        def pad := width - length
         def left := pad // 2
         def right := pad - left
         return fill * left + self + fill * right
@@ -1326,7 +1340,7 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
     ================================================================================================
     function split(delimiter:String, maxResults:Int):Array<String> {
         def result := Array<String>()
-        var index := start()
+        var index := start
         loop {
             def nextIndex:Index?
             if delimiter._length = 0 {
@@ -1359,16 +1373,16 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
     function split(delimiter:RegularExpression, maxResults:Int):Array<String> {
         def result := Array<String>()
         def matcher := delimiter.matcher(self)
-        var index := start()
+        var index := start
         loop {
             def found := matcher.find()
             if !found | result.count = maxResults - 1 {
                 result.add(self[index..])
                 break
             }
-            def start := matcher.get_start()
+            def start := matcher.start
             result.add(self[index .. start])
-            index := Index(start.value.max(matcher.get_end().value))
+            index := Index(start.value.max(matcher.end.value))
         }
         return result
     }
@@ -1453,7 +1467,7 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
     @inherit
     ================================================================================================
     @override
-    function hash():Int {
+    function get_hash():Int {
         var h := 1
         for i in 0 .. _length {
             h := h * 101 + Int64(data[i].value->builtin_int64)

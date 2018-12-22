@@ -920,7 +920,7 @@ class Int8 : Value, Key<Int8>, Comparable<Int8>, Formattable, ListView<Bit> {
     }
 
     @override
-    function hash():Int {
+    function get_hash():Int {
         return Int(value->builtin_int64)
     }
 

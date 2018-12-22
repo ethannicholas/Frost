@@ -31,7 +31,7 @@ class DFA {
             accepts:Pointer<Int>) {
         self.source := source.data
         self.offset := 0
-        self.sourceEnd := source.byteLength()
+        self.sourceEnd := source.byteLength
         self.stateCount := stateCount
         self.transitions := transitions
         self.accepts := accepts

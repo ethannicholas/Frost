@@ -28,7 +28,7 @@ class Bit : Value, Key<Bit>, Formattable {
     }
 
     @override
-    function hash():Int {
+    function get_hash():Int {
         if value {
             return 1
         }

@@ -899,7 +899,7 @@ class UInt8 : Value, Key<UInt8>, Comparable<UInt8>, Formattable, ListView<Bit> {
     }
 
     @override
-    function hash():Int {
+    function get_hash():Int {
         return Int(value->builtin_int64)
     }
 

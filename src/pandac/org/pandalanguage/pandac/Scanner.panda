@@ -480,7 +480,7 @@ class Scanner {
                     inner.owner := cl
                     cl.classes.add(inner)
                     assert inner.name.startsWith(cl.name + ".")
-                    cl.symbolTable.add(Alias(inner.name[cl.name.length() + 1..], inner.name,
+                    cl.symbolTable.add(Alias(inner.name[cl.name.length + 1..], inner.name,
                             Position()))
                     inner.symbolTable.add(Alias(cl.simpleName(), cl.name, Position()))
                 }

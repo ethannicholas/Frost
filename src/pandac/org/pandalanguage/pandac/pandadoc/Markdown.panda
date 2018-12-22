@@ -74,7 +74,7 @@ class Protector {
         constant SAFE_CHARS := "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-/,."
         def result := MutableString()
         for i in 0 .. LENGTH {
-            result.append(SAFE_CHARS[random.int(SAFE_CHARS.byteLength())])
+            result.append(SAFE_CHARS[random.int(SAFE_CHARS.byteLength)])
         }
         return result.finish()
     }
@@ -147,8 +147,8 @@ class Markdown {
     }
 
     method encodeBackslashEscapes(text:MutableString) {
-        def normalChars := "`_>!".utf8()
-        def escapedChars := "*{}[]()#+-.".utf8()
+        def normalChars := "`_>!".utf8
+        def escapedChars := "*{}[]()#+-.".utf8
 
         -- Two backslashes in a row
         text.replace("\\\\\\\\", charProtector.encode("\\"))
@@ -421,7 +421,7 @@ class Markdown {
     method detabify(text:MutableString) {
         text.replace(/(.*?)\t/, function(groups:ListView<String?>):String {
             def lineSoFar := groups[1]
-            def width := lineSoFar.length()
+            def width := lineSoFar.length
             def replacement := MutableString(lineSoFar)
             do {
                 replacement.append(" ")
@@ -473,13 +473,13 @@ class Markdown {
         function isLanguageIdentifier(line:String):Bit {
             var lang := ""
             if line.startsWith(LANG_IDENTIFIER) {
-                lang := line.replace(LANG_IDENTIFIER, "").trim() -- FIXME supposed to be replaceFirst
+                lang := line.replace(LANG_IDENTIFIER, "").trimmed -- FIXME supposed to be replaceFirst
             }
             return lang != ""
         }
 
         function languageBlock(firstLine:String, text:String):String {
-            def lang := firstLine.replace(LANG_IDENTIFIER, "").trim() -- FIXME supposed to be replaceFirst
+            def lang := firstLine.replace(LANG_IDENTIFIER, "").trimmed -- FIXME supposed to be replaceFirst
             def block := text.replace(firstLine + "\n", "") -- FIXME supposed to be replaceFirst
             return "\n\n<pre class=\"\{lang}\">\n\{block}\n</pre>\n\n"
         }
@@ -566,7 +566,7 @@ class Markdown {
 
     method syntaxHighlight(ed:MutableString) {
         errorQueue.clear()
-        def text := ed.convert().trim()
+        def text := ed.convert().trimmed
         parser.start(source, text)
         def file := parser.file()
         if file !== null & errorQueue.pendingMessages() = 0 {
@@ -769,7 +769,7 @@ class Markdown {
             def marker := groups[1]
             def heading := MutableString(groups[2])
             self.runSpanGamut(heading)
-            def level := marker.length()
+            def level := marker.length
             def tag := "h" + level
             return "<\{tag}>\{heading}</\{tag}>\n"
         })
@@ -824,16 +824,16 @@ class Markdown {
                 RegularExpression.CASE_INSENSITIVE)
 
         def m := p.matcher(text)
-        var lastPos := text.start()
+        var lastPos := text.start
         while m.find() {
-            if lastPos < m.get_start() {
-                tokens.add(HTMLToken.TEXT(text.substring(lastPos .. m.get_start())))
+            if lastPos < m.start {
+                tokens.add(HTMLToken.TEXT(text.substring(lastPos .. m.start)))
             }
-            tokens.add(HTMLToken.TAG(text.substring(m.get_start() .. m.get_end())))
+            tokens.add(HTMLToken.TAG(text.substring(m.get_start() .. m.end)))
             lastPos := m.get_end()
         }
-        if lastPos < text.end() {
-            tokens.add(HTMLToken.TEXT(text.substring(lastPos .. text.end())))
+        if lastPos < text.end {
+            tokens.add(HTMLToken.TEXT(text.substring(lastPos .. text.end)))
         }
 
         return tokens

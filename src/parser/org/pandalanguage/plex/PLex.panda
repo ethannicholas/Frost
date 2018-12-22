@@ -40,19 +40,19 @@ class PLex {
         token.printLine("REGEX")
         offset += 1
         for rawLine in input.lines() {
-            def line := rawLine.trim()
+            def line := rawLine.trimmed
             if line.contains(":=") {
-                def id := line[line.start() .. line.indexOf(":=")].trim()
-                def pattern := line[line.offset(line.indexOf(":="), 2) .. line.end()].trim()
+                def id := line[line.start .. line.indexOf(":=")].trimmed
+                def pattern := line[line.offset(line.indexOf(":="), 2) .. line.end].trimmed
                 def regex:Regex
                 if pattern.startsWith('"') {
-                    regex := Regex(escape(pattern[pattern.next(pattern.start()) ..
-                            pattern.previous(pattern.end())]))
+                    regex := Regex(escape(pattern[pattern.next(pattern.start) ..
+                            pattern.previous(pattern.end)]))
                 }
                 else {
                     assert pattern.startsWith("/") & pattern.endsWith("/")
-                    regex := Regex(pattern[pattern.next(pattern.start()) ..
-                            pattern.previous(pattern.end())])
+                    regex := Regex(pattern[pattern.next(pattern.start) ..
+                            pattern.previous(pattern.end)])
                 }
                 token.printLine(id)
                 def states := regex.addToNFA(nfa, nfa.addState(AcceptState(tokens.count +
@@ -63,7 +63,7 @@ class PLex {
                 tokens[id] := regex
             }
             else {
-                assert line.utf8().count = 0, "error parsing '\{line}'"
+                assert line.byteLength = 0, "error parsing '\{line}'"
             }
         }
         token.printLine()
@@ -115,7 +115,7 @@ class PLex {
 
     function escape(s:String):String {
         def result := MutableString()
-        for c in s.utf8() {
+        for c in s.utf8 {
             if "+*?|.()[]".contains(c) {
                 result.append("\\")
             }

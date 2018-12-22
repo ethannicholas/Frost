@@ -174,7 +174,7 @@ class HashMap<K:Key<K>, V> : Map<K, V> {
             h := 0
         }
         else {
-            h := key.hash()
+            h := key.hash
         }
         -- supplemental hash function to defend against poor hash codes, as we do not use a prime
         -- table length

@@ -14,7 +14,7 @@ class CharSet : Node {
 
     init(contents:String) {
         super.init(CHARSET)
-        self.contents := contents.utf8()
+        self.contents := contents.utf8
     }
 
     @override

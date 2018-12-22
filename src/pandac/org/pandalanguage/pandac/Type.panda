@@ -703,8 +703,8 @@ class Type : Symbol, Key<Type> {
     }
 
     @override
-    function hash():Int {
-        return name.hash()
+    function get_hash():Int {
+        return name.hash
     }
 
     @override

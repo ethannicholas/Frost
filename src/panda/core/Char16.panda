@@ -69,7 +69,7 @@ class Char16 : Value, Key<Char16>, Comparable<Char16> {
     }
 
     @override
-    function hash():Int {
+    function get_hash():Int {
         return convert()
     }
 

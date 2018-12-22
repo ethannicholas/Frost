@@ -909,10 +909,10 @@ class CCodeGenerator : CodeGenerator {
         strings.print("static panda$core$String \{result} = { " +
                 "(panda$core$Class*) &panda$core$String$class, \{NO_REFCNT}, " +
                 "(panda$core$Char8*) \"")
-        for c in s.utf8() {
+        for c in s.utf8 {
             strings.print("\\x\{c.convert()->UInt8,0>2:x}")
         }
-        strings.printLine("\", \{s.utf8().count}, \{s.hash()}, NULL };")
+        strings.printLine("\", \{s.utf8.count}, \{s.hash}, NULL };")
         return "&\{result}"
     }
 

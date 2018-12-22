@@ -14,10 +14,12 @@ Violating requirement 3 will not break anything, but will reduce performance.
 ====================================================================================================
 interface Key<T:Equatable<T>> : Equatable<T> {
     ================================================================================================
-    Computes a hash code for this object. While hash codes must be stable within a single run of a
+    Returns a hash code for this object. While hash codes must be stable within a single run of a
     program, they are not, in general, guaranteed to remain stable across different runs of the same
     program - in particular, future versions of Panda may choose to use different hashing
     algorithms.
     ================================================================================================
-    function hash():Int
+    property hash:Int
+
+    function get_hash():Int
 }

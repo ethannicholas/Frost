@@ -8,7 +8,7 @@ class DFAStateLabel : Key<DFAStateLabel> {
     }
 
     @override
-    function hash():Int {
+    function get_hash():Int {
         var result := 0
         for s in states {
             result ~~= s

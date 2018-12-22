@@ -80,7 +80,7 @@ class Char8 : Value, Key<Char8>, Comparable<Char8> {
     }
 
     @override
-    function hash():Int {
+    function get_hash():Int {
         return convert()
     }
 

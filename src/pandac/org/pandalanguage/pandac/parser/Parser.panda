@@ -254,7 +254,7 @@ class Parser {
                         return null
                     }
                     def escapeText := text(escape)
-                    def c := escapeText.utf8()[0]
+                    def c := escapeText.utf8[0]
                     match c {
                         when "n":  result.append("\n")
                         when "r":  result.append("\r")
@@ -267,7 +267,7 @@ class Parser {
                             error(token, "invalid format string escape sequence")
                             return null
                     }
-                    result.append(escapeText[escapeText.next(escapeText.start())..])
+                    result.append(escapeText[escapeText.next(escapeText.start)..])
                 when Token.Kind.RBRACE:
                     pushback(token)
                     return result.finish()
@@ -299,7 +299,7 @@ class Parser {
                         return null
                     }
                     def escapeText := text(escape)
-                    def c := escapeText.utf8()[0]
+                    def c := escapeText.utf8[0]
                     match c {
                         when "n":  result.append("\n")
                         when "r":  result.append("\r")
@@ -313,7 +313,7 @@ class Parser {
                             error(token, "invalid format string escape sequence")
                             return null
                     }
-                    result.append(escapeText[escapeText.next(escapeText.start())..])
+                    result.append(escapeText[escapeText.next(escapeText.start)..])
                 when Token.Kind.COLON:
                     pushback(token)
                     return result.finish()
@@ -367,7 +367,7 @@ class Parser {
                         return null
                     }
                     def escapeText := text(escape)
-                    def c := escapeText.utf8()[0]
+                    def c := escapeText.utf8[0]
                     match c {
                         when "n":  chunk.append("\n")
                         when "r":  chunk.append("\r")
@@ -432,7 +432,7 @@ class Parser {
                             error(token, "invalid string escape sequence")
                             return null
                     }
-                    chunk.append(escapeText[escapeText.next(escapeText.start())..])
+                    chunk.append(escapeText[escapeText.next(escapeText.start)..])
                 otherwise:
                     chunk.append(text(token))
             }

@@ -26,7 +26,7 @@ class MemoryInputStream : InputStream {
     ================================================================================================
     init(source:String) {
         self.data := source.data->Pointer<UInt8>
-        self.length := source.byteLength()
+        self.length := source.byteLength
         self.string := source
         super.init()
     }

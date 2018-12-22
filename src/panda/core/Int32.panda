@@ -694,7 +694,7 @@ class Int32 : Value, Key<Int32>, Comparable<Int32>, Formattable, ListView<Bit> {
     }
 
     @override
-    function hash():Int {
+    function get_hash():Int {
         return Int(value->builtin_int64)
     }
 

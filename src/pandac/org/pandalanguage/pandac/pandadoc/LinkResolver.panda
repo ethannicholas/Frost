@@ -117,7 +117,7 @@ class LinkResolver {
         def parsed := link.parse(/(\w+(?:\.\w+)*)\((.*)\)/)
         if parsed !== null {
             def parameters := Array<Type>()
-            if parsed[1].trim() != "" {
+            if parsed[1].trimmed != "" {
                 compiler.parser.start(File(parsed[1]), parsed[1])
                 loop {
                     def type := compiler.parser.type()

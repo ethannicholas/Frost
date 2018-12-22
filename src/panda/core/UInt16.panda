@@ -805,7 +805,7 @@ class UInt16 : Value, Key<UInt16>, Comparable<UInt16>, Formattable, ListView<Bit
     }
 
     @override
-    function hash():Int {
+    function get_hash():Int {
         return Int(value->builtin_int64)
     }
 

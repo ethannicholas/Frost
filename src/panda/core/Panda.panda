@@ -136,8 +136,8 @@ class Panda {
         }
         var result:UInt64 := 0
         def radix := rawRadix.convert()->UInt64
-        var index := str.start()
-        while index != str.end() {
+        var index := str.start
+        while index != str.end {
             def value := digit(str[index])
             if value == null | value >= radix {
                 return null
@@ -171,20 +171,20 @@ class Panda {
     ================================================================================================
     @class
     function align(str:String, specifier:String):String {
-        assert specifier.length() >= 2, "invalid alignment string '\{specifier}'"
-        var index := specifier.next(specifier.start())
+        assert specifier.length >= 2, "invalid alignment string '\{specifier}'"
+        var index := specifier.next(specifier.start)
         match specifier[index] {
             when "<", "^", ">": -- do nothing
             otherwise:
-                index := specifier.start()
+                index := specifier.start
         }
         def width := specifier[specifier.next(index)..].convert()->Int
         def fill:Char32
-        if index = specifier.start() {
+        if index = specifier.start {
             fill := " "
         }
         else {
-            fill := specifier[specifier.start()]
+            fill := specifier[specifier.start]
         }
         match specifier[index] {
             when "<": return str.leftAlign(width, fill)
@@ -205,10 +205,10 @@ class Panda {
     ================================================================================================
     @class
     function format(sign:Bit, rawValue:UInt64, mask:UInt64, fmt:String):String {
-        var index := fmt.start()
+        var index := fmt.start
         var base:UInt64 := 10
-        var digits := "0123456789abcdef".utf8()
-        if index < fmt.end() {
+        var digits := "0123456789abcdef".utf8
+        if index < fmt.end {
             match fmt[index] {
                 when "b", "B":
                     base := 2
@@ -220,7 +220,7 @@ class Panda {
                     base := 16
                 when "X":
                     base := 16
-                    digits := "0123456789ABCDEF".utf8()
+                    digits := "0123456789ABCDEF".utf8
                 otherwise:
                     assert false, "invalid format string"
             }

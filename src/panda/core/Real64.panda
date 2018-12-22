@@ -359,7 +359,7 @@ class Real64 : Value, Key<Real64>, Comparable<Real64>, Formattable {
     }
 
     @override
-    function hash():Int {
+    function get_hash():Int {
         return Int(value->builtin_int64)
     }
 

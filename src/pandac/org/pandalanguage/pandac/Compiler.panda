@@ -250,8 +250,8 @@ class Compiler {
         }
 
         @override
-        function hash():Int {
-            return Panda.addressOf(expr) ~~ target.hash()
+        function get_hash():Int {
+            return Panda.addressOf(expr) ~~ target.hash
         }
     }
 
@@ -2300,7 +2300,7 @@ class Compiler {
             when ASTNode.STRING(_, text):
                 def result := Array<Type>() -- FIXME literal
                 result.add(Type.StringType())
-                if text.length() = 1 {
+                if text.length = 1 {
                     def size := smallestCharSize(text[0])
                     if size = 8 {
                         result.add(Type.Char8())
@@ -2664,7 +2664,7 @@ class Compiler {
             when ASTNode.SELF:
                 return coercionCost(currentClass[0].typeWithParameters(), target)
             when ASTNode.STRING(_, text):
-                if target.isChar & text.length() = 1 {
+                if target.isChar & text.length = 1 {
                     def size := smallestCharSize(text[0])
                     def targetSize:Int
                     match target {
@@ -5287,7 +5287,7 @@ class Compiler {
             when ASTNode.STRING(position, text):
                 match type {
                     when TypeContext.TYPE(t):
-                        if t.isChar & text.length() = 1 {
+                        if t.isChar & text.length = 1 {
                             def args := Array<ASTNode>()
                             args.add(ASTNode.INT(position, text[0].convert()))
                             return compileExpression(ASTNode.CALL(position,
@@ -5981,7 +5981,7 @@ class Compiler {
                 return true
             }
             if type1.isChar & type2.name.startsWith("panda.core.Int") &
-                    type1.name.endsWith(type2.name["panda.core.Int".length()..]) {
+                    type1.name.endsWith(type2.name["panda.core.Int".length..]) {
                 return true
             }
             error(position, "for loop cannot iterate over '\{type}'; endpoint and step types " +

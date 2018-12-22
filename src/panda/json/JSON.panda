@@ -52,7 +52,7 @@ choice JSON {
     function nextPathKey(path:String, start:String.Index):PathKey? {
         match path[start] {
             when "/":
-                def end := path.end()
+                def end := path.end
                 def fieldStart := path.next(start)
                 var index := fieldStart
                 do {
@@ -98,8 +98,8 @@ choice JSON {
     ================================================================================================
     -- FIXME @pre(valid(path))
     function get(path:String):JSON? {
-        var index := path.start()
-        var end := path.end()
+        var index := path.start
+        var end := path.end
         var current:JSON? := self
         while index != end {
             assert nextPathKey(path, index) !== null, "invalid JSON path '\{path}'"

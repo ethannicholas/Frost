@@ -75,7 +75,7 @@ class File : Immutable, Key<File> {
         }
         -- remove trailing '/'
         while result.endsWith("/") {
-            result := result[..result.length() - 1]
+            result := result[..result.length - 1]
         }
         def absolute := result.startsWith("/")
         if absolute {
@@ -283,8 +283,8 @@ class File : Immutable, Key<File> {
     }
 
     @override
-    function hash():Int {
-        return path.hash()
+    function get_hash():Int {
+        return path.hash
     }
 
     ================================================================================================

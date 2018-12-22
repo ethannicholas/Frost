@@ -213,7 +213,7 @@ class TestRunner {
     @private
     @class
     function lessThan(a:String, b:String):Bit {
-        for i in 0 .. a.length().min(b.length()) {
+        for i in 0 .. a.length.min(b.length) {
             if a[i] < b[i] {
                 return true
             }
@@ -221,7 +221,7 @@ class TestRunner {
                 return false
             }
         }
-        return a.length() < b.length()
+        return a.length < b.length
     }
 
     @private

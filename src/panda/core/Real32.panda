@@ -368,7 +368,7 @@ class Real32 : Value, Key<Real32>, Comparable<Real32>, Formattable {
     }
 
     @override
-    function hash():Int {
+    function get_hash():Int {
         return Int(value->builtin_int64)
     }
 

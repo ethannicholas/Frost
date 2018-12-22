@@ -23,7 +23,7 @@ class TableOfContentsNode {
     @private
     @class
     function lessThan(a:String, b:String):Bit {
-        for i in 0 .. a.length().min(b.length()) {
+        for i in 0 .. a.length.min(b.length) {
             if a[i] < b[i] {
                 return true
             }
@@ -31,7 +31,7 @@ class TableOfContentsNode {
                 return false
             }
         }
-        return a.length() < b.length()
+        return a.length < b.length
     }
 
     @private
@@ -72,7 +72,7 @@ class TableOfContentsNode {
                 index := name.next(index)
             }
             else {
-                index := name.start()
+                index := name.start
             }
             out.write("name", name)
             out.write("simpleName", name[index..])

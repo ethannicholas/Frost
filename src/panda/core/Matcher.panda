@@ -26,6 +26,12 @@ class Matcher {
     @private
     var replacementIndex:String.Index
 
+    property start:String.Index
+
+    property end:String.Index
+
+    property groupCount:Int
+
     @private
     init() {
     }
@@ -45,21 +51,21 @@ class Matcher {
     @see find(String.Index)
     ================================================================================================
     -- @self FIXME
-    @pre(matched | replacementIndex = searchText.start())
+    @pre(matched | replacementIndex = searchText.start)
     method find():Bit {
         var start:String.Index
         if matched {
-            start := get_end()
-            if self.get_start() = start { -- zero-character match, skip ahead one
+            start := self.end
+            if self.start = start { -- zero-character match, skip ahead one
                 start := searchText.next(start)
-                if start >= searchText.end() {
+                if start >= searchText.end {
                     matched := false
                     return matched
                 }
             }
         }
         else {
-            start := searchText.start()
+            start := searchText.start
         }
         matched := nativeFind(start)
         return matched
@@ -125,19 +131,19 @@ class Matcher {
     @pre(matched)
     -- @limited FIXME
     method appendReplacement(target:MutableString, replacement:String, allowGroupReferences:Bit) {
-        target.append(searchText[replacementIndex .. get_start()])
+        target.append(searchText[replacementIndex .. start])
         if allowGroupReferences {
             def ref := REPLACEMENT_GROUPS.matcher(replacement)
-            var lastEnd:String.Index := searchText.start()
+            var lastEnd:String.Index := searchText.start
             while ref.find() {
                 def rawGroup:Int := ref.group(1).convert()
                 def groupIdx := rawGroup
-                var newEnd := ref.get_end()
-                while groupIdx >= get_groupCount() { -- no such group, pull digits off
+                var newEnd := ref.end
+                while groupIdx >= groupCount { -- no such group, pull digits off
                     groupIdx //= 10
                     newEnd := searchText.previous(newEnd)
                 }
-                target.append(replacement[lastEnd .. ref.get_start()])
+                target.append(replacement[lastEnd .. ref.start])
                 lastEnd := newEnd
                 if groupIdx > 0 | rawGroup = 0 {
                     target.append(group(groupIdx))
@@ -151,7 +157,7 @@ class Matcher {
         else {
             target.append(replacement)
         }
-        replacementIndex := get_end()
+        replacementIndex := end
     }
     
     ================================================================================================

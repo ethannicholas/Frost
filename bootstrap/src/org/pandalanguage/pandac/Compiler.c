@@ -48824,7 +48824,7 @@ void org$pandalanguage$pandac$Compiler$checkImmutable$org$pandalanguage$pandac$C
                         else {
                         panda$core$Bit $tmp19517 = org$pandalanguage$pandac$Compiler$isImmutable$org$pandalanguage$pandac$Type$R$panda$core$Bit(self, f19502->type);
                         panda$core$Bit $tmp19518 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp19517);
-                        if ($tmp19518.value) {
+                        if ($tmp19518.value && false) {
                         {
                             panda$core$String* $tmp19523 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s19522, p_cl->name);
                             $tmp19521 = $tmp19523;
