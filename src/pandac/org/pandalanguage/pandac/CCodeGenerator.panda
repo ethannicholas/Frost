@@ -270,7 +270,7 @@ class CCodeGenerator : CodeGenerator {
         }
         var result := 0
         for f in compiler.instanceFields(cl) {
-            if f.annotations.isClass() {
+            if f.annotations.isClass {
                 continue
             }
             compiler.resolve(f)
@@ -393,7 +393,7 @@ class CCodeGenerator : CodeGenerator {
             for m in methods {
                 result.append(separator)
                 separator := ", "
-                if m.annotations.isAbstract() {
+                if m.annotations.isAbstract {
                     result.append("NULL")
                 }
                 else {
@@ -497,7 +497,7 @@ class CCodeGenerator : CodeGenerator {
             for m in methods {
                 result.append(separator)
                 separator := ", "
-                if m.annotations.isAbstract() {
+                if m.annotations.isAbstract {
                     result.append("NULL")
                 }
                 else {
@@ -574,7 +574,7 @@ class CCodeGenerator : CodeGenerator {
             var separator := ""
             for m in vtable {
                 code.append(separator)
-                if m.annotations.isAbstract() {
+                if m.annotations.isAbstract {
                     code.append("NULL")
                 }
                 else {
@@ -642,7 +642,7 @@ class CCodeGenerator : CodeGenerator {
     }
 
     function getName(f:FieldDecl):String {
-        assert f.annotations.isClass()
+        assert f.annotations.isClass
         return "\{escapeName(f.owner.name)}$\{f.name}"
     }
 

@@ -208,7 +208,7 @@ class Scanner {
                                     assert false
                             }
                             def value:ASTNode?
-                            if rawValue == null & annotations.isWeak() &
+                            if rawValue == null & annotations.isWeak &
                                     type.typeKind = Type.Kind.NULLABLE {
                                 value := ASTNode.NULL(declPosition)
                             }
@@ -368,8 +368,8 @@ class Scanner {
     }
 
     function shouldInline(annotations:Annotations, statements:ImmutableArray<ASTNode>):Bit {
-        if compiler.settings.optimizationLevel > 0 & !annotations.isInline() &
-                annotations.isFinal() {
+        if compiler.settings.optimizationLevel > 0 & !annotations.isInline &
+                annotations.isFinal {
             var c := 0
             for s in statements {
                 c += complexity(s)
@@ -400,7 +400,7 @@ class Scanner {
             }
         }
         def annotations := convertAnnotations(rawAnnotations)
-        if kind != MethodDecl.Kind.INIT & owner.annotations.isFinal() | annotations.isPrivate() {
+        if kind != MethodDecl.Kind.INIT & owner.annotations.isFinal | annotations.isPrivate {
             annotations.flags ||= Annotations.Flag.FINAL
         }
         def generics:Array<ClassDecl.GenericParameter>?
@@ -769,7 +769,7 @@ class Scanner {
                             compiler.currentClass.push(bareCodeClass)
                             def m := scanMethod(bareCodeClass, position, dc, annotations,
                                     kind, name, generics, parameters, rawReturnType, statements)
-                            if m.annotations.isClass() {
+                            if m.annotations.isClass {
                                 error(m.position, "'@class' annotation may not be used outside " +
                                         "of a class")
                                 m.annotations.flags &&= !!Annotations.Flag.CLASS
@@ -784,7 +784,7 @@ class Scanner {
                             for i in old .. bareCodeClass.fields.count {
                                 def f := bareCodeClass.fields[i]
                                 if f.fieldKind != FieldDecl.Kind.CONSTANT &
-                                        f.annotations.isClass() {
+                                        f.annotations.isClass {
                                     error(f.position, "'@class' annotation may not be used " +
                                             "outside of a class")
                                 }

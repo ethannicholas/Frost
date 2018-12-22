@@ -798,7 +798,7 @@ class Compiler {
             if cl.rawSuper == null & cl.name != "panda.core.Object" {
                 cl.rawSuper := Type.Object()
             }
-            if cl.rawSuper !== null & !cl.annotations.isFinal() &
+            if cl.rawSuper !== null & !cl.annotations.isFinal &
                     cl.rawSuper.name = "panda.core.Value" {
                 cl.annotations.flags ||= Annotations.Flag.FINAL
                 for m in cl.methods {
@@ -881,7 +881,7 @@ class Compiler {
         if !m.owner.external {
             def overridden := getOverriddenMethod(m)
             if overridden !== null {
-                if !m.annotations.isOverride() {
+                if !m.annotations.isOverride {
                     error(m.position, "\{m.declaration()} overrides \{overridden.declaration()}, " +
                             "but is not marked @override")
                 }
@@ -891,7 +891,7 @@ class Compiler {
                             "but methods cannot override functions")
                 }
             }
-            else if m.annotations.isOverride() {
+            else if m.annotations.isOverride {
                 error(m.position, "\{m.declaration()} is marked @override, but no matching " +
                         "method exists among its ancestors")
             }
@@ -972,7 +972,7 @@ class Compiler {
             else {
                 f.resolved := Resolution.RESOLVED_WITH_ERRORS
             }
-            if f.annotations.isWeak() & f.type != Type.Void() {
+            if f.annotations.isWeak & f.type != Type.Void() {
                 f.type := Type.WeakOf(f.type)
             }
         }
@@ -1065,7 +1065,7 @@ class Compiler {
                 }
             }
             for f in cl.fields {
-                if !f.annotations.isClass() & f.fieldKind != FieldDecl.Kind.PROPERTY {
+                if !f.annotations.isClass & f.fieldKind != FieldDecl.Kind.PROPERTY {
                     result.add(f)
                 }
                 else {
@@ -1229,7 +1229,7 @@ class Compiler {
                 error(type.position, "type '\{type}' is not a class")
                 return null
         }
-        if result !== null & result.annotations.isSpecialize() {
+        if result !== null & result.annotations.isSpecialize {
             result := specialize(result, type)
         }
         return result
@@ -1332,7 +1332,7 @@ class Compiler {
         assert intfClass !== null
         def result := Array<MethodDecl>()
         for m in intfClass.methods {
-            if m.annotations.isClass() {
+            if m.annotations.isClass {
                 continue
             }
             def found := findMethod(cl.type, m.name, remapType(intf, inheritedType(m)), false)
@@ -1396,7 +1396,7 @@ class Compiler {
             }
             for derived in cl.methods {
                 resolve(derived)
-                if derived.methodKind = MethodDecl.Kind.INIT | derived.annotations.isClass() {
+                if derived.methodKind = MethodDecl.Kind.INIT | derived.annotations.isClass {
                     continue
                 }
                 var found := false
@@ -1648,7 +1648,7 @@ class Compiler {
         }
         def targetCl := getClass(target)
         for m in targetCl.methods {
-            if m.annotations.isImplicit() & m.parameters.count = 1 {
+            if m.annotations.isImplicit & m.parameters.count = 1 {
                 resolve(m)
                 if type = m.parameters[0].type {
                     return 6 - m.priority
@@ -1780,7 +1780,7 @@ class Compiler {
     }
 
     function isClassContext():Bit {
-        return currentMethod[0].annotations.isClass()
+        return currentMethod[0].annotations.isClass
     }
 
     function symbolType(target:Type?, s:Symbol):ListView<Type>? {
@@ -1805,7 +1805,7 @@ class Compiler {
                 def f := s->FieldDecl
                 if resolve(f) {
                     def type:Type
-                    if f.annotations.isWeak() {
+                    if f.annotations.isWeak {
                         type := f.type.subtypes[1]
                     }
                     else {
@@ -1842,7 +1842,7 @@ class Compiler {
             when Symbol.Kind.METHODS:
                 for m in s->Methods.methods { -- FIXME use map
                     if resolve(m) {
-                        if m.annotations.isClass() {
+                        if m.annotations.isClass {
                             result.add(m.type())
                         }
                         else if target !== null {
@@ -2571,7 +2571,7 @@ class Compiler {
                     assert cl != null
                     def initMethod := cl.methods[0]
                     assert initMethod.methodKind = MethodDecl.Kind.INIT
-                    assert initMethod.annotations.isImplicit()
+                    assert initMethod.annotations.isImplicit
                     return 2 - initMethod.priority
                 }
                 def preferred := preferredType(expr)
@@ -2959,7 +2959,7 @@ class Compiler {
     function capturedSelfType():Type {
         var cl := currentClass[0]
         loop {
-            if !cl.annotations.isSynthetic() {
+            if !cl.annotations.isSynthetic {
                 return cl.type
             }
             assert cl.owner !== null, "no non-synthetic owner for \{currentClass[0].name}"
@@ -3171,7 +3171,7 @@ class Compiler {
         }
         else if m.methodKind != MethodDecl.Kind.INIT &
                 m.owner.classKind = ClassDecl.Kind.INTERFACE &
-                !m.annotations.isClass() & m.body !== null {
+                !m.annotations.isClass & m.body !== null {
             error(m.position, "non-abstract interface method '\{m.name}' must be annotated with " +
                     "'@default'")
         }
@@ -3192,7 +3192,7 @@ class Compiler {
         if v.name = SELF_NAME {
             for c in captures {
                 c.second[SELF_NAME] := Capture.SELF
-                if !c.first.annotations.isSynthetic() {
+                if !c.first.annotations.isSynthetic {
                     return
                 }
             }
@@ -3251,7 +3251,7 @@ class Compiler {
             when Symbol.Kind.FIELD:
                 def f := s->FieldDecl
                 if resolve(f) {
-                    if f.annotations.isSynthetic() {
+                    if f.annotations.isSynthetic {
                         capture(position, f)
                     }
                     return FieldLValue(self, position, target, f).compileLoad()
@@ -3311,12 +3311,12 @@ class Compiler {
         def effectiveType:Type
         def irType:Type
         if target !== null & !target.type().isClassLiteral {
-            assert !m.annotations.isClass()
+            assert !m.annotations.isClass
             effectiveType := MethodRef(self, target.type(), m).effectiveType
             irType := Type.pointerTo(declaredTypeWithSelf(m, m.owner.type))
         }
         else {
-            if m.annotations.isClass() {
+            if m.annotations.isClass {
                 effectiveType := m.type()
                 irType := Type.pointerTo(m.type())
             }
@@ -3426,13 +3426,13 @@ class Compiler {
             match inits.kind {
                 when Symbol.Kind.METHOD:
                     def m := inits->MethodDecl
-                    if m.annotations.isImplicit() {
+                    if m.annotations.isImplicit {
                         if resolve(m) & coercionCost(value.type(), m.parameters[0].type) !== null {
                             return implicitInit(position, value, m)
                         }
                     }
                 when Symbol.Kind.METHODS:
-                    def methods := inits->Methods.methods.filter(m => m.annotations.isImplicit())
+                    def methods := inits->Methods.methods.filter(m => m.annotations.isImplicit)
                     if methods.count > 0 {
                         def args := Array<ASTNode>()
                         args.add(ASTNode.IR_WRAPPER(position, value))
@@ -3672,7 +3672,7 @@ class Compiler {
                     "argument\{m.parameterCount = 1:|s}, but found \{args.count}")
             return null
         }
-        if target !== null & m.value.annotations.isClass() {
+        if target !== null & m.value.annotations.isClass {
             match target {
                 when IR.Value.TYPE:
                     -- do nothing
@@ -3731,7 +3731,7 @@ class Compiler {
                     finalArgs.add(finalTarget)
             }
         }
-        else if !m.value.annotations.isClass() & !isValueInit(m.value) {
+        else if !m.value.annotations.isClass & !isValueInit(m.value) {
             finalTarget := coerce(position, compileSelf(position, false), m.value.owner.type)
             finalArgs.add(finalTarget)
         }
@@ -3823,7 +3823,7 @@ class Compiler {
             if target !== null {
                 ref := MethodRef(self, target.type(), m)
             }
-            else if m.annotations.isClass() | m.methodKind = MethodDecl.Kind.INIT {
+            else if m.annotations.isClass | m.methodKind = MethodDecl.Kind.INIT {
                 ref := MethodRef(self, m.owner.type, m)
             }
             else {
@@ -3987,7 +3987,7 @@ class Compiler {
                 if target !== null {
                     targetType := target.type()
                 }
-                else if m.annotations.isClass() | m.methodKind = MethodDecl.Kind.INIT {
+                else if m.annotations.isClass | m.methodKind = MethodDecl.Kind.INIT {
                     targetType := m.owner.type
                 }
                 else {
@@ -4077,7 +4077,7 @@ class Compiler {
             -- look for left.op(right)
             match methods.kind {
                 when Symbol.Kind.METHOD:
-                    if !methods->MethodDecl.annotations.isClass() {
+                    if !methods->MethodDecl.annotations.isClass {
                         def list := Array<MethodDecl>()
                         list.add(methods->MethodDecl)
                         def result := findBestMethod(Position(), target, list, args, type)
@@ -4087,7 +4087,7 @@ class Compiler {
                     }
                 when Symbol.Kind.METHODS:
                     def result := findBestMethod(Position(), target,
-                            methods->Methods.methods.filter(m => !m.annotations.isClass()), args,
+                            methods->Methods.methods.filter(m => !m.annotations.isClass), args,
                                     type)
                     if result !== null {
                         return result
@@ -4118,7 +4118,7 @@ class Compiler {
         args.add(right)
         match methods.kind {
             when Symbol.Kind.METHOD:
-                if methods->MethodDecl.annotations.isClass() {
+                if methods->MethodDecl.annotations.isClass {
                     def list := Array<MethodDecl>()
                     list.add(methods->MethodDecl)
                     def result := findBestMethod(Position(), null, list, args, type)
@@ -4128,7 +4128,7 @@ class Compiler {
                 }
             when Symbol.Kind.METHODS:
                 def result := findBestMethod(Position(), null,
-                        methods->Methods.methods.filter(m => m.annotations.isClass()), args, type)
+                        methods->Methods.methods.filter(m => m.annotations.isClass), args, type)
                 if result !== null {
                     return result
                 }
@@ -4441,7 +4441,7 @@ class Compiler {
                     }
                     def args := Array<ASTNode>() -- FIXME literal
                     def m := matches.first[0].value
-                    if m.annotations.isClass() {
+                    if m.annotations.isClass {
                         args.add(left)
                         args.add(right)
                         return call(position, IR.Value.METHOD(null, m), args,
@@ -4715,7 +4715,7 @@ class Compiler {
         }
         def args := Array<ASTNode>()
         def pandaType:Type
-        if methodDecl.annotations.isClass() {
+        if methodDecl.annotations.isClass {
             pandaType := methodDecl.type()
         }
         else {
@@ -5072,7 +5072,7 @@ class Compiler {
                 c.second[SELF_NAME] := Capture.SELF
             }
             var cl := captures[0].first.owner
-            while cl.annotations.isSynthetic() {
+            while cl.annotations.isSynthetic {
                 assert cl.owner !== null
                 cl := cl.owner
             }
@@ -5086,7 +5086,7 @@ class Compiler {
                 return symbolRef(position, symbolRef(position, null, actualSelf), s)
             }
         }
-        if currentMethod[0].annotations.isClass() {
+        if currentMethod[0].annotations.isClass {
             error(position, "cannot reference 'self' from a @class context")
             return null
         }
@@ -5441,8 +5441,8 @@ class Compiler {
             if target !== null & !target.type().isClassLiteral {
                 self.target := target
             }
-            else if !field.annotations.isClass() {
-                if field.owner.annotations.isSynthetic() & !compiler.reportErrors {
+            else if !field.annotations.isClass {
+                if field.owner.annotations.isSynthetic & !compiler.reportErrors {
                     -- nested closure capture during pre-scan
                     self.target := IR.Value.REF(IR.Statement.ID(-1), field.owner.type)
                 }
@@ -5452,7 +5452,7 @@ class Compiler {
             }
             rawType := field.type
             def base:Type
-            if !compiler.inFieldCleanup & field.annotations.isWeak() {
+            if !compiler.inFieldCleanup & field.annotations.isWeak {
                 base := rawType.subtypes[1]
             }
             else {
@@ -5476,7 +5476,7 @@ class Compiler {
 
         @override
         method compileLoad():IR.Value? {
-            if field.annotations.isClass() & field.fieldKind = FieldDecl.Kind.CONSTANT {
+            if field.annotations.isClass & field.fieldKind = FieldDecl.Kind.CONSTANT {
                 compiler.currentClass.push(field.owner)
                 def auto := AutoScope(compiler, compiler.getSymbolTable(field.owner))
                 def result := compiler.compileExpression(field.rawValue, TypeContext.TYPE(type()))
@@ -5504,7 +5504,7 @@ class Compiler {
                 }
                 result := IR.Value.REF(load, rawType)
             }
-            if !compiler.inFieldCleanup & field.annotations.isWeak() {
+            if !compiler.inFieldCleanup & field.annotations.isWeak {
                 def auto := AutoUnrefs(compiler)
                 result := compiler.call(position, result, "get", ImmutableArray<ASTNode>(),
                         TypeContext.UNSPECIFIED)
@@ -5523,7 +5523,7 @@ class Compiler {
             }
             def cast:IR.Value
             def value:IR.Value
-            if !compiler.inFieldCleanup & field.annotations.isWeak() {
+            if !compiler.inFieldCleanup & field.annotations.isWeak {
                 def args := Array<ASTNode>() -- FIXME literal
                 args.add(ASTNode.IR_WRAPPER(position, rawValue))
                 value := compiler.compileExpression(ASTNode.CALL(position,
@@ -5573,7 +5573,7 @@ class Compiler {
                 load := compiler.ir.add(IR.Statement.LOAD(position, IR.Value.REF(ptr, rawType)))
             }
             result := IR.Value.REF(load, rawType)
-            if !compiler.inFieldCleanup & field.annotations.isWeak() {
+            if !compiler.inFieldCleanup & field.annotations.isWeak {
                 def nonNullBlock := compiler.ir.newBlock("unref non-null")
                 def mergeBlock := compiler.ir.newBlock("unref merge")
                 def nonNullTest := compiler.ir.add(IR.Statement.BINARY(position, result,
@@ -5803,7 +5803,7 @@ class Compiler {
                             return VariableLValue(self, position, symbol->Variable)
                         when Symbol.Kind.FIELD:
                             def f := symbol->FieldDecl
-                            if !f.annotations.isClass() {
+                            if !f.annotations.isClass {
                                 return compileLValue(ASTNode.DOT(position, ASTNode.SELF(position),
                                         f.name))
                             }
@@ -6871,7 +6871,7 @@ class Compiler {
             assert !inFieldCleanup
             inFieldCleanup := true
             for f in currentMethod[0].owner.fields {
-                if resolve(f) & !f.annotations.isClass() & f.fieldKind != FieldDecl.Kind.PROPERTY &
+                if resolve(f) & !f.annotations.isClass & f.fieldKind != FieldDecl.Kind.PROPERTY &
                         isRefCounted(f.type) {
                     def load := FieldLValue(self, position,
                             compileExpression(ASTNode.IDENTIFIER(position, FORCE_SELF_NAME),
@@ -7008,7 +7008,7 @@ class Compiler {
     }
 
     method hasSelfParam(m:MethodDecl):Bit {
-        if m.annotations.isClass() {
+        if m.annotations.isClass {
             return false
         }
         if m.methodKind != MethodDecl.Kind.INIT {
@@ -7277,7 +7277,7 @@ class Compiler {
                     if m.returnType != Type.Void() {
                         error(m.position, "'main' must not have a return type")
                     }
-                    if !m.annotations.isClass() {
+                    if !m.annotations.isClass {
                         error(m.position, "'main' must be declared @class")
                     }
                     def required := "panda.collections.ListView<panda.core.String>"
@@ -7295,7 +7295,7 @@ class Compiler {
                     selfParam.owner := m
                     symbolTable.add(selfParam)
                 }
-                else if !m.annotations.isClass() {
+                else if !m.annotations.isClass {
                     def selfVar := Variable(m.position, Variable.Kind.DEF, SELF_NAME,
                             m.owner.typeWithParameters(), Variable.Storage.LOCAL(0))
                     selfVar.owner := m
@@ -7305,7 +7305,7 @@ class Compiler {
                 if m.methodKind = MethodDecl.Kind.INIT {
                     if !callsSelfInit(m.body) {
                         for f in m.owner.fields {
-                            if f.rawValue !== null & !f.annotations.isClass() {
+                            if f.rawValue !== null & !f.annotations.isClass {
                                 def p := f.rawValue.position()
                                 compileStatement(ASTNode.BINARY(p,
                                         ASTNode.DOT(p, ASTNode.SELF(p), f.name),
@@ -7383,7 +7383,7 @@ class Compiler {
     }
 
     method checkImmutable(cl:ClassDecl) {
-        if !cl.annotations.isUnsafeImmutable() & isImmutable(cl) {
+        if !cl.annotations.isUnsafeImmutable & isImmutable(cl) {
             for f in cl.fields {
                 resolve(f)
                 if f.fieldKind = FieldDecl.Kind.VAR {
@@ -7471,10 +7471,10 @@ class Compiler {
             }
         }
         if f.resolved = Resolution.RESOLVED {
-            if f.annotations.isClass() & !isImmutable(f.type) {
+            if f.annotations.isClass & !isImmutable(f.type) {
                 error(f.position, "only immutable fields may be annotated with '@class'")
             }
-            if f.annotations.isClass() & f.fieldKind = FieldDecl.Kind.VAR {
+            if f.annotations.isClass & f.fieldKind = FieldDecl.Kind.VAR {
                 error(f.position, "'var' fields may not be annotated with '@class'")
             }
         }
@@ -7490,7 +7490,7 @@ class Compiler {
             currentClass.pop()
             return
         }
-        if cl.annotations.isSpecialize() {
+        if cl.annotations.isSpecialize {
             codeGenerator.start(cl)
             codeGenerator.end(cl)
             currentClass.pop()

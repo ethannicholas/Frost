@@ -29,7 +29,7 @@ class MethodRef {
         def found := compiler.findType(target, value.owner)
         assert found !== null, "findType(\{target}, \{value.owner.name}) failed"
         var methodType := value.type()
-        if !value.annotations.isClass() & target.isClassLiteral {
+        if !value.annotations.isClass & target.isClassLiteral {
             def parameterTypes := Array<Type>()
             parameterTypes.add(target.subtypes[1])
             parameterTypes.addAll(methodType.subtypes[0 .. methodType.subtypes.count - 1])

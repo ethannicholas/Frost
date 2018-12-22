@@ -254,14 +254,14 @@ class HCodeGenerator : CodeGenerator {
         if !m.returnType.isClass {
             return false
         }
-        def result := m.annotations.isExternal() & m.returnType.isClass &
+        def result := m.annotations.isExternal & m.returnType.isClass &
                 compiler.isValue(compiler.getClass(m.returnType))
         -- if an external method requires struct indirection, it will have a different signature
         -- than a non-external method; this means this feature doesn't play nice with overriding. We
         -- can fix this down the road with shims, but for right now just assert that a method
         -- requiring struct indirection is not an override and cannot be overridden
-        assert !result | (!m.annotations.isOverride() & (m.annotations.isFinal() |
-                m.annotations.isClass())), "invalid struct indirection on \{m.signature()}"
+        assert !result | (!m.annotations.isOverride & (m.annotations.isFinal |
+                m.annotations.isClass)), "invalid struct indirection on \{m.signature()}"
         return result
     }
 
@@ -277,7 +277,7 @@ class HCodeGenerator : CodeGenerator {
         else {
             body.print("\{type(m.returnType)} \{getName(m)}(")
         }
-        if !m.annotations.isClass() & !compiler.isValueInit(m) {
+        if !m.annotations.isClass & !compiler.isValueInit(m) {
             body.print("\{separator}\{selfType(m)} self")
             separator := ", "
         }

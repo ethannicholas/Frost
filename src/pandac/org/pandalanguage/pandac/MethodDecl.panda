@@ -81,11 +81,11 @@ class MethodDecl : Symbol {
     }
 
     function get_isVirtual():Bit {
-        return !annotations.isClass() & methodKind != Kind.INIT & !annotations.isFinal()
+        return !annotations.isClass & methodKind != Kind.INIT & !annotations.isFinal
     }
 
     function isInstance():Bit {
-        return !annotations.isClass()
+        return !annotations.isClass
     }
 
     function matches(other:MethodDecl):Bit {

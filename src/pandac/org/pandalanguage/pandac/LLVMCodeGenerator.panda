@@ -167,7 +167,7 @@ class LLVMCodeGenerator : CodeGenerator {
         }
         var result := 0
         for f in compiler.instanceFields(cl) {
-            if f.annotations.isClass() {
+            if f.annotations.isClass {
                 continue
             }
             compiler.resolve(f)
@@ -297,7 +297,7 @@ class LLVMCodeGenerator : CodeGenerator {
         writtenTypes.add(t.name)
         def cl := compiler.getClass(t)
         assert cl !== null
-        assert !cl.annotations.isSpecialize()
+        assert !cl.annotations.isSpecialize
         compiler.resolve(cl)
         if cl.resolved != Compiler.Resolution.RESOLVED {
             out.print("<error resolving \{t}>")
@@ -522,7 +522,7 @@ class LLVMCodeGenerator : CodeGenerator {
             for m in methods {
                 result.append(separator)
                 separator := ", "
-                if m.annotations.isAbstract() {
+                if m.annotations.isAbstract {
                     result.append("i8* null")
                 }
                 else {
@@ -655,7 +655,7 @@ class LLVMCodeGenerator : CodeGenerator {
             for m in methods {
                 result.append(separator)
                 separator := ", "
-                if m.annotations.isAbstract() {
+                if m.annotations.isAbstract {
                     result.append("i8* null")
                 }
                 else {
@@ -690,14 +690,14 @@ class LLVMCodeGenerator : CodeGenerator {
         if !m.returnType.isClass {
             return false
         }
-        def result := m.annotations.isExternal() & m.returnType.isClass &
+        def result := m.annotations.isExternal & m.returnType.isClass &
                 compiler.isValue(compiler.getClass(m.returnType))
         -- if an external method requires struct indirection, it will have a different signature
         -- than a non-external method; this means this feature doesn't play nice with overriding. We
         -- can fix this down the road with shims, but for right now just assert that a method
         -- requiring struct indirection is not an override and cannot be overridden
-        assert !result | (!m.annotations.isOverride() & (m.annotations.isFinal() |
-                m.annotations.isClass())), "invalid struct indirection on \{m.signature()}"
+        assert !result | (!m.annotations.isOverride & (m.annotations.isFinal |
+                m.annotations.isClass)), "invalid struct indirection on \{m.signature()}"
         return result
     }
 
@@ -740,7 +740,7 @@ class LLVMCodeGenerator : CodeGenerator {
     }
 
     method getClassConstant(cl:ClassDecl):ClassConstant {
-        assert !cl.annotations.isSpecialize()
+        assert !cl.annotations.isSpecialize
         var result := classConstants[cl.name]
         if result == null {
             compiler.resolve(cl)
@@ -778,7 +778,7 @@ class LLVMCodeGenerator : CodeGenerator {
             var separator := ""
             for m in vtable {
                 code.append(separator)
-                if m.annotations.isAbstract() {
+                if m.annotations.isAbstract {
                     code.append("i8* null")
                 }
                 else {
@@ -924,7 +924,7 @@ class LLVMCodeGenerator : CodeGenerator {
     }
 
     function getName(f:FieldDecl):String {
-        assert f.annotations.isClass()
+        assert f.annotations.isClass
         return "@\{escapeName(f.owner.name)}$\{f.name}"
     }
 
@@ -1271,7 +1271,7 @@ class LLVMCodeGenerator : CodeGenerator {
             declarations.print("\{llvmType(m.returnType)}*")
             separator := ", "
         }
-        if !m.annotations.isClass() & !compiler.isValueInit(m) {
+        if !m.annotations.isClass & !compiler.isValueInit(m) {
             declarations.print("\{separator}\{selfType(m)} %self")
             separator := ", "
         }
@@ -1942,7 +1942,7 @@ class LLVMCodeGenerator : CodeGenerator {
 
     @override
     method start(cl:ClassDecl) {
-        if cl.annotations.isSpecialize() {
+        if cl.annotations.isSpecialize {
             return
         }
         if compiler.settings.debug {

@@ -123,25 +123,25 @@ class PandaDoc {
 
     method write(a:Annotations) {
         out.open("annotations")
-        if a.isPrivate() {
+        if a.isPrivate {
             out.write("annotation", "@private")
         }
-        if a.isProtected() {
+        if a.isProtected {
             out.write("annotation", "@protected")
         }
-        if a.isPackage() {
+        if a.isPackage {
             out.write("annotation", "@package")
         }
-        if a.isClass() {
+        if a.isClass {
             out.write("annotation", "@class")
         }
-        if a.isOverride() {
+        if a.isOverride {
             out.write("annotation", "@override")
         }
-        if a.isFinal() {
+        if a.isFinal {
             out.write("annotation", "@final")
         }
-        if a.isWeak() {
+        if a.isWeak {
             out.write("annotation", "@weak")
         }
         if a.expressions !== null {
@@ -242,11 +242,11 @@ class PandaDoc {
     }
 
     function visible(cl:ClassDecl):Bit {
-        return !cl.annotations.isPrivate() & !cl.annotations.isPackage()
+        return !cl.annotations.isPrivate & !cl.annotations.isPackage
     }
 
     function visible(f:FieldDecl):Bit {
-        return !f.annotations.isPrivate() & !f.annotations.isSynthetic()
+        return !f.annotations.isPrivate & !f.annotations.isSynthetic
     }
 
     function visible(m:MethodDecl):Bit {
@@ -256,7 +256,7 @@ class PandaDoc {
         if m.name.startsWith("get_") | m.name.startsWith("set_") {
             return false
         }
-        return !m.annotations.isPrivate() & !m.annotations.isSynthetic()
+        return !m.annotations.isPrivate & !m.annotations.isSynthetic
     }
 
     method writeDoc(f:FieldDecl) {
@@ -393,7 +393,7 @@ class PandaDoc {
         out.write("name", escape(m.name))
         writeDoc(m)
         def annotations := m.annotations
-        if m.owner.annotations.isFinal() {
+        if m.owner.annotations.isFinal {
             annotations.flags &&= !!Annotations.Flag.FINAL
         }
         write(annotations)

@@ -43,6 +43,36 @@ class Annotations {
 
     def expressions:Array<Expression>?
 
+    property isPrivate:Bit
+
+    property isProtected:Bit
+
+    property isPackage:Bit
+
+    property isClass:Bit
+
+    property isOverride:Bit
+
+    property isExternal:Bit
+
+    property isImplicit:Bit
+
+    property isFinal:Bit
+
+    property isAbstract:Bit
+
+    property isInline:Bit
+
+    property isSpecialize:Bit
+
+    property isWeak:Bit
+
+    property isSynthetic:Bit
+
+    property isUnsafeImmutable:Bit
+
+    property isDefault:Bit
+
     init() {
         init(0)
     }
@@ -61,112 +91,112 @@ class Annotations {
         }
     }
 
-    function isPrivate():Bit {
+    function get_isPrivate():Bit {
         return flags && Flag.PRIVATE != 0
     }
 
-    function isProtected():Bit {
+    function get_isProtected():Bit {
         return flags && Flag.PROTECTED != 0
     }
 
-    function isPackage():Bit {
+    function get_isPackage():Bit {
         return flags && Flag.PACKAGE != 0
     }
 
-    function isClass():Bit {
+    function get_isClass():Bit {
         return flags && Flag.CLASS != 0
     }
 
-    function isOverride():Bit {
+    function get_isOverride():Bit {
         return flags && Flag.OVERRIDE != 0
     }
 
-    function isExternal():Bit {
+    function get_isExternal():Bit {
         return flags && Flag.EXTERNAL != 0
     }
 
-    function isImplicit():Bit {
+    function get_isImplicit():Bit {
         return flags && Flag.IMPLICIT != 0
     }
 
-    function isFinal():Bit {
+    function get_isFinal():Bit {
         return flags && Flag.FINAL != 0
     }
 
-    function isAbstract():Bit {
+    function get_isAbstract():Bit {
         return flags && Flag.ABSTRACT != 0
     }
 
-    function isInline():Bit {
+    function get_isInline():Bit {
         return flags && Flag.INLINE != 0
     }
 
-    function isSpecialize():Bit {
+    function get_isSpecialize():Bit {
         return flags && Flag.SPECIALIZE != 0
     }
 
-    function isWeak():Bit {
+    function get_isWeak():Bit {
         return flags && Flag.WEAK != 0
     }
 
-    function isSynthetic():Bit {
+    function get_isSynthetic():Bit {
         return flags && Flag.SYNTHETIC != 0
     }
 
-    function isUnsafeImmutable():Bit {
+    function get_isUnsafeImmutable():Bit {
         return flags && Flag.UNSAFE_IMMUTABLE != 0
     }
 
-    function isDefault():Bit {
+    function get_isDefault():Bit {
         return flags && Flag.DEFAULT != 0
     }
 
     @override
     function convert():String {
         def result := MutableString()
-        if isPrivate() {
+        if isPrivate {
             result.append("@private\n")
         }
-        if isProtected() {
+        if isProtected {
             result.append("@protected\n")
         }
-        if isPackage() {
+        if isPackage {
             result.append("@package\n")
         }
-        if isClass() {
+        if isClass {
             result.append("@class\n")
         }
-        if isOverride() {
+        if isOverride {
             result.append("@override\n")
         }
-        if isExternal() {
+        if isExternal {
             result.append("@external\n")
         }
-        if isImplicit() {
+        if isImplicit {
             result.append("@implicit\n")
         }
-        if isFinal() {
+        if isFinal {
             result.append("@final\n")
         }
-        if isAbstract() {
+        if isAbstract {
             result.append("@abstract\n")
         }
-        if isInline() {
+        if isInline {
             result.append("@inline\n")
         }
-        if isSpecialize() {
+        if isSpecialize {
             result.append("@specialize\n")
         }
-        if isWeak() {
+        if isWeak {
             result.append("@weak\n")
         }
-        if isSynthetic() {
+        if isSynthetic {
             result.append("@synthetic\n")
         }
-        if isUnsafeImmutable() {
+        if isUnsafeImmutable {
             result.append("@unsafeImmutable\n")
         }
-        if isDefault() {
+        if isDefault {
             result.append("@default\n")
         }
         if expressions !== null {
