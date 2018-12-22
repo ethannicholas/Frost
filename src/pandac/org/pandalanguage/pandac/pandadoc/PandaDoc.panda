@@ -106,7 +106,7 @@ class PandaDoc {
         out.open("type")
         out.write("name", escape(t.name))
         out.write("simpleName", escape(simpleName(t)))
-        if t.isClass() {
+        if t.isClass {
             def cl := compiler.getClass(t)
             if cl !== null {
                 if cl.isSpecialization() {

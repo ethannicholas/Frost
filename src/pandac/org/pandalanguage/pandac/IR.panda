@@ -354,7 +354,7 @@ class IR {
                 when SUPER(type):
                     return "SUPER(\{type})"
                 when TYPE(type):
-                    return type.convert()
+                    return "TYPE(\{type.convert()})"
             }
         }
     }

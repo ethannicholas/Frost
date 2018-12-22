@@ -21,26 +21,13 @@ class PLex {
         def token := IndentedOutputStream(tokenPath.openOutputStream())
         def nfa := NFA()
         printWarning(token)
-        Console.printLine("YO FIX DIS CRAP")
-        if tokenName = "org.pandalanguage.regex.RegexToken" {
-            token.printLine("package org.pandalanguage.regex")
-        }
-        else if tokenName = "org.pandalanguage.pandac.parser.Token" {
-            token.printLine("package org.pandalanguage.pandac.parser")
-        }
---        token.printLine("package \{tokenName[..tokenName.lastIndexOf(".")]}")
+        token.printLine("package \{tokenName[..tokenName.lastIndexOf(".")]}")
         token.printLine()
         token.printLine("uses \{positionName}")
         token.printLine()
         token.printLine("@final")
---        def index := tokenName.next(tokenName.lastIndexOf("."))
---        token.printLine("class \{tokenName[index..]} : Value {")
-        if tokenName = "org.pandalanguage.regex.RegexToken" {
-            token.printLine("class RegexToken : Value {")
-        }
-        else if tokenName = "org.pandalanguage.pandac.parser.Token" {
-            token.printLine("class Token : Value {")
-        }
+        def index := tokenName.next(tokenName.lastIndexOf("."))
+        token.printLine("class \{tokenName[index..]} : Value {")
         token.level += 1
         token.printLine("choice Kind {")
         token.level += 1
@@ -140,26 +127,14 @@ class PLex {
     method writeLexer(tokenName:String, lexerName:String, lexerPath:File, positionName:String,
             dfa:DFA, out:IndentedOutputStream) {
         printWarning(out)
-        if lexerName = "org.pandalanguage.pandac.parser.Lexer" {
-            out.printLine("package org.pandalanguage.pandac.parser")
-        }
-        else if lexerName = "org.pandalanguage.regex.RegexLexer" {
-            out.printLine("package org.pandalanguage.regex")
-        }
---        out.printLine("package \{lexerName[..lexerName.lastIndexOf(".")]}")
+        out.printLine("package \{lexerName[..lexerName.lastIndexOf(".")]}")
         out.printLine()
         out.printLine("uses panda.unsafe.Pointer")
         out.printLine("uses org.pandalanguage.plex.runtime.DFA")
         out.printLine("uses \{positionName}")
         out.printLine()
         out.printLine("@final")
-        if lexerName = "org.pandalanguage.pandac.parser.Lexer" {
-            out.printLine("class Lexer {")
-        }
-        else if lexerName = "org.pandalanguage.regex.RegexLexer" {
-            out.printLine("class RegexLexer {")
-        }
---        out.printLine("class \{lexerName[lexerName.next(lexerName.lastIndexOf("."))..]} {")
+        out.printLine("class \{lexerName[lexerName.next(lexerName.lastIndexOf("."))..]} {")
         out.level += 1
         out.printLine("def dfa:DFA")
         out.printLine()

@@ -28,12 +28,20 @@ class MethodRef {
         self.target := target
         def found := compiler.findType(target, value.owner)
         assert found !== null, "findType(\{target}, \{value.owner.name}) failed"
-        self.effectiveType := compiler.remapType(found, value.type())
+        var methodType := value.type()
+        if !value.annotations.isClass() & target.isClassLiteral {
+            def parameterTypes := Array<Type>()
+            parameterTypes.add(target.subtypes[1])
+            parameterTypes.addAll(methodType.subtypes[0 .. methodType.subtypes.count - 1])
+            methodType := Type.methodType(methodType.position, methodType.typeKind, parameterTypes,
+                    methodType.returnType, methodType.priority)
+        }
+        self.effectiveType := compiler.remapType(found, methodType)
         for i in 0 .. 10 { Panda.ref(self) } -- FIXME hack workaround for suspected refcounting bug in bootstrap
     }
 
     function get_parameterCount():Int {
-        return value.parameters.count
+        return effectiveType.parameterCount
     }
 
     function parameterType(index:Int):Type {
@@ -41,7 +49,7 @@ class MethodRef {
     }
 
     function get_returnType():Type {
-        return effectiveType.returnType()
+        return effectiveType.returnType
     }
 
     @override

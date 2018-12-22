@@ -144,7 +144,7 @@ class LLVMCodeGenerator : CodeGenerator {
              -- void as the result of an error which should have been reported elsewhere
             return 1
         }
-        if t.isBuiltinNumber() {
+        if t.isBuiltinNumber {
             if t.name.endsWith("8") {
                 return 1
             }
@@ -196,7 +196,7 @@ class LLVMCodeGenerator : CodeGenerator {
     }
 
     function sizeOf(t:Type):Int {
-        if !t.isClass() {
+        if !t.isClass {
             return fieldSize(t)
         }
         def cl := compiler.getClass(t)
@@ -313,7 +313,7 @@ class LLVMCodeGenerator : CodeGenerator {
                 compiler.currentClass.pop()
                 return
             }
-            if f.type.isClass() {
+            if f.type.isClass {
                 def fCl := compiler.getClass(f.type)
                 if !compiler.isValue(fCl) {
                     -- If we write the correct type definition here, we end up loading and parsing a
@@ -404,7 +404,7 @@ class LLVMCodeGenerator : CodeGenerator {
                 return llvmType(t.subtypes[0])
             when Type.Kind.GENERIC:
                 if t.subtypes[0].name = "panda.unsafe.Pointer" {
-                    if t.subtypes[1].isMethod() {
+                    if t.subtypes[1].isMethod {
                         return llvmMethodType(t.subtypes[1], null)
                     }
                     return llvmType(t.subtypes[1]) + "*"
@@ -473,7 +473,7 @@ class LLVMCodeGenerator : CodeGenerator {
     method wrapperType(m:MethodDecl):String {
         def inheritedType := compiler.inheritedType(m)
         def result := MutableString()
-        result.append(llvmType(inheritedType.returnType()))
+        result.append(llvmType(inheritedType.returnType))
         result.append("(")
         assert m.isInstance()
         result.append("%\{escapeName(m.owner.name)}")
@@ -544,13 +544,13 @@ class LLVMCodeGenerator : CodeGenerator {
         }
         def oldOut := out
         out := shims
-        assert effective.isMethod()
+        assert effective.isMethod
         assert effective.subtypes.count = raw.parameters.count + 2 -- self and return
         assert raw.isInstance()
         def unrefs := MemoryOutputStream()
         def oldVarCount := varCount
         varCount := 0
-        def effectiveReturnType := effective.returnType()
+        def effectiveReturnType := effective.returnType
         def resultName := getName(raw) + "$shim"
         def resultType := MutableString(llvmType(effectiveReturnType))
         out.print("define linkonce_odr ")
@@ -687,10 +687,10 @@ class LLVMCodeGenerator : CodeGenerator {
     return structs explicitly receive a pointer to the result structure as their first parameter.
     ================================================================================================
     function needsStructIndirection(m:MethodDecl):Bit {
-        if !m.returnType.isClass() {
+        if !m.returnType.isClass {
             return false
         }
-        def result := m.annotations.isExternal() & m.returnType.isClass() &
+        def result := m.annotations.isExternal() & m.returnType.isClass &
                 compiler.isValue(compiler.getClass(m.returnType))
         -- if an external method requires struct indirection, it will have a different signature
         -- than a non-external method; this means this feature doesn't play nice with overriding. We
@@ -793,7 +793,7 @@ class LLVMCodeGenerator : CodeGenerator {
         return result
     }
 
-    @pre(!cl.type.isPointer())
+    @pre(!cl.type.isPointer)
     method getWrapperClassConstant(cl:ClassDecl):ClassConstant {
         if !compiler.resolve(cl) {
             return ClassConstant("<error>", "<error>")
@@ -1064,8 +1064,8 @@ class LLVMCodeGenerator : CodeGenerator {
 
     method getCastReference(position:Position, value:String, src:Type, target:Type):String {
         def op:String
-        if target.isBuiltinNumber() {
-            assert src.isBuiltinNumber()
+        if target.isBuiltinNumber {
+            assert src.isBuiltinNumber
             def size1 := sizeOf(src)
             def size2 := sizeOf(target)
             if src.typeKind = Type.Kind.BUILTIN_FLOAT {
@@ -1114,7 +1114,7 @@ class LLVMCodeGenerator : CodeGenerator {
                 }
             }
         }
-        else if src.isPointer() | target.isPointer() {
+        else if src.isPointer | target.isPointer {
             op := "bitcast"
         }
         else {
@@ -1512,10 +1512,10 @@ class LLVMCodeGenerator : CodeGenerator {
     method writeDynamicCall(position:Position, id:IR.Statement.ID, m:IR.Value,
             args:ListView<IR.Value>) {
         var type := m.type()
-        if type.isPointer() {
+        if type.isPointer {
             type := type.subtypes[1]
         }
-        def returnType := type.returnType()
+        def returnType := type.returnType
         if returnType != Type.Void() {
             def result := nextVar()
             out.print("\{result} = ")

@@ -241,7 +241,7 @@ class WriteNumbers {
         out.printLine()
         out.printLine("    ===\{doc}===")
         if leftType = rightType {
-            out.printLine("    @priority(2)")
+            out.printLine("    @priority(3)")
         }
         else if rightType = Type.INT64 {
             out.printLine("    @priority(1)")
@@ -292,7 +292,7 @@ class WriteNumbers {
         out.printLine()
         out.printLine("    ===Divides this number by another number.===")
         if leftType = rightType {
-            out.printLine("    @priority(2)")
+            out.printLine("    @priority(3)")
         }
         if rightType = Type.REAL32 | rightType = Type.REAL64 {
             out.printLine("    @priority(1)")
@@ -337,7 +337,7 @@ class WriteNumbers {
         out.printLine("    ===\{doc}===")
         if leftType = rightType {
             out.printLine("    @override")
-            out.printLine("    @priority(2)")
+            out.printLine("    @priority(3)")
         }
         else if rightType = Type.INT64 {
             out.printLine("    @priority(1)")
@@ -376,7 +376,7 @@ class WriteNumbers {
         out.printLine("    ===Returns the larger (closest to positive infinity) of this number " +
                 "and another number.===")
         if leftType = rightType {
-            out.printLine("    @priority(2)")
+            out.printLine("    @priority(3)")
         }
         else if rightType = Type.INT64 {
             out.printLine("    @priority(1)")
@@ -412,7 +412,7 @@ class WriteNumbers {
         out.printLine("    ===Returns the smaller (closest to negative infinity) of this number " +
                 "and another number.===")
         if leftType = rightType {
-            out.printLine("    @priority(2)")
+            out.printLine("    @priority(3)")
         }
         else if rightType = Type.INT64 {
             out.printLine("    @priority(1)")

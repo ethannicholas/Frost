@@ -33,10 +33,36 @@ class Type : Symbol, Key<Type> {
     -- @priority from methods (0 if not a method / no @priority)
     def priority:Int
 
-    property parameterCount:Int
-
     @weak
     def genericParameter:ClassDecl.GenericParameter?
+
+    property isNumber:Bit
+
+    property isBuiltinNumber:Bit
+
+    property isReal:Bit
+
+    property isChar:Bit
+
+    property isNumeric:Bit
+
+    property isClass:Bit
+
+    property isClassLiteral:Bit
+
+    property isMethod:Bit
+
+    property isPointer:Bit
+
+    property isRange:Bit
+
+    property isSteppedRange:Bit
+
+    property isNullable:Bit
+
+    property parameterCount:Int
+
+    property returnType:Type
 
     init(name:String, typeKind:Kind, position:Position) {
         init(name, typeKind, position, false)
@@ -461,30 +487,30 @@ class Type : Symbol, Key<Type> {
         return Type("<invalid>", Kind.INVALID, Position(), true)
     }
 
-    function isNumber():Bit {
+    function get_isNumber():Bit {
         return name.startsWith("panda.core.Int") | name.startsWith("panda.core.UInt") |
                 name.startsWith("panda.core.Real") | typeKind = Kind.INT_LITERAL |
                 typeKind = Kind.REAL_LITERAL
     }
 
-    function isBuiltinNumber():Bit {
+    function get_isBuiltinNumber():Bit {
         return typeKind = Kind.BUILTIN_INT | typeKind = Kind.BUILTIN_UINT |
                 typeKind = Kind.BUILTIN_FLOAT | typeKind = Kind.INT_LITERAL
     }
 
-    function isReal():Bit {
+    function get_isReal():Bit {
         return typeKind = Kind.REAL_LITERAL | name.startsWith("panda.core.Real")
     }
 
-    function isChar():Bit {
+    function get_isChar():Bit {
         return name.startsWith("panda.core.Char")
     }
 
-    function isNumeric():Bit {
-        return isNumber() | isChar()
+    function get_isNumeric():Bit {
+        return isNumber | isChar
     }
 
-    function isClass():Bit {
+    function get_isClass():Bit {
         match typeKind {
             when Kind.CLASS, Kind.NULLABLE, Kind.GENERIC, Kind.GENERIC_PARAMETER, Kind.METHOD,
                     Kind.FUNCTION, Kind.IMMUTABLE_METHOD, Kind.IMMUTABLE_FUNCTION:
@@ -494,11 +520,11 @@ class Type : Symbol, Key<Type> {
         }
     }
 
-    function isClassLiteral():Bit {
+    function get_isClassLiteral():Bit {
         return typeKind = Kind.GENERIC & subtypes[0] = Class()
     }
 
-    function isMethod():Bit {
+    function get_isMethod():Bit {
         match typeKind {
             when Kind.METHOD, Kind.FUNCTION, Kind.IMMUTABLE_METHOD, Kind.IMMUTABLE_FUNCTION:
                 return true
@@ -507,19 +533,19 @@ class Type : Symbol, Key<Type> {
         }
     }
 
-    function isPointer():Bit {
+    function get_isPointer():Bit {
         return name.startsWith("panda.unsafe.Pointer")
     }
 
-    function isRange():Bit {
+    function get_isRange():Bit {
         return name.startsWith("panda.core.Range<")
     }
 
-    function isSteppedRange():Bit {
+    function get_isSteppedRange():Bit {
         return name.startsWith("panda.core.SteppedRange<")
     }
 
-    function isNullable():Bit {
+    function get_isNullable():Bit {
         return typeKind = Kind.NULLABLE
     }
 
@@ -553,7 +579,7 @@ class Type : Symbol, Key<Type> {
 
     @pre(typeKind = Kind.FUNCTION | typeKind = Kind.METHOD | typeKind = Kind.IMMUTABLE_FUNCTION |
             typeKind = Kind.IMMUTABLE_METHOD)
-    function returnType():Type {
+    function get_returnType():Type {
         return subtypes[subtypes.count - 1]
     }
 
@@ -574,28 +600,28 @@ class Type : Symbol, Key<Type> {
             }
             return nullable()
         }
-        if typeKind = Kind.INT_LITERAL & other.isNumber() {
+        if typeKind = Kind.INT_LITERAL & other.isNumber {
             return other
         }
-        if isNumber() & other.typeKind = Kind.INT_LITERAL {
+        if isNumber & other.typeKind = Kind.INT_LITERAL {
             return self
         }
-        if isReal() {
+        if isReal {
             if other.typeKind = Kind.INT_LITERAL | other.typeKind = Kind.REAL_LITERAL {
                 return self
             }
-            if other.isNumber() {
+            if other.isNumber {
                 if other.name.endsWith("64") {
                     return Real64()
                 }
                 return Real32()
             }
         }
-        if other.isReal() {
+        if other.isReal {
             if typeKind = Kind.INT_LITERAL | typeKind = Kind.REAL_LITERAL {
                 return other
             }
-            if isNumber() {
+            if isNumber {
                 if name.endsWith("64") {
                     return Real64()
                 }
@@ -610,7 +636,7 @@ class Type : Symbol, Key<Type> {
         }
         def t1 := compiler.preferredType(self)
         def t2 := compiler.preferredType(other)
-        if t1.isClass() & t2.isClass() {
+        if t1.isClass & t2.isClass {
             def ancestors := HashSet<Type>()
             var t := self
             var cl := compiler.getClass(t1)

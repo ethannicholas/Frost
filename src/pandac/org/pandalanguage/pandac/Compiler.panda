@@ -469,7 +469,7 @@ class Compiler {
     }
 
     method isRefCounted(type:Type):Bit {
-        if !type.isClass() {
+        if !type.isClass {
             return false
         }
         return !isValue(type)
@@ -656,7 +656,7 @@ class Compiler {
                     }
                     params.add(resolved)
                 }
-                def returnType := resolve(type.returnType())
+                def returnType := resolve(type.returnType)
                 if returnType == null {
                     return null
                 }
@@ -1017,7 +1017,7 @@ class Compiler {
     }
 
     method isValue(t:Type):Bit {
-        if !t.isClass() {
+        if !t.isClass {
             return true
         }
         def cl := getClass(t)
@@ -1045,7 +1045,7 @@ class Compiler {
     }
 
     method isImmutable(t:Type):Bit {
-        if !t.isClass() {
+        if !t.isClass {
             return true
         }
         def cl := getClass(t)
@@ -1255,8 +1255,8 @@ class Compiler {
     }
 
     function signatureMatch(t1:Type, t2:Type):Bit {
-        assert t1.isMethod()
-        assert t2.isMethod()
+        assert t1.isMethod
+        assert t2.isMethod
         if t1.subtypes.count != t2.subtypes.count {
             return false
         }
@@ -1555,8 +1555,8 @@ class Compiler {
                     return coercionCost(type.subtypes[0], target)
                 }
         }
-        if type.isMethod() {
-            if target.isMethod() {
+        if type.isMethod {
+            if target.isMethod {
                 if type.subtypes.count != target.subtypes.count {
                     return null
                 }
@@ -1605,13 +1605,18 @@ class Compiler {
                 if targetMutable != srcMutable {
                     total += 1
                 }
-                for i in 0 .. type.subtypes.count {
-                    def cost := coercionCost(type.subtypes[i], target.subtypes[i])
+                for i in 0 .. type.parameterCount {
+                    def cost := coercionCost(target.subtypes[i], type.subtypes[i])
                     if cost == null {
                         return null
                     }
                     total += cost
                 }
+                def cost := coercionCost(type.returnType, target.returnType)
+                if cost == null {
+                    return null
+                }
+                total += cost
                 return total
             }
             if type.typeKind = Type.Kind.IMMUTABLE_METHOD |
@@ -1638,7 +1643,7 @@ class Compiler {
             when Type.Kind.GENERIC_PARAMETER:
                 return coercionCost(type.genericParameter.bound, target)
         }
-        if !target.isClass() {
+        if !target.isClass {
             return null
         }
         def targetCl := getClass(target)
@@ -1650,7 +1655,7 @@ class Compiler {
                 }
             }
         }
-        if !type.isClass() {
+        if !type.isClass {
             return null
         }
         def cl := getClass(type)
@@ -1731,7 +1736,7 @@ class Compiler {
                 }
                 cost += argCost
             }
-            def returnType := m.returnType()
+            def returnType := m.returnType
             match type {
                 when TypeContext.IMMUTABLE:
                     if returnType = Type.Void() | !isImmutable(returnType) {
@@ -1772,6 +1777,10 @@ class Compiler {
             return result.second
         }
         return null
+    }
+
+    function isClassContext():Bit {
+        return currentMethod[0].annotations.isClass()
     }
 
     function symbolType(target:Type?, s:Symbol):ListView<Type>? {
@@ -1821,7 +1830,14 @@ class Compiler {
                     result.add(MethodRef(self, target, m).effectiveType)
                 }
                 else {
-                    result.add(MethodRef(self, currentClass[0].type, m).effectiveType)
+                    def implicitTarget:Type
+                    if isClassContext() {
+                        implicitTarget := Type.ClassLiteral(currentClass[0].type)
+                    }
+                    else {
+                        implicitTarget := currentClass[0].type
+                    }
+                    result.add(MethodRef(self, implicitTarget, m).effectiveType)
                 }
             when Symbol.Kind.METHODS:
                 for m in s->Methods.methods { -- FIXME use map
@@ -1833,7 +1849,14 @@ class Compiler {
                             result.add(MethodRef(self, target, m).effectiveType)
                         }
                         else {
-                            result.add(MethodRef(self, currentClass[0].type, m).effectiveType)
+                            def implicitTarget:Type
+                            if isClassContext() {
+                                implicitTarget := Type.ClassLiteral(currentClass[0].type)
+                            }
+                            else {
+                                implicitTarget := currentClass[0].type
+                            }
+                            result.add(MethodRef(self, implicitTarget, m).effectiveType)
                         }
                     }
                 }
@@ -1846,9 +1869,10 @@ class Compiler {
     }
 
     method dotTypes(base:Type, name:String):ListView<Type>? {
-        if base.isClass() {
+        if base.isClass {
             def cl:ClassDecl
-            if base.typeKind = Type.Kind.GENERIC & base.subtypes[0] = Type.Class() {
+            def isClass := base.isClassLiteral
+            if isClass {
                 -- class literal, grab the class itself rather than panda.core.Class
                 cl := getClass(base.subtypes[1])
             }
@@ -2019,9 +2043,9 @@ class Compiler {
                     }
                 }
                 if !found {
-                    if target.isBuiltinNumber() {
+                    if target.isBuiltinNumber {
                         def preferred := preferredType(left)
-                        if preferred == null | !preferred.isBuiltinNumber() {
+                        if preferred == null | !preferred.isBuiltinNumber {
                             return null
                         }
                     }
@@ -2065,7 +2089,7 @@ class Compiler {
                 -- this is a bit sloppy and allows for illegal operations like Real32 << Real32,
                 -- but since nobody outside of the compiler itself should be using builtin
                 -- types, it's not a big deal
-                if type.isBuiltinNumber() {
+                if type.isBuiltinNumber {
                     match op {
                         when Token.Kind.ADD, Token.Kind.SUB, Token.Kind.MUL, Token.Kind.DIV,
                                 Token.Kind.INTDIV, Token.Kind.REM, Token.Kind.POW,
@@ -2116,7 +2140,7 @@ class Compiler {
                 }
                 if methodTypes.count = 1 {
                     def t := methodTypes.iterator().next()
-                    if t.isClass() {
+                    if t.isClass {
                         def cl := getClass(t)
                         if cl !== null & cl.classKind = ClassDecl.Kind.CHOICE {
                             -- choice case
@@ -2136,7 +2160,7 @@ class Compiler {
                 if result !== null {
                     def resultTypes := HashSet<Type>()
                     for m in result.first {
-                        resultTypes.add(m.returnType())
+                        resultTypes.add(m.returnType)
                     }
                     return resultTypes
                 }
@@ -2258,12 +2282,20 @@ class Compiler {
                     return null
                 }
                 def result := Array<Type>()
-                assert s.kind = Symbol.Kind.VARIABLE
-                def cl := getClass(s->Variable.type)
+                def type:Type
+                match s.kind {
+                    when Symbol.Kind.VARIABLE:
+                        type := s->Variable.type
+                    when Symbol.Kind.FIELD:
+                        type := s->FieldDecl.type
+                    otherwise:
+                        assert false
+                }
+                def cl := getClass(type)
                 if !resolve(cl) {
                     return null
                 }
-                result.add(remapType(s->Variable.type, cl.rawSuper))
+                result.add(remapType(type, cl.rawSuper))
                 return result
             when ASTNode.STRING(_, text):
                 def result := Array<Type>() -- FIXME literal
@@ -2313,9 +2345,9 @@ class Compiler {
                 return null
             }
             if coercionCost(left, target) == null {
-                if target.isBuiltinNumber() {
+                if target.isBuiltinNumber {
                     def leftType := preferredType(left)
-                    if leftType == null | !leftType.isBuiltinNumber() {
+                    if leftType == null | !leftType.isBuiltinNumber {
                         return null
                     }
                 }
@@ -2394,7 +2426,7 @@ class Compiler {
     }
 
     method typedLambdaCoercionCost(parameters:ListView<ASTNode>, body:ASTNode, target:Type):Int? {
-        if !target.nonnullable().isMethod() {
+        if !target.nonnullable().isMethod {
             return coercionCost(Type.MutableMethod(), target)
         }
         if target.typeKind = Type.Kind.NULLABLE {
@@ -2426,12 +2458,12 @@ class Compiler {
         if returnType == null {
             return null
         }
-        cost += coercionCost(returnType, target.returnType())
+        cost += coercionCost(returnType, target.returnType)
         return cost
     }
 
     method untypedLambdaCoercionCost(parameters:ListView<ASTNode>, body:ASTNode, target:Type):Int? {
-        if !target.nonnullable().isMethod() {
+        if !target.nonnullable().isMethod {
             return coercionCost(Type.MutableMethod(), target)
         }
         if target.typeKind = Type.Kind.NULLABLE {
@@ -2495,7 +2527,7 @@ class Compiler {
                 }
                 if methodTypes.count = 1 {
                     def t := methodTypes.iterator().next()
-                    if t.isClassLiteral() {
+                    if t.isClassLiteral {
                         def resultCost := coercionCost(t.subtypes[1], target)
                         if resultCost == null {
                             return null
@@ -2534,13 +2566,13 @@ class Compiler {
                 if target.typeKind = Type.Kind.BUILTIN_FLOAT {
                     return 1
                 }
-                if target.isNumber() {
+                if target.isNumber {
                     def cl := getClass(target)
                     assert cl != null
                     def initMethod := cl.methods[0]
                     assert initMethod.methodKind = MethodDecl.Kind.INIT
                     assert initMethod.annotations.isImplicit()
-                    return -initMethod.priority
+                    return 2 - initMethod.priority
                 }
                 def preferred := preferredType(expr)
                 assert preferred !== null
@@ -2608,7 +2640,7 @@ class Compiler {
                 }
                 def preferred := preferredType(operand)
                 if preferred !== null & (preferred = Type.BuiltinBit() |
-                        preferred.isBuiltinNumber()) {
+                        preferred.isBuiltinNumber) {
                     return coercionCost(preferred, target)
                 }
                 return coercionCost(ASTNode.CALL(position,
@@ -2621,7 +2653,7 @@ class Compiler {
                 if (target.typeKind = Type.Kind.BUILTIN_FLOAT) {
                     return 0
                 }
-                if target.isReal() {
+                if target.isReal {
                     return 1
                 }
                 def preferred := preferredType(expr)
@@ -2632,7 +2664,7 @@ class Compiler {
             when ASTNode.SELF:
                 return coercionCost(currentClass[0].typeWithParameters(), target)
             when ASTNode.STRING(_, text):
-                if target.isChar() & text.length() = 1 {
+                if target.isChar & text.length() = 1 {
                     def size := smallestCharSize(text[0])
                     def targetSize:Int
                     match target {
@@ -2699,13 +2731,13 @@ class Compiler {
     }
 
     method canCast(type:Type, target:Type):Bit {
-        if type.isPointer() & (target.isPointer() | target.nonnullable().isMethod()) {
+        if type.isPointer & (target.isPointer | target.nonnullable().isMethod) {
             return true
         }
         if coercionCost(type, target) !== null {
             return true
         }
-        if type.isBuiltinNumber() & target.isBuiltinNumber() {
+        if type.isBuiltinNumber & target.isBuiltinNumber {
             return true
         }
         if type.typeKind = Type.Kind.GENERIC_PARAMETER {
@@ -3193,7 +3225,7 @@ class Compiler {
                 def cl := getClass(position, s->Alias.fullName)
                 if cl !== null {
                     checkGenericParameters(position, cl, cl.type)
-                    return IR.Value.TYPE(Type.ClassLiteral(cl.type))
+                    return IR.Value.TYPE(cl.type)
                 }
                 return null
             when Symbol.Kind.METHOD:
@@ -3278,16 +3310,10 @@ class Compiler {
     method createMethodObject(position:Position, target:IR.Value?, m:MethodDecl):IR.Value? {
         def effectiveType:Type
         def irType:Type
-        if target !== null {
-            if m.annotations.isClass() {
-                assert target.type().isClassLiteral()
-                effectiveType := m.type()
-                irType := Type.pointerTo(m.type())
-            }
-            else {
-                effectiveType := MethodRef(self, target.type(), m).effectiveType
-                irType := Type.pointerTo(declaredTypeWithSelf(m, m.owner.type))
-            }
+        if target !== null & !target.type().isClassLiteral {
+            assert !m.annotations.isClass()
+            effectiveType := MethodRef(self, target.type(), m).effectiveType
+            irType := Type.pointerTo(declaredTypeWithSelf(m, m.owner.type))
         }
         else {
             if m.annotations.isClass() {
@@ -3302,11 +3328,11 @@ class Compiler {
         def args := Array<ASTNode>()
         args.add(ASTNode.IR_WRAPPER(position, cast(position, IR.Value.METHOD_POINTER(m, irType),
                 Type.pointerTo(Type.Int8()))))
-        if m.annotations.isClass() {
-            args.add(ASTNode.NULL(position))
+        if target !== null & !target.type().isClassLiteral {
+            args.add(ASTNode.IR_WRAPPER(position, target))
         }
         else {
-            args.add(ASTNode.IR_WRAPPER(position, target))
+            args.add(ASTNode.NULL(position))
         }
         def methodType:Type
         if target !== null & !isImmutable(target.type()) {
@@ -3319,23 +3345,24 @@ class Compiler {
                 TypeContext.UNSPECIFIED), effectiveType)
     }
 
-    function explainCoerceFailure(m:MethodDecl, target:Type):String {
-        if m.parameters.count != target.parameterCount {
+    function explainCoerceFailure(m:MethodRef, target:Type):String {
+        if m.parameterCount != target.parameterCount {
             return "wrong parameter count"
         }
-        for i in 0 .. m.parameters.count {
-            if coercionCost(target.parameterType(i), m.parameters[i].type) == null {
+        for i in 0 .. m.parameterCount {
+            if coercionCost(target.parameterType(i), m.parameterType(i)) == null {
                 return "parameter \{i + 1} cannot be converted from '\{target.parameterType(i)}' " +
-                        "to '\{m.parameters[i].type}'"
+                        "to '\{m.parameterType(i)}'"
             }
         }
-        if coercionCost(m.returnType, target.returnType()) == null {
+        if coercionCost(m.returnType, target.returnType) == null {
             return "return type '\{m.returnType}' cannot be converted to '\{target.returnType}'"
         }
-        if m.methodKind = MethodDecl.Kind.METHOD & (target.typeKind = Type.Kind.FUNCTION |
+        if m.value.methodKind = MethodDecl.Kind.METHOD & (target.typeKind = Type.Kind.FUNCTION |
                 target.typeKind = Type.Kind.IMMUTABLE_FUNCTION) {
             return "cannot use a method where a function is expected"
         }
+        return "<internal error>"
     }
 
     @pre(target != Type.Void())
@@ -3359,7 +3386,8 @@ class Compiler {
                 var bestCost := Int.MAX
                 for m in methods {
                     if resolve(m) {
-                        def cost := coercionCost(m.type(), target)
+                        def ref := MethodRef(self, targetObj.type(), m)
+                        def cost := coercionCost(ref.effectiveType, target)
                         if cost !== null {
                             if cost < bestCost {
                                 best.clear()
@@ -3381,7 +3409,9 @@ class Compiler {
                 def msg := MutableString("reference to method '\{methods[0].name}' cannot be " +
                         "used as type '\{target}'. None of the following methods match this type:")
                 for m in methods {
-                    msg.append("\n    \{m.declaration()} (\{explainCoerceFailure(m, target)})")
+                    def ref := MethodRef(self, targetObj.type(), m)
+                    msg.append("\n    \{m.declaration()}:\{m.position} (" +
+                            explainCoerceFailure(ref, target) + ")")
                 }
                 error(position, msg.finish())
                 return null
@@ -3416,7 +3446,7 @@ class Compiler {
                         }
                     }
             }
-            assert value.type().isClass()
+            assert value.type().isClass
             def result := IR.Value.REF(ir.add(IR.Statement.CAST(position, value, target)), target)
             if !isRefCounted(value.type()) & isRefCounted(target) {
                 statementUnrefs.add(result)
@@ -3504,7 +3534,7 @@ class Compiler {
     method compilePointerIntrinsic(position:Position, target:IR.Value?, m:MethodRef,
             args:ListView<ASTNode>):Pair<Bit, IR.Value?> {
         def pointerType:Type?
-        if m.target.isPointer() {
+        if m.target.isPointer {
             pointerType := resolve(m.target.subtypes[1])
         }
         else {
@@ -3624,10 +3654,10 @@ class Compiler {
 
     method compileIntrinsic(position:Position, target:IR.Value?, m:MethodRef,
             args:ListView<ASTNode>):Pair<Bit, IR.Value?> {
-        if m.target.isPointer() | m.target.isClassLiteral() & m.target.subtypes[1].isPointer() {
+        if m.target.isPointer | m.target.isClassLiteral & m.target.subtypes[1].isPointer {
             return compilePointerIntrinsic(position, target, m, args)
         }
-        if m.target.isNumber() {
+        if m.target.isNumber {
             return compileNumberIntrinsic(position, target, m, args)
         }
         return Pair<Bit, IR.Value?>(false, null)
@@ -3675,7 +3705,9 @@ class Compiler {
         else {
             actualType := declaredTypeWithSelf(m.value, m.value.owner.type)
         }
+        assert actualType.isMethod
         def effectiveType := m.effectiveType
+        assert effectiveType.isMethod
         def finalArgs := Array<IR.Value>(args.count)
         def finalTarget:IR.Value?
         if target !== null {
@@ -3740,13 +3772,13 @@ class Compiler {
             result := ir.add(IR.Statement.STATIC_CALL(position, m.value, finalArgs.finish()))
         }
         if m.returnType != Type.Void() {
-            var resultCast:IR.Value? := IR.Value.REF(result, actualType.returnType())
-            if isRefCounted(actualType.returnType()) {
+            var resultCast:IR.Value? := IR.Value.REF(result, actualType.returnType)
+            if isRefCounted(actualType.returnType) {
                 statementUnrefs.add(resultCast)
             }
             if m.value.methodKind != MethodDecl.Kind.INIT &
-                    effectiveType.returnType() != actualType.returnType() {
-                resultCast := cast(position, resultCast, effectiveType.returnType())
+                    effectiveType.returnType != actualType.returnType {
+                resultCast := cast(position, resultCast, effectiveType.returnType)
                 if resultCast == null {
                     return null
                 }
@@ -3836,7 +3868,7 @@ class Compiler {
     method callMethodObject(position:Position, m:IR.Value, args:ListView<ASTNode>,
             type:TypeContext):IR.Value? {
         def t := m.type().nonnullable()
-        if !t.isMethod() {
+        if !t.isMethod {
             error(position, "value of type '\{t}' is not a method")
             return null
         }
@@ -3855,9 +3887,9 @@ class Compiler {
         }
         def result:IR.Value?
         def resultSlot := ir.locals.count
-        if t.returnType() != Type.Void() {
-            ir.locals.add(t.returnType())
-            result := IR.Value.LOCAL(resultSlot, t.returnType())
+        if t.returnType != Type.Void() {
+            ir.locals.add(t.returnType)
+            result := IR.Value.LOCAL(resultSlot, t.returnType)
         }
         else {
             result := null
@@ -3901,7 +3933,7 @@ class Compiler {
         def noTargetResult := ir.add(IR.Statement.DYNAMIC_CALL(position, noTargetCast,
                 ImmutableArray<IR.Value>(finalArgs)))
         if result !== null {
-            ir.add(IR.Statement.STORE(position, IR.Value.REF(noTargetResult, t.returnType()),
+            ir.add(IR.Statement.STORE(position, IR.Value.REF(noTargetResult, t.returnType),
                     result))
         }
         ir.add(IR.Statement.BRANCH(position, mergeBlock))
@@ -3912,22 +3944,22 @@ class Compiler {
             targetParams.add(t.parameterType(i))
         }
         def haveTargetType := Type.methodType(position, t.typeKind, targetParams,
-                t.returnType(), 0)
+                t.returnType, 0)
         def haveTargetCast := cast(position, IR.Value.REF(methodPtr, Type.pointerTo(Type.Int8())),
                 Type.pointerTo(haveTargetType))
         finalArgs.insert(0, IR.Value.REF(target, targetType))
         def haveTargetResult := ir.add(IR.Statement.DYNAMIC_CALL(position, haveTargetCast,
                 ImmutableArray<IR.Value>(finalArgs)))
         if result !== null {
-            ir.add(IR.Statement.STORE(position, IR.Value.REF(haveTargetResult, t.returnType()),
+            ir.add(IR.Statement.STORE(position, IR.Value.REF(haveTargetResult, t.returnType),
                     result))
         }
         ir.add(IR.Statement.BRANCH(position, mergeBlock))
         ir.setCurrentBlock(mergeBlock)
         if result !== null {
             def resultLoad := ir.add(IR.Statement.LOAD(position, result))
-            def loadRef := IR.Value.REF(resultLoad, t.returnType())
-            if isRefCounted(t.returnType()) {
+            def loadRef := IR.Value.REF(resultLoad, t.returnType)
+            if isRefCounted(t.returnType) {
                 statementUnrefs.add(loadRef)
             }
             return coerce(position, loadRef, type)
@@ -4000,7 +4032,7 @@ class Compiler {
                 return callMethodObject(position, m, args, type)
             when IR.Value.TYPE(t):
                 def finalType:Type
-                if t.isClassLiteral() {
+                if t.isClassLiteral {
                     finalType := t.subtypes[1]
                 }
                 else {
@@ -4030,7 +4062,7 @@ class Compiler {
 
     method findOverloadedOperator(left:Type, op:Token.Kind, right:ASTNode,
             type:TypeContext):Pair<ListView<MethodRef>, Int>? {
-        if !left.isClass() {
+        if !left.isClass {
             return null
         }
         def leftCl := getClass(left)
@@ -4070,7 +4102,7 @@ class Compiler {
         if rightType == null {
             return null
         }
-        if !rightType.isClass() {
+        if !rightType.isClass {
             return null
         }
         def rightCl := getClass(rightType)
@@ -4145,7 +4177,7 @@ class Compiler {
     `HashMap<String, File>` inherits `MapView` under the type `MapView<String, File>`.
     ================================================================================================
     function findType(start:Type, target:ClassDecl):Type? {
-        if !start.isClass() {
+        if !start.isClass {
             return null
         }
         if start.typeKind = Type.Kind.GENERIC_PARAMETER {
@@ -4441,7 +4473,7 @@ class Compiler {
                     return null
                 }
                 if (compiledLeft.type() = Type.BuiltinBit() |
-                        compiledLeft.type().isBuiltinNumber()) {
+                        compiledLeft.type().isBuiltinNumber) {
                     def resultType := preferredType(ASTNode.BINARY(position, left, op,
                              right))
                     if resultType !== null {
@@ -4499,7 +4531,7 @@ class Compiler {
                 }
             when ASTNode.DOT(_, base, text):
                 def baseType := preferredType(base)
-                if baseType !== null & baseType.isClassLiteral() {
+                if baseType !== null & baseType.isClassLiteral {
                     def cl := getClass(baseType.subtypes[1])
                     if cl !== null & cl.classKind = ClassDecl.Kind.CHOICE {
                         def s := getSymbolTable(cl)[text]
@@ -4520,6 +4552,7 @@ class Compiler {
                 if resolved == null {
                     return null
                 }
+                assert !resolved.isClassLiteral
                 return call(position, IR.Value.TYPE(resolved), args, type)
         }
         def cc := getChoiceCase(m)
@@ -4538,12 +4571,20 @@ class Compiler {
                             return null
                         }
                         def result := Array<Type>()
-                        assert s.kind = Symbol.Kind.VARIABLE
-                        def cl := getClass(s->Variable.type)
+                        def selfType:Type
+                        match s.kind {
+                            when Symbol.Kind.VARIABLE:
+                                selfType := s->Variable.type
+                            when Symbol.Kind.FIELD:
+                                selfType := s->FieldDecl.type
+                            otherwise:
+                                assert false
+                        }
+                        def cl := getClass(selfType)
                         if cl == null {
                             return null
                         }
-                        def supertype := remapType(s->Variable.type, cl.rawSuper)
+                        def supertype := remapType(selfType, cl.rawSuper)
                         return call(position, IR.Value.SUPER(supertype), name, args, type)
                 }
         }
@@ -4736,7 +4777,7 @@ class Compiler {
             def cl := tryResolveClass(name)
             if cl !== null {
                 checkGenericParameters(position, cl, cl.type)
-                return IR.Value.TYPE(Type.ClassLiteral(cl.type))
+                return IR.Value.TYPE(cl.type)
             }
         }
         if s !== null {
@@ -4808,7 +4849,7 @@ class Compiler {
                 if t.typeKind = Type.Kind.BUILTIN_FLOAT {
                     return IR.Value.REAL(value, t)
                 }
-                if t.isNumber() {
+                if t.isNumber {
                     def args := Array<ASTNode>()
                     args.add(ASTNode.INT(position, value))
                     return call(position, IR.Value.TYPE(t), args, type)
@@ -4841,7 +4882,7 @@ class Compiler {
                                         t.typeKind = Type.Kind.BUILTIN_UINT {
                                     return IR.Value.INT(-value, t)
                                 }
-                                if t.isNumber() {
+                                if t.isNumber {
                                     def args := Array<ASTNode>()
                                     args.add(ASTNode.INT(position, -value))
                                     return call(position, IR.Value.TYPE(t), args, type)
@@ -4852,7 +4893,7 @@ class Compiler {
                 if target == null {
                     return null
                 }
-                if target.type().isBuiltinNumber() {
+                if target.type().isBuiltinNumber {
                     def result := ir.add(IR.Statement.NEGATE(position, target))
                     return coerce(position, IR.Value.REF(result, target.type()), type)
                 }
@@ -4872,7 +4913,7 @@ class Compiler {
                 if target == null {
                     return null
                 }
-                if target.type().isBuiltinNumber() {
+                if target.type().isBuiltinNumber {
                     def result := ir.add(IR.Statement.NOT(position, target))
                     return coerce(position, IR.Value.REF(result, target.type()), type)
                 }
@@ -4957,21 +4998,21 @@ class Compiler {
             return null
         }
         if compiledStart == null {
-            if !endpointType.isNullable() {
+            if !endpointType.isNullable {
                 error(position, "expected '\{endpointType}', but found 'null'")
                 return null
             }
             compiledStart := IR.Value.NULL(endpointType)
         }
         if compiledEnd == null {
-            if !endpointType.isNullable() {
+            if !endpointType.isNullable {
                 error(position, "expected '\{endpointType}', but found 'null'")
                 return null
             }
             compiledEnd := IR.Value.NULL(endpointType)
         }
         if step !== null {
-            if stepContext = TypeContext.NON_VOID & endpointType.isNumber() {
+            if stepContext = TypeContext.NON_VOID & endpointType.isNumber {
                 def p := possibleTypes(step)
                 if p !== null {
                     for t in p {
@@ -5009,7 +5050,7 @@ class Compiler {
                 if t.typeKind = Type.Kind.BUILTIN_FLOAT {
                     return IR.Value.REAL(value, t)
                 }
-                if t.isReal() {
+                if t.isReal {
                     def args := Array<ASTNode>()
                     args.add(ASTNode.REAL(position, value))
                     return call(position, IR.Value.TYPE(t), args, type)
@@ -5076,15 +5117,15 @@ class Compiler {
         def bodyContext:TypeContext
         match type {
             when TypeContext.TYPE(t):
-                if t.nonnullable().isMethod() {
-                    def target := t.returnType()
+                if t.nonnullable().isMethod {
+                    def target := t.returnType
                     -- we call computeCoercion directly, as we can't used the cached cost. When
                     -- evaluating untyped lambdas we may repeatedly reevaluate the same expr->target
                     -- coercion with different symbol definitions
                     if computeCoercionCost(expr, target) == null {
                         return null
                     }
-                    return t.nonnullable().returnType()
+                    return t.nonnullable().returnType
                 }
         }
         return preferredType(expr)
@@ -5100,8 +5141,8 @@ class Compiler {
             returnType := Type.Any()
             match type {
                 when TypeContext.TYPE(t):
-                    if t.nonnullable().isMethod() {
-                        returnType := t.nonnullable().returnType()
+                    if t.nonnullable().isMethod {
+                        returnType := t.nonnullable().returnType
                     }
             }
         }
@@ -5118,7 +5159,7 @@ class Compiler {
         match type {
             when TypeContext.TYPE(t):
                 def methodType := t.nonnullable()
-                if methodType.isMethod() {
+                if methodType.isMethod {
                     if rawParameters.count != methodType.parameterCount {
                         error(position, "expected '\{t}', but found lambda with wrong number of " +
                                 "parameters")
@@ -5135,7 +5176,7 @@ class Compiler {
                                 assert false
                         }
                     }
-                    def returnType := t.nonnullable().returnType()
+                    def returnType := t.nonnullable().returnType
                     def body := Array<ASTNode>() -- FIXME literal
                     body.add(ASTNode.RETURN(position, expr))
                     return compileClosure(position, MethodDecl.Kind.FUNCTION, parameters.finish(),
@@ -5217,7 +5258,7 @@ class Compiler {
             when ASTNode.DOT(position, base, name):
                 def t := tryResolveType(expr)
                 if t !== null {
-                    return coerce(expr.position(), IR.Value.TYPE(Type.ClassLiteral(t)), type)
+                    return coerce(expr.position(), IR.Value.TYPE(t), type)
                 }
                 return coerce(expr.position(), compileDot(position, base, name), type)
             when ASTNode.IDENTIFIER(position, name):
@@ -5246,7 +5287,7 @@ class Compiler {
             when ASTNode.STRING(position, text):
                 match type {
                     when TypeContext.TYPE(t):
-                        if t.isChar() & text.length() = 1 {
+                        if t.isChar & text.length() = 1 {
                             def args := Array<ASTNode>()
                             args.add(ASTNode.INT(position, text[0].convert()))
                             return compileExpression(ASTNode.CALL(position,
@@ -5282,7 +5323,7 @@ class Compiler {
             when IR.Value.METHODS(target, methods):
                 match type {
                     when TypeContext.TYPE(t):
-                        if !t.nonnullable().isMethod() {
+                        if !t.nonnullable().isMethod {
                             error(expr.position(), "unresolved method reference cannot possibly " +
                                     "be an instance of '\{t}'")
                         }
@@ -5397,7 +5438,7 @@ class Compiler {
             self.position := position
             assert field.resolved = Resolution.RESOLVED
             self.field := field
-            if target !== null & !target.type().isClassLiteral() {
+            if target !== null & !target.type().isClassLiteral {
                 self.target := target
             }
             else if !field.annotations.isClass() {
@@ -5933,13 +5974,13 @@ class Compiler {
         if type.typeKind = Type.Kind.NULLABLE {
             return checkSteppedRangeTypes(position, type.subtypes[0])
         }
-        if type.isSteppedRange() {
+        if type.isSteppedRange {
             def type1 := type.subtypes[1].nonnullable()
             def type2 := type.subtypes[2]
             if type1 = type2 {
                 return true
             }
-            if type1.isChar() & type2.name.startsWith("panda.core.Int") &
+            if type1.isChar & type2.name.startsWith("panda.core.Int") &
                     type1.name.endsWith(type2.name["panda.core.Int".length()..]) {
                 return true
             }
@@ -6185,8 +6226,9 @@ class Compiler {
             if stepType.name.startsWith("panda.core.Int") {
                 def args := Array<ASTNode>() -- FIXME literal
                 args.add(ASTNode.INT(position, 0))
-                direction := extractBuiltinBit(position, call(position, step, ">=", args,
-                        TypeContext.TYPE(Type.Bit())))
+                def comparison := call(position, step, ">=", args, TypeContext.TYPE(Type.Bit()))
+                assert comparison != null
+                direction := extractBuiltinBit(position, comparison)
             }
             else {
                 assert stepType.name.startsWith("panda.core.UInt")
@@ -6303,7 +6345,7 @@ class Compiler {
 
     method compileRangeFor(position:Position, label:String?, astTarget:ASTNode, list:IR.Value,
             statements:ListView<ASTNode>) {
-        assert list.type().isRange() | list.type().isSteppedRange()
+        assert list.type().isRange | list.type().isSteppedRange
         if !checkSteppedRangeTypes(position, list.type()) {
             return
         }
@@ -6316,7 +6358,7 @@ class Compiler {
             assert list.type().typeKind = Type.Kind.GENERIC
             elementType := list.type().subtypes[1]
         }
-        if !elementType.isNumeric() {
+        if !elementType.isNumeric {
             error(position, "for loop expected a numeric range, but found '\{list.type()}'")
             return
         }
@@ -6326,7 +6368,7 @@ class Compiler {
             return
         }
         assert target.second == null
-        if list.type().isRange() {
+        if list.type().isRange {
             compileSimpleRangeFor(position, label, target.first, list, statements)
         }
         else {
@@ -6345,7 +6387,7 @@ class Compiler {
                     error(position, "for loop variable cannot have nullable type '\{t}'")
                     return
                 }
-                if !t.isNumeric() {
+                if !t.isNumeric {
                     error(position, "for loop variable cannot have non-numeric type '\{t}'")
                     return
                 }
@@ -6365,10 +6407,10 @@ class Compiler {
             otherwise:
                 def preferred := preferredType(rawList)
                 var type := TypeContext.NON_VOID
-                if preferred !== null & preferred.isRange() {
+                if preferred !== null & preferred.isRange {
                     type := TypeContext.TYPE(Type.RangeOf(preferred.subtypes[1].nonnullable()))
                 }
-                else if preferred !== null & preferred.isSteppedRange() {
+                else if preferred !== null & preferred.isSteppedRange {
                     type := TypeContext.TYPE(Type.SteppedRangeOf(
                             preferred.subtypes[1].nonnullable(), preferred.subtypes[2]))
                 }
@@ -6436,7 +6478,7 @@ class Compiler {
         if list == null {
             return
         }
-        if list.type().isRange() | list.type().isSteppedRange() {
+        if list.type().isRange | list.type().isSteppedRange {
             -- it's a range, but not an unresolved one
             compileRangeFor(position, label, rawTarget, list, statements)
         }
@@ -7359,7 +7401,7 @@ class Compiler {
         if false & isValue(cl) {
             for f in cl.fields {
                 resolve(f)
-                if f.type.isClass() {
+                if f.type.isClass {
                     if !isValue(getClass(f.type)) {
                         error(f.position, "value class '\{cl.name}' cannot contain non-value " +
                                 "field '\{f.name}' of type '\{f.type}'")

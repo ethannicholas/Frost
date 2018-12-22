@@ -251,10 +251,10 @@ class HCodeGenerator : CodeGenerator {
     return structs explicitly receive a pointer to the result structure as their first parameter.
     ================================================================================================
     function needsStructIndirection(m:MethodDecl):Bit {
-        if !m.returnType.isClass() {
+        if !m.returnType.isClass {
             return false
         }
-        def result := m.annotations.isExternal() & m.returnType.isClass() &
+        def result := m.annotations.isExternal() & m.returnType.isClass &
                 compiler.isValue(compiler.getClass(m.returnType))
         -- if an external method requires struct indirection, it will have a different signature
         -- than a non-external method; this means this feature doesn't play nice with overriding. We

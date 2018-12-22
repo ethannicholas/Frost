@@ -49,13 +49,13 @@ class UInt64 : Value, Key<UInt64>, Comparable<UInt64>, Formattable, ListView<Bit
     }
 
     ===Adds another number to this number.===
-    @priority(2)
+    @priority(3)
     function +(other:UInt64):UInt64 {
         return value + other.value
     }
 
     ===Subtracts another number from this number.===
-    @priority(2)
+    @priority(3)
     function -(other:UInt64):UInt64 {
         return value - other.value
     }
@@ -66,19 +66,19 @@ class UInt64 : Value, Key<UInt64>, Comparable<UInt64>, Formattable, ListView<Bit
     }
 
     ===Multiplies this number by another number.===
-    @priority(2)
+    @priority(3)
     function *(other:UInt64):UInt64 {
         return value * other.value
     }
 
     ===Divides this number by another number, returning the whole number portion.===
-    @priority(2)
+    @priority(3)
     function //(other:UInt64):UInt64 {
         return value // other.value
     }
 
     ===Returns the remainder of dividing this number by another number.===
-    @priority(2)
+    @priority(3)
     function %(other:UInt64):UInt64 {
         return value % other.value
     }
@@ -119,7 +119,7 @@ class UInt64 : Value, Key<UInt64>, Comparable<UInt64>, Formattable, ListView<Bit
     }
 
     ===Divides this number by another number.===
-    @priority(2)
+    @priority(3)
     function /(other:UInt64):Real64 {
         return value->builtin_float64 / other.value->builtin_float64
     }
@@ -148,7 +148,7 @@ class UInt64 : Value, Key<UInt64>, Comparable<UInt64>, Formattable, ListView<Bit
     }
 
     ===Returns the bitwise AND of this number with another number.===
-    @priority(2)
+    @priority(3)
     function &&(other:UInt64):UInt64 {
         return value && other.value
     }
@@ -160,7 +160,7 @@ class UInt64 : Value, Key<UInt64>, Comparable<UInt64>, Formattable, ListView<Bit
     }
 
     ===Returns the bitwise OR of this number with another number.===
-    @priority(2)
+    @priority(3)
     function ||(other:UInt64):UInt64 {
         return value || other.value
     }
@@ -172,7 +172,7 @@ class UInt64 : Value, Key<UInt64>, Comparable<UInt64>, Formattable, ListView<Bit
     }
 
     ===Returns the bitwise XOR of this number with another number.===
-    @priority(2)
+    @priority(3)
     function ~~(other:UInt64):UInt64 {
         return value ~~ other.value
     }
@@ -184,7 +184,7 @@ class UInt64 : Value, Key<UInt64>, Comparable<UInt64>, Formattable, ListView<Bit
     }
 
     ===Returns this number shifted left by the specified number of bits.===
-    @priority(2)
+    @priority(3)
     function <<(other:UInt64):UInt64 {
         return value << other.value
     }
@@ -196,7 +196,7 @@ class UInt64 : Value, Key<UInt64>, Comparable<UInt64>, Formattable, ListView<Bit
     }
 
     ===Returns this number logical shifted right by the specified number of bits.===
-    @priority(2)
+    @priority(3)
     function >>(other:UInt64):UInt64 {
         return value >> other.value
     }
@@ -218,7 +218,7 @@ class UInt64 : Value, Key<UInt64>, Comparable<UInt64>, Formattable, ListView<Bit
 
     ===Returns `true` if this number is equal to the given number.===
     @override
-    @priority(2)
+    @priority(3)
     function =(other:UInt64):Bit {
         return value = other.value
     }
@@ -240,7 +240,7 @@ class UInt64 : Value, Key<UInt64>, Comparable<UInt64>, Formattable, ListView<Bit
 
     ===Returns `true` if this number is not equal to the given number.===
     @override
-    @priority(2)
+    @priority(3)
     function !=(other:UInt64):Bit {
         return value != other.value
     }
@@ -262,7 +262,7 @@ class UInt64 : Value, Key<UInt64>, Comparable<UInt64>, Formattable, ListView<Bit
 
     ===Returns `true` if this number is less than the given number.===
     @override
-    @priority(2)
+    @priority(3)
     function <(other:UInt64):Bit {
         return value < other.value
     }
@@ -284,7 +284,7 @@ class UInt64 : Value, Key<UInt64>, Comparable<UInt64>, Formattable, ListView<Bit
 
     ===Returns `true` if this number is greater than the given number.===
     @override
-    @priority(2)
+    @priority(3)
     function >(other:UInt64):Bit {
         return value > other.value
     }
@@ -306,7 +306,7 @@ class UInt64 : Value, Key<UInt64>, Comparable<UInt64>, Formattable, ListView<Bit
 
     ===Returns `true` if this number is greater than or equal to the given number.===
     @override
-    @priority(2)
+    @priority(3)
     function >=(other:UInt64):Bit {
         return value >= other.value
     }
@@ -328,7 +328,7 @@ class UInt64 : Value, Key<UInt64>, Comparable<UInt64>, Formattable, ListView<Bit
 
     ===Returns `true` if this number is less than or equal to the given number.===
     @override
-    @priority(2)
+    @priority(3)
     function <=(other:UInt64):Bit {
         return value <= other.value
     }
@@ -362,7 +362,7 @@ class UInt64 : Value, Key<UInt64>, Comparable<UInt64>, Formattable, ListView<Bit
     }
 
     ===Returns the smaller (closest to negative infinity) of this number and another number.===
-    @priority(2)
+    @priority(3)
     function min(other:UInt64):UInt64 {
         if value < other.value {
             return value
@@ -399,7 +399,7 @@ class UInt64 : Value, Key<UInt64>, Comparable<UInt64>, Formattable, ListView<Bit
     }
 
     ===Returns the larger (closest to positive infinity) of this number and another number.===
-    @priority(2)
+    @priority(3)
     function max(other:UInt64):UInt64 {
         if value > other.value {
             return value

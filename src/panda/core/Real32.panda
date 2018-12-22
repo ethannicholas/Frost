@@ -67,7 +67,7 @@ class Real32 : Value, Key<Real32>, Comparable<Real32>, Formattable {
     }
 
     ===Adds another number to this number.===
-    @priority(2)
+    @priority(3)
     function +(other:Real32):Real32 {
         return value + other.value
     }
@@ -78,7 +78,7 @@ class Real32 : Value, Key<Real32>, Comparable<Real32>, Formattable {
     }
 
     ===Subtracts another number from this number.===
-    @priority(2)
+    @priority(3)
     function -(other:Real32):Real32 {
         return value - other.value
     }
@@ -94,7 +94,7 @@ class Real32 : Value, Key<Real32>, Comparable<Real32>, Formattable {
     }
 
     ===Multiplies this number by another number.===
-    @priority(2)
+    @priority(3)
     function *(other:Real32):Real32 {
         return value * other.value
     }
@@ -145,7 +145,7 @@ class Real32 : Value, Key<Real32>, Comparable<Real32>, Formattable {
     }
 
     ===Divides this number by another number.===
-    @priority(2)
+    @priority(3)
     @priority(1)
     function /(other:Real32):Real32 {
         return value / other.value
@@ -159,7 +159,7 @@ class Real32 : Value, Key<Real32>, Comparable<Real32>, Formattable {
 
     ===Returns `true` if this number is equal to the given number.===
     @override
-    @priority(2)
+    @priority(3)
     function =(other:Real32):Bit {
         return value = other.value
     }
@@ -171,7 +171,7 @@ class Real32 : Value, Key<Real32>, Comparable<Real32>, Formattable {
 
     ===Returns `true` if this number is not equal to the given number.===
     @override
-    @priority(2)
+    @priority(3)
     function !=(other:Real32):Bit {
         return value != other.value
     }
@@ -183,7 +183,7 @@ class Real32 : Value, Key<Real32>, Comparable<Real32>, Formattable {
 
     ===Returns `true` if this number is less than the given number.===
     @override
-    @priority(2)
+    @priority(3)
     function <(other:Real32):Bit {
         return value < other.value
     }
@@ -195,7 +195,7 @@ class Real32 : Value, Key<Real32>, Comparable<Real32>, Formattable {
 
     ===Returns `true` if this number is greater than the given number.===
     @override
-    @priority(2)
+    @priority(3)
     function >(other:Real32):Bit {
         return value > other.value
     }
@@ -207,7 +207,7 @@ class Real32 : Value, Key<Real32>, Comparable<Real32>, Formattable {
 
     ===Returns `true` if this number is greater than or equal to the given number.===
     @override
-    @priority(2)
+    @priority(3)
     function >=(other:Real32):Bit {
         return value >= other.value
     }
@@ -219,7 +219,7 @@ class Real32 : Value, Key<Real32>, Comparable<Real32>, Formattable {
 
     ===Returns `true` if this number is less than or equal to the given number.===
     @override
-    @priority(2)
+    @priority(3)
     function <=(other:Real32):Bit {
         return value <= other.value
     }

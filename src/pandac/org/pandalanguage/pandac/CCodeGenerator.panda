@@ -93,7 +93,7 @@ class CCodeGenerator : CodeGenerator {
 
     method cType(t:Type):String {
         assert t.resolved, "unresolved type \{t}"
-        if t.isClass() {
+        if t.isClass {
             def cl := compiler.getClass(t)
             assert cl !== null
             writeImport(cl)
@@ -104,7 +104,7 @@ class CCodeGenerator : CodeGenerator {
             when Type.Kind.IMMUTABLE_METHOD, Type.Kind.IMMUTABLE_FUNCTION:
                 return cType(Type.Method())
             when Type.Kind.GENERIC:
-                if t.subtypes[0].name = "panda.unsafe.Pointer" & t.subtypes[1].isMethod() {
+                if t.subtypes[0].name = "panda.unsafe.Pointer" & t.subtypes[1].isMethod {
                     return cMethodType(t.subtypes[1], null)
                 }
         }
@@ -247,7 +247,7 @@ class CCodeGenerator : CodeGenerator {
 
     function fieldSize(t:Type):Int {
         assert t.resolved
-        if t.isBuiltinNumber() {
+        if t.isBuiltinNumber {
             if t.name.endsWith("8") {
                 return 1
             }
@@ -357,7 +357,7 @@ class CCodeGenerator : CodeGenerator {
     method wrapperType(m:MethodDecl):String {
         def inheritedType := compiler.inheritedType(m)
         def result := MutableString()
-        result.append(cType(inheritedType.returnType()))
+        result.append(cType(inheritedType.returnType))
         result.append("(")
         assert m.isInstance()
         result.append("\{escapeName(m.owner.name)}")
@@ -416,10 +416,10 @@ class CCodeGenerator : CodeGenerator {
         def old := out
         def outBuffer := MemoryOutputStream()
         out := IndentedOutputStream(outBuffer)
-        assert effective.isMethod()
+        assert effective.isMethod
         assert effective.subtypes.count = raw.parameters.count + 2 -- self and return
         assert raw.isInstance()
-        def effectiveReturnType := effective.returnType()
+        def effectiveReturnType := effective.returnType
         def resultName := getName(raw) + "$shim"
         def resultType := MutableString(cType(effectiveReturnType))
         out.print("__attribute__((weak)) \{resultType} \{resultName}(")
@@ -848,8 +848,8 @@ class CCodeGenerator : CodeGenerator {
     }
 
     method getCastReference(value:String, src:Type, target:Type):String {
-        if target.isBuiltinNumber() {
-            assert src.isBuiltinNumber()
+        if target.isBuiltinNumber {
+            assert src.isBuiltinNumber
             return "((\{cType(target)}) \{value})"
         }
         else {
@@ -1027,7 +1027,7 @@ class CCodeGenerator : CodeGenerator {
             type:Type) {
         def leftRef := getReference(left)
         def rightRef := getReference(right)
-        if left.type().isNullable() {
+        if left.type().isNullable {
             match op {
                 when Token.Kind.IDENTITY:
                     if isNull(left) {
@@ -1122,10 +1122,10 @@ class CCodeGenerator : CodeGenerator {
 
     method writeDynamicCall(id:IR.Statement.ID, m:IR.Value, args:ListView<IR.Value>) {
         var type := m.type()
-        if type.isPointer() {
+        if type.isPointer {
             type := type.subtypes[1]
         }
-        def returnType := type.returnType()
+        def returnType := type.returnType
         if returnType != Type.Void() {
             def result := nextVar()
             out.print("\{cType(returnType)} \{result} = ")

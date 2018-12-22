@@ -111,6 +111,7 @@ class ClassDecl {
 
     var resolved:Compiler.Resolution
 
+    @pre(!type.isClassLiteral)
     init(source:File, position:Position, aliases:MapView<String, String>, doccomment:String?,
             annotations:Annotations, kind:Kind, type:Type, declaredSupers:ListView<Type>,
             parameters:Array<GenericParameter>, parent:SymbolTable) {
