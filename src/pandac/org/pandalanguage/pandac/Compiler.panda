@@ -882,17 +882,17 @@ class Compiler {
             def overridden := getOverriddenMethod(m)
             if overridden !== null {
                 if !m.annotations.isOverride {
-                    error(m.position, "\{m.declaration()} overrides \{overridden.declaration()}, " +
+                    error(m.position, "\{m.declaration} overrides \{overridden.declaration}, " +
                             "but is not marked @override")
                 }
                 if m.methodKind = MethodDecl.Kind.METHOD &
                         overridden.methodKind = MethodDecl.Kind.FUNCTION {
-                    error(m.position, "\{m.declaration()} overrides \{overridden.declaration()}, " +
+                    error(m.position, "\{m.declaration} overrides \{overridden.declaration}, " +
                             "but methods cannot override functions")
                 }
             }
             else if m.annotations.isOverride {
-                error(m.position, "\{m.declaration()} is marked @override, but no matching " +
+                error(m.position, "\{m.declaration} is marked @override, but no matching " +
                         "method exists among its ancestors")
             }
         }
@@ -1344,7 +1344,7 @@ class Compiler {
             }
             else {
                 error(cl.position, "class '\{cl.name}' does not implement interface " +
-                        m.declaration())
+                        m.declaration)
             }
         }
         return result
@@ -1843,7 +1843,7 @@ class Compiler {
                 for m in s->Methods.methods { -- FIXME use map
                     if resolve(m) {
                         if m.annotations.isClass {
-                            result.add(m.type())
+                            result.add(m.type)
                         }
                         else if target !== null {
                             result.add(MethodRef(self, target, m).effectiveType)
@@ -3317,8 +3317,8 @@ class Compiler {
         }
         else {
             if m.annotations.isClass {
-                effectiveType := m.type()
-                irType := Type.pointerTo(m.type())
+                effectiveType := m.type
+                irType := Type.pointerTo(m.type)
             }
             else {
                 effectiveType := declaredTypeWithSelf(m, m.owner.type)
@@ -3410,7 +3410,7 @@ class Compiler {
                         "used as type '\{target}'. None of the following methods match this type:")
                 for m in methods {
                     def ref := MethodRef(self, targetObj.type(), m)
-                    msg.append("\n    \{m.declaration()}:\{m.position} (" +
+                    msg.append("\n    \{m.declaration}:\{m.position} (" +
                             explainCoerceFailure(ref, target) + ")")
                 }
                 error(position, msg.finish())
@@ -3668,7 +3668,7 @@ class Compiler {
     method call(position:Position, target:IR.Value?, m:MethodRef, args:ListView<ASTNode>,
             type:TypeContext):IR.Value? {
         if args.count != m.parameterCount {
-            error(position, "\{m.value.declaration()} expects \{m.parameterCount} " +
+            error(position, "\{m.value.declaration} expects \{m.parameterCount} " +
                     "argument\{m.parameterCount = 1:|s}, but found \{args.count}")
             return null
         }
@@ -3677,7 +3677,7 @@ class Compiler {
                 when IR.Value.TYPE:
                     -- do nothing
                 otherwise:
-                    error(position, "cannot call class \{m.value.declaration()} on an instance")
+                    error(position, "cannot call class \{m.value.declaration} on an instance")
             }
         }
         var intrinsic := compileIntrinsic(position, target, m, args)
@@ -3794,7 +3794,7 @@ class Compiler {
             return resultCast
         }
         if type != TypeContext.UNSPECIFIED {
-            error(position, "\{m.value.declaration()} does not return a value")
+            error(position, "\{m.value.declaration} does not return a value")
         }
         return null
     }
@@ -3980,7 +3980,7 @@ class Compiler {
         def msg := MutableString("call to '\{methods[0].value.name}' is ambiguous. The following " +
                 "methods are equally good matches:")
         for m in methods {
-            msg.append("\n    \{m.value.declaration()} (\{m.value.owner.source.name()}:" +
+            msg.append("\n    \{m.value.declaration} (\{m.value.owner.source.name()}:" +
                     "\{m.value.position})")
         }
         error(position, msg.finish())
@@ -4723,7 +4723,7 @@ class Compiler {
         def args := Array<ASTNode>()
         def pandaType:Type
         if methodDecl.annotations.isClass {
-            pandaType := methodDecl.type()
+            pandaType := methodDecl.type
         }
         else {
             pandaType := declaredTypeWithSelf(methodDecl, methodDecl.owner.type)
@@ -4740,7 +4740,7 @@ class Compiler {
             methodType := Type.MutableMethod()
         }
         def construct := cast(position, call(position, IR.Value.TYPE(methodType), args,
-                TypeContext.UNSPECIFIED), methodDecl.type())
+                TypeContext.UNSPECIFIED), methodDecl.type)
         return coerce(position, construct, type)
     }
 
@@ -5338,7 +5338,7 @@ class Compiler {
                         var bestCost := Int.MAX
                         for m in methods {
                             if resolve(m) {
-                                def cost := coercionCost(m.type(), t)
+                                def cost := coercionCost(m.type, t)
                                 if cost !== null {
                                     if cost < bestCost {
                                         bestCost := cost
@@ -7165,7 +7165,7 @@ class Compiler {
         }
         if fail !== null {
             compileAssertFail(m.position, ASTNode.STRING(m.position,
-                    "precondition failure for \{m.declaration()}"))
+                    "precondition failure for \{m.declaration}"))
             assert start !== null
             ir.setCurrentBlock(start)
         }
@@ -7210,7 +7210,7 @@ class Compiler {
                                 def old := ir.currentBlock.id
                                 ir.setCurrentBlock(fail)
                                 compileAssertFail(m.position, ASTNode.STRING(m.position,
-                                        "postcondition failure for \{m.declaration()}"))
+                                        "postcondition failure for \{m.declaration}"))
                                 ir.setCurrentBlock(old)
                             }
                             ir.add(IR.Statement.CONDITIONAL_BRANCH(m.position,
@@ -7241,7 +7241,7 @@ class Compiler {
                                 fail := ir.newBlock("postcondition fail")
                                 ir.setCurrentBlock(fail)
                                 compileAssertFail(m.position, ASTNode.STRING(m.position,
-                                        "postcondition failure for \{m.declaration()}"))
+                                        "postcondition failure for \{m.declaration}"))
                             }
                             ir.add(IR.Statement.CONDITIONAL_BRANCH(m.position,
                                     extractBuiltinBit(m.position, value), success, fail))
@@ -7345,7 +7345,7 @@ class Compiler {
                     else {
                         compileAssert(m.position, ASTNode.BIT(m.position, false),
                                 ASTNode.STRING(m.position,
-                                    "\{m.declaration()} exited without returning"))
+                                    "\{m.declaration} exited without returning"))
                         ir.add(IR.Statement.UNREACHABLE(m.position))
                     }
                 }

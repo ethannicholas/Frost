@@ -250,7 +250,7 @@ class PandaDoc {
     }
 
     function visible(m:MethodDecl):Bit {
-        if m.signature() = "cleanup()" & currentClass.name != "panda.core.Object" {
+        if m.signature = "cleanup()" & currentClass.name != "panda.core.Object" {
             return false
         }
         if m.name.startsWith("get_") | m.name.startsWith("set_") {
@@ -327,7 +327,7 @@ class PandaDoc {
             def result := getDocComment(overridden)
             if result == null {
                 compiler.error(m.position, "method specifies '@inherit', but " +
-                        "\{overridden.declaration()} does not have any documentation")
+                        "\{overridden.declaration} does not have any documentation")
                 return null
             }
             return result
@@ -491,12 +491,12 @@ class PandaDoc {
                 base := m
             }
             if m.methodKind != MethodDecl.Kind.INIT & visible(m) &
-                    !overridden.contains(base.signature()) {
+                    !overridden.contains(base.signature) {
                 compiler.resolve(m)
                 if visible(m) {
                     methods.add(m)
                 }
-                overridden.add(base.signature())
+                overridden.add(base.signature)
             }
         }
         if cl.rawSuper !== null {
@@ -528,10 +528,10 @@ class PandaDoc {
         for m in cl.methods {
             def o := compiler.getOverriddenMethod(m)
             if o !== null {
-                overridden.add(o.signature())
+                overridden.add(o.signature)
             }
             else {
-                overridden.add(m.signature())
+                overridden.add(m.signature)
             }
         }
         addInheritedMethods(cl.type, methods, overridden)

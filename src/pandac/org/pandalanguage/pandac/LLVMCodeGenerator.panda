@@ -697,7 +697,7 @@ class LLVMCodeGenerator : CodeGenerator {
         -- can fix this down the road with shims, but for right now just assert that a method
         -- requiring struct indirection is not an override and cannot be overridden
         assert !result | (!m.annotations.isOverride & (m.annotations.isFinal |
-                m.annotations.isClass)), "invalid struct indirection on \{m.signature()}"
+                m.annotations.isClass)), "invalid struct indirection on \{m.signature}"
         return result
     }
 
@@ -1202,7 +1202,7 @@ class LLVMCodeGenerator : CodeGenerator {
         assert compiler.currentMethod[0].methodKind = MethodDecl.Kind.INIT |
                 !compiler.isValue(compiler.currentMethod[0].owner),
                 "self pointer for values is only accessible from init methods " +
-                "(in \{compiler.currentMethod[0].declaration()})"
+                "(in \{compiler.currentMethod[0].declaration})"
         return "%self"
     }
 

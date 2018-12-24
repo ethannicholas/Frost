@@ -218,7 +218,7 @@ class IR {
                     }
                     return "return"
                 when STATIC_CALL(position, m, args):
-                    return "static_call \{m.declaration()}(\{args.join(", ")})"
+                    return "static_call \{m.declaration}(\{args.join(", ")})"
                 when STORE(position, value, ptr):
                     return "store \{value}, \{ptr}"
                 when UNREACHABLE(position):
@@ -307,9 +307,8 @@ class IR {
                     return type
                 when STRING:
                     return Type.StringType()
-
                 when METHOD(_, m):
-                    return m.type()
+                    return m.type
                 when METHODS:
                     return Type.Invalid()
                 when SUPER(type):
@@ -331,7 +330,7 @@ class IR {
                 when NULL(type):
                     return "NULL(\{type})"
                 when METHOD_POINTER(m, _):
-                    return "METHOD_POINTER(\{m.declaration()})"
+                    return "METHOD_POINTER(\{m.declaration})"
                 when PARAMETER(index, type):
                     return "PARAMETER(\{index}:\{type})"
                 when REAL(value, _):
@@ -343,9 +342,9 @@ class IR {
 
                 when METHOD(target, m):
                     if target !== null {
-                        return "METHOD(\{target}, \{m.declaration()})"
+                        return "METHOD(\{target}, \{m.declaration})"
                     }
-                    return m.declaration()
+                    return m.declaration
                 when METHODS(target, m):
                     if target !== null {
                         return "METHODS(\{target}, \{m})"

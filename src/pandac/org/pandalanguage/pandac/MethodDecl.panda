@@ -57,6 +57,12 @@ class MethodDecl : Symbol {
 
     property isVirtual:Bit
 
+    property type:Type
+
+    property signature:String
+
+    property declaration:String
+
     init(owner:ClassDecl, position:Position, doccomment:String?, annotations:Annotations,
             methodKind:Kind, name:String, genericParameters:Array<ClassDecl.GenericParameter>?,
             parameters:Array<Parameter>, returnType:Type,
@@ -130,7 +136,7 @@ class MethodDecl : Symbol {
         return 0
     }
 
-    function type():Type {
+    function get_type():Type {
         def paramTypes := Array<Type>(parameters.count) -- FIXME use map
         for p in parameters {
             paramTypes.add(p.type)
@@ -145,7 +151,7 @@ class MethodDecl : Symbol {
         return Type.methodType(position, kind, paramTypes, returnType, priority)
     }
 
-    function signature():String {
+    function get_signature():String {
         def result := MutableString("\{name}(")
         var separator := ""
         for p in parameters {
@@ -160,22 +166,22 @@ class MethodDecl : Symbol {
         return result.finish()
     }
 
-    function declaration():String {
+    function get_declaration():String {
         match methodKind {
             when Kind.METHOD:
-                return("method \{owner.name}.\{signature()}")
+                return("method \{owner.name}.\{signature}")
             when Kind.FUNCTION:
-                return("function \{owner.name}.\{signature()}")
+                return("function \{owner.name}.\{signature}")
             when Kind.INIT:
-                return("\{owner.name}.\{signature()}")
+                return("\{owner.name}.\{signature}")
         }
     }
 
     @override
     function convert():String {
         if body !== null {
-            return "\{annotations}\{signature()} \{body}"
+            return "\{annotations}\{signature} \{body}"
         }
-        return signature()
+        return signature
     }
 }

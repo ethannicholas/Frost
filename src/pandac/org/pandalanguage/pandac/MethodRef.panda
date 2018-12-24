@@ -28,7 +28,7 @@ class MethodRef {
         self.target := target
         def found := compiler.findType(target, value.owner)
         assert found !== null, "findType(\{target}, \{value.owner.name}) failed"
-        var methodType := value.type()
+        var methodType := value.type
         if !value.annotations.isClass & value.methodKind != MethodDecl.Kind.INIT &
                 target.isClassLiteral {
             def parameterTypes := Array<Type>()
@@ -55,6 +55,6 @@ class MethodRef {
 
     @override
     function convert():String {
-        return "MethodRef(\{value.declaration()}, \{effectiveType})"
+        return "MethodRef(\{value.declaration}, \{effectiveType})"
     }
 }

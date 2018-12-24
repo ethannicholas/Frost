@@ -14,12 +14,12 @@ class Methods : Symbol {
     function containsDuplicates(methods:ListView<MethodDecl>):Bit {
         def sigs := HashSet<String>()
         for m in methods {
-            sigs.add(m.signature())
+            sigs.add(m.signature)
         }
         if sigs.count < methods.count {
             Console.printLine("duplicate methods:")
             for m in methods {
-                Console.printLine(m.declaration())
+                Console.printLine(m.declaration)
             }
         }
         return sigs.count < methods.count

@@ -261,7 +261,7 @@ class HCodeGenerator : CodeGenerator {
         -- can fix this down the road with shims, but for right now just assert that a method
         -- requiring struct indirection is not an override and cannot be overridden
         assert !result | (!m.annotations.isOverride & (m.annotations.isFinal |
-                m.annotations.isClass)), "invalid struct indirection on \{m.signature()}"
+                m.annotations.isClass)), "invalid struct indirection on \{m.signature}"
         return result
     }
 
