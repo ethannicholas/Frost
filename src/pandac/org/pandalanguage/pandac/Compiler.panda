@@ -3738,14 +3738,21 @@ class Compiler {
         else {
             finalTarget := null
         }
+        def start:Int -- skip over self if it's implicit
+        if !m.value.annotations.isClass & target !== null & target.type().isClassLiteral {
+            start := 0
+        }
+        else {
+            start := 1
+        }
         for i in 0 .. args.count {
             var a := compileExpression(args[i],
                     TypeContext.TYPE(effectiveType.parameterType(i)))
             if a == null {
                 return null
             }
-            if a.type() != actualType.parameterType(i + 1) {
-                a := cast(position, a, actualType.parameterType(i + 1))
+            if a.type() != actualType.parameterType(i + start) {
+                a := cast(position, a, actualType.parameterType(i + start))
             }
             if a == null {
                 return null

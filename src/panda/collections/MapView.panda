@@ -12,7 +12,9 @@ interface MapView<K, V> {
 
     function [](key:K):V?
 
+    -- FIXME make this a property
     function keys():Iterator<K>
 
+    -- FIXME make this a property
     function values():Iterator<V>
 }
