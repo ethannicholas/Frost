@@ -34,7 +34,30 @@ class MethodRef {
             def parameterTypes := Array<Type>()
             parameterTypes.add(target.subtypes[1])
             parameterTypes.addAll(methodType.subtypes[0 .. methodType.subtypes.count - 1])
-            methodType := Type.methodType(methodType.position, methodType.typeKind, parameterTypes,
+            def typeKind:Type.Kind
+            match value.methodKind {
+                when MethodDecl.Kind.METHOD:
+                    typeKind := Type.Kind.IMMUTABLE_METHOD
+                when MethodDecl.Kind.FUNCTION:
+                    typeKind := Type.Kind.IMMUTABLE_FUNCTION
+                otherwise:
+                    assert false
+            }
+            methodType := Type.methodType(methodType.position, typeKind, parameterTypes,
+                    methodType.returnType, methodType.priority)
+        }
+        else if !compiler.isImmutable(target) & value.methodKind != MethodDecl.Kind.INIT {
+            def typeKind:Type.Kind
+            match value.methodKind {
+                when MethodDecl.Kind.METHOD:
+                    typeKind := Type.Kind.METHOD
+                when MethodDecl.Kind.FUNCTION:
+                    typeKind := Type.Kind.FUNCTION
+                otherwise:
+                    assert false
+            }
+            methodType := Type.methodType(methodType.position, typeKind,
+                    methodType.subtypes[0 .. methodType.subtypes.count - 1],
                     methodType.returnType, methodType.priority)
         }
         self.effectiveType := compiler.remapType(found, methodType)

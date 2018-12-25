@@ -521,7 +521,7 @@ class CCodeGenerator : CodeGenerator {
             writeDeclaration(m)
         }
         def result:String
-        def declared := compiler.declaredTypeWithSelf(m, m.owner.type)
+        def declared := compiler.declaredTypeWithSelf(m, m.owner.type, false)
         def effectiveSelf:Type
         if compiler.isValue(m.owner) {
             effectiveSelf := Type.Object()

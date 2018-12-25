@@ -1045,7 +1045,7 @@ class Compiler {
     }
 
     method isImmutable(t:Type):Bit {
-        if !t.isClass {
+        if !t.isClass | t.isClassLiteral {
             return true
         }
         def cl := getClass(t)
@@ -2809,58 +2809,57 @@ class Compiler {
 
     function declaredType(m:MethodDecl):Type {
         resolve(m)
-        def subtypes := Array<Type>()
-        def typeName := MutableString("(")
-        var separator := ""
+        def parameters := Array<Type>() -- FIXME use map
         for p in m.parameters {
-            typeName.append(separator)
-            typeName.append(p.type.name)
-            subtypes.add(p.type)
-            separator := ", "
+            parameters.add(p.type)
         }
+        def immutable := m.annotations.isClass | isImmutable(m.owner)
         def kind:Type.Kind
         if m.methodKind = MethodDecl.Kind.FUNCTION {
-            typeName.append(")=>(")
-            kind := Type.Kind.FUNCTION
+            if immutable {
+                kind := Type.Kind.IMMUTABLE_FUNCTION
+            }
+            else {
+                kind := Type.Kind.FUNCTION
+            }
         }
         else {
-            typeName.append(")=&>(")
-            kind := Type.Kind.METHOD
+            if immutable {
+                kind := Type.Kind.IMMUTABLE_METHOD
+            }
+            else {
+                kind := Type.Kind.METHOD
+            }
         }
-        subtypes.add(m.returnType)
-        if m.returnType != Type.Void() {
-            typeName.append(m.returnType.name)
-        }
-        typeName.append(")")
-        return Type(typeName.finish(), kind, m.position, subtypes, true)
+        return Type.methodType(m.position, kind, parameters, m.returnType, m.priority)
     }
 
-    function declaredTypeWithSelf(m:MethodDecl, selfType:Type):Type {
+    function declaredTypeWithSelf(m:MethodDecl, selfType:Type, forceImmutable:Bit):Type {
         resolve(m)
-        def subtypes := Array<Type>()
-        def typeName := MutableString("(")
-        typeName.append(selfType.name)
-        subtypes.add(selfType)
+        def parameters := Array<Type>()
+        parameters.add(selfType)
         for p in m.parameters {
-            typeName.append(", ")
-            typeName.append(p.type.name)
-            subtypes.add(p.type)
+            parameters.add(p.type)
         }
+        def immutable := forceImmutable | m.annotations.isClass | isImmutable(m.owner)
         def kind:Type.Kind
         if m.methodKind = MethodDecl.Kind.FUNCTION {
-            typeName.append(")=>(")
-            kind := Type.Kind.FUNCTION
+            if immutable {
+                kind := Type.Kind.IMMUTABLE_FUNCTION
+            }
+            else {
+                kind := Type.Kind.FUNCTION
+            }
         }
         else {
-            typeName.append(")=&>(")
-            kind := Type.Kind.METHOD
+            if immutable {
+                kind := Type.Kind.IMMUTABLE_METHOD
+            }
+            else {
+                kind := Type.Kind.METHOD
+            }
         }
-        subtypes.add(m.returnType)
-        if m.returnType != Type.Void() {
-            typeName.append(m.returnType.name)
-        }
-        typeName.append(")")
-        return Type(typeName.finish(), kind, m.position, subtypes, true)
+        return Type.methodType(m.position, kind, parameters, m.returnType, m.priority)
     }
 
     function inheritedType(m:MethodDecl):Type {
@@ -2878,7 +2877,7 @@ class Compiler {
     function inheritedTypeWithSelf(m:MethodDecl, selfType:Type):Type {
         def inherited := getOverriddenMethod(m)
         if inherited == null {
-            return declaredTypeWithSelf(m, selfType)
+            return declaredTypeWithSelf(m, selfType, false)
         }
         return inheritedTypeWithSelf(inherited, selfType)
     }
@@ -3313,7 +3312,7 @@ class Compiler {
         if target !== null & !target.type().isClassLiteral {
             assert !m.annotations.isClass
             effectiveType := MethodRef(self, target.type(), m).effectiveType
-            irType := Type.pointerTo(declaredTypeWithSelf(m, m.owner.type))
+            irType := Type.pointerTo(declaredTypeWithSelf(m, m.owner.type, false))
         }
         else {
             if m.annotations.isClass {
@@ -3321,8 +3320,8 @@ class Compiler {
                 irType := Type.pointerTo(m.type)
             }
             else {
-                effectiveType := declaredTypeWithSelf(m, m.owner.type)
-                irType := Type.pointerTo(declaredTypeWithSelf(m, m.owner.type))
+                effectiveType := declaredTypeWithSelf(m, m.owner.type, isClassContext())
+                irType := Type.pointerTo(declaredTypeWithSelf(m, m.owner.type, false))
             }
         }
         def args := Array<ASTNode>()
@@ -3703,7 +3702,7 @@ class Compiler {
             actualType := inheritedTypeWithSelf(m.value)
         }
         else {
-            actualType := declaredTypeWithSelf(m.value, m.value.owner.type)
+            actualType := declaredTypeWithSelf(m.value, m.value.owner.type, false)
         }
         assert actualType.isMethod
         def effectiveType := m.effectiveType
@@ -4726,7 +4725,7 @@ class Compiler {
             pandaType := methodDecl.type
         }
         else {
-            pandaType := declaredTypeWithSelf(methodDecl, methodDecl.owner.type)
+            pandaType := declaredTypeWithSelf(methodDecl, methodDecl.owner.type, false)
         }
         def irType := Type.pointerTo(pandaType)
         args.add(ASTNode.IR_WRAPPER(position, cast(position, IR.Value.METHOD_POINTER(methodDecl,

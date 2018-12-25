@@ -1,5 +1,5 @@
 class PreconditionOverrideParameterName1 {
-    @pre(x >= 0 & x < y.length())
+    @pre(x >= 0 & x < y.length)
     method test(x:Int, y:String) {
         Console.printLine("char \{x}: \{y[x]}")
     }
