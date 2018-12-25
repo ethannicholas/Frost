@@ -398,7 +398,6 @@ class IR {
     method setCurrentBlock(id:Block.ID) {
         for b in blocks {
             if b.id = id {
-                -- FIXME should be an error to go back to an already-written block
                 currentBlock := b
                 return
             }

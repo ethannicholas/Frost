@@ -7211,9 +7211,6 @@ class Compiler {
     }
 
     method compilePostconditions() {
-        if true {
-            return
-        }
         def auto := AutoScope(self, methodSymbolTable)
         def m := currentMethod[0]
         var success:IR.Block.ID? := null
@@ -7390,26 +7387,27 @@ class Compiler {
                 }
             }
             if atPreBlock !== null {
-                def index:Int?
+                def index:Int? := null
                 for i in 0 .. ir.blocks.count {
                     if ir.blocks[i].id = atPreBlock {
                         index := i
                         break
                     }
                 }
-                assert index !== null
-                if ir.blocks[index].statements.count > 0 {
-                    ir.setCurrentBlock(atPreBlock)
-                    ir.add(IR.Statement.BRANCH(m.position, ir.blocks[0].id))
-                    def tmp := ir.blocks[0]
-                    ir.blocks[0] := ir.blocks[index]
-                    ir.blocks[index] := tmp
+                if index !== null {
+                    if ir.blocks[index].statements.count > 0 {
+                        ir.setCurrentBlock(atPreBlock)
+                        ir.add(IR.Statement.BRANCH(m.position, ir.blocks[0].id))
+                        def tmp := ir.blocks[0]
+                        ir.blocks[0] := ir.blocks[index]
+                        ir.blocks[index] := tmp
+                    }
+                    else {
+                        ir.blocks.removeIndex(index)
+                    }
                 }
-                else {
-                    ir.blocks.removeIndex(index)
-                }
-                atPreBlock := null
             }
+            atPreBlock := null
             if writeCode {
                 codeGenerator.write(m, ir)
             }
