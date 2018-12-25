@@ -11,5 +11,5 @@ method test(f:(String)=>(String)):String {
 }
 
 method main() {
-    Console.printLine(test(x => x.utf8()))
+    Console.printLine(test(x => x.utf8))
 }

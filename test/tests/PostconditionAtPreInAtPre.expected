@@ -1,2 +1,2 @@
-PostconditionAtPreInAtPre.panda:2:16: error: @pre is not legal within @pre
+PostconditionAtPreInAtPre.panda:2:16: error: cannot use @pre inside @pre
 1 error

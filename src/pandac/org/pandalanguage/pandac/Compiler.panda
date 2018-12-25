@@ -183,7 +183,7 @@ class Compiler {
 
         @override
         method cleanup() {
-            if !compiler.ir.currentBlockFinished() {
+            if !compiler.ir.currentBlockFinished {
                 for v in compiler.statementUnrefs {
                     compiler.compileUnref(v)
                 }
@@ -4372,6 +4372,10 @@ class Compiler {
             error(position, "@pre may only be used within a postcondition")
             return null
         }
+        if ir.currentBlock.id = atPreBlock {
+            error(position, "cannot use @pre inside @pre")
+            return null
+        }
         def old := ir.currentBlock.id
         ir.setCurrentBlock(atPreBlock)
         def result := compileExpression(expr)
@@ -4381,7 +4385,11 @@ class Compiler {
 
     method compileAtReturn(position:Position):IR.Value? {
         if currentMethod[0].returnType = Type.Void() {
-            error(position, "cannot use @return in a method with no return value")
+            error(position, "cannot use @return in a method which does not have a return type")
+            return null
+        }
+        if ir.currentBlock.id = atPreBlock {
+            error(position, "cannot use @return inside @pre")
             return null
         }
         if returnValue == null {
@@ -5999,7 +6007,7 @@ class Compiler {
                 compileStatement(s)
             }
         }
-        if !ir.currentBlockFinished() {
+        if !ir.currentBlockFinished {
             ir.add(IR.Statement.BRANCH(position, testBlock))
         }
         ir.setCurrentBlock(testBlock)
@@ -6140,7 +6148,7 @@ class Compiler {
                 compileStatement(s)
             }
         }
-        if !ir.currentBlockFinished() {
+        if !ir.currentBlockFinished {
             ir.add(IR.Statement.BRANCH(position, loopTest))
         }
         ir.setCurrentBlock(loopTest)
@@ -6316,7 +6324,7 @@ class Compiler {
                 compileStatement(s)
             }
         }
-        if !ir.currentBlockFinished() {
+        if !ir.currentBlockFinished {
             ir.add(IR.Statement.BRANCH(position, loopTest))
         }
         ir.setCurrentBlock(loopTest)
@@ -6505,7 +6513,7 @@ class Compiler {
                 compileStatement(s)
             }
         }
-        if !ir.currentBlockFinished() {
+        if !ir.currentBlockFinished {
             ir.add(IR.Statement.BRANCH(position, testBlock))
         }
         ir.setCurrentBlock(endBlock)
@@ -6580,13 +6588,13 @@ class Compiler {
                 compileStatement(s)
             }
         }
-        if !ir.currentBlockFinished() {
+        if !ir.currentBlockFinished {
             ir.add(IR.Statement.BRANCH(position, endBlock))
         }
         if ifFalse !== null {
             ir.setCurrentBlock(ifFalseBlock)
             compileStatement(ifFalse)
-            if !ir.currentBlockFinished() {
+            if !ir.currentBlockFinished {
                 ir.add(IR.Statement.BRANCH(position, endBlock))
             }
         }
@@ -6620,7 +6628,7 @@ class Compiler {
                 compileStatement(s)
             }
         }
-        if !ir.currentBlockFinished() {
+        if !ir.currentBlockFinished {
             ir.add(IR.Statement.BRANCH(position, bodyBlock))
         }
         ir.setCurrentBlock(endBlock)
@@ -6836,7 +6844,7 @@ class Compiler {
                             compileStatement(s)
                         }
                     }
-                    if !ir.currentBlockFinished() {
+                    if !ir.currentBlockFinished {
                         ir.add(IR.Statement.BRANCH(position, end))
                     }
                 otherwise:
@@ -6848,7 +6856,7 @@ class Compiler {
             for s in other {
                 compileStatement(s)
             }
-            if !ir.currentBlockFinished() {
+            if !ir.currentBlockFinished {
                 ir.add(IR.Statement.BRANCH(position, end))
             }
         }
@@ -6882,7 +6890,7 @@ class Compiler {
     }
 
     method leaveScope(c:EnclosingContext) {
-        if ir.currentBlockFinished() {
+        if ir.currentBlockFinished {
             -- we've already left the scope by other means; cleanup will have happened there
             return
         }
@@ -7004,7 +7012,7 @@ class Compiler {
                 compileStatement(s)
             }
         }
-        if !ir.currentBlockFinished() {
+        if !ir.currentBlockFinished {
             ir.add(IR.Statement.BRANCH(position, testBlock))
         }
         ir.setCurrentBlock(endBlock)
@@ -7253,6 +7261,7 @@ class Compiler {
                                     extractBuiltinBit(m.position, value), success, fail))
                             ir.setCurrentBlock(success)
                         when Annotations.Expression.POST_AND(_, expr):
+                            assert !ir.currentBlockFinished
                             if current == m {
                                 if m.overridden == null {
                                     error(expr.position(), "cannot use '@postAnd' in a method " +
@@ -7275,9 +7284,11 @@ class Compiler {
                             success := ir.newBlock("postcondition success")
                             if fail == null {
                                 fail := ir.newBlock("postcondition fail")
+                                def old := ir.currentBlock.id
                                 ir.setCurrentBlock(fail)
                                 compileAssertFail(m.position, ASTNode.STRING(m.position,
                                         "postcondition failure for \{m.declaration}"))
+                                ir.setCurrentBlock(old)
                             }
                             ir.add(IR.Statement.CONDITIONAL_BRANCH(m.position,
                                     extractBuiltinBit(m.position, value), success, fail))
@@ -7374,7 +7385,7 @@ class Compiler {
                 for s in m.body {
                     compileStatement(s)
                 }
-                if !ir.currentBlockFinished() {
+                if !ir.currentBlockFinished {
                     if m.returnType = Type.Void() | m.methodKind = MethodDecl.Kind.INIT {
                         compileReturn(m.position, null)
                     }
