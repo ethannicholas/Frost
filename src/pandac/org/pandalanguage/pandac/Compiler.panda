@@ -3666,6 +3666,46 @@ class Compiler {
             !reportErrors)
     method call(position:Position, target:IR.Value?, m:MethodRef, args:ListView<ASTNode>,
             type:TypeContext):IR.Value? {
+        if m.value.methodKind = MethodDecl.Kind.INIT {
+            var validTarget := false
+            var selfOrSuper := false
+            if target !== null {
+                match target {
+                    when IR.Value.PARAMETER(index, _):
+                        selfOrSuper := index = 0 & !isClassContext()
+                        validTarget := true
+                    when IR.Value.REF(id, _):
+                        if id = ir.currentBlock.ids[ir.currentBlock.ids.count - 1] {
+                            def last := ir.currentBlock.statements[ir.currentBlock.statements.count - 1]
+                            match last {
+                                when IR.Statement.CONSTRUCT:
+                                    validTarget := true
+                            }
+                        }
+                    when IR.Value.SUPER:
+                        selfOrSuper := true
+                        validTarget := true
+                }
+            }
+            else {
+                if isValue(m.value.owner) {
+                    selfOrSuper := false
+                    validTarget := true
+                }
+                else {
+                    selfOrSuper := !isClassContext()
+                    validTarget := selfOrSuper
+                }
+            }
+            if selfOrSuper & currentMethod[0].methodKind != MethodDecl.Kind.INIT {
+                error(position, "cannot directly call 'init' outside of an init method")
+                return null
+            }
+            if !validTarget {
+                error(position, "'init' may only be called on 'self' or 'super'")
+                return null
+            }
+        }
         if args.count != m.parameterCount {
             error(position, "\{m.value.declaration} expects \{m.parameterCount} " +
                     "argument\{m.parameterCount = 1:|s}, but found \{args.count}")

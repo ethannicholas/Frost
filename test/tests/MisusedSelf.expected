@@ -1,2 +1,2 @@
-MisusedSelf.panda:4:18: error: cannot reference 'self' from a @class method
+MisusedSelf.panda:4:18: error: cannot reference 'self' from a @class context
 1 error

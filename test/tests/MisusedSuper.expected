@@ -1,4 +1,4 @@
-MisusedSuper.panda:7:27: error: 'super' can only be used as part of a method call
-MisusedSuper.panda:11:18: error: 'super' can only be used as part of a method call
-MisusedSuper.panda:16:18: error: cannot reference 'super' from a @class method
+MisusedSuper.panda:7:27: error: 'super' may not appear in this context
+MisusedSuper.panda:11:18: error: 'super' may not appear in this context
+MisusedSuper.panda:16:18: error: 'super' may not appear in this context
 3 errors

@@ -1,4 +1,4 @@
 MisusedInit.panda:3:9: error: cannot directly call 'init' outside of an init method
-MisusedInit.panda:5:13: error: 'init' may only be called on 'self' or 'super'
-MisusedInit.panda:11:13: error: 'init' may only be called on 'self' or 'super'
+MisusedInit.panda:5:18: error: 'init' may only be called on 'self' or 'super'
+MisusedInit.panda:11:18: error: 'init' may only be called on 'self' or 'super'
 3 errors
