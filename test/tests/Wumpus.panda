@@ -335,7 +335,7 @@ class Wumpus {
             }
             Console.printLine()
             if command.startsWith("m") {
-                def roomString := command[command.next(command.start())..]
+                def roomString := command[command.next(command.start)..]
                 def label := roomString.convert()->Int?
                 if label !== null & label >= 1 & label <= rooms.count {
                     var room := getRoom(label)
@@ -355,7 +355,7 @@ class Wumpus {
                 }
             }
             else if command.startsWith("s") {
-                def roomStrings := command[command.next(command.start())..].split(",")
+                def roomStrings := command[command.next(command.start)..].split(",")
                 def roomNumbers := Array<Int>()
                 for i in 0 .. roomStrings.count {
                     def label := roomStrings[i]

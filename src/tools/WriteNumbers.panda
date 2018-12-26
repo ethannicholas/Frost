@@ -228,6 +228,35 @@ class WriteNumbers {
     }
 
     @class
+    function priority(leftType:Type, rightType:Type):Int {
+        if leftType = rightType {
+            return 10
+        }
+        match rightType {
+            when Type.UINT8:
+                return 0
+            when Type.INT8:
+                return 1
+            when Type.UINT16:
+                return 2
+            when Type.INT16:
+                return 3
+            when Type.UINT32:
+                return 4
+            when Type.INT32:
+                return 5
+            when Type.UINT64:
+                return 6
+            when Type.INT64:
+                return 7
+            when Type.REAL32:
+                return 8
+            when Type.REAL64:
+                return 9
+        }
+    }
+
+    @class
     method writeOperator(op:String, doc:String, leftType:Type, rightType:Type, signMatters:Bit,
             out:OutputStream) {
         if size(leftType) > size(rightType) {
@@ -240,12 +269,7 @@ class WriteNumbers {
         }
         out.printLine()
         out.printLine("    ===\{doc}===")
-        if leftType = rightType {
-            out.printLine("    @priority(3)")
-        }
-        else if rightType = Type.INT64 {
-            out.printLine("    @priority(1)")
-        }
+        out.printLine("    @priority(\{priority(leftType, rightType)})")
         out.printLine("    function \{op}(other:\{object(rightType)}):\{object(resultType)} {")
         out.printLine("        return value\{cast(leftType, resultType)} \{op} " +
                 "other.value\{cast(rightType, resultType)}")
@@ -291,12 +315,7 @@ class WriteNumbers {
         }
         out.printLine()
         out.printLine("    ===Divides this number by another number.===")
-        if leftType = rightType {
-            out.printLine("    @priority(3)")
-        }
-        if rightType = Type.REAL32 | rightType = Type.REAL64 {
-            out.printLine("    @priority(1)")
-        }
+        out.printLine("    @priority(\{priority(leftType, rightType)})")
         out.printLine("    function /(other:\{object(rightType)}):\{object(resultType)} {")
         out.printLine("        return value\{cast(leftType, resultType)} / " +
                 "other.value\{cast(rightType, resultType)}")
@@ -337,11 +356,8 @@ class WriteNumbers {
         out.printLine("    ===\{doc}===")
         if leftType = rightType {
             out.printLine("    @override")
-            out.printLine("    @priority(3)")
         }
-        else if rightType = Type.INT64 {
-            out.printLine("    @priority(1)")
-        }
+        out.printLine("    @priority(\{priority(leftType, rightType)})")
         out.printLine("    function \{op}(other:\{object(rightType)}):Bit {")
         out.printLine("        return value\{cast(leftType, operandType)} \{op} " +
                 "other.value\{cast(rightType, operandType)}")
@@ -375,12 +391,7 @@ class WriteNumbers {
         }
         out.printLine("    ===Returns the larger (closest to positive infinity) of this number " +
                 "and another number.===")
-        if leftType = rightType {
-            out.printLine("    @priority(3)")
-        }
-        else if rightType = Type.INT64 {
-            out.printLine("    @priority(1)")
-        }
+        out.printLine("    @priority(\{priority(leftType, rightType)})")
         out.printLine("    function max(other:\{object(rightType)}):\{object(resultType)} {")
         out.printLine("        if value\{cast(leftType, resultType)} > " +
                 "other.value\{cast(rightType, resultType)} {")
@@ -411,12 +422,7 @@ class WriteNumbers {
         }
         out.printLine("    ===Returns the smaller (closest to negative infinity) of this number " +
                 "and another number.===")
-        if leftType = rightType {
-            out.printLine("    @priority(3)")
-        }
-        else if rightType = Type.INT64 {
-            out.printLine("    @priority(1)")
-        }
+        out.printLine("    @priority(\{priority(leftType, rightType)})")
         out.printLine("    function min(other:\{object(rightType)}):\{object(resultType)} {")
         out.printLine("        if value\{cast(leftType, resultType)} < " +
                 "other.value\{cast(rightType, resultType)} {")
@@ -497,7 +503,7 @@ class WriteNumbers {
     method writeHash(type:Type, out:OutputStream) {
         out.printLine()
         out.printLine("    @override")
-        out.printLine("    function hash():Int {")
+        out.printLine("    function get_hash():Int {")
         out.printLine("        return Int(value\{cast(type, Type.INT64)})")
         out.printLine("    }")
     }
@@ -514,7 +520,7 @@ class WriteNumbers {
         out.printLine("    ===Returns this number converted to a decimal string.===")
         out.printLine("    @override")
         out.printLine("    function convert():String {")
-        var max := max(type).convert()->String.length()
+        var max := max(type).convert()->String.length
         if signed(type) {
             max += 1 -- for minus sign
         }
@@ -676,7 +682,7 @@ class WriteNumbers {
 
     @class
     function insertCommas(s:String):String {
-        if s.length() < 4 {
+        if s.length < 4 {
             return s
         }
         def result := MutableString(s)

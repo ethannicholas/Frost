@@ -2035,6 +2035,9 @@ class Compiler {
                     return null
                 }
                 def types := possibleTypes(left)
+                if types == null {
+                    return null
+                }
                 var found := false
                 for t in types {
                     if canCast(t, target) {
@@ -2568,7 +2571,7 @@ class Compiler {
                 }
                 if target.isNumber {
                     def cl := getClass(target)
-                    assert cl != null
+                    assert cl !== null
                     def initMethod := cl.methods[0]
                     assert initMethod.methodKind = MethodDecl.Kind.INIT
                     assert initMethod.annotations.isImplicit
@@ -6281,7 +6284,7 @@ class Compiler {
                 def args := Array<ASTNode>() -- FIXME literal
                 args.add(ASTNode.INT(position, 0))
                 def comparison := call(position, step, ">=", args, TypeContext.TYPE(Type.Bit()))
-                assert comparison != null
+                assert comparison !== null
                 direction := extractBuiltinBit(position, comparison)
             }
             else {
@@ -7075,21 +7078,23 @@ class Compiler {
         if body.count = 0 {
             return false
         }
-        match body[0] {
-            when ASTNode.CALL(_, target, _):
-                match target {
-                    when ASTNode.IDENTIFIER(_, text):
-                        return text = "init"
-                    when ASTNode.DOT(_, base, text):
-                        if text != "init" {
-                            return false
-                        }
-                        match base {
-                            when ASTNode.SELF:
+        for s in body {
+            match s {
+                when ASTNode.CALL(_, target, _):
+                    match target {
+                        when ASTNode.IDENTIFIER(_, text):
+                            if text = "init" {
                                 return true
-                        }
-                        return false
-                }
+                            }
+                        when ASTNode.DOT(_, base, text):
+                            if text = "init" {
+                                match base {
+                                    when ASTNode.SELF:
+                                        return true
+                                }
+                            }
+                    }
+            }
         }
         return false
     }
@@ -7098,19 +7103,19 @@ class Compiler {
         if body.count = 0 {
             return false
         }
-        match body[0] {
-            when ASTNode.CALL(_, target, _):
-                match target {
-                    when ASTNode.DOT(_, base, text):
-                        if text != "init" {
-                            return false
-                        }
-                        match base {
-                            when ASTNode.SUPER:
-                                return true
-                        }
-                        return false
-                }
+        for s in body {
+            match s {
+                when ASTNode.CALL(_, target, _):
+                    match target {
+                        when ASTNode.DOT(_, base, text):
+                            if text = "init" {
+                                match base {
+                                    when ASTNode.SUPER:
+                                        return true
+                                }
+                            }
+                    }
+            }
         }
         return false
 
@@ -7315,6 +7320,9 @@ class Compiler {
         currentMethod.push(m)
         checkAnnotations(m)
         assert atPreBlock == null
+        if m.owner.classKind = ClassDecl.Kind.CHOICE & m.name = "cleanup" {
+            createChoiceCleanup(m)
+        }
         if m.body !== null {
             def oldIR := ir
             ir := IR()
@@ -7367,7 +7375,7 @@ class Compiler {
                                         f.rawValue))
                             }
                         }
-                        if !callsSuperInit(m.body) {
+                        if !callsSuperInit(m.body) & m.owner.rawSuper !== null {
                             def p := m.position
                             compileStatement(ASTNode.CALL(p, ASTNode.DOT(p, ASTNode.SUPER(p),
                                     "init"), ImmutableArray<ASTNode>() -* FIXME literal *-))
@@ -7444,7 +7452,7 @@ class Compiler {
                 if f.fieldKind = FieldDecl.Kind.VAR {
                     error(f.position, "immutable class '\{cl.name}' cannot contain a 'var'")
                 }
-                else if !isImmutable(f.type) {
+                else if !isImmutable(f.type) & f.fieldKind != FieldDecl.Kind.PROPERTY {
                     error(f.position, "immutable class '\{cl.name}' cannot contain mutable field " +
                             "'\{f.name}' of type '\{f.type}'")
                 }
