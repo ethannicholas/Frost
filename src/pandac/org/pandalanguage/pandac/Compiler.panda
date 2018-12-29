@@ -2561,9 +2561,9 @@ class Compiler {
                 return coercionCost(types, target)
             when ASTNode.INT(_, value):
                 if (target.typeKind = Type.Kind.BUILTIN_INT &
-                        requiredSize(value.convert()->Int64) <= target.size()) |
+                        requiredSize(value.convert()->Int64) <= target.size) |
                         (target.typeKind = Type.Kind.BUILTIN_UINT &
-                        requiredSize(value) <= target.size()) {
+                        requiredSize(value) <= target.size) {
                     return 0
                 }
                 if target.typeKind = Type.Kind.BUILTIN_FLOAT {
@@ -3616,40 +3616,161 @@ class Compiler {
     }
 
     method compileNumberIntrinsic(position:Position, target:IR.Value, op:Token.Kind,
-            args:ListView<ASTNode>, resultType:Type):Pair<Bit, IR.Value?> {
+            args:ListView<ASTNode>, operandType:Type, resultType:Type):Pair<Bit, IR.Value?> {
         if args.count != 1 {
             return Pair<Bit, IR.Value?>(false, null)
         }
-        def left := coerce(position, target, resultType)
+        def left := coerce(position, target, operandType)
         if left == null {
             return Pair<Bit, IR.Value?>(false, null)
         }
-        def right := compileExpression(args[0], TypeContext.TYPE(resultType))
+        def right := compileExpression(args[0], TypeContext.TYPE(operandType))
         if right == null {
             return Pair<Bit, IR.Value?>(false, null)
         }
         def builtinLeft := extractBuiltinInt(position, left)
-        def builtin := ir.add(IR.Statement.BINARY(position, builtinLeft, op,
-                extractBuiltinInt(position, right), builtinLeft.type()))
+        def builtin:IR.Statement.ID
+        def builtinResultType:Type
+        if resultType = Type.Bit() {
+            builtinResultType := Type.BuiltinBit()
+        }
+        else {
+            builtinResultType :=  builtinLeft.type()
+        }
+        builtin := ir.add(IR.Statement.BINARY(position, builtinLeft, op,
+                extractBuiltinInt(position, right), builtinResultType))
         def constructArgs := Array<ASTNode>()
-        constructArgs.add(ASTNode.IR_WRAPPER(position, IR.Value.REF(builtin, builtinLeft.type())))
+        constructArgs.add(ASTNode.IR_WRAPPER(position, IR.Value.REF(builtin, builtinResultType)))
         def construct := call(position, IR.Value.TYPE(resultType), constructArgs,
                 TypeContext.TYPE(resultType))
         assert construct !== null
         return Pair<Bit, IR.Value?>(true, construct)
     }
 
+    @pre(type.isNumber)
+    function numberSize(type:Type):Int {
+        def cl := getClass(type)
+        assert cl !== null
+        def value := cl.fields[cl.fields.count - 1]
+        resolve(value)
+        assert value.type.isBuiltinNumber
+        return value.type.size
+    }
+
+    function binaryType(leftType:Type, rightType:Type, signMatters:Bit, promote32:Bit):Type {
+        def leftSize := numberSize(leftType)
+        def rightSize := numberSize(rightType)
+        if leftType.isReal | rightType.isReal {
+            if leftSize = 64 | rightSize = 64 {
+                return Type.Real64()
+            }
+            return Type.Real32()
+        }
+        if leftType.isSigned = rightType.isSigned | !signMatters {
+            def leftPromoted:Type
+            def rightPromoted:Type
+            if promote32 {
+--                leftPromoted := max32(leftType)
+--                rightPromoted := max32(rightType)
+                assert false
+            }
+            else {
+                leftPromoted := leftType
+                rightPromoted := rightType
+            }
+            if leftPromoted = rightPromoted {
+                return leftPromoted
+            }
+            if numberSize(leftPromoted) > numberSize(rightPromoted) {
+                return leftPromoted
+            }
+            return rightPromoted
+        }
+        else if leftSize = 8 & rightSize = 8 {
+            if promote32 {
+                return Type.Int32()
+            }
+            else {
+                return Type.Int16()
+            }
+        }
+        else if leftSize <= 16 & rightSize <= 16 {
+            return Type.Int32()
+        }
+        else if leftSize <= 32 & rightSize <= 32 {
+            return Type.Int64()
+        }
+        else {
+            assert false
+        }
+    }
+
     method compileNumberIntrinsic(position:Position, target:IR.Value?, m:MethodRef,
             args:ListView<ASTNode>):Pair<Bit, IR.Value?> {
         match m.value.name {
+            when "init":
+                assert m.value.parameters.count = 1
+                assert args.count = 1
+                def paramType := m.value.parameters[0].type
+                if paramType.isBuiltinNumber {
+                    def value := compileExpression(args[0], TypeContext.TYPE(paramType))
+                    if value !== null {
+                        def finalArgs := Array<IR.Value>() -- FIXME literal
+                        finalArgs.add(value)
+                        def result := ir.add(IR.Statement.CREATE_STRUCT(position, m.value.owner,
+                                finalArgs.finish()))
+                        return Pair<Bit, IR.Value?>(true, IR.Value.REF(result, m.value.owner.type))
+                    }
+                }
             when "+":
-                return compileNumberIntrinsic(position, target, Token.Kind.ADD, args, m.returnType)
+                return compileNumberIntrinsic(position, target, Token.Kind.ADD, args,
+                        m.returnType, m.returnType)
             when "-":
-                return compileNumberIntrinsic(position, target, Token.Kind.SUB, args, m.returnType)
+                return compileNumberIntrinsic(position, target, Token.Kind.SUB, args,
+                        m.returnType, m.returnType)
             when "*":
-                return compileNumberIntrinsic(position, target, Token.Kind.MUL, args, m.returnType)
+                return compileNumberIntrinsic(position, target, Token.Kind.MUL, args,
+                        m.returnType, m.returnType)
             when "//":
-                return compileNumberIntrinsic(position, target, Token.Kind.INTDIV, args, m.returnType)
+                return compileNumberIntrinsic(position, target, Token.Kind.INTDIV, args,
+                        m.returnType, m.returnType)
+            when ">":
+                return compileNumberIntrinsic(position, target, Token.Kind.GT, args,
+                        binaryType(m.value.owner.type, m.value.parameters[0].type, true, false),
+                        m.returnType)
+            when ">=":
+                return compileNumberIntrinsic(position, target, Token.Kind.GTEQ, args,
+                        binaryType(m.value.owner.type, m.value.parameters[0].type, true, false),
+                        m.returnType)
+            when "<":
+                return compileNumberIntrinsic(position, target, Token.Kind.LT, args,
+                        binaryType(m.value.owner.type, m.value.parameters[0].type, true, false),
+                        m.returnType)
+            when "<=":
+                return compileNumberIntrinsic(position, target, Token.Kind.LTEQ, args,
+                        binaryType(m.value.owner.type, m.value.parameters[0].type, true, false),
+                        m.returnType)
+        }
+        return Pair<Bit, IR.Value?>(false, null)
+    }
+
+    method compileBitIntrinsic(position:Position, target:IR.Value?, m:MethodRef,
+            args:ListView<ASTNode>):Pair<Bit, IR.Value?> {
+        match m.value.name {
+            when "init":
+                assert m.value.parameters.count = 1
+                assert args.count = 1
+                def paramType := m.value.parameters[0].type
+                if paramType = Type.BuiltinBit() {
+                    def value := compileExpression(args[0], TypeContext.TYPE(paramType))
+                    if value !== null {
+                        def finalArgs := Array<IR.Value>() -- FIXME literal
+                        finalArgs.add(value)
+                        def result := ir.add(IR.Statement.CREATE_STRUCT(position, m.value.owner,
+                                finalArgs.finish()))
+                        return Pair<Bit, IR.Value?>(true, IR.Value.REF(result, m.value.owner.type))
+                    }
+                }
         }
         return Pair<Bit, IR.Value?>(false, null)
     }
@@ -3661,6 +3782,9 @@ class Compiler {
         }
         if m.target.isNumber {
             return compileNumberIntrinsic(position, target, m, args)
+        }
+        if m.target = Type.Bit() {
+            return compileBitIntrinsic(position, target, m, args)
         }
         return Pair<Bit, IR.Value?>(false, null)
     }
@@ -7308,6 +7432,22 @@ class Compiler {
         }
     }
 
+    -- to avoid calling super.init for a few common classes we know for sure will never do anything
+    -- interesting in their init methods. This is especially important for Value classes, which
+    -- would have to be wrapped in order to perform super.init calls.
+    function hasTrivialInit(cl:ClassDecl?):Bit {
+        -- FIXME should be able to roll this into match below
+        if cl == null {
+            return true
+        }
+        match cl.name {
+            when "panda.core.Object", "panda.core.Immutable", "panda.core.Value":
+                return true
+            otherwise:
+                return false
+        }
+    }
+
     method compile(m:MethodDecl) {
         compile(m, null)
     }
@@ -7375,7 +7515,8 @@ class Compiler {
                                         f.rawValue))
                             }
                         }
-                        if !callsSuperInit(m.body) & m.owner.rawSuper !== null {
+                        if !callsSuperInit(m.body) & m.owner.rawSuper !== null &
+                                !hasTrivialInit(getClass(m.owner.rawSuper)) {
                             def p := m.position
                             compileStatement(ASTNode.CALL(p, ASTNode.DOT(p, ASTNode.SUPER(p),
                                     "init"), ImmutableArray<ASTNode>() -* FIXME literal *-))
@@ -7428,6 +7569,9 @@ class Compiler {
             }
             atPreBlock := null
             if writeCode {
+                if m.name = "DEBUG" {
+                    Console.printLine(ir)
+                }
                 codeGenerator.write(m, ir)
             }
             ir := oldIR

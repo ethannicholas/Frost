@@ -1120,6 +1120,20 @@ class CCodeGenerator : CodeGenerator {
         refs[id] := result
     }
 
+    method writeCreateStruct(id:IR.Statement.ID, cl:ClassDecl, args:ImmutableArray<IR.Value>) {
+        assert compiler.isValue(cl)
+        def result := nextVar()
+        def target := cl.type
+        out.print("\{cType(target)} \{result} = (\{cType(target)}) {")
+        var separator := ""
+        for v in args {
+            out.print("\{separator}\{getReference(v)}")
+            separator := ", "
+        }
+        out.printLine("};")
+        refs[id] := result
+    }
+
     method writeDynamicCall(id:IR.Statement.ID, m:IR.Value, args:ListView<IR.Value>) {
         var type := m.type()
         if type.isPointer {
@@ -1320,6 +1334,8 @@ class CCodeGenerator : CodeGenerator {
                 writeConditionalBranch(test, ifTrue, ifFalse)
             when IR.Statement.CONSTRUCT(position, cl):
                 writeConstruct(id, cl)
+            when IR.Statement.CREATE_STRUCT(position, cl, args):
+                writeCreateStruct(id, cl, args)
             when IR.Statement.DYNAMIC_CALL(position, m, args):
                 writeDynamicCall(id, m, args)
             when IR.Statement.EXTRACT_FIELD(position, target, field):

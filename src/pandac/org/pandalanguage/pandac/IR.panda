@@ -36,9 +36,15 @@ class IR {
         Constructs a new object instance. The object will have an initialized class pointer and a
         refcount of 1, with all other fields initialized to 0. `init` calls appear separately as
         `STATIC_CALL` statements. `CONSTRUCT` is used only for non-`Value` objects; `Value`s are
-        directly returned by their `init` methods (non-`Value` `init` methods instead return void).
+        directly returned by their `init` methods (non-`Value` `init` methods instead return void)
+        or via CREATE_STRUCT.
         ============================================================================================
         CONSTRUCT(Position, ClassDecl)
+
+        ============================================================================================
+        Creates an instance of a Value class with all fields specified.
+        ============================================================================================
+        CREATE_STRUCT(Position, ClassDecl, ImmutableArray<Value> -* args *-)
 
         ============================================================================================
         Dynamically calls a method reference. `args` is the actual, IR-level arguments, meaning that
@@ -178,6 +184,8 @@ class IR {
                     return "branch \{test}, \{ifTrue}, \{ifFalse}"
                 when CONSTRUCT(position, cl):
                     return "construct \{cl.name}"
+                when CREATE_STRUCT(position, cl, args):
+                    return "create_struct \{cl.name}, \{args}"
                 when DYNAMIC_CALL(position, m, args):
                     return "dynamic_call \{m}(\{args.join(", ")})"
                 when EXTRACT_FIELD(position, value, field):

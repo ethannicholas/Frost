@@ -1149,7 +1149,7 @@ class LLVMCodeGenerator : CodeGenerator {
     }
 
     method getRealReference(t:Type, r64:Real64):String {
-        if t.size() = 32 {
+        if t.size = 32 {
             -- LLVM has a bizarre representation of float. You still use a double, but must ensure
             -- that said double is exactly representable as a float. We convert through Real32 to
             -- ensure this.
@@ -1509,6 +1509,21 @@ class LLVMCodeGenerator : CodeGenerator {
         refs[id] := result
     }
 
+    method writeCreateStruct(position:Position, id:IR.Statement.ID, cl:ClassDecl,
+            args:ImmutableArray<IR.Value>) {
+        assert compiler.isValue(cl)
+        assert args.count > 0
+        def type := llvmType(cl.type)
+        var current := "undef"
+        for i in 0 .. args.count {
+            def value := getTypedReference(args[i])
+            def next := nextVar()
+            out.printLine("\{next} = insertvalue \{type} \{current}, \{value}, \{i}")
+            current := next
+        }
+        refs[id] := current
+    }
+
     method writeDynamicCall(position:Position, id:IR.Statement.ID, m:IR.Value,
             args:ListView<IR.Value>) {
         var type := m.type()
@@ -1675,10 +1690,10 @@ class LLVMCodeGenerator : CodeGenerator {
     method writeNegate(position:Position, id:IR.Statement.ID, value:IR.Value) {
         def result := nextVar()
         if value.type().typeKind = Type.Kind.BUILTIN_FLOAT {
-            out.print("\{result} = fsub \{getTypedReference(value)}, 0x0\{debugInfo(position)}")
+            out.printLine("\{result} = fsub \{llvmType(value.type())} 0x0, \{getReference(value)}\{debugInfo(position)}")
         }
         else {
-            out.print("\{result} = sub \{getTypedReference(value)}, 0\{debugInfo(position)}")
+            out.printLine("\{result} = sub \{llvmType(value.type())} 0, \{getReference(value)}\{debugInfo(position)}")
         }
         refs[id] := result
     }
@@ -1835,6 +1850,8 @@ class LLVMCodeGenerator : CodeGenerator {
                 writeConditionalBranch(position, test, ifTrue, ifFalse)
             when IR.Statement.CONSTRUCT(position, cl):
                 writeConstruct(position, id, cl)
+            when IR.Statement.CREATE_STRUCT(position, cl, args):
+                writeCreateStruct(position, id, cl, args)
             when IR.Statement.DYNAMIC_CALL(position, m, args):
                 writeDynamicCall(position, id, m, args)
             when IR.Statement.EXTRACT_FIELD(position, target, field):

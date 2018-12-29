@@ -38,7 +38,11 @@ class Type : Symbol, Key<Type> {
 
     property isNumber:Bit
 
+    property size:Int
+
     property isBuiltinNumber:Bit
+
+    property isSigned:Bit
 
     property isReal:Bit
 
@@ -188,7 +192,7 @@ class Type : Symbol, Key<Type> {
         return Type(name.finish(), kind, position, subtypes.finish(), resolved, priority)
     }
 
-    function size():Int {
+    function get_size():Int {
         assert typeKind = Kind.BUILTIN_INT | typeKind = Kind.BUILTIN_UINT |
                 typeKind = Kind.BUILTIN_FLOAT, "not a number: \{self}"
         return position.line
@@ -496,6 +500,10 @@ class Type : Symbol, Key<Type> {
     function get_isBuiltinNumber():Bit {
         return typeKind = Kind.BUILTIN_INT | typeKind = Kind.BUILTIN_UINT |
                 typeKind = Kind.BUILTIN_FLOAT | typeKind = Kind.INT_LITERAL
+    }
+
+    function get_isSigned():Bit {
+        return name.startsWith("panda.core.Int")
     }
 
     function get_isReal():Bit {

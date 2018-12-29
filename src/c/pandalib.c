@@ -269,7 +269,7 @@ void* pandaRealloc(void* ptr, size_t oldSize, size_t newSize) {
 void pandaFree(void* ptr) {
     allocations--;
 #if !DEBUG_ALLOCS
-    free(ptr);
+//    free(ptr);
 #endif
 }
 
@@ -781,6 +781,16 @@ void pandaThreadEntry(ThreadInfo* threadInfo) {
 }
 
 void panda$threads$Thread$run$$LP$RP$EQ$AM$GT$ST$LP$RP$builtin_bit(Object* thread, Method* run,
+        Bit preventsExit) {
+    pthread_t threadId;
+    ThreadInfo* threadInfo = pandaAlloc(sizeof(ThreadInfo));
+    panda$core$Panda$ref$panda$core$Object$Q((Object*) run);
+    threadInfo->run = run;
+    threadInfo->preventsExit = preventsExit;
+    pthread_create(&threadId, NULL, (void* (*)()) &pandaThreadEntry, threadInfo);
+}
+
+void panda$threads$Thread$run$$LP$RP$EQ$AM$GT$LP$RP$builtin_bit(Object* thread, Method* run,
         Bit preventsExit) {
     pthread_t threadId;
     ThreadInfo* threadInfo = pandaAlloc(sizeof(ThreadInfo));

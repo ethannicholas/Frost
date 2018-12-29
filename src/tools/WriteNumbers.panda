@@ -144,6 +144,10 @@ class WriteNumbers {
                 leftPromoted := max32(leftType)
                 rightPromoted := max32(rightType)
             }
+            else {
+                leftPromoted := leftType
+                rightPromoted := rightType
+            }
             if leftPromoted = rightPromoted {
                 return leftPromoted
             }

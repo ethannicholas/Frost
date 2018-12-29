@@ -8,6 +8,21 @@ A simple lexical analyzer generator for Panda, used to build pandac's lexer.
 class PLex {
     def tokens := HashMap<String, Regex>()
 
+    @class
+    function lastIndexOf(this:String, s:String):String.Index? {
+        def startPos := this._length - s._length
+        outer: for i in startPos ... 0 by -1 {
+            for j in 0 .. s._length {
+                if this.data[i + j] != s.data[j] {
+                    continue outer
+                }
+            }
+            return String.Index(i)
+        }
+        assert !this.contains(s), "returning null for \{this:panda}.lastIndex(\{s:panda})"
+        return null
+    }
+
     method printWarning(out:OutputStream) {
         out.printLine("-------- UPDATED --------")
         out.printLine("-***********************************************************************-")
@@ -21,12 +36,12 @@ class PLex {
         def token := IndentedOutputStream(tokenPath.openOutputStream())
         def nfa := NFA()
         printWarning(token)
-        token.printLine("package \{tokenName[..tokenName.lastIndexOf(".")]}")
+        token.printLine("package \{tokenName[..lastIndexOf(tokenName, ".")]}")
         token.printLine()
         token.printLine("uses \{positionName}")
         token.printLine()
         token.printLine("@final")
-        def index := tokenName.next(tokenName.lastIndexOf("."))
+        def index := tokenName.next(lastIndexOf(tokenName, "."))
         token.printLine("class \{tokenName[index..]} : Value {")
         token.level += 1
         token.printLine("choice Kind {")
@@ -127,14 +142,14 @@ class PLex {
     method writeLexer(tokenName:String, lexerName:String, lexerPath:File, positionName:String,
             dfa:DFA, out:IndentedOutputStream) {
         printWarning(out)
-        out.printLine("package \{lexerName[..lexerName.lastIndexOf(".")]}")
+        out.printLine("package \{lexerName[..lastIndexOf(lexerName, ".")]}")
         out.printLine()
         out.printLine("uses panda.unsafe.Pointer")
         out.printLine("uses org.pandalanguage.plex.runtime.DFA")
         out.printLine("uses \{positionName}")
         out.printLine()
         out.printLine("@final")
-        out.printLine("class \{lexerName[lexerName.next(lexerName.lastIndexOf("."))..]} {")
+        out.printLine("class \{lexerName[lexerName.next(lastIndexOf(lexerName, "."))..]} {")
         out.level += 1
         out.printLine("def dfa:DFA")
         out.printLine()
