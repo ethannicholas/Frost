@@ -7,7 +7,8 @@ typedef struct panda$core$Class panda$core$Class;
 typedef struct panda$core$String panda$core$String;
 #include "panda/core/Bit_types.h"
 #include "org/pandalanguage/pandac/Type/Kind_types.h"
-typedef struct panda$collections$Array panda$collections$Array;
+typedef struct panda$collections$ImmutableArray panda$collections$ImmutableArray;
+#include "panda/core/Int64_types.h"
 typedef struct panda$core$Weak panda$core$Weak;
 
 typedef struct org$pandalanguage$pandac$Type {
@@ -18,10 +19,11 @@ typedef struct org$pandalanguage$pandac$Type {
     panda$core$String* name;
     panda$core$Bit resolved;
     org$pandalanguage$pandac$Type$Kind typeKind;
-    panda$collections$Array* subtypes;
-    panda$core$Weak* parameter;
+    panda$collections$ImmutableArray* subtypes;
+    panda$core$Int64 priority;
+    panda$core$Weak* genericParameter;
 } org$pandalanguage$pandac$Type;
 #include "panda/core/Class.h"
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[23]; } org$pandalanguage$pandac$Type$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[26]; } org$pandalanguage$pandac$Type$class_type;
 extern org$pandalanguage$pandac$Type$class_type org$pandalanguage$pandac$Type$class;
 

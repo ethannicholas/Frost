@@ -156,7 +156,6 @@ add_library(c_panda
     bootstrap/src/panda/io/PushbackInputStream.c
     bootstrap/src/panda/json/JSON.c
     bootstrap/src/panda/json/JSONParser.c
-    bootstrap/src/panda/math/MersenneTwister.c
     bootstrap/src/panda/math/Random.c
     bootstrap/src/panda/math/XorShift128Plus.c
     bootstrap/src/panda/threads/Lock.c
@@ -183,15 +182,28 @@ add_library(c_panda
 
 add_executable(bootstrap
     ${CMAKE_CURRENT_BINARY_DIR}/config.c
+    bootstrap/src/org/pandalanguage/json/Lexer.c
+    bootstrap/src/org/pandalanguage/json/Position.c
+    bootstrap/src/org/pandalanguage/json/Token.c
+    bootstrap/src/org/pandalanguage/json/Token/Kind.c
+    bootstrap/src/org/pandalanguage/panda/Int16List.c
+    bootstrap/src/org/pandalanguage/panda/Int32List.c
+    bootstrap/src/org/pandalanguage/panda/Int64List.c
+    bootstrap/src/org/pandalanguage/panda/Int8List.c
+    bootstrap/src/org/pandalanguage/panda/IntBitIterator.c
+    bootstrap/src/org/pandalanguage/panda/UInt16List.c
+    bootstrap/src/org/pandalanguage/panda/UInt32List.c
+    bootstrap/src/org/pandalanguage/panda/UInt64List.c
+    bootstrap/src/org/pandalanguage/panda/UInt8List.c
     bootstrap/src/org/pandalanguage/pandac/Alias.c
     bootstrap/src/org/pandalanguage/pandac/Annotations.c
     bootstrap/src/org/pandalanguage/pandac/Annotations/Expression.c
+    bootstrap/src/org/pandalanguage/pandac/Annotations/Flag.c
     bootstrap/src/org/pandalanguage/pandac/ASTNode.c
     bootstrap/src/org/pandalanguage/pandac/CCodeGenerator.c
     bootstrap/src/org/pandalanguage/pandac/CCodeGenerator/AutoContext.c
     bootstrap/src/org/pandalanguage/pandac/CCodeGenerator/ClassConstant.c
     bootstrap/src/org/pandalanguage/pandac/CCodeGenerator/EnclosingContext.c
-    bootstrap/src/org/pandalanguage/pandac/CCodeGenerator/ExtraEffect.c
     bootstrap/src/org/pandalanguage/pandac/CCodeGenerator/MethodShim.c
     bootstrap/src/org/pandalanguage/pandac/CCodeGenerator/OpClass.c
     bootstrap/src/org/pandalanguage/pandac/ChoiceCase.c
@@ -201,34 +213,74 @@ add_executable(bootstrap
     bootstrap/src/org/pandalanguage/pandac/ClassDecl/Resolution.c
     bootstrap/src/org/pandalanguage/pandac/CodeGenerator.c
     bootstrap/src/org/pandalanguage/pandac/Compiler.c
-    bootstrap/src/org/pandalanguage/pandac/Compiler/_Closure1.c
     bootstrap/src/org/pandalanguage/pandac/Compiler/AutoAtPreFlag.c
-    bootstrap/src/org/pandalanguage/pandac/Compiler/AutoSymbolTable.c
-    bootstrap/src/org/pandalanguage/pandac/Compiler/CompileTargetResult.c
+    bootstrap/src/org/pandalanguage/pandac/Compiler/AutoContext.c
+    bootstrap/src/org/pandalanguage/pandac/Compiler/AutoScope.c
+    bootstrap/src/org/pandalanguage/pandac/Compiler/AutoUnrefs.c
+    bootstrap/src/org/pandalanguage/pandac/Compiler/Capture.c
+    bootstrap/src/org/pandalanguage/pandac/Compiler/ChoiceFieldLValue.c
+    bootstrap/src/org/pandalanguage/pandac/Compiler/CoercionKey.c
+    bootstrap/src/org/pandalanguage/pandac/Compiler/EnclosingContext.c
     bootstrap/src/org/pandalanguage/pandac/Compiler/Error.c
+    bootstrap/src/org/pandalanguage/pandac/Compiler/FieldLValue.c
+    bootstrap/src/org/pandalanguage/pandac/Compiler/IndexLValue.c
+    bootstrap/src/org/pandalanguage/pandac/Compiler/LValue.c
     bootstrap/src/org/pandalanguage/pandac/Compiler/Resolution.c
     bootstrap/src/org/pandalanguage/pandac/Compiler/Settings.c
+    bootstrap/src/org/pandalanguage/pandac/Compiler/TypeContext.c
+    bootstrap/src/org/pandalanguage/pandac/Compiler/VariableLValue.c
     bootstrap/src/org/pandalanguage/pandac/FieldDecl.c
     bootstrap/src/org/pandalanguage/pandac/FieldDecl/Kind.c
     bootstrap/src/org/pandalanguage/pandac/HCodeGenerator.c
     bootstrap/src/org/pandalanguage/pandac/HTMLProcessor.c
-    bootstrap/src/org/pandalanguage/pandac/IRNode.c
+    bootstrap/src/org/pandalanguage/pandac/IR.c
+    bootstrap/src/org/pandalanguage/pandac/IR/Block.c
+    bootstrap/src/org/pandalanguage/pandac/IR/Block/ID.c
+    bootstrap/src/org/pandalanguage/pandac/IR/Statement.c
+    bootstrap/src/org/pandalanguage/pandac/IR/Statement/ID.c
+    bootstrap/src/org/pandalanguage/pandac/IR/Value.c
     bootstrap/src/org/pandalanguage/pandac/LLVMCodeGenerator.c
-    bootstrap/src/org/pandalanguage/pandac/LLVMCodeGenerator/AutoContext.c
     bootstrap/src/org/pandalanguage/pandac/LLVMCodeGenerator/ClassConstant.c
-    bootstrap/src/org/pandalanguage/pandac/LLVMCodeGenerator/InlineContext.c
-    bootstrap/src/org/pandalanguage/pandac/LLVMCodeGenerator/EnclosingContext.c
-    bootstrap/src/org/pandalanguage/pandac/LLVMCodeGenerator/ExtraEffect.c
     bootstrap/src/org/pandalanguage/pandac/LLVMCodeGenerator/MethodShim.c
+    bootstrap/src/org/pandalanguage/pandac/LLVMCodeGenerator/OpClass.c
     bootstrap/src/org/pandalanguage/pandac/Main.c
     bootstrap/src/org/pandalanguage/pandac/Main/Arguments.c
     bootstrap/src/org/pandalanguage/pandac/Main/Format.c
     bootstrap/src/org/pandalanguage/pandac/MethodDecl.c
     bootstrap/src/org/pandalanguage/pandac/MethodDecl/Kind.c
     bootstrap/src/org/pandalanguage/pandac/MethodDecl/Parameter.c
-    bootstrap/src/org/pandalanguage/pandac/Methods.c
     bootstrap/src/org/pandalanguage/pandac/MethodRef.c
+    bootstrap/src/org/pandalanguage/pandac/Methods.c
     bootstrap/src/org/pandalanguage/pandac/Pair.c
+    bootstrap/src/org/pandalanguage/pandac/pandadoc/DummyCodeGenerator.c
+    bootstrap/src/org/pandalanguage/pandac/pandadoc/LinkResolver.c
+    bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown.c
+    bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/_Closure12.c
+    bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/_Closure14.c
+    bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/_Closure16.c
+    bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/_Closure18.c
+    bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/_Closure2.c
+    bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/_Closure20.c
+    bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/_Closure22.c
+    bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/_Closure24.c
+    bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/_Closure26.c
+    bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/_Closure28.c
+    bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/_Closure30.c
+    bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/_Closure32.c
+    bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/_Closure4.c
+    bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/_Closure6.c
+    bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/_Closure9.c
+    bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/CodeReplacer.c
+    bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/HTMLToken.c
+    bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/LinkDefinition.c
+    bootstrap/src/org/pandalanguage/pandac/pandadoc/Protector.c
+    bootstrap/src/org/pandalanguage/pandac/parser/Lexer.c
+    bootstrap/src/org/pandalanguage/pandac/parser/Parser.c
+    bootstrap/src/org/pandalanguage/pandac/parser/Parser/AutoSyntaxHighlight.c
+    bootstrap/src/org/pandalanguage/pandac/parser/SyntaxHighlighter.c
+    bootstrap/src/org/pandalanguage/pandac/parser/SyntaxHighlighter/Kind.c
+    bootstrap/src/org/pandalanguage/pandac/parser/Token.c
+    bootstrap/src/org/pandalanguage/pandac/parser/Token/Kind.c
     bootstrap/src/org/pandalanguage/pandac/Position.c
     bootstrap/src/org/pandalanguage/pandac/Scanner.c
     bootstrap/src/org/pandalanguage/pandac/Symbol.c
@@ -239,25 +291,141 @@ add_executable(bootstrap
     bootstrap/src/org/pandalanguage/pandac/Variable.c
     bootstrap/src/org/pandalanguage/pandac/Variable/Kind.c
     bootstrap/src/org/pandalanguage/pandac/Variable/Storage.c
-    bootstrap/src/org/pandalanguage/pandac/pandadoc/LinkResolver.c
-    bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown.c
-    bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/CodeReplacer.c
-    bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/HTMLToken.c
-    bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/LinkDefinition.c
-    bootstrap/src/org/pandalanguage/pandac/pandadoc/Protector.c
-    bootstrap/src/org/pandalanguage/pandac/parser/Parser.c
-    bootstrap/src/org/pandalanguage/pandac/parser/Parser/AutoSyntaxHighlight.c
-    bootstrap/src/org/pandalanguage/pandac/parser/Lexer.c
-    bootstrap/src/org/pandalanguage/pandac/parser/SyntaxHighlighter.c
-    bootstrap/src/org/pandalanguage/pandac/parser/SyntaxHighlighter/Kind.c
-    bootstrap/src/org/pandalanguage/pandac/parser/Token.c
-    bootstrap/src/org/pandalanguage/pandac/parser/Token/Kind.c
     bootstrap/src/org/pandalanguage/plex/runtime/DFA.c
     bootstrap/src/org/pandalanguage/plex/runtime/RawToken.c
-    bootstrap/src/org/pandalanguage/regex/RegexParser.c
     bootstrap/src/org/pandalanguage/regex/RegexLexer.c
+    bootstrap/src/org/pandalanguage/regex/RegexParser.c
     bootstrap/src/org/pandalanguage/regex/RegexToken.c
     bootstrap/src/org/pandalanguage/regex/RegexToken/Kind.c
+    bootstrap/src/panda/collections/Array.c
+    bootstrap/src/panda/collections/Collection.c
+    bootstrap/src/panda/collections/CollectionView.c
+    bootstrap/src/panda/collections/CollectionWriter.c
+    bootstrap/src/panda/collections/HashMap.c
+    bootstrap/src/panda/collections/HashMap/Entry.c
+    bootstrap/src/panda/collections/HashMap/EntryIterator.c
+    bootstrap/src/panda/collections/HashMap/KeyIterator.c
+    bootstrap/src/panda/collections/HashMap/ValueIterator.c
+    bootstrap/src/panda/collections/HashSet.c
+    bootstrap/src/panda/collections/IdentityMap.c
+    bootstrap/src/panda/collections/IdentityMap/Entry.c
+    bootstrap/src/panda/collections/ImmutableArray.c
+    bootstrap/src/panda/collections/ImmutableArray/ImmutableArrayIterator.c
+    bootstrap/src/panda/collections/ImmutableHashMap.c
+    bootstrap/src/panda/collections/ImmutableHashMap/Entry.c
+    bootstrap/src/panda/collections/ImmutableHashMap/EntryIterator.c
+    bootstrap/src/panda/collections/ImmutableHashMap/KeyIterator.c
+    bootstrap/src/panda/collections/ImmutableHashMap/ValueIterator.c
+    bootstrap/src/panda/collections/Iterable.c
+    bootstrap/src/panda/collections/Iterator.c
+    bootstrap/src/panda/collections/Iterator/FilterIterator.c
+    bootstrap/src/panda/collections/Iterator/RangeIterator.c
+    bootstrap/src/panda/collections/Key.c
+    bootstrap/src/panda/collections/List.c
+    bootstrap/src/panda/collections/ListView.c
+    bootstrap/src/panda/collections/ListView/ListIterator.c
+    bootstrap/src/panda/collections/ListWriter.c
+    bootstrap/src/panda/collections/Map.c
+    bootstrap/src/panda/collections/MapView.c
+    bootstrap/src/panda/collections/MapWriter.c
+    bootstrap/src/panda/collections/SpecializedArray.LTorg/pandalanguage/pandac/parser/Token.GT.c
+    bootstrap/src/panda/collections/SpecializedArray.LTorg/pandalanguage/regex/RegexToken.GT.c
+    bootstrap/src/panda/collections/SpecializedArrayIterator.LTorg/pandalanguage/pandac/parser/Token.GT.c
+    bootstrap/src/panda/collections/SpecializedArrayIterator.LTorg/pandalanguage/regex/RegexToken.GT.c
+    bootstrap/src/panda/collections/Stack.c
+    bootstrap/src/panda/collections/Stack/StackIterator.c
+    bootstrap/src/panda/core/Bit.c
+    bootstrap/src/panda/core/Char16.c
+    bootstrap/src/panda/core/Char32.c
+    bootstrap/src/panda/core/Char8.c
+    bootstrap/src/panda/core/Class.c
+    bootstrap/src/panda/core/Comparable.c
+    bootstrap/src/panda/core/Equatable.c
+    bootstrap/src/panda/core/Error.c
+    bootstrap/src/panda/core/Formattable.c
+    bootstrap/src/panda/core/Immutable.c
+    bootstrap/src/panda/core/Int16.c
+    bootstrap/src/panda/core/Int32.c
+    bootstrap/src/panda/core/Int64.c
+    bootstrap/src/panda/core/Int8.c
+    bootstrap/src/panda/core/Matcher.c
+    bootstrap/src/panda/core/Maybe.c
+    bootstrap/src/panda/core/Method.c
+    bootstrap/src/panda/core/MutableMethod.c
+    bootstrap/src/panda/core/MutableString.c
+    bootstrap/src/panda/core/MutableString/Index.c
+    bootstrap/src/panda/core/Object.c
+    bootstrap/src/panda/core/Panda.c
+    bootstrap/src/panda/core/Range.LTpanda/core/Int16.GT.c
+    bootstrap/src/panda/core/Range.LTpanda/core/Int32.GT.c
+    bootstrap/src/panda/core/Range.LTpanda/core/Int64.GT.c
+    bootstrap/src/panda/core/Range.LTpanda/core/Int64.Q.GT.c
+    bootstrap/src/panda/core/Range.LTpanda/core/Int8.GT.c
+    bootstrap/src/panda/core/Range.LTpanda/core/MutableString/Index.GT.c
+    bootstrap/src/panda/core/Range.LTpanda/core/MutableString/Index.Q.GT.c
+    bootstrap/src/panda/core/Range.LTpanda/core/String/Index.GT.c
+    bootstrap/src/panda/core/Range.LTpanda/core/String/Index.Q.GT.c
+    bootstrap/src/panda/core/Range.LTpanda/core/UInt16.GT.c
+    bootstrap/src/panda/core/Range.LTpanda/core/UInt32.GT.c
+    bootstrap/src/panda/core/Range.LTpanda/core/UInt64.GT.c
+    bootstrap/src/panda/core/Range.LTpanda/core/UInt8.GT.c
+    bootstrap/src/panda/core/Real32.c
+    bootstrap/src/panda/core/Real64.c
+    bootstrap/src/panda/core/RegularExpression.c
+    bootstrap/src/panda/core/SteppedRange.LTpanda/core/Int16.Cpanda/core/Int16.GT.c
+    bootstrap/src/panda/core/SteppedRange.LTpanda/core/Int32.Cpanda/core/Int32.GT.c
+    bootstrap/src/panda/core/SteppedRange.LTpanda/core/Int64.Cpanda/core/Int64.GT.c
+    bootstrap/src/panda/core/SteppedRange.LTpanda/core/Int64.Q.Cpanda/core/Int64.GT.c
+    bootstrap/src/panda/core/SteppedRange.LTpanda/core/Int8.Cpanda/core/Int8.GT.c
+    bootstrap/src/panda/core/SteppedRange.LTpanda/core/String/Index.Q.Cpanda/core/Int64.GT.c
+    bootstrap/src/panda/core/SteppedRange.LTpanda/core/UInt16.Cpanda/core/UInt16.GT.c
+    bootstrap/src/panda/core/SteppedRange.LTpanda/core/UInt32.Cpanda/core/UInt32.GT.c
+    bootstrap/src/panda/core/SteppedRange.LTpanda/core/UInt64.Cpanda/core/UInt64.GT.c
+    bootstrap/src/panda/core/SteppedRange.LTpanda/core/UInt8.Cpanda/core/UInt8.GT.c
+    bootstrap/src/panda/core/String.c
+    bootstrap/src/panda/core/String/Index.c
+    bootstrap/src/panda/core/String/Match.c
+    bootstrap/src/panda/core/String/MatchIterator.c
+    bootstrap/src/panda/core/String/RegexMatchIterator.c
+    bootstrap/src/panda/core/String/UTF16Iterator.c
+    bootstrap/src/panda/core/String/UTF32Iterator.c
+    bootstrap/src/panda/core/String/UTF8Iterator.c
+    bootstrap/src/panda/core/String/UTF8List.c
+    bootstrap/src/panda/core/System.c
+    bootstrap/src/panda/core/System/Process.c
+    bootstrap/src/panda/core/UInt16.c
+    bootstrap/src/panda/core/UInt32.c
+    bootstrap/src/panda/core/UInt64.c
+    bootstrap/src/panda/core/UInt8.c
+    bootstrap/src/panda/core/Value.c
+    bootstrap/src/panda/core/Weak.c
+    bootstrap/src/panda/io/ByteOrder.c
+    bootstrap/src/panda/io/Console.c
+    bootstrap/src/panda/io/File.c
+    bootstrap/src/panda/io/FileInputStream.c
+    bootstrap/src/panda/io/FileOutputStream.c
+    bootstrap/src/panda/io/IndentedOutputStream.c
+    bootstrap/src/panda/io/InputStream.c
+    bootstrap/src/panda/io/InputStream/LineIterator.c
+    bootstrap/src/panda/io/LineNumberInputStream.c
+    bootstrap/src/panda/io/MemoryInputStream.c
+    bootstrap/src/panda/io/MemoryOutputStream.c
+    bootstrap/src/panda/io/OutputStream.c
+    bootstrap/src/panda/io/PushbackInputStream.c
+    bootstrap/src/panda/json/JSON.c
+    bootstrap/src/panda/json/JSON/PathKey.c
+    bootstrap/src/panda/json/JSONParser.c
+    bootstrap/src/panda/math/Random.c
+    bootstrap/src/panda/math/XorShift128Plus.c
+    bootstrap/src/panda/threads/Lock.c
+    bootstrap/src/panda/threads/MessageQueue.c
+    bootstrap/src/panda/threads/MessageQueue/Message.c
+    bootstrap/src/panda/threads/Notifier.c
+    bootstrap/src/panda/threads/ScopedLock.c
+    bootstrap/src/panda/threads/Thread.c
+    bootstrap/src/panda/unsafe/UnsafeMessageQueue.c
+    bootstrap/src/panda/unsafe/UnsafeMessageQueue/Message.c
+    bootstrap/src/pandalib.c
 )
 target_link_libraries(bootstrap ${SYSTEM_LIBRARIES} c_panda ${ICU_LIBRARIES})
 set_target_properties(bootstrap PROPERTIES LINKER_LANGUAGE CXX)

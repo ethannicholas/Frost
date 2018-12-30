@@ -7348,6 +7348,7 @@ class Compiler {
     }
 
     method compilePostconditions() {
+        if true { return }
         def auto := AutoScope(self, methodSymbolTable)
         def m := currentMethod[0]
         var success:IR.Block.ID? := null
@@ -7569,9 +7570,6 @@ class Compiler {
             }
             atPreBlock := null
             if writeCode {
-                if m.name = "DEBUG" {
-                    Console.printLine(ir)
-                }
                 codeGenerator.write(m, ir)
             }
             ir := oldIR

@@ -38,5 +38,6 @@ panda$core$String* panda$core$Panda$format$panda$core$Bit$panda$core$UInt64$pand
 void panda$core$Panda$debugPrint$builtin_int64(int64_t p_i);
 void panda$core$Panda$debugPrint$panda$core$Object(panda$core$Object* p_o);
 panda$core$String* panda$core$Panda$pointerConvert$panda$unsafe$Pointer$LTpanda$core$Object$Q$GT$R$panda$core$String(panda$core$Object** p_p);
+void panda$core$Panda$disableRefErrorReporting();
 void panda$core$Panda$cleanup(panda$core$Panda* self);
 

@@ -28,12 +28,11 @@ typedef struct org$pandalanguage$pandac$MethodDecl {
     panda$collections$Array* parameters;
     org$pandalanguage$pandac$Type* returnType;
     panda$collections$ImmutableArray* body;
-    panda$collections$ImmutableArray* compiledBody;
     org$pandalanguage$pandac$Compiler$Resolution resolved;
     panda$core$Bit overrideKnown;
     panda$core$Weak* overridden;
 } org$pandalanguage$pandac$MethodDecl;
 #include "panda/core/Class.h"
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[9]; } org$pandalanguage$pandac$MethodDecl$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[10]; } org$pandalanguage$pandac$MethodDecl$class_type;
 extern org$pandalanguage$pandac$MethodDecl$class_type org$pandalanguage$pandac$MethodDecl$class;
 

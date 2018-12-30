@@ -7,6 +7,7 @@
 #include "panda/core/Bit.h"
 #include "panda/core/MutableString.h"
 #include "panda/core/Panda.h"
+
 __attribute__((weak)) panda$core$String* panda$core$Range$LTpanda$core$MutableString$Index$Q$GT$convert$R$panda$core$String$shim(panda$core$Object* p0) {
     panda$core$String* result = panda$core$Range$LTpanda$core$MutableString$Index$Q$GT$convert$R$panda$core$String(((panda$core$Range$LTpanda$core$MutableString$Index$Q$GT$wrapper*) p0)->value);
 
@@ -24,89 +25,114 @@ static panda$core$String $s2;
 panda$core$Range$LTpanda$core$MutableString$Index$Q$GT$wrapperclass_type panda$core$Range$LTpanda$core$MutableString$Index$Q$GT$wrapperclass = { (panda$core$Class*) &panda$core$Class$class, -999, &$s2, (panda$core$Class*) &panda$core$Value$class, NULL, { panda$core$Range$LTpanda$core$MutableString$Index$Q$GT$convert$R$panda$core$String$shim, panda$core$Range$LTpanda$core$MutableString$Index$Q$GT$cleanup$shim} };
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x52\x61\x6e\x67\x65\x3c\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x4d\x75\x74\x61\x62\x6c\x65\x53\x74\x72\x69\x6e\x67\x2e\x49\x6e\x64\x65\x78\x3f\x3e", 49, 428656404792329936, NULL };
 static panda$core$String $s2 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x52\x61\x6e\x67\x65\x3c\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x4d\x75\x74\x61\x62\x6c\x65\x53\x74\x72\x69\x6e\x67\x2e\x49\x6e\x64\x65\x78\x3f\x3e", 49, 428656404792329936, NULL };
-static panda$core$String $s12 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2e\x2e\x2e", 3, 1504239, NULL };
-static panda$core$String $s13 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2e\x2e", 2, 14893, NULL };
-static panda$core$String $s25 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x52\x61\x6e\x67\x65\x2e\x70\x61\x6e\x64\x61", 11, -6437309673427079776, NULL };
-static panda$core$String $s26 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6d\x65\x74\x68\x6f\x64\x20\x65\x78\x69\x74\x65\x64\x20\x77\x69\x74\x68\x6f\x75\x74\x20\x72\x65\x74\x75\x72\x6e\x69\x6e\x67", 31, 7480581949655794403, NULL };
+static panda$core$String $s19 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2e\x2e\x2e", 3, 1504239, NULL };
+static panda$core$String $s21 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2e\x2e", 2, 14893, NULL };
 
-void panda$core$Range$LTpanda$core$MutableString$Index$Q$GT$init$panda$core$MutableString$Index$Q$panda$core$MutableString$Index$Q$panda$core$Bit(panda$core$Range$LTpanda$core$MutableString$Index$Q$GT* self, panda$core$MutableString$Index$nullable p_min, panda$core$MutableString$Index$nullable p_max, panda$core$Bit p_inclusive) {
-    self->min = p_min;
-    self->max = p_max;
-    self->inclusive = p_inclusive;
+panda$core$Range$LTpanda$core$MutableString$Index$Q$GT panda$core$Range$LTpanda$core$MutableString$Index$Q$GT$init$panda$core$MutableString$Index$Q$panda$core$MutableString$Index$Q$panda$core$Bit(panda$core$MutableString$Index$nullable param0, panda$core$MutableString$Index$nullable param1, panda$core$Bit param2) {
+
+panda$core$Range$LTpanda$core$MutableString$Index$Q$GT local0;
+// line 30
+panda$core$MutableString$Index$nullable* $tmp3 = &(&local0)->min;
+*$tmp3 = param0;
+// line 31
+panda$core$MutableString$Index$nullable* $tmp4 = &(&local0)->max;
+*$tmp4 = param1;
+// line 32
+panda$core$Bit* $tmp5 = &(&local0)->inclusive;
+*$tmp5 = param2;
+panda$core$Range$LTpanda$core$MutableString$Index$Q$GT $tmp6 = *(&local0);
+return $tmp6;
+
 }
-panda$core$String* panda$core$Range$LTpanda$core$MutableString$Index$Q$GT$convert$R$panda$core$String(panda$core$Range$LTpanda$core$MutableString$Index$Q$GT self) {
-    panda$core$MutableString* result6 = NULL;
-    panda$core$MutableString* $tmp7;
-    panda$core$MutableString* $tmp8;
-    panda$core$Object* $tmp10;
-    panda$core$Object* $tmp14;
-    panda$core$String* $returnValue16;
-    panda$core$String* $tmp17;
-    panda$core$String* $tmp18;
-    int $tmp5;
-    {
-        panda$core$MutableString* $tmp9 = (panda$core$MutableString*) pandaObjectAlloc(48, (panda$core$Class*) &panda$core$MutableString$class);
-        panda$core$MutableString$init($tmp9);
-        $tmp8 = $tmp9;
-        $tmp7 = $tmp8;
-        result6 = $tmp7;
-        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp7));
-        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp8));
-        if (((panda$core$Bit) { self.min.nonnull }).value) {
-        {
-            panda$core$MutableString$Index$wrapper* $tmp11;
-            $tmp11 = (panda$core$MutableString$Index$wrapper*) pandaObjectAlloc(24, (panda$core$Class*) &panda$core$MutableString$Index$wrapperclass);
-            $tmp11->value = ((panda$core$MutableString$Index) self.min.value);
-            $tmp10 = ((panda$core$Object*) $tmp11);
-            panda$core$MutableString$append$panda$core$Object(result6, $tmp10);
-            panda$core$Panda$unref$panda$core$Object$Q($tmp10);
-        }
-        }
-        if (self.inclusive.value) {
-        {
-            panda$core$MutableString$append$panda$core$String(result6, &$s12);
-        }
-        }
-        else {
-        {
-            panda$core$MutableString$append$panda$core$String(result6, &$s13);
-        }
-        }
-        if (((panda$core$Bit) { self.max.nonnull }).value) {
-        {
-            panda$core$MutableString$Index$wrapper* $tmp15;
-            $tmp15 = (panda$core$MutableString$Index$wrapper*) pandaObjectAlloc(24, (panda$core$Class*) &panda$core$MutableString$Index$wrapperclass);
-            $tmp15->value = ((panda$core$MutableString$Index) self.max.value);
-            $tmp14 = ((panda$core$Object*) $tmp15);
-            panda$core$MutableString$append$panda$core$Object(result6, $tmp14);
-            panda$core$Panda$unref$panda$core$Object$Q($tmp14);
-        }
-        }
-        panda$core$String* $tmp19 = panda$core$MutableString$finish$R$panda$core$String(result6);
-        $tmp18 = $tmp19;
-        $tmp17 = $tmp18;
-        $returnValue16 = $tmp17;
-        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp17));
-        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp18));
-        $tmp5 = 0;
-        goto $l3;
-        $l20:;
-        return $returnValue16;
-    }
-    $l3:;
-    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) result6));
-    result6 = NULL;
-    switch ($tmp5) {
-        case 0: goto $l20;
-    }
-    $l22:;
-    if (false) goto $l23; else goto $l24;
-    $l24:;
-    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s25, (panda$core$Int64) { 36 }, &$s26);
-    abort();
-    $l23:;
-    abort();
+panda$core$String* panda$core$Range$LTpanda$core$MutableString$Index$Q$GT$convert$R$panda$core$String(panda$core$Range$LTpanda$core$MutableString$Index$Q$GT param0) {
+
+panda$core$MutableString* local0 = NULL;
+// line 37
+panda$core$MutableString* $tmp7 = (panda$core$MutableString*) pandaObjectAlloc(48, (panda$core$Class*) &panda$core$MutableString$class);
+panda$core$MutableString$init($tmp7);
+*(&local0) = ((panda$core$MutableString*) NULL);
+panda$core$MutableString* $tmp8 = *(&local0);
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp8));
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp7));
+*(&local0) = $tmp7;
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp7));
+// line 38
+panda$core$MutableString$Index$nullable $tmp9 = param0.min;
+panda$core$Bit $tmp10 = panda$core$Bit$init$builtin_bit($tmp9.nonnull);
+bool $tmp11 = $tmp10.value;
+if ($tmp11) goto block1; else goto block2;
+block1:;
+// line 39
+panda$core$MutableString* $tmp12 = *(&local0);
+panda$core$MutableString$Index$nullable $tmp13 = param0.min;
+panda$core$Object* $tmp14;
+if ($tmp13.nonnull) {
+    panda$core$MutableString$Index$wrapper* $tmp15;
+    $tmp15 = (panda$core$MutableString$Index$wrapper*) pandaObjectAlloc(24, (panda$core$Class*) &panda$core$MutableString$Index$wrapperclass);
+    $tmp15->value = ((panda$core$MutableString$Index) $tmp13.value);
+    $tmp14 = ((panda$core$Object*) $tmp15);
 }
-void panda$core$Range$LTpanda$core$MutableString$Index$Q$GT$cleanup(panda$core$Range$LTpanda$core$MutableString$Index$Q$GT self) {
+else {
+    $tmp14 = NULL;
+}
+panda$core$MutableString$append$panda$core$Object($tmp12, $tmp14);
+panda$core$Panda$unref$panda$core$Object$Q($tmp14);
+goto block2;
+block2:;
+// line 41
+panda$core$Bit $tmp16 = param0.inclusive;
+bool $tmp17 = $tmp16.value;
+if ($tmp17) goto block3; else goto block5;
+block3:;
+// line 42
+panda$core$MutableString* $tmp18 = *(&local0);
+panda$core$MutableString$append$panda$core$String($tmp18, &$s19);
+goto block4;
+block5:;
+// line 1
+// line 45
+panda$core$MutableString* $tmp20 = *(&local0);
+panda$core$MutableString$append$panda$core$String($tmp20, &$s21);
+goto block4;
+block4:;
+// line 47
+panda$core$MutableString$Index$nullable $tmp22 = param0.max;
+panda$core$Bit $tmp23 = panda$core$Bit$init$builtin_bit($tmp22.nonnull);
+bool $tmp24 = $tmp23.value;
+if ($tmp24) goto block6; else goto block7;
+block6:;
+// line 48
+panda$core$MutableString* $tmp25 = *(&local0);
+panda$core$MutableString$Index$nullable $tmp26 = param0.max;
+panda$core$Object* $tmp27;
+if ($tmp26.nonnull) {
+    panda$core$MutableString$Index$wrapper* $tmp28;
+    $tmp28 = (panda$core$MutableString$Index$wrapper*) pandaObjectAlloc(24, (panda$core$Class*) &panda$core$MutableString$Index$wrapperclass);
+    $tmp28->value = ((panda$core$MutableString$Index) $tmp26.value);
+    $tmp27 = ((panda$core$Object*) $tmp28);
+}
+else {
+    $tmp27 = NULL;
+}
+panda$core$MutableString$append$panda$core$Object($tmp25, $tmp27);
+panda$core$Panda$unref$panda$core$Object$Q($tmp27);
+goto block7;
+block7:;
+// line 50
+panda$core$MutableString* $tmp29 = *(&local0);
+panda$core$String* $tmp30 = panda$core$MutableString$finish$R$panda$core$String($tmp29);
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp30));
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp30));
+panda$core$MutableString* $tmp31 = *(&local0);
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp31));
+// unreffing result
+*(&local0) = ((panda$core$MutableString*) NULL);
+return $tmp30;
+
+}
+void panda$core$Range$LTpanda$core$MutableString$Index$Q$GT$cleanup(panda$core$Range$LTpanda$core$MutableString$Index$Q$GT param0) {
+
+return;
+
 }
 

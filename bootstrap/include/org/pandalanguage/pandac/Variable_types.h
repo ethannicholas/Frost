@@ -7,8 +7,7 @@ typedef struct panda$core$Class panda$core$Class;
 typedef struct panda$core$String panda$core$String;
 #include "org/pandalanguage/pandac/Variable/Kind_types.h"
 typedef struct org$pandalanguage$pandac$Type org$pandalanguage$pandac$Type;
-#include "org/pandalanguage/pandac/Variable/Storage_types.h"
-typedef struct org$pandalanguage$pandac$IRNode org$pandalanguage$pandac$IRNode;
+typedef struct org$pandalanguage$pandac$Variable$Storage org$pandalanguage$pandac$Variable$Storage;
 typedef struct panda$core$Weak panda$core$Weak;
 
 typedef struct org$pandalanguage$pandac$Variable {
@@ -19,8 +18,7 @@ typedef struct org$pandalanguage$pandac$Variable {
     panda$core$String* name;
     org$pandalanguage$pandac$Variable$Kind varKind;
     org$pandalanguage$pandac$Type* type;
-    org$pandalanguage$pandac$Variable$Storage storage;
-    org$pandalanguage$pandac$IRNode* initialValue;
+    org$pandalanguage$pandac$Variable$Storage* storage;
     panda$core$Weak* owner;
 } org$pandalanguage$pandac$Variable;
 #include "panda/core/Class.h"

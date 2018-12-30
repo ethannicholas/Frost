@@ -13,7 +13,7 @@ typedef struct panda$core$String panda$core$String;
 #include "panda/core/UInt32_types.h"
 #include "panda/core/UInt64_types.h"
 
-void panda$core$Char8$init$panda$core$UInt8(panda$core$Char8* self, panda$core$UInt8 p_value);
+panda$core$Char8 panda$core$Char8$init$panda$core$UInt8(panda$core$UInt8 p_value);
 panda$core$Bit panda$core$Char8$$EQ$panda$core$Char8$R$panda$core$Bit(panda$core$Char8 self, panda$core$Char8 p_other);
 panda$core$Bit panda$core$Char8$$NEQ$panda$core$Char8$R$panda$core$Bit(panda$core$Char8 self, panda$core$Char8 p_other);
 panda$core$Bit panda$core$Char8$$LT$panda$core$Char8$R$panda$core$Bit(panda$core$Char8 self, panda$core$Char8 p_other);
@@ -23,7 +23,7 @@ panda$core$Bit panda$core$Char8$$GE$panda$core$Char8$R$panda$core$Bit(panda$core
 panda$core$Bit panda$core$Char8$isWhitespace$R$panda$core$Bit(panda$core$Char8 self);
 panda$core$String* panda$core$Char8$$MUL$panda$core$Int64$R$panda$core$String(panda$core$Char8 self, panda$core$Int64 p_count);
 panda$core$String* panda$core$Char8$$MUL$panda$core$Int64$panda$core$Char8$R$panda$core$String(panda$core$Int64 p_count, panda$core$Char8 p_char);
-panda$core$Int64 panda$core$Char8$hash$R$panda$core$Int64(panda$core$Char8 self);
+panda$core$Int64 panda$core$Char8$get_hash$R$panda$core$Int64(panda$core$Char8 self);
 panda$core$Int8 panda$core$Char8$convert$R$panda$core$Int8(panda$core$Char8 self);
 panda$core$Int16 panda$core$Char8$convert$R$panda$core$Int16(panda$core$Char8 self);
 panda$core$Int32 panda$core$Char8$convert$R$panda$core$Int32(panda$core$Char8 self);

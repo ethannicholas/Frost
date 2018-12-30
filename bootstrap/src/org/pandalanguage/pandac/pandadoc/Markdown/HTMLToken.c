@@ -2,85 +2,107 @@
 #include "panda/core/Object.h"
 #include "panda/core/Class.h"
 #include "panda/core/String.h"
-#include "panda/core/Panda.h"
-#include "panda/core/Int64.h"
+#include "panda/core/Equatable.h"
 #include "panda/core/Bit.h"
+#include "panda/core/Int64.h"
+#include "panda/core/Panda.h"
+
+__attribute__((weak)) panda$core$Bit org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken$$EQ$org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken$R$panda$core$Bit$shim(org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken* p0, panda$core$Equatable* p1) {
+    panda$core$Bit result = org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken$$EQ$org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken$R$panda$core$Bit(p0, ((org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken*) p1));
+
+    return result;
+}
+
+struct { panda$core$Class* cl; ITable* next; void* methods[2]; } org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken$_panda$core$Equatable = { (panda$core$Class*) &panda$core$Equatable$class, NULL, { org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken$$EQ$org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken$R$panda$core$Bit$shim, panda$core$Equatable$$NEQ$panda$core$Equatable$T$R$panda$core$Bit} };
 
 static panda$core$String $s1;
-org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken$class_type org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, NULL, { panda$core$Object$convert$R$panda$core$String, org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken$cleanup} };
+org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken$class_type org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, (ITable*) &org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken$_panda$core$Equatable, { panda$core$Object$convert$R$panda$core$String, org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken$cleanup, org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken$$EQ$org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken$R$panda$core$Bit$shim} };
 
 
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x70\x61\x6e\x64\x61\x63\x2e\x70\x61\x6e\x64\x61\x64\x6f\x63\x2e\x4d\x61\x72\x6b\x64\x6f\x77\x6e\x2e\x48\x54\x4d\x4c\x54\x6f\x6b\x65\x6e", 52, -3956136468165552167, NULL };
 
-void org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken$cleanup(org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken* self) {
-    org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken* $match$796_58 = NULL;
-    org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken* $tmp9;
-    panda$core$Int64 $tmp10;
-    panda$core$String* _f012 = NULL;
-    panda$core$Int64 $tmp14;
-    panda$core$String* _f016 = NULL;
-    int $tmp4;
-    {
-        int $tmp7;
-        {
-            $tmp9 = self;
-            $match$796_58 = $tmp9;
-            panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp9));
-            panda$core$Int64$init$builtin_int64(&$tmp10, 0);
-            panda$core$Bit $tmp11 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$796_58->$rawValue, $tmp10);
-            if ($tmp11.value) {
-            {
-                panda$core$String** $tmp13 = ((panda$core$String**) ((char*) $match$796_58->$data + 0));
-                _f012 = *$tmp13;
-                panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) _f012));
-            }
-            }
-            else {
-            panda$core$Int64$init$builtin_int64(&$tmp14, 1);
-            panda$core$Bit $tmp15 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$796_58->$rawValue, $tmp14);
-            if ($tmp15.value) {
-            {
-                panda$core$String** $tmp17 = ((panda$core$String**) ((char*) $match$796_58->$data + 0));
-                _f016 = *$tmp17;
-                panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) _f016));
-            }
-            }
-            }
-        }
-        $tmp7 = -1;
-        goto $l5;
-        $l5:;
-        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp9));
-        switch ($tmp7) {
-            case -1: goto $l18;
-        }
-        $l18:;
-    }
-    $tmp4 = -1;
-    goto $l2;
-    $l2:;
-    panda$core$Object$cleanup(((panda$core$Object*) self));
-    switch ($tmp4) {
-        case -1: goto $l19;
-    }
-    $l19:;
+void org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken$cleanup(org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken* param0) {
+
+panda$core$String* local0 = NULL;
+panda$core$String* local1 = NULL;
+// line 799
+panda$core$Int64* $tmp2 = &param0->$rawValue;
+panda$core$Int64 $tmp3 = *$tmp2;
+panda$core$Int64 $tmp4 = (panda$core$Int64) {0};
+panda$core$Bit $tmp5 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp3, $tmp4);
+bool $tmp6 = $tmp5.value;
+if ($tmp6) goto block2; else goto block3;
+block2:;
+panda$core$String** $tmp7 = (panda$core$String**) (param0->$data + 0);
+panda$core$String* $tmp8 = *$tmp7;
+*(&local0) = ((panda$core$String*) NULL);
+panda$core$String* $tmp9 = *(&local0);
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp9));
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp8));
+*(&local0) = $tmp8;
+// line 1
+panda$core$String* $tmp10 = *(&local0);
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp10));
+panda$core$String* $tmp11 = *(&local0);
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp11));
+// unreffing _f0
+*(&local0) = ((panda$core$String*) NULL);
+goto block1;
+block3:;
+panda$core$Int64 $tmp12 = (panda$core$Int64) {1};
+panda$core$Bit $tmp13 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp3, $tmp12);
+bool $tmp14 = $tmp13.value;
+if ($tmp14) goto block4; else goto block1;
+block4:;
+panda$core$String** $tmp15 = (panda$core$String**) (param0->$data + 0);
+panda$core$String* $tmp16 = *$tmp15;
+*(&local1) = ((panda$core$String*) NULL);
+panda$core$String* $tmp17 = *(&local1);
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp17));
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp16));
+*(&local1) = $tmp16;
+// line 1
+panda$core$String* $tmp18 = *(&local1);
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp18));
+panda$core$String* $tmp19 = *(&local1);
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp19));
+// unreffing _f0
+*(&local1) = ((panda$core$String*) NULL);
+goto block1;
+block1:;
+return;
+
 }
-void org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken$init$panda$core$Int64$panda$core$String(org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken* self, panda$core$Int64 p_rv, panda$core$String* p_f0) {
-    panda$core$String* $tmp20;
-    panda$core$String* $tmp23;
-    self->$rawValue = p_rv;
-    {
-        panda$core$String** $tmp21 = ((panda$core$String**) ((char*) self->$data + 0));
-        $tmp20 = *$tmp21;
-        panda$core$String** $tmp22 = ((panda$core$String**) ((char*) self->$data + 0));
-        $tmp23 = p_f0;
-        *$tmp22 = $tmp23;
-        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp23));
-        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp20));
-    }
+void org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken$init$panda$core$Int64$panda$core$String(org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken* param0, panda$core$Int64 param1, panda$core$String* param2) {
+
+// line 799
+panda$core$Int64* $tmp20 = &param0->$rawValue;
+*$tmp20 = param1;
+// line 799
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param2));
+panda$core$String** $tmp21 = (panda$core$String**) (param0->$data + 0);
+*$tmp21 = param2;
+return;
+
 }
+panda$core$Bit org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken$$EQ$org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken$R$panda$core$Bit(org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken* param0, org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken* param1) {
 
+// line 799
+panda$core$Int64* $tmp22 = &param0->$rawValue;
+panda$core$Int64 $tmp23 = *$tmp22;
+panda$core$Int64* $tmp24 = &param1->$rawValue;
+panda$core$Int64 $tmp25 = *$tmp24;
+panda$core$Bit $tmp26 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit($tmp23, $tmp25);
+bool $tmp27 = $tmp26.value;
+if ($tmp27) goto block1; else goto block2;
+block1:;
+// line 799
+panda$core$Bit $tmp28 = panda$core$Bit$init$builtin_bit(false);
+return $tmp28;
+block2:;
+// line 799
+panda$core$Bit $tmp29 = panda$core$Bit$init$builtin_bit(true);
+return $tmp29;
 
-
-
+}
 

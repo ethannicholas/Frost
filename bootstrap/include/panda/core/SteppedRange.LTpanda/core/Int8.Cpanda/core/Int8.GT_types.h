@@ -4,7 +4,7 @@
 #include "panda/core/Bit_types.h"
 typedef struct panda$core$String panda$core$String;
 typedef struct panda$core$Class panda$core$Class;
-#include "panda/core/SteppedRange.LTpanda/core/Int8.Cpanda/core/Int8.GT_types.h"
+#include "panda/core/SteppedRange.LTpanda/core/Int8.Cpanda/core/Int8.GT.h"
 
 typedef struct panda$core$SteppedRange$LTpanda$core$Int8$Cpanda$core$Int8$GT {
     panda$core$Int8 start;

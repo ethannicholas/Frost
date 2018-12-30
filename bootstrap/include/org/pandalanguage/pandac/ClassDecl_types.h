@@ -5,11 +5,11 @@ typedef struct panda$core$Class panda$core$Class;
 typedef struct panda$io$File panda$io$File;
 #include "org/pandalanguage/pandac/Position_types.h"
 typedef struct panda$core$String panda$core$String;
+typedef struct org$pandalanguage$pandac$Type org$pandalanguage$pandac$Type;
 typedef struct panda$collections$MapView panda$collections$MapView;
 typedef struct org$pandalanguage$pandac$Annotations org$pandalanguage$pandac$Annotations;
 #include "org/pandalanguage/pandac/ClassDecl/Kind_types.h"
 typedef struct panda$collections$Array panda$collections$Array;
-typedef struct org$pandalanguage$pandac$Type org$pandalanguage$pandac$Type;
 typedef struct panda$collections$List panda$collections$List;
 typedef struct panda$core$Weak panda$core$Weak;
 typedef struct org$pandalanguage$pandac$SymbolTable org$pandalanguage$pandac$SymbolTable;
@@ -23,6 +23,7 @@ typedef struct org$pandalanguage$pandac$ClassDecl {
     panda$io$File* source;
     org$pandalanguage$pandac$Position position;
     panda$core$String* name;
+    org$pandalanguage$pandac$Type* type;
     panda$collections$MapView* aliases;
     panda$core$String* doccomment;
     org$pandalanguage$pandac$Annotations* annotations;
@@ -44,6 +45,6 @@ typedef struct org$pandalanguage$pandac$ClassDecl {
     org$pandalanguage$pandac$Compiler$Resolution resolved;
 } org$pandalanguage$pandac$ClassDecl;
 #include "panda/core/Class.h"
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[6]; } org$pandalanguage$pandac$ClassDecl$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[5]; } org$pandalanguage$pandac$ClassDecl$class_type;
 extern org$pandalanguage$pandac$ClassDecl$class_type org$pandalanguage$pandac$ClassDecl$class;
 

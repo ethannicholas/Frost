@@ -15,6 +15,7 @@ typedef struct panda$core$String panda$core$String;
 typedef struct org$pandalanguage$pandac$MethodDecl org$pandalanguage$pandac$MethodDecl;
 typedef struct panda$collections$Stack panda$collections$Stack;
 #include "panda/core/Int64_types.h"
+typedef struct org$pandalanguage$pandac$IR org$pandalanguage$pandac$IR;
 
 typedef struct org$pandalanguage$pandac$CCodeGenerator {
     panda$core$Class* $class;
@@ -27,6 +28,7 @@ typedef struct org$pandalanguage$pandac$CCodeGenerator {
     panda$core$Weak* hCodeGen;
     org$pandalanguage$pandac$HCodeGenerator* hCodeGenRetain;
     org$pandalanguage$pandac$ClassDecl* currentClass;
+    panda$io$MemoryOutputStream* includes;
     panda$io$MemoryOutputStream* declarations;
     panda$io$MemoryOutputStream* types;
     panda$io$MemoryOutputStream* methodsBuffer;
@@ -44,12 +46,13 @@ typedef struct org$pandalanguage$pandac$CCodeGenerator {
     org$pandalanguage$pandac$MethodDecl* currentMethod;
     panda$core$String* returnValueVar;
     panda$collections$Stack* enclosingContexts;
-    panda$collections$Stack* extraEffects;
     panda$core$Int64 varCount;
-    panda$collections$HashMap* reusedValues;
     panda$collections$IdentityMap* methodShims;
+    panda$collections$IdentityMap* choiceDataSizes;
+    panda$collections$HashMap* refs;
+    org$pandalanguage$pandac$IR* ir;
 } org$pandalanguage$pandac$CCodeGenerator;
 #include "panda/core/Class.h"
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[102]; } org$pandalanguage$pandac$CCodeGenerator$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[84]; } org$pandalanguage$pandac$CCodeGenerator$class_type;
 extern org$pandalanguage$pandac$CCodeGenerator$class_type org$pandalanguage$pandac$CCodeGenerator$class;
 

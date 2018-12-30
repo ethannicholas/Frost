@@ -14,6 +14,8 @@
 
 #include "unicode/uregex.h"
 
+typedef uint8_t bool;
+
 #define true 1
 #define false 0
 
@@ -53,6 +55,10 @@ typedef struct Int64 {
 typedef struct UInt8 {
     uint8_t value;
 } UInt8;
+
+typedef struct Real32 {
+    double value;
+} Real32;
 
 typedef struct Real64 {
     double value;
@@ -216,8 +222,10 @@ static pthread_mutex_t preventsExitThreadsMutex = PTHREAD_MUTEX_INITIALIZER;
 
 Object* panda = NULL;
 
+static bool refErrorReporting = true;
+
 #if DEBUG_ALLOCS
-uint8_t debugAllocs = true;
+bool debugAllocs = true;
 #endif
 
 void* pandaAlloc(size_t size) {
@@ -261,7 +269,7 @@ void* pandaRealloc(void* ptr, size_t oldSize, size_t newSize) {
 void pandaFree(void* ptr) {
     allocations--;
 #if !DEBUG_ALLOCS
-    free(ptr);
+//    free(ptr);
 #endif
 }
 
@@ -317,6 +325,9 @@ void* pandaGetInterfaceMethod(Object* o, Class* intf, int index) {
 void pandaMain(Array* args);
 
 int main(int argc, char** argv) {
+#if DEBUG_ALLOCS
+    printf("Warning: memory tracing is enabled. This will severely impact performance.\n");
+#endif
     Array* args = pandaObjectAlloc(sizeof(Array), &panda$collections$Array$class);
     args->count = argc;
     args->capacity = argc;
@@ -338,15 +349,20 @@ int main(int argc, char** argv) {
 #if DEBUG_ALLOCS
     debugAllocs = false;
 #endif
-    if (panda) {
-        panda$core$Panda$dumpReport(panda);
+    if (refErrorReporting) {
+        if (panda) {
+            panda$core$Panda$dumpReport(panda);
+            panda$core$Panda$unref$panda$core$Object$Q(panda);
+        }
+        if (allocations && allocations != 1) {
+            printf("warning: %d objects were still in memory on exit\n", allocations);
+        }
+        else if (allocations == 1) {
+            printf("warning: 1 object was still in memory on exit\n");
+        }
+    }
+    else if (panda) {
         panda$core$Panda$unref$panda$core$Object$Q(panda);
-    }
-    if (allocations && allocations != 1) {
-        printf("warning: %d objects were still in memory on exit\n", allocations);
-    }
-    else if (allocations == 1) {
-        printf("warning: 1 object was still in memory on exit\n");
     }
     return 0;
 }
@@ -457,7 +473,16 @@ void panda$core$System$Process$waitFor$R$panda$core$Int64(Int64* result, Process
     result->value = WEXITSTATUS(status);
 }
 
-File* panda$core$System$tempDir$R$panda$io$File() {
+File* panda$core$System$workingDirectory$R$panda$io$File() {
+    char dir[PATH_MAX];
+    getcwd(dir, PATH_MAX);
+    String* path = pandaNewString(dir, strlen(dir));
+    File* file = pandaObjectAlloc(sizeof(File), &panda$io$File$class);
+    file->path = path;
+    return file;
+}
+
+File* panda$core$System$temporaryDirectory$R$panda$io$File() {
     const char* tmpdir = getenv("TMPDIR");
     if (!tmpdir) {
         tmpdir = "/tmp";
@@ -508,7 +533,7 @@ void panda$core$Panda$trace$panda$core$String(String* s) {
 void panda$core$Panda$ref$panda$core$Object$Q(Object* o) {
     if (o && o->refcnt != NO_REFCNT) {
         int newCount = __atomic_add_fetch(&o->refcnt, 1, __ATOMIC_RELAXED <= 1);
-        if (newCount <= 1) {
+        if (newCount <= 1 && refErrorReporting) {
             printf("internal error: ref %p with refcnt = %d\n", o, newCount - 1);
             printf("    class: %s\n", pandaGetCString(o->cl->name));
             abort();
@@ -519,7 +544,7 @@ void panda$core$Panda$ref$panda$core$Object$Q(Object* o) {
 void panda$core$Panda$unref$panda$core$Object$Q(Object* o) {
     if (o && o->refcnt != NO_REFCNT) {
         int newCount = __atomic_sub_fetch(&o->refcnt, 1, __ATOMIC_RELAXED);
-        if (newCount < 0) {
+        if (newCount < 0 && refErrorReporting) {
             printf("internal error: unref %p with refcnt = %d\n", o, newCount + 1);
             printf("    class: %s\n", pandaGetCString(o->cl->name));
             abort();
@@ -546,6 +571,15 @@ void panda$core$Panda$toReal64$panda$core$String$R$panda$core$Real64(Real64* res
     char* cstr = pandaGetCString(s);
     result->value = atof(cstr);
     pandaFree(cstr);
+}
+
+String* panda$core$Real32$convert$R$panda$core$String(Real32 d) {
+    size_t len = snprintf(NULL, 0, "%g", d.value);
+    char* chars = (char*) pandaAlloc(len + 1);
+    snprintf(chars, len + 1, "%g", d.value);
+    String* result = pandaNewString(chars, len);
+    pandaFree(chars);
+    return result;
 }
 
 String* panda$core$Real64$convert$R$panda$core$String(Real64 d) {
@@ -577,6 +611,10 @@ int64_t panda$core$Panda$currentTime$R$builtin_int64() {
     }
     return ((int64_t) t.tv_sec) * 1000 + ((int64_t) t.tv_usec) / 1000;
     
+}
+
+void panda$core$Panda$disableRefErrorReporting() {
+    refErrorReporting = false;
 }
 
 // RegularExpression
@@ -743,6 +781,16 @@ void pandaThreadEntry(ThreadInfo* threadInfo) {
 }
 
 void panda$threads$Thread$run$$LP$RP$EQ$AM$GT$ST$LP$RP$builtin_bit(Object* thread, Method* run,
+        Bit preventsExit) {
+    pthread_t threadId;
+    ThreadInfo* threadInfo = pandaAlloc(sizeof(ThreadInfo));
+    panda$core$Panda$ref$panda$core$Object$Q((Object*) run);
+    threadInfo->run = run;
+    threadInfo->preventsExit = preventsExit;
+    pthread_create(&threadId, NULL, (void* (*)()) &pandaThreadEntry, threadInfo);
+}
+
+void panda$threads$Thread$run$$LP$RP$EQ$AM$GT$LP$RP$builtin_bit(Object* thread, Method* run,
         Bit preventsExit) {
     pthread_t threadId;
     ThreadInfo* threadInfo = pandaAlloc(sizeof(ThreadInfo));

@@ -12,6 +12,6 @@ typedef struct panda$json$JSON$PathKey {
     int8_t $data[16];
 } panda$json$JSON$PathKey;
 #include "panda/core/Class.h"
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[2]; } panda$json$JSON$PathKey$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[3]; } panda$json$JSON$PathKey$class_type;
 extern panda$json$JSON$PathKey$class_type panda$json$JSON$PathKey$class;
 

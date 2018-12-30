@@ -3,73 +3,56 @@
 #include "panda/core/Class.h"
 #include "panda/core/String.h"
 #include "panda/core/Object.h"
+#include "panda/core/Bit.h"
 #include "panda/core/UInt8.h"
 #include "panda/core/Int64.h"
-#include "panda/core/Bit.h"
-#include "panda/core/Panda.h"
+
 
 static panda$core$String $s1;
 panda$io$FileInputStream$class_type panda$io$FileInputStream$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$io$InputStream$class, NULL, { panda$core$Object$convert$R$panda$core$String, panda$io$FileInputStream$cleanup, panda$io$FileInputStream$read$R$panda$core$UInt8$Q, panda$io$InputStream$read$R$panda$core$UInt16$Q, panda$io$InputStream$read$R$panda$core$UInt32$Q, panda$io$InputStream$read$R$panda$core$UInt64$Q, panda$io$InputStream$read$R$panda$core$Int8$Q, panda$io$InputStream$read$R$panda$core$Int16$Q, panda$io$InputStream$read$R$panda$core$Int32$Q, panda$io$InputStream$read$R$panda$core$Int64$Q, panda$io$InputStream$read$R$panda$core$Char8$Q, panda$io$FileInputStream$read$panda$unsafe$Pointer$LTpanda$core$UInt8$GT$panda$core$Int64$R$panda$core$Int64, panda$io$InputStream$read$panda$unsafe$Pointer$LTpanda$core$Int8$GT$panda$core$Int64$R$panda$core$Int64, panda$io$InputStream$read$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64$R$panda$core$Int64, panda$io$InputStream$readFully$R$panda$core$String, panda$io$InputStream$readLine$R$panda$core$String$Q, panda$io$InputStream$sendTo$panda$io$OutputStream$R$panda$core$Int64, panda$io$InputStream$lines$R$panda$collections$Iterator$LTpanda$core$String$GT, panda$io$FileInputStream$close, panda$io$FileInputStream$readImpl$R$panda$core$UInt8$Q, panda$io$FileInputStream$readImpl$panda$unsafe$Pointer$LTpanda$core$UInt8$GT$panda$core$Int64$R$panda$core$Int64} };
 
 
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x69\x6f\x2e\x46\x69\x6c\x65\x49\x6e\x70\x75\x74\x53\x74\x72\x65\x61\x6d", 24, -605666812933524967, NULL };
-static panda$core$String $s21 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x46\x69\x6c\x65\x49\x6e\x70\x75\x74\x53\x74\x72\x65\x61\x6d\x2e\x70\x61\x6e\x64\x61", 21, 7350084854621019619, NULL };
-static panda$core$String $s22 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x6f\x73\x74\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x70\x61\x6e\x64\x61\x2e\x69\x6f\x2e\x46\x69\x6c\x65\x49\x6e\x70\x75\x74\x53\x74\x72\x65\x61\x6d\x2e\x72\x65\x61\x64\x28\x62\x75\x66\x66\x65\x72\x3a\x70\x61\x6e\x64\x61\x2e\x75\x6e\x73\x61\x66\x65\x2e\x50\x6f\x69\x6e\x74\x65\x72\x3c\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x55\x49\x6e\x74\x38\x3e\x2c\x20\x6d\x61\x78\x3a\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x36\x34\x29\x3a\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x36\x34", 148, -6946390198610151251, NULL };
 
-void panda$io$FileInputStream$init(panda$io$FileInputStream* self) {
+void panda$io$FileInputStream$init(panda$io$FileInputStream* param0) {
+
+// line 15
+panda$io$InputStream$init(((panda$io$InputStream*) param0));
+return;
+
 }
-void panda$io$FileInputStream$cleanup(panda$io$FileInputStream* self) {
-    int $tmp4;
-    {
-        if (self->closeOnCleanup.value) {
-        {
-            panda$io$FileInputStream$close(self);
-        }
-        }
-    }
-    $tmp4 = -1;
-    goto $l2;
-    $l2:;
-    panda$io$InputStream$cleanup(((panda$io$InputStream*) self));
-    switch ($tmp4) {
-        case -1: goto $l5;
-    }
-    $l5:;
+void panda$io$FileInputStream$cleanup(panda$io$FileInputStream* param0) {
+
+// line 21
+panda$core$Bit* $tmp2 = &param0->closeOnCleanup;
+panda$core$Bit $tmp3 = *$tmp2;
+bool $tmp4 = $tmp3.value;
+if ($tmp4) goto block1; else goto block2;
+block1:;
+// line 22
+panda$io$FileInputStream$close(param0);
+goto block2;
+block2:;
+return;
+
 }
-panda$core$UInt8$nullable panda$io$FileInputStream$read$R$panda$core$UInt8$Q(panda$io$FileInputStream* self) {
-    panda$core$UInt8$nullable $returnValue6;
-    panda$core$UInt8$nullable $tmp7;
-    panda$io$FileInputStream$readImpl$R$panda$core$UInt8$Q(&$tmp7, self);
-    $returnValue6 = $tmp7;
-    return $returnValue6;
+panda$core$UInt8$nullable panda$io$FileInputStream$read$R$panda$core$UInt8$Q(panda$io$FileInputStream* param0) {
+
+// line 32
+panda$core$UInt8$nullable $tmp5;
+panda$io$FileInputStream$readImpl$R$panda$core$UInt8$Q(&$tmp5, param0);
+return $tmp5;
+
 }
-panda$core$Int64 panda$io$FileInputStream$read$panda$unsafe$Pointer$LTpanda$core$UInt8$GT$panda$core$Int64$R$panda$core$Int64(panda$io$FileInputStream* self, panda$core$UInt8* p_buffer, panda$core$Int64 p_max) {
-    panda$core$Int64 $returnValue12;
-    panda$core$Int64 $tmp13;
-    panda$core$Int64 $tmp17;
-    int $tmp11;
-    {
-        panda$io$FileInputStream$readImpl$panda$unsafe$Pointer$LTpanda$core$UInt8$GT$panda$core$Int64$R$panda$core$Int64(&$tmp13, self, p_buffer, p_max);
-        $returnValue12 = $tmp13;
-        $tmp11 = 0;
-        goto $l9;
-        $l14:;
-        return $returnValue12;
-    }
-    $l9:;
-    panda$core$Int64$init$builtin_int64(&$tmp17, 0);
-    panda$core$Bit $tmp18 = panda$core$Int64$$GE$panda$core$Int64$R$panda$core$Bit($returnValue12, $tmp17);
-    if ($tmp18.value) goto $l19; else goto $l20;
-    $l20:;
-    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s21, (panda$core$Int64) { 40 }, &$s22);
-    abort();
-    $l19:;
-    switch ($tmp11) {
-        case 0: goto $l14;
-    }
-    $l16:;
-    abort();
+panda$core$Int64 panda$io$FileInputStream$read$panda$unsafe$Pointer$LTpanda$core$UInt8$GT$panda$core$Int64$R$panda$core$Int64(panda$io$FileInputStream* param0, panda$core$UInt8* param1, panda$core$Int64 param2) {
+
+// line 41
+panda$core$Int64 $tmp6;
+panda$io$FileInputStream$readImpl$panda$unsafe$Pointer$LTpanda$core$UInt8$GT$panda$core$Int64$R$panda$core$Int64(&$tmp6, param0, param1, param2);
+return $tmp6;
+
 }
+
 
 
 

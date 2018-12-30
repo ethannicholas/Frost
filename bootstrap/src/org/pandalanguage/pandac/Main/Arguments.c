@@ -7,165 +7,177 @@
 #include "panda/core/Panda.h"
 #include "panda/core/Bit.h"
 #include "panda/collections/CollectionView.h"
-#include "panda/io/OutputStream.h"
 #include "panda/io/Console.h"
-#include "panda/core/System.h"
+#include "panda/io/OutputStream.h"
 #include "panda/core/UInt8.h"
+#include "panda/core/System.h"
+
 
 static panda$core$String $s1;
 org$pandalanguage$pandac$Main$Arguments$class_type org$pandalanguage$pandac$Main$Arguments$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, NULL, { panda$core$Object$convert$R$panda$core$String, org$pandalanguage$pandac$Main$Arguments$cleanup, org$pandalanguage$pandac$Main$Arguments$get_done$R$panda$core$Bit, org$pandalanguage$pandac$Main$Arguments$next$R$panda$core$String, org$pandalanguage$pandac$Main$Arguments$next$panda$core$String$R$panda$core$String} };
 
-typedef panda$core$Int64 (*$fn8)(panda$collections$CollectionView*);
-typedef panda$core$Bit (*$fn12)(org$pandalanguage$pandac$Main$Arguments*);
-typedef panda$core$Object* (*$fn28)(panda$collections$ListView*, panda$core$Int64);
-typedef panda$core$Bit (*$fn31)(org$pandalanguage$pandac$Main$Arguments*);
-typedef panda$core$Int64 (*$fn48)(panda$collections$CollectionView*);
-typedef panda$core$Object* (*$fn54)(panda$collections$ListView*, panda$core$Int64);
-typedef void (*$fn60)(panda$io$OutputStream*, panda$core$String*);
-typedef panda$core$String* (*$fn65)(org$pandalanguage$pandac$Main$Arguments*);
+typedef panda$core$Int64 (*$fn13)(panda$collections$CollectionView*);
+typedef panda$core$Bit (*$fn17)(org$pandalanguage$pandac$Main$Arguments*);
+typedef panda$core$Object* (*$fn42)(panda$collections$ListView*, panda$core$Int64);
+typedef panda$core$Bit (*$fn45)(org$pandalanguage$pandac$Main$Arguments*);
+typedef panda$core$Int64 (*$fn59)(panda$collections$CollectionView*);
+typedef panda$core$Object* (*$fn68)(panda$collections$ListView*, panda$core$Int64);
+typedef void (*$fn76)(panda$io$OutputStream*, panda$core$String*);
+typedef panda$core$String* (*$fn79)(org$pandalanguage$pandac$Main$Arguments*);
 
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x70\x61\x6e\x64\x61\x63\x2e\x4d\x61\x69\x6e\x2e\x41\x72\x67\x75\x6d\x65\x6e\x74\x73", 39, 4637500274244339259, NULL };
-static panda$core$String $s17 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x4d\x61\x69\x6e\x2e\x70\x61\x6e\x64\x61", 10, -7176460584895440524, NULL };
-static panda$core$String $s38 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x65\x78\x70\x65\x63\x74\x65\x64\x20", 9, 2200356131793558883, NULL };
-static panda$core$String $s40 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x20\x61\x66\x74\x65\x72\x20", 7, 142212394496195, NULL };
-static panda$core$String $s44 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x27", 1, 140, NULL };
-static panda$core$String $s57 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x27", 1, 140, NULL };
+static panda$core$String $s22 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x4d\x61\x69\x6e\x2e\x70\x61\x6e\x64\x61", 10, -7176460584895440524, NULL };
+static panda$core$String $s50 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x65\x78\x70\x65\x63\x74\x65\x64\x20", 9, 2200356131793558883, NULL };
+static panda$core$String $s52 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x20\x61\x66\x74\x65\x72\x20", 7, 142212394496195, NULL };
+static panda$core$String $s71 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x27", 1, 140, NULL };
+static panda$core$String $s73 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x27", 1, 140, NULL };
 
-void org$pandalanguage$pandac$Main$Arguments$init$panda$collections$ListView$LTpanda$core$String$GT(org$pandalanguage$pandac$Main$Arguments* self, panda$collections$ListView* p_args) {
-    panda$core$Int64 $tmp2;
-    panda$collections$ListView* $tmp3;
-    panda$collections$ListView* $tmp4;
-    self->args = NULL;
-    panda$core$Int64$init$builtin_int64(&$tmp2, 1);
-    self->index = $tmp2;
-    {
-        $tmp3 = self->args;
-        $tmp4 = p_args;
-        self->args = $tmp4;
-        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp4));
-        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
-    }
+void org$pandalanguage$pandac$Main$Arguments$init$panda$collections$ListView$LTpanda$core$String$GT(org$pandalanguage$pandac$Main$Arguments* param0, panda$collections$ListView* param1) {
+
+// line 32
+panda$core$Int64 $tmp2 = (panda$core$Int64) {1};
+panda$core$Int64* $tmp3 = &param0->index;
+*$tmp3 = $tmp2;
+// line 35
+panda$collections$ListView** $tmp4 = &param0->args;
+panda$collections$ListView* $tmp5 = *$tmp4;
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp5));
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
+panda$collections$ListView** $tmp6 = &param0->args;
+*$tmp6 = param1;
+return;
+
 }
-panda$core$Bit org$pandalanguage$pandac$Main$Arguments$get_done$R$panda$core$Bit(org$pandalanguage$pandac$Main$Arguments* self) {
-    panda$core$Bit $returnValue5;
-    ITable* $tmp6 = ((panda$collections$CollectionView*) self->args)->$class->itable;
-    while ($tmp6->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {
-        $tmp6 = $tmp6->next;
-    }
-    $fn8 $tmp7 = $tmp6->methods[0];
-    panda$core$Int64 $tmp9 = $tmp7(((panda$collections$CollectionView*) self->args));
-    panda$core$Bit $tmp10 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(self->index, $tmp9);
-    $returnValue5 = $tmp10;
-    return $returnValue5;
+panda$core$Bit org$pandalanguage$pandac$Main$Arguments$get_done$R$panda$core$Bit(org$pandalanguage$pandac$Main$Arguments* param0) {
+
+// line 39
+panda$core$Int64* $tmp7 = &param0->index;
+panda$core$Int64 $tmp8 = *$tmp7;
+panda$collections$ListView** $tmp9 = &param0->args;
+panda$collections$ListView* $tmp10 = *$tmp9;
+ITable* $tmp11 = ((panda$collections$CollectionView*) $tmp10)->$class->itable;
+while ($tmp11->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {
+    $tmp11 = $tmp11->next;
 }
-panda$core$String* org$pandalanguage$pandac$Main$Arguments$next$R$panda$core$String(org$pandalanguage$pandac$Main$Arguments* self) {
-    org$pandalanguage$pandac$Main$Arguments* $tmp18;
-    panda$core$Int64 $tmp19;
-    panda$core$String* $returnValue21;
-    panda$core$String* $tmp22;
-    panda$core$Object* $tmp23;
-    panda$core$Int64 $tmp24;
-    panda$core$Bit $tmp13 = (($fn12) self->$class->vtable[2])(self);
-    panda$core$Bit $tmp14 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp13);
-    if ($tmp14.value) goto $l15; else goto $l16;
-    $l16:;
-    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64(&$s17, (panda$core$Int64) { 44 });
-    abort();
-    $l15:;
-    $tmp18 = self;
-    panda$core$Int64$init$builtin_int64(&$tmp19, 1);
-    panda$core$Int64 $tmp20 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64($tmp18->index, $tmp19);
-    $tmp18->index = $tmp20;
-    panda$core$Int64$init$builtin_int64(&$tmp24, 1);
-    panda$core$Int64 $tmp25 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(self->index, $tmp24);
-    ITable* $tmp26 = self->args->$class->itable;
-    while ($tmp26->$class != (panda$core$Class*) &panda$collections$ListView$class) {
-        $tmp26 = $tmp26->next;
-    }
-    $fn28 $tmp27 = $tmp26->methods[0];
-    panda$core$Object* $tmp29 = $tmp27(self->args, $tmp25);
-    $tmp23 = $tmp29;
-    $tmp22 = ((panda$core$String*) $tmp23);
-    $returnValue21 = $tmp22;
-    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp22));
-    panda$core$Panda$unref$panda$core$Object$Q($tmp23);
-    return $returnValue21;
+$fn13 $tmp12 = $tmp11->methods[0];
+panda$core$Int64 $tmp14 = $tmp12(((panda$collections$CollectionView*) $tmp10));
+panda$core$Bit $tmp15 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp8, $tmp14);
+return $tmp15;
+
 }
-panda$core$String* org$pandalanguage$pandac$Main$Arguments$next$panda$core$String$R$panda$core$String(org$pandalanguage$pandac$Main$Arguments* self, panda$core$String* p_label) {
-    panda$io$OutputStream* $tmp33;
-    panda$core$String* $tmp35;
-    panda$core$String* $tmp36;
-    panda$core$String* $tmp37;
-    panda$core$String* $tmp42;
-    panda$core$String* $tmp43;
-    panda$core$Object* $tmp45;
-    panda$core$Int64 $tmp50;
-    panda$core$UInt8 $tmp61;
-    panda$core$String* $returnValue62;
-    panda$core$String* $tmp63;
-    panda$core$String* $tmp64;
-    panda$core$Bit $tmp32 = (($fn31) self->$class->vtable[2])(self);
-    if ($tmp32.value) {
-    {
-        panda$io$OutputStream* $tmp34 = panda$io$Console$errorStream$R$panda$io$OutputStream();
-        $tmp33 = $tmp34;
-        panda$core$String* $tmp39 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s38, p_label);
-        $tmp37 = $tmp39;
-        panda$core$String* $tmp41 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp37, &$s40);
-        $tmp36 = $tmp41;
-        ITable* $tmp46 = ((panda$collections$CollectionView*) self->args)->$class->itable;
-        while ($tmp46->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {
-            $tmp46 = $tmp46->next;
-        }
-        $fn48 $tmp47 = $tmp46->methods[0];
-        panda$core$Int64 $tmp49 = $tmp47(((panda$collections$CollectionView*) self->args));
-        panda$core$Int64$init$builtin_int64(&$tmp50, 1);
-        panda$core$Int64 $tmp51 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64($tmp49, $tmp50);
-        ITable* $tmp52 = self->args->$class->itable;
-        while ($tmp52->$class != (panda$core$Class*) &panda$collections$ListView$class) {
-            $tmp52 = $tmp52->next;
-        }
-        $fn54 $tmp53 = $tmp52->methods[0];
-        panda$core$Object* $tmp55 = $tmp53(self->args, $tmp51);
-        $tmp45 = $tmp55;
-        panda$core$String* $tmp56 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s44, ((panda$core$String*) $tmp45));
-        $tmp43 = $tmp56;
-        panda$core$String* $tmp58 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp43, &$s57);
-        $tmp42 = $tmp58;
-        panda$core$String* $tmp59 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp36, $tmp42);
-        $tmp35 = $tmp59;
-        (($fn60) $tmp33->$class->vtable[19])($tmp33, $tmp35);
-        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp35));
-        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp42));
-        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp43));
-        panda$core$Panda$unref$panda$core$Object$Q($tmp45);
-        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp36));
-        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp37));
-        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp33));
-        panda$core$UInt8$init$builtin_uint8(&$tmp61, 1);
-        panda$core$System$exit$panda$core$UInt8($tmp61);
-    }
-    }
-    panda$core$String* $tmp66 = (($fn65) self->$class->vtable[3])(self);
-    $tmp64 = $tmp66;
-    $tmp63 = $tmp64;
-    $returnValue62 = $tmp63;
-    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp63));
-    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp64));
-    return $returnValue62;
+panda$core$String* org$pandalanguage$pandac$Main$Arguments$next$R$panda$core$String(org$pandalanguage$pandac$Main$Arguments* param0) {
+
+// line 43
+$fn17 $tmp16 = ($fn17) param0->$class->vtable[2];
+panda$core$Bit $tmp18 = $tmp16(param0);
+panda$core$Bit $tmp19 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp18);
+bool $tmp20 = $tmp19.value;
+if ($tmp20) goto block1; else goto block2;
+block2:;
+panda$core$Int64 $tmp21 = (panda$core$Int64) {43};
+panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64(&$s22, $tmp21);
+abort(); // unreachable
+block1:;
+// line 44
+panda$core$Int64* $tmp23 = &param0->index;
+panda$core$Int64 $tmp24 = *$tmp23;
+panda$core$Int64 $tmp25 = (panda$core$Int64) {1};
+int64_t $tmp26 = $tmp24.value;
+int64_t $tmp27 = $tmp25.value;
+int64_t $tmp28 = $tmp26 + $tmp27;
+panda$core$Int64 $tmp29 = (panda$core$Int64) {$tmp28};
+panda$core$Int64* $tmp30 = &param0->index;
+*$tmp30 = $tmp29;
+// line 45
+panda$collections$ListView** $tmp31 = &param0->args;
+panda$collections$ListView* $tmp32 = *$tmp31;
+panda$core$Int64* $tmp33 = &param0->index;
+panda$core$Int64 $tmp34 = *$tmp33;
+panda$core$Int64 $tmp35 = (panda$core$Int64) {1};
+int64_t $tmp36 = $tmp34.value;
+int64_t $tmp37 = $tmp35.value;
+int64_t $tmp38 = $tmp36 - $tmp37;
+panda$core$Int64 $tmp39 = (panda$core$Int64) {$tmp38};
+ITable* $tmp40 = $tmp32->$class->itable;
+while ($tmp40->$class != (panda$core$Class*) &panda$collections$ListView$class) {
+    $tmp40 = $tmp40->next;
 }
-void org$pandalanguage$pandac$Main$Arguments$cleanup(org$pandalanguage$pandac$Main$Arguments* self) {
-    int $tmp70;
-    {
-    }
-    $tmp70 = -1;
-    goto $l68;
-    $l68:;
-    panda$core$Object$cleanup(((panda$core$Object*) self));
-    switch ($tmp70) {
-        case -1: goto $l71;
-    }
-    $l71:;
-    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->args));
+$fn42 $tmp41 = $tmp40->methods[0];
+panda$core$Object* $tmp43 = $tmp41($tmp32, $tmp39);
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((panda$core$String*) $tmp43)));
+panda$core$Panda$unref$panda$core$Object$Q($tmp43);
+return ((panda$core$String*) $tmp43);
+
 }
+panda$core$String* org$pandalanguage$pandac$Main$Arguments$next$panda$core$String$R$panda$core$String(org$pandalanguage$pandac$Main$Arguments* param0, panda$core$String* param1) {
+
+// line 49
+$fn45 $tmp44 = ($fn45) param0->$class->vtable[2];
+panda$core$Bit $tmp46 = $tmp44(param0);
+bool $tmp47 = $tmp46.value;
+if ($tmp47) goto block1; else goto block2;
+block1:;
+// line 50
+panda$io$OutputStream* $tmp48 = panda$io$Console$errorStream$R$panda$io$OutputStream();
+panda$core$String* $tmp49 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s50, param1);
+panda$core$String* $tmp51 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp49, &$s52);
+panda$collections$ListView** $tmp53 = &param0->args;
+panda$collections$ListView* $tmp54 = *$tmp53;
+panda$collections$ListView** $tmp55 = &param0->args;
+panda$collections$ListView* $tmp56 = *$tmp55;
+ITable* $tmp57 = ((panda$collections$CollectionView*) $tmp56)->$class->itable;
+while ($tmp57->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {
+    $tmp57 = $tmp57->next;
+}
+$fn59 $tmp58 = $tmp57->methods[0];
+panda$core$Int64 $tmp60 = $tmp58(((panda$collections$CollectionView*) $tmp56));
+panda$core$Int64 $tmp61 = (panda$core$Int64) {1};
+int64_t $tmp62 = $tmp60.value;
+int64_t $tmp63 = $tmp61.value;
+int64_t $tmp64 = $tmp62 - $tmp63;
+panda$core$Int64 $tmp65 = (panda$core$Int64) {$tmp64};
+ITable* $tmp66 = $tmp54->$class->itable;
+while ($tmp66->$class != (panda$core$Class*) &panda$collections$ListView$class) {
+    $tmp66 = $tmp66->next;
+}
+$fn68 $tmp67 = $tmp66->methods[0];
+panda$core$Object* $tmp69 = $tmp67($tmp54, $tmp65);
+panda$core$String* $tmp70 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s71, ((panda$core$String*) $tmp69));
+panda$core$String* $tmp72 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp70, &$s73);
+panda$core$String* $tmp74 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp51, $tmp72);
+$fn76 $tmp75 = ($fn76) $tmp48->$class->vtable[19];
+$tmp75($tmp48, $tmp74);
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp48));
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp49));
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp51));
+panda$core$Panda$unref$panda$core$Object$Q($tmp69);
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp70));
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp72));
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp74));
+// line 52
+panda$core$UInt8 $tmp77 = (panda$core$UInt8) {1};
+panda$core$System$exit$panda$core$UInt8($tmp77);
+goto block2;
+block2:;
+// line 54
+$fn79 $tmp78 = ($fn79) param0->$class->vtable[3];
+panda$core$String* $tmp80 = $tmp78(param0);
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp80));
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp80));
+return $tmp80;
+
+}
+void org$pandalanguage$pandac$Main$Arguments$cleanup(org$pandalanguage$pandac$Main$Arguments* param0) {
+
+panda$collections$ListView** $tmp81 = &param0->args;
+panda$collections$ListView* $tmp82 = *$tmp81;
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp82));
+return;
+
+}
+
+
+
+
+
 

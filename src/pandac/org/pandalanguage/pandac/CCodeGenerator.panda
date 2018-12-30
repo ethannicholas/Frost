@@ -344,6 +344,9 @@ class CCodeGenerator : CodeGenerator {
     }
 
     method wrapperTypeName(t:Type):String {
+        def cl := compiler.getClass(t)
+        assert cl !== null
+        writeImport(cl)
         if t.typeKind = Type.Kind.NULLABLE {
             return wrapperTypeName(t.subtypes[0])
         }

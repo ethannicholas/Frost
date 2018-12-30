@@ -10,10 +10,14 @@ typedef struct org$pandalanguage$pandac$ClassDecl org$pandalanguage$pandac$Class
 typedef struct panda$collections$Array panda$collections$Array;
 typedef struct panda$collections$HashMap panda$collections$HashMap;
 typedef struct panda$collections$Stack panda$collections$Stack;
+typedef struct org$pandalanguage$pandac$IR org$pandalanguage$pandac$IR;
 typedef struct org$pandalanguage$pandac$CodeGenerator org$pandalanguage$pandac$CodeGenerator;
 typedef struct panda$threads$MessageQueue panda$threads$MessageQueue;
 #include "panda/core/Int64_types.h"
 #include "panda/core/Bit_types.h"
+typedef struct org$pandalanguage$pandac$IR$Value org$pandalanguage$pandac$IR$Value;
+#include "org/pandalanguage/pandac/IR/Block/ID_types.h"
+typedef struct panda$collections$IdentityMap panda$collections$IdentityMap;
 typedef struct panda$core$String panda$core$String;
 
 typedef struct org$pandalanguage$pandac$Compiler {
@@ -29,25 +33,28 @@ typedef struct org$pandalanguage$pandac$Compiler {
     panda$collections$HashMap* classes;
     panda$collections$Stack* currentClass;
     panda$collections$Stack* currentMethod;
+    org$pandalanguage$pandac$IR* ir;
     org$pandalanguage$pandac$SymbolTable* symbolTable;
+    org$pandalanguage$pandac$SymbolTable* methodSymbolTable;
     org$pandalanguage$pandac$CodeGenerator* codeGenerator;
     panda$threads$MessageQueue* errorQueue;
-    panda$collections$Stack* loops;
-    panda$collections$Stack* finallies;
-    panda$core$Int64 reusedValueCount;
+    panda$collections$Stack* enclosingContexts;
     panda$core$Int64 errorCount;
-    panda$core$Int64 tmpCount;
     panda$core$Int64 closureCount;
-    panda$core$Bit reportErrors;
     panda$collections$HashMap* existenceCache;
-    panda$core$Bit inFieldCleanup;
-    panda$collections$Array* atPreSetupStatements;
-    panda$core$Bit inAtPre;
-    panda$core$Bit writeCode;
-    panda$collections$Stack* captures;
+    panda$core$Bit reportErrors;
     panda$collections$Array* pendingClasses;
+    panda$core$Bit inAtPre;
+    panda$collections$Array* statementUnrefs;
+    org$pandalanguage$pandac$IR$Value* returnValue;
+    org$pandalanguage$pandac$IR$Block$ID$nullable atPreBlock;
+    panda$collections$Stack* captures;
+    panda$core$Bit writeCode;
+    panda$core$Bit inFieldCleanup;
+    panda$collections$HashMap* coercionCosts;
+    panda$collections$IdentityMap* lambdaTypes;
 } org$pandalanguage$pandac$Compiler;
 #include "panda/core/Class.h"
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[164]; } org$pandalanguage$pandac$Compiler$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[191]; } org$pandalanguage$pandac$Compiler$class_type;
 extern org$pandalanguage$pandac$Compiler$class_type org$pandalanguage$pandac$Compiler$class;
 

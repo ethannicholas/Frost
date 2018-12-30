@@ -14,6 +14,6 @@ typedef struct panda$collections$ImmutableArray {
     panda$core$Object** data;
 } panda$collections$ImmutableArray;
 #include "panda/core/Class.h"
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[8]; } panda$collections$ImmutableArray$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[5]; } panda$collections$ImmutableArray$class_type;
 extern panda$collections$ImmutableArray$class_type panda$collections$ImmutableArray$class;
 

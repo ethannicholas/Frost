@@ -8,7 +8,7 @@ typedef struct panda$core$Real64 {
     double value;
 } panda$core$Real64;
 #include "panda/core/Class.h"
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[28]; } panda$core$Real64$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[58]; } panda$core$Real64$class_type;
 extern panda$core$Real64$class_type panda$core$Real64$class;
 typedef struct panda$core$Real64$wrapper {
     panda$core$Class* cl;

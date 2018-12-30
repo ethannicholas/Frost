@@ -12,6 +12,6 @@ typedef struct org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken {
     int8_t $data[8];
 } org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken;
 #include "panda/core/Class.h"
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[2]; } org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[3]; } org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken$class_type;
 extern org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken$class_type org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken$class;
 

@@ -10,7 +10,7 @@ typedef struct panda$io$ByteOrder {
     int8_t $data[0];
 } panda$io$ByteOrder;
 #include "panda/core/Class.h"
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[2]; } panda$io$ByteOrder$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[4]; } panda$io$ByteOrder$class_type;
 extern panda$io$ByteOrder$class_type panda$io$ByteOrder$class;
 typedef struct panda$io$ByteOrder$wrapper {
     panda$core$Class* cl;

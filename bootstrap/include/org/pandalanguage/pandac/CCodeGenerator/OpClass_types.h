@@ -10,7 +10,7 @@ typedef struct org$pandalanguage$pandac$CCodeGenerator$OpClass {
     int8_t $data[0];
 } org$pandalanguage$pandac$CCodeGenerator$OpClass;
 #include "panda/core/Class.h"
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[2]; } org$pandalanguage$pandac$CCodeGenerator$OpClass$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[4]; } org$pandalanguage$pandac$CCodeGenerator$OpClass$class_type;
 extern org$pandalanguage$pandac$CCodeGenerator$OpClass$class_type org$pandalanguage$pandac$CCodeGenerator$OpClass$class;
 typedef struct org$pandalanguage$pandac$CCodeGenerator$OpClass$wrapper {
     panda$core$Class* cl;

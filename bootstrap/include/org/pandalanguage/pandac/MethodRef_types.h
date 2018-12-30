@@ -2,17 +2,15 @@
 #include "panda_c.h"
 typedef struct panda$core$Class panda$core$Class;
 #include "panda/core/Int32_types.h"
-typedef struct org$pandalanguage$pandac$MethodDecl org$pandalanguage$pandac$MethodDecl;
-typedef struct org$pandalanguage$pandac$IRNode org$pandalanguage$pandac$IRNode;
 typedef struct org$pandalanguage$pandac$Type org$pandalanguage$pandac$Type;
+typedef struct org$pandalanguage$pandac$MethodDecl org$pandalanguage$pandac$MethodDecl;
 typedef struct panda$core$String panda$core$String;
 
 typedef struct org$pandalanguage$pandac$MethodRef {
     panda$core$Class* $class;
     panda$core$Int32 refCount;
+    org$pandalanguage$pandac$Type* target;
     org$pandalanguage$pandac$MethodDecl* value;
-    org$pandalanguage$pandac$IRNode* target;
-    org$pandalanguage$pandac$Type* owner;
     org$pandalanguage$pandac$Type* effectiveType;
 } org$pandalanguage$pandac$MethodRef;
 #include "panda/core/Class.h"

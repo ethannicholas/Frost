@@ -10,7 +10,6 @@ typedef struct org$pandalanguage$pandac$Annotations org$pandalanguage$pandac$Ann
 #include "org/pandalanguage/pandac/FieldDecl/Kind_types.h"
 typedef struct org$pandalanguage$pandac$Type org$pandalanguage$pandac$Type;
 typedef struct org$pandalanguage$pandac$ASTNode org$pandalanguage$pandac$ASTNode;
-typedef struct org$pandalanguage$pandac$IRNode org$pandalanguage$pandac$IRNode;
 #include "org/pandalanguage/pandac/Compiler/Resolution_types.h"
 
 typedef struct org$pandalanguage$pandac$FieldDecl {
@@ -25,7 +24,6 @@ typedef struct org$pandalanguage$pandac$FieldDecl {
     org$pandalanguage$pandac$FieldDecl$Kind fieldKind;
     org$pandalanguage$pandac$Type* type;
     org$pandalanguage$pandac$ASTNode* rawValue;
-    org$pandalanguage$pandac$IRNode* value;
     org$pandalanguage$pandac$Compiler$Resolution resolved;
 } org$pandalanguage$pandac$FieldDecl;
 #include "panda/core/Class.h"

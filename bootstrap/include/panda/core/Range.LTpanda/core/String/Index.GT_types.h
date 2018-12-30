@@ -4,7 +4,7 @@
 #include "panda/core/Bit_types.h"
 typedef struct panda$core$String panda$core$String;
 typedef struct panda$core$Class panda$core$Class;
-#include "panda/core/Range.LTpanda/core/String/Index.GT_types.h"
+#include "panda/core/Range.LTpanda/core/String/Index.GT.h"
 
 typedef struct panda$core$Range$LTpanda$core$String$Index$GT {
     panda$core$String$Index min;

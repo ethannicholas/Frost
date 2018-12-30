@@ -9,6 +9,6 @@ typedef struct panda$collections$MapWriter {
     panda$core$Int32 refCount;
 } panda$collections$MapWriter;
 #include "panda/core/Class.h"
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[3]; } panda$collections$MapWriter$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[4]; } panda$collections$MapWriter$class_type;
 extern panda$collections$MapWriter$class_type panda$collections$MapWriter$class;
 

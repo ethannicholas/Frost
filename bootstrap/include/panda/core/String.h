@@ -27,14 +27,14 @@ void panda$core$String$init$panda$collections$ListView$LTpanda$core$Char8$GT(pan
 panda$core$String* panda$core$String$convert$R$panda$core$String(panda$core$String* self);
 panda$core$String* panda$core$String$format$panda$core$String$R$panda$core$String(panda$core$String* self, panda$core$String* p_fmt);
 void panda$core$String$cleanup(panda$core$String* self);
-panda$collections$ListView* panda$core$String$utf8$R$panda$collections$ListView$LTpanda$core$Char8$GT(panda$core$String* self);
-panda$collections$Iterator* panda$core$String$utf16$R$panda$collections$Iterator$LTpanda$core$Char16$GT(panda$core$String* self);
+panda$collections$ListView* panda$core$String$get_utf8$R$panda$collections$ListView$LTpanda$core$Char8$GT(panda$core$String* self);
+panda$collections$Iterator* panda$core$String$get_utf16$R$panda$collections$Iterator$LTpanda$core$Char16$GT(panda$core$String* self);
 panda$collections$Iterator* panda$core$String$iterator$R$panda$collections$Iterator$LTpanda$core$Char32$GT(panda$core$String* self);
-panda$core$Int64 panda$core$String$length$R$panda$core$Int64(panda$core$String* self);
-panda$core$Int64 panda$core$String$byteLength$R$panda$core$Int64(panda$core$String* self);
+panda$core$Int64 panda$core$String$get_length$R$panda$core$Int64(panda$core$String* self);
+panda$core$Int64 panda$core$String$get_byteLength$R$panda$core$Int64(panda$core$String* self);
 panda$core$Bit panda$core$String$startsWith$panda$core$String$R$panda$core$Bit(panda$core$String* self, panda$core$String* p_other);
 panda$core$Bit panda$core$String$endsWith$panda$core$String$R$panda$core$Bit(panda$core$String* self, panda$core$String* p_other);
-panda$core$String* panda$core$String$trim$R$panda$core$String(panda$core$String* self);
+panda$core$String* panda$core$String$get_trimmed$R$panda$core$String(panda$core$String* self);
 panda$core$String* panda$core$String$$ADD$panda$core$String$R$panda$core$String(panda$core$String* self, panda$core$String* p_other);
 panda$core$String* panda$core$String$$ADD$panda$core$Object$R$panda$core$String(panda$core$String* self, panda$core$Object* p_other);
 panda$core$String* panda$core$String$$MUL$panda$core$Int64$R$panda$core$String(panda$core$String* self, panda$core$Int64 p_count);
@@ -68,8 +68,8 @@ panda$collections$Iterator* panda$core$String$find$panda$core$String$R$panda$col
 panda$collections$Iterator* panda$core$String$find$panda$core$String$panda$core$Bit$R$panda$collections$Iterator$LTpanda$core$String$Index$GT(panda$core$String* self, panda$core$String* p_needle, panda$core$Bit p_overlapping);
 panda$collections$Iterator* panda$core$String$find$panda$core$RegularExpression$R$panda$collections$Iterator$LTpanda$core$String$Match$GT(panda$core$String* self, panda$core$RegularExpression* p_needle);
 panda$collections$Iterator* panda$core$String$find$panda$core$RegularExpression$panda$core$Bit$R$panda$collections$Iterator$LTpanda$core$String$Match$GT(panda$core$String* self, panda$core$RegularExpression* p_needle, panda$core$Bit p_overlapping);
-panda$core$String$Index panda$core$String$start$R$panda$core$String$Index(panda$core$String* self);
-panda$core$String$Index panda$core$String$end$R$panda$core$String$Index(panda$core$String* self);
+panda$core$String$Index panda$core$String$get_start$R$panda$core$String$Index(panda$core$String* self);
+panda$core$String$Index panda$core$String$get_end$R$panda$core$String$Index(panda$core$String* self);
 panda$core$String$Index panda$core$String$next$panda$core$String$Index$R$panda$core$String$Index(panda$core$String* self, panda$core$String$Index p_i);
 panda$core$String$Index panda$core$String$previous$panda$core$String$Index$R$panda$core$String$Index(panda$core$String* self, panda$core$String$Index p_i);
 panda$core$String$Index panda$core$String$offset$panda$core$String$Index$panda$core$Int64$R$panda$core$String$Index(panda$core$String* self, panda$core$String$Index p_index, panda$core$Int64 p_offset);
@@ -86,5 +86,5 @@ panda$collections$Array* panda$core$String$split$panda$core$RegularExpression$R$
 panda$core$Int64$nullable panda$core$String$convert$R$panda$core$Int64$Q(panda$core$String* self);
 panda$core$UInt64$nullable panda$core$String$convert$R$panda$core$UInt64$Q(panda$core$String* self);
 panda$core$Real64$nullable panda$core$String$convert$R$panda$core$Real64$Q(panda$core$String* self);
-panda$core$Int64 panda$core$String$hash$R$panda$core$Int64(panda$core$String* self);
+panda$core$Int64 panda$core$String$get_hash$R$panda$core$Int64(panda$core$String* self);
 

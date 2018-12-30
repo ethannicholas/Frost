@@ -7,6 +7,7 @@
 #include "panda/core/Int64.h"
 #include "panda/core/Panda.h"
 #include "panda/core/Bit.h"
+
 __attribute__((weak)) panda$core$Object* panda$collections$Stack$StackIterator$next$R$panda$collections$Stack$StackIterator$T$shim(panda$collections$Stack$StackIterator* p0) {
     panda$core$Object* result = panda$collections$Stack$StackIterator$next$R$panda$collections$Stack$StackIterator$T(p0);
 
@@ -18,99 +19,97 @@ struct { panda$core$Class* cl; ITable* next; void* methods[10]; } panda$collecti
 static panda$core$String $s1;
 panda$collections$Stack$StackIterator$class_type panda$collections$Stack$StackIterator$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, (ITable*) &panda$collections$Stack$StackIterator$_panda$collections$Iterator, { panda$core$Object$convert$R$panda$core$String, panda$collections$Stack$StackIterator$cleanup, panda$collections$Stack$StackIterator$get_done$R$panda$core$Bit, panda$collections$Stack$StackIterator$next$R$panda$collections$Stack$StackIterator$T$shim} };
 
-typedef panda$core$Bit (*$fn9)(panda$collections$Stack$StackIterator*);
+typedef panda$core$Bit (*$fn17)(panda$collections$Stack$StackIterator*);
 
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x53\x74\x61\x63\x6b\x2e\x53\x74\x61\x63\x6b\x49\x74\x65\x72\x61\x74\x6f\x72", 37, 4888538230325112768, NULL };
-static panda$core$String $s14 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x53\x74\x61\x63\x6b\x2e\x70\x61\x6e\x64\x61", 11, -4463479324022222579, NULL };
-static panda$core$String $s15 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x70\x61\x6e\x64\x61\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x53\x74\x61\x63\x6b\x2e\x53\x74\x61\x63\x6b\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x6e\x65\x78\x74\x28\x29\x3a\x70\x61\x6e\x64\x61\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x53\x74\x61\x63\x6b\x2e\x53\x74\x61\x63\x6b\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x54", 116, 2142613279611990419, NULL };
-static panda$core$String $s33 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x53\x74\x61\x63\x6b\x2e\x70\x61\x6e\x64\x61", 11, -4463479324022222579, NULL };
-static panda$core$String $s34 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6d\x65\x74\x68\x6f\x64\x20\x65\x78\x69\x74\x65\x64\x20\x77\x69\x74\x68\x6f\x75\x74\x20\x72\x65\x74\x75\x72\x6e\x69\x6e\x67", 31, 7480581949655794403, NULL };
+static panda$core$String $s22 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x53\x74\x61\x63\x6b\x2e\x70\x61\x6e\x64\x61", 11, -4463479324022222579, NULL };
+static panda$core$String $s23 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x70\x61\x6e\x64\x61\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x53\x74\x61\x63\x6b\x2e\x53\x74\x61\x63\x6b\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x6e\x65\x78\x74\x28\x29\x3a\x70\x61\x6e\x64\x61\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x53\x74\x61\x63\x6b\x2e\x53\x74\x61\x63\x6b\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x54", 116, 2142613279611990419, NULL };
 
-void panda$collections$Stack$StackIterator$init$panda$collections$Stack$LTpanda$collections$Stack$StackIterator$T$GT(panda$collections$Stack$StackIterator* self, panda$collections$Stack* p_stack) {
-    panda$core$Int64 $tmp2;
-    panda$collections$Stack* $tmp3;
-    panda$collections$Stack* $tmp4;
-    self->stack = NULL;
-    panda$core$Int64$init$builtin_int64(&$tmp2, 0);
-    self->index = $tmp2;
-    {
-        $tmp3 = self->stack;
-        $tmp4 = p_stack;
-        self->stack = $tmp4;
-        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp4));
-        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
-    }
+void panda$collections$Stack$StackIterator$init$panda$collections$Stack$LTpanda$collections$Stack$StackIterator$T$GT(panda$collections$Stack$StackIterator* param0, panda$collections$Stack* param1) {
+
+// line 14
+panda$core$Int64 $tmp2 = (panda$core$Int64) {0};
+panda$core$Int64* $tmp3 = &param0->index;
+*$tmp3 = $tmp2;
+// line 17
+panda$collections$Stack** $tmp4 = &param0->stack;
+panda$collections$Stack* $tmp5 = *$tmp4;
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp5));
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
+panda$collections$Stack** $tmp6 = &param0->stack;
+*$tmp6 = param1;
+return;
+
 }
-panda$core$Bit panda$collections$Stack$StackIterator$get_done$R$panda$core$Bit(panda$collections$Stack$StackIterator* self) {
-    panda$core$Bit $returnValue5;
-    panda$core$Int64 $tmp6 = panda$collections$Stack$get_count$R$panda$core$Int64(self->stack);
-    panda$core$Bit $tmp7 = panda$core$Int64$$GE$panda$core$Int64$R$panda$core$Bit(self->index, $tmp6);
-    $returnValue5 = $tmp7;
-    return $returnValue5;
+panda$core$Bit panda$collections$Stack$StackIterator$get_done$R$panda$core$Bit(panda$collections$Stack$StackIterator* param0) {
+
+// line 22
+panda$core$Int64* $tmp7 = &param0->index;
+panda$core$Int64 $tmp8 = *$tmp7;
+panda$collections$Stack** $tmp9 = &param0->stack;
+panda$collections$Stack* $tmp10 = *$tmp9;
+panda$core$Int64 $tmp11 = panda$collections$Stack$get_count$R$panda$core$Int64($tmp10);
+int64_t $tmp12 = $tmp8.value;
+int64_t $tmp13 = $tmp11.value;
+bool $tmp14 = $tmp12 >= $tmp13;
+panda$core$Bit $tmp15 = (panda$core$Bit) {$tmp14};
+return $tmp15;
+
 }
-panda$core$Object* panda$collections$Stack$StackIterator$next$R$panda$collections$Stack$StackIterator$T(panda$collections$Stack$StackIterator* self) {
-    panda$core$Object* result19 = NULL;
-    panda$core$Object* $tmp20;
-    panda$core$Object* $tmp21;
-    panda$collections$Stack$StackIterator* $tmp23;
-    panda$core$Int64 $tmp24;
-    panda$core$Object* $returnValue26;
-    panda$core$Object* $tmp27;
-    panda$core$Bit $tmp10 = (($fn9) self->$class->vtable[2])(self);
-    panda$core$Bit $tmp11 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp10);
-    if ($tmp11.value) goto $l12; else goto $l13;
-    $l13:;
-    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s14, (panda$core$Int64) { 26 }, &$s15);
-    abort();
-    $l12:;
-    int $tmp18;
-    {
-        panda$core$Object* $tmp22 = panda$collections$Stack$$IDX$panda$core$Int64$R$panda$collections$Stack$T(self->stack, self->index);
-        $tmp21 = $tmp22;
-        $tmp20 = $tmp21;
-        result19 = $tmp20;
-        panda$core$Panda$ref$panda$core$Object$Q($tmp20);
-        panda$core$Panda$unref$panda$core$Object$Q($tmp21);
-        $tmp23 = self;
-        panda$core$Int64$init$builtin_int64(&$tmp24, 1);
-        panda$core$Int64 $tmp25 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64($tmp23->index, $tmp24);
-        $tmp23->index = $tmp25;
-        $tmp27 = result19;
-        $returnValue26 = $tmp27;
-        panda$core$Panda$ref$panda$core$Object$Q($tmp27);
-        $tmp18 = 0;
-        goto $l16;
-        $l28:;
-        return $returnValue26;
-    }
-    $l16:;
-    panda$core$Panda$unref$panda$core$Object$Q(result19);
-    result19 = NULL;
-    switch ($tmp18) {
-        case 0: goto $l28;
-    }
-    $l30:;
-    if (false) goto $l31; else goto $l32;
-    $l32:;
-    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s33, (panda$core$Int64) { 26 }, &$s34);
-    abort();
-    $l31:;
-    abort();
+panda$core$Object* panda$collections$Stack$StackIterator$next$R$panda$collections$Stack$StackIterator$T(panda$collections$Stack$StackIterator* param0) {
+
+panda$core$Object* local0 = NULL;
+$fn17 $tmp16 = ($fn17) param0->$class->vtable[2];
+panda$core$Bit $tmp18 = $tmp16(param0);
+panda$core$Bit $tmp19 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp18);
+bool $tmp20 = $tmp19.value;
+if ($tmp20) goto block1; else goto block2;
+block2:;
+panda$core$Int64 $tmp21 = (panda$core$Int64) {26};
+panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s22, $tmp21, &$s23);
+abort(); // unreachable
+block1:;
+// line 27
+panda$collections$Stack** $tmp24 = &param0->stack;
+panda$collections$Stack* $tmp25 = *$tmp24;
+panda$core$Int64* $tmp26 = &param0->index;
+panda$core$Int64 $tmp27 = *$tmp26;
+panda$core$Object* $tmp28 = panda$collections$Stack$$IDX$panda$core$Int64$R$panda$collections$Stack$T($tmp25, $tmp27);
+*(&local0) = ((panda$core$Object*) NULL);
+panda$core$Object* $tmp29 = *(&local0);
+panda$core$Panda$unref$panda$core$Object$Q($tmp29);
+panda$core$Panda$ref$panda$core$Object$Q($tmp28);
+*(&local0) = $tmp28;
+panda$core$Panda$unref$panda$core$Object$Q($tmp28);
+// line 28
+panda$core$Int64* $tmp30 = &param0->index;
+panda$core$Int64 $tmp31 = *$tmp30;
+panda$core$Int64 $tmp32 = (panda$core$Int64) {1};
+int64_t $tmp33 = $tmp31.value;
+int64_t $tmp34 = $tmp32.value;
+int64_t $tmp35 = $tmp33 + $tmp34;
+panda$core$Int64 $tmp36 = (panda$core$Int64) {$tmp35};
+panda$core$Int64* $tmp37 = &param0->index;
+*$tmp37 = $tmp36;
+// line 29
+panda$core$Object* $tmp38 = *(&local0);
+panda$core$Panda$ref$panda$core$Object$Q($tmp38);
+panda$core$Object* $tmp39 = *(&local0);
+panda$core$Panda$unref$panda$core$Object$Q($tmp39);
+// unreffing result
+*(&local0) = ((panda$core$Object*) NULL);
+return $tmp38;
+
 }
-void panda$collections$Stack$StackIterator$cleanup(panda$collections$Stack$StackIterator* self) {
-    int $tmp37;
-    {
-    }
-    $tmp37 = -1;
-    goto $l35;
-    $l35:;
-    panda$core$Object$cleanup(((panda$core$Object*) self));
-    switch ($tmp37) {
-        case -1: goto $l38;
-    }
-    $l38:;
-    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->stack));
+void panda$collections$Stack$StackIterator$cleanup(panda$collections$Stack$StackIterator* param0) {
+
+panda$collections$Stack** $tmp40 = &param0->stack;
+panda$collections$Stack* $tmp41 = *$tmp40;
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp41));
+return;
+
 }
+
 
 
 

@@ -8,7 +8,8 @@ typedef struct panda$core$System$Process panda$core$System$Process;
 typedef struct panda$collections$ListView panda$collections$ListView;
 
 void panda$core$System$init(panda$core$System* self);
-panda$io$File* panda$core$System$tempDir$R$panda$io$File();
+panda$io$File* panda$core$System$workingDirectory$R$panda$io$File();
+panda$io$File* panda$core$System$temporaryDirectory$R$panda$io$File();
 void panda$core$System$exit$panda$core$UInt8(panda$core$UInt8 p_status);
 void panda$core$System$crash();
 panda$core$System$Process* panda$core$System$exec$panda$io$File$panda$collections$ListView$LTpanda$core$String$GT$R$panda$core$System$Process$Q(panda$io$File* p_path, panda$collections$ListView* p_args);

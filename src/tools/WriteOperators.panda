@@ -112,7 +112,7 @@ class WriteOperators {
         out.printLine("fprintf(out, \"\{fmt}\\n\", x >> 1);")
         out.printLine("fprintf(out, \"\\n\");")
         out.printLine("fprintf(out, \"\{name} Bitwise\\n\");")
-        if mask != null {
+        if mask !== null {
             out.printLine("fprintf(out, \"\{fmt}\\n\", ~x & \{mask});")
         }
         else {

@@ -6,6 +6,7 @@
 #include "panda/core/Int64.h"
 #include "panda/core/Bit.h"
 #include "panda/core/Panda.h"
+
 __attribute__((weak)) panda$core$String* org$pandalanguage$json$Position$convert$R$panda$core$String$shim(panda$core$Object* p0) {
     panda$core$String* result = org$pandalanguage$json$Position$convert$R$panda$core$String(((org$pandalanguage$json$Position$wrapper*) p0)->value);
 
@@ -23,70 +24,88 @@ static panda$core$String $s2;
 org$pandalanguage$json$Position$wrapperclass_type org$pandalanguage$json$Position$wrapperclass = { (panda$core$Class*) &panda$core$Class$class, -999, &$s2, (panda$core$Class*) &panda$core$Value$class, NULL, { org$pandalanguage$json$Position$convert$R$panda$core$String$shim, org$pandalanguage$json$Position$cleanup$shim} };
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x6a\x73\x6f\x6e\x2e\x50\x6f\x73\x69\x74\x69\x6f\x6e", 31, -5210778280495041410, NULL };
 static panda$core$String $s2 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x6a\x73\x6f\x6e\x2e\x50\x6f\x73\x69\x74\x69\x6f\x6e", 31, -5210778280495041410, NULL };
-static panda$core$String $s14 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x50\x6f\x73\x69\x74\x69\x6f\x6e\x2e\x70\x61\x6e\x64\x61", 14, -2904814050009372044, NULL };
-static panda$core$String $s22 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x3a", 1, 159, NULL };
-static panda$core$String $s27 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
+static panda$core$String $s16 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x50\x6f\x73\x69\x74\x69\x6f\x6e\x2e\x70\x61\x6e\x64\x61", 14, -2904814050009372044, NULL };
+static panda$core$String $s23 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x3a", 1, 159, NULL };
+static panda$core$String $s28 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
 
-void org$pandalanguage$json$Position$init(org$pandalanguage$json$Position* self) {
-    panda$core$Int64 $tmp3;
-    panda$core$Int64 $tmp4;
-    panda$core$Int64$init$builtin_int64(&$tmp3, 1);
-    self->line = $tmp3;
-    panda$core$Int64$init$builtin_int64(&$tmp4, 1);
-    self->column = $tmp4;
+org$pandalanguage$json$Position org$pandalanguage$json$Position$init() {
+
+org$pandalanguage$json$Position local0;
+// line 10
+panda$core$Int64 $tmp3 = (panda$core$Int64) {1};
+panda$core$Int64* $tmp4 = &(&local0)->line;
+*$tmp4 = $tmp3;
+// line 11
+panda$core$Int64 $tmp5 = (panda$core$Int64) {1};
+panda$core$Int64* $tmp6 = &(&local0)->column;
+*$tmp6 = $tmp5;
+org$pandalanguage$json$Position $tmp7 = *(&local0);
+return $tmp7;
+
 }
-void org$pandalanguage$json$Position$init$panda$core$Int64$panda$core$Int64(org$pandalanguage$json$Position* self, panda$core$Int64 p_line, panda$core$Int64 p_column) {
-    panda$core$Int64 $tmp6;
-    panda$core$Int64 $tmp9;
-    panda$core$Int64$init$builtin_int64(&$tmp6, 0);
-    panda$core$Bit $tmp7 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit(p_line, $tmp6);
-    bool $tmp5 = $tmp7.value;
-    if (!$tmp5) goto $l8;
-    panda$core$Int64$init$builtin_int64(&$tmp9, 0);
-    panda$core$Bit $tmp10 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit(p_column, $tmp9);
-    $tmp5 = $tmp10.value;
-    $l8:;
-    panda$core$Bit $tmp11 = { $tmp5 };
-    if ($tmp11.value) goto $l12; else goto $l13;
-    $l13:;
-    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64(&$s14, (panda$core$Int64) { 15 });
-    abort();
-    $l12:;
-    self->line = p_line;
-    self->column = p_column;
+org$pandalanguage$json$Position org$pandalanguage$json$Position$init$panda$core$Int64$panda$core$Int64(panda$core$Int64 param0, panda$core$Int64 param1) {
+
+org$pandalanguage$json$Position local0;
+panda$core$Bit local1;
+// line 15
+panda$core$Int64 $tmp8 = (panda$core$Int64) {0};
+panda$core$Bit $tmp9 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit(param0, $tmp8);
+bool $tmp10 = $tmp9.value;
+if ($tmp10) goto block1; else goto block2;
+block1:;
+panda$core$Int64 $tmp11 = (panda$core$Int64) {0};
+panda$core$Bit $tmp12 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit(param1, $tmp11);
+*(&local1) = $tmp12;
+goto block3;
+block2:;
+*(&local1) = $tmp9;
+goto block3;
+block3:;
+panda$core$Bit $tmp13 = *(&local1);
+bool $tmp14 = $tmp13.value;
+if ($tmp14) goto block4; else goto block5;
+block5:;
+panda$core$Int64 $tmp15 = (panda$core$Int64) {15};
+panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64(&$s16, $tmp15);
+abort(); // unreachable
+block4:;
+// line 16
+panda$core$Int64* $tmp17 = &(&local0)->line;
+*$tmp17 = param0;
+// line 17
+panda$core$Int64* $tmp18 = &(&local0)->column;
+*$tmp18 = param1;
+org$pandalanguage$json$Position $tmp19 = *(&local0);
+return $tmp19;
+
 }
-panda$core$String* org$pandalanguage$json$Position$convert$R$panda$core$String(org$pandalanguage$json$Position self) {
-    panda$core$String* $returnValue15;
-    panda$core$String* $tmp16;
-    panda$core$String* $tmp17;
-    panda$core$String* $tmp18;
-    panda$core$String* $tmp19;
-    panda$core$String* $tmp20;
-    panda$core$Object* $tmp24;
-    panda$core$String* $tmp21 = panda$core$Int64$convert$R$panda$core$String(self.line);
-    $tmp20 = $tmp21;
-    panda$core$String* $tmp23 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp20, &$s22);
-    $tmp19 = $tmp23;
-    panda$core$Int64$wrapper* $tmp25;
-    $tmp25 = (panda$core$Int64$wrapper*) pandaObjectAlloc(24, (panda$core$Class*) &panda$core$Int64$wrapperclass);
-    $tmp25->value = self.column;
-    $tmp24 = ((panda$core$Object*) $tmp25);
-    panda$core$String* $tmp26 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String($tmp19, $tmp24);
-    $tmp18 = $tmp26;
-    panda$core$String* $tmp28 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp18, &$s27);
-    $tmp17 = $tmp28;
-    $tmp16 = $tmp17;
-    $returnValue15 = $tmp16;
-    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp16));
-    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp17));
-    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp18));
-    panda$core$Panda$unref$panda$core$Object$Q($tmp24);
-    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp19));
-    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp20));
-    return $returnValue15;
+panda$core$String* org$pandalanguage$json$Position$convert$R$panda$core$String(org$pandalanguage$json$Position param0) {
+
+// line 22
+panda$core$Int64 $tmp20 = param0.line;
+panda$core$String* $tmp21 = panda$core$Int64$convert$R$panda$core$String($tmp20);
+panda$core$String* $tmp22 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp21, &$s23);
+panda$core$Int64 $tmp24 = param0.column;
+panda$core$Int64$wrapper* $tmp25;
+$tmp25 = (panda$core$Int64$wrapper*) pandaObjectAlloc(24, (panda$core$Class*) &panda$core$Int64$wrapperclass);
+$tmp25->value = $tmp24;
+panda$core$String* $tmp26 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String($tmp22, ((panda$core$Object*) $tmp25));
+panda$core$String* $tmp27 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp26, &$s28);
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp27));
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp21));
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp22));
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp25));
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp26));
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp27));
+return $tmp27;
+
 }
-void org$pandalanguage$json$Position$cleanup(org$pandalanguage$json$Position self) {
+void org$pandalanguage$json$Position$cleanup(org$pandalanguage$json$Position param0) {
+
+return;
+
 }
+
 
 
 
