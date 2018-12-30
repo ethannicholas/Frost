@@ -5754,7 +5754,7 @@ class Compiler {
                 load := compiler.ir.add(IR.Statement.LOAD(position, IR.Value.REF(ptr, rawType)))
             }
             result := IR.Value.REF(load, rawType)
-            if !compiler.inFieldCleanup & field.annotations.isWeak {
+-*            if !compiler.inFieldCleanup & field.annotations.isWeak {
                 def nonNullBlock := compiler.ir.newBlock("unref non-null")
                 def mergeBlock := compiler.ir.newBlock("unref merge")
                 def nonNullTest := compiler.ir.add(IR.Statement.BINARY(position, result,
@@ -5771,9 +5771,9 @@ class Compiler {
                 compiler.ir.add(IR.Statement.BRANCH(position, mergeBlock))
                 compiler.ir.setCurrentBlock(mergeBlock)
             }
-            else {
+            else {*-
                 compiler.compileUnref(result)
-            }
+--            }
         }
     }
 

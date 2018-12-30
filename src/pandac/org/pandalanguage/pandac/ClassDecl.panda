@@ -131,7 +131,6 @@ class ClassDecl {
         for p in parameters {
             symbolTable.add(p)
         }
-        Panda.ref(fields)
         symbolTable.compiler.currentClass.pop(self)
     }
 
