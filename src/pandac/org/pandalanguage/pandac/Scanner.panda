@@ -570,7 +570,6 @@ class Scanner {
         }
         def result := ClassDecl(source, position, aliases, doccomment, annotations, kind, fullName,
                 supertypes, parameters, compiler.root)
-        Panda.ref(result)
         compiler.currentClass.push(result)
         if kind = ClassDecl.Kind.CHOICE {
             def rawValue := FieldDecl(result, result.position, null,

@@ -1,7 +1,7 @@
 package org.pandalanguage.pandac
 
 @final
-class Position : Value, Equatable<Position> {
+class Position : Value, Key<Position> {
     def line:Int
 
     def column:Int
@@ -23,8 +23,8 @@ class Position : Value, Equatable<Position> {
     }
 
     @override
-    function !=(other:Position):Bit { -- FIXME shouldn't need this definition
-        return line != other.line | column != other.column
+    function get_hash():Int {
+        return line << 16 + column
     }
 
     @override

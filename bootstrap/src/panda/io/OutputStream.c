@@ -375,12 +375,12 @@ while ($tmp152->$class != (panda$core$Class*) &panda$collections$Iterator$class)
 }
 $fn154 $tmp153 = $tmp152->methods[1];
 panda$core$Object* $tmp155 = $tmp153($tmp146);
+panda$core$Panda$unref$panda$core$Object$Q($tmp155);
 *(&local0) = ((panda$core$UInt8$wrapper*) $tmp155)->value;
 // line 168
 panda$core$UInt8 $tmp156 = *(&local0);
 $fn158 $tmp157 = ($fn158) param0->$class->vtable[2];
 $tmp157(param0, $tmp156);
-panda$core$Panda$unref$panda$core$Object$Q($tmp155);
 goto block1;
 block3:;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp146));
@@ -414,11 +414,11 @@ while ($tmp168->$class != (panda$core$Class*) &panda$collections$Iterator$class)
 }
 $fn170 $tmp169 = $tmp168->methods[1];
 panda$core$Object* $tmp171 = $tmp169($tmp162);
+panda$core$Panda$unref$panda$core$Object$Q($tmp171);
 *(&local0) = ((panda$core$Int8$wrapper*) $tmp171)->value;
 // line 182
 panda$core$Int8 $tmp172 = *(&local0);
 panda$io$OutputStream$write$panda$core$Int8(param0, $tmp172);
-panda$core$Panda$unref$panda$core$Object$Q($tmp171);
 goto block1;
 block3:;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp162));
@@ -452,12 +452,12 @@ while ($tmp182->$class != (panda$core$Class*) &panda$collections$Iterator$class)
 }
 $fn184 $tmp183 = $tmp182->methods[1];
 panda$core$Object* $tmp185 = $tmp183($tmp176);
+panda$core$Panda$unref$panda$core$Object$Q($tmp185);
 *(&local0) = ((panda$core$Char8$wrapper*) $tmp185)->value;
 // line 196
 panda$core$Char8 $tmp186 = *(&local0);
 $fn188 $tmp187 = ($fn188) param0->$class->vtable[16];
 $tmp187(param0, $tmp186);
-panda$core$Panda$unref$panda$core$Object$Q($tmp185);
 goto block1;
 block3:;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp176));

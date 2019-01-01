@@ -67,18 +67,21 @@ panda$core$UInt64* $tmp17 = &param0->mask;
 panda$core$UInt64 $tmp18 = *$tmp17;
 panda$core$UInt64 $tmp19 = panda$core$UInt64$$BAND$panda$core$UInt64$R$panda$core$UInt64($tmp16, $tmp18);
 panda$core$UInt64 $tmp20 = (panda$core$UInt64) {0};
-panda$core$Bit $tmp21 = panda$core$UInt64$$NEQ$panda$core$UInt64$R$panda$core$Bit($tmp19, $tmp20);
-*(&local0) = $tmp21;
+uint64_t $tmp21 = $tmp19.value;
+uint64_t $tmp22 = $tmp20.value;
+bool $tmp23 = $tmp21 != $tmp22;
+panda$core$Bit $tmp24 = (panda$core$Bit) {$tmp23};
+*(&local0) = $tmp24;
 // line 24
-panda$core$UInt64* $tmp22 = &param0->mask;
-panda$core$UInt64 $tmp23 = *$tmp22;
-panda$core$UInt64 $tmp24 = (panda$core$UInt64) {1};
-panda$core$UInt64 $tmp25 = panda$core$UInt64$$SHR$panda$core$UInt64$R$panda$core$UInt64($tmp23, $tmp24);
-panda$core$UInt64* $tmp26 = &param0->mask;
-*$tmp26 = $tmp25;
+panda$core$UInt64* $tmp25 = &param0->mask;
+panda$core$UInt64 $tmp26 = *$tmp25;
+panda$core$UInt64 $tmp27 = (panda$core$UInt64) {1};
+panda$core$UInt64 $tmp28 = panda$core$UInt64$$SHR$panda$core$UInt64$R$panda$core$UInt64($tmp26, $tmp27);
+panda$core$UInt64* $tmp29 = &param0->mask;
+*$tmp29 = $tmp28;
 // line 25
-panda$core$Bit $tmp27 = *(&local0);
-return $tmp27;
+panda$core$Bit $tmp30 = *(&local0);
+return $tmp30;
 
 }
 void org$pandalanguage$panda$IntBitIterator$cleanup(org$pandalanguage$panda$IntBitIterator* param0) {

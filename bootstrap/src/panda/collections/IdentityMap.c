@@ -4,11 +4,11 @@
 #include "panda/core/String.h"
 #include "panda/collections/MapWriter.h"
 #include "panda/collections/MapView.h"
+#include "panda/core/Bit.h"
 #include "panda/collections/Iterator.h"
 #include "panda/collections/Map.h"
 #include "panda/core/Int64.h"
 #include "panda/collections/IdentityMap/Entry.h"
-#include "panda/core/Bit.h"
 #include "panda/core/Range.LTpanda/core/Int64.GT.h"
 #include "panda/core/UInt64.h"
 #include "panda/core/Panda.h"
@@ -27,6 +27,11 @@ __attribute__((weak)) panda$core$Object* panda$collections$IdentityMap$$IDX$pand
 
     return result;
 }
+__attribute__((weak)) panda$core$Bit panda$collections$IdentityMap$contains$panda$collections$IdentityMap$K$R$panda$core$Bit$shim(panda$collections$IdentityMap* p0, panda$core$Object* p1) {
+    panda$core$Bit result = panda$collections$IdentityMap$contains$panda$collections$IdentityMap$K$R$panda$core$Bit(p0, p1);
+
+    return result;
+}
 __attribute__((weak)) panda$collections$Iterator* panda$collections$IdentityMap$keys$R$panda$collections$Iterator$LTpanda$collections$IdentityMap$K$GT$shim(panda$collections$IdentityMap* p0) {
     panda$collections$Iterator* result = panda$collections$IdentityMap$keys$R$panda$collections$Iterator$LTpanda$collections$IdentityMap$K$GT(p0);
 
@@ -40,12 +45,12 @@ __attribute__((weak)) panda$collections$Iterator* panda$collections$IdentityMap$
 
 struct { panda$core$Class* cl; ITable* next; void* methods[2]; } panda$collections$IdentityMap$_panda$collections$MapWriter = { (panda$core$Class*) &panda$collections$MapWriter$class, NULL, { panda$collections$IdentityMap$$IDXEQ$panda$collections$IdentityMap$K$panda$collections$IdentityMap$V$shim, panda$collections$IdentityMap$remove$panda$collections$IdentityMap$K$shim} };
 
-struct { panda$core$Class* cl; ITable* next; void* methods[4]; } panda$collections$IdentityMap$_panda$collections$MapView = { (panda$core$Class*) &panda$collections$MapView$class, (ITable*) &panda$collections$IdentityMap$_panda$collections$MapWriter, { panda$collections$IdentityMap$get_count$R$panda$core$Int64, panda$collections$IdentityMap$$IDX$panda$collections$IdentityMap$K$R$panda$collections$IdentityMap$V$Q$shim, panda$collections$IdentityMap$keys$R$panda$collections$Iterator$LTpanda$collections$IdentityMap$K$GT$shim, panda$collections$IdentityMap$values$R$panda$collections$Iterator$LTpanda$collections$IdentityMap$V$GT$shim} };
+struct { panda$core$Class* cl; ITable* next; void* methods[5]; } panda$collections$IdentityMap$_panda$collections$MapView = { (panda$core$Class*) &panda$collections$MapView$class, (ITable*) &panda$collections$IdentityMap$_panda$collections$MapWriter, { panda$collections$IdentityMap$get_count$R$panda$core$Int64, panda$collections$IdentityMap$$IDX$panda$collections$IdentityMap$K$R$panda$collections$IdentityMap$V$Q$shim, panda$collections$IdentityMap$contains$panda$collections$IdentityMap$K$R$panda$core$Bit$shim, panda$collections$IdentityMap$keys$R$panda$collections$Iterator$LTpanda$collections$IdentityMap$K$GT$shim, panda$collections$IdentityMap$values$R$panda$collections$Iterator$LTpanda$collections$IdentityMap$V$GT$shim} };
 
 struct { panda$core$Class* cl; ITable* next; void* methods[0]; } panda$collections$IdentityMap$_panda$collections$Map = { (panda$core$Class*) &panda$collections$Map$class, (ITable*) &panda$collections$IdentityMap$_panda$collections$MapView, { } };
 
 static panda$core$String $s1;
-panda$collections$IdentityMap$class_type panda$collections$IdentityMap$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, (ITable*) &panda$collections$IdentityMap$_panda$collections$Map, { panda$collections$IdentityMap$convert$R$panda$core$String, panda$collections$IdentityMap$cleanup, panda$collections$IdentityMap$indexFor$panda$collections$IdentityMap$K$R$panda$core$Int64, panda$collections$IdentityMap$$IDX$panda$collections$IdentityMap$K$R$panda$collections$IdentityMap$V$Q$shim, panda$collections$IdentityMap$contains$panda$collections$IdentityMap$K$R$panda$core$Bit, panda$collections$IdentityMap$$IDXEQ$panda$collections$IdentityMap$K$panda$collections$IdentityMap$V$shim, panda$collections$IdentityMap$remove$panda$collections$IdentityMap$K$shim, panda$collections$IdentityMap$clear, panda$collections$IdentityMap$incrementCount, panda$collections$IdentityMap$get_count$R$panda$core$Int64, panda$collections$IdentityMap$keys$R$panda$collections$Iterator$LTpanda$collections$IdentityMap$K$GT$shim, panda$collections$IdentityMap$values$R$panda$collections$Iterator$LTpanda$collections$IdentityMap$V$GT$shim} };
+panda$collections$IdentityMap$class_type panda$collections$IdentityMap$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, (ITable*) &panda$collections$IdentityMap$_panda$collections$Map, { panda$collections$IdentityMap$convert$R$panda$core$String, panda$collections$IdentityMap$cleanup, panda$collections$IdentityMap$indexFor$panda$collections$IdentityMap$K$R$panda$core$Int64, panda$collections$IdentityMap$$IDX$panda$collections$IdentityMap$K$R$panda$collections$IdentityMap$V$Q$shim, panda$collections$IdentityMap$contains$panda$collections$IdentityMap$K$R$panda$core$Bit$shim, panda$collections$IdentityMap$$IDXEQ$panda$collections$IdentityMap$K$panda$collections$IdentityMap$V$shim, panda$collections$IdentityMap$remove$panda$collections$IdentityMap$K$shim, panda$collections$IdentityMap$clear, panda$collections$IdentityMap$incrementCount, panda$collections$IdentityMap$get_count$R$panda$core$Int64, panda$collections$IdentityMap$keys$R$panda$collections$Iterator$LTpanda$collections$IdentityMap$K$GT$shim, panda$collections$IdentityMap$values$R$panda$collections$Iterator$LTpanda$collections$IdentityMap$V$GT$shim} };
 
 
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x49\x64\x65\x6e\x74\x69\x74\x79\x4d\x61\x70", 29, -1297284844070118424, NULL };
@@ -383,10 +388,10 @@ panda$core$Bit panda$collections$IdentityMap$contains$panda$collections$Identity
 panda$core$Int64 local0;
 panda$collections$IdentityMap$Entry* local1 = NULL;
 panda$core$Bit local2;
-// line 101
+// line 102
 panda$core$Int64 $tmp173 = panda$collections$IdentityMap$indexFor$panda$collections$IdentityMap$K$R$panda$core$Int64(param0, param1);
 *(&local0) = $tmp173;
-// line 102
+// line 103
 panda$collections$IdentityMap$Entry*** $tmp174 = &param0->contents;
 panda$collections$IdentityMap$Entry** $tmp175 = *$tmp174;
 panda$core$Int64 $tmp176 = *(&local0);
@@ -397,7 +402,7 @@ panda$collections$IdentityMap$Entry* $tmp179 = *(&local1);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp179));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp178));
 *(&local1) = $tmp178;
-// line 103
+// line 104
 goto block1;
 block1:;
 panda$collections$IdentityMap$Entry* $tmp180 = *(&local1);
@@ -420,7 +425,7 @@ panda$core$Bit $tmp188 = *(&local2);
 bool $tmp189 = $tmp188.value;
 if ($tmp189) goto block2; else goto block3;
 block2:;
-// line 104
+// line 105
 panda$collections$IdentityMap$Entry* $tmp190 = *(&local1);
 panda$collections$IdentityMap$Entry** $tmp191 = &$tmp190->next;
 panda$collections$IdentityMap$Entry* $tmp192 = *$tmp191;
@@ -430,7 +435,7 @@ panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp192));
 *(&local1) = $tmp192;
 goto block1;
 block3:;
-// line 106
+// line 107
 panda$collections$IdentityMap$Entry* $tmp194 = *(&local1);
 panda$core$Bit $tmp195 = panda$core$Bit$init$builtin_bit($tmp194 != NULL);
 panda$collections$IdentityMap$Entry* $tmp196 = *(&local1);
@@ -446,7 +451,7 @@ panda$core$Int64 local0;
 panda$collections$IdentityMap$Entry* local1 = NULL;
 panda$core$Bit local2;
 panda$collections$IdentityMap$Entry* local3 = NULL;
-// line 111
+// line 112
 panda$core$Int64* $tmp197 = &param0->changeCount;
 panda$core$Int64 $tmp198 = *$tmp197;
 panda$core$Int64 $tmp199 = (panda$core$Int64) {1};
@@ -456,10 +461,10 @@ int64_t $tmp202 = $tmp200 + $tmp201;
 panda$core$Int64 $tmp203 = (panda$core$Int64) {$tmp202};
 panda$core$Int64* $tmp204 = &param0->changeCount;
 *$tmp204 = $tmp203;
-// line 112
+// line 113
 panda$core$Int64 $tmp205 = panda$collections$IdentityMap$indexFor$panda$collections$IdentityMap$K$R$panda$core$Int64(param0, param1);
 *(&local0) = $tmp205;
-// line 113
+// line 114
 panda$collections$IdentityMap$Entry*** $tmp206 = &param0->contents;
 panda$collections$IdentityMap$Entry** $tmp207 = *$tmp206;
 panda$core$Int64 $tmp208 = *(&local0);
@@ -470,7 +475,7 @@ panda$collections$IdentityMap$Entry* $tmp211 = *(&local1);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp211));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp210));
 *(&local1) = $tmp210;
-// line 114
+// line 115
 goto block1;
 block1:;
 panda$collections$IdentityMap$Entry* $tmp212 = *(&local1);
@@ -493,7 +498,7 @@ panda$core$Bit $tmp220 = *(&local2);
 bool $tmp221 = $tmp220.value;
 if ($tmp221) goto block2; else goto block3;
 block2:;
-// line 115
+// line 116
 panda$collections$IdentityMap$Entry* $tmp222 = *(&local1);
 panda$collections$IdentityMap$Entry** $tmp223 = &$tmp222->next;
 panda$collections$IdentityMap$Entry* $tmp224 = *$tmp223;
@@ -503,13 +508,13 @@ panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp224));
 *(&local1) = $tmp224;
 goto block1;
 block3:;
-// line 117
+// line 118
 panda$collections$IdentityMap$Entry* $tmp226 = *(&local1);
 panda$core$Bit $tmp227 = panda$core$Bit$init$builtin_bit($tmp226 == NULL);
 bool $tmp228 = $tmp227.value;
 if ($tmp228) goto block7; else goto block9;
 block7:;
-// line 118
+// line 119
 panda$collections$IdentityMap$Entry*** $tmp229 = &param0->contents;
 panda$collections$IdentityMap$Entry** $tmp230 = *$tmp229;
 panda$core$Int64 $tmp231 = *(&local0);
@@ -520,7 +525,7 @@ panda$collections$IdentityMap$Entry* $tmp234 = *(&local3);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp234));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp233));
 *(&local3) = $tmp233;
-// line 119
+// line 120
 panda$collections$IdentityMap$Entry* $tmp235 = (panda$collections$IdentityMap$Entry*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$IdentityMap$Entry$class);
 panda$collections$IdentityMap$Entry$init$panda$collections$IdentityMap$Entry$K$panda$collections$IdentityMap$Entry$V($tmp235, param1, param2);
 panda$collections$IdentityMap$Entry* $tmp236 = *(&local1);
@@ -528,7 +533,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp236));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp235));
 *(&local1) = $tmp235;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp235));
-// line 120
+// line 121
 panda$collections$IdentityMap$Entry* $tmp237 = *(&local1);
 panda$collections$IdentityMap$Entry* $tmp238 = *(&local3);
 panda$collections$IdentityMap$Entry** $tmp239 = &$tmp237->next;
@@ -537,7 +542,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp240));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp238));
 panda$collections$IdentityMap$Entry** $tmp241 = &$tmp237->next;
 *$tmp241 = $tmp238;
-// line 121
+// line 122
 panda$collections$IdentityMap$Entry*** $tmp242 = &param0->contents;
 panda$collections$IdentityMap$Entry** $tmp243 = *$tmp242;
 panda$collections$IdentityMap$Entry* $tmp244 = *(&local1);
@@ -547,7 +552,7 @@ panda$collections$IdentityMap$Entry* $tmp247 = $tmp243[$tmp246];
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp247));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp244));
 $tmp243[$tmp246] = $tmp244;
-// line 122
+// line 123
 panda$collections$IdentityMap$incrementCount(param0);
 panda$collections$IdentityMap$Entry* $tmp248 = *(&local3);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp248));
@@ -556,7 +561,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp248));
 goto block8;
 block9:;
 // line 1
-// line 125
+// line 126
 panda$collections$IdentityMap$Entry* $tmp249 = *(&local1);
 panda$core$Object** $tmp250 = &$tmp249->value;
 panda$core$Object* $tmp251 = *$tmp250;
@@ -579,7 +584,7 @@ panda$core$Int64 local0;
 panda$collections$IdentityMap$Entry* local1 = NULL;
 panda$collections$IdentityMap$Entry* local2 = NULL;
 panda$collections$IdentityMap$Entry* local3 = NULL;
-// line 131
+// line 132
 panda$core$Int64* $tmp254 = &param0->changeCount;
 panda$core$Int64 $tmp255 = *$tmp254;
 panda$core$Int64 $tmp256 = (panda$core$Int64) {1};
@@ -589,10 +594,10 @@ int64_t $tmp259 = $tmp257 + $tmp258;
 panda$core$Int64 $tmp260 = (panda$core$Int64) {$tmp259};
 panda$core$Int64* $tmp261 = &param0->changeCount;
 *$tmp261 = $tmp260;
-// line 132
+// line 133
 panda$core$Int64 $tmp262 = panda$collections$IdentityMap$indexFor$panda$collections$IdentityMap$K$R$panda$core$Int64(param0, param1);
 *(&local0) = $tmp262;
-// line 133
+// line 134
 panda$collections$IdentityMap$Entry*** $tmp263 = &param0->contents;
 panda$collections$IdentityMap$Entry** $tmp264 = *$tmp263;
 panda$core$Int64 $tmp265 = *(&local0);
@@ -603,20 +608,20 @@ panda$collections$IdentityMap$Entry* $tmp268 = *(&local1);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp268));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp267));
 *(&local1) = $tmp267;
-// line 135
+// line 136
 panda$collections$IdentityMap$Entry* $tmp269 = *(&local1);
 panda$core$Bit $tmp270 = panda$core$Bit$init$builtin_bit($tmp269 == NULL);
 bool $tmp271 = $tmp270.value;
 if ($tmp271) goto block1; else goto block2;
 block1:;
-// line 136
+// line 137
 panda$collections$IdentityMap$Entry* $tmp272 = *(&local1);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp272));
 // unreffing e
 *(&local1) = ((panda$collections$IdentityMap$Entry*) NULL);
 return;
 block2:;
-// line 139
+// line 140
 panda$collections$IdentityMap$Entry* $tmp273 = *(&local1);
 panda$core$Object** $tmp274 = &$tmp273->key;
 panda$core$Object* $tmp275 = *$tmp274;
@@ -625,7 +630,7 @@ panda$core$Bit $tmp277 = panda$core$Bit$init$builtin_bit($tmp276);
 bool $tmp278 = $tmp277.value;
 if ($tmp278) goto block3; else goto block4;
 block3:;
-// line 140
+// line 141
 panda$collections$IdentityMap$Entry*** $tmp279 = &param0->contents;
 panda$collections$IdentityMap$Entry** $tmp280 = *$tmp279;
 panda$collections$IdentityMap$Entry* $tmp281 = *(&local1);
@@ -637,7 +642,7 @@ panda$collections$IdentityMap$Entry* $tmp286 = $tmp280[$tmp285];
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp286));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp283));
 $tmp280[$tmp285] = $tmp283;
-// line 141
+// line 142
 panda$core$Int64* $tmp287 = &param0->_count;
 panda$core$Int64 $tmp288 = *$tmp287;
 panda$core$Int64 $tmp289 = (panda$core$Int64) {1};
@@ -647,17 +652,17 @@ int64_t $tmp292 = $tmp290 - $tmp291;
 panda$core$Int64 $tmp293 = (panda$core$Int64) {$tmp292};
 panda$core$Int64* $tmp294 = &param0->_count;
 *$tmp294 = $tmp293;
-// line 142
+// line 143
 panda$collections$IdentityMap$Entry* $tmp295 = *(&local1);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp295));
 // unreffing e
 *(&local1) = ((panda$collections$IdentityMap$Entry*) NULL);
 return;
 block4:;
-// line 144
+// line 145
 goto block5;
 block5:;
-// line 145
+// line 146
 panda$collections$IdentityMap$Entry* $tmp296 = *(&local1);
 panda$collections$IdentityMap$Entry** $tmp297 = &$tmp296->next;
 panda$collections$IdentityMap$Entry* $tmp298 = *$tmp297;
@@ -666,13 +671,13 @@ panda$collections$IdentityMap$Entry* $tmp299 = *(&local2);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp299));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp298));
 *(&local2) = $tmp298;
-// line 146
+// line 147
 panda$collections$IdentityMap$Entry* $tmp300 = *(&local2);
 panda$core$Bit $tmp301 = panda$core$Bit$init$builtin_bit($tmp300 == NULL);
 bool $tmp302 = $tmp301.value;
 if ($tmp302) goto block7; else goto block8;
 block7:;
-// line 148
+// line 149
 panda$collections$IdentityMap$Entry* $tmp303 = *(&local2);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp303));
 // unreffing next
@@ -683,7 +688,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp304));
 *(&local1) = ((panda$collections$IdentityMap$Entry*) NULL);
 return;
 block8:;
-// line 150
+// line 151
 panda$collections$IdentityMap$Entry* $tmp305 = *(&local2);
 panda$core$Object** $tmp306 = &$tmp305->key;
 panda$core$Object* $tmp307 = *$tmp306;
@@ -692,14 +697,14 @@ panda$core$Bit $tmp309 = panda$core$Bit$init$builtin_bit($tmp308);
 bool $tmp310 = $tmp309.value;
 if ($tmp310) goto block9; else goto block10;
 block9:;
-// line 152
+// line 153
 panda$collections$IdentityMap$Entry* $tmp311 = *(&local2);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp311));
 // unreffing next
 *(&local2) = ((panda$collections$IdentityMap$Entry*) NULL);
 goto block6;
 block10:;
-// line 154
+// line 155
 panda$collections$IdentityMap$Entry* $tmp312 = *(&local2);
 panda$collections$IdentityMap$Entry* $tmp313 = *(&local1);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp313));
@@ -711,7 +716,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp314));
 *(&local2) = ((panda$collections$IdentityMap$Entry*) NULL);
 goto block5;
 block6:;
-// line 157
+// line 158
 panda$collections$IdentityMap$Entry* $tmp315 = *(&local1);
 panda$collections$IdentityMap$Entry** $tmp316 = &$tmp315->next;
 panda$collections$IdentityMap$Entry* $tmp317 = *$tmp316;
@@ -720,17 +725,17 @@ panda$collections$IdentityMap$Entry* $tmp318 = *(&local3);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp318));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp317));
 *(&local3) = $tmp317;
-// line 158
+// line 159
 panda$collections$IdentityMap$Entry* $tmp319 = *(&local3);
 panda$core$Bit $tmp320 = panda$core$Bit$init$builtin_bit($tmp319 != NULL);
 bool $tmp321 = $tmp320.value;
 if ($tmp321) goto block11; else goto block12;
 block12:;
-panda$core$Int64 $tmp322 = (panda$core$Int64) {158};
+panda$core$Int64 $tmp322 = (panda$core$Int64) {159};
 panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64(&$s323, $tmp322);
 abort(); // unreachable
 block11:;
-// line 159
+// line 160
 panda$collections$IdentityMap$Entry* $tmp324 = *(&local1);
 panda$collections$IdentityMap$Entry* $tmp325 = *(&local3);
 panda$collections$IdentityMap$Entry** $tmp326 = &$tmp325->next;
@@ -741,7 +746,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp329));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp327));
 panda$collections$IdentityMap$Entry** $tmp330 = &$tmp324->next;
 *$tmp330 = $tmp327;
-// line 160
+// line 161
 panda$core$Int64* $tmp331 = &param0->_count;
 panda$core$Int64 $tmp332 = *$tmp331;
 panda$core$Int64 $tmp333 = (panda$core$Int64) {1};
@@ -766,7 +771,7 @@ void panda$collections$IdentityMap$clear(panda$collections$IdentityMap* param0) 
 
 panda$core$Int64 local0;
 panda$core$Int64 local1;
-// line 164
+// line 165
 panda$core$Int64* $tmp341 = &param0->changeCount;
 panda$core$Int64 $tmp342 = *$tmp341;
 panda$core$Int64 $tmp343 = (panda$core$Int64) {1};
@@ -776,11 +781,11 @@ int64_t $tmp346 = $tmp344 + $tmp345;
 panda$core$Int64 $tmp347 = (panda$core$Int64) {$tmp346};
 panda$core$Int64* $tmp348 = &param0->changeCount;
 *$tmp348 = $tmp347;
-// line 165
+// line 166
 panda$core$Int64 $tmp349 = (panda$core$Int64) {0};
 panda$core$Int64* $tmp350 = &param0->_count;
 *$tmp350 = $tmp349;
-// line 166
+// line 167
 panda$core$Int64 $tmp351 = (panda$core$Int64) {0};
 panda$core$Int64* $tmp352 = &param0->bucketCount;
 panda$core$Int64 $tmp353 = *$tmp352;
@@ -809,7 +814,7 @@ panda$core$Bit $tmp370 = (panda$core$Bit) {$tmp369};
 bool $tmp371 = $tmp370.value;
 if ($tmp371) goto block1; else goto block2;
 block1:;
-// line 167
+// line 168
 panda$collections$IdentityMap$Entry*** $tmp372 = &param0->contents;
 panda$collections$IdentityMap$Entry** $tmp373 = *$tmp372;
 panda$core$Int64 $tmp374 = *(&local0);
@@ -819,7 +824,7 @@ panda$core$Bit $tmp377 = panda$core$Bit$init$builtin_bit($tmp376 != NULL);
 bool $tmp378 = $tmp377.value;
 if ($tmp378) goto block6; else goto block7;
 block6:;
-// line 168
+// line 169
 panda$collections$IdentityMap$Entry*** $tmp379 = &param0->contents;
 panda$collections$IdentityMap$Entry** $tmp380 = *$tmp379;
 panda$core$Int64 $tmp381 = *(&local0);
@@ -859,22 +864,22 @@ panda$core$Int64 $tmp403 = (panda$core$Int64) {$tmp402};
 *(&local0) = $tmp403;
 goto block1;
 block2:;
-// line 171
+// line 172
 panda$collections$IdentityMap$Entry*** $tmp404 = &param0->contents;
 panda$collections$IdentityMap$Entry** $tmp405 = *$tmp404;
 pandaFree($tmp405);
-// line 172
+// line 173
 panda$core$Int64 $tmp406 = (panda$core$Int64) {16};
 panda$core$Int64* $tmp407 = &param0->bucketCount;
 *$tmp407 = $tmp406;
-// line 173
+// line 174
 panda$core$Int64* $tmp408 = &param0->bucketCount;
 panda$core$Int64 $tmp409 = *$tmp408;
 int64_t $tmp410 = $tmp409.value;
 panda$collections$IdentityMap$Entry** $tmp411 = ((panda$collections$IdentityMap$Entry**) pandaZAlloc($tmp410 * 8));
 panda$collections$IdentityMap$Entry*** $tmp412 = &param0->contents;
 *$tmp412 = $tmp411;
-// line 174
+// line 175
 panda$core$Int64 $tmp413 = (panda$core$Int64) {0};
 panda$core$Int64* $tmp414 = &param0->bucketCount;
 panda$core$Int64 $tmp415 = *$tmp414;
@@ -903,7 +908,7 @@ panda$core$Bit $tmp432 = (panda$core$Bit) {$tmp431};
 bool $tmp433 = $tmp432.value;
 if ($tmp433) goto block11; else goto block12;
 block11:;
-// line 175
+// line 176
 panda$collections$IdentityMap$Entry*** $tmp434 = &param0->contents;
 panda$collections$IdentityMap$Entry** $tmp435 = *$tmp434;
 panda$core$Int64 $tmp436 = *(&local1);
@@ -913,7 +918,7 @@ panda$core$Bit $tmp439 = panda$core$Bit$init$builtin_bit($tmp438 != NULL);
 bool $tmp440 = $tmp439.value;
 if ($tmp440) goto block16; else goto block17;
 block16:;
-// line 176
+// line 177
 panda$collections$IdentityMap$Entry*** $tmp441 = &param0->contents;
 panda$collections$IdentityMap$Entry** $tmp442 = *$tmp441;
 panda$core$Int64 $tmp443 = *(&local1);
@@ -955,7 +960,7 @@ panda$core$Int64 $tmp465 = (panda$core$Int64) {$tmp464};
 *(&local1) = $tmp465;
 goto block11;
 block12:;
-// line 179
+// line 180
 panda$core$Int64* $tmp466 = &param0->bucketCount;
 panda$core$Int64 $tmp467 = *$tmp466;
 panda$core$Int64 $tmp468 = (panda$core$Int64) {3};
@@ -981,7 +986,7 @@ panda$core$Int64 local2;
 panda$core$Int64 local3;
 panda$collections$IdentityMap$Entry* local4 = NULL;
 panda$core$Int64 local5;
-// line 184
+// line 185
 panda$core$Int64* $tmp479 = &param0->_count;
 panda$core$Int64 $tmp480 = *$tmp479;
 panda$core$Int64 $tmp481 = (panda$core$Int64) {1};
@@ -991,7 +996,7 @@ int64_t $tmp484 = $tmp482 + $tmp483;
 panda$core$Int64 $tmp485 = (panda$core$Int64) {$tmp484};
 panda$core$Int64* $tmp486 = &param0->_count;
 *$tmp486 = $tmp485;
-// line 185
+// line 186
 panda$core$Int64* $tmp487 = &param0->_count;
 panda$core$Int64 $tmp488 = *$tmp487;
 panda$core$Int64* $tmp489 = &param0->threshold;
@@ -1003,15 +1008,15 @@ panda$core$Bit $tmp494 = (panda$core$Bit) {$tmp493};
 bool $tmp495 = $tmp494.value;
 if ($tmp495) goto block1; else goto block2;
 block1:;
-// line 186
+// line 187
 panda$collections$IdentityMap$Entry*** $tmp496 = &param0->contents;
 panda$collections$IdentityMap$Entry** $tmp497 = *$tmp496;
 *(&local0) = $tmp497;
-// line 187
+// line 188
 panda$core$Int64* $tmp498 = &param0->bucketCount;
 panda$core$Int64 $tmp499 = *$tmp498;
 *(&local1) = $tmp499;
-// line 188
+// line 189
 panda$core$Int64* $tmp500 = &param0->bucketCount;
 panda$core$Int64 $tmp501 = *$tmp500;
 panda$core$Int64 $tmp502 = (panda$core$Int64) {2};
@@ -1021,14 +1026,14 @@ int64_t $tmp505 = $tmp503 * $tmp504;
 panda$core$Int64 $tmp506 = (panda$core$Int64) {$tmp505};
 panda$core$Int64* $tmp507 = &param0->bucketCount;
 *$tmp507 = $tmp506;
-// line 189
+// line 190
 panda$core$Int64* $tmp508 = &param0->bucketCount;
 panda$core$Int64 $tmp509 = *$tmp508;
 int64_t $tmp510 = $tmp509.value;
 panda$collections$IdentityMap$Entry** $tmp511 = ((panda$collections$IdentityMap$Entry**) pandaZAlloc($tmp510 * 8));
 panda$collections$IdentityMap$Entry*** $tmp512 = &param0->contents;
 *$tmp512 = $tmp511;
-// line 190
+// line 191
 panda$core$Int64 $tmp513 = (panda$core$Int64) {0};
 panda$core$Int64* $tmp514 = &param0->bucketCount;
 panda$core$Int64 $tmp515 = *$tmp514;
@@ -1057,7 +1062,7 @@ panda$core$Bit $tmp532 = (panda$core$Bit) {$tmp531};
 bool $tmp533 = $tmp532.value;
 if ($tmp533) goto block3; else goto block4;
 block3:;
-// line 191
+// line 192
 panda$collections$IdentityMap$Entry*** $tmp534 = &param0->contents;
 panda$collections$IdentityMap$Entry** $tmp535 = *$tmp534;
 panda$core$Int64 $tmp536 = *(&local2);
@@ -1097,7 +1102,7 @@ panda$core$Int64 $tmp558 = (panda$core$Int64) {$tmp557};
 *(&local2) = $tmp558;
 goto block3;
 block4:;
-// line 193
+// line 194
 panda$core$Int64* $tmp559 = &param0->threshold;
 panda$core$Int64 $tmp560 = *$tmp559;
 panda$core$Int64 $tmp561 = (panda$core$Int64) {2};
@@ -1107,11 +1112,11 @@ int64_t $tmp564 = $tmp562 * $tmp563;
 panda$core$Int64 $tmp565 = (panda$core$Int64) {$tmp564};
 panda$core$Int64* $tmp566 = &param0->threshold;
 *$tmp566 = $tmp565;
-// line 194
+// line 195
 panda$core$Int64 $tmp567 = (panda$core$Int64) {0};
 panda$core$Int64* $tmp568 = &param0->_count;
 *$tmp568 = $tmp567;
-// line 195
+// line 196
 panda$core$Int64 $tmp569 = (panda$core$Int64) {0};
 panda$core$Int64 $tmp570 = *(&local1);
 panda$core$Bit $tmp571 = panda$core$Bit$init$builtin_bit(false);
@@ -1139,7 +1144,7 @@ panda$core$Bit $tmp587 = (panda$core$Bit) {$tmp586};
 bool $tmp588 = $tmp587.value;
 if ($tmp588) goto block11; else goto block12;
 block11:;
-// line 196
+// line 197
 panda$collections$IdentityMap$Entry** $tmp589 = *(&local0);
 panda$core$Int64 $tmp590 = *(&local3);
 int64_t $tmp591 = $tmp590.value;
@@ -1149,7 +1154,7 @@ panda$collections$IdentityMap$Entry* $tmp593 = *(&local4);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp593));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp592));
 *(&local4) = $tmp592;
-// line 197
+// line 198
 goto block16;
 block16:;
 panda$collections$IdentityMap$Entry* $tmp594 = *(&local4);
@@ -1157,7 +1162,7 @@ panda$core$Bit $tmp595 = panda$core$Bit$init$builtin_bit($tmp594 != NULL);
 bool $tmp596 = $tmp595.value;
 if ($tmp596) goto block17; else goto block18;
 block17:;
-// line 198
+// line 199
 panda$collections$IdentityMap$Entry* $tmp597 = *(&local4);
 panda$core$Object** $tmp598 = &$tmp597->value;
 panda$core$Object* $tmp599 = *$tmp598;
@@ -1165,7 +1170,7 @@ panda$collections$IdentityMap$Entry* $tmp600 = *(&local4);
 panda$core$Object** $tmp601 = &$tmp600->key;
 panda$core$Object* $tmp602 = *$tmp601;
 panda$collections$IdentityMap$$IDXEQ$panda$collections$IdentityMap$K$panda$collections$IdentityMap$V(param0, $tmp602, $tmp599);
-// line 199
+// line 200
 panda$collections$IdentityMap$Entry* $tmp603 = *(&local4);
 panda$collections$IdentityMap$Entry** $tmp604 = &$tmp603->next;
 panda$collections$IdentityMap$Entry* $tmp605 = *$tmp604;
@@ -1210,7 +1215,7 @@ panda$core$Int64 $tmp627 = (panda$core$Int64) {$tmp626};
 *(&local3) = $tmp627;
 goto block11;
 block12:;
-// line 202
+// line 203
 panda$core$Int64 $tmp628 = (panda$core$Int64) {0};
 panda$core$Int64 $tmp629 = *(&local1);
 panda$core$Bit $tmp630 = panda$core$Bit$init$builtin_bit(false);
@@ -1238,7 +1243,7 @@ panda$core$Bit $tmp646 = (panda$core$Bit) {$tmp645};
 bool $tmp647 = $tmp646.value;
 if ($tmp647) goto block22; else goto block23;
 block22:;
-// line 203
+// line 204
 panda$collections$IdentityMap$Entry** $tmp648 = *(&local0);
 panda$core$Int64 $tmp649 = *(&local5);
 int64_t $tmp650 = $tmp649.value;
@@ -1247,7 +1252,7 @@ panda$core$Bit $tmp652 = panda$core$Bit$init$builtin_bit($tmp651 != NULL);
 bool $tmp653 = $tmp652.value;
 if ($tmp653) goto block27; else goto block28;
 block27:;
-// line 204
+// line 205
 panda$collections$IdentityMap$Entry** $tmp654 = *(&local0);
 panda$core$Int64 $tmp655 = *(&local5);
 int64_t $tmp656 = $tmp655.value;
@@ -1286,7 +1291,7 @@ panda$core$Int64 $tmp677 = (panda$core$Int64) {$tmp676};
 *(&local5) = $tmp677;
 goto block22;
 block23:;
-// line 207
+// line 208
 panda$collections$IdentityMap$Entry** $tmp678 = *(&local0);
 pandaFree($tmp678);
 goto block2;
@@ -1296,7 +1301,7 @@ return;
 }
 panda$core$Int64 panda$collections$IdentityMap$get_count$R$panda$core$Int64(panda$collections$IdentityMap* param0) {
 
-// line 213
+// line 214
 panda$core$Int64* $tmp679 = &param0->_count;
 panda$core$Int64 $tmp680 = *$tmp679;
 return $tmp680;
@@ -1304,12 +1309,12 @@ return $tmp680;
 }
 panda$collections$Iterator* panda$collections$IdentityMap$keys$R$panda$collections$Iterator$LTpanda$collections$IdentityMap$K$GT(panda$collections$IdentityMap* param0) {
 
-// line 218
+// line 219
 panda$core$Bit $tmp681 = panda$core$Bit$init$builtin_bit(false);
 bool $tmp682 = $tmp681.value;
 if ($tmp682) goto block1; else goto block2;
 block2:;
-panda$core$Int64 $tmp683 = (panda$core$Int64) {218};
+panda$core$Int64 $tmp683 = (panda$core$Int64) {219};
 panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s684, $tmp683, &$s685);
 abort(); // unreachable
 block1:;
@@ -1317,7 +1322,7 @@ panda$core$Bit $tmp686 = panda$core$Bit$init$builtin_bit(false);
 bool $tmp687 = $tmp686.value;
 if ($tmp687) goto block3; else goto block4;
 block4:;
-panda$core$Int64 $tmp688 = (panda$core$Int64) {217};
+panda$core$Int64 $tmp688 = (panda$core$Int64) {218};
 panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s689, $tmp688, &$s690);
 abort(); // unreachable
 block3:;
@@ -1326,12 +1331,12 @@ abort(); // unreachable
 }
 panda$collections$Iterator* panda$collections$IdentityMap$values$R$panda$collections$Iterator$LTpanda$collections$IdentityMap$V$GT(panda$collections$IdentityMap* param0) {
 
-// line 223
+// line 224
 panda$core$Bit $tmp691 = panda$core$Bit$init$builtin_bit(false);
 bool $tmp692 = $tmp691.value;
 if ($tmp692) goto block1; else goto block2;
 block2:;
-panda$core$Int64 $tmp693 = (panda$core$Int64) {223};
+panda$core$Int64 $tmp693 = (panda$core$Int64) {224};
 panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s694, $tmp693, &$s695);
 abort(); // unreachable
 block1:;
@@ -1339,7 +1344,7 @@ panda$core$Bit $tmp696 = panda$core$Bit$init$builtin_bit(false);
 bool $tmp697 = $tmp696.value;
 if ($tmp697) goto block3; else goto block4;
 block4:;
-panda$core$Int64 $tmp698 = (panda$core$Int64) {222};
+panda$core$Int64 $tmp698 = (panda$core$Int64) {223};
 panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s699, $tmp698, &$s700);
 abort(); // unreachable
 block3:;
@@ -1352,7 +1357,7 @@ panda$core$MutableString* local0 = NULL;
 panda$core$String* local1 = NULL;
 panda$core$Int64 local2;
 panda$collections$IdentityMap$Entry* local3 = NULL;
-// line 234
+// line 235
 panda$core$MutableString* $tmp701 = (panda$core$MutableString*) pandaObjectAlloc(48, (panda$core$Class*) &panda$core$MutableString$class);
 panda$core$MutableString$init($tmp701);
 *(&local0) = ((panda$core$MutableString*) NULL);
@@ -1361,16 +1366,16 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp702));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp701));
 *(&local0) = $tmp701;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp701));
-// line 235
+// line 236
 panda$core$MutableString* $tmp703 = *(&local0);
 panda$core$MutableString$append$panda$core$String($tmp703, &$s704);
-// line 236
+// line 237
 *(&local1) = ((panda$core$String*) NULL);
 panda$core$String* $tmp705 = *(&local1);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp705));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) &$s706));
 *(&local1) = &$s707;
-// line 237
+// line 238
 panda$core$Int64 $tmp708 = (panda$core$Int64) {0};
 panda$core$Int64* $tmp709 = &param0->bucketCount;
 panda$core$Int64 $tmp710 = *$tmp709;
@@ -1399,7 +1404,7 @@ panda$core$Bit $tmp727 = (panda$core$Bit) {$tmp726};
 bool $tmp728 = $tmp727.value;
 if ($tmp728) goto block1; else goto block2;
 block1:;
-// line 238
+// line 239
 panda$collections$IdentityMap$Entry*** $tmp729 = &param0->contents;
 panda$collections$IdentityMap$Entry** $tmp730 = *$tmp729;
 panda$core$Int64 $tmp731 = *(&local2);
@@ -1410,7 +1415,7 @@ panda$collections$IdentityMap$Entry* $tmp734 = *(&local3);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp734));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp733));
 *(&local3) = $tmp733;
-// line 239
+// line 240
 goto block6;
 block6:;
 panda$collections$IdentityMap$Entry* $tmp735 = *(&local3);
@@ -1418,11 +1423,11 @@ panda$core$Bit $tmp736 = panda$core$Bit$init$builtin_bit($tmp735 != NULL);
 bool $tmp737 = $tmp736.value;
 if ($tmp737) goto block7; else goto block8;
 block7:;
-// line 240
+// line 241
 panda$core$MutableString* $tmp738 = *(&local0);
 panda$core$String* $tmp739 = *(&local1);
 panda$core$MutableString$append$panda$core$String($tmp738, $tmp739);
-// line 241
+// line 242
 panda$collections$IdentityMap$Entry* $tmp740 = *(&local3);
 panda$core$Object** $tmp741 = &$tmp740->key;
 panda$core$Object* $tmp742 = *$tmp741;
@@ -1430,7 +1435,7 @@ panda$core$Bit $tmp743 = panda$core$Bit$init$builtin_bit(true);
 bool $tmp744 = $tmp743.value;
 if ($tmp744) goto block9; else goto block11;
 block9:;
-// line 242
+// line 243
 panda$core$MutableString* $tmp745 = *(&local0);
 panda$collections$IdentityMap$Entry* $tmp746 = *(&local3);
 panda$core$Object** $tmp747 = &$tmp746->key;
@@ -1439,15 +1444,15 @@ panda$core$MutableString$append$panda$core$Object($tmp745, $tmp748);
 goto block10;
 block11:;
 // line 1
-// line 245
+// line 246
 panda$core$MutableString* $tmp749 = *(&local0);
 panda$core$MutableString$append$panda$core$String($tmp749, &$s750);
 goto block10;
 block10:;
-// line 247
+// line 248
 panda$core$MutableString* $tmp751 = *(&local0);
 panda$core$MutableString$append$panda$core$String($tmp751, &$s752);
-// line 248
+// line 249
 panda$collections$IdentityMap$Entry* $tmp753 = *(&local3);
 panda$core$Object** $tmp754 = &$tmp753->value;
 panda$core$Object* $tmp755 = *$tmp754;
@@ -1455,7 +1460,7 @@ panda$core$Bit $tmp756 = panda$core$Bit$init$builtin_bit(true);
 bool $tmp757 = $tmp756.value;
 if ($tmp757) goto block12; else goto block14;
 block12:;
-// line 249
+// line 250
 panda$core$MutableString* $tmp758 = *(&local0);
 panda$collections$IdentityMap$Entry* $tmp759 = *(&local3);
 panda$core$Object** $tmp760 = &$tmp759->value;
@@ -1464,12 +1469,12 @@ panda$core$MutableString$append$panda$core$Object($tmp758, $tmp761);
 goto block13;
 block14:;
 // line 1
-// line 252
+// line 253
 panda$core$MutableString* $tmp762 = *(&local0);
 panda$core$MutableString$append$panda$core$String($tmp762, &$s763);
 goto block13;
 block13:;
-// line 254
+// line 255
 panda$collections$IdentityMap$Entry* $tmp764 = *(&local3);
 panda$collections$IdentityMap$Entry** $tmp765 = &$tmp764->next;
 panda$collections$IdentityMap$Entry* $tmp766 = *$tmp765;
@@ -1477,7 +1482,7 @@ panda$collections$IdentityMap$Entry* $tmp767 = *(&local3);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp767));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp766));
 *(&local3) = $tmp766;
-// line 255
+// line 256
 panda$core$String* $tmp768 = *(&local1);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp768));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) &$s769));
@@ -1519,10 +1524,10 @@ panda$core$Int64 $tmp791 = (panda$core$Int64) {$tmp790};
 *(&local2) = $tmp791;
 goto block1;
 block2:;
-// line 258
+// line 259
 panda$core$MutableString* $tmp792 = *(&local0);
 panda$core$MutableString$append$panda$core$String($tmp792, &$s793);
-// line 259
+// line 260
 panda$core$MutableString* $tmp794 = *(&local0);
 panda$core$String* $tmp795 = panda$core$MutableString$finish$R$panda$core$String($tmp794);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp795));

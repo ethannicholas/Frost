@@ -2040,17 +2040,20 @@ panda$core$Bit org$pandalanguage$pandac$parser$Token$Kind$$EQ$org$pandalanguage$
 // line 11
 panda$core$Int64 $tmp884 = param0.$rawValue;
 panda$core$Int64 $tmp885 = param1.$rawValue;
-panda$core$Bit $tmp886 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit($tmp884, $tmp885);
-bool $tmp887 = $tmp886.value;
-if ($tmp887) goto block1; else goto block2;
+int64_t $tmp886 = $tmp884.value;
+int64_t $tmp887 = $tmp885.value;
+bool $tmp888 = $tmp886 != $tmp887;
+panda$core$Bit $tmp889 = (panda$core$Bit) {$tmp888};
+bool $tmp890 = $tmp889.value;
+if ($tmp890) goto block1; else goto block2;
 block1:;
 // line 11
-panda$core$Bit $tmp888 = panda$core$Bit$init$builtin_bit(false);
-return $tmp888;
+panda$core$Bit $tmp891 = panda$core$Bit$init$builtin_bit(false);
+return $tmp891;
 block2:;
 // line 11
-panda$core$Bit $tmp889 = panda$core$Bit$init$builtin_bit(true);
-return $tmp889;
+panda$core$Bit $tmp892 = panda$core$Bit$init$builtin_bit(true);
+return $tmp892;
 
 }
 

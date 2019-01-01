@@ -16,12 +16,12 @@ typedef void (*$fn24)(panda$io$OutputStream*, panda$core$UInt8);
 typedef void (*$fn51)(panda$io$OutputStream*, panda$core$UInt8*, panda$core$Int64);
 typedef void (*$fn70)(panda$io$OutputStream*, panda$core$UInt8*, panda$core$Int64);
 typedef void (*$fn90)(panda$io$OutputStream*, panda$core$UInt8*, panda$core$Int64);
-typedef void (*$fn126)(panda$io$OutputStream*, panda$core$String*);
+typedef void (*$fn129)(panda$io$OutputStream*, panda$core$String*);
 
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x69\x6f\x2e\x49\x6e\x64\x65\x6e\x74\x65\x64\x4f\x75\x74\x70\x75\x74\x53\x74\x72\x65\x61\x6d", 29, 1042140495667569485, NULL };
 static panda$core$String $s8 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
 static panda$core$String $s10 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
-static panda$core$String $s119 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x20", 1, 133, NULL };
+static panda$core$String $s122 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x20", 1, 133, NULL };
 
 void panda$io$IndentedOutputStream$init$panda$io$OutputStream(panda$io$IndentedOutputStream* param0, panda$io$OutputStream* param1) {
 
@@ -217,34 +217,37 @@ int64_t $tmp104 = $tmp101.value;
 int64_t $tmp105 = $tmp103.value;
 int64_t $tmp106 = $tmp104 * $tmp105;
 panda$core$Int64 $tmp107 = (panda$core$Int64) {$tmp106};
-panda$core$Bit $tmp108 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit($tmp99, $tmp107);
-bool $tmp109 = $tmp108.value;
-if ($tmp109) goto block3; else goto block4;
+int64_t $tmp108 = $tmp99.value;
+int64_t $tmp109 = $tmp107.value;
+bool $tmp110 = $tmp108 != $tmp109;
+panda$core$Bit $tmp111 = (panda$core$Bit) {$tmp110};
+bool $tmp112 = $tmp111.value;
+if ($tmp112) goto block3; else goto block4;
 block3:;
 // line 77
-panda$core$Int64* $tmp110 = &param0->indentSize;
-panda$core$Int64 $tmp111 = *$tmp110;
-panda$core$Int64* $tmp112 = &param0->level;
-panda$core$Int64 $tmp113 = *$tmp112;
-int64_t $tmp114 = $tmp111.value;
-int64_t $tmp115 = $tmp113.value;
-int64_t $tmp116 = $tmp114 * $tmp115;
-panda$core$Int64 $tmp117 = (panda$core$Int64) {$tmp116};
-panda$core$String* $tmp118 = panda$core$String$$MUL$panda$core$Int64$R$panda$core$String(&$s119, $tmp117);
-panda$core$String** $tmp120 = &param0->indent;
-panda$core$String* $tmp121 = *$tmp120;
+panda$core$Int64* $tmp113 = &param0->indentSize;
+panda$core$Int64 $tmp114 = *$tmp113;
+panda$core$Int64* $tmp115 = &param0->level;
+panda$core$Int64 $tmp116 = *$tmp115;
+int64_t $tmp117 = $tmp114.value;
+int64_t $tmp118 = $tmp116.value;
+int64_t $tmp119 = $tmp117 * $tmp118;
+panda$core$Int64 $tmp120 = (panda$core$Int64) {$tmp119};
+panda$core$String* $tmp121 = panda$core$String$$MUL$panda$core$Int64$R$panda$core$String(&$s122, $tmp120);
+panda$core$String** $tmp123 = &param0->indent;
+panda$core$String* $tmp124 = *$tmp123;
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp124));
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp121));
+panda$core$String** $tmp125 = &param0->indent;
+*$tmp125 = $tmp121;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp121));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp118));
-panda$core$String** $tmp122 = &param0->indent;
-*$tmp122 = $tmp118;
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp118));
 goto block4;
 block4:;
 // line 79
-panda$core$String** $tmp123 = &param0->indent;
-panda$core$String* $tmp124 = *$tmp123;
-$fn126 $tmp125 = ($fn126) ((panda$io$OutputStream*) param0)->$class->vtable[17];
-$tmp125(((panda$io$OutputStream*) param0), $tmp124);
+panda$core$String** $tmp126 = &param0->indent;
+panda$core$String* $tmp127 = *$tmp126;
+$fn129 $tmp128 = ($fn129) ((panda$io$OutputStream*) param0)->$class->vtable[17];
+$tmp128(((panda$io$OutputStream*) param0), $tmp127);
 goto block2;
 block2:;
 return;
@@ -252,12 +255,12 @@ return;
 }
 void panda$io$IndentedOutputStream$cleanup(panda$io$IndentedOutputStream* param0) {
 
-panda$core$String** $tmp127 = &param0->indent;
-panda$core$String* $tmp128 = *$tmp127;
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp128));
-panda$io$OutputStream** $tmp129 = &param0->out;
-panda$io$OutputStream* $tmp130 = *$tmp129;
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp130));
+panda$core$String** $tmp130 = &param0->indent;
+panda$core$String* $tmp131 = *$tmp130;
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp131));
+panda$io$OutputStream** $tmp132 = &param0->out;
+panda$io$OutputStream* $tmp133 = *$tmp132;
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp133));
 return;
 
 }

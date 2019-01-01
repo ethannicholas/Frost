@@ -1359,6 +1359,7 @@ while ($tmp569->$class != (panda$core$Class*) &panda$collections$Iterator$class)
 }
 $fn571 $tmp570 = $tmp569->methods[1];
 panda$core$Object* $tmp572 = $tmp570($tmp563);
+panda$core$Panda$unref$panda$core$Object$Q($tmp572);
 org$pandalanguage$pandac$FieldDecl* $tmp573 = *(&local2);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp573));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((org$pandalanguage$pandac$FieldDecl*) $tmp572)));
@@ -1429,7 +1430,6 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp615));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp616));
 goto block5;
 block5:;
-panda$core$Panda$unref$panda$core$Object$Q($tmp572);
 org$pandalanguage$pandac$FieldDecl* $tmp620 = *(&local2);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp620));
 // unreffing f
@@ -2169,6 +2169,7 @@ while ($tmp1065->$class != (panda$core$Class*) &panda$collections$Iterator$class
 }
 $fn1067 $tmp1066 = $tmp1065->methods[1];
 panda$core$Object* $tmp1068 = $tmp1066($tmp1059);
+panda$core$Panda$unref$panda$core$Object$Q($tmp1068);
 org$pandalanguage$pandac$MethodDecl$Parameter* $tmp1069 = *(&local2);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp1069));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((org$pandalanguage$pandac$MethodDecl$Parameter*) $tmp1068)));
@@ -2213,7 +2214,6 @@ panda$core$String* $tmp1095 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp1095));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) &$s1096));
 *(&local0) = &$s1097;
-panda$core$Panda$unref$panda$core$Object$Q($tmp1068);
 panda$core$String* $tmp1098 = *(&local3);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp1098));
 // unreffing name

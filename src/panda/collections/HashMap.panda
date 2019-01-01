@@ -200,6 +200,7 @@ class HashMap<K:Key<K>, V> : Map<K, V> {
         }
     }
     
+    @override
     function contains(key:K):Bit {
         def index := indexFor(key)
         var e := contents[index]

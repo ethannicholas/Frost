@@ -96,6 +96,7 @@ while ($tmp36->$class != (panda$core$Class*) &panda$collections$Iterator$class) 
 }
 $fn38 $tmp37 = $tmp36->methods[1];
 panda$core$Object* $tmp39 = $tmp37($tmp30);
+panda$core$Panda$unref$panda$core$Object$Q($tmp39);
 org$pandalanguage$pandac$IR$Value* $tmp40 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp40));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((org$pandalanguage$pandac$IR$Value*) $tmp39)));
@@ -105,7 +106,6 @@ org$pandalanguage$pandac$Compiler** $tmp41 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp42 = *$tmp41;
 org$pandalanguage$pandac$IR$Value* $tmp43 = *(&local0);
 org$pandalanguage$pandac$Compiler$compileUnref$org$pandalanguage$pandac$IR$Value($tmp42, $tmp43);
-panda$core$Panda$unref$panda$core$Object$Q($tmp39);
 org$pandalanguage$pandac$IR$Value* $tmp44 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp44));
 // unreffing v

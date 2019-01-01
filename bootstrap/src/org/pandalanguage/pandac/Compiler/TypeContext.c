@@ -258,17 +258,20 @@ panda$core$Int64* $tmp92 = &param0->$rawValue;
 panda$core$Int64 $tmp93 = *$tmp92;
 panda$core$Int64* $tmp94 = &param1->$rawValue;
 panda$core$Int64 $tmp95 = *$tmp94;
-panda$core$Bit $tmp96 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit($tmp93, $tmp95);
-bool $tmp97 = $tmp96.value;
-if ($tmp97) goto block1; else goto block2;
+int64_t $tmp96 = $tmp93.value;
+int64_t $tmp97 = $tmp95.value;
+bool $tmp98 = $tmp96 != $tmp97;
+panda$core$Bit $tmp99 = (panda$core$Bit) {$tmp98};
+bool $tmp100 = $tmp99.value;
+if ($tmp100) goto block1; else goto block2;
 block1:;
 // line 46
-panda$core$Bit $tmp98 = panda$core$Bit$init$builtin_bit(false);
-return $tmp98;
+panda$core$Bit $tmp101 = panda$core$Bit$init$builtin_bit(false);
+return $tmp101;
 block2:;
 // line 46
-panda$core$Bit $tmp99 = panda$core$Bit$init$builtin_bit(true);
-return $tmp99;
+panda$core$Bit $tmp102 = panda$core$Bit$init$builtin_bit(true);
+return $tmp102;
 
 }
 

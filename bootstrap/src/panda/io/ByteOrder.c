@@ -69,17 +69,20 @@ panda$core$Bit panda$io$ByteOrder$$EQ$panda$io$ByteOrder$R$panda$core$Bit(panda$
 // line 6
 panda$core$Int64 $tmp12 = param0.$rawValue;
 panda$core$Int64 $tmp13 = param1.$rawValue;
-panda$core$Bit $tmp14 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit($tmp12, $tmp13);
-bool $tmp15 = $tmp14.value;
-if ($tmp15) goto block1; else goto block2;
+int64_t $tmp14 = $tmp12.value;
+int64_t $tmp15 = $tmp13.value;
+bool $tmp16 = $tmp14 != $tmp15;
+panda$core$Bit $tmp17 = (panda$core$Bit) {$tmp16};
+bool $tmp18 = $tmp17.value;
+if ($tmp18) goto block1; else goto block2;
 block1:;
 // line 6
-panda$core$Bit $tmp16 = panda$core$Bit$init$builtin_bit(false);
-return $tmp16;
+panda$core$Bit $tmp19 = panda$core$Bit$init$builtin_bit(false);
+return $tmp19;
 block2:;
 // line 6
-panda$core$Bit $tmp17 = panda$core$Bit$init$builtin_bit(true);
-return $tmp17;
+panda$core$Bit $tmp20 = panda$core$Bit$init$builtin_bit(true);
+return $tmp20;
 
 }
 

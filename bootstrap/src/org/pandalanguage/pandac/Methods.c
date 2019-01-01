@@ -140,6 +140,7 @@ while ($tmp44->$class != (panda$core$Class*) &panda$collections$Iterator$class) 
 }
 $fn46 $tmp45 = $tmp44->methods[1];
 panda$core$Object* $tmp47 = $tmp45($tmp38);
+panda$core$Panda$unref$panda$core$Object$Q($tmp47);
 org$pandalanguage$pandac$MethodDecl* $tmp48 = *(&local1);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp48));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((org$pandalanguage$pandac$MethodDecl*) $tmp47)));
@@ -150,7 +151,6 @@ org$pandalanguage$pandac$MethodDecl* $tmp50 = *(&local1);
 panda$core$String* $tmp51 = org$pandalanguage$pandac$MethodDecl$get_signature$R$panda$core$String($tmp50);
 panda$collections$HashSet$add$panda$collections$HashSet$T($tmp49, ((panda$collections$Key*) $tmp51));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp51));
-panda$core$Panda$unref$panda$core$Object$Q($tmp47);
 org$pandalanguage$pandac$MethodDecl* $tmp52 = *(&local1);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp52));
 // unreffing m
@@ -206,6 +206,7 @@ while ($tmp77->$class != (panda$core$Class*) &panda$collections$Iterator$class) 
 }
 $fn79 $tmp78 = $tmp77->methods[1];
 panda$core$Object* $tmp80 = $tmp78($tmp71);
+panda$core$Panda$unref$panda$core$Object$Q($tmp80);
 org$pandalanguage$pandac$MethodDecl* $tmp81 = *(&local2);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp81));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((org$pandalanguage$pandac$MethodDecl*) $tmp80)));
@@ -215,7 +216,6 @@ org$pandalanguage$pandac$MethodDecl* $tmp82 = *(&local2);
 panda$core$String* $tmp83 = org$pandalanguage$pandac$MethodDecl$get_declaration$R$panda$core$String($tmp82);
 panda$io$Console$printLine$panda$core$String($tmp83);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp83));
-panda$core$Panda$unref$panda$core$Object$Q($tmp80);
 org$pandalanguage$pandac$MethodDecl* $tmp84 = *(&local2);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp84));
 // unreffing m

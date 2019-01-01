@@ -164,6 +164,7 @@ while ($tmp24->$class != (panda$core$Class*) &panda$collections$Iterator$class) 
 }
 $fn26 $tmp25 = $tmp24->methods[1];
 panda$core$Object* $tmp27 = $tmp25($tmp18);
+panda$core$Panda$unref$panda$core$Object$Q($tmp27);
 panda$core$Object* $tmp28 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q($tmp28);
 panda$core$Panda$ref$panda$core$Object$Q($tmp27);
@@ -171,7 +172,6 @@ panda$core$Panda$ref$panda$core$Object$Q($tmp27);
 // line 49
 panda$core$Object* $tmp29 = *(&local0);
 panda$collections$Array$add$panda$collections$Array$T(param0, $tmp29);
-panda$core$Panda$unref$panda$core$Object$Q($tmp27);
 panda$core$Object* $tmp30 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q($tmp30);
 // unreffing v
@@ -546,6 +546,7 @@ while ($tmp236->$class != (panda$core$Class*) &panda$collections$Iterator$class)
 }
 $fn238 $tmp237 = $tmp236->methods[1];
 panda$core$Object* $tmp239 = $tmp237($tmp230);
+panda$core$Panda$unref$panda$core$Object$Q($tmp239);
 panda$core$Object* $tmp240 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q($tmp240);
 panda$core$Panda$ref$panda$core$Object$Q($tmp239);
@@ -571,7 +572,6 @@ int64_t $tmp253 = $tmp251 + $tmp252;
 panda$core$Int64 $tmp254 = (panda$core$Int64) {$tmp253};
 panda$core$Int64* $tmp255 = &param0->_count;
 *$tmp255 = $tmp254;
-panda$core$Panda$unref$panda$core$Object$Q($tmp239);
 panda$core$Object* $tmp256 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q($tmp256);
 // unreffing v
@@ -947,6 +947,7 @@ while ($tmp461->$class != (panda$core$Class*) &panda$collections$Iterator$class)
 }
 $fn463 $tmp462 = $tmp461->methods[1];
 panda$core$Object* $tmp464 = $tmp462($tmp455);
+panda$core$Panda$unref$panda$core$Object$Q($tmp464);
 panda$core$Object* $tmp465 = *(&local2);
 panda$core$Panda$unref$panda$core$Object$Q($tmp465);
 panda$core$Panda$ref$panda$core$Object$Q($tmp464);
@@ -978,7 +979,6 @@ panda$core$MutableString* $tmp476 = *(&local0);
 panda$core$MutableString$append$panda$core$String($tmp476, &$s477);
 goto block5;
 block5:;
-panda$core$Panda$unref$panda$core$Object$Q($tmp464);
 panda$core$Object* $tmp478 = *(&local2);
 panda$core$Panda$unref$panda$core$Object$Q($tmp478);
 // unreffing v

@@ -61,7 +61,6 @@ class MethodRef {
                     methodType.returnType, methodType.priority)
         }
         self.effectiveType := compiler.remapType(found, methodType)
-        for i in 0 .. 10 { Panda.ref(self) } -- FIXME hack workaround for suspected refcounting bug in bootstrap
     }
 
     function get_parameterCount():Int {

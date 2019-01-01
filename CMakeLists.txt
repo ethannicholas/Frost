@@ -217,6 +217,7 @@ add_executable(bootstrap
     bootstrap/src/org/pandalanguage/pandac/Compiler/AutoContext.c
     bootstrap/src/org/pandalanguage/pandac/Compiler/AutoScope.c
     bootstrap/src/org/pandalanguage/pandac/Compiler/AutoUnrefs.c
+    bootstrap/src/org/pandalanguage/pandac/Compiler/BinaryKey.c
     bootstrap/src/org/pandalanguage/pandac/Compiler/Capture.c
     bootstrap/src/org/pandalanguage/pandac/Compiler/ChoiceFieldLValue.c
     bootstrap/src/org/pandalanguage/pandac/Compiler/CoercionKey.c

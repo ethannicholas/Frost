@@ -150,17 +150,20 @@ panda$core$Bit org$pandalanguage$pandac$Compiler$Resolution$$EQ$org$pandalanguag
 // line 8
 panda$core$Int64 $tmp44 = param0.$rawValue;
 panda$core$Int64 $tmp45 = param1.$rawValue;
-panda$core$Bit $tmp46 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit($tmp44, $tmp45);
-bool $tmp47 = $tmp46.value;
-if ($tmp47) goto block1; else goto block2;
+int64_t $tmp46 = $tmp44.value;
+int64_t $tmp47 = $tmp45.value;
+bool $tmp48 = $tmp46 != $tmp47;
+panda$core$Bit $tmp49 = (panda$core$Bit) {$tmp48};
+bool $tmp50 = $tmp49.value;
+if ($tmp50) goto block1; else goto block2;
 block1:;
 // line 8
-panda$core$Bit $tmp48 = panda$core$Bit$init$builtin_bit(false);
-return $tmp48;
+panda$core$Bit $tmp51 = panda$core$Bit$init$builtin_bit(false);
+return $tmp51;
 block2:;
 // line 8
-panda$core$Bit $tmp49 = panda$core$Bit$init$builtin_bit(true);
-return $tmp49;
+panda$core$Bit $tmp52 = panda$core$Bit$init$builtin_bit(true);
+return $tmp52;
 
 }
 

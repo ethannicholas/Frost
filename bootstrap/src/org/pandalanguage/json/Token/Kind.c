@@ -366,17 +366,20 @@ panda$core$Bit org$pandalanguage$json$Token$Kind$$EQ$org$pandalanguage$json$Toke
 // line 11
 panda$core$Int64 $tmp140 = param0.$rawValue;
 panda$core$Int64 $tmp141 = param1.$rawValue;
-panda$core$Bit $tmp142 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit($tmp140, $tmp141);
-bool $tmp143 = $tmp142.value;
-if ($tmp143) goto block1; else goto block2;
+int64_t $tmp142 = $tmp140.value;
+int64_t $tmp143 = $tmp141.value;
+bool $tmp144 = $tmp142 != $tmp143;
+panda$core$Bit $tmp145 = (panda$core$Bit) {$tmp144};
+bool $tmp146 = $tmp145.value;
+if ($tmp146) goto block1; else goto block2;
 block1:;
 // line 11
-panda$core$Bit $tmp144 = panda$core$Bit$init$builtin_bit(false);
-return $tmp144;
+panda$core$Bit $tmp147 = panda$core$Bit$init$builtin_bit(false);
+return $tmp147;
 block2:;
 // line 11
-panda$core$Bit $tmp145 = panda$core$Bit$init$builtin_bit(true);
-return $tmp145;
+panda$core$Bit $tmp148 = panda$core$Bit$init$builtin_bit(true);
+return $tmp148;
 
 }
 

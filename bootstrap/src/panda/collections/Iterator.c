@@ -286,6 +286,7 @@ while ($tmp98->$class != (panda$core$Class*) &panda$collections$Iterator$class) 
 }
 $fn100 $tmp99 = $tmp98->methods[1];
 panda$core$Object* $tmp101 = $tmp99(param0);
+panda$core$Panda$unref$panda$core$Object$Q($tmp101);
 panda$core$Object* $tmp102 = *(&local1);
 panda$core$Panda$unref$panda$core$Object$Q($tmp102);
 panda$core$Panda$ref$panda$core$Object$Q($tmp101);
@@ -294,7 +295,6 @@ panda$core$Panda$ref$panda$core$Object$Q($tmp101);
 panda$collections$Array* $tmp103 = *(&local0);
 panda$core$Object* $tmp104 = *(&local1);
 panda$collections$Array$add$panda$collections$Array$T($tmp103, $tmp104);
-panda$core$Panda$unref$panda$core$Object$Q($tmp101);
 panda$core$Object* $tmp105 = *(&local1);
 panda$core$Panda$unref$panda$core$Object$Q($tmp105);
 // unreffing v
@@ -333,6 +333,7 @@ while ($tmp113->$class != (panda$core$Class*) &panda$collections$Iterator$class)
 }
 $fn115 $tmp114 = $tmp113->methods[1];
 panda$core$Object* $tmp116 = $tmp114(param0);
+panda$core$Panda$unref$panda$core$Object$Q($tmp116);
 panda$core$Object* $tmp117 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q($tmp117);
 panda$core$Panda$ref$panda$core$Object$Q($tmp116);
@@ -352,7 +353,6 @@ block4:;
 (($fn125) $tmp120)($tmp122, $tmp118);
 goto block6;
 block6:;
-panda$core$Panda$unref$panda$core$Object$Q($tmp116);
 panda$core$Object* $tmp126 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q($tmp126);
 // unreffing v

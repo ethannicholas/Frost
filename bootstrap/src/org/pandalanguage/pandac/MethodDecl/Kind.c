@@ -76,17 +76,20 @@ panda$core$Bit org$pandalanguage$pandac$MethodDecl$Kind$$EQ$org$pandalanguage$pa
 // line 7
 panda$core$Int64 $tmp15 = param0.$rawValue;
 panda$core$Int64 $tmp16 = param1.$rawValue;
-panda$core$Bit $tmp17 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit($tmp15, $tmp16);
-bool $tmp18 = $tmp17.value;
-if ($tmp18) goto block1; else goto block2;
+int64_t $tmp17 = $tmp15.value;
+int64_t $tmp18 = $tmp16.value;
+bool $tmp19 = $tmp17 != $tmp18;
+panda$core$Bit $tmp20 = (panda$core$Bit) {$tmp19};
+bool $tmp21 = $tmp20.value;
+if ($tmp21) goto block1; else goto block2;
 block1:;
 // line 7
-panda$core$Bit $tmp19 = panda$core$Bit$init$builtin_bit(false);
-return $tmp19;
+panda$core$Bit $tmp22 = panda$core$Bit$init$builtin_bit(false);
+return $tmp22;
 block2:;
 // line 7
-panda$core$Bit $tmp20 = panda$core$Bit$init$builtin_bit(true);
-return $tmp20;
+panda$core$Bit $tmp23 = panda$core$Bit$init$builtin_bit(true);
+return $tmp23;
 
 }
 

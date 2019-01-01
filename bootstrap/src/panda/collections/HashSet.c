@@ -125,6 +125,7 @@ while ($tmp21->$class != (panda$core$Class*) &panda$collections$Iterator$class) 
 }
 $fn23 $tmp22 = $tmp21->methods[1];
 panda$core$Object* $tmp24 = $tmp22($tmp15);
+panda$core$Panda$unref$panda$core$Object$Q($tmp24);
 panda$collections$Key* $tmp25 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp25));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((panda$collections$Key*) $tmp24)));
@@ -132,7 +133,6 @@ panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((panda$collectio
 // line 25
 panda$collections$Key* $tmp26 = *(&local0);
 panda$collections$HashSet$add$panda$collections$HashSet$T(param0, $tmp26);
-panda$core$Panda$unref$panda$core$Object$Q($tmp24);
 panda$collections$Key* $tmp27 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp27));
 // unreffing v
@@ -228,6 +228,7 @@ while ($tmp56->$class != (panda$core$Class*) &panda$collections$Iterator$class) 
 }
 $fn58 $tmp57 = $tmp56->methods[1];
 panda$core$Object* $tmp59 = $tmp57($tmp50);
+panda$core$Panda$unref$panda$core$Object$Q($tmp59);
 panda$collections$Key* $tmp60 = *(&local2);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp60));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((panda$collections$Key*) $tmp59)));
@@ -259,7 +260,6 @@ panda$core$String* $tmp70 = *(&local1);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp70));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) &$s71));
 *(&local1) = &$s72;
-panda$core$Panda$unref$panda$core$Object$Q($tmp59);
 panda$collections$Key* $tmp73 = *(&local2);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp73));
 // unreffing v

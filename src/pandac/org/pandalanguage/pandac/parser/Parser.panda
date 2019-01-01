@@ -62,7 +62,6 @@ class Parser {
     }
 
     method start(path:File, source:String) {
-        for i in 0 .. 100 { Panda.ref(source) }
         reportErrors := true
         lexer.start(source)
         self.path := path

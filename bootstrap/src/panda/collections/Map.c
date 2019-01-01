@@ -10,7 +10,7 @@ struct { panda$core$Class* cl; ITable* next; void* methods[2]; } panda$collectio
 
 struct { panda$core$Class* cl; ITable* next; void* methods[0]; } panda$collections$Map$_panda$collections$Map = { (panda$core$Class*) &panda$collections$Map$class, (ITable*) &panda$collections$Map$_panda$collections$MapWriter, { } };
 
-struct { panda$core$Class* cl; ITable* next; void* methods[4]; } panda$collections$Map$_panda$collections$MapView = { (panda$core$Class*) &panda$collections$MapView$class, (ITable*) &panda$collections$Map$_panda$collections$Map, { NULL, NULL, NULL, NULL} };
+struct { panda$core$Class* cl; ITable* next; void* methods[5]; } panda$collections$Map$_panda$collections$MapView = { (panda$core$Class*) &panda$collections$MapView$class, (ITable*) &panda$collections$Map$_panda$collections$Map, { NULL, NULL, NULL, NULL, NULL} };
 
 static panda$core$String $s1;
 panda$collections$Map$class_type panda$collections$Map$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, (ITable*) &panda$collections$Map$_panda$collections$MapView, { panda$core$Object$convert$R$panda$core$String, panda$core$Object$cleanup} };

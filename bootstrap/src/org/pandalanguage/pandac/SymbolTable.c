@@ -377,6 +377,7 @@ while ($tmp127->$class != (panda$core$Class*) &panda$collections$Iterator$class)
 }
 $fn129 $tmp128 = $tmp127->methods[1];
 panda$core$Object* $tmp130 = $tmp128($tmp121);
+panda$core$Panda$unref$panda$core$Object$Q($tmp130);
 org$pandalanguage$pandac$MethodDecl* $tmp131 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp131));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((org$pandalanguage$pandac$MethodDecl*) $tmp130)));
@@ -412,7 +413,6 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp143));
 *(&local0) = ((org$pandalanguage$pandac$MethodDecl*) NULL);
 return;
 block7:;
-panda$core$Panda$unref$panda$core$Object$Q($tmp130);
 org$pandalanguage$pandac$MethodDecl* $tmp144 = *(&local1);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp144));
 // unreffing overridden
@@ -543,6 +543,7 @@ while ($tmp187->$class != (panda$core$Class*) &panda$collections$Iterator$class)
 }
 $fn189 $tmp188 = $tmp187->methods[1];
 panda$core$Object* $tmp190 = $tmp188($tmp181);
+panda$core$Panda$unref$panda$core$Object$Q($tmp190);
 org$pandalanguage$pandac$MethodDecl* $tmp191 = *(&local1);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp191));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((org$pandalanguage$pandac$MethodDecl*) $tmp190)));
@@ -551,7 +552,6 @@ panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((org$pandalangua
 org$pandalanguage$pandac$MethodDecl* $tmp192 = *(&local1);
 panda$collections$Array* $tmp193 = *(&local0);
 org$pandalanguage$pandac$SymbolTable$addIfNotOverridden$org$pandalanguage$pandac$MethodDecl$panda$collections$List$LTorg$pandalanguage$pandac$MethodDecl$GT(param0, $tmp192, ((panda$collections$List*) $tmp193));
-panda$core$Panda$unref$panda$core$Object$Q($tmp190);
 org$pandalanguage$pandac$MethodDecl* $tmp194 = *(&local1);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp194));
 // unreffing m
@@ -751,6 +751,7 @@ while ($tmp265->$class != (panda$core$Class*) &panda$collections$Iterator$class)
 }
 $fn267 $tmp266 = $tmp265->methods[1];
 panda$core$Object* $tmp268 = $tmp266($tmp259);
+panda$core$Panda$unref$panda$core$Object$Q($tmp268);
 org$pandalanguage$pandac$MethodDecl* $tmp269 = *(&local9);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp269));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((org$pandalanguage$pandac$MethodDecl*) $tmp268)));
@@ -759,7 +760,6 @@ panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((org$pandalangua
 org$pandalanguage$pandac$MethodDecl* $tmp270 = *(&local9);
 panda$collections$Array* $tmp271 = *(&local8);
 org$pandalanguage$pandac$SymbolTable$addIfNotOverridden$org$pandalanguage$pandac$MethodDecl$panda$collections$List$LTorg$pandalanguage$pandac$MethodDecl$GT(param0, $tmp270, ((panda$collections$List*) $tmp271));
-panda$core$Panda$unref$panda$core$Object$Q($tmp268);
 org$pandalanguage$pandac$MethodDecl* $tmp272 = *(&local9);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp272));
 // unreffing m
@@ -887,6 +887,7 @@ while ($tmp314->$class != (panda$core$Class*) &panda$collections$Iterator$class)
 }
 $fn316 $tmp315 = $tmp314->methods[1];
 panda$core$Object* $tmp317 = $tmp315($tmp308);
+panda$core$Panda$unref$panda$core$Object$Q($tmp317);
 org$pandalanguage$pandac$SymbolTable* $tmp318 = *(&local1);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp318));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((org$pandalanguage$pandac$SymbolTable*) $tmp317)));
@@ -902,7 +903,6 @@ panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp322));
 *(&local0) = $tmp322;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp321));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp322));
-panda$core$Panda$unref$panda$core$Object$Q($tmp317);
 org$pandalanguage$pandac$SymbolTable* $tmp324 = *(&local1);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp324));
 // unreffing p

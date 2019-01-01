@@ -1326,6 +1326,7 @@ while ($tmp472->$class != (panda$core$Class*) &panda$collections$Iterator$class)
 }
 $fn474 $tmp473 = $tmp472->methods[1];
 panda$core$Object* $tmp475 = $tmp473($tmp466);
+panda$core$Panda$unref$panda$core$Object$Q($tmp475);
 panda$core$String* $tmp476 = *(&local7);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp476));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((panda$core$String*) $tmp475)));
@@ -1363,7 +1364,6 @@ panda$core$String* $tmp497 = *(&local6);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp497));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) &$s498));
 *(&local6) = &$s499;
-panda$core$Panda$unref$panda$core$Object$Q($tmp475);
 panda$core$String* $tmp500 = *(&local7);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp500));
 // unreffing k
@@ -1446,6 +1446,7 @@ while ($tmp530->$class != (panda$core$Class*) &panda$collections$Iterator$class)
 }
 $fn532 $tmp531 = $tmp530->methods[1];
 panda$core$Object* $tmp533 = $tmp531($tmp524);
+panda$core$Panda$unref$panda$core$Object$Q($tmp533);
 panda$json$JSON* $tmp534 = *(&local11);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp534));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((panda$json$JSON*) $tmp533)));
@@ -1468,7 +1469,6 @@ panda$core$String* $tmp544 = *(&local10);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp544));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) &$s545));
 *(&local10) = &$s546;
-panda$core$Panda$unref$panda$core$Object$Q($tmp533);
 panda$json$JSON* $tmp547 = *(&local11);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp547));
 // unreffing n

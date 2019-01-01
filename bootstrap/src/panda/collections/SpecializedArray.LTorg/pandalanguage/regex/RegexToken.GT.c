@@ -190,11 +190,11 @@ while ($tmp26->$class != (panda$core$Class*) &panda$collections$Iterator$class) 
 }
 $fn28 $tmp27 = $tmp26->methods[1];
 panda$core$Object* $tmp29 = $tmp27($tmp20);
+panda$core$Panda$unref$panda$core$Object$Q($tmp29);
 *(&local0) = ((org$pandalanguage$regex$RegexToken$wrapper*) $tmp29)->value;
 // line 56
 org$pandalanguage$regex$RegexToken $tmp30 = *(&local0);
 panda$collections$SpecializedArray$LTorg$pandalanguage$regex$RegexToken$GT$add$org$pandalanguage$regex$RegexToken(param0, $tmp30);
-panda$core$Panda$unref$panda$core$Object$Q($tmp29);
 goto block1;
 block3:;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp20));
@@ -1082,6 +1082,7 @@ while ($tmp489->$class != (panda$core$Class*) &panda$collections$Iterator$class)
 }
 $fn491 $tmp490 = $tmp489->methods[1];
 panda$core$Object* $tmp492 = $tmp490($tmp483);
+panda$core$Panda$unref$panda$core$Object$Q($tmp492);
 *(&local0) = ((org$pandalanguage$regex$RegexToken$wrapper*) $tmp492)->value;
 // line 207
 org$pandalanguage$regex$RegexToken$nullable** $tmp493 = &param0->data;
@@ -1101,7 +1102,6 @@ int64_t $tmp504 = $tmp502 + $tmp503;
 panda$core$Int64 $tmp505 = (panda$core$Int64) {$tmp504};
 panda$core$Int64* $tmp506 = &param0->_count;
 *$tmp506 = $tmp505;
-panda$core$Panda$unref$panda$core$Object$Q($tmp492);
 goto block1;
 block3:;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp483));
@@ -1458,6 +1458,7 @@ while ($tmp703->$class != (panda$core$Class*) &panda$collections$Iterator$class)
 }
 $fn705 $tmp704 = $tmp703->methods[1];
 panda$core$Object* $tmp706 = $tmp704($tmp697);
+panda$core$Panda$unref$panda$core$Object$Q($tmp706);
 *(&local2) = ((org$pandalanguage$regex$RegexToken$wrapper*) $tmp706)->value;
 // line 259
 panda$core$MutableString* $tmp707 = *(&local0);
@@ -1490,7 +1491,6 @@ panda$core$MutableString* $tmp718 = *(&local0);
 panda$core$MutableString$append$panda$core$String($tmp718, &$s719);
 goto block5;
 block5:;
-panda$core$Panda$unref$panda$core$Object$Q($tmp706);
 goto block1;
 block3:;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp697));

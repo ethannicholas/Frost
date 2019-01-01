@@ -255,6 +255,30 @@ class Compiler {
         }
     }
 
+    class BinaryKey : Key<BinaryKey> {
+        def left:ASTNode
+
+        def op:Token.Kind
+
+        def right:ASTNode
+
+        init(left:ASTNode,op:Token.Kind, right:ASTNode) {
+            self.left := left
+            self.op := op
+            self.right := right
+        }
+
+        @override
+        function =(other:BinaryKey):Bit {
+            return left == other.left & op = other.op & right == other.right
+        }
+
+        @override
+        function get_hash():Int {
+            return Panda.addressOf(left) ~~ Panda.addressOf(right)
+        }
+    }
+
     constant POINTER_NAME := "panda.unsafe.Pointer"
     
     constant WEAK_NAME := "panda.core.Weak"
@@ -358,6 +382,9 @@ class Compiler {
 
     @private
     def coercionCosts := HashMap<CoercionKey, Int>()
+
+    @private
+    def binaryTypes := HashMap<BinaryKey, ListView<Type>?>()
 
     -- Sometimes we need to resolve an untyped lambda against several different types, such as when
     -- calling an overloaded method which can take different types of functions. If, say, the lambda
@@ -1996,7 +2023,7 @@ class Compiler {
         return 32
     }
 
-    function binaryType(left:ASTNode, op:Token.Kind, right:ASTNode):ListView<Type>? {
+    function computeBinaryType(left:ASTNode, op:Token.Kind, right:ASTNode):ListView<Type>? {
         match op {
             when Token.Kind.CAST:
                 def rawTarget := scanner.convertType(right)
@@ -2012,7 +2039,7 @@ class Compiler {
                     def type := resolve(rawTarget)
                     reportErrors := old
                     if type == null {
-                        def base := binaryType(left, op,
+                        def base := computeBinaryType(left, op,
                                 ASTNode.TYPE(rawTarget.position, rawTarget.name[..index]))
                         if base == null {
                             return null
@@ -2113,6 +2140,17 @@ class Compiler {
         }
     }
 
+    function binaryType(position:Position, left:ASTNode, op:Token.Kind,
+            right:ASTNode):ListView<Type>? {
+        def key := BinaryKey(left, op, right)
+        if binaryTypes.contains(key) {
+            return binaryTypes[key]
+        }
+        def result := computeBinaryType(left, op, right)
+        binaryTypes[key] := result
+        return result
+    }
+
     ================================================================================================
     Returns the types we should consider this expression to potentially be when evaluating method
     calls and field accesses against it. This is not always (nor could it reasonably be) an
@@ -2129,8 +2167,8 @@ class Compiler {
                 def a := Array<Type>() -- FIXME literal
                 a.add(currentMethod[0].returnType)
                 return a
-            when ASTNode.BINARY(_, left, op, right):
-                return binaryType(left, op, right)
+            when ASTNode.BINARY(position, left, op, right):
+                return binaryType(position, left, op, right)
             when ASTNode.BIT:
                 def result := Array<Type>() -- FIXME literal
                 result.add(Type.Bit())
@@ -3705,6 +3743,7 @@ class Compiler {
         }
     }
 
+    -- just a stopgap until proper inlining is in
     method compileNumberIntrinsic(position:Position, target:IR.Value?, m:MethodRef,
             args:ListView<ASTNode>):Pair<Bit, IR.Value?> {
         match m.value.name {
@@ -3750,10 +3789,19 @@ class Compiler {
                 return compileNumberIntrinsic(position, target, Token.Kind.LTEQ, args,
                         binaryType(m.value.owner.type, m.value.parameters[0].type, true, false),
                         m.returnType)
+            when "==":
+                return compileNumberIntrinsic(position, target, Token.Kind.EQ, args,
+                        binaryType(m.value.owner.type, m.value.parameters[0].type, true, false),
+                        m.returnType)
+            when "!=":
+                return compileNumberIntrinsic(position, target, Token.Kind.NEQ, args,
+                        binaryType(m.value.owner.type, m.value.parameters[0].type, true, false),
+                        m.returnType)
         }
         return Pair<Bit, IR.Value?>(false, null)
     }
 
+    -- just a stopgap until proper inlining is in
     method compileBitIntrinsic(position:Position, target:IR.Value?, m:MethodRef,
             args:ListView<ASTNode>):Pair<Bit, IR.Value?> {
         match m.value.name {
@@ -4003,7 +4051,6 @@ class Compiler {
                 ref := MethodRef(self, findType(currentClass[0].type, m.owner), m)
             }
             var cost := 0
-            for i in 0 .. 5 { Panda.ref(ref) } -- FIXME seems to be a bug in the bootstrap compiler's refcounting
             for i in 0 .. args.count {
                 def argCost := coercionCost(args[i], ref.parameterType(i))
                 if argCost == null {
@@ -4470,6 +4517,8 @@ class Compiler {
     }
 
     function foldStrings(left:ASTNode, op:Token.Kind, right:ASTNode):ASTNode? {
+        -- FIXME this doesn't work for longer concatenations like "A" + "B" + "C" + "D"; will only
+        -- fold the innermost pair
         if op != Token.Kind.ADD {
             return null
         }
@@ -6623,15 +6672,18 @@ class Compiler {
         ir.setCurrentBlock(bodyBlock)
         {
             def auto := AutoScope(self)
-            def unrefs := AutoUnrefs(self)
             def compiledTarget := compileTarget(target, Variable.Kind.DEF, null,
                     iterator.type().subtypes[1])
             if compiledTarget == null {
                 return
             }
             def targetType := compiledTarget.first.type
-            def next := call(position, iterator, "next", Array<ASTNode>(),
-                    TypeContext.TYPE(targetType))
+            def next:IR.Value
+            {
+                def unrefs := AutoUnrefs(self)
+                next := call(position, iterator, "next", Array<ASTNode>(),
+                        TypeContext.TYPE(targetType))
+            }
             if next == null {
                 return
             }
@@ -7458,6 +7510,7 @@ class Compiler {
             return
         }
         coercionCosts.clear()
+        binaryTypes.clear()
         currentMethod.push(m)
         checkAnnotations(m)
         assert atPreBlock == null

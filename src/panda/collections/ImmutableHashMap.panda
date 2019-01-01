@@ -182,6 +182,7 @@ class ImmutableHashMap<K:Key<K>, V> : MapView<K, V> {
         }
     }
     
+    @override
     function contains(key:K):Bit {
         if bucketCount = 0 {
             return false

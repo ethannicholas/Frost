@@ -3,14 +3,26 @@ package panda.collections
 ====================================================================================================
 A read-only view of the standard "Map" abstract data type, which stores key/value pairs such that no
 key appears more than once in the collection. Given a key, a `MapView` will return the corresponding
-value, and generally does so very quickly (linear or `log n` time, depending on the implementation).
+value, and generally does so very quickly (constant or `log n` time, depending on the
+implementation).
 ====================================================================================================
 interface MapView<K, V> {
     property count:Int
 
     function get_count():Int
 
+    ================================================================================================
+    Returns the value mapped to the given key, or `null` if no such mapping exists. If the map's
+    type permits `null` values, this function does not distinguish between cases where the map does
+    not contain the given key, and cases where it does contain the key, but it maps to `null`. The
+    `contains` method can be used to disambiguate this situation.
+    ================================================================================================
     function [](key:K):V?
+
+    ================================================================================================
+    Returns `true` if the map contains the given key (even if the value it maps to is `null`)
+    ================================================================================================
+    function contains(key:K):Bit
 
     -- FIXME make this a property
     function keys():Iterator<K>

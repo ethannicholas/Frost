@@ -262,7 +262,6 @@ class TestRunner {
         var total := 0
         var success := 0
         for file in files {
-            if file.path.endsWith("JSON.panda") { continue }
             if file.path.endsWith(".panda") {
                 def name := file.changeExtension("").name()
                 total += 1

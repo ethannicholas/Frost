@@ -83,17 +83,20 @@ panda$core$Bit org$pandalanguage$pandac$FieldDecl$Kind$$EQ$org$pandalanguage$pan
 // line 5
 panda$core$Int64 $tmp18 = param0.$rawValue;
 panda$core$Int64 $tmp19 = param1.$rawValue;
-panda$core$Bit $tmp20 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit($tmp18, $tmp19);
-bool $tmp21 = $tmp20.value;
-if ($tmp21) goto block1; else goto block2;
+int64_t $tmp20 = $tmp18.value;
+int64_t $tmp21 = $tmp19.value;
+bool $tmp22 = $tmp20 != $tmp21;
+panda$core$Bit $tmp23 = (panda$core$Bit) {$tmp22};
+bool $tmp24 = $tmp23.value;
+if ($tmp24) goto block1; else goto block2;
 block1:;
 // line 5
-panda$core$Bit $tmp22 = panda$core$Bit$init$builtin_bit(false);
-return $tmp22;
+panda$core$Bit $tmp25 = panda$core$Bit$init$builtin_bit(false);
+return $tmp25;
 block2:;
 // line 5
-panda$core$Bit $tmp23 = panda$core$Bit$init$builtin_bit(true);
-return $tmp23;
+panda$core$Bit $tmp26 = panda$core$Bit$init$builtin_bit(true);
+return $tmp26;
 
 }
 

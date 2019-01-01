@@ -456,17 +456,20 @@ panda$core$Bit org$pandalanguage$regex$RegexToken$Kind$$EQ$org$pandalanguage$reg
 // line 11
 panda$core$Int64 $tmp180 = param0.$rawValue;
 panda$core$Int64 $tmp181 = param1.$rawValue;
-panda$core$Bit $tmp182 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit($tmp180, $tmp181);
-bool $tmp183 = $tmp182.value;
-if ($tmp183) goto block1; else goto block2;
+int64_t $tmp182 = $tmp180.value;
+int64_t $tmp183 = $tmp181.value;
+bool $tmp184 = $tmp182 != $tmp183;
+panda$core$Bit $tmp185 = (panda$core$Bit) {$tmp184};
+bool $tmp186 = $tmp185.value;
+if ($tmp186) goto block1; else goto block2;
 block1:;
 // line 11
-panda$core$Bit $tmp184 = panda$core$Bit$init$builtin_bit(false);
-return $tmp184;
+panda$core$Bit $tmp187 = panda$core$Bit$init$builtin_bit(false);
+return $tmp187;
 block2:;
 // line 11
-panda$core$Bit $tmp185 = panda$core$Bit$init$builtin_bit(true);
-return $tmp185;
+panda$core$Bit $tmp188 = panda$core$Bit$init$builtin_bit(true);
+return $tmp188;
 
 }
 

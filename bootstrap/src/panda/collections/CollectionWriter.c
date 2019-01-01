@@ -49,6 +49,7 @@ while ($tmp11->$class != (panda$core$Class*) &panda$collections$Iterator$class) 
 }
 $fn13 $tmp12 = $tmp11->methods[1];
 panda$core$Object* $tmp14 = $tmp12($tmp5);
+panda$core$Panda$unref$panda$core$Object$Q($tmp14);
 panda$core$Object* $tmp15 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q($tmp15);
 panda$core$Panda$ref$panda$core$Object$Q($tmp14);
@@ -61,7 +62,6 @@ while ($tmp17->$class != (panda$core$Class*) &panda$collections$CollectionWriter
 }
 $fn19 $tmp18 = $tmp17->methods[0];
 $tmp18(param0, $tmp16);
-panda$core$Panda$unref$panda$core$Object$Q($tmp14);
 panda$core$Object* $tmp20 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q($tmp20);
 // unreffing v

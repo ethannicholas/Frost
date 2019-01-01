@@ -312,17 +312,20 @@ panda$core$Bit org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind$$EQ$org$pa
 // line 6
 panda$core$Int64 $tmp116 = param0.$rawValue;
 panda$core$Int64 $tmp117 = param1.$rawValue;
-panda$core$Bit $tmp118 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit($tmp116, $tmp117);
-bool $tmp119 = $tmp118.value;
-if ($tmp119) goto block1; else goto block2;
+int64_t $tmp118 = $tmp116.value;
+int64_t $tmp119 = $tmp117.value;
+bool $tmp120 = $tmp118 != $tmp119;
+panda$core$Bit $tmp121 = (panda$core$Bit) {$tmp120};
+bool $tmp122 = $tmp121.value;
+if ($tmp122) goto block1; else goto block2;
 block1:;
 // line 6
-panda$core$Bit $tmp120 = panda$core$Bit$init$builtin_bit(false);
-return $tmp120;
+panda$core$Bit $tmp123 = panda$core$Bit$init$builtin_bit(false);
+return $tmp123;
 block2:;
 // line 6
-panda$core$Bit $tmp121 = panda$core$Bit$init$builtin_bit(true);
-return $tmp121;
+panda$core$Bit $tmp124 = panda$core$Bit$init$builtin_bit(true);
+return $tmp124;
 
 }
 

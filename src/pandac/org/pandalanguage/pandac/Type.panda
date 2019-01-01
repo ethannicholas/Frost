@@ -111,7 +111,6 @@ class Type : Symbol, Key<Type> {
         self.priority := priority
         self.subtypes := ImmutableArray<Type>(subtypes)
         super.init(Symbol.Kind.TYPE, position, name)
-        panda.core.Panda.ref(self) -- FIXME hack yet another bootstrap memory management workaround
     }
 
     init(subtypes:ListView<Type>) {

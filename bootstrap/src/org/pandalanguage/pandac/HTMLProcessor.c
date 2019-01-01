@@ -163,6 +163,7 @@ while ($tmp20->$class != (panda$core$Class*) &panda$collections$Iterator$class) 
 }
 $fn22 $tmp21 = $tmp20->methods[1];
 panda$core$Object* $tmp23 = $tmp21($tmp14);
+panda$core$Panda$unref$panda$core$Object$Q($tmp23);
 org$pandalanguage$pandac$Pair* $tmp24 = *(&local2);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp24));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((org$pandalanguage$pandac$Pair*) $tmp23)));
@@ -532,7 +533,6 @@ panda$core$MutableString* $tmp199 = *(&local0);
 panda$core$MutableString$append$panda$core$String($tmp199, &$s200);
 goto block48;
 block48:;
-panda$core$Panda$unref$panda$core$Object$Q($tmp23);
 panda$core$MutableString* $tmp201 = *(&local4);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp201));
 // unreffing s

@@ -182,6 +182,7 @@ while ($tmp72->$class != (panda$core$Class*) &panda$collections$Iterator$class) 
 }
 $fn74 $tmp73 = $tmp72->methods[1];
 panda$core$Object* $tmp75 = $tmp73($tmp66);
+panda$core$Panda$unref$panda$core$Object$Q($tmp75);
 org$pandalanguage$pandac$IR$Block* $tmp76 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp76));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((org$pandalanguage$pandac$IR$Block*) $tmp75)));
@@ -209,7 +210,6 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp86));
 *(&local0) = ((org$pandalanguage$pandac$IR$Block*) NULL);
 return;
 block5:;
-panda$core$Panda$unref$panda$core$Object$Q($tmp75);
 org$pandalanguage$pandac$IR$Block* $tmp87 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp87));
 // unreffing b
