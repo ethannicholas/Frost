@@ -19,7 +19,7 @@ void org$pandalanguage$pandac$Compiler$Capture$cleanup(org$pandalanguage$pandac$
 
 org$pandalanguage$pandac$Variable* local0 = NULL;
 org$pandalanguage$pandac$FieldDecl* local1 = NULL;
-// line 249
+// line 250
 panda$core$Int64* $tmp2 = &param0->$rawValue;
 panda$core$Int64 $tmp3 = *$tmp2;
 panda$core$Int64 $tmp4 = (panda$core$Int64) {0};
@@ -76,10 +76,10 @@ return;
 }
 void org$pandalanguage$pandac$Compiler$Capture$init$panda$core$Int64$org$pandalanguage$pandac$Variable(org$pandalanguage$pandac$Compiler$Capture* param0, panda$core$Int64 param1, org$pandalanguage$pandac$Variable* param2) {
 
-// line 249
+// line 250
 panda$core$Int64* $tmp23 = &param0->$rawValue;
 *$tmp23 = param1;
-// line 249
+// line 250
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param2));
 org$pandalanguage$pandac$Variable** $tmp24 = (org$pandalanguage$pandac$Variable**) (param0->$data + 0);
 *$tmp24 = param2;
@@ -88,10 +88,10 @@ return;
 }
 void org$pandalanguage$pandac$Compiler$Capture$init$panda$core$Int64$org$pandalanguage$pandac$FieldDecl(org$pandalanguage$pandac$Compiler$Capture* param0, panda$core$Int64 param1, org$pandalanguage$pandac$FieldDecl* param2) {
 
-// line 249
+// line 250
 panda$core$Int64* $tmp25 = &param0->$rawValue;
 *$tmp25 = param1;
-// line 249
+// line 250
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param2));
 org$pandalanguage$pandac$FieldDecl** $tmp26 = (org$pandalanguage$pandac$FieldDecl**) (param0->$data + 0);
 *$tmp26 = param2;
@@ -100,7 +100,7 @@ return;
 }
 void org$pandalanguage$pandac$Compiler$Capture$init$panda$core$Int64(org$pandalanguage$pandac$Compiler$Capture* param0, panda$core$Int64 param1) {
 
-// line 249
+// line 250
 panda$core$Int64* $tmp27 = &param0->$rawValue;
 *$tmp27 = param1;
 return;

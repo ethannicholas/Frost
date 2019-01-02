@@ -545,13 +545,13 @@ panda$collections$IdentityMap$Entry** $tmp241 = &$tmp237->next;
 // line 122
 panda$collections$IdentityMap$Entry*** $tmp242 = &param0->contents;
 panda$collections$IdentityMap$Entry** $tmp243 = *$tmp242;
-panda$collections$IdentityMap$Entry* $tmp244 = *(&local1);
-panda$core$Int64 $tmp245 = *(&local0);
-int64_t $tmp246 = $tmp245.value;
+panda$core$Int64 $tmp244 = *(&local0);
+panda$collections$IdentityMap$Entry* $tmp245 = *(&local1);
+int64_t $tmp246 = $tmp244.value;
 panda$collections$IdentityMap$Entry* $tmp247 = $tmp243[$tmp246];
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp247));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp244));
-$tmp243[$tmp246] = $tmp244;
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp245));
+$tmp243[$tmp246] = $tmp245;
 // line 123
 panda$collections$IdentityMap$incrementCount(param0);
 panda$collections$IdentityMap$Entry* $tmp248 = *(&local3);
@@ -633,15 +633,15 @@ block3:;
 // line 141
 panda$collections$IdentityMap$Entry*** $tmp279 = &param0->contents;
 panda$collections$IdentityMap$Entry** $tmp280 = *$tmp279;
-panda$collections$IdentityMap$Entry* $tmp281 = *(&local1);
-panda$collections$IdentityMap$Entry** $tmp282 = &$tmp281->next;
-panda$collections$IdentityMap$Entry* $tmp283 = *$tmp282;
-panda$core$Int64 $tmp284 = *(&local0);
-int64_t $tmp285 = $tmp284.value;
+panda$core$Int64 $tmp281 = *(&local0);
+panda$collections$IdentityMap$Entry* $tmp282 = *(&local1);
+panda$collections$IdentityMap$Entry** $tmp283 = &$tmp282->next;
+panda$collections$IdentityMap$Entry* $tmp284 = *$tmp283;
+int64_t $tmp285 = $tmp281.value;
 panda$collections$IdentityMap$Entry* $tmp286 = $tmp280[$tmp285];
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp286));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp283));
-$tmp280[$tmp285] = $tmp283;
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp284));
+$tmp280[$tmp285] = $tmp284;
 // line 142
 panda$core$Int64* $tmp287 = &param0->_count;
 panda$core$Int64 $tmp288 = *$tmp287;
@@ -1164,12 +1164,12 @@ if ($tmp596) goto block17; else goto block18;
 block17:;
 // line 199
 panda$collections$IdentityMap$Entry* $tmp597 = *(&local4);
-panda$core$Object** $tmp598 = &$tmp597->value;
+panda$core$Object** $tmp598 = &$tmp597->key;
 panda$core$Object* $tmp599 = *$tmp598;
 panda$collections$IdentityMap$Entry* $tmp600 = *(&local4);
-panda$core$Object** $tmp601 = &$tmp600->key;
+panda$core$Object** $tmp601 = &$tmp600->value;
 panda$core$Object* $tmp602 = *$tmp601;
-panda$collections$IdentityMap$$IDXEQ$panda$collections$IdentityMap$K$panda$collections$IdentityMap$V(param0, $tmp602, $tmp599);
+panda$collections$IdentityMap$$IDXEQ$panda$collections$IdentityMap$K$panda$collections$IdentityMap$V(param0, $tmp599, $tmp602);
 // line 200
 panda$collections$IdentityMap$Entry* $tmp603 = *(&local4);
 panda$collections$IdentityMap$Entry** $tmp604 = &$tmp603->next;

@@ -5,8 +5,8 @@ choice ChoiceIgnoredFields {
     @class
     method test(c:ChoiceIgnoredFields) {
         match c {
-            when SOME_STUFF(_, _, _, four): Console.printLine(four)
-            when OTHER_STUFF(_, two, _, _): Console.printLine(two)
+            when SOME_STUFF(_, _, _, four) { Console.printLine(four) }
+            when OTHER_STUFF(_, two, _, _) { Console.printLine(two) }
         }
     }
 

@@ -24,14 +24,14 @@ static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -
 
 void org$pandalanguage$pandac$Compiler$AutoUnrefs$init$org$pandalanguage$pandac$Compiler(org$pandalanguage$pandac$Compiler$AutoUnrefs* param0, org$pandalanguage$pandac$Compiler* param1) {
 
-// line 197
+// line 198
 org$pandalanguage$pandac$Compiler** $tmp2 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp3 = *$tmp2;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 org$pandalanguage$pandac$Compiler** $tmp4 = &param0->compiler;
 *$tmp4 = param1;
-// line 198
+// line 199
 panda$collections$Array** $tmp5 = &param1->statementUnrefs;
 panda$collections$Array* $tmp6 = *$tmp5;
 panda$collections$Array** $tmp7 = &param0->old;
@@ -40,7 +40,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp8));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp6));
 panda$collections$Array** $tmp9 = &param0->old;
 *$tmp9 = $tmp6;
-// line 199
+// line 200
 panda$collections$Array* $tmp10 = (panda$collections$Array*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$Array$class);
 panda$collections$Array$init($tmp10);
 panda$collections$Array** $tmp11 = &param1->statementUnrefs;
@@ -56,7 +56,7 @@ return;
 void org$pandalanguage$pandac$Compiler$AutoUnrefs$cleanup(org$pandalanguage$pandac$Compiler$AutoUnrefs* param0) {
 
 org$pandalanguage$pandac$IR$Value* local0 = NULL;
-// line 204
+// line 205
 org$pandalanguage$pandac$Compiler** $tmp14 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp15 = *$tmp14;
 org$pandalanguage$pandac$IR** $tmp16 = &$tmp15->ir;
@@ -67,7 +67,7 @@ panda$core$Bit $tmp21 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp20);
 bool $tmp22 = $tmp21.value;
 if ($tmp22) goto block1; else goto block2;
 block1:;
-// line 205
+// line 206
 org$pandalanguage$pandac$Compiler** $tmp23 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp24 = *$tmp23;
 panda$collections$Array** $tmp25 = &$tmp24->statementUnrefs;
@@ -101,7 +101,7 @@ org$pandalanguage$pandac$IR$Value* $tmp40 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp40));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((org$pandalanguage$pandac$IR$Value*) $tmp39)));
 *(&local0) = ((org$pandalanguage$pandac$IR$Value*) $tmp39);
-// line 206
+// line 207
 org$pandalanguage$pandac$Compiler** $tmp41 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp42 = *$tmp41;
 org$pandalanguage$pandac$IR$Value* $tmp43 = *(&local0);
@@ -115,7 +115,7 @@ block5:;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp30));
 goto block2;
 block2:;
-// line 209
+// line 210
 org$pandalanguage$pandac$Compiler** $tmp45 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp46 = *$tmp45;
 panda$collections$Array** $tmp47 = &param0->old;

@@ -31,7 +31,7 @@ struct { panda$core$Class* cl; ITable* next; void* methods[6]; } panda$collectio
 static panda$core$String $s1;
 panda$collections$ListView$class_type panda$collections$ListView$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, (ITable*) &panda$collections$ListView$_panda$collections$CollectionView, { panda$core$Object$convert$R$panda$core$String, panda$core$Object$cleanup, NULL, panda$collections$ListView$$IDX$panda$core$Range$LTpanda$core$Int64$GT$R$panda$collections$ListView$LTpanda$collections$ListView$T$GT, panda$collections$ListView$$IDX$panda$core$Range$LTpanda$core$Int64$Q$GT$R$panda$collections$ListView$LTpanda$collections$ListView$T$GT, panda$collections$ListView$$IDX$panda$core$SteppedRange$LTpanda$core$Int64$Q$Cpanda$core$Int64$GT$R$panda$collections$ListView$LTpanda$collections$ListView$T$GT, panda$collections$ListView$filter$$LPpanda$collections$ListView$T$RP$EQ$GT$LPpanda$core$Bit$RP$R$panda$collections$ListView$LTpanda$collections$ListView$T$GT, panda$collections$ListView$iterator$R$panda$collections$Iterator$LTpanda$collections$ListView$T$GT$shim} };
 
-typedef panda$core$Object* (*$fn49)(panda$collections$ListView*, panda$core$Int64);
+typedef panda$core$Object* (*$fn50)(panda$collections$ListView*, panda$core$Int64);
 typedef panda$core$Int64 (*$fn88)(panda$collections$CollectionView*);
 typedef panda$collections$ListView* (*$fn104)(panda$collections$ListView*, panda$core$Range$LTpanda$core$Int64$GT);
 typedef panda$core$Int64 (*$fn121)(panda$collections$CollectionView*);
@@ -116,25 +116,25 @@ if ($tmp39) goto block3; else goto block4;
 block3:;
 // line 58
 panda$core$Object** $tmp40 = *(&local2);
-panda$core$Int64 $tmp41 = param1.min;
-panda$core$Int64 $tmp42 = *(&local3);
-int64_t $tmp43 = $tmp41.value;
+panda$core$Int64 $tmp41 = *(&local3);
+panda$core$Int64 $tmp42 = param1.min;
+panda$core$Int64 $tmp43 = *(&local3);
 int64_t $tmp44 = $tmp42.value;
-int64_t $tmp45 = $tmp43 + $tmp44;
-panda$core$Int64 $tmp46 = (panda$core$Int64) {$tmp45};
-ITable* $tmp47 = param0->$class->itable;
-while ($tmp47->$class != (panda$core$Class*) &panda$collections$ListView$class) {
-    $tmp47 = $tmp47->next;
+int64_t $tmp45 = $tmp43.value;
+int64_t $tmp46 = $tmp44 + $tmp45;
+panda$core$Int64 $tmp47 = (panda$core$Int64) {$tmp46};
+ITable* $tmp48 = param0->$class->itable;
+while ($tmp48->$class != (panda$core$Class*) &panda$collections$ListView$class) {
+    $tmp48 = $tmp48->next;
 }
-$fn49 $tmp48 = $tmp47->methods[0];
-panda$core$Object* $tmp50 = $tmp48(param0, $tmp46);
-panda$core$Int64 $tmp51 = *(&local3);
-int64_t $tmp52 = $tmp51.value;
+$fn50 $tmp49 = $tmp48->methods[0];
+panda$core$Object* $tmp51 = $tmp49(param0, $tmp47);
+int64_t $tmp52 = $tmp41.value;
 panda$core$Object* $tmp53 = $tmp40[$tmp52];
 panda$core$Panda$unref$panda$core$Object$Q($tmp53);
-panda$core$Panda$ref$panda$core$Object$Q($tmp50);
-$tmp40[$tmp52] = $tmp50;
-panda$core$Panda$unref$panda$core$Object$Q($tmp50);
+panda$core$Panda$ref$panda$core$Object$Q($tmp51);
+$tmp40[$tmp52] = $tmp51;
+panda$core$Panda$unref$panda$core$Object$Q($tmp51);
 goto block5;
 block5:;
 panda$core$Int64 $tmp54 = *(&local3);

@@ -529,6 +529,7 @@ class MutableString {
     }
 
     -- FIXME @self
+    @priority(1)
     method []:=(r:Range<Index?>, s:String) {
         def min:Index
         if r.min !== null {

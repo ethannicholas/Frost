@@ -1574,40 +1574,11 @@ class Parser {
             expressions.add(expr)
         }
         allowLambdas := true
-        def statements := Array<ASTNode>()
-        if checkNext(Token.Kind.COLON) !== null {
-            error(start, "old-style match")
-            loop {
-                match peek().kind {
-                    when Token.Kind.WHEN, Token.Kind.OTHERWISE, Token.Kind.RBRACE {
-                        break
-                    }
-                    when Token.Kind.BREAK, Token.Kind.CONTINUE, Token.Kind.RETURN {
-                        def stmt := terminalStatement()
-                        if stmt == null {
-                            return null
-                        }
-                        statements.add(stmt)
-                        break
-                    }
-                    otherwise {
-                        def stmt := statement()
-                        if stmt == null {
-                            return null
-                        }
-                        statements.add(stmt)
-                    }
-                }
-            }
+        def statements := blockStatements()
+        if statements == null {
+            return null
         }
-        else {
-            def s := blockStatements()
-            if s == null {
-                return null
-            }
-            statements := Array<ASTNode>(s)
-        }
-        return ASTNode.WHEN(start.position, expressions.finish(), statements.finish())
+        return ASTNode.WHEN(start.position, expressions.finish(), statements)
     }
 
     ================================================================================================
@@ -1626,7 +1597,7 @@ class Parser {
             return null
         }
         def whens := Array<ASTNode>()
-        var other:Array<ASTNode>? := null
+        var other:ImmutableArray<ASTNode>? := null
         loop {
             def token := peek()
             match token.kind {
@@ -1642,38 +1613,9 @@ class Parser {
                 }
                 when Token.Kind.OTHERWISE {
                     def o := next()
-                    other := Array<ASTNode>()
-                    if checkNext(Token.Kind.COLON) !== null {
-                        loop {
-                            match peek().kind {
-                                when Token.Kind.RBRACE {
-                                    break
-                                }
-                                when Token.Kind.BREAK, Token.Kind.CONTINUE, Token.Kind.RETURN {
-                                    def stmt := terminalStatement()
-                                    if stmt == null {
-                                        return null
-                                    }
-                                    other.add(stmt)
-                                    break
-                                }
-                                otherwise {
-                                    def stmt := statement()
-                                    if stmt == null {
-                                        return null
-                                    }
-                                    other.add(stmt)
-                                }
-                            }
-                        }
-                        error(start, "old-style match")
-                    }
-                    else {
-                        def s := blockStatements()
-                        if s == null {
-                            return null
-                        }
-                        other.addAll(s)
+                    other := blockStatements()
+                    if other == null {
+                        return null
                     }
                     break
                 }
@@ -1689,7 +1631,7 @@ class Parser {
             return null
         }
         if other !== null {
-            return ASTNode.MATCH(start.position, expr, whens.finish(), other.finish())
+            return ASTNode.MATCH(start.position, expr, whens.finish(), other)
         }
         return ASTNode.MATCH(start.position, expr, whens.finish(), null)
     }

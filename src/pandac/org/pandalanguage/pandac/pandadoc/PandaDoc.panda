@@ -498,7 +498,7 @@ class PandaDoc {
             for f in fields {
                 out.open("field")
                 out.write("name", f.name)
-                out.write("link", linkTo(f))
+                out.write("link", escape(linkTo(f)))
                 out.close("field")
             }
             out.close("inheritedFields")
@@ -568,7 +568,7 @@ class PandaDoc {
             for m in methods {
                 out.open("method")
                 out.write("name", escape(simpleSignature(m)))
-                out.write("link", linkTo(m))
+                out.write("link", escape(linkTo(m)))
                 out.close("method")
             }
             out.close("inheritedMethods")
@@ -691,7 +691,8 @@ class PandaDoc {
         cl.fields.apply(self.write) -- FIXME shouldn't need 'self.'
         cl.methods.apply(self.write) -- FIXME shouldn't need 'self.'
         out.close("class")
-        compiler.currentClass.pop(cl)
+        assert compiler.currentClass[0] == cl
+        compiler.currentClass.pop()
         out := XMLWriter(MemoryOutputStream())
     }
 
@@ -720,7 +721,6 @@ class PandaDoc {
     method writePackages(node:TableOfContentsNode) {
         if compiler.getClass(node.name) == null {
             def dest := outDir.resolve(node.name.replace(".", "/")).resolve("index.xml")
-            Console.printLine(dest)
             out := XMLWriter(dest.openOutputStream())
             writePackage(node)
         }

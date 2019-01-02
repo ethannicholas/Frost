@@ -56,7 +56,7 @@ panda$collections$ImmutableArray$class_type panda$collections$ImmutableArray$cla
 
 typedef panda$core$Int64 (*$fn10)(panda$collections$CollectionView*);
 typedef panda$core$Int64 (*$fn21)(panda$collections$CollectionView*);
-typedef panda$core$Object* (*$fn46)(panda$collections$ListView*, panda$core$Int64);
+typedef panda$core$Object* (*$fn47)(panda$collections$ListView*, panda$core$Int64);
 typedef panda$core$Int64 (*$fn76)(panda$collections$CollectionView*);
 typedef panda$core$Int64 (*$fn131)(panda$collections$CollectionView*);
 typedef panda$core$Int64 (*$fn150)(panda$collections$CollectionView*);
@@ -147,19 +147,19 @@ block1:;
 panda$core$Object*** $tmp41 = &param0->data;
 panda$core$Object** $tmp42 = *$tmp41;
 panda$core$Int64 $tmp43 = *(&local0);
-ITable* $tmp44 = param1->$class->itable;
-while ($tmp44->$class != (panda$core$Class*) &panda$collections$ListView$class) {
-    $tmp44 = $tmp44->next;
+panda$core$Int64 $tmp44 = *(&local0);
+ITable* $tmp45 = param1->$class->itable;
+while ($tmp45->$class != (panda$core$Class*) &panda$collections$ListView$class) {
+    $tmp45 = $tmp45->next;
 }
-$fn46 $tmp45 = $tmp44->methods[0];
-panda$core$Object* $tmp47 = $tmp45(param1, $tmp43);
-panda$core$Int64 $tmp48 = *(&local0);
-int64_t $tmp49 = $tmp48.value;
+$fn47 $tmp46 = $tmp45->methods[0];
+panda$core$Object* $tmp48 = $tmp46(param1, $tmp44);
+int64_t $tmp49 = $tmp43.value;
 panda$core$Object* $tmp50 = $tmp42[$tmp49];
 panda$core$Panda$unref$panda$core$Object$Q($tmp50);
-panda$core$Panda$ref$panda$core$Object$Q($tmp47);
-$tmp42[$tmp49] = $tmp47;
-panda$core$Panda$unref$panda$core$Object$Q($tmp47);
+panda$core$Panda$ref$panda$core$Object$Q($tmp48);
+$tmp42[$tmp49] = $tmp48;
+panda$core$Panda$unref$panda$core$Object$Q($tmp48);
 goto block3;
 block3:;
 panda$core$Int64 $tmp51 = *(&local0);

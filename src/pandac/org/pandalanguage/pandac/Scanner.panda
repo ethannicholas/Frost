@@ -903,7 +903,8 @@ class Scanner {
                                         "of a class")
                                 m.annotations.flags &&= !!Annotations.Flag.CLASS
                             }
-                            compiler.currentClass.pop(bareCodeClass)
+                            assert compiler.currentClass[0] == bareCodeClass
+                            compiler.currentClass.pop()
                             bareCodeClass.methods.add(m)
                             bareCodeClass.symbolTable.add(m)
                         }

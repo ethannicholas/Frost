@@ -396,10 +396,10 @@ goto block6;
 block6:;
 // line 109
 panda$collections$HashMap* $tmp128 = *(&local0);
-panda$json$JSON* $tmp129 = panda$json$JSONParser$node$R$panda$json$JSON(param0);
-panda$core$String* $tmp130 = *(&local1);
-panda$collections$HashMap$$IDXEQ$panda$collections$HashMap$K$panda$collections$HashMap$V($tmp128, ((panda$collections$Key*) $tmp130), ((panda$core$Object*) $tmp129));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp129));
+panda$core$String* $tmp129 = *(&local1);
+panda$json$JSON* $tmp130 = panda$json$JSONParser$node$R$panda$json$JSON(param0);
+panda$collections$HashMap$$IDXEQ$panda$collections$HashMap$K$panda$collections$HashMap$V($tmp128, ((panda$collections$Key*) $tmp129), ((panda$core$Object*) $tmp130));
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp130));
 // line 110
 org$pandalanguage$json$Token $tmp131 = panda$json$JSONParser$next$R$org$pandalanguage$json$Token(param0);
 org$pandalanguage$json$Token$Kind $tmp132 = $tmp131.kind;

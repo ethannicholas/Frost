@@ -11,6 +11,6 @@ typedef struct panda$collections$Stack {
     panda$collections$Array* contents;
 } panda$collections$Stack;
 #include "panda/core/Class.h"
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[9]; } panda$collections$Stack$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[8]; } panda$collections$Stack$class_type;
 extern panda$collections$Stack$class_type panda$collections$Stack$class;
 

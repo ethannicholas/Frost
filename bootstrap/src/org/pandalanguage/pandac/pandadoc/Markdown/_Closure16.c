@@ -25,7 +25,7 @@ static panda$core$String $s52 = { (panda$core$Class*) &panda$core$String$class, 
 
 void org$pandalanguage$pandac$pandadoc$Markdown$_Closure16$init$org$pandalanguage$pandac$pandadoc$Markdown(org$pandalanguage$pandac$pandadoc$Markdown$_Closure16* param0, org$pandalanguage$pandac$pandadoc$Markdown* param1) {
 
-// line 736
+// line 739
 org$pandalanguage$pandac$pandadoc$Markdown** $tmp2 = &param0->$self;
 org$pandalanguage$pandac$pandadoc$Markdown* $tmp3 = *$tmp2;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
@@ -49,7 +49,7 @@ panda$core$String* local0 = NULL;
 panda$core$MutableString* local1 = NULL;
 panda$core$String* local2 = NULL;
 panda$core$Bit local3;
-// line 737
+// line 740
 panda$core$Int64 $tmp7 = (panda$core$Int64) {4};
 ITable* $tmp8 = param1->$class->itable;
 while ($tmp8->$class != (panda$core$Class*) &panda$collections$ListView$class) {
@@ -63,7 +63,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp12));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((panda$core$String*) $tmp11)));
 *(&local0) = ((panda$core$String*) $tmp11);
 panda$core$Panda$unref$panda$core$Object$Q($tmp11);
-// line 738
+// line 741
 panda$core$MutableString* $tmp13 = (panda$core$MutableString*) pandaObjectAlloc(48, (panda$core$Class*) &panda$core$MutableString$class);
 panda$core$String* $tmp14 = *(&local0);
 panda$core$MutableString$init$panda$core$String($tmp13, $tmp14);
@@ -73,7 +73,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp15));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp13));
 *(&local1) = $tmp13;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp13));
-// line 739
+// line 742
 panda$core$Int64 $tmp16 = (panda$core$Int64) {1};
 ITable* $tmp17 = param1->$class->itable;
 while ($tmp17->$class != (panda$core$Class*) &panda$collections$ListView$class) {
@@ -87,7 +87,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp21));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((panda$core$String*) $tmp20)));
 *(&local2) = ((panda$core$String*) $tmp20);
 panda$core$Panda$unref$panda$core$Object$Q($tmp20);
-// line 740
+// line 743
 panda$core$String* $tmp22 = *(&local2);
 panda$core$Bit $tmp23 = org$pandalanguage$pandac$pandadoc$Markdown$isEmptyString$panda$core$String$Q$R$panda$core$Bit($tmp22);
 panda$core$Bit $tmp24 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp23);
@@ -106,10 +106,10 @@ panda$core$Bit $tmp28 = *(&local3);
 bool $tmp29 = $tmp28.value;
 if ($tmp29) goto block4; else goto block6;
 block4:;
-// line 741
+// line 744
 panda$core$MutableString* $tmp30 = *(&local1);
 org$pandalanguage$pandac$pandadoc$Markdown$outdent$panda$core$MutableString($tmp30);
-// line 742
+// line 745
 org$pandalanguage$pandac$pandadoc$Markdown** $tmp31 = &param0->$self;
 org$pandalanguage$pandac$pandadoc$Markdown* $tmp32 = *$tmp31;
 panda$core$MutableString* $tmp33 = *(&local1);
@@ -118,16 +118,16 @@ $tmp34($tmp32, $tmp33);
 goto block5;
 block6:;
 // line 1
-// line 746
+// line 749
 panda$core$MutableString* $tmp36 = *(&local1);
 org$pandalanguage$pandac$pandadoc$Markdown$outdent$panda$core$MutableString($tmp36);
-// line 747
+// line 750
 org$pandalanguage$pandac$pandadoc$Markdown** $tmp37 = &param0->$self;
 org$pandalanguage$pandac$pandadoc$Markdown* $tmp38 = *$tmp37;
 panda$core$MutableString* $tmp39 = *(&local1);
 $fn41 $tmp40 = ($fn41) $tmp38->$class->vtable[19];
 $tmp40($tmp38, $tmp39);
-// line 748
+// line 751
 org$pandalanguage$pandac$pandadoc$Markdown** $tmp42 = &param0->$self;
 org$pandalanguage$pandac$pandadoc$Markdown* $tmp43 = *$tmp42;
 panda$core$MutableString* $tmp44 = *(&local1);
@@ -135,10 +135,10 @@ $fn46 $tmp45 = ($fn46) $tmp43->$class->vtable[22];
 $tmp45($tmp43, $tmp44);
 goto block5;
 block5:;
-// line 750
+// line 753
 panda$core$MutableString* $tmp47 = *(&local1);
 panda$core$MutableString$trim($tmp47);
-// line 751
+// line 754
 panda$core$MutableString* $tmp48 = *(&local1);
 panda$core$String* $tmp49 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s50, ((panda$core$Object*) $tmp48));
 panda$core$String* $tmp51 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp49, &$s52);

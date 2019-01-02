@@ -26,7 +26,7 @@ static panda$core$String $s48 = { (panda$core$Class*) &panda$core$String$class, 
 
 void org$pandalanguage$pandac$pandadoc$Markdown$_Closure6$init$org$pandalanguage$pandac$pandadoc$Markdown(org$pandalanguage$pandac$pandadoc$Markdown$_Closure6* param0, org$pandalanguage$pandac$pandadoc$Markdown* param1) {
 
-// line 359
+// line 362
 org$pandalanguage$pandac$pandadoc$Markdown** $tmp2 = &param0->$self;
 org$pandalanguage$pandac$pandadoc$Markdown* $tmp3 = *$tmp2;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
@@ -50,7 +50,7 @@ panda$core$String* local0 = NULL;
 panda$core$MutableString* local1 = NULL;
 panda$core$String* local2 = NULL;
 panda$core$String* local3 = NULL;
-// line 360
+// line 363
 panda$core$Int64 $tmp7 = (panda$core$Int64) {1};
 ITable* $tmp8 = param1->$class->itable;
 while ($tmp8->$class != (panda$core$Class*) &panda$collections$ListView$class) {
@@ -64,7 +64,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp12));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((panda$core$String*) $tmp11)));
 *(&local0) = ((panda$core$String*) $tmp11);
 panda$core$Panda$unref$panda$core$Object$Q($tmp11);
-// line 361
+// line 364
 panda$core$MutableString* $tmp13 = (panda$core$MutableString*) pandaObjectAlloc(48, (panda$core$Class*) &panda$core$MutableString$class);
 panda$core$String* $tmp14 = *(&local0);
 panda$core$MutableString$init$panda$core$String($tmp13, $tmp14);
@@ -74,13 +74,13 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp15));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp13));
 *(&local1) = $tmp13;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp13));
-// line 362
+// line 365
 org$pandalanguage$pandac$pandadoc$Markdown** $tmp16 = &param0->$self;
 org$pandalanguage$pandac$pandadoc$Markdown* $tmp17 = *$tmp16;
 panda$core$MutableString* $tmp18 = *(&local1);
 $fn20 $tmp19 = ($fn20) $tmp17->$class->vtable[11];
 $tmp19($tmp17, $tmp18);
-// line 363
+// line 366
 org$pandalanguage$pandac$pandadoc$Markdown** $tmp21 = &param0->$self;
 org$pandalanguage$pandac$pandadoc$Markdown* $tmp22 = *$tmp21;
 panda$core$MutableString* $tmp23 = *(&local1);
@@ -94,7 +94,7 @@ panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp27));
 *(&local2) = $tmp27;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp24));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp27));
-// line 364
+// line 367
 org$pandalanguage$pandac$pandadoc$Markdown** $tmp29 = &param0->$self;
 org$pandalanguage$pandac$pandadoc$Markdown* $tmp30 = *$tmp29;
 panda$core$MutableString* $tmp31 = *(&local1);
@@ -110,7 +110,7 @@ panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp38));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp32));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp34));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp38));
-// line 365
+// line 368
 panda$core$String* $tmp40 = *(&local3);
 panda$core$String* $tmp41 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s42, $tmp40);
 panda$core$String* $tmp43 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp41, &$s44);

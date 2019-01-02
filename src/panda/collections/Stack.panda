@@ -56,28 +56,6 @@ class Stack<T> : Iterable<T> {
     }
 
     ================================================================================================
-    Pops the top value from the stack with the precondition that it has the expected value. This is
-    useful for balanced stack operations, e.g.:
-
-        stack.push(value)
-        <code which should leave the stack unmodified>
-        stack.pop(value)
-
-    This will generate a safety violation if the stack was incorrectly modified in between the
-    `push` and `pop`, because the `pop` will not result in the expected value.
-
-    @see pop()
-    ================================================================================================
-    -- FIXME doesn't work with Values, which confused the hell out of me because I subconsciously
-    -- assumed I had used '=' for this comparison. This is absolutely more trouble than it's worth
-    -- unless I can fix that. Figure out a way to provide a different implementation for Equatable
-    -- types? Add -?> back and just live with the typecast? Just remove the method for now?
-    @pre(self[0] == expected)
-    method pop(expected:T) {
-        pop()
-    }
-
-    ================================================================================================
     Returns the value at the given depth in the stack. The top element (most recently pushed) is
     element 0, and the bottom element (earliest pushed) is element `count - 1`.
     ================================================================================================

@@ -6,6 +6,8 @@
 #include "org/pandalanguage/pandac/Compiler/EnclosingContext.h"
 #include "panda/core/Panda.h"
 #include "panda/collections/Stack.h"
+#include "panda/core/Int64.h"
+#include "panda/core/Bit.h"
 
 
 static panda$core$String $s1;
@@ -13,6 +15,7 @@ org$pandalanguage$pandac$Compiler$AutoContext$class_type org$pandalanguage$panda
 
 
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x70\x61\x6e\x64\x61\x63\x2e\x43\x6f\x6d\x70\x69\x6c\x65\x72\x2e\x41\x75\x74\x6f\x43\x6f\x6e\x74\x65\x78\x74", 45, 6395246767481970453, NULL };
+static panda$core$String $s22 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x43\x6f\x6d\x70\x69\x6c\x65\x72\x2e\x70\x61\x6e\x64\x61", 14, -3408958965109419534, NULL };
 
 void org$pandalanguage$pandac$Compiler$AutoContext$init$org$pandalanguage$pandac$Compiler$org$pandalanguage$pandac$Compiler$EnclosingContext(org$pandalanguage$pandac$Compiler$AutoContext* param0, org$pandalanguage$pandac$Compiler* param1, org$pandalanguage$pandac$Compiler$EnclosingContext* param2) {
 
@@ -44,15 +47,33 @@ org$pandalanguage$pandac$Compiler** $tmp10 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp11 = *$tmp10;
 panda$collections$Stack** $tmp12 = &$tmp11->enclosingContexts;
 panda$collections$Stack* $tmp13 = *$tmp12;
-org$pandalanguage$pandac$Compiler$EnclosingContext** $tmp14 = &param0->context;
-org$pandalanguage$pandac$Compiler$EnclosingContext* $tmp15 = *$tmp14;
-panda$collections$Stack$pop$panda$collections$Stack$T($tmp13, ((panda$core$Object*) $tmp15));
-org$pandalanguage$pandac$Compiler** $tmp16 = &param0->compiler;
-org$pandalanguage$pandac$Compiler* $tmp17 = *$tmp16;
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp17));
-org$pandalanguage$pandac$Compiler$EnclosingContext** $tmp18 = &param0->context;
-org$pandalanguage$pandac$Compiler$EnclosingContext* $tmp19 = *$tmp18;
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp19));
+panda$core$Int64 $tmp14 = (panda$core$Int64) {0};
+panda$core$Object* $tmp15 = panda$collections$Stack$$IDX$panda$core$Int64$R$panda$collections$Stack$T($tmp13, $tmp14);
+org$pandalanguage$pandac$Compiler$EnclosingContext** $tmp16 = &param0->context;
+org$pandalanguage$pandac$Compiler$EnclosingContext* $tmp17 = *$tmp16;
+bool $tmp18 = ((org$pandalanguage$pandac$Compiler$EnclosingContext*) $tmp15) == $tmp17;
+panda$core$Bit $tmp19 = panda$core$Bit$init$builtin_bit($tmp18);
+bool $tmp20 = $tmp19.value;
+if ($tmp20) goto block1; else goto block2;
+block2:;
+panda$core$Int64 $tmp21 = (panda$core$Int64) {147};
+panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64(&$s22, $tmp21);
+abort(); // unreachable
+block1:;
+panda$core$Panda$unref$panda$core$Object$Q($tmp15);
+// line 148
+org$pandalanguage$pandac$Compiler** $tmp23 = &param0->compiler;
+org$pandalanguage$pandac$Compiler* $tmp24 = *$tmp23;
+panda$collections$Stack** $tmp25 = &$tmp24->enclosingContexts;
+panda$collections$Stack* $tmp26 = *$tmp25;
+panda$core$Object* $tmp27 = panda$collections$Stack$pop$R$panda$collections$Stack$T($tmp26);
+panda$core$Panda$unref$panda$core$Object$Q($tmp27);
+org$pandalanguage$pandac$Compiler** $tmp28 = &param0->compiler;
+org$pandalanguage$pandac$Compiler* $tmp29 = *$tmp28;
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp29));
+org$pandalanguage$pandac$Compiler$EnclosingContext** $tmp30 = &param0->context;
+org$pandalanguage$pandac$Compiler$EnclosingContext* $tmp31 = *$tmp30;
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp31));
 return;
 
 }

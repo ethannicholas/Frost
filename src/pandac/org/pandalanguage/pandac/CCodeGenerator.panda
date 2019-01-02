@@ -29,7 +29,8 @@ class CCodeGenerator : CodeGenerator {
 
         @override
         method cleanup() {
-            cg.enclosingContexts.pop(context)
+            assert cg.enclosingContexts[0] == context
+            cg.enclosingContexts.pop()
         }
     }
 
@@ -590,7 +591,8 @@ class CCodeGenerator : CodeGenerator {
             }
             code.append("} };\n")
             types.printLine(code.finish())
-            compiler.currentClass.pop(cl)
+            assert compiler.currentClass[0] == cl
+            compiler.currentClass.pop()
         }
         return result
     }

@@ -6,9 +6,9 @@ choice Color {
 
 method printColor(c:Color) {
     match c {
-        when Color.RED:   Console.printLine("red")
-        when Color.WHITE: Console.printLine("white")
-        when Color.BLACK: Console.printLine("black")
+        when Color.RED   { Console.printLine("red") }
+        when Color.WHITE { Console.printLine("white") }
+        when Color.BLACK { Console.printLine("black") }
     }
 }
 

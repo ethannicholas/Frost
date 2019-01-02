@@ -144,7 +144,8 @@ class Compiler {
 
         @override
         method cleanup() {
-            compiler.enclosingContexts.pop(context)
+            assert compiler.enclosingContexts[0] == context
+            compiler.enclosingContexts.pop()
         }
     }
 
@@ -796,7 +797,8 @@ class Compiler {
                 }
                 else {
                     cl.resolved := Resolution.RESOLVED_WITH_ERRORS
-                    currentClass.pop(cl)
+                    assert currentClass[0] == cl
+                    currentClass.pop()
                     return false
                 }
             }
@@ -811,7 +813,8 @@ class Compiler {
                 def resolvedType := resolve(rawS, false)
                 if resolvedType == null {
                     cl.resolved := Resolution.RESOLVED_WITH_ERRORS
-                    currentClass.pop(cl)
+                    assert currentClass[0] == cl
+                    currentClass.pop()
                     return false
                 }
                 def s := resolve(resolvedType, false)
@@ -843,13 +846,15 @@ class Compiler {
                     }
                     else {
                         cl.resolved := Resolution.RESOLVED_WITH_ERRORS
-                        currentClass.pop(cl)
+                        assert currentClass[0] == cl
+                        currentClass.pop()
                         return false
                     }
                 }
                 else {
                     cl.resolved := Resolution.RESOLVED_WITH_ERRORS
-                    currentClass.pop(cl)
+                    assert currentClass[0] == cl
+                    currentClass.pop()
                     return false
                 }
             }
@@ -1016,7 +1021,7 @@ class Compiler {
                 }
                 currentMethod.push(firstInit)
                 determineRawType(f)
-                currentMethod.pop(firstInit)
+                currentMethod.pop()
             }
             else {
                 def old := currentMethod
@@ -5178,7 +5183,7 @@ class Compiler {
                     }
                 }
             }
-            captures.pop(currentCaptures)
+            captures.pop()
             pendingClasses.add(cl)
             def rawTarget := call(position, IR.Value.TYPE(cl.type), args.finish(),
                     TypeContext.UNSPECIFIED)
@@ -5190,7 +5195,7 @@ class Compiler {
         }
         else {
             -- no captures, method is already good
-            captures.pop(currentCaptures)
+            captures.pop()
             enclosingContexts := Stack<EnclosingContext>()
             compile(methodDecl, symbolTable)
             enclosingContexts := oldContexts
@@ -6224,8 +6229,8 @@ class Compiler {
                             TypeContext.TYPE(m.first[0].parameterType(0)))
                 }
                 if index == null {
+                    -- just to get us through to where the error should occur down below at call
                     index := IR.Value.REF(IR.Statement.ID(-1), type())
-                    return
                 }
             }
             def args := Array<ASTNode>()
@@ -6282,6 +6287,7 @@ class Compiler {
                 if op = Token.Kind.LBRACKET {
                     def target := compileExpression(left)
                     if target == null {
+                        Console.printLine("null!")
                         return null
                     }
                     return IndexLValue(self, position, target, right)
@@ -6414,6 +6420,23 @@ class Compiler {
         if !isAssignment(op) {
             error(position, "not a statement")
             return
+        }
+        if op = Token.Kind.ASSIGNMENT {
+            match rawLeft {
+                when ASTNode.BINARY(position, base, op, index) {
+                    if op = Token.Kind.LBRACKET {
+                        def args := Array<ASTNode>()
+                        def compiledBase := compileExpression(base, TypeContext.NON_VOID)
+                        if compiledBase == null {
+                            return
+                        }
+                        args.add(index)
+                        args.add(rawRight)
+                        call(position, compiledBase, "[]:=", args, TypeContext.UNSPECIFIED)
+                        return
+                    }
+                }
+            }
         }
         def left := compileLValue(rawLeft)
         if left == null {
@@ -8007,7 +8030,7 @@ class Compiler {
         else {
             codeGenerator.writeDeclaration(m)
         }
-        currentMethod.pop(m)
+        currentMethod.pop()
     }
 
     method markNonExternal(cl:ClassDecl) {

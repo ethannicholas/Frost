@@ -466,10 +466,10 @@ block4:;
 goto block3;
 block5:;
 // line 185
-panda$core$UInt8$nullable $tmp199 = *(&local1);
-panda$core$Int64 $tmp200 = *(&local0);
-int64_t $tmp201 = $tmp200.value;
-param1[$tmp201] = ((panda$core$UInt8) $tmp199.value);
+panda$core$Int64 $tmp199 = *(&local0);
+panda$core$UInt8$nullable $tmp200 = *(&local1);
+int64_t $tmp201 = $tmp199.value;
+param1[$tmp201] = ((panda$core$UInt8) $tmp200.value);
 // line 186
 panda$core$Int64 $tmp202 = *(&local0);
 panda$core$Int64 $tmp203 = (panda$core$Int64) {1};

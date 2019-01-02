@@ -101,6 +101,5 @@ method main(args:ListView<String>) {
     }
     recursiveDelete(tmpOutput.absolute().get(), tmpOutput.absolute().get())
     addTableOfContents(tocFile, root, apiRelativePath)
-    Console.printLine(tocFile)
     tocFile.delete()
 }

@@ -131,7 +131,8 @@ class ClassDecl {
         for p in parameters {
             symbolTable.add(p)
         }
-        symbolTable.compiler.currentClass.pop(self)
+        assert symbolTable.compiler.currentClass[0] == self
+        symbolTable.compiler.currentClass.pop()
     }
 
     init(source:File, position:Position, aliases:MapView<String, String>, doccomment:String?,

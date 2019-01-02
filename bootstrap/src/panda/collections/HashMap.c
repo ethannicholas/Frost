@@ -60,7 +60,7 @@ panda$collections$HashMap$class_type panda$collections$HashMap$class = { (panda$
 typedef panda$collections$Iterator* (*$fn82)(panda$collections$MapView*);
 typedef panda$core$Bit (*$fn86)(panda$collections$Iterator*);
 typedef panda$core$Object* (*$fn91)(panda$collections$Iterator*);
-typedef panda$core$Object* (*$fn97)(panda$collections$MapView*, panda$core$Object*);
+typedef panda$core$Object* (*$fn98)(panda$collections$MapView*, panda$core$Object*);
 typedef panda$core$Int64 (*$fn161)(panda$collections$Key*);
 typedef panda$core$Bit (*$fn205)(panda$core$Equatable*, panda$core$Equatable*);
 typedef panda$core$Bit (*$fn241)(panda$core$Equatable*, panda$core$Equatable*);
@@ -238,15 +238,15 @@ panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((panda$collectio
 *(&local0) = ((panda$collections$Key*) $tmp92);
 // line 153
 panda$collections$Key* $tmp94 = *(&local0);
-ITable* $tmp95 = param1->$class->itable;
-while ($tmp95->$class != (panda$core$Class*) &panda$collections$MapView$class) {
-    $tmp95 = $tmp95->next;
+panda$collections$Key* $tmp95 = *(&local0);
+ITable* $tmp96 = param1->$class->itable;
+while ($tmp96->$class != (panda$core$Class*) &panda$collections$MapView$class) {
+    $tmp96 = $tmp96->next;
 }
-$fn97 $tmp96 = $tmp95->methods[1];
-panda$core$Object* $tmp98 = $tmp96(param1, ((panda$core$Object*) $tmp94));
-panda$collections$Key* $tmp99 = *(&local0);
-panda$collections$HashMap$$IDXEQ$panda$collections$HashMap$K$panda$collections$HashMap$V(param0, $tmp99, $tmp98);
-panda$core$Panda$unref$panda$core$Object$Q($tmp98);
+$fn98 $tmp97 = $tmp96->methods[1];
+panda$core$Object* $tmp99 = $tmp97(param1, ((panda$core$Object*) $tmp95));
+panda$collections$HashMap$$IDXEQ$panda$collections$HashMap$K$panda$collections$HashMap$V(param0, $tmp94, $tmp99);
+panda$core$Panda$unref$panda$core$Object$Q($tmp99);
 panda$collections$Key* $tmp100 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp100));
 // unreffing k
@@ -669,13 +669,13 @@ panda$collections$HashMap$Entry** $tmp298 = &$tmp294->next;
 // line 225
 panda$collections$HashMap$Entry*** $tmp299 = &param0->contents;
 panda$collections$HashMap$Entry** $tmp300 = *$tmp299;
-panda$collections$HashMap$Entry* $tmp301 = *(&local1);
-panda$core$Int64 $tmp302 = *(&local0);
-int64_t $tmp303 = $tmp302.value;
+panda$core$Int64 $tmp301 = *(&local0);
+panda$collections$HashMap$Entry* $tmp302 = *(&local1);
+int64_t $tmp303 = $tmp301.value;
 panda$collections$HashMap$Entry* $tmp304 = $tmp300[$tmp303];
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp304));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp301));
-$tmp300[$tmp303] = $tmp301;
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp302));
+$tmp300[$tmp303] = $tmp302;
 // line 226
 panda$collections$HashMap$incrementCount(param0);
 panda$collections$HashMap$Entry* $tmp305 = *(&local3);
@@ -761,15 +761,15 @@ block3:;
 // line 244
 panda$collections$HashMap$Entry*** $tmp338 = &param0->contents;
 panda$collections$HashMap$Entry** $tmp339 = *$tmp338;
-panda$collections$HashMap$Entry* $tmp340 = *(&local1);
-panda$collections$HashMap$Entry** $tmp341 = &$tmp340->next;
-panda$collections$HashMap$Entry* $tmp342 = *$tmp341;
-panda$core$Int64 $tmp343 = *(&local0);
-int64_t $tmp344 = $tmp343.value;
+panda$core$Int64 $tmp340 = *(&local0);
+panda$collections$HashMap$Entry* $tmp341 = *(&local1);
+panda$collections$HashMap$Entry** $tmp342 = &$tmp341->next;
+panda$collections$HashMap$Entry* $tmp343 = *$tmp342;
+int64_t $tmp344 = $tmp340.value;
 panda$collections$HashMap$Entry* $tmp345 = $tmp339[$tmp344];
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp345));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp342));
-$tmp339[$tmp344] = $tmp342;
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp343));
+$tmp339[$tmp344] = $tmp343;
 // line 245
 panda$core$Int64* $tmp346 = &param0->_count;
 panda$core$Int64 $tmp347 = *$tmp346;
@@ -1296,12 +1296,12 @@ if ($tmp657) goto block17; else goto block18;
 block17:;
 // line 302
 panda$collections$HashMap$Entry* $tmp658 = *(&local4);
-panda$core$Object** $tmp659 = &$tmp658->value;
-panda$core$Object* $tmp660 = *$tmp659;
+panda$collections$Key** $tmp659 = &$tmp658->key;
+panda$collections$Key* $tmp660 = *$tmp659;
 panda$collections$HashMap$Entry* $tmp661 = *(&local4);
-panda$collections$Key** $tmp662 = &$tmp661->key;
-panda$collections$Key* $tmp663 = *$tmp662;
-panda$collections$HashMap$$IDXEQ$panda$collections$HashMap$K$panda$collections$HashMap$V(param0, $tmp663, $tmp660);
+panda$core$Object** $tmp662 = &$tmp661->value;
+panda$core$Object* $tmp663 = *$tmp662;
+panda$collections$HashMap$$IDXEQ$panda$collections$HashMap$K$panda$collections$HashMap$V(param0, $tmp660, $tmp663);
 // line 303
 panda$collections$HashMap$Entry* $tmp664 = *(&local4);
 panda$collections$HashMap$Entry** $tmp665 = &$tmp664->next;

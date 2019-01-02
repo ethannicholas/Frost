@@ -15,10 +15,11 @@ class XMLWriter {
         stack.push(tag)
     }
 
+    @pre(stack[0] = tag)
     method close(tag:String) {
         out.level -= 1
         out.printLine("</\{tag}>")
-        stack.pop(tag)
+        stack.pop()
     }
 
     method write(tag:String, text:String) {
