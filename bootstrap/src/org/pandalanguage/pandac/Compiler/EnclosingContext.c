@@ -34,7 +34,7 @@ panda$core$String* local0 = NULL;
 org$pandalanguage$pandac$IR$Block$ID local1;
 org$pandalanguage$pandac$IR$Block$ID local2;
 org$pandalanguage$pandac$Variable* local3 = NULL;
-// line 105
+// line 117
 panda$core$Int64* $tmp2 = &param0->$rawValue;
 panda$core$Int64 $tmp3 = *$tmp2;
 panda$core$Int64 $tmp4 = (panda$core$Int64) {0};
@@ -55,13 +55,13 @@ org$pandalanguage$pandac$IR$Block$ID $tmp11 = *$tmp10;
 org$pandalanguage$pandac$IR$Block$ID* $tmp12 = (org$pandalanguage$pandac$IR$Block$ID*) (param0->$data + 16);
 org$pandalanguage$pandac$IR$Block$ID $tmp13 = *$tmp12;
 *(&local2) = $tmp13;
-// line 107
+// line 119
 panda$core$String* $tmp14 = *(&local0);
 panda$core$Bit $tmp15 = panda$core$Bit$init$builtin_bit($tmp14 != NULL);
 bool $tmp16 = $tmp15.value;
 if ($tmp16) goto block4; else goto block5;
 block4:;
-// line 108
+// line 120
 panda$core$String* $tmp17 = *(&local0);
 panda$core$String* $tmp18 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s19, $tmp17);
 panda$core$String* $tmp20 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp18, &$s21);
@@ -92,7 +92,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp32));
 *(&local0) = ((panda$core$String*) NULL);
 return $tmp30;
 block5:;
-// line 110
+// line 122
 org$pandalanguage$pandac$IR$Block$ID $tmp33 = *(&local1);
 org$pandalanguage$pandac$IR$Block$ID$wrapper* $tmp34;
 $tmp34 = (org$pandalanguage$pandac$IR$Block$ID$wrapper*) pandaObjectAlloc(24, (panda$core$Class*) &org$pandalanguage$pandac$IR$Block$ID$wrapperclass);
@@ -123,7 +123,7 @@ panda$core$Bit $tmp46 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($
 bool $tmp47 = $tmp46.value;
 if ($tmp47) goto block6; else goto block7;
 block6:;
-// line 112
+// line 125
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) &$s48));
 return &$s49;
 block7:;
@@ -139,7 +139,7 @@ org$pandalanguage$pandac$Variable* $tmp55 = *(&local3);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp55));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp54));
 *(&local3) = $tmp54;
-// line 114
+// line 128
 org$pandalanguage$pandac$Variable* $tmp56 = *(&local3);
 panda$core$String* $tmp57 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s58, ((panda$core$Object*) $tmp56));
 panda$core$String* $tmp59 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp57, &$s60);
@@ -156,7 +156,7 @@ panda$core$Bit $tmp62 = panda$core$Bit$init$builtin_bit(false);
 bool $tmp63 = $tmp62.value;
 if ($tmp63) goto block9; else goto block10;
 block10:;
-panda$core$Int64 $tmp64 = (panda$core$Int64) {104};
+panda$core$Int64 $tmp64 = (panda$core$Int64) {116};
 panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s65, $tmp64, &$s66);
 abort(); // unreachable
 block9:;
@@ -169,7 +169,7 @@ panda$core$String* local0 = NULL;
 org$pandalanguage$pandac$IR$Block$ID local1;
 org$pandalanguage$pandac$IR$Block$ID local2;
 org$pandalanguage$pandac$Variable* local3 = NULL;
-// line 98
+// line 110
 panda$core$Int64* $tmp67 = &param0->$rawValue;
 panda$core$Int64 $tmp68 = *$tmp67;
 panda$core$Int64 $tmp69 = (panda$core$Int64) {0};
@@ -232,17 +232,17 @@ return;
 }
 void org$pandalanguage$pandac$Compiler$EnclosingContext$init$panda$core$Int64$panda$core$String$Q$org$pandalanguage$pandac$IR$Block$ID$org$pandalanguage$pandac$IR$Block$ID(org$pandalanguage$pandac$Compiler$EnclosingContext* param0, panda$core$Int64 param1, panda$core$String* param2, org$pandalanguage$pandac$IR$Block$ID param3, org$pandalanguage$pandac$IR$Block$ID param4) {
 
-// line 98
+// line 110
 panda$core$Int64* $tmp92 = &param0->$rawValue;
 *$tmp92 = param1;
-// line 98
+// line 110
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param2));
 panda$core$String** $tmp93 = (panda$core$String**) (param0->$data + 0);
 *$tmp93 = param2;
-// line 98
+// line 110
 org$pandalanguage$pandac$IR$Block$ID* $tmp94 = (org$pandalanguage$pandac$IR$Block$ID*) (param0->$data + 8);
 *$tmp94 = param3;
-// line 98
+// line 110
 org$pandalanguage$pandac$IR$Block$ID* $tmp95 = (org$pandalanguage$pandac$IR$Block$ID*) (param0->$data + 16);
 *$tmp95 = param4;
 return;
@@ -250,7 +250,7 @@ return;
 }
 void org$pandalanguage$pandac$Compiler$EnclosingContext$init$panda$core$Int64(org$pandalanguage$pandac$Compiler$EnclosingContext* param0, panda$core$Int64 param1) {
 
-// line 98
+// line 110
 panda$core$Int64* $tmp96 = &param0->$rawValue;
 *$tmp96 = param1;
 return;
@@ -258,10 +258,10 @@ return;
 }
 void org$pandalanguage$pandac$Compiler$EnclosingContext$init$panda$core$Int64$org$pandalanguage$pandac$Variable(org$pandalanguage$pandac$Compiler$EnclosingContext* param0, panda$core$Int64 param1, org$pandalanguage$pandac$Variable* param2) {
 
-// line 98
+// line 110
 panda$core$Int64* $tmp97 = &param0->$rawValue;
 *$tmp97 = param1;
-// line 98
+// line 110
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param2));
 org$pandalanguage$pandac$Variable** $tmp98 = (org$pandalanguage$pandac$Variable**) (param0->$data + 0);
 *$tmp98 = param2;

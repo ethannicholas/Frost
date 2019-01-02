@@ -85,155 +85,218 @@ choice ASTNode {
 
     function position():Position {
         match self {
-            when ANNOTATION(position, _, _, _):
+            when ANNOTATION(position, _, _, _) {
                 return position
-            when ASSERT(position, _, _):
+            }
+            when ASSERT(position, _, _) {
                 return position
-            when AT_PRE(position, _):
+            }
+            when AT_PRE(position, _) {
                 return position
-            when AT_RETURN(position):
+            }
+            when AT_RETURN(position) {
                 return position
-            when BINARY(position, _, _, _):
+            }
+            when BINARY(position, _, _, _) {
                 return position
-            when BIT(position, _):
+            }
+            when BIT(position, _) {
                 return position
-            when BLOCK(position, _):
+            }
+            when BLOCK(position, _) {
                 return position
-            when BREAK(position, _):
+            }
+            when BREAK(position, _) {
                 return position
-            when CALL(position, _, _):
+            }
+            when CALL(position, _, _) {
                 return position
-            when CHOICE_CASE(position, _, _, _):
+            }
+            when CHOICE_CASE(position, _, _, _) {
                 return position
-            when CHOICE_FIELD_REFERENCE(position, _, _, _):
+            }
+            when CHOICE_FIELD_REFERENCE(position, _, _, _) {
                 return position
-            when CLASS(position, _, _, _, _, _, _, _):
+            }
+            when CLASS(position, _, _, _, _, _, _, _) {
                 return position
-            when CONTINUE(position, _):
+            }
+            when CONTINUE(position, _) {
                 return position
-            when DECLARATION(position, _, _):
+            }
+            when DECLARATION(position, _, _) {
                 return position
-            when DO(position, _, _, _):
+            }
+            when DO(position, _, _, _) {
                 return position
-            when DOT(position, _, _):
+            }
+            when DOT(position, _, _) {
                 return position
-            when FIELD(position, _, _, _):
+            }
+            when FIELD(position, _, _, _) {
                 return position
-            when FILE(_):
+            }
+            when FILE(_) {
                 return Position()
-            when FOR(position, _, _, _, _):
+            }
+            when FOR(position, _, _, _, _) {
                 return position
-            when GENERIC_TYPE(position, _, _):
+            }
+            when GENERIC_TYPE(position, _, _) {
                 return position
-            when IDENTIFIER(position, _):
+            }
+            when IDENTIFIER(position, _) {
                 return position
-            when IF(position, _, _, _):
+            }
+            when IF(position, _, _, _) {
                 return position
-            when INT(position, _):
+            }
+            when INT(position, _) {
                 return position
-            when IR_WRAPPER(position, _):
+            }
+            when IR_WRAPPER(position, _) {
                 return position
-            when LOOP(position, _, _):
+            }
+            when LOOP(position, _, _) {
                 return position
-            when MATCH(position, _, _, _):
+            }
+            when MATCH(position, _, _, _) {
                 return position
-            when METHOD(position, _, _, _, _, _, _, _, _):
+            }
+            when METHOD(position, _, _, _, _, _, _, _, _) {
                 return position
-            when METHOD_TYPE(position, _, _, _):
+            }
+            when METHOD_TYPE(position, _, _, _) {
                 return position
-            when NULL(position):
+            }
+            when NULL(position) {
                 return position
-            when NULLABLE_TYPE(position, _):
+            }
+            when NULLABLE_TYPE(position, _) {
                 return position
-            when PACKAGE(position, _):
+            }
+            when PACKAGE(position, _) {
                 return position
-            when PARAMETER(position, _, _):
+            }
+            when PARAMETER(position, _, _) {
                 return position
-            when PREFIX(position, _, _):
+            }
+            when PREFIX(position, _, _) {
                 return position
-            when RANGE(position, _, _, _, _):
+            }
+            when RANGE(position, _, _, _, _) {
                 return position
-            when REAL(position, _):
+            }
+            when REAL(position, _) {
                 return position
-            when REGEX(position, _):
+            }
+            when REGEX(position, _) {
                 return position
-            when RETURN(position, _):
+            }
+            when RETURN(position, _) {
                 return position
-            when SELF(position):
+            }
+            when SELF(position) {
                 return position
-            when STRING(position, _):
+            }
+            when STRING(position, _) {
                 return position
-            when SUPER(position):
+            }
+            when SUPER(position) {
                 return position
-            when TUPLE(position, _):
+            }
+            when TUPLE(position, _) {
                 return position
-            when TUPLE_TYPE(position, _):
+            }
+            when TUPLE_TYPE(position, _) {
                 return position
-            when TYPE(position, _):
+            }
+            when TYPE(position, _) {
                 return position
-            when TYPED_IDENTIFIER(position, _, _):
+            }
+            when TYPED_IDENTIFIER(position, _, _) {
                 return position
-            when TYPED_LAMBDA(position, _, _):
+            }
+            when TYPED_LAMBDA(position, _, _) {
                 return position
-            when UNTYPED_LAMBDA(position, _, _):
+            }
+            when UNTYPED_LAMBDA(position, _, _) {
                 return position
-            when USES(position, _):
+            }
+            when USES(position, _) {
                 return position
-            when VAR(position, _, _):
+            }
+            when VAR(position, _, _) {
                 return position
-            when WHEN(position, _, _):
+            }
+            when WHEN(position, _, _) {
                 return position
-            when WHILE(position, _, _, _):
+            }
+            when WHILE(position, _, _, _) {
                 return position
-            otherwise: assert false
+            }
+            otherwise {
+                assert false
+            }
         }
     }
 
     @override
     function convert():String {
         match self {
-            when ANNOTATION(_, name, _, expr):
+            when ANNOTATION(_, name, _, expr) {
                 if expr !== null {
                     return "\{name}(\{expr})"
                 }
                 return name
-            when ASSERT(_, test, msg):
+            }
+            when ASSERT(_, test, msg) {
                 if msg == null {
                     return "assert \{test}"
                 }
                 return "assert \{test}, \{msg}"
-            when AT_PRE(_, expr):
+            }
+            when AT_PRE(_, expr) {
                 return "@pre(\{expr})"
-            when AT_RETURN(_):
+            }
+            when AT_RETURN(_) {
                 return "@return"
-            when BINARY(_, left, op, right):
+            }
+            when BINARY(_, left, op, right) {
                 return "(\{left} \{op} \{right})"
-            when BIT(_, value):
+            }
+            when BIT(_, value) {
                 return value.convert()
-            when BLOCK(_, statements):
+            }
+            when BLOCK(_, statements) {
                 def result := MutableString("{\n")
                 for s in statements {
                     result.append(s + "\n")
                 }
                 result.append("}")
                 return result.finish()
-            when BREAK(_, label):
+            }
+            when BREAK(_, label) {
                 if label !== null {
                     return "break \{label}"
                 }
                 return "break"
-            when CALL(_, target, args):
+            }
+            when CALL(_, target, args) {
                 return "\{target}(\{args.join()})"
-            when CHOICE_CASE(_, dc, name, fields):
+            }
+            when CHOICE_CASE(_, dc, name, fields) {
                 def result := MutableString()
                 if dc !== null {
                     result.append(dc + "\n")
                 }
                 result.append("\{name}(\{fields.join()})")
                 return result.finish()
-            when CHOICE_FIELD_REFERENCE(_, base, ce, index):
+            }
+            when CHOICE_FIELD_REFERENCE(_, base, ce, index) {
                 return "\{base}.\{ce}(\{index})"
-            when CLASS(_, dc, annotations, kind, name, generics, supertypes, members):
+            }
+            when CLASS(_, dc, annotations, kind, name, generics, supertypes, members) {
                 def result := MutableString()
                 if dc !== null {
                     result.append(dc + "\n")
@@ -242,9 +305,9 @@ choice ASTNode {
                     result.append(a + "\n")
                 }
                 match kind {
-                    when ClassDecl.Kind.CLASS:     result.append("class ")
-                    when ClassDecl.Kind.INTERFACE: result.append("interface ")
-                    when ClassDecl.Kind.CHOICE:    result.append("choice ")
+                    when ClassDecl.Kind.CLASS     { result.append("class ") }
+                    when ClassDecl.Kind.INTERFACE { result.append("interface ") }
+                    when ClassDecl.Kind.CHOICE    { result.append("choice ") }
                 }
                 result.append(name)
                 if generics !== null {
@@ -259,17 +322,20 @@ choice ASTNode {
                 }
                 result.append("}")
                 return result.finish()
-            when CONTINUE(_, label):
+            }
+            when CONTINUE(_, label) {
                 if label !== null {
                     return "continue \{label}"
                 }
                 return "continue"
-            when DECLARATION(_, target, value):
+            }
+            when DECLARATION(_, target, value) {
                 if value !== null {
                     return "\{target} := \{value}"
                 }
                 return target.convert()
-            when DO(_, label, statements, test):
+            }
+            when DO(_, label, statements, test) {
                 def result := MutableString()
                 if label !== null {
                     result.append("\{label}:")
@@ -280,9 +346,11 @@ choice ASTNode {
                 }
                 result.append("}\nwhile \{test}")
                 return result.finish()
-            when DOT(_, base, field):
+            }
+            when DOT(_, base, field) {
                 return "\{base}.\{field}"
-            when FIELD(_, dc, annotations, decl):
+            }
+            when FIELD(_, dc, annotations, decl) {
                 def result := MutableString()
                 if dc !== null {
                     result.append(dc + "\n")
@@ -292,13 +360,15 @@ choice ASTNode {
                 }
                 result.append(decl)
                 return result.finish()
-            when FILE(entries):
+            }
+            when FILE(entries) {
                 def result := MutableString()
                 for e in entries {
                     result.append(e + "\n")
                 }
                 return result.finish()
-            when FOR(_, label, target, list, statements):
+            }
+            when FOR(_, label, target, list, statements) {
                 def result := MutableString()
                 if label !== null {
                     result.append(label + ": ")
@@ -309,11 +379,14 @@ choice ASTNode {
                 }
                 result.append("}")
                 return result.finish()
-            when GENERIC_TYPE(_, name, subtypes):
+            }
+            when GENERIC_TYPE(_, name, subtypes) {
                 return "\{name}<\{subtypes.join()}>"
-            when IDENTIFIER(_, name):
+            }
+            when IDENTIFIER(_, name) {
                 return name
-            when IF(_, test, ifTrue, ifFalse):
+            }
+            when IF(_, test, ifTrue, ifFalse) {
                 def result := MutableString("if \{test} {\n")
                 for s in ifTrue {
                     result.append(s + "\n")
@@ -323,11 +396,14 @@ choice ASTNode {
                     result.append("\nelse \{ifFalse}")
                 }
                 return result.finish()
-            when INT(_, value):
+            }
+            when INT(_, value) {
                 return value.convert()
-            when IR_WRAPPER(_, value):
+            }
+            when IR_WRAPPER(_, value) {
                 return value.convert()
-            when LOOP(_, label, statements):
+            }
+            when LOOP(_, label, statements) {
                 def result := MutableString()
                 if label !== null {
                     result.append("\{label}:")
@@ -338,7 +414,8 @@ choice ASTNode {
                 }
                 result.append("}")
                 return result.finish()
-            when MATCH(_, value, whens, other):
+            }
+            when MATCH(_, value, whens, other) {
                 def result := MutableString("match \{value} {\n")
                 for w in whens {
                     result.append(w + "\n")
@@ -348,7 +425,9 @@ choice ASTNode {
                 }
                 result.append("}")
                 return result.finish()
-            when METHOD(_, dc, annotations, kind, name, generics, parameters, returnType, statements):
+            }
+            when METHOD(_, dc, annotations, kind, name, generics, parameters, returnType,
+                    statements) {
                 def result := MutableString()
                 if dc !== null {
                     result.append(dc + "\n")
@@ -357,9 +436,9 @@ choice ASTNode {
                     result.append(a + "\n")
                 }
                 match kind {
-                    when MethodDecl.Kind.METHOD:   result.append("method ")
-                    when MethodDecl.Kind.FUNCTION: result.append("function ")
-                    when MethodDecl.Kind.INIT:     -- do nothing
+                    when MethodDecl.Kind.METHOD    { result.append("method ") }
+                    when MethodDecl.Kind.FUNCTION  { result.append("function ") }
+                    when MethodDecl.Kind.INIT      { -* do nothing *- }
                 }
                 result.append(name)
                 if generics !== null {
@@ -377,34 +456,45 @@ choice ASTNode {
                     result.append("}")
                 }
                 return result.finish()
-            when METHOD_TYPE(_, kind, paramTypes, returnType):
+            }
+            when METHOD_TYPE(_, kind, paramTypes, returnType) {
                 def yield:String
                 match kind {
-                    when Token.Kind.YIELDS:
+                    when Token.Kind.YIELDS {
                         yield := "=>"
-                    when Token.Kind.YIELDS_METHOD:
+                    }
+                    when Token.Kind.YIELDS_METHOD {
                         yield := "=&>"
-                    when Token.Kind.YIELDS_IMMUTABLE:
+                    }
+                    when Token.Kind.YIELDS_IMMUTABLE {
                         yield := "=>*"
-                    when Token.Kind.YIELDS_METHOD_IMMUTABLE:
+                    }
+                    when Token.Kind.YIELDS_METHOD_IMMUTABLE {
                         yield := "=&>*"
+                    }
                 }
                 def partial := "(\{paramTypes.join()})\{yield}"
                 if returnType !== null {
                     return "\{partial}(\{returnType})"
                 }
                 return "\{partial}()"
-            when NULL:
+            }
+            when NULL {
                 return "null"
-            when NULLABLE_TYPE(_, base):
+            }
+            when NULLABLE_TYPE(_, base) {
                 return base + "?"
-            when PACKAGE(_, name):
+            }
+            when PACKAGE(_, name) {
                 return name
-            when PARAMETER(_, name, type):
+            }
+            when PARAMETER(_, name, type) {
                 return "\{name}:\{type}"
-            when PREFIX(_, kind, base):
+            }
+            when PREFIX(_, kind, base) {
                 return "\{kind}\{base}"
-            when RANGE(_, start, inclusive, end, step):
+            }
+            when RANGE(_, start, inclusive, end, step) {
                 def result := MutableString()
                 if start !== null {
                     result.append(start)
@@ -422,49 +512,64 @@ choice ASTNode {
                     result.append(" by " + step)
                 }
                 return result.finish()
-            when REAL(_, value):
+            }
+            when REAL(_, value) {
                 return value.convert()
-            when REGEX(_, src):
+            }
+            when REGEX(_, src) {
                 return "/\{src}/"
-            when RETURN(_, value):
+            }
+            when RETURN(_, value) {
                 if value !== null {
                     return "return \{value}"
                 }
                 return "return"
-            when SELF:
+            }
+            when SELF {
                 return "self"
-            when STRING(_, str):
+            }
+            when STRING(_, str) {
                 return str.format("panda")
-            when SUPER:
+            }
+            when SUPER {
                 return "super"
-            when TUPLE(_, arguments):
+            }
+            when TUPLE(_, arguments) {
                 return "(\{arguments.join()})"
-            when TUPLE_TYPE(_, parameters):
+            }
+            when TUPLE_TYPE(_, parameters) {
                 return "(\{parameters.join()})"
-            when TYPE(_, name):
+            }
+            when TYPE(_, name) {
                 return name
-            when TYPED_IDENTIFIER(_, name, type):
+            }
+            when TYPED_IDENTIFIER(_, name, type) {
                 if type !== null {
                     return "\{name}:\{type}"
                 }
                 return name
-            when TYPED_LAMBDA(_, parameters, body):
+            }
+            when TYPED_LAMBDA(_, parameters, body) {
                 return "(\{parameters.join()})=>\{body}"
-            when UNTYPED_LAMBDA(_, parameters, body):
+            }
+            when UNTYPED_LAMBDA(_, parameters, body) {
                 return "(\{parameters.join()})=>\{body}"
-            when USES(_, name):
+            }
+            when USES(_, name) {
                 return name
-            when VAR(_, kind, decls):
+            }
+            when VAR(_, kind, decls) {
                 def result := MutableString()
                 match kind {
-                    when Variable.Kind.VAR:      result.append("var ")
-                    when Variable.Kind.DEF:      result.append("def ")
-                    when Variable.Kind.CONSTANT: result.append("constant ")
-                    when Variable.Kind.PROPERTY: result.append("property ")
+                    when Variable.Kind.VAR      { result.append("var ") }
+                    when Variable.Kind.DEF      { result.append("def ") }
+                    when Variable.Kind.CONSTANT { result.append("constant ") }
+                    when Variable.Kind.PROPERTY { result.append("property ") }
                 }
                 result.append(decls.join())
                 return result.finish()
-            when WHEN(_, tests, statements):
+            }
+            when WHEN(_, tests, statements) {
                 def result := MutableString("when ")
                 var separator := ""
                 for t in tests {
@@ -475,7 +580,8 @@ choice ASTNode {
                     result.append("\n" + s)
                 }
                 return result.finish()
-            when WHILE(_, label, test, statements):
+            }
+            when WHILE(_, label, test, statements) {
                 def result := MutableString()
                 if label !== null {
                     result.append("\{label}:")
@@ -486,8 +592,10 @@ choice ASTNode {
                 }
                 result.append("}")
                 return result.finish()
-            otherwise:
+            }
+            otherwise {
                 assert false, "unsupported ASTNode: \{$rawValue}"
+            }
         }
     }
 }

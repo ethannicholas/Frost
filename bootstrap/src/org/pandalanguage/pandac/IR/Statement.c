@@ -288,7 +288,7 @@ org$pandalanguage$pandac$Position $tmp45 = *$tmp44;
 org$pandalanguage$pandac$IR$Block$ID* $tmp46 = (org$pandalanguage$pandac$IR$Block$ID*) (param0->$data + 16);
 org$pandalanguage$pandac$IR$Block$ID $tmp47 = *$tmp46;
 *(&local6) = $tmp47;
-// line 178
+// line 179
 org$pandalanguage$pandac$IR$Block$ID $tmp48 = *(&local6);
 org$pandalanguage$pandac$IR$Block$ID$wrapper* $tmp49;
 $tmp49 = (org$pandalanguage$pandac$IR$Block$ID$wrapper*) pandaObjectAlloc(24, (panda$core$Class*) &org$pandalanguage$pandac$IR$Block$ID$wrapperclass);
@@ -323,7 +323,7 @@ org$pandalanguage$pandac$Type* $tmp64 = *(&local9);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp64));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp63));
 *(&local9) = $tmp63;
-// line 180
+// line 182
 org$pandalanguage$pandac$IR$Value* $tmp65 = *(&local8);
 panda$core$String* $tmp66 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s67, ((panda$core$Object*) $tmp65));
 panda$core$String* $tmp68 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp66, &$s69);
@@ -357,7 +357,7 @@ panda$core$String* $tmp81 = *(&local10);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp81));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp80));
 *(&local10) = $tmp80;
-// line 182
+// line 185
 panda$core$String* $tmp82 = *(&local10);
 panda$core$String* $tmp83 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s84, $tmp82);
 panda$core$String* $tmp85 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp83, &$s86);
@@ -391,7 +391,7 @@ org$pandalanguage$pandac$IR$Block$ID $tmp97 = *$tmp96;
 org$pandalanguage$pandac$IR$Block$ID* $tmp98 = (org$pandalanguage$pandac$IR$Block$ID*) (param0->$data + 32);
 org$pandalanguage$pandac$IR$Block$ID $tmp99 = *$tmp98;
 *(&local14) = $tmp99;
-// line 184
+// line 188
 org$pandalanguage$pandac$IR$Value* $tmp100 = *(&local12);
 panda$core$String* $tmp101 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s102, ((panda$core$Object*) $tmp100));
 panda$core$String* $tmp103 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp101, &$s104);
@@ -437,7 +437,7 @@ org$pandalanguage$pandac$ClassDecl* $tmp123 = *(&local16);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp123));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp122));
 *(&local16) = $tmp122;
-// line 186
+// line 191
 org$pandalanguage$pandac$ClassDecl* $tmp124 = *(&local16);
 panda$core$String** $tmp125 = &$tmp124->name;
 panda$core$String* $tmp126 = *$tmp125;
@@ -474,7 +474,7 @@ panda$collections$ImmutableArray* $tmp142 = *(&local19);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp142));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp141));
 *(&local19) = $tmp141;
-// line 188
+// line 194
 org$pandalanguage$pandac$ClassDecl* $tmp143 = *(&local18);
 panda$core$String** $tmp144 = &$tmp143->name;
 panda$core$String* $tmp145 = *$tmp144;
@@ -520,7 +520,7 @@ panda$collections$ImmutableArray* $tmp166 = *(&local22);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp166));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp165));
 *(&local22) = $tmp165;
-// line 190
+// line 197
 org$pandalanguage$pandac$IR$Value* $tmp167 = *(&local21);
 panda$core$String* $tmp168 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s169, ((panda$core$Object*) $tmp167));
 panda$core$String* $tmp170 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp168, &$s171);
@@ -571,7 +571,7 @@ org$pandalanguage$pandac$FieldDecl* $tmp193 = *(&local25);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp193));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp192));
 *(&local25) = $tmp192;
-// line 192
+// line 200
 org$pandalanguage$pandac$IR$Value* $tmp194 = *(&local24);
 panda$core$String* $tmp195 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s196, ((panda$core$Object*) $tmp194));
 panda$core$String* $tmp197 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp195, &$s198);
@@ -631,7 +631,7 @@ panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp225));
 panda$core$Int64* $tmp227 = (panda$core$Int64*) (param0->$data + 32);
 panda$core$Int64 $tmp228 = *$tmp227;
 *(&local29) = $tmp228;
-// line 194
+// line 203
 org$pandalanguage$pandac$IR$Value* $tmp229 = *(&local27);
 panda$core$String* $tmp230 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s231, ((panda$core$Object*) $tmp229));
 panda$core$String* $tmp232 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp230, &$s233);
@@ -686,7 +686,7 @@ org$pandalanguage$pandac$FieldDecl* $tmp257 = *(&local32);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp257));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp256));
 *(&local32) = $tmp256;
-// line 196
+// line 206
 org$pandalanguage$pandac$IR$Value* $tmp258 = *(&local31);
 panda$core$String* $tmp259 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s260, ((panda$core$Object*) $tmp258));
 panda$core$String* $tmp261 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp259, &$s262);
@@ -753,7 +753,7 @@ org$pandalanguage$pandac$Type* $tmp295 = *(&local37);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp295));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp294));
 *(&local37) = $tmp294;
-// line 198
+// line 209
 org$pandalanguage$pandac$IR$Value* $tmp296 = *(&local34);
 panda$core$String* $tmp297 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s298, ((panda$core$Object*) $tmp296));
 panda$core$String* $tmp299 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp297, &$s300);
@@ -820,7 +820,7 @@ org$pandalanguage$pandac$Type* $tmp331 = *(&local41);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp331));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp330));
 *(&local41) = $tmp330;
-// line 200
+// line 212
 org$pandalanguage$pandac$IR$Value* $tmp332 = *(&local39);
 panda$core$String* $tmp333 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s334, ((panda$core$Object*) $tmp332));
 panda$core$String* $tmp335 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp333, &$s336);
@@ -866,7 +866,7 @@ org$pandalanguage$pandac$IR$Value* $tmp355 = *(&local43);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp355));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp354));
 *(&local43) = $tmp354;
-// line 202
+// line 215
 org$pandalanguage$pandac$IR$Value* $tmp356 = *(&local43);
 panda$core$String* $tmp357 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s358, ((panda$core$Object*) $tmp356));
 panda$core$String* $tmp359 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp357, &$s360);
@@ -894,7 +894,7 @@ org$pandalanguage$pandac$IR$Value* $tmp369 = *(&local45);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp369));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp368));
 *(&local45) = $tmp368;
-// line 204
+// line 218
 org$pandalanguage$pandac$IR$Value* $tmp370 = *(&local45);
 panda$core$String* $tmp371 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s372, ((panda$core$Object*) $tmp370));
 panda$core$String* $tmp373 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp371, &$s374);
@@ -922,7 +922,7 @@ org$pandalanguage$pandac$IR$Value* $tmp383 = *(&local47);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp383));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp382));
 *(&local47) = $tmp382;
-// line 206
+// line 221
 org$pandalanguage$pandac$IR$Value* $tmp384 = *(&local47);
 panda$core$String* $tmp385 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s386, ((panda$core$Object*) $tmp384));
 panda$core$String* $tmp387 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp385, &$s388);
@@ -957,7 +957,7 @@ org$pandalanguage$pandac$Type* $tmp400 = *(&local50);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp400));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp399));
 *(&local50) = $tmp399;
-// line 208
+// line 224
 org$pandalanguage$pandac$IR$Value* $tmp401 = *(&local49);
 panda$core$String* $tmp402 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s403, ((panda$core$Object*) $tmp401));
 panda$core$String* $tmp404 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp402, &$s405);
@@ -994,7 +994,7 @@ org$pandalanguage$pandac$IR$Value* $tmp419 = *(&local52);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp419));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp418));
 *(&local52) = $tmp418;
-// line 210
+// line 227
 org$pandalanguage$pandac$IR$Value* $tmp420 = *(&local52);
 panda$core$String* $tmp421 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s422, ((panda$core$Object*) $tmp420));
 panda$core$String* $tmp423 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp421, &$s424);
@@ -1022,7 +1022,7 @@ org$pandalanguage$pandac$IR$Value* $tmp433 = *(&local54);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp433));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp432));
 *(&local54) = $tmp432;
-// line 212
+// line 230
 org$pandalanguage$pandac$IR$Value* $tmp434 = *(&local54);
 panda$core$String* $tmp435 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s436, ((panda$core$Object*) $tmp434));
 panda$core$String* $tmp437 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp435, &$s438);
@@ -1057,7 +1057,7 @@ org$pandalanguage$pandac$IR$Value* $tmp450 = *(&local57);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp450));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp449));
 *(&local57) = $tmp449;
-// line 214
+// line 233
 org$pandalanguage$pandac$IR$Value* $tmp451 = *(&local56);
 panda$core$String* $tmp452 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s453, ((panda$core$Object*) $tmp451));
 panda$core$String* $tmp454 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp452, &$s455);
@@ -1101,7 +1101,7 @@ org$pandalanguage$pandac$IR$Value* $tmp472 = *(&local60);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp472));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp471));
 *(&local60) = $tmp471;
-// line 216
+// line 236
 org$pandalanguage$pandac$IR$Value* $tmp473 = *(&local59);
 panda$core$String* $tmp474 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s475, ((panda$core$Object*) $tmp473));
 panda$core$String* $tmp476 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp474, &$s477);
@@ -1152,7 +1152,7 @@ org$pandalanguage$pandac$IR$Value* $tmp497 = *(&local64);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp497));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp496));
 *(&local64) = $tmp496;
-// line 218
+// line 239
 org$pandalanguage$pandac$IR$Value* $tmp498 = *(&local62);
 panda$core$String* $tmp499 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s500, ((panda$core$Object*) $tmp498));
 panda$core$String* $tmp501 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp499, &$s502);
@@ -1205,7 +1205,7 @@ org$pandalanguage$pandac$IR$Value* $tmp524 = *(&local67);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp524));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp523));
 *(&local67) = $tmp523;
-// line 220
+// line 242
 org$pandalanguage$pandac$IR$Value* $tmp525 = *(&local66);
 panda$core$String* $tmp526 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s527, ((panda$core$Object*) $tmp525));
 panda$core$String* $tmp528 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp526, &$s529);
@@ -1256,7 +1256,7 @@ org$pandalanguage$pandac$IR$Value* $tmp549 = *(&local71);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp549));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp548));
 *(&local71) = $tmp548;
-// line 222
+// line 245
 org$pandalanguage$pandac$IR$Value* $tmp550 = *(&local69);
 panda$core$String* $tmp551 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s552, ((panda$core$Object*) $tmp550));
 panda$core$String* $tmp553 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp551, &$s554);
@@ -1302,13 +1302,13 @@ org$pandalanguage$pandac$IR$Value* $tmp573 = *(&local73);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp573));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp572));
 *(&local73) = $tmp572;
-// line 224
+// line 248
 org$pandalanguage$pandac$IR$Value* $tmp574 = *(&local73);
 panda$core$Bit $tmp575 = panda$core$Bit$init$builtin_bit($tmp574 != NULL);
 bool $tmp576 = $tmp575.value;
 if ($tmp576) goto block52; else goto block53;
 block52:;
-// line 225
+// line 249
 org$pandalanguage$pandac$IR$Value* $tmp577 = *(&local73);
 panda$core$String* $tmp578 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s579, ((panda$core$Object*) $tmp577));
 panda$core$String* $tmp580 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp578, &$s581);
@@ -1321,7 +1321,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp582));
 *(&local73) = ((org$pandalanguage$pandac$IR$Value*) NULL);
 return $tmp580;
 block53:;
-// line 227
+// line 251
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) &$s583));
 org$pandalanguage$pandac$IR$Value* $tmp584 = *(&local73);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp584));
@@ -1351,7 +1351,7 @@ panda$collections$ImmutableArray* $tmp596 = *(&local76);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp596));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp595));
 *(&local76) = $tmp595;
-// line 229
+// line 254
 org$pandalanguage$pandac$MethodDecl* $tmp597 = *(&local75);
 panda$core$String* $tmp598 = org$pandalanguage$pandac$MethodDecl$get_declaration$R$panda$core$String($tmp597);
 panda$core$String* $tmp599 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s600, $tmp598);
@@ -1404,7 +1404,7 @@ org$pandalanguage$pandac$IR$Value* $tmp624 = *(&local79);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp624));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp623));
 *(&local79) = $tmp623;
-// line 231
+// line 257
 org$pandalanguage$pandac$IR$Value* $tmp625 = *(&local78);
 panda$core$String* $tmp626 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s627, ((panda$core$Object*) $tmp625));
 panda$core$String* $tmp628 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp626, &$s629);
@@ -1434,7 +1434,7 @@ block58:;
 org$pandalanguage$pandac$Position* $tmp639 = (org$pandalanguage$pandac$Position*) (param0->$data + 0);
 org$pandalanguage$pandac$Position $tmp640 = *$tmp639;
 *(&local80) = $tmp640;
-// line 233
+// line 260
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) &$s641));
 return &$s642;
 block1:;

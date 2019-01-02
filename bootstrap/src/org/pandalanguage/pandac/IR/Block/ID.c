@@ -44,7 +44,7 @@ static panda$core$String $s13 = { (panda$core$Class*) &panda$core$String$class, 
 org$pandalanguage$pandac$IR$Block$ID org$pandalanguage$pandac$IR$Block$ID$init$panda$core$Int64(panda$core$Int64 param0) {
 
 org$pandalanguage$pandac$IR$Block$ID local0;
-// line 243
+// line 271
 panda$core$Int64* $tmp3 = &(&local0)->value;
 *$tmp3 = param0;
 org$pandalanguage$pandac$IR$Block$ID $tmp4 = *(&local0);
@@ -53,7 +53,7 @@ return $tmp4;
 }
 panda$core$Bit org$pandalanguage$pandac$IR$Block$ID$$EQ$org$pandalanguage$pandac$IR$Block$ID$R$panda$core$Bit(org$pandalanguage$pandac$IR$Block$ID param0, org$pandalanguage$pandac$IR$Block$ID param1) {
 
-// line 248
+// line 276
 panda$core$Int64 $tmp5 = param0.value;
 panda$core$Int64 $tmp6 = param1.value;
 panda$core$Bit $tmp7 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp5, $tmp6);
@@ -62,7 +62,7 @@ return $tmp7;
 }
 panda$core$String* org$pandalanguage$pandac$IR$Block$ID$convert$R$panda$core$String(org$pandalanguage$pandac$IR$Block$ID param0) {
 
-// line 253
+// line 281
 panda$core$Int64 $tmp8 = param0.value;
 panda$core$Int64$wrapper* $tmp9;
 $tmp9 = (panda$core$Int64$wrapper*) pandaObjectAlloc(24, (panda$core$Class*) &panda$core$Int64$wrapperclass);

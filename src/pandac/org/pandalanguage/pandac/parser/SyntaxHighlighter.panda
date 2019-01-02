@@ -21,32 +21,45 @@ class SyntaxHighlighter {
         @override -- FIXME should be automatic
         function convert():String {
             match self {
-                when DEFAULT:
+                when DEFAULT {
                     return "DEFAULT"
-                when COMMENT:
+                }
+                when COMMENT {
                     return "COMMENT"
-                when DOC_COMMENT:
+                }
+                when DOC_COMMENT {
                     return "DOC_COMMENT"
-                when ANNOTATION:
+                }
+                when ANNOTATION {
                     return "ANNOTATION"
-                when METHOD_NAME:
+                }
+                when METHOD_NAME {
                     return "METHOD_NAME"
-                when METHOD_PARAMETER:
+                }
+                when METHOD_PARAMETER {
                     return "METHOD_PARAMETER"
-                when TYPE:
+                }
+                when TYPE {
                     return "TYPE"
-                when KEYWORD:
+                }
+                when KEYWORD {
                     return "KEYWORD"
-                when CONTROL_KEYWORD:
+                }
+                when CONTROL_KEYWORD {
                     return "CONTROL_KEYWORD"
-                when LITERAL:
+                }
+                when LITERAL {
                     return "LITERAL"
-                when STRING:
+                }
+                when STRING {
                     return "STRING"
-                when OPERATOR:
+                }
+                when OPERATOR {
                     return "OPERATOR"
-                when LABEL:
+                }
+                when LABEL {
                     return "LABEL"
+                }
             }
         }
     }
@@ -82,31 +95,40 @@ class SyntaxHighlighter {
         }
 
         match token.kind {
-            when Token.Kind.SHIFTRIGHT:
+            when Token.Kind.SHIFTRIGHT {
                 add(token, Kind.OPERATOR)
+            }
             when Token.Kind.DECIMAL, Token.Kind.BINARY, Token.Kind.HEX, Token.Kind.REAL,
-                    Token.Kind.TRUE, Token.Kind.FALSE, Token.Kind.NULL, Token.Kind.REGEX:
+                    Token.Kind.TRUE, Token.Kind.FALSE, Token.Kind.NULL, Token.Kind.REGEX {
                 add(token, Kind.LITERAL)
-            when Token.Kind.LINE_COMMENT, Token.Kind.BLOCK_COMMENT_START:
+            }
+            when Token.Kind.LINE_COMMENT, Token.Kind.BLOCK_COMMENT_START {
                 add(token, Kind.COMMENT)
-            when Token.Kind.BLOCK_COMMENT_END:
+            }
+            when Token.Kind.BLOCK_COMMENT_END {
                 add(token, Kind.COMMENT)
-            when Token.Kind.DOC_COMMENT:
+            }
+            when Token.Kind.DOC_COMMENT {
                 add(token, Kind.DOC_COMMENT)
-            when Token.Kind.ANNOTATION:
+            }
+            when Token.Kind.ANNOTATION {
                 add(token, Kind.ANNOTATION)
+            }
             when Token.Kind.PACKAGE, Token.Kind.USES, Token.Kind.AS, Token.Kind.CLASS,
                     Token.Kind.INTERFACE, Token.Kind.CHOICE, Token.Kind.FUNCTION,
                     Token.Kind.METHOD, Token.Kind.VAR, Token.Kind.DEF, Token.Kind.PROPERTY,
-                    Token.Kind.CONSTANT, Token.Kind.BY, Token.Kind.IN:
+                    Token.Kind.CONSTANT, Token.Kind.BY, Token.Kind.IN {
                 add(token, Kind.KEYWORD)
+            }
             when Token.Kind.RETURN, Token.Kind.BREAK, Token.Kind.CONTINUE, Token.Kind.DO,
                     Token.Kind.WHILE, Token.Kind.FOR, Token.Kind.LOOP, Token.Kind.IF,
                     Token.Kind.ELSE, Token.Kind.MATCH, Token.Kind.WHEN, Token.Kind.OTHERWISE,
-                    Token.Kind.INIT, Token.Kind.ASSERT, Token.Kind.UNREACHABLE:
+                    Token.Kind.INIT, Token.Kind.ASSERT, Token.Kind.UNREACHABLE {
                 add(token, Kind.CONTROL_KEYWORD)
-            when Token.Kind.SELF, Token.Kind.SUPER:
+            }
+            when Token.Kind.SELF, Token.Kind.SUPER {
                 add(token, Kind.LITERAL)
+            }
             when Token.Kind.NOT, Token.Kind.BITWISENOT, Token.Kind.ADD, Token.Kind.SUB,
                     Token.Kind.MUL, Token.Kind.DIV, Token.Kind.INTDIV, Token.Kind.REM,
                     Token.Kind.POW, Token.Kind.EQ, Token.Kind.NEQ, Token.Kind.IDENTITY,
@@ -120,10 +142,12 @@ class SyntaxHighlighter {
                     Token.Kind.SHIFTLEFTEQ, Token.Kind.SHIFTRIGHTEQ, Token.Kind.CAST,
                     Token.Kind.YIELDS, Token.Kind.YIELDS_METHOD, Token.Kind.YIELDS_IMMUTABLE,
                     Token.Kind.YIELDS_METHOD_IMMUTABLE, Token.Kind.QUESTION, Token.Kind.COLON,
-                    Token.Kind.ELLIPSIS, Token.Kind.DOTDOT:
+                    Token.Kind.ELLIPSIS, Token.Kind.DOTDOT {
                 add(token, Kind.OPERATOR)
-            otherwise:
+            }
+            otherwise {
                 add(token, Kind.DEFAULT)
+            }
         }
     }
 

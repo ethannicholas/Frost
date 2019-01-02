@@ -172,65 +172,93 @@ class IR {
         @override
         function convert():String {
             match self {
-                when BINARY(position, left, op, right, type):
+                when BINARY(position, left, op, right, type) {
                     return "binary \{left}, \{op}, \{right}, \{type}"
-                when BRANCH(position, id):
+                }
+                when BRANCH(position, id) {
                     return "branch \{id}"
-                when CAST(position, value, type):
+                }
+                when CAST(position, value, type) {
                     return "cast \{value}->\{type}"
-                when COMMENT(text):
+                }
+                when COMMENT(text) {
                     return "-- \{text}"
-                when CONDITIONAL_BRANCH(position, test, ifTrue, ifFalse):
+                }
+                when CONDITIONAL_BRANCH(position, test, ifTrue, ifFalse) {
                     return "branch \{test}, \{ifTrue}, \{ifFalse}"
-                when CONSTRUCT(position, cl):
+                }
+                when CONSTRUCT(position, cl) {
                     return "construct \{cl.name}"
-                when CREATE_STRUCT(position, cl, args):
+                }
+                when CREATE_STRUCT(position, cl, args) {
                     return "create_struct \{cl.name}, \{args}"
-                when DYNAMIC_CALL(position, m, args):
+                }
+                when DYNAMIC_CALL(position, m, args) {
                     return "dynamic_call \{m}(\{args.join(", ")})"
-                when EXTRACT_FIELD(position, value, field):
+                }
+                when EXTRACT_FIELD(position, value, field) {
                     return "load_field \{value}, \{field.owner.name}.\{field.name}"
-                when GET_CHOICE_FIELD_POINTER(position, target, cc, index):
+                }
+                when GET_CHOICE_FIELD_POINTER(position, target, cc, index) {
                     return "get_choice_field_pointer \{target}, \{cc.name}, \{index}"
-                when GET_FIELD_POINTER(position, ptr, field):
+                }
+                when GET_FIELD_POINTER(position, ptr, field) {
                     return "get_field_pointer \{ptr}, \{field.owner.name}.\{field.name}"
-                when GET_INTERFACE_METHOD(position, value, cl, id, type):
+                }
+                when GET_INTERFACE_METHOD(position, value, cl, id, type) {
                     return "get_interface_method \{value}, \{cl.name}, \{id}, \{type}"
-                when GET_VIRTUAL_METHOD(position, value, id, type):
+                }
+                when GET_VIRTUAL_METHOD(position, value, id, type) {
                     return "get_virtual_method \{value}, \{id}, \{type}"
-                when LOAD(position, ptr):
+                }
+                when LOAD(position, ptr) {
                     return "load \{ptr}"
-                when NEGATE(position, value):
+                }
+                when NEGATE(position, value) {
                     return "negate \{value}"
-                when NOT(position, value):
+                }
+                when NOT(position, value) {
                     return "not \{value}"
-                when POINTER_ALLOC(position, count, type):
+                }
+                when POINTER_ALLOC(position, count, type) {
                     return "pointer_alloc \{count}, \{type}"
-                when POINTER_DESTROY(position, ptr):
+                }
+                when POINTER_DESTROY(position, ptr) {
                     return "pointer_destroy \{ptr}"
-                when POINTER_GET(position, ptr):
+                }
+                when POINTER_GET(position, ptr) {
                     return "pointer_get \{ptr}"
-                when POINTER_GET_INDEX(position, ptr, index):
+                }
+                when POINTER_GET_INDEX(position, ptr, index) {
                     return "pointer_get_index \{ptr}, \{index}"
-                when POINTER_OFFSET(position, ptr, index):
+                }
+                when POINTER_OFFSET(position, ptr, index) {
                     return "pointer_offset \{ptr}, \{index}"
-                when POINTER_REALLOC(position, ptr, oldSize, newSize):
+                }
+                when POINTER_REALLOC(position, ptr, oldSize, newSize) {
                     return "pointer_realloc \{ptr}, \{oldSize}, \{newSize}"
-                when POINTER_SET(position, value, ptr):
+                }
+                when POINTER_SET(position, value, ptr) {
                     return "pointer_set \{value}, \{ptr}"
-                when POINTER_SET_INDEX(position, value, ptr, index):
+                }
+                when POINTER_SET_INDEX(position, value, ptr, index) {
                     return "pointer_set_index \{value}, \{ptr}, \{index}"
-                when RETURN(position, value):
+                }
+                when RETURN(position, value) {
                     if value !== null {
                         return "return \{value}"
                     }
                     return "return"
-                when STATIC_CALL(position, m, args):
+                }
+                when STATIC_CALL(position, m, args) {
                     return "static_call \{m.declaration}(\{args.join(", ")})"
-                when STORE(position, value, ptr):
+                }
+                when STORE(position, value, ptr) {
                     return "store \{value}, \{ptr}"
-                when UNREACHABLE(position):
+                }
+                when UNREACHABLE(position) {
                     return "unreachable"
+                }
             }
         }
     }
@@ -297,71 +325,96 @@ class IR {
 
         function type():Type {
             match self {
-                when BIT:
+                when BIT {
                     return Type.BuiltinBit()
-                when INT(_, type):
+                }
+                when INT(_, type) {
                     return type
-                when LOCAL(_, type):
+                }
+                when LOCAL(_, type) {
                     return type -- note that the actual IR type is a pointer to this type
-                when METHOD_POINTER(_, type):
+                }
+                when METHOD_POINTER(_, type) {
                     return type
-                when NULL(type):
+                }
+                when NULL(type) {
                     return type
-                when PARAMETER(_, type):
+                }
+                when PARAMETER(_, type) {
                     return type
-                when REAL(_, type):
+                }
+                when REAL(_, type) {
                     return type
-                when REF(_, type):
+                }
+                when REF(_, type) {
                     return type
-                when STRING:
+                }
+                when STRING {
                     return Type.StringType()
-                when METHOD(_, m):
+                }
+                when METHOD(_, m) {
                     return m.type
-                when METHODS:
+                }
+                when METHODS {
                     return Type.Invalid()
-                when SUPER(type):
+                }
+                when SUPER(type) {
                     return type
-                when TYPE(type):
+                }
+                when TYPE(type) {
                     return Type.ClassLiteral(type)
+                }
             }
         }
 
         @override
         function convert():String {
             match self {
-                when BIT(value):
+                when BIT(value) {
                     return value.convert()
-                when INT(value, _):
+                }
+                when INT(value, _) {
                     return value.convert()
-                when LOCAL(slot, type):
+                }
+                when LOCAL(slot, type) {
                     return "LOCAL(\{slot}:\{type}*)"
-                when NULL(type):
+                }
+                when NULL(type) {
                     return "NULL(\{type})"
-                when METHOD_POINTER(m, _):
+                }
+                when METHOD_POINTER(m, _) {
                     return "METHOD_POINTER(\{m.declaration})"
-                when PARAMETER(index, type):
+                }
+                when PARAMETER(index, type) {
                     return "PARAMETER(\{index}:\{type})"
-                when REAL(value, _):
+                }
+                when REAL(value, _) {
                     return value.convert()
-                when REF(id, type):
+                }
+                when REF(id, type) {
                     return "REF(\{id}:\{type})"
-                when STRING(s):
+                }
+                when STRING(s) {
                     return s.format("panda")
-
-                when METHOD(target, m):
+                }
+                when METHOD(target, m) {
                     if target !== null {
                         return "METHOD(\{target}, \{m.declaration})"
                     }
                     return m.declaration
-                when METHODS(target, m):
+                }
+                when METHODS(target, m) {
                     if target !== null {
                         return "METHODS(\{target}, \{m})"
                     }
                     return "METHODS(<null>, \{m})"
-                when SUPER(type):
+                }
+                when SUPER(type) {
                     return "SUPER(\{type})"
-                when TYPE(type):
+                }
+                when TYPE(type) {
                     return "TYPE(\{type.convert()})"
+                }
             }
         }
     }
@@ -423,10 +476,12 @@ class IR {
         }
         match currentBlock.statements[currentBlock.statements.count - 1] {
             when Statement.BRANCH, Statement.CONDITIONAL_BRANCH, Statement.RETURN,
-                    Statement.UNREACHABLE:
+                    Statement.UNREACHABLE {
                 return true
-            otherwise:
+            }
+            otherwise {
                 return false
+            }
         }
     }
 

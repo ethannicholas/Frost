@@ -16,21 +16,21 @@ static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -
 
 void org$pandalanguage$pandac$Compiler$AutoContext$init$org$pandalanguage$pandac$Compiler$org$pandalanguage$pandac$Compiler$EnclosingContext(org$pandalanguage$pandac$Compiler$AutoContext* param0, org$pandalanguage$pandac$Compiler* param1, org$pandalanguage$pandac$Compiler$EnclosingContext* param2) {
 
-// line 125
+// line 140
 org$pandalanguage$pandac$Compiler** $tmp2 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp3 = *$tmp2;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 org$pandalanguage$pandac$Compiler** $tmp4 = &param0->compiler;
 *$tmp4 = param1;
-// line 126
+// line 141
 org$pandalanguage$pandac$Compiler$EnclosingContext** $tmp5 = &param0->context;
 org$pandalanguage$pandac$Compiler$EnclosingContext* $tmp6 = *$tmp5;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp6));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param2));
 org$pandalanguage$pandac$Compiler$EnclosingContext** $tmp7 = &param0->context;
 *$tmp7 = param2;
-// line 127
+// line 142
 panda$collections$Stack** $tmp8 = &param1->enclosingContexts;
 panda$collections$Stack* $tmp9 = *$tmp8;
 panda$collections$Stack$push$panda$collections$Stack$T($tmp9, ((panda$core$Object*) param2));
@@ -39,7 +39,7 @@ return;
 }
 void org$pandalanguage$pandac$Compiler$AutoContext$cleanup(org$pandalanguage$pandac$Compiler$AutoContext* param0) {
 
-// line 132
+// line 147
 org$pandalanguage$pandac$Compiler** $tmp10 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp11 = *$tmp10;
 panda$collections$Stack** $tmp12 = &$tmp11->enclosingContexts;

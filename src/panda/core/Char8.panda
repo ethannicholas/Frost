@@ -53,10 +53,12 @@ class Char8 : Value, Key<Char8>, Comparable<Char8> {
 
     function isWhitespace():Bit {
         match self {
-            when "\n", "\r", "\t", " ":
+            when "\n", "\r", "\t", " " {
                 return true
-            otherwise:
+            }
+            otherwise {
                 return false
+            }
         }
     }
 

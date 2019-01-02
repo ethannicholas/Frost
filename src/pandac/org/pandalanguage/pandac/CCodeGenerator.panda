@@ -99,14 +99,17 @@ class CCodeGenerator : CodeGenerator {
             writeImport(cl)
         }
         match t.typeKind {
-            when Type.Kind.METHOD, Type.Kind.FUNCTION:
+            when Type.Kind.METHOD, Type.Kind.FUNCTION {
                 return cType(Type.MutableMethod())
-            when Type.Kind.IMMUTABLE_METHOD, Type.Kind.IMMUTABLE_FUNCTION:
+            }
+            when Type.Kind.IMMUTABLE_METHOD, Type.Kind.IMMUTABLE_FUNCTION {
                 return cType(Type.Method())
-            when Type.Kind.GENERIC:
+            }
+            when Type.Kind.GENERIC {
                 if t.subtypes[0].name = "panda.unsafe.Pointer" & t.subtypes[1].isMethod {
                     return cMethodType(t.subtypes[1], null)
                 }
+            }
         }
         return hCodeGen.type(t)
     }
@@ -632,8 +635,9 @@ class CCodeGenerator : CodeGenerator {
 
     function getName(v:Variable):String {
         match v.storage {
-            when Variable.Storage.PARAMETER:
+            when Variable.Storage.PARAMETER {
                 return "p_\{v.name}"
+            }
         }
         var result := variableNames[v]
         if result == null {
@@ -658,14 +662,18 @@ class CCodeGenerator : CodeGenerator {
 
     function opClass(t:Type):OpClass {
         match t.typeKind {
-            when Type.Kind.BUILTIN_INT:
+            when Type.Kind.BUILTIN_INT {
                 return OpClass.SIGNED
-            when Type.Kind.BUILTIN_UINT, Type.Kind.BUILTIN_BIT:
+            }
+            when Type.Kind.BUILTIN_UINT, Type.Kind.BUILTIN_BIT {
                 return OpClass.UNSIGNED
-            when Type.Kind.BUILTIN_FLOAT:
+            }
+            when Type.Kind.BUILTIN_FLOAT {
                 return OpClass.FLOAT
-            otherwise:
+            }
+            otherwise {
                 return OpClass.CLASS
+            }
         }
     }
 
@@ -674,48 +682,66 @@ class CCodeGenerator : CodeGenerator {
         def cOp:String
         var logical := false
         match op {
-            when Token.Kind.ADD:
+            when Token.Kind.ADD {
                 cOp := "+"
-            when Token.Kind.SUB:
+            }
+            when Token.Kind.SUB {
                 cOp := "-"
-            when Token.Kind.MUL:
+            }
+            when Token.Kind.MUL {
                 cOp := "*"
-            when Token.Kind.INTDIV:
+            }
+            when Token.Kind.INTDIV {
                 cOp := "/"
-            when Token.Kind.DIV:
+            }
+            when Token.Kind.DIV {
                 cOp := "/"
-            when Token.Kind.REM:
+            }
+            when Token.Kind.REM {
                 cOp := "%"
-            when Token.Kind.SHIFTLEFT:
+            }
+            when Token.Kind.SHIFTLEFT {
                 cOp := "<<"
-            when Token.Kind.SHIFTRIGHT:
+            }
+            when Token.Kind.SHIFTRIGHT {
                 cOp := ">>"
-            when Token.Kind.BITWISEAND:
+            }
+            when Token.Kind.BITWISEAND {
                 cOp := "&"
-            when Token.Kind.BITWISEOR:
+            }
+            when Token.Kind.BITWISEOR {
                 cOp := "|"
-            when Token.Kind.XOR, Token.Kind.BITWISEXOR: 
+            }
+            when Token.Kind.XOR, Token.Kind.BITWISEXOR {
                 cOp := "^"
-            when Token.Kind.EQ:
+            }
+            when Token.Kind.EQ {
                 cOp := "=="
                 logical := true
-            when Token.Kind.NEQ:
+            }
+            when Token.Kind.NEQ {
                 cOp := "!="
                 logical := true
-            when Token.Kind.GT:
+            }
+            when Token.Kind.GT {
                 cOp := ">"
                 logical := true
-            when Token.Kind.LT:
+            }
+            when Token.Kind.LT {
                 cOp := "<"
                 logical := true
-            when Token.Kind.GTEQ:
+            }
+            when Token.Kind.GTEQ {
                 cOp := ">="
                 logical := true
-            when Token.Kind.LTEQ:
+            }
+            when Token.Kind.LTEQ {
                 logical := true
                 cOp := "<="
-            otherwise:
+            }
+            otherwise {
                 assert false
+            }
         }
         def result := nextVar()
         if logical {
@@ -933,33 +959,43 @@ class CCodeGenerator : CodeGenerator {
 
     method getReference(v:IR.Value):String {
         match v {
-            when IR.Value.BIT(value):
+            when IR.Value.BIT(value) {
                 return value.convert()
-            when IR.Value.INT(value, _):
+            }
+            when IR.Value.INT(value, _) {
                 return value.convert()
-            when IR.Value.LOCAL(index, _):
+            }
+            when IR.Value.LOCAL(index, _) {
                 return "(&local\{index})"
-            when IR.Value.METHOD_POINTER(m, _):
+            }
+            when IR.Value.METHOD_POINTER(m, _) {
                 if m.owner.external {
                     writeDeclaration(m)
                 }
                 return getName(m)
-            when IR.Value.NULL(type):
+            }
+            when IR.Value.NULL(type) {
                 return getNullReference(type)
-            when IR.Value.PARAMETER(index, _):
+            }
+            when IR.Value.PARAMETER(index, _) {
                 return "param\{index}"
-            when IR.Value.REAL(value, type):
+            }
+            when IR.Value.REAL(value, type) {
                 return getRealReference(type, value)
-            when IR.Value.REF(id, _):
---                assert refs[id] !== null, "id \{id} has not been defined"
+            }
+            when IR.Value.REF(id, _) {
+                assert refs[id] !== null, "id \{id} has not been defined"
                 if refs[id] == null {
                     return "undefined ref: \{id}"
                 }
                 return refs[id]
-            when IR.Value.STRING(s):
+            }
+            when IR.Value.STRING(s) {
                 return getStringReference(s)
-            otherwise:
+            }
+            otherwise {
                 assert false, "unsupported value \{v}"
+            }
         }
     }
 
@@ -1020,8 +1056,9 @@ class CCodeGenerator : CodeGenerator {
 
     function isNull(v:IR.Value):Bit {
         match v {
-            when IR.Value.NULL:
+            when IR.Value.NULL {
                 return true
+            }
         }
         return false
     }
@@ -1032,7 +1069,7 @@ class CCodeGenerator : CodeGenerator {
         def rightRef := getReference(right)
         if left.type().isNullable {
             match op {
-                when Token.Kind.IDENTITY:
+                when Token.Kind.IDENTITY {
                     if isNull(left) {
                         writeIsNull(id, right)
                         return
@@ -1041,7 +1078,8 @@ class CCodeGenerator : CodeGenerator {
                         writeIsNull(id, left)
                         return
                     }
-                when Token.Kind.NIDENTITY:
+                }
+                when Token.Kind.NIDENTITY {
                     if isNull(left) {
                         writeIsNonNull(id, right)
                         return
@@ -1050,44 +1088,62 @@ class CCodeGenerator : CodeGenerator {
                         writeIsNonNull(id, left)
                         return
                     }
+                }
             }
         }
         def cOp:String
         match op {
-            when Token.Kind.ADD:
+            when Token.Kind.ADD {
                 cOp := "+"
-            when Token.Kind.SUB:
+            }
+            when Token.Kind.SUB {
                 cOp := "-"
-            when Token.Kind.MUL:
+            }
+            when Token.Kind.MUL {
                 cOp := "*"
-            when Token.Kind.DIV, Token.Kind.INTDIV:
+            }
+            when Token.Kind.DIV, Token.Kind.INTDIV {
                 cOp := "/"
-            when Token.Kind.REM:
+            }
+            when Token.Kind.REM {
                 cOp := "%"
-            when Token.Kind.SHIFTLEFT:
+            }
+            when Token.Kind.SHIFTLEFT {
                 cOp := "<<"
-            when Token.Kind.SHIFTRIGHT:
+            }
+            when Token.Kind.SHIFTRIGHT {
                 cOp := ">>"
-            when Token.Kind.AND, Token.Kind.BITWISEAND:
+            }
+            when Token.Kind.AND, Token.Kind.BITWISEAND {
                 cOp := "&"
-            when Token.Kind.OR, Token.Kind.BITWISEOR:
+            }
+            when Token.Kind.OR, Token.Kind.BITWISEOR {
                 cOp := "|"
-            when Token.Kind.XOR, Token.Kind.BITWISEXOR: 
+            }
+            when Token.Kind.XOR, Token.Kind.BITWISEXOR {
                 cOp := "^"
-            when Token.Kind.EQ, Token.Kind.IDENTITY:
+            }
+            when Token.Kind.EQ, Token.Kind.IDENTITY {
                 cOp := "=="
-            when Token.Kind.NEQ, Token.Kind.NIDENTITY:
+            }
+            when Token.Kind.NEQ, Token.Kind.NIDENTITY {
                 cOp := "!="
-            when Token.Kind.GT:
+            }
+            when Token.Kind.GT {
                 cOp := ">"
-            when Token.Kind.LT:
+            }
+            when Token.Kind.LT {
                 cOp := "<"
-            when Token.Kind.GTEQ:
+            }
+            when Token.Kind.GTEQ {
                 cOp := ">="
-            when Token.Kind.LTEQ:
+            }
+            when Token.Kind.LTEQ {
                 cOp := "<="
-            otherwise:
+            }
+            otherwise {
                 assert false, "unsupported operator: \{op}"
+            }
         }
         def result := nextVar()
         out.printLine("\{cType(type)} \{result} = \{leftRef} \{cOp} \{rightRef};")
@@ -1325,60 +1381,87 @@ class CCodeGenerator : CodeGenerator {
 
     method writeStatement(id:IR.Statement.ID, s:IR.Statement) {
         match s {
-            when IR.Statement.BINARY(position, left, op, right, type):
+            when IR.Statement.BINARY(position, left, op, right, type) {
                 writeBinary(id, left, op, right, type)
-            when IR.Statement.BRANCH(position, target):
+            }
+            when IR.Statement.BRANCH(position, target) {
                 writeBranch(target)
-            when IR.Statement.CAST(position, value, type):
+            }
+            when IR.Statement.CAST(position, value, type) {
                 writeCast(id, value, type)
-            when IR.Statement.COMMENT(text):
+            }
+            when IR.Statement.COMMENT(text) {
                 out.printLine("// \{text}")
-            when IR.Statement.CONDITIONAL_BRANCH(position, test, ifTrue, ifFalse):
+            }
+            when IR.Statement.CONDITIONAL_BRANCH(position, test, ifTrue, ifFalse) {
                 writeConditionalBranch(test, ifTrue, ifFalse)
-            when IR.Statement.CONSTRUCT(position, cl):
+            }
+            when IR.Statement.CONSTRUCT(position, cl) {
                 writeConstruct(id, cl)
-            when IR.Statement.CREATE_STRUCT(position, cl, args):
+            }
+            when IR.Statement.CREATE_STRUCT(position, cl, args) {
                 writeCreateStruct(id, cl, args)
-            when IR.Statement.DYNAMIC_CALL(position, m, args):
+            }
+            when IR.Statement.DYNAMIC_CALL(position, m, args) {
                 writeDynamicCall(id, m, args)
-            when IR.Statement.EXTRACT_FIELD(position, target, field):
+            }
+            when IR.Statement.EXTRACT_FIELD(position, target, field) {
                 writeExtractField(id, target, field)
-            when IR.Statement.GET_CHOICE_FIELD_POINTER(position, target, cc, index):
+            }
+            when IR.Statement.GET_CHOICE_FIELD_POINTER(position, target, cc, index) {
                 writeGetChoiceFieldPointer(id, target, cc, index)
-            when IR.Statement.GET_FIELD_POINTER(position, target, field):
+            }
+            when IR.Statement.GET_FIELD_POINTER(position, target, field) {
                 writeGetFieldPointer(id, target, field)
-            when IR.Statement.GET_INTERFACE_METHOD(position, value, cl, index, type):
+            }
+            when IR.Statement.GET_INTERFACE_METHOD(position, value, cl, index, type) {
                 writeGetInterfaceMethod(id, value, cl, index, type)
-            when IR.Statement.GET_VIRTUAL_METHOD(position, value, index, type):
+            }
+            when IR.Statement.GET_VIRTUAL_METHOD(position, value, index, type) {
                 writeGetVirtualMethod(id, value, index, type)
-            when IR.Statement.LOAD(position, ptr):
+            }
+            when IR.Statement.LOAD(position, ptr) {
                 writeLoad(id, ptr)
-            when IR.Statement.NEGATE(position, value):
+            }
+            when IR.Statement.NEGATE(position, value) {
                 writeNegate(id, value)
-            when IR.Statement.NOT(position, value):
+            }
+            when IR.Statement.NOT(position, value) {
                 writeNot(id, value)
-            when IR.Statement.POINTER_ALLOC(position, count, type):
+            }
+            when IR.Statement.POINTER_ALLOC(position, count, type) {
                 writePointerAlloc(id, count, type)
-            when IR.Statement.POINTER_DESTROY(position, ptr):
+            }
+            when IR.Statement.POINTER_DESTROY(position, ptr) {
                 writePointerDestroy(ptr)
-            when IR.Statement.POINTER_GET_INDEX(position, ptr, index):
+            }
+            when IR.Statement.POINTER_GET_INDEX(position, ptr, index) {
                 writePointerGetIndex(id, ptr, index)
-            when IR.Statement.POINTER_OFFSET(position, ptr, offset):
+            }
+            when IR.Statement.POINTER_OFFSET(position, ptr, offset) {
                 writePointerOffset(id, ptr, offset)
-            when IR.Statement.POINTER_REALLOC(position, ptr, oldCount, newCount):
+            }
+            when IR.Statement.POINTER_REALLOC(position, ptr, oldCount, newCount) {
                 writePointerRealloc(id, ptr, oldCount, newCount)
-            when IR.Statement.POINTER_SET_INDEX(position, value, ptr, index):
+            }
+            when IR.Statement.POINTER_SET_INDEX(position, value, ptr, index) {
                 writePointerSetIndex(value, ptr, index)
-            when IR.Statement.RETURN(position, value):
+            }
+            when IR.Statement.RETURN(position, value) {
                 writeReturn(value)
-            when IR.Statement.STATIC_CALL(position, m, args):
+            }
+            when IR.Statement.STATIC_CALL(position, m, args) {
                 writeStaticCall(id, m, args)
-            when IR.Statement.STORE(position, value, slot):
+            }
+            when IR.Statement.STORE(position, value, slot) {
                 writeStore(value, slot)
-            when IR.Statement.UNREACHABLE(position):
+            }
+            when IR.Statement.UNREACHABLE(position) {
                 out.printLine("abort(); // unreachable")
-            otherwise:
+            }
+            otherwise {
                 assert false, "unsupported statement \{s}"
+            }
         }
     }
 

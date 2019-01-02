@@ -36,12 +36,15 @@ class MethodRef {
             parameterTypes.addAll(methodType.subtypes[0 .. methodType.subtypes.count - 1])
             def typeKind:Type.Kind
             match value.methodKind {
-                when MethodDecl.Kind.METHOD:
+                when MethodDecl.Kind.METHOD {
                     typeKind := Type.Kind.IMMUTABLE_METHOD
-                when MethodDecl.Kind.FUNCTION:
+                }
+                when MethodDecl.Kind.FUNCTION {
                     typeKind := Type.Kind.IMMUTABLE_FUNCTION
-                otherwise:
+                }
+                otherwise {
                     assert false
+                }
             }
             methodType := Type.methodType(methodType.position, typeKind, parameterTypes,
                     methodType.returnType, methodType.priority)
@@ -49,12 +52,15 @@ class MethodRef {
         else if !compiler.isImmutable(target) & value.methodKind != MethodDecl.Kind.INIT {
             def typeKind:Type.Kind
             match value.methodKind {
-                when MethodDecl.Kind.METHOD:
+                when MethodDecl.Kind.METHOD {
                     typeKind := Type.Kind.METHOD
-                when MethodDecl.Kind.FUNCTION:
+                }
+                when MethodDecl.Kind.FUNCTION {
                     typeKind := Type.Kind.FUNCTION
-                otherwise:
+                }
+                otherwise {
                     assert false
+                }
             }
             methodType := Type.methodType(methodType.position, typeKind,
                     methodType.subtypes[0 .. methodType.subtypes.count - 1],

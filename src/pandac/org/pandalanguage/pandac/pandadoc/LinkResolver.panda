@@ -80,10 +80,15 @@ class LinkResolver {
 
     function linkTo(s:Symbol):String? {
         match s.kind {
-            when Symbol.Kind.FIELD: return linkTo(s->FieldDecl)
-            when Symbol.Kind.METHOD: return linkTo(s->MethodDecl)
-            otherwise:
+            when Symbol.Kind.FIELD {
+                return linkTo(s->FieldDecl)
+            }
+            when Symbol.Kind.METHOD {
+                return linkTo(s->MethodDecl)
+            }
+            otherwise {
                 return null
+            }
         }    
     }
 
@@ -153,16 +158,18 @@ class LinkResolver {
                     return null
                 }
                 match s.kind {
-                    when Symbol.Kind.METHOD:
+                    when Symbol.Kind.METHOD {
                         if matches(s->MethodDecl, parameters) {
                             return linkTo(s)
                         }
-                    when Symbol.Kind.METHODS:
+                    }
+                    when Symbol.Kind.METHODS {
                         for m in s->Methods.methods {
                             if matches(m, parameters) {
                                 return linkTo(m)
                             }
                         }
+                    }
                 }
                 return null
             }

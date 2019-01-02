@@ -88,7 +88,7 @@ panda$core$Bit $tmp34 = panda$core$UInt8$$EQ$panda$core$UInt8$R$panda$core$Bit((
 bool $tmp35 = $tmp34.value;
 if ($tmp35) goto block6; else goto block7;
 block6:;
-// line 48
+// line 49
 panda$core$Int64* $tmp36 = &param0->column;
 panda$core$Int64 $tmp37 = *$tmp36;
 panda$core$Int64* $tmp38 = &param0->tabSize;
@@ -110,7 +110,7 @@ panda$core$Int64* $tmp53 = &param0->column;
 *$tmp53 = $tmp52;
 goto block3;
 block7:;
-// line 50
+// line 52
 panda$core$Int64* $tmp54 = &param0->column;
 panda$core$Int64 $tmp55 = *$tmp54;
 panda$core$Int64 $tmp56 = (panda$core$Int64) {1};
@@ -122,7 +122,7 @@ panda$core$Int64* $tmp61 = &param0->column;
 *$tmp61 = $tmp60;
 goto block3;
 block3:;
-// line 52
+// line 55
 panda$core$UInt8$nullable $tmp62 = *(&local0);
 return $tmp62;
 

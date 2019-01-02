@@ -230,7 +230,7 @@ panda$core$Bit $tmp116 = panda$core$UInt8$$EQ$panda$core$UInt8$R$panda$core$Bit(
 bool $tmp117 = $tmp116.value;
 if ($tmp117) goto block14; else goto block15;
 block14:;
-// line 65
+// line 66
 panda$core$Int64* $tmp118 = &param0->column;
 panda$core$Int64 $tmp119 = *$tmp118;
 panda$core$Int64 $tmp120 = (panda$core$Int64) {4};
@@ -250,7 +250,7 @@ panda$core$Int64* $tmp133 = &param0->column;
 *$tmp133 = $tmp132;
 goto block11;
 block15:;
-// line 67
+// line 69
 panda$core$Int64* $tmp134 = &param0->column;
 panda$core$Int64 $tmp135 = *$tmp134;
 panda$core$Int64 $tmp136 = (panda$core$Int64) {1};
@@ -262,14 +262,14 @@ panda$core$Int64* $tmp141 = &param0->column;
 *$tmp141 = $tmp140;
 goto block11;
 block11:;
-// line 69
+// line 72
 panda$core$Int64** $tmp142 = &param0->accepts;
 panda$core$Int64* $tmp143 = *$tmp142;
 panda$core$Int64 $tmp144 = *(&local0);
 int64_t $tmp145 = $tmp144.value;
 panda$core$Int64 $tmp146 = $tmp143[$tmp145];
 *(&local7) = $tmp146;
-// line 70
+// line 73
 panda$core$Int64 $tmp147 = *(&local7);
 panda$core$Int64 $tmp148 = (panda$core$Int64) {18446744073709551615};
 int64_t $tmp149 = $tmp147.value;
@@ -279,10 +279,10 @@ panda$core$Bit $tmp152 = (panda$core$Bit) {$tmp151};
 bool $tmp153 = $tmp152.value;
 if ($tmp153) goto block16; else goto block17;
 block16:;
-// line 71
+// line 74
 panda$core$Int64 $tmp154 = *(&local7);
 *(&local1) = $tmp154;
-// line 72
+// line 75
 panda$core$Int64* $tmp155 = &param0->offset;
 panda$core$Int64 $tmp156 = *$tmp155;
 *(&local3) = $tmp156;
@@ -291,16 +291,16 @@ block17:;
 goto block9;
 block10:;
 // line 1
-// line 76
+// line 79
 goto block5;
 block9:;
 goto block3;
 block5:;
-// line 79
+// line 82
 panda$core$Int64 $tmp157 = *(&local3);
 panda$core$Int64* $tmp158 = &param0->offset;
 *$tmp158 = $tmp157;
-// line 80
+// line 83
 panda$core$Int64 $tmp159 = *(&local1);
 panda$core$Int64 $tmp160 = *(&local2);
 panda$core$String$Index $tmp161 = panda$core$String$Index$init$panda$core$Int64($tmp160);

@@ -39,10 +39,10 @@ class FieldDecl : Symbol {
     function convert():String {
         def result := MutableString(annotations.convert())
         match fieldKind {
-            when Kind.VAR:      result.append("var ")
-            when Kind.DEF:      result.append("def ")
-            when Kind.CONSTANT: result.append("constant ")
-            when Kind.PROPERTY: result.append("property ")
+            when Kind.VAR      { result.append("var ") }
+            when Kind.DEF      { result.append("def ") }
+            when Kind.CONSTANT { result.append("constant ") }
+            when Kind.PROPERTY { result.append("property ") }
         }
         result.append(name)
         result.append(":")

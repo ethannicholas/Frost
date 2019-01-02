@@ -23,7 +23,7 @@ static panda$core$String $s31 = { (panda$core$Class*) &panda$core$String$class, 
 
 void org$pandalanguage$pandac$pandadoc$Markdown$_Closure18$init$org$pandalanguage$pandac$pandadoc$Markdown(org$pandalanguage$pandac$pandadoc$Markdown$_Closure18* param0, org$pandalanguage$pandac$pandadoc$Markdown* param1) {
 
-// line 755
+// line 769
 org$pandalanguage$pandac$pandadoc$Markdown** $tmp2 = &param0->$self;
 org$pandalanguage$pandac$pandadoc$Markdown* $tmp3 = *$tmp2;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
@@ -44,7 +44,7 @@ return;
 panda$core$String* org$pandalanguage$pandac$pandadoc$Markdown$_Closure18$$anonymous17$panda$collections$ListView$LTpanda$core$String$Q$GT$R$panda$core$String(org$pandalanguage$pandac$pandadoc$Markdown$_Closure18* param0, panda$collections$ListView* param1) {
 
 panda$core$MutableString* local0 = NULL;
-// line 756
+// line 770
 panda$core$MutableString* $tmp7 = (panda$core$MutableString*) pandaObjectAlloc(48, (panda$core$Class*) &panda$core$MutableString$class);
 panda$core$Int64 $tmp8 = (panda$core$Int64) {1};
 ITable* $tmp9 = param1->$class->itable;
@@ -61,13 +61,13 @@ panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp7));
 *(&local0) = $tmp7;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp7));
 panda$core$Panda$unref$panda$core$Object$Q($tmp12);
-// line 757
+// line 771
 org$pandalanguage$pandac$pandadoc$Markdown** $tmp14 = &param0->$self;
 org$pandalanguage$pandac$pandadoc$Markdown* $tmp15 = *$tmp14;
 panda$core$MutableString* $tmp16 = *(&local0);
 $fn18 $tmp17 = ($fn18) $tmp15->$class->vtable[22];
 $tmp17($tmp15, $tmp16);
-// line 758
+// line 772
 panda$core$Int64 $tmp19 = (panda$core$Int64) {1};
 ITable* $tmp20 = param1->$class->itable;
 while ($tmp20->$class != (panda$core$Class*) &panda$collections$ListView$class) {

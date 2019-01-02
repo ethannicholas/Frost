@@ -29,14 +29,14 @@ static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -
 
 void org$pandalanguage$pandac$Compiler$CoercionKey$init$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$Type(org$pandalanguage$pandac$Compiler$CoercionKey* param0, org$pandalanguage$pandac$ASTNode* param1, org$pandalanguage$pandac$Type* param2) {
 
-// line 243
+// line 261
 org$pandalanguage$pandac$ASTNode** $tmp2 = &param0->expr;
 org$pandalanguage$pandac$ASTNode* $tmp3 = *$tmp2;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 org$pandalanguage$pandac$ASTNode** $tmp4 = &param0->expr;
 *$tmp4 = param1;
-// line 244
+// line 262
 org$pandalanguage$pandac$Type** $tmp5 = &param0->target;
 org$pandalanguage$pandac$Type* $tmp6 = *$tmp5;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp6));
@@ -49,7 +49,7 @@ return;
 panda$core$Bit org$pandalanguage$pandac$Compiler$CoercionKey$$EQ$org$pandalanguage$pandac$Compiler$CoercionKey$R$panda$core$Bit(org$pandalanguage$pandac$Compiler$CoercionKey* param0, org$pandalanguage$pandac$Compiler$CoercionKey* param1) {
 
 panda$core$Bit local0;
-// line 249
+// line 267
 org$pandalanguage$pandac$ASTNode** $tmp8 = &param0->expr;
 org$pandalanguage$pandac$ASTNode* $tmp9 = *$tmp8;
 org$pandalanguage$pandac$ASTNode** $tmp10 = &param1->expr;
@@ -76,7 +76,7 @@ return $tmp20;
 }
 panda$core$Int64 org$pandalanguage$pandac$Compiler$CoercionKey$get_hash$R$panda$core$Int64(org$pandalanguage$pandac$Compiler$CoercionKey* param0) {
 
-// line 254
+// line 272
 org$pandalanguage$pandac$ASTNode** $tmp21 = &param0->expr;
 org$pandalanguage$pandac$ASTNode* $tmp22 = *$tmp21;
 panda$core$Int64 $tmp23;

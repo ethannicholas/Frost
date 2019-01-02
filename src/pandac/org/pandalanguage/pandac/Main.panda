@@ -139,55 +139,61 @@ class Main {
         while !args.get_done() {
             def a := args.next()
             match a {
-                when "--mem":
-                    
-                when "--fuzz":
+                when "--fuzz" {
                     def path := File("/tmp/fuzz.panda")
                     Console.inputStream().sendTo(path.openOutputStream())
                     sources.add(path)
-                when "-o":
+                }
+                when "-o" {
                     if outFile !== null {
                         err.printLine("'-o' may only be specified once")
                         System.exit(1)
                     }
                     outFile := File(args.next("a filename"))
                     outFile.parent().createDirectories()
-                when "-O":
+                }
+                when "-O" {
                     def level := args.next("a number from 0-3")
                     optimizationLevel := level.convert()->Int
                     if optimizationLevel > 3 | optimizationLevel < 0 {
                         Console.errorStream().printLine("expected a number from 0-3 after '-O'")
                         System.exit(1)
                     }
-                when "-S":
+                }
+                when "-S" {
                     def level := args.next("a number from 0-3")
                     safetyLevel := level.convert()->Int
                     if safetyLevel > 3 | safetyLevel < 0 {
                         Console.errorStream().printLine("expected a number from 0-3 after '-S'")
                         System.exit(1)
                     }
-                when "-f":
+                }
+                when "-f" {
                     if format !== null {
                         err.printLine("'-f' may only be specified once")
                         System.exit(1)
                     }
                     def f := args.next("an output format")
                     match f {
-                        when "exe":  format := Format.EXECUTABLE
-                        when "o":    format := Format.OBJECT
-                        when "ll":   format := Format.LLVM
-                        when "h":    format := Format.C_HEADER
-                        when "c":    format := Format.C
-                        when "html": format := Format.HTML
-                        otherwise:
+                        when "exe"  { format := Format.EXECUTABLE }
+                        when "o"    { format := Format.OBJECT }
+                        when "ll"   { format := Format.LLVM }
+                        when "h"    { format := Format.C_HEADER }
+                        when "c"    { format := Format.C }
+                        when "html" { format := Format.HTML }
+                        otherwise {
                             err.printLine("unsupported output format '\{f}'")
                             System.exit(1)
+                        }
                     }
-                when "-i":
+                }
+                when "-i" {
                     imports.add(File(args.next("a path to an import directory")))
-                when "--root":
+                }
+                when "--root" {
                     root := args.next("a path")
-                otherwise:
+                }
+                otherwise {
                     if a.endsWith(".panda") {
                         sources.add(File(a))
                     }
@@ -195,6 +201,7 @@ class Main {
                         err.printLine("unrecognized argument '\{a}'")
                         System.exit(1)
                     }
+                }
             }
         }
         def llvmDir := File(Config.llvmDir())
@@ -210,13 +217,14 @@ class Main {
             if sources.count = 1 {
                 def extension:String
                 match format {
-                    when Format.EXECUTABLE: extension := ""
-                    when Format.OBJECT:     extension := ".o"
-                    when Format.LLVM:       extension := ".ll"
-                    when Format.HTML:       extension := ".html"
-                    otherwise:
+                    when Format.EXECUTABLE { extension := "" }
+                    when Format.OBJECT     { extension := ".o" }
+                    when Format.LLVM       { extension := ".ll" }
+                    when Format.HTML       { extension := ".html" }
+                    otherwise {
                         err.printLine("output format requires a '-o' output to be specified")
                         System.exit(1)
+                    }
                 }
                 outFile := sources[0].changeExtension(extension)
             }
@@ -245,15 +253,19 @@ class Main {
         {
             def cg:CodeGenerator
             match format {
-                when Format.LLVM, Format.EXECUTABLE, Format.OBJECT:
+                when Format.LLVM, Format.EXECUTABLE, Format.OBJECT {
                     cg := LLVMCodeGenerator(Config.llvmTriple(),
                                             outFile.changeExtension(".ll").openOutputStream())
-                when Format.C_HEADER:
+                }
+                when Format.C_HEADER {
                     cg := HCodeGenerator(outFile)
-                when Format.C:
+                }
+                when Format.C {
                     cg := CCodeGenerator(outFile)
-                otherwise:
+                }
+                otherwise {
                     assert false
+                }
             }
             def settings := Compiler.Settings(pandaHome, imports, optimizationLevel, safetyLevel,
                     debug)
@@ -276,10 +288,12 @@ class Main {
         }
         if errorCount = 0 {
             match format {
-                when Format.EXECUTABLE:
+                when Format.EXECUTABLE {
                     toExecutable(outFile.changeExtension(".ll"), outFile, preserveTemporaries)
-                when Format.OBJECT:
+                }
+                when Format.OBJECT {
                     toObject(outFile.changeExtension(".ll"), outFile, preserveTemporaries)
+                }
             }
         }
         else {
@@ -300,9 +314,7 @@ class Main {
 
     @class
     method main(args:ListView<String>) {
-        if args[1] != "--mem" {
-            Panda.disableRefErrorReporting()
-        }
+        Panda.disableRefErrorReporting()
         Main().run(args)
     }
 }

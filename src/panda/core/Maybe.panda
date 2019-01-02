@@ -21,8 +21,9 @@ choice Maybe<T> {
     @pre(succeeded())
     function get():T {
         match self {
-            when SUCCESS(value):
+            when SUCCESS(value) {
                 return value
+            }
         }
         assert false
     }
@@ -33,8 +34,9 @@ choice Maybe<T> {
     @pre(!succeeded())
     function error():Error {
         match self {
-            when ERROR(error):
+            when ERROR(error) {
                 return error
+            }
         }
         assert false
     }
@@ -44,20 +46,24 @@ choice Maybe<T> {
     ================================================================================================
     function succeeded():Bit {
         match self {
-            when SUCCESS:
+            when SUCCESS {
                 return true
-            when ERROR:
+            }
+            when ERROR {
                 return false
+            }
         }
     }
 
     @override
     function convert():String {
         match self {
-            when SUCCESS(v):
+            when SUCCESS(v) {
                 return "SUCCESS(\{v})"
-            when ERROR(e):
+            }
+            when ERROR(e) {
                 return "ERROR(\{e})"
+            }
         }
     }
 }

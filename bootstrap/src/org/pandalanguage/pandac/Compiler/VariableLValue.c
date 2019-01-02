@@ -36,14 +36,14 @@ static panda$core$String $s19 = { (panda$core$Class*) &panda$core$String$class, 
 void org$pandalanguage$pandac$Compiler$VariableLValue$init$org$pandalanguage$pandac$Compiler$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Variable(org$pandalanguage$pandac$Compiler$VariableLValue* param0, org$pandalanguage$pandac$Compiler* param1, org$pandalanguage$pandac$Position param2, org$pandalanguage$pandac$Variable* param3) {
 
 panda$core$Int64 local0;
-// line 5622
+// line 5930
 org$pandalanguage$pandac$Compiler** $tmp2 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp3 = *$tmp2;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 org$pandalanguage$pandac$Compiler** $tmp4 = &param0->compiler;
 *$tmp4 = param1;
-// line 5623
+// line 5931
 org$pandalanguage$pandac$Variable$Storage** $tmp5 = &param3->storage;
 org$pandalanguage$pandac$Variable$Storage* $tmp6 = *$tmp5;
 panda$core$Int64* $tmp7 = &$tmp6->$rawValue;
@@ -56,24 +56,24 @@ block2:;
 panda$core$Int64* $tmp12 = (panda$core$Int64*) ($tmp6->$data + 0);
 panda$core$Int64 $tmp13 = *$tmp12;
 *(&local0) = $tmp13;
-// line 5625
+// line 5933
 panda$core$Int64 $tmp14 = *(&local0);
 panda$core$Int64* $tmp15 = &param0->slot;
 *$tmp15 = $tmp14;
 goto block1;
 block3:;
-// line 5627
+// line 5936
 panda$core$Bit $tmp16 = panda$core$Bit$init$builtin_bit(false);
 bool $tmp17 = $tmp16.value;
 if ($tmp17) goto block4; else goto block5;
 block5:;
-panda$core$Int64 $tmp18 = (panda$core$Int64) {5627};
+panda$core$Int64 $tmp18 = (panda$core$Int64) {5936};
 panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64(&$s19, $tmp18);
 abort(); // unreachable
 block4:;
 goto block1;
 block1:;
-// line 5629
+// line 5939
 org$pandalanguage$pandac$Position* $tmp20 = &param0->position;
 *$tmp20 = param2;
 return;
@@ -81,7 +81,7 @@ return;
 }
 org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Compiler$VariableLValue$type$R$org$pandalanguage$pandac$Type(org$pandalanguage$pandac$Compiler$VariableLValue* param0) {
 
-// line 5634
+// line 5944
 org$pandalanguage$pandac$Compiler** $tmp21 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp22 = *$tmp21;
 org$pandalanguage$pandac$IR** $tmp23 = &$tmp22->ir;
@@ -99,7 +99,7 @@ return ((org$pandalanguage$pandac$Type*) $tmp29);
 org$pandalanguage$pandac$IR$Value* org$pandalanguage$pandac$Compiler$VariableLValue$compileLoad$R$org$pandalanguage$pandac$IR$Value$Q(org$pandalanguage$pandac$Compiler$VariableLValue* param0) {
 
 org$pandalanguage$pandac$IR$Statement$ID local0;
-// line 5639
+// line 5949
 org$pandalanguage$pandac$Compiler** $tmp30 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp31 = *$tmp30;
 org$pandalanguage$pandac$IR** $tmp32 = &$tmp31->ir;
@@ -122,7 +122,7 @@ org$pandalanguage$pandac$IR$Statement$ID $tmp47 = $tmp45($tmp33, $tmp34);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp34));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp38));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp44));
-// line 5640
+// line 5950
 org$pandalanguage$pandac$IR$Value* $tmp48 = (org$pandalanguage$pandac$IR$Value*) pandaObjectAlloc(40, (panda$core$Class*) &org$pandalanguage$pandac$IR$Value$class);
 panda$core$Int64 $tmp49 = (panda$core$Int64) {7};
 org$pandalanguage$pandac$IR$Statement$ID $tmp50 = *(&local0);
@@ -144,7 +144,7 @@ return $tmp48;
 }
 void org$pandalanguage$pandac$Compiler$VariableLValue$compileStore$org$pandalanguage$pandac$IR$Value(org$pandalanguage$pandac$Compiler$VariableLValue* param0, org$pandalanguage$pandac$IR$Value* param1) {
 
-// line 5645
+// line 5955
 org$pandalanguage$pandac$Compiler** $tmp60 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp61 = *$tmp60;
 $fn63 $tmp62 = ($fn63) param0->$class->vtable[2];
@@ -154,20 +154,20 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp64));
 bool $tmp66 = $tmp65.value;
 if ($tmp66) goto block1; else goto block2;
 block1:;
-// line 5646
+// line 5956
 org$pandalanguage$pandac$Compiler** $tmp67 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp68 = *$tmp67;
 $fn70 $tmp69 = ($fn70) param0->$class->vtable[3];
 org$pandalanguage$pandac$IR$Value* $tmp71 = $tmp69(param0);
 org$pandalanguage$pandac$Compiler$compileUnref$org$pandalanguage$pandac$IR$Value($tmp68, $tmp71);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp71));
-// line 5647
+// line 5957
 org$pandalanguage$pandac$Compiler** $tmp72 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp73 = *$tmp72;
 org$pandalanguage$pandac$Compiler$compileRef$org$pandalanguage$pandac$IR$Value($tmp73, param1);
 goto block2;
 block2:;
-// line 5649
+// line 5959
 org$pandalanguage$pandac$Compiler** $tmp74 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp75 = *$tmp74;
 org$pandalanguage$pandac$IR** $tmp76 = &$tmp75->ir;

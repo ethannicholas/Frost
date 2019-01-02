@@ -13,14 +13,14 @@ static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -
 
 void org$pandalanguage$pandac$CCodeGenerator$MethodShim$init$panda$core$String$panda$core$String(org$pandalanguage$pandac$CCodeGenerator$MethodShim* param0, panda$core$String* param1, panda$core$String* param2) {
 
-// line 160
+// line 163
 panda$core$String** $tmp2 = &param0->name;
 panda$core$String* $tmp3 = *$tmp2;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 panda$core$String** $tmp4 = &param0->name;
 *$tmp4 = param1;
-// line 161
+// line 164
 panda$core$String** $tmp5 = &param0->type;
 panda$core$String* $tmp6 = *$tmp5;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp6));

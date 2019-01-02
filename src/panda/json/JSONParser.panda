@@ -81,12 +81,15 @@ class JSONParser {
         loop {
             result.add(node())
             match next().kind {
-                when Token.Kind.RBRACKET:
+                when Token.Kind.RBRACKET {
                     return JSON.ARRAY(result.finish())
-                when Token.Kind.COMMA:
+                }
+                when Token.Kind.COMMA {
                     continue
-                otherwise:
+                }
+                otherwise {
                     assert false, "expected end of array"
+                }
             }
         }
     }
@@ -105,12 +108,15 @@ class JSONParser {
             }
             result[key] := node()
             match next().kind {
-                when Token.Kind.RBRACE:
+                when Token.Kind.RBRACE {
                     return JSON.OBJECT(result.finish())
-                when Token.Kind.COMMA:
+                }
+                when Token.Kind.COMMA {
                     continue
-                otherwise:
+                }
+                otherwise {
                     assert false, "expected end of object"
+                }
             }
         }
     }
@@ -129,25 +135,34 @@ class JSONParser {
     method node():JSON {
         def token := next()
         match token.kind {
-            when Token.Kind.LBRACE:
+            when Token.Kind.LBRACE {
                 return object()
-            when Token.Kind.LBRACKET:
+            }
+            when Token.Kind.LBRACKET {
                 return array()
-            when Token.Kind.STRING:
+            }
+            when Token.Kind.STRING {
                 def s := text(token)
                 return JSON.STRING(s.substring(s.next(s.start) .. s.previous(s.end)))
-            when Token.Kind.INT:
+            }
+            when Token.Kind.INT {
                 return JSON.INT(text(token).convert())
-            when Token.Kind.REAL:
+            }
+            when Token.Kind.REAL {
                 return JSON.REAL(text(token).convert())
-            when Token.Kind.TRUE:
+            }
+            when Token.Kind.TRUE {
                 return JSON.BIT(true)
-            when Token.Kind.FALSE:
+            }
+            when Token.Kind.FALSE {
                 return JSON.BIT(false)
-            when Token.Kind.NULL:
+            }
+            when Token.Kind.NULL {
                 return JSON.NULL
-            otherwise:
+            }
+            otherwise {
                 assert false, "invalid node: '\{text(token)}'"
+            }
         }
     }
 }

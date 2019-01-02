@@ -51,7 +51,7 @@ choice JSON {
     @class
     function nextPathKey(path:String, start:String.Index):PathKey? {
         match path[start] {
-            when "/":
+            when "/" {
                 def end := path.end
                 def fieldStart := path.next(start)
                 var index := fieldStart
@@ -67,7 +67,8 @@ choice JSON {
                     return null
                 }
                 return PathKey.FIELD(path.substring(fieldStart .. index), index)
-            when "[":
+            }
+            when "[" {
                 def indexStart := path.next(start)
                 var index := indexStart
                 while path[index] != "]" {
@@ -78,8 +79,10 @@ choice JSON {
                     return null
                 }
                 return PathKey.INDEX(parsed, path.next(index))
-            otherwise:
+            }
+            otherwise {
                 return null
+            }
         }
     }
 
@@ -104,25 +107,31 @@ choice JSON {
         while index != end {
             assert nextPathKey(path, index) !== null, "invalid JSON path '\{path}'"
             match nextPathKey(path, index) {
-                when PathKey.FIELD(field, next):
+                when PathKey.FIELD(field, next) {
                     match current {
-                        when OBJECT(fields):
+                        when OBJECT(fields) {
                             current := fields[field]
                             if current == null {
                                 return null
                             }
-                        otherwise:
+                        }
+                        otherwise {
                             return null
+                        }
                     }
                     index := next
-                when PathKey.INDEX(key, next):
+                }
+                when PathKey.INDEX(key, next) {
                     match current {
-                        when ARRAY(nodes):
+                        when ARRAY(nodes) {
                             current := nodes[key]
-                        otherwise:
+                        }
+                        otherwise {
                             return null
+                        }
                     }
                     index := next
+                }
             }
         }
         return current
@@ -137,10 +146,12 @@ choice JSON {
             return null
         }
         match result {
-            when INT(value):
+            when INT(value) {
                 return value
-            otherwise:
+            }
+            otherwise {
                 return null
+            }
         }
     }
 
@@ -153,10 +164,12 @@ choice JSON {
             return null
         }
         match result {
-            when REAL(value):
+            when REAL(value) {
                 return value
-            otherwise:
+            }
+            otherwise {
                 return null
+            }
         }
     }
 
@@ -169,10 +182,12 @@ choice JSON {
             return null
         }
         match result {
-            when BIT(value):
+            when BIT(value) {
                 return value
-            otherwise:
+            }
+            otherwise {
                 return null
+            }
         }
     }
 
@@ -185,10 +200,12 @@ choice JSON {
             return null
         }
         match result {
-            when STRING(value):
+            when STRING(value) {
                 return value
-            otherwise:
+            }
+            otherwise {
                 return null
+            }
         }
     }
 
@@ -201,10 +218,12 @@ choice JSON {
             return null
         }
         match result {
-            when ARRAY(value):
+            when ARRAY(value) {
                 return value
-            otherwise:
+            }
+            otherwise {
                 return null
+            }
         }
     }
 
@@ -217,10 +236,12 @@ choice JSON {
             return null
         }
         match result {
-            when OBJECT(value):
+            when OBJECT(value) {
                 return value
-            otherwise:
+            }
+            otherwise {
                 return null
+            }
         }
     }
 
@@ -229,10 +250,12 @@ choice JSON {
     ================================================================================================
     function asInt():Int64 {
         match self {
-            when INT(value):
+            when INT(value) {
                 return value
-            otherwise:
+            }
+            otherwise {
                 assert false
+            }
         }
     }
 
@@ -241,10 +264,12 @@ choice JSON {
     ================================================================================================
     function asReal():Real64 {
         match self {
-            when REAL(value):
+            when REAL(value) {
                 return value
-            otherwise:
+            }
+            otherwise {
                 assert false
+            }
         }
     }
 
@@ -253,10 +278,12 @@ choice JSON {
     ================================================================================================
     function asString():String {
         match self {
-            when STRING(value):
+            when STRING(value) {
                 return value
-            otherwise:
+            }
+            otherwise {
                 assert false
+            }
         }
     }
 
@@ -265,10 +292,12 @@ choice JSON {
     ================================================================================================
     function asBit():Bit {
         match self {
-            when BIT(value):
+            when BIT(value) {
                 return value
-            otherwise:
+            }
+            otherwise {
                 assert false
+            }
         }
     }
 
@@ -277,10 +306,12 @@ choice JSON {
     ================================================================================================
     function asObject():MapView<String, JSON> {
         match self {
-            when OBJECT(value):
+            when OBJECT(value) {
                 return value
-            otherwise:
+            }
+            otherwise {
                 assert false
+            }
         }
     }
 
@@ -289,10 +320,12 @@ choice JSON {
     ================================================================================================
     function asArray():ListView<JSON> {
         match self {
-            when ARRAY(value):
+            when ARRAY(value) {
                 return value
-            otherwise:
+            }
+            otherwise {
                 assert false
+            }
         }
     }
 
@@ -302,15 +335,19 @@ choice JSON {
     @override
     function convert():String {
         match self {
-            when INT(value):
+            when INT(value) {
                 return value.convert()
-            when REAL(value):
+            }
+            when REAL(value) {
                 return value.convert()
-            when STRING(value):
+            }
+            when STRING(value) {
                 return value.format("panda")
-            when BIT(value):
+            }
+            when BIT(value) {
                 return value.convert()
-            when OBJECT(fields):
+            }
+            when OBJECT(fields) {
                 def result := MutableString("{")
                 var separator := " "
                 for k in fields.keys() { -- FIXME iterate over tuples
@@ -319,7 +356,8 @@ choice JSON {
                 }
                 result.append(" }")
                 return result.finish()
-            when ARRAY(nodes):
+            }
+            when ARRAY(nodes) {
                 def result := MutableString("[")
                 var separator := ""
                 for n in nodes {
@@ -328,10 +366,13 @@ choice JSON {
                 }
                 result.append("]")
                 return result.finish()
-            when NULL:
+            }
+            when NULL {
                 return "null"
-            otherwise:
+            }
+            otherwise {
                 assert false
+            }
         }
     }
 }

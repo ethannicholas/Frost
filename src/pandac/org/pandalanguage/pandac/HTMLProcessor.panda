@@ -15,31 +15,45 @@ class HTMLProcessor {
             if t.second != current {
                 current := t.second
                 match current {
-                    when SyntaxHighlighter.Kind.DEFAULT: {}
-                    when SyntaxHighlighter.Kind.COMMENT, SyntaxHighlighter.Kind.DOC_COMMENT:
+                    when SyntaxHighlighter.Kind.DEFAULT {
+                        -- do nithing
+                    }
+                    when SyntaxHighlighter.Kind.COMMENT, SyntaxHighlighter.Kind.DOC_COMMENT {
                         result.append("<span class=\"comment\">")
-                    when SyntaxHighlighter.Kind.ANNOTATION:
+                    }
+                    when SyntaxHighlighter.Kind.ANNOTATION {
                         result.append("<span class=\"annotation\">")
-                    when SyntaxHighlighter.Kind.METHOD_NAME:
+                    }
+                    when SyntaxHighlighter.Kind.METHOD_NAME {
                         result.append("<span class=\"methodName\">")
-                    when SyntaxHighlighter.Kind.METHOD_PARAMETER:
+                    }
+                    when SyntaxHighlighter.Kind.METHOD_PARAMETER {
                         result.append("<span class=\"parameterName\">")
-                    when SyntaxHighlighter.Kind.TYPE:
+                    }
+                    when SyntaxHighlighter.Kind.TYPE {
                         result.append("<span class=\"type\">")
-                    when SyntaxHighlighter.Kind.KEYWORD:
+                    }
+                    when SyntaxHighlighter.Kind.KEYWORD {
                         result.append("<span class=\"keyword\">")
-                    when SyntaxHighlighter.Kind.CONTROL_KEYWORD:
+                    }
+                    when SyntaxHighlighter.Kind.CONTROL_KEYWORD {
                         result.append("<span class=\"control\">")
-                    when SyntaxHighlighter.Kind.LITERAL:
+                    }
+                    when SyntaxHighlighter.Kind.LITERAL {
                         result.append("<span class=\"literal\">")
-                    when SyntaxHighlighter.Kind.STRING:
+                    }
+                    when SyntaxHighlighter.Kind.STRING {
                         result.append("<span class=\"string\">")
-                    when SyntaxHighlighter.Kind.OPERATOR:
+                    }
+                    when SyntaxHighlighter.Kind.OPERATOR {
                         result.append("<span class=\"operator\">")
-                    when SyntaxHighlighter.Kind.LABEL:
+                    }
+                    when SyntaxHighlighter.Kind.LABEL {
                         result.append("<span class=\"label\">")
-                    otherwise:
+                    }
+                    otherwise {
                         assert false
+                    }
                 }
             }
             def s := MutableString(parser.text(t.first))

@@ -374,19 +374,23 @@ class LLVMCodeGenerator : CodeGenerator {
             return "<unresolved type: \{t}>"
         }
         match t.typeKind {
-            when Type.Kind.VOID:
+            when Type.Kind.VOID {
                 return "void"
-            when Type.Kind.BUILTIN_INT, Type.Kind.BUILTIN_UINT:
+            }
+            when Type.Kind.BUILTIN_INT, Type.Kind.BUILTIN_UINT {
                 return "i\{sizeOf(t) * 8}"
-            when Type.Kind.BUILTIN_BIT:
+            }
+            when Type.Kind.BUILTIN_BIT {
                 return "i1"
-            when Type.Kind.BUILTIN_FLOAT:
+            }
+            when Type.Kind.BUILTIN_FLOAT {
                 match sizeOf(t) {
-                    when 4: return "float"
-                    when 8: return "double"
-                    otherwise: assert false
+                    when 4    { return "float" }
+                    when 8    { return "double" }
+                    otherwise { assert false }
                 }
-            when Type.Kind.CLASS:
+            }
+            when Type.Kind.CLASS {
                 writeType(t)
                 def name := "%\{escapeName(t.name)}"
                 def cl := compiler.getClass(t)
@@ -395,14 +399,16 @@ class LLVMCodeGenerator : CodeGenerator {
                     return name + "*"
                 }
                 return name
-            when Type.Kind.NULLABLE:
+            }
+            when Type.Kind.NULLABLE {
                 def cl := compiler.getClass(t)
                 assert cl !== null
                 if compiler.isValue(cl) {
                     return nullableType(t)
                 }
                 return llvmType(t.subtypes[0])
-            when Type.Kind.GENERIC:
+            }
+            when Type.Kind.GENERIC {
                 if t.subtypes[0].name = "panda.unsafe.Pointer" {
                     if t.subtypes[1].isMethod {
                         return llvmMethodType(t.subtypes[1], null)
@@ -420,14 +426,19 @@ class LLVMCodeGenerator : CodeGenerator {
                     return name
                 }
                 return llvmType(t.subtypes[0])
-            when Type.Kind.GENERIC_PARAMETER:
+            }
+            when Type.Kind.GENERIC_PARAMETER {
                 return llvmType(t.genericParameter.bound)
-            when Type.Kind.FUNCTION, Type.Kind.METHOD:
+            }
+            when Type.Kind.FUNCTION, Type.Kind.METHOD {
                 return llvmType(Type.MutableMethod())
-            when Type.Kind.IMMUTABLE_FUNCTION, Type.Kind.IMMUTABLE_METHOD:
+            }
+            when Type.Kind.IMMUTABLE_FUNCTION, Type.Kind.IMMUTABLE_METHOD {
                 return llvmType(Type.Method())
-            otherwise:
+            }
+            otherwise {
                 assert false, "unsupported type '\{t}'"
+            }
         }
     }
 
@@ -856,18 +867,18 @@ class LLVMCodeGenerator : CodeGenerator {
         while current != end {
             def c := s[current]
             match c {
-                when ".": result.append("$")
-                when "?": result.append("$Q")
-                when "<": result.append("$LT")
-                when ">": result.append("$GT")
-                when " ": -- do nothing
-                when ",": result.append("$C")
-                when "(": result.append("$LP")
-                when ")": result.append("$RP")
-                when "=": result.append("$EQ")
-                when "&": result.append("$AM")
-                when "*": result.append("$ST")
-                otherwise: result.append(c)
+                when "."  { result.append("$") }
+                when "?"  { result.append("$Q") }
+                when "<"  { result.append("$LT") }
+                when ">"  { result.append("$GT") }
+                when " "  { -* do nothing *- }
+                when ","  { result.append("$C") }
+                when "("  { result.append("$LP") }
+                when ")"  { result.append("$RP") }
+                when "="  { result.append("$EQ") }
+                when "&"  { result.append("$AM") }
+                when "*"  { result.append("$ST") }
+                otherwise { result.append(c) }
             }
             current := s.next(current)
         }
@@ -886,32 +897,32 @@ class LLVMCodeGenerator : CodeGenerator {
         result.append(escapeName(m.owner.name))
         result.append("$")
         match m.name {
-            when "+":    result.append("$ADD")
-            when "-":    result.append("$SUB")
-            when "*":    result.append("$MUL")
-            when "/":    result.append("$DIV")
-            when "//":   result.append("$INTDIV")
-            when "%":    result.append("$REM")
-            when "^":    result.append("$POW")
-            when "[]":   result.append("$IDX")
-            when "[]:=": result.append("$IDXEQ")
-            when "=":    result.append("$EQ")
-            when "!=":   result.append("$NEQ")
-            when ">":    result.append("$GT")
-            when "<":    result.append("$LT")
-            when ">=":   result.append("$GE")
-            when "<=":   result.append("$LE")
-            when "|":    result.append("$OR")
-            when "||":   result.append("$BOR")
-            when "&":    result.append("$AND")
-            when "&&":   result.append("$BAND")
-            when "~":    result.append("$XOR")
-            when "~~":   result.append("$BXOR")
-            when "!":    result.append("$NOT")
-            when "!!":   result.append("$BNOT")
-            when "<<":   result.append("$SHL")
-            when ">>":   result.append("$SHR")
-            otherwise:   result.append(escapeName(m.name))
+            when "+"    { result.append("$ADD") }
+            when "-"    { result.append("$SUB") }
+            when "*"    { result.append("$MUL") }
+            when "/"    { result.append("$DIV") }
+            when "//"   { result.append("$INTDIV") }
+            when "%"    { result.append("$REM") }
+            when "^"    { result.append("$POW") }
+            when "[]"   { result.append("$IDX") }
+            when "[]:=" { result.append("$IDXEQ") }
+            when "="    { result.append("$EQ") }
+            when "!="   { result.append("$NEQ") }
+            when ">"    { result.append("$GT") }
+            when "<"    { result.append("$LT") }
+            when ">="   { result.append("$GE") }
+            when "<="   { result.append("$LE") }
+            when "|"    { result.append("$OR") }
+            when "||"   { result.append("$BOR") }
+            when "&"    { result.append("$AND") }
+            when "&&"   { result.append("$BAND") }
+            when "~"    { result.append("$XOR") }
+            when "~~"   { result.append("$BXOR") }
+            when "!"    { result.append("$NOT") }
+            when "!!"   { result.append("$BNOT") }
+            when "<<"   { result.append("$SHL") }
+            when ">>"   { result.append("$SHR") }
+            otherwise   { result.append(escapeName(m.name)) }
         }
         for p in m.parameters {
             result.append("$\{escapeName(p.type.name)}")
@@ -937,14 +948,18 @@ class LLVMCodeGenerator : CodeGenerator {
 
     function opClass(t:Type):OpClass {
         match t.typeKind {
-            when Type.Kind.BUILTIN_INT:
+            when Type.Kind.BUILTIN_INT {
                 return OpClass.SIGNED
-            when Type.Kind.BUILTIN_UINT, Type.Kind.BUILTIN_BIT:
+            }
+            when Type.Kind.BUILTIN_UINT, Type.Kind.BUILTIN_BIT {
                 return OpClass.UNSIGNED
-            when Type.Kind.BUILTIN_FLOAT:
+            }
+            when Type.Kind.BUILTIN_FLOAT {
                 return OpClass.FLOAT
-            otherwise:
+            }
+            otherwise {
                 return OpClass.CLASS
+            }
         }
     }
 
@@ -1284,30 +1299,40 @@ class LLVMCodeGenerator : CodeGenerator {
 
     method getReference(v:IR.Value):String {
         match v {
-            when IR.Value.BIT(value):
+            when IR.Value.BIT(value) {
                 return value.convert()
-            when IR.Value.INT(value, _):
+            }
+            when IR.Value.INT(value, _) {
                 return value.convert()
-            when IR.Value.LOCAL(index, _):
+            }
+            when IR.Value.LOCAL(index, _) {
                 return "%local\{index}"
-            when IR.Value.METHOD_POINTER(m, _):
+            }
+            when IR.Value.METHOD_POINTER(m, _) {
                 if m.owner.external {
                     writeDeclaration(m)
                 }
                 return getName(m)
-            when IR.Value.NULL(type):
+            }
+            when IR.Value.NULL(type) {
                 return getNullReference(type)
-            when IR.Value.PARAMETER(index, _):
+            }
+            when IR.Value.PARAMETER(index, _) {
                 return "%param\{index}"
-            when IR.Value.REAL(value, type):
+            }
+            when IR.Value.REAL(value, type) {
                 return getRealReference(type, value)
-            when IR.Value.REF(id, _):
+            }
+            when IR.Value.REF(id, _) {
                 assert refs[id] !== null, "id \{id} has not been defined"
                 return refs[id]
-            when IR.Value.STRING(s):
+            }
+            when IR.Value.STRING(s) {
                 return getStringReference(s)
-            otherwise:
+            }
+            otherwise {
                 assert false, "unsupported value \{v}"
+            }
         }
     }
 
@@ -1372,8 +1397,9 @@ class LLVMCodeGenerator : CodeGenerator {
 
     function isNull(v:IR.Value):Bit {
         match v {
-            when IR.Value.NULL:
+            when IR.Value.NULL {
                 return true
+            }
         }
         return false
     }
@@ -1382,70 +1408,76 @@ class LLVMCodeGenerator : CodeGenerator {
             right:IR.Value, type:Type) {
         def llvmOp:String
         match opClass(left.type()) {
-            when OpClass.SIGNED:
+            when OpClass.SIGNED {
                 match op {
-                    when Token.Kind.ADD:        llvmOp := "add"
-                    when Token.Kind.SUB:        llvmOp := "sub"
-                    when Token.Kind.MUL:        llvmOp := "mul"
-                    when Token.Kind.INTDIV:     llvmOp := "sdiv"
-                    when Token.Kind.REM:        llvmOp := "srem"
-                    when Token.Kind.SHIFTLEFT:  llvmOp := "shl"
-                    when Token.Kind.SHIFTRIGHT: llvmOp := "ashr"
-                    when Token.Kind.BITWISEAND: llvmOp := "and"
-                    when Token.Kind.BITWISEOR:  llvmOp := "or"
-                    when Token.Kind.XOR, Token.Kind.BITWISEXOR: 
-                                                llvmOp := "xor"
-                    when Token.Kind.EQ:         llvmOp := "icmp eq"
-                    when Token.Kind.NEQ:        llvmOp := "icmp ne"
-                    when Token.Kind.GT:         llvmOp := "icmp sgt"
-                    when Token.Kind.LT:         llvmOp := "icmp slt"
-                    when Token.Kind.GTEQ:       llvmOp := "icmp sge"
-                    when Token.Kind.LTEQ:       llvmOp := "icmp sle"
-                    otherwise:
+                    when Token.Kind.ADD        { llvmOp := "add" }
+                    when Token.Kind.SUB        { llvmOp := "sub" }
+                    when Token.Kind.MUL        { llvmOp := "mul" }
+                    when Token.Kind.INTDIV     { llvmOp := "sdiv" }
+                    when Token.Kind.REM        { llvmOp := "srem" }
+                    when Token.Kind.SHIFTLEFT  { llvmOp := "shl" }
+                    when Token.Kind.SHIFTRIGHT { llvmOp := "ashr" }
+                    when Token.Kind.BITWISEAND { llvmOp := "and" }
+                    when Token.Kind.BITWISEOR  {  llvmOp := "or" }
+                    when Token.Kind.BITWISEXOR,
+                            Token.Kind.XOR     { llvmOp := "xor" }
+                    when Token.Kind.EQ         { llvmOp := "icmp eq" }
+                    when Token.Kind.NEQ        { llvmOp := "icmp ne" }
+                    when Token.Kind.GT         { llvmOp := "icmp sgt" }
+                    when Token.Kind.LT         { llvmOp := "icmp slt" }
+                    when Token.Kind.GTEQ       { llvmOp := "icmp sge" }
+                    when Token.Kind.LTEQ       { llvmOp := "icmp sle" }
+                    otherwise {
                         assert false, "unsupported signed operator \{op}"
+                    }
                 }
-            when OpClass.UNSIGNED:
+            }
+            when OpClass.UNSIGNED {
                 match op {
-                    when Token.Kind.ADD:        llvmOp := "add"
-                    when Token.Kind.SUB:        llvmOp := "sub"
-                    when Token.Kind.MUL:        llvmOp := "mul"
-                    when Token.Kind.INTDIV:     llvmOp := "udiv"
-                    when Token.Kind.REM:        llvmOp := "urem"
-                    when Token.Kind.SHIFTLEFT:  llvmOp := "shl"
-                    when Token.Kind.SHIFTRIGHT: llvmOp := "lshr"
-                    when Token.Kind.BITWISEAND, Token.Kind.AND:
-                                                llvmOp := "and"
-                    when Token.Kind.BITWISEOR, Token.Kind.OR:
-                                                llvmOp := "or"
-                    when Token.Kind.XOR, Token.Kind.BITWISEXOR: 
-                                                llvmOp := "xor"
-                    when Token.Kind.EQ:         llvmOp := "icmp eq"
-                    when Token.Kind.NEQ:        llvmOp := "icmp ne"
-                    when Token.Kind.GT:         llvmOp := "icmp ugt"
-                    when Token.Kind.LT:         llvmOp := "icmp ult"
-                    when Token.Kind.GTEQ:       llvmOp := "icmp uge"
-                    when Token.Kind.LTEQ:       llvmOp := "icmp ule"
-                    otherwise:
+                    when Token.Kind.ADD        { llvmOp := "add" }
+                    when Token.Kind.SUB        { llvmOp := "sub" }
+                    when Token.Kind.MUL        { llvmOp := "mul" }
+                    when Token.Kind.INTDIV     { llvmOp := "udiv" }
+                    when Token.Kind.REM        { llvmOp := "urem" }
+                    when Token.Kind.SHIFTLEFT  { llvmOp := "shl" }
+                    when Token.Kind.SHIFTRIGHT { llvmOp := "lshr" }
+                    when Token.Kind.BITWISEAND,
+                            Token.Kind.AND     { llvmOp := "and" }
+                    when Token.Kind.BITWISEOR,
+                            Token.Kind.OR      { llvmOp := "or" }
+                    when Token.Kind.BITWISEXOR, 
+                            Token.Kind.XOR     { llvmOp := "xor" }
+                    when Token.Kind.EQ         { llvmOp := "icmp eq" }
+                    when Token.Kind.NEQ        { llvmOp := "icmp ne" }
+                    when Token.Kind.GT         { llvmOp := "icmp ugt" }
+                    when Token.Kind.LT         { llvmOp := "icmp ult" }
+                    when Token.Kind.GTEQ       { llvmOp := "icmp uge" }
+                    when Token.Kind.LTEQ       { llvmOp := "icmp ule" }
+                    otherwise {
                         assert false, "unsupported unsigned operator \{op}"
+                    }
                 }
-            when OpClass.FLOAT:
+            }
+            when OpClass.FLOAT {
                 match op {
-                    when Token.Kind.ADD:        llvmOp := "fadd"
-                    when Token.Kind.SUB:        llvmOp := "fsub"
-                    when Token.Kind.MUL:        llvmOp := "fmul"
-                    when Token.Kind.DIV:        llvmOp := "fdiv"
-                    when Token.Kind.EQ:         llvmOp := "fcmp oeq"
-                    when Token.Kind.NEQ:        llvmOp := "fcmp one"
-                    when Token.Kind.GT:         llvmOp := "fcmp ogt"
-                    when Token.Kind.LT:         llvmOp := "fcmp olt"
-                    when Token.Kind.GTEQ:       llvmOp := "fcmp oge"
-                    when Token.Kind.LTEQ:       llvmOp := "fcmp ole"
-                    otherwise:
+                    when Token.Kind.ADD  { llvmOp := "fadd" }
+                    when Token.Kind.SUB  { llvmOp := "fsub" }
+                    when Token.Kind.MUL  { llvmOp := "fmul" }
+                    when Token.Kind.DIV  { llvmOp := "fdiv" }
+                    when Token.Kind.EQ   { llvmOp := "fcmp oeq" }
+                    when Token.Kind.NEQ  { llvmOp := "fcmp one" }
+                    when Token.Kind.GT   { llvmOp := "fcmp ogt" }
+                    when Token.Kind.LT   { llvmOp := "fcmp olt" }
+                    when Token.Kind.GTEQ { llvmOp := "fcmp oge" }
+                    when Token.Kind.LTEQ { llvmOp := "fcmp ole" }
+                    otherwise {
                         assert false, "unsupported float operator \{op}"
+                    }
                 }
-            when OpClass.CLASS:
+            }
+            when OpClass.CLASS {
                 match op {
-                    when Token.Kind.IDENTITY:
+                    when Token.Kind.IDENTITY {
                         if isNull(left) {
                             writeIsNull(position, id, right)
                             return
@@ -1455,7 +1487,8 @@ class LLVMCodeGenerator : CodeGenerator {
                             return
                         }
                         llvmOp := "icmp eq"
-                    when Token.Kind.NIDENTITY:
+                    }
+                    when Token.Kind.NIDENTITY {
                         if isNull(left) {
                             writeIsNonNull(position, id, right)
                             return
@@ -1465,7 +1498,9 @@ class LLVMCodeGenerator : CodeGenerator {
                             return
                         }
                         llvmOp := "icmp ne"
+                    }
                 }
+            }
         }
         def result := nextVar()
         def leftRef := getReference(left)
@@ -1838,60 +1873,87 @@ class LLVMCodeGenerator : CodeGenerator {
 
     method writeStatement(id:IR.Statement.ID, s:IR.Statement) {
         match s {
-            when IR.Statement.BINARY(position, left, op, right, type):
+            when IR.Statement.BINARY(position, left, op, right, type) {
                 writeBinary(position, id, left, op, right, type)
-            when IR.Statement.BRANCH(position, target):
+            }
+            when IR.Statement.BRANCH(position, target) {
                 writeBranch(position, target)
-            when IR.Statement.CAST(position, value, type):
+            }
+            when IR.Statement.CAST(position, value, type) {
                 writeCast(position, id, value, type)
-            when IR.Statement.COMMENT(text):
+            }
+            when IR.Statement.COMMENT(text) {
                 out.printLine("; \{text}")
-            when IR.Statement.CONDITIONAL_BRANCH(position, test, ifTrue, ifFalse):
+            }
+            when IR.Statement.CONDITIONAL_BRANCH(position, test, ifTrue, ifFalse) {
                 writeConditionalBranch(position, test, ifTrue, ifFalse)
-            when IR.Statement.CONSTRUCT(position, cl):
+            }
+            when IR.Statement.CONSTRUCT(position, cl) {
                 writeConstruct(position, id, cl)
-            when IR.Statement.CREATE_STRUCT(position, cl, args):
+            }
+            when IR.Statement.CREATE_STRUCT(position, cl, args) {
                 writeCreateStruct(position, id, cl, args)
-            when IR.Statement.DYNAMIC_CALL(position, m, args):
+            }
+            when IR.Statement.DYNAMIC_CALL(position, m, args) {
                 writeDynamicCall(position, id, m, args)
-            when IR.Statement.EXTRACT_FIELD(position, target, field):
+            }
+            when IR.Statement.EXTRACT_FIELD(position, target, field) {
                 writeExtractField(position, id, target, field)
-            when IR.Statement.GET_CHOICE_FIELD_POINTER(position, target, cc, index):
+            }
+            when IR.Statement.GET_CHOICE_FIELD_POINTER(position, target, cc, index) {
                 writeGetChoiceFieldPointer(position, id, target, cc, index)
-            when IR.Statement.GET_FIELD_POINTER(position, target, field):
+            }
+            when IR.Statement.GET_FIELD_POINTER(position, target, field) {
                 writeGetFieldPointer(position, id, target, field)
-            when IR.Statement.GET_INTERFACE_METHOD(position, value, cl, index, type):
+            }
+            when IR.Statement.GET_INTERFACE_METHOD(position, value, cl, index, type) {
                 writeGetInterfaceMethod(position, id, value, cl, index, type)
-            when IR.Statement.GET_VIRTUAL_METHOD(position, value, index, type):
+            }
+            when IR.Statement.GET_VIRTUAL_METHOD(position, value, index, type) {
                 writeGetVirtualMethod(position, id, value, index, type)
-            when IR.Statement.LOAD(position, ptr):
+            }
+            when IR.Statement.LOAD(position, ptr) {
                 writeLoad(position, id, ptr)
-            when IR.Statement.NEGATE(position, value):
+            }
+            when IR.Statement.NEGATE(position, value) {
                 writeNegate(position, id, value)
-            when IR.Statement.NOT(position, value):
+            }
+            when IR.Statement.NOT(position, value) {
                 writeNot(position, id, value)
-            when IR.Statement.POINTER_ALLOC(position, count, type):
+            }
+            when IR.Statement.POINTER_ALLOC(position, count, type) {
                 writePointerAlloc(position, id, count, type)
-            when IR.Statement.POINTER_DESTROY(position, ptr):
+            }
+            when IR.Statement.POINTER_DESTROY(position, ptr) {
                 writePointerDestroy(position, ptr)
-            when IR.Statement.POINTER_GET_INDEX(position, ptr, index):
+            }
+            when IR.Statement.POINTER_GET_INDEX(position, ptr, index) {
                 writePointerGetIndex(position, id, ptr, index)
-            when IR.Statement.POINTER_OFFSET(position, ptr, offset):
+            }
+            when IR.Statement.POINTER_OFFSET(position, ptr, offset) {
                 writePointerOffset(position, id, ptr, offset)
-            when IR.Statement.POINTER_REALLOC(position, ptr, oldCount, newCount):
+            }
+            when IR.Statement.POINTER_REALLOC(position, ptr, oldCount, newCount) {
                 writePointerRealloc(position, id, ptr, oldCount, newCount)
-            when IR.Statement.POINTER_SET_INDEX(position, value, ptr, index):
+            }
+            when IR.Statement.POINTER_SET_INDEX(position, value, ptr, index) {
                 writePointerSetIndex(position, value, ptr, index)
-            when IR.Statement.RETURN(position, value):
+            }
+            when IR.Statement.RETURN(position, value) {
                 writeReturn(position, value)
-            when IR.Statement.STATIC_CALL(position, m, args):
+            }
+            when IR.Statement.STATIC_CALL(position, m, args) {
                 writeStaticCall(position, id, m, args)
-            when IR.Statement.STORE(position, value, slot):
+            }
+            when IR.Statement.STORE(position, value, slot) {
                 writeStore(position, value, slot)
-            when IR.Statement.UNREACHABLE(position):
+            }
+            when IR.Statement.UNREACHABLE(position) {
                 out.printLine("unreachable\{debugInfo(position)}")
-            otherwise:
+            }
+            otherwise {
                 assert false, "unsupported statement \{s}"
+            }
         }
     }
 

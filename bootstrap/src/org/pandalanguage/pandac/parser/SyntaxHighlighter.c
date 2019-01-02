@@ -36,11 +36,11 @@ static panda$core$String $s18 = { (panda$core$Class*) &panda$core$String$class, 
 
 void org$pandalanguage$pandac$parser$SyntaxHighlighter$reset(org$pandalanguage$pandac$parser$SyntaxHighlighter* param0) {
 
-// line 61
+// line 74
 panda$collections$Array** $tmp2 = &param0->tokens;
 panda$collections$Array* $tmp3 = *$tmp2;
 panda$collections$Array$clear($tmp3);
-// line 62
+// line 75
 panda$collections$Stack** $tmp4 = &param0->stack;
 panda$collections$Stack* $tmp5 = *$tmp4;
 panda$collections$Stack$clear($tmp5);
@@ -49,7 +49,7 @@ return;
 }
 void org$pandalanguage$pandac$parser$SyntaxHighlighter$open$org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind(org$pandalanguage$pandac$parser$SyntaxHighlighter* param0, org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind param1) {
 
-// line 66
+// line 79
 panda$collections$Stack** $tmp6 = &param0->stack;
 panda$collections$Stack* $tmp7 = *$tmp6;
 org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind$wrapper* $tmp8;
@@ -62,7 +62,7 @@ return;
 }
 void org$pandalanguage$pandac$parser$SyntaxHighlighter$close$org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind(org$pandalanguage$pandac$parser$SyntaxHighlighter* param0, org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind param1) {
 
-// line 70
+// line 83
 panda$collections$Stack** $tmp9 = &param0->stack;
 panda$collections$Stack* $tmp10 = *$tmp9;
 panda$core$Int64 $tmp11 = (panda$core$Int64) {0};
@@ -73,12 +73,12 @@ panda$core$Bit $tmp15 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($
 bool $tmp16 = $tmp15.value;
 if ($tmp16) goto block1; else goto block2;
 block2:;
-panda$core$Int64 $tmp17 = (panda$core$Int64) {70};
+panda$core$Int64 $tmp17 = (panda$core$Int64) {83};
 panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64(&$s18, $tmp17);
 abort(); // unreachable
 block1:;
 panda$core$Panda$unref$panda$core$Object$Q($tmp12);
-// line 71
+// line 84
 panda$collections$Stack** $tmp19 = &param0->stack;
 panda$collections$Stack* $tmp20 = *$tmp19;
 panda$core$Object* $tmp21 = panda$collections$Stack$pop$R$panda$collections$Stack$T($tmp20);
@@ -88,7 +88,7 @@ return;
 }
 void org$pandalanguage$pandac$parser$SyntaxHighlighter$add$org$pandalanguage$pandac$parser$Token$org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind(org$pandalanguage$pandac$parser$SyntaxHighlighter* param0, org$pandalanguage$pandac$parser$Token param1, org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind param2) {
 
-// line 75
+// line 88
 panda$collections$Array** $tmp22 = &param0->tokens;
 panda$collections$Array* $tmp23 = *$tmp22;
 org$pandalanguage$pandac$Pair* $tmp24 = (org$pandalanguage$pandac$Pair*) pandaObjectAlloc(32, (panda$core$Class*) &org$pandalanguage$pandac$Pair$class);
@@ -108,7 +108,7 @@ return;
 }
 void org$pandalanguage$pandac$parser$SyntaxHighlighter$add$org$pandalanguage$pandac$parser$Token(org$pandalanguage$pandac$parser$SyntaxHighlighter* param0, org$pandalanguage$pandac$parser$Token param1) {
 
-// line 79
+// line 92
 panda$collections$Stack** $tmp27 = &param0->stack;
 panda$collections$Stack* $tmp28 = *$tmp27;
 panda$core$Int64 $tmp29 = panda$collections$Stack$get_count$R$panda$core$Int64($tmp28);
@@ -120,7 +120,7 @@ panda$core$Bit $tmp34 = (panda$core$Bit) {$tmp33};
 bool $tmp35 = $tmp34.value;
 if ($tmp35) goto block1; else goto block2;
 block1:;
-// line 80
+// line 93
 panda$collections$Stack** $tmp36 = &param0->stack;
 panda$collections$Stack* $tmp37 = *$tmp36;
 panda$core$Int64 $tmp38 = (panda$core$Int64) {0};
@@ -128,10 +128,10 @@ panda$core$Object* $tmp39 = panda$collections$Stack$$IDX$panda$core$Int64$R$pand
 $fn41 $tmp40 = ($fn41) param0->$class->vtable[5];
 $tmp40(param0, param1, ((org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind$wrapper*) $tmp39)->value);
 panda$core$Panda$unref$panda$core$Object$Q($tmp39);
-// line 81
+// line 94
 return;
 block2:;
-// line 84
+// line 97
 org$pandalanguage$pandac$parser$Token$Kind $tmp42 = param1.kind;
 panda$core$Int64 $tmp43 = $tmp42.$rawValue;
 panda$core$Int64 $tmp44 = (panda$core$Int64) {1};
@@ -139,7 +139,7 @@ panda$core$Bit $tmp45 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($
 bool $tmp46 = $tmp45.value;
 if ($tmp46) goto block4; else goto block5;
 block4:;
-// line 86
+// line 99
 panda$core$Int64 $tmp47 = (panda$core$Int64) {11};
 org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind $tmp48 = org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind$init$panda$core$Int64($tmp47);
 $fn50 $tmp49 = ($fn50) param0->$class->vtable[5];
@@ -186,7 +186,7 @@ panda$core$Bit $tmp73 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($
 bool $tmp74 = $tmp73.value;
 if ($tmp74) goto block6; else goto block14;
 block6:;
-// line 89
+// line 103
 panda$core$Int64 $tmp75 = (panda$core$Int64) {9};
 org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind $tmp76 = org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind$init$panda$core$Int64($tmp75);
 $fn78 $tmp77 = ($fn78) param0->$class->vtable[5];
@@ -203,7 +203,7 @@ panda$core$Bit $tmp83 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($
 bool $tmp84 = $tmp83.value;
 if ($tmp84) goto block15; else goto block17;
 block15:;
-// line 91
+// line 106
 panda$core$Int64 $tmp85 = (panda$core$Int64) {1};
 org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind $tmp86 = org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind$init$panda$core$Int64($tmp85);
 $fn88 $tmp87 = ($fn88) param0->$class->vtable[5];
@@ -215,7 +215,7 @@ panda$core$Bit $tmp90 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($
 bool $tmp91 = $tmp90.value;
 if ($tmp91) goto block18; else goto block19;
 block18:;
-// line 93
+// line 109
 panda$core$Int64 $tmp92 = (panda$core$Int64) {1};
 org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind $tmp93 = org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind$init$panda$core$Int64($tmp92);
 $fn95 $tmp94 = ($fn95) param0->$class->vtable[5];
@@ -227,7 +227,7 @@ panda$core$Bit $tmp97 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($
 bool $tmp98 = $tmp97.value;
 if ($tmp98) goto block20; else goto block21;
 block20:;
-// line 95
+// line 112
 panda$core$Int64 $tmp99 = (panda$core$Int64) {2};
 org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind $tmp100 = org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind$init$panda$core$Int64($tmp99);
 $fn102 $tmp101 = ($fn102) param0->$class->vtable[5];
@@ -239,7 +239,7 @@ panda$core$Bit $tmp104 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(
 bool $tmp105 = $tmp104.value;
 if ($tmp105) goto block22; else goto block23;
 block22:;
-// line 97
+// line 115
 panda$core$Int64 $tmp106 = (panda$core$Int64) {3};
 org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind $tmp107 = org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind$init$panda$core$Int64($tmp106);
 $fn109 $tmp108 = ($fn109) param0->$class->vtable[5];
@@ -316,7 +316,7 @@ panda$core$Bit $tmp150 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(
 bool $tmp151 = $tmp150.value;
 if ($tmp151) goto block24; else goto block38;
 block24:;
-// line 102
+// line 121
 panda$core$Int64 $tmp152 = (panda$core$Int64) {7};
 org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind $tmp153 = org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind$init$panda$core$Int64($tmp152);
 $fn155 $tmp154 = ($fn155) param0->$class->vtable[5];
@@ -398,7 +398,7 @@ panda$core$Bit $tmp199 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(
 bool $tmp200 = $tmp199.value;
 if ($tmp200) goto block39; else goto block54;
 block39:;
-// line 107
+// line 127
 panda$core$Int64 $tmp201 = (panda$core$Int64) {8};
 org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind $tmp202 = org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind$init$panda$core$Int64($tmp201);
 $fn204 $tmp203 = ($fn204) param0->$class->vtable[5];
@@ -415,7 +415,7 @@ panda$core$Bit $tmp209 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(
 bool $tmp210 = $tmp209.value;
 if ($tmp210) goto block55; else goto block57;
 block55:;
-// line 109
+// line 130
 panda$core$Int64 $tmp211 = (panda$core$Int64) {9};
 org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind $tmp212 = org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind$init$panda$core$Int64($tmp211);
 $fn214 $tmp213 = ($fn214) param0->$class->vtable[5];
@@ -667,14 +667,14 @@ panda$core$Bit $tmp360 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(
 bool $tmp361 = $tmp360.value;
 if ($tmp361) goto block58; else goto block107;
 block58:;
-// line 124
+// line 146
 panda$core$Int64 $tmp362 = (panda$core$Int64) {11};
 org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind $tmp363 = org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind$init$panda$core$Int64($tmp362);
 $fn365 $tmp364 = ($fn365) param0->$class->vtable[5];
 $tmp364(param0, param1, $tmp363);
 goto block3;
 block107:;
-// line 126
+// line 149
 panda$core$Int64 $tmp366 = (panda$core$Int64) {0};
 org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind $tmp367 = org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind$init$panda$core$Int64($tmp366);
 $fn369 $tmp368 = ($fn369) param0->$class->vtable[5];
@@ -686,7 +686,7 @@ return;
 }
 void org$pandalanguage$pandac$parser$SyntaxHighlighter$rewind(org$pandalanguage$pandac$parser$SyntaxHighlighter* param0) {
 
-// line 131
+// line 155
 panda$collections$Array** $tmp370 = &param0->tokens;
 panda$collections$Array* $tmp371 = *$tmp370;
 panda$collections$Array** $tmp372 = &param0->tokens;
@@ -709,7 +709,7 @@ return;
 }
 void org$pandalanguage$pandac$parser$SyntaxHighlighter$init(org$pandalanguage$pandac$parser$SyntaxHighlighter* param0) {
 
-// line 55
+// line 68
 panda$collections$Stack* $tmp384 = (panda$collections$Stack*) pandaObjectAlloc(24, (panda$core$Class*) &panda$collections$Stack$class);
 panda$collections$Stack$init($tmp384);
 panda$collections$Stack** $tmp385 = &param0->stack;
@@ -719,7 +719,7 @@ panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp384));
 panda$collections$Stack** $tmp387 = &param0->stack;
 *$tmp387 = $tmp384;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp384));
-// line 58
+// line 71
 panda$collections$Array* $tmp388 = (panda$collections$Array*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$Array$class);
 panda$collections$Array$init($tmp388);
 panda$collections$Array** $tmp389 = &param0->tokens;

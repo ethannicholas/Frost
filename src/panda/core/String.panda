@@ -388,18 +388,29 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
     @override
     function format(fmt:String):String {
         match fmt {
-            when "":
+            when "" {
                 return self
-            when "panda":
+            }
+            when "panda" {
                 def result := MutableString('"')
                 for c in utf8 {
                     match c {
-                        when "\"": result.append("\\\"")
-                        when "\\": result.append("\\\\")
-                        when "\n": result.append("\\n")
-                        when "\r": result.append("\\r")
-                        when "\t": result.append("\\t")
-                        otherwise:
+                        when "\"" {
+                            result.append("\\\"")
+                        }
+                        when "\\" {
+                            result.append("\\\\")
+                        }
+                        when "\n" {
+                            result.append("\\n")
+                        }
+                        when "\r" {
+                            result.append("\\r")
+                        }
+                        when "\t" {
+                            result.append("\\t")
+                        }
+                        otherwise {
                             if c.convert()->UInt8 >= 32 & c.convert()->UInt8 <= 126 {
                                 result.append(c)
                             }
@@ -407,13 +418,15 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
                                 -- FIXME add unicode escape
                                 result.append("?")
                             }
+                        }
                     }
                 }
                 result.append("\"")
                 return result.finish()
-
-            otherwise:
+            }
+            otherwise {
                 assert false
+            }
         }
     }
 

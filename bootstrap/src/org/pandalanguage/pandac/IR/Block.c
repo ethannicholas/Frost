@@ -27,7 +27,7 @@ static panda$core$String $s57 = { (panda$core$Class*) &panda$core$String$class, 
 
 void org$pandalanguage$pandac$IR$Block$init$org$pandalanguage$pandac$IR$Block$ID(org$pandalanguage$pandac$IR$Block* param0, org$pandalanguage$pandac$IR$Block$ID param1) {
 
-// line 259
+// line 287
 panda$collections$Array* $tmp2 = (panda$collections$Array*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$Array$class);
 panda$collections$Array$init($tmp2);
 panda$collections$Array** $tmp3 = &param0->ids;
@@ -37,7 +37,7 @@ panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
 panda$collections$Array** $tmp5 = &param0->ids;
 *$tmp5 = $tmp2;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
-// line 261
+// line 289
 panda$collections$Array* $tmp6 = (panda$collections$Array*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$Array$class);
 panda$collections$Array$init($tmp6);
 panda$collections$Array** $tmp7 = &param0->statements;
@@ -47,7 +47,7 @@ panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp6));
 panda$collections$Array** $tmp9 = &param0->statements;
 *$tmp9 = $tmp6;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp6));
-// line 264
+// line 292
 org$pandalanguage$pandac$IR$Block$ID* $tmp10 = &param0->id;
 *$tmp10 = param1;
 return;
@@ -57,7 +57,7 @@ panda$core$String* org$pandalanguage$pandac$IR$Block$convert$R$panda$core$String
 
 panda$core$MutableString* local0 = NULL;
 panda$core$Int64 local1;
-// line 269
+// line 297
 panda$core$MutableString* $tmp11 = (panda$core$MutableString*) pandaObjectAlloc(48, (panda$core$Class*) &panda$core$MutableString$class);
 org$pandalanguage$pandac$IR$Block$ID* $tmp12 = &param0->id;
 org$pandalanguage$pandac$IR$Block$ID $tmp13 = *$tmp12;
@@ -72,7 +72,7 @@ panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp11));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp11));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp14));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp15));
-// line 270
+// line 298
 panda$core$Int64 $tmp18 = (panda$core$Int64) {0};
 panda$collections$Array** $tmp19 = &param0->statements;
 panda$collections$Array* $tmp20 = *$tmp19;
@@ -107,7 +107,7 @@ panda$core$Bit $tmp41 = (panda$core$Bit) {$tmp40};
 bool $tmp42 = $tmp41.value;
 if ($tmp42) goto block1; else goto block2;
 block1:;
-// line 271
+// line 299
 panda$core$MutableString* $tmp43 = *(&local0);
 panda$collections$Array** $tmp44 = &param0->ids;
 panda$collections$Array* $tmp45 = *$tmp44;
@@ -119,10 +119,10 @@ $tmp48->value = ((org$pandalanguage$pandac$IR$Statement$ID$wrapper*) $tmp47)->va
 panda$core$MutableString$append$panda$core$Object($tmp43, ((panda$core$Object*) $tmp48));
 panda$core$Panda$unref$panda$core$Object$Q($tmp47);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp48));
-// line 272
+// line 300
 panda$core$MutableString* $tmp49 = *(&local0);
 panda$core$MutableString$append$panda$core$String($tmp49, &$s50);
-// line 273
+// line 301
 panda$core$MutableString* $tmp51 = *(&local0);
 panda$collections$Array** $tmp52 = &param0->statements;
 panda$collections$Array* $tmp53 = *$tmp52;
@@ -130,7 +130,7 @@ panda$core$Int64 $tmp54 = *(&local1);
 panda$core$Object* $tmp55 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T($tmp53, $tmp54);
 panda$core$MutableString$append$panda$core$Object($tmp51, ((panda$core$Object*) ((org$pandalanguage$pandac$IR$Statement*) $tmp55)));
 panda$core$Panda$unref$panda$core$Object$Q($tmp55);
-// line 274
+// line 302
 panda$core$MutableString* $tmp56 = *(&local0);
 panda$core$MutableString$append$panda$core$String($tmp56, &$s57);
 goto block3;
@@ -164,7 +164,7 @@ panda$core$Int64 $tmp77 = (panda$core$Int64) {$tmp76};
 *(&local1) = $tmp77;
 goto block1;
 block2:;
-// line 276
+// line 304
 panda$core$MutableString* $tmp78 = *(&local0);
 panda$core$String* $tmp79 = panda$core$MutableString$finish$R$panda$core$String($tmp78);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp79));

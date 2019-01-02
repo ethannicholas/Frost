@@ -71,21 +71,26 @@ class HCodeGenerator : CodeGenerator {
 
     method type(t:Type):String {
         match t.typeKind {
-            when Type.Kind.VOID:
+            when Type.Kind.VOID {
                 return "void"
-            when Type.Kind.BUILTIN_INT:
+            }
+            when Type.Kind.BUILTIN_INT {
                 return "int\{sizeOf(t) * 8}_t"
-            when Type.Kind.BUILTIN_UINT:
+            }
+            when Type.Kind.BUILTIN_UINT {
                 return "uint\{sizeOf(t) * 8}_t"
-            when Type.Kind.BUILTIN_BIT:
+            }
+            when Type.Kind.BUILTIN_BIT {
                 return "bool"
-            when Type.Kind.BUILTIN_FLOAT:
+            }
+            when Type.Kind.BUILTIN_FLOAT {
                 match sizeOf(t) {
-                    when 4: return "float"
-                    when 8: return "double"
-                    otherwise: assert false
+                    when 4    { return "float" }
+                    when 8    { return "double" }
+                    otherwise { assert false }
                 }
-            when Type.Kind.CLASS:
+            }
+            when Type.Kind.CLASS {
                 def name := "\{escapeName(t.name)}"
                 def cl := compiler.getClass(t)
                 assert cl !== null
@@ -102,14 +107,16 @@ class HCodeGenerator : CodeGenerator {
                     imports.add(includePath)
                 }
                 return name
-            when Type.Kind.NULLABLE:
+            }
+            when Type.Kind.NULLABLE {
                 def cl := compiler.getClass(t)
                 assert cl !== null
                 if compiler.isValue(cl) {
                     return type(t.subtypes[0]) + "$nullable"
                 }
                 return type(t.subtypes[0])
-            when Type.Kind.GENERIC:
+            }
+            when Type.Kind.GENERIC {
                 if t.subtypes[0].name = "panda.unsafe.Pointer" {
                     return type(t.subtypes[1]) + "*"
                 }
@@ -133,14 +140,19 @@ class HCodeGenerator : CodeGenerator {
                     return name
                 }
                 return type(t.subtypes[0])
-            when Type.Kind.GENERIC_PARAMETER:
+            }
+            when Type.Kind.GENERIC_PARAMETER {
                 return type(t.genericParameter.bound)
-            when Type.Kind.FUNCTION, Type.Kind.METHOD:
+            }
+            when Type.Kind.FUNCTION, Type.Kind.METHOD {
                 return type(Type.MutableMethod())
-            when Type.Kind.IMMUTABLE_FUNCTION, Type.Kind.IMMUTABLE_METHOD:
+            }
+            when Type.Kind.IMMUTABLE_FUNCTION, Type.Kind.IMMUTABLE_METHOD {
                 return type(Type.Method())
-            otherwise:
+            }
+            otherwise {
                 assert false, "unsupported type '\{t}'"
+            }
         }
     }
 

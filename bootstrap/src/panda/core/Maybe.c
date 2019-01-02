@@ -70,12 +70,12 @@ panda$core$Panda$unref$panda$core$Object$Q($tmp18);
 *(&local0) = ((panda$core$Object*) NULL);
 return $tmp17;
 block3:;
-// line 27
+// line 28
 panda$core$Bit $tmp19 = panda$core$Bit$init$builtin_bit(false);
 bool $tmp20 = $tmp19.value;
 if ($tmp20) goto block5; else goto block6;
 block6:;
-panda$core$Int64 $tmp21 = (panda$core$Int64) {27};
+panda$core$Int64 $tmp21 = (panda$core$Int64) {28};
 panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64(&$s22, $tmp21);
 abort(); // unreachable
 block5:;
@@ -99,11 +99,11 @@ panda$core$Bit $tmp31 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp30);
 bool $tmp32 = $tmp31.value;
 if ($tmp32) goto block1; else goto block2;
 block2:;
-panda$core$Int64 $tmp33 = (panda$core$Int64) {34};
+panda$core$Int64 $tmp33 = (panda$core$Int64) {35};
 panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s34, $tmp33, &$s35);
 abort(); // unreachable
 block1:;
-// line 35
+// line 36
 panda$core$Int64* $tmp36 = &param0->$rawValue;
 panda$core$Int64 $tmp37 = *$tmp36;
 panda$core$Int64 $tmp38 = (panda$core$Int64) {1};
@@ -118,7 +118,7 @@ panda$core$Error* $tmp43 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp43));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp42));
 *(&local0) = $tmp42;
-// line 37
+// line 38
 panda$core$Error* $tmp44 = *(&local0);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp44));
 panda$core$Error* $tmp45 = *(&local0);
@@ -127,12 +127,12 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp45));
 *(&local0) = ((panda$core$Error*) NULL);
 return $tmp44;
 block3:;
-// line 39
+// line 41
 panda$core$Bit $tmp46 = panda$core$Bit$init$builtin_bit(false);
 bool $tmp47 = $tmp46.value;
 if ($tmp47) goto block5; else goto block6;
 block6:;
-panda$core$Int64 $tmp48 = (panda$core$Int64) {39};
+panda$core$Int64 $tmp48 = (panda$core$Int64) {41};
 panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64(&$s49, $tmp48);
 abort(); // unreachable
 block5:;
@@ -140,7 +140,7 @@ panda$core$Bit $tmp50 = panda$core$Bit$init$builtin_bit(false);
 bool $tmp51 = $tmp50.value;
 if ($tmp51) goto block7; else goto block8;
 block8:;
-panda$core$Int64 $tmp52 = (panda$core$Int64) {34};
+panda$core$Int64 $tmp52 = (panda$core$Int64) {35};
 panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s53, $tmp52, &$s54);
 abort(); // unreachable
 block7:;
@@ -149,7 +149,7 @@ abort(); // unreachable
 }
 panda$core$Bit panda$core$Maybe$succeeded$R$panda$core$Bit(panda$core$Maybe* param0) {
 
-// line 46
+// line 48
 panda$core$Int64* $tmp55 = &param0->$rawValue;
 panda$core$Int64 $tmp56 = *$tmp55;
 panda$core$Int64 $tmp57 = (panda$core$Int64) {0};
@@ -157,7 +157,7 @@ panda$core$Bit $tmp58 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($
 bool $tmp59 = $tmp58.value;
 if ($tmp59) goto block2; else goto block3;
 block2:;
-// line 48
+// line 50
 panda$core$Bit $tmp60 = panda$core$Bit$init$builtin_bit(true);
 return $tmp60;
 block3:;
@@ -166,7 +166,7 @@ panda$core$Bit $tmp62 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($
 bool $tmp63 = $tmp62.value;
 if ($tmp63) goto block4; else goto block1;
 block4:;
-// line 50
+// line 53
 panda$core$Bit $tmp64 = panda$core$Bit$init$builtin_bit(false);
 return $tmp64;
 block1:;
@@ -174,7 +174,7 @@ panda$core$Bit $tmp65 = panda$core$Bit$init$builtin_bit(false);
 bool $tmp66 = $tmp65.value;
 if ($tmp66) goto block5; else goto block6;
 block6:;
-panda$core$Int64 $tmp67 = (panda$core$Int64) {45};
+panda$core$Int64 $tmp67 = (panda$core$Int64) {47};
 panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s68, $tmp67, &$s69);
 abort(); // unreachable
 block5:;
@@ -185,7 +185,7 @@ panda$core$String* panda$core$Maybe$convert$R$panda$core$String(panda$core$Maybe
 
 panda$core$Object* local0 = NULL;
 panda$core$Error* local1 = NULL;
-// line 56
+// line 60
 panda$core$Int64* $tmp70 = &param0->$rawValue;
 panda$core$Int64 $tmp71 = *$tmp70;
 panda$core$Int64 $tmp72 = (panda$core$Int64) {0};
@@ -200,7 +200,7 @@ panda$core$Object* $tmp77 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q($tmp77);
 panda$core$Panda$ref$panda$core$Object$Q($tmp76);
 *(&local0) = $tmp76;
-// line 58
+// line 62
 panda$core$Object* $tmp78 = *(&local0);
 panda$core$String* $tmp79 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s80, $tmp78);
 panda$core$String* $tmp81 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp79, &$s82);
@@ -225,7 +225,7 @@ panda$core$Error* $tmp89 = *(&local1);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp89));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp88));
 *(&local1) = $tmp88;
-// line 60
+// line 65
 panda$core$Error* $tmp90 = *(&local1);
 panda$core$String* $tmp91 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s92, ((panda$core$Object*) $tmp90));
 panda$core$String* $tmp93 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp91, &$s94);
@@ -242,7 +242,7 @@ panda$core$Bit $tmp96 = panda$core$Bit$init$builtin_bit(false);
 bool $tmp97 = $tmp96.value;
 if ($tmp97) goto block5; else goto block6;
 block6:;
-panda$core$Int64 $tmp98 = (panda$core$Int64) {55};
+panda$core$Int64 $tmp98 = (panda$core$Int64) {59};
 panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s99, $tmp98, &$s100);
 abort(); // unreachable
 block5:;

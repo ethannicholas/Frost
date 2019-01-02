@@ -41,13 +41,16 @@ class LineNumberInputStream : InputStream {
             return null
         }
         match result {
-            when 10: 
+            when 10 {
                 line += 1
                 column := 1
-            when 9:
+            }
+            when 9 {
                 column += tabSize - column % tabSize
-            otherwise:
+            }
+            otherwise {
                 column += 1
+            }
         }
         return result
     }

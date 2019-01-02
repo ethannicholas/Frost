@@ -106,36 +106,44 @@ class Parser {
         outer: loop {
             def result := rawNext()
             match result.kind {
-                when Token.Kind.WHITESPACE:
+                when Token.Kind.WHITESPACE {
                     continue
-                when Token.Kind.LINE_COMMENT:
+                }
+                when Token.Kind.LINE_COMMENT {
                     def auto := AutoSyntaxHighlight(self, SyntaxHighlighter.Kind.COMMENT)
                     loop {
                         def t := rawNext()
                         match t.kind {
-                            when Token.Kind.WHITESPACE:
+                            when Token.Kind.WHITESPACE {
                                 if text(t).contains("\n") {
                                     break
                                 }
-                            when Token.Kind.EOF:
+                            }
+                            when Token.Kind.EOF {
                                 return t
+                            }
                         }
                     }
-                when Token.Kind.BLOCK_COMMENT_START:
+                }
+                when Token.Kind.BLOCK_COMMENT_START {
                     def auto := AutoSyntaxHighlight(self, SyntaxHighlighter.Kind.COMMENT)
                     loop {
                         def t := next()
                         match t.kind {
-                            when Token.Kind.BLOCK_COMMENT_END:
+                            when Token.Kind.BLOCK_COMMENT_END {
                                 break
-                            when Token.Kind.EOF:
+                            }
+                            when Token.Kind.EOF {
                                 error(result, "unterminated comment")
                                 reportErrors := false
                                 return t
+                            }
                         }
                     }
-                otherwise:
+                }
+                otherwise {
                     return result
+                }
             }
         }
     }
@@ -236,17 +244,19 @@ class Parser {
         loop {
             def token := rawNext()
             match token.kind {
-                when Token.Kind.WHITESPACE:
+                when Token.Kind.WHITESPACE {
                     def str := text(token)
                     if str.contains("\n") {
                         error(token, "unterminated string literal")
                         return null
                     }
                     result.append(str)
-                when Token.Kind.EOF:
+                }
+                when Token.Kind.EOF {
                     error(token, "unterminated string literal")
                     return null
-                when Token.Kind.BACKSLASH:
+                }
+                when Token.Kind.BACKSLASH {
                     def escape := rawNext()
                     if escape.kind = Token.Kind.EOF {
                         error(token, "unterminated string literal")
@@ -255,23 +265,27 @@ class Parser {
                     def escapeText := text(escape)
                     def c := escapeText.utf8[0]
                     match c {
-                        when "n":  result.append("\n")
-                        when "r":  result.append("\r")
-                        when "t":  result.append("\t")
-                        when "'":  result.append("'")
-                        when "\"": result.append("\"")
-                        when "\\": result.append("\\")
-                        when "}":  result.append("}")
-                        otherwise:
+                        when "n"  { result.append("\n") }
+                        when "r"  { result.append("\r") }
+                        when "t"  { result.append("\t") }
+                        when "'"  { result.append("'") }
+                        when "\"" { result.append("\"") }
+                        when "\\" { result.append("\\") }
+                        when "}"  { result.append("}") }
+                        otherwise {
                             error(token, "invalid format string escape sequence")
                             return null
+                        }
                     }
                     result.append(escapeText[escapeText.next(escapeText.start)..])
-                when Token.Kind.RBRACE:
+                }
+                when Token.Kind.RBRACE {
                     pushback(token)
                     return result.finish()
-                otherwise:
+                }
+                otherwise {
                     result.append(text(token))
+                }
             }
         }
     }
@@ -281,17 +295,19 @@ class Parser {
         loop {
             def token := rawNext()
             match token.kind {
-                when Token.Kind.WHITESPACE:
+                when Token.Kind.WHITESPACE {
                     def str := text(token)
                     if str.contains("\n") {
                         error(token, "unterminated string literal")
                         return null
                     }
                     result.append(str)
-                when Token.Kind.EOF:
+                }
+                when Token.Kind.EOF {
                     error(token, "unterminated string literal")
                     return null
-                when Token.Kind.BACKSLASH:
+                }
+                when Token.Kind.BACKSLASH {
                     def escape := rawNext()
                     if escape.kind = Token.Kind.EOF {
                         error(token, "unterminated string literal")
@@ -300,27 +316,32 @@ class Parser {
                     def escapeText := text(escape)
                     def c := escapeText.utf8[0]
                     match c {
-                        when "n":  result.append("\n")
-                        when "r":  result.append("\r")
-                        when "t":  result.append("\t")
-                        when "'":  result.append("'")
-                        when "\"": result.append("\"")
-                        when "\\": result.append("\\")
-                        when ":":  result.append(":")
-                        when "}":  result.append("}")
-                        otherwise:
+                        when "n"  { result.append("\n") }
+                        when "r"  { result.append("\r") }
+                        when "t"  { result.append("\t") }
+                        when "'"  { result.append("'") }
+                        when "\"" { result.append("\"") }
+                        when "\\" { result.append("\\") }
+                        when ":"  { result.append(":") }
+                        when "}"  { result.append("}") }
+                        otherwise {
                             error(token, "invalid format string escape sequence")
                             return null
+                        }
                     }
                     result.append(escapeText[escapeText.next(escapeText.start)..])
-                when Token.Kind.COLON:
+                }
+                when Token.Kind.COLON {
                     pushback(token)
                     return result.finish()
-                when Token.Kind.RBRACE:
+                }
+                when Token.Kind.RBRACE {
                     pushback(token)
                     return result.finish()
-                otherwise:
+                }
+                otherwise {
                     result.append(text(token))
+                }
             }
         }
     }
@@ -349,17 +370,19 @@ class Parser {
                 break
             }
             match token.kind {
-                when Token.Kind.WHITESPACE:
+                when Token.Kind.WHITESPACE {
                     def str := text(token)
                     if str.contains("\n") {
                         error(start, "unterminated string literal")
                         return null
                     }
                     chunk.append(str)
-                when Token.Kind.EOF:
+                }
+                when Token.Kind.EOF {
                     error(start, "unterminated string literal")
                     return null
-                when Token.Kind.BACKSLASH:
+                }
+                when Token.Kind.BACKSLASH {
                     def escape := rawNext()
                     if escape.kind = Token.Kind.EOF {
                         error(start, "unterminated string literal")
@@ -368,13 +391,13 @@ class Parser {
                     def escapeText := text(escape)
                     def c := escapeText.utf8[0]
                     match c {
-                        when "n":  chunk.append("\n")
-                        when "r":  chunk.append("\r")
-                        when "t":  chunk.append("\t")
-                        when "'":  chunk.append("'")
-                        when "\"": chunk.append("\"")
-                        when "\\": chunk.append("\\")
-                        when "{": {
+                        when "n"  { chunk.append("\n") }
+                        when "r"  { chunk.append("\r") }
+                        when "t"  { chunk.append("\t") }
+                        when "'"  { chunk.append("'") }
+                        when "\"" { chunk.append("\"") }
+                        when "\\" { chunk.append("\\") }
+                        when "{" {
                             -- handle string interpolation
                             def oldAllow := allowLambdas
                             allowLambdas := false
@@ -427,13 +450,16 @@ class Parser {
                                 result := convertToString(expr)
                             }
                         }
-                        otherwise:
+                        otherwise {
                             error(token, "invalid string escape sequence")
                             return null
+                        }
                     }
                     chunk.append(escapeText[escapeText.next(escapeText.start)..])
-                otherwise:
+                }
+                otherwise {
                     chunk.append(text(token))
+                }
             }
         }
         return addStringChunk(result, ASTNode.STRING(start.position, chunk.finish()))
@@ -454,7 +480,7 @@ class Parser {
             return null
         }
         match expr {
-            when ASTNode.IDENTIFIER(firstPosition, firstName):
+            when ASTNode.IDENTIFIER(firstPosition, firstName) {
                 -- possible tuple or lambda
                 if checkNext(Token.Kind.COLON) !== null {
                     -- typed lambda
@@ -499,9 +525,12 @@ class Parser {
                             return null
                         }
                         match nextExpr {
-                            when ASTNode.IDENTIFIER:
-                            otherwise:
+                            when ASTNode.IDENTIFIER {
+                                -- do nothing
+                            }
+                            otherwise {
                                 validLambda := false
+                            }
                         }
                         parameters.add(nextExpr)
                     } while checkNext(Token.Kind.COMMA) !== null
@@ -533,7 +562,8 @@ class Parser {
                     return ASTNode.UNTYPED_LAMBDA(start.position, parameters.finish(), body)
                 }
                 return expr -- just a parenthesized identifier
-            otherwise:
+            }
+            otherwise {
                 -- either a single parenthesized expression or a tuple
                 if checkNext(Token.Kind.COMMA) == null {
                     expect(Token.Kind.RPAREN, "')'")
@@ -553,6 +583,7 @@ class Parser {
 --                return ASTNode.TUPLE(start.position, arguments.finish())
                 error(start, "tuples are not yet supported")
                 return null
+            }
         }
     }
 
@@ -630,38 +661,50 @@ class Parser {
     method term():ASTNode? {
         def t := next()
         match t.kind {
-            when Token.Kind.IDENTIFIER:
+            when Token.Kind.IDENTIFIER {
                 def check := peek().kind
                 if (allowLambdas & check = Token.Kind.COLON) | check = Token.Kind.YIELDS {
                     pushback(t)
                     return lambda()
                 }
                 return ASTNode.IDENTIFIER(t.position, text(t))
-            when Token.Kind.DECIMAL:
+            }
+            when Token.Kind.DECIMAL {
                 return ASTNode.INT(t.position, text(t).convert())
-            when Token.Kind.BINARY:
+            }
+            when Token.Kind.BINARY {
                 return ASTNode.INT(t.position, UInt64.parse(text(t)[2..], 2))
-            when Token.Kind.HEX:
+            }
+            when Token.Kind.HEX {
                 return ASTNode.INT(t.position, UInt64.parse(text(t)[2..], 16))
-            when Token.Kind.REAL:
+            }
+            when Token.Kind.REAL {
                 return ASTNode.REAL(t.position, text(t).convert())
-            when Token.Kind.SELF:
+            }
+            when Token.Kind.SELF {
                 return ASTNode.SELF(t.position)
-            when Token.Kind.SUPER:
+            }
+            when Token.Kind.SUPER {
                 return ASTNode.SUPER(t.position)
-            when Token.Kind.NULL:
+            }
+            when Token.Kind.NULL {
                 return ASTNode.NULL(t.position)
-            when Token.Kind.TRUE:
+            }
+            when Token.Kind.TRUE {
                 return ASTNode.BIT(t.position, true)
-            when Token.Kind.FALSE:
+            }
+            when Token.Kind.FALSE {
                 return ASTNode.BIT(t.position, false)
-            when Token.Kind.DOUBLE_QUOTE, Token.Kind.SINGLE_QUOTE:
+            }
+            when Token.Kind.DOUBLE_QUOTE, Token.Kind.SINGLE_QUOTE {
                 pushback(t)
                 return string()
-            when Token.Kind.LPAREN:
+            }
+            when Token.Kind.LPAREN {
                 pushback(t)
                 return parenthesizedExpression()
-            when Token.Kind.ANNOTATION:
+            }
+            when Token.Kind.ANNOTATION {
                 def name := text(t)
                 if name = "@pre" {
                     expect(Token.Kind.LPAREN, "'('")
@@ -677,30 +720,38 @@ class Parser {
                 }
                 error(t, "expected an expression, but found '\{name}'")
                 return null
-            when Token.Kind.FUNCTION, Token.Kind.METHOD:
+            }
+            when Token.Kind.FUNCTION, Token.Kind.METHOD {
                 pushback(t)
                 return anonymousMethod()
-            when Token.Kind.DIV:
+            }
+            when Token.Kind.DIV {
                 pushback(t)
                 return regex()
-            otherwise:
+            }
+            otherwise {
                 error(t, "expected an expression, but found '\{text(t)}'")
                 return null
+            }
         }
     }
 
     @class
     function getClassName(expr:ASTNode):String? {
         match expr {
-            when ASTNode.IDENTIFIER(_, text): return text
-            when ASTNode.DOT(_, base, field):
+            when ASTNode.IDENTIFIER(_, text) {
+                return text
+            }
+            when ASTNode.DOT(_, base, field) {
                 var result := getClassName(base)
                 if result !== null {
                     result += "." + field
                 }
                 return result
-            otherwise:
+            }
+            otherwise {
                 return null
+            }
         }
     }
 
@@ -717,9 +768,10 @@ class Parser {
                     Token.Kind.NEQ, Token.Kind.LT, Token.Kind.GTEQ, Token.Kind.LTEQ,
                     Token.Kind.REM, Token.Kind.AND, Token.Kind.BITWISEAND, Token.Kind.OR,
                     Token.Kind.BITWISEOR, Token.Kind.XOR, Token.Kind.BITWISEXOR, Token.Kind.NOT,
-                    Token.Kind.BITWISENOT, Token.Kind.SHIFTLEFT:
+                    Token.Kind.BITWISENOT, Token.Kind.SHIFTLEFT {
                 return text(name)
-            when Token.Kind.GT:
+            }
+            when Token.Kind.GT {
                 def token := rawNext()
                 if token.kind = Token.Kind.GT { -- two GT's in a row = SHIFTRIGHT
                     return ">>"
@@ -728,7 +780,8 @@ class Parser {
                     pushback(token)
                     return ">"
                 }
-            when Token.Kind.LBRACKET:
+            }
+            when Token.Kind.LBRACKET {
                 if expect(Token.Kind.RBRACKET, "']'") == null {
                     return null
                 }
@@ -736,10 +789,12 @@ class Parser {
                     return "[]:="
                 }
                 return "[]"
-            otherwise:
+            }
+            otherwise {
                 error(name,
                         "expected an identifier or operator, but found '\{text(name)}'")
                 return null
+            }
         }
     }
 
@@ -777,7 +832,7 @@ class Parser {
         def yields := peek()
         match yields.kind {
             when Token.Kind.YIELDS, Token.Kind.YIELDS_METHOD, Token.Kind.YIELDS_IMMUTABLE,
-                    Token.Kind.YIELDS_METHOD_IMMUTABLE:
+                    Token.Kind.YIELDS_METHOD_IMMUTABLE {
                 next()
                 if expect(Token.Kind.LPAREN, "'('") == null {
                     return null
@@ -814,10 +869,12 @@ class Parser {
                 }
                 return ASTNode.METHOD_TYPE(start.position, yields.kind, subtypes.finish(),
                         returnType)
-            otherwise:
+            }
+            otherwise {
                 --return ASTNode.TUPLE_TYPE(start.position, subtypes.finish())
                 error(start, "tuple types are not yet supported")
                 return null
+            }
         }
     }
 
@@ -914,7 +971,7 @@ class Parser {
         loop {
             def token := next()
             match token.kind {
-                when Token.Kind.LPAREN:
+                when Token.Kind.LPAREN {
                     commaSeparatedExpressionContext.push(true) -- FIXME use init / cleanup to automate this
                     def args := Array<ASTNode>()
                     if checkNext(Token.Kind.RPAREN) == null {
@@ -939,7 +996,8 @@ class Parser {
                     }
                     commaSeparatedExpressionContext.pop()
                     result := ASTNode.CALL(token.position, result, args.finish())
-                when Token.Kind.LBRACKET:
+                }
+                when Token.Kind.LBRACKET {
                     def arg := expression()
                     if arg == null {
                         return null
@@ -948,7 +1006,8 @@ class Parser {
                         return null
                     }
                     result := ASTNode.BINARY(token.position, result, Token.Kind.LBRACKET, arg)
-                when Token.Kind.DOT:
+                }
+                when Token.Kind.DOT {
                     def name:String?
                     if checkNext(Token.Kind.INIT) !== null {
                         name := "init"
@@ -960,13 +1019,15 @@ class Parser {
                         }
                     }
                     result := ASTNode.DOT(token.position, result, name)
-                when Token.Kind.CAST:
+                }
+                when Token.Kind.CAST {
                     def target := type()
                     if target == null {
                         return null
                     }
                     result := ASTNode.BINARY(token.position, result, Token.Kind.CAST, target)
-                when Token.Kind.LT:
+                }
+                when Token.Kind.LT {
                     -- this is where we need to be careful. First, we make sure it makes sense to
                     -- interpret this as the start of a generic parameter list...
                     pushback(token)
@@ -1027,13 +1088,16 @@ class Parser {
                         if commaSeparatedExpressionContext[0] {
                             def n := next()
                             match n.kind {
-                                when Token.Kind.DOT, Token.Kind.COMMA, Token.Kind.CAST:
+                                when Token.Kind.DOT, Token.Kind.COMMA, Token.Kind.CAST {
                                     shouldAccept := true
-                                when Token.Kind.LPAREN:
+                                }
+                                when Token.Kind.LPAREN {
                                     shouldAccept := n.position.line = gt.position.line &
                                             n.position.column = gt.position.column + 1
-                                otherwise:
+                                }
+                                otherwise {
                                     shouldAccept := false
+                                }
                             }
                             if shouldAccept {
                                 pushback(n)
@@ -1053,9 +1117,11 @@ class Parser {
                         }
                     }
                     return result
-                otherwise:
+                }
+                otherwise {
                     pushback(token)
                     return result
+                }
             }
         }
     }
@@ -1088,15 +1154,17 @@ class Parser {
     method prefixExpression():ASTNode? {
         def op := next()
         match op.kind {
-            when Token.Kind.SUB, Token.Kind.NOT, Token.Kind.BITWISENOT:
+            when Token.Kind.SUB, Token.Kind.NOT, Token.Kind.BITWISENOT {
                 def base := exponentExpression()
                 if base == null {
                     return null
                 }
                 return ASTNode.PREFIX(op.position, op.kind, base)
-            otherwise:
+            }
+            otherwise {
                 pushback(op)
                 return exponentExpression()
+            }
         }
     }
 
@@ -1115,13 +1183,14 @@ class Parser {
             def op := next()
             match op.kind {
                 when Token.Kind.MUL, Token.Kind.DIV, Token.Kind.INTDIV, Token.Kind.REM,
-                        Token.Kind.SHIFTLEFT, Token.Kind.BITWISEAND, Token.Kind.BITWISEOR:
+                        Token.Kind.SHIFTLEFT, Token.Kind.BITWISEAND, Token.Kind.BITWISEOR {
                     def next := prefixExpression()
                     if next == null {
                         return null
                     }
                     result := ASTNode.BINARY(op.position, result, op.kind, next)
-                when Token.Kind.GT:
+                }
+                when Token.Kind.GT {
                     def nextToken := rawNext()
                     if nextToken.kind = Token.Kind.GT {
                         -- two GTs in a row = SHIFTRIGHT
@@ -1136,9 +1205,11 @@ class Parser {
                         pushback(op)
                         return result
                     }
-                otherwise:
+                }
+                otherwise {
                     pushback(op)
                     return result
+                }
             }
         }
     }
@@ -1155,15 +1226,17 @@ class Parser {
         loop {
             def op := next()
             match op.kind {
-                when Token.Kind.ADD, Token.Kind.SUB, Token.Kind.BITWISEXOR:
+                when Token.Kind.ADD, Token.Kind.SUB, Token.Kind.BITWISEXOR {
                     def next := multiplicativeExpression()
                     if next == null {
                         return null
                     }
                     result := ASTNode.BINARY(op.position, result, op.kind, next)
-                otherwise:
+                }
+                otherwise {
                     pushback(op)
                     return result
+                }
             }
         }
     }
@@ -1175,17 +1248,19 @@ class Parser {
     method rangeExpression():ASTNode? {
         var result:ASTNode?
         match peek().kind {
-            when Token.Kind.DOTDOT, Token.Kind.ELLIPSIS:
+            when Token.Kind.DOTDOT, Token.Kind.ELLIPSIS {
                 result := null
-            otherwise:
+            }
+            otherwise {
                 result := additiveExpression()
                 if result == null {
                     return null
                 }
+            }
         }
         def op := next()
         match op.kind {
-            when Token.Kind.DOTDOT, Token.Kind.ELLIPSIS:
+            when Token.Kind.DOTDOT, Token.Kind.ELLIPSIS {
                 def next := peek()
                 def right:ASTNode?
                 if next.kind != Token.Kind.RBRACKET & next.kind != Token.Kind.RPAREN &
@@ -1210,9 +1285,11 @@ class Parser {
                 }
                 return ASTNode.RANGE(op.position, result, op.kind = Token.Kind.ELLIPSIS, right,
                         step)
-            otherwise:
+            }
+            otherwise {
                 pushback(op)
                 return result
+            }
         }
     }
 
@@ -1235,15 +1312,17 @@ class Parser {
                         Token.Kind.LT,
                         Token.Kind.GT,
                         Token.Kind.LTEQ,
-                        Token.Kind.GTEQ:
+                        Token.Kind.GTEQ {
                     def next := rangeExpression()
                     if next == null {
                         return null
                     }
                     result := ASTNode.BINARY(op.position, result, op.kind, next)
-                otherwise:
+                }
+                otherwise {
                     pushback(op)
                     return result
+                }
             }
         }
     }
@@ -1259,15 +1338,17 @@ class Parser {
         loop {
             def op := next()
             match op.kind {
-                when Token.Kind.AND, Token.Kind.XOR:
+                when Token.Kind.AND, Token.Kind.XOR {
                     def next := comparisonExpression()
                     if next == null {
                         return null
                     }
                     result := ASTNode.BINARY(op.position, result, op.kind, next)
-                otherwise:
+                }
+                otherwise {
                     pushback(op)
                     return result
+                }
             }
         }
     }
@@ -1493,29 +1574,38 @@ class Parser {
             expressions.add(expr)
         }
         allowLambdas := true
-        if expect(Token.Kind.COLON, "':'") == null {
-            return null
-        }
         def statements := Array<ASTNode>()
-        loop {
-            match peek().kind {
-                when Token.Kind.WHEN, Token.Kind.OTHERWISE, Token.Kind.RBRACE:
-                    break
-                when Token.Kind.BREAK, Token.Kind.CONTINUE, Token.Kind.RETURN:
-                    def stmt := terminalStatement()
-                    if stmt == null {
-                        return null
+        if checkNext(Token.Kind.COLON) !== null {
+            error(start, "old-style match")
+            loop {
+                match peek().kind {
+                    when Token.Kind.WHEN, Token.Kind.OTHERWISE, Token.Kind.RBRACE {
+                        break
                     }
-                    statements.add(stmt)
-                    break
-                otherwise: {
-                    def stmt := statement()
-                    if stmt == null {
-                        return null
+                    when Token.Kind.BREAK, Token.Kind.CONTINUE, Token.Kind.RETURN {
+                        def stmt := terminalStatement()
+                        if stmt == null {
+                            return null
+                        }
+                        statements.add(stmt)
+                        break
                     }
-                    statements.add(stmt)
+                    otherwise {
+                        def stmt := statement()
+                        if stmt == null {
+                            return null
+                        }
+                        statements.add(stmt)
+                    }
                 }
             }
+        }
+        else {
+            def s := blockStatements()
+            if s == null {
+                return null
+            }
+            statements := Array<ASTNode>(s)
         }
         return ASTNode.WHEN(start.position, expressions.finish(), statements.finish())
     }
@@ -1540,45 +1630,59 @@ class Parser {
         loop {
             def token := peek()
             match token.kind {
-                when Token.Kind.RBRACE:
+                when Token.Kind.RBRACE {
                     break
-                when Token.Kind.WHEN:
+                }
+                when Token.Kind.WHEN {
                     def w := whenClause()
                     if w == null {
                         return null
                     }
                     whens.add(w)
-                when Token.Kind.OTHERWISE:
+                }
+                when Token.Kind.OTHERWISE {
                     def o := next()
-                    if expect(Token.Kind.COLON, "':'") == null {
-                        return null
-                    }
                     other := Array<ASTNode>()
-                    loop {
-                        match peek().kind {
-                            when Token.Kind.RBRACE:
-                                break
-                            when Token.Kind.BREAK, Token.Kind.CONTINUE, Token.Kind.RETURN:
-                                def stmt := terminalStatement()
-                                if stmt == null {
-                                    return null
+                    if checkNext(Token.Kind.COLON) !== null {
+                        loop {
+                            match peek().kind {
+                                when Token.Kind.RBRACE {
+                                    break
                                 }
-                                other.add(stmt)
-                                break
-                            otherwise:
-                                def stmt := statement()
-                                if stmt == null {
-                                    return null
+                                when Token.Kind.BREAK, Token.Kind.CONTINUE, Token.Kind.RETURN {
+                                    def stmt := terminalStatement()
+                                    if stmt == null {
+                                        return null
+                                    }
+                                    other.add(stmt)
+                                    break
                                 }
-                                other.add(stmt)
+                                otherwise {
+                                    def stmt := statement()
+                                    if stmt == null {
+                                        return null
+                                    }
+                                    other.add(stmt)
+                                }
+                            }
                         }
+                        error(start, "old-style match")
+                    }
+                    else {
+                        def s := blockStatements()
+                        if s == null {
+                            return null
+                        }
+                        other.addAll(s)
                     }
                     break
-                otherwise:
+                }
+                otherwise {
                     next()
                     error(token, "expected 'when', 'otherwise', or '}', but " +
                             "found '\{text(token)}'")
                     break
+                }
             }
         }
         if expect(Token.Kind.RBRACE, "'}'") == null {
@@ -1601,10 +1705,11 @@ class Parser {
         def result := Array<ASTNode>()
         loop {
             match peek().kind {
-                when Token.Kind.RBRACE:
+                when Token.Kind.RBRACE {
                     next()
                     break
-                when Token.Kind.BREAK, Token.Kind.CONTINUE, Token.Kind.RETURN:
+                }
+                when Token.Kind.BREAK, Token.Kind.CONTINUE, Token.Kind.RETURN {
                     def stmt := terminalStatement()
                     if stmt == null {
                         return null
@@ -1614,12 +1719,14 @@ class Parser {
                     }
                     result.add(stmt)
                     break
-                otherwise:
+                }
+                otherwise {
                     def stmt := statement()
                     if stmt == null {
                         return null
                     }
                     result.add(stmt)
+                }
             }
         }
         return result.finish()
@@ -1649,14 +1756,15 @@ class Parser {
                     Token.Kind.DIVEQ, Token.Kind.REMEQ, Token.Kind.INTDIVEQ, Token.Kind.POWEQ,
                     Token.Kind.OREQ, Token.Kind.BITWISEOREQ, Token.Kind.ANDEQ,
                     Token.Kind.BITWISEANDEQ, Token.Kind.XOREQ, Token.Kind.BITWISEXOREQ,
-                    Token.Kind.SHIFTLEFTEQ, Token.Kind.SHIFTRIGHTEQ:
+                    Token.Kind.SHIFTLEFTEQ, Token.Kind.SHIFTRIGHTEQ {
                 def op := next()
                 def rvalue := expression()
                 if rvalue == null {
                     return null
                 }
                 return ASTNode.BINARY(start.position(), start, op.kind, rvalue)
-            when Token.Kind.EQ:
+            }
+            when Token.Kind.EQ {
                 error(peek(), "unexpected '=', perhaps you meant ':='?")
                 def op := next()
                 def rvalue := expression()
@@ -1664,8 +1772,10 @@ class Parser {
                     return null
                 }
                 return ASTNode.BINARY(start.position(), start, op.kind, rvalue)
-            otherwise:
+            }
+            otherwise {
                 return start
+            }
         }
     }
 
@@ -1704,16 +1814,21 @@ class Parser {
         def start := next()
         def kind:Variable.Kind
         match start.kind {
-            when Token.Kind.VAR:
+            when Token.Kind.VAR {
                 kind := Variable.Kind.VAR
-            when Token.Kind.DEF:
+            }
+            when Token.Kind.DEF {
                 kind := Variable.Kind.DEF
-            when Token.Kind.PROPERTY:
+            }
+            when Token.Kind.PROPERTY {
                 kind := Variable.Kind.PROPERTY
-            when Token.Kind.CONSTANT:
+            }
+            when Token.Kind.CONSTANT {
                 kind := Variable.Kind.CONSTANT
-            otherwise:
+            }
+            otherwise {
                 error(start, "expected 'var', 'def', 'property', or 'constant'")
+            }
         }
         def declarations := Array<ASTNode>()
         var decl := singleVar()
@@ -1808,9 +1923,10 @@ class Parser {
             return null
         }
         match peek().kind {
-            when Token.Kind.RBRACE, Token.Kind.WHEN, Token.Kind.OTHERWISE:
+            when Token.Kind.RBRACE, Token.Kind.WHEN, Token.Kind.OTHERWISE {
                 return ASTNode.RETURN(start.position, null)
-            otherwise:
+            }
+            otherwise {
                 def children := Array<ASTNode>()
                 def expr := expression()
                 if expr == null {
@@ -1818,6 +1934,7 @@ class Parser {
                 }
                 children.add(expr)
                 return ASTNode.RETURN(start.position, expr)
+            }
         }
     }
 
@@ -1826,10 +1943,10 @@ class Parser {
     ================================================================================================
     method terminalStatement():ASTNode? {
         match peek().kind {
-            when Token.Kind.BREAK:    return breakStatement()
-            when Token.Kind.CONTINUE: return continueStatement()
-            when Token.Kind.RETURN:   return returnStatement()
-            otherwise: assert false
+            when Token.Kind.BREAK    { return breakStatement() }
+            when Token.Kind.CONTINUE { return continueStatement() }
+            when Token.Kind.RETURN   { return returnStatement() }
+            otherwise                { assert false }
         }
     }
 
@@ -1838,14 +1955,15 @@ class Parser {
     ================================================================================================
     method anyLoop(label:String?):ASTNode? {
         match peek().kind {
-            when Token.Kind.DO:    return doLoop(label)
-            when Token.Kind.FOR:   return forLoop(label)
-            when Token.Kind.LOOP:  return loopLoop(label)
-            when Token.Kind.WHILE: return whileLoop(label)
-            otherwise:
+            when Token.Kind.DO     { return doLoop(label) }
+            when Token.Kind.FOR    { return forLoop(label) }
+            when Token.Kind.LOOP   { return loopLoop(label) }
+            when Token.Kind.WHILE  { return whileLoop(label) }
+            otherwise {
                 -- trigger error
                 expect(Token.Kind.DO, "'do', 'for', 'loop', or 'while' following label")
                 return null
+            }
         }
     }
 
@@ -1897,15 +2015,15 @@ class Parser {
     ================================================================================================
     method statement():ASTNode? {
         match peek().kind {
-            when Token.Kind.IF:     return ifStatement()
-            when Token.Kind.FOR:    return forLoop(null)
-            when Token.Kind.WHILE:  return whileLoop(null)
-            when Token.Kind.DO:     return doLoop(null)
-            when Token.Kind.LOOP:   return loopLoop(null)
-            when Token.Kind.ASSERT: return assertStatement()
-            when Token.Kind.MATCH:  return matchStatement()
-            when Token.Kind.LBRACE: return block()
-            when Token.Kind.IDENTIFIER:
+            when Token.Kind.IF     { return ifStatement() }
+            when Token.Kind.FOR    { return forLoop(null) }
+            when Token.Kind.WHILE  { return whileLoop(null) }
+            when Token.Kind.DO     { return doLoop(null) }
+            when Token.Kind.LOOP   { return loopLoop(null) }
+            when Token.Kind.ASSERT { return assertStatement() }
+            when Token.Kind.MATCH  { return matchStatement() }
+            when Token.Kind.LBRACE { return block() }
+            when Token.Kind.IDENTIFIER {
                 def id := next()
                 def colon := checkNext(Token.Kind.COLON)
                 if colon !== null {
@@ -1921,18 +2039,24 @@ class Parser {
                 }
                 pushback(id)
                 return expressionOrAssignment()
-            when Token.Kind.SELF, Token.Kind.SUPER:
+            }
+            when Token.Kind.SELF, Token.Kind.SUPER {
                 return expressionOrAssignment()
-            when Token.Kind.VAR, Token.Kind.DEF, Token.Kind.PROPERTY, Token.Kind.CONSTANT:
+            }
+            when Token.Kind.VAR, Token.Kind.DEF, Token.Kind.PROPERTY, Token.Kind.CONSTANT {
                 return varDeclaration()
-            when Token.Kind.INIT:
+            }
+            when Token.Kind.INIT {
                 return initCall()
-            when Token.Kind.METHOD, Token.Kind.FUNCTION:
+            }
+            when Token.Kind.METHOD, Token.Kind.FUNCTION {
                 return innerMethod()
-            otherwise:
+            }
+            otherwise {
                 -- trigger error
                 expect(Token.Kind.IF, "a statement")
                 return null
+            }
         }
     }
 
@@ -2356,41 +2480,47 @@ class Parser {
             match next.kind {
                 when Token.Kind.CLASS, Token.Kind.INTERFACE, Token.Kind.CHOICE, Token.Kind.METHOD,
                         Token.Kind.FUNCTION, Token.Kind.ANNOTATION, Token.Kind.VAR, Token.Kind.DEF,
-                        Token.Kind.PROPERTY, Token.Kind.CONSTANT:
+                        Token.Kind.PROPERTY, Token.Kind.CONSTANT {
                     break
-                when Token.Kind.DOC_COMMENT:
+                }
+                when Token.Kind.DOC_COMMENT {
                     if dc !== null {
                         error(next, "expected a declaration, but found '\{text(next)}'")
                     }
                     dc := doccomment()
-                when Token.Kind.IDENTIFIER:
+                }
+                when Token.Kind.IDENTIFIER {
                     def c := choiceCase(dc)
                     if c == null {
                         return null
                     }
                     members.add(c)
                     dc := null
-                otherwise:
+                }
+                otherwise {
                     break
+                }
             }
         }
         var a := ImmutableArray<ASTNode>() -- FIXME literal
         loop {
             def next := peek()
             match next.kind {
-                when Token.Kind.ANNOTATION:
+                when Token.Kind.ANNOTATION {
                     if a.count > 0 {
                         error(next, "expected a declaration, but found '\{text(next)}'")
                         return null
                     }
                     a := annotations()
-                when Token.Kind.DOC_COMMENT:
+                }
+                when Token.Kind.DOC_COMMENT {
                     if dc !== null | a.count > 0 {
                         error(next, "expected a declaration, but found '\{text(next)}'")
                         return null
                     }
                     dc := doccomment()
-                when Token.Kind.CLASS:
+                }
+                when Token.Kind.CLASS {
                     def decl := classDeclaration(dc, a)
                     if decl == null {
                         return null
@@ -2398,7 +2528,8 @@ class Parser {
                     members.add(decl)
                     dc := null
                     a := ImmutableArray<ASTNode>()
-                when Token.Kind.INTERFACE:
+                }
+                when Token.Kind.INTERFACE {
                     def decl := interfaceDeclaration(dc, a)
                     if decl == null {
                         return null
@@ -2406,7 +2537,8 @@ class Parser {
                     members.add(decl)
                     dc := null
                     a := ImmutableArray<ASTNode>()
-                when Token.Kind.CHOICE:
+                }
+                when Token.Kind.CHOICE {
                     def decl := choiceDeclaration(dc, a)
                     if decl == null {
                         return null
@@ -2414,7 +2546,8 @@ class Parser {
                     members.add(decl)
                     dc := null
                     a := ImmutableArray<ASTNode>()
-                when Token.Kind.METHOD, Token.Kind.FUNCTION:
+                }
+                when Token.Kind.METHOD, Token.Kind.FUNCTION {
                     def decl := methodDeclaration(dc, a)
                     if decl == null {
                         return null
@@ -2422,7 +2555,8 @@ class Parser {
                     members.add(decl)
                     dc := null
                     a := ImmutableArray<ASTNode>()
-                when Token.Kind.VAR, Token.Kind.DEF, Token.Kind.PROPERTY, Token.Kind.CONSTANT:
+                }
+                when Token.Kind.VAR, Token.Kind.DEF, Token.Kind.PROPERTY, Token.Kind.CONSTANT {
                     def decl := fieldDeclaration(dc, a)
                     if decl == null {
                         return null
@@ -2430,13 +2564,16 @@ class Parser {
                     members.add(decl)
                     dc := null
                     a := ImmutableArray<ASTNode>()
-                when Token.Kind.RBRACE:
+                }
+                when Token.Kind.RBRACE {
                     expect(Token.Kind.RBRACE, "'}'")
                     break
-                otherwise:
+                }
+                otherwise {
                     error(next, "expected a declaration, but found '\{text(next)}'")
                     self.next()
                     return null
+                }
             }
         }
         return ASTNode.CLASS(start.position, choiceDoccomment, choiceAnnotations,
@@ -2464,22 +2601,29 @@ class Parser {
             return null
         }
         match peek().kind {
-            when Token.Kind.CLASS:
+            when Token.Kind.CLASS {
                 return classDeclaration(dc, a)
-            when Token.Kind.INTERFACE:
+            }
+            when Token.Kind.INTERFACE {
                 return interfaceDeclaration(dc, a)
-            when Token.Kind.CHOICE:
+            }
+            when Token.Kind.CHOICE {
                 return choiceDeclaration(dc, a)
-            when Token.Kind.METHOD, Token.Kind.FUNCTION:
+            }
+            when Token.Kind.METHOD, Token.Kind.FUNCTION {
                 return methodDeclaration(dc, a)
-            when Token.Kind.INIT:
+            }
+            when Token.Kind.INIT {
                 return initDeclaration(dc, a)
-            when Token.Kind.VAR, Token.Kind.DEF, Token.Kind.PROPERTY, Token.Kind.CONSTANT:
+            }
+            when Token.Kind.VAR, Token.Kind.DEF, Token.Kind.PROPERTY, Token.Kind.CONSTANT {
                 return fieldDeclaration(dc, a)
-            otherwise:
+            }
+            otherwise {
                 -- trigger error
                 expect(Token.Kind.CLASS, "a declaration")
                 return null
+            }
         }
     }
 
@@ -2588,10 +2732,12 @@ class Parser {
     ================================================================================================
     method bodyEntry():ASTNode? {
         match peek().kind {
-            when Token.Kind.USES:
+            when Token.Kind.USES {
                 return usesDeclaration()
-            otherwise:
+            }
+            otherwise {
                 return declaration()
+            }
         }
     }
 

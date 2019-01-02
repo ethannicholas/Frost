@@ -85,7 +85,7 @@ panda$core$Bit $tmp10 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($
 bool $tmp11 = $tmp10.value;
 if ($tmp11) goto block4; else goto block5;
 block4:;
-// line 27
+// line 28
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) &$s12));
 return &$s13;
 block5:;
@@ -94,7 +94,7 @@ panda$core$Bit $tmp15 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($
 bool $tmp16 = $tmp15.value;
 if ($tmp16) goto block6; else goto block7;
 block6:;
-// line 29
+// line 31
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) &$s17));
 return &$s18;
 block7:;
@@ -103,7 +103,7 @@ panda$core$Bit $tmp20 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($
 bool $tmp21 = $tmp20.value;
 if ($tmp21) goto block8; else goto block9;
 block8:;
-// line 31
+// line 34
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) &$s22));
 return &$s23;
 block9:;
@@ -112,7 +112,7 @@ panda$core$Bit $tmp25 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($
 bool $tmp26 = $tmp25.value;
 if ($tmp26) goto block10; else goto block11;
 block10:;
-// line 33
+// line 37
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) &$s27));
 return &$s28;
 block11:;
@@ -121,7 +121,7 @@ panda$core$Bit $tmp30 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($
 bool $tmp31 = $tmp30.value;
 if ($tmp31) goto block12; else goto block13;
 block12:;
-// line 35
+// line 40
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) &$s32));
 return &$s33;
 block13:;
@@ -130,7 +130,7 @@ panda$core$Bit $tmp35 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($
 bool $tmp36 = $tmp35.value;
 if ($tmp36) goto block14; else goto block15;
 block14:;
-// line 37
+// line 43
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) &$s37));
 return &$s38;
 block15:;
@@ -139,7 +139,7 @@ panda$core$Bit $tmp40 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($
 bool $tmp41 = $tmp40.value;
 if ($tmp41) goto block16; else goto block17;
 block16:;
-// line 39
+// line 46
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) &$s42));
 return &$s43;
 block17:;
@@ -148,7 +148,7 @@ panda$core$Bit $tmp45 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($
 bool $tmp46 = $tmp45.value;
 if ($tmp46) goto block18; else goto block19;
 block18:;
-// line 41
+// line 49
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) &$s47));
 return &$s48;
 block19:;
@@ -157,7 +157,7 @@ panda$core$Bit $tmp50 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($
 bool $tmp51 = $tmp50.value;
 if ($tmp51) goto block20; else goto block21;
 block20:;
-// line 43
+// line 52
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) &$s52));
 return &$s53;
 block21:;
@@ -166,7 +166,7 @@ panda$core$Bit $tmp55 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($
 bool $tmp56 = $tmp55.value;
 if ($tmp56) goto block22; else goto block23;
 block22:;
-// line 45
+// line 55
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) &$s57));
 return &$s58;
 block23:;
@@ -175,7 +175,7 @@ panda$core$Bit $tmp60 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($
 bool $tmp61 = $tmp60.value;
 if ($tmp61) goto block24; else goto block25;
 block24:;
-// line 47
+// line 58
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) &$s62));
 return &$s63;
 block25:;
@@ -184,7 +184,7 @@ panda$core$Bit $tmp65 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($
 bool $tmp66 = $tmp65.value;
 if ($tmp66) goto block26; else goto block1;
 block26:;
-// line 49
+// line 61
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) &$s67));
 return &$s68;
 block1:;

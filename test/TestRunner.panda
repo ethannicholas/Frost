@@ -7,9 +7,15 @@ class TestRunner {
         @override
         function convert():String {
             match self {
-                when O0: return "-O0"
-                when O3: return "-O3"
-                when C:  return "C"
+                when O0 {
+                    return "-O0"
+                }
+                when O3 {
+                    return "-O3"
+                }
+                when C {
+                    return "C"
+                }
             }
         }
     }
@@ -151,8 +157,9 @@ class TestRunner {
             mode:Mode):Bit {
         Console.print("Testing \{test} (\{mode})...")
         match mode {
-            when Mode.C:
+            when Mode.C {
                 return runTestC(pandac, cLibs, workingDir, test)
+            }
         }
         def expected := workingDir.resolve(test + ".expected").readFully()
         def exe := File("/tmp/test.out")
@@ -166,12 +173,14 @@ class TestRunner {
         args.add("-i")
         args.add(workingDir.parent().convert())
         match mode {
-            when Mode.O0:
+            when Mode.O0 {
                 args.add("-O")
                 args.add("0")
-            when Mode.O3:
+            }
+            when Mode.O3 {
                 args.add("-O")
                 args.add("3")
+            }
         }
         def compiler := System.exec(pandac, args)
         def compileResult := compiler.output.readFully() -- FIXME use error stream instead

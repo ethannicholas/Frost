@@ -42,8 +42,9 @@ method main() {
     Console.printLine(json2.getString("/phoneNumbers[1]/number"))
     assert json2.get("/notFound") == null
     match json2.get("/spouse") {
-        when JSON.NULL:
-        otherwise:
+        when JSON.NULL {}
+        otherwise {
             assert false
+        }
     }
 }

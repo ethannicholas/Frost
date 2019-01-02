@@ -30,11 +30,11 @@ class Annotations {
         @override
         function convert():String {
             match self {
-                when PRE(_, expr):      return "@pre(\{expr})"
-                when PRE_OR(_, expr):   return "@preOr(\{expr})"
-                when POST(_, expr):     return "@post(\{expr})"
-                when POST_AND(_, expr): return "@postAnd(\{expr})"
-                when PRIORITY(_, expr): return "@priority(\{expr})"
+                when PRE(_, expr)      { return "@pre(\{expr})" }
+                when PRE_OR(_, expr)   { return "@preOr(\{expr})" }
+                when POST(_, expr)     { return "@post(\{expr})" }
+                when POST_AND(_, expr) { return "@postAnd(\{expr})" }
+                when PRIORITY(_, expr) { return "@priority(\{expr})" }
             }
         }
     }

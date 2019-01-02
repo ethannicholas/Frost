@@ -174,9 +174,12 @@ class Panda {
         assert specifier.length >= 2, "invalid alignment string '\{specifier}'"
         var index := specifier.next(specifier.start)
         match specifier[index] {
-            when "<", "^", ">": -- do nothing
-            otherwise:
+            when "<", "^", ">" {
+                -- do nothing
+            }
+            otherwise {
                 index := specifier.start
+            }
         }
         def width := specifier[specifier.next(index)..].convert()->Int
         def fill:Char32
@@ -187,11 +190,10 @@ class Panda {
             fill := specifier[specifier.start]
         }
         match specifier[index] {
-            when "<": return str.leftAlign(width, fill)
-            when "^": return str.centerAlign(width, fill)
-            when ">": return str.rightAlign(width, fill)
-            otherwise:
-                assert false, "invalid alignment string '\{specifier}'"
+            when "<"  { return str.leftAlign(width, fill) }
+            when "^"  { return str.centerAlign(width, fill) }
+            when ">"  { return str.rightAlign(width, fill) }
+            otherwise { assert false, "invalid alignment string '\{specifier}'" }
         }
     }
 
@@ -210,19 +212,25 @@ class Panda {
         var digits := "0123456789abcdef".utf8
         if index < fmt.end {
             match fmt[index] {
-                when "b", "B":
+                when "b", "B" {
                     base := 2
-                when "o", "O":
+                }
+                when "o", "O" {
                     base := 8
-                when "d", "D":
+                }
+                when "d", "D" {
                     base := 10
-                when "x":
+                }
+                when "x" {
                     base := 16
-                when "X":
+                }
+                when "X" {
                     base := 16
                     digits := "0123456789ABCDEF".utf8
-                otherwise:
+                }
+                otherwise {
                     assert false, "invalid format string"
+                }
             }
         }
         var value:UInt64 -- FIXME make rawValue a var parameter

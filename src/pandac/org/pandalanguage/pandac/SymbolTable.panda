@@ -36,18 +36,20 @@ class SymbolTable {
         }
         if s.kind = Symbol.Kind.METHOD {
             match old.kind {
-                when Symbol.Kind.METHOD:
+                when Symbol.Kind.METHOD {
                     def methods := Array<MethodDecl>()
                     methods.add(s->MethodDecl)
                     methods.add(old->MethodDecl)
                     symbols[name] := Methods(methods)
                     return
-                when Symbol.Kind.METHODS:
+                }
+                when Symbol.Kind.METHODS {
                     def methods := Array<MethodDecl>()
                     methods.add(s->MethodDecl)
                     methods.addAll(old->Methods.methods)
                     symbols[name] := Methods(methods)
                     return
+                }
             }
         }
         compiler.error(s.position, "duplicate symbol '\{name}' (previous declaration was at " +
@@ -83,16 +85,17 @@ class SymbolTable {
             return symbol
         }
         match symbol.kind {
-            when Symbol.Kind.METHOD:
+            when Symbol.Kind.METHOD {
                 match inherited.kind {
-                    when Symbol.Kind.METHODS:
+                    when Symbol.Kind.METHODS {
                         def methods := Array<MethodDecl>() -- FIXME literal
                         methods.add(symbol->MethodDecl)
                         for m in (inherited->Methods).methods {
                             addIfNotOverridden(m, methods)
                         }
                         return Methods(methods)
-                    when Symbol.Kind.METHOD:
+                    }
+                    when Symbol.Kind.METHOD {
                         def overridden1 := compiler.getOverriddenMethod(inherited->MethodDecl)
                         def overridden2 := compiler.getOverriddenMethod(symbol->MethodDecl)
                         if  overridden1 == symbol->MethodDecl |
@@ -104,26 +107,34 @@ class SymbolTable {
                         methods.add(symbol->MethodDecl)
                         methods.add(inherited->MethodDecl)
                         return Methods(methods)
-                    otherwise:
+                    }
+                    otherwise {
                         return symbol
+                    }
                 }
-            when Symbol.Kind.METHODS:
+            }
+            when Symbol.Kind.METHODS {
                 match inherited.kind {
-                    when Symbol.Kind.METHODS:
+                    when Symbol.Kind.METHODS {
                         def methods := Array<MethodDecl>(symbol->Methods.methods)
                         for m in (inherited->Methods).methods {
                             addIfNotOverridden(m, methods)
                         }
                         return Methods(methods)
-                    when Symbol.Kind.METHOD:
+                    }
+                    when Symbol.Kind.METHOD {
                         def methods := Array<MethodDecl>(symbol->Methods.methods)
                         addIfNotOverridden(inherited->MethodDecl, methods)
                         return Methods(methods)
-                    otherwise:
+                    }
+                    otherwise {
                         return symbol
+                    }
                 }
-            otherwise:
+            }
+            otherwise {
                 return symbol
+            }
         }
     }
 

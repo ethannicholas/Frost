@@ -58,13 +58,16 @@ class DFA {
             if state != 0 {
                 offset += 1
                 match c.convert()->UInt8 {
-                    when 10:
+                    when 10 {
                         line += 1
                         column := 1
-                    when 9:
+                    }
+                    when 9 {
                         column += 4 - column % 4
-                    otherwise:
+                    }
+                    otherwise {
                         column += 1
+                    }
                 }
                 def newAccept := accepts[state]
                 if newAccept != -1 {

@@ -16,16 +16,16 @@ class WriteNumbers {
     @class
     function builtin(type:Type):String {
         match type {
-            when Type.INT8:   return "builtin_int8"
-            when Type.INT16:  return "builtin_int16"
-            when Type.INT32:  return "builtin_int32"
-            when Type.INT64:  return "builtin_int64"
-            when Type.UINT8:  return "builtin_uint8"
-            when Type.UINT16: return "builtin_uint16"
-            when Type.UINT32: return "builtin_uint32"
-            when Type.UINT64: return "builtin_uint64"
-            when Type.REAL32: return "builtin_float32"
-            when Type.REAL64: return "builtin_float64"
+            when Type.INT8   { return "builtin_int8" }
+            when Type.INT16  { return "builtin_int16" }
+            when Type.INT32  { return "builtin_int32" }
+            when Type.INT64  { return "builtin_int64" }
+            when Type.UINT8  { return "builtin_uint8" }
+            when Type.UINT16 { return "builtin_uint16" }
+            when Type.UINT32 { return "builtin_uint32" }
+            when Type.UINT64 { return "builtin_uint64" }
+            when Type.REAL32 { return "builtin_float32" }
+            when Type.REAL64 { return "builtin_float64" }
         }
         assert false, "invalid type \{type}"
     }
@@ -33,16 +33,16 @@ class WriteNumbers {
     @class
     function object(type:Type):String {
         match type {
-            when Type.INT8:   return "Int8"
-            when Type.INT16:  return "Int16"
-            when Type.INT32:  return "Int32"
-            when Type.INT64:  return "Int64"
-            when Type.UINT8:  return "UInt8"
-            when Type.UINT16: return "UInt16"
-            when Type.UINT32: return "UInt32"
-            when Type.UINT64: return "UInt64"
-            when Type.REAL32: return "Real32"
-            when Type.REAL64: return "Real64"
+            when Type.INT8   { return "Int8" }
+            when Type.INT16  { return "Int16" }
+            when Type.INT32  { return "Int32" }
+            when Type.INT64  { return "Int64" }
+            when Type.UINT8  { return "UInt8" }
+            when Type.UINT16 { return "UInt16" }
+            when Type.UINT32 { return "UInt32" }
+            when Type.UINT64 { return "UInt64" }
+            when Type.REAL32 { return "Real32" }
+            when Type.REAL64 { return "Real64" }
         }
         assert false, "invalid type \{type}"
     }
@@ -50,38 +50,43 @@ class WriteNumbers {
     @class
     function max32(type:Type):Type {
         match type {
-            when Type.INT8,  Type.INT16:  return Type.INT32
-            when Type.UINT8, Type.UINT16: return Type.UINT32
-            otherwise: return type
+            when Type.INT8,  Type.INT16  { return Type.INT32 }
+            when Type.UINT8, Type.UINT16 { return Type.UINT32 }
+            otherwise { return type }
         }
     }
 
     @class
     function signed(type:Type):Bit {
         match type {
-            when Type.INT8,  Type.INT16,  Type.INT32,  Type.INT64, Type.REAL32, Type.REAL64:
+            when Type.INT8,  Type.INT16,  Type.INT32,  Type.INT64, Type.REAL32, Type.REAL64 {
                 return true
-            when Type.UINT8, Type.UINT16, Type.UINT32, Type.UINT64: return false
+            }
+            when Type.UINT8, Type.UINT16, Type.UINT32, Type.UINT64 {
+                return false
+            }
         }
     }
 
     @class
     function real(type:Type):Bit {
         match type {
-            when Type.REAL32, Type.REAL64:
+            when Type.REAL32, Type.REAL64 {
                 return true
-            otherwise:
+            }
+            otherwise {
                 return false
+            }
         }
     }
 
     @class
     function size(type:Type):Int {
         match type {
-            when Type.INT8,  Type.UINT8:  return 8
-            when Type.INT16, Type.UINT16: return 16
-            when Type.INT32, Type.UINT32, Type.REAL32: return 32
-            when Type.INT64, Type.UINT64, Type.REAL64: return 64
+            when Type.INT8,  Type.UINT8               { return 8 }
+            when Type.INT16, Type.UINT16              { return 16 }
+            when Type.INT32, Type.UINT32, Type.REAL32 { return 32 }
+            when Type.INT64, Type.UINT64, Type.REAL64 { return 64 }
         }
     }
 
@@ -104,28 +109,28 @@ class WriteNumbers {
     @class
     function min(type:Type):String {
         match type {
-            when Type.INT8:   return "-128"
-            when Type.INT16:  return "-32768"
-            when Type.INT32:  return "-2147483648"
-            when Type.INT64:  return "-9223372036854775808"
-            when Type.UINT8:  return "0"
-            when Type.UINT16: return "0"
-            when Type.UINT32: return "0"
-            when Type.UINT64: return "0"
+            when Type.INT8   { return "-128" }
+            when Type.INT16  { return "-32768" }
+            when Type.INT32  { return "-2147483648" }
+            when Type.INT64  { return "-9223372036854775808" }
+            when Type.UINT8  { return "0" }
+            when Type.UINT16 { return "0" }
+            when Type.UINT32 { return "0" }
+            when Type.UINT64 { return "0" }
         }
     }
 
     @class
     function max(type:Type):String {
         match type {
-            when Type.INT8:   return "127"
-            when Type.INT16:  return "32767"
-            when Type.INT32:  return "2147483647"
-            when Type.INT64:  return "9223372036854775807"
-            when Type.UINT8:  return "255"
-            when Type.UINT16: return "65535"
-            when Type.UINT32: return "4294967295"
-            when Type.UINT64: return "18446744073709551615"
+            when Type.INT8   { return "127" }
+            when Type.INT16  { return "32767" }
+            when Type.INT32  { return "2147483647" }
+            when Type.INT64  { return "9223372036854775807" }
+            when Type.UINT8  { return "255" }
+            when Type.UINT16 { return "65535" }
+            when Type.UINT32 { return "4294967295" }
+            when Type.UINT64 { return "18446744073709551615" }
         }
     }
 
@@ -237,26 +242,16 @@ class WriteNumbers {
             return 10
         }
         match rightType {
-            when Type.UINT8:
-                return 0
-            when Type.INT8:
-                return 1
-            when Type.UINT16:
-                return 2
-            when Type.INT16:
-                return 3
-            when Type.UINT32:
-                return 4
-            when Type.INT32:
-                return 5
-            when Type.UINT64:
-                return 6
-            when Type.INT64:
-                return 7
-            when Type.REAL32:
-                return 8
-            when Type.REAL64:
-                return 9
+            when Type.UINT8  { return 0 }
+            when Type.INT8   { return 1 }
+            when Type.UINT16 { return 2 }
+            when Type.INT16  { return 3 }
+            when Type.UINT32 { return 4 }
+            when Type.INT32  { return 5 }
+            when Type.UINT64 { return 6 }
+            when Type.INT64  { return 7 }
+            when Type.REAL32 { return 8 }
+            when Type.REAL64 { return 9 }
         }
     }
 
@@ -617,10 +612,10 @@ class WriteNumbers {
         out.printLine()
         def mask:String
         match size(type) {
-            when  8: mask := "0xFF"
-            when 16: mask := "0xFFFF"
-            when 32: mask := "0xFFFFFFFF"
-            when 64: mask := "0xFFFFFFFFFFFFFFFF"
+            when  8 { mask := "0xFF" }
+            when 16 { mask := "0xFFFF" }
+            when 32 { mask := "0xFFFFFFFF" }
+            when 64 { mask := "0xFFFFFFFFFFFFFFFF" }
         }
         out.printLine("    === Returns a formatted representation of this number. Supported " +
                 "format strings are `\"\"`, `\"d\"`, or `\"D\"` for decimal, `\"b\"` or `\"B\"` " +

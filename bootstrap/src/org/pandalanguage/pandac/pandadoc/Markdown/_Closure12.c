@@ -34,7 +34,7 @@ static panda$core$String $s61 = { (panda$core$Class*) &panda$core$String$class, 
 
 void org$pandalanguage$pandac$pandadoc$Markdown$_Closure12$init$org$pandalanguage$pandac$pandadoc$Markdown(org$pandalanguage$pandac$pandadoc$Markdown$_Closure12* param0, org$pandalanguage$pandac$pandadoc$Markdown* param1) {
 
-// line 644
+// line 658
 org$pandalanguage$pandac$pandadoc$Markdown** $tmp2 = &param0->$self;
 org$pandalanguage$pandac$pandadoc$Markdown* $tmp3 = *$tmp2;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
@@ -58,7 +58,7 @@ panda$core$String* local0 = NULL;
 panda$core$String* local1 = NULL;
 panda$core$String* local2 = NULL;
 panda$core$String* local3 = NULL;
-// line 645
+// line 659
 panda$core$Int64 $tmp7 = (panda$core$Int64) {1};
 ITable* $tmp8 = param1->$class->itable;
 while ($tmp8->$class != (panda$core$Class*) &panda$collections$ListView$class) {
@@ -72,7 +72,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp12));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((panda$core$String*) $tmp11)));
 *(&local0) = ((panda$core$String*) $tmp11);
 panda$core$Panda$unref$panda$core$Object$Q($tmp11);
-// line 646
+// line 660
 panda$core$Int64 $tmp13 = (panda$core$Int64) {3};
 ITable* $tmp14 = param1->$class->itable;
 while ($tmp14->$class != (panda$core$Class*) &panda$collections$ListView$class) {
@@ -86,9 +86,9 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp18));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((panda$core$String*) $tmp17)));
 *(&local1) = ((panda$core$String*) $tmp17);
 panda$core$Panda$unref$panda$core$Object$Q($tmp17);
-// line 647
+// line 661
 *(&local2) = ((panda$core$String*) NULL);
-// line 648
+// line 662
 panda$core$String* $tmp19 = *(&local1);
 panda$core$RegularExpression* $tmp20 = (panda$core$RegularExpression*) pandaObjectAlloc(24, (panda$core$Class*) &panda$core$RegularExpression$class);
 panda$core$RegularExpression$init$panda$core$String($tmp20, &$s21);
@@ -97,7 +97,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp20));
 bool $tmp23 = $tmp22.value;
 if ($tmp23) goto block1; else goto block3;
 block1:;
-// line 649
+// line 663
 panda$core$String* $tmp24 = *(&local2);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp24));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) &$s25));
@@ -105,14 +105,14 @@ panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) &$s25));
 goto block2;
 block3:;
 // line 1
-// line 652
+// line 666
 panda$core$String* $tmp27 = *(&local2);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp27));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) &$s28));
 *(&local2) = &$s29;
 goto block2;
 block2:;
-// line 657
+// line 671
 panda$core$String* $tmp30 = *(&local0);
 panda$core$RegularExpression* $tmp31 = (panda$core$RegularExpression*) pandaObjectAlloc(24, (panda$core$Class*) &panda$core$RegularExpression$class);
 panda$core$RegularExpression$init$panda$core$String($tmp31, &$s32);
@@ -123,7 +123,7 @@ panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp33));
 *(&local0) = $tmp33;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp31));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp33));
-// line 659
+// line 673
 org$pandalanguage$pandac$pandadoc$Markdown** $tmp36 = &param0->$self;
 org$pandalanguage$pandac$pandadoc$Markdown* $tmp37 = *$tmp36;
 panda$core$String* $tmp38 = *(&local0);
@@ -135,7 +135,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp42));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp41));
 *(&local3) = $tmp41;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp41));
-// line 664
+// line 678
 panda$core$String* $tmp43 = *(&local3);
 panda$core$RegularExpression* $tmp44 = (panda$core$RegularExpression*) pandaObjectAlloc(24, (panda$core$Class*) &panda$core$RegularExpression$class);
 panda$core$RegularExpression$init$panda$core$String($tmp44, &$s45);
@@ -146,7 +146,7 @@ panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp46));
 *(&local3) = $tmp46;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp44));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp46));
-// line 666
+// line 680
 panda$core$String* $tmp49 = *(&local2);
 panda$core$String* $tmp50 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s51, $tmp49);
 panda$core$String* $tmp52 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp50, &$s53);

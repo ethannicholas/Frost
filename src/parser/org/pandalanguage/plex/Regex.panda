@@ -35,10 +35,10 @@ class Regex {
     method elementary() {
         match peek() {
             -- FIXME use char literals
-            when Char8(40): group()
-            when Char8(91): set()
-            when Char8(46): any()
-            otherwise: char()
+            when Char8(40) { group() }
+            when Char8(91) { set() }
+            when Char8(46) { any() }
+            otherwise      { char() }
         }
     }
 
@@ -46,15 +46,18 @@ class Regex {
     method basic() {
         elementary()
         match peek() {
-            when Char8(42):
+            when Char8(42) {
                 stack.push(Star(stack.pop()))
                 index += 1
-            when Char8(43):
+            }
+            when Char8(43) {
                 stack.push(Plus(stack.pop()))
                 index += 1
-            when Char8(63):
+            }
+            when Char8(63) {
                 stack.push(Option(stack.pop()))
                 index += 1
+            }
         }
     }
 
@@ -63,13 +66,15 @@ class Regex {
         basic()
         loop {
             match peek() {
-                when Char8(124), Char8(41), EOF:
+                when Char8(124), Char8(41), EOF {
                     break
-                otherwise:
+                }
+                otherwise {
                     simple()
                     def b := stack.pop()
                     def a := stack.pop()
                     stack.push(Concat(a, b))
+                }
             }
         }
     }
@@ -77,11 +82,11 @@ class Regex {
     @private
     method getEscape(c:Char8):Node {
         match c {
-            when Char8(115): return CharSet(" \t\n\r")
-            when Char8(110): return SingleChar(Char8(10))
-            when Char8(116): return SingleChar(Char8(9))
-            when Char8(114): return SingleChar(Char8(13))
-            otherwise: return SingleChar(c)
+            when Char8(115) { return CharSet(" \t\n\r") }
+            when Char8(110) { return SingleChar(Char8(10)) }
+            when Char8(116) { return SingleChar(Char8(9)) }
+            when Char8(114) { return SingleChar(Char8(13)) }
+            otherwise       { return SingleChar(c) }
         }
     }
 
@@ -89,15 +94,18 @@ class Regex {
     method char() {
         var c := peek()
         match c {
-            when Char8(40), Char8(41), Char8(43), Char8(42), Char8(46), Char8(124):
+            when Char8(40), Char8(41), Char8(43), Char8(42), Char8(46), Char8(124) {
                 return
-            when Char8(92):
+            }
+            when Char8(92) {
                 index += 1
                 stack.push(getEscape(peek()))
                 index += 1
-            otherwise:
+            }
+            otherwise {
                 stack.push(SingleChar(c))
                 index += 1
+            }
         }
     }
 
@@ -118,15 +126,18 @@ class Regex {
     method setChar() {
         def c := peek()
         match c {
-            when Char8(93):
+            when Char8(93) {
                 return
-            when Char8(92):
+            }
+            when Char8(92) {
                 index += 1
                 stack.push(getEscape(peek()))
                 index += 1
-            otherwise:
+            }
+            otherwise {
                 stack.push(SingleChar(c))
                 index += 1
+            }
         }
     }
 
@@ -188,14 +199,16 @@ class Regex {
     method regex() {
         simple()
         match peek() {
-            when Char8(124):
+            when Char8(124) {
                 expect(Char8(124))
                 regex()
                 def b := stack.pop()
                 def a := stack.pop()
                 stack.push(Union(a, b))
-            when EOF:
+            }
+            when EOF {
                 return
+            }
         }
     }
 

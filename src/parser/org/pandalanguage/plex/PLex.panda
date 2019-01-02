@@ -88,11 +88,11 @@ class PLex {
         token.printLine("match self {")
         token.level += 1
         for id in tokens.keys() {
-            token.printLine("when \{id}: return \{id.format("panda")}")
+            token.printLine("when \{id} { return \{id.format("panda")} }")
         }
-        token.printLine("when EOF: return \"EOF\"")
-        token.printLine("when SHIFTRIGHT: return \">>\"")
-        token.printLine("when REGEX: return \"REGEX\"")
+        token.printLine("when EOF { return \"EOF\" }")
+        token.printLine("when SHIFTRIGHT { return \">>\" }")
+        token.printLine("when REGEX { return \"REGEX\" }")
         token.level -= 1
         token.printLine("}")
         token.level -= 1

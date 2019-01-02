@@ -118,18 +118,22 @@ class MethodDecl : Symbol {
         if annotations.expressions !== null {
             for a in annotations.expressions {
                 match a {
-                    when Annotations.Expression.PRIORITY(_, expr):
+                    when Annotations.Expression.PRIORITY(_, expr) {
                         match expr {
-                            when ASTNode.INT(_, value):
+                            when ASTNode.INT(_, value) {
                                 return value.convert()
-                            when ASTNode.PREFIX(_, op, base):
+                            }
+                            when ASTNode.PREFIX(_, op, base) {
                                 if op = Token.Kind.SUB {
                                     match base {
-                                        when ASTNode.INT(_, value):
+                                        when ASTNode.INT(_, value) {
                                             return -(value.convert()->Int)
+                                        }
                                     }
                                 }
+                            }
                         }
+                    }
                 }
             }
         }
@@ -168,12 +172,15 @@ class MethodDecl : Symbol {
 
     function get_declaration():String {
         match methodKind {
-            when Kind.METHOD:
+            when Kind.METHOD {
                 return("method \{owner.name}.\{signature}")
-            when Kind.FUNCTION:
+            }
+            when Kind.FUNCTION {
                 return("function \{owner.name}.\{signature}")
-            when Kind.INIT:
+            }
+            when Kind.INIT {
                 return("\{owner.name}.\{signature}")
+            }
         }
     }
 

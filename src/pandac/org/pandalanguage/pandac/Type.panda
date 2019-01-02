@@ -172,16 +172,21 @@ class Type : Symbol, Key<Type> {
             separator := ", "
         }
         match kind {
-            when Kind.FUNCTION:
+            when Kind.FUNCTION {
                 name.append(")=>(")
-            when Kind.METHOD:
+            }
+            when Kind.METHOD {
                 name.append(")=&>(")
-            when Kind.IMMUTABLE_FUNCTION:
+            }
+            when Kind.IMMUTABLE_FUNCTION {
                 name.append(")=>*(")
-            when Kind.IMMUTABLE_METHOD:
+            }
+            when Kind.IMMUTABLE_METHOD {
                 name.append(")=&>*(")
-            otherwise:
+            }
+            otherwise {
                 assert false
+            }
         }
         subtypes.add(returnType)
         if returnType != Type.Void() {
@@ -520,10 +525,12 @@ class Type : Symbol, Key<Type> {
     function get_isClass():Bit {
         match typeKind {
             when Kind.CLASS, Kind.NULLABLE, Kind.GENERIC, Kind.GENERIC_PARAMETER, Kind.METHOD,
-                    Kind.FUNCTION, Kind.IMMUTABLE_METHOD, Kind.IMMUTABLE_FUNCTION:
+                    Kind.FUNCTION, Kind.IMMUTABLE_METHOD, Kind.IMMUTABLE_FUNCTION {
                 return true
-            otherwise:
+            }
+            otherwise {
                 return false
+            }
         }
     }
 
@@ -533,10 +540,12 @@ class Type : Symbol, Key<Type> {
 
     function get_isMethod():Bit {
         match typeKind {
-            when Kind.METHOD, Kind.FUNCTION, Kind.IMMUTABLE_METHOD, Kind.IMMUTABLE_FUNCTION:
+            when Kind.METHOD, Kind.FUNCTION, Kind.IMMUTABLE_METHOD, Kind.IMMUTABLE_FUNCTION {
                 return true
-            otherwise:
+            }
+            otherwise {
                 return false
+            }
         }
     }
 
@@ -682,22 +691,25 @@ class Type : Symbol, Key<Type> {
             return self
         }
         match typeKind {
-            when Kind.GENERIC_PARAMETER:
+            when Kind.GENERIC_PARAMETER {
                 def found := types[name]
                 if found !== null {
                     return found
                 }
                 return self
-            when Kind.GENERIC:
+            }
+            when Kind.GENERIC {
                 def base := subtypes[0].remap(types)
                 def remappedArgs := Array<Type>()
                 for i in 1 .. subtypes.count {
                     remappedArgs.add(subtypes[i].remap(types))
                 }
                 return Type.generic(base, remappedArgs)
-            when Kind.NULLABLE:
+            }
+            when Kind.NULLABLE {
                 return subtypes[0].remap(types).nullable()
-            when Kind.METHOD, Kind.FUNCTION, Kind.IMMUTABLE_METHOD, Kind.IMMUTABLE_FUNCTION:
+            }
+            when Kind.METHOD, Kind.FUNCTION, Kind.IMMUTABLE_METHOD, Kind.IMMUTABLE_FUNCTION {
                 def parameters := Array<Type>()
                 assert subtypes.count >= 1
                 for i in 0 .. subtypes.count - 1 {
@@ -705,7 +717,10 @@ class Type : Symbol, Key<Type> {
                 }
                 return methodType(position, typeKind, parameters,
                         subtypes[subtypes.count - 1].remap(types), priority)
-            otherwise: return self
+            }
+            otherwise {
+                 return self
+            }
         }
     }
 
