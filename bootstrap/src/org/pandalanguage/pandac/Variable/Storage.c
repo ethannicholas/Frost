@@ -54,6 +54,8 @@ if ($tmp16) goto block6; else goto block1;
 block6:;
 goto block1;
 block1:;
+// line 15
+panda$core$Object$cleanup(((panda$core$Object*) param0));
 return;
 
 }

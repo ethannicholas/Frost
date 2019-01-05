@@ -80,7 +80,6 @@ panda$core$Object* $tmp29 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q($tmp29);
 panda$core$Panda$ref$panda$core$Object$Q($tmp28);
 *(&local0) = $tmp28;
-panda$core$Panda$unref$panda$core$Object$Q($tmp28);
 // line 28
 panda$core$Int64* $tmp30 = &param0->index;
 panda$core$Int64 $tmp31 = *$tmp30;
@@ -98,11 +97,15 @@ panda$core$Object* $tmp39 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q($tmp39);
 // unreffing result
 *(&local0) = ((panda$core$Object*) NULL);
+panda$core$Panda$unref$panda$core$Object$Q($tmp28);
+// unreffing REF($17:panda.collections.Stack.T)
 return $tmp38;
 
 }
 void panda$collections$Stack$StackIterator$cleanup(panda$collections$Stack$StackIterator* param0) {
 
+// line 11
+panda$core$Object$cleanup(((panda$core$Object*) param0));
 panda$collections$Stack** $tmp40 = &param0->stack;
 panda$collections$Stack* $tmp41 = *$tmp40;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp41));

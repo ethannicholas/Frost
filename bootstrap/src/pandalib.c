@@ -281,6 +281,13 @@ void pandaObjectFree(Object* o) {
         debugAllocs = true;
     }
 #endif
+    if (!refErrorReporting) {
+        const char* name = pandaGetCString(o->cl->name);
+        if (strstr(name, "panda.collections.Special") && !strstr(name, "ArrayIterator")) {
+            printf("FREEING %s\n", name);
+            abort();
+        }
+    }
     o->refcnt = -100000;
     pandaFree(o);
 }

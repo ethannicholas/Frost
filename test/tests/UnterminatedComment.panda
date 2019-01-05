@@ -1,5 +1,5 @@
 choice Expression {
-NUMBER(Int)
+    NUMBER(Int)
     ADD(Expression, Expression)
     SUB(Expression, Expression)
     MUL(Expression, Expression)
@@ -9,23 +9,23 @@ NUMBER(Int)
     @override
     function convert():String {
         match self {
-            when NUMBER(v): return v.convert()
-            when ADD(a, b): return "(\{a} + \{b})"
-            when SUB(a, b): return "(\{a} - \{b})"
-            when MUL(a, b): return "(\{a} * \{b})"
-            when DIV(a, b): return "(\{a} / \{b})"
-            when NEGATE(v): return "-\{v}"
+            when NUMBER(v) { return v.convert() }
+            when ADD(a, b) { return "(\{a} + \{b})" }
+            when SUB(a, b) { return "(\{a} - \{b})" }
+            when MUL(a, b) { return "(\{a} * \{b})" }
+            when DIV(a, b) { return "(\{a} / \{b})" }
+            when NEGATE(v) { return "-\{v}" }
         }
     }
 
     function evaluate():Int {
         match self {
-            when NUMBER(v): return v
-            when ADD(a, b): return a.evaluate() + b.evaluate()
-            when SUB(a, b): return a.evaluate() -*b.evaluate()
-            when MUL(a, b): return a.evaluate() * b.evaluate()
-            when DIV(a, b): return a.evaluate() // b.evaluate()
-            when NEGATE(v): return -v.evaluate()
+            when NUMBER(v) { return v }
+            when ADD(a, b) { return a.evaluate() + b.evaluate() }
+            when SUB(a, b) { return a.evaluate() -*b.evaluate() }
+            when MUL(a, b) { return a.evaluate() * b.evaluate() }
+            when DIV(a, b) { return a.evaluate() // b.evaluate() }
+            when NEGATE(v) { return -v.evaluate() }
         }
     }
 

@@ -37,6 +37,8 @@ return;
 }
 void org$pandalanguage$pandac$CCodeGenerator$ClassConstant$cleanup(org$pandalanguage$pandac$CCodeGenerator$ClassConstant* param0) {
 
+// line 149
+panda$core$Immutable$cleanup(((panda$core$Immutable*) param0));
 panda$core$String** $tmp8 = &param0->name;
 panda$core$String* $tmp9 = *$tmp8;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp9));

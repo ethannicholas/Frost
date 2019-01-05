@@ -36,7 +36,6 @@ panda$threads$Thread* $tmp3 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
 *(&local0) = $tmp2;
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
 // line 49
 panda$threads$Thread* $tmp4 = *(&local0);
 panda$threads$Thread$run$$LP$RP$EQ$AM$GT$LP$RP$builtin_bit($tmp4, ((panda$core$MutableMethod*) param0), true);
@@ -47,6 +46,8 @@ panda$threads$Thread* $tmp6 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp6));
 // unreffing result
 *(&local0) = ((panda$threads$Thread*) NULL);
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
+// unreffing REF($1:panda.threads.Thread)
 return $tmp5;
 
 }
@@ -61,7 +62,6 @@ panda$threads$Thread* $tmp8 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp8));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp7));
 *(&local0) = $tmp7;
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp7));
 // line 56
 panda$threads$Thread* $tmp9 = *(&local0);
 bool $tmp10 = param1.value;
@@ -73,6 +73,8 @@ panda$threads$Thread* $tmp12 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp12));
 // unreffing result
 *(&local0) = ((panda$threads$Thread*) NULL);
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp7));
+// unreffing REF($1:panda.threads.Thread)
 return $tmp11;
 
 }
@@ -87,7 +89,6 @@ panda$threads$Thread* $tmp14 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp14));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp13));
 *(&local0) = $tmp13;
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp13));
 // line 63
 panda$threads$Thread* $tmp15 = *(&local0);
 panda$threads$Thread$run$$LP$RP$EQ$AM$GT$LP$RP$builtin_bit($tmp15, param0, true);
@@ -98,6 +99,8 @@ panda$threads$Thread* $tmp17 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp17));
 // unreffing result
 *(&local0) = ((panda$threads$Thread*) NULL);
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp13));
+// unreffing REF($1:panda.threads.Thread)
 return $tmp16;
 
 }
@@ -112,7 +115,6 @@ panda$threads$Thread* $tmp19 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp19));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp18));
 *(&local0) = $tmp18;
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp18));
 // line 70
 panda$threads$Thread* $tmp20 = *(&local0);
 bool $tmp21 = param1.value;
@@ -124,6 +126,8 @@ panda$threads$Thread* $tmp23 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp23));
 // unreffing result
 *(&local0) = ((panda$threads$Thread*) NULL);
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp18));
+// unreffing REF($1:panda.threads.Thread)
 return $tmp22;
 
 }
@@ -136,6 +140,8 @@ return $tmp24;
 }
 void panda$threads$Thread$cleanup(panda$threads$Thread* param0) {
 
+// line 24
+panda$core$Immutable$cleanup(((panda$core$Immutable*) param0));
 return;
 
 }

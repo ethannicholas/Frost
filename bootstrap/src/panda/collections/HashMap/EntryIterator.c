@@ -272,6 +272,8 @@ return $tmp134;
 }
 void panda$collections$HashMap$EntryIterator$cleanup(panda$collections$HashMap$EntryIterator* param0) {
 
+// line 41
+panda$core$Object$cleanup(((panda$core$Object*) param0));
 panda$collections$HashMap** $tmp136 = &param0->map;
 panda$collections$HashMap* $tmp137 = *$tmp136;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp137));

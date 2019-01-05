@@ -28,6 +28,7 @@ panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
 panda$core$Weak** $tmp5 = &param0->owner;
 *$tmp5 = $tmp2;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
+// unreffing REF($1:panda.core.Weak<org.pandalanguage.pandac.MethodDecl?>)
 // line 22
 panda$core$String** $tmp6 = &param0->name;
 panda$core$String* $tmp7 = *$tmp6;
@@ -57,15 +58,21 @@ org$pandalanguage$pandac$Type* $tmp18 = *$tmp17;
 panda$core$String* $tmp19 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String($tmp15, ((panda$core$Object*) $tmp18));
 panda$core$String* $tmp20 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp19, &$s21);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp20));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp14));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp15));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp19));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp20));
+// unreffing REF($9:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp19));
+// unreffing REF($8:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp15));
+// unreffing REF($4:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp14));
+// unreffing REF($3:panda.core.String)
 return $tmp20;
 
 }
 void org$pandalanguage$pandac$MethodDecl$Parameter$cleanup(org$pandalanguage$pandac$MethodDecl$Parameter* param0) {
 
+// line 13
+panda$core$Object$cleanup(((panda$core$Object*) param0));
 panda$core$String** $tmp22 = &param0->name;
 panda$core$String* $tmp23 = *$tmp22;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp23));

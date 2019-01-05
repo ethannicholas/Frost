@@ -35,6 +35,8 @@ void panda$core$RegularExpression$cleanup(panda$core$RegularExpression* param0) 
 
 // line 27
 panda$core$RegularExpression$destroy(param0);
+// line 26
+panda$core$Immutable$cleanup(((panda$core$Immutable*) param0));
 return;
 
 }

@@ -31,6 +31,8 @@ block1:;
 panda$io$FileOutputStream$close(param0);
 goto block2;
 block2:;
+// line 20
+panda$io$OutputStream$cleanup(((panda$io$OutputStream*) param0));
 return;
 
 }

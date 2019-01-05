@@ -32,6 +32,8 @@ return;
 }
 void panda$collections$IdentityMap$Entry$cleanup(panda$collections$IdentityMap$Entry* param0) {
 
+// line 14
+panda$core$Object$cleanup(((panda$core$Object*) param0));
 panda$core$Object** $tmp8 = &param0->key;
 panda$core$Object* $tmp9 = *$tmp8;
 panda$core$Panda$unref$panda$core$Object$Q($tmp9);

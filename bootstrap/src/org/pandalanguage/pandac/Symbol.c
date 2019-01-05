@@ -60,6 +60,8 @@ return $tmp15;
 }
 void org$pandalanguage$pandac$Symbol$cleanup(org$pandalanguage$pandac$Symbol* param0) {
 
+// line 3
+panda$core$Object$cleanup(((panda$core$Object*) param0));
 panda$core$String** $tmp16 = &param0->name;
 panda$core$String* $tmp17 = *$tmp16;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp17));

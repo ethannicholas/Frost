@@ -111,6 +111,7 @@ while ($tmp43->$class != (panda$core$Class*) &panda$collections$Iterator$class) 
 $fn45 $tmp44 = $tmp43->methods[1];
 panda$core$Object* $tmp46 = $tmp44(param1);
 panda$core$Panda$unref$panda$core$Object$Q($tmp46);
+// unreffing REF($65:panda.collections.Iterator.T)
 goto block12;
 block12:;
 goto block8;
@@ -211,6 +212,7 @@ panda$core$Panda$ref$panda$core$Object$Q($tmp90);
 panda$core$Object** $tmp93 = &param0->pending;
 *$tmp93 = $tmp90;
 panda$core$Panda$unref$panda$core$Object$Q($tmp90);
+// unreffing REF($152:panda.collections.Iterator.T)
 goto block22;
 block23:;
 // line 1
@@ -368,6 +370,7 @@ panda$core$Panda$ref$panda$core$Object$Q($tmp171);
 panda$core$Object** $tmp174 = &param0->pending;
 *$tmp174 = $tmp171;
 panda$core$Panda$unref$panda$core$Object$Q($tmp171);
+// unreffing REF($123:panda.collections.Iterator.T)
 goto block5;
 block5:;
 panda$core$Int64 $tmp175 = *(&local1);
@@ -411,6 +414,8 @@ return $tmp195;
 }
 void panda$collections$Iterator$RangeIterator$cleanup(panda$collections$Iterator$RangeIterator* param0) {
 
+// line 48
+panda$core$Object$cleanup(((panda$core$Object*) param0));
 panda$collections$Iterator** $tmp197 = &param0->base;
 panda$collections$Iterator* $tmp198 = *$tmp197;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp198));

@@ -17,6 +17,8 @@ return;
 }
 void org$pandalanguage$pandac$Annotations$Flag$cleanup(org$pandalanguage$pandac$Annotations$Flag* param0) {
 
+// line 5
+panda$core$Object$cleanup(((panda$core$Object*) param0));
 return;
 
 }

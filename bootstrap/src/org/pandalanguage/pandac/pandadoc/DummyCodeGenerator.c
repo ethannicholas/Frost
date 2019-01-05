@@ -54,6 +54,8 @@ return;
 }
 void org$pandalanguage$pandac$pandadoc$DummyCodeGenerator$cleanup(org$pandalanguage$pandac$pandadoc$DummyCodeGenerator* param0) {
 
+// line 10
+panda$core$Object$cleanup(((panda$core$Object*) param0));
 return;
 
 }

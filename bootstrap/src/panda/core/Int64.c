@@ -1248,6 +1248,7 @@ panda$core$SteppedRange$LTpanda$core$Int64$Cpanda$core$Int64$GT $tmp310 = panda$
 org$pandalanguage$panda$Int64List$init$panda$core$SteppedRange$LTpanda$core$Int64$Cpanda$core$Int64$GT($tmp305, $tmp310);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((panda$collections$ListView*) $tmp305)));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp305));
+// unreffing REF($1:org.pandalanguage.panda.Int64List)
 return ((panda$collections$ListView*) $tmp305);
 
 }
@@ -1258,6 +1259,7 @@ org$pandalanguage$panda$Int64List* $tmp311 = (org$pandalanguage$panda$Int64List*
 org$pandalanguage$panda$Int64List$init$panda$core$SteppedRange$LTpanda$core$Int64$Cpanda$core$Int64$GT($tmp311, param0);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((panda$collections$ListView*) $tmp311)));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp311));
+// unreffing REF($1:org.pandalanguage.panda.Int64List)
 return ((panda$collections$ListView*) $tmp311);
 
 }
@@ -1286,6 +1288,7 @@ int64_t $tmp324 = $tmp322.value;
 bool $tmp325 = $tmp323 < $tmp324;
 panda$core$Bit $tmp326 = (panda$core$Bit) {$tmp325};
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) ((panda$collections$CollectionView*) $tmp318)));
+// unreffing REF($7:panda.collections.CollectionView)
 *(&local0) = $tmp326;
 goto block3;
 block2:;
@@ -1328,6 +1331,7 @@ panda$core$UInt64 $tmp343 = (panda$core$UInt64) {9223372036854775808};
 org$pandalanguage$panda$IntBitIterator$init$panda$core$UInt64$panda$core$UInt64($tmp341, $tmp342, $tmp343);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((panda$collections$Iterator*) $tmp341)));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp341));
+// unreffing REF($1:org.pandalanguage.panda.IntBitIterator)
 return ((panda$collections$Iterator*) $tmp341);
 
 }
@@ -1384,6 +1388,7 @@ panda$core$String* $tmp368 = panda$core$String$$IDX$panda$core$Range$LTpanda$cor
 panda$core$UInt64$nullable $tmp369 = panda$core$Panda$parse$panda$core$String$panda$core$Int64$R$panda$core$UInt64$Q($tmp368, param1);
 *(&local1) = $tmp369;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp368));
+// unreffing REF($31:panda.core.String)
 // line 506
 panda$core$UInt64$nullable $tmp370 = *(&local1);
 panda$core$Bit $tmp371 = panda$core$Bit$init$builtin_bit(!$tmp370.nonnull);
@@ -1734,6 +1739,7 @@ panda$core$Int64 $tmp557 = *(&local4);
 panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64($tmp555, $tmp556, $tmp557);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp555));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp555));
+// unreffing REF($203:panda.core.String)
 return $tmp555;
 
 }
@@ -1749,6 +1755,7 @@ panda$core$UInt64 $tmp563 = (panda$core$UInt64) {18446744073709551615};
 panda$core$String* $tmp564 = panda$core$Panda$format$panda$core$Bit$panda$core$UInt64$panda$core$UInt64$panda$core$String$R$panda$core$String($tmp560, $tmp562, $tmp563, param1);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp564));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp564));
+// unreffing REF($7:panda.core.String)
 return $tmp564;
 
 }

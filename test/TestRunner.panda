@@ -139,7 +139,6 @@ class TestRunner {
         def input := workingDir.resolve(test + ".in")
         if input.exists() {
             child.input.print(input.readFully())
-            child.input.cleanup() -- FIXME add close and use that
         }
         def childResult1 := child.output.readFully()
         def childResult2 := child.error.readFully()
@@ -196,8 +195,9 @@ class TestRunner {
         def child := System.exec(exe, Array<String>())
         def input := workingDir.resolve(test + ".in")
         if input.exists() {
-            child.input.print(input.readFully())
-            child.input.cleanup() -- FIXME add close and use that
+            Console.printLine("SKIPPING DUE TO INPUT DIFFICULTIES")
+            return false
+--            child.input.print(input.readFully())
         }
         def childResult1 := child.output.readFully()
         def childResult2 := child.error.readFully()

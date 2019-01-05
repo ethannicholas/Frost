@@ -103,6 +103,8 @@ return $tmp53;
 }
 void panda$math$XorShift128Plus$cleanup(panda$math$XorShift128Plus* param0) {
 
+// line 10
+panda$core$Object$cleanup(((panda$core$Object*) param0));
 return;
 
 }

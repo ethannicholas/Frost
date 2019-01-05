@@ -160,6 +160,7 @@ panda$core$Panda$unref$panda$core$Object$Q($tmp50);
 panda$core$Panda$ref$panda$core$Object$Q($tmp48);
 $tmp42[$tmp49] = $tmp48;
 panda$core$Panda$unref$panda$core$Object$Q($tmp48);
+// unreffing REF($51:panda.collections.ListView.T)
 goto block3;
 block3:;
 panda$core$Int64 $tmp51 = *(&local0);
@@ -285,6 +286,8 @@ block2:;
 panda$core$Object*** $tmp121 = &param0->data;
 panda$core$Object** $tmp122 = *$tmp121;
 pandaFree($tmp122);
+// line 58
+panda$core$Immutable$cleanup(((panda$core$Immutable*) param0));
 return;
 
 }
@@ -381,6 +384,7 @@ panda$collections$ImmutableArray$ImmutableArrayIterator* $tmp166 = (panda$collec
 panda$collections$ImmutableArray$ImmutableArrayIterator$init$panda$collections$ImmutableArray$LTpanda$collections$ImmutableArray$ImmutableArrayIterator$T$GT($tmp166, param0);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((panda$collections$Iterator*) $tmp166)));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp166));
+// unreffing REF($1:panda.collections.ImmutableArray.ImmutableArrayIterator<panda.collections.ImmutableArray.T>)
 return ((panda$collections$Iterator*) $tmp166);
 
 }
@@ -397,7 +401,6 @@ panda$core$MutableString* $tmp168 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp168));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp167));
 *(&local0) = $tmp167;
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp167));
 // line 84
 panda$core$MutableString* $tmp169 = *(&local0);
 panda$core$MutableString$append$panda$core$String($tmp169, &$s170);
@@ -432,7 +435,6 @@ while ($tmp183->$class != (panda$core$Class*) &panda$collections$Iterator$class)
 }
 $fn185 $tmp184 = $tmp183->methods[1];
 panda$core$Object* $tmp186 = $tmp184($tmp177);
-panda$core$Panda$unref$panda$core$Object$Q($tmp186);
 panda$core$Object* $tmp187 = *(&local2);
 panda$core$Panda$unref$panda$core$Object$Q($tmp187);
 panda$core$Panda$ref$panda$core$Object$Q($tmp186);
@@ -464,6 +466,8 @@ panda$core$MutableString* $tmp198 = *(&local0);
 panda$core$MutableString$append$panda$core$String($tmp198, &$s199);
 goto block5;
 block5:;
+panda$core$Panda$unref$panda$core$Object$Q($tmp186);
+// unreffing REF($36:panda.collections.Iterator.T)
 panda$core$Object* $tmp200 = *(&local2);
 panda$core$Panda$unref$panda$core$Object$Q($tmp200);
 // unreffing v
@@ -471,6 +475,7 @@ panda$core$Panda$unref$panda$core$Object$Q($tmp200);
 goto block1;
 block3:;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp177));
+// unreffing REF($25:panda.collections.Iterator<panda.collections.Iterable.T>)
 // line 96
 panda$core$MutableString* $tmp201 = *(&local0);
 panda$core$MutableString$append$panda$core$String($tmp201, &$s202);
@@ -479,6 +484,7 @@ panda$core$MutableString* $tmp203 = *(&local0);
 panda$core$String* $tmp204 = panda$core$MutableString$finish$R$panda$core$String($tmp203);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp204));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp204));
+// unreffing REF($88:panda.core.String)
 panda$core$String* $tmp205 = *(&local1);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp205));
 // unreffing separator
@@ -487,6 +493,8 @@ panda$core$MutableString* $tmp206 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp206));
 // unreffing result
 *(&local0) = ((panda$core$MutableString*) NULL);
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp167));
+// unreffing REF($1:panda.core.MutableString)
 return $tmp204;
 
 }

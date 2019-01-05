@@ -100,6 +100,8 @@ return $tmp40;
 }
 void panda$collections$SpecializedArrayIterator$LTorg$pandalanguage$pandac$parser$Token$GT$cleanup(panda$collections$SpecializedArrayIterator$LTorg$pandalanguage$pandac$parser$Token$GT* param0) {
 
+// line 8
+panda$core$Object$cleanup(((panda$core$Object*) param0));
 panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT** $tmp41 = &param0->array;
 panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT* $tmp42 = *$tmp41;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp42));

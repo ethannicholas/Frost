@@ -40,6 +40,7 @@ $fn3 $tmp2 = ($fn3) param0->$class->vtable[0];
 panda$core$String* $tmp4 = $tmp2(param0);
 panda$io$Console$print$panda$core$String($tmp4);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp4));
+// unreffing REF($2:panda.core.String)
 return;
 
 }
@@ -50,6 +51,7 @@ $fn6 $tmp5 = ($fn6) param0->$class->vtable[0];
 panda$core$String* $tmp7 = $tmp5(param0);
 panda$io$Console$printLine$panda$core$String($tmp7);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp7));
+// unreffing REF($2:panda.core.String)
 return;
 
 }
@@ -72,7 +74,6 @@ panda$core$MutableString* $tmp10 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp10));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp9));
 *(&local0) = $tmp9;
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp9));
 // line 88
 goto block1;
 block1:;
@@ -101,6 +102,8 @@ panda$core$MutableString* $tmp21 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp21));
 // unreffing result
 *(&local0) = ((panda$core$MutableString*) NULL);
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp9));
+// unreffing REF($1:panda.core.MutableString)
 return ((panda$core$String*) NULL);
 block6:;
 // line 94
@@ -128,15 +131,20 @@ panda$core$MutableString* $tmp29 = *(&local0);
 panda$core$String* $tmp30 = panda$core$MutableString$finish$R$panda$core$String($tmp29);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp30));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp30));
+// unreffing REF($61:panda.core.String)
 panda$core$MutableString* $tmp31 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp31));
 // unreffing result
 *(&local0) = ((panda$core$MutableString*) NULL);
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp9));
+// unreffing REF($1:panda.core.MutableString)
 return $tmp30;
 
 }
 void panda$io$Console$cleanup(panda$io$Console* param0) {
 
+// line 7
+panda$core$Object$cleanup(((panda$core$Object*) param0));
 return;
 
 }

@@ -102,6 +102,8 @@ return $tmp40;
 }
 void panda$core$String$UTF16Iterator$cleanup(panda$core$String$UTF16Iterator* param0) {
 
+// line 130
+panda$core$Object$cleanup(((panda$core$Object*) param0));
 panda$core$String** $tmp41 = &param0->str;
 panda$core$String* $tmp42 = *$tmp41;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp42));

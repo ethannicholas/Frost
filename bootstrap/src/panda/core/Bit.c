@@ -218,7 +218,6 @@ panda$collections$Array* $tmp45 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp45));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp43));
 *(&local0) = $tmp43;
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp43));
 // line 65
 panda$collections$Array* $tmp46 = *(&local0);
 ITable* $tmp47 = ((panda$collections$CollectionView*) $tmp46)->$class->itable;
@@ -236,8 +235,10 @@ panda$core$Int64 $tmp54 = (panda$core$Int64) {65};
 panda$core$String* $tmp55 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s56, param1);
 panda$core$String* $tmp57 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp55, &$s58);
 panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s59, $tmp54, $tmp57);
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp55));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp57));
+// unreffing REF($20:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp55));
+// unreffing REF($19:panda.core.String)
 abort(); // unreachable
 block1:;
 // line 66
@@ -250,10 +251,13 @@ panda$core$Int64 $tmp62 = (panda$core$Int64) {0};
 panda$core$Object* $tmp63 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T($tmp61, $tmp62);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((panda$core$String*) $tmp63)));
 panda$core$Panda$unref$panda$core$Object$Q($tmp63);
+// unreffing REF($36:panda.collections.Array.T)
 panda$collections$Array* $tmp64 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp64));
 // unreffing s
 *(&local0) = ((panda$collections$Array*) NULL);
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp43));
+// unreffing REF($1:panda.collections.Array<panda.core.String>)
 return ((panda$core$String*) $tmp63);
 block4:;
 // line 69
@@ -262,10 +266,13 @@ panda$core$Int64 $tmp66 = (panda$core$Int64) {1};
 panda$core$Object* $tmp67 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T($tmp65, $tmp66);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((panda$core$String*) $tmp67)));
 panda$core$Panda$unref$panda$core$Object$Q($tmp67);
+// unreffing REF($56:panda.collections.Array.T)
 panda$collections$Array* $tmp68 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp68));
 // unreffing s
 *(&local0) = ((panda$collections$Array*) NULL);
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp43));
+// unreffing REF($1:panda.collections.Array<panda.core.String>)
 return ((panda$core$String*) $tmp67);
 
 }

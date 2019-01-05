@@ -32,6 +32,8 @@ return;
 }
 void org$pandalanguage$pandac$pandadoc$Markdown$LinkDefinition$cleanup(org$pandalanguage$pandac$pandadoc$Markdown$LinkDefinition* param0) {
 
+// line 84
+panda$core$Object$cleanup(((panda$core$Object*) param0));
 panda$core$String** $tmp8 = &param0->url;
 panda$core$String* $tmp9 = *$tmp8;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp9));

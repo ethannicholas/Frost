@@ -17,6 +17,8 @@ return;
 }
 void panda$core$System$cleanup(panda$core$System* param0) {
 
+// line 7
+panda$core$Object$cleanup(((panda$core$Object*) param0));
 return;
 
 }

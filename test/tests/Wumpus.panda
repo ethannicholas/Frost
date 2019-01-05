@@ -161,8 +161,8 @@ class Wumpus {
             bats |= room.bats
             pit |= room.pit
             wumpus |= room.wumpus
-            for i in 0 .. room.exits.count {
-                wumpus |= getRoom(room.exits[i]).wumpus
+            for j in 0 .. room.exits.count {
+                wumpus |= getRoom(room.exits[j]).wumpus
             }
         }
         if bats {

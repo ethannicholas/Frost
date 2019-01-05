@@ -106,6 +106,7 @@ $fn42 $tmp41 = $tmp40->methods[0];
 panda$core$Object* $tmp43 = $tmp41($tmp32, $tmp39);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((panda$core$String*) $tmp43)));
 panda$core$Panda$unref$panda$core$Object$Q($tmp43);
+// unreffing REF($31:panda.collections.ListView.T)
 return ((panda$core$String*) $tmp43);
 
 }
@@ -147,13 +148,20 @@ panda$core$String* $tmp72 = panda$core$String$$ADD$panda$core$String$R$panda$cor
 panda$core$String* $tmp74 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp51, $tmp72);
 $fn76 $tmp75 = ($fn76) $tmp48->$class->vtable[19];
 $tmp75($tmp48, $tmp74);
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp48));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp49));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp51));
-panda$core$Panda$unref$panda$core$Object$Q($tmp69);
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp70));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp72));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp74));
+// unreffing REF($27:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp72));
+// unreffing REF($26:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp70));
+// unreffing REF($25:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q($tmp69);
+// unreffing REF($23:panda.collections.ListView.T)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp51));
+// unreffing REF($8:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp49));
+// unreffing REF($7:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp48));
+// unreffing REF($6:panda.io.OutputStream)
 // line 52
 panda$core$UInt8 $tmp77 = (panda$core$UInt8) {1};
 panda$core$System$exit$panda$core$UInt8($tmp77);
@@ -164,11 +172,14 @@ $fn79 $tmp78 = ($fn79) param0->$class->vtable[3];
 panda$core$String* $tmp80 = $tmp78(param0);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp80));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp80));
+// unreffing REF($57:panda.core.String)
 return $tmp80;
 
 }
 void org$pandalanguage$pandac$Main$Arguments$cleanup(org$pandalanguage$pandac$Main$Arguments* param0) {
 
+// line 27
+panda$core$Object$cleanup(((panda$core$Object*) param0));
 panda$collections$ListView** $tmp81 = &param0->args;
 panda$collections$ListView* $tmp82 = *$tmp81;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp82));

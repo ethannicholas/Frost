@@ -29,17 +29,17 @@ static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -
 
 void org$pandalanguage$pandac$Compiler$BinaryKey$init$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$parser$Token$Kind$org$pandalanguage$pandac$ASTNode(org$pandalanguage$pandac$Compiler$BinaryKey* param0, org$pandalanguage$pandac$ASTNode* param1, org$pandalanguage$pandac$parser$Token$Kind param2, org$pandalanguage$pandac$ASTNode* param3) {
 
-// line 285
+// line 294
 org$pandalanguage$pandac$ASTNode** $tmp2 = &param0->left;
 org$pandalanguage$pandac$ASTNode* $tmp3 = *$tmp2;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 org$pandalanguage$pandac$ASTNode** $tmp4 = &param0->left;
 *$tmp4 = param1;
-// line 286
+// line 295
 org$pandalanguage$pandac$parser$Token$Kind* $tmp5 = &param0->op;
 *$tmp5 = param2;
-// line 287
+// line 296
 org$pandalanguage$pandac$ASTNode** $tmp6 = &param0->right;
 org$pandalanguage$pandac$ASTNode* $tmp7 = *$tmp6;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp7));
@@ -53,7 +53,7 @@ panda$core$Bit org$pandalanguage$pandac$Compiler$BinaryKey$$EQ$org$pandalanguage
 
 panda$core$Bit local0;
 panda$core$Bit local1;
-// line 292
+// line 301
 org$pandalanguage$pandac$ASTNode** $tmp9 = &param0->left;
 org$pandalanguage$pandac$ASTNode* $tmp10 = *$tmp9;
 org$pandalanguage$pandac$ASTNode** $tmp11 = &param1->left;
@@ -79,8 +79,10 @@ while ($tmp22->$class != (panda$core$Class*) &panda$core$Equatable$class) {
 }
 $fn24 $tmp23 = $tmp22->methods[0];
 panda$core$Bit $tmp25 = $tmp23(((panda$core$Equatable*) $tmp18), ((panda$core$Equatable*) $tmp21));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) ((panda$core$Equatable*) $tmp18)));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) ((panda$core$Equatable*) $tmp21)));
+// unreffing REF($15:panda.core.Equatable.T)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) ((panda$core$Equatable*) $tmp18)));
+// unreffing REF($11:panda.core.Equatable<org.pandalanguage.pandac.parser.Token.Kind>)
 *(&local1) = $tmp25;
 goto block3;
 block2:;
@@ -109,7 +111,7 @@ return $tmp34;
 }
 panda$core$Int64 org$pandalanguage$pandac$Compiler$BinaryKey$get_hash$R$panda$core$Int64(org$pandalanguage$pandac$Compiler$BinaryKey* param0) {
 
-// line 297
+// line 306
 org$pandalanguage$pandac$ASTNode** $tmp35 = &param0->left;
 org$pandalanguage$pandac$ASTNode* $tmp36 = *$tmp35;
 panda$core$Int64 $tmp37;
@@ -124,6 +126,8 @@ return $tmp41;
 }
 void org$pandalanguage$pandac$Compiler$BinaryKey$cleanup(org$pandalanguage$pandac$Compiler$BinaryKey* param0) {
 
+// line 286
+panda$core$Object$cleanup(((panda$core$Object*) param0));
 org$pandalanguage$pandac$ASTNode** $tmp42 = &param0->left;
 org$pandalanguage$pandac$ASTNode* $tmp43 = *$tmp42;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp43));

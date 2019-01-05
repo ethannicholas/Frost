@@ -29,6 +29,7 @@ panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
 panda$threads$Lock** $tmp5 = &param0->lock;
 *$tmp5 = $tmp2;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
+// unreffing REF($1:panda.threads.Lock)
 // line 18
 panda$threads$Lock** $tmp6 = &param0->lock;
 panda$threads$Lock* $tmp7 = *$tmp6;
@@ -45,6 +46,8 @@ void panda$threads$Notifier$cleanup(panda$threads$Notifier* param0) {
 
 // line 44
 panda$threads$Notifier$destroy(param0);
+// line 43
+panda$core$Immutable$cleanup(((panda$core$Immutable*) param0));
 panda$threads$Lock** $tmp9 = &param0->lock;
 panda$threads$Lock* $tmp10 = *$tmp9;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp10));

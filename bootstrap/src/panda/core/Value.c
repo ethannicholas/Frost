@@ -17,6 +17,8 @@ static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -
 
 void panda$core$Value$cleanup(panda$core$Value* param0) {
 
+// line 41
+panda$core$Immutable$cleanup(((panda$core$Immutable*) param0));
 return;
 
 }

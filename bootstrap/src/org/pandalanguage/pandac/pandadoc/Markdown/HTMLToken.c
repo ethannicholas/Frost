@@ -25,7 +25,7 @@ void org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken$cleanup(org$pandalangu
 
 panda$core$String* local0 = NULL;
 panda$core$String* local1 = NULL;
-// line 816
+// line 813
 panda$core$Int64* $tmp2 = &param0->$rawValue;
 panda$core$Int64 $tmp3 = *$tmp2;
 panda$core$Int64 $tmp4 = (panda$core$Int64) {0};
@@ -70,15 +70,17 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp19));
 *(&local1) = ((panda$core$String*) NULL);
 goto block1;
 block1:;
+// line 813
+panda$core$Object$cleanup(((panda$core$Object*) param0));
 return;
 
 }
 void org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken$init$panda$core$Int64$panda$core$String(org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken* param0, panda$core$Int64 param1, panda$core$String* param2) {
 
-// line 816
+// line 813
 panda$core$Int64* $tmp20 = &param0->$rawValue;
 *$tmp20 = param1;
-// line 816
+// line 813
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param2));
 panda$core$String** $tmp21 = (panda$core$String**) (param0->$data + 0);
 *$tmp21 = param2;
@@ -87,7 +89,7 @@ return;
 }
 panda$core$Bit org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken$$EQ$org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken$R$panda$core$Bit(org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken* param0, org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken* param1) {
 
-// line 816
+// line 813
 panda$core$Int64* $tmp22 = &param0->$rawValue;
 panda$core$Int64 $tmp23 = *$tmp22;
 panda$core$Int64* $tmp24 = &param1->$rawValue;
@@ -99,11 +101,11 @@ panda$core$Bit $tmp29 = (panda$core$Bit) {$tmp28};
 bool $tmp30 = $tmp29.value;
 if ($tmp30) goto block1; else goto block2;
 block1:;
-// line 816
+// line 813
 panda$core$Bit $tmp31 = panda$core$Bit$init$builtin_bit(false);
 return $tmp31;
 block2:;
-// line 816
+// line 813
 panda$core$Bit $tmp32 = panda$core$Bit$init$builtin_bit(true);
 return $tmp32;
 

@@ -21,7 +21,7 @@ static panda$core$String $s24 = { (panda$core$Class*) &panda$core$String$class, 
 
 void org$pandalanguage$pandac$pandadoc$Markdown$_Closure4$init$org$pandalanguage$pandac$pandadoc$Markdown(org$pandalanguage$pandac$pandadoc$Markdown$_Closure4* param0, org$pandalanguage$pandac$pandadoc$Markdown* param1) {
 
-// line 278
+// line 277
 org$pandalanguage$pandac$pandadoc$Markdown** $tmp2 = &param0->$self;
 org$pandalanguage$pandac$pandadoc$Markdown* $tmp3 = *$tmp2;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
@@ -33,6 +33,8 @@ return;
 }
 void org$pandalanguage$pandac$pandadoc$Markdown$_Closure4$cleanup(org$pandalanguage$pandac$pandadoc$Markdown$_Closure4* param0) {
 
+// line 277
+panda$core$Object$cleanup(((panda$core$Object*) param0));
 org$pandalanguage$pandac$pandadoc$Markdown** $tmp5 = &param0->$self;
 org$pandalanguage$pandac$pandadoc$Markdown* $tmp6 = *$tmp5;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp6));
@@ -42,7 +44,7 @@ return;
 panda$core$String* org$pandalanguage$pandac$pandadoc$Markdown$_Closure4$$anonymous3$panda$collections$ListView$LTpanda$core$String$Q$GT$R$panda$core$String(org$pandalanguage$pandac$pandadoc$Markdown$_Closure4* param0, panda$collections$ListView* param1) {
 
 panda$core$String* local0 = NULL;
-// line 279
+// line 278
 panda$core$Int64 $tmp7 = (panda$core$Int64) {0};
 ITable* $tmp8 = param1->$class->itable;
 while ($tmp8->$class != (panda$core$Class*) &panda$collections$ListView$class) {
@@ -55,8 +57,7 @@ panda$core$String* $tmp12 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp12));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((panda$core$String*) $tmp11)));
 *(&local0) = ((panda$core$String*) $tmp11);
-panda$core$Panda$unref$panda$core$Object$Q($tmp11);
-// line 280
+// line 279
 org$pandalanguage$pandac$pandadoc$Markdown** $tmp13 = &param0->$self;
 org$pandalanguage$pandac$pandadoc$Markdown* $tmp14 = *$tmp13;
 org$pandalanguage$pandac$pandadoc$Protector** $tmp15 = &$tmp14->htmlProtector;
@@ -67,13 +68,18 @@ panda$core$String* $tmp20 = $tmp18($tmp16, $tmp17);
 panda$core$String* $tmp21 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s22, $tmp20);
 panda$core$String* $tmp23 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp21, &$s24);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp23));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp20));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp21));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp23));
+// unreffing REF($23:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp21));
+// unreffing REF($22:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp20));
+// unreffing REF($21:panda.core.String)
 panda$core$String* $tmp25 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp25));
 // unreffing literal
 *(&local0) = ((panda$core$String*) NULL);
+panda$core$Panda$unref$panda$core$Object$Q($tmp11);
+// unreffing REF($4:panda.collections.ListView.T)
 return $tmp23;
 
 }

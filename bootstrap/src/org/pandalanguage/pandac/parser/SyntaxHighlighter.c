@@ -57,6 +57,7 @@ $tmp8 = (org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind$wrapper*) pandaO
 $tmp8->value = param1;
 panda$collections$Stack$push$panda$collections$Stack$T($tmp7, ((panda$core$Object*) $tmp8));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp8));
+// unreffing REF($4:panda.collections.Stack.T)
 return;
 
 }
@@ -78,11 +79,13 @@ panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64(&$s18, $tmp
 abort(); // unreachable
 block1:;
 panda$core$Panda$unref$panda$core$Object$Q($tmp12);
+// unreffing REF($5:panda.collections.Stack.T)
 // line 84
 panda$collections$Stack** $tmp19 = &param0->stack;
 panda$collections$Stack* $tmp20 = *$tmp19;
 panda$core$Object* $tmp21 = panda$collections$Stack$pop$R$panda$collections$Stack$T($tmp20);
 panda$core$Panda$unref$panda$core$Object$Q($tmp21);
+// unreffing REF($22:panda.collections.Stack.T)
 return;
 
 }
@@ -100,9 +103,12 @@ $tmp26 = (org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind$wrapper*) panda
 $tmp26->value = param2;
 org$pandalanguage$pandac$Pair$init$org$pandalanguage$pandac$Pair$A$org$pandalanguage$pandac$Pair$B($tmp24, ((panda$core$Object*) $tmp25), ((panda$core$Object*) $tmp26));
 panda$collections$Array$add$panda$collections$Array$T($tmp23, ((panda$core$Object*) $tmp24));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp24));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp25));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp26));
+// unreffing REF($7:org.pandalanguage.pandac.Pair.B)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp25));
+// unreffing REF($6:org.pandalanguage.pandac.Pair.A)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp24));
+// unreffing REF($4:org.pandalanguage.pandac.Pair<org.pandalanguage.pandac.parser.Token, org.pandalanguage.pandac.parser.SyntaxHighlighter.Kind>)
 return;
 
 }
@@ -128,6 +134,7 @@ panda$core$Object* $tmp39 = panda$collections$Stack$$IDX$panda$core$Int64$R$pand
 $fn41 $tmp40 = ($fn41) param0->$class->vtable[5];
 $tmp40(param0, param1, ((org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind$wrapper*) $tmp39)->value);
 panda$core$Panda$unref$panda$core$Object$Q($tmp39);
+// unreffing REF($17:panda.collections.Stack.T)
 // line 94
 return;
 block2:;
@@ -704,6 +711,7 @@ int64_t $tmp381 = $tmp379 - $tmp380;
 panda$core$Int64 $tmp382 = (panda$core$Int64) {$tmp381};
 panda$core$Object* $tmp383 = panda$collections$Array$removeIndex$panda$core$Int64$R$panda$collections$Array$T($tmp371, $tmp382);
 panda$core$Panda$unref$panda$core$Object$Q($tmp383);
+// unreffing REF($14:panda.collections.Array.T)
 return;
 
 }
@@ -719,6 +727,7 @@ panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp384));
 panda$collections$Stack** $tmp387 = &param0->stack;
 *$tmp387 = $tmp384;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp384));
+// unreffing REF($1:panda.collections.Stack<org.pandalanguage.pandac.parser.SyntaxHighlighter.Kind>)
 // line 71
 panda$collections$Array* $tmp388 = (panda$collections$Array*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$Array$class);
 panda$collections$Array$init($tmp388);
@@ -729,11 +738,14 @@ panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp388));
 panda$collections$Array** $tmp391 = &param0->tokens;
 *$tmp391 = $tmp388;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp388));
+// unreffing REF($16:panda.collections.Array<org.pandalanguage.pandac.Pair<org.pandalanguage.pandac.parser.Token, org.pandalanguage.pandac.parser.SyntaxHighlighter.Kind>>)
 return;
 
 }
 void org$pandalanguage$pandac$parser$SyntaxHighlighter$cleanup(org$pandalanguage$pandac$parser$SyntaxHighlighter* param0) {
 
+// line 5
+panda$core$Object$cleanup(((panda$core$Object*) param0));
 panda$collections$Stack** $tmp392 = &param0->stack;
 panda$collections$Stack* $tmp393 = *$tmp392;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp393));

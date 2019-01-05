@@ -25,7 +25,7 @@ static panda$core$String $s44 = { (panda$core$Class*) &panda$core$String$class, 
 
 void org$pandalanguage$pandac$pandadoc$Markdown$_Closure22$init$org$pandalanguage$pandac$pandadoc$Markdown(org$pandalanguage$pandac$pandadoc$Markdown$_Closure22* param0, org$pandalanguage$pandac$pandadoc$Markdown* param1) {
 
-// line 785
+// line 782
 org$pandalanguage$pandac$pandadoc$Markdown** $tmp2 = &param0->$self;
 org$pandalanguage$pandac$pandadoc$Markdown* $tmp3 = *$tmp2;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
@@ -37,6 +37,8 @@ return;
 }
 void org$pandalanguage$pandac$pandadoc$Markdown$_Closure22$cleanup(org$pandalanguage$pandac$pandadoc$Markdown$_Closure22* param0) {
 
+// line 782
+panda$core$Object$cleanup(((panda$core$Object*) param0));
 org$pandalanguage$pandac$pandadoc$Markdown** $tmp5 = &param0->$self;
 org$pandalanguage$pandac$pandadoc$Markdown* $tmp6 = *$tmp5;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp6));
@@ -49,7 +51,7 @@ panda$core$String* local0 = NULL;
 panda$core$MutableString* local1 = NULL;
 panda$core$Int64 local2;
 panda$core$String* local3 = NULL;
-// line 786
+// line 783
 panda$core$Int64 $tmp7 = (panda$core$Int64) {1};
 ITable* $tmp8 = param1->$class->itable;
 while ($tmp8->$class != (panda$core$Class*) &panda$collections$ListView$class) {
@@ -62,8 +64,7 @@ panda$core$String* $tmp12 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp12));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((panda$core$String*) $tmp11)));
 *(&local0) = ((panda$core$String*) $tmp11);
-panda$core$Panda$unref$panda$core$Object$Q($tmp11);
-// line 787
+// line 784
 panda$core$MutableString* $tmp13 = (panda$core$MutableString*) pandaObjectAlloc(48, (panda$core$Class*) &panda$core$MutableString$class);
 panda$core$Int64 $tmp14 = (panda$core$Int64) {2};
 ITable* $tmp15 = param1->$class->itable;
@@ -78,19 +79,17 @@ panda$core$MutableString* $tmp19 = *(&local1);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp19));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp13));
 *(&local1) = $tmp13;
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp13));
-panda$core$Panda$unref$panda$core$Object$Q($tmp18);
-// line 788
+// line 785
 org$pandalanguage$pandac$pandadoc$Markdown** $tmp20 = &param0->$self;
 org$pandalanguage$pandac$pandadoc$Markdown* $tmp21 = *$tmp20;
 panda$core$MutableString* $tmp22 = *(&local1);
 $fn24 $tmp23 = ($fn24) $tmp21->$class->vtable[22];
 $tmp23($tmp21, $tmp22);
-// line 789
+// line 786
 panda$core$String* $tmp25 = *(&local0);
 panda$core$Int64 $tmp26 = panda$core$String$get_length$R$panda$core$Int64($tmp25);
 *(&local2) = $tmp26;
-// line 790
+// line 787
 panda$core$Int64 $tmp27 = *(&local2);
 panda$core$Int64$wrapper* $tmp28;
 $tmp28 = (panda$core$Int64$wrapper*) pandaObjectAlloc(24, (panda$core$Class*) &panda$core$Int64$wrapperclass);
@@ -101,9 +100,7 @@ panda$core$String* $tmp31 = *(&local3);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp31));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp29));
 *(&local3) = $tmp29;
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp28));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp29));
-// line 791
+// line 788
 panda$core$String* $tmp32 = *(&local3);
 panda$core$String* $tmp33 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s34, $tmp32);
 panda$core$String* $tmp35 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp33, &$s36);
@@ -114,24 +111,40 @@ panda$core$String* $tmp41 = *(&local3);
 panda$core$String* $tmp42 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp39, $tmp41);
 panda$core$String* $tmp43 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp42, &$s44);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp43));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp33));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp35));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp38));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp39));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp42));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp43));
+// unreffing REF($61:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp42));
+// unreffing REF($60:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp39));
+// unreffing REF($58:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp38));
+// unreffing REF($57:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp35));
+// unreffing REF($54:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp33));
+// unreffing REF($53:panda.core.String)
 panda$core$String* $tmp45 = *(&local3);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp45));
 // unreffing tag
 *(&local3) = ((panda$core$String*) NULL);
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp29));
+// unreffing REF($43:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp28));
+// unreffing REF($42:panda.core.Object)
 panda$core$MutableString* $tmp46 = *(&local1);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp46));
 // unreffing heading
 *(&local1) = ((panda$core$MutableString*) NULL);
+panda$core$Panda$unref$panda$core$Object$Q($tmp18);
+// unreffing REF($18:panda.collections.ListView.T)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp13));
+// unreffing REF($14:panda.core.MutableString)
 panda$core$String* $tmp47 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp47));
 // unreffing marker
 *(&local0) = ((panda$core$String*) NULL);
+panda$core$Panda$unref$panda$core$Object$Q($tmp11);
+// unreffing REF($4:panda.collections.ListView.T)
 return ((panda$core$Object*) $tmp43);
 
 }

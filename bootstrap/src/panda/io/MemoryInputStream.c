@@ -85,6 +85,8 @@ return ((panda$core$UInt8$nullable) { .nonnull = false });
 }
 void panda$io$MemoryInputStream$cleanup(panda$io$MemoryInputStream* param0) {
 
+// line 9
+panda$io$InputStream$cleanup(((panda$io$InputStream*) param0));
 panda$core$String** $tmp36 = &param0->string;
 panda$core$String* $tmp37 = *$tmp36;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp37));

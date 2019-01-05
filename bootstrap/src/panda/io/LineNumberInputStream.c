@@ -129,6 +129,8 @@ return $tmp62;
 }
 void panda$io$LineNumberInputStream$cleanup(panda$io$LineNumberInputStream* param0) {
 
+// line 8
+panda$io$InputStream$cleanup(((panda$io$InputStream*) param0));
 panda$io$InputStream** $tmp63 = &param0->source;
 panda$io$InputStream* $tmp64 = *$tmp63;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp64));

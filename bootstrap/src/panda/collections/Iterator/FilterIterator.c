@@ -94,6 +94,7 @@ panda$core$Panda$ref$panda$core$Object$Q($tmp24);
 panda$core$Object** $tmp27 = &param0->nextValue;
 *$tmp27 = $tmp24;
 panda$core$Panda$unref$panda$core$Object$Q($tmp24);
+// unreffing REF($25:panda.collections.Iterator.T)
 goto block2;
 block2:;
 panda$core$MutableMethod** $tmp28 = &param0->filter;
@@ -167,6 +168,8 @@ return $tmp59;
 }
 void panda$collections$Iterator$FilterIterator$cleanup(panda$collections$Iterator$FilterIterator* param0) {
 
+// line 8
+panda$core$Object$cleanup(((panda$core$Object*) param0));
 panda$collections$Iterator** $tmp61 = &param0->base;
 panda$collections$Iterator* $tmp62 = *$tmp61;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp62));

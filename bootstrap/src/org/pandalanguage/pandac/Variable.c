@@ -37,6 +37,7 @@ panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
 panda$core$Weak** $tmp5 = &param0->owner;
 *$tmp5 = $tmp2;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
+// unreffing REF($1:panda.core.Weak<org.pandalanguage.pandac.MethodDecl?>)
 org$pandalanguage$pandac$Type* $tmp6 = org$pandalanguage$pandac$Type$Void$R$org$pandalanguage$pandac$Type();
 ITable* $tmp7 = ((panda$core$Equatable*) param4)->$class->itable;
 while ($tmp7->$class != (panda$core$Class*) &panda$core$Equatable$class) {
@@ -45,6 +46,7 @@ while ($tmp7->$class != (panda$core$Class*) &panda$core$Equatable$class) {
 $fn9 $tmp8 = $tmp7->methods[1];
 panda$core$Bit $tmp10 = $tmp8(((panda$core$Equatable*) param4), ((panda$core$Equatable*) $tmp6));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp6));
+// unreffing REF($18:org.pandalanguage.pandac.Type)
 bool $tmp11 = $tmp10.value;
 if ($tmp11) goto block1; else goto block2;
 block2:;
@@ -87,6 +89,8 @@ return $tmp25;
 }
 void org$pandalanguage$pandac$Variable$cleanup(org$pandalanguage$pandac$Variable* param0) {
 
+// line 7
+org$pandalanguage$pandac$Symbol$cleanup(((org$pandalanguage$pandac$Symbol*) param0));
 org$pandalanguage$pandac$Type** $tmp26 = &param0->type;
 org$pandalanguage$pandac$Type* $tmp27 = *$tmp26;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp27));

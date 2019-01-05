@@ -26,6 +26,8 @@ void panda$threads$Lock$cleanup(panda$threads$Lock* param0) {
 
 // line 44
 panda$threads$Lock$destroy(param0);
+// line 43
+panda$core$Immutable$cleanup(((panda$core$Immutable*) param0));
 return;
 
 }

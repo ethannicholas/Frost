@@ -61,6 +61,7 @@ panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64(&$s22, $tmp
 abort(); // unreachable
 block1:;
 panda$core$Panda$unref$panda$core$Object$Q($tmp15);
+// unreffing REF($7:panda.collections.Stack.T)
 // line 33
 org$pandalanguage$pandac$CCodeGenerator** $tmp23 = &param0->cg;
 org$pandalanguage$pandac$CCodeGenerator* $tmp24 = *$tmp23;
@@ -68,6 +69,9 @@ panda$collections$Stack** $tmp25 = &$tmp24->enclosingContexts;
 panda$collections$Stack* $tmp26 = *$tmp25;
 panda$core$Object* $tmp27 = panda$collections$Stack$pop$R$panda$collections$Stack$T($tmp26);
 panda$core$Panda$unref$panda$core$Object$Q($tmp27);
+// unreffing REF($27:panda.collections.Stack.T)
+// line 31
+panda$core$Object$cleanup(((panda$core$Object*) param0));
 org$pandalanguage$pandac$CCodeGenerator** $tmp28 = &param0->cg;
 org$pandalanguage$pandac$CCodeGenerator* $tmp29 = *$tmp28;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp29));

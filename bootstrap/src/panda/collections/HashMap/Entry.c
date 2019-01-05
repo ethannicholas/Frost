@@ -33,6 +33,8 @@ return;
 }
 void panda$collections$HashMap$Entry$cleanup(panda$collections$HashMap$Entry* param0) {
 
+// line 20
+panda$core$Object$cleanup(((panda$core$Object*) param0));
 panda$collections$Key** $tmp8 = &param0->key;
 panda$collections$Key* $tmp9 = *$tmp8;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp9));

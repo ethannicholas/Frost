@@ -101,11 +101,14 @@ $fn43 $tmp42 = $tmp41->methods[0];
 panda$core$Object* $tmp44 = $tmp42($tmp33, $tmp40);
 panda$core$Panda$ref$panda$core$Object$Q($tmp44);
 panda$core$Panda$unref$panda$core$Object$Q($tmp44);
+// unreffing REF($34:panda.collections.ListView.T)
 return $tmp44;
 
 }
 void panda$collections$ListView$ListIterator$cleanup(panda$collections$ListView$ListIterator* param0) {
 
+// line 14
+panda$core$Object$cleanup(((panda$core$Object*) param0));
 panda$collections$ListView** $tmp45 = &param0->list;
 panda$collections$ListView* $tmp46 = *$tmp45;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp46));

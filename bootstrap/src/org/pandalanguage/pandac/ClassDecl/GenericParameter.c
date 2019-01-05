@@ -58,17 +58,25 @@ org$pandalanguage$pandac$Type* $tmp21 = *$tmp20;
 panda$core$String* $tmp22 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String($tmp18, ((panda$core$Object*) $tmp21));
 panda$core$String* $tmp23 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp22, &$s24);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp23));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp12));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp13));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp17));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp18));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp22));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp23));
+// unreffing REF($14:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp22));
+// unreffing REF($13:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp18));
+// unreffing REF($9:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp17));
+// unreffing REF($8:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp13));
+// unreffing REF($4:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp12));
+// unreffing REF($3:panda.core.String)
 return $tmp23;
 
 }
 void org$pandalanguage$pandac$ClassDecl$GenericParameter$cleanup(org$pandalanguage$pandac$ClassDecl$GenericParameter* param0) {
 
+// line 22
+org$pandalanguage$pandac$Symbol$cleanup(((org$pandalanguage$pandac$Symbol*) param0));
 panda$core$String** $tmp25 = &param0->owner;
 panda$core$String* $tmp26 = *$tmp25;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp26));

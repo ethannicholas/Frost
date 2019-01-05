@@ -45,7 +45,6 @@ typedef struct org$pandalanguage$pandac$Compiler {
     panda$core$Bit reportErrors;
     panda$collections$Array* pendingClasses;
     panda$core$Bit inAtPre;
-    panda$collections$Array* statementUnrefs;
     org$pandalanguage$pandac$IR$Value* returnValue;
     org$pandalanguage$pandac$IR$Block$ID$nullable atPreBlock;
     panda$collections$Stack* captures;

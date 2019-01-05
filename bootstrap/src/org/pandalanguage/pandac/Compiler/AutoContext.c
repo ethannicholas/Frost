@@ -19,21 +19,21 @@ static panda$core$String $s22 = { (panda$core$Class*) &panda$core$String$class, 
 
 void org$pandalanguage$pandac$Compiler$AutoContext$init$org$pandalanguage$pandac$Compiler$org$pandalanguage$pandac$Compiler$EnclosingContext(org$pandalanguage$pandac$Compiler$AutoContext* param0, org$pandalanguage$pandac$Compiler* param1, org$pandalanguage$pandac$Compiler$EnclosingContext* param2) {
 
-// line 140
+// line 144
 org$pandalanguage$pandac$Compiler** $tmp2 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp3 = *$tmp2;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 org$pandalanguage$pandac$Compiler** $tmp4 = &param0->compiler;
 *$tmp4 = param1;
-// line 141
+// line 145
 org$pandalanguage$pandac$Compiler$EnclosingContext** $tmp5 = &param0->context;
 org$pandalanguage$pandac$Compiler$EnclosingContext* $tmp6 = *$tmp5;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp6));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param2));
 org$pandalanguage$pandac$Compiler$EnclosingContext** $tmp7 = &param0->context;
 *$tmp7 = param2;
-// line 142
+// line 146
 panda$collections$Stack** $tmp8 = &param1->enclosingContexts;
 panda$collections$Stack* $tmp9 = *$tmp8;
 panda$collections$Stack$push$panda$collections$Stack$T($tmp9, ((panda$core$Object*) param2));
@@ -42,7 +42,7 @@ return;
 }
 void org$pandalanguage$pandac$Compiler$AutoContext$cleanup(org$pandalanguage$pandac$Compiler$AutoContext* param0) {
 
-// line 147
+// line 151
 org$pandalanguage$pandac$Compiler** $tmp10 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp11 = *$tmp10;
 panda$collections$Stack** $tmp12 = &$tmp11->enclosingContexts;
@@ -56,18 +56,22 @@ panda$core$Bit $tmp19 = panda$core$Bit$init$builtin_bit($tmp18);
 bool $tmp20 = $tmp19.value;
 if ($tmp20) goto block1; else goto block2;
 block2:;
-panda$core$Int64 $tmp21 = (panda$core$Int64) {147};
+panda$core$Int64 $tmp21 = (panda$core$Int64) {151};
 panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64(&$s22, $tmp21);
 abort(); // unreachable
 block1:;
 panda$core$Panda$unref$panda$core$Object$Q($tmp15);
-// line 148
+// unreffing REF($7:panda.collections.Stack.T)
+// line 152
 org$pandalanguage$pandac$Compiler** $tmp23 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp24 = *$tmp23;
 panda$collections$Stack** $tmp25 = &$tmp24->enclosingContexts;
 panda$collections$Stack* $tmp26 = *$tmp25;
 panda$core$Object* $tmp27 = panda$collections$Stack$pop$R$panda$collections$Stack$T($tmp26);
 panda$core$Panda$unref$panda$core$Object$Q($tmp27);
+// unreffing REF($27:panda.collections.Stack.T)
+// line 150
+panda$core$Object$cleanup(((panda$core$Object*) param0));
 org$pandalanguage$pandac$Compiler** $tmp28 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp29 = *$tmp28;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp29));

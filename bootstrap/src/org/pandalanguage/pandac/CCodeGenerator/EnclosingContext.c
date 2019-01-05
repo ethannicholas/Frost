@@ -123,6 +123,8 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp39));
 *(&local3) = ((panda$core$String*) NULL);
 goto block1;
 block1:;
+// line 12
+panda$core$Object$cleanup(((panda$core$Object*) param0));
 return;
 
 }

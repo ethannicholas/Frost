@@ -272,12 +272,15 @@ Match
 `match` is similar to C's `switch` statement:
 
     match <expression> {
-        when <expression>: -- run this code if the value matches
+        when <expression> { -- run this code if the value matches
             ...
-        when <expression>, <expression>, <expression>: -- match any of these three values
+        }
+        when <expression>, <expression>, <expression> { -- match any of these three values
             ...
-        otherwise: -- run this code if there are no matches
+        }
+        otherwise { -- run this code if there are no matches
             ...
+        }
     }
 
 There is no fallthrough. Unlike C, the values do not have to be compile-time numeric constants (but
@@ -395,10 +398,12 @@ When a choice entry has data fields associated with it, as with `Expression` abo
 be extracted using `match`:
 
     match expr {
-        when NUMBER(value):
+        when NUMBER(value) {
             return value.convert()
-        when ADD(left, right):
+        }
+        when ADD(left, right) {
             return "\{left} + \{right}"
+        }
         ...
     }
 

@@ -47,6 +47,7 @@ panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp5));
 panda$core$Weak** $tmp8 = &param0->owner;
 *$tmp8 = $tmp5;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp5));
+// unreffing REF($6:panda.core.Weak<org.pandalanguage.pandac.ClassDecl>)
 // line 30
 panda$core$String** $tmp9 = &param0->doccomment;
 panda$core$String* $tmp10 = *$tmp9;
@@ -99,8 +100,6 @@ panda$core$MutableString* $tmp28 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp28));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp24));
 *(&local0) = $tmp24;
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp24));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp27));
 // line 41
 org$pandalanguage$pandac$FieldDecl$Kind* $tmp29 = &param0->fieldKind;
 org$pandalanguage$pandac$FieldDecl$Kind $tmp30 = *$tmp29;
@@ -180,15 +179,22 @@ panda$core$MutableString* $tmp69 = *(&local0);
 panda$core$String* $tmp70 = panda$core$MutableString$finish$R$panda$core$String($tmp69);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp70));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp70));
+// unreffing REF($83:panda.core.String)
 panda$core$MutableString* $tmp71 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp71));
 // unreffing result
 *(&local0) = ((panda$core$MutableString*) NULL);
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp27));
+// unreffing REF($4:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp24));
+// unreffing REF($1:panda.core.MutableString)
 return $tmp70;
 
 }
 void org$pandalanguage$pandac$FieldDecl$cleanup(org$pandalanguage$pandac$FieldDecl* param0) {
 
+// line 4
+org$pandalanguage$pandac$Symbol$cleanup(((org$pandalanguage$pandac$Symbol*) param0));
 panda$core$Weak** $tmp72 = &param0->owner;
 panda$core$Weak* $tmp73 = *$tmp72;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp73));

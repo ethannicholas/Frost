@@ -48,10 +48,14 @@ panda$unsafe$UnsafeMessageQueue$Message* $tmp16 = *$tmp15;
 panda$core$String* $tmp17 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String($tmp13, ((panda$core$Object*) $tmp16));
 panda$core$String* $tmp18 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp17, &$s19);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp18));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp11));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp13));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp17));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp18));
+// unreffing REF($20:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp17));
+// unreffing REF($19:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp13));
+// unreffing REF($14:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp11));
+// unreffing REF($13:panda.core.String)
 return $tmp18;
 block2:;
 // line 21
@@ -60,13 +64,17 @@ panda$core$Object* $tmp21 = *$tmp20;
 panda$core$String* $tmp22 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s23, $tmp21);
 panda$core$String* $tmp24 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp22, &$s25);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp24));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp22));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp24));
+// unreffing REF($42:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp22));
+// unreffing REF($41:panda.core.String)
 return $tmp24;
 
 }
 void panda$unsafe$UnsafeMessageQueue$Message$cleanup(panda$unsafe$UnsafeMessageQueue$Message* param0) {
 
+// line 7
+panda$core$Object$cleanup(((panda$core$Object*) param0));
 panda$core$Object** $tmp26 = &param0->payload;
 panda$core$Object* $tmp27 = *$tmp26;
 panda$core$Panda$unref$panda$core$Object$Q($tmp27);

@@ -98,11 +98,16 @@ $tmp31->value = $tmp30;
 panda$core$String* $tmp32 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String($tmp28, ((panda$core$Object*) $tmp31));
 panda$core$String* $tmp33 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp32, &$s34);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp33));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp27));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp28));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp31));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp32));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp33));
+// unreffing REF($7:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp32));
+// unreffing REF($6:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp31));
+// unreffing REF($5:panda.core.Object)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp28));
+// unreffing REF($3:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp27));
+// unreffing REF($2:panda.core.String)
 return $tmp33;
 
 }

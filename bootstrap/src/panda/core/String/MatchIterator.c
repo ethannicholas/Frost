@@ -130,6 +130,8 @@ return ((panda$core$String$Index) $tmp52.value);
 }
 void panda$core$String$MatchIterator$cleanup(panda$core$String$MatchIterator* param0) {
 
+// line 212
+panda$core$Object$cleanup(((panda$core$Object*) param0));
 panda$core$String** $tmp53 = &param0->haystack;
 panda$core$String* $tmp54 = *$tmp53;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp54));

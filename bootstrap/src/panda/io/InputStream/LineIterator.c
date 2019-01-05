@@ -112,11 +112,14 @@ panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp35));
 panda$core$String** $tmp38 = &param0->_next;
 *$tmp38 = $tmp35;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp35));
+// unreffing REF($4:panda.core.String?)
 return;
 
 }
 void panda$io$InputStream$LineIterator$cleanup(panda$io$InputStream$LineIterator* param0) {
 
+// line 17
+panda$core$Object$cleanup(((panda$core$Object*) param0));
 panda$io$InputStream** $tmp39 = &param0->input;
 panda$io$InputStream* $tmp40 = *$tmp39;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp40));

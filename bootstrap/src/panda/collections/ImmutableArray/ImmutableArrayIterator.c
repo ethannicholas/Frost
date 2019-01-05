@@ -95,11 +95,14 @@ panda$core$Int64 $tmp40 = (panda$core$Int64) {$tmp39};
 panda$core$Object* $tmp41 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T($tmp33, $tmp40);
 panda$core$Panda$ref$panda$core$Object$Q($tmp41);
 panda$core$Panda$unref$panda$core$Object$Q($tmp41);
+// unreffing REF($33:panda.collections.ImmutableArray.T)
 return $tmp41;
 
 }
 void panda$collections$ImmutableArray$ImmutableArrayIterator$cleanup(panda$collections$ImmutableArray$ImmutableArrayIterator* param0) {
 
+// line 8
+panda$core$Object$cleanup(((panda$core$Object*) param0));
 panda$collections$ImmutableArray** $tmp42 = &param0->array;
 panda$collections$ImmutableArray* $tmp43 = *$tmp42;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp43));

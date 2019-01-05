@@ -33,6 +33,8 @@ block1:;
 panda$io$FileInputStream$close(param0);
 goto block2;
 block2:;
+// line 20
+panda$io$InputStream$cleanup(((panda$io$InputStream*) param0));
 return;
 
 }

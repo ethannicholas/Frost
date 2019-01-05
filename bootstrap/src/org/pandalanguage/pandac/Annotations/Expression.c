@@ -55,8 +55,10 @@ org$pandalanguage$pandac$ASTNode* $tmp12 = *(&local0);
 panda$core$String* $tmp13 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s14, ((panda$core$Object*) $tmp12));
 panda$core$String* $tmp15 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp13, &$s16);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp15));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp13));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp15));
+// unreffing REF($22:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp13));
+// unreffing REF($21:panda.core.String)
 org$pandalanguage$pandac$ASTNode* $tmp17 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp17));
 // unreffing expr
@@ -82,8 +84,10 @@ org$pandalanguage$pandac$ASTNode* $tmp26 = *(&local1);
 panda$core$String* $tmp27 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s28, ((panda$core$Object*) $tmp26));
 panda$core$String* $tmp29 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp27, &$s30);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp29));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp27));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp29));
+// unreffing REF($56:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp27));
+// unreffing REF($55:panda.core.String)
 org$pandalanguage$pandac$ASTNode* $tmp31 = *(&local1);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp31));
 // unreffing expr
@@ -109,8 +113,10 @@ org$pandalanguage$pandac$ASTNode* $tmp40 = *(&local2);
 panda$core$String* $tmp41 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s42, ((panda$core$Object*) $tmp40));
 panda$core$String* $tmp43 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp41, &$s44);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp43));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp41));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp43));
+// unreffing REF($90:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp41));
+// unreffing REF($89:panda.core.String)
 org$pandalanguage$pandac$ASTNode* $tmp45 = *(&local2);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp45));
 // unreffing expr
@@ -136,8 +142,10 @@ org$pandalanguage$pandac$ASTNode* $tmp54 = *(&local3);
 panda$core$String* $tmp55 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s56, ((panda$core$Object*) $tmp54));
 panda$core$String* $tmp57 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp55, &$s58);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp57));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp55));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp57));
+// unreffing REF($124:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp55));
+// unreffing REF($123:panda.core.String)
 org$pandalanguage$pandac$ASTNode* $tmp59 = *(&local3);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp59));
 // unreffing expr
@@ -163,8 +171,10 @@ org$pandalanguage$pandac$ASTNode* $tmp68 = *(&local4);
 panda$core$String* $tmp69 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s70, ((panda$core$Object*) $tmp68));
 panda$core$String* $tmp71 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp69, &$s72);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp71));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp69));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp71));
+// unreffing REF($158:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp69));
+// unreffing REF($157:panda.core.String)
 org$pandalanguage$pandac$ASTNode* $tmp73 = *(&local4);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp73));
 // unreffing expr
@@ -372,6 +382,8 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp145));
 *(&local8) = ((panda$core$String*) NULL);
 goto block1;
 block1:;
+// line 23
+panda$core$Object$cleanup(((panda$core$Object*) param0));
 return;
 
 }

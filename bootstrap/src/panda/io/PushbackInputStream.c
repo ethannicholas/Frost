@@ -44,6 +44,7 @@ panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
 panda$collections$Array** $tmp5 = &param0->pushbackBuffer;
 *$tmp5 = $tmp2;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
+// unreffing REF($1:panda.collections.Array<panda.core.UInt8>)
 // line 22
 panda$io$InputStream** $tmp6 = &param0->source;
 panda$io$InputStream* $tmp7 = *$tmp6;
@@ -95,6 +96,7 @@ panda$core$Int64 $tmp33 = (panda$core$Int64) {$tmp32};
 panda$core$Object* $tmp34 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T($tmp22, $tmp33);
 *(&local0) = ((panda$core$UInt8$wrapper*) $tmp34)->value;
 panda$core$Panda$unref$panda$core$Object$Q($tmp34);
+// unreffing REF($27:panda.collections.Array.T)
 // line 30
 panda$collections$Array** $tmp35 = &param0->pushbackBuffer;
 panda$collections$Array* $tmp36 = *$tmp35;
@@ -113,6 +115,7 @@ int64_t $tmp46 = $tmp44 - $tmp45;
 panda$core$Int64 $tmp47 = (panda$core$Int64) {$tmp46};
 panda$core$Object* $tmp48 = panda$collections$Array$removeIndex$panda$core$Int64$R$panda$collections$Array$T($tmp36, $tmp47);
 panda$core$Panda$unref$panda$core$Object$Q($tmp48);
+// unreffing REF($47:panda.collections.Array.T)
 // line 31
 panda$core$UInt8 $tmp49 = *(&local0);
 return ((panda$core$UInt8$nullable) { $tmp49, true });
@@ -135,6 +138,7 @@ $tmp57 = (panda$core$UInt8$wrapper*) pandaObjectAlloc(13, (panda$core$Class*) &p
 $tmp57->value = param1;
 panda$collections$Array$add$panda$collections$Array$T($tmp56, ((panda$core$Object*) $tmp57));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp57));
+// unreffing REF($4:panda.collections.Array.T)
 return;
 
 }
@@ -149,6 +153,7 @@ $tmp61 = (panda$core$UInt8$wrapper*) pandaObjectAlloc(13, (panda$core$Class*) &p
 $tmp61->value = $tmp60;
 panda$collections$Array$add$panda$collections$Array$T($tmp59, ((panda$core$Object*) $tmp61));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp61));
+// unreffing REF($5:panda.collections.Array.T)
 return;
 
 }
@@ -230,6 +235,7 @@ $fn112 $tmp111 = $tmp110->methods[0];
 panda$core$Object* $tmp113 = $tmp111(param1, $tmp109);
 panda$io$PushbackInputStream$pushback$panda$core$UInt8(param0, ((panda$core$UInt8$wrapper*) $tmp113)->value);
 panda$core$Panda$unref$panda$core$Object$Q($tmp113);
+// unreffing REF($59:panda.collections.ListView.T)
 goto block3;
 block3:;
 panda$core$Int64 $tmp114 = *(&local0);
@@ -365,6 +371,7 @@ $fn199 $tmp198 = $tmp197->methods[0];
 panda$core$Object* $tmp200 = $tmp198(param1, $tmp196);
 panda$io$PushbackInputStream$pushback$panda$core$Int8(param0, ((panda$core$Int8$wrapper*) $tmp200)->value);
 panda$core$Panda$unref$panda$core$Object$Q($tmp200);
+// unreffing REF($59:panda.collections.ListView.T)
 goto block3;
 block3:;
 panda$core$Int64 $tmp201 = *(&local0);
@@ -508,6 +515,7 @@ $fn287 $tmp286 = $tmp285->methods[0];
 panda$core$Object* $tmp288 = $tmp286(param1, $tmp284);
 panda$io$PushbackInputStream$pushback$panda$core$Char8(param0, ((panda$core$Char8$wrapper*) $tmp288)->value);
 panda$core$Panda$unref$panda$core$Object$Q($tmp288);
+// unreffing REF($59:panda.collections.ListView.T)
 goto block3;
 block3:;
 panda$core$Int64 $tmp289 = *(&local0);
@@ -571,11 +579,14 @@ void panda$io$PushbackInputStream$pushback$panda$core$String(panda$io$PushbackIn
 panda$collections$ListView* $tmp324 = panda$core$String$get_utf8$R$panda$collections$ListView$LTpanda$core$Char8$GT(param1);
 panda$io$PushbackInputStream$pushback$panda$collections$ListView$LTpanda$core$Char8$GT(param0, $tmp324);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp324));
+// unreffing REF($1:panda.collections.ListView<panda.core.Char8>)
 return;
 
 }
 void panda$io$PushbackInputStream$cleanup(panda$io$PushbackInputStream* param0) {
 
+// line 9
+panda$io$InputStream$cleanup(((panda$io$InputStream*) param0));
 panda$io$InputStream** $tmp325 = &param0->source;
 panda$io$InputStream* $tmp326 = *$tmp325;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp326));

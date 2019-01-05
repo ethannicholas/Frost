@@ -38,6 +38,7 @@ panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
 org$pandalanguage$plex$runtime$DFA** $tmp10 = &param0->dfa;
 *$tmp10 = $tmp2;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
+// unreffing REF($1:org.pandalanguage.plex.runtime.DFA)
 return;
 
 }
@@ -3024,6 +3025,8 @@ pandaFree($tmp2272);
 panda$core$Int64** $tmp2273 = &param0->accepts;
 panda$core$Int64* $tmp2274 = *$tmp2273;
 pandaFree($tmp2274);
+// line 358
+panda$core$Object$cleanup(((panda$core$Object*) param0));
 org$pandalanguage$plex$runtime$DFA** $tmp2275 = &param0->dfa;
 org$pandalanguage$plex$runtime$DFA* $tmp2276 = *$tmp2275;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2276));

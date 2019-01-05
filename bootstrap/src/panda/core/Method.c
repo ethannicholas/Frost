@@ -62,11 +62,16 @@ panda$core$Immutable* $tmp18 = *$tmp17;
 panda$core$String* $tmp19 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String($tmp15, ((panda$core$Object*) $tmp18));
 panda$core$String* $tmp20 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp19, &$s21);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp20));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp12));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp13));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp15));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp19));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp20));
+// unreffing REF($18:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp19));
+// unreffing REF($17:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp15));
+// unreffing REF($13:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp13));
+// unreffing REF($12:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp12));
+// unreffing REF($11:panda.core.String)
 return $tmp20;
 block2:;
 // line 46
@@ -76,14 +81,19 @@ panda$core$String* $tmp24 = panda$core$Panda$pointerConvert$panda$unsafe$Pointer
 panda$core$String* $tmp25 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s26, $tmp24);
 panda$core$String* $tmp27 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp25, &$s28);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp27));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp24));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp25));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp27));
+// unreffing REF($43:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp25));
+// unreffing REF($42:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp24));
+// unreffing REF($41:panda.core.String)
 return $tmp27;
 
 }
 void panda$core$Method$cleanup(panda$core$Method* param0) {
 
+// line 7
+panda$core$Immutable$cleanup(((panda$core$Immutable*) param0));
 panda$core$Immutable** $tmp29 = &param0->target;
 panda$core$Immutable* $tmp30 = *$tmp29;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp30));

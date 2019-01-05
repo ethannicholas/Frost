@@ -32,6 +32,8 @@ return;
 }
 void org$pandalanguage$pandac$CCodeGenerator$MethodShim$cleanup(org$pandalanguage$pandac$CCodeGenerator$MethodShim* param0) {
 
+// line 159
+panda$core$Object$cleanup(((panda$core$Object*) param0));
 panda$core$String** $tmp8 = &param0->name;
 panda$core$String* $tmp9 = *$tmp8;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp9));

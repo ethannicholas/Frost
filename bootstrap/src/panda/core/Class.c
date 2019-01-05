@@ -22,6 +22,8 @@ return;
 }
 void panda$core$Class$cleanup(panda$core$Class* param0) {
 
+// line 4
+panda$core$Immutable$cleanup(((panda$core$Immutable*) param0));
 panda$core$String** $tmp2 = &param0->name;
 panda$core$String* $tmp3 = *$tmp2;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));

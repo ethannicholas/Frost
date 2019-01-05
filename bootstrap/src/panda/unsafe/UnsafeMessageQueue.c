@@ -37,7 +37,6 @@ panda$threads$ScopedLock* $tmp5 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp5));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
 *(&local0) = $tmp2;
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
 // line 47
 panda$unsafe$UnsafeMessageQueue$Message** $tmp6 = &param0->tail;
 panda$unsafe$UnsafeMessageQueue$Message* $tmp7 = *$tmp6;
@@ -68,6 +67,7 @@ panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp18));
 panda$unsafe$UnsafeMessageQueue$Message** $tmp21 = &$tmp17->next;
 *$tmp21 = $tmp18;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp18));
+// unreffing REF($37:panda.unsafe.UnsafeMessageQueue.Message<panda.unsafe.UnsafeMessageQueue.T>)
 // line 50
 panda$unsafe$UnsafeMessageQueue$Message** $tmp22 = &param0->tail;
 panda$unsafe$UnsafeMessageQueue$Message* $tmp23 = *$tmp22;
@@ -104,6 +104,7 @@ panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp36));
 panda$unsafe$UnsafeMessageQueue$Message** $tmp39 = &param0->head;
 *$tmp39 = $tmp36;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp36));
+// unreffing REF($86:panda.unsafe.UnsafeMessageQueue.Message<panda.unsafe.UnsafeMessageQueue.T>)
 // line 55
 panda$unsafe$UnsafeMessageQueue$Message** $tmp40 = &param0->head;
 panda$unsafe$UnsafeMessageQueue$Message* $tmp41 = *$tmp40;
@@ -133,6 +134,8 @@ panda$threads$ScopedLock* $tmp55 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp55));
 // unreffing scope
 *(&local0) = ((panda$threads$ScopedLock*) NULL);
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
+// unreffing REF($1:panda.threads.ScopedLock)
 return;
 
 }
@@ -149,7 +152,6 @@ panda$threads$ScopedLock* $tmp59 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp59));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp56));
 *(&local0) = $tmp56;
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp56));
 // line 71
 panda$core$Int64* $tmp60 = &param0->count;
 panda$core$Int64 $tmp61 = *$tmp60;
@@ -157,6 +159,8 @@ panda$threads$ScopedLock* $tmp62 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp62));
 // unreffing scope
 *(&local0) = ((panda$threads$ScopedLock*) NULL);
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp56));
+// unreffing REF($1:panda.threads.ScopedLock)
 return $tmp61;
 
 }
@@ -186,7 +190,6 @@ panda$threads$ScopedLock* $tmp72 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp72));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp69));
 *(&local0) = $tmp69;
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp69));
 // line 94
 goto block1;
 block1:;
@@ -260,6 +263,8 @@ panda$threads$ScopedLock* $tmp108 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp108));
 // unreffing scope
 *(&local0) = ((panda$threads$ScopedLock*) NULL);
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp69));
+// unreffing REF($1:panda.threads.ScopedLock)
 return $tmp106;
 
 }
@@ -275,6 +280,7 @@ block2:;
 // line 111
 panda$core$Object* $tmp111 = panda$unsafe$UnsafeMessageQueue$getMessage$R$panda$unsafe$UnsafeMessageQueue$T(param0);
 panda$core$Panda$unref$panda$core$Object$Q($tmp111);
+// unreffing REF($8:panda.unsafe.UnsafeMessageQueue.T)
 goto block1;
 block3:;
 return;
@@ -292,6 +298,7 @@ panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp112));
 panda$threads$Lock** $tmp115 = &param0->lock;
 *$tmp115 = $tmp112;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp112));
+// unreffing REF($2:panda.threads.Lock)
 // line 29
 panda$threads$Notifier* $tmp116 = (panda$threads$Notifier*) pandaObjectAlloc(32, (panda$core$Class*) &panda$threads$Notifier$class);
 panda$threads$Lock** $tmp117 = &param0->lock;
@@ -304,6 +311,7 @@ panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp116));
 panda$threads$Notifier** $tmp121 = &param0->notifier;
 *$tmp121 = $tmp116;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp116));
+// unreffing REF($17:panda.threads.Notifier)
 // line 32
 panda$core$Int64 $tmp122 = (panda$core$Int64) {0};
 panda$core$Int64* $tmp123 = &param0->count;
@@ -313,6 +321,8 @@ return;
 }
 void panda$unsafe$UnsafeMessageQueue$cleanup(panda$unsafe$UnsafeMessageQueue* param0) {
 
+// line 5
+panda$core$Immutable$cleanup(((panda$core$Immutable*) param0));
 panda$threads$Lock** $tmp124 = &param0->lock;
 panda$threads$Lock* $tmp125 = *$tmp124;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp125));

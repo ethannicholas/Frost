@@ -42,6 +42,7 @@ panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
 panda$collections$HashMap$EntryIterator** $tmp5 = &param0->base;
 *$tmp5 = $tmp2;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
+// unreffing REF($2:panda.collections.HashMap.EntryIterator<panda.collections.HashMap.KeyIterator.K, panda.collections.HashMap.KeyIterator.V>)
 return;
 
 }
@@ -76,11 +77,14 @@ panda$collections$Key** $tmp24 = &((panda$collections$HashMap$Entry*) $tmp23)->k
 panda$collections$Key* $tmp25 = *$tmp24;
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp25));
 panda$core$Panda$unref$panda$core$Object$Q($tmp23);
+// unreffing REF($15:panda.collections.Iterator.T)
 return $tmp25;
 
 }
 void panda$collections$HashMap$KeyIterator$cleanup(panda$collections$HashMap$KeyIterator* param0) {
 
+// line 79
+panda$core$Object$cleanup(((panda$core$Object*) param0));
 panda$collections$HashMap$EntryIterator** $tmp26 = &param0->base;
 panda$collections$HashMap$EntryIterator* $tmp27 = *$tmp26;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp27));

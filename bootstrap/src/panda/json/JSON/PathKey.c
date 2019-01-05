@@ -68,6 +68,8 @@ panda$core$String$Index $tmp20 = *$tmp19;
 *(&local3) = $tmp20;
 goto block1;
 block1:;
+// line 45
+panda$core$Object$cleanup(((panda$core$Object*) param0));
 return;
 
 }

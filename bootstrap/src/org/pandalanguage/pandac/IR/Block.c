@@ -37,6 +37,7 @@ panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
 panda$collections$Array** $tmp5 = &param0->ids;
 *$tmp5 = $tmp2;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
+// unreffing REF($1:panda.collections.Array<org.pandalanguage.pandac.IR.Statement.ID>)
 // line 289
 panda$collections$Array* $tmp6 = (panda$collections$Array*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$Array$class);
 panda$collections$Array$init($tmp6);
@@ -47,6 +48,7 @@ panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp6));
 panda$collections$Array** $tmp9 = &param0->statements;
 *$tmp9 = $tmp6;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp6));
+// unreffing REF($16:panda.collections.Array<org.pandalanguage.pandac.IR.Statement>)
 // line 292
 org$pandalanguage$pandac$IR$Block$ID* $tmp10 = &param0->id;
 *$tmp10 = param1;
@@ -69,9 +71,6 @@ panda$core$MutableString* $tmp17 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp17));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp11));
 *(&local0) = $tmp11;
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp11));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp14));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp15));
 // line 298
 panda$core$Int64 $tmp18 = (panda$core$Int64) {0};
 panda$collections$Array** $tmp19 = &param0->statements;
@@ -117,8 +116,10 @@ org$pandalanguage$pandac$IR$Statement$ID$wrapper* $tmp48;
 $tmp48 = (org$pandalanguage$pandac$IR$Statement$ID$wrapper*) pandaObjectAlloc(24, (panda$core$Class*) &org$pandalanguage$pandac$IR$Statement$ID$wrapperclass);
 $tmp48->value = ((org$pandalanguage$pandac$IR$Statement$ID$wrapper*) $tmp47)->value;
 panda$core$MutableString$append$panda$core$Object($tmp43, ((panda$core$Object*) $tmp48));
-panda$core$Panda$unref$panda$core$Object$Q($tmp47);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp48));
+// unreffing REF($51:panda.core.Object)
+panda$core$Panda$unref$panda$core$Object$Q($tmp47);
+// unreffing REF($49:panda.collections.Array.T)
 // line 300
 panda$core$MutableString* $tmp49 = *(&local0);
 panda$core$MutableString$append$panda$core$String($tmp49, &$s50);
@@ -130,6 +131,7 @@ panda$core$Int64 $tmp54 = *(&local1);
 panda$core$Object* $tmp55 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T($tmp53, $tmp54);
 panda$core$MutableString$append$panda$core$Object($tmp51, ((panda$core$Object*) ((org$pandalanguage$pandac$IR$Statement*) $tmp55)));
 panda$core$Panda$unref$panda$core$Object$Q($tmp55);
+// unreffing REF($68:panda.collections.Array.T)
 // line 302
 panda$core$MutableString* $tmp56 = *(&local0);
 panda$core$MutableString$append$panda$core$String($tmp56, &$s57);
@@ -169,15 +171,24 @@ panda$core$MutableString* $tmp78 = *(&local0);
 panda$core$String* $tmp79 = panda$core$MutableString$finish$R$panda$core$String($tmp78);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp79));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp79));
+// unreffing REF($106:panda.core.String)
 panda$core$MutableString* $tmp80 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp80));
 // unreffing result
 *(&local0) = ((panda$core$MutableString*) NULL);
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp15));
+// unreffing REF($5:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp14));
+// unreffing REF($4:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp11));
+// unreffing REF($1:panda.core.MutableString)
 return $tmp79;
 
 }
 void org$pandalanguage$pandac$IR$Block$cleanup(org$pandalanguage$pandac$IR$Block* param0) {
 
+// line 266
+panda$core$Object$cleanup(((panda$core$Object*) param0));
 panda$collections$Array** $tmp81 = &param0->ids;
 panda$collections$Array* $tmp82 = *$tmp81;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp82));

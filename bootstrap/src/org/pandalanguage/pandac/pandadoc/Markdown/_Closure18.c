@@ -23,7 +23,7 @@ static panda$core$String $s31 = { (panda$core$Class*) &panda$core$String$class, 
 
 void org$pandalanguage$pandac$pandadoc$Markdown$_Closure18$init$org$pandalanguage$pandac$pandadoc$Markdown(org$pandalanguage$pandac$pandadoc$Markdown$_Closure18* param0, org$pandalanguage$pandac$pandadoc$Markdown* param1) {
 
-// line 772
+// line 769
 org$pandalanguage$pandac$pandadoc$Markdown** $tmp2 = &param0->$self;
 org$pandalanguage$pandac$pandadoc$Markdown* $tmp3 = *$tmp2;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
@@ -35,6 +35,8 @@ return;
 }
 void org$pandalanguage$pandac$pandadoc$Markdown$_Closure18$cleanup(org$pandalanguage$pandac$pandadoc$Markdown$_Closure18* param0) {
 
+// line 769
+panda$core$Object$cleanup(((panda$core$Object*) param0));
 org$pandalanguage$pandac$pandadoc$Markdown** $tmp5 = &param0->$self;
 org$pandalanguage$pandac$pandadoc$Markdown* $tmp6 = *$tmp5;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp6));
@@ -44,7 +46,7 @@ return;
 panda$core$String* org$pandalanguage$pandac$pandadoc$Markdown$_Closure18$$anonymous17$panda$collections$ListView$LTpanda$core$String$Q$GT$R$panda$core$String(org$pandalanguage$pandac$pandadoc$Markdown$_Closure18* param0, panda$collections$ListView* param1) {
 
 panda$core$MutableString* local0 = NULL;
-// line 773
+// line 770
 panda$core$MutableString* $tmp7 = (panda$core$MutableString*) pandaObjectAlloc(48, (panda$core$Class*) &panda$core$MutableString$class);
 panda$core$Int64 $tmp8 = (panda$core$Int64) {1};
 ITable* $tmp9 = param1->$class->itable;
@@ -59,15 +61,13 @@ panda$core$MutableString* $tmp13 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp13));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp7));
 *(&local0) = $tmp7;
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp7));
-panda$core$Panda$unref$panda$core$Object$Q($tmp12);
-// line 774
+// line 771
 org$pandalanguage$pandac$pandadoc$Markdown** $tmp14 = &param0->$self;
 org$pandalanguage$pandac$pandadoc$Markdown* $tmp15 = *$tmp14;
 panda$core$MutableString* $tmp16 = *(&local0);
 $fn18 $tmp17 = ($fn18) $tmp15->$class->vtable[22];
 $tmp17($tmp15, $tmp16);
-// line 775
+// line 772
 panda$core$Int64 $tmp19 = (panda$core$Int64) {1};
 ITable* $tmp20 = param1->$class->itable;
 while ($tmp20->$class != (panda$core$Class*) &panda$collections$ListView$class) {
@@ -81,15 +81,24 @@ panda$core$MutableString* $tmp28 = *(&local0);
 panda$core$String* $tmp29 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String($tmp26, ((panda$core$Object*) $tmp28));
 panda$core$String* $tmp30 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp29, &$s31);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp30));
-panda$core$Panda$unref$panda$core$Object$Q($tmp23);
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp24));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp26));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp29));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp30));
+// unreffing REF($34:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp29));
+// unreffing REF($33:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp26));
+// unreffing REF($30:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp24));
+// unreffing REF($29:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q($tmp23);
+// unreffing REF($26:panda.collections.ListView.T)
 panda$core$MutableString* $tmp32 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp32));
 // unreffing result
 *(&local0) = ((panda$core$MutableString*) NULL);
+panda$core$Panda$unref$panda$core$Object$Q($tmp12);
+// unreffing REF($5:panda.collections.ListView.T)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp7));
+// unreffing REF($1:panda.core.MutableString)
 return $tmp30;
 
 }

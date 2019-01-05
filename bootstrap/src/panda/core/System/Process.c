@@ -20,6 +20,8 @@ return;
 }
 void panda$core$System$Process$cleanup(panda$core$System$Process* param0) {
 
+// line 12
+panda$core$Object$cleanup(((panda$core$Object*) param0));
 panda$io$OutputStream** $tmp2 = &param0->input;
 panda$io$OutputStream* $tmp3 = *$tmp2;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));

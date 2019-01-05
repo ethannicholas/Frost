@@ -23,14 +23,14 @@ static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -
 
 void org$pandalanguage$pandac$Compiler$Settings$init$panda$io$File$panda$collections$ListView$LTpanda$io$File$GT$panda$core$Int64$panda$core$Int64$panda$core$Bit(org$pandalanguage$pandac$Compiler$Settings* param0, panda$io$File* param1, panda$collections$ListView* param2, panda$core$Int64 param3, panda$core$Int64 param4, panda$core$Bit param5) {
 
-// line 242
+// line 251
 panda$io$File** $tmp2 = &param0->pandaHome;
 panda$io$File* $tmp3 = *$tmp2;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 panda$io$File** $tmp4 = &param0->pandaHome;
 *$tmp4 = param1;
-// line 243
+// line 252
 panda$collections$ImmutableArray* $tmp5 = (panda$collections$ImmutableArray*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$ImmutableArray$class);
 panda$collections$ImmutableArray$init$panda$collections$ListView$LTpanda$collections$ImmutableArray$T$GT($tmp5, param2);
 panda$collections$ImmutableArray** $tmp6 = &param0->importDirs;
@@ -40,13 +40,14 @@ panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp5));
 panda$collections$ImmutableArray** $tmp8 = &param0->importDirs;
 *$tmp8 = $tmp5;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp5));
-// line 244
+// unreffing REF($10:panda.collections.ImmutableArray<panda.io.File>)
+// line 253
 panda$core$Int64* $tmp9 = &param0->optimizationLevel;
 *$tmp9 = param3;
-// line 245
+// line 254
 panda$core$Int64* $tmp10 = &param0->safetyLevel;
 *$tmp10 = param4;
-// line 246
+// line 255
 panda$core$Bit* $tmp11 = &param0->debug;
 *$tmp11 = param5;
 return;
@@ -54,6 +55,8 @@ return;
 }
 void org$pandalanguage$pandac$Compiler$Settings$cleanup(org$pandalanguage$pandac$Compiler$Settings* param0) {
 
+// line 238
+panda$core$Immutable$cleanup(((panda$core$Immutable*) param0));
 panda$io$File** $tmp12 = &param0->pandaHome;
 panda$io$File* $tmp13 = *$tmp12;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp13));

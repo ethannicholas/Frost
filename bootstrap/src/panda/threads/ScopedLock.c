@@ -37,6 +37,8 @@ void panda$threads$ScopedLock$cleanup(panda$threads$ScopedLock* param0) {
 panda$threads$Lock** $tmp5 = &param0->lock;
 panda$threads$Lock* $tmp6 = *$tmp5;
 panda$threads$Lock$unlock($tmp6);
+// line 25
+panda$core$Immutable$cleanup(((panda$core$Immutable*) param0));
 panda$threads$Lock** $tmp7 = &param0->lock;
 panda$threads$Lock* $tmp8 = *$tmp7;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp8));

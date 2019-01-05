@@ -1189,6 +1189,7 @@ panda$core$UInt64 $tmp322 = (panda$core$UInt64) {4294967295};
 panda$core$String* $tmp323 = panda$core$Panda$format$panda$core$Bit$panda$core$UInt64$panda$core$UInt64$panda$core$String$R$panda$core$String($tmp319, $tmp321, $tmp322, param1);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp323));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp323));
+// unreffing REF($7:panda.core.String)
 return $tmp323;
 
 }

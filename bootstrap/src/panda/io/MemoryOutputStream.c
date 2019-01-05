@@ -36,6 +36,7 @@ panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
 panda$core$MutableString** $tmp6 = &param0->data;
 *$tmp6 = $tmp3;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
+// unreffing REF($1:panda.core.MutableString)
 // line 28
 panda$io$OutputStream$init(((panda$io$OutputStream*) param0));
 return;
@@ -77,6 +78,7 @@ panda$core$MutableString* $tmp15 = *$tmp14;
 panda$core$String* $tmp16 = panda$core$MutableString$convert$R$panda$core$String($tmp15);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp16));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp16));
+// unreffing REF($3:panda.core.String)
 return $tmp16;
 
 }
@@ -88,11 +90,14 @@ panda$core$MutableString* $tmp18 = *$tmp17;
 panda$core$String* $tmp19 = panda$core$MutableString$finish$R$panda$core$String($tmp18);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp19));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp19));
+// unreffing REF($3:panda.core.String)
 return $tmp19;
 
 }
 void panda$io$MemoryOutputStream$cleanup(panda$io$MemoryOutputStream* param0) {
 
+// line 9
+panda$io$OutputStream$cleanup(((panda$io$OutputStream*) param0));
 panda$core$MutableString** $tmp20 = &param0->data;
 panda$core$MutableString* $tmp21 = *$tmp20;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp21));

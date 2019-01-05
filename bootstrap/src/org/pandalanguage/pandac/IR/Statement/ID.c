@@ -87,9 +87,12 @@ $tmp10->value = $tmp9;
 panda$core$String* $tmp11 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s12, ((panda$core$Object*) $tmp10));
 panda$core$String* $tmp13 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp11, &$s14);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp13));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp10));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp11));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp13));
+// unreffing REF($4:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp11));
+// unreffing REF($3:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp10));
+// unreffing REF($2:panda.core.Object)
 return $tmp13;
 
 }

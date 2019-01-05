@@ -122,11 +122,14 @@ panda$core$String* $tmp37 = *$tmp36;
 panda$core$String$UTF8Iterator$init$panda$core$String($tmp35, $tmp37);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((panda$collections$Iterator*) $tmp35)));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp35));
+// unreffing REF($1:panda.core.String.UTF8Iterator)
 return ((panda$collections$Iterator*) $tmp35);
 
 }
 void panda$core$String$UTF8List$cleanup(panda$core$String$UTF8List* param0) {
 
+// line 84
+panda$core$Object$cleanup(((panda$core$Object*) param0));
 panda$core$String** $tmp38 = &param0->str;
 panda$core$String* $tmp39 = *$tmp38;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp39));

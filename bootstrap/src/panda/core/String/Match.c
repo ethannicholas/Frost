@@ -53,7 +53,6 @@ panda$collections$Array* $tmp7 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp7));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp6));
 *(&local0) = $tmp6;
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp6));
 // line 272
 panda$core$Int64 $tmp8 = (panda$core$Int64) {0};
 panda$core$Int64 $tmp9;
@@ -89,6 +88,7 @@ panda$core$Int64 $tmp29 = *(&local1);
 panda$core$String* $tmp30 = panda$core$Matcher$group$panda$core$Int64$R$panda$core$String$Q(param1, $tmp29);
 panda$collections$Array$add$panda$collections$Array$T($tmp28, ((panda$core$Object*) $tmp30));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp30));
+// unreffing REF($48:panda.core.String?)
 goto block3;
 block3:;
 panda$core$Int64 $tmp31 = *(&local1);
@@ -130,10 +130,13 @@ panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp52));
 panda$collections$ImmutableArray** $tmp55 = &param0->groups;
 *$tmp55 = $tmp52;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp52));
+// unreffing REF($84:panda.collections.ImmutableArray<panda.collections.Array.T>)
 panda$collections$Array* $tmp56 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp56));
 // unreffing g
 *(&local0) = ((panda$collections$Array*) NULL);
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp6));
+// unreffing REF($9:panda.collections.Array<panda.core.String>)
 return;
 
 }
@@ -147,14 +150,19 @@ panda$core$Object* $tmp60 = panda$collections$ImmutableArray$$IDX$panda$core$Int
 panda$core$String* $tmp61 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s62, ((panda$core$String*) $tmp60));
 panda$core$String* $tmp63 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp61, &$s64);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp63));
-panda$core$Panda$unref$panda$core$Object$Q($tmp60);
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp61));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp63));
+// unreffing REF($8:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp61));
+// unreffing REF($7:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q($tmp60);
+// unreffing REF($5:panda.collections.ImmutableArray.T)
 return $tmp63;
 
 }
 void panda$core$String$Match$cleanup(panda$core$String$Match* param0) {
 
+// line 251
+panda$core$Immutable$cleanup(((panda$core$Immutable*) param0));
 panda$collections$ImmutableArray** $tmp65 = &param0->groups;
 panda$collections$ImmutableArray* $tmp66 = *$tmp65;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp66));

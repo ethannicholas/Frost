@@ -25,6 +25,8 @@ return;
 }
 void panda$core$Error$cleanup(panda$core$Error* param0) {
 
+// line 6
+panda$core$Object$cleanup(((panda$core$Object*) param0));
 panda$core$String** $tmp5 = &param0->message;
 panda$core$String* $tmp6 = *$tmp5;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp6));

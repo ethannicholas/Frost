@@ -86,6 +86,8 @@ return $tmp30;
 }
 void org$pandalanguage$panda$IntBitIterator$cleanup(org$pandalanguage$panda$IntBitIterator* param0) {
 
+// line 4
+panda$core$Object$cleanup(((panda$core$Object*) param0));
 return;
 
 }

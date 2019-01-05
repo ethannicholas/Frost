@@ -327,14 +327,19 @@ panda$core$String* $tmp177 = $tmp175(((panda$collections$CollectionView*) param0
 panda$core$String* $tmp178 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s179, $tmp177);
 panda$core$String* $tmp180 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp178, &$s181);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp180));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp177));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp178));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp180));
+// unreffing REF($5:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp178));
+// unreffing REF($4:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp177));
+// unreffing REF($3:panda.core.String)
 return $tmp180;
 
 }
 void org$pandalanguage$panda$Int32List$cleanup(org$pandalanguage$panda$Int32List* param0) {
 
+// line 8
+panda$core$Object$cleanup(((panda$core$Object*) param0));
 return;
 
 }

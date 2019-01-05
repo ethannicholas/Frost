@@ -241,6 +241,7 @@ panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp121));
 panda$core$String** $tmp125 = &param0->indent;
 *$tmp125 = $tmp121;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp121));
+// unreffing REF($37:panda.core.String)
 goto block4;
 block4:;
 // line 79
@@ -255,6 +256,8 @@ return;
 }
 void panda$io$IndentedOutputStream$cleanup(panda$io$IndentedOutputStream* param0) {
 
+// line 10
+panda$io$OutputStream$cleanup(((panda$io$OutputStream*) param0));
 panda$core$String** $tmp130 = &param0->indent;
 panda$core$String* $tmp131 = *$tmp130;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp131));

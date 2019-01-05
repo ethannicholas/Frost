@@ -160,6 +160,7 @@ while ($tmp62->$class != (panda$core$Class*) &panda$collections$ListWriter$class
 $fn64 $tmp63 = $tmp62->methods[2];
 panda$core$Object* $tmp65 = $tmp63(((panda$collections$ListWriter*) param0), $tmp61);
 panda$core$Panda$unref$panda$core$Object$Q($tmp65);
+// unreffing REF($80:panda.collections.ListWriter.T)
 goto block7;
 block7:;
 panda$core$Int64 $tmp66 = *(&local1);
@@ -242,7 +243,6 @@ while ($tmp111->$class != (panda$core$Class*) &panda$collections$Iterator$class)
 }
 $fn113 $tmp112 = $tmp111->methods[1];
 panda$core$Object* $tmp114 = $tmp112($tmp105);
-panda$core$Panda$unref$panda$core$Object$Q($tmp114);
 panda$core$Object* $tmp115 = *(&local3);
 panda$core$Panda$unref$panda$core$Object$Q($tmp115);
 panda$core$Panda$ref$panda$core$Object$Q($tmp114);
@@ -264,6 +264,8 @@ int64_t $tmp124 = $tmp122.value;
 int64_t $tmp125 = $tmp123 + $tmp124;
 panda$core$Int64 $tmp126 = (panda$core$Int64) {$tmp125};
 *(&local2) = $tmp126;
+panda$core$Panda$unref$panda$core$Object$Q($tmp114);
+// unreffing REF($148:panda.collections.Iterator.T)
 panda$core$Object* $tmp127 = *(&local3);
 panda$core$Panda$unref$panda$core$Object$Q($tmp127);
 // unreffing v
@@ -271,6 +273,7 @@ panda$core$Panda$unref$panda$core$Object$Q($tmp127);
 goto block21;
 block23:;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp105));
+// unreffing REF($137:panda.collections.Iterator<panda.collections.Iterable.T>)
 return;
 
 }
@@ -407,22 +410,23 @@ panda$core$Int8* $tmp201 = *$tmp200;
 panda$core$Object** $tmp202 = &param1->target;
 panda$core$Object* $tmp203 = *$tmp202;
 bool $tmp204 = $tmp203 != ((panda$core$Object*) NULL);
-if ($tmp204) goto block10; else goto block11;
-block11:;
+if ($tmp204) goto block12; else goto block13;
+block13:;
 panda$core$Bit $tmp206 = (($fn205) $tmp201)($tmp199);
 *(&local1) = $tmp206;
-goto block12;
-block10:;
+goto block14;
+block12:;
 panda$core$Bit $tmp208 = (($fn207) $tmp201)($tmp203, $tmp199);
 *(&local1) = $tmp208;
-goto block12;
-block12:;
+goto block14;
+block14:;
 panda$core$Bit $tmp209 = *(&local1);
 panda$core$Bit $tmp210 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp209);
-panda$core$Panda$unref$panda$core$Object$Q($tmp199);
 bool $tmp211 = $tmp210.value;
-if ($tmp211) goto block13; else goto block14;
-block13:;
+panda$core$Panda$unref$panda$core$Object$Q($tmp199);
+// unreffing REF($60:panda.collections.ListView.T)
+if ($tmp211) goto block10; else goto block11;
+block10:;
 // line 46
 panda$core$Int64 $tmp212 = *(&local0);
 ITable* $tmp213 = ((panda$collections$ListWriter*) param0)->$class->itable;
@@ -432,8 +436,9 @@ while ($tmp213->$class != (panda$core$Class*) &panda$collections$ListWriter$clas
 $fn215 $tmp214 = $tmp213->methods[2];
 panda$core$Object* $tmp216 = $tmp214(((panda$collections$ListWriter*) param0), $tmp212);
 panda$core$Panda$unref$panda$core$Object$Q($tmp216);
-goto block14;
-block14:;
+// unreffing REF($88:panda.collections.ListWriter.T)
+goto block11;
+block11:;
 goto block3;
 block3:;
 panda$core$Int64 $tmp217 = *(&local0);

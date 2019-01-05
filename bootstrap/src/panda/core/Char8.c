@@ -269,7 +269,6 @@ panda$core$MutableString* $tmp54 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp54));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp53));
 *(&local0) = $tmp53;
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp53));
 // line 70
 panda$core$Int64 $tmp55 = (panda$core$Int64) {0};
 panda$core$Bit $tmp56 = panda$core$Bit$init$builtin_bit(false);
@@ -336,10 +335,13 @@ panda$core$MutableString* $tmp95 = *(&local0);
 panda$core$String* $tmp96 = panda$core$MutableString$finish$R$panda$core$String($tmp95);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp96));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp96));
+// unreffing REF($65:panda.core.String)
 panda$core$MutableString* $tmp97 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp97));
 // unreffing result
 *(&local0) = ((panda$core$MutableString*) NULL);
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp53));
+// unreffing REF($1:panda.core.MutableString)
 return $tmp96;
 
 }
@@ -349,6 +351,7 @@ panda$core$String* panda$core$Char8$$MUL$panda$core$Int64$panda$core$Char8$R$pan
 panda$core$String* $tmp98 = panda$core$Char8$$MUL$panda$core$Int64$R$panda$core$String(param1, param0);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp98));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp98));
+// unreffing REF($1:panda.core.String)
 return $tmp98;
 
 }
@@ -454,6 +457,7 @@ panda$core$Int64 $tmp131 = (panda$core$Int64) {1};
 panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64($tmp129, $tmp130, $tmp131);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp129));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp129));
+// unreffing REF($17:panda.core.String)
 return $tmp129;
 block2:;
 // line 134
@@ -488,6 +492,7 @@ panda$core$Int64 $tmp153 = (panda$core$Int64) {2};
 panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64($tmp151, $tmp152, $tmp153);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp151));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp151));
+// unreffing REF($57:panda.core.String)
 return $tmp151;
 
 }

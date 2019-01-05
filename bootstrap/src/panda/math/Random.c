@@ -39,6 +39,7 @@ panda$core$Int64 $tmp4 = panda$core$Int64$init$builtin_int64($tmp3);
 panda$math$XorShift128Plus$init$panda$core$Int64($tmp2, $tmp4);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((panda$math$Random*) $tmp2)));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
+// unreffing REF($1:panda.math.XorShift128Plus)
 return ((panda$math$Random*) $tmp2);
 
 }

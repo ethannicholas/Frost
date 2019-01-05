@@ -217,7 +217,6 @@ panda$core$MutableString* $tmp31 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp31));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp30));
 *(&local0) = $tmp30;
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp30));
 // line 57
 panda$core$Int64 $tmp32 = (panda$core$Int64) {0};
 panda$core$Bit $tmp33 = panda$core$Bit$init$builtin_bit(false);
@@ -252,6 +251,7 @@ $tmp52 = (panda$core$Char16$wrapper*) pandaObjectAlloc(14, (panda$core$Class*) &
 $tmp52->value = param0;
 panda$core$MutableString$append$panda$core$Object($tmp51, ((panda$core$Object*) $tmp52));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp52));
+// unreffing REF($36:panda.core.Object)
 goto block3;
 block3:;
 panda$core$Int64 $tmp53 = *(&local1);
@@ -288,10 +288,13 @@ panda$core$MutableString* $tmp73 = *(&local0);
 panda$core$String* $tmp74 = panda$core$MutableString$finish$R$panda$core$String($tmp73);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp74));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp74));
+// unreffing REF($69:panda.core.String)
 panda$core$MutableString* $tmp75 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp75));
 // unreffing result
 *(&local0) = ((panda$core$MutableString*) NULL);
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp30));
+// unreffing REF($1:panda.core.MutableString)
 return $tmp74;
 
 }
@@ -301,6 +304,7 @@ panda$core$String* panda$core$Char16$$MUL$panda$core$Int64$panda$core$Char16$R$p
 panda$core$String* $tmp76 = panda$core$Char16$$MUL$panda$core$Int64$R$panda$core$String(param1, param0);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp76));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp76));
+// unreffing REF($1:panda.core.String)
 return $tmp76;
 
 }
@@ -406,6 +410,7 @@ panda$core$Int64 $tmp108 = (panda$core$Int64) {1};
 panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64($tmp106, $tmp107, $tmp108);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp106));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp106));
+// unreffing REF($19:panda.core.String)
 return $tmp106;
 block2:;
 // line 120
@@ -447,6 +452,7 @@ panda$core$Int64 $tmp134 = (panda$core$Int64) {2};
 panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64($tmp132, $tmp133, $tmp134);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp132));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp132));
+// unreffing REF($63:panda.core.String)
 return $tmp132;
 block4:;
 // line 126
@@ -492,6 +498,7 @@ panda$core$Int64 $tmp165 = (panda$core$Int64) {3};
 panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64($tmp163, $tmp164, $tmp165);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp163));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp163));
+// unreffing REF($113:panda.core.String)
 return $tmp163;
 
 }

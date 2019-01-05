@@ -38,8 +38,10 @@ panda$core$Object* $tmp6 = *$tmp5;
 panda$core$String* $tmp7 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s8, $tmp6);
 panda$core$String* $tmp9 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp7, &$s10);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp9));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp7));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp9));
+// unreffing REF($6:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp7));
+// unreffing REF($5:panda.core.String)
 return $tmp9;
 
 }

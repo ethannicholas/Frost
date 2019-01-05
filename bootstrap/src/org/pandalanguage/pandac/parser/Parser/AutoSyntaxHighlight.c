@@ -68,6 +68,8 @@ $fn27 $tmp26 = ($fn27) $tmp23->$class->vtable[4];
 $tmp26($tmp23, $tmp25);
 goto block2;
 block2:;
+// line 27
+panda$core$Object$cleanup(((panda$core$Object*) param0));
 org$pandalanguage$pandac$parser$Parser** $tmp28 = &param0->parser;
 org$pandalanguage$pandac$parser$Parser* $tmp29 = *$tmp28;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp29));

@@ -280,6 +280,8 @@ block2:;
 panda$collections$IdentityMap$Entry*** $tmp133 = &param0->contents;
 panda$collections$IdentityMap$Entry** $tmp134 = *$tmp133;
 pandaFree($tmp134);
+// line 68
+panda$core$Object$cleanup(((panda$core$Object*) param0));
 return;
 
 }
@@ -533,6 +535,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp236));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp235));
 *(&local1) = $tmp235;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp235));
+// unreffing REF($84:panda.collections.IdentityMap.Entry<panda.collections.IdentityMap.K, panda.collections.IdentityMap.V>)
 // line 121
 panda$collections$IdentityMap$Entry* $tmp237 = *(&local1);
 panda$collections$IdentityMap$Entry* $tmp238 = *(&local3);
@@ -1365,7 +1368,6 @@ panda$core$MutableString* $tmp702 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp702));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp701));
 *(&local0) = $tmp701;
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp701));
 // line 236
 panda$core$MutableString* $tmp703 = *(&local0);
 panda$core$MutableString$append$panda$core$String($tmp703, &$s704);
@@ -1532,6 +1534,7 @@ panda$core$MutableString* $tmp794 = *(&local0);
 panda$core$String* $tmp795 = panda$core$MutableString$finish$R$panda$core$String($tmp794);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp795));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp795));
+// unreffing REF($180:panda.core.String)
 panda$core$String* $tmp796 = *(&local1);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp796));
 // unreffing separator
@@ -1540,6 +1543,8 @@ panda$core$MutableString* $tmp797 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp797));
 // unreffing result
 *(&local0) = ((panda$core$MutableString*) NULL);
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp701));
+// unreffing REF($1:panda.core.MutableString)
 return $tmp795;
 
 }

@@ -63,6 +63,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp17));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp16));
 *(&local0) = $tmp16;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp16));
+// unreffing REF($15:panda.core.String)
 goto block2;
 block3:;
 // line 1
@@ -92,6 +93,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp30));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp29));
 *(&local1) = $tmp29;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp29));
+// unreffing REF($50:panda.core.String)
 goto block5;
 block6:;
 // line 1
@@ -110,10 +112,14 @@ panda$core$String* $tmp39 = *(&local1);
 panda$core$String* $tmp40 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp37, $tmp39);
 panda$core$String* $tmp41 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp40, &$s42);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp41));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp35));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp37));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp40));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp41));
+// unreffing REF($76:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp40));
+// unreffing REF($75:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp37));
+// unreffing REF($73:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp35));
+// unreffing REF($72:panda.core.String)
 panda$core$String* $tmp43 = *(&local1);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp43));
 // unreffing secondString
@@ -127,6 +133,8 @@ return $tmp41;
 }
 void org$pandalanguage$pandac$Pair$cleanup(org$pandalanguage$pandac$Pair* param0) {
 
+// line 4
+panda$core$Object$cleanup(((panda$core$Object*) param0));
 panda$core$Object** $tmp45 = &param0->first;
 panda$core$Object* $tmp46 = *$tmp45;
 panda$core$Panda$unref$panda$core$Object$Q($tmp46);

@@ -42,6 +42,8 @@ return;
 }
 void org$pandalanguage$pandac$Compiler$Error$cleanup(org$pandalanguage$pandac$Compiler$Error* param0) {
 
+// line 33
+panda$core$Immutable$cleanup(((panda$core$Immutable*) param0));
 panda$io$File** $tmp9 = &param0->file;
 panda$io$File* $tmp10 = *$tmp9;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp10));

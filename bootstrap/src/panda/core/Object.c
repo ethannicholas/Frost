@@ -22,8 +22,10 @@ panda$core$String* $tmp5 = *$tmp4;
 panda$core$String* $tmp6 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s7, $tmp5);
 panda$core$String* $tmp8 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp6, &$s9);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp8));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp6));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp8));
+// unreffing REF($6:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp6));
+// unreffing REF($5:panda.core.String)
 return $tmp8;
 
 }

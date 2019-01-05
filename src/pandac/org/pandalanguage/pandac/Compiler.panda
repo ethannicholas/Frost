@@ -111,6 +111,7 @@ class Compiler {
         LOOP(String? -* label *-, IR.Block.ID -* break target *-, IR.Block.ID -* continue target *-)
         SCOPE
         VARIABLE_SCOPE(Variable)
+        VALUE_SCOPE(IR.Value)
 
         @override
         function convert():String {
@@ -126,6 +127,9 @@ class Compiler {
                 }
                 when VARIABLE_SCOPE(v) {
                     return "VARIABLE_SCOPE(\{v})"
+                }
+                when VALUE_SCOPE(v) {
+                    return "VALUE_SCOPE(\{v})"
                 }
             }
         }
@@ -146,6 +150,33 @@ class Compiler {
         method cleanup() {
             assert compiler.enclosingContexts[0] == context
             compiler.enclosingContexts.pop()
+        }
+    }
+
+    class AutoUnrefs {
+        def compiler:Compiler
+
+        def depth:Int
+
+        init(compiler:Compiler) {
+            self.compiler := compiler
+            self.depth := compiler.enclosingContexts.count
+        }
+
+        @override
+        method cleanup() {
+            while compiler.enclosingContexts.count > depth {
+                def scope := compiler.enclosingContexts[0]
+                match scope {
+                    when EnclosingContext.VALUE_SCOPE(v) {
+                        compiler.leaveScope(scope)
+                        compiler.enclosingContexts.pop()
+                    }
+                    otherwise {
+                        break
+                    }
+                }
+            }
         }
     }
 
@@ -176,7 +207,7 @@ class Compiler {
                     when EnclosingContext.SCOPE {
                         break
                     }
-                    when EnclosingContext.VARIABLE_SCOPE {
+                    when EnclosingContext.VARIABLE_SCOPE, EnclosingContext.VALUE_SCOPE {
                         compiler.leaveScope(pop)
                     }
                     otherwise {
@@ -186,28 +217,6 @@ class Compiler {
             }
             assert compiler.symbolTable == newSymbolTable
             compiler.symbolTable := oldSymbolTable
-        }
-    }
-
-    class AutoUnrefs {
-        def compiler:Compiler
-
-        def old:Array<IR.Value>?
-
-        init(compiler:Compiler) {
-            self.compiler := compiler
-            self.old := compiler.statementUnrefs
-            compiler.statementUnrefs := Array<IR.Value>()
-        }
-
-        @override
-        method cleanup() {
-            if !compiler.ir.currentBlockFinished {
-                for v in compiler.statementUnrefs {
-                    compiler.compileUnref(v)
-                }
-            }
-            compiler.statementUnrefs := old
         }
     }
 
@@ -379,9 +388,6 @@ class Compiler {
 
     @private
     var inAtPre := false
-
-    @private
-    var statementUnrefs:Array<IR.Value>?
 
     @private
     var returnValue:IR.Value? := null -- FIXME shouldn't need := null, but getting precondition failure without it
@@ -986,7 +992,6 @@ class Compiler {
         def preferred := preferredType(f.rawValue)
         if preferred == null {
             -- report error
-            def unrefs := AutoUnrefs(self)
             if compileExpression(f.rawValue) !== null {
                 error(f.position, "type of field '\{f.name}' was not specified and could not be " +
                         "determined")
@@ -3483,7 +3488,7 @@ class Compiler {
                 else {
                     def construct := ir.add(IR.Statement.CONSTRUCT(position, cc.owner))
                     def constructRef := IR.Value.REF(construct, cc.owner.type)
-                    statementUnrefs.add(constructRef)
+                    enclosingContexts.push(EnclosingContext.VALUE_SCOPE(constructRef))
                     call(position, symbolRef(position, constructRef, inits), args,
                             TypeContext.UNSPECIFIED)
                     return constructRef
@@ -3660,7 +3665,7 @@ class Compiler {
             assert value.type().isClass
             def result := IR.Value.REF(ir.add(IR.Statement.CAST(position, value, target)), target)
             if !isRefCounted(value.type()) & isRefCounted(target) {
-                statementUnrefs.add(result)
+                enclosingContexts.push(EnclosingContext.VALUE_SCOPE(result))
             }
             return result
         }
@@ -3705,7 +3710,7 @@ class Compiler {
         }
         def result := IR.Value.REF(ir.add(IR.Statement.CAST(position, value, target)), target)
         if !isRefCounted(value.type()) & isRefCounted(target) {
-            statementUnrefs.add(result)
+            enclosingContexts.push(EnclosingContext.VALUE_SCOPE(result))
         }
         return result
     }
@@ -4200,7 +4205,7 @@ class Compiler {
         if m.returnType != Type.Void() {
             var resultCast:IR.Value? := IR.Value.REF(result, actualType.returnType)
             if isRefCounted(actualType.returnType) {
-                statementUnrefs.add(resultCast)
+                enclosingContexts.push(EnclosingContext.VALUE_SCOPE(resultCast))
             }
             if m.value.methodKind != MethodDecl.Kind.INIT &
                     effectiveType.returnType != actualType.returnType {
@@ -4225,7 +4230,10 @@ class Compiler {
             return null
         }
         def s := getSymbolTable(cl)[m]
-        assert s !== null, "could not find \{m} in \{cl.name}"
+        if s == null {
+            error(position, "class '\{cl.name}' does not have a member named '\{m}'")
+            return null
+        }
         def ref := symbolRef(position, target, s)
         return call(position, ref, args, type)
     }
@@ -4387,7 +4395,7 @@ class Compiler {
             def resultLoad := ir.add(IR.Statement.LOAD(position, result))
             def loadRef := IR.Value.REF(resultLoad, t.returnType)
             if isRefCounted(t.returnType) {
-                statementUnrefs.add(loadRef)
+                enclosingContexts.push(EnclosingContext.VALUE_SCOPE(loadRef))
             }
             return coerce(position, loadRef, type)
         }
@@ -4480,8 +4488,7 @@ class Compiler {
                 }
                 def construct := ir.add(IR.Statement.CONSTRUCT(position, cl))
                 def constructRef := IR.Value.REF(construct, finalType)
-                assert statementUnrefs !== null
-                statementUnrefs.add(constructRef)
+                enclosingContexts.push(EnclosingContext.VALUE_SCOPE(constructRef))
                 call(position, symbolRef(position, constructRef, inits), args,
                         TypeContext.UNSPECIFIED)
                 return coerce(position, constructRef, type)
@@ -4823,12 +4830,9 @@ class Compiler {
         def result := IR.Value.LOCAL(ir.locals.count, Type.Bit())
         ir.locals.add(Type.Bit())
         def compiledLeft:IR.Value?
-        {
-            def auto := AutoUnrefs(self)
-            compiledLeft := compileExpression(left, TypeContext.TYPE(Type.Bit()))
-            if compiledLeft == null {
-                return null
-            }
+        compiledLeft := compileExpression(left, TypeContext.TYPE(Type.Bit()))
+        if compiledLeft == null {
+            return null
         }
         def ifTrue := ir.newBlock("and true")
         def ifFalse := ir.newBlock("and false")
@@ -4838,7 +4842,7 @@ class Compiler {
         ir.setCurrentBlock(ifTrue)
         def compiledRight:IR.Value?
         {
-            def auto := AutoUnrefs(self)
+            def unrefs := AutoUnrefs(self)
             compiledRight := compileExpression(right, TypeContext.TYPE(Type.Bit()))
             if compiledRight == null {
                 return null
@@ -4859,12 +4863,9 @@ class Compiler {
         def result := IR.Value.LOCAL(ir.locals.count, Type.Bit())
         ir.locals.add(Type.Bit())
         def compiledLeft:IR.Value?
-        {
-            def auto := AutoUnrefs(self)
-            compiledLeft := compileExpression(left, TypeContext.TYPE(Type.Bit()))
-            if compiledLeft == null {
-                return null
-            }
+        compiledLeft := compileExpression(left, TypeContext.TYPE(Type.Bit()))
+        if compiledLeft == null {
+            return null
         }
         def ifTrue := ir.newBlock("or true")
         def ifFalse := ir.newBlock("or false")
@@ -4877,7 +4878,7 @@ class Compiler {
         ir.setCurrentBlock(ifFalse)
         def compiledRight:IR.Value?
         {
-            def auto := AutoUnrefs(self)
+            def unrefs := AutoUnrefs(self)
             compiledRight := compileExpression(right, TypeContext.TYPE(Type.Bit()))
             if compiledRight == null {
                 return null
@@ -4985,7 +4986,7 @@ class Compiler {
         else {
             def construct := ir.add(IR.Statement.CONSTRUCT(position, cc.owner))
             def constructRef := IR.Value.REF(construct, owner)
-            statementUnrefs.add(constructRef)
+            enclosingContexts.push(EnclosingContext.VALUE_SCOPE(constructRef))
             call(position, symbolRef(position, constructRef, initMethod), finalArgs,
                     TypeContext.UNSPECIFIED)
             return coerce(position, constructRef, type)
@@ -6023,7 +6024,6 @@ class Compiler {
         method compileLoad():IR.Value? {
             if field.annotations.isClass & field.fieldKind = FieldDecl.Kind.CONSTANT {
                 compiler.currentClass.push(field.owner)
-                def auto := AutoScope(compiler, compiler.getSymbolTable(field.owner))
                 def result := compiler.compileExpression(field.rawValue, TypeContext.TYPE(type()))
                 compiler.currentClass.pop()
                 return result
@@ -6050,7 +6050,6 @@ class Compiler {
                 result := IR.Value.REF(load, rawType)
             }
             if !compiler.inFieldCleanup & field.annotations.isWeak {
-                def auto := AutoUnrefs(compiler)
                 result := compiler.call(position, result, "get", ImmutableArray<ASTNode>(),
                         TypeContext.UNSPECIFIED)
             }
@@ -6118,26 +6117,7 @@ class Compiler {
                 load := compiler.ir.add(IR.Statement.LOAD(position, IR.Value.REF(ptr, rawType)))
             }
             result := IR.Value.REF(load, rawType)
--*            if !compiler.inFieldCleanup & field.annotations.isWeak {
-                def nonNullBlock := compiler.ir.newBlock("unref non-null")
-                def mergeBlock := compiler.ir.newBlock("unref merge")
-                def nonNullTest := compiler.ir.add(IR.Statement.BINARY(position, result,
-                        Token.Kind.NIDENTITY, IR.Value.NULL(rawType.nullable()), Type.BuiltinBit()))
-                compiler.ir.add(IR.Statement.CONDITIONAL_BRANCH(position, IR.Value.REF(nonNullTest,
-                        Type.BuiltinBit()), nonNullBlock, mergeBlock))
-                compiler.ir.setCurrentBlock(nonNullBlock)
-                {
-                    def auto := AutoUnrefs(compiler)
-                    def get := compiler.call(position, result, "get", ImmutableArray<ASTNode>(),
-                            TypeContext.UNSPECIFIED)
-                    compiler.compileUnref(get)
-                }
-                compiler.ir.add(IR.Statement.BRANCH(position, mergeBlock))
-                compiler.ir.setCurrentBlock(mergeBlock)
-            }
-            else {*-
-                compiler.compileUnref(result)
---            }
+            compiler.compileUnref(result)
         }
     }
 
@@ -6287,7 +6267,6 @@ class Compiler {
                 if op = Token.Kind.LBRACKET {
                     def target := compileExpression(left)
                     if target == null {
-                        Console.printLine("null!")
                         return null
                     }
                     return IndexLValue(self, position, target, right)
@@ -6380,22 +6359,22 @@ class Compiler {
     }
 
     method compileAssertFail(position:Position, msg:ASTNode?) {
-        def args := Array<ASTNode>()
-        args.add(ASTNode.STRING(position, currentClass[0].source.name()))
-        args.add(ASTNode.INT(position, position.line.convert()))
-        def m:MethodDecl
-        if msg !== null {
-            m := getSymbolTable(getClass(Type.Panda()))["assertionFailure"]->Methods.methods[0]
-            args.add(msg)
-        }
-        else {
-            m := getSymbolTable(getClass(Type.Panda()))["assertionFailure"]->Methods.methods[1]
-        }
-        if !resolve(m) {
-            return
-        }
         {
             def unrefs := AutoUnrefs(self)
+            def args := Array<ASTNode>()
+            args.add(ASTNode.STRING(position, currentClass[0].source.name()))
+            args.add(ASTNode.INT(position, position.line.convert()))
+            def m:MethodDecl
+            if msg !== null {
+                m := getSymbolTable(getClass(Type.Panda()))["assertionFailure"]->Methods.methods[0]
+                args.add(msg)
+            }
+            else {
+                m := getSymbolTable(getClass(Type.Panda()))["assertionFailure"]->Methods.methods[1]
+            }
+            if !resolve(m) {
+                return
+            }
             call(position, null, MethodRef(self, Type.Panda(), m), args, TypeContext.UNSPECIFIED)
         }
         ir.add(IR.Statement.UNREACHABLE(position))
@@ -6456,9 +6435,8 @@ class Compiler {
         left.compileStore(right)
     }
 
-    method findAndLeaveLoopScope(position:Position, label:String?):EnclosingContext? {
+    method findAndLeaveToLoopScope(position:Position, label:String?):EnclosingContext? {
         for c in enclosingContexts {
-            leaveScope(c)
             match c {
                 when EnclosingContext.LOOP(loopLabel, _, _) {
                     if label == null | loopLabel !== null & label = loopLabel {
@@ -6466,6 +6444,7 @@ class Compiler {
                     }
                 }
             }
+            leaveScope(c)
         }
         if label == null {
             error(position, "not in a loop")
@@ -6477,7 +6456,7 @@ class Compiler {
     }
 
     method compileBreak(position:Position, label:String?) {
-        def l := findAndLeaveLoopScope(position, label)
+        def l := findAndLeaveToLoopScope(position, label)
         if l !== null {
             match l {
                 when EnclosingContext.LOOP(_, breakTarget, _) {
@@ -6491,7 +6470,7 @@ class Compiler {
     }
 
     method compileContinue(position:Position, label:String?) {
-        def l := findAndLeaveLoopScope(position, label)
+        def l := findAndLeaveToLoopScope(position, label)
         if l !== null {
             match l {
                 when EnclosingContext.LOOP(_, _, continueTarget) {
@@ -6506,7 +6485,6 @@ class Compiler {
 
     @pre(bit.type() = Type.Bit())
     method extractBuiltinBit(position:Position, bit:IR.Value):IR.Value {
-        Panda.ref(bit) -- FIXME bootstrap refcounting apparently broken
         def result := ir.add(IR.Statement.EXTRACT_FIELD(position, bit,
                 getSymbolTable(getClass(Type.Bit()))["value"]->FieldDecl))
         return IR.Value.REF(result, Type.BuiltinBit())
@@ -6538,16 +6516,16 @@ class Compiler {
             ir.add(IR.Statement.BRANCH(position, testBlock))
         }
         ir.setCurrentBlock(testBlock)
-        def compiledTest:IR.Value?
+        def testBit:IR.Value?
         {
             def unrefs := AutoUnrefs(self)
-            compiledTest := compileExpression(test, TypeContext.TYPE(Type.Bit()))
+            def compiledTest := compileExpression(test, TypeContext.TYPE(Type.Bit()))
             if compiledTest == null {
                 return
             }
+            testBit := extractBuiltinBit(position, compiledTest)
         }
-        ir.add(IR.Statement.CONDITIONAL_BRANCH(position, extractBuiltinBit(position, compiledTest),
-                bodyBlock, endBlock))
+        ir.add(IR.Statement.CONDITIONAL_BRANCH(position, testBit, bodyBlock, endBlock))
         ir.setCurrentBlock(endBlock)
     }
 
@@ -6592,7 +6570,6 @@ class Compiler {
     }
 
     method debugPrint(value:IR.Value) {
-        def auto := AutoUnrefs(self)
         def p := Position()
         def args := Array<ASTNode>() -- FIXME literal
         args.add(ASTNode.IR_WRAPPER(p, value))
@@ -6963,7 +6940,6 @@ class Compiler {
 
     method compileRangeFor(position:Position, label:String?, astTarget:ASTNode, rawList:ASTNode,
             statements:ListView<ASTNode>) {
-        def elementType:Type
         def list:IR.Value?
         match astTarget {
             when ASTNode.TYPED_IDENTIFIER(position, _, type) {
@@ -7002,7 +6978,7 @@ class Compiler {
                     type := TypeContext.TYPE(Type.SteppedRangeOf(
                             preferred.subtypes[1].nonnullable(), preferred.subtypes[2]))
                 }
-                list := compileExpression(rawList, type)
+                list := compileExpression(rawList, type)    
             }
         }
         if list == null {
@@ -7038,11 +7014,8 @@ class Compiler {
             }
             def targetType := compiledTarget.first.type
             def next:IR.Value
-            {
-                def unrefs := AutoUnrefs(self)
-                next := call(position, iterator, "next", Array<ASTNode>(),
-                        TypeContext.TYPE(targetType))
-            }
+            next := call(position, iterator, "next", Array<ASTNode>(),
+                    TypeContext.TYPE(targetType))
             if next == null {
                 return
             }
@@ -7101,25 +7074,25 @@ class Compiler {
 
     method compileIf(position:Position, test:ASTNode, ifTrue:ImmutableArray<ASTNode>,
             ifFalse:ASTNode?) {
-        def compiledTest:IR.Value?
-        {
-            def unrefs := AutoUnrefs(self)
-            compiledTest := compileExpression(test, TypeContext.TYPE(Type.Bit()))
-            if compiledTest == null {
-                return
-            }
-        }
+        def testBit:IR.Value
         def ifTrueBlock := ir.newBlock("if true")
         def ifFalseBlock:IR.Block.ID
         def endBlock := ir.newBlock("if end")
-        if ifFalse !== null {
-            ifFalseBlock := ir.newBlock("if false")
+        {
+            def unrefs := AutoUnrefs(self)
+            def compiledTest := compileExpression(test, TypeContext.TYPE(Type.Bit()))
+            if compiledTest == null {
+                return
+            }
+            if ifFalse !== null {
+                ifFalseBlock := ir.newBlock("if false")
+            }
+            else {
+                ifFalseBlock := endBlock
+            }
+            testBit := extractBuiltinBit(position, compiledTest)
         }
-        else {
-            ifFalseBlock := endBlock
-        }
-        ir.add(IR.Statement.CONDITIONAL_BRANCH(position, extractBuiltinBit(position, compiledTest),
-                ifTrueBlock, ifFalseBlock))
+        ir.add(IR.Statement.CONDITIONAL_BRANCH(position, testBit, ifTrueBlock, ifFalseBlock))
         ir.setCurrentBlock(ifTrueBlock)
         {
             def scope := AutoScope(self)
@@ -7289,7 +7262,6 @@ class Compiler {
                 when ASTNode.WHEN(position, tests, statements) {
                     {
                         def auto := AutoScope(self)
-                        def unrefs := AutoUnrefs(self)
                         var testSuccess := ir.newBlock("test success")
                         for j in 0 .. tests.count {
                             if nextBlock != ir.currentBlock.id {
@@ -7397,9 +7369,12 @@ class Compiler {
             }
         }
         if other !== null {
-            ir.setCurrentBlock(nextBlock)
-            for s in other {
-                compileStatement(s)
+            {
+                def scope := AutoScope(self)
+                ir.setCurrentBlock(nextBlock)
+                for s in other {
+                    compileStatement(s)
+                }
             }
             if !ir.currentBlockFinished {
                 ir.add(IR.Statement.BRANCH(position, end))
@@ -7410,7 +7385,7 @@ class Compiler {
 
     method compileMatch(position:Position, value:ASTNode, whens:ImmutableArray<ASTNode>,
             other:ImmutableArray<ASTNode>?) {
-        var compiledValue := compileExpression(value, TypeContext.NON_VOID)
+        def compiledValue := compileExpression(value, TypeContext.NON_VOID)
         if compiledValue == null | (whens.count = 0 & other == null) {
             return
         }
@@ -7456,6 +7431,10 @@ class Compiler {
                     }
                 }
             }
+            when EnclosingContext.VALUE_SCOPE(v) {
+                compileUnref(v)
+                ir.add(IR.Statement.COMMENT("unreffing \{v}"))
+            }
         }
     }
 
@@ -7469,6 +7448,12 @@ class Compiler {
     method compileReturn(position:Position, value:ASTNode?) {
         if currentMethod[0].name = "cleanup" & currentMethod[0].parameters.count = 0 &
                 currentMethod[0].owner.name != WEAK_NAME {
+            -- call super cleanup
+            if currentClass[0].rawSuper !== null & !isValue(currentClass[0]) {
+                def supertype := remapType(currentClass[0].type, currentClass[0].rawSuper)
+                compileStatement(ASTNode.CALL(position, ASTNode.DOT(position,
+                        ASTNode.SUPER(position), "cleanup"), ImmutableArray<ASTNode>() -* FIXME literal *-))
+            }
             -- unref fields
             assert !inFieldCleanup
             inFieldCleanup := true
@@ -7493,17 +7478,13 @@ class Compiler {
                 error(position, "cannot return a value from a method with no return type")
                 return
             }
-            def compiled:IR.Value?
-            {
-                def unrefs := AutoUnrefs(self)
-                compiled := compileExpression(value, TypeContext.TYPE(currentMethod[0].returnType))
-                if compiled == null {
-                    return
-                }
-                returnValue := compiled
-                if isRefCounted(compiled.type()) {
-                    compileRef(compiled)
-                }
+            def compiled := compileExpression(value, TypeContext.TYPE(currentMethod[0].returnType))
+            if compiled == null {
+                return
+            }
+            returnValue := compiled
+            if isRefCounted(compiled.type()) {
+                compileRef(compiled)
             }
             leaveAllScopes()
             compilePostconditions()
@@ -7547,16 +7528,16 @@ class Compiler {
             def scope := AutoScope(self)
             ir.add(IR.Statement.BRANCH(position, testBlock))
             ir.setCurrentBlock(testBlock)
-            def compiledTest:IR.Value?
+            def testBit:IR.Value
             {
                 def unrefs := AutoUnrefs(self)
-                compiledTest := compileExpression(test, TypeContext.TYPE(Type.Bit()))
+                def compiledTest := compileExpression(test, TypeContext.TYPE(Type.Bit()))
                 if compiledTest == null {
                     return
                 }
+                testBit := extractBuiltinBit(position, compiledTest)
             }
-            ir.add(IR.Statement.CONDITIONAL_BRANCH(position, extractBuiltinBit(position,
-                    compiledTest), bodyBlock, endBlock))
+            ir.add(IR.Statement.CONDITIONAL_BRANCH(position, testBit, bodyBlock, endBlock))
             ir.setCurrentBlock(bodyBlock)
             for s in statements {
                 compileStatement(s)
@@ -7712,7 +7693,6 @@ class Compiler {
     method compileExpressionInContext(expr:ASTNode, type:TypeContext, owner:MethodDecl,
             context:MethodDecl):IR.Value? {
         def symbols := AutoScope(self)
-        def unrefs := AutoUnrefs(self)
         for i in 0 .. owner.parameters.count {
             symbolTable.add(symbols.oldSymbolTable[context.parameters[i].name],
                     owner.parameters[i].name)
@@ -7960,6 +7940,7 @@ class Compiler {
                 }
                 if m.methodKind = MethodDecl.Kind.INIT {
                     if !callsSelfInit(m.body) {
+                        def unrefs := AutoUnrefs(self)
                         for f in m.owner.fields {
                             if f.rawValue !== null & !f.annotations.isClass {
                                 def p := f.rawValue.position()

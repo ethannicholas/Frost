@@ -55,7 +55,6 @@ panda$core$MutableString* $tmp8 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp8));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp7));
 *(&local0) = $tmp7;
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp7));
 // line 38
 panda$core$MutableString$Index$nullable $tmp9 = param0.min;
 panda$core$Bit $tmp10 = panda$core$Bit$init$builtin_bit($tmp9.nonnull);
@@ -77,6 +76,7 @@ else {
 }
 panda$core$MutableString$append$panda$core$Object($tmp12, $tmp14);
 panda$core$Panda$unref$panda$core$Object$Q($tmp14);
+// unreffing REF($19:panda.core.Object)
 goto block2;
 block2:;
 // line 41
@@ -116,6 +116,7 @@ else {
 }
 panda$core$MutableString$append$panda$core$Object($tmp25, $tmp27);
 panda$core$Panda$unref$panda$core$Object$Q($tmp27);
+// unreffing REF($47:panda.core.Object)
 goto block7;
 block7:;
 // line 50
@@ -123,10 +124,13 @@ panda$core$MutableString* $tmp29 = *(&local0);
 panda$core$String* $tmp30 = panda$core$MutableString$finish$R$panda$core$String($tmp29);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp30));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp30));
+// unreffing REF($55:panda.core.String)
 panda$core$MutableString* $tmp31 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp31));
 // unreffing result
 *(&local0) = ((panda$core$MutableString*) NULL);
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp7));
+// unreffing REF($1:panda.core.MutableString)
 return $tmp30;
 
 }

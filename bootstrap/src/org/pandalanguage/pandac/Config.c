@@ -63,6 +63,8 @@ return;
 }
 void org$pandalanguage$pandac$Config$cleanup(org$pandalanguage$pandac$Config* param0) {
 
+// line 2
+panda$core$Object$cleanup(((panda$core$Object*) param0));
 return;
 
 }

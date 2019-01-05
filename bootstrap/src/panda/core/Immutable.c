@@ -21,6 +21,8 @@ return;
 }
 void panda$core$Immutable$cleanup(panda$core$Immutable* param0) {
 
+// line 9
+panda$core$Object$cleanup(((panda$core$Object*) param0));
 return;
 
 }

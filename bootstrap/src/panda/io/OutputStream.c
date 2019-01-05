@@ -89,9 +89,11 @@ while ($tmp8->$class != (panda$core$Class*) &panda$core$Equatable$class) {
 }
 $fn10 $tmp9 = $tmp8->methods[0];
 panda$core$Bit $tmp11 = $tmp9(((panda$core$Equatable*) $tmp4), ((panda$core$Equatable*) $tmp7));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) ((panda$core$Equatable*) $tmp4)));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) ((panda$core$Equatable*) $tmp7)));
 bool $tmp12 = $tmp11.value;
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) ((panda$core$Equatable*) $tmp7)));
+// unreffing REF($7:panda.core.Equatable.T)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) ((panda$core$Equatable*) $tmp4)));
+// unreffing REF($3:panda.core.Equatable<panda.io.ByteOrder>)
 if ($tmp12) goto block1; else goto block3;
 block1:;
 // line 41
@@ -141,9 +143,11 @@ while ($tmp35->$class != (panda$core$Class*) &panda$core$Equatable$class) {
 }
 $fn37 $tmp36 = $tmp35->methods[0];
 panda$core$Bit $tmp38 = $tmp36(((panda$core$Equatable*) $tmp31), ((panda$core$Equatable*) $tmp34));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) ((panda$core$Equatable*) $tmp31)));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) ((panda$core$Equatable*) $tmp34)));
 bool $tmp39 = $tmp38.value;
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) ((panda$core$Equatable*) $tmp34)));
+// unreffing REF($7:panda.core.Equatable.T)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) ((panda$core$Equatable*) $tmp31)));
+// unreffing REF($3:panda.core.Equatable<panda.io.ByteOrder>)
 if ($tmp39) goto block1; else goto block3;
 block1:;
 // line 58
@@ -193,9 +197,11 @@ while ($tmp62->$class != (panda$core$Class*) &panda$core$Equatable$class) {
 }
 $fn64 $tmp63 = $tmp62->methods[0];
 panda$core$Bit $tmp65 = $tmp63(((panda$core$Equatable*) $tmp58), ((panda$core$Equatable*) $tmp61));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) ((panda$core$Equatable*) $tmp58)));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) ((panda$core$Equatable*) $tmp61)));
 bool $tmp66 = $tmp65.value;
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) ((panda$core$Equatable*) $tmp61)));
+// unreffing REF($7:panda.core.Equatable.T)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) ((panda$core$Equatable*) $tmp58)));
+// unreffing REF($3:panda.core.Equatable<panda.io.ByteOrder>)
 if ($tmp66) goto block1; else goto block3;
 block1:;
 // line 75
@@ -375,15 +381,17 @@ while ($tmp152->$class != (panda$core$Class*) &panda$collections$Iterator$class)
 }
 $fn154 $tmp153 = $tmp152->methods[1];
 panda$core$Object* $tmp155 = $tmp153($tmp146);
-panda$core$Panda$unref$panda$core$Object$Q($tmp155);
 *(&local0) = ((panda$core$UInt8$wrapper*) $tmp155)->value;
 // line 168
 panda$core$UInt8 $tmp156 = *(&local0);
 $fn158 $tmp157 = ($fn158) param0->$class->vtable[2];
 $tmp157(param0, $tmp156);
+panda$core$Panda$unref$panda$core$Object$Q($tmp155);
+// unreffing REF($14:panda.collections.Iterator.T)
 goto block1;
 block3:;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp146));
+// unreffing REF($4:panda.collections.Iterator<panda.collections.Iterable.T>)
 return;
 
 }
@@ -414,14 +422,16 @@ while ($tmp168->$class != (panda$core$Class*) &panda$collections$Iterator$class)
 }
 $fn170 $tmp169 = $tmp168->methods[1];
 panda$core$Object* $tmp171 = $tmp169($tmp162);
-panda$core$Panda$unref$panda$core$Object$Q($tmp171);
 *(&local0) = ((panda$core$Int8$wrapper*) $tmp171)->value;
 // line 182
 panda$core$Int8 $tmp172 = *(&local0);
 panda$io$OutputStream$write$panda$core$Int8(param0, $tmp172);
+panda$core$Panda$unref$panda$core$Object$Q($tmp171);
+// unreffing REF($14:panda.collections.Iterator.T)
 goto block1;
 block3:;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp162));
+// unreffing REF($4:panda.collections.Iterator<panda.collections.Iterable.T>)
 return;
 
 }
@@ -452,15 +462,17 @@ while ($tmp182->$class != (panda$core$Class*) &panda$collections$Iterator$class)
 }
 $fn184 $tmp183 = $tmp182->methods[1];
 panda$core$Object* $tmp185 = $tmp183($tmp176);
-panda$core$Panda$unref$panda$core$Object$Q($tmp185);
 *(&local0) = ((panda$core$Char8$wrapper*) $tmp185)->value;
 // line 196
 panda$core$Char8 $tmp186 = *(&local0);
 $fn188 $tmp187 = ($fn188) param0->$class->vtable[16];
 $tmp187(param0, $tmp186);
+panda$core$Panda$unref$panda$core$Object$Q($tmp185);
+// unreffing REF($14:panda.collections.Iterator.T)
 goto block1;
 block3:;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp176));
+// unreffing REF($4:panda.collections.Iterator<panda.collections.Iterable.T>)
 return;
 
 }
@@ -493,6 +505,7 @@ panda$core$String* $tmp199 = $tmp197(param1);
 $fn201 $tmp200 = ($fn201) param0->$class->vtable[17];
 $tmp200(param0, $tmp199);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp199));
+// unreffing REF($2:panda.core.String)
 return;
 
 }
@@ -515,6 +528,7 @@ panda$core$String* $tmp208 = $tmp206(param1);
 $fn210 $tmp209 = ($fn210) param0->$class->vtable[19];
 $tmp209(param0, $tmp208);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp208));
+// unreffing REF($2:panda.core.String)
 return;
 
 }
@@ -552,6 +566,8 @@ return;
 }
 void panda$io$OutputStream$cleanup(panda$io$OutputStream* param0) {
 
+// line 12
+panda$core$Object$cleanup(((panda$core$Object*) param0));
 panda$core$String** $tmp223 = &param0->lineEnding;
 panda$core$String* $tmp224 = *$tmp223;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp224));

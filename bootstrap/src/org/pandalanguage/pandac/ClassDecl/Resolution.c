@@ -25,6 +25,7 @@ panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
 panda$core$Weak** $tmp5 = &param0->value;
 *$tmp5 = $tmp2;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
+// unreffing REF($1:panda.core.Weak<org.pandalanguage.pandac.ClassDecl?>)
 // line 44
 panda$core$Weak* $tmp6 = (panda$core$Weak*) pandaObjectAlloc(24, (panda$core$Class*) &panda$core$Weak$class);
 panda$core$Weak$init$panda$core$Weak$T($tmp6, ((panda$core$Object*) param1));
@@ -35,11 +36,14 @@ panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp6));
 panda$core$Weak** $tmp9 = &param0->value;
 *$tmp9 = $tmp6;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp6));
+// unreffing REF($17:panda.core.Weak<org.pandalanguage.pandac.ClassDecl?>)
 return;
 
 }
 void org$pandalanguage$pandac$ClassDecl$Resolution$cleanup(org$pandalanguage$pandac$ClassDecl$Resolution* param0) {
 
+// line 39
+panda$core$Object$cleanup(((panda$core$Object*) param0));
 panda$core$Weak** $tmp10 = &param0->value;
 panda$core$Weak* $tmp11 = *$tmp10;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp11));

@@ -46,15 +46,21 @@ panda$core$String* $tmp14 = *$tmp13;
 panda$core$String* $tmp15 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp11, $tmp14);
 panda$core$String* $tmp16 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp15, &$s17);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp16));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp9));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp11));
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp15));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp16));
+// unreffing REF($9:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp15));
+// unreffing REF($8:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp11));
+// unreffing REF($5:panda.core.String)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp9));
+// unreffing REF($4:panda.core.String)
 return $tmp16;
 
 }
 void org$pandalanguage$pandac$Alias$cleanup(org$pandalanguage$pandac$Alias* param0) {
 
+// line 4
+org$pandalanguage$pandac$Symbol$cleanup(((org$pandalanguage$pandac$Symbol*) param0));
 panda$core$String** $tmp18 = &param0->fullName;
 panda$core$String* $tmp19 = *$tmp18;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp19));

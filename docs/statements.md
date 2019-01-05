@@ -298,12 +298,15 @@ match
 -----
 
     match <expression> {
-        when <value1>:
+        when <value1> {
             <statements>
-        when <value2>, <value3>:
+        }
+        when <value2>, <value3> {
             <statements>
-        otherwise:
+        }
+        otherwise {
             <statements>
+        }
     }
 
 The `match` statement runs one of a number of blocks based on the value of its `<expression>`.
@@ -331,9 +334,11 @@ it contains:
 
     function text(node:Node):String {
         match node {
-            when Node.TAG(name, children):
+            when Node.TAG(name, children) {
                 return "<\{name}>\{children.map(c => text(c)).join()}</{name}>"
-            when Node.TEXT(text):
+            }
+            when Node.TEXT(text) {
                 return text
+            }
         }
     }
