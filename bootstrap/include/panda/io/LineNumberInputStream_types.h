@@ -17,6 +17,6 @@ typedef struct panda$io$LineNumberInputStream {
     panda$core$Int64 tabSize;
 } panda$io$LineNumberInputStream;
 #include "panda/core/Class.h"
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[18]; } panda$io$LineNumberInputStream$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[19]; } panda$io$LineNumberInputStream$class_type;
 extern panda$io$LineNumberInputStream$class_type panda$io$LineNumberInputStream$class;
 

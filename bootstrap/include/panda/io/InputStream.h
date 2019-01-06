@@ -31,6 +31,7 @@ panda$core$String* panda$io$InputStream$readFully$R$panda$core$String(panda$io$I
 panda$core$String* panda$io$InputStream$readLine$R$panda$core$String$Q(panda$io$InputStream* self);
 panda$core$Int64 panda$io$InputStream$sendTo$panda$io$OutputStream$R$panda$core$Int64(panda$io$InputStream* self, panda$io$OutputStream* p_out);
 panda$collections$Iterator* panda$io$InputStream$lines$R$panda$collections$Iterator$LTpanda$core$String$GT(panda$io$InputStream* self);
+void panda$io$InputStream$close(panda$io$InputStream* self);
 void panda$io$InputStream$init(panda$io$InputStream* self);
 void panda$io$InputStream$cleanup(panda$io$InputStream* self);
 

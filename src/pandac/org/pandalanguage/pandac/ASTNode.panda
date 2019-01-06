@@ -5,6 +5,7 @@ uses org.pandalanguage.pandac.parser.Token.Kind -- FIXME shouldn't need
 
 choice ASTNode {
     ANNOTATION             (Position, String, String? -* expr text *-, ASTNode? -* expr *-)
+    ARRAY                  (Position, ImmutableArray<ASTNode>)
     ASSERT                 (Position, ASTNode, ASTNode?)
     AT_PRE                 (Position, ASTNode -* expression *-)
     AT_RETURN              (Position)
@@ -86,6 +87,9 @@ choice ASTNode {
     function position():Position {
         match self {
             when ANNOTATION(position, _, _, _) {
+                return position
+            }
+            when ARRAY(position, _) {
                 return position
             }
             when ASSERT(position, _, _) {
@@ -249,6 +253,9 @@ choice ASTNode {
                     return "\{name}(\{expr})"
                 }
                 return name
+            }
+            when ARRAY(_, elements) {
+                return elements.convert()
             }
             when ASSERT(_, test, msg) {
                 if msg == null {

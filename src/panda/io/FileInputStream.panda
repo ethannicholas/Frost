@@ -23,7 +23,7 @@ class FileInputStream : InputStream {
         }
     }
 
-    @private
+    @override
     @external
     method close()
 

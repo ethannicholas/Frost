@@ -11,6 +11,6 @@ typedef struct panda$io$InputStream {
     panda$io$ByteOrder byteOrder;
 } panda$io$InputStream;
 #include "panda/core/Class.h"
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[18]; } panda$io$InputStream$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[19]; } panda$io$InputStream$class_type;
 extern panda$io$InputStream$class_type panda$io$InputStream$class;
 

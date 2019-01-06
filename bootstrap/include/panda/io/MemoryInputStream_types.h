@@ -17,6 +17,6 @@ typedef struct panda$io$MemoryInputStream {
     panda$core$Int64 index;
 } panda$io$MemoryInputStream;
 #include "panda/core/Class.h"
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[18]; } panda$io$MemoryInputStream$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[19]; } panda$io$MemoryInputStream$class_type;
 extern panda$io$MemoryInputStream$class_type panda$io$MemoryInputStream$class;
 

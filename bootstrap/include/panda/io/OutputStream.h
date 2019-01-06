@@ -36,6 +36,7 @@ void panda$io$OutputStream$printLine$panda$core$String(panda$io$OutputStream* se
 void panda$io$OutputStream$printLine$panda$core$Object(panda$io$OutputStream* self, panda$core$Object* p_o);
 void panda$io$OutputStream$printLine(panda$io$OutputStream* self);
 void panda$io$OutputStream$flush(panda$io$OutputStream* self);
+void panda$io$OutputStream$close(panda$io$OutputStream* self);
 void panda$io$OutputStream$init(panda$io$OutputStream* self);
 void panda$io$OutputStream$cleanup(panda$io$OutputStream* self);
 

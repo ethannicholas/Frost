@@ -452,6 +452,20 @@ class Type : Symbol, Key<Type> {
     }
 
     @class
+    method ArrayOf(t:Type):Type {
+        def children := Array<Type>() -- FIXME literal
+        children.add(t)
+        return generic(Type(Compiler.ARRAY_NAME, Kind.CLASS, Position(), true), children)
+    }
+
+    @class
+    method ImmutableArrayOf(t:Type):Type {
+        def children := Array<Type>() -- FIXME literal
+        children.add(t)
+        return generic(Type(Compiler.IMMUTABLE_ARRAY_NAME, Kind.CLASS, Position(), true), children)
+    }
+
+    @class
     method RangeOf(t:Type):Type {
         def children := Array<Type>() -- FIXME literal
         children.add(t)

@@ -9,7 +9,7 @@ class FileOutputStream : OutputStream {
     def handle:Int64
 
     @private
-    def closeOnCleanup:Bit
+    var closeOnCleanup:Bit
 
     @private
     init() {
@@ -23,7 +23,7 @@ class FileOutputStream : OutputStream {
         }
     }
 
-    @private
+    @override
     @external
     method close()
 

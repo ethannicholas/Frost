@@ -292,6 +292,13 @@ class Scanner {
     function complexity(node:ASTNode):Int {
         -- FIXME provide a visitor in ASTNode when lambdas are in so I can eliminate this mess
         match node {
+            when ASTNode.ARRAY(_, elements) {
+                var result := 0
+                for e in elements {
+                    result += complexity(e)
+                }
+                return result
+            }
             when ASTNode.ASSERT(_, test, _) {
                 return complexity(test)
             }

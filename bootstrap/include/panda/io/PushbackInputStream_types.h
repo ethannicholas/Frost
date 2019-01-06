@@ -15,6 +15,6 @@ typedef struct panda$io$PushbackInputStream {
     panda$collections$Array* pushbackBuffer;
 } panda$io$PushbackInputStream;
 #include "panda/core/Class.h"
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[25]; } panda$io$PushbackInputStream$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[26]; } panda$io$PushbackInputStream$class_type;
 extern panda$io$PushbackInputStream$class_type panda$io$PushbackInputStream$class;
 

@@ -1965,13 +1965,11 @@ return $tmp776;
 void pandaMain(panda$collections$ListView* param0) {
 
 // line 320
-panda$core$Panda$disableRefErrorReporting();
-// line 321
 org$pandalanguage$pandac$Main* $tmp778 = (org$pandalanguage$pandac$Main*) pandaObjectAlloc(33, (panda$core$Class*) &org$pandalanguage$pandac$Main$class);
 org$pandalanguage$pandac$Main$init($tmp778);
 org$pandalanguage$pandac$Main$run$panda$collections$ListView$LTpanda$core$String$GT($tmp778, param0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp778));
-// unreffing REF($3:org.pandalanguage.pandac.Main)
+// unreffing REF($1:org.pandalanguage.pandac.Main)
 return;
 
 }

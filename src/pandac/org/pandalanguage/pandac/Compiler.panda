@@ -311,6 +311,10 @@ class Compiler {
     
     constant WEAK_NAME := "panda.core.Weak"
     
+    constant ARRAY_NAME := "panda.collections.Array"
+
+    constant IMMUTABLE_ARRAY_NAME := "panda.collections.ImmutableArray"
+
     constant RANGE_NAME := "panda.core.Range"
     
     constant STEPPED_RANGE_NAME := "panda.core.SteppedRange"
@@ -2257,6 +2261,26 @@ class Compiler {
     ================================================================================================
     method possibleTypes(value:ASTNode):CollectionView<Type>? {
         match value {
+            when ASTNode.ARRAY(_, elements) {
+                def result := Array<Type>()
+                if elements.count != 0 {
+                    var union := preferredType(elements[0])
+                    if union !== null {
+                        for i in 1 .. elements.count {
+                            def type := preferredType(elements[i])
+                            if type == null {
+                                result.add(Type.ArrayOf(Type.Any()))
+                                return result
+                            }
+                            union := union.union(self, type)
+                        }
+                        result.add(Type.ArrayOf(union))
+                        return result
+                    }
+                }
+                result.add(Type.ArrayOf(Type.Any()))
+                return result
+            }
             when ASTNode.AT_PRE(_, expr) {
                 return possibleTypes(expr)
             }
@@ -2664,9 +2688,30 @@ class Compiler {
         return result
     }
 
+    method arrayCoercionCost(position:Position, elements:ImmutableArray<ASTNode>,
+            target:Type):Int? {
+        def t := getListType(target)
+        if t == null {
+            def p := preferredType(ASTNode.ARRAY(position, elements))
+            if p == null {
+                return null
+            }
+            return coercionCost(p, target)
+        }
+        if t.first {
+            return coercionCost(Type.ArrayOf(t.second), target)
+        }
+        else {
+            return coercionCost(Type.ImmutableArrayOf(t.second), target)
+        }
+    }
+
     @pre(target.resolved)
     method computeCoercionCost(expr:ASTNode, target:Type):Int? {
         match expr {
+            when ASTNode.ARRAY(position, elements) {
+                return arrayCoercionCost(position, elements, target)
+            }
             when ASTNode.AT_PRE(_, expr) {
                 return coercionCost(expr, target)
             }
@@ -4793,7 +4838,107 @@ class Compiler {
         }
     }
 
-    method compileAtPre(position:Position, expr:ASTNode):IR.Value? {
+    ================================================================================================
+    If `t` is a type to which an array literal can be coerced, returns whether or not the resulting
+    collection should be mutable and the element type.
+    ================================================================================================
+    function getListType(t:Type):Pair<Bit, Type>? {
+        if t.typeKind = Type.Kind.NULLABLE {
+            return getListType(t.subtypes[0])
+        }
+        if t.typeKind = Type.Kind.GENERIC {
+            if t.subtypes.count != 2 {
+                return null
+            }
+            def mutable:Bit
+            match t.subtypes[0].name {
+                when "panda.collections.Array" {
+                    mutable := true
+                }
+                when "panda.collections.List" {
+                    mutable := !isImmutable(t.subtypes[1])
+                }
+                when "panda.collections.ListView" {
+                    mutable := !isImmutable(t.subtypes[1])
+                }
+                when "panda.collections.ListWriter" {
+                    mutable :=!isImmutable(t.subtypes[1])
+                }
+                when "panda.collections.Collection" {
+                    mutable := !isImmutable(t.subtypes[1])
+                }
+                when "panda.collections.CollectionView" {
+                    mutable := !isImmutable(t.subtypes[1])
+                }
+                when "panda.collections.CollectionWriter" {
+                    mutable := true
+                }
+                when "panda.collections.ImmutableArray" {
+                    mutable := !isImmutable(t.subtypes[1])
+                }
+                when "panda.collections.Iterable" {
+                    mutable := !isImmutable(t.subtypes[1])
+                }
+                otherwise {
+                    return null
+                }
+            }
+            return Pair<Bit, Type>(mutable, t.subtypes[1])
+        }
+        match t.name {
+            when "panda.core.Object", "panda.core.Immutable" {
+                return Pair<Bit, Type>(true, Type.Any())
+            }
+            otherwise {
+                return null
+            }
+        }
+    }
+
+    method compileArray(position:Position, elements:ImmutableArray<ASTNode>,
+            type:TypeContext):IR.Value?  {
+        var listType:Pair<Bit, Type>?
+        match type {
+            when TypeContext.TYPE(t) {
+                listType := getListType(t)
+                if listType == null {
+                    -- it's going to cause an error no matter what we do, so let's just go with the
+                    -- preferred type for error reporting purposes
+                    def preferred := preferredType(ASTNode.ARRAY(position, elements))
+                    if preferred !== null {
+                        listType := getListType(preferred)
+                    }
+                    if listType == null {
+                        error(position, "cannot determine type of array literal")
+                        return null
+                    }
+                }
+            }
+            otherwise {
+                def t := preferredType(ASTNode.ARRAY(position, elements))
+                if t == null {
+                    return null
+                }
+                listType := getListType(t)
+            }
+        }
+        def arrayType := Type.ArrayOf(listType.second)
+        var result := call(position, IR.Value.TYPE(arrayType),
+                [ASTNode.INT(position, elements.count.convert())],
+                TypeContext.UNSPECIFIED)
+        if result == null {
+            return null
+        }
+        for e in elements {
+            call(position, result, "add", [e], TypeContext.UNSPECIFIED)
+        }
+        if !listType.first {
+            result := call(position, result, "finish", [], TypeContext.UNSPECIFIED)
+        }
+        return coerce(position, result, type)
+    }
+
+    method compileAtPre(position:Position, expr:ASTNode, type:TypeContext):IR.Value? {
         if atPreBlock == null {
             error(position, "@pre may only be used within a postcondition")
             return null
@@ -4804,7 +4949,7 @@ class Compiler {
         }
         def old := ir.currentBlock.id
         ir.setCurrentBlock(atPreBlock)
-        def result := compileExpression(expr)
+        def result := compileExpression(expr, type)
         ir.setCurrentBlock(old)
         return result
     }
@@ -4909,18 +5054,12 @@ class Compiler {
                 def matches := findOverloadedOperator(left, op, right, type)
                 if matches !== null {
                     if matches.first.count > 1 {
-                        def args := Array<ASTNode>()
-                        args.add(left)
-                        args.add(right)
-                        reportAmbiguousMatch(position, matches.first, args, type)
+                        reportAmbiguousMatch(position, matches.first, [left, right], type)
                         return null
                     }
-                    def args := Array<ASTNode>() -- FIXME literal
                     def m := matches.first[0].value
                     if m.annotations.isClass {
-                        args.add(left)
-                        args.add(right)
-                        return call(position, IR.Value.METHOD(null, m), args,
+                        return call(position, IR.Value.METHOD(null, m), [left, right],
                                 type)
                     }
                     if m.owner.name = "panda.core.Bit" {
@@ -4937,8 +5076,7 @@ class Compiler {
                     if target == null {
                         return null
                     }
-                    args.add(right)
-                    return call(position, IR.Value.METHOD(target, m), args, type)
+                    return call(position, IR.Value.METHOD(target, m), [right], type)
                 }
                 def compiledLeft := compileExpression(left, TypeContext.NON_VOID)
                 if compiledLeft == null {
@@ -5753,8 +5891,11 @@ class Compiler {
     @post(typeMatch(@return, type) & (@return !== null | errorCount > 0 | !reportErrors))
     method compileMethodExpression(expr:ASTNode, type:TypeContext):IR.Value? {
         match expr {
+            when ASTNode.ARRAY(position, elements) {
+                return compileArray(position, elements, type)
+            }
             when ASTNode.AT_PRE(position, expr) {
-                return compileAtPre(position, expr)
+                return compileAtPre(position, expr, type)
             }
             when ASTNode.AT_RETURN(position) {
                 return compileAtReturn(position)

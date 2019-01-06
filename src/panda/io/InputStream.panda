@@ -275,4 +275,7 @@ class InputStream {
     function lines():Iterator<String> {
         return LineIterator(self)
     }
+
+    method close() {
+    }
 }

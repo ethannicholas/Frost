@@ -1043,9 +1043,8 @@ void panda$io$FileInputStream$readImpl$panda$unsafe$Pointer$LTpanda$core$UInt8$G
 }
 
 void panda$io$FileInputStream$close(FileInputStream* self) {
-    if (self->file) {
-        fclose(self->file);
-    }
+    fclose(self->file);
+    self->closeOnCleanup.value = false;
 }
 
 // FileOutputStream
@@ -1061,6 +1060,7 @@ void panda$io$FileOutputStream$write$panda$unsafe$Pointer$LTpanda$core$UInt8$GT$
 
 void panda$io$FileOutputStream$close(FileOutputStream* self) {
     fclose(self->file);
+    self->closeOnCleanup.value = false;
 }
 
 void panda$io$FileOutputStream$flush(FileOutputStream* self) {

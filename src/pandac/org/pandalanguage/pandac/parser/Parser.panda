@@ -588,6 +588,39 @@ class Parser {
     }
 
     ================================================================================================
+    arrayLiteral = LBRACKET (expression (COMMA expression)*)? RBRACKET
+    ================================================================================================
+    method arrayLiteral():ASTNode? {
+        def start := expect(Token.Kind.LBRACKET, "'['")
+        def args := Array<ASTNode>()
+        if checkNext(Token.Kind.RBRACKET) == null {
+            commaSeparatedExpressionContext.push(true) -- FIXME use init / cleanup to automate this
+            if checkNext(Token.Kind.RPAREN) == null {
+                var expr := expression()
+                if expr == null {
+                    commaSeparatedExpressionContext.pop()
+                    return null
+                }
+                args.add(expr)
+                while checkNext(Token.Kind.COMMA) !== null {
+                    expr := expression()
+                    if expr == null {
+                        commaSeparatedExpressionContext.pop()
+                        return null
+                    }
+                    args.add(expr)
+                }
+                if expect(Token.Kind.RBRACKET, "']'") == null {
+                    commaSeparatedExpressionContext.pop()
+                    return null
+                }
+            }
+            commaSeparatedExpressionContext.pop()
+        }
+        return ASTNode.ARRAY(start.position, args.finish())
+    }
+
+    ================================================================================================
     lambda = IDENTIFIER (COLON type) YIELDS expression
     ================================================================================================
     method lambda():ASTNode? {
@@ -655,8 +688,9 @@ class Parser {
 
     ================================================================================================
     term = IDENTIFIER | DECIMAL | BINARY | HEX | REAL | SELF | SUPER | NULL | TRUE | FALSE |
-            string | parenthesizedExpression | ANNOTATION(@pre) LPAREN expression RPAREN |
-            anonymousMethod | lambda | regex | ANNOTATION(@return)
+            string | parenthesizedExpression | arrayLiteral |
+            ANNOTATION(@pre) LPAREN expression RPAREN | anonymousMethod | lambda | regex |
+            ANNOTATION(@return)
     ================================================================================================
     method term():ASTNode? {
         def t := next()
@@ -703,6 +737,10 @@ class Parser {
             when Token.Kind.LPAREN {
                 pushback(t)
                 return parenthesizedExpression()
+            }
+            when Token.Kind.LBRACKET {
+                pushback(t)
+                return arrayLiteral()
             }
             when Token.Kind.ANNOTATION {
                 def name := text(t)
