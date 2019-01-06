@@ -30,10 +30,10 @@ void org$pandalanguage$pandac$Variable$init$org$pandalanguage$pandac$Position$or
 // line 28
 panda$core$Weak* $tmp2 = (panda$core$Weak*) pandaObjectAlloc(24, (panda$core$Class*) &panda$core$Weak$class);
 panda$core$Weak$init$panda$core$Weak$T($tmp2, ((panda$core$Object*) ((org$pandalanguage$pandac$MethodDecl*) NULL)));
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
 panda$core$Weak** $tmp3 = &param0->owner;
 panda$core$Weak* $tmp4 = *$tmp3;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp4));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
 panda$core$Weak** $tmp5 = &param0->owner;
 *$tmp5 = $tmp2;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
@@ -58,17 +58,17 @@ block1:;
 org$pandalanguage$pandac$Variable$Kind* $tmp15 = &param0->varKind;
 *$tmp15 = param2;
 // line 33
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param4));
 org$pandalanguage$pandac$Type** $tmp16 = &param0->type;
 org$pandalanguage$pandac$Type* $tmp17 = *$tmp16;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp17));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param4));
 org$pandalanguage$pandac$Type** $tmp18 = &param0->type;
 *$tmp18 = param4;
 // line 34
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param5));
 org$pandalanguage$pandac$Variable$Storage** $tmp19 = &param0->storage;
 org$pandalanguage$pandac$Variable$Storage* $tmp20 = *$tmp19;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp20));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param5));
 org$pandalanguage$pandac$Variable$Storage** $tmp21 = &param0->storage;
 *$tmp21 = param5;
 // line 35

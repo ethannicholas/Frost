@@ -23,10 +23,10 @@ void panda$core$MutableMethod$init$panda$unsafe$Pointer$LTpanda$core$Int8$GT$pan
 panda$core$Int8** $tmp2 = &param0->pointer;
 *$tmp2 = param1;
 // line 33
+panda$core$Panda$ref$panda$core$Object$Q(param2);
 panda$core$Object** $tmp3 = &param0->target;
 panda$core$Object* $tmp4 = *$tmp3;
 panda$core$Panda$unref$panda$core$Object$Q($tmp4);
-panda$core$Panda$ref$panda$core$Object$Q(param2);
 panda$core$Object** $tmp5 = &param0->target;
 *$tmp5 = param2;
 return;

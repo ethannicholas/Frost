@@ -101,10 +101,12 @@ int64_t $tmp39 = $tmp37 - $tmp38;
 panda$core$Int64 $tmp40 = (panda$core$Int64) {$tmp39};
 panda$core$Object* $tmp41 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T($tmp29, $tmp40);
 *(&local0) = ((panda$core$Object*) NULL);
+panda$core$Panda$ref$panda$core$Object$Q($tmp41);
 panda$core$Object* $tmp42 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q($tmp42);
-panda$core$Panda$ref$panda$core$Object$Q($tmp41);
 *(&local0) = $tmp41;
+panda$core$Panda$unref$panda$core$Object$Q($tmp41);
+// unreffing REF($45:panda.collections.Array.T)
 // line 54
 panda$collections$Array** $tmp43 = &param0->contents;
 panda$collections$Array* $tmp44 = *$tmp43;
@@ -123,7 +125,7 @@ int64_t $tmp54 = $tmp52 - $tmp53;
 panda$core$Int64 $tmp55 = (panda$core$Int64) {$tmp54};
 panda$core$Object* $tmp56 = panda$collections$Array$removeIndex$panda$core$Int64$R$panda$collections$Array$T($tmp44, $tmp55);
 panda$core$Panda$unref$panda$core$Object$Q($tmp56);
-// unreffing REF($70:panda.collections.Array.T)
+// unreffing REF($73:panda.collections.Array.T)
 // line 55
 panda$core$Object* $tmp57 = *(&local0);
 panda$core$Panda$ref$panda$core$Object$Q($tmp57);
@@ -131,8 +133,6 @@ panda$core$Object* $tmp58 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q($tmp58);
 // unreffing result
 *(&local0) = ((panda$core$Object*) NULL);
-panda$core$Panda$unref$panda$core$Object$Q($tmp41);
-// unreffing REF($45:panda.collections.Array.T)
 return $tmp57;
 
 }
@@ -264,10 +264,10 @@ void panda$collections$Stack$init(panda$collections$Stack* param0) {
 // line 34
 panda$collections$Array* $tmp118 = (panda$collections$Array*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$Array$class);
 panda$collections$Array$init($tmp118);
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp118));
 panda$collections$Array** $tmp119 = &param0->contents;
 panda$collections$Array* $tmp120 = *$tmp119;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp120));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp118));
 panda$collections$Array** $tmp121 = &param0->contents;
 *$tmp121 = $tmp118;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp118));

@@ -32,10 +32,10 @@ panda$core$Int64 $tmp2 = (panda$core$Int64) {0};
 panda$core$Int64* $tmp3 = &param0->index;
 *$tmp3 = $tmp2;
 // line 17
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 panda$collections$Stack** $tmp4 = &param0->stack;
 panda$collections$Stack* $tmp5 = *$tmp4;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp5));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 panda$collections$Stack** $tmp6 = &param0->stack;
 *$tmp6 = param1;
 return;
@@ -76,10 +76,12 @@ panda$core$Int64* $tmp26 = &param0->index;
 panda$core$Int64 $tmp27 = *$tmp26;
 panda$core$Object* $tmp28 = panda$collections$Stack$$IDX$panda$core$Int64$R$panda$collections$Stack$T($tmp25, $tmp27);
 *(&local0) = ((panda$core$Object*) NULL);
+panda$core$Panda$ref$panda$core$Object$Q($tmp28);
 panda$core$Object* $tmp29 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q($tmp29);
-panda$core$Panda$ref$panda$core$Object$Q($tmp28);
 *(&local0) = $tmp28;
+panda$core$Panda$unref$panda$core$Object$Q($tmp28);
+// unreffing REF($17:panda.collections.Stack.T)
 // line 28
 panda$core$Int64* $tmp30 = &param0->index;
 panda$core$Int64 $tmp31 = *$tmp30;
@@ -97,8 +99,6 @@ panda$core$Object* $tmp39 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q($tmp39);
 // unreffing result
 *(&local0) = ((panda$core$Object*) NULL);
-panda$core$Panda$unref$panda$core$Object$Q($tmp28);
-// unreffing REF($17:panda.collections.Stack.T)
 return $tmp38;
 
 }

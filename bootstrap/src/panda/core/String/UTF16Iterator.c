@@ -38,10 +38,10 @@ panda$core$Int64 $tmp3 = (panda$core$Int64) {0};
 panda$core$Int64* $tmp4 = &param0->index;
 *$tmp4 = $tmp3;
 // line 136
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 panda$core$String** $tmp5 = &param0->str;
 panda$core$String* $tmp6 = *$tmp5;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp6));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 panda$core$String** $tmp7 = &param0->str;
 *$tmp7 = param1;
 // line 137

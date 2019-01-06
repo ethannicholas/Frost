@@ -28,10 +28,10 @@ org$pandalanguage$pandac$Symbol$Kind* $tmp2 = &param0->kind;
 org$pandalanguage$pandac$Position* $tmp3 = &param0->position;
 *$tmp3 = param2;
 // line 25
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param3));
 panda$core$String** $tmp4 = &param0->name;
 panda$core$String* $tmp5 = *$tmp4;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp5));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param3));
 panda$core$String** $tmp6 = &param0->name;
 *$tmp6 = param3;
 // line 26

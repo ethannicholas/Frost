@@ -30,17 +30,17 @@ static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -
 void org$pandalanguage$pandac$Compiler$CoercionKey$init$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$Type(org$pandalanguage$pandac$Compiler$CoercionKey* param0, org$pandalanguage$pandac$ASTNode* param1, org$pandalanguage$pandac$Type* param2) {
 
 // line 271
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 org$pandalanguage$pandac$ASTNode** $tmp2 = &param0->expr;
 org$pandalanguage$pandac$ASTNode* $tmp3 = *$tmp2;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 org$pandalanguage$pandac$ASTNode** $tmp4 = &param0->expr;
 *$tmp4 = param1;
 // line 272
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param2));
 org$pandalanguage$pandac$Type** $tmp5 = &param0->target;
 org$pandalanguage$pandac$Type* $tmp6 = *$tmp5;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp6));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param2));
 org$pandalanguage$pandac$Type** $tmp7 = &param0->target;
 *$tmp7 = param2;
 return;

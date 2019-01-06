@@ -57,9 +57,9 @@ block4:;
 panda$core$Object** $tmp14 = (panda$core$Object**) (param0->$data + 0);
 panda$core$Object* $tmp15 = *$tmp14;
 *(&local0) = ((panda$core$Object*) NULL);
+panda$core$Panda$ref$panda$core$Object$Q($tmp15);
 panda$core$Object* $tmp16 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q($tmp16);
-panda$core$Panda$ref$panda$core$Object$Q($tmp15);
 *(&local0) = $tmp15;
 // line 25
 panda$core$Object* $tmp17 = *(&local0);
@@ -114,9 +114,9 @@ block4:;
 panda$core$Error** $tmp41 = (panda$core$Error**) (param0->$data + 0);
 panda$core$Error* $tmp42 = *$tmp41;
 *(&local0) = ((panda$core$Error*) NULL);
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp42));
 panda$core$Error* $tmp43 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp43));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp42));
 *(&local0) = $tmp42;
 // line 38
 panda$core$Error* $tmp44 = *(&local0);
@@ -196,9 +196,9 @@ block2:;
 panda$core$Object** $tmp75 = (panda$core$Object**) (param0->$data + 0);
 panda$core$Object* $tmp76 = *$tmp75;
 *(&local0) = ((panda$core$Object*) NULL);
+panda$core$Panda$ref$panda$core$Object$Q($tmp76);
 panda$core$Object* $tmp77 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q($tmp77);
-panda$core$Panda$ref$panda$core$Object$Q($tmp76);
 *(&local0) = $tmp76;
 // line 62
 panda$core$Object* $tmp78 = *(&local0);
@@ -223,9 +223,9 @@ block4:;
 panda$core$Error** $tmp87 = (panda$core$Error**) (param0->$data + 0);
 panda$core$Error* $tmp88 = *$tmp87;
 *(&local1) = ((panda$core$Error*) NULL);
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp88));
 panda$core$Error* $tmp89 = *(&local1);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp89));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp88));
 *(&local1) = $tmp88;
 // line 65
 panda$core$Error* $tmp90 = *(&local1);
@@ -268,9 +268,9 @@ block2:;
 panda$core$Object** $tmp106 = (panda$core$Object**) (param0->$data + 0);
 panda$core$Object* $tmp107 = *$tmp106;
 *(&local0) = ((panda$core$Object*) NULL);
+panda$core$Panda$ref$panda$core$Object$Q($tmp107);
 panda$core$Object* $tmp108 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q($tmp108);
-panda$core$Panda$ref$panda$core$Object$Q($tmp107);
 *(&local0) = $tmp107;
 // line 1
 panda$core$Object* $tmp109 = *(&local0);
@@ -289,9 +289,9 @@ block4:;
 panda$core$Error** $tmp114 = (panda$core$Error**) (param0->$data + 0);
 panda$core$Error* $tmp115 = *$tmp114;
 *(&local1) = ((panda$core$Error*) NULL);
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp115));
 panda$core$Error* $tmp116 = *(&local1);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp116));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp115));
 *(&local1) = $tmp115;
 // line 1
 panda$core$Error* $tmp117 = *(&local1);

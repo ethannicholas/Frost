@@ -25,10 +25,10 @@ panda$core$Int64 $tmp2 = (panda$core$Int64) {0};
 org$pandalanguage$pandac$Symbol$Kind $tmp3 = org$pandalanguage$pandac$Symbol$Kind$init$panda$core$Int64($tmp2);
 org$pandalanguage$pandac$Symbol$init$org$pandalanguage$pandac$Symbol$Kind$org$pandalanguage$pandac$Position$panda$core$String(((org$pandalanguage$pandac$Symbol*) param0), $tmp3, param3, param1);
 // line 9
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param2));
 panda$core$String** $tmp4 = &param0->fullName;
 panda$core$String* $tmp5 = *$tmp4;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp5));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param2));
 panda$core$String** $tmp6 = &param0->fullName;
 *$tmp6 = param2;
 return;

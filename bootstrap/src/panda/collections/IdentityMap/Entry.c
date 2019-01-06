@@ -14,17 +14,17 @@ static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -
 void panda$collections$IdentityMap$Entry$init$panda$collections$IdentityMap$Entry$K$panda$collections$IdentityMap$Entry$V(panda$collections$IdentityMap$Entry* param0, panda$core$Object* param1, panda$core$Object* param2) {
 
 // line 29
+panda$core$Panda$ref$panda$core$Object$Q(param1);
 panda$core$Object** $tmp2 = &param0->key;
 panda$core$Object* $tmp3 = *$tmp2;
 panda$core$Panda$unref$panda$core$Object$Q($tmp3);
-panda$core$Panda$ref$panda$core$Object$Q(param1);
 panda$core$Object** $tmp4 = &param0->key;
 *$tmp4 = param1;
 // line 30
+panda$core$Panda$ref$panda$core$Object$Q(param2);
 panda$core$Object** $tmp5 = &param0->value;
 panda$core$Object* $tmp6 = *$tmp5;
 panda$core$Panda$unref$panda$core$Object$Q($tmp6);
-panda$core$Panda$ref$panda$core$Object$Q(param2);
 panda$core$Object** $tmp7 = &param0->value;
 *$tmp7 = param2;
 return;

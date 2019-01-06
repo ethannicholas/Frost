@@ -30,20 +30,20 @@ static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -
 void org$pandalanguage$pandac$Compiler$BinaryKey$init$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$parser$Token$Kind$org$pandalanguage$pandac$ASTNode(org$pandalanguage$pandac$Compiler$BinaryKey* param0, org$pandalanguage$pandac$ASTNode* param1, org$pandalanguage$pandac$parser$Token$Kind param2, org$pandalanguage$pandac$ASTNode* param3) {
 
 // line 294
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 org$pandalanguage$pandac$ASTNode** $tmp2 = &param0->left;
 org$pandalanguage$pandac$ASTNode* $tmp3 = *$tmp2;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 org$pandalanguage$pandac$ASTNode** $tmp4 = &param0->left;
 *$tmp4 = param1;
 // line 295
 org$pandalanguage$pandac$parser$Token$Kind* $tmp5 = &param0->op;
 *$tmp5 = param2;
 // line 296
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param3));
 org$pandalanguage$pandac$ASTNode** $tmp6 = &param0->right;
 org$pandalanguage$pandac$ASTNode* $tmp7 = *$tmp6;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp7));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param3));
 org$pandalanguage$pandac$ASTNode** $tmp8 = &param0->right;
 *$tmp8 = param3;
 return;

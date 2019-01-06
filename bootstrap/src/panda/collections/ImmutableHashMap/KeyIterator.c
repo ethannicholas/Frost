@@ -35,10 +35,10 @@ void panda$collections$ImmutableHashMap$KeyIterator$init$panda$collections$Immut
 // line 75
 panda$collections$ImmutableHashMap$EntryIterator* $tmp2 = (panda$collections$ImmutableHashMap$EntryIterator*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$ImmutableHashMap$EntryIterator$class);
 panda$collections$ImmutableHashMap$EntryIterator$init$panda$collections$ImmutableHashMap$LTpanda$collections$ImmutableHashMap$EntryIterator$K$Cpanda$collections$ImmutableHashMap$EntryIterator$V$GT($tmp2, param1);
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
 panda$collections$ImmutableHashMap$EntryIterator** $tmp3 = &param0->base;
 panda$collections$ImmutableHashMap$EntryIterator* $tmp4 = *$tmp3;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp4));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
 panda$collections$ImmutableHashMap$EntryIterator** $tmp5 = &param0->base;
 *$tmp5 = $tmp2;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2));

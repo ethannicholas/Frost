@@ -67,7 +67,7 @@ typedef void (*$fn210)(panda$io$OutputStream*, panda$core$String*);
 typedef void (*$fn214)(panda$io$OutputStream*, panda$core$String*);
 
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x69\x6f\x2e\x4f\x75\x74\x70\x75\x74\x53\x74\x72\x65\x61\x6d", 21, -3689739765115213222, NULL };
-static panda$core$String $s220 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x0a", 1, 111, NULL };
+static panda$core$String $s218 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x0a", 1, 111, NULL };
 static panda$core$String $s222 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x0a", 1, 111, NULL };
 
 void panda$io$OutputStream$write$panda$core$UInt16(panda$io$OutputStream* param0, panda$core$UInt16 param1) {
@@ -555,10 +555,10 @@ panda$io$ByteOrder $tmp216 = panda$io$ByteOrder$init$panda$core$Int64($tmp215);
 panda$io$ByteOrder* $tmp217 = &param0->byteOrder;
 *$tmp217 = $tmp216;
 // line 23
-panda$core$String** $tmp218 = &param0->lineEnding;
-panda$core$String* $tmp219 = *$tmp218;
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp219));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) &$s220));
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) &$s218));
+panda$core$String** $tmp219 = &param0->lineEnding;
+panda$core$String* $tmp220 = *$tmp219;
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp220));
 panda$core$String** $tmp221 = &param0->lineEnding;
 *$tmp221 = &$s222;
 return;

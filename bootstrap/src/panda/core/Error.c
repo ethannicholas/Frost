@@ -14,10 +14,10 @@ static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -
 void panda$core$Error$init$panda$core$String(panda$core$Error* param0, panda$core$String* param1) {
 
 // line 16
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 panda$core$String** $tmp2 = &param0->message;
 panda$core$String* $tmp3 = *$tmp2;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 panda$core$String** $tmp4 = &param0->message;
 *$tmp4 = param1;
 return;

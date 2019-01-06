@@ -70,10 +70,12 @@ panda$core$Char8$nullable local1;
 panda$core$MutableString* $tmp9 = (panda$core$MutableString*) pandaObjectAlloc(48, (panda$core$Class*) &panda$core$MutableString$class);
 panda$core$MutableString$init($tmp9);
 *(&local0) = ((panda$core$MutableString*) NULL);
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp9));
 panda$core$MutableString* $tmp10 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp10));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp9));
 *(&local0) = $tmp9;
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp9));
+// unreffing REF($1:panda.core.MutableString)
 // line 88
 goto block1;
 block1:;
@@ -102,8 +104,6 @@ panda$core$MutableString* $tmp21 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp21));
 // unreffing result
 *(&local0) = ((panda$core$MutableString*) NULL);
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp9));
-// unreffing REF($1:panda.core.MutableString)
 return ((panda$core$String*) NULL);
 block6:;
 // line 94
@@ -136,8 +136,6 @@ panda$core$MutableString* $tmp31 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp31));
 // unreffing result
 *(&local0) = ((panda$core$MutableString*) NULL);
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp9));
-// unreffing REF($1:panda.core.MutableString)
 return $tmp30;
 
 }

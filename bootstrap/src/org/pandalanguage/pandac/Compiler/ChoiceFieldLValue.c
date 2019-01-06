@@ -34,24 +34,24 @@ static panda$core$String $s27 = { (panda$core$Class*) &panda$core$String$class, 
 void org$pandalanguage$pandac$Compiler$ChoiceFieldLValue$init$org$pandalanguage$pandac$Compiler$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Value$org$pandalanguage$pandac$ChoiceCase$panda$core$Int64(org$pandalanguage$pandac$Compiler$ChoiceFieldLValue* param0, org$pandalanguage$pandac$Compiler* param1, org$pandalanguage$pandac$Position param2, org$pandalanguage$pandac$IR$Value* param3, org$pandalanguage$pandac$ChoiceCase* param4, panda$core$Int64 param5) {
 
 // line 6236
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 org$pandalanguage$pandac$Compiler** $tmp2 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp3 = *$tmp2;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 org$pandalanguage$pandac$Compiler** $tmp4 = &param0->compiler;
 *$tmp4 = param1;
 // line 6237
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param3));
 org$pandalanguage$pandac$IR$Value** $tmp5 = &param0->target;
 org$pandalanguage$pandac$IR$Value* $tmp6 = *$tmp5;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp6));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param3));
 org$pandalanguage$pandac$IR$Value** $tmp7 = &param0->target;
 *$tmp7 = param3;
 // line 6238
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param4));
 org$pandalanguage$pandac$ChoiceCase** $tmp8 = &param0->choiceCase;
 org$pandalanguage$pandac$ChoiceCase* $tmp9 = *$tmp8;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp9));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param4));
 org$pandalanguage$pandac$ChoiceCase** $tmp10 = &param0->choiceCase;
 *$tmp10 = param4;
 // line 6239

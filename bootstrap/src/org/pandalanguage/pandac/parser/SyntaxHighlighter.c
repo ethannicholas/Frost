@@ -720,10 +720,10 @@ void org$pandalanguage$pandac$parser$SyntaxHighlighter$init(org$pandalanguage$pa
 // line 68
 panda$collections$Stack* $tmp384 = (panda$collections$Stack*) pandaObjectAlloc(24, (panda$core$Class*) &panda$collections$Stack$class);
 panda$collections$Stack$init($tmp384);
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp384));
 panda$collections$Stack** $tmp385 = &param0->stack;
 panda$collections$Stack* $tmp386 = *$tmp385;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp386));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp384));
 panda$collections$Stack** $tmp387 = &param0->stack;
 *$tmp387 = $tmp384;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp384));
@@ -731,10 +731,10 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp384));
 // line 71
 panda$collections$Array* $tmp388 = (panda$collections$Array*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$Array$class);
 panda$collections$Array$init($tmp388);
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp388));
 panda$collections$Array** $tmp389 = &param0->tokens;
 panda$collections$Array* $tmp390 = *$tmp389;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp390));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp388));
 panda$collections$Array** $tmp391 = &param0->tokens;
 *$tmp391 = $tmp388;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp388));

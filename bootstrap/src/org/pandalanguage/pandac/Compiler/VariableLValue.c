@@ -26,7 +26,7 @@ org$pandalanguage$pandac$Compiler$VariableLValue$class_type org$pandalanguage$pa
 typedef org$pandalanguage$pandac$Type* (*$fn43)(org$pandalanguage$pandac$Compiler$VariableLValue*);
 typedef org$pandalanguage$pandac$IR$Statement$ID (*$fn46)(org$pandalanguage$pandac$IR*, org$pandalanguage$pandac$IR$Statement*);
 typedef org$pandalanguage$pandac$Type* (*$fn63)(org$pandalanguage$pandac$Compiler$VariableLValue*);
-typedef org$pandalanguage$pandac$IR$Value* (*$fn70)(org$pandalanguage$pandac$Compiler$VariableLValue*);
+typedef org$pandalanguage$pandac$IR$Value* (*$fn72)(org$pandalanguage$pandac$Compiler$VariableLValue*);
 typedef org$pandalanguage$pandac$Type* (*$fn87)(org$pandalanguage$pandac$Compiler$VariableLValue*);
 typedef org$pandalanguage$pandac$IR$Statement$ID (*$fn90)(org$pandalanguage$pandac$IR*, org$pandalanguage$pandac$IR$Statement*);
 
@@ -37,10 +37,10 @@ void org$pandalanguage$pandac$Compiler$VariableLValue$init$org$pandalanguage$pan
 
 panda$core$Int64 local0;
 // line 5936
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 org$pandalanguage$pandac$Compiler** $tmp2 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp3 = *$tmp2;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 org$pandalanguage$pandac$Compiler** $tmp4 = &param0->compiler;
 *$tmp4 = param1;
 // line 5937
@@ -164,15 +164,15 @@ block1:;
 // line 5962
 org$pandalanguage$pandac$Compiler** $tmp67 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp68 = *$tmp67;
-$fn70 $tmp69 = ($fn70) param0->$class->vtable[3];
-org$pandalanguage$pandac$IR$Value* $tmp71 = $tmp69(param0);
-org$pandalanguage$pandac$Compiler$compileUnref$org$pandalanguage$pandac$IR$Value($tmp68, $tmp71);
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp71));
-// unreffing REF($15:org.pandalanguage.pandac.IR.Value?)
+org$pandalanguage$pandac$Compiler$compileRef$org$pandalanguage$pandac$IR$Value($tmp68, param1);
 // line 5963
-org$pandalanguage$pandac$Compiler** $tmp72 = &param0->compiler;
-org$pandalanguage$pandac$Compiler* $tmp73 = *$tmp72;
-org$pandalanguage$pandac$Compiler$compileRef$org$pandalanguage$pandac$IR$Value($tmp73, param1);
+org$pandalanguage$pandac$Compiler** $tmp69 = &param0->compiler;
+org$pandalanguage$pandac$Compiler* $tmp70 = *$tmp69;
+$fn72 $tmp71 = ($fn72) param0->$class->vtable[3];
+org$pandalanguage$pandac$IR$Value* $tmp73 = $tmp71(param0);
+org$pandalanguage$pandac$Compiler$compileUnref$org$pandalanguage$pandac$IR$Value($tmp70, $tmp73);
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp73));
+// unreffing REF($19:org.pandalanguage.pandac.IR.Value?)
 goto block2;
 block2:;
 // line 5965

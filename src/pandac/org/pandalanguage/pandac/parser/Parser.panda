@@ -59,8 +59,6 @@ class Parser {
         self.errors := errors
         commaSeparatedExpressionContext.push(false)
         regexParser := RegexParser(errors)
-        Panda.ref(pushbackBuffer)
-        Panda.ref(speculativeBuffer)
     }
 
     method start(path:File, source:String) {

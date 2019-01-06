@@ -35,10 +35,10 @@ panda$core$Int64 $tmp2 = (panda$core$Int64) {0};
 panda$core$Int64* $tmp3 = &param0->index;
 *$tmp3 = $tmp2;
 // line 20
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 panda$collections$ListView** $tmp4 = &param0->list;
 panda$collections$ListView* $tmp5 = *$tmp4;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp5));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 panda$collections$ListView** $tmp6 = &param0->list;
 *$tmp6 = param1;
 return;

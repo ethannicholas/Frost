@@ -31,17 +31,17 @@ static panda$core$String $s24 = { (panda$core$Class*) &panda$core$String$class, 
 void panda$core$String$MatchIterator$init$panda$core$String$panda$core$String$panda$core$Bit(panda$core$String$MatchIterator* param0, panda$core$String* param1, panda$core$String* param2, panda$core$Bit param3) {
 
 // line 222
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 panda$core$String** $tmp3 = &param0->haystack;
 panda$core$String* $tmp4 = *$tmp3;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp4));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 panda$core$String** $tmp5 = &param0->haystack;
 *$tmp5 = param1;
 // line 223
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param2));
 panda$core$String** $tmp6 = &param0->needle;
 panda$core$String* $tmp7 = *$tmp6;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp7));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param2));
 panda$core$String** $tmp8 = &param0->needle;
 *$tmp8 = param2;
 // line 224

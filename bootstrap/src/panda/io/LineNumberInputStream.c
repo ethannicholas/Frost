@@ -31,10 +31,10 @@ panda$core$Int64 $tmp6 = (panda$core$Int64) {4};
 panda$core$Int64* $tmp7 = &param0->tabSize;
 *$tmp7 = $tmp6;
 // line 33
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 panda$io$InputStream** $tmp8 = &param0->source;
 panda$io$InputStream* $tmp9 = *$tmp8;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp9));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 panda$io$InputStream** $tmp10 = &param0->source;
 *$tmp10 = param1;
 // line 34

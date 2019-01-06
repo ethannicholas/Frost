@@ -20,10 +20,10 @@ static panda$core$String $s25 = { (panda$core$Class*) &panda$core$String$class, 
 void panda$unsafe$UnsafeMessageQueue$Message$init$panda$unsafe$UnsafeMessageQueue$Message$T(panda$unsafe$UnsafeMessageQueue$Message* param0, panda$core$Object* param1) {
 
 // line 13
+panda$core$Panda$ref$panda$core$Object$Q(param1);
 panda$core$Object** $tmp2 = &param0->payload;
 panda$core$Object* $tmp3 = *$tmp2;
 panda$core$Panda$unref$panda$core$Object$Q($tmp3);
-panda$core$Panda$ref$panda$core$Object$Q(param1);
 panda$core$Object** $tmp4 = &param0->payload;
 *$tmp4 = param1;
 return;

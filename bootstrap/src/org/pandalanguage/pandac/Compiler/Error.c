@@ -21,20 +21,20 @@ static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -
 void org$pandalanguage$pandac$Compiler$Error$init$panda$io$File$org$pandalanguage$pandac$Position$panda$core$String(org$pandalanguage$pandac$Compiler$Error* param0, panda$io$File* param1, org$pandalanguage$pandac$Position param2, panda$core$String* param3) {
 
 // line 41
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 panda$io$File** $tmp2 = &param0->file;
 panda$io$File* $tmp3 = *$tmp2;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 panda$io$File** $tmp4 = &param0->file;
 *$tmp4 = param1;
 // line 42
 org$pandalanguage$pandac$Position* $tmp5 = &param0->position;
 *$tmp5 = param2;
 // line 43
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param3));
 panda$core$String** $tmp6 = &param0->message;
 panda$core$String* $tmp7 = *$tmp6;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp7));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param3));
 panda$core$String** $tmp8 = &param0->message;
 *$tmp8 = param3;
 return;

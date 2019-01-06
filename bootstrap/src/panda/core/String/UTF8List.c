@@ -49,10 +49,10 @@ static panda$core$String $s24 = { (panda$core$Class*) &panda$core$String$class, 
 void panda$core$String$UTF8List$init$panda$core$String(panda$core$String$UTF8List* param0, panda$core$String* param1) {
 
 // line 88
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 panda$core$String** $tmp3 = &param0->str;
 panda$core$String* $tmp4 = *$tmp3;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp4));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 panda$core$String** $tmp5 = &param0->str;
 *$tmp5 = param1;
 return;

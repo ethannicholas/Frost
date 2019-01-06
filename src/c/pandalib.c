@@ -281,13 +281,6 @@ void pandaObjectFree(Object* o) {
         debugAllocs = true;
     }
 #endif
-    if (!refErrorReporting) {
-        const char* name = pandaGetCString(o->cl->name);
-        if (strstr(name, "panda.collections.Special") && !strstr(name, "ArrayIterator")) {
-            printf("FREEING %s\n", name);
-            abort();
-        }
-    }
     o->refcnt = -100000;
     pandaFree(o);
 }
@@ -951,13 +944,19 @@ Object* panda$io$File$absolute$R$panda$core$Maybe$LTpanda$io$File$GT(File* file)
     char path[PATH_MAX];
     char* rawPath = pandaGetCString(file->path);
     if (!realpath(rawPath, path)) {
+        pandaFree(rawPath);
         const char* msg = "unable to resolve absolute path";
-        return pandaMaybeError(pandaNewString(msg, strlen(msg)));
+        String* str = pandaNewString(msg, strlen(msg));
+        Object* result = pandaMaybeError(str);
+        panda$core$Panda$unref$panda$core$Object$Q((Object*) str);
+        return result;
     }
     pandaFree(rawPath);
-    File* result = pandaObjectAlloc(sizeof(File), &panda$io$File$class);
-    result->path = pandaNewString(path, strlen(path));
-    return pandaMaybeSuccess(result);
+    File* f = pandaObjectAlloc(sizeof(File), &panda$io$File$class);
+    f->path = pandaNewString(path, strlen(path));
+    Object* result = pandaMaybeSuccess((Object*) f);
+    panda$core$Panda$unref$panda$core$Object$Q((Object*) f);
+    return result;
 }
 
 void panda$io$File$delete(File* file) {

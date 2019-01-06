@@ -20,17 +20,17 @@ static panda$core$String $s22 = { (panda$core$Class*) &panda$core$String$class, 
 void org$pandalanguage$pandac$Compiler$AutoContext$init$org$pandalanguage$pandac$Compiler$org$pandalanguage$pandac$Compiler$EnclosingContext(org$pandalanguage$pandac$Compiler$AutoContext* param0, org$pandalanguage$pandac$Compiler* param1, org$pandalanguage$pandac$Compiler$EnclosingContext* param2) {
 
 // line 144
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 org$pandalanguage$pandac$Compiler** $tmp2 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp3 = *$tmp2;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 org$pandalanguage$pandac$Compiler** $tmp4 = &param0->compiler;
 *$tmp4 = param1;
 // line 145
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param2));
 org$pandalanguage$pandac$Compiler$EnclosingContext** $tmp5 = &param0->context;
 org$pandalanguage$pandac$Compiler$EnclosingContext* $tmp6 = *$tmp5;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp6));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param2));
 org$pandalanguage$pandac$Compiler$EnclosingContext** $tmp7 = &param0->context;
 *$tmp7 = param2;
 // line 146

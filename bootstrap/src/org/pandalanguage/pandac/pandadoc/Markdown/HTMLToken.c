@@ -36,9 +36,9 @@ block2:;
 panda$core$String** $tmp7 = (panda$core$String**) (param0->$data + 0);
 panda$core$String* $tmp8 = *$tmp7;
 *(&local0) = ((panda$core$String*) NULL);
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp8));
 panda$core$String* $tmp9 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp9));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp8));
 *(&local0) = $tmp8;
 // line 1
 panda$core$String* $tmp10 = *(&local0);
@@ -57,9 +57,9 @@ block4:;
 panda$core$String** $tmp15 = (panda$core$String**) (param0->$data + 0);
 panda$core$String* $tmp16 = *$tmp15;
 *(&local1) = ((panda$core$String*) NULL);
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp16));
 panda$core$String* $tmp17 = *(&local1);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp17));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp16));
 *(&local1) = $tmp16;
 // line 1
 panda$core$String* $tmp18 = *(&local1);

@@ -77,10 +77,10 @@ void panda$core$Panda$init(panda$core$Panda* param0) {
 // line 11
 panda$collections$HashMap* $tmp2 = (panda$collections$HashMap*) pandaObjectAlloc(56, (panda$core$Class*) &panda$collections$HashMap$class);
 panda$collections$HashMap$init($tmp2);
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
 panda$collections$HashMap** $tmp3 = &param0->allocations;
 panda$collections$HashMap* $tmp4 = *$tmp3;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp4));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
 panda$collections$HashMap** $tmp5 = &param0->allocations;
 *$tmp5 = $tmp2;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
@@ -88,10 +88,10 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
 // line 13
 panda$collections$HashMap* $tmp6 = (panda$collections$HashMap*) pandaObjectAlloc(56, (panda$core$Class*) &panda$collections$HashMap$class);
 panda$collections$HashMap$init($tmp6);
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp6));
 panda$collections$HashMap** $tmp7 = &param0->traces;
 panda$collections$HashMap* $tmp8 = *$tmp7;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp8));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp6));
 panda$collections$HashMap** $tmp9 = &param0->traces;
 *$tmp9 = $tmp6;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp6));
@@ -193,10 +193,12 @@ panda$core$Int64$nullable local1;
 // line 43
 panda$core$String* $tmp43 = panda$core$Panda$allocationName$panda$core$Class$R$panda$core$String(param1);
 *(&local0) = ((panda$core$String*) NULL);
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp43));
 panda$core$String* $tmp44 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp44));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp43));
 *(&local0) = $tmp43;
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp43));
+// unreffing REF($1:panda.core.String)
 // line 44
 panda$collections$HashMap** $tmp45 = &param0->allocations;
 panda$collections$HashMap* $tmp46 = *$tmp45;
@@ -204,7 +206,7 @@ panda$core$String* $tmp47 = *(&local0);
 panda$core$Object* $tmp48 = panda$collections$HashMap$$IDX$panda$collections$HashMap$K$R$panda$collections$HashMap$V$Q($tmp46, ((panda$collections$Key*) $tmp47));
 *(&local1) = ($tmp48 != NULL ? ((panda$core$Int64$nullable) { ((panda$core$Int64$wrapper*) $tmp48)->value, true }) : (panda$core$Int64$nullable) { .nonnull = 0 });
 panda$core$Panda$unref$panda$core$Object$Q($tmp48);
-// unreffing REF($15:panda.collections.HashMap.V?)
+// unreffing REF($18:panda.collections.HashMap.V?)
 // line 45
 panda$core$Int64$nullable $tmp49 = *(&local1);
 panda$core$Bit $tmp50 = panda$core$Bit$init$builtin_bit(!$tmp49.nonnull);
@@ -231,13 +233,11 @@ $tmp62 = (panda$core$Int64$wrapper*) pandaObjectAlloc(24, (panda$core$Class*) &p
 $tmp62->value = $tmp61;
 panda$collections$HashMap$$IDXEQ$panda$collections$HashMap$K$panda$collections$HashMap$V($tmp54, ((panda$collections$Key*) $tmp55), ((panda$core$Object*) $tmp62));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp62));
-// unreffing REF($45:panda.collections.HashMap.V)
+// unreffing REF($48:panda.collections.HashMap.V)
 panda$core$String* $tmp63 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp63));
 // unreffing name
 *(&local0) = ((panda$core$String*) NULL);
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp43));
-// unreffing REF($1:panda.core.String)
 return;
 
 }
@@ -248,10 +248,12 @@ panda$core$Int64$nullable local1;
 // line 52
 panda$core$String* $tmp64 = panda$core$Panda$allocationName$panda$core$Class$R$panda$core$String(param1);
 *(&local0) = ((panda$core$String*) NULL);
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp64));
 panda$core$String* $tmp65 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp65));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp64));
 *(&local0) = $tmp64;
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp64));
+// unreffing REF($1:panda.core.String)
 // line 53
 panda$collections$HashMap** $tmp66 = &param0->allocations;
 panda$collections$HashMap* $tmp67 = *$tmp66;
@@ -259,7 +261,7 @@ panda$core$String* $tmp68 = *(&local0);
 panda$core$Object* $tmp69 = panda$collections$HashMap$$IDX$panda$collections$HashMap$K$R$panda$collections$HashMap$V$Q($tmp67, ((panda$collections$Key*) $tmp68));
 *(&local1) = ($tmp69 != NULL ? ((panda$core$Int64$nullable) { ((panda$core$Int64$wrapper*) $tmp69)->value, true }) : (panda$core$Int64$nullable) { .nonnull = 0 });
 panda$core$Panda$unref$panda$core$Object$Q($tmp69);
-// unreffing REF($15:panda.collections.HashMap.V?)
+// unreffing REF($18:panda.collections.HashMap.V?)
 // line 54
 panda$core$Int64$nullable $tmp70 = *(&local1);
 panda$core$Bit $tmp71 = panda$core$Bit$init$builtin_bit(!$tmp70.nonnull);
@@ -286,13 +288,11 @@ $tmp83 = (panda$core$Int64$wrapper*) pandaObjectAlloc(24, (panda$core$Class*) &p
 $tmp83->value = $tmp82;
 panda$collections$HashMap$$IDXEQ$panda$collections$HashMap$K$panda$collections$HashMap$V($tmp75, ((panda$collections$Key*) $tmp76), ((panda$core$Object*) $tmp83));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp83));
-// unreffing REF($45:panda.collections.HashMap.V)
+// unreffing REF($48:panda.collections.HashMap.V)
 panda$core$String* $tmp84 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp84));
 // unreffing name
 *(&local0) = ((panda$core$String*) NULL);
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp64));
-// unreffing REF($1:panda.core.String)
 return;
 
 }
@@ -322,9 +322,9 @@ while ($tmp93->$class != (panda$core$Class*) &panda$collections$Iterator$class) 
 }
 $fn95 $tmp94 = $tmp93->methods[1];
 panda$core$Object* $tmp96 = $tmp94($tmp87);
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((panda$core$String*) $tmp96)));
 panda$core$String* $tmp97 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp97));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((panda$core$String*) $tmp96)));
 *(&local0) = ((panda$core$String*) $tmp96);
 // line 62
 panda$collections$HashMap** $tmp98 = &param0->allocations;
@@ -408,9 +408,9 @@ while ($tmp130->$class != (panda$core$Class*) &panda$collections$Iterator$class)
 }
 $fn132 $tmp131 = $tmp130->methods[1];
 panda$core$Object* $tmp133 = $tmp131($tmp124);
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((panda$core$String*) $tmp133)));
 panda$core$String* $tmp134 = *(&local1);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp134));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((panda$core$String*) $tmp133)));
 *(&local1) = ((panda$core$String*) $tmp133);
 // line 67
 panda$core$String* $tmp135 = *(&local1);
@@ -963,10 +963,12 @@ panda$core$UInt64 $tmp375 = (panda$core$UInt64) {10};
 // line 212
 panda$collections$ListView* $tmp376 = panda$core$String$get_utf8$R$panda$collections$ListView$LTpanda$core$Char8$GT(&$s377);
 *(&local2) = ((panda$collections$ListView*) NULL);
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp376));
 panda$collections$ListView* $tmp378 = *(&local2);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp378));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp376));
 *(&local2) = $tmp376;
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp376));
+// unreffing REF($7:panda.collections.ListView<panda.core.Char8>)
 // line 213
 panda$core$String$Index $tmp379 = *(&local0);
 panda$core$String$Index$wrapper* $tmp380;
@@ -984,9 +986,9 @@ $fn385 $tmp384 = $tmp383->methods[1];
 panda$core$Bit $tmp386 = $tmp384(((panda$core$Comparable*) $tmp380), ((panda$core$Comparable*) $tmp382));
 bool $tmp387 = $tmp386.value;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) ((panda$core$Comparable*) $tmp382)));
-// unreffing REF($20:panda.core.Comparable.T)
+// unreffing REF($23:panda.core.Comparable.T)
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) ((panda$core$Comparable*) $tmp380)));
-// unreffing REF($17:panda.core.Comparable<panda.core.String.Index>)
+// unreffing REF($20:panda.core.Comparable<panda.core.String.Index>)
 if ($tmp387) goto block1; else goto block2;
 block1:;
 // line 214
@@ -1065,12 +1067,12 @@ panda$core$UInt64 $tmp426 = (panda$core$UInt64) {16};
 *(&local1) = $tmp426;
 // line 229
 panda$collections$ListView* $tmp427 = panda$core$String$get_utf8$R$panda$collections$ListView$LTpanda$core$Char8$GT(&$s428);
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp427));
 panda$collections$ListView* $tmp429 = *(&local2);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp429));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp427));
 *(&local2) = $tmp427;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp427));
-// unreffing REF($94:panda.collections.ListView<panda.core.Char8>)
+// unreffing REF($97:panda.collections.ListView<panda.core.Char8>)
 goto block3;
 block16:;
 // line 232
@@ -1156,7 +1158,7 @@ panda$core$Object* $tmp468 = $tmp466($tmp460, $tmp464);
 int64_t $tmp469 = $tmp459.value;
 $tmp458[$tmp469] = ((panda$core$Char8$wrapper*) $tmp468)->value;
 panda$core$Panda$unref$panda$core$Object$Q($tmp468);
-// unreffing REF($170:panda.collections.ListView.T)
+// unreffing REF($173:panda.collections.ListView.T)
 // line 248
 panda$core$UInt64 $tmp470 = *(&local3);
 panda$core$UInt64 $tmp471 = *(&local1);
@@ -1314,13 +1316,11 @@ panda$core$Int64 $tmp572 = *(&local9);
 panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64($tmp570, $tmp571, $tmp572);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp570));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp570));
-// unreffing REF($313:panda.core.String)
+// unreffing REF($316:panda.core.String)
 panda$collections$ListView* $tmp573 = *(&local2);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp573));
 // unreffing digits
 *(&local2) = ((panda$collections$ListView*) NULL);
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp376));
-// unreffing REF($7:panda.collections.ListView<panda.core.Char8>)
 return $tmp570;
 
 }

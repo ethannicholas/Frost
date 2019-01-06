@@ -5959,8 +5959,8 @@ class Compiler {
         @override
         method compileStore(value:IR.Value) {
             if compiler.isRefCounted(type()) {
-                compiler.compileUnref(compileLoad())
                 compiler.compileRef(value)
+                compiler.compileUnref(compileLoad())
             }
             compiler.ir.add(IR.Statement.STORE(position, value, IR.Value.LOCAL(slot, type())))
         }
@@ -6094,8 +6094,8 @@ class Compiler {
             }
             else {
                 if compiler.isRefCounted(rawType) & field.owner.name != "panda.core.Weak" {
-                    compileUnref()
                     compiler.compileRef(value)
+                    compileUnref()
                 }
                 def ptr := IR.Value.REF(compiler.ir.add(IR.Statement.GET_FIELD_POINTER(position,
                         target, field)), rawType)
@@ -6930,6 +6930,9 @@ class Compiler {
             return
         }
         assert target.second == null
+        if isRefCounted(target.first.type) {
+            enclosingContexts.push(EnclosingContext.VARIABLE_SCOPE(target.first))
+        }
         if list.type().isRange {
             compileSimpleRangeFor(position, label, target.first, list, statements)
         }
@@ -7006,13 +7009,20 @@ class Compiler {
                 endBlock, bodyBlock))
         ir.setCurrentBlock(bodyBlock)
         {
-            def auto := AutoScope(self)
-            def compiledTarget := compileTarget(target, Variable.Kind.DEF, null,
-                    iterator.type().subtypes[1])
-            if compiledTarget == null {
-                return
+            def scope := AutoScope(self)
+            def compiledTarget:Pair<Variable, IR.Value?>?
+            {
+                def unrefs := AutoUnrefs(self)
+                compiledTarget := compileTarget(target, Variable.Kind.DEF, null,
+                        iterator.type().subtypes[1])
+                if compiledTarget == null {
+                    return
+                }
             }
             def targetType := compiledTarget.first.type
+            if isRefCounted(targetType) {
+                enclosingContexts.push(EnclosingContext.VARIABLE_SCOPE(compiledTarget.first))
+            }
             def next:IR.Value
             next := call(position, iterator, "next", Array<ASTNode>(),
                     TypeContext.TYPE(targetType))
@@ -7181,7 +7191,6 @@ class Compiler {
                         Variable.Storage.LOCAL(ir.locals.count))
                 v.owner := currentMethod[0]
                 if isRefCounted(v.type) {
-                    enclosingContexts.push(EnclosingContext.VARIABLE_SCOPE(v))
                     ir.add(IR.Statement.STORE(position, IR.Value.NULL(v.type.nullable()),
                             IR.Value.LOCAL(ir.locals.count, v.type)))
                 }
@@ -7208,7 +7217,6 @@ class Compiler {
                         Variable.Storage.LOCAL(ir.locals.count))
                 v.owner := currentMethod[0]
                 if isRefCounted(v.type) {
-                    enclosingContexts.push(EnclosingContext.VARIABLE_SCOPE(v))
                     ir.add(IR.Statement.STORE(position, IR.Value.NULL(v.type.nullable()),
                             IR.Value.LOCAL(ir.locals.count, v.type)))
                 }
@@ -7224,12 +7232,19 @@ class Compiler {
 
     method compileDeclaration(position:Position, target:ASTNode, value:ASTNode?,
             varKind:Variable.Kind) {
-        def compiledTarget := compileTarget(target, varKind, value, null)
-        if compiledTarget == null {
-            return
+        def compiledTarget:Pair<Variable, IR.Value?>?
+        {
+            def unrefs := AutoUnrefs(self)
+            compiledTarget := compileTarget(target, varKind, value, null)
+            if compiledTarget == null {
+                return
+            }
+            if compiledTarget.second !== null {
+                VariableLValue(self, position, compiledTarget.first).compileStore(compiledTarget.second)
+            }
         }
-        if compiledTarget.second !== null {
-            VariableLValue(self, position, compiledTarget.first).compileStore(compiledTarget.second)
+        if isRefCounted(compiledTarget.first.type) {
+            enclosingContexts.push(EnclosingContext.VARIABLE_SCOPE(compiledTarget.first))
         }
     }
 
@@ -7298,15 +7313,19 @@ class Compiler {
                                                         "instance of '\{cc.second.owner.name}'")
                                                 return
                                             }
-                                            def eqArgs := Array<ASTNode>() -- FIXME literal
-                                            eqArgs.add(ASTNode.INT(base.position(),
-                                                    cc.second.rawValue.convert()))
-                                            def test := call(base.position(), choiceRawValue, "=",
-                                                    eqArgs, TypeContext.TYPE(Type.Bit()))
-                                            assert test !== null
+                                            def testBit:IR.Value
+                                            {
+                                                def unrefs := AutoUnrefs(self)
+                                                def eqArgs := Array<ASTNode>() -- FIXME literal
+                                                eqArgs.add(ASTNode.INT(base.position(),
+                                                        cc.second.rawValue.convert()))
+                                                def test := call(base.position(), choiceRawValue,
+                                                        "=", eqArgs, TypeContext.TYPE(Type.Bit()))
+                                                assert test !== null
+                                                testBit := extractBuiltinBit(position, test)
+                                            }
                                             ir.add(IR.Statement.CONDITIONAL_BRANCH(position,
-                                                    extractBuiltinBit(position, test), testSuccess,
-                                                    nextBlock))
+                                                    testBit, testSuccess, nextBlock))
                                             ir.setCurrentBlock(testSuccess)
                                             for i in 0 .. args.count {
                                                 def ptr := ir.add(
@@ -7317,42 +7336,59 @@ class Compiler {
                                                 if getText(args[i]) = "_" {
                                                     continue
                                                 }
-                                                def target := compileTarget(args[i], Variable.Kind.DEF,
-                                                        ASTNode.IR_WRAPPER(position,
+                                                def target:Pair<Variable, IR.Value?>?
+                                                {
+                                                    def unrefs := AutoUnrefs(self)
+                                                    target := compileTarget(args[i],
+                                                            Variable.Kind.DEF,
+                                                            ASTNode.IR_WRAPPER(position,
+                                                                    IR.Value.REF(load,
+                                                                        cc.second.fields[i])),
+                                                                    null)
+                                                    VariableLValue(self, position,
+                                                            target.first).compileStore(
                                                                 IR.Value.REF(load,
-                                                                    cc.second.fields[i])),
-                                                                null)
-                                                VariableLValue(self, position,
-                                                        target.first).compileStore(
-                                                            IR.Value.REF(load, cc.second.fields[i]))
+                                                                    cc.second.fields[i]))
+                                                }
+                                                if isRefCounted(target.first.type) {
+                                                    enclosingContexts.push(
+                                                            EnclosingContext.VARIABLE_SCOPE(
+                                                                target.first))
+                                                }
                                             }
                                             continue
                                         }
                                     }
                                 }
                             }
-                            def test:IR.Value?
-                            def cc := getChoiceCase(t)
-                            if cc !== null {
-                                def args := Array<ASTNode>() -- FIXME literal
-                                args.add(ASTNode.INT(t.position(), cc.second.rawValue.convert()))
-                                test := call(t.position(), choiceRawValue, "=", args,
-                                        TypeContext.TYPE(Type.Bit()))
-                                if test == null {
-                                    return
+                            def testBit:IR.Value
+                            {
+                                def unrefs := AutoUnrefs(self)
+                                def test:IR.Value?
+                                def cc := getChoiceCase(t)
+                                if cc !== null {
+                                    def args := Array<ASTNode>() -- FIXME literal
+                                    args.add(ASTNode.INT(t.position(),
+                                            cc.second.rawValue.convert()))
+                                    test := call(t.position(), choiceRawValue, "=", args,
+                                            TypeContext.TYPE(Type.Bit()))
+                                    if test == null {
+                                        return
+                                    }
                                 }
-                            }
-                            else {
-                                def args := Array<ASTNode>() -- FIXME literal
-                                args.add(t)
-                                test := call(t.position(), value, "=", args,
-                                        TypeContext.TYPE(Type.Bit()))
-                                if test == null {
-                                    return
+                                else {
+                                    def args := Array<ASTNode>() -- FIXME literal
+                                    args.add(t)
+                                    test := call(t.position(), value, "=", args,
+                                            TypeContext.TYPE(Type.Bit()))
+                                    if test == null {
+                                        return
+                                    }
                                 }
+                                testBit := extractBuiltinBit(position, test)
                             }
                             ir.add(IR.Statement.CONDITIONAL_BRANCH(position,
-                                    extractBuiltinBit(position, test), testSuccess, nextBlock))
+                                    testBit, testSuccess, nextBlock))
                         }
                         ir.setCurrentBlock(testSuccess)
                         for s in statements {

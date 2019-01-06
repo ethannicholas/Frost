@@ -37,10 +37,10 @@ panda$core$Int64 $tmp3 = (panda$core$Int64) {0};
 panda$core$Int64* $tmp4 = &param0->index;
 *$tmp4 = $tmp3;
 // line 14
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 panda$collections$SpecializedArray$LTorg$pandalanguage$regex$RegexToken$GT** $tmp5 = &param0->array;
 panda$collections$SpecializedArray$LTorg$pandalanguage$regex$RegexToken$GT* $tmp6 = *$tmp5;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp6));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 panda$collections$SpecializedArray$LTorg$pandalanguage$regex$RegexToken$GT** $tmp7 = &param0->array;
 *$tmp7 = param1;
 return;

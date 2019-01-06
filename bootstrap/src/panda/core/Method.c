@@ -33,10 +33,10 @@ void panda$core$Method$init$panda$unsafe$Pointer$LTpanda$core$Int8$GT$panda$core
 panda$core$Int8** $tmp2 = &param0->pointer;
 *$tmp2 = param1;
 // line 38
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param2));
 panda$core$Immutable** $tmp3 = &param0->target;
 panda$core$Immutable* $tmp4 = *$tmp3;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp4));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param2));
 panda$core$Immutable** $tmp5 = &param0->target;
 *$tmp5 = param2;
 return;

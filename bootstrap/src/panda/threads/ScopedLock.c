@@ -20,10 +20,10 @@ static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -
 void panda$threads$ScopedLock$init$panda$threads$Lock(panda$threads$ScopedLock* param0, panda$threads$Lock* param1) {
 
 // line 20
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 panda$threads$Lock** $tmp2 = &param0->lock;
 panda$threads$Lock* $tmp3 = *$tmp2;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 panda$threads$Lock** $tmp4 = &param0->lock;
 *$tmp4 = param1;
 // line 21

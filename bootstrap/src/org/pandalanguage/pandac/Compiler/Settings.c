@@ -24,19 +24,19 @@ static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -
 void org$pandalanguage$pandac$Compiler$Settings$init$panda$io$File$panda$collections$ListView$LTpanda$io$File$GT$panda$core$Int64$panda$core$Int64$panda$core$Bit(org$pandalanguage$pandac$Compiler$Settings* param0, panda$io$File* param1, panda$collections$ListView* param2, panda$core$Int64 param3, panda$core$Int64 param4, panda$core$Bit param5) {
 
 // line 251
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 panda$io$File** $tmp2 = &param0->pandaHome;
 panda$io$File* $tmp3 = *$tmp2;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 panda$io$File** $tmp4 = &param0->pandaHome;
 *$tmp4 = param1;
 // line 252
 panda$collections$ImmutableArray* $tmp5 = (panda$collections$ImmutableArray*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$ImmutableArray$class);
 panda$collections$ImmutableArray$init$panda$collections$ListView$LTpanda$collections$ImmutableArray$T$GT($tmp5, param2);
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp5));
 panda$collections$ImmutableArray** $tmp6 = &param0->importDirs;
 panda$collections$ImmutableArray* $tmp7 = *$tmp6;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp7));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp5));
 panda$collections$ImmutableArray** $tmp8 = &param0->importDirs;
 *$tmp8 = $tmp5;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp5));

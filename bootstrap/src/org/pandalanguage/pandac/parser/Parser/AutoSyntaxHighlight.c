@@ -20,10 +20,10 @@ static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -
 void org$pandalanguage$pandac$parser$Parser$AutoSyntaxHighlight$init$org$pandalanguage$pandac$parser$Parser$org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind(org$pandalanguage$pandac$parser$Parser$AutoSyntaxHighlight* param0, org$pandalanguage$pandac$parser$Parser* param1, org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind param2) {
 
 // line 19
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 org$pandalanguage$pandac$parser$Parser** $tmp2 = &param0->parser;
 org$pandalanguage$pandac$parser$Parser* $tmp3 = *$tmp2;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 org$pandalanguage$pandac$parser$Parser** $tmp4 = &param0->parser;
 *$tmp4 = param1;
 // line 20

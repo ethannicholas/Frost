@@ -195,7 +195,10 @@ class Main {
                 }
                 otherwise {
                     if a.endsWith(".panda") {
-                        sources.add(File(a))
+                        def f := File(a)
+--                        Console.printLine("main1: \{f.refCount}")
+                        sources.add(f)
+  --                      Console.printLine("main2: \{f.refCount}")
                     }
                     else {
                         err.printLine("unrecognized argument '\{a}'")
@@ -314,7 +317,6 @@ class Main {
 
     @class
     method main(args:ListView<String>) {
-        Panda.disableRefErrorReporting()
         Main().run(args)
     }
 }

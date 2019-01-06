@@ -21,7 +21,7 @@ typedef panda$core$String* (*$fn10)(org$pandalanguage$pandac$pandadoc$Protector*
 typedef panda$core$Int64 (*$fn58)(panda$math$Random*, panda$core$Int64);
 
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x70\x61\x6e\x64\x61\x63\x2e\x70\x61\x6e\x64\x61\x64\x6f\x63\x2e\x50\x72\x6f\x74\x65\x63\x74\x6f\x72", 43, 8647705865568288660, NULL };
-static panda$core$String $s26 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x41\x42\x43\x44\x45\x46\x47\x48\x49\x4a\x4b\x4c\x4d\x4e\x4f\x50\x51\x52\x53\x54\x55\x56\x57\x58\x59\x5a\x61\x62\x63\x64\x65\x66\x67\x68\x69\x6a\x6b\x6c\x6d\x6e\x6f\x70\x71\x72\x73\x74\x75\x76\x77\x78\x79\x7a\x30\x31\x32\x33\x34\x35\x36\x37\x38\x39\x2d\x2f\x2c\x2e", 66, 8332415192204060750, NULL };
+static panda$core$String $s25 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x41\x42\x43\x44\x45\x46\x47\x48\x49\x4a\x4b\x4c\x4d\x4e\x4f\x50\x51\x52\x53\x54\x55\x56\x57\x58\x59\x5a\x61\x62\x63\x64\x65\x66\x67\x68\x69\x6a\x6b\x6c\x6d\x6e\x6f\x70\x71\x72\x73\x74\x75\x76\x77\x78\x79\x7a\x30\x31\x32\x33\x34\x35\x36\x37\x38\x39\x2d\x2f\x2c\x2e", 66, 8332415192204060750, NULL };
 static panda$core$String $s27 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x41\x42\x43\x44\x45\x46\x47\x48\x49\x4a\x4b\x4c\x4d\x4e\x4f\x50\x51\x52\x53\x54\x55\x56\x57\x58\x59\x5a\x61\x62\x63\x64\x65\x66\x67\x68\x69\x6a\x6b\x6c\x6d\x6e\x6f\x70\x71\x72\x73\x74\x75\x76\x77\x78\x79\x7a\x30\x31\x32\x33\x34\x35\x36\x37\x38\x39\x2d\x2f\x2c\x2e", 66, 8332415192204060750, NULL };
 
 panda$core$String* org$pandalanguage$pandac$pandadoc$Protector$encode$panda$core$String$R$panda$core$String(org$pandalanguage$pandac$pandadoc$Protector* param0, panda$core$String* param1) {
@@ -32,10 +32,12 @@ panda$collections$HashMap** $tmp2 = &param0->encodeMap;
 panda$collections$HashMap* $tmp3 = *$tmp2;
 panda$core$Object* $tmp4 = panda$collections$HashMap$$IDX$panda$collections$HashMap$K$R$panda$collections$HashMap$V$Q($tmp3, ((panda$collections$Key*) param1));
 *(&local0) = ((panda$core$String*) NULL);
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((panda$core$String*) $tmp4)));
 panda$core$String* $tmp5 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp5));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((panda$core$String*) $tmp4)));
 *(&local0) = ((panda$core$String*) $tmp4);
+panda$core$Panda$unref$panda$core$Object$Q($tmp4);
+// unreffing REF($5:panda.collections.HashMap.V?)
 // line 60
 panda$core$String* $tmp6 = *(&local0);
 panda$core$Bit $tmp7 = panda$core$Bit$init$builtin_bit($tmp6 == NULL);
@@ -45,12 +47,12 @@ block1:;
 // line 61
 $fn10 $tmp9 = ($fn10) param0->$class->vtable[4];
 panda$core$String* $tmp11 = $tmp9(param0);
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp11));
 panda$core$String* $tmp12 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp12));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp11));
 *(&local0) = $tmp11;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp11));
-// unreffing REF($22:panda.core.String)
+// unreffing REF($25:panda.core.String)
 // line 62
 panda$collections$HashMap** $tmp13 = &param0->encodeMap;
 panda$collections$HashMap* $tmp14 = *$tmp13;
@@ -70,8 +72,6 @@ panda$core$String* $tmp20 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp20));
 // unreffing result
 *(&local0) = ((panda$core$String*) NULL);
-panda$core$Panda$unref$panda$core$Object$Q($tmp4);
-// unreffing REF($5:panda.collections.HashMap.V?)
 return $tmp19;
 
 }
@@ -98,18 +98,20 @@ panda$core$Int64 $tmp24 = (panda$core$Int64) {20};
 *(&local0) = $tmp24;
 // line 74
 *(&local1) = ((panda$core$String*) NULL);
-panda$core$String* $tmp25 = *(&local1);
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp25));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) &$s26));
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) &$s25));
+panda$core$String* $tmp26 = *(&local1);
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp26));
 *(&local1) = &$s27;
 // line 75
 panda$core$MutableString* $tmp28 = (panda$core$MutableString*) pandaObjectAlloc(48, (panda$core$Class*) &panda$core$MutableString$class);
 panda$core$MutableString$init($tmp28);
 *(&local2) = ((panda$core$MutableString*) NULL);
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp28));
 panda$core$MutableString* $tmp29 = *(&local2);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp29));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp28));
 *(&local2) = $tmp28;
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp28));
+// unreffing REF($12:panda.core.MutableString)
 // line 76
 panda$core$Int64 $tmp30 = (panda$core$Int64) {0};
 panda$core$Int64 $tmp31 = *(&local0);
@@ -189,13 +191,11 @@ panda$core$MutableString* $tmp81 = *(&local2);
 panda$core$String* $tmp82 = panda$core$MutableString$finish$R$panda$core$String($tmp81);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp82));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp82));
-// unreffing REF($85:panda.core.String)
+// unreffing REF($88:panda.core.String)
 panda$core$MutableString* $tmp83 = *(&local2);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp83));
 // unreffing result
 *(&local2) = ((panda$core$MutableString*) NULL);
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp28));
-// unreffing REF($12:panda.core.MutableString)
 panda$core$String* $tmp84 = *(&local1);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp84));
 // unreffing SAFE_CHARS
@@ -208,10 +208,10 @@ void org$pandalanguage$pandac$pandadoc$Protector$init(org$pandalanguage$pandac$p
 // line 52
 panda$collections$HashMap* $tmp85 = (panda$collections$HashMap*) pandaObjectAlloc(56, (panda$core$Class*) &panda$collections$HashMap$class);
 panda$collections$HashMap$init($tmp85);
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp85));
 panda$collections$HashMap** $tmp86 = &param0->encodeMap;
 panda$collections$HashMap* $tmp87 = *$tmp86;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp87));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp85));
 panda$collections$HashMap** $tmp88 = &param0->encodeMap;
 *$tmp88 = $tmp85;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp85));
@@ -219,20 +219,20 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp85));
 // line 54
 panda$collections$HashMap* $tmp89 = (panda$collections$HashMap*) pandaObjectAlloc(56, (panda$core$Class*) &panda$collections$HashMap$class);
 panda$collections$HashMap$init($tmp89);
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp89));
 panda$collections$HashMap** $tmp90 = &param0->decodeMap;
 panda$collections$HashMap* $tmp91 = *$tmp90;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp91));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp89));
 panda$collections$HashMap** $tmp92 = &param0->decodeMap;
 *$tmp92 = $tmp89;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp89));
 // unreffing REF($16:panda.collections.HashMap<panda.core.String, panda.core.String>)
 // line 56
 panda$math$Random* $tmp93 = panda$math$Random$default$R$panda$math$Random();
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp93));
 panda$math$Random** $tmp94 = &param0->random;
 panda$math$Random* $tmp95 = *$tmp94;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp95));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp93));
 panda$math$Random** $tmp96 = &param0->random;
 *$tmp96 = $tmp93;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp93));

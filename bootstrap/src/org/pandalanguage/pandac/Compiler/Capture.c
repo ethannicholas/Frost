@@ -30,9 +30,9 @@ block2:;
 org$pandalanguage$pandac$Variable** $tmp7 = (org$pandalanguage$pandac$Variable**) (param0->$data + 0);
 org$pandalanguage$pandac$Variable* $tmp8 = *$tmp7;
 *(&local0) = ((org$pandalanguage$pandac$Variable*) NULL);
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp8));
 org$pandalanguage$pandac$Variable* $tmp9 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp9));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp8));
 *(&local0) = $tmp8;
 // line 1
 org$pandalanguage$pandac$Variable* $tmp10 = *(&local0);
@@ -51,9 +51,9 @@ block4:;
 org$pandalanguage$pandac$FieldDecl** $tmp15 = (org$pandalanguage$pandac$FieldDecl**) (param0->$data + 0);
 org$pandalanguage$pandac$FieldDecl* $tmp16 = *$tmp15;
 *(&local1) = ((org$pandalanguage$pandac$FieldDecl*) NULL);
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp16));
 org$pandalanguage$pandac$FieldDecl* $tmp17 = *(&local1);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp17));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp16));
 *(&local1) = $tmp16;
 // line 1
 org$pandalanguage$pandac$FieldDecl* $tmp18 = *(&local1);

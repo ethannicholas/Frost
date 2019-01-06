@@ -49,9 +49,9 @@ while ($tmp11->$class != (panda$core$Class*) &panda$collections$Iterator$class) 
 }
 $fn13 $tmp12 = $tmp11->methods[1];
 panda$core$Object* $tmp14 = $tmp12($tmp5);
+panda$core$Panda$ref$panda$core$Object$Q($tmp14);
 panda$core$Object* $tmp15 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q($tmp15);
-panda$core$Panda$ref$panda$core$Object$Q($tmp14);
 *(&local0) = $tmp14;
 // line 28
 panda$core$Object* $tmp16 = *(&local0);

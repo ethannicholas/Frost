@@ -29,10 +29,10 @@ void panda$io$MemoryOutputStream$init$panda$core$Int64(panda$io$MemoryOutputStre
 // line 27
 panda$core$MutableString* $tmp3 = (panda$core$MutableString*) pandaObjectAlloc(48, (panda$core$Class*) &panda$core$MutableString$class);
 panda$core$MutableString$init$panda$core$Int64($tmp3, param1);
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
 panda$core$MutableString** $tmp4 = &param0->data;
 panda$core$MutableString* $tmp5 = *$tmp4;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp5));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
 panda$core$MutableString** $tmp6 = &param0->data;
 *$tmp6 = $tmp3;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));

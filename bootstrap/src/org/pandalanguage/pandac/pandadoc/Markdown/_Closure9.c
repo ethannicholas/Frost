@@ -37,10 +37,10 @@ static panda$core$String $s50 = { (panda$core$Class*) &panda$core$String$class, 
 void org$pandalanguage$pandac$pandadoc$Markdown$_Closure9$init$org$pandalanguage$pandac$pandadoc$Markdown(org$pandalanguage$pandac$pandadoc$Markdown$_Closure9* param0, org$pandalanguage$pandac$pandadoc$Markdown* param1) {
 
 // line 408
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 org$pandalanguage$pandac$pandadoc$Markdown** $tmp2 = &param0->$self;
 org$pandalanguage$pandac$pandadoc$Markdown* $tmp3 = *$tmp2;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 org$pandalanguage$pandac$pandadoc$Markdown** $tmp4 = &param0->$self;
 *$tmp4 = param1;
 return;
@@ -90,24 +90,28 @@ $fn19 $tmp18 = $tmp17->methods[0];
 panda$core$Object* $tmp20 = $tmp18(param1, $tmp16);
 panda$core$MutableString$init$panda$core$String($tmp15, ((panda$core$String*) $tmp20));
 *(&local0) = ((panda$core$MutableString*) NULL);
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp15));
 panda$core$MutableString* $tmp21 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp21));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp15));
 *(&local0) = $tmp15;
+panda$core$Panda$unref$panda$core$Object$Q($tmp20);
+// unreffing REF($5:panda.collections.ListView.T)
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp15));
+// unreffing REF($1:panda.core.MutableString)
 // line 410
 panda$core$MutableString* $tmp22 = *(&local0);
 panda$core$RegularExpression* $tmp23 = (panda$core$RegularExpression*) pandaObjectAlloc(24, (panda$core$Class*) &panda$core$RegularExpression$class);
 panda$core$RegularExpression$init$panda$core$String($tmp23, &$s24);
 panda$core$MutableString$replace$panda$core$RegularExpression$panda$core$String($tmp22, $tmp23, &$s25);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp23));
-// unreffing REF($18:panda.core.RegularExpression)
+// unreffing REF($24:panda.core.RegularExpression)
 // line 411
 panda$core$MutableString* $tmp26 = *(&local0);
 panda$core$RegularExpression* $tmp27 = (panda$core$RegularExpression*) pandaObjectAlloc(24, (panda$core$Class*) &panda$core$RegularExpression$class);
 panda$core$RegularExpression$init$panda$core$String($tmp27, &$s28);
 panda$core$MutableString$replace$panda$core$RegularExpression$panda$core$String($tmp26, $tmp27, &$s29);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp27));
-// unreffing REF($26:panda.core.RegularExpression)
+// unreffing REF($32:panda.core.RegularExpression)
 // line 412
 org$pandalanguage$pandac$pandadoc$Markdown** $tmp30 = &param0->$self;
 org$pandalanguage$pandac$pandadoc$Markdown* $tmp31 = *$tmp30;
@@ -122,10 +126,12 @@ panda$core$RegularExpression* $tmp38 = (panda$core$RegularExpression*) pandaObje
 panda$core$Int64 $tmp39 = (panda$core$Int64) {4};
 panda$core$RegularExpression$init$panda$core$String$panda$core$Int64($tmp38, &$s40, $tmp39);
 *(&local1) = ((panda$core$RegularExpression*) NULL);
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp38));
 panda$core$RegularExpression* $tmp41 = *(&local1);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp41));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp38));
 *(&local1) = $tmp38;
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp38));
+// unreffing REF($48:panda.core.RegularExpression)
 // line 416
 panda$core$MutableString* $tmp42 = *(&local0);
 panda$core$RegularExpression* $tmp43 = *(&local1);
@@ -133,30 +139,24 @@ panda$core$Method* $tmp45 = (panda$core$Method*) pandaObjectAlloc(32, (panda$cor
 panda$core$Method$init$panda$unsafe$Pointer$LTpanda$core$Int8$GT$panda$core$Immutable$Q($tmp45, ((panda$core$Int8*) org$pandalanguage$pandac$pandadoc$Markdown$_Closure9$$anonymous33$panda$collections$ListView$LTpanda$core$String$Q$GT$R$panda$core$Object), ((panda$core$Immutable*) NULL));
 panda$core$MutableString$replace$panda$core$RegularExpression$$LPpanda$collections$ListView$LTpanda$core$String$Q$GT$RP$EQ$GT$LPpanda$core$Object$RP($tmp42, $tmp43, ((panda$core$MutableMethod*) $tmp45));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp45));
-// unreffing REF($56:panda.core.Method)
+// unreffing REF($65:panda.core.Method)
 // line 417
 panda$core$MutableString* $tmp46 = *(&local0);
 panda$core$String* $tmp47 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s48, ((panda$core$Object*) $tmp46));
 panda$core$String* $tmp49 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp47, &$s50);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp49));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp49));
-// unreffing REF($68:panda.core.String)
+// unreffing REF($77:panda.core.String)
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp47));
-// unreffing REF($67:panda.core.String)
+// unreffing REF($76:panda.core.String)
 panda$core$RegularExpression* $tmp51 = *(&local1);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp51));
 // unreffing p1
 *(&local1) = ((panda$core$RegularExpression*) NULL);
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp38));
-// unreffing REF($42:panda.core.RegularExpression)
 panda$core$MutableString* $tmp52 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp52));
 // unreffing blockQuote
 *(&local0) = ((panda$core$MutableString*) NULL);
-panda$core$Panda$unref$panda$core$Object$Q($tmp20);
-// unreffing REF($5:panda.collections.ListView.T)
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp15));
-// unreffing REF($1:panda.core.MutableString)
 return ((panda$core$Object*) $tmp49);
 
 }

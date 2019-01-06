@@ -34,17 +34,17 @@ static panda$core$String $s53 = { (panda$core$Class*) &panda$core$String$class, 
 void panda$collections$Iterator$FilterIterator$init$panda$collections$Iterator$LTpanda$collections$Iterator$FilterIterator$T$GT$$LPpanda$collections$Iterator$FilterIterator$T$RP$EQ$GT$LPpanda$core$Bit$RP(panda$collections$Iterator$FilterIterator* param0, panda$collections$Iterator* param1, panda$core$MutableMethod* param2) {
 
 // line 18
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 panda$collections$Iterator** $tmp2 = &param0->base;
 panda$collections$Iterator* $tmp3 = *$tmp2;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 panda$collections$Iterator** $tmp4 = &param0->base;
 *$tmp4 = param1;
 // line 19
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param2));
 panda$core$MutableMethod** $tmp5 = &param0->filter;
 panda$core$MutableMethod* $tmp6 = *$tmp5;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp6));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param2));
 panda$core$MutableMethod** $tmp7 = &param0->filter;
 *$tmp7 = param2;
 // line 20
@@ -87,10 +87,10 @@ while ($tmp21->$class != (panda$core$Class*) &panda$collections$Iterator$class) 
 }
 $fn23 $tmp22 = $tmp21->methods[1];
 panda$core$Object* $tmp24 = $tmp22($tmp20);
+panda$core$Panda$ref$panda$core$Object$Q($tmp24);
 panda$core$Object** $tmp25 = &param0->nextValue;
 panda$core$Object* $tmp26 = *$tmp25;
 panda$core$Panda$unref$panda$core$Object$Q($tmp26);
-panda$core$Panda$ref$panda$core$Object$Q($tmp24);
 panda$core$Object** $tmp27 = &param0->nextValue;
 *$tmp27 = $tmp24;
 panda$core$Panda$unref$panda$core$Object$Q($tmp24);
@@ -149,9 +149,9 @@ block1:;
 panda$core$Object** $tmp54 = &param0->nextValue;
 panda$core$Object* $tmp55 = *$tmp54;
 *(&local0) = ((panda$core$Object*) NULL);
+panda$core$Panda$ref$panda$core$Object$Q($tmp55);
 panda$core$Object* $tmp56 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q($tmp56);
-panda$core$Panda$ref$panda$core$Object$Q($tmp55);
 *(&local0) = $tmp55;
 // line 42
 $fn58 $tmp57 = ($fn58) param0->$class->vtable[2];

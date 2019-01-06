@@ -19,7 +19,7 @@ typedef void (*$fn90)(panda$io$OutputStream*, panda$core$UInt8*, panda$core$Int6
 typedef void (*$fn129)(panda$io$OutputStream*, panda$core$String*);
 
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x69\x6f\x2e\x49\x6e\x64\x65\x6e\x74\x65\x64\x4f\x75\x74\x70\x75\x74\x53\x74\x72\x65\x61\x6d", 29, 1042140495667569485, NULL };
-static panda$core$String $s8 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
+static panda$core$String $s6 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
 static panda$core$String $s10 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
 static panda$core$String $s122 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x20", 1, 133, NULL };
 
@@ -34,10 +34,10 @@ panda$core$Int64 $tmp4 = (panda$core$Int64) {4};
 panda$core$Int64* $tmp5 = &param0->indentSize;
 *$tmp5 = $tmp4;
 // line 23
-panda$core$String** $tmp6 = &param0->indent;
-panda$core$String* $tmp7 = *$tmp6;
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp7));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) &$s8));
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) &$s6));
+panda$core$String** $tmp7 = &param0->indent;
+panda$core$String* $tmp8 = *$tmp7;
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp8));
 panda$core$String** $tmp9 = &param0->indent;
 *$tmp9 = &$s10;
 // line 26
@@ -45,10 +45,10 @@ panda$core$Bit $tmp11 = panda$core$Bit$init$builtin_bit(true);
 panda$core$Bit* $tmp12 = &param0->atLineStart;
 *$tmp12 = $tmp11;
 // line 37
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 panda$io$OutputStream** $tmp13 = &param0->out;
 panda$io$OutputStream* $tmp14 = *$tmp13;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp14));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 panda$io$OutputStream** $tmp15 = &param0->out;
 *$tmp15 = param1;
 // line 38
@@ -234,10 +234,10 @@ int64_t $tmp118 = $tmp116.value;
 int64_t $tmp119 = $tmp117 * $tmp118;
 panda$core$Int64 $tmp120 = (panda$core$Int64) {$tmp119};
 panda$core$String* $tmp121 = panda$core$String$$MUL$panda$core$Int64$R$panda$core$String(&$s122, $tmp120);
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp121));
 panda$core$String** $tmp123 = &param0->indent;
 panda$core$String* $tmp124 = *$tmp123;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp124));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp121));
 panda$core$String** $tmp125 = &param0->indent;
 *$tmp125 = $tmp121;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp121));

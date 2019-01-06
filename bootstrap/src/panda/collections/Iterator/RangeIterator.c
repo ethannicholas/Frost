@@ -54,10 +54,10 @@ panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$
 abort(); // unreachable
 block1:;
 // line 63
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 panda$collections$Iterator** $tmp13 = &param0->base;
 panda$collections$Iterator* $tmp14 = *$tmp13;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp14));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 panda$collections$Iterator** $tmp15 = &param0->base;
 *$tmp15 = param1;
 // line 64
@@ -205,10 +205,10 @@ while ($tmp87->$class != (panda$core$Class*) &panda$collections$Iterator$class) 
 }
 $fn89 $tmp88 = $tmp87->methods[1];
 panda$core$Object* $tmp90 = $tmp88(param1);
+panda$core$Panda$ref$panda$core$Object$Q($tmp90);
 panda$core$Object** $tmp91 = &param0->pending;
 panda$core$Object* $tmp92 = *$tmp91;
 panda$core$Panda$unref$panda$core$Object$Q($tmp92);
-panda$core$Panda$ref$panda$core$Object$Q($tmp90);
 panda$core$Object** $tmp93 = &param0->pending;
 *$tmp93 = $tmp90;
 panda$core$Panda$unref$panda$core$Object$Q($tmp90);
@@ -253,9 +253,9 @@ block1:;
 panda$core$Object** $tmp106 = &param0->pending;
 panda$core$Object* $tmp107 = *$tmp106;
 *(&local0) = ((panda$core$Object*) NULL);
+panda$core$Panda$ref$panda$core$Object$Q($tmp107);
 panda$core$Object* $tmp108 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q($tmp108);
-panda$core$Panda$ref$panda$core$Object$Q($tmp107);
 *(&local0) = $tmp107;
 // line 100
 panda$core$Int64 $tmp109 = (panda$core$Int64) {0};
@@ -345,10 +345,10 @@ bool $tmp162 = $tmp161.value;
 if ($tmp162) goto block14; else goto block15;
 block14:;
 // line 104
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) NULL));
 panda$core$Object** $tmp163 = &param0->pending;
 panda$core$Object* $tmp164 = *$tmp163;
 panda$core$Panda$unref$panda$core$Object$Q($tmp164);
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) NULL));
 panda$core$Object** $tmp165 = &param0->pending;
 *$tmp165 = ((panda$core$Object*) NULL);
 // line 105
@@ -363,10 +363,10 @@ while ($tmp168->$class != (panda$core$Class*) &panda$collections$Iterator$class)
 }
 $fn170 $tmp169 = $tmp168->methods[1];
 panda$core$Object* $tmp171 = $tmp169($tmp167);
+panda$core$Panda$ref$panda$core$Object$Q($tmp171);
 panda$core$Object** $tmp172 = &param0->pending;
 panda$core$Object* $tmp173 = *$tmp172;
 panda$core$Panda$unref$panda$core$Object$Q($tmp173);
-panda$core$Panda$ref$panda$core$Object$Q($tmp171);
 panda$core$Object** $tmp174 = &param0->pending;
 *$tmp174 = $tmp171;
 panda$core$Panda$unref$panda$core$Object$Q($tmp171);

@@ -83,9 +83,9 @@ block8:;
 org$pandalanguage$pandac$Type** $tmp22 = (org$pandalanguage$pandac$Type**) (param0->$data + 0);
 org$pandalanguage$pandac$Type* $tmp23 = *$tmp22;
 *(&local0) = ((org$pandalanguage$pandac$Type*) NULL);
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp23));
 org$pandalanguage$pandac$Type* $tmp24 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp24));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp23));
 *(&local0) = $tmp23;
 // line 86
 org$pandalanguage$pandac$Type* $tmp25 = *(&local0);
@@ -154,9 +154,9 @@ block8:;
 org$pandalanguage$pandac$Type** $tmp56 = (org$pandalanguage$pandac$Type**) (param0->$data + 0);
 org$pandalanguage$pandac$Type* $tmp57 = *$tmp56;
 *(&local0) = ((org$pandalanguage$pandac$Type*) NULL);
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp57));
 org$pandalanguage$pandac$Type* $tmp58 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp58));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp57));
 *(&local0) = $tmp57;
 // line 104
 org$pandalanguage$pandac$Type* $tmp59 = *(&local0);
@@ -219,9 +219,9 @@ block8:;
 org$pandalanguage$pandac$Type** $tmp84 = (org$pandalanguage$pandac$Type**) (param0->$data + 0);
 org$pandalanguage$pandac$Type* $tmp85 = *$tmp84;
 *(&local0) = ((org$pandalanguage$pandac$Type*) NULL);
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp85));
 org$pandalanguage$pandac$Type* $tmp86 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp86));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp85));
 *(&local0) = $tmp85;
 // line 1
 org$pandalanguage$pandac$Type* $tmp87 = *(&local0);

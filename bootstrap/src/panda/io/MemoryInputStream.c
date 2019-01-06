@@ -31,10 +31,10 @@ panda$core$Int64 $tmp7 = panda$core$String$get_byteLength$R$panda$core$Int64(par
 panda$core$Int64* $tmp8 = &param0->length;
 *$tmp8 = $tmp7;
 // line 30
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 panda$core$String** $tmp9 = &param0->string;
 panda$core$String* $tmp10 = *$tmp9;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp10));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 panda$core$String** $tmp11 = &param0->string;
 *$tmp11 = param1;
 // line 31

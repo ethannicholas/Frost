@@ -20,17 +20,17 @@ static panda$core$String $s22 = { (panda$core$Class*) &panda$core$String$class, 
 void org$pandalanguage$pandac$CCodeGenerator$AutoContext$init$org$pandalanguage$pandac$CCodeGenerator$org$pandalanguage$pandac$CCodeGenerator$EnclosingContext(org$pandalanguage$pandac$CCodeGenerator$AutoContext* param0, org$pandalanguage$pandac$CCodeGenerator* param1, org$pandalanguage$pandac$CCodeGenerator$EnclosingContext* param2) {
 
 // line 25
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 org$pandalanguage$pandac$CCodeGenerator** $tmp2 = &param0->cg;
 org$pandalanguage$pandac$CCodeGenerator* $tmp3 = *$tmp2;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 org$pandalanguage$pandac$CCodeGenerator** $tmp4 = &param0->cg;
 *$tmp4 = param1;
 // line 26
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param2));
 org$pandalanguage$pandac$CCodeGenerator$EnclosingContext** $tmp5 = &param0->context;
 org$pandalanguage$pandac$CCodeGenerator$EnclosingContext* $tmp6 = *$tmp5;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp6));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param2));
 org$pandalanguage$pandac$CCodeGenerator$EnclosingContext** $tmp7 = &param0->context;
 *$tmp7 = param2;
 // line 27

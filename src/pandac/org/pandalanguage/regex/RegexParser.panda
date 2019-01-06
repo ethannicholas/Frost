@@ -19,7 +19,6 @@ class RegexParser {
 
     init(errors:MessageQueue<Compiler.Error>) {
         self.errors := errors
-        Panda.ref(pushbackBuffer)
     }
 
     method start(path:File, source:String) {

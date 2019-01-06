@@ -22,19 +22,19 @@ void panda$threads$Notifier$init$panda$threads$Lock(panda$threads$Notifier* para
 // line 15
 panda$threads$Lock* $tmp2 = (panda$threads$Lock*) pandaObjectAlloc(24, (panda$core$Class*) &panda$threads$Lock$class);
 panda$threads$Lock$init($tmp2);
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
 panda$threads$Lock** $tmp3 = &param0->lock;
 panda$threads$Lock* $tmp4 = *$tmp3;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp4));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
 panda$threads$Lock** $tmp5 = &param0->lock;
 *$tmp5 = $tmp2;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
 // unreffing REF($1:panda.threads.Lock)
 // line 18
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 panda$threads$Lock** $tmp6 = &param0->lock;
 panda$threads$Lock* $tmp7 = *$tmp6;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp7));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 panda$threads$Lock** $tmp8 = &param0->lock;
 *$tmp8 = param1;
 // line 19

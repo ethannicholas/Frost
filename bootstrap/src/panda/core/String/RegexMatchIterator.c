@@ -31,10 +31,10 @@ static panda$core$String $s26 = { (panda$core$Class*) &panda$core$String$class, 
 void panda$core$String$RegexMatchIterator$init$panda$core$String$panda$core$RegularExpression$panda$core$Bit(panda$core$String$RegexMatchIterator* param0, panda$core$String* param1, panda$core$RegularExpression* param2, panda$core$Bit param3) {
 
 // line 295
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 panda$core$String** $tmp2 = &param0->haystack;
 panda$core$String* $tmp3 = *$tmp2;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 panda$core$String** $tmp4 = &param0->haystack;
 *$tmp4 = param1;
 // line 296
@@ -44,10 +44,10 @@ panda$core$Bit* $tmp7 = &param0->allowOverlaps;
 *$tmp7 = $tmp6;
 // line 297
 panda$core$Matcher* $tmp8 = panda$core$RegularExpression$matcher$panda$core$String$R$panda$core$Matcher(param2, param1);
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp8));
 panda$core$Matcher** $tmp9 = &param0->matcher;
 panda$core$Matcher* $tmp10 = *$tmp9;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp10));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp8));
 panda$core$Matcher** $tmp11 = &param0->matcher;
 *$tmp11 = $tmp8;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp8));
@@ -90,10 +90,12 @@ panda$core$Matcher** $tmp28 = &param0->matcher;
 panda$core$Matcher* $tmp29 = *$tmp28;
 panda$core$String$Match$init$panda$core$Matcher($tmp27, $tmp29);
 *(&local0) = ((panda$core$String$Match*) NULL);
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp27));
 panda$core$String$Match* $tmp30 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp30));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp27));
 *(&local0) = $tmp27;
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp27));
+// unreffing REF($9:panda.core.String.Match)
 // line 309
 // line 310
 panda$core$Bit* $tmp31 = &param0->allowOverlaps;
@@ -135,8 +137,6 @@ panda$core$String$Match* $tmp49 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp49));
 // unreffing result
 *(&local0) = ((panda$core$String$Match*) NULL);
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp27));
-// unreffing REF($9:panda.core.String.Match)
 return $tmp48;
 
 }

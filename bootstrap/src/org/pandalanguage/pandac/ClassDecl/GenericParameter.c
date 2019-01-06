@@ -22,17 +22,17 @@ static panda$core$String $s24 = { (panda$core$Class*) &panda$core$String$class, 
 void org$pandalanguage$pandac$ClassDecl$GenericParameter$init$org$pandalanguage$pandac$Position$panda$core$String$panda$core$String$org$pandalanguage$pandac$Type(org$pandalanguage$pandac$ClassDecl$GenericParameter* param0, org$pandalanguage$pandac$Position param1, panda$core$String* param2, panda$core$String* param3, org$pandalanguage$pandac$Type* param4) {
 
 // line 28
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param2));
 panda$core$String** $tmp2 = &param0->owner;
 panda$core$String* $tmp3 = *$tmp2;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param2));
 panda$core$String** $tmp4 = &param0->owner;
 *$tmp4 = param2;
 // line 29
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param4));
 org$pandalanguage$pandac$Type** $tmp5 = &param0->bound;
 org$pandalanguage$pandac$Type* $tmp6 = *$tmp5;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp6));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param4));
 org$pandalanguage$pandac$Type** $tmp7 = &param0->bound;
 *$tmp7 = param4;
 // line 30

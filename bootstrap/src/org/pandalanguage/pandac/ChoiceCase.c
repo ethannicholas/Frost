@@ -29,10 +29,10 @@ void org$pandalanguage$pandac$ChoiceCase$init$org$pandalanguage$pandac$ClassDecl
 // line 15
 panda$core$Weak* $tmp2 = (panda$core$Weak*) pandaObjectAlloc(24, (panda$core$Class*) &panda$core$Weak$class);
 panda$core$Weak$init$panda$core$Weak$T($tmp2, ((panda$core$Object*) ((org$pandalanguage$pandac$MethodDecl*) NULL)));
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
 panda$core$Weak** $tmp3 = &param0->initMethod;
 panda$core$Weak* $tmp4 = *$tmp3;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp4));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
 panda$core$Weak** $tmp5 = &param0->initMethod;
 *$tmp5 = $tmp2;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
@@ -45,19 +45,19 @@ org$pandalanguage$pandac$Compiler$Resolution* $tmp8 = &param0->resolved;
 // line 21
 panda$core$Weak* $tmp9 = (panda$core$Weak*) pandaObjectAlloc(24, (panda$core$Class*) &panda$core$Weak$class);
 panda$core$Weak$init$panda$core$Weak$T($tmp9, ((panda$core$Object*) param1));
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp9));
 panda$core$Weak** $tmp10 = &param0->owner;
 panda$core$Weak* $tmp11 = *$tmp10;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp11));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp9));
 panda$core$Weak** $tmp12 = &param0->owner;
 *$tmp12 = $tmp9;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp9));
 // unreffing REF($22:panda.core.Weak<org.pandalanguage.pandac.ClassDecl>)
 // line 22
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param4));
 panda$core$String** $tmp13 = &param0->doccomment;
 panda$core$String* $tmp14 = *$tmp13;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp14));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param4));
 panda$core$String** $tmp15 = &param0->doccomment;
 *$tmp15 = param4;
 // line 23
@@ -66,10 +66,10 @@ panda$core$Int64* $tmp16 = &param0->rawValue;
 // line 24
 panda$collections$Array* $tmp17 = (panda$collections$Array*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$Array$class);
 panda$collections$Array$init$panda$collections$CollectionView$LTpanda$collections$Array$T$GT($tmp17, ((panda$collections$CollectionView*) param6));
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp17));
 panda$collections$Array** $tmp18 = &param0->fields;
 panda$collections$Array* $tmp19 = *$tmp18;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp19));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp17));
 panda$collections$Array** $tmp20 = &param0->fields;
 *$tmp20 = $tmp17;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp17));

@@ -18,10 +18,10 @@ static panda$core$String $s13 = { (panda$core$Class*) &panda$core$String$class, 
 void org$pandalanguage$pandac$Compiler$AutoAtPreFlag$init$org$pandalanguage$pandac$Compiler(org$pandalanguage$pandac$Compiler$AutoAtPreFlag* param0, org$pandalanguage$pandac$Compiler* param1) {
 
 // line 227
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 org$pandalanguage$pandac$Compiler** $tmp2 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp3 = *$tmp2;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 org$pandalanguage$pandac$Compiler** $tmp4 = &param0->compiler;
 *$tmp4 = param1;
 // line 228

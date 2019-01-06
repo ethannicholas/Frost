@@ -30,10 +30,10 @@ static panda$core$String $s25 = { (panda$core$Class*) &panda$core$String$class, 
 void panda$threads$MessageQueue$Message$init$panda$threads$MessageQueue$Message$T(panda$threads$MessageQueue$Message* param0, panda$core$Immutable* param1) {
 
 // line 19
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 panda$core$Immutable** $tmp2 = &param0->payload;
 panda$core$Immutable* $tmp3 = *$tmp2;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 panda$core$Immutable** $tmp4 = &param0->payload;
 *$tmp4 = param1;
 return;

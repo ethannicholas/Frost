@@ -15,17 +15,17 @@ static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -
 void panda$collections$ImmutableHashMap$Entry$init$panda$collections$ImmutableHashMap$Entry$K$panda$collections$ImmutableHashMap$Entry$V(panda$collections$ImmutableHashMap$Entry* param0, panda$collections$Key* param1, panda$core$Object* param2) {
 
 // line 27
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 panda$collections$Key** $tmp2 = &param0->key;
 panda$collections$Key* $tmp3 = *$tmp2;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 panda$collections$Key** $tmp4 = &param0->key;
 *$tmp4 = param1;
 // line 28
+panda$core$Panda$ref$panda$core$Object$Q(param2);
 panda$core$Object** $tmp5 = &param0->value;
 panda$core$Object* $tmp6 = *$tmp5;
 panda$core$Panda$unref$panda$core$Object$Q($tmp6);
-panda$core$Panda$ref$panda$core$Object$Q(param2);
 panda$core$Object** $tmp7 = &param0->value;
 *$tmp7 = param2;
 return;

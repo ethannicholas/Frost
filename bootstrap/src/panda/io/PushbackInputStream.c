@@ -37,19 +37,19 @@ void panda$io$PushbackInputStream$init$panda$io$InputStream(panda$io$PushbackInp
 // line 14
 panda$collections$Array* $tmp2 = (panda$collections$Array*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$Array$class);
 panda$collections$Array$init($tmp2);
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
 panda$collections$Array** $tmp3 = &param0->pushbackBuffer;
 panda$collections$Array* $tmp4 = *$tmp3;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp4));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
 panda$collections$Array** $tmp5 = &param0->pushbackBuffer;
 *$tmp5 = $tmp2;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
 // unreffing REF($1:panda.collections.Array<panda.core.UInt8>)
 // line 22
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 panda$io$InputStream** $tmp6 = &param0->source;
 panda$io$InputStream* $tmp7 = *$tmp6;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp7));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 panda$io$InputStream** $tmp8 = &param0->source;
 *$tmp8 = param1;
 // line 23

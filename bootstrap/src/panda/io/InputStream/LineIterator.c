@@ -32,10 +32,10 @@ static panda$core$String $s23 = { (panda$core$Class*) &panda$core$String$class, 
 void panda$io$InputStream$LineIterator$init$panda$io$InputStream(panda$io$InputStream$LineIterator* param0, panda$io$InputStream* param1) {
 
 // line 22
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 panda$io$InputStream** $tmp2 = &param0->input;
 panda$io$InputStream* $tmp3 = *$tmp2;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 panda$io$InputStream** $tmp4 = &param0->input;
 *$tmp4 = param1;
 // line 23
@@ -81,9 +81,9 @@ block3:;
 panda$core$String** $tmp24 = &param0->_next;
 panda$core$String* $tmp25 = *$tmp24;
 *(&local0) = ((panda$core$String*) NULL);
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp25));
 panda$core$String* $tmp26 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp26));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp25));
 *(&local0) = $tmp25;
 // line 35
 $fn28 $tmp27 = ($fn28) param0->$class->vtable[4];
@@ -105,10 +105,10 @@ panda$io$InputStream** $tmp31 = &param0->input;
 panda$io$InputStream* $tmp32 = *$tmp31;
 $fn34 $tmp33 = ($fn34) $tmp32->$class->vtable[15];
 panda$core$String* $tmp35 = $tmp33($tmp32);
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp35));
 panda$core$String** $tmp36 = &param0->_next;
 panda$core$String* $tmp37 = *$tmp36;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp37));
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp35));
 panda$core$String** $tmp38 = &param0->_next;
 *$tmp38 = $tmp35;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp35));
