@@ -35,7 +35,7 @@ static panda$core$String $s2 = { (panda$core$Class*) &panda$core$String$class, -
 
 void org$pandalanguage$pandac$LLVMCodeGenerator$OpClass$cleanup(org$pandalanguage$pandac$LLVMCodeGenerator$OpClass param0) {
 
-// line 942
+// line 948
 panda$core$Int64 $tmp3 = param0.$rawValue;
 panda$core$Int64 $tmp4 = (panda$core$Int64) {0};
 panda$core$Bit $tmp5 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp3, $tmp4);
@@ -71,7 +71,7 @@ return;
 org$pandalanguage$pandac$LLVMCodeGenerator$OpClass org$pandalanguage$pandac$LLVMCodeGenerator$OpClass$init$panda$core$Int64(panda$core$Int64 param0) {
 
 org$pandalanguage$pandac$LLVMCodeGenerator$OpClass local0;
-// line 942
+// line 948
 panda$core$Int64* $tmp16 = &(&local0)->$rawValue;
 *$tmp16 = param0;
 org$pandalanguage$pandac$LLVMCodeGenerator$OpClass $tmp17 = *(&local0);
@@ -80,7 +80,7 @@ return $tmp17;
 }
 panda$core$Bit org$pandalanguage$pandac$LLVMCodeGenerator$OpClass$$EQ$org$pandalanguage$pandac$LLVMCodeGenerator$OpClass$R$panda$core$Bit(org$pandalanguage$pandac$LLVMCodeGenerator$OpClass param0, org$pandalanguage$pandac$LLVMCodeGenerator$OpClass param1) {
 
-// line 942
+// line 948
 panda$core$Int64 $tmp18 = param0.$rawValue;
 panda$core$Int64 $tmp19 = param1.$rawValue;
 int64_t $tmp20 = $tmp18.value;
@@ -90,11 +90,11 @@ panda$core$Bit $tmp23 = (panda$core$Bit) {$tmp22};
 bool $tmp24 = $tmp23.value;
 if ($tmp24) goto block1; else goto block2;
 block1:;
-// line 942
+// line 948
 panda$core$Bit $tmp25 = panda$core$Bit$init$builtin_bit(false);
 return $tmp25;
 block2:;
-// line 942
+// line 948
 panda$core$Bit $tmp26 = panda$core$Bit$init$builtin_bit(true);
 return $tmp26;
 

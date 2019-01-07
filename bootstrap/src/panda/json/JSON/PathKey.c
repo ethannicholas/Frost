@@ -1,9 +1,10 @@
 #include "panda/json/JSON/PathKey.h"
-#include "panda/core/Object.h"
+#include "panda/core/Immutable.h"
 #include "panda/core/Class.h"
 #include "panda/core/String.h"
 #include "panda/core/Equatable.h"
 #include "panda/core/Bit.h"
+#include "panda/core/Object.h"
 #include "panda/core/String/Index.h"
 #include "panda/core/Int64.h"
 #include "panda/core/Panda.h"
@@ -13,11 +14,15 @@ __attribute__((weak)) panda$core$Bit panda$json$JSON$PathKey$$EQ$panda$json$JSON
 
     return result;
 }
+__attribute__((weak)) void panda$json$JSON$PathKey$cleanup$shim(panda$json$JSON$PathKey* p0) {
+    panda$json$JSON$PathKey$cleanup(p0);
+
+}
 
 struct { panda$core$Class* cl; ITable* next; void* methods[2]; } panda$json$JSON$PathKey$_panda$core$Equatable = { (panda$core$Class*) &panda$core$Equatable$class, NULL, { panda$json$JSON$PathKey$$EQ$panda$json$JSON$PathKey$R$panda$core$Bit$shim, panda$core$Equatable$$NEQ$panda$core$Equatable$T$R$panda$core$Bit} };
 
 static panda$core$String $s1;
-panda$json$JSON$PathKey$class_type panda$json$JSON$PathKey$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, (ITable*) &panda$json$JSON$PathKey$_panda$core$Equatable, { panda$core$Object$convert$R$panda$core$String, panda$json$JSON$PathKey$cleanup, panda$json$JSON$PathKey$$EQ$panda$json$JSON$PathKey$R$panda$core$Bit$shim} };
+panda$json$JSON$PathKey$class_type panda$json$JSON$PathKey$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Immutable$class, (ITable*) &panda$json$JSON$PathKey$_panda$core$Equatable, { panda$core$Object$convert$R$panda$core$String, panda$json$JSON$PathKey$cleanup$shim, panda$json$JSON$PathKey$$EQ$panda$json$JSON$PathKey$R$panda$core$Bit$shim} };
 
 
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x6a\x73\x6f\x6e\x2e\x4a\x53\x4f\x4e\x2e\x50\x61\x74\x68\x4b\x65\x79", 23, 7178919972541529313, NULL };
@@ -69,7 +74,7 @@ panda$core$String$Index $tmp20 = *$tmp19;
 goto block1;
 block1:;
 // line 45
-panda$core$Object$cleanup(((panda$core$Object*) param0));
+panda$core$Immutable$cleanup(((panda$core$Immutable*) param0));
 return;
 
 }

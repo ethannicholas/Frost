@@ -362,15 +362,4 @@ class HashMap<K:Key<K>, V> : Map<K, V> {
         result.append("}")
         return result.finish()
     }
-
-    ================================================================================================
-    Invalidates this `HashMap` and returns its contents as an `ImmutableHashMap`. Interacting in
-    any way with a `HashMap` after `finish`ing will cause precondition violations (or, if
-    safety checks are disabled, undefined behavior).
-    ================================================================================================
-    method finish():ImmutableHashMap<K, V> {
-        -- FIXME this transformation is only safe at -S0
-        self.$class := ImmutableHashMap<K, V>().$class -- FIXME need a better way to get at the class
-        return self->Object->ImmutableHashMap<K, V>
-    }
 }

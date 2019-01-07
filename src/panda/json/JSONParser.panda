@@ -82,7 +82,7 @@ class JSONParser {
             result.add(node())
             match next().kind {
                 when Token.Kind.RBRACKET {
-                    return JSON.ARRAY(result.finish())
+                    return JSON.ARRAY(ImmutableArray<JSON>.from(result))
                 }
                 when Token.Kind.COMMA {
                     continue
@@ -109,7 +109,7 @@ class JSONParser {
             result[key] := node()
             match next().kind {
                 when Token.Kind.RBRACE {
-                    return JSON.OBJECT(result.finish())
+                    return JSON.OBJECT(ImmutableHashMap<String, JSON>.from(result))
                 }
                 when Token.Kind.COMMA {
                     continue

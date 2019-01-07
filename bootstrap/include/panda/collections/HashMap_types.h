@@ -16,6 +16,6 @@ typedef struct panda$collections$HashMap {
     panda$core$Int64 changeCount;
 } panda$collections$HashMap;
 #include "panda/core/Class.h"
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[13]; } panda$collections$HashMap$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[12]; } panda$collections$HashMap$class_type;
 extern panda$collections$HashMap$class_type panda$collections$HashMap$class;
 

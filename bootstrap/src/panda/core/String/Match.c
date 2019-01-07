@@ -124,7 +124,7 @@ goto block1;
 block2:;
 // line 275
 panda$collections$Array* $tmp51 = *(&local0);
-panda$collections$ImmutableArray* $tmp52 = panda$collections$Array$finish$R$panda$collections$ImmutableArray$LTpanda$collections$Array$T$GT($tmp51);
+panda$collections$ImmutableArray* $tmp52 = panda$collections$ImmutableArray$from$panda$collections$Array$LTpanda$collections$ImmutableArray$T$GT$R$panda$collections$ImmutableArray$LTpanda$collections$ImmutableArray$T$GT($tmp51);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp52));
 panda$collections$ImmutableArray** $tmp53 = &param0->groups;
 panda$collections$ImmutableArray* $tmp54 = *$tmp53;
@@ -132,7 +132,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp54));
 panda$collections$ImmutableArray** $tmp55 = &param0->groups;
 *$tmp55 = $tmp52;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp52));
-// unreffing REF($87:panda.collections.ImmutableArray<panda.collections.Array.T>)
+// unreffing REF($87:panda.collections.ImmutableArray<panda.collections.ImmutableArray.T>)
 panda$collections$Array* $tmp56 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp56));
 // unreffing g

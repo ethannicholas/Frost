@@ -154,18 +154,4 @@ class Array<T> : List<T> {
         result.append("]")
         return result.finish()
     }
-
-    ================================================================================================
-    Invalidates this `Array` and returns its contents as an `ImmutableArray`. This is generally
-    preferable to creating a new instance of `ImmutableArray` from this array, as `finish()` does
-    not copy the array's contents. Interacting in any way with an `Array` after `finish`ing it will
-    cause precondition violations (or, if safety checks are disabled, undefined behavior).
-    ================================================================================================
-    method finish():ImmutableArray<T> {
-        -- FIXME this transformation is only safe at -S0
-        data := data.realloc(capacity, _count)
-        self.$class := ImmutableArray<T>().$class
-        self.capacity := -1
-        return self->Object->ImmutableArray<T>
-    }
 }

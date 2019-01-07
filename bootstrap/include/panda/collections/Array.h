@@ -6,7 +6,6 @@ typedef struct panda$collections$Array panda$collections$Array;
 typedef struct panda$collections$CollectionView panda$collections$CollectionView;
 typedef struct panda$core$Object panda$core$Object;
 typedef struct panda$core$String panda$core$String;
-typedef struct panda$collections$ImmutableArray panda$collections$ImmutableArray;
 
 void panda$collections$Array$init(panda$collections$Array* self);
 void panda$collections$Array$init$panda$core$Int64(panda$collections$Array* self, panda$core$Int64 p_capacity);
@@ -23,5 +22,4 @@ panda$core$Int64 panda$collections$Array$get_count$R$panda$core$Int64(panda$coll
 panda$core$Object* panda$collections$Array$removeIndex$panda$core$Int64$R$panda$collections$Array$T(panda$collections$Array* self, panda$core$Int64 p_index);
 void panda$collections$Array$clear(panda$collections$Array* self);
 panda$core$String* panda$collections$Array$convert$R$panda$core$String(panda$collections$Array* self);
-panda$collections$ImmutableArray* panda$collections$Array$finish$R$panda$collections$ImmutableArray$LTpanda$collections$Array$T$GT(panda$collections$Array* self);
 

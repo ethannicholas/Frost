@@ -138,8 +138,8 @@ class LLVMCodeGenerator : CodeGenerator {
         currentBlock := label
     }
 
-    function fieldSize(t:Type):Int {
-        assert t.resolved
+    method fieldSize(t:Type):Int {
+        assert t.resolved, "type \{t} was unresolved"
         if t = Type.Void() {
              -- void as the result of an error which should have been reported elsewhere
             return 1
@@ -161,7 +161,9 @@ class LLVMCodeGenerator : CodeGenerator {
             return 1
         }
         def cl := compiler.getClass(t)
-        assert cl !== null
+        if cl == null {
+            return 0
+        }
         if !compiler.isValue(cl) | cl.name = "panda.unsafe.Pointer" {
             return POINTER_SIZE
         }
@@ -195,12 +197,14 @@ class LLVMCodeGenerator : CodeGenerator {
         return fieldSize(t).min(8)
     }
 
-    function sizeOf(t:Type):Int {
+    method sizeOf(t:Type):Int {
         if !t.isClass {
             return fieldSize(t)
         }
         def cl := compiler.getClass(t)
         assert cl !== null
+        assert cl.resolved = Compiler.Resolution.RESOLVED,
+                "determining size of unresolved class \{cl.name}"
         if cl.name = "panda.unsafe.Pointer" {
             return POINTER_SIZE
         }
@@ -210,7 +214,9 @@ class LLVMCodeGenerator : CodeGenerator {
         }
         var result := 0
         for f in compiler.instanceFields(cl) {
-            compiler.resolve(f)
+            if !compiler.resolve(f) {
+                continue
+            }
             if f.type = Type.ChoiceData() {
                 -- FIXME need to respect alignment!
                 result += getChoiceDataSize(cl)
@@ -437,7 +443,7 @@ class LLVMCodeGenerator : CodeGenerator {
                 return llvmType(Type.Method())
             }
             otherwise {
-                assert false, "unsupported type '\{t}'"
+                return "<unsupported type '\{t}'>"
             }
         }
     }
@@ -1524,6 +1530,7 @@ class LLVMCodeGenerator : CodeGenerator {
                 "label %\{ifFalse}\{debugInfo(position)}")
     }
 
+    @pre(cl.resolved = Compiler.Resolution.RESOLVED)
     method writeConstruct(position:Position, id:IR.Statement.ID, cl:ClassDecl) {
         assert !compiler.isValue(cl)
         def cc := getClassConstant(cl)

@@ -9,7 +9,6 @@ typedef struct panda$core$Object panda$core$Object;
 #include "panda/core/Bit_types.h"
 typedef struct panda$collections$Iterator panda$collections$Iterator;
 typedef struct panda$core$String panda$core$String;
-typedef struct panda$collections$ImmutableHashMap panda$collections$ImmutableHashMap;
 
 void panda$collections$HashMap$init(panda$collections$HashMap* self);
 void panda$collections$HashMap$init$panda$collections$MapView$LTpanda$collections$HashMap$K$Cpanda$collections$HashMap$V$GT(panda$collections$HashMap* self, panda$collections$MapView* p_map);
@@ -25,5 +24,4 @@ panda$collections$Iterator* panda$collections$HashMap$keys$R$panda$collections$I
 panda$collections$Iterator* panda$collections$HashMap$values$R$panda$collections$Iterator$LTpanda$collections$HashMap$V$GT(panda$collections$HashMap* self);
 panda$core$Int64 panda$collections$HashMap$get_count$R$panda$core$Int64(panda$collections$HashMap* self);
 panda$core$String* panda$collections$HashMap$convert$R$panda$core$String(panda$collections$HashMap* self);
-panda$collections$ImmutableHashMap* panda$collections$HashMap$finish$R$panda$collections$ImmutableHashMap$LTpanda$collections$HashMap$K$Cpanda$collections$HashMap$V$GT(panda$collections$HashMap* self);
 

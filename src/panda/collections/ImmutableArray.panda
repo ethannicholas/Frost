@@ -54,6 +54,22 @@ class ImmutableArray<T> : Immutable, ListView<T> {
         self._count := count
     }
 
+    ================================================================================================
+    Invalidates an `Array` and returns its contents as an `ImmutableArray`. This is generally
+    preferable to creating a new instance of `ImmutableArray` from this array, as `finish()` does
+    not copy the array's contents. Interacting in any way with an `Array` after calling this method
+    on it will cause precondition violations (or, if safety checks are disabled, undefined
+    behavior).
+    ================================================================================================
+    @class
+    method from(a:Array<T>):ImmutableArray<T> {
+        -- FIXME this transformation is only safe at -S0
+        a.data := a.data.realloc(a.capacity, a._count)
+        a.$class := ImmutableArray<T>().$class -- FIXME need a better way to get a class pointer
+        a.capacity := -1
+        return a->Object->ImmutableArray<T>
+    }
+
     @override
     method cleanup() {
         for i in 0 .. count {

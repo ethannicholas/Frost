@@ -281,11 +281,11 @@ block6:;
 panda$json$JSON* $tmp81 = (panda$json$JSON*) pandaObjectAlloc(32, (panda$core$Class*) &panda$json$JSON$class);
 panda$core$Int64 $tmp82 = (panda$core$Int64) {5};
 panda$collections$Array* $tmp83 = *(&local0);
-panda$collections$ImmutableArray* $tmp84 = panda$collections$Array$finish$R$panda$collections$ImmutableArray$LTpanda$collections$Array$T$GT($tmp83);
+panda$collections$ImmutableArray* $tmp84 = panda$collections$ImmutableArray$from$panda$collections$Array$LTpanda$collections$ImmutableArray$T$GT$R$panda$collections$ImmutableArray$LTpanda$collections$ImmutableArray$T$GT($tmp83);
 panda$json$JSON$init$panda$core$Int64$panda$collections$ImmutableArray$LTpanda$json$JSON$GT($tmp81, $tmp82, $tmp84);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp81));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp84));
-// unreffing REF($62:panda.collections.ImmutableArray<panda.collections.Array.T>)
+// unreffing REF($62:panda.collections.ImmutableArray<panda.collections.ImmutableArray.T>)
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp81));
 // unreffing REF($58:panda.json.JSON)
 panda$collections$Array* $tmp85 = *(&local0);
@@ -432,11 +432,11 @@ block10:;
 panda$json$JSON* $tmp137 = (panda$json$JSON*) pandaObjectAlloc(32, (panda$core$Class*) &panda$json$JSON$class);
 panda$core$Int64 $tmp138 = (panda$core$Int64) {4};
 panda$collections$HashMap* $tmp139 = *(&local0);
-panda$collections$ImmutableHashMap* $tmp140 = panda$collections$HashMap$finish$R$panda$collections$ImmutableHashMap$LTpanda$collections$HashMap$K$Cpanda$collections$HashMap$V$GT($tmp139);
+panda$collections$ImmutableHashMap* $tmp140 = panda$collections$ImmutableHashMap$from$panda$collections$HashMap$LTpanda$collections$ImmutableHashMap$K$Cpanda$collections$ImmutableHashMap$V$GT$R$panda$collections$ImmutableHashMap$LTpanda$collections$ImmutableHashMap$K$Cpanda$collections$ImmutableHashMap$V$GT($tmp139);
 panda$json$JSON$init$panda$core$Int64$panda$collections$ImmutableHashMap$LTpanda$core$String$Cpanda$json$JSON$GT($tmp137, $tmp138, $tmp140);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp137));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp140));
-// unreffing REF($105:panda.collections.ImmutableHashMap<panda.collections.HashMap.K, panda.collections.HashMap.V>)
+// unreffing REF($105:panda.collections.ImmutableHashMap<panda.collections.ImmutableHashMap.K, panda.collections.ImmutableHashMap.V>)
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp137));
 // unreffing REF($101:panda.json.JSON)
 panda$core$String* $tmp141 = *(&local1);

@@ -193,7 +193,8 @@ class Type : Symbol, Key<Type> {
             name.append(returnType.name)
         }
         name.append(")")
-        return Type(name.finish(), kind, position, subtypes.finish(), resolved, priority)
+        return Type(name.finish(), kind, position, ImmutableArray<Type>.from(subtypes), resolved,
+                priority)
     }
 
     function get_size():Int {

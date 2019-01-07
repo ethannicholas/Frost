@@ -17,7 +17,6 @@
 #include "panda/core/UInt64.h"
 #include "panda/core/Range.LTpanda/core/Int64.GT.h"
 #include "panda/core/MutableString.h"
-#include "panda/collections/ImmutableArray.h"
 
 __attribute__((weak)) panda$collections$Iterator* panda$collections$ListView$iterator$R$panda$collections$Iterator$LTpanda$collections$ListView$T$GT$shim(panda$collections$ListView* p0) {
     panda$collections$Iterator* result = panda$collections$ListView$iterator$R$panda$collections$Iterator$LTpanda$collections$ListView$T$GT(p0);
@@ -66,7 +65,7 @@ struct { panda$core$Class* cl; ITable* next; void* methods[3]; } panda$collectio
 struct { panda$core$Class* cl; ITable* next; void* methods[6]; } panda$collections$Array$_panda$collections$CollectionView = { (panda$core$Class*) &panda$collections$CollectionView$class, (ITable*) &panda$collections$Array$_panda$collections$CollectionWriter, { panda$collections$Array$get_count$R$panda$core$Int64, panda$collections$CollectionView$join$R$panda$core$String, panda$collections$CollectionView$join$panda$core$String$R$panda$core$String, panda$collections$CollectionView$fold$$LPpanda$collections$CollectionView$T$Cpanda$collections$CollectionView$T$RP$EQ$GT$LPpanda$collections$CollectionView$T$RP$R$panda$collections$CollectionView$T, panda$collections$CollectionView$fold$$LPpanda$collections$CollectionView$T$Cpanda$collections$CollectionView$T$RP$EQ$GT$LPpanda$collections$CollectionView$T$RP$panda$collections$CollectionView$T$R$panda$collections$CollectionView$T, panda$collections$CollectionView$apply$$LPpanda$collections$CollectionView$T$RP$EQ$AM$GT$LP$RP} };
 
 static panda$core$String $s1;
-panda$collections$Array$class_type panda$collections$Array$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, (ITable*) &panda$collections$Array$_panda$collections$CollectionView, { panda$collections$Array$convert$R$panda$core$String, panda$collections$Array$cleanup, panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T$shim, panda$collections$Array$$IDXEQ$panda$core$Int64$panda$collections$Array$T$shim, panda$collections$Array$insert$panda$core$Int64$panda$collections$Array$T$shim, panda$collections$Array$add$panda$collections$Array$T$shim, panda$collections$Array$addAll$panda$collections$CollectionView$LTpanda$collections$Array$T$GT$shim, panda$collections$Array$ensureCapacity$panda$core$Int64, panda$collections$Array$get_count$R$panda$core$Int64, panda$collections$Array$removeIndex$panda$core$Int64$R$panda$collections$Array$T$shim, panda$collections$Array$clear, panda$collections$Array$finish$R$panda$collections$ImmutableArray$LTpanda$collections$Array$T$GT} };
+panda$collections$Array$class_type panda$collections$Array$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, (ITable*) &panda$collections$Array$_panda$collections$CollectionView, { panda$collections$Array$convert$R$panda$core$String, panda$collections$Array$cleanup, panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T$shim, panda$collections$Array$$IDXEQ$panda$core$Int64$panda$collections$Array$T$shim, panda$collections$Array$insert$panda$core$Int64$panda$collections$Array$T$shim, panda$collections$Array$add$panda$collections$Array$T$shim, panda$collections$Array$addAll$panda$collections$CollectionView$LTpanda$collections$Array$T$GT$shim, panda$collections$Array$ensureCapacity$panda$core$Int64, panda$collections$Array$get_count$R$panda$core$Int64, panda$collections$Array$removeIndex$panda$core$Int64$R$panda$collections$Array$T$shim, panda$collections$Array$clear} };
 
 typedef panda$core$Int64 (*$fn11)(panda$collections$CollectionView*);
 typedef panda$collections$Iterator* (*$fn17)(panda$collections$Iterable*);
@@ -1015,42 +1014,6 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp484));
 // unreffing result
 *(&local0) = ((panda$core$MutableString*) NULL);
 return $tmp482;
-
-}
-panda$collections$ImmutableArray* panda$collections$Array$finish$R$panda$collections$ImmutableArray$LTpanda$collections$Array$T$GT(panda$collections$Array* param0) {
-
-// line 166
-panda$core$Object*** $tmp485 = &param0->data;
-panda$core$Object** $tmp486 = *$tmp485;
-panda$core$Int64* $tmp487 = &param0->capacity;
-panda$core$Int64 $tmp488 = *$tmp487;
-panda$core$Int64* $tmp489 = &param0->_count;
-panda$core$Int64 $tmp490 = *$tmp489;
-int64_t $tmp491 = $tmp488.value;
-int64_t $tmp492 = $tmp490.value;
-panda$core$Object** $tmp493 = (panda$core$Object**) pandaRealloc($tmp486, $tmp491 * 8, $tmp492 * 8);
-panda$core$Object*** $tmp494 = &param0->data;
-*$tmp494 = $tmp493;
-// line 167
-panda$collections$ImmutableArray* $tmp495 = (panda$collections$ImmutableArray*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$ImmutableArray$class);
-panda$collections$ImmutableArray$init($tmp495);
-panda$core$Class** $tmp496 = &((panda$core$Object*) $tmp495)->$class;
-panda$core$Class* $tmp497 = *$tmp496;
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp497));
-panda$core$Class** $tmp498 = &((panda$core$Object*) param0)->$class;
-panda$core$Class* $tmp499 = *$tmp498;
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp499));
-panda$core$Class** $tmp500 = &((panda$core$Object*) param0)->$class;
-*$tmp500 = $tmp497;
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp495));
-// unreffing REF($18:panda.collections.ImmutableArray<panda.collections.Array.T>)
-// line 168
-panda$core$Int64 $tmp501 = (panda$core$Int64) {18446744073709551615};
-panda$core$Int64* $tmp502 = &param0->capacity;
-*$tmp502 = $tmp501;
-// line 169
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((panda$collections$ImmutableArray*) ((panda$core$Object*) param0))));
-return ((panda$collections$ImmutableArray*) ((panda$core$Object*) param0));
 
 }
 

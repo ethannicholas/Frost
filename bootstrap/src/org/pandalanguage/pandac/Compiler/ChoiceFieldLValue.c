@@ -33,28 +33,28 @@ static panda$core$String $s27 = { (panda$core$Class*) &panda$core$String$class, 
 
 void org$pandalanguage$pandac$Compiler$ChoiceFieldLValue$init$org$pandalanguage$pandac$Compiler$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Value$org$pandalanguage$pandac$ChoiceCase$panda$core$Int64(org$pandalanguage$pandac$Compiler$ChoiceFieldLValue* param0, org$pandalanguage$pandac$Compiler* param1, org$pandalanguage$pandac$Position param2, org$pandalanguage$pandac$IR$Value* param3, org$pandalanguage$pandac$ChoiceCase* param4, panda$core$Int64 param5) {
 
-// line 6384
+// line 6405
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 org$pandalanguage$pandac$Compiler** $tmp2 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp3 = *$tmp2;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
 org$pandalanguage$pandac$Compiler** $tmp4 = &param0->compiler;
 *$tmp4 = param1;
-// line 6385
+// line 6406
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param3));
 org$pandalanguage$pandac$IR$Value** $tmp5 = &param0->target;
 org$pandalanguage$pandac$IR$Value* $tmp6 = *$tmp5;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp6));
 org$pandalanguage$pandac$IR$Value** $tmp7 = &param0->target;
 *$tmp7 = param3;
-// line 6386
+// line 6407
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param4));
 org$pandalanguage$pandac$ChoiceCase** $tmp8 = &param0->choiceCase;
 org$pandalanguage$pandac$ChoiceCase* $tmp9 = *$tmp8;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp9));
 org$pandalanguage$pandac$ChoiceCase** $tmp10 = &param0->choiceCase;
 *$tmp10 = param4;
-// line 6387
+// line 6408
 panda$core$Int64* $tmp11 = &param0->index;
 *$tmp11 = param5;
 return;
@@ -62,7 +62,7 @@ return;
 }
 org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Compiler$ChoiceFieldLValue$type$R$org$pandalanguage$pandac$Type(org$pandalanguage$pandac$Compiler$ChoiceFieldLValue* param0) {
 
-// line 6392
+// line 6413
 org$pandalanguage$pandac$ChoiceCase** $tmp12 = &param0->choiceCase;
 org$pandalanguage$pandac$ChoiceCase* $tmp13 = *$tmp12;
 panda$collections$Array** $tmp14 = &$tmp13->fields;
@@ -78,12 +78,12 @@ return ((org$pandalanguage$pandac$Type*) $tmp18);
 }
 org$pandalanguage$pandac$IR$Value* org$pandalanguage$pandac$Compiler$ChoiceFieldLValue$compileLoad$R$org$pandalanguage$pandac$IR$Value$Q(org$pandalanguage$pandac$Compiler$ChoiceFieldLValue* param0) {
 
-// line 6397
+// line 6418
 panda$core$Bit $tmp19 = panda$core$Bit$init$builtin_bit(false);
 bool $tmp20 = $tmp19.value;
 if ($tmp20) goto block1; else goto block2;
 block2:;
-panda$core$Int64 $tmp21 = (panda$core$Int64) {6397};
+panda$core$Int64 $tmp21 = (panda$core$Int64) {6418};
 panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64(&$s22, $tmp21);
 abort(); // unreachable
 block1:;
@@ -91,7 +91,7 @@ panda$core$Bit $tmp23 = panda$core$Bit$init$builtin_bit(false);
 bool $tmp24 = $tmp23.value;
 if ($tmp24) goto block3; else goto block4;
 block4:;
-panda$core$Int64 $tmp25 = (panda$core$Int64) {6396};
+panda$core$Int64 $tmp25 = (panda$core$Int64) {6417};
 panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s26, $tmp25, &$s27);
 abort(); // unreachable
 block3:;
@@ -101,7 +101,7 @@ abort(); // unreachable
 void org$pandalanguage$pandac$Compiler$ChoiceFieldLValue$compileStore$org$pandalanguage$pandac$IR$Value(org$pandalanguage$pandac$Compiler$ChoiceFieldLValue* param0, org$pandalanguage$pandac$IR$Value* param1) {
 
 org$pandalanguage$pandac$IR$Statement$ID local0;
-// line 6402
+// line 6423
 org$pandalanguage$pandac$Compiler** $tmp28 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp29 = *$tmp28;
 $fn31 $tmp30 = ($fn31) param0->$class->vtable[2];
@@ -112,13 +112,13 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp32));
 // unreffing REF($4:org.pandalanguage.pandac.Type)
 if ($tmp34) goto block1; else goto block2;
 block1:;
-// line 6403
+// line 6424
 org$pandalanguage$pandac$Compiler** $tmp35 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp36 = *$tmp35;
 org$pandalanguage$pandac$Compiler$compileRef$org$pandalanguage$pandac$IR$Value($tmp36, param1);
 goto block2;
 block2:;
-// line 6405
+// line 6426
 org$pandalanguage$pandac$Compiler** $tmp37 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp38 = *$tmp37;
 org$pandalanguage$pandac$IR** $tmp39 = &$tmp38->ir;
@@ -139,7 +139,7 @@ org$pandalanguage$pandac$IR$Statement$ID $tmp53 = $tmp51($tmp40, $tmp41);
 *(&local0) = $tmp53;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp41));
 // unreffing REF($21:org.pandalanguage.pandac.IR.Statement)
-// line 6407
+// line 6428
 org$pandalanguage$pandac$Compiler** $tmp54 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp55 = *$tmp54;
 org$pandalanguage$pandac$IR** $tmp56 = &$tmp55->ir;
@@ -173,7 +173,7 @@ return;
 }
 void org$pandalanguage$pandac$Compiler$ChoiceFieldLValue$cleanup(org$pandalanguage$pandac$Compiler$ChoiceFieldLValue* param0) {
 
-// line 6371
+// line 6392
 panda$core$Object$cleanup(((panda$core$Object*) param0));
 org$pandalanguage$pandac$Compiler** $tmp75 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp76 = *$tmp75;

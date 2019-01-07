@@ -7,7 +7,7 @@ Immutable implementation of the [Map] interface, which associates keys with valu
 are typically created via the [HashMap.finish()] function.
 ====================================================================================================
 @final
-class ImmutableHashMap<K:Key<K>, V> : MapView<K, V> {
+class ImmutableHashMap<K:Key<K>, V> : Immutable, MapView<K, V> {
     @private
     class Entry<K:Key<K>, V> {
         ============================================================================================
@@ -109,20 +109,20 @@ class ImmutableHashMap<K:Key<K>, V> : MapView<K, V> {
     constant DEFAULT_BUCKET_COUNT := 16
 
     @private
-    var _count:Int
+    def _count:Int
 
     @private
     -- must be a power of 2 (see indexFor)
-    var bucketCount:Int
+    def bucketCount:Int
 
     @private
-    var contents:Pointer<Entry<K, V>?>
+    def contents:Pointer<Entry<K, V>?>
 
     @private
-    var dummyThreshold:Int -- for compatibility with HashMap
+    def dummyThreshold:Int -- for compatibility with HashMap
 
     @private
-    var dummyChangeCount:Int -- for compatibility with HashMap
+    def dummyChangeCount:Int -- for compatibility with HashMap
     
     ================================================================================================
     Creates an empty `ImmutableHashMap`.
@@ -244,5 +244,17 @@ class ImmutableHashMap<K:Key<K>, V> : MapView<K, V> {
         }
         result.append("}")
         return result.finish()
+    }
+
+    ================================================================================================
+    Invalidates the given `HashMap` and returns its contents as an `ImmutableHashMap`. Interacting
+    in any way with the `HashMap` after calling this method will cause precondition violations (or,
+    if safety checks are disabled, undefined behavior).
+    ================================================================================================
+    @class
+    method from(map:HashMap<K, V>):ImmutableHashMap<K, V> {
+        -- FIXME this transformation is only safe at -S0
+        map.$class := ImmutableHashMap<K, V>().$class -- FIXME need a better way to get at the class
+        return map->Object->ImmutableHashMap<K, V>
     }
 }

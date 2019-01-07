@@ -272,7 +272,7 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
             for i in 0 .. m.get_groupCount() {
                 g.add(m.group(i))
             }
-            groups := g.finish()
+            groups := ImmutableArray<String>.from(g)
         }
 
         @override

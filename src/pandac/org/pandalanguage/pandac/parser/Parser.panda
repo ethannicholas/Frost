@@ -423,7 +423,8 @@ class Parser {
                                 def dot := ASTNode.DOT(expr.position(), cast, "format")
                                 def callArgs := Array<ASTNode>() -- FIXME literal
                                 callArgs.add(ASTNode.STRING(start.position, format))
-                                expr := ASTNode.CALL(expr.position(), dot, callArgs.finish())
+                                expr := ASTNode.CALL(expr.position(), dot,
+                                        ImmutableArray<ASTNode>.from(callArgs))
                             }
                             if expect(Token.Kind.RBRACE, "'}'") == null {
                                 return null
@@ -437,7 +438,8 @@ class Parser {
                                 def callArgs := Array<ASTNode>()
                                 callArgs.add(expr)
                                 callArgs.add(ASTNode.STRING(start.position, align))
-                                expr := ASTNode.CALL(expr.position(), callTarget, callArgs.finish())
+                                expr := ASTNode.CALL(expr.position(), callTarget,
+                                        ImmutableArray<ASTNode>.from(callArgs))
                             }
                             def text := chunk.finish()
                             chunk := MutableString()
@@ -512,7 +514,8 @@ class Parser {
                     if body == null {
                         return null
                     }
-                    return ASTNode.TYPED_LAMBDA(start.position, parameters.finish(), body)
+                    return ASTNode.TYPED_LAMBDA(start.position,
+                            ImmutableArray<ASTNode>.from(parameters), body)
                 }
                 if checkNext(Token.Kind.COMMA) !== null {
                     -- untyped lambda or tuple
@@ -542,7 +545,8 @@ class Parser {
                         if body == null {
                             return null
                         }
-                        return ASTNode.UNTYPED_LAMBDA(start.position, parameters.finish(), body)
+                        return ASTNode.UNTYPED_LAMBDA(start.position,
+                                ImmutableArray<ASTNode>.from(parameters), body)
                     }
                     --return ASTNode.TUPLE(start.position, parameters.finish())
                     error(start, "tuples are not yet supported")
@@ -559,7 +563,8 @@ class Parser {
                     if body == null {
                         return null
                     }
-                    return ASTNode.UNTYPED_LAMBDA(start.position, parameters.finish(), body)
+                    return ASTNode.UNTYPED_LAMBDA(start.position,
+                            ImmutableArray<ASTNode>.from(parameters), body)
                 }
                 return expr -- just a parenthesized identifier
             }
@@ -580,7 +585,7 @@ class Parser {
                 }
                 while checkNext(Token.Kind.COMMA) !== null
                 expect(Token.Kind.RPAREN, "')'")
---                return ASTNode.TUPLE(start.position, arguments.finish())
+--                return ASTNode.TUPLE(start.position, ImmutableArray<ASTNode>.from(arguments))
                 error(start, "tuples are not yet supported")
                 return null
             }
@@ -617,7 +622,7 @@ class Parser {
             }
             commaSeparatedExpressionContext.pop()
         }
-        return ASTNode.ARRAY(start.position, args.finish())
+        return ASTNode.ARRAY(start.position, ImmutableArray<ASTNode>.from(args))
     }
 
     ================================================================================================
@@ -639,7 +644,8 @@ class Parser {
             if expr == null {
                 return null
             }
-            return ASTNode.TYPED_LAMBDA(start.position, parameters.finish(), expr)
+            return ASTNode.TYPED_LAMBDA(start.position, ImmutableArray<ASTNode>.from(parameters),
+                    expr)
         }
         def parameters := Array<ASTNode>()
         parameters.add(ASTNode.IDENTIFIER(start.position, text(start)))
@@ -650,7 +656,8 @@ class Parser {
         if expr == null {
             return null
         }
-        return ASTNode.UNTYPED_LAMBDA(start.position, parameters.finish(), expr)
+        return ASTNode.UNTYPED_LAMBDA(start.position, ImmutableArray<ASTNode>.from(parameters),
+                expr)
     }
 
     ================================================================================================
@@ -905,11 +912,11 @@ class Parser {
                     error(start, "tuple types are not yet supported")
                     return null
                 }
-                return ASTNode.METHOD_TYPE(start.position, yields.kind, subtypes.finish(),
-                        returnType)
+                return ASTNode.METHOD_TYPE(start.position, yields.kind,
+                        ImmutableArray<ASTNode>.from(subtypes), returnType)
             }
             otherwise {
-                --return ASTNode.TUPLE_TYPE(start.position, subtypes.finish())
+                --return ASTNode.TUPLE_TYPE(start.position, ImmutableArray<ASTNode>.from(subtypes))
                 error(start, "tuple types are not yet supported")
                 return null
             }
@@ -979,7 +986,8 @@ class Parser {
                     }
                     return null
                 }
-                result := ASTNode.GENERIC_TYPE(start.position, finalName, children.finish())
+                result := ASTNode.GENERIC_TYPE(start.position, finalName,
+                        ImmutableArray<ASTNode>.from(children))
                 if needSpeculativeParse {
                     accept()
                 }
@@ -1033,7 +1041,8 @@ class Parser {
                         }
                     }
                     commaSeparatedExpressionContext.pop()
-                    result := ASTNode.CALL(token.position, result, args.finish())
+                    result := ASTNode.CALL(token.position, result,
+                            ImmutableArray<ASTNode>.from(args))
                 }
                 when Token.Kind.LBRACKET {
                     def arg := expression()
@@ -1146,7 +1155,8 @@ class Parser {
                         }
                         if shouldAccept {
                             accept()
-                            result := ASTNode.GENERIC_TYPE(result.position(), name, types.finish())
+                            result := ASTNode.GENERIC_TYPE(result.position(), name,
+                                    ImmutableArray<ASTNode>.from(types))
                             continue
                         }
                         else {
@@ -1616,7 +1626,7 @@ class Parser {
         if statements == null {
             return null
         }
-        return ASTNode.WHEN(start.position, expressions.finish(), statements)
+        return ASTNode.WHEN(start.position, ImmutableArray<ASTNode>.from(expressions), statements)
     }
 
     ================================================================================================
@@ -1669,9 +1679,9 @@ class Parser {
             return null
         }
         if other !== null {
-            return ASTNode.MATCH(start.position, expr, whens.finish(), other)
+            return ASTNode.MATCH(start.position, expr, ImmutableArray<ASTNode>.from(whens), other)
         }
-        return ASTNode.MATCH(start.position, expr, whens.finish(), null)
+        return ASTNode.MATCH(start.position, expr, ImmutableArray<ASTNode>.from(whens), null)
     }
 
     ================================================================================================
@@ -1709,7 +1719,7 @@ class Parser {
                 }
             }
         }
-        return result.finish()
+        return ImmutableArray<ASTNode>.from(result)
     }
 
     ================================================================================================
@@ -1823,7 +1833,7 @@ class Parser {
             }
             declarations.add(decl)
         }
-        return ASTNode.VAR(start.position, kind, declarations.finish())
+        return ASTNode.VAR(start.position, kind, ImmutableArray<ASTNode>.from(declarations))
     }
 
     ================================================================================================
@@ -1861,7 +1871,7 @@ class Parser {
             }
         }
         commaSeparatedExpressionContext.pop()
-        return ASTNode.CALL(start.position, target, args.finish())
+        return ASTNode.CALL(start.position, target, ImmutableArray<ASTNode>.from(args))
     }
 
     ================================================================================================
@@ -2138,7 +2148,7 @@ class Parser {
         if expect(Token.Kind.GT, "'>'") == null {
             return null
         }
-        return parameters.finish()
+        return ImmutableArray<ASTNode>.from(parameters)
     }
 
     ================================================================================================
@@ -2162,7 +2172,7 @@ class Parser {
             }
             result.add(t)
         }
-        return result.finish()
+        return ImmutableArray<ASTNode>.from(result)
     }
 
     ================================================================================================
@@ -2199,7 +2209,7 @@ class Parser {
             }
             result.add(a)
         }
-        return result.finish()
+        return ImmutableArray<ASTNode>.from(result)
     }
 
      method doccomment():ASTNode? {
@@ -2265,7 +2275,7 @@ class Parser {
                 return null
             }
         }
-        return result.finish()
+        return ImmutableArray<ASTNode>.from(result)
     }
 
     ================================================================================================
@@ -2423,7 +2433,8 @@ class Parser {
                 return null
             }
         }
-        return ASTNode.CHOICE_CASE(name.position, doccomment, text(name), fields.finish())
+        return ASTNode.CHOICE_CASE(name.position, doccomment, text(name),
+                ImmutableArray<ASTNode>.from(fields))
     }
 
     ================================================================================================
@@ -2557,7 +2568,8 @@ class Parser {
             }
         }
         return ASTNode.CLASS(start.position, choiceDoccomment, choiceAnnotations,
-                ClassDecl.Kind.CHOICE, text(name), generics, null, members.finish())
+                ClassDecl.Kind.CHOICE, text(name), generics, null,
+                ImmutableArray<ASTNode>.from(members))
     }
 
     ================================================================================================
@@ -2651,7 +2663,7 @@ class Parser {
             members.add(member)
         }
         return ASTNode.CLASS(start.position, doccomment, annotations, ClassDecl.Kind.CLASS,
-                text(name), generics, stypes, members.finish())
+                text(name), generics, stypes, ImmutableArray<ASTNode>.from(members))
     }
 
     ================================================================================================
@@ -2704,7 +2716,8 @@ class Parser {
             members.add(member)
         }
         return ASTNode.CLASS(start.position, doccomment, annotations, ClassDecl.Kind.INTERFACE,
-                text(name), generics, intfs.finish(), members.finish())
+                text(name), generics, ImmutableArray<ASTNode>.from(intfs),
+                ImmutableArray<ASTNode>.from(members))
     }
 
     ================================================================================================
@@ -2740,6 +2753,6 @@ class Parser {
             assert !inSpeculative
             entries.add(entry)
         }
-        return ASTNode.FILE(entries.finish())
+        return ASTNode.FILE(ImmutableArray<ASTNode>.from(entries))
     }
 }

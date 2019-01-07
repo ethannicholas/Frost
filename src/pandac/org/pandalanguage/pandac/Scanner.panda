@@ -76,8 +76,8 @@ class Scanner {
                 else {
                     returnType := Type.Void()
                 }
-                return Type.methodType(type.position(), typeKind, parameters.finish(), returnType,
-                        0)
+                return Type.methodType(type.position(), typeKind,
+                        ImmutableArray<Type>.from(parameters), returnType, 0)
             }
             otherwise {
                 assert false, "unsupported type \{type}(\{type.$rawValue})"
@@ -885,7 +885,7 @@ class Scanner {
                                         ImmutableArray<ASTNode>())
                                 mainStatements.add(ASTNode.CALL(position,
                                         ASTNode.DOT(position, bareConstruct, name),
-                                        mainArguments.finish()))
+                                        ImmutableArray<ASTNode>.from(mainArguments)))
                                 def returnType:Type
                                 if rawReturnType !== null {
                                     returnType := convertType(rawReturnType)
@@ -896,7 +896,7 @@ class Scanner {
                                 def bareMain := MethodDecl(bareCodeClass, Position(), null,
                                         Annotations(Annotations.Flag.CLASS), MethodDecl.Kind.METHOD,
                                         "main", Array<ClassDecl.GenericParameter>(), mainParameters,
-                                        returnType, mainStatements.finish())
+                                        returnType, ImmutableArray<ASTNode>.from(mainStatements))
                                 bareCodeClass.methods.add(bareMain)
                             }
                             else {

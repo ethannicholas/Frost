@@ -1,5 +1,5 @@
 #include "panda/json/JSON.h"
-#include "panda/core/Object.h"
+#include "panda/core/Immutable.h"
 #include "panda/core/Class.h"
 #include "panda/core/String.h"
 #include "panda/json/JSON/PathKey.h"
@@ -9,6 +9,7 @@
 #include "panda/core/Int64.h"
 #include "panda/core/Int32.h"
 #include "panda/core/Equatable.h"
+#include "panda/core/Object.h"
 #include "panda/core/Panda.h"
 #include "panda/core/Range.LTpanda/core/String/Index.GT.h"
 #include "panda/collections/ImmutableHashMap.h"
@@ -22,9 +23,18 @@
 #include "panda/core/Formattable.h"
 #include "panda/collections/Iterable.h"
 
+__attribute__((weak)) panda$core$String* panda$json$JSON$convert$R$panda$core$String$shim(panda$json$JSON* p0) {
+    panda$core$String* result = panda$json$JSON$convert$R$panda$core$String(p0);
+
+    return result;
+}
+__attribute__((weak)) void panda$json$JSON$cleanup$shim(panda$json$JSON* p0) {
+    panda$json$JSON$cleanup(p0);
+
+}
 
 static panda$core$String $s1;
-panda$json$JSON$class_type panda$json$JSON$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, NULL, { panda$json$JSON$convert$R$panda$core$String, panda$json$JSON$cleanup, panda$json$JSON$get$panda$core$String$R$panda$json$JSON$Q, panda$json$JSON$getInt$panda$core$String$R$panda$core$Int64$Q, panda$json$JSON$getReal$panda$core$String$R$panda$core$Real64$Q, panda$json$JSON$getBit$panda$core$String$R$panda$core$Bit$Q, panda$json$JSON$getString$panda$core$String$R$panda$core$String$Q, panda$json$JSON$getArray$panda$core$String$R$panda$collections$ListView$LTpanda$json$JSON$GT$Q, panda$json$JSON$getObject$panda$core$String$R$panda$collections$MapView$LTpanda$core$String$Cpanda$json$JSON$GT$Q, panda$json$JSON$asInt$R$panda$core$Int64, panda$json$JSON$asReal$R$panda$core$Real64, panda$json$JSON$asString$R$panda$core$String, panda$json$JSON$asBit$R$panda$core$Bit, panda$json$JSON$asObject$R$panda$collections$MapView$LTpanda$core$String$Cpanda$json$JSON$GT, panda$json$JSON$asArray$R$panda$collections$ListView$LTpanda$json$JSON$GT} };
+panda$json$JSON$class_type panda$json$JSON$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Immutable$class, NULL, { panda$json$JSON$convert$R$panda$core$String$shim, panda$json$JSON$cleanup$shim, panda$json$JSON$get$panda$core$String$R$panda$json$JSON$Q, panda$json$JSON$getInt$panda$core$String$R$panda$core$Int64$Q, panda$json$JSON$getReal$panda$core$String$R$panda$core$Real64$Q, panda$json$JSON$getBit$panda$core$String$R$panda$core$Bit$Q, panda$json$JSON$getString$panda$core$String$R$panda$core$String$Q, panda$json$JSON$getArray$panda$core$String$R$panda$collections$ListView$LTpanda$json$JSON$GT$Q, panda$json$JSON$getObject$panda$core$String$R$panda$collections$MapView$LTpanda$core$String$Cpanda$json$JSON$GT$Q, panda$json$JSON$asInt$R$panda$core$Int64, panda$json$JSON$asReal$R$panda$core$Real64, panda$json$JSON$asString$R$panda$core$String, panda$json$JSON$asBit$R$panda$core$Bit, panda$json$JSON$asObject$R$panda$collections$MapView$LTpanda$core$String$Cpanda$json$JSON$GT, panda$json$JSON$asArray$R$panda$collections$ListView$LTpanda$json$JSON$GT} };
 
 typedef panda$core$Bit (*$fn31)(panda$core$Equatable*, panda$core$Equatable*);
 typedef panda$core$Bit (*$fn88)(panda$core$Equatable*, panda$core$Equatable*);
@@ -1691,7 +1701,7 @@ block14:;
 goto block1;
 block1:;
 // line 8
-panda$core$Object$cleanup(((panda$core$Object*) param0));
+panda$core$Immutable$cleanup(((panda$core$Immutable*) param0));
 return;
 
 }

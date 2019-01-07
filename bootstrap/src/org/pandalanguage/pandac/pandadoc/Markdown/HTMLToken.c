@@ -1,9 +1,10 @@
 #include "org/pandalanguage/pandac/pandadoc/Markdown/HTMLToken.h"
-#include "panda/core/Object.h"
+#include "panda/core/Immutable.h"
 #include "panda/core/Class.h"
 #include "panda/core/String.h"
 #include "panda/core/Equatable.h"
 #include "panda/core/Bit.h"
+#include "panda/core/Object.h"
 #include "panda/core/Int64.h"
 #include "panda/core/Panda.h"
 
@@ -12,11 +13,15 @@ __attribute__((weak)) panda$core$Bit org$pandalanguage$pandac$pandadoc$Markdown$
 
     return result;
 }
+__attribute__((weak)) void org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken$cleanup$shim(org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken* p0) {
+    org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken$cleanup(p0);
+
+}
 
 struct { panda$core$Class* cl; ITable* next; void* methods[2]; } org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken$_panda$core$Equatable = { (panda$core$Class*) &panda$core$Equatable$class, NULL, { org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken$$EQ$org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken$R$panda$core$Bit$shim, panda$core$Equatable$$NEQ$panda$core$Equatable$T$R$panda$core$Bit} };
 
 static panda$core$String $s1;
-org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken$class_type org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, (ITable*) &org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken$_panda$core$Equatable, { panda$core$Object$convert$R$panda$core$String, org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken$cleanup, org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken$$EQ$org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken$R$panda$core$Bit$shim} };
+org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken$class_type org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Immutable$class, (ITable*) &org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken$_panda$core$Equatable, { panda$core$Object$convert$R$panda$core$String, org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken$cleanup$shim, org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken$$EQ$org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken$R$panda$core$Bit$shim} };
 
 
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x70\x61\x6e\x64\x61\x63\x2e\x70\x61\x6e\x64\x61\x64\x6f\x63\x2e\x4d\x61\x72\x6b\x64\x6f\x77\x6e\x2e\x48\x54\x4d\x4c\x54\x6f\x6b\x65\x6e", 52, -3956136468165552167, NULL };
@@ -71,7 +76,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp19));
 goto block1;
 block1:;
 // line 813
-panda$core$Object$cleanup(((panda$core$Object*) param0));
+panda$core$Immutable$cleanup(((panda$core$Immutable*) param0));
 return;
 
 }

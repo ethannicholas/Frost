@@ -1,12 +1,13 @@
 #include "panda/collections/ImmutableHashMap.h"
-#include "panda/core/Object.h"
+#include "panda/core/Immutable.h"
 #include "panda/core/Class.h"
 #include "panda/core/String.h"
 #include "panda/collections/MapView.h"
+#include "panda/core/Int64.h"
+#include "panda/core/Object.h"
 #include "panda/collections/Key.h"
 #include "panda/core/Bit.h"
 #include "panda/collections/Iterator.h"
-#include "panda/core/Int64.h"
 #include "panda/collections/ImmutableHashMap/Entry.h"
 #include "panda/core/Range.LTpanda/core/Int64.GT.h"
 #include "panda/core/UInt64.h"
@@ -15,7 +16,13 @@
 #include "panda/collections/ImmutableHashMap/KeyIterator.h"
 #include "panda/collections/ImmutableHashMap/ValueIterator.h"
 #include "panda/core/MutableString.h"
+#include "panda/collections/HashMap.h"
 
+__attribute__((weak)) panda$core$Int64 panda$collections$ImmutableHashMap$get_count$R$panda$core$Int64$shim(panda$collections$ImmutableHashMap* p0) {
+    panda$core$Int64 result = panda$collections$ImmutableHashMap$get_count$R$panda$core$Int64(p0);
+
+    return result;
+}
 __attribute__((weak)) panda$core$Object* panda$collections$ImmutableHashMap$$IDX$panda$collections$ImmutableHashMap$K$R$panda$collections$ImmutableHashMap$V$Q$shim(panda$collections$ImmutableHashMap* p0, panda$core$Object* p1) {
     panda$core$Object* result = panda$collections$ImmutableHashMap$$IDX$panda$collections$ImmutableHashMap$K$R$panda$collections$ImmutableHashMap$V$Q(p0, ((panda$collections$Key*) p1));
 
@@ -36,11 +43,20 @@ __attribute__((weak)) panda$collections$Iterator* panda$collections$ImmutableHas
 
     return result;
 }
+__attribute__((weak)) panda$core$String* panda$collections$ImmutableHashMap$convert$R$panda$core$String$shim(panda$collections$ImmutableHashMap* p0) {
+    panda$core$String* result = panda$collections$ImmutableHashMap$convert$R$panda$core$String(p0);
 
-struct { panda$core$Class* cl; ITable* next; void* methods[5]; } panda$collections$ImmutableHashMap$_panda$collections$MapView = { (panda$core$Class*) &panda$collections$MapView$class, NULL, { panda$collections$ImmutableHashMap$get_count$R$panda$core$Int64, panda$collections$ImmutableHashMap$$IDX$panda$collections$ImmutableHashMap$K$R$panda$collections$ImmutableHashMap$V$Q$shim, panda$collections$ImmutableHashMap$contains$panda$collections$ImmutableHashMap$K$R$panda$core$Bit$shim, panda$collections$ImmutableHashMap$keys$R$panda$collections$Iterator$LTpanda$collections$ImmutableHashMap$K$GT$shim, panda$collections$ImmutableHashMap$values$R$panda$collections$Iterator$LTpanda$collections$ImmutableHashMap$V$GT$shim} };
+    return result;
+}
+__attribute__((weak)) void panda$collections$ImmutableHashMap$cleanup$shim(panda$collections$ImmutableHashMap* p0) {
+    panda$collections$ImmutableHashMap$cleanup(p0);
+
+}
+
+struct { panda$core$Class* cl; ITable* next; void* methods[5]; } panda$collections$ImmutableHashMap$_panda$collections$MapView = { (panda$core$Class*) &panda$collections$MapView$class, NULL, { panda$collections$ImmutableHashMap$get_count$R$panda$core$Int64$shim, panda$collections$ImmutableHashMap$$IDX$panda$collections$ImmutableHashMap$K$R$panda$collections$ImmutableHashMap$V$Q$shim, panda$collections$ImmutableHashMap$contains$panda$collections$ImmutableHashMap$K$R$panda$core$Bit$shim, panda$collections$ImmutableHashMap$keys$R$panda$collections$Iterator$LTpanda$collections$ImmutableHashMap$K$GT$shim, panda$collections$ImmutableHashMap$values$R$panda$collections$Iterator$LTpanda$collections$ImmutableHashMap$V$GT$shim} };
 
 static panda$core$String $s1;
-panda$collections$ImmutableHashMap$class_type panda$collections$ImmutableHashMap$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, (ITable*) &panda$collections$ImmutableHashMap$_panda$collections$MapView, { panda$collections$ImmutableHashMap$convert$R$panda$core$String, panda$collections$ImmutableHashMap$cleanup, panda$collections$ImmutableHashMap$indexFor$panda$collections$ImmutableHashMap$K$R$panda$core$Int64, panda$collections$ImmutableHashMap$$IDX$panda$collections$ImmutableHashMap$K$R$panda$collections$ImmutableHashMap$V$Q$shim, panda$collections$ImmutableHashMap$contains$panda$collections$ImmutableHashMap$K$R$panda$core$Bit$shim, panda$collections$ImmutableHashMap$keys$R$panda$collections$Iterator$LTpanda$collections$ImmutableHashMap$K$GT$shim, panda$collections$ImmutableHashMap$values$R$panda$collections$Iterator$LTpanda$collections$ImmutableHashMap$V$GT$shim, panda$collections$ImmutableHashMap$get_count$R$panda$core$Int64} };
+panda$collections$ImmutableHashMap$class_type panda$collections$ImmutableHashMap$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Immutable$class, (ITable*) &panda$collections$ImmutableHashMap$_panda$collections$MapView, { panda$collections$ImmutableHashMap$convert$R$panda$core$String$shim, panda$collections$ImmutableHashMap$cleanup$shim, panda$collections$ImmutableHashMap$indexFor$panda$collections$ImmutableHashMap$K$R$panda$core$Int64, panda$collections$ImmutableHashMap$$IDX$panda$collections$ImmutableHashMap$K$R$panda$collections$ImmutableHashMap$V$Q$shim, panda$collections$ImmutableHashMap$contains$panda$collections$ImmutableHashMap$K$R$panda$core$Bit$shim, panda$collections$ImmutableHashMap$keys$R$panda$collections$Iterator$LTpanda$collections$ImmutableHashMap$K$GT$shim, panda$collections$ImmutableHashMap$values$R$panda$collections$Iterator$LTpanda$collections$ImmutableHashMap$V$GT$shim, panda$collections$ImmutableHashMap$get_count$R$panda$core$Int64$shim} };
 
 typedef panda$core$Int64 (*$fn70)(panda$collections$Key*);
 typedef panda$core$Bit (*$fn119)(panda$core$Equatable*, panda$core$Equatable*);
@@ -165,7 +181,7 @@ panda$collections$ImmutableHashMap$Entry*** $tmp63 = &param0->contents;
 panda$collections$ImmutableHashMap$Entry** $tmp64 = *$tmp63;
 pandaFree($tmp64);
 // line 137
-panda$core$Object$cleanup(((panda$core$Object*) param0));
+panda$core$Immutable$cleanup(((panda$core$Immutable*) param0));
 return;
 
 }
@@ -634,6 +650,26 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp272));
 // unreffing result
 *(&local0) = ((panda$core$MutableString*) NULL);
 return $tmp270;
+
+}
+panda$collections$ImmutableHashMap* panda$collections$ImmutableHashMap$from$panda$collections$HashMap$LTpanda$collections$ImmutableHashMap$K$Cpanda$collections$ImmutableHashMap$V$GT$R$panda$collections$ImmutableHashMap$LTpanda$collections$ImmutableHashMap$K$Cpanda$collections$ImmutableHashMap$V$GT(panda$collections$HashMap* param0) {
+
+// line 257
+panda$collections$ImmutableHashMap* $tmp273 = (panda$collections$ImmutableHashMap*) pandaObjectAlloc(56, (panda$core$Class*) &panda$collections$ImmutableHashMap$class);
+panda$collections$ImmutableHashMap$init($tmp273);
+panda$core$Class** $tmp274 = &((panda$core$Object*) $tmp273)->$class;
+panda$core$Class* $tmp275 = *$tmp274;
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp275));
+panda$core$Class** $tmp276 = &((panda$core$Object*) param0)->$class;
+panda$core$Class* $tmp277 = *$tmp276;
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp277));
+panda$core$Class** $tmp278 = &((panda$core$Object*) param0)->$class;
+*$tmp278 = $tmp275;
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp273));
+// unreffing REF($2:panda.collections.ImmutableHashMap<panda.collections.ImmutableHashMap.K, panda.collections.ImmutableHashMap.V>)
+// line 258
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((panda$collections$ImmutableHashMap*) ((panda$core$Object*) param0))));
+return ((panda$collections$ImmutableHashMap*) ((panda$core$Object*) param0));
 
 }
 

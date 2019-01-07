@@ -1,9 +1,10 @@
 #include "org/pandalanguage/pandac/Variable/Storage.h"
-#include "panda/core/Object.h"
+#include "panda/core/Immutable.h"
 #include "panda/core/Class.h"
 #include "panda/core/String.h"
 #include "panda/core/Equatable.h"
 #include "panda/core/Bit.h"
+#include "panda/core/Object.h"
 #include "panda/core/Int64.h"
 
 __attribute__((weak)) panda$core$Bit org$pandalanguage$pandac$Variable$Storage$$EQ$org$pandalanguage$pandac$Variable$Storage$R$panda$core$Bit$shim(org$pandalanguage$pandac$Variable$Storage* p0, panda$core$Equatable* p1) {
@@ -11,11 +12,15 @@ __attribute__((weak)) panda$core$Bit org$pandalanguage$pandac$Variable$Storage$$
 
     return result;
 }
+__attribute__((weak)) void org$pandalanguage$pandac$Variable$Storage$cleanup$shim(org$pandalanguage$pandac$Variable$Storage* p0) {
+    org$pandalanguage$pandac$Variable$Storage$cleanup(p0);
+
+}
 
 struct { panda$core$Class* cl; ITable* next; void* methods[2]; } org$pandalanguage$pandac$Variable$Storage$_panda$core$Equatable = { (panda$core$Class*) &panda$core$Equatable$class, NULL, { org$pandalanguage$pandac$Variable$Storage$$EQ$org$pandalanguage$pandac$Variable$Storage$R$panda$core$Bit$shim, panda$core$Equatable$$NEQ$panda$core$Equatable$T$R$panda$core$Bit} };
 
 static panda$core$String $s1;
-org$pandalanguage$pandac$Variable$Storage$class_type org$pandalanguage$pandac$Variable$Storage$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, (ITable*) &org$pandalanguage$pandac$Variable$Storage$_panda$core$Equatable, { panda$core$Object$convert$R$panda$core$String, org$pandalanguage$pandac$Variable$Storage$cleanup, org$pandalanguage$pandac$Variable$Storage$$EQ$org$pandalanguage$pandac$Variable$Storage$R$panda$core$Bit$shim} };
+org$pandalanguage$pandac$Variable$Storage$class_type org$pandalanguage$pandac$Variable$Storage$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Immutable$class, (ITable*) &org$pandalanguage$pandac$Variable$Storage$_panda$core$Equatable, { panda$core$Object$convert$R$panda$core$String, org$pandalanguage$pandac$Variable$Storage$cleanup$shim, org$pandalanguage$pandac$Variable$Storage$$EQ$org$pandalanguage$pandac$Variable$Storage$R$panda$core$Bit$shim} };
 
 
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x70\x61\x6e\x64\x61\x63\x2e\x56\x61\x72\x69\x61\x62\x6c\x65\x2e\x53\x74\x6f\x72\x61\x67\x65", 41, -3893682112086944269, NULL };
@@ -55,7 +60,7 @@ block6:;
 goto block1;
 block1:;
 // line 15
-panda$core$Object$cleanup(((panda$core$Object*) param0));
+panda$core$Immutable$cleanup(((panda$core$Immutable*) param0));
 return;
 
 }

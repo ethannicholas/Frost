@@ -769,7 +769,7 @@ $fn189 $tmp188 = ($fn189) param1->$class->vtable[2];
 org$pandalanguage$pandac$Position $tmp190 = $tmp188(param1);
 org$pandalanguage$pandac$Type$Kind $tmp191 = *(&local16);
 panda$collections$Array* $tmp192 = *(&local17);
-panda$collections$ImmutableArray* $tmp193 = panda$collections$Array$finish$R$panda$collections$ImmutableArray$LTpanda$collections$Array$T$GT($tmp192);
+panda$collections$ImmutableArray* $tmp193 = panda$collections$ImmutableArray$from$panda$collections$Array$LTpanda$collections$ImmutableArray$T$GT$R$panda$collections$ImmutableArray$LTpanda$collections$ImmutableArray$T$GT($tmp192);
 org$pandalanguage$pandac$Type* $tmp194 = *(&local19);
 panda$core$Int64 $tmp195 = (panda$core$Int64) {0};
 org$pandalanguage$pandac$Type* $tmp196 = org$pandalanguage$pandac$Type$methodType$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$Kind$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT$org$pandalanguage$pandac$Type$panda$core$Int64$R$org$pandalanguage$pandac$Type($tmp190, $tmp191, ((panda$collections$ListView*) $tmp193), $tmp194, $tmp195);
@@ -777,7 +777,7 @@ panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp196));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp196));
 // unreffing REF($479:org.pandalanguage.pandac.Type)
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp193));
-// unreffing REF($474:panda.collections.ImmutableArray<panda.collections.Array.T>)
+// unreffing REF($474:panda.collections.ImmutableArray<panda.collections.ImmutableArray.T>)
 org$pandalanguage$pandac$Type* $tmp197 = *(&local19);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp197));
 // unreffing returnType
@@ -7226,11 +7226,11 @@ org$pandalanguage$pandac$ASTNode* $tmp2892 = *(&local35);
 panda$core$String* $tmp2893 = *(&local27);
 org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$ASTNode$panda$core$String($tmp2889, $tmp2890, $tmp2891, $tmp2892, $tmp2893);
 panda$collections$Array* $tmp2894 = *(&local30);
-panda$collections$ImmutableArray* $tmp2895 = panda$collections$Array$finish$R$panda$collections$ImmutableArray$LTpanda$collections$Array$T$GT($tmp2894);
+panda$collections$ImmutableArray* $tmp2895 = panda$collections$ImmutableArray$from$panda$collections$Array$LTpanda$collections$ImmutableArray$T$GT$R$panda$collections$ImmutableArray$LTpanda$collections$ImmutableArray$T$GT($tmp2894);
 org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$ASTNode$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$ASTNode$GT($tmp2886, $tmp2887, $tmp2888, $tmp2889, $tmp2895);
 panda$collections$Array$add$panda$collections$Array$T($tmp2885, ((panda$core$Object*) $tmp2886));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2895));
-// unreffing REF($686:panda.collections.ImmutableArray<panda.collections.Array.T>)
+// unreffing REF($686:panda.collections.ImmutableArray<panda.collections.ImmutableArray.T>)
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2889));
 // unreffing REF($678:org.pandalanguage.pandac.ASTNode)
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2886));
@@ -7280,7 +7280,7 @@ panda$collections$Array$init($tmp2912);
 panda$collections$Array* $tmp2913 = *(&local28);
 org$pandalanguage$pandac$Type* $tmp2914 = *(&local36);
 panda$collections$Array* $tmp2915 = *(&local29);
-panda$collections$ImmutableArray* $tmp2916 = panda$collections$Array$finish$R$panda$collections$ImmutableArray$LTpanda$collections$Array$T$GT($tmp2915);
+panda$collections$ImmutableArray* $tmp2916 = panda$collections$ImmutableArray$from$panda$collections$Array$LTpanda$collections$ImmutableArray$T$GT$R$panda$collections$ImmutableArray$LTpanda$collections$ImmutableArray$T$GT($tmp2915);
 org$pandalanguage$pandac$MethodDecl$init$org$pandalanguage$pandac$ClassDecl$org$pandalanguage$pandac$Position$panda$core$String$Q$org$pandalanguage$pandac$Annotations$org$pandalanguage$pandac$MethodDecl$Kind$panda$core$String$panda$collections$Array$LTorg$pandalanguage$pandac$ClassDecl$GenericParameter$GT$Q$panda$collections$Array$LTorg$pandalanguage$pandac$MethodDecl$Parameter$GT$org$pandalanguage$pandac$Type$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$ASTNode$GT$Q($tmp2904, $tmp2906, $tmp2907, ((panda$core$String*) NULL), $tmp2908, $tmp2911, &$s2917, $tmp2912, $tmp2913, $tmp2914, $tmp2916);
 *(&local37) = ((org$pandalanguage$pandac$MethodDecl*) NULL);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp2904));
@@ -7288,7 +7288,7 @@ org$pandalanguage$pandac$MethodDecl* $tmp2918 = *(&local37);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2918));
 *(&local37) = $tmp2904;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2916));
-// unreffing REF($754:panda.collections.ImmutableArray<panda.collections.Array.T>)
+// unreffing REF($754:panda.collections.ImmutableArray<panda.collections.ImmutableArray.T>)
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2912));
 // unreffing REF($746:panda.collections.Array<org.pandalanguage.pandac.ClassDecl.GenericParameter>)
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2908));
