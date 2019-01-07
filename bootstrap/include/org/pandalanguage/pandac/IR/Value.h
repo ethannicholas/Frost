@@ -10,7 +10,7 @@ typedef struct panda$core$String panda$core$String;
 typedef struct org$pandalanguage$pandac$MethodDecl org$pandalanguage$pandac$MethodDecl;
 #include "panda/core/Real64_types.h"
 #include "org/pandalanguage/pandac/IR/Statement/ID_types.h"
-typedef struct panda$collections$ImmutableArray panda$collections$ImmutableArray;
+typedef struct org$pandalanguage$pandac$FixedArray org$pandalanguage$pandac$FixedArray;
 
 org$pandalanguage$pandac$Type* org$pandalanguage$pandac$IR$Value$type$R$org$pandalanguage$pandac$Type(org$pandalanguage$pandac$IR$Value* self);
 panda$core$String* org$pandalanguage$pandac$IR$Value$convert$R$panda$core$String(org$pandalanguage$pandac$IR$Value* self);
@@ -24,5 +24,5 @@ void org$pandalanguage$pandac$IR$Value$init$panda$core$Int64$panda$core$Real64$o
 void org$pandalanguage$pandac$IR$Value$init$panda$core$Int64$org$pandalanguage$pandac$IR$Statement$ID$org$pandalanguage$pandac$Type(org$pandalanguage$pandac$IR$Value* self, panda$core$Int64 p_rv, org$pandalanguage$pandac$IR$Statement$ID p_f0, org$pandalanguage$pandac$Type* p_f1);
 void org$pandalanguage$pandac$IR$Value$init$panda$core$Int64$panda$core$String(org$pandalanguage$pandac$IR$Value* self, panda$core$Int64 p_rv, panda$core$String* p_f0);
 void org$pandalanguage$pandac$IR$Value$init$panda$core$Int64$org$pandalanguage$pandac$IR$Value$Q$org$pandalanguage$pandac$MethodDecl(org$pandalanguage$pandac$IR$Value* self, panda$core$Int64 p_rv, org$pandalanguage$pandac$IR$Value* p_f0, org$pandalanguage$pandac$MethodDecl* p_f1);
-void org$pandalanguage$pandac$IR$Value$init$panda$core$Int64$org$pandalanguage$pandac$IR$Value$Q$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$MethodDecl$GT(org$pandalanguage$pandac$IR$Value* self, panda$core$Int64 p_rv, org$pandalanguage$pandac$IR$Value* p_f0, panda$collections$ImmutableArray* p_f1);
+void org$pandalanguage$pandac$IR$Value$init$panda$core$Int64$org$pandalanguage$pandac$IR$Value$Q$org$pandalanguage$pandac$FixedArray$LTorg$pandalanguage$pandac$MethodDecl$GT(org$pandalanguage$pandac$IR$Value* self, panda$core$Int64 p_rv, org$pandalanguage$pandac$IR$Value* p_f0, org$pandalanguage$pandac$FixedArray* p_f1);
 

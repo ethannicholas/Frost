@@ -454,7 +454,6 @@ class Compiler {
         addAlias("panda.collections.HashSet")
         addAlias("panda.collections.IdentityMap")
         addAlias("panda.collections.ImmutableArray")
-        addAlias("panda.collections.ImmutableHashMap")
         addAlias("panda.collections.Iterable")
         addAlias("panda.collections.Iterator")
         addAlias("panda.collections.Key")
@@ -775,22 +774,18 @@ class Compiler {
             }
         }
         -- every field of every choice is equatable, make the choice equatable
-        def args := Array<Type>() -- FIXME literal
-        args.add(cl.type)
-        cl.declaredSupers.add(Type.generic(equatable.type, args))
+        cl.declaredSupers.add(Type.generic(equatable.type, [cl.type]))
         def parameters := Array<MethodDecl.Parameter>()
         parameters.add(MethodDecl.Parameter("other", cl.type))
         def p := cl.position
         def body := Array<ASTNode>()
-        def returnBlock := Array<ASTNode>() -- FIXME literal
-        returnBlock.add(ASTNode.RETURN(p, ASTNode.BIT(p, false)))
         body.add(ASTNode.IF(p, ASTNode.BINARY(p, ASTNode.DOT(p, ASTNode.SELF(p), "$rawValue"),
                 Token.Kind.NEQ, ASTNode.DOT(p, ASTNode.IDENTIFIER(p, "other"), "$rawValue")),
-                ImmutableArray<ASTNode>.from(returnBlock), null))
+                FixedArray<ASTNode>.from([ASTNode.RETURN(p, ASTNode.BIT(p, false))]), null))
         body.add(ASTNode.RETURN(p, ASTNode.BIT(p, true)))
         def eq := MethodDecl(cl, p, null, Annotations(Annotations.Flag.OVERRIDE),
                 MethodDecl.Kind.FUNCTION, "=", null, parameters, Type.Bit(),
-                ImmutableArray<ASTNode>.from(body))
+                FixedArray<ASTNode>.from(body))
         cl.methods.add(eq)
     }
 
@@ -1138,6 +1133,9 @@ class Compiler {
         if !t.isClass | t.isClassLiteral {
             return true
         }
+--        if t.isPointer {
+--            return isImmutable(t.subtypes[1])
+--        }
         def cl := getClass(t)
         if cl == null {
             return false
@@ -1581,7 +1579,7 @@ class Compiler {
                     def target := IR.Value.REF(IR.Statement.ID(-1), baseType)
                     return preferredType(ASTNode.CALL(p,
                             ASTNode.DOT(p, ASTNode.IR_WRAPPER(p, target), operatorName(op)),
-                            ImmutableArray<ASTNode>()))
+                            FixedArray<ASTNode>()))
                 }
             }
             when ASTNode.REAL {
@@ -2195,20 +2193,16 @@ class Compiler {
                         return null
                     }
                 }
-                def result := Array<Type>() -- FIXME literal
-                result.add(target)
-                return result
+                return [target]
             }
             when Token.Kind.IDENTITY, Token.Kind.NIDENTITY {
-                def result := Array<Type>() -- FIXME literal
-                result.add(Type.Bit())
-                return result
+                return [Type.Bit()]
             }
             otherwise {
                 def matches := findOverloadedOperator(left, op, right,
                         TypeContext.NON_VOID)
                 if matches !== null {
-                    def result := Array<Type>() -- FIXME literal
+                    def result := Array<Type>()
                     for m in matches.first { -- FIXME map
                         result.add(m.returnType)
                     }
@@ -2225,9 +2219,7 @@ class Compiler {
                     match op {
                         when Token.Kind.AND, Token.Kind.OR, Token.Kind.XOR, Token.Kind.EQ,
                                 Token.Kind.NEQ {
-                            def result := Array<Type>() -- FIXME literal
-                            result.add(Type.BuiltinBit())
-                            return result
+                            return [Type.BuiltinBit()]
                         }
                     }
                 }
@@ -2241,15 +2233,11 @@ class Compiler {
                                 Token.Kind.BITWISEOR, Token.Kind.BITWISEAND,
                                 Token.Kind.BITWISEXOR, Token.Kind.SHIFTLEFT,
                                 Token.Kind.SHIFTRIGHT {
-                            def result := Array<Type>() -- FIXME literal
-                            result.add(type)
-                            return result
+                            return [type]
                         }
                         when Token.Kind.EQ, Token.Kind.NEQ, Token.Kind.GT, Token.Kind.LT,
                                 Token.Kind.GTEQ, Token.Kind.LTEQ {
-                            def result := Array<Type>() -- FIXME literal
-                            result.add(Type.BuiltinBit())
-                            return result
+                            return [Type.BuiltinBit()]
                         }
                     }
                 }
@@ -2267,7 +2255,7 @@ class Compiler {
         def result := computeBinaryType(left, op, right)
         binaryTypes[key] := result
         return result
-    }
+    }   
 
     ================================================================================================
     Returns the types we should consider this expression to potentially be when evaluating method
@@ -2303,18 +2291,13 @@ class Compiler {
                 return possibleTypes(expr)
             }
             when ASTNode.AT_RETURN {
-                def a := Array<Type>() -- FIXME literal
-                a.add(currentMethod[0].returnType)
-                return a
+                return [currentMethod[0].returnType]
             }
             when ASTNode.BINARY(position, left, op, right) {
                 return binaryType(position, left, op, right)
             }
             when ASTNode.BIT {
-                def result := Array<Type>() -- FIXME literal
-                result.add(Type.Bit())
-                result.add(Type.BuiltinBit())
-                return result
+                return [Type.Bit(), Type.BuiltinBit()]
             }
             when ASTNode.CALL(_, m, args) {
                 def methodTypes := possibleTypes(m)
@@ -2327,16 +2310,12 @@ class Compiler {
                         def cl := getClass(t)
                         if cl !== null & cl.classKind = ClassDecl.Kind.CHOICE {
                             -- choice case
-                            def result := Array<Type>() -- FIXME literal
-                            result.add(t)
-                            return result
+                            return [t]
                         }
                     }
                     if t.typeKind = Type.Kind.GENERIC & t.subtypes[0] = Type.Class() {
                         -- calling a class literal, this is actually object construction
-                        def result := Array<Type>() -- FIXME literal
-                        result.add(t.subtypes[1])
-                        return result
+                        return [t.subtypes[1]]
                     }
                 }
                 def result := possibleMatches(methodTypes, args, TypeContext.NON_VOID)
@@ -2377,15 +2356,13 @@ class Compiler {
                 if t == null {
                     return null
                 }
-                def result := Array<Type>() -- FIXME literal
-                result.add(Type.ClassLiteral(t))
-                return result
+                return [Type.ClassLiteral(t)]
             }
             when ASTNode.IDENTIFIER(_, name) {
                 return identifierType(name)
             }
             when ASTNode.INT(_, value) {
-                def result := Array<Type>() -- FIXME literal
+                def result := Array<Type>()
                 def signedValue := value.convert()->Int64
                 if signedValue >= Int8.MIN.convert() & signedValue <= Int8.MAX.convert() {
                     result.add(Type.BuiltinInt8())
@@ -2420,44 +2397,31 @@ class Compiler {
                 return result
             }
             when ASTNode.IR_WRAPPER(_, node) {
-                def a := Array<Type>() -- FIXME literal
-                a.add(node.type())
-                return a
+                return [node.type()]
             }
             when ASTNode.METHOD {
                 return null
             }
             when ASTNode.NULL {
-                def a := Array<Type>() -- FIXME literal
-                a.add(Type.Any())
-                return a
+                return [Type.Any()]
             }
             when ASTNode.PREFIX(position, op, operand) {
                 return possibleTypes(ASTNode.CALL(position,
                         ASTNode.DOT(position, operand, operatorName(op)),
-                        ImmutableArray<ASTNode>() -* FIXME literal *-))
+                        FixedArray<ASTNode>()))
             }
             when ASTNode.RANGE(_, start, _, end, step) {
                 def result := rangePreferredType(start, end, step)
                 if result == null {
                     return null
                 }
-                def a := Array<Type>() -- FIXME literal
-                a.add(result)
-                return a
+                return [result]
             }
             when ASTNode.REAL {
-                def result := Array<Type>() -- FIXME literal
-                result.add(Type.BuiltinFloat32())
-                result.add(Type.BuiltinFloat64())
-                result.add(Type.Real32())
-                result.add(Type.Real64())
-                return result
+                return [Type.BuiltinFloat32(), Type.BuiltinFloat64(), Type.Real32(), Type.Real64()]
             }
             when ASTNode.REGEX {
-                def a := Array<Type>() -- FIXME literal
-                a.add(Type.RegularExpression())
-                return a
+                return [Type.RegularExpression()]
             }
             when ASTNode.SELF {
                 var s := symbolTable[CAPTURED_SELF_NAME]
@@ -2498,7 +2462,7 @@ class Compiler {
                 return result
             }
             when ASTNode.STRING(_, text) {
-                def result := Array<Type>() -- FIXME literal
+                def result := Array<Type>()
                 result.add(Type.StringType())
                 if text.length = 1 {
                     def size := smallestCharSize(text[0])
@@ -2529,10 +2493,8 @@ class Compiler {
                 if returnType == null {
                     return null
                 }
-                def result := Array<Type>() -- FIXME literal
-                result.add(Type.methodType(position, Type.Kind.FUNCTION, parameterTypes,
-                        returnType, 0))
-                return result
+                return [Type.methodType(position, Type.Kind.FUNCTION, parameterTypes, returnType,
+                        0)]
             }
             when ASTNode.UNTYPED_LAMBDA {
                 return null
@@ -2706,7 +2668,7 @@ class Compiler {
         return result
     }
 
-    method arrayCoercionCost(position:Position, elements:ImmutableArray<ASTNode>,
+    method arrayCoercionCost(position:Position, elements:FixedArray<ASTNode>,
             target:Type):Int? {
         def t := getListType(target)
         if t == null {
@@ -2891,7 +2853,7 @@ class Compiler {
                 }
                 return coercionCost(ASTNode.CALL(position,
                         ASTNode.DOT(position, operand, operatorName(op)),
-                        ImmutableArray<ASTNode>() -* FIXME literal *-),
+                            FixedArray<ASTNode>()),
                         target)
             }
             when ASTNode.RANGE(_, start, _, end, step) {
@@ -3057,7 +3019,7 @@ class Compiler {
         }
         def synthetic := MethodDecl(cl, cl.position, null, Annotations(Annotations.Flag.SYNTHETIC),
                 MethodDecl.Kind.INIT, "init", null, parameters, Type.Void(),
-                ImmutableArray<ASTNode>.from(statements))
+                FixedArray<ASTNode>.from(statements))
         entry.initMethod := synthetic
         cl.methods.add(synthetic)
         cl.symbolTable.add(synthetic)
@@ -3290,7 +3252,7 @@ class Compiler {
         def initMethod := MethodDecl(result, p, null,
                 Annotations(Annotations.Flag.SYNTHETIC), MethodDecl.Kind.INIT, "init",
                 Array<ClassDecl.GenericParameter>(), parameters,
-                Type.Void(), ImmutableArray<ASTNode>.from(statements))
+                Type.Void(), FixedArray<ASTNode>.from(statements))
         result.methods.add(initMethod)
         result.symbolTable.add(initMethod)
 
@@ -3298,7 +3260,7 @@ class Compiler {
         def defaultCleanup := MethodDecl(result, p, null,
                 Annotations(Annotations.Flag.OVERRIDE || Annotations.Flag.SYNTHETIC),
                 MethodDecl.Kind.METHOD, "cleanup", Array<ClassDecl.GenericParameter>(),
-                Array<MethodDecl.Parameter>(), Type.Void(), ImmutableArray<ASTNode>())
+                Array<MethodDecl.Parameter>(), Type.Void(), FixedArray<ASTNode>())
         result.methods.add(defaultCleanup)
         result.symbolTable.add(defaultCleanup)
 
@@ -3348,30 +3310,29 @@ class Compiler {
             if errorCount != 0 {
                 return
             }
-            def tests := Array<ASTNode>() -- FIXME literal
+            def tests := Array<ASTNode>()
             def fields := Array<ASTNode>()
             for i in 0 .. e.fields.count {
                 fields.add(ASTNode.IDENTIFIER(cl.position, "_f\{i}"))
             }
             tests.add(ASTNode.CALL(cl.position, ASTNode.IDENTIFIER(cl.position, e.name),
-                    ImmutableArray<ASTNode>.from(fields)))
+                    FixedArray<ASTNode>.from(fields)))
             def unrefs := Array<ASTNode>()
             for i in 0 .. e.fields.count {
                 if isRefCounted(e.fields[i]) {
                     def p := Position()
                     def unref := ASTNode.DOT(p, ASTNode.DOT(p, ASTNode.DOT(p,
                             ASTNode.IDENTIFIER(p, "panda"), "core"), "Panda"), "unref")
-                    def args := Array<ASTNode>() -- FIXME literal
-                    args.add(fields[i])
-                    unrefs.add(ASTNode.CALL(Position(), unref, ImmutableArray<ASTNode>.from(args)))
+                    unrefs.add(ASTNode.CALL(Position(), unref,
+                            FixedArray<ASTNode>.from([fields[i]])))
                 }
             }
-            whens.add(ASTNode.WHEN(cl.position, ImmutableArray<ASTNode>.from(tests),
-                    ImmutableArray<ASTNode>.from(unrefs)))
+            whens.add(ASTNode.WHEN(cl.position, FixedArray<ASTNode>.from(tests),
+                    FixedArray<ASTNode>.from(unrefs)))
         }
-        statements.add(ASTNode.MATCH(cl.position, value, ImmutableArray<ASTNode>.from(whens),
+        statements.add(ASTNode.MATCH(cl.position, value, FixedArray<ASTNode>.from(whens),
                 null))
-        m.body := ImmutableArray<ASTNode>.from(statements)
+        m.body := FixedArray<ASTNode>.from(statements)
     }
 
     method checkAccessModifierCount(position:Position, a:Annotations) {
@@ -3545,8 +3506,7 @@ class Compiler {
                 def inits := getSymbolTable(cc.owner)["init"]
                 assert inits !== null
                 resolve(inits->MethodDecl)
-                def args := Array<ASTNode>() -- FIXME literal
-                args.add(ASTNode.INT(position, cc.rawValue.convert()))
+                def args := [ASTNode.INT(position, cc.rawValue.convert())]
                 if isValue(cc.owner) {
                     return call(position, symbolRef(position, null, inits), args,
                             TypeContext.UNSPECIFIED)
@@ -3579,10 +3539,8 @@ class Compiler {
         assert isValue(cl)
         def coerced := coerce(position, value, m.parameters[0].type)
         assert coerced !== null
-        def args := Array<IR.Value>() -- FIXME literal
-        args.add(coerced)
         def result := ir.add(IR.Statement.STATIC_CALL(position, m,
-                ImmutableArray<IR.Value>.from(args)))
+                FixedArray<IR.Value>.from([coerced])))
         return IR.Value.REF(result, m.owner.type)
     }
 
@@ -3789,8 +3747,7 @@ class Compiler {
         if value.type() = target {
             return value
         }
-        return call(Position(), value, "convert", Array<ASTNode>() -* FIXME literal *-,
-                TypeContext.TYPE(target))
+        return call(Position(), value, "convert", [], TypeContext.TYPE(target))
     }
 
     method getVTableIndex(m:MethodDecl):Int {
@@ -4009,10 +3966,8 @@ class Compiler {
                 if paramType.isBuiltinNumber {
                     def value := compileExpression(args[0], TypeContext.TYPE(paramType))
                     if value !== null {
-                        def finalArgs := Array<IR.Value>() -- FIXME literal
-                        finalArgs.add(value)
                         def result := ir.add(IR.Statement.CREATE_STRUCT(position, m.value.owner,
-                                ImmutableArray<IR.Value>.from(finalArgs)))
+                                FixedArray<IR.Value>.from([value])))
                         return Pair<Bit, IR.Value?>(true, IR.Value.REF(result, m.value.owner.type))
                     }
                 }
@@ -4078,10 +4033,8 @@ class Compiler {
                 if paramType = Type.BuiltinBit() {
                     def value := compileExpression(args[0], TypeContext.TYPE(paramType))
                     if value !== null {
-                        def finalArgs := Array<IR.Value>() -- FIXME literal
-                        finalArgs.add(value)
                         def result := ir.add(IR.Statement.CREATE_STRUCT(position, m.value.owner,
-                                ImmutableArray<IR.Value>.from(finalArgs)))
+                                FixedArray<IR.Value>.from([value])))
                         return Pair<Bit, IR.Value?>(true, IR.Value.REF(result, m.value.owner.type))
                     }
                 }
@@ -4264,11 +4217,11 @@ class Compiler {
                         getVTableIndex(m.value), actualType))
             }
             result := ir.add(IR.Statement.DYNAMIC_CALL(position, IR.Value.REF(mref, actualType),
-                    ImmutableArray<IR.Value>.from(finalArgs)))
+                    FixedArray<IR.Value>.from(finalArgs)))
         }
         else {
             result := ir.add(IR.Statement.STATIC_CALL(position, m.value,
-                    ImmutableArray<IR.Value>.from(finalArgs)))
+                    FixedArray<IR.Value>.from(finalArgs)))
         }
         if m.returnType != Type.Void() {
             var resultCast:IR.Value? := IR.Value.REF(result, actualType.returnType)
@@ -4434,7 +4387,7 @@ class Compiler {
         def noTargetCast := cast(position, IR.Value.REF(methodPtr, Type.pointerTo(Type.Int8())),
                 Type.pointerTo(t))
         def noTargetResult := ir.add(IR.Statement.DYNAMIC_CALL(position, noTargetCast,
-                ImmutableArray<IR.Value>(finalArgs)))
+                FixedArray<IR.Value>(finalArgs)))
         if result !== null {
             ir.add(IR.Statement.STORE(position, IR.Value.REF(noTargetResult, t.returnType),
                     result))
@@ -4452,7 +4405,7 @@ class Compiler {
                 Type.pointerTo(haveTargetType))
         finalArgs.insert(0, IR.Value.REF(target, targetType))
         def haveTargetResult := ir.add(IR.Statement.DYNAMIC_CALL(position, haveTargetCast,
-                ImmutableArray<IR.Value>(finalArgs)))
+                FixedArray<IR.Value>(finalArgs)))
         if result !== null {
             ir.add(IR.Statement.STORE(position, IR.Value.REF(haveTargetResult, t.returnType),
                     result))
@@ -4582,8 +4535,7 @@ class Compiler {
         def target := IR.Value.REF(IR.Statement.ID(-1), left) -- fake target, just used for matching
         var methods := getSymbolTable(leftCl)[operatorName(op)]
         if methods !== null {
-            def args := Array<ASTNode>() -- FIXME literal
-            args.add(right)
+            def args := [right]
             -- look for left.op(right)
             match methods.kind {
                 when Symbol.Kind.METHOD {
@@ -4626,9 +4578,7 @@ class Compiler {
         if methods == null {
             return null
         }
-        def args := Array<ASTNode>() -- FIXME literal
-        args.add(ASTNode.IR_WRAPPER(Position(), target))
-        args.add(right)
+        def args := [ASTNode.IR_WRAPPER(Position(), target), right]
         match methods.kind {
             when Symbol.Kind.METHOD {
                 if methods->MethodDecl.annotations.isClass {
@@ -4921,7 +4871,7 @@ class Compiler {
         }
     }
 
-    method compileArray(position:Position, elements:ImmutableArray<ASTNode>,
+    method compileArray(position:Position, elements:FixedArray<ASTNode>,
             type:TypeContext):IR.Value?  {
         var listType:Pair<Bit, Type>?
         match type {
@@ -5135,7 +5085,7 @@ class Compiler {
     }
 
     method compileChoiceCaseReference(position:Position, owner:Type, cc:ChoiceCase,
-            args:ImmutableArray<ASTNode>, type:TypeContext):IR.Value? {
+            args:FixedArray<ASTNode>, type:TypeContext):IR.Value? {
         resolve(cc)
         def initMethod := cc.initMethod
         resolve(initMethod)
@@ -5191,7 +5141,7 @@ class Compiler {
         return null
     }
 
-    method compileCall(position:Position, m:ASTNode, args:ImmutableArray<ASTNode>,
+    method compileCall(position:Position, m:ASTNode, args:FixedArray<ASTNode>,
                        type:TypeContext):IR.Value? {
         match m {
             when ASTNode.GENERIC_TYPE {
@@ -5279,8 +5229,8 @@ class Compiler {
     }
 
     method compileClosure(position:Position, kind:MethodDecl.Kind,
-            rawParameters:ImmutableArray<ASTNode>, rawReturnType:ASTNode?,
-            body:ImmutableArray<ASTNode>, type:TypeContext):IR.Value? {
+            rawParameters:FixedArray<ASTNode>, rawReturnType:ASTNode?,
+            body:FixedArray<ASTNode>, type:TypeContext):IR.Value? {
         closureCount += 1
         def name := "$anonymous\{closureCount}"
         def parameters := Array<MethodDecl.Parameter>()
@@ -5355,7 +5305,7 @@ class Compiler {
             captures.pop()
             pendingClasses.add(cl)
             def rawTarget := call(position, IR.Value.TYPE(cl.type),
-                    ImmutableArray<ASTNode>.from(args), TypeContext.UNSPECIFIED)
+                    FixedArray<ASTNode>.from(args), TypeContext.UNSPECIFIED)
             if rawTarget == null {
                 return null
             }
@@ -5807,7 +5757,7 @@ class Compiler {
     }
 
     @post(@return !== null | errorCount > 0 | !reportErrors)
-    method compileTypedLambda(position:Position, rawParameters:ImmutableArray<ASTNode>,
+    method compileTypedLambda(position:Position, rawParameters:FixedArray<ASTNode>,
             expr:ASTNode, type:TypeContext):IR.Value? {
         var returnType := typedLambdaReturnType(rawParameters, expr, type)
         if returnType == null {
@@ -5824,11 +5774,11 @@ class Compiler {
         }
         return compileClosure(position, MethodDecl.Kind.FUNCTION, rawParameters,
                 ASTNode.IR_WRAPPER(position, IR.Value.TYPE(returnType)),
-                [ASTNode.RETURN(position, expr)]->ImmutableArray<ASTNode>, type)
+                [ASTNode.RETURN(position, expr)]->FixedArray<ASTNode>, type)
     }
 
     @post(@return !== null | errorCount > 0 | !reportErrors)
-    method compileUntypedLambda(position:Position, rawParameters:ImmutableArray<ASTNode>,
+    method compileUntypedLambda(position:Position, rawParameters:FixedArray<ASTNode>,
             expr:ASTNode, type:TypeContext):IR.Value? {
         match type {
             when TypeContext.TYPE(t) {
@@ -5853,12 +5803,10 @@ class Compiler {
                         }
                     }
                     def returnType := t.nonnullable().returnType
-                    def body := Array<ASTNode>() -- FIXME literal
-                    body.add(ASTNode.RETURN(position, expr))
                     return compileClosure(position, MethodDecl.Kind.FUNCTION,
-                            ImmutableArray<ASTNode>.from(parameters),
+                            FixedArray<ASTNode>.from(parameters),
                             ASTNode.IR_WRAPPER(position, IR.Value.TYPE(returnType)),
-                            ImmutableArray<ASTNode>.from(body), type)
+                            FixedArray<ASTNode>.from([ASTNode.RETURN(position, expr)]), type)
 
                 }
             }
@@ -5991,11 +5939,10 @@ class Compiler {
                 match type {
                     when TypeContext.TYPE(t) {
                         if t.isChar & text.length = 1 {
-                            def args := Array<ASTNode>() -- FIXME literal
-                            args.add(ASTNode.INT(position, text[0].convert()))
                             return compileExpression(ASTNode.CALL(position,
                                     ASTNode.IR_WRAPPER(position, IR.Value.TYPE(t)),
-                                    ImmutableArray<ASTNode>.from(args)))
+                                    FixedArray<ASTNode>.from([ASTNode.INT(position,
+                                        text[0].convert())])))
                         }
                     }
                 }
@@ -6219,7 +6166,7 @@ class Compiler {
                 result := IR.Value.REF(load, rawType)
             }
             if !compiler.inFieldCleanup & field.annotations.isWeak {
-                result := compiler.call(position, result, "get", ImmutableArray<ASTNode>(),
+                result := compiler.call(position, result, "get", FixedArray<ASTNode>(),
                         TypeContext.UNSPECIFIED)
             }
             if effectiveType != result.type() {
@@ -6241,7 +6188,7 @@ class Compiler {
                 args.add(ASTNode.IR_WRAPPER(position, rawValue))
                 value := compiler.compileExpression(ASTNode.CALL(position,
                         ASTNode.IR_WRAPPER(position, IR.Value.TYPE(Type.WeakOf(effectiveType))),
-                        ImmutableArray<ASTNode>.from(args)))
+                        FixedArray<ASTNode>.from(args)))
             }
             else {
                 value := rawValue
@@ -6667,7 +6614,7 @@ class Compiler {
         return IR.Value.REF(result, field.type)
     }
 
-    method compileDo(position:Position, label:String?, statements:ImmutableArray<ASTNode>,
+    method compileDo(position:Position, label:String?, statements:FixedArray<ASTNode>,
             test:ASTNode) {
         def bodyBlock := ir.newBlock("do body")
         def testBlock := ir.newBlock("do test")
@@ -6741,7 +6688,7 @@ class Compiler {
     method debugPrint(value:IR.Value) {
         def p := Position()
         compileCall(p, ASTNode.DOT(p, ASTNode.IDENTIFIER(p, "Console"), "printLine"),
-                [ASTNode.IR_WRAPPER(p, value)], TypeContext.UNSPECIFIED)
+                FixedArray<ASTNode>.from([ASTNode.IR_WRAPPER(p, value)]), TypeContext.UNSPECIFIED)
     }
 
     method compileSimpleRangeFor(position:Position, label:String?, index:Variable, range:IR.Value,
@@ -7248,7 +7195,7 @@ class Compiler {
         }
     }
 
-    method compileIf(position:Position, test:ASTNode, ifTrue:ImmutableArray<ASTNode>,
+    method compileIf(position:Position, test:ASTNode, ifTrue:FixedArray<ASTNode>,
             ifFalse:ASTNode?) {
         def testBit:IR.Value
         def ifTrueBlock := ir.newBlock("if true")
@@ -7290,8 +7237,8 @@ class Compiler {
     }
 
     method compileInnerMethod(position:Position, kind:MethodDecl.Kind, name:String,
-            rawParameters:ImmutableArray<ASTNode>, rawReturnType:ASTNode?,
-            body:ImmutableArray<ASTNode>) {
+            rawParameters:FixedArray<ASTNode>, rawReturnType:ASTNode?,
+            body:FixedArray<ASTNode>) {
         def methodRef := compileClosure(position, kind, rawParameters, rawReturnType, body,
                 TypeContext.NON_VOID)
         if methodRef == null {
@@ -7299,10 +7246,10 @@ class Compiler {
         }
         def decl := ASTNode.DECLARATION(position, ASTNode.IDENTIFIER(position, name),
                 ASTNode.IR_WRAPPER(position, methodRef))
-        compileStatement(ASTNode.VAR(position, Variable.Kind.DEF, [decl]))
+        compileStatement(ASTNode.VAR(position, Variable.Kind.DEF, FixedArray<ASTNode>.from([decl])))
     }
 
-    method compileLoop(position:Position, label:String?, statements:ImmutableArray<ASTNode>) {
+    method compileLoop(position:Position, label:String?, statements:FixedArray<ASTNode>) {
         def bodyBlock := ir.newBlock("loop body")
         def endBlock := ir.newBlock("loop end")
         {
@@ -7431,8 +7378,8 @@ class Compiler {
 
     @pre(whens.count > 0 | other !== null)
     method compileChainedIfMatch(position:Position, value:IR.Value, choiceClass:ClassDecl?,
-            choiceRawValue:IR.Value?, whens:ImmutableArray<ASTNode>,
-            other:ImmutableArray<ASTNode>?) {
+            choiceRawValue:IR.Value?, whens:FixedArray<ASTNode>,
+            other:FixedArray<ASTNode>?) {
         def end := ir.newBlock("match end")
         var nextBlock := ir.currentBlock.id
         for i in 0 .. whens.count {
@@ -7583,8 +7530,8 @@ class Compiler {
         ir.setCurrentBlock(end)
     }
 
-    method compileMatch(position:Position, value:ASTNode, whens:ImmutableArray<ASTNode>,
-            other:ImmutableArray<ASTNode>?) {
+    method compileMatch(position:Position, value:ASTNode, whens:FixedArray<ASTNode>,
+            other:FixedArray<ASTNode>?) {
         def compiledValue := compileExpression(value, TypeContext.NON_VOID)
         if compiledValue == null | (whens.count = 0 & other == null) {
             return
@@ -7652,7 +7599,7 @@ class Compiler {
             if currentClass[0].rawSuper !== null & !isValue(currentClass[0]) {
                 def supertype := remapType(currentClass[0].type, currentClass[0].rawSuper)
                 compileStatement(ASTNode.CALL(position, ASTNode.DOT(position,
-                        ASTNode.SUPER(position), "cleanup"), ImmutableArray<ASTNode>() -* FIXME literal *-))
+                        ASTNode.SUPER(position), "cleanup"), FixedArray<ASTNode>() -* FIXME literal *-))
             }
             -- unref fields
             assert !inFieldCleanup
@@ -7705,7 +7652,7 @@ class Compiler {
         }
     }
 
-    method compileVar(position:Position, kind:Variable.Kind, decls:ImmutableArray<ASTNode>) {
+    method compileVar(position:Position, kind:Variable.Kind, decls:FixedArray<ASTNode>) {
         for decl in decls {
             match decl {
                 when ASTNode.DECLARATION(position, target, rawValue) {
@@ -7719,7 +7666,7 @@ class Compiler {
     }
 
     method compileWhile(position:Position, label:String?, test:ASTNode,
-            statements:ImmutableArray<ASTNode>) {
+            statements:FixedArray<ASTNode>) {
         def testBlock := ir.newBlock("while test")
         def bodyBlock := ir.newBlock("while body")
         def endBlock := ir.newBlock("while end")
@@ -7818,7 +7765,7 @@ class Compiler {
         return !isValue(m.owner)
     }
 
-    function callsSelfInit(body:ImmutableArray<ASTNode>):Bit {
+    function callsSelfInit(body:FixedArray<ASTNode>):Bit {
         if body.count = 0 {
             return false
         }
@@ -7847,7 +7794,7 @@ class Compiler {
         return false
     }
 
-    function callsSuperInit(body:ImmutableArray<ASTNode>):Bit {
+    function callsSuperInit(body:FixedArray<ASTNode>):Bit {
         if body.count = 0 {
             return false
         }
@@ -8154,7 +8101,7 @@ class Compiler {
                                 !hasTrivialInit(getClass(m.owner.rawSuper)) {
                             def p := m.position
                             compileStatement(ASTNode.CALL(p, ASTNode.DOT(p, ASTNode.SUPER(p),
-                                    "init"), ImmutableArray<ASTNode>() -* FIXME literal *-))
+                                    "init"), FixedArray<ASTNode>() -* FIXME literal *-))
                         }
                     }
                 }

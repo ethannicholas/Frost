@@ -3,6 +3,7 @@
 #include "panda/core/Class.h"
 #include "panda/core/String.h"
 #include "panda/collections/Iterator.h"
+#include "panda/core/Immutable.h"
 #include "panda/collections/ImmutableArray.h"
 #include "panda/core/Int64.h"
 #include "panda/core/Panda.h"
@@ -10,9 +11,9 @@
 #include "panda/collections/CollectionView.h"
 
 __attribute__((weak)) panda$core$Object* panda$collections$ImmutableArray$ImmutableArrayIterator$next$R$panda$collections$ImmutableArray$ImmutableArrayIterator$T$shim(panda$collections$ImmutableArray$ImmutableArrayIterator* p0) {
-    panda$core$Object* result = panda$collections$ImmutableArray$ImmutableArrayIterator$next$R$panda$collections$ImmutableArray$ImmutableArrayIterator$T(p0);
+    panda$core$Immutable* result = panda$collections$ImmutableArray$ImmutableArrayIterator$next$R$panda$collections$ImmutableArray$ImmutableArrayIterator$T(p0);
 
-    return result;
+    return ((panda$core$Object*) result);
 }
 
 struct { panda$core$Class* cl; ITable* next; void* methods[10]; } panda$collections$ImmutableArray$ImmutableArrayIterator$_panda$collections$Iterator = { (panda$core$Class*) &panda$collections$Iterator$class, NULL, { panda$collections$ImmutableArray$ImmutableArrayIterator$get_done$R$panda$core$Bit, panda$collections$ImmutableArray$ImmutableArrayIterator$next$R$panda$collections$ImmutableArray$ImmutableArrayIterator$T$shim, panda$collections$Iterator$count$R$panda$core$Int64, panda$collections$Iterator$filter$$LPpanda$collections$Iterator$T$RP$EQ$GT$LPpanda$core$Bit$RP$R$panda$collections$Iterator$LTpanda$collections$Iterator$T$GT, panda$collections$Iterator$$IDX$panda$core$Range$LTpanda$core$Int64$Q$GT$R$panda$collections$Iterator$LTpanda$collections$Iterator$T$GT, panda$collections$Iterator$$IDX$panda$core$SteppedRange$LTpanda$core$Int64$Q$Cpanda$core$Int64$GT$R$panda$collections$Iterator$LTpanda$collections$Iterator$T$GT, panda$collections$Iterator$all$R$panda$collections$Array$LTpanda$collections$Iterator$T$GT, panda$collections$Iterator$apply$$LPpanda$collections$Iterator$T$RP$EQ$AM$GT$LP$RP, panda$collections$Iterator$fold$$LPpanda$collections$Iterator$T$Cpanda$collections$Iterator$T$RP$EQ$GT$LPpanda$collections$Iterator$T$RP$R$panda$collections$Iterator$T, panda$collections$Iterator$fold$$LPpanda$collections$Iterator$T$Cpanda$collections$Iterator$T$RP$EQ$GT$LPpanda$collections$Iterator$T$RP$panda$collections$Iterator$T$R$panda$collections$Iterator$T} };
@@ -60,7 +61,7 @@ panda$core$Bit $tmp15 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($
 return $tmp15;
 
 }
-panda$core$Object* panda$collections$ImmutableArray$ImmutableArrayIterator$next$R$panda$collections$ImmutableArray$ImmutableArrayIterator$T(panda$collections$ImmutableArray$ImmutableArrayIterator* param0) {
+panda$core$Immutable* panda$collections$ImmutableArray$ImmutableArrayIterator$next$R$panda$collections$ImmutableArray$ImmutableArrayIterator$T(panda$collections$ImmutableArray$ImmutableArrayIterator* param0) {
 
 $fn17 $tmp16 = ($fn17) param0->$class->vtable[2];
 panda$core$Bit $tmp18 = $tmp16(param0);
@@ -92,9 +93,9 @@ int64_t $tmp37 = $tmp35.value;
 int64_t $tmp38 = $tmp36.value;
 int64_t $tmp39 = $tmp37 - $tmp38;
 panda$core$Int64 $tmp40 = (panda$core$Int64) {$tmp39};
-panda$core$Object* $tmp41 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T($tmp33, $tmp40);
-panda$core$Panda$ref$panda$core$Object$Q($tmp41);
-panda$core$Panda$unref$panda$core$Object$Q($tmp41);
+panda$core$Immutable* $tmp41 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T($tmp33, $tmp40);
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp41));
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp41));
 // unreffing REF($33:panda.collections.ImmutableArray.T)
 return $tmp41;
 

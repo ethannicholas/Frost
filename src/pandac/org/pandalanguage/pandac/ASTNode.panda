@@ -5,60 +5,60 @@ uses org.pandalanguage.pandac.parser.Token.Kind -- FIXME shouldn't need
 
 choice ASTNode {
     ANNOTATION             (Position, String, String? -* expr text *-, ASTNode? -* expr *-)
-    ARRAY                  (Position, ImmutableArray<ASTNode>)
+    ARRAY                  (Position, FixedArray<ASTNode>)
     ASSERT                 (Position, ASTNode, ASTNode?)
     AT_PRE                 (Position, ASTNode -* expression *-)
     AT_RETURN              (Position)
     BINARY                 (Position, ASTNode, Token.Kind, ASTNode)
     BIT                    (Position, Bit)
-    BLOCK                  (Position, ImmutableArray<ASTNode>)
+    BLOCK                  (Position, FixedArray<ASTNode>)
     BREAK                  (Position, String?)
-    CALL                   (Position, ASTNode, ImmutableArray<ASTNode>)
+    CALL                   (Position, ASTNode, FixedArray<ASTNode>)
     CHOICE_CASE            (Position,
-                            ASTNode?                 -* Doccomment (STRING) *-,
-                            String                   -* name *-,
-                            ImmutableArray<ASTNode>? -* field TYPEs *-)
+                            ASTNode?             -* Doccomment (STRING) *-,
+                            String               -* name *-,
+                            FixedArray<ASTNode>? -* field TYPEs *-)
     CHOICE_FIELD_REFERENCE (Position, ASTNode -* base *-, ChoiceCase, Int -* field index *-)
     CLASS                  (Position,
-                            ASTNode?                 -* Doccomment (STRING) *-,
-                            ImmutableArray<ASTNode>  -* ANNOTATIONs *-,
+                            ASTNode?             -* Doccomment (STRING) *-,
+                            FixedArray<ASTNode>  -* ANNOTATIONs *-,
                             ClassDecl.Kind,
                             String,
-                            ImmutableArray<ASTNode>? -* Generics (TYPED_IDENTIFIERs) *-,
-                            ImmutableArray<ASTNode>? -* Supertypes (TYPEs)) *-,
-                            ImmutableArray<ASTNode>  -* Members *-)
+                            FixedArray<ASTNode>? -* Generics (TYPED_IDENTIFIERs) *-,
+                            FixedArray<ASTNode>? -* Supertypes (TYPEs)) *-,
+                            FixedArray<ASTNode>  -* Members *-)
     CONTINUE               (Position, String?)
     DECLARATION            (Position, ASTNode -* target *-, ASTNode? -* initializer *-)
-    DO                     (Position, String?, ImmutableArray<ASTNode>, ASTNode)
+    DO                     (Position, String?, FixedArray<ASTNode>, ASTNode)
     DOT                    (Position, ASTNode, String)
     FIELD                  (Position,
-                            ASTNode?                 -* Doccomment (STRING) *-,
-                            ImmutableArray<ASTNode>  -* ANNOTATIONs *-,
-                            ASTNode                  -* VAR *-)
-    FILE                   (ImmutableArray<ASTNode>)
-    FOR                    (Position, String?, ASTNode, ASTNode, ImmutableArray<ASTNode>)
-    GENERIC_TYPE           (Position, String, ImmutableArray<ASTNode> -* types *-)
+                            ASTNode?             -* Doccomment (STRING) *-,
+                            FixedArray<ASTNode>  -* ANNOTATIONs *-,
+                            ASTNode              -* VAR *-)
+    FILE                   (FixedArray<ASTNode>)
+    FOR                    (Position, String?, ASTNode, ASTNode, FixedArray<ASTNode>)
+    GENERIC_TYPE           (Position, String, FixedArray<ASTNode> -* types *-)
     IDENTIFIER             (Position, String)
-    IF                     (Position, ASTNode, ImmutableArray<ASTNode> -* ifTrue *-,
+    IF                     (Position, ASTNode, FixedArray<ASTNode> -* ifTrue *-,
                             ASTNode? -* ifFalse *-)
     INT                    (Position, UInt64)
     IR_WRAPPER             (Position, IR.Value)
-    LOOP                   (Position, String?, ImmutableArray<ASTNode>)
+    LOOP                   (Position, String?, FixedArray<ASTNode>)
     MATCH                  (Position,
-                            ASTNode                  -* value *-,
-                            ImmutableArray<ASTNode>  -* whens *-,
-                            ImmutableArray<ASTNode>? -* otherwise *-)
+                            ASTNode              -* value *-,
+                            FixedArray<ASTNode>  -* whens *-,
+                            FixedArray<ASTNode>? -* otherwise *-)
     METHOD                 (Position,
                             ASTNode?                 -* Doccomment (STRING) *-,
-                            ImmutableArray<ASTNode>  -* ANNOTATIONs *-,
+                            FixedArray<ASTNode>  -* ANNOTATIONs *-,
                             MethodDecl.Kind,
-                            String                   -* name *-,
-                            ImmutableArray<ASTNode>? -* Generics (TYPED_IDENTIFIERs) *-,
-                            ImmutableArray<ASTNode>  -* PARAMETERs *-,
+                            String               -* name *-,
+                            FixedArray<ASTNode>? -* Generics (TYPED_IDENTIFIERs) *-,
+                            FixedArray<ASTNode>  -* PARAMETERs *-,
                             ASTNode?                 -* return type *-,
-                            ImmutableArray<ASTNode>? -* statements *-)
+                            FixedArray<ASTNode>? -* statements *-)
     METHOD_TYPE            (Position, Token.Kind -* yield type *-,
-                            ImmutableArray<ASTNode> -* arg types *-, ASTNode? -* return type *-)
+                            FixedArray<ASTNode> -* arg types *-, ASTNode? -* return type *-)
     NULL                   (Position)
     NULLABLE_TYPE          (Position, ASTNode -* type *-)
     PACKAGE                (Position, String)
@@ -71,18 +71,18 @@ choice ASTNode {
     SELF                   (Position)
     STRING                 (Position, String)
     SUPER                  (Position)
-    TUPLE                  (Position, ImmutableArray<ASTNode>)
-    TUPLE_TYPE             (Position, ImmutableArray<ASTNode>)
+    TUPLE                  (Position, FixedArray<ASTNode>)
+    TUPLE_TYPE             (Position, FixedArray<ASTNode>)
     TYPE                   (Position, String)
-    TYPED_LAMBDA           (Position, ImmutableArray<ASTNode> -* PARAMETERs *-, ASTNode -* body *-)
+    TYPED_LAMBDA           (Position, FixedArray<ASTNode> -* PARAMETERs *-, ASTNode -* body *-)
     TYPED_IDENTIFIER       (Position, String, ASTNode?)
-    UNTYPED_LAMBDA         (Position, ImmutableArray<ASTNode> -* IDENTIFIERs *-, ASTNode -* body *-)
+    UNTYPED_LAMBDA         (Position, FixedArray<ASTNode> -* IDENTIFIERs *-, ASTNode -* body *-)
     USES                   (Position, String)
-    VAR                    (Position, Variable.Kind, ImmutableArray<ASTNode> -* DECLARATIONs *-)
+    VAR                    (Position, Variable.Kind, FixedArray<ASTNode> -* DECLARATIONs *-)
     WHEN                   (Position,
-                            ImmutableArray<ASTNode> -* tests *-,
-                            ImmutableArray<ASTNode> -* statements *-)
-    WHILE                  (Position, String?, ASTNode, ImmutableArray<ASTNode>)
+                            FixedArray<ASTNode> -* tests *-,
+                            FixedArray<ASTNode> -* statements *-)
+    WHILE                  (Position, String?, ASTNode, FixedArray<ASTNode>)
 
     function position():Position {
         match self {

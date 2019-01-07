@@ -77,7 +77,7 @@ class Scanner {
                     returnType := Type.Void()
                 }
                 return Type.methodType(type.position(), typeKind,
-                        ImmutableArray<Type>.from(parameters), returnType, 0)
+                        FixedArray<Type>.from(parameters), returnType, 0)
             }
             otherwise {
                 assert false, "unsupported type \{type}(\{type.$rawValue})"
@@ -92,7 +92,7 @@ class Scanner {
         return flags || flag
     }
 
-    method convertAnnotations(a:ImmutableArray<ASTNode>):Annotations {
+    method convertAnnotations(a:FixedArray<ASTNode>):Annotations {
         var flags := 0
         var expressions:Array<Annotations.Expression>? := null
         method checkExpression(scanner:Scanner, position:Position, text:String, expr:ASTNode?):Bit {
@@ -211,7 +211,7 @@ class Scanner {
     }
 
     method scanFields(owner:ClassDecl, position:Position, rawDoccomment:ASTNode?,
-                rawAnnotations:ImmutableArray<ASTNode>, varDecl:ASTNode) {
+                rawAnnotations:FixedArray<ASTNode>, varDecl:ASTNode) {
         def doccomment:String?
         -- FIXME should be able to match against null too
         if rawDoccomment == null {
@@ -473,7 +473,7 @@ class Scanner {
         }
     }
 
-    function shouldInline(annotations:Annotations, statements:ImmutableArray<ASTNode>):Bit {
+    function shouldInline(annotations:Annotations, statements:ListView<ASTNode>):Bit {
         if compiler.settings.optimizationLevel > 0 & !annotations.isInline &
                 annotations.isFinal {
             var c := 0
@@ -489,9 +489,9 @@ class Scanner {
     }
 
     method scanMethod(owner:ClassDecl, position:Position, rawDoccomment:ASTNode?,
-            rawAnnotations:ImmutableArray<ASTNode>, kind:MethodDecl.Kind, name:String,
-            rawGenerics:ImmutableArray<ASTNode>?, rawParameters:ImmutableArray<ASTNode>,
-            rawReturnType:ASTNode?, statements:ImmutableArray<ASTNode>?):MethodDecl? {
+            rawAnnotations:FixedArray<ASTNode>, kind:MethodDecl.Kind, name:String,
+            rawGenerics:FixedArray<ASTNode>?, rawParameters:FixedArray<ASTNode>,
+            rawReturnType:ASTNode?, statements:FixedArray<ASTNode>?):MethodDecl? {
         def doccomment:String?
         -- FIXME should be able to match against null too
         if rawDoccomment == null {
@@ -610,7 +610,7 @@ class Scanner {
     }
 
     method scanChoiceCase(cl:ClassDecl, position:Position, rawDoccomment:ASTNode?, name:String,
-            rawFields:ImmutableArray<ASTNode>?) {
+            rawFields:FixedArray<ASTNode>?) {
         def doccomment:String?
         -- FIXME should be able to match against null too
         if rawDoccomment == null {
@@ -637,9 +637,9 @@ class Scanner {
     }
 
     method scanClass(source:File, aliases:MapView<String, String>, contextName:String,
-            position:Position, rawDoccomment:ASTNode?, rawAnnotations:ImmutableArray<ASTNode>,
-            kind:ClassDecl.Kind, name:String, generics:ImmutableArray<ASTNode>?,
-            rawSupertypes:ImmutableArray<ASTNode>?, members:ImmutableArray<ASTNode>):ClassDecl? {
+            position:Position, rawDoccomment:ASTNode?, rawAnnotations:FixedArray<ASTNode>,
+            kind:ClassDecl.Kind, name:String, generics:FixedArray<ASTNode>?,
+            rawSupertypes:FixedArray<ASTNode>?, members:FixedArray<ASTNode>):ClassDecl? {
         def fullName:String
         if contextName != "" {
             fullName := "\{contextName}.\{name}"
@@ -748,7 +748,7 @@ class Scanner {
             def defaultInit := MethodDecl(result, position, null,
                     Annotations(Annotations.Flag.SYNTHETIC), MethodDecl.Kind.INIT, "init",
                     Array<ClassDecl.GenericParameter>(), Array<MethodDecl.Parameter>(),
-                    Type.Void(), ImmutableArray<ASTNode>())
+                    Type.Void(), FixedArray<ASTNode>())
             result.methods.add(defaultInit)
             result.symbolTable.add(defaultInit)
         }
@@ -757,7 +757,7 @@ class Scanner {
             def defaultCleanup := MethodDecl(result, position, null,
                     Annotations(Annotations.Flag.OVERRIDE || Annotations.Flag.SYNTHETIC),
                     MethodDecl.Kind.METHOD, "cleanup", Array<ClassDecl.GenericParameter>(),
-                    Array<MethodDecl.Parameter>(), Type.Void(), ImmutableArray<ASTNode>())
+                    Array<MethodDecl.Parameter>(), Type.Void(), FixedArray<ASTNode>())
             result.methods.add(defaultCleanup)
             result.symbolTable.add(defaultCleanup)
         }
@@ -807,13 +807,13 @@ class Scanner {
             def defaultInit := MethodDecl(bareCodeClass, Position(), null,
                     Annotations(Annotations.Flag.SYNTHETIC), MethodDecl.Kind.INIT, "init",
                     Array<ClassDecl.GenericParameter>(), Array<MethodDecl.Parameter>(), Type.Void(),
-                    ImmutableArray<ASTNode>())
+                    FixedArray<ASTNode>())
             bareCodeClass.methods.add(defaultInit)
             bareCodeClass.symbolTable.add(defaultInit)
             def defaultCleanup := MethodDecl(bareCodeClass, Position(), null,
                     Annotations(Annotations.Flag.OVERRIDE || Annotations.Flag.SYNTHETIC),
                     MethodDecl.Kind.METHOD, "cleanup", Array<ClassDecl.GenericParameter>(),
-                    Array<MethodDecl.Parameter>(), Type.Void(), ImmutableArray<ASTNode>())
+                    Array<MethodDecl.Parameter>(), Type.Void(), FixedArray<ASTNode>())
             bareCodeClass.methods.add(defaultCleanup)
             bareCodeClass.symbolTable.add(defaultCleanup)
         }
@@ -882,10 +882,10 @@ class Scanner {
                                 }
                                 def bareConstruct := ASTNode.CALL(position,
                                         ASTNode.IDENTIFIER(position, "BareCode"),
-                                        ImmutableArray<ASTNode>())
+                                        FixedArray<ASTNode>())
                                 mainStatements.add(ASTNode.CALL(position,
                                         ASTNode.DOT(position, bareConstruct, name),
-                                        ImmutableArray<ASTNode>.from(mainArguments)))
+                                        FixedArray<ASTNode>.from(mainArguments)))
                                 def returnType:Type
                                 if rawReturnType !== null {
                                     returnType := convertType(rawReturnType)
@@ -896,7 +896,7 @@ class Scanner {
                                 def bareMain := MethodDecl(bareCodeClass, Position(), null,
                                         Annotations(Annotations.Flag.CLASS), MethodDecl.Kind.METHOD,
                                         "main", Array<ClassDecl.GenericParameter>(), mainParameters,
-                                        returnType, ImmutableArray<ASTNode>.from(mainStatements))
+                                        returnType, FixedArray<ASTNode>.from(mainStatements))
                                 bareCodeClass.methods.add(bareMain)
                             }
                             else {

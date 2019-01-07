@@ -1181,7 +1181,7 @@ class CCodeGenerator : CodeGenerator {
         refs[id] := result
     }
 
-    method writeCreateStruct(id:IR.Statement.ID, cl:ClassDecl, args:ImmutableArray<IR.Value>) {
+    method writeCreateStruct(id:IR.Statement.ID, cl:ClassDecl, args:FixedArray<IR.Value>) {
         assert compiler.isValue(cl)
         def result := nextVar()
         def target := cl.type

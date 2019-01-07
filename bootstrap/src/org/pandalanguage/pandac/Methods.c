@@ -11,7 +11,7 @@
 #include "org/pandalanguage/pandac/Symbol/Kind.h"
 #include "org/pandalanguage/pandac/Position.h"
 #include "org/pandalanguage/pandac/MethodDecl.h"
-#include "panda/collections/ImmutableArray.h"
+#include "org/pandalanguage/pandac/FixedArray.h"
 #include "panda/collections/HashSet.h"
 #include "panda/collections/Iterable.h"
 #include "panda/collections/Iterator.h"
@@ -90,16 +90,16 @@ org$pandalanguage$pandac$Symbol$init$org$pandalanguage$pandac$Symbol$Kind$org$pa
 panda$core$Panda$unref$panda$core$Object$Q($tmp26);
 // unreffing REF($30:panda.collections.ListView.T)
 // line 10
-panda$collections$ImmutableArray* $tmp29 = (panda$collections$ImmutableArray*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$ImmutableArray$class);
-panda$collections$ImmutableArray$init$panda$collections$ListView$LTpanda$collections$ImmutableArray$T$GT($tmp29, param1);
+org$pandalanguage$pandac$FixedArray* $tmp29 = (org$pandalanguage$pandac$FixedArray*) pandaObjectAlloc(40, (panda$core$Class*) &org$pandalanguage$pandac$FixedArray$class);
+org$pandalanguage$pandac$FixedArray$init$panda$collections$ListView$LTorg$pandalanguage$pandac$FixedArray$T$GT($tmp29, param1);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp29));
-panda$collections$ImmutableArray** $tmp30 = &param0->methods;
-panda$collections$ImmutableArray* $tmp31 = *$tmp30;
+org$pandalanguage$pandac$FixedArray** $tmp30 = &param0->methods;
+org$pandalanguage$pandac$FixedArray* $tmp31 = *$tmp30;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp31));
-panda$collections$ImmutableArray** $tmp32 = &param0->methods;
+org$pandalanguage$pandac$FixedArray** $tmp32 = &param0->methods;
 *$tmp32 = $tmp29;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp29));
-// unreffing REF($40:panda.collections.ImmutableArray<org.pandalanguage.pandac.MethodDecl>)
+// unreffing REF($40:org.pandalanguage.pandac.FixedArray<org.pandalanguage.pandac.MethodDecl>)
 return;
 
 }
@@ -263,8 +263,8 @@ void org$pandalanguage$pandac$Methods$cleanup(org$pandalanguage$pandac$Methods* 
 
 // line 4
 org$pandalanguage$pandac$Symbol$cleanup(((org$pandalanguage$pandac$Symbol*) param0));
-panda$collections$ImmutableArray** $tmp99 = &param0->methods;
-panda$collections$ImmutableArray* $tmp100 = *$tmp99;
+org$pandalanguage$pandac$FixedArray** $tmp99 = &param0->methods;
+org$pandalanguage$pandac$FixedArray* $tmp100 = *$tmp99;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp100));
 return;
 

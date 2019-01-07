@@ -35,7 +35,7 @@
 #include "org/pandalanguage/pandac/parser/Token/Kind.h"
 #include "org/pandalanguage/pandac/parser/Token.h"
 #include "org/pandalanguage/pandac/Methods.h"
-#include "panda/collections/ImmutableArray.h"
+#include "org/pandalanguage/pandac/FixedArray.h"
 
 
 static panda$core$String $s1;
@@ -1237,8 +1237,8 @@ if ($tmp489) goto block47; else goto block42;
 block47:;
 // line 167
 org$pandalanguage$pandac$Symbol* $tmp490 = *(&local14);
-panda$collections$ImmutableArray** $tmp491 = &((org$pandalanguage$pandac$Methods*) $tmp490)->methods;
-panda$collections$ImmutableArray* $tmp492 = *$tmp491;
+org$pandalanguage$pandac$FixedArray** $tmp491 = &((org$pandalanguage$pandac$Methods*) $tmp490)->methods;
+org$pandalanguage$pandac$FixedArray* $tmp492 = *$tmp491;
 ITable* $tmp493 = ((panda$collections$Iterable*) $tmp492)->$class->itable;
 while ($tmp493->$class != (panda$core$Class*) &panda$collections$Iterable$class) {
     $tmp493 = $tmp493->next;

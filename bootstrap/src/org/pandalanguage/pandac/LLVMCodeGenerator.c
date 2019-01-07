@@ -31,7 +31,7 @@
 #include "panda/collections/Key.h"
 #include "panda/collections/Stack.h"
 #include "org/pandalanguage/pandac/LLVMCodeGenerator/ClassConstant.h"
-#include "panda/collections/ImmutableArray.h"
+#include "org/pandalanguage/pandac/FixedArray.h"
 #include "org/pandalanguage/pandac/ClassDecl/GenericParameter.h"
 #include "panda/collections/CollectionView.h"
 #include "panda/core/Range.LTpanda/core/Int64.GT.h"
@@ -66,7 +66,7 @@
 struct { panda$core$Class* cl; ITable* next; void* methods[6]; } org$pandalanguage$pandac$LLVMCodeGenerator$_org$pandalanguage$pandac$CodeGenerator = { (panda$core$Class*) &org$pandalanguage$pandac$CodeGenerator$class, NULL, { org$pandalanguage$pandac$LLVMCodeGenerator$setCompiler$org$pandalanguage$pandac$Compiler, org$pandalanguage$pandac$LLVMCodeGenerator$start$org$pandalanguage$pandac$ClassDecl, org$pandalanguage$pandac$LLVMCodeGenerator$end$org$pandalanguage$pandac$ClassDecl, org$pandalanguage$pandac$LLVMCodeGenerator$writeDeclaration$org$pandalanguage$pandac$MethodDecl, org$pandalanguage$pandac$LLVMCodeGenerator$write$org$pandalanguage$pandac$MethodDecl$org$pandalanguage$pandac$IR, org$pandalanguage$pandac$LLVMCodeGenerator$finish} };
 
 static panda$core$String $s1;
-org$pandalanguage$pandac$LLVMCodeGenerator$class_type org$pandalanguage$pandac$LLVMCodeGenerator$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, (ITable*) &org$pandalanguage$pandac$LLVMCodeGenerator$_org$pandalanguage$pandac$CodeGenerator, { panda$core$Object$convert$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$cleanup, org$pandalanguage$pandac$LLVMCodeGenerator$setCompiler$org$pandalanguage$pandac$Compiler, org$pandalanguage$pandac$LLVMCodeGenerator$finish, org$pandalanguage$pandac$LLVMCodeGenerator$nextVar$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$nextLabel$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$nextMetadata$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$createBlock$panda$core$String$panda$io$OutputStream, org$pandalanguage$pandac$LLVMCodeGenerator$fieldSize$org$pandalanguage$pandac$Type$R$panda$core$Int64, org$pandalanguage$pandac$LLVMCodeGenerator$alignment$org$pandalanguage$pandac$Type$R$panda$core$Int64, org$pandalanguage$pandac$LLVMCodeGenerator$sizeOf$org$pandalanguage$pandac$Type$R$panda$core$Int64, org$pandalanguage$pandac$LLVMCodeGenerator$stride$org$pandalanguage$pandac$Type$R$panda$core$Int64, org$pandalanguage$pandac$LLVMCodeGenerator$sizeOfWrapper$org$pandalanguage$pandac$Type$R$panda$core$Int64, org$pandalanguage$pandac$LLVMCodeGenerator$getChoiceDataSize$org$pandalanguage$pandac$ClassDecl$R$panda$core$Int64, org$pandalanguage$pandac$LLVMCodeGenerator$writeType$org$pandalanguage$pandac$Type, org$pandalanguage$pandac$LLVMCodeGenerator$writeWrapperType$org$pandalanguage$pandac$Type, org$pandalanguage$pandac$LLVMCodeGenerator$typeName$org$pandalanguage$pandac$Type$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$llvmType$org$pandalanguage$pandac$Type$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$llvmMethodType$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Type$Q$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$wrapperTypeName$org$pandalanguage$pandac$Type$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$wrapperType$org$pandalanguage$pandac$Type$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$wrapperType$org$pandalanguage$pandac$MethodDecl$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$nullableType$org$pandalanguage$pandac$Type$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$getITable$org$pandalanguage$pandac$ClassDecl$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$createMethodShim$org$pandalanguage$pandac$MethodDecl$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$LLVMCodeGenerator$MethodShim, org$pandalanguage$pandac$LLVMCodeGenerator$getWrapperITable$org$pandalanguage$pandac$ClassDecl$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$needsStructIndirection$org$pandalanguage$pandac$MethodDecl$R$panda$core$Bit, org$pandalanguage$pandac$LLVMCodeGenerator$getMethodTableEntry$org$pandalanguage$pandac$MethodDecl$R$org$pandalanguage$pandac$Pair$LTpanda$core$String$Cpanda$core$String$GT, org$pandalanguage$pandac$LLVMCodeGenerator$getClassConstant$org$pandalanguage$pandac$ClassDecl$R$org$pandalanguage$pandac$LLVMCodeGenerator$ClassConstant, org$pandalanguage$pandac$LLVMCodeGenerator$getWrapperClassConstant$org$pandalanguage$pandac$ClassDecl$R$org$pandalanguage$pandac$LLVMCodeGenerator$ClassConstant, org$pandalanguage$pandac$LLVMCodeGenerator$escapeName$panda$core$String$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$getName$org$pandalanguage$pandac$Variable$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$getName$org$pandalanguage$pandac$MethodDecl$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$getName$org$pandalanguage$pandac$FieldDecl$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$opClass$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$LLVMCodeGenerator$OpClass, org$pandalanguage$pandac$LLVMCodeGenerator$wrapValue$org$pandalanguage$pandac$Position$panda$core$String$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Type$panda$io$OutputStream$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$unwrapValue$org$pandalanguage$pandac$Position$panda$core$String$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Type$panda$io$OutputStream$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$toNullableValue$org$pandalanguage$pandac$Position$panda$core$String$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Type$panda$io$OutputStream$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$toNonNullableValue$org$pandalanguage$pandac$Position$panda$core$String$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Type$panda$io$OutputStream$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$getCastReference$org$pandalanguage$pandac$Position$panda$core$String$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Type$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$getRealReference$org$pandalanguage$pandac$Type$panda$core$Real64$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$getStringReference$panda$core$String$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$haveSelfValuePointer$R$panda$core$Bit, org$pandalanguage$pandac$LLVMCodeGenerator$getSelfPointer$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$getSelfValue$panda$io$OutputStream$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$getNullReference$org$pandalanguage$pandac$Type$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$getChoiceFieldOffset$org$pandalanguage$pandac$ChoiceCase$panda$core$Int64$R$panda$core$Int64, org$pandalanguage$pandac$LLVMCodeGenerator$selfType$org$pandalanguage$pandac$MethodDecl$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$writeDeclaration$org$pandalanguage$pandac$MethodDecl, org$pandalanguage$pandac$LLVMCodeGenerator$getReference$org$pandalanguage$pandac$IR$Value$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$getTypedReference$org$pandalanguage$pandac$IR$Value$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$debugInfo$org$pandalanguage$pandac$Position$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$writeIsNull$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Statement$ID$org$pandalanguage$pandac$IR$Value, org$pandalanguage$pandac$LLVMCodeGenerator$writeIsNonNull$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Statement$ID$org$pandalanguage$pandac$IR$Value, org$pandalanguage$pandac$LLVMCodeGenerator$isNull$org$pandalanguage$pandac$IR$Value$R$panda$core$Bit, org$pandalanguage$pandac$LLVMCodeGenerator$writeBinary$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Statement$ID$org$pandalanguage$pandac$IR$Value$org$pandalanguage$pandac$parser$Token$Kind$org$pandalanguage$pandac$IR$Value$org$pandalanguage$pandac$Type, org$pandalanguage$pandac$LLVMCodeGenerator$writeBranch$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Block$ID, org$pandalanguage$pandac$LLVMCodeGenerator$writeCast$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Statement$ID$org$pandalanguage$pandac$IR$Value$org$pandalanguage$pandac$Type, org$pandalanguage$pandac$LLVMCodeGenerator$writeConditionalBranch$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Value$org$pandalanguage$pandac$IR$Block$ID$org$pandalanguage$pandac$IR$Block$ID, org$pandalanguage$pandac$LLVMCodeGenerator$writeConstruct$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Statement$ID$org$pandalanguage$pandac$ClassDecl, org$pandalanguage$pandac$LLVMCodeGenerator$writeCreateStruct$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Statement$ID$org$pandalanguage$pandac$ClassDecl$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$IR$Value$GT, org$pandalanguage$pandac$LLVMCodeGenerator$writeDynamicCall$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Statement$ID$org$pandalanguage$pandac$IR$Value$panda$collections$ListView$LTorg$pandalanguage$pandac$IR$Value$GT, org$pandalanguage$pandac$LLVMCodeGenerator$writeExtractField$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Statement$ID$org$pandalanguage$pandac$IR$Value$org$pandalanguage$pandac$FieldDecl, org$pandalanguage$pandac$LLVMCodeGenerator$writeGetChoiceFieldPointer$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Statement$ID$org$pandalanguage$pandac$IR$Value$org$pandalanguage$pandac$ChoiceCase$panda$core$Int64, org$pandalanguage$pandac$LLVMCodeGenerator$writeGetFieldPointer$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Statement$ID$org$pandalanguage$pandac$IR$Value$org$pandalanguage$pandac$FieldDecl, org$pandalanguage$pandac$LLVMCodeGenerator$writeGetInterfaceMethod$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Statement$ID$org$pandalanguage$pandac$IR$Value$org$pandalanguage$pandac$ClassDecl$panda$core$Int64$org$pandalanguage$pandac$Type, org$pandalanguage$pandac$LLVMCodeGenerator$writeGetVirtualMethod$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Statement$ID$org$pandalanguage$pandac$IR$Value$panda$core$Int64$org$pandalanguage$pandac$Type, org$pandalanguage$pandac$LLVMCodeGenerator$writeLoad$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Statement$ID$org$pandalanguage$pandac$IR$Value, org$pandalanguage$pandac$LLVMCodeGenerator$writeNegate$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Statement$ID$org$pandalanguage$pandac$IR$Value, org$pandalanguage$pandac$LLVMCodeGenerator$writeNot$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Statement$ID$org$pandalanguage$pandac$IR$Value, org$pandalanguage$pandac$LLVMCodeGenerator$writePointerAlloc$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Statement$ID$org$pandalanguage$pandac$IR$Value$org$pandalanguage$pandac$Type, org$pandalanguage$pandac$LLVMCodeGenerator$writePointerDestroy$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Value, org$pandalanguage$pandac$LLVMCodeGenerator$writePointerGetIndex$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Statement$ID$org$pandalanguage$pandac$IR$Value$org$pandalanguage$pandac$IR$Value, org$pandalanguage$pandac$LLVMCodeGenerator$writePointerOffset$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Statement$ID$org$pandalanguage$pandac$IR$Value$org$pandalanguage$pandac$IR$Value, org$pandalanguage$pandac$LLVMCodeGenerator$writePointerRealloc$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Statement$ID$org$pandalanguage$pandac$IR$Value$org$pandalanguage$pandac$IR$Value$org$pandalanguage$pandac$IR$Value, org$pandalanguage$pandac$LLVMCodeGenerator$writePointerSetIndex$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Value$org$pandalanguage$pandac$IR$Value$org$pandalanguage$pandac$IR$Value, org$pandalanguage$pandac$LLVMCodeGenerator$writeReturn$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Value$Q, org$pandalanguage$pandac$LLVMCodeGenerator$writeStaticCall$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Statement$ID$org$pandalanguage$pandac$MethodDecl$panda$collections$ListView$LTorg$pandalanguage$pandac$IR$Value$GT, org$pandalanguage$pandac$LLVMCodeGenerator$writeStore$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Value$org$pandalanguage$pandac$IR$Value, org$pandalanguage$pandac$LLVMCodeGenerator$writeStatement$org$pandalanguage$pandac$IR$Statement$ID$org$pandalanguage$pandac$IR$Statement, org$pandalanguage$pandac$LLVMCodeGenerator$writeIR$org$pandalanguage$pandac$IR, org$pandalanguage$pandac$LLVMCodeGenerator$write$org$pandalanguage$pandac$MethodDecl$org$pandalanguage$pandac$IR, org$pandalanguage$pandac$LLVMCodeGenerator$start$org$pandalanguage$pandac$ClassDecl, org$pandalanguage$pandac$LLVMCodeGenerator$end$org$pandalanguage$pandac$ClassDecl} };
+org$pandalanguage$pandac$LLVMCodeGenerator$class_type org$pandalanguage$pandac$LLVMCodeGenerator$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, (ITable*) &org$pandalanguage$pandac$LLVMCodeGenerator$_org$pandalanguage$pandac$CodeGenerator, { panda$core$Object$convert$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$cleanup, org$pandalanguage$pandac$LLVMCodeGenerator$setCompiler$org$pandalanguage$pandac$Compiler, org$pandalanguage$pandac$LLVMCodeGenerator$finish, org$pandalanguage$pandac$LLVMCodeGenerator$nextVar$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$nextLabel$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$nextMetadata$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$createBlock$panda$core$String$panda$io$OutputStream, org$pandalanguage$pandac$LLVMCodeGenerator$fieldSize$org$pandalanguage$pandac$Type$R$panda$core$Int64, org$pandalanguage$pandac$LLVMCodeGenerator$alignment$org$pandalanguage$pandac$Type$R$panda$core$Int64, org$pandalanguage$pandac$LLVMCodeGenerator$sizeOf$org$pandalanguage$pandac$Type$R$panda$core$Int64, org$pandalanguage$pandac$LLVMCodeGenerator$stride$org$pandalanguage$pandac$Type$R$panda$core$Int64, org$pandalanguage$pandac$LLVMCodeGenerator$sizeOfWrapper$org$pandalanguage$pandac$Type$R$panda$core$Int64, org$pandalanguage$pandac$LLVMCodeGenerator$getChoiceDataSize$org$pandalanguage$pandac$ClassDecl$R$panda$core$Int64, org$pandalanguage$pandac$LLVMCodeGenerator$writeType$org$pandalanguage$pandac$Type, org$pandalanguage$pandac$LLVMCodeGenerator$writeWrapperType$org$pandalanguage$pandac$Type, org$pandalanguage$pandac$LLVMCodeGenerator$typeName$org$pandalanguage$pandac$Type$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$llvmType$org$pandalanguage$pandac$Type$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$llvmMethodType$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Type$Q$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$wrapperTypeName$org$pandalanguage$pandac$Type$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$wrapperType$org$pandalanguage$pandac$Type$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$wrapperType$org$pandalanguage$pandac$MethodDecl$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$nullableType$org$pandalanguage$pandac$Type$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$getITable$org$pandalanguage$pandac$ClassDecl$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$createMethodShim$org$pandalanguage$pandac$MethodDecl$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$LLVMCodeGenerator$MethodShim, org$pandalanguage$pandac$LLVMCodeGenerator$getWrapperITable$org$pandalanguage$pandac$ClassDecl$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$needsStructIndirection$org$pandalanguage$pandac$MethodDecl$R$panda$core$Bit, org$pandalanguage$pandac$LLVMCodeGenerator$getMethodTableEntry$org$pandalanguage$pandac$MethodDecl$R$org$pandalanguage$pandac$Pair$LTpanda$core$String$Cpanda$core$String$GT, org$pandalanguage$pandac$LLVMCodeGenerator$getClassConstant$org$pandalanguage$pandac$ClassDecl$R$org$pandalanguage$pandac$LLVMCodeGenerator$ClassConstant, org$pandalanguage$pandac$LLVMCodeGenerator$getWrapperClassConstant$org$pandalanguage$pandac$ClassDecl$R$org$pandalanguage$pandac$LLVMCodeGenerator$ClassConstant, org$pandalanguage$pandac$LLVMCodeGenerator$escapeName$panda$core$String$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$getName$org$pandalanguage$pandac$Variable$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$getName$org$pandalanguage$pandac$MethodDecl$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$getName$org$pandalanguage$pandac$FieldDecl$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$opClass$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$LLVMCodeGenerator$OpClass, org$pandalanguage$pandac$LLVMCodeGenerator$wrapValue$org$pandalanguage$pandac$Position$panda$core$String$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Type$panda$io$OutputStream$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$unwrapValue$org$pandalanguage$pandac$Position$panda$core$String$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Type$panda$io$OutputStream$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$toNullableValue$org$pandalanguage$pandac$Position$panda$core$String$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Type$panda$io$OutputStream$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$toNonNullableValue$org$pandalanguage$pandac$Position$panda$core$String$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Type$panda$io$OutputStream$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$getCastReference$org$pandalanguage$pandac$Position$panda$core$String$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Type$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$getRealReference$org$pandalanguage$pandac$Type$panda$core$Real64$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$getStringReference$panda$core$String$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$haveSelfValuePointer$R$panda$core$Bit, org$pandalanguage$pandac$LLVMCodeGenerator$getSelfPointer$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$getSelfValue$panda$io$OutputStream$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$getNullReference$org$pandalanguage$pandac$Type$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$getChoiceFieldOffset$org$pandalanguage$pandac$ChoiceCase$panda$core$Int64$R$panda$core$Int64, org$pandalanguage$pandac$LLVMCodeGenerator$selfType$org$pandalanguage$pandac$MethodDecl$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$writeDeclaration$org$pandalanguage$pandac$MethodDecl, org$pandalanguage$pandac$LLVMCodeGenerator$getReference$org$pandalanguage$pandac$IR$Value$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$getTypedReference$org$pandalanguage$pandac$IR$Value$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$debugInfo$org$pandalanguage$pandac$Position$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$writeIsNull$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Statement$ID$org$pandalanguage$pandac$IR$Value, org$pandalanguage$pandac$LLVMCodeGenerator$writeIsNonNull$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Statement$ID$org$pandalanguage$pandac$IR$Value, org$pandalanguage$pandac$LLVMCodeGenerator$isNull$org$pandalanguage$pandac$IR$Value$R$panda$core$Bit, org$pandalanguage$pandac$LLVMCodeGenerator$writeBinary$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Statement$ID$org$pandalanguage$pandac$IR$Value$org$pandalanguage$pandac$parser$Token$Kind$org$pandalanguage$pandac$IR$Value$org$pandalanguage$pandac$Type, org$pandalanguage$pandac$LLVMCodeGenerator$writeBranch$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Block$ID, org$pandalanguage$pandac$LLVMCodeGenerator$writeCast$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Statement$ID$org$pandalanguage$pandac$IR$Value$org$pandalanguage$pandac$Type, org$pandalanguage$pandac$LLVMCodeGenerator$writeConditionalBranch$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Value$org$pandalanguage$pandac$IR$Block$ID$org$pandalanguage$pandac$IR$Block$ID, org$pandalanguage$pandac$LLVMCodeGenerator$writeConstruct$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Statement$ID$org$pandalanguage$pandac$ClassDecl, org$pandalanguage$pandac$LLVMCodeGenerator$writeCreateStruct$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Statement$ID$org$pandalanguage$pandac$ClassDecl$org$pandalanguage$pandac$FixedArray$LTorg$pandalanguage$pandac$IR$Value$GT, org$pandalanguage$pandac$LLVMCodeGenerator$writeDynamicCall$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Statement$ID$org$pandalanguage$pandac$IR$Value$panda$collections$ListView$LTorg$pandalanguage$pandac$IR$Value$GT, org$pandalanguage$pandac$LLVMCodeGenerator$writeExtractField$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Statement$ID$org$pandalanguage$pandac$IR$Value$org$pandalanguage$pandac$FieldDecl, org$pandalanguage$pandac$LLVMCodeGenerator$writeGetChoiceFieldPointer$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Statement$ID$org$pandalanguage$pandac$IR$Value$org$pandalanguage$pandac$ChoiceCase$panda$core$Int64, org$pandalanguage$pandac$LLVMCodeGenerator$writeGetFieldPointer$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Statement$ID$org$pandalanguage$pandac$IR$Value$org$pandalanguage$pandac$FieldDecl, org$pandalanguage$pandac$LLVMCodeGenerator$writeGetInterfaceMethod$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Statement$ID$org$pandalanguage$pandac$IR$Value$org$pandalanguage$pandac$ClassDecl$panda$core$Int64$org$pandalanguage$pandac$Type, org$pandalanguage$pandac$LLVMCodeGenerator$writeGetVirtualMethod$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Statement$ID$org$pandalanguage$pandac$IR$Value$panda$core$Int64$org$pandalanguage$pandac$Type, org$pandalanguage$pandac$LLVMCodeGenerator$writeLoad$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Statement$ID$org$pandalanguage$pandac$IR$Value, org$pandalanguage$pandac$LLVMCodeGenerator$writeNegate$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Statement$ID$org$pandalanguage$pandac$IR$Value, org$pandalanguage$pandac$LLVMCodeGenerator$writeNot$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Statement$ID$org$pandalanguage$pandac$IR$Value, org$pandalanguage$pandac$LLVMCodeGenerator$writePointerAlloc$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Statement$ID$org$pandalanguage$pandac$IR$Value$org$pandalanguage$pandac$Type, org$pandalanguage$pandac$LLVMCodeGenerator$writePointerDestroy$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Value, org$pandalanguage$pandac$LLVMCodeGenerator$writePointerGetIndex$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Statement$ID$org$pandalanguage$pandac$IR$Value$org$pandalanguage$pandac$IR$Value, org$pandalanguage$pandac$LLVMCodeGenerator$writePointerOffset$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Statement$ID$org$pandalanguage$pandac$IR$Value$org$pandalanguage$pandac$IR$Value, org$pandalanguage$pandac$LLVMCodeGenerator$writePointerRealloc$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Statement$ID$org$pandalanguage$pandac$IR$Value$org$pandalanguage$pandac$IR$Value$org$pandalanguage$pandac$IR$Value, org$pandalanguage$pandac$LLVMCodeGenerator$writePointerSetIndex$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Value$org$pandalanguage$pandac$IR$Value$org$pandalanguage$pandac$IR$Value, org$pandalanguage$pandac$LLVMCodeGenerator$writeReturn$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Value$Q, org$pandalanguage$pandac$LLVMCodeGenerator$writeStaticCall$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Statement$ID$org$pandalanguage$pandac$MethodDecl$panda$collections$ListView$LTorg$pandalanguage$pandac$IR$Value$GT, org$pandalanguage$pandac$LLVMCodeGenerator$writeStore$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Value$org$pandalanguage$pandac$IR$Value, org$pandalanguage$pandac$LLVMCodeGenerator$writeStatement$org$pandalanguage$pandac$IR$Statement$ID$org$pandalanguage$pandac$IR$Statement, org$pandalanguage$pandac$LLVMCodeGenerator$writeIR$org$pandalanguage$pandac$IR, org$pandalanguage$pandac$LLVMCodeGenerator$write$org$pandalanguage$pandac$MethodDecl$org$pandalanguage$pandac$IR, org$pandalanguage$pandac$LLVMCodeGenerator$start$org$pandalanguage$pandac$ClassDecl, org$pandalanguage$pandac$LLVMCodeGenerator$end$org$pandalanguage$pandac$ClassDecl} };
 
 typedef void (*$fn88)(panda$io$OutputStream*, panda$core$String*);
 typedef void (*$fn95)(panda$io$OutputStream*, panda$core$String*);
@@ -4115,16 +4115,16 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp1220));
 return $tmp1219;
 block31:;
 // line 415
-panda$collections$ImmutableArray** $tmp1221 = &param1->subtypes;
-panda$collections$ImmutableArray* $tmp1222 = *$tmp1221;
+org$pandalanguage$pandac$FixedArray** $tmp1221 = &param1->subtypes;
+org$pandalanguage$pandac$FixedArray* $tmp1222 = *$tmp1221;
 panda$core$Int64 $tmp1223 = (panda$core$Int64) {0};
-panda$core$Object* $tmp1224 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T($tmp1222, $tmp1223);
+panda$core$Object* $tmp1224 = org$pandalanguage$pandac$FixedArray$$IDX$panda$core$Int64$R$org$pandalanguage$pandac$FixedArray$T($tmp1222, $tmp1223);
 panda$core$String* $tmp1225 = org$pandalanguage$pandac$LLVMCodeGenerator$llvmType$org$pandalanguage$pandac$Type$R$panda$core$String(param0, ((org$pandalanguage$pandac$Type*) $tmp1224));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp1225));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp1225));
 // unreffing REF($277:panda.core.String)
 panda$core$Panda$unref$panda$core$Object$Q($tmp1224);
-// unreffing REF($275:panda.collections.ImmutableArray.T)
+// unreffing REF($275:org.pandalanguage.pandac.FixedArray.T)
 org$pandalanguage$pandac$ClassDecl* $tmp1226 = *(&local2);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp1226));
 // unreffing cl
@@ -4137,47 +4137,47 @@ bool $tmp1229 = $tmp1228.value;
 if ($tmp1229) goto block32; else goto block33;
 block32:;
 // line 418
-panda$collections$ImmutableArray** $tmp1230 = &param1->subtypes;
-panda$collections$ImmutableArray* $tmp1231 = *$tmp1230;
+org$pandalanguage$pandac$FixedArray** $tmp1230 = &param1->subtypes;
+org$pandalanguage$pandac$FixedArray* $tmp1231 = *$tmp1230;
 panda$core$Int64 $tmp1232 = (panda$core$Int64) {0};
-panda$core$Object* $tmp1233 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T($tmp1231, $tmp1232);
+panda$core$Object* $tmp1233 = org$pandalanguage$pandac$FixedArray$$IDX$panda$core$Int64$R$org$pandalanguage$pandac$FixedArray$T($tmp1231, $tmp1232);
 panda$core$String** $tmp1234 = &((org$pandalanguage$pandac$Symbol*) ((org$pandalanguage$pandac$Type*) $tmp1233))->name;
 panda$core$String* $tmp1235 = *$tmp1234;
 panda$core$Bit $tmp1236 = panda$core$String$$EQ$panda$core$String$R$panda$core$Bit($tmp1235, &$s1237);
 bool $tmp1238 = $tmp1236.value;
 panda$core$Panda$unref$panda$core$Object$Q($tmp1233);
-// unreffing REF($302:panda.collections.ImmutableArray.T)
+// unreffing REF($302:org.pandalanguage.pandac.FixedArray.T)
 if ($tmp1238) goto block34; else goto block35;
 block34:;
 // line 419
-panda$collections$ImmutableArray** $tmp1239 = &param1->subtypes;
-panda$collections$ImmutableArray* $tmp1240 = *$tmp1239;
+org$pandalanguage$pandac$FixedArray** $tmp1239 = &param1->subtypes;
+org$pandalanguage$pandac$FixedArray* $tmp1240 = *$tmp1239;
 panda$core$Int64 $tmp1241 = (panda$core$Int64) {1};
-panda$core$Object* $tmp1242 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T($tmp1240, $tmp1241);
+panda$core$Object* $tmp1242 = org$pandalanguage$pandac$FixedArray$$IDX$panda$core$Int64$R$org$pandalanguage$pandac$FixedArray$T($tmp1240, $tmp1241);
 panda$core$Bit $tmp1243 = org$pandalanguage$pandac$Type$get_isMethod$R$panda$core$Bit(((org$pandalanguage$pandac$Type*) $tmp1242));
 bool $tmp1244 = $tmp1243.value;
 panda$core$Panda$unref$panda$core$Object$Q($tmp1242);
-// unreffing REF($319:panda.collections.ImmutableArray.T)
+// unreffing REF($319:org.pandalanguage.pandac.FixedArray.T)
 if ($tmp1244) goto block36; else goto block37;
 block36:;
 // line 420
-panda$collections$ImmutableArray** $tmp1245 = &param1->subtypes;
-panda$collections$ImmutableArray* $tmp1246 = *$tmp1245;
+org$pandalanguage$pandac$FixedArray** $tmp1245 = &param1->subtypes;
+org$pandalanguage$pandac$FixedArray* $tmp1246 = *$tmp1245;
 panda$core$Int64 $tmp1247 = (panda$core$Int64) {1};
-panda$core$Object* $tmp1248 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T($tmp1246, $tmp1247);
+panda$core$Object* $tmp1248 = org$pandalanguage$pandac$FixedArray$$IDX$panda$core$Int64$R$org$pandalanguage$pandac$FixedArray$T($tmp1246, $tmp1247);
 panda$core$String* $tmp1249 = org$pandalanguage$pandac$LLVMCodeGenerator$llvmMethodType$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Type$Q$R$panda$core$String(param0, ((org$pandalanguage$pandac$Type*) $tmp1248), ((org$pandalanguage$pandac$Type*) NULL));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp1249));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp1249));
 // unreffing REF($335:panda.core.String)
 panda$core$Panda$unref$panda$core$Object$Q($tmp1248);
-// unreffing REF($333:panda.collections.ImmutableArray.T)
+// unreffing REF($333:org.pandalanguage.pandac.FixedArray.T)
 return $tmp1249;
 block37:;
 // line 422
-panda$collections$ImmutableArray** $tmp1250 = &param1->subtypes;
-panda$collections$ImmutableArray* $tmp1251 = *$tmp1250;
+org$pandalanguage$pandac$FixedArray** $tmp1250 = &param1->subtypes;
+org$pandalanguage$pandac$FixedArray* $tmp1251 = *$tmp1250;
 panda$core$Int64 $tmp1252 = (panda$core$Int64) {1};
-panda$core$Object* $tmp1253 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T($tmp1251, $tmp1252);
+panda$core$Object* $tmp1253 = org$pandalanguage$pandac$FixedArray$$IDX$panda$core$Int64$R$org$pandalanguage$pandac$FixedArray$T($tmp1251, $tmp1252);
 panda$core$String* $tmp1254 = org$pandalanguage$pandac$LLVMCodeGenerator$llvmType$org$pandalanguage$pandac$Type$R$panda$core$String(param0, ((org$pandalanguage$pandac$Type*) $tmp1253));
 panda$core$String* $tmp1255 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp1254, &$s1256);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp1255));
@@ -4186,7 +4186,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp1255));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp1254));
 // unreffing REF($353:panda.core.String)
 panda$core$Panda$unref$panda$core$Object$Q($tmp1253);
-// unreffing REF($351:panda.collections.ImmutableArray.T)
+// unreffing REF($351:org.pandalanguage.pandac.FixedArray.T)
 return $tmp1255;
 block35:;
 // line 424
@@ -4300,16 +4300,16 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp1299));
 return $tmp1296;
 block39:;
 // line 434
-panda$collections$ImmutableArray** $tmp1300 = &param1->subtypes;
-panda$collections$ImmutableArray* $tmp1301 = *$tmp1300;
+org$pandalanguage$pandac$FixedArray** $tmp1300 = &param1->subtypes;
+org$pandalanguage$pandac$FixedArray* $tmp1301 = *$tmp1300;
 panda$core$Int64 $tmp1302 = (panda$core$Int64) {0};
-panda$core$Object* $tmp1303 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T($tmp1301, $tmp1302);
+panda$core$Object* $tmp1303 = org$pandalanguage$pandac$FixedArray$$IDX$panda$core$Int64$R$org$pandalanguage$pandac$FixedArray$T($tmp1301, $tmp1302);
 panda$core$String* $tmp1304 = org$pandalanguage$pandac$LLVMCodeGenerator$llvmType$org$pandalanguage$pandac$Type$R$panda$core$String(param0, ((org$pandalanguage$pandac$Type*) $tmp1303));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp1304));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp1304));
 // unreffing REF($514:panda.core.String)
 panda$core$Panda$unref$panda$core$Object$Q($tmp1303);
-// unreffing REF($512:panda.collections.ImmutableArray.T)
+// unreffing REF($512:org.pandalanguage.pandac.FixedArray.T)
 org$pandalanguage$pandac$ClassDecl* $tmp1305 = *(&local3);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp1305));
 // unreffing cl
@@ -4554,10 +4554,10 @@ abort(); // unreachable
 block13:;
 // line 462
 panda$core$MutableString* $tmp1402 = (panda$core$MutableString*) pandaObjectAlloc(48, (panda$core$Class*) &panda$core$MutableString$class);
-panda$collections$ImmutableArray** $tmp1403 = &param1->subtypes;
-panda$collections$ImmutableArray* $tmp1404 = *$tmp1403;
-panda$collections$ImmutableArray** $tmp1405 = &param1->subtypes;
-panda$collections$ImmutableArray* $tmp1406 = *$tmp1405;
+org$pandalanguage$pandac$FixedArray** $tmp1403 = &param1->subtypes;
+org$pandalanguage$pandac$FixedArray* $tmp1404 = *$tmp1403;
+org$pandalanguage$pandac$FixedArray** $tmp1405 = &param1->subtypes;
+org$pandalanguage$pandac$FixedArray* $tmp1406 = *$tmp1405;
 ITable* $tmp1407 = ((panda$collections$CollectionView*) $tmp1406)->$class->itable;
 while ($tmp1407->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {
     $tmp1407 = $tmp1407->next;
@@ -4569,7 +4569,7 @@ int64_t $tmp1412 = $tmp1410.value;
 int64_t $tmp1413 = $tmp1411.value;
 int64_t $tmp1414 = $tmp1412 - $tmp1413;
 panda$core$Int64 $tmp1415 = (panda$core$Int64) {$tmp1414};
-panda$core$Object* $tmp1416 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T($tmp1404, $tmp1415);
+panda$core$Object* $tmp1416 = org$pandalanguage$pandac$FixedArray$$IDX$panda$core$Int64$R$org$pandalanguage$pandac$FixedArray$T($tmp1404, $tmp1415);
 panda$core$String* $tmp1417 = org$pandalanguage$pandac$LLVMCodeGenerator$llvmType$org$pandalanguage$pandac$Type$R$panda$core$String(param0, ((org$pandalanguage$pandac$Type*) $tmp1416));
 panda$core$MutableString$init$panda$core$String($tmp1402, $tmp1417);
 *(&local4) = ((panda$core$MutableString*) NULL);
@@ -4580,7 +4580,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp1418));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp1417));
 // unreffing REF($126:panda.core.String)
 panda$core$Panda$unref$panda$core$Object$Q($tmp1416);
-// unreffing REF($124:panda.collections.ImmutableArray.T)
+// unreffing REF($124:org.pandalanguage.pandac.FixedArray.T)
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp1402));
 // unreffing REF($109:panda.core.MutableString)
 // line 463
@@ -4612,8 +4612,8 @@ goto block16;
 block16:;
 // line 469
 panda$core$Int64 $tmp1431 = (panda$core$Int64) {0};
-panda$collections$ImmutableArray** $tmp1432 = &param1->subtypes;
-panda$collections$ImmutableArray* $tmp1433 = *$tmp1432;
+org$pandalanguage$pandac$FixedArray** $tmp1432 = &param1->subtypes;
+org$pandalanguage$pandac$FixedArray* $tmp1433 = *$tmp1432;
 ITable* $tmp1434 = ((panda$collections$CollectionView*) $tmp1433)->$class->itable;
 while ($tmp1434->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {
     $tmp1434 = $tmp1434->next;
@@ -4656,16 +4656,16 @@ panda$core$String* $tmp1462 = *(&local5);
 panda$core$MutableString$append$panda$core$String($tmp1461, $tmp1462);
 // line 471
 panda$core$MutableString* $tmp1463 = *(&local4);
-panda$collections$ImmutableArray** $tmp1464 = &param1->subtypes;
-panda$collections$ImmutableArray* $tmp1465 = *$tmp1464;
+org$pandalanguage$pandac$FixedArray** $tmp1464 = &param1->subtypes;
+org$pandalanguage$pandac$FixedArray* $tmp1465 = *$tmp1464;
 panda$core$Int64 $tmp1466 = *(&local6);
-panda$core$Object* $tmp1467 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T($tmp1465, $tmp1466);
+panda$core$Object* $tmp1467 = org$pandalanguage$pandac$FixedArray$$IDX$panda$core$Int64$R$org$pandalanguage$pandac$FixedArray$T($tmp1465, $tmp1466);
 panda$core$String* $tmp1468 = org$pandalanguage$pandac$LLVMCodeGenerator$llvmType$org$pandalanguage$pandac$Type$R$panda$core$String(param0, ((org$pandalanguage$pandac$Type*) $tmp1467));
 panda$core$MutableString$append$panda$core$String($tmp1463, $tmp1468);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp1468));
 // unreffing REF($223:panda.core.String)
 panda$core$Panda$unref$panda$core$Object$Q($tmp1467);
-// unreffing REF($221:panda.collections.ImmutableArray.T)
+// unreffing REF($221:org.pandalanguage.pandac.FixedArray.T)
 // line 472
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) &$s1469));
 panda$core$String* $tmp1470 = *(&local5);
@@ -4749,16 +4749,16 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) ((panda$core$Eq
 if ($tmp1508) goto block1; else goto block2;
 block1:;
 // line 480
-panda$collections$ImmutableArray** $tmp1509 = &param1->subtypes;
-panda$collections$ImmutableArray* $tmp1510 = *$tmp1509;
+org$pandalanguage$pandac$FixedArray** $tmp1509 = &param1->subtypes;
+org$pandalanguage$pandac$FixedArray* $tmp1510 = *$tmp1509;
 panda$core$Int64 $tmp1511 = (panda$core$Int64) {0};
-panda$core$Object* $tmp1512 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T($tmp1510, $tmp1511);
+panda$core$Object* $tmp1512 = org$pandalanguage$pandac$FixedArray$$IDX$panda$core$Int64$R$org$pandalanguage$pandac$FixedArray$T($tmp1510, $tmp1511);
 panda$core$String* $tmp1513 = org$pandalanguage$pandac$LLVMCodeGenerator$wrapperTypeName$org$pandalanguage$pandac$Type$R$panda$core$String(param0, ((org$pandalanguage$pandac$Type*) $tmp1512));
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp1513));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp1513));
 // unreffing REF($26:panda.core.String)
 panda$core$Panda$unref$panda$core$Object$Q($tmp1512);
-// unreffing REF($24:panda.collections.ImmutableArray.T)
+// unreffing REF($24:org.pandalanguage.pandac.FixedArray.T)
 return $tmp1513;
 block2:;
 // line 482
@@ -4888,8 +4888,8 @@ panda$core$MutableString$append$panda$core$String($tmp1562, &$s1563);
 // line 501
 panda$core$Int64 $tmp1564 = (panda$core$Int64) {0};
 org$pandalanguage$pandac$Type* $tmp1565 = *(&local0);
-panda$collections$ImmutableArray** $tmp1566 = &$tmp1565->subtypes;
-panda$collections$ImmutableArray* $tmp1567 = *$tmp1566;
+org$pandalanguage$pandac$FixedArray** $tmp1566 = &$tmp1565->subtypes;
+org$pandalanguage$pandac$FixedArray* $tmp1567 = *$tmp1566;
 ITable* $tmp1568 = ((panda$collections$CollectionView*) $tmp1567)->$class->itable;
 while ($tmp1568->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {
     $tmp1568 = $tmp1568->next;
@@ -4932,16 +4932,16 @@ panda$core$MutableString$append$panda$core$String($tmp1595, &$s1596);
 // line 503
 panda$core$MutableString* $tmp1597 = *(&local1);
 org$pandalanguage$pandac$Type* $tmp1598 = *(&local0);
-panda$collections$ImmutableArray** $tmp1599 = &$tmp1598->subtypes;
-panda$collections$ImmutableArray* $tmp1600 = *$tmp1599;
+org$pandalanguage$pandac$FixedArray** $tmp1599 = &$tmp1598->subtypes;
+org$pandalanguage$pandac$FixedArray* $tmp1600 = *$tmp1599;
 panda$core$Int64 $tmp1601 = *(&local2);
-panda$core$Object* $tmp1602 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T($tmp1600, $tmp1601);
+panda$core$Object* $tmp1602 = org$pandalanguage$pandac$FixedArray$$IDX$panda$core$Int64$R$org$pandalanguage$pandac$FixedArray$T($tmp1600, $tmp1601);
 panda$core$String* $tmp1603 = org$pandalanguage$pandac$LLVMCodeGenerator$llvmType$org$pandalanguage$pandac$Type$R$panda$core$String(param0, ((org$pandalanguage$pandac$Type*) $tmp1602));
 panda$core$MutableString$append$panda$core$String($tmp1597, $tmp1603);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp1603));
 // unreffing REF($158:panda.core.String)
 panda$core$Panda$unref$panda$core$Object$Q($tmp1602);
-// unreffing REF($156:panda.collections.ImmutableArray.T)
+// unreffing REF($156:org.pandalanguage.pandac.FixedArray.T)
 goto block7;
 block7:;
 panda$core$Int64 $tmp1604 = *(&local2);
@@ -5030,18 +5030,18 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) ((panda$core$Eq
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) ((panda$core$Equatable*) $tmp1632)));
 // unreffing REF($3:panda.core.Equatable<org.pandalanguage.pandac.Type.Kind>)
 // line 511
-panda$collections$ImmutableArray** $tmp1646 = &param1->subtypes;
-panda$collections$ImmutableArray* $tmp1647 = *$tmp1646;
+org$pandalanguage$pandac$FixedArray** $tmp1646 = &param1->subtypes;
+org$pandalanguage$pandac$FixedArray* $tmp1647 = *$tmp1646;
 panda$core$Int64 $tmp1648 = (panda$core$Int64) {0};
-panda$core$Object* $tmp1649 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T($tmp1647, $tmp1648);
+panda$core$Object* $tmp1649 = org$pandalanguage$pandac$FixedArray$$IDX$panda$core$Int64$R$org$pandalanguage$pandac$FixedArray$T($tmp1647, $tmp1648);
 org$pandalanguage$pandac$LLVMCodeGenerator$writeWrapperType$org$pandalanguage$pandac$Type(param0, ((org$pandalanguage$pandac$Type*) $tmp1649));
 panda$core$Panda$unref$panda$core$Object$Q($tmp1649);
-// unreffing REF($35:panda.collections.ImmutableArray.T)
+// unreffing REF($35:org.pandalanguage.pandac.FixedArray.T)
 // line 512
-panda$collections$ImmutableArray** $tmp1650 = &param1->subtypes;
-panda$collections$ImmutableArray* $tmp1651 = *$tmp1650;
+org$pandalanguage$pandac$FixedArray** $tmp1650 = &param1->subtypes;
+org$pandalanguage$pandac$FixedArray* $tmp1651 = *$tmp1650;
 panda$core$Int64 $tmp1652 = (panda$core$Int64) {0};
-panda$core$Object* $tmp1653 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T($tmp1651, $tmp1652);
+panda$core$Object* $tmp1653 = org$pandalanguage$pandac$FixedArray$$IDX$panda$core$Int64$R$org$pandalanguage$pandac$FixedArray$T($tmp1651, $tmp1652);
 panda$core$String* $tmp1654 = org$pandalanguage$pandac$LLVMCodeGenerator$llvmType$org$pandalanguage$pandac$Type$R$panda$core$String(param0, ((org$pandalanguage$pandac$Type*) $tmp1653));
 panda$core$String* $tmp1655 = panda$core$String$convert$R$panda$core$String($tmp1654);
 panda$core$String* $tmp1656 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp1655, &$s1657);
@@ -5053,7 +5053,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp1655));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp1654));
 // unreffing REF($49:panda.core.String)
 panda$core$Panda$unref$panda$core$Object$Q($tmp1653);
-// unreffing REF($47:panda.collections.ImmutableArray.T)
+// unreffing REF($47:org.pandalanguage.pandac.FixedArray.T)
 return $tmp1656;
 
 }
@@ -5653,8 +5653,8 @@ panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64(&$s1902, $t
 abort(); // unreachable
 block3:;
 // line 565
-panda$collections$ImmutableArray** $tmp1903 = &param2->subtypes;
-panda$collections$ImmutableArray* $tmp1904 = *$tmp1903;
+org$pandalanguage$pandac$FixedArray** $tmp1903 = &param2->subtypes;
+org$pandalanguage$pandac$FixedArray* $tmp1904 = *$tmp1903;
 ITable* $tmp1905 = ((panda$collections$CollectionView*) $tmp1904)->$class->itable;
 while ($tmp1905->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {
     $tmp1905 = $tmp1905->next;
@@ -5779,8 +5779,8 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp1964));
 *(&local7) = &$s1965;
 // line 577
 panda$core$Int64 $tmp1966 = (panda$core$Int64) {0};
-panda$collections$ImmutableArray** $tmp1967 = &param2->subtypes;
-panda$collections$ImmutableArray* $tmp1968 = *$tmp1967;
+org$pandalanguage$pandac$FixedArray** $tmp1967 = &param2->subtypes;
+org$pandalanguage$pandac$FixedArray* $tmp1968 = *$tmp1967;
 ITable* $tmp1969 = ((panda$collections$CollectionView*) $tmp1968)->$class->itable;
 while ($tmp1969->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {
     $tmp1969 = $tmp1969->next;
@@ -5818,10 +5818,10 @@ bool $tmp1995 = $tmp1994.value;
 if ($tmp1995) goto block9; else goto block10;
 block9:;
 // line 578
-panda$collections$ImmutableArray** $tmp1996 = &param2->subtypes;
-panda$collections$ImmutableArray* $tmp1997 = *$tmp1996;
+org$pandalanguage$pandac$FixedArray** $tmp1996 = &param2->subtypes;
+org$pandalanguage$pandac$FixedArray* $tmp1997 = *$tmp1996;
 panda$core$Int64 $tmp1998 = *(&local8);
-panda$core$Object* $tmp1999 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T($tmp1997, $tmp1998);
+panda$core$Object* $tmp1999 = org$pandalanguage$pandac$FixedArray$$IDX$panda$core$Int64$R$org$pandalanguage$pandac$FixedArray$T($tmp1997, $tmp1998);
 panda$core$String* $tmp2000 = org$pandalanguage$pandac$LLVMCodeGenerator$llvmType$org$pandalanguage$pandac$Type$R$panda$core$String(param0, ((org$pandalanguage$pandac$Type*) $tmp1999));
 *(&local9) = ((panda$core$String*) NULL);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp2000));
@@ -5831,7 +5831,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2001));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2000));
 // unreffing REF($240:panda.core.String)
 panda$core$Panda$unref$panda$core$Object$Q($tmp1999);
-// unreffing REF($238:panda.collections.ImmutableArray.T)
+// unreffing REF($238:org.pandalanguage.pandac.FixedArray.T)
 // line 579
 panda$core$MutableString* $tmp2002 = *(&local6);
 panda$core$MutableString$append$panda$core$String($tmp2002, &$s2003);
@@ -5930,8 +5930,8 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2054));
 // unreffing REF($344:panda.collections.Array<panda.core.String>)
 // line 587
 panda$core$Int64 $tmp2056 = (panda$core$Int64) {0};
-panda$collections$ImmutableArray** $tmp2057 = &param2->subtypes;
-panda$collections$ImmutableArray* $tmp2058 = *$tmp2057;
+org$pandalanguage$pandac$FixedArray** $tmp2057 = &param2->subtypes;
+org$pandalanguage$pandac$FixedArray* $tmp2058 = *$tmp2057;
 ITable* $tmp2059 = ((panda$collections$CollectionView*) $tmp2058)->$class->itable;
 while ($tmp2059->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {
     $tmp2059 = $tmp2059->next;
@@ -6032,10 +6032,10 @@ goto block23;
 block23:;
 // line 596
 org$pandalanguage$pandac$Type* $tmp2115 = *(&local13);
-panda$collections$ImmutableArray** $tmp2116 = &param2->subtypes;
-panda$collections$ImmutableArray* $tmp2117 = *$tmp2116;
+org$pandalanguage$pandac$FixedArray** $tmp2116 = &param2->subtypes;
+org$pandalanguage$pandac$FixedArray* $tmp2117 = *$tmp2116;
 panda$core$Int64 $tmp2118 = *(&local11);
-panda$core$Object* $tmp2119 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T($tmp2117, $tmp2118);
+panda$core$Object* $tmp2119 = org$pandalanguage$pandac$FixedArray$$IDX$panda$core$Int64$R$org$pandalanguage$pandac$FixedArray$T($tmp2117, $tmp2118);
 ITable* $tmp2120 = ((panda$core$Equatable*) $tmp2115)->$class->itable;
 while ($tmp2120->$class != (panda$core$Class*) &panda$core$Equatable$class) {
     $tmp2120 = $tmp2120->next;
@@ -6044,17 +6044,17 @@ $fn2122 $tmp2121 = $tmp2120->methods[1];
 panda$core$Bit $tmp2123 = $tmp2121(((panda$core$Equatable*) $tmp2115), ((panda$core$Equatable*) ((org$pandalanguage$pandac$Type*) $tmp2119)));
 bool $tmp2124 = $tmp2123.value;
 panda$core$Panda$unref$panda$core$Object$Q($tmp2119);
-// unreffing REF($472:panda.collections.ImmutableArray.T)
+// unreffing REF($472:org.pandalanguage.pandac.FixedArray.T)
 if ($tmp2124) goto block25; else goto block27;
 block25:;
 // line 597
 org$pandalanguage$pandac$Position* $tmp2125 = &((org$pandalanguage$pandac$Symbol*) param1)->position;
 org$pandalanguage$pandac$Position $tmp2126 = *$tmp2125;
 panda$core$String* $tmp2127 = *(&local12);
-panda$collections$ImmutableArray** $tmp2128 = &param2->subtypes;
-panda$collections$ImmutableArray* $tmp2129 = *$tmp2128;
+org$pandalanguage$pandac$FixedArray** $tmp2128 = &param2->subtypes;
+org$pandalanguage$pandac$FixedArray* $tmp2129 = *$tmp2128;
 panda$core$Int64 $tmp2130 = *(&local11);
-panda$core$Object* $tmp2131 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T($tmp2129, $tmp2130);
+panda$core$Object* $tmp2131 = org$pandalanguage$pandac$FixedArray$$IDX$panda$core$Int64$R$org$pandalanguage$pandac$FixedArray$T($tmp2129, $tmp2130);
 org$pandalanguage$pandac$Type* $tmp2132 = *(&local13);
 panda$core$String* $tmp2133 = org$pandalanguage$pandac$LLVMCodeGenerator$getCastReference$org$pandalanguage$pandac$Position$panda$core$String$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Type$R$panda$core$String(param0, $tmp2126, $tmp2127, ((org$pandalanguage$pandac$Type*) $tmp2131), $tmp2132);
 *(&local14) = ((panda$core$String*) NULL);
@@ -6065,7 +6065,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2134));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2133));
 // unreffing REF($495:panda.core.String)
 panda$core$Panda$unref$panda$core$Object$Q($tmp2131);
-// unreffing REF($492:panda.collections.ImmutableArray.T)
+// unreffing REF($492:org.pandalanguage.pandac.FixedArray.T)
 // line 598
 panda$collections$Array* $tmp2135 = *(&local10);
 panda$core$String* $tmp2136 = *(&local14);
@@ -6074,10 +6074,10 @@ panda$collections$Array$add$panda$collections$Array$T($tmp2135, ((panda$core$Obj
 panda$core$Weak** $tmp2137 = &param0->compiler;
 panda$core$Weak* $tmp2138 = *$tmp2137;
 panda$core$Object* $tmp2139 = panda$core$Weak$get$R$panda$core$Weak$T($tmp2138);
-panda$collections$ImmutableArray** $tmp2140 = &param2->subtypes;
-panda$collections$ImmutableArray* $tmp2141 = *$tmp2140;
+org$pandalanguage$pandac$FixedArray** $tmp2140 = &param2->subtypes;
+org$pandalanguage$pandac$FixedArray* $tmp2141 = *$tmp2140;
 panda$core$Int64 $tmp2142 = *(&local11);
-panda$core$Object* $tmp2143 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T($tmp2141, $tmp2142);
+panda$core$Object* $tmp2143 = org$pandalanguage$pandac$FixedArray$$IDX$panda$core$Int64$R$org$pandalanguage$pandac$FixedArray$T($tmp2141, $tmp2142);
 panda$core$Bit $tmp2144 = org$pandalanguage$pandac$Compiler$isValue$org$pandalanguage$pandac$Type$R$panda$core$Bit(((org$pandalanguage$pandac$Compiler*) $tmp2139), ((org$pandalanguage$pandac$Type*) $tmp2143));
 bool $tmp2145 = $tmp2144.value;
 if ($tmp2145) goto block30; else goto block31;
@@ -6099,7 +6099,7 @@ block32:;
 panda$core$Bit $tmp2152 = *(&local15);
 bool $tmp2153 = $tmp2152.value;
 panda$core$Panda$unref$panda$core$Object$Q($tmp2143);
-// unreffing REF($527:panda.collections.ImmutableArray.T)
+// unreffing REF($527:org.pandalanguage.pandac.FixedArray.T)
 panda$core$Panda$unref$panda$core$Object$Q($tmp2139);
 // unreffing REF($519:panda.core.Weak.T)
 if ($tmp2153) goto block28; else goto block29;
@@ -6315,8 +6315,8 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2261));
 *(&local7) = &$s2262;
 // line 623
 panda$core$Int64 $tmp2263 = (panda$core$Int64) {0};
-panda$collections$ImmutableArray** $tmp2264 = &param2->subtypes;
-panda$collections$ImmutableArray* $tmp2265 = *$tmp2264;
+org$pandalanguage$pandac$FixedArray** $tmp2264 = &param2->subtypes;
+org$pandalanguage$pandac$FixedArray* $tmp2265 = *$tmp2264;
 ITable* $tmp2266 = ((panda$collections$CollectionView*) $tmp2265)->$class->itable;
 while ($tmp2266->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {
     $tmp2266 = $tmp2266->next;
@@ -7452,11 +7452,11 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2771));
 // line 747
 panda$core$MutableString* $tmp2774 = *(&local5);
 org$pandalanguage$pandac$Type* $tmp2775 = *(&local3);
-panda$collections$ImmutableArray** $tmp2776 = &$tmp2775->subtypes;
-panda$collections$ImmutableArray* $tmp2777 = *$tmp2776;
+org$pandalanguage$pandac$FixedArray** $tmp2776 = &$tmp2775->subtypes;
+org$pandalanguage$pandac$FixedArray* $tmp2777 = *$tmp2776;
 org$pandalanguage$pandac$Type* $tmp2778 = *(&local3);
-panda$collections$ImmutableArray** $tmp2779 = &$tmp2778->subtypes;
-panda$collections$ImmutableArray* $tmp2780 = *$tmp2779;
+org$pandalanguage$pandac$FixedArray** $tmp2779 = &$tmp2778->subtypes;
+org$pandalanguage$pandac$FixedArray* $tmp2780 = *$tmp2779;
 ITable* $tmp2781 = ((panda$collections$CollectionView*) $tmp2780)->$class->itable;
 while ($tmp2781->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {
     $tmp2781 = $tmp2781->next;
@@ -7468,21 +7468,21 @@ int64_t $tmp2786 = $tmp2784.value;
 int64_t $tmp2787 = $tmp2785.value;
 int64_t $tmp2788 = $tmp2786 - $tmp2787;
 panda$core$Int64 $tmp2789 = (panda$core$Int64) {$tmp2788};
-panda$core$Object* $tmp2790 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T($tmp2777, $tmp2789);
+panda$core$Object* $tmp2790 = org$pandalanguage$pandac$FixedArray$$IDX$panda$core$Int64$R$org$pandalanguage$pandac$FixedArray$T($tmp2777, $tmp2789);
 panda$core$String* $tmp2791 = org$pandalanguage$pandac$LLVMCodeGenerator$llvmType$org$pandalanguage$pandac$Type$R$panda$core$String(param0, ((org$pandalanguage$pandac$Type*) $tmp2790));
 panda$core$MutableString$append$panda$core$String($tmp2774, $tmp2791);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2791));
 // unreffing REF($242:panda.core.String)
 panda$core$Panda$unref$panda$core$Object$Q($tmp2790);
-// unreffing REF($240:panda.collections.ImmutableArray.T)
+// unreffing REF($240:org.pandalanguage.pandac.FixedArray.T)
 // line 748
 panda$core$MutableString* $tmp2792 = *(&local5);
 panda$core$MutableString$append$panda$core$String($tmp2792, &$s2793);
 // line 749
 panda$core$Int64 $tmp2794 = (panda$core$Int64) {0};
 org$pandalanguage$pandac$Type* $tmp2795 = *(&local3);
-panda$collections$ImmutableArray** $tmp2796 = &$tmp2795->subtypes;
-panda$collections$ImmutableArray* $tmp2797 = *$tmp2796;
+org$pandalanguage$pandac$FixedArray** $tmp2796 = &$tmp2795->subtypes;
+org$pandalanguage$pandac$FixedArray* $tmp2797 = *$tmp2796;
 ITable* $tmp2798 = ((panda$collections$CollectionView*) $tmp2797)->$class->itable;
 while ($tmp2798->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {
     $tmp2798 = $tmp2798->next;
@@ -7525,16 +7525,16 @@ panda$core$MutableString$append$panda$core$String($tmp2825, &$s2826);
 // line 751
 panda$core$MutableString* $tmp2827 = *(&local5);
 org$pandalanguage$pandac$Type* $tmp2828 = *(&local3);
-panda$collections$ImmutableArray** $tmp2829 = &$tmp2828->subtypes;
-panda$collections$ImmutableArray* $tmp2830 = *$tmp2829;
+org$pandalanguage$pandac$FixedArray** $tmp2829 = &$tmp2828->subtypes;
+org$pandalanguage$pandac$FixedArray* $tmp2830 = *$tmp2829;
 panda$core$Int64 $tmp2831 = *(&local6);
-panda$core$Object* $tmp2832 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T($tmp2830, $tmp2831);
+panda$core$Object* $tmp2832 = org$pandalanguage$pandac$FixedArray$$IDX$panda$core$Int64$R$org$pandalanguage$pandac$FixedArray$T($tmp2830, $tmp2831);
 panda$core$String* $tmp2833 = org$pandalanguage$pandac$LLVMCodeGenerator$llvmType$org$pandalanguage$pandac$Type$R$panda$core$String(param0, ((org$pandalanguage$pandac$Type*) $tmp2832));
 panda$core$MutableString$append$panda$core$String($tmp2827, $tmp2833);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2833));
 // unreffing REF($301:panda.core.String)
 panda$core$Panda$unref$panda$core$Object$Q($tmp2832);
-// unreffing REF($299:panda.collections.ImmutableArray.T)
+// unreffing REF($299:org.pandalanguage.pandac.FixedArray.T)
 goto block15;
 block15:;
 panda$core$Int64 $tmp2834 = *(&local6);
@@ -9789,10 +9789,10 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3874));
 panda$core$String* $tmp3890 = *(&local3);
 org$pandalanguage$pandac$LLVMCodeGenerator$createBlock$panda$core$String$panda$io$OutputStream(param0, $tmp3890, param5);
 // line 987
-panda$collections$ImmutableArray** $tmp3891 = &param3->subtypes;
-panda$collections$ImmutableArray* $tmp3892 = *$tmp3891;
+org$pandalanguage$pandac$FixedArray** $tmp3891 = &param3->subtypes;
+org$pandalanguage$pandac$FixedArray* $tmp3892 = *$tmp3891;
 panda$core$Int64 $tmp3893 = (panda$core$Int64) {0};
-panda$core$Object* $tmp3894 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T($tmp3892, $tmp3893);
+panda$core$Object* $tmp3894 = org$pandalanguage$pandac$FixedArray$$IDX$panda$core$Int64$R$org$pandalanguage$pandac$FixedArray$T($tmp3892, $tmp3893);
 panda$core$String* $tmp3895 = org$pandalanguage$pandac$LLVMCodeGenerator$toNonNullableValue$org$pandalanguage$pandac$Position$panda$core$String$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Type$panda$io$OutputStream$R$panda$core$String(param0, param1, param2, param3, ((org$pandalanguage$pandac$Type*) $tmp3894), param5);
 *(&local5) = ((panda$core$String*) NULL);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp3895));
@@ -9802,13 +9802,13 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3896));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3895));
 // unreffing REF($183:panda.core.String)
 panda$core$Panda$unref$panda$core$Object$Q($tmp3894);
-// unreffing REF($181:panda.collections.ImmutableArray.T)
+// unreffing REF($181:org.pandalanguage.pandac.FixedArray.T)
 // line 988
 panda$core$String* $tmp3897 = *(&local5);
-panda$collections$ImmutableArray** $tmp3898 = &param3->subtypes;
-panda$collections$ImmutableArray* $tmp3899 = *$tmp3898;
+org$pandalanguage$pandac$FixedArray** $tmp3898 = &param3->subtypes;
+org$pandalanguage$pandac$FixedArray* $tmp3899 = *$tmp3898;
 panda$core$Int64 $tmp3900 = (panda$core$Int64) {0};
-panda$core$Object* $tmp3901 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T($tmp3899, $tmp3900);
+panda$core$Object* $tmp3901 = org$pandalanguage$pandac$FixedArray$$IDX$panda$core$Int64$R$org$pandalanguage$pandac$FixedArray$T($tmp3899, $tmp3900);
 panda$core$String* $tmp3902 = org$pandalanguage$pandac$LLVMCodeGenerator$wrapValue$org$pandalanguage$pandac$Position$panda$core$String$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Type$panda$io$OutputStream$R$panda$core$String(param0, param1, $tmp3897, ((org$pandalanguage$pandac$Type*) $tmp3901), param4, param5);
 *(&local6) = ((panda$core$String*) NULL);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp3902));
@@ -9818,7 +9818,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3903));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3902));
 // unreffing REF($206:panda.core.String)
 panda$core$Panda$unref$panda$core$Object$Q($tmp3901);
-// unreffing REF($204:panda.collections.ImmutableArray.T)
+// unreffing REF($204:org.pandalanguage.pandac.FixedArray.T)
 // line 989
 panda$core$String* $tmp3904 = *(&local4);
 panda$core$String* $tmp3905 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s3906, $tmp3904);
@@ -10498,10 +10498,10 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp4170));
 panda$core$String* $tmp4186 = *(&local3);
 org$pandalanguage$pandac$LLVMCodeGenerator$createBlock$panda$core$String$panda$io$OutputStream(param0, $tmp4186, param5);
 // line 1042
-panda$collections$ImmutableArray** $tmp4187 = &param4->subtypes;
-panda$collections$ImmutableArray* $tmp4188 = *$tmp4187;
+org$pandalanguage$pandac$FixedArray** $tmp4187 = &param4->subtypes;
+org$pandalanguage$pandac$FixedArray* $tmp4188 = *$tmp4187;
 panda$core$Int64 $tmp4189 = (panda$core$Int64) {0};
-panda$core$Object* $tmp4190 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T($tmp4188, $tmp4189);
+panda$core$Object* $tmp4190 = org$pandalanguage$pandac$FixedArray$$IDX$panda$core$Int64$R$org$pandalanguage$pandac$FixedArray$T($tmp4188, $tmp4189);
 panda$core$String* $tmp4191 = org$pandalanguage$pandac$LLVMCodeGenerator$unwrapValue$org$pandalanguage$pandac$Position$panda$core$String$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Type$panda$io$OutputStream$R$panda$core$String(param0, param1, param2, param3, ((org$pandalanguage$pandac$Type*) $tmp4190), param5);
 *(&local5) = ((panda$core$String*) NULL);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp4191));
@@ -10511,13 +10511,13 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp4192));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp4191));
 // unreffing REF($183:panda.core.String)
 panda$core$Panda$unref$panda$core$Object$Q($tmp4190);
-// unreffing REF($181:panda.collections.ImmutableArray.T)
+// unreffing REF($181:org.pandalanguage.pandac.FixedArray.T)
 // line 1043
 panda$core$String* $tmp4193 = *(&local5);
-panda$collections$ImmutableArray** $tmp4194 = &param4->subtypes;
-panda$collections$ImmutableArray* $tmp4195 = *$tmp4194;
+org$pandalanguage$pandac$FixedArray** $tmp4194 = &param4->subtypes;
+org$pandalanguage$pandac$FixedArray* $tmp4195 = *$tmp4194;
 panda$core$Int64 $tmp4196 = (panda$core$Int64) {0};
-panda$core$Object* $tmp4197 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T($tmp4195, $tmp4196);
+panda$core$Object* $tmp4197 = org$pandalanguage$pandac$FixedArray$$IDX$panda$core$Int64$R$org$pandalanguage$pandac$FixedArray$T($tmp4195, $tmp4196);
 panda$core$String* $tmp4198 = org$pandalanguage$pandac$LLVMCodeGenerator$toNullableValue$org$pandalanguage$pandac$Position$panda$core$String$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Type$panda$io$OutputStream$R$panda$core$String(param0, param1, $tmp4193, ((org$pandalanguage$pandac$Type*) $tmp4197), param4, param5);
 *(&local6) = ((panda$core$String*) NULL);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp4198));
@@ -10527,7 +10527,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp4199));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp4198));
 // unreffing REF($206:panda.core.String)
 panda$core$Panda$unref$panda$core$Object$Q($tmp4197);
-// unreffing REF($204:panda.collections.ImmutableArray.T)
+// unreffing REF($204:org.pandalanguage.pandac.FixedArray.T)
 // line 1045
 panda$core$String* $tmp4200 = *(&local4);
 panda$core$String* $tmp4201 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s4202, $tmp4200);
@@ -10566,10 +10566,10 @@ panda$core$String* $tmp4216 = panda$core$String$$ADD$panda$core$String$R$panda$c
 panda$core$String* $tmp4218 = org$pandalanguage$pandac$LLVMCodeGenerator$llvmType$org$pandalanguage$pandac$Type$R$panda$core$String(param0, param4);
 panda$core$String* $tmp4219 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp4216, $tmp4218);
 panda$core$String* $tmp4220 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp4219, &$s4221);
-panda$collections$ImmutableArray** $tmp4222 = &param4->subtypes;
-panda$collections$ImmutableArray* $tmp4223 = *$tmp4222;
+org$pandalanguage$pandac$FixedArray** $tmp4222 = &param4->subtypes;
+org$pandalanguage$pandac$FixedArray* $tmp4223 = *$tmp4222;
 panda$core$Int64 $tmp4224 = (panda$core$Int64) {0};
-panda$core$Object* $tmp4225 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T($tmp4223, $tmp4224);
+panda$core$Object* $tmp4225 = org$pandalanguage$pandac$FixedArray$$IDX$panda$core$Int64$R$org$pandalanguage$pandac$FixedArray$T($tmp4223, $tmp4224);
 panda$core$String* $tmp4226 = org$pandalanguage$pandac$LLVMCodeGenerator$llvmType$org$pandalanguage$pandac$Type$R$panda$core$String(param0, ((org$pandalanguage$pandac$Type*) $tmp4225));
 panda$core$String* $tmp4227 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s4228, $tmp4226);
 panda$core$String* $tmp4229 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp4227, &$s4230);
@@ -10609,7 +10609,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp4227));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp4226));
 // unreffing REF($273:panda.core.String)
 panda$core$Panda$unref$panda$core$Object$Q($tmp4225);
-// unreffing REF($271:panda.collections.ImmutableArray.T)
+// unreffing REF($271:org.pandalanguage.pandac.FixedArray.T)
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp4220));
 // unreffing REF($265:panda.core.String)
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp4219));
@@ -11608,13 +11608,13 @@ panda$core$Bit $tmp4637 = *(&local9);
 bool $tmp4638 = $tmp4637.value;
 if ($tmp4638) goto block67; else goto block68;
 block67:;
-panda$collections$ImmutableArray** $tmp4639 = &param4->subtypes;
-panda$collections$ImmutableArray* $tmp4640 = *$tmp4639;
+org$pandalanguage$pandac$FixedArray** $tmp4639 = &param4->subtypes;
+org$pandalanguage$pandac$FixedArray* $tmp4640 = *$tmp4639;
 panda$core$Int64 $tmp4641 = (panda$core$Int64) {0};
-panda$core$Object* $tmp4642 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T($tmp4640, $tmp4641);
+panda$core$Object* $tmp4642 = org$pandalanguage$pandac$FixedArray$$IDX$panda$core$Int64$R$org$pandalanguage$pandac$FixedArray$T($tmp4640, $tmp4641);
 panda$core$Bit $tmp4643 = org$pandalanguage$pandac$Type$$EQ$org$pandalanguage$pandac$Type$R$panda$core$Bit(((org$pandalanguage$pandac$Type*) $tmp4642), param3);
 panda$core$Panda$unref$panda$core$Object$Q($tmp4642);
-// unreffing REF($564:panda.collections.ImmutableArray.T)
+// unreffing REF($564:org.pandalanguage.pandac.FixedArray.T)
 *(&local8) = $tmp4643;
 goto block69;
 block68:;
@@ -11687,13 +11687,13 @@ panda$core$Bit $tmp4668 = *(&local11);
 bool $tmp4669 = $tmp4668.value;
 if ($tmp4669) goto block76; else goto block77;
 block76:;
-panda$collections$ImmutableArray** $tmp4670 = &param3->subtypes;
-panda$collections$ImmutableArray* $tmp4671 = *$tmp4670;
+org$pandalanguage$pandac$FixedArray** $tmp4670 = &param3->subtypes;
+org$pandalanguage$pandac$FixedArray* $tmp4671 = *$tmp4670;
 panda$core$Int64 $tmp4672 = (panda$core$Int64) {0};
-panda$core$Object* $tmp4673 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T($tmp4671, $tmp4672);
+panda$core$Object* $tmp4673 = org$pandalanguage$pandac$FixedArray$$IDX$panda$core$Int64$R$org$pandalanguage$pandac$FixedArray$T($tmp4671, $tmp4672);
 panda$core$Bit $tmp4674 = org$pandalanguage$pandac$Type$$EQ$org$pandalanguage$pandac$Type$R$panda$core$Bit(((org$pandalanguage$pandac$Type*) $tmp4673), param4);
 panda$core$Panda$unref$panda$core$Object$Q($tmp4673);
-// unreffing REF($643:panda.collections.ImmutableArray.T)
+// unreffing REF($643:org.pandalanguage.pandac.FixedArray.T)
 *(&local10) = $tmp4674;
 goto block78;
 block77:;
@@ -12636,10 +12636,10 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) ((panda$core$Eq
 panda$core$Weak** $tmp5100 = &param0->compiler;
 panda$core$Weak* $tmp5101 = *$tmp5100;
 panda$core$Object* $tmp5102 = panda$core$Weak$get$R$panda$core$Weak$T($tmp5101);
-panda$collections$ImmutableArray** $tmp5103 = &param1->subtypes;
-panda$collections$ImmutableArray* $tmp5104 = *$tmp5103;
+org$pandalanguage$pandac$FixedArray** $tmp5103 = &param1->subtypes;
+org$pandalanguage$pandac$FixedArray* $tmp5104 = *$tmp5103;
 panda$core$Int64 $tmp5105 = (panda$core$Int64) {0};
-panda$core$Object* $tmp5106 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T($tmp5104, $tmp5105);
+panda$core$Object* $tmp5106 = org$pandalanguage$pandac$FixedArray$$IDX$panda$core$Int64$R$org$pandalanguage$pandac$FixedArray$T($tmp5104, $tmp5105);
 org$pandalanguage$pandac$ClassDecl* $tmp5107 = org$pandalanguage$pandac$Compiler$getClass$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$ClassDecl$Q(((org$pandalanguage$pandac$Compiler*) $tmp5102), ((org$pandalanguage$pandac$Type*) $tmp5106));
 *(&local0) = ((org$pandalanguage$pandac$ClassDecl*) NULL);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp5107));
@@ -12649,7 +12649,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp5108));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp5107));
 // unreffing REF($35:org.pandalanguage.pandac.ClassDecl?)
 panda$core$Panda$unref$panda$core$Object$Q($tmp5106);
-// unreffing REF($33:panda.collections.ImmutableArray.T)
+// unreffing REF($33:org.pandalanguage.pandac.FixedArray.T)
 panda$core$Panda$unref$panda$core$Object$Q($tmp5102);
 // unreffing REF($25:panda.core.Weak.T)
 // line 1248
@@ -12674,10 +12674,10 @@ panda$core$Panda$unref$panda$core$Object$Q($tmp5116);
 if ($tmp5119) goto block5; else goto block7;
 block5:;
 // line 1250
-panda$collections$ImmutableArray** $tmp5120 = &param1->subtypes;
-panda$collections$ImmutableArray* $tmp5121 = *$tmp5120;
+org$pandalanguage$pandac$FixedArray** $tmp5120 = &param1->subtypes;
+org$pandalanguage$pandac$FixedArray* $tmp5121 = *$tmp5120;
 panda$core$Int64 $tmp5122 = (panda$core$Int64) {0};
-panda$core$Object* $tmp5123 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T($tmp5121, $tmp5122);
+panda$core$Object* $tmp5123 = org$pandalanguage$pandac$FixedArray$$IDX$panda$core$Int64$R$org$pandalanguage$pandac$FixedArray$T($tmp5121, $tmp5122);
 panda$core$String* $tmp5124 = org$pandalanguage$pandac$LLVMCodeGenerator$llvmType$org$pandalanguage$pandac$Type$R$panda$core$String(param0, ((org$pandalanguage$pandac$Type*) $tmp5123));
 panda$core$String* $tmp5125 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s5126, $tmp5124);
 panda$core$String* $tmp5127 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp5125, &$s5128);
@@ -12689,7 +12689,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp5125));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp5124));
 // unreffing REF($83:panda.core.String)
 panda$core$Panda$unref$panda$core$Object$Q($tmp5123);
-// unreffing REF($81:panda.collections.ImmutableArray.T)
+// unreffing REF($81:org.pandalanguage.pandac.FixedArray.T)
 org$pandalanguage$pandac$ClassDecl* $tmp5129 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp5129));
 // unreffing cl
@@ -15308,7 +15308,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp6287));
 return;
 
 }
-void org$pandalanguage$pandac$LLVMCodeGenerator$writeCreateStruct$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Statement$ID$org$pandalanguage$pandac$ClassDecl$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$IR$Value$GT(org$pandalanguage$pandac$LLVMCodeGenerator* param0, org$pandalanguage$pandac$Position param1, org$pandalanguage$pandac$IR$Statement$ID param2, org$pandalanguage$pandac$ClassDecl* param3, panda$collections$ImmutableArray* param4) {
+void org$pandalanguage$pandac$LLVMCodeGenerator$writeCreateStruct$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Statement$ID$org$pandalanguage$pandac$ClassDecl$org$pandalanguage$pandac$FixedArray$LTorg$pandalanguage$pandac$IR$Value$GT(org$pandalanguage$pandac$LLVMCodeGenerator* param0, org$pandalanguage$pandac$Position param1, org$pandalanguage$pandac$IR$Statement$ID param2, org$pandalanguage$pandac$ClassDecl* param3, org$pandalanguage$pandac$FixedArray* param4) {
 
 panda$core$String* local0 = NULL;
 panda$core$String* local1 = NULL;
@@ -15400,7 +15400,7 @@ if ($tmp6336) goto block5; else goto block6;
 block5:;
 // line 1561
 panda$core$Int64 $tmp6337 = *(&local2);
-panda$core$Object* $tmp6338 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(param4, $tmp6337);
+panda$core$Object* $tmp6338 = org$pandalanguage$pandac$FixedArray$$IDX$panda$core$Int64$R$org$pandalanguage$pandac$FixedArray$T(param4, $tmp6337);
 panda$core$String* $tmp6339 = org$pandalanguage$pandac$LLVMCodeGenerator$getTypedReference$org$pandalanguage$pandac$IR$Value$R$panda$core$String(param0, ((org$pandalanguage$pandac$IR$Value*) $tmp6338));
 *(&local3) = ((panda$core$String*) NULL);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp6339));
@@ -15410,7 +15410,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp6340));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp6339));
 // unreffing REF($85:panda.core.String)
 panda$core$Panda$unref$panda$core$Object$Q($tmp6338);
-// unreffing REF($83:panda.collections.ImmutableArray.T)
+// unreffing REF($83:org.pandalanguage.pandac.FixedArray.T)
 // line 1562
 panda$core$String* $tmp6341 = org$pandalanguage$pandac$LLVMCodeGenerator$nextVar$R$panda$core$String(param0);
 *(&local4) = ((panda$core$String*) NULL);
@@ -15556,16 +15556,16 @@ if ($tmp6404) goto block1; else goto block2;
 block1:;
 // line 1573
 org$pandalanguage$pandac$Type* $tmp6405 = *(&local0);
-panda$collections$ImmutableArray** $tmp6406 = &$tmp6405->subtypes;
-panda$collections$ImmutableArray* $tmp6407 = *$tmp6406;
+org$pandalanguage$pandac$FixedArray** $tmp6406 = &$tmp6405->subtypes;
+org$pandalanguage$pandac$FixedArray* $tmp6407 = *$tmp6406;
 panda$core$Int64 $tmp6408 = (panda$core$Int64) {1};
-panda$core$Object* $tmp6409 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T($tmp6407, $tmp6408);
+panda$core$Object* $tmp6409 = org$pandalanguage$pandac$FixedArray$$IDX$panda$core$Int64$R$org$pandalanguage$pandac$FixedArray$T($tmp6407, $tmp6408);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((org$pandalanguage$pandac$Type*) $tmp6409)));
 org$pandalanguage$pandac$Type* $tmp6410 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp6410));
 *(&local0) = ((org$pandalanguage$pandac$Type*) $tmp6409);
 panda$core$Panda$unref$panda$core$Object$Q($tmp6409);
-// unreffing REF($25:panda.collections.ImmutableArray.T)
+// unreffing REF($25:org.pandalanguage.pandac.FixedArray.T)
 goto block2;
 block2:;
 // line 1575
@@ -18268,10 +18268,10 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp7601));
 // line 1775
 $fn7604 $tmp7603 = ($fn7604) param3->$class->vtable[2];
 org$pandalanguage$pandac$Type* $tmp7605 = $tmp7603(param3);
-panda$collections$ImmutableArray** $tmp7606 = &$tmp7605->subtypes;
-panda$collections$ImmutableArray* $tmp7607 = *$tmp7606;
+org$pandalanguage$pandac$FixedArray** $tmp7606 = &$tmp7605->subtypes;
+org$pandalanguage$pandac$FixedArray* $tmp7607 = *$tmp7606;
 panda$core$Int64 $tmp7608 = (panda$core$Int64) {1};
-panda$core$Object* $tmp7609 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T($tmp7607, $tmp7608);
+panda$core$Object* $tmp7609 = org$pandalanguage$pandac$FixedArray$$IDX$panda$core$Int64$R$org$pandalanguage$pandac$FixedArray$T($tmp7607, $tmp7608);
 panda$core$String* $tmp7610 = org$pandalanguage$pandac$LLVMCodeGenerator$llvmType$org$pandalanguage$pandac$Type$R$panda$core$String(param0, ((org$pandalanguage$pandac$Type*) $tmp7609));
 *(&local2) = ((panda$core$String*) NULL);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp7610));
@@ -18281,7 +18281,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp7611));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp7610));
 // unreffing REF($34:panda.core.String)
 panda$core$Panda$unref$panda$core$Object$Q($tmp7609);
-// unreffing REF($32:panda.collections.ImmutableArray.T)
+// unreffing REF($32:org.pandalanguage.pandac.FixedArray.T)
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp7605));
 // unreffing REF($26:org.pandalanguage.pandac.Type)
 // line 1776
@@ -18449,10 +18449,10 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp7676));
 // line 1788
 $fn7679 $tmp7678 = ($fn7679) param3->$class->vtable[2];
 org$pandalanguage$pandac$Type* $tmp7680 = $tmp7678(param3);
-panda$collections$ImmutableArray** $tmp7681 = &$tmp7680->subtypes;
-panda$collections$ImmutableArray* $tmp7682 = *$tmp7681;
+org$pandalanguage$pandac$FixedArray** $tmp7681 = &$tmp7680->subtypes;
+org$pandalanguage$pandac$FixedArray* $tmp7682 = *$tmp7681;
 panda$core$Int64 $tmp7683 = (panda$core$Int64) {1};
-panda$core$Object* $tmp7684 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T($tmp7682, $tmp7683);
+panda$core$Object* $tmp7684 = org$pandalanguage$pandac$FixedArray$$IDX$panda$core$Int64$R$org$pandalanguage$pandac$FixedArray$T($tmp7682, $tmp7683);
 panda$core$String* $tmp7685 = org$pandalanguage$pandac$LLVMCodeGenerator$llvmType$org$pandalanguage$pandac$Type$R$panda$core$String(param0, ((org$pandalanguage$pandac$Type*) $tmp7684));
 *(&local2) = ((panda$core$String*) NULL);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp7685));
@@ -18462,7 +18462,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp7686));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp7685));
 // unreffing REF($34:panda.core.String)
 panda$core$Panda$unref$panda$core$Object$Q($tmp7684);
-// unreffing REF($32:panda.collections.ImmutableArray.T)
+// unreffing REF($32:org.pandalanguage.pandac.FixedArray.T)
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp7680));
 // unreffing REF($26:org.pandalanguage.pandac.Type)
 // line 1789
@@ -18947,10 +18947,10 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp7886));
 // line 1821
 $fn7889 $tmp7888 = ($fn7889) param3->$class->vtable[2];
 org$pandalanguage$pandac$Type* $tmp7890 = $tmp7888(param3);
-panda$collections$ImmutableArray** $tmp7891 = &$tmp7890->subtypes;
-panda$collections$ImmutableArray* $tmp7892 = *$tmp7891;
+org$pandalanguage$pandac$FixedArray** $tmp7891 = &$tmp7890->subtypes;
+org$pandalanguage$pandac$FixedArray* $tmp7892 = *$tmp7891;
 panda$core$Int64 $tmp7893 = (panda$core$Int64) {1};
-panda$core$Object* $tmp7894 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T($tmp7892, $tmp7893);
+panda$core$Object* $tmp7894 = org$pandalanguage$pandac$FixedArray$$IDX$panda$core$Int64$R$org$pandalanguage$pandac$FixedArray$T($tmp7892, $tmp7893);
 panda$core$String* $tmp7895 = org$pandalanguage$pandac$LLVMCodeGenerator$llvmType$org$pandalanguage$pandac$Type$R$panda$core$String(param0, ((org$pandalanguage$pandac$Type*) $tmp7894));
 *(&local3) = ((panda$core$String*) NULL);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp7895));
@@ -18960,7 +18960,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp7896));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp7895));
 // unreffing REF($46:panda.core.String)
 panda$core$Panda$unref$panda$core$Object$Q($tmp7894);
-// unreffing REF($44:panda.collections.ImmutableArray.T)
+// unreffing REF($44:org.pandalanguage.pandac.FixedArray.T)
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp7890));
 // unreffing REF($38:org.pandalanguage.pandac.Type)
 // line 1822
@@ -19558,10 +19558,10 @@ org$pandalanguage$pandac$Position local15;
 org$pandalanguage$pandac$ClassDecl* local16 = NULL;
 org$pandalanguage$pandac$Position local17;
 org$pandalanguage$pandac$ClassDecl* local18 = NULL;
-panda$collections$ImmutableArray* local19 = NULL;
+org$pandalanguage$pandac$FixedArray* local19 = NULL;
 org$pandalanguage$pandac$Position local20;
 org$pandalanguage$pandac$IR$Value* local21 = NULL;
-panda$collections$ImmutableArray* local22 = NULL;
+org$pandalanguage$pandac$FixedArray* local22 = NULL;
 org$pandalanguage$pandac$Position local23;
 org$pandalanguage$pandac$IR$Value* local24 = NULL;
 org$pandalanguage$pandac$FieldDecl* local25 = NULL;
@@ -19610,7 +19610,7 @@ org$pandalanguage$pandac$Position local67;
 org$pandalanguage$pandac$IR$Value* local68 = NULL;
 org$pandalanguage$pandac$Position local69;
 org$pandalanguage$pandac$MethodDecl* local70 = NULL;
-panda$collections$ImmutableArray* local71 = NULL;
+org$pandalanguage$pandac$FixedArray* local71 = NULL;
 org$pandalanguage$pandac$Position local72;
 org$pandalanguage$pandac$IR$Value* local73 = NULL;
 org$pandalanguage$pandac$IR$Value* local74 = NULL;
@@ -19828,22 +19828,22 @@ panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp8268));
 org$pandalanguage$pandac$ClassDecl* $tmp8269 = *(&local18);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp8269));
 *(&local18) = $tmp8268;
-panda$collections$ImmutableArray** $tmp8270 = (panda$collections$ImmutableArray**) (param2->$data + 24);
-panda$collections$ImmutableArray* $tmp8271 = *$tmp8270;
-*(&local19) = ((panda$collections$ImmutableArray*) NULL);
+org$pandalanguage$pandac$FixedArray** $tmp8270 = (org$pandalanguage$pandac$FixedArray**) (param2->$data + 24);
+org$pandalanguage$pandac$FixedArray* $tmp8271 = *$tmp8270;
+*(&local19) = ((org$pandalanguage$pandac$FixedArray*) NULL);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp8271));
-panda$collections$ImmutableArray* $tmp8272 = *(&local19);
+org$pandalanguage$pandac$FixedArray* $tmp8272 = *(&local19);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp8272));
 *(&local19) = $tmp8271;
 // line 1902
 org$pandalanguage$pandac$Position $tmp8273 = *(&local17);
 org$pandalanguage$pandac$ClassDecl* $tmp8274 = *(&local18);
-panda$collections$ImmutableArray* $tmp8275 = *(&local19);
-org$pandalanguage$pandac$LLVMCodeGenerator$writeCreateStruct$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Statement$ID$org$pandalanguage$pandac$ClassDecl$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$IR$Value$GT(param0, $tmp8273, param1, $tmp8274, $tmp8275);
-panda$collections$ImmutableArray* $tmp8276 = *(&local19);
+org$pandalanguage$pandac$FixedArray* $tmp8275 = *(&local19);
+org$pandalanguage$pandac$LLVMCodeGenerator$writeCreateStruct$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Statement$ID$org$pandalanguage$pandac$ClassDecl$org$pandalanguage$pandac$FixedArray$LTorg$pandalanguage$pandac$IR$Value$GT(param0, $tmp8273, param1, $tmp8274, $tmp8275);
+org$pandalanguage$pandac$FixedArray* $tmp8276 = *(&local19);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp8276));
 // unreffing args
-*(&local19) = ((panda$collections$ImmutableArray*) NULL);
+*(&local19) = ((org$pandalanguage$pandac$FixedArray*) NULL);
 org$pandalanguage$pandac$ClassDecl* $tmp8277 = *(&local18);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp8277));
 // unreffing cl
@@ -19865,22 +19865,22 @@ panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp8284));
 org$pandalanguage$pandac$IR$Value* $tmp8285 = *(&local21);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp8285));
 *(&local21) = $tmp8284;
-panda$collections$ImmutableArray** $tmp8286 = (panda$collections$ImmutableArray**) (param2->$data + 24);
-panda$collections$ImmutableArray* $tmp8287 = *$tmp8286;
-*(&local22) = ((panda$collections$ImmutableArray*) NULL);
+org$pandalanguage$pandac$FixedArray** $tmp8286 = (org$pandalanguage$pandac$FixedArray**) (param2->$data + 24);
+org$pandalanguage$pandac$FixedArray* $tmp8287 = *$tmp8286;
+*(&local22) = ((org$pandalanguage$pandac$FixedArray*) NULL);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp8287));
-panda$collections$ImmutableArray* $tmp8288 = *(&local22);
+org$pandalanguage$pandac$FixedArray* $tmp8288 = *(&local22);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp8288));
 *(&local22) = $tmp8287;
 // line 1905
 org$pandalanguage$pandac$Position $tmp8289 = *(&local20);
 org$pandalanguage$pandac$IR$Value* $tmp8290 = *(&local21);
-panda$collections$ImmutableArray* $tmp8291 = *(&local22);
+org$pandalanguage$pandac$FixedArray* $tmp8291 = *(&local22);
 org$pandalanguage$pandac$LLVMCodeGenerator$writeDynamicCall$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Statement$ID$org$pandalanguage$pandac$IR$Value$panda$collections$ListView$LTorg$pandalanguage$pandac$IR$Value$GT(param0, $tmp8289, param1, $tmp8290, ((panda$collections$ListView*) $tmp8291));
-panda$collections$ImmutableArray* $tmp8292 = *(&local22);
+org$pandalanguage$pandac$FixedArray* $tmp8292 = *(&local22);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp8292));
 // unreffing args
-*(&local22) = ((panda$collections$ImmutableArray*) NULL);
+*(&local22) = ((org$pandalanguage$pandac$FixedArray*) NULL);
 org$pandalanguage$pandac$IR$Value* $tmp8293 = *(&local21);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp8293));
 // unreffing m
@@ -20445,22 +20445,22 @@ panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp8539));
 org$pandalanguage$pandac$MethodDecl* $tmp8540 = *(&local70);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp8540));
 *(&local70) = $tmp8539;
-panda$collections$ImmutableArray** $tmp8541 = (panda$collections$ImmutableArray**) (param2->$data + 24);
-panda$collections$ImmutableArray* $tmp8542 = *$tmp8541;
-*(&local71) = ((panda$collections$ImmutableArray*) NULL);
+org$pandalanguage$pandac$FixedArray** $tmp8541 = (org$pandalanguage$pandac$FixedArray**) (param2->$data + 24);
+org$pandalanguage$pandac$FixedArray* $tmp8542 = *$tmp8541;
+*(&local71) = ((org$pandalanguage$pandac$FixedArray*) NULL);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp8542));
-panda$collections$ImmutableArray* $tmp8543 = *(&local71);
+org$pandalanguage$pandac$FixedArray* $tmp8543 = *(&local71);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp8543));
 *(&local71) = $tmp8542;
 // line 1953
 org$pandalanguage$pandac$Position $tmp8544 = *(&local69);
 org$pandalanguage$pandac$MethodDecl* $tmp8545 = *(&local70);
-panda$collections$ImmutableArray* $tmp8546 = *(&local71);
+org$pandalanguage$pandac$FixedArray* $tmp8546 = *(&local71);
 org$pandalanguage$pandac$LLVMCodeGenerator$writeStaticCall$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Statement$ID$org$pandalanguage$pandac$MethodDecl$panda$collections$ListView$LTorg$pandalanguage$pandac$IR$Value$GT(param0, $tmp8544, param1, $tmp8545, ((panda$collections$ListView*) $tmp8546));
-panda$collections$ImmutableArray* $tmp8547 = *(&local71);
+org$pandalanguage$pandac$FixedArray* $tmp8547 = *(&local71);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp8547));
 // unreffing args
-*(&local71) = ((panda$collections$ImmutableArray*) NULL);
+*(&local71) = ((org$pandalanguage$pandac$FixedArray*) NULL);
 org$pandalanguage$pandac$MethodDecl* $tmp8548 = *(&local70);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp8548));
 // unreffing m

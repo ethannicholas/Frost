@@ -3,8 +3,6 @@ package panda.json
 uses org.pandalanguage.json.Lexer
 uses org.pandalanguage.json.Token
 
-uses panda.collections.ImmutableHashMap
-
 ====================================================================================================
 Simple JSON parser. Note that this parser is incomplete - in particular it does not handle string
 escape sequences correctly.
@@ -75,14 +73,14 @@ class JSONParser {
     @private
     method array():JSON {
         if checkNext(Token.Kind.RBRACKET) !== null {
-            return JSON.ARRAY(ImmutableArray<JSON>()) -- FIXME literal
+            return JSON.ARRAY([])
         }
         def result := Array<JSON>()
         loop {
             result.add(node())
             match next().kind {
                 when Token.Kind.RBRACKET {
-                    return JSON.ARRAY(ImmutableArray<JSON>.from(result))
+                    return JSON.ARRAY(result)
                 }
                 when Token.Kind.COMMA {
                     continue
@@ -97,7 +95,7 @@ class JSONParser {
     @private
     method object():JSON {
         if checkNext(Token.Kind.RBRACE) !== null {
-            return JSON.OBJECT(ImmutableHashMap<String, JSON>()) -- FIXME literal
+            return JSON.OBJECT(HashMap<String, JSON>())
         }
         def result := HashMap<String, JSON>()
         loop {
@@ -109,7 +107,7 @@ class JSONParser {
             result[key] := node()
             match next().kind {
                 when Token.Kind.RBRACE {
-                    return JSON.OBJECT(ImmutableHashMap<String, JSON>.from(result))
+                    return JSON.OBJECT(result)
                 }
                 when Token.Kind.COMMA {
                     continue

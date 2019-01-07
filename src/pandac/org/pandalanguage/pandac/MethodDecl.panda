@@ -44,7 +44,7 @@ class MethodDecl : Symbol {
 
     var returnType:Type
 
-    def body:ImmutableArray<ASTNode>?
+    def body:FixedArray<ASTNode>?
 
     var resolved := Compiler.Resolution.UNRESOLVED
 
@@ -66,7 +66,7 @@ class MethodDecl : Symbol {
     init(owner:ClassDecl, position:Position, doccomment:String?, annotations:Annotations,
             methodKind:Kind, name:String, genericParameters:Array<ClassDecl.GenericParameter>?,
             parameters:Array<Parameter>, returnType:Type,
-            body:ImmutableArray<ASTNode>?) {
+            body:FixedArray<ASTNode>?) {
         super.init(Symbol.Kind.METHOD, position, name)
         self.owner := owner
         self.doccomment := doccomment

@@ -3,6 +3,7 @@ package org.pandalanguage.pandac.parser
 uses org.pandalanguage.pandac.ASTNode
 uses org.pandalanguage.pandac.ClassDecl -- FIXME should be able to import ClassDecl.Kind directly
 uses org.pandalanguage.pandac.Compiler
+uses org.pandalanguage.pandac.FixedArray
 uses org.pandalanguage.pandac.MethodDecl -- FIXME should be able to import MethodDecl.Kind directly
 uses org.pandalanguage.pandac.Position
 uses org.pandalanguage.pandac.Variable -- FIXME should be able to import Variable.Kind directly
@@ -349,7 +350,7 @@ class Parser {
     @private
     function convertToString(expr:ASTNode):ASTNode {
         def dot := ASTNode.DOT(expr.position(), expr, "convert")
-        def call := ASTNode.CALL(expr.position(), dot, ImmutableArray<ASTNode>())
+        def call := ASTNode.CALL(expr.position(), dot, FixedArray<ASTNode>())
         def stringType := ASTNode.TYPE(expr.position(), "panda.core.String")
         return ASTNode.BINARY(expr.position(), call, Token.Kind.CAST, stringType)
     }
@@ -424,7 +425,7 @@ class Parser {
                                 def callArgs := Array<ASTNode>() -- FIXME literal
                                 callArgs.add(ASTNode.STRING(start.position, format))
                                 expr := ASTNode.CALL(expr.position(), dot,
-                                        ImmutableArray<ASTNode>.from(callArgs))
+                                        FixedArray<ASTNode>.from(callArgs))
                             }
                             if expect(Token.Kind.RBRACE, "'}'") == null {
                                 return null
@@ -439,7 +440,7 @@ class Parser {
                                 callArgs.add(expr)
                                 callArgs.add(ASTNode.STRING(start.position, align))
                                 expr := ASTNode.CALL(expr.position(), callTarget,
-                                        ImmutableArray<ASTNode>.from(callArgs))
+                                        FixedArray<ASTNode>.from(callArgs))
                             }
                             def text := chunk.finish()
                             chunk := MutableString()
@@ -515,7 +516,7 @@ class Parser {
                         return null
                     }
                     return ASTNode.TYPED_LAMBDA(start.position,
-                            ImmutableArray<ASTNode>.from(parameters), body)
+                            FixedArray<ASTNode>.from(parameters), body)
                 }
                 if checkNext(Token.Kind.COMMA) !== null {
                     -- untyped lambda or tuple
@@ -546,7 +547,7 @@ class Parser {
                             return null
                         }
                         return ASTNode.UNTYPED_LAMBDA(start.position,
-                                ImmutableArray<ASTNode>.from(parameters), body)
+                                FixedArray<ASTNode>.from(parameters), body)
                     }
                     --return ASTNode.TUPLE(start.position, parameters.finish())
                     error(start, "tuples are not yet supported")
@@ -564,7 +565,7 @@ class Parser {
                         return null
                     }
                     return ASTNode.UNTYPED_LAMBDA(start.position,
-                            ImmutableArray<ASTNode>.from(parameters), body)
+                            FixedArray<ASTNode>.from(parameters), body)
                 }
                 return expr -- just a parenthesized identifier
             }
@@ -585,7 +586,7 @@ class Parser {
                 }
                 while checkNext(Token.Kind.COMMA) !== null
                 expect(Token.Kind.RPAREN, "')'")
---                return ASTNode.TUPLE(start.position, ImmutableArray<ASTNode>.from(arguments))
+--                return ASTNode.TUPLE(start.position, FixedArray<ASTNode>.from(arguments))
                 error(start, "tuples are not yet supported")
                 return null
             }
@@ -622,7 +623,7 @@ class Parser {
             }
             commaSeparatedExpressionContext.pop()
         }
-        return ASTNode.ARRAY(start.position, ImmutableArray<ASTNode>.from(args))
+        return ASTNode.ARRAY(start.position, FixedArray<ASTNode>.from(args))
     }
 
     ================================================================================================
@@ -644,7 +645,7 @@ class Parser {
             if expr == null {
                 return null
             }
-            return ASTNode.TYPED_LAMBDA(start.position, ImmutableArray<ASTNode>.from(parameters),
+            return ASTNode.TYPED_LAMBDA(start.position, FixedArray<ASTNode>.from(parameters),
                     expr)
         }
         def parameters := Array<ASTNode>()
@@ -656,7 +657,7 @@ class Parser {
         if expr == null {
             return null
         }
-        return ASTNode.UNTYPED_LAMBDA(start.position, ImmutableArray<ASTNode>.from(parameters),
+        return ASTNode.UNTYPED_LAMBDA(start.position, FixedArray<ASTNode>.from(parameters),
                 expr)
     }
 
@@ -913,10 +914,10 @@ class Parser {
                     return null
                 }
                 return ASTNode.METHOD_TYPE(start.position, yields.kind,
-                        ImmutableArray<ASTNode>.from(subtypes), returnType)
+                        FixedArray<ASTNode>.from(subtypes), returnType)
             }
             otherwise {
-                --return ASTNode.TUPLE_TYPE(start.position, ImmutableArray<ASTNode>.from(subtypes))
+                --return ASTNode.TUPLE_TYPE(start.position, FixedArray<ASTNode>.from(subtypes))
                 error(start, "tuple types are not yet supported")
                 return null
             }
@@ -987,7 +988,7 @@ class Parser {
                     return null
                 }
                 result := ASTNode.GENERIC_TYPE(start.position, finalName,
-                        ImmutableArray<ASTNode>.from(children))
+                        FixedArray<ASTNode>.from(children))
                 if needSpeculativeParse {
                     accept()
                 }
@@ -1042,7 +1043,7 @@ class Parser {
                     }
                     commaSeparatedExpressionContext.pop()
                     result := ASTNode.CALL(token.position, result,
-                            ImmutableArray<ASTNode>.from(args))
+                            FixedArray<ASTNode>.from(args))
                 }
                 when Token.Kind.LBRACKET {
                     def arg := expression()
@@ -1156,7 +1157,7 @@ class Parser {
                         if shouldAccept {
                             accept()
                             result := ASTNode.GENERIC_TYPE(result.position(), name,
-                                    ImmutableArray<ASTNode>.from(types))
+                                    FixedArray<ASTNode>.from(types))
                             continue
                         }
                         else {
@@ -1626,7 +1627,7 @@ class Parser {
         if statements == null {
             return null
         }
-        return ASTNode.WHEN(start.position, ImmutableArray<ASTNode>.from(expressions), statements)
+        return ASTNode.WHEN(start.position, FixedArray<ASTNode>.from(expressions), statements)
     }
 
     ================================================================================================
@@ -1645,7 +1646,7 @@ class Parser {
             return null
         }
         def whens := Array<ASTNode>()
-        var other:ImmutableArray<ASTNode>? := null
+        var other:FixedArray<ASTNode>? := null
         loop {
             def token := peek()
             match token.kind {
@@ -1679,15 +1680,15 @@ class Parser {
             return null
         }
         if other !== null {
-            return ASTNode.MATCH(start.position, expr, ImmutableArray<ASTNode>.from(whens), other)
+            return ASTNode.MATCH(start.position, expr, FixedArray<ASTNode>.from(whens), other)
         }
-        return ASTNode.MATCH(start.position, expr, ImmutableArray<ASTNode>.from(whens), null)
+        return ASTNode.MATCH(start.position, expr, FixedArray<ASTNode>.from(whens), null)
     }
 
     ================================================================================================
     blockStatements = LBRACE statement* terminalStatement? RBRACE
     ================================================================================================
-    method blockStatements():ImmutableArray<ASTNode>? {
+    method blockStatements():FixedArray<ASTNode>? {
         def start := expect(Token.Kind.LBRACE, "'{'")
         if start == null {
             return null
@@ -1719,7 +1720,7 @@ class Parser {
                 }
             }
         }
-        return ImmutableArray<ASTNode>.from(result)
+        return FixedArray<ASTNode>.from(result)
     }
 
     ================================================================================================
@@ -1833,7 +1834,7 @@ class Parser {
             }
             declarations.add(decl)
         }
-        return ASTNode.VAR(start.position, kind, ImmutableArray<ASTNode>.from(declarations))
+        return ASTNode.VAR(start.position, kind, FixedArray<ASTNode>.from(declarations))
     }
 
     ================================================================================================
@@ -1871,7 +1872,7 @@ class Parser {
             }
         }
         commaSeparatedExpressionContext.pop()
-        return ASTNode.CALL(start.position, target, ImmutableArray<ASTNode>.from(args))
+        return ASTNode.CALL(start.position, target, FixedArray<ASTNode>.from(args))
     }
 
     ================================================================================================
@@ -1995,7 +1996,7 @@ class Parser {
         if body == null {
             return null
         }
-        return ASTNode.METHOD(start.position, null, ImmutableArray<ASTNode>(), kind, text(name), -- FIXME literal
+        return ASTNode.METHOD(start.position, null, FixedArray<ASTNode>(), kind, text(name), -- FIXME literal
                 null, params, returnType, body)
     }
 
@@ -2109,7 +2110,7 @@ class Parser {
     ================================================================================================
     genericsDeclaration = LT IDENTIFIER typeDeclaration? (COMMA IDENTIFIER typeDeclaration?)* GT
     ================================================================================================
-    method genericsDeclaration():ImmutableArray<ASTNode>? {
+    method genericsDeclaration():FixedArray<ASTNode>? {
         def start := expect(Token.Kind.LT, "'<'")
         if start == null {
             return null
@@ -2148,13 +2149,13 @@ class Parser {
         if expect(Token.Kind.GT, "'>'") == null {
             return null
         }
-        return ImmutableArray<ASTNode>.from(parameters)
+        return FixedArray<ASTNode>.from(parameters)
     }
 
     ================================================================================================
     supertypes = COLON type (COMMA type)*
     ================================================================================================
-    method supertypes():ImmutableArray<ASTNode>? {
+    method supertypes():FixedArray<ASTNode>? {
         def start := expect(Token.Kind.COLON, "':'")
         if start == null {
             return null
@@ -2172,7 +2173,7 @@ class Parser {
             }
             result.add(t)
         }
-        return ImmutableArray<ASTNode>.from(result)
+        return FixedArray<ASTNode>.from(result)
     }
 
     ================================================================================================
@@ -2200,7 +2201,7 @@ class Parser {
     ================================================================================================
     annotations = annotation*
     ================================================================================================
-    method annotations():ImmutableArray<ASTNode> {
+    method annotations():FixedArray<ASTNode> {
         def result := Array<ASTNode>()
         while peek().kind = Token.Kind.ANNOTATION {
             def a := annotation()
@@ -2209,7 +2210,7 @@ class Parser {
             }
             result.add(a)
         }
-        return ImmutableArray<ASTNode>.from(result)
+        return FixedArray<ASTNode>.from(result)
     }
 
      method doccomment():ASTNode? {
@@ -2252,7 +2253,7 @@ class Parser {
     ================================================================================================
     parameters = LPAREN (parameter (COMMA parameter)*)? RPAREN
     ================================================================================================
-    method parameters():ImmutableArray<ASTNode>? {
+    method parameters():FixedArray<ASTNode>? {
         def start := expect(Token.Kind.LPAREN, "'('")
         if start == null {
             return null
@@ -2275,14 +2276,14 @@ class Parser {
                 return null
             }
         }
-        return ImmutableArray<ASTNode>.from(result)
+        return FixedArray<ASTNode>.from(result)
     }
 
     ================================================================================================
     methodDeclaration = (METHOD | FUNCTION) methodName genericsDeclaration parameters
             typeDeclaration? block?
     ================================================================================================
-    method methodDeclaration(doccomment:ASTNode?, annotations:ImmutableArray<ASTNode>):ASTNode? {
+    method methodDeclaration(doccomment:ASTNode?, annotations:FixedArray<ASTNode>):ASTNode? {
         def kind:MethodDecl.Kind
         def start := checkNext(Token.Kind.FUNCTION)
         if start == null {
@@ -2301,7 +2302,7 @@ class Parser {
         if name == null {
             return null
         }
-        def generics:ImmutableArray<ASTNode>?
+        def generics:FixedArray<ASTNode>?
         if peek().kind = Token.Kind.LT {
             generics := genericsDeclaration()
         }
@@ -2322,7 +2323,7 @@ class Parser {
         else {
             returnType := null
         }
-        def body:ImmutableArray<ASTNode>?
+        def body:FixedArray<ASTNode>?
         if peek().kind = Token.Kind.LBRACE {
             body := blockStatements()
             if body == null {
@@ -2370,14 +2371,14 @@ class Parser {
         if body == null {
             return null
         }
-        return ASTNode.METHOD(start.position, null, ImmutableArray<ASTNode>(), kind, "<anonymous>", -- FIXME literal
+        return ASTNode.METHOD(start.position, null, FixedArray<ASTNode>(), kind, "<anonymous>", -- FIXME literal
                 null, params, returnType, body)
     }
 
     ================================================================================================
     initDeclaration = INIT parameters block
     ================================================================================================
-    method initDeclaration(doccomment:ASTNode?, annotations:ImmutableArray<ASTNode>):ASTNode? {
+    method initDeclaration(doccomment:ASTNode?, annotations:FixedArray<ASTNode>):ASTNode? {
         def start := expect(Token.Kind.INIT, "'init'")
         if start == null {
             return null
@@ -2397,7 +2398,7 @@ class Parser {
     ================================================================================================
     fieldDeclaration = varDeclaration
     ================================================================================================
-    method fieldDeclaration(doccomment:ASTNode?, annotations:ImmutableArray<ASTNode>):ASTNode? {
+    method fieldDeclaration(doccomment:ASTNode?, annotations:FixedArray<ASTNode>):ASTNode? {
         def decl := varDeclaration()
         if decl == null {
             return null
@@ -2434,7 +2435,7 @@ class Parser {
             }
         }
         return ASTNode.CHOICE_CASE(name.position, doccomment, text(name),
-                ImmutableArray<ASTNode>.from(fields))
+                FixedArray<ASTNode>.from(fields))
     }
 
     ================================================================================================
@@ -2442,7 +2443,7 @@ class Parser {
             RBRACE
     ================================================================================================
     method choiceDeclaration(choiceDoccomment:ASTNode?,
-            choiceAnnotations:ImmutableArray<ASTNode>):ASTNode? {
+            choiceAnnotations:FixedArray<ASTNode>):ASTNode? {
         def start := expect(Token.Kind.CHOICE, "'choice'")
         if start == null {
             return null
@@ -2451,7 +2452,7 @@ class Parser {
         if name == null {
             return null
         }
-        def generics:ImmutableArray<ASTNode>?
+        def generics:FixedArray<ASTNode>?
         if peek().kind = Token.Kind.LT {
             generics := genericsDeclaration()
             if generics == null {
@@ -2493,7 +2494,7 @@ class Parser {
                 }
             }
         }
-        var a := ImmutableArray<ASTNode>() -- FIXME literal
+        var a := FixedArray<ASTNode>() -- FIXME literal
         loop {
             def next := peek()
             match next.kind {
@@ -2518,7 +2519,7 @@ class Parser {
                     }
                     members.add(decl)
                     dc := null
-                    a := ImmutableArray<ASTNode>()
+                    a := FixedArray<ASTNode>()
                 }
                 when Token.Kind.INTERFACE {
                     def decl := interfaceDeclaration(dc, a)
@@ -2527,7 +2528,7 @@ class Parser {
                     }
                     members.add(decl)
                     dc := null
-                    a := ImmutableArray<ASTNode>()
+                    a := FixedArray<ASTNode>()
                 }
                 when Token.Kind.CHOICE {
                     def decl := choiceDeclaration(dc, a)
@@ -2536,7 +2537,7 @@ class Parser {
                     }
                     members.add(decl)
                     dc := null
-                    a := ImmutableArray<ASTNode>()
+                    a := FixedArray<ASTNode>()
                 }
                 when Token.Kind.METHOD, Token.Kind.FUNCTION {
                     def decl := methodDeclaration(dc, a)
@@ -2545,7 +2546,7 @@ class Parser {
                     }
                     members.add(decl)
                     dc := null
-                    a := ImmutableArray<ASTNode>()
+                    a := FixedArray<ASTNode>()
                 }
                 when Token.Kind.VAR, Token.Kind.DEF, Token.Kind.PROPERTY, Token.Kind.CONSTANT {
                     def decl := fieldDeclaration(dc, a)
@@ -2554,7 +2555,7 @@ class Parser {
                     }
                     members.add(decl)
                     dc := null
-                    a := ImmutableArray<ASTNode>()
+                    a := FixedArray<ASTNode>()
                 }
                 when Token.Kind.RBRACE {
                     expect(Token.Kind.RBRACE, "'}'")
@@ -2569,7 +2570,7 @@ class Parser {
         }
         return ASTNode.CLASS(start.position, choiceDoccomment, choiceAnnotations,
                 ClassDecl.Kind.CHOICE, text(name), generics, null,
-                ImmutableArray<ASTNode>.from(members))
+                FixedArray<ASTNode>.from(members))
     }
 
     ================================================================================================
@@ -2622,7 +2623,7 @@ class Parser {
     ================================================================================================
     classDeclaration = CLASS IDENTIFIER genericsDeclaration? supertypes? LBRACE declaration* RBRACE
     ================================================================================================
-    method classDeclaration(doccomment:ASTNode?, annotations:ImmutableArray<ASTNode>):ASTNode? {
+    method classDeclaration(doccomment:ASTNode?, annotations:FixedArray<ASTNode>):ASTNode? {
         def start := expect(Token.Kind.CLASS, "'class'")
         if start == null {
             return null
@@ -2631,7 +2632,7 @@ class Parser {
         if name == null {
             return null
         }
-        def generics:ImmutableArray<ASTNode>?
+        def generics:FixedArray<ASTNode>?
         if peek().kind = Token.Kind.LT {
             generics := genericsDeclaration()
             if generics == null {
@@ -2641,7 +2642,7 @@ class Parser {
         else {
             generics := null
         }
-        def stypes:ImmutableArray<ASTNode>?
+        def stypes:FixedArray<ASTNode>?
         if peek().kind = Token.Kind.COLON {
             stypes := supertypes()
             if stypes == null {
@@ -2663,14 +2664,14 @@ class Parser {
             members.add(member)
         }
         return ASTNode.CLASS(start.position, doccomment, annotations, ClassDecl.Kind.CLASS,
-                text(name), generics, stypes, ImmutableArray<ASTNode>.from(members))
+                text(name), generics, stypes, FixedArray<ASTNode>.from(members))
     }
 
     ================================================================================================
     interfaceDeclaration = INTERFACE IDENTIFIER genericsDeclaration? (COLON type (COMMA type)*)?
             LBRACE declaration* RBRACE
     ================================================================================================
-    method interfaceDeclaration(doccomment:ASTNode?, annotations:ImmutableArray<ASTNode>):ASTNode? {
+    method interfaceDeclaration(doccomment:ASTNode?, annotations:FixedArray<ASTNode>):ASTNode? {
         def start := expect(Token.Kind.INTERFACE, "'interface'")
         if start == null {
             return null
@@ -2679,7 +2680,7 @@ class Parser {
         if name == null {
             return null
         }
-        def generics:ImmutableArray<ASTNode>?
+        def generics:FixedArray<ASTNode>?
         if peek().kind = Token.Kind.LT {
             generics := genericsDeclaration()
             if generics == null {
@@ -2687,7 +2688,7 @@ class Parser {
             }
         }
         else {
-            generics := ImmutableArray<ASTNode>()
+            generics := FixedArray<ASTNode>()
         }
         def intfs := Array<ASTNode>()
         if checkNext(Token.Kind.COLON) !== null {
@@ -2716,8 +2717,8 @@ class Parser {
             members.add(member)
         }
         return ASTNode.CLASS(start.position, doccomment, annotations, ClassDecl.Kind.INTERFACE,
-                text(name), generics, ImmutableArray<ASTNode>.from(intfs),
-                ImmutableArray<ASTNode>.from(members))
+                text(name), generics, FixedArray<ASTNode>.from(intfs),
+                FixedArray<ASTNode>.from(members))
     }
 
     ================================================================================================
@@ -2753,6 +2754,6 @@ class Parser {
             assert !inSpeculative
             entries.add(entry)
         }
-        return ASTNode.FILE(ImmutableArray<ASTNode>.from(entries))
+        return ASTNode.FILE(FixedArray<ASTNode>.from(entries))
     }
 }

@@ -10,8 +10,6 @@ typedef struct panda$json$JSON panda$json$JSON;
 #include "panda/core/Bit_types.h"
 typedef struct panda$collections$ListView panda$collections$ListView;
 typedef struct panda$collections$MapView panda$collections$MapView;
-typedef struct panda$collections$ImmutableHashMap panda$collections$ImmutableHashMap;
-typedef struct panda$collections$ImmutableArray panda$collections$ImmutableArray;
 
 panda$json$JSON$PathKey* panda$json$JSON$nextPathKey$panda$core$String$panda$core$String$Index$R$panda$json$JSON$PathKey$Q(panda$core$String* p_path, panda$core$String$Index p_start);
 panda$json$JSON* panda$json$JSON$get$panda$core$String$R$panda$json$JSON$Q(panda$json$JSON* self, panda$core$String* p_path);
@@ -33,7 +31,7 @@ void panda$json$JSON$init$panda$core$Int64$panda$core$Int64(panda$json$JSON* sel
 void panda$json$JSON$init$panda$core$Int64$panda$core$Real64(panda$json$JSON* self, panda$core$Int64 p_rv, panda$core$Real64 p_f0);
 void panda$json$JSON$init$panda$core$Int64$panda$core$String(panda$json$JSON* self, panda$core$Int64 p_rv, panda$core$String* p_f0);
 void panda$json$JSON$init$panda$core$Int64$panda$core$Bit(panda$json$JSON* self, panda$core$Int64 p_rv, panda$core$Bit p_f0);
-void panda$json$JSON$init$panda$core$Int64$panda$collections$ImmutableHashMap$LTpanda$core$String$Cpanda$json$JSON$GT(panda$json$JSON* self, panda$core$Int64 p_rv, panda$collections$ImmutableHashMap* p_f0);
-void panda$json$JSON$init$panda$core$Int64$panda$collections$ImmutableArray$LTpanda$json$JSON$GT(panda$json$JSON* self, panda$core$Int64 p_rv, panda$collections$ImmutableArray* p_f0);
+void panda$json$JSON$init$panda$core$Int64$panda$collections$MapView$LTpanda$core$String$Cpanda$json$JSON$GT(panda$json$JSON* self, panda$core$Int64 p_rv, panda$collections$MapView* p_f0);
+void panda$json$JSON$init$panda$core$Int64$panda$collections$ListView$LTpanda$json$JSON$GT(panda$json$JSON* self, panda$core$Int64 p_rv, panda$collections$ListView* p_f0);
 void panda$json$JSON$init$panda$core$Int64(panda$json$JSON* self, panda$core$Int64 p_rv);
 

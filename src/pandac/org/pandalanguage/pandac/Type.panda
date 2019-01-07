@@ -28,7 +28,7 @@ class Type : Symbol, Key<Type> {
 
     def typeKind:Kind
 
-    def subtypes:ImmutableArray<Type>?
+    def subtypes:FixedArray<Type>?
 
     -- @priority from methods (0 if not a method / no @priority)
     def priority:Int
@@ -109,13 +109,13 @@ class Type : Symbol, Key<Type> {
         self.position := position
         self.resolved := resolved
         self.priority := priority
-        self.subtypes := ImmutableArray<Type>(subtypes)
+        self.subtypes := FixedArray<Type>(subtypes)
         super.init(Symbol.Kind.TYPE, position, name)
     }
 
     init(subtypes:ListView<Type>) {
         self.typeKind := Kind.UNRESOLVED
-        self.subtypes := ImmutableArray<Type>(subtypes)
+        self.subtypes := FixedArray<Type>(subtypes)
         def name := MutableString("unresolved<")
         var separator := ""
         self.resolved := true
@@ -193,7 +193,7 @@ class Type : Symbol, Key<Type> {
             name.append(returnType.name)
         }
         name.append(")")
-        return Type(name.finish(), kind, position, ImmutableArray<Type>.from(subtypes), resolved,
+        return Type(name.finish(), kind, position, FixedArray<Type>.from(subtypes), resolved,
                 priority)
     }
 

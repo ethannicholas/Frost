@@ -10,7 +10,7 @@ typedef struct org$pandalanguage$pandac$Annotations org$pandalanguage$pandac$Ann
 #include "org/pandalanguage/pandac/MethodDecl/Kind_types.h"
 typedef struct panda$collections$Array panda$collections$Array;
 typedef struct org$pandalanguage$pandac$Type org$pandalanguage$pandac$Type;
-typedef struct panda$collections$ImmutableArray panda$collections$ImmutableArray;
+typedef struct org$pandalanguage$pandac$FixedArray org$pandalanguage$pandac$FixedArray;
 #include "org/pandalanguage/pandac/Compiler/Resolution_types.h"
 #include "panda/core/Bit_types.h"
 
@@ -27,7 +27,7 @@ typedef struct org$pandalanguage$pandac$MethodDecl {
     panda$collections$Array* genericParameters;
     panda$collections$Array* parameters;
     org$pandalanguage$pandac$Type* returnType;
-    panda$collections$ImmutableArray* body;
+    org$pandalanguage$pandac$FixedArray* body;
     org$pandalanguage$pandac$Compiler$Resolution resolved;
     panda$core$Bit overrideKnown;
     panda$core$Weak* overridden;

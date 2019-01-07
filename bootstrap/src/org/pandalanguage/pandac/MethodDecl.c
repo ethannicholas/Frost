@@ -8,7 +8,7 @@
 #include "org/pandalanguage/pandac/MethodDecl/Kind.h"
 #include "panda/collections/Array.h"
 #include "org/pandalanguage/pandac/Type.h"
-#include "panda/collections/ImmutableArray.h"
+#include "org/pandalanguage/pandac/FixedArray.h"
 #include "org/pandalanguage/pandac/MethodDecl/Parameter.h"
 #include "panda/core/Int64.h"
 #include "org/pandalanguage/pandac/Compiler/Resolution.h"
@@ -85,7 +85,7 @@ static panda$core$String $s479 = { (panda$core$Class*) &panda$core$String$class,
 static panda$core$String $s483 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x20", 1, 133, NULL };
 static panda$core$String $s488 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
 
-void org$pandalanguage$pandac$MethodDecl$init$org$pandalanguage$pandac$ClassDecl$org$pandalanguage$pandac$Position$panda$core$String$Q$org$pandalanguage$pandac$Annotations$org$pandalanguage$pandac$MethodDecl$Kind$panda$core$String$panda$collections$Array$LTorg$pandalanguage$pandac$ClassDecl$GenericParameter$GT$Q$panda$collections$Array$LTorg$pandalanguage$pandac$MethodDecl$Parameter$GT$org$pandalanguage$pandac$Type$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$ASTNode$GT$Q(org$pandalanguage$pandac$MethodDecl* param0, org$pandalanguage$pandac$ClassDecl* param1, org$pandalanguage$pandac$Position param2, panda$core$String* param3, org$pandalanguage$pandac$Annotations* param4, org$pandalanguage$pandac$MethodDecl$Kind param5, panda$core$String* param6, panda$collections$Array* param7, panda$collections$Array* param8, org$pandalanguage$pandac$Type* param9, panda$collections$ImmutableArray* param10) {
+void org$pandalanguage$pandac$MethodDecl$init$org$pandalanguage$pandac$ClassDecl$org$pandalanguage$pandac$Position$panda$core$String$Q$org$pandalanguage$pandac$Annotations$org$pandalanguage$pandac$MethodDecl$Kind$panda$core$String$panda$collections$Array$LTorg$pandalanguage$pandac$ClassDecl$GenericParameter$GT$Q$panda$collections$Array$LTorg$pandalanguage$pandac$MethodDecl$Parameter$GT$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$FixedArray$LTorg$pandalanguage$pandac$ASTNode$GT$Q(org$pandalanguage$pandac$MethodDecl* param0, org$pandalanguage$pandac$ClassDecl* param1, org$pandalanguage$pandac$Position param2, panda$core$String* param3, org$pandalanguage$pandac$Annotations* param4, org$pandalanguage$pandac$MethodDecl$Kind param5, panda$core$String* param6, panda$collections$Array* param7, panda$collections$Array* param8, org$pandalanguage$pandac$Type* param9, org$pandalanguage$pandac$FixedArray* param10) {
 
 org$pandalanguage$pandac$MethodDecl$Parameter* local0 = NULL;
 // line 49
@@ -214,10 +214,10 @@ org$pandalanguage$pandac$Type** $tmp52 = &param0->returnType;
 *$tmp52 = param9;
 // line 81
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param10));
-panda$collections$ImmutableArray** $tmp53 = &param0->body;
-panda$collections$ImmutableArray* $tmp54 = *$tmp53;
+org$pandalanguage$pandac$FixedArray** $tmp53 = &param0->body;
+org$pandalanguage$pandac$FixedArray* $tmp54 = *$tmp53;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp54));
-panda$collections$ImmutableArray** $tmp55 = &param0->body;
+org$pandalanguage$pandac$FixedArray** $tmp55 = &param0->body;
 *$tmp55 = param10;
 return;
 
@@ -1118,8 +1118,8 @@ abort(); // unreachable
 panda$core$String* org$pandalanguage$pandac$MethodDecl$convert$R$panda$core$String(org$pandalanguage$pandac$MethodDecl* param0) {
 
 // line 189
-panda$collections$ImmutableArray** $tmp471 = &param0->body;
-panda$collections$ImmutableArray* $tmp472 = *$tmp471;
+org$pandalanguage$pandac$FixedArray** $tmp471 = &param0->body;
+org$pandalanguage$pandac$FixedArray* $tmp472 = *$tmp471;
 panda$core$Bit $tmp473 = panda$core$Bit$init$builtin_bit($tmp472 != NULL);
 bool $tmp474 = $tmp473.value;
 if ($tmp474) goto block1; else goto block2;
@@ -1132,8 +1132,8 @@ panda$core$String* $tmp478 = panda$core$String$$ADD$panda$core$String$R$panda$co
 panda$core$String* $tmp480 = org$pandalanguage$pandac$MethodDecl$get_signature$R$panda$core$String(param0);
 panda$core$String* $tmp481 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp478, $tmp480);
 panda$core$String* $tmp482 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp481, &$s483);
-panda$collections$ImmutableArray** $tmp484 = &param0->body;
-panda$collections$ImmutableArray* $tmp485 = *$tmp484;
+org$pandalanguage$pandac$FixedArray** $tmp484 = &param0->body;
+org$pandalanguage$pandac$FixedArray* $tmp485 = *$tmp484;
 panda$core$String* $tmp486 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String($tmp482, ((panda$core$Object*) $tmp485));
 panda$core$String* $tmp487 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp486, &$s488);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp487));
@@ -1183,8 +1183,8 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp499));
 org$pandalanguage$pandac$Type** $tmp500 = &param0->returnType;
 org$pandalanguage$pandac$Type* $tmp501 = *$tmp500;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp501));
-panda$collections$ImmutableArray** $tmp502 = &param0->body;
-panda$collections$ImmutableArray* $tmp503 = *$tmp502;
+org$pandalanguage$pandac$FixedArray** $tmp502 = &param0->body;
+org$pandalanguage$pandac$FixedArray* $tmp503 = *$tmp502;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp503));
 panda$core$Weak** $tmp504 = &param0->overridden;
 panda$core$Weak* $tmp505 = *$tmp504;

@@ -2,12 +2,12 @@ package org.pandalanguage.pandac
 
 @final
 class Methods : Symbol {
-    def methods:ImmutableArray<MethodDecl>
+    def methods:FixedArray<MethodDecl>
 
     @pre(methods.count > 0 & !containsDuplicates(methods))
     init(methods:ListView<MethodDecl>) {
         super.init(Kind.METHODS, Position(), methods[0].name)
-        self.methods := ImmutableArray<MethodDecl>(methods)
+        self.methods := FixedArray<MethodDecl>(methods)
     }
 
     @class

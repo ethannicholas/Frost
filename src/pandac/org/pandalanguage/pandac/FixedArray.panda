@@ -1,16 +1,16 @@
-package panda.collections
+package org.pandalanguage.pandac
 
 uses panda.unsafe.Pointer
 
 @final
-class ImmutableArray<T:Immutable> : Immutable, ListView<T> {
+class FixedArray<T> : ListView<T> {
     @private
-    class ImmutableArrayIterator<T:Immutable> : Iterator<T> {
-        var array:ImmutableArray<T>
+    class FixedArrayIterator<T> : Iterator<T> {
+        var array:FixedArray<T>
 
         var index := 0
 
-        init(array:ImmutableArray<T>) {
+        init(array:FixedArray<T>) {
             self.array := array
         }
 
@@ -55,19 +55,19 @@ class ImmutableArray<T:Immutable> : Immutable, ListView<T> {
     }
 
     ================================================================================================
-    Invalidates an `Array` and returns its contents as an `ImmutableArray`. This is generally
-    preferable to creating a new instance of `ImmutableArray` from this array, as `finish()` does
+    Invalidates an `Array` and returns its contents as a `FixedArray`. This is generally
+    preferable to creating a new instance of `FixedArray` from this array, as `finish()` does
     not copy the array's contents. Interacting in any way with an `Array` after calling this method
     on it will cause precondition violations (or, if safety checks are disabled, undefined
     behavior).
     ================================================================================================
     @class
-    method from(a:Array<T>):ImmutableArray<T> {
+    method from(a:Array<T>):FixedArray<T> {
         -- FIXME this transformation is only safe at -S0
         a.data := a.data.realloc(a.capacity, a._count)
-        a.$class := ImmutableArray<T>().$class -- FIXME need a better way to get a class pointer
+        a.$class := FixedArray<T>().$class -- FIXME need a better way to get a class pointer
         a.capacity := -1
-        return a->Object->ImmutableArray<T>
+        return a->Object->FixedArray<T>
     }
 
     @override
@@ -91,7 +91,7 @@ class ImmutableArray<T:Immutable> : Immutable, ListView<T> {
 
     @override
     function iterator():Iterator<T> {
-        return ImmutableArrayIterator<T>(self)
+        return FixedArrayIterator<T>(self)
     }
 
     @override

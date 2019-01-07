@@ -44,13 +44,13 @@ class IR {
         ============================================================================================
         Creates an instance of a Value class with all fields specified.
         ============================================================================================
-        CREATE_STRUCT(Position, ClassDecl, ImmutableArray<Value> -* args *-)
+        CREATE_STRUCT(Position, ClassDecl, FixedArray<Value> -* args *-)
 
         ============================================================================================
         Dynamically calls a method reference. `args` is the actual, IR-level arguments, meaning that
         `self` (if any) appears explicitly as `args[0]`.
         ============================================================================================
-        DYNAMIC_CALL(Position, Value -* method *-, ImmutableArray<Value> -* args *-)
+        DYNAMIC_CALL(Position, Value -* method *-, FixedArray<Value> -* args *-)
 
         ============================================================================================
         Given a value, returns the value of a field within the value.
@@ -137,7 +137,7 @@ class IR {
         A static (non-virtual, non-dynamic) call to a method. `args` is the actual, IR-level
         arguments, meaning that `self` (if any) appears explicitly as `args[0]`.
         ============================================================================================
-        STATIC_CALL(Position, MethodDecl, ImmutableArray<Value> -* args *-)
+        STATIC_CALL(Position, MethodDecl, FixedArray<Value> -* args *-)
 
         ============================================================================================
         Writes a value to the target of the given pointer.
@@ -319,7 +319,7 @@ class IR {
 
         -- intermediate values; these never show up in finished IR sent to the code generator
         METHOD(Value? -* target *-, MethodDecl)
-        METHODS(Value? -* target *-, ImmutableArray<MethodDecl>)
+        METHODS(Value? -* target *-, FixedArray<MethodDecl>)
         SUPER(Type)
         TYPE(Type)
 

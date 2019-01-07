@@ -16,7 +16,7 @@
 #include "org/pandalanguage/pandac/MethodDecl.h"
 #include "org/pandalanguage/pandac/Methods.h"
 #include "panda/collections/ListView.h"
-#include "panda/collections/ImmutableArray.h"
+#include "org/pandalanguage/pandac/FixedArray.h"
 #include "panda/collections/CollectionView.h"
 #include "org/pandalanguage/pandac/Position.h"
 #include "panda/collections/List.h"
@@ -300,8 +300,8 @@ panda$collections$Array$add$panda$collections$Array$T($tmp87, ((panda$core$Objec
 // line 49
 panda$collections$Array* $tmp88 = *(&local2);
 org$pandalanguage$pandac$Symbol* $tmp89 = *(&local0);
-panda$collections$ImmutableArray** $tmp90 = &((org$pandalanguage$pandac$Methods*) $tmp89)->methods;
-panda$collections$ImmutableArray* $tmp91 = *$tmp90;
+org$pandalanguage$pandac$FixedArray** $tmp90 = &((org$pandalanguage$pandac$Methods*) $tmp89)->methods;
+org$pandalanguage$pandac$FixedArray* $tmp91 = *$tmp90;
 panda$collections$Array$addAll$panda$collections$CollectionView$LTpanda$collections$Array$T$GT($tmp88, ((panda$collections$CollectionView*) $tmp91));
 // line 50
 panda$collections$HashMap** $tmp92 = &param0->symbols;
@@ -548,8 +548,8 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp173));
 panda$collections$Array* $tmp175 = *(&local0);
 panda$collections$Array$add$panda$collections$Array$T($tmp175, ((panda$core$Object*) ((org$pandalanguage$pandac$MethodDecl*) param1)));
 // line 93
-panda$collections$ImmutableArray** $tmp176 = &((org$pandalanguage$pandac$Methods*) param2)->methods;
-panda$collections$ImmutableArray* $tmp177 = *$tmp176;
+org$pandalanguage$pandac$FixedArray** $tmp176 = &((org$pandalanguage$pandac$Methods*) param2)->methods;
+org$pandalanguage$pandac$FixedArray* $tmp177 = *$tmp176;
 ITable* $tmp178 = ((panda$collections$Iterable*) $tmp177)->$class->itable;
 while ($tmp178->$class != (panda$core$Class*) &panda$collections$Iterable$class) {
     $tmp178 = $tmp178->next;
@@ -755,8 +755,8 @@ if ($tmp249) goto block34; else goto block35;
 block34:;
 // line 119
 panda$collections$Array* $tmp250 = (panda$collections$Array*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$Array$class);
-panda$collections$ImmutableArray** $tmp251 = &((org$pandalanguage$pandac$Methods*) param1)->methods;
-panda$collections$ImmutableArray* $tmp252 = *$tmp251;
+org$pandalanguage$pandac$FixedArray** $tmp251 = &((org$pandalanguage$pandac$Methods*) param1)->methods;
+org$pandalanguage$pandac$FixedArray* $tmp252 = *$tmp251;
 panda$collections$Array$init$panda$collections$CollectionView$LTpanda$collections$Array$T$GT($tmp250, ((panda$collections$CollectionView*) $tmp252));
 *(&local8) = ((panda$collections$Array*) NULL);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp250));
@@ -766,8 +766,8 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp253));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp250));
 // unreffing REF($307:panda.collections.Array<org.pandalanguage.pandac.MethodDecl>)
 // line 120
-panda$collections$ImmutableArray** $tmp254 = &((org$pandalanguage$pandac$Methods*) param2)->methods;
-panda$collections$ImmutableArray* $tmp255 = *$tmp254;
+org$pandalanguage$pandac$FixedArray** $tmp254 = &((org$pandalanguage$pandac$Methods*) param2)->methods;
+org$pandalanguage$pandac$FixedArray* $tmp255 = *$tmp254;
 ITable* $tmp256 = ((panda$collections$Iterable*) $tmp255)->$class->itable;
 while ($tmp256->$class != (panda$core$Class*) &panda$collections$Iterable$class) {
     $tmp256 = $tmp256->next;
@@ -830,8 +830,8 @@ if ($tmp278) goto block39; else goto block40;
 block39:;
 // line 126
 panda$collections$Array* $tmp279 = (panda$collections$Array*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$Array$class);
-panda$collections$ImmutableArray** $tmp280 = &((org$pandalanguage$pandac$Methods*) param1)->methods;
-panda$collections$ImmutableArray* $tmp281 = *$tmp280;
+org$pandalanguage$pandac$FixedArray** $tmp280 = &((org$pandalanguage$pandac$Methods*) param1)->methods;
+org$pandalanguage$pandac$FixedArray* $tmp281 = *$tmp280;
 panda$collections$Array$init$panda$collections$CollectionView$LTpanda$collections$Array$T$GT($tmp279, ((panda$collections$CollectionView*) $tmp281));
 *(&local10) = ((panda$collections$Array*) NULL);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp279));

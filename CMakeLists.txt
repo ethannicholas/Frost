@@ -232,6 +232,8 @@ add_executable(bootstrap
     bootstrap/src/org/pandalanguage/pandac/Compiler/VariableLValue.c
     bootstrap/src/org/pandalanguage/pandac/FieldDecl.c
     bootstrap/src/org/pandalanguage/pandac/FieldDecl/Kind.c
+    bootstrap/src/org/pandalanguage/pandac/FixedArray.c
+    bootstrap/src/org/pandalanguage/pandac/FixedArray/FixedArrayIterator.c
     bootstrap/src/org/pandalanguage/pandac/HCodeGenerator.c
     bootstrap/src/org/pandalanguage/pandac/HTMLProcessor.c
     bootstrap/src/org/pandalanguage/pandac/IR.c
@@ -458,7 +460,6 @@ set(public_source
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/HashSet.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/IdentityMap.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/ImmutableArray.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/ImmutableHashMap.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/Iterable.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/Iterator.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/Key.panda
@@ -743,6 +744,7 @@ set(pandac_source
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/CodeGenerator.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/Compiler.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/FieldDecl.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/FixedArray.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/HCodeGenerator.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/HTMLProcessor.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/IR.panda

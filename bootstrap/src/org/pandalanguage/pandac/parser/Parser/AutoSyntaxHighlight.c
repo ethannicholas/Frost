@@ -19,24 +19,24 @@ static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -
 
 void org$pandalanguage$pandac$parser$Parser$AutoSyntaxHighlight$init$org$pandalanguage$pandac$parser$Parser$org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind(org$pandalanguage$pandac$parser$Parser$AutoSyntaxHighlight* param0, org$pandalanguage$pandac$parser$Parser* param1, org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind param2) {
 
-// line 19
+// line 20
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 org$pandalanguage$pandac$parser$Parser** $tmp2 = &param0->parser;
 org$pandalanguage$pandac$parser$Parser* $tmp3 = *$tmp2;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
 org$pandalanguage$pandac$parser$Parser** $tmp4 = &param0->parser;
 *$tmp4 = param1;
-// line 20
+// line 21
 org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind* $tmp5 = &param0->kind;
 *$tmp5 = param2;
-// line 21
+// line 22
 org$pandalanguage$pandac$parser$SyntaxHighlighter** $tmp6 = &param1->syntaxHighlighter;
 org$pandalanguage$pandac$parser$SyntaxHighlighter* $tmp7 = *$tmp6;
 panda$core$Bit $tmp8 = panda$core$Bit$init$builtin_bit($tmp7 != NULL);
 bool $tmp9 = $tmp8.value;
 if ($tmp9) goto block1; else goto block2;
 block1:;
-// line 22
+// line 23
 org$pandalanguage$pandac$parser$SyntaxHighlighter** $tmp10 = &param1->syntaxHighlighter;
 org$pandalanguage$pandac$parser$SyntaxHighlighter* $tmp11 = *$tmp10;
 $fn13 $tmp12 = ($fn13) $tmp11->$class->vtable[3];
@@ -48,7 +48,7 @@ return;
 }
 void org$pandalanguage$pandac$parser$Parser$AutoSyntaxHighlight$cleanup(org$pandalanguage$pandac$parser$Parser$AutoSyntaxHighlight* param0) {
 
-// line 28
+// line 29
 org$pandalanguage$pandac$parser$Parser** $tmp14 = &param0->parser;
 org$pandalanguage$pandac$parser$Parser* $tmp15 = *$tmp14;
 org$pandalanguage$pandac$parser$SyntaxHighlighter** $tmp16 = &$tmp15->syntaxHighlighter;
@@ -57,7 +57,7 @@ panda$core$Bit $tmp18 = panda$core$Bit$init$builtin_bit($tmp17 != NULL);
 bool $tmp19 = $tmp18.value;
 if ($tmp19) goto block1; else goto block2;
 block1:;
-// line 29
+// line 30
 org$pandalanguage$pandac$parser$Parser** $tmp20 = &param0->parser;
 org$pandalanguage$pandac$parser$Parser* $tmp21 = *$tmp20;
 org$pandalanguage$pandac$parser$SyntaxHighlighter** $tmp22 = &$tmp21->syntaxHighlighter;
@@ -68,7 +68,7 @@ $fn27 $tmp26 = ($fn27) $tmp23->$class->vtable[4];
 $tmp26($tmp23, $tmp25);
 goto block2;
 block2:;
-// line 27
+// line 28
 panda$core$Object$cleanup(((panda$core$Object*) param0));
 org$pandalanguage$pandac$parser$Parser** $tmp28 = &param0->parser;
 org$pandalanguage$pandac$parser$Parser* $tmp29 = *$tmp28;

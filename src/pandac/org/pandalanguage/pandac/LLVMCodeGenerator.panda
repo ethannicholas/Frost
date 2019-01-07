@@ -1552,7 +1552,7 @@ class LLVMCodeGenerator : CodeGenerator {
     }
 
     method writeCreateStruct(position:Position, id:IR.Statement.ID, cl:ClassDecl,
-            args:ImmutableArray<IR.Value>) {
+            args:FixedArray<IR.Value>) {
         assert compiler.isValue(cl)
         assert args.count > 0
         def type := llvmType(cl.type)
