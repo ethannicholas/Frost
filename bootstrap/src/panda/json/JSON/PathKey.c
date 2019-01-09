@@ -33,7 +33,7 @@ panda$core$String* local0 = NULL;
 panda$core$String$Index local1;
 panda$core$Int64 local2;
 panda$core$String$Index local3;
-// line 45
+// line 44
 panda$core$Int64* $tmp2 = &param0->$rawValue;
 panda$core$Int64 $tmp3 = *$tmp2;
 panda$core$Int64 $tmp4 = (panda$core$Int64) {0};
@@ -73,21 +73,21 @@ panda$core$String$Index $tmp20 = *$tmp19;
 *(&local3) = $tmp20;
 goto block1;
 block1:;
-// line 45
+// line 44
 panda$core$Immutable$cleanup(((panda$core$Immutable*) param0));
 return;
 
 }
 void panda$json$JSON$PathKey$init$panda$core$Int64$panda$core$String$panda$core$String$Index(panda$json$JSON$PathKey* param0, panda$core$Int64 param1, panda$core$String* param2, panda$core$String$Index param3) {
 
-// line 45
+// line 44
 panda$core$Int64* $tmp21 = &param0->$rawValue;
 *$tmp21 = param1;
-// line 45
+// line 44
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param2));
 panda$core$String** $tmp22 = (panda$core$String**) (param0->$data + 0);
 *$tmp22 = param2;
-// line 45
+// line 44
 panda$core$String$Index* $tmp23 = (panda$core$String$Index*) (param0->$data + 8);
 *$tmp23 = param3;
 return;
@@ -95,13 +95,13 @@ return;
 }
 void panda$json$JSON$PathKey$init$panda$core$Int64$panda$core$Int64$panda$core$String$Index(panda$json$JSON$PathKey* param0, panda$core$Int64 param1, panda$core$Int64 param2, panda$core$String$Index param3) {
 
-// line 45
+// line 44
 panda$core$Int64* $tmp24 = &param0->$rawValue;
 *$tmp24 = param1;
-// line 45
+// line 44
 panda$core$Int64* $tmp25 = (panda$core$Int64*) (param0->$data + 0);
 *$tmp25 = param2;
-// line 45
+// line 44
 panda$core$String$Index* $tmp26 = (panda$core$String$Index*) (param0->$data + 8);
 *$tmp26 = param3;
 return;
@@ -109,7 +109,7 @@ return;
 }
 panda$core$Bit panda$json$JSON$PathKey$$EQ$panda$json$JSON$PathKey$R$panda$core$Bit(panda$json$JSON$PathKey* param0, panda$json$JSON$PathKey* param1) {
 
-// line 45
+// line 44
 panda$core$Int64* $tmp27 = &param0->$rawValue;
 panda$core$Int64 $tmp28 = *$tmp27;
 panda$core$Int64* $tmp29 = &param1->$rawValue;
@@ -121,11 +121,11 @@ panda$core$Bit $tmp34 = (panda$core$Bit) {$tmp33};
 bool $tmp35 = $tmp34.value;
 if ($tmp35) goto block1; else goto block2;
 block1:;
-// line 45
+// line 44
 panda$core$Bit $tmp36 = panda$core$Bit$init$builtin_bit(false);
 return $tmp36;
 block2:;
-// line 45
+// line 44
 panda$core$Bit $tmp37 = panda$core$Bit$init$builtin_bit(true);
 return $tmp37;
 

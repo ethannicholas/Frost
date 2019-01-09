@@ -194,7 +194,7 @@ class IR {
                     return "create_struct \{cl.name}, \{args}"
                 }
                 when DYNAMIC_CALL(position, m, args) {
-                    return "dynamic_call \{m}(\{args.join(", ")})"
+                    return "dynamic_call \{m}(\{args.join()})"
                 }
                 when EXTRACT_FIELD(position, value, field) {
                     return "load_field \{value}, \{field.owner.name}.\{field.name}"
@@ -251,7 +251,7 @@ class IR {
                     return "return"
                 }
                 when STATIC_CALL(position, m, args) {
-                    return "static_call \{m.declaration}(\{args.join(", ")})"
+                    return "static_call \{m.declaration}(\{args.join()})"
                 }
                 when STORE(position, value, ptr) {
                     return "store \{value}, \{ptr}"
@@ -320,6 +320,8 @@ class IR {
         -- intermediate values; these never show up in finished IR sent to the code generator
         METHOD(Value? -* target *-, MethodDecl)
         METHODS(Value? -* target *-, FixedArray<MethodDecl>)
+        GENERIC_METHOD(Value? -* target *-, MethodDecl, FixedArray<Type>)
+        GENERIC_METHODS(Value? -* target *-, FixedArray<MethodDecl>, FixedArray<Type>)
         SUPER(Type)
         TYPE(Type)
 
@@ -401,13 +403,25 @@ class IR {
                     if target !== null {
                         return "METHOD(\{target}, \{m.declaration})"
                     }
-                    return m.declaration
+                    return "METHOD(\{m.declaration})"
                 }
                 when METHODS(target, m) {
                     if target !== null {
                         return "METHODS(\{target}, \{m})"
                     }
                     return "METHODS(<null>, \{m})"
+                }
+                when GENERIC_METHOD(target, m, types) {
+                    if target !== null {
+                        return "GENERIC_METHOD(\{target}, \{m.declaration}, \{types})"
+                    }
+                    return "GENERIC_METHOD(\{m.declaration}, \{types})"
+                }
+                when GENERIC_METHODS(target, m, types) {
+                    if target !== null {
+                        return "GENERIC_METHODS(\{target}, \{m}, \{types})"
+                    }
+                    return "GENERIC_METHODS(<null>, \{m}, \{types})"
                 }
                 when SUPER(type) {
                     return "SUPER(\{type})"

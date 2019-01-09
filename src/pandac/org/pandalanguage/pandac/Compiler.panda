@@ -1909,7 +1909,23 @@ class Compiler {
     }
 
     function symbolType(target:Type?, s:Symbol):ListView<Type>? {
+        return symbolType(target, s, null)
+    }
+
+    function symbolType(target:Type?, s:Symbol,
+            genericArguments:ListView<ASTNode>?):ListView<Type>? {
         def result := Array<Type>()
+        def resolvedArguments:Array<Type>?
+        if genericArguments !== null {
+            resolvedArguments := Array<Type>()
+            for p in genericArguments {
+                def resolved := resolve(scanner.convertType(p))
+                if resolved == null {
+                    return null
+                }
+                resolvedArguments.add(resolved)
+            }
+        }
         match s.kind {
             when Symbol.Kind.ALIAS {
                 def cl := getClass(s->Alias.fullName)
@@ -1955,7 +1971,7 @@ class Compiler {
                     return null
                 }
                 if target !== null {
-                    result.add(MethodRef(self, target, m).effectiveType)
+                    result.add(MethodRef(self, target, m, resolvedArguments).effectiveType)
                 }
                 else {
                     def implicitTarget:Type
@@ -1965,7 +1981,7 @@ class Compiler {
                     else {
                         implicitTarget := currentClass[0].type
                     }
-                    result.add(MethodRef(self, implicitTarget, m).effectiveType)
+                    result.add(MethodRef(self, implicitTarget, m, resolvedArguments).effectiveType)
                 }
             }
             when Symbol.Kind.METHODS {
@@ -1975,7 +1991,7 @@ class Compiler {
                             result.add(m.type)
                         }
                         else if target !== null {
-                            result.add(MethodRef(self, target, m).effectiveType)
+                            result.add(MethodRef(self, target, m, resolvedArguments).effectiveType)
                         }
                         else {
                             def implicitTarget:Type
@@ -1985,7 +2001,8 @@ class Compiler {
                             else {
                                 implicitTarget := currentClass[0].type
                             }
-                            result.add(MethodRef(self, implicitTarget, m).effectiveType)
+                            result.add(MethodRef(self, implicitTarget, m,
+                                    resolvedArguments).effectiveType)
                         }
                     }
                 }
@@ -2001,6 +2018,10 @@ class Compiler {
     }
 
     method dotTypes(base:Type, name:String):ListView<Type>? {
+        return dotTypes(base, name, null)
+    }
+
+    method dotTypes(base:Type, name:String, genericArguments:ListView<ASTNode>?):ListView<Type>? {
         if base.isClass {
             def cl:ClassDecl
             def isClass := base.isClassLiteral
@@ -2018,7 +2039,7 @@ class Compiler {
             if symbol == null {
                 return null
             }
-            return symbolType(base, symbol)
+            return symbolType(base, symbol, genericArguments)
         }
         return null
     }
@@ -2069,6 +2090,13 @@ class Compiler {
                 def text := getText(base)
                 if text !== null {
                     return tryResolveType(ASTNode.TYPE(position, "\{text}.\{name}"))
+                }
+                return null
+            }
+            when ASTNode.DOT_GENERICS(position, base, name, types) {
+                def text := getText(base)
+                if text !== null {
+                    return tryResolveType(ASTNode.GENERIC_TYPE(position, "\{text}.\{name}", types))
                 }
                 return null
             }
@@ -2342,6 +2370,27 @@ class Compiler {
                 }
                 for t in baseTypes {
                     def list := dotTypes(t, name)
+                    if list !== null {
+                        if result == null {
+                            result := Array<Type>()
+                        }
+                        result.addAll(list)
+                    }
+                }
+                return result
+            }
+            when ASTNode.DOT_GENERICS(position, base, name, genericArguments) {
+                def t := tryResolveType(value)
+                if t !== null {
+                    return [Type.ClassLiteral(t)]
+                }
+                def result:Array<Type>? := null
+                def baseTypes := possibleTypes(base)
+                if baseTypes == null {
+                    return null
+                }
+                for t in baseTypes {
+                    def list := dotTypes(t, name, genericArguments)
                     if list !== null {
                         if result == null {
                             result := Array<Type>()
@@ -3251,7 +3300,7 @@ class Compiler {
         }
         def initMethod := MethodDecl(result, p, null,
                 Annotations(Annotations.Flag.SYNTHETIC), MethodDecl.Kind.INIT, "init",
-                Array<ClassDecl.GenericParameter>(), parameters,
+                null, parameters,
                 Type.Void(), FixedArray<ASTNode>.from(statements))
         result.methods.add(initMethod)
         result.symbolTable.add(initMethod)
@@ -3259,7 +3308,7 @@ class Compiler {
         -- default cleanup
         def defaultCleanup := MethodDecl(result, p, null,
                 Annotations(Annotations.Flag.OVERRIDE || Annotations.Flag.SYNTHETIC),
-                MethodDecl.Kind.METHOD, "cleanup", Array<ClassDecl.GenericParameter>(),
+                MethodDecl.Kind.METHOD, "cleanup", null,
                 Array<MethodDecl.Parameter>(), Type.Void(), FixedArray<ASTNode>())
         result.methods.add(defaultCleanup)
         result.symbolTable.add(defaultCleanup)
@@ -3602,12 +3651,74 @@ class Compiler {
         return "<internal error>"
     }
 
+    @pre(value.type().isMethod & target.isMethod)
+    method methodCast(position:Position, value:IR.Value, target:Type):IR.Value? {
+        def src := value.type()
+        if src = target {
+            return value
+        }
+        assert src.subtypes.count = target.subtypes.count
+        var diff := false
+        for i in 0 .. src.subtypes.count {
+            if isValue(src.subtypes[i]) != isValue(target.subtypes[i]) {
+                diff := true
+                break
+            }
+        }
+        if !diff {
+            return IR.Value.REF(ir.add(IR.Statement.CAST(position, value, target)), target)
+        }
+        def kind:MethodDecl.Kind
+        match target.typeKind {
+            when Type.Kind.IMMUTABLE_FUNCTION, Type.Kind.FUNCTION {
+                kind := MethodDecl.Kind.FUNCTION
+            }
+            otherwise {
+                kind := MethodDecl.Kind.METHOD
+            }
+        }
+        def rawParams := Array<ASTNode>()
+        def callParams := Array<ASTNode>()
+        for i in 0 .. src.parameterCount {
+            def name := "param\{i}"
+            rawParams.add(ASTNode.PARAMETER(position, name, ASTNode.IR_WRAPPER(position,
+                    IR.Value.TYPE(target.subtypes[i]))))
+            callParams.add(ASTNode.BINARY(position, ASTNode.IDENTIFIER(position, name),
+                    Token.Kind.CAST, ASTNode.IR_WRAPPER(position,
+                        IR.Value.TYPE(src.subtypes[i]))))
+        }
+        closureCount += 1
+        def methodCapture := ASTNode.IDENTIFIER(position, "$method\{closureCount}")
+        compileDeclaration(position, methodCapture, ASTNode.IR_WRAPPER(position, value),
+                Variable.Kind.DEF)
+        def c := ASTNode.CALL(position, methodCapture, FixedArray<ASTNode>.from(callParams))
+        def body:Array<ASTNode>
+        if target.returnType != Type.Void() {
+            body := [ASTNode.RETURN(position, ASTNode.BINARY(position, c, Token.Kind.CAST,
+                    ASTNode.IR_WRAPPER(position, IR.Value.TYPE(target.returnType))))]
+        }
+        else {
+            body := [c]
+        }
+        return compileClosure(position, kind, FixedArray<ASTNode>.from(rawParams),
+                ASTNode.IR_WRAPPER(position, IR.Value.TYPE(target.returnType)),
+                FixedArray<ASTNode>.from(body), TypeContext.TYPE(target))
+    }
+
+    ================================================================================================
+    Coerces a value to a different type, returning a new value representing the converted type (or
+    report an error and return `null` if no such coercion is possible). "Coerce", in Panda's
+    lexicon, means to perform a typecast which can be performed implicitly, without being explicitly
+    specified by the user. This includes things like widenining conversions or converting a literal
+    to any of the types it can legally represent.
+    ================================================================================================
     @pre(target != Type.Void())
     method coerce(position:Position, value:IR.Value?, target:Type):IR.Value? {
         if value == null {
             return null
         }
-        if value.type() = target {
+        def srcType := value.type()
+        if srcType = target {
             return value
         }
         match value {
@@ -3655,7 +3766,10 @@ class Compiler {
                 return null
             }
         }
-        if coercionCost(value.type(), target) !== null {
+        if coercionCost(srcType, target) !== null {
+            if target.isMethod & srcType.isMethod {
+                return methodCast(position, value, target)
+            }
             def cl := getClass(target)
             if cl == null {
                 return null
@@ -3666,7 +3780,7 @@ class Compiler {
                 when Symbol.Kind.METHOD {
                     def m := inits->MethodDecl
                     if m.annotations.isImplicit {
-                        if resolve(m) & coercionCost(value.type(), m.parameters[0].type) !== null {
+                        if resolve(m) & coercionCost(srcType, m.parameters[0].type) !== null {
                             return implicitInit(position, value, m)
                         }
                     }
@@ -3687,14 +3801,14 @@ class Compiler {
                     }
                 }
             }
-            assert value.type().isClass
+            assert srcType.isClass
             def result := IR.Value.REF(ir.add(IR.Statement.CAST(position, value, target)), target)
-            if !isRefCounted(value.type()) & isRefCounted(target) {
+            if !isRefCounted(srcType) & isRefCounted(target) {
                 enclosingContexts.push(EnclosingContext.VALUE_SCOPE(result))
             }
             return result
         }
-        error(position, "expected '\{target}', but found '\{value.type()}'")
+        error(position, "expected '\{target}', but found '\{srcType}'")
         return null
     }
 
@@ -3722,17 +3836,34 @@ class Compiler {
         }
     }
 
+    ================================================================================================
+    Casts a value to a different type, returning a new value representing the converted type (or
+    report an error and return `null` if no such cast is possible). "Cast", in Panda's lexicon,
+    means to perform a typecast which has been explicitly specified by the user, as in the
+    expression `object->String`.
+    ================================================================================================
     @pre(target != Type.Void() & target.resolved)
     method cast(position:Position, value:IR.Value?, target:Type):IR.Value? {
         if value == null {
             return null
         }
-        if value.type() = target {
+        def valueType := value.type()
+        if valueType = target {
             return value
         }
         if coercionCost(value.type(), target) !== null {
             return coerce(Position(), value, TypeContext.TYPE(target))
         }
+        if target.isMethod {
+            if valueType.isMethod {
+                return methodCast(position, value, target)
+            } 
+            if valueType.name != "panda.core.Method" &
+                    valueType.name != "panda.core.MutableMethod" {
+                error(position, "non-method objects may not be cast to methods")
+            }
+        }
+        -- FIXME error on impossible casts
         def result := IR.Value.REF(ir.add(IR.Statement.CAST(position, value, target)), target)
         if !isRefCounted(value.type()) & isRefCounted(target) {
             enclosingContexts.push(EnclosingContext.VALUE_SCOPE(result))
@@ -3740,7 +3871,11 @@ class Compiler {
         return result
     }
 
-    method convert(value:IR.Value?, target:Type):IR.Value? {
+    ================================================================================================
+    Converts an object to a different type using the appropriate overload of the `convert` function.
+    Reports an error and returns `null` if no such conversion is possible.
+    ================================================================================================
+     method convert(value:IR.Value?, target:Type):IR.Value? {
         if value == null {
             return value
         }
@@ -4259,9 +4394,15 @@ class Compiler {
         return call(position, ref, args, type)
     }
 
-    @post(@return == null | @return.first.count > 0)
     method findBestMethod(position:Position, target:IR.Value?, methods:ListView<MethodDecl>,
             args:ListView<ASTNode>, type:TypeContext):Pair<ListView<MethodRef>, Int>? {
+        return findBestMethod(position, target, methods, null, args, type)
+    }
+
+    @post(@return == null | @return.first.count > 0)
+    method findBestMethod(position:Position, target:IR.Value?, methods:ListView<MethodDecl>,
+            genericArguments:ListView<Type>?, args:ListView<ASTNode>,
+            type:TypeContext):Pair<ListView<MethodRef>, Int>? {
         if methods.count = 0 {
             return null
         }
@@ -4276,13 +4417,13 @@ class Compiler {
             }
             def ref:MethodRef
             if target !== null {
-                ref := MethodRef(self, target.type(), m)
+                ref := MethodRef(self, target.type(), m, genericArguments)
             }
             else if m.annotations.isClass | m.methodKind = MethodDecl.Kind.INIT {
-                ref := MethodRef(self, m.owner.type, m)
+                ref := MethodRef(self, m.owner.type, m, genericArguments)
             }
             else {
-                ref := MethodRef(self, findType(currentClass[0].type, m.owner), m)
+                ref := MethodRef(self, findType(currentClass[0].type, m.owner), m, genericArguments)
             }
             var cost := 0
             for i in 0 .. args.count {
@@ -4457,6 +4598,25 @@ class Compiler {
                 }
                 return call(position, target, MethodRef(self, targetType, m), args, type)
             }
+            when IR.Value.GENERIC_METHOD(target, m, types) {
+                def targetType:Type
+                if target !== null {
+                    targetType := target.type()
+                }
+                else if m.annotations.isClass | m.methodKind = MethodDecl.Kind.INIT {
+                    targetType := m.owner.type
+                }
+                else {
+                    def found := findType(currentClass[0].type, m.owner)
+                    assert found !== null,
+                            "could not find \{currentClass[0].type} in \{m.owner.name}"
+                    targetType := found
+                }
+                if !resolve(m) {
+                    return null
+                }
+                return call(position, target, MethodRef(self, targetType, m, types), args, type)
+            }
             when IR.Value.METHODS(target, methods) {
                 def best := findBestMethod(position, target, methods, args, type)
                 if best !== null {
@@ -4482,7 +4642,36 @@ class Compiler {
                     }
                     argTypes.add(preferred)
                 }
-                error(position, "no match for \{methods[0].name}(\{argTypes.join(", ")})" +
+                error(position, "no match for \{methods[0].name}(\{argTypes.join()})" +
+                        type.description())
+                return null
+            }
+            when IR.Value.GENERIC_METHODS(target, methods, types) {
+                def best := findBestMethod(position, target, methods, types, args, type)
+                if best !== null {
+                    if best.first.count > 1 {
+                        reportAmbiguousMatch(position, best.first, args, type)
+                        return null
+                    }
+                    return call(position, target, best.first[0], args, type)
+                }
+                -- no match
+                def argTypes := Array<Type>()
+                for a in args {
+                    def preferred := preferredType(a)
+                    if preferred == null {
+                        -- force it to produce an error
+                        def oldErrorCount := errorCount
+                        compileExpression(a)
+                        if errorCount = oldErrorCount {
+                            -- could not determine type
+                            error(position, "no match for call to '\{methods[0].name}'")
+                        }
+                        return null
+                    }
+                    argTypes.add(preferred)
+                }
+                error(position, "no match for \{methods[0].name}(\{argTypes.join()})" +
                         type.description())
                 return null
             }
@@ -5858,6 +6047,26 @@ class Compiler {
         }
     }
 
+    method genericMethodRef(raw:IR.Value, rawTypes:FixedArray<ASTNode>):IR.Value? {
+        def resolvedTypes := Array<Type>()
+        for t in rawTypes {
+            def resolved := resolve(scanner.convertType(t))
+            if resolved == null {
+                return null
+            }
+            resolvedTypes.add(resolved)
+        }
+        match raw {
+            when IR.Value.METHOD(target, m) {
+                return IR.Value.GENERIC_METHOD(target, m, FixedArray<Type>.from(resolvedTypes))
+            }
+            when IR.Value.METHODS(target, m) {
+                return IR.Value.GENERIC_METHODS(target, m, FixedArray<Type>.from(resolvedTypes))
+            }
+        }
+        return raw
+    }
+
     ================================================================================================
     Compiles an expression without fully resolving method references. That is,
     `compileMethodExpression` on `Console.printLine` returns an IR.Value.METHOD, whereas fully
@@ -5900,6 +6109,17 @@ class Compiler {
                     return coerce(expr.position(), IR.Value.TYPE(t), type)
                 }
                 return coerce(expr.position(), compileDot(position, base, name), type)
+            }
+            when ASTNode.DOT_GENERICS(position, base, name, types) {
+                def t := tryResolveType(expr)
+                if t !== null {
+                    return coerce(expr.position(), IR.Value.TYPE(t), type)
+                }
+                def dot := compileDot(position, base, name)
+                if dot == null {
+                    return null
+                }
+                return coerce(expr.position(), genericMethodRef(dot, types), type)
             }
             when ASTNode.IDENTIFIER(position, name) {
                 return coerce(expr.position(), compileIdentifier(position, name), type)
@@ -6683,12 +6903,6 @@ class Compiler {
             when Type.Int64() { return Type.UInt64() }
             otherwise         { return type }
         }
-    }
-
-    method debugPrint(value:IR.Value) {
-        def p := Position()
-        compileCall(p, ASTNode.DOT(p, ASTNode.IDENTIFIER(p, "Console"), "printLine"),
-                FixedArray<ASTNode>.from([ASTNode.IR_WRAPPER(p, value)]), TypeContext.UNSPECIFIED)
     }
 
     method compileSimpleRangeFor(position:Position, label:String?, index:Variable, range:IR.Value,
@@ -8052,6 +8266,9 @@ class Compiler {
                 methodSymbolTable := symbolTable
                 if enclosingContext !== null {
                     symbolTable.parents.add(enclosingContext)
+                }
+                if m.genericParameters !== null {
+                    m.genericParameters.apply(symbolTable.add)
                 }
                 if m.name = "main" {
                     if m.methodKind != MethodDecl.Kind.METHOD {

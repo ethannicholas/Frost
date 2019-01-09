@@ -60,11 +60,6 @@ add_library(c_panda
     bootstrap/src/panda/collections/IdentityMap/Entry.c
     bootstrap/src/panda/collections/ImmutableArray.c
     bootstrap/src/panda/collections/ImmutableArray/ImmutableArrayIterator.c
-    bootstrap/src/panda/collections/ImmutableHashMap.c
-    bootstrap/src/panda/collections/ImmutableHashMap/Entry.c
-    bootstrap/src/panda/collections/ImmutableHashMap/EntryIterator.c
-    bootstrap/src/panda/collections/ImmutableHashMap/KeyIterator.c
-    bootstrap/src/panda/collections/ImmutableHashMap/ValueIterator.c
     bootstrap/src/panda/collections/Iterable.c
     bootstrap/src/panda/collections/Iterator.c
     bootstrap/src/panda/collections/Iterator/FilterIterator.c
@@ -258,11 +253,14 @@ add_executable(bootstrap
     bootstrap/src/org/pandalanguage/pandac/pandadoc/DummyCodeGenerator.c
     bootstrap/src/org/pandalanguage/pandac/pandadoc/LinkResolver.c
     bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown.c
+    bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/_Closure2.c
+    bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/_Closure4.c
+    bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/_Closure6.c
+    bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/_Closure9.c
     bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/_Closure12.c
     bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/_Closure14.c
     bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/_Closure16.c
     bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/_Closure18.c
-    bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/_Closure2.c
     bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/_Closure20.c
     bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/_Closure22.c
     bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/_Closure24.c
@@ -270,9 +268,6 @@ add_executable(bootstrap
     bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/_Closure28.c
     bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/_Closure30.c
     bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/_Closure32.c
-    bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/_Closure4.c
-    bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/_Closure6.c
-    bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/_Closure9.c
     bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/CodeReplacer.c
     bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/HTMLToken.c
     bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/LinkDefinition.c
@@ -314,11 +309,6 @@ add_executable(bootstrap
     bootstrap/src/panda/collections/IdentityMap/Entry.c
     bootstrap/src/panda/collections/ImmutableArray.c
     bootstrap/src/panda/collections/ImmutableArray/ImmutableArrayIterator.c
-    bootstrap/src/panda/collections/ImmutableHashMap.c
-    bootstrap/src/panda/collections/ImmutableHashMap/Entry.c
-    bootstrap/src/panda/collections/ImmutableHashMap/EntryIterator.c
-    bootstrap/src/panda/collections/ImmutableHashMap/KeyIterator.c
-    bootstrap/src/panda/collections/ImmutableHashMap/ValueIterator.c
     bootstrap/src/panda/collections/Iterable.c
     bootstrap/src/panda/collections/Iterator.c
     bootstrap/src/panda/collections/Iterator/FilterIterator.c

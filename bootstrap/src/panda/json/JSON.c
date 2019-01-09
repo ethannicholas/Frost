@@ -113,7 +113,7 @@ panda$core$Bit local4;
 panda$core$String$Index local5;
 panda$core$String$Index local6;
 panda$core$Int64$nullable local7;
-// line 53
+// line 52
 panda$core$Char32 $tmp2 = panda$core$String$$IDX$panda$core$String$Index$R$panda$core$Char32(param0, param1);
 panda$core$Int32 $tmp3 = (panda$core$Int32) {47};
 panda$core$Char32 $tmp4 = panda$core$Char32$init$panda$core$Int32($tmp3);
@@ -121,23 +121,23 @@ panda$core$Bit $tmp5 = panda$core$Char32$$EQ$panda$core$Char32$R$panda$core$Bit(
 bool $tmp6 = $tmp5.value;
 if ($tmp6) goto block2; else goto block3;
 block2:;
-// line 55
+// line 54
 panda$core$String$Index $tmp7 = panda$core$String$get_end$R$panda$core$String$Index(param0);
 *(&local0) = $tmp7;
-// line 56
+// line 55
 panda$core$String$Index $tmp8 = panda$core$String$next$panda$core$String$Index$R$panda$core$String$Index(param0, param1);
 *(&local1) = $tmp8;
-// line 57
+// line 56
 panda$core$String$Index $tmp9 = *(&local1);
 *(&local2) = $tmp9;
-// line 58
+// line 57
 goto block4;
 block4:;
-// line 59
+// line 58
 panda$core$String$Index $tmp10 = *(&local2);
 panda$core$Char32 $tmp11 = panda$core$String$$IDX$panda$core$String$Index$R$panda$core$Char32(param0, $tmp10);
 *(&local3) = $tmp11;
-// line 60
+// line 59
 panda$core$Char32 $tmp12 = *(&local3);
 panda$core$Int32 $tmp13 = (panda$core$Int32) {47};
 panda$core$Char32 $tmp14 = panda$core$Char32$init$panda$core$Int32($tmp13);
@@ -159,10 +159,10 @@ panda$core$Bit $tmp21 = *(&local4);
 bool $tmp22 = $tmp21.value;
 if ($tmp22) goto block7; else goto block8;
 block7:;
-// line 61
+// line 60
 goto block6;
 block8:;
-// line 63
+// line 62
 panda$core$String$Index $tmp23 = *(&local2);
 panda$core$String$Index $tmp24 = panda$core$String$next$panda$core$String$Index$R$panda$core$String$Index(param0, $tmp23);
 *(&local2) = $tmp24;
@@ -189,18 +189,18 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) ((panda$core$Eq
 // unreffing REF($48:panda.core.Equatable<panda.core.String.Index>)
 if ($tmp33) goto block4; else goto block6;
 block6:;
-// line 66
+// line 65
 panda$core$String$Index $tmp34 = *(&local1);
 panda$core$String$Index $tmp35 = *(&local2);
 panda$core$Bit $tmp36 = panda$core$String$Index$$EQ$panda$core$String$Index$R$panda$core$Bit($tmp34, $tmp35);
 bool $tmp37 = $tmp36.value;
 if ($tmp37) goto block12; else goto block13;
 block12:;
-// line 67
+// line 66
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((panda$json$JSON$PathKey*) NULL)));
 return ((panda$json$JSON$PathKey*) NULL);
 block13:;
-// line 69
+// line 68
 panda$json$JSON$PathKey* $tmp38 = (panda$json$JSON$PathKey*) pandaObjectAlloc(40, (panda$core$Class*) &panda$json$JSON$PathKey$class);
 panda$core$Int64 $tmp39 = (panda$core$Int64) {0};
 panda$core$String$Index $tmp40 = *(&local1);
@@ -223,13 +223,13 @@ panda$core$Bit $tmp48 = panda$core$Char32$$EQ$panda$core$Char32$R$panda$core$Bit
 bool $tmp49 = $tmp48.value;
 if ($tmp49) goto block14; else goto block15;
 block14:;
-// line 72
+// line 71
 panda$core$String$Index $tmp50 = panda$core$String$next$panda$core$String$Index$R$panda$core$String$Index(param0, param1);
 *(&local5) = $tmp50;
-// line 73
+// line 72
 panda$core$String$Index $tmp51 = *(&local5);
 *(&local6) = $tmp51;
-// line 74
+// line 73
 goto block16;
 block16:;
 panda$core$String$Index $tmp52 = *(&local6);
@@ -240,13 +240,13 @@ panda$core$Bit $tmp56 = panda$core$Char32$$NEQ$panda$core$Char32$R$panda$core$Bi
 bool $tmp57 = $tmp56.value;
 if ($tmp57) goto block17; else goto block18;
 block17:;
-// line 75
+// line 74
 panda$core$String$Index $tmp58 = *(&local6);
 panda$core$String$Index $tmp59 = panda$core$String$next$panda$core$String$Index$R$panda$core$String$Index(param0, $tmp58);
 *(&local6) = $tmp59;
 goto block16;
 block18:;
-// line 77
+// line 76
 panda$core$String$Index $tmp60 = *(&local5);
 panda$core$String$Index $tmp61 = *(&local6);
 panda$core$Bit $tmp62 = panda$core$Bit$init$builtin_bit(false);
@@ -256,17 +256,17 @@ panda$core$Int64$nullable $tmp65 = panda$core$String$convert$R$panda$core$Int64$
 *(&local7) = $tmp65;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp64));
 // unreffing REF($122:panda.core.String)
-// line 78
+// line 77
 panda$core$Int64$nullable $tmp66 = *(&local7);
 panda$core$Bit $tmp67 = panda$core$Bit$init$builtin_bit(!$tmp66.nonnull);
 bool $tmp68 = $tmp67.value;
 if ($tmp68) goto block19; else goto block20;
 block19:;
-// line 79
+// line 78
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((panda$json$JSON$PathKey*) NULL)));
 return ((panda$json$JSON$PathKey*) NULL);
 block20:;
-// line 81
+// line 80
 panda$json$JSON$PathKey* $tmp69 = (panda$json$JSON$PathKey*) pandaObjectAlloc(40, (panda$core$Class*) &panda$json$JSON$PathKey$class);
 panda$core$Int64 $tmp70 = (panda$core$Int64) {1};
 panda$core$Int64$nullable $tmp71 = *(&local7);
@@ -278,7 +278,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp69));
 // unreffing REF($139:panda.json.JSON.PathKey)
 return $tmp69;
 block15:;
-// line 84
+// line 83
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((panda$json$JSON$PathKey*) NULL)));
 return ((panda$json$JSON$PathKey*) NULL);
 block1:;
@@ -286,7 +286,7 @@ panda$core$Bit $tmp74 = panda$core$Bit$init$builtin_bit(false);
 bool $tmp75 = $tmp74.value;
 if ($tmp75) goto block21; else goto block22;
 block22:;
-panda$core$Int64 $tmp76 = (panda$core$Int64) {52};
+panda$core$Int64 $tmp76 = (panda$core$Int64) {51};
 panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s77, $tmp76, &$s78);
 abort(); // unreachable
 block21:;
@@ -304,19 +304,19 @@ panda$collections$MapView* local5 = NULL;
 panda$core$Int64 local6;
 panda$core$String$Index local7;
 panda$collections$ListView* local8 = NULL;
-// line 104
+// line 103
 panda$core$String$Index $tmp79 = panda$core$String$get_start$R$panda$core$String$Index(param1);
 *(&local0) = $tmp79;
-// line 105
+// line 104
 panda$core$String$Index $tmp80 = panda$core$String$get_end$R$panda$core$String$Index(param1);
 *(&local1) = $tmp80;
-// line 106
+// line 105
 *(&local2) = ((panda$json$JSON*) NULL);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param0));
 panda$json$JSON* $tmp81 = *(&local2);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp81));
 *(&local2) = param0;
-// line 107
+// line 106
 goto block1;
 block1:;
 panda$core$String$Index $tmp82 = *(&local0);
@@ -340,14 +340,14 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) ((panda$core$Eq
 // unreffing REF($18:panda.core.Equatable<panda.core.String.Index>)
 if ($tmp90) goto block2; else goto block3;
 block2:;
-// line 108
+// line 107
 panda$core$String$Index $tmp91 = *(&local0);
 panda$json$JSON$PathKey* $tmp92 = panda$json$JSON$nextPathKey$panda$core$String$panda$core$String$Index$R$panda$json$JSON$PathKey$Q(param1, $tmp91);
 panda$core$Bit $tmp93 = panda$core$Bit$init$builtin_bit($tmp92 != NULL);
 bool $tmp94 = $tmp93.value;
 if ($tmp94) goto block4; else goto block5;
 block5:;
-panda$core$Int64 $tmp95 = (panda$core$Int64) {108};
+panda$core$Int64 $tmp95 = (panda$core$Int64) {107};
 panda$core$String* $tmp96 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s97, param1);
 panda$core$String* $tmp98 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp96, &$s99);
 panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s100, $tmp95, $tmp98);
@@ -359,7 +359,7 @@ abort(); // unreachable
 block4:;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp92));
 // unreffing REF($34:panda.json.JSON.PathKey?)
-// line 109
+// line 108
 panda$core$String$Index $tmp101 = *(&local0);
 panda$json$JSON$PathKey* $tmp102 = panda$json$JSON$nextPathKey$panda$core$String$panda$core$String$Index$R$panda$json$JSON$PathKey$Q(param1, $tmp101);
 panda$core$Int64* $tmp103 = &$tmp102->$rawValue;
@@ -379,7 +379,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp110));
 panda$core$String$Index* $tmp111 = (panda$core$String$Index*) ($tmp102->$data + 8);
 panda$core$String$Index $tmp112 = *$tmp111;
 *(&local4) = $tmp112;
-// line 111
+// line 110
 panda$json$JSON* $tmp113 = *(&local2);
 panda$core$Int64* $tmp114 = &$tmp113->$rawValue;
 panda$core$Int64 $tmp115 = *$tmp114;
@@ -395,7 +395,7 @@ panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp120));
 panda$collections$MapView* $tmp121 = *(&local5);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp121));
 *(&local5) = $tmp120;
-// line 113
+// line 112
 panda$collections$MapView* $tmp122 = *(&local5);
 panda$core$String* $tmp123 = *(&local3);
 ITable* $tmp124 = $tmp122->$class->itable;
@@ -410,13 +410,13 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp128));
 *(&local2) = ((panda$json$JSON*) $tmp127);
 panda$core$Panda$unref$panda$core$Object$Q($tmp127);
 // unreffing REF($99:panda.collections.MapView.V?)
-// line 114
+// line 113
 panda$json$JSON* $tmp129 = *(&local2);
 panda$core$Bit $tmp130 = panda$core$Bit$init$builtin_bit($tmp129 == NULL);
 bool $tmp131 = $tmp130.value;
 if ($tmp131) goto block12; else goto block13;
 block12:;
-// line 115
+// line 114
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((panda$json$JSON*) NULL)));
 panda$collections$MapView* $tmp132 = *(&local5);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp132));
@@ -440,7 +440,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp135));
 *(&local5) = ((panda$collections$MapView*) NULL);
 goto block9;
 block11:;
-// line 119
+// line 118
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((panda$json$JSON*) NULL)));
 panda$core$String* $tmp136 = *(&local3);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp136));
@@ -454,7 +454,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp137));
 *(&local2) = ((panda$json$JSON*) NULL);
 return ((panda$json$JSON*) NULL);
 block9:;
-// line 122
+// line 121
 panda$core$String$Index $tmp138 = *(&local4);
 *(&local0) = $tmp138;
 panda$core$String* $tmp139 = *(&local3);
@@ -474,7 +474,7 @@ panda$core$Int64 $tmp144 = *$tmp143;
 panda$core$String$Index* $tmp145 = (panda$core$String$Index*) ($tmp102->$data + 8);
 panda$core$String$Index $tmp146 = *$tmp145;
 *(&local7) = $tmp146;
-// line 125
+// line 124
 panda$json$JSON* $tmp147 = *(&local2);
 panda$core$Int64* $tmp148 = &$tmp147->$rawValue;
 panda$core$Int64 $tmp149 = *$tmp148;
@@ -490,7 +490,7 @@ panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp154));
 panda$collections$ListView* $tmp155 = *(&local8);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp155));
 *(&local8) = $tmp154;
-// line 127
+// line 126
 panda$collections$ListView* $tmp156 = *(&local8);
 panda$core$Int64 $tmp157 = *(&local6);
 ITable* $tmp158 = $tmp156->$class->itable;
@@ -511,7 +511,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp163));
 *(&local8) = ((panda$collections$ListView*) NULL);
 goto block15;
 block17:;
-// line 130
+// line 129
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((panda$json$JSON*) NULL)));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp102));
 // unreffing REF($55:panda.json.JSON.PathKey?)
@@ -521,7 +521,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp164));
 *(&local2) = ((panda$json$JSON*) NULL);
 return ((panda$json$JSON*) NULL);
 block15:;
-// line 133
+// line 132
 panda$core$String$Index $tmp165 = *(&local7);
 *(&local0) = $tmp165;
 goto block6;
@@ -530,7 +530,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp102));
 // unreffing REF($55:panda.json.JSON.PathKey?)
 goto block1;
 block3:;
-// line 137
+// line 136
 panda$json$JSON* $tmp166 = *(&local2);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp166));
 panda$json$JSON* $tmp167 = *(&local2);
@@ -544,7 +544,7 @@ panda$core$Int64$nullable panda$json$JSON$getInt$panda$core$String$R$panda$core$
 
 panda$json$JSON* local0 = NULL;
 panda$core$Int64 local1;
-// line 144
+// line 143
 $fn169 $tmp168 = ($fn169) param0->$class->vtable[2];
 panda$json$JSON* $tmp170 = $tmp168(param0, param1);
 *(&local0) = ((panda$json$JSON*) NULL);
@@ -554,20 +554,20 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp171));
 *(&local0) = $tmp170;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp170));
 // unreffing REF($2:panda.json.JSON?)
-// line 145
+// line 144
 panda$json$JSON* $tmp172 = *(&local0);
 panda$core$Bit $tmp173 = panda$core$Bit$init$builtin_bit($tmp172 == NULL);
 bool $tmp174 = $tmp173.value;
 if ($tmp174) goto block1; else goto block2;
 block1:;
-// line 146
+// line 145
 panda$json$JSON* $tmp175 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp175));
 // unreffing result
 *(&local0) = ((panda$json$JSON*) NULL);
 return ((panda$core$Int64$nullable) { .nonnull = false });
 block2:;
-// line 148
+// line 147
 panda$json$JSON* $tmp176 = *(&local0);
 panda$core$Int64* $tmp177 = &$tmp176->$rawValue;
 panda$core$Int64 $tmp178 = *$tmp177;
@@ -579,7 +579,7 @@ block4:;
 panda$core$Int64* $tmp182 = (panda$core$Int64*) ($tmp176->$data + 0);
 panda$core$Int64 $tmp183 = *$tmp182;
 *(&local1) = $tmp183;
-// line 150
+// line 149
 panda$core$Int64 $tmp184 = *(&local1);
 panda$json$JSON* $tmp185 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp185));
@@ -587,7 +587,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp185));
 *(&local0) = ((panda$json$JSON*) NULL);
 return ((panda$core$Int64$nullable) { $tmp184, true });
 block5:;
-// line 153
+// line 152
 panda$json$JSON* $tmp186 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp186));
 // unreffing result
@@ -598,7 +598,7 @@ panda$core$Bit $tmp187 = panda$core$Bit$init$builtin_bit(false);
 bool $tmp188 = $tmp187.value;
 if ($tmp188) goto block6; else goto block7;
 block7:;
-panda$core$Int64 $tmp189 = (panda$core$Int64) {143};
+panda$core$Int64 $tmp189 = (panda$core$Int64) {142};
 panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s190, $tmp189, &$s191);
 abort(); // unreachable
 block6:;
@@ -609,7 +609,7 @@ panda$core$Real64$nullable panda$json$JSON$getReal$panda$core$String$R$panda$cor
 
 panda$json$JSON* local0 = NULL;
 panda$core$Real64 local1;
-// line 162
+// line 161
 $fn193 $tmp192 = ($fn193) param0->$class->vtable[2];
 panda$json$JSON* $tmp194 = $tmp192(param0, param1);
 *(&local0) = ((panda$json$JSON*) NULL);
@@ -619,20 +619,20 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp195));
 *(&local0) = $tmp194;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp194));
 // unreffing REF($2:panda.json.JSON?)
-// line 163
+// line 162
 panda$json$JSON* $tmp196 = *(&local0);
 panda$core$Bit $tmp197 = panda$core$Bit$init$builtin_bit($tmp196 == NULL);
 bool $tmp198 = $tmp197.value;
 if ($tmp198) goto block1; else goto block2;
 block1:;
-// line 164
+// line 163
 panda$json$JSON* $tmp199 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp199));
 // unreffing result
 *(&local0) = ((panda$json$JSON*) NULL);
 return ((panda$core$Real64$nullable) { .nonnull = false });
 block2:;
-// line 166
+// line 165
 panda$json$JSON* $tmp200 = *(&local0);
 panda$core$Int64* $tmp201 = &$tmp200->$rawValue;
 panda$core$Int64 $tmp202 = *$tmp201;
@@ -644,7 +644,7 @@ block4:;
 panda$core$Real64* $tmp206 = (panda$core$Real64*) ($tmp200->$data + 0);
 panda$core$Real64 $tmp207 = *$tmp206;
 *(&local1) = $tmp207;
-// line 168
+// line 167
 panda$core$Real64 $tmp208 = *(&local1);
 panda$json$JSON* $tmp209 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp209));
@@ -652,7 +652,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp209));
 *(&local0) = ((panda$json$JSON*) NULL);
 return ((panda$core$Real64$nullable) { $tmp208, true });
 block5:;
-// line 171
+// line 170
 panda$json$JSON* $tmp210 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp210));
 // unreffing result
@@ -663,7 +663,7 @@ panda$core$Bit $tmp211 = panda$core$Bit$init$builtin_bit(false);
 bool $tmp212 = $tmp211.value;
 if ($tmp212) goto block6; else goto block7;
 block7:;
-panda$core$Int64 $tmp213 = (panda$core$Int64) {161};
+panda$core$Int64 $tmp213 = (panda$core$Int64) {160};
 panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s214, $tmp213, &$s215);
 abort(); // unreachable
 block6:;
@@ -674,7 +674,7 @@ panda$core$Bit$nullable panda$json$JSON$getBit$panda$core$String$R$panda$core$Bi
 
 panda$json$JSON* local0 = NULL;
 panda$core$Bit local1;
-// line 180
+// line 179
 $fn217 $tmp216 = ($fn217) param0->$class->vtable[2];
 panda$json$JSON* $tmp218 = $tmp216(param0, param1);
 *(&local0) = ((panda$json$JSON*) NULL);
@@ -684,20 +684,20 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp219));
 *(&local0) = $tmp218;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp218));
 // unreffing REF($2:panda.json.JSON?)
-// line 181
+// line 180
 panda$json$JSON* $tmp220 = *(&local0);
 panda$core$Bit $tmp221 = panda$core$Bit$init$builtin_bit($tmp220 == NULL);
 bool $tmp222 = $tmp221.value;
 if ($tmp222) goto block1; else goto block2;
 block1:;
-// line 182
+// line 181
 panda$json$JSON* $tmp223 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp223));
 // unreffing result
 *(&local0) = ((panda$json$JSON*) NULL);
 return ((panda$core$Bit$nullable) { .nonnull = false });
 block2:;
-// line 184
+// line 183
 panda$json$JSON* $tmp224 = *(&local0);
 panda$core$Int64* $tmp225 = &$tmp224->$rawValue;
 panda$core$Int64 $tmp226 = *$tmp225;
@@ -709,7 +709,7 @@ block4:;
 panda$core$Bit* $tmp230 = (panda$core$Bit*) ($tmp224->$data + 0);
 panda$core$Bit $tmp231 = *$tmp230;
 *(&local1) = $tmp231;
-// line 186
+// line 185
 panda$core$Bit $tmp232 = *(&local1);
 panda$json$JSON* $tmp233 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp233));
@@ -717,7 +717,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp233));
 *(&local0) = ((panda$json$JSON*) NULL);
 return ((panda$core$Bit$nullable) { $tmp232, true });
 block5:;
-// line 189
+// line 188
 panda$json$JSON* $tmp234 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp234));
 // unreffing result
@@ -728,7 +728,7 @@ panda$core$Bit $tmp235 = panda$core$Bit$init$builtin_bit(false);
 bool $tmp236 = $tmp235.value;
 if ($tmp236) goto block6; else goto block7;
 block7:;
-panda$core$Int64 $tmp237 = (panda$core$Int64) {179};
+panda$core$Int64 $tmp237 = (panda$core$Int64) {178};
 panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s238, $tmp237, &$s239);
 abort(); // unreachable
 block6:;
@@ -739,7 +739,7 @@ panda$core$String* panda$json$JSON$getString$panda$core$String$R$panda$core$Stri
 
 panda$json$JSON* local0 = NULL;
 panda$core$String* local1 = NULL;
-// line 198
+// line 197
 $fn241 $tmp240 = ($fn241) param0->$class->vtable[2];
 panda$json$JSON* $tmp242 = $tmp240(param0, param1);
 *(&local0) = ((panda$json$JSON*) NULL);
@@ -749,13 +749,13 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp243));
 *(&local0) = $tmp242;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp242));
 // unreffing REF($2:panda.json.JSON?)
-// line 199
+// line 198
 panda$json$JSON* $tmp244 = *(&local0);
 panda$core$Bit $tmp245 = panda$core$Bit$init$builtin_bit($tmp244 == NULL);
 bool $tmp246 = $tmp245.value;
 if ($tmp246) goto block1; else goto block2;
 block1:;
-// line 200
+// line 199
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((panda$core$String*) NULL)));
 panda$json$JSON* $tmp247 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp247));
@@ -763,7 +763,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp247));
 *(&local0) = ((panda$json$JSON*) NULL);
 return ((panda$core$String*) NULL);
 block2:;
-// line 202
+// line 201
 panda$json$JSON* $tmp248 = *(&local0);
 panda$core$Int64* $tmp249 = &$tmp248->$rawValue;
 panda$core$Int64 $tmp250 = *$tmp249;
@@ -779,7 +779,7 @@ panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp255));
 panda$core$String* $tmp256 = *(&local1);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp256));
 *(&local1) = $tmp255;
-// line 204
+// line 203
 panda$core$String* $tmp257 = *(&local1);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp257));
 panda$core$String* $tmp258 = *(&local1);
@@ -792,7 +792,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp259));
 *(&local0) = ((panda$json$JSON*) NULL);
 return $tmp257;
 block5:;
-// line 207
+// line 206
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((panda$core$String*) NULL)));
 panda$json$JSON* $tmp260 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp260));
@@ -804,7 +804,7 @@ panda$core$Bit $tmp261 = panda$core$Bit$init$builtin_bit(false);
 bool $tmp262 = $tmp261.value;
 if ($tmp262) goto block6; else goto block7;
 block7:;
-panda$core$Int64 $tmp263 = (panda$core$Int64) {197};
+panda$core$Int64 $tmp263 = (panda$core$Int64) {196};
 panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s264, $tmp263, &$s265);
 abort(); // unreachable
 block6:;
@@ -815,7 +815,7 @@ panda$collections$ListView* panda$json$JSON$getArray$panda$core$String$R$panda$c
 
 panda$json$JSON* local0 = NULL;
 panda$collections$ListView* local1 = NULL;
-// line 216
+// line 215
 $fn267 $tmp266 = ($fn267) param0->$class->vtable[2];
 panda$json$JSON* $tmp268 = $tmp266(param0, param1);
 *(&local0) = ((panda$json$JSON*) NULL);
@@ -825,13 +825,13 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp269));
 *(&local0) = $tmp268;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp268));
 // unreffing REF($2:panda.json.JSON?)
-// line 217
+// line 216
 panda$json$JSON* $tmp270 = *(&local0);
 panda$core$Bit $tmp271 = panda$core$Bit$init$builtin_bit($tmp270 == NULL);
 bool $tmp272 = $tmp271.value;
 if ($tmp272) goto block1; else goto block2;
 block1:;
-// line 218
+// line 217
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((panda$collections$ListView*) NULL)));
 panda$json$JSON* $tmp273 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp273));
@@ -839,7 +839,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp273));
 *(&local0) = ((panda$json$JSON*) NULL);
 return ((panda$collections$ListView*) NULL);
 block2:;
-// line 220
+// line 219
 panda$json$JSON* $tmp274 = *(&local0);
 panda$core$Int64* $tmp275 = &$tmp274->$rawValue;
 panda$core$Int64 $tmp276 = *$tmp275;
@@ -855,7 +855,7 @@ panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp281));
 panda$collections$ListView* $tmp282 = *(&local1);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp282));
 *(&local1) = $tmp281;
-// line 222
+// line 221
 panda$collections$ListView* $tmp283 = *(&local1);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp283));
 panda$collections$ListView* $tmp284 = *(&local1);
@@ -868,7 +868,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp285));
 *(&local0) = ((panda$json$JSON*) NULL);
 return $tmp283;
 block5:;
-// line 225
+// line 224
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((panda$collections$ListView*) NULL)));
 panda$json$JSON* $tmp286 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp286));
@@ -880,7 +880,7 @@ panda$core$Bit $tmp287 = panda$core$Bit$init$builtin_bit(false);
 bool $tmp288 = $tmp287.value;
 if ($tmp288) goto block6; else goto block7;
 block7:;
-panda$core$Int64 $tmp289 = (panda$core$Int64) {215};
+panda$core$Int64 $tmp289 = (panda$core$Int64) {214};
 panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s290, $tmp289, &$s291);
 abort(); // unreachable
 block6:;
@@ -891,7 +891,7 @@ panda$collections$MapView* panda$json$JSON$getObject$panda$core$String$R$panda$c
 
 panda$json$JSON* local0 = NULL;
 panda$collections$MapView* local1 = NULL;
-// line 234
+// line 233
 $fn293 $tmp292 = ($fn293) param0->$class->vtable[2];
 panda$json$JSON* $tmp294 = $tmp292(param0, param1);
 *(&local0) = ((panda$json$JSON*) NULL);
@@ -901,13 +901,13 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp295));
 *(&local0) = $tmp294;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp294));
 // unreffing REF($2:panda.json.JSON?)
-// line 235
+// line 234
 panda$json$JSON* $tmp296 = *(&local0);
 panda$core$Bit $tmp297 = panda$core$Bit$init$builtin_bit($tmp296 == NULL);
 bool $tmp298 = $tmp297.value;
 if ($tmp298) goto block1; else goto block2;
 block1:;
-// line 236
+// line 235
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((panda$collections$MapView*) NULL)));
 panda$json$JSON* $tmp299 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp299));
@@ -915,7 +915,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp299));
 *(&local0) = ((panda$json$JSON*) NULL);
 return ((panda$collections$MapView*) NULL);
 block2:;
-// line 238
+// line 237
 panda$json$JSON* $tmp300 = *(&local0);
 panda$core$Int64* $tmp301 = &$tmp300->$rawValue;
 panda$core$Int64 $tmp302 = *$tmp301;
@@ -931,7 +931,7 @@ panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp307));
 panda$collections$MapView* $tmp308 = *(&local1);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp308));
 *(&local1) = $tmp307;
-// line 240
+// line 239
 panda$collections$MapView* $tmp309 = *(&local1);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp309));
 panda$collections$MapView* $tmp310 = *(&local1);
@@ -944,7 +944,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp311));
 *(&local0) = ((panda$json$JSON*) NULL);
 return $tmp309;
 block5:;
-// line 243
+// line 242
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((panda$collections$MapView*) NULL)));
 panda$json$JSON* $tmp312 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp312));
@@ -956,7 +956,7 @@ panda$core$Bit $tmp313 = panda$core$Bit$init$builtin_bit(false);
 bool $tmp314 = $tmp313.value;
 if ($tmp314) goto block6; else goto block7;
 block7:;
-panda$core$Int64 $tmp315 = (panda$core$Int64) {233};
+panda$core$Int64 $tmp315 = (panda$core$Int64) {232};
 panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s316, $tmp315, &$s317);
 abort(); // unreachable
 block6:;
@@ -966,7 +966,7 @@ abort(); // unreachable
 panda$core$Int64 panda$json$JSON$asInt$R$panda$core$Int64(panda$json$JSON* param0) {
 
 panda$core$Int64 local0;
-// line 252
+// line 251
 panda$core$Int64* $tmp318 = &param0->$rawValue;
 panda$core$Int64 $tmp319 = *$tmp318;
 panda$core$Int64 $tmp320 = (panda$core$Int64) {0};
@@ -977,16 +977,16 @@ block2:;
 panda$core$Int64* $tmp323 = (panda$core$Int64*) (param0->$data + 0);
 panda$core$Int64 $tmp324 = *$tmp323;
 *(&local0) = $tmp324;
-// line 254
+// line 253
 panda$core$Int64 $tmp325 = *(&local0);
 return $tmp325;
 block3:;
-// line 257
+// line 256
 panda$core$Bit $tmp326 = panda$core$Bit$init$builtin_bit(false);
 bool $tmp327 = $tmp326.value;
 if ($tmp327) goto block4; else goto block5;
 block5:;
-panda$core$Int64 $tmp328 = (panda$core$Int64) {257};
+panda$core$Int64 $tmp328 = (panda$core$Int64) {256};
 panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64(&$s329, $tmp328);
 abort(); // unreachable
 block4:;
@@ -996,7 +996,7 @@ panda$core$Bit $tmp330 = panda$core$Bit$init$builtin_bit(false);
 bool $tmp331 = $tmp330.value;
 if ($tmp331) goto block6; else goto block7;
 block7:;
-panda$core$Int64 $tmp332 = (panda$core$Int64) {251};
+panda$core$Int64 $tmp332 = (panda$core$Int64) {250};
 panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s333, $tmp332, &$s334);
 abort(); // unreachable
 block6:;
@@ -1006,7 +1006,7 @@ abort(); // unreachable
 panda$core$Real64 panda$json$JSON$asReal$R$panda$core$Real64(panda$json$JSON* param0) {
 
 panda$core$Real64 local0;
-// line 266
+// line 265
 panda$core$Int64* $tmp335 = &param0->$rawValue;
 panda$core$Int64 $tmp336 = *$tmp335;
 panda$core$Int64 $tmp337 = (panda$core$Int64) {1};
@@ -1017,16 +1017,16 @@ block2:;
 panda$core$Real64* $tmp340 = (panda$core$Real64*) (param0->$data + 0);
 panda$core$Real64 $tmp341 = *$tmp340;
 *(&local0) = $tmp341;
-// line 268
+// line 267
 panda$core$Real64 $tmp342 = *(&local0);
 return $tmp342;
 block3:;
-// line 271
+// line 270
 panda$core$Bit $tmp343 = panda$core$Bit$init$builtin_bit(false);
 bool $tmp344 = $tmp343.value;
 if ($tmp344) goto block4; else goto block5;
 block5:;
-panda$core$Int64 $tmp345 = (panda$core$Int64) {271};
+panda$core$Int64 $tmp345 = (panda$core$Int64) {270};
 panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64(&$s346, $tmp345);
 abort(); // unreachable
 block4:;
@@ -1036,7 +1036,7 @@ panda$core$Bit $tmp347 = panda$core$Bit$init$builtin_bit(false);
 bool $tmp348 = $tmp347.value;
 if ($tmp348) goto block6; else goto block7;
 block7:;
-panda$core$Int64 $tmp349 = (panda$core$Int64) {265};
+panda$core$Int64 $tmp349 = (panda$core$Int64) {264};
 panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s350, $tmp349, &$s351);
 abort(); // unreachable
 block6:;
@@ -1046,7 +1046,7 @@ abort(); // unreachable
 panda$core$String* panda$json$JSON$asString$R$panda$core$String(panda$json$JSON* param0) {
 
 panda$core$String* local0 = NULL;
-// line 280
+// line 279
 panda$core$Int64* $tmp352 = &param0->$rawValue;
 panda$core$Int64 $tmp353 = *$tmp352;
 panda$core$Int64 $tmp354 = (panda$core$Int64) {2};
@@ -1061,7 +1061,7 @@ panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp358));
 panda$core$String* $tmp359 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp359));
 *(&local0) = $tmp358;
-// line 282
+// line 281
 panda$core$String* $tmp360 = *(&local0);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp360));
 panda$core$String* $tmp361 = *(&local0);
@@ -1070,12 +1070,12 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp361));
 *(&local0) = ((panda$core$String*) NULL);
 return $tmp360;
 block3:;
-// line 285
+// line 284
 panda$core$Bit $tmp362 = panda$core$Bit$init$builtin_bit(false);
 bool $tmp363 = $tmp362.value;
 if ($tmp363) goto block4; else goto block5;
 block5:;
-panda$core$Int64 $tmp364 = (panda$core$Int64) {285};
+panda$core$Int64 $tmp364 = (panda$core$Int64) {284};
 panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64(&$s365, $tmp364);
 abort(); // unreachable
 block4:;
@@ -1085,7 +1085,7 @@ panda$core$Bit $tmp366 = panda$core$Bit$init$builtin_bit(false);
 bool $tmp367 = $tmp366.value;
 if ($tmp367) goto block6; else goto block7;
 block7:;
-panda$core$Int64 $tmp368 = (panda$core$Int64) {279};
+panda$core$Int64 $tmp368 = (panda$core$Int64) {278};
 panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s369, $tmp368, &$s370);
 abort(); // unreachable
 block6:;
@@ -1095,7 +1095,7 @@ abort(); // unreachable
 panda$core$Bit panda$json$JSON$asBit$R$panda$core$Bit(panda$json$JSON* param0) {
 
 panda$core$Bit local0;
-// line 294
+// line 293
 panda$core$Int64* $tmp371 = &param0->$rawValue;
 panda$core$Int64 $tmp372 = *$tmp371;
 panda$core$Int64 $tmp373 = (panda$core$Int64) {3};
@@ -1106,16 +1106,16 @@ block2:;
 panda$core$Bit* $tmp376 = (panda$core$Bit*) (param0->$data + 0);
 panda$core$Bit $tmp377 = *$tmp376;
 *(&local0) = $tmp377;
-// line 296
+// line 295
 panda$core$Bit $tmp378 = *(&local0);
 return $tmp378;
 block3:;
-// line 299
+// line 298
 panda$core$Bit $tmp379 = panda$core$Bit$init$builtin_bit(false);
 bool $tmp380 = $tmp379.value;
 if ($tmp380) goto block4; else goto block5;
 block5:;
-panda$core$Int64 $tmp381 = (panda$core$Int64) {299};
+panda$core$Int64 $tmp381 = (panda$core$Int64) {298};
 panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64(&$s382, $tmp381);
 abort(); // unreachable
 block4:;
@@ -1125,7 +1125,7 @@ panda$core$Bit $tmp383 = panda$core$Bit$init$builtin_bit(false);
 bool $tmp384 = $tmp383.value;
 if ($tmp384) goto block6; else goto block7;
 block7:;
-panda$core$Int64 $tmp385 = (panda$core$Int64) {293};
+panda$core$Int64 $tmp385 = (panda$core$Int64) {292};
 panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s386, $tmp385, &$s387);
 abort(); // unreachable
 block6:;
@@ -1135,7 +1135,7 @@ abort(); // unreachable
 panda$collections$MapView* panda$json$JSON$asObject$R$panda$collections$MapView$LTpanda$core$String$Cpanda$json$JSON$GT(panda$json$JSON* param0) {
 
 panda$collections$MapView* local0 = NULL;
-// line 308
+// line 307
 panda$core$Int64* $tmp388 = &param0->$rawValue;
 panda$core$Int64 $tmp389 = *$tmp388;
 panda$core$Int64 $tmp390 = (panda$core$Int64) {4};
@@ -1150,7 +1150,7 @@ panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp394));
 panda$collections$MapView* $tmp395 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp395));
 *(&local0) = $tmp394;
-// line 310
+// line 309
 panda$collections$MapView* $tmp396 = *(&local0);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp396));
 panda$collections$MapView* $tmp397 = *(&local0);
@@ -1159,12 +1159,12 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp397));
 *(&local0) = ((panda$collections$MapView*) NULL);
 return $tmp396;
 block3:;
-// line 313
+// line 312
 panda$core$Bit $tmp398 = panda$core$Bit$init$builtin_bit(false);
 bool $tmp399 = $tmp398.value;
 if ($tmp399) goto block4; else goto block5;
 block5:;
-panda$core$Int64 $tmp400 = (panda$core$Int64) {313};
+panda$core$Int64 $tmp400 = (panda$core$Int64) {312};
 panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64(&$s401, $tmp400);
 abort(); // unreachable
 block4:;
@@ -1174,7 +1174,7 @@ panda$core$Bit $tmp402 = panda$core$Bit$init$builtin_bit(false);
 bool $tmp403 = $tmp402.value;
 if ($tmp403) goto block6; else goto block7;
 block7:;
-panda$core$Int64 $tmp404 = (panda$core$Int64) {307};
+panda$core$Int64 $tmp404 = (panda$core$Int64) {306};
 panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s405, $tmp404, &$s406);
 abort(); // unreachable
 block6:;
@@ -1184,7 +1184,7 @@ abort(); // unreachable
 panda$collections$ListView* panda$json$JSON$asArray$R$panda$collections$ListView$LTpanda$json$JSON$GT(panda$json$JSON* param0) {
 
 panda$collections$ListView* local0 = NULL;
-// line 322
+// line 321
 panda$core$Int64* $tmp407 = &param0->$rawValue;
 panda$core$Int64 $tmp408 = *$tmp407;
 panda$core$Int64 $tmp409 = (panda$core$Int64) {5};
@@ -1199,7 +1199,7 @@ panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp413));
 panda$collections$ListView* $tmp414 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp414));
 *(&local0) = $tmp413;
-// line 324
+// line 323
 panda$collections$ListView* $tmp415 = *(&local0);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp415));
 panda$collections$ListView* $tmp416 = *(&local0);
@@ -1208,12 +1208,12 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp416));
 *(&local0) = ((panda$collections$ListView*) NULL);
 return $tmp415;
 block3:;
-// line 327
+// line 326
 panda$core$Bit $tmp417 = panda$core$Bit$init$builtin_bit(false);
 bool $tmp418 = $tmp417.value;
 if ($tmp418) goto block4; else goto block5;
 block5:;
-panda$core$Int64 $tmp419 = (panda$core$Int64) {327};
+panda$core$Int64 $tmp419 = (panda$core$Int64) {326};
 panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64(&$s420, $tmp419);
 abort(); // unreachable
 block4:;
@@ -1223,7 +1223,7 @@ panda$core$Bit $tmp421 = panda$core$Bit$init$builtin_bit(false);
 bool $tmp422 = $tmp421.value;
 if ($tmp422) goto block6; else goto block7;
 block7:;
-panda$core$Int64 $tmp423 = (panda$core$Int64) {321};
+panda$core$Int64 $tmp423 = (panda$core$Int64) {320};
 panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s424, $tmp423, &$s425);
 abort(); // unreachable
 block6:;
@@ -1244,7 +1244,7 @@ panda$collections$ListView* local8 = NULL;
 panda$core$MutableString* local9 = NULL;
 panda$core$String* local10 = NULL;
 panda$json$JSON* local11 = NULL;
-// line 337
+// line 336
 panda$core$Int64* $tmp426 = &param0->$rawValue;
 panda$core$Int64 $tmp427 = *$tmp426;
 panda$core$Int64 $tmp428 = (panda$core$Int64) {0};
@@ -1255,7 +1255,7 @@ block2:;
 panda$core$Int64* $tmp431 = (panda$core$Int64*) (param0->$data + 0);
 panda$core$Int64 $tmp432 = *$tmp431;
 *(&local0) = $tmp432;
-// line 339
+// line 338
 panda$core$Int64 $tmp433 = *(&local0);
 panda$core$String* $tmp434 = panda$core$Int64$convert$R$panda$core$String($tmp433);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp434));
@@ -1271,7 +1271,7 @@ block4:;
 panda$core$Real64* $tmp438 = (panda$core$Real64*) (param0->$data + 0);
 panda$core$Real64 $tmp439 = *$tmp438;
 *(&local1) = $tmp439;
-// line 342
+// line 341
 panda$core$Real64 $tmp440 = *(&local1);
 panda$core$String* $tmp441 = panda$core$Real64$convert$R$panda$core$String($tmp440);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp441));
@@ -1291,7 +1291,7 @@ panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp446));
 panda$core$String* $tmp447 = *(&local2);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp447));
 *(&local2) = $tmp446;
-// line 345
+// line 344
 panda$core$String* $tmp448 = *(&local2);
 panda$core$String* $tmp449 = panda$core$String$format$panda$core$String$R$panda$core$String($tmp448, &$s450);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp449));
@@ -1311,7 +1311,7 @@ block8:;
 panda$core$Bit* $tmp455 = (panda$core$Bit*) (param0->$data + 0);
 panda$core$Bit $tmp456 = *$tmp455;
 *(&local3) = $tmp456;
-// line 348
+// line 347
 panda$core$Bit $tmp457 = *(&local3);
 panda$core$String* $tmp458 = panda$core$Bit$convert$R$panda$core$String($tmp457);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp458));
@@ -1331,7 +1331,7 @@ panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp463));
 panda$collections$MapView* $tmp464 = *(&local4);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp464));
 *(&local4) = $tmp463;
-// line 351
+// line 350
 panda$core$MutableString* $tmp465 = (panda$core$MutableString*) pandaObjectAlloc(48, (panda$core$Class*) &panda$core$MutableString$class);
 panda$core$MutableString$init$panda$core$String($tmp465, &$s466);
 *(&local5) = ((panda$core$MutableString*) NULL);
@@ -1341,13 +1341,13 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp467));
 *(&local5) = $tmp465;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp465));
 // unreffing REF($92:panda.core.MutableString)
-// line 352
+// line 351
 *(&local6) = ((panda$core$String*) NULL);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) &$s468));
 panda$core$String* $tmp469 = *(&local6);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp469));
 *(&local6) = &$s470;
-// line 353
+// line 352
 panda$collections$MapView* $tmp471 = *(&local4);
 ITable* $tmp472 = $tmp471->$class->itable;
 while ($tmp472->$class != (panda$core$Class*) &panda$collections$MapView$class) {
@@ -1377,7 +1377,7 @@ panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((panda$core$Stri
 panda$core$String* $tmp485 = *(&local7);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp485));
 *(&local7) = ((panda$core$String*) $tmp484);
-// line 354
+// line 353
 panda$core$MutableString* $tmp486 = *(&local5);
 panda$core$String* $tmp487 = *(&local6);
 panda$core$String* $tmp488 = panda$core$String$convert$R$panda$core$String($tmp487);
@@ -1418,7 +1418,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp489));
 // unreffing REF($139:panda.core.String)
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp488));
 // unreffing REF($138:panda.core.String)
-// line 355
+// line 354
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) &$s509));
 panda$core$String* $tmp510 = *(&local6);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp510));
@@ -1433,10 +1433,10 @@ goto block12;
 block14:;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp475));
 // unreffing REF($116:panda.collections.Iterator<panda.collections.MapView.K>)
-// line 357
+// line 356
 panda$core$MutableString* $tmp513 = *(&local5);
 panda$core$MutableString$append$panda$core$String($tmp513, &$s514);
-// line 358
+// line 357
 panda$core$MutableString* $tmp515 = *(&local5);
 panda$core$String* $tmp516 = panda$core$MutableString$finish$R$panda$core$String($tmp515);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp516));
@@ -1468,7 +1468,7 @@ panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp524));
 panda$collections$ListView* $tmp525 = *(&local8);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp525));
 *(&local8) = $tmp524;
-// line 361
+// line 360
 panda$core$MutableString* $tmp526 = (panda$core$MutableString*) pandaObjectAlloc(48, (panda$core$Class*) &panda$core$MutableString$class);
 panda$core$MutableString$init$panda$core$String($tmp526, &$s527);
 *(&local9) = ((panda$core$MutableString*) NULL);
@@ -1478,13 +1478,13 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp528));
 *(&local9) = $tmp526;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp526));
 // unreffing REF($241:panda.core.MutableString)
-// line 362
+// line 361
 *(&local10) = ((panda$core$String*) NULL);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) &$s529));
 panda$core$String* $tmp530 = *(&local10);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp530));
 *(&local10) = &$s531;
-// line 363
+// line 362
 panda$collections$ListView* $tmp532 = *(&local8);
 ITable* $tmp533 = ((panda$collections$Iterable*) $tmp532)->$class->itable;
 while ($tmp533->$class != (panda$core$Class*) &panda$collections$Iterable$class) {
@@ -1514,7 +1514,7 @@ panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((panda$json$JSON
 panda$json$JSON* $tmp546 = *(&local11);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp546));
 *(&local11) = ((panda$json$JSON*) $tmp545);
-// line 364
+// line 363
 panda$core$MutableString* $tmp547 = *(&local9);
 panda$core$String* $tmp548 = *(&local10);
 panda$core$String* $tmp549 = panda$core$String$convert$R$panda$core$String($tmp548);
@@ -1531,7 +1531,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp550));
 // unreffing REF($289:panda.core.String)
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp549));
 // unreffing REF($288:panda.core.String)
-// line 365
+// line 364
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) &$s556));
 panda$core$String* $tmp557 = *(&local10);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp557));
@@ -1546,10 +1546,10 @@ goto block17;
 block19:;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp536));
 // unreffing REF($266:panda.collections.Iterator<panda.collections.Iterable.T>)
-// line 367
+// line 366
 panda$core$MutableString* $tmp560 = *(&local9);
 panda$core$MutableString$append$panda$core$String($tmp560, &$s561);
-// line 368
+// line 367
 panda$core$MutableString* $tmp562 = *(&local9);
 panda$core$String* $tmp563 = panda$core$MutableString$finish$R$panda$core$String($tmp562);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp563));
@@ -1574,16 +1574,16 @@ panda$core$Bit $tmp568 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(
 bool $tmp569 = $tmp568.value;
 if ($tmp569) goto block20; else goto block21;
 block20:;
-// line 371
+// line 370
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) &$s570));
 return &$s571;
 block21:;
-// line 374
+// line 373
 panda$core$Bit $tmp572 = panda$core$Bit$init$builtin_bit(false);
 bool $tmp573 = $tmp572.value;
 if ($tmp573) goto block22; else goto block23;
 block23:;
-panda$core$Int64 $tmp574 = (panda$core$Int64) {374};
+panda$core$Int64 $tmp574 = (panda$core$Int64) {373};
 panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64(&$s575, $tmp574);
 abort(); // unreachable
 block22:;
@@ -1593,7 +1593,7 @@ panda$core$Bit $tmp576 = panda$core$Bit$init$builtin_bit(false);
 bool $tmp577 = $tmp576.value;
 if ($tmp577) goto block24; else goto block25;
 block25:;
-panda$core$Int64 $tmp578 = (panda$core$Int64) {336};
+panda$core$Int64 $tmp578 = (panda$core$Int64) {335};
 panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s579, $tmp578, &$s580);
 abort(); // unreachable
 block24:;
@@ -1608,7 +1608,7 @@ panda$core$String* local2 = NULL;
 panda$core$Bit local3;
 panda$collections$MapView* local4 = NULL;
 panda$collections$ListView* local5 = NULL;
-// line 8
+// line 6
 panda$core$Int64* $tmp581 = &param0->$rawValue;
 panda$core$Int64 $tmp582 = *$tmp581;
 panda$core$Int64 $tmp583 = (panda$core$Int64) {0};
@@ -1711,17 +1711,17 @@ if ($tmp624) goto block14; else goto block1;
 block14:;
 goto block1;
 block1:;
-// line 8
+// line 6
 panda$core$Object$cleanup(((panda$core$Object*) param0));
 return;
 
 }
 void panda$json$JSON$init$panda$core$Int64$panda$core$Int64(panda$json$JSON* param0, panda$core$Int64 param1, panda$core$Int64 param2) {
 
-// line 8
+// line 6
 panda$core$Int64* $tmp625 = &param0->$rawValue;
 *$tmp625 = param1;
-// line 8
+// line 6
 panda$core$Int64* $tmp626 = (panda$core$Int64*) (param0->$data + 0);
 *$tmp626 = param2;
 return;
@@ -1729,10 +1729,10 @@ return;
 }
 void panda$json$JSON$init$panda$core$Int64$panda$core$Real64(panda$json$JSON* param0, panda$core$Int64 param1, panda$core$Real64 param2) {
 
-// line 8
+// line 6
 panda$core$Int64* $tmp627 = &param0->$rawValue;
 *$tmp627 = param1;
-// line 8
+// line 6
 panda$core$Real64* $tmp628 = (panda$core$Real64*) (param0->$data + 0);
 *$tmp628 = param2;
 return;
@@ -1740,10 +1740,10 @@ return;
 }
 void panda$json$JSON$init$panda$core$Int64$panda$core$String(panda$json$JSON* param0, panda$core$Int64 param1, panda$core$String* param2) {
 
-// line 8
+// line 6
 panda$core$Int64* $tmp629 = &param0->$rawValue;
 *$tmp629 = param1;
-// line 8
+// line 6
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param2));
 panda$core$String** $tmp630 = (panda$core$String**) (param0->$data + 0);
 *$tmp630 = param2;
@@ -1752,10 +1752,10 @@ return;
 }
 void panda$json$JSON$init$panda$core$Int64$panda$core$Bit(panda$json$JSON* param0, panda$core$Int64 param1, panda$core$Bit param2) {
 
-// line 8
+// line 6
 panda$core$Int64* $tmp631 = &param0->$rawValue;
 *$tmp631 = param1;
-// line 8
+// line 6
 panda$core$Bit* $tmp632 = (panda$core$Bit*) (param0->$data + 0);
 *$tmp632 = param2;
 return;
@@ -1763,10 +1763,10 @@ return;
 }
 void panda$json$JSON$init$panda$core$Int64$panda$collections$MapView$LTpanda$core$String$Cpanda$json$JSON$GT(panda$json$JSON* param0, panda$core$Int64 param1, panda$collections$MapView* param2) {
 
-// line 8
+// line 6
 panda$core$Int64* $tmp633 = &param0->$rawValue;
 *$tmp633 = param1;
-// line 8
+// line 6
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param2));
 panda$collections$MapView** $tmp634 = (panda$collections$MapView**) (param0->$data + 0);
 *$tmp634 = param2;
@@ -1775,10 +1775,10 @@ return;
 }
 void panda$json$JSON$init$panda$core$Int64$panda$collections$ListView$LTpanda$json$JSON$GT(panda$json$JSON* param0, panda$core$Int64 param1, panda$collections$ListView* param2) {
 
-// line 8
+// line 6
 panda$core$Int64* $tmp635 = &param0->$rawValue;
 *$tmp635 = param1;
-// line 8
+// line 6
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param2));
 panda$collections$ListView** $tmp636 = (panda$collections$ListView**) (param0->$data + 0);
 *$tmp636 = param2;
@@ -1787,7 +1787,7 @@ return;
 }
 void panda$json$JSON$init$panda$core$Int64(panda$json$JSON* param0, panda$core$Int64 param1) {
 
-// line 8
+// line 6
 panda$core$Int64* $tmp637 = &param0->$rawValue;
 *$tmp637 = param1;
 return;

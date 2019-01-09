@@ -23,6 +23,15 @@ class MethodRef {
     `"Hello"`. For class methods, the target type is the class type.
     ================================================================================================
     init(compiler:Compiler, target:Type, value:MethodDecl) {
+        init(compiler, target, value, null)
+    }
+
+    ================================================================================================
+    Creates a reference to a method within a particular "target type" and generic arguments.
+    ================================================================================================
+    @pre((genericArguments == null) = (value.genericParameters == null) &
+            (genericArguments == null | genericArguments.count = value.genericParameters.count))
+    init(compiler:Compiler, target:Type, value:MethodDecl, genericArguments:ListView<Type>?) {
         assert value.resolved != Compiler.Resolution.UNRESOLVED
         self.value := value
         self.target := target
@@ -66,7 +75,18 @@ class MethodRef {
                     methodType.subtypes[0 .. methodType.subtypes.count - 1],
                     methodType.returnType, methodType.priority)
         }
-        self.effectiveType := compiler.remapType(found, methodType)
+        def effectiveType := compiler.remapType(found, methodType)
+        if genericArguments !== null {
+            def prefix := value.owner.name + "." + value.name + "."
+            def map := HashMap<String, Type>()
+            for i in 0 .. genericArguments.count {
+                map[prefix + value.genericParameters[i].name] := genericArguments[i]
+            }
+            self.effectiveType := effectiveType.remap(map)
+        }
+        else {
+            self.effectiveType := effectiveType
+        }
     }
 
     function get_parameterCount():Int {

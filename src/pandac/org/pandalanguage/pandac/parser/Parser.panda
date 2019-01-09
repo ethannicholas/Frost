@@ -1001,8 +1001,36 @@ class Parser {
     }
 
     ================================================================================================
+    typeSpecifiers = LT type (COMMA type)* GR
+    ================================================================================================
+    method typeSpecifiers():FixedArray<ASTNode>? {
+        if expect(Token.Kind.LT, "'<'") == null {
+            return null
+        }
+        def result := Array<ASTNode>()
+        {
+            def t := type()
+            if t == null {
+                return null
+            }
+            result.add(t)
+        }
+        while checkNext(Token.Kind.COMMA) !== null {
+            def t := type()
+            if t == null {
+                return null
+            }
+            result.add(t)
+        }
+        if expect(Token.Kind.GT, "'>'") == null {
+            return null
+        }
+        return FixedArray<ASTNode>.from(result)
+    }
+
+    ================================================================================================
     callExpression = term ((LPAREN (expression (COMMA expression)*)? RPAREN |
-            DOT (methodName | INIT) | LBRACKET expression RBRACKET)* |
+            DOT (methodName | INIT) typeSpecifiers? | LBRACKET expression RBRACKET)* |
             (CAST | INSTANCEOF | NINSTANCEOF) type)* |
             (<if result so far is a valid class name> LT type (COMMA type)* GT)?
     Note there is a great deal of special handling to deal with class names, due to ambiguities
@@ -1066,7 +1094,20 @@ class Parser {
                             return null
                         }
                     }
-                    result := ASTNode.DOT(token.position, result, name)
+                    def base := result
+                    result := ASTNode.DOT(token.position, base, name)
+                    if peek().kind = Token.Kind.LT {
+                        startSpeculative()
+                        def types := typeSpecifiers()
+                        if types !== null {
+                            accept()
+                            result := ASTNode.DOT_GENERICS(token.position, base, name, types)
+                        }
+                        else {
+                            rewind()
+                            return result
+                        }
+                    }
                 }
                 when Token.Kind.CAST {
                     def target := type()

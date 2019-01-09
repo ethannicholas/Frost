@@ -896,7 +896,7 @@ goto block3;
 block4:;
 // line 226
 org$pandalanguage$pandac$ASTNode* $tmp411 = (org$pandalanguage$pandac$ASTNode*) pandaObjectAlloc(104, (panda$core$Class*) &org$pandalanguage$pandac$ASTNode$class);
-panda$core$Int64 $tmp412 = (panda$core$Int64) {36};
+panda$core$Int64 $tmp412 = (panda$core$Int64) {37};
 org$pandalanguage$pandac$Position $tmp413 = *(&local0);
 panda$core$String* $tmp414 = (panda$core$String*) pandaObjectAlloc(48, (panda$core$Class*) &panda$core$String$class);
 panda$core$Char8* $tmp415 = *(&local4);

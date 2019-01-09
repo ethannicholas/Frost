@@ -29,6 +29,6 @@ typedef struct org$pandalanguage$pandac$parser$Parser {
     org$pandalanguage$pandac$parser$SyntaxHighlighter* syntaxHighlighter;
 } org$pandalanguage$pandac$parser$Parser;
 #include "panda/core/Class.h"
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[82]; } org$pandalanguage$pandac$parser$Parser$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[83]; } org$pandalanguage$pandac$parser$Parser$class_type;
 extern org$pandalanguage$pandac$parser$Parser$class_type org$pandalanguage$pandac$parser$Parser$class;
 

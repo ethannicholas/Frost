@@ -63,6 +63,7 @@ class MethodDecl : Symbol {
 
     property declaration:String
 
+    @pre(genericParameters == null | genericParameters.count > 0)
     init(owner:ClassDecl, position:Position, doccomment:String?, annotations:Annotations,
             methodKind:Kind, name:String, genericParameters:Array<ClassDecl.GenericParameter>?,
             parameters:Array<Parameter>, returnType:Type,

@@ -9,7 +9,7 @@ typedef struct org$pandalanguage$pandac$IR$Value {
     panda$core$Class* $class;
     panda$core$Int32 refCount;
     panda$core$Int64 $rawValue;
-    int8_t $data[16];
+    int8_t $data[24];
 } org$pandalanguage$pandac$IR$Value;
 #include "panda/core/Class.h"
 typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[3]; } org$pandalanguage$pandac$IR$Value$class_type;

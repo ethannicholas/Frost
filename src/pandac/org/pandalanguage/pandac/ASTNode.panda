@@ -31,6 +31,7 @@ choice ASTNode {
     DECLARATION            (Position, ASTNode -* target *-, ASTNode? -* initializer *-)
     DO                     (Position, String?, FixedArray<ASTNode>, ASTNode)
     DOT                    (Position, ASTNode, String)
+    DOT_GENERICS           (Position, ASTNode, String, FixedArray<ASTNode>)
     FIELD                  (Position,
                             ASTNode?             -* Doccomment (STRING) *-,
                             FixedArray<ASTNode>  -* ANNOTATIONs *-,
@@ -135,6 +136,9 @@ choice ASTNode {
                 return position
             }
             when DOT(position, _, _) {
+                return position
+            }
+            when DOT_GENERICS(position, _, _, _) {
                 return position
             }
             when FIELD(position, _, _, _) {
@@ -356,6 +360,9 @@ choice ASTNode {
             }
             when DOT(_, base, field) {
                 return "\{base}.\{field}"
+            }
+            when DOT_GENERICS(_, base, field, types) {
+                return "\{base}.\{field}<\{types.join(" ")}>"
             }
             when FIELD(_, dc, annotations, decl) {
                 def result := MutableString()

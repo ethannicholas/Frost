@@ -44,7 +44,7 @@ class Scanner {
                         return t
                     }
                 }
-                assert false
+                assert false, "unsupported type: \{type}"
             }
             when ASTNode.METHOD_TYPE(position, kind, rawParameters, rawReturnType) {
                 def typeKind:Type.Kind
@@ -351,6 +351,9 @@ class Scanner {
                 return result
             }
             when ASTNode.DOT(_, base, _) {
+                return complexity(base)
+            }
+            when ASTNode.DOT_GENERICS(_, base, _, _) {
                 return complexity(base)
             }
             when ASTNode.FOR(_, _, _, list, statements) {
@@ -747,8 +750,7 @@ class Scanner {
         if !foundInit & kind = ClassDecl.Kind.CLASS & result.name != "panda.unsafe.Pointer" {
             def defaultInit := MethodDecl(result, position, null,
                     Annotations(Annotations.Flag.SYNTHETIC), MethodDecl.Kind.INIT, "init",
-                    Array<ClassDecl.GenericParameter>(), Array<MethodDecl.Parameter>(),
-                    Type.Void(), FixedArray<ASTNode>())
+                    null, [], Type.Void(), FixedArray<ASTNode>())
             result.methods.add(defaultInit)
             result.symbolTable.add(defaultInit)
         }
@@ -756,8 +758,7 @@ class Scanner {
                 result.name != "panda.unsafe.Pointer" {
             def defaultCleanup := MethodDecl(result, position, null,
                     Annotations(Annotations.Flag.OVERRIDE || Annotations.Flag.SYNTHETIC),
-                    MethodDecl.Kind.METHOD, "cleanup", Array<ClassDecl.GenericParameter>(),
-                    Array<MethodDecl.Parameter>(), Type.Void(), FixedArray<ASTNode>())
+                    MethodDecl.Kind.METHOD, "cleanup", null, [], Type.Void(), FixedArray<ASTNode>())
             result.methods.add(defaultCleanup)
             result.symbolTable.add(defaultCleanup)
         }
@@ -806,14 +807,12 @@ class Scanner {
             classes.add(bareCodeClass)
             def defaultInit := MethodDecl(bareCodeClass, Position(), null,
                     Annotations(Annotations.Flag.SYNTHETIC), MethodDecl.Kind.INIT, "init",
-                    Array<ClassDecl.GenericParameter>(), Array<MethodDecl.Parameter>(), Type.Void(),
-                    FixedArray<ASTNode>())
+                    null, [], Type.Void(), FixedArray<ASTNode>())
             bareCodeClass.methods.add(defaultInit)
             bareCodeClass.symbolTable.add(defaultInit)
             def defaultCleanup := MethodDecl(bareCodeClass, Position(), null,
                     Annotations(Annotations.Flag.OVERRIDE || Annotations.Flag.SYNTHETIC),
-                    MethodDecl.Kind.METHOD, "cleanup", Array<ClassDecl.GenericParameter>(),
-                    Array<MethodDecl.Parameter>(), Type.Void(), FixedArray<ASTNode>())
+                    MethodDecl.Kind.METHOD, "cleanup", null, [], Type.Void(), FixedArray<ASTNode>())
             bareCodeClass.methods.add(defaultCleanup)
             bareCodeClass.symbolTable.add(defaultCleanup)
         }
@@ -895,8 +894,8 @@ class Scanner {
                                 }
                                 def bareMain := MethodDecl(bareCodeClass, Position(), null,
                                         Annotations(Annotations.Flag.CLASS), MethodDecl.Kind.METHOD,
-                                        "main", Array<ClassDecl.GenericParameter>(), mainParameters,
-                                        returnType, FixedArray<ASTNode>.from(mainStatements))
+                                        "main", null, mainParameters, returnType,
+                                        FixedArray<ASTNode>.from(mainStatements))
                                 bareCodeClass.methods.add(bareMain)
                             }
                             else {

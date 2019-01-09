@@ -126,4 +126,13 @@ interface CollectionView<T> : Iterable<T> {
             m(v)
         }
     }
+
+    @default
+    function map<U>(f:(T)=>(U)):Array<U> {
+        def result := Array<U>(count)
+        for v in self {
+            result.add(f(v))
+        }
+        return result
+    }
 }
