@@ -110,6 +110,28 @@ interface Iterator<T> {
         }
     }
 
+    @private
+    class MapIterator<T, U> : Iterator<U> {
+        def base:Iterator<T>
+
+        def map:(T)=>(U)
+
+        init(base:Iterator<T>, map:(T)=>(U)) {
+            self.base := base
+            self.map := map
+        }
+
+        @override
+        function get_done():Bit {
+            return base.get_done()
+        }
+
+        @override
+        method next():U {
+            return map(base.next())
+        }
+    }
+
     -- property done:Bit
 
     function get_done():Bit
@@ -266,5 +288,10 @@ interface Iterator<T> {
             result := f(result, next())
         }
         return result
+    }
+
+    @default
+    method map<U>(f:(T)=>(U)):Iterator<U> {
+        return MapIterator<T, U>(self, f)
     }
 }

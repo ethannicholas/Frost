@@ -237,11 +237,8 @@ class WriteNumbers {
     }
 
     @class
-    function priority(leftType:Type, rightType:Type):Int {
-        if leftType = rightType {
-            return 10
-        }
-        match rightType {
+    function priority(type:Type):Int {
+        match type {
             when Type.UINT8  { return 0 }
             when Type.INT8   { return 1 }
             when Type.UINT16 { return 2 }
@@ -253,6 +250,15 @@ class WriteNumbers {
             when Type.REAL32 { return 8 }
             when Type.REAL64 { return 9 }
         }
+    }
+
+
+    @class
+    function priority(leftType:Type, rightType:Type):Int {
+        if leftType = rightType {
+            return 20
+        }
+        return priority(leftType) + priority(rightType)
     }
 
     @class

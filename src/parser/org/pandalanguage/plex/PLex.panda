@@ -87,7 +87,7 @@ class PLex {
         token.level += 1
         token.printLine("match self {")
         token.level += 1
-        for id in tokens.keys() {
+        for id in tokens.keys {
             token.printLine("when \{id} { return \{id.format("panda")} }")
         }
         token.printLine("when EOF { return \"EOF\" }")

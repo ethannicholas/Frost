@@ -215,12 +215,12 @@ class IdentityMap<K, V> : Map<K, V> {
     }
 
     @override
-    function keys():Iterator<K> {
+    function get_keys():Iterator<K> {
         assert false, "unimplemented" -- FIXME
     }
 
     @override
-    function values():Iterator<V> {
+    function get_values():Iterator<V> {
         assert false, "unimplemented" -- FIXME
     }
 

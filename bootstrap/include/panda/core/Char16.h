@@ -6,6 +6,8 @@
 #include "panda/core/Bit_types.h"
 typedef struct panda$core$String panda$core$String;
 #include "panda/core/Int64_types.h"
+#include "panda/core/Char8_types.h"
+#include "panda/core/Char32_types.h"
 #include "panda/core/Int8_types.h"
 #include "panda/core/Int16_types.h"
 #include "panda/core/Int32_types.h"
@@ -23,6 +25,8 @@ panda$core$Bit panda$core$Char16$$GE$panda$core$Char16$R$panda$core$Bit(panda$co
 panda$core$String* panda$core$Char16$$MUL$panda$core$Int64$R$panda$core$String(panda$core$Char16 self, panda$core$Int64 p_count);
 panda$core$String* panda$core$Char16$$MUL$panda$core$Int64$panda$core$Char16$R$panda$core$String(panda$core$Int64 p_count, panda$core$Char16 p_char);
 panda$core$Int64 panda$core$Char16$get_hash$R$panda$core$Int64(panda$core$Char16 self);
+panda$core$Char8 panda$core$Char16$convert$R$panda$core$Char8(panda$core$Char16 self);
+panda$core$Char32 panda$core$Char16$convert$R$panda$core$Char32(panda$core$Char16 self);
 panda$core$Int8 panda$core$Char16$convert$R$panda$core$Int8(panda$core$Char16 self);
 panda$core$Int16 panda$core$Char16$convert$R$panda$core$Int16(panda$core$Char16 self);
 panda$core$Int32 panda$core$Char16$convert$R$panda$core$Int32(panda$core$Char16 self);

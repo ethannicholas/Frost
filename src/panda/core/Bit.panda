@@ -54,6 +54,14 @@ class Bit : Value, Key<Bit>, Formattable {
         return Bit(value ~ other.value)
     }
 
+    -- FIXME make lazy
+    function choose<T>(ifTrue:T, ifFalse:T):T {
+        if self {
+            return ifTrue
+        }
+        return ifFalse
+    }
+
     ================================================================================================
     Chooses one of two strings based on the value of this `Bit`. The format string must be of the
     form `trueString|falseString`, and the result will be `trueString` if this `Bit` is true,

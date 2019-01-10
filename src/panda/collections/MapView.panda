@@ -9,6 +9,10 @@ implementation).
 interface MapView<K, V> {
     property count:Int
 
+    property keys:Iterator<K>
+
+    property values:Iterator<V>
+
     function get_count():Int
 
     ================================================================================================
@@ -24,9 +28,7 @@ interface MapView<K, V> {
     ================================================================================================
     function contains(key:K):Bit
 
-    -- FIXME make this a property
-    function keys():Iterator<K>
+    function get_keys():Iterator<K>
 
-    -- FIXME make this a property
-    function values():Iterator<V>
+    function get_values():Iterator<V>
 }

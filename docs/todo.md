@@ -1,7 +1,6 @@
 Rearchitecture
 ==============
 
-method shims
 @class binary overloads Int[1 .. 10]
 inlining
 

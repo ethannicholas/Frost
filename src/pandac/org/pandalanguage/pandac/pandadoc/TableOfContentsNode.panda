@@ -80,7 +80,7 @@ class TableOfContentsNode {
         }
         if children.count != 0 {
             out.open("contents")
-            def list := children.values().all()
+            def list := children.values.all()
             sort(list)
             for child in list {
                 child.write(apiRelativePath, out)

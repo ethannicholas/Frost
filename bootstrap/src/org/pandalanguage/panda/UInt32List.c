@@ -28,9 +28,9 @@ __attribute__((weak)) panda$core$Object* org$pandalanguage$panda$UInt32List$$IDX
 
 struct { panda$core$Class* cl; ITable* next; void* methods[1]; } org$pandalanguage$panda$UInt32List$_panda$collections$Iterable = { (panda$core$Class*) &panda$collections$Iterable$class, NULL, { panda$collections$ListView$iterator$R$panda$collections$Iterator$LTpanda$collections$ListView$T$GT$shim} };
 
-struct { panda$core$Class* cl; ITable* next; void* methods[6]; } org$pandalanguage$panda$UInt32List$_panda$collections$ListView = { (panda$core$Class*) &panda$collections$ListView$class, (ITable*) &org$pandalanguage$panda$UInt32List$_panda$collections$Iterable, { org$pandalanguage$panda$UInt32List$$IDX$panda$core$Int64$R$panda$core$UInt32$shim, panda$collections$ListView$$IDX$panda$core$Range$LTpanda$core$Int64$GT$R$panda$collections$ListView$LTpanda$collections$ListView$T$GT, panda$collections$ListView$$IDX$panda$core$Range$LTpanda$core$Int64$Q$GT$R$panda$collections$ListView$LTpanda$collections$ListView$T$GT, panda$collections$ListView$$IDX$panda$core$SteppedRange$LTpanda$core$Int64$Q$Cpanda$core$Int64$GT$R$panda$collections$ListView$LTpanda$collections$ListView$T$GT, panda$collections$ListView$filter$$LPpanda$collections$ListView$T$RP$EQ$GT$LPpanda$core$Bit$RP$R$panda$collections$ListView$LTpanda$collections$ListView$T$GT, panda$collections$ListView$iterator$R$panda$collections$Iterator$LTpanda$collections$ListView$T$GT$shim} };
+struct { panda$core$Class* cl; ITable* next; void* methods[7]; } org$pandalanguage$panda$UInt32List$_panda$collections$ListView = { (panda$core$Class*) &panda$collections$ListView$class, (ITable*) &org$pandalanguage$panda$UInt32List$_panda$collections$Iterable, { org$pandalanguage$panda$UInt32List$$IDX$panda$core$Int64$R$panda$core$UInt32$shim, panda$collections$ListView$$IDX$panda$core$Range$LTpanda$core$Int64$GT$R$panda$collections$ListView$LTpanda$collections$ListView$T$GT, panda$collections$ListView$$IDX$panda$core$Range$LTpanda$core$Int64$Q$GT$R$panda$collections$ListView$LTpanda$collections$ListView$T$GT, panda$collections$ListView$$IDX$panda$core$SteppedRange$LTpanda$core$Int64$Q$Cpanda$core$Int64$GT$R$panda$collections$ListView$LTpanda$collections$ListView$T$GT, panda$collections$ListView$filter$$LPpanda$collections$ListView$T$RP$EQ$GT$LPpanda$core$Bit$RP$R$panda$collections$ListView$LTpanda$collections$ListView$T$GT, panda$collections$ListView$iterator$R$panda$collections$Iterator$LTpanda$collections$ListView$T$GT$shim, panda$collections$ListView$sorted$$LPpanda$collections$ListView$T$Cpanda$collections$ListView$T$RP$EQ$GT$LPpanda$core$Bit$RP$R$panda$collections$ListView$LTpanda$collections$ListView$T$GT} };
 
-struct { panda$core$Class* cl; ITable* next; void* methods[6]; } org$pandalanguage$panda$UInt32List$_panda$collections$CollectionView = { (panda$core$Class*) &panda$collections$CollectionView$class, (ITable*) &org$pandalanguage$panda$UInt32List$_panda$collections$ListView, { org$pandalanguage$panda$UInt32List$get_count$R$panda$core$Int64, panda$collections$CollectionView$join$R$panda$core$String, panda$collections$CollectionView$join$panda$core$String$R$panda$core$String, panda$collections$CollectionView$fold$$LPpanda$collections$CollectionView$T$Cpanda$collections$CollectionView$T$RP$EQ$GT$LPpanda$collections$CollectionView$T$RP$R$panda$collections$CollectionView$T, panda$collections$CollectionView$fold$$LPpanda$collections$CollectionView$T$Cpanda$collections$CollectionView$T$RP$EQ$GT$LPpanda$collections$CollectionView$T$RP$panda$collections$CollectionView$T$R$panda$collections$CollectionView$T, panda$collections$CollectionView$apply$$LPpanda$collections$CollectionView$T$RP$EQ$AM$GT$LP$RP} };
+struct { panda$core$Class* cl; ITable* next; void* methods[7]; } org$pandalanguage$panda$UInt32List$_panda$collections$CollectionView = { (panda$core$Class*) &panda$collections$CollectionView$class, (ITable*) &org$pandalanguage$panda$UInt32List$_panda$collections$ListView, { org$pandalanguage$panda$UInt32List$get_count$R$panda$core$Int64, panda$collections$CollectionView$join$R$panda$core$String, panda$collections$CollectionView$join$panda$core$String$R$panda$core$String, panda$collections$CollectionView$fold$$LPpanda$collections$CollectionView$T$Cpanda$collections$CollectionView$T$RP$EQ$GT$LPpanda$collections$CollectionView$T$RP$R$panda$collections$CollectionView$T, panda$collections$CollectionView$fold$$LPpanda$collections$CollectionView$T$Cpanda$collections$CollectionView$T$RP$EQ$GT$LPpanda$collections$CollectionView$T$RP$panda$collections$CollectionView$T$R$panda$collections$CollectionView$T, panda$collections$CollectionView$apply$$LPpanda$collections$CollectionView$T$RP$EQ$AM$GT$LP$RP, panda$collections$CollectionView$map$$LPpanda$collections$CollectionView$T$RP$EQ$GT$LPpanda$collections$CollectionView$map$U$RP$R$panda$collections$Array$LTpanda$collections$CollectionView$map$U$GT} };
 
 static panda$core$String $s1;
 org$pandalanguage$panda$UInt32List$class_type org$pandalanguage$panda$UInt32List$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, (ITable*) &org$pandalanguage$panda$UInt32List$_panda$collections$CollectionView, { org$pandalanguage$panda$UInt32List$convert$R$panda$core$String, org$pandalanguage$panda$UInt32List$cleanup, org$pandalanguage$panda$UInt32List$computeCount$R$panda$core$Int64, org$pandalanguage$panda$UInt32List$get_count$R$panda$core$Int64, org$pandalanguage$panda$UInt32List$$IDX$panda$core$Int64$R$panda$core$UInt32$shim} };
@@ -140,12 +140,12 @@ uint32_t $tmp58 = $tmp56 / $tmp57;
 panda$core$UInt32 $tmp59 = (panda$core$UInt32) {$tmp58};
 panda$core$UInt32 $tmp60 = (panda$core$UInt32) {0};
 panda$core$UInt32 $tmp61 = panda$core$UInt32$max$panda$core$UInt32$R$panda$core$UInt32($tmp59, $tmp60);
-panda$core$Int64 $tmp62 = panda$core$Int64$init$panda$core$UInt32($tmp61);
-panda$core$Int64 $tmp63 = (panda$core$Int64) {1};
-int64_t $tmp64 = $tmp62.value;
-int64_t $tmp65 = $tmp63.value;
-int64_t $tmp66 = $tmp64 + $tmp65;
-panda$core$Int64 $tmp67 = (panda$core$Int64) {$tmp66};
+panda$core$UInt32 $tmp62 = (panda$core$UInt32) {1};
+uint32_t $tmp63 = $tmp61.value;
+uint32_t $tmp64 = $tmp62.value;
+uint32_t $tmp65 = $tmp63 + $tmp64;
+panda$core$UInt32 $tmp66 = (panda$core$UInt32) {$tmp65};
+panda$core$Int64 $tmp67 = panda$core$Int64$init$panda$core$UInt32($tmp66);
 return $tmp67;
 block3:;
 // line 1
@@ -178,12 +178,12 @@ uint32_t $tmp89 = $tmp87 / $tmp88;
 panda$core$UInt32 $tmp90 = (panda$core$UInt32) {$tmp89};
 panda$core$UInt32 $tmp91 = (panda$core$UInt32) {0};
 panda$core$UInt32 $tmp92 = panda$core$UInt32$max$panda$core$UInt32$R$panda$core$UInt32($tmp90, $tmp91);
-panda$core$Int64 $tmp93 = panda$core$Int64$init$panda$core$UInt32($tmp92);
-panda$core$Int64 $tmp94 = (panda$core$Int64) {1};
-int64_t $tmp95 = $tmp93.value;
-int64_t $tmp96 = $tmp94.value;
-int64_t $tmp97 = $tmp95 + $tmp96;
-panda$core$Int64 $tmp98 = (panda$core$Int64) {$tmp97};
+panda$core$UInt32 $tmp93 = (panda$core$UInt32) {1};
+uint32_t $tmp94 = $tmp92.value;
+uint32_t $tmp95 = $tmp93.value;
+uint32_t $tmp96 = $tmp94 + $tmp95;
+panda$core$UInt32 $tmp97 = (panda$core$UInt32) {$tmp96};
+panda$core$Int64 $tmp98 = panda$core$Int64$init$panda$core$UInt32($tmp97);
 return $tmp98;
 block2:;
 panda$core$Bit $tmp99 = panda$core$Bit$init$builtin_bit(false);

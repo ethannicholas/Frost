@@ -24,6 +24,7 @@ typedef struct panda$collections$Array panda$collections$Array;
 void panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64(panda$core$String* self, panda$core$Char8* p_data, panda$core$Int64 p_length);
 void panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64$panda$core$String(panda$core$String* self, panda$core$Char8* p_data, panda$core$Int64 p_length, panda$core$String* p_owner);
 void panda$core$String$init$panda$collections$ListView$LTpanda$core$Char8$GT(panda$core$String* self, panda$collections$ListView* p_chars);
+void panda$core$String$init$panda$collections$ListView$LTpanda$core$Char32$GT(panda$core$String* self, panda$collections$ListView* p_chars);
 panda$core$String* panda$core$String$convert$R$panda$core$String(panda$core$String* self);
 panda$core$String* panda$core$String$format$panda$core$String$R$panda$core$String(panda$core$String* self, panda$core$String* p_fmt);
 void panda$core$String$cleanup(panda$core$String* self);

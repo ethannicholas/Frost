@@ -68,13 +68,13 @@ class Int64 : Value, Key<Int64>, Comparable<Int64>, Formattable, ListView<Bit> {
     }
 
     ===Adds another number to this number.===
-    @priority(10)
+    @priority(20)
     function +(other:Int64):Int64 {
         return value + other.value
     }
 
     ===Subtracts another number from this number.===
-    @priority(10)
+    @priority(20)
     function -(other:Int64):Int64 {
         return value - other.value
     }
@@ -85,79 +85,79 @@ class Int64 : Value, Key<Int64>, Comparable<Int64>, Formattable, ListView<Bit> {
     }
 
     ===Multiplies this number by another number.===
-    @priority(10)
+    @priority(20)
     function *(other:Int64):Int64 {
         return value * other.value
     }
 
     ===Divides this number by another number, returning the whole number portion.===
-    @priority(10)
+    @priority(20)
     function //(other:Int64):Int64 {
         return value // other.value
     }
 
     ===Returns the remainder of dividing this number by another number.===
-    @priority(10)
+    @priority(20)
     function %(other:Int64):Int64 {
         return value % other.value
     }
 
     ===Divides this number by another number.===
-    @priority(1)
+    @priority(8)
     function /(other:Int8):Real64 {
         return value->builtin_float64 / other.value->builtin_float64
     }
 
     ===Divides this number by another number.===
-    @priority(3)
+    @priority(10)
     function /(other:Int16):Real64 {
         return value->builtin_float64 / other.value->builtin_float64
     }
 
     ===Divides this number by another number.===
-    @priority(5)
+    @priority(12)
     function /(other:Int32):Real64 {
         return value->builtin_float64 / other.value->builtin_float64
     }
 
     ===Divides this number by another number.===
-    @priority(10)
+    @priority(20)
     function /(other:Int64):Real64 {
         return value->builtin_float64 / other.value->builtin_float64
     }
 
     ===Divides this number by another number.===
-    @priority(0)
+    @priority(7)
     function /(other:UInt8):Real64 {
         return value->builtin_float64 / other.value->builtin_float64
     }
 
     ===Divides this number by another number.===
-    @priority(2)
+    @priority(9)
     function /(other:UInt16):Real64 {
         return value->builtin_float64 / other.value->builtin_float64
     }
 
     ===Divides this number by another number.===
-    @priority(4)
+    @priority(11)
     function /(other:UInt32):Real64 {
         return value->builtin_float64 / other.value->builtin_float64
     }
 
     ===Divides this number by another number.===
-    @priority(6)
+    @priority(13)
     function /(other:UInt64):Real64 {
         return value->builtin_float64 / other.value->builtin_float64
     }
 
     ===Divides this number by another number.===
-    @priority(8)
+    @priority(15)
     function /(other:Real32):Real64 {
         return value->builtin_float64 / other.value->builtin_float64
     }
 
     ===Divides this number by another number.===
-    @priority(9)
+    @priority(16)
     function /(other:Real64):Real64 {
         return value->builtin_float64 / other.value
     }
@@ -168,211 +168,211 @@ class Int64 : Value, Key<Int64>, Comparable<Int64>, Formattable, ListView<Bit> {
     }
 
     ===Returns the bitwise AND of this number with another number.===
-    @priority(10)
+    @priority(20)
     function &&(other:Int64):Int64 {
         return value && other.value
     }
 
     ===Returns the bitwise AND of this number with another number.===
-    @priority(6)
+    @priority(13)
     function &&(other:UInt64):UInt64 {
         return value->builtin_uint64 && other.value
     }
 
     ===Returns the bitwise OR of this number with another number.===
-    @priority(10)
+    @priority(20)
     function ||(other:Int64):Int64 {
         return value || other.value
     }
 
     ===Returns the bitwise OR of this number with another number.===
-    @priority(6)
+    @priority(13)
     function ||(other:UInt64):UInt64 {
         return value->builtin_uint64 || other.value
     }
 
     ===Returns the bitwise XOR of this number with another number.===
-    @priority(10)
+    @priority(20)
     function ~~(other:Int64):Int64 {
         return value ~~ other.value
     }
 
     ===Returns the bitwise XOR of this number with another number.===
-    @priority(6)
+    @priority(13)
     function ~~(other:UInt64):UInt64 {
         return value->builtin_uint64 ~~ other.value
     }
 
     ===Returns this number shifted left by the specified number of bits.===
-    @priority(10)
+    @priority(20)
     function <<(other:Int64):Int64 {
         return value << other.value
     }
 
     ===Returns this number shifted left by the specified number of bits.===
-    @priority(6)
+    @priority(13)
     function <<(other:UInt64):UInt64 {
         return value->builtin_uint64 << other.value
     }
 
     ===Returns this number arithmetic shifted right by the specified number of bits.===
-    @priority(10)
+    @priority(20)
     function >>(other:Int64):Int64 {
         return value >> other.value
     }
 
     ===Returns this number arithmetic shifted right by the specified number of bits.===
-    @priority(6)
+    @priority(13)
     function >>(other:UInt64):UInt64 {
         return value->builtin_uint64 >> other.value
     }
 
     ===Returns `true` if this number is equal to the given number.===
-    @priority(1)
+    @priority(8)
     function =(other:Int8):Bit {
         return value = other.value->builtin_int64
     }
 
     ===Returns `true` if this number is equal to the given number.===
-    @priority(3)
+    @priority(10)
     function =(other:Int16):Bit {
         return value = other.value->builtin_int64
     }
 
     ===Returns `true` if this number is equal to the given number.===
-    @priority(5)
+    @priority(12)
     function =(other:Int32):Bit {
         return value = other.value->builtin_int64
     }
 
     ===Returns `true` if this number is equal to the given number.===
     @override
-    @priority(10)
+    @priority(20)
     function =(other:Int64):Bit {
         return value = other.value
     }
 
     ===Returns `true` if this number is not equal to the given number.===
-    @priority(1)
+    @priority(8)
     function !=(other:Int8):Bit {
         return value != other.value->builtin_int64
     }
 
     ===Returns `true` if this number is not equal to the given number.===
-    @priority(3)
+    @priority(10)
     function !=(other:Int16):Bit {
         return value != other.value->builtin_int64
     }
 
     ===Returns `true` if this number is not equal to the given number.===
-    @priority(5)
+    @priority(12)
     function !=(other:Int32):Bit {
         return value != other.value->builtin_int64
     }
 
     ===Returns `true` if this number is not equal to the given number.===
     @override
-    @priority(10)
+    @priority(20)
     function !=(other:Int64):Bit {
         return value != other.value
     }
 
     ===Returns `true` if this number is less than the given number.===
-    @priority(1)
+    @priority(8)
     function <(other:Int8):Bit {
         return value < other.value->builtin_int64
     }
 
     ===Returns `true` if this number is less than the given number.===
-    @priority(3)
+    @priority(10)
     function <(other:Int16):Bit {
         return value < other.value->builtin_int64
     }
 
     ===Returns `true` if this number is less than the given number.===
-    @priority(5)
+    @priority(12)
     function <(other:Int32):Bit {
         return value < other.value->builtin_int64
     }
 
     ===Returns `true` if this number is less than the given number.===
     @override
-    @priority(10)
+    @priority(20)
     function <(other:Int64):Bit {
         return value < other.value
     }
 
     ===Returns `true` if this number is greater than the given number.===
-    @priority(1)
+    @priority(8)
     function >(other:Int8):Bit {
         return value > other.value->builtin_int64
     }
 
     ===Returns `true` if this number is greater than the given number.===
-    @priority(3)
+    @priority(10)
     function >(other:Int16):Bit {
         return value > other.value->builtin_int64
     }
 
     ===Returns `true` if this number is greater than the given number.===
-    @priority(5)
+    @priority(12)
     function >(other:Int32):Bit {
         return value > other.value->builtin_int64
     }
 
     ===Returns `true` if this number is greater than the given number.===
     @override
-    @priority(10)
+    @priority(20)
     function >(other:Int64):Bit {
         return value > other.value
     }
 
     ===Returns `true` if this number is greater than or equal to the given number.===
-    @priority(1)
+    @priority(8)
     function >=(other:Int8):Bit {
         return value >= other.value->builtin_int64
     }
 
     ===Returns `true` if this number is greater than or equal to the given number.===
-    @priority(3)
+    @priority(10)
     function >=(other:Int16):Bit {
         return value >= other.value->builtin_int64
     }
 
     ===Returns `true` if this number is greater than or equal to the given number.===
-    @priority(5)
+    @priority(12)
     function >=(other:Int32):Bit {
         return value >= other.value->builtin_int64
     }
 
     ===Returns `true` if this number is greater than or equal to the given number.===
     @override
-    @priority(10)
+    @priority(20)
     function >=(other:Int64):Bit {
         return value >= other.value
     }
 
     ===Returns `true` if this number is less than or equal to the given number.===
-    @priority(1)
+    @priority(8)
     function <=(other:Int8):Bit {
         return value <= other.value->builtin_int64
     }
 
     ===Returns `true` if this number is less than or equal to the given number.===
-    @priority(3)
+    @priority(10)
     function <=(other:Int16):Bit {
         return value <= other.value->builtin_int64
     }
 
     ===Returns `true` if this number is less than or equal to the given number.===
-    @priority(5)
+    @priority(12)
     function <=(other:Int32):Bit {
         return value <= other.value->builtin_int64
     }
 
     ===Returns `true` if this number is less than or equal to the given number.===
     @override
-    @priority(10)
+    @priority(20)
     function <=(other:Int64):Bit {
         return value <= other.value
     }
@@ -386,7 +386,7 @@ class Int64 : Value, Key<Int64>, Comparable<Int64>, Formattable, ListView<Bit> {
     }
 
     ===Returns the smaller (closest to negative infinity) of this number and another number.===
-    @priority(1)
+    @priority(8)
     function min(other:Int8):Int64 {
         if value < other.value->builtin_int64 {
             return value
@@ -395,7 +395,7 @@ class Int64 : Value, Key<Int64>, Comparable<Int64>, Formattable, ListView<Bit> {
     }
 
     ===Returns the smaller (closest to negative infinity) of this number and another number.===
-    @priority(3)
+    @priority(10)
     function min(other:Int16):Int64 {
         if value < other.value->builtin_int64 {
             return value
@@ -404,7 +404,7 @@ class Int64 : Value, Key<Int64>, Comparable<Int64>, Formattable, ListView<Bit> {
     }
 
     ===Returns the smaller (closest to negative infinity) of this number and another number.===
-    @priority(5)
+    @priority(12)
     function min(other:Int32):Int64 {
         if value < other.value->builtin_int64 {
             return value
@@ -413,7 +413,7 @@ class Int64 : Value, Key<Int64>, Comparable<Int64>, Formattable, ListView<Bit> {
     }
 
     ===Returns the smaller (closest to negative infinity) of this number and another number.===
-    @priority(10)
+    @priority(20)
     function min(other:Int64):Int64 {
         if value < other.value {
             return value
@@ -426,7 +426,7 @@ class Int64 : Value, Key<Int64>, Comparable<Int64>, Formattable, ListView<Bit> {
 
 
     ===Returns the larger (closest to positive infinity) of this number and another number.===
-    @priority(1)
+    @priority(8)
     function max(other:Int8):Int64 {
         if value > other.value->builtin_int64 {
             return value
@@ -435,7 +435,7 @@ class Int64 : Value, Key<Int64>, Comparable<Int64>, Formattable, ListView<Bit> {
     }
 
     ===Returns the larger (closest to positive infinity) of this number and another number.===
-    @priority(3)
+    @priority(10)
     function max(other:Int16):Int64 {
         if value > other.value->builtin_int64 {
             return value
@@ -444,7 +444,7 @@ class Int64 : Value, Key<Int64>, Comparable<Int64>, Formattable, ListView<Bit> {
     }
 
     ===Returns the larger (closest to positive infinity) of this number and another number.===
-    @priority(5)
+    @priority(12)
     function max(other:Int32):Int64 {
         if value > other.value->builtin_int64 {
             return value
@@ -453,7 +453,7 @@ class Int64 : Value, Key<Int64>, Comparable<Int64>, Formattable, ListView<Bit> {
     }
 
     ===Returns the larger (closest to positive infinity) of this number and another number.===
-    @priority(10)
+    @priority(20)
     function max(other:Int64):Int64 {
         if value > other.value {
             return value

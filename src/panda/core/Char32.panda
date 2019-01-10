@@ -81,6 +81,14 @@ class Char32 : Value, Key<Char32>, Comparable<Char32> {
         return convert()
     }
 
+    function convert():Char8 {
+        return Char8(convert())
+    }
+
+    function convert():Char16 {
+        return Char16(convert())
+    }
+
     function convert():Int8 {
         return Int8(value->builtin_int8)
     }

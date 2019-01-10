@@ -58,12 +58,12 @@ class Panda {
     }
 
     method dumpReport() {
-        for k in allocations.keys() { -- FIXME entries
+        for k in allocations.keys { -- FIXME entries
             if allocations[k] != 0 {
                 Console.printLine("\{k}: \{allocations[k]}")
             }
         }
-        for k in traces.keys() { -- FIXME entries
+        for k in traces.keys { -- FIXME entries
             Console.printLine("\{k}: \{traces[k]}")
         }
     }

@@ -46,9 +46,7 @@ class Parser {
 
     def commaSeparatedExpressionContext := Stack<Bit>()
 
-    var inSpeculative := false
-
-    def speculativeBuffer := SpecializedArray<Token>()
+    def speculativeBuffers := Stack<SpecializedArray<Token>>()
 
     var allowLambdas := true
 
@@ -97,8 +95,8 @@ class Parser {
             }
             syntaxHighlighter.add(result)
         }
-        if inSpeculative {
-            speculativeBuffer.add(result)
+        if speculativeBuffers.count > 0 {
+            speculativeBuffers[0].add(result)
         }
         return result
     }
@@ -188,7 +186,7 @@ class Parser {
     }
 
     method error(token:Token, msg:String) {
-        if !inSpeculative & reportErrors {
+        if speculativeBuffers.count = 0 & reportErrors {
             errors.post(Compiler.Error(path, token.position, msg))
         }
     }
@@ -205,28 +203,20 @@ class Parser {
         }
     }
 
-    @pre(!inSpeculative)
-    @post(inSpeculative)
     method startSpeculative() {
-        assert !inSpeculative
-        inSpeculative := true
-        speculativeBuffer.clear()
-        speculativeBuffer.addAll(pushbackBuffer)
+        speculativeBuffers.push(SpecializedArray<Token>())
+        speculativeBuffers[0].addAll(pushbackBuffer)
     }
 
-    @pre(inSpeculative)
-    @post(!inSpeculative)
     method accept() {
-        inSpeculative := false
+        speculativeBuffers.pop()
     }
 
-    @pre(inSpeculative)
-    @post(!inSpeculative)
     method rewind() {
-        inSpeculative := false
-        for i in speculativeBuffer.count - 1 ... 0 by -1 {
-            pushbackBuffer.add(speculativeBuffer[i])
+        for i in speculativeBuffers[0].count - 1 ... 0 by -1 {
+            pushbackBuffer.add(speculativeBuffers[0][i])
         }
+        speculativeBuffers.pop()
     }
 
     function text(token:Token):String {
@@ -2792,7 +2782,7 @@ class Parser {
             if entry == null {
                 return null
             }
-            assert !inSpeculative
+            assert speculativeBuffers.count = 0
             entries.add(entry)
         }
         return ASTNode.FILE(FixedArray<ASTNode>.from(entries))

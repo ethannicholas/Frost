@@ -22,8 +22,7 @@ typedef struct org$pandalanguage$pandac$parser$Parser {
     panda$core$String* source;
     panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT* pushbackBuffer;
     panda$collections$Stack* commaSeparatedExpressionContext;
-    panda$core$Bit inSpeculative;
-    panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT* speculativeBuffer;
+    panda$collections$Stack* speculativeBuffers;
     panda$core$Bit allowLambdas;
     panda$core$Bit reportErrors;
     org$pandalanguage$pandac$parser$SyntaxHighlighter* syntaxHighlighter;

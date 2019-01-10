@@ -149,7 +149,7 @@ class HashMap<K:Key<K>, V> : Map<K, V> {
     init(map:MapView<K, V>) {
         init()
         -- FIXME inefficient, need to iterate across entries rather than keys
-        for k in map.keys() {
+        for k in map.keys {
             self[k] := map[k]
         }
     }
@@ -313,12 +313,12 @@ class HashMap<K:Key<K>, V> : Map<K, V> {
     }
 
     @override
-    function keys():Iterator<K> {
+    function get_keys():Iterator<K> {
         return KeyIterator<K, V>(self)
     }
 
     @override
-    function values():Iterator<V> {
+    function get_values():Iterator<V> {
         return ValueIterator<K, V>(self)
     }
 

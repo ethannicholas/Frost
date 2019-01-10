@@ -349,7 +349,7 @@ choice JSON {
             when OBJECT(fields) {
                 def result := MutableString("{")
                 var separator := " "
-                for k in fields.keys() { -- FIXME iterate over tuples
+                for k in fields.keys { -- FIXME iterate over tuples
                     result.append("\{separator}\{k:panda}: \{fields[k]}")
                     separator := ", "
                 }

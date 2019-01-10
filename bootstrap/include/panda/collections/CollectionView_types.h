@@ -9,6 +9,6 @@ typedef struct panda$collections$CollectionView {
     panda$core$Int32 refCount;
 } panda$collections$CollectionView;
 #include "panda/core/Class.h"
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[8]; } panda$collections$CollectionView$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[9]; } panda$collections$CollectionView$class_type;
 extern panda$collections$CollectionView$class_type panda$collections$CollectionView$class;
 

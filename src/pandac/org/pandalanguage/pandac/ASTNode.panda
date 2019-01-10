@@ -40,6 +40,7 @@ choice ASTNode {
     FOR                    (Position, String?, ASTNode, ASTNode, FixedArray<ASTNode>)
     GENERIC_TYPE           (Position, String, FixedArray<ASTNode> -* types *-)
     IDENTIFIER             (Position, String)
+    IDENTIFIER_GENERICS    (Position, String, FixedArray<ASTNode>)
     IF                     (Position, ASTNode, FixedArray<ASTNode> -* ifTrue *-,
                             ASTNode? -* ifFalse *-)
     INT                    (Position, UInt64)
@@ -154,6 +155,9 @@ choice ASTNode {
                 return position
             }
             when IDENTIFIER(position, _) {
+                return position
+            }
+            when IDENTIFIER_GENERICS(position, _, _) {
                 return position
             }
             when IF(position, _, _, _) {
@@ -399,6 +403,9 @@ choice ASTNode {
             }
             when IDENTIFIER(_, name) {
                 return name
+            }
+            when IDENTIFIER_GENERICS(_, name, types) {
+                return "IDENTIFIER_GENERICS(\{name}<\{types.join()}>)"
             }
             when IF(_, test, ifTrue, ifFalse) {
                 def result := MutableString("if \{test} {\n")

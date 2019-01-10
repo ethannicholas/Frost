@@ -208,6 +208,7 @@ add_executable(bootstrap
     bootstrap/src/org/pandalanguage/pandac/ClassDecl/Resolution.c
     bootstrap/src/org/pandalanguage/pandac/CodeGenerator.c
     bootstrap/src/org/pandalanguage/pandac/Compiler.c
+    bootstrap/src/org/pandalanguage/pandac/Compiler/_Closure2.c
     bootstrap/src/org/pandalanguage/pandac/Compiler/AutoAtPreFlag.c
     bootstrap/src/org/pandalanguage/pandac/Compiler/AutoContext.c
     bootstrap/src/org/pandalanguage/pandac/Compiler/AutoScope.c
@@ -312,6 +313,7 @@ add_executable(bootstrap
     bootstrap/src/panda/collections/Iterable.c
     bootstrap/src/panda/collections/Iterator.c
     bootstrap/src/panda/collections/Iterator/FilterIterator.c
+    bootstrap/src/panda/collections/Iterator/MapIterator.c
     bootstrap/src/panda/collections/Iterator/RangeIterator.c
     bootstrap/src/panda/collections/Key.c
     bootstrap/src/panda/collections/List.c

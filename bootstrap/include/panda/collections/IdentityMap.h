@@ -18,7 +18,7 @@ void panda$collections$IdentityMap$remove$panda$collections$IdentityMap$K(panda$
 void panda$collections$IdentityMap$clear(panda$collections$IdentityMap* self);
 void panda$collections$IdentityMap$incrementCount(panda$collections$IdentityMap* self);
 panda$core$Int64 panda$collections$IdentityMap$get_count$R$panda$core$Int64(panda$collections$IdentityMap* self);
-panda$collections$Iterator* panda$collections$IdentityMap$keys$R$panda$collections$Iterator$LTpanda$collections$IdentityMap$K$GT(panda$collections$IdentityMap* self);
-panda$collections$Iterator* panda$collections$IdentityMap$values$R$panda$collections$Iterator$LTpanda$collections$IdentityMap$V$GT(panda$collections$IdentityMap* self);
+panda$collections$Iterator* panda$collections$IdentityMap$get_keys$R$panda$collections$Iterator$LTpanda$collections$IdentityMap$K$GT(panda$collections$IdentityMap* self);
+panda$collections$Iterator* panda$collections$IdentityMap$get_values$R$panda$collections$Iterator$LTpanda$collections$IdentityMap$V$GT(panda$collections$IdentityMap* self);
 panda$core$String* panda$collections$IdentityMap$convert$R$panda$core$String(panda$collections$IdentityMap* self);
 

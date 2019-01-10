@@ -700,7 +700,7 @@ class PandaDoc {
         out.open("package")
         out.write("name", node.name)
         out.open("contents")
-        for c in node.children.values() {
+        for c in node.children.values {
             def cl := compiler.getClass(c.name)
             if cl == null {
                 writePackage(c)
@@ -724,7 +724,7 @@ class PandaDoc {
             out := XMLWriter(dest.openOutputStream())
             writePackage(node)
         }
-        for c in node.children.values() {
+        for c in node.children.values {
             writePackages(c)
         }
     }

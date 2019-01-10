@@ -369,6 +369,19 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
         owner := null
     }
 
+    init(chars:ListView<Char32>) {
+        def result := MutableString()
+        for c in chars {
+            result.append(c)
+        }
+        self.data := Pointer<Char8>.alloc(result._length)
+        for i in 0 .. result._length {
+            self.data[i] := result.data[i]
+        }
+        self._length := result._length
+        owner := null
+    }
+
     ================================================================================================
     Returns this string.
     ================================================================================================

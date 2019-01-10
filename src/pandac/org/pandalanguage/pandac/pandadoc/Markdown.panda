@@ -367,7 +367,7 @@ class Markdown {
     }
 
     method unescapeSpecialChars(ed:MutableString) {
-        for hash in charProtector.decodeMap.keys() {
+        for hash in charProtector.decodeMap.keys {
             def plaintext := charProtector.decode(hash)
             ed.replace(hash, plaintext)
         }

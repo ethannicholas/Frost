@@ -47,6 +47,8 @@ interface ListView<T> : CollectionView<T> {
     to the same objects.
     ================================================================================================
     @default
+    @pre(r.min >= 0 & (r.inclusive & r.min < count | !r.inclusive & r.min <= count) &
+            r.max >= 0 & (r.inclusive & r.max < count | !r.inclusive & r.max <= count))
     function [](r:Range<Int>):ListView<T> {
         var max := r.max
         if r.inclusive {
@@ -99,6 +101,8 @@ interface ListView<T> : CollectionView<T> {
     to the same objects.
     ================================================================================================
     @default
+    @pre(r.start >= 0 & (r.inclusive & r.start < count | !r.inclusive & r.start <= count) &
+            r.end >= 0 & (r.inclusive & r.end < count | !r.inclusive & r.end <= count))
     function [](r:SteppedRange<Int?, Int>):ListView<T> {
         def step := r.step
 
@@ -163,5 +167,50 @@ interface ListView<T> : CollectionView<T> {
     @override
     function iterator():Iterator<T> {
         return ListIterator<T>(self)
+    }
+
+    @private
+    @class
+    method swap(a:Array<T>, i1:Int, i2:Int) {
+        def tmp := a[i1]
+        a[i1] := a[i2]
+        a[i2] := tmp
+    }
+
+    -- quick-and-dirty QuickSort
+    @private
+    @class
+    method sort(a:Array<T>, left:Int, right:Int, greater:(T, T)=>(Bit)) {
+        if left >= right {
+            return
+        }
+        def pivotIndex := left + (right - left) // 2
+        def pivot := a[pivotIndex]
+        swap(a, right, pivotIndex)
+        var storeIndex := left
+        for i in left ... right - 1 {
+            if !greater(a[i], pivot) {
+                swap(a, i, storeIndex)
+                storeIndex += 1
+            }
+        }
+        swap(a, storeIndex, right)
+        sort(a, left, storeIndex - 1, greater)
+        sort(a, storeIndex + 1, right, greater)
+    }
+
+    ================================================================================================
+    Returns a sorted version of the list using the provided comparison method. The list is sorted so
+    that the greatest elements, according to the `greater` function, are at the end (higher indices)
+    of the array. The sort algorithm used may be unstable, meaning equal values (that is, values for
+    which `greater(a, b)` and `greater(b, a)` both return `false`) may be arbitrarily reordered
+    during the sort.
+    ================================================================================================
+    -- FIXME write a better sort, create stableSorted
+    @default
+    method sorted(greater:(T, T)=>(Bit)):ListView<T> {
+        def result := Array<T>(self)
+        sort(result, 0, count - 1, greater)
+        return result
     }
 }

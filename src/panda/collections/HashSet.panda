@@ -38,7 +38,7 @@ class HashSet<T:Key<T>> : Collection<T> {
 
     @override
     function iterator():Iterator<T> {
-        return contents.keys()
+        return contents.keys
     }
 
     function contains(value:T):Bit {
@@ -49,7 +49,7 @@ class HashSet<T:Key<T>> : Collection<T> {
     function convert():String {
         def result := MutableString("[")
         var separator := ""
-        for v in contents.keys() {
+        for v in contents.keys {
             result.append(separator)
             if v !== null {
                 result.append(v)

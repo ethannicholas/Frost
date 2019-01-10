@@ -613,10 +613,10 @@ class Compiler {
     }
 
     ================================================================================================
-    Verifies that a type uses the correct number and kind of generic parameters for the class it
+    Verifies that a type uses the correct number and kind of generic arguments for the class it
     refers to. Reports error(s) and returns false if the type is not valid.
     ================================================================================================
-    method checkGenericParameters(position:Position, cl:ClassDecl, type:Type):Bit {
+    method checkGenericArguments(position:Position, cl:ClassDecl, type:Type):Bit {
         if !resolve(cl) {
             assert errorCount > 0
             return false
@@ -646,7 +646,7 @@ class Compiler {
     }
 
     @post(@return == null & (errorCount > 0 | !reportErrors) | (@return !== null & @return.resolved))
-    method resolve(type:Type, checkParameters:Bit):Type? {
+    method resolve(type:Type, checkArguments:Bit):Type? {
         if type.resolved {
             return type
         }
@@ -655,8 +655,8 @@ class Compiler {
                 def resolved := tryResolveClass(type.name)
                 if resolved !== null {
                     def result := resolved.type
-                    if result !== null & checkParameters &
-                            !checkGenericParameters(type.position, resolved, result) {
+                    if result !== null & checkArguments &
+                            !checkGenericArguments(type.position, resolved, result) {
                         return null
                     }
                     return result
@@ -706,8 +706,8 @@ class Compiler {
                 }
                 def result := Type.generic(base, args)
                 def cl := getClass(result.subtypes[0])
-                if cl !== null & checkParameters &
-                        !checkGenericParameters(type.position, cl, result) {
+                if cl !== null & checkArguments &
+                        !checkGenericArguments(type.position, cl, result) {
                     return null
                 }
                 return result
@@ -904,19 +904,19 @@ class Compiler {
             if cl.rawSuper !== null {
                 def superclass := getClass(cl.rawSuper)
                 if superclass !== null {
-                    checkGenericParameters(cl.position, superclass, cl.rawSuper)
+                    checkGenericArguments(cl.position, superclass, cl.rawSuper)
                 }
             }
             for intf in cl.rawInterfaces {
                 def intfclass := getClass(intf)
                 if intfclass !== null {
-                    checkGenericParameters(cl.position, intfclass, intf)
+                    checkGenericArguments(cl.position, intfclass, intf)
                 }
             }
             for p in cl.parameters {
                 def cl := getClass(p.bound)
                 if cl !== null {
-                    checkGenericParameters(cl.position, cl, p.bound)
+                    checkGenericArguments(cl.position, cl, p.bound)
                 }
             }
             currentClass.pop()
@@ -1156,8 +1156,6 @@ class Compiler {
                 if !f.annotations.isClass & f.fieldKind != FieldDecl.Kind.PROPERTY {
                     result.add(f)
                 }
-                else {
-                }
             }
         }
         else {
@@ -1248,7 +1246,7 @@ class Compiler {
             def annotations := Annotations(cl.annotations.flags && !!Annotations.Flag.SPECIALIZE)
             def supertypes := Array<Type>()
             supertypes.add(remapType(type, cl.rawSuper))
-            for intf in cl.rawInterfaces { -- FIXME use map
+            for intf in cl.rawInterfaces {
                 supertypes.add(remapType(type, intf))
             }
             def aliases := HashMap<String, String>(cl.aliases)
@@ -1268,10 +1266,8 @@ class Compiler {
                                 remapType(type, p.bound)))
                     }
                 }
-                def parameters := Array<MethodDecl.Parameter>() -- FIXME use map
-                for p in m.parameters {
-                    parameters.add(MethodDecl.Parameter(p.name, remapType(type, p.type)))
-                }
+                def parameters := m.parameters.map<MethodDecl.Parameter>(
+                        p => MethodDecl.Parameter(p.name, self.remapType(type, p.type)))
                 def clone := MethodDecl(result, m.position, m.doccomment, m.annotations,
                         m.methodKind, m.name, generics, parameters, remapType(type, m.returnType),
                         m.body)
@@ -1515,8 +1511,8 @@ class Compiler {
         return cl.virtualMethods
     }
 
-    function remapType(context:Type, raw:Type):Type {
-        if context.typeKind = Type.Kind.GENERIC & context.subtypes[0] = Type.Class() {
+    method remapType(context:Type, raw:Type):Type {
+        if context.isClassLiteral {
             return remapType(context.subtypes[1], raw)
         }
         match raw.typeKind {
@@ -1955,7 +1951,8 @@ class Compiler {
                         type := f.type
                     }
                     if target !== null {
-                        result.add(remapType(target, type))
+                        def found := findType(target, f.owner)
+                        result.add(remapType(found, type))
                     }
                     else {
                         result.add(type)
@@ -1988,7 +1985,8 @@ class Compiler {
                 for m in s->Methods.methods { -- FIXME use map
                     if resolve(m) {
                         if m.annotations.isClass {
-                            result.add(m.type)
+                            result.add(MethodRef(self, Type.ClassLiteral(m.owner.type), m,
+                                    resolvedArguments).effectiveType)
                         }
                         else if target !== null {
                             result.add(MethodRef(self, target, m, resolvedArguments).effectiveType)
@@ -2045,9 +2043,13 @@ class Compiler {
     }
 
     method identifierType(name:String):ListView<Type>? {
+        return identifierType(name, null)
+    }
+
+    method identifierType(name:String, genericArguments:ListView<ASTNode>?):ListView<Type>? {
         def s := symbolTable[name]
         if s !== null {
-            return symbolType(null, s)
+            return symbolType(null, s, genericArguments)
         }
         def cl := tryResolveClass(name)
         if cl !== null {
@@ -2077,33 +2079,43 @@ class Compiler {
     }
 
     ================================================================================================
-    If `value` represents a type, returns the corresponding [Type]. Otherwise returns `null` without
-    reporting an error.
+    If `value` represents a valid type, returns the corresponding [Type]. Otherwise returns `null`
+    without reporting an error.
+    ================================================================================================
+    method tryResolveType(value:ASTNode):Type? {
+        return tryResolveType(value, true)
+    }
+
+    ================================================================================================
+    As [tryResolveType(ASTNode)], but allows the validity check for generic arguments to be
+    disabled.
     ================================================================================================
     @post(errorCount = @pre(errorCount))
-    method tryResolveType(value:ASTNode):Type? {
+    method tryResolveType(value:ASTNode, checkGenericArguments:Bit):Type? {
         match value {
             when ASTNode.IDENTIFIER(position, text) {
-                return tryResolveType(ASTNode.TYPE(position, text))
+                return tryResolveType(ASTNode.TYPE(position, text), checkGenericArguments)
             }
             when ASTNode.DOT(position, base, name) {
                 def text := getText(base)
                 if text !== null {
-                    return tryResolveType(ASTNode.TYPE(position, "\{text}.\{name}"))
+                    return tryResolveType(ASTNode.TYPE(position, "\{text}.\{name}"),
+                            checkGenericArguments)
                 }
                 return null
             }
             when ASTNode.DOT_GENERICS(position, base, name, types) {
                 def text := getText(base)
                 if text !== null {
-                    return tryResolveType(ASTNode.GENERIC_TYPE(position, "\{text}.\{name}", types))
+                    return tryResolveType(ASTNode.GENERIC_TYPE(position, "\{text}.\{name}", types),
+                            checkGenericArguments)
                 }
                 return null
             }
         }
         def old := reportErrors
         reportErrors := false
-        def result := resolve(scanner.convertType(value))
+        def result := resolve(scanner.convertType(value), checkGenericArguments)
         reportErrors := old
         return result
     }
@@ -2400,15 +2412,33 @@ class Compiler {
                 }
                 return result
             }
-            when ASTNode.GENERIC_TYPE, ASTNode.TYPE {
-                def t := tryResolveType(value)
-                if t == null {
-                    return null
+            when ASTNode.GENERIC_TYPE(position, name, types) {
+                def resolved := tryResolveType(value)
+                if resolved !== null {
+                    assert !resolved.isClassLiteral
+                    return [Type.ClassLiteral(resolved)]
                 }
-                return [Type.ClassLiteral(t)]
+                -- not a type, might be a function call with explicit generics
+                def components := name.split(".")
+                var effective:ASTNode
+                if components.count = 1 {
+                    effective := ASTNode.IDENTIFIER_GENERICS(position, name, types)
+                }
+                else {
+                    effective := ASTNode.IDENTIFIER(position, components[0])
+                    for i in 1 .. components.count - 1 {
+                        effective := ASTNode.DOT(position, effective, components[i])
+                    }
+                    effective := ASTNode.DOT_GENERICS(position, effective,
+                            components[components.count - 1], types)
+                }
+                return possibleTypes(effective)
             }
             when ASTNode.IDENTIFIER(_, name) {
                 return identifierType(name)
+            }
+            when ASTNode.IDENTIFIER_GENERICS(_, name, types) {
+                return identifierType(name, types)
             }
             when ASTNode.INT(_, value) {
                 def result := Array<Type>()
@@ -2524,6 +2554,14 @@ class Compiler {
                     result.add(Type.Char32())
                 }
                 return result
+            }
+            when ASTNode.TYPE {
+                def resolved := tryResolveType(value)
+                if resolved !== null {
+                    assert !resolved.isClassLiteral
+                    return [Type.ClassLiteral(resolved)]
+                }
+                return null
             }
             when ASTNode.TYPED_LAMBDA(position, parameters, body) {
                 def parameterTypes := Array<Type>()
@@ -2792,15 +2830,22 @@ class Compiler {
                 }
                 return callCost(methodTypes, args, TypeContext.TYPE(target))
             }
-            when ASTNode.DOT {
+            when ASTNode.DOT, ASTNode.DOT_GENERICS {
                 def types := possibleTypes(expr)
                 if types == null {
                     return null
                 }
                 return coercionCost(types, target)
             }
-            when ASTNode.IDENTIFIER(position, name) {
+            when ASTNode.IDENTIFIER(_, name) {
                 def types := identifierType(name)
+                if types == null {
+                    return null
+                }
+                return coercionCost(types, target)
+            }
+            when ASTNode.IDENTIFIER_GENERICS(_, name, genericArguments) {
+                def types := identifierType(name, genericArguments)
                 if types == null {
                     return null
                 }
@@ -3501,7 +3546,7 @@ class Compiler {
             when Symbol.Kind.ALIAS {
                 def cl := getClass(position, s->Alias.fullName)
                 if cl !== null {
-                    checkGenericParameters(position, cl, cl.type)
+                    checkGenericArguments(position, cl, cl.type)
                     return IR.Value.TYPE(cl.type)
                 }
                 return null
@@ -4831,7 +4876,7 @@ class Compiler {
     Returns the type under which a particular class was inherited. For instance,
     `HashMap<String, File>` inherits `MapView` under the type `MapView<String, File>`.
     ================================================================================================
-    function findType(start:Type, target:ClassDecl):Type? {
+    method findType(start:Type, target:ClassDecl):Type? {
         if !start.isClass {
             return null
         }
@@ -5333,13 +5378,33 @@ class Compiler {
     method compileCall(position:Position, m:ASTNode, args:FixedArray<ASTNode>,
                        type:TypeContext):IR.Value? {
         match m {
-            when ASTNode.GENERIC_TYPE {
-                def resolved := resolve(scanner.convertType(m))
-                if resolved == null {
+            when ASTNode.GENERIC_TYPE(_, name, types) {
+                var resolved := tryResolveType(m)
+                if resolved !== null {
+                    assert !resolved.isClassLiteral
+                    return call(position, IR.Value.TYPE(resolved), args, type)
+                }
+                resolved := tryResolveType(m, false)
+                if resolved !== null {
+                    -- It's a type, but the parameters are invalid. Force an error and bail.
+                    resolve(scanner.convertType(m))
                     return null
                 }
-                assert !resolved.isClassLiteral
-                return call(position, IR.Value.TYPE(resolved), args, type)
+                -- not a type, might be a function call with explicit generics
+                def components := name.split(".")
+                var target:ASTNode
+                if components.count = 1 {
+                    target := ASTNode.IDENTIFIER_GENERICS(position, name, types)
+                }
+                else {
+                    target := ASTNode.IDENTIFIER(position, components[0])
+                    for i in 1 .. components.count - 1 {
+                        target := ASTNode.DOT(position, target, components[i])
+                    }
+                    target := ASTNode.DOT_GENERICS(position, target,
+                            components[components.count - 1], types)
+                }
+                return compileCall(position, target, args, type)
             }
         }
         def cc := getChoiceCase(m)
@@ -5474,9 +5539,9 @@ class Compiler {
         def target:ASTNode?
         if currentCaptures.second.count != 0 {
             -- we have captures, need to build an actual closure for it
-            def cl := createClosureClass(methodDecl, currentCaptures.second.values().all())
+            def cl := createClosureClass(methodDecl, currentCaptures.second.values.all())
             def args := Array<ASTNode>()
-            for capture in currentCaptures.second.values() {
+            for capture in currentCaptures.second.values {
                 match capture {
                     when Capture.VARIABLE(v) {
                         args.add(ASTNode.IDENTIFIER(position, v.name))
@@ -5574,7 +5639,7 @@ class Compiler {
         if s == null {
             def cl := tryResolveClass(name)
             if cl !== null {
-                checkGenericParameters(position, cl, cl.type)
+                checkGenericArguments(position, cl, cl.type)
                 return IR.Value.TYPE(cl.type)
             }
         }
@@ -6124,6 +6189,13 @@ class Compiler {
             when ASTNode.IDENTIFIER(position, name) {
                 return coerce(expr.position(), compileIdentifier(position, name), type)
             }
+            when ASTNode.IDENTIFIER_GENERICS(position, name, types) {
+                def identifier := compileIdentifier(position, name)
+                if identifier == null {
+                    return null
+                }
+                return coerce(expr.position(), genericMethodRef(identifier, types), type)
+            }
             when ASTNode.INT(position, value) {
                 return compileInt(position, value, type)
             }
@@ -6341,7 +6413,8 @@ class Compiler {
                 base := rawType
             }
             if self.target !== null {
-                effectiveType := compiler.remapType(self.target.type(), base)
+                effectiveType := compiler.remapType(compiler.findType(self.target.type(), field.owner),
+                        base)
             }
             else {
                 effectiveType := base

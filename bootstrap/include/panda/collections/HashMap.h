@@ -20,8 +20,8 @@ void panda$collections$HashMap$$IDXEQ$panda$collections$HashMap$K$panda$collecti
 void panda$collections$HashMap$remove$panda$collections$HashMap$K(panda$collections$HashMap* self, panda$collections$Key* p_key);
 void panda$collections$HashMap$clear(panda$collections$HashMap* self);
 void panda$collections$HashMap$incrementCount(panda$collections$HashMap* self);
-panda$collections$Iterator* panda$collections$HashMap$keys$R$panda$collections$Iterator$LTpanda$collections$HashMap$K$GT(panda$collections$HashMap* self);
-panda$collections$Iterator* panda$collections$HashMap$values$R$panda$collections$Iterator$LTpanda$collections$HashMap$V$GT(panda$collections$HashMap* self);
+panda$collections$Iterator* panda$collections$HashMap$get_keys$R$panda$collections$Iterator$LTpanda$collections$HashMap$K$GT(panda$collections$HashMap* self);
+panda$collections$Iterator* panda$collections$HashMap$get_values$R$panda$collections$Iterator$LTpanda$collections$HashMap$V$GT(panda$collections$HashMap* self);
 panda$core$Int64 panda$collections$HashMap$get_count$R$panda$core$Int64(panda$collections$HashMap* self);
 panda$core$String* panda$collections$HashMap$convert$R$panda$core$String(panda$collections$HashMap* self);
 

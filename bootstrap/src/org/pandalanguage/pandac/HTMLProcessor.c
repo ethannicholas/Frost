@@ -630,7 +630,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp221));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp220));
 // unreffing REF($1:panda.threads.MessageQueue<org.pandalanguage.pandac.Compiler.Error>)
 // line 82
-org$pandalanguage$pandac$parser$Parser* $tmp222 = (org$pandalanguage$pandac$parser$Parser*) pandaObjectAlloc(104, (panda$core$Class*) &org$pandalanguage$pandac$parser$Parser$class);
+org$pandalanguage$pandac$parser$Parser* $tmp222 = (org$pandalanguage$pandac$parser$Parser*) pandaObjectAlloc(96, (panda$core$Class*) &org$pandalanguage$pandac$parser$Parser$class);
 panda$threads$MessageQueue* $tmp223 = *(&local0);
 org$pandalanguage$pandac$parser$Parser$init$panda$threads$MessageQueue$LTorg$pandalanguage$pandac$Compiler$Error$GT($tmp222, $tmp223);
 *(&local1) = ((org$pandalanguage$pandac$parser$Parser*) NULL);
