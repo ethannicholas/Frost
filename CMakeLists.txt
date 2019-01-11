@@ -209,6 +209,7 @@ add_executable(bootstrap
     bootstrap/src/org/pandalanguage/pandac/CodeGenerator.c
     bootstrap/src/org/pandalanguage/pandac/Compiler.c
     bootstrap/src/org/pandalanguage/pandac/Compiler/_Closure2.c
+    bootstrap/src/org/pandalanguage/pandac/Compiler/_Closure7.c
     bootstrap/src/org/pandalanguage/pandac/Compiler/AutoAtPreFlag.c
     bootstrap/src/org/pandalanguage/pandac/Compiler/AutoContext.c
     bootstrap/src/org/pandalanguage/pandac/Compiler/AutoScope.c

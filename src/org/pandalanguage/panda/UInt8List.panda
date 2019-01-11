@@ -14,11 +14,11 @@ class UInt8List : ListView<UInt8> {
 
     init(range:SteppedRange<UInt8, UInt8>) {
         self.range := range
-        self._count := computeCount()
+        self._count := computeCount(range)
     }
 
-    @private
-    function computeCount():Int {
+    @class
+    function computeCount(range:SteppedRange<UInt8, UInt8>):Int {
         if range.inclusive {
             if range.step > 0 {
                 if range.end < range.start {

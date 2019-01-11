@@ -14,11 +14,11 @@ class Int64List : ListView<Int64> {
 
     init(range:SteppedRange<Int64, Int64>) {
         self.range := range
-        self._count := computeCount()
+        self._count := computeCount(range)
     }
 
-    @private
-    function computeCount():Int {
+    @class
+    function computeCount(range:SteppedRange<Int64, Int64>):Int {
         if range.inclusive {
             if range.step > 0 {
                 if range.end < range.start {

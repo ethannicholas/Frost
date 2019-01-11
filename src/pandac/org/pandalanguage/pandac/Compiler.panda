@@ -4773,7 +4773,7 @@ class Compiler {
             -- look for left.op(right)
             match methods.kind {
                 when Symbol.Kind.METHOD {
-                    if !methods->MethodDecl.annotations.isClass {
+                    if !methods->MethodDecl.annotations.isClass | left.isClassLiteral {
                         def list := Array<MethodDecl>()
                         list.add(methods->MethodDecl)
                         def result := findBestMethod(Position(), target, list, args, type)
@@ -4784,8 +4784,8 @@ class Compiler {
                 }
                 when Symbol.Kind.METHODS {
                     def result := findBestMethod(Position(), target,
-                            methods->Methods.methods.filter(m => !m.annotations.isClass), args,
-                                    type)
+                            methods->Methods.methods.filter(
+                                    m => m.annotations.isClass = left.isClassLiteral), args, type)
                     if result !== null {
                         return result
                     }
@@ -5273,8 +5273,12 @@ class Compiler {
                     }
                     def m := matches.first[0].value
                     if m.annotations.isClass {
-                        return call(position, IR.Value.METHOD(null, m), [left, right],
-                                type)
+                        if m.parameters.count = 2 {
+                            return call(position, IR.Value.METHOD(null, m), [left, right],
+                                    type)
+                        }
+                        assert m.parameters.count = 1
+                        return call(position, IR.Value.METHOD(null, m), [right], type)
                     }
                     if m.owner.name = "panda.core.Bit" {
                         if m.name = "&" {

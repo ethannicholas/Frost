@@ -50,7 +50,7 @@ panda$core$Bit panda$core$Real64$$GE$panda$core$Real32$R$panda$core$Bit(panda$co
 panda$core$Bit panda$core$Real64$$GE$panda$core$Real64$R$panda$core$Bit(panda$core$Real64 self, panda$core$Real64 p_other);
 panda$core$Bit panda$core$Real64$$LE$panda$core$Real32$R$panda$core$Bit(panda$core$Real64 self, panda$core$Real32 p_other);
 panda$core$Bit panda$core$Real64$$LE$panda$core$Real64$R$panda$core$Bit(panda$core$Real64 self, panda$core$Real64 p_other);
-panda$core$Real64 panda$core$Real64$abs$R$panda$core$Real64(panda$core$Real64 self);
+panda$core$Real64 panda$core$Real64$get_abs$R$panda$core$Real64(panda$core$Real64 self);
 panda$core$Real64 panda$core$Real64$min$panda$core$Int8$R$panda$core$Real64(panda$core$Real64 self, panda$core$Int8 p_other);
 panda$core$Real64 panda$core$Real64$min$panda$core$Int16$R$panda$core$Real64(panda$core$Real64 self, panda$core$Int16 p_other);
 panda$core$Real64 panda$core$Real64$min$panda$core$Int32$R$panda$core$Real64(panda$core$Real64 self, panda$core$Int32 p_other);

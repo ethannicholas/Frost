@@ -14,7 +14,7 @@ A single term, such as:
 * [self](self.html)
 * [super](super.html)
 * A variable reference
-* An [array literal](arrays.html#simple)
+* An [array literal](arrayLiterals.html#simple)
 * A [tuple](tuples.html#simple)
 * An [inline method](inlineMethods.html)
 * A [method reference](methodReferences.html)

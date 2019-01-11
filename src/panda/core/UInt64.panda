@@ -439,11 +439,13 @@ class UInt64 : Value, Key<UInt64>, Comparable<UInt64>, Formattable, ListView<Bit
     }
     ===Returns a list of all integers in the given range. The list is 'lazy', meaning that it does not actually allocate memory to hold the entire list.===
     @class
+    @pre(range.max - range.min < Int64.MAX.convert()->UInt64)
     function [](range:Range<UInt64>):ListView<UInt64> {
         return org.pandalanguage.panda.UInt64List(SteppedRange<UInt64, UInt64>(range.min, range.max, 1, range.inclusive))
     }
     ===Returns a list of all integers in the given stepped range. The list is 'lazy', meaning that it does not actually allocate memory to hold the entire list.===
     @class
+    @pre(org.pandalanguage.panda.UInt64List.computeCount(range) > 0)
     function [](range:SteppedRange<UInt64, UInt64>):ListView<UInt64> {
         return org.pandalanguage.panda.UInt64List(range)
     }

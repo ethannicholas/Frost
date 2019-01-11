@@ -468,6 +468,13 @@ class WriteNumbers {
                 "'lazy', meaning that it does not actually allocate memory to hold the entire " +
                 "list.===")
         out.printLine("    @class")
+        if type = Type.INT64 {
+            out.printLine("    @pre(range.max.convert()->UInt64 - range.min.convert()->UInt64 < " +
+                    "Int64.MAX.convert()->UInt64)")
+        }
+        else if type = Type.UINT64 {
+            out.printLine("    @pre(range.max - range.min < Int64.MAX.convert()->UInt64)")
+        }
         out.printLine("    function [](range:Range<\{object(type)}>):ListView<\{object(type)}> {")
         out.printLine("        return org.pandalanguage.panda.\{object(type)}List(SteppedRange<" +
                 "\{object(type)}, \{object(type)}>(range.min, range.max, 1, range.inclusive))")
@@ -476,6 +483,9 @@ class WriteNumbers {
                 "list is 'lazy', meaning that it does not actually allocate memory to hold the " +
                 "entire list.===")
         out.printLine("    @class")
+        if type = Type.INT64 | type = Type.UINT64 {
+            out.printLine("    @pre(org.pandalanguage.panda.\{object(type)}List.computeCount(range) > 0)")
+        }
         out.printLine("    function [](range:SteppedRange<\{object(type)}, \{object(type)}>):" +
                 "ListView<\{object(type)}> {")
         out.printLine("        return org.pandalanguage.panda.\{object(type)}List(range)")
@@ -807,11 +817,11 @@ class WriteNumbers {
         out.printLine()
         out.printLine("    init(range:SteppedRange<\{cl}, \{cl}>) {")
         out.printLine("        self.range := range")
-        out.printLine("        self._count := computeCount()")
+        out.printLine("        self._count := computeCount(range)")
         out.printLine("    }")
         out.printLine()
-        out.printLine("    @private")
-        out.printLine("    function computeCount():Int {")
+        out.printLine("    @class")
+        out.printLine("    function computeCount(range:SteppedRange<\{cl}, \{cl}>):Int {")
         def cast:String
         if type = Type.UINT64 {
             cast := ".convert()->Int"
