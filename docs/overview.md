@@ -151,7 +151,7 @@ be [Immutable]:
 
 There are *no global variables* in Panda. This includes class-level variables - in Java,
 `public class Global { public static int foo; }` is effectively a global variable, in that
-`Global.foo` is accessibly from anywhere. There is no equivalent in Panda; the only
+`Global.foo` is accessible from anywhere. There is no equivalent in Panda; the only
 globally-accessible Panda values are class-level constants.
 
 Conditional Statements and Loops
@@ -182,6 +182,8 @@ Braces are required, even when there is only one statement in the block.
     loop { -- infinite loop, similar to 'while true { ... }'
         ...
     }
+
+All conditional statements require an expression of type `Bit`.
 
 Flow Control Statements
 -----------------------
@@ -264,6 +266,12 @@ To count backwards from 100 by 10:
 
     for i in 100 ... 0 by -10 {
         Console.printLine(i)
+    }
+
+To iterate over a collection:
+
+    for greeting in ["Hello", "Bonjour", "Hola", "Guten tag"] {
+        Console.printLine(greeting)
     }
 
 Match
@@ -581,6 +589,20 @@ object to do your own matching.
 And, of course, you may directly create `RegularExpression` objects without relying on the built-in
 syntax for it.
 
+Array Literals
+--------------
+
+An [array literal](arrayLiterals.html) is an expression of the form:
+
+    [1, 2, 3, 4, 5]
+
+By default, this expression will be compiled into an `ImmutableArray` of the appropriate type, but
+may be evaluated as another type depending upon the context in which it is used. For instance,
+
+    def a:List<Int> := [1, 2, 3, 4, 5]
+
+produces a mutable `Array` rather than an `ImmutableArray`, because `List` is writable.
+
 Tuples
 ------
 
@@ -629,10 +651,14 @@ Here is an example generic class which holds objects of type `T` and pulls them 
 
     class Bag<T> {
         @private
-        def random := Random.default()
+        def random:Random
 
         @private
         def contents := Array<T>()
+
+        init(random:Random) {
+            self.random := random
+        }
 
         method add(object:T) {
             contents.add(object)
@@ -656,9 +682,19 @@ Generic Methods
 
 Generic methods are defined very similarly to generic types:
 
-    method sort<T>(l:ListView<T>):ListView<T> {
+    method process<T>(l:ListView<T>):ListView<T> {
         ...
     }
+
+The type of the generic method is normally inferred at the call site. For instance, in the
+expression
+
+    process(["Hello", "Goodbye"])
+
+the generic type `T` will be inferred to be `String`, and the method will return a
+`ListView<String>`. You may manually specify the type(s) if you wish, as in:
+
+    process<Object>(["Hello", "Goodbye"])
 
 Methods as Values
 -----------------
@@ -700,7 +736,8 @@ This allows us to specify which `Int.+` we want:
     Console.printLine(add(17, 6)) -- prints 23
 
 Note that since we grabbed `+` out of the `Int` class, it takes an extra parameter for its `self`.
-We could also have referred to `+` as a member of a specific `Int` instance:
+We could also have referred to `+` as a member of a specific `Int` instance, in which case its
+`self` is the object from which it was taken:
 
     def add3:(Int)=>(Int) := 3.+
     Console.printLine(add3(8)) -- prints 11
@@ -720,8 +757,9 @@ Inside of a method, you may create anonymous method values:
         }
     }
 
-These inner methods have access to any `def`, `constant`, or parameter in scope, but may not
-capture `var`s.
+These inner methods are closures and have access to any `def`, `constant`, or parameter in scope,
+but may not capture `var`s. To make the capture of `self` more obvious, any reference to the
+enclosing method's `self` value must be explicitly specified.
 
 Named Inner Methods
 -------------------
@@ -745,7 +783,9 @@ This is syntactic sugar for:
         ...
     }
 
-Note that because of this, overloading inner methods is not possible.
+and therefore all of the same rules apply to named inner methods as apply to anonymous inner
+methods. Note that because of how named inner methods are handled, it is not possible to overload
+inner methods.
 
 Lambdas
 -------
@@ -760,7 +800,7 @@ value of an expression.
 If the type of the lambda is implied by its context (for instance, when passing it to a method which
 expects a particular function type), you may omit the types:
 
-    x => x.abs()
+    x => x.abs
 
     (x, y) => x + y
 

@@ -16,6 +16,30 @@ class File : Immutable, Key<File> {
     ================================================================================================
     def path:String
 
+    ================================================================================================
+    `true` if this file represents an absolute path.
+    ================================================================================================
+    property isAbsolute:Bit
+
+    ================================================================================================
+    The directory containing this file, or `null` if this is the root directory. The parent is
+    computed based purely on the path string, without accessing the filesystem.
+    ================================================================================================
+    property parent:File
+
+    ================================================================================================
+    The name (not including directory) of this file. For instance, `File("/tmp/data/log.txt").name`
+    is `"log.txt"`.
+    ================================================================================================
+    property name:String
+
+    ================================================================================================
+    The name of this file without its extension. The file's extension is considered to start at the
+    last period (`'.'`) it contains, so `File("/tmp/foo.bar.baz").simpleName()` returns the path
+    `"foo.bar"`. If the filename does not contain a period, this property is equivalen to `name`.
+    ================================================================================================
+    property simpleName:String
+
     init(path:String) {
         self.path := path
     }
@@ -49,10 +73,7 @@ class File : Immutable, Key<File> {
         return openInputStream().lines()
     }
 
-    ================================================================================================
-    Returns `true` if this file represents an absolute path.
-    ================================================================================================
-    function isAbsolute():Bit {
+    function get_isAbsolute():Bit {
         return path.startsWith("/")
     }
     
@@ -107,14 +128,7 @@ class File : Immutable, Key<File> {
         return result
     }
 
-    ================================================================================================
-    Returns the directory containing this file, or `null` if this is the root directory. This
-    function computes the parent directory based purely on the path string, without accessing the
-    filesystem.
-
-    @returns the path to the file
-    ================================================================================================
-    function parent():File? {
+    function get_parent():File? {
         def result := normalize(resolve("..").path)
         if result == null {
             return null
@@ -122,13 +136,7 @@ class File : Immutable, Key<File> {
         return File(result)
     }
 
-    ================================================================================================
-    Returns the name (not including directory) of this file. For instance,
-    `File("/tmp/data/log.txt").name()` returns `"log.txt"`.
-
-    @returns the name of this file
-    ================================================================================================
-    function name():String {
+    function get_name():String {
         def index := path.lastIndexOf("/")
         if index !== null {
             return path[path.next(index)..]
@@ -138,15 +146,8 @@ class File : Immutable, Key<File> {
         }
     }
 
-    ================================================================================================
-    Returns the name of this file without its extension. The file's extension is considered to start
-    at the last period (`'.'`) it contains, so `File("/tmp/foo.bar.baz").simpleName()` returns the
-    path `"foo.bar"`. If the filename does not contain a period, this call is equivalen to `name()`.
-
-    @returns the extensionless name of this file
-    ================================================================================================
-    function simpleName():String {
-        def result := name()
+    function get_simpleName():String {
+        def result := name
         def index := result.lastIndexOf(".")
         if index == null {
             return result
@@ -170,7 +171,7 @@ class File : Immutable, Key<File> {
     @returns the path with a new extension
     ================================================================================================
     function changeExtension(ext:String):File {
-        return parent().resolve(simpleName() + ext)
+        return parent.resolve(simpleName + ext)
     }
 
     ================================================================================================
@@ -209,7 +210,7 @@ class File : Immutable, Key<File> {
     to attempt to create a directory which already exists.
     ================================================================================================
     method createDirectories() {
-        def p := parent()
+        def p := parent
         if p !== null & !p.exists() {
             p.createDirectories()
         }

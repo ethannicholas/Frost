@@ -1311,7 +1311,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp475));
 // unreffing REF($27:panda.io.File)
 // line 182
 panda$io$File* $tmp478 = *(&local0);
-panda$io$File* $tmp479 = panda$io$File$parent$R$panda$io$File$Q($tmp478);
+panda$io$File* $tmp479 = panda$io$File$get_parent$R$panda$io$File$Q($tmp478);
 panda$io$File$createDirectories($tmp479);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp479));
 // unreffing REF($40:panda.io.File?)
@@ -1368,7 +1368,7 @@ $tmp502(((panda$io$OutputStream*) $tmp501), &$s504);
 panda$io$IndentedOutputStream** $tmp505 = &param0->out;
 panda$io$IndentedOutputStream* $tmp506 = *$tmp505;
 panda$io$File* $tmp507 = *(&local1);
-panda$core$String* $tmp508 = panda$io$File$name$R$panda$core$String($tmp507);
+panda$core$String* $tmp508 = panda$io$File$get_name$R$panda$core$String($tmp507);
 panda$core$String* $tmp509 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s510, $tmp508);
 panda$core$String* $tmp511 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp509, &$s512);
 $fn514 $tmp513 = ($fn514) ((panda$io$OutputStream*) $tmp506)->$class->vtable[19];

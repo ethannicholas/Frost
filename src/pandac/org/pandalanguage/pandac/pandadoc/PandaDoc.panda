@@ -630,7 +630,7 @@ class PandaDoc {
         compiler.currentClass.push(cl)
         self.currentClass := cl
         def dest := getPath(cl, ".xml")
-        dest.parent().createDirectories()
+        dest.parent.createDirectories()
         out := XMLWriter(dest.openOutputStream())
         out.open("class")
         out.write("name", cl.name)

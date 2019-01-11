@@ -24,12 +24,12 @@ typedef panda$core$Bit (*$fn14)(panda$collections$Iterator*);
 typedef panda$core$Object* (*$fn23)(panda$collections$Iterator*);
 typedef panda$core$Bit (*$fn37)(panda$core$Object*);
 typedef panda$core$Bit (*$fn39)(panda$core$Object*, panda$core$Object*);
-typedef panda$core$Bit (*$fn47)(panda$collections$Iterator$FilterIterator*);
-typedef void (*$fn58)(panda$collections$Iterator$FilterIterator*);
+typedef panda$core$Bit (*$fn48)(panda$collections$Iterator*);
+typedef void (*$fn59)(panda$collections$Iterator$FilterIterator*);
 
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x46\x69\x6c\x74\x65\x72\x49\x74\x65\x72\x61\x74\x6f\x72", 41, 7769725683637530640, NULL };
-static panda$core$String $s52 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x70\x61\x6e\x64\x61", 14, -6782353983774632655, NULL };
-static panda$core$String $s53 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x70\x61\x6e\x64\x61\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x46\x69\x6c\x74\x65\x72\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x6e\x65\x78\x74\x28\x29\x3a\x70\x61\x6e\x64\x61\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x46\x69\x6c\x74\x65\x72\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x54", 124, -6681978521071191293, NULL };
+static panda$core$String $s53 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x70\x61\x6e\x64\x61", 14, -6782353983774632655, NULL };
+static panda$core$String $s54 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x70\x61\x6e\x64\x61\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x46\x69\x6c\x74\x65\x72\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x6e\x65\x78\x74\x28\x29\x3a\x70\x61\x6e\x64\x61\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x46\x69\x6c\x74\x65\x72\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x54", 124, -6681978521071191293, NULL };
 
 void panda$collections$Iterator$FilterIterator$init$panda$collections$Iterator$LTpanda$collections$Iterator$FilterIterator$T$GT$$LPpanda$collections$Iterator$FilterIterator$T$RP$EQ$GT$LPpanda$core$Bit$RP(panda$collections$Iterator$FilterIterator* param0, panda$collections$Iterator* param1, panda$core$MutableMethod* param2) {
 
@@ -135,50 +135,54 @@ return $tmp45;
 panda$core$Object* panda$collections$Iterator$FilterIterator$next$R$panda$collections$Iterator$FilterIterator$T(panda$collections$Iterator$FilterIterator* param0) {
 
 panda$core$Object* local0 = NULL;
-$fn47 $tmp46 = ($fn47) param0->$class->vtable[3];
-panda$core$Bit $tmp48 = $tmp46(param0);
-panda$core$Bit $tmp49 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp48);
-bool $tmp50 = $tmp49.value;
-if ($tmp50) goto block1; else goto block2;
+ITable* $tmp46 = ((panda$collections$Iterator*) param0)->$class->itable;
+while ($tmp46->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+    $tmp46 = $tmp46->next;
+}
+$fn48 $tmp47 = $tmp46->methods[0];
+panda$core$Bit $tmp49 = $tmp47(((panda$collections$Iterator*) param0));
+panda$core$Bit $tmp50 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp49);
+bool $tmp51 = $tmp50.value;
+if ($tmp51) goto block1; else goto block2;
 block2:;
-panda$core$Int64 $tmp51 = (panda$core$Int64) {40};
-panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s52, $tmp51, &$s53);
+panda$core$Int64 $tmp52 = (panda$core$Int64) {40};
+panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s53, $tmp52, &$s54);
 abort(); // unreachable
 block1:;
 // line 41
-panda$core$Object** $tmp54 = &param0->nextValue;
-panda$core$Object* $tmp55 = *$tmp54;
+panda$core$Object** $tmp55 = &param0->nextValue;
+panda$core$Object* $tmp56 = *$tmp55;
 *(&local0) = ((panda$core$Object*) NULL);
-panda$core$Panda$ref$panda$core$Object$Q($tmp55);
-panda$core$Object* $tmp56 = *(&local0);
-panda$core$Panda$unref$panda$core$Object$Q($tmp56);
-*(&local0) = $tmp55;
+panda$core$Panda$ref$panda$core$Object$Q($tmp56);
+panda$core$Object* $tmp57 = *(&local0);
+panda$core$Panda$unref$panda$core$Object$Q($tmp57);
+*(&local0) = $tmp56;
 // line 42
-$fn58 $tmp57 = ($fn58) param0->$class->vtable[2];
-$tmp57(param0);
+$fn59 $tmp58 = ($fn59) param0->$class->vtable[2];
+$tmp58(param0);
 // line 43
-panda$core$Object* $tmp59 = *(&local0);
-panda$core$Panda$ref$panda$core$Object$Q($tmp59);
 panda$core$Object* $tmp60 = *(&local0);
-panda$core$Panda$unref$panda$core$Object$Q($tmp60);
+panda$core$Panda$ref$panda$core$Object$Q($tmp60);
+panda$core$Object* $tmp61 = *(&local0);
+panda$core$Panda$unref$panda$core$Object$Q($tmp61);
 // unreffing result
 *(&local0) = ((panda$core$Object*) NULL);
-return $tmp59;
+return $tmp60;
 
 }
 void panda$collections$Iterator$FilterIterator$cleanup(panda$collections$Iterator$FilterIterator* param0) {
 
 // line 8
 panda$core$Object$cleanup(((panda$core$Object*) param0));
-panda$collections$Iterator** $tmp61 = &param0->base;
-panda$collections$Iterator* $tmp62 = *$tmp61;
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp62));
-panda$core$MutableMethod** $tmp63 = &param0->filter;
-panda$core$MutableMethod* $tmp64 = *$tmp63;
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp64));
-panda$core$Object** $tmp65 = &param0->nextValue;
-panda$core$Object* $tmp66 = *$tmp65;
-panda$core$Panda$unref$panda$core$Object$Q($tmp66);
+panda$collections$Iterator** $tmp62 = &param0->base;
+panda$collections$Iterator* $tmp63 = *$tmp62;
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp63));
+panda$core$MutableMethod** $tmp64 = &param0->filter;
+panda$core$MutableMethod* $tmp65 = *$tmp64;
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp65));
+panda$core$Object** $tmp66 = &param0->nextValue;
+panda$core$Object* $tmp67 = *$tmp66;
+panda$core$Panda$unref$panda$core$Object$Q($tmp67);
 return;
 
 }

@@ -77,7 +77,7 @@ class Stack<T> : Iterable<T> {
     down to the bottom. Iterating over the stack does not modify it.
     ================================================================================================
     @override
-    function iterator():Iterator<T> {
+    function get_iterator():Iterator<T> {
         return StackIterator<T>(self)
     }
 

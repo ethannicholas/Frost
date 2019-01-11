@@ -245,8 +245,9 @@ class Real32 : Value, Key<Real32>, Comparable<Real32>, Formattable {
         return value->builtin_float64 <= other.value
     }
 
-    ===Returns the absolute value of this number.===
-    function abs():Real32 {
+    ===The absolute value of this number.===
+    property abs:Real32
+    function get_abs():Real32 {
         if self < 0 {
             return -self
         }
@@ -459,6 +460,6 @@ class Real32 : Value, Key<Real32>, Comparable<Real32>, Formattable {
     === Returns a formatted representation of this number. Supported format strings are `""`, `"d"`, or `"D"` for decimal, `"b"` or `"B"` for binary, `"o"` or `"O"` for octal, `"x"` for lowercase hexadecimal, and `"X"` for uppercase hexadecimal. ===
     @override
     function format(fmt:String):String {
-        return Panda.format(value < 0, abs().convert(), 0xFFFFFFFF, fmt)
+        return Panda.format(value < 0, abs.convert(), 0xFFFFFFFF, fmt)
     }
 }

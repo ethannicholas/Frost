@@ -22,12 +22,12 @@ static panda$core$String $s1;
 panda$collections$HashMap$ValueIterator$class_type panda$collections$HashMap$ValueIterator$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, (ITable*) &panda$collections$HashMap$ValueIterator$_panda$collections$Iterator, { panda$core$Object$convert$R$panda$core$String, panda$collections$HashMap$ValueIterator$cleanup, panda$collections$HashMap$ValueIterator$get_done$R$panda$core$Bit, panda$collections$HashMap$ValueIterator$next$R$panda$collections$HashMap$ValueIterator$V$shim} };
 
 typedef panda$core$Bit (*$fn9)(panda$collections$HashMap$EntryIterator*);
-typedef panda$core$Bit (*$fn12)(panda$collections$HashMap$ValueIterator*);
-typedef panda$core$Object* (*$fn22)(panda$collections$HashMap$EntryIterator*);
+typedef panda$core$Bit (*$fn13)(panda$collections$Iterator*);
+typedef panda$core$Object* (*$fn23)(panda$collections$HashMap$EntryIterator*);
 
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x48\x61\x73\x68\x4d\x61\x70\x2e\x56\x61\x6c\x75\x65\x49\x74\x65\x72\x61\x74\x6f\x72", 39, -7666047204960680933, NULL };
-static panda$core$String $s17 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x48\x61\x73\x68\x4d\x61\x70\x2e\x70\x61\x6e\x64\x61", 13, 1817269292024755533, NULL };
-static panda$core$String $s18 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x70\x61\x6e\x64\x61\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x48\x61\x73\x68\x4d\x61\x70\x2e\x56\x61\x6c\x75\x65\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x6e\x65\x78\x74\x28\x29\x3a\x70\x61\x6e\x64\x61\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x48\x61\x73\x68\x4d\x61\x70\x2e\x56\x61\x6c\x75\x65\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x56", 120, 7938074744907518279, NULL };
+static panda$core$String $s18 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x48\x61\x73\x68\x4d\x61\x70\x2e\x70\x61\x6e\x64\x61", 13, 1817269292024755533, NULL };
+static panda$core$String $s19 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x70\x61\x6e\x64\x61\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x48\x61\x73\x68\x4d\x61\x70\x2e\x56\x61\x6c\x75\x65\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x6e\x65\x78\x74\x28\x29\x3a\x70\x61\x6e\x64\x61\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x48\x61\x73\x68\x4d\x61\x70\x2e\x56\x61\x6c\x75\x65\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x56", 120, 7938074744907518279, NULL };
 
 void panda$collections$HashMap$ValueIterator$init$panda$collections$HashMap$LTpanda$collections$HashMap$ValueIterator$K$Cpanda$collections$HashMap$ValueIterator$V$GT(panda$collections$HashMap$ValueIterator* param0, panda$collections$HashMap* param1) {
 
@@ -57,36 +57,40 @@ return $tmp10;
 }
 panda$core$Object* panda$collections$HashMap$ValueIterator$next$R$panda$collections$HashMap$ValueIterator$V(panda$collections$HashMap$ValueIterator* param0) {
 
-$fn12 $tmp11 = ($fn12) param0->$class->vtable[2];
-panda$core$Bit $tmp13 = $tmp11(param0);
-panda$core$Bit $tmp14 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp13);
-bool $tmp15 = $tmp14.value;
-if ($tmp15) goto block1; else goto block2;
+ITable* $tmp11 = ((panda$collections$Iterator*) param0)->$class->itable;
+while ($tmp11->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+    $tmp11 = $tmp11->next;
+}
+$fn13 $tmp12 = $tmp11->methods[0];
+panda$core$Bit $tmp14 = $tmp12(((panda$collections$Iterator*) param0));
+panda$core$Bit $tmp15 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp14);
+bool $tmp16 = $tmp15.value;
+if ($tmp16) goto block1; else goto block2;
 block2:;
-panda$core$Int64 $tmp16 = (panda$core$Int64) {111};
-panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s17, $tmp16, &$s18);
+panda$core$Int64 $tmp17 = (panda$core$Int64) {111};
+panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s18, $tmp17, &$s19);
 abort(); // unreachable
 block1:;
 // line 112
-panda$collections$HashMap$EntryIterator** $tmp19 = &param0->base;
-panda$collections$HashMap$EntryIterator* $tmp20 = *$tmp19;
-$fn22 $tmp21 = ($fn22) $tmp20->$class->vtable[3];
-panda$core$Object* $tmp23 = $tmp21($tmp20);
-panda$core$Object** $tmp24 = &((panda$collections$HashMap$Entry*) $tmp23)->value;
-panda$core$Object* $tmp25 = *$tmp24;
-panda$core$Panda$ref$panda$core$Object$Q($tmp25);
-panda$core$Panda$unref$panda$core$Object$Q($tmp23);
+panda$collections$HashMap$EntryIterator** $tmp20 = &param0->base;
+panda$collections$HashMap$EntryIterator* $tmp21 = *$tmp20;
+$fn23 $tmp22 = ($fn23) $tmp21->$class->vtable[3];
+panda$core$Object* $tmp24 = $tmp22($tmp21);
+panda$core$Object** $tmp25 = &((panda$collections$HashMap$Entry*) $tmp24)->value;
+panda$core$Object* $tmp26 = *$tmp25;
+panda$core$Panda$ref$panda$core$Object$Q($tmp26);
+panda$core$Panda$unref$panda$core$Object$Q($tmp24);
 // unreffing REF($15:panda.collections.Iterator.T)
-return $tmp25;
+return $tmp26;
 
 }
 void panda$collections$HashMap$ValueIterator$cleanup(panda$collections$HashMap$ValueIterator* param0) {
 
 // line 98
 panda$core$Object$cleanup(((panda$core$Object*) param0));
-panda$collections$HashMap$EntryIterator** $tmp26 = &param0->base;
-panda$collections$HashMap$EntryIterator* $tmp27 = *$tmp26;
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp27));
+panda$collections$HashMap$EntryIterator** $tmp27 = &param0->base;
+panda$collections$HashMap$EntryIterator* $tmp28 = *$tmp27;
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp28));
 return;
 
 }

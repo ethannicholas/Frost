@@ -11,6 +11,8 @@ typedef struct panda$core$Class panda$core$Class;
 #include "panda/core/UInt64_types.h"
 #include "panda/core/Char32_types.h"
 #include "panda/core/Bit_types.h"
+typedef struct panda$collections$List panda$collections$List;
+typedef struct panda$core$MutableMethod panda$core$MutableMethod;
 
 void panda$core$Panda$init(panda$core$Panda* self);
 panda$core$Maybe* panda$core$Panda$success$panda$core$Object$R$panda$core$Maybe$LTpanda$core$Object$GT$Q(panda$core$Object* p_o);
@@ -39,5 +41,7 @@ void panda$core$Panda$debugPrint$builtin_int64(int64_t p_i);
 void panda$core$Panda$debugPrint$panda$core$Object(panda$core$Object* p_o);
 panda$core$String* panda$core$Panda$pointerConvert$panda$unsafe$Pointer$LTpanda$core$Object$Q$GT$R$panda$core$String(panda$core$Object** p_p);
 void panda$core$Panda$disableRefErrorReporting();
+void panda$core$Panda$swap$panda$collections$List$LTpanda$core$Panda$swap$T$GT$panda$core$Int64$panda$core$Int64(panda$collections$List* p_a, panda$core$Int64 p_i1, panda$core$Int64 p_i2);
+void panda$core$Panda$sort$panda$collections$List$LTpanda$core$Panda$sort$T$GT$panda$core$Int64$panda$core$Int64$$LPpanda$core$Panda$sort$T$Cpanda$core$Panda$sort$T$RP$EQ$GT$LPpanda$core$Bit$RP(panda$collections$List* p_a, panda$core$Int64 p_left, panda$core$Int64 p_right, panda$core$MutableMethod* p_greater);
 void panda$core$Panda$cleanup(panda$core$Panda* self);
 

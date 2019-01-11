@@ -15,21 +15,22 @@
 #include "panda/core/SteppedRange.LTpanda/core/Int64.Q.Cpanda/core/Int64.GT.h"
 #include "panda/core/MutableMethod.h"
 #include "panda/collections/ListView/ListIterator.h"
+#include "panda/collections/List.h"
 
-__attribute__((weak)) panda$collections$Iterator* panda$collections$ListView$iterator$R$panda$collections$Iterator$LTpanda$collections$ListView$T$GT$shim(panda$collections$ListView* p0) {
-    panda$collections$Iterator* result = panda$collections$ListView$iterator$R$panda$collections$Iterator$LTpanda$collections$ListView$T$GT(p0);
+__attribute__((weak)) panda$collections$Iterator* panda$collections$ListView$get_iterator$R$panda$collections$Iterator$LTpanda$collections$ListView$T$GT$shim(panda$collections$ListView* p0) {
+    panda$collections$Iterator* result = panda$collections$ListView$get_iterator$R$panda$collections$Iterator$LTpanda$collections$ListView$T$GT(p0);
 
     return result;
 }
 
-struct { panda$core$Class* cl; ITable* next; void* methods[1]; } panda$collections$ListView$_panda$collections$Iterable = { (panda$core$Class*) &panda$collections$Iterable$class, NULL, { panda$collections$ListView$iterator$R$panda$collections$Iterator$LTpanda$collections$ListView$T$GT$shim} };
+struct { panda$core$Class* cl; ITable* next; void* methods[1]; } panda$collections$ListView$_panda$collections$Iterable = { (panda$core$Class*) &panda$collections$Iterable$class, NULL, { panda$collections$ListView$get_iterator$R$panda$collections$Iterator$LTpanda$collections$ListView$T$GT$shim} };
 
-struct { panda$core$Class* cl; ITable* next; void* methods[7]; } panda$collections$ListView$_panda$collections$ListView = { (panda$core$Class*) &panda$collections$ListView$class, (ITable*) &panda$collections$ListView$_panda$collections$Iterable, { NULL, panda$collections$ListView$$IDX$panda$core$Range$LTpanda$core$Int64$GT$R$panda$collections$ListView$LTpanda$collections$ListView$T$GT, panda$collections$ListView$$IDX$panda$core$Range$LTpanda$core$Int64$Q$GT$R$panda$collections$ListView$LTpanda$collections$ListView$T$GT, panda$collections$ListView$$IDX$panda$core$SteppedRange$LTpanda$core$Int64$Q$Cpanda$core$Int64$GT$R$panda$collections$ListView$LTpanda$collections$ListView$T$GT, panda$collections$ListView$filter$$LPpanda$collections$ListView$T$RP$EQ$GT$LPpanda$core$Bit$RP$R$panda$collections$ListView$LTpanda$collections$ListView$T$GT, panda$collections$ListView$iterator$R$panda$collections$Iterator$LTpanda$collections$ListView$T$GT$shim, panda$collections$ListView$sorted$$LPpanda$collections$ListView$T$Cpanda$collections$ListView$T$RP$EQ$GT$LPpanda$core$Bit$RP$R$panda$collections$ListView$LTpanda$collections$ListView$T$GT} };
+struct { panda$core$Class* cl; ITable* next; void* methods[7]; } panda$collections$ListView$_panda$collections$ListView = { (panda$core$Class*) &panda$collections$ListView$class, (ITable*) &panda$collections$ListView$_panda$collections$Iterable, { NULL, panda$collections$ListView$$IDX$panda$core$Range$LTpanda$core$Int64$GT$R$panda$collections$ListView$LTpanda$collections$ListView$T$GT, panda$collections$ListView$$IDX$panda$core$Range$LTpanda$core$Int64$Q$GT$R$panda$collections$ListView$LTpanda$collections$ListView$T$GT, panda$collections$ListView$$IDX$panda$core$SteppedRange$LTpanda$core$Int64$Q$Cpanda$core$Int64$GT$R$panda$collections$ListView$LTpanda$collections$ListView$T$GT, panda$collections$ListView$filter$$LPpanda$collections$ListView$T$RP$EQ$GT$LPpanda$core$Bit$RP$R$panda$collections$ListView$LTpanda$collections$ListView$T$GT, panda$collections$ListView$get_iterator$R$panda$collections$Iterator$LTpanda$collections$ListView$T$GT$shim, panda$collections$ListView$sort$$LPpanda$collections$ListView$T$Cpanda$collections$ListView$T$RP$EQ$GT$LPpanda$core$Bit$RP$R$panda$collections$ListView$LTpanda$collections$ListView$T$GT} };
 
 struct { panda$core$Class* cl; ITable* next; void* methods[7]; } panda$collections$ListView$_panda$collections$CollectionView = { (panda$core$Class*) &panda$collections$CollectionView$class, (ITable*) &panda$collections$ListView$_panda$collections$ListView, { NULL, panda$collections$CollectionView$join$R$panda$core$String, panda$collections$CollectionView$join$panda$core$String$R$panda$core$String, panda$collections$CollectionView$fold$$LPpanda$collections$CollectionView$T$Cpanda$collections$CollectionView$T$RP$EQ$GT$LPpanda$collections$CollectionView$T$RP$R$panda$collections$CollectionView$T, panda$collections$CollectionView$fold$$LPpanda$collections$CollectionView$T$Cpanda$collections$CollectionView$T$RP$EQ$GT$LPpanda$collections$CollectionView$T$RP$panda$collections$CollectionView$T$R$panda$collections$CollectionView$T, panda$collections$CollectionView$apply$$LPpanda$collections$CollectionView$T$RP$EQ$AM$GT$LP$RP, panda$collections$CollectionView$map$$LPpanda$collections$CollectionView$T$RP$EQ$GT$LPpanda$collections$CollectionView$map$U$RP$R$panda$collections$Array$LTpanda$collections$CollectionView$map$U$GT} };
 
 static panda$core$String $s1;
-panda$collections$ListView$class_type panda$collections$ListView$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, (ITable*) &panda$collections$ListView$_panda$collections$CollectionView, { panda$core$Object$convert$R$panda$core$String, panda$core$Object$cleanup, NULL, panda$collections$ListView$$IDX$panda$core$Range$LTpanda$core$Int64$GT$R$panda$collections$ListView$LTpanda$collections$ListView$T$GT, panda$collections$ListView$$IDX$panda$core$Range$LTpanda$core$Int64$Q$GT$R$panda$collections$ListView$LTpanda$collections$ListView$T$GT, panda$collections$ListView$$IDX$panda$core$SteppedRange$LTpanda$core$Int64$Q$Cpanda$core$Int64$GT$R$panda$collections$ListView$LTpanda$collections$ListView$T$GT, panda$collections$ListView$filter$$LPpanda$collections$ListView$T$RP$EQ$GT$LPpanda$core$Bit$RP$R$panda$collections$ListView$LTpanda$collections$ListView$T$GT, panda$collections$ListView$iterator$R$panda$collections$Iterator$LTpanda$collections$ListView$T$GT$shim, panda$collections$ListView$sorted$$LPpanda$collections$ListView$T$Cpanda$collections$ListView$T$RP$EQ$GT$LPpanda$core$Bit$RP$R$panda$collections$ListView$LTpanda$collections$ListView$T$GT} };
+panda$collections$ListView$class_type panda$collections$ListView$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, (ITable*) &panda$collections$ListView$_panda$collections$CollectionView, { panda$core$Object$convert$R$panda$core$String, panda$core$Object$cleanup, NULL, panda$collections$ListView$$IDX$panda$core$Range$LTpanda$core$Int64$GT$R$panda$collections$ListView$LTpanda$collections$ListView$T$GT, panda$collections$ListView$$IDX$panda$core$Range$LTpanda$core$Int64$Q$GT$R$panda$collections$ListView$LTpanda$collections$ListView$T$GT, panda$collections$ListView$$IDX$panda$core$SteppedRange$LTpanda$core$Int64$Q$Cpanda$core$Int64$GT$R$panda$collections$ListView$LTpanda$collections$ListView$T$GT, panda$collections$ListView$filter$$LPpanda$collections$ListView$T$RP$EQ$GT$LPpanda$core$Bit$RP$R$panda$collections$ListView$LTpanda$collections$ListView$T$GT, panda$collections$ListView$get_iterator$R$panda$collections$Iterator$LTpanda$collections$ListView$T$GT$shim, panda$collections$ListView$sort$$LPpanda$collections$ListView$T$Cpanda$collections$ListView$T$RP$EQ$GT$LPpanda$core$Bit$RP$R$panda$collections$ListView$LTpanda$collections$ListView$T$GT} };
 
 typedef panda$core$Int64 (*$fn14)(panda$collections$CollectionView*);
 typedef panda$core$Int64 (*$fn28)(panda$collections$CollectionView*);
@@ -53,9 +54,7 @@ typedef panda$core$Bit (*$fn390)(panda$collections$Iterator*);
 typedef panda$core$Object* (*$fn395)(panda$collections$Iterator*);
 typedef panda$core$Bit (*$fn404)(panda$core$Object*);
 typedef panda$core$Bit (*$fn406)(panda$core$Object*, panda$core$Object*);
-typedef panda$core$Bit (*$fn474)(panda$core$Object*, panda$core$Object*);
-typedef panda$core$Bit (*$fn476)(panda$core$Object*, panda$core$Object*, panda$core$Object*);
-typedef panda$core$Int64 (*$fn529)(panda$collections$CollectionView*);
+typedef panda$core$Int64 (*$fn422)(panda$collections$CollectionView*);
 
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x4c\x69\x73\x74\x56\x69\x65\x77", 26, 1346634265727302291, NULL };
 static panda$core$String $s76 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x4c\x69\x73\x74\x56\x69\x65\x77\x2e\x70\x61\x6e\x64\x61", 14, -973627211574904282, NULL };
@@ -976,7 +975,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp414));
 return ((panda$collections$ListView*) $tmp413);
 
 }
-panda$collections$Iterator* panda$collections$ListView$iterator$R$panda$collections$Iterator$LTpanda$collections$ListView$T$GT(panda$collections$ListView* param0) {
+panda$collections$Iterator* panda$collections$ListView$get_iterator$R$panda$collections$Iterator$LTpanda$collections$ListView$T$GT(panda$collections$ListView* param0) {
 
 // line 169
 panda$collections$ListView$ListIterator* $tmp415 = (panda$collections$ListView$ListIterator*) pandaObjectAlloc(32, (panda$core$Class*) &panda$collections$ListView$ListIterator$class);
@@ -987,245 +986,42 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp415));
 return ((panda$collections$Iterator*) $tmp415);
 
 }
-void panda$collections$ListView$swap$panda$collections$Array$LTpanda$collections$ListView$T$GT$panda$core$Int64$panda$core$Int64(panda$collections$Array* param0, panda$core$Int64 param1, panda$core$Int64 param2) {
-
-panda$core$Object* local0 = NULL;
-// line 175
-panda$core$Object* $tmp416 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(param0, param1);
-*(&local0) = ((panda$core$Object*) NULL);
-panda$core$Panda$ref$panda$core$Object$Q($tmp416);
-panda$core$Object* $tmp417 = *(&local0);
-panda$core$Panda$unref$panda$core$Object$Q($tmp417);
-*(&local0) = $tmp416;
-panda$core$Panda$unref$panda$core$Object$Q($tmp416);
-// unreffing REF($2:panda.collections.Array.T)
-// line 176
-panda$core$Object* $tmp418 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(param0, param2);
-panda$collections$Array$$IDXEQ$panda$core$Int64$panda$collections$Array$T(param0, param1, $tmp418);
-panda$core$Panda$unref$panda$core$Object$Q($tmp418);
-// unreffing REF($17:panda.collections.Array.T)
-// line 177
-panda$core$Object* $tmp419 = *(&local0);
-panda$collections$Array$$IDXEQ$panda$core$Int64$panda$collections$Array$T(param0, param2, $tmp419);
-panda$core$Object* $tmp420 = *(&local0);
-panda$core$Panda$unref$panda$core$Object$Q($tmp420);
-// unreffing tmp
-*(&local0) = ((panda$core$Object*) NULL);
-return;
-
-}
-void panda$collections$ListView$sort$panda$collections$Array$LTpanda$collections$ListView$T$GT$panda$core$Int64$panda$core$Int64$$LPpanda$collections$ListView$T$Cpanda$collections$ListView$T$RP$EQ$GT$LPpanda$core$Bit$RP(panda$collections$Array* param0, panda$core$Int64 param1, panda$core$Int64 param2, panda$core$MutableMethod* param3) {
-
-panda$core$Int64 local0;
-panda$core$Object* local1 = NULL;
-panda$core$Int64 local2;
-panda$core$Int64 local3;
-panda$core$Bit local4;
-// line 184
-int64_t $tmp421 = param1.value;
-int64_t $tmp422 = param2.value;
-bool $tmp423 = $tmp421 >= $tmp422;
-panda$core$Bit $tmp424 = (panda$core$Bit) {$tmp423};
-bool $tmp425 = $tmp424.value;
-if ($tmp425) goto block1; else goto block2;
-block1:;
-// line 185
-return;
-block2:;
-// line 187
-int64_t $tmp426 = param2.value;
-int64_t $tmp427 = param1.value;
-int64_t $tmp428 = $tmp426 - $tmp427;
-panda$core$Int64 $tmp429 = (panda$core$Int64) {$tmp428};
-panda$core$Int64 $tmp430 = (panda$core$Int64) {2};
-int64_t $tmp431 = $tmp429.value;
-int64_t $tmp432 = $tmp430.value;
-int64_t $tmp433 = $tmp431 / $tmp432;
-panda$core$Int64 $tmp434 = (panda$core$Int64) {$tmp433};
-int64_t $tmp435 = param1.value;
-int64_t $tmp436 = $tmp434.value;
-int64_t $tmp437 = $tmp435 + $tmp436;
-panda$core$Int64 $tmp438 = (panda$core$Int64) {$tmp437};
-*(&local0) = $tmp438;
-// line 188
-panda$core$Int64 $tmp439 = *(&local0);
-panda$core$Object* $tmp440 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(param0, $tmp439);
-*(&local1) = ((panda$core$Object*) NULL);
-panda$core$Panda$ref$panda$core$Object$Q($tmp440);
-panda$core$Object* $tmp441 = *(&local1);
-panda$core$Panda$unref$panda$core$Object$Q($tmp441);
-*(&local1) = $tmp440;
-panda$core$Panda$unref$panda$core$Object$Q($tmp440);
-// unreffing REF($27:panda.collections.Array.T)
-// line 189
-panda$core$Int64 $tmp442 = *(&local0);
-panda$collections$ListView$swap$panda$collections$Array$LTpanda$collections$ListView$T$GT$panda$core$Int64$panda$core$Int64(param0, param2, $tmp442);
-// line 190
-*(&local2) = param1;
-// line 191
-panda$core$Int64 $tmp443 = (panda$core$Int64) {1};
-int64_t $tmp444 = param2.value;
-int64_t $tmp445 = $tmp443.value;
-int64_t $tmp446 = $tmp444 - $tmp445;
-panda$core$Int64 $tmp447 = (panda$core$Int64) {$tmp446};
-panda$core$Bit $tmp448 = panda$core$Bit$init$builtin_bit(true);
-panda$core$Range$LTpanda$core$Int64$GT $tmp449 = panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(param1, $tmp447, $tmp448);
-panda$core$Int64 $tmp450 = $tmp449.min;
-*(&local3) = $tmp450;
-panda$core$Int64 $tmp451 = $tmp449.max;
-panda$core$Bit $tmp452 = $tmp449.inclusive;
-bool $tmp453 = $tmp452.value;
-panda$core$Int64 $tmp454 = (panda$core$Int64) {1};
-panda$core$UInt64 $tmp455 = panda$core$Int64$convert$R$panda$core$UInt64($tmp454);
-if ($tmp453) goto block6; else goto block7;
-block6:;
-int64_t $tmp456 = $tmp450.value;
-int64_t $tmp457 = $tmp451.value;
-bool $tmp458 = $tmp456 <= $tmp457;
-panda$core$Bit $tmp459 = (panda$core$Bit) {$tmp458};
-bool $tmp460 = $tmp459.value;
-if ($tmp460) goto block3; else goto block4;
-block7:;
-int64_t $tmp461 = $tmp450.value;
-int64_t $tmp462 = $tmp451.value;
-bool $tmp463 = $tmp461 < $tmp462;
-panda$core$Bit $tmp464 = (panda$core$Bit) {$tmp463};
-bool $tmp465 = $tmp464.value;
-if ($tmp465) goto block3; else goto block4;
-block3:;
-// line 192
-panda$core$Int64 $tmp466 = *(&local3);
-panda$core$Object* $tmp467 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(param0, $tmp466);
-panda$core$Object* $tmp468 = *(&local1);
-panda$core$Int8** $tmp469 = &param3->pointer;
-panda$core$Int8* $tmp470 = *$tmp469;
-panda$core$Object** $tmp471 = &param3->target;
-panda$core$Object* $tmp472 = *$tmp471;
-bool $tmp473 = $tmp472 != ((panda$core$Object*) NULL);
-if ($tmp473) goto block10; else goto block11;
-block11:;
-panda$core$Bit $tmp475 = (($fn474) $tmp470)($tmp467, $tmp468);
-*(&local4) = $tmp475;
-goto block12;
-block10:;
-panda$core$Bit $tmp477 = (($fn476) $tmp470)($tmp472, $tmp467, $tmp468);
-*(&local4) = $tmp477;
-goto block12;
-block12:;
-panda$core$Bit $tmp478 = *(&local4);
-panda$core$Bit $tmp479 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp478);
-bool $tmp480 = $tmp479.value;
-panda$core$Panda$unref$panda$core$Object$Q($tmp467);
-// unreffing REF($75:panda.collections.Array.T)
-if ($tmp480) goto block8; else goto block9;
-block8:;
-// line 193
-panda$core$Int64 $tmp481 = *(&local3);
-panda$core$Int64 $tmp482 = *(&local2);
-panda$collections$ListView$swap$panda$collections$Array$LTpanda$collections$ListView$T$GT$panda$core$Int64$panda$core$Int64(param0, $tmp481, $tmp482);
-// line 194
-panda$core$Int64 $tmp483 = *(&local2);
-panda$core$Int64 $tmp484 = (panda$core$Int64) {1};
-int64_t $tmp485 = $tmp483.value;
-int64_t $tmp486 = $tmp484.value;
-int64_t $tmp487 = $tmp485 + $tmp486;
-panda$core$Int64 $tmp488 = (panda$core$Int64) {$tmp487};
-*(&local2) = $tmp488;
-goto block9;
-block9:;
-goto block5;
-block5:;
-panda$core$Int64 $tmp489 = *(&local3);
-int64_t $tmp490 = $tmp451.value;
-int64_t $tmp491 = $tmp489.value;
-int64_t $tmp492 = $tmp490 - $tmp491;
-panda$core$Int64 $tmp493 = (panda$core$Int64) {$tmp492};
-panda$core$UInt64 $tmp494 = panda$core$Int64$convert$R$panda$core$UInt64($tmp493);
-if ($tmp453) goto block14; else goto block15;
-block14:;
-uint64_t $tmp495 = $tmp494.value;
-uint64_t $tmp496 = $tmp455.value;
-bool $tmp497 = $tmp495 >= $tmp496;
-panda$core$Bit $tmp498 = (panda$core$Bit) {$tmp497};
-bool $tmp499 = $tmp498.value;
-if ($tmp499) goto block13; else goto block4;
-block15:;
-uint64_t $tmp500 = $tmp494.value;
-uint64_t $tmp501 = $tmp455.value;
-bool $tmp502 = $tmp500 > $tmp501;
-panda$core$Bit $tmp503 = (panda$core$Bit) {$tmp502};
-bool $tmp504 = $tmp503.value;
-if ($tmp504) goto block13; else goto block4;
-block13:;
-int64_t $tmp505 = $tmp489.value;
-int64_t $tmp506 = $tmp454.value;
-int64_t $tmp507 = $tmp505 + $tmp506;
-panda$core$Int64 $tmp508 = (panda$core$Int64) {$tmp507};
-*(&local3) = $tmp508;
-goto block3;
-block4:;
-// line 197
-panda$core$Int64 $tmp509 = *(&local2);
-panda$collections$ListView$swap$panda$collections$Array$LTpanda$collections$ListView$T$GT$panda$core$Int64$panda$core$Int64(param0, $tmp509, param2);
-// line 198
-panda$core$Int64 $tmp510 = *(&local2);
-panda$core$Int64 $tmp511 = (panda$core$Int64) {1};
-int64_t $tmp512 = $tmp510.value;
-int64_t $tmp513 = $tmp511.value;
-int64_t $tmp514 = $tmp512 - $tmp513;
-panda$core$Int64 $tmp515 = (panda$core$Int64) {$tmp514};
-panda$collections$ListView$sort$panda$collections$Array$LTpanda$collections$ListView$T$GT$panda$core$Int64$panda$core$Int64$$LPpanda$collections$ListView$T$Cpanda$collections$ListView$T$RP$EQ$GT$LPpanda$core$Bit$RP(param0, param1, $tmp515, param3);
-// line 199
-panda$core$Int64 $tmp516 = *(&local2);
-panda$core$Int64 $tmp517 = (panda$core$Int64) {1};
-int64_t $tmp518 = $tmp516.value;
-int64_t $tmp519 = $tmp517.value;
-int64_t $tmp520 = $tmp518 + $tmp519;
-panda$core$Int64 $tmp521 = (panda$core$Int64) {$tmp520};
-panda$collections$ListView$sort$panda$collections$Array$LTpanda$collections$ListView$T$GT$panda$core$Int64$panda$core$Int64$$LPpanda$collections$ListView$T$Cpanda$collections$ListView$T$RP$EQ$GT$LPpanda$core$Bit$RP(param0, $tmp521, param2, param3);
-panda$core$Object* $tmp522 = *(&local1);
-panda$core$Panda$unref$panda$core$Object$Q($tmp522);
-// unreffing pivot
-*(&local1) = ((panda$core$Object*) NULL);
-return;
-
-}
-panda$collections$ListView* panda$collections$ListView$sorted$$LPpanda$collections$ListView$T$Cpanda$collections$ListView$T$RP$EQ$GT$LPpanda$core$Bit$RP$R$panda$collections$ListView$LTpanda$collections$ListView$T$GT(panda$collections$ListView* param0, panda$core$MutableMethod* param1) {
+panda$collections$ListView* panda$collections$ListView$sort$$LPpanda$collections$ListView$T$Cpanda$collections$ListView$T$RP$EQ$GT$LPpanda$core$Bit$RP$R$panda$collections$ListView$LTpanda$collections$ListView$T$GT(panda$collections$ListView* param0, panda$core$MutableMethod* param1) {
 
 panda$collections$Array* local0 = NULL;
-// line 212
-panda$collections$Array* $tmp523 = (panda$collections$Array*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$Array$class);
-panda$collections$Array$init$panda$collections$CollectionView$LTpanda$collections$Array$T$GT($tmp523, ((panda$collections$CollectionView*) param0));
+// line 182
+panda$collections$Array* $tmp416 = (panda$collections$Array*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$Array$class);
+panda$collections$Array$init$panda$collections$CollectionView$LTpanda$collections$Array$T$GT($tmp416, ((panda$collections$CollectionView*) param0));
 *(&local0) = ((panda$collections$Array*) NULL);
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp523));
-panda$collections$Array* $tmp524 = *(&local0);
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp524));
-*(&local0) = $tmp523;
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp523));
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp416));
+panda$collections$Array* $tmp417 = *(&local0);
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp417));
+*(&local0) = $tmp416;
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp416));
 // unreffing REF($1:panda.collections.Array<panda.collections.ListView.T>)
-// line 213
-panda$collections$Array* $tmp525 = *(&local0);
-panda$core$Int64 $tmp526 = (panda$core$Int64) {0};
-ITable* $tmp527 = ((panda$collections$CollectionView*) param0)->$class->itable;
-while ($tmp527->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {
-    $tmp527 = $tmp527->next;
+// line 183
+panda$collections$Array* $tmp418 = *(&local0);
+panda$core$Int64 $tmp419 = (panda$core$Int64) {0};
+ITable* $tmp420 = ((panda$collections$CollectionView*) param0)->$class->itable;
+while ($tmp420->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {
+    $tmp420 = $tmp420->next;
 }
-$fn529 $tmp528 = $tmp527->methods[0];
-panda$core$Int64 $tmp530 = $tmp528(((panda$collections$CollectionView*) param0));
-panda$core$Int64 $tmp531 = (panda$core$Int64) {1};
-int64_t $tmp532 = $tmp530.value;
-int64_t $tmp533 = $tmp531.value;
-int64_t $tmp534 = $tmp532 - $tmp533;
-panda$core$Int64 $tmp535 = (panda$core$Int64) {$tmp534};
-panda$collections$ListView$sort$panda$collections$Array$LTpanda$collections$ListView$T$GT$panda$core$Int64$panda$core$Int64$$LPpanda$collections$ListView$T$Cpanda$collections$ListView$T$RP$EQ$GT$LPpanda$core$Bit$RP($tmp525, $tmp526, $tmp535, param1);
-// line 214
-panda$collections$Array* $tmp536 = *(&local0);
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((panda$collections$ListView*) $tmp536)));
-panda$collections$Array* $tmp537 = *(&local0);
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp537));
+$fn422 $tmp421 = $tmp420->methods[0];
+panda$core$Int64 $tmp423 = $tmp421(((panda$collections$CollectionView*) param0));
+panda$core$Int64 $tmp424 = (panda$core$Int64) {1};
+int64_t $tmp425 = $tmp423.value;
+int64_t $tmp426 = $tmp424.value;
+int64_t $tmp427 = $tmp425 - $tmp426;
+panda$core$Int64 $tmp428 = (panda$core$Int64) {$tmp427};
+panda$core$Panda$sort$panda$collections$List$LTpanda$core$Panda$sort$T$GT$panda$core$Int64$panda$core$Int64$$LPpanda$core$Panda$sort$T$Cpanda$core$Panda$sort$T$RP$EQ$GT$LPpanda$core$Bit$RP(((panda$collections$List*) $tmp418), $tmp419, $tmp428, param1);
+// line 184
+panda$collections$Array* $tmp429 = *(&local0);
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((panda$collections$ListView*) $tmp429)));
+panda$collections$Array* $tmp430 = *(&local0);
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp430));
 // unreffing result
 *(&local0) = ((panda$collections$Array*) NULL);
-return ((panda$collections$ListView*) $tmp536);
+return ((panda$collections$ListView*) $tmp429);
 
 }
 

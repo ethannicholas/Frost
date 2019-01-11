@@ -31,6 +31,8 @@ class Main {
         @private
         def index := 1
 
+        property done:Bit
+
         init(args:ListView<String>) {
             self.args := args
         }
@@ -40,13 +42,13 @@ class Main {
         }
 
         method next():String {
-            assert !get_done()
+            assert !done
             index += 1
             return args[index - 1]
         }
 
         method next(label:String):String {
-            if get_done() {
+            if done {
                 Console.errorStream().printLine("expected \{label} after " +
                         "'\{args[args.count - 1]}'")
                 System.exit(1)
@@ -89,8 +91,8 @@ class Main {
         def icuLibs := Config.icuLibraries().split(";")
         for lib in icuLibs {
             def libFile := File(lib)
-            args.add("-L" + libFile.parent())
-            var simpleName := libFile.simpleName()
+            args.add("-L" + libFile.parent)
+            var simpleName := libFile.simpleName
             assert simpleName.startsWith("lib")
             simpleName := simpleName[3..]
             args.add("-l" + simpleName)
@@ -136,7 +138,7 @@ class Main {
         var root:String? := null
         var preserveTemporaries := true
         def err := Console.errorStream()
-        while !args.get_done() {
+        while !args.done {
             def a := args.next()
             match a {
                 when "--fuzz" {
@@ -150,7 +152,7 @@ class Main {
                         System.exit(1)
                     }
                     outFile := File(args.next("a filename"))
-                    outFile.parent().createDirectories()
+                    outFile.parent.createDirectories()
                 }
                 when "-O" {
                     def level := args.next("a number from 0-3")
@@ -286,7 +288,7 @@ class Main {
             errorCount := errorQueue.pendingMessages()
             for i in 0 .. errorCount {
                 def error := errorQueue.getMessage()
-                Console.printLine("\{error.file.name()}:\{error.position}: error: \{error.message}")
+                Console.printLine("\{error.file.name}:\{error.position}: error: \{error.message}")
             }
         }
         if errorCount = 0 {

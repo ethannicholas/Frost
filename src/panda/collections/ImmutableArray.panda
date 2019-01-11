@@ -90,7 +90,7 @@ class ImmutableArray<T:Immutable> : Immutable, ListView<T> {
     }
 
     @override
-    function iterator():Iterator<T> {
+    function get_iterator():Iterator<T> {
         return ImmutableArrayIterator<T>(self)
     }
 

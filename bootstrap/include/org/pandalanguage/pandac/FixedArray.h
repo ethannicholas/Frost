@@ -16,6 +16,6 @@ org$pandalanguage$pandac$FixedArray* org$pandalanguage$pandac$FixedArray$from$pa
 void org$pandalanguage$pandac$FixedArray$cleanup(org$pandalanguage$pandac$FixedArray* self);
 panda$core$Object* org$pandalanguage$pandac$FixedArray$$IDX$panda$core$Int64$R$org$pandalanguage$pandac$FixedArray$T(org$pandalanguage$pandac$FixedArray* self, panda$core$Int64 p_index);
 panda$core$Int64 org$pandalanguage$pandac$FixedArray$get_count$R$panda$core$Int64(org$pandalanguage$pandac$FixedArray* self);
-panda$collections$Iterator* org$pandalanguage$pandac$FixedArray$iterator$R$panda$collections$Iterator$LTorg$pandalanguage$pandac$FixedArray$T$GT(org$pandalanguage$pandac$FixedArray* self);
+panda$collections$Iterator* org$pandalanguage$pandac$FixedArray$get_iterator$R$panda$collections$Iterator$LTorg$pandalanguage$pandac$FixedArray$T$GT(org$pandalanguage$pandac$FixedArray* self);
 panda$core$String* org$pandalanguage$pandac$FixedArray$convert$R$panda$core$String(org$pandalanguage$pandac$FixedArray* self);
 

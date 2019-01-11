@@ -233,8 +233,9 @@ class Real64 : Value, Key<Real64>, Comparable<Real64>, Formattable {
         return value <= other.value
     }
 
-    ===Returns the absolute value of this number.===
-    function abs():Real64 {
+    ===The absolute value of this number.===
+    property abs:Real64
+    function get_abs():Real64 {
         if self < 0 {
             return -self
         }
@@ -447,6 +448,6 @@ class Real64 : Value, Key<Real64>, Comparable<Real64>, Formattable {
     === Returns a formatted representation of this number. Supported format strings are `""`, `"d"`, or `"D"` for decimal, `"b"` or `"B"` for binary, `"o"` or `"O"` for octal, `"x"` for lowercase hexadecimal, and `"X"` for uppercase hexadecimal. ===
     @override
     function format(fmt:String):String {
-        return Panda.format(value < 0, abs().convert(), 0xFFFFFFFFFFFFFFFF, fmt)
+        return Panda.format(value < 0, abs.convert(), 0xFFFFFFFFFFFFFFFF, fmt)
     }
 }

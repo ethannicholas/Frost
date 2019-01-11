@@ -731,7 +731,7 @@ class UInt32 : Value, Key<UInt32>, Comparable<UInt32>, Formattable, ListView<Bit
     }
 
     @override
-    function iterator():Iterator<Bit> {
+    function get_iterator():Iterator<Bit> {
         return org.pandalanguage.panda.IntBitIterator(self.convert()->UInt64, 1 << 31)
     }
 

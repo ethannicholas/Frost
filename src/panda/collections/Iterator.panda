@@ -22,7 +22,7 @@ interface Iterator<T> {
 
         method getNext() {
             do {
-                if base.get_done() {
+                if base.done {
                     _done := true
                     return
                 }
@@ -63,7 +63,7 @@ interface Iterator<T> {
             self.base := base
             if start !== null {
                 for i in 0 .. start {
-                    if !base.get_done() {
+                    if !base.done {
                         base.next()
                     }
                 }
@@ -81,7 +81,7 @@ interface Iterator<T> {
                 }
             }
             self.step := step
-            if !base.get_done() {
+            if !base.done {
                 pending := base.next()
             }
             else {
@@ -99,7 +99,7 @@ interface Iterator<T> {
             def result := pending
             for i in 0 .. step {
                 current += 1
-                _done := (end !== null & current >= end) | base.get_done()
+                _done := (end !== null & current >= end) | base.done
                 if _done {
                     pending := null
                     break
@@ -123,7 +123,7 @@ interface Iterator<T> {
 
         @override
         function get_done():Bit {
-            return base.get_done()
+            return base.done
         }
 
         @override
@@ -132,14 +132,14 @@ interface Iterator<T> {
         }
     }
 
-    -- property done:Bit
+    property done:Bit
 
     function get_done():Bit
 
     ================================================================================================
     Returns the next element from the iterator.
     ================================================================================================
-    @pre(!get_done())
+    @pre(!done)
     method next():T
 
     ================================================================================================
@@ -149,7 +149,7 @@ interface Iterator<T> {
     @post(get_done())
     method count():Int {
         var result := 0
-        while !get_done() {
+        while !done {
             next()
             result += 1
         }
@@ -209,7 +209,7 @@ interface Iterator<T> {
     `Array`.
     ================================================================================================
     @default
-    @post(get_done())
+    @post(done)
     method all():Array<T> {
         def result := Array<T>()
         for v in self {
@@ -227,7 +227,7 @@ interface Iterator<T> {
         File(path).lines().apply(process)
     ================================================================================================
     @default
-    @post(get_done())
+    @post(done)
     method apply(m:(T)=&>()) {
         for v in self {
             m(v)
@@ -259,11 +259,11 @@ interface Iterator<T> {
     @see fold((T, T)=>(T), T)
     ================================================================================================
     @default
-    @pre(!get_done())
-    @post(get_done())
+    @pre(!done)
+    @post(done)
     method fold(f:(T, T)=>(T)):T {
         var result := next()
-        while !get_done() {
+        while !done {
             result := f(result, next())
         }
         return result
@@ -281,10 +281,10 @@ interface Iterator<T> {
     @see fold((T, T)=>(T))
     ================================================================================================
     @default
-    @post(get_done())
+    @post(done)
     method fold(f:(T, T)=>(T), start:T):T {
         var result := start
-        while !get_done() {
+        while !done {
             result := f(result, next())
         }
         return result

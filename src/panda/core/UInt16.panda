@@ -895,7 +895,7 @@ class UInt16 : Value, Key<UInt16>, Comparable<UInt16>, Formattable, ListView<Bit
     }
 
     @override
-    function iterator():Iterator<Bit> {
+    function get_iterator():Iterator<Bit> {
         return org.pandalanguage.panda.IntBitIterator(self.convert()->UInt64, 1 << 15)
     }
 

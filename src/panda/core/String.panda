@@ -99,7 +99,7 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
         }
 
         @override
-        function iterator():Iterator<Char8> {
+        function get_iterator():Iterator<Char8> {
             return UTF8Iterator(str)
         }
     }
@@ -471,7 +471,7 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
     Returns an `Iterator` over the characters in this string.
     ================================================================================================
     @override
-    function iterator():Iterator<Char32> {
+    function get_iterator():Iterator<Char32> {
         return UTF32Iterator(self)
     }
 
@@ -482,7 +482,7 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
     respect to the size of the string).
     ================================================================================================
     function get_length():Int {
-        return iterator().count()
+        return iterator.count()
     }
 
     ================================================================================================

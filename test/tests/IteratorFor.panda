@@ -3,7 +3,7 @@ method main() {
     for i in 0 ... 20 {
         a.add(i * i)
     }
-    for v in a.iterator() {
+    for v in a.iterator {
         Console.printLine(v)
     }
 }

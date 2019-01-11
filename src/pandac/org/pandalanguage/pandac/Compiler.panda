@@ -1590,7 +1590,7 @@ class Compiler {
             return null
         }
         if possible.count = 1 {
-            return possible.iterator().next()
+            return possible.iterator.next()
         }
         def best := Array<Type>()
         def bestCost := Int.MAX
@@ -2345,7 +2345,7 @@ class Compiler {
                     return null
                 }
                 if methodTypes.count = 1 {
-                    def t := methodTypes.iterator().next()
+                    def t := methodTypes.iterator.next()
                     if t.isClass {
                         def cl := getClass(t)
                         if cl !== null & cl.classKind = ClassDecl.Kind.CHOICE {
@@ -2811,7 +2811,7 @@ class Compiler {
                     return null
                 }
                 if methodTypes.count = 1 {
-                    def t := methodTypes.iterator().next()
+                    def t := methodTypes.iterator.next()
                     if t.isClassLiteral {
                         def resultCost := coercionCost(t.subtypes[1], target)
                         if resultCost == null {
@@ -4081,7 +4081,7 @@ class Compiler {
     function numberSize(type:Type):Int {
         def cl := getClass(type)
         assert cl !== null
-        def value := cl.fields[cl.fields.count - 1]
+        def value := cl.fields.filter(f => f.name = "value")[0]
         resolve(value)
         assert value.type.isBuiltinNumber
         return value.type.size
@@ -4615,7 +4615,7 @@ class Compiler {
         def msg := MutableString("call to '\{methods[0].value.name}' is ambiguous. The following " +
                 "methods are equally good matches:")
         for m in methods {
-            msg.append("\n    \{m.value.declaration} (\{m.value.owner.source.name()}:" +
+            msg.append("\n    \{m.value.declaration} (\{m.value.owner.source.name}:" +
                     "\{m.value.position})")
         }
         error(position, msg.finish())
@@ -6084,7 +6084,7 @@ class Compiler {
             }
             else {
                 compileUntypedLambda(position, rawParameters, expr,
-                        TypeContext.TYPE(attempts.iterator().next()))
+                        TypeContext.TYPE(attempts.iterator.next()))
                 return null
             }
         }
@@ -6558,7 +6558,7 @@ class Compiler {
                 return Type.Any()
             }
             assert types.count = 1 -- FIXME handle ambiguous matches
-            return types.iterator().next()
+            return types.iterator.next()
         }
 
         @override
@@ -6771,7 +6771,7 @@ class Compiler {
         {
             def unrefs := AutoUnrefs(self)
             def args := Array<ASTNode>()
-            args.add(ASTNode.STRING(position, currentClass[0].source.name()))
+            args.add(ASTNode.STRING(position, currentClass[0].source.name))
             args.add(ASTNode.INT(position, position.line.convert()))
             def m:MethodDecl
             if msg !== null {
@@ -7470,7 +7470,14 @@ class Compiler {
                     if iterable == null {
                         return
                     }
-                    def iterator := call(position, iterable, "iterator", Array<ASTNode>(),
+                    def name:String
+                    if getSymbolTable(getClass(iterable.type()))["get_iterator"] !== null {
+                        name := "get_iterator"
+                    }
+                    else {
+                        name := "iterator"
+                    }
+                    def iterator := call(position, iterable, name, Array<ASTNode>(),
                             TypeContext.NON_VOID)
                     assert iterator !== null
                     compileIteratorFor(position, label, rawTarget, iterator, statements)

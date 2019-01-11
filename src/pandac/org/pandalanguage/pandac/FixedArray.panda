@@ -90,7 +90,7 @@ class FixedArray<T> : ListView<T> {
     }
 
     @override
-    function iterator():Iterator<T> {
+    function get_iterator():Iterator<T> {
         return FixedArrayIterator<T>(self)
     }
 

@@ -377,8 +377,9 @@ class Int64 : Value, Key<Int64>, Comparable<Int64>, Formattable, ListView<Bit> {
         return value <= other.value
     }
 
-    ===Returns the absolute value of this number.===
-    function abs():Int64 {
+    ===The absolute value of this number.===
+    property abs:Int64
+    function get_abs():Int64 {
         if self < 0 {
             return -self
         }
@@ -488,7 +489,7 @@ class Int64 : Value, Key<Int64>, Comparable<Int64>, Formattable, ListView<Bit> {
     }
 
     @override
-    function iterator():Iterator<Bit> {
+    function get_iterator():Iterator<Bit> {
         return org.pandalanguage.panda.IntBitIterator(self.convert()->UInt64, 1 << 63)
     }
 
@@ -597,6 +598,6 @@ class Int64 : Value, Key<Int64>, Comparable<Int64>, Formattable, ListView<Bit> {
     === Returns a formatted representation of this number. Supported format strings are `""`, `"d"`, or `"D"` for decimal, `"b"` or `"B"` for binary, `"o"` or `"O"` for octal, `"x"` for lowercase hexadecimal, and `"X"` for uppercase hexadecimal. ===
     @override
     function format(fmt:String):String {
-        return Panda.format(value < 0, abs().convert(), 0xFFFFFFFFFFFFFFFF, fmt)
+        return Panda.format(value < 0, abs.convert(), 0xFFFFFFFFFFFFFFFF, fmt)
     }
 }

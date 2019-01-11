@@ -276,4 +276,34 @@ class Panda {
     @class
     @external
     method disableRefErrorReporting()
+
+    @private
+    @class
+    method swap<T>(a:List<T>, i1:Int, i2:Int) {
+        def tmp := a[i1]
+        a[i1] := a[i2]
+        a[i2] := tmp
+    }
+
+    -- quick-and-dirty QuickSort
+    @private
+    @class
+    method sort<T>(a:List<T>, left:Int, right:Int, greater:(T, T)=>(Bit)) {
+        if left >= right {
+            return
+        }
+        def pivotIndex := left + (right - left) // 2
+        def pivot := a[pivotIndex]
+        swap<T>(a, right, pivotIndex)
+        var storeIndex := left
+        for i in left ... right - 1 {
+            if !greater(a[i], pivot) {
+                swap<T>(a, i, storeIndex)
+                storeIndex += 1
+            }
+        }
+        swap<T>(a, storeIndex, right)
+        sort<T>(a, left, storeIndex - 1, greater)
+        sort<T>(a, storeIndex + 1, right, greater)
+    }
 }

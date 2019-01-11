@@ -15,7 +15,7 @@ void panda$collections$HashSet$add$panda$collections$HashSet$T(panda$collections
 void panda$collections$HashSet$addAll$panda$collections$CollectionView$LTpanda$collections$HashSet$T$GT(panda$collections$HashSet* self, panda$collections$CollectionView* p_c);
 panda$core$Int64 panda$collections$HashSet$get_count$R$panda$core$Int64(panda$collections$HashSet* self);
 void panda$collections$HashSet$clear(panda$collections$HashSet* self);
-panda$collections$Iterator* panda$collections$HashSet$iterator$R$panda$collections$Iterator$LTpanda$collections$HashSet$T$GT(panda$collections$HashSet* self);
+panda$collections$Iterator* panda$collections$HashSet$get_iterator$R$panda$collections$Iterator$LTpanda$collections$HashSet$T$GT(panda$collections$HashSet* self);
 panda$core$Bit panda$collections$HashSet$contains$panda$collections$HashSet$T$R$panda$core$Bit(panda$collections$HashSet* self, panda$collections$Key* p_value);
 panda$core$String* panda$collections$HashSet$convert$R$panda$core$String(panda$collections$HashSet* self);
 void panda$collections$HashSet$cleanup(panda$collections$HashSet* self);

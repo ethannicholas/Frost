@@ -38,7 +38,7 @@ void org$pandalanguage$pandac$Main$Arguments$init$panda$collections$ListView$LTp
 panda$core$Int64 $tmp2 = (panda$core$Int64) {1};
 panda$core$Int64* $tmp3 = &param0->index;
 *$tmp3 = $tmp2;
-// line 35
+// line 37
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 panda$collections$ListView** $tmp4 = &param0->args;
 panda$collections$ListView* $tmp5 = *$tmp4;
@@ -50,7 +50,7 @@ return;
 }
 panda$core$Bit org$pandalanguage$pandac$Main$Arguments$get_done$R$panda$core$Bit(org$pandalanguage$pandac$Main$Arguments* param0) {
 
-// line 39
+// line 41
 panda$core$Int64* $tmp7 = &param0->index;
 panda$core$Int64 $tmp8 = *$tmp7;
 panda$collections$ListView** $tmp9 = &param0->args;
@@ -67,18 +67,18 @@ return $tmp15;
 }
 panda$core$String* org$pandalanguage$pandac$Main$Arguments$next$R$panda$core$String(org$pandalanguage$pandac$Main$Arguments* param0) {
 
-// line 43
+// line 45
 $fn17 $tmp16 = ($fn17) param0->$class->vtable[2];
 panda$core$Bit $tmp18 = $tmp16(param0);
 panda$core$Bit $tmp19 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp18);
 bool $tmp20 = $tmp19.value;
 if ($tmp20) goto block1; else goto block2;
 block2:;
-panda$core$Int64 $tmp21 = (panda$core$Int64) {43};
+panda$core$Int64 $tmp21 = (panda$core$Int64) {45};
 panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64(&$s22, $tmp21);
 abort(); // unreachable
 block1:;
-// line 44
+// line 46
 panda$core$Int64* $tmp23 = &param0->index;
 panda$core$Int64 $tmp24 = *$tmp23;
 panda$core$Int64 $tmp25 = (panda$core$Int64) {1};
@@ -88,7 +88,7 @@ int64_t $tmp28 = $tmp26 + $tmp27;
 panda$core$Int64 $tmp29 = (panda$core$Int64) {$tmp28};
 panda$core$Int64* $tmp30 = &param0->index;
 *$tmp30 = $tmp29;
-// line 45
+// line 47
 panda$collections$ListView** $tmp31 = &param0->args;
 panda$collections$ListView* $tmp32 = *$tmp31;
 panda$core$Int64* $tmp33 = &param0->index;
@@ -112,13 +112,13 @@ return ((panda$core$String*) $tmp43);
 }
 panda$core$String* org$pandalanguage$pandac$Main$Arguments$next$panda$core$String$R$panda$core$String(org$pandalanguage$pandac$Main$Arguments* param0, panda$core$String* param1) {
 
-// line 49
+// line 51
 $fn45 $tmp44 = ($fn45) param0->$class->vtable[2];
 panda$core$Bit $tmp46 = $tmp44(param0);
 bool $tmp47 = $tmp46.value;
 if ($tmp47) goto block1; else goto block2;
 block1:;
-// line 50
+// line 52
 panda$io$OutputStream* $tmp48 = panda$io$Console$errorStream$R$panda$io$OutputStream();
 panda$core$String* $tmp49 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s50, param1);
 panda$core$String* $tmp51 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp49, &$s52);
@@ -162,12 +162,12 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp49));
 // unreffing REF($7:panda.core.String)
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp48));
 // unreffing REF($6:panda.io.OutputStream)
-// line 52
+// line 54
 panda$core$UInt8 $tmp77 = (panda$core$UInt8) {1};
 panda$core$System$exit$panda$core$UInt8($tmp77);
 goto block2;
 block2:;
-// line 54
+// line 56
 $fn79 $tmp78 = ($fn79) param0->$class->vtable[3];
 panda$core$String* $tmp80 = $tmp78(param0);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp80));

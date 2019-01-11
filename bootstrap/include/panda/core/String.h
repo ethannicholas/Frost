@@ -30,7 +30,7 @@ panda$core$String* panda$core$String$format$panda$core$String$R$panda$core$Strin
 void panda$core$String$cleanup(panda$core$String* self);
 panda$collections$ListView* panda$core$String$get_utf8$R$panda$collections$ListView$LTpanda$core$Char8$GT(panda$core$String* self);
 panda$collections$Iterator* panda$core$String$get_utf16$R$panda$collections$Iterator$LTpanda$core$Char16$GT(panda$core$String* self);
-panda$collections$Iterator* panda$core$String$iterator$R$panda$collections$Iterator$LTpanda$core$Char32$GT(panda$core$String* self);
+panda$collections$Iterator* panda$core$String$get_iterator$R$panda$collections$Iterator$LTpanda$core$Char32$GT(panda$core$String* self);
 panda$core$Int64 panda$core$String$get_length$R$panda$core$Int64(panda$core$String* self);
 panda$core$Int64 panda$core$String$get_byteLength$R$panda$core$Int64(panda$core$String* self);
 panda$core$Bit panda$core$String$startsWith$panda$core$String$R$panda$core$Bit(panda$core$String* self, panda$core$String* p_other);

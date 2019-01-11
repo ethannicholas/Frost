@@ -177,7 +177,7 @@ panda$collections$ListView* panda$core$Int8$$IDX$panda$core$Range$LTpanda$core$I
 panda$collections$ListView* panda$core$Int8$$IDX$panda$core$SteppedRange$LTpanda$core$Int8$Cpanda$core$Int8$GT$R$panda$collections$ListView$LTpanda$core$Int8$GT(panda$core$SteppedRange$LTpanda$core$Int8$Cpanda$core$Int8$GT p_range);
 panda$core$Bit panda$core$Int8$$IDX$panda$core$Int64$R$panda$core$Bit(panda$core$Int8 self, panda$core$Int64 p_index);
 panda$core$Int64 panda$core$Int8$get_count$R$panda$core$Int64(panda$core$Int8 self);
-panda$collections$Iterator* panda$core$Int8$iterator$R$panda$collections$Iterator$LTpanda$core$Bit$GT(panda$core$Int8 self);
+panda$collections$Iterator* panda$core$Int8$get_iterator$R$panda$collections$Iterator$LTpanda$core$Bit$GT(panda$core$Int8 self);
 panda$core$Int64 panda$core$Int8$get_hash$R$panda$core$Int64(panda$core$Int8 self);
 panda$core$Int8$nullable panda$core$Int8$parse$panda$core$String$panda$core$Int64$R$panda$core$Int8$Q(panda$core$String* p_str, panda$core$Int64 p_radix);
 panda$core$Int16 panda$core$Int8$convert$R$panda$core$Int16(panda$core$Int8 self);

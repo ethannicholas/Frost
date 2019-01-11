@@ -37,7 +37,7 @@ class HashSet<T:Key<T>> : Collection<T> {
     }
 
     @override
-    function iterator():Iterator<T> {
+    function get_iterator():Iterator<T> {
         return contents.keys
     }
 

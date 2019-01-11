@@ -55,44 +55,6 @@ class NFAtoDFA {
         a[start] := next
     }
 
-    @private
-    @class
-    method swap(a:List<Int>, i1:Int, i2:Int) {
-        def tmp := a[i1]
-        a[i1] := a[i2]
-        a[i2] := tmp
-    }
-
-    @private
-    @class
-    method sort(a:List<Int>, left:Int, right:Int) {
-        if left >= right {
-            return
-        }
-        def pivotIndex := left + (right - left) // 2
-        def pivot := a[pivotIndex]
-        swap(a, right, pivotIndex)
-        var storeIndex := left
-        for i in left ... right - 1 {
-            if a[i] < pivot {
-                swap(a, i, storeIndex)
-                storeIndex += 1
-            }
-        }
-        swap(a, storeIndex, right)
-        sort(a, left, storeIndex - 1)
-        sort(a, storeIndex + 1, right)
-    }
-
-    ================================================================================================
-    Quick and dirty naive quicksort, until generics are done and ListView can be 
-    sorted natively.
-    ================================================================================================
-    @class
-    method sort(a:List<Int>) {
-        sort(a, 0, a.count - 1)
-    }
-
     method scanState(state:DFAState) {
         state.scanned := true
         for c in DFA.START_CHAR ... DFA.END_CHAR  { -- FIXME iterate over Char8 directly
@@ -111,7 +73,7 @@ class NFAtoDFA {
                 }
             }
 
-            sort(next)
+            next.sortInPlace(Int.>)
             def nextState := getState(DFAStateLabel(next))
             addTransition(Char8(c), state.id, nextState.id)
             if bestAccept < Int32.MAX.convert()->Int64 {
@@ -134,7 +96,7 @@ class NFAtoDFA {
         for i in 0 .. nfa.startStates.count {
             startStates.add(nfa.startStates[i])
         }
-        sort(startStates)
+        startStates.sort(Int.>)
         -- state 1 is the start state
         def start := getState(DFAStateLabel(startStates))
         scanState(start)

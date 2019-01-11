@@ -16,6 +16,6 @@ panda$collections$ImmutableArray* panda$collections$ImmutableArray$from$panda$co
 void panda$collections$ImmutableArray$cleanup(panda$collections$ImmutableArray* self);
 panda$core$Immutable* panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(panda$collections$ImmutableArray* self, panda$core$Int64 p_index);
 panda$core$Int64 panda$collections$ImmutableArray$get_count$R$panda$core$Int64(panda$collections$ImmutableArray* self);
-panda$collections$Iterator* panda$collections$ImmutableArray$iterator$R$panda$collections$Iterator$LTpanda$collections$ImmutableArray$T$GT(panda$collections$ImmutableArray* self);
+panda$collections$Iterator* panda$collections$ImmutableArray$get_iterator$R$panda$collections$Iterator$LTpanda$collections$ImmutableArray$T$GT(panda$collections$ImmutableArray* self);
 panda$core$String* panda$collections$ImmutableArray$convert$R$panda$core$String(panda$collections$ImmutableArray* self);
 

@@ -227,7 +227,7 @@ class SpecializedArray<T> : List<T> {
     }
 
     @override
-    function iterator():Iterator<T> {
+    function get_iterator():Iterator<T> {
         return panda.collections.SpecializedArrayIterator<T>(self)
     }
 

@@ -33,7 +33,7 @@ method main(args:ListView<String>) {
     }
     def input := File(args[1])
     def output := File(args[2])
-    output.parent().createDirectories()
+    output.parent.createDirectories()
     def imports := Array<File>() -- FIXME literal
     imports.add(File(Config.pandaSourceDir()))
     def settings := Settings(File(Config.pandaSourceDir()), imports, 0, 0, true)

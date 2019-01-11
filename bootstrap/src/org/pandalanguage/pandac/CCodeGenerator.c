@@ -13816,7 +13816,7 @@ panda$core$Panda$unref$panda$core$Object$Q($tmp5836);
 // unreffing REF($83:panda.core.Weak.T)
 // line 1548
 panda$io$File* $tmp5840 = *(&local0);
-panda$io$File* $tmp5841 = panda$io$File$parent$R$panda$io$File$Q($tmp5840);
+panda$io$File* $tmp5841 = panda$io$File$get_parent$R$panda$io$File$Q($tmp5840);
 panda$io$File$createDirectories($tmp5841);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp5841));
 // unreffing REF($101:panda.io.File?)

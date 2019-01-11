@@ -20,14 +20,14 @@ static panda$core$String $s1;
 panda$io$InputStream$LineIterator$class_type panda$io$InputStream$LineIterator$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, (ITable*) &panda$io$InputStream$LineIterator$_panda$collections$Iterator, { panda$core$Object$convert$R$panda$core$String, panda$io$InputStream$LineIterator$cleanup, panda$io$InputStream$LineIterator$get_done$R$panda$core$Bit, panda$io$InputStream$LineIterator$next$R$panda$core$String$shim, panda$io$InputStream$LineIterator$readNext} };
 
 typedef void (*$fn6)(panda$io$InputStream$LineIterator*);
-typedef panda$core$Bit (*$fn11)(panda$io$InputStream$LineIterator*);
-typedef void (*$fn28)(panda$io$InputStream$LineIterator*);
-typedef panda$core$String* (*$fn34)(panda$io$InputStream*);
+typedef panda$core$Bit (*$fn12)(panda$collections$Iterator*);
+typedef void (*$fn29)(panda$io$InputStream$LineIterator*);
+typedef panda$core$String* (*$fn35)(panda$io$InputStream*);
 
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x69\x6f\x2e\x49\x6e\x70\x75\x74\x53\x74\x72\x65\x61\x6d\x2e\x4c\x69\x6e\x65\x49\x74\x65\x72\x61\x74\x6f\x72", 33, -4146794243265748747, NULL };
-static panda$core$String $s16 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x49\x6e\x70\x75\x74\x53\x74\x72\x65\x61\x6d\x2e\x70\x61\x6e\x64\x61", 17, -1756706895279743357, NULL };
-static panda$core$String $s17 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x70\x61\x6e\x64\x61\x2e\x69\x6f\x2e\x49\x6e\x70\x75\x74\x53\x74\x72\x65\x61\x6d\x2e\x4c\x69\x6e\x65\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x6e\x65\x78\x74\x28\x29\x3a\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67", 90, -3022453931518810697, NULL };
-static panda$core$String $s23 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x49\x6e\x70\x75\x74\x53\x74\x72\x65\x61\x6d\x2e\x70\x61\x6e\x64\x61", 17, -1756706895279743357, NULL };
+static panda$core$String $s17 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x49\x6e\x70\x75\x74\x53\x74\x72\x65\x61\x6d\x2e\x70\x61\x6e\x64\x61", 17, -1756706895279743357, NULL };
+static panda$core$String $s18 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x70\x61\x6e\x64\x61\x2e\x69\x6f\x2e\x49\x6e\x70\x75\x74\x53\x74\x72\x65\x61\x6d\x2e\x4c\x69\x6e\x65\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x6e\x65\x78\x74\x28\x29\x3a\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67", 90, -3022453931518810697, NULL };
+static panda$core$String $s24 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x49\x6e\x70\x75\x74\x53\x74\x72\x65\x61\x6d\x2e\x70\x61\x6e\x64\x61", 17, -1756706895279743357, NULL };
 
 void panda$io$InputStream$LineIterator$init$panda$io$InputStream(panda$io$InputStream$LineIterator* param0, panda$io$InputStream* param1) {
 
@@ -56,62 +56,66 @@ return $tmp9;
 panda$core$String* panda$io$InputStream$LineIterator$next$R$panda$core$String(panda$io$InputStream$LineIterator* param0) {
 
 panda$core$String* local0 = NULL;
-$fn11 $tmp10 = ($fn11) param0->$class->vtable[2];
-panda$core$Bit $tmp12 = $tmp10(param0);
-panda$core$Bit $tmp13 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp12);
-bool $tmp14 = $tmp13.value;
-if ($tmp14) goto block1; else goto block2;
+ITable* $tmp10 = ((panda$collections$Iterator*) param0)->$class->itable;
+while ($tmp10->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+    $tmp10 = $tmp10->next;
+}
+$fn12 $tmp11 = $tmp10->methods[0];
+panda$core$Bit $tmp13 = $tmp11(((panda$collections$Iterator*) param0));
+panda$core$Bit $tmp14 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp13);
+bool $tmp15 = $tmp14.value;
+if ($tmp15) goto block1; else goto block2;
 block2:;
-panda$core$Int64 $tmp15 = (panda$core$Int64) {32};
-panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s16, $tmp15, &$s17);
+panda$core$Int64 $tmp16 = (panda$core$Int64) {32};
+panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s17, $tmp16, &$s18);
 abort(); // unreachable
 block1:;
 // line 33
-panda$core$String** $tmp18 = &param0->_next;
-panda$core$String* $tmp19 = *$tmp18;
-panda$core$Bit $tmp20 = panda$core$Bit$init$builtin_bit($tmp19 != NULL);
-bool $tmp21 = $tmp20.value;
-if ($tmp21) goto block3; else goto block4;
+panda$core$String** $tmp19 = &param0->_next;
+panda$core$String* $tmp20 = *$tmp19;
+panda$core$Bit $tmp21 = panda$core$Bit$init$builtin_bit($tmp20 != NULL);
+bool $tmp22 = $tmp21.value;
+if ($tmp22) goto block3; else goto block4;
 block4:;
-panda$core$Int64 $tmp22 = (panda$core$Int64) {33};
-panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64(&$s23, $tmp22);
+panda$core$Int64 $tmp23 = (panda$core$Int64) {33};
+panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64(&$s24, $tmp23);
 abort(); // unreachable
 block3:;
 // line 34
-panda$core$String** $tmp24 = &param0->_next;
-panda$core$String* $tmp25 = *$tmp24;
+panda$core$String** $tmp25 = &param0->_next;
+panda$core$String* $tmp26 = *$tmp25;
 *(&local0) = ((panda$core$String*) NULL);
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp25));
-panda$core$String* $tmp26 = *(&local0);
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp26));
-*(&local0) = $tmp25;
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp26));
+panda$core$String* $tmp27 = *(&local0);
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp27));
+*(&local0) = $tmp26;
 // line 35
-$fn28 $tmp27 = ($fn28) param0->$class->vtable[4];
-$tmp27(param0);
+$fn29 $tmp28 = ($fn29) param0->$class->vtable[4];
+$tmp28(param0);
 // line 36
-panda$core$String* $tmp29 = *(&local0);
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp29));
 panda$core$String* $tmp30 = *(&local0);
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp30));
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp30));
+panda$core$String* $tmp31 = *(&local0);
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp31));
 // unreffing result
 *(&local0) = ((panda$core$String*) NULL);
-return $tmp29;
+return $tmp30;
 
 }
 void panda$io$InputStream$LineIterator$readNext(panda$io$InputStream$LineIterator* param0) {
 
 // line 40
-panda$io$InputStream** $tmp31 = &param0->input;
-panda$io$InputStream* $tmp32 = *$tmp31;
-$fn34 $tmp33 = ($fn34) $tmp32->$class->vtable[15];
-panda$core$String* $tmp35 = $tmp33($tmp32);
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp35));
-panda$core$String** $tmp36 = &param0->_next;
-panda$core$String* $tmp37 = *$tmp36;
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp37));
-panda$core$String** $tmp38 = &param0->_next;
-*$tmp38 = $tmp35;
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp35));
+panda$io$InputStream** $tmp32 = &param0->input;
+panda$io$InputStream* $tmp33 = *$tmp32;
+$fn35 $tmp34 = ($fn35) $tmp33->$class->vtable[15];
+panda$core$String* $tmp36 = $tmp34($tmp33);
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp36));
+panda$core$String** $tmp37 = &param0->_next;
+panda$core$String* $tmp38 = *$tmp37;
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp38));
+panda$core$String** $tmp39 = &param0->_next;
+*$tmp39 = $tmp36;
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp36));
 // unreffing REF($4:panda.core.String?)
 return;
 
@@ -120,12 +124,12 @@ void panda$io$InputStream$LineIterator$cleanup(panda$io$InputStream$LineIterator
 
 // line 17
 panda$core$Object$cleanup(((panda$core$Object*) param0));
-panda$io$InputStream** $tmp39 = &param0->input;
-panda$io$InputStream* $tmp40 = *$tmp39;
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp40));
-panda$core$String** $tmp41 = &param0->_next;
-panda$core$String* $tmp42 = *$tmp41;
-panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp42));
+panda$io$InputStream** $tmp40 = &param0->input;
+panda$io$InputStream* $tmp41 = *$tmp40;
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp41));
+panda$core$String** $tmp42 = &param0->_next;
+panda$core$String* $tmp43 = *$tmp42;
+panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp43));
 return;
 
 }

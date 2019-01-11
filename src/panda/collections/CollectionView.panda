@@ -34,7 +34,7 @@ interface CollectionView<T> : Iterable<T> {
 
     @param separator the delimiter string
     @see join()
-    ================================================================================================    
+    ================================================================================================
     @default
     function join(separator:String):String {
         if count = 0 {
@@ -85,9 +85,10 @@ interface CollectionView<T> : Iterable<T> {
     @pre(count > 0)
     @default
     function fold(f:(T, T)=>(T)):T {
-        def i := iterator()
+        -- FIXME type declaration shouldn't be necessary
+        def i:Iterator<T> := iterator
         var result := i.next()
-        while !i.get_done() {
+        while !i.done {
             result := f(result, i.next())
         }
         return result
