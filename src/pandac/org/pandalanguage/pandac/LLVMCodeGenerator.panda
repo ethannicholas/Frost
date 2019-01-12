@@ -433,8 +433,11 @@ class LLVMCodeGenerator : CodeGenerator {
                 }
                 return llvmType(t.subtypes[0])
             }
-            when Type.Kind.GENERIC_PARAMETER {
-                return llvmType(t.genericParameter.bound)
+            when Type.Kind.GENERIC_CLASS_PARAMETER {
+                return llvmType(t.genericClassParameter.bound)
+            }
+            when Type.Kind.GENERIC_METHOD_PARAMETER {
+                return llvmType(t.genericMethodParameter.bound)
             }
             when Type.Kind.FUNCTION, Type.Kind.METHOD {
                 return llvmType(Type.MutableMethod())

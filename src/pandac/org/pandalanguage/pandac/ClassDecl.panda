@@ -27,7 +27,7 @@ class ClassDecl {
         init(position:Position, owner:String, name:String, bound:Type) {
             self.owner := owner
             self.bound := bound
-            super.init(Symbol.Kind.GENERIC_PARAMETER, position, name)
+            super.init(Symbol.Kind.GENERIC_CLASS_PARAMETER, position, name)
         }
 
         @override

@@ -514,9 +514,9 @@ class Scanner {
         if kind != MethodDecl.Kind.INIT & owner.annotations.isFinal | annotations.isPrivate {
             annotations.flags ||= Annotations.Flag.FINAL
         }
-        def generics:Array<ClassDecl.GenericParameter>?
+        def generics:Array<MethodDecl.GenericParameter>?
         if rawGenerics !== null {
-            generics := Array<ClassDecl.GenericParameter>()
+            generics := Array<MethodDecl.GenericParameter>()
             def fullName := "\{owner.name}.\{name}"
             for p in rawGenerics {
                 def parameterName:String
@@ -534,7 +534,7 @@ class Scanner {
                         assert false
                     }
                 }
-                generics.add(ClassDecl.GenericParameter(p.position(), fullName, parameterName,
+                generics.add(MethodDecl.GenericParameter(p.position(), fullName, parameterName,
                         bound))
             }
         }

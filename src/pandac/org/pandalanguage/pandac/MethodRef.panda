@@ -13,6 +13,8 @@ class MethodRef {
 
     def effectiveType:Type
 
+    def requiresTypeInference:Bit
+
     property parameterCount:Int
 
     property returnType:Type
@@ -29,10 +31,9 @@ class MethodRef {
     ================================================================================================
     Creates a reference to a method within a particular "target type" and generic arguments.
     ================================================================================================
-    @pre((genericArguments == null) = (value.genericParameters == null) &
-            (genericArguments == null | genericArguments.count = value.genericParameters.count))
     init(compiler:Compiler, target:Type, value:MethodDecl, genericArguments:ListView<Type>?) {
         assert value.resolved != Compiler.Resolution.UNRESOLVED
+        requiresTypeInference := genericArguments == null & value.genericParameters !== null 
         self.value := value
         self.target := target
         def found := compiler.findType(target, value.owner)

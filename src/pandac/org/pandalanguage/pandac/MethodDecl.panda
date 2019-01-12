@@ -29,6 +29,23 @@ class MethodDecl : Symbol {
         }
     }
 
+    class GenericParameter : Symbol {
+        def owner:String
+
+        def bound:Type
+
+        init(position:Position, owner:String, name:String, bound:Type) {
+            self.owner := owner
+            self.bound := bound
+            super.init(Symbol.Kind.GENERIC_METHOD_PARAMETER, position, name)
+        }
+
+        @override
+        function convert():String {
+            return "\{owner}.\{name}:\{bound}"
+        }
+    }
+
     @weak
     def owner:ClassDecl
 
@@ -38,7 +55,7 @@ class MethodDecl : Symbol {
 
     def methodKind:Kind
 
-    def genericParameters:Array<ClassDecl.GenericParameter>?
+    def genericParameters:Array<GenericParameter>?
 
     def parameters:Array<Parameter>
 
@@ -65,7 +82,7 @@ class MethodDecl : Symbol {
 
     @pre(genericParameters == null | genericParameters.count > 0)
     init(owner:ClassDecl, position:Position, doccomment:String?, annotations:Annotations,
-            methodKind:Kind, name:String, genericParameters:Array<ClassDecl.GenericParameter>?,
+            methodKind:Kind, name:String, genericParameters:Array<GenericParameter>?,
             parameters:Array<Parameter>, returnType:Type,
             body:FixedArray<ASTNode>?) {
         super.init(Symbol.Kind.METHOD, position, name)

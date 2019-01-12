@@ -51,7 +51,8 @@ class PandaDoc {
 
     function simpleName(t:Type):String {
         match t.typeKind {
-            when Type.Kind.CLASS, Type.Kind.GENERIC_PARAMETER {
+            when Type.Kind.CLASS, Type.Kind.GENERIC_CLASS_PARAMETER,
+                    Type.Kind.GENERIC_METHOD_PARAMETER {
                 def index := t.name.lastIndexOf(".")
                 if index == null {
                     return t.name

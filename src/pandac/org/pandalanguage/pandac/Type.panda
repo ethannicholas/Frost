@@ -15,7 +15,8 @@ class Type : Symbol, Key<Type> {
         BUILTIN_BIT
         BUILTIN_FLOAT
         GENERIC
-        GENERIC_PARAMETER
+        GENERIC_CLASS_PARAMETER
+        GENERIC_METHOD_PARAMETER
         NULL
         FUNCTION
         METHOD
@@ -34,7 +35,12 @@ class Type : Symbol, Key<Type> {
     def priority:Int
 
     @weak
-    def genericParameter:ClassDecl.GenericParameter?
+    def genericClassParameter:ClassDecl.GenericParameter?
+
+    @weak
+    def genericMethodParameter:MethodDecl.GenericParameter?
+
+    def methodRef:MethodRef?
 
     property isNumber:Bit
 
@@ -72,7 +78,8 @@ class Type : Symbol, Key<Type> {
         init(name, typeKind, position, false)
     }
 
-    @pre(typeKind != Kind.GENERIC_PARAMETER & typeKind != Kind.METHOD & typeKind != Kind.FUNCTION &
+    @pre(typeKind != Kind.GENERIC_CLASS_PARAMETER & typeKind != Kind.GENERIC_METHOD_PARAMETER &
+            typeKind != Kind.METHOD & typeKind != Kind.FUNCTION &
             typeKind != Kind.IMMUTABLE_METHOD & typeKind != Kind.IMMUTABLE_FUNCTION)
     init(name:String, typeKind:Kind, position:Position, resolved:Bit) {
         self.typeKind := typeKind
@@ -82,7 +89,8 @@ class Type : Symbol, Key<Type> {
         super.init(Symbol.Kind.TYPE, position, name)
     }
 
-    @pre(typeKind != Kind.GENERIC_PARAMETER & typeKind != Kind.METHOD & typeKind != Kind.FUNCTION &
+    @pre(typeKind != Kind.GENERIC_CLASS_PARAMETER & typeKind != Kind.GENERIC_METHOD_PARAMETER &
+            typeKind != Kind.METHOD & typeKind != Kind.FUNCTION &
             typeKind != Kind.IMMUTABLE_METHOD & typeKind != Kind.IMMUTABLE_FUNCTION)
     init(name:String, typeKind:Kind, size:Int) {
         assert !name.endsWith("?")
@@ -97,14 +105,13 @@ class Type : Symbol, Key<Type> {
         init(name, typeKind, position, subtypes, resolved, 0)
     }
 
-    @pre(typeKind != Kind.GENERIC_PARAMETER)
+    @pre(typeKind != Kind.GENERIC_CLASS_PARAMETER & typeKind != Kind.GENERIC_METHOD_PARAMETER)
     init(name:String, typeKind:Kind, position:Position, subtypes:ListView<Type>, resolved:Bit,
             priority:Int) {
         assert (typeKind = Kind.NULLABLE) = name.endsWith("?"),
                 "invalid type: name=\{name}, nullable=\{typeKind = Kind.NULLABLE}"
         assert (typeKind = Kind.GENERIC) = name.endsWith(">"),
                 "invalid type: name=\{name}, generic=\{typeKind = Kind.GENERIC}"
-        assert typeKind != Kind.GENERIC_PARAMETER
         self.typeKind := typeKind
         self.position := position
         self.resolved := resolved
@@ -130,11 +137,27 @@ class Type : Symbol, Key<Type> {
     }
 
     init(param:ClassDecl.GenericParameter) {
-        self.typeKind := Kind.GENERIC_PARAMETER
-        self.genericParameter := param
+        self.typeKind := Kind.GENERIC_CLASS_PARAMETER
+        self.genericClassParameter := param
         self.resolved := true
         self.subtypes := null
         super.init(Symbol.Kind.TYPE, position, "\{param.owner}.\{param.name}")
+    }
+
+    init(param:MethodDecl.GenericParameter) {
+        self.typeKind := Kind.GENERIC_METHOD_PARAMETER
+        self.genericMethodParameter := param
+        self.resolved := true
+        self.subtypes := null
+        super.init(Symbol.Kind.TYPE, position, "\{param.owner}.\{param.name}")
+    }
+
+    init(ref:MethodRef) {
+        self.typeKind := ref.effectiveType.typeKind
+        self.subtypes := ref.effectiveType.subtypes
+        self.resolved := ref.effectiveType.resolved
+        self.methodRef := ref
+        super.init(Symbol.Kind.TYPE, ref.effectiveType.position, ref.effectiveType.name)
     }
 
     @class
@@ -539,8 +562,9 @@ class Type : Symbol, Key<Type> {
 
     function get_isClass():Bit {
         match typeKind {
-            when Kind.CLASS, Kind.NULLABLE, Kind.GENERIC, Kind.GENERIC_PARAMETER, Kind.METHOD,
-                    Kind.FUNCTION, Kind.IMMUTABLE_METHOD, Kind.IMMUTABLE_FUNCTION {
+            when Kind.CLASS, Kind.NULLABLE, Kind.GENERIC, Kind.GENERIC_CLASS_PARAMETER,
+                    Kind.GENERIC_METHOD_PARAMETER, Kind.METHOD, Kind.FUNCTION,
+                    Kind.IMMUTABLE_METHOD, Kind.IMMUTABLE_FUNCTION {
                 return true
             }
             otherwise {
@@ -614,7 +638,9 @@ class Type : Symbol, Key<Type> {
         return subtypes[subtypes.count - 1]
     }
 
-    -- returns the narrowest type that can hold an instance of either type
+    ================================================================================================
+    Returns the narrowest type that can hold an instance of either type
+    ================================================================================================
     function union(compiler:Compiler, other:Type):Type {
         if self = other {
             return self
@@ -699,6 +725,14 @@ class Type : Symbol, Key<Type> {
         return Type.Object()
     }
 
+    ================================================================================================
+    Returns the widest type that could be coerced to either type.
+    ================================================================================================
+    function intersection(compiler:Compiler, other:Type):Type {
+        -- FIXME implement
+        return other
+    }
+
     @pre(typeKind != Kind.INVALID)
     @post(@return.typeKind != Kind.INVALID)
     method remap(types:HashMap<String, Type>):Type {
@@ -706,7 +740,7 @@ class Type : Symbol, Key<Type> {
             return self
         }
         match typeKind {
-            when Kind.GENERIC_PARAMETER {
+            when Kind.GENERIC_CLASS_PARAMETER, Kind.GENERIC_METHOD_PARAMETER {
                 def found := types[name]
                 if found !== null {
                     return found

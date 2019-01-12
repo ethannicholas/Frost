@@ -5,7 +5,8 @@ class Symbol {
         ALIAS
         CHOICE_CASE
         FIELD
-        GENERIC_PARAMETER
+        GENERIC_CLASS_PARAMETER
+        GENERIC_METHOD_PARAMETER
         METHOD
         METHODS
         PACKAGE
@@ -20,6 +21,9 @@ class Symbol {
     def name:String
 
     init(kind:Kind, position:Position, name:String) {
+        if name = "anonymous.CollectionView.map.U" {
+            assert self->Type.typeKind = Type.Kind.GENERIC_METHOD_PARAMETER, "actual value: \{self->Type.typeKind.$rawValue}"
+        }
         self.kind := kind
         self.position := position
         self.name := name

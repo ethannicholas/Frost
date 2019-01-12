@@ -22,16 +22,21 @@ compile-time type `panda.core.Immutable`.
 Destructuring
 -------------
 
-You may assign into multiple variables simultaneously in order to extract values from a tuple, or
-"destructure" it.
+You may assign into multiple variables simultaneously (surrounded by parentheses) in order to
+extract values from a tuple, or "destructure" it.
 
     def suffix := ("KB", 1024)
     def (name, value) := suffix
     Console.writeLine(name)  -- writes "KB"
     Console.writeLine(value) -- writes "1024"
 
-The number of assignment targets must equal the number of tuple elements. You may ignore tuple
-values you do not care about using an underscore ('_') as the "name" of a value:
+The number of assignment targets must equal the number of tuple elements. This even works for nested
+tuples:
+
+	def ((this, is), a, (nested, tuple)) := (("This", "is"), "a", ("nested", "tuple"))
+
+You may ignore tuple values you do not care about using an underscore ('_') as the "name" of a
+value:
 
     def suffix := ("KB", 1024)
     (_, values[i]) := suffix

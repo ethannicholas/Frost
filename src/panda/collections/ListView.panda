@@ -94,6 +94,34 @@ interface ListView<T> : CollectionView<T> {
         return self[Range<Int>(start, end, r.inclusive)]
     }
 
+    @private
+    @class
+    function inRange(r:SteppedRange<Int?, Int>, count:Int):Bit {
+        if r.start !== null {
+            if (r.start < 0) {
+                return false
+            }
+            if r.inclusive & r.start >= count {
+                return false
+            }
+            if !r.inclusive & r.start > count {
+                return false
+            }
+        }
+        if r.end !== null {
+            if (r.end < 0) {
+                return false
+            }
+            if r.inclusive & r.end >= count {
+                return false
+            }
+            if !r.inclusive & r.end > count {
+                return false
+            }
+        }
+        return true
+    }
+
     ================================================================================================
     Returns a slice of the list, containing all of the elements specified by the range. The slice
     is an independent copy of the list and elements may be added to and removed from the original
@@ -101,8 +129,7 @@ interface ListView<T> : CollectionView<T> {
     to the same objects.
     ================================================================================================
     @default
-    @pre(r.start >= 0 & (r.inclusive & r.start < count | !r.inclusive & r.start <= count) &
-            r.end >= 0 & (r.inclusive & r.end < count | !r.inclusive & r.end <= count))
+    @pre(inRange(r, count))
     function [](r:SteppedRange<Int?, Int>):ListView<T> {
         def step := r.step
 

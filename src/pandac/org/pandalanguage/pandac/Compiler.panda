@@ -410,7 +410,7 @@ class Compiler {
     var inFieldCleanup := false
 
     @private
-    def coercionCosts := HashMap<CoercionKey, Int>()
+    def coercionCosts := HashMap<CoercionKey, Pair<Type, Int>>()
 
     @private
     def binaryTypes := HashMap<BinaryKey, ListView<Type>?>()
@@ -596,8 +596,11 @@ class Compiler {
 
     function typeParameters(type:Type):ListView<Type> {
         match type.typeKind {
-            when Type.Kind.GENERIC_PARAMETER {
-                return typeParameters(type.genericParameter.bound)
+            when Type.Kind.GENERIC_CLASS_PARAMETER {
+                return typeParameters(type.genericClassParameter.bound)
+            }
+            when Type.Kind.GENERIC_METHOD_PARAMETER {
+                return typeParameters(type.genericMethodParameter.bound)
             }
             when Type.Kind.GENERIC {
                 assert type.subtypes.count >= 2
@@ -667,8 +670,12 @@ class Compiler {
                         when Symbol.Kind.ALIAS {
                             return Type(s->Alias.fullName, Type.Kind.CLASS, type.position, true)
                         }
-                        when Symbol.Kind.GENERIC_PARAMETER {
+                        when Symbol.Kind.GENERIC_CLASS_PARAMETER {
                             def gp := s->ClassDecl.GenericParameter
+                            return Type(gp)
+                        }
+                        when Symbol.Kind.GENERIC_METHOD_PARAMETER {
+                            def gp := s->MethodDecl.GenericParameter
                             return Type(gp)
                         }
                         when Symbol.Kind.TYPE {
@@ -1259,10 +1266,10 @@ class Compiler {
             result.external := false
             for m in cl.methods {
                 resolve(m)
-                def generics:Array<ClassDecl.GenericParameter>?
+                def generics:Array<MethodDecl.GenericParameter>?
                 if m.genericParameters !== null {
                     for p in m.genericParameters {
-                        generics.add(ClassDecl.GenericParameter(p.position, p.owner, p.name,
+                        generics.add(MethodDecl.GenericParameter(p.position, p.owner, p.name,
                                 remapType(type, p.bound)))
                     }
                 }
@@ -1305,9 +1312,11 @@ class Compiler {
             when Type.Kind.NULLABLE {
                 result := getClass(type.subtypes[0])
             }
-            when Type.Kind.GENERIC_PARAMETER {
-                assert type.genericParameter !== null
-                return getClass(type.genericParameter.bound)
+            when Type.Kind.GENERIC_CLASS_PARAMETER {
+                return getClass(type.genericClassParameter.bound)
+            }
+            when Type.Kind.GENERIC_METHOD_PARAMETER {
+                return getClass(type.genericMethodParameter.bound)
             }
             when Type.Kind.METHOD, Type.Kind.FUNCTION {
                 return getClass(Type.MutableMethod())
@@ -1601,11 +1610,11 @@ class Compiler {
             }
             def cost := coercionCost(expr, t)
             assert cost !== null
-            if cost < bestCost {
-                bestCost := cost
+            if cost.second < bestCost {
+                bestCost := cost.second
                 best.clear()
             }
-            if cost = bestCost {
+            if cost.second = bestCost {
                 best.add(t)
             }
         }
@@ -1619,18 +1628,18 @@ class Compiler {
         return null
     }
 
-    method coercionCost(type:Type, target:Type):Int? {
+    method coercionCost(type:Type, target:Type):Pair<Type, Int>? {
         assert type.resolved, "unresolved type '\{type}'"
         assert target.resolved, "unresolved type '\{target}'"
         if type = target {
-            return 0
+            return Pair<Type, Int>(target, 0)
         }
         if type = Type.Void() {
             return null
         }
         if type.typeKind = Type.Kind.NULL {
             if target.typeKind = Type.Kind.NULLABLE {
-                return 0
+                return Pair<Type, Int>(target, 0)
             }
             return null
         }
@@ -1639,7 +1648,7 @@ class Compiler {
             if result == null {
                 return null
             }
-            return result + NULLABLE_TO_NONNULLABLE_CAST_COST
+            return Pair<Type, Int>(result.first, result.second + NULLABLE_TO_NONNULLABLE_CAST_COST)
         }
         match target.typeKind {
             when Type.Kind.NULLABLE {
@@ -1647,10 +1656,18 @@ class Compiler {
                 if result == null {
                     return null
                 }
-                return result + NONNULLABLE_TO_NULLABLE_CAST_COST
+                return Pair<Type, Int>(result.first,
+                        result.second + NONNULLABLE_TO_NULLABLE_CAST_COST)
             }
-            when Type.Kind.GENERIC_PARAMETER {
+            when Type.Kind.GENERIC_CLASS_PARAMETER {
                 return null
+            }
+            when Type.Kind.GENERIC_METHOD_PARAMETER {
+                def raw := coercionCost(type, target.genericMethodParameter.bound)
+                if raw == null {
+                    return null
+                }
+                return Pair<Type, Int>(type, raw.second)
             }
             when Type.Kind.CLASS {
                 if type.typeKind = Type.Kind.GENERIC {
@@ -1721,14 +1738,14 @@ class Compiler {
                     if cost == null {
                         return null
                     }
-                    total += cost
+                    total += cost.second
                 }
                 def cost := coercionCost(type.returnType, target.returnType)
                 if cost == null {
                     return null
                 }
-                total += cost
-                return total
+                total += cost.second
+                return Pair<Type, Int>(target, total)
             }
             if type.typeKind = Type.Kind.IMMUTABLE_METHOD |
                     type.typeKind = Type.Kind.IMMUTABLE_FUNCTION {
@@ -1744,17 +1761,20 @@ class Compiler {
                 return coercionCost(Type.Bit(), target)
             }
             when Type.Kind.UNRESOLVED {
-                var best:Int? := null
+                var best:Pair<Type, Int>? := null
                 for t in type.subtypes {
                     def cost := coercionCost(t, target)
-                    if cost !== null & (best == null | cost < best) {
+                    if cost !== null & (best == null | cost.second < best.second) {
                         best := cost
                     }
                 }
                 return best
             }
-            when Type.Kind.GENERIC_PARAMETER {
-                return coercionCost(type.genericParameter.bound, target)
+            when Type.Kind.GENERIC_CLASS_PARAMETER {
+                return coercionCost(type.genericClassParameter.bound, target)
+            }
+            when Type.Kind.GENERIC_METHOD_PARAMETER {
+                return coercionCost(type.genericMethodParameter.bound, target)
             }
         }
         if !target.isClass {
@@ -1765,7 +1785,9 @@ class Compiler {
             if m.annotations.isImplicit & m.parameters.count = 1 {
                 resolve(m)
                 if type = m.parameters[0].type {
-                    return 6 - m.priority
+                    -- FIXME I don't remember where this 6 came from. Figure this out, and if it's
+                    -- necessary figure out what the right value is for it and use a named constant.
+                    return Pair<Type, Int>(target, 6 - m.priority)
                 }
             }
         }
@@ -1779,35 +1801,35 @@ class Compiler {
         resolve(cl)
         if cl.resolved != Resolution.RESOLVED_WITH_ERRORS {
             if cl.rawSuper !== null {
-                var cost := coercionCost(remapType(type, remapType(type, cl.rawSuper)), target)
+                def cost := coercionCost(remapType(type, remapType(type, cl.rawSuper)), target)
                 if cost !== null {
-                    return cost + 1
+                    return Pair<Type, Int>(cost.first, cost.second + 1)
                 }
             }
             for intf in cl.rawInterfaces {
-                var cost := coercionCost(remapType(type, remapType(type, intf)), target)
+                def cost := coercionCost(remapType(type, remapType(type, intf)), target)
                 if cost !== null {
-                    return cost + 1
+                    return Pair<Type, Int>(cost.first, cost.second + 1)
                 }
             }
         }
         return null
     }
 
-    method coercionCost(type:Type, target:TypeContext):Int? {
+    method coercionCost(type:Type, target:TypeContext):Pair<Type, Int>? {
         match target {
             when TypeContext.UNSPECIFIED {
-                return 0
+                return Pair<Type, Int>(type, 0)
             }
             when TypeContext.NON_VOID {
                 if type = Type.Void() {
                     return null
                 }
-                return 0
+                return Pair<Type, Int>(type, 0)
             }
             when TypeContext.IMMUTABLE {
                 if isImmutable(type) {
-                    return 0
+                    return Pair<Type, Int>(type, 0)
                 }
                 return null
             }
@@ -1817,15 +1839,15 @@ class Compiler {
         }
     }
 
-    method coercionCost(types:CollectionView<Type>, target:Type):Int? {
-        def best := Int.MAX
+    method coercionCost(types:CollectionView<Type>, target:Type):Pair<Type, Int>? {
+        def best := Pair<Type, Int>(Type.Void(), Int.MAX)
         for t in types {
             def cost := coercionCost(t, target)
-            if cost !== null & cost < best {
+            if cost !== null & cost.second < best.second {
                 best := cost
             }
         }
-        if best != Int.MAX {
+        if best.second != Int.MAX {
             return best
         }
         return null
@@ -1836,7 +1858,10 @@ class Compiler {
         var bestCost := Int.MAX
         def best := Array<Type>()
         outer: for raw in methodTypes {
-            def m := raw.nonnullable()
+            var m := raw.nonnullable()
+            if m.methodRef !== null & m.methodRef.value.genericParameters !== null {
+                m := Type(performTypeInference(m.methodRef, args))
+            }
             if m.typeKind != Type.Kind.METHOD &
                     m.typeKind != Type.Kind.FUNCTION &
                     m.typeKind != Type.Kind.IMMUTABLE_METHOD &
@@ -1852,7 +1877,7 @@ class Compiler {
                 if argCost == null {
                     continue outer
                 }
-                cost += argCost
+                cost += argCost.second
             }
             def returnType := m.returnType
             match type {
@@ -1866,7 +1891,7 @@ class Compiler {
                     if returnCost == null {
                         continue
                     }
-                    cost += returnCost
+                    cost += returnCost.second
                 }
                 when TypeContext.NON_VOID {
                     if returnType = Type.Void() {
@@ -1889,13 +1914,13 @@ class Compiler {
     }
 
     method callCost(methodTypes:CollectionView<Type>, args:ListView<ASTNode>,
-            type:TypeContext):Int? {
+            type:TypeContext):Pair<Type, Int>? {
         def result := possibleMatches(methodTypes, args, type)
         if result !== null {
             -- we still might not actually be able to successfully perform the coercion, in the
             -- event that it's ambiguous, but for error reporting purposes we act like it's going to
             -- be ok right now
-            return result.second
+            return Pair<Type, Int>(result.first.iterator.next().returnType, result.second)
         }
         return null
     }
@@ -1968,7 +1993,7 @@ class Compiler {
                     return null
                 }
                 if target !== null {
-                    result.add(MethodRef(self, target, m, resolvedArguments).effectiveType)
+                    result.add(Type(MethodRef(self, target, m, resolvedArguments)))
                 }
                 else {
                     def implicitTarget:Type
@@ -1978,18 +2003,18 @@ class Compiler {
                     else {
                         implicitTarget := currentClass[0].type
                     }
-                    result.add(MethodRef(self, implicitTarget, m, resolvedArguments).effectiveType)
+                    result.add(Type(MethodRef(self, implicitTarget, m, resolvedArguments)))
                 }
             }
             when Symbol.Kind.METHODS {
                 for m in s->Methods.methods { -- FIXME use map
                     if resolve(m) {
                         if m.annotations.isClass {
-                            result.add(MethodRef(self, Type.ClassLiteral(m.owner.type), m,
-                                    resolvedArguments).effectiveType)
+                            result.add(Type(MethodRef(self, Type.ClassLiteral(m.owner.type), m,
+                                    resolvedArguments)))
                         }
                         else if target !== null {
-                            result.add(MethodRef(self, target, m, resolvedArguments).effectiveType)
+                            result.add(Type(MethodRef(self, target, m, resolvedArguments)))
                         }
                         else {
                             def implicitTarget:Type
@@ -1999,8 +2024,8 @@ class Compiler {
                             else {
                                 implicitTarget := currentClass[0].type
                             }
-                            result.add(MethodRef(self, implicitTarget, m,
-                                    resolvedArguments).effectiveType)
+                            result.add(Type(MethodRef(self, implicitTarget, m,
+                                    resolvedArguments)))
                         }
                     }
                 }
@@ -2576,12 +2601,11 @@ class Compiler {
                         }
                     }
                 }
-                def returnType := typedLambdaReturnType(parameters, body, TypeContext.NON_VOID)
-                if returnType == null {
+                def lambdaType := typedLambdaType(parameters, body, TypeContext.NON_VOID)
+                if lambdaType == null {
                     return null
                 }
-                return [Type.methodType(position, Type.Kind.FUNCTION, parameterTypes, returnType,
-                        0)]
+                return [lambdaType]
             }
             when ASTNode.UNTYPED_LAMBDA {
                 return null
@@ -2592,7 +2616,8 @@ class Compiler {
         }
     }
 
-    method binaryCost(left:ASTNode, op:Token.Kind, right:ASTNode, type:TypeContext):Int? {
+    method binaryCost(left:ASTNode, op:Token.Kind, right:ASTNode,
+            type:TypeContext):Pair<Type, Int>? {
         if op = Token.Kind.CAST {
             def target := tryResolveType(right)
             if target == null {
@@ -2613,7 +2638,7 @@ class Compiler {
         }
         def result := findOverloadedOperator(left, op, right, type)
         if result !== null {
-            return result.second
+            return Pair<Type, Int>(result.first[0].returnType, result.second)
         }
         def preferred := preferredType(ASTNode.BINARY(left.position(), left, op, right))
         if preferred !== null {
@@ -2622,13 +2647,14 @@ class Compiler {
         return null
     }
 
-    method rangeCoercionCost(start:ASTNode?, end:ASTNode?, step:ASTNode?, target:Type):Int? {
+    method rangeCoercionCost(start:ASTNode?, end:ASTNode?, step:ASTNode?,
+            target:Type):Pair<Type, Int>? {
         if target.typeKind = Type.Kind.NULLABLE {
             def result := rangeCoercionCost(start, end, step, target.nonnullable())
             if result == null {
                 return null
             }
-            return result + 1
+            return Pair<Type, Int>(result.first, result.second + 1)
         }
         if target.typeKind = Type.Kind.GENERIC {
             if target.subtypes[0].name = RANGE_NAME & target.subtypes.count = 2 |
@@ -2639,7 +2665,7 @@ class Compiler {
                     if startCost == null {
                         return null
                     }
-                    cost += startCost
+                    cost += startCost.second
                 }
                 else if target.subtypes[1].typeKind != Type.Kind.NULLABLE {
                     return null
@@ -2649,7 +2675,7 @@ class Compiler {
                     if endCost == null {
                         return null
                     }
-                    cost += endCost
+                    cost += endCost.second
                 }
                 else if target.subtypes[1].typeKind != Type.Kind.NULLABLE {
                     return null
@@ -2667,9 +2693,9 @@ class Compiler {
                     if stepCost == null {
                         return null
                     }
-                    cost += stepCost
+                    cost += stepCost.second
                 }
-                return cost
+                return Pair<Type, Int>(target, cost)
             }
         }
         def type := preferredType(ASTNode.RANGE(Position(), start, true, end, step))
@@ -2679,7 +2705,8 @@ class Compiler {
         return coercionCost(type, target)
     }
 
-    method typedLambdaCoercionCost(parameters:ListView<ASTNode>, body:ASTNode, target:Type):Int? {
+    method typedLambdaCoercionCost(parameters:ListView<ASTNode>, body:ASTNode,
+            target:Type):Pair<Type, Int>? {
         if !target.nonnullable().isMethod {
             return coercionCost(Type.MutableMethod(), target)
         }
@@ -2688,7 +2715,7 @@ class Compiler {
             if result == null {
                 return null
             }
-            return result + NONNULLABLE_TO_NULLABLE_CAST_COST
+            return Pair<Type, Int>(result.first, result.second + NONNULLABLE_TO_NULLABLE_CAST_COST)
         }
         if target.parameterCount != parameters.count {
             return null
@@ -2705,19 +2732,22 @@ class Compiler {
                     if parameterCost == null {
                         return null
                     }
-                    cost += parameterCost
+                    cost += parameterCost.second
                 }
             }
         }
-        def returnType := typedLambdaReturnType(parameters, body, TypeContext.TYPE(target))
-        if returnType == null {
+        def type := typedLambdaType(parameters, body, TypeContext.TYPE(target))
+        if type == null {
             return null
         }
-        cost += coercionCost(returnType, target.returnType)
-        return cost
+        def returnCost := coercionCost(type.returnType, target.returnType)
+        assert returnCost !== null
+        cost += returnCost.second
+        return Pair<Type, Int>(type, cost)
     }
 
-    method untypedLambdaCoercionCost(parameters:ListView<ASTNode>, body:ASTNode, target:Type):Int? {
+    method untypedLambdaCoercionCost(parameters:ListView<ASTNode>, body:ASTNode,
+            target:Type):Pair<Type, Int>? {
         if !target.nonnullable().isMethod {
             return coercionCost(Type.MutableMethod(), target)
         }
@@ -2726,7 +2756,7 @@ class Compiler {
             if result == null {
                 return null
             }
-            return result + NONNULLABLE_TO_NULLABLE_CAST_COST
+            return Pair<Type, Int>(result.first, result.second + NONNULLABLE_TO_NULLABLE_CAST_COST)
         }
         if target.parameterCount != parameters.count {
             return null
@@ -2756,7 +2786,7 @@ class Compiler {
     }
 
     method arrayCoercionCost(position:Position, elements:FixedArray<ASTNode>,
-            target:Type):Int? {
+            target:Type):Pair<Type, Int>? {
         def t := getListType(target)
         if t == null {
             def p := preferredType(ASTNode.ARRAY(position, elements))
@@ -2774,7 +2804,7 @@ class Compiler {
     }
 
     @pre(target.resolved)
-    method computeCoercionCost(expr:ASTNode, target:Type):Int? {
+    method computeCoercionCost(expr:ASTNode, target:Type):Pair<Type, Int>? {
         match expr {
             when ASTNode.ARRAY(position, elements) {
                 return arrayCoercionCost(position, elements, target)
@@ -2825,7 +2855,8 @@ class Compiler {
                         if callCost == null {
                             return null
                         }
-                        return callCost + resultCost
+                        return Pair<Type, Int>(resultCost.first, callCost.second +
+                                resultCost.second)
                     }
                 }
                 return callCost(methodTypes, args, TypeContext.TYPE(target))
@@ -2856,10 +2887,10 @@ class Compiler {
                         requiredSize(value.convert()->Int64) <= target.size) |
                         (target.typeKind = Type.Kind.BUILTIN_UINT &
                         requiredSize(value) <= target.size) {
-                    return 0
+                    return Pair<Type, Int>(target, 0)
                 }
                 if target.typeKind = Type.Kind.BUILTIN_FLOAT {
-                    return 1
+                    return Pair<Type, Int>(target, 1)
                 }
                 if target.isNumber {
                     def cl := getClass(target)
@@ -2867,7 +2898,9 @@ class Compiler {
                     def initMethod := cl.methods[0]
                     assert initMethod.methodKind = MethodDecl.Kind.INIT
                     assert initMethod.annotations.isImplicit
-                    return 2 - initMethod.priority
+                    -- FIXME figure out where this 2 came from and whether it's the right value,
+                    -- make it a constant if it's necessarys
+                    return Pair<Type, Int>(target, 2 - initMethod.priority)
                 }
                 def preferred := preferredType(expr)
                 assert preferred !== null
@@ -2918,7 +2951,7 @@ class Compiler {
             }
             when ASTNode.NULL {
                 if target.typeKind = Type.Kind.NULLABLE {
-                    return 0
+                    return Pair<Type, Int>(target, 0)
                 }
                 return null
             }
@@ -2955,10 +2988,10 @@ class Compiler {
             }
             when ASTNode.REAL {
                 if (target.typeKind = Type.Kind.BUILTIN_FLOAT) {
-                    return 0
+                    return Pair<Type, Int>(target, 0)
                 }
                 if target.isReal {
-                    return 1
+                    return Pair<Type, Int>(target, 1)
                 }
                 def preferred := preferredType(expr)
                 assert preferred !== null
@@ -2980,7 +3013,7 @@ class Compiler {
                         when Type.Char32() { targetSize := 32 }
                     }
                     if targetSize >= size {
-                        return 1
+                        return Pair<Type, Int>(target, 1)
                     }
                     return null
                 }
@@ -2998,19 +3031,24 @@ class Compiler {
         }
     }
 
+    ================================================================================================
+    Returns the cost of coercing the expression to the specified type, along with the actual type
+    that will result (which is generally `target`, but may be a different type if `target` had
+    unspecified method generic parameters).
+    ================================================================================================
     @pre(target.resolved)
-    method coercionCost(expr:ASTNode, target:Type):Int? {
+    method coercionCost(expr:ASTNode, target:Type):Pair<Type, Int>? {
         def key := CoercionKey(expr, target)
         var cached := coercionCosts[key]
         if cached !== null {
-            if cached = -1 {
+            if cached.second = -1 {
                 return null
             }
             return cached
         }
         def result := computeCoercionCost(expr, target)
         if result == null {
-            coercionCosts[key] := -1
+            coercionCosts[key] := Pair<Type, Int>(Type.Void(), -1)
         }
         return result
     }
@@ -3051,8 +3089,11 @@ class Compiler {
         if type.isBuiltinNumber & target.isBuiltinNumber {
             return true
         }
-        if type.typeKind = Type.Kind.GENERIC_PARAMETER {
-            return canCast(type.genericParameter.bound, target)
+        if type.typeKind = Type.Kind.GENERIC_CLASS_PARAMETER {
+            return canCast(type.genericClassParameter.bound, target)
+        }
+        if type.typeKind = Type.Kind.GENERIC_METHOD_PARAMETER {
+            return canCast(type.genericMethodParameter.bound, target)
         }
         if type.typeKind = Type.Kind.INVALID {
             return false
@@ -3614,7 +3655,7 @@ class Compiler {
                     return constructRef
                 }
             }
-            when Symbol.Kind.GENERIC_PARAMETER {
+            when Symbol.Kind.GENERIC_CLASS_PARAMETER, Symbol.Kind.GENERIC_METHOD_PARAMETER {
                 error(position, "generic parameter '\{s.name}' is not an expression")
                 return null
             }
@@ -3783,11 +3824,11 @@ class Compiler {
                         def ref := MethodRef(self, targetObj.type(), m)
                         def cost := coercionCost(ref.effectiveType, target)
                         if cost !== null {
-                            if cost < bestCost {
+                            if cost.second < bestCost {
                                 best.clear()
-                                bestCost := cost
+                                bestCost := cost.second
                             }
-                            if cost = bestCost {
+                            if cost.second = bestCost {
                                 best.add(m)
                             }
                         }
@@ -4237,10 +4278,88 @@ class Compiler {
         return Pair<Bit, IR.Value?>(false, null)
     }
 
+    ================================================================================================
+    Scans a type to find instances of unsubstituted generic parameters belonging to the method in
+    it. For instance, when dealing with `map<U>(f:(T)=>(U)):ListView<U>`, the type
+    `(String)=>(U)` contains an unsubstituted reference to the generic parameter `U`. Returns the
+    "paths" to these parameters, where each path is a list of numbers representing the subtype
+    index at which the parameter was found. In the given example, the result would be `[[1]]`, since
+    there was one parameter located, and since it is located at index 1 in the type, its path is
+    `[1]`. Returns null if no such type was located.
+    ================================================================================================
+    function findGenericParameters(m:MethodDecl, t:Type):ListView<ListView<Int>>? {
+        if t.subtypes == null {
+            return null
+        }
+        var result:Array<ListView<Int>>? := null
+        for i in 0 .. t.subtypes.count {
+            if t.subtypes[i].typeKind = Type.Kind.GENERIC_METHOD_PARAMETER {
+                if t.subtypes[i].genericMethodParameter.owner = m.owner.name + "." + m.name {
+                    if result == null {
+                        result := Array<ListView<Int>>()
+                    }
+                    result.add([i])
+                }
+            }
+            else {
+                def paths := findGenericParameters(m, t.subtypes[i])
+                if paths !== null {
+                    if result == null {
+                        result := Array<ListView<Int>>()
+                    }
+                    for path in paths {
+                        def finalPath:Array<Int> := [i]
+                        finalPath.addAll(path)
+                        result.add(finalPath)
+                    }
+                }
+            }
+        }
+        return result
+    }
+
+    function getSubtype(type:Type, indices:ListView<Int>):Type {
+        var result := type
+        for i in indices {
+            result := result.subtypes[i]
+        }
+        return result
+    }
+
+    method performTypeInference(m:MethodRef, args:ListView<ASTNode>):MethodRef? {
+        if !m.requiresTypeInference {
+            return m
+        }
+        def result := Array<Type>(m.value.genericParameters.map<Type>(p => p.bound))
+        for i in 0 .. m.value.parameters.count {
+            def paramType := m.parameterType(i)
+            def generics := findGenericParameters(m.value, paramType)
+            if generics !== null {
+                for g in generics {
+                    var argType := coercionCost(args[i], paramType)
+                    if argType == null {
+                        return null
+                    }
+                    def parameter := getSubtype(m.value.parameters[i].type, g)
+                    assert parameter.typeKind = Type.Kind.GENERIC_METHOD_PARAMETER
+                    var parameterIndex := 0
+                    while Type(m.value.genericParameters[i]) != parameter {
+                        parameterIndex += 1
+                    }
+                    result[parameterIndex] := result[parameterIndex].intersection(self,
+                            getSubtype(argType.first, g))
+                }
+            }
+        }
+        return MethodRef(self, m.target, m.value, result) 
+    }
+
     @post((m.returnType = Type.Void() & @return == null) | @return !== null | errorCount > 0 |
             !reportErrors)
-    method call(position:Position, target:IR.Value?, m:MethodRef, args:ListView<ASTNode>,
+    method call(position:Position, target:IR.Value?, rawM:MethodRef, args:ListView<ASTNode>,
             type:TypeContext):IR.Value? {
+        -- FIXME var param
+        var m := rawM
         if m.value.methodKind = MethodDecl.Kind.INIT {
             var validTarget := false
             var selfOrSuper := false
@@ -4304,6 +4423,11 @@ class Compiler {
         if intrinsic.first {
             return coerce(position, intrinsic.second, type)
         }
+        def inferred := performTypeInference(m, args)
+        if inferred == null {
+            return null
+        }
+        m := inferred
         def isSuper:Bit
         if target !== null {
             match target {
@@ -4476,7 +4600,7 @@ class Compiler {
                 if argCost == null {
                     continue outer
                 }
-                cost += argCost
+                cost += argCost.second
             }
             match type {
                 when TypeContext.IMMUTABLE {
@@ -4489,7 +4613,7 @@ class Compiler {
                     if returnCost == null {
                         continue
                     }
-                    cost += returnCost
+                    cost += returnCost.second
                 }
             }
             cost -= m.priority
@@ -4848,7 +4972,7 @@ class Compiler {
                 assert selfCost !== null, "failed self cast \{left}->\{t} at \{left.position()}"
                 def ops := findOverloadedOperator(t, op, right, type)
                 if ops !== null {
-                    def cost := ops.second + selfCost
+                    def cost := ops.second + selfCost.second
                     if best == null | cost < best.second {
                         best := Pair<ListView<MethodRef>, Int>(ops.first, cost)
                     }
@@ -4880,8 +5004,8 @@ class Compiler {
         if !start.isClass {
             return null
         }
-        if start.typeKind = Type.Kind.GENERIC_PARAMETER {
-            return findType(start.genericParameter.bound, target)
+        if start.typeKind = Type.Kind.GENERIC_CLASS_PARAMETER {
+            return findType(start.genericClassParameter.bound, target)
         }
         def startClass := getClass(start)
         if startClass == null {
@@ -5972,9 +6096,10 @@ class Compiler {
         return symbolRef(position, null, s)
     }
 
-    method typedLambdaReturnType(rawParameters:ListView<ASTNode>, expr:ASTNode,
+    method typedLambdaType(rawParameters:ListView<ASTNode>, expr:ASTNode,
             type:TypeContext):Type? {
         def scope := AutoScope(self)
+        def parameterTypes := Array<Type>()
         for i in 0 .. rawParameters.count {
             def p := rawParameters[i]
             match p {
@@ -5987,17 +6112,18 @@ class Compiler {
                     if type == null {
                         return null
                     }
+                    parameterTypes.add(type)
                     symbolTable.add(Variable(position, Variable.Kind.DEF, name, type,
                             Variable.Storage.PARAMETER(-1)))
                 }
             }
         }
-        def bodyContext:TypeContext
+        def returnType:Type?
         match type {
             when TypeContext.TYPE(t) {
                 if t.nonnullable().isMethod {
                     def target := t.returnType
-                    -- we call computeCoercion directly, as we can't used the cached cost. When
+                    -- we call computeCoercionCost directly, as we can't used the cached cost. When
                     -- evaluating untyped lambdas we may repeatedly reevaluate the same expr->target
                     -- coercion with different symbol definitions
                     def oldBinaryTypes := binaryTypes
@@ -6007,18 +6133,29 @@ class Compiler {
                     if cost == null {
                         return null
                     }
-                    return t.nonnullable().returnType
+                    returnType := cost.first
                 }
             }
+            otherwise {
+                returnType := preferredType(expr)
+            }
         }
-        return preferredType(expr)
+        if returnType == null {
+            return null
+        }
+        return Type.methodType(Position(), Type.Kind.IMMUTABLE_FUNCTION, parameterTypes, returnType,
+                0)
     }
 
     @post(@return !== null | errorCount > 0 | !reportErrors)
     method compileTypedLambda(position:Position, rawParameters:FixedArray<ASTNode>,
             expr:ASTNode, type:TypeContext):IR.Value? {
-        var returnType := typedLambdaReturnType(rawParameters, expr, type)
-        if returnType == null {
+        var returnType:Type
+        def lambdaType := typedLambdaType(rawParameters, expr, type)
+        if lambdaType !== null {
+            returnType := lambdaType.returnType
+        }
+        else {
             -- this shouldn't happen with a valid lambda. push ahead and expect an error during
             -- compilation.
             returnType := Type.Any()
@@ -6286,11 +6423,11 @@ class Compiler {
                             if resolve(m) {
                                 def cost := coercionCost(m.type, t)
                                 if cost !== null {
-                                    if cost < bestCost {
-                                        bestCost := cost
+                                    if cost.second < bestCost {
+                                        bestCost := cost.second
                                         best.clear()
                                     }
-                                    if cost = bestCost {
+                                    if cost.second = bestCost {
                                         best.add(m)
                                     }
                                 }
