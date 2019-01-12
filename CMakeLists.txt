@@ -210,6 +210,7 @@ add_executable(bootstrap
     bootstrap/src/org/pandalanguage/pandac/Compiler.c
     bootstrap/src/org/pandalanguage/pandac/Compiler/_Closure2.c
     bootstrap/src/org/pandalanguage/pandac/Compiler/_Closure7.c
+    bootstrap/src/org/pandalanguage/pandac/Compiler/_Closure8.c
     bootstrap/src/org/pandalanguage/pandac/Compiler/AutoAtPreFlag.c
     bootstrap/src/org/pandalanguage/pandac/Compiler/AutoContext.c
     bootstrap/src/org/pandalanguage/pandac/Compiler/AutoScope.c
@@ -247,6 +248,7 @@ add_executable(bootstrap
     bootstrap/src/org/pandalanguage/pandac/Main/Arguments.c
     bootstrap/src/org/pandalanguage/pandac/Main/Format.c
     bootstrap/src/org/pandalanguage/pandac/MethodDecl.c
+    bootstrap/src/org/pandalanguage/pandac/MethodDecl/GenericParameter.c
     bootstrap/src/org/pandalanguage/pandac/MethodDecl/Kind.c
     bootstrap/src/org/pandalanguage/pandac/MethodDecl/Parameter.c
     bootstrap/src/org/pandalanguage/pandac/MethodRef.c

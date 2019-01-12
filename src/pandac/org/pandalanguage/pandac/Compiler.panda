@@ -943,6 +943,13 @@ class Compiler {
         if m.genericParameters !== null {
             for p in m.genericParameters {
                 symbolTable.add(Type(p), p.name)
+                def resolved := resolve(p.bound, false)
+                if resolved !== null {
+                    p.bound := resolved
+                }
+                else {
+                    m.resolved := Resolution.RESOLVED_WITH_ERRORS
+                }
             }
         }
         for p in m.parameters {
@@ -1273,7 +1280,7 @@ class Compiler {
                                 remapType(type, p.bound)))
                     }
                 }
-                def parameters := m.parameters.map<MethodDecl.Parameter>(
+                def parameters := m.parameters.map(
                         p => MethodDecl.Parameter(p.name, self.remapType(type, p.type)))
                 def clone := MethodDecl(result, m.position, m.doccomment, m.annotations,
                         m.methodKind, m.name, generics, parameters, remapType(type, m.returnType),
@@ -1296,7 +1303,6 @@ class Compiler {
         return result
     }
 
-    @pre(type.resolved)
     method getClass(type:Type):ClassDecl? {
         var result:ClassDecl
         match type.typeKind {
@@ -1546,6 +1552,9 @@ class Compiler {
                 }
                 return raw.remap(typeMap)
             }
+            when Type.Kind.GENERIC_METHOD_PARAMETER {
+                return remapType(context.genericMethodParameter.bound, raw)
+            }
             otherwise {
                 return raw
             }
@@ -1628,6 +1637,26 @@ class Compiler {
         return null
     }
 
+    function coercionCostUnresolvedParameters(a:Type, b:Type):Int? {
+        if a = b {
+            return 0
+        }
+        if b.typeKind = Type.Kind.GENERIC_METHOD_PARAMETER {
+            return 0
+        }
+        var total := 0
+        if a.subtypes !== null & b.subtypes !== null & a.subtypes.count = b.subtypes.count {
+            for i in 0 .. a.subtypes.count {
+                def cost := coercionCostUnresolvedParameters(a.subtypes[i], b.subtypes[i])
+                if cost == null {
+                    return null
+                }
+                total += cost
+            }
+        }
+        return total
+    }
+
     method coercionCost(type:Type, target:Type):Pair<Type, Int>? {
         assert type.resolved, "unresolved type '\{type}'"
         assert target.resolved, "unresolved type '\{target}'"
@@ -1673,6 +1702,17 @@ class Compiler {
                 if type.typeKind = Type.Kind.GENERIC {
                     return coercionCost(type.subtypes[0], target)
                 }
+            }
+            when Type.Kind.GENERIC {
+                if type.typeKind = Type.Kind.GENERIC & type.subtypes[0] = target.subtypes[0] {
+                    -- generic casts normally have to be exact, but we make an exception for
+                    -- unresolved method parameters
+                    def result := coercionCostUnresolvedParameters(type, target)
+                    if result !== null {
+                        return Pair<Type, Int>(type, result)
+                    }
+                    return null
+                }            
             }
         }
         if type.isMethod {
@@ -1860,7 +1900,8 @@ class Compiler {
         outer: for raw in methodTypes {
             var m := raw.nonnullable()
             if m.methodRef !== null & m.methodRef.value.genericParameters !== null {
-                m := Type(performTypeInference(m.methodRef, args))
+                def inferred := performTypeInference(m.methodRef, args)
+                m := Type(inferred)
             }
             if m.typeKind != Type.Kind.METHOD &
                     m.typeKind != Type.Kind.FUNCTION &
@@ -4330,7 +4371,7 @@ class Compiler {
         if !m.requiresTypeInference {
             return m
         }
-        def result := Array<Type>(m.value.genericParameters.map<Type>(p => p.bound))
+        def result := Array<Type>(m.value.genericParameters.map(p => p.bound))
         for i in 0 .. m.value.parameters.count {
             def paramType := m.parameterType(i)
             def generics := findGenericParameters(m.value, paramType)
@@ -4338,7 +4379,8 @@ class Compiler {
                 for g in generics {
                     var argType := coercionCost(args[i], paramType)
                     if argType == null {
-                        return null
+                        Console.printLine("note: can't coerce \{args[i]} to \{paramType}")
+                        return m
                     }
                     def parameter := getSubtype(m.value.parameters[i].type, g)
                     assert parameter.typeKind = Type.Kind.GENERIC_METHOD_PARAMETER
@@ -4584,9 +4626,13 @@ class Compiler {
             if !resolve(m) {
                 continue
             }
-            def ref:MethodRef
+            var ref:MethodRef
             if target !== null {
-                ref := MethodRef(self, target.type(), m, genericArguments)
+                var owner := target.type()
+                if owner.typeKind = Type.Kind.GENERIC_METHOD_PARAMETER {
+                    owner := owner.genericMethodParameter.bound
+                }
+                ref := MethodRef(self, owner, m, genericArguments)
             }
             else if m.annotations.isClass | m.methodKind = MethodDecl.Kind.INIT {
                 ref := MethodRef(self, m.owner.type, m, genericArguments)
@@ -4594,6 +4640,7 @@ class Compiler {
             else {
                 ref := MethodRef(self, findType(currentClass[0].type, m.owner), m, genericArguments)
             }
+            ref := performTypeInference(ref, args)
             var cost := 0
             for i in 0 .. args.count {
                 def argCost := coercionCost(args[i], ref.parameterType(i))

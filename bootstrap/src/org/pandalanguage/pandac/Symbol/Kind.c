@@ -96,8 +96,15 @@ block17:;
 panda$core$Int64 $tmp28 = (panda$core$Int64) {8};
 panda$core$Bit $tmp29 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp3, $tmp28);
 bool $tmp30 = $tmp29.value;
-if ($tmp30) goto block18; else goto block1;
+if ($tmp30) goto block18; else goto block19;
 block18:;
+goto block1;
+block19:;
+panda$core$Int64 $tmp31 = (panda$core$Int64) {9};
+panda$core$Bit $tmp32 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp3, $tmp31);
+bool $tmp33 = $tmp32.value;
+if ($tmp33) goto block20; else goto block1;
+block20:;
 goto block1;
 block1:;
 return;
@@ -107,31 +114,31 @@ org$pandalanguage$pandac$Symbol$Kind org$pandalanguage$pandac$Symbol$Kind$init$p
 
 org$pandalanguage$pandac$Symbol$Kind local0;
 // line 4
-panda$core$Int64* $tmp31 = &(&local0)->$rawValue;
-*$tmp31 = param0;
-org$pandalanguage$pandac$Symbol$Kind $tmp32 = *(&local0);
-return $tmp32;
+panda$core$Int64* $tmp34 = &(&local0)->$rawValue;
+*$tmp34 = param0;
+org$pandalanguage$pandac$Symbol$Kind $tmp35 = *(&local0);
+return $tmp35;
 
 }
 panda$core$Bit org$pandalanguage$pandac$Symbol$Kind$$EQ$org$pandalanguage$pandac$Symbol$Kind$R$panda$core$Bit(org$pandalanguage$pandac$Symbol$Kind param0, org$pandalanguage$pandac$Symbol$Kind param1) {
 
 // line 4
-panda$core$Int64 $tmp33 = param0.$rawValue;
-panda$core$Int64 $tmp34 = param1.$rawValue;
-int64_t $tmp35 = $tmp33.value;
-int64_t $tmp36 = $tmp34.value;
-bool $tmp37 = $tmp35 != $tmp36;
-panda$core$Bit $tmp38 = (panda$core$Bit) {$tmp37};
-bool $tmp39 = $tmp38.value;
-if ($tmp39) goto block1; else goto block2;
+panda$core$Int64 $tmp36 = param0.$rawValue;
+panda$core$Int64 $tmp37 = param1.$rawValue;
+int64_t $tmp38 = $tmp36.value;
+int64_t $tmp39 = $tmp37.value;
+bool $tmp40 = $tmp38 != $tmp39;
+panda$core$Bit $tmp41 = (panda$core$Bit) {$tmp40};
+bool $tmp42 = $tmp41.value;
+if ($tmp42) goto block1; else goto block2;
 block1:;
 // line 4
-panda$core$Bit $tmp40 = panda$core$Bit$init$builtin_bit(false);
-return $tmp40;
+panda$core$Bit $tmp43 = panda$core$Bit$init$builtin_bit(false);
+return $tmp43;
 block2:;
 // line 4
-panda$core$Bit $tmp41 = panda$core$Bit$init$builtin_bit(true);
-return $tmp41;
+panda$core$Bit $tmp44 = panda$core$Bit$init$builtin_bit(true);
+return $tmp44;
 
 }
 

@@ -74,7 +74,7 @@ panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$
 abort(); // unreachable
 block4:;
 // line 9
-panda$core$Int64 $tmp19 = (panda$core$Int64) {5};
+panda$core$Int64 $tmp19 = (panda$core$Int64) {6};
 org$pandalanguage$pandac$Symbol$Kind $tmp20 = org$pandalanguage$pandac$Symbol$Kind$init$panda$core$Int64($tmp19);
 org$pandalanguage$pandac$Position $tmp21 = org$pandalanguage$pandac$Position$init();
 panda$core$Int64 $tmp22 = (panda$core$Int64) {0};

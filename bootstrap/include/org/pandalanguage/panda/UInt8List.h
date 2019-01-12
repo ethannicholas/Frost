@@ -8,7 +8,7 @@ typedef struct org$pandalanguage$panda$UInt8List org$pandalanguage$panda$UInt8Li
 typedef struct panda$core$String panda$core$String;
 
 void org$pandalanguage$panda$UInt8List$init$panda$core$SteppedRange$LTpanda$core$UInt8$Cpanda$core$UInt8$GT(org$pandalanguage$panda$UInt8List* self, panda$core$SteppedRange$LTpanda$core$UInt8$Cpanda$core$UInt8$GT p_range);
-panda$core$Int64 org$pandalanguage$panda$UInt8List$computeCount$R$panda$core$Int64(org$pandalanguage$panda$UInt8List* self);
+panda$core$Int64 org$pandalanguage$panda$UInt8List$computeCount$panda$core$SteppedRange$LTpanda$core$UInt8$Cpanda$core$UInt8$GT$R$panda$core$Int64(panda$core$SteppedRange$LTpanda$core$UInt8$Cpanda$core$UInt8$GT p_range);
 panda$core$Int64 org$pandalanguage$panda$UInt8List$get_count$R$panda$core$Int64(org$pandalanguage$panda$UInt8List* self);
 panda$core$UInt8 org$pandalanguage$panda$UInt8List$$IDX$panda$core$Int64$R$panda$core$UInt8(org$pandalanguage$panda$UInt8List* self, panda$core$Int64 p_index);
 panda$core$String* org$pandalanguage$panda$UInt8List$convert$R$panda$core$String(org$pandalanguage$panda$UInt8List* self);

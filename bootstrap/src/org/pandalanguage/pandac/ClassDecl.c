@@ -380,7 +380,7 @@ return;
 void org$pandalanguage$pandac$ClassDecl$init$panda$io$File$org$pandalanguage$pandac$Position$panda$collections$MapView$LTpanda$core$String$Cpanda$core$String$GT$panda$core$String$Q$org$pandalanguage$pandac$Annotations$org$pandalanguage$pandac$ClassDecl$Kind$panda$core$String$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT$panda$collections$Array$LTorg$pandalanguage$pandac$ClassDecl$GenericParameter$GT$org$pandalanguage$pandac$SymbolTable(org$pandalanguage$pandac$ClassDecl* param0, panda$io$File* param1, org$pandalanguage$pandac$Position param2, panda$collections$MapView* param3, panda$core$String* param4, org$pandalanguage$pandac$Annotations* param5, org$pandalanguage$pandac$ClassDecl$Kind param6, panda$core$String* param7, panda$collections$ListView* param8, panda$collections$Array* param9, org$pandalanguage$pandac$SymbolTable* param10) {
 
 // line 141
-org$pandalanguage$pandac$Type* $tmp131 = (org$pandalanguage$pandac$Type*) pandaObjectAlloc(96, (panda$core$Class*) &org$pandalanguage$pandac$Type$class);
+org$pandalanguage$pandac$Type* $tmp131 = (org$pandalanguage$pandac$Type*) pandaObjectAlloc(112, (panda$core$Class*) &org$pandalanguage$pandac$Type$class);
 panda$core$Int64 $tmp132 = (panda$core$Int64) {0};
 org$pandalanguage$pandac$Type$Kind $tmp133 = org$pandalanguage$pandac$Type$Kind$init$panda$core$Int64($tmp132);
 org$pandalanguage$pandac$Position $tmp134 = org$pandalanguage$pandac$Position$init();
@@ -495,7 +495,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp182));
 *(&local1) = ((org$pandalanguage$pandac$ClassDecl$GenericParameter*) $tmp181);
 // line 159
 panda$collections$Array* $tmp183 = *(&local0);
-org$pandalanguage$pandac$Type* $tmp184 = (org$pandalanguage$pandac$Type*) pandaObjectAlloc(96, (panda$core$Class*) &org$pandalanguage$pandac$Type$class);
+org$pandalanguage$pandac$Type* $tmp184 = (org$pandalanguage$pandac$Type*) pandaObjectAlloc(112, (panda$core$Class*) &org$pandalanguage$pandac$Type$class);
 org$pandalanguage$pandac$ClassDecl$GenericParameter* $tmp185 = *(&local1);
 org$pandalanguage$pandac$Type$init$org$pandalanguage$pandac$ClassDecl$GenericParameter($tmp184, $tmp185);
 panda$collections$Array$add$panda$collections$Array$T($tmp183, ((panda$core$Object*) $tmp184));

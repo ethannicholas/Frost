@@ -72,7 +72,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp20));
 org$pandalanguage$pandac$Variable$Storage** $tmp21 = &param0->storage;
 *$tmp21 = param5;
 // line 35
-panda$core$Int64 $tmp22 = (panda$core$Int64) {8};
+panda$core$Int64 $tmp22 = (panda$core$Int64) {9};
 org$pandalanguage$pandac$Symbol$Kind $tmp23 = org$pandalanguage$pandac$Symbol$Kind$init$panda$core$Int64($tmp22);
 org$pandalanguage$pandac$Symbol$init$org$pandalanguage$pandac$Symbol$Kind$org$pandalanguage$pandac$Position$panda$core$String(((org$pandalanguage$pandac$Symbol*) param0), $tmp23, param1, param3);
 return;

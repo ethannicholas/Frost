@@ -13,6 +13,6 @@ typedef struct org$pandalanguage$panda$UInt64List {
     panda$core$Int64 _count;
 } org$pandalanguage$panda$UInt64List;
 #include "panda/core/Class.h"
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[5]; } org$pandalanguage$panda$UInt64List$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[4]; } org$pandalanguage$panda$UInt64List$class_type;
 extern org$pandalanguage$panda$UInt64List$class_type org$pandalanguage$panda$UInt64List$class;
 
