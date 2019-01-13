@@ -17,7 +17,7 @@ static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -
 
 void org$pandalanguage$pandac$Compiler$_Closure7$init$org$pandalanguage$pandac$Type(org$pandalanguage$pandac$Compiler$_Closure7* param0, org$pandalanguage$pandac$Type* param1) {
 
-// line 4788
+// line 4157
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 org$pandalanguage$pandac$Type** $tmp2 = &param0->left;
 org$pandalanguage$pandac$Type* $tmp3 = *$tmp2;
@@ -29,7 +29,7 @@ return;
 }
 void org$pandalanguage$pandac$Compiler$_Closure7$cleanup(org$pandalanguage$pandac$Compiler$_Closure7* param0) {
 
-// line 4788
+// line 4157
 panda$core$Object$cleanup(((panda$core$Object*) param0));
 org$pandalanguage$pandac$Type** $tmp5 = &param0->left;
 org$pandalanguage$pandac$Type* $tmp6 = *$tmp5;
@@ -39,7 +39,7 @@ return;
 }
 panda$core$Bit org$pandalanguage$pandac$Compiler$_Closure7$$anonymous6$org$pandalanguage$pandac$MethodDecl$R$panda$core$Bit(org$pandalanguage$pandac$Compiler$_Closure7* param0, org$pandalanguage$pandac$MethodDecl* param1) {
 
-// line 4788
+// line 4157
 org$pandalanguage$pandac$Annotations** $tmp7 = &param1->annotations;
 org$pandalanguage$pandac$Annotations* $tmp8 = *$tmp7;
 panda$core$Bit $tmp9 = org$pandalanguage$pandac$Annotations$get_isClass$R$panda$core$Bit($tmp8);

@@ -29,17 +29,17 @@ static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -
 
 void org$pandalanguage$pandac$Compiler$BinaryKey$init$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$parser$Token$Kind$org$pandalanguage$pandac$ASTNode(org$pandalanguage$pandac$Compiler$BinaryKey* param0, org$pandalanguage$pandac$ASTNode* param1, org$pandalanguage$pandac$parser$Token$Kind param2, org$pandalanguage$pandac$ASTNode* param3) {
 
-// line 294
+// line 308
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 org$pandalanguage$pandac$ASTNode** $tmp2 = &param0->left;
 org$pandalanguage$pandac$ASTNode* $tmp3 = *$tmp2;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
 org$pandalanguage$pandac$ASTNode** $tmp4 = &param0->left;
 *$tmp4 = param1;
-// line 295
+// line 309
 org$pandalanguage$pandac$parser$Token$Kind* $tmp5 = &param0->op;
 *$tmp5 = param2;
-// line 296
+// line 310
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param3));
 org$pandalanguage$pandac$ASTNode** $tmp6 = &param0->right;
 org$pandalanguage$pandac$ASTNode* $tmp7 = *$tmp6;
@@ -53,7 +53,7 @@ panda$core$Bit org$pandalanguage$pandac$Compiler$BinaryKey$$EQ$org$pandalanguage
 
 panda$core$Bit local0;
 panda$core$Bit local1;
-// line 301
+// line 315
 org$pandalanguage$pandac$ASTNode** $tmp9 = &param0->left;
 org$pandalanguage$pandac$ASTNode* $tmp10 = *$tmp9;
 org$pandalanguage$pandac$ASTNode** $tmp11 = &param1->left;
@@ -111,7 +111,7 @@ return $tmp34;
 }
 panda$core$Int64 org$pandalanguage$pandac$Compiler$BinaryKey$get_hash$R$panda$core$Int64(org$pandalanguage$pandac$Compiler$BinaryKey* param0) {
 
-// line 306
+// line 320
 org$pandalanguage$pandac$ASTNode** $tmp35 = &param0->left;
 org$pandalanguage$pandac$ASTNode* $tmp36 = *$tmp35;
 panda$core$Int64 $tmp37;
@@ -126,7 +126,7 @@ return $tmp41;
 }
 void org$pandalanguage$pandac$Compiler$BinaryKey$cleanup(org$pandalanguage$pandac$Compiler$BinaryKey* param0) {
 
-// line 286
+// line 300
 panda$core$Object$cleanup(((panda$core$Object*) param0));
 org$pandalanguage$pandac$ASTNode** $tmp42 = &param0->left;
 org$pandalanguage$pandac$ASTNode* $tmp43 = *$tmp42;

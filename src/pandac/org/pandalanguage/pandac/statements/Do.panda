@@ -1,0 +1,48 @@
+package org.pandalanguage.pandac.statements
+
+uses org.pandalanguage.pandac.ASTNode
+uses org.pandalanguage.pandac.Compiler
+uses org.pandalanguage.pandac.Compiler.AutoContext
+uses org.pandalanguage.pandac.Compiler.AutoScope
+uses org.pandalanguage.pandac.Compiler.AutoUnrefs
+uses org.pandalanguage.pandac.Compiler.EnclosingContext
+uses org.pandalanguage.pandac.Compiler.TypeContext
+uses org.pandalanguage.pandac.FixedArray
+uses org.pandalanguage.pandac.IR
+uses org.pandalanguage.pandac.Position
+uses org.pandalanguage.pandac.Type
+
+class Do {
+    @class
+    method compile(compiler:Compiler, position:Position, label:String?,
+            statements:FixedArray<ASTNode>, test:ASTNode) {
+        def ir := compiler.ir
+        def bodyBlock := ir.newBlock("do body")
+        def testBlock := ir.newBlock("do test")
+        def endBlock := ir.newBlock("do end")
+        {
+            def context := AutoContext(compiler, EnclosingContext.LOOP(label, endBlock, testBlock))
+            def scope := AutoScope(compiler)
+            ir.add(IR.Statement.BRANCH(position, bodyBlock))
+            ir.setCurrentBlock(bodyBlock)
+            for s in statements {
+                compiler.compileStatement(s)
+            }
+        }
+        if !ir.currentBlockFinished {
+            ir.add(IR.Statement.BRANCH(position, testBlock))
+        }
+        ir.setCurrentBlock(testBlock)
+        def testBit:IR.Value?
+        {
+            def unrefs := AutoUnrefs(compiler)
+            def compiledTest := compiler.compileExpression(test, TypeContext.TYPE(Type.Bit()))
+            if compiledTest == null {
+                return
+            }
+            testBit := compiler.extractBuiltinBit(position, compiledTest)
+        }
+        ir.add(IR.Statement.CONDITIONAL_BRANCH(position, testBit, bodyBlock, endBlock))
+        ir.setCurrentBlock(endBlock)
+    }
+}

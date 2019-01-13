@@ -25,6 +25,7 @@
 #include "org/pandalanguage/pandac/Symbol.h"
 #include "panda/collections/Array.h"
 #include "panda/collections/ListView.h"
+#include "org/pandalanguage/pandac/statements/Call.h"
 #include "org/pandalanguage/pandac/IR.h"
 #include "org/pandalanguage/pandac/IR/Statement.h"
 
@@ -71,17 +72,17 @@ panda$core$Bit local0;
 panda$core$Bit local1;
 org$pandalanguage$pandac$Type* local2 = NULL;
 panda$core$Bit local3;
-// line 6532
+// line 5704
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 org$pandalanguage$pandac$Compiler** $tmp2 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp3 = *$tmp2;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
 org$pandalanguage$pandac$Compiler** $tmp4 = &param0->compiler;
 *$tmp4 = param1;
-// line 6533
+// line 5705
 org$pandalanguage$pandac$Position* $tmp5 = &param0->position;
 *$tmp5 = param2;
-// line 6534
+// line 5706
 org$pandalanguage$pandac$Compiler$Resolution* $tmp6 = &param4->resolved;
 org$pandalanguage$pandac$Compiler$Resolution $tmp7 = *$tmp6;
 org$pandalanguage$pandac$Compiler$Resolution$wrapper* $tmp8;
@@ -101,7 +102,7 @@ panda$core$Bit $tmp15 = $tmp13(((panda$core$Equatable*) $tmp8), ((panda$core$Equ
 bool $tmp16 = $tmp15.value;
 if ($tmp16) goto block1; else goto block2;
 block2:;
-panda$core$Int64 $tmp17 = (panda$core$Int64) {6534};
+panda$core$Int64 $tmp17 = (panda$core$Int64) {5706};
 panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64(&$s18, $tmp17);
 abort(); // unreachable
 block1:;
@@ -109,14 +110,14 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) ((panda$core$Eq
 // unreffing REF($19:panda.core.Equatable.T)
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) ((panda$core$Equatable*) $tmp8)));
 // unreffing REF($15:panda.core.Equatable<org.pandalanguage.pandac.Compiler.Resolution>)
-// line 6535
+// line 5707
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param4));
 org$pandalanguage$pandac$FieldDecl** $tmp19 = &param0->field;
 org$pandalanguage$pandac$FieldDecl* $tmp20 = *$tmp19;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp20));
 org$pandalanguage$pandac$FieldDecl** $tmp21 = &param0->field;
 *$tmp21 = param4;
-// line 6536
+// line 5708
 panda$core$Bit $tmp22 = panda$core$Bit$init$builtin_bit(param3 != NULL);
 bool $tmp23 = $tmp22.value;
 if ($tmp23) goto block5; else goto block6;
@@ -137,7 +138,7 @@ panda$core$Bit $tmp29 = *(&local0);
 bool $tmp30 = $tmp29.value;
 if ($tmp30) goto block3; else goto block8;
 block3:;
-// line 6537
+// line 5709
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param3));
 org$pandalanguage$pandac$IR$Value** $tmp31 = &param0->target;
 org$pandalanguage$pandac$IR$Value* $tmp32 = *$tmp31;
@@ -146,7 +147,7 @@ org$pandalanguage$pandac$IR$Value** $tmp33 = &param0->target;
 *$tmp33 = param3;
 goto block4;
 block8:;
-// line 6539
+// line 5711
 org$pandalanguage$pandac$Annotations** $tmp34 = &param4->annotations;
 org$pandalanguage$pandac$Annotations* $tmp35 = *$tmp34;
 panda$core$Bit $tmp36 = org$pandalanguage$pandac$Annotations$get_isClass$R$panda$core$Bit($tmp35);
@@ -154,7 +155,7 @@ panda$core$Bit $tmp37 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp36);
 bool $tmp38 = $tmp37.value;
 if ($tmp38) goto block9; else goto block10;
 block9:;
-// line 6540
+// line 5712
 panda$core$Weak** $tmp39 = &param4->owner;
 panda$core$Weak* $tmp40 = *$tmp39;
 panda$core$Object* $tmp41 = panda$core$Weak$get$R$panda$core$Weak$T($tmp40);
@@ -179,7 +180,7 @@ panda$core$Panda$unref$panda$core$Object$Q($tmp41);
 // unreffing REF($83:panda.core.Weak.T)
 if ($tmp50) goto block11; else goto block16;
 block11:;
-// line 6542
+// line 5714
 org$pandalanguage$pandac$IR$Value* $tmp51 = (org$pandalanguage$pandac$IR$Value*) pandaObjectAlloc(48, (panda$core$Class*) &org$pandalanguage$pandac$IR$Value$class);
 panda$core$Int64 $tmp52 = (panda$core$Int64) {7};
 panda$core$Int64 $tmp53 = (panda$core$Int64) {18446744073709551615};
@@ -203,7 +204,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp51));
 goto block12;
 block16:;
 // line 1
-// line 6545
+// line 5717
 panda$core$Bit $tmp63 = panda$core$Bit$init$builtin_bit(false);
 org$pandalanguage$pandac$IR$Value* $tmp64 = org$pandalanguage$pandac$Compiler$compileSelf$org$pandalanguage$pandac$Position$panda$core$Bit$R$org$pandalanguage$pandac$IR$Value$Q(param1, param2, $tmp63);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp64));
@@ -220,7 +221,7 @@ goto block10;
 block10:;
 goto block4;
 block4:;
-// line 6548
+// line 5720
 org$pandalanguage$pandac$Type** $tmp68 = &param4->type;
 org$pandalanguage$pandac$Type* $tmp69 = *$tmp68;
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp69));
@@ -229,9 +230,9 @@ org$pandalanguage$pandac$Type* $tmp71 = *$tmp70;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp71));
 org$pandalanguage$pandac$Type** $tmp72 = &param0->rawType;
 *$tmp72 = $tmp69;
-// line 6549
+// line 5721
 *(&local2) = ((org$pandalanguage$pandac$Type*) NULL);
-// line 6550
+// line 5722
 panda$core$Bit* $tmp73 = &param1->inFieldCleanup;
 panda$core$Bit $tmp74 = *$tmp73;
 panda$core$Bit $tmp75 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp74);
@@ -251,7 +252,7 @@ panda$core$Bit $tmp80 = *(&local3);
 bool $tmp81 = $tmp80.value;
 if ($tmp81) goto block17; else goto block22;
 block17:;
-// line 6551
+// line 5723
 org$pandalanguage$pandac$Type** $tmp82 = &param0->rawType;
 org$pandalanguage$pandac$Type* $tmp83 = *$tmp82;
 org$pandalanguage$pandac$FixedArray** $tmp84 = &$tmp83->subtypes;
@@ -267,7 +268,7 @@ panda$core$Panda$unref$panda$core$Object$Q($tmp87);
 goto block18;
 block22:;
 // line 1
-// line 6554
+// line 5726
 org$pandalanguage$pandac$Type** $tmp89 = &param0->rawType;
 org$pandalanguage$pandac$Type* $tmp90 = *$tmp89;
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp90));
@@ -276,14 +277,14 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp91));
 *(&local2) = $tmp90;
 goto block18;
 block18:;
-// line 6556
+// line 5728
 org$pandalanguage$pandac$IR$Value** $tmp92 = &param0->target;
 org$pandalanguage$pandac$IR$Value* $tmp93 = *$tmp92;
 panda$core$Bit $tmp94 = panda$core$Bit$init$builtin_bit($tmp93 != NULL);
 bool $tmp95 = $tmp94.value;
 if ($tmp95) goto block23; else goto block25;
 block23:;
-// line 6557
+// line 5729
 org$pandalanguage$pandac$IR$Value** $tmp96 = &param0->target;
 org$pandalanguage$pandac$IR$Value* $tmp97 = *$tmp96;
 $fn99 $tmp98 = ($fn99) $tmp97->$class->vtable[2];
@@ -311,7 +312,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp100));
 goto block24;
 block25:;
 // line 1
-// line 6561
+// line 5733
 org$pandalanguage$pandac$Type* $tmp110 = *(&local2);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp110));
 org$pandalanguage$pandac$Type** $tmp111 = &param0->effectiveType;
@@ -321,14 +322,14 @@ org$pandalanguage$pandac$Type** $tmp113 = &param0->effectiveType;
 *$tmp113 = $tmp110;
 goto block24;
 block24:;
-// line 6563
+// line 5735
 org$pandalanguage$pandac$IR$Value** $tmp114 = &param0->target;
 org$pandalanguage$pandac$IR$Value* $tmp115 = *$tmp114;
 panda$core$Bit $tmp116 = panda$core$Bit$init$builtin_bit($tmp115 != NULL);
 bool $tmp117 = $tmp116.value;
 if ($tmp117) goto block26; else goto block27;
 block26:;
-// line 6564
+// line 5736
 org$pandalanguage$pandac$IR$Value** $tmp118 = &param0->target;
 org$pandalanguage$pandac$IR$Value* $tmp119 = *$tmp118;
 panda$core$Weak** $tmp120 = &param4->owner;
@@ -358,7 +359,7 @@ return;
 }
 org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Compiler$FieldLValue$type$R$org$pandalanguage$pandac$Type(org$pandalanguage$pandac$Compiler$FieldLValue* param0) {
 
-// line 6570
+// line 5742
 org$pandalanguage$pandac$Type** $tmp130 = &param0->effectiveType;
 org$pandalanguage$pandac$Type* $tmp131 = *$tmp130;
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp131));
@@ -373,7 +374,7 @@ org$pandalanguage$pandac$IR$Value* local2 = NULL;
 org$pandalanguage$pandac$IR$Statement$ID local3;
 org$pandalanguage$pandac$IR$Statement$ID local4;
 panda$core$Bit local5;
-// line 6575
+// line 5747
 org$pandalanguage$pandac$FieldDecl** $tmp132 = &param0->field;
 org$pandalanguage$pandac$FieldDecl* $tmp133 = *$tmp132;
 org$pandalanguage$pandac$Annotations** $tmp134 = &$tmp133->annotations;
@@ -414,7 +415,7 @@ panda$core$Bit $tmp150 = *(&local0);
 bool $tmp151 = $tmp150.value;
 if ($tmp151) goto block1; else goto block2;
 block1:;
-// line 6576
+// line 5748
 org$pandalanguage$pandac$Compiler** $tmp152 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp153 = *$tmp152;
 panda$collections$Stack** $tmp154 = &$tmp153->currentClass;
@@ -427,7 +428,7 @@ panda$core$Object* $tmp160 = panda$core$Weak$get$R$panda$core$Weak$T($tmp159);
 panda$collections$Stack$push$panda$collections$Stack$T($tmp155, ((panda$core$Object*) ((org$pandalanguage$pandac$ClassDecl*) $tmp160)));
 panda$core$Panda$unref$panda$core$Object$Q($tmp160);
 // unreffing REF($43:panda.core.Weak.T)
-// line 6577
+// line 5749
 org$pandalanguage$pandac$Compiler** $tmp161 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp162 = *$tmp161;
 org$pandalanguage$pandac$FieldDecl** $tmp163 = &param0->field;
@@ -451,7 +452,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp171));
 // unreffing REF($61:org.pandalanguage.pandac.Type)
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp167));
 // unreffing REF($58:org.pandalanguage.pandac.Compiler.TypeContext)
-// line 6578
+// line 5750
 org$pandalanguage$pandac$Compiler** $tmp174 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp175 = *$tmp174;
 panda$collections$Stack** $tmp176 = &$tmp175->currentClass;
@@ -459,7 +460,7 @@ panda$collections$Stack* $tmp177 = *$tmp176;
 panda$core$Object* $tmp178 = panda$collections$Stack$pop$R$panda$collections$Stack$T($tmp177);
 panda$core$Panda$unref$panda$core$Object$Q($tmp178);
 // unreffing REF($86:panda.collections.Stack.T)
-// line 6579
+// line 5751
 org$pandalanguage$pandac$IR$Value* $tmp179 = *(&local1);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp179));
 org$pandalanguage$pandac$IR$Value* $tmp180 = *(&local1);
@@ -468,20 +469,20 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp180));
 *(&local1) = ((org$pandalanguage$pandac$IR$Value*) NULL);
 return $tmp179;
 block2:;
-// line 6581
+// line 5753
 org$pandalanguage$pandac$IR$Value** $tmp181 = &param0->target;
 org$pandalanguage$pandac$IR$Value* $tmp182 = *$tmp181;
 panda$core$Bit $tmp183 = panda$core$Bit$init$builtin_bit($tmp182 == NULL);
 bool $tmp184 = $tmp183.value;
 if ($tmp184) goto block6; else goto block7;
 block6:;
-// line 6583
+// line 5755
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) ((org$pandalanguage$pandac$IR$Value*) NULL)));
 return ((org$pandalanguage$pandac$IR$Value*) NULL);
 block7:;
-// line 6585
+// line 5757
 *(&local2) = ((org$pandalanguage$pandac$IR$Value*) NULL);
-// line 6586
+// line 5758
 org$pandalanguage$pandac$FieldDecl** $tmp185 = &param0->field;
 org$pandalanguage$pandac$FieldDecl* $tmp186 = *$tmp185;
 org$pandalanguage$pandac$FieldDecl$Kind* $tmp187 = &$tmp186->fieldKind;
@@ -507,7 +508,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) ((panda$core$Eq
 // unreffing REF($119:panda.core.Equatable<org.pandalanguage.pandac.FieldDecl.Kind>)
 if ($tmp197) goto block8; else goto block10;
 block8:;
-// line 6587
+// line 5759
 org$pandalanguage$pandac$Compiler** $tmp198 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp199 = *$tmp198;
 org$pandalanguage$pandac$Position* $tmp200 = &param0->position;
@@ -527,7 +528,7 @@ panda$core$Int64 $tmp214 = (panda$core$Int64) {3};
 org$pandalanguage$pandac$Type** $tmp215 = &param0->rawType;
 org$pandalanguage$pandac$Type* $tmp216 = *$tmp215;
 org$pandalanguage$pandac$Compiler$TypeContext$init$panda$core$Int64$org$pandalanguage$pandac$Type($tmp213, $tmp214, $tmp216);
-org$pandalanguage$pandac$IR$Value* $tmp217 = org$pandalanguage$pandac$Compiler$call$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Value$panda$core$String$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$org$pandalanguage$pandac$Compiler$TypeContext$R$org$pandalanguage$pandac$IR$Value$Q($tmp199, $tmp201, $tmp203, $tmp210, ((panda$collections$ListView*) $tmp212), $tmp213);
+org$pandalanguage$pandac$IR$Value* $tmp217 = org$pandalanguage$pandac$statements$Call$compile$org$pandalanguage$pandac$Compiler$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Value$panda$core$String$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$org$pandalanguage$pandac$Compiler$TypeContext$R$org$pandalanguage$pandac$IR$Value$Q($tmp199, $tmp201, $tmp203, $tmp210, ((panda$collections$ListView*) $tmp212), $tmp213);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp217));
 org$pandalanguage$pandac$IR$Value* $tmp218 = *(&local2);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp218));
@@ -545,8 +546,8 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp208));
 goto block9;
 block10:;
 // line 1
-// line 6591
-// line 6592
+// line 5763
+// line 5764
 org$pandalanguage$pandac$Compiler** $tmp219 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp220 = *$tmp219;
 org$pandalanguage$pandac$FieldDecl** $tmp221 = &param0->field;
@@ -560,7 +561,7 @@ panda$core$Panda$unref$panda$core$Object$Q($tmp225);
 // unreffing REF($192:panda.core.Weak.T)
 if ($tmp227) goto block11; else goto block13;
 block11:;
-// line 6593
+// line 5765
 org$pandalanguage$pandac$Compiler** $tmp228 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp229 = *$tmp228;
 org$pandalanguage$pandac$IR** $tmp230 = &$tmp229->ir;
@@ -582,7 +583,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp232));
 goto block12;
 block13:;
 // line 1
-// line 6596
+// line 5768
 org$pandalanguage$pandac$Compiler** $tmp243 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp244 = *$tmp243;
 org$pandalanguage$pandac$IR** $tmp245 = &$tmp244->ir;
@@ -601,7 +602,7 @@ org$pandalanguage$pandac$IR$Statement$ID $tmp257 = $tmp255($tmp246, $tmp247);
 *(&local4) = $tmp257;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp247));
 // unreffing REF($229:org.pandalanguage.pandac.IR.Statement)
-// line 6598
+// line 5770
 org$pandalanguage$pandac$Compiler** $tmp258 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp259 = *$tmp258;
 org$pandalanguage$pandac$IR** $tmp260 = &$tmp259->ir;
@@ -626,7 +627,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp262));
 // unreffing REF($250:org.pandalanguage.pandac.IR.Statement)
 goto block12;
 block12:;
-// line 6600
+// line 5772
 org$pandalanguage$pandac$IR$Value* $tmp274 = (org$pandalanguage$pandac$IR$Value*) pandaObjectAlloc(48, (panda$core$Class*) &org$pandalanguage$pandac$IR$Value$class);
 panda$core$Int64 $tmp275 = (panda$core$Int64) {7};
 org$pandalanguage$pandac$IR$Statement$ID $tmp276 = *(&local3);
@@ -641,7 +642,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp274));
 // unreffing REF($272:org.pandalanguage.pandac.IR.Value)
 goto block9;
 block9:;
-// line 6602
+// line 5774
 org$pandalanguage$pandac$Compiler** $tmp280 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp281 = *$tmp280;
 panda$core$Bit* $tmp282 = &$tmp281->inFieldCleanup;
@@ -665,7 +666,7 @@ panda$core$Bit $tmp291 = *(&local5);
 bool $tmp292 = $tmp291.value;
 if ($tmp292) goto block14; else goto block15;
 block14:;
-// line 6603
+// line 5775
 org$pandalanguage$pandac$Compiler** $tmp293 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp294 = *$tmp293;
 org$pandalanguage$pandac$Position* $tmp295 = &param0->position;
@@ -676,7 +677,7 @@ org$pandalanguage$pandac$FixedArray$init($tmp298);
 org$pandalanguage$pandac$Compiler$TypeContext* $tmp299 = (org$pandalanguage$pandac$Compiler$TypeContext*) pandaObjectAlloc(32, (panda$core$Class*) &org$pandalanguage$pandac$Compiler$TypeContext$class);
 panda$core$Int64 $tmp300 = (panda$core$Int64) {0};
 org$pandalanguage$pandac$Compiler$TypeContext$init$panda$core$Int64($tmp299, $tmp300);
-org$pandalanguage$pandac$IR$Value* $tmp301 = org$pandalanguage$pandac$Compiler$call$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Value$panda$core$String$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$org$pandalanguage$pandac$Compiler$TypeContext$R$org$pandalanguage$pandac$IR$Value$Q($tmp294, $tmp296, $tmp297, &$s302, ((panda$collections$ListView*) $tmp298), $tmp299);
+org$pandalanguage$pandac$IR$Value* $tmp301 = org$pandalanguage$pandac$statements$Call$compile$org$pandalanguage$pandac$Compiler$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Value$panda$core$String$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$org$pandalanguage$pandac$Compiler$TypeContext$R$org$pandalanguage$pandac$IR$Value$Q($tmp294, $tmp296, $tmp297, &$s302, ((panda$collections$ListView*) $tmp298), $tmp299);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp301));
 org$pandalanguage$pandac$IR$Value* $tmp303 = *(&local2);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp303));
@@ -689,7 +690,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp298));
 // unreffing REF($314:org.pandalanguage.pandac.FixedArray<org.pandalanguage.pandac.ASTNode>)
 goto block15;
 block15:;
-// line 6606
+// line 5778
 org$pandalanguage$pandac$Type** $tmp304 = &param0->effectiveType;
 org$pandalanguage$pandac$Type* $tmp305 = *$tmp304;
 org$pandalanguage$pandac$IR$Value* $tmp306 = *(&local2);
@@ -706,7 +707,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp309));
 // unreffing REF($346:org.pandalanguage.pandac.Type)
 if ($tmp314) goto block19; else goto block20;
 block19:;
-// line 6607
+// line 5779
 org$pandalanguage$pandac$Compiler** $tmp315 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp316 = *$tmp315;
 org$pandalanguage$pandac$Position* $tmp317 = &param0->position;
@@ -723,7 +724,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp322));
 // unreffing REF($364:org.pandalanguage.pandac.IR.Value?)
 goto block20;
 block20:;
-// line 6609
+// line 5781
 org$pandalanguage$pandac$IR$Value* $tmp324 = *(&local2);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp324));
 org$pandalanguage$pandac$IR$Value* $tmp325 = *(&local2);
@@ -742,21 +743,21 @@ panda$collections$Array* local3 = NULL;
 panda$collections$Array* local4 = NULL;
 panda$core$Bit local5;
 org$pandalanguage$pandac$IR$Value* local6 = NULL;
-// line 6614
+// line 5786
 org$pandalanguage$pandac$IR$Value** $tmp326 = &param0->target;
 org$pandalanguage$pandac$IR$Value* $tmp327 = *$tmp326;
 panda$core$Bit $tmp328 = panda$core$Bit$init$builtin_bit($tmp327 == NULL);
 bool $tmp329 = $tmp328.value;
 if ($tmp329) goto block1; else goto block2;
 block1:;
-// line 6616
+// line 5788
 return;
 block2:;
-// line 6618
+// line 5790
 *(&local0) = ((org$pandalanguage$pandac$IR$Value*) NULL);
-// line 6619
+// line 5791
 *(&local1) = ((org$pandalanguage$pandac$IR$Value*) NULL);
-// line 6620
+// line 5792
 org$pandalanguage$pandac$Compiler** $tmp330 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp331 = *$tmp330;
 panda$core$Bit* $tmp332 = &$tmp331->inFieldCleanup;
@@ -780,7 +781,7 @@ panda$core$Bit $tmp341 = *(&local2);
 bool $tmp342 = $tmp341.value;
 if ($tmp342) goto block3; else goto block8;
 block3:;
-// line 6621
+// line 5793
 panda$collections$Array* $tmp343 = (panda$collections$Array*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$Array$class);
 panda$collections$Array$init($tmp343);
 *(&local3) = ((panda$collections$Array*) NULL);
@@ -790,7 +791,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp344));
 *(&local3) = $tmp343;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp343));
 // unreffing REF($34:panda.collections.Array<org.pandalanguage.pandac.ASTNode>)
-// line 6622
+// line 5794
 panda$collections$Array* $tmp345 = *(&local3);
 org$pandalanguage$pandac$ASTNode* $tmp346 = (org$pandalanguage$pandac$ASTNode*) pandaObjectAlloc(104, (panda$core$Class*) &org$pandalanguage$pandac$ASTNode$class);
 panda$core$Int64 $tmp347 = (panda$core$Int64) {26};
@@ -800,7 +801,7 @@ org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$
 panda$collections$Array$add$panda$collections$Array$T($tmp345, ((panda$core$Object*) $tmp346));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp346));
 // unreffing REF($50:org.pandalanguage.pandac.ASTNode)
-// line 6623
+// line 5795
 org$pandalanguage$pandac$Compiler** $tmp350 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp351 = *$tmp350;
 org$pandalanguage$pandac$ASTNode* $tmp352 = (org$pandalanguage$pandac$ASTNode*) pandaObjectAlloc(104, (panda$core$Class*) &org$pandalanguage$pandac$ASTNode$class);
@@ -845,14 +846,14 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp369));
 goto block4;
 block8:;
 // line 1
-// line 6628
+// line 5800
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 org$pandalanguage$pandac$IR$Value* $tmp370 = *(&local1);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp370));
 *(&local1) = param1;
 goto block4;
 block4:;
-// line 6630
+// line 5802
 org$pandalanguage$pandac$Type** $tmp371 = &param0->effectiveType;
 org$pandalanguage$pandac$Type* $tmp372 = *$tmp371;
 org$pandalanguage$pandac$Type** $tmp373 = &param0->rawType;
@@ -866,7 +867,7 @@ panda$core$Bit $tmp378 = $tmp376(((panda$core$Equatable*) $tmp372), ((panda$core
 bool $tmp379 = $tmp378.value;
 if ($tmp379) goto block9; else goto block11;
 block9:;
-// line 6631
+// line 5803
 org$pandalanguage$pandac$Compiler** $tmp380 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp381 = *$tmp380;
 org$pandalanguage$pandac$Position* $tmp382 = &param0->position;
@@ -881,13 +882,13 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp388));
 *(&local0) = $tmp387;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp387));
 // unreffing REF($145:org.pandalanguage.pandac.IR.Value?)
-// line 6632
+// line 5804
 org$pandalanguage$pandac$IR$Value* $tmp389 = *(&local0);
 panda$core$Bit $tmp390 = panda$core$Bit$init$builtin_bit(false);
 bool $tmp391 = $tmp390.value;
 if ($tmp391) goto block12; else goto block13;
 block12:;
-// line 6633
+// line 5805
 org$pandalanguage$pandac$IR$Value* $tmp392 = *(&local1);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp392));
 // unreffing value
@@ -901,7 +902,7 @@ block13:;
 goto block10;
 block11:;
 // line 1
-// line 6637
+// line 5809
 org$pandalanguage$pandac$IR$Value* $tmp394 = *(&local1);
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp394));
 org$pandalanguage$pandac$IR$Value* $tmp395 = *(&local0);
@@ -909,7 +910,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp395));
 *(&local0) = $tmp394;
 goto block10;
 block10:;
-// line 6639
+// line 5811
 org$pandalanguage$pandac$FieldDecl** $tmp396 = &param0->field;
 org$pandalanguage$pandac$FieldDecl* $tmp397 = *$tmp396;
 org$pandalanguage$pandac$FieldDecl$Kind* $tmp398 = &$tmp397->fieldKind;
@@ -935,7 +936,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) ((panda$core$Eq
 // unreffing REF($189:panda.core.Equatable<org.pandalanguage.pandac.FieldDecl.Kind>)
 if ($tmp408) goto block14; else goto block16;
 block14:;
-// line 6640
+// line 5812
 panda$collections$Array* $tmp409 = (panda$collections$Array*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$Array$class);
 panda$collections$Array$init($tmp409);
 *(&local4) = ((panda$collections$Array*) NULL);
@@ -945,7 +946,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp410));
 *(&local4) = $tmp409;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp409));
 // unreffing REF($205:panda.collections.Array<org.pandalanguage.pandac.ASTNode>)
-// line 6641
+// line 5813
 panda$collections$Array* $tmp411 = *(&local4);
 org$pandalanguage$pandac$ASTNode* $tmp412 = (org$pandalanguage$pandac$ASTNode*) pandaObjectAlloc(104, (panda$core$Class*) &org$pandalanguage$pandac$ASTNode$class);
 panda$core$Int64 $tmp413 = (panda$core$Int64) {26};
@@ -956,7 +957,7 @@ org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$
 panda$collections$Array$add$panda$collections$Array$T($tmp411, ((panda$core$Object*) $tmp412));
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp412));
 // unreffing REF($221:org.pandalanguage.pandac.ASTNode)
-// line 6642
+// line 5814
 org$pandalanguage$pandac$Compiler** $tmp417 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp418 = *$tmp417;
 org$pandalanguage$pandac$Position* $tmp419 = &param0->position;
@@ -975,7 +976,7 @@ panda$core$Int64 $tmp433 = (panda$core$Int64) {3};
 org$pandalanguage$pandac$Type** $tmp434 = &param0->rawType;
 org$pandalanguage$pandac$Type* $tmp435 = *$tmp434;
 org$pandalanguage$pandac$Compiler$TypeContext$init$panda$core$Int64$org$pandalanguage$pandac$Type($tmp432, $tmp433, $tmp435);
-org$pandalanguage$pandac$IR$Value* $tmp436 = org$pandalanguage$pandac$Compiler$call$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Value$panda$core$String$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$org$pandalanguage$pandac$Compiler$TypeContext$R$org$pandalanguage$pandac$IR$Value$Q($tmp418, $tmp420, $tmp422, $tmp429, ((panda$collections$ListView*) $tmp431), $tmp432);
+org$pandalanguage$pandac$IR$Value* $tmp436 = org$pandalanguage$pandac$statements$Call$compile$org$pandalanguage$pandac$Compiler$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IR$Value$panda$core$String$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$org$pandalanguage$pandac$Compiler$TypeContext$R$org$pandalanguage$pandac$IR$Value$Q($tmp418, $tmp420, $tmp422, $tmp429, ((panda$collections$ListView*) $tmp431), $tmp432);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp436));
 // unreffing REF($254:org.pandalanguage.pandac.IR.Value?)
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp432));
@@ -991,7 +992,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp437));
 goto block15;
 block16:;
 // line 1
-// line 6646
+// line 5818
 org$pandalanguage$pandac$Compiler** $tmp438 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp439 = *$tmp438;
 org$pandalanguage$pandac$Type** $tmp440 = &param0->rawType;
@@ -1025,17 +1026,17 @@ panda$core$Bit $tmp456 = *(&local5);
 bool $tmp457 = $tmp456.value;
 if ($tmp457) goto block17; else goto block18;
 block17:;
-// line 6647
+// line 5819
 org$pandalanguage$pandac$Compiler** $tmp458 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp459 = *$tmp458;
 org$pandalanguage$pandac$IR$Value* $tmp460 = *(&local1);
 org$pandalanguage$pandac$Compiler$compileRef$org$pandalanguage$pandac$IR$Value($tmp459, $tmp460);
-// line 6648
+// line 5820
 $fn462 $tmp461 = ($fn462) param0->$class->vtable[5];
 $tmp461(param0);
 goto block18;
 block18:;
-// line 6650
+// line 5822
 org$pandalanguage$pandac$IR$Value* $tmp463 = (org$pandalanguage$pandac$IR$Value*) pandaObjectAlloc(48, (panda$core$Class*) &org$pandalanguage$pandac$IR$Value$class);
 panda$core$Int64 $tmp464 = (panda$core$Int64) {7};
 org$pandalanguage$pandac$Compiler** $tmp465 = &param0->compiler;
@@ -1065,7 +1066,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp469));
 // unreffing REF($322:org.pandalanguage.pandac.IR.Statement)
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp463));
 // unreffing REF($316:org.pandalanguage.pandac.IR.Value)
-// line 6652
+// line 5824
 org$pandalanguage$pandac$Compiler** $tmp483 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp484 = *$tmp483;
 org$pandalanguage$pandac$IR** $tmp485 = &$tmp484->ir;
@@ -1103,9 +1104,9 @@ void org$pandalanguage$pandac$Compiler$FieldLValue$compileUnref(org$pandalanguag
 org$pandalanguage$pandac$IR$Value* local0 = NULL;
 org$pandalanguage$pandac$IR$Statement$ID local1;
 org$pandalanguage$pandac$IR$Statement$ID local2;
-// line 6657
+// line 5829
 *(&local0) = ((org$pandalanguage$pandac$IR$Value*) NULL);
-// line 6658
+// line 5830
 org$pandalanguage$pandac$FieldDecl** $tmp499 = &param0->field;
 org$pandalanguage$pandac$FieldDecl* $tmp500 = *$tmp499;
 org$pandalanguage$pandac$FieldDecl$Kind* $tmp501 = &$tmp500->fieldKind;
@@ -1131,15 +1132,15 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) ((panda$core$Eq
 // unreffing REF($7:panda.core.Equatable<org.pandalanguage.pandac.FieldDecl.Kind>)
 if ($tmp511) goto block1; else goto block2;
 block1:;
-// line 6659
+// line 5831
 org$pandalanguage$pandac$IR$Value* $tmp512 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp512));
 // unreffing result
 *(&local0) = ((org$pandalanguage$pandac$IR$Value*) NULL);
 return;
 block2:;
-// line 6661
-// line 6662
+// line 5833
+// line 5834
 org$pandalanguage$pandac$Compiler** $tmp513 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp514 = *$tmp513;
 org$pandalanguage$pandac$FieldDecl** $tmp515 = &param0->field;
@@ -1153,7 +1154,7 @@ panda$core$Panda$unref$panda$core$Object$Q($tmp519);
 // unreffing REF($38:panda.core.Weak.T)
 if ($tmp521) goto block3; else goto block5;
 block3:;
-// line 6663
+// line 5835
 org$pandalanguage$pandac$Compiler** $tmp522 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp523 = *$tmp522;
 org$pandalanguage$pandac$IR** $tmp524 = &$tmp523->ir;
@@ -1175,7 +1176,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp526));
 goto block4;
 block5:;
 // line 1
-// line 6666
+// line 5838
 org$pandalanguage$pandac$Compiler** $tmp537 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp538 = *$tmp537;
 org$pandalanguage$pandac$IR** $tmp539 = &$tmp538->ir;
@@ -1194,7 +1195,7 @@ org$pandalanguage$pandac$IR$Statement$ID $tmp551 = $tmp549($tmp540, $tmp541);
 *(&local2) = $tmp551;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp541));
 // unreffing REF($75:org.pandalanguage.pandac.IR.Statement)
-// line 6667
+// line 5839
 org$pandalanguage$pandac$Compiler** $tmp552 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp553 = *$tmp552;
 org$pandalanguage$pandac$IR** $tmp554 = &$tmp553->ir;
@@ -1219,7 +1220,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp556));
 // unreffing REF($96:org.pandalanguage.pandac.IR.Statement)
 goto block4;
 block4:;
-// line 6669
+// line 5841
 org$pandalanguage$pandac$IR$Value* $tmp568 = (org$pandalanguage$pandac$IR$Value*) pandaObjectAlloc(48, (panda$core$Class*) &org$pandalanguage$pandac$IR$Value$class);
 panda$core$Int64 $tmp569 = (panda$core$Int64) {7};
 org$pandalanguage$pandac$IR$Statement$ID $tmp570 = *(&local1);
@@ -1232,7 +1233,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp573));
 *(&local0) = $tmp568;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp568));
 // unreffing REF($118:org.pandalanguage.pandac.IR.Value)
-// line 6670
+// line 5842
 org$pandalanguage$pandac$Compiler** $tmp574 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp575 = *$tmp574;
 org$pandalanguage$pandac$IR$Value* $tmp576 = *(&local0);
@@ -1246,7 +1247,7 @@ return;
 }
 void org$pandalanguage$pandac$Compiler$FieldLValue$cleanup(org$pandalanguage$pandac$Compiler$FieldLValue* param0) {
 
-// line 6518
+// line 5690
 panda$core$Object$cleanup(((panda$core$Object*) param0));
 org$pandalanguage$pandac$Compiler** $tmp578 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp579 = *$tmp578;

@@ -309,9 +309,9 @@ while ($tmp124->$class != (panda$core$Class*) &panda$collections$ListView$class)
 $fn126 $tmp125 = $tmp124->methods[0];
 panda$core$Object* $tmp127 = $tmp125(param0, $tmp123);
 int64_t $tmp128 = $tmp117.value;
+panda$core$Panda$ref$panda$core$Object$Q($tmp127);
 panda$core$Object* $tmp129 = $tmp116[$tmp128];
 panda$core$Panda$unref$panda$core$Object$Q($tmp129);
-panda$core$Panda$ref$panda$core$Object$Q($tmp127);
 $tmp116[$tmp128] = $tmp127;
 panda$core$Panda$unref$panda$core$Object$Q($tmp127);
 // unreffing REF($183:panda.collections.ListView.T)

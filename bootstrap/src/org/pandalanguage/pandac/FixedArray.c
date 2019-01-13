@@ -141,9 +141,9 @@ while ($tmp45->$class != (panda$core$Class*) &panda$collections$ListView$class) 
 $fn47 $tmp46 = $tmp45->methods[0];
 panda$core$Object* $tmp48 = $tmp46(param1, $tmp44);
 int64_t $tmp49 = $tmp43.value;
+panda$core$Panda$ref$panda$core$Object$Q($tmp48);
 panda$core$Object* $tmp50 = $tmp42[$tmp49];
 panda$core$Panda$unref$panda$core$Object$Q($tmp50);
-panda$core$Panda$ref$panda$core$Object$Q($tmp48);
 $tmp42[$tmp49] = $tmp48;
 panda$core$Panda$unref$panda$core$Object$Q($tmp48);
 // unreffing REF($51:panda.collections.ListView.T)
@@ -269,9 +269,9 @@ panda$core$Object*** $tmp114 = &param0->data;
 panda$core$Object** $tmp115 = *$tmp114;
 panda$core$Int64 $tmp116 = *(&local0);
 int64_t $tmp117 = $tmp116.value;
+panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) NULL));
 panda$core$Object* $tmp118 = $tmp115[$tmp117];
 panda$core$Panda$unref$panda$core$Object$Q($tmp118);
-panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) NULL));
 $tmp115[$tmp117] = ((panda$core$Object*) NULL);
 goto block3;
 block3:;

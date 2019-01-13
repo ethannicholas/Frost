@@ -210,7 +210,6 @@ add_executable(bootstrap
     bootstrap/src/org/pandalanguage/pandac/Compiler.c
     bootstrap/src/org/pandalanguage/pandac/Compiler/_Closure2.c
     bootstrap/src/org/pandalanguage/pandac/Compiler/_Closure7.c
-    bootstrap/src/org/pandalanguage/pandac/Compiler/_Closure8.c
     bootstrap/src/org/pandalanguage/pandac/Compiler/AutoAtPreFlag.c
     bootstrap/src/org/pandalanguage/pandac/Compiler/AutoContext.c
     bootstrap/src/org/pandalanguage/pandac/Compiler/AutoScope.c
@@ -285,6 +284,20 @@ add_executable(bootstrap
     bootstrap/src/org/pandalanguage/pandac/parser/Token/Kind.c
     bootstrap/src/org/pandalanguage/pandac/Position.c
     bootstrap/src/org/pandalanguage/pandac/Scanner.c
+    bootstrap/src/org/pandalanguage/pandac/statements/Assert.c
+    bootstrap/src/org/pandalanguage/pandac/statements/Assignment.c
+    bootstrap/src/org/pandalanguage/pandac/statements/Break.c
+    bootstrap/src/org/pandalanguage/pandac/statements/Call.c
+    bootstrap/src/org/pandalanguage/pandac/statements/Continue.c
+    bootstrap/src/org/pandalanguage/pandac/statements/Do.c
+    bootstrap/src/org/pandalanguage/pandac/statements/For.c
+    bootstrap/src/org/pandalanguage/pandac/statements/If.c
+    bootstrap/src/org/pandalanguage/pandac/statements/InnerMethod.c
+    bootstrap/src/org/pandalanguage/pandac/statements/Loop.c
+    bootstrap/src/org/pandalanguage/pandac/statements/Match.c
+    bootstrap/src/org/pandalanguage/pandac/statements/Return.c
+    bootstrap/src/org/pandalanguage/pandac/statements/Var.c
+    bootstrap/src/org/pandalanguage/pandac/statements/While.c
     bootstrap/src/org/pandalanguage/pandac/Symbol.c
     bootstrap/src/org/pandalanguage/pandac/Symbol/Kind.c
     bootstrap/src/org/pandalanguage/pandac/SymbolTable.c
@@ -759,6 +772,20 @@ set(pandac_source
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/pandadoc/Markdown.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/parser/Parser.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/parser/SyntaxHighlighter.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/statements/Assert.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/statements/Assignment.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/statements/Break.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/statements/Call.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/statements/Continue.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/statements/Do.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/statements/For.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/statements/If.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/statements/InnerMethod.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/statements/Loop.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/statements/Match.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/statements/Return.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/statements/Var.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/statements/While.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/regex/RegexParser.panda
 )
 

@@ -1,0 +1,24 @@
+package org.pandalanguage.pandac.statements
+
+uses org.pandalanguage.pandac.ASTNode
+uses org.pandalanguage.pandac.Compiler
+uses org.pandalanguage.pandac.FixedArray
+uses org.pandalanguage.pandac.Position
+uses org.pandalanguage.pandac.Variable
+
+class Var {
+    @class
+    method compile(compiler:Compiler, position:Position, kind:Variable.Kind,
+            decls:FixedArray<ASTNode>) {
+        for decl in decls {
+            match decl {
+                when ASTNode.DECLARATION(position, target, rawValue) {
+                    compiler.compileDeclaration(position, target, rawValue, kind)
+                }
+                otherwise {
+                    assert false
+                }
+            }
+        }
+    }
+}

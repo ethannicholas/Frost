@@ -1,0 +1,26 @@
+package org.pandalanguage.pandac.statements
+
+uses org.pandalanguage.pandac.ASTNode
+uses org.pandalanguage.pandac.Compiler
+uses org.pandalanguage.pandac.Compiler.TypeContext
+uses org.pandalanguage.pandac.FixedArray
+uses org.pandalanguage.pandac.MethodDecl
+uses org.pandalanguage.pandac.Position
+uses org.pandalanguage.pandac.Variable
+
+class InnerMethod {
+    @class
+    method compile(compiler:Compiler, position:Position, kind:MethodDecl.Kind, name:String,
+            rawParameters:FixedArray<ASTNode>, rawReturnType:ASTNode?,
+            body:FixedArray<ASTNode>) {
+        def methodRef := compiler.compileClosure(position, kind, rawParameters, rawReturnType, body,
+                TypeContext.NON_VOID)
+        if methodRef == null {
+            return
+        }
+        def decl := ASTNode.DECLARATION(position, ASTNode.IDENTIFIER(position, name),
+                ASTNode.IR_WRAPPER(position, methodRef))
+        compiler.compileStatement(ASTNode.VAR(position, Variable.Kind.DEF,
+                FixedArray<ASTNode>.from([decl])))
+    }
+}
