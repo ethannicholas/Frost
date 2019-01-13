@@ -1,4 +1,4 @@
-package org.pandalanguage.pandac.statements
+package org.pandalanguage.pandac.statement
 
 uses org.pandalanguage.pandac.ASTNode
 uses org.pandalanguage.pandac.Compiler
@@ -14,6 +14,8 @@ uses org.pandalanguage.pandac.Pair
 uses org.pandalanguage.pandac.Position
 uses org.pandalanguage.pandac.Type
 uses org.pandalanguage.pandac.Variable
+uses org.pandalanguage.pandac.expression.Call
+uses org.pandalanguage.pandac.lvalue.VariableLValue
 
 class For {
     @private

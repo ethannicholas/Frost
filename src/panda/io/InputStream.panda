@@ -239,7 +239,7 @@ class InputStream {
                 break
             }
             if c = "\n" {
-                if result._length > 0 & result[result._length - 1] = "\r" {
+                if result._length > 0 & result[result.previous(result.end)] = "\r" {
                     result._length -= 1
                 }
                 break

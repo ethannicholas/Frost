@@ -1,0 +1,31 @@
+package org.pandalanguage.pandac.expression
+
+uses org.pandalanguage.pandac.ASTNode
+uses org.pandalanguage.pandac.Compiler
+uses org.pandalanguage.pandac.Compiler.TypeContext
+uses org.pandalanguage.pandac.IR
+uses org.pandalanguage.pandac.Position
+uses org.pandalanguage.pandac.Type
+
+class IntLiteral {
+    @class
+    method compile(compiler:Compiler, position:Position, value:UInt64,
+            type:TypeContext):IR.Value? {
+        match type {
+            when TypeContext.TYPE(t) {
+                if t.typeKind = Type.Kind.BUILTIN_INT | t.typeKind = Type.Kind.BUILTIN_UINT {
+                    return IR.Value.INT(value, t)
+                }
+                if t.typeKind = Type.Kind.BUILTIN_FLOAT {
+                    return IR.Value.REAL(value, t)
+                }
+                if t.isNumber {
+                    return Call.compile(compiler, position, IR.Value.TYPE(t),
+                            [ASTNode.INT(position, value)], type)
+                }
+            }
+        }
+        return compiler.coerce(position, compile(compiler, position, value,
+                TypeContext.TYPE(Type.Int64())), type)
+    }
+}

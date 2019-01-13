@@ -1,4 +1,4 @@
-package org.pandalanguage.pandac.statements
+package org.pandalanguage.pandac.statement
 
 uses org.pandalanguage.pandac.ASTNode
 uses org.pandalanguage.pandac.Compiler

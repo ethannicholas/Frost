@@ -1,0 +1,49 @@
+package org.pandalanguage.pandac.expression
+
+uses org.pandalanguage.pandac.ASTNode
+uses org.pandalanguage.pandac.Compiler
+uses org.pandalanguage.pandac.Compiler.AutoUnrefs
+uses org.pandalanguage.pandac.Compiler.TypeContext
+uses org.pandalanguage.pandac.IR
+uses org.pandalanguage.pandac.Position
+uses org.pandalanguage.pandac.Type
+
+class Or {
+    @class
+    method compile(compiler:Compiler, position:Position, left:ASTNode, right:ASTNode,
+            type:TypeContext):IR.Value? {
+        def ir := compiler.ir
+        -- FIXME should add phis so we can avoid using a local        
+        def result := IR.Value.LOCAL(ir.locals.count, Type.Bit())
+        ir.locals.add(Type.Bit())
+        def compiledLeft:IR.Value?
+        compiledLeft := compiler.compileExpression(left, TypeContext.TYPE(Type.Bit()))
+        if compiledLeft == null {
+            return null
+        }
+        def ifTrue := ir.newBlock("or true")
+        def ifFalse := ir.newBlock("or false")
+        def merge := ir.newBlock("or merge")
+        ir.add(IR.Statement.CONDITIONAL_BRANCH(position,
+                compiler.extractBuiltinBit(position, compiledLeft), ifTrue, ifFalse))
+        ir.setCurrentBlock(ifTrue)
+        ir.add(IR.Statement.STORE(position, compiledLeft, result))
+        ir.add(IR.Statement.BRANCH(position, merge))
+        ir.setCurrentBlock(ifFalse)
+        def compiledRight:IR.Value?
+        {
+            def unrefs := AutoUnrefs(compiler)
+            compiledRight := compiler.compileExpression(right, TypeContext.TYPE(Type.Bit()))
+            if compiledRight == null {
+                return null
+            }
+        }
+        ir.add(IR.Statement.STORE(position, compiledRight, result))
+        ir.add(IR.Statement.BRANCH(position, merge))
+        ir.setCurrentBlock(merge)
+        def load := ir.add(IR.Statement.LOAD(position, result))
+        return IR.Value.REF(load, Type.Bit())
+    }
+
+
+}

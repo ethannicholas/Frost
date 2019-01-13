@@ -1,4 +1,4 @@
-package org.pandalanguage.pandac.statements
+package org.pandalanguage.pandac.statement
 
 uses org.pandalanguage.pandac.ASTNode
 uses org.pandalanguage.pandac.ChoiceCase
@@ -15,6 +15,9 @@ uses org.pandalanguage.pandac.Pair
 uses org.pandalanguage.pandac.Position
 uses org.pandalanguage.pandac.Type
 uses org.pandalanguage.pandac.Variable
+uses org.pandalanguage.pandac.expression.Call
+uses org.pandalanguage.pandac.expression.Dot
+uses org.pandalanguage.pandac.lvalue.VariableLValue
 uses org.pandalanguage.pandac.parser.Token
 
 class Match {
@@ -211,7 +214,8 @@ class Match {
         def choiceClass:ClassDecl? := null
         def choiceRawValue:IR.Value?
         if cl.classKind = ClassDecl.Kind.CHOICE {
-            choiceRawValue := compiler.compileDot(position, compiledValue, ClassDecl.RAW_VALUE_NAME)
+            choiceRawValue := Dot.compile(compiler, position, compiledValue,
+                    ClassDecl.RAW_VALUE_NAME)
             choiceClass := cl
         }
         else if compiler.getSymbolTable(cl)["="] == null {

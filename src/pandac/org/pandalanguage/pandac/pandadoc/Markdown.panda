@@ -333,7 +333,7 @@ class Markdown {
         markup.replace(/\n+\z/, "")
 
         def paragraphs:Array<String>
-        if markup.byteLength() = 0 {
+        if markup.byteLength = 0 {
             paragraphs := Array<String>()
         } else {
             paragraphs := Array<String>(markup.convert().split(/\n{2,}/))

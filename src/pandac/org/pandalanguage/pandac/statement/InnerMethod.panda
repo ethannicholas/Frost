@@ -1,4 +1,4 @@
-package org.pandalanguage.pandac.statements
+package org.pandalanguage.pandac.statement
 
 uses org.pandalanguage.pandac.ASTNode
 uses org.pandalanguage.pandac.Compiler
@@ -7,14 +7,15 @@ uses org.pandalanguage.pandac.FixedArray
 uses org.pandalanguage.pandac.MethodDecl
 uses org.pandalanguage.pandac.Position
 uses org.pandalanguage.pandac.Variable
+uses org.pandalanguage.pandac.expression.Closure
 
 class InnerMethod {
     @class
     method compile(compiler:Compiler, position:Position, kind:MethodDecl.Kind, name:String,
             rawParameters:FixedArray<ASTNode>, rawReturnType:ASTNode?,
             body:FixedArray<ASTNode>) {
-        def methodRef := compiler.compileClosure(position, kind, rawParameters, rawReturnType, body,
-                TypeContext.NON_VOID)
+        def methodRef := Closure.compile(compiler, position, kind, rawParameters, rawReturnType,
+                body, TypeContext.NON_VOID)
         if methodRef == null {
             return
         }
