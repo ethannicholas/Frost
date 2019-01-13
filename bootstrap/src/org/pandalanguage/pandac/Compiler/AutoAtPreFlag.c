@@ -17,14 +17,14 @@ static panda$core$String $s13 = { (panda$core$Class*) &panda$core$String$class, 
 
 void org$pandalanguage$pandac$Compiler$AutoAtPreFlag$init$org$pandalanguage$pandac$Compiler(org$pandalanguage$pandac$Compiler$AutoAtPreFlag* param0, org$pandalanguage$pandac$Compiler* param1) {
 
-// line 241
+// line 256
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 org$pandalanguage$pandac$Compiler** $tmp2 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp3 = *$tmp2;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
 org$pandalanguage$pandac$Compiler** $tmp4 = &param0->compiler;
 *$tmp4 = param1;
-// line 242
+// line 257
 panda$core$Bit $tmp5 = panda$core$Bit$init$builtin_bit(true);
 panda$core$Bit* $tmp6 = &param1->inAtPre;
 *$tmp6 = $tmp5;
@@ -33,7 +33,7 @@ return;
 }
 void org$pandalanguage$pandac$Compiler$AutoAtPreFlag$cleanup(org$pandalanguage$pandac$Compiler$AutoAtPreFlag* param0) {
 
-// line 247
+// line 262
 org$pandalanguage$pandac$Compiler** $tmp7 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp8 = *$tmp7;
 panda$core$Bit* $tmp9 = &$tmp8->inAtPre;
@@ -41,17 +41,17 @@ panda$core$Bit $tmp10 = *$tmp9;
 bool $tmp11 = $tmp10.value;
 if ($tmp11) goto block1; else goto block2;
 block2:;
-panda$core$Int64 $tmp12 = (panda$core$Int64) {247};
+panda$core$Int64 $tmp12 = (panda$core$Int64) {262};
 panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64(&$s13, $tmp12);
 abort(); // unreachable
 block1:;
-// line 248
+// line 263
 org$pandalanguage$pandac$Compiler** $tmp14 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp15 = *$tmp14;
 panda$core$Bit $tmp16 = panda$core$Bit$init$builtin_bit(false);
 panda$core$Bit* $tmp17 = &$tmp15->inAtPre;
 *$tmp17 = $tmp16;
-// line 246
+// line 261
 panda$core$Object$cleanup(((panda$core$Object*) param0));
 org$pandalanguage$pandac$Compiler** $tmp18 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp19 = *$tmp18;

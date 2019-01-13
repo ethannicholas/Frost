@@ -16,14 +16,14 @@ static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -
 
 void org$pandalanguage$pandac$Compiler$_Closure2$init$org$pandalanguage$pandac$Type$Q$org$pandalanguage$pandac$Compiler(org$pandalanguage$pandac$Compiler$_Closure2* param0, org$pandalanguage$pandac$Type* param1, org$pandalanguage$pandac$Compiler* param2) {
 
-// line 1298
+// line 1313
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 org$pandalanguage$pandac$Type** $tmp2 = &param0->type;
 org$pandalanguage$pandac$Type* $tmp3 = *$tmp2;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
 org$pandalanguage$pandac$Type** $tmp4 = &param0->type;
 *$tmp4 = param1;
-// line 1298
+// line 1313
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param2));
 org$pandalanguage$pandac$Compiler** $tmp5 = &param0->$self;
 org$pandalanguage$pandac$Compiler* $tmp6 = *$tmp5;
@@ -35,7 +35,7 @@ return;
 }
 void org$pandalanguage$pandac$Compiler$_Closure2$cleanup(org$pandalanguage$pandac$Compiler$_Closure2* param0) {
 
-// line 1298
+// line 1313
 panda$core$Object$cleanup(((panda$core$Object*) param0));
 org$pandalanguage$pandac$Type** $tmp8 = &param0->type;
 org$pandalanguage$pandac$Type* $tmp9 = *$tmp8;
@@ -48,7 +48,7 @@ return;
 }
 org$pandalanguage$pandac$MethodDecl$Parameter* org$pandalanguage$pandac$Compiler$_Closure2$$anonymous1$org$pandalanguage$pandac$MethodDecl$Parameter$R$org$pandalanguage$pandac$MethodDecl$Parameter(org$pandalanguage$pandac$Compiler$_Closure2* param0, org$pandalanguage$pandac$MethodDecl$Parameter* param1) {
 
-// line 1298
+// line 1313
 org$pandalanguage$pandac$MethodDecl$Parameter* $tmp12 = (org$pandalanguage$pandac$MethodDecl$Parameter*) pandaObjectAlloc(40, (panda$core$Class*) &org$pandalanguage$pandac$MethodDecl$Parameter$class);
 panda$core$String** $tmp13 = &param1->name;
 panda$core$String* $tmp14 = *$tmp13;

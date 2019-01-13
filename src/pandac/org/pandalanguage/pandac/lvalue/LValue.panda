@@ -103,7 +103,15 @@ interface LValue {
                 if symbol !== null {
                     match symbol.kind {
                         when Symbol.Kind.VARIABLE {
-                            return VariableLValue(compiler, position, symbol->Variable)
+                            def v := symbol->Variable
+                            match v.storage {
+                                when Variable.Storage.LOCAL {
+                                    return VariableLValue(compiler, position, symbol->Variable)
+                                }
+                                otherwise {
+                                    compiler.error(position, "cannot assign to '\{v.name}'")
+                                }
+                            }
                         }
                         when Symbol.Kind.FIELD {
                             def f := symbol->FieldDecl

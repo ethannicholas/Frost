@@ -29,14 +29,14 @@ static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -
 
 void org$pandalanguage$pandac$Compiler$CoercionKey$init$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$Type(org$pandalanguage$pandac$Compiler$CoercionKey* param0, org$pandalanguage$pandac$ASTNode* param1, org$pandalanguage$pandac$Type* param2) {
 
-// line 285
+// line 300
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 org$pandalanguage$pandac$ASTNode** $tmp2 = &param0->expr;
 org$pandalanguage$pandac$ASTNode* $tmp3 = *$tmp2;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
 org$pandalanguage$pandac$ASTNode** $tmp4 = &param0->expr;
 *$tmp4 = param1;
-// line 286
+// line 301
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param2));
 org$pandalanguage$pandac$Type** $tmp5 = &param0->target;
 org$pandalanguage$pandac$Type* $tmp6 = *$tmp5;
@@ -49,7 +49,7 @@ return;
 panda$core$Bit org$pandalanguage$pandac$Compiler$CoercionKey$$EQ$org$pandalanguage$pandac$Compiler$CoercionKey$R$panda$core$Bit(org$pandalanguage$pandac$Compiler$CoercionKey* param0, org$pandalanguage$pandac$Compiler$CoercionKey* param1) {
 
 panda$core$Bit local0;
-// line 291
+// line 306
 org$pandalanguage$pandac$ASTNode** $tmp8 = &param0->expr;
 org$pandalanguage$pandac$ASTNode* $tmp9 = *$tmp8;
 org$pandalanguage$pandac$ASTNode** $tmp10 = &param1->expr;
@@ -76,7 +76,7 @@ return $tmp20;
 }
 panda$core$Int64 org$pandalanguage$pandac$Compiler$CoercionKey$get_hash$R$panda$core$Int64(org$pandalanguage$pandac$Compiler$CoercionKey* param0) {
 
-// line 296
+// line 311
 org$pandalanguage$pandac$ASTNode** $tmp21 = &param0->expr;
 org$pandalanguage$pandac$ASTNode* $tmp22 = *$tmp21;
 panda$core$Int64 $tmp23;
@@ -95,7 +95,7 @@ return $tmp30;
 }
 void org$pandalanguage$pandac$Compiler$CoercionKey$cleanup(org$pandalanguage$pandac$Compiler$CoercionKey* param0) {
 
-// line 279
+// line 294
 panda$core$Object$cleanup(((panda$core$Object*) param0));
 org$pandalanguage$pandac$ASTNode** $tmp31 = &param0->expr;
 org$pandalanguage$pandac$ASTNode* $tmp32 = *$tmp31;

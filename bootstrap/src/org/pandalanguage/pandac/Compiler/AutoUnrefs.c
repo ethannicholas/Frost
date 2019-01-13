@@ -19,14 +19,14 @@ static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -
 
 void org$pandalanguage$pandac$Compiler$AutoUnrefs$init$org$pandalanguage$pandac$Compiler(org$pandalanguage$pandac$Compiler$AutoUnrefs* param0, org$pandalanguage$pandac$Compiler* param1) {
 
-// line 176
+// line 191
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 org$pandalanguage$pandac$Compiler** $tmp2 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp3 = *$tmp2;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
 org$pandalanguage$pandac$Compiler** $tmp4 = &param0->compiler;
 *$tmp4 = param1;
-// line 177
+// line 192
 panda$collections$Stack** $tmp5 = &param1->enclosingContexts;
 panda$collections$Stack* $tmp6 = *$tmp5;
 panda$core$Int64 $tmp7 = panda$collections$Stack$get_count$R$panda$core$Int64($tmp6);
@@ -39,7 +39,7 @@ void org$pandalanguage$pandac$Compiler$AutoUnrefs$cleanup(org$pandalanguage$pand
 
 org$pandalanguage$pandac$Compiler$EnclosingContext* local0 = NULL;
 org$pandalanguage$pandac$IR$Value* local1 = NULL;
-// line 182
+// line 197
 goto block1;
 block1:;
 org$pandalanguage$pandac$Compiler** $tmp9 = &param0->compiler;
@@ -56,7 +56,7 @@ panda$core$Bit $tmp19 = (panda$core$Bit) {$tmp18};
 bool $tmp20 = $tmp19.value;
 if ($tmp20) goto block2; else goto block3;
 block2:;
-// line 183
+// line 198
 org$pandalanguage$pandac$Compiler** $tmp21 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp22 = *$tmp21;
 panda$collections$Stack** $tmp23 = &$tmp22->enclosingContexts;
@@ -70,7 +70,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp27));
 *(&local0) = ((org$pandalanguage$pandac$Compiler$EnclosingContext*) $tmp26);
 panda$core$Panda$unref$panda$core$Object$Q($tmp26);
 // unreffing REF($23:panda.collections.Stack.T)
-// line 184
+// line 199
 org$pandalanguage$pandac$Compiler$EnclosingContext* $tmp28 = *(&local0);
 panda$core$Int64* $tmp29 = &$tmp28->$rawValue;
 panda$core$Int64 $tmp30 = *$tmp29;
@@ -86,12 +86,12 @@ panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp35));
 org$pandalanguage$pandac$IR$Value* $tmp36 = *(&local1);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp36));
 *(&local1) = $tmp35;
-// line 186
+// line 201
 org$pandalanguage$pandac$Compiler** $tmp37 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp38 = *$tmp37;
 org$pandalanguage$pandac$Compiler$EnclosingContext* $tmp39 = *(&local0);
 org$pandalanguage$pandac$Compiler$leaveScope$org$pandalanguage$pandac$Compiler$EnclosingContext($tmp38, $tmp39);
-// line 187
+// line 202
 org$pandalanguage$pandac$Compiler** $tmp40 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp41 = *$tmp40;
 panda$collections$Stack** $tmp42 = &$tmp41->enclosingContexts;
@@ -105,7 +105,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp45));
 *(&local1) = ((org$pandalanguage$pandac$IR$Value*) NULL);
 goto block4;
 block6:;
-// line 190
+// line 205
 org$pandalanguage$pandac$Compiler$EnclosingContext* $tmp46 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp46));
 // unreffing scope
@@ -118,7 +118,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp47));
 *(&local0) = ((org$pandalanguage$pandac$Compiler$EnclosingContext*) NULL);
 goto block1;
 block3:;
-// line 181
+// line 196
 panda$core$Object$cleanup(((panda$core$Object*) param0));
 org$pandalanguage$pandac$Compiler** $tmp48 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp49 = *$tmp48;

@@ -1310,7 +1310,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp406));
 // line 335
 *(&local0) = ((panda$collections$Array*) NULL);
 // line 336
-panda$core$Int64 $tmp409 = panda$core$MutableString$byteLength$R$panda$core$Int64(param1);
+panda$core$Int64 $tmp409 = panda$core$MutableString$get_byteLength$R$panda$core$Int64(param1);
 panda$core$Int64 $tmp410 = (panda$core$Int64) {0};
 panda$core$Bit $tmp411 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp409, $tmp410);
 bool $tmp412 = $tmp411.value;

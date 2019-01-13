@@ -4120,6 +4120,9 @@ class Compiler {
             args:FixedArray<ASTNode>, type:TypeContext):IR.Value? {
         resolve(cc)
         def initMethod := cc.initMethod
+        if initMethod == null {
+            return null
+        }
         resolve(initMethod)
         if args.count != cc.fields.count {
             error(position, "'\{cc}' expected \{cc.fields.count} argument" +

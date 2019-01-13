@@ -209,24 +209,30 @@ add_executable(bootstrap
     bootstrap/src/org/pandalanguage/pandac/CodeGenerator.c
     bootstrap/src/org/pandalanguage/pandac/Compiler.c
     bootstrap/src/org/pandalanguage/pandac/Compiler/_Closure2.c
-    bootstrap/src/org/pandalanguage/pandac/Compiler/_Closure7.c
     bootstrap/src/org/pandalanguage/pandac/Compiler/AutoAtPreFlag.c
     bootstrap/src/org/pandalanguage/pandac/Compiler/AutoContext.c
     bootstrap/src/org/pandalanguage/pandac/Compiler/AutoScope.c
     bootstrap/src/org/pandalanguage/pandac/Compiler/AutoUnrefs.c
     bootstrap/src/org/pandalanguage/pandac/Compiler/BinaryKey.c
     bootstrap/src/org/pandalanguage/pandac/Compiler/Capture.c
-    bootstrap/src/org/pandalanguage/pandac/Compiler/ChoiceFieldLValue.c
     bootstrap/src/org/pandalanguage/pandac/Compiler/CoercionKey.c
     bootstrap/src/org/pandalanguage/pandac/Compiler/EnclosingContext.c
     bootstrap/src/org/pandalanguage/pandac/Compiler/Error.c
-    bootstrap/src/org/pandalanguage/pandac/Compiler/FieldLValue.c
-    bootstrap/src/org/pandalanguage/pandac/Compiler/IndexLValue.c
-    bootstrap/src/org/pandalanguage/pandac/Compiler/LValue.c
     bootstrap/src/org/pandalanguage/pandac/Compiler/Resolution.c
     bootstrap/src/org/pandalanguage/pandac/Compiler/Settings.c
     bootstrap/src/org/pandalanguage/pandac/Compiler/TypeContext.c
-    bootstrap/src/org/pandalanguage/pandac/Compiler/VariableLValue.c
+    bootstrap/src/org/pandalanguage/pandac/expression/And.c
+    bootstrap/src/org/pandalanguage/pandac/expression/ArrayLiteral.c
+    bootstrap/src/org/pandalanguage/pandac/expression/AtPre.c
+    bootstrap/src/org/pandalanguage/pandac/expression/AtReturn.c
+    bootstrap/src/org/pandalanguage/pandac/expression/Binary.c
+    bootstrap/src/org/pandalanguage/pandac/expression/Binary/_Closure2.c
+    bootstrap/src/org/pandalanguage/pandac/expression/Call.c
+    bootstrap/src/org/pandalanguage/pandac/expression/Closure.c
+    bootstrap/src/org/pandalanguage/pandac/expression/Dot.c
+    bootstrap/src/org/pandalanguage/pandac/expression/Identifier.c
+    bootstrap/src/org/pandalanguage/pandac/expression/IntLiteral.c
+    bootstrap/src/org/pandalanguage/pandac/expression/Or.c
     bootstrap/src/org/pandalanguage/pandac/FieldDecl.c
     bootstrap/src/org/pandalanguage/pandac/FieldDecl/Kind.c
     bootstrap/src/org/pandalanguage/pandac/FixedArray.c
@@ -243,6 +249,11 @@ add_executable(bootstrap
     bootstrap/src/org/pandalanguage/pandac/LLVMCodeGenerator/ClassConstant.c
     bootstrap/src/org/pandalanguage/pandac/LLVMCodeGenerator/MethodShim.c
     bootstrap/src/org/pandalanguage/pandac/LLVMCodeGenerator/OpClass.c
+    bootstrap/src/org/pandalanguage/pandac/lvalue/ChoiceFieldLValue.c
+    bootstrap/src/org/pandalanguage/pandac/lvalue/FieldLValue.c
+    bootstrap/src/org/pandalanguage/pandac/lvalue/IndexLValue.c
+    bootstrap/src/org/pandalanguage/pandac/lvalue/LValue.c
+    bootstrap/src/org/pandalanguage/pandac/lvalue/VariableLValue.c
     bootstrap/src/org/pandalanguage/pandac/Main.c
     bootstrap/src/org/pandalanguage/pandac/Main/Arguments.c
     bootstrap/src/org/pandalanguage/pandac/Main/Format.c
@@ -284,20 +295,19 @@ add_executable(bootstrap
     bootstrap/src/org/pandalanguage/pandac/parser/Token/Kind.c
     bootstrap/src/org/pandalanguage/pandac/Position.c
     bootstrap/src/org/pandalanguage/pandac/Scanner.c
-    bootstrap/src/org/pandalanguage/pandac/statements/Assert.c
-    bootstrap/src/org/pandalanguage/pandac/statements/Assignment.c
-    bootstrap/src/org/pandalanguage/pandac/statements/Break.c
-    bootstrap/src/org/pandalanguage/pandac/statements/Call.c
-    bootstrap/src/org/pandalanguage/pandac/statements/Continue.c
-    bootstrap/src/org/pandalanguage/pandac/statements/Do.c
-    bootstrap/src/org/pandalanguage/pandac/statements/For.c
-    bootstrap/src/org/pandalanguage/pandac/statements/If.c
-    bootstrap/src/org/pandalanguage/pandac/statements/InnerMethod.c
-    bootstrap/src/org/pandalanguage/pandac/statements/Loop.c
-    bootstrap/src/org/pandalanguage/pandac/statements/Match.c
-    bootstrap/src/org/pandalanguage/pandac/statements/Return.c
-    bootstrap/src/org/pandalanguage/pandac/statements/Var.c
-    bootstrap/src/org/pandalanguage/pandac/statements/While.c
+    bootstrap/src/org/pandalanguage/pandac/statement/Assert.c
+    bootstrap/src/org/pandalanguage/pandac/statement/Assignment.c
+    bootstrap/src/org/pandalanguage/pandac/statement/Break.c
+    bootstrap/src/org/pandalanguage/pandac/statement/Continue.c
+    bootstrap/src/org/pandalanguage/pandac/statement/Do.c
+    bootstrap/src/org/pandalanguage/pandac/statement/For.c
+    bootstrap/src/org/pandalanguage/pandac/statement/If.c
+    bootstrap/src/org/pandalanguage/pandac/statement/InnerMethod.c
+    bootstrap/src/org/pandalanguage/pandac/statement/Loop.c
+    bootstrap/src/org/pandalanguage/pandac/statement/Match.c
+    bootstrap/src/org/pandalanguage/pandac/statement/Return.c
+    bootstrap/src/org/pandalanguage/pandac/statement/Var.c
+    bootstrap/src/org/pandalanguage/pandac/statement/While.c
     bootstrap/src/org/pandalanguage/pandac/Symbol.c
     bootstrap/src/org/pandalanguage/pandac/Symbol/Kind.c
     bootstrap/src/org/pandalanguage/pandac/SymbolTable.c

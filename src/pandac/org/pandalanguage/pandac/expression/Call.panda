@@ -793,6 +793,9 @@ class Call {
         else if !m.value.annotations.isClass & !compiler.isValueInit(m.value) {
             finalTarget := compiler.coerce(position, compiler.compileSelf(position, false),
                     m.value.owner.type)
+            if finalTarget == null {
+                return null
+            }
             finalArgs.add(finalTarget)
         }
         else {

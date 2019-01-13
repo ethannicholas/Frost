@@ -95,9 +95,8 @@ class Match {
                                             def testBit:IR.Value
                                             {
                                                 def unrefs := AutoUnrefs(compiler)
-                                                def eqArgs := Array<ASTNode>() -- FIXME literal
-                                                eqArgs.add(ASTNode.INT(base.position(),
-                                                        cc.second.rawValue.convert()))
+                                                def eqArgs := [ASTNode.INT(base.position(),
+                                                        cc.second.rawValue.convert())]
                                                 def test := Call.compile(compiler, base.position(),
                                                         choiceRawValue, "=", eqArgs,
                                                         TypeContext.TYPE(Type.Bit()))
@@ -148,9 +147,8 @@ class Match {
                                 def test:IR.Value?
                                 def cc := compiler.getChoiceCase(t)
                                 if cc !== null {
-                                    def args := Array<ASTNode>() -- FIXME literal
-                                    args.add(ASTNode.INT(t.position(),
-                                            cc.second.rawValue.convert()))
+                                    def args := [ASTNode.INT(t.position(),
+                                            cc.second.rawValue.convert())]
                                     test := Call.compile(compiler, t.position(), choiceRawValue,
                                             "=", args, TypeContext.TYPE(Type.Bit()))
                                     if test == null {
@@ -158,9 +156,7 @@ class Match {
                                     }
                                 }
                                 else {
-                                    def args := Array<ASTNode>() -- FIXME literal
-                                    args.add(t)
-                                    test := Call.compile(compiler, t.position(), value, "=", args,
+                                    test := Call.compile(compiler, t.position(), value, "=", [t],
                                             TypeContext.TYPE(Type.Bit()))
                                     if test == null {
                                         return

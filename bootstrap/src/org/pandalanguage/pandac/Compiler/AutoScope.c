@@ -21,7 +21,7 @@ static panda$core$String $s60 = { (panda$core$Class*) &panda$core$String$class, 
 
 void org$pandalanguage$pandac$Compiler$AutoScope$init$org$pandalanguage$pandac$Compiler(org$pandalanguage$pandac$Compiler$AutoScope* param0, org$pandalanguage$pandac$Compiler* param1) {
 
-// line 205
+// line 220
 org$pandalanguage$pandac$SymbolTable* $tmp2 = (org$pandalanguage$pandac$SymbolTable*) pandaObjectAlloc(48, (panda$core$Class*) &org$pandalanguage$pandac$SymbolTable$class);
 org$pandalanguage$pandac$SymbolTable** $tmp3 = &param1->symbolTable;
 org$pandalanguage$pandac$SymbolTable* $tmp4 = *$tmp3;
@@ -34,14 +34,14 @@ return;
 }
 void org$pandalanguage$pandac$Compiler$AutoScope$init$org$pandalanguage$pandac$Compiler$org$pandalanguage$pandac$SymbolTable(org$pandalanguage$pandac$Compiler$AutoScope* param0, org$pandalanguage$pandac$Compiler* param1, org$pandalanguage$pandac$SymbolTable* param2) {
 
-// line 209
+// line 224
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param1));
 org$pandalanguage$pandac$Compiler** $tmp5 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp6 = *$tmp5;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp6));
 org$pandalanguage$pandac$Compiler** $tmp7 = &param0->compiler;
 *$tmp7 = param1;
-// line 210
+// line 225
 org$pandalanguage$pandac$SymbolTable** $tmp8 = &param1->symbolTable;
 org$pandalanguage$pandac$SymbolTable* $tmp9 = *$tmp8;
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp9));
@@ -50,21 +50,21 @@ org$pandalanguage$pandac$SymbolTable* $tmp11 = *$tmp10;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp11));
 org$pandalanguage$pandac$SymbolTable** $tmp12 = &param0->oldSymbolTable;
 *$tmp12 = $tmp9;
-// line 211
+// line 226
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param2));
 org$pandalanguage$pandac$SymbolTable** $tmp13 = &param0->newSymbolTable;
 org$pandalanguage$pandac$SymbolTable* $tmp14 = *$tmp13;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp14));
 org$pandalanguage$pandac$SymbolTable** $tmp15 = &param0->newSymbolTable;
 *$tmp15 = param2;
-// line 212
+// line 227
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) param2));
 org$pandalanguage$pandac$SymbolTable** $tmp16 = &param1->symbolTable;
 org$pandalanguage$pandac$SymbolTable* $tmp17 = *$tmp16;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp17));
 org$pandalanguage$pandac$SymbolTable** $tmp18 = &param1->symbolTable;
 *$tmp18 = param2;
-// line 213
+// line 228
 panda$collections$Stack** $tmp19 = &param1->enclosingContexts;
 panda$collections$Stack* $tmp20 = *$tmp19;
 org$pandalanguage$pandac$Compiler$EnclosingContext* $tmp21 = (org$pandalanguage$pandac$Compiler$EnclosingContext*) pandaObjectAlloc(48, (panda$core$Class*) &org$pandalanguage$pandac$Compiler$EnclosingContext$class);
@@ -79,10 +79,10 @@ return;
 void org$pandalanguage$pandac$Compiler$AutoScope$cleanup(org$pandalanguage$pandac$Compiler$AutoScope* param0) {
 
 org$pandalanguage$pandac$Compiler$EnclosingContext* local0 = NULL;
-// line 218
+// line 233
 goto block1;
 block1:;
-// line 219
+// line 234
 org$pandalanguage$pandac$Compiler** $tmp23 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp24 = *$tmp23;
 panda$collections$Stack** $tmp25 = &$tmp24->enclosingContexts;
@@ -95,7 +95,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp28));
 *(&local0) = ((org$pandalanguage$pandac$Compiler$EnclosingContext*) $tmp27);
 panda$core$Panda$unref$panda$core$Object$Q($tmp27);
 // unreffing REF($8:panda.collections.Stack.T)
-// line 220
+// line 235
 org$pandalanguage$pandac$Compiler$EnclosingContext* $tmp29 = *(&local0);
 panda$core$Int64* $tmp30 = &$tmp29->$rawValue;
 panda$core$Int64 $tmp31 = *$tmp30;
@@ -104,7 +104,7 @@ panda$core$Bit $tmp33 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($
 bool $tmp34 = $tmp33.value;
 if ($tmp34) goto block4; else goto block5;
 block4:;
-// line 222
+// line 237
 org$pandalanguage$pandac$Compiler$EnclosingContext* $tmp35 = *(&local0);
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp35));
 // unreffing pop
@@ -121,19 +121,19 @@ panda$core$Bit $tmp40 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($
 bool $tmp41 = $tmp40.value;
 if ($tmp41) goto block6; else goto block8;
 block6:;
-// line 225
+// line 240
 org$pandalanguage$pandac$Compiler** $tmp42 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp43 = *$tmp42;
 org$pandalanguage$pandac$Compiler$EnclosingContext* $tmp44 = *(&local0);
 org$pandalanguage$pandac$Compiler$leaveScope$org$pandalanguage$pandac$Compiler$EnclosingContext($tmp43, $tmp44);
 goto block3;
 block8:;
-// line 228
+// line 243
 panda$core$Bit $tmp45 = panda$core$Bit$init$builtin_bit(false);
 bool $tmp46 = $tmp45.value;
 if ($tmp46) goto block9; else goto block10;
 block10:;
-panda$core$Int64 $tmp47 = (panda$core$Int64) {228};
+panda$core$Int64 $tmp47 = (panda$core$Int64) {243};
 panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64(&$s48, $tmp47);
 abort(); // unreachable
 block9:;
@@ -145,7 +145,7 @@ panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp49));
 *(&local0) = ((org$pandalanguage$pandac$Compiler$EnclosingContext*) NULL);
 goto block1;
 block2:;
-// line 232
+// line 247
 org$pandalanguage$pandac$Compiler** $tmp50 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp51 = *$tmp50;
 org$pandalanguage$pandac$SymbolTable** $tmp52 = &$tmp51->symbolTable;
@@ -157,11 +157,11 @@ panda$core$Bit $tmp57 = panda$core$Bit$init$builtin_bit($tmp56);
 bool $tmp58 = $tmp57.value;
 if ($tmp58) goto block11; else goto block12;
 block12:;
-panda$core$Int64 $tmp59 = (panda$core$Int64) {232};
+panda$core$Int64 $tmp59 = (panda$core$Int64) {247};
 panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64(&$s60, $tmp59);
 abort(); // unreachable
 block11:;
-// line 233
+// line 248
 org$pandalanguage$pandac$Compiler** $tmp61 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp62 = *$tmp61;
 org$pandalanguage$pandac$SymbolTable** $tmp63 = &param0->oldSymbolTable;
@@ -172,7 +172,7 @@ org$pandalanguage$pandac$SymbolTable* $tmp66 = *$tmp65;
 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp66));
 org$pandalanguage$pandac$SymbolTable** $tmp67 = &$tmp62->symbolTable;
 *$tmp67 = $tmp64;
-// line 217
+// line 232
 panda$core$Object$cleanup(((panda$core$Object*) param0));
 org$pandalanguage$pandac$Compiler** $tmp68 = &param0->compiler;
 org$pandalanguage$pandac$Compiler* $tmp69 = *$tmp68;

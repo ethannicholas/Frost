@@ -25,10 +25,10 @@ void panda$core$MutableString$append$panda$core$Char32(panda$core$MutableString*
 void panda$core$MutableString$append$panda$core$String(panda$core$MutableString* self, panda$core$String* p_s);
 void panda$core$MutableString$append$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64(panda$core$MutableString* self, panda$core$Char8* p_chars, panda$core$Int64 p_count);
 void panda$core$MutableString$append$panda$core$Object(panda$core$MutableString* self, panda$core$Object* p_o);
-panda$core$Int64 panda$core$MutableString$length$R$panda$core$Int64(panda$core$MutableString* self);
-panda$core$Int64 panda$core$MutableString$byteLength$R$panda$core$Int64(panda$core$MutableString* self);
-panda$core$MutableString$Index panda$core$MutableString$start$R$panda$core$MutableString$Index(panda$core$MutableString* self);
-panda$core$MutableString$Index panda$core$MutableString$end$R$panda$core$MutableString$Index(panda$core$MutableString* self);
+panda$core$Int64 panda$core$MutableString$get_length$R$panda$core$Int64(panda$core$MutableString* self);
+panda$core$Int64 panda$core$MutableString$get_byteLength$R$panda$core$Int64(panda$core$MutableString* self);
+panda$core$MutableString$Index panda$core$MutableString$get_start$R$panda$core$MutableString$Index(panda$core$MutableString* self);
+panda$core$MutableString$Index panda$core$MutableString$get_end$R$panda$core$MutableString$Index(panda$core$MutableString* self);
 panda$core$MutableString$Index panda$core$MutableString$next$panda$core$MutableString$Index$R$panda$core$MutableString$Index(panda$core$MutableString* self, panda$core$MutableString$Index p_i);
 panda$core$MutableString$Index panda$core$MutableString$previous$panda$core$MutableString$Index$R$panda$core$MutableString$Index(panda$core$MutableString* self, panda$core$MutableString$Index p_i);
 panda$core$MutableString$Index panda$core$MutableString$offset$panda$core$MutableString$Index$panda$core$Int64$R$panda$core$MutableString$Index(panda$core$MutableString* self, panda$core$MutableString$Index p_index, panda$core$Int64 p_offset);

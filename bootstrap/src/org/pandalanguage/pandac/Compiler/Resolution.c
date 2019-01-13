@@ -51,14 +51,14 @@ static panda$core$String $s28 = { (panda$core$Class*) &panda$core$String$class, 
 
 panda$core$String* org$pandalanguage$pandac$Compiler$Resolution$convert$R$panda$core$String(org$pandalanguage$pandac$Compiler$Resolution param0) {
 
-// line 30
+// line 45
 panda$core$Int64 $tmp3 = param0.$rawValue;
 panda$core$Int64 $tmp4 = (panda$core$Int64) {0};
 panda$core$Bit $tmp5 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp3, $tmp4);
 bool $tmp6 = $tmp5.value;
 if ($tmp6) goto block2; else goto block3;
 block2:;
-// line 32
+// line 47
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) &$s7));
 return &$s8;
 block3:;
@@ -67,7 +67,7 @@ panda$core$Bit $tmp10 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($
 bool $tmp11 = $tmp10.value;
 if ($tmp11) goto block4; else goto block5;
 block4:;
-// line 35
+// line 50
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) &$s12));
 return &$s13;
 block5:;
@@ -76,7 +76,7 @@ panda$core$Bit $tmp15 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($
 bool $tmp16 = $tmp15.value;
 if ($tmp16) goto block6; else goto block7;
 block6:;
-// line 38
+// line 53
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) &$s17));
 return &$s18;
 block7:;
@@ -85,7 +85,7 @@ panda$core$Bit $tmp20 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($
 bool $tmp21 = $tmp20.value;
 if ($tmp21) goto block8; else goto block1;
 block8:;
-// line 41
+// line 56
 panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) &$s22));
 return &$s23;
 block1:;
@@ -93,7 +93,7 @@ panda$core$Bit $tmp24 = panda$core$Bit$init$builtin_bit(false);
 bool $tmp25 = $tmp24.value;
 if ($tmp25) goto block9; else goto block10;
 block10:;
-panda$core$Int64 $tmp26 = (panda$core$Int64) {29};
+panda$core$Int64 $tmp26 = (panda$core$Int64) {44};
 panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s27, $tmp26, &$s28);
 abort(); // unreachable
 block9:;
@@ -102,7 +102,7 @@ abort(); // unreachable
 }
 void org$pandalanguage$pandac$Compiler$Resolution$cleanup(org$pandalanguage$pandac$Compiler$Resolution param0) {
 
-// line 22
+// line 37
 panda$core$Int64 $tmp29 = param0.$rawValue;
 panda$core$Int64 $tmp30 = (panda$core$Int64) {0};
 panda$core$Bit $tmp31 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp29, $tmp30);
@@ -138,7 +138,7 @@ return;
 org$pandalanguage$pandac$Compiler$Resolution org$pandalanguage$pandac$Compiler$Resolution$init$panda$core$Int64(panda$core$Int64 param0) {
 
 org$pandalanguage$pandac$Compiler$Resolution local0;
-// line 22
+// line 37
 panda$core$Int64* $tmp42 = &(&local0)->$rawValue;
 *$tmp42 = param0;
 org$pandalanguage$pandac$Compiler$Resolution $tmp43 = *(&local0);
@@ -147,7 +147,7 @@ return $tmp43;
 }
 panda$core$Bit org$pandalanguage$pandac$Compiler$Resolution$$EQ$org$pandalanguage$pandac$Compiler$Resolution$R$panda$core$Bit(org$pandalanguage$pandac$Compiler$Resolution param0, org$pandalanguage$pandac$Compiler$Resolution param1) {
 
-// line 22
+// line 37
 panda$core$Int64 $tmp44 = param0.$rawValue;
 panda$core$Int64 $tmp45 = param1.$rawValue;
 int64_t $tmp46 = $tmp44.value;
@@ -157,11 +157,11 @@ panda$core$Bit $tmp49 = (panda$core$Bit) {$tmp48};
 bool $tmp50 = $tmp49.value;
 if ($tmp50) goto block1; else goto block2;
 block1:;
-// line 22
+// line 37
 panda$core$Bit $tmp51 = panda$core$Bit$init$builtin_bit(false);
 return $tmp51;
 block2:;
-// line 22
+// line 37
 panda$core$Bit $tmp52 = panda$core$Bit$init$builtin_bit(true);
 return $tmp52;
 

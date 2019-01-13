@@ -20,7 +20,7 @@ class VariableLValue : LValue {
                 self.slot := slot
             }
             otherwise {
-                assert false
+                assert false, "trying to store into non-local variable \{variable} at \{position}"
             }
         }
         self.position := position
