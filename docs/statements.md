@@ -1,7 +1,7 @@
 Statements
 ==========
 
-Panda code is comprised of a sequence of *statements*. Statements are executed one at a time, in
+Frost code is comprised of a sequence of *statements*. Statements are executed one at a time, in
 order, except where *control flow statements* specifically repeat or skip statements. The following
 statement types are supported:
 
@@ -245,7 +245,7 @@ are disabled.
 
 Assertions which always evaluate to false are a compile-time error. In other languages, you may be
 used to using something equivalent to `assert false` to signify "it should not be possible for this
-line of code to be reached", but in Panda `assert false` will not compile. You need to use
+line of code to be reached", but in Frost `assert false` will not compile. You need to use
 `unreachable`, described below, to express this.
 
 **IMPLEMENTATION NOTE:** "assert false" isn't actually a compiler error yet, but it will be soon.
@@ -317,7 +317,7 @@ any of them. If none of the values in any `when` match, the optional `otherwise`
 present. If none of the `when` values match and there is no `otherwise` block, execution simply
 continues after the end of the `match`.
 
-Unlike many other languages, Panda's switch statement does not have "fall-through": when the
+Unlike many other languages, Frost's switch statement does not have "fall-through": when the
 statements associated with a `when` finish, execution continues after the end of the match
 statement.
 

@@ -1,11 +1,11 @@
-BadAnnotations4.panda:14:9: error: fields may not be annotated with '@override'
-BadAnnotations4.panda:14:9: error: fields may not be annotated with '@external'
-BadAnnotations4.panda:14:9: error: fields may not be annotated with '@implicit'
-BadAnnotations4.panda:14:9: error: fields may not be annotated with '@abstract'
-BadAnnotations4.panda:14:9: error: fields may not be annotated with '@inline'
-BadAnnotations4.panda:14:9: error: fields may not be annotated with '@specialize'
-BadAnnotations4.panda:14:9: error: fields may not be annotated with '@unsafeImmutable'
-BadAnnotations4.panda:14:9: error: only immutable fields may be annotated with '@class'
-BadAnnotations4.panda:14:9: error: conflicting access modifier annotations
-BadAnnotations4.panda:17:9: error: 'var' fields may not be annotated with '@class'
+BadAnnotations4.frost:14:9: error: fields may not be annotated with '@override'
+BadAnnotations4.frost:14:9: error: fields may not be annotated with '@external'
+BadAnnotations4.frost:14:9: error: fields may not be annotated with '@implicit'
+BadAnnotations4.frost:14:9: error: fields may not be annotated with '@abstract'
+BadAnnotations4.frost:14:9: error: fields may not be annotated with '@inline'
+BadAnnotations4.frost:14:9: error: fields may not be annotated with '@specialize'
+BadAnnotations4.frost:14:9: error: fields may not be annotated with '@unsafeImmutable'
+BadAnnotations4.frost:14:9: error: only immutable fields may be annotated with '@class'
+BadAnnotations4.frost:14:9: error: conflicting access modifier annotations
+BadAnnotations4.frost:17:9: error: 'var' fields may not be annotated with '@class'
 10 errors

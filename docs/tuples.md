@@ -11,13 +11,13 @@ The individual elements in a tuple are extracted using the index operator, just 
     Console.writeLine(suffix[0]) -- writes "KB"
 
 If the index is a constant integer (as in `suffix[0]`), the type is determined by the element at
-that index: in this case, `suffix[0]` has type `panda.core.String`and `suffix[1]` has type
-`panda.core.Int`. 
+that index: in this case, `suffix[0]` has type `frost.core.String`and `suffix[1]` has type
+`frost.core.Int`. 
 
 If the index is not a constant, as in `suffix[i]`, the compile-time type is determined from the
 union of all of the tuple's element types. In this case, the most specific type that could represent
-both `panda.core.String` and `panda.core.Int` is `panda.core.Immutable`, so `suffix[i]` has
-compile-time type `panda.core.Immutable`.
+both `frost.core.String` and `frost.core.Int` is `frost.core.Immutable`, so `suffix[i]` has
+compile-time type `frost.core.Immutable`.
 
 Destructuring
 -------------

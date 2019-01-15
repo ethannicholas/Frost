@@ -1,0 +1,26 @@
+package org.frostlanguage.plex
+
+class AnyState : State {
+    init(next:ImmutableArray<Int>) {
+        super.init(ANY, next)
+    }
+
+    @override
+    function accept(c:Char8):Bit {
+        return c != "\n"
+    }
+
+    @override
+    function convert():String {
+        def result := MutableString()
+        result.append("Dot(")
+        for i in 0 .. next.count {
+            if i > 0 {
+                result.append(", ")
+            }
+            result.append(next[i])
+        }
+        result.append(")")
+        return result.finish()
+    }
+}

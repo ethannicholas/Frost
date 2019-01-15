@@ -36,7 +36,7 @@ first, and then the addition. This is formalized in the notion of *operator prec
 certain [operators](operators.html) such as multiplication have a higher priority than other
 operators such as addition.
 
-Panda's operator precedence, from highest to lowest, is:
+Frost's operator precedence, from highest to lowest, is:
 
 1. `.`, `->`, `()`, `[]`
 2. `-` (unary), `!`, `!!`

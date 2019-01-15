@@ -1,0 +1,12 @@
+package frost.core
+
+@final
+class Class : Immutable {
+    def name:String
+
+    def superclass:Class?
+
+    @private
+    init() {
+    }
+}

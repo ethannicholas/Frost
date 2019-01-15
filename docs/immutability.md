@@ -1,8 +1,8 @@
 Immutable
 =========
 
-Panda supports first-class immutable types. All immutable types descend from the class
-[panda.core.Immutable]. By subclassing `Immutable`, you impose some restrictions on your class:
+Frost supports first-class immutable types. All immutable types descend from the class
+[frost.core.Immutable]. By subclassing `Immutable`, you impose some restrictions on your class:
 
 * All fields must be [defines](defines.html) or [constants](varsAndConstants.html#constants) rather
   than variables

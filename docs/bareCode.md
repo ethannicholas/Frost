@@ -1,7 +1,7 @@
 Bare Code
 =========
 
-Normally, all Panda code is contained inside of [classes](classes.html). A single file in your
+Normally, all Frost code is contained inside of [classes](classes.html). A single file in your
 program, however, may consist of "bare code" which is not part of a class:
 
     def random := Random.default()    

@@ -1,0 +1,961 @@
+package org.frostlanguage.frostc.expression
+
+uses org.frostlanguage.frostc.ASTNode
+uses org.frostlanguage.frostc.ClassDecl
+uses org.frostlanguage.frostc.Compiler
+uses org.frostlanguage.frostc.Compiler.EnclosingContext
+uses org.frostlanguage.frostc.Compiler.TypeContext
+uses org.frostlanguage.frostc.FieldDecl
+uses org.frostlanguage.frostc.FixedArray
+uses org.frostlanguage.frostc.IR
+uses org.frostlanguage.frostc.MethodDecl
+uses org.frostlanguage.frostc.MethodRef
+uses org.frostlanguage.frostc.Pair
+uses org.frostlanguage.frostc.Position
+uses org.frostlanguage.frostc.Symbol
+uses org.frostlanguage.frostc.Type
+uses org.frostlanguage.frostc.Variable
+uses org.frostlanguage.frostc.parser.Token
+
+class Call {
+    @class
+    method compilePointerIntrinsic(compiler:Compiler, position:Position, target:IR.Value?,
+            m:MethodRef, args:ListView<ASTNode>):Pair<Bit, IR.Value?> {
+        def ir := compiler.ir
+        def pointerType:Type?
+        if m.target.isPointer {
+            pointerType := compiler.resolve(m.target.subtypes[1])
+        }
+        else {
+            pointerType := compiler.resolve(m.target.subtypes[1].subtypes[1])
+        }
+        if pointerType == null {
+            return Pair<Bit, IR.Value?>(false, null)
+        }
+        assert m.target.typeKind = Type.Kind.GENERIC
+        match m.value.name {
+            when "alloc" {
+                def count := compiler.compileExpression(args[0], TypeContext.TYPE(Type.Int64()))
+                if count == null {
+                    return Pair<Bit, IR.Value?>(false, null)
+                }
+                def alloc := ir.add(IR.Statement.POINTER_ALLOC(position,
+                        compiler.extractBuiltinInt(position, count), pointerType))
+                return Pair<Bit, IR.Value?>(true,
+                        IR.Value.REF(alloc, Type.pointerTo(pointerType)))
+            }
+            when "destroy" {
+                assert target !== null
+                ir.add(IR.Statement.POINTER_DESTROY(position, target))
+                return Pair<Bit, IR.Value?>(true, null)
+            }
+            when "realloc" {
+                assert target !== null
+                def oldCount := compiler.compileExpression(args[0], TypeContext.TYPE(Type.Int64()))
+                if oldCount == null {
+                    return Pair<Bit, IR.Value?>(false, null)
+                }
+                def newCount := compiler.compileExpression(args[1], TypeContext.TYPE(Type.Int64()))
+                if newCount == null {
+                    return Pair<Bit, IR.Value?>(false, null)
+                }
+                def realloc := ir.add(IR.Statement.POINTER_REALLOC(position, target,
+                        compiler.extractBuiltinInt(position, oldCount),
+                        compiler.extractBuiltinInt(position, newCount)))
+                return Pair<Bit, IR.Value?>(true,
+                        IR.Value.REF(realloc, Type.pointerTo(pointerType)))
+            }
+            when "get" {
+                assert target !== null
+                def get := ir.add(IR.Statement.POINTER_GET(position, target))
+                return Pair<Bit, IR.Value?>(true, IR.Value.REF(get, pointerType))
+            }
+            when "offset" {
+                assert target !== null
+                def value := compiler.compileExpression(args[0], TypeContext.TYPE(Type.Int64()))
+                def offset := ir.add(IR.Statement.POINTER_OFFSET(position, target,
+                        compiler.extractBuiltinInt(position, value)))
+                return Pair<Bit, IR.Value?>(true, IR.Value.REF(offset,
+                        Type.pointerTo(pointerType)))
+            }
+            when "[]" {
+                assert target !== null
+                def index := compiler.compileExpression(args[0], TypeContext.TYPE(Type.Int64()))
+                if index == null {
+                    return Pair<Bit, IR.Value?>(false, null)
+                }
+                def get := ir.add(IR.Statement.POINTER_GET_INDEX(position, target,
+                        compiler.extractBuiltinInt(position, index)))
+                return Pair<Bit, IR.Value?>(true, IR.Value.REF(get, pointerType))
+            }
+            when "[]:=" {
+                assert target !== null
+                def index := compiler.compileExpression(args[0], TypeContext.TYPE(Type.Int64()))
+                def value := compiler.compileExpression(args[1], TypeContext.TYPE(pointerType))
+                if index == null | value == null {
+                    return Pair<Bit, IR.Value?>(false, null)
+                }
+                def indexValue := compiler.extractBuiltinInt(position, index)
+                if compiler.isRefCounted(value.type()) {
+                    compiler.compileRef(value)
+                    def load := ir.add(IR.Statement.POINTER_GET_INDEX(position, target, indexValue))
+                    compiler.compileUnref(IR.Value.REF(load, value.type()))
+                }
+                ir.add(IR.Statement.POINTER_SET_INDEX(position, value, target, indexValue))
+                return Pair<Bit, IR.Value?>(true, null)
+            }
+            otherwise {
+                assert false, "unsupported pointer intrinsic: \{m.value.name}"
+            }
+        }
+    }
+
+    -- FIXME removing @class here results in a crash instead of an error
+    @class
+    method compileNumberIntrinsic(compiler:Compiler, position:Position, target:IR.Value,
+            op:Token.Kind, args:ListView<ASTNode>, operandType:Type,
+            resultType:Type):Pair<Bit, IR.Value?> {
+        if args.count != 1 {
+            return Pair<Bit, IR.Value?>(false, null)
+        }
+        def left := compiler.coerce(position, target, operandType)
+        if left == null {
+            return Pair<Bit, IR.Value?>(false, null)
+        }
+        def right := compiler.compileExpression(args[0], TypeContext.TYPE(operandType))
+        if right == null {
+            return Pair<Bit, IR.Value?>(false, null)
+        }
+        def builtinLeft := compiler.extractBuiltinInt(position, left)
+        def builtin:IR.Statement.ID
+        def builtinResultType:Type
+        if resultType = Type.Bit() {
+            builtinResultType := Type.BuiltinBit()
+        }
+        else {
+            builtinResultType :=  builtinLeft.type()
+        }
+        builtin := compiler.ir.add(IR.Statement.BINARY(position, builtinLeft, op,
+                compiler.extractBuiltinInt(position, right), builtinResultType))
+        def constructArgs := Array<ASTNode>()
+        constructArgs.add(ASTNode.IR_WRAPPER(position, IR.Value.REF(builtin, builtinResultType)))
+        def construct := Call.compile(compiler, position, IR.Value.TYPE(resultType), constructArgs,
+                TypeContext.TYPE(resultType))
+        assert construct !== null
+        return Pair<Bit, IR.Value?>(true, construct)
+    }
+
+    -- just a stopgap until proper inlining is in
+    @class
+    method compileNumberIntrinsic(compiler:Compiler, position:Position, target:IR.Value?,
+            m:MethodRef, args:ListView<ASTNode>):Pair<Bit, IR.Value?> {
+        match m.value.name {
+            when "init" {
+                assert m.value.parameters.count = 1
+                assert args.count = 1
+                def paramType := m.value.parameters[0].type
+                if paramType.isBuiltinNumber {
+                    def value := compiler.compileExpression(args[0], TypeContext.TYPE(paramType))
+                    if value !== null {
+                        def result := compiler.ir.add(IR.Statement.CREATE_STRUCT(position,
+                                m.value.owner, FixedArray<IR.Value>.from([value])))
+                        return Pair<Bit, IR.Value?>(true, IR.Value.REF(result, m.value.owner.type))
+                    }
+                }
+            }
+            when "+" {
+                return compileNumberIntrinsic(compiler, position, target, Token.Kind.ADD, args,
+                        m.returnType, m.returnType)
+            }
+            when "-" {
+                return compileNumberIntrinsic(compiler, position, target, Token.Kind.SUB, args,
+                        m.returnType, m.returnType)
+            }
+            when "*" {
+                return compileNumberIntrinsic(compiler, position, target, Token.Kind.MUL, args,
+                        m.returnType, m.returnType)
+            }
+            when "//" {
+                return compileNumberIntrinsic(compiler, position, target, Token.Kind.INTDIV, args,
+                        m.returnType, m.returnType)
+            }
+            when ">" {
+                return compileNumberIntrinsic(compiler, position, target, Token.Kind.GT, args,
+                        compiler.binaryType(m.value.owner.type, m.value.parameters[0].type, true,
+                            false),
+                        m.returnType)
+            }
+            when ">=" {
+                return compileNumberIntrinsic(compiler, position, target, Token.Kind.GTEQ, args,
+                        compiler.binaryType(m.value.owner.type, m.value.parameters[0].type, true,
+                            false),
+                        m.returnType)
+            }
+            when "<" {
+                return compileNumberIntrinsic(compiler, position, target, Token.Kind.LT, args,
+                        compiler.binaryType(m.value.owner.type, m.value.parameters[0].type, true,
+                            false),
+                        m.returnType)
+            }
+            when "<=" {
+                return compileNumberIntrinsic(compiler, position, target, Token.Kind.LTEQ, args,
+                        compiler.binaryType(m.value.owner.type, m.value.parameters[0].type, true,
+                            false),
+                        m.returnType)
+            }
+            when "==" {
+                return compileNumberIntrinsic(compiler, position, target, Token.Kind.EQ, args,
+                        compiler.binaryType(m.value.owner.type, m.value.parameters[0].type, true,
+                            false),
+                        m.returnType)
+            }
+            when "!=" {
+                return compileNumberIntrinsic(compiler, position, target, Token.Kind.NEQ, args,
+                        compiler.binaryType(m.value.owner.type, m.value.parameters[0].type, true,
+                            false),
+                        m.returnType)
+            }
+        }
+        return Pair<Bit, IR.Value?>(false, null)
+    }
+
+    -- just a stopgap until proper inlining is in
+    @class
+    method compileBitIntrinsic(compiler:Compiler, position:Position, target:IR.Value?, m:MethodRef,
+            args:ListView<ASTNode>):Pair<Bit, IR.Value?> {
+        match m.value.name {
+            when "init" {
+                assert m.value.parameters.count = 1
+                assert args.count = 1
+                def paramType := m.value.parameters[0].type
+                if paramType = Type.BuiltinBit() {
+                    def value := compiler.compileExpression(args[0], TypeContext.TYPE(paramType))
+                    if value !== null {
+                        def result := compiler.ir.add(IR.Statement.CREATE_STRUCT(position,
+                                m.value.owner, FixedArray<IR.Value>.from([value])))
+                        return Pair<Bit, IR.Value?>(true, IR.Value.REF(result, m.value.owner.type))
+                    }
+                }
+            }
+        }
+        return Pair<Bit, IR.Value?>(false, null)
+    }
+
+    @class
+    method compileIntrinsic(compiler:Compiler, position:Position, target:IR.Value?, m:MethodRef,
+            args:ListView<ASTNode>):Pair<Bit, IR.Value?> {
+        if m.target.isPointer | m.target.isClassLiteral & m.target.subtypes[1].isPointer {
+            return compilePointerIntrinsic(compiler, position, target, m, args)
+        }
+        if m.target.isNumber {
+            return compileNumberIntrinsic(compiler, position, target, m, args)
+        }
+        if m.target = Type.Bit() {
+            return compileBitIntrinsic(compiler, position, target, m, args)
+        }
+        return Pair<Bit, IR.Value?>(false, null)
+    }
+
+    ================================================================================================
+    Scans a type to find instances of unsubstituted generic parameters belonging to the method in
+    it. For instance, when dealing with `map<U>(f:(T)=>(U)):ListView<U>`, the type
+    `(String)=>(U)` contains an unsubstituted reference to the generic parameter `U`. Returns the
+    "paths" to these parameters, where each path is a list of numbers representing the subtype
+    index at which the parameter was found. In the given example, the result would be `[[1]]`, since
+    there was one parameter located, and since it is located at index 1 in the type, its path is
+    `[1]`. Returns null if no such type was located.
+    ================================================================================================
+    @class
+    function findGenericParameters(m:MethodDecl, t:Type):ListView<ListView<Int>>? {
+        if t.subtypes == null {
+            return null
+        }
+        var result:Array<ListView<Int>>? := null
+        for i in 0 .. t.subtypes.count {
+            if t.subtypes[i].typeKind = Type.Kind.GENERIC_METHOD_PARAMETER {
+                if t.subtypes[i].genericMethodParameter.owner = m.owner.name + "." + m.name {
+                    if result == null {
+                        result := Array<ListView<Int>>()
+                    }
+                    result.add([i])
+                }
+            }
+            else {
+                def paths := findGenericParameters(m, t.subtypes[i])
+                if paths !== null {
+                    if result == null {
+                        result := Array<ListView<Int>>()
+                    }
+                    for path in paths {
+                        def finalPath:Array<Int> := [i]
+                        finalPath.addAll(path)
+                        result.add(finalPath)
+                    }
+                }
+            }
+        }
+        return result
+    }
+
+    @class
+    function getSubtype(type:Type, indices:ListView<Int>):Type {
+        var result := type
+        for i in indices {
+            result := result.subtypes[i]
+        }
+        return result
+    }
+
+    @class
+    method performTypeInference(compiler:Compiler, m:MethodRef, args:ListView<ASTNode>):MethodRef? {
+        if !m.requiresTypeInference {
+            return m
+        }
+        def result := Array<Type>(m.value.genericParameters.map(p => p.bound))
+        for i in 0 .. m.value.parameters.count {
+            def paramType := m.parameterType(i)
+            def generics := findGenericParameters(m.value, paramType)
+            if generics !== null {
+                for g in generics {
+                    var argType := compiler.coercionCost(args[i], paramType)
+                    if argType == null {
+                        Console.printLine("note: can't coerce \{args[i]} to \{paramType}")
+                        return m
+                    }
+                    def parameter := getSubtype(m.value.parameters[i].type, g)
+                    assert parameter.typeKind = Type.Kind.GENERIC_METHOD_PARAMETER
+                    var parameterIndex := 0
+                    while Type(m.value.genericParameters[i]) != parameter {
+                        parameterIndex += 1
+                    }
+                    result[parameterIndex] := result[parameterIndex].intersection(compiler,
+                            getSubtype(argType.first, g))
+                }
+            }
+        }
+        return MethodRef(compiler, m.target, m.value, result) 
+    }
+
+    @class
+    method findBestMethod(compiler:Compiler, position:Position, target:IR.Value?,
+            methods:ListView<MethodDecl>, args:ListView<ASTNode>,
+            type:TypeContext):Pair<ListView<MethodRef>, Int>? {
+        return findBestMethod(compiler, position, target, methods, null, args, type)
+    }
+
+    @class
+    @post(@return == null | @return.first.count > 0)
+    method findBestMethod(compiler:Compiler, position:Position, target:IR.Value?,
+            methods:ListView<MethodDecl>, genericArguments:ListView<Type>?, args:ListView<ASTNode>,
+            type:TypeContext):Pair<ListView<MethodRef>, Int>? {
+        if methods.count = 0 {
+            return null
+        }
+        var bestCost := Int.MAX
+        var best := Array<MethodRef>()
+        outer: for m in methods {
+            if m.parameters.count != args.count {
+                continue
+            }
+            if !compiler.resolve(m) {
+                continue
+            }
+            var ref:MethodRef
+            if target !== null {
+                var owner := target.type()
+                if owner.typeKind = Type.Kind.GENERIC_METHOD_PARAMETER {
+                    owner := owner.genericMethodParameter.bound
+                }
+                ref := MethodRef(compiler, owner, m, genericArguments)
+            }
+            else if m.annotations.isClass | m.methodKind = MethodDecl.Kind.INIT {
+                ref := MethodRef(compiler, m.owner.type, m, genericArguments)
+            }
+            else {
+                ref := MethodRef(compiler, compiler.findType(compiler.currentClass[0].type,
+                        m.owner), m, genericArguments)
+            }
+            ref := performTypeInference(compiler, ref, args)
+            var cost := 0
+            for i in 0 .. args.count {
+                def argCost := compiler.coercionCost(args[i], ref.parameterType(i))
+                if argCost == null {
+                    continue outer
+                }
+                cost += argCost.second
+            }
+            match type {
+                when TypeContext.IMMUTABLE {
+                    if m.returnType = Type.Void() | !compiler.isImmutable(ref.returnType) {
+                        continue
+                    }
+                }
+                when TypeContext.TYPE(t) {
+                    def returnCost := compiler.coercionCost(ref.returnType, t)
+                    if returnCost == null {
+                        continue
+                    }
+                    cost += returnCost.second
+                }
+            }
+            cost -= m.priority
+            if cost < bestCost {
+                bestCost := cost
+                best.clear()
+            }
+            if cost = bestCost {
+                best.add(ref)
+            }
+        }
+        if best.count = 0 {
+            return null
+        }
+        return Pair<ListView<MethodRef>, Int>(best, bestCost)
+    }
+
+    @class
+    method callMethodObject(compiler:Compiler, position:Position, m:IR.Value,
+            args:ListView<ASTNode>, type:TypeContext):IR.Value? {
+        def ir := compiler.ir
+        def t := m.type().nonnullable()
+        if !t.isMethod {
+            compiler.error(position, "value of type '\{t}' is not a method")
+            return null
+        }
+        if t.parameterCount != args.count {
+            compiler.error(position, "method of type '\{t}' expected \{t.parameterCount} " +
+                    "argument\{t.parameterCount = 1:|s}, but found \{args.count}")
+            return null
+        }
+        def finalArgs := Array<IR.Value>(args.count)
+        for i in 0 .. args.count {
+            def compiled := compiler.compileExpression(args[i],
+                    TypeContext.TYPE(t.parameterType(i)))
+            if compiled == null {
+                return null
+            }
+            finalArgs.add(compiled)
+        }
+        def result:IR.Value?
+        def resultSlot := ir.locals.count
+        if t.returnType != Type.Void() {
+            ir.locals.add(t.returnType)
+            result := IR.Value.LOCAL(resultSlot, t.returnType)
+        }
+        else {
+            result := null
+        }
+        def methodType:Type
+        def targetType:Type
+        if compiler.isImmutable(m.type()) {
+            methodType := Type.Method()
+            targetType := Type.Immutable()
+        }
+        else {
+            methodType := Type.MutableMethod()
+            targetType := Type.Object()
+        }
+        def st := compiler.getSymbolTable(compiler.getClass(methodType))
+        def pointerField := st["pointer"]->FieldDecl
+        if !compiler.resolve(pointerField) {
+            return null
+        }
+        def methodObj := compiler.cast(position, m, methodType)
+        def methodPtrPtr := ir.add(IR.Statement.GET_FIELD_POINTER(position, methodObj,
+                pointerField))
+        def methodPtr := ir.add(IR.Statement.LOAD(position, IR.Value.REF(methodPtrPtr,
+                Type.pointerTo(Type.Int8()))))
+        def targetField := st["target"]->FieldDecl
+        if !compiler.resolve(targetField) {
+            return null
+        }
+        def targetPtr := ir.add(IR.Statement.GET_FIELD_POINTER(position, methodObj, targetField))
+        def target := ir.add(IR.Statement.LOAD(position, IR.Value.REF(targetPtr, targetType)))
+        def targetNonNull := ir.add(IR.Statement.BINARY(position, IR.Value.REF(target, targetType),
+                Token.Kind.NIDENTITY, IR.Value.NULL(targetType.nullable()), Type.BuiltinBit()))
+        def haveTargetBlock := ir.newBlock("dynamic call with target")
+        def noTargetBlock := ir.newBlock("dynamic call without target")
+        def mergeBlock := ir.newBlock("dynamic call merge")
+        ir.add(IR.Statement.CONDITIONAL_BRANCH(position, IR.Value.REF(targetNonNull,
+                Type.BuiltinBit()), haveTargetBlock, noTargetBlock))
+        ir.setCurrentBlock(noTargetBlock)
+        def noTargetCast := compiler.cast(position, IR.Value.REF(methodPtr,
+                Type.pointerTo(Type.Int8())), Type.pointerTo(t))
+        def noTargetResult := ir.add(IR.Statement.DYNAMIC_CALL(position, noTargetCast,
+                FixedArray<IR.Value>(finalArgs)))
+        if result !== null {
+            ir.add(IR.Statement.STORE(position, IR.Value.REF(noTargetResult, t.returnType),
+                    result))
+        }
+        ir.add(IR.Statement.BRANCH(position, mergeBlock))
+        ir.setCurrentBlock(haveTargetBlock)
+        def targetParams := Array<Type>()
+        targetParams.add(targetType)
+        for i in 0 .. t.parameterCount {
+            targetParams.add(t.parameterType(i))
+        }
+        def haveTargetType := Type.methodType(position, t.typeKind, targetParams,
+                t.returnType, 0)
+        def haveTargetCast := compiler.cast(position, IR.Value.REF(methodPtr,
+                Type.pointerTo(Type.Int8())), Type.pointerTo(haveTargetType))
+        finalArgs.insert(0, IR.Value.REF(target, targetType))
+        def haveTargetResult := ir.add(IR.Statement.DYNAMIC_CALL(position, haveTargetCast,
+                FixedArray<IR.Value>(finalArgs)))
+        if result !== null {
+            ir.add(IR.Statement.STORE(position, IR.Value.REF(haveTargetResult, t.returnType),
+                    result))
+        }
+        ir.add(IR.Statement.BRANCH(position, mergeBlock))
+        ir.setCurrentBlock(mergeBlock)
+        if result !== null {
+            def resultLoad := ir.add(IR.Statement.LOAD(position, result))
+            def loadRef := IR.Value.REF(resultLoad, t.returnType)
+            if compiler.isRefCounted(t.returnType) {
+                compiler.enclosingContexts.push(EnclosingContext.VALUE_SCOPE(loadRef))
+            }
+            return compiler.coerce(position, loadRef, type)
+        }
+        return null
+    }
+
+    @class
+    method compile(compiler:Compiler, position:Position, m:IR.Value, args:ListView<ASTNode>,
+            type:TypeContext):IR.Value? {
+        def currentClass := compiler.currentClass[0]
+        def ir := compiler.ir
+        match m {
+            when IR.Value.METHOD(target, m) {
+                def targetType:Type
+                if target !== null {
+                    targetType := target.type()
+                }
+                else if m.annotations.isClass | m.methodKind = MethodDecl.Kind.INIT {
+                    targetType := m.owner.type
+                }
+                else {
+                    def found := compiler.findType(currentClass.type, m.owner)
+                    assert found !== null,
+                            "could not find \{currentClass.type} in \{m.owner.name}"
+                    targetType := found
+                }
+                if !compiler.resolve(m) {
+                    return null
+                }
+                return compile(compiler, position, target, MethodRef(compiler, targetType, m),
+                        args, type)
+            }
+            when IR.Value.GENERIC_METHOD(target, m, types) {
+                def targetType:Type
+                if target !== null {
+                    targetType := target.type()
+                }
+                else if m.annotations.isClass | m.methodKind = MethodDecl.Kind.INIT {
+                    targetType := m.owner.type
+                }
+                else {
+                    def found := compiler.findType(currentClass.type, m.owner)
+                    assert found !== null,
+                            "could not find \{currentClass.type} in \{m.owner.name}"
+                    targetType := found
+                }
+                if !compiler.resolve(m) {
+                    return null
+                }
+                return compile(compiler, position, target,
+                        MethodRef(compiler, targetType, m, types), args, type)
+            }
+            when IR.Value.METHODS(target, methods) {
+                def best := findBestMethod(compiler, position, target, methods, args, type)
+                if best !== null {
+                    if best.first.count > 1 {
+                        compiler.reportAmbiguousMatch(position, best.first, args, type)
+                        return null
+                    }
+                    return compile(compiler, position, target, best.first[0], args, type)
+                }
+                -- no match
+                def argTypes := Array<Type>()
+                for a in args {
+                    def preferred := compiler.preferredType(a)
+                    if preferred == null {
+                        -- force it to produce an error
+                        def oldErrorCount := compiler.errorCount
+                        compiler.compileExpression(a)
+                        if compiler.errorCount = oldErrorCount {
+                            -- could not determine type
+                            compiler.error(position, "no match for call to '\{methods[0].name}'")
+                        }
+                        return null
+                    }
+                    argTypes.add(preferred)
+                }
+                compiler.error(position, "no match for \{methods[0].name}(\{argTypes.join()})" +
+                        type.description())
+                return null
+            }
+            when IR.Value.GENERIC_METHODS(target, methods, types) {
+                def best := findBestMethod(compiler, position, target, methods, types, args, type)
+                if best !== null {
+                    if best.first.count > 1 {
+                        compiler.reportAmbiguousMatch(position, best.first, args, type)
+                        return null
+                    }
+                    return compile(compiler, position, target, best.first[0], args, type)
+                }
+                -- no match
+                def argTypes := Array<Type>()
+                for a in args {
+                    def preferred := compiler.preferredType(a)
+                    if preferred == null {
+                        -- force it to produce an error
+                        def oldErrorCount := compiler.errorCount
+                        compiler.compileExpression(a)
+                        if compiler.errorCount = oldErrorCount {
+                            -- could not determine type
+                            compiler.error(position, "no match for call to '\{methods[0].name}'")
+                        }
+                        return null
+                    }
+                    argTypes.add(preferred)
+                }
+                compiler.error(position, "no match for \{methods[0].name}(\{argTypes.join()})" +
+                        type.description())
+                return null
+            }
+            when IR.Value.PARAMETER, IR.Value.REF {
+                return callMethodObject(compiler, position, m, args, type)
+            }
+            when IR.Value.TYPE(t) {
+                def finalType:Type
+                if t.isClassLiteral {
+                    finalType := t.subtypes[1]
+                }
+                else {
+                    finalType := t
+                }
+                def cl := compiler.getClass(finalType)
+                if cl == null {
+                    return null
+                }
+                if !compiler.resolve(cl) {
+                    return null
+                }
+                def inits := compiler.getSymbolTable(cl)["init"]
+                assert inits !== null, "no init for \{cl.name}"
+                if compiler.isValue(cl) {
+                    return compiler.coerce(position, compiler.cast(position,
+                            compile(compiler, position, compiler.symbolRef(position, null, inits),
+                            args, type), finalType), type)
+                }
+                def construct := ir.add(IR.Statement.CONSTRUCT(position, cl))
+                def constructRef := IR.Value.REF(construct, finalType)
+                compiler.enclosingContexts.push(EnclosingContext.VALUE_SCOPE(constructRef))
+                compile(compiler, position, compiler.symbolRef(position, constructRef, inits), args,
+                        TypeContext.UNSPECIFIED)
+                return compiler.coerce(position, constructRef, type)
+            }
+            otherwise {
+                assert false, "cannot call \{m}"
+            }
+        }
+    }
+
+    @class
+    @post((m.returnType = Type.Void() & @return == null) | @return !== null | errorCount > 0 |
+            !reportErrors)
+    method compile(compiler:Compiler, position:Position, target:IR.Value?, rawM:MethodRef,
+            args:ListView<ASTNode>, type:TypeContext):IR.Value? {
+        def ir := compiler.ir
+        -- FIXME var param
+        var m := rawM
+        if m.value.methodKind = MethodDecl.Kind.INIT {
+            var validTarget := false
+            var selfOrSuper := false
+            if target !== null {
+                match target {
+                    when IR.Value.PARAMETER(index, _) {
+                        selfOrSuper := index = 0 & !compiler.isClassContext()
+                        validTarget := true
+                    }
+                    when IR.Value.REF(id, _) {
+                        if id = ir.currentBlock.ids[ir.currentBlock.ids.count - 1] {
+                            def last := ir.currentBlock.statements[ir.currentBlock.statements.count - 1]
+                            match last {
+                                when IR.Statement.CONSTRUCT {
+                                    validTarget := true
+                                }
+                            }
+                        }
+                    }
+                    when IR.Value.SUPER {
+                        selfOrSuper := true
+                        validTarget := true
+                    }
+                }
+            }
+            else {
+                if compiler.isValue(m.value.owner) {
+                    selfOrSuper := false
+                    validTarget := true
+                }
+                else {
+                    selfOrSuper := !compiler.isClassContext()
+                    validTarget := selfOrSuper
+                }
+            }
+            if selfOrSuper & compiler.currentMethod[0].methodKind != MethodDecl.Kind.INIT {
+                compiler.error(position, "cannot directly call 'init' outside of an init method")
+                return null
+            }
+            if !validTarget {
+                compiler.error(position, "'init' may only be called on 'self' or 'super'")
+                return null
+            }
+        }
+        if args.count != m.parameterCount {
+            compiler.error(position, "\{m.value.declaration} expects \{m.parameterCount} " +
+                    "argument\{m.parameterCount = 1:|s}, but found \{args.count}")
+            return null
+        }
+        if target !== null & m.value.annotations.isClass {
+            match target {
+                when IR.Value.TYPE {
+                    -- do nothing
+                }
+                otherwise {
+                    compiler.error(position, "cannot call class \{m.value.declaration} on an " +
+                            "instance")
+                }
+            }
+        }
+        var intrinsic := compileIntrinsic(compiler, position, target, m, args)
+        if intrinsic.first {
+            return compiler.coerce(position, intrinsic.second, type)
+        }
+        def inferred := performTypeInference(compiler, m, args)
+        if inferred == null {
+            return null
+        }
+        m := inferred
+        def isSuper:Bit
+        if target !== null {
+            match target {
+                when IR.Value.SUPER {
+                    isSuper := true
+                }
+                otherwise {
+                    isSuper := false
+                }
+            }
+        }
+        else {
+            isSuper := false
+        }
+        -- actualType always has a "self", even for a @class method. This will probably be tightened
+        -- up in the future, but it simplifies the logic a bit here.
+        def actualType:Type
+        if m.value.isVirtual {
+            actualType := compiler.inheritedTypeWithSelf(m.value)
+        }
+        else {
+            actualType := compiler.declaredTypeWithSelf(m.value, m.value.owner.type, false)
+        }
+        assert actualType.isMethod
+        def effectiveType := m.effectiveType
+        assert effectiveType.isMethod
+        def finalArgs := Array<IR.Value>(args.count)
+        def finalTarget:IR.Value?
+        if target !== null {
+            match target {
+                when IR.Value.TYPE {
+                    -- do nothing
+                }
+                otherwise {
+                    if m.value.owner.name = Compiler.POINTER_NAME {
+                        finalTarget := compiler.coerce(position, target,
+                                actualType.parameterType(0))
+                    }
+                    else if isSuper {
+                        finalTarget := compiler.coerce(position,
+                                compiler.compileSelf(position, false),
+                                m.value.owner.type)
+                    }
+                    else {
+                        finalTarget := compiler.coerce(position, target, m.value.owner.type)
+                    }
+                    if finalTarget == null {
+                        return null
+                    }
+                    finalArgs.add(finalTarget)
+                }
+            }
+        }
+        else if !m.value.annotations.isClass & !compiler.isValueInit(m.value) {
+            finalTarget := compiler.coerce(position, compiler.compileSelf(position, false),
+                    m.value.owner.type)
+            if finalTarget == null {
+                return null
+            }
+            finalArgs.add(finalTarget)
+        }
+        else {
+            finalTarget := null
+        }
+        def start:Int -- skip over self if it's implicit
+        if !m.value.annotations.isClass & target !== null & target.type().isClassLiteral {
+            start := 0
+        }
+        else {
+            start := 1
+        }
+        for i in 0 .. args.count {
+            var a := compiler.compileExpression(args[i],
+                    TypeContext.TYPE(effectiveType.parameterType(i)))
+            if a == null {
+                return null
+            }
+            if a.type() != actualType.parameterType(i + start) {
+                a := compiler.cast(position, a, actualType.parameterType(i + start))
+            }
+            if a == null {
+                return null
+            }
+            finalArgs.add(a)
+        }
+        var result:IR.Statement.ID
+        if !isSuper & m.value.isVirtual {
+            def mref:IR.Statement.ID
+            if m.value.owner.classKind = ClassDecl.Kind.INTERFACE {
+                mref := ir.add(IR.Statement.GET_INTERFACE_METHOD(position, finalTarget,
+                        m.value.owner,
+                        compiler.getVTableIndex(m.value) -
+                            compiler.getVTable(compiler.getClass(Type.Object())).count,
+                        actualType))
+            }
+            else {
+                mref := ir.add(IR.Statement.GET_VIRTUAL_METHOD(position, finalTarget,
+                        compiler.getVTableIndex(m.value), actualType))
+            }
+            result := ir.add(IR.Statement.DYNAMIC_CALL(position, IR.Value.REF(mref, actualType),
+                    FixedArray<IR.Value>.from(finalArgs)))
+        }
+        else {
+            result := ir.add(IR.Statement.STATIC_CALL(position, m.value,
+                    FixedArray<IR.Value>.from(finalArgs)))
+        }
+        if m.returnType != Type.Void() {
+            var resultCast:IR.Value? := IR.Value.REF(result, actualType.returnType)
+            if compiler.isRefCounted(actualType.returnType) {
+                compiler.enclosingContexts.push(EnclosingContext.VALUE_SCOPE(resultCast))
+            }
+            if m.value.methodKind != MethodDecl.Kind.INIT &
+                    effectiveType.returnType != actualType.returnType {
+                resultCast := compiler.cast(position, resultCast, effectiveType.returnType)
+                if resultCast == null {
+                    return null
+                }
+            }
+            resultCast := compiler.coerce(position, resultCast, type)
+            return resultCast
+        }
+        if type != TypeContext.UNSPECIFIED {
+            compiler.error(position, "\{m.value.declaration} does not return a value")
+        }
+        return null
+    }
+
+    @class
+    method compile(compiler:Compiler, position:Position, target:IR.Value, m:String,
+            args:ListView<ASTNode>, type:TypeContext):IR.Value? {
+        def cl := compiler.getClass(target.type())
+        if cl == null {
+            return null
+        }
+        def s := compiler.getSymbolTable(cl)[m]
+        if s == null {
+            compiler.error(position, "class '\{cl.name}' does not have a member named '\{m}'")
+            return null
+        }
+        def ref := compiler.symbolRef(position, target, s)
+        return compile(compiler, position, ref, args, type)
+    }
+
+    @class
+    method compile(compiler:Compiler, position:Position, m:ASTNode, args:FixedArray<ASTNode>,
+                       type:TypeContext):IR.Value? {
+        match m {
+            when ASTNode.GENERIC_TYPE(_, name, types) {
+                var resolved := compiler.tryResolveType(m)
+                if resolved !== null {
+                    assert !resolved.isClassLiteral
+                    return compile(compiler, position, IR.Value.TYPE(resolved), args, type)
+                }
+                resolved := compiler.tryResolveType(m, false)
+                if resolved !== null {
+                    -- It's a type, but the parameters are invalid. Force an error and bail.
+                    compiler.resolve(compiler.scanner.convertType(m))
+                    return null
+                }
+                -- not a type, might be a function call with explicit generics
+                def components := name.split(".")
+                var target:ASTNode
+                if components.count = 1 {
+                    target := ASTNode.IDENTIFIER_GENERICS(position, name, types)
+                }
+                else {
+                    target := ASTNode.IDENTIFIER(position, components[0])
+                    for i in 1 .. components.count - 1 {
+                        target := ASTNode.DOT(position, target, components[i])
+                    }
+                    target := ASTNode.DOT_GENERICS(position, target,
+                            components[components.count - 1], types)
+                }
+                return compile(compiler, position, target, args, type)
+            }
+        }
+        def cc := compiler.getChoiceCase(m)
+        if cc !== null {
+            return compiler.compileChoiceCaseReference(position, cc.first, cc.second, args, type)
+        }
+        match m {
+            when ASTNode.DOT(position, base, name) {
+                match base {
+                    when ASTNode.SUPER {
+                        var s := compiler.symbolTable[Compiler.CAPTURED_SELF_NAME]
+                        if s == null {
+                            s := compiler.symbolTable[Compiler.SELF_NAME]
+                        }
+                        if s == null {
+                            return null
+                        }
+                        def result := Array<Type>()
+                        def selfType:Type
+                        match s.kind {
+                            when Symbol.Kind.VARIABLE {
+                                selfType := s->Variable.type
+                            }
+                            when Symbol.Kind.FIELD {
+                                selfType := s->FieldDecl.type
+                            }
+                            otherwise {
+                                assert false
+                            }
+                        }
+                        def cl := compiler.getClass(selfType)
+                        if cl == null {
+                            return null
+                        }
+                        def supertype := compiler.remapType(selfType, cl.rawSuper)
+                        return compile(compiler, position, IR.Value.SUPER(supertype), name, args,
+                                type)
+                    }
+                }
+            }
+        }
+        def compiledM := compiler.compileMethodExpression(m, TypeContext.NON_VOID)
+        if compiledM == null {
+            return null
+        }
+        return compile(compiler, position, compiledM, args, type)
+    }
+}

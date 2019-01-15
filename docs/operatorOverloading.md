@@ -1,7 +1,7 @@
 Operator Overloading
 ====================
 
-Panda classes may provide their own implementations of [operators](operators.html), which is called
+Frost classes may provide their own implementations of [operators](operators.html), which is called
 *operator overloading*.
 
     -- this won't compile, keep reading!
@@ -25,10 +25,10 @@ Panda classes may provide their own implementations of [operators](operators.htm
         }
     }
 
-If you attempt to compile this class, it will fail because Panda does not know how to add two 
+If you attempt to compile this class, it will fail because Frost does not know how to add two 
 `OperatorExample`s together.
 
-We can tell Panda how to add these together by providing an implementation of the `+` operator:
+We can tell Frost how to add these together by providing an implementation of the `+` operator:
 
     function +(right:OperatorExample):OperatorExample {
         return OperatorExample(value + right.value)

@@ -178,7 +178,7 @@ case `Text.paint()`.
 Method Values
 -------------
 
-Methods and functions are *first-class* values in Panda, meaning that they can be stored in
+Methods and functions are *first-class* values in Frost, meaning that they can be stored in
 variables, passed into and returned from methods, and otherwise be used as any other value would be.
 There are three ways to use a method as a value:
 

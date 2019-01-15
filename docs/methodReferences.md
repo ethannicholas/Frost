@@ -7,7 +7,7 @@ are normally used as part of method calls, for instance in:
     Console.printLine("Hello, World!")
 
 `Console.printLine` is a reference to the method `printLine(Object)` in the class
-`panda.io.Console`. The parentheses and argument after the reference make this a *call* to
+`frost.io.Console`. The parentheses and argument after the reference make this a *call* to
 `Console.printLine`, but we can also use the method value directly:
 
     Int[1 ... 10].apply(Console.printLine)

@@ -1,0 +1,86 @@
+#include "org/frostlanguage/frostc/frostdoc/Markdown/_Closure4.h"
+#include "frost/core/Object.h"
+#include "frost/core/Class.h"
+#include "frost/core/String.h"
+#include "org/frostlanguage/frostc/frostdoc/Markdown.h"
+#include "frost/core/Frost.h"
+#include "frost/collections/ListView.h"
+#include "frost/core/Int64.h"
+#include "org/frostlanguage/frostc/frostdoc/Protector.h"
+
+
+static frost$core$String $s1;
+org$frostlanguage$frostc$frostdoc$Markdown$_Closure4$class_type org$frostlanguage$frostc$frostdoc$Markdown$_Closure4$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { frost$core$Object$convert$R$frost$core$String, org$frostlanguage$frostc$frostdoc$Markdown$_Closure4$cleanup, org$frostlanguage$frostc$frostdoc$Markdown$_Closure4$$anonymous3$frost$collections$ListView$LTfrost$core$String$Q$GT$R$frost$core$String} };
+
+typedef frost$core$Object* (*$fn10)(frost$collections$ListView*, frost$core$Int64);
+typedef frost$core$String* (*$fn19)(org$frostlanguage$frostc$frostdoc$Protector*, frost$core$String*);
+
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x66\x72\x6f\x73\x74\x63\x2e\x66\x72\x6f\x73\x74\x64\x6f\x63\x2e\x4d\x61\x72\x6b\x64\x6f\x77\x6e\x2e\x5f\x43\x6c\x6f\x73\x75\x72\x65\x34", 52, -6959142615451851783, NULL };
+static frost$core$String $s22 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x0a\x0a", 2, 11221, NULL };
+static frost$core$String $s24 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x0a\x0a", 2, 11221, NULL };
+
+void org$frostlanguage$frostc$frostdoc$Markdown$_Closure4$init$org$frostlanguage$frostc$frostdoc$Markdown(org$frostlanguage$frostc$frostdoc$Markdown$_Closure4* param0, org$frostlanguage$frostc$frostdoc$Markdown* param1) {
+
+// line 277
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
+org$frostlanguage$frostc$frostdoc$Markdown** $tmp2 = &param0->$self;
+org$frostlanguage$frostc$frostdoc$Markdown* $tmp3 = *$tmp2;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp3));
+org$frostlanguage$frostc$frostdoc$Markdown** $tmp4 = &param0->$self;
+*$tmp4 = param1;
+return;
+
+}
+void org$frostlanguage$frostc$frostdoc$Markdown$_Closure4$cleanup(org$frostlanguage$frostc$frostdoc$Markdown$_Closure4* param0) {
+
+// line 277
+frost$core$Object$cleanup(((frost$core$Object*) param0));
+org$frostlanguage$frostc$frostdoc$Markdown** $tmp5 = &param0->$self;
+org$frostlanguage$frostc$frostdoc$Markdown* $tmp6 = *$tmp5;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp6));
+return;
+
+}
+frost$core$String* org$frostlanguage$frostc$frostdoc$Markdown$_Closure4$$anonymous3$frost$collections$ListView$LTfrost$core$String$Q$GT$R$frost$core$String(org$frostlanguage$frostc$frostdoc$Markdown$_Closure4* param0, frost$collections$ListView* param1) {
+
+frost$core$String* local0 = NULL;
+// line 278
+frost$core$Int64 $tmp7 = (frost$core$Int64) {0};
+ITable* $tmp8 = param1->$class->itable;
+while ($tmp8->$class != (frost$core$Class*) &frost$collections$ListView$class) {
+    $tmp8 = $tmp8->next;
+}
+$fn10 $tmp9 = $tmp8->methods[0];
+frost$core$Object* $tmp11 = $tmp9(param1, $tmp7);
+*(&local0) = ((frost$core$String*) NULL);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$String*) $tmp11)));
+frost$core$String* $tmp12 = *(&local0);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp12));
+*(&local0) = ((frost$core$String*) $tmp11);
+frost$core$Frost$unref$frost$core$Object$Q($tmp11);
+// unreffing REF($4:frost.collections.ListView.T)
+// line 279
+org$frostlanguage$frostc$frostdoc$Markdown** $tmp13 = &param0->$self;
+org$frostlanguage$frostc$frostdoc$Markdown* $tmp14 = *$tmp13;
+org$frostlanguage$frostc$frostdoc$Protector** $tmp15 = &$tmp14->htmlProtector;
+org$frostlanguage$frostc$frostdoc$Protector* $tmp16 = *$tmp15;
+frost$core$String* $tmp17 = *(&local0);
+$fn19 $tmp18 = ($fn19) $tmp16->$class->vtable[2];
+frost$core$String* $tmp20 = $tmp18($tmp16, $tmp17);
+frost$core$String* $tmp21 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(&$s22, $tmp20);
+frost$core$String* $tmp23 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp21, &$s24);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp23));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp23));
+// unreffing REF($26:frost.core.String)
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp21));
+// unreffing REF($25:frost.core.String)
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp20));
+// unreffing REF($24:frost.core.String)
+frost$core$String* $tmp25 = *(&local0);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp25));
+// unreffing literal
+*(&local0) = ((frost$core$String*) NULL);
+return $tmp23;
+
+}
+

@@ -1,0 +1,17 @@
+package org.frostlanguage.plex
+
+class Any : Node {
+    init() {
+        super.init(ANY)
+    }
+
+    @override
+    method makeStartStates(context:NFA, accept:ListView<Int>):Array<Int> {
+        return Regex.singleton(context.addState(AnyState(ImmutableArray<Int>(accept))))
+    }
+
+    @override
+    function convert():String {
+        return "."
+    }
+}

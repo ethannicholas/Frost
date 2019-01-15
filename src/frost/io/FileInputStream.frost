@@ -1,0 +1,47 @@
+package frost.io
+
+uses frost.unsafe.Pointer
+
+@package
+@final
+class FileInputStream : InputStream {
+    @private
+    def handle:Int64
+
+    @private
+    def closeOnCleanup:Bit
+
+    @private
+    init() {
+        -- can only be constructed by native code
+    }
+
+    @override
+    method cleanup() {
+        if closeOnCleanup {
+            close()
+        }
+    }
+
+    @override
+    @external
+    method close()
+
+    @override
+    method read():UInt8? {
+        return readImpl()
+    }
+
+    @private
+    @external
+    method readImpl():UInt8?
+
+    @override
+    method read(buffer:Pointer<UInt8>, max:Int):Int {
+        return readImpl(buffer, max)
+    }
+
+    @private
+    @external
+    method readImpl(buffer:Pointer<UInt8>, max:Int):Int
+}

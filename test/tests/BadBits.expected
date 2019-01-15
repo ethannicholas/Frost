@@ -1,4 +1,4 @@
-BadBits.panda:3:12: error: expected 'panda.core.Bit', but found 'panda.core.Int64'
-BadBits.panda:8:15: error: expected 'panda.core.Bit', but found 'panda.core.String'
-BadBits.panda:15:15: error: expected 'panda.core.Bit', but found 'anonymous.BadBits'
+BadBits.frost:3:12: error: expected 'frost.core.Bit', but found 'frost.core.Int64'
+BadBits.frost:8:15: error: expected 'frost.core.Bit', but found 'frost.core.String'
+BadBits.frost:15:15: error: expected 'frost.core.Bit', but found 'anonymous.BadBits'
 3 errors

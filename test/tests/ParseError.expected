@@ -1,2 +1,2 @@
-ParseError.panda:1:1: error: expected a declaration, but found 'void'
+ParseError.frost:1:1: error: expected a declaration, but found 'void'
 1 error

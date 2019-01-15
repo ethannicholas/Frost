@@ -5,10 +5,10 @@ An *operator* is a special symbol that performs an operation on one or two *oper
 *result*. For instance, in the expression `7 + 3` the operator is `+` (addition), the two operands
 are `7` and `3`, and the result is `10`.
 
-The behaviors described below are how Panda's built-in types define these operators to work. They
+The behaviors described below are how Frost's built-in types define these operators to work. They
 may be [overloaded](operatorOverloading.html), just as they are in the built-in types.
 
-Panda operators come in several categories:
+Frost operators come in several categories:
 
 <a name="arithmetic"></a>
 Arithmetic
@@ -21,7 +21,7 @@ Arithmetic
 * `//` (integer divide): `9 // 2` is `4`
 * `%` (remainder): `9 % 2` is `1`
 
-Panda's arithmetic operators operate on [numbers](basicTypes.html#numbers), and always produce at
+Frost's arithmetic operators operate on [numbers](basicTypes.html#numbers), and always produce at
 least an `Int32` value, even if the [types](types.html) you are operating on are smaller than that.
 If either of the two operands is `Real`, the result is `Real`. If either of the two operands is 64
 bits long, the result is 64 bits long. Thus `Int8 * Int16 = Int32`, `Int64 * Real32 = Real64`, and 
@@ -30,7 +30,7 @@ hold either of its operands, so adding an `Int32` and a `UInt32` results in an `
 error to add an `Int64` and a `UInt64`, because there is no signed type big enough to hold all
 `UInt64` values.
 
-Note that Panda's division operator always produces a `Real` result, even if you are dividing two
+Note that Frost's division operator always produces a `Real` result, even if you are dividing two
 integers. To perform an integer division you must use the integer divide (`//`) operator.
 
 <a name="range"></a>
@@ -48,7 +48,7 @@ the following ranges are all valid:
 * `...` (equivalent to `Range<Int?>(null, null, true)`)
 * `10 ... by -1` (equivalent to `SteppedRange<Int?>(10, null, -1, true)`)
 
-`Range` and `SteppedRange` are used in many of Panda's APIs. They are used to specify subranges of
+`Range` and `SteppedRange` are used in many of Frost's APIs. They are used to specify subranges of
 [List], substrings of [String], and as a target of [`for` loops](statements.html#for).
 
 <a name="shift"></a>
@@ -101,7 +101,7 @@ seldom-used operation; you will almost always want to compare objects for equali
 identity.
 
 The identity / not identity operators are not allowed to operate on [value](values.html) objects, as
-value objects do not have a well-defined identity. If you "trick" Panda into comparing the identity
+value objects do not have a well-defined identity. If you "trick" Frost into comparing the identity
 of two value objects, for instance:
 
     def a:Object := 5
@@ -109,7 +109,7 @@ of two value objects, for instance:
     Console.writeLine(a == b)
 
 the result is undefined. This may display either `true` or `false`, and the output may change with
-compiler settings, environment, or version of Panda.
+compiler settings, environment, or version of Frost.
 
 <a name="logic"></a>
 Logic
@@ -159,7 +159,7 @@ The cast operator tells the compiler to treat an object as being a different
     processString(x)
 
 assuming `processString` is declared to take a single parameter of type `String`, this code will
-produce the message `no match found for method processString(panda.core.Object)`. As far as the
+produce the message `no match found for method processString(frost.core.Object)`. As far as the
 compiler is concerned, the variable `x` has type `Object`, and so one cannot call the method 
 `processString` on it.
 

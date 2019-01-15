@@ -1,0 +1,59 @@
+package org.frostlanguage.frostc.statement
+
+uses org.frostlanguage.frostc.ASTNode
+uses org.frostlanguage.frostc.Compiler
+uses org.frostlanguage.frostc.Compiler.TypeContext
+uses org.frostlanguage.frostc.IR
+uses org.frostlanguage.frostc.Position
+uses org.frostlanguage.frostc.expression.Binary
+uses org.frostlanguage.frostc.expression.Call
+uses org.frostlanguage.frostc.lvalue.LValue
+uses org.frostlanguage.frostc.parser.Token
+
+class Assignment {
+    @class
+    method compile(compiler:Compiler, position:Position, rawLeft:ASTNode, op:Token.Kind,
+            rawRight:ASTNode) {
+        if !Compiler.isAssignment(op) {
+            compiler.error(position, "not a statement")
+            return
+        }
+        if op = Token.Kind.ASSIGNMENT {
+            match rawLeft {
+                when ASTNode.BINARY(position, base, op, index) {
+                    if op = Token.Kind.LBRACKET {
+                        def args := Array<ASTNode>()
+                        def compiledBase := compiler.compileExpression(base, TypeContext.NON_VOID)
+                        if compiledBase == null {
+                            return
+                        }
+                        args.add(index)
+                        args.add(rawRight)
+                        Call.compile(compiler, position, compiledBase, "[]:=", args,
+                                TypeContext.UNSPECIFIED)
+                        return
+                    }
+                }
+            }
+        }
+        def left := LValue.compile(compiler, rawLeft)
+        if left == null {
+            return
+        }
+        def right:IR.Value?
+        if op = Token.Kind.ASSIGNMENT {
+            right := compiler.compileExpression(rawRight, TypeContext.TYPE(left.type()))
+        }
+        else {
+            right := Binary.compile(compiler, position,
+                    ASTNode.IR_WRAPPER(position, left.compileLoad()),
+                    Compiler.removeAssignment(op),
+                    rawRight,
+                    TypeContext.TYPE(left.type()))
+        }
+        if right == null {
+            return
+        }
+        left.compileStore(right)
+    }
+}

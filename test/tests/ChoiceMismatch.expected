@@ -1,2 +1,2 @@
-ChoiceMismatch.panda:10:32: error: expected 'anonymous.A', but found 'anonymous.B'
+ChoiceMismatch.frost:10:32: error: expected 'anonymous.A', but found 'anonymous.B'
 1 error

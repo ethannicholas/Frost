@@ -1,0 +1,209 @@
+package org.frostlanguage.frostc
+
+@final
+class Annotations {
+    class Flag {
+        constant PRIVATE          := 1 << 1
+        constant PROTECTED        := 1 << 2
+        constant PACKAGE          := 1 << 3
+        constant CLASS            := 1 << 4
+        constant OVERRIDE         := 1 << 5
+        constant EXTERNAL         := 1 << 6
+        constant IMPLICIT         := 1 << 7
+        constant FINAL            := 1 << 8
+        constant ABSTRACT         := 1 << 9
+        constant INLINE           := 1 << 10
+        constant SPECIALIZE       := 1 << 11
+        constant WEAK             := 1 << 12
+        constant SYNTHETIC        := 1 << 13
+        constant UNSAFE_IMMUTABLE := 1 << 14
+        constant DEFAULT          := 1 << 15
+    }
+
+    choice Expression {
+        PRE(String, ASTNode)
+        PRE_OR(String, ASTNode)
+        POST(String, ASTNode)
+        POST_AND(String, ASTNode)
+        PRIORITY(String, ASTNode)
+
+        @override
+        function convert():String {
+            match self {
+                when PRE(_, expr)      { return "@pre(\{expr})" }
+                when PRE_OR(_, expr)   { return "@preOr(\{expr})" }
+                when POST(_, expr)     { return "@post(\{expr})" }
+                when POST_AND(_, expr) { return "@postAnd(\{expr})" }
+                when PRIORITY(_, expr) { return "@priority(\{expr})" }
+            }
+        }
+    }
+
+    def flags:Int
+
+    def expressions:Array<Expression>?
+
+    property isPrivate:Bit
+
+    property isProtected:Bit
+
+    property isPackage:Bit
+
+    property isClass:Bit
+
+    property isOverride:Bit
+
+    property isExternal:Bit
+
+    property isImplicit:Bit
+
+    property isFinal:Bit
+
+    property isAbstract:Bit
+
+    property isInline:Bit
+
+    property isSpecialize:Bit
+
+    property isWeak:Bit
+
+    property isSynthetic:Bit
+
+    property isUnsafeImmutable:Bit
+
+    property isDefault:Bit
+
+    init() {
+        init(0)
+    }
+
+    init(flags:Int) {
+        init(flags, null)
+    }
+
+    init(flags:Int, expressions:ListView<Expression>?) {
+        self.flags := flags
+        if expressions !== null {
+            self.expressions := Array<Expression>(expressions)
+        }
+        else {
+            self.expressions := null
+        }
+    }
+
+    function get_isPrivate():Bit {
+        return flags && Flag.PRIVATE != 0
+    }
+
+    function get_isProtected():Bit {
+        return flags && Flag.PROTECTED != 0
+    }
+
+    function get_isPackage():Bit {
+        return flags && Flag.PACKAGE != 0
+    }
+
+    function get_isClass():Bit {
+        return flags && Flag.CLASS != 0
+    }
+
+    function get_isOverride():Bit {
+        return flags && Flag.OVERRIDE != 0
+    }
+
+    function get_isExternal():Bit {
+        return flags && Flag.EXTERNAL != 0
+    }
+
+    function get_isImplicit():Bit {
+        return flags && Flag.IMPLICIT != 0
+    }
+
+    function get_isFinal():Bit {
+        return flags && Flag.FINAL != 0
+    }
+
+    function get_isAbstract():Bit {
+        return flags && Flag.ABSTRACT != 0
+    }
+
+    function get_isInline():Bit {
+        return flags && Flag.INLINE != 0
+    }
+
+    function get_isSpecialize():Bit {
+        return flags && Flag.SPECIALIZE != 0
+    }
+
+    function get_isWeak():Bit {
+        return flags && Flag.WEAK != 0
+    }
+
+    function get_isSynthetic():Bit {
+        return flags && Flag.SYNTHETIC != 0
+    }
+
+    function get_isUnsafeImmutable():Bit {
+        return flags && Flag.UNSAFE_IMMUTABLE != 0
+    }
+
+    function get_isDefault():Bit {
+        return flags && Flag.DEFAULT != 0
+    }
+
+    @override
+    function convert():String {
+        def result := MutableString()
+        if isPrivate {
+            result.append("@private\n")
+        }
+        if isProtected {
+            result.append("@protected\n")
+        }
+        if isPackage {
+            result.append("@package\n")
+        }
+        if isClass {
+            result.append("@class\n")
+        }
+        if isOverride {
+            result.append("@override\n")
+        }
+        if isExternal {
+            result.append("@external\n")
+        }
+        if isImplicit {
+            result.append("@implicit\n")
+        }
+        if isFinal {
+            result.append("@final\n")
+        }
+        if isAbstract {
+            result.append("@abstract\n")
+        }
+        if isInline {
+            result.append("@inline\n")
+        }
+        if isSpecialize {
+            result.append("@specialize\n")
+        }
+        if isWeak {
+            result.append("@weak\n")
+        }
+        if isSynthetic {
+            result.append("@synthetic\n")
+        }
+        if isUnsafeImmutable {
+            result.append("@unsafeImmutable\n")
+        }
+        if isDefault {
+            result.append("@default\n")
+        }
+        if expressions !== null {
+            for expr in expressions {
+                result.append("\{expr}\n")
+            }
+        }
+        return result.finish()
+    }
+}

@@ -44,10 +44,10 @@ snippet of code has type `OutputStream`, despite the fact that `path.openOutputS
 `Maybe<OutputStream>` - placing the call inside of a `try` block handles the error checking and
 unwrapping automatically.
 
-Note that Panda's `try` block is very different from `try` blocks in languages such as C++ and Java.
-Panda does not feature exception handling and Panda's `try` therefore has nothing to do with
-exceptions. Panda `Error`s do not cause the stack to unwind, will not propagate to enclosing
-contexts, etc. Panda's `try` block simply forwards any `Errors` happening within it to the `fail`
+Note that Frost's `try` block is very different from `try` blocks in languages such as C++ and Java.
+Frost does not feature exception handling and Frost's `try` therefore has nothing to do with
+exceptions. Frost `Error`s do not cause the stack to unwind, will not propagate to enclosing
+contexts, etc. Frost's `try` block simply forwards any `Errors` happening within it to the `fail`
 block.
 
 The `fail` block can be written in three different ways:

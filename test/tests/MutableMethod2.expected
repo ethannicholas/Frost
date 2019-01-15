@@ -1,2 +1,2 @@
-MutableMethod2.panda:18:50: error: expected '(panda.core.String)=&>*()', but found '(panda.core.String)=&>()'
+MutableMethod2.frost:18:50: error: expected '(frost.core.String)=&>*()', but found '(frost.core.String)=&>()'
 1 error

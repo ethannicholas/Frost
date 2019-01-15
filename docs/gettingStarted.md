@@ -4,7 +4,7 @@ Getting Started
 Prerequisites
 -------------
 
-Panda currently only works under Linux and MacOS. You must have the following prerequisites
+Frost currently only works under Linux and MacOS. You must have the following prerequisites
 installed:
 
 * git
@@ -15,14 +15,14 @@ installed:
 
 Make sure that all of these software packages are available on your `PATH`.
 
-Building Panda
+Building Frost
 --------------
 
-Panda's source repository is located at [https://github.com/ethannicholas/Panda]. Clone this
+Frost's source repository is located at [https://github.com/ethannicholas/Frost]. Clone this
 repository using Git and `cd` into it:
 
-    $ git clone https://github.com/ethannicholas/Panda
-    $ cd Panda
+    $ git clone https://github.com/ethannicholas/Frost
+    $ cd Frost
 
 Then create a build directory and run `cmake`:
 
@@ -31,11 +31,11 @@ Then create a build directory and run `cmake`:
     $ cmake ..
 
 Assuming `cmake` finds all of the prerequisites, it should create a makefile with which to build
-Panda:
+Frost:
 
     $ make
 
-This will create the `pandac` compiler in the build directory. You can run Panda's tests to ensure
+This will create the `frostc` compiler in the build directory. You can run Frost's tests to ensure
 that it is functioning correctly:
 
     $ make run_tests
@@ -43,18 +43,18 @@ that it is functioning correctly:
 "Hello, World!"
 ---------------
 
-Once you have built `pandac` and verified that it works, add its directory to your path and create a
-simple Panda program:
+Once you have built `frostc` and verified that it works, add its directory to your path and create a
+simple Frost program:
 
     method main() {
         Console.printLine("Hello, World!")
     }
 
-Save this file as `hello.panda`. Now compile and run it:
+Save this file as `hello.frost`. Now compile and run it:
 
-    $ pandac hello.panda
+    $ frostc hello.frost
     $ ./hello
     Hello, World!
 
-Congratulations, you have successfully run your first Panda program! See the
-[overview](overview.html) for a rundown of Panda's basic features.
+Congratulations, you have successfully run your first Frost program! See the
+[overview](overview.html) for a rundown of Frost's basic features.

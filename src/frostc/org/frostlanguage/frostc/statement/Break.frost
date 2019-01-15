@@ -1,0 +1,23 @@
+package org.frostlanguage.frostc.statement
+
+uses org.frostlanguage.frostc.Compiler
+uses org.frostlanguage.frostc.Compiler.EnclosingContext
+uses org.frostlanguage.frostc.IR
+uses org.frostlanguage.frostc.Position
+
+class Break {
+    @class
+    method compile(compiler:Compiler, position:Position, label:String?) {
+        def l := compiler.findAndLeaveToLoopScope(position, label)
+        if l !== null {
+            match l {
+                when EnclosingContext.LOOP(_, breakTarget, _) {
+                    compiler.ir.add(IR.Statement.BRANCH(position, breakTarget))
+                }
+                otherwise {
+                    assert false
+                }
+            }
+        }
+    }
+}

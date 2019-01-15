@@ -14,7 +14,7 @@
                 <li id="documentationBullet" class="open">
                     <a href="documentation.html">Documentation</a>
                     <ul>
-                        <li><a href="pandac.html"><code>pandac</code></a></li>
+                        <li><a href="frostc.html"><code>frostc</code></a></li>
                         <li id="syntaxBullet" class="collapse">
                             <a href="overview.html">Syntax</a>
                             <ul>

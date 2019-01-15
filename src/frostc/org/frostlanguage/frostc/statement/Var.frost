@@ -1,0 +1,24 @@
+package org.frostlanguage.frostc.statement
+
+uses org.frostlanguage.frostc.ASTNode
+uses org.frostlanguage.frostc.Compiler
+uses org.frostlanguage.frostc.FixedArray
+uses org.frostlanguage.frostc.Position
+uses org.frostlanguage.frostc.Variable
+
+class Var {
+    @class
+    method compile(compiler:Compiler, position:Position, kind:Variable.Kind,
+            decls:FixedArray<ASTNode>) {
+        for decl in decls {
+            match decl {
+                when ASTNode.DECLARATION(position, target, rawValue) {
+                    compiler.compileDeclaration(position, target, rawValue, kind)
+                }
+                otherwise {
+                    assert false
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,82 @@
+package frost.core
+
+@final
+class Bit : Value, Key<Bit>, Formattable {
+    @implicit
+    init(value:builtin_bit) {
+        self.value := value
+    }
+
+    @override
+    function convert():String {
+        if self {
+            return "true"
+        }
+        else {
+            return "false"
+        }
+    }
+
+    @override
+    function =(other:Bit):Bit {
+        return value = other.value
+    }
+
+    @override
+    function !=(other:Bit):Bit {
+        return value != other.value
+    }
+
+    @override
+    function get_hash():Int {
+        if value {
+            return 1
+        }
+        return 0
+    }
+
+    function !():Bit {
+        return Bit(!value)
+    }
+
+    -- note that the '|' and '&' functions do not have any way to provide for short circuiting, so
+    -- these operators require special support in the compiler. These implementations are therefore
+    -- only actually called in unusual circumstances, such as via dynamic method references.
+    function |(other:Bit):Bit {
+        return value | other.value
+    }
+
+    function &(other:Bit):Bit {
+        return value & other.value
+    }
+
+    function ~(other:Bit):Bit {
+        return Bit(value ~ other.value)
+    }
+
+    -- FIXME make lazy
+    function choose<T>(ifTrue:T, ifFalse:T):T {
+        if self {
+            return ifTrue
+        }
+        return ifFalse
+    }
+
+    ================================================================================================
+    Chooses one of two strings based on the value of this `Bit`. The format string must be of the
+    form `trueString|falseString`, and the result will be `trueString` if this `Bit` is true,
+    otherwise `falseString`.
+    ================================================================================================
+    @override
+    function format(fmt:String):String {
+        def s := fmt.split("|")
+        assert s.count = 2, "invalid format string '\{fmt}'"
+        if self {
+            return s[0]
+        }
+        return s[1]
+    }
+
+    @private
+    def value:builtin_bit
+}

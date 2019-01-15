@@ -1,0 +1,109 @@
+package org.frostlanguage.frostc
+
+====================================================================================================
+A reference to a method in a particular context type. For instance, the method `String.!=` and the
+method `File.!=` are actually the same method (inherited from `Equatable`), but have different types
+because one of them comes from `Equatable<String>` and the other `Equatable<File>`.
+====================================================================================================
+@final
+class MethodRef {
+    def target:Type
+
+    def value:MethodDecl
+
+    def effectiveType:Type
+
+    def requiresTypeInference:Bit
+
+    property parameterCount:Int
+
+    property returnType:Type
+
+    ================================================================================================
+    Creates a reference to a method within a particular "target type", where the target is the
+    object from which the method was taken. In `"Hello".length()`, the target is the string
+    `"Hello"`. For class methods, the target type is the class type.
+    ================================================================================================
+    init(compiler:Compiler, target:Type, value:MethodDecl) {
+        init(compiler, target, value, null)
+    }
+
+    ================================================================================================
+    Creates a reference to a method within a particular "target type" and generic arguments.
+    ================================================================================================
+    init(compiler:Compiler, target:Type, value:MethodDecl, genericArguments:ListView<Type>?) {
+        assert value.resolved != Compiler.Resolution.UNRESOLVED
+        requiresTypeInference := genericArguments == null & value.genericParameters !== null 
+        self.value := value
+        self.target := target
+        def found := compiler.findType(target, value.owner)
+        assert found !== null, "findType(\{target}, \{value.owner.name}) failed"
+        var methodType := value.type
+        if !value.annotations.isClass & value.methodKind != MethodDecl.Kind.INIT &
+                target.isClassLiteral {
+            def parameterTypes := Array<Type>()
+            parameterTypes.add(target.subtypes[1])
+            parameterTypes.addAll(methodType.subtypes[0 .. methodType.subtypes.count - 1])
+            def typeKind:Type.Kind
+            match value.methodKind {
+                when MethodDecl.Kind.METHOD {
+                    typeKind := Type.Kind.IMMUTABLE_METHOD
+                }
+                when MethodDecl.Kind.FUNCTION {
+                    typeKind := Type.Kind.IMMUTABLE_FUNCTION
+                }
+                otherwise {
+                    assert false
+                }
+            }
+            methodType := Type.methodType(methodType.position, typeKind, parameterTypes,
+                    methodType.returnType, methodType.priority)
+        }
+        else if !compiler.isImmutable(target) & value.methodKind != MethodDecl.Kind.INIT {
+            def typeKind:Type.Kind
+            match value.methodKind {
+                when MethodDecl.Kind.METHOD {
+                    typeKind := Type.Kind.METHOD
+                }
+                when MethodDecl.Kind.FUNCTION {
+                    typeKind := Type.Kind.FUNCTION
+                }
+                otherwise {
+                    assert false
+                }
+            }
+            methodType := Type.methodType(methodType.position, typeKind,
+                    methodType.subtypes[0 .. methodType.subtypes.count - 1],
+                    methodType.returnType, methodType.priority)
+        }
+        def effectiveType := compiler.remapType(found, methodType)
+        if genericArguments !== null {
+            def prefix := value.owner.name + "." + value.name + "."
+            def map := HashMap<String, Type>()
+            for i in 0 .. genericArguments.count {
+                map[prefix + value.genericParameters[i].name] := genericArguments[i]
+            }
+            self.effectiveType := effectiveType.remap(map)
+        }
+        else {
+            self.effectiveType := effectiveType
+        }
+    }
+
+    function get_parameterCount():Int {
+        return effectiveType.parameterCount
+    }
+
+    function parameterType(index:Int):Type {
+        return effectiveType.subtypes[index]
+    }
+
+    function get_returnType():Type {
+        return effectiveType.returnType
+    }
+
+    @override
+    function convert():String {
+        return "MethodRef(\{value.declaration}, \{effectiveType})"
+    }
+}

@@ -1,2 +1,2 @@
-PreconditionBadPreOr.panda:10:14: error: cannot use '@preOr' in a method which does not override another method; did you mean '@pre'?
+PreconditionBadPreOr.frost:10:14: error: cannot use '@preOr' in a method which does not override another method; did you mean '@pre'?
 1 error

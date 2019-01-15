@@ -1,0 +1,36 @@
+package org.frostlanguage.frostc
+
+class Symbol {
+    choice Kind {
+        ALIAS
+        CHOICE_CASE
+        FIELD
+        GENERIC_CLASS_PARAMETER
+        GENERIC_METHOD_PARAMETER
+        METHOD
+        METHODS
+        PACKAGE
+        TYPE
+        VARIABLE
+    }
+
+    def kind:Kind
+
+    def position:Position
+
+    def name:String
+
+    init(kind:Kind, position:Position, name:String) {
+        if name = "anonymous.CollectionView.map.U" {
+            assert self->Type.typeKind = Type.Kind.GENERIC_METHOD_PARAMETER, "actual value: \{self->Type.typeKind.$rawValue}"
+        }
+        self.kind := kind
+        self.position := position
+        self.name := name
+        assert name != "1"
+    }
+
+    function get_heritable():Bit {
+        return true
+    }
+}

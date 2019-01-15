@@ -1,2 +1,2 @@
-PostconditionAtReturnInAtPre.panda:2:26: error: cannot use @return inside @pre
+PostconditionAtReturnInAtPre.frost:2:26: error: cannot use @return inside @pre
 1 error

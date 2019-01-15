@@ -50,7 +50,7 @@ should we be able to create class method and instance method with identical sign
     and fix it.
 need to error on duplicate methods
 I/O with System.Process is being indefinitely buffered somewhere; this means interactive programs
-        don't work at all through PandaRun
+        don't work at all through FrostRun
 
 
 Specializations
@@ -66,7 +66,7 @@ class Array<T> {
 }
 
 specializations are implemented as subclasses, so we end up with something like
-class Array$panda$core$Equatable : Array<Equatable> internally. They have to be part of the
+class Array$frost$core$Equatable : Array<Equatable> internally. They have to be part of the
 containing class to ensure that we always see them (and thus use the right specialization) and
 because they can effectively disable @final optimizations, so we need to know about them to know
 the class isn't "really" final. Naturally they only work within 'class', not interface or choice.

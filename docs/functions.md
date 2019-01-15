@@ -15,14 +15,14 @@ Functions are declared exactly like other methods, but with the `function` keywo
 
 Note that functions are still considered methods, just methods with additional restrictions. The
 "may not depend upon unpredictable state" restriction is the simplest, because it does not generally
-affect pure Panda code. "Unpredictable" state is state which could change without Panda's knowledge;
+affect pure Frost code. "Unpredictable" state is state which could change without Frost's knowledge;
 for instance, whether or not a file exists on the filesystem is "unpredictable" in that a program
 could check for the file's existence multiple times and receive a different answer each time,
 without having done anything to the filesystem itself. The `File.exists()` method is therefore a
-method, rather than a function. If your program is written in 100% Panda and you do not use any
+method, rather than a function. If your program is written in 100% Frost and you do not use any
 of the (clearly marked) unsafe APIs, you should never need to worry about this restriction.
 
-"Side effects" are defined in Panda as "making changes to state which are visible outside of the
+"Side effects" are defined in Frost as "making changes to state which are visible outside of the
 function itself". Functions may freely modify state that only they can see; for instance, the
 following function is legal:
 

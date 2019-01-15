@@ -1,2 +1,2 @@
-InterfaceInit.panda:2:5: error: interfaces may not have 'init' methods
+InterfaceInit.frost:2:5: error: interfaces may not have 'init' methods
 1 error

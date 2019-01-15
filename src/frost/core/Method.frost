@@ -1,0 +1,48 @@
+package frost.core
+
+uses frost.unsafe.Pointer
+
+@package
+@final
+class Method : Immutable {
+    ================================================================================================
+    Pointer to the actual method code. This pointer can be called directly at the C level.
+
+    Non-null targets are passed as a hidden parameter to the function, whereas a null target is
+    ignored (indicates that this is a class method). If the method returns a Value, the caller is
+    responsible for allocating the memory for the value in its stack frame and then passing a
+    pointer to the memory as a hidden parameter. Both of these hidden parameters come before all
+    "real" parameters of the method, with the return value pointer coming first.
+
+    It is common to, at the Frost source code level, call methods whose types do not match -
+    consider the case of calling `intListView.filter(0.<=)`. The method `0.<=` has type
+    `(Int)=>(Bit)`, but `ListView.filter` has an actual parameter type of `(ListView.T)=>(Bit)`.
+    Obviously these are logically the same thing in a `ListView<Int>`, but at the binary level
+    `ListView.T` is really an `Object?` and is not compatible with `Int`. The compiler will create a
+    method shim in this situation - a hidden method which matches the signature
+    `(ListView.T)=>(Bit)` but internally forwards the call to an (Int)=>(Bit). In this case the
+    target will be a struct containing the pointer to the actual method and the actual target.
+    ================================================================================================
+    @private
+    def pointer:Pointer<Int8>
+
+    ================================================================================================
+    Object on which the method is being invoked.
+    ================================================================================================
+    @private
+    def target:Immutable?
+
+    @private
+    init(pointer:Pointer<Int8>, target:Immutable?) {
+        self.pointer := pointer
+        self.target := target
+    }
+
+    @override
+    function convert():String {
+        if target !== null {
+            return "Method<\{Frost.pointerConvert(pointer->Pointer<Object?>)}, \{target}>"
+        }
+        return "Method<\{Frost.pointerConvert(pointer->Pointer<Object?>)}>"
+    }
+}

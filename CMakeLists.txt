@@ -1,4 +1,4 @@
-project(panda)
+project(frost)
 cmake_minimum_required(VERSION 2.8)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -m64 -fPIC")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -m64 -fPIC")
@@ -13,11 +13,11 @@ set(SYSTEM_LIBRARIES m Threads::Threads)
 find_package(LLVM 4.0 REQUIRED)
 find_package(ICU COMPONENTS uc i18n REQUIRED)
 
-file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/org/pandalanguage/pandac/Config.panda"
-    "package org.pandalanguage.pandac\n"
+file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/org/frostlanguage/frostc/Config.frost"
+    "package org.frostlanguage.frostc\n"
     "class Config {\n"
-    "@class function pandaSourceDir():String { return \"${CMAKE_SOURCE_DIR}/src\" }\n"
-    "@class function pandaLibDir():String { return \"${CMAKE_CURRENT_BINARY_DIR}\" }\n"
+    "@class function frostSourceDir():String { return \"${CMAKE_SOURCE_DIR}/src\" }\n"
+    "@class function frostLibDir():String { return \"${CMAKE_CURRENT_BINARY_DIR}\" }\n"
     "@class function llvmDir():String { return \"${LLVM_ROOT_DIR}\" }\n"
     "@class function llvmTriple():String { return \"${LLVM_HOST_TARGET}\" }\n"
     "@class function icuLibraries():String { return \"${ICU_LIBRARIES}\" }\n"
@@ -25,14 +25,14 @@ file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/org/pandalanguage/pandac/Config.panda"
 
 file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/config.c"
     "#include <string.h>\n"
-    "#include \"panda/core/String.h\"\n"
-    "panda$core$String* pandaNewString(const char* s, int length)\n;"
-    "static panda$core$String* configString(const char* s) { return pandaNewString(s, strlen(s)); }"
-    "panda$core$String* org$pandalanguage$pandac$Config$pandaSourceDir$R$panda$core$String() { return configString(\"${CMAKE_SOURCE_DIR}/src\"); }\n"
-    "panda$core$String* org$pandalanguage$pandac$Config$pandaLibDir$R$panda$core$String() { return configString(\"${CMAKE_CURRENT_BINARY_DIR}\"); }\n"
-    "panda$core$String* org$pandalanguage$pandac$Config$llvmDir$R$panda$core$String() { return configString(\"${LLVM_ROOT_DIR}\"); }\n"
-    "panda$core$String* org$pandalanguage$pandac$Config$llvmTriple$R$panda$core$String() { return configString(\"${LLVM_HOST_TARGET}\"); }\n"
-    "panda$core$String* org$pandalanguage$pandac$Config$icuLibraries$R$panda$core$String() { return configString(\"${ICU_LIBRARIES}\"); }\n"
+    "#include \"frost/core/String.h\"\n"
+    "frost$core$String* frostNewString(const char* s, int length)\n;"
+    "static frost$core$String* configString(const char* s) { return frostNewString(s, strlen(s)); }"
+    "frost$core$String* org$frostlanguage$frostc$Config$frostSourceDir$R$frost$core$String() { return configString(\"${CMAKE_SOURCE_DIR}/src\"); }\n"
+    "frost$core$String* org$frostlanguage$frostc$Config$frostLibDir$R$frost$core$String() { return configString(\"${CMAKE_CURRENT_BINARY_DIR}\"); }\n"
+    "frost$core$String* org$frostlanguage$frostc$Config$llvmDir$R$frost$core$String() { return configString(\"${LLVM_ROOT_DIR}\"); }\n"
+    "frost$core$String* org$frostlanguage$frostc$Config$llvmTriple$R$frost$core$String() { return configString(\"${LLVM_HOST_TARGET}\"); }\n"
+    "frost$core$String* org$frostlanguage$frostc$Config$icuLibraries$R$frost$core$String() { return configString(\"${ICU_LIBRARIES}\"); }\n"
 )
 
 set(BOOTSTRAP_ARGS "-O" ${OPTIMIZATION} "-S" ${SAFETY})
@@ -41,417 +41,417 @@ include_directories(
     ${ICU_INCLUDE_DIRS}
 )
 
-file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/org/pandalanguage/regex")
+file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/org/frostlanguage/regex")
 
 file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/docs")
 
-add_library(c_panda
-    bootstrap/src/panda/collections/Array.c
-    bootstrap/src/panda/collections/Collection.c
-    bootstrap/src/panda/collections/CollectionView.c
-    bootstrap/src/panda/collections/CollectionWriter.c
-    bootstrap/src/panda/collections/HashMap.c
-    bootstrap/src/panda/collections/HashMap/Entry.c
-    bootstrap/src/panda/collections/HashMap/EntryIterator.c
-    bootstrap/src/panda/collections/HashMap/KeyIterator.c
-    bootstrap/src/panda/collections/HashMap/ValueIterator.c
-    bootstrap/src/panda/collections/HashSet.c
-    bootstrap/src/panda/collections/IdentityMap.c
-    bootstrap/src/panda/collections/IdentityMap/Entry.c
-    bootstrap/src/panda/collections/ImmutableArray.c
-    bootstrap/src/panda/collections/ImmutableArray/ImmutableArrayIterator.c
-    bootstrap/src/panda/collections/Iterable.c
-    bootstrap/src/panda/collections/Iterator.c
-    bootstrap/src/panda/collections/Iterator/FilterIterator.c
-    bootstrap/src/panda/collections/Iterator/RangeIterator.c
-    bootstrap/src/panda/collections/Key.c
-    bootstrap/src/panda/collections/List.c
-    bootstrap/src/panda/collections/ListView.c
-    bootstrap/src/panda/collections/ListView/ListIterator.c
-    bootstrap/src/panda/collections/ListWriter.c
-    bootstrap/src/panda/collections/Map.c
-    bootstrap/src/panda/collections/MapView.c
-    bootstrap/src/panda/collections/MapWriter.c
-    bootstrap/src/panda/collections/Stack.c
-    bootstrap/src/panda/collections/Stack/StackIterator.c
-    bootstrap/src/panda/collections/SpecializedArray.LTorg/pandalanguage/pandac/parser/Token.GT.c
-    bootstrap/src/panda/collections/SpecializedArrayIterator.LTorg/pandalanguage/pandac/parser/Token.GT.c
-    bootstrap/src/panda/collections/SpecializedArray.LTorg/pandalanguage/regex/RegexToken.GT.c
-    bootstrap/src/panda/collections/SpecializedArrayIterator.LTorg/pandalanguage/regex/RegexToken.GT.c
-    bootstrap/src/panda/core/Bit.c
-    bootstrap/src/panda/core/Char8.c
-    bootstrap/src/panda/core/Char16.c
-    bootstrap/src/panda/core/Char32.c
-    bootstrap/src/panda/core/Class.c
-    bootstrap/src/panda/core/Comparable.c
-    bootstrap/src/panda/core/Equatable.c
-    bootstrap/src/panda/core/Error.c
-    bootstrap/src/panda/core/Formattable.c
-    bootstrap/src/panda/core/Immutable.c
-    bootstrap/src/panda/core/Int16.c
-    bootstrap/src/panda/core/Int32.c
-    bootstrap/src/panda/core/Int64.c
-    bootstrap/src/panda/core/Int8.c
-    bootstrap/src/panda/core/Matcher.c
-    bootstrap/src/panda/core/Maybe.c
-    bootstrap/src/panda/core/Method.c
-    bootstrap/src/panda/core/MutableMethod.c
-    bootstrap/src/panda/core/MutableString.c
-    bootstrap/src/panda/core/MutableString/Index.c
-    bootstrap/src/panda/core/Real32.c
-    bootstrap/src/panda/core/Real64.c
-    bootstrap/src/panda/core/RegularExpression.c
-    bootstrap/src/panda/core/Object.c
-    bootstrap/src/panda/core/Panda.c
-    bootstrap/src/panda/core/Range.LTpanda/core/String/Index.Q.GT.c
-    bootstrap/src/panda/core/Range.LTpanda/core/String/Index.GT.c
-    bootstrap/src/panda/core/Range.LTpanda/core/MutableString/Index.Q.GT.c
-    bootstrap/src/panda/core/Range.LTpanda/core/MutableString/Index.GT.c
-    bootstrap/src/panda/core/Range.LTpanda/core/Int64.Q.GT.c
-    bootstrap/src/panda/core/Range.LTpanda/core/Int64.GT.c
-    bootstrap/src/panda/core/SteppedRange.LTpanda/core/String/Index.Q.Cpanda/core/Int64.GT.c
-    bootstrap/src/panda/core/SteppedRange.LTpanda/core/Int8.Cpanda/core/Int8.GT.c
-    bootstrap/src/panda/core/SteppedRange.LTpanda/core/Int16.Cpanda/core/Int16.GT.c
-    bootstrap/src/panda/core/SteppedRange.LTpanda/core/Int32.Cpanda/core/Int32.GT.c
-    bootstrap/src/panda/core/SteppedRange.LTpanda/core/Int64.Cpanda/core/Int64.GT.c
-    bootstrap/src/panda/core/SteppedRange.LTpanda/core/UInt8.Cpanda/core/UInt8.GT.c
-    bootstrap/src/panda/core/SteppedRange.LTpanda/core/UInt16.Cpanda/core/UInt16.GT.c
-    bootstrap/src/panda/core/SteppedRange.LTpanda/core/UInt32.Cpanda/core/UInt32.GT.c
-    bootstrap/src/panda/core/SteppedRange.LTpanda/core/UInt64.Cpanda/core/UInt64.GT.c
-    bootstrap/src/panda/core/SteppedRange.LTpanda/core/Int64.Q.Cpanda/core/Int64.GT.c
-    bootstrap/src/panda/core/String.c
-    bootstrap/src/panda/core/String/Index.c
-    bootstrap/src/panda/core/String/Match.c
-    bootstrap/src/panda/core/String/MatchIterator.c
-    bootstrap/src/panda/core/String/RegexMatchIterator.c
-    bootstrap/src/panda/core/String/UTF8Iterator.c
-    bootstrap/src/panda/core/String/UTF16Iterator.c
-    bootstrap/src/panda/core/String/UTF32Iterator.c
-    bootstrap/src/panda/core/String/UTF8List.c
-    bootstrap/src/panda/core/System.c
-    bootstrap/src/panda/core/System/Process.c
-    bootstrap/src/panda/core/UInt16.c
-    bootstrap/src/panda/core/UInt32.c
-    bootstrap/src/panda/core/UInt64.c
-    bootstrap/src/panda/core/UInt8.c
-    bootstrap/src/panda/core/Value.c
-    bootstrap/src/panda/core/Weak.c
-    bootstrap/src/panda/io/ByteOrder.c
-    bootstrap/src/panda/io/Console.c
-    bootstrap/src/panda/io/File.c
-    bootstrap/src/panda/io/FileInputStream.c
-    bootstrap/src/panda/io/FileOutputStream.c
-    bootstrap/src/panda/io/IndentedOutputStream.c
-    bootstrap/src/panda/io/InputStream.c
-    bootstrap/src/panda/io/InputStream/LineIterator.c
-    bootstrap/src/panda/io/LineNumberInputStream.c
-    bootstrap/src/panda/io/MemoryInputStream.c
-    bootstrap/src/panda/io/MemoryOutputStream.c
-    bootstrap/src/panda/io/OutputStream.c
-    bootstrap/src/panda/io/PushbackInputStream.c
-    bootstrap/src/panda/json/JSON.c
-    bootstrap/src/panda/json/JSONParser.c
-    bootstrap/src/panda/math/Random.c
-    bootstrap/src/panda/math/XorShift128Plus.c
-    bootstrap/src/panda/threads/Lock.c
-    bootstrap/src/panda/threads/MessageQueue.c
-    bootstrap/src/panda/threads/MessageQueue/Message.c
-    bootstrap/src/panda/threads/Notifier.c
-    bootstrap/src/panda/threads/ScopedLock.c
-    bootstrap/src/panda/threads/Thread.c
-    bootstrap/src/org/pandalanguage/json/Lexer.c
-    bootstrap/src/org/pandalanguage/json/Position.c
-    bootstrap/src/org/pandalanguage/json/Token.c
-    bootstrap/src/org/pandalanguage/json/Token/Kind.c
-    bootstrap/src/org/pandalanguage/panda/IntBitIterator.c
-    bootstrap/src/org/pandalanguage/panda/Int8List.c
-    bootstrap/src/org/pandalanguage/panda/Int16List.c
-    bootstrap/src/org/pandalanguage/panda/Int32List.c
-    bootstrap/src/org/pandalanguage/panda/Int64List.c
-    bootstrap/src/org/pandalanguage/panda/UInt8List.c
-    bootstrap/src/org/pandalanguage/panda/UInt16List.c
-    bootstrap/src/org/pandalanguage/panda/UInt32List.c
-    bootstrap/src/org/pandalanguage/panda/UInt64List.c
-    bootstrap/src/pandalib.c
+add_library(c_frost
+    bootstrap/src/frost/collections/Array.c
+    bootstrap/src/frost/collections/Collection.c
+    bootstrap/src/frost/collections/CollectionView.c
+    bootstrap/src/frost/collections/CollectionWriter.c
+    bootstrap/src/frost/collections/HashMap.c
+    bootstrap/src/frost/collections/HashMap/Entry.c
+    bootstrap/src/frost/collections/HashMap/EntryIterator.c
+    bootstrap/src/frost/collections/HashMap/KeyIterator.c
+    bootstrap/src/frost/collections/HashMap/ValueIterator.c
+    bootstrap/src/frost/collections/HashSet.c
+    bootstrap/src/frost/collections/IdentityMap.c
+    bootstrap/src/frost/collections/IdentityMap/Entry.c
+    bootstrap/src/frost/collections/ImmutableArray.c
+    bootstrap/src/frost/collections/ImmutableArray/ImmutableArrayIterator.c
+    bootstrap/src/frost/collections/Iterable.c
+    bootstrap/src/frost/collections/Iterator.c
+    bootstrap/src/frost/collections/Iterator/FilterIterator.c
+    bootstrap/src/frost/collections/Iterator/RangeIterator.c
+    bootstrap/src/frost/collections/Key.c
+    bootstrap/src/frost/collections/List.c
+    bootstrap/src/frost/collections/ListView.c
+    bootstrap/src/frost/collections/ListView/ListIterator.c
+    bootstrap/src/frost/collections/ListWriter.c
+    bootstrap/src/frost/collections/Map.c
+    bootstrap/src/frost/collections/MapView.c
+    bootstrap/src/frost/collections/MapWriter.c
+    bootstrap/src/frost/collections/Stack.c
+    bootstrap/src/frost/collections/Stack/StackIterator.c
+    bootstrap/src/frost/collections/SpecializedArray.LTorg/frostlanguage/frostc/parser/Token.GT.c
+    bootstrap/src/frost/collections/SpecializedArrayIterator.LTorg/frostlanguage/frostc/parser/Token.GT.c
+    bootstrap/src/frost/collections/SpecializedArray.LTorg/frostlanguage/regex/RegexToken.GT.c
+    bootstrap/src/frost/collections/SpecializedArrayIterator.LTorg/frostlanguage/regex/RegexToken.GT.c
+    bootstrap/src/frost/core/Bit.c
+    bootstrap/src/frost/core/Char8.c
+    bootstrap/src/frost/core/Char16.c
+    bootstrap/src/frost/core/Char32.c
+    bootstrap/src/frost/core/Class.c
+    bootstrap/src/frost/core/Comparable.c
+    bootstrap/src/frost/core/Equatable.c
+    bootstrap/src/frost/core/Error.c
+    bootstrap/src/frost/core/Formattable.c
+    bootstrap/src/frost/core/Immutable.c
+    bootstrap/src/frost/core/Int16.c
+    bootstrap/src/frost/core/Int32.c
+    bootstrap/src/frost/core/Int64.c
+    bootstrap/src/frost/core/Int8.c
+    bootstrap/src/frost/core/Matcher.c
+    bootstrap/src/frost/core/Maybe.c
+    bootstrap/src/frost/core/Method.c
+    bootstrap/src/frost/core/MutableMethod.c
+    bootstrap/src/frost/core/MutableString.c
+    bootstrap/src/frost/core/MutableString/Index.c
+    bootstrap/src/frost/core/Real32.c
+    bootstrap/src/frost/core/Real64.c
+    bootstrap/src/frost/core/RegularExpression.c
+    bootstrap/src/frost/core/Object.c
+    bootstrap/src/frost/core/Frost.c
+    bootstrap/src/frost/core/Range.LTfrost/core/String/Index.Q.GT.c
+    bootstrap/src/frost/core/Range.LTfrost/core/String/Index.GT.c
+    bootstrap/src/frost/core/Range.LTfrost/core/MutableString/Index.Q.GT.c
+    bootstrap/src/frost/core/Range.LTfrost/core/MutableString/Index.GT.c
+    bootstrap/src/frost/core/Range.LTfrost/core/Int64.Q.GT.c
+    bootstrap/src/frost/core/Range.LTfrost/core/Int64.GT.c
+    bootstrap/src/frost/core/SteppedRange.LTfrost/core/String/Index.Q.Cfrost/core/Int64.GT.c
+    bootstrap/src/frost/core/SteppedRange.LTfrost/core/Int8.Cfrost/core/Int8.GT.c
+    bootstrap/src/frost/core/SteppedRange.LTfrost/core/Int16.Cfrost/core/Int16.GT.c
+    bootstrap/src/frost/core/SteppedRange.LTfrost/core/Int32.Cfrost/core/Int32.GT.c
+    bootstrap/src/frost/core/SteppedRange.LTfrost/core/Int64.Cfrost/core/Int64.GT.c
+    bootstrap/src/frost/core/SteppedRange.LTfrost/core/UInt8.Cfrost/core/UInt8.GT.c
+    bootstrap/src/frost/core/SteppedRange.LTfrost/core/UInt16.Cfrost/core/UInt16.GT.c
+    bootstrap/src/frost/core/SteppedRange.LTfrost/core/UInt32.Cfrost/core/UInt32.GT.c
+    bootstrap/src/frost/core/SteppedRange.LTfrost/core/UInt64.Cfrost/core/UInt64.GT.c
+    bootstrap/src/frost/core/SteppedRange.LTfrost/core/Int64.Q.Cfrost/core/Int64.GT.c
+    bootstrap/src/frost/core/String.c
+    bootstrap/src/frost/core/String/Index.c
+    bootstrap/src/frost/core/String/Match.c
+    bootstrap/src/frost/core/String/MatchIterator.c
+    bootstrap/src/frost/core/String/RegexMatchIterator.c
+    bootstrap/src/frost/core/String/UTF8Iterator.c
+    bootstrap/src/frost/core/String/UTF16Iterator.c
+    bootstrap/src/frost/core/String/UTF32Iterator.c
+    bootstrap/src/frost/core/String/UTF8List.c
+    bootstrap/src/frost/core/System.c
+    bootstrap/src/frost/core/System/Process.c
+    bootstrap/src/frost/core/UInt16.c
+    bootstrap/src/frost/core/UInt32.c
+    bootstrap/src/frost/core/UInt64.c
+    bootstrap/src/frost/core/UInt8.c
+    bootstrap/src/frost/core/Value.c
+    bootstrap/src/frost/core/Weak.c
+    bootstrap/src/frost/io/ByteOrder.c
+    bootstrap/src/frost/io/Console.c
+    bootstrap/src/frost/io/File.c
+    bootstrap/src/frost/io/FileInputStream.c
+    bootstrap/src/frost/io/FileOutputStream.c
+    bootstrap/src/frost/io/IndentedOutputStream.c
+    bootstrap/src/frost/io/InputStream.c
+    bootstrap/src/frost/io/InputStream/LineIterator.c
+    bootstrap/src/frost/io/LineNumberInputStream.c
+    bootstrap/src/frost/io/MemoryInputStream.c
+    bootstrap/src/frost/io/MemoryOutputStream.c
+    bootstrap/src/frost/io/OutputStream.c
+    bootstrap/src/frost/io/PushbackInputStream.c
+    bootstrap/src/frost/json/JSON.c
+    bootstrap/src/frost/json/JSONParser.c
+    bootstrap/src/frost/math/Random.c
+    bootstrap/src/frost/math/XorShift128Plus.c
+    bootstrap/src/frost/threads/Lock.c
+    bootstrap/src/frost/threads/MessageQueue.c
+    bootstrap/src/frost/threads/MessageQueue/Message.c
+    bootstrap/src/frost/threads/Notifier.c
+    bootstrap/src/frost/threads/ScopedLock.c
+    bootstrap/src/frost/threads/Thread.c
+    bootstrap/src/org/frostlanguage/json/Lexer.c
+    bootstrap/src/org/frostlanguage/json/Position.c
+    bootstrap/src/org/frostlanguage/json/Token.c
+    bootstrap/src/org/frostlanguage/json/Token/Kind.c
+    bootstrap/src/org/frostlanguage/frost/IntBitIterator.c
+    bootstrap/src/org/frostlanguage/frost/Int8List.c
+    bootstrap/src/org/frostlanguage/frost/Int16List.c
+    bootstrap/src/org/frostlanguage/frost/Int32List.c
+    bootstrap/src/org/frostlanguage/frost/Int64List.c
+    bootstrap/src/org/frostlanguage/frost/UInt8List.c
+    bootstrap/src/org/frostlanguage/frost/UInt16List.c
+    bootstrap/src/org/frostlanguage/frost/UInt32List.c
+    bootstrap/src/org/frostlanguage/frost/UInt64List.c
+    bootstrap/src/frostlib.c
 )
 
 add_executable(bootstrap
     ${CMAKE_CURRENT_BINARY_DIR}/config.c
-    bootstrap/src/org/pandalanguage/json/Lexer.c
-    bootstrap/src/org/pandalanguage/json/Position.c
-    bootstrap/src/org/pandalanguage/json/Token.c
-    bootstrap/src/org/pandalanguage/json/Token/Kind.c
-    bootstrap/src/org/pandalanguage/panda/Int16List.c
-    bootstrap/src/org/pandalanguage/panda/Int32List.c
-    bootstrap/src/org/pandalanguage/panda/Int64List.c
-    bootstrap/src/org/pandalanguage/panda/Int8List.c
-    bootstrap/src/org/pandalanguage/panda/IntBitIterator.c
-    bootstrap/src/org/pandalanguage/panda/UInt16List.c
-    bootstrap/src/org/pandalanguage/panda/UInt32List.c
-    bootstrap/src/org/pandalanguage/panda/UInt64List.c
-    bootstrap/src/org/pandalanguage/panda/UInt8List.c
-    bootstrap/src/org/pandalanguage/pandac/Alias.c
-    bootstrap/src/org/pandalanguage/pandac/Annotations.c
-    bootstrap/src/org/pandalanguage/pandac/Annotations/Expression.c
-    bootstrap/src/org/pandalanguage/pandac/Annotations/Flag.c
-    bootstrap/src/org/pandalanguage/pandac/ASTNode.c
-    bootstrap/src/org/pandalanguage/pandac/CCodeGenerator.c
-    bootstrap/src/org/pandalanguage/pandac/CCodeGenerator/AutoContext.c
-    bootstrap/src/org/pandalanguage/pandac/CCodeGenerator/ClassConstant.c
-    bootstrap/src/org/pandalanguage/pandac/CCodeGenerator/EnclosingContext.c
-    bootstrap/src/org/pandalanguage/pandac/CCodeGenerator/MethodShim.c
-    bootstrap/src/org/pandalanguage/pandac/CCodeGenerator/OpClass.c
-    bootstrap/src/org/pandalanguage/pandac/ChoiceCase.c
-    bootstrap/src/org/pandalanguage/pandac/ClassDecl.c
-    bootstrap/src/org/pandalanguage/pandac/ClassDecl/GenericParameter.c
-    bootstrap/src/org/pandalanguage/pandac/ClassDecl/Kind.c
-    bootstrap/src/org/pandalanguage/pandac/ClassDecl/Resolution.c
-    bootstrap/src/org/pandalanguage/pandac/CodeGenerator.c
-    bootstrap/src/org/pandalanguage/pandac/Compiler.c
-    bootstrap/src/org/pandalanguage/pandac/Compiler/_Closure2.c
-    bootstrap/src/org/pandalanguage/pandac/Compiler/AutoAtPreFlag.c
-    bootstrap/src/org/pandalanguage/pandac/Compiler/AutoContext.c
-    bootstrap/src/org/pandalanguage/pandac/Compiler/AutoScope.c
-    bootstrap/src/org/pandalanguage/pandac/Compiler/AutoUnrefs.c
-    bootstrap/src/org/pandalanguage/pandac/Compiler/BinaryKey.c
-    bootstrap/src/org/pandalanguage/pandac/Compiler/Capture.c
-    bootstrap/src/org/pandalanguage/pandac/Compiler/CoercionKey.c
-    bootstrap/src/org/pandalanguage/pandac/Compiler/EnclosingContext.c
-    bootstrap/src/org/pandalanguage/pandac/Compiler/Error.c
-    bootstrap/src/org/pandalanguage/pandac/Compiler/Resolution.c
-    bootstrap/src/org/pandalanguage/pandac/Compiler/Settings.c
-    bootstrap/src/org/pandalanguage/pandac/Compiler/TypeContext.c
-    bootstrap/src/org/pandalanguage/pandac/expression/And.c
-    bootstrap/src/org/pandalanguage/pandac/expression/ArrayLiteral.c
-    bootstrap/src/org/pandalanguage/pandac/expression/AtPre.c
-    bootstrap/src/org/pandalanguage/pandac/expression/AtReturn.c
-    bootstrap/src/org/pandalanguage/pandac/expression/Binary.c
-    bootstrap/src/org/pandalanguage/pandac/expression/Binary/_Closure2.c
-    bootstrap/src/org/pandalanguage/pandac/expression/Call.c
-    bootstrap/src/org/pandalanguage/pandac/expression/Closure.c
-    bootstrap/src/org/pandalanguage/pandac/expression/Dot.c
-    bootstrap/src/org/pandalanguage/pandac/expression/Identifier.c
-    bootstrap/src/org/pandalanguage/pandac/expression/IntLiteral.c
-    bootstrap/src/org/pandalanguage/pandac/expression/Or.c
-    bootstrap/src/org/pandalanguage/pandac/FieldDecl.c
-    bootstrap/src/org/pandalanguage/pandac/FieldDecl/Kind.c
-    bootstrap/src/org/pandalanguage/pandac/FixedArray.c
-    bootstrap/src/org/pandalanguage/pandac/FixedArray/FixedArrayIterator.c
-    bootstrap/src/org/pandalanguage/pandac/HCodeGenerator.c
-    bootstrap/src/org/pandalanguage/pandac/HTMLProcessor.c
-    bootstrap/src/org/pandalanguage/pandac/IR.c
-    bootstrap/src/org/pandalanguage/pandac/IR/Block.c
-    bootstrap/src/org/pandalanguage/pandac/IR/Block/ID.c
-    bootstrap/src/org/pandalanguage/pandac/IR/Statement.c
-    bootstrap/src/org/pandalanguage/pandac/IR/Statement/ID.c
-    bootstrap/src/org/pandalanguage/pandac/IR/Value.c
-    bootstrap/src/org/pandalanguage/pandac/LLVMCodeGenerator.c
-    bootstrap/src/org/pandalanguage/pandac/LLVMCodeGenerator/ClassConstant.c
-    bootstrap/src/org/pandalanguage/pandac/LLVMCodeGenerator/MethodShim.c
-    bootstrap/src/org/pandalanguage/pandac/LLVMCodeGenerator/OpClass.c
-    bootstrap/src/org/pandalanguage/pandac/lvalue/ChoiceFieldLValue.c
-    bootstrap/src/org/pandalanguage/pandac/lvalue/FieldLValue.c
-    bootstrap/src/org/pandalanguage/pandac/lvalue/IndexLValue.c
-    bootstrap/src/org/pandalanguage/pandac/lvalue/LValue.c
-    bootstrap/src/org/pandalanguage/pandac/lvalue/VariableLValue.c
-    bootstrap/src/org/pandalanguage/pandac/Main.c
-    bootstrap/src/org/pandalanguage/pandac/Main/Arguments.c
-    bootstrap/src/org/pandalanguage/pandac/Main/Format.c
-    bootstrap/src/org/pandalanguage/pandac/MethodDecl.c
-    bootstrap/src/org/pandalanguage/pandac/MethodDecl/GenericParameter.c
-    bootstrap/src/org/pandalanguage/pandac/MethodDecl/Kind.c
-    bootstrap/src/org/pandalanguage/pandac/MethodDecl/Parameter.c
-    bootstrap/src/org/pandalanguage/pandac/MethodRef.c
-    bootstrap/src/org/pandalanguage/pandac/Methods.c
-    bootstrap/src/org/pandalanguage/pandac/Pair.c
-    bootstrap/src/org/pandalanguage/pandac/pandadoc/DummyCodeGenerator.c
-    bootstrap/src/org/pandalanguage/pandac/pandadoc/LinkResolver.c
-    bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown.c
-    bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/_Closure2.c
-    bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/_Closure4.c
-    bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/_Closure6.c
-    bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/_Closure9.c
-    bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/_Closure12.c
-    bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/_Closure14.c
-    bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/_Closure16.c
-    bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/_Closure18.c
-    bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/_Closure20.c
-    bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/_Closure22.c
-    bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/_Closure24.c
-    bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/_Closure26.c
-    bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/_Closure28.c
-    bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/_Closure30.c
-    bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/_Closure32.c
-    bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/CodeReplacer.c
-    bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/HTMLToken.c
-    bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/LinkDefinition.c
-    bootstrap/src/org/pandalanguage/pandac/pandadoc/Protector.c
-    bootstrap/src/org/pandalanguage/pandac/parser/Lexer.c
-    bootstrap/src/org/pandalanguage/pandac/parser/Parser.c
-    bootstrap/src/org/pandalanguage/pandac/parser/Parser/AutoSyntaxHighlight.c
-    bootstrap/src/org/pandalanguage/pandac/parser/SyntaxHighlighter.c
-    bootstrap/src/org/pandalanguage/pandac/parser/SyntaxHighlighter/Kind.c
-    bootstrap/src/org/pandalanguage/pandac/parser/Token.c
-    bootstrap/src/org/pandalanguage/pandac/parser/Token/Kind.c
-    bootstrap/src/org/pandalanguage/pandac/Position.c
-    bootstrap/src/org/pandalanguage/pandac/Scanner.c
-    bootstrap/src/org/pandalanguage/pandac/statement/Assert.c
-    bootstrap/src/org/pandalanguage/pandac/statement/Assignment.c
-    bootstrap/src/org/pandalanguage/pandac/statement/Break.c
-    bootstrap/src/org/pandalanguage/pandac/statement/Continue.c
-    bootstrap/src/org/pandalanguage/pandac/statement/Do.c
-    bootstrap/src/org/pandalanguage/pandac/statement/For.c
-    bootstrap/src/org/pandalanguage/pandac/statement/If.c
-    bootstrap/src/org/pandalanguage/pandac/statement/InnerMethod.c
-    bootstrap/src/org/pandalanguage/pandac/statement/Loop.c
-    bootstrap/src/org/pandalanguage/pandac/statement/Match.c
-    bootstrap/src/org/pandalanguage/pandac/statement/Return.c
-    bootstrap/src/org/pandalanguage/pandac/statement/Var.c
-    bootstrap/src/org/pandalanguage/pandac/statement/While.c
-    bootstrap/src/org/pandalanguage/pandac/Symbol.c
-    bootstrap/src/org/pandalanguage/pandac/Symbol/Kind.c
-    bootstrap/src/org/pandalanguage/pandac/SymbolTable.c
-    bootstrap/src/org/pandalanguage/pandac/Type.c
-    bootstrap/src/org/pandalanguage/pandac/Type/Kind.c
-    bootstrap/src/org/pandalanguage/pandac/Variable.c
-    bootstrap/src/org/pandalanguage/pandac/Variable/Kind.c
-    bootstrap/src/org/pandalanguage/pandac/Variable/Storage.c
-    bootstrap/src/org/pandalanguage/plex/runtime/DFA.c
-    bootstrap/src/org/pandalanguage/plex/runtime/RawToken.c
-    bootstrap/src/org/pandalanguage/regex/RegexLexer.c
-    bootstrap/src/org/pandalanguage/regex/RegexParser.c
-    bootstrap/src/org/pandalanguage/regex/RegexToken.c
-    bootstrap/src/org/pandalanguage/regex/RegexToken/Kind.c
-    bootstrap/src/panda/collections/Array.c
-    bootstrap/src/panda/collections/Collection.c
-    bootstrap/src/panda/collections/CollectionView.c
-    bootstrap/src/panda/collections/CollectionWriter.c
-    bootstrap/src/panda/collections/HashMap.c
-    bootstrap/src/panda/collections/HashMap/Entry.c
-    bootstrap/src/panda/collections/HashMap/EntryIterator.c
-    bootstrap/src/panda/collections/HashMap/KeyIterator.c
-    bootstrap/src/panda/collections/HashMap/ValueIterator.c
-    bootstrap/src/panda/collections/HashSet.c
-    bootstrap/src/panda/collections/IdentityMap.c
-    bootstrap/src/panda/collections/IdentityMap/Entry.c
-    bootstrap/src/panda/collections/ImmutableArray.c
-    bootstrap/src/panda/collections/ImmutableArray/ImmutableArrayIterator.c
-    bootstrap/src/panda/collections/Iterable.c
-    bootstrap/src/panda/collections/Iterator.c
-    bootstrap/src/panda/collections/Iterator/FilterIterator.c
-    bootstrap/src/panda/collections/Iterator/MapIterator.c
-    bootstrap/src/panda/collections/Iterator/RangeIterator.c
-    bootstrap/src/panda/collections/Key.c
-    bootstrap/src/panda/collections/List.c
-    bootstrap/src/panda/collections/ListView.c
-    bootstrap/src/panda/collections/ListView/ListIterator.c
-    bootstrap/src/panda/collections/ListWriter.c
-    bootstrap/src/panda/collections/Map.c
-    bootstrap/src/panda/collections/MapView.c
-    bootstrap/src/panda/collections/MapWriter.c
-    bootstrap/src/panda/collections/SpecializedArray.LTorg/pandalanguage/pandac/parser/Token.GT.c
-    bootstrap/src/panda/collections/SpecializedArray.LTorg/pandalanguage/regex/RegexToken.GT.c
-    bootstrap/src/panda/collections/SpecializedArrayIterator.LTorg/pandalanguage/pandac/parser/Token.GT.c
-    bootstrap/src/panda/collections/SpecializedArrayIterator.LTorg/pandalanguage/regex/RegexToken.GT.c
-    bootstrap/src/panda/collections/Stack.c
-    bootstrap/src/panda/collections/Stack/StackIterator.c
-    bootstrap/src/panda/core/Bit.c
-    bootstrap/src/panda/core/Char16.c
-    bootstrap/src/panda/core/Char32.c
-    bootstrap/src/panda/core/Char8.c
-    bootstrap/src/panda/core/Class.c
-    bootstrap/src/panda/core/Comparable.c
-    bootstrap/src/panda/core/Equatable.c
-    bootstrap/src/panda/core/Error.c
-    bootstrap/src/panda/core/Formattable.c
-    bootstrap/src/panda/core/Immutable.c
-    bootstrap/src/panda/core/Int16.c
-    bootstrap/src/panda/core/Int32.c
-    bootstrap/src/panda/core/Int64.c
-    bootstrap/src/panda/core/Int8.c
-    bootstrap/src/panda/core/Matcher.c
-    bootstrap/src/panda/core/Maybe.c
-    bootstrap/src/panda/core/Method.c
-    bootstrap/src/panda/core/MutableMethod.c
-    bootstrap/src/panda/core/MutableString.c
-    bootstrap/src/panda/core/MutableString/Index.c
-    bootstrap/src/panda/core/Object.c
-    bootstrap/src/panda/core/Panda.c
-    bootstrap/src/panda/core/Range.LTpanda/core/Int16.GT.c
-    bootstrap/src/panda/core/Range.LTpanda/core/Int32.GT.c
-    bootstrap/src/panda/core/Range.LTpanda/core/Int64.GT.c
-    bootstrap/src/panda/core/Range.LTpanda/core/Int64.Q.GT.c
-    bootstrap/src/panda/core/Range.LTpanda/core/Int8.GT.c
-    bootstrap/src/panda/core/Range.LTpanda/core/MutableString/Index.GT.c
-    bootstrap/src/panda/core/Range.LTpanda/core/MutableString/Index.Q.GT.c
-    bootstrap/src/panda/core/Range.LTpanda/core/String/Index.GT.c
-    bootstrap/src/panda/core/Range.LTpanda/core/String/Index.Q.GT.c
-    bootstrap/src/panda/core/Range.LTpanda/core/UInt16.GT.c
-    bootstrap/src/panda/core/Range.LTpanda/core/UInt32.GT.c
-    bootstrap/src/panda/core/Range.LTpanda/core/UInt64.GT.c
-    bootstrap/src/panda/core/Range.LTpanda/core/UInt8.GT.c
-    bootstrap/src/panda/core/Real32.c
-    bootstrap/src/panda/core/Real64.c
-    bootstrap/src/panda/core/RegularExpression.c
-    bootstrap/src/panda/core/SteppedRange.LTpanda/core/Int16.Cpanda/core/Int16.GT.c
-    bootstrap/src/panda/core/SteppedRange.LTpanda/core/Int32.Cpanda/core/Int32.GT.c
-    bootstrap/src/panda/core/SteppedRange.LTpanda/core/Int64.Cpanda/core/Int64.GT.c
-    bootstrap/src/panda/core/SteppedRange.LTpanda/core/Int64.Q.Cpanda/core/Int64.GT.c
-    bootstrap/src/panda/core/SteppedRange.LTpanda/core/Int8.Cpanda/core/Int8.GT.c
-    bootstrap/src/panda/core/SteppedRange.LTpanda/core/String/Index.Q.Cpanda/core/Int64.GT.c
-    bootstrap/src/panda/core/SteppedRange.LTpanda/core/UInt16.Cpanda/core/UInt16.GT.c
-    bootstrap/src/panda/core/SteppedRange.LTpanda/core/UInt32.Cpanda/core/UInt32.GT.c
-    bootstrap/src/panda/core/SteppedRange.LTpanda/core/UInt64.Cpanda/core/UInt64.GT.c
-    bootstrap/src/panda/core/SteppedRange.LTpanda/core/UInt8.Cpanda/core/UInt8.GT.c
-    bootstrap/src/panda/core/String.c
-    bootstrap/src/panda/core/String/Index.c
-    bootstrap/src/panda/core/String/Match.c
-    bootstrap/src/panda/core/String/MatchIterator.c
-    bootstrap/src/panda/core/String/RegexMatchIterator.c
-    bootstrap/src/panda/core/String/UTF16Iterator.c
-    bootstrap/src/panda/core/String/UTF32Iterator.c
-    bootstrap/src/panda/core/String/UTF8Iterator.c
-    bootstrap/src/panda/core/String/UTF8List.c
-    bootstrap/src/panda/core/System.c
-    bootstrap/src/panda/core/System/Process.c
-    bootstrap/src/panda/core/UInt16.c
-    bootstrap/src/panda/core/UInt32.c
-    bootstrap/src/panda/core/UInt64.c
-    bootstrap/src/panda/core/UInt8.c
-    bootstrap/src/panda/core/Value.c
-    bootstrap/src/panda/core/Weak.c
-    bootstrap/src/panda/io/ByteOrder.c
-    bootstrap/src/panda/io/Console.c
-    bootstrap/src/panda/io/File.c
-    bootstrap/src/panda/io/FileInputStream.c
-    bootstrap/src/panda/io/FileOutputStream.c
-    bootstrap/src/panda/io/IndentedOutputStream.c
-    bootstrap/src/panda/io/InputStream.c
-    bootstrap/src/panda/io/InputStream/LineIterator.c
-    bootstrap/src/panda/io/LineNumberInputStream.c
-    bootstrap/src/panda/io/MemoryInputStream.c
-    bootstrap/src/panda/io/MemoryOutputStream.c
-    bootstrap/src/panda/io/OutputStream.c
-    bootstrap/src/panda/io/PushbackInputStream.c
-    bootstrap/src/panda/json/JSON.c
-    bootstrap/src/panda/json/JSON/PathKey.c
-    bootstrap/src/panda/json/JSONParser.c
-    bootstrap/src/panda/math/Random.c
-    bootstrap/src/panda/math/XorShift128Plus.c
-    bootstrap/src/panda/threads/Lock.c
-    bootstrap/src/panda/threads/MessageQueue.c
-    bootstrap/src/panda/threads/MessageQueue/Message.c
-    bootstrap/src/panda/threads/Notifier.c
-    bootstrap/src/panda/threads/ScopedLock.c
-    bootstrap/src/panda/threads/Thread.c
-    bootstrap/src/panda/unsafe/UnsafeMessageQueue.c
-    bootstrap/src/panda/unsafe/UnsafeMessageQueue/Message.c
-    bootstrap/src/pandalib.c
+    bootstrap/src/org/frostlanguage/json/Lexer.c
+    bootstrap/src/org/frostlanguage/json/Position.c
+    bootstrap/src/org/frostlanguage/json/Token.c
+    bootstrap/src/org/frostlanguage/json/Token/Kind.c
+    bootstrap/src/org/frostlanguage/frost/Int16List.c
+    bootstrap/src/org/frostlanguage/frost/Int32List.c
+    bootstrap/src/org/frostlanguage/frost/Int64List.c
+    bootstrap/src/org/frostlanguage/frost/Int8List.c
+    bootstrap/src/org/frostlanguage/frost/IntBitIterator.c
+    bootstrap/src/org/frostlanguage/frost/UInt16List.c
+    bootstrap/src/org/frostlanguage/frost/UInt32List.c
+    bootstrap/src/org/frostlanguage/frost/UInt64List.c
+    bootstrap/src/org/frostlanguage/frost/UInt8List.c
+    bootstrap/src/org/frostlanguage/frostc/Alias.c
+    bootstrap/src/org/frostlanguage/frostc/Annotations.c
+    bootstrap/src/org/frostlanguage/frostc/Annotations/Expression.c
+    bootstrap/src/org/frostlanguage/frostc/Annotations/Flag.c
+    bootstrap/src/org/frostlanguage/frostc/ASTNode.c
+    bootstrap/src/org/frostlanguage/frostc/CCodeGenerator.c
+    bootstrap/src/org/frostlanguage/frostc/CCodeGenerator/AutoContext.c
+    bootstrap/src/org/frostlanguage/frostc/CCodeGenerator/ClassConstant.c
+    bootstrap/src/org/frostlanguage/frostc/CCodeGenerator/EnclosingContext.c
+    bootstrap/src/org/frostlanguage/frostc/CCodeGenerator/MethodShim.c
+    bootstrap/src/org/frostlanguage/frostc/CCodeGenerator/OpClass.c
+    bootstrap/src/org/frostlanguage/frostc/ChoiceCase.c
+    bootstrap/src/org/frostlanguage/frostc/ClassDecl.c
+    bootstrap/src/org/frostlanguage/frostc/ClassDecl/GenericParameter.c
+    bootstrap/src/org/frostlanguage/frostc/ClassDecl/Kind.c
+    bootstrap/src/org/frostlanguage/frostc/ClassDecl/Resolution.c
+    bootstrap/src/org/frostlanguage/frostc/CodeGenerator.c
+    bootstrap/src/org/frostlanguage/frostc/Compiler.c
+    bootstrap/src/org/frostlanguage/frostc/Compiler/_Closure2.c
+    bootstrap/src/org/frostlanguage/frostc/Compiler/AutoAtPreFlag.c
+    bootstrap/src/org/frostlanguage/frostc/Compiler/AutoContext.c
+    bootstrap/src/org/frostlanguage/frostc/Compiler/AutoScope.c
+    bootstrap/src/org/frostlanguage/frostc/Compiler/AutoUnrefs.c
+    bootstrap/src/org/frostlanguage/frostc/Compiler/BinaryKey.c
+    bootstrap/src/org/frostlanguage/frostc/Compiler/Capture.c
+    bootstrap/src/org/frostlanguage/frostc/Compiler/CoercionKey.c
+    bootstrap/src/org/frostlanguage/frostc/Compiler/EnclosingContext.c
+    bootstrap/src/org/frostlanguage/frostc/Compiler/Error.c
+    bootstrap/src/org/frostlanguage/frostc/Compiler/Resolution.c
+    bootstrap/src/org/frostlanguage/frostc/Compiler/Settings.c
+    bootstrap/src/org/frostlanguage/frostc/Compiler/TypeContext.c
+    bootstrap/src/org/frostlanguage/frostc/expression/And.c
+    bootstrap/src/org/frostlanguage/frostc/expression/ArrayLiteral.c
+    bootstrap/src/org/frostlanguage/frostc/expression/AtPre.c
+    bootstrap/src/org/frostlanguage/frostc/expression/AtReturn.c
+    bootstrap/src/org/frostlanguage/frostc/expression/Binary.c
+    bootstrap/src/org/frostlanguage/frostc/expression/Binary/_Closure2.c
+    bootstrap/src/org/frostlanguage/frostc/expression/Call.c
+    bootstrap/src/org/frostlanguage/frostc/expression/Closure.c
+    bootstrap/src/org/frostlanguage/frostc/expression/Dot.c
+    bootstrap/src/org/frostlanguage/frostc/expression/Identifier.c
+    bootstrap/src/org/frostlanguage/frostc/expression/IntLiteral.c
+    bootstrap/src/org/frostlanguage/frostc/expression/Or.c
+    bootstrap/src/org/frostlanguage/frostc/FieldDecl.c
+    bootstrap/src/org/frostlanguage/frostc/FieldDecl/Kind.c
+    bootstrap/src/org/frostlanguage/frostc/FixedArray.c
+    bootstrap/src/org/frostlanguage/frostc/FixedArray/FixedArrayIterator.c
+    bootstrap/src/org/frostlanguage/frostc/HCodeGenerator.c
+    bootstrap/src/org/frostlanguage/frostc/HTMLProcessor.c
+    bootstrap/src/org/frostlanguage/frostc/IR.c
+    bootstrap/src/org/frostlanguage/frostc/IR/Block.c
+    bootstrap/src/org/frostlanguage/frostc/IR/Block/ID.c
+    bootstrap/src/org/frostlanguage/frostc/IR/Statement.c
+    bootstrap/src/org/frostlanguage/frostc/IR/Statement/ID.c
+    bootstrap/src/org/frostlanguage/frostc/IR/Value.c
+    bootstrap/src/org/frostlanguage/frostc/LLVMCodeGenerator.c
+    bootstrap/src/org/frostlanguage/frostc/LLVMCodeGenerator/ClassConstant.c
+    bootstrap/src/org/frostlanguage/frostc/LLVMCodeGenerator/MethodShim.c
+    bootstrap/src/org/frostlanguage/frostc/LLVMCodeGenerator/OpClass.c
+    bootstrap/src/org/frostlanguage/frostc/lvalue/ChoiceFieldLValue.c
+    bootstrap/src/org/frostlanguage/frostc/lvalue/FieldLValue.c
+    bootstrap/src/org/frostlanguage/frostc/lvalue/IndexLValue.c
+    bootstrap/src/org/frostlanguage/frostc/lvalue/LValue.c
+    bootstrap/src/org/frostlanguage/frostc/lvalue/VariableLValue.c
+    bootstrap/src/org/frostlanguage/frostc/Main.c
+    bootstrap/src/org/frostlanguage/frostc/Main/Arguments.c
+    bootstrap/src/org/frostlanguage/frostc/Main/Format.c
+    bootstrap/src/org/frostlanguage/frostc/MethodDecl.c
+    bootstrap/src/org/frostlanguage/frostc/MethodDecl/GenericParameter.c
+    bootstrap/src/org/frostlanguage/frostc/MethodDecl/Kind.c
+    bootstrap/src/org/frostlanguage/frostc/MethodDecl/Parameter.c
+    bootstrap/src/org/frostlanguage/frostc/MethodRef.c
+    bootstrap/src/org/frostlanguage/frostc/Methods.c
+    bootstrap/src/org/frostlanguage/frostc/Pair.c
+    bootstrap/src/org/frostlanguage/frostc/frostdoc/DummyCodeGenerator.c
+    bootstrap/src/org/frostlanguage/frostc/frostdoc/LinkResolver.c
+    bootstrap/src/org/frostlanguage/frostc/frostdoc/Markdown.c
+    bootstrap/src/org/frostlanguage/frostc/frostdoc/Markdown/_Closure2.c
+    bootstrap/src/org/frostlanguage/frostc/frostdoc/Markdown/_Closure4.c
+    bootstrap/src/org/frostlanguage/frostc/frostdoc/Markdown/_Closure6.c
+    bootstrap/src/org/frostlanguage/frostc/frostdoc/Markdown/_Closure9.c
+    bootstrap/src/org/frostlanguage/frostc/frostdoc/Markdown/_Closure12.c
+    bootstrap/src/org/frostlanguage/frostc/frostdoc/Markdown/_Closure14.c
+    bootstrap/src/org/frostlanguage/frostc/frostdoc/Markdown/_Closure16.c
+    bootstrap/src/org/frostlanguage/frostc/frostdoc/Markdown/_Closure18.c
+    bootstrap/src/org/frostlanguage/frostc/frostdoc/Markdown/_Closure20.c
+    bootstrap/src/org/frostlanguage/frostc/frostdoc/Markdown/_Closure22.c
+    bootstrap/src/org/frostlanguage/frostc/frostdoc/Markdown/_Closure24.c
+    bootstrap/src/org/frostlanguage/frostc/frostdoc/Markdown/_Closure26.c
+    bootstrap/src/org/frostlanguage/frostc/frostdoc/Markdown/_Closure28.c
+    bootstrap/src/org/frostlanguage/frostc/frostdoc/Markdown/_Closure30.c
+    bootstrap/src/org/frostlanguage/frostc/frostdoc/Markdown/_Closure32.c
+    bootstrap/src/org/frostlanguage/frostc/frostdoc/Markdown/CodeReplacer.c
+    bootstrap/src/org/frostlanguage/frostc/frostdoc/Markdown/HTMLToken.c
+    bootstrap/src/org/frostlanguage/frostc/frostdoc/Markdown/LinkDefinition.c
+    bootstrap/src/org/frostlanguage/frostc/frostdoc/Protector.c
+    bootstrap/src/org/frostlanguage/frostc/parser/Lexer.c
+    bootstrap/src/org/frostlanguage/frostc/parser/Parser.c
+    bootstrap/src/org/frostlanguage/frostc/parser/Parser/AutoSyntaxHighlight.c
+    bootstrap/src/org/frostlanguage/frostc/parser/SyntaxHighlighter.c
+    bootstrap/src/org/frostlanguage/frostc/parser/SyntaxHighlighter/Kind.c
+    bootstrap/src/org/frostlanguage/frostc/parser/Token.c
+    bootstrap/src/org/frostlanguage/frostc/parser/Token/Kind.c
+    bootstrap/src/org/frostlanguage/frostc/Position.c
+    bootstrap/src/org/frostlanguage/frostc/Scanner.c
+    bootstrap/src/org/frostlanguage/frostc/statement/Assert.c
+    bootstrap/src/org/frostlanguage/frostc/statement/Assignment.c
+    bootstrap/src/org/frostlanguage/frostc/statement/Break.c
+    bootstrap/src/org/frostlanguage/frostc/statement/Continue.c
+    bootstrap/src/org/frostlanguage/frostc/statement/Do.c
+    bootstrap/src/org/frostlanguage/frostc/statement/For.c
+    bootstrap/src/org/frostlanguage/frostc/statement/If.c
+    bootstrap/src/org/frostlanguage/frostc/statement/InnerMethod.c
+    bootstrap/src/org/frostlanguage/frostc/statement/Loop.c
+    bootstrap/src/org/frostlanguage/frostc/statement/Match.c
+    bootstrap/src/org/frostlanguage/frostc/statement/Return.c
+    bootstrap/src/org/frostlanguage/frostc/statement/Var.c
+    bootstrap/src/org/frostlanguage/frostc/statement/While.c
+    bootstrap/src/org/frostlanguage/frostc/Symbol.c
+    bootstrap/src/org/frostlanguage/frostc/Symbol/Kind.c
+    bootstrap/src/org/frostlanguage/frostc/SymbolTable.c
+    bootstrap/src/org/frostlanguage/frostc/Type.c
+    bootstrap/src/org/frostlanguage/frostc/Type/Kind.c
+    bootstrap/src/org/frostlanguage/frostc/Variable.c
+    bootstrap/src/org/frostlanguage/frostc/Variable/Kind.c
+    bootstrap/src/org/frostlanguage/frostc/Variable/Storage.c
+    bootstrap/src/org/frostlanguage/plex/runtime/DFA.c
+    bootstrap/src/org/frostlanguage/plex/runtime/RawToken.c
+    bootstrap/src/org/frostlanguage/regex/RegexLexer.c
+    bootstrap/src/org/frostlanguage/regex/RegexParser.c
+    bootstrap/src/org/frostlanguage/regex/RegexToken.c
+    bootstrap/src/org/frostlanguage/regex/RegexToken/Kind.c
+    bootstrap/src/frost/collections/Array.c
+    bootstrap/src/frost/collections/Collection.c
+    bootstrap/src/frost/collections/CollectionView.c
+    bootstrap/src/frost/collections/CollectionWriter.c
+    bootstrap/src/frost/collections/HashMap.c
+    bootstrap/src/frost/collections/HashMap/Entry.c
+    bootstrap/src/frost/collections/HashMap/EntryIterator.c
+    bootstrap/src/frost/collections/HashMap/KeyIterator.c
+    bootstrap/src/frost/collections/HashMap/ValueIterator.c
+    bootstrap/src/frost/collections/HashSet.c
+    bootstrap/src/frost/collections/IdentityMap.c
+    bootstrap/src/frost/collections/IdentityMap/Entry.c
+    bootstrap/src/frost/collections/ImmutableArray.c
+    bootstrap/src/frost/collections/ImmutableArray/ImmutableArrayIterator.c
+    bootstrap/src/frost/collections/Iterable.c
+    bootstrap/src/frost/collections/Iterator.c
+    bootstrap/src/frost/collections/Iterator/FilterIterator.c
+    bootstrap/src/frost/collections/Iterator/MapIterator.c
+    bootstrap/src/frost/collections/Iterator/RangeIterator.c
+    bootstrap/src/frost/collections/Key.c
+    bootstrap/src/frost/collections/List.c
+    bootstrap/src/frost/collections/ListView.c
+    bootstrap/src/frost/collections/ListView/ListIterator.c
+    bootstrap/src/frost/collections/ListWriter.c
+    bootstrap/src/frost/collections/Map.c
+    bootstrap/src/frost/collections/MapView.c
+    bootstrap/src/frost/collections/MapWriter.c
+    bootstrap/src/frost/collections/SpecializedArray.LTorg/frostlanguage/frostc/parser/Token.GT.c
+    bootstrap/src/frost/collections/SpecializedArray.LTorg/frostlanguage/regex/RegexToken.GT.c
+    bootstrap/src/frost/collections/SpecializedArrayIterator.LTorg/frostlanguage/frostc/parser/Token.GT.c
+    bootstrap/src/frost/collections/SpecializedArrayIterator.LTorg/frostlanguage/regex/RegexToken.GT.c
+    bootstrap/src/frost/collections/Stack.c
+    bootstrap/src/frost/collections/Stack/StackIterator.c
+    bootstrap/src/frost/core/Bit.c
+    bootstrap/src/frost/core/Char16.c
+    bootstrap/src/frost/core/Char32.c
+    bootstrap/src/frost/core/Char8.c
+    bootstrap/src/frost/core/Class.c
+    bootstrap/src/frost/core/Comparable.c
+    bootstrap/src/frost/core/Equatable.c
+    bootstrap/src/frost/core/Error.c
+    bootstrap/src/frost/core/Formattable.c
+    bootstrap/src/frost/core/Immutable.c
+    bootstrap/src/frost/core/Int16.c
+    bootstrap/src/frost/core/Int32.c
+    bootstrap/src/frost/core/Int64.c
+    bootstrap/src/frost/core/Int8.c
+    bootstrap/src/frost/core/Matcher.c
+    bootstrap/src/frost/core/Maybe.c
+    bootstrap/src/frost/core/Method.c
+    bootstrap/src/frost/core/MutableMethod.c
+    bootstrap/src/frost/core/MutableString.c
+    bootstrap/src/frost/core/MutableString/Index.c
+    bootstrap/src/frost/core/Object.c
+    bootstrap/src/frost/core/Frost.c
+    bootstrap/src/frost/core/Range.LTfrost/core/Int16.GT.c
+    bootstrap/src/frost/core/Range.LTfrost/core/Int32.GT.c
+    bootstrap/src/frost/core/Range.LTfrost/core/Int64.GT.c
+    bootstrap/src/frost/core/Range.LTfrost/core/Int64.Q.GT.c
+    bootstrap/src/frost/core/Range.LTfrost/core/Int8.GT.c
+    bootstrap/src/frost/core/Range.LTfrost/core/MutableString/Index.GT.c
+    bootstrap/src/frost/core/Range.LTfrost/core/MutableString/Index.Q.GT.c
+    bootstrap/src/frost/core/Range.LTfrost/core/String/Index.GT.c
+    bootstrap/src/frost/core/Range.LTfrost/core/String/Index.Q.GT.c
+    bootstrap/src/frost/core/Range.LTfrost/core/UInt16.GT.c
+    bootstrap/src/frost/core/Range.LTfrost/core/UInt32.GT.c
+    bootstrap/src/frost/core/Range.LTfrost/core/UInt64.GT.c
+    bootstrap/src/frost/core/Range.LTfrost/core/UInt8.GT.c
+    bootstrap/src/frost/core/Real32.c
+    bootstrap/src/frost/core/Real64.c
+    bootstrap/src/frost/core/RegularExpression.c
+    bootstrap/src/frost/core/SteppedRange.LTfrost/core/Int16.Cfrost/core/Int16.GT.c
+    bootstrap/src/frost/core/SteppedRange.LTfrost/core/Int32.Cfrost/core/Int32.GT.c
+    bootstrap/src/frost/core/SteppedRange.LTfrost/core/Int64.Cfrost/core/Int64.GT.c
+    bootstrap/src/frost/core/SteppedRange.LTfrost/core/Int64.Q.Cfrost/core/Int64.GT.c
+    bootstrap/src/frost/core/SteppedRange.LTfrost/core/Int8.Cfrost/core/Int8.GT.c
+    bootstrap/src/frost/core/SteppedRange.LTfrost/core/String/Index.Q.Cfrost/core/Int64.GT.c
+    bootstrap/src/frost/core/SteppedRange.LTfrost/core/UInt16.Cfrost/core/UInt16.GT.c
+    bootstrap/src/frost/core/SteppedRange.LTfrost/core/UInt32.Cfrost/core/UInt32.GT.c
+    bootstrap/src/frost/core/SteppedRange.LTfrost/core/UInt64.Cfrost/core/UInt64.GT.c
+    bootstrap/src/frost/core/SteppedRange.LTfrost/core/UInt8.Cfrost/core/UInt8.GT.c
+    bootstrap/src/frost/core/String.c
+    bootstrap/src/frost/core/String/Index.c
+    bootstrap/src/frost/core/String/Match.c
+    bootstrap/src/frost/core/String/MatchIterator.c
+    bootstrap/src/frost/core/String/RegexMatchIterator.c
+    bootstrap/src/frost/core/String/UTF16Iterator.c
+    bootstrap/src/frost/core/String/UTF32Iterator.c
+    bootstrap/src/frost/core/String/UTF8Iterator.c
+    bootstrap/src/frost/core/String/UTF8List.c
+    bootstrap/src/frost/core/System.c
+    bootstrap/src/frost/core/System/Process.c
+    bootstrap/src/frost/core/UInt16.c
+    bootstrap/src/frost/core/UInt32.c
+    bootstrap/src/frost/core/UInt64.c
+    bootstrap/src/frost/core/UInt8.c
+    bootstrap/src/frost/core/Value.c
+    bootstrap/src/frost/core/Weak.c
+    bootstrap/src/frost/io/ByteOrder.c
+    bootstrap/src/frost/io/Console.c
+    bootstrap/src/frost/io/File.c
+    bootstrap/src/frost/io/FileInputStream.c
+    bootstrap/src/frost/io/FileOutputStream.c
+    bootstrap/src/frost/io/IndentedOutputStream.c
+    bootstrap/src/frost/io/InputStream.c
+    bootstrap/src/frost/io/InputStream/LineIterator.c
+    bootstrap/src/frost/io/LineNumberInputStream.c
+    bootstrap/src/frost/io/MemoryInputStream.c
+    bootstrap/src/frost/io/MemoryOutputStream.c
+    bootstrap/src/frost/io/OutputStream.c
+    bootstrap/src/frost/io/PushbackInputStream.c
+    bootstrap/src/frost/json/JSON.c
+    bootstrap/src/frost/json/JSON/PathKey.c
+    bootstrap/src/frost/json/JSONParser.c
+    bootstrap/src/frost/math/Random.c
+    bootstrap/src/frost/math/XorShift128Plus.c
+    bootstrap/src/frost/threads/Lock.c
+    bootstrap/src/frost/threads/MessageQueue.c
+    bootstrap/src/frost/threads/MessageQueue/Message.c
+    bootstrap/src/frost/threads/Notifier.c
+    bootstrap/src/frost/threads/ScopedLock.c
+    bootstrap/src/frost/threads/Thread.c
+    bootstrap/src/frost/unsafe/UnsafeMessageQueue.c
+    bootstrap/src/frost/unsafe/UnsafeMessageQueue/Message.c
+    bootstrap/src/frostlib.c
 )
-target_link_libraries(bootstrap ${SYSTEM_LIBRARIES} c_panda ${ICU_LIBRARIES})
+target_link_libraries(bootstrap ${SYSTEM_LIBRARIES} c_frost ${ICU_LIBRARIES})
 set_target_properties(bootstrap PROPERTIES LINKER_LANGUAGE CXX)
 
-function(compile_panda_sources out_var)
+function(compile_frost_sources out_var)
     set(result)
     foreach(input ${ARGN})
         get_filename_component(outputDir ${input} DIRECTORY)
@@ -470,124 +470,124 @@ function(compile_panda_sources out_var)
 endfunction()
 
 set(public_source
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/Array.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/Collection.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/CollectionView.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/CollectionWriter.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/HashMap.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/HashSet.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/IdentityMap.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/ImmutableArray.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/Iterable.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/Iterator.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/Key.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/List.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/ListView.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/ListWriter.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/Map.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/MapView.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/MapWriter.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/Stack.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Bit.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Char8.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Char16.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Char32.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Class.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Comparable.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Equatable.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Error.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Formattable.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Immutable.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Int16.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Int32.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Int64.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Int8.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/UInt16.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/UInt32.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/UInt64.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/UInt8.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Matcher.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Maybe.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/MutableString.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Object.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Real32.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Real64.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/RegularExpression.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/String.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/System.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Value.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Weak.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/io/ByteOrder.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/io/Console.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/io/File.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/io/IndentedOutputStream.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/io/InputStream.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/io/LineNumberInputStream.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/io/MemoryInputStream.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/io/MemoryOutputStream.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/io/OutputStream.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/io/PushbackInputStream.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/json/JSON.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/json/JSONParser.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/math/Random.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/math/XorShift128Plus.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/threads/Lock.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/threads/Notifier.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/threads/MessageQueue.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/threads/ScopedLock.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/threads/Thread.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/unsafe/UnsafeMessageQueue.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/pandalanguage/json/Lexer.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/pandalanguage/json/Position.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/pandalanguage/json/Token.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/pandalanguage/panda/IntBitIterator.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/pandalanguage/panda/Int8List.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/pandalanguage/panda/Int16List.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/pandalanguage/panda/Int32List.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/pandalanguage/panda/Int64List.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/pandalanguage/panda/UInt8List.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/pandalanguage/panda/UInt16List.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/pandalanguage/panda/UInt32List.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/pandalanguage/panda/UInt64List.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/pandalanguage/plex/runtime/DFA.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/pandalanguage/plex/runtime/RawToken.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/collections/Array.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/collections/Collection.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/collections/CollectionView.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/collections/CollectionWriter.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/collections/HashMap.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/collections/HashSet.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/collections/IdentityMap.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/collections/ImmutableArray.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/collections/Iterable.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/collections/Iterator.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/collections/Key.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/collections/List.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/collections/ListView.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/collections/ListWriter.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/collections/Map.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/collections/MapView.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/collections/MapWriter.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/collections/Stack.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/Bit.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/Char8.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/Char16.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/Char32.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/Class.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/Comparable.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/Equatable.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/Error.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/Formattable.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/Immutable.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/Int16.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/Int32.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/Int64.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/Int8.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/UInt16.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/UInt32.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/UInt64.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/UInt8.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/Matcher.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/Maybe.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/MutableString.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/Object.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/Real32.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/Real64.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/RegularExpression.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/String.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/System.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/Value.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/Weak.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/io/ByteOrder.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/io/Console.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/io/File.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/io/IndentedOutputStream.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/io/InputStream.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/io/LineNumberInputStream.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/io/MemoryInputStream.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/io/MemoryOutputStream.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/io/OutputStream.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/io/PushbackInputStream.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/json/JSON.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/json/JSONParser.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/math/Random.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/math/XorShift128Plus.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/threads/Lock.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/threads/Notifier.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/threads/MessageQueue.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/threads/ScopedLock.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/threads/Thread.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/unsafe/UnsafeMessageQueue.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/frostlanguage/json/Lexer.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/frostlanguage/json/Position.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/frostlanguage/json/Token.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/frostlanguage/frost/IntBitIterator.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/frostlanguage/frost/Int8List.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/frostlanguage/frost/Int16List.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/frostlanguage/frost/Int32List.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/frostlanguage/frost/Int64List.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/frostlanguage/frost/UInt8List.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/frostlanguage/frost/UInt16List.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/frostlanguage/frost/UInt32List.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/frostlanguage/frost/UInt64List.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/frostlanguage/plex/runtime/DFA.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/frostlanguage/plex/runtime/RawToken.frost
 )
 
 set(core_source
     ${public_source}
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Method.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/MutableMethod.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Panda.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/io/FileInputStream.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/io/FileOutputStream.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/Method.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/MutableMethod.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/Frost.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/io/FileInputStream.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/io/FileOutputStream.frost
 )
 
-compile_panda_sources(panda_objects
+compile_frost_sources(frost_objects
     ${core_source}
 )
 
-add_library(panda
-    src/c/pandalib.c
-    ${panda_objects}
+add_library(frost
+    src/c/frostlib.c
+    ${frost_objects}
 )
 
 add_custom_command(
     OUTPUT writeNumbers
     COMMAND ${CMAKE_CURRENT_BINARY_DIR}/bootstrap ${BOOTSTRAP_ARGS} -o writeNumbers
-            ${CMAKE_CURRENT_SOURCE_DIR}/src/tools/WriteNumbers.panda
-    DEPENDS bootstrap src/tools/WriteNumbers.panda
+            ${CMAKE_CURRENT_SOURCE_DIR}/src/tools/WriteNumbers.frost
+    DEPENDS bootstrap src/tools/WriteNumbers.frost
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
 
 add_custom_command(
-    OUTPUT src/panda/core/Int8.panda
-           src/panda/core/Int16.panda
-           src/panda/core/Int32.panda
-           src/panda/core/Int64.panda
-           src/panda/core/UInt8.panda
-           src/panda/core/UInt16.panda
-           src/panda/core/UInt32.panda
-           src/panda/core/UInt64.panda
+    OUTPUT src/frost/core/Int8.frost
+           src/frost/core/Int16.frost
+           src/frost/core/Int32.frost
+           src/frost/core/Int64.frost
+           src/frost/core/UInt8.frost
+           src/frost/core/UInt16.frost
+           src/frost/core/UInt32.frost
+           src/frost/core/UInt64.frost
     COMMAND ${CMAKE_CURRENT_BINARY_DIR}/writeNumbers
     DEPENDS writeNumbers
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
@@ -596,13 +596,13 @@ add_custom_command(
 add_custom_command(
     OUTPUT writeOperators
     COMMAND ${CMAKE_CURRENT_BINARY_DIR}/bootstrap ${BOOTSTRAP_ARGS} -o writeOperators
-            ${CMAKE_CURRENT_SOURCE_DIR}/src/tools/WriteOperators.panda
-    DEPENDS src/tools/WriteOperators.panda pandac
+            ${CMAKE_CURRENT_SOURCE_DIR}/src/tools/WriteOperators.frost
+    DEPENDS src/tools/WriteOperators.frost frostc
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
 
 add_custom_command(
-    OUTPUT test/tests/Operators.panda
+    OUTPUT test/tests/Operators.frost
            Operators.c
     COMMAND ${CMAKE_CURRENT_BINARY_DIR}/writeOperators
     DEPENDS writeOperators
@@ -621,17 +621,17 @@ add_custom_command(
 )
 
 add_custom_target(generate_code
-    DEPENDS src/panda/core/Int8.panda
-            src/panda/core/Int16.panda
-            src/panda/core/Int32.panda
-            src/panda/core/Int64.panda
-            src/panda/core/UInt8.panda
-            src/panda/core/UInt16.panda
-            src/panda/core/UInt32.panda
-            src/panda/core/UInt64.panda
-            src/parser/org/pandalanguage/json/Lexer.panda
-            src/parser/org/pandalanguage/json/Token.panda
-            test/tests/Operators.panda
+    DEPENDS src/frost/core/Int8.frost
+            src/frost/core/Int16.frost
+            src/frost/core/Int32.frost
+            src/frost/core/Int64.frost
+            src/frost/core/UInt8.frost
+            src/frost/core/UInt16.frost
+            src/frost/core/UInt32.frost
+            src/frost/core/UInt64.frost
+            src/parser/org/frostlanguage/json/Lexer.frost
+            src/parser/org/frostlanguage/json/Token.frost
+            test/tests/Operators.frost
             test/tests/Operators.expected
             Operators.c
 )
@@ -655,77 +655,77 @@ function(compile_plex_sources out_var)
 endfunction()
 
 compile_plex_sources(plex_objects
-    src/parser/org/pandalanguage/plex/AcceptState.panda
-    src/parser/org/pandalanguage/plex/Any.panda
-    src/parser/org/pandalanguage/plex/AnyState.panda
-    src/parser/org/pandalanguage/plex/CharSet.panda
-    src/parser/org/pandalanguage/plex/Concat.panda
-    src/parser/org/pandalanguage/plex/DFAState.panda
-    src/parser/org/pandalanguage/plex/DFAStateLabel.panda
-    src/parser/org/pandalanguage/plex/NFA.panda
-    src/parser/org/pandalanguage/plex/NFAtoDFA.panda
-    src/parser/org/pandalanguage/plex/Node.panda
-    src/parser/org/pandalanguage/plex/Option.panda
-    src/parser/org/pandalanguage/plex/PLex.panda
-    src/parser/org/pandalanguage/plex/Plus.panda
-    src/parser/org/pandalanguage/plex/Regex.panda
-    src/parser/org/pandalanguage/plex/RemappedState.panda
-    src/parser/org/pandalanguage/plex/SingleCharState.panda
-    src/parser/org/pandalanguage/plex/SetNode.panda
-    src/parser/org/pandalanguage/plex/SingleChar.panda
-    src/parser/org/pandalanguage/plex/SingleCharState.panda
-    src/parser/org/pandalanguage/plex/Star.panda
-    src/parser/org/pandalanguage/plex/State.panda
-    src/parser/org/pandalanguage/plex/TableState.panda
-    src/parser/org/pandalanguage/plex/Union.panda
+    src/parser/org/frostlanguage/plex/AcceptState.frost
+    src/parser/org/frostlanguage/plex/Any.frost
+    src/parser/org/frostlanguage/plex/AnyState.frost
+    src/parser/org/frostlanguage/plex/CharSet.frost
+    src/parser/org/frostlanguage/plex/Concat.frost
+    src/parser/org/frostlanguage/plex/DFAState.frost
+    src/parser/org/frostlanguage/plex/DFAStateLabel.frost
+    src/parser/org/frostlanguage/plex/NFA.frost
+    src/parser/org/frostlanguage/plex/NFAtoDFA.frost
+    src/parser/org/frostlanguage/plex/Node.frost
+    src/parser/org/frostlanguage/plex/Option.frost
+    src/parser/org/frostlanguage/plex/PLex.frost
+    src/parser/org/frostlanguage/plex/Plus.frost
+    src/parser/org/frostlanguage/plex/Regex.frost
+    src/parser/org/frostlanguage/plex/RemappedState.frost
+    src/parser/org/frostlanguage/plex/SingleCharState.frost
+    src/parser/org/frostlanguage/plex/SetNode.frost
+    src/parser/org/frostlanguage/plex/SingleChar.frost
+    src/parser/org/frostlanguage/plex/SingleCharState.frost
+    src/parser/org/frostlanguage/plex/Star.frost
+    src/parser/org/frostlanguage/plex/State.frost
+    src/parser/org/frostlanguage/plex/TableState.frost
+    src/parser/org/frostlanguage/plex/Union.frost
 )
 
 add_executable(plex
     ${plex_objects}
 )
-target_link_libraries(plex panda ${SYSTEM_LIBRARIES} ${ICU_LIBRARIES})
+target_link_libraries(plex frost ${SYSTEM_LIBRARIES} ${ICU_LIBRARIES})
 set_target_properties(plex PROPERTIES LINKER_LANGUAGE CXX)
 
 add_custom_command(
-    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/org/pandalanguage/pandac/parser/Lexer.panda
-           ${CMAKE_CURRENT_BINARY_DIR}/org/pandalanguage/pandac/parser/Token.panda
-    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/plex ${CMAKE_CURRENT_SOURCE_DIR}/src/parser/Panda.plex
-            org.pandalanguage.pandac.parser.Token
-            ${CMAKE_CURRENT_BINARY_DIR}/org/pandalanguage/pandac/parser/Token.panda
-            org.pandalanguage.pandac.parser.Lexer
-            ${CMAKE_CURRENT_BINARY_DIR}/org/pandalanguage/pandac/parser/Lexer.panda
-            org.pandalanguage.pandac.Position
-    DEPENDS plex src/parser/Panda.plex
+    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/org/frostlanguage/frostc/parser/Lexer.frost
+           ${CMAKE_CURRENT_BINARY_DIR}/org/frostlanguage/frostc/parser/Token.frost
+    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/plex ${CMAKE_CURRENT_SOURCE_DIR}/src/parser/Frost.plex
+            org.frostlanguage.frostc.parser.Token
+            ${CMAKE_CURRENT_BINARY_DIR}/org/frostlanguage/frostc/parser/Token.frost
+            org.frostlanguage.frostc.parser.Lexer
+            ${CMAKE_CURRENT_BINARY_DIR}/org/frostlanguage/frostc/parser/Lexer.frost
+            org.frostlanguage.frostc.Position
+    DEPENDS plex src/parser/Frost.plex
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
 
 add_custom_command(
-    OUTPUT src/parser/org/pandalanguage/json/Lexer.panda
-           src/parser/org/pandalanguage/json/Token.panda
+    OUTPUT src/parser/org/frostlanguage/json/Lexer.frost
+           src/parser/org/frostlanguage/json/Token.frost
     COMMAND ${CMAKE_CURRENT_BINARY_DIR}/plex ${CMAKE_CURRENT_SOURCE_DIR}/src/parser/JSON.plex
-            org.pandalanguage.json.Token
-            ${CMAKE_CURRENT_SOURCE_DIR}/src/org/pandalanguage/json/Token.panda
-            org.pandalanguage.json.Lexer
-            ${CMAKE_CURRENT_SOURCE_DIR}/src/org/pandalanguage/json/Lexer.panda
-            org.pandalanguage.json.Position
+            org.frostlanguage.json.Token
+            ${CMAKE_CURRENT_SOURCE_DIR}/src/org/frostlanguage/json/Token.frost
+            org.frostlanguage.json.Lexer
+            ${CMAKE_CURRENT_SOURCE_DIR}/src/org/frostlanguage/json/Lexer.frost
+            org.frostlanguage.json.Position
     DEPENDS plex src/parser/JSON.plex
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
 
 add_custom_command(
-    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/org/pandalanguage/regex/RegexLexer.panda
-           ${CMAKE_CURRENT_BINARY_DIR}/org/pandalanguage/regex/RegexToken.panda
+    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/org/frostlanguage/regex/RegexLexer.frost
+           ${CMAKE_CURRENT_BINARY_DIR}/org/frostlanguage/regex/RegexToken.frost
     COMMAND ${CMAKE_CURRENT_BINARY_DIR}/plex ${CMAKE_CURRENT_SOURCE_DIR}/src/parser/Regex.plex
-            org.pandalanguage.regex.RegexToken
-            ${CMAKE_CURRENT_BINARY_DIR}/org/pandalanguage/regex/RegexToken.panda
-            org.pandalanguage.regex.RegexLexer
-            ${CMAKE_CURRENT_BINARY_DIR}/org/pandalanguage/regex/RegexLexer.panda
-            org.pandalanguage.pandac.Position
+            org.frostlanguage.regex.RegexToken
+            ${CMAKE_CURRENT_BINARY_DIR}/org/frostlanguage/regex/RegexToken.frost
+            org.frostlanguage.regex.RegexLexer
+            ${CMAKE_CURRENT_BINARY_DIR}/org/frostlanguage/regex/RegexLexer.frost
+            org.frostlanguage.frostc.Position
     DEPENDS plex src/parser/Regex.plex
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
 
-function(compile_pandac_sources out_var)
+function(compile_frostc_sources out_var)
     set(result)
     foreach(input ${ARGN})
         get_filename_component(outputDir ${input} DIRECTORY)
@@ -736,10 +736,10 @@ function(compile_pandac_sources out_var)
             COMMAND ${CMAKE_CURRENT_BINARY_DIR}/bootstrap ${BOOTSTRAP_ARGS}
                     -i ${CMAKE_CURRENT_SOURCE_DIR}/src/parser
                     -i ${CMAKE_CURRENT_BINARY_DIR}
-                    -i ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac
+                    -i ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc
                     -f o -o ${output} ${input}
             DEPENDS bootstrap ${input}
-                    ${CMAKE_CURRENT_BINARY_DIR}/org/pandalanguage/pandac/parser/Token.panda
+                    ${CMAKE_CURRENT_BINARY_DIR}/org/frostlanguage/frostc/parser/Token.frost
             WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         )
         list(APPEND result ${output})
@@ -747,90 +747,90 @@ function(compile_pandac_sources out_var)
     set(${out_var} "${result}" PARENT_SCOPE)
 endfunction()
 
-set(pandac_source
-    ${CMAKE_CURRENT_BINARY_DIR}/org/pandalanguage/pandac/Config.panda
-    ${CMAKE_CURRENT_BINARY_DIR}/org/pandalanguage/pandac/parser/Lexer.panda
-    ${CMAKE_CURRENT_BINARY_DIR}/org/pandalanguage/pandac/parser/Token.panda
-    ${CMAKE_CURRENT_BINARY_DIR}/org/pandalanguage/regex/RegexLexer.panda
-    ${CMAKE_CURRENT_BINARY_DIR}/org/pandalanguage/regex/RegexToken.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/Alias.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/Annotations.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/ASTNode.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/CCodeGenerator.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/ChoiceCase.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/ClassDecl.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/CodeGenerator.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/Compiler.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/expression/And.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/expression/ArrayLiteral.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/expression/AtPre.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/expression/AtReturn.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/expression/Binary.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/expression/Call.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/expression/Closure.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/expression/Dot.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/expression/Identifier.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/expression/IntLiteral.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/expression/Or.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/FieldDecl.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/FixedArray.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/HCodeGenerator.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/HTMLProcessor.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/IR.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/LLVMCodeGenerator.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/lvalue/ChoiceFieldLValue.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/lvalue/FieldLValue.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/lvalue/IndexLValue.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/lvalue/LValue.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/lvalue/VariableLValue.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/MethodDecl.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/MethodRef.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/Methods.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/Pair.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/Position.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/Scanner.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/Symbol.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/SymbolTable.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/Type.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/Variable.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/pandadoc/DummyCodeGenerator.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/pandadoc/LinkResolver.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/pandadoc/Markdown.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/parser/Parser.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/parser/SyntaxHighlighter.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/statement/Assert.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/statement/Assignment.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/statement/Break.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/statement/Continue.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/statement/Do.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/statement/For.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/statement/If.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/statement/InnerMethod.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/statement/Loop.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/statement/Match.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/statement/Return.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/statement/Var.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/statement/While.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/regex/RegexParser.panda
+set(frostc_source
+    ${CMAKE_CURRENT_BINARY_DIR}/org/frostlanguage/frostc/Config.frost
+    ${CMAKE_CURRENT_BINARY_DIR}/org/frostlanguage/frostc/parser/Lexer.frost
+    ${CMAKE_CURRENT_BINARY_DIR}/org/frostlanguage/frostc/parser/Token.frost
+    ${CMAKE_CURRENT_BINARY_DIR}/org/frostlanguage/regex/RegexLexer.frost
+    ${CMAKE_CURRENT_BINARY_DIR}/org/frostlanguage/regex/RegexToken.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/Alias.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/Annotations.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/ASTNode.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/CCodeGenerator.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/ChoiceCase.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/ClassDecl.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/CodeGenerator.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/Compiler.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/expression/And.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/expression/ArrayLiteral.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/expression/AtPre.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/expression/AtReturn.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/expression/Binary.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/expression/Call.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/expression/Closure.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/expression/Dot.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/expression/Identifier.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/expression/IntLiteral.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/expression/Or.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/FieldDecl.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/FixedArray.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/HCodeGenerator.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/HTMLProcessor.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/IR.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/LLVMCodeGenerator.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/lvalue/ChoiceFieldLValue.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/lvalue/FieldLValue.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/lvalue/IndexLValue.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/lvalue/LValue.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/lvalue/VariableLValue.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/MethodDecl.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/MethodRef.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/Methods.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/Pair.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/Position.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/Scanner.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/Symbol.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/SymbolTable.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/Type.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/Variable.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/frostdoc/DummyCodeGenerator.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/frostdoc/LinkResolver.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/frostdoc/Markdown.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/parser/Parser.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/parser/SyntaxHighlighter.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/statement/Assert.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/statement/Assignment.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/statement/Break.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/statement/Continue.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/statement/Do.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/statement/For.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/statement/If.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/statement/InnerMethod.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/statement/Loop.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/statement/Match.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/statement/Return.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/statement/Var.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/statement/While.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/regex/RegexParser.frost
 )
 
-compile_pandac_sources(pandac_objects
-    ${pandac_source}
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/Main.panda
+compile_frostc_sources(frostc_objects
+    ${frostc_source}
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/Main.frost
 )
 
-add_executable(pandac
-    ${pandac_objects}
+add_executable(frostc
+    ${frostc_objects}
 )
-target_link_libraries(pandac panda ${SYSTEM_LIBRARIES} ${ICU_LIBRARIES})
-set_target_properties(pandac PROPERTIES LINKER_LANGUAGE CXX)
+target_link_libraries(frostc frost ${SYSTEM_LIBRARIES} ${ICU_LIBRARIES})
+set_target_properties(frostc PROPERTIES LINKER_LANGUAGE CXX)
 
 function(create_headers out_var)
     set(result)
     foreach(rawInput ${ARGN})
-        if (${rawInput} MATCHES "^${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/.*")
-            file(RELATIVE_PATH input "${CMAKE_CURRENT_SOURCE_DIR}/src/pandac" ${rawInput})
-            set(working "${CMAKE_CURRENT_SOURCE_DIR}/src/pandac")
+        if (${rawInput} MATCHES "^${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/.*")
+            file(RELATIVE_PATH input "${CMAKE_CURRENT_SOURCE_DIR}/src/frostc" ${rawInput})
+            set(working "${CMAKE_CURRENT_SOURCE_DIR}/src/frostc")
         elseif (${rawInput} MATCHES "^${CMAKE_CURRENT_SOURCE_DIR}/src/parser/.*")
             file(RELATIVE_PATH input "${CMAKE_CURRENT_SOURCE_DIR}/src/parser" ${rawInput})
             set(working "${CMAKE_CURRENT_SOURCE_DIR}/src/parser")
@@ -844,9 +844,9 @@ function(create_headers out_var)
         get_filename_component(outputDir ${input} DIRECTORY)
         get_filename_component(outputName ${input} NAME_WE)
         set(output "${CMAKE_CURRENT_BINARY_DIR}/updated_bootstrap/include/${outputDir}/${outputName}.h")
-        file(RELATIVE_PATH pandacInc ${working} "${CMAKE_CURRENT_SOURCE_DIR}/src/pandac")
-        if (pandacInc STREQUAL "")
-            set(pandacInc ".")
+        file(RELATIVE_PATH frostcInc ${working} "${CMAKE_CURRENT_SOURCE_DIR}/src/frostc")
+        if (frostcInc STREQUAL "")
+            set(frostcInc ".")
         endif()
         file(RELATIVE_PATH parserInc ${working} "${CMAKE_CURRENT_SOURCE_DIR}/src/parser")
         if (parserInc STREQUAL "")
@@ -858,10 +858,10 @@ function(create_headers out_var)
         endif()
         add_custom_command(
             OUTPUT ${output}
-            COMMAND ${CMAKE_CURRENT_BINARY_DIR}/pandac -O ${OPTIMIZATION} -S ${SAFETY} -f h
-                    -i ${CMAKE_CURRENT_SOURCE_DIR}/src -i ${pandacInc} -i ${parserInc}
+            COMMAND ${CMAKE_CURRENT_BINARY_DIR}/frostc -O ${OPTIMIZATION} -S ${SAFETY} -f h
+                    -i ${CMAKE_CURRENT_SOURCE_DIR}/src -i ${frostcInc} -i ${parserInc}
                     -i ${buildInc} -o ${CMAKE_CURRENT_BINARY_DIR}/updated_bootstrap/include ${input}
-            DEPENDS ${rawInput} pandac
+            DEPENDS ${rawInput} frostc
             WORKING_DIRECTORY ${working}
         )
         list(APPEND result ${output})
@@ -869,18 +869,18 @@ function(create_headers out_var)
     set(${out_var} "${result}" PARENT_SCOPE)
 endfunction()
 
-create_headers(updated_pandac_headers
+create_headers(updated_frostc_headers
     ${core_source}
-    ${pandac_source}
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/Main.panda
+    ${frostc_source}
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/Main.frost
 )
 
-function(compile_panda_sources_to_c out_var)
+function(compile_frost_sources_to_c out_var)
     set(result)
     foreach(rawInput ${ARGN})
-        if (${rawInput} MATCHES "^${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/.*")
-            file(RELATIVE_PATH input "${CMAKE_CURRENT_SOURCE_DIR}/src/pandac" ${rawInput})
-            set(working "${CMAKE_CURRENT_SOURCE_DIR}/src/pandac")
+        if (${rawInput} MATCHES "^${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/.*")
+            file(RELATIVE_PATH input "${CMAKE_CURRENT_SOURCE_DIR}/src/frostc" ${rawInput})
+            set(working "${CMAKE_CURRENT_SOURCE_DIR}/src/frostc")
         elseif (${rawInput} MATCHES "^${CMAKE_CURRENT_SOURCE_DIR}/src/parser/.*")
             file(RELATIVE_PATH input "${CMAKE_CURRENT_SOURCE_DIR}/src/parser" ${rawInput})
             set(working "${CMAKE_CURRENT_SOURCE_DIR}/src/parser")
@@ -894,9 +894,9 @@ function(compile_panda_sources_to_c out_var)
         get_filename_component(outputDir ${input} DIRECTORY)
         get_filename_component(outputName ${input} NAME_WE)
         set(output "${CMAKE_CURRENT_BINARY_DIR}/updated_bootstrap/src/${outputDir}/${outputName}.c")
-        file(RELATIVE_PATH pandacInc ${working} "${CMAKE_CURRENT_SOURCE_DIR}/src/pandac")
-        if (pandacInc STREQUAL "")
-            set(pandacInc ".")
+        file(RELATIVE_PATH frostcInc ${working} "${CMAKE_CURRENT_SOURCE_DIR}/src/frostc")
+        if (frostcInc STREQUAL "")
+            set(frostcInc ".")
         endif()
         file(RELATIVE_PATH parserInc ${working} "${CMAKE_CURRENT_SOURCE_DIR}/src/parser")
         if (parserInc STREQUAL "")
@@ -908,10 +908,10 @@ function(compile_panda_sources_to_c out_var)
         endif()
         add_custom_command(
             OUTPUT ${output}
-            COMMAND ${CMAKE_CURRENT_BINARY_DIR}/pandac -O ${OPTIMIZATION} -S ${SAFETY} -f c
-                    -i ${CMAKE_CURRENT_SOURCE_DIR}/src -i ${pandacInc} -i ${parserInc}
+            COMMAND ${CMAKE_CURRENT_BINARY_DIR}/frostc -O ${OPTIMIZATION} -S ${SAFETY} -f c
+                    -i ${CMAKE_CURRENT_SOURCE_DIR}/src -i ${frostcInc} -i ${parserInc}
                     -i ${buildInc} -o ${CMAKE_CURRENT_BINARY_DIR}/updated_bootstrap/src ${input}
-            DEPENDS ${rawInput} pandac
+            DEPENDS ${rawInput} frostc
             WORKING_DIRECTORY ${working}
         )
         list(APPEND result ${output})
@@ -919,14 +919,14 @@ function(compile_panda_sources_to_c out_var)
     set(${out_var} "${result}" PARENT_SCOPE)
 endfunction()
 
-compile_panda_sources_to_c(updated_pandac_c
+compile_frost_sources_to_c(updated_frostc_c
     ${core_source}
-    ${pandac_source}
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/Main.panda
+    ${frostc_source}
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/Main.frost
 )
 
 add_custom_target(update_bootstrap
-    DEPENDS ${updated_pandac_headers} ${updated_pandac_c}
+    DEPENDS ${updated_frostc_headers} ${updated_frostc_c}
 )
 
 add_custom_command(
@@ -934,24 +934,24 @@ add_custom_command(
     COMMAND ${CMAKE_COMMAND} -E remove_directory ${CMAKE_CURRENT_SOURCE_DIR}/bootstrap
     COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_BINARY_DIR}/updated_bootstrap
             ${CMAKE_CURRENT_SOURCE_DIR}/bootstrap
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/src/c/panda_c.h
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/src/c/frost_c.h
             ${CMAKE_CURRENT_SOURCE_DIR}/bootstrap/include
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/src/c/pandalib.c
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/src/c/frostlib.c
             ${CMAKE_CURRENT_SOURCE_DIR}/bootstrap/src
 )
 
-add_custom_target(pandarun
-    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/pandac -O ${OPTIMIZATION} -S ${SAFETY}
-            ${CMAKE_CURRENT_SOURCE_DIR}/src/tools/PandaRun.panda
-            -o ${CMAKE_CURRENT_BINARY_DIR}/pandarun
+add_custom_target(frostrun
+    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/frostc -O ${OPTIMIZATION} -S ${SAFETY}
+            ${CMAKE_CURRENT_SOURCE_DIR}/src/tools/FrostRun.frost
+            -o ${CMAKE_CURRENT_BINARY_DIR}/frostrun
 )
 
 add_custom_command(
     OUTPUT TestRunner
-    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/pandac -O ${OPTIMIZATION} -S ${SAFETY}
-            -i ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/test/TestRunner.panda
+    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/frostc -O ${OPTIMIZATION} -S ${SAFETY}
+            -i ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/test/TestRunner.frost
             -o ${CMAKE_CURRENT_BINARY_DIR}/TestRunner
-    DEPENDS pandac test/TestRunner.panda
+    DEPENDS frostc test/TestRunner.frost
 )
 
 add_custom_target(run_tests
@@ -964,16 +964,16 @@ add_custom_command(
             ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_C_COMPILER} ${ICU_LIBRARIES}
 )
 
-compile_pandac_sources(pandamd_objects
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/pandadoc/PandaMDMain.panda
-    ${pandac_source}
+compile_frostc_sources(frostmd_objects
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/frostdoc/FrostMDMain.frost
+    ${frostc_source}
 )
 
-add_executable(pandamd
-    ${pandamd_objects}
+add_executable(frostmd
+    ${frostmd_objects}
 )
-target_link_libraries(pandamd panda ${SYSTEM_LIBRARIES} ${ICU_LIBRARIES})
-set_target_properties(pandamd PROPERTIES LINKER_LANGUAGE CXX)
+target_link_libraries(frostmd frost ${SYSTEM_LIBRARIES} ${ICU_LIBRARIES})
+set_target_properties(frostmd PROPERTIES LINKER_LANGUAGE CXX)
 
 function(run_markdown out_var)
     set(result)
@@ -983,8 +983,8 @@ function(run_markdown out_var)
         set(output "${CMAKE_CURRENT_BINARY_DIR}/docs/${output}.html")
         add_custom_command(
             OUTPUT ${output}
-            COMMAND ${CMAKE_CURRENT_BINARY_DIR}/pandamd ${input} ${output}
-            DEPENDS pandamd ${input}
+            COMMAND ${CMAKE_CURRENT_BINARY_DIR}/frostmd ${input} ${output}
+            DEPENDS frostmd ${input}
         )
         list(APPEND result ${output})
     endforeach()
@@ -1034,19 +1034,19 @@ run_markdown(markdown_html
     docs/weakReferences.md
 )
 
-compile_pandac_sources(pandadoc_objects
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/pandadoc/PandaDoc.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/pandadoc/PandaDocMain.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/pandadoc/TableOfContentsNode.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/pandadoc/XMLWriter.panda
-    ${pandac_source}
+compile_frostc_sources(frostdoc_objects
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/frostdoc/FrostDoc.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/frostdoc/FrostDocMain.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/frostdoc/TableOfContentsNode.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/frostdoc/XMLWriter.frost
+    ${frostc_source}
 )
 
-add_executable(pandadoc
-    ${pandadoc_objects}
+add_executable(frostdoc
+    ${frostdoc_objects}
 )
-target_link_libraries(pandadoc panda ${SYSTEM_LIBRARIES} ${ICU_LIBRARIES})
-set_target_properties(pandadoc PROPERTIES LINKER_LANGUAGE CXX)
+target_link_libraries(frostdoc frost ${SYSTEM_LIBRARIES} ${ICU_LIBRARIES})
+set_target_properties(frostdoc PROPERTIES LINKER_LANGUAGE CXX)
 
 function(syntax_highlight out_var)
     set(result)
@@ -1058,19 +1058,19 @@ function(syntax_highlight out_var)
         string(REGEX REPLACE "[A-Za-z]+" ".." root ${outputPath})
         add_custom_command(
             OUTPUT ${output}
-            COMMAND ${CMAKE_CURRENT_BINARY_DIR}/pandac -f html ${input} -o ${output} --root ../${root}
-            DEPENDS ${input} pandac
+            COMMAND ${CMAKE_CURRENT_BINARY_DIR}/frostc -f html ${input} -o ${output} --root ../${root}
+            DEPENDS ${input} frostc
         )
         list(APPEND result ${output})
     endforeach()
     set(${out_var} "${result}" PARENT_SCOPE)
 endfunction()
 
-syntax_highlight(panda_source_html
+syntax_highlight(frost_source_html
     ${public_source}
 )
 
 add_custom_target(docs
-    COMMAND pandadoc ${CMAKE_CURRENT_SOURCE_DIR}/src/panda ${CMAKE_CURRENT_BINARY_DIR}/docs api
-    DEPENDS pandadoc ${public_source} ${markdown_html} ${panda_source_html}
+    COMMAND frostdoc ${CMAKE_CURRENT_SOURCE_DIR}/src/frost ${CMAKE_CURRENT_BINARY_DIR}/docs api
+    DEPENDS frostdoc ${public_source} ${markdown_html} ${frost_source_html}
 )

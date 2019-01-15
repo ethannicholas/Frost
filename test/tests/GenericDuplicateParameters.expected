@@ -1,2 +1,2 @@
-GenericDuplicateParameters.panda:1:40: error: duplicate symbol 'B' (previous declaration was at 1:37)
+GenericDuplicateParameters.frost:1:40: error: duplicate symbol 'B' (previous declaration was at 1:37)
 1 error

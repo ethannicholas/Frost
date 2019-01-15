@@ -1,4 +1,4 @@
-RangeForLoopNull.panda:3:23: error: expected 'panda.core.Int64', but found 'null'
-RangeForLoopNull.panda:8:18: error: expected 'panda.core.Int64', but found 'null'
-RangeForLoopNull.panda:13:29: error: range step cannot be null
+RangeForLoopNull.frost:3:23: error: expected 'frost.core.Int64', but found 'null'
+RangeForLoopNull.frost:8:18: error: expected 'frost.core.Int64', but found 'null'
+RangeForLoopNull.frost:13:29: error: range step cannot be null
 3 errors

@@ -1,2 +1,2 @@
-RangeForLoopExplicitRangeNullable.panda:3:14: error: expected 'panda.core.Range<panda.core.Int64>', but found 'panda.core.Range<panda.core.Int64?>'
+RangeForLoopExplicitRangeNullable.frost:3:14: error: expected 'frost.core.Range<frost.core.Int64>', but found 'frost.core.Range<frost.core.Int64?>'
 1 error

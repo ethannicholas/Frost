@@ -1,0 +1,158 @@
+package org.frostlanguage.frostc.parser
+
+uses org.frostlanguage.frostc.Pair
+
+class SyntaxHighlighter {
+    choice Kind {
+        DEFAULT
+        COMMENT
+        DOC_COMMENT
+        ANNOTATION
+        METHOD_NAME
+        METHOD_PARAMETER
+        TYPE
+        KEYWORD
+        CONTROL_KEYWORD
+        LITERAL
+        STRING
+        OPERATOR
+        LABEL
+
+        @override -- FIXME should be automatic
+        function convert():String {
+            match self {
+                when DEFAULT {
+                    return "DEFAULT"
+                }
+                when COMMENT {
+                    return "COMMENT"
+                }
+                when DOC_COMMENT {
+                    return "DOC_COMMENT"
+                }
+                when ANNOTATION {
+                    return "ANNOTATION"
+                }
+                when METHOD_NAME {
+                    return "METHOD_NAME"
+                }
+                when METHOD_PARAMETER {
+                    return "METHOD_PARAMETER"
+                }
+                when TYPE {
+                    return "TYPE"
+                }
+                when KEYWORD {
+                    return "KEYWORD"
+                }
+                when CONTROL_KEYWORD {
+                    return "CONTROL_KEYWORD"
+                }
+                when LITERAL {
+                    return "LITERAL"
+                }
+                when STRING {
+                    return "STRING"
+                }
+                when OPERATOR {
+                    return "OPERATOR"
+                }
+                when LABEL {
+                    return "LABEL"
+                }
+            }
+        }
+    }
+
+    @private
+    def stack := Stack<Kind>()
+
+    @private
+    def tokens := Array<Pair<Token, Kind>>()
+
+    method reset() {
+        tokens.clear()
+        stack.clear()
+    }
+
+    method open(kind:Kind) {
+        stack.push(kind)
+    }
+
+    method close(kind:Kind) {
+        assert stack[0].$rawValue = kind.$rawValue -- FIXME see FIXME in Stack.pop(T) for why we're not using that
+        stack.pop()
+    }
+
+    method add(token:Token, syntaxKind:SyntaxHighlighter.Kind) {
+        tokens.add(Pair<Token, Kind>(token, syntaxKind))
+    }
+
+    method add(token:Token) {
+        if stack.count > 0 {
+            add(token, stack[0])
+            return
+        }
+
+        match token.kind {
+            when Token.Kind.SHIFTRIGHT {
+                add(token, Kind.OPERATOR)
+            }
+            when Token.Kind.DECIMAL, Token.Kind.BINARY, Token.Kind.HEX, Token.Kind.REAL,
+                    Token.Kind.TRUE, Token.Kind.FALSE, Token.Kind.NULL, Token.Kind.REGEX {
+                add(token, Kind.LITERAL)
+            }
+            when Token.Kind.LINE_COMMENT, Token.Kind.BLOCK_COMMENT_START {
+                add(token, Kind.COMMENT)
+            }
+            when Token.Kind.BLOCK_COMMENT_END {
+                add(token, Kind.COMMENT)
+            }
+            when Token.Kind.DOC_COMMENT {
+                add(token, Kind.DOC_COMMENT)
+            }
+            when Token.Kind.ANNOTATION {
+                add(token, Kind.ANNOTATION)
+            }
+            when Token.Kind.PACKAGE, Token.Kind.USES, Token.Kind.AS, Token.Kind.CLASS,
+                    Token.Kind.INTERFACE, Token.Kind.CHOICE, Token.Kind.FUNCTION,
+                    Token.Kind.METHOD, Token.Kind.VAR, Token.Kind.DEF, Token.Kind.PROPERTY,
+                    Token.Kind.CONSTANT, Token.Kind.BY, Token.Kind.IN {
+                add(token, Kind.KEYWORD)
+            }
+            when Token.Kind.RETURN, Token.Kind.BREAK, Token.Kind.CONTINUE, Token.Kind.DO,
+                    Token.Kind.WHILE, Token.Kind.FOR, Token.Kind.LOOP, Token.Kind.IF,
+                    Token.Kind.ELSE, Token.Kind.MATCH, Token.Kind.WHEN, Token.Kind.OTHERWISE,
+                    Token.Kind.INIT, Token.Kind.ASSERT, Token.Kind.UNREACHABLE {
+                add(token, Kind.CONTROL_KEYWORD)
+            }
+            when Token.Kind.SELF, Token.Kind.SUPER {
+                add(token, Kind.LITERAL)
+            }
+            when Token.Kind.NOT, Token.Kind.BITWISENOT, Token.Kind.ADD, Token.Kind.SUB,
+                    Token.Kind.MUL, Token.Kind.DIV, Token.Kind.INTDIV, Token.Kind.REM,
+                    Token.Kind.POW, Token.Kind.EQ, Token.Kind.NEQ, Token.Kind.IDENTITY,
+                    Token.Kind.NIDENTITY, Token.Kind.LT, Token.Kind.GT, Token.Kind.LTEQ,
+                    Token.Kind.GTEQ, Token.Kind.AND, Token.Kind.BITWISEAND, Token.Kind.OR,
+                    Token.Kind.BITWISEOR, Token.Kind.XOR, Token.Kind.BITWISEXOR,
+                    Token.Kind.SHIFTLEFT, Token.Kind.ASSIGNMENT, Token.Kind.ADDEQ, Token.Kind.SUBEQ,
+                    Token.Kind.MULEQ, Token.Kind.DIVEQ, Token.Kind.REMEQ, Token.Kind.INTDIVEQ,
+                    Token.Kind.POWEQ, Token.Kind.OREQ, Token.Kind.BITWISEOREQ, Token.Kind.ANDEQ,
+                    Token.Kind.BITWISEANDEQ, Token.Kind.XOREQ, Token.Kind.BITWISEXOREQ,
+                    Token.Kind.SHIFTLEFTEQ, Token.Kind.SHIFTRIGHTEQ, Token.Kind.CAST,
+                    Token.Kind.YIELDS, Token.Kind.YIELDS_METHOD, Token.Kind.YIELDS_IMMUTABLE,
+                    Token.Kind.YIELDS_METHOD_IMMUTABLE, Token.Kind.QUESTION, Token.Kind.COLON,
+                    Token.Kind.ELLIPSIS, Token.Kind.DOTDOT {
+                add(token, Kind.OPERATOR)
+            }
+            otherwise {
+                add(token, Kind.DEFAULT)
+            }
+        }
+    }
+
+    method rewind() {
+        tokens.removeIndex(tokens.count - 1)
+    }
+
+}

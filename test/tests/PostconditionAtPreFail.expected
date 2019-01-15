@@ -1,1 +1,1 @@
-assertion failure (PostconditionAtPreFail.panda:4): postcondition failure for method anonymous.BareCode.increment()
+assertion failure (PostconditionAtPreFail.frost:4): postcondition failure for method anonymous.BareCode.increment()

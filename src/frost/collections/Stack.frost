@@ -1,0 +1,92 @@
+package frost.collections
+
+====================================================================================================
+An implementation of the stack abstract data type. A stack is a collection of elements which
+operates in "LIFO" (last in, first out) order; that is, the element most recently added to the stack
+is the first one retrieved.
+====================================================================================================
+@final
+class Stack<T> : Iterable<T> {
+    @private
+    class StackIterator<T> : Iterator<T> {
+        def stack:Stack<T>
+
+        var index := 0
+
+        init(stack:Stack<T>) {
+            self.stack := stack
+        }
+
+        @override
+        function get_done():Bit {
+            return index >= stack.count
+        }
+
+        @override
+        method next():T {
+            def result := stack[index]
+            index += 1
+            return result
+        }
+    }
+
+    @private
+    def contents := Array<T>()
+
+    property count:Int
+
+    ================================================================================================
+    Pushes a new element onto the stack.
+    ================================================================================================
+    method push(v:T) {
+        contents.add(v)
+    }
+
+    ================================================================================================
+    Pops the top value from the stack and returns it.
+
+    @see pop(T)
+    ================================================================================================
+    @pre(count > 0)
+    method pop():T {
+        assert contents.count > 0
+        def result := contents[contents.count - 1]
+        contents.removeIndex(contents.count - 1)
+        return result
+    }
+
+    ================================================================================================
+    Returns the value at the given depth in the stack. The top element (most recently pushed) is
+    element 0, and the bottom element (earliest pushed) is element `count - 1`.
+    ================================================================================================
+    @pre(depth >= 0 & depth < count)
+    function [](depth:Int):T {
+        assert contents.count > depth
+        return contents[contents.count - 1 - depth]
+    }
+
+    ================================================================================================
+    Removes all elements from the stack.
+    ================================================================================================
+    method clear() {
+        contents.clear()
+    }
+
+    ================================================================================================
+    Returns an iterator which returns elements from the stack, starting from the top and working
+    down to the bottom. Iterating over the stack does not modify it.
+    ================================================================================================
+    @override
+    function get_iterator():Iterator<T> {
+        return StackIterator<T>(self)
+    }
+
+    function get_count():Int {
+        return contents.count
+    }
+
+    @override
+    function convert():String {
+        return contents.convert()
+    }
+}

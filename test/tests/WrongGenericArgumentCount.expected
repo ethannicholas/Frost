@@ -1,3 +1,3 @@
-WrongGenericArgumentCount.panda:1:7: error: 'panda.collections.Array' expected 1 generic argument, but found 2
-WrongGenericArgumentCount.panda:3:7: error: 'panda.collections.HashMap' expected 2 generic arguments, but found 1
+WrongGenericArgumentCount.frost:1:7: error: 'frost.collections.Array' expected 1 generic argument, but found 2
+WrongGenericArgumentCount.frost:3:7: error: 'frost.collections.HashMap' expected 2 generic arguments, but found 1
 2 errors

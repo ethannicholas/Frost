@@ -1,0 +1,42 @@
+.frostcode {
+    font-family: Menlo, Consolas, Andale Mono, sans-serif;
+}
+
+.frostcode .comment {
+    color: #808080;
+    font-style: italic;
+}
+
+.frostcode .annotation, .label {
+    color: #A888BD;
+    font-style: italic;
+}
+
+.frostcode .control, .frostcode .VAR, .frostcode .DEF, .frostcode .CONSTANT, .frostcode .PROPERTY,
+        .frostcode .AT_RETURN, .frostcode .DOT {
+    color: #C80000;
+}
+
+.frostcode .control {
+    font-style: italic;
+}
+
+.frostcode .methodName {
+    color: #00A200;
+}
+
+.frostcode .type {
+    color: #3389DF;
+}
+
+.frostcode .literal {
+    color: #9E61CF;
+}
+
+.frostcode .STRING {
+    color: #3040E0;
+}
+
+.frostcode .parameterName {
+    color: #FD971F;
+}

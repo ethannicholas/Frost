@@ -1,0 +1,24 @@
+package org.frostlanguage.json
+
+@final
+class Position : Value {
+    def line:Int
+
+    def column:Int
+
+    init() {
+        self.line := 1
+        self.column := 1
+    }
+
+    init(line:Int, column:Int) {
+        assert line != 0 & column != 0
+        self.line := line
+        self.column := column
+    }
+
+    @override
+    function convert():String {
+        return "\{line}:\{column}"
+    }
+}

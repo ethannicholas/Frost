@@ -1,0 +1,313 @@
+package frost.io
+
+uses frost.core.Maybe
+
+====================================================================================================
+Represents a file path, providing methods to query, read, and write files. A `File` object itself is
+merely the path to the file, not the actual physical file on disk, so creating a `File` object does
+not in and of itself cause any interaction with the filesystem.
+
+`File` always uses `"/"` as a path separator regardless of operating system.
+====================================================================================================
+@final
+class File : Immutable, Key<File> {
+    ================================================================================================
+    The path represented by this `File`.
+    ================================================================================================
+    def path:String
+
+    ================================================================================================
+    `true` if this file represents an absolute path.
+    ================================================================================================
+    property isAbsolute:Bit
+
+    ================================================================================================
+    The directory containing this file, or `null` if this is the root directory. The parent is
+    computed based purely on the path string, without accessing the filesystem.
+    ================================================================================================
+    property parent:File
+
+    ================================================================================================
+    The name (not including directory) of this file. For instance, `File("/tmp/data/log.txt").name`
+    is `"log.txt"`.
+    ================================================================================================
+    property name:String
+
+    ================================================================================================
+    The name of this file without its extension. The file's extension is considered to start at the
+    last period (`'.'`) it contains, so `File("/tmp/foo.bar.baz").simpleName()` returns the path
+    `"foo.bar"`. If the filename does not contain a period, this property is equivalen to `name`.
+    ================================================================================================
+    property simpleName:String
+
+    init(path:String) {
+        self.path := path
+    }
+
+    ================================================================================================
+    Resolves a path relative to this `File`. If the path begins with `"/"`, it is absolute and
+    returned as-is. Otherwise this `File` is interpreted as a directory containing the relative
+    path, so for instance `File("/tmp/output").relative("data/dump.xml")` results in the path
+    `"/tmp/output/data/dump.xml"`.
+
+    @param path the relative or absolute path
+    @returns the final path
+    ================================================================================================
+    function resolve(path:String):File {
+        if path.startsWith("/") {
+            return File(path)
+        }
+        if self.path.endsWith("/") {
+            return File(self.path + path)
+        }
+        return File(self.path + "/" + path)
+    }
+
+    ================================================================================================
+    Returns an iterator which reads from the file line-by-line. Either `"\r\n"` or `"\n"` is
+    accepted as a line ending, and the line endings are not part of the returned strings.
+
+    @returns the contents of the file line-by-line
+    ================================================================================================
+    function lines():Iterator<String> {
+        return openInputStream().lines()
+    }
+
+    function get_isAbsolute():Bit {
+        return path.startsWith("/")
+    }
+    
+    ================================================================================================
+    Returns a `File` representing the absolute path of this file. This queries the filesystem and
+    thus is not guaranteed to succeed.
+
+    @returns the file's absolute path
+    ================================================================================================
+    @external
+    method absolute():Maybe<File>
+
+    @private
+    function normalize(path:String):String? {
+        var result := path
+        -- coalesce multiple repeated '/'s into a single '/'
+        result := result.replace(/\/+/, "/")
+        if result = "/" {
+            return result
+        }
+        -- remove trailing '/'
+        while result.endsWith("/") {
+            result := result[..result.length - 1]
+        }
+        def absolute := result.startsWith("/")
+        if absolute {
+            result := result[1..]
+        }
+        -- collapse "foo/../bar" to just "bar"
+        def components := result.split("/")
+        outer: loop {
+            for i in 1 .. components.count {
+                if components[i] = ".." & components[i - 1] != ".." {
+                    components.removeIndex(i)
+                    components.removeIndex(i - 1)
+                    continue outer
+                }
+            }
+            break
+        }
+        result := components.join("/")
+        if absolute {
+            result := "/" + result
+        }
+        if absolute & result.contains("/..") {
+            -- uh-oh, we went above root level
+            return null
+        }
+        if result = "" {
+            result := "."
+        }
+        return result
+    }
+
+    function get_parent():File? {
+        def result := normalize(resolve("..").path)
+        if result == null {
+            return null
+        }
+        return File(result)
+    }
+
+    function get_name():String {
+        def index := path.lastIndexOf("/")
+        if index !== null {
+            return path[path.next(index)..]
+        }
+        else {
+            return path
+        }
+    }
+
+    function get_simpleName():String {
+        def result := name
+        def index := result.lastIndexOf(".")
+        if index == null {
+            return result
+        }
+        return result[..index]
+    }
+
+    ================================================================================================
+    Removes the extension from this path and replaces it with a new extension. This does not alter
+    the file on disk; it merely performs string manipulation to compute a new path. The new
+    extension does not have to contain a period; it is possible to turn a path with an extension
+    into one without using this method.
+
+    Examples:
+
+        File("/tmp/foo.gif").changeExtension(".png") => /tmp/foo.png
+        File("/tmp/foo").changeExtension(".png") => /tmp/foo.png
+        File("/tmp/foo.gif").changeExtension("") => /tmp/foo
+
+    @param ext the new extension
+    @returns the path with a new extension
+    ================================================================================================
+    function changeExtension(ext:String):File {
+        return parent.resolve(simpleName + ext)
+    }
+
+    ================================================================================================
+    Returns `true` if this file exists.
+
+    @returns `true` if this file exists
+    ================================================================================================
+    @external
+    method exists():Bit
+
+    ================================================================================================
+    Returns `true` if this path represents a directory.
+
+    @returns `true` if this is a directory
+    ================================================================================================
+    @external
+    method isDirectory():Bit
+
+    ================================================================================================
+    Returns a list of files contained by this directory.
+
+    @returns the contents of the directory
+    ================================================================================================
+    @external
+    method list():ListView<File>
+
+    ================================================================================================
+    Creates a directory at this path. It is not an error to attempt to create a directory which
+    already exists.
+    ================================================================================================
+    @external
+    method createDirectory()
+
+    ================================================================================================
+    Creates a directory at this path, including all required parent directories. It is not an error
+    to attempt to create a directory which already exists.
+    ================================================================================================
+    method createDirectories() {
+        def p := parent
+        if p !== null & !p.exists() {
+            p.createDirectories()
+        }
+        createDirectory()
+    }
+
+    ================================================================================================
+    Returns an `InputStream` for reading this file.
+
+    @returns an `InputStream`
+    ================================================================================================
+    @external
+    method openInputStream():InputStream
+
+    ================================================================================================
+    Destroys any existing contents of this file and returns an `OutputStream` for writing it. If the
+    file does not already exist, it is created.
+
+    @returns an `OutputStream`
+    ================================================================================================
+    @external
+    method openOutputStream():OutputStream
+
+    ================================================================================================
+    Returns an `OutputStream` for writing to the end of this file. If the file does not already
+    exist, it is created.
+
+    @returns an `OutputStream`
+    ================================================================================================
+    @external
+    method openForAppend():OutputStream
+
+    ================================================================================================
+    Reads the entire contents of the file into memory as a `String` and returns it. Naturally, you
+    should be careful to only call `readFully()` for files which comfortably fit into memory.
+
+    @returns the contents of the file
+    ================================================================================================
+    @priority(1)
+    method readFully():String {
+        return openInputStream().readFully()
+    }
+
+    ================================================================================================
+    Reads the entire contents of the file into memory as an `Array<UInt8>` and returns it.
+    Naturally, you should be careful to only call `readFully()` for files which comfortably fit into
+    memory.
+
+    @returns the contents of the file
+    ================================================================================================
+    method readFully():Array<UInt8> {
+        return openInputStream().readFully()
+    }
+
+    ================================================================================================
+    Writes a string to this path. If the file already exists, its contents are replaced. If it does
+    not exist, it is created.
+
+    @param contents the data to write
+    ================================================================================================
+    method write(contents:String) {
+        openOutputStream().print(contents)
+    }
+
+    ================================================================================================
+    Deletes the file. If the file is a directory, it must be empty or FIXME some sort of error will
+    be produced just as soon as I figure out how we're handling errors.
+    ================================================================================================
+    @external
+    method delete()
+
+    ================================================================================================
+    Returns `true` if both files represent the same path. Note that two files can refer to the same
+    physical file on disk without being the same path (e.g. `File("src/Foo.frost")` and
+    `File("src/../src/Foo.frost")`); these are considered not equal despite resolving to the same
+    physical file.
+
+    @returns true if the files refer to the same path
+    ================================================================================================
+    @override
+    function =(other:File):Bit {
+        return path = other.path
+    }
+
+    @override
+    function get_hash():Int {
+        return path.hash
+    }
+
+    ================================================================================================
+    Returns the path to which this file refers.
+    ================================================================================================
+    @override
+    function convert():String {
+        return path
+    }
+
+    @external
+    method rename(s:String)
+}

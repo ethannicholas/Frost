@@ -1,0 +1,179 @@
+package org.frostlanguage.frostc.frostdoc
+
+uses org.frostlanguage.frostc.ClassDecl
+uses org.frostlanguage.frostc.Compiler
+uses org.frostlanguage.frostc.FieldDecl
+uses org.frostlanguage.frostc.MethodDecl
+uses org.frostlanguage.frostc.Methods
+uses org.frostlanguage.frostc.Symbol
+uses org.frostlanguage.frostc.Type
+uses org.frostlanguage.frostc.parser.Token
+
+class LinkResolver {
+    @private
+    def compiler:Compiler
+
+    @private
+    def apiRelativePath:String
+
+    @private
+    def context:ClassDecl?
+
+    init(compiler:Compiler, apiRelativePath:String) {
+        init(compiler, apiRelativePath, null)
+    }
+
+    init(compiler:Compiler, apiRelativePath:String, context:ClassDecl?) {
+        self.compiler := compiler
+        self.apiRelativePath := apiRelativePath
+        self.context := context
+    }
+
+    function matches(m:MethodDecl, parameters:ListView<Type>):Bit {
+        if m.parameters.count != parameters.count {
+            return false
+        }
+        for i in 0 .. parameters.count {
+            if m.parameters[i].type != parameters[i] {
+                return false
+            }
+        }
+        return true
+    }
+
+    function linkTo(cl:ClassDecl):String {
+        def base:String
+        if context !== null {
+            base := "../" * context.name.find(".").count()
+        }
+        else {
+            base := apiRelativePath
+        }
+        return base + cl.name.replace(".", "/") + ".html"
+    }
+
+    function linkTo(f:FieldDecl):String? {
+        return linkTo(f.owner) + "#\{f.name}"
+    }
+
+    function linkTo(m:MethodDecl):String? {
+        compiler.resolve(m)
+        def result := MutableString(linkTo(m.owner))
+        result.append("#")
+        result.append(m.name)
+        result.append("(")
+        var separator := ""
+        for p in m.parameters {
+            result.append(separator)
+            result.append(p.type)
+            separator := ","
+        }
+        result.append(")")
+        if m.returnType != Type.Void() {
+            result.append(":")
+            result.append(m.returnType)
+        }
+        result.replace("&", "&amp;")
+        result.replace("<", "&lt;")
+        return result.finish()
+    }
+
+    function linkTo(s:Symbol):String? {
+        match s.kind {
+            when Symbol.Kind.FIELD {
+                return linkTo(s->FieldDecl)
+            }
+            when Symbol.Kind.METHOD {
+                return linkTo(s->MethodDecl)
+            }
+            otherwise {
+                return null
+            }
+        }    
+    }
+
+    method resolve(link:String):String? {
+        if link.contains("http") | link.contains(".html") {
+            return link
+        }
+        var cl := compiler.tryResolveClass(link)
+        if cl !== null {
+            return linkTo(cl)
+        }
+        if context !== null & link.matches(/\w+/) {
+            def s := compiler.getSymbolTable(context)[link]
+            if s !== null {
+                return linkTo(s)
+            }
+        }
+        if link.matches(/\w+(?:\.\w+)*/) {
+            def index := link.lastIndexOf(".")
+            if index !== null {
+                cl := compiler.tryResolveClass(link[..index])
+                if cl !== null {
+                    def s := compiler.getSymbolTable(cl)[link[link.next(index)..]]
+                    if s == null {
+                        return null
+                    }
+                    return linkTo(s)
+                }
+            }
+        }
+        def parsed := link.parse(/(\w+(?:\.\w+)*)\((.*)\)/)
+        if parsed !== null {
+            def parameters := Array<Type>()
+            if parsed[1].trimmed != "" {
+                compiler.parser.start(File(parsed[1]), parsed[1])
+                loop {
+                    def type := compiler.parser.type()
+                    if type == null {
+                        Console.printLine("could not parse: \{parsed[1]}")
+                        return null
+                    }
+                    def converted := compiler.scanner.convertType(type)
+                    def resolved := compiler.resolve(converted)
+                    if resolved == null {
+                        return null
+                    }
+                    parameters.add(resolved)
+                    if compiler.parser.checkNext(Token.Kind.COMMA) == null {
+                        break
+                    }
+                }
+            }
+            def name := parsed[0]
+            def index := name.lastIndexOf(".")
+            def symbolName:String
+            if index !== null {
+                cl := compiler.tryResolveClass(name[..index])
+                symbolName := name[name.next(index)..]
+            }
+            else {
+                cl := context
+                symbolName := name
+            }
+            if cl !== null {
+                def s := compiler.getSymbolTable(cl)[symbolName]
+                if s == null {
+                    return null
+                }
+                match s.kind {
+                    when Symbol.Kind.METHOD {
+                        if matches(s->MethodDecl, parameters) {
+                            return linkTo(s)
+                        }
+                    }
+                    when Symbol.Kind.METHODS {
+                        for m in s->Methods.methods {
+                            if matches(m, parameters) {
+                                return linkTo(m)
+                            }
+                        }
+                    }
+                }
+                return null
+            }
+        }
+        return null
+    }
+}

@@ -1,0 +1,33 @@
+package org.frostlanguage.plex
+
+class RemappedState : State {
+    def states:ImmutableArray<Int>
+
+    init() {
+        init(ImmutableArray<Int>())
+    }
+
+    init(states:ImmutableArray<Int>) {
+        super.init(REMAPPED, ImmutableArray<Int>())
+        self.states := states
+    }
+
+    @override
+    function accept(c:Char8):Bit {
+        assert false, "RemappedState.accept"
+        return false
+    }
+
+    @override
+    function convert():String {
+        def result := MutableString("Remapped(")
+        var separator := ""
+        for s in states {
+            result.append(separator)
+            result.append(s)
+            separator := ", "
+        }
+        result.append(")")
+        return result.finish()
+    }
+}

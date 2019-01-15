@@ -1,5 +1,5 @@
-MainBadSignature.panda:2:5: error: 'main' must be a method
-MainBadSignature.panda:2:5: error: 'main' must not have a return type
-MainBadSignature.panda:2:5: error: 'main' must be declared @class
-MainBadSignature.panda:2:5: error: 'main' must have either zero parameters or one parameter of type 'panda.collections.ListView<panda.core.String>'
+MainBadSignature.frost:2:5: error: 'main' must be a method
+MainBadSignature.frost:2:5: error: 'main' must not have a return type
+MainBadSignature.frost:2:5: error: 'main' must be declared @class
+MainBadSignature.frost:2:5: error: 'main' must have either zero parameters or one parameter of type 'frost.collections.ListView<frost.core.String>'
 4 errors

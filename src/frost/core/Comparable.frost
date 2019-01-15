@@ -1,0 +1,25 @@
+package frost.core
+
+====================================================================================================
+Interface for objects which can be compared for equality and ordering. To fully implement this
+interface, only the `=` (inherited from `Equatable`) and `>` operators are required, as the others
+all have default implementations.
+====================================================================================================
+interface Comparable<T:Comparable<T>> : Equatable<T> {
+    function >(other:T):Bit
+
+    @default
+    function <(other:T):Bit {
+        return other > self->T
+    }
+
+    @default
+    function >=(other:T):Bit {
+        return !(self < other)
+    }
+
+    @default
+    function <=(other:T):Bit {
+        return !(self > other)
+    }
+}

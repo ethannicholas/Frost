@@ -1,0 +1,18 @@
+package org.frostlanguage.plex.runtime
+
+@final
+class RawToken : Value {
+    def kind:Int
+    def start:String.Index
+    def end:String.Index
+    def line:Int
+    def column:Int
+
+    init(kind:Int, start:String.Index, end:String.Index, line:Int, column:Int) {
+        self.kind := kind
+        self.start := start
+        self.end := end
+        self.line := line
+        self.column := column
+    }
+}

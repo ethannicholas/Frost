@@ -1,0 +1,227 @@
+package org.frostlanguage.frostc.statement
+
+uses org.frostlanguage.frostc.ASTNode
+uses org.frostlanguage.frostc.ChoiceCase
+uses org.frostlanguage.frostc.ClassDecl
+uses org.frostlanguage.frostc.Compiler
+uses org.frostlanguage.frostc.Compiler.AutoScope
+uses org.frostlanguage.frostc.Compiler.AutoUnrefs
+uses org.frostlanguage.frostc.Compiler.EnclosingContext
+uses org.frostlanguage.frostc.Compiler.TypeContext
+uses org.frostlanguage.frostc.Compiler.VariableLValue
+uses org.frostlanguage.frostc.FixedArray
+uses org.frostlanguage.frostc.IR
+uses org.frostlanguage.frostc.Pair
+uses org.frostlanguage.frostc.Position
+uses org.frostlanguage.frostc.Type
+uses org.frostlanguage.frostc.Variable
+uses org.frostlanguage.frostc.expression.Call
+uses org.frostlanguage.frostc.expression.Dot
+uses org.frostlanguage.frostc.lvalue.VariableLValue
+uses org.frostlanguage.frostc.parser.Token
+
+class Match {
+    @private
+    @class
+    method checkChoiceMatch(compiler:Compiler, position:Position, cc:ChoiceCase?,
+            choiceClass:ClassDecl?, value:IR.Value):Bit {
+        if cc == null {
+            return false
+        }
+        if choiceClass == null {
+            compiler.error(position, "cannot match choice case '\{cc}' against '\{value.type()}'")
+            return false
+        }
+        if cc.owner !== choiceClass {
+            compiler.error(position, "cannot match choice case '\{cc}' against " +
+                    "'\{choiceClass.name}'")
+            return false
+        }
+        return true
+    }
+
+    @private
+    @class
+    @pre(whens.count > 0 | other !== null)
+    method compileChainedIfMatch(compiler:Compiler, position:Position, value:IR.Value,
+            choiceClass:ClassDecl?, choiceRawValue:IR.Value?, whens:FixedArray<ASTNode>,
+            other:FixedArray<ASTNode>?) {
+        def ir := compiler.ir
+        def end := ir.newBlock("match end")
+        var nextBlock := ir.currentBlock.id
+        for i in 0 .. whens.count {
+            def w := whens[i]
+            match w {
+                when ASTNode.WHEN(position, tests, statements) {
+                    {
+                        def auto := AutoScope(compiler)
+                        var testSuccess := ir.newBlock("test success")
+                        for j in 0 .. tests.count {
+                            if nextBlock != ir.currentBlock.id {
+                                ir.setCurrentBlock(nextBlock)
+                            }
+                            if j < tests.count - 1 | i < whens.count - 1 | other !== null {
+                                nextBlock := ir.newBlock("match")
+                            }
+                            else {
+                                nextBlock := end
+                            }
+                            def t := tests[j]
+                            match t {
+                                when ASTNode.CALL(position, base, args) {
+                                    def cc := compiler.getChoiceCase(base)
+                                    if cc !== null {
+                                        if checkChoiceMatch(compiler, base.position(), cc.second,
+                                                choiceClass, value) {
+                                            if tests.count != 1 {
+                                                compiler.error(position, "destructuring choice " +
+                                                        "'when' cannot be used together with " +
+                                                        "other 'when' comparisons")
+                                                return
+                                            }
+                                            if args.count != cc.second.fields.count {
+                                                compiler.error(position, "choice '\{cc.second}' " +
+                                                        "requires " + cc.second.fields.count +
+                                                        " argument\{cc.second.fields.count = 1:|s}, " +
+                                                        "but found " + args.count)
+                                                return
+                                            }
+                                            if choiceRawValue == null {
+                                                compiler.error(position, "'\{value.type()}' is " +
+                                                        "not an instance of " +
+                                                        "'\{cc.second.owner.name}'")
+                                                return
+                                            }
+                                            def testBit:IR.Value
+                                            {
+                                                def unrefs := AutoUnrefs(compiler)
+                                                def eqArgs := [ASTNode.INT(base.position(),
+                                                        cc.second.rawValue.convert())]
+                                                def test := Call.compile(compiler, base.position(),
+                                                        choiceRawValue, "=", eqArgs,
+                                                        TypeContext.TYPE(Type.Bit()))
+                                                assert test !== null
+                                                testBit := compiler.extractBuiltinBit(position,
+                                                        test)
+                                            }
+                                            ir.add(IR.Statement.CONDITIONAL_BRANCH(position,
+                                                    testBit, testSuccess, nextBlock))
+                                            ir.setCurrentBlock(testSuccess)
+                                            for i in 0 .. args.count {
+                                                def ptr := ir.add(
+                                                        IR.Statement.GET_CHOICE_FIELD_POINTER(
+                                                            position, value, cc.second, i))
+                                                def load := ir.add(IR.Statement.LOAD(position,
+                                                        IR.Value.REF(ptr, cc.second.fields[i])))
+                                                if compiler.getText(args[i]) = "_" {
+                                                    continue
+                                                }
+                                                def target:Pair<Variable, IR.Value?>?
+                                                {
+                                                    def unrefs := AutoUnrefs(compiler)
+                                                    target := compiler.compileTarget(args[i],
+                                                            Variable.Kind.DEF,
+                                                            ASTNode.IR_WRAPPER(position,
+                                                                    IR.Value.REF(load,
+                                                                        cc.second.fields[i])),
+                                                                    null)
+                                                    VariableLValue(compiler, position,
+                                                            target.first).compileStore(
+                                                                IR.Value.REF(load,
+                                                                    cc.second.fields[i]))
+                                                }
+                                                if compiler.isRefCounted(target.first.type) {
+                                                    compiler.enclosingContexts.push(
+                                                            EnclosingContext.VARIABLE_SCOPE(
+                                                                target.first))
+                                                }
+                                            }
+                                            continue
+                                        }
+                                    }
+                                }
+                            }
+                            def testBit:IR.Value
+                            {
+                                def unrefs := AutoUnrefs(compiler)
+                                def test:IR.Value?
+                                def cc := compiler.getChoiceCase(t)
+                                if cc !== null {
+                                    def args := [ASTNode.INT(t.position(),
+                                            cc.second.rawValue.convert())]
+                                    test := Call.compile(compiler, t.position(), choiceRawValue,
+                                            "=", args, TypeContext.TYPE(Type.Bit()))
+                                    if test == null {
+                                        return
+                                    }
+                                }
+                                else {
+                                    test := Call.compile(compiler, t.position(), value, "=", [t],
+                                            TypeContext.TYPE(Type.Bit()))
+                                    if test == null {
+                                        return
+                                    }
+                                }
+                                testBit := compiler.extractBuiltinBit(position, test)
+                            }
+                            ir.add(IR.Statement.CONDITIONAL_BRANCH(position,
+                                    testBit, testSuccess, nextBlock))
+                        }
+                        ir.setCurrentBlock(testSuccess)
+                        for s in statements {
+                            compiler.compileStatement(s)
+                        }
+                    }
+                    if !ir.currentBlockFinished {
+                        ir.add(IR.Statement.BRANCH(position, end))
+                    }
+                }
+                otherwise {
+                    assert false
+                }
+            }
+        }
+        if other !== null {
+            {
+                def scope := AutoScope(compiler)
+                ir.setCurrentBlock(nextBlock)
+                for s in other {
+                    compiler.compileStatement(s)
+                }
+            }
+            if !ir.currentBlockFinished {
+                ir.add(IR.Statement.BRANCH(position, end))
+            }
+        }
+        ir.setCurrentBlock(end)
+    }
+
+    @class
+    method compile(compiler:Compiler, position:Position, value:ASTNode, whens:FixedArray<ASTNode>,
+            other:FixedArray<ASTNode>?) {
+        def compiledValue := compiler.compileExpression(value, TypeContext.NON_VOID)
+        if compiledValue == null | (whens.count = 0 & other == null) {
+            return
+        }
+        def cl := compiler.getClass(compiledValue.type())
+        if cl == null {
+            return
+        }
+        def choiceClass:ClassDecl? := null
+        def choiceRawValue:IR.Value?
+        if cl.classKind = ClassDecl.Kind.CHOICE {
+            choiceRawValue := Dot.compile(compiler, position, compiledValue,
+                    ClassDecl.RAW_VALUE_NAME)
+            choiceClass := cl
+        }
+        else if compiler.getSymbolTable(cl)["="] == null {
+            compiler.error(value.position(), "'match' value does not define the '=' operator")
+            return
+        }
+        else {
+            choiceRawValue := null
+        }
+        compileChainedIfMatch(compiler, position, compiledValue, choiceClass, choiceRawValue, whens,
+                other)
+    }
+}

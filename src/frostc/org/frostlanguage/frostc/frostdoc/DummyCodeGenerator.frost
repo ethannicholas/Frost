@@ -1,0 +1,34 @@
+package org.frostlanguage.frostc.frostdoc
+
+uses org.frostlanguage.frostc.ClassDecl
+uses org.frostlanguage.frostc.CodeGenerator
+uses org.frostlanguage.frostc.Compiler
+uses org.frostlanguage.frostc.IR
+uses org.frostlanguage.frostc.MethodDecl
+
+@package
+class DummyCodeGenerator : CodeGenerator {
+    @override
+    method setCompiler(compiler:Compiler) {
+    }
+
+    @override
+    method start(cl:ClassDecl) {
+    }
+
+    @override
+    method end(cl:ClassDecl) {
+    }
+
+    @override
+    method writeDeclaration(m:MethodDecl) {
+    }
+
+    @override
+    method write(m:MethodDecl, ir:IR) {
+    }
+
+    @override
+    method finish() {
+    }
+}

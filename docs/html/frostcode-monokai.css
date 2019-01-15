@@ -1,0 +1,73 @@
+/* Inspired by the Monokai theme, 
+        http://www.monokai.nl/blog/2006/07/15/textmate-color-theme/ */
+
+pre {
+    display:inline-block;
+    font-family: monospace;
+    background-color: #272822;
+    color: #F8F8F2;
+    padding: 8pt;
+    margin-top: -3pt;
+    margin-left: 6pt;
+    margin-right: 30pt;
+}
+
+.frostcode {
+    font-family: Menlo, Consolas, Andale Mono, sans-serif;
+    color: #F8F8F2;
+}
+
+.frostcode .comment {
+    color: #857A65;
+    font-style: italic;
+}
+
+.frostcode .lineNumber {
+    color: #857A65;
+    font-style: italic;
+    font-size: 90%;
+}
+
+.frostcode .annotation, .frostcode .label {
+    color: #D6C2FF;
+    font-style: italic;
+}
+
+.frostcode .control, .frostcode .VAR, .frostcode .DEF, .frostcode .CONSTANT, .frostcode .PROPERTY,
+        .frostcode .AT_RETURN, .frostcode .DOT {
+    color: #F92672;
+}
+
+.frostcode .PACKAGE, .frostcode .CLASS, .frostcode .CHOICE, .frostcode .INTERFACE,
+        .frostcode .FUNCTION, .frostcode .METHOD, .frostcode .INIT {
+    color: #30E1EF;
+    font-style: italic;
+}
+
+.frostcode .control {
+    font-style: italic;
+}
+
+.frostcode .methodName {
+    color: #A6E22E;
+}
+
+.frostcode .type {
+    color: #66D9EF;
+}
+
+.frostcode .literal {
+    color: #AE81FF;
+}
+
+.frostcode .STRING {
+    color: #E6DB74;
+}
+
+.frostcode .parameterName {
+    color: #FD971F;
+}
+
+.frostcode .ellipsis {
+    color: #F8F8F2;
+}

@@ -1,7 +1,7 @@
-The Panda Programming Language
+The Frost Programming Language
 ==============================
 
-Panda is a high-level, general-purpose multiparadigm programming language with support for:
+Frost is a high-level, general-purpose multiparadigm programming language with support for:
 
 * First-class immutable objects and value types
 * First-class functions and closures
@@ -12,7 +12,7 @@ Panda is a high-level, general-purpose multiparadigm programming language with s
 * "Sane" operator overloading
 * Actor model threading
 
-And many other features. This is what a simple Panda program looks like:
+And many other features. This is what a simple Frost program looks like:
 
     =======================================================
     Simple version of the Unix `head` utility. Reads a file
@@ -41,6 +41,6 @@ And many other features. This is what a simple Panda program looks like:
         head(File(args[1]), count)
     }
 
-For a more comprehensive overview of Panda's syntax and features, see the 
-[Syntax Overview](overview.html) or [API documentation](api/index.html). If you'd like to try Panda
+For a more comprehensive overview of Frost's syntax and features, see the 
+[Syntax Overview](overview.html) or [API documentation](api/index.html). If you'd like to try Frost
 out for yourself, see the [Getting Started](gettingStarted.html) page.

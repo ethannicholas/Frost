@@ -1,0 +1,27 @@
+package org.frostlanguage.frostc.statement
+
+uses org.frostlanguage.frostc.ASTNode
+uses org.frostlanguage.frostc.Compiler
+uses org.frostlanguage.frostc.Compiler.TypeContext
+uses org.frostlanguage.frostc.FixedArray
+uses org.frostlanguage.frostc.MethodDecl
+uses org.frostlanguage.frostc.Position
+uses org.frostlanguage.frostc.Variable
+uses org.frostlanguage.frostc.expression.Closure
+
+class InnerMethod {
+    @class
+    method compile(compiler:Compiler, position:Position, kind:MethodDecl.Kind, name:String,
+            rawParameters:FixedArray<ASTNode>, rawReturnType:ASTNode?,
+            body:FixedArray<ASTNode>) {
+        def methodRef := Closure.compile(compiler, position, kind, rawParameters, rawReturnType,
+                body, TypeContext.NON_VOID)
+        if methodRef == null {
+            return
+        }
+        def decl := ASTNode.DECLARATION(position, ASTNode.IDENTIFIER(position, name),
+                ASTNode.IR_WRAPPER(position, methodRef))
+        compiler.compileStatement(ASTNode.VAR(position, Variable.Kind.DEF,
+                FixedArray<ASTNode>.from([decl])))
+    }
+}

@@ -1,7 +1,7 @@
 Comments
 ========
 
-Panda supports three different styles of comments:
+Frost supports three different styles of comments:
 
 Line comments
 -------------
@@ -41,6 +41,6 @@ method, or field they precede.
     }
 
 Documentation comments are described in more detail on the
-[documentation comments](documentationComments.html) page. Documentation comments in Panda, unlike
+[documentation comments](documentationComments.html) page. Documentation comments in Frost, unlike
 in many other languages, are actually part of the language's grammar and thus may not appear
 anywhere but immediately before a class, method, or field.

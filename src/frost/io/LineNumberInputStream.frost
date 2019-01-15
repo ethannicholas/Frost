@@ -1,0 +1,57 @@
+package frost.io
+
+====================================================================================================
+A `InputStream` which sits on top of another stream, tracking the current line and column as it
+reads from the underlying stream.
+====================================================================================================
+@final
+class LineNumberInputStream : InputStream {
+    @private
+    def source:InputStream
+
+    ================================================================================================
+    The current line number (starting at 1).
+    ================================================================================================
+    var line := 1
+
+    ================================================================================================
+    The current column number (starting at 1).
+    ================================================================================================
+    var column := 1
+
+    ================================================================================================
+    The width of a tab character.
+    ================================================================================================
+    var tabSize := 4
+
+    ================================================================================================
+    Creates a new `LineNumberInputStream`.
+
+    @param source the underlying stream
+    ================================================================================================
+    init(source:InputStream) {
+        self.source := source
+        super.init()
+    }
+
+    @override
+    method read():UInt8? {
+        def result:UInt8? := source.read()
+        if result == null {
+            return null
+        }
+        match result {
+            when 10 {
+                line += 1
+                column := 1
+            }
+            when 9 {
+                column += tabSize - column % tabSize
+            }
+            otherwise {
+                column += 1
+            }
+        }
+        return result
+    }
+}

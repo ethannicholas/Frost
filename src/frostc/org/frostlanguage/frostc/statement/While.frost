@@ -1,0 +1,48 @@
+package org.frostlanguage.frostc.statement
+
+uses org.frostlanguage.frostc.ASTNode
+uses org.frostlanguage.frostc.Compiler
+uses org.frostlanguage.frostc.Compiler.AutoContext
+uses org.frostlanguage.frostc.Compiler.AutoScope
+uses org.frostlanguage.frostc.Compiler.AutoUnrefs
+uses org.frostlanguage.frostc.Compiler.EnclosingContext
+uses org.frostlanguage.frostc.Compiler.TypeContext
+uses org.frostlanguage.frostc.FixedArray
+uses org.frostlanguage.frostc.IR
+uses org.frostlanguage.frostc.Position
+uses org.frostlanguage.frostc.Type
+
+class While {
+    @class
+    method compile(compiler:Compiler, position:Position, label:String?, test:ASTNode,
+            statements:FixedArray<ASTNode>) {
+        def ir := compiler.ir
+        def testBlock := ir.newBlock("while test")
+        def bodyBlock := ir.newBlock("while body")
+        def endBlock := ir.newBlock("while end")
+        {
+            def context := AutoContext(compiler, EnclosingContext.LOOP(label, endBlock, testBlock))
+            def scope := AutoScope(compiler)
+            ir.add(IR.Statement.BRANCH(position, testBlock))
+            ir.setCurrentBlock(testBlock)
+            def testBit:IR.Value
+            {
+                def unrefs := AutoUnrefs(compiler)
+                def compiledTest := compiler.compileExpression(test, TypeContext.TYPE(Type.Bit()))
+                if compiledTest == null {
+                    return
+                }
+                testBit := compiler.extractBuiltinBit(position, compiledTest)
+            }
+            ir.add(IR.Statement.CONDITIONAL_BRANCH(position, testBit, bodyBlock, endBlock))
+            ir.setCurrentBlock(bodyBlock)
+            for s in statements {
+                compiler.compileStatement(s)
+            }
+        }
+        if !ir.currentBlockFinished {
+            ir.add(IR.Statement.BRANCH(position, testBlock))
+        }
+        ir.setCurrentBlock(endBlock)
+    }
+}

@@ -1,9 +1,9 @@
-AmbiguousMatch.panda:30:9: error: call to 'test' with arguments (IntegerLiteral(0)) is ambiguous. The following methods are equally good matches:
-    method anonymous.AmbiguousMatch.test(x:panda.core.Int64) (AmbiguousMatch.panda:15:5)
-    method anonymous.AmbiguousMatch.test(x:panda.core.Int32) (AmbiguousMatch.panda:11:5)
-    method anonymous.AmbiguousMatch.test(x:panda.core.Int16) (AmbiguousMatch.panda:7:5)
-    method anonymous.AmbiguousMatch.test(x:panda.core.Int8) (AmbiguousMatch.panda:3:5)
-AmbiguousMatch.panda:31:18: error: call to 'test2' with arguments (IntegerLiteral(1)) is ambiguous. The following methods are equally good matches:
-    function anonymous.AmbiguousMatch.test2(x:panda.core.Int64):panda.core.Int64 (AmbiguousMatch.panda:24:5)
-    function anonymous.AmbiguousMatch.test2(x:panda.core.Int8):panda.core.Int64 (AmbiguousMatch.panda:19:5)
+AmbiguousMatch.frost:30:9: error: call to 'test' with arguments (IntegerLiteral(0)) is ambiguous. The following methods are equally good matches:
+    method anonymous.AmbiguousMatch.test(x:frost.core.Int64) (AmbiguousMatch.frost:15:5)
+    method anonymous.AmbiguousMatch.test(x:frost.core.Int32) (AmbiguousMatch.frost:11:5)
+    method anonymous.AmbiguousMatch.test(x:frost.core.Int16) (AmbiguousMatch.frost:7:5)
+    method anonymous.AmbiguousMatch.test(x:frost.core.Int8) (AmbiguousMatch.frost:3:5)
+AmbiguousMatch.frost:31:18: error: call to 'test2' with arguments (IntegerLiteral(1)) is ambiguous. The following methods are equally good matches:
+    function anonymous.AmbiguousMatch.test2(x:frost.core.Int64):frost.core.Int64 (AmbiguousMatch.frost:24:5)
+    function anonymous.AmbiguousMatch.test2(x:frost.core.Int8):frost.core.Int64 (AmbiguousMatch.frost:19:5)
 2 errors

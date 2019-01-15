@@ -1,0 +1,54 @@
+package frost.threads
+
+====================================================================================================
+A lock (mutex) which allows multiple threads to coordinate access to a shared resource. Locks are
+typically unnecessary in Frost, as only immutable data can be shared between threads without
+resorting to unsafe code.
+====================================================================================================
+@final
+class Lock : Immutable {
+    @private
+    def nativeLock:Int64
+    
+    ================================================================================================
+    Creates a new, unlocked `Lock`.
+    ================================================================================================
+    init() {
+        create()
+    }
+    
+    ================================================================================================
+    Blocks the current thread until the lock is available, and then locks it. While the lock is
+    held, any other threads which attempt to lock the `Lock` will block until the current thread
+    releases the `Lock`. 
+    
+    It is legal for a thread to lock the same `Lock` multiple times; the same number of [unlock()]
+    calls will be necessary to completely release the `Lock`.
+
+    @see unlock()
+    ================================================================================================
+    @external
+    method lock()
+
+    ================================================================================================
+    Releases a held `lock`. Unlocking a `Lock` which has not actually been locked by the current
+    thread is undefined behavior.
+
+    @see lock()
+    ================================================================================================
+    @external
+    method unlock()
+    
+    @override
+    method cleanup() {
+        destroy()
+    }
+
+    @private
+    @external
+    method create()
+
+    @private
+    @external
+    method destroy()
+}

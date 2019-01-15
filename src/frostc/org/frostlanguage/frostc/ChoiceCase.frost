@@ -1,0 +1,32 @@
+package org.frostlanguage.frostc
+
+@final
+class ChoiceCase : Symbol {
+    @weak
+    def owner:ClassDecl
+
+    def doccomment:String?
+
+    def fields:Array<Type>
+
+    def rawValue:Int
+
+    @weak
+    def initMethod:MethodDecl? := null
+
+    var resolved:Compiler.Resolution := Compiler.Resolution.UNRESOLVED
+
+    init(owner:ClassDecl, position:Position, name:String, doccomment:String?, rawValue:Int,
+            fields:ListView<Type>) {
+        self.owner := owner
+        self.doccomment := doccomment
+        self.rawValue := rawValue
+        self.fields := Array<Type>(fields)
+        super.init(Symbol.Kind.CHOICE_CASE, position, name)
+    }
+
+    @override
+    function convert():String {
+        return "\{owner.name}.\{name}"
+    }
+}

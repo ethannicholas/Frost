@@ -1,2 +1,2 @@
-MissingInnerClass.panda:1:12: error: unknown type 'Object.NotFound'
+MissingInnerClass.frost:1:12: error: unknown type 'Object.NotFound'
 1 error

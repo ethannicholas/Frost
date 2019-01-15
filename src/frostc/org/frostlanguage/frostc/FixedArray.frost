@@ -1,0 +1,115 @@
+package org.frostlanguage.frostc
+
+uses frost.unsafe.Pointer
+
+@final
+class FixedArray<T> : ListView<T> {
+    @private
+    class FixedArrayIterator<T> : Iterator<T> {
+        var array:FixedArray<T>
+
+        var index := 0
+
+        init(array:FixedArray<T>) {
+            self.array := array
+        }
+
+        @override
+        function get_done():Bit {
+            return index = array.count
+        }
+
+        @override
+        function next():T {
+            index += 1
+            return array[index - 1]
+        }
+    }
+
+    @private
+    def _count:Int
+
+    @private
+    def dummy:Int -- for binary compatibility with Array
+
+    @private
+    def data:Pointer<T?>
+
+    init() {
+        self._count := 0
+        data := Pointer<T?>.alloc(0)
+    }
+
+    init(data:ListView<T>) {
+        self._count := data.count
+        self.data := Pointer<T?>.alloc(_count)
+        for i in 0 .. count {
+            self.data[i] := data[i]
+        }
+    }
+
+    @private
+    init(data:Pointer<T>, count:Int) {
+        self.data := data->Pointer<T?>
+        self._count := count
+    }
+
+    ================================================================================================
+    Invalidates an `Array` and returns its contents as a `FixedArray`. This is generally
+    preferable to creating a new instance of `FixedArray` from this array, as `finish()` does
+    not copy the array's contents. Interacting in any way with an `Array` after calling this method
+    on it will cause precondition violations (or, if safety checks are disabled, undefined
+    behavior).
+    ================================================================================================
+    @class
+    method from(a:Array<T>):FixedArray<T> {
+        -- FIXME this transformation is only safe at -S0
+        a.data := a.data.realloc(a.capacity, a._count)
+        a.$class := FixedArray<T>().$class -- FIXME need a better way to get a class pointer
+        a.capacity := -1
+        return a->Object->FixedArray<T>
+    }
+
+    @override
+    method cleanup() {
+        for i in 0 .. count {
+            data[i] := null
+        }
+        data.destroy()
+    }
+
+    @override
+    function [](index:Int):T {
+        assert index >= 0 & index < count
+        return data[index]->T
+    }
+
+    @override
+    function get_count():Int {
+        return _count
+    }
+
+    @override
+    function get_iterator():Iterator<T> {
+        return FixedArrayIterator<T>(self)
+    }
+
+    @override
+    function convert():String {
+        def result := MutableString()
+        result.append("[")
+        var separator := ""
+        for v in self {
+            result.append(separator)
+            separator := ", "
+            if v !== null {
+                result.append(v)
+            }
+            else {
+                result.append("<null>")
+            }
+        }
+        result.append("]")
+        return result.finish()
+    }
+}

@@ -1,6 +1,6 @@
-AmbiguousMethodReference.panda:2:19: error: reference to method '+' is ambiguous. The following methods are equally good matches:
-    function panda.core.Int64.+(other:panda.core.Int64):panda.core.Int64 (Int64.panda:79:5)
-    function panda.core.Int64.+(other:panda.core.Int32):panda.core.Int64 (Int64.panda:74:5)
-    function panda.core.Int64.+(other:panda.core.Int16):panda.core.Int64 (Int64.panda:69:5)
-    function panda.core.Int64.+(other:panda.core.Int8):panda.core.Int64 (Int64.panda:64:5)
+AmbiguousMethodReference.frost:2:19: error: reference to method '+' is ambiguous. The following methods are equally good matches:
+    function frost.core.Int64.+(other:frost.core.Int64):frost.core.Int64 (Int64.frost:79:5)
+    function frost.core.Int64.+(other:frost.core.Int32):frost.core.Int64 (Int64.frost:74:5)
+    function frost.core.Int64.+(other:frost.core.Int16):frost.core.Int64 (Int64.frost:69:5)
+    function frost.core.Int64.+(other:frost.core.Int8):frost.core.Int64 (Int64.frost:64:5)
 1 error

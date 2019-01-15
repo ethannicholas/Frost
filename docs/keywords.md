@@ -1,9 +1,9 @@
 Keywords
 ========
 
-*Keywords* are reserved words defined by the Panda language. They may not be used as names for
+*Keywords* are reserved words defined by the Frost language. They may not be used as names for
 [classes](classes.html), [methods](methods.html), [variables](variables.html), or anywhere else an
-identifier is expected. Panda reserves the following keywords:
+identifier is expected. Frost reserves the following keywords:
 
 * `package`
 * `uses`

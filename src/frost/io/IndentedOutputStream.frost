@@ -1,0 +1,82 @@
+package frost.io
+
+uses frost.unsafe.Pointer
+
+====================================================================================================
+An output stream which indents the lines it writes. `IndentedOutputStream` sits "on top of" another
+stream, directing its output to the underlying stream.
+====================================================================================================
+@final
+class IndentedOutputStream : OutputStream {
+    ================================================================================================
+    The current indentation level, in units of `indentSize`. Each line written to the underlying
+    stream will be prefixed by `indentSize * level` spaces.
+    ================================================================================================
+    var level := 0 -- FIXME make these properties and store the indentation string
+
+    ================================================================================================
+    The number of spaces represented by each increment of `level`. Defaults to `4`.
+    ================================================================================================
+    var indentSize := 4
+
+    @private
+    var indent := ""
+
+    @private
+    var atLineStart := true
+
+    @private
+    def out:OutputStream
+
+    ================================================================================================
+    Creates a new `IndentedOutputStream`.
+
+    @param out the underlying output stream
+    ================================================================================================
+    init(out:OutputStream) {
+        self.out := out
+        super.init()
+    }
+
+    @override
+    method write(b:UInt8) {
+        if b = 10 {
+            atLineStart := true
+        }
+        else {
+            indentIfNeeded()
+        }
+        out.write(b)
+    }
+
+    @override
+    method write(ptr:Pointer<UInt8>, count:Int) {
+        var start := 0
+        var current := start
+        while current < count {
+            if ptr[current] = 10 {
+                out.write(ptr.offset(start), current - start)
+                start := current
+                atLineStart := true
+            }
+            else if atLineStart {
+                out.write(ptr.offset(start), current - start)
+                start := current
+                indentIfNeeded()
+            }
+            current += 1
+        }
+        out.write(ptr.offset(start), current - start)
+    }
+    
+    @private
+    method indentIfNeeded() {
+        if atLineStart {
+            atLineStart := false
+            if indent._length != indentSize * level {
+                indent := " " * (indentSize * level)
+            }
+            print(indent)
+        }
+    }
+}

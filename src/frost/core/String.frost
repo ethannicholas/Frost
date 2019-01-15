@@ -1,0 +1,1512 @@
+package frost.core
+
+uses frost.unsafe.Pointer
+
+---------------
+-- IMPORTANT --
+------------------------------------------------------------------------------
+-- String and MutableString are assumed to have a compatible memory layout! --
+-- See MutableString.finish().                                              --
+------------------------------------------------------------------------------
+
+====================================================================================================
+An immutable sequence of Unicode codepoints. Each Unicode codepoint is a number between 0 and
+1,114,112; a `String` may consist of any sequence of zero or more codepoints, regardless of whether
+this sequence forms a sensible Unicode string. Note that a single logical character may be composed
+of multiple Unicode codepoints, such as a string consisting of REGIONAL INDICATOR SYMBOL LETTER B
+followed by REGIONAL INDICATOR SYMBOL LETTER R, which many platforms will render as a Brazilian flag
+Emoji. Even though this string will generally be displayed as a single logical character, Frost
+deals with Unicode codepoints and thus considers the string to have a length of 2.
+
+Internally, `String`s are stored using the UTF-8 encoding. The fact that UTF-8 is a variable-length
+encoding impacts the performance of some operations, as determining the offset of a given codepoint
+requires traversing the string from the beginning. Because of this, it can be much faster to use
+[String.Index] as opposed to numeric offsets to index into `String`s. For instance, the code:
+
+    for i in 0 .. string.length {
+        process(s[i])
+    }
+
+is relatively slow, as the repeated calls to `s[i]` constantly re-scan the `String` from the
+beginning to find each successive character. We can rewrite this code using `String.Index`:
+
+    var index := string.start()
+    while index != string.end() {
+        process(s[index])
+        index := s.next(index)
+    }
+
+This avoids the expensive re-scan of the string. Of course, iteration over the string is even
+simpler:
+
+    for c in string {
+        process(c)
+    }
+
+As `String` is immutable, assembling a string via repeated concatenation is a very slow operation
+that creates many temporary objects. Instead create a [MutableString], repeatedly call `append` on
+it, and then finally turn it into an immutable `String` using [finish](MutableString.finish).
+====================================================================================================
+@final
+class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
+    ================================================================================================
+    Represents the position of a Unicode codepoint within a `String`.
+    ================================================================================================
+    class Index : Value, Key<Index>, Comparable<Index> {
+        @private
+        def value:Int
+
+        @private
+        init(value:Int) {
+            self.value := value
+        }
+
+        @override
+        function =(other:Index):Bit {
+            return value = other.value
+        }
+
+        @override
+        function >(other:Index):Bit {
+            return value > other.value
+        }
+
+        ============================================================================================
+        @inherit
+        ============================================================================================
+        @override
+        function get_hash():Int {
+            return value
+        }
+    }
+
+    @private
+    class UTF8List : ListView<Char8> {
+        def str:String
+
+        init(str:String) {
+            self.str := str
+        }
+
+        @override
+        function [](index:Int):Char8 {
+            return str.data[index]
+        }
+
+        @override
+        function get_count():Int {
+            return str._length
+        }
+
+        @override
+        function get_iterator():Iterator<Char8> {
+            return UTF8Iterator(str)
+        }
+    }
+
+    @private
+    class UTF8Iterator : Iterator<Char8> {
+        var index := 0
+
+        def str:String
+
+        init(str:String) {
+            self.str := str
+        }
+
+        @override
+        function get_done():Bit {
+            return index >= str._length
+        }
+
+        @override
+        method next():Char8 {
+            index += 1
+            return str.data[index - 1]
+        }
+    }
+
+    @private
+    class UTF16Iterator : Iterator<Char16> {
+        var index := 0
+
+        def str:String
+
+        init(str:String) {
+            self.str := str
+            assert false, "unimplemented"
+        }
+
+        @override
+        function get_done():Bit {
+            return index >= str._length
+        }
+
+        @override
+        method next():Char16 {
+            index += 1
+            return Char16(1)
+        }
+    }
+
+    @private
+    class UTF32Iterator : Iterator<Char32> {
+        var index := 0
+
+        def str:String
+
+        init(str:String) {
+            self.str := str
+        }
+
+        @override
+        function get_done():Bit {
+            return index >= str._length
+        }
+
+        @override
+        method next():Char32 {
+            assert index < str._length
+            def c := str.data[index]
+            var result:Int32 := c.convert()
+            if c.value->builtin_int64 && 0xFF < 0b10000000 {
+                index += 1
+                return Char32(result)
+            }
+            if c.value->builtin_int64 && 0xFF < 0b11000000 {
+                if index + 1 < str._length {
+                    result := result && 0b11111 << 6 + str.data[index + 1].convert()->Int32 &&
+                            0b111111
+                }
+                else {
+                    result := 0
+                }
+                index += 2
+                return Char32(result)
+            }
+            if c.value->builtin_int64 && 0xFF < 0b11100000 {
+                if index + 2 < str._length {
+                    result := result && 0b1111 << 12 + str.data[index + 1].convert()->Int32 &&
+                            0b111111 << 6 + str.data[index + 2].convert()->Int32 && 0b111111
+                }
+                else {
+                    result := 0
+                }
+                index += 3
+                return Char32(result)
+            }
+            if index + 3 < str._length {
+                result := result && 0b111 << 18 + str.data[index + 1].convert()->Int32 &&
+                        0b111111 << 12 + str.data[index + 2].convert()->Int32 && 0b111111 << 6 +
+                        str.data[index + 3].convert()->Int32 && 0b111111
+            }
+            else {
+                result := 0
+            }
+            index += 4
+            return Char32(result)
+        }
+    }
+
+    @private
+    class MatchIterator : Iterator<String.Index> {
+        def haystack:String
+
+        def needle:String
+
+        var nextMatch:String.Index?
+
+        var allowOverlaps:Bit
+
+        init(haystack:String, needle:String, allowOveraps:Bit) {
+            self.haystack := haystack
+            self.needle := needle
+            self.allowOverlaps := allowOverlaps
+            nextMatch := haystack.indexOf(needle)
+        }
+
+        @override
+        function get_done():Bit {
+            return nextMatch == null
+        }
+
+        @override
+        method next():String.Index {
+            def result := nextMatch
+            def start:String.Index
+            if allowOverlaps {
+                start := haystack.next(start)
+            }
+            else {
+                start := String.Index(nextMatch.value + needle.byteLength)
+            }
+            nextMatch := haystack.indexOf(needle, start)
+            return result
+        }
+    }
+
+    ================================================================================================
+    Represents a regular expression match within a string.
+    ================================================================================================
+    class Match : Immutable {
+        ============================================================================================
+        The index of the first character of the match.
+        ============================================================================================
+        def start:String.Index
+
+        ============================================================================================
+        The index just past the end of the match.
+        ============================================================================================
+        def end:String.Index
+
+        ============================================================================================
+        The match's group captures. Group 0 is always the entire match.
+        ============================================================================================
+        def groups:ImmutableArray<String>
+
+        @private
+        init(m:Matcher) {
+            start := m.get_start()
+            end := m.get_end()
+            def g := Array<String>()
+            for i in 0 .. m.get_groupCount() {
+                g.add(m.group(i))
+            }
+            groups := ImmutableArray<String>.from(g)
+        }
+
+        @override
+        function convert():String {
+            return "Match(\{groups[0]})"
+        }
+    }
+
+    @private
+    class RegexMatchIterator : Iterator<Match> {
+        def matcher:Matcher
+
+        def haystack:String
+
+        def allowOverlaps:Bit
+
+        var found:Bit
+
+        init(haystack:String, needle:RegularExpression, allowOveraps:Bit) {
+            self.haystack := haystack
+            self.allowOverlaps := allowOverlaps
+            matcher := needle.matcher(haystack)
+            found := matcher.find()
+        }
+
+        @override
+        function get_done():Bit {
+            return !found
+        }
+
+        @override
+        method next():Match {
+            def result := Match(matcher)
+            def start:String.Index
+            if allowOverlaps {
+                start := haystack.next(matcher.start)
+            }
+            else {
+                start := matcher.get_end()
+            }
+            found := matcher.find(start)
+            return result
+        }
+    }
+
+    @private
+    def data:Pointer<Char8>
+
+    @private
+    def _length:Int
+
+    @private
+    def dummy:Int := 0
+   
+    property utf8:ListView<Char8>
+
+    property utf16:Iterator<Char16>
+
+    property length:Int
+
+    property byteLength:Int
+
+    property start:Index
+
+    property end:Index
+
+    property trimmed:String
+
+    ================================================================================================
+    For dependent substrings, points to the parent String.
+    ================================================================================================
+    @private
+    def owner:String?
+
+    init(data:Pointer<Char8>, length:Int) {
+        self.data := data
+        _length := length
+        self.owner := null
+    }
+
+    @private
+    init(data:Pointer<Char8>, length:Int, owner:String) {
+        self.data := data
+        _length := length
+        self.owner := owner
+    }
+
+    init(chars:ListView<Char8>) {
+        _length := chars.count
+        data := Pointer<Char8>.alloc(_length)
+        for i in 0 .. _length {
+            data[i] := chars[i]
+        }
+        owner := null
+    }
+
+    init(chars:ListView<Char32>) {
+        def result := MutableString()
+        for c in chars {
+            result.append(c)
+        }
+        self.data := Pointer<Char8>.alloc(result._length)
+        for i in 0 .. result._length {
+            self.data[i] := result.data[i]
+        }
+        self._length := result._length
+        owner := null
+    }
+
+    ================================================================================================
+    Returns this string.
+    ================================================================================================
+    @override
+    function convert():String {
+        return self
+    }
+
+    ================================================================================================
+    Returns a formatted representation of this string. With an empty format string, the raw string
+    is returned. With the format string `"frost"`, a representation of the string as it would appear
+    in Frost source code is returned.
+
+    @param fmt the format string
+    @returns a formatted string
+    ================================================================================================
+    @override
+    function format(fmt:String):String {
+        match fmt {
+            when "" {
+                return self
+            }
+            when "frost" {
+                def result := MutableString('"')
+                for c in utf8 {
+                    match c {
+                        when "\"" {
+                            result.append("\\\"")
+                        }
+                        when "\\" {
+                            result.append("\\\\")
+                        }
+                        when "\n" {
+                            result.append("\\n")
+                        }
+                        when "\r" {
+                            result.append("\\r")
+                        }
+                        when "\t" {
+                            result.append("\\t")
+                        }
+                        otherwise {
+                            if c.convert()->UInt8 >= 32 & c.convert()->UInt8 <= 126 {
+                                result.append(c)
+                            }
+                            else {
+                                -- FIXME add unicode escape
+                                result.append("?")
+                            }
+                        }
+                    }
+                }
+                result.append("\"")
+                return result.finish()
+            }
+            otherwise {
+                assert false
+            }
+        }
+    }
+
+    @override
+    @private
+    method cleanup() {
+        if owner == null {
+            data.destroy()
+        }
+    }
+
+    ================================================================================================
+    Returns a list of the bytes in this string's UTF-8 representation.
+    ================================================================================================
+    function get_utf8():ListView<Char8> {
+        return UTF8List(self)
+    }
+
+    ================================================================================================
+    Returns an iterator which returns the code units of this string's UTF-16 representation. As not
+    all Unicode codepoints fit into a single UTF-16 code unit, the returned code units may contain
+    surrogate pairs.
+    ================================================================================================
+    function get_utf16():Iterator<Char16> {
+        return UTF16Iterator(self)
+    }
+
+    ================================================================================================
+    Returns an `Iterator` over the characters in this string.
+    ================================================================================================
+    @override
+    function get_iterator():Iterator<Char32> {
+        return UTF32Iterator(self)
+    }
+
+    ================================================================================================
+    Returns the number of Unicode codepoints in the string. Note that because the string is
+    internally stored in the variable-length UTF-8 encoding, determining the number of Unicode
+    codepoints in the string can be a relatively expensive operation for long strings (linear with
+    respect to the size of the string).
+    ================================================================================================
+    function get_length():Int {
+        return iterator.count()
+    }
+
+    ================================================================================================
+    Returns the number of bytes of storage taken up by this string's internal UTF-8 encoding.
+    ================================================================================================
+    function get_byteLength():Int {
+        return _length
+    }
+
+    function startsWith(other:String):Bit {
+        if _length < other._length {
+            return false
+        }
+        for i in 0 .. other._length {
+            if data[i] != other.data[i] {
+                return false
+            }
+        }
+        return true
+    }
+
+    function endsWith(other:String):Bit {
+        if _length < other._length {
+            return false
+        }
+        for i in 0 .. other._length {
+            if data[_length - other._length + i] != other.data[i] {
+                return false
+            }
+        }
+        return true
+    }
+
+    ================================================================================================
+    Returns a copy of this string with leading and trailing whitespace characters removed.
+
+    @returns a trimmed version of this string
+    ================================================================================================
+    function get_trimmed():String {
+        if _length = 0 {
+            return self
+        }
+        var start := 0
+        while start < _length & data[start].isWhitespace() {
+            start += 1
+        }
+
+        var end := _length - 1
+        while end >= start & data[end].isWhitespace() {
+            end -= 1
+        }
+
+        return self[Index(start) ... Index(end)]
+    }
+
+    ================================================================================================
+    Returns the concatenation of this string and another string.
+    ================================================================================================
+    function +(other:String):String {
+        def result := Pointer<Char8>.alloc(_length + other._length)
+        for i in 0 .. _length {
+            result[i] := data[i]
+        }
+        for i in 0 .. other._length {
+            result[_length + i] := other.data[i]
+        }
+        return String(result, _length + other._length)
+    }
+
+    ================================================================================================
+    Returns the concatenation of this string and another object's string representation. The
+    object's string representation is computed using its [convert() method](Object.convert()).
+    ================================================================================================
+    function +(other:Object):String {
+        return self + other.convert()->String
+    }
+
+    ================================================================================================
+    Returns a string consisting of `count` copies of this string.
+    ================================================================================================
+    @pre(count >= 0)
+    function *(count:Int):String {
+        def result := MutableString()
+        for i in 0 .. count {
+            result.append(self)
+        }
+        return result.finish()
+    }
+
+    ================================================================================================
+    Returns a string consisting of `count` copies of `s`.
+    ================================================================================================
+    @class
+    @pre(count >= 0)
+    function *(count:Int, s:String):String {
+        def result := MutableString()
+        for i in 0 .. count {
+            result.append(s)
+        }
+        return result.finish()
+    }
+
+    ================================================================================================
+    Returns the concatenation of another object's string representation and this string. The
+    object's string representation is computed using its [convert() method](Object.convert()).
+    ================================================================================================
+    @class
+    function +(o:Object, s:String):String {
+        return o.convert() + s
+    }
+
+    ================================================================================================
+    Returns true if these two strings are equal (contain the same sequence of codepoints). Strings
+    which logically mean the same thing but contain different codepoints are not equal. For
+    instance, the string with Unicode codepoint LATIN CAPITAL LETTER A WITH ACUTE and the string
+    with Unicode codepoints LATIN CAPITAL LETTER A followed by COMBINING ACUTE ACCENT will (in most
+    programs) display and behave exactly the same, but they do not contain the same sequence of
+    codepoints and therefore are not equal.
+    ================================================================================================
+    @override
+    function =(other:String):Bit {
+        if _length != other._length {
+            return false
+        }
+        for i in 0 .. _length {
+            if data[i]->Char8 != other.data[i]->Char8 {
+                return false
+            }
+        }
+        return true
+    }
+
+    ================================================================================================
+    Returns the Unicode codepoint at the given offset within the string.
+    ================================================================================================
+    function [](index:Index):Char32 {
+        def idx := index.value
+        def c := data[idx]
+        var result:Int32 := c.convert()
+        if c.value->builtin_int64 && 0xFF < 0b11000000 {
+            return Char32(result)
+        }
+        if c.value->builtin_int64 && 0xFF < 0b11100000 {
+            assert idx + 1 < _length
+            result := result && 0b11111 << 6 + data[idx + 1].convert()->Int32 && 0b111111
+            return Char32(result)
+        }
+        if c.value->builtin_int64 && 0xFF < 0b11110000 {
+            assert idx + 2 < _length
+            result := result && 0b1111 << 12 + data[idx + 1].convert()->Int32 && 0b111111 << 6 +
+                    data[idx + 2].convert()->Int32 && 0b111111
+            return Char32(result)
+        }
+        assert idx + 3 < _length
+        result := result && 0b111 << 18 + data[idx + 1].convert()->Int32 && 0b111111 << 12 +
+                data[idx + 2].convert()->Int32 && 0b111111 << 6 +
+                data[idx + 3].convert()->Int32 && 0b111111
+        return Char32(result)
+    }
+
+    ================================================================================================
+    Returns the Unicode codepoint at the given offset within the string. This overload of the `[]`
+    operator is slower than the overload that accepts an `Index` parameter, as it must scan the
+    (internally UTF-8) string from the beginning to find the correct index.
+    ================================================================================================
+    function [](index:Int):Char32 {
+        return self[offset(start, index)]
+    }
+
+    ================================================================================================
+    Returns a 'dependent' substring of a string. `string.substring(range)` behaves exactly the same
+    as the more-common `string[range]`, except that `substring` does not copy the characters into a
+    new memory buffer, instead referring directly to the memory held by the "parent" string. This
+    means that the parent string will remain in memory as long as any of its substrings do.
+
+    `string.substring(range)` is therefore much more efficient than `string[range]`, provided that
+    forcing the parent string to remain in memory is acceptable.
+    ================================================================================================
+    function substring(r:Range<Index>):String {
+        var length := r.max.value - r.min.value
+        if r.inclusive {
+            length += 1
+        }
+        return String(data.offset(r.min.value), length, self)
+    }
+
+    ================================================================================================
+    Returns a 'dependent' substring of a string. `string.substring(range)` behaves exactly the same
+    as the more-common `string[range]`, except that `substring` does not copy the characters into a
+    new memory buffer, instead referring directly to the memory held by the "parent" string. This
+    means that the parent string will remain in memory as long as any of its substrings do.
+
+    `string.substring(range)` is therefore much more efficient than `string[range]`, provided that
+    forcing the parent string to remain in memory is acceptable.
+
+    As with other `Range` methods, a null `min` starts at the beginning of the string, and a null
+    `max` ends at the end of the string.
+    ================================================================================================
+    function substring(r:Range<Index?>):String {
+        def min:Index
+        if r.min !== null {
+            min := r.min
+        }
+        else {
+            min := start
+        }
+
+        var inclusive := r.inclusive
+        def max:Index
+        if r.max !== null {
+            max := r.max
+        }
+        else {
+            max := end
+            inclusive := false
+        }
+        return substring(Range<Index>(min, max, inclusive))
+    }
+
+    ================================================================================================
+    Returns a substring of a string. If `Range.min` is greater than `Range.max`, the resulting
+    substring will be empty.
+    ================================================================================================
+    function [](r:Range<Index>):String {
+        def current := r.min.value
+        def result := MutableString()
+        var max := r.max.value
+        if r.inclusive {
+            max += 1
+        }
+        while current < max {
+            def c := data[current]
+            result.append(c)
+            current += 1
+            if c.value->builtin_int64 && 0xFF >= 0b11000000 {
+                result.append(data[current])
+                current += 1
+            }
+            if c.value->builtin_int64 && 0xFF >= 0b11100000 {
+                result.append(data[current])
+                current += 1
+            }
+            if c.value->builtin_int64 && 0xFF >= 0b11110000 {
+                result.append(data[current])
+                current += 1
+            }
+        }
+        return result.finish()
+    }
+
+    ================================================================================================
+    Returns a substring of a string. If `Range.min` is not specified, the substring will start at
+    the beginning of the string. If `Range.max` is not specified, the substring will end at the end
+    of the string. If `Range.min` is greater than `Range.max`, the resulting substring will be
+    empty.
+    ================================================================================================
+    @priority(1)
+    function [](r:Range<Index?>):String {
+        if _length = 0 {
+            return ""
+        }
+        def min:Index
+        if r.min !== null {
+            min := r.min
+        }
+        else {
+            min := start
+        }
+
+        var inclusive := r.inclusive
+        def max:Index
+        if r.max !== null {
+            max := r.max
+        }
+        else {
+            max := end
+            inclusive := false
+        }
+        return self[Range<Index>(min, max, inclusive)]
+    }
+
+    ================================================================================================
+    Returns a substring of a string. The `Range.step` value is interpreted in terms of Unicode
+    codepoints: that is, `s[... by 2]` will return a `String` consisting of every other Unicode
+    codepoint in `s`. As some Unicode characters consist of more than one codepoint (e.g. when using
+    combining diacriticals, Emoji skin tone modifiers, or Emoji flags), this will mangle such
+    characters when the step is not `1`.
+
+    A negative range value will scan the string backwards from the starting point, thus `[.. by -1]`
+    will reverse the Unicode codepoints in the input string. Note again that this will mangle
+    Unicode characters which consist of more than one Unicode codepoint.
+    ================================================================================================
+    @priority(1)
+    function [](r:SteppedRange<Index?, Int>):String {
+        if _length = 0 {
+            return ""
+        }
+        def step := r.step
+
+        def current:Int
+        if r.start !== null {
+            current := r.start.value
+        }
+        else if step > 0 {
+            current := start.value
+        }
+        else {
+            current := previous(end).value
+        }
+
+        def end:Int
+        if r.end !== null {
+            end := r.end.value
+        }
+        else if step > 0 {
+            end := self.end.value
+        }
+        else {
+            end := self.start.value
+        }
+
+        def result := MutableString()
+        if r.step > 0 {
+            while current < end {
+                def c := data[current]
+                result.append(c)
+                current += 1
+                if c.value->builtin_int64 && 0xFF >= 0b11000000 {
+                    result.append(data[current])
+                    current += 1
+                }
+                if c.value->builtin_int64 && 0xFF >= 0b11100000 {
+                    result.append(data[current])
+                    current += 1
+                }
+                if c.value->builtin_int64 && 0xFF >= 0b11110000 {
+                    result.append(data[current])
+                    current += 1
+                }
+                for i in 1 .. step {
+                    if current >= end {
+                        return result.convert()
+                    }
+                    current := next(Index(current)).value
+                }
+            }
+        }
+        else {
+            assert r.step < 0
+            while current > end {
+                def c := data[current]
+                result.append(c)
+                def old := current
+                current += 1
+                if c.value->builtin_int64 && 0xFF >= 0b11000000 {
+                    result.append(data[current])
+                    current += 1
+                }
+                if c.value->builtin_int64 && 0xFF >= 0b11100000 {
+                    result.append(data[current])
+                    current += 1
+                }
+                if c.value->builtin_int64 && 0xFF >= 0b11110000 {
+                    result.append(data[current])
+                }
+                current := old - 1
+                while data[current].value->builtin_int64 && 0xFF >= 0b10000000 & data[current].value->builtin_int64 && 0xFF < 0b11000000 {
+                    current -= 1
+                }
+                for i in -1 .. step by -1 {
+                    if current <= end {
+                        return result.convert()
+                    }
+                    current := previous(Index(current)).value
+                }
+            }
+        }
+        if (r.inclusive | r.end == null) & current = end & end < _length {
+            def c := data[current]
+            result.append(c)
+            current += 1
+            if c.value->builtin_int64 && 0xFF >= 0b11000000 {
+                result.append(data[current])
+                current += 1
+            }
+            if c.value->builtin_int64 && 0xFF >= 0b11100000 {
+                result.append(data[current])
+                current += 1
+            }
+            if c.value->builtin_int64 && 0xFF >= 0b11110000 {
+                result.append(data[current])
+            }
+        }
+        return result.finish()
+    }
+
+    ================================================================================================
+    Returns a substring of a string. This version of the `[]` operator is slower than the one that
+    accepts a `Range<Index?>` parameter, as it must scan the (internally UTF-8) string from the
+    beginning to find the right offsets.
+    ================================================================================================
+    function [](r:Range<Int?>):String {
+        def start:Index?
+        if r.min !== null {
+            start := offset(self.start, r.min)
+        }
+        else {
+            start := null
+        }
+        def end:Index?
+        if r.max !== null {
+            end := offset(self.start, r.max)
+        }
+        else {
+            end := null
+        }
+        return self[Range<Index?>(start, end, r.inclusive)]
+    }
+
+    ================================================================================================
+    Returns a substring of a string. This version of the `[]` operator is slower than the one that
+    accepts a `Range<Index?>` parameter, as it must scan the (internally UTF-8) string from the
+    beginning to find the right offsets.
+    ================================================================================================
+    function [](r:SteppedRange<Int?, Int>):String {
+        def start:Index?
+        if r.start !== null {
+            start := offset(self.start, r.start)
+        }
+        else {
+            start := null
+        }
+        def end:Index?
+        if r.end !== null {
+            end := offset(self.start, r.end)
+        }
+        else {
+            end := null
+        }
+        return self[SteppedRange<Index?, Int>(start, end, r.step, r.inclusive)]
+    }
+
+    ================================================================================================
+    Returns `true` if this string contains at least one occurrence of the given character.
+    ================================================================================================
+    function contains(c:Char8):Bit {
+        for i in 0 .. _length {
+            if data[i] = c {
+                return true
+            }
+        }
+        return false
+    }
+
+    ================================================================================================
+    Returns `true` if this string contains at least one occurrence of the given substring.
+    ================================================================================================
+    function contains(s:String):Bit {
+        return indexOf(s) !== null
+    }
+
+    ================================================================================================
+    Returns the index of the first occurrence of the string `s` within this string, or `null` if not
+    found.
+
+    @param s the string to search for
+    @returns the index of the match, or `null` if not found
+    ================================================================================================
+    function indexOf(s:String):Index? {
+        return indexOf(s, start)
+    }
+
+    ================================================================================================
+    Returns the index of the first occurrence of the string `s` within this string, starting from
+    the specified `index`, or `null` if not found.
+
+    @param s the string to search for
+    @param start the index to begin searching from
+    @returns the index of the match, or `null` if not found
+    ================================================================================================
+    function indexOf(s:String, start:Index):Index? {
+        if _length < s._length {
+            return null
+        }
+        outer: for i in start.value ... _length - s._length {
+            for j in 0 .. s._length {
+                if data[i + j] != s.data[j] {
+                    continue outer
+                }
+            }
+            return Index(i)
+        }
+        return null
+    }
+
+    ================================================================================================
+    Returns the index of the last occurrence of the string `s` within this string, or `null` if not
+    found.
+
+    @param s the string to search for
+    @returns the index of the match, or `null` if not found
+    ================================================================================================
+    function lastIndexOf(s:String):Index? {
+        return lastIndexOf(s, end)
+    }
+
+    ================================================================================================
+    Returns the index of the last occurrence of the string `s` within this string, starting the
+    search backwards from the specified `index`, or `null` if not found.
+
+    @param s the string to search for
+    @param start the index to begin searching from
+    @returns the index of the match, or `null` if not found
+    ================================================================================================
+    function lastIndexOf(s:String, start:Index):Index? {
+        if _length < s._length {
+            return null
+        }
+        def startPos := start.value.min(_length - s._length)
+        outer: for i in startPos ... 0 by -1 {
+            for j in 0 .. s._length {
+                if data[i + j] != s.data[j] {
+                    continue outer
+                }
+            }
+            return Index(i)
+        }
+        return null
+    }
+
+    ================================================================================================
+    Returns `true` if this string matches the given regular expression. The regular expression must
+    match the entire string.
+
+    @param regex the regular expression to compare against
+    @returns `true` if the string matches
+    ================================================================================================
+    function matches(regex:RegularExpression):Bit {
+        return regex.matcher(self).matches()
+    }
+
+    ================================================================================================
+    Returns `true` if this string contains a match for the given regular expression. The regular
+    expression may match zero or more characters of the string, starting at any point.
+
+    @param needle the regular expression to search for
+    @returns `true` if the string contains a match
+    ================================================================================================
+    function contains(needle:RegularExpression):Bit {
+        return needle.matcher(self).find()
+    }
+
+    ================================================================================================
+    Matches the string against the given regular expression, returning an array of its capture
+    groups. Group 0, the group containing the entire string, is not returned. If the string does not
+    match the regular expression, returns `null`. For example, `"1,2,34".parse(/(\d+),(\d+),(\d+)/)`
+    will return a list consisting of `"1"`, `"2"`, and `"34"`.
+    
+    @param regex the regular expression to parse against
+    @returns a list of the capture groups, or `null` if the string did not match
+    ================================================================================================
+    -- @safeReturn FIXME
+    function parse(regex:RegularExpression):ListView<String>? {
+        def matcher := regex.matcher(self)
+        if matcher.matches() {
+            def result := Array<String>()
+            for i in 1 .. matcher.get_groupCount() {
+                result.add(matcher.group(i))
+            }
+            return result
+        }
+        return null
+    }
+
+    ================================================================================================
+    Returns a new string with every occurrence of `search` replaced with `replacement`.
+
+    @param search the string to search for
+    @param replacement the replacement text
+    @returns a string with all matches replaced
+    ================================================================================================
+    function replace(search:String, replacement:String):String {
+        if search = "" {
+            return self
+        }
+        def result := MutableString()
+        var index := start
+        loop {
+            def nextIndex := indexOf(search, index)
+            if nextIndex == null {
+                result.append(self[index..])
+                break
+            }
+            result.append(self[index .. nextIndex->Index])
+            result.append(replacement)
+            index := Index(nextIndex.value + search._length)
+        }
+        return result.finish()
+    }
+
+    ================================================================================================
+    Returns a new string with every match of `search` replaced with `replacement`. The replacement
+    string may contain `$1`-style regular expression group references; for instance
+    `s.replace(regex, "$1")` will replace every occurrence of the regex with the contents of its
+    first group.
+    
+    @param search the regular expression to search for
+    @param replacement the replacement text
+    @returns a string with all matches replaced
+    ================================================================================================
+    function replace(search:RegularExpression, replacement:String):String {
+        return replace(search, replacement, true)
+    }
+
+    function replace(search:RegularExpression, replacement:String,
+            allowGroupReferences:Bit):String {
+        def result := MutableString()
+        def matcher := search.matcher(self)
+        while matcher.find() {
+            matcher.appendReplacement(result, replacement, allowGroupReferences)
+        }
+        matcher.appendTail(result)
+        return result.finish()
+    }
+
+    ================================================================================================
+    Searches the string for a regular expression, replacing occurrences of the regular expression
+    with new text determined by a function. For instance, given:
+
+        "This is a test!".replace(/\w+/, word => word.length)
+
+    The regular expression `/\w+/` matches sequences of one or more word characters; in other words,
+    it matches all words occurring in the string. The replacement function 
+    `word => word.length.convert()` replaces each matched sequence with the number of characters in
+    the sequence, resulting in the text:
+
+        4 2 1 4!
+
+    @param search the regular expression to match the string with
+    @param replacement a function generating the replacement text
+    @returns a new string with all occurrences of the regular expression replaced
+    ================================================================================================
+    function replace(search:RegularExpression, replacement:(String)=>(Object)):String {
+        def result := MutableString()
+        def matcher := search.matcher(self)
+        while matcher.find() {
+            matcher.appendReplacement(result, replacement(matcher.group(0)).convert(), false)
+        }
+        matcher.appendTail(result)
+        return result.convert()
+    }
+
+    ================================================================================================
+    As [replace(RegularExpression, (String)=>(Object))], but the replacement function receives the
+    capture groups from the regular expression rather than the raw matched text. The groups list
+    includes the special whole-match group at index `0`, with the first set of parentheses in the
+    regular expression corresponding to index `1`.
+
+    @param search the regular expression to match the string with
+    @param replacement a function generating the replacement text
+    @returns a new string with all occurrences of the regular expression replaced
+    ================================================================================================
+    function replace(search:RegularExpression, replacement:(ListView<String?>)=>(Object)):String {
+        def result := MutableString()
+        def matcher := search.matcher(self)
+        while matcher.find() {
+            def groups := Array<String?>()
+            for i in 0 .. matcher.get_groupCount() {
+                groups.add(matcher.group(i))
+            }
+            matcher.appendReplacement(result, replacement(groups).convert(), false)
+        }
+        matcher.appendTail(result)
+        return result.convert()
+    }
+
+    function find(needle:String):Iterator<String.Index> {
+        return find(needle, false)
+    }
+
+    function find(needle:String, overlapping:Bit):Iterator<String.Index> {
+        return MatchIterator(self, needle, overlapping)
+    }
+
+    function find(needle:RegularExpression):Iterator<Match> {
+        return find(needle, false)
+    }
+
+    function find(needle:RegularExpression, overlapping:Bit):Iterator<Match> {
+        return RegexMatchIterator(self, needle, overlapping)
+    }
+
+    ================================================================================================
+    Returns the index of the first character in the string.
+    ================================================================================================
+    function get_start():Index {
+        return Index(0)
+    }
+
+    ================================================================================================
+    Returns the index just past the end of the string.
+    ================================================================================================
+    function get_end():Index {
+        return Index(_length)
+    }
+
+    ================================================================================================
+    Returns the index of the Unicode codepoint after the given index. It is an error to call
+    `next()` when already at the end of the string. Note that because a logical character can
+    consist of multiple Unicode codepoints (such as LATIN SMALL LETTER A followed by COMBINING ACUTE
+    ACCENT), this may return an index in the middle of such a compound character.
+    ================================================================================================
+    function next(i:Index):Index {
+        assert i.value < _length
+        def c := data[i.value].value->builtin_int64 && 0xFF
+        if c >= 0b11110000 {
+            return Index(i.value + 4)
+        }
+        if c >= 0b11100000 {
+            return Index(i.value + 3)
+        }
+        if c >= 0b11000000 {
+            return Index(i.value + 2)
+        }
+        return Index(i.value + 1)
+    }
+
+    ================================================================================================
+    Returns the index of the Unicode codepoint before the given index. It is an error to call
+    `previous()` when already at the beginning of the string. Note that because a logical character
+    can consist of multiple Unicode codepoints (such as LATIN SMALL LETTER A followed by COMBINING
+    ACUTE ACCENT), this may return an index in the middle of such a compound character.
+    ================================================================================================
+    function previous(i:Index):Index {
+        assert i.value > 0
+        var newValue := i.value - 1
+        while data[newValue].value->builtin_int64 && 0xFF >= 0b10000000 &
+                data[newValue].value->builtin_int64 && 0xFF < 0b11000000 {
+            newValue -= 1
+        }
+        return Index(newValue)
+    }
+
+    ================================================================================================
+    Returns the index offset by `offset` Unicode codepoints. It is an error to index before the
+    beginning or after the end of the string.  Note that because a logical character can consist of
+    multiple Unicode codepoints (such as LATIN SMALL LETTER A followed by COMBINING ACUTE ACCENT),
+    this may return an index in the middle of such a compound character.
+    ================================================================================================
+    function offset(index:Index, offset:Int):Index {
+        var result := index
+        if offset > 0 {
+            for i in 0 .. offset {
+                result := next(result)
+            }
+        }
+        else {
+            for i in 0 .. offset by -1 {
+                result := previous(result)
+            }
+        }
+        return result
+    }
+
+    ================================================================================================
+    Returns a new string consisting of this string left-justified in a field of at least `width`
+    characters. If this string has a length greater than or equal to `width`, this string is
+    returned. If this string is shorter than `width`, space characters are appended until the
+    resulting string is `width` characters long.
+
+    @param width the minimum width of the string
+    @returns a string at least `width` characters long
+    ================================================================================================
+    function leftAlign(width:Int):String {
+        return leftAlign(width, " ")
+    }
+
+    ================================================================================================
+    Returns a new string consisting of this string left-justified in a field of at least `width`
+    characters, filled with the specified character. If this string has a length greater than or
+    equal to `width`, this string is returned. If this string is shorter than `width`, `fill`
+    characters are appended until the resulting string is `width` characters long.
+
+    @param width the minimum width of the string
+    @param fill the fill character
+    @returns a string at least `width` characters long
+    ============================================================================
+    function leftAlign(width:Int, fill:Char32):String {
+        if length >= width {
+            return self
+        }
+        return self + fill * (width - length)
+    }
+
+    ================================================================================================
+    Returns a new string consisting of this string right-justified in a field of at least `width`
+    characters. If this string has a length greater than or equal to `width`, this string is
+    returned. If this string is shorter than `width`, space characters are prepended until the
+    resulting string is `width` characters long.
+
+    @param width the minimum width of the string
+    @returns a string at least `width` characters long
+    ================================================================================================
+    function rightAlign(width:Int):String {
+        return rightAlign(width, " ")
+    }
+
+    ================================================================================================
+    Returns a new string consisting of this string right-justified in a field of at least `width`
+    characters, filled with the specified character. If this string has a length greater than or
+    equal to `width`, this string is returned. If this string is shorter than `width`, `fill`
+    characters are prepended until the resulting string is `width` characters long.
+
+    @param width the minimum width of the string
+    @param fill the fill character
+    @returns a string at least `width` characters long
+    ================================================================================================
+    function rightAlign(width:Int, fill:Char32):String {
+        if length >= width {
+            return self
+        }
+        return fill * (width - length) + self
+    }
+
+    ================================================================================================
+    Returns a new string consisting of this string centered in a field of at least `width`
+    characters. If this string has a length greater than or equal to `width`, this string is
+    returned. If this string is shorter than `width`, space characters are added as equally as
+    possible to the left and right until the resulting string is `width` characters long. If the
+    number of characters to be added is odd, the right side of the string will receive one more
+    space than the left side.
+
+    @param width the minimum width of the string
+    @returns a string at least `width` characters long
+    ================================================================================================
+    function centerAlign(width:Int):String {
+        return centerAlign(width, " ")
+    }
+
+    ================================================================================================
+    Returns a new string consisting of this string centered in a field of at least `width`
+    characters, filled with the specified character. If this string has a length greater than or
+    equal to `width`, this string is returned. If this string is shorter than `width`, `fill`
+    characters are added as equally as possible to the left and right until the resulting string is
+    `width` characters long. If the number of characters to be added is odd, the right side of the
+    string will receive one more `fill` character than the left side.
+
+    @param width the minimum width of the string
+    @param fill the fill character
+    @returns a string at least `width` characters long
+    ================================================================================================
+    function centerAlign(width:Int, fill:Char32):String {
+        if length >= width {
+            return self
+        }
+        def pad := width - length
+        def left := pad // 2
+        def right := pad - left
+        return fill * left + self + fill * right
+    }
+
+    ================================================================================================
+    Splits this string into tokens separated by a delimiter. For instance,
+    `"This is a long string".split(" ")` yields `"This"`, `"is"`, `"a"`, `"long"`, and `"string"`.
+
+    @param delimiter the token delimiter
+    @returns the split tokens
+    ================================================================================================
+    function split(delimiter:String):Array<String> {
+        return split(delimiter, Int.MAX)
+    }
+
+    ================================================================================================
+    Splits this string into tokens separated by a delimiter. At most `maxResults` results will be
+    returned; any additional delimiters beyond that point will be ignored. For instance,
+    `"This is a long string".split(" ", 3)` yields `"This"`, `"is"`, and `"a long string"`.
+
+    @param delimiter the token delimiter
+    @param maxResults the maximum number of results to return
+    @returns the split tokens
+    ================================================================================================
+    function split(delimiter:String, maxResults:Int):Array<String> {
+        def result := Array<String>()
+        var index := start
+        loop {
+            def nextIndex:Index?
+            if delimiter._length = 0 {
+                nextIndex := next(index)
+            }
+            else {
+                nextIndex := indexOf(delimiter, index)
+            }
+            if nextIndex == null | result.count = maxResults - 1 {
+                result.add(self[index..])
+                break
+            }
+            result.add(self[index .. nextIndex->Index])
+            index := Index(nextIndex.value + delimiter._length)
+        }
+        return result
+    }
+
+    ================================================================================================
+    Splits this string into tokens separated by a delimiter. At most `maxResults` different strings
+    will be returned; any additional delimiters beyond that point will be ignored. For instance,
+    `"This  is a long    string".split(/\s+/, 3)` yields `"This"`, `"is"`, and `"a long    string"`.
+
+    @param delimiter the token delimiter
+    @param maxResults the maximum number of results to return
+    @returns the split tokens
+    ================================================================================================
+    -- FIXME @safeReturn
+    @pre(maxResults > 0)
+    function split(delimiter:RegularExpression, maxResults:Int):Array<String> {
+        def result := Array<String>()
+        def matcher := delimiter.matcher(self)
+        var index := start
+        loop {
+            def found := matcher.find()
+            if !found | result.count = maxResults - 1 {
+                result.add(self[index..])
+                break
+            }
+            def start := matcher.start
+            result.add(self[index .. start])
+            index := Index(start.value.max(matcher.end.value))
+        }
+        return result
+    }
+
+    ================================================================================================
+    Splits this string into tokens separated by a delimiter. For instance,
+    `"This  is a long    string".split(/\s+/)` yields `"This"`, `"is"`, `"a"`, `"long"`, and
+    `"string"`.
+
+    @param delimiter the token delimiter
+    @returns the split tokens
+    ================================================================================================
+    -- FIXME @safeReturn
+    function split(delimiter:RegularExpression):Array<String> {
+        return split(delimiter, Int.MAX)
+    }
+
+    ================================================================================================
+    Converts this string to a signed number. The string must be a sequence of decimal digits,
+    optionally preceded by a minus sign (`-`), whose numeric representation can fit into an `Int64`.
+    Returns `null` if the conversion fails.
+
+    @returns this string converted to a number, or `null`
+    ================================================================================================
+    function convert():Int64? {
+        if _length = 0 {
+            return null
+        }
+        var result:Int64 := 0
+        var start:Int
+        if data[0] = Char8(45) {
+            start := 1
+        }
+        else {
+            start := 0
+        }
+        for i in start .. _length {
+            def digit := Int64(data[i].value->builtin_int64) - 48
+            if digit < 0 | digit > 9 {
+                return null
+            }
+            result := result * 10 + digit
+        }
+        if data[0] = Char8(45) {
+            result := -result
+        }
+        return result
+    }
+
+    ================================================================================================
+    Converts this string to an unsigned number. The string must be a sequence of decimal digits
+    whose numeric representation can fit into a `UInt64`. Returns `null` if the conversion fails.
+
+    @returns this string converted to a number, or `null`
+    ================================================================================================
+    function convert():UInt64? {
+        if _length = 0 {
+            return null
+        }
+        var result:UInt64 := 0
+        for i in 0 .. _length {
+            def digit := UInt64(data[i].value->builtin_uint64) - 48
+            if digit < 0 | digit > 9 {
+                return null
+            }
+            result := result * 10 + digit
+        }
+        return result
+    }
+
+    ================================================================================================
+    Converts this string to a real number. The string must be a valid Frost real literal. Returns
+    `null` if the conversion fails.
+
+    @returns this string converted to a number, or `null`
+    ================================================================================================
+    function convert():Real64? {
+        return Frost.toReal64(self)
+    }
+
+    ================================================================================================
+    @inherit
+    ================================================================================================
+    @override
+    function get_hash():Int {
+        var h := 1
+        for i in 0 .. _length {
+            h := h * 101 + Int64(data[i].value->builtin_int64)
+        }
+-*
+            -- FNV-1a hash, thanks to Fowler, Landon, and Vo. This algorithm is in the public
+            -- domain: http://www.isthe.com/chongo/tech/comp/fnv/index.html#public_domain
+            var h := 0xcbf29ce484222325
+            for i in 0 .. _length {
+                h ~~= data[i].convert()
+                h *= 0x100000001b3
+            }
+*-
+        return h
+    }
+}

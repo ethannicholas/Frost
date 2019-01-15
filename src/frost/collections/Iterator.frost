@@ -1,0 +1,297 @@
+package frost.collections
+
+====================================================================================================
+Returns a collection of objects one at a time. `Iterator`s are valid `for` loop targets.
+====================================================================================================
+interface Iterator<T> {
+    @private
+    class FilterIterator<T> : Iterator<T> {
+        def base:Iterator<T>
+        
+        def filter:(T)=>(Bit)
+        
+        var _done:Bit
+
+        var nextValue:T?
+
+        init(base:Iterator<T>, filter:(T)=>(Bit)) {
+            self.base := base
+            self.filter := filter
+            getNext()
+        }
+
+        method getNext() {
+            do {
+                if base.done {
+                    _done := true
+                    return
+                }
+                nextValue := base.next()
+            }
+            while !filter(nextValue)
+        }
+
+        @override
+        function get_done():Bit {
+            return _done
+        }
+
+        @override
+        method next():T {
+            def result := nextValue
+            getNext()
+            return result
+        }
+    }
+
+    @private
+    class RangeIterator<T> : Iterator<T> {
+        def base:Iterator<T>
+
+        def current:Int
+
+        def end:Int?
+
+        def step:Int
+
+        def pending:T?
+
+        def _done := false
+
+        @pre(step > 0)
+        init(base:Iterator<T>, start:Int?, end:Int?, inclusive:Bit, step:Int) {
+            self.base := base
+            if start !== null {
+                for i in 0 .. start {
+                    if !base.done {
+                        base.next()
+                    }
+                }
+                current := start
+            }
+            else {
+                current := 0
+            }
+            if end !== null {
+                if inclusive {
+                    self.end := end + 1
+                }
+                else {
+                    self.end := end
+                }
+            }
+            self.step := step
+            if !base.done {
+                pending := base.next()
+            }
+            else {
+                _done := true
+            }
+        }
+
+        @override
+        function get_done():Bit {
+            return _done
+        }
+
+        @override
+        method next():T {
+            def result := pending
+            for i in 0 .. step {
+                current += 1
+                _done := (end !== null & current >= end) | base.done
+                if _done {
+                    pending := null
+                    break
+                }
+                pending := base.next()
+            }
+            return result
+        }
+    }
+
+    @private
+    class MapIterator<T, U> : Iterator<U> {
+        def base:Iterator<T>
+
+        def map:(T)=>(U)
+
+        init(base:Iterator<T>, map:(T)=>(U)) {
+            self.base := base
+            self.map := map
+        }
+
+        @override
+        function get_done():Bit {
+            return base.done
+        }
+
+        @override
+        method next():U {
+            return map(base.next())
+        }
+    }
+
+    property done:Bit
+
+    function get_done():Bit
+
+    ================================================================================================
+    Returns the next element from the iterator.
+    ================================================================================================
+    @pre(!done)
+    method next():T
+
+    ================================================================================================
+    Scans through the `Iterator` until the end, returning the number of elements traversed over.
+    ================================================================================================
+    @default
+    @post(get_done())
+    method count():Int {
+        var result := 0
+        while !done {
+            next()
+            result += 1
+        }
+        return result
+    }
+
+    ================================================================================================
+    Returns a new `Iterator` which reads from this `Iterator`, skipping over values which do not
+    match the predicate. As the new `Iterator` internally reads from this `Iterator`, you should not
+    interact with an `Iterator` after calling `filter` on it.
+    ================================================================================================
+    @default
+    function filter(predicate:(T)=>(Bit)):Iterator<T> {
+        return FilterIterator<T>(self, predicate)
+    }
+
+    ================================================================================================
+    Returns an `Iterator` which traverses a subrange of this `Iterator`. As the new `Iterator`
+    internally reads from this `Iterator`, you should not interact with an `Iterator` after calling
+    `range` on it.
+
+    Example:
+
+        File(path).lines()[..count].apply(Console.printLine)
+
+    This is roughly equivalent to the Unix `head` utility, in that it will print the first `count`
+    lines of a file.
+
+    The range iterator will never read past the end of the base iterator. If the base iterator does
+    not produce enough elements to finish the range, iteration will simply end at that point.
+    ================================================================================================
+    @default
+    @pre(range.min == null | range.min >= 0 & range.max == null | range.min >= 0)
+    function [](range:Range<Int?>):Iterator<T> {
+        return RangeIterator<T>(self, range.min, range.max, range.inclusive, 1)
+    }
+
+    ================================================================================================
+    As [[](Range<Int?>)], but additionally handles a `step`.
+
+    Example:
+
+        for v in arr.iterator()[1.. by 2] {
+            ...
+        }
+
+    This will loop over every odd-numbered element in `arr`.
+    ================================================================================================
+    @default
+    @pre(range.start == null | range.start >= 0 & range.end == null | range.end >= 0 & range.step > 0)
+    function [](range:SteppedRange<Int?, Int>):Iterator<T> {
+        return RangeIterator<T>(self, range.start, range.end, range.inclusive, range.step)
+    }
+
+    ================================================================================================
+    Scans through the `Iterator` until the end, collecting all of the traversed elements into an
+    `Array`.
+    ================================================================================================
+    @default
+    @post(done)
+    method all():Array<T> {
+        def result := Array<T>()
+        for v in self {
+            result.add(v)
+        }
+        return result
+    }
+
+    ================================================================================================
+    Scans through the `Iterator` until the end, calling the specified method on each object
+    returned.
+
+    For example, to call a method named `process` on each line in a file:
+
+        File(path).lines().apply(process)
+    ================================================================================================
+    @default
+    @post(done)
+    method apply(m:(T)=&>()) {
+        for v in self {
+            m(v)
+        }
+    }
+
+    ================================================================================================
+    Successively applies a binary function to 'fold' the elements returned by the iterator down to a
+    single value. For instance, if we have an `Iterator<Int64>` and fold it using the binary
+    function [Int64.+(Int64)], as in:
+
+        iter.fold(Int.+)
+
+    this would add the first and second elements returned by the iterator together, and
+    then add the sum of the first to elements to the third, and so forth until all of the elements
+    had been added together.
+
+    Similarly, we could fold using [Int64.max(Int64)] to find the biggest number in returned by the
+    iterator, [Int64.*(Int64)] to get the product of all of the numbers returned by the iterator,
+    etc.
+
+    If the iterator returns only a single element, the result of `fold` is this single element and
+    the function `f` is never called. This variant of `fold` may not be called on an iterator with
+    no remaining elements because the result would be undefined. After calling `fold`, there will be
+    no more elements remaining.
+
+    @param f a binary function to combine elements of the iterator
+    @returns the result of combining all elements from the iterator
+    @see fold((T, T)=>(T), T)
+    ================================================================================================
+    @default
+    @pre(!done)
+    @post(done)
+    method fold(f:(T, T)=>(T)):T {
+        var result := next()
+        while !done {
+            result := f(result, next())
+        }
+        return result
+    }
+
+    ================================================================================================
+    As [fold((T, T)=>(T))], but additionally takes a starting value for the fold operation. The
+    starting value is folded into the first element, the result is then folded into the second
+    element, etc. This allows `fold` to be well-defined even on an empty iterator: folding an empty
+    iterator simply returns the start value.
+
+    @param f a binary function to combine elements of the iterator
+    @param start the starting value for the fold
+    @returns the result of combining all elements from the iterator
+    @see fold((T, T)=>(T))
+    ================================================================================================
+    @default
+    @post(done)
+    method fold(f:(T, T)=>(T), start:T):T {
+        var result := start
+        while !done {
+            result := f(result, next())
+        }
+        return result
+    }
+
+    @default
+    method map<U>(f:(T)=>(U)):Iterator<U> {
+        return MapIterator<T, U>(self, f)
+    }
+}

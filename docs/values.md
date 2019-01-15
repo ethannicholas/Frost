@@ -1,7 +1,7 @@
 Values
 ======
 
-Subclasses of [panda.core.Value] are called "value classes" or "values".
+Subclasses of [frost.core.Value] are called "value classes" or "values".
 
 While most objects are passed by reference, values are passed by value. Values do not have a
 distinct identity and may not be compared using the `==` or `!==` operator. Values are "plain old
@@ -14,13 +14,13 @@ Values are essentially equivalent to immutable stack allocated C `struct`s.
 Performance Considerations
 ==========================
 
-Value objects allow for many optimizations; Panda would be unacceptably slow if `Int` were a regular
+Value objects allow for many optimizations; Frost would be unacceptably slow if `Int` were a regular
 class instead of a value - even calculating `1 + 1` would multiple heap allocations. Fortunately,
-this is not the case, and after optimization math in Panda compiles down to the same basic
+this is not the case, and after optimization math in Frost compiles down to the same basic
 arithmetic instructions that it does in languages like C.
 
 However, there are still some pitfalls to be aware of. Casting a value type to an `Object` requires
-Panda to convert it to a full-fledged refcounted object with an object header. This "wrapping" is
+Frost to convert it to a full-fledged refcounted object with an object header. This "wrapping" is
 handled automatically, as is unwrapping if the object is cast back to an object type, but it can
 have a significant performance impact.
 

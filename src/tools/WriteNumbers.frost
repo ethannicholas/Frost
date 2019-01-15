@@ -1,0 +1,960 @@
+class WriteNumbers {
+    choice Type {
+        INT8
+        INT16
+        INT32
+        INT64
+        UINT8
+        UINT16
+        UINT32
+        UINT64
+        REAL32
+        REAL64
+        INVALID
+    }
+
+    @class
+    function builtin(type:Type):String {
+        match type {
+            when Type.INT8   { return "builtin_int8" }
+            when Type.INT16  { return "builtin_int16" }
+            when Type.INT32  { return "builtin_int32" }
+            when Type.INT64  { return "builtin_int64" }
+            when Type.UINT8  { return "builtin_uint8" }
+            when Type.UINT16 { return "builtin_uint16" }
+            when Type.UINT32 { return "builtin_uint32" }
+            when Type.UINT64 { return "builtin_uint64" }
+            when Type.REAL32 { return "builtin_float32" }
+            when Type.REAL64 { return "builtin_float64" }
+        }
+        assert false, "invalid type \{type}"
+    }
+
+    @class
+    function object(type:Type):String {
+        match type {
+            when Type.INT8   { return "Int8" }
+            when Type.INT16  { return "Int16" }
+            when Type.INT32  { return "Int32" }
+            when Type.INT64  { return "Int64" }
+            when Type.UINT8  { return "UInt8" }
+            when Type.UINT16 { return "UInt16" }
+            when Type.UINT32 { return "UInt32" }
+            when Type.UINT64 { return "UInt64" }
+            when Type.REAL32 { return "Real32" }
+            when Type.REAL64 { return "Real64" }
+        }
+        assert false, "invalid type \{type}"
+    }
+
+    @class
+    function max32(type:Type):Type {
+        match type {
+            when Type.INT8,  Type.INT16  { return Type.INT32 }
+            when Type.UINT8, Type.UINT16 { return Type.UINT32 }
+            otherwise { return type }
+        }
+    }
+
+    @class
+    function signed(type:Type):Bit {
+        match type {
+            when Type.INT8,  Type.INT16,  Type.INT32,  Type.INT64, Type.REAL32, Type.REAL64 {
+                return true
+            }
+            when Type.UINT8, Type.UINT16, Type.UINT32, Type.UINT64 {
+                return false
+            }
+        }
+    }
+
+    @class
+    function real(type:Type):Bit {
+        match type {
+            when Type.REAL32, Type.REAL64 {
+                return true
+            }
+            otherwise {
+                return false
+            }
+        }
+    }
+
+    @class
+    function size(type:Type):Int {
+        match type {
+            when Type.INT8,  Type.UINT8               { return 8 }
+            when Type.INT16, Type.UINT16              { return 16 }
+            when Type.INT32, Type.UINT32, Type.REAL32 { return 32 }
+            when Type.INT64, Type.UINT64, Type.REAL64 { return 64 }
+        }
+    }
+
+    @class
+    function cast(type:Type, target:Type):String {
+        if type = target {
+            return ""
+        }
+        return "->\{builtin(target)}"
+    }
+
+    @class
+    function castInt(type:Type, target:Type):String {
+        if type = target {
+            return ""
+        }
+        return ".convert()->\{object(target)}"
+    }
+
+    @class
+    function min(type:Type):String {
+        match type {
+            when Type.INT8   { return "-128" }
+            when Type.INT16  { return "-32768" }
+            when Type.INT32  { return "-2147483648" }
+            when Type.INT64  { return "-9223372036854775808" }
+            when Type.UINT8  { return "0" }
+            when Type.UINT16 { return "0" }
+            when Type.UINT32 { return "0" }
+            when Type.UINT64 { return "0" }
+        }
+    }
+
+    @class
+    function max(type:Type):String {
+        match type {
+            when Type.INT8   { return "127" }
+            when Type.INT16  { return "32767" }
+            when Type.INT32  { return "2147483647" }
+            when Type.INT64  { return "9223372036854775807" }
+            when Type.UINT8  { return "255" }
+            when Type.UINT16 { return "65535" }
+            when Type.UINT32 { return "4294967295" }
+            when Type.UINT64 { return "18446744073709551615" }
+        }
+    }
+
+    @class
+    function binaryType(leftType:Type, rightType:Type, signMatters:Bit, promote32:Bit):Type {
+        if real(leftType) | real(rightType) {
+            if size(leftType) = 64 | size(rightType) = 64 {
+                return Type.REAL64
+            }
+            return Type.REAL32
+        }
+        if signed(leftType) = signed(rightType) | !signMatters {
+            def leftPromoted:Type
+            def rightPromoted:Type
+            if promote32 {
+                leftPromoted := max32(leftType)
+                rightPromoted := max32(rightType)
+            }
+            else {
+                leftPromoted := leftType
+                rightPromoted := rightType
+            }
+            if leftPromoted = rightPromoted {
+                return leftPromoted
+            }
+            if size(leftPromoted) > size(rightPromoted) {
+                return leftPromoted
+            }
+            return rightPromoted
+        }
+        else if size(leftType) = 8 & size(rightType) = 8 {
+            if promote32 {
+                return Type.INT32
+            }
+            else {
+                return Type.INT16
+            }
+        }
+        else if size(leftType) <= 16 & size(rightType) <= 16 {
+            return Type.INT32
+        }
+        else if size(leftType) <= 32 & size(rightType) <= 32 {
+            return Type.INT64
+        }
+        else {
+            return Type.INVALID
+        }
+    }
+
+    @class
+    method writeInit(type:Type, other:Type, out:OutputStream) {
+        out.printLine()
+        out.printLine("    @implicit")
+        var priority := 0
+        if signed(type) = signed(other) {
+            priority -= 3
+        }
+        var current := size(other)
+        def end := size(type)
+        while current < end {
+            priority -= 1
+            current *= 2
+        }
+        out.printLine("    @priority(\{priority})")
+        out.printLine("    init(value:\{object(other)}) {")
+        out.printLine("        self.value := value.value\{cast(other, type)}")
+        out.printLine("    }")
+    }
+
+    @class
+    method writeInits(type:Type, out:OutputStream) {
+        if real(type) {
+            writeInit(type, Type.INT8,   out)
+            writeInit(type, Type.INT16,  out)
+            writeInit(type, Type.INT32,  out)
+            writeInit(type, Type.INT64,  out)
+            writeInit(type, Type.UINT8,  out)
+            writeInit(type, Type.UINT16, out)
+            writeInit(type, Type.UINT32, out)
+            writeInit(type, Type.UINT64, out)
+            if type = Type.REAL64 {
+                writeInit(type, Type.REAL32, out)
+            }
+            return
+        }
+        if size(type) > size(Type.INT8) & signed(type) {
+            writeInit(type, Type.INT8, out)
+        }
+        if size(type) > size(Type.INT16) & signed(type) {
+            writeInit(type, Type.INT16, out)
+        }
+        if size(type) > size(Type.INT32) & signed(type) {
+            writeInit(type, Type.INT32, out)
+        }
+        if size(type) > size(Type.UINT8) {
+            writeInit(type, Type.UINT8, out)
+        }
+        if size(type) > size(Type.UINT16) {
+            writeInit(type, Type.UINT16, out)
+        }
+        if size(type) > size(Type.UINT32) {
+            writeInit(type, Type.UINT32, out)
+        }
+    }
+
+    @class
+    function priority(type:Type):Int {
+        match type {
+            when Type.UINT8  { return 0 }
+            when Type.INT8   { return 1 }
+            when Type.UINT16 { return 2 }
+            when Type.INT16  { return 3 }
+            when Type.UINT32 { return 4 }
+            when Type.INT32  { return 5 }
+            when Type.UINT64 { return 6 }
+            when Type.INT64  { return 7 }
+            when Type.REAL32 { return 8 }
+            when Type.REAL64 { return 9 }
+        }
+    }
+
+
+    @class
+    function priority(leftType:Type, rightType:Type):Int {
+        if leftType = rightType {
+            return 20
+        }
+        return priority(leftType) + priority(rightType)
+    }
+
+    @class
+    method writeOperator(op:String, doc:String, leftType:Type, rightType:Type, signMatters:Bit,
+            out:OutputStream) {
+        if size(leftType) > size(rightType) {
+            -- we rely on implicit conversion
+            return
+        }
+        def resultType := binaryType(leftType, rightType, signMatters, true)
+        if resultType = Type.INVALID {
+            return
+        }
+        out.printLine()
+        out.printLine("    ===\{doc}===")
+        out.printLine("    @priority(\{priority(leftType, rightType)})")
+        out.printLine("    function \{op}(other:\{object(rightType)}):\{object(resultType)} {")
+        out.printLine("        return value\{cast(leftType, resultType)} \{op} " +
+                "other.value\{cast(rightType, resultType)}")
+        out.printLine("    }")
+
+        if leftType = rightType & resultType != leftType {
+            out.printLine("    ===\{doc}===")
+            if leftType = rightType {
+                out.printLine("    @priority(-1)")
+            }
+            out.printLine("    function \{op}(other:\{object(leftType)}):\{object(leftType)} {")
+            out.printLine("        return value \{op} other.value")
+            out.printLine("    }")
+        }
+    }
+
+    @class
+    method writeOperator(op:String, doc:String, type:Type, signMatters:Bit, out:OutputStream) {
+        if real(type) {
+            writeOperator(op, doc, type, Type.REAL32, true, out)
+            writeOperator(op, doc, type, Type.REAL64, true, out)
+        }
+        else {
+            writeOperator(op, doc, type, Type.INT8,   signMatters, out)
+            writeOperator(op, doc, type, Type.INT16,  signMatters, out)
+            writeOperator(op, doc, type, Type.INT32,  signMatters, out)
+            writeOperator(op, doc, type, Type.INT64,  signMatters, out)
+            writeOperator(op, doc, type, Type.UINT8,  signMatters, out)
+            writeOperator(op, doc, type, Type.UINT16, signMatters, out)
+            writeOperator(op, doc, type, Type.UINT32, signMatters, out)
+            writeOperator(op, doc, type, Type.UINT64, signMatters, out)
+        }
+    }
+
+    @class
+    method writeDivide(leftType:Type, rightType:Type, out:OutputStream) {
+        def resultType:Type
+        if size(leftType).max(size(rightType)) = 64 {
+            resultType := Type.REAL64
+        }
+        else {
+            resultType := Type.REAL32
+        }
+        out.printLine()
+        out.printLine("    ===Divides this number by another number.===")
+        out.printLine("    @priority(\{priority(leftType, rightType)})")
+        out.printLine("    function /(other:\{object(rightType)}):\{object(resultType)} {")
+        out.printLine("        return value\{cast(leftType, resultType)} / " +
+                "other.value\{cast(rightType, resultType)}")
+        out.printLine("    }")
+    }
+
+    @class
+    method writeDivide(type:Type, out:OutputStream) {
+        writeDivide(type, Type.INT8,   out)
+        writeDivide(type, Type.INT16,  out)
+        writeDivide(type, Type.INT32,  out)
+        writeDivide(type, Type.INT64,  out)
+        writeDivide(type, Type.UINT8,  out)
+        writeDivide(type, Type.UINT16, out)
+        writeDivide(type, Type.UINT32, out)
+        writeDivide(type, Type.UINT64, out)
+        writeDivide(type, Type.REAL32, out)
+        writeDivide(type, Type.REAL64, out)
+    }
+
+    @class
+    method writePrefixOperator(op:String, doc:String, type:Type, out:OutputStream) {
+        out.printLine()
+        out.printLine("    ===\{doc}===")
+        out.printLine("    function \{op}():\{object(type)} {")
+        out.printLine("        return \{object(type)}(\{op}value)")
+        out.printLine("    }")
+    }
+
+    @class
+    method writeComparisonOperator(op:String, doc:String, leftType:Type, rightType:Type,
+            out:OutputStream) {
+        def operandType := binaryType(leftType, rightType, true, false)
+        if operandType = Type.INVALID {
+            return
+        }
+        out.printLine()
+        out.printLine("    ===\{doc}===")
+        if leftType = rightType {
+            out.printLine("    @override")
+        }
+        out.printLine("    @priority(\{priority(leftType, rightType)})")
+        out.printLine("    function \{op}(other:\{object(rightType)}):Bit {")
+        out.printLine("        return value\{cast(leftType, operandType)} \{op} " +
+                "other.value\{cast(rightType, operandType)}")
+        out.printLine("    }")
+    }
+
+    @class
+    method writeComparisonOperator(op:String, doc:String, type:Type, out:OutputStream) {
+        if real(type) {
+            writeComparisonOperator(op, doc, type, Type.REAL32, out)
+            writeComparisonOperator(op, doc, type, Type.REAL64, out)
+        }
+        else {
+            writeComparisonOperator(op, doc, type, Type.INT8,   out)
+            writeComparisonOperator(op, doc, type, Type.INT16,  out)
+            writeComparisonOperator(op, doc, type, Type.INT32,  out)
+            writeComparisonOperator(op, doc, type, Type.INT64,  out)
+            writeComparisonOperator(op, doc, type, Type.UINT8,  out)
+            writeComparisonOperator(op, doc, type, Type.UINT16, out)
+            writeComparisonOperator(op, doc, type, Type.UINT32, out)
+            writeComparisonOperator(op, doc, type, Type.UINT64, out)
+        }
+    }
+
+    @class
+    method writeMax(leftType:Type, rightType:Type, out:OutputStream) {
+        out.printLine()
+        def resultType := binaryType(leftType, rightType, true, false)
+        if resultType = Type.INVALID {
+            return
+        }
+        out.printLine("    ===Returns the larger (closest to positive infinity) of this number " +
+                "and another number.===")
+        out.printLine("    @priority(\{priority(leftType, rightType)})")
+        out.printLine("    function max(other:\{object(rightType)}):\{object(resultType)} {")
+        out.printLine("        if value\{cast(leftType, resultType)} > " +
+                "other.value\{cast(rightType, resultType)} {")
+        out.printLine("            return value\{cast(leftType, resultType)}")
+        out.printLine("        }")
+        out.printLine("        return other.value\{cast(rightType, resultType)}")
+        out.printLine("    }")
+    }
+
+    @class
+    method writeMax(type:Type, out:OutputStream) {
+        writeMax(type, Type.INT8,   out)
+        writeMax(type, Type.INT16,  out)
+        writeMax(type, Type.INT32,  out)
+        writeMax(type, Type.INT64,  out)
+        writeMax(type, Type.UINT8,  out)
+        writeMax(type, Type.UINT16, out)
+        writeMax(type, Type.UINT32, out)
+        writeMax(type, Type.UINT64, out)
+    }
+
+    @class
+    method writeMin(leftType:Type, rightType:Type, out:OutputStream) {
+        out.printLine()
+        def resultType := binaryType(leftType, rightType, true, false)
+        if resultType = Type.INVALID {
+            return
+        }
+        out.printLine("    ===Returns the smaller (closest to negative infinity) of this number " +
+                "and another number.===")
+        out.printLine("    @priority(\{priority(leftType, rightType)})")
+        out.printLine("    function min(other:\{object(rightType)}):\{object(resultType)} {")
+        out.printLine("        if value\{cast(leftType, resultType)} < " +
+                "other.value\{cast(rightType, resultType)} {")
+        out.printLine("            return value\{cast(leftType, resultType)}")
+        out.printLine("        }")
+        out.printLine("        return other.value\{cast(rightType, resultType)}")
+        out.printLine("    }")
+    }
+
+    @class
+    method writeMin(type:Type, out:OutputStream) {
+        writeMin(type, Type.INT8,   out)
+        writeMin(type, Type.INT16,  out)
+        writeMin(type, Type.INT32,  out)
+        writeMin(type, Type.INT64,  out)
+        writeMin(type, Type.UINT8,  out)
+        writeMin(type, Type.UINT16, out)
+        writeMin(type, Type.UINT32, out)
+        writeMin(type, Type.UINT64, out)
+    }
+
+    @class
+    method writeIndex(leftType:Type, rightType:Type, out:OutputStream) {
+        out.printLine()
+        out.printLine("    ===Returns a single bit from this number, where index 0 is the least " +
+                "significant bit.===")
+        if rightType = Type.INT64 {
+            out.printLine("    @override")
+        }
+        out.printLine("    function [](index:\{object(rightType)}):Bit {")
+        out.printLine("        return self && (1 << index) != 0")
+        out.printLine("    }")
+    }
+
+    @class
+    method writeIndex(type:Type, out:OutputStream) {
+        out.printLine("    ===Returns a list of all integers in the given range. The list is " +
+                "'lazy', meaning that it does not actually allocate memory to hold the entire " +
+                "list.===")
+        out.printLine("    @class")
+        if type = Type.INT64 {
+            out.printLine("    @pre(range.max.convert()->UInt64 - range.min.convert()->UInt64 < " +
+                    "Int64.MAX.convert()->UInt64)")
+        }
+        else if type = Type.UINT64 {
+            out.printLine("    @pre(range.max - range.min < Int64.MAX.convert()->UInt64)")
+        }
+        out.printLine("    function [](range:Range<\{object(type)}>):ListView<\{object(type)}> {")
+        out.printLine("        return org.frostlanguage.frost.\{object(type)}List(SteppedRange<" +
+                "\{object(type)}, \{object(type)}>(range.min, range.max, 1, range.inclusive))")
+        out.printLine("    }")
+        out.printLine("    ===Returns a list of all integers in the given stepped range. The " +
+                "list is 'lazy', meaning that it does not actually allocate memory to hold the " +
+                "entire list.===")
+        out.printLine("    @class")
+        if type = Type.INT64 | type = Type.UINT64 {
+            out.printLine("    @pre(org.frostlanguage.frost.\{object(type)}List.computeCount(range) > 0)")
+        }
+        out.printLine("    function [](range:SteppedRange<\{object(type)}, \{object(type)}>):" +
+                "ListView<\{object(type)}> {")
+        out.printLine("        return org.frostlanguage.frost.\{object(type)}List(range)")
+        out.printLine("    }")
+        writeIndex(type, Type.INT64,  out)
+    }
+
+    @class
+    method writeIterator(type:Type, out:OutputStream) {
+        out.printLine()
+        out.printLine("    @override")
+        out.printLine("    function get_iterator():Iterator<Bit> {")
+        out.printLine("        return org.frostlanguage.frost.IntBitIterator(self" +
+                "\{castInt(type, Type.UINT64)}, 1 << \{size(type) - 1})")
+        out.printLine("    }")
+    }
+
+    @class
+    method writeCount(type:Type, out:OutputStream) {
+        out.printLine()
+        out.printLine("    ===Returns the number of bits in this integer, which is always " +
+                "\{size(type)}.===")
+        out.printLine("    @override")
+        out.printLine("    function get_count():Int {")
+        out.printLine("        return \{size(type)}")
+        out.printLine("    }")
+    }
+
+    @class
+    method writeHash(type:Type, out:OutputStream) {
+        out.printLine()
+        out.printLine("    @override")
+        out.printLine("    function get_hash():Int {")
+        out.printLine("        return Int(value\{cast(type, Type.INT64)})")
+        out.printLine("    }")
+    }
+
+    @class
+    method writeConvertToString(type:Type, out:OutputStream) {
+        out.printLine()
+        if real(type) {
+            out.printLine("    @override")
+            out.printLine("    @external")
+            out.printLine("    function convert():String")
+            return
+        }
+        out.printLine("    ===Returns this number converted to a decimal string.===")
+        out.printLine("    @override")
+        out.printLine("    function convert():String {")
+        var max := max(type).convert()->String.length
+        if signed(type) {
+            max += 1 -- for minus sign
+        }
+        out.printLine("        constant max := \{max}")
+        out.printLine("        def chars := Pointer<Char8>.alloc(max)")
+        out.printLine("        var index := max - 1")
+        out.printLine("        var value := self")
+        out.printLine("        if value >= 0 {")
+        out.printLine("            do {")
+        out.printLine("                chars[index] := Char8((value % 10 + 48).convert())")
+        out.printLine("                value := (value // 10)\{castInt(max32(type), type)}")
+        out.printLine("                index -= 1")
+        out.printLine("            }")
+        out.printLine("            while value > 0")
+        out.printLine("            index += 1")
+        out.printLine("        }")
+        out.printLine("        else {")
+        out.printLine("            do {")
+        out.printLine("                chars[index] := Char8((48 - value % 10).convert())")
+        out.printLine("                value := (value // 10)\{castInt(max32(type), type)}")
+        out.printLine("                index -= 1")
+        out.printLine("            }")
+        out.printLine("            while value < 0")
+        out.printLine("            chars[index] := \"-\"")
+        out.printLine("        }")
+        out.printLine("        def size := max - index")
+        out.printLine("        for i in 0 .. size {")
+        out.printLine("            chars[i] := chars[i + index]")
+        out.printLine("        }")
+        out.printLine("        return String(chars, size)")
+        out.printLine("    }")
+    }
+
+    @class
+    method writeConvert(type:Type, target:Type, out:OutputStream) {
+        out.printLine()
+        def converted:String
+        if size(type) > size(target) {
+            converted := "truncated"
+        }
+        else if size(type) < size(target) & signed(type) {
+            converted := "sign extended"
+        }
+        else if size(type) < size(target) & !signed(type) {
+            converted := "zero extended"
+        }
+        else {
+            converted := "reinterpreted"
+        }
+        out.printLine("    ===Returns this number \{converted} to a\{size(target) = 8:n|} bit " +
+                "\{signed(target):signed|unsigned} number.===")
+        out.printLine("    function convert():\{object(target)} {")
+        out.printLine("        return \{object(target)}(value->\{builtin(target)})")
+        out.printLine("    }")
+    }
+
+    @class
+    method writeConvert(type:Type, out:OutputStream) {
+        if type != Type.INT8 {
+            writeConvert(type, Type.INT8, out)
+        }
+        if type != Type.INT16 {
+            writeConvert(type, Type.INT16, out)
+        }
+        if type != Type.INT32 {
+            writeConvert(type, Type.INT32, out)
+        }
+        if type != Type.INT64 {
+            writeConvert(type, Type.INT64, out)
+        }
+        if type != Type.UINT8 {
+            writeConvert(type, Type.UINT8, out)
+        }
+        if type != Type.UINT16 {
+            writeConvert(type, Type.UINT16, out)
+        }
+        if type != Type.UINT32 {
+            writeConvert(type, Type.UINT32, out)
+        }
+        if type != Type.UINT64 {
+            writeConvert(type, Type.UINT64, out)
+        }
+        writeConvert(type, Type.REAL32, out)
+        writeConvert(type, Type.REAL64, out)
+        writeConvertToString(type, out)
+    }
+
+    @class
+    method writeFormat(type:Type, out:OutputStream) {
+        out.printLine()
+        def mask:String
+        match size(type) {
+            when  8 { mask := "0xFF" }
+            when 16 { mask := "0xFFFF" }
+            when 32 { mask := "0xFFFFFFFF" }
+            when 64 { mask := "0xFFFFFFFFFFFFFFFF" }
+        }
+        out.printLine("    === Returns a formatted representation of this number. Supported " +
+                "format strings are `\"\"`, `\"d\"`, or `\"D\"` for decimal, `\"b\"` or `\"B\"` " +
+                "for binary, `\"o\"` or `\"O\"` for octal, `\"x\"` for lowercase hexadecimal, " +
+                "and `\"X\"` for uppercase hexadecimal. ===")
+        out.printLine("    @override")
+        out.printLine("    function format(fmt:String):String {")
+        if signed(type) {
+            out.printLine("        return Frost.format(value < 0, abs.convert(), \{mask}, fmt)")
+        }
+        else {
+            out.printLine("        return Frost.format(false, self\{castInt(type, Type.UINT64)}, " +
+                    "\{mask}, fmt)")
+        }
+        out.printLine("    }")
+    }
+
+    @class
+    method writeAbs(type:Type, out:OutputStream) {
+        out.printLine()
+        out.printLine("    ===The absolute value of this number.===")
+        out.printLine("    property abs:\{object(type)}")
+        out.printLine("    function get_abs():\{object(type)} {")
+        out.printLine("        if self < 0 {")
+        out.printLine("            return -self")
+        out.printLine("        }")
+        out.printLine("        return self")
+        out.printLine("    }")
+    }
+
+    @class
+    method writeParse(type:Type, out:OutputStream) {
+        out.printLine()
+        out.printLine("    ===Parses a string as a number in the specified radix. Returns `null` " +
+                "if the parse fails.===")
+        out.printLine("    @class")
+        out.printLine("    @pre(radix >= 2 & radix <= 36)")
+        out.printLine("    function parse(str:String, radix:Int):\{object(type)}? {")
+        if signed(type) {
+            out.printLine("        if str.startsWith(\"-\") {")
+            out.printLine("            def abs := Frost.parse(str[1..], radix)")
+            out.printLine("            if abs == null {")
+            out.printLine("                return null")
+            out.printLine("            }")
+            out.printLine("            return -(abs\{castInt(Type.UINT64, type)})")
+            out.printLine("        }")
+            out.printLine("        else {")
+            out.printLine("            def result := Frost.parse(str, radix)")
+            out.printLine("            if result == null {")
+            out.printLine("                return null")
+            out.printLine("            }")
+            out.printLine("            return result\{castInt(Type.UINT64, type)}")
+            out.printLine("        }")
+        }
+        else {
+            out.printLine("        def result := Frost.parse(str, radix)")
+            out.printLine("        if result == null {")
+            out.printLine("            return null")
+            out.printLine("        }")
+            out.printLine("        return result\{castInt(Type.UINT64, type)}")
+        }
+        out.printLine("    }")
+    }
+
+    @class
+    function insertCommas(s:String):String {
+        if s.length < 4 {
+            return s
+        }
+        def result := MutableString(s)
+        var index := result.end()
+        def end := result.offset(result.start(), 4)
+        while index >= end {
+            index := result.offset(index, -3)
+            result[index .. index] := ","
+        }
+        return result.finish()
+    }
+
+    @class
+    method writeInt(type:Type, out:OutputStream) {
+        out.printLine("------------------------------------------------------------------")
+        out.printLine("-- This file was autogenerated by 'writeNumbers', do not modify --")
+        out.printLine("------------------------------------------------------------------")
+        out.printLine()
+        out.printLine("package frost.core")
+        out.printLine()
+        out.printLine("uses frost.unsafe.Pointer")
+        out.printLine()
+        out.printLine("===")
+        out.printLine("A\{size(type) = 8:n|} \{size(type)}-bit \{signed(type):signed|unsigned} " +
+                "integer.")
+        out.printLine("===")
+        out.printLine("@final")
+        out.printLine("class \{object(type)} : Value, Key<\{object(type)}>, " +
+                "Comparable<\{object(type)}>, Formattable, ListView<Bit> {")
+        out.printLine("    ===")
+        out.printLine("    The smallest value this type can hold (\{insertCommas(min(type))}).")
+        out.printLine("    ===")
+        out.printLine("    constant MIN:\{object(type)} := \{min(type)}")
+        out.printLine()
+        out.printLine("    ===")
+        out.printLine("    The largest value this type can hold (\{insertCommas(max(type))}).")
+        out.printLine("    ===")
+        out.printLine("    constant MAX:\{object(type)} := \{max(type)}")
+        out.printLine()
+        out.printLine("    @private")
+        out.printLine("    def value:\{builtin(type)}")
+        out.printLine()
+        out.printLine("    @private")
+        out.printLine("    @implicit")
+        if type = Type.INT64 {
+            out.printLine("    @priority(1)")
+        }
+        out.printLine("    init(value:\{builtin(type)}) {")
+        out.printLine("        self.value := value")
+        out.printLine("    }")
+        writeInits(type, out)
+        writeOperator("+", "Adds another number to this number.", type, true, out)
+        writeOperator("-", "Subtracts another number from this number.", type, true, out)
+        writePrefixOperator("-", "Returns the negation (additive inverse) of this number", type,
+                out)
+        writeOperator("*", "Multiplies this number by another number.", type, true, out)
+        writeOperator("//", "Divides this number by another number, returning the whole number " +
+                "portion.", type, true, out)
+        writeOperator("%", "Returns the remainder of dividing this number by another number.", type,
+                true, out)
+        writeDivide(type, out)
+        writePrefixOperator("!!", "Returns the bitwise NOT of this number.", type, out)
+        writeOperator("&&", "Returns the bitwise AND of this number with another number.", type,
+                false, out)
+        writeOperator("||", "Returns the bitwise OR of this number with another number.", type,
+                false, out)
+        writeOperator("~~", "Returns the bitwise XOR of this number with another number.", type,
+                false, out)
+        writeOperator("<<", "Returns this number shifted left by the specified number of bits.",
+                type, false, out)
+        writeOperator(">>", "Returns this number \{signed(type):arithmetic|logical} shifted " +
+                "right by the specified number of bits.", type, false, out)
+        writeComparisonOperator("=", "Returns `true` if this number is equal to the given number.",
+                type, out)
+        writeComparisonOperator("!=", "Returns `true` if this number is not equal to the given " +
+                "number.", type, out)
+        writeComparisonOperator("<", "Returns `true` if this number is less than the given " +
+                "number.", type, out)
+        writeComparisonOperator(">", "Returns `true` if this number is greater than the given " +
+                "number.", type, out)
+        writeComparisonOperator(">=", "Returns `true` if this number is greater than or equal to " +
+                "the given number.", type, out)
+        writeComparisonOperator("<=", "Returns `true` if this number is less than or equal to " +
+                "the given number.", type, out)
+        if signed(type) {
+            writeAbs(type, out)
+        }
+        writeMin(type, out)
+        writeMax(type, out)
+        writeIndex(type, out)
+        writeCount(type, out)
+        writeIterator(type, out)
+        writeHash(type, out)
+        writeParse(type, out)
+        writeConvert(type, out)
+        writeFormat(type, out)
+        out.printLine("}")
+    }
+
+    @class
+    method writeIntList(type:Type, out:OutputStream) {
+        def cl := object(type)
+        out.printLine("------------------------------------------------------------------")
+        out.printLine("-- This file was autogenerated by 'writeNumbers', do not modify --")
+        out.printLine("------------------------------------------------------------------")
+        out.printLine()
+        out.printLine("package org.frostlanguage.frost")
+        out.printLine()
+        out.printLine("@final")
+        out.printLine("class \{cl}List : ListView<\{cl}> {")
+        out.printLine("    @private")
+        out.printLine("    def range:SteppedRange<\{cl}, \{cl}>")
+        out.printLine()
+        out.printLine("    @private")
+        out.printLine("    def _count:Int")
+        out.printLine()
+        out.printLine("    init(range:SteppedRange<\{cl}, \{cl}>) {")
+        out.printLine("        self.range := range")
+        out.printLine("        self._count := computeCount(range)")
+        out.printLine("    }")
+        out.printLine()
+        out.printLine("    @class")
+        out.printLine("    function computeCount(range:SteppedRange<\{cl}, \{cl}>):Int {")
+        def cast:String
+        if type = Type.UINT64 {
+            cast := ".convert()->Int"
+        }
+        else {
+            cast := ""
+        }
+        out.printLine("        if range.inclusive {")
+        out.printLine("            if range.step > 0 {")
+        out.printLine("                if range.end < range.start {")
+        out.printLine("                    return 0")
+        out.printLine("                }")
+        out.printLine("            } else if range.end > range.start {")
+        out.printLine("                return 0")
+        out.printLine("            }")
+        out.printLine("            return ((range.end - range.start) // range.step)\{cast}.max(0) + 1")
+        out.printLine("        }")
+        out.printLine("        else {")
+        out.printLine("            def offset:\{cl}")
+        if signed(type) {
+            out.printLine("            if range.step > 0 {")
+            out.printLine("                if range.end <= range.start {")
+            out.printLine("                    return 0")
+            out.printLine("                }")
+            out.printLine("                offset := -1")
+            out.printLine("            } else {")
+            out.printLine("                if range.end >= range.start {")
+            out.printLine("                    return 0")
+            out.printLine("                }")
+            out.printLine("                offset := 1")
+            out.printLine("            }")
+        }
+        else {
+            out.printLine("        offset := 1")
+        }
+        out.printLine("            return ((range.end - range.start + offset) // range.step)" +
+                "\{cast}.max(0) + 1")
+        out.printLine("        }")
+        out.printLine("    }")
+        out.printLine()
+        out.printLine("    @override")
+        out.printLine("    function get_count():Int {")
+        out.printLine("        return _count")
+        out.printLine("    }")
+        out.printLine()
+        out.printLine("    @override")
+        out.printLine("    function [](index:Int):\{cl} {")
+        out.printLine("        return (range.start + range.step * index" +
+                "\{castInt(Type.INT64, type)})\{castInt(max32(type), type)}")
+        out.printLine("    }")
+        out.printLine()
+        out.printLine("    @override")
+        out.printLine("    function convert():String {")
+        out.printLine("        return \"[\\{join()}]\"")
+        out.printLine("    }")
+        out.printLine("}")
+    }
+
+    @class
+    method writeReal(type:Type, out:OutputStream) {
+        out.printLine("------------------------------------------------------------------")
+        out.printLine("-- This file was autogenerated by 'writeNumbers', do not modify --")
+        out.printLine("------------------------------------------------------------------")
+        out.printLine()
+        out.printLine("package frost.core")
+        out.printLine()
+        out.printLine("===")
+        out.printLine("A \{size(type)}-bit floating point number.")
+        out.printLine("===")
+        out.printLine("@final")
+        out.printLine("class \{object(type)} : Value, Key<\{object(type)}>, " +
+                "Comparable<\{object(type)}>, Formattable {")
+        out.printLine("    @private")
+        out.printLine("    def value:\{builtin(type)}")
+        out.printLine()
+        out.printLine("    @private")
+        out.printLine("    @implicit")
+        out.printLine("    init(value:\{builtin(type)}) {")
+        out.printLine("        self.value := value")
+        out.printLine("    }")
+        writeInits(type, out)
+        writeOperator("+", "Adds another number to this number.", type, true, out)
+        writeOperator("-", "Subtracts another number from this number.", type, true, out)
+        writePrefixOperator("-", "Returns the negation (additive inverse) of this number", type,
+                out)
+        writeOperator("*", "Multiplies this number by another number.", type, true, out)
+        writeDivide(type, out)
+        writeComparisonOperator("=", "Returns `true` if this number is equal to the given number.",
+                type, out)
+        writeComparisonOperator("!=", "Returns `true` if this number is not equal to the given " +
+                "number.", type, out)
+        writeComparisonOperator("<", "Returns `true` if this number is less than the given " +
+                "number.", type, out)
+        writeComparisonOperator(">", "Returns `true` if this number is greater than the given " +
+                "number.", type, out)
+        writeComparisonOperator(">=", "Returns `true` if this number is greater than or equal to " +
+                "the given number.", type, out)
+        writeComparisonOperator("<=", "Returns `true` if this number is less than or equal to " +
+                "the given number.", type, out)
+        if signed(type) {
+            writeAbs(type, out)
+        }
+        writeMin(type, out)
+        writeMax(type, out)
+        writeHash(type, out)
+        writeConvert(type, out)
+        writeFormat(type, out)
+        out.printLine("}")
+    }
+
+    @class
+    method main() {
+        def corePath := File("../src/frost/core")
+        writeInt(Type.INT8, corePath.resolve("Int8.frost").openOutputStream())
+        writeInt(Type.INT16, corePath.resolve("Int16.frost").openOutputStream())
+        writeInt(Type.INT32, corePath.resolve("Int32.frost").openOutputStream())
+        writeInt(Type.INT64, corePath.resolve("Int64.frost").openOutputStream())
+        writeInt(Type.UINT8, corePath.resolve("UInt8.frost").openOutputStream())
+        writeInt(Type.UINT16, corePath.resolve("UInt16.frost").openOutputStream())
+        writeInt(Type.UINT32, corePath.resolve("UInt32.frost").openOutputStream())
+        writeInt(Type.UINT64, corePath.resolve("UInt64.frost").openOutputStream())
+
+        def listPath := File("../src/org/frostlanguage/frost")
+        writeIntList(Type.INT8, listPath.resolve("Int8List.frost").openOutputStream())
+        writeIntList(Type.INT16, listPath.resolve("Int16List.frost").openOutputStream())
+        writeIntList(Type.INT32, listPath.resolve("Int32List.frost").openOutputStream())
+        writeIntList(Type.INT64, listPath.resolve("Int64List.frost").openOutputStream())
+        writeIntList(Type.UINT8, listPath.resolve("UInt8List.frost").openOutputStream())
+        writeIntList(Type.UINT16, listPath.resolve("UInt16List.frost").openOutputStream())
+        writeIntList(Type.UINT32, listPath.resolve("UInt32List.frost").openOutputStream())
+        writeIntList(Type.UINT64, listPath.resolve("UInt64List.frost").openOutputStream())
+
+        writeReal(Type.REAL32, corePath.resolve("Real32.frost").openOutputStream())
+        writeReal(Type.REAL64, corePath.resolve("Real64.frost").openOutputStream())
+    }
+}

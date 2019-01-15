@@ -1,0 +1,66 @@
+package frost.io
+
+uses frost.unsafe.Pointer
+
+====================================================================================================
+An `OutputStream` which stores the data written to it in a memory buffer.
+====================================================================================================
+@final
+class MemoryOutputStream : OutputStream {
+    @private
+    constant DEFAULT_CAPACITY := 1024
+
+    @private
+    var data:MutableString
+
+    ================================================================================================
+    Creates a new `MemoryOutputStream`.
+    ================================================================================================
+    init() {
+        init(DEFAULT_CAPACITY)
+    }
+
+    ================================================================================================
+    Creates a new `MemoryOutputStream` with the specified capacity.
+    ================================================================================================
+    init(capacity:Int) {
+        data := MutableString(capacity)
+        super.init()
+    }
+
+    @override
+    method write(i:UInt8) {
+        data.append(Char8(i))
+    }
+
+    @override
+    method write(ptr:Pointer<UInt8>, count:Int) {
+        data.append(ptr->Pointer<Char8>, count)
+    }
+
+    ================================================================================================
+    Clears all data written to the stream.
+    ================================================================================================
+    method clear() {
+        data.clear()
+    }
+
+    ================================================================================================
+    Returns an immutable copy of the data written to this stream. Typically it is better to use
+    [finish()] for performance reasons, as that does not make a copy.
+    ================================================================================================
+    @override
+    function convert():String {
+        return data.convert()
+    }
+
+    ================================================================================================
+    Invalidates this stream and returns its contents as an immutable `String`. This is generally
+    preferable to [convert()], as it does not copy the stream's contents. Interacting in any way
+    with a `MemoryOutputStream` after `finish`ing it will cause precondition violations (or, if
+    safety checks are disabled, undefined behavior).
+    ================================================================================================
+    method finish():String {
+        return data.finish()
+    }
+}

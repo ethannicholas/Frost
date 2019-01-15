@@ -1,0 +1,324 @@
+package org.frostlanguage.frostc
+
+uses org.frostlanguage.frostc.frostdoc.FrostDoc
+uses org.frostlanguage.frostc.parser.Lexer
+uses org.frostlanguage.frostc.parser.Parser
+uses org.frostlanguage.frostc.parser.TokenKind
+
+@final
+class Main {
+    choice Format {
+        LLVM
+        EXECUTABLE
+        OBJECT
+        C_HEADER
+        C
+        HTML
+    }
+
+    var clang:File
+    def frostHome:File
+    var debug:Bit := true
+
+    init() {
+        frostHome := File(Config.frostSourceDir())
+    }
+
+    class Arguments {
+        @private
+        def args:ListView<String>
+
+        @private
+        def index := 1
+
+        property done:Bit
+
+        init(args:ListView<String>) {
+            self.args := args
+        }
+
+        function get_done():Bit {
+            return index = args.count
+        }
+
+        method next():String {
+            assert !done
+            index += 1
+            return args[index - 1]
+        }
+
+        method next(label:String):String {
+            if done {
+                Console.errorStream().printLine("expected \{label} after " +
+                        "'\{args[args.count - 1]}'")
+                System.exit(1)
+            }
+            return next()
+        }
+    }
+
+    method toObject(llvm:File, dest:File, preserveTemporaries:Bit):File {
+        def args := Array<String>() -- FIXME literal
+        args.add(llvm.path)
+        args.add("-m64")
+        args.add("-fPIC")
+        args.add("-c")
+        if debug {
+            args.add("-g")
+        }
+        args.add("-o")
+        args.add(dest.path)
+        def p := System.exec(clang, args)
+        Console.errorStream().print(p.output.readFully())
+        Console.errorStream().print(p.error.readFully())
+        def exitCode := p.waitFor()
+        if !preserveTemporaries {
+            llvm.delete()
+        }
+        if exitCode != 0 {
+            System.exit(1)
+        }
+        return dest
+    }
+
+    method toExecutable(llvm:File, dest:File, preserveTemporaries:Bit):File {
+        def args := Array<String>() -- FIXME literal
+        args.add(llvm.path)
+        args.add("-L\{Config.frostLibDir()}")
+        args.add("-lfrost")
+        args.add("-lm")
+        args.add("-lpthread")
+        def icuLibs := Config.icuLibraries().split(";")
+        for lib in icuLibs {
+            def libFile := File(lib)
+            args.add("-L" + libFile.parent)
+            var simpleName := libFile.simpleName
+            assert simpleName.startsWith("lib")
+            simpleName := simpleName[3..]
+            args.add("-l" + simpleName)
+        }
+        args.add("-m64")
+        args.add("-fPIC")
+        if debug {
+            args.add("-g")
+        }
+        args.add("-o")
+        args.add(dest.path)
+        def p := System.exec(clang, args)
+        Console.errorStream().print(p.output.readFully())
+        Console.errorStream().print(p.error.readFully())
+        def exitCode := p.waitFor()
+        if !preserveTemporaries {
+            llvm.delete()
+        }
+        if exitCode != 0 {
+            System.exit(1)
+        }
+        return dest
+    }
+
+    method printUsage(out:OutputStream) {
+        out.printLine("Usage: frostc [options] <sources>")
+        out.printLine()
+        out.printLine("Source filenames must end in '.frost'.")
+        out.printLine()
+        out.printLine("Options:")
+        out.printLine("  -o <path>    output path")
+    }
+
+    method run(rawArgs:ListView<String>) {
+        def args := Arguments(rawArgs)
+        def sources := Array<File>()
+        def imports := Array<File>() -- FIXME literal
+        imports.add(frostHome)
+        var outFile:File? := null
+        var optimizationLevel := 3
+        var safetyLevel := 3
+        var format:Format? := null
+        var root:String? := null
+        var preserveTemporaries := true
+        def err := Console.errorStream()
+        while !args.done {
+            def a := args.next()
+            match a {
+                when "--fuzz" {
+                    def path := File("/tmp/fuzz.frost")
+                    Console.inputStream().sendTo(path.openOutputStream())
+                    sources.add(path)
+                }
+                when "-o" {
+                    if outFile !== null {
+                        err.printLine("'-o' may only be specified once")
+                        System.exit(1)
+                    }
+                    outFile := File(args.next("a filename"))
+                    outFile.parent.createDirectories()
+                }
+                when "-O" {
+                    def level := args.next("a number from 0-3")
+                    optimizationLevel := level.convert()->Int
+                    if optimizationLevel > 3 | optimizationLevel < 0 {
+                        Console.errorStream().printLine("expected a number from 0-3 after '-O'")
+                        System.exit(1)
+                    }
+                }
+                when "-S" {
+                    def level := args.next("a number from 0-3")
+                    safetyLevel := level.convert()->Int
+                    if safetyLevel > 3 | safetyLevel < 0 {
+                        Console.errorStream().printLine("expected a number from 0-3 after '-S'")
+                        System.exit(1)
+                    }
+                }
+                when "-f" {
+                    if format !== null {
+                        err.printLine("'-f' may only be specified once")
+                        System.exit(1)
+                    }
+                    def f := args.next("an output format")
+                    match f {
+                        when "exe"  { format := Format.EXECUTABLE }
+                        when "o"    { format := Format.OBJECT }
+                        when "ll"   { format := Format.LLVM }
+                        when "h"    { format := Format.C_HEADER }
+                        when "c"    { format := Format.C }
+                        when "html" { format := Format.HTML }
+                        otherwise {
+                            err.printLine("unsupported output format '\{f}'")
+                            System.exit(1)
+                        }
+                    }
+                }
+                when "-i" {
+                    imports.add(File(args.next("a path to an import directory")))
+                }
+                when "--root" {
+                    root := args.next("a path")
+                }
+                otherwise {
+                    if a.endsWith(".frost") {
+                        def f := File(a)
+--                        Console.printLine("main1: \{f.refCount}")
+                        sources.add(f)
+  --                      Console.printLine("main2: \{f.refCount}")
+                    }
+                    else {
+                        err.printLine("unrecognized argument '\{a}'")
+                        System.exit(1)
+                    }
+                }
+            }
+        }
+        def llvmDir := File(Config.llvmDir())
+        clang := File("/usr/bin/clang")
+        if sources.count = 0 {
+            err.printLine("no input files specified")
+            System.exit(1)
+        }
+        if format == null {
+            format := Format.EXECUTABLE
+        }
+        if outFile == null {
+            if sources.count = 1 {
+                def extension:String
+                match format {
+                    when Format.EXECUTABLE { extension := "" }
+                    when Format.OBJECT     { extension := ".o" }
+                    when Format.LLVM       { extension := ".ll" }
+                    when Format.HTML       { extension := ".html" }
+                    otherwise {
+                        err.printLine("output format requires a '-o' output to be specified")
+                        System.exit(1)
+                    }
+                }
+                outFile := sources[0].changeExtension(extension)
+            }
+            else if format = Format.HTML {
+                err.printLine("format 'html' requires exactly one input file")
+                System.exit(1)
+            }
+            else {
+                err.printLine("multiple input files specified, must use '-o' to specify output " +
+                        "file")
+                System.exit(1)
+            }
+        }
+        if format = Format.HTML {
+            if root == null {
+                root := "."
+            }
+            HTMLProcessor().process(sources[0], outFile, root)
+            return
+        }
+        if root !== null {
+            err.printLine("--root requires 'html' output format")
+            System.exit(1)
+        }
+        def errorCount:Int
+        {
+            def cg:CodeGenerator
+            match format {
+                when Format.LLVM, Format.EXECUTABLE, Format.OBJECT {
+                    cg := LLVMCodeGenerator(Config.llvmTriple(),
+                                            outFile.changeExtension(".ll").openOutputStream())
+                }
+                when Format.C_HEADER {
+                    cg := HCodeGenerator(outFile)
+                }
+                when Format.C {
+                    cg := CCodeGenerator(outFile)
+                }
+                otherwise {
+                    assert false
+                }
+            }
+            def settings := Compiler.Settings(frostHome, imports, optimizationLevel, safetyLevel,
+                    debug)
+            def errorQueue := MessageQueue<Compiler.Error>()
+            def compiler := Compiler(errorQueue, cg, settings)
+            for s in sources {
+                for cl in compiler.scan(s) {
+                    compiler.markNonExternal(cl)
+                }
+            }
+            for s in sources {
+                compiler.compile(s)
+            }
+            compiler.finish()
+            errorCount := errorQueue.pendingMessages()
+            for i in 0 .. errorCount {
+                def error := errorQueue.getMessage()
+                Console.printLine("\{error.file.name}:\{error.position}: error: \{error.message}")
+            }
+        }
+        if errorCount = 0 {
+            match format {
+                when Format.EXECUTABLE {
+                    toExecutable(outFile.changeExtension(".ll"), outFile, preserveTemporaries)
+                }
+                when Format.OBJECT {
+                    toObject(outFile.changeExtension(".ll"), outFile, preserveTemporaries)
+                }
+            }
+        }
+        else {
+            if errorCount = 1 {
+                Console.printLine("1 error")
+            }
+            else {
+                Console.printLine("\{errorCount} errors")
+            }
+            System.exit(1)
+        }
+    }
+    
+    @class
+    function containsError(s:String):Bit {
+        return s.contains("error")
+    }
+
+    @class
+    method main(args:ListView<String>) {
+        Main().run(args)
+    }
+}

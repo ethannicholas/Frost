@@ -3,7 +3,7 @@ Types
 
 A *type* is a kind of data, such as [String] or [Int]. Every type has an associated
 [class](classes.html), but more than one type may map to the same class: for instance, `String` and
-`String?` are two distinct types, but are the same class (`panda.core.String`).
+`String?` are two distinct types, but are the same class (`frost.core.String`).
 
 The full syntax for a class type is:
 
@@ -11,7 +11,7 @@ The full syntax for a class type is:
 
 For example, the type `Array<Int64?>?` refers to a nullable array of nullable `Int64`s.
 
-`<class>` is the name of any Panda class, such as `Int32` or `String`. Class names may or may not be
+`<class>` is the name of any Frost class, such as `Int32` or `String`. Class names may or may not be
 [fully qualified](packages.html#fullyQualified).
 
 The `<parameters>` are an optional comma-separated list of types, surrounded by angle brackets
@@ -21,7 +21,7 @@ The optional question mark at the end of a type name identifies the type as bein
 [*nullable*](nonNullability.html). Without a trailing question mark, the type is non-nullable and
 thus [`null`](null.html) is not a legal value for the type.
 
-Every [expression](expressions.html) in Panda has a type. Panda uses
+Every [expression](expressions.html) in Frost has a type. Frost uses
 [type inference](typeInference.html) to automatically determine the types of [fields](fields.html)
 and [variables](variables.html).
 

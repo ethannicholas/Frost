@@ -1,5 +1,0 @@
-package org.pandalanguage.pandac
-
-interface ASTProcessor {
-    process(cl:ClassDecl, ast:ASTNode)
-}

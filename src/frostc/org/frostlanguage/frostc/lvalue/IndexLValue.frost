@@ -1,0 +1,113 @@
+package org.frostlanguage.frostc.lvalue
+
+uses org.frostlanguage.frostc.ASTNode
+uses org.frostlanguage.frostc.Compiler
+uses org.frostlanguage.frostc.Compiler.TypeContext
+uses org.frostlanguage.frostc.IR
+uses org.frostlanguage.frostc.MethodDecl
+uses org.frostlanguage.frostc.Methods
+uses org.frostlanguage.frostc.Position
+uses org.frostlanguage.frostc.Symbol
+uses org.frostlanguage.frostc.Type
+uses org.frostlanguage.frostc.expression.Binary
+uses org.frostlanguage.frostc.expression.Call
+uses org.frostlanguage.frostc.parser.Token
+
+class IndexLValue : LValue {
+    def compiler:Compiler
+
+    def position:Position
+
+    def target:IR.Value
+
+    def rawIndex:ASTNode
+
+    -- it's important that we don't compile the index twice, so we store it the first time it
+    -- gets compiled and re-use that for the other call
+    def index:IR.Value?
+
+    init(compiler:Compiler, position:Position, target:IR.Value, rawIndex:ASTNode) {
+        self.compiler := compiler
+        self.position := position
+        self.target := target
+        self.rawIndex := rawIndex
+    }
+
+    @override
+    function type():Type {
+        def types := compiler.possibleTypes(ASTNode.BINARY(position,
+                ASTNode.IR_WRAPPER(position, target), Token.Kind.LBRACKET, rawIndex))
+        if types == null {
+            return Type.Any()
+        }
+        assert types.count = 1 -- FIXME handle ambiguous matches
+        return types.iterator.next()
+    }
+
+    @override
+    method compileLoad():IR.Value? {
+        if index == null {
+            def m := Binary.findOverloadedOperator(compiler, target.type(), Token.Kind.LBRACKET,
+                    rawIndex, TypeContext.NON_VOID)
+            if m !== null {
+                assert m.first.count = 1 -- FIXME handle ambiguous matches
+                index := compiler.compileExpression(rawIndex,
+                        TypeContext.TYPE(m.first[0].parameterType(0)))
+            }
+        }
+        if index == null {
+            index := IR.Value.REF(IR.Statement.ID(-1), type())
+            return null
+        }
+        return Binary.compile(compiler, position, ASTNode.IR_WRAPPER(position, target),
+                Token.Kind.LBRACKET, ASTNode.IR_WRAPPER(position, index),
+                TypeContext.NON_VOID)
+    }
+
+    @override
+    method compileStore(value:IR.Value) {
+        if index == null {
+            def cl := compiler.getClass(target.type())
+            if cl == null {
+                return
+            }
+            def assignment := compiler.getSymbolTable(cl)["[]:="]
+            if assignment == null {
+                compiler.error(position, "no match for '[]:=' on '\{target.type()}', " +
+                        "'\{value.type()}'")
+                return
+            }
+            def methods:ListView<MethodDecl>
+            match assignment.kind {
+                when Symbol.Kind.METHOD {
+                    methods := Array<MethodDecl>()
+                    methods->Array<MethodDecl>.add(assignment->MethodDecl)
+                }
+                when Symbol.Kind.METHODS {
+                    methods := assignment->Methods.methods
+                }
+                otherwise {
+                    assert false
+                }
+            }
+            def args := Array<ASTNode>()
+            args.add(rawIndex)
+            args.add(ASTNode.IR_WRAPPER(position, value))
+            def m := Call.findBestMethod(compiler, position, target, methods, args,
+                    TypeContext.UNSPECIFIED)
+            if m !== null {
+                assert m.first.count = 1 -- FIXME handle ambiguous matches
+                index := compiler.compileExpression(rawIndex,
+                        TypeContext.TYPE(m.first[0].parameterType(0)))
+            }
+            if index == null {
+                -- just to get us through to where the error should occur down below at call
+                index := IR.Value.REF(IR.Statement.ID(-1), type())
+            }
+        }
+        def args := Array<ASTNode>()
+        args.add(ASTNode.IR_WRAPPER(position, index))
+        args.add(ASTNode.IR_WRAPPER(position, value))
+        Call.compile(compiler, position, target, "[]:=", args, TypeContext.UNSPECIFIED)
+    }
+}

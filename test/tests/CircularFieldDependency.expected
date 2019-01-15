@@ -1,8 +1,8 @@
-CircularFieldDependency.panda:11:14: error: unable to resolve field types due to a circular dependency involving:
-    FieldDependency1.F (CircularFieldDependency.panda:2:14)
-    FieldDependency2.C (CircularFieldDependency.panda:11:14)
-    FieldDependency3.D (CircularFieldDependency.panda:16:14)
-    FieldDependency3.E (CircularFieldDependency.panda:15:14)
-    FieldDependency4.A (CircularFieldDependency.panda:20:14)
-    FieldDependency5.B (CircularFieldDependency.panda:24:14)
+CircularFieldDependency.frost:11:14: error: unable to resolve field types due to a circular dependency involving:
+    FieldDependency1.F (CircularFieldDependency.frost:2:14)
+    FieldDependency2.C (CircularFieldDependency.frost:11:14)
+    FieldDependency3.D (CircularFieldDependency.frost:16:14)
+    FieldDependency3.E (CircularFieldDependency.frost:15:14)
+    FieldDependency4.A (CircularFieldDependency.frost:20:14)
+    FieldDependency5.B (CircularFieldDependency.frost:24:14)
 1 error

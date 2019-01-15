@@ -1,8 +1,8 @@
 Syntax Overview
 ===============
 
-This is a basic overview of Panda's syntax and features, intended to help experienced programmers
-quickly get started in Panda.
+This is a basic overview of Frost's syntax and features, intended to help experienced programmers
+quickly get started in Frost.
 
 Comments
 --------
@@ -17,7 +17,7 @@ Comments
     begin and end it, but it looks nicer to fill the entire line up.
     ============================================================================
 
-It is legal to nest block comments. [Documentation comments](doccomments.html) are part of Panda's
+It is legal to nest block comments. [Documentation comments](doccomments.html) are part of Frost's
 grammar, and thus can only appear in prescribed locations.
 
 Numeric Literals
@@ -38,7 +38,7 @@ instead.
 Strings
 -------
 
-Panda [strings](strings.html) are double-quoted, with support for the same backslashed escape
+Frost [strings](strings.html) are double-quoted, with support for the same backslashed escape
 sequences as C. (FIXME: figure out Unicode escapes).
 
 String literals may have expressions embedded into them using the syntax `\{expression}`, e.g.:
@@ -48,7 +48,7 @@ String literals may have expressions embedded into them using the syntax `\{expr
 This is called [string interpolation](stringInterpolation.html), and it has quite a few other tricks
 up its sleeve.
 
-Panda's strings are immutable, but there is a mutable variant called `MutableString`.
+Frost's strings are immutable, but there is a mutable variant called `MutableString`.
 
 Basic Types
 -----------
@@ -60,7 +60,7 @@ Basic Types
 * [Char8], [Char16], [Char32]
 * [String]
 
-`Bit` is Panda's Boolean type, which has only two values: `true` and `false`.
+`Bit` is Frost's Boolean type, which has only two values: `true` and `false`.
 
 `Int` is an alias for `Int64`.
 
@@ -127,7 +127,7 @@ The full syntax for declaring variables is:
 
     var x:Int := 0, y:Int := 0
 
-Panda supports type interpolation, so you may omit the type declaration when a variable has an
+Frost supports type interpolation, so you may omit the type declaration when a variable has an
 initial value:
 
     var hello := "Hello, World!"
@@ -141,7 +141,7 @@ The `def` keyword is similar to `var`, but defines a value which cannot be reass
     def hello := "Hello, World!"
     hello := "Goodbye!" -- ERROR, cannot reassign a def
 
-You should generally use `def` instead of `var` wherever possible. In idiomatic Panda code, `var` is
+You should generally use `def` instead of `var` wherever possible. In idiomatic Frost code, `var` is
 very uncommon.
 
 The `constant` keyword is similar to `def`, but has the additional requirement that the value must
@@ -149,10 +149,10 @@ be [Immutable]:
 
     constant PI := 3.141592653589
 
-There are *no global variables* in Panda. This includes class-level variables - in Java,
+There are *no global variables* in Frost. This includes class-level variables - in Java,
 `public class Global { public static int foo; }` is effectively a global variable, in that
-`Global.foo` is accessible from anywhere. There is no equivalent in Panda; the only
-globally-accessible Panda values are class-level constants.
+`Global.foo` is accessible from anywhere. There is no equivalent in Frost; the only
+globally-accessible Frost values are class-level constants.
 
 Conditional Statements and Loops
 --------------------------------
@@ -224,7 +224,7 @@ Assertions
 
 `unreachable` is a special assertion which means "the program will never reach this statement". This
 is commonly expressed as `assert false` in other languages, but an assertion which always fails is a
-compile-time error in Panda and so `assert false` is not actually legal.
+compile-time error in Frost and so `assert false` is not actually legal.
 
 Ranges
 ------
@@ -311,7 +311,7 @@ state, it could have been declared as a `function`:
         return x + y
     }
 
-Panda supports overloading by method parameters *and* by return type. Overloading by return type is
+Frost supports overloading by method parameters *and* by return type. Overloading by return type is
 used frequently in the core APIs; for instance, many classes provide multiple `convert()` functions
 for converting to various other types. The appropriate function is chosen based on context:
 
@@ -342,10 +342,10 @@ Classes
 Creating Instances
 ------------------
 
-Panda's constructors are called "`init` methods". As seen above in the `Adder` class, they are
+Frost's constructors are called "`init` methods". As seen above in the `Adder` class, they are
 written as `init(<parameters> { ... }`.
 
-There is no `new` operator in Panda. Simply put the arguments to `init` after the name of the class,
+There is no `new` operator in Frost. Simply put the arguments to `init` after the name of the class,
 as in:
 
     def a := Adder(12)
@@ -487,7 +487,7 @@ between multiple threads.
 Everything is an Object
 -----------------------
 
-Every value in Panda is an object, even basic types such as numbers. The common mathematical
+Every value in Frost is an object, even basic types such as numbers. The common mathematical
 functions are defined directly on the numbers themselves, so you may compute the square root of 2
 by writing `2.sqrt()`.
 
@@ -498,7 +498,7 @@ same basic processor math instructions you would expect.
 Memory
 ------
 
-Panda features [automatic reference counting](memoryManagement.html). Objects will be promptly
+Frost features [automatic reference counting](memoryManagement.html). Objects will be promptly
 cleaned up when no longer referenced. Objects have a special [`cleanup()`](Object.cleanup) method
 which is called before they are destroyed; unlike with typical garbage collectors, this cleanup is
 guaranteed to happen as soon as the object is no longer referenced. Because of this, `cleanup()` is
@@ -514,16 +514,16 @@ frequently used to tie operations to a particular scope, such as with [ScopedLoc
         -- at this point
     }
 
-Panda provides [weak references](weakReferences.html) to help handle reference cycles.
+Frost provides [weak references](weakReferences.html) to help handle reference cycles.
 
 Main and Bare Code
 ------------------
 
-The main entry point into a Panda program is `@class` method named [`main`](main.html), defined on a
+The main entry point into a Frost program is `@class` method named [`main`](main.html), defined on a
 class of your choosing, which may have zero parameters or a single `ListView<String>` parameter (to
 receive its command line arguments). For convenience, you may also define `main` [outside of any
 class](bareCode.html), in which case a class is synthesized to hold it. This means that the simplest
-way to write "Hello, World!" in Panda is:
+way to write "Hello, World!" in Frost is:
 
     method main() {
         Console.printLine("Hello, World!")
@@ -541,7 +541,7 @@ but you could also write it as:
 Non-Nullability
 ---------------
 
-By default, Panda types are *non-nullable*. If you have a variable defined to contain a `String`:
+By default, Frost types are *non-nullable*. If you have a variable defined to contain a `String`:
 
     def nonnullable:String
 
@@ -560,7 +560,7 @@ This creates an array which can contain either `Int` or `null` entries.
 
 FIXME: get null safety working again...
 
-You may use a nullable type wherever a non-nullable type is expected, but only if Panda can prove
+You may use a nullable type wherever a non-nullable type is expected, but only if Frost can prove
 that the value cannot actually be `null` at that particular point. For example:
 
     def result:Object? := getResult()
@@ -579,7 +579,7 @@ But if we prove that the value can't be `null` at the point where it is referenc
 Regular Expressions
 -------------------
 
-Regular expressions are first-class values in Panda, introduced with the syntax `/regex/`. This
+Regular expressions are first-class values in Frost, introduced with the syntax `/regex/`. This
 syntax creates a value of type [RegularExpression], which many methods in `String` and
 `MutableString` operate on. `RegularExpression` may also be used to directly create a `Matcher`
 object to do your own matching.
@@ -699,7 +699,7 @@ the generic type `T` will be inferred to be `String`, and the method will return
 Methods as Values
 -----------------
 
-Methods are [first-class values](methodValues.html) in Panda. You may assign methods to variables,
+Methods are [first-class values](methodValues.html) in Frost. You may assign methods to variables,
 return them from other methods, etc.
 
 Referring to a method by its name, without arguments, gives you a reference to the method. With
@@ -724,7 +724,7 @@ parameter types, which means that:
 
     def add := Int.+
 
-produces an error. You need to give Panda a hint as to which `Int.+` function you want by declaring
+produces an error. You need to give Frost a hint as to which `Int.+` function you want by declaring
 its type. Function types are written `(parameters)=>(return)`, so a function which takes two `Int`s
 and returns an `Int` has type:
     
@@ -807,6 +807,6 @@ expects a particular function type), you may omit the types:
 And that's it!
 --------------
 
-That provides at least a brief overview of all of the major features of Panda. If you haven't
+That provides at least a brief overview of all of the major features of Frost. If you haven't
 already done so, you may wish to take a look at how to [get started](gettingStarted.html) with
-Panda programming.
+Frost programming.

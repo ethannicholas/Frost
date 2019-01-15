@@ -1,0 +1,41 @@
+package frost.io
+
+uses frost.unsafe.Pointer
+
+@package
+@final
+class FileOutputStream : OutputStream {
+    @private
+    def handle:Int64
+
+    @private
+    var closeOnCleanup:Bit
+
+    @private
+    init() {
+        -- can only be constructed by native code
+    }
+
+    @override
+    method cleanup() {
+        if closeOnCleanup {
+            close()
+        }
+    }
+
+    @override
+    @external
+    method close()
+
+    @override
+    @external
+    method write(value:UInt8)
+
+    @override
+    @external
+    method write(ptr:Pointer<UInt8>, size:Int)
+
+    @override
+    @external
+    method flush()
+}

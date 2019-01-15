@@ -1,0 +1,38 @@
+#pragma once
+#include "frost_c.h"
+#include "Statement_types.h"
+typedef struct frost$core$String frost$core$String;
+typedef struct org$frostlanguage$frostc$IR$Statement org$frostlanguage$frostc$IR$Statement;
+#include "frost/core/Int64_types.h"
+#include "org/frostlanguage/frostc/Position_types.h"
+typedef struct org$frostlanguage$frostc$IR$Value org$frostlanguage$frostc$IR$Value;
+#include "org/frostlanguage/frostc/parser/Token/Kind_types.h"
+typedef struct org$frostlanguage$frostc$Type org$frostlanguage$frostc$Type;
+#include "org/frostlanguage/frostc/IR/Block/ID_types.h"
+typedef struct org$frostlanguage$frostc$ChoiceCase org$frostlanguage$frostc$ChoiceCase;
+typedef struct org$frostlanguage$frostc$ClassDecl org$frostlanguage$frostc$ClassDecl;
+typedef struct org$frostlanguage$frostc$FixedArray org$frostlanguage$frostc$FixedArray;
+typedef struct org$frostlanguage$frostc$FieldDecl org$frostlanguage$frostc$FieldDecl;
+typedef struct org$frostlanguage$frostc$MethodDecl org$frostlanguage$frostc$MethodDecl;
+
+frost$core$String* org$frostlanguage$frostc$IR$Statement$convert$R$frost$core$String(org$frostlanguage$frostc$IR$Statement* self);
+void org$frostlanguage$frostc$IR$Statement$cleanup(org$frostlanguage$frostc$IR$Statement* self);
+void org$frostlanguage$frostc$IR$Statement$init$frost$core$Int64$org$frostlanguage$frostc$Position$org$frostlanguage$frostc$IR$Value$org$frostlanguage$frostc$parser$Token$Kind$org$frostlanguage$frostc$IR$Value$org$frostlanguage$frostc$Type(org$frostlanguage$frostc$IR$Statement* self, frost$core$Int64 p_rv, org$frostlanguage$frostc$Position p_f0, org$frostlanguage$frostc$IR$Value* p_f1, org$frostlanguage$frostc$parser$Token$Kind p_f2, org$frostlanguage$frostc$IR$Value* p_f3, org$frostlanguage$frostc$Type* p_f4);
+void org$frostlanguage$frostc$IR$Statement$init$frost$core$Int64$org$frostlanguage$frostc$Position$org$frostlanguage$frostc$IR$Block$ID(org$frostlanguage$frostc$IR$Statement* self, frost$core$Int64 p_rv, org$frostlanguage$frostc$Position p_f0, org$frostlanguage$frostc$IR$Block$ID p_f1);
+void org$frostlanguage$frostc$IR$Statement$init$frost$core$Int64$org$frostlanguage$frostc$Position$org$frostlanguage$frostc$IR$Value$org$frostlanguage$frostc$Type(org$frostlanguage$frostc$IR$Statement* self, frost$core$Int64 p_rv, org$frostlanguage$frostc$Position p_f0, org$frostlanguage$frostc$IR$Value* p_f1, org$frostlanguage$frostc$Type* p_f2);
+void org$frostlanguage$frostc$IR$Statement$init$frost$core$Int64$frost$core$String(org$frostlanguage$frostc$IR$Statement* self, frost$core$Int64 p_rv, frost$core$String* p_f0);
+void org$frostlanguage$frostc$IR$Statement$init$frost$core$Int64$org$frostlanguage$frostc$Position$org$frostlanguage$frostc$IR$Value$org$frostlanguage$frostc$ChoiceCase$frost$core$Int64(org$frostlanguage$frostc$IR$Statement* self, frost$core$Int64 p_rv, org$frostlanguage$frostc$Position p_f0, org$frostlanguage$frostc$IR$Value* p_f1, org$frostlanguage$frostc$ChoiceCase* p_f2, frost$core$Int64 p_f3);
+void org$frostlanguage$frostc$IR$Statement$init$frost$core$Int64$org$frostlanguage$frostc$Position$org$frostlanguage$frostc$IR$Value$org$frostlanguage$frostc$IR$Block$ID$org$frostlanguage$frostc$IR$Block$ID(org$frostlanguage$frostc$IR$Statement* self, frost$core$Int64 p_rv, org$frostlanguage$frostc$Position p_f0, org$frostlanguage$frostc$IR$Value* p_f1, org$frostlanguage$frostc$IR$Block$ID p_f2, org$frostlanguage$frostc$IR$Block$ID p_f3);
+void org$frostlanguage$frostc$IR$Statement$init$frost$core$Int64$org$frostlanguage$frostc$Position$org$frostlanguage$frostc$ClassDecl(org$frostlanguage$frostc$IR$Statement* self, frost$core$Int64 p_rv, org$frostlanguage$frostc$Position p_f0, org$frostlanguage$frostc$ClassDecl* p_f1);
+void org$frostlanguage$frostc$IR$Statement$init$frost$core$Int64$org$frostlanguage$frostc$Position$org$frostlanguage$frostc$ClassDecl$org$frostlanguage$frostc$FixedArray$LTorg$frostlanguage$frostc$IR$Value$GT(org$frostlanguage$frostc$IR$Statement* self, frost$core$Int64 p_rv, org$frostlanguage$frostc$Position p_f0, org$frostlanguage$frostc$ClassDecl* p_f1, org$frostlanguage$frostc$FixedArray* p_f2);
+void org$frostlanguage$frostc$IR$Statement$init$frost$core$Int64$org$frostlanguage$frostc$Position$org$frostlanguage$frostc$IR$Value$org$frostlanguage$frostc$FixedArray$LTorg$frostlanguage$frostc$IR$Value$GT(org$frostlanguage$frostc$IR$Statement* self, frost$core$Int64 p_rv, org$frostlanguage$frostc$Position p_f0, org$frostlanguage$frostc$IR$Value* p_f1, org$frostlanguage$frostc$FixedArray* p_f2);
+void org$frostlanguage$frostc$IR$Statement$init$frost$core$Int64$org$frostlanguage$frostc$Position$org$frostlanguage$frostc$IR$Value$org$frostlanguage$frostc$FieldDecl(org$frostlanguage$frostc$IR$Statement* self, frost$core$Int64 p_rv, org$frostlanguage$frostc$Position p_f0, org$frostlanguage$frostc$IR$Value* p_f1, org$frostlanguage$frostc$FieldDecl* p_f2);
+void org$frostlanguage$frostc$IR$Statement$init$frost$core$Int64$org$frostlanguage$frostc$Position$org$frostlanguage$frostc$IR$Value$frost$core$Int64$org$frostlanguage$frostc$Type(org$frostlanguage$frostc$IR$Statement* self, frost$core$Int64 p_rv, org$frostlanguage$frostc$Position p_f0, org$frostlanguage$frostc$IR$Value* p_f1, frost$core$Int64 p_f2, org$frostlanguage$frostc$Type* p_f3);
+void org$frostlanguage$frostc$IR$Statement$init$frost$core$Int64$org$frostlanguage$frostc$Position$org$frostlanguage$frostc$IR$Value$org$frostlanguage$frostc$ClassDecl$frost$core$Int64$org$frostlanguage$frostc$Type(org$frostlanguage$frostc$IR$Statement* self, frost$core$Int64 p_rv, org$frostlanguage$frostc$Position p_f0, org$frostlanguage$frostc$IR$Value* p_f1, org$frostlanguage$frostc$ClassDecl* p_f2, frost$core$Int64 p_f3, org$frostlanguage$frostc$Type* p_f4);
+void org$frostlanguage$frostc$IR$Statement$init$frost$core$Int64$org$frostlanguage$frostc$Position$org$frostlanguage$frostc$IR$Value(org$frostlanguage$frostc$IR$Statement* self, frost$core$Int64 p_rv, org$frostlanguage$frostc$Position p_f0, org$frostlanguage$frostc$IR$Value* p_f1);
+void org$frostlanguage$frostc$IR$Statement$init$frost$core$Int64$org$frostlanguage$frostc$Position$org$frostlanguage$frostc$IR$Value$org$frostlanguage$frostc$IR$Value(org$frostlanguage$frostc$IR$Statement* self, frost$core$Int64 p_rv, org$frostlanguage$frostc$Position p_f0, org$frostlanguage$frostc$IR$Value* p_f1, org$frostlanguage$frostc$IR$Value* p_f2);
+void org$frostlanguage$frostc$IR$Statement$init$frost$core$Int64$org$frostlanguage$frostc$Position$org$frostlanguage$frostc$IR$Value$org$frostlanguage$frostc$IR$Value$org$frostlanguage$frostc$IR$Value(org$frostlanguage$frostc$IR$Statement* self, frost$core$Int64 p_rv, org$frostlanguage$frostc$Position p_f0, org$frostlanguage$frostc$IR$Value* p_f1, org$frostlanguage$frostc$IR$Value* p_f2, org$frostlanguage$frostc$IR$Value* p_f3);
+void org$frostlanguage$frostc$IR$Statement$init$frost$core$Int64$org$frostlanguage$frostc$Position$org$frostlanguage$frostc$IR$Value$Q(org$frostlanguage$frostc$IR$Statement* self, frost$core$Int64 p_rv, org$frostlanguage$frostc$Position p_f0, org$frostlanguage$frostc$IR$Value* p_f1);
+void org$frostlanguage$frostc$IR$Statement$init$frost$core$Int64$org$frostlanguage$frostc$Position$org$frostlanguage$frostc$MethodDecl$org$frostlanguage$frostc$FixedArray$LTorg$frostlanguage$frostc$IR$Value$GT(org$frostlanguage$frostc$IR$Statement* self, frost$core$Int64 p_rv, org$frostlanguage$frostc$Position p_f0, org$frostlanguage$frostc$MethodDecl* p_f1, org$frostlanguage$frostc$FixedArray* p_f2);
+void org$frostlanguage$frostc$IR$Statement$init$frost$core$Int64$org$frostlanguage$frostc$Position(org$frostlanguage$frostc$IR$Statement* self, frost$core$Int64 p_rv, org$frostlanguage$frostc$Position p_f0);
+

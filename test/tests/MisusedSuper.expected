@@ -1,4 +1,4 @@
-MisusedSuper.panda:7:27: error: 'super' may not appear in this context
-MisusedSuper.panda:11:18: error: 'super' may not appear in this context
-MisusedSuper.panda:16:18: error: 'super' may not appear in this context
+MisusedSuper.frost:7:27: error: 'super' may not appear in this context
+MisusedSuper.frost:11:18: error: 'super' may not appear in this context
+MisusedSuper.frost:16:18: error: 'super' may not appear in this context
 3 errors

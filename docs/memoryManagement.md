@@ -1,7 +1,7 @@
 Memory Management
 =================
 
-Panda manages memory using automatic reference counting. Each object carries around a count of the
+Frost manages memory using automatic reference counting. Each object carries around a count of the
 number of references to it, and when that count drops to zero, the object is destroyed. This
 reference count tracking is completely automatic, and you will generally not even need to be aware
 of it - simply create and use objects as needed, and they will be automatically cleaned up for you
@@ -10,19 +10,19 @@ when you are finished with them.
 Of course, every memory management strategy has advantages and disadvantages, and automatic
 reference counting is no different.
 
-The chief *advantages* of Panda's memory management are:
+The chief *advantages* of Frost's memory management are:
 
-* **Simple**: In practice Panda memory management feels much like a typical garbage collector; just
+* **Simple**: In practice Frost memory management feels much like a typical garbage collector; just
   'drop objects on the floor' when you're done with them, and it will handle cleanup for you
   automatically.
-* **Timely**: Unlike typical garbage collected languages, Panda cleans up objects the instant the
+* **Timely**: Unlike typical garbage collected languages, Frost cleans up objects the instant the
   last reference is removed. This means that you may rely on `cleanup()` methods being called
   promptly.
 * **Pauseless**: Typical garbage collectors must stop the execution of a program while they scan
   memory to determine which objects are still in use. Even so-called "pauseless" garbage collectors
   still have these pauses, they are just less likely to be noticed.
 
-The chief *disadvantages* of Panda's memory management are:
+The chief *disadvantages* of Frost's memory management are:
 
 * **Reference cycles**: When object A refers to object B, and object B refers to object A, each of
   them will have a reference count of 1 even when no outside references to them exist. This is a

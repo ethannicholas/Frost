@@ -30,4 +30,4 @@ redefined. On the other hand, this is not legal:
 
 because it is an illegal attempt to change the value of the define itself.
 
-Idiomatic Panda code tends to use `def` almost everywhere, only occasionally resorting to `var`.
+Idiomatic Frost code tends to use `def` almost everywhere, only occasionally resorting to `var`.

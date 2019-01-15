@@ -21,9 +21,9 @@ in:
 While only three equals signs are necessary, it is conventional to extend the row of equals signs to
 the end of the line.
 
-Documentation comments are processed by [`pandac`](pandac.html) when the output format (`-f`) is set
+Documentation comments are processed by [`frostc`](frostc.html) when the output format (`-f`) is set
 to `xml`, causing a set of XML documentation files to be produced. These XML files are suitable for
-processing into HTML using the provided `pandadoc.xsl` stylesheet.
+processing into HTML using the provided `frostdoc.xsl` stylesheet.
 
 Documentation comments consist of three parts. The *summary* is the first "sentence" of the content,
 extending from the beginning of the comment to the first period (`.`). The *description* is the
@@ -31,8 +31,8 @@ entire documentation text, including the summary, up until the *tags* begin. The
 directives beginning with `@` at the end of the documentation comment.
 
 The summary and description are written in a variant of the standard
-[Markdown](https://en.wikipedia.org/wiki/Markdown) format. Panda's Markdown implementation differs
-from standard Markdown in two major ways: first, all source code is assumed to be Panda code and is
+[Markdown](https://en.wikipedia.org/wiki/Markdown) format. Frost's Markdown implementation differs
+from standard Markdown in two major ways: first, all source code is assumed to be Frost code and is
 syntax highlighted appropriately, and second, the link syntax has been extended.
 
 In addition to normal URL links, links within documentation comments may point to particular
@@ -45,9 +45,9 @@ same fashion as fields, but may also have a list of parameter types to disambigu
 methods (e.g. `Int64.max(Int)`). The return type may also be provided to disambiguate methods with
 the same parameter types (e.g. `convert():String`).
 
-Panda also extends the Markdown link syntax to allow for "simple" links. Normally, you would specify
-the link target using a parenthesized URL after the link text, as in `[Object](Object)`. In Panda
-documentation it often happens that the link text and link target are the same, so Panda allows you
+Frost also extends the Markdown link syntax to allow for "simple" links. Normally, you would specify
+the link target using a parenthesized URL after the link text, as in `[Object](Object)`. In Frost
+documentation it often happens that the link text and link target are the same, so Frost allows you
 to omit the link target. This means you can create a link to the `Object` class simply by writing 
 `[Object]`.
 

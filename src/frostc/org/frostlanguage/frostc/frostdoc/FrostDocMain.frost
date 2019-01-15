@@ -1,0 +1,105 @@
+package org.frostlanguage.frostc.frostdoc
+
+uses org.frostlanguage.frostc.ClassDecl
+uses org.frostlanguage.frostc.CodeGenerator
+uses org.frostlanguage.frostc.Compiler
+uses org.frostlanguage.frostc.Compiler.Error
+uses org.frostlanguage.frostc.Compiler.Settings
+uses org.frostlanguage.frostc.Config
+uses org.frostlanguage.frostc.MethodDecl
+
+method process(input:File, frostdoc:FrostDoc) {
+    if input.isDirectory() {
+        for file in input.list() {
+            process(file, frostdoc)
+        }
+    }
+    else if input.path.endsWith(".frost") {
+        for cl in frostdoc.compiler.scan(input) {
+            frostdoc.add(cl)
+        }
+    }
+}
+
+method recursiveDelete(root:File, currentPath:File) {
+    for f in currentPath.list() {
+        recursiveDelete(root, f)
+    }
+    -- deleting a directory tree on an end user's machine is scary, so let's be extra careful...
+    if !currentPath.absolute().get().path.startsWith(root.absolute().get().path) {
+        Console.errorStream().printLine("Panicking! Recursive delete stepped outside of the " +
+                "expected path tree! (was deleting \{root}, ended up looking at \{currentPath})")
+        System.exit(1)
+    }
+    currentPath.delete()
+}
+
+method xsltproc(input:File, xsl:File, output:File) {
+    if input.isDirectory() {
+        for file in input.list() {
+            xsltproc(file, xsl, output.resolve(file.name))
+        }
+    }
+    else if input.path.endsWith(".xml") {
+        def args := Array<String>() -- FIXME literal
+        args.add(xsl.path)
+        args.add(input.path)
+        def p := System.exec(File("xsltproc"), args)
+        output.parent.createDirectories()
+        p.output.sendTo(output.changeExtension(".html").openOutputStream())
+        p.error.sendTo(Console.errorStream())
+        assert p.waitFor() = 0
+    }
+}
+
+method addTableOfContentsToTree(toc:String, path:File, level:Int) {
+    if path.isDirectory() {
+        for file in path.list() {
+            addTableOfContentsToTree(toc, file, level + 1)
+        }
+    }
+    else if path.name.endsWith(".html") {
+        def root := level * "../"
+        def finalToc := toc.replace("href=\"", "href=\"\{root}")
+                .replace("src=\"", "src=\"\{root}")
+                .replace("prepareToC(\"", "prepareToC(\"\{root}")
+        path.write(path.readFully().replace(/<!--TOCBEGIN-->.*<!--TOCEND-->/,
+                "<!--TOCBEGIN-->\{finalToc}<!--TOCEND-->"))
+    }
+}
+
+method addTableOfContents(tocFile:File, tree:File, apiRelativePath:String) {
+    def args := Array<String>() -- FIXME literal
+    args.add(File(Config.frostSourceDir()).resolve("tools/tableOfContents.xsl").path)
+    args.add(tocFile.path)
+    def p := System.exec(File("xsltproc"), args)
+    addTableOfContentsToTree(p.output.readFully(), tree, -1)
+}
+
+method main(args:ListView<String>) {
+    if args.count != 4 {
+        Console.errorStream().printLine("usage: frostdoc <source dir> <api dir> <root dir>")
+        System.exit(1)
+    }
+    def input := File(args[1])
+    def root := File(args[2])
+    def apiRelativePath := args[3] + "/"
+    def tmpOutput := System.temporaryDirectory().resolve("frostdoc-tmp")
+    def tocFile := System.temporaryDirectory().resolve("frostdoc-toc.xml")
+    def imports := Array<File>() -- FIXME literal
+    imports.add(File(Config.frostSourceDir()))
+    imports.add(input)
+    def settings := Settings(File(Config.frostSourceDir()), imports, 0, 0, true)
+    def compiler := Compiler(MessageQueue<Error>(), DummyCodeGenerator(), settings)
+    def frostdoc := FrostDoc(compiler, tmpOutput, tocFile, apiRelativePath)
+    process(input, frostdoc)
+    frostdoc.finish()
+    def mainXSL := File(Config.frostSourceDir()).resolve("tools/frostdoc.xsl")
+    xsltproc(tmpOutput, mainXSL, root.resolve(apiRelativePath))
+    for file in File(Config.frostSourceDir()).resolve("../docs/html").list() {
+        file.openInputStream().sendTo(root.resolve(file.name).openOutputStream())
+    }
+    recursiveDelete(tmpOutput.absolute().get(), tmpOutput.absolute().get())
+    addTableOfContents(tocFile, root, apiRelativePath)
+    tocFile.delete()
+}

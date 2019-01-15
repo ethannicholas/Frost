@@ -1,0 +1,10 @@
+package frost.core
+
+====================================================================================================
+Marks objects whose fields cannot be modified after creation. The compiler will ensure that
+objects which inherit from `Immutable` do not contain `var` fields or fields which are not
+themselves `Immutable`.
+====================================================================================================
+@abstract
+class Immutable {
+}

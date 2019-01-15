@@ -1,2 +1,2 @@
-InnerFunctionNoReturn.panda:2:5: error: functions must have a return type
+InnerFunctionNoReturn.frost:2:5: error: functions must have a return type
 1 error

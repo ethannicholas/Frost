@@ -1,0 +1,136 @@
+package org.frostlanguage.frostc.lvalue
+
+uses org.frostlanguage.frostc.ASTNode
+uses org.frostlanguage.frostc.Compiler
+uses org.frostlanguage.frostc.FieldDecl
+uses org.frostlanguage.frostc.IR
+uses org.frostlanguage.frostc.MethodDecl
+uses org.frostlanguage.frostc.Position
+uses org.frostlanguage.frostc.Symbol
+uses org.frostlanguage.frostc.Type
+uses org.frostlanguage.frostc.Variable
+uses org.frostlanguage.frostc.parser.Token
+
+================================================================================================
+An assignment target. It is crucial that when loading and then storing the lvalue, any side
+effects only happen once. For instance, in `foo()[0] += 1`, we will create an lvalue
+representing `foo()[0]`. We have to read from this lvalue, add 1 to it, and store the result
+back. This must not result in evaluating `foo()` twice.
+
+It is acceptable for the mere act of creating an lvalue to evaluate shared code (`foo()`, in
+this case) - we never create an lvalue and then not use it.
+================================================================================================
+interface LValue {
+    function type():Type
+
+    method compileLoad():IR.Value?
+
+    method compileStore(value:IR.Value)
+
+    @class
+    method compile(compiler:Compiler, expr:ASTNode):LValue? {
+        match expr {
+            when ASTNode.BINARY(position, left, op, right) {
+                if op = Token.Kind.LBRACKET {
+                    def target := compiler.compileExpression(left)
+                    if target == null {
+                        return null
+                    }
+                    return IndexLValue(compiler, position, target, right)
+                }
+            }
+            when ASTNode.CHOICE_FIELD_REFERENCE(position, base, cc, index) {
+                def compiledBase := compiler.compileExpression(base)
+                if compiledBase == null {
+                    return null
+                }
+                return ChoiceFieldLValue(compiler, position, compiledBase, cc, index)
+            }
+            when ASTNode.DOT(_, base, name) {
+                def compiledBase:IR.Value
+                match base {
+                    when ASTNode.SELF {
+                        if compiler.isValue(compiler.currentClass[0]) {
+                            if compiler.currentMethod[0].methodKind != MethodDecl.Kind.INIT {
+                                compiler.error(expr.position(),
+                                        "cannot modify value fields outside of an init method")
+                                return null
+                            }
+                            compiledBase := IR.Value.LOCAL(0, compiler.currentClass[0].type)
+                        }
+                        else {
+                            compiledBase := compiler.compileExpression(base)
+                            if compiledBase == null {
+                                return null
+                            }
+                        }
+                    }
+                    otherwise {
+                        compiledBase := compiler.compileExpression(base)
+                        if compiledBase == null {
+                            return null
+                        }
+                    }
+                }
+                def cl := compiler.getClass(compiledBase.type())
+                if cl == null {
+                    return null
+                }
+                def symbol := compiler.getSymbolTable(cl)[name]
+                if symbol !== null {
+                    match symbol.kind {
+                        when Symbol.Kind.FIELD {
+                            if compiler.resolve(symbol->FieldDecl) {
+                                def f := symbol->FieldDecl
+                                if compiler.resolve(f) {
+                                    return FieldLValue(compiler, expr.position(), compiledBase, f)
+                                }
+                            }
+                            return null
+                        }
+                        otherwise {
+                            compiler.error(expr.position(), "cannot assign to this expression")
+                            return null
+                        }
+                    }
+                }
+                compiler.error(expr.position(), "class '\{cl.name}' does not have a member named " +
+                		"'\{name}'")
+                return null
+            }
+            when ASTNode.IDENTIFIER(position, id) {
+                def symbol := compiler.symbolTable[id]
+                if symbol !== null {
+                    match symbol.kind {
+                        when Symbol.Kind.VARIABLE {
+                            def v := symbol->Variable
+                            match v.storage {
+                                when Variable.Storage.LOCAL {
+                                    return VariableLValue(compiler, position, symbol->Variable)
+                                }
+                                otherwise {
+                                    compiler.error(position, "cannot assign to '\{v.name}'")
+                                }
+                            }
+                        }
+                        when Symbol.Kind.FIELD {
+                            def f := symbol->FieldDecl
+                            if !f.annotations.isClass {
+                                return compile(compiler, 
+                                		ASTNode.DOT(position, ASTNode.SELF(position), f.name))
+                            }
+                            if compiler.resolve(f) {
+                                return FieldLValue(compiler, position, null, f)
+                            }
+                            return null
+                        }
+                    }
+                }
+                compiler.error(position, "unknown identifier")
+                return null
+            }
+        }
+        compiler.error(expr.position(), "cannot assign to this expression)")
+        return null
+    }
+}

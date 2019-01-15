@@ -1,0 +1,34 @@
+package frost.core
+
+====================================================================================================
+Holds a weak reference to an object. A weak reference allows access to an object, but does not
+participate in reference counting. Objects are destroyed when there are no remaining normal
+("strong") references to them, even if one or more `Weak` references remain in memory.
+====================================================================================================
+@final
+class Weak<T> {
+    -- This is special cased within the compiler
+    @private
+    def value:T?
+
+    init(value:T) {
+        self.value := value
+    }
+
+    ================================================================================================
+    Returns the object referenced by this `Weak`. It is a safety violation to refer to an object
+    after it has been destroyed (by having no remaining strong references to it); this will be
+    detected using default compiler settings, but result in undefined behavior when safety checks
+    are disabled.
+
+    FIXME actually implement this behavior :-)
+    ================================================================================================
+    method get():T {
+        return value
+    }
+
+    @override
+    function convert():String {
+        return "Weak(\{value})"
+    }
+}

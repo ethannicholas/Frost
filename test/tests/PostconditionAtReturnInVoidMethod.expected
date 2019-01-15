@@ -1,2 +1,2 @@
-PostconditionAtReturnInVoidMethod.panda:2:11: error: cannot use @return in a method which does not have a return type
+PostconditionAtReturnInVoidMethod.frost:2:11: error: cannot use @return in a method which does not have a return type
 1 error

@@ -1,8 +1,8 @@
 Classes
 =======
 
-A *class* in Panda represents a kind of object. Classes contain [fields](fields.html) (data values)
-and [methods](methods.html) (actions). Every Panda value other than [`null`](null.html) is an
+A *class* in Frost represents a kind of object. Classes contain [fields](fields.html) (data values)
+and [methods](methods.html) (actions). Every Frost value other than [`null`](null.html) is an
 object, and therefore an instance of a class. Classes are defined using the syntax:
 
     class <name> {
@@ -21,7 +21,7 @@ here is a simple class containing two fields:
         var y:Int
     }
 
-Because `Point` does not specify a supertype, it descends from `panda.core.Object`. Its two fields,
+Because `Point` does not specify a supertype, it descends from `frost.core.Object`. Its two fields,
 `x` and `y`, are public by default (that is, any other class is free to read and modify them).
 
 You would create an instance of `Point` using the expression `Point()`, like this:
@@ -59,7 +59,7 @@ Inheritance
 Classes may *inherit* from another class to extend or modify the parent class' behavior. In the real
 world, we might say that the Human class extends the Primate class, which in turn extends the Mammal
 class, and so forth. At each step, we add new traits which specialize the class further. We could
-express this concept in Panda as follows:
+express this concept in Frost as follows:
 
     class Mammal : Synapsid {
         ...
@@ -88,7 +88,7 @@ such as:
         }
     }
 
-All classes ultimately inherit from [panda.core.Object]. If you do not specify a superclass, the
+All classes ultimately inherit from [frost.core.Object]. If you do not specify a superclass, the
 superclass defaults to `Object`.
 
 A class may inherit from multiple types, but only one of these types may be a `class`. The other

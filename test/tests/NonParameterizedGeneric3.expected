@@ -1,2 +1,2 @@
-NonParameterizedGeneric3.panda:1:1: error: 'panda.collections.Array' expected 1 generic argument, but found 0
+NonParameterizedGeneric3.frost:1:1: error: 'frost.collections.Array' expected 1 generic argument, but found 0
 1 error

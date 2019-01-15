@@ -1,2 +1,2 @@
-WrongGenericArgumentType.panda:4:18: error: generic argument 'anonymous.WrongGenericArgumentType.T' must be of type 'panda.core.Value', but found 'panda.core.Object'
+WrongGenericArgumentType.frost:4:18: error: generic argument 'anonymous.WrongGenericArgumentType.T' must be of type 'frost.core.Value', but found 'frost.core.Object'
 1 error

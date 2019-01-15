@@ -1,2 +1,2 @@
-UnterminatedString.panda:2:23: error: unterminated string literal
+UnterminatedString.frost:2:23: error: unterminated string literal
 1 error

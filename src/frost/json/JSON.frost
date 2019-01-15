@@ -1,0 +1,377 @@
+package frost.json
+
+====================================================================================================
+A node in a JSON parse tree.
+====================================================================================================
+choice JSON {
+    ================================================================================================
+    An `Int64` node.
+    ================================================================================================
+    INT(Int64)
+
+    ================================================================================================
+    A `Real64` node.
+    ================================================================================================
+    REAL(Real64)
+
+    ================================================================================================
+    A `String` node.
+    ================================================================================================
+    STRING(String)
+
+    ================================================================================================
+    A `Bit` node.
+    ================================================================================================
+    BIT(Bit)
+
+    -- FIXME need to use ImmutableHashMap / ImmutableArray so this choice is immutable
+    ================================================================================================
+    An object node.
+    ================================================================================================
+    OBJECT(MapView<String, JSON>)
+
+    ================================================================================================
+    An array node.
+    ================================================================================================
+    ARRAY(ListView<JSON>)
+
+    ================================================================================================
+    A `null` node.
+    ================================================================================================
+    NULL
+
+    @private
+    choice PathKey {
+        FIELD(String, String.Index) -- FIXME pull the String.Index out of here and return a (PathKey, String.Index) from nextPathKey()
+        INDEX(Int, String.Index)
+    }
+
+    @private
+    @class
+    function nextPathKey(path:String, start:String.Index):PathKey? {
+        match path[start] {
+            when "/" {
+                def end := path.end
+                def fieldStart := path.next(start)
+                var index := fieldStart
+                do {
+                    var c := path[index]
+                    if c = "/" | c = "[" {
+                        break
+                    }
+                    index := path.next(index)
+                }
+                while index != end
+                if fieldStart = index {
+                    return null
+                }
+                return PathKey.FIELD(path.substring(fieldStart .. index), index)
+            }
+            when "[" {
+                def indexStart := path.next(start)
+                var index := indexStart
+                while path[index] != "]" {
+                    index := path.next(index)
+                }
+                def parsed := path.substring(indexStart .. index).convert()->Int?
+                if parsed == null {
+                    return null
+                }
+                return PathKey.INDEX(parsed, path.next(index))
+            }
+            otherwise {
+                return null
+            }
+        }
+    }
+
+    ================================================================================================
+    Returns a node from the JSON subtree represented by this node by following a path specification.
+    The path of this node (the root of its subtree) is the empty string (`""`). Objects are indexed
+    by a slash followed by the name of a field, such as `"/customer"`. Arrays are index by bracketed
+    integers, such as `[0]`. These rules may be combined to produce complex paths such as
+    "/customer/address[0]/zipCode".
+
+    If the specified node does not exist or cannot be resolved (for instance, by trying to index
+    into a node which is not an array), `null` is returned. Note that a `null` node in the JSON file
+    is represented by `JSON.NULL`, so successfully retrieving a `null` JSON node will result in a
+    *non-null* `JSON.NULL` return. An invalid path (due to mismatched brackets, non-numeric array
+    indices, etc.) will cause a precondition failure.
+    ================================================================================================
+    -- FIXME @pre(valid(path))
+    function get(path:String):JSON? {
+        var index := path.start
+        var end := path.end
+        var current:JSON? := self
+        while index != end {
+            assert nextPathKey(path, index) !== null, "invalid JSON path '\{path}'"
+            match nextPathKey(path, index) {
+                when PathKey.FIELD(field, next) {
+                    match current {
+                        when OBJECT(fields) {
+                            current := fields[field]
+                            if current == null {
+                                return null
+                            }
+                        }
+                        otherwise {
+                            return null
+                        }
+                    }
+                    index := next
+                }
+                when PathKey.INDEX(key, next) {
+                    match current {
+                        when ARRAY(nodes) {
+                            current := nodes[key]
+                        }
+                        otherwise {
+                            return null
+                        }
+                    }
+                    index := next
+                }
+            }
+        }
+        return current
+    }
+
+    ================================================================================================
+    As [get(String)], but returns the node as an `Int64`.
+    ================================================================================================
+    function getInt(path:String):Int64? {
+        def result := get(path)
+        if result == null {
+            return null
+        }
+        match result {
+            when INT(value) {
+                return value
+            }
+            otherwise {
+                return null
+            }
+        }
+    }
+
+    ================================================================================================
+    As [get(String)], but returns the node as a `Real64`.
+    ================================================================================================
+    function getReal(path:String):Real64? {
+        def result := get(path)
+        if result == null {
+            return null
+        }
+        match result {
+            when REAL(value) {
+                return value
+            }
+            otherwise {
+                return null
+            }
+        }
+    }
+
+    ================================================================================================
+    As [get(String)], but returns the node as a `Bit`.
+    ================================================================================================
+    function getBit(path:String):Bit? {
+        def result := get(path)
+        if result == null {
+            return null
+        }
+        match result {
+            when BIT(value) {
+                return value
+            }
+            otherwise {
+                return null
+            }
+        }
+    }
+
+    ================================================================================================
+    As [get(String)], but returns the node as a `String`.
+    ================================================================================================
+    function getString(path:String):String? {
+        def result := get(path)
+        if result == null {
+            return null
+        }
+        match result {
+            when STRING(value) {
+                return value
+            }
+            otherwise {
+                return null
+            }
+        }
+    }
+
+    ================================================================================================
+    As [get(String)], but returns the node as an array (`ListView<Node>`).
+    ================================================================================================
+    function getArray(path:String):ListView<JSON>? {
+        def result := get(path)
+        if result == null {
+            return null
+        }
+        match result {
+            when ARRAY(value) {
+                return value
+            }
+            otherwise {
+                return null
+            }
+        }
+    }
+
+    ================================================================================================
+    As [get(String)], but returns the node as an object (`MapView<String, JSON>`).
+    ================================================================================================
+    function getObject(path:String):MapView<String, JSON>? {
+        def result := get(path)
+        if result == null {
+            return null
+        }
+        match result {
+            when OBJECT(value) {
+                return value
+            }
+            otherwise {
+                return null
+            }
+        }
+    }
+
+    ================================================================================================
+    Returns the value of this `INT` node.
+    ================================================================================================
+    function asInt():Int64 {
+        match self {
+            when INT(value) {
+                return value
+            }
+            otherwise {
+                assert false
+            }
+        }
+    }
+
+    ================================================================================================
+    Returns the value of this `REAL` node.
+    ================================================================================================
+    function asReal():Real64 {
+        match self {
+            when REAL(value) {
+                return value
+            }
+            otherwise {
+                assert false
+            }
+        }
+    }
+
+    ================================================================================================
+    Returns the value of this `STRING` node.
+    ================================================================================================
+    function asString():String {
+        match self {
+            when STRING(value) {
+                return value
+            }
+            otherwise {
+                assert false
+            }
+        }
+    }
+
+    ================================================================================================
+    Returns the value of this `BIT` node.
+    ================================================================================================
+    function asBit():Bit {
+        match self {
+            when BIT(value) {
+                return value
+            }
+            otherwise {
+                assert false
+            }
+        }
+    }
+
+    ================================================================================================
+    Returns the value of this `OBJECT` node.
+    ================================================================================================
+    function asObject():MapView<String, JSON> {
+        match self {
+            when OBJECT(value) {
+                return value
+            }
+            otherwise {
+                assert false
+            }
+        }
+    }
+
+    ================================================================================================
+    Returns the value of this `ARRAY` node.
+    ================================================================================================
+    function asArray():ListView<JSON> {
+        match self {
+            when ARRAY(value) {
+                return value
+            }
+            otherwise {
+                assert false
+            }
+        }
+    }
+
+    ================================================================================================
+    Returns a JSON string representing this node.
+    ================================================================================================
+    @override
+    function convert():String {
+        match self {
+            when INT(value) {
+                return value.convert()
+            }
+            when REAL(value) {
+                return value.convert()
+            }
+            when STRING(value) {
+                return value.format("frost")
+            }
+            when BIT(value) {
+                return value.convert()
+            }
+            when OBJECT(fields) {
+                def result := MutableString("{")
+                var separator := " "
+                for k in fields.keys { -- FIXME iterate over tuples
+                    result.append("\{separator}\{k:frost}: \{fields[k]}")
+                    separator := ", "
+                }
+                result.append(" }")
+                return result.finish()
+            }
+            when ARRAY(nodes) {
+                def result := MutableString("[")
+                var separator := ""
+                for n in nodes {
+                    result.append("\{separator}\{n}")
+                    separator := ", "
+                }
+                result.append("]")
+                return result.finish()
+            }
+            when NULL {
+                return "null"
+            }
+            otherwise {
+                assert false
+            }
+        }
+    }
+}

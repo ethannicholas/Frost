@@ -3,7 +3,7 @@ Weak References
 
 A *weak reference* is a reference to an object which does not force it to
 [remain in memory](memoryManagement.html). Weak references are created using either the
-[`@weak` annotation](annotations.html#weak) or directly using the `panda.core.Weak` class.
+[`@weak` annotation](annotations.html#weak) or directly using the `frost.core.Weak` class.
 
 To understand why we need weak references in the first place, consider this class:
 
@@ -46,10 +46,10 @@ is also gone, and `child` will be cleaned up as well.
 **Parent-child relationships** are by far the most common kind of reference cycle. Simply tag the
 reference from child to parent with the `@weak` annotation to break the cycle.
 
-`panda.core.Weak`
+`frost.core.Weak`
 -----------------
 
-In addition to the `@weak` annotation, you may explicitly create `panda.core.Weak` objects. `Weak`
+In addition to the `@weak` annotation, you may explicitly create `frost.core.Weak` objects. `Weak`
 objects hold a reference to an object without affecting its reference count. The `Node` class above
 could also have been written:
 
@@ -71,8 +71,8 @@ and extract them using `get()`
 
     Console.printLine(child.parent.get())
 
-The `@weak` annotation simply instructs Panda to perform these steps automatically; there is no
-behavioral difference between using `panda.core.Weak` and `@weak`.
+The `@weak` annotation simply instructs Frost to perform these steps automatically; there is no
+behavioral difference between using `frost.core.Weak` and `@weak`.
 
 Using a weak reference after it is destroyed
 --------------------------------------------
@@ -87,7 +87,7 @@ The only reference to the result of calling `"Hello" * 3` is a weak one, which c
 remain in memory. The temporary object will be destroyed as soon as the first statement finishes
 executing, and is gone by the time we call `w.get()` in the second statement.
 
-This is a [safety violation](safetyViolation.html) . With safety checks enabled, Panda will catch
+This is a [safety violation](safetyViolation.html) . With safety checks enabled, Frost will catch
 and report this error. With safety checks disabled, undefined behavior results.
 
 **FIXME:** the safety checks that catch this aren't actually in place yet; it's always undefined

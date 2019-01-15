@@ -1,0 +1,108 @@
+package frost.threads
+
+====================================================================================================
+Represents a thread of execution within a program. Each program begins with a single thread, and may
+create more. By default, any living threads prevent a program from exiting, even if its `main()`
+method ends. The [preventsExit] flag may be toggled to change this behavior.
+
+As Frost has neither global nor class-level mutable variables, threads do not normally have any
+access to each other's mutable data. Eliminating memory sharing means that there is generally no
+need for mutexes, semaphores, or other common thread synchronization constructs; mutable objects are
+only accessible from a single thread each and there is therefore no contention. 
+
+Threads communicate with each other using [MessageQueue] objects, which only permit [Immutable]
+objects to be sent. This ensures that only one thread can access a given mutable object at a time.
+
+In situations where it is actually necessary to have multiple threads access potentially-shared
+mutable objects, the [UnsafeMessageQueue] class allows for passing mutable objects between threads
+without terminating the calling thread. If the object (including any other mutable objects it
+directly or indirectly points to) is truly 'handed off' and no longer accessed by the sending
+thread, no danger exists. If the sending thread continues to access a shared object, [Lock] must be
+used to synchronize access.
+====================================================================================================
+@final
+class Thread : Immutable {
+    @private
+    init() {
+    }
+
+    @private
+    @external
+    method run(m:()=&>(), preventsExit:builtin_bit)
+
+    ================================================================================================
+    Creates and starts a new thread which executes the specified method. For example, to create a
+    new thread which continually displays a message to the console:
+
+        Thread.start(method() {
+            loop {
+                Console.writeLine("Hi, I'm a thread!")
+            }
+        })
+
+    @param run the run method to execute
+    @returns the newly created thread
+    ================================================================================================
+    @class
+    method start(run:()=&>*()):Thread {
+        def result := Thread()
+        result.run(run, true)
+        return result
+    }
+
+    @class
+    method start(run:()=&>*(), preventsExit:Bit):Thread {
+        var result := Thread()
+        result.run(run, preventsExit.value)
+        return result
+    }
+
+    @class
+    method unsafeStart(run:()=&>()):Thread {
+        def result := Thread()
+        result.run(run, true)
+        return result
+    }
+
+    @class
+    method unsafeStart(run:()=&>(), preventsExit:Bit):Thread {
+        var result := Thread()
+        result.run(run, preventsExit.value)
+        return result
+    }
+
+-*  
+    not 100% sure about this API, just capturing my current thinking
+
+    ================================================================================================
+    Creates and starts a new thread which executes the specified method, posting its result to a
+    `ResultQueue`.
+    ================================================================================================
+    @class
+    method start<T>(run:()=&>(T), resultQueue:ResultQueue<T>):Thread {
+    }
+*-
+
+    ================================================================================================
+    Returns the number of threads that generally leads to best performance on the current system.
+    This will generally be (but is not necessarily) the number of available processor cores.
+
+    **IMPLEMENTATION NOTE:** this is not currently implemented and is just 
+    hardcoded to return 8.
+
+    @returns the preferred number of executing threads
+    ================================================================================================
+    @class
+    function preferredThreadCount():Int {
+        return 8
+    }
+    
+    ================================================================================================
+    Pauses execution of the current thread for a length of time.
+    
+    @param millis the number of milliseconds to sleep
+    ================================================================================================
+    @class 
+    @external
+    method sleep(millis:Int)
+}

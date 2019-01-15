@@ -1,7 +1,7 @@
 The main() method
 =================
 
-As with many other programming langauges, the entry point to a Panda program - the method which is
+As with many other programming langauges, the entry point to a Frost program - the method which is
 executed when the program starts up - is called `main()`. There are several ways to define `main()`:
 
 As a `@class` method taking no parameters:

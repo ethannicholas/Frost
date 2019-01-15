@@ -1,0 +1,11 @@
+package frost.collections
+
+====================================================================================================
+A write-only version of the standard `Map` abstract data type. `MapWriter` is generally paired with
+`MapView`, as in the [Map] interface.
+====================================================================================================
+interface MapWriter<K, V> {
+    method []:=(key:K, value:V)
+
+    method remove(key:K)
+}

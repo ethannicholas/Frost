@@ -1,4 +1,4 @@
-RangeTypeMismatch.panda:3:36: error: expected 'panda.core.UInt8', but found 'IntegerLiteral(-1)'
-RangeTypeMismatch.panda:9:18: error: for loop cannot iterate over 'panda.core.SteppedRange<panda.core.UInt64, panda.core.Int64>'; endpoint and step types are not compatible
-RangeTypeMismatch.panda:15:23: error: expected 'panda.core.SteppedRange<panda.core.Int8, panda.core.Int8>', but found 'panda.core.Range<panda.core.Int64>'
+RangeTypeMismatch.frost:3:36: error: expected 'frost.core.UInt8', but found 'IntegerLiteral(-1)'
+RangeTypeMismatch.frost:9:18: error: for loop cannot iterate over 'frost.core.SteppedRange<frost.core.UInt64, frost.core.Int64>'; endpoint and step types are not compatible
+RangeTypeMismatch.frost:15:23: error: expected 'frost.core.SteppedRange<frost.core.Int8, frost.core.Int8>', but found 'frost.core.Range<frost.core.Int64>'
 3 errors

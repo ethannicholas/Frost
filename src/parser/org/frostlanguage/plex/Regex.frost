@@ -1,0 +1,223 @@
+package org.frostlanguage.plex
+
+class Regex {
+    constant EOF := Char8(0)
+
+    def stack := Stack<Node>()
+    var source:String
+    var index := 0
+    var regexNode:Node
+
+    init(source:String) {
+        self.source := source
+        regex()
+        self.regexNode := stack.pop()
+    }
+
+    @private
+    function peek():Char8 {
+        if index = source.utf8.count {
+            return EOF
+        }
+        return source.utf8[index]
+    }
+
+    @private
+    method expect(c:Char8) {
+        if peek() != c {
+            Console.printLine("expected '\{c}' at index \{index}")
+            System.exit(1)
+        }
+        index += 1
+    }
+
+    @private
+    method elementary() {
+        match peek() {
+            -- FIXME use char literals
+            when Char8(40) { group() }
+            when Char8(91) { set() }
+            when Char8(46) { any() }
+            otherwise      { char() }
+        }
+    }
+
+    @private
+    method basic() {
+        elementary()
+        match peek() {
+            when Char8(42) {
+                stack.push(Star(stack.pop()))
+                index += 1
+            }
+            when Char8(43) {
+                stack.push(Plus(stack.pop()))
+                index += 1
+            }
+            when Char8(63) {
+                stack.push(Option(stack.pop()))
+                index += 1
+            }
+        }
+    }
+
+    @private
+    method simple() {
+        basic()
+        loop {
+            match peek() {
+                when Char8(124), Char8(41), EOF {
+                    break
+                }
+                otherwise {
+                    simple()
+                    def b := stack.pop()
+                    def a := stack.pop()
+                    stack.push(Concat(a, b))
+                }
+            }
+        }
+    }
+
+    @private
+    method getEscape(c:Char8):Node {
+        match c {
+            when Char8(115) { return CharSet(" \t\n\r") }
+            when Char8(110) { return SingleChar(Char8(10)) }
+            when Char8(116) { return SingleChar(Char8(9)) }
+            when Char8(114) { return SingleChar(Char8(13)) }
+            otherwise       { return SingleChar(c) }
+        }
+    }
+
+    @private
+    method char() {
+        var c := peek()
+        match c {
+            when Char8(40), Char8(41), Char8(43), Char8(42), Char8(46), Char8(124) {
+                return
+            }
+            when Char8(92) {
+                index += 1
+                stack.push(getEscape(peek()))
+                index += 1
+            }
+            otherwise {
+                stack.push(SingleChar(c))
+                index += 1
+            }
+        }
+    }
+
+    @private
+    method any() {
+        expect(Char8(46))
+        stack.push(Any())
+    }
+
+    @private
+    method group() {
+        expect(Char8(40))
+        regex()
+        expect(Char8(41))
+    }
+
+    @private
+    method setChar() {
+        def c := peek()
+        match c {
+            when Char8(93) {
+                return
+            }
+            when Char8(92) {
+                index += 1
+                stack.push(getEscape(peek()))
+                index += 1
+            }
+            otherwise {
+                stack.push(SingleChar(c))
+                index += 1
+            }
+        }
+    }
+
+    @private
+    method setItem() {
+        setChar()
+        if peek() = Char8(45) {
+            expect(Char8(45))
+            if peek() = Char8(93) {
+                index -= 1
+                setChar()
+                assert peek() = Char8(93)
+            }
+            else {
+                setChar()
+                def b := (stack.pop()->SingleChar).value -- FIXME remove ()
+                def a := (stack.pop()->SingleChar).value -- FIXME remove ()
+                stack.push(CharSet(a, b))
+            }
+        }
+    }
+
+    @private
+    method setItems() {
+        setItem()
+        if peek() != Char8(93) {
+            setItems()
+        }
+    }
+
+    @private
+    method set() {
+        expect(Char8(91))
+        def MARKER:Node := SingleChar(Char8(33))
+        stack.push(MARKER)
+        def set := SetNode()
+        if peek() = Char8(94) {
+            index += 1
+            set.inverse := true
+        }
+        setItems()
+        var item := stack.pop()
+        while item !== MARKER {
+            set.contents.add(item)
+            item := stack.pop()
+        }
+        stack.push(set)
+        expect(Char8(93))
+    }
+
+    @class
+    function singleton(i:Int):Array<Int> {
+        def result := Array<Int>()
+        result.add(i)
+        return result
+    }
+
+    @private
+    method regex() {
+        simple()
+        match peek() {
+            when Char8(124) {
+                expect(Char8(124))
+                regex()
+                def b := stack.pop()
+                def a := stack.pop()
+                stack.push(Union(a, b))
+            }
+            when EOF {
+                return
+            }
+        }
+    }
+
+    method addToNFA(context:NFA, accept:Int):Array<Int> {
+        return regexNode.makeStartStates(context, singleton(accept))
+    }
+
+    @override
+    function convert():String {
+        return regexNode.convert()
+    }
+}

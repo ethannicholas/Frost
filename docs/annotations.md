@@ -182,6 +182,6 @@ potentially result in incorrect behavior in the face of functions which do not "
 @external
 ---------
 
-The `@external` annotation marks a method which is implemented by external (non-Panda) code. Like
+The `@external` annotation marks a method which is implemented by external (non-Frost) code. Like
 abstract methods, external methods do not have a method body. See 
 [external methods](externalMethods.html) for more details.

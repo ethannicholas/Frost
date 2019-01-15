@@ -1,0 +1,83 @@
+package frost.core
+
+====================================================================================================
+Provides utility methods that interface with the operating environment.
+====================================================================================================
+@final
+class System {
+    ================================================================================================
+    Represents a program launched by [System.exec].
+    ================================================================================================
+    @final
+    class Process {
+        @private
+        def pid:Int
+
+        ============================================================================================
+        An `OutputStream` which sends its output to the process' standard input stream.
+        ============================================================================================
+        def input:OutputStream
+
+        ============================================================================================
+        An `InputStream` which reads from the process' standard output stream.
+        ============================================================================================
+        def output:InputStream
+
+        ============================================================================================
+        An `InputStream` which reads from the process' standard error stream.
+        ============================================================================================
+        def error:InputStream
+
+        ============================================================================================
+        Waits for the process to finish and returns its exit status.
+        ============================================================================================
+        @external
+        method waitFor():Int
+    }
+
+    @private
+    init() {
+    }
+
+    ================================================================================================
+    Returns the current working directory.
+    ================================================================================================
+    @class
+    @external
+    method workingDirectory():File
+
+    ================================================================================================
+    Returns a path to a directory suitable for storing temporary files.
+    ================================================================================================
+    @class
+    @external
+    method temporaryDirectory():File
+
+    ================================================================================================
+    Causes the program to immediately stop running, returning the indicated exit status to the
+    operating system. Generally an exit value of 0 is taken to mean a normal exit and a non-zero
+    value is taken to mean an error occurred, but this is system-dependent. Cleanup methods are
+    **not** run when an exit is forced in this fashion; among other things, this means that open
+    files will not be properly flushed and closed, which may cause output to be incomplete.
+    ================================================================================================
+    @class
+    @external
+    method exit(status:UInt8)
+
+    ================================================================================================
+    Causes the program to perform an illegal operation which forces an abnormal exit.
+    ================================================================================================
+    @class
+    @external
+    method crash()
+
+    ================================================================================================
+    Executes an external program with the given command line arguments. Returns the resulting
+    process, or `null` if the program could not be started. If `path` is just a filename (as
+    opposed to the full path to a file), the system PATH environment variable will be searched to
+    find it.
+    ================================================================================================
+    @class
+    @external
+    method exec(path:File, args:ListView<String>):Process? -- FIXME variadic
+}

@@ -1,0 +1,8 @@
+package frost.collections
+
+====================================================================================================
+The standard "Map" abstract data type, which stores key/value pairs such that no key appears more
+than once in the collection.
+====================================================================================================
+interface Map<K, V> : MapView<K, V>, MapWriter<K, V> {
+}

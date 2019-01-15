@@ -1,2 +1,2 @@
-RangeTypeMismatch2.panda:4:22: error: range endpoints must be value types, but found 'panda.core.Immutable'
+RangeTypeMismatch2.frost:4:22: error: range endpoints must be value types, but found 'frost.core.Immutable'
 1 error
