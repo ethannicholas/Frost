@@ -29,6 +29,8 @@ static frost$core$String $s46 = { (frost$core$Class*) &frost$core$String$class, 
 static frost$core$String $s51 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x70\x72\x6f\x70\x65\x72\x74\x79\x20", 9, 2318826142498553734, NULL };
 static frost$core$String $s56 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x3a", 1, 159, NULL };
 static frost$core$String $s65 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x20\x3a\x3d\x20", 4, 137627884, NULL };
+static frost$core$String $s72 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x46\x69\x65\x6c\x64\x44\x65\x63\x6c\x2e\x66\x72\x6f\x73\x74", 15, -1057146787963783519, NULL };
+static frost$core$String $s73 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x41\x53\x54\x4e\x6f\x64\x65\x3f\x20\x74\x6f\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x4f\x62\x6a\x65\x63\x74", 84, 4416450806347501802, NULL };
 
 void org$frostlang$frostc$FieldDecl$init$org$frostlang$frostc$ClassDecl$org$frostlang$frostc$Position$frost$core$String$Q$org$frostlang$frostc$Annotations$org$frostlang$frostc$FieldDecl$Kind$frost$core$String$org$frostlang$frostc$Type$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$FieldDecl* param0, org$frostlang$frostc$ClassDecl* param1, org$frostlang$frostc$Position param2, frost$core$String* param3, org$frostlang$frostc$Annotations* param4, org$frostlang$frostc$FieldDecl$Kind param5, frost$core$String* param6, org$frostlang$frostc$Type* param7, org$frostlang$frostc$ASTNode* param8) {
 
@@ -175,41 +177,49 @@ frost$core$MutableString$append$frost$core$String($tmp64, &$s65);
 frost$core$MutableString* $tmp66 = *(&local0);
 org$frostlang$frostc$ASTNode** $tmp67 = &param0->rawValue;
 org$frostlang$frostc$ASTNode* $tmp68 = *$tmp67;
+frost$core$Bit $tmp69 = frost$core$Bit$init$builtin_bit($tmp68 != NULL);
+bool $tmp70 = $tmp69.value;
+if ($tmp70) goto block11; else goto block12;
+block12:;
+frost$core$Int64 $tmp71 = (frost$core$Int64) {52};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s72, $tmp71, &$s73);
+abort(); // unreachable
+block11:;
 frost$core$MutableString$append$frost$core$Object($tmp66, ((frost$core$Object*) $tmp68));
 goto block10;
 block10:;
 // line 54
-frost$core$MutableString* $tmp69 = *(&local0);
-frost$core$String* $tmp70 = frost$core$MutableString$finish$R$frost$core$String($tmp69);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp70));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp70));
-// unreffing REF($89:frost.core.String)
-frost$core$MutableString* $tmp71 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp71));
+frost$core$MutableString* $tmp74 = *(&local0);
+frost$core$String* $tmp75 = frost$core$MutableString$finish$R$frost$core$String($tmp74);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp75));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp75));
+// unreffing REF($96:frost.core.String)
+frost$core$MutableString* $tmp76 = *(&local0);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp76));
 // unreffing result
 *(&local0) = ((frost$core$MutableString*) NULL);
-return $tmp70;
+return $tmp75;
 
 }
 void org$frostlang$frostc$FieldDecl$cleanup(org$frostlang$frostc$FieldDecl* param0) {
 
 // line 4
 org$frostlang$frostc$Symbol$cleanup(((org$frostlang$frostc$Symbol*) param0));
-frost$core$Weak** $tmp72 = &param0->owner;
-frost$core$Weak* $tmp73 = *$tmp72;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp73));
-frost$core$String** $tmp74 = &param0->doccomment;
-frost$core$String* $tmp75 = *$tmp74;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp75));
-org$frostlang$frostc$Annotations** $tmp76 = &param0->annotations;
-org$frostlang$frostc$Annotations* $tmp77 = *$tmp76;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp77));
-org$frostlang$frostc$Type** $tmp78 = &param0->type;
-org$frostlang$frostc$Type* $tmp79 = *$tmp78;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp79));
-org$frostlang$frostc$ASTNode** $tmp80 = &param0->rawValue;
-org$frostlang$frostc$ASTNode* $tmp81 = *$tmp80;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp81));
+frost$core$Weak** $tmp77 = &param0->owner;
+frost$core$Weak* $tmp78 = *$tmp77;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp78));
+frost$core$String** $tmp79 = &param0->doccomment;
+frost$core$String* $tmp80 = *$tmp79;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp80));
+org$frostlang$frostc$Annotations** $tmp81 = &param0->annotations;
+org$frostlang$frostc$Annotations* $tmp82 = *$tmp81;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp82));
+org$frostlang$frostc$Type** $tmp83 = &param0->type;
+org$frostlang$frostc$Type* $tmp84 = *$tmp83;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp84));
+org$frostlang$frostc$ASTNode** $tmp85 = &param0->rawValue;
+org$frostlang$frostc$ASTNode* $tmp86 = *$tmp85;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp86));
 return;
 
 }

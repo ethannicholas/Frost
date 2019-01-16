@@ -26,7 +26,13 @@ static frost$core$String $s61 = { (frost$core$Class*) &frost$core$String$class, 
 static frost$core$String $s67 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x4d\x61\x74\x63\x68\x65\x72\x2e\x66\x72\x6f\x73\x74", 13, 6318596349235178397, NULL };
 static frost$core$String $s68 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x4d\x61\x74\x63\x68\x65\x72\x2e\x61\x70\x70\x65\x6e\x64\x52\x65\x70\x6c\x61\x63\x65\x6d\x65\x6e\x74\x28\x74\x61\x72\x67\x65\x74\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x4d\x75\x74\x61\x62\x6c\x65\x53\x74\x72\x69\x6e\x67\x2c\x20\x72\x65\x70\x6c\x61\x63\x65\x6d\x65\x6e\x74\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2c\x20\x61\x6c\x6c\x6f\x77\x47\x72\x6f\x75\x70\x52\x65\x66\x65\x72\x65\x6e\x63\x65\x73\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x42\x69\x74\x29", 169, 3790419115313828788, NULL };
 static frost$core$String $s79 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x5c\x24\x28\x30\x7c\x5b\x31\x2d\x39\x5d\x5c\x64\x2a\x29", 14, -223758346038775697, NULL };
-static frost$core$String $s133 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x24", 1, 137, NULL };
+static frost$core$String $s94 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x4d\x61\x74\x63\x68\x65\x72\x2e\x66\x72\x6f\x73\x74", 13, 6318596349235178397, NULL };
+static frost$core$String $s95 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x3f\x20\x74\x6f\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67", 73, -103656499491929097, NULL };
+static frost$core$String $s100 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x4d\x61\x74\x63\x68\x65\x72\x2e\x66\x72\x6f\x73\x74", 13, 6318596349235178397, NULL };
+static frost$core$String $s101 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x36\x34\x3f\x20\x74\x6f\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x36\x34", 71, -2353806797591321741, NULL };
+static frost$core$String $s146 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x4d\x61\x74\x63\x68\x65\x72\x2e\x66\x72\x6f\x73\x74", 13, 6318596349235178397, NULL };
+static frost$core$String $s147 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x3f\x20\x74\x6f\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67", 73, -103656499491929097, NULL };
+static frost$core$String $s148 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x24", 1, 137, NULL };
 
 void frost$core$Matcher$init(frost$core$Matcher* param0) {
 
@@ -241,109 +247,133 @@ block7:;
 frost$core$Matcher* $tmp88 = *(&local0);
 frost$core$Int64 $tmp89 = (frost$core$Int64) {1};
 frost$core$String* $tmp90 = frost$core$Matcher$group$frost$core$Int64$R$frost$core$String$Q($tmp88, $tmp89);
-frost$core$Int64$nullable $tmp91 = frost$core$String$convert$R$frost$core$Int64$Q($tmp90);
-*(&local2) = ((frost$core$Int64) $tmp91.value);
+frost$core$Bit $tmp91 = frost$core$Bit$init$builtin_bit($tmp90 != NULL);
+bool $tmp92 = $tmp91.value;
+if ($tmp92) goto block9; else goto block10;
+block10:;
+frost$core$Int64 $tmp93 = (frost$core$Int64) {139};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s94, $tmp93, &$s95);
+abort(); // unreachable
+block9:;
+frost$core$Int64$nullable $tmp96 = frost$core$String$convert$R$frost$core$Int64$Q($tmp90);
+frost$core$Bit $tmp97 = frost$core$Bit$init$builtin_bit($tmp96.nonnull);
+bool $tmp98 = $tmp97.value;
+if ($tmp98) goto block11; else goto block12;
+block12:;
+frost$core$Int64 $tmp99 = (frost$core$Int64) {139};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s100, $tmp99, &$s101);
+abort(); // unreachable
+block11:;
+*(&local2) = ((frost$core$Int64) $tmp96.value);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp90));
 // unreffing REF($54:frost.core.String?)
 // line 140
-frost$core$Int64 $tmp92 = *(&local2);
-*(&local3) = $tmp92;
+frost$core$Int64 $tmp102 = *(&local2);
+*(&local3) = $tmp102;
 // line 141
-frost$core$Matcher* $tmp93 = *(&local0);
-frost$core$String$Index $tmp94;
-frost$core$Matcher$get_end$R$frost$core$String$Index(&$tmp94, $tmp93);
-*(&local4) = $tmp94;
+frost$core$Matcher* $tmp103 = *(&local0);
+frost$core$String$Index $tmp104;
+frost$core$Matcher$get_end$R$frost$core$String$Index(&$tmp104, $tmp103);
+*(&local4) = $tmp104;
 // line 142
-goto block9;
-block9:;
-frost$core$Int64 $tmp95 = *(&local3);
-frost$core$Int64 $tmp96;
-frost$core$Matcher$get_groupCount$R$frost$core$Int64(&$tmp96, param0);
-int64_t $tmp97 = $tmp95.value;
-int64_t $tmp98 = $tmp96.value;
-bool $tmp99 = $tmp97 >= $tmp98;
-frost$core$Bit $tmp100 = (frost$core$Bit) {$tmp99};
-bool $tmp101 = $tmp100.value;
-if ($tmp101) goto block10; else goto block11;
-block10:;
-// line 143
-frost$core$Int64 $tmp102 = *(&local3);
-frost$core$Int64 $tmp103 = (frost$core$Int64) {10};
-int64_t $tmp104 = $tmp102.value;
-int64_t $tmp105 = $tmp103.value;
-int64_t $tmp106 = $tmp104 / $tmp105;
-frost$core$Int64 $tmp107 = (frost$core$Int64) {$tmp106};
-*(&local3) = $tmp107;
-// line 144
-frost$core$String** $tmp108 = &param0->searchText;
-frost$core$String* $tmp109 = *$tmp108;
-frost$core$String$Index $tmp110 = *(&local4);
-frost$core$String$Index $tmp111 = frost$core$String$previous$frost$core$String$Index$R$frost$core$String$Index($tmp109, $tmp110);
-*(&local4) = $tmp111;
-goto block9;
-block11:;
-// line 146
-frost$core$String$Index $tmp112 = *(&local1);
-frost$core$Matcher* $tmp113 = *(&local0);
-frost$core$String$Index $tmp114;
-frost$core$Matcher$get_start$R$frost$core$String$Index(&$tmp114, $tmp113);
-frost$core$Bit $tmp115 = frost$core$Bit$init$builtin_bit(false);
-frost$core$Range$LTfrost$core$String$Index$GT $tmp116 = frost$core$Range$LTfrost$core$String$Index$GT$init$frost$core$String$Index$frost$core$String$Index$frost$core$Bit($tmp112, $tmp114, $tmp115);
-frost$core$String* $tmp117 = frost$core$String$$IDX$frost$core$Range$LTfrost$core$String$Index$GT$R$frost$core$String(param2, $tmp116);
-frost$core$MutableString$append$frost$core$String(param1, $tmp117);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp117));
-// unreffing REF($100:frost.core.String)
-// line 147
-frost$core$String$Index $tmp118 = *(&local4);
-*(&local1) = $tmp118;
-// line 148
-frost$core$Int64 $tmp119 = *(&local3);
-frost$core$Int64 $tmp120 = (frost$core$Int64) {0};
-int64_t $tmp121 = $tmp119.value;
-int64_t $tmp122 = $tmp120.value;
-bool $tmp123 = $tmp121 > $tmp122;
-frost$core$Bit $tmp124 = (frost$core$Bit) {$tmp123};
-bool $tmp125 = $tmp124.value;
-if ($tmp125) goto block14; else goto block15;
-block14:;
-*(&local5) = $tmp124;
-goto block16;
-block15:;
-frost$core$Int64 $tmp126 = *(&local2);
-frost$core$Int64 $tmp127 = (frost$core$Int64) {0};
-frost$core$Bit $tmp128 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp126, $tmp127);
-*(&local5) = $tmp128;
-goto block16;
-block16:;
-frost$core$Bit $tmp129 = *(&local5);
-bool $tmp130 = $tmp129.value;
-if ($tmp130) goto block12; else goto block17;
-block12:;
-// line 149
-frost$core$Int64 $tmp131 = *(&local3);
-frost$core$String* $tmp132 = frost$core$Matcher$group$frost$core$Int64$R$frost$core$String$Q(param0, $tmp131);
-frost$core$MutableString$append$frost$core$String(param1, $tmp132);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp132));
-// unreffing REF($129:frost.core.String?)
-goto block13;
-block17:;
-// line 1
-// line 152
-frost$core$MutableString$append$frost$core$String(param1, &$s133);
 goto block13;
 block13:;
+frost$core$Int64 $tmp105 = *(&local3);
+frost$core$Int64 $tmp106;
+frost$core$Matcher$get_groupCount$R$frost$core$Int64(&$tmp106, param0);
+int64_t $tmp107 = $tmp105.value;
+int64_t $tmp108 = $tmp106.value;
+bool $tmp109 = $tmp107 >= $tmp108;
+frost$core$Bit $tmp110 = (frost$core$Bit) {$tmp109};
+bool $tmp111 = $tmp110.value;
+if ($tmp111) goto block14; else goto block15;
+block14:;
+// line 143
+frost$core$Int64 $tmp112 = *(&local3);
+frost$core$Int64 $tmp113 = (frost$core$Int64) {10};
+int64_t $tmp114 = $tmp112.value;
+int64_t $tmp115 = $tmp113.value;
+int64_t $tmp116 = $tmp114 / $tmp115;
+frost$core$Int64 $tmp117 = (frost$core$Int64) {$tmp116};
+*(&local3) = $tmp117;
+// line 144
+frost$core$String** $tmp118 = &param0->searchText;
+frost$core$String* $tmp119 = *$tmp118;
+frost$core$String$Index $tmp120 = *(&local4);
+frost$core$String$Index $tmp121 = frost$core$String$previous$frost$core$String$Index$R$frost$core$String$Index($tmp119, $tmp120);
+*(&local4) = $tmp121;
+goto block13;
+block15:;
+// line 146
+frost$core$String$Index $tmp122 = *(&local1);
+frost$core$Matcher* $tmp123 = *(&local0);
+frost$core$String$Index $tmp124;
+frost$core$Matcher$get_start$R$frost$core$String$Index(&$tmp124, $tmp123);
+frost$core$Bit $tmp125 = frost$core$Bit$init$builtin_bit(false);
+frost$core$Range$LTfrost$core$String$Index$GT $tmp126 = frost$core$Range$LTfrost$core$String$Index$GT$init$frost$core$String$Index$frost$core$String$Index$frost$core$Bit($tmp122, $tmp124, $tmp125);
+frost$core$String* $tmp127 = frost$core$String$$IDX$frost$core$Range$LTfrost$core$String$Index$GT$R$frost$core$String(param2, $tmp126);
+frost$core$MutableString$append$frost$core$String(param1, $tmp127);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp127));
+// unreffing REF($114:frost.core.String)
+// line 147
+frost$core$String$Index $tmp128 = *(&local4);
+*(&local1) = $tmp128;
+// line 148
+frost$core$Int64 $tmp129 = *(&local3);
+frost$core$Int64 $tmp130 = (frost$core$Int64) {0};
+int64_t $tmp131 = $tmp129.value;
+int64_t $tmp132 = $tmp130.value;
+bool $tmp133 = $tmp131 > $tmp132;
+frost$core$Bit $tmp134 = (frost$core$Bit) {$tmp133};
+bool $tmp135 = $tmp134.value;
+if ($tmp135) goto block18; else goto block19;
+block18:;
+*(&local5) = $tmp134;
+goto block20;
+block19:;
+frost$core$Int64 $tmp136 = *(&local2);
+frost$core$Int64 $tmp137 = (frost$core$Int64) {0};
+frost$core$Bit $tmp138 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp136, $tmp137);
+*(&local5) = $tmp138;
+goto block20;
+block20:;
+frost$core$Bit $tmp139 = *(&local5);
+bool $tmp140 = $tmp139.value;
+if ($tmp140) goto block16; else goto block21;
+block16:;
+// line 149
+frost$core$Int64 $tmp141 = *(&local3);
+frost$core$String* $tmp142 = frost$core$Matcher$group$frost$core$Int64$R$frost$core$String$Q(param0, $tmp141);
+frost$core$Bit $tmp143 = frost$core$Bit$init$builtin_bit($tmp142 != NULL);
+bool $tmp144 = $tmp143.value;
+if ($tmp144) goto block22; else goto block23;
+block23:;
+frost$core$Int64 $tmp145 = (frost$core$Int64) {149};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s146, $tmp145, &$s147);
+abort(); // unreachable
+block22:;
+frost$core$MutableString$append$frost$core$String(param1, $tmp142);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp142));
+// unreffing REF($143:frost.core.String?)
+goto block17;
+block21:;
+// line 1
+// line 152
+frost$core$MutableString$append$frost$core$String(param1, &$s148);
+goto block17;
+block17:;
 goto block6;
 block8:;
 // line 155
-frost$core$String$Index $tmp134 = *(&local1);
-frost$core$Bit $tmp135 = frost$core$Bit$init$builtin_bit(false);
-frost$core$Range$LTfrost$core$String$Index$Q$GT $tmp136 = frost$core$Range$LTfrost$core$String$Index$Q$GT$init$frost$core$String$Index$Q$frost$core$String$Index$Q$frost$core$Bit(((frost$core$String$Index$nullable) { $tmp134, true }), ((frost$core$String$Index$nullable) { .nonnull = false }), $tmp135);
-frost$core$String* $tmp137 = frost$core$String$$IDX$frost$core$Range$LTfrost$core$String$Index$Q$GT$R$frost$core$String(param2, $tmp136);
-frost$core$MutableString$append$frost$core$String(param1, $tmp137);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp137));
-// unreffing REF($146:frost.core.String)
-frost$core$Matcher* $tmp138 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp138));
+frost$core$String$Index $tmp149 = *(&local1);
+frost$core$Bit $tmp150 = frost$core$Bit$init$builtin_bit(false);
+frost$core$Range$LTfrost$core$String$Index$Q$GT $tmp151 = frost$core$Range$LTfrost$core$String$Index$Q$GT$init$frost$core$String$Index$Q$frost$core$String$Index$Q$frost$core$Bit(((frost$core$String$Index$nullable) { $tmp149, true }), ((frost$core$String$Index$nullable) { .nonnull = false }), $tmp150);
+frost$core$String* $tmp152 = frost$core$String$$IDX$frost$core$Range$LTfrost$core$String$Index$Q$GT$R$frost$core$String(param2, $tmp151);
+frost$core$MutableString$append$frost$core$String(param1, $tmp152);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp152));
+// unreffing REF($167:frost.core.String)
+frost$core$Matcher* $tmp153 = *(&local0);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp153));
 // unreffing ref
 *(&local0) = ((frost$core$Matcher*) NULL);
 goto block4;
@@ -354,25 +384,25 @@ frost$core$MutableString$append$frost$core$String(param1, param2);
 goto block4;
 block4:;
 // line 160
-frost$core$String$Index $tmp139;
-frost$core$Matcher$get_end$R$frost$core$String$Index(&$tmp139, param0);
-frost$core$String$Index* $tmp140 = &param0->replacementIndex;
-*$tmp140 = $tmp139;
+frost$core$String$Index $tmp154;
+frost$core$Matcher$get_end$R$frost$core$String$Index(&$tmp154, param0);
+frost$core$String$Index* $tmp155 = &param0->replacementIndex;
+*$tmp155 = $tmp154;
 return;
 
 }
 void frost$core$Matcher$appendTail$frost$core$MutableString(frost$core$Matcher* param0, frost$core$MutableString* param1) {
 
 // line 171
-frost$core$String** $tmp141 = &param0->searchText;
-frost$core$String* $tmp142 = *$tmp141;
-frost$core$String$Index* $tmp143 = &param0->replacementIndex;
-frost$core$String$Index $tmp144 = *$tmp143;
-frost$core$Bit $tmp145 = frost$core$Bit$init$builtin_bit(false);
-frost$core$Range$LTfrost$core$String$Index$Q$GT $tmp146 = frost$core$Range$LTfrost$core$String$Index$Q$GT$init$frost$core$String$Index$Q$frost$core$String$Index$Q$frost$core$Bit(((frost$core$String$Index$nullable) { $tmp144, true }), ((frost$core$String$Index$nullable) { .nonnull = false }), $tmp145);
-frost$core$String* $tmp147 = frost$core$String$$IDX$frost$core$Range$LTfrost$core$String$Index$Q$GT$R$frost$core$String($tmp142, $tmp146);
-frost$core$MutableString$append$frost$core$String(param1, $tmp147);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp147));
+frost$core$String** $tmp156 = &param0->searchText;
+frost$core$String* $tmp157 = *$tmp156;
+frost$core$String$Index* $tmp158 = &param0->replacementIndex;
+frost$core$String$Index $tmp159 = *$tmp158;
+frost$core$Bit $tmp160 = frost$core$Bit$init$builtin_bit(false);
+frost$core$Range$LTfrost$core$String$Index$Q$GT $tmp161 = frost$core$Range$LTfrost$core$String$Index$Q$GT$init$frost$core$String$Index$Q$frost$core$String$Index$Q$frost$core$Bit(((frost$core$String$Index$nullable) { $tmp159, true }), ((frost$core$String$Index$nullable) { .nonnull = false }), $tmp160);
+frost$core$String* $tmp162 = frost$core$String$$IDX$frost$core$Range$LTfrost$core$String$Index$Q$GT$R$frost$core$String($tmp157, $tmp161);
+frost$core$MutableString$append$frost$core$String(param1, $tmp162);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp162));
 // unreffing REF($8:frost.core.String)
 return;
 
@@ -383,9 +413,9 @@ void frost$core$Matcher$cleanup(frost$core$Matcher* param0) {
 frost$core$Matcher$destroy(param0);
 // line 191
 frost$core$Object$cleanup(((frost$core$Object*) param0));
-frost$core$String** $tmp148 = &param0->searchText;
-frost$core$String* $tmp149 = *$tmp148;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp149));
+frost$core$String** $tmp163 = &param0->searchText;
+frost$core$String* $tmp164 = *$tmp163;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp164));
 return;
 
 }

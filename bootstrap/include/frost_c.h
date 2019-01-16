@@ -14,13 +14,11 @@ typedef struct ITable {
     void* methods[];
 } ITable;
 
-void* frostZAlloc(size_t size);
+void* frostAlloc(size_t size);
 
 void* frostObjectAlloc(size_t size, frost$core$Class* cl);
 
 void* frostRealloc(void* old, size_t oldSize, size_t newSize);
-
-void* frostNewRealloc(void* old, size_t oldSize, size_t newSize);
 
 void frostFree(void* ptr);
 

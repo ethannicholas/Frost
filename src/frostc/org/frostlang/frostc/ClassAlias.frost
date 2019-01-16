@@ -1,0 +1,16 @@
+package org.frostlang.frostc
+
+@final
+class ClassAlias : Symbol {
+    def fullName:String
+
+    init(alias:String, fullName:String, position:Position) {
+        super.init(Kind.ALIAS, position, alias)
+        self.fullName := fullName
+    }
+
+    @override
+    function convert():String {
+        return("Alias(\{name}->\{fullName})")
+    }
+}

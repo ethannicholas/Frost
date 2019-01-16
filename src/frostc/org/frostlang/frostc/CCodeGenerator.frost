@@ -1291,7 +1291,7 @@ class CCodeGenerator : CodeGenerator {
         def elementSize := stride(t)
         def type := cType(t)
         def result := nextVar()
-        out.printLine("\{type}* \{result} = ((\{type}*) frostZAlloc(\{countRef} * " +
+        out.printLine("\{type}* \{result} = ((\{type}*) frostAlloc(\{countRef} * " +
                 "\{elementSize}));")
         refs[id] := result
     }

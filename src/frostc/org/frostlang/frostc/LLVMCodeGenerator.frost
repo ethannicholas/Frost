@@ -94,7 +94,7 @@ class LLVMCodeGenerator : CodeGenerator {
 
         out.printLine("target datalayout = \"e-m:o-i64:64-f80:128-n8:16:32:64-S128\"")
         out.printLine("target triple = \"\{triple}\"")
-        out.printLine("declare i8* @frostZAlloc(\{SIZE_TYPE})")
+        out.printLine("declare i8* @frostAlloc(\{SIZE_TYPE})")
         out.printLine("declare i8* @frostObjectAlloc(\{SIZE_TYPE}, %frost$core$Class*)")
         out.printLine("declare i8* @frostRealloc(i8*, \{SIZE_TYPE}, \{SIZE_TYPE})")
         out.printLine("declare void @frostFree(i8*)")
@@ -586,6 +586,7 @@ class LLVMCodeGenerator : CodeGenerator {
         }
         resultType.append(")*")
         out.printLine(") {")
+        currentBlock := "0"
         def casts := Array<String>()
         for i in 0 .. effective.subtypes.count - 1 {
             def p := "%p\{i}"
@@ -813,8 +814,8 @@ class LLVMCodeGenerator : CodeGenerator {
         return result
     }
 
-    @pre(!cl.type.isPointer)
     method getWrapperClassConstant(cl:ClassDecl):ClassConstant {
+        assert !cl.type.isPointer, "trying to wrap \{cl.name}"
         if !compiler.resolve(cl) {
             return ClassConstant("<error>", "<error>")
         }
@@ -1756,7 +1757,7 @@ class LLVMCodeGenerator : CodeGenerator {
         def size := nextVar()
         out.printLine("\{size} = mul \{countRef}, \{elementSize}\{debugInfo(position)}")
         def malloc := nextVar()
-        out.printLine("\{malloc} = call i8* @frostZAlloc(\{SIZE_TYPE} \{size})" +
+        out.printLine("\{malloc} = call i8* @frostAlloc(\{SIZE_TYPE} \{size})" +
                 debugInfo(position))
         def result := nextVar()
         out.printLine("\{result} = bitcast i8* \{malloc} to \{llvmType(Type.pointerTo(type))}" +
@@ -1802,7 +1803,7 @@ class LLVMCodeGenerator : CodeGenerator {
         out.printLine("\{cast} = bitcast \{ptrRef} to i8*\{debugInfo(position)}")
         def oldCountRef := getTypedReference(oldCount)
         def newCountRef := getTypedReference(newCount)
-        def elementSize := stride(ptr.type())
+        def elementSize := stride(ptr.type().subtypes[1])
         assert elementSize > 0, "invalid size for type \{ptr.type()}"
         def oldSize := nextVar()
         out.printLine("\{oldSize} = mul \{oldCountRef}, \{elementSize}\{debugInfo(position)}")

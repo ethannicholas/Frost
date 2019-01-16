@@ -71,7 +71,7 @@ frost$core$Int64* $tmp3 = &param0->_count;
 // line 40
 frost$core$Int64 $tmp4 = (frost$core$Int64) {0};
 int64_t $tmp5 = $tmp4.value;
-frost$core$Object** $tmp6 = ((frost$core$Object**) frostZAlloc($tmp5 * 8));
+frost$core$Object** $tmp6 = ((frost$core$Object**) frostAlloc($tmp5 * 8));
 frost$core$Object*** $tmp7 = &param0->data;
 *$tmp7 = $tmp6;
 return;
@@ -93,7 +93,7 @@ frost$core$Int64* $tmp12 = &param0->_count;
 frost$core$Int64* $tmp13 = &param0->_count;
 frost$core$Int64 $tmp14 = *$tmp13;
 int64_t $tmp15 = $tmp14.value;
-frost$core$Object** $tmp16 = ((frost$core$Object**) frostZAlloc($tmp15 * 8));
+frost$core$Object** $tmp16 = ((frost$core$Object**) frostAlloc($tmp15 * 8));
 frost$core$Object*** $tmp17 = &param0->data;
 *$tmp17 = $tmp16;
 // line 46

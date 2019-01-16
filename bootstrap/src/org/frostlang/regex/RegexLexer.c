@@ -48,7 +48,7 @@ frost$core$Int64* local0;
 frost$core$Int64 local1;
 // line 25
 int64_t $tmp11 = param0.value;
-frost$core$Int64* $tmp12 = ((frost$core$Int64*) frostZAlloc($tmp11 * 8));
+frost$core$Int64* $tmp12 = ((frost$core$Int64*) frostAlloc($tmp11 * 8));
 *(&local0) = $tmp12;
 // line 26
 frost$core$Int64 $tmp13 = (frost$core$Int64) {0};
@@ -124,7 +124,7 @@ frost$core$Int64** local0;
 // line 34
 frost$core$Int64 $tmp56 = (frost$core$Int64) {256};
 int64_t $tmp57 = $tmp56.value;
-frost$core$Int64** $tmp58 = ((frost$core$Int64**) frostZAlloc($tmp57 * 8));
+frost$core$Int64** $tmp58 = ((frost$core$Int64**) frostAlloc($tmp57 * 8));
 *(&local0) = $tmp58;
 // line 35
 frost$core$Int64** $tmp59 = *(&local0);
@@ -2755,7 +2755,7 @@ frost$core$Int64* local0;
 // line 333
 frost$core$Int64 $tmp2092 = (frost$core$Int64) {20};
 int64_t $tmp2093 = $tmp2092.value;
-frost$core$Int64* $tmp2094 = ((frost$core$Int64*) frostZAlloc($tmp2093 * 8));
+frost$core$Int64* $tmp2094 = ((frost$core$Int64*) frostAlloc($tmp2093 * 8));
 *(&local0) = $tmp2094;
 // line 334
 frost$core$Int64* $tmp2095 = *(&local0);

@@ -92,16 +92,27 @@ class Call {
                 assert target !== null
                 def index := compiler.compileExpression(args[0], TypeContext.TYPE(Type.Int64()))
                 def value := compiler.compileExpression(args[1], TypeContext.TYPE(pointerType))
-                if index == null | value == null {
-                    return Pair<Bit, IR.Value?>(false, null)
+                if index !== null & value !== null {
+                    def indexValue := compiler.extractBuiltinInt(position, index)
+                    if compiler.isRefCounted(pointerType) {
+                        compiler.compileRef(value)
+                        def load := ir.add(IR.Statement.POINTER_GET_INDEX(position, target, indexValue))
+                        compiler.compileUnref(IR.Value.REF(load, pointerType))
+                    }
+                    ir.add(IR.Statement.POINTER_SET_INDEX(position, value, target, indexValue))
                 }
-                def indexValue := compiler.extractBuiltinInt(position, index)
-                if compiler.isRefCounted(value.type()) {
-                    compiler.compileRef(value)
+                return Pair<Bit, IR.Value?>(true, null)
+            }
+            when "clear" {
+                def nullableType := pointerType.nullable()
+                def index := compiler.compileExpression(args[0], TypeContext.TYPE(Type.Int64()))
+                if compiler.isRefCounted(nullableType) {
+                    def indexValue := compiler.extractBuiltinInt(position, index)
                     def load := ir.add(IR.Statement.POINTER_GET_INDEX(position, target, indexValue))
-                    compiler.compileUnref(IR.Value.REF(load, value.type()))
+                    compiler.compileUnref(IR.Value.REF(load, nullableType))
+                    ir.add(IR.Statement.POINTER_SET_INDEX(position,
+                            IR.Value.NULL(nullableType), target, indexValue))
                 }
-                ir.add(IR.Statement.POINTER_SET_INDEX(position, value, target, indexValue))
                 return Pair<Bit, IR.Value?>(true, null)
             }
             otherwise {
@@ -730,7 +741,10 @@ class Call {
         }
         var intrinsic := compileIntrinsic(compiler, position, target, m, args)
         if intrinsic.first {
-            return compiler.coerce(position, intrinsic.second, type)
+            if intrinsic.second !== null {
+                return compiler.coerce(position, intrinsic.second, type)
+            }
+            return null
         }
         def inferred := performTypeInference(compiler, m, args)
         if inferred == null {

@@ -473,9 +473,9 @@ class Compiler {
         root.add(Type.BuiltinUInt64())
         root.add(Type.BuiltinFloat32())
         root.add(Type.BuiltinFloat64())
-        root.add(Alias("Int", "frost.core.Int64", Position()))
-        root.add(Alias("UInt", "frost.core.UInt64", Position()))
-        root.add(Alias("Real", "frost.core.Real64", Position()))
+        root.add(Alias("Int", Type.Int64()))
+        root.add(Alias("UInt", Type.UInt64()))
+        root.add(Alias("Real", Type.Real64()))
         addAlias("frost.collections.Array")
         addAlias("frost.collections.Collection")
         addAlias("frost.collections.CollectionView")
@@ -549,7 +549,8 @@ class Compiler {
 
     @private
     method addAlias(name:String) {
-        root.add(Alias(name[name.next(name.lastIndexOf("."))..], name, Position()))
+        root.add(Alias(name[name.next(name.lastIndexOf("."))..],
+                Type(name, Type.Kind.CLASS, Position(), true)))
     }
 
     method isRefCounted(type:Type):Bit {
@@ -604,7 +605,7 @@ class Compiler {
         if result == null {
             def rootAlias := root[name]
             if rootAlias !== null & rootAlias.kind = Symbol.Kind.ALIAS {
-                result := getClass(rootAlias->Alias.fullName)
+                result := getClass(rootAlias->Alias.type)
             }
         }
         if result == null {
@@ -697,7 +698,7 @@ class Compiler {
                 if s !== null {
                     match s.kind {
                         when Symbol.Kind.ALIAS {
-                            return Type(s->Alias.fullName, Type.Kind.CLASS, type.position, true)
+                            return resolve(s->Alias.type, checkArguments)
                         }
                         when Symbol.Kind.GENERIC_CLASS_PARAMETER {
                             def gp := s->ClassDecl.GenericParameter
@@ -1292,13 +1293,12 @@ class Compiler {
             for intf in cl.rawInterfaces {
                 supertypes.add(remapType(type, intf))
             }
-            def aliases := HashMap<String, String>(cl.aliases)
-            for i in 0 .. cl.parameters.count {
-                aliases[cl.parameters[i].name] := type.subtypes[i + 1].name
-            }
-            result := ClassDecl(cl.source, cl.position, aliases, cl.doccomment, annotations,
+            result := ClassDecl(cl.source, cl.position, cl.aliases, cl.doccomment, annotations,
                     cl.classKind, type, supertypes, Array<ClassDecl.GenericParameter>(),
                     cl.symbolTable.parents[0])
+            for i in 0 .. cl.parameters.count {
+                result.symbolTable.add(Alias(cl.parameters[i].name, type.subtypes[i + 1]))
+            }
             result.external := false
             for m in cl.methods {
                 resolve(m)
@@ -1325,6 +1325,7 @@ class Compiler {
                 result.symbolTable.add(clone)
             }
             classes[result.name] := result
+            resolve(result)
             compilationQueue.add(result)
             currentClass.pop()
             resolve(result)
@@ -2021,11 +2022,7 @@ class Compiler {
         }
         match s.kind {
             when Symbol.Kind.ALIAS {
-                def cl := getClass(s->Alias.fullName)
-                if cl == null {
-                    return null
-                }
-                result.add(Type.ClassLiteral(cl.type))
+                result.add(Type.ClassLiteral(resolve(s->Alias.type)))
             }
             when Symbol.Kind.CHOICE_CASE {
                 def cc := s->ChoiceCase
@@ -3531,10 +3528,9 @@ class Compiler {
     method symbolRef(position:Position, target:IR.Value?, s:Symbol):IR.Value? {
         match s.kind {
             when Symbol.Kind.ALIAS {
-                def cl := getClass(position, s->Alias.fullName)
-                if cl !== null {
-                    checkGenericArguments(position, cl, cl.type)
-                    return IR.Value.TYPE(cl.type)
+                def type := resolve(s->Alias.type)
+                if type !== null {
+                    return IR.Value.TYPE(type)
                 }
                 return null
             }
@@ -3746,6 +3742,7 @@ class Compiler {
     ================================================================================================
     @pre(target != Type.Void())
     method coerce(position:Position, value:IR.Value?, target:Type):IR.Value? {
+        assert target.name != "frost.unsafe.Pointer", "FIXME temp"
         if value == null {
             return null
         }
@@ -3834,6 +3831,15 @@ class Compiler {
                 }
             }
             assert srcType.isClass
+            if value.type().isNullable & !target.isNullable &
+                    target.typeKind != Type.Kind.GENERIC_CLASS_PARAMETER &
+                    target.typeKind != Type.Kind.GENERIC_METHOD_PARAMETER {
+                -- FIXME remove this when compile-time nullability checks are in
+                Assert.compile(self, position, ASTNode.BINARY(position,
+                        ASTNode.IR_WRAPPER(position, value), Token.Kind.NIDENTITY,
+                        ASTNode.NULL(position)), ASTNode.STRING(position,
+                                "unexpected null reference casting \{value.type()} to \{target}"))
+            }
             def result := IR.Value.REF(ir.add(IR.Statement.CAST(position, value, target)), target)
             if !isRefCounted(srcType) & isRefCounted(target) {
                 enclosingContexts.push(EnclosingContext.VALUE_SCOPE(result))

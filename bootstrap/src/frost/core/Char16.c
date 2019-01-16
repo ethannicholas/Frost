@@ -421,7 +421,7 @@ block1:;
 // line 124
 frost$core$Int64 $tmp102 = (frost$core$Int64) {1};
 int64_t $tmp103 = $tmp102.value;
-frost$core$Char8* $tmp104 = ((frost$core$Char8*) frostZAlloc($tmp103 * 1));
+frost$core$Char8* $tmp104 = ((frost$core$Char8*) frostAlloc($tmp103 * 1));
 *(&local0) = $tmp104;
 // line 125
 frost$core$Char8* $tmp105 = *(&local0);
@@ -450,7 +450,7 @@ block3:;
 // line 129
 frost$core$Int64 $tmp117 = (frost$core$Int64) {2};
 int64_t $tmp118 = $tmp117.value;
-frost$core$Char8* $tmp119 = ((frost$core$Char8*) frostZAlloc($tmp118 * 1));
+frost$core$Char8* $tmp119 = ((frost$core$Char8*) frostAlloc($tmp118 * 1));
 *(&local1) = $tmp119;
 // line 130
 frost$core$Char8* $tmp120 = *(&local1);
@@ -485,7 +485,7 @@ block4:;
 // line 134
 frost$core$Int64 $tmp139 = (frost$core$Int64) {3};
 int64_t $tmp140 = $tmp139.value;
-frost$core$Char8* $tmp141 = ((frost$core$Char8*) frostZAlloc($tmp140 * 1));
+frost$core$Char8* $tmp141 = ((frost$core$Char8*) frostAlloc($tmp140 * 1));
 *(&local2) = $tmp141;
 // line 135
 frost$core$Char8* $tmp142 = *(&local2);

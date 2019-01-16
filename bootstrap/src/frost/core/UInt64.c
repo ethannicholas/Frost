@@ -1452,7 +1452,7 @@ frost$core$Int64 $tmp394 = (frost$core$Int64) {20};
 // line 535
 frost$core$Int64 $tmp395 = *(&local0);
 int64_t $tmp396 = $tmp395.value;
-frost$core$Char8* $tmp397 = ((frost$core$Char8*) frostZAlloc($tmp396 * 1));
+frost$core$Char8* $tmp397 = ((frost$core$Char8*) frostAlloc($tmp396 * 1));
 *(&local1) = $tmp397;
 // line 536
 frost$core$Int64 $tmp398 = *(&local0);

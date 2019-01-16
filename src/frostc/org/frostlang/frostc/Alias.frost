@@ -2,15 +2,15 @@ package org.frostlang.frostc
 
 @final
 class Alias : Symbol {
-    def fullName:String
+    def type:Type
 
-    init(alias:String, fullName:String, position:Position) {
-        super.init(Kind.ALIAS, position, alias)
-        self.fullName := fullName
+    init(alias:String, type:Type) {
+        super.init(Kind.ALIAS, type.position, alias)
+        self.type := type
     }
 
     @override
     function convert():String {
-        return("Alias(\{name}->\{fullName})")
+        return("Alias(\{name}->\{type})")
     }
 }

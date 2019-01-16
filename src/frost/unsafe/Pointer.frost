@@ -61,6 +61,13 @@ class Pointer<T> : Value {
     function offset(count:Int):Pointer<T> -- FIXME change to '+'
 
     ================================================================================================
+    If the pointer points to a reference counted object type, unrefs the indicated slot and sets it
+    to `null`. Otherwise, does nothing.
+    ================================================================================================
+    @external
+    method clear(index:Int)
+
+    ================================================================================================
     Frees the block of memory that this pointer points to. This is exactly equivalen to the C `free`
     function, and in particular **does not do any reference counting or cleanup of values in the
     pointed-to memory**. If, for instance, you wish to destroy a `Pointer<Pointer<Char8>>`, you must

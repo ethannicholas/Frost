@@ -814,7 +814,7 @@ frost$core$Int64 $tmp350 = (frost$core$Int64) {$tmp349};
 // line 222
 frost$core$Int64 $tmp351 = *(&local3);
 int64_t $tmp352 = $tmp351.value;
-frost$core$Char8* $tmp353 = ((frost$core$Char8*) frostZAlloc($tmp352 * 1));
+frost$core$Char8* $tmp353 = ((frost$core$Char8*) frostAlloc($tmp352 * 1));
 *(&local4) = $tmp353;
 // line 223
 frost$core$Int64 $tmp354 = *(&local1);

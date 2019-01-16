@@ -237,14 +237,26 @@ static bool refErrorReporting = true;
 bool debugAllocs = true;
 #endif
 
+void frostFatalError(const char* msg) {
+    printf("%s\n", msg);
+    abort();
+}
+
+void frostAssert(uint8_t b) {
+    if (!b) {
+        frostFatalError("assertion failure");
+    }
+}
+
 void* frostAlloc(size_t size) {
     allocations++;
-    return calloc(size, 1);
+    void* result = calloc(size, 1);
+    frostAssert(result != NULL);
+    return result;
 }
 
 void* frostZAlloc(size_t size) {
-    allocations++;
-    return calloc(size, 1);
+    return frostAlloc(size);
 }
 
 void* frostObjectAlloc(size_t size, Class* cl) {
@@ -252,7 +264,7 @@ void* frostObjectAlloc(size_t size, Class* cl) {
     if (debugAllocs) {
         debugAllocs = false;
         if (!frost) {
-            frost = frostZAlloc(sizeof(Object) + sizeof(void*));
+            frost = frostAlloc(sizeof(Object) + sizeof(void*));
             frost->cl = &frost$core$Frost$class;
             frost->refcnt = 1;
             frost$core$Frost$init(frost);
@@ -261,7 +273,7 @@ void* frostObjectAlloc(size_t size, Class* cl) {
         debugAllocs = true;
     }
 #endif
-    Object* result = frostZAlloc(size);
+    Object* result = frostAlloc(size);
     result->cl = cl;
     result->refcnt = 1;
     return result;
@@ -269,6 +281,7 @@ void* frostObjectAlloc(size_t size, Class* cl) {
 
 void* frostRealloc(void* ptr, size_t oldSize, size_t newSize) {
     void* result = realloc(ptr, newSize);
+    frostAssert(result != NULL);
     if (newSize > oldSize) {
         memset(result + oldSize, 0, newSize - oldSize);
     }
@@ -340,7 +353,7 @@ int main(int argc, char** argv) {
     Array* args = frostObjectAlloc(sizeof(Array), &frost$collections$Array$class);
     args->count = argc;
     args->capacity = argc;
-    args->data = frostZAlloc(argc * sizeof(Object*));
+    args->data = frostAlloc(argc * sizeof(Object*));
     int i;
     for (i = 0; i < argc; ++i) {
         args->data[i] = (Object*) frostNewString(argv[i], strlen(argv[i]));
@@ -531,7 +544,7 @@ String* frost$core$Frost$pointerConvert$frost$unsafe$Pointer$LTfrost$core$Object
 
 void frost$core$Frost$trace$frost$core$String(String* s) {
     if (!frost) {
-        frost = frostZAlloc(sizeof(Object) + sizeof(void*));
+        frost = frostAlloc(sizeof(Object) + sizeof(void*));
         frost->cl = &frost$core$Frost$class;
         frost->refcnt = 1;
         frost$core$Frost$init(frost);
@@ -627,17 +640,6 @@ void frost$core$Frost$disableRefErrorReporting() {
 }
 
 // RegularExpression
-
-void frostFatalError(const char* msg) {
-    printf("%s\n", msg);
-    abort();
-}
-
-void frostAssert(uint8_t b) {
-    if (!b) {
-        frostFatalError("assertion failure");
-    }
-}
 
 void frost$core$RegularExpression$compile$frost$core$String$frost$core$Int64(RegularExpression* r,
         String* regex, Int64 flags) {
@@ -1019,7 +1021,7 @@ Array* frost$io$File$list$R$frost$collections$ListView$LTfrost$io$File$GT(File* 
     Array* result = frostObjectAlloc(sizeof(Array), &frost$collections$Array$class);
     result->count = 0;
     result->capacity = 16;
-    result->data = frostZAlloc(result->capacity * sizeof(Object*));
+    result->data = frostAlloc(result->capacity * sizeof(Object*));
     DIR *d;
     struct dirent *entry;
     char* path = frostGetCString(dir->path);

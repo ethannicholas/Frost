@@ -119,7 +119,7 @@ frost$core$Int64* $tmp5 = &param0->capacity;
 *$tmp5 = param1;
 // line 40
 int64_t $tmp6 = param1.value;
-frost$core$Object** $tmp7 = ((frost$core$Object**) frostZAlloc($tmp6 * 8));
+frost$core$Object** $tmp7 = ((frost$core$Object**) frostAlloc($tmp6 * 8));
 frost$core$Object*** $tmp8 = &param0->data;
 *$tmp8 = $tmp7;
 return;
