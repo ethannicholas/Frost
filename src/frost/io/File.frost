@@ -1,5 +1,6 @@
 package frost.io
 
+uses frost.core.Error
 uses frost.core.Maybe
 
 ====================================================================================================
@@ -276,11 +277,20 @@ class File : Immutable, Key<File> {
     }
 
     ================================================================================================
-    Deletes the file. If the file is a directory, it must be empty or FIXME some sort of error will
-    be produced just as soon as I figure out how we're handling errors.
+    Attempts to rename the file to a different path. The rules about when files can be renamed and
+    to which paths depend upon the operating environment, but generally speaking the source and
+    destination paths must be on the same filesystem for this operation to succeed. Returns an
+    [Error] if the file could not be renamed.
     ================================================================================================
     @external
-    method delete()
+    method rename(path:File):Error?
+
+    ================================================================================================
+    Attempts to delete the file. If the file is a directory, it must be empty or the operation will
+    fail. Returns an [Error] if the file could not be deleted.
+    ================================================================================================
+    @external
+    method delete():Error?
 
     ================================================================================================
     Returns `true` if both files represent the same path. Note that two files can refer to the same
@@ -307,7 +317,4 @@ class File : Immutable, Key<File> {
     function convert():String {
         return path
     }
-
-    @external
-    method rename(s:String)
 }

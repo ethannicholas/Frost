@@ -1,0 +1,48 @@
+package org.frostlang.frostc.lvalue
+
+uses org.frostlang.frostc.ChoiceCase
+uses org.frostlang.frostc.Compiler
+uses org.frostlang.frostc.IR
+uses org.frostlang.frostc.Position
+uses org.frostlang.frostc.Type
+
+class ChoiceFieldLValue : LValue {
+    def compiler:Compiler
+
+    def position:Position
+
+    def target:IR.Value
+
+    def choiceCase:ChoiceCase
+
+    def index:Int
+
+    init(compiler:Compiler, position:Position, target:IR.Value, choiceCase:ChoiceCase,
+            index:Int) {
+        self.compiler := compiler
+        self.target := target
+        self.choiceCase := choiceCase
+        self.index := index
+    }
+
+    @override
+    function type():Type {
+        return choiceCase.fields[index]
+    }
+
+    @override
+    method compileLoad():IR.Value? {
+        assert false
+    }
+
+    @override
+    method compileStore(value:IR.Value) {
+        if compiler.isRefCounted(type()) {
+            compiler.compileRef(value)
+        }
+        def ptr := compiler.ir.add(IR.Statement.GET_CHOICE_FIELD_POINTER(position, target,
+                choiceCase, index))
+        compiler.ir.add(IR.Statement.STORE(position, value, IR.Value.REF(ptr,
+                choiceCase.fields[index])))
+    }
+}

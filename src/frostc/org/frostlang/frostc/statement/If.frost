@@ -1,0 +1,56 @@
+package org.frostlang.frostc.statement
+
+uses org.frostlang.frostc.ASTNode
+uses org.frostlang.frostc.Compiler
+uses org.frostlang.frostc.Compiler.AutoScope
+uses org.frostlang.frostc.Compiler.AutoUnrefs
+uses org.frostlang.frostc.Compiler.TypeContext
+uses org.frostlang.frostc.FixedArray
+uses org.frostlang.frostc.IR
+uses org.frostlang.frostc.Position
+uses org.frostlang.frostc.Type
+
+class If {
+    @class
+    method compile(compiler:Compiler, position:Position, test:ASTNode, ifTrue:FixedArray<ASTNode>,
+            ifFalse:ASTNode?) {
+        def ir := compiler.ir
+        def testBit:IR.Value
+        def ifTrueBlock := ir.newBlock("if true")
+        def ifFalseBlock:IR.Block.ID
+        def endBlock := ir.newBlock("if end")
+        {
+            def unrefs := AutoUnrefs(compiler)
+            def compiledTest := compiler.compileExpression(test, TypeContext.TYPE(Type.Bit()))
+            if compiledTest == null {
+                return
+            }
+            if ifFalse !== null {
+                ifFalseBlock := ir.newBlock("if false")
+            }
+            else {
+                ifFalseBlock := endBlock
+            }
+            testBit := compiler.extractBuiltinBit(position, compiledTest)
+        }
+        ir.add(IR.Statement.CONDITIONAL_BRANCH(position, testBit, ifTrueBlock, ifFalseBlock))
+        ir.setCurrentBlock(ifTrueBlock)
+        {
+            def scope := AutoScope(compiler)
+            for s in ifTrue {
+                compiler.compileStatement(s)
+            }
+        }
+        if !ir.currentBlockFinished {
+            ir.add(IR.Statement.BRANCH(position, endBlock))
+        }
+        if ifFalse !== null {
+            ir.setCurrentBlock(ifFalseBlock)
+            compiler.compileStatement(ifFalse)
+            if !ir.currentBlockFinished {
+                ir.add(IR.Statement.BRANCH(position, endBlock))
+            }
+        }
+        ir.setCurrentBlock(endBlock)
+    }
+}

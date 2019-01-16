@@ -1,0 +1,20 @@
+package org.frostlang.plex
+
+class AcceptState : State {
+    def token:Int
+
+    init(token:Int) {
+        super.init(ACCEPT, ImmutableArray<Int>() -* FIXME array literal *-)
+        self.token := token
+    }
+
+    @override
+    function accept(c:Char8):Bit {
+        return false
+    }
+
+    @override
+    function convert():String {
+        return "Accept(\{token})"
+    }
+}

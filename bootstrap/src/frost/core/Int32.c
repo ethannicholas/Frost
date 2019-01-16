@@ -22,10 +22,10 @@
 #include "frost/core/UInt16.h"
 #include "frost/core/UInt64.h"
 #include "frost/core/Range.LTfrost/core/Int32.GT.h"
-#include "org/frostlanguage/frost/Int32List.h"
+#include "org/frostlang/frost/Int32List.h"
 #include "frost/core/SteppedRange.LTfrost/core/Int32.Cfrost/core/Int32.GT.h"
 #include "frost/core/Frost.h"
-#include "org/frostlanguage/frost/IntBitIterator.h"
+#include "org/frostlang/frost/IntBitIterator.h"
 #include "frost/core/Range.LTfrost/core/Int64.Q.GT.h"
 #include "frost/core/Char8.h"
 #include "frost/core/Range.LTfrost/core/Int64.GT.h"
@@ -1944,27 +1944,27 @@ return $tmp504;
 frost$collections$ListView* frost$core$Int32$$IDX$frost$core$Range$LTfrost$core$Int32$GT$R$frost$collections$ListView$LTfrost$core$Int32$GT(frost$core$Range$LTfrost$core$Int32$GT param0) {
 
 // line 734
-org$frostlanguage$frost$Int32List* $tmp505 = (org$frostlanguage$frost$Int32List*) frostObjectAlloc(40, (frost$core$Class*) &org$frostlanguage$frost$Int32List$class);
+org$frostlang$frost$Int32List* $tmp505 = (org$frostlang$frost$Int32List*) frostObjectAlloc(40, (frost$core$Class*) &org$frostlang$frost$Int32List$class);
 frost$core$Int32 $tmp506 = param0.min;
 frost$core$Int32 $tmp507 = param0.max;
 frost$core$Int32 $tmp508 = (frost$core$Int32) {1};
 frost$core$Bit $tmp509 = param0.inclusive;
 frost$core$SteppedRange$LTfrost$core$Int32$Cfrost$core$Int32$GT $tmp510 = frost$core$SteppedRange$LTfrost$core$Int32$Cfrost$core$Int32$GT$init$frost$core$Int32$frost$core$Int32$frost$core$Int32$frost$core$Bit($tmp506, $tmp507, $tmp508, $tmp509);
-org$frostlanguage$frost$Int32List$init$frost$core$SteppedRange$LTfrost$core$Int32$Cfrost$core$Int32$GT($tmp505, $tmp510);
+org$frostlang$frost$Int32List$init$frost$core$SteppedRange$LTfrost$core$Int32$Cfrost$core$Int32$GT($tmp505, $tmp510);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$collections$ListView*) $tmp505)));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp505));
-// unreffing REF($1:org.frostlanguage.frost.Int32List)
+// unreffing REF($1:org.frostlang.frost.Int32List)
 return ((frost$collections$ListView*) $tmp505);
 
 }
 frost$collections$ListView* frost$core$Int32$$IDX$frost$core$SteppedRange$LTfrost$core$Int32$Cfrost$core$Int32$GT$R$frost$collections$ListView$LTfrost$core$Int32$GT(frost$core$SteppedRange$LTfrost$core$Int32$Cfrost$core$Int32$GT param0) {
 
 // line 739
-org$frostlanguage$frost$Int32List* $tmp511 = (org$frostlanguage$frost$Int32List*) frostObjectAlloc(40, (frost$core$Class*) &org$frostlanguage$frost$Int32List$class);
-org$frostlanguage$frost$Int32List$init$frost$core$SteppedRange$LTfrost$core$Int32$Cfrost$core$Int32$GT($tmp511, param0);
+org$frostlang$frost$Int32List* $tmp511 = (org$frostlang$frost$Int32List*) frostObjectAlloc(40, (frost$core$Class*) &org$frostlang$frost$Int32List$class);
+org$frostlang$frost$Int32List$init$frost$core$SteppedRange$LTfrost$core$Int32$Cfrost$core$Int32$GT($tmp511, param0);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$collections$ListView*) $tmp511)));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp511));
-// unreffing REF($1:org.frostlanguage.frost.Int32List)
+// unreffing REF($1:org.frostlang.frost.Int32List)
 return ((frost$collections$ListView*) $tmp511);
 
 }
@@ -2030,13 +2030,13 @@ return $tmp540;
 frost$collections$Iterator* frost$core$Int32$get_iterator$R$frost$collections$Iterator$LTfrost$core$Bit$GT(frost$core$Int32 param0) {
 
 // line 756
-org$frostlanguage$frost$IntBitIterator* $tmp541 = (org$frostlanguage$frost$IntBitIterator*) frostObjectAlloc(32, (frost$core$Class*) &org$frostlanguage$frost$IntBitIterator$class);
+org$frostlang$frost$IntBitIterator* $tmp541 = (org$frostlang$frost$IntBitIterator*) frostObjectAlloc(32, (frost$core$Class*) &org$frostlang$frost$IntBitIterator$class);
 frost$core$UInt64 $tmp542 = frost$core$Int32$convert$R$frost$core$UInt64(param0);
 frost$core$UInt64 $tmp543 = (frost$core$UInt64) {2147483648};
-org$frostlanguage$frost$IntBitIterator$init$frost$core$UInt64$frost$core$UInt64($tmp541, $tmp542, $tmp543);
+org$frostlang$frost$IntBitIterator$init$frost$core$UInt64$frost$core$UInt64($tmp541, $tmp542, $tmp543);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$collections$Iterator*) $tmp541)));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp541));
-// unreffing REF($1:org.frostlanguage.frost.IntBitIterator)
+// unreffing REF($1:org.frostlang.frost.IntBitIterator)
 return ((frost$collections$Iterator*) $tmp541);
 
 }

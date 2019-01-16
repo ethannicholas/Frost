@@ -10,6 +10,7 @@ typedef struct frost$collections$ListView frost$collections$ListView;
 typedef struct frost$io$InputStream frost$io$InputStream;
 typedef struct frost$io$OutputStream frost$io$OutputStream;
 typedef struct frost$collections$Array frost$collections$Array;
+typedef struct frost$core$Error frost$core$Error;
 #include "frost/core/Int64_types.h"
 
 void frost$io$File$init$frost$core$String(frost$io$File* self, frost$core$String* p_path);
@@ -33,10 +34,10 @@ frost$io$OutputStream* frost$io$File$openForAppend$R$frost$io$OutputStream(frost
 frost$core$String* frost$io$File$readFully$R$frost$core$String(frost$io$File* self);
 frost$collections$Array* frost$io$File$readFully$R$frost$collections$Array$LTfrost$core$UInt8$GT(frost$io$File* self);
 void frost$io$File$write$frost$core$String(frost$io$File* self, frost$core$String* p_contents);
-void frost$io$File$delete(frost$io$File* self);
+frost$core$Error* frost$io$File$rename$frost$io$File$R$frost$core$Error$Q(frost$io$File* self, frost$io$File* p_path);
+frost$core$Error* frost$io$File$delete$R$frost$core$Error$Q(frost$io$File* self);
 frost$core$Bit frost$io$File$$EQ$frost$io$File$R$frost$core$Bit(frost$io$File* self, frost$io$File* p_other);
 frost$core$Int64 frost$io$File$get_hash$R$frost$core$Int64(frost$io$File* self);
 frost$core$String* frost$io$File$convert$R$frost$core$String(frost$io$File* self);
-void frost$io$File$rename$frost$core$String(frost$io$File* self, frost$core$String* p_s);
 void frost$io$File$cleanup(frost$io$File* self);
 

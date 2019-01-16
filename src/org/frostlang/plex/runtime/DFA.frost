@@ -1,0 +1,84 @@
+package org.frostlang.plex.runtime
+
+uses frost.unsafe.Pointer
+
+@final
+class DFA {
+    constant START_CHAR:UInt8 := 0
+    constant END_CHAR:UInt8 := 255
+
+    def stateCount:Int
+
+    def transitions:Pointer<Pointer<Int>>
+
+    def accepts:Pointer<Int>
+
+    var source:Pointer<Char8>
+
+    var offset:Int
+
+    var sourceEnd:Int
+
+    var line := 1
+
+    var column := 1
+
+    init(stateCount:Int, transitions:Pointer<Pointer<Int>>, accepts:Pointer<Int>) {
+        init("", stateCount, transitions, accepts)
+    }
+
+    init(source:String, stateCount:Int, transitions:Pointer<Pointer<Int>>,
+            accepts:Pointer<Int>) {
+        self.source := source.data
+        self.offset := 0
+        self.sourceEnd := source.byteLength
+        self.stateCount := stateCount
+        self.transitions := transitions
+        self.accepts := accepts
+    }
+
+    method next():RawToken {
+        var state := 1
+        if offset = sourceEnd {
+            return RawToken(0, String.Index(offset), String.Index(offset), line, column)
+        }
+        var kind := -1
+        def start := offset
+        var end := offset
+        def startLine := line
+        def startColumn := column
+        while offset != sourceEnd {
+            def c := source[offset]
+            if c.convert()->UInt8 > END_CHAR {
+                Console.printLine("invalid token \{c.convert()->UInt8}")
+                System.exit(1)
+            }
+            state := transitions[c.convert()][state]
+            if state != 0 {
+                offset += 1
+                match c.convert()->UInt8 {
+                    when 10 {
+                        line += 1
+                        column := 1
+                    }
+                    when 9 {
+                        column += 4 - column % 4
+                    }
+                    otherwise {
+                        column += 1
+                    }
+                }
+                def newAccept := accepts[state]
+                if newAccept != -1 {
+                    kind := newAccept
+                    end := offset
+                }
+            }
+            else {
+                break
+            }
+        }
+        offset := end
+        return RawToken(kind, String.Index(start), String.Index(end), startLine, startColumn)
+    }
+}

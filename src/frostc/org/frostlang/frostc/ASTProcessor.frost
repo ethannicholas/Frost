@@ -1,0 +1,5 @@
+package org.frostlang.frostc
+
+interface ASTProcessor {
+    process(cl:ClassDecl, ast:ASTNode)
+}

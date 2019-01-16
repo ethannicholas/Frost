@@ -13,8 +13,8 @@ set(SYSTEM_LIBRARIES m Threads::Threads)
 find_package(LLVM 4.0 REQUIRED)
 find_package(ICU COMPONENTS uc i18n REQUIRED)
 
-file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/org/frostlanguage/frostc/Config.frost"
-    "package org.frostlanguage.frostc\n"
+file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/org/frostlang/frostc/Config.frost"
+    "package org.frostlang.frostc\n"
     "class Config {\n"
     "@class function frostSourceDir():String { return \"${CMAKE_SOURCE_DIR}/src\" }\n"
     "@class function frostLibDir():String { return \"${CMAKE_CURRENT_BINARY_DIR}\" }\n"
@@ -28,11 +28,11 @@ file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/config.c"
     "#include \"frost/core/String.h\"\n"
     "frost$core$String* frostNewString(const char* s, int length)\n;"
     "static frost$core$String* configString(const char* s) { return frostNewString(s, strlen(s)); }"
-    "frost$core$String* org$frostlanguage$frostc$Config$frostSourceDir$R$frost$core$String() { return configString(\"${CMAKE_SOURCE_DIR}/src\"); }\n"
-    "frost$core$String* org$frostlanguage$frostc$Config$frostLibDir$R$frost$core$String() { return configString(\"${CMAKE_CURRENT_BINARY_DIR}\"); }\n"
-    "frost$core$String* org$frostlanguage$frostc$Config$llvmDir$R$frost$core$String() { return configString(\"${LLVM_ROOT_DIR}\"); }\n"
-    "frost$core$String* org$frostlanguage$frostc$Config$llvmTriple$R$frost$core$String() { return configString(\"${LLVM_HOST_TARGET}\"); }\n"
-    "frost$core$String* org$frostlanguage$frostc$Config$icuLibraries$R$frost$core$String() { return configString(\"${ICU_LIBRARIES}\"); }\n"
+    "frost$core$String* org$frostlang$frostc$Config$frostSourceDir$R$frost$core$String() { return configString(\"${CMAKE_SOURCE_DIR}/src\"); }\n"
+    "frost$core$String* org$frostlang$frostc$Config$frostLibDir$R$frost$core$String() { return configString(\"${CMAKE_CURRENT_BINARY_DIR}\"); }\n"
+    "frost$core$String* org$frostlang$frostc$Config$llvmDir$R$frost$core$String() { return configString(\"${LLVM_ROOT_DIR}\"); }\n"
+    "frost$core$String* org$frostlang$frostc$Config$llvmTriple$R$frost$core$String() { return configString(\"${LLVM_HOST_TARGET}\"); }\n"
+    "frost$core$String* org$frostlang$frostc$Config$icuLibraries$R$frost$core$String() { return configString(\"${ICU_LIBRARIES}\"); }\n"
 )
 
 set(BOOTSTRAP_ARGS "-O" ${OPTIMIZATION} "-S" ${SAFETY})
@@ -41,7 +41,7 @@ include_directories(
     ${ICU_INCLUDE_DIRS}
 )
 
-file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/org/frostlanguage/regex")
+file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/org/frostlang/regex")
 
 file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/docs")
 
@@ -74,10 +74,10 @@ add_library(c_frost
     bootstrap/src/frost/collections/MapWriter.c
     bootstrap/src/frost/collections/Stack.c
     bootstrap/src/frost/collections/Stack/StackIterator.c
-    bootstrap/src/frost/collections/SpecializedArray.LTorg/frostlanguage/frostc/parser/Token.GT.c
-    bootstrap/src/frost/collections/SpecializedArrayIterator.LTorg/frostlanguage/frostc/parser/Token.GT.c
-    bootstrap/src/frost/collections/SpecializedArray.LTorg/frostlanguage/regex/RegexToken.GT.c
-    bootstrap/src/frost/collections/SpecializedArrayIterator.LTorg/frostlanguage/regex/RegexToken.GT.c
+    bootstrap/src/frost/collections/SpecializedArray.LTorg/frostlang/frostc/parser/Token.GT.c
+    bootstrap/src/frost/collections/SpecializedArrayIterator.LTorg/frostlang/frostc/parser/Token.GT.c
+    bootstrap/src/frost/collections/SpecializedArray.LTorg/frostlang/regex/RegexToken.GT.c
+    bootstrap/src/frost/collections/SpecializedArrayIterator.LTorg/frostlang/regex/RegexToken.GT.c
     bootstrap/src/frost/core/Bit.c
     bootstrap/src/frost/core/Char8.c
     bootstrap/src/frost/core/Char16.c
@@ -159,169 +159,169 @@ add_library(c_frost
     bootstrap/src/frost/threads/Notifier.c
     bootstrap/src/frost/threads/ScopedLock.c
     bootstrap/src/frost/threads/Thread.c
-    bootstrap/src/org/frostlanguage/json/Lexer.c
-    bootstrap/src/org/frostlanguage/json/Position.c
-    bootstrap/src/org/frostlanguage/json/Token.c
-    bootstrap/src/org/frostlanguage/json/Token/Kind.c
-    bootstrap/src/org/frostlanguage/frost/IntBitIterator.c
-    bootstrap/src/org/frostlanguage/frost/Int8List.c
-    bootstrap/src/org/frostlanguage/frost/Int16List.c
-    bootstrap/src/org/frostlanguage/frost/Int32List.c
-    bootstrap/src/org/frostlanguage/frost/Int64List.c
-    bootstrap/src/org/frostlanguage/frost/UInt8List.c
-    bootstrap/src/org/frostlanguage/frost/UInt16List.c
-    bootstrap/src/org/frostlanguage/frost/UInt32List.c
-    bootstrap/src/org/frostlanguage/frost/UInt64List.c
+    bootstrap/src/org/frostlang/json/Lexer.c
+    bootstrap/src/org/frostlang/json/Position.c
+    bootstrap/src/org/frostlang/json/Token.c
+    bootstrap/src/org/frostlang/json/Token/Kind.c
+    bootstrap/src/org/frostlang/frost/IntBitIterator.c
+    bootstrap/src/org/frostlang/frost/Int8List.c
+    bootstrap/src/org/frostlang/frost/Int16List.c
+    bootstrap/src/org/frostlang/frost/Int32List.c
+    bootstrap/src/org/frostlang/frost/Int64List.c
+    bootstrap/src/org/frostlang/frost/UInt8List.c
+    bootstrap/src/org/frostlang/frost/UInt16List.c
+    bootstrap/src/org/frostlang/frost/UInt32List.c
+    bootstrap/src/org/frostlang/frost/UInt64List.c
     bootstrap/src/frostlib.c
 )
 
 add_executable(bootstrap
     ${CMAKE_CURRENT_BINARY_DIR}/config.c
-    bootstrap/src/org/frostlanguage/json/Lexer.c
-    bootstrap/src/org/frostlanguage/json/Position.c
-    bootstrap/src/org/frostlanguage/json/Token.c
-    bootstrap/src/org/frostlanguage/json/Token/Kind.c
-    bootstrap/src/org/frostlanguage/frost/Int16List.c
-    bootstrap/src/org/frostlanguage/frost/Int32List.c
-    bootstrap/src/org/frostlanguage/frost/Int64List.c
-    bootstrap/src/org/frostlanguage/frost/Int8List.c
-    bootstrap/src/org/frostlanguage/frost/IntBitIterator.c
-    bootstrap/src/org/frostlanguage/frost/UInt16List.c
-    bootstrap/src/org/frostlanguage/frost/UInt32List.c
-    bootstrap/src/org/frostlanguage/frost/UInt64List.c
-    bootstrap/src/org/frostlanguage/frost/UInt8List.c
-    bootstrap/src/org/frostlanguage/frostc/Alias.c
-    bootstrap/src/org/frostlanguage/frostc/Annotations.c
-    bootstrap/src/org/frostlanguage/frostc/Annotations/Expression.c
-    bootstrap/src/org/frostlanguage/frostc/Annotations/Flag.c
-    bootstrap/src/org/frostlanguage/frostc/ASTNode.c
-    bootstrap/src/org/frostlanguage/frostc/CCodeGenerator.c
-    bootstrap/src/org/frostlanguage/frostc/CCodeGenerator/AutoContext.c
-    bootstrap/src/org/frostlanguage/frostc/CCodeGenerator/ClassConstant.c
-    bootstrap/src/org/frostlanguage/frostc/CCodeGenerator/EnclosingContext.c
-    bootstrap/src/org/frostlanguage/frostc/CCodeGenerator/MethodShim.c
-    bootstrap/src/org/frostlanguage/frostc/CCodeGenerator/OpClass.c
-    bootstrap/src/org/frostlanguage/frostc/ChoiceCase.c
-    bootstrap/src/org/frostlanguage/frostc/ClassDecl.c
-    bootstrap/src/org/frostlanguage/frostc/ClassDecl/GenericParameter.c
-    bootstrap/src/org/frostlanguage/frostc/ClassDecl/Kind.c
-    bootstrap/src/org/frostlanguage/frostc/ClassDecl/Resolution.c
-    bootstrap/src/org/frostlanguage/frostc/CodeGenerator.c
-    bootstrap/src/org/frostlanguage/frostc/Compiler.c
-    bootstrap/src/org/frostlanguage/frostc/Compiler/_Closure2.c
-    bootstrap/src/org/frostlanguage/frostc/Compiler/AutoAtPreFlag.c
-    bootstrap/src/org/frostlanguage/frostc/Compiler/AutoContext.c
-    bootstrap/src/org/frostlanguage/frostc/Compiler/AutoScope.c
-    bootstrap/src/org/frostlanguage/frostc/Compiler/AutoUnrefs.c
-    bootstrap/src/org/frostlanguage/frostc/Compiler/BinaryKey.c
-    bootstrap/src/org/frostlanguage/frostc/Compiler/Capture.c
-    bootstrap/src/org/frostlanguage/frostc/Compiler/CoercionKey.c
-    bootstrap/src/org/frostlanguage/frostc/Compiler/EnclosingContext.c
-    bootstrap/src/org/frostlanguage/frostc/Compiler/Error.c
-    bootstrap/src/org/frostlanguage/frostc/Compiler/Resolution.c
-    bootstrap/src/org/frostlanguage/frostc/Compiler/Settings.c
-    bootstrap/src/org/frostlanguage/frostc/Compiler/TypeContext.c
-    bootstrap/src/org/frostlanguage/frostc/expression/And.c
-    bootstrap/src/org/frostlanguage/frostc/expression/ArrayLiteral.c
-    bootstrap/src/org/frostlanguage/frostc/expression/AtPre.c
-    bootstrap/src/org/frostlanguage/frostc/expression/AtReturn.c
-    bootstrap/src/org/frostlanguage/frostc/expression/Binary.c
-    bootstrap/src/org/frostlanguage/frostc/expression/Binary/_Closure2.c
-    bootstrap/src/org/frostlanguage/frostc/expression/Call.c
-    bootstrap/src/org/frostlanguage/frostc/expression/Closure.c
-    bootstrap/src/org/frostlanguage/frostc/expression/Dot.c
-    bootstrap/src/org/frostlanguage/frostc/expression/Identifier.c
-    bootstrap/src/org/frostlanguage/frostc/expression/IntLiteral.c
-    bootstrap/src/org/frostlanguage/frostc/expression/Or.c
-    bootstrap/src/org/frostlanguage/frostc/FieldDecl.c
-    bootstrap/src/org/frostlanguage/frostc/FieldDecl/Kind.c
-    bootstrap/src/org/frostlanguage/frostc/FixedArray.c
-    bootstrap/src/org/frostlanguage/frostc/FixedArray/FixedArrayIterator.c
-    bootstrap/src/org/frostlanguage/frostc/HCodeGenerator.c
-    bootstrap/src/org/frostlanguage/frostc/HTMLProcessor.c
-    bootstrap/src/org/frostlanguage/frostc/IR.c
-    bootstrap/src/org/frostlanguage/frostc/IR/Block.c
-    bootstrap/src/org/frostlanguage/frostc/IR/Block/ID.c
-    bootstrap/src/org/frostlanguage/frostc/IR/Statement.c
-    bootstrap/src/org/frostlanguage/frostc/IR/Statement/ID.c
-    bootstrap/src/org/frostlanguage/frostc/IR/Value.c
-    bootstrap/src/org/frostlanguage/frostc/LLVMCodeGenerator.c
-    bootstrap/src/org/frostlanguage/frostc/LLVMCodeGenerator/ClassConstant.c
-    bootstrap/src/org/frostlanguage/frostc/LLVMCodeGenerator/MethodShim.c
-    bootstrap/src/org/frostlanguage/frostc/LLVMCodeGenerator/OpClass.c
-    bootstrap/src/org/frostlanguage/frostc/lvalue/ChoiceFieldLValue.c
-    bootstrap/src/org/frostlanguage/frostc/lvalue/FieldLValue.c
-    bootstrap/src/org/frostlanguage/frostc/lvalue/IndexLValue.c
-    bootstrap/src/org/frostlanguage/frostc/lvalue/LValue.c
-    bootstrap/src/org/frostlanguage/frostc/lvalue/VariableLValue.c
-    bootstrap/src/org/frostlanguage/frostc/Main.c
-    bootstrap/src/org/frostlanguage/frostc/Main/Arguments.c
-    bootstrap/src/org/frostlanguage/frostc/Main/Format.c
-    bootstrap/src/org/frostlanguage/frostc/MethodDecl.c
-    bootstrap/src/org/frostlanguage/frostc/MethodDecl/GenericParameter.c
-    bootstrap/src/org/frostlanguage/frostc/MethodDecl/Kind.c
-    bootstrap/src/org/frostlanguage/frostc/MethodDecl/Parameter.c
-    bootstrap/src/org/frostlanguage/frostc/MethodRef.c
-    bootstrap/src/org/frostlanguage/frostc/Methods.c
-    bootstrap/src/org/frostlanguage/frostc/Pair.c
-    bootstrap/src/org/frostlanguage/frostc/frostdoc/DummyCodeGenerator.c
-    bootstrap/src/org/frostlanguage/frostc/frostdoc/LinkResolver.c
-    bootstrap/src/org/frostlanguage/frostc/frostdoc/Markdown.c
-    bootstrap/src/org/frostlanguage/frostc/frostdoc/Markdown/_Closure2.c
-    bootstrap/src/org/frostlanguage/frostc/frostdoc/Markdown/_Closure4.c
-    bootstrap/src/org/frostlanguage/frostc/frostdoc/Markdown/_Closure6.c
-    bootstrap/src/org/frostlanguage/frostc/frostdoc/Markdown/_Closure9.c
-    bootstrap/src/org/frostlanguage/frostc/frostdoc/Markdown/_Closure12.c
-    bootstrap/src/org/frostlanguage/frostc/frostdoc/Markdown/_Closure14.c
-    bootstrap/src/org/frostlanguage/frostc/frostdoc/Markdown/_Closure16.c
-    bootstrap/src/org/frostlanguage/frostc/frostdoc/Markdown/_Closure18.c
-    bootstrap/src/org/frostlanguage/frostc/frostdoc/Markdown/_Closure20.c
-    bootstrap/src/org/frostlanguage/frostc/frostdoc/Markdown/_Closure22.c
-    bootstrap/src/org/frostlanguage/frostc/frostdoc/Markdown/_Closure24.c
-    bootstrap/src/org/frostlanguage/frostc/frostdoc/Markdown/_Closure26.c
-    bootstrap/src/org/frostlanguage/frostc/frostdoc/Markdown/_Closure28.c
-    bootstrap/src/org/frostlanguage/frostc/frostdoc/Markdown/_Closure30.c
-    bootstrap/src/org/frostlanguage/frostc/frostdoc/Markdown/_Closure32.c
-    bootstrap/src/org/frostlanguage/frostc/frostdoc/Markdown/CodeReplacer.c
-    bootstrap/src/org/frostlanguage/frostc/frostdoc/Markdown/HTMLToken.c
-    bootstrap/src/org/frostlanguage/frostc/frostdoc/Markdown/LinkDefinition.c
-    bootstrap/src/org/frostlanguage/frostc/frostdoc/Protector.c
-    bootstrap/src/org/frostlanguage/frostc/parser/Lexer.c
-    bootstrap/src/org/frostlanguage/frostc/parser/Parser.c
-    bootstrap/src/org/frostlanguage/frostc/parser/Parser/AutoSyntaxHighlight.c
-    bootstrap/src/org/frostlanguage/frostc/parser/SyntaxHighlighter.c
-    bootstrap/src/org/frostlanguage/frostc/parser/SyntaxHighlighter/Kind.c
-    bootstrap/src/org/frostlanguage/frostc/parser/Token.c
-    bootstrap/src/org/frostlanguage/frostc/parser/Token/Kind.c
-    bootstrap/src/org/frostlanguage/frostc/Position.c
-    bootstrap/src/org/frostlanguage/frostc/Scanner.c
-    bootstrap/src/org/frostlanguage/frostc/statement/Assert.c
-    bootstrap/src/org/frostlanguage/frostc/statement/Assignment.c
-    bootstrap/src/org/frostlanguage/frostc/statement/Break.c
-    bootstrap/src/org/frostlanguage/frostc/statement/Continue.c
-    bootstrap/src/org/frostlanguage/frostc/statement/Do.c
-    bootstrap/src/org/frostlanguage/frostc/statement/For.c
-    bootstrap/src/org/frostlanguage/frostc/statement/If.c
-    bootstrap/src/org/frostlanguage/frostc/statement/InnerMethod.c
-    bootstrap/src/org/frostlanguage/frostc/statement/Loop.c
-    bootstrap/src/org/frostlanguage/frostc/statement/Match.c
-    bootstrap/src/org/frostlanguage/frostc/statement/Return.c
-    bootstrap/src/org/frostlanguage/frostc/statement/Var.c
-    bootstrap/src/org/frostlanguage/frostc/statement/While.c
-    bootstrap/src/org/frostlanguage/frostc/Symbol.c
-    bootstrap/src/org/frostlanguage/frostc/Symbol/Kind.c
-    bootstrap/src/org/frostlanguage/frostc/SymbolTable.c
-    bootstrap/src/org/frostlanguage/frostc/Type.c
-    bootstrap/src/org/frostlanguage/frostc/Type/Kind.c
-    bootstrap/src/org/frostlanguage/frostc/Variable.c
-    bootstrap/src/org/frostlanguage/frostc/Variable/Kind.c
-    bootstrap/src/org/frostlanguage/frostc/Variable/Storage.c
-    bootstrap/src/org/frostlanguage/plex/runtime/DFA.c
-    bootstrap/src/org/frostlanguage/plex/runtime/RawToken.c
-    bootstrap/src/org/frostlanguage/regex/RegexLexer.c
-    bootstrap/src/org/frostlanguage/regex/RegexParser.c
-    bootstrap/src/org/frostlanguage/regex/RegexToken.c
-    bootstrap/src/org/frostlanguage/regex/RegexToken/Kind.c
+    bootstrap/src/org/frostlang/json/Lexer.c
+    bootstrap/src/org/frostlang/json/Position.c
+    bootstrap/src/org/frostlang/json/Token.c
+    bootstrap/src/org/frostlang/json/Token/Kind.c
+    bootstrap/src/org/frostlang/frost/Int16List.c
+    bootstrap/src/org/frostlang/frost/Int32List.c
+    bootstrap/src/org/frostlang/frost/Int64List.c
+    bootstrap/src/org/frostlang/frost/Int8List.c
+    bootstrap/src/org/frostlang/frost/IntBitIterator.c
+    bootstrap/src/org/frostlang/frost/UInt16List.c
+    bootstrap/src/org/frostlang/frost/UInt32List.c
+    bootstrap/src/org/frostlang/frost/UInt64List.c
+    bootstrap/src/org/frostlang/frost/UInt8List.c
+    bootstrap/src/org/frostlang/frostc/Alias.c
+    bootstrap/src/org/frostlang/frostc/Annotations.c
+    bootstrap/src/org/frostlang/frostc/Annotations/Expression.c
+    bootstrap/src/org/frostlang/frostc/Annotations/Flag.c
+    bootstrap/src/org/frostlang/frostc/ASTNode.c
+    bootstrap/src/org/frostlang/frostc/CCodeGenerator.c
+    bootstrap/src/org/frostlang/frostc/CCodeGenerator/AutoContext.c
+    bootstrap/src/org/frostlang/frostc/CCodeGenerator/ClassConstant.c
+    bootstrap/src/org/frostlang/frostc/CCodeGenerator/EnclosingContext.c
+    bootstrap/src/org/frostlang/frostc/CCodeGenerator/MethodShim.c
+    bootstrap/src/org/frostlang/frostc/CCodeGenerator/OpClass.c
+    bootstrap/src/org/frostlang/frostc/ChoiceCase.c
+    bootstrap/src/org/frostlang/frostc/ClassDecl.c
+    bootstrap/src/org/frostlang/frostc/ClassDecl/GenericParameter.c
+    bootstrap/src/org/frostlang/frostc/ClassDecl/Kind.c
+    bootstrap/src/org/frostlang/frostc/ClassDecl/Resolution.c
+    bootstrap/src/org/frostlang/frostc/CodeGenerator.c
+    bootstrap/src/org/frostlang/frostc/Compiler.c
+    bootstrap/src/org/frostlang/frostc/Compiler/_Closure2.c
+    bootstrap/src/org/frostlang/frostc/Compiler/AutoAtPreFlag.c
+    bootstrap/src/org/frostlang/frostc/Compiler/AutoContext.c
+    bootstrap/src/org/frostlang/frostc/Compiler/AutoScope.c
+    bootstrap/src/org/frostlang/frostc/Compiler/AutoUnrefs.c
+    bootstrap/src/org/frostlang/frostc/Compiler/BinaryKey.c
+    bootstrap/src/org/frostlang/frostc/Compiler/Capture.c
+    bootstrap/src/org/frostlang/frostc/Compiler/CoercionKey.c
+    bootstrap/src/org/frostlang/frostc/Compiler/EnclosingContext.c
+    bootstrap/src/org/frostlang/frostc/Compiler/Error.c
+    bootstrap/src/org/frostlang/frostc/Compiler/Resolution.c
+    bootstrap/src/org/frostlang/frostc/Compiler/Settings.c
+    bootstrap/src/org/frostlang/frostc/Compiler/TypeContext.c
+    bootstrap/src/org/frostlang/frostc/expression/And.c
+    bootstrap/src/org/frostlang/frostc/expression/ArrayLiteral.c
+    bootstrap/src/org/frostlang/frostc/expression/AtPre.c
+    bootstrap/src/org/frostlang/frostc/expression/AtReturn.c
+    bootstrap/src/org/frostlang/frostc/expression/Binary.c
+    bootstrap/src/org/frostlang/frostc/expression/Binary/_Closure2.c
+    bootstrap/src/org/frostlang/frostc/expression/Call.c
+    bootstrap/src/org/frostlang/frostc/expression/Closure.c
+    bootstrap/src/org/frostlang/frostc/expression/Dot.c
+    bootstrap/src/org/frostlang/frostc/expression/Identifier.c
+    bootstrap/src/org/frostlang/frostc/expression/IntLiteral.c
+    bootstrap/src/org/frostlang/frostc/expression/Or.c
+    bootstrap/src/org/frostlang/frostc/FieldDecl.c
+    bootstrap/src/org/frostlang/frostc/FieldDecl/Kind.c
+    bootstrap/src/org/frostlang/frostc/FixedArray.c
+    bootstrap/src/org/frostlang/frostc/FixedArray/FixedArrayIterator.c
+    bootstrap/src/org/frostlang/frostc/HCodeGenerator.c
+    bootstrap/src/org/frostlang/frostc/HTMLProcessor.c
+    bootstrap/src/org/frostlang/frostc/IR.c
+    bootstrap/src/org/frostlang/frostc/IR/Block.c
+    bootstrap/src/org/frostlang/frostc/IR/Block/ID.c
+    bootstrap/src/org/frostlang/frostc/IR/Statement.c
+    bootstrap/src/org/frostlang/frostc/IR/Statement/ID.c
+    bootstrap/src/org/frostlang/frostc/IR/Value.c
+    bootstrap/src/org/frostlang/frostc/LLVMCodeGenerator.c
+    bootstrap/src/org/frostlang/frostc/LLVMCodeGenerator/ClassConstant.c
+    bootstrap/src/org/frostlang/frostc/LLVMCodeGenerator/MethodShim.c
+    bootstrap/src/org/frostlang/frostc/LLVMCodeGenerator/OpClass.c
+    bootstrap/src/org/frostlang/frostc/lvalue/ChoiceFieldLValue.c
+    bootstrap/src/org/frostlang/frostc/lvalue/FieldLValue.c
+    bootstrap/src/org/frostlang/frostc/lvalue/IndexLValue.c
+    bootstrap/src/org/frostlang/frostc/lvalue/LValue.c
+    bootstrap/src/org/frostlang/frostc/lvalue/VariableLValue.c
+    bootstrap/src/org/frostlang/frostc/Main.c
+    bootstrap/src/org/frostlang/frostc/Main/Arguments.c
+    bootstrap/src/org/frostlang/frostc/Main/Format.c
+    bootstrap/src/org/frostlang/frostc/MethodDecl.c
+    bootstrap/src/org/frostlang/frostc/MethodDecl/GenericParameter.c
+    bootstrap/src/org/frostlang/frostc/MethodDecl/Kind.c
+    bootstrap/src/org/frostlang/frostc/MethodDecl/Parameter.c
+    bootstrap/src/org/frostlang/frostc/MethodRef.c
+    bootstrap/src/org/frostlang/frostc/Methods.c
+    bootstrap/src/org/frostlang/frostc/Pair.c
+    bootstrap/src/org/frostlang/frostc/frostdoc/DummyCodeGenerator.c
+    bootstrap/src/org/frostlang/frostc/frostdoc/LinkResolver.c
+    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown.c
+    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure2.c
+    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure4.c
+    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure6.c
+    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure9.c
+    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure12.c
+    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure14.c
+    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure16.c
+    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure18.c
+    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure20.c
+    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure22.c
+    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure24.c
+    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure26.c
+    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure28.c
+    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure30.c
+    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure32.c
+    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/CodeReplacer.c
+    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/HTMLToken.c
+    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/LinkDefinition.c
+    bootstrap/src/org/frostlang/frostc/frostdoc/Protector.c
+    bootstrap/src/org/frostlang/frostc/parser/Lexer.c
+    bootstrap/src/org/frostlang/frostc/parser/Parser.c
+    bootstrap/src/org/frostlang/frostc/parser/Parser/AutoSyntaxHighlight.c
+    bootstrap/src/org/frostlang/frostc/parser/SyntaxHighlighter.c
+    bootstrap/src/org/frostlang/frostc/parser/SyntaxHighlighter/Kind.c
+    bootstrap/src/org/frostlang/frostc/parser/Token.c
+    bootstrap/src/org/frostlang/frostc/parser/Token/Kind.c
+    bootstrap/src/org/frostlang/frostc/Position.c
+    bootstrap/src/org/frostlang/frostc/Scanner.c
+    bootstrap/src/org/frostlang/frostc/statement/Assert.c
+    bootstrap/src/org/frostlang/frostc/statement/Assignment.c
+    bootstrap/src/org/frostlang/frostc/statement/Break.c
+    bootstrap/src/org/frostlang/frostc/statement/Continue.c
+    bootstrap/src/org/frostlang/frostc/statement/Do.c
+    bootstrap/src/org/frostlang/frostc/statement/For.c
+    bootstrap/src/org/frostlang/frostc/statement/If.c
+    bootstrap/src/org/frostlang/frostc/statement/InnerMethod.c
+    bootstrap/src/org/frostlang/frostc/statement/Loop.c
+    bootstrap/src/org/frostlang/frostc/statement/Match.c
+    bootstrap/src/org/frostlang/frostc/statement/Return.c
+    bootstrap/src/org/frostlang/frostc/statement/Var.c
+    bootstrap/src/org/frostlang/frostc/statement/While.c
+    bootstrap/src/org/frostlang/frostc/Symbol.c
+    bootstrap/src/org/frostlang/frostc/Symbol/Kind.c
+    bootstrap/src/org/frostlang/frostc/SymbolTable.c
+    bootstrap/src/org/frostlang/frostc/Type.c
+    bootstrap/src/org/frostlang/frostc/Type/Kind.c
+    bootstrap/src/org/frostlang/frostc/Variable.c
+    bootstrap/src/org/frostlang/frostc/Variable/Kind.c
+    bootstrap/src/org/frostlang/frostc/Variable/Storage.c
+    bootstrap/src/org/frostlang/plex/runtime/DFA.c
+    bootstrap/src/org/frostlang/plex/runtime/RawToken.c
+    bootstrap/src/org/frostlang/regex/RegexLexer.c
+    bootstrap/src/org/frostlang/regex/RegexParser.c
+    bootstrap/src/org/frostlang/regex/RegexToken.c
+    bootstrap/src/org/frostlang/regex/RegexToken/Kind.c
     bootstrap/src/frost/collections/Array.c
     bootstrap/src/frost/collections/Collection.c
     bootstrap/src/frost/collections/CollectionView.c
@@ -349,10 +349,10 @@ add_executable(bootstrap
     bootstrap/src/frost/collections/Map.c
     bootstrap/src/frost/collections/MapView.c
     bootstrap/src/frost/collections/MapWriter.c
-    bootstrap/src/frost/collections/SpecializedArray.LTorg/frostlanguage/frostc/parser/Token.GT.c
-    bootstrap/src/frost/collections/SpecializedArray.LTorg/frostlanguage/regex/RegexToken.GT.c
-    bootstrap/src/frost/collections/SpecializedArrayIterator.LTorg/frostlanguage/frostc/parser/Token.GT.c
-    bootstrap/src/frost/collections/SpecializedArrayIterator.LTorg/frostlanguage/regex/RegexToken.GT.c
+    bootstrap/src/frost/collections/SpecializedArray.LTorg/frostlang/frostc/parser/Token.GT.c
+    bootstrap/src/frost/collections/SpecializedArray.LTorg/frostlang/regex/RegexToken.GT.c
+    bootstrap/src/frost/collections/SpecializedArrayIterator.LTorg/frostlang/frostc/parser/Token.GT.c
+    bootstrap/src/frost/collections/SpecializedArrayIterator.LTorg/frostlang/regex/RegexToken.GT.c
     bootstrap/src/frost/collections/Stack.c
     bootstrap/src/frost/collections/Stack/StackIterator.c
     bootstrap/src/frost/core/Bit.c
@@ -537,20 +537,20 @@ set(public_source
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/threads/ScopedLock.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/threads/Thread.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/unsafe/UnsafeMessageQueue.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/frostlanguage/json/Lexer.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/frostlanguage/json/Position.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/frostlanguage/json/Token.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/frostlanguage/frost/IntBitIterator.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/frostlanguage/frost/Int8List.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/frostlanguage/frost/Int16List.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/frostlanguage/frost/Int32List.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/frostlanguage/frost/Int64List.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/frostlanguage/frost/UInt8List.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/frostlanguage/frost/UInt16List.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/frostlanguage/frost/UInt32List.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/frostlanguage/frost/UInt64List.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/frostlanguage/plex/runtime/DFA.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/frostlanguage/plex/runtime/RawToken.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/frostlang/json/Lexer.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/frostlang/json/Position.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/frostlang/json/Token.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/frostlang/frost/IntBitIterator.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/frostlang/frost/Int8List.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/frostlang/frost/Int16List.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/frostlang/frost/Int32List.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/frostlang/frost/Int64List.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/frostlang/frost/UInt8List.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/frostlang/frost/UInt16List.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/frostlang/frost/UInt32List.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/frostlang/frost/UInt64List.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/frostlang/plex/runtime/DFA.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/frostlang/plex/runtime/RawToken.frost
 )
 
 set(core_source
@@ -629,8 +629,8 @@ add_custom_target(generate_code
             src/frost/core/UInt16.frost
             src/frost/core/UInt32.frost
             src/frost/core/UInt64.frost
-            src/parser/org/frostlanguage/json/Lexer.frost
-            src/parser/org/frostlanguage/json/Token.frost
+            src/parser/org/frostlang/json/Lexer.frost
+            src/parser/org/frostlang/json/Token.frost
             test/tests/Operators.frost
             test/tests/Operators.expected
             Operators.c
@@ -655,29 +655,29 @@ function(compile_plex_sources out_var)
 endfunction()
 
 compile_plex_sources(plex_objects
-    src/parser/org/frostlanguage/plex/AcceptState.frost
-    src/parser/org/frostlanguage/plex/Any.frost
-    src/parser/org/frostlanguage/plex/AnyState.frost
-    src/parser/org/frostlanguage/plex/CharSet.frost
-    src/parser/org/frostlanguage/plex/Concat.frost
-    src/parser/org/frostlanguage/plex/DFAState.frost
-    src/parser/org/frostlanguage/plex/DFAStateLabel.frost
-    src/parser/org/frostlanguage/plex/NFA.frost
-    src/parser/org/frostlanguage/plex/NFAtoDFA.frost
-    src/parser/org/frostlanguage/plex/Node.frost
-    src/parser/org/frostlanguage/plex/Option.frost
-    src/parser/org/frostlanguage/plex/PLex.frost
-    src/parser/org/frostlanguage/plex/Plus.frost
-    src/parser/org/frostlanguage/plex/Regex.frost
-    src/parser/org/frostlanguage/plex/RemappedState.frost
-    src/parser/org/frostlanguage/plex/SingleCharState.frost
-    src/parser/org/frostlanguage/plex/SetNode.frost
-    src/parser/org/frostlanguage/plex/SingleChar.frost
-    src/parser/org/frostlanguage/plex/SingleCharState.frost
-    src/parser/org/frostlanguage/plex/Star.frost
-    src/parser/org/frostlanguage/plex/State.frost
-    src/parser/org/frostlanguage/plex/TableState.frost
-    src/parser/org/frostlanguage/plex/Union.frost
+    src/parser/org/frostlang/plex/AcceptState.frost
+    src/parser/org/frostlang/plex/Any.frost
+    src/parser/org/frostlang/plex/AnyState.frost
+    src/parser/org/frostlang/plex/CharSet.frost
+    src/parser/org/frostlang/plex/Concat.frost
+    src/parser/org/frostlang/plex/DFAState.frost
+    src/parser/org/frostlang/plex/DFAStateLabel.frost
+    src/parser/org/frostlang/plex/NFA.frost
+    src/parser/org/frostlang/plex/NFAtoDFA.frost
+    src/parser/org/frostlang/plex/Node.frost
+    src/parser/org/frostlang/plex/Option.frost
+    src/parser/org/frostlang/plex/PLex.frost
+    src/parser/org/frostlang/plex/Plus.frost
+    src/parser/org/frostlang/plex/Regex.frost
+    src/parser/org/frostlang/plex/RemappedState.frost
+    src/parser/org/frostlang/plex/SingleCharState.frost
+    src/parser/org/frostlang/plex/SetNode.frost
+    src/parser/org/frostlang/plex/SingleChar.frost
+    src/parser/org/frostlang/plex/SingleCharState.frost
+    src/parser/org/frostlang/plex/Star.frost
+    src/parser/org/frostlang/plex/State.frost
+    src/parser/org/frostlang/plex/TableState.frost
+    src/parser/org/frostlang/plex/Union.frost
 )
 
 add_executable(plex
@@ -687,40 +687,40 @@ target_link_libraries(plex frost ${SYSTEM_LIBRARIES} ${ICU_LIBRARIES})
 set_target_properties(plex PROPERTIES LINKER_LANGUAGE CXX)
 
 add_custom_command(
-    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/org/frostlanguage/frostc/parser/Lexer.frost
-           ${CMAKE_CURRENT_BINARY_DIR}/org/frostlanguage/frostc/parser/Token.frost
+    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/org/frostlang/frostc/parser/Lexer.frost
+           ${CMAKE_CURRENT_BINARY_DIR}/org/frostlang/frostc/parser/Token.frost
     COMMAND ${CMAKE_CURRENT_BINARY_DIR}/plex ${CMAKE_CURRENT_SOURCE_DIR}/src/parser/Frost.plex
-            org.frostlanguage.frostc.parser.Token
-            ${CMAKE_CURRENT_BINARY_DIR}/org/frostlanguage/frostc/parser/Token.frost
-            org.frostlanguage.frostc.parser.Lexer
-            ${CMAKE_CURRENT_BINARY_DIR}/org/frostlanguage/frostc/parser/Lexer.frost
-            org.frostlanguage.frostc.Position
+            org.frostlang.frostc.parser.Token
+            ${CMAKE_CURRENT_BINARY_DIR}/org/frostlang/frostc/parser/Token.frost
+            org.frostlang.frostc.parser.Lexer
+            ${CMAKE_CURRENT_BINARY_DIR}/org/frostlang/frostc/parser/Lexer.frost
+            org.frostlang.frostc.Position
     DEPENDS plex src/parser/Frost.plex
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
 
 add_custom_command(
-    OUTPUT src/parser/org/frostlanguage/json/Lexer.frost
-           src/parser/org/frostlanguage/json/Token.frost
+    OUTPUT src/parser/org/frostlang/json/Lexer.frost
+           src/parser/org/frostlang/json/Token.frost
     COMMAND ${CMAKE_CURRENT_BINARY_DIR}/plex ${CMAKE_CURRENT_SOURCE_DIR}/src/parser/JSON.plex
-            org.frostlanguage.json.Token
-            ${CMAKE_CURRENT_SOURCE_DIR}/src/org/frostlanguage/json/Token.frost
-            org.frostlanguage.json.Lexer
-            ${CMAKE_CURRENT_SOURCE_DIR}/src/org/frostlanguage/json/Lexer.frost
-            org.frostlanguage.json.Position
+            org.frostlang.json.Token
+            ${CMAKE_CURRENT_SOURCE_DIR}/src/org/frostlang/json/Token.frost
+            org.frostlang.json.Lexer
+            ${CMAKE_CURRENT_SOURCE_DIR}/src/org/frostlang/json/Lexer.frost
+            org.frostlang.json.Position
     DEPENDS plex src/parser/JSON.plex
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
 
 add_custom_command(
-    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/org/frostlanguage/regex/RegexLexer.frost
-           ${CMAKE_CURRENT_BINARY_DIR}/org/frostlanguage/regex/RegexToken.frost
+    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/org/frostlang/regex/RegexLexer.frost
+           ${CMAKE_CURRENT_BINARY_DIR}/org/frostlang/regex/RegexToken.frost
     COMMAND ${CMAKE_CURRENT_BINARY_DIR}/plex ${CMAKE_CURRENT_SOURCE_DIR}/src/parser/Regex.plex
-            org.frostlanguage.regex.RegexToken
-            ${CMAKE_CURRENT_BINARY_DIR}/org/frostlanguage/regex/RegexToken.frost
-            org.frostlanguage.regex.RegexLexer
-            ${CMAKE_CURRENT_BINARY_DIR}/org/frostlanguage/regex/RegexLexer.frost
-            org.frostlanguage.frostc.Position
+            org.frostlang.regex.RegexToken
+            ${CMAKE_CURRENT_BINARY_DIR}/org/frostlang/regex/RegexToken.frost
+            org.frostlang.regex.RegexLexer
+            ${CMAKE_CURRENT_BINARY_DIR}/org/frostlang/regex/RegexLexer.frost
+            org.frostlang.frostc.Position
     DEPENDS plex src/parser/Regex.plex
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
@@ -739,7 +739,7 @@ function(compile_frostc_sources out_var)
                     -i ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc
                     -f o -o ${output} ${input}
             DEPENDS bootstrap ${input}
-                    ${CMAKE_CURRENT_BINARY_DIR}/org/frostlanguage/frostc/parser/Token.frost
+                    ${CMAKE_CURRENT_BINARY_DIR}/org/frostlang/frostc/parser/Token.frost
             WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         )
         list(APPEND result ${output})
@@ -748,75 +748,75 @@ function(compile_frostc_sources out_var)
 endfunction()
 
 set(frostc_source
-    ${CMAKE_CURRENT_BINARY_DIR}/org/frostlanguage/frostc/Config.frost
-    ${CMAKE_CURRENT_BINARY_DIR}/org/frostlanguage/frostc/parser/Lexer.frost
-    ${CMAKE_CURRENT_BINARY_DIR}/org/frostlanguage/frostc/parser/Token.frost
-    ${CMAKE_CURRENT_BINARY_DIR}/org/frostlanguage/regex/RegexLexer.frost
-    ${CMAKE_CURRENT_BINARY_DIR}/org/frostlanguage/regex/RegexToken.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/Alias.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/Annotations.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/ASTNode.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/CCodeGenerator.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/ChoiceCase.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/ClassDecl.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/CodeGenerator.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/Compiler.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/expression/And.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/expression/ArrayLiteral.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/expression/AtPre.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/expression/AtReturn.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/expression/Binary.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/expression/Call.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/expression/Closure.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/expression/Dot.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/expression/Identifier.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/expression/IntLiteral.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/expression/Or.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/FieldDecl.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/FixedArray.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/HCodeGenerator.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/HTMLProcessor.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/IR.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/LLVMCodeGenerator.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/lvalue/ChoiceFieldLValue.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/lvalue/FieldLValue.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/lvalue/IndexLValue.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/lvalue/LValue.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/lvalue/VariableLValue.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/MethodDecl.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/MethodRef.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/Methods.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/Pair.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/Position.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/Scanner.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/Symbol.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/SymbolTable.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/Type.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/Variable.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/frostdoc/DummyCodeGenerator.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/frostdoc/LinkResolver.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/frostdoc/Markdown.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/parser/Parser.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/parser/SyntaxHighlighter.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/statement/Assert.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/statement/Assignment.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/statement/Break.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/statement/Continue.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/statement/Do.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/statement/For.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/statement/If.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/statement/InnerMethod.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/statement/Loop.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/statement/Match.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/statement/Return.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/statement/Var.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/statement/While.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/regex/RegexParser.frost
+    ${CMAKE_CURRENT_BINARY_DIR}/org/frostlang/frostc/Config.frost
+    ${CMAKE_CURRENT_BINARY_DIR}/org/frostlang/frostc/parser/Lexer.frost
+    ${CMAKE_CURRENT_BINARY_DIR}/org/frostlang/frostc/parser/Token.frost
+    ${CMAKE_CURRENT_BINARY_DIR}/org/frostlang/regex/RegexLexer.frost
+    ${CMAKE_CURRENT_BINARY_DIR}/org/frostlang/regex/RegexToken.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/Alias.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/Annotations.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/ASTNode.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/CCodeGenerator.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/ChoiceCase.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/ClassDecl.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/CodeGenerator.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/Compiler.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/expression/And.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/expression/ArrayLiteral.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/expression/AtPre.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/expression/AtReturn.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/expression/Binary.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/expression/Call.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/expression/Closure.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/expression/Dot.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/expression/Identifier.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/expression/IntLiteral.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/expression/Or.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/FieldDecl.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/FixedArray.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/HCodeGenerator.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/HTMLProcessor.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/IR.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/lvalue/ChoiceFieldLValue.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/lvalue/FieldLValue.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/lvalue/IndexLValue.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/lvalue/LValue.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/lvalue/VariableLValue.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/MethodDecl.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/MethodRef.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/Methods.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/Pair.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/Position.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/Scanner.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/Symbol.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/SymbolTable.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/Type.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/Variable.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/frostdoc/DummyCodeGenerator.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/frostdoc/LinkResolver.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/parser/Parser.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/parser/SyntaxHighlighter.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/statement/Assert.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/statement/Assignment.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/statement/Break.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/statement/Continue.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/statement/Do.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/statement/For.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/statement/If.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/statement/InnerMethod.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/statement/Loop.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/statement/Match.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/statement/Return.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/statement/Var.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/statement/While.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/regex/RegexParser.frost
 )
 
 compile_frostc_sources(frostc_objects
     ${frostc_source}
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/Main.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/Main.frost
 )
 
 add_executable(frostc
@@ -872,7 +872,7 @@ endfunction()
 create_headers(updated_frostc_headers
     ${core_source}
     ${frostc_source}
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/Main.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/Main.frost
 )
 
 function(compile_frost_sources_to_c out_var)
@@ -922,7 +922,7 @@ endfunction()
 compile_frost_sources_to_c(updated_frostc_c
     ${core_source}
     ${frostc_source}
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/Main.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/Main.frost
 )
 
 add_custom_target(update_bootstrap
@@ -965,7 +965,7 @@ add_custom_command(
 )
 
 compile_frostc_sources(frostmd_objects
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/frostdoc/FrostMDMain.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/frostdoc/FrostMDMain.frost
     ${frostc_source}
 )
 
@@ -1035,10 +1035,10 @@ run_markdown(markdown_html
 )
 
 compile_frostc_sources(frostdoc_objects
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/frostdoc/FrostDoc.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/frostdoc/FrostDocMain.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/frostdoc/TableOfContentsNode.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlanguage/frostc/frostdoc/XMLWriter.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/frostdoc/FrostDoc.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/frostdoc/FrostDocMain.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/frostdoc/TableOfContentsNode.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/frostdoc/XMLWriter.frost
     ${frostc_source}
 )
 

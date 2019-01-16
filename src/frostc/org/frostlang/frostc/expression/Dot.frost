@@ -1,0 +1,42 @@
+package org.frostlang.frostc.expression
+
+uses org.frostlang.frostc.ASTNode
+uses org.frostlang.frostc.Compiler
+uses org.frostlang.frostc.Compiler.TypeContext
+uses org.frostlang.frostc.IR
+uses org.frostlang.frostc.Position
+
+class Dot {
+    @class
+    method compile(compiler:Compiler, position:Position, target:IR.Value,
+            name:String):IR.Value? {
+        def cl := compiler.getClass(target.type())
+        if cl == null {
+            return null
+        }
+        def symbol := compiler.getSymbolTable(cl)[name]
+        if symbol == null {
+            compiler.error(position, "class '\{target.type()}' does not have a member named '\{name}'")
+            return null
+        }
+        return compiler.symbolRef(position, target, symbol)
+    }
+
+    @class
+    method compile(compiler:Compiler, position:Position, base:ASTNode, name:String):IR.Value? {
+        match base {
+            when ASTNode.GENERIC_TYPE {
+                def resolved := compiler.resolve(compiler.scanner.convertType(base))
+                if resolved == null {
+                    return null
+                }
+                return compile(compiler, position, IR.Value.TYPE(resolved), name)
+            }
+        }
+        def compiledBase := compiler.compileExpression(base)
+        if compiledBase == null {
+            return null
+        }
+        return compile(compiler, position, compiledBase, name)
+    }
+}

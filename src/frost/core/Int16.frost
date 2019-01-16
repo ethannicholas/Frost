@@ -889,12 +889,12 @@ class Int16 : Value, Key<Int16>, Comparable<Int16>, Formattable, ListView<Bit> {
     ===Returns a list of all integers in the given range. The list is 'lazy', meaning that it does not actually allocate memory to hold the entire list.===
     @class
     function [](range:Range<Int16>):ListView<Int16> {
-        return org.frostlanguage.frost.Int16List(SteppedRange<Int16, Int16>(range.min, range.max, 1, range.inclusive))
+        return org.frostlang.frost.Int16List(SteppedRange<Int16, Int16>(range.min, range.max, 1, range.inclusive))
     }
     ===Returns a list of all integers in the given stepped range. The list is 'lazy', meaning that it does not actually allocate memory to hold the entire list.===
     @class
     function [](range:SteppedRange<Int16, Int16>):ListView<Int16> {
-        return org.frostlanguage.frost.Int16List(range)
+        return org.frostlang.frost.Int16List(range)
     }
 
     ===Returns a single bit from this number, where index 0 is the least significant bit.===
@@ -911,7 +911,7 @@ class Int16 : Value, Key<Int16>, Comparable<Int16>, Formattable, ListView<Bit> {
 
     @override
     function get_iterator():Iterator<Bit> {
-        return org.frostlanguage.frost.IntBitIterator(self.convert()->UInt64, 1 << 15)
+        return org.frostlang.frost.IntBitIterator(self.convert()->UInt64, 1 << 15)
     }
 
     @override

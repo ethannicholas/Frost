@@ -26,7 +26,7 @@ This displays `This answer is always at least six digits long: 000063`. The fiel
 means "use the character `"0"` to right-align this value into a string at least 6 characters long".
 You may also use `<` to left-align and `^` to center.
 
-Format strings and field specifieers may be combined:
+Format strings and field specifiers may be combined:
 
     Console.printLine("I calculated something: \{7 * 9,#^8:x}")
 

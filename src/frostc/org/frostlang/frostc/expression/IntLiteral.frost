@@ -1,0 +1,31 @@
+package org.frostlang.frostc.expression
+
+uses org.frostlang.frostc.ASTNode
+uses org.frostlang.frostc.Compiler
+uses org.frostlang.frostc.Compiler.TypeContext
+uses org.frostlang.frostc.IR
+uses org.frostlang.frostc.Position
+uses org.frostlang.frostc.Type
+
+class IntLiteral {
+    @class
+    method compile(compiler:Compiler, position:Position, value:UInt64,
+            type:TypeContext):IR.Value? {
+        match type {
+            when TypeContext.TYPE(t) {
+                if t.typeKind = Type.Kind.BUILTIN_INT | t.typeKind = Type.Kind.BUILTIN_UINT {
+                    return IR.Value.INT(value, t)
+                }
+                if t.typeKind = Type.Kind.BUILTIN_FLOAT {
+                    return IR.Value.REAL(value, t)
+                }
+                if t.isNumber {
+                    return Call.compile(compiler, position, IR.Value.TYPE(t),
+                            [ASTNode.INT(position, value)], type)
+                }
+            }
+        }
+        return compiler.coerce(position, compile(compiler, position, value,
+                TypeContext.TYPE(Type.Int64())), type)
+    }
+}

@@ -1,0 +1,943 @@
+package org.frostlang.frostc
+
+uses org.frostlang.frostc.parser.Token
+
+@final
+class Scanner {
+    @private
+    constant INLINE_THRESHOLD := 10
+
+    @private
+    @weak
+    def compiler:Compiler
+
+    @private
+    def bareCodeClass:ClassDecl?
+
+    @private
+    def source:File?
+
+    init(compiler:Compiler) {
+        self.compiler := compiler
+    }
+
+    method convertType(type:ASTNode):Type {
+        match type {
+            when ASTNode.TYPE(position, name) {
+                return Type(name, Type.Kind.CLASS, position)
+            }
+            when ASTNode.NULLABLE_TYPE(position, base) {
+                def subtypes := Array<Type>()
+                subtypes.add(convertType(base))
+                return Type(subtypes[0].name + "?", Type.Kind.NULLABLE, position, subtypes, false)
+            }
+            when ASTNode.GENERIC_TYPE(position, base, args) {
+                def finalArgs := Array<Type>()
+                for arg in args {
+                    finalArgs.add(convertType(arg))
+                }
+                return Type.generic(Type(base, Type.Kind.CLASS, type.position()), finalArgs)
+            }
+            when ASTNode.IR_WRAPPER(_, type) {
+                match type {
+                    when IR.Value.TYPE(t) {
+                        return t
+                    }
+                }
+                assert false, "unsupported type: \{type}"
+            }
+            when ASTNode.METHOD_TYPE(position, kind, rawParameters, rawReturnType) {
+                def typeKind:Type.Kind
+                match kind {
+                    when Token.Kind.YIELDS {
+                        typeKind := Type.Kind.FUNCTION
+                    }
+                    when Token.Kind.YIELDS_METHOD {
+                        typeKind := Type.Kind.METHOD
+                    }
+                    when Token.Kind.YIELDS_IMMUTABLE {
+                        typeKind := Type.Kind.IMMUTABLE_FUNCTION
+                    }
+                    when Token.Kind.YIELDS_METHOD_IMMUTABLE {
+                        typeKind := Type.Kind.IMMUTABLE_METHOD
+                    }
+                    otherwise {
+                        assert false, "unsupported"
+                    }
+                }
+                def parameters := Array<Type>() -- FIXME use map
+                for p in rawParameters {
+                    parameters.add(convertType(p))
+                }
+                def returnType:Type
+                if rawReturnType !== null {
+                    returnType := convertType(rawReturnType)
+                }
+                else {
+                    returnType := Type.Void()
+                }
+                return Type.methodType(type.position(), typeKind,
+                        FixedArray<Type>.from(parameters), returnType, 0)
+            }
+            otherwise {
+                assert false, "unsupported type \{type}(\{type.$rawValue})"
+            }
+        }
+    }
+
+    method add(position:Position, flags:Int, flag:Int):Int {
+        if flags && flag != 0 {
+            error(position, "duplicate annotation")
+        }
+        return flags || flag
+    }
+
+    method convertAnnotations(a:FixedArray<ASTNode>):Annotations {
+        var flags := 0
+        var expressions:Array<Annotations.Expression>? := null
+        method checkExpression(scanner:Scanner, position:Position, text:String, expr:ASTNode?):Bit {
+            if expr !== null {
+                return true
+            }
+            scanner.error(position, "annotation '\{text}' requires an expression")
+            return false
+        }
+        for c in a {
+            match c {
+                when ASTNode.ANNOTATION(p, text, exprText, rawExpr) {
+                    var expr := rawExpr
+                    match text {
+                        when "@private" {
+                            flags := add(p, flags, Annotations.Flag.PRIVATE)
+                        }
+                        when "@protected" {
+                            flags := add(p, flags, Annotations.Flag.PROTECTED)
+                        }
+                        when "@package" {
+                            flags := add(p, flags, Annotations.Flag.PACKAGE)
+                        }
+                        when "@class" {
+                            flags := add(p, flags, Annotations.Flag.CLASS)
+                        }
+                        when "@override" {
+                            flags := add(p, flags, Annotations.Flag.OVERRIDE)
+                        }
+                        when "@external" {
+                            flags := add(p, flags, Annotations.Flag.EXTERNAL)
+                        }
+                        when "@implicit" {
+                            flags := add(p, flags, Annotations.Flag.IMPLICIT)
+                        }
+                        when "@final" {
+                            flags := add(p, flags, Annotations.Flag.FINAL)
+                        }
+                        when "@abstract" {
+                            flags := add(p, flags, Annotations.Flag.ABSTRACT)
+                        }
+                        when "@inline" {
+                            flags := add(p, flags, Annotations.Flag.INLINE)
+                        }
+                        when "@specialize" {
+                            flags := add(p, flags, Annotations.Flag.SPECIALIZE)
+                        }
+                        when "@weak" {
+                            flags := add(p, flags, Annotations.Flag.WEAK)
+                        }
+                        when "@unsafeImmutable" {
+                            flags := add(p, flags, Annotations.Flag.UNSAFE_IMMUTABLE)
+                        }
+                        when "@default" {
+                            flags := add(p, flags, Annotations.Flag.DEFAULT)
+                        }
+                        when "@pre" {
+                            if expressions == null {
+                                expressions := Array<Annotations.Expression>()
+                            }
+                            if checkExpression(self, p, text, expr) {
+                                expressions.add(Annotations.Expression.PRE(exprText, expr))
+                                expr := null
+                            }
+                        }
+                        when "@preOr" {
+                            if expressions == null {
+                                expressions := Array<Annotations.Expression>()
+                            }
+                            if checkExpression(self, p, text, expr) {
+                                expressions.add(Annotations.Expression.PRE_OR(exprText, expr))
+                                expr := null
+                            }
+                        }
+                        when "@post" {
+                            if expressions == null {
+                                expressions := Array<Annotations.Expression>()
+                            }
+                            if checkExpression(self, p, text, expr) {
+                                expressions.add(Annotations.Expression.POST(exprText, expr))
+                                expr := null
+                            }
+                        }
+                        when "@postAnd" {
+                            if expressions == null {
+                                expressions := Array<Annotations.Expression>()
+                            }
+                            if checkExpression(self, p, text, expr) {
+                                expressions.add(Annotations.Expression.POST_AND(exprText, expr))
+                                expr := null
+                            }
+                        }
+                        when "@priority" {
+                            if expressions == null {
+                                expressions := Array<Annotations.Expression>()
+                            }
+                            if checkExpression(self, p, text, expr) {
+                                expressions.add(Annotations.Expression.PRIORITY(exprText, expr))
+                                expr := null
+                            }
+                        }
+                        otherwise {
+                            error(p, "unrecognized annotation '\{text}'")
+                        }
+                    }
+                    if expr !== null {
+                        error(p, "'\{text}' annotation does not accept parameters")
+                    }
+                }
+                otherwise {
+                    assert false
+                }
+            }
+        }
+        return Annotations(flags, expressions)
+    }
+
+    method scanFields(owner:ClassDecl, position:Position, rawDoccomment:ASTNode?,
+                rawAnnotations:FixedArray<ASTNode>, varDecl:ASTNode) {
+        def doccomment:String?
+        -- FIXME should be able to match against null too
+        if rawDoccomment == null {
+            doccomment := null
+        }
+        else {
+            match rawDoccomment {
+                when ASTNode.STRING(position, text) {
+                    doccomment := text
+                }
+                otherwise {
+                    assert false
+                }
+            }
+        }
+        def annotations := convertAnnotations(rawAnnotations)
+        def fieldKind:FieldDecl.Kind
+        match varDecl {
+            when ASTNode.VAR(_, kind, decls) {
+                match kind {
+                    when Variable.Kind.VAR {
+                        fieldKind := FieldDecl.Kind.VAR
+                    }
+                    when Variable.Kind.DEF {
+                        fieldKind := FieldDecl.Kind.DEF
+                    }
+                    when Variable.Kind.CONSTANT {
+                        fieldKind := FieldDecl.Kind.CONSTANT
+                        annotations.flags ||= Annotations.Flag.CLASS
+                    }
+                    when Variable.Kind.PROPERTY {
+                        fieldKind := FieldDecl.Kind.PROPERTY
+                    }
+                }
+                for decl in decls {
+                    match decl {
+                        when ASTNode.DECLARATION(declPosition, target, rawValue) {
+                            def name:String
+                            def type:Type
+                            match target {
+                                when ASTNode.IDENTIFIER(_, id) {
+                                    name := id
+                                    type := Type.Void()
+                                }
+                                when ASTNode.TYPED_IDENTIFIER(_, id, idType) {
+                                    name := id
+                                    type := convertType(idType)
+                                }
+                                otherwise {
+                                    assert false
+                                }
+                            }
+                            def value:ASTNode?
+                            if rawValue == null & annotations.isWeak &
+                                    type.typeKind = Type.Kind.NULLABLE {
+                                value := ASTNode.NULL(declPosition)
+                            }
+                            else {
+                                value := rawValue
+                            }
+                            def field := FieldDecl(owner, declPosition, doccomment, annotations,
+                                    fieldKind, name, type, value)
+                            owner.symbolTable.add(field)
+                            owner.fields.add(field)
+                        }
+                        otherwise {
+                            assert false
+                        }
+                    }
+                }
+            }
+            otherwise {
+                assert false
+            }
+        }
+    }
+
+    function complexity(node:ASTNode):Int {
+        -- FIXME provide a visitor in ASTNode when lambdas are in so I can eliminate this mess
+        match node {
+            when ASTNode.ARRAY(_, elements) {
+                var result := 0
+                for e in elements {
+                    result += complexity(e)
+                }
+                return result
+            }
+            when ASTNode.ASSERT(_, test, _) {
+                return complexity(test)
+            }
+            when ASTNode.AT_PRE {
+                return 0
+            }
+            when ASTNode.AT_RETURN {
+                return 0
+            }
+            when ASTNode.BINARY(_, left, _, right) {
+                return 1 + complexity(left) + complexity(right)
+            }
+            when ASTNode.BIT {
+                return 1
+            }
+            when ASTNode.BLOCK(_, statements) {
+                var result := 0
+                for s in statements {
+                    result += complexity(s)
+                }
+                return result
+            }
+            when ASTNode.BREAK {
+                return 1
+            }
+            when ASTNode.CALL(_, target, args) {
+                var result := complexity(target)
+                for a in args {
+                    result += complexity(a)
+                }
+                return result
+            }
+            when ASTNode.CHOICE_FIELD_REFERENCE(_, base, _, _) {
+                return complexity(base)
+            }
+            when ASTNode.CONTINUE {
+                return 1
+            }
+            when ASTNode.DECLARATION(_, _, value) {
+                if value == null {
+                    return 0
+                }
+                return complexity(value)
+            }
+            when ASTNode.DO(_, _, statements, test) {
+                var result := complexity(test)
+                for s in statements {
+                    result += complexity(s)
+                }
+                return result
+            }
+            when ASTNode.DOT(_, base, _) {
+                return complexity(base)
+            }
+            when ASTNode.DOT_GENERICS(_, base, _, _) {
+                return complexity(base)
+            }
+            when ASTNode.FOR(_, _, _, list, statements) {
+                var result := complexity(list)
+                for s in statements {
+                    result += complexity(s)
+                }
+                return result
+            }
+            when ASTNode.GENERIC_TYPE {
+                return 0
+            }
+            when ASTNode.IDENTIFIER {
+                return 1
+            }
+            when ASTNode.IF(_, test, ifTrue, ifFalse) {
+                var result := complexity(test)
+                for s in ifTrue {
+                    result += complexity(s)
+                }
+                if ifFalse !== null {
+                    result += complexity(ifFalse)
+                }
+                return result
+            }
+            when ASTNode.INT {
+                return 1
+            }
+            when ASTNode.LOOP(_, _, statements) {
+                var result := 0
+                for s in statements {
+                    result += complexity(s)
+                }
+                return result
+            }
+            when ASTNode.MATCH(_, value, whens, other) {
+                var result := complexity(value)
+                for w in whens {
+                    result += complexity(w)
+                }
+                if other !== null {
+                    for s in other {
+                        result += complexity(s)
+                    }
+                }
+                return result
+            }
+            when ASTNode.METHOD {
+                return INLINE_THRESHOLD
+            }
+            when ASTNode.NULL {
+                return 1
+            }
+            when ASTNode.NULLABLE_TYPE {
+                return 0
+            }
+            when ASTNode.PREFIX(_, _, base) {
+                return 1 + complexity(base)
+            }
+            when ASTNode.RANGE {
+                return 1
+            }
+            when ASTNode.REAL {
+                return 1
+            }
+            when ASTNode.REGEX {
+                return 1
+            }
+            when ASTNode.RETURN(_, value) {
+                if value == null {
+                    return 0
+                }
+                return complexity(value)
+            }
+            when ASTNode.SELF {
+                return 1
+            }
+            when ASTNode.STRING {
+                return 1
+            }
+            when ASTNode.SUPER {
+                return 1
+            }
+            when ASTNode.TYPE {
+                return 0
+            }
+            when ASTNode.TYPED_LAMBDA {
+                return INLINE_THRESHOLD
+            }
+            when ASTNode.UNTYPED_LAMBDA {
+                return INLINE_THRESHOLD
+            }
+            when ASTNode.VAR(_, _, decls) {
+                var result := 0
+                for decl in decls {
+                    result += complexity(decl)
+                }
+                return result
+            }
+            when ASTNode.WHEN(_, tests, statements) {
+                var result := 0
+                for test in tests {
+                    result += complexity(test)
+                }
+                for s in statements {
+                    result += complexity(s)
+                }
+                return result
+            }
+            when ASTNode.WHILE(_, _, test, statements) {
+                var result := complexity(test)
+                for s in statements {
+                    result += complexity(s)
+                }
+                return result
+            }
+            otherwise {
+                assert false, "unsupported node: \{node}"
+            }
+        }
+    }
+
+    function shouldInline(annotations:Annotations, statements:ListView<ASTNode>):Bit {
+        if compiler.settings.optimizationLevel > 0 & !annotations.isInline &
+                annotations.isFinal {
+            var c := 0
+            for s in statements {
+                c += complexity(s)
+                if c > INLINE_THRESHOLD {
+                    return false
+                }
+            }
+            return true
+        }
+        return false
+    }
+
+    method scanMethod(owner:ClassDecl, position:Position, rawDoccomment:ASTNode?,
+            rawAnnotations:FixedArray<ASTNode>, kind:MethodDecl.Kind, name:String,
+            rawGenerics:FixedArray<ASTNode>?, rawParameters:FixedArray<ASTNode>,
+            rawReturnType:ASTNode?, statements:FixedArray<ASTNode>?):MethodDecl? {
+        def doccomment:String?
+        -- FIXME should be able to match against null too
+        if rawDoccomment == null {
+            doccomment := null
+        }
+        else {
+            match rawDoccomment {
+                when ASTNode.STRING(position, text) {
+                    doccomment := text
+                }
+                otherwise {
+                    assert false
+                }
+            }
+        }
+        def annotations := convertAnnotations(rawAnnotations)
+        if kind != MethodDecl.Kind.INIT & owner.annotations.isFinal | annotations.isPrivate {
+            annotations.flags ||= Annotations.Flag.FINAL
+        }
+        def generics:Array<MethodDecl.GenericParameter>?
+        if rawGenerics !== null {
+            generics := Array<MethodDecl.GenericParameter>()
+            def fullName := "\{owner.name}.\{name}"
+            for p in rawGenerics {
+                def parameterName:String
+                def bound:Type
+                match p {
+                    when ASTNode.IDENTIFIER(_, id) {
+                        parameterName := id
+                        bound := Type.Any()
+                    }
+                    when ASTNode.TYPED_IDENTIFIER(_, id, type) {
+                        parameterName := id
+                        bound := convertType(type)
+                    }
+                    otherwise {
+                        assert false
+                    }
+                }
+                generics.add(MethodDecl.GenericParameter(p.position(), fullName, parameterName,
+                        bound))
+            }
+        }
+        else {
+            generics := null
+        }
+        def parameters := Array<MethodDecl.Parameter>()
+        for p in rawParameters {
+            match p {
+                when ASTNode.PARAMETER(_, name, type) {
+                    parameters.add(MethodDecl.Parameter(name, convertType(type)))
+                }
+                otherwise {
+                    assert false
+                }
+            }
+        }
+        def returnType:Type
+        if rawReturnType !== null{
+            returnType := convertType(rawReturnType)
+        }
+        else {
+            returnType := Type.Void()
+        }
+        if kind = MethodDecl.Kind.FUNCTION & returnType = Type.Void() {
+            error(position, "functions must have a return type")
+        }
+        if statements !== null & shouldInline(annotations, statements) {
+            annotations.flags ||= Annotations.Flag.INLINE
+        }
+        if statements == null & owner.classKind = ClassDecl.Kind.INTERFACE {
+            if annotations.flags && Annotations.Flag.ABSTRACT != 0 {
+                error(position,  "interface methods are abstract by default and may not have an " +
+                        "explicit '@abstract' annotation")
+            }
+            annotations.flags ||= Annotations.Flag.ABSTRACT
+        }
+        return MethodDecl(owner, position, doccomment, annotations, kind, name, generics,
+                parameters, returnType, statements)
+    }
+
+    method scanClassChild(cl:ClassDecl, node:ASTNode) {
+        match node {
+            when ASTNode.FIELD(position, dc, annotations, varDecl) {
+                scanFields(cl, position, dc, annotations, varDecl)
+            }
+            when ASTNode.METHOD(position, dc, annotations, kind, name, generics, parameters,
+                    returnType, statements) {
+                def m := scanMethod(cl, position, dc, annotations, kind, name, generics, parameters,
+                        returnType, statements)
+                if m !== null {
+                    cl.symbolTable.add(m)
+                    cl.methods.add(m)
+                }
+            }
+            when ASTNode.CLASS(position, dc, annotations, kind, name, generics, supertypes,
+                    members) {
+                def inner := scanClass(cl.source, cl.aliases, cl.name, position, dc, annotations,
+                        kind, name, generics, supertypes, members)
+                if inner !== null {
+                    inner.owner := cl
+                    cl.classes.add(inner)
+                    assert inner.name.startsWith(cl.name + ".")
+                    cl.symbolTable.add(Alias(inner.name[cl.name.length + 1..], inner.name,
+                            Position()))
+                    inner.symbolTable.add(Alias(cl.simpleName(), cl.name, Position()))
+                }
+            }
+            when ASTNode.CHOICE_CASE(position, dc, name, fields) {
+                scanChoiceCase(cl, position, dc, name, fields)
+            }
+            otherwise {
+                assert false, "unsupported class child: \{node}"
+            }
+        }
+    }
+
+    method scanChoiceCase(cl:ClassDecl, position:Position, rawDoccomment:ASTNode?, name:String,
+            rawFields:FixedArray<ASTNode>?) {
+        def doccomment:String?
+        -- FIXME should be able to match against null too
+        if rawDoccomment == null {
+            doccomment := null
+        }
+        else {
+            match rawDoccomment {
+                when ASTNode.STRING(position, text) {
+                    doccomment := text
+                }
+                otherwise {
+                    assert false
+                }
+            }
+        }
+        def fields := Array<Type>()
+        for t in rawFields {
+            fields.add(convertType(t))
+        }
+        def entry := ChoiceCase(cl, position, name, doccomment, cl.choiceCases.count,
+                fields)
+        cl.choiceCases.add(entry)
+        cl.symbolTable.add(entry)
+    }
+
+    method scanClass(source:File, aliases:MapView<String, String>, contextName:String,
+            position:Position, rawDoccomment:ASTNode?, rawAnnotations:FixedArray<ASTNode>,
+            kind:ClassDecl.Kind, name:String, generics:FixedArray<ASTNode>?,
+            rawSupertypes:FixedArray<ASTNode>?, members:FixedArray<ASTNode>):ClassDecl? {
+        def fullName:String
+        if contextName != "" {
+            fullName := "\{contextName}.\{name}"
+        }
+        else {
+            fullName := name
+        }
+        def doccomment:String?
+        -- FIXME should be able to match against null too
+        if rawDoccomment == null {
+            doccomment := null
+        }
+        else {
+            match rawDoccomment {
+                when ASTNode.STRING(position, text) {
+                    doccomment := text
+                }
+                otherwise {
+                    assert false
+                }
+            }
+        }
+        def annotations := convertAnnotations(rawAnnotations)
+        def parameters := Array<ClassDecl.GenericParameter>()
+        if generics !== null {
+            for p in generics {
+                def name:String
+                def bound:Type
+                match p {
+                    when ASTNode.IDENTIFIER(_, id) {
+                        name := id
+                        bound := Type.Any()
+                    }
+                    when ASTNode.TYPED_IDENTIFIER(_, id, type) {
+                        name := id
+                        bound := convertType(type)
+                    }
+                    otherwise {
+                        assert false
+                    }
+                }
+                parameters.add(ClassDecl.GenericParameter(p.position(), fullName, name, bound))
+            }
+        }
+        def supertypes := Array<Type>()
+        if rawSupertypes !== null {
+            if kind = ClassDecl.Kind.CHOICE {
+                error(position, "choices may not specify supertypes")
+            }
+            for s in rawSupertypes {
+                supertypes.add(convertType(s))
+            }
+        }
+        def result := ClassDecl(source, position, aliases, doccomment, annotations, kind, fullName,
+                supertypes, parameters, compiler.root)
+        compiler.currentClass.push(result)
+        if kind = ClassDecl.Kind.CHOICE {
+            def rawValue := FieldDecl(result, result.position, null,
+                    Annotations(Annotations.Flag.SYNTHETIC), FieldDecl.Kind.DEF,
+                    ClassDecl.RAW_VALUE_NAME, Type.Int64(), null)
+            result.fields.add(rawValue)
+            result.symbolTable.add(rawValue)
+            def data := FieldDecl(result, result.position, null,
+                    Annotations(Annotations.Flag.SYNTHETIC), FieldDecl.Kind.DEF,
+                    ClassDecl.CHOICE_DATA_NAME, Type.ChoiceData(), null)
+            result.fields.add(data)
+            result.symbolTable.add(data)
+        }
+        for m in members {
+            match m {
+                when ASTNode.METHOD(mPosition, _, _, methodKind, _, _,  _, _, _) {
+                    if methodKind = MethodDecl.Kind.INIT {
+                        match kind {
+                            when ClassDecl.Kind.CLASS {
+                                -- do nothing
+                            }
+                            when ClassDecl.Kind.INTERFACE {
+                                error(mPosition, "interfaces may not have 'init' methods")
+                            }
+                            when ClassDecl.Kind.CHOICE {
+                                error(mPosition, "choices may not have 'init' methods")
+                            }
+                        }
+                    }
+                }
+                otherwise {
+                    -- do nothing
+                }
+            }
+            scanClassChild(result, m)
+        }
+        var foundInit := false
+        var foundCleanup := false
+        for m in result.methods {
+            if m.methodKind = MethodDecl.Kind.INIT {
+                foundInit := true
+            }
+            if m.name = "cleanup" & m.parameters.count = 0 {
+                foundCleanup := true
+                if kind = ClassDecl.Kind.CHOICE {
+                    error(position, "choice cleanup method cannot be overridden")
+                }
+            }
+        }
+        if !foundInit & kind = ClassDecl.Kind.CLASS & result.name != "frost.unsafe.Pointer" {
+            def defaultInit := MethodDecl(result, position, null,
+                    Annotations(Annotations.Flag.SYNTHETIC), MethodDecl.Kind.INIT, "init",
+                    null, [], Type.Void(), FixedArray<ASTNode>())
+            result.methods.add(defaultInit)
+            result.symbolTable.add(defaultInit)
+        }
+        if !foundCleanup & (kind = ClassDecl.Kind.CLASS | kind = ClassDecl.Kind.CHOICE) &
+                result.name != "frost.unsafe.Pointer" {
+            def defaultCleanup := MethodDecl(result, position, null,
+                    Annotations(Annotations.Flag.OVERRIDE || Annotations.Flag.SYNTHETIC),
+                    MethodDecl.Kind.METHOD, "cleanup", null, [], Type.Void(), FixedArray<ASTNode>())
+            result.methods.add(defaultCleanup)
+            result.symbolTable.add(defaultCleanup)
+        }
+        if kind = ClassDecl.Kind.CHOICE {
+            var haveFields := false
+            if result.choiceCases.count > 0 {
+                for e in result.choiceCases {
+                    if e.fields.count > 0 {
+                        haveFields := true
+                        break
+                    }
+                }
+            }
+            else {
+                error(result.position, "'choice' must have at least one entry")
+                return null
+            }
+            if !haveFields {
+                result.rawSuper := Type.Value()
+            }
+        }
+        compiler.currentClass.pop()
+        return result
+    }
+
+    method addClass(cl:ClassDecl, arr:Array<ClassDecl>) {
+        arr.add(cl)
+        for inner in cl.classes {
+            addClass(inner, arr)
+        }
+    }
+
+    method createBareCodeClass(source:File, aliases:MapView<String, String>, contextName:String,
+            classes:List<ClassDecl>) {
+        if bareCodeClass == null {
+            def fullName:String
+            if contextName != "" {
+                fullName := "\{contextName}.BareCode"
+            }
+            else {
+                fullName := "anonymous.BareCode"
+            }
+            bareCodeClass := ClassDecl(source, Position(), aliases, null, Annotations(),
+                    ClassDecl.Kind.CLASS, fullName, Array<Type>(), -- FIXME literal
+                    Array<ClassDecl.GenericParameter>(), compiler.root) -- FIXME literal
+            classes.add(bareCodeClass)
+            def defaultInit := MethodDecl(bareCodeClass, Position(), null,
+                    Annotations(Annotations.Flag.SYNTHETIC), MethodDecl.Kind.INIT, "init",
+                    null, [], Type.Void(), FixedArray<ASTNode>())
+            bareCodeClass.methods.add(defaultInit)
+            bareCodeClass.symbolTable.add(defaultInit)
+            def defaultCleanup := MethodDecl(bareCodeClass, Position(), null,
+                    Annotations(Annotations.Flag.OVERRIDE || Annotations.Flag.SYNTHETIC),
+                    MethodDecl.Kind.METHOD, "cleanup", null, [], Type.Void(), FixedArray<ASTNode>())
+            bareCodeClass.methods.add(defaultCleanup)
+            bareCodeClass.symbolTable.add(defaultCleanup)
+        }
+    }
+
+    @pre(source !== null)
+    method error(position:Position, msg:String) {
+        compiler.error(source, position, msg)
+    }
+
+    method scan(source:File, file:ASTNode):ListView<ClassDecl> {
+        self.source := source
+        match file {
+            when ASTNode.FILE(entries) {
+                def result := Array<ClassDecl>()
+                var currentPackage := "anonymous"
+                def aliases := HashMap<String, String>()
+                for e in entries {
+                    match e {
+                        when ASTNode.PACKAGE(_, name) {
+                            currentPackage := name
+                        }
+                        when ASTNode.USES(_, fullName) {
+                            def idx := fullName.lastIndexOf(".")
+                            def alias:String
+                            if idx !== null {
+                                alias := fullName[fullName.next(idx)..]
+                            }
+                            else {
+                                alias := fullName
+                            }
+                            aliases[alias] := fullName
+                        }
+                        when ASTNode.CLASS(position, dc, annotations, kind, name, generics,
+                                supertypes, members) {
+                            def cl := scanClass(source, aliases, currentPackage, position, dc,
+                                    annotations, kind, name, generics, supertypes, members)
+                            if cl !== null {
+                                addClass(cl, result)
+                            }
+                        }
+                        when ASTNode.METHOD(position, dc, annotations, kind, rawName, generics,
+                                parameters, rawReturnType, statements) {
+                            if kind = MethodDecl.Kind.INIT {
+                                error(position, "'init' methods must be inside a class")
+                                continue
+                            }
+                            createBareCodeClass(source, aliases, currentPackage, result)
+                            def name:String
+                            if rawName = "main" {
+                                name := "$bareMain"
+                                def mainParameters := Array<MethodDecl.Parameter>()
+                                def mainStatements := Array<ASTNode>() -- FIXME literals
+                                def mainArguments := Array<ASTNode>()
+                                for p in parameters {
+                                    match p {
+                                        when ASTNode.PARAMETER(position, name, type) {
+                                            mainParameters.add(MethodDecl.Parameter(name,
+                                                    convertType(type)))
+                                            mainArguments.add(ASTNode.IDENTIFIER(position, name))
+                                        }
+                                        otherwise {
+                                            assert false
+                                        }
+                                    }
+                                }
+                                def bareConstruct := ASTNode.CALL(position,
+                                        ASTNode.IDENTIFIER(position, "BareCode"),
+                                        FixedArray<ASTNode>())
+                                mainStatements.add(ASTNode.CALL(position,
+                                        ASTNode.DOT(position, bareConstruct, name),
+                                        FixedArray<ASTNode>.from(mainArguments)))
+                                def returnType:Type
+                                if rawReturnType !== null {
+                                    returnType := convertType(rawReturnType)
+                                }
+                                else {
+                                    returnType := Type.Void()
+                                }
+                                def bareMain := MethodDecl(bareCodeClass, Position(), null,
+                                        Annotations(Annotations.Flag.CLASS), MethodDecl.Kind.METHOD,
+                                        "main", null, mainParameters, returnType,
+                                        FixedArray<ASTNode>.from(mainStatements))
+                                bareCodeClass.methods.add(bareMain)
+                            }
+                            else {
+                                name := rawName
+                            }
+                            compiler.currentClass.push(bareCodeClass)
+                            def m := scanMethod(bareCodeClass, position, dc, annotations,
+                                    kind, name, generics, parameters, rawReturnType, statements)
+                            if m.annotations.isClass {
+                                error(m.position, "'@class' annotation may not be used outside " +
+                                        "of a class")
+                                m.annotations.flags &&= !!Annotations.Flag.CLASS
+                            }
+                            assert compiler.currentClass[0] == bareCodeClass
+                            compiler.currentClass.pop()
+                            bareCodeClass.methods.add(m)
+                            bareCodeClass.symbolTable.add(m)
+                        }
+                        when ASTNode.FIELD(position, dc, annotations, varDecl) {
+                            createBareCodeClass(source, aliases, currentPackage, result)
+                            def old := bareCodeClass.fields.count
+                            scanFields(bareCodeClass, position, dc, annotations, varDecl)
+                            for i in old .. bareCodeClass.fields.count {
+                                def f := bareCodeClass.fields[i]
+                                if f.fieldKind != FieldDecl.Kind.CONSTANT &
+                                        f.annotations.isClass {
+                                    error(f.position, "'@class' annotation may not be used " +
+                                            "outside of a class")
+                                }
+                            }
+                        }
+                        otherwise {
+                            assert false, "unsupported: \{e}(\{e.$rawValue}):\{e.position()}"
+                        }
+                    }
+                }
+                self.source := null
+                return result
+            }
+            otherwise {
+                assert false
+            }
+        }
+    }
+}

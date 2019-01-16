@@ -1,0 +1,49 @@
+package org.frostlang.plex
+
+class SetNode : Node {
+    var inverse := false
+
+    def contents := Array<Node>()
+
+    init() {
+        super.init(SET)
+    }
+
+    @class
+    method set(table:List<Bit>, c:Char8) {
+        def i := c.convert()->Int64
+        while table.count <= i {
+            table.add(false)
+        }
+        table[i] := true
+    }
+
+    @override
+    method makeStartStates(context:NFA, accept:ListView<Int>):Array<Int> {
+        def table := Array<Bit>()
+        for n in contents {
+            if n.kind = Node.SINGLECHAR {
+                set(table, (n->SingleChar).value) -- FIXME remove ()
+            }
+            else {
+                def cs := n->CharSet
+                for c in cs.contents {
+                    set(table, c)
+                }
+            }
+        }
+        return Regex.singleton(context.addState(TableState(inverse, ImmutableArray<Bit>(table),
+                accept)))
+    }
+
+    @override
+    function convert():String {
+        var result := MutableString()
+        result.append("[")
+        for c in contents {
+            result.append(c)
+        }
+        result.append("]")
+        return result.finish()
+    }
+}

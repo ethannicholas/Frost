@@ -1,0 +1,12 @@
+#pragma once
+#include "frost_c.h"
+#include "_Closure28_types.h"
+typedef struct org$frostlang$frostc$frostdoc$Markdown$_Closure28 org$frostlang$frostc$frostdoc$Markdown$_Closure28;
+typedef struct org$frostlang$frostc$frostdoc$Markdown org$frostlang$frostc$frostdoc$Markdown;
+typedef struct frost$core$String frost$core$String;
+typedef struct frost$collections$ListView frost$collections$ListView;
+
+void org$frostlang$frostc$frostdoc$Markdown$_Closure28$init$org$frostlang$frostc$frostdoc$Markdown(org$frostlang$frostc$frostdoc$Markdown$_Closure28* self, org$frostlang$frostc$frostdoc$Markdown* p_$self);
+void org$frostlang$frostc$frostdoc$Markdown$_Closure28$cleanup(org$frostlang$frostc$frostdoc$Markdown$_Closure28* self);
+frost$core$String* org$frostlang$frostc$frostdoc$Markdown$_Closure28$$anonymous27$frost$collections$ListView$LTfrost$core$String$Q$GT$R$frost$core$String(org$frostlang$frostc$frostdoc$Markdown$_Closure28* self, frost$collections$ListView* p_groups);
+

@@ -1,0 +1,43 @@
+package org.frostlang.frostc.frostdoc
+
+uses org.frostlang.frostc.ClassDecl
+uses org.frostlang.frostc.CodeGenerator
+uses org.frostlang.frostc.Compiler
+uses org.frostlang.frostc.Compiler.Error
+uses org.frostlang.frostc.Compiler.Settings
+uses org.frostlang.frostc.Config
+uses org.frostlang.frostc.MethodDecl
+
+constant HEADER :=
+    "<html>" +
+    "  <head>\n" +
+    "    <link rel=\"stylesheet\" type=\"text/css\" href=\"frost-main.css\" />\n" +
+    "    <link rel=\"stylesheet\" type=\"text/css\" href=\"frostdoc.css\" />\n" +
+    "    <link rel=\"stylesheet\" type=\"text/css\" href=\"frostcode-light.css\" />\n" +
+    "  </head>\n" +
+    "  <body>\n" +
+    "    <div id=\"main\">" +
+    "      <!--TOCBEGIN--><!--TOCEND-->" +
+    "      <div id=\"content\">"
+
+constant FOOTER :=
+    "      </div>" +
+    "    </div>" +
+    "  </body>" +
+    "</html>"
+
+method main(args:ListView<String>) {
+    if args.count != 3 {
+        Console.errorStream().printLine("usage: frostmd <input.md> <output.html>")
+        System.exit(1)
+    }
+    def input := File(args[1])
+    def output := File(args[2])
+    output.parent.createDirectories()
+    def imports := Array<File>() -- FIXME literal
+    imports.add(File(Config.frostSourceDir()))
+    def settings := Settings(File(Config.frostSourceDir()), imports, 0, 0, true)
+    def compiler := Compiler(MessageQueue<Error>(), DummyCodeGenerator(), settings)
+    def resolve := LinkResolver(compiler, "api/").resolve
+    output.write(HEADER + Markdown(resolve).process(input.readFully()) + FOOTER)
+}

@@ -469,13 +469,13 @@ class Int64 : Value, Key<Int64>, Comparable<Int64>, Formattable, ListView<Bit> {
     @class
     @pre(range.max.convert()->UInt64 - range.min.convert()->UInt64 < Int64.MAX.convert()->UInt64)
     function [](range:Range<Int64>):ListView<Int64> {
-        return org.frostlanguage.frost.Int64List(SteppedRange<Int64, Int64>(range.min, range.max, 1, range.inclusive))
+        return org.frostlang.frost.Int64List(SteppedRange<Int64, Int64>(range.min, range.max, 1, range.inclusive))
     }
     ===Returns a list of all integers in the given stepped range. The list is 'lazy', meaning that it does not actually allocate memory to hold the entire list.===
     @class
-    @pre(org.frostlanguage.frost.Int64List.computeCount(range) > 0)
+    @pre(org.frostlang.frost.Int64List.computeCount(range) > 0)
     function [](range:SteppedRange<Int64, Int64>):ListView<Int64> {
-        return org.frostlanguage.frost.Int64List(range)
+        return org.frostlang.frost.Int64List(range)
     }
 
     ===Returns a single bit from this number, where index 0 is the least significant bit.===
@@ -492,7 +492,7 @@ class Int64 : Value, Key<Int64>, Comparable<Int64>, Formattable, ListView<Bit> {
 
     @override
     function get_iterator():Iterator<Bit> {
-        return org.frostlanguage.frost.IntBitIterator(self.convert()->UInt64, 1 << 63)
+        return org.frostlang.frost.IntBitIterator(self.convert()->UInt64, 1 << 63)
     }
 
     @override

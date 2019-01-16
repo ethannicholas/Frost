@@ -1,0 +1,47 @@
+package org.frostlang.frostc.expression
+
+uses org.frostlang.frostc.ASTNode
+uses org.frostlang.frostc.Compiler
+uses org.frostlang.frostc.Compiler.AutoUnrefs
+uses org.frostlang.frostc.Compiler.TypeContext
+uses org.frostlang.frostc.IR
+uses org.frostlang.frostc.Position
+uses org.frostlang.frostc.Type
+
+class And {
+    @class
+    method compile(compiler:Compiler, position:Position, left:ASTNode, right:ASTNode,
+            type:TypeContext):IR.Value? {
+        def ir := compiler.ir
+        -- FIXME should add phis so we can avoid using a local
+        def result := IR.Value.LOCAL(ir.locals.count, Type.Bit())
+        ir.locals.add(Type.Bit())
+        def compiledLeft:IR.Value?
+        compiledLeft := compiler.compileExpression(left, TypeContext.TYPE(Type.Bit()))
+        if compiledLeft == null {
+            return null
+        }
+        def ifTrue := ir.newBlock("and true")
+        def ifFalse := ir.newBlock("and false")
+        def merge := ir.newBlock("and merge")
+        ir.add(IR.Statement.CONDITIONAL_BRANCH(position,
+                compiler.extractBuiltinBit(position, compiledLeft), ifTrue, ifFalse))
+        ir.setCurrentBlock(ifTrue)
+        def compiledRight:IR.Value?
+        {
+            def unrefs := AutoUnrefs(compiler)
+            compiledRight := compiler.compileExpression(right, TypeContext.TYPE(Type.Bit()))
+            if compiledRight == null {
+                return null
+            }
+        }
+        ir.add(IR.Statement.STORE(position, compiledRight, result))
+        ir.add(IR.Statement.BRANCH(position, merge))
+        ir.setCurrentBlock(ifFalse)
+        ir.add(IR.Statement.STORE(position, compiledLeft, result))
+        ir.add(IR.Statement.BRANCH(position, merge))
+        ir.setCurrentBlock(merge)
+        def load := ir.add(IR.Statement.LOAD(position, result))
+        return IR.Value.REF(load, Type.Bit())
+    }
+}

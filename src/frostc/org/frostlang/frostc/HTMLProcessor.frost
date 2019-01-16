@@ -1,0 +1,116 @@
+package org.frostlang.frostc
+
+uses org.frostlang.frostc.parser.Parser
+uses org.frostlang.frostc.parser.SyntaxHighlighter
+
+class HTMLProcessor {
+    @private
+    method prettyPrint(parser:Parser):String {
+        def result := MutableString("<span class=\"frostcode\">")
+        var current := SyntaxHighlighter.Kind.DEFAULT
+        for t in parser.syntaxHighlighter.tokens {
+            if t.second != current & current != SyntaxHighlighter.Kind.DEFAULT {
+                result.append("</span>")
+            }
+            if t.second != current {
+                current := t.second
+                match current {
+                    when SyntaxHighlighter.Kind.DEFAULT {
+                        -- do nithing
+                    }
+                    when SyntaxHighlighter.Kind.COMMENT, SyntaxHighlighter.Kind.DOC_COMMENT {
+                        result.append("<span class=\"comment\">")
+                    }
+                    when SyntaxHighlighter.Kind.ANNOTATION {
+                        result.append("<span class=\"annotation\">")
+                    }
+                    when SyntaxHighlighter.Kind.METHOD_NAME {
+                        result.append("<span class=\"methodName\">")
+                    }
+                    when SyntaxHighlighter.Kind.METHOD_PARAMETER {
+                        result.append("<span class=\"parameterName\">")
+                    }
+                    when SyntaxHighlighter.Kind.TYPE {
+                        result.append("<span class=\"type\">")
+                    }
+                    when SyntaxHighlighter.Kind.KEYWORD {
+                        result.append("<span class=\"keyword\">")
+                    }
+                    when SyntaxHighlighter.Kind.CONTROL_KEYWORD {
+                        result.append("<span class=\"control\">")
+                    }
+                    when SyntaxHighlighter.Kind.LITERAL {
+                        result.append("<span class=\"literal\">")
+                    }
+                    when SyntaxHighlighter.Kind.STRING {
+                        result.append("<span class=\"string\">")
+                    }
+                    when SyntaxHighlighter.Kind.OPERATOR {
+                        result.append("<span class=\"operator\">")
+                    }
+                    when SyntaxHighlighter.Kind.LABEL {
+                        result.append("<span class=\"label\">")
+                    }
+                    otherwise {
+                        assert false
+                    }
+                }
+            }
+            def s := MutableString(parser.text(t.first))
+            s.replace("&", "&amp;")
+            s.replace("<", "&lt;")
+            s.replace(">", "&gt;")
+            if current != SyntaxHighlighter.Kind.COMMENT &
+                    current != SyntaxHighlighter.Kind.DOC_COMMENT {
+                result.append("<span class=\"\{t.first.kind}\">")
+            }
+            result.append(s)
+            if current != SyntaxHighlighter.Kind.COMMENT &
+                    current != SyntaxHighlighter.Kind.DOC_COMMENT {
+                result.append("</span>")
+            }
+        }
+        if current != SyntaxHighlighter.Kind.DEFAULT {
+            result.append("</span>")
+        }
+        result.append("</span>")
+        return result.finish()
+    }
+
+    method process(input:File, output:File, root:String) {
+        def errors := MessageQueue<Compiler.Error>()
+        def parser := Parser(errors)
+        parser.syntaxHighlighter := SyntaxHighlighter()
+        parser.start(input, input.readFully())
+        if parser.file() == null {
+            while errors.hasMessage() {
+                Console.printLine(errors.getMessage())
+            }
+        }
+        def lines := prettyPrint(parser).split("\n")
+        def width := lines.count.convert()->String.length
+        def highlighted := MutableString()
+        for i in 0 .. lines.count {
+            def lineNumber := (i + 1).convert()->String.rightAlign(width)
+            highlighted.append("<span class=\"lineNumber\">\{lineNumber}</span>  \{lines[i]}\n")
+        }
+        def out := output.openOutputStream()
+        out.printLine("<html>")
+        out.printLine("  <head>")
+        out.printLine("    <link rel=\"stylesheet\" type=\"text/css\" href=\"\{root}/frost-main.css\" />")
+        out.printLine("    <link rel=\"stylesheet\" type=\"text/css\" href=\"\{root}/frost-source.css\" />")
+        out.printLine("    <link rel=\"stylesheet\" type=\"text/css\" href=\"\{root}/frostcode-monokai.css\" />")
+        out.printLine("  </head>")
+        out.printLine("  <body>")
+        out.printLine("    <div id=\"main\">")
+        out.printLine("      <!--TOCBEGIN--><!--TOCEND-->")
+        out.printLine("      <div id=\"content\">")
+        out.printLine("        <pre><code class=\"frostcode\">")
+        out.print(highlighted.finish())
+        out.printLine("        </code></pre>")
+        out.printLine("      </div>")
+        out.printLine("    </div>")
+        out.printLine("  </body>")
+        out.printLine("</html>")
+    }
+}

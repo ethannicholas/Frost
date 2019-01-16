@@ -1,0 +1,32 @@
+package org.frostlang.frostc.expression
+
+uses org.frostlang.frostc.ASTNode
+uses org.frostlang.frostc.Compiler
+uses org.frostlang.frostc.Compiler.TypeContext
+uses org.frostlang.frostc.IR
+uses org.frostlang.frostc.Position
+uses org.frostlang.frostc.Type
+
+class Identifier {
+    @class
+    method compile(compiler:Compiler, position:Position, name:String):IR.Value? {
+        if name = Compiler.FORCE_SELF_NAME {
+            def s := compiler.symbolTable[Compiler.SELF_NAME]
+            assert s !== null, "no 'self' in symboltable"
+            return compiler.symbolRef(position, null, s)
+        }
+        def s := compiler.symbolTable[name]
+        if s == null {
+            def cl := compiler.tryResolveClass(name)
+            if cl !== null {
+                compiler.checkGenericArguments(position, cl, cl.type)
+                return IR.Value.TYPE(cl.type)
+            }
+        }
+        if s !== null {
+            return compiler.symbolRef(position, null, s)
+        }
+        compiler.error(position, "unknown identifier")
+        return null
+    }
+}

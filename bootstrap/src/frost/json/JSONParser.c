@@ -4,10 +4,10 @@
 #include "frost/core/String.h"
 #include "frost/json/JSON.h"
 #include "frost/core/Frost.h"
-#include "org/frostlanguage/json/Lexer.h"
-#include "org/frostlanguage/json/Token.h"
+#include "org/frostlang/json/Lexer.h"
+#include "org/frostlang/json/Token.h"
 #include "frost/core/Bit.h"
-#include "org/frostlanguage/json/Token/Kind.h"
+#include "org/frostlang/json/Token/Kind.h"
 #include "frost/core/Equatable.h"
 #include "frost/core/Int64.h"
 #include "frost/core/String/Index.h"
@@ -21,7 +21,7 @@
 
 
 static frost$core$String $s1;
-frost$json$JSONParser$class_type frost$json$JSONParser$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { frost$core$Object$convert$R$frost$core$String, frost$json$JSONParser$cleanup, frost$json$JSONParser$parse$frost$core$String$R$frost$json$JSON$Q, frost$json$JSONParser$next$R$org$frostlanguage$json$Token, frost$json$JSONParser$pushback$org$frostlanguage$json$Token, frost$json$JSONParser$peek$R$org$frostlanguage$json$Token, frost$json$JSONParser$checkNext$org$frostlanguage$json$Token$Kind$R$org$frostlanguage$json$Token$Q, frost$json$JSONParser$text$org$frostlanguage$json$Token$R$frost$core$String, frost$json$JSONParser$array$R$frost$json$JSON, frost$json$JSONParser$object$R$frost$json$JSON, frost$json$JSONParser$string$R$frost$core$String, frost$json$JSONParser$node$R$frost$json$JSON} };
+frost$json$JSONParser$class_type frost$json$JSONParser$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { frost$core$Object$convert$R$frost$core$String, frost$json$JSONParser$cleanup, frost$json$JSONParser$parse$frost$core$String$R$frost$json$JSON$Q, frost$json$JSONParser$next$R$org$frostlang$json$Token, frost$json$JSONParser$pushback$org$frostlang$json$Token, frost$json$JSONParser$peek$R$org$frostlang$json$Token, frost$json$JSONParser$checkNext$org$frostlang$json$Token$Kind$R$org$frostlang$json$Token$Q, frost$json$JSONParser$text$org$frostlang$json$Token$R$frost$core$String, frost$json$JSONParser$array$R$frost$json$JSON, frost$json$JSONParser$object$R$frost$json$JSON, frost$json$JSONParser$string$R$frost$core$String, frost$json$JSONParser$node$R$frost$json$JSON} };
 
 typedef frost$core$Bit (*$fn27)(frost$core$Equatable*, frost$core$Equatable*);
 typedef frost$core$Bit (*$fn51)(frost$core$Equatable*, frost$core$Equatable*);
@@ -61,9 +61,9 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp3));
 frost$core$String** $tmp4 = &param0->source;
 *$tmp4 = param1;
 // line 27
-org$frostlanguage$json$Lexer** $tmp5 = &param0->lexer;
-org$frostlanguage$json$Lexer* $tmp6 = *$tmp5;
-org$frostlanguage$json$Lexer$start$frost$core$String($tmp6, param1);
+org$frostlang$json$Lexer** $tmp5 = &param0->lexer;
+org$frostlang$json$Lexer* $tmp6 = *$tmp5;
+org$frostlang$json$Lexer$start$frost$core$String($tmp6, param1);
 // line 28
 frost$json$JSON* $tmp7 = frost$json$JSONParser$node$R$frost$json$JSON(param0);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp7));
@@ -72,45 +72,45 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp7));
 return $tmp7;
 
 }
-org$frostlanguage$json$Token frost$json$JSONParser$next$R$org$frostlanguage$json$Token(frost$json$JSONParser* param0) {
+org$frostlang$json$Token frost$json$JSONParser$next$R$org$frostlang$json$Token(frost$json$JSONParser* param0) {
 
-org$frostlanguage$json$Token$nullable local0;
-org$frostlanguage$json$Token local1;
+org$frostlang$json$Token$nullable local0;
+org$frostlang$json$Token local1;
 // line 33
-org$frostlanguage$json$Token$nullable* $tmp8 = &param0->pushbackToken;
-org$frostlanguage$json$Token$nullable $tmp9 = *$tmp8;
+org$frostlang$json$Token$nullable* $tmp8 = &param0->pushbackToken;
+org$frostlang$json$Token$nullable $tmp9 = *$tmp8;
 frost$core$Bit $tmp10 = frost$core$Bit$init$builtin_bit($tmp9.nonnull);
 bool $tmp11 = $tmp10.value;
 if ($tmp11) goto block1; else goto block2;
 block1:;
 // line 34
-org$frostlanguage$json$Token$nullable* $tmp12 = &param0->pushbackToken;
-org$frostlanguage$json$Token$nullable $tmp13 = *$tmp12;
+org$frostlang$json$Token$nullable* $tmp12 = &param0->pushbackToken;
+org$frostlang$json$Token$nullable $tmp13 = *$tmp12;
 *(&local0) = $tmp13;
 // line 35
-org$frostlanguage$json$Token$nullable* $tmp14 = &param0->pushbackToken;
-*$tmp14 = ((org$frostlanguage$json$Token$nullable) { .nonnull = false });
+org$frostlang$json$Token$nullable* $tmp14 = &param0->pushbackToken;
+*$tmp14 = ((org$frostlang$json$Token$nullable) { .nonnull = false });
 // line 36
-org$frostlanguage$json$Token$nullable $tmp15 = *(&local0);
-return ((org$frostlanguage$json$Token) $tmp15.value);
+org$frostlang$json$Token$nullable $tmp15 = *(&local0);
+return ((org$frostlang$json$Token) $tmp15.value);
 block2:;
 // line 38
-org$frostlanguage$json$Lexer** $tmp16 = &param0->lexer;
-org$frostlanguage$json$Lexer* $tmp17 = *$tmp16;
-org$frostlanguage$json$Token $tmp18 = org$frostlanguage$json$Lexer$next$R$org$frostlanguage$json$Token($tmp17);
+org$frostlang$json$Lexer** $tmp16 = &param0->lexer;
+org$frostlang$json$Lexer* $tmp17 = *$tmp16;
+org$frostlang$json$Token $tmp18 = org$frostlang$json$Lexer$next$R$org$frostlang$json$Token($tmp17);
 *(&local1) = $tmp18;
 // line 39
 goto block3;
 block3:;
-org$frostlanguage$json$Token $tmp19 = *(&local1);
-org$frostlanguage$json$Token$Kind $tmp20 = $tmp19.kind;
-org$frostlanguage$json$Token$Kind$wrapper* $tmp21;
-$tmp21 = (org$frostlanguage$json$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlanguage$json$Token$Kind$wrapperclass);
+org$frostlang$json$Token $tmp19 = *(&local1);
+org$frostlang$json$Token$Kind $tmp20 = $tmp19.kind;
+org$frostlang$json$Token$Kind$wrapper* $tmp21;
+$tmp21 = (org$frostlang$json$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$json$Token$Kind$wrapperclass);
 $tmp21->value = $tmp20;
 frost$core$Int64 $tmp22 = (frost$core$Int64) {6};
-org$frostlanguage$json$Token$Kind $tmp23 = org$frostlanguage$json$Token$Kind$init$frost$core$Int64($tmp22);
-org$frostlanguage$json$Token$Kind$wrapper* $tmp24;
-$tmp24 = (org$frostlanguage$json$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlanguage$json$Token$Kind$wrapperclass);
+org$frostlang$json$Token$Kind $tmp23 = org$frostlang$json$Token$Kind$init$frost$core$Int64($tmp22);
+org$frostlang$json$Token$Kind$wrapper* $tmp24;
+$tmp24 = (org$frostlang$json$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$json$Token$Kind$wrapperclass);
 $tmp24->value = $tmp23;
 ITable* $tmp25 = ((frost$core$Equatable*) $tmp21)->$class->itable;
 while ($tmp25->$class != (frost$core$Class*) &frost$core$Equatable$class) {
@@ -122,26 +122,26 @@ bool $tmp29 = $tmp28.value;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Equatable*) $tmp24)));
 // unreffing REF($31:frost.core.Equatable.T)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Equatable*) $tmp21)));
-// unreffing REF($27:frost.core.Equatable<org.frostlanguage.json.Token.Kind>)
+// unreffing REF($27:frost.core.Equatable<org.frostlang.json.Token.Kind>)
 if ($tmp29) goto block4; else goto block5;
 block4:;
 // line 40
-org$frostlanguage$json$Lexer** $tmp30 = &param0->lexer;
-org$frostlanguage$json$Lexer* $tmp31 = *$tmp30;
-org$frostlanguage$json$Token $tmp32 = org$frostlanguage$json$Lexer$next$R$org$frostlanguage$json$Token($tmp31);
+org$frostlang$json$Lexer** $tmp30 = &param0->lexer;
+org$frostlang$json$Lexer* $tmp31 = *$tmp30;
+org$frostlang$json$Token $tmp32 = org$frostlang$json$Lexer$next$R$org$frostlang$json$Token($tmp31);
 *(&local1) = $tmp32;
 goto block3;
 block5:;
 // line 42
-org$frostlanguage$json$Token $tmp33 = *(&local1);
+org$frostlang$json$Token $tmp33 = *(&local1);
 return $tmp33;
 
 }
-void frost$json$JSONParser$pushback$org$frostlanguage$json$Token(frost$json$JSONParser* param0, org$frostlanguage$json$Token param1) {
+void frost$json$JSONParser$pushback$org$frostlang$json$Token(frost$json$JSONParser* param0, org$frostlang$json$Token param1) {
 
 // line 47
-org$frostlanguage$json$Token$nullable* $tmp34 = &param0->pushbackToken;
-org$frostlanguage$json$Token$nullable $tmp35 = *$tmp34;
+org$frostlang$json$Token$nullable* $tmp34 = &param0->pushbackToken;
+org$frostlang$json$Token$nullable $tmp35 = *$tmp34;
 frost$core$Bit $tmp36 = frost$core$Bit$init$builtin_bit(!$tmp35.nonnull);
 bool $tmp37 = $tmp36.value;
 if ($tmp37) goto block1; else goto block2;
@@ -151,39 +151,39 @@ frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s39, $tmp
 abort(); // unreachable
 block1:;
 // line 48
-org$frostlanguage$json$Token$nullable* $tmp40 = &param0->pushbackToken;
-*$tmp40 = ((org$frostlanguage$json$Token$nullable) { param1, true });
+org$frostlang$json$Token$nullable* $tmp40 = &param0->pushbackToken;
+*$tmp40 = ((org$frostlang$json$Token$nullable) { param1, true });
 return;
 
 }
-org$frostlanguage$json$Token frost$json$JSONParser$peek$R$org$frostlanguage$json$Token(frost$json$JSONParser* param0) {
+org$frostlang$json$Token frost$json$JSONParser$peek$R$org$frostlang$json$Token(frost$json$JSONParser* param0) {
 
-org$frostlanguage$json$Token local0;
+org$frostlang$json$Token local0;
 // line 53
-org$frostlanguage$json$Token $tmp41 = frost$json$JSONParser$next$R$org$frostlanguage$json$Token(param0);
+org$frostlang$json$Token $tmp41 = frost$json$JSONParser$next$R$org$frostlang$json$Token(param0);
 *(&local0) = $tmp41;
 // line 54
-org$frostlanguage$json$Token $tmp42 = *(&local0);
-frost$json$JSONParser$pushback$org$frostlanguage$json$Token(param0, $tmp42);
+org$frostlang$json$Token $tmp42 = *(&local0);
+frost$json$JSONParser$pushback$org$frostlang$json$Token(param0, $tmp42);
 // line 55
-org$frostlanguage$json$Token $tmp43 = *(&local0);
+org$frostlang$json$Token $tmp43 = *(&local0);
 return $tmp43;
 
 }
-org$frostlanguage$json$Token$nullable frost$json$JSONParser$checkNext$org$frostlanguage$json$Token$Kind$R$org$frostlanguage$json$Token$Q(frost$json$JSONParser* param0, org$frostlanguage$json$Token$Kind param1) {
+org$frostlang$json$Token$nullable frost$json$JSONParser$checkNext$org$frostlang$json$Token$Kind$R$org$frostlang$json$Token$Q(frost$json$JSONParser* param0, org$frostlang$json$Token$Kind param1) {
 
-org$frostlanguage$json$Token local0;
+org$frostlang$json$Token local0;
 // line 60
-org$frostlanguage$json$Token $tmp44 = frost$json$JSONParser$next$R$org$frostlanguage$json$Token(param0);
+org$frostlang$json$Token $tmp44 = frost$json$JSONParser$next$R$org$frostlang$json$Token(param0);
 *(&local0) = $tmp44;
 // line 61
-org$frostlanguage$json$Token $tmp45 = *(&local0);
-org$frostlanguage$json$Token$Kind $tmp46 = $tmp45.kind;
-org$frostlanguage$json$Token$Kind$wrapper* $tmp47;
-$tmp47 = (org$frostlanguage$json$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlanguage$json$Token$Kind$wrapperclass);
+org$frostlang$json$Token $tmp45 = *(&local0);
+org$frostlang$json$Token$Kind $tmp46 = $tmp45.kind;
+org$frostlang$json$Token$Kind$wrapper* $tmp47;
+$tmp47 = (org$frostlang$json$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$json$Token$Kind$wrapperclass);
 $tmp47->value = $tmp46;
-org$frostlanguage$json$Token$Kind$wrapper* $tmp48;
-$tmp48 = (org$frostlanguage$json$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlanguage$json$Token$Kind$wrapperclass);
+org$frostlang$json$Token$Kind$wrapper* $tmp48;
+$tmp48 = (org$frostlang$json$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$json$Token$Kind$wrapperclass);
 $tmp48->value = param1;
 ITable* $tmp49 = ((frost$core$Equatable*) $tmp47)->$class->itable;
 while ($tmp49->$class != (frost$core$Class*) &frost$core$Equatable$class) {
@@ -195,21 +195,21 @@ bool $tmp53 = $tmp52.value;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Equatable*) $tmp48)));
 // unreffing REF($8:frost.core.Equatable.T)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Equatable*) $tmp47)));
-// unreffing REF($6:frost.core.Equatable<org.frostlanguage.json.Token.Kind>)
+// unreffing REF($6:frost.core.Equatable<org.frostlang.json.Token.Kind>)
 if ($tmp53) goto block1; else goto block2;
 block1:;
 // line 62
-org$frostlanguage$json$Token $tmp54 = *(&local0);
-return ((org$frostlanguage$json$Token$nullable) { $tmp54, true });
+org$frostlang$json$Token $tmp54 = *(&local0);
+return ((org$frostlang$json$Token$nullable) { $tmp54, true });
 block2:;
 // line 64
-org$frostlanguage$json$Token $tmp55 = *(&local0);
-frost$json$JSONParser$pushback$org$frostlanguage$json$Token(param0, $tmp55);
+org$frostlang$json$Token $tmp55 = *(&local0);
+frost$json$JSONParser$pushback$org$frostlang$json$Token(param0, $tmp55);
 // line 65
-return ((org$frostlanguage$json$Token$nullable) { .nonnull = false });
+return ((org$frostlang$json$Token$nullable) { .nonnull = false });
 
 }
-frost$core$String* frost$json$JSONParser$text$org$frostlanguage$json$Token$R$frost$core$String(frost$json$JSONParser* param0, org$frostlanguage$json$Token param1) {
+frost$core$String* frost$json$JSONParser$text$org$frostlang$json$Token$R$frost$core$String(frost$json$JSONParser* param0, org$frostlang$json$Token param1) {
 
 // line 70
 frost$core$String** $tmp56 = &param0->source;
@@ -230,8 +230,8 @@ frost$json$JSON* frost$json$JSONParser$array$R$frost$json$JSON(frost$json$JSONPa
 frost$collections$Array* local0 = NULL;
 // line 75
 frost$core$Int64 $tmp63 = (frost$core$Int64) {13};
-org$frostlanguage$json$Token$Kind $tmp64 = org$frostlanguage$json$Token$Kind$init$frost$core$Int64($tmp63);
-org$frostlanguage$json$Token$nullable $tmp65 = frost$json$JSONParser$checkNext$org$frostlanguage$json$Token$Kind$R$org$frostlanguage$json$Token$Q(param0, $tmp64);
+org$frostlang$json$Token$Kind $tmp64 = org$frostlang$json$Token$Kind$init$frost$core$Int64($tmp63);
+org$frostlang$json$Token$nullable $tmp65 = frost$json$JSONParser$checkNext$org$frostlang$json$Token$Kind$R$org$frostlang$json$Token$Q(param0, $tmp64);
 frost$core$Bit $tmp66 = frost$core$Bit$init$builtin_bit($tmp65.nonnull);
 bool $tmp67 = $tmp66.value;
 if ($tmp67) goto block1; else goto block2;
@@ -270,8 +270,8 @@ frost$collections$Array$add$frost$collections$Array$T($tmp74, ((frost$core$Objec
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp75));
 // unreffing REF($45:frost.json.JSON)
 // line 81
-org$frostlanguage$json$Token $tmp76 = frost$json$JSONParser$next$R$org$frostlanguage$json$Token(param0);
-org$frostlanguage$json$Token$Kind $tmp77 = $tmp76.kind;
+org$frostlang$json$Token $tmp76 = frost$json$JSONParser$next$R$org$frostlang$json$Token(param0);
+org$frostlang$json$Token$Kind $tmp77 = $tmp76.kind;
 frost$core$Int64 $tmp78 = $tmp77.$rawValue;
 frost$core$Int64 $tmp79 = (frost$core$Int64) {13};
 frost$core$Bit $tmp80 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp78, $tmp79);
@@ -328,11 +328,11 @@ frost$json$JSON* frost$json$JSONParser$object$R$frost$json$JSON(frost$json$JSONP
 
 frost$collections$HashMap* local0 = NULL;
 frost$core$String* local1 = NULL;
-org$frostlanguage$json$Token local2;
+org$frostlang$json$Token local2;
 // line 97
 frost$core$Int64 $tmp99 = (frost$core$Int64) {11};
-org$frostlanguage$json$Token$Kind $tmp100 = org$frostlanguage$json$Token$Kind$init$frost$core$Int64($tmp99);
-org$frostlanguage$json$Token$nullable $tmp101 = frost$json$JSONParser$checkNext$org$frostlanguage$json$Token$Kind$R$org$frostlanguage$json$Token$Q(param0, $tmp100);
+org$frostlang$json$Token$Kind $tmp100 = org$frostlang$json$Token$Kind$init$frost$core$Int64($tmp99);
+org$frostlang$json$Token$nullable $tmp101 = frost$json$JSONParser$checkNext$org$frostlang$json$Token$Kind$R$org$frostlang$json$Token$Q(param0, $tmp100);
 frost$core$Bit $tmp102 = frost$core$Bit$init$builtin_bit($tmp101.nonnull);
 bool $tmp103 = $tmp102.value;
 if ($tmp103) goto block1; else goto block2;
@@ -373,18 +373,18 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp110));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp109));
 // unreffing REF($42:frost.core.String)
 // line 103
-org$frostlanguage$json$Token $tmp111 = frost$json$JSONParser$next$R$org$frostlanguage$json$Token(param0);
+org$frostlang$json$Token $tmp111 = frost$json$JSONParser$next$R$org$frostlang$json$Token(param0);
 *(&local2) = $tmp111;
 // line 104
-org$frostlanguage$json$Token $tmp112 = *(&local2);
-org$frostlanguage$json$Token$Kind $tmp113 = $tmp112.kind;
-org$frostlanguage$json$Token$Kind$wrapper* $tmp114;
-$tmp114 = (org$frostlanguage$json$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlanguage$json$Token$Kind$wrapperclass);
+org$frostlang$json$Token $tmp112 = *(&local2);
+org$frostlang$json$Token$Kind $tmp113 = $tmp112.kind;
+org$frostlang$json$Token$Kind$wrapper* $tmp114;
+$tmp114 = (org$frostlang$json$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$json$Token$Kind$wrapperclass);
 $tmp114->value = $tmp113;
 frost$core$Int64 $tmp115 = (frost$core$Int64) {15};
-org$frostlanguage$json$Token$Kind $tmp116 = org$frostlanguage$json$Token$Kind$init$frost$core$Int64($tmp115);
-org$frostlanguage$json$Token$Kind$wrapper* $tmp117;
-$tmp117 = (org$frostlanguage$json$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlanguage$json$Token$Kind$wrapperclass);
+org$frostlang$json$Token$Kind $tmp116 = org$frostlang$json$Token$Kind$init$frost$core$Int64($tmp115);
+org$frostlang$json$Token$Kind$wrapper* $tmp117;
+$tmp117 = (org$frostlang$json$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$json$Token$Kind$wrapperclass);
 $tmp117->value = $tmp116;
 ITable* $tmp118 = ((frost$core$Equatable*) $tmp114)->$class->itable;
 while ($tmp118->$class != (frost$core$Class*) &frost$core$Equatable$class) {
@@ -396,7 +396,7 @@ bool $tmp122 = $tmp121.value;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Equatable*) $tmp117)));
 // unreffing REF($63:frost.core.Equatable.T)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Equatable*) $tmp114)));
-// unreffing REF($59:frost.core.Equatable<org.frostlanguage.json.Token.Kind>)
+// unreffing REF($59:frost.core.Equatable<org.frostlang.json.Token.Kind>)
 if ($tmp122) goto block5; else goto block6;
 block5:;
 // line 105
@@ -418,8 +418,8 @@ frost$collections$HashMap$$IDXEQ$frost$collections$HashMap$K$frost$collections$H
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp130));
 // unreffing REF($87:frost.json.JSON)
 // line 108
-org$frostlanguage$json$Token $tmp131 = frost$json$JSONParser$next$R$org$frostlanguage$json$Token(param0);
-org$frostlanguage$json$Token$Kind $tmp132 = $tmp131.kind;
+org$frostlang$json$Token $tmp131 = frost$json$JSONParser$next$R$org$frostlang$json$Token(param0);
+org$frostlang$json$Token$Kind $tmp132 = $tmp131.kind;
 frost$core$Int64 $tmp133 = $tmp132.$rawValue;
 frost$core$Int64 $tmp134 = (frost$core$Int64) {11};
 frost$core$Bit $tmp135 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp133, $tmp134);
@@ -486,21 +486,21 @@ abort(); // unreachable
 }
 frost$core$String* frost$json$JSONParser$string$R$frost$core$String(frost$json$JSONParser* param0) {
 
-org$frostlanguage$json$Token local0;
+org$frostlang$json$Token local0;
 frost$core$String* local1 = NULL;
 // line 124
-org$frostlanguage$json$Token $tmp157 = frost$json$JSONParser$next$R$org$frostlanguage$json$Token(param0);
+org$frostlang$json$Token $tmp157 = frost$json$JSONParser$next$R$org$frostlang$json$Token(param0);
 *(&local0) = $tmp157;
 // line 125
-org$frostlanguage$json$Token $tmp158 = *(&local0);
-org$frostlanguage$json$Token$Kind $tmp159 = $tmp158.kind;
-org$frostlanguage$json$Token$Kind$wrapper* $tmp160;
-$tmp160 = (org$frostlanguage$json$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlanguage$json$Token$Kind$wrapperclass);
+org$frostlang$json$Token $tmp158 = *(&local0);
+org$frostlang$json$Token$Kind $tmp159 = $tmp158.kind;
+org$frostlang$json$Token$Kind$wrapper* $tmp160;
+$tmp160 = (org$frostlang$json$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$json$Token$Kind$wrapperclass);
 $tmp160->value = $tmp159;
 frost$core$Int64 $tmp161 = (frost$core$Int64) {3};
-org$frostlanguage$json$Token$Kind $tmp162 = org$frostlanguage$json$Token$Kind$init$frost$core$Int64($tmp161);
-org$frostlanguage$json$Token$Kind$wrapper* $tmp163;
-$tmp163 = (org$frostlanguage$json$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlanguage$json$Token$Kind$wrapperclass);
+org$frostlang$json$Token$Kind $tmp162 = org$frostlang$json$Token$Kind$init$frost$core$Int64($tmp161);
+org$frostlang$json$Token$Kind$wrapper* $tmp163;
+$tmp163 = (org$frostlang$json$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$json$Token$Kind$wrapperclass);
 $tmp163->value = $tmp162;
 ITable* $tmp164 = ((frost$core$Equatable*) $tmp160)->$class->itable;
 while ($tmp164->$class != (frost$core$Class*) &frost$core$Equatable$class) {
@@ -512,7 +512,7 @@ bool $tmp168 = $tmp167.value;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Equatable*) $tmp163)));
 // unreffing REF($10:frost.core.Equatable.T)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Equatable*) $tmp160)));
-// unreffing REF($6:frost.core.Equatable<org.frostlanguage.json.Token.Kind>)
+// unreffing REF($6:frost.core.Equatable<org.frostlang.json.Token.Kind>)
 if ($tmp168) goto block1; else goto block2;
 block1:;
 // line 126
@@ -521,8 +521,8 @@ bool $tmp170 = $tmp169.value;
 if ($tmp170) goto block3; else goto block4;
 block4:;
 frost$core$Int64 $tmp171 = (frost$core$Int64) {126};
-org$frostlanguage$json$Token $tmp172 = *(&local0);
-frost$core$String* $tmp173 = frost$json$JSONParser$text$org$frostlanguage$json$Token$R$frost$core$String(param0, $tmp172);
+org$frostlang$json$Token $tmp172 = *(&local0);
+frost$core$String* $tmp173 = frost$json$JSONParser$text$org$frostlang$json$Token$R$frost$core$String(param0, $tmp172);
 frost$core$String* $tmp174 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(&$s175, $tmp173);
 frost$core$String* $tmp176 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp174, &$s177);
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s178, $tmp171, $tmp176);
@@ -537,8 +537,8 @@ block3:;
 goto block2;
 block2:;
 // line 128
-org$frostlanguage$json$Token $tmp179 = *(&local0);
-frost$core$String* $tmp180 = frost$json$JSONParser$text$org$frostlanguage$json$Token$R$frost$core$String(param0, $tmp179);
+org$frostlang$json$Token $tmp179 = *(&local0);
+frost$core$String* $tmp180 = frost$json$JSONParser$text$org$frostlang$json$Token$R$frost$core$String(param0, $tmp179);
 *(&local1) = ((frost$core$String*) NULL);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp180));
 frost$core$String* $tmp181 = *(&local1);
@@ -571,14 +571,14 @@ return $tmp193;
 }
 frost$json$JSON* frost$json$JSONParser$node$R$frost$json$JSON(frost$json$JSONParser* param0) {
 
-org$frostlanguage$json$Token local0;
+org$frostlang$json$Token local0;
 frost$core$String* local1 = NULL;
 // line 134
-org$frostlanguage$json$Token $tmp195 = frost$json$JSONParser$next$R$org$frostlanguage$json$Token(param0);
+org$frostlang$json$Token $tmp195 = frost$json$JSONParser$next$R$org$frostlang$json$Token(param0);
 *(&local0) = $tmp195;
 // line 135
-org$frostlanguage$json$Token $tmp196 = *(&local0);
-org$frostlanguage$json$Token$Kind $tmp197 = $tmp196.kind;
+org$frostlang$json$Token $tmp196 = *(&local0);
+org$frostlang$json$Token$Kind $tmp197 = $tmp196.kind;
 frost$core$Int64 $tmp198 = $tmp197.$rawValue;
 frost$core$Int64 $tmp199 = (frost$core$Int64) {10};
 frost$core$Bit $tmp200 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp198, $tmp199);
@@ -610,8 +610,8 @@ bool $tmp209 = $tmp208.value;
 if ($tmp209) goto block6; else goto block7;
 block6:;
 // line 143
-org$frostlanguage$json$Token $tmp210 = *(&local0);
-frost$core$String* $tmp211 = frost$json$JSONParser$text$org$frostlanguage$json$Token$R$frost$core$String(param0, $tmp210);
+org$frostlang$json$Token $tmp210 = *(&local0);
+frost$core$String* $tmp211 = frost$json$JSONParser$text$org$frostlang$json$Token$R$frost$core$String(param0, $tmp210);
 *(&local1) = ((frost$core$String*) NULL);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp211));
 frost$core$String* $tmp212 = *(&local1);
@@ -654,8 +654,8 @@ block8:;
 // line 147
 frost$json$JSON* $tmp231 = (frost$json$JSON*) frostObjectAlloc(32, (frost$core$Class*) &frost$json$JSON$class);
 frost$core$Int64 $tmp232 = (frost$core$Int64) {0};
-org$frostlanguage$json$Token $tmp233 = *(&local0);
-frost$core$String* $tmp234 = frost$json$JSONParser$text$org$frostlanguage$json$Token$R$frost$core$String(param0, $tmp233);
+org$frostlang$json$Token $tmp233 = *(&local0);
+frost$core$String* $tmp234 = frost$json$JSONParser$text$org$frostlang$json$Token$R$frost$core$String(param0, $tmp233);
 frost$core$Int64$nullable $tmp235 = frost$core$String$convert$R$frost$core$Int64$Q($tmp234);
 frost$json$JSON$init$frost$core$Int64$frost$core$Int64($tmp231, $tmp232, ((frost$core$Int64) $tmp235.value));
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp231));
@@ -673,8 +673,8 @@ block10:;
 // line 150
 frost$json$JSON* $tmp239 = (frost$json$JSON*) frostObjectAlloc(32, (frost$core$Class*) &frost$json$JSON$class);
 frost$core$Int64 $tmp240 = (frost$core$Int64) {1};
-org$frostlanguage$json$Token $tmp241 = *(&local0);
-frost$core$String* $tmp242 = frost$json$JSONParser$text$org$frostlanguage$json$Token$R$frost$core$String(param0, $tmp241);
+org$frostlang$json$Token $tmp241 = *(&local0);
+frost$core$String* $tmp242 = frost$json$JSONParser$text$org$frostlang$json$Token$R$frost$core$String(param0, $tmp241);
 frost$core$Real64$nullable $tmp243 = frost$core$String$convert$R$frost$core$Real64$Q($tmp242);
 frost$json$JSON$init$frost$core$Int64$frost$core$Real64($tmp239, $tmp240, ((frost$core$Real64) $tmp243.value));
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp239));
@@ -734,8 +734,8 @@ bool $tmp262 = $tmp261.value;
 if ($tmp262) goto block18; else goto block19;
 block19:;
 frost$core$Int64 $tmp263 = (frost$core$Int64) {162};
-org$frostlanguage$json$Token $tmp264 = *(&local0);
-frost$core$String* $tmp265 = frost$json$JSONParser$text$org$frostlanguage$json$Token$R$frost$core$String(param0, $tmp264);
+org$frostlang$json$Token $tmp264 = *(&local0);
+frost$core$String* $tmp265 = frost$json$JSONParser$text$org$frostlang$json$Token$R$frost$core$String(param0, $tmp264);
 frost$core$String* $tmp266 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(&$s267, $tmp265);
 frost$core$String* $tmp268 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp266, &$s269);
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s270, $tmp263, $tmp268);
@@ -770,19 +770,19 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp278));
 frost$core$String** $tmp279 = &param0->source;
 *$tmp279 = &$s280;
 // line 15
-org$frostlanguage$json$Lexer* $tmp281 = (org$frostlanguage$json$Lexer*) frostObjectAlloc(40, (frost$core$Class*) &org$frostlanguage$json$Lexer$class);
-org$frostlanguage$json$Lexer$init($tmp281);
+org$frostlang$json$Lexer* $tmp281 = (org$frostlang$json$Lexer*) frostObjectAlloc(40, (frost$core$Class*) &org$frostlang$json$Lexer$class);
+org$frostlang$json$Lexer$init($tmp281);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp281));
-org$frostlanguage$json$Lexer** $tmp282 = &param0->lexer;
-org$frostlanguage$json$Lexer* $tmp283 = *$tmp282;
+org$frostlang$json$Lexer** $tmp282 = &param0->lexer;
+org$frostlang$json$Lexer* $tmp283 = *$tmp282;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp283));
-org$frostlanguage$json$Lexer** $tmp284 = &param0->lexer;
+org$frostlang$json$Lexer** $tmp284 = &param0->lexer;
 *$tmp284 = $tmp281;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp281));
-// unreffing REF($10:org.frostlanguage.json.Lexer)
+// unreffing REF($10:org.frostlang.json.Lexer)
 // line 18
-org$frostlanguage$json$Token$nullable* $tmp285 = &param0->pushbackToken;
-*$tmp285 = ((org$frostlanguage$json$Token$nullable) { .nonnull = false });
+org$frostlang$json$Token$nullable* $tmp285 = &param0->pushbackToken;
+*$tmp285 = ((org$frostlang$json$Token$nullable) { .nonnull = false });
 return;
 
 }
@@ -793,8 +793,8 @@ frost$core$Object$cleanup(((frost$core$Object*) param0));
 frost$core$String** $tmp286 = &param0->source;
 frost$core$String* $tmp287 = *$tmp286;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp287));
-org$frostlanguage$json$Lexer** $tmp288 = &param0->lexer;
-org$frostlanguage$json$Lexer* $tmp289 = *$tmp288;
+org$frostlang$json$Lexer** $tmp288 = &param0->lexer;
+org$frostlang$json$Lexer* $tmp289 = *$tmp288;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp289));
 return;
 

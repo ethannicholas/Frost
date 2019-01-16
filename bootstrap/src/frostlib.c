@@ -11,6 +11,7 @@
 #include <sys/time.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <errno.h>
 
 #include "unicode/uregex.h"
 
@@ -97,6 +98,12 @@ typedef struct Array {
     Object** data;
 } Array;
 
+typedef struct Error {
+    Class* cl;
+    int32_t refcnt;
+    String* message;
+} Error;
+
 typedef struct File {
     Class* cl;
     int32_t refcnt;
@@ -167,6 +174,8 @@ typedef struct Matcher {
 } Matcher;
 
 extern Class frost$core$Frost$class;
+
+extern Class frost$core$Error$class;
 
 extern Class frost$io$File$class;
 
@@ -959,13 +968,30 @@ Object* frost$io$File$absolute$R$frost$core$Maybe$LTfrost$io$File$GT(File* file)
     return result;
 }
 
-void frost$io$File$delete(File* file) {
-    char* path = frostGetCString(file->path);
-    if (remove(path)) {
-        printf("failed to delete %s\n", path);
-        exit(1);
+Error* frost$io$File$rename$frost$io$File$R$frost$core$Error$Q(File* src, File* dst) {
+    char* srcPath = frostGetCString(src->path);
+    char* dstPath = frostGetCString(dst->path);
+    if (!rename(srcPath, dstPath)) {
+        Error* result = frostObjectAlloc(sizeof(Error), &frost$core$Error$class);
+        const char* msg = strerror(errno);
+        result->message = frostNewString(msg, strlen(msg));
+        frostFree(srcPath);
+        frostFree(dstPath);
+        return result;
     }
-    frostFree(path);
+    return NULL;
+}
+
+Error* frost$io$File$delete$R$frost$core$Error$Q(File* self) {
+    char* path = frostGetCString(self->path);
+    if (!remove(path)) {
+        Error* result = frostObjectAlloc(sizeof(Error), &frost$core$Error$class);
+        const char* msg = strerror(errno);
+        result->message = frostNewString(msg, strlen(msg));
+        frostFree(path);
+        return result;
+    }
+    return NULL;
 }
 
 void frost$io$File$exists$R$frost$core$Bit(Bit* result, File* file) {

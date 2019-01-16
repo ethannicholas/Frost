@@ -1,0 +1,228 @@
+package org.frostlang.regex
+
+uses frost.unsafe.Pointer
+uses org.frostlang.frostc.ASTNode
+uses org.frostlang.frostc.Compiler
+uses org.frostlang.frostc.Position
+
+@final
+class RegexParser {
+    def lexer := RegexLexer()
+
+    def errors:MessageQueue<Compiler.Error>
+
+    var path:File
+
+    var source:String
+
+    def pushbackBuffer := SpecializedArray<RegexToken>()
+
+    init(errors:MessageQueue<Compiler.Error>) {
+        self.errors := errors
+    }
+
+    method start(path:File, source:String) {
+        lexer.start(source)
+        self.path := path
+        self.source := source
+        pushbackBuffer.clear()
+    }
+
+    method next():RegexToken {
+        if pushbackBuffer.count != 0 {
+            def idx := pushbackBuffer.count - 1
+            def result := pushbackBuffer[idx]
+            pushbackBuffer.removeIndex(idx)
+            return result
+        }
+        def result := lexer.next()
+        return result
+    }
+
+    method pushback(token:RegexToken) {
+        pushbackBuffer.add(token)
+    }
+
+    method peek():RegexToken {
+        if pushbackBuffer.count = 0 {
+            pushback(next())
+        }
+        return pushbackBuffer[pushbackBuffer.count - 1]
+    }
+
+    method checkNext(kind:RegexToken.Kind):Bit {
+        def result := next()
+        if result.kind = kind {
+            return true
+        }
+        pushback(result)
+        return false
+    }
+
+    method expect(kind:RegexToken.Kind, expected:String):Bit {
+        def result := next()
+        if result.kind = kind {
+            return true
+        }
+        error(result, "expected \{expected}, but found '\{text(result)}'")
+        return false
+    }
+
+    method error(token:RegexToken, msg:String) {
+        errors.post(Compiler.Error(path, token.position, msg))
+    }
+
+    function text(token:RegexToken):String {
+        return source.substring(token.start .. token.end)
+    }
+
+    ================================================================================================
+    characterClass = <anything other than ']'>*
+    ================================================================================================
+    method characterClass():Bit {
+        loop {
+            def char := next()
+            if text(char) = "]" {
+                pushback(char)
+                return true
+            }
+            if char.kind = RegexToken.Kind.EOF {
+                return false
+            }
+        }
+    }
+
+    ================================================================================================
+    integer = DIGIT+
+    ================================================================================================
+    method integer():Bit {
+        if !expect(RegexToken.Kind.DIGIT, "an integer") {
+            return false
+        }
+        while checkNext(RegexToken.Kind.DIGIT) {
+        }
+        return true
+    }
+
+    ================================================================================================
+    metacharacter = PLUS | STAR | QUESTION
+    ================================================================================================
+    method metacharacter():Bit {
+        def token := next()
+        match token.kind {
+            when RegexToken.Kind.PLUS, RegexToken.Kind.STAR {
+                checkNext(RegexToken.Kind.QUESTION)
+                return true
+            }
+            when RegexToken.Kind.QUESTION {
+                return true
+            }
+            when RegexToken.Kind.DOLLAR {
+                match peek().kind {
+                    when RegexToken.Kind.BACKTICK, RegexToken.Kind.SINGLE_QUOTE,
+                            RegexToken.Kind.DOLLAR {
+                        next()
+                    }
+                }
+            }
+            otherwise {
+                pushback(token)
+                return false
+            }
+        }
+    }
+
+    ================================================================================================
+    atom = LETTER | DIGIT | LPAREN expression RPAREN | LBRACKET characterClass RBRACKET |
+            LBRACE integer (COMMA integer?)? RBRACE
+    ================================================================================================
+    method atom():Bit {
+        def token := next()
+        match token.kind {
+            when RegexToken.Kind.LETTER, RegexToken.Kind.DIGIT, RegexToken.Kind.DOLLAR,
+                    RegexToken.Kind.CARET, RegexToken.Kind.BACKTICK, RegexToken.Kind.SINGLE_QUOTE,
+                    RegexToken.Kind.AMPERSAND {
+                return true
+            }
+            when RegexToken.Kind.LPAREN {
+                checkNext(RegexToken.Kind.QUESTION)
+                if !expression() {
+                    return false
+                }
+                return expect(RegexToken.Kind.RPAREN, "')'")
+            }
+            when RegexToken.Kind.LBRACKET {
+                if !characterClass() {
+                    return false
+                }
+                return expect(RegexToken.Kind.RBRACKET, "']'")
+            }
+            when RegexToken.Kind.LBRACE {
+                if !integer() {
+                    return false
+                }
+                if checkNext(RegexToken.Kind.COMMA) {
+                    integer()
+                }
+                return expect(RegexToken.Kind.RBRACE, "'}'")
+            }
+            otherwise {
+                pushback(token)
+                return false
+            }
+        }
+    }
+
+    ================================================================================================
+    factor = atom metacharacter?
+    ================================================================================================
+    method factor():Bit {
+        if !atom() {
+            return false
+        }
+        metacharacter()
+        return true
+    }
+
+    ================================================================================================
+    term = factor term?
+    ================================================================================================
+    method term():Bit {
+        if !factor() {
+            return false
+        }
+        term()
+        return true
+    }
+
+    ================================================================================================
+    expression = term expression?
+    ================================================================================================
+    method expression():Bit {
+        if !term() {
+            return false
+        }
+        expression()
+        return true
+    }
+
+    ================================================================================================
+    regex = expression
+    ================================================================================================
+    method regex():ASTNode? {
+        pushbackBuffer.clear()
+        def position := Position(lexer.dfa.line, lexer.dfa.column)
+        def start := lexer.dfa.offset
+        if !expression() {
+            return null
+        }
+        lexer.dfa.offset -= 1
+        def end := lexer.dfa.offset
+        def length := end - start
+        def result := Pointer<Char8>.alloc(length)
+        for i in start .. end {
+            result[i - start] := lexer.dfa.source[i]
+        }
+        return ASTNode.REGEX(position, String(result, length))
+    }
+}

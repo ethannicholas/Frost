@@ -1,0 +1,28 @@
+package org.frostlang.frostc.expression
+
+uses org.frostlang.frostc.ASTNode
+uses org.frostlang.frostc.Compiler
+uses org.frostlang.frostc.Compiler.TypeContext
+uses org.frostlang.frostc.IR
+uses org.frostlang.frostc.Position
+uses org.frostlang.frostc.Type
+
+class AtReturn {
+    @class
+    method compile(compiler:Compiler, position:Position, type:TypeContext):IR.Value? {
+        if compiler.currentMethod[0].returnType = Type.Void() {
+            compiler.error(position, "cannot use @return in a method which does not have a " +
+                    "return type")
+            return null
+        }
+        if compiler.ir.currentBlock.id = compiler.atPreBlock {
+            compiler.error(position, "cannot use @return inside @pre")
+            return null
+        }
+        if compiler.returnValue == null {
+            compiler.error(position, "cannot use @return outside of a postcondition")
+            return null
+        }
+        return compiler.coerce(position, compiler.returnValue, type)
+    }
+}

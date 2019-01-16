@@ -1,0 +1,212 @@
+package org.frostlang.frostc
+
+uses org.frostlang.frostc.parser.Token
+
+@final
+class MethodDecl : Symbol {
+    choice Kind {
+        METHOD
+        FUNCTION
+        INIT
+    }
+
+    class Parameter {
+        def name:String
+
+        def type:Type
+
+        @weak
+        var owner:MethodDecl?
+
+        init(name:String, type:org.frostlang.frostc.Type) {
+            self.name := name
+            self.type := type
+        }
+
+        @override
+        function convert():String {
+            return "\{name}:\{type}"
+        }
+    }
+
+    class GenericParameter : Symbol {
+        def owner:String
+
+        def bound:Type
+
+        init(position:Position, owner:String, name:String, bound:Type) {
+            self.owner := owner
+            self.bound := bound
+            super.init(Symbol.Kind.GENERIC_METHOD_PARAMETER, position, name)
+        }
+
+        @override
+        function convert():String {
+            return "\{owner}.\{name}:\{bound}"
+        }
+    }
+
+    @weak
+    def owner:ClassDecl
+
+    def doccomment:String?
+
+    def annotations:Annotations
+
+    def methodKind:Kind
+
+    def genericParameters:Array<GenericParameter>?
+
+    def parameters:Array<Parameter>
+
+    var returnType:Type
+
+    def body:FixedArray<ASTNode>?
+
+    var resolved := Compiler.Resolution.UNRESOLVED
+
+    var overrideKnown := false
+
+    @weak
+    var overridden:MethodDecl? := null
+
+    property priority:Int
+
+    property isVirtual:Bit
+
+    property type:Type
+
+    property signature:String
+
+    property declaration:String
+
+    @pre(genericParameters == null | genericParameters.count > 0)
+    init(owner:ClassDecl, position:Position, doccomment:String?, annotations:Annotations,
+            methodKind:Kind, name:String, genericParameters:Array<GenericParameter>?,
+            parameters:Array<Parameter>, returnType:Type,
+            body:FixedArray<ASTNode>?) {
+        super.init(Symbol.Kind.METHOD, position, name)
+        self.owner := owner
+        self.doccomment := doccomment
+        self.annotations := annotations
+        self.methodKind := methodKind
+        self.genericParameters := genericParameters
+        for p in parameters {
+            p.owner := self
+        }
+        self.parameters := parameters
+        self.returnType := returnType
+        self.body := body
+    }
+
+    @override
+    function get_heritable():Bit {
+        return methodKind != Kind.INIT
+    }
+
+    function get_isVirtual():Bit {
+        return !annotations.isClass & methodKind != Kind.INIT & !annotations.isFinal
+    }
+
+    function isInstance():Bit {
+        return !annotations.isClass
+    }
+
+    function matches(other:MethodDecl):Bit {
+        assert resolved != Compiler.Resolution.UNRESOLVED &
+                other.resolved != Compiler.Resolution.UNRESOLVED
+        if name != other.name {
+            return false
+        }
+        if returnType != other.returnType {
+            return false
+        }
+        if parameters.count != other.parameters.count {
+            return false
+        }
+        for i in 0 .. parameters.count {
+            if parameters[i].type != other.parameters[i].type {
+                return false
+            }
+        }
+        return true
+    }
+
+    function get_priority():Int {
+        if annotations.expressions !== null {
+            for a in annotations.expressions {
+                match a {
+                    when Annotations.Expression.PRIORITY(_, expr) {
+                        match expr {
+                            when ASTNode.INT(_, value) {
+                                return value.convert()
+                            }
+                            when ASTNode.PREFIX(_, op, base) {
+                                if op = Token.Kind.SUB {
+                                    match base {
+                                        when ASTNode.INT(_, value) {
+                                            return -(value.convert()->Int)
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return 0
+    }
+
+    function get_type():Type {
+        def paramTypes := Array<Type>(parameters.count) -- FIXME use map
+        for p in parameters {
+            paramTypes.add(p.type)
+        }
+        def kind:Type.Kind
+        if methodKind = Kind.FUNCTION {
+            kind := Type.Kind.IMMUTABLE_FUNCTION
+        }
+         else {
+            kind := Type.Kind.IMMUTABLE_METHOD
+        }
+        return Type.methodType(position, kind, paramTypes, returnType, priority)
+    }
+
+    function get_signature():String {
+        def result := MutableString("\{name}(")
+        var separator := ""
+        for p in parameters {
+            result.append(separator)
+            result.append(p)
+            separator := ", "
+        }
+        result.append(")")
+        if returnType != Type.Void() {
+            result.append(":\{returnType}")
+        }
+        return result.finish()
+    }
+
+    function get_declaration():String {
+        match methodKind {
+            when Kind.METHOD {
+                return("method \{owner.name}.\{signature}")
+            }
+            when Kind.FUNCTION {
+                return("function \{owner.name}.\{signature}")
+            }
+            when Kind.INIT {
+                return("\{owner.name}.\{signature}")
+            }
+        }
+    }
+
+    @override
+    function convert():String {
+        if body !== null {
+            return "\{annotations}\{signature} \{body}"
+        }
+        return signature
+    }
+}

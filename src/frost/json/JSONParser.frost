@@ -1,7 +1,7 @@
 package frost.json
 
-uses org.frostlanguage.json.Lexer
-uses org.frostlanguage.json.Token
+uses org.frostlang.json.Lexer
+uses org.frostlang.json.Token
 
 ====================================================================================================
 Simple JSON parser. Note that this parser is incomplete - in particular it does not handle string

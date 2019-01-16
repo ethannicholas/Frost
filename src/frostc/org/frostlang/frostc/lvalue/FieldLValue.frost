@@ -1,0 +1,169 @@
+package org.frostlang.frostc.lvalue
+
+uses org.frostlang.frostc.ASTNode
+uses org.frostlang.frostc.Compiler
+uses org.frostlang.frostc.Compiler.Resolution
+uses org.frostlang.frostc.Compiler.TypeContext
+uses org.frostlang.frostc.FieldDecl
+uses org.frostlang.frostc.FixedArray
+uses org.frostlang.frostc.IR
+uses org.frostlang.frostc.Position
+uses org.frostlang.frostc.Type
+uses org.frostlang.frostc.expression.Call
+
+
+class FieldLValue : LValue {
+    def compiler:Compiler
+
+    def position:Position
+
+    def target:IR.Value?
+
+    def field:FieldDecl
+
+    def rawType:Type
+
+    def effectiveType:Type
+
+    init(compiler:Compiler, position:Position, target:IR.Value?, field:FieldDecl) {
+        self.compiler := compiler
+        self.position := position
+        assert field.resolved = Resolution.RESOLVED
+        self.field := field
+        if target !== null & !target.type().isClassLiteral {
+            self.target := target
+        }
+        else if !field.annotations.isClass {
+            if field.owner.annotations.isSynthetic & !compiler.reportErrors {
+                -- nested closure capture during pre-scan
+                self.target := IR.Value.REF(IR.Statement.ID(-1), field.owner.type)
+            }
+            else {
+                self.target := compiler.compileSelf(position, false)
+            }
+        }
+        rawType := field.type
+        def base:Type
+        if !compiler.inFieldCleanup & field.annotations.isWeak {
+            base := rawType.subtypes[1]
+        }
+        else {
+            base := rawType
+        }
+        if self.target !== null {
+            effectiveType := compiler.remapType(compiler.findType(self.target.type(), field.owner),
+                    base)
+        }
+        else {
+            effectiveType := base
+        }
+        if self.target !== null {
+            self.target := compiler.coerce(position, self.target, field.owner.type)
+        }
+    }
+
+    @override
+    function type():Type {
+        return effectiveType
+    }
+
+    @override
+    method compileLoad():IR.Value? {
+        if field.annotations.isClass & field.fieldKind = FieldDecl.Kind.CONSTANT {
+            compiler.currentClass.push(field.owner)
+            def result := compiler.compileExpression(field.rawValue, TypeContext.TYPE(type()))
+            compiler.currentClass.pop()
+            return result
+        }
+        if target == null {
+            -- should have already reported an error
+            return null
+        }
+        var result:IR.Value
+        if field.fieldKind = FieldDecl.Kind.PROPERTY {
+            result := Call.compile(compiler, position, target, "get_\{field.name}",
+                    Array<ASTNode>(), TypeContext.TYPE(rawType))
+        }
+        else {
+            def load:IR.Statement.ID
+            if compiler.isValue(field.owner) {
+                load := compiler.ir.add(IR.Statement.EXTRACT_FIELD(position, target, field))
+            }
+            else {
+                def ptr := compiler.ir.add(IR.Statement.GET_FIELD_POINTER(position, target,
+                        field))
+                load := compiler.ir.add(IR.Statement.LOAD(position, IR.Value.REF(ptr, rawType)))
+            }
+            result := IR.Value.REF(load, rawType)
+        }
+        if !compiler.inFieldCleanup & field.annotations.isWeak {
+            result := Call.compile(compiler, position, result, "get", FixedArray<ASTNode>(),
+                    TypeContext.UNSPECIFIED)
+        }
+        if effectiveType != result.type() {
+            result := compiler.cast(position, result, effectiveType)
+        }
+        return result
+    }
+
+    @override
+    method compileStore(rawValue:IR.Value) {
+        if target == null {
+            -- should have already reported an error
+            return
+        }
+        def cast:IR.Value
+        def value:IR.Value
+        if !compiler.inFieldCleanup & field.annotations.isWeak {
+            def args := Array<ASTNode>() -- FIXME literal
+            args.add(ASTNode.IR_WRAPPER(position, rawValue))
+            value := compiler.compileExpression(ASTNode.CALL(position,
+                    ASTNode.IR_WRAPPER(position, IR.Value.TYPE(Type.WeakOf(effectiveType))),
+                    FixedArray<ASTNode>.from(args)))
+        }
+        else {
+            value := rawValue
+        }
+        if effectiveType != rawType {
+            cast := compiler.cast(position, value, rawType)
+            if cast == null {
+                return
+            }
+        }
+        else {
+            cast := value
+        }
+        if field.fieldKind = FieldDecl.Kind.PROPERTY {
+            def args := Array<ASTNode>()
+            args.add(ASTNode.IR_WRAPPER(position, value))
+            Call.compile(compiler, position, target, "set_\{field.name}", args,
+                    TypeContext.TYPE(rawType))
+        }
+        else {
+            if compiler.isRefCounted(rawType) & field.owner.name != "frost.core.Weak" {
+                compiler.compileRef(value)
+                compileUnref()
+            }
+            def ptr := IR.Value.REF(compiler.ir.add(IR.Statement.GET_FIELD_POINTER(position,
+                    target, field)), rawType)
+            compiler.ir.add(IR.Statement.STORE(position, cast, ptr))
+        }
+    }
+
+    method compileUnref() {
+        var result:IR.Value
+        if field.fieldKind = FieldDecl.Kind.PROPERTY {
+            return
+        }
+        def load:IR.Statement.ID
+        if compiler.isValue(field.owner) {
+            load := compiler.ir.add(IR.Statement.EXTRACT_FIELD(position, target, field))
+        }
+        else {
+            def ptr := compiler.ir.add(IR.Statement.GET_FIELD_POINTER(position, target, field))
+            load := compiler.ir.add(IR.Statement.LOAD(position, IR.Value.REF(ptr, rawType)))
+        }
+        result := IR.Value.REF(load, rawType)
+        compiler.compileUnref(result)
+    }
+}

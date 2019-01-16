@@ -1,0 +1,30 @@
+package org.frostlang.frostc.frostdoc
+
+class XMLWriter {
+    def out:IndentedOutputStream
+
+    def stack := Stack<String>()
+
+    init(out:OutputStream) {
+        self.out := IndentedOutputStream(out)
+    }
+
+    method open(tag:String) {
+        out.printLine("<\{tag}>")
+        out.level += 1
+        stack.push(tag)
+    }
+
+    @pre(stack[0] = tag)
+    method close(tag:String) {
+        out.level -= 1
+        out.printLine("</\{tag}>")
+        stack.pop()
+    }
+
+    method write(tag:String, text:String) {
+        assert !text.contains("&&gt")
+        out.printLine("<\{tag}>\{text}</\{tag}>")
+    }
+}
+
