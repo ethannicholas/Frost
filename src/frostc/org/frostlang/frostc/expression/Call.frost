@@ -330,7 +330,7 @@ class Call {
                 for g in generics {
                     var argType := compiler.coercionCost(args[i], paramType)
                     if argType == null {
-                        Console.printLine("note: can't coerce \{args[i]} to \{paramType}")
+                        Console.printLine("note: can't coerce '\{args[i]}' to \{paramType}")
                         return m
                     }
                     def parameter := getSubtype(m.value.parameters[i].type, g)

@@ -9,6 +9,6 @@ typedef struct frost$collections$CollectionView {
     frost$core$Int32 refCount;
 } frost$collections$CollectionView;
 #include "frost/core/Class.h"
-typedef struct { frost$core$Class* cl; int32_t refCount; frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[9]; } frost$collections$CollectionView$class_type;
+typedef struct { frost$core$Class* cl; int32_t refCount; frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[12]; } frost$collections$CollectionView$class_type;
 extern frost$collections$CollectionView$class_type frost$collections$CollectionView$class;
 

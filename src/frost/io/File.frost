@@ -49,7 +49,8 @@ class File : Immutable, Key<File> {
     Resolves a path relative to this `File`. If the path begins with `"/"`, it is absolute and
     returned as-is. Otherwise this `File` is interpreted as a directory containing the relative
     path, so for instance `File("/tmp/output").relative("data/dump.xml")` results in the path
-    `"/tmp/output/data/dump.xml"`.
+    `"/tmp/output/data/dump.xml"`. This function merely performs string manipulation and does not
+    access the filesystem.
 
     @param path the relative or absolute path
     @returns the final path
@@ -69,6 +70,7 @@ class File : Immutable, Key<File> {
     accepted as a line ending, and the line endings are not part of the returned strings.
 
     @returns the contents of the file line-by-line
+    -- FIXME Maybe
     ================================================================================================
     function lines():Iterator<String> {
         return openInputStream().lines()
@@ -164,14 +166,14 @@ class File : Immutable, Key<File> {
 
     Examples:
 
-        File("/tmp/foo.gif").changeExtension(".png") => /tmp/foo.png
-        File("/tmp/foo").changeExtension(".png") => /tmp/foo.png
-        File("/tmp/foo.gif").changeExtension("") => /tmp/foo
+        File("/tmp/foo.gif").withExtension(".png") => /tmp/foo.png
+        File("/tmp/foo").withExtension(".png") => /tmp/foo.png
+        File("/tmp/foo.gif").withExtension("") => /tmp/foo
 
     @param ext the new extension
     @returns the path with a new extension
     ================================================================================================
-    function changeExtension(ext:String):File {
+    function withExtension(ext:String):File {
         return parent.resolve(simpleName + ext)
     }
 
@@ -179,6 +181,7 @@ class File : Immutable, Key<File> {
     Returns `true` if this file exists.
 
     @returns `true` if this file exists
+    -- FIXME Maybe
     ================================================================================================
     @external
     method exists():Bit
@@ -187,6 +190,7 @@ class File : Immutable, Key<File> {
     Returns `true` if this path represents a directory.
 
     @returns `true` if this is a directory
+    -- FIXME Maybe
     ================================================================================================
     @external
     method isDirectory():Bit
@@ -195,6 +199,7 @@ class File : Immutable, Key<File> {
     Returns a list of files contained by this directory.
 
     @returns the contents of the directory
+    -- FIXME Maybe
     ================================================================================================
     @external
     method list():ListView<File>
@@ -202,6 +207,7 @@ class File : Immutable, Key<File> {
     ================================================================================================
     Creates a directory at this path. It is not an error to attempt to create a directory which
     already exists.
+    -- FIXME error
     ================================================================================================
     @external
     method createDirectory()
@@ -209,6 +215,7 @@ class File : Immutable, Key<File> {
     ================================================================================================
     Creates a directory at this path, including all required parent directories. It is not an error
     to attempt to create a directory which already exists.
+    -- FIXME error
     ================================================================================================
     method createDirectories() {
         def p := parent

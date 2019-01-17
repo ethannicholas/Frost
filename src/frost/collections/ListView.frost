@@ -180,12 +180,45 @@ interface ListView<T> : CollectionView<T> {
     returns true. For instance, `[1, 7, -10, 5, -2].filter(x => x > 0)` returns `[1, 7, 5]`.
     ================================================================================================
     @default
+    @priority(1) -- FIXME I don't think I should need all these @priority annotations...
     function filter(predicate:(T)=>(Bit)):ListView<T> {
         def result := Array<T>()
         for v in self {
             if predicate(v) {
                 result.add(v)
             }
+        }
+        return result
+    }
+
+    @default
+    method filter(predicate:(T)=&>(Bit)):ListView<T> {
+        def result := Array<T>()
+        for v in self {
+            if predicate(v) {
+                result.add(v)
+            }
+        }
+        return result
+    }
+
+    @default
+    @priority(1)
+    @pre(count = other.count)
+    function combine<U, V>(other:ListView<U>, f:(T, U)=>(V)):ListView<V> {
+        def result := Array<V>(count)
+        for i in 0 .. count {
+            result.add(f(self[i], other[i]))
+        }
+        return result
+    }
+
+    @default
+    @pre(count = other.count)
+    method combine<U, V>(other:ListView<U>, f:(T, U)=&>(V)):ListView<V> {
+        def result := Array<V>(count)
+        for i in 0 .. count {
+            result.add(f(self[i], other[i]))
         }
         return result
     }

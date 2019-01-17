@@ -42,6 +42,6 @@ void frost$core$Frost$debugPrint$frost$core$Object(frost$core$Object* p_o);
 frost$core$String* frost$core$Frost$pointerConvert$frost$unsafe$Pointer$LTfrost$core$Object$Q$GT$R$frost$core$String(frost$core$Object** p_p);
 void frost$core$Frost$disableRefErrorReporting();
 void frost$core$Frost$swap$frost$collections$List$LTfrost$core$Frost$swap$T$GT$frost$core$Int64$frost$core$Int64(frost$collections$List* p_a, frost$core$Int64 p_i1, frost$core$Int64 p_i2);
-void frost$core$Frost$sort$frost$collections$List$LTfrost$core$Frost$sort$T$GT$frost$core$Int64$frost$core$Int64$$LPfrost$core$Frost$sort$T$Cfrost$core$Frost$sort$T$RP$EQ$GT$LPfrost$core$Bit$RP(frost$collections$List* p_a, frost$core$Int64 p_left, frost$core$Int64 p_right, frost$core$MutableMethod* p_greater);
+void frost$core$Frost$sort$frost$collections$List$LTfrost$core$Frost$sort$T$GT$frost$core$Int64$frost$core$Int64$$LPfrost$core$Frost$sort$T$Cfrost$core$Frost$sort$T$RP$EQ$AM$GT$LPfrost$core$Bit$RP(frost$collections$List* p_a, frost$core$Int64 p_left, frost$core$Int64 p_right, frost$core$MutableMethod* p_greater);
 void frost$core$Frost$cleanup(frost$core$Frost* self);
 

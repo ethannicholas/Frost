@@ -468,21 +468,19 @@ class Parser {
         if start == null {
             return null
         }
-        def expr := expression()
-        if expr == null {
-            return null
-        }
-        match expr {
-            when ASTNode.IDENTIFIER(firstPosition, firstName) {
-                -- possible tuple or lambda
-                if checkNext(Token.Kind.COLON) !== null {
+        def peek1 := next()
+        if peek1.kind = Token.Kind.IDENTIFIER {
+            -- possible tuple or lambda
+            def peek2 := next()
+            match peek2.kind {
+                when Token.Kind.COLON {
                     -- typed lambda
                     def parameters := Array<ASTNode>()
                     def firstType := type()
                     if firstType == null {
                         return null
                     }
-                    parameters.add(ASTNode.PARAMETER(firstPosition, firstName, firstType))
+                    parameters.add(ASTNode.PARAMETER(peek1.position, text(peek1), firstType))
                     while checkNext(Token.Kind.COMMA) !== null {
                         def nextName := expect(Token.Kind.IDENTIFIER, "an identifier")
                         if expect(Token.Kind.COLON, "':'") == null {
@@ -498,7 +496,7 @@ class Parser {
                     if expect(Token.Kind.RPAREN, "')'") == null {
                         return null
                     }
-                    if expect(Token.Kind.YIELDS, "'=>'") == null {
+                    if expect(Token.Kind.YIELDS, "'=>1'") == null {
                         return null
                     }
                     def body := expression()
@@ -508,10 +506,10 @@ class Parser {
                     return ASTNode.TYPED_LAMBDA(start.position,
                             FixedArray<ASTNode>.from(parameters), body)
                 }
-                if checkNext(Token.Kind.COMMA) !== null {
+                when Token.Kind.COMMA {
                     -- untyped lambda or tuple
                     def parameters := Array<ASTNode>()
-                    parameters.add(expr)
+                    parameters.add(ASTNode.IDENTIFIER(peek1.position, text(peek1)))
                     var validLambda := true
                     do {
                         def nextExpr := expression()
@@ -527,7 +525,8 @@ class Parser {
                             }
                         }
                         parameters.add(nextExpr)
-                    } while checkNext(Token.Kind.COMMA) !== null
+                    }
+                    while checkNext(Token.Kind.COMMA) !== null
                     if expect(Token.Kind.RPAREN, "')'") == null {
                         return null
                     }
@@ -543,44 +542,33 @@ class Parser {
                     error(start, "tuples are not yet supported")
                     return null
                 }
-                -- either a single-parameter untyped lambda or a parenthesized identifier
-                if expect(Token.Kind.RPAREN, "')'") == null {
-                    return null
-                }
-                if checkNext(Token.Kind.YIELDS) !== null {
-                    def parameters := Array<ASTNode>()
-                    parameters.add(expr)
-                    def body := expression()
-                    if body == null {
-                        return null
+                when Token.Kind.RPAREN {
+                    -- either a single-parameter untyped lambda or a parenthesized identifier
+                    if checkNext(Token.Kind.YIELDS) !== null {
+                        def parameters := Array<ASTNode>()
+                        parameters.add(ASTNode.IDENTIFIER(peek1.position, text(peek1)))
+                        def body := expression()
+                        if body == null {
+                            return null
+                        }
+                        return ASTNode.UNTYPED_LAMBDA(start.position,
+                                FixedArray<ASTNode>.from(parameters), body)
                     }
-                    return ASTNode.UNTYPED_LAMBDA(start.position,
-                            FixedArray<ASTNode>.from(parameters), body)
+                    -- just a parenthesized identifier
+                    return ASTNode.IDENTIFIER(peek1.position, text(peek1))
                 }
-                return expr -- just a parenthesized identifier
-            }
-            otherwise {
-                -- either a single parenthesized expression or a tuple
-                if checkNext(Token.Kind.COMMA) == null {
-                    expect(Token.Kind.RPAREN, "')'")
-                    return expr
+                otherwise {
+                    pushback(peek2)
                 }
-                def arguments := Array<ASTNode>()
-                arguments.add(expr)
-                do {
-                    def nextExpr := expression()
-                    if nextExpr == null {
-                        return null
-                    }
-                    arguments.add(nextExpr)
-                }
-                while checkNext(Token.Kind.COMMA) !== null
-                expect(Token.Kind.RPAREN, "')'")
---                return ASTNode.TUPLE(start.position, FixedArray<ASTNode>.from(arguments))
-                error(start, "tuples are not yet supported")
-                return null
             }
         }
+        pushback(peek1)
+        def expr := expression()
+        if expr == null {
+            return null
+        }
+        expect(Token.Kind.RPAREN, "')'")
+        return expr
     }
 
     ================================================================================================
@@ -1637,23 +1625,19 @@ class Parser {
         if start == null {
             return null
         }
-        allowLambdas := false
         def expressions := Array<ASTNode>()
         var expr := expression()
         if expr == null {
-            allowLambdas := true
             return null
         }
         expressions.add(expr)
         while checkNext(Token.Kind.COMMA) !== null {
             expr := expression()
             if expr == null {
-                allowLambdas := true
                 return null
             }
             expressions.add(expr)
         }
-        allowLambdas := true
         def statements := blockStatements()
         if statements == null {
             return null

@@ -11,9 +11,9 @@ typedef struct frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$
     frost$core$Int32 refCount;
     frost$core$Int64 _count;
     frost$core$Int64 capacity;
-    org$frostlang$frostc$parser$Token$nullable* data;
+    org$frostlang$frostc$parser$Token* data;
 } frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT;
 #include "frost/core/Class.h"
-typedef struct { frost$core$Class* cl; int32_t refCount; frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[15]; } frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT$class_type;
+typedef struct { frost$core$Class* cl; int32_t refCount; frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[11]; } frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT$class_type;
 extern frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT$class_type frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT$class;
 

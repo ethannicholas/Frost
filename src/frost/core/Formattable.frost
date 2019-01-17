@@ -14,6 +14,10 @@ This calls `value.format("X")`, which is understood by the [Int64] class to mean
 in uppercase hexadecimal". This results in the output:
 
     255 in hexadecimal is: FF
+
+and is equivalent to having written:
+
+    Console.printLine(value + " in hexadecimal is: " + value.format("X"))
 ====================================================================================================
 interface Formattable {
     function format(fmt:String):String

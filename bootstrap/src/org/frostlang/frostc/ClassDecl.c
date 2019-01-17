@@ -18,7 +18,6 @@
 #include "frost/collections/HashMap.h"
 #include "frost/core/Int64.h"
 #include "org/frostlang/frostc/Symbol.h"
-#include "frost/collections/CollectionView.h"
 #include "frost/collections/List.h"
 #include "org/frostlang/frostc/Compiler/Resolution.h"
 #include "org/frostlang/frostc/Compiler.h"
@@ -28,6 +27,7 @@
 #include "org/frostlang/frostc/Type/Kind.h"
 #include "frost/core/String/Index.h"
 #include "frost/core/Range.LTfrost/core/String/Index.Q.GT.h"
+#include "frost/collections/CollectionView.h"
 #include "frost/core/MutableString.h"
 #include "org/frostlang/frostc/FieldDecl.h"
 #include "org/frostlang/frostc/MethodDecl.h"
@@ -255,7 +255,7 @@ org$frostlang$frostc$ClassDecl$Kind* $tmp69 = &param0->classKind;
 *$tmp69 = param6;
 // line 126
 frost$collections$Array* $tmp70 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
-frost$collections$Array$init$frost$collections$CollectionView$LTfrost$collections$Array$T$GT($tmp70, ((frost$collections$CollectionView*) param8));
+frost$collections$Array$init$frost$collections$ListView$LTfrost$collections$Array$T$GT($tmp70, param8);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp70));
 frost$collections$Array** $tmp71 = &param0->declaredSupers;
 frost$collections$Array* $tmp72 = *$tmp71;
@@ -281,7 +281,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp79));
 org$frostlang$frostc$SymbolTable** $tmp80 = &param0->symbolTable;
 *$tmp80 = $tmp77;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp77));
-// unreffing REF($244:org.frostlang.frostc.SymbolTable)
+// unreffing REF($243:org.frostlang.frostc.SymbolTable)
 // line 129
 frost$core$Int64 $tmp81 = (frost$core$Int64) {0};
 org$frostlang$frostc$Compiler$Resolution $tmp82 = org$frostlang$frostc$Compiler$Resolution$init$frost$core$Int64($tmp81);
@@ -297,7 +297,7 @@ frost$collections$Stack** $tmp89 = &((org$frostlang$frostc$Compiler*) $tmp88)->c
 frost$collections$Stack* $tmp90 = *$tmp89;
 frost$collections$Stack$push$frost$collections$Stack$T($tmp90, ((frost$core$Object*) param0));
 frost$core$Frost$unref$frost$core$Object$Q($tmp88);
-// unreffing REF($268:frost.core.Weak.T)
+// unreffing REF($267:frost.core.Weak.T)
 // line 131
 ITable* $tmp91 = ((frost$collections$Iterable*) param9)->$class->itable;
 while ($tmp91->$class != (frost$core$Class*) &frost$collections$Iterable$class) {
@@ -333,7 +333,7 @@ org$frostlang$frostc$SymbolTable* $tmp106 = *$tmp105;
 org$frostlang$frostc$ClassDecl$GenericParameter* $tmp107 = *(&local0);
 org$frostlang$frostc$SymbolTable$add$org$frostlang$frostc$Symbol($tmp106, ((org$frostlang$frostc$Symbol*) $tmp107));
 frost$core$Frost$unref$frost$core$Object$Q($tmp103);
-// unreffing REF($293:frost.collections.Iterator.T)
+// unreffing REF($292:frost.collections.Iterator.T)
 org$frostlang$frostc$ClassDecl$GenericParameter* $tmp108 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp108));
 // unreffing p
@@ -341,7 +341,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp108));
 goto block3;
 block5:;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp94));
-// unreffing REF($282:frost.collections.Iterator<frost.collections.Iterable.T>)
+// unreffing REF($281:frost.collections.Iterator<frost.collections.Iterable.T>)
 // line 134
 org$frostlang$frostc$SymbolTable** $tmp109 = &param0->symbolTable;
 org$frostlang$frostc$SymbolTable* $tmp110 = *$tmp109;
@@ -362,9 +362,9 @@ frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s122, $tm
 abort(); // unreachable
 block6:;
 frost$core$Frost$unref$frost$core$Object$Q($tmp117);
-// unreffing REF($331:frost.collections.Stack.T)
+// unreffing REF($330:frost.collections.Stack.T)
 frost$core$Frost$unref$frost$core$Object$Q($tmp113);
-// unreffing REF($325:frost.core.Weak.T)
+// unreffing REF($324:frost.core.Weak.T)
 // line 135
 org$frostlang$frostc$SymbolTable** $tmp123 = &param0->symbolTable;
 org$frostlang$frostc$SymbolTable* $tmp124 = *$tmp123;
@@ -375,9 +375,9 @@ frost$collections$Stack** $tmp128 = &((org$frostlang$frostc$Compiler*) $tmp127)-
 frost$collections$Stack* $tmp129 = *$tmp128;
 frost$core$Object* $tmp130 = frost$collections$Stack$pop$R$frost$collections$Stack$T($tmp129);
 frost$core$Frost$unref$frost$core$Object$Q($tmp130);
-// unreffing REF($357:frost.collections.Stack.T)
+// unreffing REF($356:frost.collections.Stack.T)
 frost$core$Frost$unref$frost$core$Object$Q($tmp127);
-// unreffing REF($352:frost.core.Weak.T)
+// unreffing REF($351:frost.core.Weak.T)
 return;
 
 }

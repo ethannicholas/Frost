@@ -161,7 +161,7 @@ class Closure {
             def p := rawParameters[i]
             match p {
                 when ASTNode.PARAMETER(position, name, rawType) {
-                    var type := compiler.scanner.convertType(rawType)
+                    var type:Type? := compiler.scanner.convertType(rawType)
                     if type == null {
                         return null
                     }

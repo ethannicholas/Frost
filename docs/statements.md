@@ -259,7 +259,7 @@ unreachable
 The `unreachable` statement tells the compiler that this line of code will never actually be
 reached. For instance, in the code:
 
-    var widget:Widget
+    def widget:Widget
     if widgetReady() {
         widget := nextWidget()
     }
@@ -272,7 +272,7 @@ we will receive a compilation error because `widget` is not definitely assigned 
 it is used. What if there is no ready widget and we cannot manufacture a new one? But suppose we
 know for sure that one of those conditions will always be true. We can then modify the code to read:
 
-    var widget:Widget
+    def widget:Widget
     if widgetReady()
         widget := nextWidget()
     else if canManufactureWidget()
@@ -317,7 +317,7 @@ any of them. If none of the values in any `when` match, the optional `otherwise`
 present. If none of the `when` values match and there is no `otherwise` block, execution simply
 continues after the end of the `match`.
 
-Unlike many other languages, Frost's switch statement does not have "fall-through": when the
+Unlike many other languages, Frost's `match` statement does not have "fall-through": when the
 statements associated with a `when` finish, execution continues after the end of the match
 statement.
 

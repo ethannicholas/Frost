@@ -1271,22 +1271,77 @@ class Compiler {
         return result
     }
 
+    ================================================================================================
+    Given a requested type (e.g. `Foo<String, Int64>`), returns the actual type that the class
+    should be specialized to. The actual type collapses all non-Value types down to their type
+    bounds, since they're all just pointers and can be treated equivalently. This would likely
+    result in `Foo<Object?, Int64>` in this case.
+    ================================================================================================
+    method specializedType(cl:ClassDecl, type:Type):Type {
+        if type.typeKind = Type.Kind.CLASS {
+            return type
+        }
+        assert type.typeKind = Type.Kind.GENERIC
+        def args := Array<Type>()
+        for i in 0 .. type.subtypes.count - 1 {
+            if isValue(type.subtypes[i + 1]) {
+                args.add(type.subtypes[i + 1])
+            }
+            else {
+                args.add(cl.parameters[i].bound)
+            }
+        }
+        return Type.generic(cl.type, args)
+    }
+
+    ================================================================================================
+    Specializes a generic type to a particular set of type arguments. Specializing a type is similar
+    to instantiating a C++ template, in that we create a copy of the code for each different set of
+    type arguments.
+
+    Or more precisely, we determine the widest set of types which can be used for each given
+    specialization (see [specializedType]), and then re-use that (with different generic arguments)
+    to fulfill matching requests.
+
+    As a concrete example, suppose we have `class Foo<T, U> { ... }`, and we request
+    `Foo<String, Int64>`. Since `String` is just a pointer and the `Foo` class has to be written as if
+    `T` were an `Object?` anyway, it really doesn't matter whether the class is instantiated to use
+    `String` or `File` or whatever else as a type parameter. So we can specialize `T` against the
+    the bound of `T`, in this case `Object?`.
+
+    But `Int64` is a `Value`, not a pointer. We actually end up producing different code to handle
+    `Int64` vs., say, `Int8`, so it matters that we are using this particular type. `Value` types
+    (including nullable `Value`s) have to remain as-is. So we actually end up specializing
+    `Foo<String, Int64>` into an instance of `Foo<Object?, Int64>`, and this class will be reused by
+    any other compatible specializations of the `Foo` class.
+
+    To make this class actually handle the `<String, Int>` types, the specialization is still
+    generic (over `<T:Object?, U:Int64>`), and we can then specify its actual types as generic
+    parameters. The resulting specialization has name `Foo<frost.core.Object?, frost.core.Int64>`,
+    and so we end up with type name `Foo<frost.core.Object?, frost.core.Int64><frost.core.String,
+    frost.core.Int64>`. This name is internal use only and this "doubly generic" syntax cannot
+    actually be used in Frost source code. The inclusion of the `U:Int64` generic parameter is of
+    course not strictly necessary, since `Int64` cannot be subclassed, but it simplifies things to
+    always have the same number of generic parameters.
+
+    FIXME: As a future optimization, we could probably worry only about the *size* of the Values and
+    not their specific identities.
+    ================================================================================================
     @post(currentClass.count = @pre(currentClass.count))
     method specialize(cl:ClassDecl, rawType:Type):ClassDecl {
         if !resolve(cl) {
             return cl
         }
-        def type := resolve(rawType)
-        if type.typeKind = Type.Kind.NULLABLE {
-            return specialize(cl, type.subtypes[0])
-        }
+        def type := specializedType(cl, resolve(rawType).nonnullable())
         if type.typeKind = Type.Kind.CLASS {
             return cl
         }
-        assert type.typeKind = Type.Kind.GENERIC
         def result:ClassDecl? := classes[type.name]
         if result == null {
             currentClass.push(cl)
+            --def parameters := cl.parameters.combine<Type, ClassDecl.GenericParameter>(type,
+              --      (p1:ClassDecl.GenericParameter, p2:Type) => ClassDecl.GenericParameter(p1.position, p1.owner, p1.name, p2))
+            --Console.printLine("parameters: \{parameters}")
             def annotations := Annotations(cl.annotations.flags && !!Annotations.Flag.SPECIALIZE)
             def supertypes := Array<Type>()
             supertypes.add(remapType(type, cl.rawSuper))
@@ -1294,7 +1349,7 @@ class Compiler {
                 supertypes.add(remapType(type, intf))
             }
             result := ClassDecl(cl.source, cl.position, cl.aliases, cl.doccomment, annotations,
-                    cl.classKind, type, supertypes, Array<ClassDecl.GenericParameter>(),
+                    cl.classKind, type, supertypes, [],
                     cl.symbolTable.parents[0])
             for i in 0 .. cl.parameters.count {
                 result.symbolTable.add(Alias(cl.parameters[i].name, type.subtypes[i + 1]))

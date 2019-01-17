@@ -2,7 +2,7 @@ package frost.collections
 
 ====================================================================================================
 A read-only view of a collection of elements. A `CollectionView`'s elements are accessed via its
-[iterator()].
+[iterator] property.
 
 @see CollectionWriter
 @see Collection
@@ -84,7 +84,20 @@ interface CollectionView<T> : Iterable<T> {
     ================================================================================================
     @pre(count > 0)
     @default
+    @priority(1)
     function fold(f:(T, T)=>(T)):T {
+        -- FIXME type declaration shouldn't be necessary
+        def i:Iterator<T> := iterator
+        var result := i.next()
+        while !i.done {
+            result := f(result, i.next())
+        }
+        return result
+    }
+
+    @pre(count > 0)
+    @default
+    method fold(f:(T, T)=&>(T)):T {
         -- FIXME type declaration shouldn't be necessary
         def i:Iterator<T> := iterator
         var result := i.next()
@@ -105,7 +118,17 @@ interface CollectionView<T> : Iterable<T> {
     @see fold((T, T)=>(T))
     ================================================================================================
     @default
+    @priority(1)
     function fold(f:(T, T)=>(T), start:T):T {
+        var result := start
+        for v in self {
+            result := f(result, v)
+        }
+        return result
+    }
+
+    @default
+    method fold(f:(T, T)=&>(T), start:T):T {
         var result := start
         for v in self {
             result := f(result, v)
@@ -129,7 +152,17 @@ interface CollectionView<T> : Iterable<T> {
     }
 
     @default
+    @priority(1)
     function map<U>(f:(T)=>(U)):Array<U> {
+        def result := Array<U>(count)
+        for v in self {
+            result.add(f(v))
+        }
+        return result
+    }
+
+    @default
+    method map<U>(f:(T)=&>(U)):Array<U> {
         def result := Array<U>(count)
         for v in self {
             result.add(f(v))

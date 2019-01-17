@@ -56,9 +56,10 @@ class System {
     ================================================================================================
     Causes the program to immediately stop running, returning the indicated exit status to the
     operating system. Generally an exit value of 0 is taken to mean a normal exit and a non-zero
-    value is taken to mean an error occurred, but this is system-dependent. Cleanup methods are
-    **not** run when an exit is forced in this fashion; among other things, this means that open
-    files will not be properly flushed and closed, which may cause output to be incomplete.
+    value is taken to mean an error occurred, but the interpretation of the status value is
+    system-dependent. Cleanup methods are **not** run when an exit is forced in this fashion; among
+    other things, this means that open files will not be properly flushed and closed, which may
+    cause output to be incomplete.
     ================================================================================================
     @class
     @external
@@ -79,5 +80,5 @@ class System {
     ================================================================================================
     @class
     @external
-    method exec(path:File, args:ListView<String>):Process? -- FIXME variadic
+    method exec(path:File, args:ListView<String>):Process?
 }

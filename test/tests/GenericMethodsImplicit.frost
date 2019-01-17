@@ -14,5 +14,7 @@ class GenericMethodsImplicit {
 	@class
 	method main() {
 		Console.printLine(indexOf([1, 7, 2, 9, -6, 0, 5, 8, 10], 5))
+	    Console.printLine(Int[1 ... 5].combine(Int[1 ... 5], (a, b) => a + b))
+	    Console.printLine(Int[1 ... 5].combine(Int[1 ... 5], Int.*)
 	}
 }

@@ -4,6 +4,13 @@ package frost.io
 An input stream which allows data to be "pushed back" into it, so that it may be read again. This is
 useful in situations such as parsing, in which you may wish to read until you encounter a delimiter
 and then push the delimiter back into the stream so that it can be handled by other code.
+
+The `PushbackInputStream` "sits on top of" another stream, reading from it when it requires new
+data. You should not read directly from the underlying stream while reading from a
+`PushbackInputStream`. Closing the `PushbackInputStream` *does not* close the underlying stream, but
+if the `PushbackInputStream` holds the only remaining reference to the underlying stream, then
+discarding the `PushbackInputStream` will cause the underlying stream to likewise be discarded and
+thus closed.
 ====================================================================================================
 @final
 class PushbackInputStream : InputStream {

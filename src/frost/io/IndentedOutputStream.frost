@@ -4,7 +4,14 @@ uses frost.unsafe.Pointer
 
 ====================================================================================================
 An output stream which indents the lines it writes. `IndentedOutputStream` sits "on top of" another
-stream, directing its output to the underlying stream.
+stream, directing its output to the underlying stream. Closing the `IndentedOutputStream` *does not*
+close the underlying stream, but if the `IndentedOutputStream` holds the only remaining reference to
+the underlying stream, then discarding the `IndentedOutputStream` will cause the underlying stream
+to likewise be discarded and thus closed.
+
+It is possible to continue writing directly to the underlying stream despite having created an
+`IndentedOutputStream` on top of it; naturally, such writes will not be processed by the
+`IndentedOutputStream` and thus may interact badly with it.
 ====================================================================================================
 @final
 class IndentedOutputStream : OutputStream {

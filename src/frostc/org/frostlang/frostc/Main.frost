@@ -231,7 +231,7 @@ class Main {
                         System.exit(1)
                     }
                 }
-                outFile := sources[0].changeExtension(extension)
+                outFile := sources[0].withExtension(extension)
             }
             else if format = Format.HTML {
                 err.printLine("format 'html' requires exactly one input file")
@@ -260,7 +260,7 @@ class Main {
             match format {
                 when Format.LLVM, Format.EXECUTABLE, Format.OBJECT {
                     cg := LLVMCodeGenerator(Config.llvmTriple(),
-                                            outFile.changeExtension(".ll").openOutputStream())
+                                            outFile.withExtension(".ll").openOutputStream())
                 }
                 when Format.C_HEADER {
                     cg := HCodeGenerator(outFile)
@@ -294,10 +294,10 @@ class Main {
         if errorCount = 0 {
             match format {
                 when Format.EXECUTABLE {
-                    toExecutable(outFile.changeExtension(".ll"), outFile, preserveTemporaries)
+                    toExecutable(outFile.withExtension(".ll"), outFile, preserveTemporaries)
                 }
                 when Format.OBJECT {
-                    toObject(outFile.changeExtension(".ll"), outFile, preserveTemporaries)
+                    toObject(outFile.withExtension(".ll"), outFile, preserveTemporaries)
                 }
             }
         }

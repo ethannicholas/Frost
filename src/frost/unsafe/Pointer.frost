@@ -26,7 +26,8 @@ class Pointer<T> : Value {
 
     ================================================================================================
     Replaces the item pointed to by this pointer with a new value. Equivalent to
-    `pointer[0] := value`.
+    `pointer[0] := value`. For reference counted values, this handles unreffing the previous value
+    and reffing the new value automatically.
     ================================================================================================
     @external
     method set(value:T)
@@ -38,7 +39,8 @@ class Pointer<T> : Value {
 
     ================================================================================================
     Replaces the n'th item pointed to by this pointer. Equivalent to
-    `pointer.offset(count).set(value)`.
+    `pointer.offset(count).set(value)`. For reference counted values, this handles unreffing the
+    previous value and reffing the new value automatically.
     ================================================================================================
     @external
     method []:=(index:Int, value:T)
@@ -53,27 +55,29 @@ class Pointer<T> : Value {
 
     ================================================================================================
     Moves this pointer forward (or backward if `count` is negative) `count` steps. Each step is the
-    size of a single element of type `T`, so e.g. offsetting an `Int32` pointer by 4 steps will move
-    it by 16 total bytes. This call is not bounds-checked, and moving the pointer outside of its
-    associated block of memory can lead to undefined behavior.
+    size of a single element of type `T`, rounded up to its alignment, so e.g. offsetting an `Int32`
+    pointer by 4 steps will generally move it by 16 total bytes. This call is not bounds-checked,
+    and moving the pointer outside of its associated block of memory can lead to undefined behavior.
     ================================================================================================
     @external
-    function offset(count:Int):Pointer<T> -- FIXME change to '+'
+    function offset(count:Int):Pointer<T>
 
     ================================================================================================
     If the pointer points to a reference counted object type, unrefs the indicated slot and sets it
-    to `null`. Otherwise, does nothing.
+    to `null`. Otherwise, does nothing. This is used to permit safe handling of references from
+    within generic types which do not know whether or not they are dealing with a reference-counted
+    type.
     ================================================================================================
     @external
     method clear(index:Int)
 
     ================================================================================================
-    Frees the block of memory that this pointer points to. This is exactly equivalen to the C `free`
-    function, and in particular **does not do any reference counting or cleanup of values in the
-    pointed-to memory**. If, for instance, you wish to destroy a `Pointer<Pointer<Char8>>`, you must
-    first `destroy` all of the inner `Pointer<Char8>`s or you will leak memory. If the values
-    pointed to by the pointer are reference counted Frost objects, you must call `Frost.unref()` on
-    them to avoid leaking memory.
+    Frees the block of memory that this pointer points to. This is exactly equivalent to the C
+    `free` function, and in particular **does not do any reference counting or cleanup of values in
+    the pointed-to memory**. If, for instance, you wish to destroy a `Pointer<Pointer<Char8>>`, you
+    must first `destroy` all of the inner `Pointer<Char8>`s or you will leak memory. If the values
+    pointed to by the pointer are reference counted objects, you must call `Frost.unref()` (or
+    use [clear]) to unref them.
     ================================================================================================
     @external
     method destroy()

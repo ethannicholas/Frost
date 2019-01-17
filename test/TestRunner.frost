@@ -243,7 +243,7 @@ class TestRunner {
         var success := 0
         for file in files {
             if file.path.endsWith(".frost") {
-                def name := file.changeExtension("").name
+                def name := file.withExtension("").name
                 total += 1
                 if runTest(frostc, cLibs, tests, name, Mode.O0) {
                     success += 1

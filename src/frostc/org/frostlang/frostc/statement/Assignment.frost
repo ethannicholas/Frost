@@ -45,8 +45,12 @@ class Assignment {
             right := compiler.compileExpression(rawRight, TypeContext.TYPE(left.type()))
         }
         else {
+            def load := left.compileLoad()
+            if load == null {
+                return
+            }
             right := Binary.compile(compiler, position,
-                    ASTNode.IR_WRAPPER(position, left.compileLoad()),
+                    ASTNode.IR_WRAPPER(position, load),
                     Compiler.removeAssignment(op),
                     rawRight,
                     TypeContext.TYPE(left.type()))

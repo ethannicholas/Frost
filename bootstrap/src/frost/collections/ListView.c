@@ -23,14 +23,14 @@ __attribute__((weak)) frost$collections$Iterator* frost$collections$ListView$get
     return result;
 }
 
-struct { frost$core$Class* cl; ITable* next; void* methods[7]; } frost$collections$ListView$_frost$collections$CollectionView = { (frost$core$Class*) &frost$collections$CollectionView$class, NULL, { NULL, frost$collections$CollectionView$join$R$frost$core$String, frost$collections$CollectionView$join$frost$core$String$R$frost$core$String, frost$collections$CollectionView$fold$$LPfrost$collections$CollectionView$T$Cfrost$collections$CollectionView$T$RP$EQ$GT$LPfrost$collections$CollectionView$T$RP$R$frost$collections$CollectionView$T, frost$collections$CollectionView$fold$$LPfrost$collections$CollectionView$T$Cfrost$collections$CollectionView$T$RP$EQ$GT$LPfrost$collections$CollectionView$T$RP$frost$collections$CollectionView$T$R$frost$collections$CollectionView$T, frost$collections$CollectionView$apply$$LPfrost$collections$CollectionView$T$RP$EQ$AM$GT$LP$RP, frost$collections$CollectionView$map$$LPfrost$collections$CollectionView$T$RP$EQ$GT$LPfrost$collections$CollectionView$map$U$RP$R$frost$collections$Array$LTfrost$collections$CollectionView$map$U$GT} };
+struct { frost$core$Class* cl; ITable* next; void* methods[10]; } frost$collections$ListView$_frost$collections$CollectionView = { (frost$core$Class*) &frost$collections$CollectionView$class, NULL, { NULL, frost$collections$CollectionView$join$R$frost$core$String, frost$collections$CollectionView$join$frost$core$String$R$frost$core$String, frost$collections$CollectionView$fold$$LPfrost$collections$CollectionView$T$Cfrost$collections$CollectionView$T$RP$EQ$GT$LPfrost$collections$CollectionView$T$RP$R$frost$collections$CollectionView$T, frost$collections$CollectionView$fold$$LPfrost$collections$CollectionView$T$Cfrost$collections$CollectionView$T$RP$EQ$AM$GT$LPfrost$collections$CollectionView$T$RP$R$frost$collections$CollectionView$T, frost$collections$CollectionView$fold$$LPfrost$collections$CollectionView$T$Cfrost$collections$CollectionView$T$RP$EQ$GT$LPfrost$collections$CollectionView$T$RP$frost$collections$CollectionView$T$R$frost$collections$CollectionView$T, frost$collections$CollectionView$fold$$LPfrost$collections$CollectionView$T$Cfrost$collections$CollectionView$T$RP$EQ$AM$GT$LPfrost$collections$CollectionView$T$RP$frost$collections$CollectionView$T$R$frost$collections$CollectionView$T, frost$collections$CollectionView$apply$$LPfrost$collections$CollectionView$T$RP$EQ$AM$GT$LP$RP, frost$collections$CollectionView$map$$LPfrost$collections$CollectionView$T$RP$EQ$GT$LPfrost$collections$CollectionView$map$U$RP$R$frost$collections$Array$LTfrost$collections$CollectionView$map$U$GT, frost$collections$CollectionView$map$$LPfrost$collections$CollectionView$T$RP$EQ$AM$GT$LPfrost$collections$CollectionView$map$U$RP$R$frost$collections$Array$LTfrost$collections$CollectionView$map$U$GT} };
 
-struct { frost$core$Class* cl; ITable* next; void* methods[7]; } frost$collections$ListView$_frost$collections$ListView = { (frost$core$Class*) &frost$collections$ListView$class, (ITable*) &frost$collections$ListView$_frost$collections$CollectionView, { NULL, frost$collections$ListView$$IDX$frost$core$Range$LTfrost$core$Int64$GT$R$frost$collections$ListView$LTfrost$collections$ListView$T$GT, frost$collections$ListView$$IDX$frost$core$Range$LTfrost$core$Int64$Q$GT$R$frost$collections$ListView$LTfrost$collections$ListView$T$GT, frost$collections$ListView$$IDX$frost$core$SteppedRange$LTfrost$core$Int64$Q$Cfrost$core$Int64$GT$R$frost$collections$ListView$LTfrost$collections$ListView$T$GT, frost$collections$ListView$filter$$LPfrost$collections$ListView$T$RP$EQ$GT$LPfrost$core$Bit$RP$R$frost$collections$ListView$LTfrost$collections$ListView$T$GT, frost$collections$ListView$get_iterator$R$frost$collections$Iterator$LTfrost$collections$ListView$T$GT$shim, frost$collections$ListView$sort$$LPfrost$collections$ListView$T$Cfrost$collections$ListView$T$RP$EQ$GT$LPfrost$core$Bit$RP$R$frost$collections$ListView$LTfrost$collections$ListView$T$GT} };
+struct { frost$core$Class* cl; ITable* next; void* methods[10]; } frost$collections$ListView$_frost$collections$ListView = { (frost$core$Class*) &frost$collections$ListView$class, (ITable*) &frost$collections$ListView$_frost$collections$CollectionView, { NULL, frost$collections$ListView$$IDX$frost$core$Range$LTfrost$core$Int64$GT$R$frost$collections$ListView$LTfrost$collections$ListView$T$GT, frost$collections$ListView$$IDX$frost$core$Range$LTfrost$core$Int64$Q$GT$R$frost$collections$ListView$LTfrost$collections$ListView$T$GT, frost$collections$ListView$$IDX$frost$core$SteppedRange$LTfrost$core$Int64$Q$Cfrost$core$Int64$GT$R$frost$collections$ListView$LTfrost$collections$ListView$T$GT, frost$collections$ListView$filter$$LPfrost$collections$ListView$T$RP$EQ$GT$LPfrost$core$Bit$RP$R$frost$collections$ListView$LTfrost$collections$ListView$T$GT, frost$collections$ListView$filter$$LPfrost$collections$ListView$T$RP$EQ$AM$GT$LPfrost$core$Bit$RP$R$frost$collections$ListView$LTfrost$collections$ListView$T$GT, frost$collections$ListView$combine$frost$collections$ListView$LTfrost$collections$ListView$combine$U$GT$$LPfrost$collections$ListView$T$Cfrost$collections$ListView$combine$U$RP$EQ$GT$LPfrost$collections$ListView$combine$V$RP$R$frost$collections$ListView$LTfrost$collections$ListView$combine$V$GT, frost$collections$ListView$combine$frost$collections$ListView$LTfrost$collections$ListView$combine$U$GT$$LPfrost$collections$ListView$T$Cfrost$collections$ListView$combine$U$RP$EQ$AM$GT$LPfrost$collections$ListView$combine$V$RP$R$frost$collections$ListView$LTfrost$collections$ListView$combine$V$GT, frost$collections$ListView$get_iterator$R$frost$collections$Iterator$LTfrost$collections$ListView$T$GT$shim, frost$collections$ListView$sort$$LPfrost$collections$ListView$T$Cfrost$collections$ListView$T$RP$EQ$GT$LPfrost$core$Bit$RP$R$frost$collections$ListView$LTfrost$collections$ListView$T$GT} };
 
 struct { frost$core$Class* cl; ITable* next; void* methods[1]; } frost$collections$ListView$_frost$collections$Iterable = { (frost$core$Class*) &frost$collections$Iterable$class, (ITable*) &frost$collections$ListView$_frost$collections$ListView, { frost$collections$ListView$get_iterator$R$frost$collections$Iterator$LTfrost$collections$ListView$T$GT$shim} };
 
 static frost$core$String $s1;
-frost$collections$ListView$class_type frost$collections$ListView$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Object$class, (ITable*) &frost$collections$ListView$_frost$collections$Iterable, { frost$core$Object$convert$R$frost$core$String, frost$core$Object$cleanup, NULL, frost$collections$ListView$$IDX$frost$core$Range$LTfrost$core$Int64$GT$R$frost$collections$ListView$LTfrost$collections$ListView$T$GT, frost$collections$ListView$$IDX$frost$core$Range$LTfrost$core$Int64$Q$GT$R$frost$collections$ListView$LTfrost$collections$ListView$T$GT, frost$collections$ListView$$IDX$frost$core$SteppedRange$LTfrost$core$Int64$Q$Cfrost$core$Int64$GT$R$frost$collections$ListView$LTfrost$collections$ListView$T$GT, frost$collections$ListView$filter$$LPfrost$collections$ListView$T$RP$EQ$GT$LPfrost$core$Bit$RP$R$frost$collections$ListView$LTfrost$collections$ListView$T$GT, frost$collections$ListView$get_iterator$R$frost$collections$Iterator$LTfrost$collections$ListView$T$GT$shim, frost$collections$ListView$sort$$LPfrost$collections$ListView$T$Cfrost$collections$ListView$T$RP$EQ$GT$LPfrost$core$Bit$RP$R$frost$collections$ListView$LTfrost$collections$ListView$T$GT} };
+frost$collections$ListView$class_type frost$collections$ListView$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Object$class, (ITable*) &frost$collections$ListView$_frost$collections$Iterable, { frost$core$Object$convert$R$frost$core$String, frost$core$Object$cleanup, NULL, frost$collections$ListView$$IDX$frost$core$Range$LTfrost$core$Int64$GT$R$frost$collections$ListView$LTfrost$collections$ListView$T$GT, frost$collections$ListView$$IDX$frost$core$Range$LTfrost$core$Int64$Q$GT$R$frost$collections$ListView$LTfrost$collections$ListView$T$GT, frost$collections$ListView$$IDX$frost$core$SteppedRange$LTfrost$core$Int64$Q$Cfrost$core$Int64$GT$R$frost$collections$ListView$LTfrost$collections$ListView$T$GT, frost$collections$ListView$filter$$LPfrost$collections$ListView$T$RP$EQ$GT$LPfrost$core$Bit$RP$R$frost$collections$ListView$LTfrost$collections$ListView$T$GT, frost$collections$ListView$filter$$LPfrost$collections$ListView$T$RP$EQ$AM$GT$LPfrost$core$Bit$RP$R$frost$collections$ListView$LTfrost$collections$ListView$T$GT, frost$collections$ListView$combine$frost$collections$ListView$LTfrost$collections$ListView$combine$U$GT$$LPfrost$collections$ListView$T$Cfrost$collections$ListView$combine$U$RP$EQ$GT$LPfrost$collections$ListView$combine$V$RP$R$frost$collections$ListView$LTfrost$collections$ListView$combine$V$GT, frost$collections$ListView$combine$frost$collections$ListView$LTfrost$collections$ListView$combine$U$GT$$LPfrost$collections$ListView$T$Cfrost$collections$ListView$combine$U$RP$EQ$AM$GT$LPfrost$collections$ListView$combine$V$RP$R$frost$collections$ListView$LTfrost$collections$ListView$combine$V$GT, frost$collections$ListView$get_iterator$R$frost$collections$Iterator$LTfrost$collections$ListView$T$GT$shim, frost$collections$ListView$sort$$LPfrost$collections$ListView$T$Cfrost$collections$ListView$T$RP$EQ$GT$LPfrost$core$Bit$RP$R$frost$collections$ListView$LTfrost$collections$ListView$T$GT} };
 
 typedef frost$core$Int64 (*$fn14)(frost$collections$CollectionView*);
 typedef frost$core$Int64 (*$fn28)(frost$collections$CollectionView*);
@@ -51,7 +51,28 @@ typedef frost$core$Bit (*$fn438)(frost$collections$Iterator*);
 typedef frost$core$Object* (*$fn443)(frost$collections$Iterator*);
 typedef frost$core$Bit (*$fn452)(frost$core$Object*);
 typedef frost$core$Bit (*$fn454)(frost$core$Object*, frost$core$Object*);
-typedef frost$core$Int64 (*$fn470)(frost$collections$CollectionView*);
+typedef frost$collections$Iterator* (*$fn467)(frost$collections$Iterable*);
+typedef frost$core$Bit (*$fn471)(frost$collections$Iterator*);
+typedef frost$core$Object* (*$fn476)(frost$collections$Iterator*);
+typedef frost$core$Bit (*$fn485)(frost$core$Object*);
+typedef frost$core$Bit (*$fn487)(frost$core$Object*, frost$core$Object*);
+typedef frost$core$Int64 (*$fn498)(frost$collections$CollectionView*);
+typedef frost$core$Int64 (*$fn502)(frost$collections$CollectionView*);
+typedef frost$core$Int64 (*$fn512)(frost$collections$CollectionView*);
+typedef frost$core$Int64 (*$fn518)(frost$collections$CollectionView*);
+typedef frost$core$Object* (*$fn542)(frost$collections$ListView*, frost$core$Int64);
+typedef frost$core$Object* (*$fn547)(frost$collections$ListView*, frost$core$Int64);
+typedef frost$core$Object* (*$fn554)(frost$core$Object*, frost$core$Object*);
+typedef frost$core$Object* (*$fn556)(frost$core$Object*, frost$core$Object*, frost$core$Object*);
+typedef frost$core$Int64 (*$fn583)(frost$collections$CollectionView*);
+typedef frost$core$Int64 (*$fn587)(frost$collections$CollectionView*);
+typedef frost$core$Int64 (*$fn597)(frost$collections$CollectionView*);
+typedef frost$core$Int64 (*$fn603)(frost$collections$CollectionView*);
+typedef frost$core$Object* (*$fn627)(frost$collections$ListView*, frost$core$Int64);
+typedef frost$core$Object* (*$fn632)(frost$collections$ListView*, frost$core$Int64);
+typedef frost$core$Object* (*$fn639)(frost$core$Object*, frost$core$Object*);
+typedef frost$core$Object* (*$fn641)(frost$core$Object*, frost$core$Object*, frost$core$Object*);
+typedef frost$core$Int64 (*$fn673)(frost$collections$CollectionView*);
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x4c\x69\x73\x74\x56\x69\x65\x77", 26, 4907195926384919541, NULL };
 static frost$core$String $s76 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x4c\x69\x73\x74\x56\x69\x65\x77\x2e\x66\x72\x6f\x73\x74", 14, -973627212597981440, NULL };
@@ -79,6 +100,10 @@ static frost$core$String $s305 = { (frost$core$Class*) &frost$core$String$class,
 static frost$core$String $s330 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x4c\x69\x73\x74\x56\x69\x65\x77\x2e\x66\x72\x6f\x73\x74", 14, -973627212597981440, NULL };
 static frost$core$String $s331 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x36\x34\x3f\x20\x74\x6f\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x36\x34", 71, -2353806797591321741, NULL };
 static frost$core$String $s380 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x4c\x69\x73\x74\x56\x69\x65\x77\x2e\x66\x72\x6f\x73\x74", 14, -973627212597981440, NULL };
+static frost$core$String $s507 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x4c\x69\x73\x74\x56\x69\x65\x77\x2e\x66\x72\x6f\x73\x74", 14, -973627212597981440, NULL };
+static frost$core$String $s508 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x4c\x69\x73\x74\x56\x69\x65\x77\x2e\x63\x6f\x6d\x62\x69\x6e\x65\x28\x6f\x74\x68\x65\x72\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x4c\x69\x73\x74\x56\x69\x65\x77\x3c\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x4c\x69\x73\x74\x56\x69\x65\x77\x2e\x63\x6f\x6d\x62\x69\x6e\x65\x2e\x55\x3e\x2c\x20\x66\x3a\x28\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x4c\x69\x73\x74\x56\x69\x65\x77\x2e\x54\x2c\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x4c\x69\x73\x74\x56\x69\x65\x77\x2e\x63\x6f\x6d\x62\x69\x6e\x65\x2e\x55\x29\x3d\x3e\x28\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x4c\x69\x73\x74\x56\x69\x65\x77\x2e\x63\x6f\x6d\x62\x69\x6e\x65\x2e\x56\x29\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x4c\x69\x73\x74\x56\x69\x65\x77\x3c\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x4c\x69\x73\x74\x56\x69\x65\x77\x2e\x63\x6f\x6d\x62\x69\x6e\x65\x2e\x56\x3e", 317, -5691853660146369113, NULL };
+static frost$core$String $s592 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x4c\x69\x73\x74\x56\x69\x65\x77\x2e\x66\x72\x6f\x73\x74", 14, -973627212597981440, NULL };
+static frost$core$String $s593 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x4c\x69\x73\x74\x56\x69\x65\x77\x2e\x63\x6f\x6d\x62\x69\x6e\x65\x28\x6f\x74\x68\x65\x72\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x4c\x69\x73\x74\x56\x69\x65\x77\x3c\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x4c\x69\x73\x74\x56\x69\x65\x77\x2e\x63\x6f\x6d\x62\x69\x6e\x65\x2e\x55\x3e\x2c\x20\x66\x3a\x28\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x4c\x69\x73\x74\x56\x69\x65\x77\x2e\x54\x2c\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x4c\x69\x73\x74\x56\x69\x65\x77\x2e\x63\x6f\x6d\x62\x69\x6e\x65\x2e\x55\x29\x3d\x26\x3e\x28\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x4c\x69\x73\x74\x56\x69\x65\x77\x2e\x63\x6f\x6d\x62\x69\x6e\x65\x2e\x56\x29\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x4c\x69\x73\x74\x56\x69\x65\x77\x3c\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x4c\x69\x73\x74\x56\x69\x65\x77\x2e\x63\x6f\x6d\x62\x69\x6e\x65\x2e\x56\x3e", 316, 3269539729494931284, NULL };
 
 frost$collections$ListView* frost$collections$ListView$$IDX$frost$core$Range$LTfrost$core$Int64$GT$R$frost$collections$ListView$LTfrost$collections$ListView$T$GT(frost$collections$ListView* param0, frost$core$Range$LTfrost$core$Int64$GT param1) {
 
@@ -985,7 +1010,7 @@ frost$collections$ListView* frost$collections$ListView$filter$$LPfrost$collectio
 frost$collections$Array* local0 = NULL;
 frost$core$Object* local1 = NULL;
 frost$core$Bit local2;
-// line 184
+// line 185
 frost$collections$Array* $tmp430 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
 frost$collections$Array$init($tmp430);
 *(&local0) = ((frost$collections$Array*) NULL);
@@ -995,7 +1020,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp431));
 *(&local0) = $tmp430;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp430));
 // unreffing REF($1:frost.collections.Array<frost.collections.ListView.T>)
-// line 185
+// line 186
 ITable* $tmp432 = ((frost$collections$Iterable*) param0)->$class->itable;
 while ($tmp432->$class != (frost$core$Class*) &frost$collections$Iterable$class) {
     $tmp432 = $tmp432->next;
@@ -1024,7 +1049,7 @@ frost$core$Frost$ref$frost$core$Object$Q($tmp444);
 frost$core$Object* $tmp445 = *(&local1);
 frost$core$Frost$unref$frost$core$Object$Q($tmp445);
 *(&local1) = $tmp444;
-// line 186
+// line 187
 frost$core$Object* $tmp446 = *(&local1);
 frost$core$Int8** $tmp447 = &param1->pointer;
 frost$core$Int8* $tmp448 = *$tmp447;
@@ -1045,7 +1070,7 @@ frost$core$Bit $tmp456 = *(&local2);
 bool $tmp457 = $tmp456.value;
 if ($tmp457) goto block4; else goto block5;
 block4:;
-// line 187
+// line 188
 frost$collections$Array* $tmp458 = *(&local0);
 frost$core$Object* $tmp459 = *(&local1);
 frost$collections$Array$add$frost$collections$Array$T($tmp458, $tmp459);
@@ -1061,7 +1086,7 @@ goto block1;
 block3:;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp435));
 // unreffing REF($18:frost.collections.Iterator<frost.collections.Iterable.T>)
-// line 190
+// line 191
 frost$collections$Array* $tmp461 = *(&local0);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$collections$ListView*) $tmp461)));
 frost$collections$Array* $tmp462 = *(&local0);
@@ -1071,53 +1096,452 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp462));
 return ((frost$collections$ListView*) $tmp461);
 
 }
+frost$collections$ListView* frost$collections$ListView$filter$$LPfrost$collections$ListView$T$RP$EQ$AM$GT$LPfrost$core$Bit$RP$R$frost$collections$ListView$LTfrost$collections$ListView$T$GT(frost$collections$ListView* param0, frost$core$MutableMethod* param1) {
+
+frost$collections$Array* local0 = NULL;
+frost$core$Object* local1 = NULL;
+frost$core$Bit local2;
+// line 196
+frost$collections$Array* $tmp463 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+frost$collections$Array$init($tmp463);
+*(&local0) = ((frost$collections$Array*) NULL);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp463));
+frost$collections$Array* $tmp464 = *(&local0);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp464));
+*(&local0) = $tmp463;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp463));
+// unreffing REF($1:frost.collections.Array<frost.collections.ListView.T>)
+// line 197
+ITable* $tmp465 = ((frost$collections$Iterable*) param0)->$class->itable;
+while ($tmp465->$class != (frost$core$Class*) &frost$collections$Iterable$class) {
+    $tmp465 = $tmp465->next;
+}
+$fn467 $tmp466 = $tmp465->methods[0];
+frost$collections$Iterator* $tmp468 = $tmp466(((frost$collections$Iterable*) param0));
+goto block1;
+block1:;
+ITable* $tmp469 = $tmp468->$class->itable;
+while ($tmp469->$class != (frost$core$Class*) &frost$collections$Iterator$class) {
+    $tmp469 = $tmp469->next;
+}
+$fn471 $tmp470 = $tmp469->methods[0];
+frost$core$Bit $tmp472 = $tmp470($tmp468);
+bool $tmp473 = $tmp472.value;
+if ($tmp473) goto block3; else goto block2;
+block2:;
+*(&local1) = ((frost$core$Object*) NULL);
+ITable* $tmp474 = $tmp468->$class->itable;
+while ($tmp474->$class != (frost$core$Class*) &frost$collections$Iterator$class) {
+    $tmp474 = $tmp474->next;
+}
+$fn476 $tmp475 = $tmp474->methods[1];
+frost$core$Object* $tmp477 = $tmp475($tmp468);
+frost$core$Frost$ref$frost$core$Object$Q($tmp477);
+frost$core$Object* $tmp478 = *(&local1);
+frost$core$Frost$unref$frost$core$Object$Q($tmp478);
+*(&local1) = $tmp477;
+// line 198
+frost$core$Object* $tmp479 = *(&local1);
+frost$core$Int8** $tmp480 = &param1->pointer;
+frost$core$Int8* $tmp481 = *$tmp480;
+frost$core$Object** $tmp482 = &param1->target;
+frost$core$Object* $tmp483 = *$tmp482;
+bool $tmp484 = $tmp483 != ((frost$core$Object*) NULL);
+if ($tmp484) goto block6; else goto block7;
+block7:;
+frost$core$Bit $tmp486 = (($fn485) $tmp481)($tmp479);
+*(&local2) = $tmp486;
+goto block8;
+block6:;
+frost$core$Bit $tmp488 = (($fn487) $tmp481)($tmp483, $tmp479);
+*(&local2) = $tmp488;
+goto block8;
+block8:;
+frost$core$Bit $tmp489 = *(&local2);
+bool $tmp490 = $tmp489.value;
+if ($tmp490) goto block4; else goto block5;
+block4:;
+// line 199
+frost$collections$Array* $tmp491 = *(&local0);
+frost$core$Object* $tmp492 = *(&local1);
+frost$collections$Array$add$frost$collections$Array$T($tmp491, $tmp492);
+goto block5;
+block5:;
+frost$core$Frost$unref$frost$core$Object$Q($tmp477);
+// unreffing REF($29:frost.collections.Iterator.T)
+frost$core$Object* $tmp493 = *(&local1);
+frost$core$Frost$unref$frost$core$Object$Q($tmp493);
+// unreffing v
+*(&local1) = ((frost$core$Object*) NULL);
+goto block1;
+block3:;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp468));
+// unreffing REF($18:frost.collections.Iterator<frost.collections.Iterable.T>)
+// line 202
+frost$collections$Array* $tmp494 = *(&local0);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$collections$ListView*) $tmp494)));
+frost$collections$Array* $tmp495 = *(&local0);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp495));
+// unreffing result
+*(&local0) = ((frost$collections$Array*) NULL);
+return ((frost$collections$ListView*) $tmp494);
+
+}
+frost$collections$ListView* frost$collections$ListView$combine$frost$collections$ListView$LTfrost$collections$ListView$combine$U$GT$$LPfrost$collections$ListView$T$Cfrost$collections$ListView$combine$U$RP$EQ$GT$LPfrost$collections$ListView$combine$V$RP$R$frost$collections$ListView$LTfrost$collections$ListView$combine$V$GT(frost$collections$ListView* param0, frost$collections$ListView* param1, frost$core$MutableMethod* param2) {
+
+frost$collections$Array* local0 = NULL;
+frost$core$Int64 local1;
+frost$core$Object* local2 = NULL;
+ITable* $tmp496 = ((frost$collections$CollectionView*) param0)->$class->itable;
+while ($tmp496->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
+    $tmp496 = $tmp496->next;
+}
+$fn498 $tmp497 = $tmp496->methods[0];
+frost$core$Int64 $tmp499 = $tmp497(((frost$collections$CollectionView*) param0));
+ITable* $tmp500 = ((frost$collections$CollectionView*) param1)->$class->itable;
+while ($tmp500->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
+    $tmp500 = $tmp500->next;
+}
+$fn502 $tmp501 = $tmp500->methods[0];
+frost$core$Int64 $tmp503 = $tmp501(((frost$collections$CollectionView*) param1));
+frost$core$Bit $tmp504 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp499, $tmp503);
+bool $tmp505 = $tmp504.value;
+if ($tmp505) goto block1; else goto block2;
+block2:;
+frost$core$Int64 $tmp506 = (frost$core$Int64) {208};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s507, $tmp506, &$s508);
+abort(); // unreachable
+block1:;
+// line 209
+frost$collections$Array* $tmp509 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+ITable* $tmp510 = ((frost$collections$CollectionView*) param0)->$class->itable;
+while ($tmp510->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
+    $tmp510 = $tmp510->next;
+}
+$fn512 $tmp511 = $tmp510->methods[0];
+frost$core$Int64 $tmp513 = $tmp511(((frost$collections$CollectionView*) param0));
+frost$collections$Array$init$frost$core$Int64($tmp509, $tmp513);
+*(&local0) = ((frost$collections$Array*) NULL);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp509));
+frost$collections$Array* $tmp514 = *(&local0);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp514));
+*(&local0) = $tmp509;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp509));
+// unreffing REF($13:frost.collections.Array<frost.collections.ListView.combine.V>)
+// line 210
+frost$core$Int64 $tmp515 = (frost$core$Int64) {0};
+ITable* $tmp516 = ((frost$collections$CollectionView*) param0)->$class->itable;
+while ($tmp516->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
+    $tmp516 = $tmp516->next;
+}
+$fn518 $tmp517 = $tmp516->methods[0];
+frost$core$Int64 $tmp519 = $tmp517(((frost$collections$CollectionView*) param0));
+frost$core$Bit $tmp520 = frost$core$Bit$init$builtin_bit(false);
+frost$core$Range$LTfrost$core$Int64$GT $tmp521 = frost$core$Range$LTfrost$core$Int64$GT$init$frost$core$Int64$frost$core$Int64$frost$core$Bit($tmp515, $tmp519, $tmp520);
+frost$core$Int64 $tmp522 = $tmp521.min;
+*(&local1) = $tmp522;
+frost$core$Int64 $tmp523 = $tmp521.max;
+frost$core$Bit $tmp524 = $tmp521.inclusive;
+bool $tmp525 = $tmp524.value;
+frost$core$Int64 $tmp526 = (frost$core$Int64) {1};
+frost$core$UInt64 $tmp527 = frost$core$Int64$convert$R$frost$core$UInt64($tmp526);
+if ($tmp525) goto block6; else goto block7;
+block6:;
+int64_t $tmp528 = $tmp522.value;
+int64_t $tmp529 = $tmp523.value;
+bool $tmp530 = $tmp528 <= $tmp529;
+frost$core$Bit $tmp531 = (frost$core$Bit) {$tmp530};
+bool $tmp532 = $tmp531.value;
+if ($tmp532) goto block3; else goto block4;
+block7:;
+int64_t $tmp533 = $tmp522.value;
+int64_t $tmp534 = $tmp523.value;
+bool $tmp535 = $tmp533 < $tmp534;
+frost$core$Bit $tmp536 = (frost$core$Bit) {$tmp535};
+bool $tmp537 = $tmp536.value;
+if ($tmp537) goto block3; else goto block4;
+block3:;
+// line 211
+frost$collections$Array* $tmp538 = *(&local0);
+frost$core$Int64 $tmp539 = *(&local1);
+ITable* $tmp540 = param0->$class->itable;
+while ($tmp540->$class != (frost$core$Class*) &frost$collections$ListView$class) {
+    $tmp540 = $tmp540->next;
+}
+$fn542 $tmp541 = $tmp540->methods[0];
+frost$core$Object* $tmp543 = $tmp541(param0, $tmp539);
+frost$core$Int64 $tmp544 = *(&local1);
+ITable* $tmp545 = param1->$class->itable;
+while ($tmp545->$class != (frost$core$Class*) &frost$collections$ListView$class) {
+    $tmp545 = $tmp545->next;
+}
+$fn547 $tmp546 = $tmp545->methods[0];
+frost$core$Object* $tmp548 = $tmp546(param1, $tmp544);
+frost$core$Int8** $tmp549 = &param2->pointer;
+frost$core$Int8* $tmp550 = *$tmp549;
+frost$core$Object** $tmp551 = &param2->target;
+frost$core$Object* $tmp552 = *$tmp551;
+bool $tmp553 = $tmp552 != ((frost$core$Object*) NULL);
+if ($tmp553) goto block8; else goto block9;
+block9:;
+frost$core$Object* $tmp555 = (($fn554) $tmp550)($tmp543, $tmp548);
+*(&local2) = $tmp555;
+goto block10;
+block8:;
+frost$core$Object* $tmp557 = (($fn556) $tmp550)($tmp552, $tmp543, $tmp548);
+*(&local2) = $tmp557;
+goto block10;
+block10:;
+frost$core$Object* $tmp558 = *(&local2);
+frost$collections$Array$add$frost$collections$Array$T($tmp538, $tmp558);
+frost$core$Frost$unref$frost$core$Object$Q($tmp558);
+// unreffing REF($83:frost.collections.ListView.combine.V)
+frost$core$Frost$unref$frost$core$Object$Q($tmp548);
+// unreffing REF($66:frost.collections.ListView.T)
+frost$core$Frost$unref$frost$core$Object$Q($tmp543);
+// unreffing REF($62:frost.collections.ListView.T)
+goto block5;
+block5:;
+frost$core$Int64 $tmp559 = *(&local1);
+int64_t $tmp560 = $tmp523.value;
+int64_t $tmp561 = $tmp559.value;
+int64_t $tmp562 = $tmp560 - $tmp561;
+frost$core$Int64 $tmp563 = (frost$core$Int64) {$tmp562};
+frost$core$UInt64 $tmp564 = frost$core$Int64$convert$R$frost$core$UInt64($tmp563);
+if ($tmp525) goto block12; else goto block13;
+block12:;
+uint64_t $tmp565 = $tmp564.value;
+uint64_t $tmp566 = $tmp527.value;
+bool $tmp567 = $tmp565 >= $tmp566;
+frost$core$Bit $tmp568 = (frost$core$Bit) {$tmp567};
+bool $tmp569 = $tmp568.value;
+if ($tmp569) goto block11; else goto block4;
+block13:;
+uint64_t $tmp570 = $tmp564.value;
+uint64_t $tmp571 = $tmp527.value;
+bool $tmp572 = $tmp570 > $tmp571;
+frost$core$Bit $tmp573 = (frost$core$Bit) {$tmp572};
+bool $tmp574 = $tmp573.value;
+if ($tmp574) goto block11; else goto block4;
+block11:;
+int64_t $tmp575 = $tmp559.value;
+int64_t $tmp576 = $tmp526.value;
+int64_t $tmp577 = $tmp575 + $tmp576;
+frost$core$Int64 $tmp578 = (frost$core$Int64) {$tmp577};
+*(&local1) = $tmp578;
+goto block3;
+block4:;
+// line 213
+frost$collections$Array* $tmp579 = *(&local0);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$collections$ListView*) $tmp579)));
+frost$collections$Array* $tmp580 = *(&local0);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp580));
+// unreffing result
+*(&local0) = ((frost$collections$Array*) NULL);
+return ((frost$collections$ListView*) $tmp579);
+
+}
+frost$collections$ListView* frost$collections$ListView$combine$frost$collections$ListView$LTfrost$collections$ListView$combine$U$GT$$LPfrost$collections$ListView$T$Cfrost$collections$ListView$combine$U$RP$EQ$AM$GT$LPfrost$collections$ListView$combine$V$RP$R$frost$collections$ListView$LTfrost$collections$ListView$combine$V$GT(frost$collections$ListView* param0, frost$collections$ListView* param1, frost$core$MutableMethod* param2) {
+
+frost$collections$Array* local0 = NULL;
+frost$core$Int64 local1;
+frost$core$Object* local2 = NULL;
+ITable* $tmp581 = ((frost$collections$CollectionView*) param0)->$class->itable;
+while ($tmp581->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
+    $tmp581 = $tmp581->next;
+}
+$fn583 $tmp582 = $tmp581->methods[0];
+frost$core$Int64 $tmp584 = $tmp582(((frost$collections$CollectionView*) param0));
+ITable* $tmp585 = ((frost$collections$CollectionView*) param1)->$class->itable;
+while ($tmp585->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
+    $tmp585 = $tmp585->next;
+}
+$fn587 $tmp586 = $tmp585->methods[0];
+frost$core$Int64 $tmp588 = $tmp586(((frost$collections$CollectionView*) param1));
+frost$core$Bit $tmp589 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp584, $tmp588);
+bool $tmp590 = $tmp589.value;
+if ($tmp590) goto block1; else goto block2;
+block2:;
+frost$core$Int64 $tmp591 = (frost$core$Int64) {218};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s592, $tmp591, &$s593);
+abort(); // unreachable
+block1:;
+// line 219
+frost$collections$Array* $tmp594 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+ITable* $tmp595 = ((frost$collections$CollectionView*) param0)->$class->itable;
+while ($tmp595->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
+    $tmp595 = $tmp595->next;
+}
+$fn597 $tmp596 = $tmp595->methods[0];
+frost$core$Int64 $tmp598 = $tmp596(((frost$collections$CollectionView*) param0));
+frost$collections$Array$init$frost$core$Int64($tmp594, $tmp598);
+*(&local0) = ((frost$collections$Array*) NULL);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp594));
+frost$collections$Array* $tmp599 = *(&local0);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp599));
+*(&local0) = $tmp594;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp594));
+// unreffing REF($13:frost.collections.Array<frost.collections.ListView.combine.V>)
+// line 220
+frost$core$Int64 $tmp600 = (frost$core$Int64) {0};
+ITable* $tmp601 = ((frost$collections$CollectionView*) param0)->$class->itable;
+while ($tmp601->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
+    $tmp601 = $tmp601->next;
+}
+$fn603 $tmp602 = $tmp601->methods[0];
+frost$core$Int64 $tmp604 = $tmp602(((frost$collections$CollectionView*) param0));
+frost$core$Bit $tmp605 = frost$core$Bit$init$builtin_bit(false);
+frost$core$Range$LTfrost$core$Int64$GT $tmp606 = frost$core$Range$LTfrost$core$Int64$GT$init$frost$core$Int64$frost$core$Int64$frost$core$Bit($tmp600, $tmp604, $tmp605);
+frost$core$Int64 $tmp607 = $tmp606.min;
+*(&local1) = $tmp607;
+frost$core$Int64 $tmp608 = $tmp606.max;
+frost$core$Bit $tmp609 = $tmp606.inclusive;
+bool $tmp610 = $tmp609.value;
+frost$core$Int64 $tmp611 = (frost$core$Int64) {1};
+frost$core$UInt64 $tmp612 = frost$core$Int64$convert$R$frost$core$UInt64($tmp611);
+if ($tmp610) goto block6; else goto block7;
+block6:;
+int64_t $tmp613 = $tmp607.value;
+int64_t $tmp614 = $tmp608.value;
+bool $tmp615 = $tmp613 <= $tmp614;
+frost$core$Bit $tmp616 = (frost$core$Bit) {$tmp615};
+bool $tmp617 = $tmp616.value;
+if ($tmp617) goto block3; else goto block4;
+block7:;
+int64_t $tmp618 = $tmp607.value;
+int64_t $tmp619 = $tmp608.value;
+bool $tmp620 = $tmp618 < $tmp619;
+frost$core$Bit $tmp621 = (frost$core$Bit) {$tmp620};
+bool $tmp622 = $tmp621.value;
+if ($tmp622) goto block3; else goto block4;
+block3:;
+// line 221
+frost$collections$Array* $tmp623 = *(&local0);
+frost$core$Int64 $tmp624 = *(&local1);
+ITable* $tmp625 = param0->$class->itable;
+while ($tmp625->$class != (frost$core$Class*) &frost$collections$ListView$class) {
+    $tmp625 = $tmp625->next;
+}
+$fn627 $tmp626 = $tmp625->methods[0];
+frost$core$Object* $tmp628 = $tmp626(param0, $tmp624);
+frost$core$Int64 $tmp629 = *(&local1);
+ITable* $tmp630 = param1->$class->itable;
+while ($tmp630->$class != (frost$core$Class*) &frost$collections$ListView$class) {
+    $tmp630 = $tmp630->next;
+}
+$fn632 $tmp631 = $tmp630->methods[0];
+frost$core$Object* $tmp633 = $tmp631(param1, $tmp629);
+frost$core$Int8** $tmp634 = &param2->pointer;
+frost$core$Int8* $tmp635 = *$tmp634;
+frost$core$Object** $tmp636 = &param2->target;
+frost$core$Object* $tmp637 = *$tmp636;
+bool $tmp638 = $tmp637 != ((frost$core$Object*) NULL);
+if ($tmp638) goto block8; else goto block9;
+block9:;
+frost$core$Object* $tmp640 = (($fn639) $tmp635)($tmp628, $tmp633);
+*(&local2) = $tmp640;
+goto block10;
+block8:;
+frost$core$Object* $tmp642 = (($fn641) $tmp635)($tmp637, $tmp628, $tmp633);
+*(&local2) = $tmp642;
+goto block10;
+block10:;
+frost$core$Object* $tmp643 = *(&local2);
+frost$collections$Array$add$frost$collections$Array$T($tmp623, $tmp643);
+frost$core$Frost$unref$frost$core$Object$Q($tmp643);
+// unreffing REF($83:frost.collections.ListView.combine.V)
+frost$core$Frost$unref$frost$core$Object$Q($tmp633);
+// unreffing REF($66:frost.collections.ListView.T)
+frost$core$Frost$unref$frost$core$Object$Q($tmp628);
+// unreffing REF($62:frost.collections.ListView.T)
+goto block5;
+block5:;
+frost$core$Int64 $tmp644 = *(&local1);
+int64_t $tmp645 = $tmp608.value;
+int64_t $tmp646 = $tmp644.value;
+int64_t $tmp647 = $tmp645 - $tmp646;
+frost$core$Int64 $tmp648 = (frost$core$Int64) {$tmp647};
+frost$core$UInt64 $tmp649 = frost$core$Int64$convert$R$frost$core$UInt64($tmp648);
+if ($tmp610) goto block12; else goto block13;
+block12:;
+uint64_t $tmp650 = $tmp649.value;
+uint64_t $tmp651 = $tmp612.value;
+bool $tmp652 = $tmp650 >= $tmp651;
+frost$core$Bit $tmp653 = (frost$core$Bit) {$tmp652};
+bool $tmp654 = $tmp653.value;
+if ($tmp654) goto block11; else goto block4;
+block13:;
+uint64_t $tmp655 = $tmp649.value;
+uint64_t $tmp656 = $tmp612.value;
+bool $tmp657 = $tmp655 > $tmp656;
+frost$core$Bit $tmp658 = (frost$core$Bit) {$tmp657};
+bool $tmp659 = $tmp658.value;
+if ($tmp659) goto block11; else goto block4;
+block11:;
+int64_t $tmp660 = $tmp644.value;
+int64_t $tmp661 = $tmp611.value;
+int64_t $tmp662 = $tmp660 + $tmp661;
+frost$core$Int64 $tmp663 = (frost$core$Int64) {$tmp662};
+*(&local1) = $tmp663;
+goto block3;
+block4:;
+// line 223
+frost$collections$Array* $tmp664 = *(&local0);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$collections$ListView*) $tmp664)));
+frost$collections$Array* $tmp665 = *(&local0);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp665));
+// unreffing result
+*(&local0) = ((frost$collections$Array*) NULL);
+return ((frost$collections$ListView*) $tmp664);
+
+}
 frost$collections$Iterator* frost$collections$ListView$get_iterator$R$frost$collections$Iterator$LTfrost$collections$ListView$T$GT(frost$collections$ListView* param0) {
 
-// line 196
-frost$collections$ListView$ListIterator* $tmp463 = (frost$collections$ListView$ListIterator*) frostObjectAlloc(32, (frost$core$Class*) &frost$collections$ListView$ListIterator$class);
-frost$collections$ListView$ListIterator$init$frost$collections$ListView$LTfrost$collections$ListView$ListIterator$T$GT($tmp463, param0);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$collections$Iterator*) $tmp463)));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp463));
+// line 229
+frost$collections$ListView$ListIterator* $tmp666 = (frost$collections$ListView$ListIterator*) frostObjectAlloc(32, (frost$core$Class*) &frost$collections$ListView$ListIterator$class);
+frost$collections$ListView$ListIterator$init$frost$collections$ListView$LTfrost$collections$ListView$ListIterator$T$GT($tmp666, param0);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$collections$Iterator*) $tmp666)));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp666));
 // unreffing REF($1:frost.collections.ListView.ListIterator<frost.collections.ListView.T>)
-return ((frost$collections$Iterator*) $tmp463);
+return ((frost$collections$Iterator*) $tmp666);
 
 }
 frost$collections$ListView* frost$collections$ListView$sort$$LPfrost$collections$ListView$T$Cfrost$collections$ListView$T$RP$EQ$GT$LPfrost$core$Bit$RP$R$frost$collections$ListView$LTfrost$collections$ListView$T$GT(frost$collections$ListView* param0, frost$core$MutableMethod* param1) {
 
 frost$collections$Array* local0 = NULL;
-// line 209
-frost$collections$Array* $tmp464 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
-frost$collections$Array$init$frost$collections$CollectionView$LTfrost$collections$Array$T$GT($tmp464, ((frost$collections$CollectionView*) param0));
+// line 242
+frost$collections$Array* $tmp667 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+frost$collections$Array$init$frost$collections$ListView$LTfrost$collections$Array$T$GT($tmp667, param0);
 *(&local0) = ((frost$collections$Array*) NULL);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp464));
-frost$collections$Array* $tmp465 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp465));
-*(&local0) = $tmp464;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp464));
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp667));
+frost$collections$Array* $tmp668 = *(&local0);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp668));
+*(&local0) = $tmp667;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp667));
 // unreffing REF($1:frost.collections.Array<frost.collections.ListView.T>)
-// line 210
-frost$collections$Array* $tmp466 = *(&local0);
-frost$core$Int64 $tmp467 = (frost$core$Int64) {0};
-ITable* $tmp468 = ((frost$collections$CollectionView*) param0)->$class->itable;
-while ($tmp468->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
-    $tmp468 = $tmp468->next;
+// line 243
+frost$collections$Array* $tmp669 = *(&local0);
+frost$core$Int64 $tmp670 = (frost$core$Int64) {0};
+ITable* $tmp671 = ((frost$collections$CollectionView*) param0)->$class->itable;
+while ($tmp671->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
+    $tmp671 = $tmp671->next;
 }
-$fn470 $tmp469 = $tmp468->methods[0];
-frost$core$Int64 $tmp471 = $tmp469(((frost$collections$CollectionView*) param0));
-frost$core$Int64 $tmp472 = (frost$core$Int64) {1};
-int64_t $tmp473 = $tmp471.value;
-int64_t $tmp474 = $tmp472.value;
-int64_t $tmp475 = $tmp473 - $tmp474;
-frost$core$Int64 $tmp476 = (frost$core$Int64) {$tmp475};
-frost$core$Frost$sort$frost$collections$List$LTfrost$core$Frost$sort$T$GT$frost$core$Int64$frost$core$Int64$$LPfrost$core$Frost$sort$T$Cfrost$core$Frost$sort$T$RP$EQ$GT$LPfrost$core$Bit$RP(((frost$collections$List*) $tmp466), $tmp467, $tmp476, param1);
-// line 211
-frost$collections$Array* $tmp477 = *(&local0);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$collections$ListView*) $tmp477)));
-frost$collections$Array* $tmp478 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp478));
+$fn673 $tmp672 = $tmp671->methods[0];
+frost$core$Int64 $tmp674 = $tmp672(((frost$collections$CollectionView*) param0));
+frost$core$Int64 $tmp675 = (frost$core$Int64) {1};
+int64_t $tmp676 = $tmp674.value;
+int64_t $tmp677 = $tmp675.value;
+int64_t $tmp678 = $tmp676 - $tmp677;
+frost$core$Int64 $tmp679 = (frost$core$Int64) {$tmp678};
+frost$core$Frost$sort$frost$collections$List$LTfrost$core$Frost$sort$T$GT$frost$core$Int64$frost$core$Int64$$LPfrost$core$Frost$sort$T$Cfrost$core$Frost$sort$T$RP$EQ$AM$GT$LPfrost$core$Bit$RP(((frost$collections$List*) $tmp669), $tmp670, $tmp679, param1);
+// line 244
+frost$collections$Array* $tmp680 = *(&local0);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$collections$ListView*) $tmp680)));
+frost$collections$Array* $tmp681 = *(&local0);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp681));
 // unreffing result
 *(&local0) = ((frost$collections$Array*) NULL);
-return ((frost$collections$ListView*) $tmp477);
+return ((frost$collections$ListView*) $tmp680);
 
 }
 

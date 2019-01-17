@@ -40,7 +40,7 @@ interface List<T> : ListView<T>, ListWriter<T>, Collection<T> {
     }
 
     @default
-    method filterInPlace(f:(T)=>(Bit)) {
+    method filterInPlace(f:(T)=&>(Bit)) {
         for i in count - 1 ... 0 by -1 {
             if !f(self[i]) {
                 removeIndex(i)
@@ -52,7 +52,7 @@ interface List<T> : ListView<T>, ListWriter<T>, Collection<T> {
     As [sorted], but performs the sort in-place rather than returning a new list.
     ================================================================================================
     @default
-    method sortInPlace(greater:(T, T)=>(Bit)) {
+    method sortInPlace(greater:(T, T)=&>(Bit)) {
         Frost.sort<T>(self, 0, count - 1, greater)
     }
 }

@@ -25,23 +25,22 @@ enforce class directory and filename rules
 Eventually
 ==========
 
-Move wrappers / structs / casting / etc. out of CG and into Compiler. Create IR.Type.
 Dataflow, null safety, function safety
 Proper native code headers
 Tuples
 Property error reporting
 automatically calculate dependency information during build
 DWARF info
+Move wrappers / structs / casting / etc. out of CG and into Compiler. Create IR.Type. ...Maybe?
 
 Bugs
 ====
 
+Do we add an owner to String.Index and check against it?
 need to handle pre/postconditions inherited from multiple sources (remember that multiple interfaces
     can define the same method with different contracts)
-change def current := compiler.currentMethod[0] for i in 0 .. current.parameters.get_count() in
-    LLVMCodeGenerator to just for i in 0 .. compiler.currentMethod[0].parameters.get_count() and we
-    leak memory
 Need to figure out & enforce init and cleanup rules
+need to report error on @external init / cleanup
 Add tests for things like breaking out of multiple loops w/ memory management
 Initializing a @weak <nullable> with null causes a crash (probably fixed?)
 Not getting error from using instance field in class constant (probably fixed?)

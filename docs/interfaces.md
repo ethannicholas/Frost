@@ -41,12 +41,13 @@ Interfaces may even inherit from more than one parent interface:
 Default Methods
 ---------------
 
-All methods in an interface are abstract by default. You may provide an 
-implementation of an interface method in order to create a *default method*:
+All methods in an interface are abstract by default. You may annotate an interface method with
+`@default` and provide an implementation in order to create a *default method*:
 
     interface Example {
         method exampleMethod(s:String):Bit
 
+        @default
         method defaultMethod() {
             Console.writeLine("this method has an implementation!")
         }
@@ -60,6 +61,7 @@ to interfaces listed later. For example, given the code:
     interface Example1 {
         method exampleMethod(s:String):Bit
 
+        @default
         method defaultMethod() {
             Console.writeLine("this method has an implementation!")
         }
@@ -68,6 +70,7 @@ to interfaces listed later. For example, given the code:
     interface Example2 {
         function someOtherMethod(r:Real64):Real64
 
+        @default
         method defaultMethod() {
             Console.writeLine("this method also has an implementation!")
         }

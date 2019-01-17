@@ -288,7 +288,7 @@ class Frost {
     -- quick-and-dirty QuickSort
     @private
     @class
-    method sort<T>(a:List<T>, left:Int, right:Int, greater:(T, T)=>(Bit)) {
+    method sort<T>(a:List<T>, left:Int, right:Int, greater:(T, T)=&>(Bit)) {
         if left >= right {
             return
         }

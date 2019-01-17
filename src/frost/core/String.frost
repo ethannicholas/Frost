@@ -15,8 +15,8 @@ An immutable sequence of Unicode codepoints. Each Unicode codepoint is a number 
 this sequence forms a sensible Unicode string. Note that a single logical character may be composed
 of multiple Unicode codepoints, such as a string consisting of REGIONAL INDICATOR SYMBOL LETTER B
 followed by REGIONAL INDICATOR SYMBOL LETTER R, which many platforms will render as a Brazilian flag
-Emoji. Even though this string will generally be displayed as a single logical character, Frost
-deals with Unicode codepoints and thus considers the string to have a length of 2.
+Emoji. Even though this string will generally be displayed as a single logical character, the String
+class deals with Unicode codepoints and thus considers the string to have a length of 2.
 
 Internally, `String`s are stored using the UTF-8 encoding. The fact that UTF-8 is a variable-length
 encoding impacts the performance of some operations, as determining the offset of a given codepoint
@@ -30,8 +30,8 @@ requires traversing the string from the beginning. Because of this, it can be mu
 is relatively slow, as the repeated calls to `s[i]` constantly re-scan the `String` from the
 beginning to find each successive character. We can rewrite this code using `String.Index`:
 
-    var index := string.start()
-    while index != string.end() {
+    var index := string.start
+    while index != string.end {
         process(s[index])
         index := s.next(index)
     }
@@ -48,7 +48,7 @@ that creates many temporary objects. Instead create a [MutableString], repeatedl
 it, and then finally turn it into an immutable `String` using [finish](MutableString.finish).
 ====================================================================================================
 @final
-class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
+class String : Immutable, Key<String>, Comparable<String>, Iterable<Char32>, Formattable {
     ================================================================================================
     Represents the position of a Unicode codepoint within a `String`.
     ================================================================================================
@@ -613,6 +613,29 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
             }
         }
         return true
+    }
+
+    ================================================================================================
+    Returns `true` if this string is greater than the other string when considered in a
+    codepoint-by-codepoint fashion. This is sufficient to provide *some* ordering of strings, and
+    will generally work acceptably for pure ASCII strings, but will not yield the expected sort
+    order in most locales.
+    ================================================================================================
+    @override
+    function >(other:String):Bit {
+        var selfIndex := start
+        var otherIndex := other.start
+        while selfIndex < end & otherIndex < other.end {
+            def c1 := self[selfIndex]
+            def c2 := other[otherIndex]
+            if c1 = c2 {
+                selfIndex := next(selfIndex)
+                otherIndex := other.next(otherIndex)
+                continue
+            }
+            return c1 > c2
+        }
+        return selfIndex != end
     }
 
     ================================================================================================

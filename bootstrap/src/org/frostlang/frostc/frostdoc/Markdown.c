@@ -1346,7 +1346,7 @@ frost$core$String* $tmp416 = frost$core$MutableString$convert$R$frost$core$Strin
 frost$core$RegularExpression* $tmp417 = (frost$core$RegularExpression*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$RegularExpression$class);
 frost$core$RegularExpression$init$frost$core$String($tmp417, &$s418);
 frost$collections$Array* $tmp419 = frost$core$String$split$frost$core$RegularExpression$R$frost$collections$Array$LTfrost$core$String$GT($tmp416, $tmp417);
-frost$collections$Array$init$frost$collections$CollectionView$LTfrost$collections$Array$T$GT($tmp415, ((frost$collections$CollectionView*) $tmp419));
+frost$collections$Array$init$frost$collections$ListView$LTfrost$collections$Array$T$GT($tmp415, ((frost$collections$ListView*) $tmp419));
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp415));
 frost$collections$Array* $tmp420 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp420));

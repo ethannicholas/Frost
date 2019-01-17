@@ -1485,7 +1485,7 @@ frost$core$Frost$unref$frost$core$Object$Q($tmp641);
 return;
 
 }
-void frost$core$Frost$sort$frost$collections$List$LTfrost$core$Frost$sort$T$GT$frost$core$Int64$frost$core$Int64$$LPfrost$core$Frost$sort$T$Cfrost$core$Frost$sort$T$RP$EQ$GT$LPfrost$core$Bit$RP(frost$collections$List* param0, frost$core$Int64 param1, frost$core$Int64 param2, frost$core$MutableMethod* param3) {
+void frost$core$Frost$sort$frost$collections$List$LTfrost$core$Frost$sort$T$GT$frost$core$Int64$frost$core$Int64$$LPfrost$core$Frost$sort$T$Cfrost$core$Frost$sort$T$RP$EQ$AM$GT$LPfrost$core$Bit$RP(frost$collections$List* param0, frost$core$Int64 param1, frost$core$Int64 param2, frost$core$MutableMethod* param3) {
 
 frost$core$Int64 local0;
 frost$core$Object* local1 = NULL;
@@ -1655,7 +1655,7 @@ int64_t $tmp739 = $tmp737.value;
 int64_t $tmp740 = $tmp738.value;
 int64_t $tmp741 = $tmp739 - $tmp740;
 frost$core$Int64 $tmp742 = (frost$core$Int64) {$tmp741};
-frost$core$Frost$sort$frost$collections$List$LTfrost$core$Frost$sort$T$GT$frost$core$Int64$frost$core$Int64$$LPfrost$core$Frost$sort$T$Cfrost$core$Frost$sort$T$RP$EQ$GT$LPfrost$core$Bit$RP(param0, param1, $tmp742, param3);
+frost$core$Frost$sort$frost$collections$List$LTfrost$core$Frost$sort$T$GT$frost$core$Int64$frost$core$Int64$$LPfrost$core$Frost$sort$T$Cfrost$core$Frost$sort$T$RP$EQ$AM$GT$LPfrost$core$Bit$RP(param0, param1, $tmp742, param3);
 // line 307
 frost$core$Int64 $tmp743 = *(&local2);
 frost$core$Int64 $tmp744 = (frost$core$Int64) {1};
@@ -1663,7 +1663,7 @@ int64_t $tmp745 = $tmp743.value;
 int64_t $tmp746 = $tmp744.value;
 int64_t $tmp747 = $tmp745 + $tmp746;
 frost$core$Int64 $tmp748 = (frost$core$Int64) {$tmp747};
-frost$core$Frost$sort$frost$collections$List$LTfrost$core$Frost$sort$T$GT$frost$core$Int64$frost$core$Int64$$LPfrost$core$Frost$sort$T$Cfrost$core$Frost$sort$T$RP$EQ$GT$LPfrost$core$Bit$RP(param0, $tmp748, param2, param3);
+frost$core$Frost$sort$frost$collections$List$LTfrost$core$Frost$sort$T$GT$frost$core$Int64$frost$core$Int64$$LPfrost$core$Frost$sort$T$Cfrost$core$Frost$sort$T$RP$EQ$AM$GT$LPfrost$core$Bit$RP(param0, $tmp748, param2, param3);
 frost$core$Object* $tmp749 = *(&local1);
 frost$core$Frost$unref$frost$core$Object$Q($tmp749);
 // unreffing pivot

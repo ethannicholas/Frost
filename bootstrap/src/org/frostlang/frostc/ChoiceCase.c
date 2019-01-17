@@ -12,7 +12,6 @@
 #include "frost/core/Frost.h"
 #include "org/frostlang/frostc/Compiler/Resolution.h"
 #include "frost/collections/Array.h"
-#include "frost/collections/CollectionView.h"
 #include "org/frostlang/frostc/Symbol/Kind.h"
 
 
@@ -65,7 +64,7 @@ frost$core$Int64* $tmp16 = &param0->rawValue;
 *$tmp16 = param5;
 // line 24
 frost$collections$Array* $tmp17 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
-frost$collections$Array$init$frost$collections$CollectionView$LTfrost$collections$Array$T$GT($tmp17, ((frost$collections$CollectionView*) param6));
+frost$collections$Array$init$frost$collections$ListView$LTfrost$collections$Array$T$GT($tmp17, param6);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp17));
 frost$collections$Array** $tmp18 = &param0->fields;
 frost$collections$Array* $tmp19 = *$tmp18;
