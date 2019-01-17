@@ -25,57 +25,57 @@ static frost$core$String $s122 = { (frost$core$Class*) &frost$core$String$class,
 
 void frost$io$IndentedOutputStream$init$frost$io$OutputStream(frost$io$IndentedOutputStream* param0, frost$io$OutputStream* param1) {
 
-// line 15
+// line 22
 frost$core$Int64 $tmp2 = (frost$core$Int64) {0};
 frost$core$Int64* $tmp3 = &param0->level;
 *$tmp3 = $tmp2;
-// line 20
+// line 27
 frost$core$Int64 $tmp4 = (frost$core$Int64) {4};
 frost$core$Int64* $tmp5 = &param0->indentSize;
 *$tmp5 = $tmp4;
-// line 23
+// line 30
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) &$s6));
 frost$core$String** $tmp7 = &param0->indent;
 frost$core$String* $tmp8 = *$tmp7;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp8));
 frost$core$String** $tmp9 = &param0->indent;
 *$tmp9 = &$s10;
-// line 26
+// line 33
 frost$core$Bit $tmp11 = frost$core$Bit$init$builtin_bit(true);
 frost$core$Bit* $tmp12 = &param0->atLineStart;
 *$tmp12 = $tmp11;
-// line 37
+// line 44
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
 frost$io$OutputStream** $tmp13 = &param0->out;
 frost$io$OutputStream* $tmp14 = *$tmp13;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp14));
 frost$io$OutputStream** $tmp15 = &param0->out;
 *$tmp15 = param1;
-// line 38
+// line 45
 frost$io$OutputStream$init(((frost$io$OutputStream*) param0));
 return;
 
 }
 void frost$io$IndentedOutputStream$write$frost$core$UInt8(frost$io$IndentedOutputStream* param0, frost$core$UInt8 param1) {
 
-// line 43
+// line 50
 frost$core$UInt8 $tmp16 = (frost$core$UInt8) {10};
 frost$core$Bit $tmp17 = frost$core$UInt8$$EQ$frost$core$UInt8$R$frost$core$Bit(param1, $tmp16);
 bool $tmp18 = $tmp17.value;
 if ($tmp18) goto block1; else goto block3;
 block1:;
-// line 44
+// line 51
 frost$core$Bit $tmp19 = frost$core$Bit$init$builtin_bit(true);
 frost$core$Bit* $tmp20 = &param0->atLineStart;
 *$tmp20 = $tmp19;
 goto block2;
 block3:;
 // line 1
-// line 47
+// line 54
 frost$io$IndentedOutputStream$indentIfNeeded(param0);
 goto block2;
 block2:;
-// line 49
+// line 56
 frost$io$OutputStream** $tmp21 = &param0->out;
 frost$io$OutputStream* $tmp22 = *$tmp21;
 $fn24 $tmp23 = ($fn24) $tmp22->$class->vtable[2];
@@ -87,13 +87,13 @@ void frost$io$IndentedOutputStream$write$frost$unsafe$Pointer$LTfrost$core$UInt8
 
 frost$core$Int64 local0;
 frost$core$Int64 local1;
-// line 54
+// line 61
 frost$core$Int64 $tmp25 = (frost$core$Int64) {0};
 *(&local0) = $tmp25;
-// line 55
+// line 62
 frost$core$Int64 $tmp26 = *(&local0);
 *(&local1) = $tmp26;
-// line 56
+// line 63
 goto block1;
 block1:;
 frost$core$Int64 $tmp27 = *(&local1);
@@ -104,7 +104,7 @@ frost$core$Bit $tmp31 = (frost$core$Bit) {$tmp30};
 bool $tmp32 = $tmp31.value;
 if ($tmp32) goto block2; else goto block3;
 block2:;
-// line 57
+// line 64
 frost$core$Int64 $tmp33 = *(&local1);
 int64_t $tmp34 = $tmp33.value;
 frost$core$UInt8 $tmp35 = param1[$tmp34];
@@ -113,7 +113,7 @@ frost$core$Bit $tmp37 = frost$core$UInt8$$EQ$frost$core$UInt8$R$frost$core$Bit($
 bool $tmp38 = $tmp37.value;
 if ($tmp38) goto block4; else goto block6;
 block4:;
-// line 58
+// line 65
 frost$io$OutputStream** $tmp39 = &param0->out;
 frost$io$OutputStream* $tmp40 = *$tmp39;
 frost$core$Int64 $tmp41 = *(&local0);
@@ -127,22 +127,22 @@ int64_t $tmp48 = $tmp46 - $tmp47;
 frost$core$Int64 $tmp49 = (frost$core$Int64) {$tmp48};
 $fn51 $tmp50 = ($fn51) $tmp40->$class->vtable[10];
 $tmp50($tmp40, $tmp43, $tmp49);
-// line 59
+// line 66
 frost$core$Int64 $tmp52 = *(&local1);
 *(&local0) = $tmp52;
-// line 60
+// line 67
 frost$core$Bit $tmp53 = frost$core$Bit$init$builtin_bit(true);
 frost$core$Bit* $tmp54 = &param0->atLineStart;
 *$tmp54 = $tmp53;
 goto block5;
 block6:;
-// line 62
+// line 69
 frost$core$Bit* $tmp55 = &param0->atLineStart;
 frost$core$Bit $tmp56 = *$tmp55;
 bool $tmp57 = $tmp56.value;
 if ($tmp57) goto block7; else goto block8;
 block7:;
-// line 63
+// line 70
 frost$io$OutputStream** $tmp58 = &param0->out;
 frost$io$OutputStream* $tmp59 = *$tmp58;
 frost$core$Int64 $tmp60 = *(&local0);
@@ -156,16 +156,16 @@ int64_t $tmp67 = $tmp65 - $tmp66;
 frost$core$Int64 $tmp68 = (frost$core$Int64) {$tmp67};
 $fn70 $tmp69 = ($fn70) $tmp59->$class->vtable[10];
 $tmp69($tmp59, $tmp62, $tmp68);
-// line 64
+// line 71
 frost$core$Int64 $tmp71 = *(&local1);
 *(&local0) = $tmp71;
-// line 65
+// line 72
 frost$io$IndentedOutputStream$indentIfNeeded(param0);
 goto block8;
 block8:;
 goto block5;
 block5:;
-// line 67
+// line 74
 frost$core$Int64 $tmp72 = *(&local1);
 frost$core$Int64 $tmp73 = (frost$core$Int64) {1};
 int64_t $tmp74 = $tmp72.value;
@@ -175,7 +175,7 @@ frost$core$Int64 $tmp77 = (frost$core$Int64) {$tmp76};
 *(&local1) = $tmp77;
 goto block1;
 block3:;
-// line 69
+// line 76
 frost$io$OutputStream** $tmp78 = &param0->out;
 frost$io$OutputStream* $tmp79 = *$tmp78;
 frost$core$Int64 $tmp80 = *(&local0);
@@ -194,17 +194,17 @@ return;
 }
 void frost$io$IndentedOutputStream$indentIfNeeded(frost$io$IndentedOutputStream* param0) {
 
-// line 74
+// line 81
 frost$core$Bit* $tmp91 = &param0->atLineStart;
 frost$core$Bit $tmp92 = *$tmp91;
 bool $tmp93 = $tmp92.value;
 if ($tmp93) goto block1; else goto block2;
 block1:;
-// line 75
+// line 82
 frost$core$Bit $tmp94 = frost$core$Bit$init$builtin_bit(false);
 frost$core$Bit* $tmp95 = &param0->atLineStart;
 *$tmp95 = $tmp94;
-// line 76
+// line 83
 frost$core$String** $tmp96 = &param0->indent;
 frost$core$String* $tmp97 = *$tmp96;
 frost$core$Int64* $tmp98 = &$tmp97->_length;
@@ -224,7 +224,7 @@ frost$core$Bit $tmp111 = (frost$core$Bit) {$tmp110};
 bool $tmp112 = $tmp111.value;
 if ($tmp112) goto block3; else goto block4;
 block3:;
-// line 77
+// line 84
 frost$core$Int64* $tmp113 = &param0->indentSize;
 frost$core$Int64 $tmp114 = *$tmp113;
 frost$core$Int64* $tmp115 = &param0->level;
@@ -244,7 +244,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp121));
 // unreffing REF($37:frost.core.String)
 goto block4;
 block4:;
-// line 79
+// line 86
 frost$core$String** $tmp126 = &param0->indent;
 frost$core$String* $tmp127 = *$tmp126;
 $fn129 $tmp128 = ($fn129) ((frost$io$OutputStream*) param0)->$class->vtable[17];
@@ -256,7 +256,7 @@ return;
 }
 void frost$io$IndentedOutputStream$cleanup(frost$io$IndentedOutputStream* param0) {
 
-// line 10
+// line 17
 frost$io$OutputStream$cleanup(((frost$io$OutputStream*) param0));
 frost$core$String** $tmp130 = &param0->indent;
 frost$core$String* $tmp131 = *$tmp130;

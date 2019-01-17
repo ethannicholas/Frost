@@ -14,4 +14,5 @@ void org$frostlang$frostc$Compiler$EnclosingContext$init$frost$core$Int64$frost$
 void org$frostlang$frostc$Compiler$EnclosingContext$init$frost$core$Int64(org$frostlang$frostc$Compiler$EnclosingContext* self, frost$core$Int64 p_rv);
 void org$frostlang$frostc$Compiler$EnclosingContext$init$frost$core$Int64$org$frostlang$frostc$Variable(org$frostlang$frostc$Compiler$EnclosingContext* self, frost$core$Int64 p_rv, org$frostlang$frostc$Variable* p_f0);
 void org$frostlang$frostc$Compiler$EnclosingContext$init$frost$core$Int64$org$frostlang$frostc$IR$Value(org$frostlang$frostc$Compiler$EnclosingContext* self, frost$core$Int64 p_rv, org$frostlang$frostc$IR$Value* p_f0);
+void org$frostlang$frostc$Compiler$EnclosingContext$init$frost$core$Int64$org$frostlang$frostc$IR$Block$ID$org$frostlang$frostc$Variable$Q(org$frostlang$frostc$Compiler$EnclosingContext* self, frost$core$Int64 p_rv, org$frostlang$frostc$IR$Block$ID p_f0, org$frostlang$frostc$Variable* p_f1);
 

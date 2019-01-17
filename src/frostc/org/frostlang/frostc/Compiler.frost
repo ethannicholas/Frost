@@ -29,6 +29,7 @@ uses org.frostlang.frostc.statement.InnerMethod
 uses org.frostlang.frostc.statement.Loop
 uses org.frostlang.frostc.statement.Match
 uses org.frostlang.frostc.statement.Return
+uses org.frostlang.frostc.statement.Try
 uses org.frostlang.frostc.statement.While
 uses org.frostlang.frostc.statement.Var
 
@@ -141,6 +142,7 @@ class Compiler {
         SCOPE
         VARIABLE_SCOPE(Variable)
         VALUE_SCOPE(IR.Value)
+        TRY_SCOPE(IR.Block.ID, Variable?)
 
         @override
         function convert():String {
@@ -502,12 +504,14 @@ class Compiler {
         addAlias("frost.core.Char32")
         addAlias("frost.core.Comparable")
         addAlias("frost.core.Equatable")
+        addAlias("frost.core.Error")
         addAlias("frost.core.Formattable")
         addAlias("frost.core.Int8")
         addAlias("frost.core.Int16")
         addAlias("frost.core.Int32")
         addAlias("frost.core.Int64")
         addAlias("frost.core.Immutable")
+        addAlias("frost.core.Maybe")
         addAlias("frost.core.Method")
         addAlias("frost.core.MutableString")
         addAlias("frost.core.Object")
@@ -4814,6 +4818,29 @@ class Compiler {
         return null
     }
 
+    function getTryScope():Pair<IR.Block.ID, Variable>? {
+        for c in enclosingContexts {
+            match c {
+                when EnclosingContext.TRY_SCOPE(failBlock, errorVar) {
+                    return Pair<IR.Block.ID, Variable>(failBlock, errorVar)
+                }
+            }
+        }
+        return null
+    }
+
+    method leaveTryScope() {
+        for c in enclosingContexts {
+            match c {
+                when EnclosingContext.TRY_SCOPE {
+                    break
+                }
+            }
+            leaveScope(c)
+        }
+        assert false    
+    }
+
     @pre(bit.type() = Type.Bit())
     method extractBuiltinBit(position:Position, bit:IR.Value):IR.Value {
         def result := ir.add(IR.Statement.EXTRACT_FIELD(position, bit,
@@ -4988,6 +5015,9 @@ class Compiler {
             when ASTNode.FOR(position, label, target, list, statements) {
                 For.compile(self, position, label, target, list, statements)
             }
+            when ASTNode.IDENTIFIER(position, _) {
+                error(position, "expected a statement")
+            }
             when ASTNode.IF(position, test, ifTrue, ifFalse) {
                 If.compile(self, position, test, ifTrue, ifFalse)
             }
@@ -5002,6 +5032,9 @@ class Compiler {
             }
             when ASTNode.RETURN(position, value) {
                 Return.compile(self, position, value)
+            }
+            when ASTNode.TRY(position, block, error, failBlock) {
+                Try.compile(self, position, block, error, failBlock)
             }
             when ASTNode.VAR(position, kind, decls) {
                 Var.compile(self, position, kind, decls)
@@ -5110,7 +5143,7 @@ class Compiler {
     method compilePreconditions() {
         def m := currentMethod[0]
         var start:IR.Block.ID? := null
-        var fail:IR.Block.ID? := null
+        var failBlock:IR.Block.ID? := null
         var current := m
         loop {
             var havePre := false
@@ -5136,10 +5169,10 @@ class Compiler {
                             if start == null {
                                 start := ir.newBlock("precondition success")
                             }
-                            fail := ir.newBlock("precondition fail")
+                            failBlock := ir.newBlock("precondition fail")
                             ir.add(IR.Statement.CONDITIONAL_BRANCH(m.position,
-                                    extractBuiltinBit(m.position, value), start, fail))
-                            ir.setCurrentBlock(fail)
+                                    extractBuiltinBit(m.position, value), start, failBlock))
+                            ir.setCurrentBlock(failBlock)
                         }
                         when Annotations.Expression.PRE_OR(_, expr) {
                             if current == m {
@@ -5161,10 +5194,10 @@ class Compiler {
                             if start == null {
                                 start := ir.newBlock("precondition success")
                             }
-                            fail := ir.newBlock("precondition fail")
+                            failBlock := ir.newBlock("precondition fail")
                             ir.add(IR.Statement.CONDITIONAL_BRANCH(m.position,
-                                    extractBuiltinBit(m.position, value), start, fail))
-                            ir.setCurrentBlock(fail)
+                                    extractBuiltinBit(m.position, value), start, failBlock))
+                            ir.setCurrentBlock(failBlock)
                         }
                     }
                 }
@@ -5174,7 +5207,7 @@ class Compiler {
             }
             current := current.overridden
         }
-        if fail !== null {
+        if failBlock !== null {
             Assert.compileFail(self, m.position, ASTNode.STRING(m.position,
                     "precondition failure for \{m.declaration}"))
             assert start !== null
@@ -5187,7 +5220,7 @@ class Compiler {
         def auto := AutoScope(self, methodSymbolTable)
         def m := currentMethod[0]
         var success:IR.Block.ID? := null
-        var fail:IR.Block.ID? := null
+        var failBlock:IR.Block.ID? := null
         var current := m
         loop {
             var havePost := false
@@ -5214,16 +5247,16 @@ class Compiler {
                                 return
                             }
                             success := ir.newBlock("postcondition success")
-                            if fail == null {
-                                fail := ir.newBlock("postcondition fail")
+                            if failBlock == null {
+                                failBlock := ir.newBlock("postcondition fail")
                                 def old := ir.currentBlock.id
-                                ir.setCurrentBlock(fail)
+                                ir.setCurrentBlock(failBlock)
                                 Assert.compileFail(self, m.position, ASTNode.STRING(m.position,
                                         "postcondition failure for \{m.declaration}"))
                                 ir.setCurrentBlock(old)
                             }
                             ir.add(IR.Statement.CONDITIONAL_BRANCH(m.position,
-                                    extractBuiltinBit(m.position, value), success, fail))
+                                    extractBuiltinBit(m.position, value), success, failBlock))
                             ir.setCurrentBlock(success)
                         }
                         when Annotations.Expression.POST_AND(_, expr) {
@@ -5248,16 +5281,16 @@ class Compiler {
                                 return
                             }
                             success := ir.newBlock("postcondition success")
-                            if fail == null {
-                                fail := ir.newBlock("postcondition fail")
+                            if failBlock == null {
+                                failBlock := ir.newBlock("postcondition fail")
                                 def old := ir.currentBlock.id
-                                ir.setCurrentBlock(fail)
+                                ir.setCurrentBlock(failBlock)
                                 Assert.compileFail(self, m.position, ASTNode.STRING(m.position,
                                         "postcondition failure for \{m.declaration}"))
                                 ir.setCurrentBlock(old)
                             }
                             ir.add(IR.Statement.CONDITIONAL_BRANCH(m.position,
-                                    extractBuiltinBit(m.position, value), success, fail))
+                                    extractBuiltinBit(m.position, value), success, failBlock))
                             ir.setCurrentBlock(success)
                         }
                     }

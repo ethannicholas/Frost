@@ -2016,8 +2016,44 @@ class Parser {
     }
 
     ================================================================================================
+    tryStatement = TRY block FAIL (LPAREN identifier RPAREN)? block
+    ================================================================================================
+    method tryStatement():ASTNode? {
+        def start := expect(Token.Kind.TRY, "'try'")
+        if start == null {
+            return null
+        }
+        def block := blockStatements()
+        if block == null {
+            return null
+        }
+        if expect(Token.Kind.FAIL, "'fail'") == null {
+            return null
+        }
+        def identifier:ASTNode?
+        if checkNext(Token.Kind.LPAREN) !== null {
+            def idText := expect(Token.Kind.IDENTIFIER, "an identifier")
+            if idText == null {
+                return null
+            }
+            identifier := ASTNode.IDENTIFIER(idText.position, text(idText))
+            if expect(Token.Kind.RPAREN, "')'") == null {
+                return null
+            }
+        }
+        else {
+            identifier := null
+        }
+        def failBlock := blockStatements()
+        if failBlock == null {
+            return null
+        }
+        return ASTNode.TRY(start.position, block, identifier, failBlock)
+    }
+
+    ================================================================================================
     statement = ifStatement | anyLoop | expressionOrAssignment | assertStatement | matchStatement |
-            block | varDeclaration | initCall | innerMethod
+            block | varDeclaration | initCall | innerMethod | try
     ================================================================================================
     method statement():ASTNode? {
         match peek().kind {
@@ -2057,6 +2093,9 @@ class Parser {
             }
             when Token.Kind.METHOD, Token.Kind.FUNCTION {
                 return innerMethod()
+            }
+            when Token.Kind.TRY {
+                return tryStatement()
             }
             otherwise {
                 -- trigger error

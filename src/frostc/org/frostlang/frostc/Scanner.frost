@@ -437,6 +437,9 @@ class Scanner {
             when ASTNode.SUPER {
                 return 1
             }
+            when ASTNode.TRY {
+                return INLINE_THRESHOLD
+            }
             when ASTNode.TYPE {
                 return 0
             }

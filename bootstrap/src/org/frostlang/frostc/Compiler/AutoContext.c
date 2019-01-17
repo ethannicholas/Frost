@@ -19,21 +19,21 @@ static frost$core$String $s22 = { (frost$core$Class*) &frost$core$String$class, 
 
 void org$frostlang$frostc$Compiler$AutoContext$init$org$frostlang$frostc$Compiler$org$frostlang$frostc$Compiler$EnclosingContext(org$frostlang$frostc$Compiler$AutoContext* param0, org$frostlang$frostc$Compiler* param1, org$frostlang$frostc$Compiler$EnclosingContext* param2) {
 
-// line 173
+// line 175
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
 org$frostlang$frostc$Compiler** $tmp2 = &param0->compiler;
 org$frostlang$frostc$Compiler* $tmp3 = *$tmp2;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp3));
 org$frostlang$frostc$Compiler** $tmp4 = &param0->compiler;
 *$tmp4 = param1;
-// line 174
+// line 176
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param2));
 org$frostlang$frostc$Compiler$EnclosingContext** $tmp5 = &param0->context;
 org$frostlang$frostc$Compiler$EnclosingContext* $tmp6 = *$tmp5;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp6));
 org$frostlang$frostc$Compiler$EnclosingContext** $tmp7 = &param0->context;
 *$tmp7 = param2;
-// line 175
+// line 177
 frost$collections$Stack** $tmp8 = &param1->enclosingContexts;
 frost$collections$Stack* $tmp9 = *$tmp8;
 frost$collections$Stack$push$frost$collections$Stack$T($tmp9, ((frost$core$Object*) param2));
@@ -42,7 +42,7 @@ return;
 }
 void org$frostlang$frostc$Compiler$AutoContext$cleanup(org$frostlang$frostc$Compiler$AutoContext* param0) {
 
-// line 180
+// line 182
 org$frostlang$frostc$Compiler** $tmp10 = &param0->compiler;
 org$frostlang$frostc$Compiler* $tmp11 = *$tmp10;
 frost$collections$Stack** $tmp12 = &$tmp11->enclosingContexts;
@@ -56,13 +56,13 @@ frost$core$Bit $tmp19 = frost$core$Bit$init$builtin_bit($tmp18);
 bool $tmp20 = $tmp19.value;
 if ($tmp20) goto block1; else goto block2;
 block2:;
-frost$core$Int64 $tmp21 = (frost$core$Int64) {180};
+frost$core$Int64 $tmp21 = (frost$core$Int64) {182};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s22, $tmp21);
 abort(); // unreachable
 block1:;
 frost$core$Frost$unref$frost$core$Object$Q($tmp15);
 // unreffing REF($7:frost.collections.Stack.T)
-// line 181
+// line 183
 org$frostlang$frostc$Compiler** $tmp23 = &param0->compiler;
 org$frostlang$frostc$Compiler* $tmp24 = *$tmp23;
 frost$collections$Stack** $tmp25 = &$tmp24->enclosingContexts;
@@ -70,7 +70,7 @@ frost$collections$Stack* $tmp26 = *$tmp25;
 frost$core$Object* $tmp27 = frost$collections$Stack$pop$R$frost$collections$Stack$T($tmp26);
 frost$core$Frost$unref$frost$core$Object$Q($tmp27);
 // unreffing REF($27:frost.collections.Stack.T)
-// line 179
+// line 181
 frost$core$Object$cleanup(((frost$core$Object*) param0));
 org$frostlang$frostc$Compiler** $tmp28 = &param0->compiler;
 org$frostlang$frostc$Compiler* $tmp29 = *$tmp28;

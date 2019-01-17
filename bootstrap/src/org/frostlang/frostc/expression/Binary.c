@@ -1466,7 +1466,7 @@ return ((org$frostlang$frostc$ASTNode*) NULL);
 block6:;
 // line 163
 frost$core$Int64 $tmp489 = param2.$rawValue;
-frost$core$Int64 $tmp490 = (frost$core$Int64) {52};
+frost$core$Int64 $tmp490 = (frost$core$Int64) {55};
 frost$core$Bit $tmp491 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp489, $tmp490);
 bool $tmp492 = $tmp491.value;
 if ($tmp492) goto block12; else goto block13;
@@ -1492,7 +1492,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp500));
 // unreffing REF($88:org.frostlang.frostc.ASTNode)
 return $tmp500;
 block13:;
-frost$core$Int64 $tmp506 = (frost$core$Int64) {53};
+frost$core$Int64 $tmp506 = (frost$core$Int64) {56};
 frost$core$Bit $tmp507 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp489, $tmp506);
 bool $tmp508 = $tmp507.value;
 if ($tmp508) goto block14; else goto block15;
@@ -1518,7 +1518,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp516));
 // unreffing REF($115:org.frostlang.frostc.ASTNode)
 return $tmp516;
 block15:;
-frost$core$Int64 $tmp522 = (frost$core$Int64) {54};
+frost$core$Int64 $tmp522 = (frost$core$Int64) {57};
 frost$core$Bit $tmp523 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp489, $tmp522);
 bool $tmp524 = $tmp523.value;
 if ($tmp524) goto block16; else goto block17;
@@ -1544,7 +1544,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp532));
 // unreffing REF($142:org.frostlang.frostc.ASTNode)
 return $tmp532;
 block17:;
-frost$core$Int64 $tmp538 = (frost$core$Int64) {56};
+frost$core$Int64 $tmp538 = (frost$core$Int64) {59};
 frost$core$Bit $tmp539 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp489, $tmp538);
 bool $tmp540 = $tmp539.value;
 if ($tmp540) goto block18; else goto block19;
@@ -1585,7 +1585,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp556));
 // unreffing REF($183:org.frostlang.frostc.ASTNode)
 return $tmp556;
 block19:;
-frost$core$Int64 $tmp562 = (frost$core$Int64) {57};
+frost$core$Int64 $tmp562 = (frost$core$Int64) {60};
 frost$core$Bit $tmp563 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp489, $tmp562);
 bool $tmp564 = $tmp563.value;
 if ($tmp564) goto block22; else goto block23;
@@ -1623,7 +1623,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp577));
 // unreffing REF($221:org.frostlang.frostc.ASTNode)
 return $tmp577;
 block23:;
-frost$core$Int64 $tmp583 = (frost$core$Int64) {59};
+frost$core$Int64 $tmp583 = (frost$core$Int64) {62};
 frost$core$Bit $tmp584 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp489, $tmp583);
 bool $tmp585 = $tmp584.value;
 if ($tmp585) goto block26; else goto block27;
@@ -1642,7 +1642,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp586));
 // unreffing REF($239:org.frostlang.frostc.ASTNode)
 return $tmp586;
 block27:;
-frost$core$Int64 $tmp594 = (frost$core$Int64) {60};
+frost$core$Int64 $tmp594 = (frost$core$Int64) {63};
 frost$core$Bit $tmp595 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp489, $tmp594);
 bool $tmp596 = $tmp595.value;
 if ($tmp596) goto block28; else goto block29;
@@ -1664,7 +1664,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp597));
 // unreffing REF($259:org.frostlang.frostc.ASTNode)
 return $tmp597;
 block29:;
-frost$core$Int64 $tmp608 = (frost$core$Int64) {63};
+frost$core$Int64 $tmp608 = (frost$core$Int64) {66};
 frost$core$Bit $tmp609 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp489, $tmp608);
 bool $tmp610 = $tmp609.value;
 if ($tmp610) goto block30; else goto block31;
@@ -1686,7 +1686,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp611));
 // unreffing REF($282:org.frostlang.frostc.ASTNode)
 return $tmp611;
 block31:;
-frost$core$Int64 $tmp622 = (frost$core$Int64) {64};
+frost$core$Int64 $tmp622 = (frost$core$Int64) {67};
 frost$core$Bit $tmp623 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp489, $tmp622);
 bool $tmp624 = $tmp623.value;
 if ($tmp624) goto block32; else goto block33;
@@ -1708,7 +1708,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp625));
 // unreffing REF($305:org.frostlang.frostc.ASTNode)
 return $tmp625;
 block33:;
-frost$core$Int64 $tmp636 = (frost$core$Int64) {65};
+frost$core$Int64 $tmp636 = (frost$core$Int64) {68};
 frost$core$Bit $tmp637 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp489, $tmp636);
 bool $tmp638 = $tmp637.value;
 if ($tmp638) goto block34; else goto block35;
@@ -1730,7 +1730,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp639));
 // unreffing REF($328:org.frostlang.frostc.ASTNode)
 return $tmp639;
 block35:;
-frost$core$Int64 $tmp650 = (frost$core$Int64) {66};
+frost$core$Int64 $tmp650 = (frost$core$Int64) {69};
 frost$core$Bit $tmp651 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp489, $tmp650);
 bool $tmp652 = $tmp651.value;
 if ($tmp652) goto block36; else goto block37;
@@ -1752,7 +1752,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp653));
 // unreffing REF($351:org.frostlang.frostc.ASTNode)
 return $tmp653;
 block37:;
-frost$core$Int64 $tmp664 = (frost$core$Int64) {68};
+frost$core$Int64 $tmp664 = (frost$core$Int64) {71};
 frost$core$Bit $tmp665 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp489, $tmp664);
 bool $tmp666 = $tmp665.value;
 if ($tmp666) goto block38; else goto block39;
@@ -1775,7 +1775,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp671));
 // unreffing REF($380:org.frostlang.frostc.ASTNode)
 return $tmp671;
 block39:;
-frost$core$Int64 $tmp677 = (frost$core$Int64) {70};
+frost$core$Int64 $tmp677 = (frost$core$Int64) {73};
 frost$core$Bit $tmp678 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp489, $tmp677);
 bool $tmp679 = $tmp678.value;
 if ($tmp679) goto block40; else goto block41;
@@ -1798,7 +1798,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp684));
 // unreffing REF($404:org.frostlang.frostc.ASTNode)
 return $tmp684;
 block41:;
-frost$core$Int64 $tmp690 = (frost$core$Int64) {72};
+frost$core$Int64 $tmp690 = (frost$core$Int64) {75};
 frost$core$Bit $tmp691 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp489, $tmp690);
 bool $tmp692 = $tmp691.value;
 if ($tmp692) goto block42; else goto block43;
@@ -1821,7 +1821,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp697));
 // unreffing REF($428:org.frostlang.frostc.ASTNode)
 return $tmp697;
 block43:;
-frost$core$Int64 $tmp703 = (frost$core$Int64) {73};
+frost$core$Int64 $tmp703 = (frost$core$Int64) {76};
 frost$core$Bit $tmp704 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp489, $tmp703);
 bool $tmp705 = $tmp704.value;
 if ($tmp705) goto block44; else goto block45;
@@ -1897,7 +1897,7 @@ frost$core$String* local2 = NULL;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp739;
 $tmp739 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp739->value = param2;
-frost$core$Int64 $tmp740 = (frost$core$Int64) {52};
+frost$core$Int64 $tmp740 = (frost$core$Int64) {55};
 org$frostlang$frostc$parser$Token$Kind $tmp741 = org$frostlang$frostc$parser$Token$Kind$init$frost$core$Int64($tmp740);
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp742;
 $tmp742 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
@@ -2082,7 +2082,7 @@ return $tmp803;
 block2:;
 // line 277
 frost$core$Int64 $tmp805 = param3.$rawValue;
-frost$core$Int64 $tmp806 = (frost$core$Int64) {90};
+frost$core$Int64 $tmp806 = (frost$core$Int64) {93};
 frost$core$Bit $tmp807 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp805, $tmp806);
 bool $tmp808 = $tmp807.value;
 if ($tmp808) goto block6; else goto block7;
@@ -2117,12 +2117,12 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp817));
 *(&local0) = ((org$frostlang$frostc$ASTNode*) NULL);
 return $tmp815;
 block7:;
-frost$core$Int64 $tmp818 = (frost$core$Int64) {61};
+frost$core$Int64 $tmp818 = (frost$core$Int64) {64};
 frost$core$Bit $tmp819 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp805, $tmp818);
 bool $tmp820 = $tmp819.value;
 if ($tmp820) goto block8; else goto block9;
 block9:;
-frost$core$Int64 $tmp821 = (frost$core$Int64) {62};
+frost$core$Int64 $tmp821 = (frost$core$Int64) {65};
 frost$core$Bit $tmp822 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp805, $tmp821);
 bool $tmp823 = $tmp822.value;
 if ($tmp823) goto block8; else goto block10;

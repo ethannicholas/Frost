@@ -1,8 +1,5 @@
 package frost.io
 
-uses frost.core.Error
-uses frost.core.Maybe
-
 ====================================================================================================
 Represents a file path, providing methods to query, read, and write files. A `File` object itself is
 merely the path to the file, not the actual physical file on disk, so creating a `File` object does
@@ -159,16 +156,17 @@ class File : Immutable, Key<File> {
     }
 
     ================================================================================================
-    Removes the extension from this path and replaces it with a new extension. This does not alter
-    the file on disk; it merely performs string manipulation to compute a new path. The new
-    extension does not have to contain a period; it is possible to turn a path with an extension
-    into one without using this method.
+    Removes the extension (including the period) from this path and replaces it with a new
+    extension. This does not alter the file on disk; it merely performs string manipulation to
+    compute a new path. The new extension does not have to contain a period; it is possible to turn
+    a path with an extension into one without using this method.
 
     Examples:
 
         File("/tmp/foo.gif").withExtension(".png") => /tmp/foo.png
         File("/tmp/foo").withExtension(".png") => /tmp/foo.png
         File("/tmp/foo.gif").withExtension("") => /tmp/foo
+        File("/tmp/foo.tar.gz").withExtension("") => /tmp/foo
 
     @param ext the new extension
     @returns the path with a new extension

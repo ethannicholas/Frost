@@ -22,26 +22,26 @@ static frost$core$String $s42 = { (frost$core$Class*) &frost$core$String$class, 
 
 void frost$io$LineNumberInputStream$init$frost$io$InputStream(frost$io$LineNumberInputStream* param0, frost$io$InputStream* param1) {
 
-// line 15
+// line 21
 frost$core$Int64 $tmp2 = (frost$core$Int64) {1};
 frost$core$Int64* $tmp3 = &param0->line;
 *$tmp3 = $tmp2;
-// line 20
+// line 26
 frost$core$Int64 $tmp4 = (frost$core$Int64) {1};
 frost$core$Int64* $tmp5 = &param0->column;
 *$tmp5 = $tmp4;
-// line 25
+// line 31
 frost$core$Int64 $tmp6 = (frost$core$Int64) {4};
 frost$core$Int64* $tmp7 = &param0->tabSize;
 *$tmp7 = $tmp6;
-// line 33
+// line 39
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
 frost$io$InputStream** $tmp8 = &param0->source;
 frost$io$InputStream* $tmp9 = *$tmp8;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp9));
 frost$io$InputStream** $tmp10 = &param0->source;
 *$tmp10 = param1;
-// line 34
+// line 40
 frost$io$InputStream$init(((frost$io$InputStream*) param0));
 return;
 
@@ -49,28 +49,28 @@ return;
 frost$core$UInt8$nullable frost$io$LineNumberInputStream$read$R$frost$core$UInt8$Q(frost$io$LineNumberInputStream* param0) {
 
 frost$core$UInt8$nullable local0;
-// line 39
+// line 45
 frost$io$InputStream** $tmp11 = &param0->source;
 frost$io$InputStream* $tmp12 = *$tmp11;
 $fn14 $tmp13 = ($fn14) $tmp12->$class->vtable[2];
 frost$core$UInt8$nullable $tmp15 = $tmp13($tmp12);
 *(&local0) = $tmp15;
-// line 40
+// line 46
 frost$core$UInt8$nullable $tmp16 = *(&local0);
 frost$core$Bit $tmp17 = frost$core$Bit$init$builtin_bit(!$tmp16.nonnull);
 bool $tmp18 = $tmp17.value;
 if ($tmp18) goto block1; else goto block2;
 block1:;
-// line 41
+// line 47
 return ((frost$core$UInt8$nullable) { .nonnull = false });
 block2:;
-// line 43
+// line 49
 frost$core$UInt8$nullable $tmp19 = *(&local0);
 frost$core$Bit $tmp20 = frost$core$Bit$init$builtin_bit($tmp19.nonnull);
 bool $tmp21 = $tmp20.value;
 if ($tmp21) goto block6; else goto block7;
 block7:;
-frost$core$Int64 $tmp22 = (frost$core$Int64) {44};
+frost$core$Int64 $tmp22 = (frost$core$Int64) {50};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s23, $tmp22, &$s24);
 abort(); // unreachable
 block6:;
@@ -79,7 +79,7 @@ frost$core$Bit $tmp26 = frost$core$UInt8$$EQ$frost$core$UInt8$R$frost$core$Bit((
 bool $tmp27 = $tmp26.value;
 if ($tmp27) goto block4; else goto block5;
 block4:;
-// line 45
+// line 51
 frost$core$Int64* $tmp28 = &param0->line;
 frost$core$Int64 $tmp29 = *$tmp28;
 frost$core$Int64 $tmp30 = (frost$core$Int64) {1};
@@ -89,7 +89,7 @@ int64_t $tmp33 = $tmp31 + $tmp32;
 frost$core$Int64 $tmp34 = (frost$core$Int64) {$tmp33};
 frost$core$Int64* $tmp35 = &param0->line;
 *$tmp35 = $tmp34;
-// line 46
+// line 52
 frost$core$Int64 $tmp36 = (frost$core$Int64) {1};
 frost$core$Int64* $tmp37 = &param0->column;
 *$tmp37 = $tmp36;
@@ -99,7 +99,7 @@ frost$core$Bit $tmp38 = frost$core$Bit$init$builtin_bit($tmp19.nonnull);
 bool $tmp39 = $tmp38.value;
 if ($tmp39) goto block10; else goto block11;
 block11:;
-frost$core$Int64 $tmp40 = (frost$core$Int64) {48};
+frost$core$Int64 $tmp40 = (frost$core$Int64) {54};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s41, $tmp40, &$s42);
 abort(); // unreachable
 block10:;
@@ -108,7 +108,7 @@ frost$core$Bit $tmp44 = frost$core$UInt8$$EQ$frost$core$UInt8$R$frost$core$Bit((
 bool $tmp45 = $tmp44.value;
 if ($tmp45) goto block8; else goto block9;
 block8:;
-// line 49
+// line 55
 frost$core$Int64* $tmp46 = &param0->column;
 frost$core$Int64 $tmp47 = *$tmp46;
 frost$core$Int64* $tmp48 = &param0->tabSize;
@@ -130,7 +130,7 @@ frost$core$Int64* $tmp63 = &param0->column;
 *$tmp63 = $tmp62;
 goto block3;
 block9:;
-// line 52
+// line 58
 frost$core$Int64* $tmp64 = &param0->column;
 frost$core$Int64 $tmp65 = *$tmp64;
 frost$core$Int64 $tmp66 = (frost$core$Int64) {1};
@@ -142,14 +142,14 @@ frost$core$Int64* $tmp71 = &param0->column;
 *$tmp71 = $tmp70;
 goto block3;
 block3:;
-// line 55
+// line 61
 frost$core$UInt8$nullable $tmp72 = *(&local0);
 return $tmp72;
 
 }
 void frost$io$LineNumberInputStream$cleanup(frost$io$LineNumberInputStream* param0) {
 
-// line 8
+// line 14
 frost$io$InputStream$cleanup(((frost$io$InputStream*) param0));
 frost$io$InputStream** $tmp73 = &param0->source;
 frost$io$InputStream* $tmp74 = *$tmp73;

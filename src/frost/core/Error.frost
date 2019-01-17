@@ -15,4 +15,9 @@ class Error {
     init(message:String) {
         self.message := message
     }
+
+    @override
+    function convert():String {
+        return "\{message}"
+    }
 }

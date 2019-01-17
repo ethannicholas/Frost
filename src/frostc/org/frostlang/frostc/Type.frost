@@ -279,6 +279,11 @@ class Type : Symbol, Key<Type> {
     }
 
     @class
+    method Error():Type {
+        return Type("frost.core.Error", Kind.CLASS, Position(), true)
+    }
+
+    @class
     method RegularExpression():Type {
         return Type("frost.core.RegularExpression", Kind.CLASS, Position(), true)
     }

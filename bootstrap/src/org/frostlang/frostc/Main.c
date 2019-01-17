@@ -1436,7 +1436,7 @@ frost$collections$Array* $tmp555 = *(&local1);
 frost$core$Int64 $tmp556 = (frost$core$Int64) {0};
 frost$core$Object* $tmp557 = frost$collections$Array$$IDX$frost$core$Int64$R$frost$collections$Array$T($tmp555, $tmp556);
 frost$core$String* $tmp558 = *(&local19);
-frost$io$File* $tmp559 = frost$io$File$changeExtension$frost$core$String$R$frost$io$File(((frost$io$File*) $tmp557), $tmp558);
+frost$io$File* $tmp559 = frost$io$File$withExtension$frost$core$String$R$frost$io$File(((frost$io$File*) $tmp557), $tmp558);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp559));
 frost$io$File* $tmp560 = *(&local3);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp560));
@@ -1681,7 +1681,7 @@ frost$core$Int64 $tmp663 = (frost$core$Int64) {263};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s664, $tmp663, &$s665);
 abort(); // unreachable
 block101:;
-frost$io$File* $tmp666 = frost$io$File$changeExtension$frost$core$String$R$frost$io$File($tmp660, &$s667);
+frost$io$File* $tmp666 = frost$io$File$withExtension$frost$core$String$R$frost$io$File($tmp660, &$s667);
 frost$io$OutputStream* $tmp668 = frost$io$File$openOutputStream$R$frost$io$OutputStream($tmp666);
 org$frostlang$frostc$LLVMCodeGenerator$init$frost$core$String$frost$io$OutputStream($tmp658, $tmp659, $tmp668);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((org$frostlang$frostc$CodeGenerator*) $tmp658)));
@@ -2097,7 +2097,7 @@ frost$core$Int64 $tmp854 = (frost$core$Int64) {297};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s855, $tmp854, &$s856);
 abort(); // unreachable
 block138:;
-frost$io$File* $tmp857 = frost$io$File$changeExtension$frost$core$String$R$frost$io$File($tmp851, &$s858);
+frost$io$File* $tmp857 = frost$io$File$withExtension$frost$core$String$R$frost$io$File($tmp851, &$s858);
 frost$io$File* $tmp859 = *(&local3);
 frost$core$Bit $tmp860 = frost$core$Bit$init$builtin_bit($tmp859 != NULL);
 bool $tmp861 = $tmp860.value;
@@ -2130,7 +2130,7 @@ frost$core$Int64 $tmp873 = (frost$core$Int64) {300};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s874, $tmp873, &$s875);
 abort(); // unreachable
 block143:;
-frost$io$File* $tmp876 = frost$io$File$changeExtension$frost$core$String$R$frost$io$File($tmp870, &$s877);
+frost$io$File* $tmp876 = frost$io$File$withExtension$frost$core$String$R$frost$io$File($tmp870, &$s877);
 frost$io$File* $tmp878 = *(&local3);
 frost$core$Bit $tmp879 = frost$core$Bit$init$builtin_bit($tmp878 != NULL);
 bool $tmp880 = $tmp879.value;

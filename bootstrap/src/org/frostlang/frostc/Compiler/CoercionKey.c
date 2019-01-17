@@ -29,14 +29,14 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 
 void org$frostlang$frostc$Compiler$CoercionKey$init$org$frostlang$frostc$ASTNode$org$frostlang$frostc$Type(org$frostlang$frostc$Compiler$CoercionKey* param0, org$frostlang$frostc$ASTNode* param1, org$frostlang$frostc$Type* param2) {
 
-// line 300
+// line 302
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
 org$frostlang$frostc$ASTNode** $tmp2 = &param0->expr;
 org$frostlang$frostc$ASTNode* $tmp3 = *$tmp2;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp3));
 org$frostlang$frostc$ASTNode** $tmp4 = &param0->expr;
 *$tmp4 = param1;
-// line 301
+// line 303
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param2));
 org$frostlang$frostc$Type** $tmp5 = &param0->target;
 org$frostlang$frostc$Type* $tmp6 = *$tmp5;
@@ -49,7 +49,7 @@ return;
 frost$core$Bit org$frostlang$frostc$Compiler$CoercionKey$$EQ$org$frostlang$frostc$Compiler$CoercionKey$R$frost$core$Bit(org$frostlang$frostc$Compiler$CoercionKey* param0, org$frostlang$frostc$Compiler$CoercionKey* param1) {
 
 frost$core$Bit local0;
-// line 306
+// line 308
 org$frostlang$frostc$ASTNode** $tmp8 = &param0->expr;
 org$frostlang$frostc$ASTNode* $tmp9 = *$tmp8;
 org$frostlang$frostc$ASTNode** $tmp10 = &param1->expr;
@@ -76,7 +76,7 @@ return $tmp20;
 }
 frost$core$Int64 org$frostlang$frostc$Compiler$CoercionKey$get_hash$R$frost$core$Int64(org$frostlang$frostc$Compiler$CoercionKey* param0) {
 
-// line 311
+// line 313
 org$frostlang$frostc$ASTNode** $tmp21 = &param0->expr;
 org$frostlang$frostc$ASTNode* $tmp22 = *$tmp21;
 frost$core$Int64 $tmp23;
@@ -95,7 +95,7 @@ return $tmp30;
 }
 void org$frostlang$frostc$Compiler$CoercionKey$cleanup(org$frostlang$frostc$Compiler$CoercionKey* param0) {
 
-// line 294
+// line 296
 frost$core$Object$cleanup(((frost$core$Object*) param0));
 org$frostlang$frostc$ASTNode** $tmp31 = &param0->expr;
 org$frostlang$frostc$ASTNode* $tmp32 = *$tmp31;

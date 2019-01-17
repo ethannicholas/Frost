@@ -4126,7 +4126,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp1781));
 // line 448
 frost$core$Int64* $tmp1782 = &param3->$rawValue;
 frost$core$Int64 $tmp1783 = *$tmp1782;
-frost$core$Int64 $tmp1784 = (frost$core$Int64) {47};
+frost$core$Int64 $tmp1784 = (frost$core$Int64) {48};
 frost$core$Bit $tmp1785 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp1783, $tmp1784);
 bool $tmp1786 = $tmp1785.value;
 if ($tmp1786) goto block2; else goto block3;

@@ -1,0 +1,70 @@
+package org.frostlang.frostc.statement
+
+uses org.frostlang.frostc.ASTNode
+uses org.frostlang.frostc.Compiler
+uses org.frostlang.frostc.Compiler.AutoContext
+uses org.frostlang.frostc.Compiler.AutoScope
+uses org.frostlang.frostc.Compiler.EnclosingContext
+uses org.frostlang.frostc.FixedArray
+uses org.frostlang.frostc.IR
+uses org.frostlang.frostc.Position
+uses org.frostlang.frostc.Type
+uses org.frostlang.frostc.Variable
+
+class Try {
+    @class
+    method compile(compiler:Compiler, position:Position, block:FixedArray<ASTNode>, error:ASTNode?,
+            failBlock:FixedArray<ASTNode>) {
+        def scope := AutoScope(compiler)
+        def ir := compiler.ir
+        def failTarget := ir.newBlock("loop body")
+        def endBlock := ir.newBlock("loop end")
+        def errorVar:Variable?
+        if error !== null {
+            match error {
+                when ASTNode.IDENTIFIER(_, name) {
+                    errorVar := Variable(position, Variable.Kind.DEF, name, Type.Error(),
+                            Variable.Storage.LOCAL(ir.locals.count))
+                    errorVar.owner := compiler.currentMethod[0]
+                    if compiler.isRefCounted(errorVar.type) {
+                        ir.add(IR.Statement.STORE(position, IR.Value.NULL(errorVar.type.nullable()),
+                                IR.Value.LOCAL(ir.locals.count, errorVar.type)))
+                        compiler.enclosingContexts.push(EnclosingContext.VARIABLE_SCOPE(errorVar))
+                    }
+                    ir.locals.add(errorVar.type)
+                }
+                otherwise {
+                    assert false
+                }
+            }
+        }
+        else {
+            errorVar := null
+        }
+        {
+            def tryScope := AutoScope(compiler)
+            def context := AutoContext(compiler,
+                    Compiler.EnclosingContext.TRY_SCOPE(failTarget, errorVar))
+            for s in block {
+                compiler.compileStatement(s)
+            }
+        }
+        if !ir.currentBlockFinished {
+            ir.add(IR.Statement.BRANCH(position, endBlock))
+        }
+        ir.setCurrentBlock(failTarget)
+        {
+            def failScope := AutoScope(compiler)
+            if errorVar !== null {
+                compiler.symbolTable.add(errorVar)
+            }
+            for s in failBlock {
+                compiler.compileStatement(s)
+            }
+            if !ir.currentBlockFinished {
+                ir.add(IR.Statement.BRANCH(position, endBlock))
+            }
+        }
+        ir.setCurrentBlock(endBlock)
+    }
+}

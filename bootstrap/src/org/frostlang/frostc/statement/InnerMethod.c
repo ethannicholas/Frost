@@ -88,7 +88,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp10));
 // unreffing REF($32:org.frostlang.frostc.ASTNode)
 // line 24
 org$frostlang$frostc$ASTNode* $tmp23 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(104, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
-frost$core$Int64 $tmp24 = (frost$core$Int64) {50};
+frost$core$Int64 $tmp24 = (frost$core$Int64) {51};
 frost$core$Int64 $tmp25 = (frost$core$Int64) {1};
 org$frostlang$frostc$Variable$Kind $tmp26 = org$frostlang$frostc$Variable$Kind$init$frost$core$Int64($tmp25);
 frost$collections$Array* $tmp27 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);

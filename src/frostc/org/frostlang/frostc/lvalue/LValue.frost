@@ -47,7 +47,7 @@ interface LValue {
                 return ChoiceFieldLValue(compiler, position, compiledBase, cc, index)
             }
             when ASTNode.DOT(_, base, name) {
-                def compiledBase:IR.Value
+                def compiledBase:IR.Value?
                 match base {
                     when ASTNode.SELF {
                         if compiler.isValue(compiler.currentClass[0]) {

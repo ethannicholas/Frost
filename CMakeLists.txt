@@ -306,6 +306,7 @@ add_executable(bootstrap
     bootstrap/src/org/frostlang/frostc/statement/Loop.c
     bootstrap/src/org/frostlang/frostc/statement/Match.c
     bootstrap/src/org/frostlang/frostc/statement/Return.c
+    bootstrap/src/org/frostlang/frostc/statement/Try.c
     bootstrap/src/org/frostlang/frostc/statement/Var.c
     bootstrap/src/org/frostlang/frostc/statement/While.c
     bootstrap/src/org/frostlang/frostc/Symbol.c
@@ -809,6 +810,7 @@ set(frostc_source
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/statement/Loop.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/statement/Match.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/statement/Return.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/statement/Try.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/statement/Var.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/statement/While.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/regex/RegexParser.frost

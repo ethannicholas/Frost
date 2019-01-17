@@ -672,6 +672,77 @@ class Call {
     }
 
     @class
+    method handleErrors(compiler:Compiler, position:Position, v:IR.Value):IR.Value? {
+        def tryScope := compiler.getTryScope()
+        if tryScope == null {
+            return v
+        }
+        def ir := compiler.ir
+        def type := v.type()
+        def errorType := Type.Error()
+        def nullableError := errorType.nullable()
+        if type = nullableError {
+            def test := ir.add(IR.Statement.BINARY(position, v, Token.Kind.IDENTITY,
+                    IR.Value.NULL(nullableError), Type.BuiltinBit()))
+            def success := ir.newBlock("error? null")
+            def failure := ir.newBlock("error? error")
+            ir.add(IR.Statement.CONDITIONAL_BRANCH(position, IR.Value.REF(test, Type.BuiltinBit()),
+                    success, failure))
+            ir.setCurrentBlock(failure)
+            match tryScope.second.storage {
+                when Variable.Storage.LOCAL(slot) {
+                    ir.add(IR.Statement.STORE(position, v, IR.Value.LOCAL(slot, errorType)))
+                }
+                otherwise {
+                    assert false
+                }
+            }
+            ir.add(IR.Statement.BRANCH(position, tryScope.first))
+            ir.setCurrentBlock(success)
+            return null
+        }
+        if type.typeKind = Type.Kind.GENERIC & type.subtypes[0].name = "frost.core.Maybe" {
+            def cl := compiler.getClass(type)
+            assert cl !== null
+            def rawValue := Dot.compile(compiler, position, ASTNode.IR_WRAPPER(position, v),
+                    ClassDecl.RAW_VALUE_NAME)
+            assert rawValue !== null
+            def test := ir.add(IR.Statement.BINARY(position, compiler.extractBuiltinInt(position,
+                    rawValue), Token.Kind.EQ, IR.Value.INT(0, Type.Int64()), Type.BuiltinBit()))
+            def success := ir.newBlock("maybe success")
+            def failure := ir.newBlock("maybe error")
+            ir.add(IR.Statement.CONDITIONAL_BRANCH(position, IR.Value.REF(test, Type.BuiltinBit()),
+                    success, failure))
+            ir.setCurrentBlock(failure)
+            def errorPtr := ir.add(IR.Statement.GET_CHOICE_FIELD_POINTER(position, v,
+                    cl.choiceCases[1], 0))
+            def errorValue := ir.add(IR.Statement.LOAD(position, IR.Value.REF(errorPtr,
+                    errorType)))
+            def errorRef := IR.Value.REF(errorValue, errorType)
+            compiler.compileRef(errorRef)
+            match tryScope.second.storage {
+                when Variable.Storage.LOCAL(slot) {
+                    ir.add(IR.Statement.STORE(position, errorRef, IR.Value.LOCAL(slot, errorType)))
+                }
+                otherwise {
+                    assert false
+                }
+            }
+            compiler.compileUnref(v)
+            ir.add(IR.Statement.BRANCH(position, tryScope.first))
+            ir.setCurrentBlock(success)
+            def successPtr := ir.add(IR.Statement.GET_CHOICE_FIELD_POINTER(position, v,
+                    cl.choiceCases[0], 0))
+            def successValue := ir.add(IR.Statement.LOAD(position, IR.Value.REF(successPtr,
+                    Type.Any())))
+            def successCast := compiler.cast(position, IR.Value.REF(successValue, Type.Any()),
+                    type.subtypes[1])
+            return successCast
+        }
+        return v
+    }
+
+    @class
     @post((m.returnType = Type.Void() & @return == null) | @return !== null | errorCount > 0 |
             !reportErrors)
     method compile(compiler:Compiler, position:Position, target:IR.Value?, rawM:MethodRef,
@@ -869,8 +940,11 @@ class Call {
                     return null
                 }
             }
-            resultCast := compiler.coerce(position, resultCast, type)
-            return resultCast
+            resultCast := handleErrors(compiler, position, resultCast)
+            if resultCast == null {
+                return null
+            }
+            return compiler.coerce(position, resultCast, type)
         }
         if type != TypeContext.UNSPECIFIED {
             compiler.error(position, "\{m.value.declaration} does not return a value")

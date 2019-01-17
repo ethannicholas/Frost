@@ -34,7 +34,7 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 
 void frost$io$PushbackInputStream$init$frost$io$InputStream(frost$io$PushbackInputStream* param0, frost$io$InputStream* param1) {
 
-// line 14
+// line 21
 frost$collections$Array* $tmp2 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
 frost$collections$Array$init($tmp2);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp2));
@@ -45,14 +45,14 @@ frost$collections$Array** $tmp5 = &param0->pushbackBuffer;
 *$tmp5 = $tmp2;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp2));
 // unreffing REF($1:frost.collections.Array<frost.core.UInt8>)
-// line 22
+// line 29
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
 frost$io$InputStream** $tmp6 = &param0->source;
 frost$io$InputStream* $tmp7 = *$tmp6;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp7));
 frost$io$InputStream** $tmp8 = &param0->source;
 *$tmp8 = param1;
-// line 23
+// line 30
 frost$io$InputStream$init(((frost$io$InputStream*) param0));
 return;
 
@@ -60,7 +60,7 @@ return;
 frost$core$UInt8$nullable frost$io$PushbackInputStream$read$R$frost$core$UInt8$Q(frost$io$PushbackInputStream* param0) {
 
 frost$core$UInt8 local0;
-// line 28
+// line 35
 frost$collections$Array** $tmp9 = &param0->pushbackBuffer;
 frost$collections$Array* $tmp10 = *$tmp9;
 ITable* $tmp11 = ((frost$collections$CollectionView*) $tmp10)->$class->itable;
@@ -77,7 +77,7 @@ frost$core$Bit $tmp19 = (frost$core$Bit) {$tmp18};
 bool $tmp20 = $tmp19.value;
 if ($tmp20) goto block1; else goto block2;
 block1:;
-// line 29
+// line 36
 frost$collections$Array** $tmp21 = &param0->pushbackBuffer;
 frost$collections$Array* $tmp22 = *$tmp21;
 frost$collections$Array** $tmp23 = &param0->pushbackBuffer;
@@ -97,7 +97,7 @@ frost$core$Object* $tmp34 = frost$collections$Array$$IDX$frost$core$Int64$R$fros
 *(&local0) = ((frost$core$UInt8$wrapper*) $tmp34)->value;
 frost$core$Frost$unref$frost$core$Object$Q($tmp34);
 // unreffing REF($27:frost.collections.Array.T)
-// line 30
+// line 37
 frost$collections$Array** $tmp35 = &param0->pushbackBuffer;
 frost$collections$Array* $tmp36 = *$tmp35;
 frost$collections$Array** $tmp37 = &param0->pushbackBuffer;
@@ -116,11 +116,11 @@ frost$core$Int64 $tmp47 = (frost$core$Int64) {$tmp46};
 frost$core$Object* $tmp48 = frost$collections$Array$removeIndex$frost$core$Int64$R$frost$collections$Array$T($tmp36, $tmp47);
 frost$core$Frost$unref$frost$core$Object$Q($tmp48);
 // unreffing REF($47:frost.collections.Array.T)
-// line 31
+// line 38
 frost$core$UInt8 $tmp49 = *(&local0);
 return ((frost$core$UInt8$nullable) { $tmp49, true });
 block2:;
-// line 33
+// line 40
 frost$io$InputStream** $tmp50 = &param0->source;
 frost$io$InputStream* $tmp51 = *$tmp50;
 $fn53 $tmp52 = ($fn53) $tmp51->$class->vtable[2];
@@ -130,7 +130,7 @@ return $tmp54;
 }
 void frost$io$PushbackInputStream$pushback$frost$core$UInt8(frost$io$PushbackInputStream* param0, frost$core$UInt8 param1) {
 
-// line 43
+// line 50
 frost$collections$Array** $tmp55 = &param0->pushbackBuffer;
 frost$collections$Array* $tmp56 = *$tmp55;
 frost$core$UInt8$wrapper* $tmp57;
@@ -144,7 +144,7 @@ return;
 }
 void frost$io$PushbackInputStream$pushback$frost$core$Int8(frost$io$PushbackInputStream* param0, frost$core$Int8 param1) {
 
-// line 53
+// line 60
 frost$collections$Array** $tmp58 = &param0->pushbackBuffer;
 frost$collections$Array* $tmp59 = *$tmp58;
 frost$core$UInt8 $tmp60 = frost$core$Int8$convert$R$frost$core$UInt8(param1);
@@ -160,7 +160,7 @@ return;
 void frost$io$PushbackInputStream$pushback$frost$collections$ListView$LTfrost$core$UInt8$GT(frost$io$PushbackInputStream* param0, frost$collections$ListView* param1) {
 
 frost$core$Int64 local0;
-// line 62
+// line 69
 ITable* $tmp62 = ((frost$collections$CollectionView*) param1)->$class->itable;
 while ($tmp62->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
     $tmp62 = $tmp62->next;
@@ -225,7 +225,7 @@ frost$core$Bit $tmp107 = (frost$core$Bit) {$tmp106};
 bool $tmp108 = $tmp107.value;
 if ($tmp108) goto block1; else goto block2;
 block1:;
-// line 63
+// line 70
 frost$core$Int64 $tmp109 = *(&local0);
 ITable* $tmp110 = param1->$class->itable;
 while ($tmp110->$class != (frost$core$Class*) &frost$collections$ListView$class) {
@@ -296,7 +296,7 @@ return;
 void frost$io$PushbackInputStream$pushback$frost$collections$ListView$LTfrost$core$Int8$GT(frost$io$PushbackInputStream* param0, frost$collections$ListView* param1) {
 
 frost$core$Int64 local0;
-// line 73
+// line 80
 ITable* $tmp149 = ((frost$collections$CollectionView*) param1)->$class->itable;
 while ($tmp149->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
     $tmp149 = $tmp149->next;
@@ -361,7 +361,7 @@ frost$core$Bit $tmp194 = (frost$core$Bit) {$tmp193};
 bool $tmp195 = $tmp194.value;
 if ($tmp195) goto block1; else goto block2;
 block1:;
-// line 74
+// line 81
 frost$core$Int64 $tmp196 = *(&local0);
 ITable* $tmp197 = param1->$class->itable;
 while ($tmp197->$class != (frost$core$Class*) &frost$collections$ListView$class) {
@@ -431,7 +431,7 @@ return;
 }
 void frost$io$PushbackInputStream$pushback$frost$core$Char8(frost$io$PushbackInputStream* param0, frost$core$Char8 param1) {
 
-// line 84
+// line 91
 frost$core$UInt8 $tmp236 = frost$core$Char8$convert$R$frost$core$UInt8(param1);
 frost$io$PushbackInputStream$pushback$frost$core$UInt8(param0, $tmp236);
 return;
@@ -440,7 +440,7 @@ return;
 void frost$io$PushbackInputStream$pushback$frost$collections$ListView$LTfrost$core$Char8$GT(frost$io$PushbackInputStream* param0, frost$collections$ListView* param1) {
 
 frost$core$Int64 local0;
-// line 93
+// line 100
 ITable* $tmp237 = ((frost$collections$CollectionView*) param1)->$class->itable;
 while ($tmp237->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
     $tmp237 = $tmp237->next;
@@ -505,7 +505,7 @@ frost$core$Bit $tmp282 = (frost$core$Bit) {$tmp281};
 bool $tmp283 = $tmp282.value;
 if ($tmp283) goto block1; else goto block2;
 block1:;
-// line 94
+// line 101
 frost$core$Int64 $tmp284 = *(&local0);
 ITable* $tmp285 = param1->$class->itable;
 while ($tmp285->$class != (frost$core$Class*) &frost$collections$ListView$class) {
@@ -575,7 +575,7 @@ return;
 }
 void frost$io$PushbackInputStream$pushback$frost$core$String(frost$io$PushbackInputStream* param0, frost$core$String* param1) {
 
-// line 104
+// line 111
 frost$collections$ListView* $tmp324 = frost$core$String$get_utf8$R$frost$collections$ListView$LTfrost$core$Char8$GT(param1);
 frost$io$PushbackInputStream$pushback$frost$collections$ListView$LTfrost$core$Char8$GT(param0, $tmp324);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp324));
@@ -585,7 +585,7 @@ return;
 }
 void frost$io$PushbackInputStream$cleanup(frost$io$PushbackInputStream* param0) {
 
-// line 9
+// line 16
 frost$io$InputStream$cleanup(((frost$io$InputStream*) param0));
 frost$io$InputStream** $tmp325 = &param0->source;
 frost$io$InputStream* $tmp326 = *$tmp325;

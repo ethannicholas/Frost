@@ -717,7 +717,7 @@ org$frostlang$frostc$parser$Token$Kind $tmp304 = *(&local3);
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp305;
 $tmp305 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp305->value = $tmp304;
-frost$core$Int64 $tmp306 = (frost$core$Int64) {53};
+frost$core$Int64 $tmp306 = (frost$core$Int64) {56};
 org$frostlang$frostc$parser$Token$Kind $tmp307 = org$frostlang$frostc$parser$Token$Kind$init$frost$core$Int64($tmp306);
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp308;
 $tmp308 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);

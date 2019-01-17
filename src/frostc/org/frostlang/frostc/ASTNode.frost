@@ -73,6 +73,8 @@ choice ASTNode {
     SELF                   (Position)
     STRING                 (Position, String)
     SUPER                  (Position)
+    TRY                    (Position, FixedArray<ASTNode> -* block *-, ASTNode? -* identifier *-,
+                            FixedArray<ASTNode> -* fail block *-)
     TUPLE                  (Position, FixedArray<ASTNode>)
     TUPLE_TYPE             (Position, FixedArray<ASTNode>)
     TYPE                   (Position, String)
@@ -236,6 +238,9 @@ choice ASTNode {
                 return position
             }
             when USES(position, _) {
+                return position
+            }
+            when TRY(position, _, _, _) {
                 return position
             }
             when VAR(position, _, _) {
@@ -560,6 +565,19 @@ choice ASTNode {
             }
             when TUPLE_TYPE(_, parameters) {
                 return "(\{parameters.join()})"
+            }
+            when TRY(_, block, error, failBlock) {
+                def result := MutableString("try {\n")
+                block.apply(result.append)
+                if error !== null {
+                    result.append("}\nfail(\{error}) {\n")
+                }
+                else {
+                    result.append("}\nfail {\n")
+                }
+                failBlock.apply(result.append)
+                result.append("}")
+                return result.finish()
             }
             when TYPE(_, name) {
                 return name

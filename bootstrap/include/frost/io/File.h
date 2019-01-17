@@ -22,7 +22,7 @@ frost$core$String* frost$io$File$normalize$frost$core$String$R$frost$core$String
 frost$io$File* frost$io$File$get_parent$R$frost$io$File$Q(frost$io$File* self);
 frost$core$String* frost$io$File$get_name$R$frost$core$String(frost$io$File* self);
 frost$core$String* frost$io$File$get_simpleName$R$frost$core$String(frost$io$File* self);
-frost$io$File* frost$io$File$changeExtension$frost$core$String$R$frost$io$File(frost$io$File* self, frost$core$String* p_ext);
+frost$io$File* frost$io$File$withExtension$frost$core$String$R$frost$io$File(frost$io$File* self, frost$core$String* p_ext);
 void frost$io$File$exists$R$frost$core$Bit(frost$core$Bit* result, frost$io$File* self);
 void frost$io$File$isDirectory$R$frost$core$Bit(frost$core$Bit* result, frost$io$File* self);
 frost$collections$ListView* frost$io$File$list$R$frost$collections$ListView$LTfrost$io$File$GT(frost$io$File* self);

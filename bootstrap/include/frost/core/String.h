@@ -42,6 +42,7 @@ frost$core$String* frost$core$String$$MUL$frost$core$Int64$R$frost$core$String(f
 frost$core$String* frost$core$String$$MUL$frost$core$Int64$frost$core$String$R$frost$core$String(frost$core$Int64 p_count, frost$core$String* p_s);
 frost$core$String* frost$core$String$$ADD$frost$core$Object$frost$core$String$R$frost$core$String(frost$core$Object* p_o, frost$core$String* p_s);
 frost$core$Bit frost$core$String$$EQ$frost$core$String$R$frost$core$Bit(frost$core$String* self, frost$core$String* p_other);
+frost$core$Bit frost$core$String$$GT$frost$core$String$R$frost$core$Bit(frost$core$String* self, frost$core$String* p_other);
 frost$core$Char32 frost$core$String$$IDX$frost$core$String$Index$R$frost$core$Char32(frost$core$String* self, frost$core$String$Index p_index);
 frost$core$Char32 frost$core$String$$IDX$frost$core$Int64$R$frost$core$Char32(frost$core$String* self, frost$core$Int64 p_index);
 frost$core$String* frost$core$String$substring$frost$core$Range$LTfrost$core$String$Index$GT$R$frost$core$String(frost$core$String* self, frost$core$Range$LTfrost$core$String$Index$GT p_r);

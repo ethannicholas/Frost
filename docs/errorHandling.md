@@ -17,16 +17,16 @@ There are three main ways for a method to communicate failures back to its calle
    function cannot parse a string, it simply returns `null` to indicate that "this wasn't a valid
    number". There really isn't any need for further information, so the function doesn't bother with
    the [Error] class at all.
-2. A [Maybe] result. The `Maybe<X>` type contains either an instance of the type `X`, or an `Error`.
+2. A [Maybe] result. The `Maybe<T>` type contains either an instance of the type `T`, or an `Error`.
    The caller can inspect this object to retrieve the result or examine the `Error`.
 3. The return type `Error?`. When a method does not normally need to return any information, but
    still might fail, `Error?` is the right return type. `File.delete()` is a good example of this
    sort of method. It is a compile-time error for a program to call a method which returns `Error?`
    and not examine the return value.
 
-Because it is common to call many `Error?`-returning methods in sequence (for instance, writing data
-to a file will tend to involve many such calls), manually checking the result of each call quickly
-becomes tedious. The `try ... fail` syntax exists to help with this:
+Because it is common to call many `Error?`-returning methods in sequence (for instance, interacting
+with the filesystem will tend to involve many such calls), manually checking the result of each call
+quickly becomes tedious. The `try ... fail` syntax exists to help with this:
 
     try {
         def out := path.openOutputStream()
@@ -48,7 +48,7 @@ Note that Frost's `try` block is very different from `try` blocks in languages s
 Frost does not feature exception handling and Frost's `try` therefore has nothing to do with
 exceptions. Frost `Error`s do not cause the stack to unwind, will not propagate to enclosing
 contexts, etc. Frost's `try` block simply forwards any `Errors` happening within it to the `fail`
-block.
+block and automatically unwraps any `Maybes`.
 
 The `fail` block can be written in three different ways:
 

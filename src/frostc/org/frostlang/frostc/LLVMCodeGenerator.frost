@@ -1509,6 +1509,9 @@ class LLVMCodeGenerator : CodeGenerator {
                         }
                         llvmOp := "icmp ne"
                     }
+                    otherwise {
+                        assert false, "unsupported class operator \{op}"
+                    }
                 }
             }
         }
@@ -1668,9 +1671,9 @@ class LLVMCodeGenerator : CodeGenerator {
         labelCount += 1
         def itableNext := "%$itable\{labelCount}"
         def itablePtrPtr := nextVar()
-        def fail := nextLabel()
+        def failBlock := nextLabel()
         out.printLine("\{itablePtrPtr} = phi %$itable** [ \{itableFirst}, %\{leavingEntryLabel}]," +
-                " [ \{itableNext}, %\{fail} ]")
+                " [ \{itableNext}, %\{failBlock} ]")
         def itablePtr := nextVar()
         out.printLine("\{itablePtr} = load %$itable*, %$itable** \{itablePtrPtr}" +
                 debugInfo(position))
@@ -1685,9 +1688,9 @@ class LLVMCodeGenerator : CodeGenerator {
         out.printLine("\{test} = icmp eq \{classType}* bitcast(\{intfCC.type}* \{intfCC.name} to " +
                 "\{classType}*), \{itableClass}\{debugInfo(position)}")
         def success := nextLabel()
-        out.printLine("br i1 \{test}, label %\{success}, label %\{fail}\{debugInfo(position)}")
+        out.printLine("br i1 \{test}, label %\{success}, label %\{failBlock}\{debugInfo(position)}")
 
-        createBlock(fail, out)
+        createBlock(failBlock, out)
         out.printLine("\{itableNext} = getelementptr inbounds %$itable, %$itable* \{itablePtr}, " +
                 "\{SIZE_TYPE} 0, i32 1\{debugInfo(position)}")
         out.printLine("br label %\{next}")

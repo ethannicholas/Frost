@@ -437,7 +437,7 @@ frost$core$Frost$unref$frost$core$Object$Q($tmp110);
 org$frostlang$frostc$ASTNode* $tmp112 = *(&local5);
 frost$core$Int64* $tmp113 = &$tmp112->$rawValue;
 frost$core$Int64 $tmp114 = *$tmp113;
-frost$core$Int64 $tmp115 = (frost$core$Int64) {51};
+frost$core$Int64 $tmp115 = (frost$core$Int64) {52};
 frost$core$Bit $tmp116 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp114, $tmp115);
 bool $tmp117 = $tmp116.value;
 if ($tmp117) goto block12; else goto block13;
