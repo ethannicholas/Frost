@@ -436,12 +436,12 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp4));
 frost$threads$MessageQueue** $tmp5 = &param0->errorQueue;
 *$tmp5 = $tmp2;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp2));
-// unreffing REF($1:frost.threads.MessageQueue<org.frostlang.frostc.Compiler.Error>)
+// unreffing REF($1:frost.threads.MessageQueue<org.frostlang.frostc.Compiler.ErrorMsg>)
 // line 100
 org$frostlang$frostc$parser$Parser* $tmp6 = (org$frostlang$frostc$parser$Parser*) frostObjectAlloc(96, (frost$core$Class*) &org$frostlang$frostc$parser$Parser$class);
 frost$threads$MessageQueue** $tmp7 = &param0->errorQueue;
 frost$threads$MessageQueue* $tmp8 = *$tmp7;
-org$frostlang$frostc$parser$Parser$init$frost$threads$MessageQueue$LTorg$frostlang$frostc$Compiler$Error$GT($tmp6, $tmp8);
+org$frostlang$frostc$parser$Parser$init$frost$threads$MessageQueue$LTorg$frostlang$frostc$Compiler$ErrorMsg$GT($tmp6, $tmp8);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp6));
 org$frostlang$frostc$parser$Parser** $tmp9 = &param0->parser;
 org$frostlang$frostc$parser$Parser* $tmp10 = *$tmp9;

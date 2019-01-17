@@ -1,0 +1,25 @@
+MemoryTest.init: startup
+MemoryTest.init: first try start
+MemoryTest.init: Dropping it on the floor
+MemoryTest.cleanup: Dropping it on the floor
+MemoryTest.init: after maybeSucceed
+MemoryTest.init: after errorSucceed
+MemoryTest.cleanup: after errorSucceed
+MemoryTest.cleanup: after maybeSucceed
+MemoryTest.cleanup: first try start
+MemoryTest.init: after first try
+MemoryTest.init: second try start
+MemoryTest.cleanup: second try start
+MemoryTest.init: in second try fail
+MemoryTest.init: Dropping it on the floor
+MemoryTest.cleanup: Dropping it on the floor
+second try fail
+MemoryTest.init: third try start
+MemoryTest.cleanup: third try start
+MemoryTest.init: in third try fail
+third try fail
+MemoryTest.cleanup: in third try fail
+MemoryTest.cleanup: in second try fail
+done!
+MemoryTest.cleanup: after first try
+MemoryTest.cleanup: startup

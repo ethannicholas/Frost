@@ -58,6 +58,7 @@ class Main {
     }
 
     method toObject(llvm:File, dest:File, preserveTemporaries:Bit):File {
+        Console.printLine("toObject: \{llvm}")
         def args := Array<String>() -- FIXME literal
         args.add(llvm.path)
         args.add("-m64")
@@ -142,9 +143,15 @@ class Main {
             def a := args.next()
             match a {
                 when "--fuzz" {
-                    def path := File("/tmp/fuzz.frost")
-                    Console.inputStream().sendTo(path.openOutputStream())
-                    sources.add(path)
+                    try {
+                        def path := File("/tmp/fuzz.frost")
+                        Console.inputStream().sendTo(path.openOutputStream())
+                        sources.add(path)
+                    }
+                    fail(error) {
+                        Console.printLine(error)
+                        System.exit(1)
+                    }
                 }
                 when "-o" {
                     if outFile !== null {
@@ -259,8 +266,14 @@ class Main {
             def cg:CodeGenerator
             match format {
                 when Format.LLVM, Format.EXECUTABLE, Format.OBJECT {
-                    cg := LLVMCodeGenerator(Config.llvmTriple(),
-                                            outFile.withExtension(".ll").openOutputStream())
+                    try {
+                        cg := LLVMCodeGenerator(Config.llvmTriple(),
+                                                outFile.withExtension(".ll").openOutputStream())
+                    }
+                    fail(error) {
+                        Console.printLine(error)
+                        System.exit(1)
+                    }
                 }
                 when Format.C_HEADER {
                     cg := HCodeGenerator(outFile)
@@ -274,7 +287,7 @@ class Main {
             }
             def settings := Compiler.Settings(frostHome, imports, optimizationLevel, safetyLevel,
                     debug)
-            def errorQueue := MessageQueue<Compiler.Error>()
+            def errorQueue := MessageQueue<Compiler.ErrorMsg>()
             def compiler := Compiler(errorQueue, cg, settings)
             for s in sources {
                 for cl in compiler.scan(s) {

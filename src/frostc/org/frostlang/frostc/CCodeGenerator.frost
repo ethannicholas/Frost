@@ -1529,28 +1529,33 @@ class CCodeGenerator : CodeGenerator {
 
     @override
     method start(cl:ClassDecl) {
-        assert currentClass == null
-        currentClass := cl
-        imports.clear()
-        strings.clear()
-        declarations.clear()
-        types.clear()
-        methodsBuffer.clear()
-        shimsBuffer.clear()
-        declared.clear()
-        writtenTypes.clear()
-        writtenWrappers.clear()
-        classConstants.clear()
-        variableNames.clear()
-        varCount := 0
-        methodShims.clear()
-        def path := hCodeGen.getPath(cl, ".c")
-        path.parent.createDirectories()
-        out := IndentedOutputStream(path.openOutputStream())
-        out.flush()
-        getClassConstant(cl)
-        if compiler.isValue(cl) {
-            getWrapperClassConstant(cl)
+        try {
+            assert currentClass == null
+            currentClass := cl
+            imports.clear()
+            strings.clear()
+            declarations.clear()
+            types.clear()
+            methodsBuffer.clear()
+            shimsBuffer.clear()
+            declared.clear()
+            writtenTypes.clear()
+            writtenWrappers.clear()
+            classConstants.clear()
+            variableNames.clear()
+            varCount := 0
+            methodShims.clear()
+            def path := hCodeGen.getPath(cl, ".c")
+            path.parent.createDirectories()
+            out := IndentedOutputStream(path.openOutputStream())
+            out.flush()
+            getClassConstant(cl)
+            if compiler.isValue(cl) {
+                getWrapperClassConstant(cl)
+            }
+        }
+        fail(error) {
+            compiler.error(cl.position, error.message)
         }
     }
 

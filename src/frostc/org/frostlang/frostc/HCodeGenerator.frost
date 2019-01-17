@@ -175,69 +175,74 @@ class HCodeGenerator : CodeGenerator {
 
     @override
     method start(cl:ClassDecl) {
-        typeImportStream.clear()
-        typesBuffer.clear()
-        bodyImportStream.clear()
-        bodyBuffer.clear()
-        typeImports.clear()
-        bodyImports.clear()
-        def path := getPath(cl, ".h")
-        path.parent.createDirectories()
-        self.out := IndentedOutputStream(path.openOutputStream())
-        def typesPath := getPath(cl, "_types.h")
-        self.typesOut := IndentedOutputStream(typesPath.openOutputStream())
-        out.printLine("#pragma once")
-        out.printLine("#include \"frost_c.h\"")
-        out.printLine("#include \"\{typesPath.name}\"")
-        typesOut.printLine("#pragma once")
-        typesOut.printLine("#include \"frost_c.h\"")
-        importStream := typeImportStream
-        imports := typeImports
-        types.printLine("typedef struct \{escapeName(cl.name)} {")
-        types.level += 1
-        for f in compiler.instanceFields(cl) {
-            compiler.resolve(f)
-            if f.type = Type.ChoiceData() {
-                types.printLine("int8_t \{f.name}[\{llvmCodeGen.getChoiceDataSize(cl)}];")
-            }
-            else {
-                types.printLine("\{type(f.type)} \{f.name};")
-            }
-        }
-        if cl.name = "frost.core.Class" {
-            types.printLine("ITable* itable;")
-            types.printLine("void* vtable[];")
-        }
-        types.level -= 1
-        types.printLine("} \{escapeName(cl.name)};")
-        types.printLine("#include \"frost/core/Class.h\"")
-        types.printLine("typedef struct { frost$core$Class* cl; int32_t refCount; " +
-                "\{type(Type.StringType())} name; \{type(Type.Class())} super; ITable* itable; " +
-                "void* vtable[\{compiler.getVTable(cl).count}]; } " +
-                "\{escapeName(cl.name)}$class_type;")
-        types.printLine("extern \{escapeName(cl.name)}$class_type \{escapeName(cl.name)}$class;")
-        if compiler.isValue(cl) {
-            types.printLine("typedef struct \{escapeName(cl.name)}$wrapper {")
+        try {
+            typeImportStream.clear()
+            typesBuffer.clear()
+            bodyImportStream.clear()
+            bodyBuffer.clear()
+            typeImports.clear()
+            bodyImports.clear()
+            def path := getPath(cl, ".h")
+            path.parent.createDirectories()
+            self.out := IndentedOutputStream(path.openOutputStream())
+            def typesPath := getPath(cl, "_types.h")
+            self.typesOut := IndentedOutputStream(typesPath.openOutputStream())
+            out.printLine("#pragma once")
+            out.printLine("#include \"frost_c.h\"")
+            out.printLine("#include \"\{typesPath.name}\"")
+            typesOut.printLine("#pragma once")
+            typesOut.printLine("#include \"frost_c.h\"")
+            importStream := typeImportStream
+            imports := typeImports
+            types.printLine("typedef struct \{escapeName(cl.name)} {")
             types.level += 1
-            types.printLine("frost$core$Class* cl;")
-            types.printLine("int32_t refCount;")
-            types.printLine("\{type(cl.type)} value;")
+            for f in compiler.instanceFields(cl) {
+                compiler.resolve(f)
+                if f.type = Type.ChoiceData() {
+                    types.printLine("int8_t \{f.name}[\{llvmCodeGen.getChoiceDataSize(cl)}];")
+                }
+                else {
+                    types.printLine("\{type(f.type)} \{f.name};")
+                }
+            }
+            if cl.name = "frost.core.Class" {
+                types.printLine("ITable* itable;")
+                types.printLine("void* vtable[];")
+            }
             types.level -= 1
-            types.printLine("} \{escapeName(cl.name)}$wrapper;")
-            types.printLine("typedef struct \{escapeName(cl.name)}$nullable {")
-            types.level += 1
-            types.printLine("\{escapeName(cl.name)} value;")
-            types.printLine("bool nonnull;")
-            types.level -= 1
-            types.printLine("} \{escapeName(cl.name)}$nullable;")
-            def value := compiler.getClass(Type.Value())
-            def valueVTable := compiler.getVTable(value)
+            types.printLine("} \{escapeName(cl.name)};")
+            types.printLine("#include \"frost/core/Class.h\"")
             types.printLine("typedef struct { frost$core$Class* cl; int32_t refCount; " +
-                    "frost$core$String* name; frost$core$Class* super; ITable* itable; " +
-                    "void* vtable[\{valueVTable.count}]; } " +
-                    "\{escapeName(cl.name)}$wrapperclass_type;")
-            types.printLine("extern \{escapeName(cl.name)}$wrapperclass_type " +
-                    "\{escapeName(cl.name)}$wrapperclass;")
+                    "\{type(Type.StringType())} name; \{type(Type.Class())} super; ITable* itable; " +
+                    "void* vtable[\{compiler.getVTable(cl).count}]; } " +
+                    "\{escapeName(cl.name)}$class_type;")
+            types.printLine("extern \{escapeName(cl.name)}$class_type \{escapeName(cl.name)}$class;")
+            if compiler.isValue(cl) {
+                types.printLine("typedef struct \{escapeName(cl.name)}$wrapper {")
+                types.level += 1
+                types.printLine("frost$core$Class* cl;")
+                types.printLine("int32_t refCount;")
+                types.printLine("\{type(cl.type)} value;")
+                types.level -= 1
+                types.printLine("} \{escapeName(cl.name)}$wrapper;")
+                types.printLine("typedef struct \{escapeName(cl.name)}$nullable {")
+                types.level += 1
+                types.printLine("\{escapeName(cl.name)} value;")
+                types.printLine("bool nonnull;")
+                types.level -= 1
+                types.printLine("} \{escapeName(cl.name)}$nullable;")
+                def value := compiler.getClass(Type.Value())
+                def valueVTable := compiler.getVTable(value)
+                types.printLine("typedef struct { frost$core$Class* cl; int32_t refCount; " +
+                        "frost$core$String* name; frost$core$Class* super; ITable* itable; " +
+                        "void* vtable[\{valueVTable.count}]; } " +
+                        "\{escapeName(cl.name)}$wrapperclass_type;")
+                types.printLine("extern \{escapeName(cl.name)}$wrapperclass_type " +
+                        "\{escapeName(cl.name)}$wrapperclass;")
+            }
+        }
+        fail(error) {
+            compiler.error(cl.position, error.message)
         }
     }
 

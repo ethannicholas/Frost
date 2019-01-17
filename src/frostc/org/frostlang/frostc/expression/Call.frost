@@ -682,6 +682,7 @@ class Call {
         def errorType := Type.Error()
         def nullableError := errorType.nullable()
         if type = nullableError {
+            ir.add(IR.Statement.COMMENT("try error check"))
             def test := ir.add(IR.Statement.BINARY(position, v, Token.Kind.IDENTITY,
                     IR.Value.NULL(nullableError), Type.BuiltinBit()))
             def success := ir.newBlock("error? null")
@@ -691,17 +692,20 @@ class Call {
             ir.setCurrentBlock(failure)
             match tryScope.second.storage {
                 when Variable.Storage.LOCAL(slot) {
+                    compiler.compileRef(v)
                     ir.add(IR.Statement.STORE(position, v, IR.Value.LOCAL(slot, errorType)))
                 }
                 otherwise {
                     assert false
                 }
             }
+            compiler.leaveTryScope()
             ir.add(IR.Statement.BRANCH(position, tryScope.first))
             ir.setCurrentBlock(success)
             return null
         }
         if type.typeKind = Type.Kind.GENERIC & type.subtypes[0].name = "frost.core.Maybe" {
+            ir.add(IR.Statement.COMMENT("try maybe check"))
             def cl := compiler.getClass(type)
             assert cl !== null
             def rawValue := Dot.compile(compiler, position, ASTNode.IR_WRAPPER(position, v),
@@ -728,7 +732,7 @@ class Call {
                     assert false
                 }
             }
-            compiler.compileUnref(v)
+            compiler.leaveTryScope()
             ir.add(IR.Statement.BRANCH(position, tryScope.first))
             ir.setCurrentBlock(success)
             def successPtr := ir.add(IR.Statement.GET_CHOICE_FIELD_POINTER(position, v,
@@ -928,10 +932,14 @@ class Call {
             result := ir.add(IR.Statement.STATIC_CALL(position, m.value,
                     FixedArray<IR.Value>.from(finalArgs)))
         }
-        if m.returnType != Type.Void() {
+        if m.value.returnType != Type.Void() {
             var resultCast:IR.Value? := IR.Value.REF(result, actualType.returnType)
             if compiler.isRefCounted(actualType.returnType) {
                 compiler.enclosingContexts.push(EnclosingContext.VALUE_SCOPE(resultCast))
+            }
+            resultCast := handleErrors(compiler, position, resultCast)
+            if resultCast == null {
+                return null
             }
             if m.value.methodKind != MethodDecl.Kind.INIT &
                     effectiveType.returnType != actualType.returnType {
@@ -939,10 +947,6 @@ class Call {
                 if resultCast == null {
                     return null
                 }
-            }
-            resultCast := handleErrors(compiler, position, resultCast)
-            if resultCast == null {
-                return null
             }
             return compiler.coerce(position, resultCast, type)
         }

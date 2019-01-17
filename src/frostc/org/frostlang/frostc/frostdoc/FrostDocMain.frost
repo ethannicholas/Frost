@@ -3,7 +3,7 @@ package org.frostlang.frostc.frostdoc
 uses org.frostlang.frostc.ClassDecl
 uses org.frostlang.frostc.CodeGenerator
 uses org.frostlang.frostc.Compiler
-uses org.frostlang.frostc.Compiler.Error
+uses org.frostlang.frostc.Compiler.ErrorMsg
 uses org.frostlang.frostc.Compiler.Settings
 uses org.frostlang.frostc.Config
 uses org.frostlang.frostc.MethodDecl
@@ -34,72 +34,94 @@ method recursiveDelete(root:File, currentPath:File) {
     currentPath.delete()
 }
 
-method xsltproc(input:File, xsl:File, output:File) {
-    if input.isDirectory() {
-        for file in input.list() {
-            xsltproc(file, xsl, output.resolve(file.name))
+method xsltproc(input:File, xsl:File, output:File):Error? {
+    try {
+        if input.isDirectory() {
+            for file in input.list() {
+                xsltproc(file, xsl, output.resolve(file.name))
+            }
+        }
+        else if input.path.endsWith(".xml") {
+            def args := Array<String>() -- FIXME literal
+            args.add(xsl.path)
+            args.add(input.path)
+            def p := System.exec(File("xsltproc"), args)
+            output.parent.createDirectories()
+            p.output.sendTo(output.withExtension(".html").openOutputStream())
+            p.error.sendTo(Console.errorStream())
+            assert p.waitFor() = 0
+        }
+        return null
+    }
+    fail(error) {
+        return error
+    }
+}
+
+method addTableOfContentsToTree(toc:String, path:File, level:Int):Error? {
+    try {
+        if path.isDirectory() {
+            for file in path.list() {
+                addTableOfContentsToTree(toc, file, level + 1)
+            }
+        }
+        else if path.name.endsWith(".html") {
+            def root := level * "../"
+            def finalToc := toc.replace("href=\"", "href=\"\{root}")
+                    .replace("src=\"", "src=\"\{root}")
+                    .replace("prepareToC(\"", "prepareToC(\"\{root}")
+            path.write(path.readFully().replace(/<!--TOCBEGIN-->.*<!--TOCEND-->/,
+                    "<!--TOCBEGIN-->\{finalToc}<!--TOCEND-->"))
         }
     }
-    else if input.path.endsWith(".xml") {
+    fail(error) {
+        return error
+    }
+}
+
+method addTableOfContents(tocFile:File, tree:File, apiRelativePath:String):Error? {
+    try {
         def args := Array<String>() -- FIXME literal
-        args.add(xsl.path)
-        args.add(input.path)
+        args.add(File(Config.frostSourceDir()).resolve("tools/tableOfContents.xsl").path)
+        args.add(tocFile.path)
         def p := System.exec(File("xsltproc"), args)
-        output.parent.createDirectories()
-        p.output.sendTo(output.withExtension(".html").openOutputStream())
-        p.error.sendTo(Console.errorStream())
-        assert p.waitFor() = 0
+        addTableOfContentsToTree(p.output.readFully(), tree, -1)
     }
-}
-
-method addTableOfContentsToTree(toc:String, path:File, level:Int) {
-    if path.isDirectory() {
-        for file in path.list() {
-            addTableOfContentsToTree(toc, file, level + 1)
-        }
+    fail(error) {
+        return error
     }
-    else if path.name.endsWith(".html") {
-        def root := level * "../"
-        def finalToc := toc.replace("href=\"", "href=\"\{root}")
-                .replace("src=\"", "src=\"\{root}")
-                .replace("prepareToC(\"", "prepareToC(\"\{root}")
-        path.write(path.readFully().replace(/<!--TOCBEGIN-->.*<!--TOCEND-->/,
-                "<!--TOCBEGIN-->\{finalToc}<!--TOCEND-->"))
-    }
-}
-
-method addTableOfContents(tocFile:File, tree:File, apiRelativePath:String) {
-    def args := Array<String>() -- FIXME literal
-    args.add(File(Config.frostSourceDir()).resolve("tools/tableOfContents.xsl").path)
-    args.add(tocFile.path)
-    def p := System.exec(File("xsltproc"), args)
-    addTableOfContentsToTree(p.output.readFully(), tree, -1)
 }
 
 method main(args:ListView<String>) {
-    if args.count != 4 {
-        Console.errorStream().printLine("usage: frostdoc <source dir> <api dir> <root dir>")
+    try {
+        if args.count != 4 {
+            Console.errorStream().printLine("usage: frostdoc <source dir> <api dir> <root dir>")
+            System.exit(1)
+        }
+        def input := File(args[1])
+        def root := File(args[2])
+        def apiRelativePath := args[3] + "/"
+        def tmpOutput := System.temporaryDirectory().resolve("frostdoc-tmp")
+        def tocFile := System.temporaryDirectory().resolve("frostdoc-toc.xml")
+        def imports := Array<File>() -- FIXME literal
+        imports.add(File(Config.frostSourceDir()))
+        imports.add(input)
+        def settings := Settings(File(Config.frostSourceDir()), imports, 0, 0, true)
+        def compiler := Compiler(MessageQueue<ErrorMsg>(), DummyCodeGenerator(), settings)
+        def frostdoc := FrostDoc(compiler, tmpOutput, tocFile, apiRelativePath)
+        process(input, frostdoc)
+        frostdoc.finish()
+        def mainXSL := File(Config.frostSourceDir()).resolve("tools/frostdoc.xsl")
+        xsltproc(tmpOutput, mainXSL, root.resolve(apiRelativePath))
+        for file in File(Config.frostSourceDir()).resolve("../docs/html").list() {
+            file.openInputStream().sendTo(root.resolve(file.name).openOutputStream())
+        }
+        recursiveDelete(tmpOutput.absolute(), tmpOutput.absolute())
+        addTableOfContents(tocFile, root, apiRelativePath)
+        tocFile.delete()
+    }
+    fail(error) {
+        Console.printLine(error)
         System.exit(1)
     }
-    def input := File(args[1])
-    def root := File(args[2])
-    def apiRelativePath := args[3] + "/"
-    def tmpOutput := System.temporaryDirectory().resolve("frostdoc-tmp")
-    def tocFile := System.temporaryDirectory().resolve("frostdoc-toc.xml")
-    def imports := Array<File>() -- FIXME literal
-    imports.add(File(Config.frostSourceDir()))
-    imports.add(input)
-    def settings := Settings(File(Config.frostSourceDir()), imports, 0, 0, true)
-    def compiler := Compiler(MessageQueue<Error>(), DummyCodeGenerator(), settings)
-    def frostdoc := FrostDoc(compiler, tmpOutput, tocFile, apiRelativePath)
-    process(input, frostdoc)
-    frostdoc.finish()
-    def mainXSL := File(Config.frostSourceDir()).resolve("tools/frostdoc.xsl")
-    xsltproc(tmpOutput, mainXSL, root.resolve(apiRelativePath))
-    for file in File(Config.frostSourceDir()).resolve("../docs/html").list() {
-        file.openInputStream().sendTo(root.resolve(file.name).openOutputStream())
-    }
-    recursiveDelete(tmpOutput.absolute().get(), tmpOutput.absolute().get())
-    addTableOfContents(tocFile, root, apiRelativePath)
-    tocFile.delete()
 }

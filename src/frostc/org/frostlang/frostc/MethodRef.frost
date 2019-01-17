@@ -77,6 +77,20 @@ class MethodRef {
                     methodType.subtypes[0 .. methodType.subtypes.count - 1],
                     methodType.returnType, methodType.priority)
         }
+        if compiler.getTryScope() !== null {
+            def returnType := methodType.returnType
+            if returnType = Type.Error().nullable() {
+                methodType := Type.methodType(methodType.position, methodType.typeKind,
+                        methodType.subtypes[0 .. methodType.subtypes.count - 1], Type.Void(),
+                        methodType.priority)
+            }
+            else if returnType.typeKind = Type.Kind.GENERIC &
+                    returnType.subtypes[0].name = "frost.core.Maybe" {
+                methodType := Type.methodType(methodType.position, methodType.typeKind,
+                        methodType.subtypes[0 .. methodType.subtypes.count - 1],
+                        returnType.subtypes[1], methodType.priority)
+            }
+        }
         def effectiveType := compiler.remapType(found, methodType)
         if genericArguments !== null {
             def prefix := value.owner.name + "." + value.name + "."

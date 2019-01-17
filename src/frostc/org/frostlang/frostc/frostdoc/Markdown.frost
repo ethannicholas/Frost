@@ -95,7 +95,7 @@ class Markdown {
 
     def source:File
 
-    def errorQueue := MessageQueue<Compiler.Error>()
+    def errorQueue := MessageQueue<Compiler.ErrorMsg>()
 
     def parser := Parser(errorQueue)
 

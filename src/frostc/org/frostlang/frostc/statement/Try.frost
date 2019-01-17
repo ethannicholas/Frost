@@ -42,9 +42,9 @@ class Try {
             errorVar := null
         }
         {
-            def tryScope := AutoScope(compiler)
             def context := AutoContext(compiler,
                     Compiler.EnclosingContext.TRY_SCOPE(failTarget, errorVar))
+            def tryScope := AutoScope(compiler)
             for s in block {
                 compiler.compileStatement(s)
             }
@@ -54,12 +54,14 @@ class Try {
         }
         ir.setCurrentBlock(failTarget)
         {
-            def failScope := AutoScope(compiler)
-            if errorVar !== null {
-                compiler.symbolTable.add(errorVar)
-            }
-            for s in failBlock {
-                compiler.compileStatement(s)
+            {
+                def failScope := AutoScope(compiler)
+                if errorVar !== null {
+                    compiler.symbolTable.add(errorVar)
+                }
+                for s in failBlock {
+                    compiler.compileStatement(s)
+                }
             }
             if !ir.currentBlockFinished {
                 ir.add(IR.Statement.BRANCH(position, endBlock))

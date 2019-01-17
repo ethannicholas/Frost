@@ -116,6 +116,7 @@ class LLVMCodeGenerator : CodeGenerator {
         physicalOut.print(shims.finish())
         physicalOut.print(methods.finish())
         physicalOut.print(metadata.finish())
+        physicalOut.close()
     }
 
     method nextVar():String {
@@ -2060,5 +2061,9 @@ class LLVMCodeGenerator : CodeGenerator {
 
     @override
     method end(cl:ClassDecl) {
+    }
+
+    @override
+    method cleanup() {
     }
 }

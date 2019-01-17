@@ -49,7 +49,7 @@
 #include "frost/threads/MessageQueue.h"
 #include "frost/collections/IdentityMap.h"
 #include "frost/core/Immutable.h"
-#include "org/frostlang/frostc/Compiler/Error.h"
+#include "org/frostlang/frostc/Compiler/ErrorMsg.h"
 #include "frost/core/Equatable.h"
 #include "frost/collections/Map.h"
 #include "org/frostlang/frostc/expression/Call.h"
@@ -2216,7 +2216,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp903));
 frost$threads$MessageQueue** $tmp904 = &param0->errorQueue;
 *$tmp904 = $tmp901;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp901));
-// unreffing REF($427:frost.threads.MessageQueue<org.frostlang.frostc.Compiler.Error>)
+// unreffing REF($427:frost.threads.MessageQueue<org.frostlang.frostc.Compiler.ErrorMsg>)
 // line 276
 org$frostlang$frostc$Compiler$TypeContext* $tmp905 = (org$frostlang$frostc$Compiler$TypeContext*) frostObjectAlloc(32, (frost$core$Class*) &org$frostlang$frostc$Compiler$TypeContext$class);
 frost$core$Int64 $tmp906 = (frost$core$Int64) {3};
@@ -2264,7 +2264,7 @@ frost$core$MutableString* $tmp926 = *(&local8);
 frost$threads$MessageQueue** $tmp927 = &param0->errorQueue;
 frost$threads$MessageQueue* $tmp928 = *$tmp927;
 frost$core$Immutable* $tmp929 = frost$threads$MessageQueue$getMessage$R$frost$threads$MessageQueue$T($tmp928);
-frost$core$String** $tmp930 = &((org$frostlang$frostc$Compiler$Error*) $tmp929)->message;
+frost$core$String** $tmp930 = &((org$frostlang$frostc$Compiler$ErrorMsg*) $tmp929)->message;
 frost$core$String* $tmp931 = *$tmp930;
 frost$core$String* $tmp932 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(&$s933, $tmp931);
 frost$core$String* $tmp934 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp932, &$s935);

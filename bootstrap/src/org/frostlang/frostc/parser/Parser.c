@@ -20,7 +20,7 @@
 #include "org/frostlang/frostc/parser/Parser/AutoSyntaxHighlight.h"
 #include "frost/collections/Array.h"
 #include "org/frostlang/frostc/Pair.h"
-#include "org/frostlang/frostc/Compiler/Error.h"
+#include "org/frostlang/frostc/Compiler/ErrorMsg.h"
 #include "org/frostlang/frostc/Position.h"
 #include "frost/core/Immutable.h"
 #include "frost/core/SteppedRange.LTfrost/core/Int64.Cfrost/core/Int64.GT.h"
@@ -861,7 +861,7 @@ static frost$core$String $s7042 = { (frost$core$Class*) &frost$core$String$class
 static frost$core$String $s7048 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x50\x61\x72\x73\x65\x72\x2e\x66\x72\x6f\x73\x74", 12, 7165916831566560714, NULL };
 static frost$core$String $s7049 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x41\x53\x54\x4e\x6f\x64\x65\x3f\x20\x74\x6f\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x41\x53\x54\x4e\x6f\x64\x65", 95, -6292765482005070111, NULL };
 
-void org$frostlang$frostc$parser$Parser$init$frost$threads$MessageQueue$LTorg$frostlang$frostc$Compiler$Error$GT(org$frostlang$frostc$parser$Parser* param0, frost$threads$MessageQueue* param1) {
+void org$frostlang$frostc$parser$Parser$init$frost$threads$MessageQueue$LTorg$frostlang$frostc$Compiler$ErrorMsg$GT(org$frostlang$frostc$parser$Parser* param0, frost$threads$MessageQueue* param1) {
 
 // line 35
 org$frostlang$frostc$parser$Lexer* $tmp2 = (org$frostlang$frostc$parser$Lexer*) frostObjectAlloc(40, (frost$core$Class*) &org$frostlang$frostc$parser$Lexer$class);
@@ -934,7 +934,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp28));
 // unreffing REF($80:frost.collections.Stack.T)
 // line 60
 org$frostlang$regex$RegexParser* $tmp29 = (org$frostlang$regex$RegexParser*) frostObjectAlloc(56, (frost$core$Class*) &org$frostlang$regex$RegexParser$class);
-org$frostlang$regex$RegexParser$init$frost$threads$MessageQueue$LTorg$frostlang$frostc$Compiler$Error$GT($tmp29, param1);
+org$frostlang$regex$RegexParser$init$frost$threads$MessageQueue$LTorg$frostlang$frostc$Compiler$ErrorMsg$GT($tmp29, param1);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp29));
 org$frostlang$regex$RegexParser** $tmp30 = &param0->regexParser;
 org$frostlang$regex$RegexParser* $tmp31 = *$tmp30;
@@ -1741,14 +1741,14 @@ block1:;
 // line 190
 frost$threads$MessageQueue** $tmp427 = &param0->errors;
 frost$threads$MessageQueue* $tmp428 = *$tmp427;
-org$frostlang$frostc$Compiler$Error* $tmp429 = (org$frostlang$frostc$Compiler$Error*) frostObjectAlloc(56, (frost$core$Class*) &org$frostlang$frostc$Compiler$Error$class);
+org$frostlang$frostc$Compiler$ErrorMsg* $tmp429 = (org$frostlang$frostc$Compiler$ErrorMsg*) frostObjectAlloc(56, (frost$core$Class*) &org$frostlang$frostc$Compiler$ErrorMsg$class);
 frost$io$File** $tmp430 = &param0->path;
 frost$io$File* $tmp431 = *$tmp430;
 org$frostlang$frostc$Position $tmp432 = param1.position;
-org$frostlang$frostc$Compiler$Error$init$frost$io$File$org$frostlang$frostc$Position$frost$core$String($tmp429, $tmp431, $tmp432, param2);
+org$frostlang$frostc$Compiler$ErrorMsg$init$frost$io$File$org$frostlang$frostc$Position$frost$core$String($tmp429, $tmp431, $tmp432, param2);
 frost$threads$MessageQueue$post$frost$threads$MessageQueue$T($tmp428, ((frost$core$Immutable*) $tmp429));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp429));
-// unreffing REF($22:org.frostlang.frostc.Compiler.Error)
+// unreffing REF($22:org.frostlang.frostc.Compiler.ErrorMsg)
 goto block2;
 block2:;
 return;

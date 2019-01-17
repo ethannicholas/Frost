@@ -197,10 +197,6 @@ Object* frost$core$Frost$success$frost$core$Object$R$frost$core$Maybe$LTfrost$co
 
 Object* frost$core$Frost$error$frost$core$String$R$frost$core$Maybe$LTfrost$core$Object$GT$Q(String*);
 
-#define frostMaybeSuccess frost$core$Frost$success$frost$core$Object$R$frost$core$Maybe$LTfrost$core$Object$GT$Q
-
-#define frostMaybeError frost$core$Frost$error$frost$core$String$R$frost$core$Maybe$LTfrost$core$Object$GT$Q
-
 void frost$core$Frost$unref$frost$core$Object$Q(Object*);
 
 void frost$core$Frost$dumpReport(Object*);
@@ -244,20 +240,23 @@ void frostFatalError(const char* msg) {
 
 void frostAssert(uint8_t b) {
     if (!b) {
-        frostFatalError("assertion failure");
+        fprintf(stderr, "assertion failure\n");
+        abort();
     }
 }
 
 void* frostAlloc(size_t size) {
     allocations++;
     void* result = calloc(size, 1);
-    frostAssert(result != NULL);
+    frostAssert(result != NULL || size == 0);
     return result;
 }
 
 void* frostZAlloc(size_t size) {
     return frostAlloc(size);
 }
+
+void frostDebugPrintObject(void* object);
 
 void* frostObjectAlloc(size_t size, Class* cl) {
 #if DEBUG_ALLOCS
@@ -281,7 +280,7 @@ void* frostObjectAlloc(size_t size, Class* cl) {
 
 void* frostRealloc(void* ptr, size_t oldSize, size_t newSize) {
     void* result = realloc(ptr, newSize);
-    frostAssert(result != NULL);
+    frostAssert(result != NULL || newSize == 0);
     if (newSize > oldSize) {
         memset(result + oldSize, 0, newSize - oldSize);
     }
@@ -335,6 +334,20 @@ String* frostNewString(const char* s, int length) {
     memcpy(result->data, s, length);
     return result;
 }
+
+// returns o wrapped in a Maybe.SUCCESS, *without* increasing its refcount
+Object* frostMaybeSuccess(Object* o) {
+    Object* result = frost$core$Frost$success$frost$core$Object$R$frost$core$Maybe$LTfrost$core$Object$GT$Q(o);
+    frost$core$Frost$unref$frost$core$Object$Q(o);
+    return result;
+}    
+
+// returns s wrapped in a Maybe.ERROR, *without* increasing its refcount
+Object* frostMaybeError(String* s) {
+    Object* result = frost$core$Frost$error$frost$core$String$R$frost$core$Maybe$LTfrost$core$Object$GT$Q(s);
+    frost$core$Frost$unref$frost$core$Object$Q(s);
+    return result;
+}    
 
 void* frostGetInterfaceMethod(Object* o, Class* intf, int index) {
     ITable* it = o->cl->itable;
@@ -906,34 +919,40 @@ FileOutputStream* frost$io$Console$errorStream$R$frost$io$OutputStream() {
 
 // File
 
-FileInputStream* frost$io$File$openInputStream$R$frost$io$InputStream(File* self) {
+String* frostFileError(const char* msg, const char* path) {
+    char buffer[1024];
+    int length = snprintf(buffer, sizeof(buffer), "%s %s: %s", msg, path, strerror(errno));
+    return frostNewString(buffer, length);
+}
+
+FileInputStream* frost$io$File$openInputStream$R$frost$core$Maybe$LTfrost$io$InputStream$GT(File* self) {
     FileInputStream* result = frostObjectAlloc(sizeof(FileInputStream),
             &frost$io$FileInputStream$class);
     frost$io$InputStream$init(result);
     char* str = frostGetCString(self->path);
     result->file = fopen(str, "rb");
     if (!result->file) {
-        printf("error opening '%s' for reading\n", str);
-        exit(1);
+        frostFree(str);
+        return frostMaybeError(frostFileError("Could not read", str));
     }
-    result->closeOnCleanup.value = true;
     frostFree(str);
-    return result;
+    result->closeOnCleanup.value = true;
+    return frostMaybeSuccess((Object*) result);
 }
 
-FileOutputStream* frost$io$File$openOutputStream$R$frost$io$OutputStream(File* self) {
+FileOutputStream* frost$io$File$openOutputStream$R$frost$core$Maybe$LTfrost$io$OutputStream$GT(File* self) {
     FileOutputStream* result = frostObjectAlloc(sizeof(FileOutputStream),
             &frost$io$FileOutputStream$class);
     frost$io$OutputStream$init(result);
     char* str = frostGetCString(self->path);
     result->file = fopen(str, "wb");
     if (!result->file) {
-        printf("error opening '%s' for writing\n", str);
-        exit(1);
+        frostFree(str);
+        return frostMaybeError(frostFileError("Could not write", str));
     }
-    result->closeOnCleanup.value = true;
     frostFree(str);
-    return result;
+    result->closeOnCleanup.value = true;
+    return frostMaybeSuccess((Object*) result);
 }
 
 FileOutputStream* frost$io$File$openForAppend$R$frost$io$OutputStream(File* self) {
@@ -943,40 +962,36 @@ FileOutputStream* frost$io$File$openForAppend$R$frost$io$OutputStream(File* self
     char* str = frostGetCString(self->path);
     result->file = fopen(str, "ab");
     if (!result->file) {
-        printf("error opening '%s' for appending\n", str);
-        exit(1);
+        frostFree(str);
+        return frostMaybeError(frostFileError("Could not write", str));
     }
-    result->closeOnCleanup.value = true;
     frostFree(str);
-    return result;
+    result->closeOnCleanup.value = true;
+    return frostMaybeSuccess((Object*) result);
 }
 
 Object* frost$io$File$absolute$R$frost$core$Maybe$LTfrost$io$File$GT(File* file) {
     char path[PATH_MAX];
     char* rawPath = frostGetCString(file->path);
     if (!realpath(rawPath, path)) {
+        Object* result = frostMaybeError(frostFileError("Could not determine absolute path",
+                rawPath));
         frostFree(rawPath);
-        const char* msg = "unable to resolve absolute path";
-        String* str = frostNewString(msg, strlen(msg));
-        Object* result = frostMaybeError(str);
-        frost$core$Frost$unref$frost$core$Object$Q((Object*) str);
         return result;
     }
     frostFree(rawPath);
     File* f = frostObjectAlloc(sizeof(File), &frost$io$File$class);
     f->path = frostNewString(path, strlen(path));
     Object* result = frostMaybeSuccess((Object*) f);
-    frost$core$Frost$unref$frost$core$Object$Q((Object*) f);
     return result;
 }
 
 Error* frost$io$File$rename$frost$io$File$R$frost$core$Error$Q(File* src, File* dst) {
     char* srcPath = frostGetCString(src->path);
     char* dstPath = frostGetCString(dst->path);
-    if (!rename(srcPath, dstPath)) {
+    if (rename(srcPath, dstPath)) {
         Error* result = frostObjectAlloc(sizeof(Error), &frost$core$Error$class);
-        const char* msg = strerror(errno);
-        result->message = frostNewString(msg, strlen(msg));
+        result->message = frostFileError("Could not rename", srcPath);
         frostFree(srcPath);
         frostFree(dstPath);
         return result;
@@ -986,10 +1001,9 @@ Error* frost$io$File$rename$frost$io$File$R$frost$core$Error$Q(File* src, File* 
 
 Error* frost$io$File$delete$R$frost$core$Error$Q(File* self) {
     char* path = frostGetCString(self->path);
-    if (!remove(path)) {
+    if (remove(path)) {
         Error* result = frostObjectAlloc(sizeof(Error), &frost$core$Error$class);
-        const char* msg = strerror(errno);
-        result->message = frostNewString(msg, strlen(msg));
+        result->message = frostFileError("Could not delete", path);
         frostFree(path);
         return result;
     }

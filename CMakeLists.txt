@@ -75,9 +75,7 @@ add_library(c_frost
     bootstrap/src/frost/collections/Stack.c
     bootstrap/src/frost/collections/Stack/StackIterator.c
     bootstrap/src/frost/collections/SpecializedArray.LTorg/frostlang/frostc/parser/Token.GT.c
-    bootstrap/src/frost/collections/SpecializedArrayIterator.LTorg/frostlang/frostc/parser/Token.GT.c
     bootstrap/src/frost/collections/SpecializedArray.LTorg/frostlang/regex/RegexToken.GT.c
-    bootstrap/src/frost/collections/SpecializedArrayIterator.LTorg/frostlang/regex/RegexToken.GT.c
     bootstrap/src/frost/core/Bit.c
     bootstrap/src/frost/core/Char8.c
     bootstrap/src/frost/core/Char16.c
@@ -217,7 +215,7 @@ add_executable(bootstrap
     bootstrap/src/org/frostlang/frostc/Compiler/Capture.c
     bootstrap/src/org/frostlang/frostc/Compiler/CoercionKey.c
     bootstrap/src/org/frostlang/frostc/Compiler/EnclosingContext.c
-    bootstrap/src/org/frostlang/frostc/Compiler/Error.c
+    bootstrap/src/org/frostlang/frostc/Compiler/ErrorMsg.c
     bootstrap/src/org/frostlang/frostc/Compiler/Resolution.c
     bootstrap/src/org/frostlang/frostc/Compiler/Settings.c
     bootstrap/src/org/frostlang/frostc/Compiler/TypeContext.c
@@ -352,8 +350,6 @@ add_executable(bootstrap
     bootstrap/src/frost/collections/MapWriter.c
     bootstrap/src/frost/collections/SpecializedArray.LTorg/frostlang/frostc/parser/Token.GT.c
     bootstrap/src/frost/collections/SpecializedArray.LTorg/frostlang/regex/RegexToken.GT.c
-    bootstrap/src/frost/collections/SpecializedArrayIterator.LTorg/frostlang/frostc/parser/Token.GT.c
-    bootstrap/src/frost/collections/SpecializedArrayIterator.LTorg/frostlang/regex/RegexToken.GT.c
     bootstrap/src/frost/collections/Stack.c
     bootstrap/src/frost/collections/Stack/StackIterator.c
     bootstrap/src/frost/core/Bit.c

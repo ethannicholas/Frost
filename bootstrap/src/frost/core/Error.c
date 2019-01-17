@@ -1,12 +1,22 @@
 #include "frost/core/Error.h"
-#include "frost/core/Object.h"
+#include "frost/core/Immutable.h"
 #include "frost/core/Class.h"
 #include "frost/core/String.h"
+#include "frost/core/Object.h"
 #include "frost/core/Frost.h"
 
+__attribute__((weak)) frost$core$String* frost$core$Error$convert$R$frost$core$String$shim(frost$core$Error* p0) {
+    frost$core$String* result = frost$core$Error$convert$R$frost$core$String(p0);
+
+    return result;
+}
+__attribute__((weak)) void frost$core$Error$cleanup$shim(frost$core$Error* p0) {
+    frost$core$Error$cleanup(p0);
+
+}
 
 static frost$core$String $s1;
-frost$core$Error$class_type frost$core$Error$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { frost$core$Error$convert$R$frost$core$String, frost$core$Error$cleanup} };
+frost$core$Error$class_type frost$core$Error$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Immutable$class, NULL, { frost$core$Error$convert$R$frost$core$String$shim, frost$core$Error$cleanup$shim} };
 
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x45\x72\x72\x6f\x72", 16, -3824106976449029430, NULL };
@@ -42,7 +52,7 @@ return $tmp8;
 void frost$core$Error$cleanup(frost$core$Error* param0) {
 
 // line 6
-frost$core$Object$cleanup(((frost$core$Object*) param0));
+frost$core$Immutable$cleanup(((frost$core$Immutable*) param0));
 frost$core$String** $tmp10 = &param0->message;
 frost$core$String* $tmp11 = *$tmp10;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp11));

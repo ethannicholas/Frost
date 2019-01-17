@@ -198,7 +198,13 @@ class WriteOperators {
 
     @class
     method main() {
-        writeFrost(File("../test/tests/Operators.frost").openOutputStream())
-        writeC(File("Operators.c").openOutputStream())
+        try {
+            writeFrost(File("../test/tests/Operators.frost").openOutputStream())
+            writeC(File("Operators.c").openOutputStream())
+        }
+        fail(error) {
+            Console.printLine(error)
+            System.exit(1)
+        }
     }
 }

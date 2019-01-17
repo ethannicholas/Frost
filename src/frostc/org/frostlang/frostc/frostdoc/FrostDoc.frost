@@ -628,73 +628,79 @@ class FrostDoc {
     }
 
     method process(cl:ClassDecl) {
-        compiler.currentClass.push(cl)
-        self.currentClass := cl
-        def dest := getPath(cl, ".xml")
-        dest.parent.createDirectories()
-        out := XMLWriter(dest.openOutputStream())
-        out.open("class")
-        out.write("name", cl.name)
-        var simple := simpleName(cl.type)
-        if cl.parameters.count != 0 {
-            var separator := "&lt;"
-            for p in cl.parameters {
-                simple += separator
-                simple += p.name
-                separator := ", "
+        try {
+            compiler.currentClass.push(cl)
+            self.currentClass := cl
+            def dest := getPath(cl, ".xml")
+            dest.parent.createDirectories()
+            out := XMLWriter(dest.openOutputStream())
+            out.open("class")
+            out.write("name", cl.name)
+            var simple := simpleName(cl.type)
+            if cl.parameters.count != 0 {
+                var separator := "&lt;"
+                for p in cl.parameters {
+                    simple += separator
+                    simple += p.name
+                    separator := ", "
+                }
+                simple += "&gt;"
             }
-            simple += "&gt;"
-        }
-        out.write("simpleName", simple)
-        match cl.classKind {
-            when ClassDecl.Kind.CLASS {
-                out.write("kind", "class")
-            }
-            when ClassDecl.Kind.INTERFACE {
-                out.write("kind", "interface")
-            }
-            when ClassDecl.Kind.CHOICE {
-                out.write("kind", "choice")
-                for cc in cl.choiceCases {
-                    compiler.resolve(cc)
-                    out.open("case")
-                    out.write("name", cc.name)
-                    if cc.doccomment !== null {
-                        writeDoc(cc.doccomment)
-                    }
-                    if cc.fields.count > 0 {
-                        out.open("fields")
-                        for f in cc.fields {
-                            write(f)
+            out.write("simpleName", simple)
+            match cl.classKind {
+                when ClassDecl.Kind.CLASS {
+                    out.write("kind", "class")
+                }
+                when ClassDecl.Kind.INTERFACE {
+                    out.write("kind", "interface")
+                }
+                when ClassDecl.Kind.CHOICE {
+                    out.write("kind", "choice")
+                    for cc in cl.choiceCases {
+                        compiler.resolve(cc)
+                        out.open("case")
+                        out.write("name", cc.name)
+                        if cc.doccomment !== null {
+                            writeDoc(cc.doccomment)
                         }
-                        out.close("fields")
+                        if cc.fields.count > 0 {
+                            out.open("fields")
+                            for f in cc.fields {
+                                write(f)
+                            }
+                            out.close("fields")
+                        }
+                        out.close("case")
                     }
-                    out.close("case")
                 }
             }
+            var base := cl
+            while base.owner !== null {
+                base := base.owner
+            }
+            out.write("source", "../" * (cl.name.find(".").count() + 1) + "source/" +
+                    base.name.replace(".", "/") + ".html")
+            writeDoc(cl)
+            writeAncestors(cl)
+            if cl.rawInterfaces.count > 0 {
+                out.open("interfaces")
+                cl.rawInterfaces.apply(self.write) -- FIXME shouldn't need 'self.'
+                out.close("interfaces")
+            }
+            writeInheritedFields(cl)
+            writeInheritedMethods(cl)
+            cl.classes.apply(self.write) -- FIXME shouldn't need 'self.'
+            cl.fields.apply(self.write) -- FIXME shouldn't need 'self.'
+            cl.methods.apply(self.write) -- FIXME shouldn't need 'self.'
+            out.close("class")
+            assert compiler.currentClass[0] == cl
+            compiler.currentClass.pop()
+            out := XMLWriter(MemoryOutputStream())
         }
-        var base := cl
-        while base.owner !== null {
-            base := base.owner
+        fail(error) {
+            Console.printLine(error)
+            System.exit(1)
         }
-        out.write("source", "../" * (cl.name.find(".").count() + 1) + "source/" +
-                base.name.replace(".", "/") + ".html")
-        writeDoc(cl)
-        writeAncestors(cl)
-        if cl.rawInterfaces.count > 0 {
-            out.open("interfaces")
-            cl.rawInterfaces.apply(self.write) -- FIXME shouldn't need 'self.'
-            out.close("interfaces")
-        }
-        writeInheritedFields(cl)
-        writeInheritedMethods(cl)
-        cl.classes.apply(self.write) -- FIXME shouldn't need 'self.'
-        cl.fields.apply(self.write) -- FIXME shouldn't need 'self.'
-        cl.methods.apply(self.write) -- FIXME shouldn't need 'self.'
-        out.close("class")
-        assert compiler.currentClass[0] == cl
-        compiler.currentClass.pop()
-        out := XMLWriter(MemoryOutputStream())
     }
 
     method writePackage(node:TableOfContentsNode) {
@@ -719,24 +725,29 @@ class FrostDoc {
         out.close("package")
     }
 
-    method writePackages(node:TableOfContentsNode) {
-        if compiler.getClass(node.name) == null {
-            def dest := outDir.resolve(node.name.replace(".", "/")).resolve("index.xml")
-            out := XMLWriter(dest.openOutputStream())
-            writePackage(node)
+    method writePackages(node:TableOfContentsNode):Error? {
+        try {
+            if compiler.getClass(node.name) == null {
+                def dest := outDir.resolve(node.name.replace(".", "/")).resolve("index.xml")
+                out := XMLWriter(dest.openOutputStream())
+                writePackage(node)
+            }
+            for c in node.children.values {
+                writePackages(c)
+            }
+            return null
         }
-        for c in node.children.values {
-            writePackages(c)
+        fail(error) {
+            return error
         }
     }
 
     method finish() {
---        classes.apply(process)
-        for cl in classes {
-            process(cl)
-        }
+        System.crash()
+        -- FIXME shouldn't need explicit self
+        classes.apply(self.process)
         writePackages(tableOfContents)
-        out := XMLWriter(tocFile.openOutputStream())
+        out := XMLWriter(tocFile.openOutputStream().get())
         tableOfContents.write(apiRelativePath, out)
         out := XMLWriter(MemoryOutputStream())
     }

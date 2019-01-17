@@ -8,7 +8,7 @@ uses org.frostlang.frostc.Compiler.AutoScope
 uses org.frostlang.frostc.Compiler.BinaryKey
 uses org.frostlang.frostc.Compiler.Capture
 uses org.frostlang.frostc.Compiler.EnclosingContext
-uses org.frostlang.frostc.Compiler.Error
+uses org.frostlang.frostc.Compiler.ErrorMsg
 uses org.frostlang.frostc.Compiler.TypeContext
 uses org.frostlang.frostc.FieldDecl
 uses org.frostlang.frostc.FixedArray
@@ -272,7 +272,7 @@ class Closure {
                 def old := compiler.errorQueue
                 for t in attempts {
                     msg.append("\n    when interpreted as '\{t}':")
-                    compiler.errorQueue := MessageQueue<Error>()
+                    compiler.errorQueue := MessageQueue<ErrorMsg>()
                     compileUntypedLambda(compiler, position, rawParameters, expr,
                             TypeContext.TYPE(t))
                     assert compiler.errorQueue.hasMessage(),

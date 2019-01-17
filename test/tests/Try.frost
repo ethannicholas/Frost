@@ -1,0 +1,66 @@
+class MemoryTest {
+    def msg:String
+
+    init(msg:String) {
+        self.msg := msg
+        Console.printLine("MemoryTest.init: \{msg}")
+    }
+
+    @override
+    method cleanup() {
+        Console.printLine("MemoryTest.cleanup: \{msg}")
+    }
+}
+
+method maybeSucceed():Maybe<Int> {
+    return Maybe<Int>.SUCCESS(5)
+}
+
+method maybeFail():Maybe<Int> {
+    return Maybe<Int>.ERROR(Error("maybeFail"))
+}
+
+method errorSucceed():Error? {
+    return null
+}
+
+method errorFail():Error? {
+    return Error("errorFail")
+}
+
+method main() {
+    def var1 := MemoryTest("startup")
+    try {
+        def var2 := MemoryTest("first try start")
+        MemoryTest("Dropping it on the floor")
+        def success1 := maybeSucceed()
+        def var3 := MemoryTest("after maybeSucceed")
+        errorSucceed()
+        def var4 := MemoryTest("after errorSucceed")
+    }
+    fail(error) {
+        def var5 := MemoryTest("in try fail, should not see this")
+        Console.printLine("first try fail, should not see this")
+    }
+    def var6 := MemoryTest("after first try")
+    try {
+        def var7 := MemoryTest("second try start")
+        def fail1 := maybeFail()
+        def var8 := MemoryTest("after maybeFail, should not see this")
+    }
+    fail(error) {
+        def var9 := MemoryTest("in second try fail")
+        MemoryTest("Dropping it on the floor")
+        Console.printLine("second try fail")
+        try {
+            def var10 := MemoryTest("third try start")
+            errorFail()
+            def var11 := MemoryTest("after errorFail, should not see this")
+        }
+        fail(error) {
+            def var12 := MemoryTest("in third try fail")
+            Console.printLine("third try fail")
+        }
+    }
+    Console.printLine("done!")
+}

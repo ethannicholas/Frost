@@ -69,8 +69,13 @@ class File : Immutable, Key<File> {
     @returns the contents of the file line-by-line
     -- FIXME Maybe
     ================================================================================================
-    function lines():Iterator<String> {
-        return openInputStream().lines()
+    function lines():Maybe<Iterator<String>> {
+        try {
+            return Maybe<Iterator<String>>.SUCCESS(openInputStream().lines())
+        }
+        fail(error) {
+            return Maybe<Iterator<String>>.ERROR(error)
+        }
     }
 
     function get_isAbsolute():Bit {
@@ -229,7 +234,7 @@ class File : Immutable, Key<File> {
     @returns an `InputStream`
     ================================================================================================
     @external
-    method openInputStream():InputStream
+    method openInputStream():Maybe<InputStream>
 
     ================================================================================================
     Destroys any existing contents of this file and returns an `OutputStream` for writing it. If the
@@ -238,7 +243,7 @@ class File : Immutable, Key<File> {
     @returns an `OutputStream`
     ================================================================================================
     @external
-    method openOutputStream():OutputStream
+    method openOutputStream():Maybe<OutputStream>
 
     ================================================================================================
     Returns an `OutputStream` for writing to the end of this file. If the file does not already
@@ -256,8 +261,13 @@ class File : Immutable, Key<File> {
     @returns the contents of the file
     ================================================================================================
     @priority(1)
-    method readFully():String {
-        return openInputStream().readFully()
+    method readFully():Maybe<String> {
+        try {
+            return Maybe<String>.SUCCESS(openInputStream().readFully())
+        }
+        fail(error) {
+            return Maybe<String>.ERROR(error)
+        }
     }
 
     ================================================================================================
@@ -267,8 +277,13 @@ class File : Immutable, Key<File> {
 
     @returns the contents of the file
     ================================================================================================
-    method readFully():Array<UInt8> {
-        return openInputStream().readFully()
+    method readFully():Maybe<Array<UInt8>> {
+        try {
+            return Maybe<Array<UInt8>>.SUCCESS(openInputStream().readFully())
+        }
+        fail(error) {
+            return Maybe<Array<UInt8>>.ERROR(error)
+        }
     }
 
     ================================================================================================
@@ -277,8 +292,14 @@ class File : Immutable, Key<File> {
 
     @param contents the data to write
     ================================================================================================
-    method write(contents:String) {
-        openOutputStream().print(contents)
+    method write(contents:String):Error? {
+        try {
+            openOutputStream().print(contents)
+            return null
+        }
+        fail(error) {
+            return error
+        }
     }
 
     ================================================================================================

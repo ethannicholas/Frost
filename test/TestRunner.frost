@@ -89,126 +89,141 @@ class TestRunner {
     }
 
     method runTestC(frostc:File, cLibs:ListView<String>, workingDir:File, test:String):Bit {
-        def expected := workingDir.resolve(test + ".expected").readFully()
-        def exe := File("/tmp/test.out")
-        if exe.exists() {
-            exe.delete()
-        }
-        def outPath := File("/tmp/test.cout")
-        if outPath.exists() {
-            deleteTree(outPath)
-        }
-        def args := Array<String>() -- FIXME literal
-        args.add(workingDir.resolve(test + ".frost").path)
-        args.add("-o")
-        args.add(outPath.path)
-        args.add("-f")
-        args.add("h")
-        var compiler := System.exec(frostc, args)
-        var compileResult := compiler.output.readFully() -- FIXME use error stream instead
-        compiler.waitFor()
-        if compileResult != "" {
-            if compileResult != expected {
-                Console.printLine("error, expected:\n\{expected}\nbut received:\n\{compileResult}")
+        try {
+            def expected := workingDir.resolve(test + ".expected").readFully()
+            def exe := File("/tmp/test.out")
+            if exe.exists() {
+                exe.delete()
+            }
+            def outPath := File("/tmp/test.cout")
+            if outPath.exists() {
+                deleteTree(outPath)
+            }
+            def args := Array<String>() -- FIXME literal
+            args.add(workingDir.resolve(test + ".frost").path)
+            args.add("-o")
+            args.add(outPath.path)
+            args.add("-f")
+            args.add("h")
+            var compiler := System.exec(frostc, args)
+            var compileResult := compiler.output.readFully() -- FIXME use error stream instead
+            compiler.waitFor()
+            if compileResult != "" {
+                if compileResult != expected {
+                    Console.printLine("error, expected:\n\{expected}\nbut received:")
+                    Console.printLine(compileResult)
+                    return false
+                }
+                Console.printLine("success")
+                return true
+            }
+            args.clear()
+            args.add(workingDir.resolve(test + ".frost").path)
+            args.add("-o")
+            args.add(outPath.path)
+            args.add("-f")
+            args.add("c")
+            compiler := System.exec(frostc, args)
+            compileResult := compiler.output.readFully() -- FIXME use error stream instead
+            compiler.waitFor()
+            if !compileCFiles(cLibs, outPath, exe) {
+                return false
+            }
+            if compileResult != "" {
+                if compileResult != expected {
+                    Console.printLine("error, expected:\n\{expected}\nbut received:")
+                    Console.printLine(compileResult)
+                    return false
+                }
+                Console.printLine("success")
+                return true
+            }
+            def child := System.exec(exe, Array<String>())
+            def input := workingDir.resolve(test + ".in")
+            if input.exists() {
+                child.input.print(input.readFully())
+                child.input.close()
+            }
+            def childResult1 := child.output.readFully()
+            def childResult2 := child.error.readFully()
+            child.waitFor()
+            def childResult := childResult1 + childResult2
+            if childResult != expected {
+                Console.printLine("error, expected:\n\{expected}\nbut received:\n\{childResult}")
                 return false
             }
             Console.printLine("success")
             return true
         }
-        args.clear()
-        args.add(workingDir.resolve(test + ".frost").path)
-        args.add("-o")
-        args.add(outPath.path)
-        args.add("-f")
-        args.add("c")
-        compiler := System.exec(frostc, args)
-        compileResult := compiler.output.readFully() -- FIXME use error stream instead
-        compiler.waitFor()
-        if !compileCFiles(cLibs, outPath, exe) {
-            return false
+        fail(error) {
+            Console.printLine(error)
+            System.exit(1)
         }
-        if compileResult != "" {
-            if compileResult != expected {
-                Console.printLine("error, expected:\n\{expected}\nbut received:\n\{compileResult}")
-                return false
-            }
-            Console.printLine("success")
-            return true
-        }
-        def child := System.exec(exe, Array<String>())
-        def input := workingDir.resolve(test + ".in")
-        if input.exists() {
-            child.input.print(input.readFully())
-            child.input.close()
-        }
-        def childResult1 := child.output.readFully()
-        def childResult2 := child.error.readFully()
-        child.waitFor()
-        def childResult := childResult1 + childResult2
-        if childResult != expected {
-            Console.printLine("error, expected:\n\{expected}\nbut received:\n\{childResult}")
-            return false
-        }
-        Console.printLine("success")
-        return true        
     }
 
     method runTest(frostc:File, cLibs:ListView<String>, workingDir:File, test:String,
             mode:Mode):Bit {
-        Console.print("Testing \{test} (\{mode})...")
-        match mode {
-            when Mode.C {
-                return runTestC(frostc, cLibs, workingDir, test)
+        try {
+            Console.print("Testing \{test} (\{mode})...")
+            match mode {
+                when Mode.C {
+                    return runTestC(frostc, cLibs, workingDir, test)
+                }
             }
-        }
-        def expected := workingDir.resolve(test + ".expected").readFully()
-        def exe := File("/tmp/test.out")
-        if exe.exists() {
-            exe.delete()
-        }
-        def args := Array<String>() -- FIXME literal
-        args.add(workingDir.resolve(test + ".frost").path)
-        args.add("-o")
-        args.add(exe.path)
-        args.add("-i")
-        args.add(workingDir.parent.convert())
-        match mode {
-            when Mode.O0 {
-                args.add("-O")
-                args.add("0")
+            def expected := workingDir.resolve(test + ".expected").readFully()
+            def exe := File("/tmp/test.out")
+            if exe.exists() {
+                exe.delete()
             }
-            when Mode.O3 {
-                args.add("-O")
-                args.add("3")
+            def args := Array<String>() -- FIXME literal
+            args.add(workingDir.resolve(test + ".frost").path)
+            args.add("-o")
+            args.add(exe.path)
+            args.add("-i")
+            args.add(workingDir.parent.convert())
+            match mode {
+                when Mode.O0 {
+                    args.add("-O")
+                    args.add("0")
+                }
+                when Mode.O3 {
+                    args.add("-O")
+                    args.add("3")
+                }
             }
-        }
-        def compiler := System.exec(frostc, args)
-        def compileResult := compiler.output.readFully() -- FIXME use error stream instead
-        compiler.waitFor()
-        if compileResult != "" {
-            if compileResult != expected {
-                Console.printLine("error, expected:\n\{expected}\nbut received:\n\{compileResult}")
+            def compiler := System.exec(frostc, args)
+            def compileResult := compiler.output.readFully() -- FIXME use error stream instead
+            compiler.waitFor()
+            if compileResult != "" {
+                if compileResult != expected {
+                    Console.printLine("error, expected:\n\{expected}\nbut received:")
+                    Console.printLine(compileResult)
+                    return false
+                }
+                Console.printLine("success")
+                return true
+            }
+            def child := System.exec(exe, Array<String>())
+            def input := workingDir.resolve(test + ".in")
+            if input.exists() {
+                child.input.print(input.readFully())
+                child.input.close()
+            }
+            def childResult1 := child.output.readFully()
+            def childResult2 := child.error.readFully()
+            child.waitFor()
+            def childResult := childResult1 + childResult2
+            if childResult != expected {
+                Console.printLine("error, expected:\n\{expected}\nbut received:\n\{childResult}")
                 return false
             }
             Console.printLine("success")
             return true
         }
-        def child := System.exec(exe, Array<String>())
-        def input := workingDir.resolve(test + ".in")
-        if input.exists() {
-            child.input.print(input.readFully())
-            child.input.close()
+        fail(error) {
+            Console.printLine(error)
+            System.exit(1)
         }
-        def childResult1 := child.output.readFully()
-        def childResult2 := child.error.readFully()
-        child.waitFor()
-        def childResult := childResult1 + childResult2
-        if childResult != expected {
-            Console.printLine("error, expected:\n\{expected}\nbut received:\n\{childResult}")
-            return false
-        }
-        Console.printLine("success")
-        return true
     }
 
     @private
