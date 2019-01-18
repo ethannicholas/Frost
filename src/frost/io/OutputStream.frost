@@ -28,7 +28,7 @@ class OutputStream {
     @param value the value to write
     ================================================================================================
     @abstract
-    method write(value:UInt8)
+    method write(value:UInt8):Error?
 
     ================================================================================================
     Writes the two bytes comprising a `UInt16`. The byte order is controlled by the [byteOrder]
@@ -36,14 +36,19 @@ class OutputStream {
 
     @param value the value to write
     ================================================================================================
-    method write(value:UInt16) {
-        if byteOrder = ByteOrder.LITTLE_ENDIAN {
-            write(value.convert()->UInt8)
-            write((value >> 8).convert()->UInt8)
+    method write(value:UInt16):Error? {
+        try {
+            if byteOrder = ByteOrder.LITTLE_ENDIAN {
+                write(value.convert()->UInt8)
+                write((value >> 8).convert()->UInt8)
+            }
+            else {
+                write((value >> 8).convert()->UInt8)
+                write(value.convert()->UInt8)        
+            }
         }
-        else {
-            write((value >> 8).convert()->UInt8)
-            write(value.convert()->UInt8)        
+        fail(error) {
+            return error
         }
     }
 
@@ -53,14 +58,19 @@ class OutputStream {
 
     @param value the value to write
     ================================================================================================
-    method write(value:UInt32) {
-        if byteOrder = ByteOrder.LITTLE_ENDIAN {
-            write(value.convert()->UInt16)
-            write((value >> 16).convert()->UInt16)
+    method write(value:UInt32):Error? {
+        try {
+            if byteOrder = ByteOrder.LITTLE_ENDIAN {
+                write(value.convert()->UInt16)
+                write((value >> 16).convert()->UInt16)
+            }
+            else {
+                write((value >> 16).convert()->UInt16)
+                write(value.convert()->UInt16)
+            }
         }
-        else {
-            write((value >> 16).convert()->UInt16)
-            write(value.convert()->UInt16)
+        fail(error) {
+            return error
         }
     }
 
@@ -70,14 +80,19 @@ class OutputStream {
 
     @param value the value to write
     ================================================================================================
-    method write(value:UInt64) {
-        if byteOrder = ByteOrder.LITTLE_ENDIAN {
-            write(value.convert()->UInt32)
-            write((value >> 32).convert()->UInt32)
+    method write(value:UInt64):Error? {
+        try {
+            if byteOrder = ByteOrder.LITTLE_ENDIAN {
+                write(value.convert()->UInt32)
+                write((value >> 32).convert()->UInt32)
+            }
+            else {
+                write((value >> 32).convert()->UInt32)
+                write(value.convert()->UInt32)
+            }
         }
-        else {
-            write((value >> 32).convert()->UInt32)
-            write(value.convert()->UInt32)
+        fail(error) {
+            return error
         }
     }
 
@@ -87,8 +102,8 @@ class OutputStream {
     @param value the value to write
     ================================================================================================
     @final
-    method write(value:Int8) {
-        write(value.convert()->UInt8)
+    method write(value:Int8):Error? {
+        return write(value.convert()->UInt8)
     }
 
     ================================================================================================
@@ -97,8 +112,8 @@ class OutputStream {
 
     @param value the value to write
     ================================================================================================
-    method write(value:Int16) {
-        write(value.convert()->UInt16)
+    method write(value:Int16):Error? {
+        return write(value.convert()->UInt16)
     }
 
     ================================================================================================
@@ -107,8 +122,8 @@ class OutputStream {
 
     @param value the value to write
     ================================================================================================
-    method write(value:Int32) {
-        write(value.convert()->UInt32)
+    method write(value:Int32):Error? {
+        return write(value.convert()->UInt32)
     }
 
     ================================================================================================
@@ -117,8 +132,8 @@ class OutputStream {
 
     @param value the value to write
     ================================================================================================
-    method write(value:Int64) {
-        write(value.convert()->UInt64)
+    method write(value:Int64):Error? {
+        return write(value.convert()->UInt64)
     }
 
     ================================================================================================
@@ -127,9 +142,14 @@ class OutputStream {
     @param ptr pointer to the data to write
     @param count number of bytes to write
     ================================================================================================
-    method write(ptr:Pointer<UInt8>, count:Int) {
-        for i in 0 .. count {
-            write(ptr[i])
+    method write(ptr:Pointer<UInt8>, count:Int):Error? {
+        try {
+            for i in 0 .. count {
+                write(ptr[i])
+            }
+        }
+        fail(error) {
+            return error
         }
     }
 
@@ -140,8 +160,8 @@ class OutputStream {
     @param count number of bytes to write
     ================================================================================================
     @final
-    method write(ptr:Pointer<Int8>, count:Int) {
-        write(ptr->Pointer<UInt8>, count)
+    method write(ptr:Pointer<Int8>, count:Int):Error? {
+        return write(ptr->Pointer<UInt8>, count)
     }
 
     ================================================================================================
@@ -151,8 +171,8 @@ class OutputStream {
     @param count number of bytes to write
     ================================================================================================
     @final
-    method write(ptr:Pointer<Char8>, count:Int) {
-        write(ptr->Pointer<UInt8>, count)
+    method write(ptr:Pointer<Char8>, count:Int):Error? {
+        return write(ptr->Pointer<UInt8>, count)
     }
 
     ================================================================================================
@@ -163,9 +183,14 @@ class OutputStream {
     @param count number of bytes to write
     ================================================================================================
     @final
-    method write(a:Array<UInt8>, count:Int) {
-        for v in a {
-            write(v)
+    method write(a:Array<UInt8>, count:Int):Error? {
+        try {
+            for v in a {
+                write(v)
+            }
+        }
+        fail(error) {
+            return error
         }
     }
 
@@ -177,9 +202,14 @@ class OutputStream {
     @param count number of bytes to write
     ================================================================================================
     @final
-    method write(a:Array<Int8>, count:Int) {
-        for v in a {
-            write(v)
+    method write(a:Array<Int8>, count:Int):Error? {
+        try {
+            for v in a {
+                write(v)
+            }
+        }
+        fail(error) {
+            return error
         }
     }
 
@@ -191,9 +221,14 @@ class OutputStream {
     @param count number of bytes to write
     ================================================================================================
     @final
-    method write(a:Array<Char8>, count:Int) {
-        for v in a {
-            write(v)
+    method write(a:Array<Char8>, count:Int):Error? {
+        try {
+            for v in a {
+                write(v)
+            }
+        }
+        fail(error) {
+            return error
         }
     }
 
@@ -202,8 +237,8 @@ class OutputStream {
 
     @param value the value to write
     ================================================================================================
-    method write(value:Char8) {
-        write(value.value)
+    method write(value:Char8):Error? {
+        return write(value.value)
     }
 
     ================================================================================================
@@ -211,8 +246,8 @@ class OutputStream {
 
     @param s the string to write
     ================================================================================================
-    method print(s:String) {
-        write(s.data, s._length)
+    method print(s:String):Error? {
+        return write(s.data, s._length)
     }
 
     ================================================================================================
@@ -221,8 +256,8 @@ class OutputStream {
 
     @param o the object to write
     ================================================================================================
-    method print(o:Object) {
-        print(o.convert())
+    method print(o:Object):Error? {
+        return print(o.convert())
     }
 
     ================================================================================================
@@ -230,9 +265,15 @@ class OutputStream {
 
     @param s the string to write
     ================================================================================================
-    method printLine(s:String) {
-        print(s)
-        printLine()
+    method printLine(s:String):Error? {
+        try {
+            print(s)
+            printLine()
+            return null
+        }
+        fail(error) {
+            return error
+        }
     }
 
     ================================================================================================
@@ -241,15 +282,15 @@ class OutputStream {
 
     @param o the object to write
     ================================================================================================
-    method printLine(o:Object) {
-        printLine(o.convert())
+    method printLine(o:Object):Error? {
+        return printLine(o.convert())
     }
 
     ================================================================================================
     Prints a [line ending](lineEnding).
     ================================================================================================
-    method printLine() {
-        print(lineEnding)
+    method printLine():Error? {
+        return print(lineEnding)
     }
 
     ================================================================================================
@@ -257,9 +298,11 @@ class OutputStream {
     buffering, so the base implementation of this method does nothing, but subclasses which buffer
     their output should override this.
     ================================================================================================
-    method flush() {
+    method flush():Error? {
+        return null
     }
 
-    method close() {
+    method close():Error? {
+        return null
     }
 }

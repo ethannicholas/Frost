@@ -58,7 +58,6 @@ class Main {
     }
 
     method toObject(llvm:File, dest:File, preserveTemporaries:Bit):File {
-        Console.printLine("toObject: \{llvm}")
         def args := Array<String>() -- FIXME literal
         args.add(llvm.path)
         args.add("-m64")

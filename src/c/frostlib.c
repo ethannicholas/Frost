@@ -349,6 +349,13 @@ Object* frostMaybeError(String* s) {
     return result;
 }    
 
+// returns s wrapped in an Error, *without* increasing its refcount
+Error* frostError(String *s) {
+    Error* result = frostObjectAlloc(sizeof(Error), &frost$core$Error$class);
+    result->message = s;
+    return result;
+}
+
 void* frostGetInterfaceMethod(Object* o, Class* intf, int index) {
     ITable* it = o->cl->itable;
     while (it->cl != intf) {
@@ -919,9 +926,15 @@ FileOutputStream* frost$io$Console$errorStream$R$frost$io$OutputStream() {
 
 // File
 
-String* frostFileError(const char* msg, const char* path) {
+String* frostFileErrorMessage(const char* msg, const char* path) {
     char buffer[1024];
-    int length = snprintf(buffer, sizeof(buffer), "%s %s: %s", msg, path, strerror(errno));
+    int length;
+    if (path) {
+        length = snprintf(buffer, sizeof(buffer), "%s %s: %s", msg, path, strerror(errno));
+    }
+    else {
+        length = snprintf(buffer, sizeof(buffer), "%s: %s", msg, strerror(errno));
+    }
     return frostNewString(buffer, length);
 }
 
@@ -933,7 +946,7 @@ FileInputStream* frost$io$File$openInputStream$R$frost$core$Maybe$LTfrost$io$Inp
     result->file = fopen(str, "rb");
     if (!result->file) {
         frostFree(str);
-        return frostMaybeError(frostFileError("Could not read", str));
+        return frostMaybeError(frostFileErrorMessage("Could not read", str));
     }
     frostFree(str);
     result->closeOnCleanup.value = true;
@@ -948,7 +961,7 @@ FileOutputStream* frost$io$File$openOutputStream$R$frost$core$Maybe$LTfrost$io$O
     result->file = fopen(str, "wb");
     if (!result->file) {
         frostFree(str);
-        return frostMaybeError(frostFileError("Could not write", str));
+        return frostMaybeError(frostFileErrorMessage("Could not write", str));
     }
     frostFree(str);
     result->closeOnCleanup.value = true;
@@ -963,7 +976,7 @@ FileOutputStream* frost$io$File$openForAppend$R$frost$io$OutputStream(File* self
     result->file = fopen(str, "ab");
     if (!result->file) {
         frostFree(str);
-        return frostMaybeError(frostFileError("Could not write", str));
+        return frostMaybeError(frostFileErrorMessage("Could not write", str));
     }
     frostFree(str);
     result->closeOnCleanup.value = true;
@@ -974,7 +987,7 @@ Object* frost$io$File$absolute$R$frost$core$Maybe$LTfrost$io$File$GT(File* file)
     char path[PATH_MAX];
     char* rawPath = frostGetCString(file->path);
     if (!realpath(rawPath, path)) {
-        Object* result = frostMaybeError(frostFileError("Could not determine absolute path",
+        Object* result = frostMaybeError(frostFileErrorMessage("Could not determine absolute path",
                 rawPath));
         frostFree(rawPath);
         return result;
@@ -991,7 +1004,7 @@ Error* frost$io$File$rename$frost$io$File$R$frost$core$Error$Q(File* src, File* 
     char* dstPath = frostGetCString(dst->path);
     if (rename(srcPath, dstPath)) {
         Error* result = frostObjectAlloc(sizeof(Error), &frost$core$Error$class);
-        result->message = frostFileError("Could not rename", srcPath);
+        result->message = frostFileErrorMessage("Could not rename", srcPath);
         frostFree(srcPath);
         frostFree(dstPath);
         return result;
@@ -1003,7 +1016,7 @@ Error* frost$io$File$delete$R$frost$core$Error$Q(File* self) {
     char* path = frostGetCString(self->path);
     if (remove(path)) {
         Error* result = frostObjectAlloc(sizeof(Error), &frost$core$Error$class);
-        result->message = frostFileError("Could not delete", path);
+        result->message = frostFileErrorMessage("Could not delete", path);
         frostFree(path);
         return result;
     }
@@ -1084,34 +1097,52 @@ void frost$io$FileInputStream$readImpl$frost$unsafe$Pointer$LTfrost$core$UInt8$G
     *result = fread(buffer, 1, max, self->file);
 }
 
-void frost$io$FileInputStream$close(FileInputStream* self) {
-    fclose(self->file);
+Error* frost$io$FileInputStream$close$R$frost$core$Error$Q(FileInputStream* self) {
     self->closeOnCleanup.value = false;
+    if (fclose(self->file)) {
+        return frostError(frostFileErrorMessage("error closing stream", NULL));
+    }
+    return NULL;
 }
 
 // FileOutputStream
-
-void frost$io$FileOutputStream$write$frost$core$UInt8(FileOutputStream* self, uint8_t ch) {
-    fputc(ch, self->file);
+Error* frost$io$FileOutputStream$write$frost$core$UInt8$R$frost$core$Error$Q(FileOutputStream* self,
+        uint8_t ch) {
+    if (fputc(ch, self->file) == EOF) {
+        return frostError(frostNewString("error writing to stream", NULL));
+    }
+    return NULL;
 }
 
-void frost$io$FileOutputStream$write$frost$unsafe$Pointer$LTfrost$core$UInt8$GT$frost$core$Int64(
+Error* frost$io$FileOutputStream$write$frost$unsafe$Pointer$LTfrost$core$UInt8$GT$frost$core$Int64$R$frost$core$Error$Q(
         FileOutputStream* self, void* src, int64_t count) {
-    fwrite(src, 1, count, self->file);
+    if (fwrite(src, 1, count, self->file) != count) {
+        return frostError(frostNewString("error writing to stream", NULL));
+    }
+    return NULL;
 }
 
-void frost$io$FileOutputStream$close(FileOutputStream* self) {
-    fclose(self->file);
+Error* frost$io$FileOutputStream$close$R$frost$core$Error$Q(FileOutputStream* self) {
     self->closeOnCleanup.value = false;
+    if (fclose(self->file)) {
+        return frostError(frostFileErrorMessage("error closing stream", NULL));
+    }
+    return NULL;
 }
 
-void frost$io$FileOutputStream$flush(FileOutputStream* self) {
-    fflush(self->file);
+Error* frost$io$FileOutputStream$flush$R$frost$core$Error$Q(FileOutputStream* self) {
+    if (fflush(self->file)) {
+        return frostError(frostFileErrorMessage("error flushing stream", NULL));
+    }
+    return NULL;
 }
 
-void frost$io$File$rename$frost$core$String(File* src, String* dst) {
+Error* frost$io$File$rename$frost$core$String(File* src, String* dst) {
     char* srcPath = frostGetCString(src->path);
     char* dstPath = frostGetCString(dst);
-    rename(srcPath, dstPath);
+    if (rename(srcPath, dstPath)) {
+        return frostError(frostFileErrorMessage("error renaming file", srcPath));
+    }
+    return NULL;
 }
 

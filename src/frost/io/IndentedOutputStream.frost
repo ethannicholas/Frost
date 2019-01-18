@@ -46,44 +46,56 @@ class IndentedOutputStream : OutputStream {
     }
 
     @override
-    method write(b:UInt8) {
-        if b = 10 {
-            atLineStart := true
+    method write(b:UInt8):Error? {
+        try {
+            if b = 10 {
+                atLineStart := true
+            }
+            else {
+                indentIfNeeded()
+            }
+            out.write(b)
         }
-        else {
-            indentIfNeeded()
+        fail(error) {
+            return error
         }
-        out.write(b)
     }
 
     @override
-    method write(ptr:Pointer<UInt8>, count:Int) {
-        var start := 0
-        var current := start
-        while current < count {
-            if ptr[current] = 10 {
-                out.write(ptr.offset(start), current - start)
-                start := current
-                atLineStart := true
+    method write(ptr:Pointer<UInt8>, count:Int):Error? {
+        try {
+            var start := 0
+            var current := start
+            while current < count {
+                if ptr[current] = 10 {
+                    out.write(ptr.offset(start), current - start)
+                    start := current
+                    atLineStart := true
+                }
+                else if atLineStart {
+                    out.write(ptr.offset(start), current - start)
+                    start := current
+                    indentIfNeeded()
+                }
+                current += 1
             }
-            else if atLineStart {
-                out.write(ptr.offset(start), current - start)
-                start := current
-                indentIfNeeded()
-            }
-            current += 1
+            out.write(ptr.offset(start), current - start)
+            return null
         }
-        out.write(ptr.offset(start), current - start)
+        fail(error) {
+            return error
+        }
     }
     
     @private
-    method indentIfNeeded() {
+    method indentIfNeeded():Error? {
         if atLineStart {
             atLineStart := false
             if indent._length != indentSize * level {
                 indent := " " * (indentSize * level)
             }
-            print(indent)
+            return print(indent)
         }
+        return null
     }
 }

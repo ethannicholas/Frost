@@ -25,17 +25,17 @@ class FileOutputStream : OutputStream {
 
     @override
     @external
-    method close()
+    method close():Error?
 
     @override
     @external
-    method write(value:UInt8)
+    method write(value:UInt8):Error?
 
     @override
     @external
-    method write(ptr:Pointer<UInt8>, size:Int)
+    method write(ptr:Pointer<UInt8>, size:Int):Error?
 
     @override
     @external
-    method flush()
+    method flush():Error?
 }

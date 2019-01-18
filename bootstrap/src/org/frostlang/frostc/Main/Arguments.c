@@ -9,6 +9,7 @@
 #include "frost/collections/CollectionView.h"
 #include "frost/io/Console.h"
 #include "frost/io/OutputStream.h"
+#include "frost/core/Error.h"
 #include "frost/core/UInt8.h"
 #include "frost/core/System.h"
 
@@ -22,8 +23,8 @@ typedef frost$core$Object* (*$fn42)(frost$collections$ListView*, frost$core$Int6
 typedef frost$core$Bit (*$fn45)(org$frostlang$frostc$Main$Arguments*);
 typedef frost$core$Int64 (*$fn59)(frost$collections$CollectionView*);
 typedef frost$core$Object* (*$fn68)(frost$collections$ListView*, frost$core$Int64);
-typedef void (*$fn76)(frost$io$OutputStream*, frost$core$String*);
-typedef frost$core$String* (*$fn79)(org$frostlang$frostc$Main$Arguments*);
+typedef frost$core$Error* (*$fn76)(frost$io$OutputStream*, frost$core$String*);
+typedef frost$core$String* (*$fn80)(org$frostlang$frostc$Main$Arguments*);
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x4d\x61\x69\x6e\x2e\x41\x72\x67\x75\x6d\x65\x6e\x74\x73", 35, 4342876122100458845, NULL };
 static frost$core$String $s22 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x4d\x61\x69\x6e\x2e\x66\x72\x6f\x73\x74", 10, -7176460585918517682, NULL };
@@ -147,7 +148,9 @@ frost$core$String* $tmp70 = frost$core$String$$ADD$frost$core$String$R$frost$cor
 frost$core$String* $tmp72 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp70, &$s73);
 frost$core$String* $tmp74 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp51, $tmp72);
 $fn76 $tmp75 = ($fn76) $tmp48->$class->vtable[19];
-$tmp75($tmp48, $tmp74);
+frost$core$Error* $tmp77 = $tmp75($tmp48, $tmp74);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp77));
+// unreffing REF($29:frost.core.Error?)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp74));
 // unreffing REF($27:frost.core.String)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp72));
@@ -163,26 +166,26 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp49));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp48));
 // unreffing REF($6:frost.io.OutputStream)
 // line 54
-frost$core$UInt8 $tmp77 = (frost$core$UInt8) {1};
-frost$core$System$exit$frost$core$UInt8($tmp77);
+frost$core$UInt8 $tmp78 = (frost$core$UInt8) {1};
+frost$core$System$exit$frost$core$UInt8($tmp78);
 goto block2;
 block2:;
 // line 56
-$fn79 $tmp78 = ($fn79) param0->$class->vtable[3];
-frost$core$String* $tmp80 = $tmp78(param0);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp80));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp80));
-// unreffing REF($57:frost.core.String)
-return $tmp80;
+$fn80 $tmp79 = ($fn80) param0->$class->vtable[3];
+frost$core$String* $tmp81 = $tmp79(param0);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp81));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp81));
+// unreffing REF($60:frost.core.String)
+return $tmp81;
 
 }
 void org$frostlang$frostc$Main$Arguments$cleanup(org$frostlang$frostc$Main$Arguments* param0) {
 
 // line 27
 frost$core$Object$cleanup(((frost$core$Object*) param0));
-frost$collections$ListView** $tmp81 = &param0->args;
-frost$collections$ListView* $tmp82 = *$tmp81;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp82));
+frost$collections$ListView** $tmp82 = &param0->args;
+frost$collections$ListView* $tmp83 = *$tmp82;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp83));
 return;
 
 }

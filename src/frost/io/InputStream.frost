@@ -43,7 +43,7 @@ class InputStream {
 
     ================================================================================================
     Reads and returns a single byte. Blocks until at least one byte is available for reading, or
-    returns `null` if the end of the stream has been reached.
+    returns `null` if the end of the stream has been reached or in the event of an error.
     ================================================================================================
     @abstract
     method read():UInt8?
@@ -172,7 +172,7 @@ class InputStream {
     ================================================================================================
     Reads up to `max` bytes from this stream into a buffer and returns the number of bytes actually
     read. Blocks until at least one byte is available for reading, or returns `0` if the end of the
-    stream has been reached.
+    stream has been reached or if an error occurs.
     ================================================================================================
     @post(@return >= 0)
     method read(buffer:Pointer<UInt8>, max:Int):Int {
@@ -251,6 +251,7 @@ class InputStream {
     ================================================================================================
     Reads a single line of text from this stream and returns it as a `String`. Either `"\n"` or
     `"\r\n"` is accepted as a valid line ending. The line ending is not part of the returned string.
+    Returns `null` if an error occurs while reading.
     ================================================================================================
     method readLine():String? {
         def result := MutableString()
@@ -275,9 +276,10 @@ class InputStream {
 
     ================================================================================================
     Continually reads from this stream, sending all of the data read to an [OutputStream]. Returns
-    when the end of the input is reached (which may be "never" for some `InputStream`s).
+    the number of bytes transferred when the end of the input is reached (which may be "never" for
+    some `InputStream`s).
     ================================================================================================
-    method sendTo(out:OutputStream):Int {
+    method sendTo(out:OutputStream):Maybe<Int> {
         var total := 0
         constant BUFFER_SIZE := 2048
         def buffer := Pointer<UInt8>.alloc(BUFFER_SIZE)
@@ -287,19 +289,23 @@ class InputStream {
                 break
             }
             total += count
-            out.write(buffer, count)
+            def error := out.write(buffer, count)
+            if error !== null {
+                return Maybe<Int>.ERROR(error)
+            }
         }
         buffer.destroy()
-        return total
+        return Maybe<Int>.SUCCESS(total)
     }
 
     ================================================================================================
-    Returns an `Iterator` which reads from this string one line at a time.
+    Returns an `Iterator` which reads from this string one line at a time. The `Iterator` will
+    report that it is finished either when the end of the stream is reached or an error occurs.
     ================================================================================================
     function lines():Iterator<String> {
         return LineIterator(self)
     }
 
-    method close() {
+    method close():Error? {
     }
 }

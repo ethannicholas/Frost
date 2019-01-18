@@ -29,13 +29,15 @@ class MemoryOutputStream : OutputStream {
     }
 
     @override
-    method write(i:UInt8) {
+    method write(i:UInt8):Error? {
         data.append(Char8(i))
+        return null
     }
 
     @override
-    method write(ptr:Pointer<UInt8>, count:Int) {
+    method write(ptr:Pointer<UInt8>, count:Int):Error? {
         data.append(ptr->Pointer<Char8>, count)
+        return null
     }
 
     ================================================================================================
