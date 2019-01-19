@@ -1,0 +1,74 @@
+package org.frostlang.frostc.expression
+
+uses org.frostlang.frostc.ASTNode
+uses org.frostlang.frostc.Compiler
+uses org.frostlang.frostc.Compiler.AutoContext
+uses org.frostlang.frostc.Compiler.AutoUnrefs
+uses org.frostlang.frostc.Compiler.AutoScope
+uses org.frostlang.frostc.Compiler.EnclosingContext
+uses org.frostlang.frostc.Compiler.TypeContext
+uses org.frostlang.frostc.FixedArray
+uses org.frostlang.frostc.IR
+uses org.frostlang.frostc.Position
+uses org.frostlang.frostc.Type
+uses org.frostlang.frostc.Variable
+uses org.frostlang.frostc.parser.Token
+uses org.frostlang.frostc.statement.Assert
+
+class Postfix {
+    @class
+    method compile(compiler:Compiler, position:Position, operand:ASTNode, op:Token.Kind,
+            type:TypeContext):IR.Value? {
+        def cost := compiler.coercionCost(operand, type)
+        if cost == null {
+            return null
+        }
+        def exprType := cost.first
+        if exprType = Type.Error().nullable() | (exprType.typeKind = Type.Kind.GENERIC &
+                exprType.subtypes[0].name = "frost.core.Maybe") {
+            def ir := compiler.ir
+            def failTarget := ir.newBlock("try fail")
+            def endBlock := ir.newBlock("try end")
+            def errorName := "error"
+            def errorVar := Variable(position, Variable.Kind.DEF, errorName, Type.Error(),
+                    Variable.Storage.LOCAL(ir.locals.count))
+            errorVar.owner := compiler.currentMethod[0]
+            if compiler.isRefCounted(errorVar.type) {
+                ir.add(IR.Statement.STORE(position, IR.Value.NULL(errorVar.type.nullable()),
+                        IR.Value.LOCAL(ir.locals.count, errorVar.type)))
+                compiler.enclosingContexts.push(EnclosingContext.VARIABLE_SCOPE(errorVar))
+            }
+            ir.locals.add(errorVar.type)
+            def result:IR.Value?
+            {
+                def context := Compiler.EnclosingContext.TRY_SCOPE(failTarget, errorVar)
+                compiler.enclosingContexts.push(context)
+                result := compiler.compileExpression(operand, type)
+                for i in 0 .. compiler.enclosingContexts.count {
+                    if compiler.enclosingContexts[i] == context {
+                        compiler.enclosingContexts.removeIndex(i)
+                        break
+                    }
+                }
+            }
+            ir.add(IR.Statement.BRANCH(position, endBlock))
+            ir.setCurrentBlock(failTarget)
+            {
+                def failScope := AutoScope(compiler)
+                if errorVar !== null {
+                    compiler.symbolTable.add(errorVar)
+                }
+                Assert.compileFail(compiler, position, ASTNode.CALL(position, ASTNode.DOT(position,
+                        ASTNode.IDENTIFIER(position, errorName), "convert"), FixedArray<ASTNode>()))
+            }
+            if !ir.currentBlockFinished {
+                ir.add(IR.Statement.BRANCH(position, endBlock))
+            }
+            ir.setCurrentBlock(endBlock)
+            return result
+        }
+        else {
+            assert false
+        }
+    }
+}

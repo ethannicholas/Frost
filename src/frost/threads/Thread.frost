@@ -22,6 +22,9 @@ continues to access a shared object, [Lock] must be used to synchronize access.
 @final
 class Thread : Immutable {
     @private
+    def nativeHandle:Int
+    
+    @private
     init() {
     }
 
@@ -70,17 +73,11 @@ class Thread : Immutable {
         return result
     }
 
--*  
-    not 100% sure about this API, just capturing my current thinking
-
     ================================================================================================
-    Creates and starts a new thread which executes the specified method, posting its result to a
-    `ResultQueue`.
+    Waits for this thread to exit.
     ================================================================================================
-    @class
-    method start<T>(run:()=&>(T), resultQueue:ResultQueue<T>):Thread {
-    }
-*-
+    @external
+    method waitFor()
 
     ================================================================================================
     Returns the number of threads that generally leads to best performance on the current system.

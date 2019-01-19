@@ -13,6 +13,7 @@ uses org.frostlang.frostc.expression.Dot
 uses org.frostlang.frostc.expression.Identifier
 uses org.frostlang.frostc.expression.IntLiteral
 uses org.frostlang.frostc.expression.Or
+uses org.frostlang.frostc.expression.Postfix
 uses org.frostlang.frostc.lvalue.ChoiceFieldLValue
 uses org.frostlang.frostc.lvalue.FieldLValue
 uses org.frostlang.frostc.lvalue.IndexLValue
@@ -3089,6 +3090,10 @@ class Compiler {
                 }
                 return null
             }
+            when ASTNode.POSTFIX(position, operand, op) {
+                assert op = Token.Kind.NOT
+                return coercionCost(operand, target)
+            }
             when ASTNode.PREFIX(position, op, operand) {
                 -- need to special-case things like -128, which can fit into an Int8 despite 128 not
                 -- doing so
@@ -3185,6 +3190,23 @@ class Compiler {
             coercionCosts[key] := Pair<Type, Int>(Type.Void(), -1)
         }
         return result
+    }
+
+    method coercionCost(expr:ASTNode, target:TypeContext):Pair<Type, Int>? {
+        match target {
+            when TypeContext.UNSPECIFIED, TypeContext.NON_VOID {
+                return coercionCost(expr, Type.Any())
+            }
+            when TypeContext.TYPE(type) {
+                return coercionCost(expr, type)
+            }
+            when TypeContext.IMMUTABLE {
+                return coercionCost(expr, Type.Immutable())
+            }
+            otherwise {
+                assert false
+            }
+        }
     }
 
     function requiredSize(value:Int64):Int {
@@ -4695,6 +4717,9 @@ class Compiler {
             when ASTNode.NULL(position) {
                 return compileNull(position, type)
             }
+            when ASTNode.POSTFIX(position, operand, op) {
+                return Postfix.compile(self, position, operand, op, type)
+            }
             when ASTNode.PREFIX(position, op, operand) {
                 return compilePrefix(position, op, operand, type)
             }
@@ -5034,6 +5059,9 @@ class Compiler {
             }
             when ASTNode.METHOD(position, _, _, kind, name, _, parameters, returnType, body) {
                 InnerMethod.compile(self, position, kind, name, parameters, returnType, body)
+            }
+            when ASTNode.POSTFIX(position, operand, op) {
+                Postfix.compile(self, position, operand, op, TypeContext.UNSPECIFIED)
             }
             when ASTNode.RETURN(position, value) {
                 Return.compile(self, position, value)

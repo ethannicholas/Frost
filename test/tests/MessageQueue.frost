@@ -1,0 +1,81 @@
+-- Simple simulation of a lengthy computation. We have a Producer produce data for each Consumer to
+-- operate on. Each Consumer takes a long time to calculate its result, and then posts the results
+-- to a Destination which aggregates and sorts the data.
+
+class Producer : Immutable {
+    constant MAX := 1000
+    def queue:MessageQueue<Int>
+    
+    init(queue:MessageQueue<Int>) {
+        self.queue := queue
+    }
+    
+    method start() {
+        Thread.start(method() {
+            for i in 1 ... Producer.MAX {
+                self.queue.post(i)
+            }
+        })
+    }
+}
+
+class Consumer : Immutable {
+    @private
+    def sourceQueue:MessageQueue<Int>
+    
+    @private
+    def destQueue:MessageQueue<Int>
+    
+    init(sourceQueue:MessageQueue<Int>, destQueue:MessageQueue<Int>) {
+        self.sourceQueue := sourceQueue
+        self.destQueue := destQueue
+    }
+
+    method start() {
+        Thread.start(method() {
+            loop {
+                def msg := self.sourceQueue.getMessage()
+                Thread.sleep(1000)
+                self.destQueue.post(msg * msg)
+            }
+        }, false)
+    }
+}
+
+class Destination : Immutable {
+    @private
+    def destQueue:MessageQueue<Int>
+    
+    init(destQueue:MessageQueue<Int>) {
+        self.destQueue := destQueue
+    }
+    
+    method start() {
+        Thread.start(method() {
+            def results := Array<Int>()
+            while results.count < Producer.MAX {
+                def msg := self.destQueue.getMessage()
+                results.add(msg)
+            }
+            results.sortInPlace(Int.>)
+            results.apply(Console.printLine)
+        })
+    }
+}
+
+class Test {
+    constant THREADS := 500
+
+    @class
+    method main() {
+        def sourceQueue := MessageQueue<Int>()
+        def destQueue := MessageQueue<Int>()
+        def p := Producer(sourceQueue)
+        def d := Destination(destQueue)
+        for i in 1 ... THREADS {
+            Consumer(sourceQueue, destQueue).start()
+        }
+        p.start()
+        d.start()
+    }
+}

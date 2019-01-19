@@ -1,0 +1,61 @@
+method interpret(code:String) {
+    def tape:Array<Int8> := [0]
+    var pointer := 0
+    var instr := 0
+    while instr < code.length {
+        match code[instr] {
+            when ">" {
+                pointer += 1
+                while pointer >= tape.count {
+                    tape.add(0)
+                }
+            }
+            when "<" { pointer -= 1 }
+            when "+" { tape[pointer] += 1 }
+            when "-" { tape[pointer] -= 1 }
+            when "." { Console.print(Char8(tape[pointer].convert())) }
+            when "," {
+                def c := Console.read()
+                if c !== null {
+                    tape[pointer] := c.convert()
+                }
+                else {
+                    tape[pointer] := 0
+                }
+            }
+            when "[" {
+                if tape[pointer] = 0 {
+                    var l := 1
+                    while l > 0 {
+                        instr += 1
+                        if code[instr] = "]" {
+                            l -= 1
+                        }
+                        else if code[instr] = "[" {
+                            l += 1
+                        }
+                    }
+                }
+            }
+            when "]" {
+                if tape[pointer] != 0 {
+                    var l := 1
+                    while l > 0 {
+                        instr -= 1
+                        if code[instr] = "[" {
+                            l -= 1
+                        }
+                        else if code[instr] = "]" {
+                            l += 1
+                        }
+                    }
+                }
+            }
+        }
+        instr += 1
+    }
+}
+
+method main() {
+    interpret(Console.inputStream().readFully())
+}

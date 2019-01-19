@@ -1007,16 +1007,16 @@ class Parser {
     }
 
     ================================================================================================
-    callExpression = term ((LPAREN (expression (COMMA expression)*)? RPAREN |
+    postfixExpression = term ((LPAREN (expression (COMMA expression)*)? RPAREN |
             DOT (methodName | INIT) typeSpecifiers? | LBRACKET expression RBRACKET)* |
-            (CAST | INSTANCEOF | NINSTANCEOF) type)* |
+            (CAST | INSTANCEOF | NINSTANCEOF) type)* | NOT
             (<if result so far is a valid class name> LT type (COMMA type)* GT)?
     Note there is a great deal of special handling to deal with class names, due to ambiguities
     between generic parameters and comparison expressions, e.g. foo(X < Y, Z > ... could be either a
     generic type X<Y, Z> or two comparison expressions X < Y and Z > <whatever the next token is>.
     We can't disambiguate this until we see the next token.
     ================================================================================================
-    method callExpression():ASTNode? {
+    method postfixExpression():ASTNode? {
         var result := term()
         if result == null {
             return null
@@ -1093,6 +1093,9 @@ class Parser {
                         return null
                     }
                     result := ASTNode.BINARY(token.position, result, Token.Kind.CAST, target)
+                }
+                when Token.Kind.NOT {
+                    result := ASTNode.POSTFIX(token.position, result, Token.Kind.NOT)
                 }
                 when Token.Kind.LT {
                     -- this is where we need to be careful. First, we make sure it makes sense to
@@ -1195,10 +1198,10 @@ class Parser {
     }
 
     ================================================================================================
-    exponentExression = callExpression (POW callExpression)*
+    exponentExression = postfixExpression (POW postfixExpression)*
     ================================================================================================
     method exponentExpression():ASTNode? {
-        var result := callExpression()
+        var result := postfixExpression()
         if result == null {
             return null
         }
@@ -1207,7 +1210,7 @@ class Parser {
             if op == null {
                 break
             }
-            def next := callExpression()
+            def next := postfixExpression()
             if next == null {
                 return null
             }

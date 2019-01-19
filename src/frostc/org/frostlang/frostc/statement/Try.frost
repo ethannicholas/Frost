@@ -17,8 +17,8 @@ class Try {
             failBlock:FixedArray<ASTNode>) {
         def scope := AutoScope(compiler)
         def ir := compiler.ir
-        def failTarget := ir.newBlock("loop body")
-        def endBlock := ir.newBlock("loop end")
+        def failTarget := ir.newBlock("try fail")
+        def endBlock := ir.newBlock("try end")
         def errorVar:Variable?
         if error !== null {
             match error {

@@ -143,6 +143,13 @@ typedef struct Process {
     int64_t stderr;
 } Process;
 
+typedef struct Thread {
+    Class* cl;
+    int32_t refcnt;
+    // FIXME unsafe assumption that void* and int64_t are the same size
+    void* nativeHandle;
+} Thread;
+
 typedef struct Lock {
     Class* cl;
     int32_t refcnt;
@@ -235,6 +242,7 @@ Object* frost = NULL;
 static bool refErrorReporting = true;
 
 #if DEBUG_ALLOCS
+static pthread_mutex_t traceMutex = PTHREAD_MUTEX_INITIALIZER;
 bool debugAllocs = true;
 #endif
 
@@ -253,7 +261,7 @@ void _frostAssert(int i, int line) {
 #define frostAssert(i) _frostAssert(i, __LINE__)
 
 void* frostAlloc(size_t size) {
-    allocations++;
+    __atomic_add_fetch(&allocations, 1, __ATOMIC_RELAXED);
     void* result = calloc(size, 1);
     frostAssert(result != NULL || size == 0);
     return result;
@@ -275,7 +283,9 @@ void* frostObjectAlloc(size_t size, Class* cl) {
             frost->refcnt = 1;
             frost$core$Frost$init(frost);
         }
+        pthread_mutex_lock(&traceMutex);
         frost$core$Frost$countAllocation$frost$core$Class(frost, cl);
+        pthread_mutex_unlock(&traceMutex);
         debugAllocs = true;
     }
 #endif
@@ -295,7 +305,7 @@ void* frostRealloc(void* ptr, size_t oldSize, size_t newSize) {
 }
 
 void frostFree(void* ptr) {
-    allocations--;
+    __atomic_sub_fetch(&allocations, 1, __ATOMIC_RELAXED);
 #if !DEBUG_ALLOCS
 //    free(ptr);
 #endif
@@ -305,7 +315,9 @@ void frostObjectFree(Object* o) {
 #if DEBUG_ALLOCS
     if (debugAllocs) {
         debugAllocs = false;
+        pthread_mutex_lock(&traceMutex);
         frost$core$Frost$countDeallocation$frost$core$Class(frost, o->cl);
+        pthread_mutex_unlock(&traceMutex);
         debugAllocs = true;
     }
 #endif
@@ -616,8 +628,10 @@ void frost$core$Frost$trace$frost$core$String(String* s) {
 }
 
 void frost$core$Frost$ref$frost$core$Object$Q(Object* o) {
+    // should be ok to perform load without locking - if it's NO_REFCNT, nobody should be changing
+    // it anyway
     if (o && o->refcnt != NO_REFCNT) {
-        int newCount = __atomic_add_fetch(&o->refcnt, 1, __ATOMIC_RELAXED <= 1);
+        int newCount = __atomic_add_fetch(&o->refcnt, 1, __ATOMIC_RELAXED);
         if (newCount <= 1 && refErrorReporting) {
             printf("internal error: ref %p with refcnt = %d\n", o, newCount - 1);
             printf("    class: %s\n", frostGetCString(o->cl->name));
@@ -627,6 +641,8 @@ void frost$core$Frost$ref$frost$core$Object$Q(Object* o) {
 }
 
 void frost$core$Frost$unref$frost$core$Object$Q(Object* o) {
+    // should be ok to perform load without locking - if it's NO_REFCNT, nobody should be changing
+    // it anyway
     if (o && o->refcnt != NO_REFCNT) {
         int newCount = __atomic_sub_fetch(&o->refcnt, 1, __ATOMIC_RELAXED);
         if (newCount < 0 && refErrorReporting) {
@@ -757,7 +773,7 @@ Matcher* frost$core$RegularExpression$matcher$frost$core$String$R$frost$core$Mat
 
 void frost$core$RegularExpression$destroy(RegularExpression* self) {
     uregex_close(self->nativeHandle);
-    --allocations;
+    __atomic_sub_fetch(&allocations, 1, __ATOMIC_RELAXED);
 }
 
 void frost$core$Matcher$matches$R$frost$core$Bit(Bit* result, Matcher* self) {
@@ -821,7 +837,7 @@ String* frost$core$Matcher$group$frost$core$Int64$R$frost$core$String$Q(Matcher*
 
 void frost$core$Matcher$destroy(Matcher* self) {
     uregex_close(self->nativeHandle);
-    --allocations;
+    __atomic_sub_fetch(&allocations, 1, __ATOMIC_RELAXED);
 }
 
 // Thread
@@ -832,11 +848,6 @@ typedef struct ThreadInfo {
 } ThreadInfo;
 
 void frostThreadEntry(ThreadInfo* threadInfo) {
-    if (threadInfo->preventsExit.value) {
-        pthread_mutex_lock(&preventsExitThreadsMutex);
-        preventsExitThreads++;
-        pthread_mutex_unlock(&preventsExitThreadsMutex);
-    }
     if (threadInfo->run->target) {
         ((void(*)(Object*)) threadInfo->run->pointer)(threadInfo->run->target);
     }
@@ -848,30 +859,45 @@ void frostThreadEntry(ThreadInfo* threadInfo) {
     if (threadInfo->preventsExit.value) {
         pthread_mutex_lock(&preventsExitThreadsMutex);
         preventsExitThreads--;
-        if (preventsExitThreads == 0)
+        if (preventsExitThreads == 0) {
             pthread_cond_signal(&preventsExitThreadsVar);
+        }
         pthread_mutex_unlock(&preventsExitThreadsMutex);
     }
 }
 
-void frost$threads$Thread$run$$LP$RP$EQ$AM$GT$ST$LP$RP$builtin_bit(Object* thread, Method* run,
+void frost$threads$Thread$run$$LP$RP$EQ$AM$GT$LP$RP$builtin_bit(Thread* thread, Method* run,
         Bit preventsExit) {
+    if (!preventsExit.value) {
+        // if threads are still running on exit, then naturally objects will still be in memory on
+        // exit, so don't complain
+        refErrorReporting = false;
+    }
     pthread_t threadId;
     ThreadInfo* threadInfo = frostAlloc(sizeof(ThreadInfo));
     frost$core$Frost$ref$frost$core$Object$Q((Object*) run);
     threadInfo->run = run;
     threadInfo->preventsExit = preventsExit;
+    if (threadInfo->preventsExit.value) {
+        pthread_mutex_lock(&preventsExitThreadsMutex);
+        preventsExitThreads++;
+        pthread_mutex_unlock(&preventsExitThreadsMutex);
+    }
     pthread_create(&threadId, NULL, (void* (*)()) &frostThreadEntry, threadInfo);
+    // If there's a system where this isn't true, we can easily use the nativeHandler as a pointer
+    // to the pthread_t instead when the sizes don't match. For now, I'm just going to be lazy.
+    frostAssert(sizeof(threadId) == sizeof(thread->nativeHandle));
+    thread->nativeHandle = threadId;
 }
 
-void frost$threads$Thread$run$$LP$RP$EQ$AM$GT$LP$RP$builtin_bit(Object* thread, Method* run,
+void frost$threads$Thread$run$$LP$RP$EQ$AM$GT$ST$LP$RP$builtin_bit(Thread* thread, Method* run,
         Bit preventsExit) {
-    pthread_t threadId;
-    ThreadInfo* threadInfo = frostAlloc(sizeof(ThreadInfo));
-    frost$core$Frost$ref$frost$core$Object$Q((Object*) run);
-    threadInfo->run = run;
-    threadInfo->preventsExit = preventsExit;
-    pthread_create(&threadId, NULL, (void* (*)()) &frostThreadEntry, threadInfo);
+    frost$threads$Thread$run$$LP$RP$EQ$AM$GT$LP$RP$builtin_bit(thread, run, preventsExit);
+}
+
+void frost$threads$Thread$waitFor(Thread* thread) {
+    frostAssert(sizeof(pthread_t) == sizeof(thread->nativeHandle));
+    pthread_join((pthread_t) thread->nativeHandle, NULL);
 }
 
 void frost$threads$Thread$sleep$frost$core$Int64(int64_t millis) {

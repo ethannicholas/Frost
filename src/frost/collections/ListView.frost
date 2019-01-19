@@ -181,6 +181,7 @@ interface ListView<T> : CollectionView<T> {
     ================================================================================================
     @default
     @priority(1) -- FIXME I don't think I should need all these @priority annotations...
+    -- FIXME need an annotation for having to use the return value
     function filter(predicate:(T)=>(Bit)):ListView<T> {
         def result := Array<T>()
         for v in self {
@@ -192,6 +193,7 @@ interface ListView<T> : CollectionView<T> {
     }
 
     @default
+    -- FIXME need an annotation for having to use the return value
     method filter(predicate:(T)=&>(Bit)):ListView<T> {
         def result := Array<T>()
         for v in self {
@@ -237,6 +239,7 @@ interface ListView<T> : CollectionView<T> {
     during the sort.
     ================================================================================================
     -- FIXME write a better sort, create stableSort
+    -- FIXME need an annotation for having to use the return value
     @default
     method sort(greater:(T, T)=>(Bit)):ListView<T> {
         def result := Array<T>(self)

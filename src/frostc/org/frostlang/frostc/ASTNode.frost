@@ -65,6 +65,7 @@ choice ASTNode {
     NULLABLE_TYPE          (Position, ASTNode -* type *-)
     PACKAGE                (Position, String)
     PARAMETER              (Position, String, ASTNode -* type *-)
+    POSTFIX                (Position, ASTNode, Token.Kind)
     PREFIX                 (Position, Token.Kind, ASTNode)
     RANGE                  (Position, ASTNode?, Bit, ASTNode?, ASTNode?)
     REAL                   (Position, Real64)
@@ -193,6 +194,9 @@ choice ASTNode {
                 return position
             }
             when PARAMETER(position, _, _) {
+                return position
+            }
+            when POSTFIX(position, _, _) {
                 return position
             }
             when PREFIX(position, _, _) {
@@ -516,6 +520,9 @@ choice ASTNode {
             }
             when PARAMETER(_, name, type) {
                 return "\{name}:\{type}"
+            }
+            when POSTFIX(_, operand, op) {
+                return "\{operand}\{op}"
             }
             when PREFIX(_, kind, base) {
                 return "\{kind}\{base}"

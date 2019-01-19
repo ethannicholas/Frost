@@ -55,6 +55,14 @@ class Stack<T> : Iterable<T> {
         return result
     }
 
+    method insert(depth:Int, value:T) {
+        contents.insert(contents.count - 1 - depth, value)
+    }
+
+    method removeIndex(depth:Int):T {
+        return contents.removeIndex(contents.count - 1 - depth)
+    }
+
     ================================================================================================
     Returns the value at the given depth in the stack. The top element (most recently pushed) is
     element 0, and the bottom element (earliest pushed) is element `count - 1`.
