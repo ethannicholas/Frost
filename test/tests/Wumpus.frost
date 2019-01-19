@@ -336,7 +336,7 @@ class Wumpus {
             Console.printLine()
             if command.startsWith("m") {
                 def roomString := command[command.next(command.start)..]
-                def label := roomString.convert()->Int?
+                def label := roomString.asInt64
                 if label !== null & label >= 1 & label <= rooms.count {
                     var room := getRoom(label)
                     if currentRoom.hasExitTo(room) {
@@ -359,7 +359,7 @@ class Wumpus {
                 def roomNumbers := Array<Int>()
                 for i in 0 .. roomStrings.count {
                     def label := roomStrings[i]
-                    def room := label.convert()->Int?
+                    def room := label.asInt64
                     if room == null | room < 1 | room > ROOMS {
                         Console.printLine("'\{label}' is not a valid room number")
                         continue main

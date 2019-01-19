@@ -2,7 +2,7 @@ method main() {
     Console.printLine(Int8[1...10])
     Console.printLine(UInt[1...10 by 3])
     Console.printLine(Int[1...10].fold(Int.+))
-    Console.printLine(UInt8[1...10].fold((a, b)=>(a + b).convert()->UInt8)) -- FIXME shouldn't need '->UInt8' here
+    Console.printLine(UInt8[1...10].fold((a, b)=>(a + b).asUInt8))
     Console.printLine(Int8[-10...10 by 2])
     Console.printLine(Int16[10...1 by -1])
     Console.printLine(Int16[10..1 by -1])

@@ -43,7 +43,7 @@ class UInt16List : ListView<UInt16> {
 
     @override
     function [](index:Int):UInt16 {
-        return (range.start + range.step * index.convert()->UInt16).convert()->UInt16
+        return (range.start + range.step * index.asUInt16).asUInt16
     }
 
     @override

@@ -6,7 +6,7 @@ class CharSet : Node {
     init(a:Char8, b:Char8) {
         super.init(CHARSET)
         def contents := Array<Char8>()
-        for c in a.convert()->Int8 ... b.convert()->Int8 {
+        for c in a.asInt8 ... b.asInt8 {
             contents.add(Char8(c.value->builtin_uint8))
         }
         self.contents := contents

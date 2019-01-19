@@ -58,7 +58,7 @@ class MemoryOutputStream : OutputStream {
 
     ================================================================================================
     Invalidates this stream and returns its contents as an immutable `String`. This is generally
-    preferable to [convert()], as it does not copy the stream's contents. Interacting in any way
+    preferable to [asString], as it does not copy the stream's contents. Interacting in any way
     with a `MemoryOutputStream` after `finish`ing it will cause precondition violations (or, if
     safety checks are disabled, undefined behavior).
     ================================================================================================

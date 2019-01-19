@@ -1260,7 +1260,7 @@ class LLVMCodeGenerator : CodeGenerator {
             -- LLVM has a bizarre representation of float. You still use a double, but must ensure
             -- that said double is exactly representable as a float. We convert through Real32 to
             -- ensure this.
-            def r32 := r64.convert()->frost.core.Real32.convert()->Real64
+            def r32 := r64.asReal32.asReal64
             return "0x\{Frost.floatToIntBits(r32):x}"
         }
         return "0x\{Frost.floatToIntBits(r64):x}"
@@ -1274,7 +1274,7 @@ class LLVMCodeGenerator : CodeGenerator {
             strings.print("\{chars} = private unnamed_addr constant \{charsType} [ ")
             var separator := ""
             for c in s.utf8 {
-                strings.print("\{separator}i8 \{c.convert()->Int8}")
+                strings.print("\{separator}i8 \{c.asInt8}")
                 separator := ", "
             }
             strings.printLine(" ]")

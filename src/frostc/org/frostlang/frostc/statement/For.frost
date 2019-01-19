@@ -112,9 +112,12 @@ class For {
 
         def step := compiler.compileExpression(ASTNode.INT(position, 1),
                 TypeContext.TYPE(indexType))
-        def stepComparison:IR.Value
+        def stepComparison:IR.Value?
         if step.type() = Type.Int64() {
             stepComparison := compiler.convert(step, Type.UInt64())
+            if stepComparison == null {
+                return
+            }
         }
         else {
             stepComparison := step

@@ -20,7 +20,7 @@ class Assert {
             def unrefs := AutoUnrefs(compiler)
             def args := Array<ASTNode>()
             args.add(ASTNode.STRING(position, compiler.currentClass[0].source.name))
-            args.add(ASTNode.INT(position, position.line.convert()))
+            args.add(ASTNode.INT(position, position.line.asUInt64))
             def frost := compiler.getClass(Type.Frost())
             def m:MethodDecl
             if msg !== null {

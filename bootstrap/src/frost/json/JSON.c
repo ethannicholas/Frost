@@ -277,7 +277,7 @@ frost$core$String$Index $tmp61 = *(&local6);
 frost$core$Bit $tmp62 = frost$core$Bit$init$builtin_bit(false);
 frost$core$Range$LTfrost$core$String$Index$GT $tmp63 = frost$core$Range$LTfrost$core$String$Index$GT$init$frost$core$String$Index$frost$core$String$Index$frost$core$Bit($tmp60, $tmp61, $tmp62);
 frost$core$String* $tmp64 = frost$core$String$substring$frost$core$Range$LTfrost$core$String$Index$GT$R$frost$core$String(param0, $tmp63);
-frost$core$Int64$nullable $tmp65 = frost$core$String$convert$R$frost$core$Int64$Q($tmp64);
+frost$core$Int64$nullable $tmp65 = frost$core$String$get_asInt64$R$frost$core$Int64$Q($tmp64);
 *(&local7) = $tmp65;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp64));
 // unreffing REF($122:frost.core.String)

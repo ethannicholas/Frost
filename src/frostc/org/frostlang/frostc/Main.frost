@@ -197,7 +197,7 @@ class Main {
                 }
                 when "-O" {
                     def level := args.next("a number from 0-3")
-                    optimizationLevel := level.convert()->Int
+                    optimizationLevel := level.asInt64
                     if optimizationLevel > 3 | optimizationLevel < 0 {
                         Console.printErrorLine("expected a number from 0-3 after '-O'")
                         System.exit(1)
@@ -205,7 +205,7 @@ class Main {
                 }
                 when "-S" {
                     def level := args.next("a number from 0-3")
-                    safetyLevel := level.convert()->Int
+                    safetyLevel := level.asInt64
                     if safetyLevel > 3 | safetyLevel < 0 {
                         Console.printErrorLine("expected a number from 0-3 after '-S'")
                         System.exit(1)

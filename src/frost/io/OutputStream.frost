@@ -39,12 +39,12 @@ class OutputStream {
     method write(value:UInt16):Error? {
         try {
             if byteOrder = ByteOrder.LITTLE_ENDIAN {
-                write(value.convert()->UInt8)
-                write((value >> 8).convert()->UInt8)
+                write(value.asUInt8)
+                write((value >> 8).asUInt8)
             }
             else {
-                write((value >> 8).convert()->UInt8)
-                write(value.convert()->UInt8)
+                write((value >> 8).asUInt8)
+                write(value.asUInt8)
             }
         }
         fail(error) {
@@ -61,12 +61,12 @@ class OutputStream {
     method write(value:UInt32):Error? {
         try {
             if byteOrder = ByteOrder.LITTLE_ENDIAN {
-                write(value.convert()->UInt16)
-                write((value >> 16).convert()->UInt16)
+                write(value.asUInt16)
+                write((value >> 16).asUInt16)
             }
             else {
-                write((value >> 16).convert()->UInt16)
-                write(value.convert()->UInt16)
+                write((value >> 16).asUInt16)
+                write(value.asUInt16)
             }
         }
         fail(error) {
@@ -83,12 +83,12 @@ class OutputStream {
     method write(value:UInt64):Error? {
         try {
             if byteOrder = ByteOrder.LITTLE_ENDIAN {
-                write(value.convert()->UInt32)
-                write((value >> 32).convert()->UInt32)
+                write(value.asUInt32)
+                write((value >> 32).asUInt32)
             }
             else {
-                write((value >> 32).convert()->UInt32)
-                write(value.convert()->UInt32)
+                write((value >> 32).asUInt32)
+                write(value.asUInt32)
             }
         }
         fail(error) {
@@ -103,7 +103,7 @@ class OutputStream {
     ================================================================================================
     @final
     method write(value:Int8):Error? {
-        return write(value.convert()->UInt8)
+        return write(value.asUInt8)
     }
 
     ================================================================================================
@@ -113,7 +113,7 @@ class OutputStream {
     @param value the value to write
     ================================================================================================
     method write(value:Int16):Error? {
-        return write(value.convert()->UInt16)
+        return write(value.asUInt16)
     }
 
     ================================================================================================
@@ -123,7 +123,7 @@ class OutputStream {
     @param value the value to write
     ================================================================================================
     method write(value:Int32):Error? {
-        return write(value.convert()->UInt32)
+        return write(value.asUInt32)
     }
 
     ================================================================================================
@@ -133,7 +133,7 @@ class OutputStream {
     @param value the value to write
     ================================================================================================
     method write(value:Int64):Error? {
-        return write(value.convert()->UInt64)
+        return write(value.asUInt64)
     }
 
     ================================================================================================

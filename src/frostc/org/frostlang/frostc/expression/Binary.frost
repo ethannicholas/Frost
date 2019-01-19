@@ -140,10 +140,10 @@ class Binary {
         -- ensure both values fit into a signed Int64
         match left {
             when ASTNode.INT(_, int) {
-                if int > Int64.MAX.convert() {
+                if int > Int64.MAX.asUInt64 {
                     return null
                 }
-                l := int.convert()
+                l := int.asInt64
             }
             otherwise {
                 return null
@@ -151,10 +151,10 @@ class Binary {
         }
         match right {
             when ASTNode.INT(_, int) {
-                if int > Int64.MAX.convert() {
+                if int > Int64.MAX.asUInt64 {
                     return null
                 }
-                r := int.convert()
+                r := int.asInt64
             }
             otherwise {
                 return null
@@ -162,15 +162,15 @@ class Binary {
         }
         match op {
             when Token.Kind.ADD {
-                def v := (l + r).convert()->UInt64
+                def v := (l + r).asUInt64
                 return ASTNode.INT(left.position(), v)
             }
             when Token.Kind.SUB {
-                def v := (l - r).convert()->UInt64
+                def v := (l - r).asUInt64
                 return ASTNode.INT(left.position(), v)
             }
             when Token.Kind.MUL {
-                def v := (l * r).convert()->UInt64
+                def v := (l * r).asUInt64
                 return ASTNode.INT(left.position(), v)
             }
             when Token.Kind.INTDIV {
@@ -178,7 +178,7 @@ class Binary {
                     compiler.error(right.position(), "division by 0")
                     return null
                 }
-                def v := (l // r).convert()->UInt64
+                def v := (l // r).asUInt64
                 return ASTNode.INT(left.position(), v)
             }
             when Token.Kind.REM {
@@ -186,7 +186,7 @@ class Binary {
                     compiler.error(right.position(), "division by 0")
                     return null
                 }
-                def v := (l % r).convert()->UInt64
+                def v := (l % r).asUInt64
                 return ASTNode.INT(left.position(), v)
             }
             when Token.Kind.EQ {
@@ -208,23 +208,23 @@ class Binary {
                 return ASTNode.BIT(left.position(), l >= r)
             }
             when Token.Kind.BITWISEAND {
-                def v := (l && r).convert()->UInt64
+                def v := (l && r).asUInt64
                 return ASTNode.INT(left.position(), v)
             }
             when Token.Kind.BITWISEOR {
-                def v := (l || r).convert()->UInt64
+                def v := (l || r).asUInt64
                 return ASTNode.INT(left.position(), v)
             }
             when Token.Kind.BITWISEXOR {
-                def v := (l ~~ r).convert()->UInt64
+                def v := (l ~~ r).asUInt64
                 return ASTNode.INT(left.position(), v)
             }
             when Token.Kind.SHIFTLEFT {
-                def v := (l << r).convert()->UInt64
+                def v := (l << r).asUInt64
                 return ASTNode.INT(left.position(), v)
             }
             when Token.Kind.SHIFTRIGHT {
-                def v := (l >> r).convert()->UInt64
+                def v := (l >> r).asUInt64
                 return ASTNode.INT(left.position(), v)
             }
         }

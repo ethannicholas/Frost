@@ -670,7 +670,7 @@ frost$json$JSON* $tmp236 = (frost$json$JSON*) frostObjectAlloc(32, (frost$core$C
 frost$core$Int64 $tmp237 = (frost$core$Int64) {0};
 org$frostlang$json$Token $tmp238 = *(&local0);
 frost$core$String* $tmp239 = frost$json$JSONParser$text$org$frostlang$json$Token$R$frost$core$String(param0, $tmp238);
-frost$core$Int64$nullable $tmp240 = frost$core$String$convert$R$frost$core$Int64$Q($tmp239);
+frost$core$Int64$nullable $tmp240 = frost$core$String$get_asInt64$R$frost$core$Int64$Q($tmp239);
 frost$core$Bit $tmp241 = frost$core$Bit$init$builtin_bit($tmp240.nonnull);
 bool $tmp242 = $tmp241.value;
 if ($tmp242) goto block10; else goto block11;
@@ -697,7 +697,7 @@ frost$json$JSON* $tmp249 = (frost$json$JSON*) frostObjectAlloc(32, (frost$core$C
 frost$core$Int64 $tmp250 = (frost$core$Int64) {1};
 org$frostlang$json$Token $tmp251 = *(&local0);
 frost$core$String* $tmp252 = frost$json$JSONParser$text$org$frostlang$json$Token$R$frost$core$String(param0, $tmp251);
-frost$core$Real64$nullable $tmp253 = frost$core$String$convert$R$frost$core$Real64$Q($tmp252);
+frost$core$Real64$nullable $tmp253 = frost$core$String$get_asReal64$R$frost$core$Real64$Q($tmp252);
 frost$core$Bit $tmp254 = frost$core$Bit$init$builtin_bit($tmp253.nonnull);
 bool $tmp255 = $tmp254.value;
 if ($tmp255) goto block14; else goto block15;

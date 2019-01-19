@@ -55,7 +55,7 @@ class InputStream {
     method read():UInt16? {
         def result:Int16 := read()
         if result !== null {
-            return result.convert()->UInt16
+            return result.asUInt16
         }
         return null
     }
@@ -67,7 +67,7 @@ class InputStream {
     method read():UInt32? {
         def result:Int32 := read()
         if result !== null {
-            return result.convert()->UInt32
+            return result.asUInt32
         }
         return null
     }
@@ -79,7 +79,7 @@ class InputStream {
     method read():UInt64? {
         def result:Int64 := read()
         if result !== null {
-            return result.convert()->UInt64
+            return result.asUInt64
         }
         return null
     }
@@ -90,7 +90,7 @@ class InputStream {
     method read():Int8? {
         def result:UInt8? := read()
         if result !== null {
-            return result.convert()->Int8
+            return result.asInt8
         }
         return null
     }
@@ -109,10 +109,10 @@ class InputStream {
             return null
         }
         if byteOrder = ByteOrder.LITTLE_ENDIAN {
-            return (b << 8 + a).convert()
+            return (b << 8 + a).asInt16
         }
         else {
-            return (a << 8 + b).convert()
+            return (a << 8 + b).asInt16
         }
     }
 

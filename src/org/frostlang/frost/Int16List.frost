@@ -53,7 +53,7 @@ class Int16List : ListView<Int16> {
 
     @override
     function [](index:Int):Int16 {
-        return (range.start + range.step * index.convert()->Int16).convert()->Int16
+        return (range.start + range.step * index.asInt16).asInt16
     }
 
     @override

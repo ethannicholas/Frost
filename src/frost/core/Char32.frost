@@ -78,46 +78,56 @@ class Char32 : Value, Key<Char32>, Comparable<Char32> {
 
     @override
     function get_hash():Int {
-        return convert()
+        return asInt64
     }
 
-    function convert():Char8 {
-        return Char8(convert())
+    property asChar8:Char8
+    function get_asChar8():Char8 {
+        return Char8(asUInt8)
     }
 
-    function convert():Char16 {
-        return Char16(convert())
+    property asChar16:Char16
+    function get_asChar16():Char16 {
+        return Char16(asUInt16)
     }
 
-    function convert():Int8 {
+    property asInt8:Int8
+    function get_asInt8():Int8 {
         return Int8(value->builtin_int8)
     }
 
-    function convert():Int16 {
+    property asInt16:Int16
+    function get_asInt16():Int16 {
         return Int16(value->builtin_int16)
     }
 
-    function convert():Int32 {
+    property asInt32:Int32
+    function get_asInt32():Int32 {
         return Int32(value)
     }
 
-    function convert():Int64 {
+    property asInt64:Int64
+    function get_asInt64():Int64 {
         return Int64(value->builtin_int64)
     }
 
-    function convert():UInt8 {
+    property asUInt8:UInt8
+    function get_asUInt8():UInt8 {
         return UInt8(value->builtin_uint8)
     }
 
-    function convert():UInt16 {
+    property asUInt16:UInt16
+    function get_asUInt16():UInt16 {
         return UInt16(value->builtin_uint16)
     }
 
-    function convert():UInt32 {
+    property asUInt32:UInt32
+    function get_asUInt32():UInt32 {
         return UInt32(value->builtin_uint32)
     }
 
-    function convert():UInt64 {
+    property asUInt64:UInt64
+    function get_asUInt64():UInt64 {
         return UInt64(value->builtin_uint64)
     }
 

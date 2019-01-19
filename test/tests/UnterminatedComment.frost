@@ -9,7 +9,7 @@ choice Expression {
     @override
     function get_asString():String {
         match self {
-            when NUMBER(v) { return v.convert() }
+            when NUMBER(v) { return v.asString }
             when ADD(a, b) { return "(\{a} + \{b})" }
             when SUB(a, b) { return "(\{a} - \{b})" }
             when MUL(a, b) { return "(\{a} * \{b})" }

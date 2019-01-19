@@ -1404,7 +1404,7 @@ frost$core$UInt64 $tmp459 = *$tmp458;
 // line 143
 frost$core$UInt64 $tmp460 = *(&local2);
 frost$core$Int64 $tmp461 = (frost$core$Int64) {9223372036854775807};
-frost$core$UInt64 $tmp462 = frost$core$Int64$convert$R$frost$core$UInt64($tmp461);
+frost$core$UInt64 $tmp462 = frost$core$Int64$get_asUInt64$R$frost$core$UInt64($tmp461);
 uint64_t $tmp463 = $tmp460.value;
 uint64_t $tmp464 = $tmp462.value;
 bool $tmp465 = $tmp463 > $tmp464;
@@ -1418,7 +1418,7 @@ return ((org$frostlang$frostc$ASTNode*) NULL);
 block5:;
 // line 146
 frost$core$UInt64 $tmp468 = *(&local2);
-frost$core$Int64 $tmp469 = frost$core$UInt64$convert$R$frost$core$Int64($tmp468);
+frost$core$Int64 $tmp469 = frost$core$UInt64$get_asInt64$R$frost$core$Int64($tmp468);
 *(&local0) = $tmp469;
 goto block1;
 block3:;
@@ -1442,7 +1442,7 @@ frost$core$UInt64 $tmp478 = *$tmp477;
 // line 154
 frost$core$UInt64 $tmp479 = *(&local3);
 frost$core$Int64 $tmp480 = (frost$core$Int64) {9223372036854775807};
-frost$core$UInt64 $tmp481 = frost$core$Int64$convert$R$frost$core$UInt64($tmp480);
+frost$core$UInt64 $tmp481 = frost$core$Int64$get_asUInt64$R$frost$core$UInt64($tmp480);
 uint64_t $tmp482 = $tmp479.value;
 uint64_t $tmp483 = $tmp481.value;
 bool $tmp484 = $tmp482 > $tmp483;
@@ -1456,7 +1456,7 @@ return ((org$frostlang$frostc$ASTNode*) NULL);
 block10:;
 // line 157
 frost$core$UInt64 $tmp487 = *(&local3);
-frost$core$Int64 $tmp488 = frost$core$UInt64$convert$R$frost$core$Int64($tmp487);
+frost$core$Int64 $tmp488 = frost$core$UInt64$get_asInt64$R$frost$core$Int64($tmp487);
 *(&local1) = $tmp488;
 goto block6;
 block8:;
@@ -1478,7 +1478,7 @@ int64_t $tmp495 = $tmp493.value;
 int64_t $tmp496 = $tmp494.value;
 int64_t $tmp497 = $tmp495 + $tmp496;
 frost$core$Int64 $tmp498 = (frost$core$Int64) {$tmp497};
-frost$core$UInt64 $tmp499 = frost$core$Int64$convert$R$frost$core$UInt64($tmp498);
+frost$core$UInt64 $tmp499 = frost$core$Int64$get_asUInt64$R$frost$core$UInt64($tmp498);
 *(&local4) = $tmp499;
 // line 166
 org$frostlang$frostc$ASTNode* $tmp500 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(104, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
@@ -1504,7 +1504,7 @@ int64_t $tmp511 = $tmp509.value;
 int64_t $tmp512 = $tmp510.value;
 int64_t $tmp513 = $tmp511 - $tmp512;
 frost$core$Int64 $tmp514 = (frost$core$Int64) {$tmp513};
-frost$core$UInt64 $tmp515 = frost$core$Int64$convert$R$frost$core$UInt64($tmp514);
+frost$core$UInt64 $tmp515 = frost$core$Int64$get_asUInt64$R$frost$core$UInt64($tmp514);
 *(&local5) = $tmp515;
 // line 170
 org$frostlang$frostc$ASTNode* $tmp516 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(104, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
@@ -1530,7 +1530,7 @@ int64_t $tmp527 = $tmp525.value;
 int64_t $tmp528 = $tmp526.value;
 int64_t $tmp529 = $tmp527 * $tmp528;
 frost$core$Int64 $tmp530 = (frost$core$Int64) {$tmp529};
-frost$core$UInt64 $tmp531 = frost$core$Int64$convert$R$frost$core$UInt64($tmp530);
+frost$core$UInt64 $tmp531 = frost$core$Int64$get_asUInt64$R$frost$core$UInt64($tmp530);
 *(&local6) = $tmp531;
 // line 174
 org$frostlang$frostc$ASTNode* $tmp532 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(104, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
@@ -1571,7 +1571,7 @@ int64_t $tmp551 = $tmp549.value;
 int64_t $tmp552 = $tmp550.value;
 int64_t $tmp553 = $tmp551 / $tmp552;
 frost$core$Int64 $tmp554 = (frost$core$Int64) {$tmp553};
-frost$core$UInt64 $tmp555 = frost$core$Int64$convert$R$frost$core$UInt64($tmp554);
+frost$core$UInt64 $tmp555 = frost$core$Int64$get_asUInt64$R$frost$core$UInt64($tmp554);
 *(&local7) = $tmp555;
 // line 182
 org$frostlang$frostc$ASTNode* $tmp556 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(104, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
@@ -1609,7 +1609,7 @@ block25:;
 frost$core$Int64 $tmp573 = *(&local0);
 frost$core$Int64 $tmp574 = *(&local1);
 frost$core$Int64 $tmp575 = frost$core$Int64$$REM$frost$core$Int64$R$frost$core$Int64($tmp573, $tmp574);
-frost$core$UInt64 $tmp576 = frost$core$Int64$convert$R$frost$core$UInt64($tmp575);
+frost$core$UInt64 $tmp576 = frost$core$Int64$get_asUInt64$R$frost$core$UInt64($tmp575);
 *(&local8) = $tmp576;
 // line 190
 org$frostlang$frostc$ASTNode* $tmp577 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(104, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
@@ -1761,7 +1761,7 @@ block38:;
 frost$core$Int64 $tmp667 = *(&local0);
 frost$core$Int64 $tmp668 = *(&local1);
 frost$core$Int64 $tmp669 = frost$core$Int64$$BAND$frost$core$Int64$R$frost$core$Int64($tmp667, $tmp668);
-frost$core$UInt64 $tmp670 = frost$core$Int64$convert$R$frost$core$UInt64($tmp669);
+frost$core$UInt64 $tmp670 = frost$core$Int64$get_asUInt64$R$frost$core$UInt64($tmp669);
 *(&local9) = $tmp670;
 // line 212
 org$frostlang$frostc$ASTNode* $tmp671 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(104, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
@@ -1784,7 +1784,7 @@ block40:;
 frost$core$Int64 $tmp680 = *(&local0);
 frost$core$Int64 $tmp681 = *(&local1);
 frost$core$Int64 $tmp682 = frost$core$Int64$$BOR$frost$core$Int64$R$frost$core$Int64($tmp680, $tmp681);
-frost$core$UInt64 $tmp683 = frost$core$Int64$convert$R$frost$core$UInt64($tmp682);
+frost$core$UInt64 $tmp683 = frost$core$Int64$get_asUInt64$R$frost$core$UInt64($tmp682);
 *(&local10) = $tmp683;
 // line 216
 org$frostlang$frostc$ASTNode* $tmp684 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(104, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
@@ -1807,7 +1807,7 @@ block42:;
 frost$core$Int64 $tmp693 = *(&local0);
 frost$core$Int64 $tmp694 = *(&local1);
 frost$core$Int64 $tmp695 = frost$core$Int64$$BXOR$frost$core$Int64$R$frost$core$Int64($tmp693, $tmp694);
-frost$core$UInt64 $tmp696 = frost$core$Int64$convert$R$frost$core$UInt64($tmp695);
+frost$core$UInt64 $tmp696 = frost$core$Int64$get_asUInt64$R$frost$core$UInt64($tmp695);
 *(&local11) = $tmp696;
 // line 220
 org$frostlang$frostc$ASTNode* $tmp697 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(104, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
@@ -1830,7 +1830,7 @@ block44:;
 frost$core$Int64 $tmp706 = *(&local0);
 frost$core$Int64 $tmp707 = *(&local1);
 frost$core$Int64 $tmp708 = frost$core$Int64$$SHL$frost$core$Int64$R$frost$core$Int64($tmp706, $tmp707);
-frost$core$UInt64 $tmp709 = frost$core$Int64$convert$R$frost$core$UInt64($tmp708);
+frost$core$UInt64 $tmp709 = frost$core$Int64$get_asUInt64$R$frost$core$UInt64($tmp708);
 *(&local12) = $tmp709;
 // line 224
 org$frostlang$frostc$ASTNode* $tmp710 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(104, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
@@ -1853,7 +1853,7 @@ block46:;
 frost$core$Int64 $tmp719 = *(&local0);
 frost$core$Int64 $tmp720 = *(&local1);
 frost$core$Int64 $tmp721 = frost$core$Int64$$SHR$frost$core$Int64$R$frost$core$Int64($tmp719, $tmp720);
-frost$core$UInt64 $tmp722 = frost$core$Int64$convert$R$frost$core$UInt64($tmp721);
+frost$core$UInt64 $tmp722 = frost$core$Int64$get_asUInt64$R$frost$core$UInt64($tmp721);
 *(&local13) = $tmp722;
 // line 228
 org$frostlang$frostc$ASTNode* $tmp723 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(104, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);

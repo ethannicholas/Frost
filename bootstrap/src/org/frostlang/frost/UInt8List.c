@@ -233,7 +233,7 @@ frost$core$SteppedRange$LTfrost$core$UInt8$Cfrost$core$UInt8$GT* $tmp112 = &para
 frost$core$SteppedRange$LTfrost$core$UInt8$Cfrost$core$UInt8$GT $tmp113 = *$tmp112;
 frost$core$UInt8 $tmp114 = $tmp113.step;
 frost$core$UInt32 $tmp115 = frost$core$UInt32$init$frost$core$UInt8($tmp114);
-frost$core$UInt8 $tmp116 = frost$core$Int64$convert$R$frost$core$UInt8(param1);
+frost$core$UInt8 $tmp116 = frost$core$Int64$get_asUInt8$R$frost$core$UInt8(param1);
 frost$core$UInt32 $tmp117 = frost$core$UInt32$init$frost$core$UInt8($tmp116);
 uint32_t $tmp118 = $tmp115.value;
 uint32_t $tmp119 = $tmp117.value;
@@ -243,7 +243,7 @@ uint32_t $tmp122 = $tmp111.value;
 uint32_t $tmp123 = $tmp121.value;
 uint32_t $tmp124 = $tmp122 + $tmp123;
 frost$core$UInt32 $tmp125 = (frost$core$UInt32) {$tmp124};
-frost$core$UInt8 $tmp126 = frost$core$UInt32$convert$R$frost$core$UInt8($tmp125);
+frost$core$UInt8 $tmp126 = frost$core$UInt32$get_asUInt8$R$frost$core$UInt8($tmp125);
 return $tmp126;
 
 }

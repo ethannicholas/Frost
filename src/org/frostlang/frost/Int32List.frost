@@ -53,7 +53,7 @@ class Int32List : ListView<Int32> {
 
     @override
     function [](index:Int):Int32 {
-        return (range.start + range.step * index.convert()->Int32)
+        return (range.start + range.step * index.asInt32)
     }
 
     @override

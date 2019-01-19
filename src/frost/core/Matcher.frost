@@ -136,7 +136,7 @@ class Matcher {
             def ref := REPLACEMENT_GROUPS.matcher(replacement)
             var lastEnd:String.Index := searchText.start
             while ref.find() {
-                def rawGroup:Int := ref.group(1).convert()
+                def rawGroup := ref.group(1).asInt64
                 def groupIdx := rawGroup
                 var newEnd := ref.end
                 while groupIdx >= groupCount { -- no such group, pull digits off

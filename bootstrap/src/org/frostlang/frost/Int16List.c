@@ -277,7 +277,7 @@ frost$core$SteppedRange$LTfrost$core$Int16$Cfrost$core$Int16$GT* $tmp134 = &para
 frost$core$SteppedRange$LTfrost$core$Int16$Cfrost$core$Int16$GT $tmp135 = *$tmp134;
 frost$core$Int16 $tmp136 = $tmp135.step;
 frost$core$Int32 $tmp137 = frost$core$Int32$init$frost$core$Int16($tmp136);
-frost$core$Int16 $tmp138 = frost$core$Int64$convert$R$frost$core$Int16(param1);
+frost$core$Int16 $tmp138 = frost$core$Int64$get_asInt16$R$frost$core$Int16(param1);
 frost$core$Int32 $tmp139 = frost$core$Int32$init$frost$core$Int16($tmp138);
 int32_t $tmp140 = $tmp137.value;
 int32_t $tmp141 = $tmp139.value;
@@ -287,7 +287,7 @@ int32_t $tmp144 = $tmp133.value;
 int32_t $tmp145 = $tmp143.value;
 int32_t $tmp146 = $tmp144 + $tmp145;
 frost$core$Int32 $tmp147 = (frost$core$Int32) {$tmp146};
-frost$core$Int16 $tmp148 = frost$core$Int32$convert$R$frost$core$Int16($tmp147);
+frost$core$Int16 $tmp148 = frost$core$Int32$get_asInt16$R$frost$core$Int16($tmp147);
 return $tmp148;
 
 }

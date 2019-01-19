@@ -128,7 +128,7 @@ class PLex {
             def lexer := IndentedOutputStream(lexerPath.openOutputStream())
             writeLexer(tokenName, lexerName, lexerPath, positionName, dfa, lexer)
             tokens.clear()
-            for i in 0 ... DFA.END_CHAR.convert()->Int {
+            for i in 0 ... DFA.END_CHAR.asInt64 {
                 dfa.transitions[i].destroy()
             }
             dfa.transitions.destroy()
@@ -208,7 +208,7 @@ class PLex {
             out.level += 1
             out.printLine("def result := Pointer<Pointer<Int>>.alloc(\{DFA.END_CHAR} + 1)")
             def destroys := MutableString()
-            outer: for i in 0 ... DFA.END_CHAR.convert()->Int {
+            outer: for i in 0 ... DFA.END_CHAR.asInt64 {
                 for j in 0 .. i {
                     var equal := true
                     for k in 0 .. dfa.stateCount {

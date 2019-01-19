@@ -57,7 +57,7 @@ class PushbackInputStream : InputStream {
     @param v the `Int8` to push
     ============================================================================
     method pushback(v:Int8) {
-        pushbackBuffer.add(v.convert())
+        pushbackBuffer.add(v.asUInt8)
     }
 
     ============================================================================
@@ -88,7 +88,7 @@ class PushbackInputStream : InputStream {
     @param c the character to push
     ============================================================================
     method pushback(c:Char8) {
-        pushback(c.convert()->UInt8)
+        pushback(c.asUInt8)
     }
 
     ============================================================================

@@ -13,11 +13,11 @@ method interpret(code:String) {
             when "<" { pointer -= 1 }
             when "+" { tape[pointer] += 1 }
             when "-" { tape[pointer] -= 1 }
-            when "." { Console.print(Char8(tape[pointer].convert())) }
+            when "." { Console.print(Char8(tape[pointer].asUInt8)) }
             when "," {
                 def c := Console.read()
                 if c !== null {
-                    tape[pointer] := c.convert()
+                    tape[pointer] := c.asInt8
                 }
                 else {
                     tape[pointer] := 0

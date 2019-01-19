@@ -106,7 +106,7 @@ frost$collections$Array* $tmp16 = *(&local1);
 org$frostlang$frostc$ASTNode* $tmp17 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(104, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 frost$core$Int64 $tmp18 = (frost$core$Int64) {25};
 frost$core$Int64 $tmp19 = param1.line;
-frost$core$UInt64 $tmp20 = frost$core$Int64$convert$R$frost$core$UInt64($tmp19);
+frost$core$UInt64 $tmp20 = frost$core$Int64$get_asUInt64$R$frost$core$UInt64($tmp19);
 org$frostlang$frostc$ASTNode$init$frost$core$Int64$org$frostlang$frostc$Position$frost$core$UInt64($tmp17, $tmp18, param1, $tmp20);
 frost$collections$Array$add$frost$collections$Array$T($tmp16, ((frost$core$Object*) $tmp17));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp17));

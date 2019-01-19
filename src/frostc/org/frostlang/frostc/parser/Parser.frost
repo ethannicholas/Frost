@@ -690,7 +690,7 @@ class Parser {
                 return ASTNode.IDENTIFIER(t.position, text(t))
             }
             when Token.Kind.DECIMAL {
-                return ASTNode.INT(t.position, text(t).convert())
+                return ASTNode.INT(t.position, text(t).asUInt64)
             }
             when Token.Kind.BINARY {
                 return ASTNode.INT(t.position, UInt64.parse(text(t)[2..], 2))
@@ -699,7 +699,7 @@ class Parser {
                 return ASTNode.INT(t.position, UInt64.parse(text(t)[2..], 16))
             }
             when Token.Kind.REAL {
-                return ASTNode.REAL(t.position, text(t).convert())
+                return ASTNode.REAL(t.position, text(t).asReal64)
             }
             when Token.Kind.SELF {
                 return ASTNode.SELF(t.position)

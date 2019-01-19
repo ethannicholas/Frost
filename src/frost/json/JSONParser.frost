@@ -144,10 +144,10 @@ class JSONParser {
                 return JSON.STRING(s.substring(s.next(s.start) .. s.previous(s.end)))
             }
             when Token.Kind.INT {
-                return JSON.INT(text(token).convert())
+                return JSON.INT(text(token).asInt64)
             }
             when Token.Kind.REAL {
-                return JSON.REAL(text(token).convert())
+                return JSON.REAL(text(token).asReal64)
             }
             when Token.Kind.TRUE {
                 return JSON.BIT(true)

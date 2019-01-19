@@ -44,10 +44,10 @@ class NFAtoDFA {
     }
 
     method addTransition(c:Char8, start:Int, next:Int) {
-        while transitions.count <= c.convert() {
+        while transitions.count <= c.asInt64 {
             transitions.add(Array<Int>())
         }
-        def a := transitions[c.convert()]
+        def a := transitions[c.asInt64]
         while a.count <= start {
             a.add(-1)
         }
@@ -76,7 +76,7 @@ class NFAtoDFA {
             next.sortInPlace(Int.>)
             def nextState := getState(DFAStateLabel(next))
             addTransition(Char8(c), state.id, nextState.id)
-            if bestAccept < Int32.MAX.convert()->Int64 {
+            if bestAccept < Int32.MAX.asInt64 {
                 while accepts.count <= nextState.id {
                     accepts.add(-1)
                 }
@@ -106,7 +106,7 @@ class NFAtoDFA {
             stateCount := stateCount.max(transitions[i].count)
         }
         def outTransitions := Pointer<Pointer<Int>>.alloc(transitions.count)
-        for i in 0 ... DFA.END_CHAR.convert()->Int {
+        for i in 0 ... DFA.END_CHAR.asInt64 {
             outTransitions[i] := Pointer<Int>.alloc(stateCount)
             for j in 0 .. stateCount {
                 if i < transitions.count & j < transitions[i].count {

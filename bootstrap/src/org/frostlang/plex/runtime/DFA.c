@@ -144,7 +144,7 @@ frost$core$Char8 $tmp59 = $tmp55[$tmp58];
 *(&local6) = $tmp59;
 // line 52
 frost$core$Char8 $tmp60 = *(&local6);
-frost$core$UInt8 $tmp61 = frost$core$Char8$convert$R$frost$core$UInt8($tmp60);
+frost$core$UInt8 $tmp61 = frost$core$Char8$get_asUInt8$R$frost$core$UInt8($tmp60);
 frost$core$UInt8 $tmp62 = (frost$core$UInt8) {255};
 uint8_t $tmp63 = $tmp61.value;
 uint8_t $tmp64 = $tmp62.value;
@@ -155,7 +155,7 @@ if ($tmp67) goto block6; else goto block7;
 block6:;
 // line 53
 frost$core$Char8 $tmp68 = *(&local6);
-frost$core$UInt8 $tmp69 = frost$core$Char8$convert$R$frost$core$UInt8($tmp68);
+frost$core$UInt8 $tmp69 = frost$core$Char8$get_asUInt8$R$frost$core$UInt8($tmp68);
 frost$core$UInt8$wrapper* $tmp70;
 $tmp70 = (frost$core$UInt8$wrapper*) frostObjectAlloc(13, (frost$core$Class*) &frost$core$UInt8$wrapperclass);
 $tmp70->value = $tmp69;
@@ -177,7 +177,7 @@ block7:;
 frost$core$Int64*** $tmp76 = &param0->transitions;
 frost$core$Int64** $tmp77 = *$tmp76;
 frost$core$Char8 $tmp78 = *(&local6);
-frost$core$Int64 $tmp79 = frost$core$Char8$convert$R$frost$core$Int64($tmp78);
+frost$core$Int64 $tmp79 = frost$core$Char8$get_asInt64$R$frost$core$Int64($tmp78);
 int64_t $tmp80 = $tmp79.value;
 frost$core$Int64* $tmp81 = $tmp77[$tmp80];
 frost$core$Int64 $tmp82 = *(&local0);
@@ -206,7 +206,7 @@ frost$core$Int64* $tmp99 = &param0->offset;
 *$tmp99 = $tmp98;
 // line 59
 frost$core$Char8 $tmp100 = *(&local6);
-frost$core$UInt8 $tmp101 = frost$core$Char8$convert$R$frost$core$UInt8($tmp100);
+frost$core$UInt8 $tmp101 = frost$core$Char8$get_asUInt8$R$frost$core$UInt8($tmp100);
 frost$core$UInt8 $tmp102 = (frost$core$UInt8) {10};
 frost$core$Bit $tmp103 = frost$core$UInt8$$EQ$frost$core$UInt8$R$frost$core$Bit($tmp101, $tmp102);
 bool $tmp104 = $tmp103.value;

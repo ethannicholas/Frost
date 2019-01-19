@@ -49,14 +49,14 @@ class DFA {
         def startColumn := column
         while offset != sourceEnd {
             def c := source[offset]
-            if c.convert()->UInt8 > END_CHAR {
-                Console.printLine("invalid token \{c.convert()->UInt8}")
+            if c.asUInt8 > END_CHAR {
+                Console.printLine("invalid token \{c.asUInt8}")
                 System.exit(1)
             }
-            state := transitions[c.convert()][state]
+            state := transitions[c.asInt64][state]
             if state != 0 {
                 offset += 1
-                match c.convert()->UInt8 {
+                match c.asUInt8 {
                     when 10 {
                         line += 1
                         column := 1

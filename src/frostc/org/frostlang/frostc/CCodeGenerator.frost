@@ -962,7 +962,7 @@ class CCodeGenerator : CodeGenerator {
     }
 
     method getIntReference(int:UInt64):String {
-        if int > Int64.MAX.convert() {
+        if int > Int64.MAX.asUInt64 {
             return int + "u"
         }
         return int.asString
@@ -992,7 +992,7 @@ class CCodeGenerator : CodeGenerator {
                     "(frost$core$Class*) &frost$core$String$class, \{NO_REFCNT}, " +
                     "(frost$core$Char8*) \"")
             for c in s.utf8 {
-                strings.print("\\x\{c.convert()->UInt8,0>2:x}")
+                strings.print("\\x\{c.asUInt8,0>2:x}")
             }
             strings.printLine("\", \{s.utf8.count}, \{s.hash}, NULL };")
             return "&\{result}"

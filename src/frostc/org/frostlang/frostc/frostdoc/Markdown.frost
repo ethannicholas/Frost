@@ -380,12 +380,12 @@ class Markdown {
             def r := random.real64()
             if r < 0.45 { -- Decimal
                 result.append("&#")
-                result.append(ch.convert()->Int32)
+                result.append(ch.asInt32)
                 result.append(";")
             }
             else if r < 0.9 { -- Hex
                 result.append("&#x")
-                result.append(ch.convert()->Int32.format("x"))
+                result.append(ch.asInt32.format("x"))
                 result.append(";")
             }
             else {

@@ -466,25 +466,25 @@ class MutableString {
     function [](index:Index):Char32 {
         def idx := index.value
         def c := data[idx]
-        var result:Int32 := c.convert()
+        var result := c.asInt32
         if c.value->builtin_int64 && 0xFF < 0b11000000 {
             return Char32(result)
         }
         if c.value->builtin_int64 && 0xFF < 0b11100000 {
             assert idx + 1 < _length
-            result := result && 0b11111 << 6 + data[idx + 1].convert()->Int32 && 0b111111
+            result := result && 0b11111 << 6 + data[idx + 1].asInt32 && 0b111111
             return Char32(result)
         }
         if c.value->builtin_int64 && 0xFF < 0b11110000 {
             assert idx + 2 < _length
-            result := result && 0b1111 << 12 + data[idx + 1].convert()->Int32 && 0b111111 << 6 +
-                    data[idx + 2].convert()->Int32 && 0b111111
+            result := result && 0b1111 << 12 + data[idx + 1].asInt32 && 0b111111 << 6 +
+                    data[idx + 2].asInt32 && 0b111111
             return Char32(result)
         }
         assert idx + 3 < _length
-        result := result && 0b111 << 18 + data[idx + 1].convert()->Int32 && 0b111111 << 12 +
-                data[idx + 2].convert()->Int32 && 0b111111 << 6 +
-                data[idx + 3].convert()->Int32 && 0b111111
+        result := result && 0b111 << 18 + data[idx + 1].asInt32 && 0b111111 << 12 +
+                data[idx + 2].asInt32 && 0b111111 << 6 +
+                data[idx + 3].asInt32 && 0b111111
         return Char32(result)
     }
 

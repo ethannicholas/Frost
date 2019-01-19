@@ -70,46 +70,56 @@ class Char16 : Value, Key<Char16>, Comparable<Char16> {
 
     @override
     function get_hash():Int {
-        return convert()
+        return asInt64
     }
 
-    function convert():Char8 {
-        return Char8(convert())
+    property asChar8:Char8
+    function get_asChar8():Char8 {
+        return Char8(asUInt8)
     }
 
-    function convert():Char32 {
-        return Char32(convert())
+    property asChar32:Char32
+    function get_asChar32():Char32 {
+        return Char32(asInt32)
     }
 
-    function convert():Int8 {
+    property asInt8:Int8
+    function get_asInt8():Int8 {
         return Int8(value->builtin_int8)
     }
 
-    function convert():Int16 {
+    property asInt16:Int16
+    function get_asInt16():Int16 {
         return Int16(value->builtin_int16)
     }
 
-    function convert():Int32 {
+    property asInt32:Int32
+    function get_asInt32():Int32 {
         return Int32(value->builtin_int32)
     }
 
-    function convert():Int64 {
+    property asInt64:Int64
+    function get_asInt64():Int64 {
         return Int64(value->builtin_int64)
     }
 
-    function convert():UInt8 {
+    property asUInt8:UInt8
+    function get_asUInt8():UInt8 {
         return UInt8(value->builtin_uint8)
     }
 
-    function convert():UInt16 {
+    property asUInt16:UInt16
+    function get_asUInt16():UInt16 {
         return UInt16(value)
     }
 
-    function convert():UInt32 {
+    property asUInt32:UInt32
+    function get_asUInt32():UInt32 {
         return UInt32(value->builtin_uint32)
     }
 
-    function convert():UInt64 {
+    property asUInt64:UInt64
+    function get_asUInt64():UInt64 {
         return UInt64(value->builtin_uint64)
     }
 
@@ -122,7 +132,7 @@ class Char16 : Value, Key<Char16>, Comparable<Char16> {
     function get_asString():String {
         if value < 0x80 {
             def data := Pointer<Char8>.alloc(1)
-            data[0] := Char8(convert()->UInt8)
+            data[0] := Char8(asUInt8)
             return String(data, 1)
         }
         if value < 0x800 {

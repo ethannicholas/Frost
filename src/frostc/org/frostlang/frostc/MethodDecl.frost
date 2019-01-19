@@ -139,13 +139,13 @@ class MethodDecl : Symbol {
                     when Annotations.Expression.PRIORITY(_, expr) {
                         match expr {
                             when ASTNode.INT(_, value) {
-                                return value.convert()
+                                return value.asInt64
                             }
                             when ASTNode.PREFIX(_, op, base) {
                                 if op = Token.Kind.SUB {
                                     match base {
                                         when ASTNode.INT(_, value) {
-                                            return -(value.convert()->Int)
+                                            return -(value.asInt64)
                                         }
                                     }
                                 }

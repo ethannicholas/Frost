@@ -123,13 +123,13 @@ class Frost {
     @class
     function digit(c:Char32):UInt64? {
         if c >= "0" & c <= "9" {
-            return c.convert()->UInt64 - "0"->Char8.convert()->UInt64
+            return c.asUInt64 - "0"->Char8.asUInt64
         }
         if c >= "A" & c <= "Z" {
-            return c.convert()->UInt64 - "A"->Char8.convert()->UInt64 + 10
+            return c.asUInt64 - "A"->Char8.asUInt64 + 10
         }
         if c >= "a" & c <= "z" {
-            return c.convert()->UInt64 - "a"->Char8.convert()->UInt64 + 10
+            return c.asUInt64 - "a"->Char8.asUInt64 + 10
         }
         return null
     }
@@ -143,7 +143,7 @@ class Frost {
             return null
         }
         var result:UInt64 := 0
-        def radix := rawRadix.convert()->UInt64
+        def radix := rawRadix.asUInt64
         var index := str.start
         while index != str.end {
             def value := digit(str[index])
@@ -189,7 +189,7 @@ class Frost {
                 index := specifier.start
             }
         }
-        def width := specifier[specifier.next(index)..].convert()->Int
+        def width := specifier[specifier.next(index)..].asInt64
         def fill:Char32
         if index = specifier.start {
             fill := " "
@@ -243,7 +243,7 @@ class Frost {
         }
         var value:UInt64 -- FIXME make rawValue a var parameter
         if sign & base != 10 {
-            value := (-rawValue.convert()->Int64).convert()->UInt64 && mask
+            value := (-rawValue.asInt64).asUInt64 && mask
         }
         else {
             value := rawValue
@@ -252,7 +252,7 @@ class Frost {
         def chars := Pointer<Char8>.alloc(max)
         var charIndex := max - 1
         do {
-            chars[charIndex] := digits[(value % base).convert()]
+            chars[charIndex] := digits[(value % base).asInt64]
             value //= base
             charIndex -= 1
         }

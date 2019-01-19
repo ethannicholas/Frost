@@ -8,5 +8,5 @@ method main() {
     Console.printLine(square3(5))
 
     def sentence := "I am going to multiply by 2 all 3 numbers in this sentence of 16 words"
-    Console.printLine(sentence.replace(/\d+/, number => number.convert()->Int * 2))
+    Console.printLine(sentence.replace(/\d+/, number => number.asInt64 * 2))
 }

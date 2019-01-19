@@ -117,7 +117,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Eq
 if ($tmp12) goto block3; else goto block5;
 block3:;
 // line 42
-frost$core$UInt8 $tmp13 = frost$core$UInt16$convert$R$frost$core$UInt8(param1);
+frost$core$UInt8 $tmp13 = frost$core$UInt16$get_asUInt8$R$frost$core$UInt8(param1);
 $fn15 $tmp14 = ($fn15) param0->$class->vtable[2];
 frost$core$Error* $tmp16 = $tmp14(param0, $tmp13);
 // try error check
@@ -134,7 +134,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp16));
 // line 43
 frost$core$UInt16 $tmp17 = (frost$core$UInt16) {8};
 frost$core$UInt32 $tmp18 = frost$core$UInt16$$SHR$frost$core$UInt16$R$frost$core$UInt32(param1, $tmp17);
-frost$core$UInt8 $tmp19 = frost$core$UInt32$convert$R$frost$core$UInt8($tmp18);
+frost$core$UInt8 $tmp19 = frost$core$UInt32$get_asUInt8$R$frost$core$UInt8($tmp18);
 $fn21 $tmp20 = ($fn21) param0->$class->vtable[2];
 frost$core$Error* $tmp22 = $tmp20(param0, $tmp19);
 // try error check
@@ -154,7 +154,7 @@ block5:;
 // line 46
 frost$core$UInt16 $tmp23 = (frost$core$UInt16) {8};
 frost$core$UInt32 $tmp24 = frost$core$UInt16$$SHR$frost$core$UInt16$R$frost$core$UInt32(param1, $tmp23);
-frost$core$UInt8 $tmp25 = frost$core$UInt32$convert$R$frost$core$UInt8($tmp24);
+frost$core$UInt8 $tmp25 = frost$core$UInt32$get_asUInt8$R$frost$core$UInt8($tmp24);
 $fn27 $tmp26 = ($fn27) param0->$class->vtable[2];
 frost$core$Error* $tmp28 = $tmp26(param0, $tmp25);
 // try error check
@@ -169,7 +169,7 @@ block10:;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp28));
 // unreffing REF($63:frost.core.Error?)
 // line 47
-frost$core$UInt8 $tmp29 = frost$core$UInt16$convert$R$frost$core$UInt8(param1);
+frost$core$UInt8 $tmp29 = frost$core$UInt16$get_asUInt8$R$frost$core$UInt8(param1);
 $fn31 $tmp30 = ($fn31) param0->$class->vtable[2];
 frost$core$Error* $tmp32 = $tmp30(param0, $tmp29);
 // try error check
@@ -241,7 +241,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Eq
 if ($tmp51) goto block3; else goto block5;
 block3:;
 // line 64
-frost$core$UInt16 $tmp52 = frost$core$UInt32$convert$R$frost$core$UInt16(param1);
+frost$core$UInt16 $tmp52 = frost$core$UInt32$get_asUInt16$R$frost$core$UInt16(param1);
 $fn54 $tmp53 = ($fn54) param0->$class->vtable[3];
 frost$core$Error* $tmp55 = $tmp53(param0, $tmp52);
 // try error check
@@ -258,7 +258,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp55));
 // line 65
 frost$core$UInt32 $tmp56 = (frost$core$UInt32) {16};
 frost$core$UInt32 $tmp57 = frost$core$UInt32$$SHR$frost$core$UInt32$R$frost$core$UInt32(param1, $tmp56);
-frost$core$UInt16 $tmp58 = frost$core$UInt32$convert$R$frost$core$UInt16($tmp57);
+frost$core$UInt16 $tmp58 = frost$core$UInt32$get_asUInt16$R$frost$core$UInt16($tmp57);
 $fn60 $tmp59 = ($fn60) param0->$class->vtable[3];
 frost$core$Error* $tmp61 = $tmp59(param0, $tmp58);
 // try error check
@@ -278,7 +278,7 @@ block5:;
 // line 68
 frost$core$UInt32 $tmp62 = (frost$core$UInt32) {16};
 frost$core$UInt32 $tmp63 = frost$core$UInt32$$SHR$frost$core$UInt32$R$frost$core$UInt32(param1, $tmp62);
-frost$core$UInt16 $tmp64 = frost$core$UInt32$convert$R$frost$core$UInt16($tmp63);
+frost$core$UInt16 $tmp64 = frost$core$UInt32$get_asUInt16$R$frost$core$UInt16($tmp63);
 $fn66 $tmp65 = ($fn66) param0->$class->vtable[3];
 frost$core$Error* $tmp67 = $tmp65(param0, $tmp64);
 // try error check
@@ -293,7 +293,7 @@ block10:;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp67));
 // unreffing REF($63:frost.core.Error?)
 // line 69
-frost$core$UInt16 $tmp68 = frost$core$UInt32$convert$R$frost$core$UInt16(param1);
+frost$core$UInt16 $tmp68 = frost$core$UInt32$get_asUInt16$R$frost$core$UInt16(param1);
 $fn70 $tmp69 = ($fn70) param0->$class->vtable[3];
 frost$core$Error* $tmp71 = $tmp69(param0, $tmp68);
 // try error check
@@ -365,7 +365,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Eq
 if ($tmp90) goto block3; else goto block5;
 block3:;
 // line 86
-frost$core$UInt32 $tmp91 = frost$core$UInt64$convert$R$frost$core$UInt32(param1);
+frost$core$UInt32 $tmp91 = frost$core$UInt64$get_asUInt32$R$frost$core$UInt32(param1);
 $fn93 $tmp92 = ($fn93) param0->$class->vtable[4];
 frost$core$Error* $tmp94 = $tmp92(param0, $tmp91);
 // try error check
@@ -382,7 +382,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp94));
 // line 87
 frost$core$UInt64 $tmp95 = (frost$core$UInt64) {32};
 frost$core$UInt64 $tmp96 = frost$core$UInt64$$SHR$frost$core$UInt64$R$frost$core$UInt64(param1, $tmp95);
-frost$core$UInt32 $tmp97 = frost$core$UInt64$convert$R$frost$core$UInt32($tmp96);
+frost$core$UInt32 $tmp97 = frost$core$UInt64$get_asUInt32$R$frost$core$UInt32($tmp96);
 $fn99 $tmp98 = ($fn99) param0->$class->vtable[4];
 frost$core$Error* $tmp100 = $tmp98(param0, $tmp97);
 // try error check
@@ -402,7 +402,7 @@ block5:;
 // line 90
 frost$core$UInt64 $tmp101 = (frost$core$UInt64) {32};
 frost$core$UInt64 $tmp102 = frost$core$UInt64$$SHR$frost$core$UInt64$R$frost$core$UInt64(param1, $tmp101);
-frost$core$UInt32 $tmp103 = frost$core$UInt64$convert$R$frost$core$UInt32($tmp102);
+frost$core$UInt32 $tmp103 = frost$core$UInt64$get_asUInt32$R$frost$core$UInt32($tmp102);
 $fn105 $tmp104 = ($fn105) param0->$class->vtable[4];
 frost$core$Error* $tmp106 = $tmp104(param0, $tmp103);
 // try error check
@@ -417,7 +417,7 @@ block10:;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp106));
 // unreffing REF($63:frost.core.Error?)
 // line 91
-frost$core$UInt32 $tmp107 = frost$core$UInt64$convert$R$frost$core$UInt32(param1);
+frost$core$UInt32 $tmp107 = frost$core$UInt64$get_asUInt32$R$frost$core$UInt32(param1);
 $fn109 $tmp108 = ($fn109) param0->$class->vtable[4];
 frost$core$Error* $tmp110 = $tmp108(param0, $tmp107);
 // try error check
@@ -462,7 +462,7 @@ abort(); // unreachable
 frost$core$Error* frost$io$OutputStream$write$frost$core$Int8$R$frost$core$Error$Q(frost$io$OutputStream* param0, frost$core$Int8 param1) {
 
 // line 106
-frost$core$UInt8 $tmp119 = frost$core$Int8$convert$R$frost$core$UInt8(param1);
+frost$core$UInt8 $tmp119 = frost$core$Int8$get_asUInt8$R$frost$core$UInt8(param1);
 $fn121 $tmp120 = ($fn121) param0->$class->vtable[2];
 frost$core$Error* $tmp122 = $tmp120(param0, $tmp119);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp122));
@@ -474,7 +474,7 @@ return $tmp122;
 frost$core$Error* frost$io$OutputStream$write$frost$core$Int16$R$frost$core$Error$Q(frost$io$OutputStream* param0, frost$core$Int16 param1) {
 
 // line 116
-frost$core$UInt16 $tmp123 = frost$core$Int16$convert$R$frost$core$UInt16(param1);
+frost$core$UInt16 $tmp123 = frost$core$Int16$get_asUInt16$R$frost$core$UInt16(param1);
 $fn125 $tmp124 = ($fn125) param0->$class->vtable[3];
 frost$core$Error* $tmp126 = $tmp124(param0, $tmp123);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp126));
@@ -486,7 +486,7 @@ return $tmp126;
 frost$core$Error* frost$io$OutputStream$write$frost$core$Int32$R$frost$core$Error$Q(frost$io$OutputStream* param0, frost$core$Int32 param1) {
 
 // line 126
-frost$core$UInt32 $tmp127 = frost$core$Int32$convert$R$frost$core$UInt32(param1);
+frost$core$UInt32 $tmp127 = frost$core$Int32$get_asUInt32$R$frost$core$UInt32(param1);
 $fn129 $tmp128 = ($fn129) param0->$class->vtable[4];
 frost$core$Error* $tmp130 = $tmp128(param0, $tmp127);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp130));
@@ -498,7 +498,7 @@ return $tmp130;
 frost$core$Error* frost$io$OutputStream$write$frost$core$Int64$R$frost$core$Error$Q(frost$io$OutputStream* param0, frost$core$Int64 param1) {
 
 // line 136
-frost$core$UInt64 $tmp131 = frost$core$Int64$convert$R$frost$core$UInt64(param1);
+frost$core$UInt64 $tmp131 = frost$core$Int64$get_asUInt64$R$frost$core$UInt64(param1);
 $fn133 $tmp132 = ($fn133) param0->$class->vtable[5];
 frost$core$Error* $tmp134 = $tmp132(param0, $tmp131);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp134));
@@ -523,7 +523,7 @@ frost$core$Int64 $tmp139 = $tmp137.max;
 frost$core$Bit $tmp140 = $tmp137.inclusive;
 bool $tmp141 = $tmp140.value;
 frost$core$Int64 $tmp142 = (frost$core$Int64) {1};
-frost$core$UInt64 $tmp143 = frost$core$Int64$convert$R$frost$core$UInt64($tmp142);
+frost$core$UInt64 $tmp143 = frost$core$Int64$get_asUInt64$R$frost$core$UInt64($tmp142);
 if ($tmp141) goto block6; else goto block7;
 block6:;
 int64_t $tmp144 = $tmp138.value;
@@ -564,7 +564,7 @@ int64_t $tmp161 = $tmp139.value;
 int64_t $tmp162 = $tmp160.value;
 int64_t $tmp163 = $tmp161 - $tmp162;
 frost$core$Int64 $tmp164 = (frost$core$Int64) {$tmp163};
-frost$core$UInt64 $tmp165 = frost$core$Int64$convert$R$frost$core$UInt64($tmp164);
+frost$core$UInt64 $tmp165 = frost$core$Int64$get_asUInt64$R$frost$core$UInt64($tmp164);
 if ($tmp141) goto block11; else goto block12;
 block11:;
 uint64_t $tmp166 = $tmp165.value;

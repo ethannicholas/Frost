@@ -256,7 +256,7 @@ while ($tmp75->$class != (frost$core$Class*) &frost$collections$CollectionView$c
 }
 $fn77 $tmp76 = $tmp75->methods[0];
 frost$core$Int64 $tmp78 = $tmp76(((frost$collections$CollectionView*) param2));
-frost$core$UInt64 $tmp79 = frost$core$Int64$convert$R$frost$core$UInt64($tmp78);
+frost$core$UInt64 $tmp79 = frost$core$Int64$get_asUInt64$R$frost$core$UInt64($tmp78);
 org$frostlang$frostc$ASTNode$init$frost$core$Int64$org$frostlang$frostc$Position$frost$core$UInt64($tmp73, $tmp74, param1, $tmp79);
 frost$collections$Array$add$frost$collections$Array$T($tmp71, ((frost$core$Object*) $tmp73));
 org$frostlang$frostc$Compiler$TypeContext* $tmp80 = (org$frostlang$frostc$Compiler$TypeContext*) frostObjectAlloc(32, (frost$core$Class*) &org$frostlang$frostc$Compiler$TypeContext$class);

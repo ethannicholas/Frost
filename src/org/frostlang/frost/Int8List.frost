@@ -53,7 +53,7 @@ class Int8List : ListView<Int8> {
 
     @override
     function [](index:Int):Int8 {
-        return (range.start + range.step * index.convert()->Int8).convert()->Int8
+        return (range.start + range.step * index.asInt8).asInt8
     }
 
     @override

@@ -75,7 +75,7 @@ while ($tmp17->$class != (frost$core$Class*) &frost$math$Random$class) {
 }
 $fn19 $tmp18 = $tmp17->methods[2];
 frost$core$Int64 $tmp20 = $tmp18(param0);
-frost$core$Int32 $tmp21 = frost$core$Int64$convert$R$frost$core$Int32($tmp20);
+frost$core$Int32 $tmp21 = frost$core$Int64$get_asInt32$R$frost$core$Int32($tmp20);
 return $tmp21;
 
 }
@@ -157,7 +157,7 @@ while ($tmp55->$class != (frost$core$Class*) &frost$math$Random$class) {
 }
 $fn57 $tmp56 = $tmp55->methods[1];
 frost$core$Int32 $tmp58 = $tmp56(param0);
-frost$core$UInt32 $tmp59 = frost$core$Int32$convert$R$frost$core$UInt32($tmp58);
+frost$core$UInt32 $tmp59 = frost$core$Int32$get_asUInt32$R$frost$core$UInt32($tmp58);
 frost$core$UInt32 $tmp60 = (frost$core$UInt32) {8};
 frost$core$UInt32 $tmp61 = frost$core$UInt32$$SHR$frost$core$UInt32$R$frost$core$UInt32($tmp59, $tmp60);
 frost$core$UInt32 $tmp62 = (frost$core$UInt32) {16777216};
@@ -174,7 +174,7 @@ while ($tmp64->$class != (frost$core$Class*) &frost$math$Random$class) {
 }
 $fn66 $tmp65 = $tmp64->methods[2];
 frost$core$Int64 $tmp67 = $tmp65(param0);
-frost$core$UInt64 $tmp68 = frost$core$Int64$convert$R$frost$core$UInt64($tmp67);
+frost$core$UInt64 $tmp68 = frost$core$Int64$get_asUInt64$R$frost$core$UInt64($tmp67);
 frost$core$UInt64 $tmp69 = (frost$core$UInt64) {11};
 frost$core$UInt64 $tmp70 = frost$core$UInt64$$SHR$frost$core$UInt64$R$frost$core$UInt64($tmp68, $tmp69);
 frost$core$UInt64 $tmp71 = (frost$core$UInt64) {9007199254740992};

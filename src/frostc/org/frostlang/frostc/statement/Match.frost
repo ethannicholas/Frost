@@ -96,7 +96,7 @@ class Match {
                                             {
                                                 def unrefs := AutoUnrefs(compiler)
                                                 def eqArgs := [ASTNode.INT(base.position(),
-                                                        cc.second.rawValue.convert())]
+                                                        cc.second.rawValue.asUInt64)]
                                                 def test := Call.compile(compiler, base.position(),
                                                         choiceRawValue, "=", eqArgs,
                                                         TypeContext.TYPE(Type.Bit()))
@@ -148,7 +148,7 @@ class Match {
                                 def cc := compiler.getChoiceCase(t)
                                 if cc !== null {
                                     def args := [ASTNode.INT(t.position(),
-                                            cc.second.rawValue.convert())]
+                                            cc.second.rawValue.asUInt64)]
                                     test := Call.compile(compiler, t.position(), choiceRawValue,
                                             "=", args, TypeContext.TYPE(Type.Bit()))
                                     if test == null {

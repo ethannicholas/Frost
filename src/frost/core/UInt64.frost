@@ -439,7 +439,7 @@ class UInt64 : Value, Key<UInt64>, Comparable<UInt64>, Formattable, ListView<Bit
     }
     ===Returns a list of all integers in the given range. The list is 'lazy', meaning that it does not actually allocate memory to hold the entire list.===
     @class
-    @pre(range.max - range.min < Int64.MAX.convert()->UInt64)
+    @pre(range.max - range.min < Int64.MAX.asUInt64)
     function [](range:Range<UInt64>):ListView<UInt64> {
         return org.frostlang.frost.UInt64List(SteppedRange<UInt64, UInt64>(range.min, range.max, 1, range.inclusive))
     }
@@ -484,47 +484,56 @@ class UInt64 : Value, Key<UInt64>, Comparable<UInt64>, Formattable, ListView<Bit
     }
 
     ===Returns this number truncated to an bit signed number.===
-    function convert():Int8 {
+    property asInt8:Int8
+    function get_asInt8():Int8 {
         return Int8(value->builtin_int8)
     }
 
     ===Returns this number truncated to a bit signed number.===
-    function convert():Int16 {
+    property asInt16:Int16
+    function get_asInt16():Int16 {
         return Int16(value->builtin_int16)
     }
 
     ===Returns this number truncated to a bit signed number.===
-    function convert():Int32 {
+    property asInt32:Int32
+    function get_asInt32():Int32 {
         return Int32(value->builtin_int32)
     }
 
     ===Returns this number reinterpreted to a bit signed number.===
-    function convert():Int64 {
+    property asInt64:Int64
+    function get_asInt64():Int64 {
         return Int64(value->builtin_int64)
     }
 
     ===Returns this number truncated to an bit unsigned number.===
-    function convert():UInt8 {
+    property asUInt8:UInt8
+    function get_asUInt8():UInt8 {
         return UInt8(value->builtin_uint8)
     }
 
     ===Returns this number truncated to a bit unsigned number.===
-    function convert():UInt16 {
+    property asUInt16:UInt16
+    function get_asUInt16():UInt16 {
         return UInt16(value->builtin_uint16)
     }
 
     ===Returns this number truncated to a bit unsigned number.===
-    function convert():UInt32 {
+    property asUInt32:UInt32
+    function get_asUInt32():UInt32 {
         return UInt32(value->builtin_uint32)
     }
 
     ===Returns this number truncated to a bit signed number.===
-    function convert():Real32 {
+    property asReal32:Real32
+    function get_asReal32():Real32 {
         return Real32(value->builtin_float32)
     }
 
     ===Returns this number reinterpreted to a bit signed number.===
-    function convert():Real64 {
+    property asReal64:Real64
+    function get_asReal64():Real64 {
         return Real64(value->builtin_float64)
     }
 
@@ -537,7 +546,7 @@ class UInt64 : Value, Key<UInt64>, Comparable<UInt64>, Formattable, ListView<Bit
         var value := self
         if value >= 0 {
             do {
-                chars[index] := Char8((value % 10 + 48).convert())
+                chars[index] := Char8((value % 10 + 48).asUInt8)
                 value := (value // 10)
                 index -= 1
             }
@@ -546,7 +555,7 @@ class UInt64 : Value, Key<UInt64>, Comparable<UInt64>, Formattable, ListView<Bit
         }
         else {
             do {
-                chars[index] := Char8((48 - value % 10).convert())
+                chars[index] := Char8((48 - value % 10).asUInt8)
                 value := (value // 10)
                 index -= 1
             }

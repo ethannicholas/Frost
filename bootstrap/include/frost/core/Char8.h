@@ -26,16 +26,16 @@ frost$core$Bit frost$core$Char8$isWhitespace$R$frost$core$Bit(frost$core$Char8 s
 frost$core$String* frost$core$Char8$$MUL$frost$core$Int64$R$frost$core$String(frost$core$Char8 self, frost$core$Int64 p_count);
 frost$core$String* frost$core$Char8$$MUL$frost$core$Int64$frost$core$Char8$R$frost$core$String(frost$core$Int64 p_count, frost$core$Char8 p_char);
 frost$core$Int64 frost$core$Char8$get_hash$R$frost$core$Int64(frost$core$Char8 self);
-frost$core$Char16 frost$core$Char8$convert$R$frost$core$Char16(frost$core$Char8 self);
-frost$core$Char32 frost$core$Char8$convert$R$frost$core$Char32(frost$core$Char8 self);
-frost$core$Int8 frost$core$Char8$convert$R$frost$core$Int8(frost$core$Char8 self);
-frost$core$Int16 frost$core$Char8$convert$R$frost$core$Int16(frost$core$Char8 self);
-frost$core$Int32 frost$core$Char8$convert$R$frost$core$Int32(frost$core$Char8 self);
-frost$core$Int64 frost$core$Char8$convert$R$frost$core$Int64(frost$core$Char8 self);
-frost$core$UInt8 frost$core$Char8$convert$R$frost$core$UInt8(frost$core$Char8 self);
-frost$core$UInt16 frost$core$Char8$convert$R$frost$core$UInt16(frost$core$Char8 self);
-frost$core$UInt32 frost$core$Char8$convert$R$frost$core$UInt32(frost$core$Char8 self);
-frost$core$UInt64 frost$core$Char8$convert$R$frost$core$UInt64(frost$core$Char8 self);
+frost$core$Char16 frost$core$Char8$get_asChar16$R$frost$core$Char16(frost$core$Char8 self);
+frost$core$Char32 frost$core$Char8$get_asChar32$R$frost$core$Char32(frost$core$Char8 self);
+frost$core$Int8 frost$core$Char8$get_asInt8$R$frost$core$Int8(frost$core$Char8 self);
+frost$core$Int16 frost$core$Char8$get_asInt16$R$frost$core$Int16(frost$core$Char8 self);
+frost$core$Int32 frost$core$Char8$get_asInt32$R$frost$core$Int32(frost$core$Char8 self);
+frost$core$Int64 frost$core$Char8$get_asInt64$R$frost$core$Int64(frost$core$Char8 self);
+frost$core$UInt8 frost$core$Char8$get_asUInt8$R$frost$core$UInt8(frost$core$Char8 self);
+frost$core$UInt16 frost$core$Char8$get_asUInt16$R$frost$core$UInt16(frost$core$Char8 self);
+frost$core$UInt32 frost$core$Char8$get_asUInt32$R$frost$core$UInt32(frost$core$Char8 self);
+frost$core$UInt64 frost$core$Char8$get_asUInt64$R$frost$core$UInt64(frost$core$Char8 self);
 frost$core$String* frost$core$Char8$get_asString$R$frost$core$String(frost$core$Char8 self);
 void frost$core$Char8$cleanup(frost$core$Char8 self);
 

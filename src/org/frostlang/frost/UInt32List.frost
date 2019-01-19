@@ -43,7 +43,7 @@ class UInt32List : ListView<UInt32> {
 
     @override
     function [](index:Int):UInt32 {
-        return (range.start + range.step * index.convert()->UInt32)
+        return (range.start + range.step * index.asUInt32)
     }
 
     @override

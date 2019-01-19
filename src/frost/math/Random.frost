@@ -33,7 +33,7 @@ interface Random {
     ================================================================================================
     @default
     method int32():Int32 {
-        return int64().convert()
+        return int64().asInt32
     }
 
     ================================================================================================
@@ -73,7 +73,7 @@ interface Random {
     @default
     @post(@return >= 0 & @return < 1)
     method real32():Real32 {
-        return (int32().convert()->UInt32 >> 8) / (1 << 24)
+        return (int32().asUInt32 >> 8) / (1 << 24)
     }
         
     ================================================================================================
@@ -84,7 +84,7 @@ interface Random {
     @default
     @post(@return >= 0 & @return < 1)
     method real64():Real64 {
-        return (int64().convert()->UInt64 >> 11) / (1 << 53)
+        return (int64().asUInt64 >> 11) / (1 << 53)
     }
 
 }

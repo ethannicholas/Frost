@@ -168,14 +168,14 @@ class String : Immutable, Key<String>, Comparable<String>, Iterable<Char32>, For
         method next():Char32 {
             assert index < str._length
             def c := str.data[index]
-            var result:Int32 := c.convert()
+            var result := c.asInt32
             if c.value->builtin_int64 && 0xFF < 0b10000000 {
                 index += 1
                 return Char32(result)
             }
             if c.value->builtin_int64 && 0xFF < 0b11000000 {
                 if index + 1 < str._length {
-                    result := result && 0b11111 << 6 + str.data[index + 1].convert()->Int32 &&
+                    result := result && 0b11111 << 6 + str.data[index + 1].asInt32 &&
                             0b111111
                 }
                 else {
@@ -186,8 +186,8 @@ class String : Immutable, Key<String>, Comparable<String>, Iterable<Char32>, For
             }
             if c.value->builtin_int64 && 0xFF < 0b11100000 {
                 if index + 2 < str._length {
-                    result := result && 0b1111 << 12 + str.data[index + 1].convert()->Int32 &&
-                            0b111111 << 6 + str.data[index + 2].convert()->Int32 && 0b111111
+                    result := result && 0b1111 << 12 + str.data[index + 1].asInt32 &&
+                            0b111111 << 6 + str.data[index + 2].asInt32 && 0b111111
                 }
                 else {
                     result := 0
@@ -196,9 +196,9 @@ class String : Immutable, Key<String>, Comparable<String>, Iterable<Char32>, For
                 return Char32(result)
             }
             if index + 3 < str._length {
-                result := result && 0b111 << 18 + str.data[index + 1].convert()->Int32 &&
-                        0b111111 << 12 + str.data[index + 2].convert()->Int32 && 0b111111 << 6 +
-                        str.data[index + 3].convert()->Int32 && 0b111111
+                result := result && 0b111 << 18 + str.data[index + 1].asInt32 &&
+                        0b111111 << 12 + str.data[index + 2].asInt32 && 0b111111 << 6 +
+                        str.data[index + 3].asInt32 && 0b111111
             }
             else {
                 result := 0
@@ -424,7 +424,7 @@ class String : Immutable, Key<String>, Comparable<String>, Iterable<Char32>, For
                             result.append("\\t")
                         }
                         otherwise {
-                            if c.convert()->UInt8 >= 32 & c.convert()->UInt8 <= 126 {
+                            if c.asUInt8 >= 32 & c.asUInt8 <= 126 {
                                 result.append(c)
                             }
                             else {
@@ -644,25 +644,25 @@ class String : Immutable, Key<String>, Comparable<String>, Iterable<Char32>, For
     function [](index:Index):Char32 {
         def idx := index.value
         def c := data[idx]
-        var result:Int32 := c.convert()
+        var result := c.asInt32
         if c.value->builtin_int64 && 0xFF < 0b11000000 {
             return Char32(result)
         }
         if c.value->builtin_int64 && 0xFF < 0b11100000 {
             assert idx + 1 < _length
-            result := result && 0b11111 << 6 + data[idx + 1].convert()->Int32 && 0b111111
+            result := result && 0b11111 << 6 + data[idx + 1].asInt32 && 0b111111
             return Char32(result)
         }
         if c.value->builtin_int64 && 0xFF < 0b11110000 {
             assert idx + 2 < _length
-            result := result && 0b1111 << 12 + data[idx + 1].convert()->Int32 && 0b111111 << 6 +
-                    data[idx + 2].convert()->Int32 && 0b111111
+            result := result && 0b1111 << 12 + data[idx + 1].asInt32 && 0b111111 << 6 +
+                    data[idx + 2].asInt32 && 0b111111
             return Char32(result)
         }
         assert idx + 3 < _length
-        result := result && 0b111 << 18 + data[idx + 1].convert()->Int32 && 0b111111 << 12 +
-                data[idx + 2].convert()->Int32 && 0b111111 << 6 +
-                data[idx + 3].convert()->Int32 && 0b111111
+        result := result && 0b111 << 18 + data[idx + 1].asInt32 && 0b111111 << 12 +
+                data[idx + 2].asInt32 && 0b111111 << 6 +
+                data[idx + 3].asInt32 && 0b111111
         return Char32(result)
     }
 
@@ -1456,7 +1456,8 @@ class String : Immutable, Key<String>, Comparable<String>, Iterable<Char32>, For
 
     @returns this string converted to a number, or `null`
     ================================================================================================
-    function convert():Int64? {
+    property asInt64:Int64?
+    function get_asInt64():Int64? {
         if _length = 0 {
             return null
         }
@@ -1487,7 +1488,8 @@ class String : Immutable, Key<String>, Comparable<String>, Iterable<Char32>, For
 
     @returns this string converted to a number, or `null`
     ================================================================================================
-    function convert():UInt64? {
+    property asUInt64:UInt64?
+    function get_asUInt64():UInt64? {
         if _length = 0 {
             return null
         }
@@ -1508,7 +1510,8 @@ class String : Immutable, Key<String>, Comparable<String>, Iterable<Char32>, For
 
     @returns this string converted to a number, or `null`
     ================================================================================================
-    function convert():Real64? {
+    property asReal64:Real64?
+    function get_asReal64():Real64? {
         return Frost.toReal64(self)
     }
 

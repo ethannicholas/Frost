@@ -1010,7 +1010,7 @@ class UInt8 : Value, Key<UInt8>, Comparable<UInt8>, Formattable, ListView<Bit> {
 
     @override
     function get_iterator():Iterator<Bit> {
-        return org.frostlang.frost.IntBitIterator(self.convert()->UInt64, 1 << 7)
+        return org.frostlang.frost.IntBitIterator(self.asUInt64, 1 << 7)
     }
 
     @override
@@ -1026,51 +1026,60 @@ class UInt8 : Value, Key<UInt8>, Comparable<UInt8>, Formattable, ListView<Bit> {
         if result == null {
             return null
         }
-        return result.convert()->UInt8
+        return result.asUInt8
     }
 
     ===Returns this number reinterpreted to an bit signed number.===
-    function convert():Int8 {
+    property asInt8:Int8
+    function get_asInt8():Int8 {
         return Int8(value->builtin_int8)
     }
 
     ===Returns this number zero extended to a bit signed number.===
-    function convert():Int16 {
+    property asInt16:Int16
+    function get_asInt16():Int16 {
         return Int16(value->builtin_int16)
     }
 
     ===Returns this number zero extended to a bit signed number.===
-    function convert():Int32 {
+    property asInt32:Int32
+    function get_asInt32():Int32 {
         return Int32(value->builtin_int32)
     }
 
     ===Returns this number zero extended to a bit signed number.===
-    function convert():Int64 {
+    property asInt64:Int64
+    function get_asInt64():Int64 {
         return Int64(value->builtin_int64)
     }
 
     ===Returns this number zero extended to a bit unsigned number.===
-    function convert():UInt16 {
+    property asUInt16:UInt16
+    function get_asUInt16():UInt16 {
         return UInt16(value->builtin_uint16)
     }
 
     ===Returns this number zero extended to a bit unsigned number.===
-    function convert():UInt32 {
+    property asUInt32:UInt32
+    function get_asUInt32():UInt32 {
         return UInt32(value->builtin_uint32)
     }
 
     ===Returns this number zero extended to a bit unsigned number.===
-    function convert():UInt64 {
+    property asUInt64:UInt64
+    function get_asUInt64():UInt64 {
         return UInt64(value->builtin_uint64)
     }
 
     ===Returns this number zero extended to a bit signed number.===
-    function convert():Real32 {
+    property asReal32:Real32
+    function get_asReal32():Real32 {
         return Real32(value->builtin_float32)
     }
 
     ===Returns this number zero extended to a bit signed number.===
-    function convert():Real64 {
+    property asReal64:Real64
+    function get_asReal64():Real64 {
         return Real64(value->builtin_float64)
     }
 
@@ -1083,8 +1092,8 @@ class UInt8 : Value, Key<UInt8>, Comparable<UInt8>, Formattable, ListView<Bit> {
         var value := self
         if value >= 0 {
             do {
-                chars[index] := Char8((value % 10 + 48).convert())
-                value := (value // 10).convert()->UInt8
+                chars[index] := Char8((value % 10 + 48).asUInt8)
+                value := (value // 10).asUInt8
                 index -= 1
             }
             while value > 0
@@ -1092,8 +1101,8 @@ class UInt8 : Value, Key<UInt8>, Comparable<UInt8>, Formattable, ListView<Bit> {
         }
         else {
             do {
-                chars[index] := Char8((48 - value % 10).convert())
-                value := (value // 10).convert()->UInt8
+                chars[index] := Char8((48 - value % 10).asUInt8)
+                value := (value // 10).asUInt8
                 index -= 1
             }
             while value < 0
@@ -1109,6 +1118,6 @@ class UInt8 : Value, Key<UInt8>, Comparable<UInt8>, Formattable, ListView<Bit> {
     === Returns a formatted representation of this number. Supported format strings are `""`, `"d"`, or `"D"` for decimal, `"b"` or `"B"` for binary, `"o"` or `"O"` for octal, `"x"` for lowercase hexadecimal, and `"X"` for uppercase hexadecimal. ===
     @override
     function format(fmt:String):String {
-        return Frost.format(false, self.convert()->UInt64, 0xFF, fmt)
+        return Frost.format(false, self.asUInt64, 0xFF, fmt)
     }
 }

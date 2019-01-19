@@ -1399,7 +1399,7 @@ class Compiler {
     }
 
     method getClass(type:Type):ClassDecl? {
-        var result:ClassDecl
+        var result:ClassDecl?
         match type.typeKind {
             when Type.Kind.CLASS {
                 result := getClass(type.position, type.name)
@@ -2322,7 +2322,7 @@ class Compiler {
     Returns the size in bits of the smallest Char type that can this codepoint.
     ================================================================================================
     function smallestCharSize(char:Char32):Int {
-        def v := char.convert()->Int32
+        def v := char.asInt32
         if v <= 255 {
             return 8
         }
@@ -2601,30 +2601,30 @@ class Compiler {
             }
             when ASTNode.INT(_, value) {
                 def result := Array<Type>()
-                def signedValue := value.convert()->Int64
-                if signedValue >= Int8.MIN.convert() & signedValue <= Int8.MAX.convert() {
+                def signedValue := value.asInt64
+                if signedValue >= Int8.MIN.asInt64 & signedValue <= Int8.MAX.asInt64 {
                     result.add(Type.BuiltinInt8())
                     result.add(Type.Int8())
                 }
-                if signedValue >= Int16.MIN.convert() & signedValue <= Int16.MAX.convert() {
+                if signedValue >= Int16.MIN.asInt64 & signedValue <= Int16.MAX.asInt64 {
                     result.add(Type.BuiltinInt16())
                     result.add(Type.Int16())
                 }
-                if signedValue >= Int32.MIN.convert() & signedValue <= Int32.MAX.convert() {
+                if signedValue >= Int32.MIN.asInt64 & signedValue <= Int32.MAX.asInt64 {
                     result.add(Type.BuiltinInt32())
                     result.add(Type.Int32())
                 }
                 result.add(Type.BuiltinInt64())
                 result.add(Type.Int64())
-                if value >= UInt8.MIN.convert() & value <= UInt8.MAX.convert() {
+                if value >= UInt8.MIN.asUInt64 & value <= UInt8.MAX.asUInt64 {
                     result.add(Type.BuiltinUInt8())
                     result.add(Type.UInt8())
                 }
-                if value >= UInt16.MIN.convert() & value <= UInt16.MAX.convert() {
+                if value >= UInt16.MIN.asUInt64 & value <= UInt16.MAX.asUInt64 {
                     result.add(Type.BuiltinUInt16())
                     result.add(Type.UInt16())
                 }
-                if value >= UInt32.MIN.convert() & value <= UInt32.MAX.convert() {
+                if value >= UInt32.MIN.asUInt64 & value <= UInt32.MAX.asUInt64 {
                     result.add(Type.BuiltinUInt32())
                     result.add(Type.UInt32())
                 }
@@ -3019,7 +3019,7 @@ class Compiler {
             }
             when ASTNode.INT(_, value) {
                 if (target.typeKind = Type.Kind.BUILTIN_INT &
-                        requiredSize(value.convert()->Int64) <= target.size) |
+                        requiredSize(value.asInt64) <= target.size) |
                         (target.typeKind = Type.Kind.BUILTIN_UINT &
                         requiredSize(value) <= target.size) {
                     return Pair<Type, Int>(target, 0)
@@ -3665,7 +3665,7 @@ class Compiler {
                 def inits := getSymbolTable(cc.owner)["init"]
                 assert inits !== null
                 resolve(inits->MethodDecl)
-                def args := [ASTNode.INT(position, cc.rawValue.convert())]
+                def args := [ASTNode.INT(position, cc.rawValue.asUInt64)]
                 if isValue(cc.owner) {
                     return Call.compile(self, position, symbolRef(position, null, inits), args,
                             TypeContext.UNSPECIFIED)
@@ -3995,17 +3995,19 @@ class Compiler {
     }
 
     ================================================================================================
-    Converts an object to a different type using the appropriate overload of the `convert` function.
-    Reports an error and returns `null` if no such conversion is possible.
+    Converts an object to a different type using the appropriate `as` property. Reports an error and
+    returns `null` if no such conversion is possible.
     ================================================================================================
-     method convert(value:IR.Value?, target:Type):IR.Value? {
+    method convert(value:IR.Value?, target:Type):IR.Value? {
         if value == null {
             return value
         }
         if value.type() = target {
             return value
         }
-        return Call.compile(self, Position(), value, "convert", [], TypeContext.TYPE(target))
+        def simpleName := target.name[target.name.next(target.name.lastIndexOf("."))..]
+        return Call.compile(self, Position(), value, "get_as\{simpleName}", [],
+                TypeContext.TYPE(target))
     }
 
     method getVTableIndex(m:MethodDecl):Int {
@@ -4221,7 +4223,7 @@ class Compiler {
             return null
         }
         def finalArgs := Array<ASTNode>()
-        finalArgs.add(ASTNode.INT(position, cc.rawValue.convert()))
+        finalArgs.add(ASTNode.INT(position, cc.rawValue.asUInt64))
         finalArgs.addAll(args)
         if isValue(cc.owner) {
             return coerce(position, Call.compile(self, position,
@@ -4742,7 +4744,7 @@ class Compiler {
                             return compileExpression(ASTNode.CALL(position,
                                     ASTNode.IR_WRAPPER(position, IR.Value.TYPE(t)),
                                     FixedArray<ASTNode>.from([ASTNode.INT(position,
-                                        text[0].convert())])))
+                                        text[0].asUInt64)])))
                         }
                     }
                 }

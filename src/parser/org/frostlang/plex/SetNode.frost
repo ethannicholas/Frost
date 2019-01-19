@@ -11,7 +11,7 @@ class SetNode : Node {
 
     @class
     method set(table:List<Bit>, c:Char8) {
-        def i := c.convert()->Int64
+        def i := c.asInt64
         while table.count <= i {
             table.add(false)
         }
