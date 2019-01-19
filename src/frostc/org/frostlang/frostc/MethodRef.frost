@@ -118,7 +118,7 @@ class MethodRef {
     }
 
     @override
-    function convert():String {
+    function get_asString():String {
         return "MethodRef(\{value.declaration}, \{effectiveType})"
     }
 }

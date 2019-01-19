@@ -962,7 +962,7 @@ class UInt16 : Value, Key<UInt16>, Comparable<UInt16>, Formattable, ListView<Bit
 
     ===Returns this number converted to a decimal string.===
     @override
-    function convert():String {
+    function get_asString():String {
         constant max := 5
         def chars := Pointer<Char8>.alloc(max)
         var index := max - 1

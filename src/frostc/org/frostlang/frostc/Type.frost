@@ -415,12 +415,12 @@ class Type : Symbol, Key<Type> {
 
     @class
     method NegatedIntLiteral(value:UInt64):Type {
-        return Type("IntegerLiteral(-\{value.convert()})", Kind.INT_LITERAL, Position(), true)
+        return Type("IntegerLiteral(-\{value})", Kind.INT_LITERAL, Position(), true)
     }
 
     @class
     method RealLiteral(value:Real64):Type {
-        return Type("RealLiteral(\{value.convert()})", Kind.REAL_LITERAL, Position(), true)
+        return Type("RealLiteral(\{value})", Kind.REAL_LITERAL, Position(), true)
     }
 
     @class
@@ -784,7 +784,7 @@ class Type : Symbol, Key<Type> {
     }
 
     @override
-    function convert():String {
+    function get_asString():String {
         return name
     }
 }

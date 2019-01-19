@@ -17,7 +17,7 @@ typedef struct org$frostlang$frostc$IR$Value org$frostlang$frostc$IR$Value;
 #include "org/frostlang/frostc/Variable/Kind_types.h"
 
 org$frostlang$frostc$Position org$frostlang$frostc$ASTNode$position$R$org$frostlang$frostc$Position(org$frostlang$frostc$ASTNode* self);
-frost$core$String* org$frostlang$frostc$ASTNode$convert$R$frost$core$String(org$frostlang$frostc$ASTNode* self);
+frost$core$String* org$frostlang$frostc$ASTNode$get_asString$R$frost$core$String(org$frostlang$frostc$ASTNode* self);
 void org$frostlang$frostc$ASTNode$cleanup(org$frostlang$frostc$ASTNode* self);
 void org$frostlang$frostc$ASTNode$init$frost$core$Int64$org$frostlang$frostc$Position$frost$core$String$frost$core$String$Q$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$ASTNode* self, frost$core$Int64 p_rv, org$frostlang$frostc$Position p_f0, frost$core$String* p_f1, frost$core$String* p_f2, org$frostlang$frostc$ASTNode* p_f3);
 void org$frostlang$frostc$ASTNode$init$frost$core$Int64$org$frostlang$frostc$Position$org$frostlang$frostc$FixedArray$LTorg$frostlang$frostc$ASTNode$GT(org$frostlang$frostc$ASTNode* self, frost$core$Int64 p_rv, org$frostlang$frostc$Position p_f0, org$frostlang$frostc$FixedArray* p_f1);

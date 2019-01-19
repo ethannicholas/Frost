@@ -6,6 +6,6 @@ typedef struct org$frostlang$frostc$IR$Block org$frostlang$frostc$IR$Block;
 typedef struct frost$core$String frost$core$String;
 
 void org$frostlang$frostc$IR$Block$init$org$frostlang$frostc$IR$Block$ID(org$frostlang$frostc$IR$Block* self, org$frostlang$frostc$IR$Block$ID p_id);
-frost$core$String* org$frostlang$frostc$IR$Block$convert$R$frost$core$String(org$frostlang$frostc$IR$Block* self);
+frost$core$String* org$frostlang$frostc$IR$Block$get_asString$R$frost$core$String(org$frostlang$frostc$IR$Block* self);
 void org$frostlang$frostc$IR$Block$cleanup(org$frostlang$frostc$IR$Block* self);
 

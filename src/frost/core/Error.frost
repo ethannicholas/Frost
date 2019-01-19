@@ -17,7 +17,7 @@ class Error : Immutable {
     }
 
     @override
-    function convert():String {
+    function get_asString():String {
         return "\{message}"
     }
 }

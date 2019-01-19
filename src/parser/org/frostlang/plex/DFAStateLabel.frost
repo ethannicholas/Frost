@@ -35,7 +35,7 @@ class DFAStateLabel : Key<DFAStateLabel> {
     }
 
     @override
-    function convert():String {
+    function get_asString():String {
         def result := MutableString("<")
         var separator := ""
         for s in states {

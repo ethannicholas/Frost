@@ -164,13 +164,13 @@ class IR {
             }
 
             @override
-            function convert():String {
+            function get_asString():String {
                 return "$\{value}"
             }
         }
 
         @override
-        function convert():String {
+        function get_asString():String {
             match self {
                 when BINARY(position, left, op, right, type) {
                     return "binary \{left}, \{op}, \{right}, \{type}"
@@ -277,7 +277,7 @@ class IR {
             }
 
             @override
-            function convert():String {
+            function get_asString():String {
                 return "block\{value}"
             }
         }
@@ -293,7 +293,7 @@ class IR {
         }
 
         @override
-        function convert():String {
+        function get_asString():String {
             def result := MutableString("\{id}:\n")
             for i in 0 .. statements.count {
                 result.append(ids[i])
@@ -370,13 +370,13 @@ class IR {
         }
 
         @override
-        function convert():String {
+        function get_asString():String {
             match self {
                 when BIT(value) {
-                    return value.convert()
+                    return value.asString
                 }
                 when INT(value, _) {
-                    return value.convert()
+                    return value.asString
                 }
                 when LOCAL(slot, type) {
                     return "LOCAL(\{slot}:\{type}*)"
@@ -391,7 +391,7 @@ class IR {
                     return "PARAMETER(\{index}:\{type})"
                 }
                 when REAL(value, _) {
-                    return value.convert()
+                    return value.asString
                 }
                 when REF(id, type) {
                     return "REF(\{id}:\{type})"
@@ -427,7 +427,7 @@ class IR {
                     return "SUPER(\{type})"
                 }
                 when TYPE(type) {
-                    return "TYPE(\{type.convert()})"
+                    return "TYPE(\{type.asString})"
                 }
             }
         }
@@ -500,7 +500,7 @@ class IR {
     }
 
     @override
-    function convert():String {
+    function get_asString():String {
         def result := MutableString()
         for i in 0 .. locals.count {
             result.append("local\{i}: \{locals[i]}\n")

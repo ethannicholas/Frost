@@ -25,7 +25,7 @@ frost$core$String* frost$json$JSON$asString$R$frost$core$String(frost$json$JSON*
 frost$core$Bit frost$json$JSON$asBit$R$frost$core$Bit(frost$json$JSON* self);
 frost$collections$MapView* frost$json$JSON$asObject$R$frost$collections$MapView$LTfrost$core$String$Cfrost$json$JSON$GT(frost$json$JSON* self);
 frost$collections$ListView* frost$json$JSON$asArray$R$frost$collections$ListView$LTfrost$json$JSON$GT(frost$json$JSON* self);
-frost$core$String* frost$json$JSON$convert$R$frost$core$String(frost$json$JSON* self);
+frost$core$String* frost$json$JSON$get_asString$R$frost$core$String(frost$json$JSON* self);
 void frost$json$JSON$cleanup(frost$json$JSON* self);
 void frost$json$JSON$init$frost$core$Int64$frost$core$Int64(frost$json$JSON* self, frost$core$Int64 p_rv, frost$core$Int64 p_f0);
 void frost$json$JSON$init$frost$core$Int64$frost$core$Real64(frost$json$JSON* self, frost$core$Int64 p_rv, frost$core$Real64 p_f0);

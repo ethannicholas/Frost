@@ -16,7 +16,7 @@
 
 
 static frost$core$String $s1;
-org$frostlang$frostc$IR$Block$class_type org$frostlang$frostc$IR$Block$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { org$frostlang$frostc$IR$Block$convert$R$frost$core$String, org$frostlang$frostc$IR$Block$cleanup} };
+org$frostlang$frostc$IR$Block$class_type org$frostlang$frostc$IR$Block$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { org$frostlang$frostc$IR$Block$get_asString$R$frost$core$String, org$frostlang$frostc$IR$Block$cleanup} };
 
 typedef frost$core$Int64 (*$fn23)(frost$collections$CollectionView*);
 
@@ -55,7 +55,7 @@ org$frostlang$frostc$IR$Block$ID* $tmp10 = &param0->id;
 return;
 
 }
-frost$core$String* org$frostlang$frostc$IR$Block$convert$R$frost$core$String(org$frostlang$frostc$IR$Block* param0) {
+frost$core$String* org$frostlang$frostc$IR$Block$get_asString$R$frost$core$String(org$frostlang$frostc$IR$Block* param0) {
 
 frost$core$MutableString* local0 = NULL;
 frost$core$Int64 local1;
@@ -63,7 +63,7 @@ frost$core$Int64 local1;
 frost$core$MutableString* $tmp11 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
 org$frostlang$frostc$IR$Block$ID* $tmp12 = &param0->id;
 org$frostlang$frostc$IR$Block$ID $tmp13 = *$tmp12;
-frost$core$String* $tmp14 = org$frostlang$frostc$IR$Block$ID$convert$R$frost$core$String($tmp13);
+frost$core$String* $tmp14 = org$frostlang$frostc$IR$Block$ID$get_asString$R$frost$core$String($tmp13);
 frost$core$String* $tmp15 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp14, &$s16);
 frost$core$MutableString$init$frost$core$String($tmp11, $tmp15);
 *(&local0) = ((frost$core$MutableString*) NULL);

@@ -5,8 +5,8 @@
 #include "frost/core/Object.h"
 #include "frost/core/Frost.h"
 
-__attribute__((weak)) frost$core$String* frost$core$Error$convert$R$frost$core$String$shim(frost$core$Error* p0) {
-    frost$core$String* result = frost$core$Error$convert$R$frost$core$String(p0);
+__attribute__((weak)) frost$core$String* frost$core$Error$get_asString$R$frost$core$String$shim(frost$core$Error* p0) {
+    frost$core$String* result = frost$core$Error$get_asString$R$frost$core$String(p0);
 
     return result;
 }
@@ -16,7 +16,7 @@ __attribute__((weak)) void frost$core$Error$cleanup$shim(frost$core$Error* p0) {
 }
 
 static frost$core$String $s1;
-frost$core$Error$class_type frost$core$Error$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Immutable$class, NULL, { frost$core$Error$convert$R$frost$core$String$shim, frost$core$Error$cleanup$shim} };
+frost$core$Error$class_type frost$core$Error$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Immutable$class, NULL, { frost$core$Error$get_asString$R$frost$core$String$shim, frost$core$Error$cleanup$shim} };
 
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x45\x72\x72\x6f\x72", 16, -3824106976449029430, NULL };
@@ -34,12 +34,12 @@ frost$core$String** $tmp4 = &param0->message;
 return;
 
 }
-frost$core$String* frost$core$Error$convert$R$frost$core$String(frost$core$Error* param0) {
+frost$core$String* frost$core$Error$get_asString$R$frost$core$String(frost$core$Error* param0) {
 
 // line 21
 frost$core$String** $tmp5 = &param0->message;
 frost$core$String* $tmp6 = *$tmp5;
-frost$core$String* $tmp7 = frost$core$String$convert$R$frost$core$String($tmp6);
+frost$core$String* $tmp7 = frost$core$String$get_asString$R$frost$core$String($tmp6);
 frost$core$String* $tmp8 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp7, &$s9);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp8));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp8));

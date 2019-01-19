@@ -19,6 +19,6 @@ void org$frostlang$frostc$ClassDecl$init$frost$io$File$org$frostlang$frostc$Posi
 frost$core$String* org$frostlang$frostc$ClassDecl$simpleName$R$frost$core$String(org$frostlang$frostc$ClassDecl* self);
 org$frostlang$frostc$Type* org$frostlang$frostc$ClassDecl$typeWithParameters$R$org$frostlang$frostc$Type(org$frostlang$frostc$ClassDecl* self);
 frost$core$Bit org$frostlang$frostc$ClassDecl$isSpecialization$R$frost$core$Bit(org$frostlang$frostc$ClassDecl* self);
-frost$core$String* org$frostlang$frostc$ClassDecl$convert$R$frost$core$String(org$frostlang$frostc$ClassDecl* self);
+frost$core$String* org$frostlang$frostc$ClassDecl$get_asString$R$frost$core$String(org$frostlang$frostc$ClassDecl* self);
 void org$frostlang$frostc$ClassDecl$cleanup(org$frostlang$frostc$ClassDecl* self);
 

@@ -7,7 +7,7 @@ choice Expression {
     NEGATE(Expression)
 
     @override
-    function convert():String {
+    function get_asString():String {
         match self {
             when NUMBER(v) { return v.convert() }
             when ADD(a, b) { return "(\{a} + \{b})" }

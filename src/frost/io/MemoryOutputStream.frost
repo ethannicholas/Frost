@@ -52,8 +52,8 @@ class MemoryOutputStream : OutputStream {
     [finish()] for performance reasons, as that does not make a copy.
     ================================================================================================
     @override
-    function convert():String {
-        return data.convert()
+    function get_asString():String {
+        return data.asString
     }
 
     ================================================================================================

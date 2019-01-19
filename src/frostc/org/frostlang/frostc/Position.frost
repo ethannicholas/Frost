@@ -28,7 +28,7 @@ class Position : Value, Key<Position> {
     }
 
     @override
-    function convert():String {
+    function get_asString():String {
         return "\{line}:\{column}"
     }
 }

@@ -13,6 +13,7 @@ frost$threads$Thread* frost$threads$Thread$start$$LP$RP$EQ$AM$GT$ST$LP$RP$R$fros
 frost$threads$Thread* frost$threads$Thread$start$$LP$RP$EQ$AM$GT$ST$LP$RP$frost$core$Bit$R$frost$threads$Thread(frost$core$Method* p_run, frost$core$Bit p_preventsExit);
 frost$threads$Thread* frost$threads$Thread$unsafeStart$$LP$RP$EQ$AM$GT$LP$RP$R$frost$threads$Thread(frost$core$MutableMethod* p_run);
 frost$threads$Thread* frost$threads$Thread$unsafeStart$$LP$RP$EQ$AM$GT$LP$RP$frost$core$Bit$R$frost$threads$Thread(frost$core$MutableMethod* p_run, frost$core$Bit p_preventsExit);
+void frost$threads$Thread$waitFor(frost$threads$Thread* self);
 frost$core$Int64 frost$threads$Thread$preferredThreadCount$R$frost$core$Int64();
 void frost$threads$Thread$sleep$frost$core$Int64(frost$core$Int64 p_millis);
 void frost$threads$Thread$cleanup(frost$threads$Thread* self);

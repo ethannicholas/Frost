@@ -19,7 +19,7 @@ class RemappedState : State {
     }
 
     @override
-    function convert():String {
+    function get_asString():String {
         def result := MutableString("Remapped(")
         var separator := ""
         for s in states {

@@ -147,7 +147,7 @@ class MutableString {
 
     -- FIXME @self
     method append(o:Object) {
-        append(o.convert()->String)
+        append(o.asString)
     }
 
     ================================================================================================
@@ -365,7 +365,7 @@ class MutableString {
     @returns `true` if the string matches
     ================================================================================================
     function matches(regex:RegularExpression):Bit {
-        return regex.matcher(convert()).matches()
+        return regex.matcher(asString).matches()
     }
 
     ================================================================================================
@@ -376,7 +376,7 @@ class MutableString {
     @returns `true` if the string contains a match
     ================================================================================================
     function contains(needle:RegularExpression):Bit {
-        return needle.matcher(convert()).find()
+        return needle.matcher(asString).find()
     }
 
     -- FIXME @self
@@ -403,7 +403,7 @@ class MutableString {
 
     -- FIXME @self
     method replace(search:RegularExpression, replacement:String, allowGroupReferences:Bit) {
-        def matcher := search.matcher(convert())
+        def matcher := search.matcher(asString)
         clear()
         while matcher.find() {
             matcher.appendReplacement(self, replacement, allowGroupReferences)
@@ -418,9 +418,9 @@ class MutableString {
         "This is a test!".replace(/\w+/, word => word.length)
 
     The regular expression `/\w+/` matches sequences of one or more word characters; in other words,
-    it matches all words occurring in the string. The replacement function 
-    `word => word.length.convert()` replaces each matched sequence with the number of characters in
-    the sequence, resulting in the text:
+    it matches all words occurring in the string. The replacement function `word => word.length`
+    replaces each matched sequence with the number of characters in the sequence, resulting in the
+    text:
 
         4 2 1 4!
 
@@ -429,10 +429,10 @@ class MutableString {
     ============================================================================
     -- FIXME @self
     method replace(search:RegularExpression, replacement:(String)=>(Object)) {
-        def matcher := search.matcher(convert())
+        def matcher := search.matcher(asString)
         clear()
         while matcher.find() {
-            matcher.appendReplacement(self, replacement(matcher.group(0)).convert(), false)
+            matcher.appendReplacement(self, replacement(matcher.group(0)).asString, false)
         }
         matcher.appendTail(self)
     }
@@ -448,14 +448,14 @@ class MutableString {
     ================================================================================================
     -- FIXME @self
     method replace(search:RegularExpression, replacement:(ListView<String?>)=>(Object)) {
-        def matcher := search.matcher(convert())
+        def matcher := search.matcher(asString)
         clear()
         while matcher.find() {
             def groups := Array<String?>()
             for i in 0 .. matcher.get_groupCount() {
                 groups.add(matcher.group(i))
             }
-            matcher.appendReplacement(self, replacement(groups).convert(), false)
+            matcher.appendReplacement(self, replacement(groups).asString, false)
         }
         matcher.appendTail(self)
     }
@@ -499,7 +499,7 @@ class MutableString {
 
     -- FIXME @self
     method []:=(index:Index, c:Char32) {
-        self[index ... index] := c.convert()
+        self[index ... index] := c.asString
     }
 
     -- FIXME @self
@@ -618,7 +618,7 @@ class MutableString {
     performance reasons, as that does not make a copy.
     ================================================================================================
     @override
-    function convert():String {
+    function get_asString():String {
         def result := Pointer<Char8>.alloc(_length)
         for i in 0 .. _length {
             result[i] := data[i]
@@ -628,7 +628,7 @@ class MutableString {
 
     ================================================================================================
     Invalidates this `MutableString` and returns its contents as an immutable `String`. This is
-    generally preferable to [convert()], as it does not copy the string's contents. Interacting in
+    generally preferable to [asString], as it does not copy the string's contents. Interacting in
     any way with a `MutableString` after `finish`ing will cause precondition violations (or, if
     safety checks are disabled, undefined behavior).
     ================================================================================================

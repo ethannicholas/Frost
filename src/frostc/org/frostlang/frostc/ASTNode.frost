@@ -259,7 +259,7 @@ choice ASTNode {
     }
 
     @override
-    function convert():String {
+    function get_asString():String {
         match self {
             when ANNOTATION(_, name, _, expr) {
                 if expr !== null {
@@ -268,7 +268,7 @@ choice ASTNode {
                 return name
             }
             when ARRAY(_, elements) {
-                return elements.convert()
+                return elements.asString
             }
             when ASSERT(_, test, msg) {
                 if msg == null {
@@ -286,7 +286,7 @@ choice ASTNode {
                 return "(\{left} \{op} \{right})"
             }
             when BIT(_, value) {
-                return value.convert()
+                return value.asString
             }
             when BLOCK(_, statements) {
                 def result := MutableString("{\n")
@@ -353,7 +353,7 @@ choice ASTNode {
                 if value !== null {
                     return "\{target} := \{value}"
                 }
-                return target.convert()
+                return target.asString
             }
             when DO(_, label, statements, test) {
                 def result := MutableString()
@@ -424,10 +424,10 @@ choice ASTNode {
                 return result.finish()
             }
             when INT(_, value) {
-                return value.convert()
+                return value.asString
             }
             when IR_WRAPPER(_, value) {
-                return value.convert()
+                return value.asString
             }
             when LOOP(_, label, statements) {
                 def result := MutableString()
@@ -540,7 +540,7 @@ choice ASTNode {
                 return result.finish()
             }
             when REAL(_, value) {
-                return value.convert()
+                return value.asString
             }
             when REGEX(_, src) {
                 return "/\{src}/"

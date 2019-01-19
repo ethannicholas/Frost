@@ -529,12 +529,12 @@ class WriteNumbers {
         if real(type) {
             out.printLine("    @override")
             out.printLine("    @external")
-            out.printLine("    function convert():String")
+            out.printLine("    function get_asString():String")
             return
         }
         out.printLine("    ===Returns this number converted to a decimal string.===")
         out.printLine("    @override")
-        out.printLine("    function convert():String {")
+        out.printLine("    function get_asString():String {")
         var max := max(type).convert()->String.length
         if signed(type) {
             max += 1 -- for minus sign
@@ -874,7 +874,7 @@ class WriteNumbers {
         out.printLine("    }")
         out.printLine()
         out.printLine("    @override")
-        out.printLine("    function convert():String {")
+        out.printLine("    function get_asString():String {")
         out.printLine("        return \"[\\{join()}]\"")
         out.printLine("    }")
         out.printLine("}")

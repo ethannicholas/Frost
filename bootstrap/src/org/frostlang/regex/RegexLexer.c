@@ -16,7 +16,7 @@
 
 
 static frost$core$String $s1;
-org$frostlang$regex$RegexLexer$class_type org$frostlang$regex$RegexLexer$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { frost$core$Object$convert$R$frost$core$String, org$frostlang$regex$RegexLexer$cleanup, org$frostlang$regex$RegexLexer$start$frost$core$String, org$frostlang$regex$RegexLexer$next$R$org$frostlang$regex$RegexToken} };
+org$frostlang$regex$RegexLexer$class_type org$frostlang$regex$RegexLexer$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { frost$core$Object$get_asString$R$frost$core$String, org$frostlang$regex$RegexLexer$cleanup, org$frostlang$regex$RegexLexer$start$frost$core$String, org$frostlang$regex$RegexLexer$next$R$org$frostlang$regex$RegexToken} };
 
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x72\x65\x67\x65\x78\x2e\x52\x65\x67\x65\x78\x4c\x65\x78\x65\x72", 30, -602420720171066643, NULL };

@@ -8,7 +8,7 @@
 struct { frost$core$Class* cl; ITable* next; void* methods[2]; } frost$core$Equatable$_frost$core$Equatable = { (frost$core$Class*) &frost$core$Equatable$class, NULL, { NULL, frost$core$Equatable$$NEQ$frost$core$Equatable$T$R$frost$core$Bit} };
 
 static frost$core$String $s1;
-frost$core$Equatable$class_type frost$core$Equatable$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Object$class, (ITable*) &frost$core$Equatable$_frost$core$Equatable, { frost$core$Object$convert$R$frost$core$String, frost$core$Object$cleanup, NULL, frost$core$Equatable$$NEQ$frost$core$Equatable$T$R$frost$core$Bit} };
+frost$core$Equatable$class_type frost$core$Equatable$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Object$class, (ITable*) &frost$core$Equatable$_frost$core$Equatable, { frost$core$Object$get_asString$R$frost$core$String, frost$core$Object$cleanup, NULL, frost$core$Equatable$$NEQ$frost$core$Equatable$T$R$frost$core$Bit} };
 
 typedef frost$core$Bit (*$fn4)(frost$core$Equatable*, frost$core$Equatable*);
 

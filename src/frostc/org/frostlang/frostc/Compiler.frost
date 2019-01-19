@@ -42,7 +42,7 @@ class Compiler {
         RESOLVED_WITH_ERRORS
 
         @override
-        function convert():String {
+        function get_asString():String {
             match self {
                 when UNRESOLVED {
                     return "UNRESOLVED"
@@ -119,7 +119,7 @@ class Compiler {
         }
 
         @override
-        function convert():String {
+        function get_asString():String {
             match self {
                 when UNSPECIFIED {
                     return "UNSPECIFIED"
@@ -145,7 +145,7 @@ class Compiler {
         TRY_SCOPE(IR.Block.ID?, Variable?)
 
         @override
-        function convert():String {
+        function get_asString():String {
             match self {
                 when LOOP(label, breakTarget, continueTarget) {
                     if label !== null {
@@ -163,8 +163,8 @@ class Compiler {
                     return "VALUE_SCOPE(\{v})"
                 }
                 when TRY_SCOPE(block, v) {
-                    return "TRY_SCOPE(\{(block !== null).choose(block.convert(), "<null>")}, " +
-                            "\{(v !== null).choose(v.convert(), "<null>")})"
+                    return "TRY_SCOPE(\{(block !== null).choose(block.asString, "<null>")}, " +
+                            "\{(v !== null).choose(v.asString, "<null>")})"
                 }
             }
         }
@@ -3704,6 +3704,9 @@ class Compiler {
     }
 
     method createMethodObject(position:Position, target:IR.Value?, m:MethodDecl):IR.Value? {
+        if !resolve(m) {
+            return null
+        }
         def effectiveType:Type
         def irType:Type
         if target !== null & !target.type().isClassLiteral {

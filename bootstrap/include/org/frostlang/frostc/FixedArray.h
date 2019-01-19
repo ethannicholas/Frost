@@ -17,5 +17,5 @@ void org$frostlang$frostc$FixedArray$cleanup(org$frostlang$frostc$FixedArray* se
 frost$core$Object* org$frostlang$frostc$FixedArray$$IDX$frost$core$Int64$R$org$frostlang$frostc$FixedArray$T(org$frostlang$frostc$FixedArray* self, frost$core$Int64 p_index);
 frost$core$Int64 org$frostlang$frostc$FixedArray$get_count$R$frost$core$Int64(org$frostlang$frostc$FixedArray* self);
 frost$collections$Iterator* org$frostlang$frostc$FixedArray$get_iterator$R$frost$collections$Iterator$LTorg$frostlang$frostc$FixedArray$T$GT(org$frostlang$frostc$FixedArray* self);
-frost$core$String* org$frostlang$frostc$FixedArray$convert$R$frost$core$String(org$frostlang$frostc$FixedArray* self);
+frost$core$String* org$frostlang$frostc$FixedArray$get_asString$R$frost$core$String(org$frostlang$frostc$FixedArray* self);
 

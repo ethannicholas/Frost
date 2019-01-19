@@ -13,8 +13,8 @@
 #include "frost/core/UInt64.h"
 #include "frost/collections/ImmutableArray.h"
 
-__attribute__((weak)) frost$core$String* frost$core$String$Match$convert$R$frost$core$String$shim(frost$core$String$Match* p0) {
-    frost$core$String* result = frost$core$String$Match$convert$R$frost$core$String(p0);
+__attribute__((weak)) frost$core$String* frost$core$String$Match$get_asString$R$frost$core$String$shim(frost$core$String$Match* p0) {
+    frost$core$String* result = frost$core$String$Match$get_asString$R$frost$core$String(p0);
 
     return result;
 }
@@ -24,7 +24,7 @@ __attribute__((weak)) void frost$core$String$Match$cleanup$shim(frost$core$Strin
 }
 
 static frost$core$String $s1;
-frost$core$String$Match$class_type frost$core$String$Match$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Immutable$class, NULL, { frost$core$String$Match$convert$R$frost$core$String$shim, frost$core$String$Match$cleanup$shim} };
+frost$core$String$Match$class_type frost$core$String$Match$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Immutable$class, NULL, { frost$core$String$Match$get_asString$R$frost$core$String$shim, frost$core$String$Match$cleanup$shim} };
 
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x4d\x61\x74\x63\x68", 23, 1490981604187616890, NULL };
@@ -150,7 +150,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp61));
 return;
 
 }
-frost$core$String* frost$core$String$Match$convert$R$frost$core$String(frost$core$String$Match* param0) {
+frost$core$String* frost$core$String$Match$get_asString$R$frost$core$String(frost$core$String$Match* param0) {
 
 // line 280
 frost$collections$ImmutableArray** $tmp62 = &param0->groups;

@@ -57,6 +57,6 @@ void frost$core$MutableString$$IDXEQ$frost$core$Range$LTfrost$core$Int64$Q$GT$fr
 void frost$core$MutableString$replace$frost$core$String$frost$core$String(frost$core$MutableString* self, frost$core$String* p_search, frost$core$String* p_replacement);
 void frost$core$MutableString$ensureCapacity$frost$core$Int64(frost$core$MutableString* self, frost$core$Int64 p_newSize);
 void frost$core$MutableString$clear(frost$core$MutableString* self);
-frost$core$String* frost$core$MutableString$convert$R$frost$core$String(frost$core$MutableString* self);
+frost$core$String* frost$core$MutableString$get_asString$R$frost$core$String(frost$core$MutableString* self);
 frost$core$String* frost$core$MutableString$finish$R$frost$core$String(frost$core$MutableString* self);
 

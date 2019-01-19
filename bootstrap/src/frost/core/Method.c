@@ -7,8 +7,8 @@
 #include "frost/core/Bit.h"
 #include "frost/core/Int64.h"
 
-__attribute__((weak)) frost$core$String* frost$core$Method$convert$R$frost$core$String$shim(frost$core$Method* p0) {
-    frost$core$String* result = frost$core$Method$convert$R$frost$core$String(p0);
+__attribute__((weak)) frost$core$String* frost$core$Method$get_asString$R$frost$core$String$shim(frost$core$Method* p0) {
+    frost$core$String* result = frost$core$Method$get_asString$R$frost$core$String(p0);
 
     return result;
 }
@@ -18,7 +18,7 @@ __attribute__((weak)) void frost$core$Method$cleanup$shim(frost$core$Method* p0)
 }
 
 static frost$core$String $s1;
-frost$core$Method$class_type frost$core$Method$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Immutable$class, NULL, { frost$core$Method$convert$R$frost$core$String$shim, frost$core$Method$cleanup$shim} };
+frost$core$Method$class_type frost$core$Method$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Immutable$class, NULL, { frost$core$Method$get_asString$R$frost$core$String$shim, frost$core$Method$cleanup$shim} };
 
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x4d\x65\x74\x68\x6f\x64", 17, 1146821009278619293, NULL };
@@ -45,7 +45,7 @@ frost$core$Immutable** $tmp5 = &param0->target;
 return;
 
 }
-frost$core$String* frost$core$Method$convert$R$frost$core$String(frost$core$Method* param0) {
+frost$core$String* frost$core$Method$get_asString$R$frost$core$String(frost$core$Method* param0) {
 
 // line 43
 frost$core$Immutable** $tmp6 = &param0->target;

@@ -28,7 +28,7 @@ class CharSet : Node {
     }
 
     @override
-    function convert():String {
+    function get_asString():String {
         return String(contents)
     }
 }

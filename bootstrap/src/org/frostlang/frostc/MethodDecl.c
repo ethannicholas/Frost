@@ -32,7 +32,7 @@
 
 
 static frost$core$String $s1;
-org$frostlang$frostc$MethodDecl$class_type org$frostlang$frostc$MethodDecl$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &org$frostlang$frostc$Symbol$class, NULL, { org$frostlang$frostc$MethodDecl$convert$R$frost$core$String, org$frostlang$frostc$MethodDecl$cleanup, org$frostlang$frostc$MethodDecl$get_heritable$R$frost$core$Bit, org$frostlang$frostc$MethodDecl$get_isVirtual$R$frost$core$Bit, org$frostlang$frostc$MethodDecl$isInstance$R$frost$core$Bit, org$frostlang$frostc$MethodDecl$matches$org$frostlang$frostc$MethodDecl$R$frost$core$Bit, org$frostlang$frostc$MethodDecl$get_priority$R$frost$core$Int64, org$frostlang$frostc$MethodDecl$get_type$R$org$frostlang$frostc$Type, org$frostlang$frostc$MethodDecl$get_signature$R$frost$core$String, org$frostlang$frostc$MethodDecl$get_declaration$R$frost$core$String} };
+org$frostlang$frostc$MethodDecl$class_type org$frostlang$frostc$MethodDecl$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &org$frostlang$frostc$Symbol$class, NULL, { org$frostlang$frostc$MethodDecl$get_asString$R$frost$core$String, org$frostlang$frostc$MethodDecl$cleanup, org$frostlang$frostc$MethodDecl$get_heritable$R$frost$core$Bit, org$frostlang$frostc$MethodDecl$get_isVirtual$R$frost$core$Bit, org$frostlang$frostc$MethodDecl$isInstance$R$frost$core$Bit, org$frostlang$frostc$MethodDecl$matches$org$frostlang$frostc$MethodDecl$R$frost$core$Bit, org$frostlang$frostc$MethodDecl$get_priority$R$frost$core$Int64, org$frostlang$frostc$MethodDecl$get_type$R$org$frostlang$frostc$Type, org$frostlang$frostc$MethodDecl$get_signature$R$frost$core$String, org$frostlang$frostc$MethodDecl$get_declaration$R$frost$core$String} };
 
 typedef frost$core$Int64 (*$fn20)(frost$collections$CollectionView*);
 typedef frost$collections$Iterator* (*$fn50)(frost$collections$Iterable*);
@@ -938,7 +938,7 @@ org$frostlang$frostc$MethodDecl$Parameter* local2 = NULL;
 frost$core$MutableString* $tmp387 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$String** $tmp388 = &((org$frostlang$frostc$Symbol*) param0)->name;
 frost$core$String* $tmp389 = *$tmp388;
-frost$core$String* $tmp390 = frost$core$String$convert$R$frost$core$String($tmp389);
+frost$core$String* $tmp390 = frost$core$String$get_asString$R$frost$core$String($tmp389);
 frost$core$String* $tmp391 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp390, &$s392);
 frost$core$MutableString$init$frost$core$String($tmp387, $tmp391);
 *(&local0) = ((frost$core$MutableString*) NULL);
@@ -1139,7 +1139,7 @@ frost$core$Weak* $tmp481 = *$tmp480;
 frost$core$Object* $tmp482 = frost$core$Weak$get$R$frost$core$Weak$T($tmp481);
 frost$core$String** $tmp483 = &((org$frostlang$frostc$ClassDecl*) $tmp482)->name;
 frost$core$String* $tmp484 = *$tmp483;
-frost$core$String* $tmp485 = frost$core$String$convert$R$frost$core$String($tmp484);
+frost$core$String* $tmp485 = frost$core$String$get_asString$R$frost$core$String($tmp484);
 frost$core$String* $tmp486 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp485, &$s487);
 frost$core$String* $tmp488 = org$frostlang$frostc$MethodDecl$get_signature$R$frost$core$String(param0);
 frost$core$String* $tmp489 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp486, $tmp488);
@@ -1170,7 +1170,7 @@ block7:;
 abort(); // unreachable
 
 }
-frost$core$String* org$frostlang$frostc$MethodDecl$convert$R$frost$core$String(org$frostlang$frostc$MethodDecl* param0) {
+frost$core$String* org$frostlang$frostc$MethodDecl$get_asString$R$frost$core$String(org$frostlang$frostc$MethodDecl* param0) {
 
 // line 207
 org$frostlang$frostc$FixedArray** $tmp497 = &param0->body;
@@ -1182,7 +1182,7 @@ block1:;
 // line 208
 org$frostlang$frostc$Annotations** $tmp501 = &param0->annotations;
 org$frostlang$frostc$Annotations* $tmp502 = *$tmp501;
-frost$core$String* $tmp503 = org$frostlang$frostc$Annotations$convert$R$frost$core$String($tmp502);
+frost$core$String* $tmp503 = org$frostlang$frostc$Annotations$get_asString$R$frost$core$String($tmp502);
 frost$core$String* $tmp504 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp503, &$s505);
 frost$core$String* $tmp506 = org$frostlang$frostc$MethodDecl$get_signature$R$frost$core$String(param0);
 frost$core$String* $tmp507 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp504, $tmp506);

@@ -334,7 +334,7 @@ class HashMap<K:Key<K>, V> : Map<K, V> {
     @returns a string representation of this object
     ================================================================================================
     @override
-    function convert():String {
+    function get_asString():String {
         def result := MutableString()
         result.append("{")
         var separator := ""

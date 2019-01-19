@@ -133,7 +133,7 @@ class Char8 : Value, Key<Char8>, Comparable<Char8> {
     strings.
     ================================================================================================
     @override
-    function convert():String {
+    function get_asString():String {
         if value < 0x80 {
             def data := Pointer<Char8>.alloc(1)
             data[0] := self

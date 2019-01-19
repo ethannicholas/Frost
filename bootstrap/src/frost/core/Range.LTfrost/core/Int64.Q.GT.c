@@ -8,8 +8,8 @@
 #include "frost/core/MutableString.h"
 #include "frost/core/Frost.h"
 
-__attribute__((weak)) frost$core$String* frost$core$Range$LTfrost$core$Int64$Q$GT$convert$R$frost$core$String$shim(frost$core$Object* p0) {
-    frost$core$String* result = frost$core$Range$LTfrost$core$Int64$Q$GT$convert$R$frost$core$String(((frost$core$Range$LTfrost$core$Int64$Q$GT$wrapper*) p0)->value);
+__attribute__((weak)) frost$core$String* frost$core$Range$LTfrost$core$Int64$Q$GT$get_asString$R$frost$core$String$shim(frost$core$Object* p0) {
+    frost$core$String* result = frost$core$Range$LTfrost$core$Int64$Q$GT$get_asString$R$frost$core$String(((frost$core$Range$LTfrost$core$Int64$Q$GT$wrapper*) p0)->value);
 
     return result;
 }
@@ -19,10 +19,10 @@ __attribute__((weak)) void frost$core$Range$LTfrost$core$Int64$Q$GT$cleanup$shim
 }
 
 static frost$core$String $s1;
-frost$core$Range$LTfrost$core$Int64$Q$GT$class_type frost$core$Range$LTfrost$core$Int64$Q$GT$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Value$class, NULL, { frost$core$Range$LTfrost$core$Int64$Q$GT$convert$R$frost$core$String$shim, frost$core$Range$LTfrost$core$Int64$Q$GT$cleanup$shim} };
+frost$core$Range$LTfrost$core$Int64$Q$GT$class_type frost$core$Range$LTfrost$core$Int64$Q$GT$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Value$class, NULL, { frost$core$Range$LTfrost$core$Int64$Q$GT$get_asString$R$frost$core$String$shim, frost$core$Range$LTfrost$core$Int64$Q$GT$cleanup$shim} };
 
 static frost$core$String $s2;
-frost$core$Range$LTfrost$core$Int64$Q$GT$wrapperclass_type frost$core$Range$LTfrost$core$Int64$Q$GT$wrapperclass = { (frost$core$Class*) &frost$core$Class$class, -999, &$s2, (frost$core$Class*) &frost$core$Value$class, NULL, { frost$core$Range$LTfrost$core$Int64$Q$GT$convert$R$frost$core$String$shim, frost$core$Range$LTfrost$core$Int64$Q$GT$cleanup$shim} };
+frost$core$Range$LTfrost$core$Int64$Q$GT$wrapperclass_type frost$core$Range$LTfrost$core$Int64$Q$GT$wrapperclass = { (frost$core$Class*) &frost$core$Class$class, -999, &$s2, (frost$core$Class*) &frost$core$Value$class, NULL, { frost$core$Range$LTfrost$core$Int64$Q$GT$get_asString$R$frost$core$String$shim, frost$core$Range$LTfrost$core$Int64$Q$GT$cleanup$shim} };
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x52\x61\x6e\x67\x65\x3c\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x36\x34\x3f\x3e", 35, 6209060535781738018, NULL };
 static frost$core$String $s2 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x52\x61\x6e\x67\x65\x3c\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x36\x34\x3f\x3e", 35, 6209060535781738018, NULL };
 static frost$core$String $s17 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x52\x61\x6e\x67\x65\x2e\x66\x72\x6f\x73\x74", 11, -6437309674450156934, NULL };
@@ -48,7 +48,7 @@ frost$core$Range$LTfrost$core$Int64$Q$GT $tmp6 = *(&local0);
 return $tmp6;
 
 }
-frost$core$String* frost$core$Range$LTfrost$core$Int64$Q$GT$convert$R$frost$core$String(frost$core$Range$LTfrost$core$Int64$Q$GT param0) {
+frost$core$String* frost$core$Range$LTfrost$core$Int64$Q$GT$get_asString$R$frost$core$String(frost$core$Range$LTfrost$core$Int64$Q$GT param0) {
 
 frost$core$MutableString* local0 = NULL;
 // line 37

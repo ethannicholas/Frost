@@ -30,7 +30,7 @@
 
 
 static frost$core$String $s1;
-org$frostlang$frostc$MethodRef$class_type org$frostlang$frostc$MethodRef$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { org$frostlang$frostc$MethodRef$convert$R$frost$core$String, org$frostlang$frostc$MethodRef$cleanup, org$frostlang$frostc$MethodRef$get_parameterCount$R$frost$core$Int64, org$frostlang$frostc$MethodRef$parameterType$frost$core$Int64$R$org$frostlang$frostc$Type, org$frostlang$frostc$MethodRef$get_returnType$R$org$frostlang$frostc$Type} };
+org$frostlang$frostc$MethodRef$class_type org$frostlang$frostc$MethodRef$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { org$frostlang$frostc$MethodRef$get_asString$R$frost$core$String, org$frostlang$frostc$MethodRef$cleanup, org$frostlang$frostc$MethodRef$get_parameterCount$R$frost$core$Int64, org$frostlang$frostc$MethodRef$parameterType$frost$core$Int64$R$org$frostlang$frostc$Type, org$frostlang$frostc$MethodRef$get_returnType$R$org$frostlang$frostc$Type} };
 
 typedef frost$core$Bit (*$fn10)(frost$core$Equatable*, frost$core$Equatable*);
 typedef frost$core$Bit (*$fn70)(frost$core$Equatable*, frost$core$Equatable*);
@@ -569,11 +569,11 @@ block31:;
 goto block9;
 block9:;
 // line 80
-org$frostlang$frostc$Pair* $tmp227 = org$frostlang$frostc$Compiler$getTryScope$R$org$frostlang$frostc$Pair$LTorg$frostlang$frostc$IR$Block$ID$Corg$frostlang$frostc$Variable$GT$Q(param1);
+org$frostlang$frostc$Pair* $tmp227 = org$frostlang$frostc$Compiler$getTryScope$R$org$frostlang$frostc$Pair$LTorg$frostlang$frostc$IR$Block$ID$Q$Corg$frostlang$frostc$Variable$Q$GT$Q(param1);
 frost$core$Bit $tmp228 = frost$core$Bit$init$builtin_bit($tmp227 != NULL);
 bool $tmp229 = $tmp228.value;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp227));
-// unreffing REF($440:org.frostlang.frostc.Pair<org.frostlang.frostc.IR.Block.ID, org.frostlang.frostc.Variable>?)
+// unreffing REF($440:org.frostlang.frostc.Pair<org.frostlang.frostc.IR.Block.ID?, org.frostlang.frostc.Variable?>?)
 if ($tmp229) goto block46; else goto block47;
 block46:;
 // line 81
@@ -1064,7 +1064,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp492));
 return $tmp492;
 
 }
-frost$core$String* org$frostlang$frostc$MethodRef$convert$R$frost$core$String(org$frostlang$frostc$MethodRef* param0) {
+frost$core$String* org$frostlang$frostc$MethodRef$get_asString$R$frost$core$String(org$frostlang$frostc$MethodRef* param0) {
 
 // line 122
 org$frostlang$frostc$MethodDecl** $tmp493 = &param0->value;

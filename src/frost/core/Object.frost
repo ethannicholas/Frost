@@ -12,10 +12,13 @@ class Object {
     var refCount:Int32
 
     ================================================================================================
-    Converts this object to a `String`. The default implementation returns `"<Class Name>"`, but
-    many classes override this to provide a more useful description of the object.
+    Returns a `String` representation of this object. The default implementation returns
+    `"<Class Name>"`, but many classes override this to provide a more useful description of the
+    object.
     ================================================================================================
-    function convert():String {
+    property asString:String
+
+    function get_asString():String {
         return "<\{$class.name}>"
     }
 

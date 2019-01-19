@@ -36,8 +36,8 @@ __attribute__((weak)) frost$collections$Iterator* frost$collections$ListView$get
 
     return result;
 }
-__attribute__((weak)) frost$core$String* frost$collections$ImmutableArray$convert$R$frost$core$String$shim(frost$collections$ImmutableArray* p0) {
-    frost$core$String* result = frost$collections$ImmutableArray$convert$R$frost$core$String(p0);
+__attribute__((weak)) frost$core$String* frost$collections$ImmutableArray$get_asString$R$frost$core$String$shim(frost$collections$ImmutableArray* p0) {
+    frost$core$String* result = frost$collections$ImmutableArray$get_asString$R$frost$core$String(p0);
 
     return result;
 }
@@ -53,7 +53,7 @@ struct { frost$core$Class* cl; ITable* next; void* methods[1]; } frost$collectio
 struct { frost$core$Class* cl; ITable* next; void* methods[10]; } frost$collections$ImmutableArray$_frost$collections$ListView = { (frost$core$Class*) &frost$collections$ListView$class, (ITable*) &frost$collections$ImmutableArray$_frost$collections$Iterable, { frost$collections$ImmutableArray$$IDX$frost$core$Int64$R$frost$collections$ImmutableArray$T$shim, frost$collections$ListView$$IDX$frost$core$Range$LTfrost$core$Int64$GT$R$frost$collections$ListView$LTfrost$collections$ListView$T$GT, frost$collections$ListView$$IDX$frost$core$Range$LTfrost$core$Int64$Q$GT$R$frost$collections$ListView$LTfrost$collections$ListView$T$GT, frost$collections$ListView$$IDX$frost$core$SteppedRange$LTfrost$core$Int64$Q$Cfrost$core$Int64$GT$R$frost$collections$ListView$LTfrost$collections$ListView$T$GT, frost$collections$ListView$filter$$LPfrost$collections$ListView$T$RP$EQ$GT$LPfrost$core$Bit$RP$R$frost$collections$ListView$LTfrost$collections$ListView$T$GT, frost$collections$ListView$filter$$LPfrost$collections$ListView$T$RP$EQ$AM$GT$LPfrost$core$Bit$RP$R$frost$collections$ListView$LTfrost$collections$ListView$T$GT, frost$collections$ListView$combine$frost$collections$ListView$LTfrost$collections$ListView$combine$U$GT$$LPfrost$collections$ListView$T$Cfrost$collections$ListView$combine$U$RP$EQ$GT$LPfrost$collections$ListView$combine$V$RP$R$frost$collections$ListView$LTfrost$collections$ListView$combine$V$GT, frost$collections$ListView$combine$frost$collections$ListView$LTfrost$collections$ListView$combine$U$GT$$LPfrost$collections$ListView$T$Cfrost$collections$ListView$combine$U$RP$EQ$AM$GT$LPfrost$collections$ListView$combine$V$RP$R$frost$collections$ListView$LTfrost$collections$ListView$combine$V$GT, frost$collections$ListView$get_iterator$R$frost$collections$Iterator$LTfrost$collections$ListView$T$GT$shim, frost$collections$ListView$sort$$LPfrost$collections$ListView$T$Cfrost$collections$ListView$T$RP$EQ$GT$LPfrost$core$Bit$RP$R$frost$collections$ListView$LTfrost$collections$ListView$T$GT} };
 
 static frost$core$String $s1;
-frost$collections$ImmutableArray$class_type frost$collections$ImmutableArray$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Immutable$class, (ITable*) &frost$collections$ImmutableArray$_frost$collections$ListView, { frost$collections$ImmutableArray$convert$R$frost$core$String$shim, frost$collections$ImmutableArray$cleanup$shim, frost$collections$ImmutableArray$$IDX$frost$core$Int64$R$frost$collections$ImmutableArray$T$shim, frost$collections$ImmutableArray$get_count$R$frost$core$Int64$shim, frost$collections$ImmutableArray$get_iterator$R$frost$collections$Iterator$LTfrost$collections$ImmutableArray$T$GT$shim} };
+frost$collections$ImmutableArray$class_type frost$collections$ImmutableArray$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Immutable$class, (ITable*) &frost$collections$ImmutableArray$_frost$collections$ListView, { frost$collections$ImmutableArray$get_asString$R$frost$core$String$shim, frost$collections$ImmutableArray$cleanup$shim, frost$collections$ImmutableArray$$IDX$frost$core$Int64$R$frost$collections$ImmutableArray$T$shim, frost$collections$ImmutableArray$get_count$R$frost$core$Int64$shim, frost$collections$ImmutableArray$get_iterator$R$frost$collections$Iterator$LTfrost$collections$ImmutableArray$T$GT$shim} };
 
 typedef frost$core$Int64 (*$fn10)(frost$collections$CollectionView*);
 typedef frost$core$Int64 (*$fn21)(frost$collections$CollectionView*);
@@ -425,7 +425,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp184));
 return ((frost$collections$Iterator*) $tmp184);
 
 }
-frost$core$String* frost$collections$ImmutableArray$convert$R$frost$core$String(frost$collections$ImmutableArray* param0) {
+frost$core$String* frost$collections$ImmutableArray$get_asString$R$frost$core$String(frost$collections$ImmutableArray* param0) {
 
 frost$core$MutableString* local0 = NULL;
 frost$core$String* local1 = NULL;

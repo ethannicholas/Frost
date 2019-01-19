@@ -16,7 +16,7 @@
 
 
 static frost$core$String $s1;
-org$frostlang$json$Lexer$class_type org$frostlang$json$Lexer$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { frost$core$Object$convert$R$frost$core$String, org$frostlang$json$Lexer$cleanup, org$frostlang$json$Lexer$start$frost$core$String, org$frostlang$json$Lexer$next$R$org$frostlang$json$Token} };
+org$frostlang$json$Lexer$class_type org$frostlang$json$Lexer$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { frost$core$Object$get_asString$R$frost$core$String, org$frostlang$json$Lexer$cleanup, org$frostlang$json$Lexer$start$frost$core$String, org$frostlang$json$Lexer$next$R$org$frostlang$json$Token} };
 
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x6a\x73\x6f\x6e\x2e\x4c\x65\x78\x65\x72", 24, -6053151713001485763, NULL };

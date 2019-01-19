@@ -57,7 +57,7 @@ class Closure {
                         }
                     }
                     otherwise {
-                        assert false, c.convert()
+                        assert false, c.asString
                     }
                 }
             }
@@ -142,7 +142,7 @@ class Closure {
                     result.fields.add(field)
                 }
                 otherwise {
-                    assert false, c.convert()
+                    assert false, c.asString
                 }
             }
         }

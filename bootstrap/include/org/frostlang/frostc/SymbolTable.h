@@ -15,6 +15,6 @@ void org$frostlang$frostc$SymbolTable$add$org$frostlang$frostc$Symbol$frost$core
 void org$frostlang$frostc$SymbolTable$addIfNotOverridden$org$frostlang$frostc$MethodDecl$frost$collections$List$LTorg$frostlang$frostc$MethodDecl$GT(org$frostlang$frostc$SymbolTable* self, org$frostlang$frostc$MethodDecl* p_m, frost$collections$List* p_methods);
 org$frostlang$frostc$Symbol* org$frostlang$frostc$SymbolTable$merge$org$frostlang$frostc$Symbol$Q$org$frostlang$frostc$Symbol$Q$R$org$frostlang$frostc$Symbol$Q(org$frostlang$frostc$SymbolTable* self, org$frostlang$frostc$Symbol* p_symbol, org$frostlang$frostc$Symbol* p_inherited);
 org$frostlang$frostc$Symbol* org$frostlang$frostc$SymbolTable$$IDX$frost$core$String$R$org$frostlang$frostc$Symbol$Q(org$frostlang$frostc$SymbolTable* self, frost$core$String* p_name);
-frost$core$String* org$frostlang$frostc$SymbolTable$convert$R$frost$core$String(org$frostlang$frostc$SymbolTable* self);
+frost$core$String* org$frostlang$frostc$SymbolTable$get_asString$R$frost$core$String(org$frostlang$frostc$SymbolTable* self);
 void org$frostlang$frostc$SymbolTable$cleanup(org$frostlang$frostc$SymbolTable* self);
 

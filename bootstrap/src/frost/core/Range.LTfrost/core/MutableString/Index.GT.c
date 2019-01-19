@@ -8,8 +8,8 @@
 #include "frost/core/MutableString.h"
 #include "frost/core/Frost.h"
 
-__attribute__((weak)) frost$core$String* frost$core$Range$LTfrost$core$MutableString$Index$GT$convert$R$frost$core$String$shim(frost$core$Object* p0) {
-    frost$core$String* result = frost$core$Range$LTfrost$core$MutableString$Index$GT$convert$R$frost$core$String(((frost$core$Range$LTfrost$core$MutableString$Index$GT$wrapper*) p0)->value);
+__attribute__((weak)) frost$core$String* frost$core$Range$LTfrost$core$MutableString$Index$GT$get_asString$R$frost$core$String$shim(frost$core$Object* p0) {
+    frost$core$String* result = frost$core$Range$LTfrost$core$MutableString$Index$GT$get_asString$R$frost$core$String(((frost$core$Range$LTfrost$core$MutableString$Index$GT$wrapper*) p0)->value);
 
     return result;
 }
@@ -19,10 +19,10 @@ __attribute__((weak)) void frost$core$Range$LTfrost$core$MutableString$Index$GT$
 }
 
 static frost$core$String $s1;
-frost$core$Range$LTfrost$core$MutableString$Index$GT$class_type frost$core$Range$LTfrost$core$MutableString$Index$GT$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Value$class, NULL, { frost$core$Range$LTfrost$core$MutableString$Index$GT$convert$R$frost$core$String$shim, frost$core$Range$LTfrost$core$MutableString$Index$GT$cleanup$shim} };
+frost$core$Range$LTfrost$core$MutableString$Index$GT$class_type frost$core$Range$LTfrost$core$MutableString$Index$GT$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Value$class, NULL, { frost$core$Range$LTfrost$core$MutableString$Index$GT$get_asString$R$frost$core$String$shim, frost$core$Range$LTfrost$core$MutableString$Index$GT$cleanup$shim} };
 
 static frost$core$String $s2;
-frost$core$Range$LTfrost$core$MutableString$Index$GT$wrapperclass_type frost$core$Range$LTfrost$core$MutableString$Index$GT$wrapperclass = { (frost$core$Class*) &frost$core$Class$class, -999, &$s2, (frost$core$Class*) &frost$core$Value$class, NULL, { frost$core$Range$LTfrost$core$MutableString$Index$GT$convert$R$frost$core$String$shim, frost$core$Range$LTfrost$core$MutableString$Index$GT$cleanup$shim} };
+frost$core$Range$LTfrost$core$MutableString$Index$GT$wrapperclass_type frost$core$Range$LTfrost$core$MutableString$Index$GT$wrapperclass = { (frost$core$Class*) &frost$core$Class$class, -999, &$s2, (frost$core$Class*) &frost$core$Value$class, NULL, { frost$core$Range$LTfrost$core$MutableString$Index$GT$get_asString$R$frost$core$String$shim, frost$core$Range$LTfrost$core$MutableString$Index$GT$cleanup$shim} };
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x52\x61\x6e\x67\x65\x3c\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x4d\x75\x74\x61\x62\x6c\x65\x53\x74\x72\x69\x6e\x67\x2e\x49\x6e\x64\x65\x78\x3e", 48, 3254264024099946405, NULL };
 static frost$core$String $s2 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x52\x61\x6e\x67\x65\x3c\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x4d\x75\x74\x61\x62\x6c\x65\x53\x74\x72\x69\x6e\x67\x2e\x49\x6e\x64\x65\x78\x3e", 48, 3254264024099946405, NULL };
 static frost$core$String $s18 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2e\x2e\x2e", 3, 1504239, NULL };
@@ -44,7 +44,7 @@ frost$core$Range$LTfrost$core$MutableString$Index$GT $tmp6 = *(&local0);
 return $tmp6;
 
 }
-frost$core$String* frost$core$Range$LTfrost$core$MutableString$Index$GT$convert$R$frost$core$String(frost$core$Range$LTfrost$core$MutableString$Index$GT param0) {
+frost$core$String* frost$core$Range$LTfrost$core$MutableString$Index$GT$get_asString$R$frost$core$String(frost$core$Range$LTfrost$core$MutableString$Index$GT param0) {
 
 frost$core$MutableString* local0 = NULL;
 // line 37

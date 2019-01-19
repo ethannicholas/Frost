@@ -58,8 +58,8 @@ method xsltproc(input:File, xsl:File, output:File):Error? {
             args.add(input.path)
             def p := System.exec("xsltproc", args)
             output.parent.createDirectories()
-            p.openStandardOutput().sendTo(output.withExtension(".html").openOutputStream())
-            p.openStandardError().sendTo(Console.errorStream())
+            p.standardOutput().sendTo(output.withExtension(".html").openOutputStream())
+            p.standardError().sendTo(Console.errorStream())
             assert p.waitFor() = 0
         }
         return null
@@ -96,7 +96,7 @@ method addTableOfContents(tocFile:File, tree:File, apiRelativePath:String):Error
         args.add(File(Config.frostSourceDir()).resolve("tools/tableOfContents.xsl").path)
         args.add(tocFile.path)
         def p := System.exec("xsltproc", args)
-        addTableOfContentsToTree(p.openStandardOutput().readFully(), tree, -1)
+        addTableOfContentsToTree(p.standardOutput().readFully(), tree, -1)
     }
     fail(error) {
         return error

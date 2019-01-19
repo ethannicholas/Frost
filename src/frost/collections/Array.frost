@@ -136,7 +136,7 @@ class Array<T> : List<T> {
     }
 
     @override
-    function convert():String {
+    function get_asString():String {
         def result := MutableString()
         result.append("[")
         var separator := ""

@@ -17,7 +17,7 @@
 
 
 static frost$core$String $s1;
-org$frostlang$frostc$frostdoc$Markdown$_Closure28$class_type org$frostlang$frostc$frostdoc$Markdown$_Closure28$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { frost$core$Object$convert$R$frost$core$String, org$frostlang$frostc$frostdoc$Markdown$_Closure28$cleanup, org$frostlang$frostc$frostdoc$Markdown$_Closure28$$anonymous27$frost$collections$ListView$LTfrost$core$String$Q$GT$R$frost$core$String} };
+org$frostlang$frostc$frostdoc$Markdown$_Closure28$class_type org$frostlang$frostc$frostdoc$Markdown$_Closure28$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { frost$core$Object$get_asString$R$frost$core$String, org$frostlang$frostc$frostdoc$Markdown$_Closure28$cleanup, org$frostlang$frostc$frostdoc$Markdown$_Closure28$$anonymous27$frost$collections$ListView$LTfrost$core$String$Q$GT$R$frost$core$String} };
 
 typedef frost$core$Object* (*$fn10)(frost$collections$ListView*, frost$core$Int64);
 typedef frost$core$Object* (*$fn16)(frost$collections$ListView*, frost$core$Int64);
@@ -29,6 +29,7 @@ typedef frost$core$String* (*$fn99)(org$frostlang$frostc$frostdoc$Protector*, fr
 typedef frost$core$String* (*$fn117)(org$frostlang$frostc$frostdoc$Protector*, frost$core$String*);
 typedef frost$core$String* (*$fn149)(org$frostlang$frostc$frostdoc$Protector*, frost$core$String*);
 typedef frost$core$String* (*$fn166)(org$frostlang$frostc$frostdoc$Protector*, frost$core$String*);
+typedef frost$core$String* (*$fn208)(frost$core$Object*);
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x66\x72\x6f\x73\x74\x64\x6f\x63\x2e\x4d\x61\x72\x6b\x64\x6f\x77\x6e\x2e\x5f\x43\x6c\x6f\x73\x75\x72\x65\x32\x38", 49, -5097778637230146631, NULL };
 static frost$core$String $s39 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x4d\x61\x72\x6b\x64\x6f\x77\x6e\x2e\x66\x72\x6f\x73\x74", 14, -6276282638970051244, NULL };
@@ -498,27 +499,28 @@ frost$core$MutableString* $tmp204 = *(&local6);
 frost$core$MutableString$append$frost$core$String($tmp204, &$s205);
 // line 1018
 frost$core$MutableString* $tmp206 = *(&local6);
-frost$core$String* $tmp207 = frost$core$MutableString$convert$R$frost$core$String($tmp206);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp207));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp207));
-// unreffing REF($439:frost.core.String)
-frost$core$MutableString* $tmp208 = *(&local6);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp208));
+$fn208 $tmp207 = ($fn208) ((frost$core$Object*) $tmp206)->$class->vtable[0];
+frost$core$String* $tmp209 = $tmp207(((frost$core$Object*) $tmp206));
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp209));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp209));
+// unreffing REF($441:frost.core.String)
+frost$core$MutableString* $tmp210 = *(&local6);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp210));
 // unreffing result
 *(&local6) = ((frost$core$MutableString*) NULL);
-frost$core$String* $tmp209 = *(&local2);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp209));
+frost$core$String* $tmp211 = *(&local2);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp211));
 // unreffing title
 *(&local2) = ((frost$core$String*) NULL);
-frost$core$String* $tmp210 = *(&local1);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp210));
+frost$core$String* $tmp212 = *(&local1);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp212));
 // unreffing url
 *(&local1) = ((frost$core$String*) NULL);
-frost$core$String* $tmp211 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp211));
+frost$core$String* $tmp213 = *(&local0);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp213));
 // unreffing linkText
 *(&local0) = ((frost$core$String*) NULL);
-return $tmp207;
+return $tmp209;
 
 }
 

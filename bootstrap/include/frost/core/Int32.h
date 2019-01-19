@@ -143,7 +143,7 @@ frost$core$UInt32 frost$core$Int32$convert$R$frost$core$UInt32(frost$core$Int32 
 frost$core$UInt64 frost$core$Int32$convert$R$frost$core$UInt64(frost$core$Int32 self);
 frost$core$Real32 frost$core$Int32$convert$R$frost$core$Real32(frost$core$Int32 self);
 frost$core$Real64 frost$core$Int32$convert$R$frost$core$Real64(frost$core$Int32 self);
-frost$core$String* frost$core$Int32$convert$R$frost$core$String(frost$core$Int32 self);
+frost$core$String* frost$core$Int32$get_asString$R$frost$core$String(frost$core$Int32 self);
 frost$core$String* frost$core$Int32$format$frost$core$String$R$frost$core$String(frost$core$Int32 self, frost$core$String* p_fmt);
 void frost$core$Int32$cleanup(frost$core$Int32 self);
 

@@ -11,6 +11,6 @@ typedef struct frost$collections$Stack {
     frost$collections$Array* contents;
 } frost$collections$Stack;
 #include "frost/core/Class.h"
-typedef struct { frost$core$Class* cl; int32_t refCount; frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[8]; } frost$collections$Stack$class_type;
+typedef struct { frost$core$Class* cl; int32_t refCount; frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[10]; } frost$collections$Stack$class_type;
 extern frost$collections$Stack$class_type frost$collections$Stack$class;
 

@@ -46,7 +46,7 @@ class HashSet<T:Key<T>> : Collection<T> {
     }
 
     @override
-    function convert():String {
+    function get_asString():String {
         def result := MutableString("[")
         var separator := ""
         for v in contents.keys {

@@ -11,7 +11,7 @@ class DFAState {
     }
 
     @override
-    function convert():String {
+    function get_asString():String {
         return "DFAState<\{id}, \{label}>"
     }
 }

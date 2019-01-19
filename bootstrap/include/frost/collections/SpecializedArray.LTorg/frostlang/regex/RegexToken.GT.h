@@ -22,5 +22,5 @@ void frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$ensu
 frost$core$Int64 frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$get_count$R$frost$core$Int64(frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT* self);
 org$frostlang$regex$RegexToken frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$removeIndex$frost$core$Int64$R$org$frostlang$regex$RegexToken(frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT* self, frost$core$Int64 p_index);
 void frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$clear(frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT* self);
-frost$core$String* frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$convert$R$frost$core$String(frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT* self);
+frost$core$String* frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$get_asString$R$frost$core$String(frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT* self);
 

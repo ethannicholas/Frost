@@ -1,3 +1,7 @@
 method main() {
-    Console.inputStream().sendTo(Console.outputStream())
+    try {
+    	Console.inputStream().sendTo(Console.outputStream())
+    }
+    fail(error) {
+    }
 }

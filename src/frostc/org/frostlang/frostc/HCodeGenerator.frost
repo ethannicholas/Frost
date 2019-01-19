@@ -160,7 +160,7 @@ class HCodeGenerator : CodeGenerator {
             }
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -315,7 +315,7 @@ class HCodeGenerator : CodeGenerator {
             body.printLine(");")
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 

@@ -21,7 +21,7 @@
 
 
 static frost$core$String $s1;
-org$frostlang$frostc$expression$IntLiteral$class_type org$frostlang$frostc$expression$IntLiteral$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { frost$core$Object$convert$R$frost$core$String, org$frostlang$frostc$expression$IntLiteral$cleanup} };
+org$frostlang$frostc$expression$IntLiteral$class_type org$frostlang$frostc$expression$IntLiteral$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { frost$core$Object$get_asString$R$frost$core$String, org$frostlang$frostc$expression$IntLiteral$cleanup} };
 
 typedef frost$core$Bit (*$fn19)(frost$core$Equatable*, frost$core$Equatable*);
 typedef frost$core$Bit (*$fn31)(frost$core$Equatable*, frost$core$Equatable*);

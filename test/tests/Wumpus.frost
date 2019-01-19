@@ -20,8 +20,8 @@ class Wumpus {
         }
 
         @override
-        function convert():String {
-            return label.convert()
+        function get_asString():String {
+            return label.asString
         }
     }
 

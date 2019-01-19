@@ -90,7 +90,7 @@ class PLex {
             }
             token.printLine()
             token.printLine("@override")
-            token.printLine("function convert():String {") -- FIXME this should be automatic in choice
+            token.printLine("function get_asString():String {") -- FIXME this should be automatic in choice
             token.level += 1
             token.printLine("match self {")
             token.level += 1

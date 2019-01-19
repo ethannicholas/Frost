@@ -455,7 +455,7 @@ class Real32 : Value, Key<Real32>, Comparable<Real32>, Formattable {
 
     @override
     @external
-    function convert():String
+    function get_asString():String
 
     === Returns a formatted representation of this number. Supported format strings are `""`, `"d"`, or `"D"` for decimal, `"b"` or `"B"` for binary, `"o"` or `"O"` for octal, `"x"` for lowercase hexadecimal, and `"X"` for uppercase hexadecimal. ===
     @override

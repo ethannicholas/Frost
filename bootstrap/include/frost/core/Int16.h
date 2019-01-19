@@ -171,7 +171,7 @@ frost$core$UInt32 frost$core$Int16$convert$R$frost$core$UInt32(frost$core$Int16 
 frost$core$UInt64 frost$core$Int16$convert$R$frost$core$UInt64(frost$core$Int16 self);
 frost$core$Real32 frost$core$Int16$convert$R$frost$core$Real32(frost$core$Int16 self);
 frost$core$Real64 frost$core$Int16$convert$R$frost$core$Real64(frost$core$Int16 self);
-frost$core$String* frost$core$Int16$convert$R$frost$core$String(frost$core$Int16 self);
+frost$core$String* frost$core$Int16$get_asString$R$frost$core$String(frost$core$Int16 self);
 frost$core$String* frost$core$Int16$format$frost$core$String$R$frost$core$String(frost$core$Int16 self, frost$core$String* p_fmt);
 void frost$core$Int16$cleanup(frost$core$Int16 self);
 

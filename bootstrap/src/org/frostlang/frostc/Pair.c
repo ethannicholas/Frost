@@ -7,7 +7,7 @@
 
 
 static frost$core$String $s1;
-org$frostlang$frostc$Pair$class_type org$frostlang$frostc$Pair$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { org$frostlang$frostc$Pair$convert$R$frost$core$String, org$frostlang$frostc$Pair$cleanup} };
+org$frostlang$frostc$Pair$class_type org$frostlang$frostc$Pair$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { org$frostlang$frostc$Pair$get_asString$R$frost$core$String, org$frostlang$frostc$Pair$cleanup} };
 
 typedef frost$core$String* (*$fn15)(frost$core$Object*);
 typedef frost$core$String* (*$fn28)(frost$core$Object*);
@@ -40,7 +40,7 @@ frost$core$Object** $tmp7 = &param0->second;
 return;
 
 }
-frost$core$String* org$frostlang$frostc$Pair$convert$R$frost$core$String(org$frostlang$frostc$Pair* param0) {
+frost$core$String* org$frostlang$frostc$Pair$get_asString$R$frost$core$String(org$frostlang$frostc$Pair* param0) {
 
 frost$core$String* local0 = NULL;
 frost$core$String* local1 = NULL;

@@ -345,7 +345,7 @@ class File : Immutable, Key<File> {
     Returns the path to which this file refers.
     ================================================================================================
     @override
-    function convert():String {
+    function get_asString():String {
         return path
     }
 }

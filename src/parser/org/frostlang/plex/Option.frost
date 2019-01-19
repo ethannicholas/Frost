@@ -22,7 +22,7 @@ class Option : Node {
     }
 
     @override
-    function convert():String {
+    function get_asString():String {
         return contents + "?"
     }
 }

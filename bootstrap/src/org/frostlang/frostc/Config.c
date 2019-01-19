@@ -6,7 +6,7 @@
 
 
 static frost$core$String $s1;
-org$frostlang$frostc$Config$class_type org$frostlang$frostc$Config$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { frost$core$Object$convert$R$frost$core$String, org$frostlang$frostc$Config$cleanup} };
+org$frostlang$frostc$Config$class_type org$frostlang$frostc$Config$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { frost$core$Object$get_asString$R$frost$core$String, org$frostlang$frostc$Config$cleanup} };
 
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x43\x6f\x6e\x66\x69\x67", 27, 4805820306822158634, NULL };

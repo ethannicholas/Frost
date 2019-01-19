@@ -56,7 +56,7 @@ choice Maybe<T> {
     }
 
     @override
-    function convert():String {
+    function get_asString():String {
         match self {
             when SUCCESS(v) {
                 return "SUCCESS(\{v})"

@@ -34,7 +34,7 @@ class MutableMethod {
     }
 
     @override
-    function convert():String {
+    function get_asString():String {
         if target !== null {
             return "ImmutableMethod<\{Frost.pointerConvert(pointer->Pointer<Object?>)}, \{target}>"
         }

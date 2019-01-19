@@ -27,7 +27,7 @@ class Token : Value {
         COLON
 
         @override
-        function convert():String {
+        function get_asString():String {
             match self {
                 when COMMA { return "COMMA" }
                 when LBRACE { return "LBRACE" }

@@ -276,7 +276,7 @@ class String : Immutable, Key<String>, Comparable<String>, Iterable<Char32>, For
         }
 
         @override
-        function convert():String {
+        function get_asString():String {
             return "Match(\{groups[0]})"
         }
     }
@@ -386,7 +386,7 @@ class String : Immutable, Key<String>, Comparable<String>, Iterable<Char32>, For
     Returns this string.
     ================================================================================================
     @override
-    function convert():String {
+    function get_asString():String {
         return self
     }
 
@@ -554,10 +554,10 @@ class String : Immutable, Key<String>, Comparable<String>, Iterable<Char32>, For
 
     ================================================================================================
     Returns the concatenation of this string and another object's string representation. The
-    object's string representation is computed using its [convert() method](Object.convert()).
+    object's string representation is computed using its [asString property](Object.asString).
     ================================================================================================
     function +(other:Object):String {
-        return self + other.convert()->String
+        return self + other.asString
     }
 
     ================================================================================================
@@ -587,11 +587,11 @@ class String : Immutable, Key<String>, Comparable<String>, Iterable<Char32>, For
 
     ================================================================================================
     Returns the concatenation of another object's string representation and this string. The
-    object's string representation is computed using its [convert() method](Object.convert()).
+    object's string representation is computed using its [asString property](Object.asString).
     ================================================================================================
     @class
     function +(o:Object, s:String):String {
-        return o.convert() + s
+        return o.asString + s
     }
 
     ================================================================================================
@@ -847,7 +847,7 @@ class String : Immutable, Key<String>, Comparable<String>, Iterable<Char32>, For
                 }
                 for i in 1 .. step {
                     if current >= end {
-                        return result.convert()
+                        return result.asString
                     }
                     current := next(Index(current)).value
                 }
@@ -877,7 +877,7 @@ class String : Immutable, Key<String>, Comparable<String>, Iterable<Char32>, For
                 }
                 for i in -1 .. step by -1 {
                     if current <= end {
-                        return result.convert()
+                        return result.asString
                     }
                     current := previous(Index(current)).value
                 }
@@ -1138,9 +1138,9 @@ class String : Immutable, Key<String>, Comparable<String>, Iterable<Char32>, For
         "This is a test!".replace(/\w+/, word => word.length)
 
     The regular expression `/\w+/` matches sequences of one or more word characters; in other words,
-    it matches all words occurring in the string. The replacement function 
-    `word => word.length.convert()` replaces each matched sequence with the number of characters in
-    the sequence, resulting in the text:
+    it matches all words occurring in the string. The replacement function `word => word.length`
+    replaces each matched sequence with the number of characters in the sequence, resulting in the
+    text:
 
         4 2 1 4!
 
@@ -1152,10 +1152,10 @@ class String : Immutable, Key<String>, Comparable<String>, Iterable<Char32>, For
         def result := MutableString()
         def matcher := search.matcher(self)
         while matcher.find() {
-            matcher.appendReplacement(result, replacement(matcher.group(0)).convert(), false)
+            matcher.appendReplacement(result, replacement(matcher.group(0)).asString, false)
         }
         matcher.appendTail(result)
-        return result.convert()
+        return result.asString
     }
 
     ================================================================================================
@@ -1176,10 +1176,10 @@ class String : Immutable, Key<String>, Comparable<String>, Iterable<Char32>, For
             for i in 0 .. matcher.get_groupCount() {
                 groups.add(matcher.group(i))
             }
-            matcher.appendReplacement(result, replacement(groups).convert(), false)
+            matcher.appendReplacement(result, replacement(groups).asString, false)
         }
         matcher.appendTail(result)
-        return result.convert()
+        return result.asString
     }
 
     function find(needle:String):Iterator<String.Index> {

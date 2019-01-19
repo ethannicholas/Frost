@@ -13,7 +13,7 @@ typedef struct org$frostlang$frostc$MethodDecl org$frostlang$frostc$MethodDecl;
 typedef struct org$frostlang$frostc$FixedArray org$frostlang$frostc$FixedArray;
 
 org$frostlang$frostc$Type* org$frostlang$frostc$IR$Value$type$R$org$frostlang$frostc$Type(org$frostlang$frostc$IR$Value* self);
-frost$core$String* org$frostlang$frostc$IR$Value$convert$R$frost$core$String(org$frostlang$frostc$IR$Value* self);
+frost$core$String* org$frostlang$frostc$IR$Value$get_asString$R$frost$core$String(org$frostlang$frostc$IR$Value* self);
 void org$frostlang$frostc$IR$Value$cleanup(org$frostlang$frostc$IR$Value* self);
 void org$frostlang$frostc$IR$Value$init$frost$core$Int64$frost$core$Bit(org$frostlang$frostc$IR$Value* self, frost$core$Int64 p_rv, frost$core$Bit p_f0);
 void org$frostlang$frostc$IR$Value$init$frost$core$Int64$frost$core$UInt64$org$frostlang$frostc$Type(org$frostlang$frostc$IR$Value* self, frost$core$Int64 p_rv, frost$core$UInt64 p_f0, org$frostlang$frostc$Type* p_f1);

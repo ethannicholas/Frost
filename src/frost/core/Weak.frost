@@ -24,11 +24,12 @@ class Weak<T> {
     FIXME actually implement this behavior :-)
     ================================================================================================
     method get():T {
+        assert refCount > 0
         return value
     }
 
     @override
-    function convert():String {
+    function get_asString():String {
         return "Weak(\{value})"
     }
 }

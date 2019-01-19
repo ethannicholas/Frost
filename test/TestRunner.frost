@@ -1,35 +1,25 @@
-class TestRunner {
-    choice Mode {
-        O0
-        O3
-        C
+class TestRunner : Immutable {
+    constant THREADS := 16
 
-        @override
-        function convert():String {
-            match self {
-                when O0 {
-                    return "-O0"
-                }
-                when O3 {
-                    return "-O3"
-                }
-                when C {
-                    return "C"
-                }
-            }
-        }
+    choice Result {
+        SUCCESS(String)
+        ERROR(String, String)
     }
 
     def frostHome:File
     def buildDir:File
+    def frostc:File
     def cCompiler:File
-    def cLibs:ListView<String>
+    def testDir:File
+    def cLibs:ImmutableArray<String>
+    def workQueue := MessageQueue<String?>()
+    def resultQueue := MessageQueue<Result>()
 
     init(frostHome:File, buildDir:File, cCompiler:File, cLibs:ListView<String>) {
         self.frostHome := frostHome
         self.buildDir := buildDir
         self.cCompiler := cCompiler
-        self.cLibs := cLibs
+        self.cLibs := ImmutableArray<String>(cLibs)
     }
 
     method deleteTree(file:File):Error? {
@@ -48,146 +38,10 @@ class TestRunner {
         }
     }
 
-    method findCFiles(path:File, result:Array<File>):Error? {
-        try {
-            if path.path.endsWith(".c") {
-                result.add(path)
-            }
-            else if path.isDirectory() {
-                def list := path.list()
-                for f in list {
-                    findCFiles(f, result)
-                }
-            }
-        }
-        fail(error) {
-            return error
-        }
-    }
-
-    method compileCFiles(cLibs:ListView<String>, outPath:File, exe:File):Bit {
-        try {
-            def files := Array<File>()
-            findCFiles(outPath, files)
-            def args := Array<String>()
-            args.add("-L\{buildDir}")
-            args.add("-lc_frost")
-            args.add("-lm")
-            args.add("-I../bootstrap/include")
-            args.add("-I\{outPath}")
-            args.add("-I\{frostHome}/src/c")
-            for lib in cLibs {
-                def libFile := File(lib)
-                args.add("-L" + libFile.parent)
-                var simpleName := libFile.simpleName
-                assert simpleName.startsWith("lib")
-                simpleName := simpleName[3..]
-                args.add("-l" + simpleName)
-            }
-            for f in files {
-                args.add(f.path)
-            }
-            args.add("-o")
-            args.add(exe.path)
-            var compiler := System.exec(cCompiler.path, args)
-            var compileResult := compiler.openStandardError().readFully()
-            Console.print(compileResult)
-            if compiler.waitFor() != 0 {
-                Console.printErrorLine("C compiler error")
-                return false
-            }
-            return true
-        }
-        fail(error) {
-            Console.printErrorLine(error)
-            return false
-        }
-    }
-
-    method runTestC(frostc:File, cLibs:ListView<String>, workingDir:File, test:String):Bit {
+    method runTest(frostc:File, cLibs:ListView<String>, workingDir:File, test:String) {
         try {
             def expected := workingDir.resolve(test + ".expected").readFully()
-            def exe := File("/tmp/test.out")
-            if exe.exists() {
-                exe.delete()
-            }
-            def outPath := File("/tmp/test.cout")
-            if outPath.exists() {
-                deleteTree(outPath)
-            }
-            def args := Array<String>() -- FIXME literal
-            args.add(workingDir.resolve(test + ".frost").path)
-            args.add("-o")
-            args.add(outPath.path)
-            args.add("-f")
-            args.add("h")
-            var compiler := System.exec(frostc.path, args)
-            var compileResult := compiler.openStandardOutput().readFully() -- FIXME use error stream instead
-            compiler.waitFor()
-            if compileResult != "" {
-                if compileResult != expected {
-                    Console.printLine("error, expected:\n\{expected}\nbut received:")
-                    Console.printLine(compileResult)
-                    return false
-                }
-                Console.printLine("success")
-                return true
-            }
-            args.clear()
-            args.add(workingDir.resolve(test + ".frost").path)
-            args.add("-o")
-            args.add(outPath.path)
-            args.add("-f")
-            args.add("c")
-            compiler := System.exec(frostc.path, args)
-            compileResult := compiler.openStandardOutput().readFully() -- FIXME use error stream instead
-            compiler.waitFor()
-            if !compileCFiles(cLibs, outPath, exe) {
-                return false
-            }
-            if compileResult != "" {
-                if compileResult != expected {
-                    Console.printLine("error, expected:\n\{expected}\nbut received:")
-                    Console.printLine(compileResult)
-                    return false
-                }
-                Console.printLine("success")
-                return true
-            }
-            def child := System.exec(exe.path, Array<String>())
-            def input := workingDir.resolve(test + ".in")
-            if input.exists() {
-                child.openStandardInput().print(input.readFully())
-                --child.closeStandardInput();
-            }
-            def childResult1 := child.openStandardOutput().readFully()
-            def childResult2 := child.openStandardError().readFully()
-            child.waitFor()
-            def childResult := childResult1 + childResult2
-            if childResult != expected {
-                Console.printLine("error, expected:\n\{expected}\nbut received:\n\{childResult}")
-                return false
-            }
-            Console.printLine("success")
-            return true
-        }
-        fail(error) {
-            Console.printLine(error)
-            System.exit(1)
-        }
-    }
-
-    method runTest(frostc:File, cLibs:ListView<String>, workingDir:File, test:String,
-            mode:Mode):Bit {
-        try {
-            Console.print("Testing \{test} (\{mode})...")
-            match mode {
-                when Mode.C {
-                    return runTestC(frostc, cLibs, workingDir, test)
-                }
-            }
-            def expected := workingDir.resolve(test + ".expected").readFully()
-            def exe := File("/tmp/test.out")
+            def exe := System.temporaryDirectory().resolve(test + ".out")
             if exe.exists() {
                 exe.delete()
             }
@@ -196,45 +50,36 @@ class TestRunner {
             args.add("-o")
             args.add(exe.path)
             args.add("-i")
-            args.add(workingDir.parent.convert())
-            match mode {
-                when Mode.O0 {
-                    args.add("-O")
-                    args.add("0")
-                }
-                when Mode.O3 {
-                    args.add("-O")
-                    args.add("3")
-                }
-            }
+            args.add(workingDir.parent.asString)
             def compiler := System.exec(frostc.path, args)
-            def compileResult := compiler.openStandardOutput().readFully() -- FIXME use error stream instead
+            def compileResult := compiler.standardOutput().readFully() -- FIXME use error stream instead
             compiler.waitFor()
             if compileResult != "" {
                 if compileResult != expected {
-                    Console.printLine("error, expected:\n\{expected}\nbut received:")
-                    Console.printLine(compileResult)
-                    return false
+                    resultQueue.post(Result.ERROR(test,
+                            "expected:\n\{expected}\nbut received:\n\{compileResult}"))
+                    return
                 }
-                Console.printLine("success")
-                return true
+                resultQueue.post(Result.SUCCESS(test))
+                return
             }
             def child := System.exec(exe.path, Array<String>())
             def input := workingDir.resolve(test + ".in")
             if input.exists() {
-                child.openStandardInput().print(input.readFully())
-                --child.closeStandardInput()
+                child.standardInput().print(input.readFully())
+                child.standardInput().close()
             }
-            def childResult1 := child.openStandardOutput().readFully()
-            def childResult2 := child.openStandardError().readFully()
+            def childResult1 := child.standardOutput().readFully()
+            def childResult2 := child.standardError().readFully()
             child.waitFor()
             def childResult := childResult1 + childResult2
             if childResult != expected {
-                Console.printLine("error, expected:\n\{expected}\nbut received:\n\{childResult}")
-                return false
+                resultQueue.post(Result.ERROR(test,
+                        "expected:\n\{expected}\nbut received:\n\{childResult}"))
             }
-            Console.printLine("success")
-            return true
+            else {
+                resultQueue.post(Result.SUCCESS(test))
+            }
         }
         fail(error) {
             Console.printLine(error)
@@ -265,33 +110,69 @@ class TestRunner {
         return a.length > b.length
     }
 
+    method workThread() {
+        loop {
+            def name := workQueue.getMessage()
+            if name == null {
+                break
+            }
+            runTest(frostc, cLibs, testDir, name)
+        }
+    }
+
     method run() {
         try {
-            def frostc := buildDir.resolve("frostc")
-            def tests := frostHome.resolve("test/tests")
-            def files := Array<File>(tests.list())
+            frostc := buildDir.resolve("frostc")
+            testDir := frostHome.resolve("test/tests")
+            def files := Array<File>(testDir.list())
             files.sortInPlace((a, b) => greaterThan(a.name, b.name))
-            var total := 0
             var success := 0
-            for file in files {
-                if file.path.endsWith(".frost") {
-                    def name := file.withExtension("").name
-                    total += 1
-                    if runTest(frostc, cLibs, tests, name, Mode.O0) {
+            def tests := files.filter(f => f.path.endsWith(".frost")).map(f => f.simpleName)
+            tests.apply(workQueue.post)
+            for i in 0 .. THREADS {
+                Thread.start(self.workThread)
+                workQueue.post(null)
+            }
+            def errors := Array<Result>()
+            for i in 0 .. tests.count {
+                def result := resultQueue.getMessage()
+                match result {
+                    when Result.SUCCESS {
+                        Console.print(".")
                         success += 1
                     }
-    -*                total += 1
-                    if runTest(frostc, cLibs, tests, name, Mode.O3) {
-                        success += 1
+                    when Result.ERROR {
+                        Console.print("!")
+                        errors.add(result)
                     }
-                    total += 1
-                    if runTest(frostc, cLibs, tests, name, Mode.C) {
-                        success += 1
-                    }*-
-                    Console.printLine("Passed \{success} / \{total} tests.")
+                }
+                Console.outputStream().flush()
+            }
+            Console.printLine()
+            for e in errors {
+                match e {
+                    when Result.ERROR(name, error) {
+                        Console.printLine("----------------------------------------")
+                        Console.printLine("\{name} \{error}")
+                    }
                 }
             }
-            Console.printLine("Passed \{success} / \{total} tests.")
+            Console.printLine("----------------------------------------")
+            Console.printLine()
+            Console.printLine("Summary")
+            Console.printLine("-------")
+            if errors.count > 0 {
+                Console.print("Failures: ")
+                -- FIXME shouldn't need inference here
+                Console.printLine(errors.map<String>(function(r:Result):String {
+                    match r {
+                        when Result.ERROR(name, _) {
+                            return name
+                        }
+                    }
+                }).sort(String.>).join(", "))
+            }
+            Console.printLine("Passed \{success} / \{tests.count} tests.")
         }
         fail(error) {
             Console.printError(error)

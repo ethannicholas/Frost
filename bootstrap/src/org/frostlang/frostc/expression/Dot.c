@@ -17,7 +17,7 @@
 
 
 static frost$core$String $s1;
-org$frostlang$frostc$expression$Dot$class_type org$frostlang$frostc$expression$Dot$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { frost$core$Object$convert$R$frost$core$String, org$frostlang$frostc$expression$Dot$cleanup} };
+org$frostlang$frostc$expression$Dot$class_type org$frostlang$frostc$expression$Dot$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { frost$core$Object$get_asString$R$frost$core$String, org$frostlang$frostc$expression$Dot$cleanup} };
 
 typedef org$frostlang$frostc$Type* (*$fn3)(org$frostlang$frostc$IR$Value*);
 typedef org$frostlang$frostc$Type* (*$fn24)(org$frostlang$frostc$IR$Value*);
@@ -111,7 +111,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp26));
 // unreffing REF($67:frost.core.String)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp25));
 // unreffing REF($65:org.frostlang.frostc.Type)
-// line 20
+// line 21
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((org$frostlang$frostc$IR$Value*) NULL)));
 org$frostlang$frostc$Symbol* $tmp33 = *(&local1);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp33));
@@ -123,13 +123,13 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp34));
 *(&local0) = ((org$frostlang$frostc$ClassDecl*) NULL);
 return ((org$frostlang$frostc$IR$Value*) NULL);
 block6:;
-// line 22
+// line 23
 org$frostlang$frostc$Symbol* $tmp35 = *(&local1);
 frost$core$Bit $tmp36 = frost$core$Bit$init$builtin_bit($tmp35 != NULL);
 bool $tmp37 = $tmp36.value;
 if ($tmp37) goto block7; else goto block8;
 block8:;
-frost$core$Int64 $tmp38 = (frost$core$Int64) {22};
+frost$core$Int64 $tmp38 = (frost$core$Int64) {23};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s39, $tmp38, &$s40);
 abort(); // unreachable
 block7:;
@@ -152,7 +152,7 @@ org$frostlang$frostc$IR$Value* org$frostlang$frostc$expression$Dot$compile$org$f
 
 org$frostlang$frostc$Type* local0 = NULL;
 org$frostlang$frostc$IR$Value* local1 = NULL;
-// line 27
+// line 28
 frost$core$Int64* $tmp44 = &param2->$rawValue;
 frost$core$Int64 $tmp45 = *$tmp44;
 frost$core$Int64 $tmp46 = (frost$core$Int64) {21};
@@ -160,7 +160,7 @@ frost$core$Bit $tmp47 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($
 bool $tmp48 = $tmp47.value;
 if ($tmp48) goto block2; else goto block1;
 block2:;
-// line 29
+// line 30
 org$frostlang$frostc$Scanner** $tmp49 = &param0->scanner;
 org$frostlang$frostc$Scanner* $tmp50 = *$tmp49;
 org$frostlang$frostc$Type* $tmp51 = org$frostlang$frostc$Scanner$convertType$org$frostlang$frostc$ASTNode$R$org$frostlang$frostc$Type($tmp50, param2);
@@ -174,13 +174,13 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp52));
 // unreffing REF($11:org.frostlang.frostc.Type?)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp51));
 // unreffing REF($10:org.frostlang.frostc.Type)
-// line 30
+// line 31
 org$frostlang$frostc$Type* $tmp54 = *(&local0);
 frost$core$Bit $tmp55 = frost$core$Bit$init$builtin_bit($tmp54 == NULL);
 bool $tmp56 = $tmp55.value;
 if ($tmp56) goto block3; else goto block4;
 block3:;
-// line 31
+// line 32
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((org$frostlang$frostc$IR$Value*) NULL)));
 org$frostlang$frostc$Type* $tmp57 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp57));
@@ -188,7 +188,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp57));
 *(&local0) = ((org$frostlang$frostc$Type*) NULL);
 return ((org$frostlang$frostc$IR$Value*) NULL);
 block4:;
-// line 33
+// line 34
 org$frostlang$frostc$IR$Value* $tmp58 = (org$frostlang$frostc$IR$Value*) frostObjectAlloc(48, (frost$core$Class*) &org$frostlang$frostc$IR$Value$class);
 frost$core$Int64 $tmp59 = (frost$core$Int64) {14};
 org$frostlang$frostc$Type* $tmp60 = *(&local0);
@@ -196,7 +196,7 @@ frost$core$Bit $tmp61 = frost$core$Bit$init$builtin_bit($tmp60 != NULL);
 bool $tmp62 = $tmp61.value;
 if ($tmp62) goto block5; else goto block6;
 block6:;
-frost$core$Int64 $tmp63 = (frost$core$Int64) {33};
+frost$core$Int64 $tmp63 = (frost$core$Int64) {34};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s64, $tmp63, &$s65);
 abort(); // unreachable
 block5:;
@@ -213,7 +213,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp67));
 *(&local0) = ((org$frostlang$frostc$Type*) NULL);
 return $tmp66;
 block1:;
-// line 36
+// line 37
 org$frostlang$frostc$IR$Value* $tmp68 = org$frostlang$frostc$Compiler$compileExpression$org$frostlang$frostc$ASTNode$R$org$frostlang$frostc$IR$Value$Q(param0, param2);
 *(&local1) = ((org$frostlang$frostc$IR$Value*) NULL);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp68));
@@ -222,13 +222,13 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp69));
 *(&local1) = $tmp68;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp68));
 // unreffing REF($69:org.frostlang.frostc.IR.Value?)
-// line 37
+// line 38
 org$frostlang$frostc$IR$Value* $tmp70 = *(&local1);
 frost$core$Bit $tmp71 = frost$core$Bit$init$builtin_bit($tmp70 == NULL);
 bool $tmp72 = $tmp71.value;
 if ($tmp72) goto block7; else goto block8;
 block7:;
-// line 38
+// line 39
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((org$frostlang$frostc$IR$Value*) NULL)));
 org$frostlang$frostc$IR$Value* $tmp73 = *(&local1);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp73));
@@ -236,13 +236,13 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp73));
 *(&local1) = ((org$frostlang$frostc$IR$Value*) NULL);
 return ((org$frostlang$frostc$IR$Value*) NULL);
 block8:;
-// line 40
+// line 41
 org$frostlang$frostc$IR$Value* $tmp74 = *(&local1);
 frost$core$Bit $tmp75 = frost$core$Bit$init$builtin_bit($tmp74 != NULL);
 bool $tmp76 = $tmp75.value;
 if ($tmp76) goto block9; else goto block10;
 block10:;
-frost$core$Int64 $tmp77 = (frost$core$Int64) {40};
+frost$core$Int64 $tmp77 = (frost$core$Int64) {41};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s78, $tmp77, &$s79);
 abort(); // unreachable
 block9:;

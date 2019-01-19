@@ -36,7 +36,7 @@ class Variable : Symbol {
     }
 
     @override
-    function convert():String {
+    function get_asString():String {
         return name
     }
 }

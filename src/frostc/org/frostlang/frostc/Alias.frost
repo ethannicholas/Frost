@@ -10,7 +10,7 @@ class Alias : Symbol {
     }
 
     @override
-    function convert():String {
+    function get_asString():String {
         return("Alias(\{name}->\{type})")
     }
 }

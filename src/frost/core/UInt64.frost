@@ -530,7 +530,7 @@ class UInt64 : Value, Key<UInt64>, Comparable<UInt64>, Formattable, ListView<Bit
 
     ===Returns this number converted to a decimal string.===
     @override
-    function convert():String {
+    function get_asString():String {
         constant max := 20
         def chars := Pointer<Char8>.alloc(max)
         var index := max - 1

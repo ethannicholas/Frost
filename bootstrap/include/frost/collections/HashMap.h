@@ -23,5 +23,5 @@ void frost$collections$HashMap$incrementCount(frost$collections$HashMap* self);
 frost$collections$Iterator* frost$collections$HashMap$get_keys$R$frost$collections$Iterator$LTfrost$collections$HashMap$K$GT(frost$collections$HashMap* self);
 frost$collections$Iterator* frost$collections$HashMap$get_values$R$frost$collections$Iterator$LTfrost$collections$HashMap$V$GT(frost$collections$HashMap* self);
 frost$core$Int64 frost$collections$HashMap$get_count$R$frost$core$Int64(frost$collections$HashMap* self);
-frost$core$String* frost$collections$HashMap$convert$R$frost$core$String(frost$collections$HashMap* self);
+frost$core$String* frost$collections$HashMap$get_asString$R$frost$core$String(frost$collections$HashMap* self);
 

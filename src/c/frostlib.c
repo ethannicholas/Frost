@@ -138,9 +138,10 @@ typedef struct Process {
     Class* cl;
     int32_t refcnt;
     int64_t pid;
-    int64_t stdin;
-    int64_t stdout;
-    int64_t stderr;
+    // FIXME unsafe assumption that Object* and int64_t are the same size
+    FileOutputStream* stdin;
+    FileInputStream* stdout;
+    FileInputStream* stderr;
 } Process;
 
 typedef struct Thread {
@@ -208,6 +209,8 @@ void frost$core$Frost$init(Object*);
 Object* frost$core$Frost$success$frost$core$Object$R$frost$core$Maybe$LTfrost$core$Object$GT$Q(Object*);
 
 Object* frost$core$Frost$error$frost$core$String$R$frost$core$Maybe$LTfrost$core$Object$GT$Q(String*);
+
+void frost$core$Frost$ref$frost$core$Object$Q(Object*);
 
 void frost$core$Frost$unref$frost$core$Object$Q(Object*);
 
@@ -307,7 +310,7 @@ void* frostRealloc(void* ptr, size_t oldSize, size_t newSize) {
 void frostFree(void* ptr) {
     __atomic_sub_fetch(&allocations, 1, __ATOMIC_RELAXED);
 #if !DEBUG_ALLOCS
-//    free(ptr);
+    //free(ptr);
 #endif
 }
 
@@ -506,69 +509,54 @@ Object* frost$core$System$exec$frost$core$String$frost$collections$ListView$LTfr
         close(stderrPipe[1]);
         Process* result = frostObjectAlloc(sizeof(Process), &frost$core$System$Process$class);
         result->pid = pid;
-        result->stdin = stdinPipe[1];
-        result->stdout = stdoutPipe[0];
-        result->stderr = stderrPipe[0];
-        return frostMaybeSuccess((Object*) result);
-    }
-}
 
-Object* frost$core$System$Process$openStandardInput$R$frost$core$Maybe$LTfrost$io$OutputStream$GT(Process* p) {
-    FILE* f = fdopen(p->stdin, "wb");
-    if (f) {
-        FileOutputStream* result = frostObjectAlloc(sizeof(FileOutputStream),
+        result->stdin = frostObjectAlloc(sizeof(FileOutputStream),
                 &frost$io$FileOutputStream$class);
-        frost$io$OutputStream$init(result);
-        result->file = f;
-        result->closeOnCleanup.value = true;
-//            setvbuf(result->file, NULL, _IONBF, 0);
+        frost$io$OutputStream$init(result->stdin);
+        result->stdin->file = fdopen(stdinPipe[1], "wb");
+        frostAssert(result->stdin->file != NULL);
+        result->stdin->closeOnCleanup.value = true;
+
+        result->stdout = frostObjectAlloc(sizeof(FileInputStream),
+                &frost$io$FileInputStream$class);
+        frost$io$InputStream$init(result->stdout);
+        result->stdout->file = fdopen(stdoutPipe[0], "rb");
+        frostAssert(result->stdout->file != NULL);
+        result->stdout->closeOnCleanup.value = true;
+
+        result->stderr = frostObjectAlloc(sizeof(FileInputStream),
+                &frost$io$FileInputStream$class);
+        frost$io$InputStream$init(result->stderr);
+        result->stderr->file = fdopen(stderrPipe[0], "rb");
+        frostAssert(result->stderr->file != NULL);
+        result->stderr->closeOnCleanup.value = true;
+
         return frostMaybeSuccess((Object*) result);
-    }
-    else {
-        const char* msg = strerror(errno);
-        return frostMaybeError((Object*) frostNewString(msg, strlen(msg)));
     }
 }
 
-Object* frost$core$System$Process$openStandardOutput$R$frost$core$Maybe$LTfrost$io$InputStream$GT(Process* p) {
-    FILE* f = fdopen(p->stdout, "rb");
-    if (f) {
-        FileInputStream* result = frostObjectAlloc(sizeof(FileInputStream),
-                &frost$io$FileInputStream$class);
-        frost$io$InputStream$init(result);
-        result->file = f;
-        result->closeOnCleanup.value = true;
-//            setvbuf(result->file, NULL, _IONBF, 0);
-        return frostMaybeSuccess((Object*) result);
-    }
-    else {
-        const char* msg = strerror(errno);
-        return frostMaybeError((Object*) frostNewString(msg, strlen(msg)));
-    }
+Object* frost$core$System$Process$standardInput$R$frost$io$OutputStream(Process* p) {
+    Object* result = (Object*) p->stdin;
+    frost$core$Frost$ref$frost$core$Object$Q(result);
+    return result;
 }
 
-Object* frost$core$System$Process$openStandardError$R$frost$core$Maybe$LTfrost$io$InputStream$GT(Process* p) {
-    FILE* f = fdopen(p->stderr, "rb");
-    if (f) {
-        FileInputStream* result = frostObjectAlloc(sizeof(FileInputStream),
-                &frost$io$FileInputStream$class);
-        frost$io$InputStream$init(result);
-        result->file = f;
-        frostAssert(result->file != NULL);
-        result->closeOnCleanup.value = true;
-//        setvbuf(result->file, NULL, _IONBF, 0);
-        return frostMaybeSuccess((Object*) result);
-    }
-    else {
-        const char* msg = strerror(errno);
-        return frostMaybeError((Object*) frostNewString(msg, strlen(msg)));
-    }
+Object* frost$core$System$Process$standardOutput$R$frost$io$InputStream(Process* p) {
+    Object* result = (Object*) p->stdout;
+    frost$core$Frost$ref$frost$core$Object$Q(result);
+    return result;
+}
+
+Object* frost$core$System$Process$standardError$R$frost$io$InputStream(Process* p) {
+    Object* result = (Object*) p->stderr;
+    frost$core$Frost$ref$frost$core$Object$Q(result);
+    return result;
 }
 
 void frost$core$System$Process$_cleanup(Process* p) {
-    close(p->stdin);
-    close(p->stdout);
-    close(p->stderr);
+    frost$core$Frost$unref$frost$core$Object$Q((Object*) p->stdin);
+    frost$core$Frost$unref$frost$core$Object$Q((Object*) p->stdout);
+    frost$core$Frost$unref$frost$core$Object$Q((Object*) p->stderr);
 }
 
 void frost$core$System$Process$exitCode$R$frost$core$Int64$Q(NullableInt* result, Process* p) {
@@ -693,7 +681,7 @@ void frost$core$Frost$toReal64$frost$core$String$R$frost$core$Real64(Real64* res
     frostFree(cstr);
 }
 
-String* frost$core$Real32$convert$R$frost$core$String(Real32 d) {
+String* frost$core$Real32$get_asString$R$frost$core$String(Real32 d) {
     size_t len = snprintf(NULL, 0, "%g", d.value);
     char* chars = (char*) frostAlloc(len + 1);
     snprintf(chars, len + 1, "%g", d.value);
@@ -702,7 +690,7 @@ String* frost$core$Real32$convert$R$frost$core$String(Real32 d) {
     return result;
 }
 
-String* frost$core$Real64$convert$R$frost$core$String(Real64 d) {
+String* frost$core$Real64$get_asString$R$frost$core$String(Real64 d) {
     size_t len = snprintf(NULL, 0, "%g", d.value);
     char* chars = (char*) frostAlloc(len + 1);
     snprintf(chars, len + 1, "%g", d.value);

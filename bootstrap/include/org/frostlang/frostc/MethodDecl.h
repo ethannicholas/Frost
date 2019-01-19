@@ -22,6 +22,6 @@ frost$core$Int64 org$frostlang$frostc$MethodDecl$get_priority$R$frost$core$Int64
 org$frostlang$frostc$Type* org$frostlang$frostc$MethodDecl$get_type$R$org$frostlang$frostc$Type(org$frostlang$frostc$MethodDecl* self);
 frost$core$String* org$frostlang$frostc$MethodDecl$get_signature$R$frost$core$String(org$frostlang$frostc$MethodDecl* self);
 frost$core$String* org$frostlang$frostc$MethodDecl$get_declaration$R$frost$core$String(org$frostlang$frostc$MethodDecl* self);
-frost$core$String* org$frostlang$frostc$MethodDecl$convert$R$frost$core$String(org$frostlang$frostc$MethodDecl* self);
+frost$core$String* org$frostlang$frostc$MethodDecl$get_asString$R$frost$core$String(org$frostlang$frostc$MethodDecl* self);
 void org$frostlang$frostc$MethodDecl$cleanup(org$frostlang$frostc$MethodDecl* self);
 

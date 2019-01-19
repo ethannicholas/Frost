@@ -37,7 +37,7 @@ class SetNode : Node {
     }
 
     @override
-    function convert():String {
+    function get_asString():String {
         var result := MutableString()
         result.append("[")
         for c in contents {

@@ -152,7 +152,7 @@ class LLVMCodeGenerator : CodeGenerator {
             currentBlock := label
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -370,7 +370,7 @@ class LLVMCodeGenerator : CodeGenerator {
             compiler.currentClass.pop()
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -395,7 +395,7 @@ class LLVMCodeGenerator : CodeGenerator {
             types.printLine("\{llvmType(t)}$nullable = type { \{llvmType(t)}, i1 }")
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -586,7 +586,7 @@ class LLVMCodeGenerator : CodeGenerator {
             return previous
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -685,7 +685,7 @@ class LLVMCodeGenerator : CodeGenerator {
             return result
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -728,7 +728,7 @@ class LLVMCodeGenerator : CodeGenerator {
                 types.printLine(result.finish())
             }
             fail(error) {
-                assert false, error.convert()
+                assert false, error.asString
             }
             previous := "%$itable* bitcast(\{t}* \{name} to %$itable*)"
         }
@@ -859,7 +859,7 @@ class LLVMCodeGenerator : CodeGenerator {
             return result
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -920,7 +920,7 @@ class LLVMCodeGenerator : CodeGenerator {
             return result
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -1085,7 +1085,7 @@ class LLVMCodeGenerator : CodeGenerator {
             return wrapperCast
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -1131,7 +1131,7 @@ class LLVMCodeGenerator : CodeGenerator {
             return result
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -1146,7 +1146,7 @@ class LLVMCodeGenerator : CodeGenerator {
             return result
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -1159,7 +1159,7 @@ class LLVMCodeGenerator : CodeGenerator {
             return result
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -1250,7 +1250,7 @@ class LLVMCodeGenerator : CodeGenerator {
                     debugInfo(position))
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
         return result
     }
@@ -1293,7 +1293,7 @@ class LLVMCodeGenerator : CodeGenerator {
             return result
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -1334,7 +1334,7 @@ class LLVMCodeGenerator : CodeGenerator {
             return "%self"
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -1400,17 +1400,17 @@ class LLVMCodeGenerator : CodeGenerator {
             declarations.printLine(")")
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
     method getReference(v:IR.Value):String {
         match v {
             when IR.Value.BIT(value) {
-                return value.convert()
+                return value.asString
             }
             when IR.Value.INT(value, _) {
-                return value.convert()
+                return value.asString
             }
             when IR.Value.LOCAL(index, _) {
                 return "%local\{index}"
@@ -1462,7 +1462,7 @@ class LLVMCodeGenerator : CodeGenerator {
             }
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -1489,7 +1489,7 @@ class LLVMCodeGenerator : CodeGenerator {
             }
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -1513,7 +1513,7 @@ class LLVMCodeGenerator : CodeGenerator {
             }
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -1635,7 +1635,7 @@ class LLVMCodeGenerator : CodeGenerator {
                     debugInfo(position))
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
         refs[id] := result
     }
@@ -1645,7 +1645,7 @@ class LLVMCodeGenerator : CodeGenerator {
             out.printLine("br label %\{target}\{debugInfo(position)}")
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -1660,7 +1660,7 @@ class LLVMCodeGenerator : CodeGenerator {
                     "label %\{ifFalse}\{debugInfo(position)}")
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -1686,7 +1686,7 @@ class LLVMCodeGenerator : CodeGenerator {
             refs[id] := result
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -1706,7 +1706,7 @@ class LLVMCodeGenerator : CodeGenerator {
             refs[id] := current
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -1733,7 +1733,7 @@ class LLVMCodeGenerator : CodeGenerator {
             out.printLine(")\{debugInfo(position)}")
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -1747,7 +1747,7 @@ class LLVMCodeGenerator : CodeGenerator {
             refs[id] := result
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -1773,7 +1773,7 @@ class LLVMCodeGenerator : CodeGenerator {
             refs[id] := cast
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -1797,7 +1797,7 @@ class LLVMCodeGenerator : CodeGenerator {
             }
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -1868,7 +1868,7 @@ class LLVMCodeGenerator : CodeGenerator {
             refs[id] := methodPtr
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -1895,7 +1895,7 @@ class LLVMCodeGenerator : CodeGenerator {
             refs[id] := result
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -1907,7 +1907,7 @@ class LLVMCodeGenerator : CodeGenerator {
             refs[id] := result
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -1925,7 +1925,7 @@ class LLVMCodeGenerator : CodeGenerator {
             refs[id] := result
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -1936,7 +1936,7 @@ class LLVMCodeGenerator : CodeGenerator {
             refs[id] := result
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -1956,7 +1956,7 @@ class LLVMCodeGenerator : CodeGenerator {
             refs[id] := result
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -1968,7 +1968,7 @@ class LLVMCodeGenerator : CodeGenerator {
             out.printLine("call void @frostFree(i8* \{cast})\{debugInfo(position)}")
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -1986,7 +1986,7 @@ class LLVMCodeGenerator : CodeGenerator {
             refs[id] := result
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -2002,7 +2002,7 @@ class LLVMCodeGenerator : CodeGenerator {
             refs[id] := result
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -2029,7 +2029,7 @@ class LLVMCodeGenerator : CodeGenerator {
             refs[id] := result
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -2045,7 +2045,7 @@ class LLVMCodeGenerator : CodeGenerator {
             out.printLine("store \{valueRef}, \{baseType}* \{offset}\{debugInfo(position)}")
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -2059,7 +2059,7 @@ class LLVMCodeGenerator : CodeGenerator {
             }
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -2103,7 +2103,7 @@ class LLVMCodeGenerator : CodeGenerator {
             }
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -2113,7 +2113,7 @@ class LLVMCodeGenerator : CodeGenerator {
                     getReference(ptr) + debugInfo(position))
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -2204,7 +2204,7 @@ class LLVMCodeGenerator : CodeGenerator {
             }
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -2233,7 +2233,7 @@ class LLVMCodeGenerator : CodeGenerator {
             }
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -2276,7 +2276,7 @@ class LLVMCodeGenerator : CodeGenerator {
             methods.printLine("}")
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -2306,7 +2306,7 @@ class LLVMCodeGenerator : CodeGenerator {
             getClassConstant(cl)
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 

@@ -33,7 +33,7 @@
 
 
 static frost$core$String $s1;
-org$frostlang$frostc$statement$Return$class_type org$frostlang$frostc$statement$Return$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { frost$core$Object$convert$R$frost$core$String, org$frostlang$frostc$statement$Return$cleanup} };
+org$frostlang$frostc$statement$Return$class_type org$frostlang$frostc$statement$Return$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { frost$core$Object$get_asString$R$frost$core$String, org$frostlang$frostc$statement$Return$cleanup} };
 
 typedef frost$core$Int64 (*$fn33)(frost$collections$CollectionView*);
 typedef frost$core$Bit (*$fn48)(frost$core$Equatable*, frost$core$Equatable*);

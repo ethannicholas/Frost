@@ -6,7 +6,7 @@ typedef struct frost$core$String frost$core$String;
 #include "frost/core/Int64_types.h"
 #include "frost/core/Bit_types.h"
 
-frost$core$String* org$frostlang$frostc$parser$SyntaxHighlighter$Kind$convert$R$frost$core$String(org$frostlang$frostc$parser$SyntaxHighlighter$Kind self);
+frost$core$String* org$frostlang$frostc$parser$SyntaxHighlighter$Kind$get_asString$R$frost$core$String(org$frostlang$frostc$parser$SyntaxHighlighter$Kind self);
 void org$frostlang$frostc$parser$SyntaxHighlighter$Kind$cleanup(org$frostlang$frostc$parser$SyntaxHighlighter$Kind self);
 org$frostlang$frostc$parser$SyntaxHighlighter$Kind org$frostlang$frostc$parser$SyntaxHighlighter$Kind$init$frost$core$Int64(frost$core$Int64 p_rv);
 frost$core$Bit org$frostlang$frostc$parser$SyntaxHighlighter$Kind$$EQ$org$frostlang$frostc$parser$SyntaxHighlighter$Kind$R$frost$core$Bit(org$frostlang$frostc$parser$SyntaxHighlighter$Kind self, org$frostlang$frostc$parser$SyntaxHighlighter$Kind p_other);

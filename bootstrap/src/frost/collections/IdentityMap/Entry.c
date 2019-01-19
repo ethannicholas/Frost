@@ -6,7 +6,7 @@
 
 
 static frost$core$String $s1;
-frost$collections$IdentityMap$Entry$class_type frost$collections$IdentityMap$Entry$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { frost$core$Object$convert$R$frost$core$String, frost$collections$IdentityMap$Entry$cleanup} };
+frost$collections$IdentityMap$Entry$class_type frost$collections$IdentityMap$Entry$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { frost$core$Object$get_asString$R$frost$core$String, frost$collections$IdentityMap$Entry$cleanup} };
 
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x49\x64\x65\x6e\x74\x69\x74\x79\x4d\x61\x70\x2e\x45\x6e\x74\x72\x79", 35, 4505896286660002442, NULL };

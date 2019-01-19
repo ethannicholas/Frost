@@ -34,7 +34,7 @@
 
 
 static frost$core$String $s1;
-org$frostlang$frostc$ClassDecl$class_type org$frostlang$frostc$ClassDecl$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { org$frostlang$frostc$ClassDecl$convert$R$frost$core$String, org$frostlang$frostc$ClassDecl$cleanup, org$frostlang$frostc$ClassDecl$simpleName$R$frost$core$String, org$frostlang$frostc$ClassDecl$typeWithParameters$R$org$frostlang$frostc$Type, org$frostlang$frostc$ClassDecl$isSpecialization$R$frost$core$Bit} };
+org$frostlang$frostc$ClassDecl$class_type org$frostlang$frostc$ClassDecl$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { org$frostlang$frostc$ClassDecl$get_asString$R$frost$core$String, org$frostlang$frostc$ClassDecl$cleanup, org$frostlang$frostc$ClassDecl$simpleName$R$frost$core$String, org$frostlang$frostc$ClassDecl$typeWithParameters$R$org$frostlang$frostc$Type, org$frostlang$frostc$ClassDecl$isSpecialization$R$frost$core$Bit} };
 
 typedef frost$collections$Iterator* (*$fn93)(frost$collections$Iterable*);
 typedef frost$core$Bit (*$fn97)(frost$collections$Iterator*);
@@ -547,7 +547,7 @@ frost$core$Bit $tmp199 = frost$core$String$contains$frost$core$String$R$frost$co
 return $tmp199;
 
 }
-frost$core$String* org$frostlang$frostc$ClassDecl$convert$R$frost$core$String(org$frostlang$frostc$ClassDecl* param0) {
+frost$core$String* org$frostlang$frostc$ClassDecl$get_asString$R$frost$core$String(org$frostlang$frostc$ClassDecl* param0) {
 
 frost$core$MutableString* local0 = NULL;
 frost$core$String* local1 = NULL;
@@ -559,7 +559,7 @@ org$frostlang$frostc$MethodDecl* local5 = NULL;
 frost$core$MutableString* $tmp201 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
 org$frostlang$frostc$Annotations** $tmp202 = &param0->annotations;
 org$frostlang$frostc$Annotations* $tmp203 = *$tmp202;
-frost$core$String* $tmp204 = org$frostlang$frostc$Annotations$convert$R$frost$core$String($tmp203);
+frost$core$String* $tmp204 = org$frostlang$frostc$Annotations$get_asString$R$frost$core$String($tmp203);
 frost$core$String* $tmp205 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp204, &$s206);
 frost$core$String** $tmp207 = &param0->name;
 frost$core$String* $tmp208 = *$tmp207;
@@ -597,7 +597,7 @@ block1:;
 // line 173
 frost$core$MutableString* $tmp220 = *(&local0);
 frost$core$String* $tmp221 = *(&local1);
-frost$core$String* $tmp222 = frost$core$String$convert$R$frost$core$String($tmp221);
+frost$core$String* $tmp222 = frost$core$String$get_asString$R$frost$core$String($tmp221);
 frost$core$String* $tmp223 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp222, &$s224);
 org$frostlang$frostc$Type** $tmp225 = &param0->rawSuper;
 org$frostlang$frostc$Type* $tmp226 = *$tmp225;
@@ -661,7 +661,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp253));
 // line 177
 frost$core$MutableString* $tmp254 = *(&local0);
 frost$core$String* $tmp255 = *(&local1);
-frost$core$String* $tmp256 = frost$core$String$convert$R$frost$core$String($tmp255);
+frost$core$String* $tmp256 = frost$core$String$get_asString$R$frost$core$String($tmp255);
 frost$core$String* $tmp257 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp256, &$s258);
 org$frostlang$frostc$Type* $tmp259 = *(&local2);
 frost$core$String* $tmp260 = frost$core$String$$ADD$frost$core$Object$R$frost$core$String($tmp257, ((frost$core$Object*) $tmp259));
@@ -727,7 +727,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp284));
 // line 182
 frost$core$MutableString* $tmp285 = *(&local0);
 org$frostlang$frostc$ClassDecl* $tmp286 = *(&local3);
-frost$core$String* $tmp287 = org$frostlang$frostc$ClassDecl$convert$R$frost$core$String($tmp286);
+frost$core$String* $tmp287 = org$frostlang$frostc$ClassDecl$get_asString$R$frost$core$String($tmp286);
 frost$core$String* $tmp288 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp287, &$s289);
 frost$core$MutableString$append$frost$core$String($tmp285, $tmp288);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp288));
@@ -778,7 +778,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp306));
 // line 185
 frost$core$MutableString* $tmp307 = *(&local0);
 org$frostlang$frostc$FieldDecl* $tmp308 = *(&local4);
-frost$core$String* $tmp309 = org$frostlang$frostc$FieldDecl$convert$R$frost$core$String($tmp308);
+frost$core$String* $tmp309 = org$frostlang$frostc$FieldDecl$get_asString$R$frost$core$String($tmp308);
 frost$core$String* $tmp310 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp309, &$s311);
 frost$core$MutableString$append$frost$core$String($tmp307, $tmp310);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp310));
@@ -829,7 +829,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp328));
 // line 188
 frost$core$MutableString* $tmp329 = *(&local0);
 org$frostlang$frostc$MethodDecl* $tmp330 = *(&local5);
-frost$core$String* $tmp331 = org$frostlang$frostc$MethodDecl$convert$R$frost$core$String($tmp330);
+frost$core$String* $tmp331 = org$frostlang$frostc$MethodDecl$get_asString$R$frost$core$String($tmp330);
 frost$core$String* $tmp332 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp331, &$s333);
 frost$core$MutableString$append$frost$core$String($tmp329, $tmp332);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp332));

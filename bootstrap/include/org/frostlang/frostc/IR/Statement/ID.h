@@ -9,6 +9,6 @@ typedef struct frost$core$String frost$core$String;
 org$frostlang$frostc$IR$Statement$ID org$frostlang$frostc$IR$Statement$ID$init$frost$core$Int64(frost$core$Int64 p_value);
 frost$core$Int64 org$frostlang$frostc$IR$Statement$ID$get_hash$R$frost$core$Int64(org$frostlang$frostc$IR$Statement$ID self);
 frost$core$Bit org$frostlang$frostc$IR$Statement$ID$$EQ$org$frostlang$frostc$IR$Statement$ID$R$frost$core$Bit(org$frostlang$frostc$IR$Statement$ID self, org$frostlang$frostc$IR$Statement$ID p_other);
-frost$core$String* org$frostlang$frostc$IR$Statement$ID$convert$R$frost$core$String(org$frostlang$frostc$IR$Statement$ID self);
+frost$core$String* org$frostlang$frostc$IR$Statement$ID$get_asString$R$frost$core$String(org$frostlang$frostc$IR$Statement$ID self);
 void org$frostlang$frostc$IR$Statement$ID$cleanup(org$frostlang$frostc$IR$Statement$ID self);
 

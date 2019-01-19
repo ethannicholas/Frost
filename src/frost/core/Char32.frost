@@ -125,7 +125,7 @@ class Char32 : Value, Key<Char32>, Comparable<Char32> {
     Returns a single-character `String` containing this `Char32`.
     ================================================================================================
     @override
-    function convert():String {
+    function get_asString():String {
         if value < 0x80 {
             def data := Pointer<Char8>.alloc(1)
             data[0] := Char8(UInt8(value->builtin_uint8))

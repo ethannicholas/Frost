@@ -11,7 +11,7 @@
 
 
 static frost$core$String $s1;
-org$frostlang$frostc$ClassDecl$GenericParameter$class_type org$frostlang$frostc$ClassDecl$GenericParameter$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &org$frostlang$frostc$Symbol$class, NULL, { org$frostlang$frostc$ClassDecl$GenericParameter$convert$R$frost$core$String, org$frostlang$frostc$ClassDecl$GenericParameter$cleanup, org$frostlang$frostc$Symbol$get_heritable$R$frost$core$Bit} };
+org$frostlang$frostc$ClassDecl$GenericParameter$class_type org$frostlang$frostc$ClassDecl$GenericParameter$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &org$frostlang$frostc$Symbol$class, NULL, { org$frostlang$frostc$ClassDecl$GenericParameter$get_asString$R$frost$core$String, org$frostlang$frostc$ClassDecl$GenericParameter$cleanup, org$frostlang$frostc$Symbol$get_heritable$R$frost$core$Bit} };
 
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x43\x6c\x61\x73\x73\x44\x65\x63\x6c\x2e\x47\x65\x6e\x65\x72\x69\x63\x50\x61\x72\x61\x6d\x65\x74\x65\x72", 47, -764823054806365322, NULL };
@@ -42,12 +42,12 @@ org$frostlang$frostc$Symbol$init$org$frostlang$frostc$Symbol$Kind$org$frostlang$
 return;
 
 }
-frost$core$String* org$frostlang$frostc$ClassDecl$GenericParameter$convert$R$frost$core$String(org$frostlang$frostc$ClassDecl$GenericParameter* param0) {
+frost$core$String* org$frostlang$frostc$ClassDecl$GenericParameter$get_asString$R$frost$core$String(org$frostlang$frostc$ClassDecl$GenericParameter* param0) {
 
 // line 35
 frost$core$String** $tmp10 = &param0->owner;
 frost$core$String* $tmp11 = *$tmp10;
-frost$core$String* $tmp12 = frost$core$String$convert$R$frost$core$String($tmp11);
+frost$core$String* $tmp12 = frost$core$String$get_asString$R$frost$core$String($tmp11);
 frost$core$String* $tmp13 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp12, &$s14);
 frost$core$String** $tmp15 = &((org$frostlang$frostc$Symbol*) param0)->name;
 frost$core$String* $tmp16 = *$tmp15;

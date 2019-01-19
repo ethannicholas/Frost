@@ -70,8 +70,8 @@ class Main {
         def p:System.Process
         try {
             p := System.exec(clang.path, args)
-            Console.printError(p.openStandardOutput().readFully())
-            Console.printError(p.openStandardError().readFully())
+            Console.printError(p.standardOutput().readFully())
+            Console.printError(p.standardError().readFully())
         }
         fail(error) {
             Console.printErrorLine(error)
@@ -119,8 +119,8 @@ class Main {
         def p:System.Process
         try {
             p := System.exec(clang.path, args)
-            Console.printError(p.openStandardOutput().readFully())
-            Console.printError(p.openStandardError().readFully())
+            Console.printError(p.standardOutput().readFully())
+            Console.printError(p.standardError().readFully())
         }
         fail(error) {
             Console.printErrorLine(error)

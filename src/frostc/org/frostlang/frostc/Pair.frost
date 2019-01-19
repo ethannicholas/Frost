@@ -11,17 +11,17 @@ class Pair<A, B> {
     }
 
     @override
-    function convert():String {
+    function get_asString():String {
         def firstString:String
         if first !== null {
-            firstString := first.convert()
+            firstString := first.asString
         }
         else {
             firstString := "<null>"
         }
         def secondString:String
         if second !== null {
-            secondString := second.convert()
+            secondString := second.asString
         }
         else {
             secondString := "<null>"

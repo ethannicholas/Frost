@@ -21,7 +21,7 @@ struct { frost$core$Class* cl; ITable* next; void* methods[2]; } org$frostlang$f
 struct { frost$core$Class* cl; ITable* next; void* methods[1]; } org$frostlang$frostc$Compiler$BinaryKey$_frost$collections$Key = { (frost$core$Class*) &frost$collections$Key$class, (ITable*) &org$frostlang$frostc$Compiler$BinaryKey$_frost$core$Equatable, { org$frostlang$frostc$Compiler$BinaryKey$get_hash$R$frost$core$Int64} };
 
 static frost$core$String $s1;
-org$frostlang$frostc$Compiler$BinaryKey$class_type org$frostlang$frostc$Compiler$BinaryKey$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Object$class, (ITable*) &org$frostlang$frostc$Compiler$BinaryKey$_frost$collections$Key, { frost$core$Object$convert$R$frost$core$String, org$frostlang$frostc$Compiler$BinaryKey$cleanup, org$frostlang$frostc$Compiler$BinaryKey$$EQ$org$frostlang$frostc$Compiler$BinaryKey$R$frost$core$Bit$shim, org$frostlang$frostc$Compiler$BinaryKey$get_hash$R$frost$core$Int64} };
+org$frostlang$frostc$Compiler$BinaryKey$class_type org$frostlang$frostc$Compiler$BinaryKey$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Object$class, (ITable*) &org$frostlang$frostc$Compiler$BinaryKey$_frost$collections$Key, { frost$core$Object$get_asString$R$frost$core$String, org$frostlang$frostc$Compiler$BinaryKey$cleanup, org$frostlang$frostc$Compiler$BinaryKey$$EQ$org$frostlang$frostc$Compiler$BinaryKey$R$frost$core$Bit$shim, org$frostlang$frostc$Compiler$BinaryKey$get_hash$R$frost$core$Int64} };
 
 typedef frost$core$Bit (*$fn24)(frost$core$Equatable*, frost$core$Equatable*);
 
@@ -29,17 +29,17 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 
 void org$frostlang$frostc$Compiler$BinaryKey$init$org$frostlang$frostc$ASTNode$org$frostlang$frostc$parser$Token$Kind$org$frostlang$frostc$ASTNode(org$frostlang$frostc$Compiler$BinaryKey* param0, org$frostlang$frostc$ASTNode* param1, org$frostlang$frostc$parser$Token$Kind param2, org$frostlang$frostc$ASTNode* param3) {
 
-// line 330
+// line 331
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
 org$frostlang$frostc$ASTNode** $tmp2 = &param0->left;
 org$frostlang$frostc$ASTNode* $tmp3 = *$tmp2;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp3));
 org$frostlang$frostc$ASTNode** $tmp4 = &param0->left;
 *$tmp4 = param1;
-// line 331
+// line 332
 org$frostlang$frostc$parser$Token$Kind* $tmp5 = &param0->op;
 *$tmp5 = param2;
-// line 332
+// line 333
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param3));
 org$frostlang$frostc$ASTNode** $tmp6 = &param0->right;
 org$frostlang$frostc$ASTNode* $tmp7 = *$tmp6;
@@ -53,7 +53,7 @@ frost$core$Bit org$frostlang$frostc$Compiler$BinaryKey$$EQ$org$frostlang$frostc$
 
 frost$core$Bit local0;
 frost$core$Bit local1;
-// line 337
+// line 338
 org$frostlang$frostc$ASTNode** $tmp9 = &param0->left;
 org$frostlang$frostc$ASTNode* $tmp10 = *$tmp9;
 org$frostlang$frostc$ASTNode** $tmp11 = &param1->left;
@@ -111,7 +111,7 @@ return $tmp34;
 }
 frost$core$Int64 org$frostlang$frostc$Compiler$BinaryKey$get_hash$R$frost$core$Int64(org$frostlang$frostc$Compiler$BinaryKey* param0) {
 
-// line 342
+// line 343
 org$frostlang$frostc$ASTNode** $tmp35 = &param0->left;
 org$frostlang$frostc$ASTNode* $tmp36 = *$tmp35;
 frost$core$Int64 $tmp37;
@@ -126,7 +126,7 @@ return $tmp41;
 }
 void org$frostlang$frostc$Compiler$BinaryKey$cleanup(org$frostlang$frostc$Compiler$BinaryKey* param0) {
 
-// line 322
+// line 323
 frost$core$Object$cleanup(((frost$core$Object*) param0));
 org$frostlang$frostc$ASTNode** $tmp42 = &param0->left;
 org$frostlang$frostc$ASTNode* $tmp43 = *$tmp42;

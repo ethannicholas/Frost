@@ -188,7 +188,7 @@ frost$core$UInt32 frost$core$UInt8$convert$R$frost$core$UInt32(frost$core$UInt8 
 frost$core$UInt64 frost$core$UInt8$convert$R$frost$core$UInt64(frost$core$UInt8 self);
 frost$core$Real32 frost$core$UInt8$convert$R$frost$core$Real32(frost$core$UInt8 self);
 frost$core$Real64 frost$core$UInt8$convert$R$frost$core$Real64(frost$core$UInt8 self);
-frost$core$String* frost$core$UInt8$convert$R$frost$core$String(frost$core$UInt8 self);
+frost$core$String* frost$core$UInt8$get_asString$R$frost$core$String(frost$core$UInt8 self);
 frost$core$String* frost$core$UInt8$format$frost$core$String$R$frost$core$String(frost$core$UInt8 self, frost$core$String* p_fmt);
 void frost$core$UInt8$cleanup(frost$core$UInt8 self);
 

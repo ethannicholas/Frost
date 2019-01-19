@@ -80,7 +80,7 @@ frost$core$UInt32 frost$core$Real32$convert$R$frost$core$UInt32(frost$core$Real3
 frost$core$UInt64 frost$core$Real32$convert$R$frost$core$UInt64(frost$core$Real32 self);
 frost$core$Real32 frost$core$Real32$convert$R$frost$core$Real32(frost$core$Real32 self);
 frost$core$Real64 frost$core$Real32$convert$R$frost$core$Real64(frost$core$Real32 self);
-frost$core$String* frost$core$Real32$convert$R$frost$core$String(frost$core$Real32 self);
+frost$core$String* frost$core$Real32$get_asString$R$frost$core$String(frost$core$Real32 self);
 frost$core$String* frost$core$Real32$format$frost$core$String$R$frost$core$String(frost$core$Real32 self, frost$core$String* p_fmt);
 void frost$core$Real32$cleanup(frost$core$Real32 self);
 

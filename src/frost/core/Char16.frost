@@ -119,7 +119,7 @@ class Char16 : Value, Key<Char16>, Comparable<Char16> {
     `Char32` before being reencoded into a `String`.
     ================================================================================================
     @override
-    function convert():String {
+    function get_asString():String {
         if value < 0x80 {
             def data := Pointer<Char8>.alloc(1)
             data[0] := Char8(convert()->UInt8)

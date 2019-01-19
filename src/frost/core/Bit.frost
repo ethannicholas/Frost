@@ -8,7 +8,7 @@ class Bit : Value, Key<Bit>, Formattable {
     }
 
     @override
-    function convert():String {
+    function get_asString():String {
         if self {
             return "true"
         }

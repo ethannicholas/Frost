@@ -25,7 +25,7 @@ void frost$core$String$init$frost$unsafe$Pointer$LTfrost$core$Char8$GT$frost$cor
 void frost$core$String$init$frost$unsafe$Pointer$LTfrost$core$Char8$GT$frost$core$Int64$frost$core$String(frost$core$String* self, frost$core$Char8* p_data, frost$core$Int64 p_length, frost$core$String* p_owner);
 void frost$core$String$init$frost$collections$ListView$LTfrost$core$Char8$GT(frost$core$String* self, frost$collections$ListView* p_chars);
 void frost$core$String$init$frost$collections$ListView$LTfrost$core$Char32$GT(frost$core$String* self, frost$collections$ListView* p_chars);
-frost$core$String* frost$core$String$convert$R$frost$core$String(frost$core$String* self);
+frost$core$String* frost$core$String$get_asString$R$frost$core$String(frost$core$String* self);
 frost$core$String* frost$core$String$format$frost$core$String$R$frost$core$String(frost$core$String* self, frost$core$String* p_fmt);
 void frost$core$String$cleanup(frost$core$String* self);
 frost$collections$ListView* frost$core$String$get_utf8$R$frost$collections$ListView$LTfrost$core$Char8$GT(frost$core$String* self);

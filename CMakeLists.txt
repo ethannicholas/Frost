@@ -207,6 +207,8 @@ add_executable(bootstrap
     bootstrap/src/org/frostlang/frostc/CodeGenerator.c
     bootstrap/src/org/frostlang/frostc/Compiler.c
     bootstrap/src/org/frostlang/frostc/Compiler/_Closure2.c
+    bootstrap/src/org/frostlang/frostc/Compiler/_Closure7.c
+    bootstrap/src/org/frostlang/frostc/Compiler/_Closure9.c
     bootstrap/src/org/frostlang/frostc/Compiler/AutoAtPreFlag.c
     bootstrap/src/org/frostlang/frostc/Compiler/AutoContext.c
     bootstrap/src/org/frostlang/frostc/Compiler/AutoScope.c

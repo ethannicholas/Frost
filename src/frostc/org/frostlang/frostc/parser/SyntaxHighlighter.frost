@@ -19,7 +19,7 @@ class SyntaxHighlighter {
         LABEL
 
         @override -- FIXME should be automatic
-        function convert():String {
+        function get_asString():String {
             match self {
                 when DEFAULT {
                     return "DEFAULT"

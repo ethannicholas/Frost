@@ -30,7 +30,7 @@ class Annotations {
         PRIORITY(String, ASTNode)
 
         @override
-        function convert():String {
+        function get_asString():String {
             match self {
                 when PRE(_, expr)      { return "@pre(\{expr})" }
                 when PRE_OR(_, expr)   { return "@preOr(\{expr})" }
@@ -160,7 +160,7 @@ class Annotations {
     }
 
     @override
-    function convert():String {
+    function get_asString():String {
         def result := MutableString()
         if isPrivate {
             result.append("@private\n")

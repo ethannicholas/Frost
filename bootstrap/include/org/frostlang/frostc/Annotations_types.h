@@ -13,6 +13,6 @@ typedef struct org$frostlang$frostc$Annotations {
     frost$collections$Array* expressions;
 } org$frostlang$frostc$Annotations;
 #include "frost/core/Class.h"
-typedef struct { frost$core$Class* cl; int32_t refCount; frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[17]; } org$frostlang$frostc$Annotations$class_type;
+typedef struct { frost$core$Class* cl; int32_t refCount; frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[18]; } org$frostlang$frostc$Annotations$class_type;
 extern org$frostlang$frostc$Annotations$class_type org$frostlang$frostc$Annotations$class;
 

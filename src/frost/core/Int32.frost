@@ -828,7 +828,7 @@ class Int32 : Value, Key<Int32>, Comparable<Int32>, Formattable, ListView<Bit> {
 
     ===Returns this number converted to a decimal string.===
     @override
-    function convert():String {
+    function get_asString():String {
         constant max := 11
         def chars := Pointer<Char8>.alloc(max)
         var index := max - 1

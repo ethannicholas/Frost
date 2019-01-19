@@ -34,7 +34,7 @@ struct { frost$core$Class* cl; ITable* next; void* methods[10]; } org$frostlang$
 struct { frost$core$Class* cl; ITable* next; void* methods[1]; } org$frostlang$frost$Int16List$_frost$collections$Iterable = { (frost$core$Class*) &frost$collections$Iterable$class, (ITable*) &org$frostlang$frost$Int16List$_frost$collections$ListView, { frost$collections$ListView$get_iterator$R$frost$collections$Iterator$LTfrost$collections$ListView$T$GT$shim} };
 
 static frost$core$String $s1;
-org$frostlang$frost$Int16List$class_type org$frostlang$frost$Int16List$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Object$class, (ITable*) &org$frostlang$frost$Int16List$_frost$collections$Iterable, { org$frostlang$frost$Int16List$convert$R$frost$core$String, org$frostlang$frost$Int16List$cleanup, org$frostlang$frost$Int16List$get_count$R$frost$core$Int64, org$frostlang$frost$Int16List$$IDX$frost$core$Int64$R$frost$core$Int16$shim} };
+org$frostlang$frost$Int16List$class_type org$frostlang$frost$Int16List$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Object$class, (ITable*) &org$frostlang$frost$Int16List$_frost$collections$Iterable, { org$frostlang$frost$Int16List$get_asString$R$frost$core$String, org$frostlang$frost$Int16List$cleanup, org$frostlang$frost$Int16List$get_count$R$frost$core$Int64, org$frostlang$frost$Int16List$$IDX$frost$core$Int64$R$frost$core$Int16$shim} };
 
 typedef frost$core$Int64 (*$fn119)(frost$collections$CollectionView*);
 typedef frost$core$String* (*$fn151)(frost$collections$CollectionView*);
@@ -291,7 +291,7 @@ frost$core$Int16 $tmp148 = frost$core$Int32$convert$R$frost$core$Int16($tmp147);
 return $tmp148;
 
 }
-frost$core$String* org$frostlang$frost$Int16List$convert$R$frost$core$String(org$frostlang$frost$Int16List* param0) {
+frost$core$String* org$frostlang$frost$Int16List$get_asString$R$frost$core$String(org$frostlang$frost$Int16List* param0) {
 
 // line 61
 ITable* $tmp149 = ((frost$collections$CollectionView*) param0)->$class->itable;

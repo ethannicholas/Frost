@@ -12,8 +12,9 @@
 
 
 static frost$core$String $s1;
-frost$io$MemoryOutputStream$class_type frost$io$MemoryOutputStream$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$io$OutputStream$class, NULL, { frost$io$MemoryOutputStream$convert$R$frost$core$String, frost$io$MemoryOutputStream$cleanup, frost$io$MemoryOutputStream$write$frost$core$UInt8$R$frost$core$Error$Q, frost$io$OutputStream$write$frost$core$UInt16$R$frost$core$Error$Q, frost$io$OutputStream$write$frost$core$UInt32$R$frost$core$Error$Q, frost$io$OutputStream$write$frost$core$UInt64$R$frost$core$Error$Q, frost$io$OutputStream$write$frost$core$Int8$R$frost$core$Error$Q, frost$io$OutputStream$write$frost$core$Int16$R$frost$core$Error$Q, frost$io$OutputStream$write$frost$core$Int32$R$frost$core$Error$Q, frost$io$OutputStream$write$frost$core$Int64$R$frost$core$Error$Q, frost$io$MemoryOutputStream$write$frost$unsafe$Pointer$LTfrost$core$UInt8$GT$frost$core$Int64$R$frost$core$Error$Q, frost$io$OutputStream$write$frost$unsafe$Pointer$LTfrost$core$Int8$GT$frost$core$Int64$R$frost$core$Error$Q, frost$io$OutputStream$write$frost$unsafe$Pointer$LTfrost$core$Char8$GT$frost$core$Int64$R$frost$core$Error$Q, frost$io$OutputStream$write$frost$collections$Array$LTfrost$core$UInt8$GT$frost$core$Int64$R$frost$core$Error$Q, frost$io$OutputStream$write$frost$collections$Array$LTfrost$core$Int8$GT$frost$core$Int64$R$frost$core$Error$Q, frost$io$OutputStream$write$frost$collections$Array$LTfrost$core$Char8$GT$frost$core$Int64$R$frost$core$Error$Q, frost$io$OutputStream$write$frost$core$Char8$R$frost$core$Error$Q, frost$io$OutputStream$print$frost$core$String$R$frost$core$Error$Q, frost$io$OutputStream$print$frost$core$Object$R$frost$core$Error$Q, frost$io$OutputStream$printLine$frost$core$String$R$frost$core$Error$Q, frost$io$OutputStream$printLine$frost$core$Object$R$frost$core$Error$Q, frost$io$OutputStream$printLine$R$frost$core$Error$Q, frost$io$OutputStream$flush$R$frost$core$Error$Q, frost$io$OutputStream$close$R$frost$core$Error$Q, frost$io$MemoryOutputStream$clear, frost$io$MemoryOutputStream$finish$R$frost$core$String} };
+frost$io$MemoryOutputStream$class_type frost$io$MemoryOutputStream$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$io$OutputStream$class, NULL, { frost$io$MemoryOutputStream$get_asString$R$frost$core$String, frost$io$MemoryOutputStream$cleanup, frost$io$MemoryOutputStream$write$frost$core$UInt8$R$frost$core$Error$Q, frost$io$OutputStream$write$frost$core$UInt16$R$frost$core$Error$Q, frost$io$OutputStream$write$frost$core$UInt32$R$frost$core$Error$Q, frost$io$OutputStream$write$frost$core$UInt64$R$frost$core$Error$Q, frost$io$OutputStream$write$frost$core$Int8$R$frost$core$Error$Q, frost$io$OutputStream$write$frost$core$Int16$R$frost$core$Error$Q, frost$io$OutputStream$write$frost$core$Int32$R$frost$core$Error$Q, frost$io$OutputStream$write$frost$core$Int64$R$frost$core$Error$Q, frost$io$MemoryOutputStream$write$frost$unsafe$Pointer$LTfrost$core$UInt8$GT$frost$core$Int64$R$frost$core$Error$Q, frost$io$OutputStream$write$frost$unsafe$Pointer$LTfrost$core$Int8$GT$frost$core$Int64$R$frost$core$Error$Q, frost$io$OutputStream$write$frost$unsafe$Pointer$LTfrost$core$Char8$GT$frost$core$Int64$R$frost$core$Error$Q, frost$io$OutputStream$write$frost$collections$Array$LTfrost$core$UInt8$GT$frost$core$Int64$R$frost$core$Error$Q, frost$io$OutputStream$write$frost$collections$Array$LTfrost$core$Int8$GT$frost$core$Int64$R$frost$core$Error$Q, frost$io$OutputStream$write$frost$collections$Array$LTfrost$core$Char8$GT$frost$core$Int64$R$frost$core$Error$Q, frost$io$OutputStream$write$frost$core$Char8$R$frost$core$Error$Q, frost$io$OutputStream$print$frost$core$String$R$frost$core$Error$Q, frost$io$OutputStream$print$frost$core$Object$R$frost$core$Error$Q, frost$io$OutputStream$printLine$frost$core$String$R$frost$core$Error$Q, frost$io$OutputStream$printLine$frost$core$Object$R$frost$core$Error$Q, frost$io$OutputStream$printLine$R$frost$core$Error$Q, frost$io$OutputStream$flush$R$frost$core$Error$Q, frost$io$OutputStream$close$R$frost$core$Error$Q, frost$io$MemoryOutputStream$clear, frost$io$MemoryOutputStream$finish$R$frost$core$String} };
 
+typedef frost$core$String* (*$fn17)(frost$core$Object*);
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x69\x6f\x2e\x4d\x65\x6d\x6f\x72\x79\x4f\x75\x74\x70\x75\x74\x53\x74\x72\x65\x61\x6d", 27, 7256682645707250821, NULL };
 
@@ -75,37 +76,38 @@ frost$core$MutableString$clear($tmp13);
 return;
 
 }
-frost$core$String* frost$io$MemoryOutputStream$convert$R$frost$core$String(frost$io$MemoryOutputStream* param0) {
+frost$core$String* frost$io$MemoryOutputStream$get_asString$R$frost$core$String(frost$io$MemoryOutputStream* param0) {
 
 // line 56
 frost$core$MutableString** $tmp14 = &param0->data;
 frost$core$MutableString* $tmp15 = *$tmp14;
-frost$core$String* $tmp16 = frost$core$MutableString$convert$R$frost$core$String($tmp15);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp16));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp16));
-// unreffing REF($3:frost.core.String)
-return $tmp16;
+$fn17 $tmp16 = ($fn17) ((frost$core$Object*) $tmp15)->$class->vtable[0];
+frost$core$String* $tmp18 = $tmp16(((frost$core$Object*) $tmp15));
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp18));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp18));
+// unreffing REF($5:frost.core.String)
+return $tmp18;
 
 }
 frost$core$String* frost$io$MemoryOutputStream$finish$R$frost$core$String(frost$io$MemoryOutputStream* param0) {
 
 // line 66
-frost$core$MutableString** $tmp17 = &param0->data;
-frost$core$MutableString* $tmp18 = *$tmp17;
-frost$core$String* $tmp19 = frost$core$MutableString$finish$R$frost$core$String($tmp18);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp19));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp19));
+frost$core$MutableString** $tmp19 = &param0->data;
+frost$core$MutableString* $tmp20 = *$tmp19;
+frost$core$String* $tmp21 = frost$core$MutableString$finish$R$frost$core$String($tmp20);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp21));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp21));
 // unreffing REF($3:frost.core.String)
-return $tmp19;
+return $tmp21;
 
 }
 void frost$io$MemoryOutputStream$cleanup(frost$io$MemoryOutputStream* param0) {
 
 // line 9
 frost$io$OutputStream$cleanup(((frost$io$OutputStream*) param0));
-frost$core$MutableString** $tmp20 = &param0->data;
-frost$core$MutableString* $tmp21 = *$tmp20;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp21));
+frost$core$MutableString** $tmp22 = &param0->data;
+frost$core$MutableString* $tmp23 = *$tmp22;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp23));
 return;
 
 }

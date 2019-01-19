@@ -16,7 +16,7 @@
 
 
 static frost$core$String $s1;
-org$frostlang$frostc$ChoiceCase$class_type org$frostlang$frostc$ChoiceCase$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &org$frostlang$frostc$Symbol$class, NULL, { org$frostlang$frostc$ChoiceCase$convert$R$frost$core$String, org$frostlang$frostc$ChoiceCase$cleanup, org$frostlang$frostc$Symbol$get_heritable$R$frost$core$Bit} };
+org$frostlang$frostc$ChoiceCase$class_type org$frostlang$frostc$ChoiceCase$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &org$frostlang$frostc$Symbol$class, NULL, { org$frostlang$frostc$ChoiceCase$get_asString$R$frost$core$String, org$frostlang$frostc$ChoiceCase$cleanup, org$frostlang$frostc$Symbol$get_heritable$R$frost$core$Bit} };
 
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x43\x68\x6f\x69\x63\x65\x43\x61\x73\x65", 31, 2916299888878715327, NULL };
@@ -80,7 +80,7 @@ org$frostlang$frostc$Symbol$init$org$frostlang$frostc$Symbol$Kind$org$frostlang$
 return;
 
 }
-frost$core$String* org$frostlang$frostc$ChoiceCase$convert$R$frost$core$String(org$frostlang$frostc$ChoiceCase* param0) {
+frost$core$String* org$frostlang$frostc$ChoiceCase$get_asString$R$frost$core$String(org$frostlang$frostc$ChoiceCase* param0) {
 
 // line 30
 frost$core$Weak** $tmp23 = &param0->owner;
@@ -88,7 +88,7 @@ frost$core$Weak* $tmp24 = *$tmp23;
 frost$core$Object* $tmp25 = frost$core$Weak$get$R$frost$core$Weak$T($tmp24);
 frost$core$String** $tmp26 = &((org$frostlang$frostc$ClassDecl*) $tmp25)->name;
 frost$core$String* $tmp27 = *$tmp26;
-frost$core$String* $tmp28 = frost$core$String$convert$R$frost$core$String($tmp27);
+frost$core$String* $tmp28 = frost$core$String$get_asString$R$frost$core$String($tmp27);
 frost$core$String* $tmp29 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp28, &$s30);
 frost$core$String** $tmp31 = &((org$frostlang$frostc$Symbol*) param0)->name;
 frost$core$String* $tmp32 = *$tmp31;

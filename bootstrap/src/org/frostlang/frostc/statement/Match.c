@@ -45,7 +45,7 @@
 
 
 static frost$core$String $s1;
-org$frostlang$frostc$statement$Match$class_type org$frostlang$frostc$statement$Match$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { frost$core$Object$convert$R$frost$core$String, org$frostlang$frostc$statement$Match$cleanup} };
+org$frostlang$frostc$statement$Match$class_type org$frostlang$frostc$statement$Match$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { frost$core$Object$get_asString$R$frost$core$String, org$frostlang$frostc$statement$Match$cleanup} };
 
 typedef org$frostlang$frostc$Type* (*$fn17)(org$frostlang$frostc$IR$Value*);
 typedef frost$core$Int64 (*$fn59)(frost$collections$CollectionView*);

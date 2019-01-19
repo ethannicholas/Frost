@@ -14,6 +14,6 @@ void org$frostlang$frostc$MethodRef$init$org$frostlang$frostc$Compiler$org$frost
 frost$core$Int64 org$frostlang$frostc$MethodRef$get_parameterCount$R$frost$core$Int64(org$frostlang$frostc$MethodRef* self);
 org$frostlang$frostc$Type* org$frostlang$frostc$MethodRef$parameterType$frost$core$Int64$R$org$frostlang$frostc$Type(org$frostlang$frostc$MethodRef* self, frost$core$Int64 p_index);
 org$frostlang$frostc$Type* org$frostlang$frostc$MethodRef$get_returnType$R$org$frostlang$frostc$Type(org$frostlang$frostc$MethodRef* self);
-frost$core$String* org$frostlang$frostc$MethodRef$convert$R$frost$core$String(org$frostlang$frostc$MethodRef* self);
+frost$core$String* org$frostlang$frostc$MethodRef$get_asString$R$frost$core$String(org$frostlang$frostc$MethodRef* self);
 void org$frostlang$frostc$MethodRef$cleanup(org$frostlang$frostc$MethodRef* self);
 

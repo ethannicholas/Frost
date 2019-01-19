@@ -75,6 +75,11 @@ typedef struct NullableUInt8 {
     int8_t nonnull;
 } NullableUInt8;
 
+typedef struct NullableInt {
+    int64_t value;
+    int8_t nonnull;
+} NullableInt;
+
 extern Class frost$core$String$class;
 
 typedef struct String {
@@ -133,10 +138,17 @@ typedef struct Process {
     Class* cl;
     int32_t refcnt;
     int64_t pid;
-    FileOutputStream* input;
-    FileInputStream* output;
-    FileInputStream* error;
+    int64_t stdin;
+    int64_t stdout;
+    int64_t stderr;
 } Process;
+
+typedef struct Thread {
+    Class* cl;
+    int32_t refcnt;
+    // FIXME unsafe assumption that void* and int64_t are the same size
+    void* nativeHandle;
+} Thread;
 
 typedef struct Lock {
     Class* cl;
@@ -230,6 +242,7 @@ Object* frost = NULL;
 static bool refErrorReporting = true;
 
 #if DEBUG_ALLOCS
+static pthread_mutex_t traceMutex = PTHREAD_MUTEX_INITIALIZER;
 bool debugAllocs = true;
 #endif
 
@@ -238,15 +251,17 @@ void frostFatalError(const char* msg) {
     abort();
 }
 
-void frostAssert(uint8_t b) {
-    if (!b) {
-        fprintf(stderr, "assertion failure\n");
+void _frostAssert(int i, int line) {
+    if (!i) {
+        fprintf(stderr, "%s:%d: assertion failure\n", __FILE__, line);
         abort();
     }
 }
 
+#define frostAssert(i) _frostAssert(i, __LINE__)
+
 void* frostAlloc(size_t size) {
-    allocations++;
+    __atomic_add_fetch(&allocations, 1, __ATOMIC_RELAXED);
     void* result = calloc(size, 1);
     frostAssert(result != NULL || size == 0);
     return result;
@@ -268,7 +283,9 @@ void* frostObjectAlloc(size_t size, Class* cl) {
             frost->refcnt = 1;
             frost$core$Frost$init(frost);
         }
+        pthread_mutex_lock(&traceMutex);
         frost$core$Frost$countAllocation$frost$core$Class(frost, cl);
+        pthread_mutex_unlock(&traceMutex);
         debugAllocs = true;
     }
 #endif
@@ -288,9 +305,9 @@ void* frostRealloc(void* ptr, size_t oldSize, size_t newSize) {
 }
 
 void frostFree(void* ptr) {
-    allocations--;
+    __atomic_sub_fetch(&allocations, 1, __ATOMIC_RELAXED);
 #if !DEBUG_ALLOCS
-//    free(ptr);
+    //free(ptr);
 #endif
 }
 
@@ -298,7 +315,9 @@ void frostObjectFree(Object* o) {
 #if DEBUG_ALLOCS
     if (debugAllocs) {
         debugAllocs = false;
+        pthread_mutex_lock(&traceMutex);
         frost$core$Frost$countDeallocation$frost$core$Class(frost, o->cl);
+        pthread_mutex_unlock(&traceMutex);
         debugAllocs = true;
     }
 #endif
@@ -345,7 +364,7 @@ Object* frostMaybeSuccess(Object* o) {
 // returns s wrapped in a Maybe.ERROR, *without* increasing its refcount
 Object* frostMaybeError(String* s) {
     Object* result = frost$core$Frost$error$frost$core$String$R$frost$core$Maybe$LTfrost$core$Object$GT$Q(s);
-    frost$core$Frost$unref$frost$core$Object$Q(s);
+    frost$core$Frost$unref$frost$core$Object$Q((Object*) s);
     return result;
 }    
 
@@ -411,7 +430,7 @@ int main(int argc, char** argv) {
 
 // System
 
-void frost$core$System$exit$frost$core$UInt8(UInt8 code) {
+void frost$core$System$exit$frost$core$Int64(Int64 code) {
     exit(code.value);
 }
 
@@ -421,8 +440,8 @@ void frost$core$System$crash() {
     __builtin_trap();
 }
 
-Object* frost$core$System$exec$frost$io$File$frost$collections$ListView$LTfrost$core$String$GT$R$frost$core$Maybe$LTfrost$core$System$Process$GT(
-        File* path, Object* args) {
+Object* frost$core$System$exec$frost$core$String$frost$collections$ListView$LTfrost$core$String$GT$R$frost$core$Maybe$LTfrost$core$System$Process$GT(
+        String* path, Object* args) {
     // FIXME need to output headers so I can kill these hardcoded interface method offsets
     int (*get_count)(Object*) = frostGetInterfaceMethod(args,
                 &frost$collections$CollectionView$class, 0);
@@ -430,23 +449,23 @@ Object* frost$core$System$exec$frost$io$File$frost$collections$ListView$LTfrost$
                 &frost$collections$ListView$class, 0);
     int stdinPipe[2];
     if (pipe(stdinPipe)) {
-        perror("error opening stdin pipe");
-        exit(1);
+        const char* msg = strerror(errno);
+        return frostMaybeError(frostNewString(msg, strlen(msg)));
     }
     int stdoutPipe[2];
     if (pipe(stdoutPipe)) {
-        perror("error opening stdout pipe");
-        exit(1);
+        const char* msg = strerror(errno);
+        return frostMaybeError(frostNewString(msg, strlen(msg)));
     }
     int stderrPipe[2];
     if (pipe(stderrPipe)) {
-        perror("error opening stderr pipe");
-        exit(1);
+        const char* msg = strerror(errno);
+        return frostMaybeError(frostNewString(msg, strlen(msg)));
     }
     pid_t pid = fork();
     if (pid < 0) {
-        perror("fork failed");
-        exit(1);
+        const char* msg = strerror(errno);
+        return frostMaybeError(frostNewString(msg, strlen(msg)));
     }
     if (!pid) {
         // child
@@ -470,15 +489,13 @@ Object* frost$core$System$exec$frost$io$File$frost$collections$ListView$LTfrost$
 //        setvbuf(stderr, NULL, _IONBF, 0);
         int argCount = get_count(args);
         char** cargs = (char**) frostAlloc((argCount + 2) * sizeof(char*));
-        cargs[0] = frostGetCString(path->path);
+        cargs[0] = frostGetCString(path);
         int i;
         for (i = 0; i < argCount; ++i) {
             cargs[i + 1] = frostGetCString(index(args, i));
         }
         cargs[argCount + 1] = NULL;
         execvp(cargs[0], cargs);
-        // FIXME report error back to the parent process
-        perror("error exec'ing child process");
         // we don't bother freeing the argument memory because we just kill the process here
         exit(1);
     }
@@ -489,23 +506,80 @@ Object* frost$core$System$exec$frost$io$File$frost$collections$ListView$LTfrost$
         close(stderrPipe[1]);
         Process* result = frostObjectAlloc(sizeof(Process), &frost$core$System$Process$class);
         result->pid = pid;
-        result->input = frostObjectAlloc(sizeof(FileOutputStream),
+        result->stdin = stdinPipe[1];
+        result->stdout = stdoutPipe[0];
+        result->stderr = stderrPipe[0];
+        return frostMaybeSuccess((Object*) result);
+    }
+}
+
+Object* frost$core$System$Process$openStandardInput$R$frost$core$Maybe$LTfrost$io$OutputStream$GT(Process* p) {
+    FILE* f = fdopen(p->stdin, "wb");
+    if (f) {
+        FileOutputStream* result = frostObjectAlloc(sizeof(FileOutputStream),
                 &frost$io$FileOutputStream$class);
-        frost$io$OutputStream$init(result->input);
-        result->input->file = fdopen(stdinPipe[1], "wb");
-        result->input->closeOnCleanup.value = true;
-//        setvbuf(result->input->file, NULL, _IONBF, 0);
-        result->output = frostObjectAlloc(sizeof(FileInputStream), &frost$io$FileInputStream$class);
-        frost$io$InputStream$init(result->output);
-        result->output->file = fdopen(stdoutPipe[0], "rb");
-        result->output->closeOnCleanup.value = true;
-//        setvbuf(result->output->file, NULL, _IONBF, 0);
-        result->error = frostObjectAlloc(sizeof(FileInputStream), &frost$io$FileInputStream$class);
-        frost$io$InputStream$init(result->error);
-        result->error->file = fdopen(stderrPipe[0], "rb");
-        result->error->closeOnCleanup.value = true;
-//        setvbuf(result->error->file, NULL, _IONBF, 0);
-        return frostMaybeSuccess(result);
+        frost$io$OutputStream$init(result);
+        result->file = f;
+        result->closeOnCleanup.value = true;
+//            setvbuf(result->file, NULL, _IONBF, 0);
+        return frostMaybeSuccess((Object*) result);
+    }
+    else {
+        const char* msg = strerror(errno);
+        return frostMaybeError((Object*) frostNewString(msg, strlen(msg)));
+    }
+}
+
+Object* frost$core$System$Process$openStandardOutput$R$frost$core$Maybe$LTfrost$io$InputStream$GT(Process* p) {
+    FILE* f = fdopen(p->stdout, "rb");
+    if (f) {
+        FileInputStream* result = frostObjectAlloc(sizeof(FileInputStream),
+                &frost$io$FileInputStream$class);
+        frost$io$InputStream$init(result);
+        result->file = f;
+        result->closeOnCleanup.value = true;
+//            setvbuf(result->file, NULL, _IONBF, 0);
+        return frostMaybeSuccess((Object*) result);
+    }
+    else {
+        const char* msg = strerror(errno);
+        return frostMaybeError((Object*) frostNewString(msg, strlen(msg)));
+    }
+}
+
+Object* frost$core$System$Process$openStandardError$R$frost$core$Maybe$LTfrost$io$InputStream$GT(Process* p) {
+    FILE* f = fdopen(p->stderr, "rb");
+    if (f) {
+        FileInputStream* result = frostObjectAlloc(sizeof(FileInputStream),
+                &frost$io$FileInputStream$class);
+        frost$io$InputStream$init(result);
+        result->file = f;
+        frostAssert(result->file != NULL);
+        result->closeOnCleanup.value = true;
+//        setvbuf(result->file, NULL, _IONBF, 0);
+        return frostMaybeSuccess((Object*) result);
+    }
+    else {
+        const char* msg = strerror(errno);
+        return frostMaybeError((Object*) frostNewString(msg, strlen(msg)));
+    }
+}
+
+void frost$core$System$Process$_cleanup(Process* p) {
+    close(p->stdin);
+    close(p->stdout);
+    close(p->stderr);
+}
+
+void frost$core$System$Process$exitCode$R$frost$core$Int64$Q(NullableInt* result, Process* p) {
+    int status;
+    waitpid(p->pid, &status, WNOHANG);
+    if (WIFEXITED(status)) {
+        result->nonnull = true;
+        result->value = WEXITSTATUS(status);
+    }
+    else {
+        result->nonnull = false;
     }
 }
 
@@ -573,8 +647,10 @@ void frost$core$Frost$trace$frost$core$String(String* s) {
 }
 
 void frost$core$Frost$ref$frost$core$Object$Q(Object* o) {
+    // should be ok to perform load without locking - if it's NO_REFCNT, nobody should be changing
+    // it anyway
     if (o && o->refcnt != NO_REFCNT) {
-        int newCount = __atomic_add_fetch(&o->refcnt, 1, __ATOMIC_RELAXED <= 1);
+        int newCount = __atomic_add_fetch(&o->refcnt, 1, __ATOMIC_RELAXED);
         if (newCount <= 1 && refErrorReporting) {
             printf("internal error: ref %p with refcnt = %d\n", o, newCount - 1);
             printf("    class: %s\n", frostGetCString(o->cl->name));
@@ -584,6 +660,8 @@ void frost$core$Frost$ref$frost$core$Object$Q(Object* o) {
 }
 
 void frost$core$Frost$unref$frost$core$Object$Q(Object* o) {
+    // should be ok to perform load without locking - if it's NO_REFCNT, nobody should be changing
+    // it anyway
     if (o && o->refcnt != NO_REFCNT) {
         int newCount = __atomic_sub_fetch(&o->refcnt, 1, __ATOMIC_RELAXED);
         if (newCount < 0 && refErrorReporting) {
@@ -615,7 +693,7 @@ void frost$core$Frost$toReal64$frost$core$String$R$frost$core$Real64(Real64* res
     frostFree(cstr);
 }
 
-String* frost$core$Real32$convert$R$frost$core$String(Real32 d) {
+String* frost$core$Real32$get_asString$R$frost$core$String(Real32 d) {
     size_t len = snprintf(NULL, 0, "%g", d.value);
     char* chars = (char*) frostAlloc(len + 1);
     snprintf(chars, len + 1, "%g", d.value);
@@ -624,7 +702,7 @@ String* frost$core$Real32$convert$R$frost$core$String(Real32 d) {
     return result;
 }
 
-String* frost$core$Real64$convert$R$frost$core$String(Real64 d) {
+String* frost$core$Real64$get_asString$R$frost$core$String(Real64 d) {
     size_t len = snprintf(NULL, 0, "%g", d.value);
     char* chars = (char*) frostAlloc(len + 1);
     snprintf(chars, len + 1, "%g", d.value);
@@ -714,7 +792,7 @@ Matcher* frost$core$RegularExpression$matcher$frost$core$String$R$frost$core$Mat
 
 void frost$core$RegularExpression$destroy(RegularExpression* self) {
     uregex_close(self->nativeHandle);
-    --allocations;
+    __atomic_sub_fetch(&allocations, 1, __ATOMIC_RELAXED);
 }
 
 void frost$core$Matcher$matches$R$frost$core$Bit(Bit* result, Matcher* self) {
@@ -778,7 +856,7 @@ String* frost$core$Matcher$group$frost$core$Int64$R$frost$core$String$Q(Matcher*
 
 void frost$core$Matcher$destroy(Matcher* self) {
     uregex_close(self->nativeHandle);
-    --allocations;
+    __atomic_sub_fetch(&allocations, 1, __ATOMIC_RELAXED);
 }
 
 // Thread
@@ -789,11 +867,6 @@ typedef struct ThreadInfo {
 } ThreadInfo;
 
 void frostThreadEntry(ThreadInfo* threadInfo) {
-    if (threadInfo->preventsExit.value) {
-        pthread_mutex_lock(&preventsExitThreadsMutex);
-        preventsExitThreads++;
-        pthread_mutex_unlock(&preventsExitThreadsMutex);
-    }
     if (threadInfo->run->target) {
         ((void(*)(Object*)) threadInfo->run->pointer)(threadInfo->run->target);
     }
@@ -805,30 +878,45 @@ void frostThreadEntry(ThreadInfo* threadInfo) {
     if (threadInfo->preventsExit.value) {
         pthread_mutex_lock(&preventsExitThreadsMutex);
         preventsExitThreads--;
-        if (preventsExitThreads == 0)
+        if (preventsExitThreads == 0) {
             pthread_cond_signal(&preventsExitThreadsVar);
+        }
         pthread_mutex_unlock(&preventsExitThreadsMutex);
     }
 }
 
-void frost$threads$Thread$run$$LP$RP$EQ$AM$GT$ST$LP$RP$builtin_bit(Object* thread, Method* run,
+void frost$threads$Thread$run$$LP$RP$EQ$AM$GT$LP$RP$builtin_bit(Thread* thread, Method* run,
         Bit preventsExit) {
+    if (!preventsExit.value) {
+        // if threads are still running on exit, then naturally objects will still be in memory on
+        // exit, so don't complain
+        refErrorReporting = false;
+    }
     pthread_t threadId;
     ThreadInfo* threadInfo = frostAlloc(sizeof(ThreadInfo));
     frost$core$Frost$ref$frost$core$Object$Q((Object*) run);
     threadInfo->run = run;
     threadInfo->preventsExit = preventsExit;
+    if (threadInfo->preventsExit.value) {
+        pthread_mutex_lock(&preventsExitThreadsMutex);
+        preventsExitThreads++;
+        pthread_mutex_unlock(&preventsExitThreadsMutex);
+    }
     pthread_create(&threadId, NULL, (void* (*)()) &frostThreadEntry, threadInfo);
+    // If there's a system where this isn't true, we can easily use the nativeHandler as a pointer
+    // to the pthread_t instead when the sizes don't match. For now, I'm just going to be lazy.
+    frostAssert(sizeof(threadId) == sizeof(thread->nativeHandle));
+    thread->nativeHandle = threadId;
 }
 
-void frost$threads$Thread$run$$LP$RP$EQ$AM$GT$LP$RP$builtin_bit(Object* thread, Method* run,
+void frost$threads$Thread$run$$LP$RP$EQ$AM$GT$ST$LP$RP$builtin_bit(Thread* thread, Method* run,
         Bit preventsExit) {
-    pthread_t threadId;
-    ThreadInfo* threadInfo = frostAlloc(sizeof(ThreadInfo));
-    frost$core$Frost$ref$frost$core$Object$Q((Object*) run);
-    threadInfo->run = run;
-    threadInfo->preventsExit = preventsExit;
-    pthread_create(&threadId, NULL, (void* (*)()) &frostThreadEntry, threadInfo);
+    frost$threads$Thread$run$$LP$RP$EQ$AM$GT$LP$RP$builtin_bit(thread, run, preventsExit);
+}
+
+void frost$threads$Thread$waitFor(Thread* thread) {
+    frostAssert(sizeof(pthread_t) == sizeof(thread->nativeHandle));
+    pthread_join((pthread_t) thread->nativeHandle, NULL);
 }
 
 void frost$threads$Thread$sleep$frost$core$Int64(int64_t millis) {
@@ -938,7 +1026,7 @@ String* frostFileErrorMessage(const char* msg, const char* path) {
     return frostNewString(buffer, length);
 }
 
-FileInputStream* frost$io$File$openInputStream$R$frost$core$Maybe$LTfrost$io$InputStream$GT(File* self) {
+Object* frost$io$File$openInputStream$R$frost$core$Maybe$LTfrost$io$InputStream$GT(File* self) {
     FileInputStream* result = frostObjectAlloc(sizeof(FileInputStream),
             &frost$io$FileInputStream$class);
     frost$io$InputStream$init(result);
@@ -953,7 +1041,7 @@ FileInputStream* frost$io$File$openInputStream$R$frost$core$Maybe$LTfrost$io$Inp
     return frostMaybeSuccess((Object*) result);
 }
 
-FileOutputStream* frost$io$File$openOutputStream$R$frost$core$Maybe$LTfrost$io$OutputStream$GT(File* self) {
+Object* frost$io$File$openOutputStream$R$frost$core$Maybe$LTfrost$io$OutputStream$GT(File* self) {
     FileOutputStream* result = frostObjectAlloc(sizeof(FileOutputStream),
             &frost$io$FileOutputStream$class);
     frost$io$OutputStream$init(result);
@@ -968,7 +1056,7 @@ FileOutputStream* frost$io$File$openOutputStream$R$frost$core$Maybe$LTfrost$io$O
     return frostMaybeSuccess((Object*) result);
 }
 
-FileOutputStream* frost$io$File$openForAppend$R$frost$io$OutputStream(File* self) {
+Object* frost$io$File$openForAppend$R$frost$core$Maybe$LTfrost$io$OutputStream$GT(File* self) {
     FileOutputStream* result = frostObjectAlloc(sizeof(FileOutputStream),
             &frost$io$FileOutputStream$class);
     frost$io$OutputStream$init(result);
@@ -1038,18 +1126,22 @@ void frost$io$File$isDirectory$R$frost$core$Bit(Bit* result, File* file) {
     result->value = S_ISDIR(fileInfo.st_mode);
 }
 
-void frost$io$File$createDirectory(File* file) {
-    Bit exists;
-    frost$io$File$exists$R$frost$core$Bit(&exists, file);
-    if (exists.value) {
-        return;
+Error* frost$io$File$createDirectory$R$frost$core$Error$Q(File* file) {
+    Bit directoryExists;
+    frost$io$File$isDirectory$R$frost$core$Bit(&directoryExists, file);
+    if (!directoryExists.value) {
+        char* path = frostGetCString(file->path);
+        int result = mkdir(path, 0755);
+        frostFree(path);
+        if (result) {
+            const char* msg = strerror(errno);
+            return frostError(frostNewString(msg, strlen(msg)));
+        }
     }
-    char* path = frostGetCString(file->path);
-    mkdir(path, 0755);
-    frostFree(path);
+    return NULL;
 }
 
-Array* frost$io$File$list$R$frost$collections$ListView$LTfrost$io$File$GT(File* dir) {
+Object* frost$io$File$list$R$frost$core$Maybe$LTfrost$collections$ListView$LTfrost$io$File$GT$GT(File* dir) {
     Array* result = frostObjectAlloc(sizeof(Array), &frost$collections$Array$class);
     result->count = 0;
     result->capacity = 16;
@@ -1062,10 +1154,12 @@ Array* frost$io$File$list$R$frost$collections$ListView$LTfrost$io$File$GT(File* 
     memcpy(buffer, path, dir->path->size);
     buffer[dir->path->size] = '/';
     d = opendir(path);
-    frostFree(path);
     if (!d) {
+        Object* result = frostMaybeError(frostFileErrorMessage("could not read directory", path));
+        frostFree(path);
         return result;
     }
+    frostFree(path);
     while ((entry = readdir(d))) {
         if (!strcmp(entry->d_name, ".") || !strcmp(entry->d_name, "..")) {
             continue;
@@ -1080,7 +1174,7 @@ Array* frost$io$File$list$R$frost$collections$ListView$LTfrost$io$File$GT(File* 
         --file->refcnt;
     }
     closedir(d);
-    return result;
+    return frostMaybeSuccess((Object*) result);
 }
 
 // FileInputStream
@@ -1114,7 +1208,8 @@ Error* frost$io$FileInputStream$close$R$frost$core$Error$Q(FileInputStream* self
 Error* frost$io$FileOutputStream$write$frost$core$UInt8$R$frost$core$Error$Q(FileOutputStream* self,
         uint8_t ch) {
     if (fputc(ch, self->file) == EOF) {
-        return frostError(frostNewString("error writing to stream", NULL));
+        const char* msg = "error writing to stream";
+        return frostError(frostNewString(msg, strlen(msg)));
     }
     return NULL;
 }
@@ -1122,6 +1217,8 @@ Error* frost$io$FileOutputStream$write$frost$core$UInt8$R$frost$core$Error$Q(Fil
 Error* frost$io$FileOutputStream$write$frost$unsafe$Pointer$LTfrost$core$UInt8$GT$frost$core$Int64$R$frost$core$Error$Q(
         FileOutputStream* self, void* src, int64_t count) {
     if (fwrite(src, 1, count, self->file) != count) {
+        const char* msg = "error writing to stream";
+        return frostError(frostNewString(msg, strlen(msg)));
     }
     return NULL;
 }
@@ -1129,6 +1226,7 @@ Error* frost$io$FileOutputStream$write$frost$unsafe$Pointer$LTfrost$core$UInt8$G
 Error* frost$io$FileOutputStream$close$R$frost$core$Error$Q(FileOutputStream* self) {
     self->closeOnCleanup.value = false;
     if (fclose(self->file)) {
+        return frostError(frostFileErrorMessage("error closing stream", NULL));
     }
     return NULL;
 }

@@ -8,7 +8,7 @@ typedef struct org$frostlang$frostc$Type org$frostlang$frostc$Type;
 #include "frost/core/Bit_types.h"
 
 frost$core$String* org$frostlang$frostc$Compiler$TypeContext$description$R$frost$core$String(org$frostlang$frostc$Compiler$TypeContext* self);
-frost$core$String* org$frostlang$frostc$Compiler$TypeContext$convert$R$frost$core$String(org$frostlang$frostc$Compiler$TypeContext* self);
+frost$core$String* org$frostlang$frostc$Compiler$TypeContext$get_asString$R$frost$core$String(org$frostlang$frostc$Compiler$TypeContext* self);
 void org$frostlang$frostc$Compiler$TypeContext$cleanup(org$frostlang$frostc$Compiler$TypeContext* self);
 void org$frostlang$frostc$Compiler$TypeContext$init$frost$core$Int64(org$frostlang$frostc$Compiler$TypeContext* self, frost$core$Int64 p_rv);
 void org$frostlang$frostc$Compiler$TypeContext$init$frost$core$Int64$org$frostlang$frostc$Type(org$frostlang$frostc$Compiler$TypeContext* self, frost$core$Int64 p_rv, org$frostlang$frostc$Type* p_f0);

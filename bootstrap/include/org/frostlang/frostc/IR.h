@@ -13,6 +13,6 @@ org$frostlang$frostc$IR$Statement$ID org$frostlang$frostc$IR$add$org$frostlang$f
 org$frostlang$frostc$IR$Block$ID org$frostlang$frostc$IR$newBlock$frost$core$String$R$org$frostlang$frostc$IR$Block$ID(org$frostlang$frostc$IR* self, frost$core$String* p_comment);
 void org$frostlang$frostc$IR$setCurrentBlock$org$frostlang$frostc$IR$Block$ID(org$frostlang$frostc$IR* self, org$frostlang$frostc$IR$Block$ID p_id);
 frost$core$Bit org$frostlang$frostc$IR$get_currentBlockFinished$R$frost$core$Bit(org$frostlang$frostc$IR* self);
-frost$core$String* org$frostlang$frostc$IR$convert$R$frost$core$String(org$frostlang$frostc$IR* self);
+frost$core$String* org$frostlang$frostc$IR$get_asString$R$frost$core$String(org$frostlang$frostc$IR* self);
 void org$frostlang$frostc$IR$cleanup(org$frostlang$frostc$IR* self);
 

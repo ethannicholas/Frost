@@ -10,7 +10,7 @@ __attribute__((weak)) void frost$core$Class$cleanup$shim(frost$core$Class* p0) {
 }
 
 static frost$core$String $s1;
-frost$core$Class$class_type frost$core$Class$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Immutable$class, NULL, { frost$core$Object$convert$R$frost$core$String, frost$core$Class$cleanup$shim} };
+frost$core$Class$class_type frost$core$Class$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Immutable$class, NULL, { frost$core$Object$get_asString$R$frost$core$String, frost$core$Class$cleanup$shim} };
 
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x43\x6c\x61\x73\x73", 16, -3824106976663505050, NULL };

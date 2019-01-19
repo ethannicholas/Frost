@@ -16,7 +16,7 @@
 
 
 static frost$core$String $s1;
-org$frostlang$frostc$parser$Lexer$class_type org$frostlang$frostc$parser$Lexer$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { frost$core$Object$convert$R$frost$core$String, org$frostlang$frostc$parser$Lexer$cleanup, org$frostlang$frostc$parser$Lexer$start$frost$core$String, org$frostlang$frostc$parser$Lexer$next$R$org$frostlang$frostc$parser$Token} };
+org$frostlang$frostc$parser$Lexer$class_type org$frostlang$frostc$parser$Lexer$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { frost$core$Object$get_asString$R$frost$core$String, org$frostlang$frostc$parser$Lexer$cleanup, org$frostlang$frostc$parser$Lexer$start$frost$core$String, org$frostlang$frostc$parser$Lexer$next$R$org$frostlang$frostc$parser$Token} };
 
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x70\x61\x72\x73\x65\x72\x2e\x4c\x65\x78\x65\x72", 33, 3663597672055994379, NULL };

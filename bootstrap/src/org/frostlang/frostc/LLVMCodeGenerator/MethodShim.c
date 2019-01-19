@@ -6,7 +6,7 @@
 
 
 static frost$core$String $s1;
-org$frostlang$frostc$LLVMCodeGenerator$MethodShim$class_type org$frostlang$frostc$LLVMCodeGenerator$MethodShim$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { frost$core$Object$convert$R$frost$core$String, org$frostlang$frostc$LLVMCodeGenerator$MethodShim$cleanup} };
+org$frostlang$frostc$LLVMCodeGenerator$MethodShim$class_type org$frostlang$frostc$LLVMCodeGenerator$MethodShim$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { frost$core$Object$get_asString$R$frost$core$String, org$frostlang$frostc$LLVMCodeGenerator$MethodShim$cleanup} };
 
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x4c\x4c\x56\x4d\x43\x6f\x64\x65\x47\x65\x6e\x65\x72\x61\x74\x6f\x72\x2e\x4d\x65\x74\x68\x6f\x64\x53\x68\x69\x6d", 49, -2126054034663597615, NULL };

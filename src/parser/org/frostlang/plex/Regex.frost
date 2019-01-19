@@ -217,7 +217,7 @@ class Regex {
     }
 
     @override
-    function convert():String {
-        return regexNode.convert()
+    function get_asString():String {
+        return regexNode.asString
     }
 }

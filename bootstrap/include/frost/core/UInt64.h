@@ -97,7 +97,7 @@ frost$core$UInt16 frost$core$UInt64$convert$R$frost$core$UInt16(frost$core$UInt6
 frost$core$UInt32 frost$core$UInt64$convert$R$frost$core$UInt32(frost$core$UInt64 self);
 frost$core$Real32 frost$core$UInt64$convert$R$frost$core$Real32(frost$core$UInt64 self);
 frost$core$Real64 frost$core$UInt64$convert$R$frost$core$Real64(frost$core$UInt64 self);
-frost$core$String* frost$core$UInt64$convert$R$frost$core$String(frost$core$UInt64 self);
+frost$core$String* frost$core$UInt64$get_asString$R$frost$core$String(frost$core$UInt64 self);
 frost$core$String* frost$core$UInt64$format$frost$core$String$R$frost$core$String(frost$core$UInt64 self, frost$core$String* p_fmt);
 void frost$core$UInt64$cleanup(frost$core$UInt64 self);
 

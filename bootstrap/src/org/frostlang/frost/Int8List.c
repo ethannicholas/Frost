@@ -34,7 +34,7 @@ struct { frost$core$Class* cl; ITable* next; void* methods[1]; } org$frostlang$f
 struct { frost$core$Class* cl; ITable* next; void* methods[10]; } org$frostlang$frost$Int8List$_frost$collections$CollectionView = { (frost$core$Class*) &frost$collections$CollectionView$class, (ITable*) &org$frostlang$frost$Int8List$_frost$collections$Iterable, { org$frostlang$frost$Int8List$get_count$R$frost$core$Int64, frost$collections$CollectionView$join$R$frost$core$String, frost$collections$CollectionView$join$frost$core$String$R$frost$core$String, frost$collections$CollectionView$fold$$LPfrost$collections$CollectionView$T$Cfrost$collections$CollectionView$T$RP$EQ$GT$LPfrost$collections$CollectionView$T$RP$R$frost$collections$CollectionView$T, frost$collections$CollectionView$fold$$LPfrost$collections$CollectionView$T$Cfrost$collections$CollectionView$T$RP$EQ$AM$GT$LPfrost$collections$CollectionView$T$RP$R$frost$collections$CollectionView$T, frost$collections$CollectionView$fold$$LPfrost$collections$CollectionView$T$Cfrost$collections$CollectionView$T$RP$EQ$GT$LPfrost$collections$CollectionView$T$RP$frost$collections$CollectionView$T$R$frost$collections$CollectionView$T, frost$collections$CollectionView$fold$$LPfrost$collections$CollectionView$T$Cfrost$collections$CollectionView$T$RP$EQ$AM$GT$LPfrost$collections$CollectionView$T$RP$frost$collections$CollectionView$T$R$frost$collections$CollectionView$T, frost$collections$CollectionView$apply$$LPfrost$collections$CollectionView$T$RP$EQ$AM$GT$LP$RP, frost$collections$CollectionView$map$$LPfrost$collections$CollectionView$T$RP$EQ$GT$LPfrost$collections$CollectionView$map$U$RP$R$frost$collections$Array$LTfrost$collections$CollectionView$map$U$GT, frost$collections$CollectionView$map$$LPfrost$collections$CollectionView$T$RP$EQ$AM$GT$LPfrost$collections$CollectionView$map$U$RP$R$frost$collections$Array$LTfrost$collections$CollectionView$map$U$GT} };
 
 static frost$core$String $s1;
-org$frostlang$frost$Int8List$class_type org$frostlang$frost$Int8List$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Object$class, (ITable*) &org$frostlang$frost$Int8List$_frost$collections$CollectionView, { org$frostlang$frost$Int8List$convert$R$frost$core$String, org$frostlang$frost$Int8List$cleanup, org$frostlang$frost$Int8List$get_count$R$frost$core$Int64, org$frostlang$frost$Int8List$$IDX$frost$core$Int64$R$frost$core$Int8$shim} };
+org$frostlang$frost$Int8List$class_type org$frostlang$frost$Int8List$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Object$class, (ITable*) &org$frostlang$frost$Int8List$_frost$collections$CollectionView, { org$frostlang$frost$Int8List$get_asString$R$frost$core$String, org$frostlang$frost$Int8List$cleanup, org$frostlang$frost$Int8List$get_count$R$frost$core$Int64, org$frostlang$frost$Int8List$$IDX$frost$core$Int64$R$frost$core$Int8$shim} };
 
 typedef frost$core$Int64 (*$fn119)(frost$collections$CollectionView*);
 typedef frost$core$String* (*$fn151)(frost$collections$CollectionView*);
@@ -291,7 +291,7 @@ frost$core$Int8 $tmp148 = frost$core$Int32$convert$R$frost$core$Int8($tmp147);
 return $tmp148;
 
 }
-frost$core$String* org$frostlang$frost$Int8List$convert$R$frost$core$String(org$frostlang$frost$Int8List* param0) {
+frost$core$String* org$frostlang$frost$Int8List$get_asString$R$frost$core$String(org$frostlang$frost$Int8List* param0) {
 
 // line 61
 ITable* $tmp149 = ((frost$collections$CollectionView*) param0)->$class->itable;

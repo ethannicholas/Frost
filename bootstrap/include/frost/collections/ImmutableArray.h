@@ -17,5 +17,5 @@ void frost$collections$ImmutableArray$cleanup(frost$collections$ImmutableArray* 
 frost$core$Immutable* frost$collections$ImmutableArray$$IDX$frost$core$Int64$R$frost$collections$ImmutableArray$T(frost$collections$ImmutableArray* self, frost$core$Int64 p_index);
 frost$core$Int64 frost$collections$ImmutableArray$get_count$R$frost$core$Int64(frost$collections$ImmutableArray* self);
 frost$collections$Iterator* frost$collections$ImmutableArray$get_iterator$R$frost$collections$Iterator$LTfrost$collections$ImmutableArray$T$GT(frost$collections$ImmutableArray* self);
-frost$core$String* frost$collections$ImmutableArray$convert$R$frost$core$String(frost$collections$ImmutableArray* self);
+frost$core$String* frost$collections$ImmutableArray$get_asString$R$frost$core$String(frost$collections$ImmutableArray* self);
 

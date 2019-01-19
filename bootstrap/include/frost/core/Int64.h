@@ -101,7 +101,7 @@ frost$core$UInt32 frost$core$Int64$convert$R$frost$core$UInt32(frost$core$Int64 
 frost$core$UInt64 frost$core$Int64$convert$R$frost$core$UInt64(frost$core$Int64 self);
 frost$core$Real32 frost$core$Int64$convert$R$frost$core$Real32(frost$core$Int64 self);
 frost$core$Real64 frost$core$Int64$convert$R$frost$core$Real64(frost$core$Int64 self);
-frost$core$String* frost$core$Int64$convert$R$frost$core$String(frost$core$Int64 self);
+frost$core$String* frost$core$Int64$get_asString$R$frost$core$String(frost$core$Int64 self);
 frost$core$String* frost$core$Int64$format$frost$core$String$R$frost$core$String(frost$core$Int64 self, frost$core$String* p_fmt);
 void frost$core$Int64$cleanup(frost$core$Int64 self);
 

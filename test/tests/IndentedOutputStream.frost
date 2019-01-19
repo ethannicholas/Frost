@@ -1,19 +1,23 @@
 method main() {
-    def out := IndentedOutputStream(Console.outputStream())
-    out.printLine("level 0")
-    out.level += 1
-    out.printLine("level 1")
-    out.level += 1
-    out.printLine("level 2")
-    out.level += 1
-    out.print("level ")
-    out.printLine(3)
-    out.print("still level 3\n")
-    out.level -= 1
-    out.printLine("back to level 2")
-    out.printLine("both at\nlevel 2")
-    out.indentSize := 8
-    out.printLine("level 2 with bigger tab stops")
-    out.level := 0
-    out.printLine("all the way back to zero!")
+    try {
+        def out := IndentedOutputStream(Console.outputStream())
+        out.printLine("level 0")
+        out.level += 1
+        out.printLine("level 1")
+        out.level += 1
+        out.printLine("level 2")
+        out.level += 1
+        out.print("level ")
+        out.printLine(3)
+        out.print("still level 3\n")
+        out.level -= 1
+        out.printLine("back to level 2")
+        out.printLine("both at\nlevel 2")
+        out.indentSize := 8
+        out.printLine("level 2 with bigger tab stops")
+        out.level := 0
+        out.printLine("all the way back to zero!")
+    }
+    fail(error) {
+    }
 }

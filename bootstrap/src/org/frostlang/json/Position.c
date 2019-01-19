@@ -7,8 +7,8 @@
 #include "frost/core/Bit.h"
 #include "frost/core/Frost.h"
 
-__attribute__((weak)) frost$core$String* org$frostlang$json$Position$convert$R$frost$core$String$shim(frost$core$Object* p0) {
-    frost$core$String* result = org$frostlang$json$Position$convert$R$frost$core$String(((org$frostlang$json$Position$wrapper*) p0)->value);
+__attribute__((weak)) frost$core$String* org$frostlang$json$Position$get_asString$R$frost$core$String$shim(frost$core$Object* p0) {
+    frost$core$String* result = org$frostlang$json$Position$get_asString$R$frost$core$String(((org$frostlang$json$Position$wrapper*) p0)->value);
 
     return result;
 }
@@ -18,10 +18,10 @@ __attribute__((weak)) void org$frostlang$json$Position$cleanup$shim(frost$core$O
 }
 
 static frost$core$String $s1;
-org$frostlang$json$Position$class_type org$frostlang$json$Position$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Value$class, NULL, { org$frostlang$json$Position$convert$R$frost$core$String$shim, org$frostlang$json$Position$cleanup$shim} };
+org$frostlang$json$Position$class_type org$frostlang$json$Position$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Value$class, NULL, { org$frostlang$json$Position$get_asString$R$frost$core$String$shim, org$frostlang$json$Position$cleanup$shim} };
 
 static frost$core$String $s2;
-org$frostlang$json$Position$wrapperclass_type org$frostlang$json$Position$wrapperclass = { (frost$core$Class*) &frost$core$Class$class, -999, &$s2, (frost$core$Class*) &frost$core$Value$class, NULL, { org$frostlang$json$Position$convert$R$frost$core$String$shim, org$frostlang$json$Position$cleanup$shim} };
+org$frostlang$json$Position$wrapperclass_type org$frostlang$json$Position$wrapperclass = { (frost$core$Class*) &frost$core$Class$class, -999, &$s2, (frost$core$Class*) &frost$core$Value$class, NULL, { org$frostlang$json$Position$get_asString$R$frost$core$String$shim, org$frostlang$json$Position$cleanup$shim} };
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x6a\x73\x6f\x6e\x2e\x50\x6f\x73\x69\x74\x69\x6f\x6e", 27, -792457632813778362, NULL };
 static frost$core$String $s2 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x6a\x73\x6f\x6e\x2e\x50\x6f\x73\x69\x74\x69\x6f\x6e", 27, -792457632813778362, NULL };
 static frost$core$String $s22 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x50\x6f\x73\x69\x74\x69\x6f\x6e\x2e\x66\x72\x6f\x73\x74", 14, -2904814051032449202, NULL };
@@ -85,11 +85,11 @@ org$frostlang$json$Position $tmp25 = *(&local0);
 return $tmp25;
 
 }
-frost$core$String* org$frostlang$json$Position$convert$R$frost$core$String(org$frostlang$json$Position param0) {
+frost$core$String* org$frostlang$json$Position$get_asString$R$frost$core$String(org$frostlang$json$Position param0) {
 
 // line 22
 frost$core$Int64 $tmp26 = param0.line;
-frost$core$String* $tmp27 = frost$core$Int64$convert$R$frost$core$String($tmp26);
+frost$core$String* $tmp27 = frost$core$Int64$get_asString$R$frost$core$String($tmp26);
 frost$core$String* $tmp28 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp27, &$s29);
 frost$core$Int64 $tmp30 = param0.column;
 frost$core$Int64$wrapper* $tmp31;

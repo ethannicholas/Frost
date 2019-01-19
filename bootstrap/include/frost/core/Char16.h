@@ -35,6 +35,6 @@ frost$core$UInt8 frost$core$Char16$convert$R$frost$core$UInt8(frost$core$Char16 
 frost$core$UInt16 frost$core$Char16$convert$R$frost$core$UInt16(frost$core$Char16 self);
 frost$core$UInt32 frost$core$Char16$convert$R$frost$core$UInt32(frost$core$Char16 self);
 frost$core$UInt64 frost$core$Char16$convert$R$frost$core$UInt64(frost$core$Char16 self);
-frost$core$String* frost$core$Char16$convert$R$frost$core$String(frost$core$Char16 self);
+frost$core$String* frost$core$Char16$get_asString$R$frost$core$String(frost$core$Char16 self);
 void frost$core$Char16$cleanup(frost$core$Char16 self);
 

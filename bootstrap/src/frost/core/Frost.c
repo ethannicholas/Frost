@@ -30,7 +30,7 @@
 
 
 static frost$core$String $s1;
-frost$core$Frost$class_type frost$core$Frost$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { frost$core$Object$convert$R$frost$core$String, frost$core$Frost$cleanup, frost$core$Frost$countAllocation$frost$core$Class, frost$core$Frost$countDeallocation$frost$core$Class, frost$core$Frost$dumpReport, frost$core$Frost$countTrace$frost$core$String} };
+frost$core$Frost$class_type frost$core$Frost$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { frost$core$Object$get_asString$R$frost$core$String, frost$core$Frost$cleanup, frost$core$Frost$countAllocation$frost$core$Class, frost$core$Frost$countDeallocation$frost$core$Class, frost$core$Frost$dumpReport, frost$core$Frost$countTrace$frost$core$String} };
 
 typedef frost$collections$Iterator* (*$fn99)(frost$collections$MapView*);
 typedef frost$core$Bit (*$fn103)(frost$collections$Iterator*);
@@ -404,7 +404,7 @@ if ($tmp125) goto block4; else goto block5;
 block4:;
 // line 63
 frost$core$String* $tmp126 = *(&local0);
-frost$core$String* $tmp127 = frost$core$String$convert$R$frost$core$String($tmp126);
+frost$core$String* $tmp127 = frost$core$String$get_asString$R$frost$core$String($tmp126);
 frost$core$String* $tmp128 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp127, &$s129);
 frost$collections$HashMap** $tmp130 = &param0->allocations;
 frost$collections$HashMap* $tmp131 = *$tmp130;
@@ -488,7 +488,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp160));
 *(&local1) = ((frost$core$String*) $tmp159);
 // line 67
 frost$core$String* $tmp161 = *(&local1);
-frost$core$String* $tmp162 = frost$core$String$convert$R$frost$core$String($tmp161);
+frost$core$String* $tmp162 = frost$core$String$get_asString$R$frost$core$String($tmp161);
 frost$core$String* $tmp163 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp162, &$s164);
 frost$collections$HashMap** $tmp165 = &param0->traces;
 frost$collections$HashMap* $tmp166 = *$tmp165;

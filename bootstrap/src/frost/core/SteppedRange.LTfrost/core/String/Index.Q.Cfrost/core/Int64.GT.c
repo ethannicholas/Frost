@@ -9,8 +9,8 @@
 #include "frost/core/MutableString.h"
 #include "frost/core/Frost.h"
 
-__attribute__((weak)) frost$core$String* frost$core$SteppedRange$LTfrost$core$String$Index$Q$Cfrost$core$Int64$GT$convert$R$frost$core$String$shim(frost$core$Object* p0) {
-    frost$core$String* result = frost$core$SteppedRange$LTfrost$core$String$Index$Q$Cfrost$core$Int64$GT$convert$R$frost$core$String(((frost$core$SteppedRange$LTfrost$core$String$Index$Q$Cfrost$core$Int64$GT$wrapper*) p0)->value);
+__attribute__((weak)) frost$core$String* frost$core$SteppedRange$LTfrost$core$String$Index$Q$Cfrost$core$Int64$GT$get_asString$R$frost$core$String$shim(frost$core$Object* p0) {
+    frost$core$String* result = frost$core$SteppedRange$LTfrost$core$String$Index$Q$Cfrost$core$Int64$GT$get_asString$R$frost$core$String(((frost$core$SteppedRange$LTfrost$core$String$Index$Q$Cfrost$core$Int64$GT$wrapper*) p0)->value);
 
     return result;
 }
@@ -20,10 +20,10 @@ __attribute__((weak)) void frost$core$SteppedRange$LTfrost$core$String$Index$Q$C
 }
 
 static frost$core$String $s1;
-frost$core$SteppedRange$LTfrost$core$String$Index$Q$Cfrost$core$Int64$GT$class_type frost$core$SteppedRange$LTfrost$core$String$Index$Q$Cfrost$core$Int64$GT$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Value$class, NULL, { frost$core$SteppedRange$LTfrost$core$String$Index$Q$Cfrost$core$Int64$GT$convert$R$frost$core$String$shim, frost$core$SteppedRange$LTfrost$core$String$Index$Q$Cfrost$core$Int64$GT$cleanup$shim} };
+frost$core$SteppedRange$LTfrost$core$String$Index$Q$Cfrost$core$Int64$GT$class_type frost$core$SteppedRange$LTfrost$core$String$Index$Q$Cfrost$core$Int64$GT$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Value$class, NULL, { frost$core$SteppedRange$LTfrost$core$String$Index$Q$Cfrost$core$Int64$GT$get_asString$R$frost$core$String$shim, frost$core$SteppedRange$LTfrost$core$String$Index$Q$Cfrost$core$Int64$GT$cleanup$shim} };
 
 static frost$core$String $s2;
-frost$core$SteppedRange$LTfrost$core$String$Index$Q$Cfrost$core$Int64$GT$wrapperclass_type frost$core$SteppedRange$LTfrost$core$String$Index$Q$Cfrost$core$Int64$GT$wrapperclass = { (frost$core$Class*) &frost$core$Class$class, -999, &$s2, (frost$core$Class*) &frost$core$Value$class, NULL, { frost$core$SteppedRange$LTfrost$core$String$Index$Q$Cfrost$core$Int64$GT$convert$R$frost$core$String$shim, frost$core$SteppedRange$LTfrost$core$String$Index$Q$Cfrost$core$Int64$GT$cleanup$shim} };
+frost$core$SteppedRange$LTfrost$core$String$Index$Q$Cfrost$core$Int64$GT$wrapperclass_type frost$core$SteppedRange$LTfrost$core$String$Index$Q$Cfrost$core$Int64$GT$wrapperclass = { (frost$core$Class*) &frost$core$Class$class, -999, &$s2, (frost$core$Class*) &frost$core$Value$class, NULL, { frost$core$SteppedRange$LTfrost$core$String$Index$Q$Cfrost$core$Int64$GT$get_asString$R$frost$core$String$shim, frost$core$SteppedRange$LTfrost$core$String$Index$Q$Cfrost$core$Int64$GT$cleanup$shim} };
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x65\x70\x70\x65\x64\x52\x61\x6e\x67\x65\x3c\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x49\x6e\x64\x65\x78\x3f\x2c\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x36\x34\x3e", 67, -4100451375981612613, NULL };
 static frost$core$String $s2 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x65\x70\x70\x65\x64\x52\x61\x6e\x67\x65\x3c\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x49\x6e\x64\x65\x78\x3f\x2c\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x36\x34\x3e", 67, -4100451375981612613, NULL };
 static frost$core$String $s18 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x53\x74\x65\x70\x70\x65\x64\x52\x61\x6e\x67\x65\x2e\x66\x72\x6f\x73\x74", 18, -6556486771978878285, NULL };
@@ -53,7 +53,7 @@ frost$core$SteppedRange$LTfrost$core$String$Index$Q$Cfrost$core$Int64$GT $tmp7 =
 return $tmp7;
 
 }
-frost$core$String* frost$core$SteppedRange$LTfrost$core$String$Index$Q$Cfrost$core$Int64$GT$convert$R$frost$core$String(frost$core$SteppedRange$LTfrost$core$String$Index$Q$Cfrost$core$Int64$GT param0) {
+frost$core$String* frost$core$SteppedRange$LTfrost$core$String$Index$Q$Cfrost$core$Int64$GT$get_asString$R$frost$core$String(frost$core$SteppedRange$LTfrost$core$String$Index$Q$Cfrost$core$Int64$GT param0) {
 
 frost$core$MutableString* local0 = NULL;
 // line 51

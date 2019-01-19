@@ -15,7 +15,7 @@ class SingleChar : Node {
     }
 
     @override
-    function convert():String {
-        return value.convert()
+    function get_asString():String {
+        return value.asString
     }
 }

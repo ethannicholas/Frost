@@ -13,7 +13,7 @@ __attribute__((weak)) void org$frostlang$frostc$Compiler$ErrorMsg$cleanup$shim(o
 }
 
 static frost$core$String $s1;
-org$frostlang$frostc$Compiler$ErrorMsg$class_type org$frostlang$frostc$Compiler$ErrorMsg$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Immutable$class, NULL, { frost$core$Object$convert$R$frost$core$String, org$frostlang$frostc$Compiler$ErrorMsg$cleanup$shim} };
+org$frostlang$frostc$Compiler$ErrorMsg$class_type org$frostlang$frostc$Compiler$ErrorMsg$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Immutable$class, NULL, { frost$core$Object$get_asString$R$frost$core$String, org$frostlang$frostc$Compiler$ErrorMsg$cleanup$shim} };
 
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x43\x6f\x6d\x70\x69\x6c\x65\x72\x2e\x45\x72\x72\x6f\x72\x4d\x73\x67", 38, -7292030783747196526, NULL };

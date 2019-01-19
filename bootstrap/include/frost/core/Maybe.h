@@ -11,7 +11,7 @@ typedef struct frost$core$String frost$core$String;
 frost$core$Object* frost$core$Maybe$get$R$frost$core$Maybe$T(frost$core$Maybe* self);
 frost$core$Error* frost$core$Maybe$error$R$frost$core$Error(frost$core$Maybe* self);
 frost$core$Bit frost$core$Maybe$succeeded$R$frost$core$Bit(frost$core$Maybe* self);
-frost$core$String* frost$core$Maybe$convert$R$frost$core$String(frost$core$Maybe* self);
+frost$core$String* frost$core$Maybe$get_asString$R$frost$core$String(frost$core$Maybe* self);
 void frost$core$Maybe$cleanup(frost$core$Maybe* self);
 void frost$core$Maybe$init$frost$core$Int64$frost$core$Maybe$T(frost$core$Maybe* self, frost$core$Int64 p_rv, frost$core$Object* p_f0);
 void frost$core$Maybe$init$frost$core$Int64$frost$core$Error(frost$core$Maybe* self, frost$core$Int64 p_rv, frost$core$Error* p_f0);

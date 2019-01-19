@@ -105,6 +105,6 @@ org$frostlang$frostc$Type* org$frostlang$frostc$Type$union$org$frostlang$frostc$
 org$frostlang$frostc$Type* org$frostlang$frostc$Type$intersection$org$frostlang$frostc$Compiler$org$frostlang$frostc$Type$R$org$frostlang$frostc$Type(org$frostlang$frostc$Type* self, org$frostlang$frostc$Compiler* p_compiler, org$frostlang$frostc$Type* p_other);
 org$frostlang$frostc$Type* org$frostlang$frostc$Type$remap$frost$collections$HashMap$LTfrost$core$String$Corg$frostlang$frostc$Type$GT$R$org$frostlang$frostc$Type(org$frostlang$frostc$Type* self, frost$collections$HashMap* p_types);
 frost$core$Int64 org$frostlang$frostc$Type$get_hash$R$frost$core$Int64(org$frostlang$frostc$Type* self);
-frost$core$String* org$frostlang$frostc$Type$convert$R$frost$core$String(org$frostlang$frostc$Type* self);
+frost$core$String* org$frostlang$frostc$Type$get_asString$R$frost$core$String(org$frostlang$frostc$Type* self);
 void org$frostlang$frostc$Type$cleanup(org$frostlang$frostc$Type* self);
 

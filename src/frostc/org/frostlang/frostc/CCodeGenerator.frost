@@ -93,7 +93,7 @@ class CCodeGenerator : CodeGenerator {
             }
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -145,7 +145,7 @@ class CCodeGenerator : CodeGenerator {
             types.printLine(code.finish())
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
         return result
     }
@@ -422,7 +422,7 @@ class CCodeGenerator : CodeGenerator {
                 types.printLine(result.finish())
             }
             fail(error) {
-                assert false, error.convert()
+                assert false, error.asString
             }
             previous := "(ITable*) &\{name}"
         }
@@ -505,7 +505,7 @@ class CCodeGenerator : CodeGenerator {
             return result
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -539,7 +539,7 @@ class CCodeGenerator : CodeGenerator {
             return previous
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -623,7 +623,7 @@ class CCodeGenerator : CodeGenerator {
             return result
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -666,7 +666,7 @@ class CCodeGenerator : CodeGenerator {
             return result
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -792,7 +792,7 @@ class CCodeGenerator : CodeGenerator {
             return result
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -838,7 +838,7 @@ class CCodeGenerator : CodeGenerator {
             return result
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -903,7 +903,7 @@ class CCodeGenerator : CodeGenerator {
             return "((\{cType(dstType)}) \{wrapped})"
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -965,11 +965,11 @@ class CCodeGenerator : CodeGenerator {
         if int > Int64.MAX.convert() {
             return int + "u"
         }
-        return int.convert()
+        return int.asString
     }
 
     method getRealReference(type:Type, real:Real64):String {
-        def result := real.convert()->String
+        def result := real.asString
         if result.contains(".") {
             return result
         }
@@ -998,7 +998,7 @@ class CCodeGenerator : CodeGenerator {
             return "&\{result}"
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -1017,10 +1017,10 @@ class CCodeGenerator : CodeGenerator {
     method getReference(v:IR.Value):String {
         match v {
             when IR.Value.BIT(value) {
-                return value.convert()
+                return value.asString
             }
             when IR.Value.INT(value, _) {
-                return value.convert()
+                return value.asString
             }
             when IR.Value.LOCAL(index, _) {
                 return "(&local\{index})"
@@ -1207,7 +1207,7 @@ class CCodeGenerator : CodeGenerator {
             out.printLine("\{cType(type)} \{result} = \{leftRef} \{cOp} \{rightRef};")
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
         refs[id] := result
     }
@@ -1217,7 +1217,7 @@ class CCodeGenerator : CodeGenerator {
             out.printLine("goto \{target};")
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -1230,7 +1230,7 @@ class CCodeGenerator : CodeGenerator {
             out.printLine("if (\{getReference(test)}) goto \{ifTrue}; else goto \{ifFalse};")
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -1252,7 +1252,7 @@ class CCodeGenerator : CodeGenerator {
             refs[id] := result
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -1271,7 +1271,7 @@ class CCodeGenerator : CodeGenerator {
             refs[id] := result
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -1297,7 +1297,7 @@ class CCodeGenerator : CodeGenerator {
             out.printLine(");")
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -1310,7 +1310,7 @@ class CCodeGenerator : CodeGenerator {
             refs[id] := result
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -1328,7 +1328,7 @@ class CCodeGenerator : CodeGenerator {
             refs[id] := result
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -1340,7 +1340,7 @@ class CCodeGenerator : CodeGenerator {
             refs[id] := result
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -1361,7 +1361,7 @@ class CCodeGenerator : CodeGenerator {
             refs[id] := result
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -1374,7 +1374,7 @@ class CCodeGenerator : CodeGenerator {
             refs[id] := result
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -1385,7 +1385,7 @@ class CCodeGenerator : CodeGenerator {
             refs[id] := result
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -1396,7 +1396,7 @@ class CCodeGenerator : CodeGenerator {
             refs[id] := result
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -1407,7 +1407,7 @@ class CCodeGenerator : CodeGenerator {
             refs[id] := result
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -1422,7 +1422,7 @@ class CCodeGenerator : CodeGenerator {
             refs[id] := result
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -1432,7 +1432,7 @@ class CCodeGenerator : CodeGenerator {
             out.printLine("frostFree(\{ptrRef});")
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -1445,7 +1445,7 @@ class CCodeGenerator : CodeGenerator {
             refs[id] := result
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -1458,7 +1458,7 @@ class CCodeGenerator : CodeGenerator {
             refs[id] := result
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -1476,7 +1476,7 @@ class CCodeGenerator : CodeGenerator {
             refs[id] := result
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -1488,7 +1488,7 @@ class CCodeGenerator : CodeGenerator {
             out.printLine("\{base}[\{indexRef}] = \{valueRef};")
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -1502,7 +1502,7 @@ class CCodeGenerator : CodeGenerator {
             }
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -1538,7 +1538,7 @@ class CCodeGenerator : CodeGenerator {
             out.printLine(");")
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -1547,7 +1547,7 @@ class CCodeGenerator : CodeGenerator {
             out.printLine("*\{getReference(ptr)} = \{getReference(value)};")
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -1638,7 +1638,7 @@ class CCodeGenerator : CodeGenerator {
             }
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -1673,7 +1673,7 @@ class CCodeGenerator : CodeGenerator {
             }
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 
@@ -1708,7 +1708,7 @@ class CCodeGenerator : CodeGenerator {
             out := old
         }
         fail(error) {
-            assert false, error.convert()
+            assert false, error.asString
         }
     }
 

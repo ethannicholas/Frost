@@ -57,7 +57,7 @@ class Int8List : ListView<Int8> {
     }
 
     @override
-    function convert():String {
+    function get_asString():String {
         return "[\{join()}]"
     }
 }

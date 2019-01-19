@@ -7,6 +7,6 @@ typedef struct frost$core$String frost$core$String;
 
 org$frostlang$json$Position org$frostlang$json$Position$init();
 org$frostlang$json$Position org$frostlang$json$Position$init$frost$core$Int64$frost$core$Int64(frost$core$Int64 p_line, frost$core$Int64 p_column);
-frost$core$String* org$frostlang$json$Position$convert$R$frost$core$String(org$frostlang$json$Position self);
+frost$core$String* org$frostlang$json$Position$get_asString$R$frost$core$String(org$frostlang$json$Position self);
 void org$frostlang$json$Position$cleanup(org$frostlang$json$Position self);
 

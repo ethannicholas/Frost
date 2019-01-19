@@ -9,7 +9,7 @@
 
 
 static frost$core$String $s1;
-org$frostlang$frostc$MethodDecl$Parameter$class_type org$frostlang$frostc$MethodDecl$Parameter$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { org$frostlang$frostc$MethodDecl$Parameter$convert$R$frost$core$String, org$frostlang$frostc$MethodDecl$Parameter$cleanup} };
+org$frostlang$frostc$MethodDecl$Parameter$class_type org$frostlang$frostc$MethodDecl$Parameter$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { org$frostlang$frostc$MethodDecl$Parameter$get_asString$R$frost$core$String, org$frostlang$frostc$MethodDecl$Parameter$cleanup} };
 
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x4d\x65\x74\x68\x6f\x64\x44\x65\x63\x6c\x2e\x50\x61\x72\x61\x6d\x65\x74\x65\x72", 41, -2731845383337648952, NULL };
@@ -46,12 +46,12 @@ org$frostlang$frostc$Type** $tmp11 = &param0->type;
 return;
 
 }
-frost$core$String* org$frostlang$frostc$MethodDecl$Parameter$convert$R$frost$core$String(org$frostlang$frostc$MethodDecl$Parameter* param0) {
+frost$core$String* org$frostlang$frostc$MethodDecl$Parameter$get_asString$R$frost$core$String(org$frostlang$frostc$MethodDecl$Parameter* param0) {
 
 // line 28
 frost$core$String** $tmp12 = &param0->name;
 frost$core$String* $tmp13 = *$tmp12;
-frost$core$String* $tmp14 = frost$core$String$convert$R$frost$core$String($tmp13);
+frost$core$String* $tmp14 = frost$core$String$get_asString$R$frost$core$String($tmp13);
 frost$core$String* $tmp15 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp14, &$s16);
 org$frostlang$frostc$Type** $tmp17 = &param0->type;
 org$frostlang$frostc$Type* $tmp18 = *$tmp17;

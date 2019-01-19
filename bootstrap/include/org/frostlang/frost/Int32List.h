@@ -11,6 +11,6 @@ void org$frostlang$frost$Int32List$init$frost$core$SteppedRange$LTfrost$core$Int
 frost$core$Int64 org$frostlang$frost$Int32List$computeCount$frost$core$SteppedRange$LTfrost$core$Int32$Cfrost$core$Int32$GT$R$frost$core$Int64(frost$core$SteppedRange$LTfrost$core$Int32$Cfrost$core$Int32$GT p_range);
 frost$core$Int64 org$frostlang$frost$Int32List$get_count$R$frost$core$Int64(org$frostlang$frost$Int32List* self);
 frost$core$Int32 org$frostlang$frost$Int32List$$IDX$frost$core$Int64$R$frost$core$Int32(org$frostlang$frost$Int32List* self, frost$core$Int64 p_index);
-frost$core$String* org$frostlang$frost$Int32List$convert$R$frost$core$String(org$frostlang$frost$Int32List* self);
+frost$core$String* org$frostlang$frost$Int32List$get_asString$R$frost$core$String(org$frostlang$frost$Int32List* self);
 void org$frostlang$frost$Int32List$cleanup(org$frostlang$frost$Int32List* self);
 

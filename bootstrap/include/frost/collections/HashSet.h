@@ -17,6 +17,6 @@ frost$core$Int64 frost$collections$HashSet$get_count$R$frost$core$Int64(frost$co
 void frost$collections$HashSet$clear(frost$collections$HashSet* self);
 frost$collections$Iterator* frost$collections$HashSet$get_iterator$R$frost$collections$Iterator$LTfrost$collections$HashSet$T$GT(frost$collections$HashSet* self);
 frost$core$Bit frost$collections$HashSet$contains$frost$collections$HashSet$T$R$frost$core$Bit(frost$collections$HashSet* self, frost$collections$Key* p_value);
-frost$core$String* frost$collections$HashSet$convert$R$frost$core$String(frost$collections$HashSet* self);
+frost$core$String* frost$collections$HashSet$get_asString$R$frost$core$String(frost$collections$HashSet* self);
 void frost$collections$HashSet$cleanup(frost$collections$HashSet* self);
 

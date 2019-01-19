@@ -20,5 +20,5 @@ void frost$collections$IdentityMap$incrementCount(frost$collections$IdentityMap*
 frost$core$Int64 frost$collections$IdentityMap$get_count$R$frost$core$Int64(frost$collections$IdentityMap* self);
 frost$collections$Iterator* frost$collections$IdentityMap$get_keys$R$frost$collections$Iterator$LTfrost$collections$IdentityMap$K$GT(frost$collections$IdentityMap* self);
 frost$collections$Iterator* frost$collections$IdentityMap$get_values$R$frost$collections$Iterator$LTfrost$collections$IdentityMap$V$GT(frost$collections$IdentityMap* self);
-frost$core$String* frost$collections$IdentityMap$convert$R$frost$core$String(frost$collections$IdentityMap* self);
+frost$core$String* frost$collections$IdentityMap$get_asString$R$frost$core$String(frost$collections$IdentityMap* self);
 

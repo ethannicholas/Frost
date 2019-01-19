@@ -25,6 +25,7 @@ frost$core$Bit org$frostlang$frostc$Annotations$get_isWeak$R$frost$core$Bit(org$
 frost$core$Bit org$frostlang$frostc$Annotations$get_isSynthetic$R$frost$core$Bit(org$frostlang$frostc$Annotations* self);
 frost$core$Bit org$frostlang$frostc$Annotations$get_isUnsafeImmutable$R$frost$core$Bit(org$frostlang$frostc$Annotations* self);
 frost$core$Bit org$frostlang$frostc$Annotations$get_isDefault$R$frost$core$Bit(org$frostlang$frostc$Annotations* self);
-frost$core$String* org$frostlang$frostc$Annotations$convert$R$frost$core$String(org$frostlang$frostc$Annotations* self);
+frost$core$Bit org$frostlang$frostc$Annotations$get_isCapture$R$frost$core$Bit(org$frostlang$frostc$Annotations* self);
+frost$core$String* org$frostlang$frostc$Annotations$get_asString$R$frost$core$String(org$frostlang$frostc$Annotations* self);
 void org$frostlang$frostc$Annotations$cleanup(org$frostlang$frostc$Annotations* self);
 

@@ -22,5 +22,5 @@ void frost$collections$Array$ensureCapacity$frost$core$Int64(frost$collections$A
 frost$core$Int64 frost$collections$Array$get_count$R$frost$core$Int64(frost$collections$Array* self);
 frost$core$Object* frost$collections$Array$removeIndex$frost$core$Int64$R$frost$collections$Array$T(frost$collections$Array* self, frost$core$Int64 p_index);
 void frost$collections$Array$clear(frost$collections$Array* self);
-frost$core$String* frost$collections$Array$convert$R$frost$core$String(frost$collections$Array* self);
+frost$core$String* frost$collections$Array$get_asString$R$frost$core$String(frost$collections$Array* self);
 

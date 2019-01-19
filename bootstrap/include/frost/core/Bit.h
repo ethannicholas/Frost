@@ -7,7 +7,7 @@ typedef struct frost$core$String frost$core$String;
 typedef struct frost$core$Object frost$core$Object;
 
 frost$core$Bit frost$core$Bit$init$builtin_bit(bool p_value);
-frost$core$String* frost$core$Bit$convert$R$frost$core$String(frost$core$Bit self);
+frost$core$String* frost$core$Bit$get_asString$R$frost$core$String(frost$core$Bit self);
 frost$core$Bit frost$core$Bit$$EQ$frost$core$Bit$R$frost$core$Bit(frost$core$Bit self, frost$core$Bit p_other);
 frost$core$Bit frost$core$Bit$$NEQ$frost$core$Bit$R$frost$core$Bit(frost$core$Bit self, frost$core$Bit p_other);
 frost$core$Int64 frost$core$Bit$get_hash$R$frost$core$Int64(frost$core$Bit self);

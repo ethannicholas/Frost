@@ -16,7 +16,7 @@
 
 
 static frost$core$String $s1;
-org$frostlang$frostc$expression$AtPre$class_type org$frostlang$frostc$expression$AtPre$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { frost$core$Object$convert$R$frost$core$String, org$frostlang$frostc$expression$AtPre$cleanup} };
+org$frostlang$frostc$expression$AtPre$class_type org$frostlang$frostc$expression$AtPre$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { frost$core$Object$get_asString$R$frost$core$String, org$frostlang$frostc$expression$AtPre$cleanup} };
 
 typedef void (*$fn42)(org$frostlang$frostc$IR*, org$frostlang$frostc$IR$Block$ID);
 typedef void (*$fn48)(org$frostlang$frostc$IR*, org$frostlang$frostc$IR$Block$ID);
