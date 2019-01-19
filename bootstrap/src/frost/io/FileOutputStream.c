@@ -3,8 +3,8 @@
 #include "frost/core/Class.h"
 #include "frost/core/String.h"
 #include "frost/core/Object.h"
-#include "frost/core/Bit.h"
 #include "frost/core/Error.h"
+#include "frost/core/Bit.h"
 #include "frost/core/Frost.h"
 
 
@@ -23,6 +23,7 @@ return;
 }
 void frost$io$FileOutputStream$cleanup(frost$io$FileOutputStream* param0) {
 
+frost$core$Error* local0 = NULL;
 // line 21
 frost$core$Bit* $tmp2 = &param0->closeOnCleanup;
 frost$core$Bit $tmp3 = *$tmp2;
@@ -31,8 +32,17 @@ if ($tmp4) goto block1; else goto block2;
 block1:;
 // line 22
 frost$core$Error* $tmp5 = frost$io$FileOutputStream$close$R$frost$core$Error$Q(param0);
+*(&local0) = ((frost$core$Error*) NULL);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp5));
+frost$core$Error* $tmp6 = *(&local0);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp6));
+*(&local0) = $tmp5;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp5));
 // unreffing REF($6:frost.core.Error?)
+frost$core$Error* $tmp7 = *(&local0);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp7));
+// unreffing error
+*(&local0) = ((frost$core$Error*) NULL);
 goto block2;
 block2:;
 // line 20

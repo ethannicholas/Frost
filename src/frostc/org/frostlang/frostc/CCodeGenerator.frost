@@ -82,13 +82,18 @@ class CCodeGenerator : CodeGenerator {
     }
 
     method writeImport(cl:ClassDecl) {
-        if cl.name = "frost.unsafe.Pointer" {
-            return
+        try {
+            if cl.name = "frost.unsafe.Pointer" {
+                return 
+            }
+            def includePath := hCodeGen.getRelativePath(cl, ".h")
+            if !imports.contains(includePath) {
+                includes.printLine("#include \"\{includePath}\"")
+                imports.add(includePath)
+            }
         }
-        def includePath := hCodeGen.getRelativePath(cl, ".h")
-        if !imports.contains(includePath) {
-            includes.printLine("#include \"\{includePath}\"")
-            imports.add(includePath)
+        fail(error) {
+            assert false, error.convert()
         }
     }
 
@@ -136,7 +141,12 @@ class CCodeGenerator : CodeGenerator {
             separator := ", "
         }
         code.append(");")
-        types.printLine(code.finish())
+        try {
+            types.printLine(code.finish())
+        }
+        fail(error) {
+            assert false, error.convert()
+        }
         return result
     }
 
@@ -408,7 +418,12 @@ class CCodeGenerator : CodeGenerator {
                 }
             }
             result.append("} };\n")
-            types.printLine(result.finish())
+            try {
+                types.printLine(result.finish())
+            }
+            fail(error) {
+                assert false, error.convert()
+            }
             previous := "(ITable*) &\{name}"
         }
         return previous
@@ -416,106 +431,116 @@ class CCodeGenerator : CodeGenerator {
 
     @post(out == @pre(out))
     method createMethodShim(raw:MethodDecl, effective:Type):MethodShim {
-        def found := methodShims[raw]
-        if found !== null {
-            return found
-        }
-        def old := out
-        def outBuffer := MemoryOutputStream()
-        out := IndentedOutputStream(outBuffer)
-        assert effective.isMethod
-        assert effective.subtypes.count = raw.parameters.count + 2 -- self and return
-        assert raw.isInstance()
-        def effectiveReturnType := effective.returnType
-        def resultName := getName(raw) + "$shim"
-        def resultType := MutableString(cType(effectiveReturnType))
-        out.print("__attribute__((weak)) \{resultType} \{resultName}(")
-        resultType.append("(")
-        var separator := ""
-        for i in 0 .. effective.subtypes.count - 1 {
-            def pType := cType(effective.subtypes[i])
-            resultType.append(", ")
-            resultType.append(pType)
-            out.print("\{separator}\{pType} p\{i}")
-            separator := ", "
-        }
-        out.printLine(") {")
-        out.level +=1
-        resultType.append(")*")
-        def unrefs := MemoryOutputStream()
-        def casts := Array<String>()
-        for i in 0 .. effective.subtypes.count - 1 {
-            def p := "p\{i}"
-            def rawType:Type
-            if i = 0 {
-                rawType := raw.owner.type
+        try {
+            def found := methodShims[raw]
+            if found !== null {
+                return found
             }
-            else {
-                rawType := raw.parameters[i - 1].type
+            def old := out
+            def outBuffer := MemoryOutputStream()
+            out := IndentedOutputStream(outBuffer)
+            assert effective.isMethod
+            assert effective.subtypes.count = raw.parameters.count + 2 -- self and return
+            assert raw.isInstance()
+            def effectiveReturnType := effective.returnType
+            def resultName := getName(raw) + "$shim"
+            def resultType := MutableString(cType(effectiveReturnType))
+            out.print("__attribute__((weak)) \{resultType} \{resultName}(")
+            resultType.append("(")
+            var separator := ""
+            for i in 0 .. effective.subtypes.count - 1 {
+                def pType := cType(effective.subtypes[i])
+                resultType.append(", ")
+                resultType.append(pType)
+                out.print("\{separator}\{pType} p\{i}")
+                separator := ", "
             }
-            if rawType != effective.subtypes[i] {
-                def cast := getCastReference(p, effective.subtypes[i], rawType)
-                casts.add(cast)
-                if compiler.isValue(effective.subtypes[i]) & !compiler.isValue(rawType) {
-                    unrefs.printLine("frost$core$Frost$unref$frost$core$Object$Q(" +
-                            "(frost$core$Object*) \{cast});")
+            out.printLine(") {")
+            out.level +=1
+            resultType.append(")*")
+            def unrefs := MemoryOutputStream()
+            def casts := Array<String>()
+            for i in 0 .. effective.subtypes.count - 1 {
+                def p := "p\{i}"
+                def rawType:Type
+                if i = 0 {
+                    rawType := raw.owner.type
+                }
+                else {
+                    rawType := raw.parameters[i - 1].type
+                }
+                if rawType != effective.subtypes[i] {
+                    def cast := getCastReference(p, effective.subtypes[i], rawType)
+                    casts.add(cast)
+                    if compiler.isValue(effective.subtypes[i]) & !compiler.isValue(rawType) {
+                        unrefs.printLine("frost$core$Frost$unref$frost$core$Object$Q(" +
+                                "(frost$core$Object*) \{cast});")
+                    }
+                }
+                else {
+                    casts.add(p)
                 }
             }
-            else {
-                casts.add(p)
+            if raw.returnType != Type.Void() {
+                out.print("\{cType(raw.returnType)} result = ")
             }
+            out.print("\{getName(raw)}(")
+            separator := ""
+            for i in 0 .. effective.subtypes.count - 1 {
+                out.print("\{separator}\{casts[i]}")
+                separator := ", "
+            }
+            out.printLine(");")
+            out.printLine(unrefs)
+            if raw.returnType != Type.Void() {
+                out.printLine("return " + getCastReference("result", raw.returnType,
+                        effectiveReturnType) + ";")
+            }
+            out.level -= 1
+            out.printLine("}")
+            def result := MethodShim(resultName, resultType.finish())
+            methodShims[raw] := result
+            shims.print(outBuffer.finish())
+            out := old
+            return result
         }
-        if raw.returnType != Type.Void() {
-            out.print("\{cType(raw.returnType)} result = ")
+        fail(error) {
+            assert false, error.convert()
         }
-        out.print("\{getName(raw)}(")
-        separator := ""
-        for i in 0 .. effective.subtypes.count - 1 {
-            out.print("\{separator}\{casts[i]}")
-            separator := ", "
-        }
-        out.printLine(");")
-        out.printLine(unrefs)
-        if raw.returnType != Type.Void() {
-            out.printLine("return " + getCastReference("result", raw.returnType,
-                    effectiveReturnType) + ";")
-        }
-        out.level -= 1
-        out.printLine("}")
-        def result := MethodShim(resultName, resultType.finish())
-        methodShims[raw] := result
-        shims.print(outBuffer.finish())
-        out := old
-        return result
     }
 
     method getWrapperITable(cl:ClassDecl):String {
-        def interfaces := compiler.allInterfaces(cl.type)
-        var previous := "NULL"
-        for intfType in interfaces {
-            def intf := compiler.getClass(intfType)
-            def intfCC := getClassConstant(intf)
-            def methods := compiler.interfaceMethods(cl, intfType)
-            def name := "\{escapeName(cl.name)}$wrapper_\{escapeName(intf.name)}"
-            def result := MutableString("struct { \{cType(Type.Class())} cl; ITable* itable; " +
-                    "void* methods[\{methods.count}]; } \{name} = { " +
-                    "(\{cType(Type.Class())}) &\{intfCC.name}, \{previous}, { ")
-            var separator := ""
-            for m in methods {
-                result.append(separator)
-                separator := ", "
-                if m.annotations.isAbstract {
-                    result.append("NULL")
+        try {
+            def interfaces := compiler.allInterfaces(cl.type)
+            var previous := "NULL"
+            for intfType in interfaces {
+                def intf := compiler.getClass(intfType)
+                def intfCC := getClassConstant(intf)
+                def methods := compiler.interfaceMethods(cl, intfType)
+                def name := "\{escapeName(cl.name)}$wrapper_\{escapeName(intf.name)}"
+                def result := MutableString("struct { \{cType(Type.Class())} cl; ITable* itable; " +
+                        "void* methods[\{methods.count}]; } \{name} = { " +
+                        "(\{cType(Type.Class())}) &\{intfCC.name}, \{previous}, { ")
+                var separator := ""
+                for m in methods {
+                    result.append(separator)
+                    separator := ", "
+                    if m.annotations.isAbstract {
+                        result.append("NULL")
+                    }
+                    else {
+                        result.append(getMethodTableEntry(m))
+                    }
                 }
-                else {
-                    result.append(getMethodTableEntry(m))
-                }
+                result.append("} };\n")
+                types.printLine(result.finish())
+                previous := "(ITable*) &\{name}"
             }
-            result.append("} };\n")
-            types.printLine(result.finish())
-            previous := "(ITable*) &\{name}"
+            return previous
         }
-        return previous
+        fail(error) {
+            assert false, error.convert()
+        }
     }
 
     function needsStructIndirection(m:MethodDecl):Bit {
@@ -548,91 +573,101 @@ class CCodeGenerator : CodeGenerator {
     }
 
     method getClassConstant(cl:ClassDecl):ClassConstant {
-        var result := classConstants[cl.name]
-        if result == null {
-            writeImport(cl)
-            compiler.resolve(cl)
-            def type:String
-            if isExternal(cl) {
-                result := ClassConstant("\{escapeName(cl.type.name)}$class",
-                        "%frost$core$Class")
+        try {
+            var result := classConstants[cl.name]
+            if result == null {
+                writeImport(cl)
+                compiler.resolve(cl)
+                def type:String
+                if isExternal(cl) {
+                    result := ClassConstant("\{escapeName(cl.type.name)}$class",
+                            "%frost$core$Class")
+                    classConstants[cl.name] := result
+                    return classConstants[cl.name]
+                }
+                compiler.currentClass.push(cl)
+                def vtable := compiler.getVTable(cl)
+                result := ClassConstant("\{escapeName(cl.type.name)}$class", "<error>")
                 classConstants[cl.name] := result
-                return classConstants[cl.name]
-            }
-            compiler.currentClass.push(cl)
-            def vtable := compiler.getVTable(cl)
-            result := ClassConstant("\{escapeName(cl.type.name)}$class", "<error>")
-            classConstants[cl.name] := result
-            def superPtr:String
-            if cl.rawSuper !== null {
-                def superCC := getClassConstant(compiler.getClass(cl.rawSuper))
-                superPtr := "(frost$core$Class*) &\{superCC.name}"
-            }
-            else {
-                superPtr := "NULL"
-            }
-            def clConstant := getClassConstant(compiler.getClass(Type.Class()))
-            def name := getStringReference(cl.name)
-            assert name.startsWith("&")
-            def code := MutableString("static frost$core$String \{name[1..]};\n" +
-                    "\{result.name}_type \{result.name} = { " +
-                    "(frost$core$Class*) &\{clConstant.name}, \{NO_REFCNT}, " +
-                    "\{name}, \{superPtr}, \{getITable(cl)}, { ")
-            var separator := ""
-            for m in vtable {
-                code.append(separator)
-                if m.annotations.isAbstract {
-                    code.append("NULL")
+                def superPtr:String
+                if cl.rawSuper !== null {
+                    def superCC := getClassConstant(compiler.getClass(cl.rawSuper))
+                    superPtr := "(frost$core$Class*) &\{superCC.name}"
                 }
                 else {
-                    code.append(getMethodTableEntry(m))
+                    superPtr := "NULL"
                 }
-                separator := ", "
-            }
-            code.append("} };\n")
-            types.printLine(code.finish())
-            assert compiler.currentClass[0] == cl
-            compiler.currentClass.pop()
-        }
-        return result
-    }
-
-    method getWrapperClassConstant(cl:ClassDecl):ClassConstant {
-        def name := "\{escapeName(cl.name)}$wrapperclass"
-        var result := classConstants[name]
-        if result == null {
-            if isExternal(cl) {
-                cType(Type.Class())
-                def type := "%frost$core$Class"
-                types.printLine("\{name} = external global \{type}")
-                result := ClassConstant(name, type)
-            }
-            else {
-                def value := compiler.getClass(Type.Value())
-                def valueVTable := compiler.getVTable(value)
-                result := ClassConstant("\{escapeName(cl.name)}$wrapperclass", "<error>")
-                def vtable := compiler.getVTable(cl)
-                def superCC := getClassConstant(compiler.getClass(cl.rawSuper))
-                def superCast := "(frost$core$Class*) &\{superCC.name}"
-                def itable := getWrapperITable(cl)
                 def clConstant := getClassConstant(compiler.getClass(Type.Class()))
                 def name := getStringReference(cl.name)
                 assert name.startsWith("&")
                 def code := MutableString("static frost$core$String \{name[1..]};\n" +
                         "\{result.name}_type \{result.name} = { " +
                         "(frost$core$Class*) &\{clConstant.name}, \{NO_REFCNT}, " +
-                        "\{name}, \{superCast}, \{itable}, { ")
+                        "\{name}, \{superPtr}, \{getITable(cl)}, { ")
                 var separator := ""
-                for i in 0 .. valueVTable.count {
-                    code.append("\{separator}\{getMethodTableEntry(vtable[i])}")
+                for m in vtable {
+                    code.append(separator)
+                    if m.annotations.isAbstract {
+                        code.append("NULL")
+                    }
+                    else {
+                        code.append(getMethodTableEntry(m))
+                    }
                     separator := ", "
                 }
-                code.append("} };")
-                types.print(code.finish())
+                code.append("} };\n")
+                types.printLine(code.finish())
+                assert compiler.currentClass[0] == cl
+                compiler.currentClass.pop()
             }
-            classConstants[name] := result
+            return result
         }
-        return result
+        fail(error) {
+            assert false, error.convert()
+        }
+    }
+
+    method getWrapperClassConstant(cl:ClassDecl):ClassConstant {
+        try {
+            def name := "\{escapeName(cl.name)}$wrapperclass"
+            var result := classConstants[name]
+            if result == null {
+                if isExternal(cl) {
+                    cType(Type.Class())
+                    def type := "%frost$core$Class"
+                    types.printLine("\{name} = external global \{type}")
+                    result := ClassConstant(name, type)
+                }
+                else {
+                    def value := compiler.getClass(Type.Value())
+                    def valueVTable := compiler.getVTable(value)
+                    result := ClassConstant("\{escapeName(cl.name)}$wrapperclass", "<error>")
+                    def vtable := compiler.getVTable(cl)
+                    def superCC := getClassConstant(compiler.getClass(cl.rawSuper))
+                    def superCast := "(frost$core$Class*) &\{superCC.name}"
+                    def itable := getWrapperITable(cl)
+                    def clConstant := getClassConstant(compiler.getClass(Type.Class()))
+                    def name := getStringReference(cl.name)
+                    assert name.startsWith("&")
+                    def code := MutableString("static frost$core$String \{name[1..]};\n" +
+                            "\{result.name}_type \{result.name} = { " +
+                            "(frost$core$Class*) &\{clConstant.name}, \{NO_REFCNT}, " +
+                            "\{name}, \{superCast}, \{itable}, { ")
+                    var separator := ""
+                    for i in 0 .. valueVTable.count {
+                        code.append("\{separator}\{getMethodTableEntry(vtable[i])}")
+                        separator := ", "
+                    }
+                    code.append("} };")
+                    types.print(code.finish())
+                }
+                classConstants[name] := result
+            }
+            return result
+        }
+        fail(error) {
+            assert false, error.convert()
+        }
     }
 
     function getName(v:Variable):String {
@@ -681,79 +716,84 @@ class CCodeGenerator : CodeGenerator {
 
     method getBinaryReference(t:Type, leftRef:String, op:Token.Kind, rightRef:String,
             out:IndentedOutputStream):String {
-        def cOp:String
-        var logical := false
-        match op {
-            when Token.Kind.ADD {
-                cOp := "+"
+        try {
+            def cOp:String
+            var logical := false
+            match op {
+                when Token.Kind.ADD {
+                    cOp := "+"
+                }
+                when Token.Kind.SUB {
+                    cOp := "-"
+                }
+                when Token.Kind.MUL {
+                    cOp := "*"
+                }
+                when Token.Kind.INTDIV {
+                    cOp := "/"
+                }
+                when Token.Kind.DIV {
+                    cOp := "/"
+                }
+                when Token.Kind.REM {
+                    cOp := "%"
+                }
+                when Token.Kind.SHIFTLEFT {
+                    cOp := "<<"
+                }
+                when Token.Kind.SHIFTRIGHT {
+                    cOp := ">>"
+                }
+                when Token.Kind.BITWISEAND {
+                    cOp := "&"
+                }
+                when Token.Kind.BITWISEOR {
+                    cOp := "|"
+                }
+                when Token.Kind.XOR, Token.Kind.BITWISEXOR {
+                    cOp := "^"
+                }
+                when Token.Kind.EQ {
+                    cOp := "=="
+                    logical := true
+                }
+                when Token.Kind.NEQ {
+                    cOp := "!="
+                    logical := true
+                }
+                when Token.Kind.GT {
+                    cOp := ">"
+                    logical := true
+                }
+                when Token.Kind.LT {
+                    cOp := "<"
+                    logical := true
+                }
+                when Token.Kind.GTEQ {
+                    cOp := ">="
+                    logical := true
+                }
+                when Token.Kind.LTEQ {
+                    logical := true
+                    cOp := "<="
+                }
+                otherwise {
+                    assert false
+                }
             }
-            when Token.Kind.SUB {
-                cOp := "-"
+            def result := nextVar()
+            if logical {
+                out.print("bool ")
             }
-            when Token.Kind.MUL {
-                cOp := "*"
+            else {
+                out.print("\{cType(t)} ")
             }
-            when Token.Kind.INTDIV {
-                cOp := "/"
-            }
-            when Token.Kind.DIV {
-                cOp := "/"
-            }
-            when Token.Kind.REM {
-                cOp := "%"
-            }
-            when Token.Kind.SHIFTLEFT {
-                cOp := "<<"
-            }
-            when Token.Kind.SHIFTRIGHT {
-                cOp := ">>"
-            }
-            when Token.Kind.BITWISEAND {
-                cOp := "&"
-            }
-            when Token.Kind.BITWISEOR {
-                cOp := "|"
-            }
-            when Token.Kind.XOR, Token.Kind.BITWISEXOR {
-                cOp := "^"
-            }
-            when Token.Kind.EQ {
-                cOp := "=="
-                logical := true
-            }
-            when Token.Kind.NEQ {
-                cOp := "!="
-                logical := true
-            }
-            when Token.Kind.GT {
-                cOp := ">"
-                logical := true
-            }
-            when Token.Kind.LT {
-                cOp := "<"
-                logical := true
-            }
-            when Token.Kind.GTEQ {
-                cOp := ">="
-                logical := true
-            }
-            when Token.Kind.LTEQ {
-                logical := true
-                cOp := "<="
-            }
-            otherwise {
-                assert false
-            }
+            out.printLine("\{result} = \{leftRef} \{cOp} \{rightRef};")
+            return result
         }
-        def result := nextVar()
-        if logical {
-            out.print("bool ")
+        fail(error) {
+            assert false, error.convert()
         }
-        else {
-            out.print("\{cType(t)} ")
-        }
-        out.printLine("\{result} = \{leftRef} \{cOp} \{rightRef};")
-        return result
     }
 
     method getVirtualMethodReference(target:String, m:MethodDecl, out:IndentedOutputStream):String {
@@ -773,28 +813,33 @@ class CCodeGenerator : CodeGenerator {
 
     method getInterfaceMethodReference(target:String, m:MethodDecl,
             out:IndentedOutputStream):String {
-        def cc := getClassConstant(m.owner)
-        def itable := nextVar()
-        out.printLine("ITable* \{itable} = \{target}->$class->itable;")
-        out.printLine("while (\{itable}->$class != (frost$core$Class*) &\{cc.name}) {")
-        out.level += 1
-        out.printLine("\{itable} = \{itable}->next;")
-        out.level -= 1
-        out.printLine("}")
-        var index := -1
-        def vtable := compiler.getVTable(m.owner)
-        for i in 0 .. vtable.count {
-            if vtable[i]->MethodDecl == m {
-                index := i
-                break
+        try {
+            def cc := getClassConstant(m.owner)
+            def itable := nextVar()
+            out.printLine("ITable* \{itable} = \{target}->$class->itable;")
+            out.printLine("while (\{itable}->$class != (frost$core$Class*) &\{cc.name}) {")
+            out.level += 1
+            out.printLine("\{itable} = \{itable}->next;")
+            out.level -= 1
+            out.printLine("}")
+            var index := -1
+            def vtable := compiler.getVTable(m.owner)
+            for i in 0 .. vtable.count {
+                if vtable[i]->MethodDecl == m {
+                    index := i
+                    break
+                }
             }
+            index -= compiler.getVTable(compiler.getClass(Type.Object())).count
+            assert index != -1
+            def result := nextVar()
+            def methodType := cMethodType(compiler.inheritedTypeWithSelf(m), null)
+            out.printLine("\{methodType} \{result} = \{itable}->methods[\{index}];")
+            return result
         }
-        index -= compiler.getVTable(compiler.getClass(Type.Object())).count
-        assert index != -1
-        def result := nextVar()
-        def methodType := cMethodType(compiler.inheritedTypeWithSelf(m), null)
-        out.printLine("\{methodType} \{result} = \{itable}->methods[\{index}];")
-        return result
+        fail(error) {
+            assert false, error.convert()
+        }
     }
 
     method getMethodReference(target:String?, m:MethodDecl, isSuper:Bit,
@@ -817,44 +862,49 @@ class CCodeGenerator : CodeGenerator {
     }
 
     method wrapValue(value:String, srcType:Type, dstType:Type, out:IndentedOutputStream):String {
-        if srcType.typeKind = Type.Kind.NULLABLE {
-            -- casting nullable value to nullable wrapper, need to special-case null
-            def result := nextVar()
-            out.printLine("\{cType(dstType)} \{result};")
-            out.printLine("if (\{value}.nonnull) {")
-            out.level += 1
-            def unwrapped := toNonNullableValue(value, srcType, srcType.subtypes[0], out)
-            def nonNullValue := wrapValue(unwrapped, srcType.subtypes[0], dstType, out)
-            out.printLine("\{result} = \{nonNullValue};")
-            out.level -= 1
-            out.printLine("}")
-            out.printLine("else {")
-            out.level += 1
-            out.printLine("\{result} = NULL;")
-            out.level -= 1
-            out.printLine("}")
-            return result
+        try {
+            if srcType.typeKind = Type.Kind.NULLABLE {
+                -- casting nullable value to nullable wrapper, need to special-case null
+                def result := nextVar()
+                out.printLine("\{cType(dstType)} \{result};")
+                out.printLine("if (\{value}.nonnull) {")
+                out.level += 1
+                def unwrapped := toNonNullableValue(value, srcType, srcType.subtypes[0], out)
+                def nonNullValue := wrapValue(unwrapped, srcType.subtypes[0], dstType, out)
+                out.printLine("\{result} = \{nonNullValue};")
+                out.level -= 1
+                out.printLine("}")
+                out.printLine("else {")
+                out.level += 1
+                out.printLine("\{result} = NULL;")
+                out.level -= 1
+                out.printLine("}")
+                return result
+            }
+            def wrapped := nextVar()
+            out.printLine("\{wrapperType(srcType)} \{wrapped};")
+            if srcType.typeKind = Type.Kind.NULLABLE {
+                out.printLine("if (\{value}.nonnull) {")
+                out.level += 1
+            }
+            out.printLine("\{wrapped} = (\{wrapperType(srcType)}) " +
+                    "frostObjectAlloc(\{sizeOfWrapper(srcType)}, (frost$core$Class*) " +
+                    "&\{escapeName(srcType.name)}$wrapperclass);")
+            out.printLine("\{wrapped}->value = \{value};")
+            if srcType.typeKind = Type.Kind.NULLABLE {
+                out.level -= 1
+                out.printLine("}")
+                out.printLine("else {")
+                out.level += 1
+                out.printLine("\{wrapped} = null;")
+                out.level -= 1
+                out.printLine("}")
+            }
+            return "((\{cType(dstType)}) \{wrapped})"
         }
-        def wrapped := nextVar()
-        out.printLine("\{wrapperType(srcType)} \{wrapped};")
-        if srcType.typeKind = Type.Kind.NULLABLE {
-            out.printLine("if (\{value}.nonnull) {")
-            out.level += 1
+        fail(error) {
+            assert false, error.convert()
         }
-        out.printLine("\{wrapped} = (\{wrapperType(srcType)}) " +
-                "frostObjectAlloc(\{sizeOfWrapper(srcType)}, (frost$core$Class*) " +
-                "&\{escapeName(srcType.name)}$wrapperclass);")
-        out.printLine("\{wrapped}->value = \{value};")
-        if srcType.typeKind = Type.Kind.NULLABLE {
-            out.level -= 1
-            out.printLine("}")
-            out.printLine("else {")
-            out.level += 1
-            out.printLine("\{wrapped} = null;")
-            out.level -= 1
-            out.printLine("}")
-        }
-        return "((\{cType(dstType)}) \{wrapped})"
     }
 
     method unwrapValue(value:String, srcType:Type, dstType:Type, out:IndentedOutputStream):String {
@@ -934,17 +984,22 @@ class CCodeGenerator : CodeGenerator {
     }
 
     method getStringReference(s:String):String {
-        varCount += 1
-        def result := "$s\{varCount}"
-        cType(Type.StringType())
-        strings.print("static frost$core$String \{result} = { " +
-                "(frost$core$Class*) &frost$core$String$class, \{NO_REFCNT}, " +
-                "(frost$core$Char8*) \"")
-        for c in s.utf8 {
-            strings.print("\\x\{c.convert()->UInt8,0>2:x}")
+        try {
+            varCount += 1
+            def result := "$s\{varCount}"
+            cType(Type.StringType())
+            strings.print("static frost$core$String \{result} = { " +
+                    "(frost$core$Class*) &frost$core$String$class, \{NO_REFCNT}, " +
+                    "(frost$core$Char8*) \"")
+            for c in s.utf8 {
+                strings.print("\\x\{c.convert()->UInt8,0>2:x}")
+            }
+            strings.printLine("\", \{s.utf8.count}, \{s.hash}, NULL };")
+            return "&\{result}"
         }
-        strings.printLine("\", \{s.utf8.count}, \{s.hash}, NULL };")
-        return "&\{result}"
+        fail(error) {
+            assert false, error.convert()
+        }
     }
 
     method getNullReference(t:Type):String {
@@ -1148,12 +1203,22 @@ class CCodeGenerator : CodeGenerator {
             }
         }
         def result := nextVar()
-        out.printLine("\{cType(type)} \{result} = \{leftRef} \{cOp} \{rightRef};")
+        try {
+            out.printLine("\{cType(type)} \{result} = \{leftRef} \{cOp} \{rightRef};")
+        }
+        fail(error) {
+            assert false, error.convert()
+        }
         refs[id] := result
     }
 
     method writeBranch(target:IR.Block.ID) {
-        out.printLine("goto \{target};")
+        try {
+            out.printLine("goto \{target};")
+        }
+        fail(error) {
+            assert false, error.convert()
+        }
     }
 
     method writeCast(id:IR.Statement.ID, value:IR.Value, target:Type) {
@@ -1161,309 +1226,419 @@ class CCodeGenerator : CodeGenerator {
     }
 
     method writeConditionalBranch(test:IR.Value, ifTrue:IR.Block.ID, ifFalse:IR.Block.ID) {
-        out.printLine("if (\{getReference(test)}) goto \{ifTrue}; else goto \{ifFalse};")
+        try {
+            out.printLine("if (\{getReference(test)}) goto \{ifTrue}; else goto \{ifFalse};")
+        }
+        fail(error) {
+            assert false, error.convert()
+        }
     }
 
     method writeConstruct(id:IR.Statement.ID, cl:ClassDecl) {
-        assert !compiler.isValue(cl)
-        def cc := getClassConstant(cl)
-        def ccCast:String
-        if cc.type != "frost$core$Class" {
-            ccCast := "(frost$core$Class*) &\{cc.name}"
+        try {
+            assert !compiler.isValue(cl)
+            def cc := getClassConstant(cl)
+            def ccCast:String
+            if cc.type != "frost$core$Class" {
+                ccCast := "(frost$core$Class*) &\{cc.name}"
+            }
+            else {
+                ccCast := "&\{cc.name}"
+            }
+            def result := nextVar()
+            def target := cl.type
+            out.printLine("\{cType(target)} \{result} = (\{cType(target)}) frostObjectAlloc(" +
+                    "\{sizeOf(target)}, \{ccCast});")
+            refs[id] := result
         }
-        else {
-            ccCast := "&\{cc.name}"
+        fail(error) {
+            assert false, error.convert()
         }
-        def result := nextVar()
-        def target := cl.type
-        out.printLine("\{cType(target)} \{result} = (\{cType(target)}) frostObjectAlloc(" +
-                "\{sizeOf(target)}, \{ccCast});")
-        refs[id] := result
     }
 
     method writeCreateStruct(id:IR.Statement.ID, cl:ClassDecl, args:FixedArray<IR.Value>) {
-        assert compiler.isValue(cl)
-        def result := nextVar()
-        def target := cl.type
-        out.print("\{cType(target)} \{result} = (\{cType(target)}) {")
-        var separator := ""
-        for v in args {
-            out.print("\{separator}\{getReference(v)}")
-            separator := ", "
+        try {
+            assert compiler.isValue(cl)
+            def result := nextVar()
+            def target := cl.type
+            out.print("\{cType(target)} \{result} = (\{cType(target)}) {")
+            var separator := ""
+            for v in args {
+                out.print("\{separator}\{getReference(v)}")
+                separator := ", "
+            }
+            out.printLine("};")
+            refs[id] := result
         }
-        out.printLine("};")
-        refs[id] := result
+        fail(error) {
+            assert false, error.convert()
+        }
     }
 
     method writeDynamicCall(id:IR.Statement.ID, m:IR.Value, args:ListView<IR.Value>) {
-        var type := m.type()
-        if type.isPointer {
-            type := type.subtypes[1]
+        try {
+            var type := m.type()
+            if type.isPointer {
+                type := type.subtypes[1]
+            }
+            def returnType := type.returnType
+            if returnType != Type.Void() {
+                def result := nextVar()
+                out.print("\{cType(returnType)} \{result} = ")
+                refs[id] := result
+            }
+            out.print("\{getReference(m)}(")
+            var separator := ""
+            for a in args {
+                out.print(separator)
+                out.print(getReference(a))
+                separator := ", "
+            }
+            out.printLine(");")
         }
-        def returnType := type.returnType
-        if returnType != Type.Void() {
-            def result := nextVar()
-            out.print("\{cType(returnType)} \{result} = ")
-            refs[id] := result
+        fail(error) {
+            assert false, error.convert()
         }
-        out.print("\{getReference(m)}(")
-        var separator := ""
-        for a in args {
-            out.print(separator)
-            out.print(getReference(a))
-            separator := ", "
-        }
-        out.printLine(");")
     }
 
     method writeExtractField(id:IR.Statement.ID, target:IR.Value, field:FieldDecl) {
-        compiler.resolve(field)
-        var targetRef := getReference(target)
-        def result := nextVar()
-        out.printLine("\{cType(field.type)} \{result} = \{targetRef}.\{field.name};")
-        refs[id] := result
+        try {
+            compiler.resolve(field)
+            var targetRef := getReference(target)
+            def result := nextVar()
+            out.printLine("\{cType(field.type)} \{result} = \{targetRef}.\{field.name};")
+            refs[id] := result
+        }
+        fail(error) {
+            assert false, error.convert()
+        }
     }
 
     method writeGetChoiceFieldPointer(id:IR.Statement.ID, target:IR.Value, cc:ChoiceCase,
             index:Int) {
-        def data := cc.owner.fields[1]
-        assert data.name = ClassDecl.CHOICE_DATA_NAME
-        def targetRef := getReference(target)
-        def fieldIndex := compiler.getIndex(data)
-        def result := nextVar()
-        def type := cType(cc.fields[index])
-        out.printLine("\{type}* \{result} = (\{type}*) (\{targetRef}->$data " +
-                "+ \{getChoiceFieldOffset(cc, index)});")
-        refs[id] := result
+        try {
+            def data := cc.owner.fields[1]
+            assert data.name = ClassDecl.CHOICE_DATA_NAME
+            def targetRef := getReference(target)
+            def fieldIndex := compiler.getIndex(data)
+            def result := nextVar()
+            def type := cType(cc.fields[index])
+            out.printLine("\{type}* \{result} = (\{type}*) (\{targetRef}->$data " +
+                    "+ \{getChoiceFieldOffset(cc, index)});")
+            refs[id] := result
+        }
+        fail(error) {
+            assert false, error.convert()
+        }
     }
 
     method writeGetFieldPointer(id:IR.Statement.ID, target:IR.Value, field:FieldDecl) {
-        def targetRef := getReference(target)
-        def result := nextVar()
-        out.printLine("\{cType(field.type)}* \{result} = &\{targetRef}->\{field.name};")
-        refs[id] := result
+        try {
+            def targetRef := getReference(target)
+            def result := nextVar()
+            out.printLine("\{cType(field.type)}* \{result} = &\{targetRef}->\{field.name};")
+            refs[id] := result
+        }
+        fail(error) {
+            assert false, error.convert()
+        }
     }
 
     method writeGetInterfaceMethod(id:IR.Statement.ID, value:IR.Value, cl:ClassDecl, index:Int, 
             type:Type) {
-        def cc := getClassConstant(cl)
-        def itable := nextVar()
-        out.printLine("ITable* \{itable} = \{getReference(value)}->$class->itable;")
-        out.printLine("while (\{itable}->$class != (frost$core$Class*) &\{cc.name}) {")
-        out.level += 1
-        out.printLine("\{itable} = \{itable}->next;")
-        out.level -= 1
-        out.printLine("}")
-        def result := nextVar()
-        def methodType := cMethodType(type, null)
-        out.printLine("\{methodType} \{result} = \{itable}->methods[\{index}];")
-        refs[id] := result
+        try {
+            def cc := getClassConstant(cl)
+            def itable := nextVar()
+            out.printLine("ITable* \{itable} = \{getReference(value)}->$class->itable;")
+            out.printLine("while (\{itable}->$class != (frost$core$Class*) &\{cc.name}) {")
+            out.level += 1
+            out.printLine("\{itable} = \{itable}->next;")
+            out.level -= 1
+            out.printLine("}")
+            def result := nextVar()
+            def methodType := cMethodType(type, null)
+            out.printLine("\{methodType} \{result} = \{itable}->methods[\{index}];")
+            refs[id] := result
+        }
+        fail(error) {
+            assert false, error.convert()
+        }
     }
 
     method writeGetVirtualMethod(id:IR.Statement.ID, value:IR.Value, index:Int, type:Type) {
-        def result := nextVar()
-        def methodType := cMethodType(type, null)
-        out.printLine("\{methodType} \{result} = (\{methodType}) " +
-                "\{getReference(value)}->$class->vtable[\{index}];")
-        refs[id] := result
+        try {
+            def result := nextVar()
+            def methodType := cMethodType(type, null)
+            out.printLine("\{methodType} \{result} = (\{methodType}) " +
+                    "\{getReference(value)}->$class->vtable[\{index}];")
+            refs[id] := result
+        }
+        fail(error) {
+            assert false, error.convert()
+        }
     }
 
     method writeLoad(id:IR.Statement.ID, ptr:IR.Value) {
-        def result := nextVar()
-        out.printLine("\{cType(ptr.type())} \{result} = *\{getReference(ptr)};")
-        refs[id] := result
+        try {
+            def result := nextVar()
+            out.printLine("\{cType(ptr.type())} \{result} = *\{getReference(ptr)};")
+            refs[id] := result
+        }
+        fail(error) {
+            assert false, error.convert()
+        }
     }
 
     method writeNegate(id:IR.Statement.ID, value:IR.Value) {
-        def result := nextVar()
-        out.printLine("\{cType(value.type())} \{result} = -\{getReference(value)};")
-        refs[id] := result
+        try {
+            def result := nextVar()
+            out.printLine("\{cType(value.type())} \{result} = -\{getReference(value)};")
+            refs[id] := result
+        }
+        fail(error) {
+            assert false, error.convert()
+        }
     }
 
     method writeNot(id:IR.Statement.ID, value:IR.Value) {
-        def result := nextVar()
-        out.printLine("\{cType(value.type())} \{result} = !\{getReference(value)};")
-        refs[id] := result
+        try {
+            def result := nextVar()
+            out.printLine("\{cType(value.type())} \{result} = !\{getReference(value)};")
+            refs[id] := result
+        }
+        fail(error) {
+            assert false, error.convert()
+        }
     }
 
     method writePointerAlloc(id:IR.Statement.ID, count:IR.Value, t:Type) {
-        def countRef := getReference(count)
-        def elementSize := stride(t)
-        def type := cType(t)
-        def result := nextVar()
-        out.printLine("\{type}* \{result} = ((\{type}*) frostAlloc(\{countRef} * " +
-                "\{elementSize}));")
-        refs[id] := result
+        try {
+            def countRef := getReference(count)
+            def elementSize := stride(t)
+            def type := cType(t)
+            def result := nextVar()
+            out.printLine("\{type}* \{result} = ((\{type}*) frostAlloc(\{countRef} * " +
+                    "\{elementSize}));")
+            refs[id] := result
+        }
+        fail(error) {
+            assert false, error.convert()
+        }
     }
 
     method writePointerDestroy(ptr:IR.Value) {
-        def ptrRef := getReference(ptr)
-        out.printLine("frostFree(\{ptrRef});")
+        try {
+            def ptrRef := getReference(ptr)
+            out.printLine("frostFree(\{ptrRef});")
+        }
+        fail(error) {
+            assert false, error.convert()
+        }
     }
 
     method writePointerGetIndex(id:IR.Statement.ID, ptr:IR.Value, index:IR.Value) {
-        def base := getReference(ptr)
-        def indexRef := getReference(index)
-        def result := nextVar()
-        out.printLine("\{cType(ptr.type().subtypes[1])} \{result} = \{base}[\{indexRef}];")
-        refs[id] := result
+        try {
+            def base := getReference(ptr)
+            def indexRef := getReference(index)
+            def result := nextVar()
+            out.printLine("\{cType(ptr.type().subtypes[1])} \{result} = \{base}[\{indexRef}];")
+            refs[id] := result
+        }
+        fail(error) {
+            assert false, error.convert()
+        }
     }
 
     method writePointerOffset(id:IR.Statement.ID, ptr:IR.Value, offset:IR.Value) {
-        def base := getReference(ptr)
-        def offsetRef := getReference(offset)
-        def result := nextVar()
-        out.printLine("\{cType(ptr.type())} \{result} = \{base} + \{offsetRef};")
-        refs[id] := result
+        try {
+            def base := getReference(ptr)
+            def offsetRef := getReference(offset)
+            def result := nextVar()
+            out.printLine("\{cType(ptr.type())} \{result} = \{base} + \{offsetRef};")
+            refs[id] := result
+        }
+        fail(error) {
+            assert false, error.convert()
+        }
     }
 
     method writePointerRealloc(id:IR.Statement.ID, ptr:IR.Value, oldCount:IR.Value,
             newCount:IR.Value) {
-        def ptrRef := getReference(ptr)
-        def oldCountRef := getReference(oldCount)
-        def newCountRef := getReference(newCount)
-        def elementSize := stride(ptr.type())
-        assert elementSize > 0, "invalid size for type \{ptr.type()}"
-        def result := nextVar()
-        out.printLine("\{cType(ptr.type())} \{result} = (\{cType(ptr.type())}) frostRealloc(" +
-                "\{ptrRef}, \{oldCountRef} * \{elementSize}, \{newCountRef} * \{elementSize});")
-        refs[id] := result
+        try {
+            def ptrRef := getReference(ptr)
+            def oldCountRef := getReference(oldCount)
+            def newCountRef := getReference(newCount)
+            def elementSize := stride(ptr.type())
+            assert elementSize > 0, "invalid size for type \{ptr.type()}"
+            def result := nextVar()
+            out.printLine("\{cType(ptr.type())} \{result} = (\{cType(ptr.type())}) frostRealloc(" +
+                    "\{ptrRef}, \{oldCountRef} * \{elementSize}, \{newCountRef} * \{elementSize});")
+            refs[id] := result
+        }
+        fail(error) {
+            assert false, error.convert()
+        }
     }
 
     method writePointerSetIndex(value:IR.Value, ptr:IR.Value, index:IR.Value) {
-        def base := getReference(ptr)
-        def indexRef := getReference(index)
-        def valueRef := getReference(value)
-        out.printLine("\{base}[\{indexRef}] = \{valueRef};")
+        try {
+            def base := getReference(ptr)
+            def indexRef := getReference(index)
+            def valueRef := getReference(value)
+            out.printLine("\{base}[\{indexRef}] = \{valueRef};")
+        }
+        fail(error) {
+            assert false, error.convert()
+        }
     }
 
     method writeReturn(value:IR.Value?) {
-        if value !== null {
-            out.printLine("return \{getReference(value)};")
+        try {
+            if value !== null {
+                out.printLine("return \{getReference(value)};")
+            }
+            else {
+                out.printLine("return;")
+            }
         }
-        else {
-            out.printLine("return;")
+        fail(error) {
+            assert false, error.convert()
         }
     }
 
     method writeStaticCall(id:IR.Statement.ID, m:MethodDecl, args:ListView<IR.Value>) {
-        if m.owner.external {
-            writeDeclaration(m)
-        }
-        def indirect := needsStructIndirection(m)
-        def actualResultType := cType(m.returnType)
-        var separator := ""
-        def result:String?
-        if m.returnType != Type.Void() {
-            result := nextVar()
+        try {
+            if m.owner.external {
+                writeDeclaration(m)
+            }
+            def indirect := needsStructIndirection(m)
+            def actualResultType := cType(m.returnType)
+            var separator := ""
+            def result:String?
+            if m.returnType != Type.Void() {
+                result := nextVar()
+                if indirect {
+                    out.printLine("\{actualResultType} \{result};")
+                }
+                else {
+                    out.print("\{actualResultType} \{result} = ")
+                }
+                refs[id] := result
+            }
+            out.print("\{getName(m)}(")
             if indirect {
-                out.printLine("\{actualResultType} \{result};")
+                out.print("&\{result}")
+                separator := ", "
             }
-            else {
-                out.print("\{actualResultType} \{result} = ")
+            for a in args {
+                out.print(separator)
+                out.print(getReference(a))
+                separator := ", "
             }
-            refs[id] := result
+            out.printLine(");")
         }
-        out.print("\{getName(m)}(")
-        if indirect {
-            out.print("&\{result}")
-            separator := ", "
+        fail(error) {
+            assert false, error.convert()
         }
-        for a in args {
-            out.print(separator)
-            out.print(getReference(a))
-            separator := ", "
-        }
-        out.printLine(");")
     }
 
     method writeStore(value:IR.Value, ptr:IR.Value) {
-        out.printLine("*\{getReference(ptr)} = \{getReference(value)};")
+        try {
+            out.printLine("*\{getReference(ptr)} = \{getReference(value)};")
+        }
+        fail(error) {
+            assert false, error.convert()
+        }
     }
 
     method writeStatement(id:IR.Statement.ID, s:IR.Statement) {
-        match s {
-            when IR.Statement.BINARY(position, left, op, right, type) {
-                writeBinary(id, left, op, right, type)
+        try {
+            match s {
+                when IR.Statement.BINARY(position, left, op, right, type) {
+                    writeBinary(id, left, op, right, type)
+                }
+                when IR.Statement.BRANCH(position, target) {
+                    writeBranch(target)
+                }
+                when IR.Statement.CAST(position, value, type) {
+                    writeCast(id, value, type)
+                }
+                when IR.Statement.COMMENT(text) {
+                    out.printLine("// \{text}")
+                }
+                when IR.Statement.CONDITIONAL_BRANCH(position, test, ifTrue, ifFalse) {
+                    writeConditionalBranch(test, ifTrue, ifFalse)
+                }
+                when IR.Statement.CONSTRUCT(position, cl) {
+                    writeConstruct(id, cl)
+                }
+                when IR.Statement.CREATE_STRUCT(position, cl, args) {
+                    writeCreateStruct(id, cl, args)
+                }
+                when IR.Statement.DYNAMIC_CALL(position, m, args) {
+                    writeDynamicCall(id, m, args)
+                }
+                when IR.Statement.EXTRACT_FIELD(position, target, field) {
+                    writeExtractField(id, target, field)
+                }
+                when IR.Statement.GET_CHOICE_FIELD_POINTER(position, target, cc, index) {
+                    writeGetChoiceFieldPointer(id, target, cc, index)
+                }
+                when IR.Statement.GET_FIELD_POINTER(position, target, field) {
+                    writeGetFieldPointer(id, target, field)
+                }
+                when IR.Statement.GET_INTERFACE_METHOD(position, value, cl, index, type) {
+                    writeGetInterfaceMethod(id, value, cl, index, type)
+                }
+                when IR.Statement.GET_VIRTUAL_METHOD(position, value, index, type) {
+                    writeGetVirtualMethod(id, value, index, type)
+                }
+                when IR.Statement.LOAD(position, ptr) {
+                    writeLoad(id, ptr)
+                }
+                when IR.Statement.NEGATE(position, value) {
+                    writeNegate(id, value)
+                }
+                when IR.Statement.NOT(position, value) {
+                    writeNot(id, value)
+                }
+                when IR.Statement.POINTER_ALLOC(position, count, type) {
+                    writePointerAlloc(id, count, type)
+                }
+                when IR.Statement.POINTER_DESTROY(position, ptr) {
+                    writePointerDestroy(ptr)
+                }
+                when IR.Statement.POINTER_GET_INDEX(position, ptr, index) {
+                    writePointerGetIndex(id, ptr, index)
+                }
+                when IR.Statement.POINTER_OFFSET(position, ptr, offset) {
+                    writePointerOffset(id, ptr, offset)
+                }
+                when IR.Statement.POINTER_REALLOC(position, ptr, oldCount, newCount) {
+                    writePointerRealloc(id, ptr, oldCount, newCount)
+                }
+                when IR.Statement.POINTER_SET_INDEX(position, value, ptr, index) {
+                    writePointerSetIndex(value, ptr, index)
+                }
+                when IR.Statement.RETURN(position, value) {
+                    writeReturn(value)
+                }
+                when IR.Statement.STATIC_CALL(position, m, args) {
+                    writeStaticCall(id, m, args)
+                }
+                when IR.Statement.STORE(position, value, slot) {
+                    writeStore(value, slot)
+                }
+                when IR.Statement.UNREACHABLE(position) {
+                    out.printLine("abort(); // unreachable")
+                }
+                otherwise {
+                    assert false, "unsupported statement \{s}"
+                }
             }
-            when IR.Statement.BRANCH(position, target) {
-                writeBranch(target)
-            }
-            when IR.Statement.CAST(position, value, type) {
-                writeCast(id, value, type)
-            }
-            when IR.Statement.COMMENT(text) {
-                out.printLine("// \{text}")
-            }
-            when IR.Statement.CONDITIONAL_BRANCH(position, test, ifTrue, ifFalse) {
-                writeConditionalBranch(test, ifTrue, ifFalse)
-            }
-            when IR.Statement.CONSTRUCT(position, cl) {
-                writeConstruct(id, cl)
-            }
-            when IR.Statement.CREATE_STRUCT(position, cl, args) {
-                writeCreateStruct(id, cl, args)
-            }
-            when IR.Statement.DYNAMIC_CALL(position, m, args) {
-                writeDynamicCall(id, m, args)
-            }
-            when IR.Statement.EXTRACT_FIELD(position, target, field) {
-                writeExtractField(id, target, field)
-            }
-            when IR.Statement.GET_CHOICE_FIELD_POINTER(position, target, cc, index) {
-                writeGetChoiceFieldPointer(id, target, cc, index)
-            }
-            when IR.Statement.GET_FIELD_POINTER(position, target, field) {
-                writeGetFieldPointer(id, target, field)
-            }
-            when IR.Statement.GET_INTERFACE_METHOD(position, value, cl, index, type) {
-                writeGetInterfaceMethod(id, value, cl, index, type)
-            }
-            when IR.Statement.GET_VIRTUAL_METHOD(position, value, index, type) {
-                writeGetVirtualMethod(id, value, index, type)
-            }
-            when IR.Statement.LOAD(position, ptr) {
-                writeLoad(id, ptr)
-            }
-            when IR.Statement.NEGATE(position, value) {
-                writeNegate(id, value)
-            }
-            when IR.Statement.NOT(position, value) {
-                writeNot(id, value)
-            }
-            when IR.Statement.POINTER_ALLOC(position, count, type) {
-                writePointerAlloc(id, count, type)
-            }
-            when IR.Statement.POINTER_DESTROY(position, ptr) {
-                writePointerDestroy(ptr)
-            }
-            when IR.Statement.POINTER_GET_INDEX(position, ptr, index) {
-                writePointerGetIndex(id, ptr, index)
-            }
-            when IR.Statement.POINTER_OFFSET(position, ptr, offset) {
-                writePointerOffset(id, ptr, offset)
-            }
-            when IR.Statement.POINTER_REALLOC(position, ptr, oldCount, newCount) {
-                writePointerRealloc(id, ptr, oldCount, newCount)
-            }
-            when IR.Statement.POINTER_SET_INDEX(position, value, ptr, index) {
-                writePointerSetIndex(value, ptr, index)
-            }
-            when IR.Statement.RETURN(position, value) {
-                writeReturn(value)
-            }
-            when IR.Statement.STATIC_CALL(position, m, args) {
-                writeStaticCall(id, m, args)
-            }
-            when IR.Statement.STORE(position, value, slot) {
-                writeStore(value, slot)
-            }
-            when IR.Statement.UNREACHABLE(position) {
-                out.printLine("abort(); // unreachable")
-            }
-            otherwise {
-                assert false, "unsupported statement \{s}"
-            }
+        }
+        fail(error) {
+            assert false, error.convert()
         }
     }
 
@@ -1473,58 +1648,68 @@ class CCodeGenerator : CodeGenerator {
     }
 
     method writeIR(ir:IR) {
-        for i in 0 .. ir.locals.count {
-            def name := "local\{i}"
-            def type := cType(ir.locals[i])
-            out.print("\{type} \{name}")
-            if compiler.isRefCounted(ir.locals[i]) {
-                out.print(" = NULL")
+        try {
+            for i in 0 .. ir.locals.count {
+                def name := "local\{i}"
+                def type := cType(ir.locals[i])
+                out.print("\{type} \{name}")
+                if compiler.isRefCounted(ir.locals[i]) {
+                    out.print(" = NULL")
+                }
+                out.printLine(";")
             }
-            out.printLine(";")
+            for i in 0 .. ir.blocks.count {
+                def block := ir.blocks[i]
+                if i != 0 {
+                    currentBlock := "\{block.id}"
+                    out.printLine("\{currentBlock}:;")
+                }
+                else {
+                    currentBlock := "0"
+                }
+                for j in 0 .. block.statements.count {
+                    writeStatement(block.ids[j], block.statements[j])
+                }
+            }
         }
-        for i in 0 .. ir.blocks.count {
-            def block := ir.blocks[i]
-            if i != 0 {
-                currentBlock := "\{block.id}"
-                out.printLine("\{currentBlock}:;")
-            }
-            else {
-                currentBlock := "0"
-            }
-            for j in 0 .. block.statements.count {
-                writeStatement(block.ids[j], block.statements[j])
-            }
+        fail(error) {
+            assert false, error.convert()
         }
     }
 
     @postAnd(out == @pre(out))
     @override
     method write(m:MethodDecl, ir:IR) {
-        def old := out
-        out := methods
-        methodHeaderBuffer.clear()
-        self.ir := ir
-        out.print("\{cType(m.returnType)} \{getName(m)}(")
-        var separator := ""
-        var index := 0
-        if compiler.hasSelfParam(m) {
-            out.print("\{selfType(m)} param\{index}")
-            index += 1
-            separator := ", "
+        try {
+            def old := out
+            out := methods
+            methodHeaderBuffer.clear()
+            self.ir := ir
+            out.print("\{cType(m.returnType)} \{getName(m)}(")
+            var separator := ""
+            var index := 0
+            if compiler.hasSelfParam(m) {
+                out.print("\{selfType(m)} param\{index}")
+                index += 1
+                separator := ", "
+            }
+            for p in m.parameters {
+                out.print("\{separator}\{cType(p.type)} param\{index}")
+                index += 1
+                separator := ", "
+            }
+            out.printLine(") {")
+            def buffer := MemoryOutputStream()
+            out := IndentedOutputStream(buffer)
+            writeIR(ir)
+            methods.printLine(methodHeaderBuffer)
+            methods.printLine(buffer)
+            methods.printLine("}")
+            out := old
         }
-        for p in m.parameters {
-            out.print("\{separator}\{cType(p.type)} param\{index}")
-            index += 1
-            separator := ", "
+        fail(error) {
+            assert false, error.convert()
         }
-        out.printLine(") {")
-        def buffer := MemoryOutputStream()
-        out := IndentedOutputStream(buffer)
-        writeIR(ir)
-        methods.printLine(methodHeaderBuffer)
-        methods.printLine(buffer)
-        methods.printLine("}")
-        out := old
     }
 
     @override
@@ -1567,15 +1752,21 @@ class CCodeGenerator : CodeGenerator {
 
     @override
     method finish() {
-        out.printLine(includes)
-        includes.clear()
-        out.printLine(shimsBuffer)
-        shimsBuffer.clear()
-        out.printLine(types)
-        types.clear()
-        out.printLine(strings)
-        strings.clear()
-        out.printLine(methodsBuffer)
-        methodsBuffer.clear()
+        try {
+            out.printLine(includes)
+            includes.clear()
+            out.printLine(shimsBuffer)
+            shimsBuffer.clear()
+            out.printLine(types)
+            types.clear()
+            out.printLine(strings)
+            strings.clear()
+            out.printLine(methodsBuffer)
+            methodsBuffer.clear()
+        }
+        fail(error) {
+            Console.printLine(error)
+            System.exit(1)
+        }
     }
 }

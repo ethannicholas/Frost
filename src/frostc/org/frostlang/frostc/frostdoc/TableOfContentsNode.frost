@@ -27,29 +27,35 @@ class TableOfContentsNode {
         return a.length > b.length
     }
 
-    method write(apiRelativePath:String, out:XMLWriter) {
-        out.open("entry")
-        if name !== null {
-            var index := name.lastIndexOf(".")
-            if index !== null {
-                index := name.next(index)
+    method write(apiRelativePath:String, out:XMLWriter):Error? {
+        try {
+            out.open("entry")
+            if name !== null {
+                var index := name.lastIndexOf(".")
+                if index !== null {
+                    index := name.next(index)
+                }
+                else {
+                    index := name.start
+                }
+                out.write("name", name)
+                out.write("simpleName", name[index..])
+                out.write("url", apiRelativePath + url)
             }
-            else {
-                index := name.start
+            if children.count != 0 {
+                out.open("contents")
+                def list := children.values.all()
+                list.sortInPlace((a, b) => greaterThan(a.name, b.name))
+                for child in list {
+                    child.write(apiRelativePath, out)
+                }
+                out.close("contents")
             }
-            out.write("name", name)
-            out.write("simpleName", name[index..])
-            out.write("url", apiRelativePath + url)
+            out.close("entry")
+            return null
         }
-        if children.count != 0 {
-            out.open("contents")
-            def list := children.values.all()
-            list.sortInPlace((a, b) => greaterThan(a.name, b.name))
-            for child in list {
-                child.write(apiRelativePath, out)
-            }
-            out.close("contents")
+        fail(error) {
+            return error
         }
-        out.close("entry")
     }
 }

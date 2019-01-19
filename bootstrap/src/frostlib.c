@@ -421,7 +421,7 @@ void frost$core$System$crash() {
     __builtin_trap();
 }
 
-Process* frost$core$System$exec$frost$io$File$frost$collections$ListView$LTfrost$core$String$GT$R$frost$core$System$Process$Q(
+Object* frost$core$System$exec$frost$io$File$frost$collections$ListView$LTfrost$core$String$GT$R$frost$core$Maybe$LTfrost$core$System$Process$GT(
         File* path, Object* args) {
     // FIXME need to output headers so I can kill these hardcoded interface method offsets
     int (*get_count)(Object*) = frostGetInterfaceMethod(args,
@@ -477,6 +477,7 @@ Process* frost$core$System$exec$frost$io$File$frost$collections$ListView$LTfrost
         }
         cargs[argCount + 1] = NULL;
         execvp(cargs[0], cargs);
+        // FIXME report error back to the parent process
         perror("error exec'ing child process");
         // we don't bother freeing the argument memory because we just kill the process here
         exit(1);
@@ -504,9 +505,8 @@ Process* frost$core$System$exec$frost$io$File$frost$collections$ListView$LTfrost
         result->error->file = fdopen(stderrPipe[0], "rb");
         result->error->closeOnCleanup.value = true;
 //        setvbuf(result->error->file, NULL, _IONBF, 0);
-        return result;
+        return frostMaybeSuccess(result);
     }
-    return NULL;
 }
 
 void frost$core$System$Process$waitFor$R$frost$core$Int64(Int64* result, Process* p) {
@@ -881,12 +881,12 @@ void frost$threads$Notifier$destroy(Notifier* notifier) {
 
 // Console
 
-void frost$io$Console$write$frost$core$Char8(char ch) {
-    putchar(ch);
-}
-
 void frost$io$Console$print$frost$core$String(String* s) {
     fwrite(s->data, 1, s->size, stdout);
+}
+
+void frost$io$Console$printError$frost$core$String(String* s) {
+    fwrite(s->data, 1, s->size, stderr);
 }
 
 void frost$io$Console$read$R$frost$core$Char8$Q(NullableChar* result) {
@@ -1039,6 +1039,11 @@ void frost$io$File$isDirectory$R$frost$core$Bit(Bit* result, File* file) {
 }
 
 void frost$io$File$createDirectory(File* file) {
+    Bit exists;
+    frost$io$File$exists$R$frost$core$Bit(&exists, file);
+    if (exists.value) {
+        return;
+    }
     char* path = frostGetCString(file->path);
     mkdir(path, 0755);
     frostFree(path);
@@ -1117,7 +1122,6 @@ Error* frost$io$FileOutputStream$write$frost$core$UInt8$R$frost$core$Error$Q(Fil
 Error* frost$io$FileOutputStream$write$frost$unsafe$Pointer$LTfrost$core$UInt8$GT$frost$core$Int64$R$frost$core$Error$Q(
         FileOutputStream* self, void* src, int64_t count) {
     if (fwrite(src, 1, count, self->file) != count) {
-        return frostError(frostNewString("error writing to stream", NULL));
     }
     return NULL;
 }
@@ -1125,7 +1129,6 @@ Error* frost$io$FileOutputStream$write$frost$unsafe$Pointer$LTfrost$core$UInt8$G
 Error* frost$io$FileOutputStream$close$R$frost$core$Error$Q(FileOutputStream* self) {
     self->closeOnCleanup.value = false;
     if (fclose(self->file)) {
-        return frostError(frostFileErrorMessage("error closing stream", NULL));
     }
     return NULL;
 }

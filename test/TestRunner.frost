@@ -32,60 +32,76 @@ class TestRunner {
         self.cLibs := cLibs
     }
 
-    method deleteTree(file:File) {
-        if file.isDirectory() {
-            def list := file.list()
-            for f in list {
-                deleteTree(f)
+    method deleteTree(file:File):Error? {
+        try {
+            if file.isDirectory() {
+                def list := file.list()
+                for f in list {
+                    deleteTree(f)
+                }
             }
+            file.delete()
+            return null
         }
-        file.delete()
+        fail(error) {
+            return error
+        }
     }
 
-    method findCFiles(path:File, result:Array<File>) {
-        if path.path.endsWith(".c") {
-            result.add(path)
-        }
-        else if path.isDirectory() {
-            def list := path.list()
-            for f in list {
-                findCFiles(f, result)
+    method findCFiles(path:File, result:Array<File>):Error? {
+        try {
+            if path.path.endsWith(".c") {
+                result.add(path)
             }
+            else if path.isDirectory() {
+                def list := path.list()
+                for f in list {
+                    findCFiles(f, result)
+                }
+            }
+        }
+        fail(error) {
+            return error
         }
     }
 
     method compileCFiles(cLibs:ListView<String>, outPath:File, exe:File):Bit {
-        def files := Array<File>()
-        findCFiles(outPath, files)
-        def args := Array<String>()
-        args.add("-L\{buildDir}")
-        args.add("-lc_frost")
-        args.add("-lm")
-        args.add("-I../bootstrap/include")
-        args.add("-I\{outPath}")
-        args.add("-I\{frostHome}/src/c")
-        for lib in cLibs {
-            def libFile := File(lib)
-            args.add("-L" + libFile.parent)
-            var simpleName := libFile.simpleName
-            assert simpleName.startsWith("lib")
-            simpleName := simpleName[3..]
-            args.add("-l" + simpleName)
+        try {
+            def files := Array<File>()
+            findCFiles(outPath, files)
+            def args := Array<String>()
+            args.add("-L\{buildDir}")
+            args.add("-lc_frost")
+            args.add("-lm")
+            args.add("-I../bootstrap/include")
+            args.add("-I\{outPath}")
+            args.add("-I\{frostHome}/src/c")
+            for lib in cLibs {
+                def libFile := File(lib)
+                args.add("-L" + libFile.parent)
+                var simpleName := libFile.simpleName
+                assert simpleName.startsWith("lib")
+                simpleName := simpleName[3..]
+                args.add("-l" + simpleName)
+            }
+            for f in files {
+                args.add(f.path)
+            }
+            args.add("-o")
+            args.add(exe.path)
+            var compiler := System.exec(cCompiler.path, args)
+            var compileResult := compiler.openStandardError().readFully()
+            Console.print(compileResult)
+            if compiler.waitFor() != 0 {
+                Console.printErrorLine("C compiler error")
+                return false
+            }
+            return true
         }
-        for f in files {
-            args.add(f.path)
-        }
-        args.add("-o")
-        args.add(exe.path)
-        var compiler := System.exec(cCompiler, args)
-        var compileResult := compiler.error.readFully()
-        Console.print(compileResult)
-        if compiler.waitFor() != 0 {
-            Console.printLine("C compiler error")
-            System.exit(1)
+        fail(error) {
+            Console.printErrorLine(error)
             return false
         }
-        return true
     }
 
     method runTestC(frostc:File, cLibs:ListView<String>, workingDir:File, test:String):Bit {
@@ -105,8 +121,8 @@ class TestRunner {
             args.add(outPath.path)
             args.add("-f")
             args.add("h")
-            var compiler := System.exec(frostc, args)
-            var compileResult := compiler.output.readFully() -- FIXME use error stream instead
+            var compiler := System.exec(frostc.path, args)
+            var compileResult := compiler.openStandardOutput().readFully() -- FIXME use error stream instead
             compiler.waitFor()
             if compileResult != "" {
                 if compileResult != expected {
@@ -123,8 +139,8 @@ class TestRunner {
             args.add(outPath.path)
             args.add("-f")
             args.add("c")
-            compiler := System.exec(frostc, args)
-            compileResult := compiler.output.readFully() -- FIXME use error stream instead
+            compiler := System.exec(frostc.path, args)
+            compileResult := compiler.openStandardOutput().readFully() -- FIXME use error stream instead
             compiler.waitFor()
             if !compileCFiles(cLibs, outPath, exe) {
                 return false
@@ -138,14 +154,14 @@ class TestRunner {
                 Console.printLine("success")
                 return true
             }
-            def child := System.exec(exe, Array<String>())
+            def child := System.exec(exe.path, Array<String>())
             def input := workingDir.resolve(test + ".in")
             if input.exists() {
-                child.input.print(input.readFully())
-                child.input.close()
+                child.openStandardInput().print(input.readFully())
+                --child.closeStandardInput();
             }
-            def childResult1 := child.output.readFully()
-            def childResult2 := child.error.readFully()
+            def childResult1 := child.openStandardOutput().readFully()
+            def childResult2 := child.openStandardError().readFully()
             child.waitFor()
             def childResult := childResult1 + childResult2
             if childResult != expected {
@@ -191,8 +207,8 @@ class TestRunner {
                     args.add("3")
                 }
             }
-            def compiler := System.exec(frostc, args)
-            def compileResult := compiler.output.readFully() -- FIXME use error stream instead
+            def compiler := System.exec(frostc.path, args)
+            def compileResult := compiler.openStandardOutput().readFully() -- FIXME use error stream instead
             compiler.waitFor()
             if compileResult != "" {
                 if compileResult != expected {
@@ -203,14 +219,14 @@ class TestRunner {
                 Console.printLine("success")
                 return true
             }
-            def child := System.exec(exe, Array<String>())
+            def child := System.exec(exe.path, Array<String>())
             def input := workingDir.resolve(test + ".in")
             if input.exists() {
-                child.input.print(input.readFully())
-                child.input.close()
+                child.openStandardInput().print(input.readFully())
+                --child.closeStandardInput()
             }
-            def childResult1 := child.output.readFully()
-            def childResult2 := child.error.readFully()
+            def childResult1 := child.openStandardOutput().readFully()
+            def childResult2 := child.openStandardError().readFully()
             child.waitFor()
             def childResult := childResult1 + childResult2
             if childResult != expected {
@@ -250,31 +266,37 @@ class TestRunner {
     }
 
     method run() {
-        def frostc := buildDir.resolve("frostc")
-        def tests := frostHome.resolve("test/tests")
-        def files := Array<File>(tests.list())
-        files.sortInPlace((a, b) => greaterThan(a.name, b.name))
-        var total := 0
-        var success := 0
-        for file in files {
-            if file.path.endsWith(".frost") {
-                def name := file.withExtension("").name
-                total += 1
-                if runTest(frostc, cLibs, tests, name, Mode.O0) {
-                    success += 1
+        try {
+            def frostc := buildDir.resolve("frostc")
+            def tests := frostHome.resolve("test/tests")
+            def files := Array<File>(tests.list())
+            files.sortInPlace((a, b) => greaterThan(a.name, b.name))
+            var total := 0
+            var success := 0
+            for file in files {
+                if file.path.endsWith(".frost") {
+                    def name := file.withExtension("").name
+                    total += 1
+                    if runTest(frostc, cLibs, tests, name, Mode.O0) {
+                        success += 1
+                    }
+    -*                total += 1
+                    if runTest(frostc, cLibs, tests, name, Mode.O3) {
+                        success += 1
+                    }
+                    total += 1
+                    if runTest(frostc, cLibs, tests, name, Mode.C) {
+                        success += 1
+                    }*-
+                    Console.printLine("Passed \{success} / \{total} tests.")
                 }
--*                total += 1
-                if runTest(frostc, cLibs, tests, name, Mode.O3) {
-                    success += 1
-                }
-                total += 1
-                if runTest(frostc, cLibs, tests, name, Mode.C) {
-                    success += 1
-                }*-
-                Console.printLine("Passed \{success} / \{total} tests.")
             }
+            Console.printLine("Passed \{success} / \{total} tests.")
         }
-        Console.printLine("Passed \{success} / \{total} tests.")
+        fail(error) {
+            Console.printError(error)
+            System.exit(1)
+        }
     }
 
     @class

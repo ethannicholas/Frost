@@ -70,58 +70,28 @@ class HCodeGenerator : CodeGenerator {
     }
 
     method type(t:Type):String {
-        match t.typeKind {
-            when Type.Kind.VOID {
-                return "void"
-            }
-            when Type.Kind.BUILTIN_INT {
-                return "int\{sizeOf(t) * 8}_t"
-            }
-            when Type.Kind.BUILTIN_UINT {
-                return "uint\{sizeOf(t) * 8}_t"
-            }
-            when Type.Kind.BUILTIN_BIT {
-                return "bool"
-            }
-            when Type.Kind.BUILTIN_FLOAT {
-                match sizeOf(t) {
-                    when 4    { return "float" }
-                    when 8    { return "double" }
-                    otherwise { assert false }
+        try {
+            match t.typeKind {
+                when Type.Kind.VOID {
+                    return "void"
                 }
-            }
-            when Type.Kind.CLASS {
-                def name := "\{escapeName(t.name)}"
-                def cl := compiler.getClass(t)
-                assert cl !== null
-                if !compiler.isValue(cl) {
-                    if !imports.contains(name) {
-                        importStream.printLine("typedef struct \{name} \{name};")
-                        imports.add(name)
+                when Type.Kind.BUILTIN_INT {
+                    return "int\{sizeOf(t) * 8}_t"
+                }
+                when Type.Kind.BUILTIN_UINT {
+                    return "uint\{sizeOf(t) * 8}_t"
+                }
+                when Type.Kind.BUILTIN_BIT {
+                    return "bool"
+                }
+                when Type.Kind.BUILTIN_FLOAT {
+                    match sizeOf(t) {
+                        when 4    { return "float" }
+                        when 8    { return "double" }
+                        otherwise { assert false }
                     }
-                    return name + "*"
                 }
-                def includePath := getRelativePath(cl, "_types.h")
-                if !imports.contains(includePath) {
-                    importStream.printLine("#include \"\{includePath}\"")
-                    imports.add(includePath)
-                }
-                return name
-            }
-            when Type.Kind.NULLABLE {
-                def cl := compiler.getClass(t)
-                assert cl !== null
-                if compiler.isValue(cl) {
-                    return type(t.subtypes[0]) + "$nullable"
-                }
-                return type(t.subtypes[0])
-            }
-            when Type.Kind.GENERIC {
-                if t.subtypes[0].name = "frost.unsafe.Pointer" {
-                    return type(t.subtypes[1]) + "*"
-                }
-                def cl := compiler.getClass(t)
-                if cl.isSpecialization() {
+                when Type.Kind.CLASS {
                     def name := "\{escapeName(t.name)}"
                     def cl := compiler.getClass(t)
                     assert cl !== null
@@ -132,30 +102,65 @@ class HCodeGenerator : CodeGenerator {
                         }
                         return name + "*"
                     }
-                    def includePath := getRelativePath(cl, ".h")
+                    def includePath := getRelativePath(cl, "_types.h")
                     if !imports.contains(includePath) {
                         importStream.printLine("#include \"\{includePath}\"")
                         imports.add(includePath)
                     }
                     return name
                 }
-                return type(t.subtypes[0])
+                when Type.Kind.NULLABLE {
+                    def cl := compiler.getClass(t)
+                    assert cl !== null
+                    if compiler.isValue(cl) {
+                        return type(t.subtypes[0]) + "$nullable"
+                    }
+                    return type(t.subtypes[0])
+                }
+                when Type.Kind.GENERIC {
+                    if t.subtypes[0].name = "frost.unsafe.Pointer" {
+                        return type(t.subtypes[1]) + "*"
+                    }
+                    def cl := compiler.getClass(t)
+                    if cl.isSpecialization() {
+                        def name := "\{escapeName(t.name)}"
+                        def cl := compiler.getClass(t)
+                        assert cl !== null
+                        if !compiler.isValue(cl) {
+                            if !imports.contains(name) {
+                                importStream.printLine("typedef struct \{name} \{name};")
+                                imports.add(name)
+                            }
+                            return name + "*"
+                        }
+                        def includePath := getRelativePath(cl, ".h")
+                        if !imports.contains(includePath) {
+                            importStream.printLine("#include \"\{includePath}\"")
+                            imports.add(includePath)
+                        }
+                        return name
+                    }
+                    return type(t.subtypes[0])
+                }
+                when Type.Kind.GENERIC_CLASS_PARAMETER {
+                    return type(t.genericClassParameter.bound)
+                }
+                when Type.Kind.GENERIC_METHOD_PARAMETER {
+                    return type(t.genericMethodParameter.bound)
+                }
+                when Type.Kind.FUNCTION, Type.Kind.METHOD {
+                    return type(Type.MutableMethod())
+                }
+                when Type.Kind.IMMUTABLE_FUNCTION, Type.Kind.IMMUTABLE_METHOD {
+                    return type(Type.Method())
+                }
+                otherwise {
+                    assert false, "unsupported type '\{t}'"
+                }
             }
-            when Type.Kind.GENERIC_CLASS_PARAMETER {
-                return type(t.genericClassParameter.bound)
-            }
-            when Type.Kind.GENERIC_METHOD_PARAMETER {
-                return type(t.genericMethodParameter.bound)
-            }
-            when Type.Kind.FUNCTION, Type.Kind.METHOD {
-                return type(Type.MutableMethod())
-            }
-            when Type.Kind.IMMUTABLE_FUNCTION, Type.Kind.IMMUTABLE_METHOD {
-                return type(Type.Method())
-            }
-            otherwise {
-                assert false, "unsupported type '\{t}'"
-            }
+        }
+        fail(error) {
+            assert false, error.convert()
         }
     }
 
@@ -287,26 +292,31 @@ class HCodeGenerator : CodeGenerator {
 
     @override
     method writeDeclaration(m:MethodDecl) {
-        importStream := bodyImportStream
-        imports := bodyImports
-        var separator := ""
-        if needsStructIndirection(m) {
-            body.print("void \{getName(m)}(\{type(m.returnType)}* result")
-            separator := ", "
+        try {
+            importStream := bodyImportStream
+            imports := bodyImports
+            var separator := ""
+            if needsStructIndirection(m) {
+                body.print("void \{getName(m)}(\{type(m.returnType)}* result")
+                separator := ", "
+            }
+            else {
+                body.print("\{type(m.returnType)} \{getName(m)}(")
+            }
+            if !m.annotations.isClass & !compiler.isValueInit(m) {
+                body.print("\{separator}\{selfType(m)} self")
+                separator := ", "
+            }
+            for p in m.parameters {
+                def name := "p_\{escapeName(p.name)}"
+                body.print("\{separator}\{declaration(p.type, name)}")
+                separator := ", "
+            }
+            body.printLine(");")
         }
-        else {
-            body.print("\{type(m.returnType)} \{getName(m)}(")
+        fail(error) {
+            assert false, error.convert()
         }
-        if !m.annotations.isClass & !compiler.isValueInit(m) {
-            body.print("\{separator}\{selfType(m)} self")
-            separator := ", "
-        }
-        for p in m.parameters {
-            def name := "p_\{escapeName(p.name)}"
-            body.print("\{separator}\{declaration(p.type, name)}")
-            separator := ", "
-        }
-        body.printLine(");")
     }
 
     @override
@@ -316,10 +326,16 @@ class HCodeGenerator : CodeGenerator {
 
     @override
     method end(cl:ClassDecl) {
-        typesOut.printLine(typeImportStream)
-        typesOut.printLine(typesBuffer)
-        out.printLine(bodyImportStream)
-        out.printLine(bodyBuffer)
+        try {
+            typesOut.printLine(typeImportStream)
+            typesOut.printLine(typesBuffer)
+            out.printLine(bodyImportStream)
+            out.printLine(bodyBuffer)
+        }
+        fail(error) {
+            Console.printLine(error)
+            System.exit(1)
+        }
     }
 
     @override

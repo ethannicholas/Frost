@@ -987,7 +987,12 @@ class Markdown {
             if self.linkResolver !== null {
                 def newURL := self.linkResolver(url)
                 if newURL == null {
-                    Console.errorStream().printLine("error: unable to resolve link '\{url}'")
+                    try {
+                        Console.errorStream().printLine("error: unable to resolve link '\{url}'")
+                    }
+                    fail(error) {
+                        assert false
+                    }
                     newURL := "(error)"
                 }
                 url := newURL

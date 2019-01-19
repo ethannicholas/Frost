@@ -23,15 +23,21 @@ class PLex {
         return null
     }
 
-    method printWarning(out:OutputStream) {
-        out.printLine("-------- UPDATED --------")
-        out.printLine("-***********************************************************************-")
-        out.printLine("-********************* GENERATED CODE, DO NOT EDIT *********************-")
-        out.printLine("-***********************************************************************-")
+    method printWarning(out:OutputStream):Error? {
+        try {
+            out.printLine("-------- UPDATED --------")
+            out.printLine("-*********************************************************************-")
+            out.printLine("-******************** GENERATED CODE, DO NOT EDIT ********************-")
+            out.printLine("-*********************************************************************-")
+            return null
+        }
+        fail(error) {
+            return error
+        }
     }
 
     method process(inputPath:File, tokenName:String, tokenPath:File, lexerName:String,
-            lexerPath:File, positionName:String) {
+            lexerPath:File, positionName:String):Error? {
         try {
             def input := inputPath.openInputStream()
             def token := IndentedOutputStream(tokenPath.openOutputStream())
@@ -127,10 +133,10 @@ class PLex {
             }
             dfa.transitions.destroy()
             dfa.accepts.destroy()
+            return null
         }
         fail(error) {
-            Console.printLine("error: \{error}")
-            System.exit(1)
+            return error
         }
     }
 
@@ -146,113 +152,125 @@ class PLex {
     }
 
     method writeLexer(tokenName:String, lexerName:String, lexerPath:File, positionName:String,
-            dfa:DFA, out:IndentedOutputStream) {
-        printWarning(out)
-        out.printLine("package \{lexerName[..lastIndexOf(lexerName, ".")]}")
-        out.printLine()
-        out.printLine("uses frost.unsafe.Pointer")
-        out.printLine("uses org.frostlang.plex.runtime.DFA")
-        out.printLine("uses \{positionName}")
-        out.printLine()
-        out.printLine("@final")
-        out.printLine("class \{lexerName[lexerName.next(lastIndexOf(lexerName, "."))..]} {")
-        out.level += 1
-        out.printLine("def dfa:DFA")
-        out.printLine()
-        out.printLine("def transitions := getTransitions()")
-        out.printLine()
-        out.printLine("def accepts := getAccepts()")
-        out.printLine()
-        out.printLine("method start(source:String) {")
-        out.printLine("    dfa := DFA(source, \{dfa.stateCount}, transitions, accepts)")
-        out.printLine("}")
-        out.printLine()
-        writeStateTable(dfa, out)
-        out.printLine()
-        out.printLine("method next():\{tokenName} {")
-        out.level += 1
-        out.printLine("def raw := dfa.next()")
-        out.printLine("return \{tokenName}(\{tokenName}.Kind(raw.kind), raw.start, raw.end, " +
-                "Position(raw.line, raw.column))")
-        out.level -= 1
-        out.printLine("}")
-        out.level -= 1
-        out.printLine("}")
+            dfa:DFA, out:IndentedOutputStream):Error? {
+        try {
+            printWarning(out)
+            out.printLine("package \{lexerName[..lastIndexOf(lexerName, ".")]}")
+            out.printLine()
+            out.printLine("uses frost.unsafe.Pointer")
+            out.printLine("uses org.frostlang.plex.runtime.DFA")
+            out.printLine("uses \{positionName}")
+            out.printLine()
+            out.printLine("@final")
+            out.printLine("class \{lexerName[lexerName.next(lastIndexOf(lexerName, "."))..]} {")
+            out.level += 1
+            out.printLine("def dfa:DFA")
+            out.printLine()
+            out.printLine("def transitions := getTransitions()")
+            out.printLine()
+            out.printLine("def accepts := getAccepts()")
+            out.printLine()
+            out.printLine("method start(source:String) {")
+            out.printLine("    dfa := DFA(source, \{dfa.stateCount}, transitions, accepts)")
+            out.printLine("}")
+            out.printLine()
+            writeStateTable(dfa, out)
+            out.printLine()
+            out.printLine("method next():\{tokenName} {")
+            out.level += 1
+            out.printLine("def raw := dfa.next()")
+            out.printLine("return \{tokenName}(\{tokenName}.Kind(raw.kind), raw.start, raw.end, " +
+                    "Position(raw.line, raw.column))")
+            out.level -= 1
+            out.printLine("}")
+            out.level -= 1
+            out.printLine("}")
+            return null
+        }
+        fail(error) {
+            return error
+        }
     }
 
-    method writeStateTable(dfa:DFA, out:IndentedOutputStream) {
-        out.printLine("@class")
-        out.printLine("function alloc(count:Int, fill:Int):Pointer<Int> {")
-        out.printLine("    def result := Pointer<Int>.alloc(count)")
-        out.printLine("    for i in 0 .. count {")
-        out.printLine("        result[i] := fill")
-        out.printLine("    }")
-        out.printLine("    return result")
-        out.printLine("}")
-        out.printLine()
-        out.printLine("@class")
-        out.printLine("function getTransitions():Pointer<Pointer<Int>> {")
-        out.level += 1
-        out.printLine("def result := Pointer<Pointer<Int>>.alloc(\{DFA.END_CHAR} + 1)")
-        def destroys := MutableString()
-        outer: for i in 0 ... DFA.END_CHAR.convert()->Int {
-            for j in 0 .. i {
-                var equal := true
-                for k in 0 .. dfa.stateCount {
-                    if dfa.transitions[i][k] != dfa.transitions[j][k] {
-                        equal := false
-                        break
+    method writeStateTable(dfa:DFA, out:IndentedOutputStream):Error? {
+        try {
+            out.printLine("@class")
+            out.printLine("function alloc(count:Int, fill:Int):Pointer<Int> {")
+            out.printLine("    def result := Pointer<Int>.alloc(count)")
+            out.printLine("    for i in 0 .. count {")
+            out.printLine("        result[i] := fill")
+            out.printLine("    }")
+            out.printLine("    return result")
+            out.printLine("}")
+            out.printLine()
+            out.printLine("@class")
+            out.printLine("function getTransitions():Pointer<Pointer<Int>> {")
+            out.level += 1
+            out.printLine("def result := Pointer<Pointer<Int>>.alloc(\{DFA.END_CHAR} + 1)")
+            def destroys := MutableString()
+            outer: for i in 0 ... DFA.END_CHAR.convert()->Int {
+                for j in 0 .. i {
+                    var equal := true
+                    for k in 0 .. dfa.stateCount {
+                        if dfa.transitions[i][k] != dfa.transitions[j][k] {
+                            equal := false
+                            break
+                        }
+                    }
+                    if equal {
+                        out.printLine("result[\{i}] := result[\{j}]")
+                        continue outer
                     }
                 }
-                if equal {
-                    out.printLine("result[\{i}] := result[\{j}]")
-                    continue outer
+                destroys.append("transitions[\{i}].destroy()\n")
+                def a := dfa.transitions[i]
+                def counts := Array<Int>(dfa.stateCount)
+                for j in 0 .. dfa.stateCount {
+                    counts.add(0)
+                }
+                var maxIndex := 0
+                for j in 0 .. dfa.stateCount {
+                    counts[a[j]] += 1
+                    if counts[a[j]] > counts[maxIndex] {
+                        maxIndex := a[j]
+                    }
+                }
+                def fill := maxIndex
+                out.printLine("result[\{i}] := alloc(\{dfa.stateCount}, \{fill})")
+                for j in 0 .. dfa.stateCount {
+                    if a[j] != fill {
+                        out.printLine("result[\{i}][\{j}] := \{a[j]}")
+                    }
                 }
             }
-            destroys.append("transitions[\{i}].destroy()\n")
-            def a := dfa.transitions[i]
-            def counts := Array<Int>(dfa.stateCount)
-            for j in 0 .. dfa.stateCount {
-                counts.add(0)
+            out.printLine("return result")
+            out.level -= 1
+            out.printLine("}")
+            out.printLine()
+            out.printLine("@class")
+            out.printLine("function getAccepts():Pointer<Int> {")
+            out.level += 1
+            out.printLine("def result := Pointer<Int>.alloc(\{dfa.stateCount})")
+            for i in 0 .. dfa.stateCount {
+                out.printLine("result[\{i}] := \{dfa.accepts[i]}")
             }
-            var maxIndex := 0
-            for j in 0 .. dfa.stateCount {
-                counts[a[j]] += 1
-                if counts[a[j]] > counts[maxIndex] {
-                    maxIndex := a[j]
-                }
-            }
-            def fill := maxIndex
-            out.printLine("result[\{i}] := alloc(\{dfa.stateCount}, \{fill})")
-            for j in 0 .. dfa.stateCount {
-                if a[j] != fill {
-                    out.printLine("result[\{i}][\{j}] := \{a[j]}")
-                }
-            }
+            out.printLine("return result")
+            out.level -= 1
+            out.printLine("}")
+            out.printLine()
+            out.printLine("@override")
+            out.printLine("method cleanup() {")
+            out.level += 1
+            out.print(destroys)
+            out.printLine("transitions.destroy()")
+            out.printLine("accepts.destroy()")
+            out.level -= 1
+            out.printLine("}")
+            return null
         }
-        out.printLine("return result")
-        out.level -= 1
-        out.printLine("}")
-        out.printLine()
-        out.printLine("@class")
-        out.printLine("function getAccepts():Pointer<Int> {")
-        out.level += 1
-        out.printLine("def result := Pointer<Int>.alloc(\{dfa.stateCount})")
-        for i in 0 .. dfa.stateCount {
-            out.printLine("result[\{i}] := \{dfa.accepts[i]}")
+        fail(error) {
+            return error
         }
-        out.printLine("return result")
-        out.level -= 1
-        out.printLine("}")
-        out.printLine()
-        out.printLine("@override")
-        out.printLine("method cleanup() {")
-        out.level += 1
-        out.print(destroys)
-        out.printLine("transitions.destroy()")
-        out.printLine("accepts.destroy()")
-        out.level -= 1
-        out.printLine("}")
     }
 
     @class
@@ -264,8 +282,14 @@ class PLex {
         def lexerName := args[4]
         def lexerPath := File(args[5])
         def positionName := args[6]
-        def dst := File("org/frostlang/frostc/parser")
-        dst.createDirectories()
-        PLex().process(input, tokenName, tokenPath, lexerName, lexerPath, positionName)
+        try {
+            def dst := File("org/frostlang/frostc/parser")
+            dst.createDirectories()
+            PLex().process(input, tokenName, tokenPath, lexerName, lexerPath, positionName)
+        }
+        fail(error) {
+            Console.printLine("error: \{error}")
+            System.exit(1)
+        }
     }
 }

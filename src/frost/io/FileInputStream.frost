@@ -19,7 +19,7 @@ class FileInputStream : InputStream {
     @override
     method cleanup() {
         if closeOnCleanup {
-            close()
+            def error := close() -- ignore
         }
     }
 

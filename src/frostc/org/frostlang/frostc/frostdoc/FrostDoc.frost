@@ -109,70 +109,82 @@ class FrostDoc {
         return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
     }
 
-    method write(t:Type) {
-        if !t.resolved {
-            Console.printLine("unresolved type: \{t}")
-        }
-        out.open("type")
-        out.write("name", escape(t.name))
-        out.write("simpleName", escape(simpleName(t)))
-        if t.isClass {
-            def cl := compiler.getClass(t)
-            if cl !== null {
-                if cl.isSpecialization() {
-                    -- link to base
-                    out.write("url", linkTo(compiler.getClass(t.subtypes[0])))
-                }
-                else {
-                    out.write("url", linkTo(cl))
+    method write(t:Type):Error? {
+        try {
+            if !t.resolved {
+                Console.printLine("unresolved type: \{t}")
+            }
+            out.open("type")
+            out.write("name", escape(t.name))
+            out.write("simpleName", escape(simpleName(t)))
+            if t.isClass {
+                def cl := compiler.getClass(t)
+                if cl !== null {
+                    if cl.isSpecialization() {
+                        -- link to base
+                        out.write("url", linkTo(compiler.getClass(t.subtypes[0])))
+                    }
+                    else {
+                        out.write("url", linkTo(cl))
+                    }
                 }
             }
+            out.close("type")
+            return null
         }
-        out.close("type")
+        fail(error) {
+            return error
+        }
     }
 
-    method write(a:Annotations) {
-        out.open("annotations")
-        if a.isPrivate {
-            out.write("annotation", "@private")
-        }
-        if a.isProtected {
-            out.write("annotation", "@protected")
-        }
-        if a.isPackage {
-            out.write("annotation", "@package")
-        }
-        if a.isClass {
-            out.write("annotation", "@class")
-        }
-        if a.isOverride {
-            out.write("annotation", "@override")
-        }
-        if a.isFinal {
-            out.write("annotation", "@final")
-        }
-        if a.isWeak {
-            out.write("annotation", "@weak")
-        }
-        if a.expressions !== null {
-            for expr in a.expressions {
-                match expr {
-                    when Annotations.Expression.PRE(text, _) {
-                        out.write("annotation", "@pre(\{escape(text)})")
-                    }
-                    when Annotations.Expression.PRE_OR(text, _) {
-                        out.write("annotation", "@preOr(\{escape(text)})")
-                    }
-                    when Annotations.Expression.POST(text, _) {
-                        out.write("annotation", "@post(\{escape(text)})")
-                    }
-                    when Annotations.Expression.POST_AND(text, _) {
-                        out.write("annotation", "@postAnd(\{escape(text)})")
+    method write(a:Annotations):Error? {
+        try {
+            out.open("annotations")
+            if a.isPrivate {
+                out.write("annotation", "@private")
+            }
+            if a.isProtected {
+                out.write("annotation", "@protected")
+            }
+            if a.isPackage {
+                out.write("annotation", "@package")
+            }
+            if a.isClass {
+                out.write("annotation", "@class")
+            }
+            if a.isOverride {
+                out.write("annotation", "@override")
+            }
+            if a.isFinal {
+                out.write("annotation", "@final")
+            }
+            if a.isWeak {
+                out.write("annotation", "@weak")
+            }
+            if a.expressions !== null {
+                for expr in a.expressions {
+                    match expr {
+                        when Annotations.Expression.PRE(text, _) {
+                            out.write("annotation", "@pre(\{escape(text)})")
+                        }
+                        when Annotations.Expression.PRE_OR(text, _) {
+                            out.write("annotation", "@preOr(\{escape(text)})")
+                        }
+                        when Annotations.Expression.POST(text, _) {
+                            out.write("annotation", "@post(\{escape(text)})")
+                        }
+                        when Annotations.Expression.POST_AND(text, _) {
+                            out.write("annotation", "@postAnd(\{escape(text)})")
+                        }
                     }
                 }
             }
+            out.close("annotations")
+            return null
         }
-        out.close("annotations")
+        fail(error) {
+            return error
+        }
     }
 
     ================================================================================================
@@ -218,40 +230,58 @@ class FrostDoc {
         return Markdown(LinkResolver(compiler, apiRelativePath, currentClass).resolve)
     }
 
-    method writeDoc(doccomment:String) {
-        def summary:String
-        def index := doccomment.indexOf(".")
-        if index !== null {
-            summary := doccomment.substring(...index)
+    method writeDoc(doccomment:String):Error? {
+        try {
+            def summary:String
+            def index := doccomment.indexOf(".")
+            if index !== null {
+                summary := doccomment.substring(...index)
+            }
+            else {
+                summary := doccomment
+            }
+            def md := getMarkdown()
+            out.open("doc")
+            def oldLevel := out.out.level
+            -- the indentation from the IndentedOutputStream will screw up any <pre> blocks in the
+            -- doccomment, so we need to temporarily zero it out
+            out.out.level := 0
+            def processedSummary := stripParagraph(md.process(summary))
+            out.write("summary", processedSummary)
+            out.write("description", md.process(doccomment))
+            out.out.level := oldLevel
+            out.close("doc")
+            return null
         }
-        else {
-            summary := doccomment
+        fail(error) {
+            return error
         }
-        def md := getMarkdown()
-        out.open("doc")
-        def oldLevel := out.out.level
-        -- the indentation from the IndentedOutputStream will screw up any <pre> blocks in the
-        -- doccomment, so we need to temporarily zero it out
-        out.out.level := 0
-        def processedSummary := stripParagraph(md.process(summary))
-        out.write("summary", processedSummary)
-        out.write("description", md.process(doccomment))
-        out.out.level := oldLevel
-        out.close("doc")
     }
 
-    method writeSee(s:String) {
-        if !haveSees {
-            out.open("seeAlsos")
-            haveSees := true
+    method writeSee(s:String):Error? {
+        try {
+            if !haveSees {
+                out.open("seeAlsos")
+                haveSees := true
+            }
+            out.write("seeAlso", stripParagraph(getMarkdown().process("[\{s}]")))
+            return null
         }
-        out.write("seeAlso", stripParagraph(getMarkdown().process("[\{s}]")))
+        fail(error) {
+            return error
+        }
     }
 
-    method finishSees() {
-        if haveSees {
-            out.close("seeAlsos")
-            haveSees := false
+    method finishSees():Error? {
+        try {
+            if haveSees {
+                out.close("seeAlsos")
+                haveSees := false
+            }
+            return null
+        }
+        fail(error) {
+            return error
         }
     }
 
@@ -273,67 +303,86 @@ class FrostDoc {
         return !m.annotations.isPrivate & !m.annotations.isSynthetic
     }
 
-    method writeDoc(f:FieldDecl) {
-        if f.doccomment !== null {
-            def split := splitDoc(f.doccomment)
-            writeDoc(split[0].second)
-            for tag in split[1..] {
-                match tag.first {
-                    when "see" {
-                        writeSee(tag.second)
-                    }
-                    otherwise {
-                        compiler.error(f.position, "tag '@\{tag.first}' is not supported on fields")
+    method writeDoc(f:FieldDecl):Error? {
+        try {
+            if f.doccomment !== null {
+                def split := splitDoc(f.doccomment)
+                writeDoc(split[0].second)
+                for tag in split[1..] {
+                    match tag.first {
+                        when "see" {
+                            writeSee(tag.second)
+                        }
+                        otherwise {
+                            compiler.error(f.position,
+                                    "tag '@\{tag.first}' is not supported on fields")
+                        }
                     }
                 }
+                finishSees()
             }
-            finishSees()
+            return null
+        }
+        fail(error) {
+            return error
         }
     }
 
-    method write(cl:ClassDecl) {
-        if !visible(cl) {
-            return
+    method write(cl:ClassDecl):Error? {
+        try {
+            if !visible(cl) {
+                return null
+            }
+            out.open("class")
+            write(cl.type)
+            if cl.doccomment !== null {
+                writeDoc(cl.doccomment)
+            }
+            out.close("class")
+            return null
         }
-        out.open("class")
-        write(cl.type)
-        if cl.doccomment !== null {
-            writeDoc(cl.doccomment)
+        fail(error) {
+            return error
         }
-        out.close("class")
     }
 
 
-    method write(f:FieldDecl) {
-        if !visible(f) {
-            return
+    method write(f:FieldDecl):Error? {
+        try {
+            if !visible(f) {
+                return null
+            }
+            compiler.resolve(f)
+            if f.resolved != Compiler.Resolution.RESOLVED {
+                return null
+            }
+            out.open("field")
+            out.write("name", f.name)
+            def kind:String
+            match f.fieldKind {
+                when FieldDecl.Kind.VAR {
+                    kind := "var"
+                }
+                when FieldDecl.Kind.DEF {
+                    kind := "def"
+                }
+                when FieldDecl.Kind.CONSTANT {
+                    kind := "constant"
+                }
+                when FieldDecl.Kind.PROPERTY {
+                    kind := "property"
+                }
+            }
+            out.write("kind", kind)
+            write(f.annotations)
+            write(f.type)
+            writeDoc(f)
+            out.close("field")
+            return null
         }
-        compiler.resolve(f)
-        if f.resolved != Compiler.Resolution.RESOLVED {
-            return
+        fail(error) {
+            return error
         }
-        out.open("field")
-        out.write("name", f.name)
-        def kind:String
-        match f.fieldKind {
-            when FieldDecl.Kind.VAR {
-                kind := "var"
-            }
-            when FieldDecl.Kind.DEF {
-                kind := "def"
-            }
-            when FieldDecl.Kind.CONSTANT {
-                kind := "constant"
-            }
-            when FieldDecl.Kind.PROPERTY {
-                kind := "property"
-            }
-        }
-        out.write("kind", kind)
-        write(f.annotations)
-        write(f.type)
-        writeDoc(f)
-        out.close("field")
     }
 
     method getDocComment(m:MethodDecl):String? {
@@ -363,105 +412,124 @@ class FrostDoc {
         return s
     }
 
-    method writeDoc(m:MethodDecl) {
-        def c := getDocComment(m)
-        if c == null {
-            return
-        }
-        def split := splitDoc(c)
-        writeDoc(split[0].second)
-        for tag in split[1..] {
-            match tag.first {
-                when "param" {
-                    def split := tag.second.parse(/(?s)(\S+)\s+(.+)/)
-                    if split == null {
-                        compiler.error(m.position, "invalid '@param' contents '\{tag.second}'")
-                        continue
+    method writeDoc(m:MethodDecl):Error? {
+        try {
+            def c := getDocComment(m)
+            if c == null {
+                return null
+            }
+            def split := splitDoc(c)
+            writeDoc(split[0].second)
+            for tag in split[1..] {
+                match tag.first {
+                    when "param" {
+                        def split := tag.second.parse(/(?s)(\S+)\s+(.+)/)
+                        if split == null {
+                            compiler.error(m.position, "invalid '@param' contents '\{tag.second}'")
+                            continue
+                        }
+                        params[split[0]] := stripParagraph(getMarkdown().process(split[1]))
                     }
-                    params[split[0]] := stripParagraph(getMarkdown().process(split[1]))
-                }
-                when "returns" {
-                    returns := stripParagraph(getMarkdown().process(tag.second))
-                }
-                when "see" {
-                    writeSee(tag.second)
-                }
-                otherwise {
-                    compiler.error(m.position, "tag '@\{tag.first}' is not supported on methods")
+                    when "returns" {
+                        returns := stripParagraph(getMarkdown().process(tag.second))
+                    }
+                    when "see" {
+                        writeSee(tag.second)
+                    }
+                    otherwise {
+                        compiler.error(m.position,
+                                "tag '@\{tag.first}' is not supported on methods")
+                    }
                 }
             }
+            finishSees()
+            return null
         }
-        finishSees()
+        fail(error) {
+            return error
+        }
     }
 
-    method write(m:MethodDecl) {
-        returns := null
-        params.clear()
-        if !visible(m) {
-            return
-        }
-        compiler.resolve(m)
-        if m.resolved != Compiler.Resolution.RESOLVED {
-            return
-        }
-        def tag:String
-        match m.methodKind {
-            when MethodDecl.Kind.METHOD {
-                tag := "method"
+    method write(m:MethodDecl):Error? {
+        try {
+            returns := null
+            params.clear()
+            if !visible(m) {
+                return null
             }
-            when MethodDecl.Kind.FUNCTION {
-                tag := "function"
+            compiler.resolve(m)
+            if m.resolved != Compiler.Resolution.RESOLVED {
+                return null
             }
-            when MethodDecl.Kind.INIT {
-                tag := "init"
+            def tag:String
+            match m.methodKind {
+                when MethodDecl.Kind.METHOD {
+                    tag := "method"
+                }
+                when MethodDecl.Kind.FUNCTION {
+                    tag := "function"
+                }
+                when MethodDecl.Kind.INIT {
+                    tag := "init"
+                }
             }
-        }
-        out.open(tag)
-        out.write("name", escape(m.name))
-        writeDoc(m)
-        def annotations := m.annotations
-        if m.owner.annotations.isFinal {
-            annotations.flags &&= !!Annotations.Flag.FINAL
-        }
-        write(annotations)
-        out.open("params")
-        for p in m.parameters {
-            out.open("param")
-            out.write("name", p.name)
-            write(p.type)
-            def desc := params[p.name]
-            if desc !== null {
-                out.write("description", desc)
+            out.open(tag)
+            out.write("name", escape(m.name))
+            writeDoc(m)
+            def annotations := m.annotations
+            if m.owner.annotations.isFinal {
+                annotations.flags &&= !!Annotations.Flag.FINAL
             }
-            out.close("param")
-        }
-        out.close("params")
-        if m.returnType != Type.Void() {
-            out.open("return")
-            write(m.returnType)
-            if returns !== null {
-                out.write("description", returns)
+            write(annotations)
+            out.open("params")
+            for p in m.parameters {
+                out.open("param")
+                out.write("name", p.name)
+                write(p.type)
+                def desc := params[p.name]
+                if desc !== null {
+                    out.write("description", desc)
+                }
+                out.close("param")
             }
-            out.close("return")
+            out.close("params")
+            if m.returnType != Type.Void() {
+                out.open("return")
+                write(m.returnType)
+                if returns !== null {
+                    out.write("description", returns)
+                }
+                out.close("return")
+            }
+            out.close(tag)
+            return null
         }
-        out.close(tag)
+        fail(error) {
+            return error
+        }
     }
 
-    method writeAncestors(cl:ClassDecl) {
-        if cl.classKind != ClassDecl.Kind.CLASS {
-            return
-        }
-        out.open("ancestors")
-        var ancestor := cl.rawSuper
-        while ancestor !== null {
-            write(ancestor)
-            def ancestorClass := compiler.getClass(ancestor)
-            if ancestorClass == null {
-                return
+    method writeAncestors(cl:ClassDecl):Error? {
+        try {
+            if cl.classKind != ClassDecl.Kind.CLASS {
+                return null
             }
-            ancestor := ancestorClass.rawSuper
+            out.open("ancestors")
+            var ancestor := cl.rawSuper
+            while ancestor !== null {
+                write(ancestor)
+                def ancestorClass := compiler.getClass(ancestor)
+                if ancestorClass == null {
+                    return null
+                }
+                ancestor := ancestorClass.rawSuper
+            }
+            out.close("ancestors")
+            return null
         }
-        out.close("ancestors")
+        fail(error) {
+            return error
+        }
     }
 
     function linkTo(cl:ClassDecl):String {
@@ -476,33 +544,39 @@ class FrostDoc {
         return LinkResolver(compiler, apiRelativePath, currentClass).linkTo(f)
     }
 
-    method writeInheritedFields(cl:ClassDecl) {
-        def fields := Array<FieldDecl>()
-        var ancestor := cl.rawSuper
-        while ancestor !== null {
-            def ancestorClass := compiler.getClass(ancestor)
-            if ancestorClass == null {
-                return
-            }
-            for f in ancestorClass.fields {
-                if visible(f) {
-                    compiler.resolve(f)
-                    fields.add(f)
+    method writeInheritedFields(cl:ClassDecl):Error? {
+        try {
+            def fields := Array<FieldDecl>()
+            var ancestor := cl.rawSuper
+            while ancestor !== null {
+                def ancestorClass := compiler.getClass(ancestor)
+                if ancestorClass == null {
+                    return null
                 }
+                for f in ancestorClass.fields {
+                    if visible(f) {
+                        compiler.resolve(f)
+                        fields.add(f)
+                    }
+                }
+                ancestor := ancestorClass.rawSuper
             }
-            ancestor := ancestorClass.rawSuper
-        }
-        fields[..] := fields[.. by -1]
+            fields[..] := fields[.. by -1]
 
-        if fields.count > 0 {
-            out.open("inheritedFields")
-            for f in fields {
-                out.open("field")
-                out.write("name", f.name)
-                out.write("link", escape(linkTo(f)))
-                out.close("field")
+            if fields.count > 0 {
+                out.open("inheritedFields")
+                for f in fields {
+                    out.open("field")
+                    out.write("name", f.name)
+                    out.write("link", escape(linkTo(f)))
+                    out.close("field")
+                }
+                out.close("inheritedFields")
             }
-            out.close("inheritedFields")
+            return null
+        }
+        fail(error) {
+            return error
         }
     }
 
@@ -549,49 +623,61 @@ class FrostDoc {
         return result.finish()
     }
 
-    method writeInheritedMethods(cl:ClassDecl) {
-        def methods := Array<MethodDecl>()
-        def overridden := HashSet<String>()
-        for m in cl.methods {
-            def o := compiler.getOverriddenMethod(m)
-            if o !== null {
-                overridden.add(o.signature)
+    method writeInheritedMethods(cl:ClassDecl):Error? {
+        try {
+            def methods := Array<MethodDecl>()
+            def overridden := HashSet<String>()
+            for m in cl.methods {
+                def o := compiler.getOverriddenMethod(m)
+                if o !== null {
+                    overridden.add(o.signature)
+                }
+                else {
+                    overridden.add(m.signature)
+                }
             }
-            else {
-                overridden.add(m.signature)
-            }
-        }
-        addInheritedMethods(cl.type, methods, overridden)
-        methods[..] := methods[.. by -1]
+            addInheritedMethods(cl.type, methods, overridden)
+            methods[..] := methods[.. by -1]
 
-        if methods.count > 0 {
-            out.open("inheritedMethods")
-            for m in methods {
-                out.open("method")
-                out.write("name", escape(simpleSignature(m)))
-                out.write("link", escape(linkTo(m)))
-                out.close("method")
+            if methods.count > 0 {
+                out.open("inheritedMethods")
+                for m in methods {
+                    out.open("method")
+                    out.write("name", escape(simpleSignature(m)))
+                    out.write("link", escape(linkTo(m)))
+                    out.close("method")
+                }
+                out.close("inheritedMethods")
             }
-            out.close("inheritedMethods")
+            return null
+        }
+        fail(error) {
+            return error
         }
     }
 
-    method writeDoc(cl:ClassDecl) {
-        if cl.doccomment !== null {
-            def split := splitDoc(cl.doccomment)
-            writeDoc(split[0].second)
-            for tag in split[1..] {
-                match tag.first {
-                    when "see" {
-                        writeSee(tag.second)
-                    }
-                    otherwise {
-                        compiler.error(cl.position,
-                                "tag '@\{tag.first}' is not supported on classes")
+    method writeDoc(cl:ClassDecl):Error? {
+        try {
+            if cl.doccomment !== null {
+                def split := splitDoc(cl.doccomment)
+                writeDoc(split[0].second)
+                for tag in split[1..] {
+                    match tag.first {
+                        when "see" {
+                            writeSee(tag.second)
+                        }
+                        otherwise {
+                            compiler.error(cl.position,
+                                    "tag '@\{tag.first}' is not supported on classes")
+                        }
                     }
                 }
+                finishSees()
             }
-            finishSees()
+            return null
+        }
+        fail(error) {
+            return error
         }
     }
 
@@ -627,7 +713,7 @@ class FrostDoc {
         }
     }
 
-    method process(cl:ClassDecl) {
+    method process(cl:ClassDecl):Error? {
         try {
             compiler.currentClass.push(cl)
             self.currentClass := cl
@@ -696,33 +782,39 @@ class FrostDoc {
             assert compiler.currentClass[0] == cl
             compiler.currentClass.pop()
             out := XMLWriter(MemoryOutputStream())
+            return null
         }
         fail(error) {
-            Console.printLine(error)
-            System.exit(1)
+            return error
         }
     }
 
-    method writePackage(node:TableOfContentsNode) {
-        out.open("package")
-        out.write("name", node.name)
-        out.open("contents")
-        for c in node.children.values {
-            def cl := compiler.getClass(c.name)
-            if cl == null {
-                writePackage(c)
-            }
-            else {
-                out.open("class")
-                write(cl.type)
-                if cl.doccomment !== null {
-                    writeDoc(cl.doccomment)
+    method writePackage(node:TableOfContentsNode):Error? {
+        try {
+            out.open("package")
+            out.write("name", node.name)
+            out.open("contents")
+            for c in node.children.values {
+                def cl := compiler.getClass(c.name)
+                if cl == null {
+                    writePackage(c)
                 }
-                out.close("class")
+                else {
+                    out.open("class")
+                    write(cl.type)
+                    if cl.doccomment !== null {
+                        writeDoc(cl.doccomment)
+                    }
+                    out.close("class")
+                }
             }
+            out.close("contents")
+            out.close("package")
+            return null
         }
-        out.close("contents")
-        out.close("package")
+        fail(error) {
+            return error
+        }
     }
 
     method writePackages(node:TableOfContentsNode):Error? {
@@ -742,13 +834,18 @@ class FrostDoc {
         }
     }
 
-    method finish() {
-        System.crash()
-        -- FIXME shouldn't need explicit self
-        classes.apply(self.process)
-        writePackages(tableOfContents)
-        out := XMLWriter(tocFile.openOutputStream().get())
-        tableOfContents.write(apiRelativePath, out)
-        out := XMLWriter(MemoryOutputStream())
+    method finish():Error? {
+        try {
+            -- FIXME shouldn't need explicit self
+            classes.apply(self.process)
+            writePackages(tableOfContents)
+            out := XMLWriter(tocFile.openOutputStream())
+            tableOfContents.write(apiRelativePath, out)
+            out := XMLWriter(MemoryOutputStream())
+            return null
+        }
+        fail(error) {
+            return error
+        }
     }
 }

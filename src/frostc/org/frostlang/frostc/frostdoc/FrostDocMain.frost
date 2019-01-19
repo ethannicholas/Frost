@@ -8,30 +8,41 @@ uses org.frostlang.frostc.Compiler.Settings
 uses org.frostlang.frostc.Config
 uses org.frostlang.frostc.MethodDecl
 
-method process(input:File, frostdoc:FrostDoc) {
-    if input.isDirectory() {
-        for file in input.list() {
-            process(file, frostdoc)
+method process(input:File, frostdoc:FrostDoc):Error? {
+    try {
+        if input.isDirectory() {
+            for file in input.list() {
+                process(file, frostdoc)
+            }
         }
+        else if input.path.endsWith(".frost") {
+            for cl in frostdoc.compiler.scan(input) {
+                frostdoc.add(cl)
+            }
+        }
+        return null
     }
-    else if input.path.endsWith(".frost") {
-        for cl in frostdoc.compiler.scan(input) {
-            frostdoc.add(cl)
-        }
+    fail(error) {
+        return error
     }
 }
 
-method recursiveDelete(root:File, currentPath:File) {
-    for f in currentPath.list() {
-        recursiveDelete(root, f)
+method recursiveDelete(root:File, currentPath:File):Error? {
+    try {
+        for f in currentPath.list() {
+            recursiveDelete(root, f)
+        }
+        -- deleting a directory tree on an end user's machine is scary, so let's be extra careful...
+        if !currentPath.absolute().path.startsWith(root.absolute().path) {
+            Console.printErrorLine("Panicking! Recursive delete stepped outside of the expected " +
+                    "path tree! (was deleting \{root}, ended up looking at \{currentPath})")
+            System.exit(1)
+        }
+        currentPath.delete()
     }
-    -- deleting a directory tree on an end user's machine is scary, so let's be extra careful...
-    if !currentPath.absolute().get().path.startsWith(root.absolute().get().path) {
-        Console.errorStream().printLine("Panicking! Recursive delete stepped outside of the " +
-                "expected path tree! (was deleting \{root}, ended up looking at \{currentPath})")
-        System.exit(1)
+    fail(error) {
+        return error
     }
-    currentPath.delete()
 }
 
 method xsltproc(input:File, xsl:File, output:File):Error? {
@@ -45,10 +56,10 @@ method xsltproc(input:File, xsl:File, output:File):Error? {
             def args := Array<String>() -- FIXME literal
             args.add(xsl.path)
             args.add(input.path)
-            def p := System.exec(File("xsltproc"), args)
+            def p := System.exec("xsltproc", args)
             output.parent.createDirectories()
-            p.output.sendTo(output.withExtension(".html").openOutputStream())
-            p.error.sendTo(Console.errorStream())
+            p.openStandardOutput().sendTo(output.withExtension(".html").openOutputStream())
+            p.openStandardError().sendTo(Console.errorStream())
             assert p.waitFor() = 0
         }
         return null
@@ -84,8 +95,8 @@ method addTableOfContents(tocFile:File, tree:File, apiRelativePath:String):Error
         def args := Array<String>() -- FIXME literal
         args.add(File(Config.frostSourceDir()).resolve("tools/tableOfContents.xsl").path)
         args.add(tocFile.path)
-        def p := System.exec(File("xsltproc"), args)
-        addTableOfContentsToTree(p.output.readFully(), tree, -1)
+        def p := System.exec("xsltproc", args)
+        addTableOfContentsToTree(p.openStandardOutput().readFully(), tree, -1)
     }
     fail(error) {
         return error
@@ -95,7 +106,7 @@ method addTableOfContents(tocFile:File, tree:File, apiRelativePath:String):Error
 method main(args:ListView<String>) {
     try {
         if args.count != 4 {
-            Console.errorStream().printLine("usage: frostdoc <source dir> <api dir> <root dir>")
+            Console.printErrorLine("usage: frostdoc <source dir> <api dir> <root dir>")
             System.exit(1)
         }
         def input := File(args[1])
@@ -121,7 +132,7 @@ method main(args:ListView<String>) {
         tocFile.delete()
     }
     fail(error) {
-        Console.printLine(error)
+        Console.printErrorLine(error)
         System.exit(1)
     }
 }

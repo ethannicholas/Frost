@@ -102,13 +102,21 @@ class Frost {
 
     @class
     method assertionFailure(file:String, line:Int) {
-        Console.errorStream().printLine("assertion failure (\{file}:\{line})")
+        try {
+            Console.errorStream().printLine("assertion failure (\{file}:\{line})")
+        }
+        fail(error) {
+        }
         System.crash()
     }
 
     @class
     method assertionFailure(file:String, line:Int, msg:String) {
-        Console.errorStream().printLine("assertion failure (\{file}:\{line}): \{msg}")
+        try {
+            Console.errorStream().printLine("assertion failure (\{file}:\{line}): \{msg}")
+        }
+        fail(error) {
+        }
         System.crash()
     }
 

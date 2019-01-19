@@ -5,7 +5,9 @@ Represents a file path, providing methods to query, read, and write files. A `Fi
 merely the path to the file, not the actual physical file on disk, so creating a `File` object does
 not in and of itself cause any interaction with the filesystem.
 
-`File` always uses `"/"` as a path separator regardless of operating system.
+`File` always uses `"/"` as a path separator regardless of operating system. Relative paths (that
+is, those that do not begin with `"/"`) are interpreted relative to [System.workingDirectory()],
+which never changes while a program is running.
 ====================================================================================================
 @final
 class File : Immutable, Key<File> {
@@ -181,51 +183,54 @@ class File : Immutable, Key<File> {
     }
 
     ================================================================================================
-    Returns `true` if this file exists.
+    Returns `true` if this file exists. A return value of `false` indicates either that the path
+    does not exist or that an error occurred while trying to query the filesystem.
 
     @returns `true` if this file exists
-    -- FIXME Maybe
     ================================================================================================
     @external
     method exists():Bit
 
     ================================================================================================
-    Returns `true` if this path represents a directory.
+    Returns `true` if this path represents a directory. A return value of `false` indicates either
+    that the path does not exist, is not a directory, or that an error occurred while trying to
+    query the filesystem.
 
     @returns `true` if this is a directory
-    -- FIXME Maybe
     ================================================================================================
     @external
     method isDirectory():Bit
 
     ================================================================================================
-    Returns a list of files contained by this directory.
-
-    @returns the contents of the directory
-    -- FIXME Maybe
+    Returns a list of files contained by this directory, or an `Error` if the path could not be
+    listed.
     ================================================================================================
     @external
-    method list():ListView<File>
+    method list():Maybe<ListView<File>>
 
     ================================================================================================
     Creates a directory at this path. It is not an error to attempt to create a directory which
     already exists.
-    -- FIXME error
     ================================================================================================
     @external
-    method createDirectory()
+    method createDirectory():Error?
 
     ================================================================================================
     Creates a directory at this path, including all required parent directories. It is not an error
     to attempt to create a directory which already exists.
-    -- FIXME error
     ================================================================================================
-    method createDirectories() {
-        def p := parent
-        if p !== null & !p.exists() {
-            p.createDirectories()
+    method createDirectories():Error? {
+        try {
+            def p := parent
+            if p !== null & !p.exists() {
+                p.createDirectories()
+            }
+            createDirectory()
+            return null
         }
-        createDirectory()
+        fail(error) {
+            return error
+        }
     }
 
     ================================================================================================
@@ -252,7 +257,7 @@ class File : Immutable, Key<File> {
     @returns an `OutputStream`
     ================================================================================================
     @external
-    method openForAppend():OutputStream
+    method openForAppend():Maybe<OutputStream>
 
     ================================================================================================
     Reads the entire contents of the file into memory as a `String` and returns it. Naturally, you
@@ -319,7 +324,7 @@ class File : Immutable, Key<File> {
     method delete():Error?
 
     ================================================================================================
-    Returns `true` if both files represent the same path. Note that two files can refer to the same
+    Returns `true` if both files refer to the same path. Note that two files can refer to the same
     physical file on disk without being the same path (e.g. `File("src/Foo.frost")` and
     `File("src/../src/Foo.frost")`); these are considered not equal despite resolving to the same
     physical file.

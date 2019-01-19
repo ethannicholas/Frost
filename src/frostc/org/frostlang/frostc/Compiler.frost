@@ -4653,7 +4653,7 @@ class Compiler {
                         type)
             }
             when ASTNode.CALL(position, m, args) {
-                return Call.compile(self, position, m, args, type)
+                return Call.compile(self, position, m, args, false, type)
             }
             when ASTNode.DOT(position, base, name) {
                 def t := tryResolveType(expr)
@@ -5009,7 +5009,7 @@ class Compiler {
                 Break.compile(self, position, label)
             }
             when ASTNode.CALL(position, m, args) {
-                Call.compile(self, position, m, args, TypeContext.UNSPECIFIED)
+                Call.compile(self, position, m, args, true, TypeContext.UNSPECIFIED)
             }
             when ASTNode.CONTINUE(position, label) {
                 Continue.compile(self, position, label)

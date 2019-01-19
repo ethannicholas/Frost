@@ -9,22 +9,40 @@ class XMLWriter {
         self.out := IndentedOutputStream(out)
     }
 
-    method open(tag:String) {
-        out.printLine("<\{tag}>")
-        out.level += 1
-        stack.push(tag)
+    method open(tag:String):Error? {
+        try {
+            out.printLine("<\{tag}>")
+            out.level += 1
+            stack.push(tag)
+            return null
+        }
+        fail(error) {
+            return error
+        }
     }
 
     @pre(stack[0] = tag)
-    method close(tag:String) {
-        out.level -= 1
-        out.printLine("</\{tag}>")
-        stack.pop()
+    method close(tag:String):Error? {
+        try {
+            out.level -= 1
+            out.printLine("</\{tag}>")
+            stack.pop()
+            return null
+        }
+        fail(error) {
+            return error
+        }
     }
 
-    method write(tag:String, text:String) {
-        assert !text.contains("&&gt")
-        out.printLine("<\{tag}>\{text}</\{tag}>")
+    method write(tag:String, text:String):Error? {
+        try {
+            assert !text.contains("&&gt")
+            out.printLine("<\{tag}>\{text}</\{tag}>")
+            return null
+        }
+        fail(error) {
+            return error
+        }
     }
 }
 

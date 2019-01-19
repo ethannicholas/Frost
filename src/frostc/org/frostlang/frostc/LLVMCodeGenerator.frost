@@ -92,14 +92,20 @@ class LLVMCodeGenerator : CodeGenerator {
     init(triple:String, out:OutputStream) {
         self.physicalOut := out
 
-        out.printLine("target datalayout = \"e-m:o-i64:64-f80:128-n8:16:32:64-S128\"")
-        out.printLine("target triple = \"\{triple}\"")
-        out.printLine("declare i8* @frostAlloc(\{SIZE_TYPE})")
-        out.printLine("declare i8* @frostObjectAlloc(\{SIZE_TYPE}, %frost$core$Class*)")
-        out.printLine("declare i8* @frostRealloc(i8*, \{SIZE_TYPE}, \{SIZE_TYPE})")
-        out.printLine("declare void @frostFree(i8*)")
-        out.printLine("declare i8* @memset(i8*, i8, \{SIZE_TYPE})")
-        out.printLine("%$itable = type { %frost$core$Class*, %$itable*, [0 x i8*] }")
+        try {
+            out.printLine("target datalayout = \"e-m:o-i64:64-f80:128-n8:16:32:64-S128\"")
+            out.printLine("target triple = \"\{triple}\"")
+            out.printLine("declare i8* @frostAlloc(\{SIZE_TYPE})")
+            out.printLine("declare i8* @frostObjectAlloc(\{SIZE_TYPE}, %frost$core$Class*)")
+            out.printLine("declare i8* @frostRealloc(i8*, \{SIZE_TYPE}, \{SIZE_TYPE})")
+            out.printLine("declare void @frostFree(i8*)")
+            out.printLine("declare i8* @memset(i8*, i8, \{SIZE_TYPE})")
+            out.printLine("%$itable = type { %frost$core$Class*, %$itable*, [0 x i8*] }")
+        }
+        fail(error) {
+            Console.printLine(error)
+            System.exit(1)
+        }
     }
 
     @override
@@ -109,14 +115,20 @@ class LLVMCodeGenerator : CodeGenerator {
 
     @override
     method finish() {
-        llvmType(Type.Class())
-        physicalOut.print(types.finish())
-        physicalOut.print(strings.finish())
-        physicalOut.print(declarations.finish())
-        physicalOut.print(shims.finish())
-        physicalOut.print(methods.finish())
-        physicalOut.print(metadata.finish())
-        physicalOut.close()
+        try {
+            llvmType(Type.Class())
+            physicalOut.print(types.finish())
+            physicalOut.print(strings.finish())
+            physicalOut.print(declarations.finish())
+            physicalOut.print(shims.finish())
+            physicalOut.print(methods.finish())
+            physicalOut.print(metadata.finish())
+            physicalOut.close()
+        }
+        fail(error) {
+            Console.printLine(error)
+            System.exit(1)
+        }
     }
 
     method nextVar():String {
@@ -135,8 +147,13 @@ class LLVMCodeGenerator : CodeGenerator {
     }
 
     method createBlock(label:String, out:OutputStream) {
-        out.printLine("\n\{label}:")
-        currentBlock := label
+        try {
+            out.printLine("\n\{label}:")
+            currentBlock := label
+        }
+        fail(error) {
+            assert false, error.convert()
+        }
     }
 
     method fieldSize(t:Type):Int {
@@ -294,82 +311,92 @@ class LLVMCodeGenerator : CodeGenerator {
 
     @post(compiler.currentClass.count = @pre(compiler.currentClass.count))
     method writeType(t:Type) {
-        if !t.resolved {
-            out.print("<unresolved type: \{t}>")
-            return
-        }
-        if writtenTypes.contains(t.name) {
-            return
-        }
-        writtenTypes.add(t.name)
-        def cl := compiler.getClass(t)
-        assert cl !== null
-        assert !cl.annotations.isSpecialize
-        compiler.resolve(cl)
-        if cl.resolved != Compiler.Resolution.RESOLVED {
-            out.print("<error resolving \{t}>")
-            return
-        }
-        def code := MutableString("%\{escapeName(t.name)} = type { ")
-        compiler.currentClass.push(cl)
-        assert cl !== null
-        var separator := ""
-        for f in compiler.instanceFields(cl) {
-            compiler.resolve(f)
-            if !f.type.resolved {
-                compiler.currentClass.pop()
+        try {
+            if !t.resolved {
+                out.print("<unresolved type: \{t}>")
                 return
             }
-            if f.type.isClass {
-                def fCl := compiler.getClass(f.type)
-                if !compiler.isValue(fCl) {
-                    -- If we write the correct type definition here, we end up loading and parsing a
-                    -- ton of otherwise-unused classes, for no other reason than to figure out their
-                    -- type definitions (which we likely never use for anything else). Handling all
-                    -- pointers as opaque i8* pointers massively reduces the number of files we need
-                    -- to parse.
-                    code.append("\{separator}i8*")
+            if writtenTypes.contains(t.name) {
+                return
+            }
+            writtenTypes.add(t.name)
+            def cl := compiler.getClass(t)
+            assert cl !== null
+            assert !cl.annotations.isSpecialize
+            compiler.resolve(cl)
+            if cl.resolved != Compiler.Resolution.RESOLVED {
+                out.print("<error resolving \{t}>")
+                return
+            }
+            def code := MutableString("%\{escapeName(t.name)} = type { ")
+            compiler.currentClass.push(cl)
+            assert cl !== null
+            var separator := ""
+            for f in compiler.instanceFields(cl) {
+                compiler.resolve(f)
+                if !f.type.resolved {
+                    compiler.currentClass.pop()
+                    return
+                }
+                if f.type.isClass {
+                    def fCl := compiler.getClass(f.type)
+                    if !compiler.isValue(fCl) {
+                        -- If we write the correct type definition here, we end up loading and parsing a
+                        -- ton of otherwise-unused classes, for no other reason than to figure out their
+                        -- type definitions (which we likely never use for anything else). Handling all
+                        -- pointers as opaque i8* pointers massively reduces the number of files we need
+                        -- to parse.
+                        code.append("\{separator}i8*")
+                        separator := ", "
+                        continue
+                    }
+                }
+                if f.type = Type.ChoiceData() {
+                    code.append("\{separator}[\{getChoiceDataSize(cl)} x i8]")
                     separator := ", "
                     continue
                 }
-            }
-            if f.type = Type.ChoiceData() {
-                code.append("\{separator}[\{getChoiceDataSize(cl)} x i8]")
+                code.append("\{separator}\{llvmType(f.type)}")
                 separator := ", "
-                continue
             }
-            code.append("\{separator}\{llvmType(f.type)}")
-            separator := ", "
+            if t = Type.Class() {
+                code.append(", %$itable*, [0 x i8*]")
+            }
+            code.append(" }")
+            types.printLine(code.finish())
+            if compiler.isValue(cl) {
+                getWrapperClassConstant(cl)
+            }
+            compiler.currentClass.pop()
         }
-        if t = Type.Class() {
-            code.append(", %$itable*, [0 x i8*]")
+        fail(error) {
+            assert false, error.convert()
         }
-        code.append(" }")
-        types.printLine(code.finish())
-        if compiler.isValue(cl) {
-            getWrapperClassConstant(cl)
-        }
-        compiler.currentClass.pop()
     }
 
     method writeWrapperType(t:Type) {
-        if writtenWrappers.contains(t.name) {
-            return
+        try {
+            if writtenWrappers.contains(t.name) {
+                return
+            }
+            writtenWrappers.add(t.name)
+            def code := MutableString("\{llvmType(t)}$wrapper = type { ")
+            def object := compiler.getClass(Type.Object())
+            assert object !== null
+            var separator := ""
+            for f in compiler.instanceFields(object) {
+                compiler.resolve(f)
+                code.append("\{separator}\{llvmType(f.type)}")
+                separator := ", "
+            }
+            code.append(", \{llvmType(t)}")
+            code.append(" }")
+            types.printLine(code.finish())
+            types.printLine("\{llvmType(t)}$nullable = type { \{llvmType(t)}, i1 }")
         }
-        writtenWrappers.add(t.name)
-        def code := MutableString("\{llvmType(t)}$wrapper = type { ")
-        def object := compiler.getClass(Type.Object())
-        assert object !== null
-        var separator := ""
-        for f in compiler.instanceFields(object) {
-            compiler.resolve(f)
-            code.append("\{separator}\{llvmType(f.type)}")
-            separator := ", "
+        fail(error) {
+            assert false, error.convert()
         }
-        code.append(", \{llvmType(t)}")
-        code.append(" }")
-        types.printLine(code.finish())
-        types.printLine("\{llvmType(t)}$nullable = type { \{llvmType(t)}, i1 }")
     }
 
     function typeName(t:Type):String {
@@ -517,138 +544,149 @@ class LLVMCodeGenerator : CodeGenerator {
     }
 
     method getITable(cl:ClassDecl):String {
-        def interfaces := compiler.allInterfaces(cl.type)
-        var previous := "%$itable* null"
-        for intfType in interfaces {
-            def intf := compiler.getClass(intfType)
-            def intfCC := getClassConstant(intf)
-            def methods := compiler.interfaceMethods(cl, intfType)
-            def name := "@\{escapeName(cl.name)}$.\{escapeName(intf.name)}"
-            def classType := llvmType(Type.Class())
-            def t := "{\{classType}, %$itable*, [\{methods.count} x i8*] }"
-            def intfCCCast:String
-            if intfCC.type != llvmType(Type.Class()) {
-                intfCCCast := "bitcast(\{intfCC.type}* \{intfCC.name} to \{classType})"
-            }
-            else {
-                intfCCCast := intfCC.name
-            }
-            def result := MutableString("\{name} = ")
-            if cl.isSpecialization() {
-                result.append("linkonce_odr ")
-            }
-            result.append("constant \{t} { \{classType} \{intfCCCast}, \{previous}, " +
-                    "[\{methods.count} x i8*][")
-            var separator := ""
-            for m in methods {
-                result.append(separator)
-                separator := ", "
-                if m.annotations.isAbstract {
-                    result.append("i8* null")
+        try {
+            def interfaces := compiler.allInterfaces(cl.type)
+            var previous := "%$itable* null"
+            for intfType in interfaces {
+                def intf := compiler.getClass(intfType)
+                def intfCC := getClassConstant(intf)
+                def methods := compiler.interfaceMethods(cl, intfType)
+                def name := "@\{escapeName(cl.name)}$.\{escapeName(intf.name)}"
+                def classType := llvmType(Type.Class())
+                def t := "{\{classType}, %$itable*, [\{methods.count} x i8*] }"
+                def intfCCCast:String
+                if intfCC.type != llvmType(Type.Class()) {
+                    intfCCCast := "bitcast(\{intfCC.type}* \{intfCC.name} to \{classType})"
                 }
                 else {
-                    def entry := getMethodTableEntry(m)
-                    result.append("i8* bitcast(\{entry.second} \{entry.first} to i8*)")
+                    intfCCCast := intfCC.name
                 }
+                def result := MutableString("\{name} = ")
+                if cl.isSpecialization() {
+                    result.append("linkonce_odr ")
+                }
+                result.append("constant \{t} { \{classType} \{intfCCCast}, \{previous}, " +
+                        "[\{methods.count} x i8*][")
+                var separator := ""
+                for m in methods {
+                    result.append(separator)
+                    separator := ", "
+                    if m.annotations.isAbstract {
+                        result.append("i8* null")
+                    }
+                    else {
+                        def entry := getMethodTableEntry(m)
+                        result.append("i8* bitcast(\{entry.second} \{entry.first} to i8*)")
+                    }
+                }
+                result.append("] }\n")
+                types.printLine(result.finish())
+                previous := "%$itable* bitcast(\{t}* \{name} to %$itable*)"
             }
-            result.append("] }\n")
-            types.printLine(result.finish())
-            previous := "%$itable* bitcast(\{t}* \{name} to %$itable*)"
+            return previous
         }
-        return previous
+        fail(error) {
+            assert false, error.convert()
+        }
     }
 
     method createMethodShim(raw:MethodDecl, effective:Type):MethodShim {
-        def found := methodShims[raw]
-        if found !== null {
-            return found
-        }
-        def oldOut := out
-        out := shims
-        assert effective.isMethod
-        assert effective.subtypes.count = raw.parameters.count + 2 -- self and return
-        assert raw.isInstance()
-        def unrefs := MemoryOutputStream()
-        def oldVarCount := varCount
-        varCount := 0
-        def effectiveReturnType := effective.returnType
-        def resultName := getName(raw) + "$shim"
-        def resultType := MutableString(llvmType(effectiveReturnType))
-        out.print("define linkonce_odr ")
-        out.print("\{resultType} \{resultName}(")
-        resultType.append("(")
-        var separator := ""
-        for i in 0 .. effective.subtypes.count - 1 {
-            def pType := llvmType(effective.subtypes[i])
-            resultType.append(", ")
-            resultType.append(pType)
-            out.print("\{separator}\{pType} %p\{i}")
-            separator := ", "
-        }
-        resultType.append(")*")
-        out.printLine(") {")
-        currentBlock := "0"
-        def casts := Array<String>()
-        for i in 0 .. effective.subtypes.count - 1 {
-            def p := "%p\{i}"
-            def rawType:Type
-            if i = 0 {
-                rawType := raw.owner.type
+        try {
+            def found := methodShims[raw]
+            if found !== null {
+                return found
             }
-            else {
-                rawType := raw.parameters[i - 1].type
+            def oldOut := out
+            out := shims
+            assert effective.isMethod
+            assert effective.subtypes.count = raw.parameters.count + 2 -- self and return
+            assert raw.isInstance()
+            def unrefs := MemoryOutputStream()
+            def oldVarCount := varCount
+            varCount := 0
+            def effectiveReturnType := effective.returnType
+            def resultName := getName(raw) + "$shim"
+            def resultType := MutableString(llvmType(effectiveReturnType))
+            out.print("define linkonce_odr ")
+            out.print("\{resultType} \{resultName}(")
+            resultType.append("(")
+            var separator := ""
+            for i in 0 .. effective.subtypes.count - 1 {
+                def pType := llvmType(effective.subtypes[i])
+                resultType.append(", ")
+                resultType.append(pType)
+                out.print("\{separator}\{pType} %p\{i}")
+                separator := ", "
             }
-            if rawType != effective.subtypes[i] {
-                def cast := getCastReference(raw.position, p, effective.subtypes[i], rawType)
-                casts.add(cast)
-                if compiler.isValue(effective.subtypes[i]) & !compiler.isValue(rawType) {
-                    labelCount += 1
-                    def objectCast := "%objectCast\{labelCount}"
-                    unrefs.printLine("\{objectCast} = bitcast \{llvmType(rawType)} \{cast} to " +
-                            "%frost$core$Object*")
-                    unrefs.printLine("call void @frost$core$Frost$unref$frost$core$Object$Q(" +
-                            "%frost$core$Object* \{objectCast})")
+            resultType.append(")*")
+            out.printLine(") {")
+            currentBlock := "0"
+            def casts := Array<String>()
+            for i in 0 .. effective.subtypes.count - 1 {
+                def p := "%p\{i}"
+                def rawType:Type
+                if i = 0 {
+                    rawType := raw.owner.type
+                }
+                else {
+                    rawType := raw.parameters[i - 1].type
+                }
+                if rawType != effective.subtypes[i] {
+                    def cast := getCastReference(raw.position, p, effective.subtypes[i], rawType)
+                    casts.add(cast)
+                    if compiler.isValue(effective.subtypes[i]) & !compiler.isValue(rawType) {
+                        labelCount += 1
+                        def objectCast := "%objectCast\{labelCount}"
+                        unrefs.printLine("\{objectCast} = bitcast \{llvmType(rawType)} \{cast} " +
+                                "to %frost$core$Object*")
+                        unrefs.printLine("call void @frost$core$Frost$unref$frost$core$Object$Q(" +
+                                "%frost$core$Object* \{objectCast})")
 
+                    }
+                }
+                else {
+                    casts.add(p)
                 }
             }
-            else {
-                casts.add(p)
-            }
-        }
-        def returnValue:String
-        if raw.returnType != Type.Void() {
-            returnValue := nextVar()
-            out.print("\{returnValue} = ")
-        }
-        else {
-            returnValue := "void"
-        }
-        out.print("call \{llvmType(raw.returnType)} \{getName(raw)}(")
-        separator := ""
-        for i in 0 .. effective.subtypes.count - 1 {
-            def rawType:Type
-            if i = 0 {
-                rawType := raw.owner.type
+            def returnValue:String
+            if raw.returnType != Type.Void() {
+                returnValue := nextVar()
+                out.print("\{returnValue} = ")
             }
             else {
-                rawType := raw.parameters[i - 1].type
+                returnValue := "void"
             }
-            out.print("\{separator}\{llvmType(rawType)} \{casts[i]}")
-            separator := ", "
+            out.print("call \{llvmType(raw.returnType)} \{getName(raw)}(")
+            separator := ""
+            for i in 0 .. effective.subtypes.count - 1 {
+                def rawType:Type
+                if i = 0 {
+                    rawType := raw.owner.type
+                }
+                else {
+                    rawType := raw.parameters[i - 1].type
+                }
+                out.print("\{separator}\{llvmType(rawType)} \{casts[i]}")
+                separator := ", "
+            }
+            out.printLine(")")
+            if raw.returnType != Type.Void() {
+                returnValue := llvmType(effectiveReturnType) + " " +
+                        getCastReference(raw.position, returnValue, raw.returnType,
+                            effectiveReturnType)
+            }
+            out.printLine(unrefs)
+            out.printLine("ret \{returnValue}")
+            out.printLine("}")
+            varCount := oldVarCount
+            def result := MethodShim(resultName, resultType.finish())
+            methodShims[raw] := result
+            out := oldOut
+            return result
         }
-        out.printLine(")")
-        if raw.returnType != Type.Void() {
-            returnValue := llvmType(effectiveReturnType) + " " +
-                    getCastReference(raw.position, returnValue, raw.returnType, effectiveReturnType)
+        fail(error) {
+            assert false, error.convert()
         }
-        out.printLine(unrefs)
-        out.printLine("ret \{returnValue}")
-        out.printLine("}")
-        varCount := oldVarCount
-        def result := MethodShim(resultName, resultType.finish())
-        methodShims[raw] := result
-        out := oldOut
-        return result
     }
 
     method getWrapperITable(cl:ClassDecl):String {
@@ -686,7 +724,12 @@ class LLVMCodeGenerator : CodeGenerator {
                 }
             }
             result.append("] }\n")
-            types.printLine(result.finish())
+            try {
+                types.printLine(result.finish())
+            }
+            fail(error) {
+                assert false, error.convert()
+            }
             previous := "%$itable* bitcast(\{t}* \{name} to %$itable*)"
         }
         return previous
@@ -762,91 +805,32 @@ class LLVMCodeGenerator : CodeGenerator {
     }
 
     method getClassConstant(cl:ClassDecl):ClassConstant {
-        assert !cl.annotations.isSpecialize
-        var result := classConstants[cl.name]
-        if result == null {
-            compiler.resolve(cl)
-            def type:String
-            if cl.external {
-                result := ClassConstant("@\{escapeName(cl.type.name)}$class",
-                        "%frost$core$Class")
-                classConstants[cl.name] := result
-                types.printLine("\{result.name} = external global \{result.type}")
-                return classConstants[cl.name]
-            }
-            def vtable := compiler.getVTable(cl)
-            result := ClassConstant("@\{escapeName(cl.type.name)}$class",
-                    "{ %frost$core$Class*, \{INT_TYPE}, %frost$core$String*, %frost$core$Class*, " +
-                    "%$itable*, [\{vtable.count} x i8*] }")
-            classConstants[cl.name] := result
-            def superPtr:String
-            if cl.rawSuper !== null {
-                def superCC := getClassConstant(compiler.getClass(cl.rawSuper))
-                superPtr := "bitcast(\{superCC.type}* \{superCC.name} to %frost$core$Class*)"
-            }
-            else {
-                superPtr := "null"
-            }
-            def clConstant := getClassConstant(compiler.getClass(Type.Class()))
-            def code := MutableString("\{result.name} = ")
-            if cl.isSpecialization() {
-                code.append("linkonce_odr ")
-            }
-            code.append("constant \{result.type} { " +
-                    "%frost$core$Class* bitcast(\{clConstant.type}* \{clConstant.name} to " +
-                    "%frost$core$Class*), \{INT_TYPE} \{NO_REFCNT}, %frost$core$String* " +
-                    getStringReference(cl.name) + ", %frost$core$Class* \{superPtr}, " +
-                    "\{getITable(cl)}, [\{vtable.count} x i8*] [")
-            var separator := ""
-            for m in vtable {
-                code.append(separator)
-                if m.annotations.isAbstract {
-                    code.append("i8* null")
+        try {
+            assert !cl.annotations.isSpecialize
+            var result := classConstants[cl.name]
+            if result == null {
+                compiler.resolve(cl)
+                def type:String
+                if cl.external {
+                    result := ClassConstant("@\{escapeName(cl.type.name)}$class",
+                            "%frost$core$Class")
+                    classConstants[cl.name] := result
+                    types.printLine("\{result.name} = external global \{result.type}")
+                    return classConstants[cl.name]
                 }
-                else {
-                    def entry := getMethodTableEntry(m)
-                    code.append("i8* bitcast(\{entry.second} \{entry.first} to i8*)")
-                }
-                separator := ", "
-            }
-            code.append("] }\n")
-            types.printLine(code.finish())
-        }
-        return result
-    }
-
-    method getWrapperClassConstant(cl:ClassDecl):ClassConstant {
-        assert !cl.type.isPointer, "trying to wrap \{cl.name}"
-        if !compiler.resolve(cl) {
-            return ClassConstant("<error>", "<error>")
-        }
-        def name := "@\{escapeName(cl.name)}$wrapperclass"
-        var result := classConstants[name]
-        if result == null {
-            if cl.external {
-                llvmType(Type.Class())
-                def type := "%frost$core$Class"
-                types.printLine("\{name} = external global \{type}")
-                result := ClassConstant(name, type)
-                classConstants[name] := result
-            }
-            else {
-                def value := compiler.getClass(Type.Value())
-                def valueVTable := compiler.getVTable(value)
-                result := ClassConstant("@\{escapeName(cl.name)}$wrapperclass",
-                        "{ %frost$core$Class*, \{INT_TYPE}, %frost$core$String*, " +
-                        "%frost$core$Class*, %$itable*, [\{valueVTable.count} x i8*] }")
-                classConstants[name] := result
                 def vtable := compiler.getVTable(cl)
-                def superCC := getClassConstant(compiler.getClass(cl.rawSuper))
-                def superCast:String
-                if superCC.type != llvmType(Type.Class()) {
-                    superCast := "bitcast(\{superCC.type}* \{superCC.name} to %frost$core$Class*)"
+                result := ClassConstant("@\{escapeName(cl.type.name)}$class",
+                        "{ %frost$core$Class*, \{INT_TYPE}, %frost$core$String*, " +
+                        "%frost$core$Class*, %$itable*, [\{vtable.count} x i8*] }")
+                classConstants[cl.name] := result
+                def superPtr:String
+                if cl.rawSuper !== null {
+                    def superCC := getClassConstant(compiler.getClass(cl.rawSuper))
+                    superPtr := "bitcast(\{superCC.type}* \{superCC.name} to %frost$core$Class*)"
                 }
                 else {
-                    superCast := superCC.name
+                    superPtr := "null"
                 }
-                def itable := getWrapperITable(cl)
                 def clConstant := getClassConstant(compiler.getClass(Type.Class()))
                 def code := MutableString("\{result.name} = ")
                 if cl.isSpecialization() {
@@ -855,20 +839,89 @@ class LLVMCodeGenerator : CodeGenerator {
                 code.append("constant \{result.type} { " +
                         "%frost$core$Class* bitcast(\{clConstant.type}* \{clConstant.name} to " +
                         "%frost$core$Class*), \{INT_TYPE} \{NO_REFCNT}, %frost$core$String* " +
-                        "\{getStringReference(cl.name)}, \{llvmType(Type.Class())} \{superCast}, " +
-                        "\{itable}, [\{valueVTable.count} x i8*] [")
+                        getStringReference(cl.name) + ", %frost$core$Class* \{superPtr}, " +
+                        "\{getITable(cl)}, [\{vtable.count} x i8*] [")
                 var separator := ""
-                for i in 0 .. valueVTable.count {
-                    def m := vtable[i]
-                    def entry := getMethodTableEntry(m)
-                    code.append("\{separator}i8* bitcast(\{entry.second} \{entry.first} to i8*)")
+                for m in vtable {
+                    code.append(separator)
+                    if m.annotations.isAbstract {
+                        code.append("i8* null")
+                    }
+                    else {
+                        def entry := getMethodTableEntry(m)
+                        code.append("i8* bitcast(\{entry.second} \{entry.first} to i8*)")
+                    }
                     separator := ", "
                 }
                 code.append("] }\n")
-                types.print(code.finish())
+                types.printLine(code.finish())
             }
+            return result
         }
-        return result
+        fail(error) {
+            assert false, error.convert()
+        }
+    }
+
+    method getWrapperClassConstant(cl:ClassDecl):ClassConstant {
+        try {
+            assert !cl.type.isPointer, "trying to wrap \{cl.name}"
+            if !compiler.resolve(cl) {
+                return ClassConstant("<error>", "<error>")
+            }
+            def name := "@\{escapeName(cl.name)}$wrapperclass"
+            var result := classConstants[name]
+            if result == null {
+                if cl.external {
+                    llvmType(Type.Class())
+                    def type := "%frost$core$Class"
+                    types.printLine("\{name} = external global \{type}")
+                    result := ClassConstant(name, type)
+                    classConstants[name] := result
+                }
+                else {
+                    def value := compiler.getClass(Type.Value())
+                    def valueVTable := compiler.getVTable(value)
+                    result := ClassConstant("@\{escapeName(cl.name)}$wrapperclass",
+                            "{ %frost$core$Class*, \{INT_TYPE}, %frost$core$String*, " +
+                            "%frost$core$Class*, %$itable*, [\{valueVTable.count} x i8*] }")
+                    classConstants[name] := result
+                    def vtable := compiler.getVTable(cl)
+                    def superCC := getClassConstant(compiler.getClass(cl.rawSuper))
+                    def superCast:String
+                    if superCC.type != llvmType(Type.Class()) {
+                        superCast := "bitcast(\{superCC.type}* \{superCC.name} to %frost$core$Class*)"
+                    }
+                    else {
+                        superCast := superCC.name
+                    }
+                    def itable := getWrapperITable(cl)
+                    def clConstant := getClassConstant(compiler.getClass(Type.Class()))
+                    def code := MutableString("\{result.name} = ")
+                    if cl.isSpecialization() {
+                        code.append("linkonce_odr ")
+                    }
+                    code.append("constant \{result.type} { " +
+                            "%frost$core$Class* bitcast(\{clConstant.type}* \{clConstant.name} to " +
+                            "%frost$core$Class*), \{INT_TYPE} \{NO_REFCNT}, %frost$core$String* " +
+                            "\{getStringReference(cl.name)}, \{llvmType(Type.Class())} \{superCast}, " +
+                            "\{itable}, [\{valueVTable.count} x i8*] [")
+                    var separator := ""
+                    for i in 0 .. valueVTable.count {
+                        def m := vtable[i]
+                        def entry := getMethodTableEntry(m)
+                        code.append("\{separator}i8* bitcast(\{entry.second} \{entry.first} to i8*)")
+                        separator := ", "
+                    }
+                    code.append("] }\n")
+                    types.print(code.finish())
+                }
+            }
+            return result
+        }
+        fail(error) {
+            assert false, error.convert()
+        }
     }
 
     function escapeName(s:String):String {
@@ -976,116 +1029,138 @@ class LLVMCodeGenerator : CodeGenerator {
 
     method wrapValue(position:Position, value:String, srcType:Type, dstType:Type,
             out:OutputStream):String {
-        def src := compiler.getClass(srcType)
-        assert src !== null
-        if srcType.typeKind = Type.Kind.NULLABLE {
-            -- casting nullable value to nullable wrapper, need to special-case null
-            def testStart := currentBlock
-            def isNonNull := nextVar()
-            out.printLine("\{isNonNull} = extractvalue \{nullableType(srcType)} \{value}, 1" +
+        try {
+            def src := compiler.getClass(srcType)
+            assert src !== null
+            if srcType.typeKind = Type.Kind.NULLABLE {
+                -- casting nullable value to nullable wrapper, need to special-case null
+                def testStart := currentBlock
+                def isNonNull := nextVar()
+                out.printLine("\{isNonNull} = extractvalue \{nullableType(srcType)} \{value}, 1" +
+                        debugInfo(position))
+                def nonNullLabel := nextLabel()
+                def endLabel := nextLabel()
+                out.printLine("br i1 \{isNonNull}, label %\{nonNullLabel}, label %\{endLabel}" +
+                        debugInfo(position))
+                createBlock(nonNullLabel, out)
+                def unwrapped := toNonNullableValue(position, value, srcType, srcType.subtypes[0],
+                        out)
+                def nonNullValue := wrapValue(position, unwrapped, srcType.subtypes[0], dstType,
+                        out)
+                out.printLine("br label %\{endLabel}\{debugInfo(position)}")
+                createBlock(endLabel, out)
+                def result := nextVar()
+                out.printLine("\{result} = phi \{llvmType(dstType)} [null, %\{testStart}], " +
+                        "[\{nonNullValue}, %\{nonNullLabel}]")
+                return result
+            }
+            def cc := getWrapperClassConstant(src)
+            def ccCast:String
+            if cc.type != "%frost$core$Class" {
+                ccCast := "bitcast(\{cc.type}* \{cc.name} to %frost$core$Class*)"
+            }
+            else {
+                ccCast := cc.name
+            }
+            def mallocRef := nextVar()
+            out.printLine("\{mallocRef} = call i8* @frostObjectAlloc(" +
+                    "i64 \{sizeOfWrapper(src.type)}, %frost$core$Class* \{ccCast})" +
                     debugInfo(position))
-            def nonNullLabel := nextLabel()
-            def endLabel := nextLabel()
-            out.printLine("br i1 \{isNonNull}, label %\{nonNullLabel}, label %\{endLabel}" +
+            def wrapperTypeName := wrapperTypeName(src.type)
+            def wrapperType := wrapperType(src.type)
+            def wrapperCast := nextVar()
+            out.printLine("\{wrapperCast} = bitcast i8* \{mallocRef} to \{wrapperType}" +
                     debugInfo(position))
-            createBlock(nonNullLabel, out)
-            def unwrapped := toNonNullableValue(position, value, srcType, srcType.subtypes[0], out)
-            def nonNullValue := wrapValue(position, unwrapped, srcType.subtypes[0], dstType, out)
-            out.printLine("br label %\{endLabel}\{debugInfo(position)}")
-            createBlock(endLabel, out)
-            def result := nextVar()
-            out.printLine("\{result} = phi \{llvmType(dstType)} [null, %\{testStart}], " +
-                    "[\{nonNullValue}, %\{nonNullLabel}]")
-            return result
+            def target := nextVar()
+            out.printLine("\{target} = getelementptr \{wrapperTypeName}, " +
+                    "\{wrapperType} \{wrapperCast}, i64 0, i32 2\{debugInfo(position)}")
+            out.printLine("store \{llvmType(srcType)} \{value}, \{llvmType(srcType)}* \{target}" +
+                    debugInfo(position))
+            if wrapperType != llvmType(dstType) {
+                def result := nextVar()
+                out.printLine("\{result} = bitcast \{wrapperType} \{wrapperCast} to " +
+                        llvmType(dstType) + debugInfo(position))
+                return result
+            }
+            return wrapperCast
         }
-        def cc := getWrapperClassConstant(src)
-        def ccCast:String
-        if cc.type != "%frost$core$Class" {
-            ccCast := "bitcast(\{cc.type}* \{cc.name} to %frost$core$Class*)"
+        fail(error) {
+            assert false, error.convert()
         }
-        else {
-            ccCast := cc.name
-        }
-        def mallocRef := nextVar()
-        out.printLine("\{mallocRef} = call i8* @frostObjectAlloc(" +
-                "i64 \{sizeOfWrapper(src.type)}, %frost$core$Class* \{ccCast})" +
-                debugInfo(position))
-        def wrapperTypeName := wrapperTypeName(src.type)
-        def wrapperType := wrapperType(src.type)
-        def wrapperCast := nextVar()
-        out.printLine("\{wrapperCast} = bitcast i8* \{mallocRef} to \{wrapperType}" +
-                debugInfo(position))
-        def target := nextVar()
-        out.printLine("\{target} = getelementptr \{wrapperTypeName}, " +
-                "\{wrapperType} \{wrapperCast}, i64 0, i32 2\{debugInfo(position)}")
-        out.printLine("store \{llvmType(srcType)} \{value}, \{llvmType(srcType)}* \{target}" +
-                debugInfo(position))
-        if wrapperType != llvmType(dstType) {
-            def result := nextVar()
-            out.printLine("\{result} = bitcast \{wrapperType} \{wrapperCast} to " +
-                    llvmType(dstType) + debugInfo(position))
-            return result
-        }
-        return wrapperCast
     }
 
     method unwrapValue(position:Position, value:String, srcType:Type, dstType:Type,
             out:OutputStream):String {
-        def target := compiler.getClass(dstType)
-        assert target !== null
-        if dstType.typeKind = Type.Kind.NULLABLE {
-            -- casting nullable wrapper to nullable value, need to special-case null
-            def testStart := currentBlock
-            def isNonNull := nextVar()
-            out.printLine("\{isNonNull} = icmp ne \{llvmType(srcType)} \{value}, null" +
+        try {
+            def target := compiler.getClass(dstType)
+            assert target !== null
+            if dstType.typeKind = Type.Kind.NULLABLE {
+                -- casting nullable wrapper to nullable value, need to special-case null
+                def testStart := currentBlock
+                def isNonNull := nextVar()
+                out.printLine("\{isNonNull} = icmp ne \{llvmType(srcType)} \{value}, null" +
+                        debugInfo(position))
+                def nonNullLabel := nextLabel()
+                def endLabel := nextLabel()
+                out.printLine("br i1 \{isNonNull}, label %\{nonNullLabel}, label %\{endLabel}" +
+                        debugInfo(position))
+                createBlock(nonNullLabel, out)
+                def wrapped := unwrapValue(position, value, srcType, dstType.subtypes[0], out)
+                def nonNullValue := toNullableValue(position, wrapped, dstType.subtypes[0], dstType,
+                        out)
+                out.printLine("br label %\{endLabel}\{debugInfo(position)}")
+                createBlock(endLabel, out)
+                def result := nextVar()
+                out.printLine("\{result} = phi \{llvmType(dstType)} " +
+                        "[{ \{llvmType(dstType.subtypes[0])} undef, i1 0 }, " +
+                        "%\{testStart}], [\{nonNullValue}, %\{nonNullLabel}]")
+                return result
+            }
+            def targetType := llvmType(dstType)
+            def wrapperTypeName := wrapperTypeName(dstType)
+            def wrapperType := wrapperType(dstType)
+            def srcCast := nextVar()
+            out.printLine("\{srcCast} = bitcast \{llvmType(srcType)} \{value} to \{wrapperType}" +
                     debugInfo(position))
-            def nonNullLabel := nextLabel()
-            def endLabel := nextLabel()
-            out.printLine("br i1 \{isNonNull}, label %\{nonNullLabel}, label %\{endLabel}" +
+            def load := nextVar()
+            out.printLine("\{load} = load \{wrapperTypeName}, \{wrapperType} \{srcCast}" +
                     debugInfo(position))
-            createBlock(nonNullLabel, out)
-            def wrapped := unwrapValue(position, value, srcType, dstType.subtypes[0], out)
-            def nonNullValue := toNullableValue(position, wrapped, dstType.subtypes[0], dstType,
-                    out)
-            out.printLine("br label %\{endLabel}\{debugInfo(position)}")
-            createBlock(endLabel, out)
             def result := nextVar()
-            out.printLine("\{result} = phi \{llvmType(dstType)} " +
-                    "[{ \{llvmType(dstType.subtypes[0])} undef, i1 0 }, " +
-                    "%\{testStart}], [\{nonNullValue}, %\{nonNullLabel}]")
+            out.printLine("\{result} = extractvalue \{wrapperTypeName} \{load}, " +
+                    "\{OBJECT_FIELD_COUNT}\{debugInfo(position)}")
             return result
         }
-        def targetType := llvmType(dstType)
-        def wrapperTypeName := wrapperTypeName(dstType)
-        def wrapperType := wrapperType(dstType)
-        def srcCast := nextVar()
-        out.printLine("\{srcCast} = bitcast \{llvmType(srcType)} \{value} to \{wrapperType}" +
-                debugInfo(position))
-        def load := nextVar()
-        out.printLine("\{load} = load \{wrapperTypeName}, \{wrapperType} \{srcCast}" +
-                debugInfo(position))
-        def result := nextVar()
-        out.printLine("\{result} = extractvalue \{wrapperTypeName} \{load}, \{OBJECT_FIELD_COUNT}" +
-                debugInfo(position))
-        return result
+        fail(error) {
+            assert false, error.convert()
+        }
     }
 
     method toNullableValue(position:Position, value:String, srcType:Type, dstType:Type,
             out:OutputStream):String {
-        def nullableType := nullableType(dstType)
-        def result := nextVar()
-        out.printLine("\{result} = insertvalue \{nullableType} " +
-                "{ \{llvmType(srcType)} undef, i1 true }, \{llvmType(srcType)} \{value}, 0" +
-                debugInfo(position))
-        return result
+        try {
+            def nullableType := nullableType(dstType)
+            def result := nextVar()
+            out.printLine("\{result} = insertvalue \{nullableType} " +
+                    "{ \{llvmType(srcType)} undef, i1 true }, \{llvmType(srcType)} \{value}, 0" +
+                    debugInfo(position))
+            return result
+        }
+        fail(error) {
+            assert false, error.convert()
+        }
     }
 
     method toNonNullableValue(position:Position, value:String, srcType:Type, dstType:Type,
             out:OutputStream):String {
-        def result := nextVar()
-        out.printLine("\{result} = extractvalue \{llvmType(srcType)} \{value}, 0" +
-                debugInfo(position))
-        return result
+        try {
+            def result := nextVar()
+            out.printLine("\{result} = extractvalue \{llvmType(srcType)} \{value}, 0" +
+                    debugInfo(position))
+            return result
+        }
+        fail(error) {
+            assert false, error.convert()
+        }
     }
 
     method getCastReference(position:Position, value:String, src:Type, target:Type):String {
@@ -1170,7 +1245,13 @@ class LLVMCodeGenerator : CodeGenerator {
             return value
         }
         def result := nextVar()
-        out.printLine("\{result} = \{op} \{srcType} \{value} to \{dstType}\{debugInfo(position)}")
+        try {
+            out.printLine("\{result} = \{op} \{srcType} \{value} to \{dstType}" +
+                    debugInfo(position))
+        }
+        fail(error) {
+            assert false, error.convert()
+        }
         return result
     }
 
@@ -1186,29 +1267,34 @@ class LLVMCodeGenerator : CodeGenerator {
     }
 
     method getStringReference(s:String):String {
-        labelCount += 1
-        def chars := "@$chars\{labelCount}"
-        def charsType := "[\{s.utf8.count} x i8]"
-        strings.print("\{chars} = private unnamed_addr constant \{charsType} [ ")
-        var separator := ""
-        for c in s.utf8 {
-            strings.print("\{separator}i8 \{c.convert()->Int8}")
-            separator := ", "
+        try {
+            labelCount += 1
+            def chars := "@$chars\{labelCount}"
+            def charsType := "[\{s.utf8.count} x i8]"
+            strings.print("\{chars} = private unnamed_addr constant \{charsType} [ ")
+            var separator := ""
+            for c in s.utf8 {
+                strings.print("\{separator}i8 \{c.convert()->Int8}")
+                separator := ", "
+            }
+            strings.printLine(" ]")
+            labelCount += 1
+            def result := "@$str\{labelCount}"
+            def string := compiler.getClass(Type.StringType())
+            assert string !== null
+            def cc := getClassConstant(string)
+            strings.printLine("\{result} = private unnamed_addr constant %frost$core$String { " +
+                    "i8* bitcast(\{cc.type}* \{cc.name} to " +
+                    "i8*), %frost$core$Int32 insertvalue(%frost$core$Int32 " +
+                    "{ i32 undef }, i32 \{NO_REFCNT}, 0), " +
+                    "%frost$core$Char8* bitcast(\{charsType}* \{chars} " +
+                    "to %frost$core$Char8*), %frost$core$Int64 { i64 \{s.utf8.count} }, " +
+                    "%frost$core$Int64 { i64 \{s.hash} }, i8* null }")
+            return result
         }
-        strings.printLine(" ]")
-        labelCount += 1
-        def result := "@$str\{labelCount}"
-        def string := compiler.getClass(Type.StringType())
-        assert string !== null
-        def cc := getClassConstant(string)
-        strings.printLine("\{result} = private unnamed_addr constant %frost$core$String { " +
-                "i8* bitcast(\{cc.type}* \{cc.name} to " +
-                "i8*), %frost$core$Int32 insertvalue(%frost$core$Int32 " +
-                "{ i32 undef }, i32 \{NO_REFCNT}, 0), " +
-                "%frost$core$Char8* bitcast(\{charsType}* \{chars} " +
-                "to %frost$core$Char8*), %frost$core$Int64 { i64 \{s.utf8.count} }, " +
-                "%frost$core$Int64 { i64 \{s.hash} }, i8* null }")
-        return result
+        fail(error) {
+            assert false, error.convert()
+        }
     }
 
     ================================================================================================
@@ -1237,14 +1323,19 @@ class LLVMCodeGenerator : CodeGenerator {
     %self is always a pointer.
     ================================================================================================
     method getSelfValue(out:OutputStream):String {
-        assert compiler.currentMethod[0] !== null
-        if haveSelfValuePointer() {
-            def load := nextVar()
-            out.printLine("\{load} = load \{llvmType(compiler.currentMethod[0].owner.type)}, " +
-                    "\{llvmType(compiler.currentMethod[0].owner.type)}* \{getSelfPointer()}")
-            return load
+        try {
+            assert compiler.currentMethod[0] !== null
+            if haveSelfValuePointer() {
+                def load := nextVar()
+                out.printLine("\{load} = load \{llvmType(compiler.currentMethod[0].owner.type)}, " +
+                        "\{llvmType(compiler.currentMethod[0].owner.type)}* \{getSelfPointer()}")
+                return load
+            }
+            return "%self"
         }
-        return "%self"
+        fail(error) {
+            assert false, error.convert()
+        }
     }
 
     method getNullReference(t:Type):String {
@@ -1278,34 +1369,39 @@ class LLVMCodeGenerator : CodeGenerator {
 
     @override
     method writeDeclaration(m:MethodDecl) {
-        def name := getName(m)
-        if declared.contains(name) {
-            return
+        try {
+            def name := getName(m)
+            if declared.contains(name) {
+                return
+            }
+            declared.add(name)
+            declarations.print("declare ")
+            def needsIndirection := needsStructIndirection(m)
+            if needsIndirection {
+                declarations.print("void")
+            }
+            else {
+                declarations.print(llvmType(m.returnType))
+            }
+            declarations.print(" \{getName(m)}(")
+            var separator := ""
+            if needsIndirection {
+                declarations.print("\{llvmType(m.returnType)}*")
+                separator := ", "
+            }
+            if !m.annotations.isClass & !compiler.isValueInit(m) {
+                declarations.print("\{separator}\{selfType(m)} %self")
+                separator := ", "
+            }
+            for p in m.parameters {
+                declarations.print("\{separator}\{llvmType(p.type)} %\{escapeName(p.name)}")
+                separator := ", "
+            }
+            declarations.printLine(")")
         }
-        declared.add(name)
-        declarations.print("declare ")
-        def needsIndirection := needsStructIndirection(m)
-        if needsIndirection {
-            declarations.print("void")
+        fail(error) {
+            assert false, error.convert()
         }
-        else {
-            declarations.print(llvmType(m.returnType))
-        }
-        declarations.print(" \{getName(m)}(")
-        var separator := ""
-        if needsIndirection {
-            declarations.print("\{llvmType(m.returnType)}*")
-            separator := ", "
-        }
-        if !m.annotations.isClass & !compiler.isValueInit(m) {
-            declarations.print("\{separator}\{selfType(m)} %self")
-            separator := ", "
-        }
-        for p in m.parameters {
-            declarations.print("\{separator}\{llvmType(p.type)} %\{escapeName(p.name)}")
-            separator := ", "
-        }
-        declarations.printLine(")")
     }
 
     method getReference(v:IR.Value):String {
@@ -1352,57 +1448,72 @@ class LLVMCodeGenerator : CodeGenerator {
     }
 
     method debugInfo(position:Position):String {
-        if compiler.settings.debug & position != lastDebugPosition &
-                currentMethodMetadata !== null {
-            def result := nextMetadata()
-            metadata.print("\{result} = !DILocation(line: \{position.line}, column: " +
-                    "\{position.column}, scope: \{currentMethodMetadata})")
-            lastDebugPosition := position
-            return ", !dbg \{result}"
+        try {
+            if compiler.settings.debug & position != lastDebugPosition &
+                    currentMethodMetadata !== null {
+                def result := nextMetadata()
+                metadata.print("\{result} = !DILocation(line: \{position.line}, column: " +
+                        "\{position.column}, scope: \{currentMethodMetadata})")
+                lastDebugPosition := position
+                return ", !dbg \{result}"
+            }
+            else {
+                return ""
+            }
         }
-        else {
-            return ""
+        fail(error) {
+            assert false, error.convert()
         }
     }
 
     method writeIsNull(position:Position, id:IR.Statement.ID, value:IR.Value) {
-        def valueRef := getTypedReference(value)
-        def cl := compiler.getClass(value.type())
-        def resultValue:String
-        if compiler.isValue(cl) {
-            if value.type().typeKind != Type.Kind.NULLABLE {
-                refs[id] := "0"
-                return
+        try {
+            def valueRef := getTypedReference(value)
+            def cl := compiler.getClass(value.type())
+            def resultValue:String
+            if compiler.isValue(cl) {
+                if value.type().typeKind != Type.Kind.NULLABLE {
+                    refs[id] := "0"
+                    return
+                }
+                def field := nextVar()
+                out.printLine("\{field} = extractvalue \{valueRef}, 1\{debugInfo(position)}")
+                def result := nextVar()
+                out.printLine("\{result} = xor i1 \{field}, -1\{debugInfo(position)}")
+                refs[id] := result
             }
-            def field := nextVar()
-            out.printLine("\{field} = extractvalue \{valueRef}, 1\{debugInfo(position)}")
-            def result := nextVar()
-            out.printLine("\{result} = xor i1 \{field}, -1\{debugInfo(position)}")
-            refs[id] := result
+            else {
+                def result := nextVar()
+                out.printLine("\{result} = icmp eq \{valueRef}, null\{debugInfo(position)}")
+                refs[id] := result
+            }
         }
-        else {
-            def result := nextVar()
-            out.printLine("\{result} = icmp eq \{valueRef}, null\{debugInfo(position)}")
-            refs[id] := result
+        fail(error) {
+            assert false, error.convert()
         }
     }
 
     method writeIsNonNull(position:Position, id:IR.Statement.ID, value:IR.Value) {
-        def valueRef := getTypedReference(value)
-        def cl := compiler.getClass(value.type())
-        if compiler.isValue(cl) {
-            if value.type().typeKind != Type.Kind.NULLABLE {
-                refs[id] := "1"
-                return
+        try {
+            def valueRef := getTypedReference(value)
+            def cl := compiler.getClass(value.type())
+            if compiler.isValue(cl) {
+                if value.type().typeKind != Type.Kind.NULLABLE {
+                    refs[id] := "1"
+                    return
+                }
+                def result := nextVar()
+                out.printLine("\{result} = extractvalue \{valueRef}, 1\{debugInfo(position)}")
+                refs[id] := result
             }
-            def result := nextVar()
-            out.printLine("\{result} = extractvalue \{valueRef}, 1\{debugInfo(position)}")
-            refs[id] := result
+            else {
+                def result := nextVar()
+                out.printLine("\{result} = icmp ne \{valueRef}, null\{debugInfo(position)}")
+                refs[id] := result
+            }
         }
-        else {
-            def result := nextVar()
-            out.printLine("\{result} = icmp ne \{valueRef}, null\{debugInfo(position)}")
-            refs[id] := result
+        fail(error) {
+            assert false, error.convert()
         }
     }
 
@@ -1519,13 +1630,23 @@ class LLVMCodeGenerator : CodeGenerator {
         def result := nextVar()
         def leftRef := getReference(left)
         def rightRef := getReference(right)
-        out.printLine("\{result} = \{llvmOp} \{llvmType(left.type())} \{leftRef}, \{rightRef}" +
-                debugInfo(position))
+        try {
+            out.printLine("\{result} = \{llvmOp} \{llvmType(left.type())} \{leftRef}, \{rightRef}" +
+                    debugInfo(position))
+        }
+        fail(error) {
+            assert false, error.convert()
+        }
         refs[id] := result
     }
 
     method writeBranch(position:Position, target:IR.Block.ID) {
-        out.printLine("br label %\{target}\{debugInfo(position)}")
+        try {
+            out.printLine("br label %\{target}\{debugInfo(position)}")
+        }
+        fail(error) {
+            assert false, error.convert()
+        }
     }
 
     method writeCast(position:Position, id:IR.Statement.ID, value:IR.Value, target:Type) {
@@ -1534,529 +1655,659 @@ class LLVMCodeGenerator : CodeGenerator {
 
     method writeConditionalBranch(position:Position, test:IR.Value, ifTrue:IR.Block.ID,
                                   ifFalse:IR.Block.ID) {
-        out.printLine("br \{getTypedReference(test)}, label %\{ifTrue}, " +
-                "label %\{ifFalse}\{debugInfo(position)}")
+        try {
+            out.printLine("br \{getTypedReference(test)}, label %\{ifTrue}, " +
+                    "label %\{ifFalse}\{debugInfo(position)}")
+        }
+        fail(error) {
+            assert false, error.convert()
+        }
     }
 
     @pre(cl.resolved = Compiler.Resolution.RESOLVED)
     method writeConstruct(position:Position, id:IR.Statement.ID, cl:ClassDecl) {
-        assert !compiler.isValue(cl)
-        def cc := getClassConstant(cl)
-        def ccCast:String
-        if cc.type != "%frost$core$Class" {
-            ccCast := "bitcast(\{cc.type}* \{cc.name} to %frost$core$Class*)"
+        try {
+            assert !compiler.isValue(cl)
+            def cc := getClassConstant(cl)
+            def ccCast:String
+            if cc.type != "%frost$core$Class" {
+                ccCast := "bitcast(\{cc.type}* \{cc.name} to %frost$core$Class*)"
+            }
+            else {
+                ccCast := cc.name
+            }
+            def callRef := nextVar()
+            def target := cl.type
+            out.printLine("\{callRef} = call i8* @frostObjectAlloc(i64 \{sizeOf(target)}, " +
+                    "%frost$core$Class* \{ccCast})\{debugInfo(position)}")
+            def result := nextVar()
+            out.printLine("\{result} = bitcast i8* \{callRef} to \{llvmType(target)}" +
+                    debugInfo(position))
+            refs[id] := result
         }
-        else {
-            ccCast := cc.name
+        fail(error) {
+            assert false, error.convert()
         }
-        def callRef := nextVar()
-        def target := cl.type
-        out.printLine("\{callRef} = call i8* @frostObjectAlloc(i64 \{sizeOf(target)}, " +
-                "%frost$core$Class* \{ccCast})\{debugInfo(position)}")
-        def result := nextVar()
-        out.printLine("\{result} = bitcast i8* \{callRef} to \{llvmType(target)}" +
-                debugInfo(position))
-        refs[id] := result
     }
 
     method writeCreateStruct(position:Position, id:IR.Statement.ID, cl:ClassDecl,
             args:FixedArray<IR.Value>) {
-        assert compiler.isValue(cl)
-        assert args.count > 0
-        def type := llvmType(cl.type)
-        var current := "undef"
-        for i in 0 .. args.count {
-            def value := getTypedReference(args[i])
-            def next := nextVar()
-            out.printLine("\{next} = insertvalue \{type} \{current}, \{value}, \{i}")
-            current := next
+        try {
+            assert compiler.isValue(cl)
+            assert args.count > 0
+            def type := llvmType(cl.type)
+            var current := "undef"
+            for i in 0 .. args.count {
+                def value := getTypedReference(args[i])
+                def next := nextVar()
+                out.printLine("\{next} = insertvalue \{type} \{current}, \{value}, \{i}")
+                current := next
+            }
+            refs[id] := current
         }
-        refs[id] := current
+        fail(error) {
+            assert false, error.convert()
+        }
     }
 
     method writeDynamicCall(position:Position, id:IR.Statement.ID, m:IR.Value,
             args:ListView<IR.Value>) {
-        var type := m.type()
-        if type.isPointer {
-            type := type.subtypes[1]
+        try {
+            var type := m.type()
+            if type.isPointer {
+                type := type.subtypes[1]
+            }
+            def returnType := type.returnType
+            if returnType != Type.Void() {
+                def result := nextVar()
+                out.print("\{result} = ")
+                refs[id] := result
+            }
+            out.print("call \{llvmType(returnType)} \{getReference(m)}(")
+            var separator := ""
+            for a in args {
+                out.print(separator)
+                out.print(getTypedReference(a))
+                separator := ", "
+            }
+            out.printLine(")\{debugInfo(position)}")
         }
-        def returnType := type.returnType
-        if returnType != Type.Void() {
-            def result := nextVar()
-            out.print("\{result} = ")
-            refs[id] := result
+        fail(error) {
+            assert false, error.convert()
         }
-        out.print("call \{llvmType(returnType)} \{getReference(m)}(")
-        var separator := ""
-        for a in args {
-            out.print(separator)
-            out.print(getTypedReference(a))
-            separator := ", "
-        }
-        out.printLine(")\{debugInfo(position)}")
     }
 
     method writeExtractField(position:Position, id:IR.Statement.ID, target:IR.Value,
             field:FieldDecl) {
-        var targetRef := getTypedReference(target)
-        def index := compiler.getIndex(field)
-        def result := nextVar()
-        out.printLine("\{result} = extractvalue \{targetRef}, \{index}\{debugInfo(position)}")
-        refs[id] := result
+        try {
+            var targetRef := getTypedReference(target)
+            def index := compiler.getIndex(field)
+            def result := nextVar()
+            out.printLine("\{result} = extractvalue \{targetRef}, \{index}\{debugInfo(position)}")
+            refs[id] := result
+        }
+        fail(error) {
+            assert false, error.convert()
+        }
     }
 
     method writeGetChoiceFieldPointer(position:Position, id:IR.Statement.ID, target:IR.Value,
             cc:ChoiceCase, index:Int) {
-        def data := cc.owner.fields[1]
-        assert data.name = ClassDecl.CHOICE_DATA_NAME
-        def targetRef := getReference(target)
-        def fieldIndex := compiler.getIndex(data)
-        def dataPointer := nextVar()
-        out.printLine("\{dataPointer} = getelementptr \{typeName(cc.owner.type)}, " +
-                "\{typeName(cc.owner.type)}* \{targetRef}, i64 0, i32 \{fieldIndex}" +
-                debugInfo(position))
-        def size := getChoiceDataSize(cc.owner)
-        def offset := nextVar()
-        out.printLine("\{offset} = getelementptr [\{size} x i8], [\{size} x i8]* \{dataPointer}," +
-                " i64 0, i64 \{getChoiceFieldOffset(cc, index)}\{debugInfo(position)}")
-        def cast := nextVar()
-        out.printLine("\{cast} = bitcast i8* \{offset} to \{llvmType(cc.fields[index])}*" +
-                debugInfo(position))
-        refs[id] := cast
+        try {
+            def data := cc.owner.fields[1]
+            assert data.name = ClassDecl.CHOICE_DATA_NAME
+            def targetRef := getReference(target)
+            def fieldIndex := compiler.getIndex(data)
+            def dataPointer := nextVar()
+            out.printLine("\{dataPointer} = getelementptr \{typeName(cc.owner.type)}, " +
+                    "\{typeName(cc.owner.type)}* \{targetRef}, i64 0, i32 \{fieldIndex}" +
+                    debugInfo(position))
+            def size := getChoiceDataSize(cc.owner)
+            def offset := nextVar()
+            out.printLine("\{offset} = getelementptr [\{size} x i8], [\{size} x i8]* " +
+                    "\{dataPointer}, i64 0, i64 \{getChoiceFieldOffset(cc, index)}" +
+                    debugInfo(position))
+            def cast := nextVar()
+            out.printLine("\{cast} = bitcast i8* \{offset} to \{llvmType(cc.fields[index])}*" +
+                    debugInfo(position))
+            refs[id] := cast
+        }
+        fail(error) {
+            assert false, error.convert()
+        }
     }
 
     method writeGetFieldPointer(position:Position, id:IR.Statement.ID, target:IR.Value,
             field:FieldDecl) {
-        def targetRef := getReference(target)
-        def index := compiler.getIndex(field)
-        def result := nextVar()
-        out.printLine("\{result} = getelementptr \{typeName(target.type())}, " +
-                "\{typeName(target.type())}* \{targetRef}, i64 0, i32 \{index}" +
-                debugInfo(position))
-        if compiler.isValue(field.type) {
-            refs[id] := result
-        }
-        else {
-            def cast := nextVar()
-            out.printLine("\{cast} = bitcast i8** \{result} to \{llvmType(field.type)}*" +
+        try {
+            def targetRef := getReference(target)
+            def index := compiler.getIndex(field)
+            def result := nextVar()
+            out.printLine("\{result} = getelementptr \{typeName(target.type())}, " +
+                    "\{typeName(target.type())}* \{targetRef}, i64 0, i32 \{index}" +
                     debugInfo(position))
-            refs[id] := cast
+            if compiler.isValue(field.type) {
+                refs[id] := result
+            }
+            else {
+                def cast := nextVar()
+                out.printLine("\{cast} = bitcast i8** \{result} to \{llvmType(field.type)}*" +
+                        debugInfo(position))
+                refs[id] := cast
+            }
+        }
+        fail(error) {
+            assert false, error.convert()
         }
     }
 
     method writeGetInterfaceMethod(position:Position, id:IR.Statement.ID, value:IR.Value,
             cl:ClassDecl, index:Int, type:Type) {
-        def methodTypeString := llvmMethodType(type, null)
-        -- load class constant entry
-        def entry := nextLabel()
-        out.printLine("br label %\{entry}")
-        createBlock(entry, out)
-        def rawClassPointer := nextVar()
-        out.printLine("\{rawClassPointer} = getelementptr inbounds \{typeName(cl.type)}, " +
-                "\{getTypedReference(value)}, \{SIZE_TYPE} 0, i32 \{CLASS_POINTER_INDEX}" +
-                debugInfo(position))
-        def classPointer := nextVar()
-        def classType := typeName(Type.Class())
-        out.printLine("\{classPointer} = bitcast i8** \{rawClassPointer} to \{classType}**" +
-                debugInfo(position))
-        def loadedClass := nextVar()
-        out.printLine("\{loadedClass} = load \{classType}*, \{classType}** \{classPointer}" +
-                debugInfo(position))
-        def itableFirst := nextVar()
-        out.printLine("\{itableFirst} = getelementptr inbounds \{classType}, \{classType}* " +
-                "\{loadedClass}, \{SIZE_TYPE} 0, i32 \{ITABLE_INDEX}\{debugInfo(position)}")
-        def next := nextLabel()
-        out.printLine("br label %\{next}")
-        def leavingEntryLabel := currentBlock
-        createBlock(next, out)
-        labelCount += 1
-        def itableNext := "%$itable\{labelCount}"
-        def itablePtrPtr := nextVar()
-        def failBlock := nextLabel()
-        out.printLine("\{itablePtrPtr} = phi %$itable** [ \{itableFirst}, %\{leavingEntryLabel}]," +
-                " [ \{itableNext}, %\{failBlock} ]")
-        def itablePtr := nextVar()
-        out.printLine("\{itablePtr} = load %$itable*, %$itable** \{itablePtrPtr}" +
-                debugInfo(position))
-        def itableClassPtr := nextVar()
-        out.printLine("\{itableClassPtr} = getelementptr inbounds %$itable, %$itable* " +
-                "\{itablePtr}, \{SIZE_TYPE} 0, i32 0\{debugInfo(position)}")
-        def itableClass := nextVar()
-        out.printLine("\{itableClass} = load \{classType}*, \{classType}** \{itableClassPtr}" +
-                debugInfo(position))
-        def test := nextVar()
-        def intfCC := getClassConstant(cl)
-        out.printLine("\{test} = icmp eq \{classType}* bitcast(\{intfCC.type}* \{intfCC.name} to " +
-                "\{classType}*), \{itableClass}\{debugInfo(position)}")
-        def success := nextLabel()
-        out.printLine("br i1 \{test}, label %\{success}, label %\{failBlock}\{debugInfo(position)}")
+        try {
+            def methodTypeString := llvmMethodType(type, null)
+            -- load class constant entry
+            def entry := nextLabel()
+            out.printLine("br label %\{entry}")
+            createBlock(entry, out)
+            def rawClassPointer := nextVar()
+            out.printLine("\{rawClassPointer} = getelementptr inbounds \{typeName(cl.type)}, " +
+                    "\{getTypedReference(value)}, \{SIZE_TYPE} 0, i32 \{CLASS_POINTER_INDEX}" +
+                    debugInfo(position))
+            def classPointer := nextVar()
+            def classType := typeName(Type.Class())
+            out.printLine("\{classPointer} = bitcast i8** \{rawClassPointer} to \{classType}**" +
+                    debugInfo(position))
+            def loadedClass := nextVar()
+            out.printLine("\{loadedClass} = load \{classType}*, \{classType}** \{classPointer}" +
+                    debugInfo(position))
+            def itableFirst := nextVar()
+            out.printLine("\{itableFirst} = getelementptr inbounds \{classType}, \{classType}* " +
+                    "\{loadedClass}, \{SIZE_TYPE} 0, i32 \{ITABLE_INDEX}\{debugInfo(position)}")
+            def next := nextLabel()
+            out.printLine("br label %\{next}")
+            def leavingEntryLabel := currentBlock
+            createBlock(next, out)
+            labelCount += 1
+            def itableNext := "%$itable\{labelCount}"
+            def itablePtrPtr := nextVar()
+            def failBlock := nextLabel()
+            out.printLine("\{itablePtrPtr} = phi %$itable** [ \{itableFirst}, " +
+                    "%\{leavingEntryLabel}], [ \{itableNext}, %\{failBlock} ]")
+            def itablePtr := nextVar()
+            out.printLine("\{itablePtr} = load %$itable*, %$itable** \{itablePtrPtr}" +
+                    debugInfo(position))
+            def itableClassPtr := nextVar()
+            out.printLine("\{itableClassPtr} = getelementptr inbounds %$itable, %$itable* " +
+                    "\{itablePtr}, \{SIZE_TYPE} 0, i32 0\{debugInfo(position)}")
+            def itableClass := nextVar()
+            out.printLine("\{itableClass} = load \{classType}*, \{classType}** \{itableClassPtr}" +
+                    debugInfo(position))
+            def test := nextVar()
+            def intfCC := getClassConstant(cl)
+            out.printLine("\{test} = icmp eq \{classType}* bitcast(\{intfCC.type}* " +
+                    "\{intfCC.name} to \{classType}*), \{itableClass}\{debugInfo(position)}")
+            def success := nextLabel()
+            out.printLine("br i1 \{test}, label %\{success}, label " +
+                    "%\{failBlock}\{debugInfo(position)}")
 
-        createBlock(failBlock, out)
-        out.printLine("\{itableNext} = getelementptr inbounds %$itable, %$itable* \{itablePtr}, " +
-                "\{SIZE_TYPE} 0, i32 1\{debugInfo(position)}")
-        out.printLine("br label %\{next}")
+            createBlock(failBlock, out)
+            out.printLine("\{itableNext} = getelementptr inbounds %$itable, %$itable* " +
+                    "\{itablePtr}, \{SIZE_TYPE} 0, i32 1\{debugInfo(position)}")
+            out.printLine("br label %\{next}")
 
-        createBlock(success, out)
-        def methodPtrPtr := nextVar()
-        out.printLine("\{methodPtrPtr} = getelementptr inbounds %$itable, %$itable* " +
-                "\{itablePtr}, \{SIZE_TYPE} 0, i32 2, i32 \{index}\{debugInfo(position)}")
-        def cast := nextVar()
-        out.printLine("\{cast} = bitcast i8** \{methodPtrPtr} to \{methodTypeString}*" +
-                debugInfo(position))
-        def methodPtr := nextVar()
-        out.printLine("\{methodPtr} = load \{methodTypeString}, \{methodTypeString}* \{cast}" +
-                debugInfo(position))
-        refs[id] := methodPtr
+            createBlock(success, out)
+            def methodPtrPtr := nextVar()
+            out.printLine("\{methodPtrPtr} = getelementptr inbounds %$itable, %$itable* " +
+                    "\{itablePtr}, \{SIZE_TYPE} 0, i32 2, i32 \{index}\{debugInfo(position)}")
+            def cast := nextVar()
+            out.printLine("\{cast} = bitcast i8** \{methodPtrPtr} to \{methodTypeString}*" +
+                    debugInfo(position))
+            def methodPtr := nextVar()
+            out.printLine("\{methodPtr} = load \{methodTypeString}, \{methodTypeString}* \{cast}" +
+                    debugInfo(position))
+            refs[id] := methodPtr
+        }
+        fail(error) {
+            assert false, error.convert()
+        }
     }
 
     method writeGetVirtualMethod(position:Position, id:IR.Statement.ID, value:IR.Value, index:Int,
             type:Type) {
-        def classPtrPtr := nextVar()
-        out.printLine("\{classPtrPtr} = getelementptr inbounds \{typeName(value.type())}, " +
-                "\{getTypedReference(value)}, i64 0, i32 0\{debugInfo(position)}")
-        def classPtr := nextVar()
-        out.printLine("\{classPtr} = load i8*, i8** \{classPtrPtr}\{debugInfo(position)}")
-        def cast := nextVar()
-        def classType := typeName(Type.Class())
-        out.printLine("\{cast} = bitcast i8* \{classPtr} to \{classType}*\{debugInfo(position)}")
-        def ptr := nextVar()
-        out.printLine("\{ptr} = getelementptr inbounds \{classType}, \{classType}* \{cast}, " +
-                "i64 0, i32 \{VTABLE_INDEX}, i64 \{index}\{debugInfo(position)}")
-        def load := nextVar()
-        out.printLine("\{load} = load i8*, i8** \{ptr}\{debugInfo(position)}")
-        def result := nextVar()
-        out.printLine("\{result} = bitcast i8* \{load} to \{llvmMethodType(type, null)}" +
-                debugInfo(position))
-        refs[id] := result
+        try {
+            def classPtrPtr := nextVar()
+            out.printLine("\{classPtrPtr} = getelementptr inbounds \{typeName(value.type())}, " +
+                    "\{getTypedReference(value)}, i64 0, i32 0\{debugInfo(position)}")
+            def classPtr := nextVar()
+            out.printLine("\{classPtr} = load i8*, i8** \{classPtrPtr}\{debugInfo(position)}")
+            def cast := nextVar()
+            def classType := typeName(Type.Class())
+            out.printLine("\{cast} = bitcast i8* \{classPtr} to \{classType}*" +
+                    debugInfo(position))
+            def ptr := nextVar()
+            out.printLine("\{ptr} = getelementptr inbounds \{classType}, \{classType}* \{cast}, " +
+                    "i64 0, i32 \{VTABLE_INDEX}, i64 \{index}\{debugInfo(position)}")
+            def load := nextVar()
+            out.printLine("\{load} = load i8*, i8** \{ptr}\{debugInfo(position)}")
+            def result := nextVar()
+            out.printLine("\{result} = bitcast i8* \{load} to \{llvmMethodType(type, null)}" +
+                    debugInfo(position))
+            refs[id] := result
+        }
+        fail(error) {
+            assert false, error.convert()
+        }
     }
 
     method writeLoad(position:Position, id:IR.Statement.ID, ptr:IR.Value) {
-        def result := nextVar()
-        out.printLine("\{result} = load \{llvmType(ptr.type())}, \{llvmType(ptr.type())}* " +
-                getReference(ptr) + debugInfo(position))
-        refs[id] := result
+        try {
+            def result := nextVar()
+            out.printLine("\{result} = load \{llvmType(ptr.type())}, \{llvmType(ptr.type())}* " +
+                    getReference(ptr) + debugInfo(position))
+            refs[id] := result
+        }
+        fail(error) {
+            assert false, error.convert()
+        }
     }
 
     method writeNegate(position:Position, id:IR.Statement.ID, value:IR.Value) {
-        def result := nextVar()
-        if value.type().typeKind = Type.Kind.BUILTIN_FLOAT {
-            out.printLine("\{result} = fsub \{llvmType(value.type())} 0x0, \{getReference(value)}\{debugInfo(position)}")
+        try {
+            def result := nextVar()
+            if value.type().typeKind = Type.Kind.BUILTIN_FLOAT {
+                out.printLine("\{result} = fsub \{llvmType(value.type())} 0x0, " +
+                        "\{getReference(value)}\{debugInfo(position)}")
+            }
+            else {
+                out.printLine("\{result} = sub \{llvmType(value.type())} 0, " +
+                        "\{getReference(value)}\{debugInfo(position)}")
+            }
+            refs[id] := result
         }
-        else {
-            out.printLine("\{result} = sub \{llvmType(value.type())} 0, \{getReference(value)}\{debugInfo(position)}")
+        fail(error) {
+            assert false, error.convert()
         }
-        refs[id] := result
     }
 
     method writeNot(position:Position, id:IR.Statement.ID, value:IR.Value) {
-        def result := nextVar()
-        out.printLine("\{result} = xor \{getTypedReference(value)}, -1\{debugInfo(position)}")
-        refs[id] := result
+        try {
+            def result := nextVar()
+            out.printLine("\{result} = xor \{getTypedReference(value)}, -1\{debugInfo(position)}")
+            refs[id] := result
+        }
+        fail(error) {
+            assert false, error.convert()
+        }
     }
 
     method writePointerAlloc(position:Position, id:IR.Statement.ID, count:IR.Value, type:Type) {
-        def countRef := getTypedReference(count)
-        def elementSize := stride(type)
-        assert elementSize > 0, "invalid size for type \{type}"
-        def size := nextVar()
-        out.printLine("\{size} = mul \{countRef}, \{elementSize}\{debugInfo(position)}")
-        def malloc := nextVar()
-        out.printLine("\{malloc} = call i8* @frostAlloc(\{SIZE_TYPE} \{size})" +
-                debugInfo(position))
-        def result := nextVar()
-        out.printLine("\{result} = bitcast i8* \{malloc} to \{llvmType(Type.pointerTo(type))}" +
-                debugInfo(position))
-        refs[id] := result
+        try {
+            def countRef := getTypedReference(count)
+            def elementSize := stride(type)
+            assert elementSize > 0, "invalid size for type \{type}"
+            def size := nextVar()
+            out.printLine("\{size} = mul \{countRef}, \{elementSize}\{debugInfo(position)}")
+            def malloc := nextVar()
+            out.printLine("\{malloc} = call i8* @frostAlloc(\{SIZE_TYPE} \{size})" +
+                    debugInfo(position))
+            def result := nextVar()
+            out.printLine("\{result} = bitcast i8* \{malloc} to \{llvmType(Type.pointerTo(type))}" +
+                    debugInfo(position))
+            refs[id] := result
+        }
+        fail(error) {
+            assert false, error.convert()
+        }
     }
 
     method writePointerDestroy(position:Position, ptr:IR.Value) {
-        def ptrRef := getTypedReference(ptr)
-        def cast := nextVar()
-        out.printLine("\{cast} = bitcast \{ptrRef} to i8*\{debugInfo(position)}")
-        out.printLine("call void @frostFree(i8* \{cast})\{debugInfo(position)}")
+        try {
+            def ptrRef := getTypedReference(ptr)
+            def cast := nextVar()
+            out.printLine("\{cast} = bitcast \{ptrRef} to i8*\{debugInfo(position)}")
+            out.printLine("call void @frostFree(i8* \{cast})\{debugInfo(position)}")
+        }
+        fail(error) {
+            assert false, error.convert()
+        }
     }
 
     method writePointerGetIndex(position:Position, id:IR.Statement.ID, ptr:IR.Value,
             index:IR.Value) {
-        def base := getTypedReference(ptr)
-        def indexRef := getTypedReference(index)
-        def baseType := llvmType(ptr.type().subtypes[1])
-        def offset := nextVar()
-        out.printLine("\{offset} = getelementptr inbounds \{baseType}, " +
-                "\{base}, \{indexRef}\{debugInfo(position)}")
-        def result := nextVar()
-        out.printLine("\{result} = load \{baseType}, \{baseType}* \{offset}\{debugInfo(position)}")
-        refs[id] := result
+        try {
+            def base := getTypedReference(ptr)
+            def indexRef := getTypedReference(index)
+            def baseType := llvmType(ptr.type().subtypes[1])
+            def offset := nextVar()
+            out.printLine("\{offset} = getelementptr inbounds \{baseType}, " +
+                    "\{base}, \{indexRef}\{debugInfo(position)}")
+            def result := nextVar()
+            out.printLine("\{result} = load \{baseType}, \{baseType}* \{offset}\{debugInfo(position)}")
+            refs[id] := result
+        }
+        fail(error) {
+            assert false, error.convert()
+        }
     }
 
     method writePointerOffset(position:Position, id:IR.Statement.ID, ptr:IR.Value,
             offset:IR.Value) {
-        def base := getTypedReference(ptr)
-        def offsetRef := getTypedReference(offset)
-        def baseType := llvmType(ptr.type().subtypes[1])
-        def result := nextVar()
-        out.printLine("\{result} = getelementptr inbounds \{baseType}, " +
-                "\{base}, \{offsetRef}\{debugInfo(position)}")
-        refs[id] := result
+        try {
+            def base := getTypedReference(ptr)
+            def offsetRef := getTypedReference(offset)
+            def baseType := llvmType(ptr.type().subtypes[1])
+            def result := nextVar()
+            out.printLine("\{result} = getelementptr inbounds \{baseType}, " +
+                    "\{base}, \{offsetRef}\{debugInfo(position)}")
+            refs[id] := result
+        }
+        fail(error) {
+            assert false, error.convert()
+        }
     }
 
     method writePointerRealloc(position:Position, id:IR.Statement.ID, ptr:IR.Value,
             oldCount:IR.Value, newCount:IR.Value) {
-        def ptrRef := getTypedReference(ptr)
-        def cast := nextVar()
-        out.printLine("\{cast} = bitcast \{ptrRef} to i8*\{debugInfo(position)}")
-        def oldCountRef := getTypedReference(oldCount)
-        def newCountRef := getTypedReference(newCount)
-        def elementSize := stride(ptr.type().subtypes[1])
-        assert elementSize > 0, "invalid size for type \{ptr.type()}"
-        def oldSize := nextVar()
-        out.printLine("\{oldSize} = mul \{oldCountRef}, \{elementSize}\{debugInfo(position)}")
-        def newSize := nextVar()
-        out.printLine("\{newSize} = mul \{newCountRef}, \{elementSize}\{debugInfo(position)}")
-        def realloc := nextVar()
-        out.printLine("\{realloc} = call i8* @frostRealloc(i8* \{cast}, " +
-                "\{SIZE_TYPE} \{oldSize}, \{SIZE_TYPE} \{newSize})\{debugInfo(position)}")
-        def result := nextVar()
-        out.printLine("\{result} = bitcast i8* \{realloc} to \{llvmType(ptr.type())}" +
-                debugInfo(position))
-        refs[id] := result
+        try {
+            def ptrRef := getTypedReference(ptr)
+            def cast := nextVar()
+            out.printLine("\{cast} = bitcast \{ptrRef} to i8*\{debugInfo(position)}")
+            def oldCountRef := getTypedReference(oldCount)
+            def newCountRef := getTypedReference(newCount)
+            def elementSize := stride(ptr.type().subtypes[1])
+            assert elementSize > 0, "invalid size for type \{ptr.type()}"
+            def oldSize := nextVar()
+            out.printLine("\{oldSize} = mul \{oldCountRef}, \{elementSize}\{debugInfo(position)}")
+            def newSize := nextVar()
+            out.printLine("\{newSize} = mul \{newCountRef}, \{elementSize}\{debugInfo(position)}")
+            def realloc := nextVar()
+            out.printLine("\{realloc} = call i8* @frostRealloc(i8* \{cast}, " +
+                    "\{SIZE_TYPE} \{oldSize}, \{SIZE_TYPE} \{newSize})\{debugInfo(position)}")
+            def result := nextVar()
+            out.printLine("\{result} = bitcast i8* \{realloc} to \{llvmType(ptr.type())}" +
+                    debugInfo(position))
+            refs[id] := result
+        }
+        fail(error) {
+            assert false, error.convert()
+        }
     }
 
     method writePointerSetIndex(position:Position, value:IR.Value, ptr:IR.Value, index:IR.Value) {
-        def base := getTypedReference(ptr)
-        def indexRef := getTypedReference(index)
-        def valueRef := getTypedReference(value)
-        def baseType := llvmType(ptr.type().subtypes[1])
-        def offset := nextVar()
-        out.printLine("\{offset} = getelementptr inbounds \{baseType}, \{base}, \{indexRef}" +
-                debugInfo(position))
-        out.printLine("store \{valueRef}, \{baseType}* \{offset}\{debugInfo(position)}")
+        try {
+            def base := getTypedReference(ptr)
+            def indexRef := getTypedReference(index)
+            def valueRef := getTypedReference(value)
+            def baseType := llvmType(ptr.type().subtypes[1])
+            def offset := nextVar()
+            out.printLine("\{offset} = getelementptr inbounds \{baseType}, \{base}, \{indexRef}" +
+                    debugInfo(position))
+            out.printLine("store \{valueRef}, \{baseType}* \{offset}\{debugInfo(position)}")
+        }
+        fail(error) {
+            assert false, error.convert()
+        }
     }
 
     method writeReturn(position:Position, value:IR.Value?) {
-        if value !== null {
-            out.printLine("ret \{getTypedReference(value)}\{debugInfo(position)}")
+        try {
+            if value !== null {
+                out.printLine("ret \{getTypedReference(value)}\{debugInfo(position)}")
+            }
+            else {
+                out.printLine("ret void\{debugInfo(position)}")
+            }
         }
-        else {
-            out.printLine("ret void\{debugInfo(position)}")
+        fail(error) {
+            assert false, error.convert()
         }
     }
 
     method writeStaticCall(position:Position, id:IR.Statement.ID, m:MethodDecl,
             args:ListView<IR.Value>) {
-        if m.owner.external {
-            writeDeclaration(m)
+        try {
+            if m.owner.external {
+                writeDeclaration(m)
+            }
+            def indirect := needsStructIndirection(m)
+            def actualResultType := llvmType(m.returnType)
+            var separator := ""
+            def result:String?
+            if indirect {
+                labelCount += 1
+                result := "%tmp\{labelCount}"
+                methodHeader.printLine("\{result} = alloca \{actualResultType}")
+                out.print("call void \{getName(m)}(\{actualResultType}* \{result}")
+                separator := ", "
+            }
+            else if m.returnType != Type.Void() {
+                result := nextVar()
+                out.print("\{result} = call \{actualResultType} \{getName(m)}(")
+                refs[id] := result
+            }
+            else {
+                out.print("call void \{getName(m)}(")
+            }
+            for a in args {
+                out.print(separator)
+                out.print(getTypedReference(a))
+                separator := ", "
+            }
+            out.printLine(")\{debugInfo(position)}")
+            if indirect {
+                assert result !== null
+                def load := nextVar()
+                out.printLine("\{load} = load \{actualResultType}, \{actualResultType}* " +
+                            result)
+                refs[id] := load
+            }
         }
-        def indirect := needsStructIndirection(m)
-        def actualResultType := llvmType(m.returnType)
-        var separator := ""
-        def result:String?
-        if indirect {
-            labelCount += 1
-            result := "%tmp\{labelCount}"
-            methodHeader.printLine("\{result} = alloca \{actualResultType}")
-            out.print("call void \{getName(m)}(\{actualResultType}* \{result}")
-            separator := ", "
-        }
-        else if m.returnType != Type.Void() {
-            result := nextVar()
-            out.print("\{result} = call \{actualResultType} \{getName(m)}(")
-            refs[id] := result
-        }
-        else {
-            out.print("call void \{getName(m)}(")
-        }
-        for a in args {
-            out.print(separator)
-            out.print(getTypedReference(a))
-            separator := ", "
-        }
-        out.printLine(")\{debugInfo(position)}")
-        if indirect {
-            assert result !== null
-            def load := nextVar()
-            out.printLine("\{load} = load \{actualResultType}, \{actualResultType}* " +
-                        result)
-            refs[id] := load
+        fail(error) {
+            assert false, error.convert()
         }
     }
 
     method writeStore(position:Position, value:IR.Value, ptr:IR.Value) {
-        out.printLine("store \{getTypedReference(value)}, \{llvmType(ptr.type())}* " +
-                getReference(ptr) + debugInfo(position))
+        try {
+            out.printLine("store \{getTypedReference(value)}, \{llvmType(ptr.type())}* " +
+                    getReference(ptr) + debugInfo(position))
+        }
+        fail(error) {
+            assert false, error.convert()
+        }
     }
 
     method writeStatement(id:IR.Statement.ID, s:IR.Statement) {
-        match s {
-            when IR.Statement.BINARY(position, left, op, right, type) {
-                writeBinary(position, id, left, op, right, type)
+        try {
+            match s {
+                when IR.Statement.BINARY(position, left, op, right, type) {
+                    writeBinary(position, id, left, op, right, type)
+                }
+                when IR.Statement.BRANCH(position, target) {
+                    writeBranch(position, target)
+                }
+                when IR.Statement.CAST(position, value, type) {
+                    writeCast(position, id, value, type)
+                }
+                when IR.Statement.COMMENT(text) {
+                    out.printLine("; \{text}")
+                }
+                when IR.Statement.CONDITIONAL_BRANCH(position, test, ifTrue, ifFalse) {
+                    writeConditionalBranch(position, test, ifTrue, ifFalse)
+                }
+                when IR.Statement.CONSTRUCT(position, cl) {
+                    writeConstruct(position, id, cl)
+                }
+                when IR.Statement.CREATE_STRUCT(position, cl, args) {
+                    writeCreateStruct(position, id, cl, args)
+                }
+                when IR.Statement.DYNAMIC_CALL(position, m, args) {
+                    writeDynamicCall(position, id, m, args)
+                }
+                when IR.Statement.EXTRACT_FIELD(position, target, field) {
+                    writeExtractField(position, id, target, field)
+                }
+                when IR.Statement.GET_CHOICE_FIELD_POINTER(position, target, cc, index) {
+                    writeGetChoiceFieldPointer(position, id, target, cc, index)
+                }
+                when IR.Statement.GET_FIELD_POINTER(position, target, field) {
+                    writeGetFieldPointer(position, id, target, field)
+                }
+                when IR.Statement.GET_INTERFACE_METHOD(position, value, cl, index, type) {
+                    writeGetInterfaceMethod(position, id, value, cl, index, type)
+                }
+                when IR.Statement.GET_VIRTUAL_METHOD(position, value, index, type) {
+                    writeGetVirtualMethod(position, id, value, index, type)
+                }
+                when IR.Statement.LOAD(position, ptr) {
+                    writeLoad(position, id, ptr)
+                }
+                when IR.Statement.NEGATE(position, value) {
+                    writeNegate(position, id, value)
+                }
+                when IR.Statement.NOT(position, value) {
+                    writeNot(position, id, value)
+                }
+                when IR.Statement.POINTER_ALLOC(position, count, type) {
+                    writePointerAlloc(position, id, count, type)
+                }
+                when IR.Statement.POINTER_DESTROY(position, ptr) {
+                    writePointerDestroy(position, ptr)
+                }
+                when IR.Statement.POINTER_GET_INDEX(position, ptr, index) {
+                    writePointerGetIndex(position, id, ptr, index)
+                }
+                when IR.Statement.POINTER_OFFSET(position, ptr, offset) {
+                    writePointerOffset(position, id, ptr, offset)
+                }
+                when IR.Statement.POINTER_REALLOC(position, ptr, oldCount, newCount) {
+                    writePointerRealloc(position, id, ptr, oldCount, newCount)
+                }
+                when IR.Statement.POINTER_SET_INDEX(position, value, ptr, index) {
+                    writePointerSetIndex(position, value, ptr, index)
+                }
+                when IR.Statement.RETURN(position, value) {
+                    writeReturn(position, value)
+                }
+                when IR.Statement.STATIC_CALL(position, m, args) {
+                    writeStaticCall(position, id, m, args)
+                }
+                when IR.Statement.STORE(position, value, slot) {
+                    writeStore(position, value, slot)
+                }
+                when IR.Statement.UNREACHABLE(position) {
+                    out.printLine("unreachable\{debugInfo(position)}")
+                }
+                otherwise {
+                    assert false, "unsupported statement \{s}"
+                }
             }
-            when IR.Statement.BRANCH(position, target) {
-                writeBranch(position, target)
-            }
-            when IR.Statement.CAST(position, value, type) {
-                writeCast(position, id, value, type)
-            }
-            when IR.Statement.COMMENT(text) {
-                out.printLine("; \{text}")
-            }
-            when IR.Statement.CONDITIONAL_BRANCH(position, test, ifTrue, ifFalse) {
-                writeConditionalBranch(position, test, ifTrue, ifFalse)
-            }
-            when IR.Statement.CONSTRUCT(position, cl) {
-                writeConstruct(position, id, cl)
-            }
-            when IR.Statement.CREATE_STRUCT(position, cl, args) {
-                writeCreateStruct(position, id, cl, args)
-            }
-            when IR.Statement.DYNAMIC_CALL(position, m, args) {
-                writeDynamicCall(position, id, m, args)
-            }
-            when IR.Statement.EXTRACT_FIELD(position, target, field) {
-                writeExtractField(position, id, target, field)
-            }
-            when IR.Statement.GET_CHOICE_FIELD_POINTER(position, target, cc, index) {
-                writeGetChoiceFieldPointer(position, id, target, cc, index)
-            }
-            when IR.Statement.GET_FIELD_POINTER(position, target, field) {
-                writeGetFieldPointer(position, id, target, field)
-            }
-            when IR.Statement.GET_INTERFACE_METHOD(position, value, cl, index, type) {
-                writeGetInterfaceMethod(position, id, value, cl, index, type)
-            }
-            when IR.Statement.GET_VIRTUAL_METHOD(position, value, index, type) {
-                writeGetVirtualMethod(position, id, value, index, type)
-            }
-            when IR.Statement.LOAD(position, ptr) {
-                writeLoad(position, id, ptr)
-            }
-            when IR.Statement.NEGATE(position, value) {
-                writeNegate(position, id, value)
-            }
-            when IR.Statement.NOT(position, value) {
-                writeNot(position, id, value)
-            }
-            when IR.Statement.POINTER_ALLOC(position, count, type) {
-                writePointerAlloc(position, id, count, type)
-            }
-            when IR.Statement.POINTER_DESTROY(position, ptr) {
-                writePointerDestroy(position, ptr)
-            }
-            when IR.Statement.POINTER_GET_INDEX(position, ptr, index) {
-                writePointerGetIndex(position, id, ptr, index)
-            }
-            when IR.Statement.POINTER_OFFSET(position, ptr, offset) {
-                writePointerOffset(position, id, ptr, offset)
-            }
-            when IR.Statement.POINTER_REALLOC(position, ptr, oldCount, newCount) {
-                writePointerRealloc(position, id, ptr, oldCount, newCount)
-            }
-            when IR.Statement.POINTER_SET_INDEX(position, value, ptr, index) {
-                writePointerSetIndex(position, value, ptr, index)
-            }
-            when IR.Statement.RETURN(position, value) {
-                writeReturn(position, value)
-            }
-            when IR.Statement.STATIC_CALL(position, m, args) {
-                writeStaticCall(position, id, m, args)
-            }
-            when IR.Statement.STORE(position, value, slot) {
-                writeStore(position, value, slot)
-            }
-            when IR.Statement.UNREACHABLE(position) {
-                out.printLine("unreachable\{debugInfo(position)}")
-            }
-            otherwise {
-                assert false, "unsupported statement \{s}"
-            }
+        }
+        fail(error) {
+            assert false, error.convert()
         }
     }
 
     method writeIR(ir:IR) {
-        for i in 0 .. ir.locals.count {
-            def name := "%local\{i}"
-            def type := llvmType(ir.locals[i])
-            out.printLine("\{name} = alloca \{type}")
-            if compiler.isRefCounted(ir.locals[i]) {
-                out.printLine("store \{type} null, \{type}* \{name}")
+        try {
+            for i in 0 .. ir.locals.count {
+                def name := "%local\{i}"
+                def type := llvmType(ir.locals[i])
+                out.printLine("\{name} = alloca \{type}")
+                if compiler.isRefCounted(ir.locals[i]) {
+                    out.printLine("store \{type} null, \{type}* \{name}")
+                }
+            }
+            for i in 0 .. ir.blocks.count {
+                def block := ir.blocks[i]
+                if i != 0 {
+                    currentBlock := "\{block.id}"
+                    out.printLine(currentBlock + ":")
+                }
+                else {
+                    currentBlock := "0"
+                }
+                for j in 0 .. block.statements.count {
+                    writeStatement(block.ids[j], block.statements[j])
+                }
             }
         }
-        for i in 0 .. ir.blocks.count {
-            def block := ir.blocks[i]
-            if i != 0 {
-                currentBlock := "\{block.id}"
-                out.printLine(currentBlock + ":")
-            }
-            else {
-                currentBlock := "0"
-            }
-            for j in 0 .. block.statements.count {
-                writeStatement(block.ids[j], block.statements[j])
-            }
+        fail(error) {
+            assert false, error.convert()
         }
     }
 
     @override
     method write(m:MethodDecl, ir:IR) {
-        out := methods
-        methodHeader.clear()
-        self.ir := ir
-        varCount := 0
-        out.print("define ")
-        if m.owner.isSpecialization() {
-            out.print("linkonce_odr ")
+        try {
+            out := methods
+            methodHeader.clear()
+            self.ir := ir
+            varCount := 0
+            out.print("define ")
+            if m.owner.isSpecialization() {
+                out.print("linkonce_odr ")
+            }
+            out.print("\{llvmType(m.returnType)} \{getName(m)}(")
+            var separator := ""
+            var index := 0
+            if compiler.hasSelfParam(m) {
+                out.print("\{selfType(m)} %param\{index}")
+                index += 1
+                separator := ", "
+            }
+            for p in m.parameters {
+                out.print("\{separator}\{llvmType(p.type)} %param\{index}")
+                index += 1
+                separator := ", "
+            }
+            out.print(")")
+            if compiler.settings.debug {
+                currentMethodMetadata := nextMetadata()
+                metadata.printLine("\{currentMethodMetadata} = distinct !DISubprogram(name: " +
+                        "\"\{m.name}\", file: \{currentFileMetadata}, unit: !0, scopeLine: " +
+                        "\{m.position.line})")
+            }
+            out.printLine(" {")
+            out := MemoryOutputStream()
+            writeIR(ir)
+            methods.printLine(methodHeader)
+            methods.printLine(out)
+            methods.printLine("}")
         }
-        out.print("\{llvmType(m.returnType)} \{getName(m)}(")
-        var separator := ""
-        var index := 0
-        if compiler.hasSelfParam(m) {
-            out.print("\{selfType(m)} %param\{index}")
-            index += 1
-            separator := ", "
+        fail(error) {
+            assert false, error.convert()
         }
-        for p in m.parameters {
-            out.print("\{separator}\{llvmType(p.type)} %param\{index}")
-            index += 1
-            separator := ", "
-        }
-        out.print(")")
-        if compiler.settings.debug {
-            currentMethodMetadata := nextMetadata()
-            metadata.printLine("\{currentMethodMetadata} = distinct !DISubprogram(name: " +
-                    "\"\{m.name}\", file: \{currentFileMetadata}, unit: !0, scopeLine: " +
-                    "\{m.position.line})")
-        }
-        out.printLine(" {")
-        out := MemoryOutputStream()
-        writeIR(ir)
-        methods.printLine(methodHeader)
-        methods.printLine(out)
-        methods.printLine("}")
     }
 
     @override
     method start(cl:ClassDecl) {
-        if cl.annotations.isSpecialize {
-            return
-        }
-        if compiler.settings.debug {
-            currentFileMetadata := nextMetadata()
-            metadata.printLine("\{currentFileMetadata} = distinct !DIFile(" +
-                    "filename: \"\{cl.source}\", directory: \"\{System.workingDirectory()}\")")
-            if currentFileMetadata = "!1" {
-                metadata.printLine("!0 = distinct !DICompileUnit(language:DW_LANG_C89, " +
-                        "producer:\"frostc\", file: \{currentFileMetadata}, isOptimized: false, " +
-                        "runtimeVersion: 0, emissionKind: FullDebug)")
-                metadata.printLine("!llvm.dbg.cu = !{!0}")
-                def dwarfVersion := nextMetadata()
-                metadata.printLine("\{dwarfVersion} = !{i32 2, !\"Dwarf Version\", i32 4}")
-                def debugVersion := nextMetadata()
-                metadata.printLine("\{debugVersion} = !{i32 2, !\"Debug Info Version\", i32 3}")
-                metadata.printLine("!llvm.module.flags = !{\{dwarfVersion}, \{debugVersion}}")
+        try {
+            if cl.annotations.isSpecialize {
+                return
             }
+            if compiler.settings.debug {
+                currentFileMetadata := nextMetadata()
+                metadata.printLine("\{currentFileMetadata} = distinct !DIFile(" +
+                        "filename: \"\{cl.source}\", directory: \"\{System.workingDirectory()}\")")
+                if currentFileMetadata = "!1" {
+                    metadata.printLine("!0 = distinct !DICompileUnit(language:DW_LANG_C89, " +
+                            "producer:\"frostc\", file: \{currentFileMetadata}, isOptimized: " +
+                            "false, runtimeVersion: 0, emissionKind: FullDebug)")
+                    metadata.printLine("!llvm.dbg.cu = !{!0}")
+                    def dwarfVersion := nextMetadata()
+                    metadata.printLine("\{dwarfVersion} = !{i32 2, !\"Dwarf Version\", i32 4}")
+                    def debugVersion := nextMetadata()
+                    metadata.printLine("\{debugVersion} = !{i32 2, !\"Debug Info Version\", i32 3}")
+                    metadata.printLine("!llvm.module.flags = !{\{dwarfVersion}, \{debugVersion}}")
+                }
+            }
+            writeType(cl.type)
+            getClassConstant(cl)
         }
-        writeType(cl.type)
-        getClassConstant(cl)
+        fail(error) {
+            assert false, error.convert()
+        }
     }
 
     @override

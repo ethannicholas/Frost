@@ -75,6 +75,11 @@ typedef struct NullableUInt8 {
     int8_t nonnull;
 } NullableUInt8;
 
+typedef struct NullableInt {
+    int64_t value;
+    int8_t nonnull;
+} NullableInt;
+
 extern Class frost$core$String$class;
 
 typedef struct String {
@@ -133,9 +138,9 @@ typedef struct Process {
     Class* cl;
     int32_t refcnt;
     int64_t pid;
-    FileOutputStream* input;
-    FileInputStream* output;
-    FileInputStream* error;
+    int64_t stdin;
+    int64_t stdout;
+    int64_t stderr;
 } Process;
 
 typedef struct Lock {
@@ -238,12 +243,14 @@ void frostFatalError(const char* msg) {
     abort();
 }
 
-void frostAssert(uint8_t b) {
-    if (!b) {
-        fprintf(stderr, "assertion failure\n");
+void _frostAssert(int i, int line) {
+    if (!i) {
+        fprintf(stderr, "%s:%d: assertion failure\n", __FILE__, line);
         abort();
     }
 }
+
+#define frostAssert(i) _frostAssert(i, __LINE__)
 
 void* frostAlloc(size_t size) {
     allocations++;
@@ -345,7 +352,7 @@ Object* frostMaybeSuccess(Object* o) {
 // returns s wrapped in a Maybe.ERROR, *without* increasing its refcount
 Object* frostMaybeError(String* s) {
     Object* result = frost$core$Frost$error$frost$core$String$R$frost$core$Maybe$LTfrost$core$Object$GT$Q(s);
-    frost$core$Frost$unref$frost$core$Object$Q(s);
+    frost$core$Frost$unref$frost$core$Object$Q((Object*) s);
     return result;
 }    
 
@@ -411,7 +418,7 @@ int main(int argc, char** argv) {
 
 // System
 
-void frost$core$System$exit$frost$core$UInt8(UInt8 code) {
+void frost$core$System$exit$frost$core$Int64(Int64 code) {
     exit(code.value);
 }
 
@@ -421,8 +428,8 @@ void frost$core$System$crash() {
     __builtin_trap();
 }
 
-Process* frost$core$System$exec$frost$io$File$frost$collections$ListView$LTfrost$core$String$GT$R$frost$core$System$Process$Q(
-        File* path, Object* args) {
+Object* frost$core$System$exec$frost$core$String$frost$collections$ListView$LTfrost$core$String$GT$R$frost$core$Maybe$LTfrost$core$System$Process$GT(
+        String* path, Object* args) {
     // FIXME need to output headers so I can kill these hardcoded interface method offsets
     int (*get_count)(Object*) = frostGetInterfaceMethod(args,
                 &frost$collections$CollectionView$class, 0);
@@ -430,23 +437,23 @@ Process* frost$core$System$exec$frost$io$File$frost$collections$ListView$LTfrost
                 &frost$collections$ListView$class, 0);
     int stdinPipe[2];
     if (pipe(stdinPipe)) {
-        perror("error opening stdin pipe");
-        exit(1);
+        const char* msg = strerror(errno);
+        return frostMaybeError(frostNewString(msg, strlen(msg)));
     }
     int stdoutPipe[2];
     if (pipe(stdoutPipe)) {
-        perror("error opening stdout pipe");
-        exit(1);
+        const char* msg = strerror(errno);
+        return frostMaybeError(frostNewString(msg, strlen(msg)));
     }
     int stderrPipe[2];
     if (pipe(stderrPipe)) {
-        perror("error opening stderr pipe");
-        exit(1);
+        const char* msg = strerror(errno);
+        return frostMaybeError(frostNewString(msg, strlen(msg)));
     }
     pid_t pid = fork();
     if (pid < 0) {
-        perror("fork failed");
-        exit(1);
+        const char* msg = strerror(errno);
+        return frostMaybeError(frostNewString(msg, strlen(msg)));
     }
     if (!pid) {
         // child
@@ -470,14 +477,13 @@ Process* frost$core$System$exec$frost$io$File$frost$collections$ListView$LTfrost
 //        setvbuf(stderr, NULL, _IONBF, 0);
         int argCount = get_count(args);
         char** cargs = (char**) frostAlloc((argCount + 2) * sizeof(char*));
-        cargs[0] = frostGetCString(path->path);
+        cargs[0] = frostGetCString(path);
         int i;
         for (i = 0; i < argCount; ++i) {
             cargs[i + 1] = frostGetCString(index(args, i));
         }
         cargs[argCount + 1] = NULL;
         execvp(cargs[0], cargs);
-        perror("error exec'ing child process");
         // we don't bother freeing the argument memory because we just kill the process here
         exit(1);
     }
@@ -488,25 +494,62 @@ Process* frost$core$System$exec$frost$io$File$frost$collections$ListView$LTfrost
         close(stderrPipe[1]);
         Process* result = frostObjectAlloc(sizeof(Process), &frost$core$System$Process$class);
         result->pid = pid;
-        result->input = frostObjectAlloc(sizeof(FileOutputStream),
-                &frost$io$FileOutputStream$class);
-        frost$io$OutputStream$init(result->input);
-        result->input->file = fdopen(stdinPipe[1], "wb");
-        result->input->closeOnCleanup.value = true;
-//        setvbuf(result->input->file, NULL, _IONBF, 0);
-        result->output = frostObjectAlloc(sizeof(FileInputStream), &frost$io$FileInputStream$class);
-        frost$io$InputStream$init(result->output);
-        result->output->file = fdopen(stdoutPipe[0], "rb");
-        result->output->closeOnCleanup.value = true;
-//        setvbuf(result->output->file, NULL, _IONBF, 0);
-        result->error = frostObjectAlloc(sizeof(FileInputStream), &frost$io$FileInputStream$class);
-        frost$io$InputStream$init(result->error);
-        result->error->file = fdopen(stderrPipe[0], "rb");
-        result->error->closeOnCleanup.value = true;
-//        setvbuf(result->error->file, NULL, _IONBF, 0);
-        return result;
+        result->stdin = stdinPipe[1];
+        result->stdout = stdoutPipe[0];
+        result->stderr = stderrPipe[0];
+        return frostMaybeSuccess((Object*) result);
     }
-    return NULL;
+}
+
+FileOutputStream* frost$core$System$Process$openStandardInput$R$frost$io$OutputStream(Process* p) {
+        FileOutputStream* result = frostObjectAlloc(sizeof(FileOutputStream),
+                &frost$io$FileOutputStream$class);
+        frost$io$OutputStream$init(result);
+        result->file = fdopen(p->stdin, "wb");
+        frostAssert(result->file != NULL);
+        result->closeOnCleanup.value = true;
+//        setvbuf(result->file, NULL, _IONBF, 0);
+        return result;
+}
+
+FileInputStream* frost$core$System$Process$openStandardOutput$R$frost$io$InputStream(Process* p) {
+        FileInputStream* result = frostObjectAlloc(sizeof(FileInputStream),
+                &frost$io$FileInputStream$class);
+        frost$io$InputStream$init(result);
+        result->file = fdopen(p->stdout, "rb");
+        frostAssert(result->file != NULL);
+        result->closeOnCleanup.value = true;
+//        setvbuf(result->file, NULL, _IONBF, 0);
+        return result;
+}
+
+FileInputStream* frost$core$System$Process$openStandardError$R$frost$io$InputStream(Process* p) {
+        FileInputStream* result = frostObjectAlloc(sizeof(FileInputStream),
+                &frost$io$FileInputStream$class);
+        frost$io$InputStream$init(result);
+        result->file = fdopen(p->stderr, "rb");
+        frostAssert(result->file != NULL);
+        result->closeOnCleanup.value = true;
+//        setvbuf(result->file, NULL, _IONBF, 0);
+        return result;
+}
+
+void frost$core$System$Process$_cleanup(Process* p) {
+    close(p->stdin);
+    close(p->stdout);
+    close(p->stderr);
+}
+
+void frost$core$System$Process$exitCode$R$frost$core$Int64$Q(NullableInt* result, Process* p) {
+    int status;
+    waitpid(p->pid, &status, WNOHANG);
+    if (WIFEXITED(status)) {
+        result->nonnull = true;
+        result->value = WEXITSTATUS(status);
+    }
+    else {
+        result->nonnull = false;
+    }
 }
 
 void frost$core$System$Process$waitFor$R$frost$core$Int64(Int64* result, Process* p) {
@@ -881,12 +924,12 @@ void frost$threads$Notifier$destroy(Notifier* notifier) {
 
 // Console
 
-void frost$io$Console$write$frost$core$Char8(char ch) {
-    putchar(ch);
-}
-
 void frost$io$Console$print$frost$core$String(String* s) {
     fwrite(s->data, 1, s->size, stdout);
+}
+
+void frost$io$Console$printError$frost$core$String(String* s) {
+    fwrite(s->data, 1, s->size, stderr);
 }
 
 void frost$io$Console$read$R$frost$core$Char8$Q(NullableChar* result) {
@@ -938,7 +981,7 @@ String* frostFileErrorMessage(const char* msg, const char* path) {
     return frostNewString(buffer, length);
 }
 
-FileInputStream* frost$io$File$openInputStream$R$frost$core$Maybe$LTfrost$io$InputStream$GT(File* self) {
+Object* frost$io$File$openInputStream$R$frost$core$Maybe$LTfrost$io$InputStream$GT(File* self) {
     FileInputStream* result = frostObjectAlloc(sizeof(FileInputStream),
             &frost$io$FileInputStream$class);
     frost$io$InputStream$init(result);
@@ -953,7 +996,7 @@ FileInputStream* frost$io$File$openInputStream$R$frost$core$Maybe$LTfrost$io$Inp
     return frostMaybeSuccess((Object*) result);
 }
 
-FileOutputStream* frost$io$File$openOutputStream$R$frost$core$Maybe$LTfrost$io$OutputStream$GT(File* self) {
+Object* frost$io$File$openOutputStream$R$frost$core$Maybe$LTfrost$io$OutputStream$GT(File* self) {
     FileOutputStream* result = frostObjectAlloc(sizeof(FileOutputStream),
             &frost$io$FileOutputStream$class);
     frost$io$OutputStream$init(result);
@@ -968,7 +1011,7 @@ FileOutputStream* frost$io$File$openOutputStream$R$frost$core$Maybe$LTfrost$io$O
     return frostMaybeSuccess((Object*) result);
 }
 
-FileOutputStream* frost$io$File$openForAppend$R$frost$io$OutputStream(File* self) {
+Object* frost$io$File$openForAppend$R$frost$core$Maybe$LTfrost$io$OutputStream$GT(File* self) {
     FileOutputStream* result = frostObjectAlloc(sizeof(FileOutputStream),
             &frost$io$FileOutputStream$class);
     frost$io$OutputStream$init(result);
@@ -1038,13 +1081,22 @@ void frost$io$File$isDirectory$R$frost$core$Bit(Bit* result, File* file) {
     result->value = S_ISDIR(fileInfo.st_mode);
 }
 
-void frost$io$File$createDirectory(File* file) {
-    char* path = frostGetCString(file->path);
-    mkdir(path, 0755);
-    frostFree(path);
+Error* frost$io$File$createDirectory$R$frost$core$Error$Q(File* file) {
+    Bit directoryExists;
+    frost$io$File$isDirectory$R$frost$core$Bit(&directoryExists, file);
+    if (!directoryExists.value) {
+        char* path = frostGetCString(file->path);
+        int result = mkdir(path, 0755);
+        frostFree(path);
+        if (result) {
+            const char* msg = strerror(errno);
+            return frostError(frostNewString(msg, strlen(msg)));
+        }
+    }
+    return NULL;
 }
 
-Array* frost$io$File$list$R$frost$collections$ListView$LTfrost$io$File$GT(File* dir) {
+Object* frost$io$File$list$R$frost$core$Maybe$LTfrost$collections$ListView$LTfrost$io$File$GT$GT(File* dir) {
     Array* result = frostObjectAlloc(sizeof(Array), &frost$collections$Array$class);
     result->count = 0;
     result->capacity = 16;
@@ -1057,10 +1109,12 @@ Array* frost$io$File$list$R$frost$collections$ListView$LTfrost$io$File$GT(File* 
     memcpy(buffer, path, dir->path->size);
     buffer[dir->path->size] = '/';
     d = opendir(path);
-    frostFree(path);
     if (!d) {
+        Object* result = frostMaybeError(frostFileErrorMessage("could not read directory", path));
+        frostFree(path);
         return result;
     }
+    frostFree(path);
     while ((entry = readdir(d))) {
         if (!strcmp(entry->d_name, ".") || !strcmp(entry->d_name, "..")) {
             continue;
@@ -1075,7 +1129,7 @@ Array* frost$io$File$list$R$frost$collections$ListView$LTfrost$io$File$GT(File* 
         --file->refcnt;
     }
     closedir(d);
-    return result;
+    return frostMaybeSuccess((Object*) result);
 }
 
 // FileInputStream
@@ -1109,7 +1163,8 @@ Error* frost$io$FileInputStream$close$R$frost$core$Error$Q(FileInputStream* self
 Error* frost$io$FileOutputStream$write$frost$core$UInt8$R$frost$core$Error$Q(FileOutputStream* self,
         uint8_t ch) {
     if (fputc(ch, self->file) == EOF) {
-        return frostError(frostNewString("error writing to stream", NULL));
+        const char* msg = "error writing to stream";
+        return frostError(frostNewString(msg, strlen(msg)));
     }
     return NULL;
 }
@@ -1117,7 +1172,8 @@ Error* frost$io$FileOutputStream$write$frost$core$UInt8$R$frost$core$Error$Q(Fil
 Error* frost$io$FileOutputStream$write$frost$unsafe$Pointer$LTfrost$core$UInt8$GT$frost$core$Int64$R$frost$core$Error$Q(
         FileOutputStream* self, void* src, int64_t count) {
     if (fwrite(src, 1, count, self->file) != count) {
-        return frostError(frostNewString("error writing to stream", NULL));
+        const char* msg = "error writing to stream";
+        return frostError(frostNewString(msg, strlen(msg)));
     }
     return NULL;
 }

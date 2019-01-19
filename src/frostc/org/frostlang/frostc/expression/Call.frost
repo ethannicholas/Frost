@@ -972,9 +972,12 @@ class Call {
         return compile(compiler, position, ref, args, type)
     }
 
+    -- isStatement is used to detect when we call a method that returns Error? without examining its
+    -- return value. If isStatement, the call is top-level and therefore the return value is being
+    -- discarded.
     @class
     method compile(compiler:Compiler, position:Position, m:ASTNode, args:FixedArray<ASTNode>,
-                       type:TypeContext):IR.Value? {
+                       isStatement:Bit, type:TypeContext):IR.Value? {
         match m {
             when ASTNode.GENERIC_TYPE(_, name, types) {
                 var resolved := compiler.tryResolveType(m)
@@ -1002,7 +1005,7 @@ class Call {
                     target := ASTNode.DOT_GENERICS(position, target,
                             components[components.count - 1], types)
                 }
-                return compile(compiler, position, target, args, type)
+                return compile(compiler, position, target, args, isStatement, type)
             }
         }
         def cc := compiler.getChoiceCase(m)
@@ -1048,6 +1051,16 @@ class Call {
         if compiledM == null {
             return null
         }
-        return compile(compiler, position, compiledM, args, type)
+        def result := compile(compiler, position, compiledM, args, type)
+        if isStatement & result !== null {
+            def resultType := result.type()
+            if (resultType = Type.Error().nullable() |
+                    (resultType.typeKind = Type.Kind.GENERIC &
+                        resultType.subtypes[0].name = "frost.core.Maybe")) {
+                compiler.error(position, "return value of type " +
+                        "'\{resultType.name}' is unused and is outside of a 'try' block")
+            }
+        }
+        return result
     }
 }

@@ -49,8 +49,7 @@ class Main {
 
         method next(label:String):String {
             if done {
-                Console.errorStream().printLine("expected \{label} after " +
-                        "'\{args[args.count - 1]}'")
+                Console.printErrorLine("expected \{label} after '\{args[args.count - 1]}'")
                 System.exit(1)
             }
             return next()
@@ -68,12 +67,25 @@ class Main {
         }
         args.add("-o")
         args.add(dest.path)
-        def p := System.exec(clang, args)
-        Console.errorStream().print(p.output.readFully())
-        Console.errorStream().print(p.error.readFully())
+        def p:System.Process
+        try {
+            p := System.exec(clang.path, args)
+        }
+        fail(error) {
+            Console.printErrorLine(error)
+            System.exit(1)
+        }
+        Console.printError(p.openStandardOutput().readFully())
+        Console.printError(p.openStandardError().readFully())
         def exitCode := p.waitFor()
         if !preserveTemporaries {
-            llvm.delete()
+            try {
+                llvm.delete()
+            }
+            fail(error) {
+                Console.printErrorLine(error)
+                System.exit(1)
+            }
         }
         if exitCode != 0 {
             System.exit(1)
@@ -104,12 +116,25 @@ class Main {
         }
         args.add("-o")
         args.add(dest.path)
-        def p := System.exec(clang, args)
-        Console.errorStream().print(p.output.readFully())
-        Console.errorStream().print(p.error.readFully())
+        def p:System.Process
+        try {
+            p := System.exec(clang.path, args)
+        }
+        fail(error) {
+            Console.printErrorLine(error)
+            System.exit(1)
+        }
+        Console.printError(p.openStandardOutput().readFully())
+        Console.printError(p.openStandardError().readFully())
         def exitCode := p.waitFor()
         if !preserveTemporaries {
-            llvm.delete()
+            try {
+                llvm.delete()
+            }
+            fail(error) {
+                Console.printErrorLine(error)
+                System.exit(1)
+            }
         }
         if exitCode != 0 {
             System.exit(1)
@@ -118,12 +143,17 @@ class Main {
     }
 
     method printUsage(out:OutputStream) {
-        out.printLine("Usage: frostc [options] <sources>")
-        out.printLine()
-        out.printLine("Source filenames must end in '.frost'.")
-        out.printLine()
-        out.printLine("Options:")
-        out.printLine("  -o <path>    output path")
+        try {
+            out.printLine("Usage: frostc [options] <sources>")
+            out.printLine()
+            out.printLine("Source filenames must end in '.frost'.")
+            out.printLine()
+            out.printLine("Options:")
+            out.printLine("  -o <path>    output path")
+        }
+        fail(error) {
+            assert false
+        }
     }
 
     method run(rawArgs:ListView<String>) {
@@ -137,7 +167,6 @@ class Main {
         var format:Format? := null
         var root:String? := null
         var preserveTemporaries := true
-        def err := Console.errorStream()
         while !args.done {
             def a := args.next()
             match a {
@@ -148,23 +177,29 @@ class Main {
                         sources.add(path)
                     }
                     fail(error) {
-                        Console.printLine(error)
+                        Console.printErrorLine(error)
                         System.exit(1)
                     }
                 }
                 when "-o" {
                     if outFile !== null {
-                        err.printLine("'-o' may only be specified once")
+                        Console.printErrorLine("'-o' may only be specified once")
                         System.exit(1)
                     }
                     outFile := File(args.next("a filename"))
-                    outFile.parent.createDirectories()
+                    try {
+                        outFile.parent.createDirectories()
+                    }
+                    fail(error) {
+                        Console.printErrorLine(error)
+                        System.exit(1)
+                    }
                 }
                 when "-O" {
                     def level := args.next("a number from 0-3")
                     optimizationLevel := level.convert()->Int
                     if optimizationLevel > 3 | optimizationLevel < 0 {
-                        Console.errorStream().printLine("expected a number from 0-3 after '-O'")
+                        Console.printErrorLine("expected a number from 0-3 after '-O'")
                         System.exit(1)
                     }
                 }
@@ -172,13 +207,13 @@ class Main {
                     def level := args.next("a number from 0-3")
                     safetyLevel := level.convert()->Int
                     if safetyLevel > 3 | safetyLevel < 0 {
-                        Console.errorStream().printLine("expected a number from 0-3 after '-S'")
+                        Console.printErrorLine("expected a number from 0-3 after '-S'")
                         System.exit(1)
                     }
                 }
                 when "-f" {
                     if format !== null {
-                        err.printLine("'-f' may only be specified once")
+                        Console.printErrorLine("'-f' may only be specified once")
                         System.exit(1)
                     }
                     def f := args.next("an output format")
@@ -190,7 +225,7 @@ class Main {
                         when "c"    { format := Format.C }
                         when "html" { format := Format.HTML }
                         otherwise {
-                            err.printLine("unsupported output format '\{f}'")
+                            Console.printErrorLine("unsupported output format '\{f}'")
                             System.exit(1)
                         }
                     }
@@ -204,12 +239,10 @@ class Main {
                 otherwise {
                     if a.endsWith(".frost") {
                         def f := File(a)
---                        Console.printLine("main1: \{f.refCount}")
                         sources.add(f)
-  --                      Console.printLine("main2: \{f.refCount}")
                     }
                     else {
-                        err.printLine("unrecognized argument '\{a}'")
+                        Console.printErrorLine("unrecognized argument '\{a}'")
                         System.exit(1)
                     }
                 }
@@ -218,7 +251,7 @@ class Main {
         def llvmDir := File(Config.llvmDir())
         clang := File("/usr/bin/clang")
         if sources.count = 0 {
-            err.printLine("no input files specified")
+            Console.printErrorLine("no input files specified")
             System.exit(1)
         }
         if format == null {
@@ -233,19 +266,20 @@ class Main {
                     when Format.LLVM       { extension := ".ll" }
                     when Format.HTML       { extension := ".html" }
                     otherwise {
-                        err.printLine("output format requires a '-o' output to be specified")
+                        Console.printErrorLine("output format requires a '-o' output to be " +
+                                "specified")
                         System.exit(1)
                     }
                 }
                 outFile := sources[0].withExtension(extension)
             }
             else if format = Format.HTML {
-                err.printLine("format 'html' requires exactly one input file")
+                Console.printErrorLine("format 'html' requires exactly one input file")
                 System.exit(1)
             }
             else {
-                err.printLine("multiple input files specified, must use '-o' to specify output " +
-                        "file")
+                Console.printErrorLine("multiple input files specified, must use '-o' to specify " +
+                        "output file")
                 System.exit(1)
             }
         }
@@ -257,7 +291,7 @@ class Main {
             return
         }
         if root !== null {
-            err.printLine("--root requires 'html' output format")
+            Console.printErrorLine("--root requires 'html' output format")
             System.exit(1)
         }
         def errorCount:Int
@@ -270,7 +304,7 @@ class Main {
                                                 outFile.withExtension(".ll").openOutputStream())
                     }
                     fail(error) {
-                        Console.printLine(error)
+                        Console.printErrorLine(error)
                         System.exit(1)
                     }
                 }
@@ -300,6 +334,7 @@ class Main {
             errorCount := errorQueue.pendingMessages()
             for i in 0 .. errorCount {
                 def error := errorQueue.getMessage()
+                -- FIXME stderr
                 Console.printLine("\{error.file.name}:\{error.position}: error: \{error.message}")
             }
         }
@@ -315,9 +350,11 @@ class Main {
         }
         else {
             if errorCount = 1 {
+                -- FIXME stderr
                 Console.printLine("1 error")
             }
             else {
+                -- FIXME stderr
                 Console.printLine("\{errorCount} errors")
             }
             System.exit(1)

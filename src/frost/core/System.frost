@@ -9,30 +9,59 @@ class System {
     Represents a program launched by [System.exec].
     ================================================================================================
     @final
-    class Process {
+    class Process : Immutable {
         @private
         def pid:Int
 
-        ============================================================================================
-        An `OutputStream` which sends its output to the process' standard input stream.
-        ============================================================================================
-        def input:OutputStream
+        @private
+        def stdin:Int
+
+        @private
+        def stdout:Int
+
+        @private
+        def stderr:Int
 
         ============================================================================================
-        An `InputStream` which reads from the process' standard output stream.
+        Returns an `OutputStream` which sends its output to the process' standard input stream.
         ============================================================================================
-        def output:InputStream
+        @external
+        method openStandardInput():OutputStream
 
         ============================================================================================
-        An `InputStream` which reads from the process' standard error stream.
+        Returns an `InputStream` which reads from the process' standard output stream.
         ============================================================================================
-        def error:InputStream
+        @external
+        method openStandardOutput():InputStream
 
         ============================================================================================
-        Waits for the process to finish and returns its exit status.
+        Returns an `InputStream` which reads from the process' standard error stream.
+        ============================================================================================
+        @external
+        method openStandardError():InputStream
+
+        ============================================================================================
+        Returns the process' exit code, or null if the process has not yet exited. The precise
+        meaning of the exit code is defined by the program and operating environment, but typically
+        an exit code of `0` indicates success and a non-zero exit code indicates an error.
+        ============================================================================================
+        @external
+        method exitCode():Int?
+
+        ============================================================================================
+        Waits for the process to finish and returns its exit code.
         ============================================================================================
         @external
         method waitFor():Int
+
+        @private
+        @external
+        method _cleanup()
+        
+        @override
+        method cleanup() {
+            _cleanup()
+        }
     }
 
     @private
@@ -54,16 +83,16 @@ class System {
     method temporaryDirectory():File
 
     ================================================================================================
-    Causes the program to immediately stop running, returning the indicated exit status to the
+    Causes the program to immediately stop running, returning the indicated exit code to the
     operating system. Generally an exit value of 0 is taken to mean a normal exit and a non-zero
-    value is taken to mean an error occurred, but the interpretation of the status value is
+    value is taken to mean an error occurred, but the interpretation of the exit codeis
     system-dependent. Cleanup methods are **not** run when an exit is forced in this fashion; among
     other things, this means that open files will not be properly flushed and closed, which may
     cause output to be incomplete.
     ================================================================================================
     @class
     @external
-    method exit(status:UInt8)
+    method exit(status:Int)
 
     ================================================================================================
     Causes the program to perform an illegal operation which forces an abnormal exit.
@@ -73,12 +102,16 @@ class System {
     method crash()
 
     ================================================================================================
-    Executes an external program with the given command line arguments. Returns the resulting
-    process, or `null` if the program could not be started. If `path` is just a filename (as
-    opposed to the full path to a file), the system PATH environment variable will be searched to
-    find it.
+    Executes an external program with the given command line arguments. If `path` is just a filename
+    (meaning it does not contain any path separator characters), the system PATH environment
+    variable will be searched to find it.
+
+    Returns the resulting process, or an error if it could not be created. Successfully creating the
+    process does not imply that the child program can actually be executed. If the child program
+    cannot not be started, the resulting process will exit immediately with a nonzero exit code, but
+    no error will otherwise be reported.
     ================================================================================================
     @class
     @external
-    method exec(path:File, args:ListView<String>):Process?
+    method exec(path:String, args:ListView<String>):Maybe<Process>
 }

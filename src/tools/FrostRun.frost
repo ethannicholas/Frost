@@ -1,39 +1,26 @@
-class StreamSender {
-    def input:InputStream
-
-    def output:OutputStream
-
-    init(input:InputStream, output:OutputStream) {
-        self.input := input
-        self.output := output
-    }
-
-    method send() {
-        input.sendTo(output)
-    }
-}
-
 method main(args:ListView<String>) {
-    if args.count < 2 | !args[1].endsWith(".frost") {
-        Console.errorStream().printLine("Usage: frost <Script.frost> <args...>")
-        System.exit(1)
+    try {
+        if args.count < 2 | !args[1].endsWith(".frost") {
+            Console.errorStream().printLine("Usage: frost <Script.frost> <args...>")
+            System.exit(1)
+        }
+        def frostc := File(args[0]).parent.resolve("frostc")
+        def out := System.temporaryDirectory().resolve("frost-tmp")
+        def frostcProcess := System.exec(frostc.path, [args[1], "-o", out.convert()])
+        Thread.start(method() { def ignored := Console.inputStream().sendTo(frostcProcess.standardInput()) })
+        Thread.start(method() { def ignored := frostcProcess.standardOutput().sendTo(Console.outputStream()) })
+        Thread.start(method() { def ignored := frostcProcess.standardError().sendTo(Console.errorStream()) })
+        if frostcProcess.waitFor() = 0 {
+            def process := System.exec(out.path, args[2..])
+            Thread.start(method() { def ignored := Console.inputStream().sendTo(process.standardInput()) })
+            Thread.start(method() { def ignored := process.standardOutput().sendTo(Console.outputStream()) })
+            Thread.start(method() { def ignored := process.standardError().sendTo(Console.errorStream()) })
+            def exitCode := process.waitFor()
+            System.exit(exitCode)
+        }
     }
-    def frostc := File(args[0]).parent().resolve("frostc")
-    def frostcArgs := Array<String>() -- FIXME literal
-    frostcArgs.add(args[1])
-    frostcArgs.add("-o")
-    def out := System.temporaryDirectory().resolve("frost-tmp")
-    frostcArgs.add(out.path)
-    def frostcProcess := System.exec(frostc, frostcArgs)
-    Thread.unsafeStart(StreamSender(frostcProcess.output, Console.outputStream()).send)
-    Thread.unsafeStart(StreamSender(frostcProcess.error, Console.errorStream()).send)
-    if frostcProcess.waitFor() = 0 {
-        def process := System.exec(out, args[2..])
-        Thread.unsafeStart(StreamSender(Console.inputStream(), process.input).send)
-        Thread.unsafeStart(StreamSender(process.output, Console.outputStream()).send)
-        Thread.unsafeStart(StreamSender(process.error, Console.errorStream()).send)
-        def exitCode := process.waitFor()
-        System.exit(exitCode)
+    fail(error) {
+        Console.printErrorLine(error)
     }
     System.exit(1)
 }

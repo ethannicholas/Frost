@@ -29,7 +29,7 @@ static frost$core$String $s38 = { (frost$core$Class*) &frost$core$String$class, 
 
 void org$frostlang$frostc$frostdoc$Markdown$_Closure32$init$org$frostlang$frostc$frostdoc$Markdown(org$frostlang$frostc$frostdoc$Markdown$_Closure32* param0, org$frostlang$frostc$frostdoc$Markdown* param1) {
 
-// line 1080
+// line 1085
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
 org$frostlang$frostc$frostdoc$Markdown** $tmp2 = &param0->$self;
 org$frostlang$frostc$frostdoc$Markdown* $tmp3 = *$tmp2;
@@ -41,7 +41,7 @@ return;
 }
 void org$frostlang$frostc$frostdoc$Markdown$_Closure32$cleanup(org$frostlang$frostc$frostdoc$Markdown$_Closure32* param0) {
 
-// line 1080
+// line 1085
 frost$core$Object$cleanup(((frost$core$Object*) param0));
 org$frostlang$frostc$frostdoc$Markdown** $tmp5 = &param0->$self;
 org$frostlang$frostc$frostdoc$Markdown* $tmp6 = *$tmp5;
@@ -53,7 +53,7 @@ frost$core$String* org$frostlang$frostc$frostdoc$Markdown$_Closure32$$anonymous3
 
 frost$core$String* local0 = NULL;
 frost$core$MutableString* local1 = NULL;
-// line 1081
+// line 1086
 frost$core$Int64 $tmp7 = (frost$core$Int64) {2};
 ITable* $tmp8 = param1->$class->itable;
 while ($tmp8->$class != (frost$core$Class*) &frost$collections$ListView$class) {
@@ -68,14 +68,14 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp12));
 *(&local0) = ((frost$core$String*) $tmp11);
 frost$core$Frost$unref$frost$core$Object$Q($tmp11);
 // unreffing REF($4:frost.collections.ListView.T)
-// line 1082
+// line 1087
 frost$core$MutableString* $tmp13 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$String* $tmp14 = *(&local0);
 frost$core$Bit $tmp15 = frost$core$Bit$init$builtin_bit($tmp14 != NULL);
 bool $tmp16 = $tmp15.value;
 if ($tmp16) goto block1; else goto block2;
 block2:;
-frost$core$Int64 $tmp17 = (frost$core$Int64) {1082};
+frost$core$Int64 $tmp17 = (frost$core$Int64) {1087};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s18, $tmp17, &$s19);
 abort(); // unreachable
 block1:;
@@ -87,27 +87,27 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp20));
 *(&local1) = $tmp13;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp13));
 // unreffing REF($17:frost.core.MutableString)
-// line 1083
+// line 1088
 frost$core$MutableString* $tmp21 = *(&local1);
 frost$core$RegularExpression* $tmp22 = (frost$core$RegularExpression*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$RegularExpression$class);
 frost$core$RegularExpression$init$frost$core$String($tmp22, &$s23);
 frost$core$MutableString$replace$frost$core$RegularExpression$frost$core$String($tmp21, $tmp22, &$s24);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp22));
 // unreffing REF($40:frost.core.RegularExpression)
-// line 1084
+// line 1089
 frost$core$MutableString* $tmp25 = *(&local1);
 frost$core$RegularExpression* $tmp26 = (frost$core$RegularExpression*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$RegularExpression$class);
 frost$core$RegularExpression$init$frost$core$String($tmp26, &$s27);
 frost$core$MutableString$replace$frost$core$RegularExpression$frost$core$String($tmp25, $tmp26, &$s28);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp26));
 // unreffing REF($48:frost.core.RegularExpression)
-// line 1085
+// line 1090
 org$frostlang$frostc$frostdoc$Markdown** $tmp29 = &param0->$self;
 org$frostlang$frostc$frostdoc$Markdown* $tmp30 = *$tmp29;
 frost$core$MutableString* $tmp31 = *(&local1);
 $fn33 $tmp32 = ($fn33) $tmp30->$class->vtable[18];
 $tmp32($tmp30, $tmp31);
-// line 1086
+// line 1091
 frost$core$MutableString* $tmp34 = *(&local1);
 frost$core$String* $tmp35 = frost$core$String$$ADD$frost$core$Object$R$frost$core$String(&$s36, ((frost$core$Object*) $tmp34));
 frost$core$String* $tmp37 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp35, &$s38);

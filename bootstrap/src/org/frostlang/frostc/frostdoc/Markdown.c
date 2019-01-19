@@ -3811,7 +3811,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp1505));
 // unreffing REF($105:frost.core.MutableMethod)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp1503));
 // unreffing REF($102:org.frostlang.frostc.frostdoc.Markdown._Closure28)
-// line 1019
+// line 1024
 frost$core$RegularExpression* $tmp1506 = (frost$core$RegularExpression*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$RegularExpression$class);
 frost$core$String* $tmp1507 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(&$s1508, &$s1509);
 frost$core$String* $tmp1510 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp1507, &$s1511);
@@ -3831,7 +3831,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp1507));
 // unreffing REF($119:frost.core.String)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp1506));
 // unreffing REF($118:frost.core.RegularExpression)
-// line 1025
+// line 1030
 frost$core$RegularExpression* $tmp1516 = *(&local2);
 org$frostlang$frostc$frostdoc$Markdown$_Closure30* $tmp1517 = (org$frostlang$frostc$frostdoc$Markdown$_Closure30*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$frostdoc$Markdown$_Closure30$class);
 org$frostlang$frostc$frostdoc$Markdown$_Closure30$init$org$frostlang$frostc$frostdoc$Markdown($tmp1517, param0);
@@ -3859,13 +3859,13 @@ return;
 }
 void org$frostlang$frostc$frostdoc$Markdown$doItalicsAndBold$frost$core$MutableString(org$frostlang$frostc$frostdoc$Markdown* param0, frost$core$MutableString* param1) {
 
-// line 1067
+// line 1072
 frost$core$RegularExpression* $tmp1523 = (frost$core$RegularExpression*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$RegularExpression$class);
 frost$core$RegularExpression$init$frost$core$String($tmp1523, &$s1524);
 frost$core$MutableString$replace$frost$core$RegularExpression$frost$core$String(param1, $tmp1523, &$s1525);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp1523));
 // unreffing REF($1:frost.core.RegularExpression)
-// line 1068
+// line 1073
 frost$core$RegularExpression* $tmp1526 = (frost$core$RegularExpression*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$RegularExpression$class);
 frost$core$RegularExpression$init$frost$core$String($tmp1526, &$s1527);
 frost$core$MutableString$replace$frost$core$RegularExpression$frost$core$String(param1, $tmp1526, &$s1528);
@@ -3876,13 +3876,13 @@ return;
 }
 void org$frostlang$frostc$frostdoc$Markdown$encodeAmpsAndAngles$frost$core$MutableString(org$frostlang$frostc$frostdoc$Markdown* param0, frost$core$MutableString* param1) {
 
-// line 1074
+// line 1079
 frost$core$RegularExpression* $tmp1529 = (frost$core$RegularExpression*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$RegularExpression$class);
 frost$core$RegularExpression$init$frost$core$String($tmp1529, &$s1530);
 frost$core$MutableString$replace$frost$core$RegularExpression$frost$core$String(param1, $tmp1529, &$s1531);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp1529));
 // unreffing REF($1:frost.core.RegularExpression)
-// line 1075
+// line 1080
 frost$core$RegularExpression* $tmp1532 = (frost$core$RegularExpression*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$RegularExpression$class);
 frost$core$RegularExpression$init$frost$core$String($tmp1532, &$s1533);
 frost$core$MutableString$replace$frost$core$RegularExpression$frost$core$String(param1, $tmp1532, &$s1534);
@@ -3893,7 +3893,7 @@ return;
 }
 void org$frostlang$frostc$frostdoc$Markdown$doCodeSpans$frost$core$MutableString(org$frostlang$frostc$frostdoc$Markdown* param0, frost$core$MutableString* param1) {
 
-// line 1079
+// line 1084
 frost$core$RegularExpression* $tmp1535 = (frost$core$RegularExpression*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$RegularExpression$class);
 frost$core$RegularExpression$init$frost$core$String($tmp1535, &$s1536);
 org$frostlang$frostc$frostdoc$Markdown$_Closure32* $tmp1537 = (org$frostlang$frostc$frostdoc$Markdown$_Closure32*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$frostdoc$Markdown$_Closure32$class);

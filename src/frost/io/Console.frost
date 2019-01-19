@@ -71,6 +71,46 @@ class Console {
     }
 
     ================================================================================================
+    Prints a string to the standard error stream.
+    ================================================================================================
+    @class
+    @external
+    method printError(s:String)
+
+    ================================================================================================
+    Prints a string followed by a newline to the standard error stream.
+    ================================================================================================
+    @class
+    method printErrorLine(s:String) {
+        printError(s)
+        printErrorLine()
+    }
+
+    ================================================================================================
+    Prints the string represention of an object to the standard error stream.
+    ================================================================================================
+    @class
+    method printError(o:Object) {
+        printError(o.convert())
+    }
+
+    ================================================================================================
+    Prints the string represention of an object followed by a newline to the standard error stream.
+    ================================================================================================
+    @class
+    method printErrorLine(o:Object) {
+        printErrorLine(o.convert())
+    }
+
+    ================================================================================================
+    Prints a newline to the standard error stream.
+    ================================================================================================
+    @class
+    method printErrorLine() {
+        printError("\n")
+    }
+
+    ================================================================================================
     Reads a single byte from the standard input stream. Returns `null` if the end of the stream has
     been reached.
     ================================================================================================
