@@ -44,7 +44,7 @@ class OutputStream {
             }
             else {
                 write((value >> 8).convert()->UInt8)
-                write(value.convert()->UInt8)        
+                write(value.convert()->UInt8)
             }
         }
         fail(error) {

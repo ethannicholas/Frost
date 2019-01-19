@@ -513,37 +513,56 @@ Object* frost$core$System$exec$frost$core$String$frost$collections$ListView$LTfr
     }
 }
 
-FileOutputStream* frost$core$System$Process$openStandardInput$R$frost$io$OutputStream(Process* p) {
+Object* frost$core$System$Process$openStandardInput$R$frost$core$Maybe$LTfrost$io$OutputStream$GT(Process* p) {
+    FILE* f = fdopen(p->stdin, "wb");
+    if (f) {
         FileOutputStream* result = frostObjectAlloc(sizeof(FileOutputStream),
                 &frost$io$FileOutputStream$class);
         frost$io$OutputStream$init(result);
-        result->file = fdopen(p->stdin, "wb");
-        frostAssert(result->file != NULL);
+        result->file = f;
         result->closeOnCleanup.value = true;
-//        setvbuf(result->file, NULL, _IONBF, 0);
-        return result;
+//            setvbuf(result->file, NULL, _IONBF, 0);
+        return frostMaybeSuccess((Object*) result);
+    }
+    else {
+        const char* msg = strerror(errno);
+        return frostMaybeError((Object*) frostNewString(msg, strlen(msg)));
+    }
 }
 
-FileInputStream* frost$core$System$Process$openStandardOutput$R$frost$io$InputStream(Process* p) {
+Object* frost$core$System$Process$openStandardOutput$R$frost$core$Maybe$LTfrost$io$InputStream$GT(Process* p) {
+    FILE* f = fdopen(p->stdout, "rb");
+    if (f) {
         FileInputStream* result = frostObjectAlloc(sizeof(FileInputStream),
                 &frost$io$FileInputStream$class);
         frost$io$InputStream$init(result);
-        result->file = fdopen(p->stdout, "rb");
-        frostAssert(result->file != NULL);
+        result->file = f;
         result->closeOnCleanup.value = true;
-//        setvbuf(result->file, NULL, _IONBF, 0);
-        return result;
+//            setvbuf(result->file, NULL, _IONBF, 0);
+        return frostMaybeSuccess((Object*) result);
+    }
+    else {
+        const char* msg = strerror(errno);
+        return frostMaybeError((Object*) frostNewString(msg, strlen(msg)));
+    }
 }
 
-FileInputStream* frost$core$System$Process$openStandardError$R$frost$io$InputStream(Process* p) {
+Object* frost$core$System$Process$openStandardError$R$frost$core$Maybe$LTfrost$io$InputStream$GT(Process* p) {
+    FILE* f = fdopen(p->stderr, "rb");
+    if (f) {
         FileInputStream* result = frostObjectAlloc(sizeof(FileInputStream),
                 &frost$io$FileInputStream$class);
         frost$io$InputStream$init(result);
-        result->file = fdopen(p->stderr, "rb");
+        result->file = f;
         frostAssert(result->file != NULL);
         result->closeOnCleanup.value = true;
 //        setvbuf(result->file, NULL, _IONBF, 0);
-        return result;
+        return frostMaybeSuccess((Object*) result);
+    }
+    else {
+        const char* msg = strerror(errno);
+        return frostMaybeError((Object*) frostNewString(msg, strlen(msg)));
+    }
 }
 
 void frost$core$System$Process$_cleanup(Process* p) {

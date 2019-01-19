@@ -67,7 +67,7 @@ class JSONParser {
 
     @private
     function text(token:Token):String {
-        return source.substring(token.start .. token.end)    
+        return source.substring(token.start .. token.end)
     }
 
     @private

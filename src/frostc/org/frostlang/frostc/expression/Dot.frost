@@ -16,7 +16,8 @@ class Dot {
         }
         def symbol := compiler.getSymbolTable(cl)[name]
         if symbol == null {
-            compiler.error(position, "class '\{target.type()}' does not have a member named '\{name}'")
+            compiler.error(position,
+                    "class '\{target.type()}' does not have a member named '\{name}'")
             return null
         }
         return compiler.symbolRef(position, target, symbol)

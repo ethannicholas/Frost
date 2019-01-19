@@ -1009,7 +1009,7 @@ class Parser {
     ================================================================================================
     postfixExpression = term ((LPAREN (expression (COMMA expression)*)? RPAREN |
             DOT (methodName | INIT) typeSpecifiers? | LBRACKET expression RBRACKET)* |
-            (CAST | INSTANCEOF | NINSTANCEOF) type)* | NOT
+            (CAST | INSTANCEOF | NINSTANCEOF) type)*
             (<if result so far is a valid class name> LT type (COMMA type)* GT)?
     Note there is a great deal of special handling to deal with class names, due to ambiguities
     between generic parameters and comparison expressions, e.g. foo(X < Y, Z > ... could be either a
@@ -1093,9 +1093,6 @@ class Parser {
                         return null
                     }
                     result := ASTNode.BINARY(token.position, result, Token.Kind.CAST, target)
-                }
-                when Token.Kind.NOT {
-                    result := ASTNode.POSTFIX(token.position, result, Token.Kind.NOT)
                 }
                 when Token.Kind.LT {
                     -- this is where we need to be careful. First, we make sure it makes sense to

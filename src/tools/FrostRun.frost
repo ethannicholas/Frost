@@ -1,6 +1,5 @@
 method main(args:ListView<String>) {
     try {
-        Console.printLine("STARTUP")
         if args.count < 2 | !args[1].endsWith(".frost") {
             Console.errorStream().printLine("Usage: frost <Script.frost> <args...>")
             System.exit(1)
@@ -8,26 +7,57 @@ method main(args:ListView<String>) {
         def frostc := File(args[0]).parent.resolve("frostc")
         def out := System.temporaryDirectory().resolve("frost-tmp")
         def frostcProcess := System.exec(frostc.path, [args[1], "-o", out.convert()])
-        Thread.start(method() { Console.inputStream().sendTo(frostcProcess.standardInput())! })
-        Thread.start(method() { frostcProcess.standardOutput().sendTo(Console.outputStream())! })
-        Thread.start(method() { frostcProcess.standardError().sendTo(Console.errorStream())! })
+        Thread.start(method() {
+            try {
+                Console.inputStream().sendTo(frostcProcess.openStandardInput())
+            }
+            fail(error) {
+            }
+        })
+        Thread.start(method() {
+            try {
+                frostcProcess.openStandardOutput().sendTo(Console.outputStream())
+            }
+            fail(error) {
+            }
+        })
+        Thread.start(method() {
+            try {
+                frostcProcess.openStandardError().sendTo(Console.errorStream())
+            }
+            fail(error) {
+            }
+        })
         if frostcProcess.waitFor() = 0 {
-            Console.printLine("success!")
             def process := System.exec(out.path, args[2..])
-            Thread.start(method() { Console.inputStream().sendTo(process.standardInput())! })
-            Thread.start(method() { process.standardOutput().sendTo(Console.outputStream())! })
-            Thread.start(method() { process.standardError().sendTo(Console.errorStream())! })
+            process.openStandardError().sendTo(Console.outputStream())
+            Thread.start(method() {
+                try {
+                    Console.inputStream().sendTo(process.openStandardInput())
+                }
+                fail(error) {
+                }
+            })
+            Thread.start(method() {
+                try {
+                    process.openStandardOutput().sendTo(Console.outputStream())
+                }
+                fail(error) {
+                }
+            })
+            Thread.start(method() {
+                try {
+                    process.openStandardError().sendTo(Console.errorStream())
+                }
+                fail(error) {
+                }
+            })
             def exitCode := process.waitFor()
-            Console.printLine("done \{exitCode}!")
             System.exit(exitCode)
-        }
-        else {
-            Console.printLine("compile error")
         }
     }
     fail(error) {
         Console.printErrorLine(error)
     }
-    Console.printLine("failed")
     System.exit(1)
 }

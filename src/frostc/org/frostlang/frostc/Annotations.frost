@@ -18,6 +18,8 @@ class Annotations {
         constant SYNTHETIC        := 1 << 13
         constant UNSAFE_IMMUTABLE := 1 << 14
         constant DEFAULT          := 1 << 15
+        -- tags a field in a closure class which is used to represent a captured value
+        constant CAPTURE          := 1 << 16
     }
 
     choice Expression {
@@ -72,6 +74,8 @@ class Annotations {
     property isUnsafeImmutable:Bit
 
     property isDefault:Bit
+
+    property isCapture:Bit
 
     init() {
         init(0)
@@ -151,6 +155,10 @@ class Annotations {
         return flags && Flag.DEFAULT != 0
     }
 
+    function get_isCapture():Bit {
+        return flags && Flag.CAPTURE != 0
+    }
+
     @override
     function convert():String {
         def result := MutableString()
@@ -198,6 +206,9 @@ class Annotations {
         }
         if isDefault {
             result.append("@default\n")
+        }
+        if isCapture {
+            result.append("@capture\n")
         }
         if expressions !== null {
             for expr in expressions {

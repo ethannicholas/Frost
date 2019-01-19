@@ -121,22 +121,23 @@ class Closure {
             match c {
                 when Capture.VARIABLE(v) {
                     def field := FieldDecl(result, p, null,
-                            Annotations(Annotations.Flag.SYNTHETIC), FieldDecl.Kind.DEF, v.name,
-                            v.type, null)
+                            Annotations(Annotations.Flag.SYNTHETIC || Annotations.Flag.CAPTURE),
+                            FieldDecl.Kind.DEF, v.name, v.type, null)
                     result.symbolTable.add(field)
                     result.fields.add(field)
                 }
                 when Capture.FIELD(f) {
                     def field := FieldDecl(result, p, null,
-                            Annotations(Annotations.Flag.SYNTHETIC), FieldDecl.Kind.DEF, f.name,
-                            f.type, null)
+                            Annotations(Annotations.Flag.SYNTHETIC || Annotations.Flag.CAPTURE),
+                            FieldDecl.Kind.DEF, f.name, f.type, null)
                     result.symbolTable.add(field)
                     result.fields.add(field)
                 }
                 when Capture.SELF {
                     def field := FieldDecl(result, p, null,
-                            Annotations(Annotations.Flag.SYNTHETIC), FieldDecl.Kind.DEF,
-                            Compiler.CAPTURED_SELF_NAME, capturedSelfType(compiler), null)
+                            Annotations(Annotations.Flag.SYNTHETIC || Annotations.Flag.CAPTURE),
+                            FieldDecl.Kind.DEF, Compiler.CAPTURED_SELF_NAME,
+                            capturedSelfType(compiler), null)
                     result.symbolTable.add(field)
                     result.fields.add(field)
                 }

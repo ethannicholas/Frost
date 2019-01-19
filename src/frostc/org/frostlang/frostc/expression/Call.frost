@@ -704,7 +704,7 @@ class Call {
             ir.setCurrentBlock(success)
             return null
         }
-        if type.typeKind = Type.Kind.GENERIC & type.subtypes[0].name = "frost.core.Maybe" {
+        else if type.typeKind = Type.Kind.GENERIC & type.subtypes[0].name = "frost.core.Maybe" {
             ir.add(IR.Statement.COMMENT("try maybe check"))
             def cl := compiler.getClass(type)
             assert cl !== null

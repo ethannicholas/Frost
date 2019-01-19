@@ -13,7 +13,6 @@ uses org.frostlang.frostc.expression.Dot
 uses org.frostlang.frostc.expression.Identifier
 uses org.frostlang.frostc.expression.IntLiteral
 uses org.frostlang.frostc.expression.Or
-uses org.frostlang.frostc.expression.Postfix
 uses org.frostlang.frostc.lvalue.ChoiceFieldLValue
 uses org.frostlang.frostc.lvalue.FieldLValue
 uses org.frostlang.frostc.lvalue.IndexLValue
@@ -143,7 +142,7 @@ class Compiler {
         SCOPE
         VARIABLE_SCOPE(Variable)
         VALUE_SCOPE(IR.Value)
-        TRY_SCOPE(IR.Block.ID, Variable?)
+        TRY_SCOPE(IR.Block.ID?, Variable?)
 
         @override
         function convert():String {
@@ -164,7 +163,8 @@ class Compiler {
                     return "VALUE_SCOPE(\{v})"
                 }
                 when TRY_SCOPE(block, v) {
-                    return "TRY_SCOPE(\{block}, \{v})"
+                    return "TRY_SCOPE(\{(block !== null).choose(block.convert(), "<null>")}, " +
+                            "\{(v !== null).choose(v.convert(), "<null>")})"
                 }
             }
         }
@@ -3090,10 +3090,6 @@ class Compiler {
                 }
                 return null
             }
-            when ASTNode.POSTFIX(position, operand, op) {
-                assert op = Token.Kind.NOT
-                return coercionCost(operand, target)
-            }
             when ASTNode.PREFIX(position, op, operand) {
                 -- need to special-case things like -128, which can fit into an Int8 despite 128 not
                 -- doing so
@@ -3584,7 +3580,7 @@ class Compiler {
         if v.name = SELF_NAME {
             for c in captures {
                 c.second[SELF_NAME] := Capture.SELF
-                if !c.first.annotations.isSynthetic {
+                if !c.first.annotations.isCapture {
                     return
                 }
             }
@@ -3649,7 +3645,7 @@ class Compiler {
             when Symbol.Kind.FIELD {
                 def f := s->FieldDecl
                 if resolve(f) {
-                    if f.annotations.isSynthetic {
+                    if f.annotations.isCapture {
                         capture(position, f)
                     }
                     return FieldLValue(self, position, target, f).compileLoad()
@@ -4717,9 +4713,6 @@ class Compiler {
             when ASTNode.NULL(position) {
                 return compileNull(position, type)
             }
-            when ASTNode.POSTFIX(position, operand, op) {
-                return Postfix.compile(self, position, operand, op, type)
-            }
             when ASTNode.PREFIX(position, op, operand) {
                 return compilePrefix(position, op, operand, type)
             }
@@ -4848,11 +4841,11 @@ class Compiler {
         return null
     }
 
-    function getTryScope():Pair<IR.Block.ID, Variable>? {
+    function getTryScope():Pair<IR.Block.ID?, Variable?>? {
         for c in enclosingContexts {
             match c {
                 when EnclosingContext.TRY_SCOPE(failBlock, errorVar) {
-                    return Pair<IR.Block.ID, Variable>(failBlock, errorVar)
+                    return Pair<IR.Block.ID?, Variable?>(failBlock, errorVar)
                 }
             }
         }
@@ -5059,9 +5052,6 @@ class Compiler {
             }
             when ASTNode.METHOD(position, _, _, kind, name, _, parameters, returnType, body) {
                 InnerMethod.compile(self, position, kind, name, parameters, returnType, body)
-            }
-            when ASTNode.POSTFIX(position, operand, op) {
-                Postfix.compile(self, position, operand, op, TypeContext.UNSPECIFIED)
             }
             when ASTNode.RETURN(position, value) {
                 Return.compile(self, position, value)
@@ -5527,19 +5517,19 @@ class Compiler {
     }
 
     method checkAnnotations(cl:ClassDecl) {
-        method disallow(compiler:Compiler -* FIXME capture this *-, cl:ClassDecl -* FIXME capture this *-, flag:Int, name:String) {
+        method disallow(flag:Int, name:String) {
             if cl.annotations.flags && flag != 0 {
-                compiler.error(cl.position, "classes may not be annotated with '\{name}'")
+                self.error(cl.position, "classes may not be annotated with '\{name}'")
             }
         }
-        disallow(self, cl, Annotations.Flag.PROTECTED, "@protected")
-        disallow(self, cl, Annotations.Flag.CLASS,     "@class")
-        disallow(self, cl, Annotations.Flag.OVERRIDE,  "@override")
-        disallow(self, cl, Annotations.Flag.EXTERNAL,  "@external")
-        disallow(self, cl, Annotations.Flag.IMPLICIT,  "@implicit")
-        disallow(self, cl, Annotations.Flag.INLINE,    "@inline")
-        disallow(self, cl, Annotations.Flag.WEAK,      "@weak")
-        disallow(self, cl, Annotations.Flag.DEFAULT,   "@default")
+        disallow(Annotations.Flag.PROTECTED, "@protected")
+        disallow(Annotations.Flag.CLASS,     "@class")
+        disallow(Annotations.Flag.OVERRIDE,  "@override")
+        disallow(Annotations.Flag.EXTERNAL,  "@external")
+        disallow(Annotations.Flag.IMPLICIT,  "@implicit")
+        disallow(Annotations.Flag.INLINE,    "@inline")
+        disallow(Annotations.Flag.WEAK,      "@weak")
+        disallow(Annotations.Flag.DEFAULT,   "@default")
         if cl.annotations.expressions !== null {
             for expr in cl.annotations.expressions {
                 match expr {
@@ -5562,19 +5552,19 @@ class Compiler {
     }
 
     method checkAnnotations(f:FieldDecl) {
-        method disallow(compiler:Compiler -* FIXME capture this *-, f:FieldDecl -* FIXME capture this *-, flag:Int, name:String) {
+        method disallow(flag:Int, name:String) {
             if f.annotations.flags && flag != 0 {
-                compiler.error(f.position, "fields may not be annotated with '\{name}'")
+                self.error(f.position, "fields may not be annotated with '\{name}'")
             }
         }
-        disallow(self, f, Annotations.Flag.OVERRIDE,         "@override")
-        disallow(self, f, Annotations.Flag.EXTERNAL,         "@external")
-        disallow(self, f, Annotations.Flag.IMPLICIT,         "@implicit")
-        disallow(self, f, Annotations.Flag.ABSTRACT,         "@abstract")
-        disallow(self, f, Annotations.Flag.INLINE,           "@inline")
-        disallow(self, f, Annotations.Flag.SPECIALIZE,       "@specialize")
-        disallow(self, f, Annotations.Flag.UNSAFE_IMMUTABLE, "@unsafeImmutable")
-        disallow(self, f, Annotations.Flag.DEFAULT,          "@default")
+        disallow(Annotations.Flag.OVERRIDE,         "@override")
+        disallow(Annotations.Flag.EXTERNAL,         "@external")
+        disallow(Annotations.Flag.IMPLICIT,         "@implicit")
+        disallow(Annotations.Flag.ABSTRACT,         "@abstract")
+        disallow(Annotations.Flag.INLINE,           "@inline")
+        disallow(Annotations.Flag.SPECIALIZE,       "@specialize")
+        disallow(Annotations.Flag.UNSAFE_IMMUTABLE, "@unsafeImmutable")
+        disallow(Annotations.Flag.DEFAULT,          "@default")
         if f.annotations.expressions !== null {
             for expr in f.annotations.expressions {
                 match expr {

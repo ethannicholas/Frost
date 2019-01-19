@@ -26,19 +26,19 @@ class System {
         Returns an `OutputStream` which sends its output to the process' standard input stream.
         ============================================================================================
         @external
-        method openStandardInput():OutputStream
+        method openStandardInput():Maybe<OutputStream>
 
         ============================================================================================
         Returns an `InputStream` which reads from the process' standard output stream.
         ============================================================================================
         @external
-        method openStandardOutput():InputStream
+        method openStandardOutput():Maybe<InputStream>
 
         ============================================================================================
         Returns an `InputStream` which reads from the process' standard error stream.
         ============================================================================================
         @external
-        method openStandardError():InputStream
+        method openStandardError():Maybe<InputStream>
 
         ============================================================================================
         Returns the process' exit code, or null if the process has not yet exited. The precise

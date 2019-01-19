@@ -70,13 +70,13 @@ class Main {
         def p:System.Process
         try {
             p := System.exec(clang.path, args)
+            Console.printError(p.openStandardOutput().readFully())
+            Console.printError(p.openStandardError().readFully())
         }
         fail(error) {
             Console.printErrorLine(error)
             System.exit(1)
         }
-        Console.printError(p.openStandardOutput().readFully())
-        Console.printError(p.openStandardError().readFully())
         def exitCode := p.waitFor()
         if !preserveTemporaries {
             try {
@@ -119,13 +119,13 @@ class Main {
         def p:System.Process
         try {
             p := System.exec(clang.path, args)
+            Console.printError(p.openStandardOutput().readFully())
+            Console.printError(p.openStandardError().readFully())
         }
         fail(error) {
             Console.printErrorLine(error)
             System.exit(1)
         }
-        Console.printError(p.openStandardOutput().readFully())
-        Console.printError(p.openStandardError().readFully())
         def exitCode := p.waitFor()
         if !preserveTemporaries {
             try {
