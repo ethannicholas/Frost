@@ -14,6 +14,7 @@ class Main {
         C_HEADER
         C
         HTML
+        STUB
     }
 
     var clang:File
@@ -159,8 +160,7 @@ class Main {
     method run(rawArgs:ListView<String>) {
         def args := Arguments(rawArgs)
         def sources := Array<File>()
-        def imports := Array<File>() -- FIXME literal
-        imports.add(frostHome)
+        def imports := Array<File>()
         var outFile:File? := null
         var optimizationLevel := 3
         var safetyLevel := 3
@@ -224,6 +224,7 @@ class Main {
                         when "h"    { format := Format.C_HEADER }
                         when "c"    { format := Format.C }
                         when "html" { format := Format.HTML }
+                        when "stub" { format := Format.STUB }
                         otherwise {
                             Console.printErrorLine("unsupported output format '\{f}'")
                             System.exit(1)
@@ -248,6 +249,10 @@ class Main {
                 }
             }
         }
+        if format == null | format != Format.STUB {
+            imports.add(File(Config.frostLibDir()).resolve("stubs"))
+        }
+        imports.add(frostHome)
         def llvmDir := File(Config.llvmDir())
         clang := File("/usr/bin/clang")
         if sources.count = 0 {
@@ -265,6 +270,7 @@ class Main {
                     when Format.OBJECT     { extension := ".o" }
                     when Format.LLVM       { extension := ".ll" }
                     when Format.HTML       { extension := ".html" }
+                    when Format.STUB       { extension := ".stub" }
                     otherwise {
                         Console.printErrorLine("output format requires a '-o' output to be " +
                                 "specified")
@@ -313,6 +319,15 @@ class Main {
                 }
                 when Format.C {
                     cg := CCodeGenerator(outFile)
+                }
+                when Format.STUB {
+                    try {
+                        cg := StubCodeGenerator(outFile.openOutputStream())
+                    }
+                    fail(error) {
+                        Console.printErrorLine(error)
+                        System.exit(1)
+                    }
                 }
                 otherwise {
                     assert false
@@ -368,6 +383,11 @@ class Main {
 
     @class
     method main(args:ListView<String>) {
+        if args.count > 1 & args[1] = "-repeat" {
+            loop {
+                Main().run(args[1..])
+            }
+        }
         Main().run(args)
     }
 }

@@ -22,7 +22,7 @@ frost$core$String* local2 = NULL;
 frost$core$String* local3 = NULL;
 frost$collections$Map* local4 = NULL;
 frost$core$String* local5 = NULL;
-// line 12
+// line 13
 frost$core$Int64* $tmp2 = &param0->$rawValue;
 frost$core$Int64 $tmp3 = *$tmp2;
 frost$core$Int64 $tmp4 = (frost$core$Int64) {0};
@@ -123,25 +123,25 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp39));
 *(&local3) = ((frost$core$String*) NULL);
 goto block1;
 block1:;
-// line 12
+// line 13
 frost$core$Object$cleanup(((frost$core$Object*) param0));
 return;
 
 }
 void org$frostlang$frostc$CCodeGenerator$EnclosingContext$init$frost$core$Int64$frost$core$String$Q$frost$core$String$frost$core$String(org$frostlang$frostc$CCodeGenerator$EnclosingContext* param0, frost$core$Int64 param1, frost$core$String* param2, frost$core$String* param3, frost$core$String* param4) {
 
-// line 12
+// line 13
 frost$core$Int64* $tmp40 = &param0->$rawValue;
 *$tmp40 = param1;
-// line 12
+// line 13
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param2));
 frost$core$String** $tmp41 = (frost$core$String**) (param0->$data + 0);
 *$tmp41 = param2;
-// line 12
+// line 13
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param3));
 frost$core$String** $tmp42 = (frost$core$String**) (param0->$data + 8);
 *$tmp42 = param3;
-// line 12
+// line 13
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param4));
 frost$core$String** $tmp43 = (frost$core$String**) (param0->$data + 16);
 *$tmp43 = param4;
@@ -150,18 +150,18 @@ return;
 }
 void org$frostlang$frostc$CCodeGenerator$EnclosingContext$init$frost$core$Int64$frost$core$String$frost$collections$Map$LTfrost$core$String$Corg$frostlang$frostc$Pair$LTfrost$core$Int64$Cfrost$core$String$GT$GT$frost$core$String(org$frostlang$frostc$CCodeGenerator$EnclosingContext* param0, frost$core$Int64 param1, frost$core$String* param2, frost$collections$Map* param3, frost$core$String* param4) {
 
-// line 12
+// line 13
 frost$core$Int64* $tmp44 = &param0->$rawValue;
 *$tmp44 = param1;
-// line 12
+// line 13
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param2));
 frost$core$String** $tmp45 = (frost$core$String**) (param0->$data + 0);
 *$tmp45 = param2;
-// line 12
+// line 13
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param3));
 frost$collections$Map** $tmp46 = (frost$collections$Map**) (param0->$data + 8);
 *$tmp46 = param3;
-// line 12
+// line 13
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param4));
 frost$core$String** $tmp47 = (frost$core$String**) (param0->$data + 16);
 *$tmp47 = param4;

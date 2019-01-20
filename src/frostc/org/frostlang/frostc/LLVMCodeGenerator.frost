@@ -1,6 +1,7 @@
 package org.frostlang.frostc
 
 uses org.frostlang.frostc.Compiler.Expression
+uses org.frostlang.frostc.expression.Binary
 uses org.frostlang.frostc.parser.Token
 
 @final
@@ -340,6 +341,9 @@ class LLVMCodeGenerator : CodeGenerator {
                 }
                 if f.type.isClass {
                     def fCl := compiler.getClass(f.type)
+                    if fCl == null {
+                        return
+                    }
                     if !compiler.isValue(fCl) {
                         -- If we write the correct type definition here, we end up loading and parsing a
                         -- ton of otherwise-unused classes, for no other reason than to figure out their
@@ -372,6 +376,7 @@ class LLVMCodeGenerator : CodeGenerator {
         fail(error) {
             assert false, error.asString
         }
+        return
     }
 
     method writeWrapperType(t:Type) {
@@ -436,7 +441,7 @@ class LLVMCodeGenerator : CodeGenerator {
             }
             when Type.Kind.NULLABLE {
                 def cl := compiler.getClass(t)
-                assert cl !== null
+                assert cl !== null, "unable to load \{t}"
                 if compiler.isValue(cl) {
                     return nullableType(t)
                 }
@@ -1526,29 +1531,29 @@ class LLVMCodeGenerator : CodeGenerator {
         return false
     }
 
-    method writeBinary(position:Position, id:IR.Statement.ID, left:IR.Value, op:Token.Kind,
+    method writeBinary(position:Position, id:IR.Statement.ID, left:IR.Value, op:Binary.Operator,
             right:IR.Value, type:Type) {
         def llvmOp:String
         match opClass(left.type()) {
             when OpClass.SIGNED {
                 match op {
-                    when Token.Kind.ADD        { llvmOp := "add" }
-                    when Token.Kind.SUB        { llvmOp := "sub" }
-                    when Token.Kind.MUL        { llvmOp := "mul" }
-                    when Token.Kind.INTDIV     { llvmOp := "sdiv" }
-                    when Token.Kind.REM        { llvmOp := "srem" }
-                    when Token.Kind.SHIFTLEFT  { llvmOp := "shl" }
-                    when Token.Kind.SHIFTRIGHT { llvmOp := "ashr" }
-                    when Token.Kind.BITWISEAND { llvmOp := "and" }
-                    when Token.Kind.BITWISEOR  {  llvmOp := "or" }
-                    when Token.Kind.BITWISEXOR,
-                            Token.Kind.XOR     { llvmOp := "xor" }
-                    when Token.Kind.EQ         { llvmOp := "icmp eq" }
-                    when Token.Kind.NEQ        { llvmOp := "icmp ne" }
-                    when Token.Kind.GT         { llvmOp := "icmp sgt" }
-                    when Token.Kind.LT         { llvmOp := "icmp slt" }
-                    when Token.Kind.GTEQ       { llvmOp := "icmp sge" }
-                    when Token.Kind.LTEQ       { llvmOp := "icmp sle" }
+                    when Binary.Operator.ADD        { llvmOp := "add" }
+                    when Binary.Operator.SUB        { llvmOp := "sub" }
+                    when Binary.Operator.MUL        { llvmOp := "mul" }
+                    when Binary.Operator.INTDIV     { llvmOp := "sdiv" }
+                    when Binary.Operator.REM        { llvmOp := "srem" }
+                    when Binary.Operator.SHIFTLEFT  { llvmOp := "shl" }
+                    when Binary.Operator.SHIFTRIGHT { llvmOp := "ashr" }
+                    when Binary.Operator.BITWISEAND { llvmOp := "and" }
+                    when Binary.Operator.BITWISEOR  {  llvmOp := "or" }
+                    when Binary.Operator.BITWISEXOR,
+                            Binary.Operator.XOR     { llvmOp := "xor" }
+                    when Binary.Operator.EQ         { llvmOp := "icmp eq" }
+                    when Binary.Operator.NEQ        { llvmOp := "icmp ne" }
+                    when Binary.Operator.GT         { llvmOp := "icmp sgt" }
+                    when Binary.Operator.LT         { llvmOp := "icmp slt" }
+                    when Binary.Operator.GTEQ       { llvmOp := "icmp sge" }
+                    when Binary.Operator.LTEQ       { llvmOp := "icmp sle" }
                     otherwise {
                         assert false, "unsupported signed operator \{op}"
                     }
@@ -1556,25 +1561,25 @@ class LLVMCodeGenerator : CodeGenerator {
             }
             when OpClass.UNSIGNED {
                 match op {
-                    when Token.Kind.ADD        { llvmOp := "add" }
-                    when Token.Kind.SUB        { llvmOp := "sub" }
-                    when Token.Kind.MUL        { llvmOp := "mul" }
-                    when Token.Kind.INTDIV     { llvmOp := "udiv" }
-                    when Token.Kind.REM        { llvmOp := "urem" }
-                    when Token.Kind.SHIFTLEFT  { llvmOp := "shl" }
-                    when Token.Kind.SHIFTRIGHT { llvmOp := "lshr" }
-                    when Token.Kind.BITWISEAND,
-                            Token.Kind.AND     { llvmOp := "and" }
-                    when Token.Kind.BITWISEOR,
-                            Token.Kind.OR      { llvmOp := "or" }
-                    when Token.Kind.BITWISEXOR, 
-                            Token.Kind.XOR     { llvmOp := "xor" }
-                    when Token.Kind.EQ         { llvmOp := "icmp eq" }
-                    when Token.Kind.NEQ        { llvmOp := "icmp ne" }
-                    when Token.Kind.GT         { llvmOp := "icmp ugt" }
-                    when Token.Kind.LT         { llvmOp := "icmp ult" }
-                    when Token.Kind.GTEQ       { llvmOp := "icmp uge" }
-                    when Token.Kind.LTEQ       { llvmOp := "icmp ule" }
+                    when Binary.Operator.ADD        { llvmOp := "add" }
+                    when Binary.Operator.SUB        { llvmOp := "sub" }
+                    when Binary.Operator.MUL        { llvmOp := "mul" }
+                    when Binary.Operator.INTDIV     { llvmOp := "udiv" }
+                    when Binary.Operator.REM        { llvmOp := "urem" }
+                    when Binary.Operator.SHIFTLEFT  { llvmOp := "shl" }
+                    when Binary.Operator.SHIFTRIGHT { llvmOp := "lshr" }
+                    when Binary.Operator.BITWISEAND,
+                            Binary.Operator.AND     { llvmOp := "and" }
+                    when Binary.Operator.BITWISEOR,
+                            Binary.Operator.OR      { llvmOp := "or" }
+                    when Binary.Operator.BITWISEXOR, 
+                            Binary.Operator.XOR     { llvmOp := "xor" }
+                    when Binary.Operator.EQ         { llvmOp := "icmp eq" }
+                    when Binary.Operator.NEQ        { llvmOp := "icmp ne" }
+                    when Binary.Operator.GT         { llvmOp := "icmp ugt" }
+                    when Binary.Operator.LT         { llvmOp := "icmp ult" }
+                    when Binary.Operator.GTEQ       { llvmOp := "icmp uge" }
+                    when Binary.Operator.LTEQ       { llvmOp := "icmp ule" }
                     otherwise {
                         assert false, "unsupported unsigned operator \{op}"
                     }
@@ -1582,16 +1587,16 @@ class LLVMCodeGenerator : CodeGenerator {
             }
             when OpClass.FLOAT {
                 match op {
-                    when Token.Kind.ADD  { llvmOp := "fadd" }
-                    when Token.Kind.SUB  { llvmOp := "fsub" }
-                    when Token.Kind.MUL  { llvmOp := "fmul" }
-                    when Token.Kind.DIV  { llvmOp := "fdiv" }
-                    when Token.Kind.EQ   { llvmOp := "fcmp oeq" }
-                    when Token.Kind.NEQ  { llvmOp := "fcmp one" }
-                    when Token.Kind.GT   { llvmOp := "fcmp ogt" }
-                    when Token.Kind.LT   { llvmOp := "fcmp olt" }
-                    when Token.Kind.GTEQ { llvmOp := "fcmp oge" }
-                    when Token.Kind.LTEQ { llvmOp := "fcmp ole" }
+                    when Binary.Operator.ADD  { llvmOp := "fadd" }
+                    when Binary.Operator.SUB  { llvmOp := "fsub" }
+                    when Binary.Operator.MUL  { llvmOp := "fmul" }
+                    when Binary.Operator.DIV  { llvmOp := "fdiv" }
+                    when Binary.Operator.EQ   { llvmOp := "fcmp oeq" }
+                    when Binary.Operator.NEQ  { llvmOp := "fcmp one" }
+                    when Binary.Operator.GT   { llvmOp := "fcmp ogt" }
+                    when Binary.Operator.LT   { llvmOp := "fcmp olt" }
+                    when Binary.Operator.GTEQ { llvmOp := "fcmp oge" }
+                    when Binary.Operator.LTEQ { llvmOp := "fcmp ole" }
                     otherwise {
                         assert false, "unsupported float operator \{op}"
                     }
@@ -1599,7 +1604,7 @@ class LLVMCodeGenerator : CodeGenerator {
             }
             when OpClass.CLASS {
                 match op {
-                    when Token.Kind.IDENTITY {
+                    when Binary.Operator.IDENTITY {
                         if isNull(left) {
                             writeIsNull(position, id, right)
                             return
@@ -1610,7 +1615,7 @@ class LLVMCodeGenerator : CodeGenerator {
                         }
                         llvmOp := "icmp eq"
                     }
-                    when Token.Kind.NIDENTITY {
+                    when Binary.Operator.NIDENTITY {
                         if isNull(left) {
                             writeIsNonNull(position, id, right)
                             return

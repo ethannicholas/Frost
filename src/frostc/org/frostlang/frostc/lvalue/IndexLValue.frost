@@ -36,7 +36,7 @@ class IndexLValue : LValue {
     @override
     function type():Type {
         def types := compiler.possibleTypes(ASTNode.BINARY(position,
-                ASTNode.IR_WRAPPER(position, target), Token.Kind.LBRACKET, rawIndex))
+                ASTNode.IR_WRAPPER(position, target), Binary.Operator.INDEX, rawIndex))
         if types == null {
             return Type.Any()
         }
@@ -47,7 +47,7 @@ class IndexLValue : LValue {
     @override
     method compileLoad():IR.Value? {
         if index == null {
-            def m := Binary.findOverloadedOperator(compiler, target.type(), Token.Kind.LBRACKET,
+            def m := Binary.findOverloadedOperator(compiler, target.type(), Binary.Operator.INDEX,
                     rawIndex, TypeContext.NON_VOID)
             if m !== null {
                 assert m.first.count = 1 -- FIXME handle ambiguous matches
@@ -60,7 +60,7 @@ class IndexLValue : LValue {
             return null
         }
         return Binary.compile(compiler, position, ASTNode.IR_WRAPPER(position, target),
-                Token.Kind.LBRACKET, ASTNode.IR_WRAPPER(position, index),
+                Binary.Operator.INDEX, ASTNode.IR_WRAPPER(position, index),
                 TypeContext.NON_VOID)
     }
 

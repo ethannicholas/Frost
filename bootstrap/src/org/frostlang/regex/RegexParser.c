@@ -896,7 +896,7 @@ goto block3;
 block4:;
 // line 226
 org$frostlang$frostc$ASTNode* $tmp411 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(104, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
-frost$core$Int64 $tmp412 = (frost$core$Int64) {38};
+frost$core$Int64 $tmp412 = (frost$core$Int64) {37};
 org$frostlang$frostc$Position $tmp413 = *(&local0);
 frost$core$String* $tmp414 = (frost$core$String*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$String$class);
 frost$core$Char8* $tmp415 = *(&local4);

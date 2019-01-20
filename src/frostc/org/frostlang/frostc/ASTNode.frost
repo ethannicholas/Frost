@@ -1,7 +1,8 @@
 package org.frostlang.frostc
 
+uses org.frostlang.frostc.expression.Binary
+uses org.frostlang.frostc.expression.Unary
 uses org.frostlang.frostc.parser.Token
-uses org.frostlang.frostc.parser.Token.Kind -- FIXME shouldn't need
 
 choice ASTNode {
     ANNOTATION             (Position, String, String? -* expr text *-, ASTNode? -* expr *-)
@@ -9,7 +10,7 @@ choice ASTNode {
     ASSERT                 (Position, ASTNode, ASTNode?)
     AT_PRE                 (Position, ASTNode -* expression *-)
     AT_RETURN              (Position)
-    BINARY                 (Position, ASTNode, Token.Kind, ASTNode)
+    BINARY                 (Position, ASTNode, Binary.Operator, ASTNode)
     BIT                    (Position, Bit)
     BLOCK                  (Position, FixedArray<ASTNode>)
     BREAK                  (Position, String?)
@@ -65,7 +66,6 @@ choice ASTNode {
     NULLABLE_TYPE          (Position, ASTNode -* type *-)
     PACKAGE                (Position, String)
     PARAMETER              (Position, String, ASTNode -* type *-)
-    PREFIX                 (Position, Token.Kind, ASTNode)
     RANGE                  (Position, ASTNode?, Bit, ASTNode?, ASTNode?)
     REAL                   (Position, Real64)
     REGEX                  (Position, String)
@@ -80,6 +80,7 @@ choice ASTNode {
     TYPE                   (Position, String)
     TYPED_LAMBDA           (Position, FixedArray<ASTNode> -* PARAMETERs *-, ASTNode -* body *-)
     TYPED_IDENTIFIER       (Position, String, ASTNode?)
+    UNARY                  (Position, Unary.Operator, ASTNode)
     UNTYPED_LAMBDA         (Position, FixedArray<ASTNode> -* IDENTIFIERs *-, ASTNode -* body *-)
     USES                   (Position, String)
     VAR                    (Position, Variable.Kind, FixedArray<ASTNode> -* DECLARATIONs *-)
@@ -195,9 +196,6 @@ choice ASTNode {
             when PARAMETER(position, _, _) {
                 return position
             }
-            when PREFIX(position, _, _) {
-                return position
-            }
             when RANGE(position, _, _, _, _) {
                 return position
             }
@@ -232,6 +230,9 @@ choice ASTNode {
                 return position
             }
             when TYPED_LAMBDA(position, _, _) {
+                return position
+            }
+            when UNARY(position, _, _) {
                 return position
             }
             when UNTYPED_LAMBDA(position, _, _) {
@@ -283,6 +284,9 @@ choice ASTNode {
                 return "@return"
             }
             when BINARY(_, left, op, right) {
+                if op = Binary.Operator.INDEX {
+                    return "\{left}[\{right}]"
+                }
                 return "(\{left} \{op} \{right})"
             }
             when BIT(_, value) {
@@ -517,9 +521,6 @@ choice ASTNode {
             when PARAMETER(_, name, type) {
                 return "\{name}:\{type}"
             }
-            when PREFIX(_, kind, base) {
-                return "\{kind}\{base}"
-            }
             when RANGE(_, start, inclusive, end, step) {
                 def result := MutableString()
                 if start !== null {
@@ -590,6 +591,9 @@ choice ASTNode {
             }
             when TYPED_LAMBDA(_, parameters, body) {
                 return "(\{parameters.join()})=>\{body}"
+            }
+            when UNARY(_, op, base) {
+                return "\{op}\{base}"
             }
             when UNTYPED_LAMBDA(_, parameters, body) {
                 return "(\{parameters.join()})=>\{body}"

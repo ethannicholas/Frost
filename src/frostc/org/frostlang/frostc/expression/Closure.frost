@@ -78,16 +78,14 @@ class Closure {
                     -- self.parameterName := parameterName
                     statements.add(ASTNode.BINARY(p,
                             ASTNode.DOT(p, ASTNode.IDENTIFIER(p, Compiler.FORCE_SELF_NAME), v.name),
-                            Token.Kind.ASSIGNMENT,
-                            ASTNode.IDENTIFIER(p, v.name)))
+                            Binary.Operator.ASSIGNMENT, ASTNode.IDENTIFIER(p, v.name)))
                         }
                 when Capture.FIELD(f) {
                     parameters.add(MethodDecl.Parameter(f.name, f.type))
                     -- self.parameterName := parameterName
                     statements.add(ASTNode.BINARY(p,
                             ASTNode.DOT(p, ASTNode.IDENTIFIER(p, Compiler.FORCE_SELF_NAME), f.name),
-                            Token.Kind.ASSIGNMENT,
-                            ASTNode.IDENTIFIER(p, f.name)))
+                            Binary.Operator.ASSIGNMENT, ASTNode.IDENTIFIER(p, f.name)))
                 }
                 when Capture.SELF {
                     parameters.add(MethodDecl.Parameter(Compiler.CAPTURED_SELF_NAME,
@@ -96,8 +94,8 @@ class Closure {
                     statements.add(ASTNode.BINARY(p,
                             ASTNode.DOT(p, ASTNode.IDENTIFIER(p, Compiler.FORCE_SELF_NAME),
                                 Compiler.CAPTURED_SELF_NAME),
-                            Token.Kind.ASSIGNMENT,
-                            ASTNode.IDENTIFIER(p, Compiler.CAPTURED_SELF_NAME)))
+                            Binary.Operator.ASSIGNMENT, ASTNode.IDENTIFIER(p,
+                                Compiler.CAPTURED_SELF_NAME)))
                 }
             }
         }
@@ -206,7 +204,7 @@ class Closure {
     }
 
     @class
-    @post(@return !== null | errorCount > 0 | !reportErrors)
+    @post(@return !== null | compiler.errorCount > 0 | !compiler.reportErrors)
     method compileTypedLambda(compiler:Compiler, position:Position,
             rawParameters:FixedArray<ASTNode>, expr:ASTNode, type:TypeContext):IR.Value? {
         var returnType:Type
@@ -232,7 +230,7 @@ class Closure {
     }
 
     @class
-    @post(@return !== null | errorCount > 0 | !reportErrors)
+    @post(@return !== null | compiler.errorCount > 0 | !compiler.reportErrors)
     method compileUntypedLambda(compiler:Compiler, position:Position,
             rawParameters:FixedArray<ASTNode>, expr:ASTNode, type:TypeContext):IR.Value? {
         match type {

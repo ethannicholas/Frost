@@ -2,6 +2,7 @@ package org.frostlang.frostc.expression
 
 uses org.frostlang.frostc.ASTNode
 uses org.frostlang.frostc.Compiler
+uses org.frostlang.frostc.Compiler.AutoAtPreFlag
 uses org.frostlang.frostc.Compiler.TypeContext
 uses org.frostlang.frostc.IR
 uses org.frostlang.frostc.Position
@@ -14,13 +15,15 @@ class AtPre {
             compiler.error(position, "@pre may only be used within a postcondition")
             return null
         }
-        if compiler.ir.currentBlock.id = compiler.atPreBlock {
+        if compiler.inAtPre {
             compiler.error(position, "cannot use @pre inside @pre")
             return null
         }
+        def auto := AutoAtPreFlag(compiler)
         def old := ir.currentBlock.id
         ir.setCurrentBlock(compiler.atPreBlock)
         def result := compiler.compileExpression(expr, type)
+        compiler.atPreBlock := ir.currentBlock.id
         ir.setCurrentBlock(old)
         return result
     }

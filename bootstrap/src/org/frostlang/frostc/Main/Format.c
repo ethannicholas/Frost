@@ -75,8 +75,15 @@ block11:;
 frost$core$Int64 $tmp19 = (frost$core$Int64) {5};
 frost$core$Bit $tmp20 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp3, $tmp19);
 bool $tmp21 = $tmp20.value;
-if ($tmp21) goto block12; else goto block1;
+if ($tmp21) goto block12; else goto block13;
 block12:;
+goto block1;
+block13:;
+frost$core$Int64 $tmp22 = (frost$core$Int64) {6};
+frost$core$Bit $tmp23 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp3, $tmp22);
+bool $tmp24 = $tmp23.value;
+if ($tmp24) goto block14; else goto block1;
+block14:;
 goto block1;
 block1:;
 return;
@@ -86,31 +93,31 @@ org$frostlang$frostc$Main$Format org$frostlang$frostc$Main$Format$init$frost$cor
 
 org$frostlang$frostc$Main$Format local0;
 // line 10
-frost$core$Int64* $tmp22 = &(&local0)->$rawValue;
-*$tmp22 = param0;
-org$frostlang$frostc$Main$Format $tmp23 = *(&local0);
-return $tmp23;
+frost$core$Int64* $tmp25 = &(&local0)->$rawValue;
+*$tmp25 = param0;
+org$frostlang$frostc$Main$Format $tmp26 = *(&local0);
+return $tmp26;
 
 }
 frost$core$Bit org$frostlang$frostc$Main$Format$$EQ$org$frostlang$frostc$Main$Format$R$frost$core$Bit(org$frostlang$frostc$Main$Format param0, org$frostlang$frostc$Main$Format param1) {
 
 // line 10
-frost$core$Int64 $tmp24 = param0.$rawValue;
-frost$core$Int64 $tmp25 = param1.$rawValue;
-int64_t $tmp26 = $tmp24.value;
-int64_t $tmp27 = $tmp25.value;
-bool $tmp28 = $tmp26 != $tmp27;
-frost$core$Bit $tmp29 = (frost$core$Bit) {$tmp28};
-bool $tmp30 = $tmp29.value;
-if ($tmp30) goto block1; else goto block2;
+frost$core$Int64 $tmp27 = param0.$rawValue;
+frost$core$Int64 $tmp28 = param1.$rawValue;
+int64_t $tmp29 = $tmp27.value;
+int64_t $tmp30 = $tmp28.value;
+bool $tmp31 = $tmp29 != $tmp30;
+frost$core$Bit $tmp32 = (frost$core$Bit) {$tmp31};
+bool $tmp33 = $tmp32.value;
+if ($tmp33) goto block1; else goto block2;
 block1:;
 // line 10
-frost$core$Bit $tmp31 = frost$core$Bit$init$builtin_bit(false);
-return $tmp31;
+frost$core$Bit $tmp34 = frost$core$Bit$init$builtin_bit(false);
+return $tmp34;
 block2:;
 // line 10
-frost$core$Bit $tmp32 = frost$core$Bit$init$builtin_bit(true);
-return $tmp32;
+frost$core$Bit $tmp35 = frost$core$Bit$init$builtin_bit(true);
+return $tmp35;
 
 }
 

@@ -1,6 +1,6 @@
 package org.frostlang.frostc
 
-uses org.frostlang.frostc.parser.Token
+uses org.frostlang.frostc.expression.Binary
 
 class IR {
     choice Statement {
@@ -10,7 +10,7 @@ class IR {
         builtin float types. Class types support the IDENTITY and NIDENTITY operations. The left and
         right types must match on all comparisons other than IDENTITY and NIDENTITY.
         ============================================================================================
-        BINARY(Position, Value, Token.Kind, Value, Type)
+        BINARY(Position, Value, Binary.Operator, Value, Type)
 
         ============================================================================================
         Unconditionally branch to the given block.
@@ -473,14 +473,19 @@ class IR {
     }
 
     method setCurrentBlock(id:Block.ID) {
-        for b in blocks {
+        var insertPoint := 0
+        for i in 0 .. blocks.count {
+            def b := blocks[i]
             if b.id = id {
                 currentBlock := b
                 return
             }
+            if b == currentBlock {
+                insertPoint := i + 1
+            }
         }
         def newBlock := Block(id)
-        blocks.add(newBlock)
+        blocks.insert(insertPoint, newBlock)
         currentBlock := newBlock
     }
 

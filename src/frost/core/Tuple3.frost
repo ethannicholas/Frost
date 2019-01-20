@@ -1,0 +1,26 @@
+package frost.core
+class Tuple3<T0, T1, T2> {
+    def f0:T0
+    def f1:T1
+    def f2:T2
+
+    init(f0:T0, f1:T1, f2:T2) {
+       self.f0 := f0
+       self.f1 := f1
+       self.f2 := f2
+    }
+
+    @pre(i >= 0 & i < 3)
+    function [](i:Int):Object? {
+        match i {
+            when 0 { return f0 }
+            when 1 { return f1 }
+            when 2 { return f2 }
+        }
+    }
+
+    @override
+    function get_asString():String {
+        return "(\{f0}, \{f1}, \{f2})"
+    }
+}

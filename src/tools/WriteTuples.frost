@@ -1,0 +1,42 @@
+method writeTuple(count:Int, path:File) {
+    try {
+        def out := path.openOutputStream()
+        out.printLine("package frost.core")
+        out.printLine("class Tuple\{count}<\{Int[0 .. count].map(i => "T\{i}").join()}> {")
+        for i in 0 .. count {
+            out.printLine("    def f\{i}:T\{i}")
+        }
+        out.printLine()
+        out.printLine("    init(\{Int[0 .. count].map(i => "f\{i}:T\{i}").join()}) {")
+        for i in 0 .. count {
+            out.printLine("       self.f\{i} := f\{i}")
+        }
+        out.printLine("    }")
+        out.printLine()
+        out.printLine("    @pre(i >= 0 & i < \{count})")
+        out.printLine("    function [](i:Int):Object? {")
+        out.printLine("        match i {")
+        for i in 0 .. count {
+            out.printLine("            when \{i} { return f\{i} }")
+        }
+        out.printLine("        }")
+        out.printLine("    }")
+        out.printLine()
+        out.printLine("    @override")
+        out.printLine("    function get_asString():String {")
+        out.printLine("        return \"(\{Int[0 .. count].map(i => "\\{f\{i}}").join()})\"")
+        out.printLine("    }")
+        out.printLine("}")
+    }
+    fail(error) {
+        Console.printErrorLine(error)
+        System.exit(1)
+    }
+}
+
+method main() {
+    def corePath := File("../src/frost/core")
+    for i in 2 ... 16 {
+        writeTuple(i, corePath.resolve("Tuple\{i}.frost"))
+    }
+}

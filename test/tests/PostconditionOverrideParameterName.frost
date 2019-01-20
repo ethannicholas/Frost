@@ -14,7 +14,7 @@ class PostconditionOverrideParameterName2 : PostconditionOverrideParameterName1 
     @override
     @postAnd(y >= minimum & y <= maximum)
     method setup(minimum:Int, maximum:Int) {
-        y := ((minimum + maximum) // 2).abs()
+        y := ((minimum + maximum) // 2).abs
         Console.printLine(y)
     }
 

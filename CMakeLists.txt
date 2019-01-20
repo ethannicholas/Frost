@@ -226,6 +226,7 @@ add_executable(bootstrap
     bootstrap/src/org/frostlang/frostc/expression/AtPre.c
     bootstrap/src/org/frostlang/frostc/expression/AtReturn.c
     bootstrap/src/org/frostlang/frostc/expression/Binary.c
+    bootstrap/src/org/frostlang/frostc/expression/Binary/Operator.c
     bootstrap/src/org/frostlang/frostc/expression/Binary/_Closure2.c
     bootstrap/src/org/frostlang/frostc/expression/Call.c
     bootstrap/src/org/frostlang/frostc/expression/Closure.c
@@ -233,6 +234,8 @@ add_executable(bootstrap
     bootstrap/src/org/frostlang/frostc/expression/Identifier.c
     bootstrap/src/org/frostlang/frostc/expression/IntLiteral.c
     bootstrap/src/org/frostlang/frostc/expression/Or.c
+    bootstrap/src/org/frostlang/frostc/expression/Unary.c
+    bootstrap/src/org/frostlang/frostc/expression/Unary/Operator.c
     bootstrap/src/org/frostlang/frostc/FieldDecl.c
     bootstrap/src/org/frostlang/frostc/FieldDecl/Kind.c
     bootstrap/src/org/frostlang/frostc/FixedArray.c
@@ -309,6 +312,12 @@ add_executable(bootstrap
     bootstrap/src/org/frostlang/frostc/statement/Try.c
     bootstrap/src/org/frostlang/frostc/statement/Var.c
     bootstrap/src/org/frostlang/frostc/statement/While.c
+    bootstrap/src/org/frostlang/frostc/StubCodeGenerator.c
+    bootstrap/src/org/frostlang/frostc/StubCodeGenerator/_Closure2.c
+    bootstrap/src/org/frostlang/frostc/StubCodeGenerator/_Closure4.c
+    bootstrap/src/org/frostlang/frostc/StubCodeGenerator/_Closure6.c
+    bootstrap/src/org/frostlang/frostc/StubCodeGenerator/_Closure8.c
+    bootstrap/src/org/frostlang/frostc/StubCodeGenerator/_Closure10.c
     bootstrap/src/org/frostlang/frostc/Symbol.c
     bootstrap/src/org/frostlang/frostc/Symbol/Kind.c
     bootstrap/src/org/frostlang/frostc/SymbolTable.c
@@ -501,6 +510,21 @@ set(public_source
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/Int32.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/Int64.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/Int8.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/Tuple2.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/Tuple3.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/Tuple4.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/Tuple5.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/Tuple6.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/Tuple7.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/Tuple8.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/Tuple9.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/Tuple10.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/Tuple11.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/Tuple12.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/Tuple13.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/Tuple14.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/Tuple15.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/Tuple16.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/UInt16.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/UInt32.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/UInt64.frost
@@ -593,6 +617,35 @@ add_custom_command(
 )
 
 add_custom_command(
+    OUTPUT writeTuples
+    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/bootstrap ${BOOTSTRAP_ARGS} -o writeTuples
+            ${CMAKE_CURRENT_SOURCE_DIR}/src/tools/WriteTuples.frost
+    DEPENDS bootstrap src/tools/WriteTuples.frost
+    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+)
+
+add_custom_command(
+    OUTPUT src/frost/core/Tuple2.frost
+           src/frost/core/Tuple3.frost
+           src/frost/core/Tuple4.frost
+           src/frost/core/Tuple5.frost
+           src/frost/core/Tuple6.frost
+           src/frost/core/Tuple7.frost
+           src/frost/core/Tuple8.frost
+           src/frost/core/Tuple9.frost
+           src/frost/core/Tuple10.frost
+           src/frost/core/Tuple11.frost
+           src/frost/core/Tuple12.frost
+           src/frost/core/Tuple13.frost
+           src/frost/core/Tuple14.frost
+           src/frost/core/Tuple15.frost
+           src/frost/core/Tuple16.frost
+    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/writeTuples
+    DEPENDS writeTuples
+    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+)
+
+add_custom_command(
     OUTPUT writeOperators
     COMMAND ${CMAKE_CURRENT_BINARY_DIR}/bootstrap ${BOOTSTRAP_ARGS} -o writeOperators
             ${CMAKE_CURRENT_SOURCE_DIR}/src/tools/WriteOperators.frost
@@ -628,6 +681,23 @@ add_custom_target(generate_code
             src/frost/core/UInt16.frost
             src/frost/core/UInt32.frost
             src/frost/core/UInt64.frost
+            src/frost/core/Real32.frost
+            src/frost/core/Real64.frost
+            src/frost/core/Tuple2.frost
+            src/frost/core/Tuple3.frost
+            src/frost/core/Tuple4.frost
+            src/frost/core/Tuple5.frost
+            src/frost/core/Tuple6.frost
+            src/frost/core/Tuple7.frost
+            src/frost/core/Tuple8.frost
+            src/frost/core/Tuple9.frost
+            src/frost/core/Tuple10.frost
+            src/frost/core/Tuple11.frost
+            src/frost/core/Tuple12.frost
+            src/frost/core/Tuple13.frost
+            src/frost/core/Tuple14.frost
+            src/frost/core/Tuple15.frost
+            src/frost/core/Tuple16.frost
             src/parser/org/frostlang/json/Lexer.frost
             src/parser/org/frostlang/json/Token.frost
             test/tests/Operators.frost
@@ -771,6 +841,7 @@ set(frostc_source
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/expression/Identifier.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/expression/IntLiteral.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/expression/Or.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/expression/Unary.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/FieldDecl.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/FixedArray.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/HCodeGenerator.frost
@@ -788,6 +859,7 @@ set(frostc_source
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/Pair.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/Position.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/Scanner.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/StubCodeGenerator.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/Symbol.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/SymbolTable.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/Type.frost
@@ -824,6 +896,31 @@ add_executable(frostc
 )
 target_link_libraries(frostc frost ${SYSTEM_LIBRARIES} ${ICU_LIBRARIES})
 set_target_properties(frostc PROPERTIES LINKER_LANGUAGE CXX)
+
+function(create_stubs out_var)
+    set(result)
+    foreach(input ${ARGN})
+        file(RELATIVE_PATH relative "${CMAKE_CURRENT_SOURCE_DIR}/src" ${input})
+        get_filename_component(outputPath ${relative} DIRECTORY)
+        get_filename_component(outputName ${relative} NAME_WE)
+        set(output "${CMAKE_CURRENT_BINARY_DIR}/stubs/${outputPath}/${outputName}.stub")
+        add_custom_command(
+            OUTPUT ${output}
+            COMMAND ${CMAKE_CURRENT_BINARY_DIR}/frostc -f stub ${input} -o ${output}
+            DEPENDS ${input} frostc
+        )
+        list(APPEND result ${output})
+    endforeach()
+    set(${out_var} "${result}" PARENT_SCOPE)
+endfunction()
+
+create_stubs(frost_stubs
+    ${public_source}
+)
+
+add_custom_target(stubs ALL
+    DEPENDS ${frost_stubs}
+)
 
 function(create_headers out_var)
     set(result)
@@ -955,12 +1052,12 @@ add_custom_command(
     DEPENDS frostc test/TestRunner.frost
 )
 
-add_custom_target(run_tests
+add_custom_target(test
     DEPENDS TestRunner
 )
 
 add_custom_command(
-    TARGET run_tests POST_BUILD
+    TARGET test POST_BUILD
     COMMAND ${CMAKE_CURRENT_BINARY_DIR}/TestRunner ${CMAKE_CURRENT_SOURCE_DIR}
             ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_C_COMPILER} ${ICU_LIBRARIES}
 )

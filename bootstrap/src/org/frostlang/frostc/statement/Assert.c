@@ -85,7 +85,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp4));
 // line 22
 frost$collections$Array* $tmp6 = *(&local1);
 org$frostlang$frostc$ASTNode* $tmp7 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(104, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
-frost$core$Int64 $tmp8 = (frost$core$Int64) {41};
+frost$core$Int64 $tmp8 = (frost$core$Int64) {40};
 frost$collections$Stack** $tmp9 = &param0->currentClass;
 frost$collections$Stack* $tmp10 = *$tmp9;
 frost$core$Int64 $tmp11 = (frost$core$Int64) {0};

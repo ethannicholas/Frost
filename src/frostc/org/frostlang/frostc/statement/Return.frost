@@ -14,11 +14,11 @@ uses org.frostlang.frostc.FieldDecl
 uses org.frostlang.frostc.MethodDecl
 uses org.frostlang.frostc.Position
 uses org.frostlang.frostc.Type
+uses org.frostlang.frostc.Variable
 uses org.frostlang.frostc.lvalue.FieldLValue
 
 class Return {
     @class
-    @pre(compiler.returnValue == null)
     method compile(compiler:Compiler, position:Position, value:ASTNode?) {
         def ir := compiler.ir
         def currentClass := compiler.currentClass[0]
@@ -60,14 +60,24 @@ class Return {
             if compiled == null {
                 return
             }
-            compiler.returnValue := compiled
             if compiler.isRefCounted(compiled.type()) {
                 compiler.compileRef(compiled)
             }
             compiler.leaveAllScopes()
-            compiler.compilePostconditions()
-            ir.add(IR.Statement.RETURN(position, compiled))
-            compiler.returnValue := null
+            if compiler.returnVar !== null {
+                def returnSlot:Int
+                match compiler.returnVar.storage {
+                    when Variable.Storage.LOCAL(slot) {
+                        returnSlot := slot
+                    }
+                }
+                ir.add(IR.Statement.STORE(position, compiled, IR.Value.LOCAL(returnSlot,
+                        compiled.type())))
+                ir.add(IR.Statement.BRANCH(position, compiler.postconditionEntryBlock))
+            }
+            else {
+                ir.add(IR.Statement.RETURN(position, compiled))
+            }
         }
         else {
             if currentMethod.returnType != Type.Void() {
@@ -79,8 +89,12 @@ class Return {
                         "'\{currentMethod.returnType}'")
             }
             compiler.leaveAllScopes()
-            compiler.compilePostconditions()
-            ir.add(IR.Statement.RETURN(position, null))
+            if compiler.postconditionEntryBlock !== null {
+                ir.add(IR.Statement.BRANCH(position, compiler.postconditionEntryBlock))
+            }
+            else {
+                ir.add(IR.Statement.RETURN(position, null))
+            }
         }
     }
 }

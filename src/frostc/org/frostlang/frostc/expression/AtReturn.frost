@@ -6,23 +6,32 @@ uses org.frostlang.frostc.Compiler.TypeContext
 uses org.frostlang.frostc.IR
 uses org.frostlang.frostc.Position
 uses org.frostlang.frostc.Type
+uses org.frostlang.frostc.Variable
 
 class AtReturn {
     @class
     method compile(compiler:Compiler, position:Position, type:TypeContext):IR.Value? {
-        if compiler.currentMethod[0].returnType = Type.Void() {
+        if compiler.returnVar == null {
             compiler.error(position, "cannot use @return in a method which does not have a " +
                     "return type")
             return null
         }
-        if compiler.ir.currentBlock.id = compiler.atPreBlock {
+        if compiler.inAtPre {
             compiler.error(position, "cannot use @return inside @pre")
             return null
         }
-        if compiler.returnValue == null {
+        if compiler.atPreBlock == null {
             compiler.error(position, "cannot use @return outside of a postcondition")
             return null
         }
-        return compiler.coerce(position, compiler.returnValue, type)
+        def returnSlot:Int
+        match compiler.returnVar.storage {
+            when Variable.Storage.LOCAL(slot) {
+                returnSlot := slot
+            }
+        }
+        def load := compiler.ir.add(IR.Statement.LOAD(position, IR.Value.LOCAL(returnSlot,
+                compiler.returnVar.type)))
+        return compiler.coerce(position, IR.Value.REF(load, compiler.returnVar.type), type)
     }
 }

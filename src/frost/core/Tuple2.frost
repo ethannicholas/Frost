@@ -1,0 +1,23 @@
+package frost.core
+class Tuple2<T0, T1> {
+    def f0:T0
+    def f1:T1
+
+    init(f0:T0, f1:T1) {
+       self.f0 := f0
+       self.f1 := f1
+    }
+
+    @pre(i >= 0 & i < 2)
+    function [](i:Int):Object? {
+        match i {
+            when 0 { return f0 }
+            when 1 { return f1 }
+        }
+    }
+
+    @override
+    function get_asString():String {
+        return "(\{f0}, \{f1})"
+    }
+}

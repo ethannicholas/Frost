@@ -6,7 +6,7 @@
 #include "frost/core/Bit.h"
 #include "frost/collections/Key.h"
 #include "org/frostlang/frostc/ASTNode.h"
-#include "org/frostlang/frostc/parser/Token/Kind.h"
+#include "org/frostlang/frostc/expression/Binary/Operator.h"
 #include "frost/core/Frost.h"
 #include "frost/core/Int64.h"
 
@@ -27,19 +27,19 @@ typedef frost$core$Bit (*$fn24)(frost$core$Equatable*, frost$core$Equatable*);
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x43\x6f\x6d\x70\x69\x6c\x65\x72\x2e\x42\x69\x6e\x61\x72\x79\x4b\x65\x79", 39, 1341198773752392507, NULL };
 
-void org$frostlang$frostc$Compiler$BinaryKey$init$org$frostlang$frostc$ASTNode$org$frostlang$frostc$parser$Token$Kind$org$frostlang$frostc$ASTNode(org$frostlang$frostc$Compiler$BinaryKey* param0, org$frostlang$frostc$ASTNode* param1, org$frostlang$frostc$parser$Token$Kind param2, org$frostlang$frostc$ASTNode* param3) {
+void org$frostlang$frostc$Compiler$BinaryKey$init$org$frostlang$frostc$ASTNode$org$frostlang$frostc$expression$Binary$Operator$org$frostlang$frostc$ASTNode(org$frostlang$frostc$Compiler$BinaryKey* param0, org$frostlang$frostc$ASTNode* param1, org$frostlang$frostc$expression$Binary$Operator param2, org$frostlang$frostc$ASTNode* param3) {
 
-// line 331
+// line 332
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
 org$frostlang$frostc$ASTNode** $tmp2 = &param0->left;
 org$frostlang$frostc$ASTNode* $tmp3 = *$tmp2;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp3));
 org$frostlang$frostc$ASTNode** $tmp4 = &param0->left;
 *$tmp4 = param1;
-// line 332
-org$frostlang$frostc$parser$Token$Kind* $tmp5 = &param0->op;
-*$tmp5 = param2;
 // line 333
+org$frostlang$frostc$expression$Binary$Operator* $tmp5 = &param0->op;
+*$tmp5 = param2;
+// line 334
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param3));
 org$frostlang$frostc$ASTNode** $tmp6 = &param0->right;
 org$frostlang$frostc$ASTNode* $tmp7 = *$tmp6;
@@ -53,7 +53,7 @@ frost$core$Bit org$frostlang$frostc$Compiler$BinaryKey$$EQ$org$frostlang$frostc$
 
 frost$core$Bit local0;
 frost$core$Bit local1;
-// line 338
+// line 339
 org$frostlang$frostc$ASTNode** $tmp9 = &param0->left;
 org$frostlang$frostc$ASTNode* $tmp10 = *$tmp9;
 org$frostlang$frostc$ASTNode** $tmp11 = &param1->left;
@@ -63,15 +63,15 @@ frost$core$Bit $tmp14 = frost$core$Bit$init$builtin_bit($tmp13);
 bool $tmp15 = $tmp14.value;
 if ($tmp15) goto block1; else goto block2;
 block1:;
-org$frostlang$frostc$parser$Token$Kind* $tmp16 = &param0->op;
-org$frostlang$frostc$parser$Token$Kind $tmp17 = *$tmp16;
-org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp18;
-$tmp18 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+org$frostlang$frostc$expression$Binary$Operator* $tmp16 = &param0->op;
+org$frostlang$frostc$expression$Binary$Operator $tmp17 = *$tmp16;
+org$frostlang$frostc$expression$Binary$Operator$wrapper* $tmp18;
+$tmp18 = (org$frostlang$frostc$expression$Binary$Operator$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$expression$Binary$Operator$wrapperclass);
 $tmp18->value = $tmp17;
-org$frostlang$frostc$parser$Token$Kind* $tmp19 = &param1->op;
-org$frostlang$frostc$parser$Token$Kind $tmp20 = *$tmp19;
-org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp21;
-$tmp21 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+org$frostlang$frostc$expression$Binary$Operator* $tmp19 = &param1->op;
+org$frostlang$frostc$expression$Binary$Operator $tmp20 = *$tmp19;
+org$frostlang$frostc$expression$Binary$Operator$wrapper* $tmp21;
+$tmp21 = (org$frostlang$frostc$expression$Binary$Operator$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$expression$Binary$Operator$wrapperclass);
 $tmp21->value = $tmp20;
 ITable* $tmp22 = ((frost$core$Equatable*) $tmp18)->$class->itable;
 while ($tmp22->$class != (frost$core$Class*) &frost$core$Equatable$class) {
@@ -82,7 +82,7 @@ frost$core$Bit $tmp25 = $tmp23(((frost$core$Equatable*) $tmp18), ((frost$core$Eq
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Equatable*) $tmp21)));
 // unreffing REF($15:frost.core.Equatable.T)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Equatable*) $tmp18)));
-// unreffing REF($11:frost.core.Equatable<org.frostlang.frostc.parser.Token.Kind>)
+// unreffing REF($11:frost.core.Equatable<org.frostlang.frostc.expression.Binary.Operator>)
 *(&local1) = $tmp25;
 goto block3;
 block2:;
@@ -111,7 +111,7 @@ return $tmp34;
 }
 frost$core$Int64 org$frostlang$frostc$Compiler$BinaryKey$get_hash$R$frost$core$Int64(org$frostlang$frostc$Compiler$BinaryKey* param0) {
 
-// line 343
+// line 344
 org$frostlang$frostc$ASTNode** $tmp35 = &param0->left;
 org$frostlang$frostc$ASTNode* $tmp36 = *$tmp35;
 frost$core$Int64 $tmp37;
@@ -126,7 +126,7 @@ return $tmp41;
 }
 void org$frostlang$frostc$Compiler$BinaryKey$cleanup(org$frostlang$frostc$Compiler$BinaryKey* param0) {
 
-// line 323
+// line 324
 frost$core$Object$cleanup(((frost$core$Object*) param0));
 org$frostlang$frostc$ASTNode** $tmp42 = &param0->left;
 org$frostlang$frostc$ASTNode* $tmp43 = *$tmp42;

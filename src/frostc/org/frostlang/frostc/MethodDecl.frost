@@ -1,6 +1,6 @@
 package org.frostlang.frostc
 
-uses org.frostlang.frostc.parser.Token
+uses org.frostlang.frostc.expression.Unary
 
 @final
 class MethodDecl : Symbol {
@@ -141,8 +141,8 @@ class MethodDecl : Symbol {
                             when ASTNode.INT(_, value) {
                                 return value.asInt64
                             }
-                            when ASTNode.PREFIX(_, op, base) {
-                                if op = Token.Kind.SUB {
+                            when ASTNode.UNARY(_, op, base) {
+                                if op = Unary.Operator.NEGATE {
                                     match base {
                                         when ASTNode.INT(_, value) {
                                             return -(value.asInt64)

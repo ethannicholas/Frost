@@ -30,11 +30,11 @@ static frost$core$String $s71 = { (frost$core$Class*) &frost$core$String$class, 
 
 void org$frostlang$frostc$Main$Arguments$init$frost$collections$ListView$LTfrost$core$String$GT(org$frostlang$frostc$Main$Arguments* param0, frost$collections$ListView* param1) {
 
-// line 32
+// line 33
 frost$core$Int64 $tmp2 = (frost$core$Int64) {1};
 frost$core$Int64* $tmp3 = &param0->index;
 *$tmp3 = $tmp2;
-// line 37
+// line 38
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
 frost$collections$ListView** $tmp4 = &param0->args;
 frost$collections$ListView* $tmp5 = *$tmp4;
@@ -46,7 +46,7 @@ return;
 }
 frost$core$Bit org$frostlang$frostc$Main$Arguments$get_done$R$frost$core$Bit(org$frostlang$frostc$Main$Arguments* param0) {
 
-// line 41
+// line 42
 frost$core$Int64* $tmp7 = &param0->index;
 frost$core$Int64 $tmp8 = *$tmp7;
 frost$collections$ListView** $tmp9 = &param0->args;
@@ -63,18 +63,18 @@ return $tmp15;
 }
 frost$core$String* org$frostlang$frostc$Main$Arguments$next$R$frost$core$String(org$frostlang$frostc$Main$Arguments* param0) {
 
-// line 45
+// line 46
 $fn17 $tmp16 = ($fn17) param0->$class->vtable[2];
 frost$core$Bit $tmp18 = $tmp16(param0);
 frost$core$Bit $tmp19 = frost$core$Bit$$NOT$R$frost$core$Bit($tmp18);
 bool $tmp20 = $tmp19.value;
 if ($tmp20) goto block1; else goto block2;
 block2:;
-frost$core$Int64 $tmp21 = (frost$core$Int64) {45};
+frost$core$Int64 $tmp21 = (frost$core$Int64) {46};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s22, $tmp21);
 abort(); // unreachable
 block1:;
-// line 46
+// line 47
 frost$core$Int64* $tmp23 = &param0->index;
 frost$core$Int64 $tmp24 = *$tmp23;
 frost$core$Int64 $tmp25 = (frost$core$Int64) {1};
@@ -84,7 +84,7 @@ int64_t $tmp28 = $tmp26 + $tmp27;
 frost$core$Int64 $tmp29 = (frost$core$Int64) {$tmp28};
 frost$core$Int64* $tmp30 = &param0->index;
 *$tmp30 = $tmp29;
-// line 47
+// line 48
 frost$collections$ListView** $tmp31 = &param0->args;
 frost$collections$ListView* $tmp32 = *$tmp31;
 frost$core$Int64* $tmp33 = &param0->index;
@@ -108,13 +108,13 @@ return ((frost$core$String*) $tmp43);
 }
 frost$core$String* org$frostlang$frostc$Main$Arguments$next$frost$core$String$R$frost$core$String(org$frostlang$frostc$Main$Arguments* param0, frost$core$String* param1) {
 
-// line 51
+// line 52
 $fn45 $tmp44 = ($fn45) param0->$class->vtable[2];
 frost$core$Bit $tmp46 = $tmp44(param0);
 bool $tmp47 = $tmp46.value;
 if ($tmp47) goto block1; else goto block2;
 block1:;
-// line 52
+// line 53
 frost$core$String* $tmp48 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(&$s49, param1);
 frost$core$String* $tmp50 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp48, &$s51);
 frost$collections$ListView** $tmp52 = &param0->args;
@@ -151,12 +151,12 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp50));
 // unreffing REF($7:frost.core.String)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp48));
 // unreffing REF($6:frost.core.String)
-// line 53
+// line 54
 frost$core$Int64 $tmp72 = (frost$core$Int64) {1};
 frost$core$System$exit$frost$core$Int64($tmp72);
 goto block2;
 block2:;
-// line 55
+// line 56
 $fn74 $tmp73 = ($fn74) param0->$class->vtable[3];
 frost$core$String* $tmp75 = $tmp73(param0);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp75));
@@ -167,7 +167,7 @@ return $tmp75;
 }
 void org$frostlang$frostc$Main$Arguments$cleanup(org$frostlang$frostc$Main$Arguments* param0) {
 
-// line 27
+// line 28
 frost$core$Object$cleanup(((frost$core$Object*) param0));
 frost$collections$ListView** $tmp76 = &param0->args;
 frost$collections$ListView* $tmp77 = *$tmp76;

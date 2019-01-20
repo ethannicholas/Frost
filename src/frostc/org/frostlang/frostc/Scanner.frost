@@ -24,11 +24,25 @@ class Scanner {
     method convertType(type:ASTNode):Type {
         match type {
             when ASTNode.TYPE(position, name) {
+                if name[0] = "b" {
+                    match name {
+                        when "builtin_bit"     { return Type.BuiltinBit() }
+                        when "builtin_int8"    { return Type.BuiltinInt8() }
+                        when "builtin_int16"   { return Type.BuiltinInt16() }
+                        when "builtin_int32"   { return Type.BuiltinInt32() }
+                        when "builtin_int64"   { return Type.BuiltinInt64() }
+                        when "builtin_uint8"   { return Type.BuiltinUInt8() }
+                        when "builtin_uint16"  { return Type.BuiltinUInt16() }
+                        when "builtin_uint32"  { return Type.BuiltinUInt32() }
+                        when "builtin_uint64"  { return Type.BuiltinUInt64() }
+                        when "builtin_float32" { return Type.BuiltinFloat32() }
+                        when "builtin_float64" { return Type.BuiltinFloat64() }
+                    }
+                }
                 return Type(name, Type.Kind.CLASS, position)
             }
             when ASTNode.NULLABLE_TYPE(position, base) {
-                def subtypes := Array<Type>()
-                subtypes.add(convertType(base))
+                def subtypes := [convertType(base)]
                 return Type(subtypes[0].name + "?", Type.Kind.NULLABLE, position, subtypes, false)
             }
             when ASTNode.GENERIC_TYPE(position, base, args) {
@@ -148,6 +162,9 @@ class Scanner {
                         }
                         when "@default" {
                             flags := add(p, flags, Annotations.Flag.DEFAULT)
+                        }
+                        when "@stub" {
+                            flags := add(p, flags, Annotations.Flag.STUB)
                         }
                         when "@pre" {
                             if expressions == null {
@@ -410,9 +427,6 @@ class Scanner {
             when ASTNode.NULLABLE_TYPE {
                 return 0
             }
-            when ASTNode.PREFIX(_, _, base) {
-                return 1 + complexity(base)
-            }
             when ASTNode.RANGE {
                 return 1
             }
@@ -445,6 +459,9 @@ class Scanner {
             }
             when ASTNode.TYPED_LAMBDA {
                 return INLINE_THRESHOLD
+            }
+            when ASTNode.UNARY(_, _, base) {
+                return 1 + complexity(base)
             }
             when ASTNode.UNTYPED_LAMBDA {
                 return INLINE_THRESHOLD
@@ -568,7 +585,8 @@ class Scanner {
         if statements !== null & shouldInline(annotations, statements) {
             annotations.flags ||= Annotations.Flag.INLINE
         }
-        if statements == null & owner.classKind = ClassDecl.Kind.INTERFACE {
+        if statements == null & owner.classKind = ClassDecl.Kind.INTERFACE &
+                !owner.annotations.isStub {
             if annotations.flags && Annotations.Flag.ABSTRACT != 0 {
                 error(position,  "interface methods are abstract by default and may not have an " +
                         "explicit '@abstract' annotation")

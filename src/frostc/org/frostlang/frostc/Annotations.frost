@@ -20,6 +20,7 @@ class Annotations {
         constant DEFAULT          := 1 << 15
         -- tags a field in a closure class which is used to represent a captured value
         constant CAPTURE          := 1 << 16
+        constant STUB             := 1 << 17
     }
 
     choice Expression {
@@ -76,6 +77,8 @@ class Annotations {
     property isDefault:Bit
 
     property isCapture:Bit
+
+    property isStub:Bit
 
     init() {
         init(0)
@@ -157,6 +160,10 @@ class Annotations {
 
     function get_isCapture():Bit {
         return flags && Flag.CAPTURE != 0
+    }
+
+    function get_isStub():Bit {
+        return flags && Flag.STUB != 0
     }
 
     @override

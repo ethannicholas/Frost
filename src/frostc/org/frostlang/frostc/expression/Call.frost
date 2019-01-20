@@ -124,7 +124,7 @@ class Call {
     -- FIXME removing @class here results in a crash instead of an error
     @class
     method compileNumberIntrinsic(compiler:Compiler, position:Position, target:IR.Value,
-            op:Token.Kind, args:ListView<ASTNode>, operandType:Type,
+            op:Binary.Operator, args:ListView<ASTNode>, operandType:Type,
             resultType:Type):Pair<Bit, IR.Value?> {
         if args.count != 1 {
             return Pair<Bit, IR.Value?>(false, null)
@@ -175,53 +175,53 @@ class Call {
                 }
             }
             when "+" {
-                return compileNumberIntrinsic(compiler, position, target, Token.Kind.ADD, args,
+                return compileNumberIntrinsic(compiler, position, target, Binary.Operator.ADD, args,
                         m.returnType, m.returnType)
             }
             when "-" {
-                return compileNumberIntrinsic(compiler, position, target, Token.Kind.SUB, args,
+                return compileNumberIntrinsic(compiler, position, target, Binary.Operator.SUB, args,
                         m.returnType, m.returnType)
             }
             when "*" {
-                return compileNumberIntrinsic(compiler, position, target, Token.Kind.MUL, args,
+                return compileNumberIntrinsic(compiler, position, target, Binary.Operator.MUL, args,
                         m.returnType, m.returnType)
             }
             when "//" {
-                return compileNumberIntrinsic(compiler, position, target, Token.Kind.INTDIV, args,
-                        m.returnType, m.returnType)
+                return compileNumberIntrinsic(compiler, position, target, Binary.Operator.INTDIV,
+                        args, m.returnType, m.returnType)
             }
             when ">" {
-                return compileNumberIntrinsic(compiler, position, target, Token.Kind.GT, args,
+                return compileNumberIntrinsic(compiler, position, target, Binary.Operator.GT, args,
                         compiler.binaryType(m.value.owner.type, m.value.parameters[0].type, true,
                             false),
                         m.returnType)
             }
             when ">=" {
-                return compileNumberIntrinsic(compiler, position, target, Token.Kind.GTEQ, args,
-                        compiler.binaryType(m.value.owner.type, m.value.parameters[0].type, true,
-                            false),
+                return compileNumberIntrinsic(compiler, position, target, Binary.Operator.GTEQ,
+                        args, compiler.binaryType(m.value.owner.type, m.value.parameters[0].type,
+                            true, false),
                         m.returnType)
             }
             when "<" {
-                return compileNumberIntrinsic(compiler, position, target, Token.Kind.LT, args,
+                return compileNumberIntrinsic(compiler, position, target, Binary.Operator.LT, args,
                         compiler.binaryType(m.value.owner.type, m.value.parameters[0].type, true,
                             false),
                         m.returnType)
             }
             when "<=" {
-                return compileNumberIntrinsic(compiler, position, target, Token.Kind.LTEQ, args,
-                        compiler.binaryType(m.value.owner.type, m.value.parameters[0].type, true,
-                            false),
+                return compileNumberIntrinsic(compiler, position, target, Binary.Operator.LTEQ,
+                        args, compiler.binaryType(m.value.owner.type, m.value.parameters[0].type,
+                            true, false),
                         m.returnType)
             }
             when "==" {
-                return compileNumberIntrinsic(compiler, position, target, Token.Kind.EQ, args,
+                return compileNumberIntrinsic(compiler, position, target, Binary.Operator.EQ, args,
                         compiler.binaryType(m.value.owner.type, m.value.parameters[0].type, true,
                             false),
                         m.returnType)
             }
             when "!=" {
-                return compileNumberIntrinsic(compiler, position, target, Token.Kind.NEQ, args,
+                return compileNumberIntrinsic(compiler, position, target, Binary.Operator.NEQ, args,
                         compiler.binaryType(m.value.owner.type, m.value.parameters[0].type, true,
                             false),
                         m.returnType)
@@ -483,7 +483,7 @@ class Call {
         def targetPtr := ir.add(IR.Statement.GET_FIELD_POINTER(position, methodObj, targetField))
         def target := ir.add(IR.Statement.LOAD(position, IR.Value.REF(targetPtr, targetType)))
         def targetNonNull := ir.add(IR.Statement.BINARY(position, IR.Value.REF(target, targetType),
-                Token.Kind.NIDENTITY, IR.Value.NULL(targetType.nullable()), Type.BuiltinBit()))
+                Binary.Operator.NIDENTITY, IR.Value.NULL(targetType.nullable()), Type.BuiltinBit()))
         def haveTargetBlock := ir.newBlock("dynamic call with target")
         def noTargetBlock := ir.newBlock("dynamic call without target")
         def mergeBlock := ir.newBlock("dynamic call merge")
@@ -683,7 +683,7 @@ class Call {
         def nullableError := errorType.nullable()
         if type = nullableError {
             ir.add(IR.Statement.COMMENT("try error check"))
-            def test := ir.add(IR.Statement.BINARY(position, v, Token.Kind.IDENTITY,
+            def test := ir.add(IR.Statement.BINARY(position, v, Binary.Operator.IDENTITY,
                     IR.Value.NULL(nullableError), Type.BuiltinBit()))
             def success := ir.newBlock("error? null")
             def failure := ir.newBlock("error? error")
@@ -712,7 +712,8 @@ class Call {
                     ClassDecl.RAW_VALUE_NAME)
             assert rawValue !== null
             def test := ir.add(IR.Statement.BINARY(position, compiler.extractBuiltinInt(position,
-                    rawValue), Token.Kind.EQ, IR.Value.INT(0, Type.Int64()), Type.BuiltinBit()))
+                    rawValue), Binary.Operator.EQ, IR.Value.INT(0, Type.Int64()),
+                    Type.BuiltinBit()))
             def success := ir.newBlock("maybe success")
             def failure := ir.newBlock("maybe error")
             ir.add(IR.Statement.CONDITIONAL_BRANCH(position, IR.Value.REF(test, Type.BuiltinBit()),
@@ -747,8 +748,8 @@ class Call {
     }
 
     @class
-    @post((m.returnType = Type.Void() & @return == null) | @return !== null | errorCount > 0 |
-            !reportErrors)
+    @post((rawM.returnType = Type.Void() & @return == null) | @return !== null |
+            compiler.errorCount > 0 | !compiler.reportErrors)
     method compile(compiler:Compiler, position:Position, target:IR.Value?, rawM:MethodRef,
             args:ListView<ASTNode>, type:TypeContext):IR.Value? {
         def ir := compiler.ir

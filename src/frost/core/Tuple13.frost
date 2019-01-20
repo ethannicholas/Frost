@@ -1,0 +1,56 @@
+package frost.core
+class Tuple13<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> {
+    def f0:T0
+    def f1:T1
+    def f2:T2
+    def f3:T3
+    def f4:T4
+    def f5:T5
+    def f6:T6
+    def f7:T7
+    def f8:T8
+    def f9:T9
+    def f10:T10
+    def f11:T11
+    def f12:T12
+
+    init(f0:T0, f1:T1, f2:T2, f3:T3, f4:T4, f5:T5, f6:T6, f7:T7, f8:T8, f9:T9, f10:T10, f11:T11, f12:T12) {
+       self.f0 := f0
+       self.f1 := f1
+       self.f2 := f2
+       self.f3 := f3
+       self.f4 := f4
+       self.f5 := f5
+       self.f6 := f6
+       self.f7 := f7
+       self.f8 := f8
+       self.f9 := f9
+       self.f10 := f10
+       self.f11 := f11
+       self.f12 := f12
+    }
+
+    @pre(i >= 0 & i < 13)
+    function [](i:Int):Object? {
+        match i {
+            when 0 { return f0 }
+            when 1 { return f1 }
+            when 2 { return f2 }
+            when 3 { return f3 }
+            when 4 { return f4 }
+            when 5 { return f5 }
+            when 6 { return f6 }
+            when 7 { return f7 }
+            when 8 { return f8 }
+            when 9 { return f9 }
+            when 10 { return f10 }
+            when 11 { return f11 }
+            when 12 { return f12 }
+        }
+    }
+
+    @override
+    function get_asString():String {
+        return "(\{f0}, \{f1}, \{f2}, \{f3}, \{f4}, \{f5}, \{f6}, \{f7}, \{f8}, \{f9}, \{f10}, \{f11}, \{f12})"
+    }
+}

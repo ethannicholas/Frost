@@ -4,7 +4,7 @@
 #include "frost/core/String.h"
 #include "org/frostlang/frostc/Position.h"
 #include "org/frostlang/frostc/IR/Value.h"
-#include "org/frostlang/frostc/parser/Token/Kind.h"
+#include "org/frostlang/frostc/expression/Binary/Operator.h"
 #include "org/frostlang/frostc/Type.h"
 #include "org/frostlang/frostc/IR/Block/ID.h"
 #include "org/frostlang/frostc/ClassDecl.h"
@@ -123,7 +123,7 @@ frost$core$String* org$frostlang$frostc$IR$Statement$get_asString$R$frost$core$S
 
 org$frostlang$frostc$Position local0;
 org$frostlang$frostc$IR$Value* local1 = NULL;
-org$frostlang$frostc$parser$Token$Kind local2;
+org$frostlang$frostc$expression$Binary$Operator local2;
 org$frostlang$frostc$IR$Value* local3 = NULL;
 org$frostlang$frostc$Type* local4 = NULL;
 org$frostlang$frostc$Position local5;
@@ -220,8 +220,8 @@ frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp10));
 org$frostlang$frostc$IR$Value* $tmp11 = *(&local1);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp11));
 *(&local1) = $tmp10;
-org$frostlang$frostc$parser$Token$Kind* $tmp12 = (org$frostlang$frostc$parser$Token$Kind*) (param0->$data + 24);
-org$frostlang$frostc$parser$Token$Kind $tmp13 = *$tmp12;
+org$frostlang$frostc$expression$Binary$Operator* $tmp12 = (org$frostlang$frostc$expression$Binary$Operator*) (param0->$data + 24);
+org$frostlang$frostc$expression$Binary$Operator $tmp13 = *$tmp12;
 *(&local2) = $tmp13;
 org$frostlang$frostc$IR$Value** $tmp14 = (org$frostlang$frostc$IR$Value**) (param0->$data + 32);
 org$frostlang$frostc$IR$Value* $tmp15 = *$tmp14;
@@ -241,9 +241,9 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp19));
 org$frostlang$frostc$IR$Value* $tmp20 = *(&local1);
 frost$core$String* $tmp21 = frost$core$String$$ADD$frost$core$Object$R$frost$core$String(&$s22, ((frost$core$Object*) $tmp20));
 frost$core$String* $tmp23 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp21, &$s24);
-org$frostlang$frostc$parser$Token$Kind $tmp25 = *(&local2);
-org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp26;
-$tmp26 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+org$frostlang$frostc$expression$Binary$Operator $tmp25 = *(&local2);
+org$frostlang$frostc$expression$Binary$Operator$wrapper* $tmp26;
+$tmp26 = (org$frostlang$frostc$expression$Binary$Operator$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$expression$Binary$Operator$wrapperclass);
 $tmp26->value = $tmp25;
 frost$core$String* $tmp27 = frost$core$String$$ADD$frost$core$Object$R$frost$core$String($tmp23, ((frost$core$Object*) $tmp26));
 frost$core$String* $tmp28 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp27, &$s29);
@@ -1585,7 +1585,7 @@ void org$frostlang$frostc$IR$Statement$cleanup(org$frostlang$frostc$IR$Statement
 
 org$frostlang$frostc$Position local0;
 org$frostlang$frostc$IR$Value* local1 = NULL;
-org$frostlang$frostc$parser$Token$Kind local2;
+org$frostlang$frostc$expression$Binary$Operator local2;
 org$frostlang$frostc$IR$Value* local3 = NULL;
 org$frostlang$frostc$Type* local4 = NULL;
 org$frostlang$frostc$Position local5;
@@ -1682,8 +1682,8 @@ frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp659));
 org$frostlang$frostc$IR$Value* $tmp660 = *(&local1);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp660));
 *(&local1) = $tmp659;
-org$frostlang$frostc$parser$Token$Kind* $tmp661 = (org$frostlang$frostc$parser$Token$Kind*) (param0->$data + 24);
-org$frostlang$frostc$parser$Token$Kind $tmp662 = *$tmp661;
+org$frostlang$frostc$expression$Binary$Operator* $tmp661 = (org$frostlang$frostc$expression$Binary$Operator*) (param0->$data + 24);
+org$frostlang$frostc$expression$Binary$Operator $tmp662 = *$tmp661;
 *(&local2) = $tmp662;
 org$frostlang$frostc$IR$Value** $tmp663 = (org$frostlang$frostc$IR$Value**) (param0->$data + 32);
 org$frostlang$frostc$IR$Value* $tmp664 = *$tmp663;
@@ -2628,7 +2628,7 @@ frost$core$Object$cleanup(((frost$core$Object*) param0));
 return;
 
 }
-void org$frostlang$frostc$IR$Statement$init$frost$core$Int64$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Value$org$frostlang$frostc$parser$Token$Kind$org$frostlang$frostc$IR$Value$org$frostlang$frostc$Type(org$frostlang$frostc$IR$Statement* param0, frost$core$Int64 param1, org$frostlang$frostc$Position param2, org$frostlang$frostc$IR$Value* param3, org$frostlang$frostc$parser$Token$Kind param4, org$frostlang$frostc$IR$Value* param5, org$frostlang$frostc$Type* param6) {
+void org$frostlang$frostc$IR$Statement$init$frost$core$Int64$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Value$org$frostlang$frostc$expression$Binary$Operator$org$frostlang$frostc$IR$Value$org$frostlang$frostc$Type(org$frostlang$frostc$IR$Statement* param0, frost$core$Int64 param1, org$frostlang$frostc$Position param2, org$frostlang$frostc$IR$Value* param3, org$frostlang$frostc$expression$Binary$Operator param4, org$frostlang$frostc$IR$Value* param5, org$frostlang$frostc$Type* param6) {
 
 // line 6
 frost$core$Int64* $tmp1040 = &param0->$rawValue;
@@ -2641,7 +2641,7 @@ frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param3));
 org$frostlang$frostc$IR$Value** $tmp1042 = (org$frostlang$frostc$IR$Value**) (param0->$data + 16);
 *$tmp1042 = param3;
 // line 6
-org$frostlang$frostc$parser$Token$Kind* $tmp1043 = (org$frostlang$frostc$parser$Token$Kind*) (param0->$data + 24);
+org$frostlang$frostc$expression$Binary$Operator* $tmp1043 = (org$frostlang$frostc$expression$Binary$Operator*) (param0->$data + 24);
 *$tmp1043 = param4;
 // line 6
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param5));

@@ -1,0 +1,102 @@
+package org.frostlang.frostc.expression
+
+uses org.frostlang.frostc.ASTNode
+uses org.frostlang.frostc.Compiler
+uses org.frostlang.frostc.Compiler.TypeContext
+uses org.frostlang.frostc.IR
+uses org.frostlang.frostc.MethodDecl
+uses org.frostlang.frostc.MethodRef
+uses org.frostlang.frostc.Methods
+uses org.frostlang.frostc.Pair
+uses org.frostlang.frostc.Position
+uses org.frostlang.frostc.Symbol
+uses org.frostlang.frostc.Type
+uses org.frostlang.frostc.parser.Token
+
+class Unary {
+    choice Operator {
+        NOT
+        BITWISENOT
+        NEGATE
+
+        @class
+        function fromToken(op:Token):Operator {
+            match op.kind {
+                when Token.Kind.SUB         { return NEGATE }
+                when Token.Kind.NOT         { return NOT }
+                when Token.Kind.BITWISENOT  { return BITWISENOT }
+                otherwise                   { assert false, "not a unary operator: \{op}" }
+            }        
+        }
+
+        @override
+        function get_asString():String {
+            match self {
+                when NOT        { return "!" }
+                when BITWISENOT { return "!!" }
+                when NEGATE     { return "-" }
+                otherwise       { assert false }
+            }
+        }
+    }
+
+    @class
+    method compile(compiler:Compiler, position:Position, op:Unary.Operator, operand:ASTNode,
+            type:TypeContext):IR.Value? {
+        def ir := compiler.ir
+        match op {
+            when Unary.Operator.NEGATE {
+                match operand {
+                    when ASTNode.INT(_, value) {
+                        match type {
+                            when TypeContext.TYPE(t) {
+                                if t.typeKind = Type.Kind.BUILTIN_INT |
+                                        t.typeKind = Type.Kind.BUILTIN_UINT {
+                                    return IR.Value.INT(-value, t)
+                                }
+                                if t.isNumber {
+                                    def args := Array<ASTNode>()
+                                    args.add(ASTNode.INT(position, -value))
+                                    return Call.compile(compiler, position, IR.Value.TYPE(t), args,
+                                            type)
+                                }
+                            }
+                        }
+                    }
+                }
+                def target := compiler.compileExpression(operand, TypeContext.NON_VOID)
+                if target == null {
+                    return null
+                }
+                if target.type().isBuiltinNumber {
+                    def result := ir.add(IR.Statement.NEGATE(position, target))
+                    return compiler.coerce(position, IR.Value.REF(result, target.type()), type)
+                }
+                return Call.compile(compiler, position, target, "-", [], type)
+            }
+            when Unary.Operator.NOT {
+                def target := compiler.compileExpression(operand, TypeContext.NON_VOID)
+                if target == null {
+                    return null
+                }
+                if target.type() = Type.BuiltinBit() {
+                    def result := ir.add(IR.Statement.NOT(position, target))
+                    return compiler.coerce(position, IR.Value.REF(result, Type.BuiltinBit()), type)
+                }
+                return Call.compile(compiler, position, target, "!", [], type)
+            }
+            when Unary.Operator.BITWISENOT {
+                def target := compiler.compileExpression(operand, TypeContext.NON_VOID)
+                if target == null {
+                    return null
+                }
+                if target.type().isBuiltinNumber {
+                    def result := ir.add(IR.Statement.NOT(position, target))
+                    return compiler.coerce(position, IR.Value.REF(result, target.type()), type)
+                }
+                return Call.compile(compiler, position, target, "!!", [], type)
+            }
+        }
+        assert false
+    }
+}

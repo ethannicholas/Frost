@@ -24,31 +24,31 @@ static frost$core$String $s33 = { (frost$core$Class*) &frost$core$String$class, 
 
 void org$frostlang$frostc$parser$Parser$AutoSyntaxHighlight$init$org$frostlang$frostc$parser$Parser$org$frostlang$frostc$parser$SyntaxHighlighter$Kind(org$frostlang$frostc$parser$Parser$AutoSyntaxHighlight* param0, org$frostlang$frostc$parser$Parser* param1, org$frostlang$frostc$parser$SyntaxHighlighter$Kind param2) {
 
-// line 20
+// line 22
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
 org$frostlang$frostc$parser$Parser** $tmp2 = &param0->parser;
 org$frostlang$frostc$parser$Parser* $tmp3 = *$tmp2;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp3));
 org$frostlang$frostc$parser$Parser** $tmp4 = &param0->parser;
 *$tmp4 = param1;
-// line 21
+// line 23
 org$frostlang$frostc$parser$SyntaxHighlighter$Kind* $tmp5 = &param0->kind;
 *$tmp5 = param2;
-// line 22
+// line 24
 org$frostlang$frostc$parser$SyntaxHighlighter** $tmp6 = &param1->syntaxHighlighter;
 org$frostlang$frostc$parser$SyntaxHighlighter* $tmp7 = *$tmp6;
 frost$core$Bit $tmp8 = frost$core$Bit$init$builtin_bit($tmp7 != NULL);
 bool $tmp9 = $tmp8.value;
 if ($tmp9) goto block1; else goto block2;
 block1:;
-// line 23
+// line 25
 org$frostlang$frostc$parser$SyntaxHighlighter** $tmp10 = &param1->syntaxHighlighter;
 org$frostlang$frostc$parser$SyntaxHighlighter* $tmp11 = *$tmp10;
 frost$core$Bit $tmp12 = frost$core$Bit$init$builtin_bit($tmp11 != NULL);
 bool $tmp13 = $tmp12.value;
 if ($tmp13) goto block3; else goto block4;
 block4:;
-frost$core$Int64 $tmp14 = (frost$core$Int64) {23};
+frost$core$Int64 $tmp14 = (frost$core$Int64) {25};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s15, $tmp14, &$s16);
 abort(); // unreachable
 block3:;
@@ -61,7 +61,7 @@ return;
 }
 void org$frostlang$frostc$parser$Parser$AutoSyntaxHighlight$cleanup(org$frostlang$frostc$parser$Parser$AutoSyntaxHighlight* param0) {
 
-// line 29
+// line 31
 org$frostlang$frostc$parser$Parser** $tmp19 = &param0->parser;
 org$frostlang$frostc$parser$Parser* $tmp20 = *$tmp19;
 org$frostlang$frostc$parser$SyntaxHighlighter** $tmp21 = &$tmp20->syntaxHighlighter;
@@ -70,7 +70,7 @@ frost$core$Bit $tmp23 = frost$core$Bit$init$builtin_bit($tmp22 != NULL);
 bool $tmp24 = $tmp23.value;
 if ($tmp24) goto block1; else goto block2;
 block1:;
-// line 30
+// line 32
 org$frostlang$frostc$parser$Parser** $tmp25 = &param0->parser;
 org$frostlang$frostc$parser$Parser* $tmp26 = *$tmp25;
 org$frostlang$frostc$parser$SyntaxHighlighter** $tmp27 = &$tmp26->syntaxHighlighter;
@@ -79,7 +79,7 @@ frost$core$Bit $tmp29 = frost$core$Bit$init$builtin_bit($tmp28 != NULL);
 bool $tmp30 = $tmp29.value;
 if ($tmp30) goto block3; else goto block4;
 block4:;
-frost$core$Int64 $tmp31 = (frost$core$Int64) {30};
+frost$core$Int64 $tmp31 = (frost$core$Int64) {32};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s32, $tmp31, &$s33);
 abort(); // unreachable
 block3:;
@@ -89,7 +89,7 @@ $fn37 $tmp36 = ($fn37) $tmp28->$class->vtable[4];
 $tmp36($tmp28, $tmp35);
 goto block2;
 block2:;
-// line 28
+// line 30
 frost$core$Object$cleanup(((frost$core$Object*) param0));
 org$frostlang$frostc$parser$Parser** $tmp38 = &param0->parser;
 org$frostlang$frostc$parser$Parser* $tmp39 = *$tmp38;

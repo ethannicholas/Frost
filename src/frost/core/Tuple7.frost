@@ -1,0 +1,38 @@
+package frost.core
+class Tuple7<T0, T1, T2, T3, T4, T5, T6> {
+    def f0:T0
+    def f1:T1
+    def f2:T2
+    def f3:T3
+    def f4:T4
+    def f5:T5
+    def f6:T6
+
+    init(f0:T0, f1:T1, f2:T2, f3:T3, f4:T4, f5:T5, f6:T6) {
+       self.f0 := f0
+       self.f1 := f1
+       self.f2 := f2
+       self.f3 := f3
+       self.f4 := f4
+       self.f5 := f5
+       self.f6 := f6
+    }
+
+    @pre(i >= 0 & i < 7)
+    function [](i:Int):Object? {
+        match i {
+            when 0 { return f0 }
+            when 1 { return f1 }
+            when 2 { return f2 }
+            when 3 { return f3 }
+            when 4 { return f4 }
+            when 5 { return f5 }
+            when 6 { return f6 }
+        }
+    }
+
+    @override
+    function get_asString():String {
+        return "(\{f0}, \{f1}, \{f2}, \{f3}, \{f4}, \{f5}, \{f6})"
+    }
+}

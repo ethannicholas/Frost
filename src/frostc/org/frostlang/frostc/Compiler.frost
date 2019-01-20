@@ -13,6 +13,7 @@ uses org.frostlang.frostc.expression.Dot
 uses org.frostlang.frostc.expression.Identifier
 uses org.frostlang.frostc.expression.IntLiteral
 uses org.frostlang.frostc.expression.Or
+uses org.frostlang.frostc.expression.Unary
 uses org.frostlang.frostc.lvalue.ChoiceFieldLValue
 uses org.frostlang.frostc.lvalue.FieldLValue
 uses org.frostlang.frostc.lvalue.IndexLValue
@@ -323,11 +324,11 @@ class Compiler {
     class BinaryKey : Key<BinaryKey> {
         def left:ASTNode
 
-        def op:Token.Kind
+        def op:Binary.Operator
 
         def right:ASTNode
 
-        init(left:ASTNode,op:Token.Kind, right:ASTNode) {
+        init(left:ASTNode, op:Binary.Operator, right:ASTNode) {
             self.left := left
             self.op := op
             self.right := right
@@ -430,11 +431,25 @@ class Compiler {
     @private
     var inAtPre := false
 
+    -- local variable in which to store the return value, for postcondition purposes, or null to
+    -- just do a straight return
     @private
-    var returnValue:IR.Value? := null -- FIXME shouldn't need := null, but getting precondition failure without it
+    var returnVar:Variable?
 
+    -- current block to which @pre(...) expressions should be added. This is not necessarily the
+    -- method entry, because expressions can cause new blocks to be added.
     @private
     var atPreBlock:IR.Block.ID? := null
+
+    -- block to which we should jump to begin evaluating postconditions. The postcondition block
+    -- will handle returning from the method.
+    @private
+    var postconditionEntryBlock:IR.Block.ID? := null
+
+    -- block to which postconditions are being compiled. This is not necessarily the postcondition
+    -- entry block, because expressions can cause new blocks to be added.
+    @private
+    var postconditionCurrentBlock:IR.Block.ID? := null
 
     -- MethodDecl is the method *containing* the closure, not the closure itself
     @private
@@ -827,10 +842,11 @@ class Compiler {
         def p := cl.position
         def body := Array<ASTNode>()
         body.add(ASTNode.IF(p, ASTNode.BINARY(p, ASTNode.DOT(p, ASTNode.SELF(p), "$rawValue"),
-                Token.Kind.NEQ, ASTNode.DOT(p, ASTNode.IDENTIFIER(p, "other"), "$rawValue")),
+                Binary.Operator.NEQ, ASTNode.DOT(p, ASTNode.IDENTIFIER(p, "other"), "$rawValue")),
                 FixedArray<ASTNode>.from([ASTNode.RETURN(p, ASTNode.BIT(p, false))]), null))
         body.add(ASTNode.RETURN(p, ASTNode.BIT(p, true)))
-        def eq := MethodDecl(cl, p, null, Annotations(Annotations.Flag.OVERRIDE),
+        def eq := MethodDecl(cl, p, null, Annotations(Annotations.Flag.OVERRIDE ||
+                    Annotations.Flag.SYNTHETIC),
                 MethodDecl.Kind.FUNCTION, "=", null, parameters, Type.Bit(),
                 FixedArray<ASTNode>.from(body))
         cl.methods.add(eq)
@@ -1233,14 +1249,23 @@ class Compiler {
     method getClass(fullName:String):ClassDecl? {
         var result := classes[fullName]
         if result == null {
-            def suffix := fullName.replace(".", "/") + ".frost"
+            var suffix1 := fullName.replace(".", "/") + ".stub"
+            var suffix2 := fullName.replace(".", "/") + ".frost"
             var found := false
             for dir in settings.importDirs {
-                def f := dir.resolve(suffix)
+                var f := dir.resolve(suffix1)
                 if exists(f) {
                     found := true
                     scan(f)
                     result := classes[fullName]
+                    break
+                }
+                f := dir.resolve(suffix2)
+                if exists(f) {
+                    found := true
+                    scan(f)
+                    result := classes[fullName]
+                    break
                 }
             }
         }
@@ -1259,10 +1284,23 @@ class Compiler {
     method getClass(position:Position, fullName:String):ClassDecl? {
         var result := classes[fullName]
         if result == null {
-            def suffix := fullName.replace(".", "/") + ".frost"
+            def suffix1 := fullName.replace(".", "/") + ".stub"
+            def suffix2 := fullName.replace(".", "/") + ".frost"
             var found := false
             for dir in settings.importDirs {
-                def f := dir.resolve(suffix)
+                var f := dir.resolve(suffix1)
+                if exists(f) {
+                    found := true
+                    def oldErrorCount := errorCount
+                    scan(f)
+                    result := classes[fullName]
+                    if result == null & errorCount = oldErrorCount {
+                        error(f, Position(1, 1),
+                                "expected file '\{f}' to contain a class named '\{fullName}'")
+                    }
+                    break
+                }
+                f := dir.resolve(suffix2)
                 if exists(f) {
                     found := true
                     def oldErrorCount := errorCount
@@ -1275,7 +1313,8 @@ class Compiler {
                 }
             }
             if !found {
-                error(position, "no file named \{suffix} in any import path (\{settings.importDirs})")
+                error(position, "no file named \{suffix2} in any import path " +
+                        "(\{settings.importDirs})")
             }
         }
         return result
@@ -1352,7 +1391,8 @@ class Compiler {
             --def parameters := cl.parameters.combine<Type, ClassDecl.GenericParameter>(type,
               --      (p1:ClassDecl.GenericParameter, p2:Type) => ClassDecl.GenericParameter(p1.position, p1.owner, p1.name, p2))
             --Console.printLine("parameters: \{parameters}")
-            def annotations := Annotations(cl.annotations.flags && !!Annotations.Flag.SPECIALIZE)
+            def annotations := Annotations((cl.annotations.flags || Annotations.Flag.SYNTHETIC) &&
+                    !!Annotations.Flag.SPECIALIZE)
             def supertypes := Array<Type>()
             supertypes.add(remapType(type, cl.rawSuper))
             for intf in cl.rawInterfaces {
@@ -1680,14 +1720,14 @@ class Compiler {
             when ASTNode.INT {
                 return Type.Int64()
             }
-            when ASTNode.PREFIX(_, op, base) {
+            when ASTNode.UNARY(_, op, base) {
                 def baseType := preferredType(base)
                 if baseType !== null {
                     def p := expr.position()
                      -- fake target, just used for matching
                     def target := IR.Value.REF(IR.Statement.ID(-1), baseType)
                     return preferredType(ASTNode.CALL(p,
-                            ASTNode.DOT(p, ASTNode.IR_WRAPPER(p, target), operatorName(op)),
+                            ASTNode.DOT(p, ASTNode.IR_WRAPPER(p, target), op.asString),
                             FixedArray<ASTNode>()))
                 }
             }
@@ -2332,9 +2372,9 @@ class Compiler {
         return 32
     }
 
-    function computeBinaryType(left:ASTNode, op:Token.Kind, right:ASTNode):ListView<Type>? {
+    function computeBinaryType(left:ASTNode, op:Binary.Operator, right:ASTNode):ListView<Type>? {
         match op {
-            when Token.Kind.CAST {
+            when Binary.Operator.CAST {
                 def rawTarget := scanner.convertType(right)
                 def index := rawTarget.name.lastIndexOf(".")
                 if rawTarget.typeKind = Type.Kind.CLASS & index !== null {
@@ -2394,7 +2434,7 @@ class Compiler {
                 }
                 return [target]
             }
-            when Token.Kind.IDENTITY, Token.Kind.NIDENTITY {
+            when Binary.Operator.IDENTITY, Binary.Operator.NIDENTITY {
                 return [Type.Bit()]
             }
             otherwise {
@@ -2416,8 +2456,8 @@ class Compiler {
                 }
                 if type = Type.BuiltinBit() {
                     match op {
-                        when Token.Kind.AND, Token.Kind.OR, Token.Kind.XOR, Token.Kind.EQ,
-                                Token.Kind.NEQ {
+                        when Binary.Operator.AND, Binary.Operator.OR, Binary.Operator.XOR,
+                                Binary.Operator.EQ, Binary.Operator.NEQ {
                             return [Type.BuiltinBit()]
                         }
                     }
@@ -2427,15 +2467,15 @@ class Compiler {
                 -- types, it's not a big deal
                 if type.isBuiltinNumber {
                     match op {
-                        when Token.Kind.ADD, Token.Kind.SUB, Token.Kind.MUL, Token.Kind.DIV,
-                                Token.Kind.INTDIV, Token.Kind.REM, Token.Kind.POW,
-                                Token.Kind.BITWISEOR, Token.Kind.BITWISEAND,
-                                Token.Kind.BITWISEXOR, Token.Kind.SHIFTLEFT,
-                                Token.Kind.SHIFTRIGHT {
+                        when Binary.Operator.ADD, Binary.Operator.SUB, Binary.Operator.MUL,
+                                Binary.Operator.DIV, Binary.Operator.INTDIV, Binary.Operator.REM,
+                                Binary.Operator.BITWISEOR, Binary.Operator.BITWISEAND,
+                                Binary.Operator.BITWISEXOR, Binary.Operator.SHIFTLEFT,
+                                Binary.Operator.SHIFTRIGHT {
                             return [type]
                         }
-                        when Token.Kind.EQ, Token.Kind.NEQ, Token.Kind.GT, Token.Kind.LT,
-                                Token.Kind.GTEQ, Token.Kind.LTEQ {
+                        when Binary.Operator.EQ, Binary.Operator.NEQ, Binary.Operator.GT,
+                                Binary.Operator.LT, Binary.Operator.GTEQ, Binary.Operator.LTEQ {
                             return [Type.BuiltinBit()]
                         }
                     }
@@ -2445,7 +2485,7 @@ class Compiler {
         }
     }
 
-    function binaryType(position:Position, left:ASTNode, op:Token.Kind,
+    function binaryType(position:Position, left:ASTNode, op:Binary.Operator,
             right:ASTNode):ListView<Type>? {
         def key := BinaryKey(left, op, right)
         if binaryTypes.contains(key) {
@@ -2643,9 +2683,9 @@ class Compiler {
             when ASTNode.NULL {
                 return [Type.Any()]
             }
-            when ASTNode.PREFIX(position, op, operand) {
+            when ASTNode.UNARY(position, op, operand) {
                 return possibleTypes(ASTNode.CALL(position,
-                        ASTNode.DOT(position, operand, operatorName(op)),
+                        ASTNode.DOT(position, operand, op.asString),
                         FixedArray<ASTNode>()))
             }
             when ASTNode.RANGE(_, start, _, end, step) {
@@ -2714,6 +2754,9 @@ class Compiler {
                 }
                 return result
             }
+            when ASTNode.TUPLE(_, args) {
+--                return Tuple.possibleTypes(args)
+            }
             when ASTNode.TYPE {
                 def resolved := tryResolveType(value)
                 if resolved !== null {
@@ -2751,9 +2794,9 @@ class Compiler {
         }
     }
 
-    method binaryCost(left:ASTNode, op:Token.Kind, right:ASTNode,
+    method binaryCost(left:ASTNode, op:Binary.Operator, right:ASTNode,
             type:TypeContext):Pair<Type, Int>? {
-        if op = Token.Kind.CAST {
+        if op = Binary.Operator.CAST {
             def target := tryResolveType(right)
             if target == null {
                 return null
@@ -2952,14 +2995,14 @@ class Compiler {
             }
             when ASTNode.BINARY(_, left, op, right) {
                 match op {
-                    when Token.Kind.CAST {
+                    when Binary.Operator.CAST {
                         def types := possibleTypes(expr)
                         if types == null {
                             return null
                         }
                         return coercionCost(types, target)
                     }
-                    when Token.Kind.IDENTITY, Token.Kind.NIDENTITY {
+                    when Binary.Operator.IDENTITY, Binary.Operator.NIDENTITY {
                         return coercionCost(Type.Bit(), target)
                     }
                     otherwise {
@@ -3090,34 +3133,6 @@ class Compiler {
                 }
                 return null
             }
-            when ASTNode.PREFIX(position, op, operand) {
-                -- need to special-case things like -128, which can fit into an Int8 despite 128 not
-                -- doing so
-                if op = Token.Kind.SUB {
-                    match operand {
-                        when ASTNode.INT(_, value) {
-                            if value = 128 {
-                                return coercionCost(Type.BuiltinInt8(), target)
-                            }
-                            if value = 32768 {
-                                return coercionCost(Type.BuiltinInt16(), target)
-                            }
-                            if value = 2147483648 {
-                                return coercionCost(Type.BuiltinInt32(), target)
-                            }
-                        }
-                    }
-                }
-                def preferred := preferredType(operand)
-                if preferred !== null & (preferred = Type.BuiltinBit() |
-                        preferred.isBuiltinNumber) {
-                    return coercionCost(preferred, target)
-                }
-                return coercionCost(ASTNode.CALL(position,
-                        ASTNode.DOT(position, operand, operatorName(op)),
-                            FixedArray<ASTNode>()),
-                        target)
-            }
             when ASTNode.RANGE(_, start, _, end, step) {
                 return rangeCoercionCost(start, end, step, target)
             }
@@ -3156,6 +3171,34 @@ class Compiler {
             }
             when ASTNode.TYPED_LAMBDA(_, parameters, body) {
                 return typedLambdaCoercionCost(parameters, body, target)
+            }
+            when ASTNode.UNARY(position, op, operand) {
+                -- need to special-case things like -128, which can fit into an Int8 despite 128 not
+                -- doing so
+                if op = Unary.Operator.NEGATE {
+                    match operand {
+                        when ASTNode.INT(_, value) {
+                            if value = 128 {
+                                return coercionCost(Type.BuiltinInt8(), target)
+                            }
+                            if value = 32768 {
+                                return coercionCost(Type.BuiltinInt16(), target)
+                            }
+                            if value = 2147483648 {
+                                return coercionCost(Type.BuiltinInt32(), target)
+                            }
+                        }
+                    }
+                }
+                def preferred := preferredType(operand)
+                if preferred !== null & (preferred = Type.BuiltinBit() |
+                        preferred.isBuiltinNumber) {
+                    return coercionCost(preferred, target)
+                }
+                return coercionCost(ASTNode.CALL(position,
+                        ASTNode.DOT(position, operand, op.asString),
+                            FixedArray<ASTNode>()),
+                        target)
             }
             when ASTNode.UNTYPED_LAMBDA(_, parameters, body) {
                 return untypedLambdaCoercionCost(parameters, body, target)
@@ -3292,8 +3335,7 @@ class Compiler {
         def statements := Array<ASTNode>()
         statements.add(ASTNode.BINARY(cl.position,
                 ASTNode.IDENTIFIER(cl.position, ClassDecl.RAW_VALUE_NAME),
-                Token.Kind.ASSIGNMENT,
-                ASTNode.IDENTIFIER(cl.position, "rv")))
+                Binary.Operator.ASSIGNMENT, ASTNode.IDENTIFIER(cl.position, "rv")))
         for i in 0 .. entry.fields.count {
             parameters.add(MethodDecl.Parameter("f\{i}", entry.fields[i]))
             statements.add(ASTNode.BINARY(cl.position,
@@ -3301,7 +3343,7 @@ class Compiler {
                         ASTNode.SELF(cl.position),
                         entry,
                         i),
-                    Token.Kind.ASSIGNMENT,
+                    Binary.Operator.ASSIGNMENT,
                     ASTNode.IDENTIFIER(cl.position, "f\{i}")))
         }
         def synthetic := MethodDecl(cl, cl.position, null, Annotations(Annotations.Flag.SYNTHETIC),
@@ -3385,79 +3427,6 @@ class Compiler {
             return declaredTypeWithSelf(m, selfType, false)
         }
         return inheritedTypeWithSelf(inherited, selfType)
-    }
-
-    @class
-    function operatorName(op:Token.Kind):String {
-        match op {
-            when Token.Kind.ADD         { return "+" }
-            when Token.Kind.SUB         { return "-" }
-            when Token.Kind.MUL         { return "*" }
-            when Token.Kind.DIV         { return "/" }
-            when Token.Kind.INTDIV      { return "//" }
-            when Token.Kind.REM         { return "%" }
-            when Token.Kind.POW         { return "^" }
-            when Token.Kind.EQ          { return "=" }
-            when Token.Kind.NEQ         { return "!=" }
-            when Token.Kind.GT          { return ">" }
-            when Token.Kind.LT          { return "<" }
-            when Token.Kind.GTEQ        { return ">=" }
-            when Token.Kind.LTEQ        { return "<=" }
-            when Token.Kind.OR          { return "|" }
-            when Token.Kind.BITWISEOR   { return "||" }
-            when Token.Kind.AND         { return "&" }
-            when Token.Kind.BITWISEAND  { return "&&" }
-            when Token.Kind.XOR         { return "~" }
-            when Token.Kind.BITWISEXOR  { return "~~" }
-            when Token.Kind.NOT         { return "!" }
-            when Token.Kind.BITWISENOT  { return "!!" }
-            when Token.Kind.SHIFTLEFT   { return "<<" }
-            when Token.Kind.SHIFTRIGHT  { return ">>" }
-            when Token.Kind.LBRACKET    { return "[]" }
-            when Token.Kind.ASSIGNMENT  { return ":=" }
-            when Token.Kind.IDENTITY    { return "==" }
-            when Token.Kind.NIDENTITY   { return "!==" }
-            when Token.Kind.CAST        { return "->" }
-            otherwise                   { assert false, "not an operator: \{op}" }
-        }
-    }
-
-    @class
-    function isAssignment(op:Token.Kind):Bit {
-        match op {
-            when Token.Kind.ASSIGNMENT, Token.Kind.ADDEQ, Token.Kind.SUBEQ, Token.Kind.MULEQ,
-                    Token.Kind.DIVEQ, Token.Kind.INTDIVEQ, Token.Kind.REMEQ, Token.Kind.POWEQ,
-                    Token.Kind.OREQ, Token.Kind.BITWISEOREQ, Token.Kind.ANDEQ,
-                    Token.Kind.BITWISEANDEQ, Token.Kind.XOREQ, Token.Kind.BITWISEXOREQ,
-                    Token.Kind.SHIFTLEFTEQ, Token.Kind.SHIFTRIGHTEQ {
-                return true
-            }
-            otherwise {
-                return false
-            }
-        }
-    }
-
-    @class
-    function removeAssignment(op:Token.Kind):Token.Kind {
-        match op {
-            when Token.Kind.ADDEQ        { return Token.Kind.ADD }
-            when Token.Kind.SUBEQ        { return Token.Kind.SUB }
-            when Token.Kind.MULEQ        { return Token.Kind.MUL }
-            when Token.Kind.DIVEQ        { return Token.Kind.DIV }
-            when Token.Kind.INTDIVEQ     { return Token.Kind.INTDIV }
-            when Token.Kind.REMEQ        { return Token.Kind.REM }
-            when Token.Kind.POWEQ        { return Token.Kind.POW }
-            when Token.Kind.OREQ         { return Token.Kind.OR }
-            when Token.Kind.BITWISEOREQ  { return Token.Kind.BITWISEOR }
-            when Token.Kind.ANDEQ        { return Token.Kind.AND }
-            when Token.Kind.BITWISEANDEQ { return Token.Kind.BITWISEAND }
-            when Token.Kind.XOREQ        { return Token.Kind.XOR }
-            when Token.Kind.BITWISEXOREQ { return Token.Kind.BITWISEXOR }
-            when Token.Kind.SHIFTLEFTEQ  { return Token.Kind.SHIFTLEFT }
-            when Token.Kind.SHIFTRIGHTEQ { return Token.Kind.SHIFTRIGHT }
-            otherwise                    { assert false }
-        }
     }
 
     method createChoiceCleanup(m:MethodDecl) {
@@ -3544,24 +3513,26 @@ class Compiler {
                 m.annotations.flags && Annotations.Flag.CLASS != 0 {
             error(m.position, "class methods may not be annotated with '@override'")
         }
-        if m.annotations.flags && Annotations.Flag.ABSTRACT = 0 &
-                m.annotations.flags && Annotations.Flag.EXTERNAL = 0 &
-                m.body == null {
-            error(m.position, "expected non-abstract method '\{m.name}' to have a body")
-        }
-        if m.annotations.flags && Annotations.Flag.DEFAULT != 0 {
-            if m.owner.classKind != ClassDecl.Kind.INTERFACE {
-                error(m.position, "annotation '@default' may only appear on interface methods")
+        if !m.owner.annotations.isStub {
+            if m.annotations.flags && Annotations.Flag.ABSTRACT = 0 &
+                    m.annotations.flags && Annotations.Flag.EXTERNAL = 0 &
+                    m.body == null {
+                error(m.position, "expected non-abstract method '\{m.name}' to have a body")
             }
-            if m.body == null {
-                error(m.position, "expected '@default' method '\{m.name}' to have a body")
+            if m.annotations.flags && Annotations.Flag.DEFAULT != 0 {
+                if m.owner.classKind != ClassDecl.Kind.INTERFACE {
+                    error(m.position, "annotation '@default' may only appear on interface methods")
+                }
+                if m.body == null {
+                    error(m.position, "expected '@default' method '\{m.name}' to have a body")
+                }
             }
-        }
-        else if m.methodKind != MethodDecl.Kind.INIT &
-                m.owner.classKind = ClassDecl.Kind.INTERFACE &
-                !m.annotations.isClass & m.body !== null {
-            error(m.position, "non-abstract interface method '\{m.name}' must be annotated with " +
-                    "'@default'")
+            else if m.methodKind != MethodDecl.Kind.INIT &
+                    m.owner.classKind = ClassDecl.Kind.INTERFACE &
+                    !m.annotations.isClass & m.body !== null {
+                error(m.position, "non-abstract interface method '\{m.name}' must be annotated " +
+                        "with '@default'")
+            }
         }
         checkAccessModifierCount(m.position, m.annotations)
     }
@@ -3797,7 +3768,7 @@ class Compiler {
             rawParams.add(ASTNode.PARAMETER(position, name, ASTNode.IR_WRAPPER(position,
                     IR.Value.TYPE(target.subtypes[i]))))
             callParams.add(ASTNode.BINARY(position, ASTNode.IDENTIFIER(position, name),
-                    Token.Kind.CAST, ASTNode.IR_WRAPPER(position,
+                    Binary.Operator.CAST, ASTNode.IR_WRAPPER(position,
                         IR.Value.TYPE(src.subtypes[i]))))
         }
         closureCount += 1
@@ -3807,7 +3778,7 @@ class Compiler {
         def c := ASTNode.CALL(position, methodCapture, FixedArray<ASTNode>.from(callParams))
         def body:Array<ASTNode>
         if target.returnType != Type.Void() {
-            body := [ASTNode.RETURN(position, ASTNode.BINARY(position, c, Token.Kind.CAST,
+            body := [ASTNode.RETURN(position, ASTNode.BINARY(position, c, Binary.Operator.CAST,
                     ASTNode.IR_WRAPPER(position, IR.Value.TYPE(target.returnType))))]
         }
         else {
@@ -3921,7 +3892,7 @@ class Compiler {
                     target.typeKind != Type.Kind.GENERIC_METHOD_PARAMETER {
                 -- FIXME remove this when compile-time nullability checks are in
                 Assert.compile(self, position, ASTNode.BINARY(position,
-                        ASTNode.IR_WRAPPER(position, value), Token.Kind.NIDENTITY,
+                        ASTNode.IR_WRAPPER(position, value), Binary.Operator.NIDENTITY,
                         ASTNode.NULL(position)), ASTNode.STRING(position,
                                 "unexpected null reference casting \{value.type()} to \{target}"))
             }
@@ -4310,9 +4281,9 @@ class Compiler {
         return false
     }
 
-    @pre(op = Token.Kind.IDENTITY | op = Token.Kind.NIDENTITY)
-    method compileIdentityComparison(position:Position, left:ASTNode, op:Token.Kind, right:ASTNode,
-            type:TypeContext):IR.Value? {
+    @pre(op = Binary.Operator.IDENTITY | op = Binary.Operator.NIDENTITY)
+    method compileIdentityComparison(position:Position, left:ASTNode, op:Binary.Operator,
+            right:ASTNode, type:TypeContext):IR.Value? {
         def compiledLeft := compileExpression(left, TypeContext.NON_VOID)
         if compiledLeft == null {
             return null
@@ -4322,7 +4293,7 @@ class Compiler {
             return null
         }
         if compiledLeft.type().typeKind != Type.Kind.NULLABLE & isNull(compiledRight) {
-            if op = Token.Kind.IDENTITY {
+            if op = Binary.Operator.IDENTITY {
                 return coerce(position, coerce(position, IR.Value.BIT(false),
                         TypeContext.TYPE(Type.Bit())), type)
             }
@@ -4330,7 +4301,7 @@ class Compiler {
                     TypeContext.TYPE(Type.Bit())), type)
         }
         if compiledRight.type().typeKind != Type.Kind.NULLABLE & isNull(compiledLeft) {
-            if op = Token.Kind.IDENTITY {
+            if op = Binary.Operator.IDENTITY {
                 return coerce(position, coerce(position, IR.Value.BIT(false),
                         TypeContext.TYPE(Type.Bit())), type)
             }
@@ -4339,13 +4310,13 @@ class Compiler {
         }
         if coercionCost(compiledLeft.type(), compiledRight.type()) == null &
                 coercionCost(compiledRight.type(), compiledLeft.type()) == null {
-            error(position, "'\{operatorName(op)}' cannot compare dissimilar types " +
+            error(position, "'\{op.asString}' cannot compare dissimilar types " +
                     "'\{compiledLeft.type()}' and '\{compiledRight.type()}'")
             return null
         }
         if isValue(compiledLeft.type()) & !isNull(compiledRight) |
                 isValue(compiledRight.type()) & !isNull(compiledLeft) {
-            error(position, "'\{operatorName(op)}' cannot operate on value types")
+            error(position, "'\{op.asString}' cannot operate on value types")
             return null
         }
         def builtinBit := ir.add(IR.Statement.BINARY(position, compiledLeft, op, compiledRight,
@@ -4367,64 +4338,6 @@ class Compiler {
                 return IR.Value.NULL(Type.Any())
             }
         }
-    }
-
-    method compilePrefix(position:Position, op:Token.Kind, operand:ASTNode,
-            type:TypeContext):IR.Value? {
-        match op {
-            when Token.Kind.SUB {
-                match operand {
-                    when ASTNode.INT(_, value) {
-                        match type {
-                            when TypeContext.TYPE(t) {
-                                if t.typeKind = Type.Kind.BUILTIN_INT |
-                                        t.typeKind = Type.Kind.BUILTIN_UINT {
-                                    return IR.Value.INT(-value, t)
-                                }
-                                if t.isNumber {
-                                    def args := Array<ASTNode>()
-                                    args.add(ASTNode.INT(position, -value))
-                                    return Call.compile(self, position, IR.Value.TYPE(t), args,
-                                            type)
-                                }
-                            }
-                        }
-                    }
-                }
-                def target := compileExpression(operand, TypeContext.NON_VOID)
-                if target == null {
-                    return null
-                }
-                if target.type().isBuiltinNumber {
-                    def result := ir.add(IR.Statement.NEGATE(position, target))
-                    return coerce(position, IR.Value.REF(result, target.type()), type)
-                }
-                return Call.compile(self, position, target, "-", [], type)
-            }
-            when Token.Kind.NOT {
-                def target := compileExpression(operand, TypeContext.NON_VOID)
-                if target == null {
-                    return null
-                }
-                if target.type() = Type.BuiltinBit() {
-                    def result := ir.add(IR.Statement.NOT(position, target))
-                    return coerce(position, IR.Value.REF(result, Type.BuiltinBit()), type)
-                }
-                return Call.compile(self, position, target, "!", [], type)
-            }
-            when Token.Kind.BITWISENOT {
-                def target := compileExpression(operand, TypeContext.NON_VOID)
-                if target == null {
-                    return null
-                }
-                if target.type().isBuiltinNumber {
-                    def result := ir.add(IR.Statement.NOT(position, target))
-                    return coerce(position, IR.Value.REF(result, target.type()), type)
-                }
-                return Call.compile(self, position, target, "!!", [], type)
-            }
-        }
-        assert false
     }
 
     method compileRange(position:Position, start:ASTNode?, inclusive:Bit, end:ASTNode?,
@@ -4718,8 +4631,8 @@ class Compiler {
             when ASTNode.NULL(position) {
                 return compileNull(position, type)
             }
-            when ASTNode.PREFIX(position, op, operand) {
-                return compilePrefix(position, op, operand, type)
+            when ASTNode.UNARY(position, op, operand) {
+                return Unary.compile(self, position, op, operand, type)
             }
             when ASTNode.RANGE(position, start, inclusive, end, step) {
                 return compileRange(position, start, inclusive, end, step, type)
@@ -5243,15 +5156,45 @@ class Compiler {
         }
     }
 
+    method compilePostcondition(compiling:MethodDecl, postconditionOwner:MethodDecl,
+            expr:ASTNode, successFail:Array<IR.Block.ID?>) {
+        if postconditionEntryBlock == null {
+            postconditionEntryBlock := ir.newBlock("postcondition entry")
+            postconditionCurrentBlock := postconditionEntryBlock
+        }
+        if returnVar == null & compiling.returnType != Type.Void()  {
+            returnVar := Variable(compiling.position, Variable.Kind.DEF, "$return",
+                    compiling.returnType, Variable.Storage.LOCAL(ir.locals.count))
+            ir.locals.add(returnVar.type)
+        }
+        ir.setCurrentBlock(postconditionCurrentBlock)
+        def value := compileExpressionInContext(expr,
+                TypeContext.TYPE(Type.Bit()), postconditionOwner, compiling)
+        if value == null {
+            return
+        }
+        successFail[0] := ir.newBlock("postcondition success")
+        if successFail[1] == null {
+            successFail[1] := ir.newBlock("postcondition fail")
+            def old := ir.currentBlock.id
+            ir.setCurrentBlock(successFail[1])
+            Assert.compileFail(self, compiling.position, ASTNode.STRING(compiling.position,
+                    "postcondition failure for \{compiling.declaration}"))
+            ir.setCurrentBlock(old)
+        }
+        ir.add(IR.Statement.CONDITIONAL_BRANCH(compiling.position,
+                extractBuiltinBit(compiling.position, value), successFail[0], successFail[1]))
+        ir.setCurrentBlock(successFail[0])
+        postconditionCurrentBlock := ir.currentBlock.id
+    }
+
     method compilePostconditions() {
-        if true { return }
-        def auto := AutoScope(self, methodSymbolTable)
         def m := currentMethod[0]
-        var success:IR.Block.ID? := null
-        var failBlock:IR.Block.ID? := null
+        atPreBlock := ir.currentBlock.id
+        def successFail:Array<IR.Block.ID?> := [null, null]
         var current := m
+        var havePost := false
         loop {
-            var havePost := false
             if current.annotations.expressions !== null {
                 for ann in current.annotations.expressions {
                     match ann {
@@ -5266,26 +5209,7 @@ class Compiler {
                                 }
                             }
                             havePost := true
-                            if atPreBlock == null {
-                                atPreBlock := ir.newBlock("@pre")
-                            }
-                            def value := compileExpressionInContext(expr,
-                                    TypeContext.TYPE(Type.Bit()), current, m)
-                            if value == null {
-                                return
-                            }
-                            success := ir.newBlock("postcondition success")
-                            if failBlock == null {
-                                failBlock := ir.newBlock("postcondition fail")
-                                def old := ir.currentBlock.id
-                                ir.setCurrentBlock(failBlock)
-                                Assert.compileFail(self, m.position, ASTNode.STRING(m.position,
-                                        "postcondition failure for \{m.declaration}"))
-                                ir.setCurrentBlock(old)
-                            }
-                            ir.add(IR.Statement.CONDITIONAL_BRANCH(m.position,
-                                    extractBuiltinBit(m.position, value), success, failBlock))
-                            ir.setCurrentBlock(success)
+                            compilePostcondition(m, current, expr, successFail)
                         }
                         when Annotations.Expression.POST_AND(_, expr) {
                             assert !ir.currentBlockFinished
@@ -5300,26 +5224,7 @@ class Compiler {
                                 }
                             }
                             havePost := true
-                            if atPreBlock == null {
-                                atPreBlock := ir.newBlock("@pre")
-                            }
-                            def value := compileExpressionInContext(expr,
-                                    TypeContext.TYPE(Type.Bit()), current, m)
-                            if value == null {
-                                return
-                            }
-                            success := ir.newBlock("postcondition success")
-                            if failBlock == null {
-                                failBlock := ir.newBlock("postcondition fail")
-                                def old := ir.currentBlock.id
-                                ir.setCurrentBlock(failBlock)
-                                Assert.compileFail(self, m.position, ASTNode.STRING(m.position,
-                                        "postcondition failure for \{m.declaration}"))
-                                ir.setCurrentBlock(old)
-                            }
-                            ir.add(IR.Statement.CONDITIONAL_BRANCH(m.position,
-                                    extractBuiltinBit(m.position, value), success, failBlock))
-                            ir.setCurrentBlock(success)
+                            compilePostcondition(m, current, expr, successFail)
                         }
                     }
                 }
@@ -5329,6 +5234,23 @@ class Compiler {
             }
             current := current.overridden
         }
+        if havePost {
+            def returnValue:IR.Value?
+            if returnVar !== null {
+                def returnSlot:Int
+                match returnVar.storage {
+                    when Variable.Storage.LOCAL(slot) {
+                        returnSlot := slot
+                    }
+                }
+                returnValue := IR.Value.REF(ir.add(IR.Statement.LOAD(m.position,
+                        IR.Value.LOCAL(returnSlot, returnVar.type))),
+                        returnVar.type)
+            }
+            ir.add(IR.Statement.RETURN(m.position, returnValue))
+            ir.setCurrentBlock(atPreBlock)        
+        }
+        atPreBlock := null
     }
 
     -- to avoid calling super.init for a few common classes we know for sure will never do anything
@@ -5353,6 +5275,19 @@ class Compiler {
         compile(m, null)
     }
 
+    function hasPostconditions(m:MethodDecl):Bit {
+        if m.annotations.expressions !== null {
+            for ann in m.annotations.expressions {
+                match ann {
+                    when Annotations.Expression.POST, Annotations.Expression.POST_AND {
+                        return true
+                    }
+                }
+            }
+        }
+        return false
+    }
+
     method compile(m:MethodDecl, enclosingContext:SymbolTable?) {
         if !resolve(m) {
             return
@@ -5361,13 +5296,19 @@ class Compiler {
         binaryTypes.clear()
         currentMethod.push(m)
         checkAnnotations(m)
-        assert atPreBlock == null
         if m.owner.classKind = ClassDecl.Kind.CHOICE & m.name = "cleanup" {
             createChoiceCleanup(m)
         }
         if m.body !== null {
+            def oldAtPreBlock := atPreBlock
+            def oldPostconditionEntryBlock := postconditionEntryBlock
+            def oldPostconditionCurrentBlock := postconditionCurrentBlock
             def oldIR := ir
             ir := IR()
+            atPreBlock := ir.currentBlock.id
+            postconditionEntryBlock := null
+            postconditionCurrentBlock := null
+            returnVar := null
             {
                 def auto := AutoScope(self)
                 methodSymbolTable := symbolTable
@@ -5417,8 +5358,7 @@ class Compiler {
                                 def p := f.rawValue.position()
                                 compileStatement(ASTNode.BINARY(p,
                                         ASTNode.DOT(p, ASTNode.SELF(p), f.name),
-                                        Token.Kind.ASSIGNMENT,
-                                        f.rawValue))
+                                        Binary.Operator.ASSIGNMENT, f.rawValue))
                             }
                         }
                         if !callsSuperInit(m.body) & m.owner.rawSuper !== null &
@@ -5437,6 +5377,7 @@ class Compiler {
                     index += 1
                 }
                 compilePreconditions()
+                compilePostconditions()
                 for s in m.body {
                     compileStatement(s)
                 }
@@ -5452,28 +5393,6 @@ class Compiler {
                     }
                 }
             }
-            if atPreBlock !== null {
-                def index:Int? := null
-                for i in 0 .. ir.blocks.count {
-                    if ir.blocks[i].id = atPreBlock {
-                        index := i
-                        break
-                    }
-                }
-                if index !== null {
-                    if ir.blocks[index].statements.count > 0 {
-                        ir.setCurrentBlock(atPreBlock)
-                        ir.add(IR.Statement.BRANCH(m.position, ir.blocks[0].id))
-                        def tmp := ir.blocks[0]
-                        ir.blocks[0] := ir.blocks[index]
-                        ir.blocks[index] := tmp
-                    }
-                    else {
-                        ir.blocks.removeIndex(index)
-                    }
-                }
-            }
-            atPreBlock := null
             if writeCode {
                 codeGenerator.write(m, ir)
             }

@@ -3,14 +3,14 @@
 typedef struct frost$core$Class frost$core$Class;
 #include "frost/core/Int32_types.h"
 typedef struct org$frostlang$frostc$ASTNode org$frostlang$frostc$ASTNode;
-#include "org/frostlang/frostc/parser/Token/Kind_types.h"
+#include "org/frostlang/frostc/expression/Binary/Operator_types.h"
 typedef struct frost$core$String frost$core$String;
 
 typedef struct org$frostlang$frostc$Compiler$BinaryKey {
     frost$core$Class* $class;
     frost$core$Int32 refCount;
     org$frostlang$frostc$ASTNode* left;
-    org$frostlang$frostc$parser$Token$Kind op;
+    org$frostlang$frostc$expression$Binary$Operator op;
     org$frostlang$frostc$ASTNode* right;
 } org$frostlang$frostc$Compiler$BinaryKey;
 #include "frost/core/Class.h"

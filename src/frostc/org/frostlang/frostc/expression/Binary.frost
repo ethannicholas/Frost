@@ -14,8 +14,175 @@ uses org.frostlang.frostc.Type
 uses org.frostlang.frostc.parser.Token
 
 class Binary {
+    choice Operator {
+        ADD
+        SUB
+        MUL
+        DIV
+        INTDIV
+        REM
+        EQ
+        NEQ
+        GT
+        LT
+        GTEQ
+        LTEQ
+        OR
+        BITWISEOR
+        AND
+        BITWISEAND
+        XOR
+        BITWISEXOR
+        SHIFTLEFT
+        SHIFTRIGHT
+        INDEX
+        IDENTITY
+        NIDENTITY
+        CAST
+        ASSIGNMENT
+        ADDEQ
+        SUBEQ
+        MULEQ
+        DIVEQ
+        INTDIVEQ
+        REMEQ
+        OREQ
+        BITWISEOREQ
+        ANDEQ
+        BITWISEANDEQ
+        XOREQ
+        BITWISEXOREQ
+        SHIFTLEFTEQ
+        SHIFTRIGHTEQ
+
+        @class
+        function fromToken(op:Token):Operator {
+            match op.kind {
+                when Token.Kind.ADD          { return ADD }
+                when Token.Kind.SUB          { return SUB }
+                when Token.Kind.MUL          { return MUL }
+                when Token.Kind.DIV          { return DIV }
+                when Token.Kind.INTDIV       { return INTDIV }
+                when Token.Kind.REM          { return REM }
+                when Token.Kind.EQ           { return EQ }
+                when Token.Kind.NEQ          { return NEQ }
+                when Token.Kind.GT           { return GT }
+                when Token.Kind.LT           { return LT }
+                when Token.Kind.GTEQ         { return GTEQ }
+                when Token.Kind.LTEQ         { return LTEQ }
+                when Token.Kind.OR           { return OR }
+                when Token.Kind.BITWISEOR    { return BITWISEOR }
+                when Token.Kind.AND          { return AND }
+                when Token.Kind.BITWISEAND   { return BITWISEAND }
+                when Token.Kind.XOR          { return XOR }
+                when Token.Kind.BITWISEXOR   { return BITWISEXOR }
+                when Token.Kind.SHIFTLEFT    { return SHIFTLEFT }
+                when Token.Kind.SHIFTRIGHT   { return SHIFTRIGHT }
+                when Token.Kind.LBRACKET     { return INDEX }
+                when Token.Kind.ASSIGNMENT   { return ASSIGNMENT }
+                when Token.Kind.IDENTITY     { return IDENTITY }
+                when Token.Kind.NIDENTITY    { return NIDENTITY }
+                when Token.Kind.CAST         { return CAST }
+                when Token.Kind.ADDEQ        { return ADDEQ }
+                when Token.Kind.SUBEQ        { return SUBEQ }
+                when Token.Kind.MULEQ        { return MULEQ }
+                when Token.Kind.DIVEQ        { return DIVEQ }
+                when Token.Kind.INTDIVEQ     { return INTDIVEQ }
+                when Token.Kind.REMEQ        { return REMEQ }
+                when Token.Kind.OREQ         { return OREQ }
+                when Token.Kind.BITWISEOREQ  { return BITWISEOREQ }
+                when Token.Kind.ANDEQ        { return ANDEQ }
+                when Token.Kind.BITWISEANDEQ { return BITWISEANDEQ }
+                when Token.Kind.XOREQ        { return XOREQ }
+                when Token.Kind.BITWISEXOREQ { return BITWISEXOREQ }
+                when Token.Kind.SHIFTLEFTEQ  { return SHIFTLEFTEQ }
+                when Token.Kind.SHIFTRIGHTEQ { return SHIFTRIGHTEQ }
+                otherwise                    { assert false, "not a binary operator: \{op.kind}" }
+            }        
+        }
+
+        property isAssignment:Bit
+        function get_isAssignment():Bit {
+            match self {
+                when ASSIGNMENT, ADDEQ, SUBEQ, MULEQ, DIVEQ, INTDIVEQ, REMEQ, OREQ,
+                        BITWISEOREQ, ANDEQ, BITWISEANDEQ, XOREQ, BITWISEXOREQ, SHIFTLEFTEQ,
+                        SHIFTRIGHTEQ {
+                    return true
+                }
+                otherwise {
+                    return false
+                }
+            }
+        }
+
+        function removeAssignment():Operator {
+            match self {
+                when ADDEQ        { return ADD }
+                when SUBEQ        { return SUB }
+                when MULEQ        { return MUL }
+                when DIVEQ        { return DIV }
+                when INTDIVEQ     { return INTDIV }
+                when REMEQ        { return REM }
+                when OREQ         { return OR }
+                when BITWISEOREQ  { return BITWISEOR }
+                when ANDEQ        { return AND }
+                when BITWISEANDEQ { return BITWISEAND }
+                when XOREQ        { return XOR }
+                when BITWISEXOREQ { return BITWISEXOR }
+                when SHIFTLEFTEQ  { return SHIFTLEFT }
+                when SHIFTRIGHTEQ { return SHIFTRIGHT }
+                otherwise         { assert false, "not a compound assignment operator: \{self}" }
+            }
+        }
+
+        @override
+        function get_asString():String {
+            match self {
+                when ADD          { return "+" }
+                when SUB          { return "-" }
+                when MUL          { return "*" }
+                when DIV          { return "/" }
+                when INTDIV       { return "//" }
+                when REM          { return "%" }
+                when EQ           { return "=" }
+                when NEQ          { return "!=" }
+                when GT           { return ">" }
+                when LT           { return "<" }
+                when GTEQ         { return ">=" }
+                when LTEQ         { return "<=" }
+                when OR           { return "|" }
+                when BITWISEOR    { return "||" }
+                when AND          { return "&" }
+                when BITWISEAND   { return "&&" }
+                when XOR          { return "~" }
+                when BITWISEXOR   { return "~~" }
+                when SHIFTLEFT    { return "<<" }
+                when SHIFTRIGHT   { return ">>" }
+                when INDEX        { return "[]" }
+                when IDENTITY     { return "==" }
+                when NIDENTITY    { return "!==" }
+                when CAST         { return "->" }
+                when ASSIGNMENT   { return ":=" }
+                when ADDEQ        { return "+=" }
+                when SUBEQ        { return "-=" }
+                when MULEQ        { return "*=" }
+                when DIVEQ        { return "/=" }
+                when INTDIVEQ     { return "//=" }
+                when REMEQ        { return "%=" }
+                when OREQ         { return "|=" }
+                when BITWISEOREQ  { return "||=" }
+                when ANDEQ        { return "&=" }
+                when BITWISEANDEQ { return "&&=" }
+                when XOREQ        { return "~=" }
+                when BITWISEXOREQ { return "~~=" }
+                when SHIFTLEFTEQ  { return "<<=" }
+                when SHIFTRIGHTEQ { return ">>=" }
+            }
+        }
+    }
+
     @class
-    method findOverloadedOperator(compiler:Compiler, left:Type, op:Token.Kind, right:ASTNode,
+    method findOverloadedOperator(compiler:Compiler, left:Type, op:Operator, right:ASTNode,
             type:TypeContext):Pair<ListView<MethodRef>, Int>? {
         if !left.isClass {
             return null
@@ -25,7 +192,7 @@ class Binary {
             return null
         }
         def target := IR.Value.REF(IR.Statement.ID(-1), left) -- fake target, just used for matching
-        var methods := compiler.getSymbolTable(leftCl)[Compiler.operatorName(op)]
+        var methods := compiler.getSymbolTable(leftCl)[op.asString]
         if methods !== null {
             def args := [right]
             -- look for left.op(right)
@@ -67,7 +234,7 @@ class Binary {
         if rightCl == null {
             return null
         }
-        methods := compiler.getSymbolTable(rightCl)[Compiler.operatorName(op)]
+        methods := compiler.getSymbolTable(rightCl)[op.asString]
         if methods == null {
             return null
         }
@@ -98,7 +265,7 @@ class Binary {
     }
 
     @class
-    method findOverloadedOperator(compiler:Compiler, left:ASTNode, op:Token.Kind, right:ASTNode,
+    method findOverloadedOperator(compiler:Compiler, left:ASTNode, op:Operator, right:ASTNode,
             type:TypeContext):Pair<ListView<MethodRef>, Int>? {
         def leftTypes := compiler.possibleTypes(left)
         if leftTypes !== null {
@@ -134,7 +301,7 @@ class Binary {
     }
 
     @class
-    method foldInts(compiler:Compiler, left:ASTNode, op:Token.Kind, right:ASTNode):ASTNode? {
+    method foldInts(compiler:Compiler, left:ASTNode, op:Operator, right:ASTNode):ASTNode? {
         def l:Int64
         def r:Int64
         -- ensure both values fit into a signed Int64
@@ -161,19 +328,19 @@ class Binary {
             }
         }
         match op {
-            when Token.Kind.ADD {
+            when Operator.ADD {
                 def v := (l + r).asUInt64
                 return ASTNode.INT(left.position(), v)
             }
-            when Token.Kind.SUB {
+            when Operator.SUB {
                 def v := (l - r).asUInt64
                 return ASTNode.INT(left.position(), v)
             }
-            when Token.Kind.MUL {
+            when Operator.MUL {
                 def v := (l * r).asUInt64
                 return ASTNode.INT(left.position(), v)
             }
-            when Token.Kind.INTDIV {
+            when Operator.INTDIV {
                 if r = 0 {
                     compiler.error(right.position(), "division by 0")
                     return null
@@ -181,7 +348,7 @@ class Binary {
                 def v := (l // r).asUInt64
                 return ASTNode.INT(left.position(), v)
             }
-            when Token.Kind.REM {
+            when Operator.REM {
                 if r = 0 {
                     compiler.error(right.position(), "division by 0")
                     return null
@@ -189,55 +356,55 @@ class Binary {
                 def v := (l % r).asUInt64
                 return ASTNode.INT(left.position(), v)
             }
-            when Token.Kind.EQ {
+            when Operator.EQ {
                 return ASTNode.BIT(left.position(), l = r)
             }
-            when Token.Kind.NEQ {
+            when Operator.NEQ {
                 return ASTNode.BIT(left.position(), l != r)
             }
-            when Token.Kind.LT {
+            when Operator.LT {
                 return ASTNode.BIT(left.position(), l < r)
             }
-            when Token.Kind.GT {
+            when Operator.GT {
                 return ASTNode.BIT(left.position(), l > r)
             }
-            when Token.Kind.LTEQ {
+            when Operator.LTEQ {
                 return ASTNode.BIT(left.position(), l <= r)
             }
-            when Token.Kind.GTEQ {
+            when Operator.GTEQ {
                 return ASTNode.BIT(left.position(), l >= r)
             }
-            when Token.Kind.BITWISEAND {
+            when Operator.BITWISEAND {
                 def v := (l && r).asUInt64
                 return ASTNode.INT(left.position(), v)
             }
-            when Token.Kind.BITWISEOR {
+            when Operator.BITWISEOR {
                 def v := (l || r).asUInt64
                 return ASTNode.INT(left.position(), v)
             }
-            when Token.Kind.BITWISEXOR {
+            when Operator.BITWISEXOR {
                 def v := (l ~~ r).asUInt64
                 return ASTNode.INT(left.position(), v)
             }
-            when Token.Kind.SHIFTLEFT {
+            when Operator.SHIFTLEFT {
                 def v := (l << r).asUInt64
                 return ASTNode.INT(left.position(), v)
             }
-            when Token.Kind.SHIFTRIGHT {
+            when Operator.SHIFTRIGHT {
                 def v := (l >> r).asUInt64
                 return ASTNode.INT(left.position(), v)
             }
         }
-        compiler.error(left.position(), "'\{Compiler.operatorName(op)}' cannot operate on " +
-                "'frost.core.Int64', 'frost.core.Int64'")
+        compiler.error(left.position(), "'\{op.asString}' cannot operate on 'frost.core.Int64', " +
+                "'frost.core.Int64'")
         return null
     }
 
     @class
-    function foldStrings(compiler:Compiler, left:ASTNode, op:Token.Kind, right:ASTNode):ASTNode? {
+    function foldStrings(compiler:Compiler, left:ASTNode, op:Operator, right:ASTNode):ASTNode? {
         -- FIXME this doesn't work for longer concatenations like "A" + "B" + "C" + "D"; will only
         -- fold the innermost pair
-        if op != Token.Kind.ADD {
+        if op != Operator.ADD {
             return null
         }
         match left {
@@ -253,7 +420,7 @@ class Binary {
     }
 
     @class
-    function fold(compiler:Compiler, left:ASTNode, op:Token.Kind, right:ASTNode):ASTNode? {
+    function fold(compiler:Compiler, left:ASTNode, op:Operator, right:ASTNode):ASTNode? {
         match left {
             when ASTNode.INT {
                 return foldInts(compiler, left, op, right)
@@ -268,18 +435,18 @@ class Binary {
     }
 
     @class
-    method compile(compiler:Compiler, position:Position, left:ASTNode, op:Token.Kind, right:ASTNode,
+    method compile(compiler:Compiler, position:Position, left:ASTNode, op:Operator, right:ASTNode,
             type:TypeContext):IR.Value? {
         def folded := fold(compiler, left, op, right)
         if folded !== null {
             return compiler.compileExpression(folded, type)
         }
         match op {
-            when Token.Kind.CAST {
+            when Operator.CAST {
                 def target := compiler.scanner.convertType(right)
                 return compiler.coerce(position, compiler.compileCast(position, left, target), type)
             }
-            when Token.Kind.IDENTITY, Token.Kind.NIDENTITY {
+            when Operator.IDENTITY, Operator.NIDENTITY {
                 return compiler.compileIdentityComparison(position, left, op, right, type)
             }
             otherwise {
@@ -335,7 +502,7 @@ class Binary {
                         return compiler.coerce(position, IR.Value.REF(result, resultType), type)
                     }
                 }
-                compiler.error(position, "no match for '\{Compiler.operatorName(op)}' on " +
+                compiler.error(position, "no match for '\{op.asString}' on " +
                         "'\{compiledLeft.type()}', '\{compiledRight.type()}'" +
                         type.description())
                 return null

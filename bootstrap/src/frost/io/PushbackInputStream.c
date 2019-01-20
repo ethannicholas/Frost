@@ -147,7 +147,7 @@ void frost$io$PushbackInputStream$pushback$frost$core$Int8(frost$io$PushbackInpu
 // line 60
 frost$collections$Array** $tmp58 = &param0->pushbackBuffer;
 frost$collections$Array* $tmp59 = *$tmp58;
-frost$core$UInt8 $tmp60 = frost$core$Int8$convert$R$frost$core$UInt8(param1);
+frost$core$UInt8 $tmp60 = frost$core$Int8$get_asUInt8$R$frost$core$UInt8(param1);
 frost$core$UInt8$wrapper* $tmp61;
 $tmp61 = (frost$core$UInt8$wrapper*) frostObjectAlloc(13, (frost$core$Class*) &frost$core$UInt8$wrapperclass);
 $tmp61->value = $tmp60;

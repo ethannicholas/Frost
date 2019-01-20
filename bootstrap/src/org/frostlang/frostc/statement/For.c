@@ -4171,7 +4171,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp1793));
 // line 451
 frost$core$Int64* $tmp1794 = &param3->$rawValue;
 frost$core$Int64 $tmp1795 = *$tmp1794;
-frost$core$Int64 $tmp1796 = (frost$core$Int64) {48};
+frost$core$Int64 $tmp1796 = (frost$core$Int64) {47};
 frost$core$Bit $tmp1797 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp1795, $tmp1796);
 bool $tmp1798 = $tmp1797.value;
 if ($tmp1798) goto block2; else goto block3;
@@ -4339,7 +4339,7 @@ block13:;
 // line 463
 frost$core$Int64* $tmp1875 = &param4->$rawValue;
 frost$core$Int64 $tmp1876 = *$tmp1875;
-frost$core$Int64 $tmp1877 = (frost$core$Int64) {36};
+frost$core$Int64 $tmp1877 = (frost$core$Int64) {35};
 frost$core$Bit $tmp1878 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp1876, $tmp1877);
 bool $tmp1879 = $tmp1878.value;
 if ($tmp1879) goto block19; else goto block20;
@@ -5223,7 +5223,7 @@ org$frostlang$frostc$IR$Value* local7 = NULL;
 // line 555
 frost$core$Int64* $tmp2254 = &param4->$rawValue;
 frost$core$Int64 $tmp2255 = *$tmp2254;
-frost$core$Int64 $tmp2256 = (frost$core$Int64) {36};
+frost$core$Int64 $tmp2256 = (frost$core$Int64) {35};
 frost$core$Bit $tmp2257 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp2255, $tmp2256);
 bool $tmp2258 = $tmp2257.value;
 if ($tmp2258) goto block2; else goto block1;

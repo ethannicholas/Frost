@@ -8,20 +8,19 @@ uses org.frostlang.frostc.Position
 uses org.frostlang.frostc.expression.Binary
 uses org.frostlang.frostc.expression.Call
 uses org.frostlang.frostc.lvalue.LValue
-uses org.frostlang.frostc.parser.Token
 
 class Assignment {
     @class
-    method compile(compiler:Compiler, position:Position, rawLeft:ASTNode, op:Token.Kind,
+    method compile(compiler:Compiler, position:Position, rawLeft:ASTNode, op:Binary.Operator,
             rawRight:ASTNode) {
-        if !Compiler.isAssignment(op) {
+        if !op.isAssignment {
             compiler.error(position, "not a statement")
             return
         }
-        if op = Token.Kind.ASSIGNMENT {
+        if op = Binary.Operator.ASSIGNMENT {
             match rawLeft {
                 when ASTNode.BINARY(position, base, op, index) {
-                    if op = Token.Kind.LBRACKET {
+                    if op = Binary.Operator.INDEX {
                         def args := Array<ASTNode>()
                         def compiledBase := compiler.compileExpression(base, TypeContext.NON_VOID)
                         if compiledBase == null {
@@ -41,7 +40,7 @@ class Assignment {
             return
         }
         def right:IR.Value?
-        if op = Token.Kind.ASSIGNMENT {
+        if op = Binary.Operator.ASSIGNMENT {
             right := compiler.compileExpression(rawRight, TypeContext.TYPE(left.type()))
         }
         else {
@@ -49,11 +48,8 @@ class Assignment {
             if load == null {
                 return
             }
-            right := Binary.compile(compiler, position,
-                    ASTNode.IR_WRAPPER(position, load),
-                    Compiler.removeAssignment(op),
-                    rawRight,
-                    TypeContext.TYPE(left.type()))
+            right := Binary.compile(compiler, position, ASTNode.IR_WRAPPER(position, load),
+                    op.removeAssignment(), rawRight, TypeContext.TYPE(left.type()))
         }
         if right == null {
             return

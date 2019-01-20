@@ -1,5 +1,6 @@
 package org.frostlang.frostc
 
+uses org.frostlang.frostc.expression.Binary
 uses org.frostlang.frostc.parser.Token
 
 -- Note that the C code produced by this CodeGenerator is not quite compatible with the output of
@@ -714,66 +715,66 @@ class CCodeGenerator : CodeGenerator {
         }
     }
 
-    method getBinaryReference(t:Type, leftRef:String, op:Token.Kind, rightRef:String,
+    method getBinaryReference(t:Type, leftRef:String, op:Binary.Operator, rightRef:String,
             out:IndentedOutputStream):String {
         try {
             def cOp:String
             var logical := false
             match op {
-                when Token.Kind.ADD {
+                when Binary.Operator.ADD {
                     cOp := "+"
                 }
-                when Token.Kind.SUB {
+                when Binary.Operator.SUB {
                     cOp := "-"
                 }
-                when Token.Kind.MUL {
+                when Binary.Operator.MUL {
                     cOp := "*"
                 }
-                when Token.Kind.INTDIV {
+                when Binary.Operator.INTDIV {
                     cOp := "/"
                 }
-                when Token.Kind.DIV {
+                when Binary.Operator.DIV {
                     cOp := "/"
                 }
-                when Token.Kind.REM {
+                when Binary.Operator.REM {
                     cOp := "%"
                 }
-                when Token.Kind.SHIFTLEFT {
+                when Binary.Operator.SHIFTLEFT {
                     cOp := "<<"
                 }
-                when Token.Kind.SHIFTRIGHT {
+                when Binary.Operator.SHIFTRIGHT {
                     cOp := ">>"
                 }
-                when Token.Kind.BITWISEAND {
+                when Binary.Operator.BITWISEAND {
                     cOp := "&"
                 }
-                when Token.Kind.BITWISEOR {
+                when Binary.Operator.BITWISEOR {
                     cOp := "|"
                 }
-                when Token.Kind.XOR, Token.Kind.BITWISEXOR {
+                when Binary.Operator.XOR, Binary.Operator.BITWISEXOR {
                     cOp := "^"
                 }
-                when Token.Kind.EQ {
+                when Binary.Operator.EQ {
                     cOp := "=="
                     logical := true
                 }
-                when Token.Kind.NEQ {
+                when Binary.Operator.NEQ {
                     cOp := "!="
                     logical := true
                 }
-                when Token.Kind.GT {
+                when Binary.Operator.GT {
                     cOp := ">"
                     logical := true
                 }
-                when Token.Kind.LT {
+                when Binary.Operator.LT {
                     cOp := "<"
                     logical := true
                 }
-                when Token.Kind.GTEQ {
+                when Binary.Operator.GTEQ {
                     cOp := ">="
                     logical := true
                 }
-                when Token.Kind.LTEQ {
+                when Binary.Operator.LTEQ {
                     logical := true
                     cOp := "<="
                 }
@@ -1120,13 +1121,13 @@ class CCodeGenerator : CodeGenerator {
         return false
     }
 
-    method writeBinary(id:IR.Statement.ID, left:IR.Value, op:Token.Kind, right:IR.Value,
+    method writeBinary(id:IR.Statement.ID, left:IR.Value, op:Binary.Operator, right:IR.Value,
             type:Type) {
         def leftRef := getReference(left)
         def rightRef := getReference(right)
         if left.type().isNullable {
             match op {
-                when Token.Kind.IDENTITY {
+                when Binary.Operator.IDENTITY {
                     if isNull(left) {
                         writeIsNull(id, right)
                         return
@@ -1136,7 +1137,7 @@ class CCodeGenerator : CodeGenerator {
                         return
                     }
                 }
-                when Token.Kind.NIDENTITY {
+                when Binary.Operator.NIDENTITY {
                     if isNull(left) {
                         writeIsNonNull(id, right)
                         return
@@ -1150,52 +1151,52 @@ class CCodeGenerator : CodeGenerator {
         }
         def cOp:String
         match op {
-            when Token.Kind.ADD {
+            when Binary.Operator.ADD {
                 cOp := "+"
             }
-            when Token.Kind.SUB {
+            when Binary.Operator.SUB {
                 cOp := "-"
             }
-            when Token.Kind.MUL {
+            when Binary.Operator.MUL {
                 cOp := "*"
             }
-            when Token.Kind.DIV, Token.Kind.INTDIV {
+            when Binary.Operator.DIV, Binary.Operator.INTDIV {
                 cOp := "/"
             }
-            when Token.Kind.REM {
+            when Binary.Operator.REM {
                 cOp := "%"
             }
-            when Token.Kind.SHIFTLEFT {
+            when Binary.Operator.SHIFTLEFT {
                 cOp := "<<"
             }
-            when Token.Kind.SHIFTRIGHT {
+            when Binary.Operator.SHIFTRIGHT {
                 cOp := ">>"
             }
-            when Token.Kind.AND, Token.Kind.BITWISEAND {
+            when Binary.Operator.AND, Binary.Operator.BITWISEAND {
                 cOp := "&"
             }
-            when Token.Kind.OR, Token.Kind.BITWISEOR {
+            when Binary.Operator.OR, Binary.Operator.BITWISEOR {
                 cOp := "|"
             }
-            when Token.Kind.XOR, Token.Kind.BITWISEXOR {
+            when Binary.Operator.XOR, Binary.Operator.BITWISEXOR {
                 cOp := "^"
             }
-            when Token.Kind.EQ, Token.Kind.IDENTITY {
+            when Binary.Operator.EQ, Binary.Operator.IDENTITY {
                 cOp := "=="
             }
-            when Token.Kind.NEQ, Token.Kind.NIDENTITY {
+            when Binary.Operator.NEQ, Binary.Operator.NIDENTITY {
                 cOp := "!="
             }
-            when Token.Kind.GT {
+            when Binary.Operator.GT {
                 cOp := ">"
             }
-            when Token.Kind.LT {
+            when Binary.Operator.LT {
                 cOp := "<"
             }
-            when Token.Kind.GTEQ {
+            when Binary.Operator.GTEQ {
                 cOp := ">="
             }
-            when Token.Kind.LTEQ {
+            when Binary.Operator.LTEQ {
                 cOp := "<="
             }
             otherwise {

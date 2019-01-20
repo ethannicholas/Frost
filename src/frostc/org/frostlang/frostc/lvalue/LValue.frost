@@ -9,7 +9,7 @@ uses org.frostlang.frostc.Position
 uses org.frostlang.frostc.Symbol
 uses org.frostlang.frostc.Type
 uses org.frostlang.frostc.Variable
-uses org.frostlang.frostc.parser.Token
+uses org.frostlang.frostc.expression.Binary
 
 ================================================================================================
 An assignment target. It is crucial that when loading and then storing the lvalue, any side
@@ -31,7 +31,7 @@ interface LValue {
     method compile(compiler:Compiler, expr:ASTNode):LValue? {
         match expr {
             when ASTNode.BINARY(position, left, op, right) {
-                if op = Token.Kind.LBRACKET {
+                if op = Binary.Operator.INDEX {
                     def target := compiler.compileExpression(left)
                     if target == null {
                         return null

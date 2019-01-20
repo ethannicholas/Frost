@@ -24,6 +24,7 @@ interface ListWriter<T> : CollectionWriter<T> {
     @param index the location at which to insert
     @param value the new value
     ================================================================================================
+    @pre(index >= 0 & index <= count)
     method insert(index:Int, value:T)
 
     ================================================================================================

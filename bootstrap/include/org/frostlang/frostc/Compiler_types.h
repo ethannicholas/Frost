@@ -15,7 +15,7 @@ typedef struct org$frostlang$frostc$CodeGenerator org$frostlang$frostc$CodeGener
 typedef struct frost$threads$MessageQueue frost$threads$MessageQueue;
 #include "frost/core/Int64_types.h"
 #include "frost/core/Bit_types.h"
-typedef struct org$frostlang$frostc$IR$Value org$frostlang$frostc$IR$Value;
+typedef struct org$frostlang$frostc$Variable org$frostlang$frostc$Variable;
 #include "org/frostlang/frostc/IR/Block/ID_types.h"
 typedef struct frost$collections$IdentityMap frost$collections$IdentityMap;
 typedef struct frost$core$String frost$core$String;
@@ -45,8 +45,10 @@ typedef struct org$frostlang$frostc$Compiler {
     frost$core$Bit reportErrors;
     frost$collections$Array* pendingClasses;
     frost$core$Bit inAtPre;
-    org$frostlang$frostc$IR$Value* returnValue;
+    org$frostlang$frostc$Variable* returnVar;
     org$frostlang$frostc$IR$Block$ID$nullable atPreBlock;
+    org$frostlang$frostc$IR$Block$ID$nullable postconditionEntryBlock;
+    org$frostlang$frostc$IR$Block$ID$nullable postconditionCurrentBlock;
     frost$collections$Stack* captures;
     frost$core$Bit writeCode;
     frost$core$Bit inFieldCleanup;
@@ -55,6 +57,6 @@ typedef struct org$frostlang$frostc$Compiler {
     frost$collections$IdentityMap* lambdaTypes;
 } org$frostlang$frostc$Compiler;
 #include "frost/core/Class.h"
-typedef struct { frost$core$Class* cl; int32_t refCount; frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[149]; } org$frostlang$frostc$Compiler$class_type;
+typedef struct { frost$core$Class* cl; int32_t refCount; frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[150]; } org$frostlang$frostc$Compiler$class_type;
 extern org$frostlang$frostc$Compiler$class_type org$frostlang$frostc$Compiler$class;
 
