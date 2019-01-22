@@ -59,17 +59,11 @@ frost$core$String* $tmp22 = frost$core$String$$ADD$frost$core$Object$R$frost$cor
 frost$core$String* $tmp23 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp22, &$s24);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp23));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp23));
-// unreffing REF($14:frost.core.String)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp22));
-// unreffing REF($13:frost.core.String)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp18));
-// unreffing REF($9:frost.core.String)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp17));
-// unreffing REF($8:frost.core.String)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp13));
-// unreffing REF($4:frost.core.String)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp12));
-// unreffing REF($3:frost.core.String)
 return $tmp23;
 
 }

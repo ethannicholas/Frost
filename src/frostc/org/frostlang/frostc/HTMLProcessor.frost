@@ -52,7 +52,7 @@ class HTMLProcessor {
                         result.append("<span class=\"label\">")
                     }
                     otherwise {
-                        assert false
+                        unreachable
                     }
                 }
             }

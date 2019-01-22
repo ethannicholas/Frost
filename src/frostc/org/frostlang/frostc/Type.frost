@@ -10,7 +10,6 @@ class Type : Symbol, Key<Type> {
         VOID
         INT_LITERAL
         INVALID
-        UNRESOLVED
         BIT_LITERAL
         BUILTIN_BIT
         BUILTIN_FLOAT
@@ -120,22 +119,6 @@ class Type : Symbol, Key<Type> {
         super.init(Symbol.Kind.TYPE, position, name)
     }
 
-    init(subtypes:ListView<Type>) {
-        self.typeKind := Kind.UNRESOLVED
-        self.subtypes := FixedArray<Type>(subtypes)
-        def name := MutableString("unresolved<")
-        var separator := ""
-        self.resolved := true
-        for t in subtypes {
-            name.append(separator)
-            name.append(t)
-            separator := "|"
-            self.resolved &= t.resolved
-        }
-        name.append(">")
-        super.init(Symbol.Kind.TYPE, position, name.finish())
-    }
-
     init(param:ClassDecl.GenericParameter) {
         self.typeKind := Kind.GENERIC_CLASS_PARAMETER
         self.genericClassParameter := param
@@ -208,7 +191,7 @@ class Type : Symbol, Key<Type> {
                 name.append(")=&>*(")
             }
             otherwise {
-                assert false
+                unreachable
             }
         }
         subtypes.add(returnType)
@@ -661,6 +644,12 @@ class Type : Symbol, Key<Type> {
                 return self
             }
             return nullable()
+        }
+        if self = Invalid() {
+            return self
+        }
+        if other = Invalid() {
+            return self
         }
         if typeKind = Kind.INT_LITERAL & other.isNumber {
             return other

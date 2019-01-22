@@ -161,7 +161,6 @@ frost$core$Immutable* $tmp50 = $tmp42[$tmp49];
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp50));
 $tmp42[$tmp49] = ((frost$core$Immutable*) $tmp48);
 frost$core$Frost$unref$frost$core$Object$Q($tmp48);
-// unreffing REF($51:frost.collections.ListView.T)
 goto block3;
 block3:;
 frost$core$Int64 $tmp51 = *(&local0);
@@ -233,7 +232,6 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp87));
 frost$core$Class** $tmp88 = &((frost$core$Object*) param0)->$class;
 *$tmp88 = $tmp85;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp83));
-// unreffing REF($20:frost.collections.ImmutableArray<frost.collections.ImmutableArray.T>)
 // line 69
 frost$core$Int64 $tmp89 = (frost$core$Int64) {18446744073709551615};
 frost$core$Int64* $tmp90 = &param0->capacity;
@@ -421,7 +419,6 @@ frost$collections$ImmutableArray$ImmutableArrayIterator* $tmp184 = (frost$collec
 frost$collections$ImmutableArray$ImmutableArrayIterator$init$frost$collections$ImmutableArray$LTfrost$collections$ImmutableArray$ImmutableArrayIterator$T$GT($tmp184, param0);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$collections$Iterator*) $tmp184)));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp184));
-// unreffing REF($1:frost.collections.ImmutableArray.ImmutableArrayIterator<frost.collections.ImmutableArray.T>)
 return ((frost$collections$Iterator*) $tmp184);
 
 }
@@ -439,7 +436,6 @@ frost$core$MutableString* $tmp186 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp186));
 *(&local0) = $tmp185;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp185));
-// unreffing REF($1:frost.core.MutableString)
 // line 100
 frost$core$MutableString* $tmp187 = *(&local0);
 frost$core$MutableString$append$frost$core$String($tmp187, &$s188);
@@ -506,15 +502,12 @@ frost$core$MutableString$append$frost$core$String($tmp216, &$s217);
 goto block5;
 block5:;
 frost$core$Frost$unref$frost$core$Object$Q($tmp204);
-// unreffing REF($39:frost.collections.Iterator.T)
 frost$core$Immutable* $tmp218 = *(&local2);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp218));
-// unreffing v
 *(&local2) = ((frost$core$Immutable*) NULL);
 goto block1;
 block3:;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp195));
-// unreffing REF($28:frost.collections.Iterator<frost.collections.Iterable.T>)
 // line 112
 frost$core$MutableString* $tmp219 = *(&local0);
 frost$core$MutableString$append$frost$core$String($tmp219, &$s220);
@@ -523,14 +516,11 @@ frost$core$MutableString* $tmp221 = *(&local0);
 frost$core$String* $tmp222 = frost$core$MutableString$finish$R$frost$core$String($tmp221);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp222));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp222));
-// unreffing REF($91:frost.core.String)
 frost$core$String* $tmp223 = *(&local1);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp223));
-// unreffing separator
 *(&local1) = ((frost$core$String*) NULL);
 frost$core$MutableString* $tmp224 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp224));
-// unreffing result
 *(&local0) = ((frost$core$MutableString*) NULL);
 return $tmp222;
 

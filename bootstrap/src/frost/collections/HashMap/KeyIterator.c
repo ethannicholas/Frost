@@ -42,7 +42,6 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp4));
 frost$collections$HashMap$EntryIterator** $tmp5 = &param0->base;
 *$tmp5 = $tmp2;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp2));
-// unreffing REF($2:frost.collections.HashMap.EntryIterator<frost.collections.HashMap.KeyIterator.K, frost.collections.HashMap.KeyIterator.V>)
 return;
 
 }
@@ -81,7 +80,6 @@ frost$collections$Key** $tmp25 = &((frost$collections$HashMap$Entry*) $tmp24)->k
 frost$collections$Key* $tmp26 = *$tmp25;
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp26));
 frost$core$Frost$unref$frost$core$Object$Q($tmp24);
-// unreffing REF($15:frost.collections.Iterator.T)
 return $tmp26;
 
 }

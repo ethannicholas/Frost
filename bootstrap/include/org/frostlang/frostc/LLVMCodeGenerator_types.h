@@ -44,6 +44,6 @@ typedef struct org$frostlang$frostc$LLVMCodeGenerator {
     org$frostlang$frostc$IR* ir;
 } org$frostlang$frostc$LLVMCodeGenerator;
 #include "frost/core/Class.h"
-typedef struct { frost$core$Class* cl; int32_t refCount; frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[84]; } org$frostlang$frostc$LLVMCodeGenerator$class_type;
+typedef struct { frost$core$Class* cl; int32_t refCount; frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[85]; } org$frostlang$frostc$LLVMCodeGenerator$class_type;
 extern org$frostlang$frostc$LLVMCodeGenerator$class_type org$frostlang$frostc$LLVMCodeGenerator$class;
 

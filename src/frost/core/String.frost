@@ -134,7 +134,7 @@ class String : Immutable, Key<String>, Comparable<String>, Iterable<Char32>, For
 
         init(str:String) {
             self.str := str
-            assert false, "unimplemented"
+            unreachable, "unimplemented"
         }
 
         @override
@@ -438,7 +438,7 @@ class String : Immutable, Key<String>, Comparable<String>, Iterable<Char32>, For
                 return result.finish()
             }
             otherwise {
-                assert false
+                unreachable
             }
         }
     }

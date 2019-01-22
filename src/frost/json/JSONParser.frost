@@ -6,6 +6,8 @@ uses org.frostlang.json.Token
 ====================================================================================================
 Simple JSON parser. Note that this parser is incomplete - in particular it does not handle string
 escape sequences correctly.
+
+FIXME error handling
 ====================================================================================================
 class JSONParser {
     @private
@@ -86,7 +88,7 @@ class JSONParser {
                     continue
                 }
                 otherwise {
-                    assert false, "expected end of array"
+                    unreachable, "expected end of array"
                 }
             }
         }
@@ -102,7 +104,7 @@ class JSONParser {
             def key := string()
             def colon := next()
             if colon.kind != Token.Kind.COLON {
-                assert false, "expected ':'"
+                unreachable, "expected ':'"
             }
             result[key] := node()
             match next().kind {
@@ -113,7 +115,7 @@ class JSONParser {
                     continue
                 }
                 otherwise {
-                    assert false, "expected end of object"
+                    unreachable, "expected end of object"
                 }
             }
         }
@@ -123,7 +125,7 @@ class JSONParser {
     method string():String {
         def token := next()
         if token.kind != Token.Kind.STRING {
-            assert false, "expected string, but found '\{text(token)}'"
+            unreachable, "expected string, but found '\{text(token)}'"
         }
         def s := text(token)
         return s.substring(s.next(s.start) .. s.previous(s.end))
@@ -159,7 +161,7 @@ class JSONParser {
                 return JSON.NULL
             }
             otherwise {
-                assert false, "invalid node: '\{text(token)}'"
+                unreachable
             }
         }
     }

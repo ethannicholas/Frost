@@ -102,6 +102,7 @@ class PLex {
             token.printLine("when REGEX { return \"REGEX\" }")
             token.level -= 1
             token.printLine("}")
+            token.printLine("unreachable")
             token.level -= 1
             token.printLine("}")
             token.level -= 1

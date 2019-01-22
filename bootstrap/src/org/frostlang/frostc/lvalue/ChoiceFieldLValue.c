@@ -22,14 +22,12 @@ struct { frost$core$Class* cl; ITable* next; void* methods[3]; } org$frostlang$f
 static frost$core$String $s1;
 org$frostlang$frostc$lvalue$ChoiceFieldLValue$class_type org$frostlang$frostc$lvalue$ChoiceFieldLValue$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Object$class, (ITable*) &org$frostlang$frostc$lvalue$ChoiceFieldLValue$_org$frostlang$frostc$lvalue$LValue, { frost$core$Object$get_asString$R$frost$core$String, org$frostlang$frostc$lvalue$ChoiceFieldLValue$cleanup, org$frostlang$frostc$lvalue$ChoiceFieldLValue$type$R$org$frostlang$frostc$Type, org$frostlang$frostc$lvalue$ChoiceFieldLValue$compileLoad$R$org$frostlang$frostc$IR$Value$Q, org$frostlang$frostc$lvalue$ChoiceFieldLValue$compileStore$org$frostlang$frostc$IR$Value} };
 
-typedef org$frostlang$frostc$Type* (*$fn31)(org$frostlang$frostc$lvalue$ChoiceFieldLValue*);
-typedef org$frostlang$frostc$IR$Statement$ID (*$fn52)(org$frostlang$frostc$IR*, org$frostlang$frostc$IR$Statement*);
-typedef org$frostlang$frostc$IR$Statement$ID (*$fn73)(org$frostlang$frostc$IR*, org$frostlang$frostc$IR$Statement*);
+typedef org$frostlang$frostc$Type* (*$fn26)(org$frostlang$frostc$lvalue$ChoiceFieldLValue*);
+typedef org$frostlang$frostc$IR$Statement$ID (*$fn47)(org$frostlang$frostc$IR*, org$frostlang$frostc$IR$Statement*);
+typedef org$frostlang$frostc$IR$Statement$ID (*$fn68)(org$frostlang$frostc$IR*, org$frostlang$frostc$IR$Statement*);
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x6c\x76\x61\x6c\x75\x65\x2e\x43\x68\x6f\x69\x63\x65\x46\x69\x65\x6c\x64\x4c\x56\x61\x6c\x75\x65", 45, 8958090540298926135, NULL };
 static frost$core$String $s22 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x43\x68\x6f\x69\x63\x65\x46\x69\x65\x6c\x64\x4c\x56\x61\x6c\x75\x65\x2e\x66\x72\x6f\x73\x74", 23, -6371488786330827919, NULL };
-static frost$core$String $s26 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x43\x68\x6f\x69\x63\x65\x46\x69\x65\x6c\x64\x4c\x56\x61\x6c\x75\x65\x2e\x66\x72\x6f\x73\x74", 23, -6371488786330827919, NULL };
-static frost$core$String $s27 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x6d\x65\x74\x68\x6f\x64\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x6c\x76\x61\x6c\x75\x65\x2e\x43\x68\x6f\x69\x63\x65\x46\x69\x65\x6c\x64\x4c\x56\x61\x6c\x75\x65\x2e\x63\x6f\x6d\x70\x69\x6c\x65\x4c\x6f\x61\x64\x28\x29\x3a\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x49\x52\x2e\x56\x61\x6c\x75\x65\x3f\x20\x65\x78\x69\x74\x65\x64\x20\x77\x69\x74\x68\x6f\x75\x74\x20\x72\x65\x74\x75\x72\x6e\x69\x6e\x67", 122, -7970821627380944973, NULL };
 
 void org$frostlang$frostc$lvalue$ChoiceFieldLValue$init$org$frostlang$frostc$Compiler$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Value$org$frostlang$frostc$ChoiceCase$frost$core$Int64(org$frostlang$frostc$lvalue$ChoiceFieldLValue* param0, org$frostlang$frostc$Compiler* param1, org$frostlang$frostc$Position param2, org$frostlang$frostc$IR$Value* param3, org$frostlang$frostc$ChoiceCase* param4, frost$core$Int64 param5) {
 
@@ -72,7 +70,6 @@ frost$core$Int64 $tmp17 = *$tmp16;
 frost$core$Object* $tmp18 = frost$collections$Array$$IDX$frost$core$Int64$R$frost$collections$Array$T($tmp15, $tmp17);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((org$frostlang$frostc$Type*) $tmp18)));
 frost$core$Frost$unref$frost$core$Object$Q($tmp18);
-// unreffing REF($8:frost.collections.Array.T)
 return ((org$frostlang$frostc$Type*) $tmp18);
 
 }
@@ -87,87 +84,80 @@ frost$core$Int64 $tmp21 = (frost$core$Int64) {35};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s22, $tmp21);
 abort(); // unreachable
 block1:;
-frost$core$Bit $tmp23 = frost$core$Bit$init$builtin_bit(false);
-bool $tmp24 = $tmp23.value;
-if ($tmp24) goto block3; else goto block4;
-block4:;
-frost$core$Int64 $tmp25 = (frost$core$Int64) {34};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s26, $tmp25, &$s27);
-abort(); // unreachable
+// line 36
+goto block3;
 block3:;
-abort(); // unreachable
+goto block3;
+block4:;
+goto block5;
+block5:;
 
 }
 void org$frostlang$frostc$lvalue$ChoiceFieldLValue$compileStore$org$frostlang$frostc$IR$Value(org$frostlang$frostc$lvalue$ChoiceFieldLValue* param0, org$frostlang$frostc$IR$Value* param1) {
 
 org$frostlang$frostc$IR$Statement$ID local0;
-// line 40
-org$frostlang$frostc$Compiler** $tmp28 = &param0->compiler;
-org$frostlang$frostc$Compiler* $tmp29 = *$tmp28;
-$fn31 $tmp30 = ($fn31) param0->$class->vtable[2];
-org$frostlang$frostc$Type* $tmp32 = $tmp30(param0);
-frost$core$Bit $tmp33 = org$frostlang$frostc$Compiler$isRefCounted$org$frostlang$frostc$Type$R$frost$core$Bit($tmp29, $tmp32);
-bool $tmp34 = $tmp33.value;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp32));
-// unreffing REF($4:org.frostlang.frostc.Type)
-if ($tmp34) goto block1; else goto block2;
-block1:;
 // line 41
-org$frostlang$frostc$Compiler** $tmp35 = &param0->compiler;
-org$frostlang$frostc$Compiler* $tmp36 = *$tmp35;
-org$frostlang$frostc$Compiler$compileRef$org$frostlang$frostc$IR$Value($tmp36, param1);
+org$frostlang$frostc$Compiler** $tmp23 = &param0->compiler;
+org$frostlang$frostc$Compiler* $tmp24 = *$tmp23;
+$fn26 $tmp25 = ($fn26) param0->$class->vtable[2];
+org$frostlang$frostc$Type* $tmp27 = $tmp25(param0);
+frost$core$Bit $tmp28 = org$frostlang$frostc$Compiler$isRefCounted$org$frostlang$frostc$Type$R$frost$core$Bit($tmp24, $tmp27);
+bool $tmp29 = $tmp28.value;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp27));
+if ($tmp29) goto block1; else goto block2;
+block1:;
+// line 42
+org$frostlang$frostc$Compiler** $tmp30 = &param0->compiler;
+org$frostlang$frostc$Compiler* $tmp31 = *$tmp30;
+org$frostlang$frostc$Compiler$compileRef$org$frostlang$frostc$IR$Value($tmp31, param1);
 goto block2;
 block2:;
-// line 43
-org$frostlang$frostc$Compiler** $tmp37 = &param0->compiler;
-org$frostlang$frostc$Compiler* $tmp38 = *$tmp37;
-org$frostlang$frostc$IR** $tmp39 = &$tmp38->ir;
-org$frostlang$frostc$IR* $tmp40 = *$tmp39;
-org$frostlang$frostc$IR$Statement* $tmp41 = (org$frostlang$frostc$IR$Statement*) frostObjectAlloc(72, (frost$core$Class*) &org$frostlang$frostc$IR$Statement$class);
-frost$core$Int64 $tmp42 = (frost$core$Int64) {4};
-org$frostlang$frostc$Position* $tmp43 = &param0->position;
-org$frostlang$frostc$Position $tmp44 = *$tmp43;
-org$frostlang$frostc$IR$Value** $tmp45 = &param0->target;
-org$frostlang$frostc$IR$Value* $tmp46 = *$tmp45;
-org$frostlang$frostc$ChoiceCase** $tmp47 = &param0->choiceCase;
-org$frostlang$frostc$ChoiceCase* $tmp48 = *$tmp47;
-frost$core$Int64* $tmp49 = &param0->index;
-frost$core$Int64 $tmp50 = *$tmp49;
-org$frostlang$frostc$IR$Statement$init$frost$core$Int64$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Value$org$frostlang$frostc$ChoiceCase$frost$core$Int64($tmp41, $tmp42, $tmp44, $tmp46, $tmp48, $tmp50);
-$fn52 $tmp51 = ($fn52) $tmp40->$class->vtable[2];
-org$frostlang$frostc$IR$Statement$ID $tmp53 = $tmp51($tmp40, $tmp41);
-*(&local0) = $tmp53;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp41));
-// unreffing REF($21:org.frostlang.frostc.IR.Statement)
-// line 45
-org$frostlang$frostc$Compiler** $tmp54 = &param0->compiler;
-org$frostlang$frostc$Compiler* $tmp55 = *$tmp54;
-org$frostlang$frostc$IR** $tmp56 = &$tmp55->ir;
-org$frostlang$frostc$IR* $tmp57 = *$tmp56;
-org$frostlang$frostc$IR$Statement* $tmp58 = (org$frostlang$frostc$IR$Statement*) frostObjectAlloc(72, (frost$core$Class*) &org$frostlang$frostc$IR$Statement$class);
-frost$core$Int64 $tmp59 = (frost$core$Int64) {26};
-org$frostlang$frostc$Position* $tmp60 = &param0->position;
-org$frostlang$frostc$Position $tmp61 = *$tmp60;
-org$frostlang$frostc$IR$Value* $tmp62 = (org$frostlang$frostc$IR$Value*) frostObjectAlloc(48, (frost$core$Class*) &org$frostlang$frostc$IR$Value$class);
-frost$core$Int64 $tmp63 = (frost$core$Int64) {7};
-org$frostlang$frostc$IR$Statement$ID $tmp64 = *(&local0);
-org$frostlang$frostc$ChoiceCase** $tmp65 = &param0->choiceCase;
-org$frostlang$frostc$ChoiceCase* $tmp66 = *$tmp65;
-frost$collections$Array** $tmp67 = &$tmp66->fields;
-frost$collections$Array* $tmp68 = *$tmp67;
-frost$core$Int64* $tmp69 = &param0->index;
-frost$core$Int64 $tmp70 = *$tmp69;
-frost$core$Object* $tmp71 = frost$collections$Array$$IDX$frost$core$Int64$R$frost$collections$Array$T($tmp68, $tmp70);
-org$frostlang$frostc$IR$Value$init$frost$core$Int64$org$frostlang$frostc$IR$Statement$ID$org$frostlang$frostc$Type($tmp62, $tmp63, $tmp64, ((org$frostlang$frostc$Type*) $tmp71));
-org$frostlang$frostc$IR$Statement$init$frost$core$Int64$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Value$org$frostlang$frostc$IR$Value($tmp58, $tmp59, $tmp61, param1, $tmp62);
-$fn73 $tmp72 = ($fn73) $tmp57->$class->vtable[2];
-org$frostlang$frostc$IR$Statement$ID $tmp74 = $tmp72($tmp57, $tmp58);
-frost$core$Frost$unref$frost$core$Object$Q($tmp71);
-// unreffing REF($57:frost.collections.Array.T)
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp62));
-// unreffing REF($47:org.frostlang.frostc.IR.Value)
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp58));
-// unreffing REF($43:org.frostlang.frostc.IR.Statement)
+// line 44
+org$frostlang$frostc$Compiler** $tmp32 = &param0->compiler;
+org$frostlang$frostc$Compiler* $tmp33 = *$tmp32;
+org$frostlang$frostc$IR** $tmp34 = &$tmp33->ir;
+org$frostlang$frostc$IR* $tmp35 = *$tmp34;
+org$frostlang$frostc$IR$Statement* $tmp36 = (org$frostlang$frostc$IR$Statement*) frostObjectAlloc(72, (frost$core$Class*) &org$frostlang$frostc$IR$Statement$class);
+frost$core$Int64 $tmp37 = (frost$core$Int64) {4};
+org$frostlang$frostc$Position* $tmp38 = &param0->position;
+org$frostlang$frostc$Position $tmp39 = *$tmp38;
+org$frostlang$frostc$IR$Value** $tmp40 = &param0->target;
+org$frostlang$frostc$IR$Value* $tmp41 = *$tmp40;
+org$frostlang$frostc$ChoiceCase** $tmp42 = &param0->choiceCase;
+org$frostlang$frostc$ChoiceCase* $tmp43 = *$tmp42;
+frost$core$Int64* $tmp44 = &param0->index;
+frost$core$Int64 $tmp45 = *$tmp44;
+org$frostlang$frostc$IR$Statement$init$frost$core$Int64$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Value$org$frostlang$frostc$ChoiceCase$frost$core$Int64($tmp36, $tmp37, $tmp39, $tmp41, $tmp43, $tmp45);
+$fn47 $tmp46 = ($fn47) $tmp35->$class->vtable[2];
+org$frostlang$frostc$IR$Statement$ID $tmp48 = $tmp46($tmp35, $tmp36);
+*(&local0) = $tmp48;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp36));
+// line 46
+org$frostlang$frostc$Compiler** $tmp49 = &param0->compiler;
+org$frostlang$frostc$Compiler* $tmp50 = *$tmp49;
+org$frostlang$frostc$IR** $tmp51 = &$tmp50->ir;
+org$frostlang$frostc$IR* $tmp52 = *$tmp51;
+org$frostlang$frostc$IR$Statement* $tmp53 = (org$frostlang$frostc$IR$Statement*) frostObjectAlloc(72, (frost$core$Class*) &org$frostlang$frostc$IR$Statement$class);
+frost$core$Int64 $tmp54 = (frost$core$Int64) {27};
+org$frostlang$frostc$Position* $tmp55 = &param0->position;
+org$frostlang$frostc$Position $tmp56 = *$tmp55;
+org$frostlang$frostc$IR$Value* $tmp57 = (org$frostlang$frostc$IR$Value*) frostObjectAlloc(48, (frost$core$Class*) &org$frostlang$frostc$IR$Value$class);
+frost$core$Int64 $tmp58 = (frost$core$Int64) {7};
+org$frostlang$frostc$IR$Statement$ID $tmp59 = *(&local0);
+org$frostlang$frostc$ChoiceCase** $tmp60 = &param0->choiceCase;
+org$frostlang$frostc$ChoiceCase* $tmp61 = *$tmp60;
+frost$collections$Array** $tmp62 = &$tmp61->fields;
+frost$collections$Array* $tmp63 = *$tmp62;
+frost$core$Int64* $tmp64 = &param0->index;
+frost$core$Int64 $tmp65 = *$tmp64;
+frost$core$Object* $tmp66 = frost$collections$Array$$IDX$frost$core$Int64$R$frost$collections$Array$T($tmp63, $tmp65);
+org$frostlang$frostc$IR$Value$init$frost$core$Int64$org$frostlang$frostc$IR$Statement$ID$org$frostlang$frostc$Type($tmp57, $tmp58, $tmp59, ((org$frostlang$frostc$Type*) $tmp66));
+org$frostlang$frostc$IR$Statement$init$frost$core$Int64$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Value$org$frostlang$frostc$IR$Value($tmp53, $tmp54, $tmp56, param1, $tmp57);
+$fn68 $tmp67 = ($fn68) $tmp52->$class->vtable[2];
+org$frostlang$frostc$IR$Statement$ID $tmp69 = $tmp67($tmp52, $tmp53);
+frost$core$Frost$unref$frost$core$Object$Q($tmp66);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp57));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp53));
 return;
 
 }
@@ -175,15 +165,15 @@ void org$frostlang$frostc$lvalue$ChoiceFieldLValue$cleanup(org$frostlang$frostc$
 
 // line 9
 frost$core$Object$cleanup(((frost$core$Object*) param0));
-org$frostlang$frostc$Compiler** $tmp75 = &param0->compiler;
-org$frostlang$frostc$Compiler* $tmp76 = *$tmp75;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp76));
-org$frostlang$frostc$IR$Value** $tmp77 = &param0->target;
-org$frostlang$frostc$IR$Value* $tmp78 = *$tmp77;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp78));
-org$frostlang$frostc$ChoiceCase** $tmp79 = &param0->choiceCase;
-org$frostlang$frostc$ChoiceCase* $tmp80 = *$tmp79;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp80));
+org$frostlang$frostc$Compiler** $tmp70 = &param0->compiler;
+org$frostlang$frostc$Compiler* $tmp71 = *$tmp70;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp71));
+org$frostlang$frostc$IR$Value** $tmp72 = &param0->target;
+org$frostlang$frostc$IR$Value* $tmp73 = *$tmp72;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp73));
+org$frostlang$frostc$ChoiceCase** $tmp74 = &param0->choiceCase;
+org$frostlang$frostc$ChoiceCase* $tmp75 = *$tmp74;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp75));
 return;
 
 }

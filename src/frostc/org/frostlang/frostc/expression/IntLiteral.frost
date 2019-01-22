@@ -12,7 +12,7 @@ class IntLiteral {
     method compile(compiler:Compiler, position:Position, value:UInt64,
             type:TypeContext):IR.Value? {
         match type {
-            when TypeContext.TYPE(t) {
+            when TypeContext.TYPE(t, _) {
                 if t.typeKind = Type.Kind.BUILTIN_INT | t.typeKind = Type.Kind.BUILTIN_UINT {
                     return IR.Value.INT(value, t)
                 }
@@ -26,6 +26,6 @@ class IntLiteral {
             }
         }
         return compiler.coerce(position, compile(compiler, position, value,
-                TypeContext.TYPE(Type.Int64())), type)
+                TypeContext.TYPE(Type.Int64(), false)), type)
     }
 }

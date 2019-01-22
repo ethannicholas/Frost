@@ -200,6 +200,7 @@ class MethodDecl : Symbol {
                 return("\{owner.name}.\{signature}")
             }
         }
+        unreachable
     }
 
     @override

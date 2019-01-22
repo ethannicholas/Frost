@@ -26,6 +26,10 @@ class HashSet<T:Key<T>> : Collection<T> {
         }
     }
 
+    method remove(value:T) {
+        contents.remove(value)
+    }
+
     @override
     function get_count():Int {
         return contents.count

@@ -2,6 +2,9 @@ package frost.core
 
 @final
 class Bit : Value, Key<Bit>, Formattable {
+    @private
+    def value:builtin_bit
+
     @implicit
     init(value:builtin_bit) {
         self.value := value
@@ -76,7 +79,4 @@ class Bit : Value, Key<Bit>, Formattable {
         }
         return s[1]
     }
-
-    @private
-    def value:builtin_bit
 }

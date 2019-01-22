@@ -122,7 +122,6 @@ frost$core$String* $tmp37 = *$tmp36;
 frost$core$String$UTF8Iterator$init$frost$core$String($tmp35, $tmp37);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$collections$Iterator*) $tmp35)));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp35));
-// unreffing REF($1:frost.core.String.UTF8Iterator)
 return ((frost$collections$Iterator*) $tmp35);
 
 }

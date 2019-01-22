@@ -39,6 +39,7 @@ method recursiveDelete(root:File, currentPath:File):Error? {
             System.exit(1)
         }
         currentPath.delete()
+        return null
     }
     fail(error) {
         return error
@@ -84,6 +85,7 @@ method addTableOfContentsToTree(toc:String, path:File, level:Int):Error? {
             path.write(path.readFully().replace(/<!--TOCBEGIN-->.*<!--TOCEND-->/,
                     "<!--TOCBEGIN-->\{finalToc}<!--TOCEND-->"))
         }
+        return null
     }
     fail(error) {
         return error
@@ -97,6 +99,7 @@ method addTableOfContents(tocFile:File, tree:File, apiRelativePath:String):Error
         args.add(tocFile.path)
         def p := System.exec("xsltproc", args)
         addTableOfContentsToTree(p.standardOutput().readFully(), tree, -1)
+        return null
     }
     fail(error) {
         return error

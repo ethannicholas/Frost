@@ -20,17 +20,17 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 
 void org$frostlang$frostc$Compiler$ErrorMsg$init$frost$io$File$org$frostlang$frostc$Position$frost$core$String(org$frostlang$frostc$Compiler$ErrorMsg* param0, frost$io$File* param1, org$frostlang$frostc$Position param2, frost$core$String* param3) {
 
-// line 72
+// line 73
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
 frost$io$File** $tmp2 = &param0->file;
 frost$io$File* $tmp3 = *$tmp2;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp3));
 frost$io$File** $tmp4 = &param0->file;
 *$tmp4 = param1;
-// line 73
+// line 74
 org$frostlang$frostc$Position* $tmp5 = &param0->position;
 *$tmp5 = param2;
-// line 74
+// line 75
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param3));
 frost$core$String** $tmp6 = &param0->message;
 frost$core$String* $tmp7 = *$tmp6;
@@ -42,7 +42,7 @@ return;
 }
 void org$frostlang$frostc$Compiler$ErrorMsg$cleanup(org$frostlang$frostc$Compiler$ErrorMsg* param0) {
 
-// line 64
+// line 65
 frost$core$Immutable$cleanup(((frost$core$Immutable*) param0));
 frost$io$File** $tmp9 = &param0->file;
 frost$io$File* $tmp10 = *$tmp9;

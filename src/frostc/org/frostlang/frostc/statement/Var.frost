@@ -16,7 +16,7 @@ class Var {
                     compiler.compileDeclaration(position, target, rawValue, kind)
                 }
                 otherwise {
-                    assert false
+                    unreachable
                 }
             }
         }

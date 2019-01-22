@@ -60,7 +60,6 @@ frost$core$MutableString* $tmp9 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp9));
 *(&local0) = $tmp8;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp8));
-// unreffing REF($1:frost.core.MutableString)
 // line 52
 frost$core$Int64 $tmp10 = param0.start;
 frost$core$Bit $tmp11 = frost$core$Bit$init$builtin_bit(true);
@@ -75,7 +74,6 @@ $tmp15 = (frost$core$Int64$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &f
 $tmp15->value = $tmp14;
 frost$core$MutableString$append$frost$core$Object($tmp13, ((frost$core$Object*) $tmp15));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp15));
-// unreffing REF($21:frost.core.Object)
 goto block2;
 block2:;
 // line 55
@@ -108,7 +106,6 @@ $tmp27 = (frost$core$Int64$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &f
 $tmp27->value = $tmp26;
 frost$core$MutableString$append$frost$core$Object($tmp25, ((frost$core$Object*) $tmp27));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp27));
-// unreffing REF($48:frost.core.Object)
 goto block7;
 block7:;
 // line 64
@@ -122,16 +119,13 @@ $tmp32 = (frost$core$Int64$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &f
 $tmp32->value = $tmp31;
 frost$core$MutableString$append$frost$core$Object($tmp30, ((frost$core$Object*) $tmp32));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp32));
-// unreffing REF($60:frost.core.Object)
 // line 66
 frost$core$MutableString* $tmp33 = *(&local0);
 frost$core$String* $tmp34 = frost$core$MutableString$finish$R$frost$core$String($tmp33);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp34));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp34));
-// unreffing REF($67:frost.core.String)
 frost$core$MutableString* $tmp35 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp35));
-// unreffing result
 *(&local0) = ((frost$core$MutableString*) NULL);
 return $tmp34;
 

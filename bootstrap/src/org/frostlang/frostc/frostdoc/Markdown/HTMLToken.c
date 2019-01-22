@@ -50,7 +50,6 @@ frost$core$String* $tmp10 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp10));
 frost$core$String* $tmp11 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp11));
-// unreffing _f0
 *(&local0) = ((frost$core$String*) NULL);
 goto block1;
 block3:;
@@ -71,7 +70,6 @@ frost$core$String* $tmp18 = *(&local1);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp18));
 frost$core$String* $tmp19 = *(&local1);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp19));
-// unreffing _f0
 *(&local1) = ((frost$core$String*) NULL);
 goto block1;
 block1:;

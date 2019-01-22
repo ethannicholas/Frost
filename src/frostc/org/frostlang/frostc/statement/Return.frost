@@ -56,7 +56,7 @@ class Return {
                 return
             }
             def compiled := compiler.compileExpression(value,
-                    TypeContext.TYPE(currentMethod.returnType))
+                    TypeContext.TYPE(currentMethod.returnType, false))
             if compiled == null {
                 return
             }

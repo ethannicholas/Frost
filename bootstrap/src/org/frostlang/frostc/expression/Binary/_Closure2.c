@@ -17,7 +17,7 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 
 void org$frostlang$frostc$expression$Binary$_Closure2$init$org$frostlang$frostc$Type(org$frostlang$frostc$expression$Binary$_Closure2* param0, org$frostlang$frostc$Type* param1) {
 
-// line 214
+// line 215
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
 org$frostlang$frostc$Type** $tmp2 = &param0->left;
 org$frostlang$frostc$Type* $tmp3 = *$tmp2;
@@ -29,7 +29,7 @@ return;
 }
 void org$frostlang$frostc$expression$Binary$_Closure2$cleanup(org$frostlang$frostc$expression$Binary$_Closure2* param0) {
 
-// line 214
+// line 215
 frost$core$Object$cleanup(((frost$core$Object*) param0));
 org$frostlang$frostc$Type** $tmp5 = &param0->left;
 org$frostlang$frostc$Type* $tmp6 = *$tmp5;
@@ -39,7 +39,7 @@ return;
 }
 frost$core$Bit org$frostlang$frostc$expression$Binary$_Closure2$$anonymous1$org$frostlang$frostc$MethodDecl$R$frost$core$Bit(org$frostlang$frostc$expression$Binary$_Closure2* param0, org$frostlang$frostc$MethodDecl* param1) {
 
-// line 214
+// line 215
 org$frostlang$frostc$Annotations** $tmp7 = &param1->annotations;
 org$frostlang$frostc$Annotations* $tmp8 = *$tmp7;
 frost$core$Bit $tmp9 = org$frostlang$frostc$Annotations$get_isClass$R$frost$core$Bit($tmp8);

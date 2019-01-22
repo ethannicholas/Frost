@@ -28,6 +28,6 @@ typedef struct org$frostlang$frostc$parser$Parser {
     org$frostlang$frostc$parser$SyntaxHighlighter* syntaxHighlighter;
 } org$frostlang$frostc$parser$Parser;
 #include "frost/core/Class.h"
-typedef struct { frost$core$Class* cl; int32_t refCount; frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[84]; } org$frostlang$frostc$parser$Parser$class_type;
+typedef struct { frost$core$Class* cl; int32_t refCount; frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[85]; } org$frostlang$frostc$parser$Parser$class_type;
 extern org$frostlang$frostc$parser$Parser$class_type org$frostlang$frostc$parser$Parser$class;
 

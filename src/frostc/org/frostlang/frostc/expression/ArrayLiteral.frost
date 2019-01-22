@@ -15,7 +15,7 @@ class ArrayLiteral {
             type:TypeContext):IR.Value?  {
         var listType:Pair<Bit, Type>?
         match type {
-            when TypeContext.TYPE(t) {
+            when TypeContext.TYPE(t, _) {
                 listType := compiler.getListType(t)
                 if listType == null {
                     -- it's going to cause an error no matter what we do, so let's just go with the

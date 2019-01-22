@@ -63,7 +63,6 @@ frost$core$String* $tmp17 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp17));
 *(&local0) = $tmp16;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp16));
-// unreffing REF($15:frost.core.String)
 goto block2;
 block3:;
 // line 1
@@ -93,7 +92,6 @@ frost$core$String* $tmp30 = *(&local1);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp30));
 *(&local1) = $tmp29;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp29));
-// unreffing REF($50:frost.core.String)
 goto block5;
 block6:;
 // line 1
@@ -113,20 +111,14 @@ frost$core$String* $tmp40 = frost$core$String$$ADD$frost$core$String$R$frost$cor
 frost$core$String* $tmp41 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp40, &$s42);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp41));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp41));
-// unreffing REF($76:frost.core.String)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp40));
-// unreffing REF($75:frost.core.String)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp37));
-// unreffing REF($73:frost.core.String)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp35));
-// unreffing REF($72:frost.core.String)
 frost$core$String* $tmp43 = *(&local1);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp43));
-// unreffing secondString
 *(&local1) = ((frost$core$String*) NULL);
 frost$core$String* $tmp44 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp44));
-// unreffing firstString
 *(&local0) = ((frost$core$String*) NULL);
 return $tmp41;
 

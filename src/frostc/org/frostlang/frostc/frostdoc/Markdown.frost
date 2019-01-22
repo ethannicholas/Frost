@@ -548,7 +548,7 @@ class Markdown {
                         result.append("<span class=\"label\">")
                     }
                     otherwise {
-                        assert false
+                        unreachable
                     }
                 }
             }
@@ -991,7 +991,7 @@ class Markdown {
                         Console.errorStream().printLine("error: unable to resolve link '\{url}'")
                     }
                     fail(error) {
-                        assert false
+                        unreachable
                     }
                     newURL := "(error)"
                 }

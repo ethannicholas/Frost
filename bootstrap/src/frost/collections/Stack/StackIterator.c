@@ -85,7 +85,6 @@ frost$core$Object* $tmp30 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q($tmp30);
 *(&local0) = $tmp29;
 frost$core$Frost$unref$frost$core$Object$Q($tmp29);
-// unreffing REF($17:frost.collections.Stack.T)
 // line 28
 frost$core$Int64* $tmp31 = &param0->index;
 frost$core$Int64 $tmp32 = *$tmp31;
@@ -101,7 +100,6 @@ frost$core$Object* $tmp39 = *(&local0);
 frost$core$Frost$ref$frost$core$Object$Q($tmp39);
 frost$core$Object* $tmp40 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q($tmp40);
-// unreffing result
 *(&local0) = ((frost$core$Object*) NULL);
 return $tmp39;
 

@@ -25,7 +25,7 @@ class Unary {
                 when Token.Kind.SUB         { return NEGATE }
                 when Token.Kind.NOT         { return NOT }
                 when Token.Kind.BITWISENOT  { return BITWISENOT }
-                otherwise                   { assert false, "not a unary operator: \{op}" }
+                otherwise                   { unreachable, "not a unary operator: \{op}"}
             }        
         }
 
@@ -35,7 +35,7 @@ class Unary {
                 when NOT        { return "!" }
                 when BITWISENOT { return "!!" }
                 when NEGATE     { return "-" }
-                otherwise       { assert false }
+                otherwise       { unreachable }
             }
         }
     }
@@ -49,7 +49,7 @@ class Unary {
                 match operand {
                     when ASTNode.INT(_, value) {
                         match type {
-                            when TypeContext.TYPE(t) {
+                            when TypeContext.TYPE(t, _) {
                                 if t.typeKind = Type.Kind.BUILTIN_INT |
                                         t.typeKind = Type.Kind.BUILTIN_UINT {
                                     return IR.Value.INT(-value, t)
@@ -97,6 +97,6 @@ class Unary {
                 return Call.compile(compiler, position, target, "!!", [], type)
             }
         }
-        assert false
+        unreachable
     }
 }

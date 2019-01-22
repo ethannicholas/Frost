@@ -15,7 +15,7 @@ class Break {
                     compiler.ir.add(IR.Statement.BRANCH(position, breakTarget))
                 }
                 otherwise {
-                    assert false
+                    unreachable
                 }
             }
         }

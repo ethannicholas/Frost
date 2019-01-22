@@ -61,7 +61,6 @@ frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s22, $tmp
 abort(); // unreachable
 block1:;
 frost$core$Frost$unref$frost$core$Object$Q($tmp15);
-// unreffing REF($7:frost.collections.Stack.T)
 // line 34
 org$frostlang$frostc$CCodeGenerator** $tmp23 = &param0->cg;
 org$frostlang$frostc$CCodeGenerator* $tmp24 = *$tmp23;
@@ -69,7 +68,6 @@ frost$collections$Stack** $tmp25 = &$tmp24->enclosingContexts;
 frost$collections$Stack* $tmp26 = *$tmp25;
 frost$core$Object* $tmp27 = frost$collections$Stack$pop$R$frost$collections$Stack$T($tmp26);
 frost$core$Frost$unref$frost$core$Object$Q($tmp27);
-// unreffing REF($27:frost.collections.Stack.T)
 // line 32
 frost$core$Object$cleanup(((frost$core$Object*) param0));
 org$frostlang$frostc$CCodeGenerator** $tmp28 = &param0->cg;

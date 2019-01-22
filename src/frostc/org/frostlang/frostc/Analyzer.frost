@@ -1,0 +1,280 @@
+package org.frostlang.frostc
+
+class Analyzer {
+    def compiler:Compiler
+
+    def m:MethodDecl
+
+    def ir:IR
+
+    def predecessors := HashMap<IR.Block.ID, HashSet<IR.Block.ID>>()
+
+    class State {
+        def locals:Array<Type>
+
+        def statements:HashMap<IR.Statement.ID, Type>
+
+        init() {
+            locals := Array<Type>()
+            statements := HashMap<IR.Statement.ID, Type>()
+        }
+
+        init(src:State) {
+            locals := Array<Type>(src.locals)
+            statements := HashMap<IR.Statement.ID, Type>(src.statements)
+        }
+
+        method add(compiler:Compiler, s:State):Bit {
+            var modified := false
+            assert locals.count = s.locals.count
+            for i in 0 .. locals.count {
+                def union := locals[i].union(compiler, s.locals[i])
+                if union != locals[i] {
+                    modified := true
+                    locals[i] := union
+                }
+            }
+            for key in s.statements.keys {
+                var mine := statements[key]
+                if mine == null {
+                    mine := Type.Invalid()
+                }
+                var other := s.statements[key]
+                if other == null {
+                    other := Type.Invalid()
+                }
+                def union := mine.union(compiler, other)
+                if union != mine {
+                    modified := true
+                    statements[key] := union
+                }
+            }
+            return modified
+        }
+
+        @override
+        function get_asString():String {
+            return "State(\{locals}, \{statements})"
+        }
+    }
+
+    def entryStates := HashMap<IR.Block.ID, State>()
+
+    def worklist := HashSet<IR.Block.ID>()
+
+    init(compiler:Compiler, m:MethodDecl, ir:IR) {
+        self.compiler := compiler
+        self.m := m
+        self.ir := ir
+    }
+
+    function getType(v:IR.Value, s:State):Type {
+        match v {
+            when IR.Value.LOCAL(slot, _) {
+                if slot > s.locals.count {
+                    Console.printLine("ERROR: getting \{slot} from \{ir}")
+                }
+                return s.locals[slot]
+            }
+            when IR.Value.INT(_, type) {
+                return type
+            }
+            when IR.Value.NULL(type) {
+                return type
+            }
+            when IR.Value.PARAMETER(_, type) {
+                return type
+            }
+            when IR.Value.REAL(_, type) {
+                return type
+            }
+            when IR.Value.REF(statement, _) {
+                def result := s.statements[statement]
+                if result !== null {
+                    return result
+                }
+                return Type.Invalid()
+            }
+            when IR.Value.STRING {
+                return Type.StringType()
+            }
+            otherwise {
+                unreachable
+            }
+        }
+    }
+
+    method propagate(src:IR.Block.ID, target:IR.Block.ID) {
+        var preds := predecessors[target]
+        if preds == null {
+            preds := HashSet<IR.Block.ID>()
+            predecessors[target] := preds
+        }
+        preds.add(src)
+        var updated := false
+        def predIterator := preds.iterator
+        var entry := entryStates[target]
+        if entry == null {
+            entry := computeExitState(predIterator.next(), false)
+            entryStates[target] := entry
+            updated := true
+        }
+        for pred in predIterator {
+            updated |= entry.add(compiler, computeExitState(pred, false))
+        }
+        if updated {
+            worklist.add(target)
+        }
+    }
+
+    function getBlock(id:IR.Block.ID):IR.Block {
+        for b in ir.blocks {
+            if b.id = id {
+                return b
+            }
+        }
+        unreachable
+    }
+
+    method computeExitState(id:IR.Block.ID, reportErrors:Bit):State {
+        def result := State(entryStates[id])
+        def block := getBlock(id)
+        for i in 0 .. block.statements.count - 1 {
+            def id := block.ids[i]
+            match block.statements[i] {
+                when IR.Statement.BINARY(_, _, _, _, type) {
+                    result.statements[id] := type
+                }
+                when IR.Statement.CAST(position, value, type, explicit) {
+                    if explicit {
+                        result.statements[id] := type
+                    }
+                    else {
+                        result.statements[id] := getType(value, result)
+                    }
+                    if !explicit & reportErrors {
+                        if !type.isNullable & getType(value, result).isNullable {
+--                            Console.printLine("cast failure at \{position}")
+                        }
+                    }
+                }
+                when IR.Statement.CONSTRUCT(_, cl) {
+                    result.statements[id] := cl.type
+                }
+                when IR.Statement.DYNAMIC_CALL(_, m, _) {
+                    def type := m.type()
+                    if type.isPointer {
+                        result.statements[id] := type.subtypes[1].returnType
+                    }
+                    else {
+                        result.statements[id] := type.returnType
+                    }
+                }
+                when IR.Statement.EXTRACT_FIELD(_, _, f) {
+                    result.statements[id] := f.type
+                }
+                when IR.Statement.GET_FIELD_POINTER(_, _, f) {
+                    result.statements[id] := f.type
+                }
+                when IR.Statement.LOAD(position, v) {
+                    def type := getType(v, result)
+                    result.statements[id] := type
+                    if reportErrors & type = Type.Invalid() {
+                        --Console.printLine("uninitialized value at \{position}")
+                    }
+                }
+                when IR.Statement.NEGATE(_, v) {
+                    result.statements[id] := v.type()
+                }
+                when IR.Statement.NOT(_, v) {
+                    result.statements[id] := v.type()
+                }
+                when IR.Statement.POINTER_ALLOC(_, _, t) {
+                    result.statements[id] := Type.pointerTo(t)
+                }
+                when IR.Statement.POINTER_GET(_, p) {
+                    def type := getType(p, result)
+                    assert type.isPointer
+                    result.statements[id] := type.subtypes[1]
+                }
+                when IR.Statement.POINTER_GET_INDEX(_, p, _) {
+                    def type := getType(p, result)
+                    assert type.isPointer, type.asString
+                    result.statements[id] := type.subtypes[1]
+                }
+                when IR.Statement.POINTER_OFFSET(_, p, _) {
+                    result.statements[id] := getType(p, result)
+                }
+                when IR.Statement.POINTER_REALLOC(_, p, _, _) {
+                    result.statements[id] := getType(p, result)
+                }
+                when IR.Statement.STATIC_CALL(_, m, _) {
+                    result.statements[id] := m.returnType
+                }
+                when IR.Statement.STORE(_, v, target) {
+                    match target {
+                        when IR.Value.LOCAL(slot, _) {
+                            result.locals[slot] := getType(v, result)
+                        }
+                    }
+                }
+            }
+        }
+        return result
+    }
+
+    method process(id:IR.Block.ID) {
+        def block := getBlock(id)
+        match block.statements[block.statements.count - 1] {
+            when IR.Statement.BRANCH(_, id) {
+                propagate(block.id, id)
+            }
+            when IR.Statement.CONDITIONAL_BRANCH(_, _, id1, id2) {
+                propagate(block.id, id1)
+                propagate(block.id, id2)
+            }
+            when IR.Statement.END {
+            }
+            when IR.Statement.RETURN {
+            }
+            when IR.Statement.UNREACHABLE {
+            }
+            otherwise {
+                unreachable, "block ended in nonterminal statement " +
+                        block.statements[block.statements.count - 1]
+            }
+        }
+    }
+
+    method analyze() {
+        def invalid := Type.Invalid()
+        def startState := State()
+        for i in 0 .. ir.locals.count {
+            startState.locals.add(invalid)
+        }
+        entryStates[ir.blocks[0].id] := startState
+        worklist.add(ir.blocks[0].id)
+        while worklist.count > 0 {
+            def next := worklist.iterator.next()
+            worklist.remove(next)
+            process(next)
+        }
+        for b in ir.blocks {
+            if entryStates[b.id] !== null {
+                match b.statements[0] {
+                    when IR.Statement.END {
+                        if m.methodKind != MethodDecl.Kind.INIT & m.returnType != Type.Void() {
+                            compiler.error(m.position, "method can exit without returning")
+                        }
+                    }
+                    otherwise {
+                        computeExitState(b.id, true)
+                    }
+                }
+            }
+            else if b.containsExplicitCode {
+                compiler.error(b.statements[0].position, "unreachable")
+            }
+        }
+    }
+}

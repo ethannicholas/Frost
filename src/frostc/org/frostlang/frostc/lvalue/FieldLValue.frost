@@ -71,7 +71,8 @@ class FieldLValue : LValue {
     method compileLoad():IR.Value? {
         if field.annotations.isClass & field.fieldKind = FieldDecl.Kind.CONSTANT {
             compiler.currentClass.push(field.owner)
-            def result := compiler.compileExpression(field.rawValue, TypeContext.TYPE(type()))
+            def result := compiler.compileExpression(field.rawValue,
+                    TypeContext.TYPE(type(), false))
             compiler.currentClass.pop()
             return result
         }
@@ -82,7 +83,7 @@ class FieldLValue : LValue {
         var result:IR.Value
         if field.fieldKind = FieldDecl.Kind.PROPERTY {
             result := Call.compile(compiler, position, target, "get_\{field.name}",
-                    Array<ASTNode>(), TypeContext.TYPE(rawType))
+                    Array<ASTNode>(), TypeContext.TYPE(rawType, false))
         }
         else {
             def load:IR.Statement.ID
@@ -137,7 +138,7 @@ class FieldLValue : LValue {
             def args := Array<ASTNode>()
             args.add(ASTNode.IR_WRAPPER(position, value))
             Call.compile(compiler, position, target, "set_\{field.name}", args,
-                    TypeContext.TYPE(rawType))
+                    TypeContext.TYPE(rawType, false))
         }
         else {
             if compiler.isRefCounted(rawType) & field.owner.name != "frost.core.Weak" {

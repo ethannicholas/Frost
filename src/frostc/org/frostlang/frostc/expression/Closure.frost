@@ -57,7 +57,7 @@ class Closure {
                         }
                     }
                     otherwise {
-                        assert false, c.asString
+                        unreachable, c.asString
                     }
                 }
             }
@@ -140,7 +140,7 @@ class Closure {
                     result.fields.add(field)
                 }
                 otherwise {
-                    assert false, c.asString
+                    unreachable, c.asString
                 }
             }
         }
@@ -176,7 +176,7 @@ class Closure {
         }
         def returnType:Type?
         match type {
-            when TypeContext.TYPE(t) {
+            when TypeContext.TYPE(t, _) {
                 if t.nonnullable().isMethod {
                     def target := t.returnType
                     -- we call computeCoercionCost directly, as we can't used the cached cost. When
@@ -217,7 +217,7 @@ class Closure {
             -- compilation.
             returnType := Type.Any()
             match type {
-                when TypeContext.TYPE(t) {
+                when TypeContext.TYPE(t, _) {
                     if t.nonnullable().isMethod {
                         returnType := t.nonnullable().returnType
                     }
@@ -234,7 +234,7 @@ class Closure {
     method compileUntypedLambda(compiler:Compiler, position:Position,
             rawParameters:FixedArray<ASTNode>, expr:ASTNode, type:TypeContext):IR.Value? {
         match type {
-            when TypeContext.TYPE(t) {
+            when TypeContext.TYPE(t, _) {
                 def methodType := t.nonnullable()
                 if methodType.isMethod {
                     if rawParameters.count != methodType.parameterCount {
@@ -251,7 +251,7 @@ class Closure {
                                             IR.Value.TYPE(methodType.parameterType(i)))))
                             }
                             otherwise {
-                                assert false
+                                unreachable
                             }
                         }
                     }
@@ -273,7 +273,7 @@ class Closure {
                     msg.append("\n    when interpreted as '\{t}':")
                     compiler.errorQueue := MessageQueue<ErrorMsg>()
                     compileUntypedLambda(compiler, position, rawParameters, expr,
-                            TypeContext.TYPE(t))
+                            TypeContext.TYPE(t, false))
                     assert compiler.errorQueue.hasMessage(),
                             "did not receive expected error compiling lambda at \{position} with " +
                                 "type \{t}"
@@ -285,7 +285,7 @@ class Closure {
             }
             else {
                 compileUntypedLambda(compiler, position, rawParameters, expr,
-                        TypeContext.TYPE(attempts.iterator.next()))
+                        TypeContext.TYPE(attempts.iterator.next(), false))
                 return null
             }
         }
@@ -311,7 +311,7 @@ class Closure {
                     parameters.add(MethodDecl.Parameter(name, resolved))
                 }
                 otherwise {
-                    assert false
+                    unreachable
                 }
             }
         }

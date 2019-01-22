@@ -170,6 +170,7 @@ class TestRunner : Immutable {
                             return name
                         }
                     }
+                    unreachable
                 }).sort(String.>).join(", "))
             }
             Console.printLine("Passed \{success} / \{tests.count} tests.")

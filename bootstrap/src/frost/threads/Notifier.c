@@ -29,7 +29,6 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp4));
 frost$threads$Lock** $tmp5 = &param0->lock;
 *$tmp5 = $tmp2;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp2));
-// unreffing REF($1:frost.threads.Lock)
 // line 18
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
 frost$threads$Lock** $tmp6 = &param0->lock;

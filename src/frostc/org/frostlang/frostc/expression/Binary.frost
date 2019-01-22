@@ -97,7 +97,7 @@ class Binary {
                 when Token.Kind.BITWISEXOREQ { return BITWISEXOREQ }
                 when Token.Kind.SHIFTLEFTEQ  { return SHIFTLEFTEQ }
                 when Token.Kind.SHIFTRIGHTEQ { return SHIFTRIGHTEQ }
-                otherwise                    { assert false, "not a binary operator: \{op.kind}" }
+                otherwise                    { unreachable, "not a binary operator: \{op.kind}" }
             }        
         }
 
@@ -131,7 +131,7 @@ class Binary {
                 when BITWISEXOREQ { return BITWISEXOR }
                 when SHIFTLEFTEQ  { return SHIFTLEFT }
                 when SHIFTRIGHTEQ { return SHIFTRIGHT }
-                otherwise         { assert false, "not a compound assignment operator: \{self}" }
+                otherwise         { unreachable, "not a compound assignment operator: \{self}" }
             }
         }
 
@@ -178,6 +178,7 @@ class Binary {
                 when SHIFTLEFTEQ  { return "<<=" }
                 when SHIFTRIGHTEQ { return ">>=" }
             }
+            unreachable
         }
     }
 
@@ -217,7 +218,7 @@ class Binary {
                     }
                 }
                 otherwise {
-                    assert false
+                    unreachable
                 }
             }
         }
@@ -258,7 +259,7 @@ class Binary {
                 }
             }
             otherwise {
-                assert false
+                unreachable
             }
         }
         return null
@@ -476,7 +477,7 @@ class Binary {
                     }
                     def found := compiler.findType(compiler.possibleTypes(left), m.owner)
                     assert found !== null
-                    def target := compiler.compileExpression(left, TypeContext.TYPE(found))
+                    def target := compiler.compileExpression(left, TypeContext.TYPE(found, false))
                     if target == null {
                         return null
                     }
@@ -488,7 +489,7 @@ class Binary {
                     return null
                 }
                 def compiledRight := compiler.compileExpression(right,
-                        TypeContext.TYPE(compiledLeft.type()))
+                        TypeContext.TYPE(compiledLeft.type(), false))
                 if compiledRight == null {
                     return null
                 }

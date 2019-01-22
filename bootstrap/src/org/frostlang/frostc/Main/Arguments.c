@@ -102,7 +102,6 @@ $fn42 $tmp41 = $tmp40->methods[0];
 frost$core$Object* $tmp43 = $tmp41($tmp32, $tmp39);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$String*) $tmp43)));
 frost$core$Frost$unref$frost$core$Object$Q($tmp43);
-// unreffing REF($31:frost.collections.ListView.T)
 return ((frost$core$String*) $tmp43);
 
 }
@@ -142,15 +141,10 @@ frost$core$String* $tmp69 = frost$core$String$$ADD$frost$core$String$R$frost$cor
 frost$core$String* $tmp70 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp69, &$s71);
 frost$io$Console$printErrorLine$frost$core$String($tmp70);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp70));
-// unreffing REF($25:frost.core.String)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp69));
-// unreffing REF($24:frost.core.String)
 frost$core$Frost$unref$frost$core$Object$Q($tmp68);
-// unreffing REF($22:frost.collections.ListView.T)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp50));
-// unreffing REF($7:frost.core.String)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp48));
-// unreffing REF($6:frost.core.String)
 // line 54
 frost$core$Int64 $tmp72 = (frost$core$Int64) {1};
 frost$core$System$exit$frost$core$Int64($tmp72);
@@ -161,7 +155,6 @@ $fn74 $tmp73 = ($fn74) param0->$class->vtable[3];
 frost$core$String* $tmp75 = $tmp73(param0);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp75));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp75));
-// unreffing REF($48:frost.core.String)
 return $tmp75;
 
 }

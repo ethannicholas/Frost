@@ -14,9 +14,8 @@ frost$core$Tuple13$class_type frost$core$Tuple13$class = { (frost$core$Class*) &
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x54\x75\x70\x6c\x65\x31\x33", 18, 5148465093273673610, NULL };
 static frost$core$String $s55 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x54\x75\x70\x6c\x65\x31\x33\x2e\x66\x72\x6f\x73\x74", 13, 3188154930939979491, NULL };
 static frost$core$String $s56 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x54\x75\x70\x6c\x65\x31\x33\x2e\x5b\x5d\x28\x69\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x36\x34\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x4f\x62\x6a\x65\x63\x74\x3f", 94, 4217395196735209730, NULL };
-static frost$core$String $s125 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x54\x75\x70\x6c\x65\x31\x33\x2e\x66\x72\x6f\x73\x74", 13, 3188154930939979491, NULL };
-static frost$core$String $s126 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x54\x75\x70\x6c\x65\x31\x33\x2e\x5b\x5d\x28\x69\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x36\x34\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x4f\x62\x6a\x65\x63\x74\x3f\x20\x65\x78\x69\x74\x65\x64\x20\x77\x69\x74\x68\x6f\x75\x74\x20\x72\x65\x74\x75\x72\x6e\x69\x6e\x67", 94, 5740669545196720818, NULL };
-static frost$core$String $s130 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x28", 1, 141, NULL };
+static frost$core$String $s125 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x28", 1, 141, NULL };
+static frost$core$String $s127 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2c\x20", 2, 14677, NULL };
 static frost$core$String $s132 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2c\x20", 2, 14677, NULL };
 static frost$core$String $s137 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2c\x20", 2, 14677, NULL };
 static frost$core$String $s142 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2c\x20", 2, 14677, NULL };
@@ -28,8 +27,7 @@ static frost$core$String $s167 = { (frost$core$Class*) &frost$core$String$class,
 static frost$core$String $s172 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2c\x20", 2, 14677, NULL };
 static frost$core$String $s177 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2c\x20", 2, 14677, NULL };
 static frost$core$String $s182 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2c\x20", 2, 14677, NULL };
-static frost$core$String $s187 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2c\x20", 2, 14677, NULL };
-static frost$core$String $s192 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x29", 1, 142, NULL };
+static frost$core$String $s187 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x29", 1, 142, NULL };
 
 void frost$core$Tuple13$init$frost$core$Tuple13$T0$frost$core$Tuple13$T1$frost$core$Tuple13$T2$frost$core$Tuple13$T3$frost$core$Tuple13$T4$frost$core$Tuple13$T5$frost$core$Tuple13$T6$frost$core$Tuple13$T7$frost$core$Tuple13$T8$frost$core$Tuple13$T9$frost$core$Tuple13$T10$frost$core$Tuple13$T11$frost$core$Tuple13$T12(frost$core$Tuple13* param0, frost$core$Object* param1, frost$core$Object* param2, frost$core$Object* param3, frost$core$Object* param4, frost$core$Object* param5, frost$core$Object* param6, frost$core$Object* param7, frost$core$Object* param8, frost$core$Object* param9, frost$core$Object* param10, frost$core$Object* param11, frost$core$Object* param12, frost$core$Object* param13) {
 
@@ -301,171 +299,139 @@ frost$core$Object* $tmp121 = *$tmp120;
 frost$core$Frost$ref$frost$core$Object$Q($tmp121);
 return $tmp121;
 block6:;
-frost$core$Bit $tmp122 = frost$core$Bit$init$builtin_bit(false);
-bool $tmp123 = $tmp122.value;
-if ($tmp123) goto block32; else goto block33;
-block33:;
-frost$core$Int64 $tmp124 = (frost$core$Int64) {34};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s125, $tmp124, &$s126);
-abort(); // unreachable
-block32:;
-abort(); // unreachable
+// line 50
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) NULL));
+return ((frost$core$Object*) NULL);
 
 }
 frost$core$String* frost$core$Tuple13$get_asString$R$frost$core$String(frost$core$Tuple13* param0) {
 
-// line 54
-frost$core$Object** $tmp127 = &param0->f0;
-frost$core$Object* $tmp128 = *$tmp127;
-frost$core$String* $tmp129 = frost$core$String$$ADD$frost$core$Object$R$frost$core$String(&$s130, $tmp128);
-frost$core$String* $tmp131 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp129, &$s132);
-frost$core$Object** $tmp133 = &param0->f1;
+// line 55
+frost$core$Object** $tmp122 = &param0->f0;
+frost$core$Object* $tmp123 = *$tmp122;
+frost$core$String* $tmp124 = frost$core$String$$ADD$frost$core$Object$R$frost$core$String(&$s125, $tmp123);
+frost$core$String* $tmp126 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp124, &$s127);
+frost$core$Object** $tmp128 = &param0->f1;
+frost$core$Object* $tmp129 = *$tmp128;
+frost$core$String* $tmp130 = frost$core$String$$ADD$frost$core$Object$R$frost$core$String($tmp126, $tmp129);
+frost$core$String* $tmp131 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp130, &$s132);
+frost$core$Object** $tmp133 = &param0->f2;
 frost$core$Object* $tmp134 = *$tmp133;
 frost$core$String* $tmp135 = frost$core$String$$ADD$frost$core$Object$R$frost$core$String($tmp131, $tmp134);
 frost$core$String* $tmp136 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp135, &$s137);
-frost$core$Object** $tmp138 = &param0->f2;
+frost$core$Object** $tmp138 = &param0->f3;
 frost$core$Object* $tmp139 = *$tmp138;
 frost$core$String* $tmp140 = frost$core$String$$ADD$frost$core$Object$R$frost$core$String($tmp136, $tmp139);
 frost$core$String* $tmp141 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp140, &$s142);
-frost$core$Object** $tmp143 = &param0->f3;
+frost$core$Object** $tmp143 = &param0->f4;
 frost$core$Object* $tmp144 = *$tmp143;
 frost$core$String* $tmp145 = frost$core$String$$ADD$frost$core$Object$R$frost$core$String($tmp141, $tmp144);
 frost$core$String* $tmp146 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp145, &$s147);
-frost$core$Object** $tmp148 = &param0->f4;
+frost$core$Object** $tmp148 = &param0->f5;
 frost$core$Object* $tmp149 = *$tmp148;
 frost$core$String* $tmp150 = frost$core$String$$ADD$frost$core$Object$R$frost$core$String($tmp146, $tmp149);
 frost$core$String* $tmp151 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp150, &$s152);
-frost$core$Object** $tmp153 = &param0->f5;
+frost$core$Object** $tmp153 = &param0->f6;
 frost$core$Object* $tmp154 = *$tmp153;
 frost$core$String* $tmp155 = frost$core$String$$ADD$frost$core$Object$R$frost$core$String($tmp151, $tmp154);
 frost$core$String* $tmp156 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp155, &$s157);
-frost$core$Object** $tmp158 = &param0->f6;
+frost$core$Object** $tmp158 = &param0->f7;
 frost$core$Object* $tmp159 = *$tmp158;
 frost$core$String* $tmp160 = frost$core$String$$ADD$frost$core$Object$R$frost$core$String($tmp156, $tmp159);
 frost$core$String* $tmp161 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp160, &$s162);
-frost$core$Object** $tmp163 = &param0->f7;
+frost$core$Object** $tmp163 = &param0->f8;
 frost$core$Object* $tmp164 = *$tmp163;
 frost$core$String* $tmp165 = frost$core$String$$ADD$frost$core$Object$R$frost$core$String($tmp161, $tmp164);
 frost$core$String* $tmp166 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp165, &$s167);
-frost$core$Object** $tmp168 = &param0->f8;
+frost$core$Object** $tmp168 = &param0->f9;
 frost$core$Object* $tmp169 = *$tmp168;
 frost$core$String* $tmp170 = frost$core$String$$ADD$frost$core$Object$R$frost$core$String($tmp166, $tmp169);
 frost$core$String* $tmp171 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp170, &$s172);
-frost$core$Object** $tmp173 = &param0->f9;
+frost$core$Object** $tmp173 = &param0->f10;
 frost$core$Object* $tmp174 = *$tmp173;
 frost$core$String* $tmp175 = frost$core$String$$ADD$frost$core$Object$R$frost$core$String($tmp171, $tmp174);
 frost$core$String* $tmp176 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp175, &$s177);
-frost$core$Object** $tmp178 = &param0->f10;
+frost$core$Object** $tmp178 = &param0->f11;
 frost$core$Object* $tmp179 = *$tmp178;
 frost$core$String* $tmp180 = frost$core$String$$ADD$frost$core$Object$R$frost$core$String($tmp176, $tmp179);
 frost$core$String* $tmp181 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp180, &$s182);
-frost$core$Object** $tmp183 = &param0->f11;
+frost$core$Object** $tmp183 = &param0->f12;
 frost$core$Object* $tmp184 = *$tmp183;
 frost$core$String* $tmp185 = frost$core$String$$ADD$frost$core$Object$R$frost$core$String($tmp181, $tmp184);
 frost$core$String* $tmp186 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp185, &$s187);
-frost$core$Object** $tmp188 = &param0->f12;
-frost$core$Object* $tmp189 = *$tmp188;
-frost$core$String* $tmp190 = frost$core$String$$ADD$frost$core$Object$R$frost$core$String($tmp186, $tmp189);
-frost$core$String* $tmp191 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp190, &$s192);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp191));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp191));
-// unreffing REF($78:frost.core.String)
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp190));
-// unreffing REF($77:frost.core.String)
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp186));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp186));
-// unreffing REF($72:frost.core.String)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp185));
-// unreffing REF($71:frost.core.String)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp181));
-// unreffing REF($66:frost.core.String)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp180));
-// unreffing REF($65:frost.core.String)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp176));
-// unreffing REF($60:frost.core.String)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp175));
-// unreffing REF($59:frost.core.String)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp171));
-// unreffing REF($54:frost.core.String)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp170));
-// unreffing REF($53:frost.core.String)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp166));
-// unreffing REF($48:frost.core.String)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp165));
-// unreffing REF($47:frost.core.String)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp161));
-// unreffing REF($42:frost.core.String)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp160));
-// unreffing REF($41:frost.core.String)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp156));
-// unreffing REF($36:frost.core.String)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp155));
-// unreffing REF($35:frost.core.String)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp151));
-// unreffing REF($30:frost.core.String)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp150));
-// unreffing REF($29:frost.core.String)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp146));
-// unreffing REF($24:frost.core.String)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp145));
-// unreffing REF($23:frost.core.String)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp141));
-// unreffing REF($18:frost.core.String)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp140));
-// unreffing REF($17:frost.core.String)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp136));
-// unreffing REF($12:frost.core.String)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp135));
-// unreffing REF($11:frost.core.String)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp131));
-// unreffing REF($6:frost.core.String)
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp129));
-// unreffing REF($5:frost.core.String)
-return $tmp191;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp130));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp126));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp124));
+return $tmp186;
 
 }
 void frost$core$Tuple13$cleanup(frost$core$Tuple13* param0) {
 
 // line 2
 frost$core$Object$cleanup(((frost$core$Object*) param0));
-frost$core$Object** $tmp193 = &param0->f0;
-frost$core$Object* $tmp194 = *$tmp193;
-frost$core$Frost$unref$frost$core$Object$Q($tmp194);
-frost$core$Object** $tmp195 = &param0->f1;
-frost$core$Object* $tmp196 = *$tmp195;
-frost$core$Frost$unref$frost$core$Object$Q($tmp196);
-frost$core$Object** $tmp197 = &param0->f2;
-frost$core$Object* $tmp198 = *$tmp197;
-frost$core$Frost$unref$frost$core$Object$Q($tmp198);
-frost$core$Object** $tmp199 = &param0->f3;
-frost$core$Object* $tmp200 = *$tmp199;
-frost$core$Frost$unref$frost$core$Object$Q($tmp200);
-frost$core$Object** $tmp201 = &param0->f4;
-frost$core$Object* $tmp202 = *$tmp201;
-frost$core$Frost$unref$frost$core$Object$Q($tmp202);
-frost$core$Object** $tmp203 = &param0->f5;
-frost$core$Object* $tmp204 = *$tmp203;
-frost$core$Frost$unref$frost$core$Object$Q($tmp204);
-frost$core$Object** $tmp205 = &param0->f6;
-frost$core$Object* $tmp206 = *$tmp205;
-frost$core$Frost$unref$frost$core$Object$Q($tmp206);
-frost$core$Object** $tmp207 = &param0->f7;
-frost$core$Object* $tmp208 = *$tmp207;
-frost$core$Frost$unref$frost$core$Object$Q($tmp208);
-frost$core$Object** $tmp209 = &param0->f8;
-frost$core$Object* $tmp210 = *$tmp209;
-frost$core$Frost$unref$frost$core$Object$Q($tmp210);
-frost$core$Object** $tmp211 = &param0->f9;
-frost$core$Object* $tmp212 = *$tmp211;
-frost$core$Frost$unref$frost$core$Object$Q($tmp212);
-frost$core$Object** $tmp213 = &param0->f10;
-frost$core$Object* $tmp214 = *$tmp213;
-frost$core$Frost$unref$frost$core$Object$Q($tmp214);
-frost$core$Object** $tmp215 = &param0->f11;
-frost$core$Object* $tmp216 = *$tmp215;
-frost$core$Frost$unref$frost$core$Object$Q($tmp216);
-frost$core$Object** $tmp217 = &param0->f12;
-frost$core$Object* $tmp218 = *$tmp217;
-frost$core$Frost$unref$frost$core$Object$Q($tmp218);
+frost$core$Object** $tmp188 = &param0->f0;
+frost$core$Object* $tmp189 = *$tmp188;
+frost$core$Frost$unref$frost$core$Object$Q($tmp189);
+frost$core$Object** $tmp190 = &param0->f1;
+frost$core$Object* $tmp191 = *$tmp190;
+frost$core$Frost$unref$frost$core$Object$Q($tmp191);
+frost$core$Object** $tmp192 = &param0->f2;
+frost$core$Object* $tmp193 = *$tmp192;
+frost$core$Frost$unref$frost$core$Object$Q($tmp193);
+frost$core$Object** $tmp194 = &param0->f3;
+frost$core$Object* $tmp195 = *$tmp194;
+frost$core$Frost$unref$frost$core$Object$Q($tmp195);
+frost$core$Object** $tmp196 = &param0->f4;
+frost$core$Object* $tmp197 = *$tmp196;
+frost$core$Frost$unref$frost$core$Object$Q($tmp197);
+frost$core$Object** $tmp198 = &param0->f5;
+frost$core$Object* $tmp199 = *$tmp198;
+frost$core$Frost$unref$frost$core$Object$Q($tmp199);
+frost$core$Object** $tmp200 = &param0->f6;
+frost$core$Object* $tmp201 = *$tmp200;
+frost$core$Frost$unref$frost$core$Object$Q($tmp201);
+frost$core$Object** $tmp202 = &param0->f7;
+frost$core$Object* $tmp203 = *$tmp202;
+frost$core$Frost$unref$frost$core$Object$Q($tmp203);
+frost$core$Object** $tmp204 = &param0->f8;
+frost$core$Object* $tmp205 = *$tmp204;
+frost$core$Frost$unref$frost$core$Object$Q($tmp205);
+frost$core$Object** $tmp206 = &param0->f9;
+frost$core$Object* $tmp207 = *$tmp206;
+frost$core$Frost$unref$frost$core$Object$Q($tmp207);
+frost$core$Object** $tmp208 = &param0->f10;
+frost$core$Object* $tmp209 = *$tmp208;
+frost$core$Frost$unref$frost$core$Object$Q($tmp209);
+frost$core$Object** $tmp210 = &param0->f11;
+frost$core$Object* $tmp211 = *$tmp210;
+frost$core$Frost$unref$frost$core$Object$Q($tmp211);
+frost$core$Object** $tmp212 = &param0->f12;
+frost$core$Object* $tmp213 = *$tmp212;
+frost$core$Frost$unref$frost$core$Object$Q($tmp213);
 return;
 
 }

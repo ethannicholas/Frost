@@ -92,11 +92,9 @@ org$frostlang$frostc$ASTNode* $tmp32 = *(&local3);
 org$frostlang$frostc$Compiler$compileDeclaration$org$frostlang$frostc$Position$org$frostlang$frostc$ASTNode$org$frostlang$frostc$ASTNode$Q$org$frostlang$frostc$Variable$Kind(param0, $tmp30, $tmp31, $tmp32, param2);
 org$frostlang$frostc$ASTNode* $tmp33 = *(&local3);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp33));
-// unreffing rawValue
 *(&local3) = ((org$frostlang$frostc$ASTNode*) NULL);
 org$frostlang$frostc$ASTNode* $tmp34 = *(&local2);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp34));
-// unreffing target
 *(&local2) = ((org$frostlang$frostc$ASTNode*) NULL);
 goto block4;
 block6:;
@@ -112,15 +110,12 @@ block7:;
 goto block4;
 block4:;
 frost$core$Frost$unref$frost$core$Object$Q($tmp14);
-// unreffing REF($15:frost.collections.Iterator.T)
 org$frostlang$frostc$ASTNode* $tmp39 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp39));
-// unreffing decl
 *(&local0) = ((org$frostlang$frostc$ASTNode*) NULL);
 goto block1;
 block3:;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp5));
-// unreffing REF($4:frost.collections.Iterator<frost.collections.Iterable.T>)
 return;
 
 }

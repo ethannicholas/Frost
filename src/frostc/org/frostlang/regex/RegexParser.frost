@@ -124,6 +124,7 @@ class RegexParser {
                         next()
                     }
                 }
+                return true
             }
             otherwise {
                 pushback(token)

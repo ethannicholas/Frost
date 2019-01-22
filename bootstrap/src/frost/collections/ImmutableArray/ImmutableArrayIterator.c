@@ -100,7 +100,6 @@ frost$core$Int64 $tmp41 = (frost$core$Int64) {$tmp40};
 frost$core$Immutable* $tmp42 = frost$collections$ImmutableArray$$IDX$frost$core$Int64$R$frost$collections$ImmutableArray$T($tmp34, $tmp41);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp42));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp42));
-// unreffing REF($33:frost.collections.ImmutableArray.T)
 return $tmp42;
 
 }

@@ -25,7 +25,6 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp4));
 frost$core$Weak** $tmp5 = &param0->value;
 *$tmp5 = $tmp2;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp2));
-// unreffing REF($1:frost.core.Weak<org.frostlang.frostc.ClassDecl?>)
 // line 44
 frost$core$Weak* $tmp6 = (frost$core$Weak*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Weak$class);
 frost$core$Weak$init$frost$core$Weak$T($tmp6, ((frost$core$Object*) param1));
@@ -36,7 +35,6 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp8));
 frost$core$Weak** $tmp9 = &param0->value;
 *$tmp9 = $tmp6;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp6));
-// unreffing REF($17:frost.core.Weak<org.frostlang.frostc.ClassDecl?>)
 return;
 
 }

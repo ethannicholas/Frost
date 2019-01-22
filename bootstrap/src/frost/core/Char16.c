@@ -229,7 +229,6 @@ frost$core$MutableString* $tmp31 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp31));
 *(&local0) = $tmp30;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp30));
-// unreffing REF($1:frost.core.MutableString)
 // line 57
 frost$core$Int64 $tmp32 = (frost$core$Int64) {0};
 frost$core$Bit $tmp33 = frost$core$Bit$init$builtin_bit(false);
@@ -264,7 +263,6 @@ $tmp52 = (frost$core$Char16$wrapper*) frostObjectAlloc(14, (frost$core$Class*) &
 $tmp52->value = param0;
 frost$core$MutableString$append$frost$core$Object($tmp51, ((frost$core$Object*) $tmp52));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp52));
-// unreffing REF($39:frost.core.Object)
 goto block3;
 block3:;
 frost$core$Int64 $tmp53 = *(&local1);
@@ -301,10 +299,8 @@ frost$core$MutableString* $tmp73 = *(&local0);
 frost$core$String* $tmp74 = frost$core$MutableString$finish$R$frost$core$String($tmp73);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp74));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp74));
-// unreffing REF($72:frost.core.String)
 frost$core$MutableString* $tmp75 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp75));
-// unreffing result
 *(&local0) = ((frost$core$MutableString*) NULL);
 return $tmp74;
 
@@ -315,7 +311,6 @@ frost$core$String* frost$core$Char16$$MUL$frost$core$Int64$frost$core$Char16$R$f
 frost$core$String* $tmp76 = frost$core$Char16$$MUL$frost$core$Int64$R$frost$core$String(param1, param0);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp76));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp76));
-// unreffing REF($1:frost.core.String)
 return $tmp76;
 
 }
@@ -437,7 +432,6 @@ frost$core$Int64 $tmp112 = (frost$core$Int64) {1};
 frost$core$String$init$frost$unsafe$Pointer$LTfrost$core$Char8$GT$frost$core$Int64($tmp110, $tmp111, $tmp112);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp110));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp110));
-// unreffing REF($19:frost.core.String)
 return $tmp110;
 block2:;
 // line 138
@@ -479,7 +473,6 @@ frost$core$Int64 $tmp138 = (frost$core$Int64) {2};
 frost$core$String$init$frost$unsafe$Pointer$LTfrost$core$Char8$GT$frost$core$Int64($tmp136, $tmp137, $tmp138);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp136));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp136));
-// unreffing REF($63:frost.core.String)
 return $tmp136;
 block4:;
 // line 144
@@ -525,7 +518,6 @@ frost$core$Int64 $tmp169 = (frost$core$Int64) {3};
 frost$core$String$init$frost$unsafe$Pointer$LTfrost$core$Char8$GT$frost$core$Int64($tmp167, $tmp168, $tmp169);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp167));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp167));
-// unreffing REF($113:frost.core.String)
 return $tmp167;
 
 }

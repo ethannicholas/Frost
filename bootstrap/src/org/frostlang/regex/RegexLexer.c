@@ -38,7 +38,6 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp9));
 org$frostlang$plex$runtime$DFA** $tmp10 = &param0->dfa;
 *$tmp10 = $tmp2;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp2));
-// unreffing REF($1:org.frostlang.plex.runtime.DFA)
 return;
 
 }

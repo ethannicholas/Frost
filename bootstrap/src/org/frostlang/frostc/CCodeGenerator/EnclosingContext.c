@@ -62,15 +62,12 @@ frost$core$String* $tmp18 = *(&local2);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp18));
 frost$core$String* $tmp19 = *(&local2);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp19));
-// unreffing _f2
 *(&local2) = ((frost$core$String*) NULL);
 frost$core$String* $tmp20 = *(&local1);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp20));
-// unreffing _f1
 *(&local1) = ((frost$core$String*) NULL);
 frost$core$String* $tmp21 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp21));
-// unreffing _f0
 *(&local0) = ((frost$core$String*) NULL);
 goto block1;
 block3:;
@@ -111,15 +108,12 @@ frost$core$String* $tmp36 = *(&local5);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp36));
 frost$core$String* $tmp37 = *(&local5);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp37));
-// unreffing _f2
 *(&local5) = ((frost$core$String*) NULL);
 frost$collections$Map* $tmp38 = *(&local4);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp38));
-// unreffing _f1
 *(&local4) = ((frost$collections$Map*) NULL);
 frost$core$String* $tmp39 = *(&local3);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp39));
-// unreffing _f0
 *(&local3) = ((frost$core$String*) NULL);
 goto block1;
 block1:;

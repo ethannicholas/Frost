@@ -166,15 +166,8 @@ block37:;
 frost$core$Int64 $tmp58 = (frost$core$Int64) {18};
 frost$core$Bit $tmp59 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp3, $tmp58);
 bool $tmp60 = $tmp59.value;
-if ($tmp60) goto block38; else goto block39;
+if ($tmp60) goto block38; else goto block1;
 block38:;
-goto block1;
-block39:;
-frost$core$Int64 $tmp61 = (frost$core$Int64) {19};
-frost$core$Bit $tmp62 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp3, $tmp61);
-bool $tmp63 = $tmp62.value;
-if ($tmp63) goto block40; else goto block1;
-block40:;
 goto block1;
 block1:;
 return;
@@ -184,31 +177,31 @@ org$frostlang$frostc$Type$Kind org$frostlang$frostc$Type$Kind$init$frost$core$In
 
 org$frostlang$frostc$Type$Kind local0;
 // line 5
-frost$core$Int64* $tmp64 = &(&local0)->$rawValue;
-*$tmp64 = param0;
-org$frostlang$frostc$Type$Kind $tmp65 = *(&local0);
-return $tmp65;
+frost$core$Int64* $tmp61 = &(&local0)->$rawValue;
+*$tmp61 = param0;
+org$frostlang$frostc$Type$Kind $tmp62 = *(&local0);
+return $tmp62;
 
 }
 frost$core$Bit org$frostlang$frostc$Type$Kind$$EQ$org$frostlang$frostc$Type$Kind$R$frost$core$Bit(org$frostlang$frostc$Type$Kind param0, org$frostlang$frostc$Type$Kind param1) {
 
 // line 5
-frost$core$Int64 $tmp66 = param0.$rawValue;
-frost$core$Int64 $tmp67 = param1.$rawValue;
-int64_t $tmp68 = $tmp66.value;
-int64_t $tmp69 = $tmp67.value;
-bool $tmp70 = $tmp68 != $tmp69;
-frost$core$Bit $tmp71 = (frost$core$Bit) {$tmp70};
-bool $tmp72 = $tmp71.value;
-if ($tmp72) goto block1; else goto block2;
+frost$core$Int64 $tmp63 = param0.$rawValue;
+frost$core$Int64 $tmp64 = param1.$rawValue;
+int64_t $tmp65 = $tmp63.value;
+int64_t $tmp66 = $tmp64.value;
+bool $tmp67 = $tmp65 != $tmp66;
+frost$core$Bit $tmp68 = (frost$core$Bit) {$tmp67};
+bool $tmp69 = $tmp68.value;
+if ($tmp69) goto block1; else goto block2;
 block1:;
 // line 5
-frost$core$Bit $tmp73 = frost$core$Bit$init$builtin_bit(false);
-return $tmp73;
+frost$core$Bit $tmp70 = frost$core$Bit$init$builtin_bit(false);
+return $tmp70;
 block2:;
 // line 5
-frost$core$Bit $tmp74 = frost$core$Bit$init$builtin_bit(true);
-return $tmp74;
+frost$core$Bit $tmp71 = frost$core$Bit$init$builtin_bit(true);
+return $tmp71;
 
 }
 

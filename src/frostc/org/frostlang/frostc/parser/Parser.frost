@@ -1633,6 +1633,27 @@ class Parser {
     }
 
     ================================================================================================
+    unreachableStatement = UNREACHABLE (COMMA expression)?
+    ================================================================================================
+    method unreachableStatement():ASTNode? {
+        def start := expect(Token.Kind.UNREACHABLE, "'unreachable'")
+        if start == null {
+            return null
+        }
+        def message:ASTNode?
+        if checkNext(Token.Kind.COMMA) !== null{
+            message := expression()
+            if message == null {
+                return null
+            }
+        }
+        else {
+            message := null
+        }
+        return ASTNode.UNREACHABLE(start.position, message)
+    }
+
+    ================================================================================================
     whenClause = WHEN expression (COMMA expression)* COLON statement* terminalStatement?
     ================================================================================================
     @pre(allowLambdas)
@@ -1971,7 +1992,7 @@ class Parser {
             when Token.Kind.BREAK    { return breakStatement() }
             when Token.Kind.CONTINUE { return continueStatement() }
             when Token.Kind.RETURN   { return returnStatement() }
-            otherwise                { assert false }
+            otherwise                { unreachable }
         }
     }
 
@@ -2072,7 +2093,7 @@ class Parser {
 
     ================================================================================================
     statement = ifStatement | anyLoop | expressionOrAssignment | assertStatement | matchStatement |
-            block | varDeclaration | initCall | innerMethod | try
+            block | varDeclaration | initCall | innerMethod | try | unreachable
     ================================================================================================
     method statement():ASTNode? {
         match peek().kind {
@@ -2115,6 +2136,9 @@ class Parser {
             }
             when Token.Kind.TRY {
                 return tryStatement()
+            }
+            when Token.Kind.UNREACHABLE {
+                return unreachableStatement()
             }
             otherwise {
                 -- trigger error

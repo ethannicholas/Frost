@@ -17,7 +17,7 @@ class Or {
         def result := IR.Value.LOCAL(ir.locals.count, Type.Bit())
         ir.locals.add(Type.Bit())
         def compiledLeft:IR.Value?
-        compiledLeft := compiler.compileExpression(left, TypeContext.TYPE(Type.Bit()))
+        compiledLeft := compiler.compileExpression(left, TypeContext.TYPE(Type.Bit(), false))
         if compiledLeft == null {
             return null
         }
@@ -33,7 +33,7 @@ class Or {
         def compiledRight:IR.Value?
         {
             def unrefs := AutoUnrefs(compiler)
-            compiledRight := compiler.compileExpression(right, TypeContext.TYPE(Type.Bit()))
+            compiledRight := compiler.compileExpression(right, TypeContext.TYPE(Type.Bit(), false))
             if compiledRight == null {
                 return null
             }

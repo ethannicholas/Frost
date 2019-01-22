@@ -4,6 +4,7 @@ typedef struct frost$core$Class frost$core$Class;
 #include "frost/core/Int32_types.h"
 #include "org/frostlang/frostc/IR/Block/ID_types.h"
 typedef struct frost$collections$Array frost$collections$Array;
+#include "frost/core/Bit_types.h"
 typedef struct frost$core$String frost$core$String;
 
 typedef struct org$frostlang$frostc$IR$Block {
@@ -12,6 +13,7 @@ typedef struct org$frostlang$frostc$IR$Block {
     org$frostlang$frostc$IR$Block$ID id;
     frost$collections$Array* ids;
     frost$collections$Array* statements;
+    frost$core$Bit containsExplicitCode;
 } org$frostlang$frostc$IR$Block;
 #include "frost/core/Class.h"
 typedef struct { frost$core$Class* cl; int32_t refCount; frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[2]; } org$frostlang$frostc$IR$Block$class_type;

@@ -307,5 +307,6 @@ class InputStream {
     }
 
     method close():Error? {
+        return null
     }
 }

@@ -36,11 +36,11 @@ static frost$core$String $s18 = { (frost$core$Class*) &frost$core$String$class, 
 
 void org$frostlang$frostc$parser$SyntaxHighlighter$reset(org$frostlang$frostc$parser$SyntaxHighlighter* param0) {
 
-// line 74
+// line 75
 frost$collections$Array** $tmp2 = &param0->tokens;
 frost$collections$Array* $tmp3 = *$tmp2;
 frost$collections$Array$clear($tmp3);
-// line 75
+// line 76
 frost$collections$Stack** $tmp4 = &param0->stack;
 frost$collections$Stack* $tmp5 = *$tmp4;
 frost$collections$Stack$clear($tmp5);
@@ -49,7 +49,7 @@ return;
 }
 void org$frostlang$frostc$parser$SyntaxHighlighter$open$org$frostlang$frostc$parser$SyntaxHighlighter$Kind(org$frostlang$frostc$parser$SyntaxHighlighter* param0, org$frostlang$frostc$parser$SyntaxHighlighter$Kind param1) {
 
-// line 79
+// line 80
 frost$collections$Stack** $tmp6 = &param0->stack;
 frost$collections$Stack* $tmp7 = *$tmp6;
 org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper* $tmp8;
@@ -57,13 +57,12 @@ $tmp8 = (org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) frostObjec
 $tmp8->value = param1;
 frost$collections$Stack$push$frost$collections$Stack$T($tmp7, ((frost$core$Object*) $tmp8));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp8));
-// unreffing REF($4:frost.collections.Stack.T)
 return;
 
 }
 void org$frostlang$frostc$parser$SyntaxHighlighter$close$org$frostlang$frostc$parser$SyntaxHighlighter$Kind(org$frostlang$frostc$parser$SyntaxHighlighter* param0, org$frostlang$frostc$parser$SyntaxHighlighter$Kind param1) {
 
-// line 83
+// line 84
 frost$collections$Stack** $tmp9 = &param0->stack;
 frost$collections$Stack* $tmp10 = *$tmp9;
 frost$core$Int64 $tmp11 = (frost$core$Int64) {0};
@@ -74,24 +73,22 @@ frost$core$Bit $tmp15 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($
 bool $tmp16 = $tmp15.value;
 if ($tmp16) goto block1; else goto block2;
 block2:;
-frost$core$Int64 $tmp17 = (frost$core$Int64) {83};
+frost$core$Int64 $tmp17 = (frost$core$Int64) {84};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s18, $tmp17);
 abort(); // unreachable
 block1:;
 frost$core$Frost$unref$frost$core$Object$Q($tmp12);
-// unreffing REF($5:frost.collections.Stack.T)
-// line 84
+// line 85
 frost$collections$Stack** $tmp19 = &param0->stack;
 frost$collections$Stack* $tmp20 = *$tmp19;
 frost$core$Object* $tmp21 = frost$collections$Stack$pop$R$frost$collections$Stack$T($tmp20);
 frost$core$Frost$unref$frost$core$Object$Q($tmp21);
-// unreffing REF($22:frost.collections.Stack.T)
 return;
 
 }
 void org$frostlang$frostc$parser$SyntaxHighlighter$add$org$frostlang$frostc$parser$Token$org$frostlang$frostc$parser$SyntaxHighlighter$Kind(org$frostlang$frostc$parser$SyntaxHighlighter* param0, org$frostlang$frostc$parser$Token param1, org$frostlang$frostc$parser$SyntaxHighlighter$Kind param2) {
 
-// line 88
+// line 89
 frost$collections$Array** $tmp22 = &param0->tokens;
 frost$collections$Array* $tmp23 = *$tmp22;
 org$frostlang$frostc$Pair* $tmp24 = (org$frostlang$frostc$Pair*) frostObjectAlloc(32, (frost$core$Class*) &org$frostlang$frostc$Pair$class);
@@ -104,17 +101,14 @@ $tmp26->value = param2;
 org$frostlang$frostc$Pair$init$org$frostlang$frostc$Pair$A$org$frostlang$frostc$Pair$B($tmp24, ((frost$core$Object*) $tmp25), ((frost$core$Object*) $tmp26));
 frost$collections$Array$add$frost$collections$Array$T($tmp23, ((frost$core$Object*) $tmp24));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp26));
-// unreffing REF($7:org.frostlang.frostc.Pair.B)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp25));
-// unreffing REF($6:org.frostlang.frostc.Pair.A)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp24));
-// unreffing REF($4:org.frostlang.frostc.Pair<org.frostlang.frostc.parser.Token, org.frostlang.frostc.parser.SyntaxHighlighter.Kind>)
 return;
 
 }
 void org$frostlang$frostc$parser$SyntaxHighlighter$add$org$frostlang$frostc$parser$Token(org$frostlang$frostc$parser$SyntaxHighlighter* param0, org$frostlang$frostc$parser$Token param1) {
 
-// line 92
+// line 93
 frost$collections$Stack** $tmp27 = &param0->stack;
 frost$collections$Stack* $tmp28 = *$tmp27;
 frost$core$Int64 $tmp29 = frost$collections$Stack$get_count$R$frost$core$Int64($tmp28);
@@ -126,7 +120,7 @@ frost$core$Bit $tmp34 = (frost$core$Bit) {$tmp33};
 bool $tmp35 = $tmp34.value;
 if ($tmp35) goto block1; else goto block2;
 block1:;
-// line 93
+// line 94
 frost$collections$Stack** $tmp36 = &param0->stack;
 frost$collections$Stack* $tmp37 = *$tmp36;
 frost$core$Int64 $tmp38 = (frost$core$Int64) {0};
@@ -134,11 +128,10 @@ frost$core$Object* $tmp39 = frost$collections$Stack$$IDX$frost$core$Int64$R$fros
 $fn41 $tmp40 = ($fn41) param0->$class->vtable[5];
 $tmp40(param0, param1, ((org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) $tmp39)->value);
 frost$core$Frost$unref$frost$core$Object$Q($tmp39);
-// unreffing REF($17:frost.collections.Stack.T)
-// line 94
+// line 95
 return;
 block2:;
-// line 97
+// line 98
 org$frostlang$frostc$parser$Token$Kind $tmp42 = param1.kind;
 frost$core$Int64 $tmp43 = $tmp42.$rawValue;
 frost$core$Int64 $tmp44 = (frost$core$Int64) {1};
@@ -146,7 +139,7 @@ frost$core$Bit $tmp45 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($
 bool $tmp46 = $tmp45.value;
 if ($tmp46) goto block4; else goto block5;
 block4:;
-// line 99
+// line 100
 frost$core$Int64 $tmp47 = (frost$core$Int64) {11};
 org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp48 = org$frostlang$frostc$parser$SyntaxHighlighter$Kind$init$frost$core$Int64($tmp47);
 $fn50 $tmp49 = ($fn50) param0->$class->vtable[5];
@@ -193,7 +186,7 @@ frost$core$Bit $tmp73 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($
 bool $tmp74 = $tmp73.value;
 if ($tmp74) goto block6; else goto block14;
 block6:;
-// line 103
+// line 104
 frost$core$Int64 $tmp75 = (frost$core$Int64) {9};
 org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp76 = org$frostlang$frostc$parser$SyntaxHighlighter$Kind$init$frost$core$Int64($tmp75);
 $fn78 $tmp77 = ($fn78) param0->$class->vtable[5];
@@ -210,7 +203,7 @@ frost$core$Bit $tmp83 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($
 bool $tmp84 = $tmp83.value;
 if ($tmp84) goto block15; else goto block17;
 block15:;
-// line 106
+// line 107
 frost$core$Int64 $tmp85 = (frost$core$Int64) {1};
 org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp86 = org$frostlang$frostc$parser$SyntaxHighlighter$Kind$init$frost$core$Int64($tmp85);
 $fn88 $tmp87 = ($fn88) param0->$class->vtable[5];
@@ -222,7 +215,7 @@ frost$core$Bit $tmp90 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($
 bool $tmp91 = $tmp90.value;
 if ($tmp91) goto block18; else goto block19;
 block18:;
-// line 109
+// line 110
 frost$core$Int64 $tmp92 = (frost$core$Int64) {1};
 org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp93 = org$frostlang$frostc$parser$SyntaxHighlighter$Kind$init$frost$core$Int64($tmp92);
 $fn95 $tmp94 = ($fn95) param0->$class->vtable[5];
@@ -234,7 +227,7 @@ frost$core$Bit $tmp97 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($
 bool $tmp98 = $tmp97.value;
 if ($tmp98) goto block20; else goto block21;
 block20:;
-// line 112
+// line 113
 frost$core$Int64 $tmp99 = (frost$core$Int64) {2};
 org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp100 = org$frostlang$frostc$parser$SyntaxHighlighter$Kind$init$frost$core$Int64($tmp99);
 $fn102 $tmp101 = ($fn102) param0->$class->vtable[5];
@@ -246,7 +239,7 @@ frost$core$Bit $tmp104 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit(
 bool $tmp105 = $tmp104.value;
 if ($tmp105) goto block22; else goto block23;
 block22:;
-// line 115
+// line 116
 frost$core$Int64 $tmp106 = (frost$core$Int64) {3};
 org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp107 = org$frostlang$frostc$parser$SyntaxHighlighter$Kind$init$frost$core$Int64($tmp106);
 $fn109 $tmp108 = ($fn109) param0->$class->vtable[5];
@@ -323,7 +316,7 @@ frost$core$Bit $tmp150 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit(
 bool $tmp151 = $tmp150.value;
 if ($tmp151) goto block24; else goto block38;
 block24:;
-// line 121
+// line 122
 frost$core$Int64 $tmp152 = (frost$core$Int64) {7};
 org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp153 = org$frostlang$frostc$parser$SyntaxHighlighter$Kind$init$frost$core$Int64($tmp152);
 $fn155 $tmp154 = ($fn155) param0->$class->vtable[5];
@@ -405,7 +398,7 @@ frost$core$Bit $tmp199 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit(
 bool $tmp200 = $tmp199.value;
 if ($tmp200) goto block39; else goto block54;
 block39:;
-// line 127
+// line 128
 frost$core$Int64 $tmp201 = (frost$core$Int64) {8};
 org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp202 = org$frostlang$frostc$parser$SyntaxHighlighter$Kind$init$frost$core$Int64($tmp201);
 $fn204 $tmp203 = ($fn204) param0->$class->vtable[5];
@@ -422,7 +415,7 @@ frost$core$Bit $tmp209 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit(
 bool $tmp210 = $tmp209.value;
 if ($tmp210) goto block55; else goto block57;
 block55:;
-// line 130
+// line 131
 frost$core$Int64 $tmp211 = (frost$core$Int64) {9};
 org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp212 = org$frostlang$frostc$parser$SyntaxHighlighter$Kind$init$frost$core$Int64($tmp211);
 $fn214 $tmp213 = ($fn214) param0->$class->vtable[5];
@@ -674,14 +667,14 @@ frost$core$Bit $tmp360 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit(
 bool $tmp361 = $tmp360.value;
 if ($tmp361) goto block58; else goto block107;
 block58:;
-// line 146
+// line 147
 frost$core$Int64 $tmp362 = (frost$core$Int64) {11};
 org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp363 = org$frostlang$frostc$parser$SyntaxHighlighter$Kind$init$frost$core$Int64($tmp362);
 $fn365 $tmp364 = ($fn365) param0->$class->vtable[5];
 $tmp364(param0, param1, $tmp363);
 goto block3;
 block107:;
-// line 149
+// line 150
 frost$core$Int64 $tmp366 = (frost$core$Int64) {0};
 org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp367 = org$frostlang$frostc$parser$SyntaxHighlighter$Kind$init$frost$core$Int64($tmp366);
 $fn369 $tmp368 = ($fn369) param0->$class->vtable[5];
@@ -693,7 +686,7 @@ return;
 }
 void org$frostlang$frostc$parser$SyntaxHighlighter$rewind(org$frostlang$frostc$parser$SyntaxHighlighter* param0) {
 
-// line 155
+// line 156
 frost$collections$Array** $tmp370 = &param0->tokens;
 frost$collections$Array* $tmp371 = *$tmp370;
 frost$collections$Array** $tmp372 = &param0->tokens;
@@ -711,13 +704,12 @@ int64_t $tmp381 = $tmp379 - $tmp380;
 frost$core$Int64 $tmp382 = (frost$core$Int64) {$tmp381};
 frost$core$Object* $tmp383 = frost$collections$Array$removeIndex$frost$core$Int64$R$frost$collections$Array$T($tmp371, $tmp382);
 frost$core$Frost$unref$frost$core$Object$Q($tmp383);
-// unreffing REF($14:frost.collections.Array.T)
 return;
 
 }
 void org$frostlang$frostc$parser$SyntaxHighlighter$init(org$frostlang$frostc$parser$SyntaxHighlighter* param0) {
 
-// line 68
+// line 69
 frost$collections$Stack* $tmp384 = (frost$collections$Stack*) frostObjectAlloc(24, (frost$core$Class*) &frost$collections$Stack$class);
 frost$collections$Stack$init($tmp384);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp384));
@@ -727,8 +719,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp386));
 frost$collections$Stack** $tmp387 = &param0->stack;
 *$tmp387 = $tmp384;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp384));
-// unreffing REF($1:frost.collections.Stack<org.frostlang.frostc.parser.SyntaxHighlighter.Kind>)
-// line 71
+// line 72
 frost$collections$Array* $tmp388 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
 frost$collections$Array$init($tmp388);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp388));
@@ -738,7 +729,6 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp390));
 frost$collections$Array** $tmp391 = &param0->tokens;
 *$tmp391 = $tmp388;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp388));
-// unreffing REF($16:frost.collections.Array<org.frostlang.frostc.Pair<org.frostlang.frostc.parser.Token, org.frostlang.frostc.parser.SyntaxHighlighter.Kind>>)
 return;
 
 }

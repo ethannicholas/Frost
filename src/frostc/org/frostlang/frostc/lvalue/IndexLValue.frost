@@ -52,7 +52,7 @@ class IndexLValue : LValue {
             if m !== null {
                 assert m.first.count = 1 -- FIXME handle ambiguous matches
                 index := compiler.compileExpression(rawIndex,
-                        TypeContext.TYPE(m.first[0].parameterType(0)))
+                        TypeContext.TYPE(m.first[0].parameterType(0), false))
             }
         }
         if index == null {
@@ -87,7 +87,7 @@ class IndexLValue : LValue {
                     methods := assignment->Methods.methods
                 }
                 otherwise {
-                    assert false
+                    unreachable
                 }
             }
             def args := Array<ASTNode>()
@@ -98,7 +98,7 @@ class IndexLValue : LValue {
             if m !== null {
                 assert m.first.count = 1 -- FIXME handle ambiguous matches
                 index := compiler.compileExpression(rawIndex,
-                        TypeContext.TYPE(m.first[0].parameterType(0)))
+                        TypeContext.TYPE(m.first[0].parameterType(0), false))
             }
             if index == null {
                 -- just to get us through to where the error should occur down below at call

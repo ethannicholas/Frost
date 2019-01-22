@@ -39,7 +39,7 @@ org$frostlang$frostc$Type$Kind $tmp6 = *$tmp5;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp7;
 $tmp7 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp7->value = $tmp6;
-frost$core$Int64 $tmp8 = (frost$core$Int64) {13};
+frost$core$Int64 $tmp8 = (frost$core$Int64) {12};
 org$frostlang$frostc$Type$Kind $tmp9 = org$frostlang$frostc$Type$Kind$init$frost$core$Int64($tmp8);
 org$frostlang$frostc$Type$Kind$wrapper* $tmp10;
 $tmp10 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
@@ -64,17 +64,12 @@ frost$core$String* $tmp21 = frost$core$String$$ADD$frost$core$Object$R$frost$cor
 frost$core$String* $tmp23 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp21, &$s24);
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s25, $tmp16, $tmp23);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp23));
-// unreffing REF($24:frost.core.String)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp21));
-// unreffing REF($23:frost.core.String)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp20));
-// unreffing REF($22:frost.core.Object)
 abort(); // unreachable
 block3:;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Equatable*) $tmp10)));
-// unreffing REF($12:frost.core.Equatable.T)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Equatable*) $tmp7)));
-// unreffing REF($8:frost.core.Equatable<org.frostlang.frostc.Type.Kind>)
 goto block2;
 block2:;
 // line 27

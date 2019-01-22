@@ -189,6 +189,8 @@ add_executable(bootstrap
     bootstrap/src/org/frostlang/frost/UInt64List.c
     bootstrap/src/org/frostlang/frost/UInt8List.c
     bootstrap/src/org/frostlang/frostc/Alias.c
+    bootstrap/src/org/frostlang/frostc/Analyzer.c
+    bootstrap/src/org/frostlang/frostc/Analyzer/State.c
     bootstrap/src/org/frostlang/frostc/Annotations.c
     bootstrap/src/org/frostlang/frostc/Annotations/Expression.c
     bootstrap/src/org/frostlang/frostc/Annotations/Flag.c
@@ -823,6 +825,7 @@ set(frostc_source
     ${CMAKE_CURRENT_BINARY_DIR}/org/frostlang/regex/RegexLexer.frost
     ${CMAKE_CURRENT_BINARY_DIR}/org/frostlang/regex/RegexToken.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/Alias.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/Analyzer.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/Annotations.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/ASTNode.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/CCodeGenerator.frost

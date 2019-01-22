@@ -26,6 +26,7 @@ class Tuple6<T0, T1, T2, T3, T4, T5> {
             when 4 { return f4 }
             when 5 { return f5 }
         }
+        return null
     }
 
     @override

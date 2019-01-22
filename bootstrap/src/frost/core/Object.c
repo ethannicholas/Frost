@@ -23,9 +23,7 @@ frost$core$String* $tmp6 = frost$core$String$$ADD$frost$core$String$R$frost$core
 frost$core$String* $tmp8 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp6, &$s9);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp8));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp8));
-// unreffing REF($6:frost.core.String)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp6));
-// unreffing REF($5:frost.core.String)
 return $tmp8;
 
 }

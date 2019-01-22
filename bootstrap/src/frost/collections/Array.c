@@ -173,15 +173,12 @@ frost$core$Frost$unref$frost$core$Object$Q($tmp28);
 frost$core$Object* $tmp29 = *(&local0);
 frost$collections$Array$add$frost$collections$Array$T(param0, $tmp29);
 frost$core$Frost$unref$frost$core$Object$Q($tmp27);
-// unreffing REF($23:frost.collections.Iterator.T)
 frost$core$Object* $tmp30 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q($tmp30);
-// unreffing v
 *(&local0) = ((frost$core$Object*) NULL);
 goto block1;
 block3:;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp18));
-// unreffing REF($12:frost.collections.Iterator<frost.collections.Iterable.T>)
 return;
 
 }
@@ -610,15 +607,12 @@ frost$core$Int64 $tmp273 = (frost$core$Int64) {$tmp272};
 frost$core$Int64* $tmp274 = &param0->_count;
 *$tmp274 = $tmp273;
 frost$core$Frost$unref$frost$core$Object$Q($tmp258);
-// unreffing REF($28:frost.collections.Iterator.T)
 frost$core$Object* $tmp275 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q($tmp275);
-// unreffing v
 *(&local0) = ((frost$core$Object*) NULL);
 goto block1;
 block3:;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp249));
-// unreffing REF($17:frost.collections.Iterator<frost.collections.Iterable.T>)
 return;
 
 }
@@ -740,7 +734,6 @@ frost$core$Object* $tmp336 = *(&local1);
 frost$core$Frost$unref$frost$core$Object$Q($tmp336);
 *(&local1) = $tmp335;
 frost$core$Frost$unref$frost$core$Object$Q($tmp335);
-// unreffing REF($26:frost.collections.Array.T)
 // line 122
 frost$core$Int64* $tmp337 = &param0->_count;
 frost$core$Int64 $tmp338 = *$tmp337;
@@ -785,7 +778,6 @@ frost$core$Int64 $tmp368 = (frost$core$Int64) {$tmp367};
 frost$core$Object* $tmp369 = frost$collections$Array$$IDX$frost$core$Int64$R$frost$collections$Array$T(param0, $tmp368);
 frost$collections$Array$$IDXEQ$frost$core$Int64$frost$collections$Array$T(param0, $tmp362, $tmp369);
 frost$core$Frost$unref$frost$core$Object$Q($tmp369);
-// unreffing REF($78:frost.collections.Array.T)
 goto block8;
 block8:;
 frost$core$Int64 $tmp370 = *(&local2);
@@ -841,7 +833,6 @@ frost$core$Object* $tmp404 = *(&local1);
 frost$core$Frost$ref$frost$core$Object$Q($tmp404);
 frost$core$Object* $tmp405 = *(&local1);
 frost$core$Frost$unref$frost$core$Object$Q($tmp405);
-// unreffing result
 *(&local1) = ((frost$core$Object*) NULL);
 return $tmp404;
 
@@ -938,7 +929,6 @@ frost$core$MutableString* $tmp455 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp455));
 *(&local0) = $tmp454;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp454));
-// unreffing REF($1:frost.core.MutableString)
 // line 141
 frost$core$MutableString* $tmp456 = *(&local0);
 frost$core$MutableString$append$frost$core$String($tmp456, &$s457);
@@ -1005,15 +995,12 @@ frost$core$MutableString$append$frost$core$String($tmp485, &$s486);
 goto block5;
 block5:;
 frost$core$Frost$unref$frost$core$Object$Q($tmp473);
-// unreffing REF($39:frost.collections.Iterator.T)
 frost$core$Object* $tmp487 = *(&local2);
 frost$core$Frost$unref$frost$core$Object$Q($tmp487);
-// unreffing v
 *(&local2) = ((frost$core$Object*) NULL);
 goto block1;
 block3:;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp464));
-// unreffing REF($28:frost.collections.Iterator<frost.collections.Iterable.T>)
 // line 153
 frost$core$MutableString* $tmp488 = *(&local0);
 frost$core$MutableString$append$frost$core$String($tmp488, &$s489);
@@ -1022,14 +1009,11 @@ frost$core$MutableString* $tmp490 = *(&local0);
 frost$core$String* $tmp491 = frost$core$MutableString$finish$R$frost$core$String($tmp490);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp491));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp491));
-// unreffing REF($91:frost.core.String)
 frost$core$String* $tmp492 = *(&local1);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp492));
-// unreffing separator
 *(&local1) = ((frost$core$String*) NULL);
 frost$core$MutableString* $tmp493 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp493));
-// unreffing result
 *(&local0) = ((frost$core$MutableString*) NULL);
 return $tmp491;
 

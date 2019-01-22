@@ -38,7 +38,6 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp5));
 frost$core$MutableString** $tmp6 = &param0->data;
 *$tmp6 = $tmp3;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp3));
-// unreffing REF($1:frost.core.MutableString)
 // line 28
 frost$io$OutputStream$init(((frost$io$OutputStream*) param0));
 return;
@@ -85,7 +84,6 @@ $fn17 $tmp16 = ($fn17) ((frost$core$Object*) $tmp15)->$class->vtable[0];
 frost$core$String* $tmp18 = $tmp16(((frost$core$Object*) $tmp15));
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp18));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp18));
-// unreffing REF($5:frost.core.String)
 return $tmp18;
 
 }
@@ -97,7 +95,6 @@ frost$core$MutableString* $tmp20 = *$tmp19;
 frost$core$String* $tmp21 = frost$core$MutableString$finish$R$frost$core$String($tmp20);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp21));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp21));
-// unreffing REF($3:frost.core.String)
 return $tmp21;
 
 }

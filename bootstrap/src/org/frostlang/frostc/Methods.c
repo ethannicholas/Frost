@@ -88,7 +88,6 @@ frost$core$String** $tmp27 = &((org$frostlang$frostc$Symbol*) ((org$frostlang$fr
 frost$core$String* $tmp28 = *$tmp27;
 org$frostlang$frostc$Symbol$init$org$frostlang$frostc$Symbol$Kind$org$frostlang$frostc$Position$frost$core$String(((org$frostlang$frostc$Symbol*) param0), $tmp20, $tmp21, $tmp28);
 frost$core$Frost$unref$frost$core$Object$Q($tmp26);
-// unreffing REF($30:frost.collections.ListView.T)
 // line 10
 org$frostlang$frostc$FixedArray* $tmp29 = (org$frostlang$frostc$FixedArray*) frostObjectAlloc(40, (frost$core$Class*) &org$frostlang$frostc$FixedArray$class);
 org$frostlang$frostc$FixedArray$init$frost$collections$ListView$LTorg$frostlang$frostc$FixedArray$T$GT($tmp29, param1);
@@ -99,7 +98,6 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp31));
 org$frostlang$frostc$FixedArray** $tmp32 = &param0->methods;
 *$tmp32 = $tmp29;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp29));
-// unreffing REF($40:org.frostlang.frostc.FixedArray<org.frostlang.frostc.MethodDecl>)
 return;
 
 }
@@ -117,7 +115,6 @@ frost$collections$HashSet* $tmp34 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp34));
 *(&local0) = $tmp33;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp33));
-// unreffing REF($1:frost.collections.HashSet<frost.core.String>)
 // line 16
 ITable* $tmp35 = ((frost$collections$Iterable*) param0)->$class->itable;
 while ($tmp35->$class != (frost$core$Class*) &frost$collections$Iterable$class) {
@@ -153,17 +150,13 @@ org$frostlang$frostc$MethodDecl* $tmp50 = *(&local1);
 frost$core$String* $tmp51 = org$frostlang$frostc$MethodDecl$get_signature$R$frost$core$String($tmp50);
 frost$collections$HashSet$add$frost$collections$HashSet$T($tmp49, ((frost$collections$Key*) $tmp51));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp51));
-// unreffing REF($41:frost.core.String)
 frost$core$Frost$unref$frost$core$Object$Q($tmp47);
-// unreffing REF($29:frost.collections.Iterator.T)
 org$frostlang$frostc$MethodDecl* $tmp52 = *(&local1);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp52));
-// unreffing m
 *(&local1) = ((org$frostlang$frostc$MethodDecl*) NULL);
 goto block1;
 block3:;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp38));
-// unreffing REF($18:frost.collections.Iterator<frost.collections.Iterable.T>)
 // line 19
 frost$collections$HashSet* $tmp53 = *(&local0);
 ITable* $tmp54 = ((frost$collections$CollectionView*) $tmp53)->$class->itable;
@@ -221,17 +214,13 @@ org$frostlang$frostc$MethodDecl* $tmp82 = *(&local2);
 frost$core$String* $tmp83 = org$frostlang$frostc$MethodDecl$get_declaration$R$frost$core$String($tmp82);
 frost$io$Console$printLine$frost$core$String($tmp83);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp83));
-// unreffing REF($100:frost.core.String)
 frost$core$Frost$unref$frost$core$Object$Q($tmp80);
-// unreffing REF($90:frost.collections.Iterator.T)
 org$frostlang$frostc$MethodDecl* $tmp84 = *(&local2);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp84));
-// unreffing m
 *(&local2) = ((org$frostlang$frostc$MethodDecl*) NULL);
 goto block6;
 block8:;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp71));
-// unreffing REF($79:frost.collections.Iterator<frost.collections.Iterable.T>)
 goto block5;
 block5:;
 // line 25
@@ -254,7 +243,6 @@ bool $tmp96 = $tmp94 < $tmp95;
 frost$core$Bit $tmp97 = (frost$core$Bit) {$tmp96};
 frost$collections$HashSet* $tmp98 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp98));
-// unreffing sigs
 *(&local0) = ((frost$collections$HashSet*) NULL);
 return $tmp97;
 

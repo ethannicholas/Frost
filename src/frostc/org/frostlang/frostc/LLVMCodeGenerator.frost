@@ -6,6 +6,8 @@ uses org.frostlang.frostc.parser.Token
 
 @final
 class LLVMCodeGenerator : CodeGenerator {
+    -- FIXME remove this now that refcounting is reliable; should just be able to give constants a
+    -- starting refcount of 1 and trust they'll never be destroyed
     constant NO_REFCNT := -999
 
     class ClassConstant : Immutable {
@@ -153,7 +155,7 @@ class LLVMCodeGenerator : CodeGenerator {
             currentBlock := label
         }
         fail(error) {
-            assert false, error.asString
+            unreachable, error.asString
         }
     }
 
@@ -374,7 +376,7 @@ class LLVMCodeGenerator : CodeGenerator {
             compiler.currentClass.pop()
         }
         fail(error) {
-            assert false, error.asString
+            unreachable, error.asString
         }
         return
     }
@@ -400,7 +402,7 @@ class LLVMCodeGenerator : CodeGenerator {
             types.printLine("\{llvmType(t)}$nullable = type { \{llvmType(t)}, i1 }")
         }
         fail(error) {
-            assert false, error.asString
+            unreachable, error.asString
         }
     }
 
@@ -426,7 +428,7 @@ class LLVMCodeGenerator : CodeGenerator {
                 match sizeOf(t) {
                     when 4    { return "float" }
                     when 8    { return "double" }
-                    otherwise { assert false }
+                    otherwise { unreachable }
                 }
             }
             when Type.Kind.CLASS {
@@ -591,7 +593,7 @@ class LLVMCodeGenerator : CodeGenerator {
             return previous
         }
         fail(error) {
-            assert false, error.asString
+            unreachable
         }
     }
 
@@ -690,7 +692,7 @@ class LLVMCodeGenerator : CodeGenerator {
             return result
         }
         fail(error) {
-            assert false, error.asString
+            unreachable
         }
     }
 
@@ -733,7 +735,7 @@ class LLVMCodeGenerator : CodeGenerator {
                 types.printLine(result.finish())
             }
             fail(error) {
-                assert false, error.asString
+                unreachable, error.asString
             }
             previous := "%$itable* bitcast(\{t}* \{name} to %$itable*)"
         }
@@ -864,7 +866,7 @@ class LLVMCodeGenerator : CodeGenerator {
             return result
         }
         fail(error) {
-            assert false, error.asString
+            unreachable
         }
     }
 
@@ -925,7 +927,7 @@ class LLVMCodeGenerator : CodeGenerator {
             return result
         }
         fail(error) {
-            assert false, error.asString
+            unreachable
         }
     }
 
@@ -1090,7 +1092,7 @@ class LLVMCodeGenerator : CodeGenerator {
             return wrapperCast
         }
         fail(error) {
-            assert false, error.asString
+            unreachable
         }
     }
 
@@ -1136,7 +1138,7 @@ class LLVMCodeGenerator : CodeGenerator {
             return result
         }
         fail(error) {
-            assert false, error.asString
+            unreachable
         }
     }
 
@@ -1151,7 +1153,7 @@ class LLVMCodeGenerator : CodeGenerator {
             return result
         }
         fail(error) {
-            assert false, error.asString
+            unreachable
         }
     }
 
@@ -1164,7 +1166,7 @@ class LLVMCodeGenerator : CodeGenerator {
             return result
         }
         fail(error) {
-            assert false, error.asString
+            unreachable
         }
     }
 
@@ -1255,7 +1257,7 @@ class LLVMCodeGenerator : CodeGenerator {
                     debugInfo(position))
         }
         fail(error) {
-            assert false, error.asString
+            unreachable, error.asString
         }
         return result
     }
@@ -1298,7 +1300,7 @@ class LLVMCodeGenerator : CodeGenerator {
             return result
         }
         fail(error) {
-            assert false, error.asString
+            unreachable
         }
     }
 
@@ -1339,7 +1341,7 @@ class LLVMCodeGenerator : CodeGenerator {
             return "%self"
         }
         fail(error) {
-            assert false, error.asString
+            unreachable
         }
     }
 
@@ -1405,7 +1407,7 @@ class LLVMCodeGenerator : CodeGenerator {
             declarations.printLine(")")
         }
         fail(error) {
-            assert false, error.asString
+            unreachable, error.asString
         }
     }
 
@@ -1443,7 +1445,7 @@ class LLVMCodeGenerator : CodeGenerator {
                 return getStringReference(s)
             }
             otherwise {
-                assert false, "unsupported value \{v}"
+                unreachable
             }
         }
     }
@@ -1467,7 +1469,7 @@ class LLVMCodeGenerator : CodeGenerator {
             }
         }
         fail(error) {
-            assert false, error.asString
+            unreachable
         }
     }
 
@@ -1494,7 +1496,7 @@ class LLVMCodeGenerator : CodeGenerator {
             }
         }
         fail(error) {
-            assert false, error.asString
+            unreachable, error.asString
         }
     }
 
@@ -1518,7 +1520,7 @@ class LLVMCodeGenerator : CodeGenerator {
             }
         }
         fail(error) {
-            assert false, error.asString
+            unreachable, error.asString
         }
     }
 
@@ -1555,7 +1557,7 @@ class LLVMCodeGenerator : CodeGenerator {
                     when Binary.Operator.GTEQ       { llvmOp := "icmp sge" }
                     when Binary.Operator.LTEQ       { llvmOp := "icmp sle" }
                     otherwise {
-                        assert false, "unsupported signed operator \{op}"
+                        unreachable, "unsupported signed operator \{op}"
                     }
                 }
             }
@@ -1581,7 +1583,7 @@ class LLVMCodeGenerator : CodeGenerator {
                     when Binary.Operator.GTEQ       { llvmOp := "icmp uge" }
                     when Binary.Operator.LTEQ       { llvmOp := "icmp ule" }
                     otherwise {
-                        assert false, "unsupported unsigned operator \{op}"
+                        unreachable, "unsupported unsigned operator \{op}"
                     }
                 }
             }
@@ -1598,7 +1600,7 @@ class LLVMCodeGenerator : CodeGenerator {
                     when Binary.Operator.GTEQ { llvmOp := "fcmp oge" }
                     when Binary.Operator.LTEQ { llvmOp := "fcmp ole" }
                     otherwise {
-                        assert false, "unsupported float operator \{op}"
+                        unreachable, "unsupported float operator \{op}"
                     }
                 }
             }
@@ -1627,7 +1629,7 @@ class LLVMCodeGenerator : CodeGenerator {
                         llvmOp := "icmp ne"
                     }
                     otherwise {
-                        assert false, "unsupported class operator \{op}"
+                        unreachable, "unsupported class operator \{op}"
                     }
                 }
             }
@@ -1640,7 +1642,7 @@ class LLVMCodeGenerator : CodeGenerator {
                     debugInfo(position))
         }
         fail(error) {
-            assert false, error.asString
+            unreachable, error.asString
         }
         refs[id] := result
     }
@@ -1650,7 +1652,7 @@ class LLVMCodeGenerator : CodeGenerator {
             out.printLine("br label %\{target}\{debugInfo(position)}")
         }
         fail(error) {
-            assert false, error.asString
+            unreachable, error.asString
         }
     }
 
@@ -1665,7 +1667,7 @@ class LLVMCodeGenerator : CodeGenerator {
                     "label %\{ifFalse}\{debugInfo(position)}")
         }
         fail(error) {
-            assert false, error.asString
+            unreachable, error.asString
         }
     }
 
@@ -1691,7 +1693,7 @@ class LLVMCodeGenerator : CodeGenerator {
             refs[id] := result
         }
         fail(error) {
-            assert false, error.asString
+            unreachable, error.asString
         }
     }
 
@@ -1711,7 +1713,7 @@ class LLVMCodeGenerator : CodeGenerator {
             refs[id] := current
         }
         fail(error) {
-            assert false, error.asString
+            unreachable, error.asString
         }
     }
 
@@ -1738,7 +1740,21 @@ class LLVMCodeGenerator : CodeGenerator {
             out.printLine(")\{debugInfo(position)}")
         }
         fail(error) {
-            assert false, error.asString
+            unreachable, error.asString
+        }
+    }
+
+    method writeEnd() {
+        try {
+            if compiler.currentMethod[0].returnType = Type.Void() {
+                out.printLine("ret void")
+            }
+            else {
+                out.printLine("unreachable")
+            }
+        }
+        fail(error) {
+            unreachable, error.asString
         }
     }
 
@@ -1752,7 +1768,7 @@ class LLVMCodeGenerator : CodeGenerator {
             refs[id] := result
         }
         fail(error) {
-            assert false, error.asString
+            unreachable, error.asString
         }
     }
 
@@ -1778,7 +1794,7 @@ class LLVMCodeGenerator : CodeGenerator {
             refs[id] := cast
         }
         fail(error) {
-            assert false, error.asString
+            unreachable, error.asString
         }
     }
 
@@ -1802,7 +1818,7 @@ class LLVMCodeGenerator : CodeGenerator {
             }
         }
         fail(error) {
-            assert false, error.asString
+            unreachable, error.asString
         }
     }
 
@@ -1873,7 +1889,7 @@ class LLVMCodeGenerator : CodeGenerator {
             refs[id] := methodPtr
         }
         fail(error) {
-            assert false, error.asString
+            unreachable, error.asString
         }
     }
 
@@ -1900,7 +1916,7 @@ class LLVMCodeGenerator : CodeGenerator {
             refs[id] := result
         }
         fail(error) {
-            assert false, error.asString
+            unreachable, error.asString
         }
     }
 
@@ -1912,7 +1928,7 @@ class LLVMCodeGenerator : CodeGenerator {
             refs[id] := result
         }
         fail(error) {
-            assert false, error.asString
+            unreachable, error.asString
         }
     }
 
@@ -1930,7 +1946,7 @@ class LLVMCodeGenerator : CodeGenerator {
             refs[id] := result
         }
         fail(error) {
-            assert false, error.asString
+            unreachable, error.asString
         }
     }
 
@@ -1941,7 +1957,7 @@ class LLVMCodeGenerator : CodeGenerator {
             refs[id] := result
         }
         fail(error) {
-            assert false, error.asString
+            unreachable, error.asString
         }
     }
 
@@ -1961,7 +1977,7 @@ class LLVMCodeGenerator : CodeGenerator {
             refs[id] := result
         }
         fail(error) {
-            assert false, error.asString
+            unreachable, error.asString
         }
     }
 
@@ -1973,7 +1989,7 @@ class LLVMCodeGenerator : CodeGenerator {
             out.printLine("call void @frostFree(i8* \{cast})\{debugInfo(position)}")
         }
         fail(error) {
-            assert false, error.asString
+            unreachable, error.asString
         }
     }
 
@@ -1991,7 +2007,7 @@ class LLVMCodeGenerator : CodeGenerator {
             refs[id] := result
         }
         fail(error) {
-            assert false, error.asString
+            unreachable, error.asString
         }
     }
 
@@ -2007,7 +2023,7 @@ class LLVMCodeGenerator : CodeGenerator {
             refs[id] := result
         }
         fail(error) {
-            assert false, error.asString
+            unreachable, error.asString
         }
     }
 
@@ -2034,7 +2050,7 @@ class LLVMCodeGenerator : CodeGenerator {
             refs[id] := result
         }
         fail(error) {
-            assert false, error.asString
+            unreachable, error.asString
         }
     }
 
@@ -2050,7 +2066,7 @@ class LLVMCodeGenerator : CodeGenerator {
             out.printLine("store \{valueRef}, \{baseType}* \{offset}\{debugInfo(position)}")
         }
         fail(error) {
-            assert false, error.asString
+            unreachable, error.asString
         }
     }
 
@@ -2064,7 +2080,7 @@ class LLVMCodeGenerator : CodeGenerator {
             }
         }
         fail(error) {
-            assert false, error.asString
+            unreachable, error.asString
         }
     }
 
@@ -2108,7 +2124,7 @@ class LLVMCodeGenerator : CodeGenerator {
             }
         }
         fail(error) {
-            assert false, error.asString
+            unreachable, error.asString
         }
     }
 
@@ -2118,7 +2134,7 @@ class LLVMCodeGenerator : CodeGenerator {
                     getReference(ptr) + debugInfo(position))
         }
         fail(error) {
-            assert false, error.asString
+            unreachable, error.asString
         }
     }
 
@@ -2131,10 +2147,10 @@ class LLVMCodeGenerator : CodeGenerator {
                 when IR.Statement.BRANCH(position, target) {
                     writeBranch(position, target)
                 }
-                when IR.Statement.CAST(position, value, type) {
+                when IR.Statement.CAST(position, value, type, _) {
                     writeCast(position, id, value, type)
                 }
-                when IR.Statement.COMMENT(text) {
+                when IR.Statement.COMMENT(_, text) {
                     out.printLine("; \{text}")
                 }
                 when IR.Statement.CONDITIONAL_BRANCH(position, test, ifTrue, ifFalse) {
@@ -2148,6 +2164,9 @@ class LLVMCodeGenerator : CodeGenerator {
                 }
                 when IR.Statement.DYNAMIC_CALL(position, m, args) {
                     writeDynamicCall(position, id, m, args)
+                }
+                when IR.Statement.END {
+                    writeEnd()
                 }
                 when IR.Statement.EXTRACT_FIELD(position, target, field) {
                     writeExtractField(position, id, target, field)
@@ -2204,12 +2223,12 @@ class LLVMCodeGenerator : CodeGenerator {
                     out.printLine("unreachable\{debugInfo(position)}")
                 }
                 otherwise {
-                    assert false, "unsupported statement \{s}"
+                    unreachable, "unsupported statement \{s}"
                 }
             }
         }
         fail(error) {
-            assert false, error.asString
+            unreachable, error.asString
         }
     }
 
@@ -2238,7 +2257,7 @@ class LLVMCodeGenerator : CodeGenerator {
             }
         }
         fail(error) {
-            assert false, error.asString
+            unreachable, error.asString
         }
     }
 
@@ -2281,7 +2300,7 @@ class LLVMCodeGenerator : CodeGenerator {
             methods.printLine("}")
         }
         fail(error) {
-            assert false, error.asString
+            unreachable, error.asString
         }
     }
 
@@ -2311,7 +2330,7 @@ class LLVMCodeGenerator : CodeGenerator {
             getClassConstant(cl)
         }
         fail(error) {
-            assert false, error.asString
+            unreachable, error.asString
         }
     }
 

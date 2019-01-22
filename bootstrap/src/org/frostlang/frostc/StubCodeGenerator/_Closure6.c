@@ -43,7 +43,6 @@ org$frostlang$frostc$StubCodeGenerator* $tmp8 = *$tmp7;
 frost$core$String* $tmp9 = org$frostlang$frostc$StubCodeGenerator$type$org$frostlang$frostc$Type$R$frost$core$String($tmp8, param1);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp9));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp9));
-// unreffing REF($3:frost.core.String)
 return $tmp9;
 
 }

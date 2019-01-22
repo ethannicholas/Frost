@@ -28,7 +28,8 @@ class While {
             def testBit:IR.Value
             {
                 def unrefs := AutoUnrefs(compiler)
-                def compiledTest := compiler.compileExpression(test, TypeContext.TYPE(Type.Bit()))
+                def compiledTest := compiler.compileExpression(test,
+                        TypeContext.TYPE(Type.Bit(), false))
                 if compiledTest == null {
                     return
                 }

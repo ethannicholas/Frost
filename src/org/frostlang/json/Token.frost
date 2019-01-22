@@ -46,6 +46,7 @@ class Token : Value {
                 when SHIFTRIGHT { return ">>" }
                 when REGEX { return "REGEX" }
             }
+            unreachable
         }
     }
 

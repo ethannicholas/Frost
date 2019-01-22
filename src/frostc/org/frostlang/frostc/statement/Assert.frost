@@ -42,7 +42,7 @@ class Assert {
     @class
     method compile(compiler:Compiler, position:Position, test:ASTNode, msg:ASTNode?) {
         def ir := compiler.ir
-        def compiledTest := compiler.compileExpression(test, TypeContext.TYPE(Type.Bit()))
+        def compiledTest := compiler.compileExpression(test, TypeContext.TYPE(Type.Bit(), false))
         if compiledTest == null {
             return
         }

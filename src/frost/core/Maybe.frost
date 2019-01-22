@@ -25,7 +25,7 @@ choice Maybe<T> {
                 return value
             }
         }
-        assert false
+        unreachable
     }
 
     ================================================================================================
@@ -38,7 +38,7 @@ choice Maybe<T> {
                 return error
             }
         }
-        assert false
+        unreachable
     }
 
     ================================================================================================
@@ -53,6 +53,7 @@ choice Maybe<T> {
                 return false
             }
         }
+        unreachable
     }
 
     @override
@@ -65,5 +66,6 @@ choice Maybe<T> {
                 return "ERROR(\{e})"
             }
         }
+        unreachable
     }
 }

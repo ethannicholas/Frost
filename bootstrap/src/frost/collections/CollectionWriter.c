@@ -62,15 +62,12 @@ while ($tmp17->$class != (frost$core$Class*) &frost$collections$CollectionWriter
 $fn19 $tmp18 = $tmp17->methods[0];
 $tmp18(param0, $tmp16);
 frost$core$Frost$unref$frost$core$Object$Q($tmp14);
-// unreffing REF($15:frost.collections.Iterator.T)
 frost$core$Object* $tmp20 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q($tmp20);
-// unreffing v
 *(&local0) = ((frost$core$Object*) NULL);
 goto block1;
 block3:;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp5));
-// unreffing REF($4:frost.collections.Iterator<frost.collections.Iterable.T>)
 return;
 
 }

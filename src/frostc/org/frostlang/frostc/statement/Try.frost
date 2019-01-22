@@ -34,7 +34,7 @@ class Try {
                     ir.locals.add(errorVar.type)
                 }
                 otherwise {
-                    assert false
+                    unreachable
                 }
             }
         }

@@ -94,7 +94,6 @@ frost$core$Frost$unref$frost$core$Object$Q($tmp26);
 frost$core$Object** $tmp27 = &param0->nextValue;
 *$tmp27 = $tmp24;
 frost$core$Frost$unref$frost$core$Object$Q($tmp24);
-// unreffing REF($25:frost.collections.Iterator.T)
 goto block2;
 block2:;
 frost$core$MutableMethod** $tmp28 = &param0->filter;
@@ -165,7 +164,6 @@ frost$core$Object* $tmp60 = *(&local0);
 frost$core$Frost$ref$frost$core$Object$Q($tmp60);
 frost$core$Object* $tmp61 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q($tmp61);
-// unreffing result
 *(&local0) = ((frost$core$Object*) NULL);
 return $tmp60;
 

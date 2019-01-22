@@ -15,7 +15,7 @@ class Continue {
                     compiler.ir.add(IR.Statement.BRANCH(position, continueTarget))
                 }
                 otherwise {
-                    assert false
+                    unreachable
                 }
             }
         }

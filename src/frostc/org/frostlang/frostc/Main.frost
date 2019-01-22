@@ -153,7 +153,7 @@ class Main {
             out.printLine("  -o <path>    output path")
         }
         fail(error) {
-            assert false
+            unreachable
         }
     }
 
@@ -330,7 +330,7 @@ class Main {
                     }
                 }
                 otherwise {
-                    assert false
+                    unreachable
                 }
             }
             def settings := Compiler.Settings(frostHome, imports, optimizationLevel, safetyLevel,

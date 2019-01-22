@@ -44,7 +44,7 @@ method main() {
     match json2.get("/spouse") {
         when JSON.NULL {}
         otherwise {
-            assert false
+            unreachable
         }
     }
 }

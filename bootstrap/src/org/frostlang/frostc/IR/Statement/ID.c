@@ -54,7 +54,7 @@ static frost$core$String $s14 = { (frost$core$Class*) &frost$core$String$class, 
 org$frostlang$frostc$IR$Statement$ID org$frostlang$frostc$IR$Statement$ID$init$frost$core$Int64(frost$core$Int64 param0) {
 
 org$frostlang$frostc$IR$Statement$ID local0;
-// line 153
+// line 161
 frost$core$Int64* $tmp3 = &(&local0)->value;
 *$tmp3 = param0;
 org$frostlang$frostc$IR$Statement$ID $tmp4 = *(&local0);
@@ -63,14 +63,14 @@ return $tmp4;
 }
 frost$core$Int64 org$frostlang$frostc$IR$Statement$ID$get_hash$R$frost$core$Int64(org$frostlang$frostc$IR$Statement$ID param0) {
 
-// line 158
+// line 166
 frost$core$Int64 $tmp5 = param0.value;
 return $tmp5;
 
 }
 frost$core$Bit org$frostlang$frostc$IR$Statement$ID$$EQ$org$frostlang$frostc$IR$Statement$ID$R$frost$core$Bit(org$frostlang$frostc$IR$Statement$ID param0, org$frostlang$frostc$IR$Statement$ID param1) {
 
-// line 163
+// line 171
 frost$core$Int64 $tmp6 = param0.value;
 frost$core$Int64 $tmp7 = param1.value;
 frost$core$Bit $tmp8 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp6, $tmp7);
@@ -79,7 +79,7 @@ return $tmp8;
 }
 frost$core$String* org$frostlang$frostc$IR$Statement$ID$get_asString$R$frost$core$String(org$frostlang$frostc$IR$Statement$ID param0) {
 
-// line 168
+// line 176
 frost$core$Int64 $tmp9 = param0.value;
 frost$core$Int64$wrapper* $tmp10;
 $tmp10 = (frost$core$Int64$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int64$wrapperclass);
@@ -88,11 +88,8 @@ frost$core$String* $tmp11 = frost$core$String$$ADD$frost$core$Object$R$frost$cor
 frost$core$String* $tmp13 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp11, &$s14);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp13));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp13));
-// unreffing REF($4:frost.core.String)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp11));
-// unreffing REF($3:frost.core.String)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp10));
-// unreffing REF($2:frost.core.Object)
 return $tmp13;
 
 }

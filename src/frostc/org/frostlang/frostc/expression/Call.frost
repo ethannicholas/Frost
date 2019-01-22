@@ -35,7 +35,8 @@ class Call {
         assert m.target.typeKind = Type.Kind.GENERIC
         match m.value.name {
             when "alloc" {
-                def count := compiler.compileExpression(args[0], TypeContext.TYPE(Type.Int64()))
+                def count := compiler.compileExpression(args[0],
+                        TypeContext.TYPE(Type.Int64(), false))
                 if count == null {
                     return Pair<Bit, IR.Value?>(false, null)
                 }
@@ -51,11 +52,13 @@ class Call {
             }
             when "realloc" {
                 assert target !== null
-                def oldCount := compiler.compileExpression(args[0], TypeContext.TYPE(Type.Int64()))
+                def oldCount := compiler.compileExpression(args[0],
+                        TypeContext.TYPE(Type.Int64(), false))
                 if oldCount == null {
                     return Pair<Bit, IR.Value?>(false, null)
                 }
-                def newCount := compiler.compileExpression(args[1], TypeContext.TYPE(Type.Int64()))
+                def newCount := compiler.compileExpression(args[1],
+                        TypeContext.TYPE(Type.Int64(), false))
                 if newCount == null {
                     return Pair<Bit, IR.Value?>(false, null)
                 }
@@ -72,7 +75,8 @@ class Call {
             }
             when "offset" {
                 assert target !== null
-                def value := compiler.compileExpression(args[0], TypeContext.TYPE(Type.Int64()))
+                def value := compiler.compileExpression(args[0],
+                        TypeContext.TYPE(Type.Int64(), false))
                 def offset := ir.add(IR.Statement.POINTER_OFFSET(position, target,
                         compiler.extractBuiltinInt(position, value)))
                 return Pair<Bit, IR.Value?>(true, IR.Value.REF(offset,
@@ -80,7 +84,8 @@ class Call {
             }
             when "[]" {
                 assert target !== null
-                def index := compiler.compileExpression(args[0], TypeContext.TYPE(Type.Int64()))
+                def index := compiler.compileExpression(args[0],
+                        TypeContext.TYPE(Type.Int64(), false))
                 if index == null {
                     return Pair<Bit, IR.Value?>(false, null)
                 }
@@ -90,8 +95,10 @@ class Call {
             }
             when "[]:=" {
                 assert target !== null
-                def index := compiler.compileExpression(args[0], TypeContext.TYPE(Type.Int64()))
-                def value := compiler.compileExpression(args[1], TypeContext.TYPE(pointerType))
+                def index := compiler.compileExpression(args[0],
+                        TypeContext.TYPE(Type.Int64(), false))
+                def value := compiler.compileExpression(args[1],
+                        TypeContext.TYPE(pointerType, false))
                 if index !== null & value !== null {
                     def indexValue := compiler.extractBuiltinInt(position, index)
                     if compiler.isRefCounted(pointerType) {
@@ -105,7 +112,8 @@ class Call {
             }
             when "clear" {
                 def nullableType := pointerType.nullable()
-                def index := compiler.compileExpression(args[0], TypeContext.TYPE(Type.Int64()))
+                def index := compiler.compileExpression(args[0],
+                        TypeContext.TYPE(Type.Int64(), false))
                 if compiler.isRefCounted(nullableType) {
                     def indexValue := compiler.extractBuiltinInt(position, index)
                     def load := ir.add(IR.Statement.POINTER_GET_INDEX(position, target, indexValue))
@@ -116,7 +124,7 @@ class Call {
                 return Pair<Bit, IR.Value?>(true, null)
             }
             otherwise {
-                assert false, "unsupported pointer intrinsic: \{m.value.name}"
+                unreachable, "unsupported pointer intrinsic: \{m.value.name}"
             }
         }
     }
@@ -133,7 +141,7 @@ class Call {
         if left == null {
             return Pair<Bit, IR.Value?>(false, null)
         }
-        def right := compiler.compileExpression(args[0], TypeContext.TYPE(operandType))
+        def right := compiler.compileExpression(args[0], TypeContext.TYPE(operandType, false))
         if right == null {
             return Pair<Bit, IR.Value?>(false, null)
         }
@@ -151,7 +159,7 @@ class Call {
         def constructArgs := Array<ASTNode>()
         constructArgs.add(ASTNode.IR_WRAPPER(position, IR.Value.REF(builtin, builtinResultType)))
         def construct := Call.compile(compiler, position, IR.Value.TYPE(resultType), constructArgs,
-                TypeContext.TYPE(resultType))
+                TypeContext.TYPE(resultType, false))
         assert construct !== null
         return Pair<Bit, IR.Value?>(true, construct)
     }
@@ -166,7 +174,8 @@ class Call {
                 assert args.count = 1
                 def paramType := m.value.parameters[0].type
                 if paramType.isBuiltinNumber {
-                    def value := compiler.compileExpression(args[0], TypeContext.TYPE(paramType))
+                    def value := compiler.compileExpression(args[0],
+                            TypeContext.TYPE(paramType, false))
                     if value !== null {
                         def result := compiler.ir.add(IR.Statement.CREATE_STRUCT(position,
                                 m.value.owner, FixedArray<IR.Value>.from([value])))
@@ -240,7 +249,8 @@ class Call {
                 assert args.count = 1
                 def paramType := m.value.parameters[0].type
                 if paramType = Type.BuiltinBit() {
-                    def value := compiler.compileExpression(args[0], TypeContext.TYPE(paramType))
+                    def value := compiler.compileExpression(args[0],
+                            TypeContext.TYPE(paramType, false))
                     if value !== null {
                         def result := compiler.ir.add(IR.Statement.CREATE_STRUCT(position,
                                 m.value.owner, FixedArray<IR.Value>.from([value])))
@@ -401,7 +411,7 @@ class Call {
                         continue
                     }
                 }
-                when TypeContext.TYPE(t) {
+                when TypeContext.TYPE(t, _) {
                     def returnCost := compiler.coercionCost(ref.returnType, t)
                     if returnCost == null {
                         continue
@@ -441,7 +451,7 @@ class Call {
         def finalArgs := Array<IR.Value>(args.count)
         for i in 0 .. args.count {
             def compiled := compiler.compileExpression(args[i],
-                    TypeContext.TYPE(t.parameterType(i)))
+                    TypeContext.TYPE(t.parameterType(i), false))
             if compiled == null {
                 return null
             }
@@ -666,7 +676,7 @@ class Call {
                 return compiler.coerce(position, constructRef, type)
             }
             otherwise {
-                assert false, "cannot call \{m}"
+                unreachable, "cannot call \{m}"
             }
         }
     }
@@ -682,7 +692,6 @@ class Call {
         def errorType := Type.Error()
         def nullableError := errorType.nullable()
         if type = nullableError {
-            ir.add(IR.Statement.COMMENT("try error check"))
             def test := ir.add(IR.Statement.BINARY(position, v, Binary.Operator.IDENTITY,
                     IR.Value.NULL(nullableError), Type.BuiltinBit()))
             def success := ir.newBlock("error? null")
@@ -696,7 +705,7 @@ class Call {
                     ir.add(IR.Statement.STORE(position, v, IR.Value.LOCAL(slot, errorType)))
                 }
                 otherwise {
-                    assert false
+                    unreachable
                 }
             }
             compiler.leaveTryScope()
@@ -705,7 +714,6 @@ class Call {
             return null
         }
         else if type.typeKind = Type.Kind.GENERIC & type.subtypes[0].name = "frost.core.Maybe" {
-            ir.add(IR.Statement.COMMENT("try maybe check"))
             def cl := compiler.getClass(type)
             assert cl !== null
             def rawValue := Dot.compile(compiler, position, ASTNode.IR_WRAPPER(position, v),
@@ -730,7 +738,7 @@ class Call {
                     ir.add(IR.Statement.STORE(position, errorRef, IR.Value.LOCAL(slot, errorType)))
                 }
                 otherwise {
-                    assert false
+                    unreachable
                 }
             }
             compiler.leaveTryScope()
@@ -900,7 +908,7 @@ class Call {
         }
         for i in 0 .. args.count {
             var a := compiler.compileExpression(args[i],
-                    TypeContext.TYPE(effectiveType.parameterType(i)))
+                    TypeContext.TYPE(effectiveType.parameterType(i), false))
             if a == null {
                 return null
             }
@@ -1034,7 +1042,7 @@ class Call {
                                 selfType := s->FieldDecl.type
                             }
                             otherwise {
-                                assert false
+                                unreachable
                             }
                         }
                         def cl := compiler.getClass(selfType)

@@ -32,7 +32,7 @@ class ChoiceFieldLValue : LValue {
 
     @override
     method compileLoad():IR.Value? {
-        assert false
+        unreachable
     }
 
     @override

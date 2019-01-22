@@ -1211,7 +1211,6 @@ frost$core$SteppedRange$LTfrost$core$UInt64$Cfrost$core$UInt64$GT $tmp310 = fros
 org$frostlang$frost$UInt64List$init$frost$core$SteppedRange$LTfrost$core$UInt64$Cfrost$core$UInt64$GT($tmp305, $tmp310);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$collections$ListView*) $tmp305)));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp305));
-// unreffing REF($18:org.frostlang.frost.UInt64List)
 return ((frost$collections$ListView*) $tmp305);
 
 }
@@ -1235,7 +1234,6 @@ org$frostlang$frost$UInt64List* $tmp321 = (org$frostlang$frost$UInt64List*) fros
 org$frostlang$frost$UInt64List$init$frost$core$SteppedRange$LTfrost$core$UInt64$Cfrost$core$UInt64$GT($tmp321, param0);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$collections$ListView*) $tmp321)));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp321));
-// unreffing REF($12:org.frostlang.frost.UInt64List)
 return ((frost$collections$ListView*) $tmp321);
 
 }
@@ -1264,7 +1262,6 @@ int64_t $tmp334 = $tmp332.value;
 bool $tmp335 = $tmp333 < $tmp334;
 frost$core$Bit $tmp336 = (frost$core$Bit) {$tmp335};
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$collections$CollectionView*) $tmp328)));
-// unreffing REF($7:frost.collections.CollectionView)
 *(&local0) = $tmp336;
 goto block3;
 block2:;
@@ -1306,7 +1303,6 @@ frost$core$UInt64 $tmp352 = (frost$core$UInt64) {9223372036854775808};
 org$frostlang$frost$IntBitIterator$init$frost$core$UInt64$frost$core$UInt64($tmp351, param0, $tmp352);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$collections$Iterator*) $tmp351)));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp351));
-// unreffing REF($1:org.frostlang.frost.IntBitIterator)
 return ((frost$collections$Iterator*) $tmp351);
 
 }
@@ -1672,7 +1668,6 @@ frost$core$Int64 $tmp546 = *(&local4);
 frost$core$String$init$frost$unsafe$Pointer$LTfrost$core$Char8$GT$frost$core$Int64($tmp544, $tmp545, $tmp546);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp544));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp544));
-// unreffing REF($203:frost.core.String)
 return $tmp544;
 
 }
@@ -1684,7 +1679,6 @@ frost$core$UInt64 $tmp548 = (frost$core$UInt64) {18446744073709551615};
 frost$core$String* $tmp549 = frost$core$Frost$format$frost$core$Bit$frost$core$UInt64$frost$core$UInt64$frost$core$String$R$frost$core$String($tmp547, param0, $tmp548, param1);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp549));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp549));
-// unreffing REF($3:frost.core.String)
 return $tmp549;
 
 }

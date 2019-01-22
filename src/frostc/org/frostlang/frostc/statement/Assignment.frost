@@ -41,7 +41,7 @@ class Assignment {
         }
         def right:IR.Value?
         if op = Binary.Operator.ASSIGNMENT {
-            right := compiler.compileExpression(rawRight, TypeContext.TYPE(left.type()))
+            right := compiler.compileExpression(rawRight, TypeContext.TYPE(left.type(), false))
         }
         else {
             def load := left.compileLoad()
@@ -49,7 +49,7 @@ class Assignment {
                 return
             }
             right := Binary.compile(compiler, position, ASTNode.IR_WRAPPER(position, load),
-                    op.removeAssignment(), rawRight, TypeContext.TYPE(left.type()))
+                    op.removeAssignment(), rawRight, TypeContext.TYPE(left.type(), false))
         }
         if right == null {
             return

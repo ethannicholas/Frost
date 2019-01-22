@@ -18,14 +18,14 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 
 void org$frostlang$frostc$LLVMCodeGenerator$ClassConstant$init$frost$core$String$frost$core$String(org$frostlang$frostc$LLVMCodeGenerator$ClassConstant* param0, frost$core$String* param1, frost$core$String* param2) {
 
-// line 16
+// line 18
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
 frost$core$String** $tmp2 = &param0->name;
 frost$core$String* $tmp3 = *$tmp2;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp3));
 frost$core$String** $tmp4 = &param0->name;
 *$tmp4 = param1;
-// line 17
+// line 19
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param2));
 frost$core$String** $tmp5 = &param0->type;
 frost$core$String* $tmp6 = *$tmp5;
@@ -37,7 +37,7 @@ return;
 }
 void org$frostlang$frostc$LLVMCodeGenerator$ClassConstant$cleanup(org$frostlang$frostc$LLVMCodeGenerator$ClassConstant* param0) {
 
-// line 11
+// line 13
 frost$core$Immutable$cleanup(((frost$core$Immutable*) param0));
 frost$core$String** $tmp8 = &param0->name;
 frost$core$String* $tmp9 = *$tmp8;

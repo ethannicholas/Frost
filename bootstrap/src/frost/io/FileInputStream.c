@@ -42,10 +42,8 @@ frost$core$Error* $tmp6 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp6));
 *(&local0) = $tmp5;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp5));
-// unreffing REF($6:frost.core.Error?)
 frost$core$Error* $tmp7 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp7));
-// unreffing error
 *(&local0) = ((frost$core$Error*) NULL);
 goto block2;
 block2:;

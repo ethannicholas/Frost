@@ -39,6 +39,7 @@ class Annotations {
                 when POST_AND(_, expr) { return "@postAnd(\{expr})" }
                 when PRIORITY(_, expr) { return "@priority(\{expr})" }
             }
+            unreachable
         }
     }
 

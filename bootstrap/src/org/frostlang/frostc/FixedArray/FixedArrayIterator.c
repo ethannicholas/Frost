@@ -99,7 +99,6 @@ frost$core$Int64 $tmp41 = (frost$core$Int64) {$tmp40};
 frost$core$Object* $tmp42 = org$frostlang$frostc$FixedArray$$IDX$frost$core$Int64$R$org$frostlang$frostc$FixedArray$T($tmp34, $tmp41);
 frost$core$Frost$ref$frost$core$Object$Q($tmp42);
 frost$core$Frost$unref$frost$core$Object$Q($tmp42);
-// unreffing REF($33:org.frostlang.frostc.FixedArray.T)
 return $tmp42;
 
 }

@@ -19,11 +19,14 @@ class IR {
 
         ============================================================================================
         Casts a value of one type to another type. This handles bitcasting, truncating / extending,
-        wrapping, unwrapping, and nullable->non-nullable value / vice versa as needed.
+        wrapping, unwrapping, and nullable->non-nullable value / vice versa as needed. "Explicit"
+        means that the cast was explicitly specified by the program text, while implicit casts are
+        inserted automatically. The code behaves identically either way, but the distinction is
+        necessary because implicit nullable->non-nullable casts are an error.
         ============================================================================================
-        CAST(Position, Value, Type)
+        CAST(Position, Value, Type, Bit -* explicit *-)
 
-        COMMENT(String)
+        COMMENT(Position, String)
 
         GET_CHOICE_FIELD_POINTER(Position, Value, ChoiceCase, Int)
 
@@ -51,6 +54,11 @@ class IR {
         `self` (if any) appears explicitly as `args[0]`.
         ============================================================================================
         DYNAMIC_CALL(Position, Value -* method *-, FixedArray<Value> -* args *-)
+
+        ============================================================================================
+        Represents falling off the end of a method.
+        ============================================================================================
+        END
 
         ============================================================================================
         Given a value, returns the value of a field within the value.
@@ -169,6 +177,100 @@ class IR {
             }
         }
 
+        property position:Position
+        function get_position():Position {
+            match self {
+                when BINARY(position, _, _, _, _) {
+                    return position
+                }
+                when BRANCH(position, _) {
+                    return position
+                }
+                when CAST(position, _, _, _) {
+                    return position
+                }
+                when COMMENT(position, _) {
+                    return position
+                }
+                when CONDITIONAL_BRANCH(position, _, _, _) {
+                    return position
+                }
+                when CONSTRUCT(position, _) {
+                    return position
+                }
+                when CREATE_STRUCT(position, _, _) {
+                    return position
+                }
+                when DYNAMIC_CALL(position, _, _) {
+                    return position
+                }
+                when END {
+                    return Position()
+                }
+                when EXTRACT_FIELD(position, _, _) {
+                    return position
+                }
+                when GET_CHOICE_FIELD_POINTER(position, _, _, _) {
+                    return position
+                }
+                when GET_FIELD_POINTER(position, _, _) {
+                    return position
+                }
+                when GET_INTERFACE_METHOD(position, _, _, _, _) {
+                    return position
+                }
+                when GET_VIRTUAL_METHOD(position, _, _, _) {
+                    return position
+                }
+                when LOAD(position, _) {
+                    return position
+                }
+                when NEGATE(position, _) {
+                    return position
+                }
+                when NOT(position, _) {
+                    return position
+                }
+                when POINTER_ALLOC(position, _, _) {
+                    return position
+                }
+                when POINTER_DESTROY(position, _) {
+                    return position
+                }
+                when POINTER_GET(position, _) {
+                    return position
+                }
+                when POINTER_GET_INDEX(position, _, _) {
+                    return position
+                }
+                when POINTER_OFFSET(position, _, _) {
+                    return position
+                }
+                when POINTER_REALLOC(position, _, _, _) {
+                    return position
+                }
+                when POINTER_SET(position, _, _) {
+                    return position
+                }
+                when POINTER_SET_INDEX(position, _, _, _) {
+                    return position
+                }
+                when RETURN(position, _) {
+                    return position
+                }
+                when STATIC_CALL(position, _, _) {
+                    return position
+                }
+                when STORE(position, _, _) {
+                    return position
+                }
+                when UNREACHABLE(position) {
+                    return position
+                }
+            }
+            unreachable
+        }
+
         @override
         function get_asString():String {
             match self {
@@ -178,10 +280,10 @@ class IR {
                 when BRANCH(position, id) {
                     return "branch \{id}"
                 }
-                when CAST(position, value, type) {
-                    return "cast \{value}->\{type}"
+                when CAST(position, value, type, explicit) {
+                    return "cast \{value}->\{type} (\{explicit:explicit|implicit})"
                 }
-                when COMMENT(text) {
+                when COMMENT(_, text) {
                     return "-- \{text}"
                 }
                 when CONDITIONAL_BRANCH(position, test, ifTrue, ifFalse) {
@@ -195,6 +297,9 @@ class IR {
                 }
                 when DYNAMIC_CALL(position, m, args) {
                     return "dynamic_call \{m}(\{args.join()})"
+                }
+                when END {
+                    return "end"
                 }
                 when EXTRACT_FIELD(position, value, field) {
                     return "load_field \{value}, \{field.owner.name}.\{field.name}"
@@ -260,11 +365,12 @@ class IR {
                     return "unreachable"
                 }
             }
+            unreachable
         }
     }
 
     class Block {
-        class ID : frost.core.Value, Equatable<ID> {
+        class ID : frost.core.Value, Key<ID> {
             def value:Int
 
             init(value:Int) {
@@ -274,6 +380,11 @@ class IR {
             @override
             function =(other:ID):Bit {
                 return value = other.value
+            }
+
+            @override
+            function get_hash():Int {
+                return value
             }
 
             @override
@@ -287,6 +398,12 @@ class IR {
         def ids := Array<Statement.ID>()
 
         def statements := Array<Statement>()
+
+        -- we may end up with blocks containing only implicit code (unrefs upon leaving scope, etc.)
+        -- due to e.g. merge blocks after a control flow merge, which never end up with any explicit
+        -- code added to them. We don't want to report that autogenerated code as unreachable, so we
+        -- track whether it has had code explicitly added to it.
+        var containsExplicitCode := false
 
         init(id:ID) {
             self.id := id
@@ -367,6 +484,7 @@ class IR {
                     return Type.ClassLiteral(type)
                 }
             }
+            unreachable
         }
 
         @override
@@ -430,6 +548,7 @@ class IR {
                     return "TYPE(\{type.asString})"
                 }
             }
+            unreachable
         }
     }
 
@@ -494,7 +613,7 @@ class IR {
             return false
         }
         match currentBlock.statements[currentBlock.statements.count - 1] {
-            when Statement.BRANCH, Statement.CONDITIONAL_BRANCH, Statement.RETURN,
+            when Statement.BRANCH, Statement.CONDITIONAL_BRANCH, Statement.END, Statement.RETURN,
                     Statement.UNREACHABLE {
                 return true
             }

@@ -94,7 +94,7 @@ class CCodeGenerator : CodeGenerator {
             }
         }
         fail(error) {
-            assert false, error.asString
+            unreachable
         }
     }
 
@@ -146,7 +146,7 @@ class CCodeGenerator : CodeGenerator {
             types.printLine(code.finish())
         }
         fail(error) {
-            assert false, error.asString
+            unreachable
         }
         return result
     }
@@ -423,7 +423,7 @@ class CCodeGenerator : CodeGenerator {
                 types.printLine(result.finish())
             }
             fail(error) {
-                assert false, error.asString
+                unreachable
             }
             previous := "(ITable*) &\{name}"
         }
@@ -506,7 +506,7 @@ class CCodeGenerator : CodeGenerator {
             return result
         }
         fail(error) {
-            assert false, error.asString
+            unreachable
         }
     }
 
@@ -540,7 +540,7 @@ class CCodeGenerator : CodeGenerator {
             return previous
         }
         fail(error) {
-            assert false, error.asString
+            unreachable
         }
     }
 
@@ -624,7 +624,7 @@ class CCodeGenerator : CodeGenerator {
             return result
         }
         fail(error) {
-            assert false, error.asString
+            unreachable
         }
     }
 
@@ -667,7 +667,7 @@ class CCodeGenerator : CodeGenerator {
             return result
         }
         fail(error) {
-            assert false, error.asString
+            unreachable
         }
     }
 
@@ -779,7 +779,7 @@ class CCodeGenerator : CodeGenerator {
                     cOp := "<="
                 }
                 otherwise {
-                    assert false
+                    unreachable
                 }
             }
             def result := nextVar()
@@ -793,7 +793,7 @@ class CCodeGenerator : CodeGenerator {
             return result
         }
         fail(error) {
-            assert false, error.asString
+            unreachable
         }
     }
 
@@ -839,7 +839,7 @@ class CCodeGenerator : CodeGenerator {
             return result
         }
         fail(error) {
-            assert false, error.asString
+            unreachable
         }
     }
 
@@ -904,7 +904,7 @@ class CCodeGenerator : CodeGenerator {
             return "((\{cType(dstType)}) \{wrapped})"
         }
         fail(error) {
-            assert false, error.asString
+            unreachable, error.asString
         }
     }
 
@@ -999,7 +999,7 @@ class CCodeGenerator : CodeGenerator {
             return "&\{result}"
         }
         fail(error) {
-            assert false, error.asString
+            unreachable
         }
     }
 
@@ -1052,7 +1052,7 @@ class CCodeGenerator : CodeGenerator {
                 return getStringReference(s)
             }
             otherwise {
-                assert false, "unsupported value \{v}"
+                unreachable
             }
         }
     }
@@ -1200,7 +1200,7 @@ class CCodeGenerator : CodeGenerator {
                 cOp := "<="
             }
             otherwise {
-                assert false, "unsupported operator: \{op}"
+                unreachable
             }
         }
         def result := nextVar()
@@ -1208,7 +1208,7 @@ class CCodeGenerator : CodeGenerator {
             out.printLine("\{cType(type)} \{result} = \{leftRef} \{cOp} \{rightRef};")
         }
         fail(error) {
-            assert false, error.asString
+            unreachable
         }
         refs[id] := result
     }
@@ -1218,7 +1218,7 @@ class CCodeGenerator : CodeGenerator {
             out.printLine("goto \{target};")
         }
         fail(error) {
-            assert false, error.asString
+            unreachable
         }
     }
 
@@ -1231,7 +1231,7 @@ class CCodeGenerator : CodeGenerator {
             out.printLine("if (\{getReference(test)}) goto \{ifTrue}; else goto \{ifFalse};")
         }
         fail(error) {
-            assert false, error.asString
+            unreachable
         }
     }
 
@@ -1253,7 +1253,7 @@ class CCodeGenerator : CodeGenerator {
             refs[id] := result
         }
         fail(error) {
-            assert false, error.asString
+            unreachable
         }
     }
 
@@ -1272,7 +1272,7 @@ class CCodeGenerator : CodeGenerator {
             refs[id] := result
         }
         fail(error) {
-            assert false, error.asString
+            unreachable
         }
     }
 
@@ -1298,7 +1298,7 @@ class CCodeGenerator : CodeGenerator {
             out.printLine(");")
         }
         fail(error) {
-            assert false, error.asString
+            unreachable
         }
     }
 
@@ -1311,7 +1311,7 @@ class CCodeGenerator : CodeGenerator {
             refs[id] := result
         }
         fail(error) {
-            assert false, error.asString
+            unreachable
         }
     }
 
@@ -1329,7 +1329,7 @@ class CCodeGenerator : CodeGenerator {
             refs[id] := result
         }
         fail(error) {
-            assert false, error.asString
+            unreachable
         }
     }
 
@@ -1341,7 +1341,7 @@ class CCodeGenerator : CodeGenerator {
             refs[id] := result
         }
         fail(error) {
-            assert false, error.asString
+            unreachable
         }
     }
 
@@ -1362,7 +1362,7 @@ class CCodeGenerator : CodeGenerator {
             refs[id] := result
         }
         fail(error) {
-            assert false, error.asString
+            unreachable
         }
     }
 
@@ -1375,7 +1375,7 @@ class CCodeGenerator : CodeGenerator {
             refs[id] := result
         }
         fail(error) {
-            assert false, error.asString
+            unreachable
         }
     }
 
@@ -1386,7 +1386,7 @@ class CCodeGenerator : CodeGenerator {
             refs[id] := result
         }
         fail(error) {
-            assert false, error.asString
+            unreachable
         }
     }
 
@@ -1397,7 +1397,7 @@ class CCodeGenerator : CodeGenerator {
             refs[id] := result
         }
         fail(error) {
-            assert false, error.asString
+            unreachable
         }
     }
 
@@ -1408,7 +1408,7 @@ class CCodeGenerator : CodeGenerator {
             refs[id] := result
         }
         fail(error) {
-            assert false, error.asString
+            unreachable
         }
     }
 
@@ -1423,7 +1423,7 @@ class CCodeGenerator : CodeGenerator {
             refs[id] := result
         }
         fail(error) {
-            assert false, error.asString
+            unreachable
         }
     }
 
@@ -1433,7 +1433,7 @@ class CCodeGenerator : CodeGenerator {
             out.printLine("frostFree(\{ptrRef});")
         }
         fail(error) {
-            assert false, error.asString
+            unreachable
         }
     }
 
@@ -1446,7 +1446,7 @@ class CCodeGenerator : CodeGenerator {
             refs[id] := result
         }
         fail(error) {
-            assert false, error.asString
+            unreachable
         }
     }
 
@@ -1459,7 +1459,7 @@ class CCodeGenerator : CodeGenerator {
             refs[id] := result
         }
         fail(error) {
-            assert false, error.asString
+            unreachable
         }
     }
 
@@ -1477,7 +1477,7 @@ class CCodeGenerator : CodeGenerator {
             refs[id] := result
         }
         fail(error) {
-            assert false, error.asString
+            unreachable
         }
     }
 
@@ -1489,7 +1489,7 @@ class CCodeGenerator : CodeGenerator {
             out.printLine("\{base}[\{indexRef}] = \{valueRef};")
         }
         fail(error) {
-            assert false, error.asString
+            unreachable
         }
     }
 
@@ -1503,7 +1503,7 @@ class CCodeGenerator : CodeGenerator {
             }
         }
         fail(error) {
-            assert false, error.asString
+            unreachable
         }
     }
 
@@ -1539,7 +1539,7 @@ class CCodeGenerator : CodeGenerator {
             out.printLine(");")
         }
         fail(error) {
-            assert false, error.asString
+            unreachable
         }
     }
 
@@ -1548,7 +1548,7 @@ class CCodeGenerator : CodeGenerator {
             out.printLine("*\{getReference(ptr)} = \{getReference(value)};")
         }
         fail(error) {
-            assert false, error.asString
+            unreachable
         }
     }
 
@@ -1561,10 +1561,10 @@ class CCodeGenerator : CodeGenerator {
                 when IR.Statement.BRANCH(position, target) {
                     writeBranch(target)
                 }
-                when IR.Statement.CAST(position, value, type) {
+                when IR.Statement.CAST(position, value, type, _) {
                     writeCast(id, value, type)
                 }
-                when IR.Statement.COMMENT(text) {
+                when IR.Statement.COMMENT(_, text) {
                     out.printLine("// \{text}")
                 }
                 when IR.Statement.CONDITIONAL_BRANCH(position, test, ifTrue, ifFalse) {
@@ -1578,6 +1578,8 @@ class CCodeGenerator : CodeGenerator {
                 }
                 when IR.Statement.DYNAMIC_CALL(position, m, args) {
                     writeDynamicCall(id, m, args)
+                }
+                when IR.Statement.END {
                 }
                 when IR.Statement.EXTRACT_FIELD(position, target, field) {
                     writeExtractField(id, target, field)
@@ -1634,12 +1636,12 @@ class CCodeGenerator : CodeGenerator {
                     out.printLine("abort(); // unreachable")
                 }
                 otherwise {
-                    assert false, "unsupported statement \{s}"
+                    unreachable
                 }
             }
         }
         fail(error) {
-            assert false, error.asString
+            unreachable
         }
     }
 
@@ -1674,7 +1676,7 @@ class CCodeGenerator : CodeGenerator {
             }
         }
         fail(error) {
-            assert false, error.asString
+            unreachable
         }
     }
 
@@ -1709,7 +1711,7 @@ class CCodeGenerator : CodeGenerator {
             out := old
         }
         fail(error) {
-            assert false, error.asString
+            unreachable
         }
     }
 

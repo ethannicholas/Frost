@@ -8,6 +8,7 @@ typedef struct frost$core$String frost$core$String;
 
 org$frostlang$frostc$IR$Block$ID org$frostlang$frostc$IR$Block$ID$init$frost$core$Int64(frost$core$Int64 p_value);
 frost$core$Bit org$frostlang$frostc$IR$Block$ID$$EQ$org$frostlang$frostc$IR$Block$ID$R$frost$core$Bit(org$frostlang$frostc$IR$Block$ID self, org$frostlang$frostc$IR$Block$ID p_other);
+frost$core$Int64 org$frostlang$frostc$IR$Block$ID$get_hash$R$frost$core$Int64(org$frostlang$frostc$IR$Block$ID self);
 frost$core$String* org$frostlang$frostc$IR$Block$ID$get_asString$R$frost$core$String(org$frostlang$frostc$IR$Block$ID self);
 void org$frostlang$frostc$IR$Block$ID$cleanup(org$frostlang$frostc$IR$Block$ID self);
 

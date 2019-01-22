@@ -21,20 +21,18 @@ frost$math$Random$class_type frost$math$Random$class = { (frost$core$Class*) &fr
 typedef frost$core$Int64 (*$fn7)(frost$math$Random*);
 typedef frost$core$Int64 (*$fn19)(frost$math$Random*);
 typedef frost$core$Int64 (*$fn39)(frost$math$Random*);
-typedef frost$core$Int32 (*$fn75)(frost$math$Random*);
-typedef frost$core$Int64 (*$fn103)(frost$math$Random*);
+typedef frost$core$Int32 (*$fn70)(frost$math$Random*);
+typedef frost$core$Int64 (*$fn98)(frost$math$Random*);
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x6d\x61\x74\x68\x2e\x52\x61\x6e\x64\x6f\x6d", 17, 2121431080884763350, NULL };
 static frost$core$String $s29 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x52\x61\x6e\x64\x6f\x6d\x2e\x66\x72\x6f\x73\x74", 12, -4563581819490094058, NULL };
 static frost$core$String $s30 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x66\x72\x6f\x73\x74\x2e\x6d\x61\x74\x68\x2e\x52\x61\x6e\x64\x6f\x6d\x2e\x69\x6e\x74\x28\x6e\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x36\x34\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x36\x34", 90, 3556184057875090480, NULL };
-static frost$core$String $s53 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x52\x61\x6e\x64\x6f\x6d\x2e\x66\x72\x6f\x73\x74", 12, -4563581819490094058, NULL };
-static frost$core$String $s54 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x6d\x65\x74\x68\x6f\x64\x20\x66\x72\x6f\x73\x74\x2e\x6d\x61\x74\x68\x2e\x52\x61\x6e\x64\x6f\x6d\x2e\x69\x6e\x74\x28\x6e\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x36\x34\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x36\x34\x20\x65\x78\x69\x74\x65\x64\x20\x77\x69\x74\x68\x6f\x75\x74\x20\x72\x65\x74\x75\x72\x6e\x69\x6e\x67", 90, -4642010394243254264, NULL };
-static frost$core$String $s71 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x52\x61\x6e\x64\x6f\x6d\x2e\x66\x72\x6f\x73\x74", 12, -4563581819490094058, NULL };
-static frost$core$String $s72 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x70\x6f\x73\x74\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x66\x72\x6f\x73\x74\x2e\x6d\x61\x74\x68\x2e\x52\x61\x6e\x64\x6f\x6d\x2e\x69\x6e\x74\x28\x6e\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x36\x34\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x36\x34", 91, 1804707407405657027, NULL };
-static frost$core$String $s99 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x52\x61\x6e\x64\x6f\x6d\x2e\x66\x72\x6f\x73\x74", 12, -4563581819490094058, NULL };
-static frost$core$String $s100 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x70\x6f\x73\x74\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x66\x72\x6f\x73\x74\x2e\x6d\x61\x74\x68\x2e\x52\x61\x6e\x64\x6f\x6d\x2e\x72\x65\x61\x6c\x33\x32\x28\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x52\x65\x61\x6c\x33\x32", 77, 9217984912841940249, NULL };
-static frost$core$String $s127 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x52\x61\x6e\x64\x6f\x6d\x2e\x66\x72\x6f\x73\x74", 12, -4563581819490094058, NULL };
-static frost$core$String $s128 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x70\x6f\x73\x74\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x66\x72\x6f\x73\x74\x2e\x6d\x61\x74\x68\x2e\x52\x61\x6e\x64\x6f\x6d\x2e\x72\x65\x61\x6c\x36\x34\x28\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x52\x65\x61\x6c\x36\x34", 77, 4608643632300218411, NULL };
+static frost$core$String $s66 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x52\x61\x6e\x64\x6f\x6d\x2e\x66\x72\x6f\x73\x74", 12, -4563581819490094058, NULL };
+static frost$core$String $s67 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x70\x6f\x73\x74\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x66\x72\x6f\x73\x74\x2e\x6d\x61\x74\x68\x2e\x52\x61\x6e\x64\x6f\x6d\x2e\x69\x6e\x74\x28\x6e\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x36\x34\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x36\x34", 91, 1804707407405657027, NULL };
+static frost$core$String $s94 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x52\x61\x6e\x64\x6f\x6d\x2e\x66\x72\x6f\x73\x74", 12, -4563581819490094058, NULL };
+static frost$core$String $s95 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x70\x6f\x73\x74\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x66\x72\x6f\x73\x74\x2e\x6d\x61\x74\x68\x2e\x52\x61\x6e\x64\x6f\x6d\x2e\x72\x65\x61\x6c\x33\x32\x28\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x52\x65\x61\x6c\x33\x32", 77, 9217984912841940249, NULL };
+static frost$core$String $s122 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x52\x61\x6e\x64\x6f\x6d\x2e\x66\x72\x6f\x73\x74", 12, -4563581819490094058, NULL };
+static frost$core$String $s123 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x70\x6f\x73\x74\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x66\x72\x6f\x73\x74\x2e\x6d\x61\x74\x68\x2e\x52\x61\x6e\x64\x6f\x6d\x2e\x72\x65\x61\x6c\x36\x34\x28\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x52\x65\x61\x6c\x36\x34", 77, 4608643632300218411, NULL };
 
 frost$math$Random* frost$math$Random$default$R$frost$math$Random() {
 
@@ -45,7 +43,6 @@ frost$core$Int64 $tmp4 = frost$core$Int64$init$builtin_int64($tmp3);
 frost$math$XorShift128Plus$init$frost$core$Int64($tmp2, $tmp4);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$math$Random*) $tmp2)));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp2));
-// unreffing REF($1:frost.math.XorShift128Plus)
 return ((frost$math$Random*) $tmp2);
 
 }
@@ -147,45 +144,38 @@ goto block3;
 block14:;
 goto block11;
 block12:;
-frost$core$Bit $tmp50 = frost$core$Bit$init$builtin_bit(false);
-bool $tmp51 = $tmp50.value;
-if ($tmp51) goto block15; else goto block16;
-block16:;
-frost$core$Int64 $tmp52 = (frost$core$Int64) {54};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s53, $tmp52, &$s54);
-abort(); // unreachable
+goto block15;
 block15:;
-abort(); // unreachable
 block3:;
-frost$core$Int64 $tmp55 = *(&local0);
-frost$core$Int64 $tmp56 = (frost$core$Int64) {0};
-int64_t $tmp57 = $tmp55.value;
-int64_t $tmp58 = $tmp56.value;
-bool $tmp59 = $tmp57 >= $tmp58;
-frost$core$Bit $tmp60 = (frost$core$Bit) {$tmp59};
-bool $tmp61 = $tmp60.value;
-if ($tmp61) goto block4; else goto block5;
+frost$core$Int64 $tmp50 = *(&local0);
+frost$core$Int64 $tmp51 = (frost$core$Int64) {0};
+int64_t $tmp52 = $tmp50.value;
+int64_t $tmp53 = $tmp51.value;
+bool $tmp54 = $tmp52 >= $tmp53;
+frost$core$Bit $tmp55 = (frost$core$Bit) {$tmp54};
+bool $tmp56 = $tmp55.value;
+if ($tmp56) goto block4; else goto block5;
 block4:;
-frost$core$Int64 $tmp62 = *(&local0);
-int64_t $tmp63 = $tmp62.value;
-int64_t $tmp64 = param1.value;
-bool $tmp65 = $tmp63 < $tmp64;
-frost$core$Bit $tmp66 = (frost$core$Bit) {$tmp65};
-*(&local1) = $tmp66;
+frost$core$Int64 $tmp57 = *(&local0);
+int64_t $tmp58 = $tmp57.value;
+int64_t $tmp59 = param1.value;
+bool $tmp60 = $tmp58 < $tmp59;
+frost$core$Bit $tmp61 = (frost$core$Bit) {$tmp60};
+*(&local1) = $tmp61;
 goto block6;
 block5:;
-*(&local1) = $tmp60;
+*(&local1) = $tmp55;
 goto block6;
 block6:;
-frost$core$Bit $tmp67 = *(&local1);
-bool $tmp68 = $tmp67.value;
-if ($tmp68) goto block7; else goto block8;
+frost$core$Bit $tmp62 = *(&local1);
+bool $tmp63 = $tmp62.value;
+if ($tmp63) goto block7; else goto block8;
 block7:;
-frost$core$Int64 $tmp69 = *(&local0);
-return $tmp69;
+frost$core$Int64 $tmp64 = *(&local0);
+return $tmp64;
 block8:;
-frost$core$Int64 $tmp70 = (frost$core$Int64) {54};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s71, $tmp70, &$s72);
+frost$core$Int64 $tmp65 = (frost$core$Int64) {54};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s66, $tmp65, &$s67);
 abort(); // unreachable
 
 }
@@ -194,50 +184,50 @@ frost$core$Real32 frost$math$Random$real32$R$frost$core$Real32(frost$math$Random
 frost$core$Real32 local0;
 frost$core$Bit local1;
 // line 76
-ITable* $tmp73 = param0->$class->itable;
-while ($tmp73->$class != (frost$core$Class*) &frost$math$Random$class) {
-    $tmp73 = $tmp73->next;
+ITable* $tmp68 = param0->$class->itable;
+while ($tmp68->$class != (frost$core$Class*) &frost$math$Random$class) {
+    $tmp68 = $tmp68->next;
 }
-$fn75 $tmp74 = $tmp73->methods[1];
-frost$core$Int32 $tmp76 = $tmp74(param0);
-frost$core$UInt32 $tmp77 = frost$core$Int32$get_asUInt32$R$frost$core$UInt32($tmp76);
-frost$core$UInt32 $tmp78 = (frost$core$UInt32) {8};
-frost$core$UInt32 $tmp79 = frost$core$UInt32$$SHR$frost$core$UInt32$R$frost$core$UInt32($tmp77, $tmp78);
-frost$core$UInt32 $tmp80 = (frost$core$UInt32) {16777216};
-frost$core$Real32 $tmp81 = frost$core$UInt32$$DIV$frost$core$UInt32$R$frost$core$Real32($tmp79, $tmp80);
-*(&local0) = $tmp81;
+$fn70 $tmp69 = $tmp68->methods[1];
+frost$core$Int32 $tmp71 = $tmp69(param0);
+frost$core$UInt32 $tmp72 = frost$core$Int32$get_asUInt32$R$frost$core$UInt32($tmp71);
+frost$core$UInt32 $tmp73 = (frost$core$UInt32) {8};
+frost$core$UInt32 $tmp74 = frost$core$UInt32$$SHR$frost$core$UInt32$R$frost$core$UInt32($tmp72, $tmp73);
+frost$core$UInt32 $tmp75 = (frost$core$UInt32) {16777216};
+frost$core$Real32 $tmp76 = frost$core$UInt32$$DIV$frost$core$UInt32$R$frost$core$Real32($tmp74, $tmp75);
+*(&local0) = $tmp76;
 goto block1;
 block1:;
-frost$core$Real32 $tmp82 = *(&local0);
-frost$core$Real32 $tmp83 = (frost$core$Real32) {0.0};
-float $tmp84 = $tmp82.value;
-float $tmp85 = $tmp83.value;
-bool $tmp86 = $tmp84 >= $tmp85;
-frost$core$Bit $tmp87 = (frost$core$Bit) {$tmp86};
-bool $tmp88 = $tmp87.value;
-if ($tmp88) goto block2; else goto block3;
+frost$core$Real32 $tmp77 = *(&local0);
+frost$core$Real32 $tmp78 = (frost$core$Real32) {0.0};
+float $tmp79 = $tmp77.value;
+float $tmp80 = $tmp78.value;
+bool $tmp81 = $tmp79 >= $tmp80;
+frost$core$Bit $tmp82 = (frost$core$Bit) {$tmp81};
+bool $tmp83 = $tmp82.value;
+if ($tmp83) goto block2; else goto block3;
 block2:;
-frost$core$Real32 $tmp89 = *(&local0);
-frost$core$Real32 $tmp90 = (frost$core$Real32) {1.0};
-float $tmp91 = $tmp89.value;
-float $tmp92 = $tmp90.value;
-bool $tmp93 = $tmp91 < $tmp92;
-frost$core$Bit $tmp94 = (frost$core$Bit) {$tmp93};
-*(&local1) = $tmp94;
+frost$core$Real32 $tmp84 = *(&local0);
+frost$core$Real32 $tmp85 = (frost$core$Real32) {1.0};
+float $tmp86 = $tmp84.value;
+float $tmp87 = $tmp85.value;
+bool $tmp88 = $tmp86 < $tmp87;
+frost$core$Bit $tmp89 = (frost$core$Bit) {$tmp88};
+*(&local1) = $tmp89;
 goto block4;
 block3:;
-*(&local1) = $tmp87;
+*(&local1) = $tmp82;
 goto block4;
 block4:;
-frost$core$Bit $tmp95 = *(&local1);
-bool $tmp96 = $tmp95.value;
-if ($tmp96) goto block5; else goto block6;
+frost$core$Bit $tmp90 = *(&local1);
+bool $tmp91 = $tmp90.value;
+if ($tmp91) goto block5; else goto block6;
 block5:;
-frost$core$Real32 $tmp97 = *(&local0);
-return $tmp97;
+frost$core$Real32 $tmp92 = *(&local0);
+return $tmp92;
 block6:;
-frost$core$Int64 $tmp98 = (frost$core$Int64) {75};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s99, $tmp98, &$s100);
+frost$core$Int64 $tmp93 = (frost$core$Int64) {75};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s94, $tmp93, &$s95);
 abort(); // unreachable
 
 }
@@ -246,50 +236,50 @@ frost$core$Real64 frost$math$Random$real64$R$frost$core$Real64(frost$math$Random
 frost$core$Real64 local0;
 frost$core$Bit local1;
 // line 87
-ITable* $tmp101 = param0->$class->itable;
-while ($tmp101->$class != (frost$core$Class*) &frost$math$Random$class) {
-    $tmp101 = $tmp101->next;
+ITable* $tmp96 = param0->$class->itable;
+while ($tmp96->$class != (frost$core$Class*) &frost$math$Random$class) {
+    $tmp96 = $tmp96->next;
 }
-$fn103 $tmp102 = $tmp101->methods[2];
-frost$core$Int64 $tmp104 = $tmp102(param0);
-frost$core$UInt64 $tmp105 = frost$core$Int64$get_asUInt64$R$frost$core$UInt64($tmp104);
-frost$core$UInt64 $tmp106 = (frost$core$UInt64) {11};
-frost$core$UInt64 $tmp107 = frost$core$UInt64$$SHR$frost$core$UInt64$R$frost$core$UInt64($tmp105, $tmp106);
-frost$core$UInt64 $tmp108 = (frost$core$UInt64) {9007199254740992};
-frost$core$Real64 $tmp109 = frost$core$UInt64$$DIV$frost$core$UInt64$R$frost$core$Real64($tmp107, $tmp108);
-*(&local0) = $tmp109;
+$fn98 $tmp97 = $tmp96->methods[2];
+frost$core$Int64 $tmp99 = $tmp97(param0);
+frost$core$UInt64 $tmp100 = frost$core$Int64$get_asUInt64$R$frost$core$UInt64($tmp99);
+frost$core$UInt64 $tmp101 = (frost$core$UInt64) {11};
+frost$core$UInt64 $tmp102 = frost$core$UInt64$$SHR$frost$core$UInt64$R$frost$core$UInt64($tmp100, $tmp101);
+frost$core$UInt64 $tmp103 = (frost$core$UInt64) {9007199254740992};
+frost$core$Real64 $tmp104 = frost$core$UInt64$$DIV$frost$core$UInt64$R$frost$core$Real64($tmp102, $tmp103);
+*(&local0) = $tmp104;
 goto block1;
 block1:;
-frost$core$Real64 $tmp110 = *(&local0);
-frost$core$Real64 $tmp111 = (frost$core$Real64) {0.0};
-double $tmp112 = $tmp110.value;
-double $tmp113 = $tmp111.value;
-bool $tmp114 = $tmp112 >= $tmp113;
-frost$core$Bit $tmp115 = (frost$core$Bit) {$tmp114};
-bool $tmp116 = $tmp115.value;
-if ($tmp116) goto block2; else goto block3;
+frost$core$Real64 $tmp105 = *(&local0);
+frost$core$Real64 $tmp106 = (frost$core$Real64) {0.0};
+double $tmp107 = $tmp105.value;
+double $tmp108 = $tmp106.value;
+bool $tmp109 = $tmp107 >= $tmp108;
+frost$core$Bit $tmp110 = (frost$core$Bit) {$tmp109};
+bool $tmp111 = $tmp110.value;
+if ($tmp111) goto block2; else goto block3;
 block2:;
-frost$core$Real64 $tmp117 = *(&local0);
-frost$core$Real64 $tmp118 = (frost$core$Real64) {1.0};
-double $tmp119 = $tmp117.value;
-double $tmp120 = $tmp118.value;
-bool $tmp121 = $tmp119 < $tmp120;
-frost$core$Bit $tmp122 = (frost$core$Bit) {$tmp121};
-*(&local1) = $tmp122;
+frost$core$Real64 $tmp112 = *(&local0);
+frost$core$Real64 $tmp113 = (frost$core$Real64) {1.0};
+double $tmp114 = $tmp112.value;
+double $tmp115 = $tmp113.value;
+bool $tmp116 = $tmp114 < $tmp115;
+frost$core$Bit $tmp117 = (frost$core$Bit) {$tmp116};
+*(&local1) = $tmp117;
 goto block4;
 block3:;
-*(&local1) = $tmp115;
+*(&local1) = $tmp110;
 goto block4;
 block4:;
-frost$core$Bit $tmp123 = *(&local1);
-bool $tmp124 = $tmp123.value;
-if ($tmp124) goto block5; else goto block6;
+frost$core$Bit $tmp118 = *(&local1);
+bool $tmp119 = $tmp118.value;
+if ($tmp119) goto block5; else goto block6;
 block5:;
-frost$core$Real64 $tmp125 = *(&local0);
-return $tmp125;
+frost$core$Real64 $tmp120 = *(&local0);
+return $tmp120;
 block6:;
-frost$core$Int64 $tmp126 = (frost$core$Int64) {86};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s127, $tmp126, &$s128);
+frost$core$Int64 $tmp121 = (frost$core$Int64) {86};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s122, $tmp121, &$s123);
 abort(); // unreachable
 
 }

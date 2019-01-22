@@ -9,7 +9,7 @@ typedef struct org$frostlang$frostc$IR$Block$ID {
     frost$core$Int64 value;
 } org$frostlang$frostc$IR$Block$ID;
 #include "frost/core/Class.h"
-typedef struct { frost$core$Class* cl; int32_t refCount; frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[4]; } org$frostlang$frostc$IR$Block$ID$class_type;
+typedef struct { frost$core$Class* cl; int32_t refCount; frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[5]; } org$frostlang$frostc$IR$Block$ID$class_type;
 extern org$frostlang$frostc$IR$Block$ID$class_type org$frostlang$frostc$IR$Block$ID$class;
 typedef struct org$frostlang$frostc$IR$Block$ID$wrapper {
     frost$core$Class* cl;

@@ -13,6 +13,7 @@ void frost$collections$HashSet$init(frost$collections$HashSet* self);
 void frost$collections$HashSet$init$frost$collections$CollectionView$LTfrost$collections$HashSet$T$GT(frost$collections$HashSet* self, frost$collections$CollectionView* p_c);
 void frost$collections$HashSet$add$frost$collections$HashSet$T(frost$collections$HashSet* self, frost$collections$Key* p_value);
 void frost$collections$HashSet$addAll$frost$collections$CollectionView$LTfrost$collections$HashSet$T$GT(frost$collections$HashSet* self, frost$collections$CollectionView* p_c);
+void frost$collections$HashSet$remove$frost$collections$HashSet$T(frost$collections$HashSet* self, frost$collections$Key* p_value);
 frost$core$Int64 frost$collections$HashSet$get_count$R$frost$core$Int64(frost$collections$HashSet* self);
 void frost$collections$HashSet$clear(frost$collections$HashSet* self);
 frost$collections$Iterator* frost$collections$HashSet$get_iterator$R$frost$collections$Iterator$LTfrost$collections$HashSet$T$GT(frost$collections$HashSet* self);

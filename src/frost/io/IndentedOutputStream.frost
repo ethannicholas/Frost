@@ -55,6 +55,7 @@ class IndentedOutputStream : OutputStream {
                 indentIfNeeded()
             }
             out.write(b)
+            return null
         }
         fail(error) {
             return error

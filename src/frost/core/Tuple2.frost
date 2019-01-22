@@ -14,6 +14,7 @@ class Tuple2<T0, T1> {
             when 0 { return f0 }
             when 1 { return f1 }
         }
+        return null
     }
 
     @override

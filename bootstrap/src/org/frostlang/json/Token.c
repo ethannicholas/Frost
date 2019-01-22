@@ -23,16 +23,16 @@ static frost$core$String $s2 = { (frost$core$Class*) &frost$core$String$class, -
 org$frostlang$json$Token org$frostlang$json$Token$init$org$frostlang$json$Token$Kind$frost$core$String$Index$frost$core$String$Index$org$frostlang$json$Position(org$frostlang$json$Token$Kind param0, frost$core$String$Index param1, frost$core$String$Index param2, org$frostlang$json$Position param3) {
 
 org$frostlang$json$Token local0;
-// line 58
+// line 59
 org$frostlang$json$Token$Kind* $tmp3 = &(&local0)->kind;
 *$tmp3 = param0;
-// line 59
+// line 60
 frost$core$String$Index* $tmp4 = &(&local0)->start;
 *$tmp4 = param1;
-// line 60
+// line 61
 frost$core$String$Index* $tmp5 = &(&local0)->end;
 *$tmp5 = param2;
-// line 61
+// line 62
 org$frostlang$json$Position* $tmp6 = &(&local0)->position;
 *$tmp6 = param3;
 org$frostlang$json$Token $tmp7 = *(&local0);

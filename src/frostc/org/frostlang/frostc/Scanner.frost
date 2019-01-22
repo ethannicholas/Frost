@@ -58,7 +58,7 @@ class Scanner {
                         return t
                     }
                 }
-                assert false, "unsupported type: \{type}"
+                unreachable, "unsupported type: \{type}"
             }
             when ASTNode.METHOD_TYPE(position, kind, rawParameters, rawReturnType) {
                 def typeKind:Type.Kind
@@ -76,7 +76,7 @@ class Scanner {
                         typeKind := Type.Kind.IMMUTABLE_METHOD
                     }
                     otherwise {
-                        assert false, "unsupported"
+                        unreachable, "unsupported"
                     }
                 }
                 def parameters := Array<Type>() -- FIXME use map
@@ -94,9 +94,10 @@ class Scanner {
                         FixedArray<Type>.from(parameters), returnType, 0)
             }
             otherwise {
-                assert false, "unsupported type \{type}(\{type.$rawValue})"
+                unreachable, "unsupported type \{type}(\{type.$rawValue})"
             }
         }
+        unreachable
     }
 
     method add(position:Position, flags:Int, flag:Int):Int {
@@ -220,7 +221,7 @@ class Scanner {
                     }
                 }
                 otherwise {
-                    assert false
+                    unreachable
                 }
             }
         }
@@ -240,7 +241,7 @@ class Scanner {
                     doccomment := text
                 }
                 otherwise {
-                    assert false
+                    unreachable
                 }
             }
         }
@@ -278,7 +279,7 @@ class Scanner {
                                     type := convertType(idType)
                                 }
                                 otherwise {
-                                    assert false
+                                    unreachable
                                 }
                             }
                             def value:ASTNode?
@@ -295,13 +296,13 @@ class Scanner {
                             owner.fields.add(field)
                         }
                         otherwise {
-                            assert false
+                            unreachable
                         }
                     }
                 }
             }
             otherwise {
-                assert false
+                unreachable
             }
         }
     }
@@ -463,6 +464,9 @@ class Scanner {
             when ASTNode.UNARY(_, _, base) {
                 return 1 + complexity(base)
             }
+            when ASTNode.UNREACHABLE {
+                return 0
+            }
             when ASTNode.UNTYPED_LAMBDA {
                 return INLINE_THRESHOLD
             }
@@ -491,7 +495,7 @@ class Scanner {
                 return result
             }
             otherwise {
-                assert false, "unsupported node: \{node}"
+                unreachable
             }
         }
     }
@@ -526,7 +530,7 @@ class Scanner {
                     doccomment := text
                 }
                 otherwise {
-                    assert false
+                    unreachable
                 }
             }
         }
@@ -551,7 +555,7 @@ class Scanner {
                         bound := convertType(type)
                     }
                     otherwise {
-                        assert false
+                        unreachable
                     }
                 }
                 generics.add(MethodDecl.GenericParameter(p.position(), fullName, parameterName,
@@ -568,7 +572,7 @@ class Scanner {
                     parameters.add(MethodDecl.Parameter(name, convertType(type)))
                 }
                 otherwise {
-                    assert false
+                    unreachable
                 }
             }
         }
@@ -627,7 +631,7 @@ class Scanner {
                 scanChoiceCase(cl, position, dc, name, fields)
             }
             otherwise {
-                assert false, "unsupported class child: \{node}"
+                unreachable, "unsupported class child: \{node}"
             }
         }
     }
@@ -645,7 +649,7 @@ class Scanner {
                     doccomment := text
                 }
                 otherwise {
-                    assert false
+                    unreachable
                 }
             }
         }
@@ -681,7 +685,7 @@ class Scanner {
                     doccomment := text
                 }
                 otherwise {
-                    assert false
+                    unreachable
                 }
             }
         }
@@ -701,7 +705,7 @@ class Scanner {
                         bound := convertType(type)
                     }
                     otherwise {
-                        assert false
+                        unreachable
                     }
                 }
                 parameters.add(ClassDecl.GenericParameter(p.position(), fullName, name, bound))
@@ -895,7 +899,7 @@ class Scanner {
                                             mainArguments.add(ASTNode.IDENTIFIER(position, name))
                                         }
                                         otherwise {
-                                            assert false
+                                            unreachable
                                         }
                                     }
                                 }
@@ -948,16 +952,14 @@ class Scanner {
                             }
                         }
                         otherwise {
-                            assert false, "unsupported: \{e}(\{e.$rawValue}):\{e.position()}"
+                            unreachable, "unsupported: \{e}(\{e.$rawValue}):\{e.position()}"
                         }
                     }
                 }
                 self.source := null
                 return result
             }
-            otherwise {
-                assert false
-            }
         }
+        unreachable
     }
 }

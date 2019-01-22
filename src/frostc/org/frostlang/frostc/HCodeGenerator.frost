@@ -88,7 +88,7 @@ class HCodeGenerator : CodeGenerator {
                     match sizeOf(t) {
                         when 4    { return "float" }
                         when 8    { return "double" }
-                        otherwise { assert false }
+                        otherwise { unreachable }
                     }
                 }
                 when Type.Kind.CLASS {
@@ -155,13 +155,13 @@ class HCodeGenerator : CodeGenerator {
                     return type(Type.Method())
                 }
                 otherwise {
-                    assert false, "unsupported type '\{t}'"
+                    unreachable, "unsupported type '\{t}'"
                 }
             }
         }
         fail(error) {
-            assert false, error.asString
         }
+        unreachable
     }
 
     method declaration(t:Type, name:String):String {
@@ -315,7 +315,7 @@ class HCodeGenerator : CodeGenerator {
             body.printLine(");")
         }
         fail(error) {
-            assert false, error.asString
+            unreachable, error.asString
         }
     }
 

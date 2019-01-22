@@ -109,7 +109,6 @@ frost$core$Object* $tmp42 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q($tmp42);
 *(&local0) = $tmp41;
 frost$core$Frost$unref$frost$core$Object$Q($tmp41);
-// unreffing REF($45:frost.collections.Array.T)
 // line 54
 frost$collections$Array** $tmp43 = &param0->contents;
 frost$collections$Array* $tmp44 = *$tmp43;
@@ -128,13 +127,11 @@ int64_t $tmp54 = $tmp52 - $tmp53;
 frost$core$Int64 $tmp55 = (frost$core$Int64) {$tmp54};
 frost$core$Object* $tmp56 = frost$collections$Array$removeIndex$frost$core$Int64$R$frost$collections$Array$T($tmp44, $tmp55);
 frost$core$Frost$unref$frost$core$Object$Q($tmp56);
-// unreffing REF($73:frost.collections.Array.T)
 // line 55
 frost$core$Object* $tmp57 = *(&local0);
 frost$core$Frost$ref$frost$core$Object$Q($tmp57);
 frost$core$Object* $tmp58 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q($tmp58);
-// unreffing result
 *(&local0) = ((frost$core$Object*) NULL);
 return $tmp57;
 
@@ -190,7 +187,6 @@ frost$core$Int64 $tmp92 = (frost$core$Int64) {$tmp91};
 frost$core$Object* $tmp93 = frost$collections$Array$removeIndex$frost$core$Int64$R$frost$collections$Array$T($tmp77, $tmp92);
 frost$core$Frost$ref$frost$core$Object$Q($tmp93);
 frost$core$Frost$unref$frost$core$Object$Q($tmp93);
-// unreffing REF($20:frost.collections.Array.T)
 return $tmp93;
 
 }
@@ -267,7 +263,6 @@ frost$core$Int64 $tmp139 = (frost$core$Int64) {$tmp138};
 frost$core$Object* $tmp140 = frost$collections$Array$$IDX$frost$core$Int64$R$frost$collections$Array$T($tmp124, $tmp139);
 frost$core$Frost$ref$frost$core$Object$Q($tmp140);
 frost$core$Frost$unref$frost$core$Object$Q($tmp140);
-// unreffing REF($59:frost.collections.Array.T)
 return $tmp140;
 
 }
@@ -287,7 +282,6 @@ frost$collections$Stack$StackIterator* $tmp143 = (frost$collections$Stack$StackI
 frost$collections$Stack$StackIterator$init$frost$collections$Stack$LTfrost$collections$Stack$StackIterator$T$GT($tmp143, param0);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$collections$Iterator*) $tmp143)));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp143));
-// unreffing REF($1:frost.collections.Stack.StackIterator<frost.collections.Stack.T>)
 return ((frost$collections$Iterator*) $tmp143);
 
 }
@@ -314,7 +308,6 @@ $fn153 $tmp152 = ($fn153) ((frost$core$Object*) $tmp151)->$class->vtable[0];
 frost$core$String* $tmp154 = $tmp152(((frost$core$Object*) $tmp151));
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp154));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp154));
-// unreffing REF($6:frost.core.String)
 return $tmp154;
 
 }
@@ -330,7 +323,6 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp157));
 frost$collections$Array** $tmp158 = &param0->contents;
 *$tmp158 = $tmp155;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp155));
-// unreffing REF($2:frost.collections.Array<frost.collections.Stack.T>)
 return;
 
 }

@@ -28,7 +28,6 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp4));
 frost$core$Weak** $tmp5 = &param0->owner;
 *$tmp5 = $tmp2;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp2));
-// unreffing REF($1:frost.core.Weak<org.frostlang.frostc.MethodDecl?>)
 // line 22
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
 frost$core$String** $tmp6 = &param0->name;
@@ -59,13 +58,9 @@ frost$core$String* $tmp19 = frost$core$String$$ADD$frost$core$Object$R$frost$cor
 frost$core$String* $tmp20 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp19, &$s21);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp20));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp20));
-// unreffing REF($9:frost.core.String)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp19));
-// unreffing REF($8:frost.core.String)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp15));
-// unreffing REF($4:frost.core.String)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp14));
-// unreffing REF($3:frost.core.String)
 return $tmp20;
 
 }

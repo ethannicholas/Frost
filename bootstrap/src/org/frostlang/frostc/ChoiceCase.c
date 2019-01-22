@@ -35,7 +35,6 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp4));
 frost$core$Weak** $tmp5 = &param0->initMethod;
 *$tmp5 = $tmp2;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp2));
-// unreffing REF($1:frost.core.Weak<org.frostlang.frostc.MethodDecl?>)
 // line 17
 frost$core$Int64 $tmp6 = (frost$core$Int64) {0};
 org$frostlang$frostc$Compiler$Resolution $tmp7 = org$frostlang$frostc$Compiler$Resolution$init$frost$core$Int64($tmp6);
@@ -51,7 +50,6 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp11));
 frost$core$Weak** $tmp12 = &param0->owner;
 *$tmp12 = $tmp9;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp9));
-// unreffing REF($22:frost.core.Weak<org.frostlang.frostc.ClassDecl>)
 // line 22
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param4));
 frost$core$String** $tmp13 = &param0->doccomment;
@@ -72,7 +70,6 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp19));
 frost$collections$Array** $tmp20 = &param0->fields;
 *$tmp20 = $tmp17;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp17));
-// unreffing REF($50:frost.collections.Array<org.frostlang.frostc.Type>)
 // line 25
 frost$core$Int64 $tmp21 = (frost$core$Int64) {1};
 org$frostlang$frostc$Symbol$Kind $tmp22 = org$frostlang$frostc$Symbol$Kind$init$frost$core$Int64($tmp21);
@@ -96,15 +93,10 @@ frost$core$String* $tmp33 = frost$core$String$$ADD$frost$core$String$R$frost$cor
 frost$core$String* $tmp34 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp33, &$s35);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp34));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp34));
-// unreffing REF($14:frost.core.String)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp33));
-// unreffing REF($13:frost.core.String)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp29));
-// unreffing REF($9:frost.core.String)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp28));
-// unreffing REF($8:frost.core.String)
 frost$core$Frost$unref$frost$core$Object$Q($tmp25);
-// unreffing REF($4:frost.core.Weak.T)
 return $tmp34;
 
 }

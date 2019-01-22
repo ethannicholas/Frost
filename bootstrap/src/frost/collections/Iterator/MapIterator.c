@@ -108,9 +108,7 @@ block5:;
 frost$core$Object* $tmp40 = *(&local0);
 frost$core$Frost$ref$frost$core$Object$Q($tmp40);
 frost$core$Frost$unref$frost$core$Object$Q($tmp40);
-// unreffing REF($35:frost.collections.Iterator.MapIterator.U)
 frost$core$Frost$unref$frost$core$Object$Q($tmp30);
-// unreffing REF($18:frost.collections.Iterator.T)
 return $tmp40;
 
 }

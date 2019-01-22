@@ -105,7 +105,6 @@ $fn44 $tmp43 = $tmp42->methods[0];
 frost$core$Object* $tmp45 = $tmp43($tmp34, $tmp41);
 frost$core$Frost$ref$frost$core$Object$Q($tmp45);
 frost$core$Frost$unref$frost$core$Object$Q($tmp45);
-// unreffing REF($34:frost.collections.ListView.T)
 return $tmp45;
 
 }

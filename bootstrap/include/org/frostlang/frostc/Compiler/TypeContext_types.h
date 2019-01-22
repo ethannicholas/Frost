@@ -9,7 +9,7 @@ typedef struct org$frostlang$frostc$Compiler$TypeContext {
     frost$core$Class* $class;
     frost$core$Int32 refCount;
     frost$core$Int64 $rawValue;
-    int8_t $data[8];
+    int8_t $data[9];
 } org$frostlang$frostc$Compiler$TypeContext;
 #include "frost/core/Class.h"
 typedef struct { frost$core$Class* cl; int32_t refCount; frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[4]; } org$frostlang$frostc$Compiler$TypeContext$class_type;

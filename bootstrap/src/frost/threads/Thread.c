@@ -37,7 +37,6 @@ frost$threads$Thread* $tmp3 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp3));
 *(&local0) = $tmp2;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp2));
-// unreffing REF($1:frost.threads.Thread)
 // line 51
 frost$threads$Thread* $tmp4 = *(&local0);
 frost$threads$Thread$run$$LP$RP$EQ$AM$GT$LP$RP$builtin_bit($tmp4, ((frost$core$MutableMethod*) param0), true);
@@ -46,7 +45,6 @@ frost$threads$Thread* $tmp5 = *(&local0);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp5));
 frost$threads$Thread* $tmp6 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp6));
-// unreffing result
 *(&local0) = ((frost$threads$Thread*) NULL);
 return $tmp5;
 
@@ -63,7 +61,6 @@ frost$threads$Thread* $tmp8 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp8));
 *(&local0) = $tmp7;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp7));
-// unreffing REF($1:frost.threads.Thread)
 // line 58
 frost$threads$Thread* $tmp9 = *(&local0);
 bool $tmp10 = param1.value;
@@ -73,7 +70,6 @@ frost$threads$Thread* $tmp11 = *(&local0);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp11));
 frost$threads$Thread* $tmp12 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp12));
-// unreffing result
 *(&local0) = ((frost$threads$Thread*) NULL);
 return $tmp11;
 
@@ -90,7 +86,6 @@ frost$threads$Thread* $tmp14 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp14));
 *(&local0) = $tmp13;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp13));
-// unreffing REF($1:frost.threads.Thread)
 // line 65
 frost$threads$Thread* $tmp15 = *(&local0);
 frost$threads$Thread$run$$LP$RP$EQ$AM$GT$LP$RP$builtin_bit($tmp15, param0, true);
@@ -99,7 +94,6 @@ frost$threads$Thread* $tmp16 = *(&local0);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp16));
 frost$threads$Thread* $tmp17 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp17));
-// unreffing result
 *(&local0) = ((frost$threads$Thread*) NULL);
 return $tmp16;
 
@@ -116,7 +110,6 @@ frost$threads$Thread* $tmp19 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp19));
 *(&local0) = $tmp18;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp18));
-// unreffing REF($1:frost.threads.Thread)
 // line 72
 frost$threads$Thread* $tmp20 = *(&local0);
 bool $tmp21 = param1.value;
@@ -126,7 +119,6 @@ frost$threads$Thread* $tmp22 = *(&local0);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp22));
 frost$threads$Thread* $tmp23 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp23));
-// unreffing result
 *(&local0) = ((frost$threads$Thread*) NULL);
 return $tmp22;
 

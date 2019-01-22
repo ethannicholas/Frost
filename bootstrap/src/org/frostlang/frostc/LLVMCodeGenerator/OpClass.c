@@ -35,7 +35,7 @@ static frost$core$String $s2 = { (frost$core$Class*) &frost$core$String$class, -
 
 void org$frostlang$frostc$LLVMCodeGenerator$OpClass$cleanup(org$frostlang$frostc$LLVMCodeGenerator$OpClass param0) {
 
-// line 1011
+// line 1017
 frost$core$Int64 $tmp3 = param0.$rawValue;
 frost$core$Int64 $tmp4 = (frost$core$Int64) {0};
 frost$core$Bit $tmp5 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp3, $tmp4);
@@ -71,7 +71,7 @@ return;
 org$frostlang$frostc$LLVMCodeGenerator$OpClass org$frostlang$frostc$LLVMCodeGenerator$OpClass$init$frost$core$Int64(frost$core$Int64 param0) {
 
 org$frostlang$frostc$LLVMCodeGenerator$OpClass local0;
-// line 1011
+// line 1017
 frost$core$Int64* $tmp16 = &(&local0)->$rawValue;
 *$tmp16 = param0;
 org$frostlang$frostc$LLVMCodeGenerator$OpClass $tmp17 = *(&local0);
@@ -80,7 +80,7 @@ return $tmp17;
 }
 frost$core$Bit org$frostlang$frostc$LLVMCodeGenerator$OpClass$$EQ$org$frostlang$frostc$LLVMCodeGenerator$OpClass$R$frost$core$Bit(org$frostlang$frostc$LLVMCodeGenerator$OpClass param0, org$frostlang$frostc$LLVMCodeGenerator$OpClass param1) {
 
-// line 1011
+// line 1017
 frost$core$Int64 $tmp18 = param0.$rawValue;
 frost$core$Int64 $tmp19 = param1.$rawValue;
 int64_t $tmp20 = $tmp18.value;
@@ -90,11 +90,11 @@ frost$core$Bit $tmp23 = (frost$core$Bit) {$tmp22};
 bool $tmp24 = $tmp23.value;
 if ($tmp24) goto block1; else goto block2;
 block1:;
-// line 1011
+// line 1017
 frost$core$Bit $tmp25 = frost$core$Bit$init$builtin_bit(false);
 return $tmp25;
 block2:;
-// line 1011
+// line 1017
 frost$core$Bit $tmp26 = frost$core$Bit$init$builtin_bit(true);
 return $tmp26;
 

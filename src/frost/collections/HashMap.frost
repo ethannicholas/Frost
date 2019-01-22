@@ -150,7 +150,7 @@ class HashMap<K:Key<K>, V> : Map<K, V> {
         init()
         -- FIXME inefficient, need to iterate across entries rather than keys
         for k in map.keys {
-            self[k] := map[k]
+            self[k] := map[k]->V
         }
     }
 

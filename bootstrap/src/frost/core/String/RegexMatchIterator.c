@@ -51,7 +51,6 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp10));
 frost$core$Matcher** $tmp11 = &param0->matcher;
 *$tmp11 = $tmp8;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp8));
-// unreffing REF($15:frost.core.Matcher)
 // line 298
 frost$core$Matcher** $tmp12 = &param0->matcher;
 frost$core$Matcher* $tmp13 = *$tmp12;
@@ -99,7 +98,6 @@ frost$core$String$Match* $tmp31 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp31));
 *(&local0) = $tmp28;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp28));
-// unreffing REF($10:frost.core.String.Match)
 // line 309
 // line 310
 frost$core$Bit* $tmp32 = &param0->allowOverlaps;
@@ -139,7 +137,6 @@ frost$core$String$Match* $tmp49 = *(&local0);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp49));
 frost$core$String$Match* $tmp50 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp50));
-// unreffing result
 *(&local0) = ((frost$core$String$Match*) NULL);
 return $tmp49;
 

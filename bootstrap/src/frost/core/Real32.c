@@ -1189,7 +1189,6 @@ frost$core$UInt64 $tmp322 = (frost$core$UInt64) {4294967295};
 frost$core$String* $tmp323 = frost$core$Frost$format$frost$core$Bit$frost$core$UInt64$frost$core$UInt64$frost$core$String$R$frost$core$String($tmp319, $tmp321, $tmp322, param1);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp323));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp323));
-// unreffing REF($7:frost.core.String)
 return $tmp323;
 
 }

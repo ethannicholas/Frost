@@ -37,7 +37,6 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp4));
 frost$core$Weak** $tmp5 = &param0->owner;
 *$tmp5 = $tmp2;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp2));
-// unreffing REF($1:frost.core.Weak<org.frostlang.frostc.MethodDecl?>)
 org$frostlang$frostc$Type* $tmp6 = org$frostlang$frostc$Type$Void$R$org$frostlang$frostc$Type();
 ITable* $tmp7 = ((frost$core$Equatable*) param4)->$class->itable;
 while ($tmp7->$class != (frost$core$Class*) &frost$core$Equatable$class) {
@@ -46,7 +45,6 @@ while ($tmp7->$class != (frost$core$Class*) &frost$core$Equatable$class) {
 $fn9 $tmp8 = $tmp7->methods[1];
 frost$core$Bit $tmp10 = $tmp8(((frost$core$Equatable*) param4), ((frost$core$Equatable*) $tmp6));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp6));
-// unreffing REF($18:org.frostlang.frostc.Type)
 bool $tmp11 = $tmp10.value;
 if ($tmp11) goto block1; else goto block2;
 block2:;

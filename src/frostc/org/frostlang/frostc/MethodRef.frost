@@ -54,7 +54,7 @@ class MethodRef {
                     typeKind := Type.Kind.IMMUTABLE_FUNCTION
                 }
                 otherwise {
-                    assert false
+                    unreachable
                 }
             }
             methodType := Type.methodType(methodType.position, typeKind, parameterTypes,
@@ -70,7 +70,7 @@ class MethodRef {
                     typeKind := Type.Kind.FUNCTION
                 }
                 otherwise {
-                    assert false
+                    unreachable
                 }
             }
             methodType := Type.methodType(methodType.position, typeKind,

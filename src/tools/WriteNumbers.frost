@@ -27,7 +27,7 @@ class WriteNumbers {
             when Type.REAL32 { return "builtin_float32" }
             when Type.REAL64 { return "builtin_float64" }
         }
-        assert false, "invalid type \{type}"
+        unreachable, "invalid type \{type}"
     }
 
     @class
@@ -44,7 +44,7 @@ class WriteNumbers {
             when Type.REAL32 { return "Real32" }
             when Type.REAL64 { return "Real64" }
         }
-        assert false, "invalid type \{type}"
+        unreachable, "invalid type \{type}"
     }
 
     @class
@@ -201,7 +201,7 @@ class WriteNumbers {
             out.printLine("    }")
         }
         fail(error) {
-            assert false, error.asString
+            unreachable, error.asString
         }
     }
 
@@ -297,7 +297,7 @@ class WriteNumbers {
             }
         }
         fail(error) {
-            assert false, error.asString
+            unreachable, error.asString
         }
     }
 
@@ -338,7 +338,7 @@ class WriteNumbers {
             out.printLine("    }")
         }
         fail(error) {
-            assert false, error.asString
+            unreachable, error.asString
         }
     }
 
@@ -366,7 +366,7 @@ class WriteNumbers {
             out.printLine("    }")
         }
         fail(error) {
-            assert false, error.asString
+            unreachable, error.asString
         }
     }
 
@@ -390,7 +390,7 @@ class WriteNumbers {
             out.printLine("    }")
         }
         fail(error) {
-            assert false, error.asString
+            unreachable, error.asString
         }
     }
 
@@ -432,7 +432,7 @@ class WriteNumbers {
             out.printLine("    }")
         }
         fail(error) {
-            assert false, error.asString
+            unreachable, error.asString
         }
     }
 
@@ -468,7 +468,7 @@ class WriteNumbers {
             out.printLine("    }")
         }
         fail(error) {
-            assert false, error.asString
+            unreachable, error.asString
         }
     }
 
@@ -498,7 +498,7 @@ class WriteNumbers {
             out.printLine("    }")
         }
         fail(error) {
-            assert false, error.asString
+            unreachable, error.asString
         }
     }
 
@@ -534,7 +534,7 @@ class WriteNumbers {
             writeIndex(type, Type.INT64,  out)
         }
         fail(error) {
-            assert false, error.asString
+            unreachable, error.asString
         }
     }
 
@@ -549,7 +549,7 @@ class WriteNumbers {
             out.printLine("    }")
         }
         fail(error) {
-            assert false, error.asString
+            unreachable, error.asString
         }
     }
 
@@ -565,7 +565,7 @@ class WriteNumbers {
             out.printLine("    }")
         }
         fail(error) {
-            assert false, error.asString
+            unreachable, error.asString
         }
     }
 
@@ -579,7 +579,7 @@ class WriteNumbers {
             out.printLine("    }")
         }
         fail(error) {
-            assert false, error.asString
+            unreachable, error.asString
         }
     }
 
@@ -630,7 +630,7 @@ class WriteNumbers {
             out.printLine("    }")
         }
         fail(error) {
-            assert false, error.asString
+            unreachable, error.asString
         }
     }
 
@@ -659,7 +659,7 @@ class WriteNumbers {
             out.printLine("    }")
         }
         fail(error) {
-            assert false, error.asString
+            unreachable, error.asString
         }
     }
 
@@ -721,7 +721,7 @@ class WriteNumbers {
             out.printLine("    }")
         }
         fail(error) {
-            assert false, error.asString
+            unreachable, error.asString
         }
     }
 
@@ -739,7 +739,7 @@ class WriteNumbers {
             out.printLine("    }")
         }
         fail(error) {
-            assert false, error.asString
+            unreachable, error.asString
         }
     }
 
@@ -778,7 +778,7 @@ class WriteNumbers {
             out.printLine("    }")
         }
         fail(error) {
-            assert false, error.asString
+            unreachable, error.asString
         }
     }
 
@@ -838,7 +838,7 @@ class WriteNumbers {
             out.printLine("    }")
         }
         fail(error) {
-            assert false, error.asString
+            unreachable, error.asString
         }
         writeInits(type, out)
         writeOperator("+", "Adds another number to this number.", type, true, out)
@@ -890,7 +890,7 @@ class WriteNumbers {
             out.printLine("}")
         }
         fail(error) {
-            assert false, error.asString
+            unreachable, error.asString
         }            
     }
 
@@ -977,7 +977,7 @@ class WriteNumbers {
             out.printLine("}")
         }
         fail(error) {
-            assert false, error.asString
+            unreachable, error.asString
         }
     }
 
@@ -1034,7 +1034,7 @@ class WriteNumbers {
             out.printLine("}")
         }
         fail(error) {
-            assert false, error.asString
+            unreachable, error.asString
         }
     }
 
@@ -1065,7 +1065,7 @@ class WriteNumbers {
             writeReal(Type.REAL64, corePath.resolve("Real64.frost").openOutputStream())
         }
         fail(error) {
-            assert false, error.asString
+            unreachable, error.asString
         }
     }
 }

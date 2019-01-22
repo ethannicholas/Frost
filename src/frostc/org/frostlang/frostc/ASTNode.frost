@@ -81,6 +81,7 @@ choice ASTNode {
     TYPED_LAMBDA           (Position, FixedArray<ASTNode> -* PARAMETERs *-, ASTNode -* body *-)
     TYPED_IDENTIFIER       (Position, String, ASTNode?)
     UNARY                  (Position, Unary.Operator, ASTNode)
+    UNREACHABLE            (Position, ASTNode? -* message *-)
     UNTYPED_LAMBDA         (Position, FixedArray<ASTNode> -* IDENTIFIERs *-, ASTNode -* body *-)
     USES                   (Position, String)
     VAR                    (Position, Variable.Kind, FixedArray<ASTNode> -* DECLARATIONs *-)
@@ -235,6 +236,9 @@ choice ASTNode {
             when UNARY(position, _, _) {
                 return position
             }
+            when UNREACHABLE(position, _) {
+                return position
+            }
             when UNTYPED_LAMBDA(position, _, _) {
                 return position
             }
@@ -254,7 +258,7 @@ choice ASTNode {
                 return position
             }
             otherwise {
-                assert false
+                unreachable
             }
         }
     }
@@ -595,6 +599,12 @@ choice ASTNode {
             when UNARY(_, op, base) {
                 return "\{op}\{base}"
             }
+            when UNREACHABLE(_, message) {
+                if message !== null {
+                    return "unreachable, \{message}"
+                }
+                return "unreachable"
+            }
             when UNTYPED_LAMBDA(_, parameters, body) {
                 return "(\{parameters.join()})=>\{body}"
             }
@@ -637,7 +647,7 @@ choice ASTNode {
                 return result.finish()
             }
             otherwise {
-                assert false, "unsupported ASTNode: \{$rawValue}"
+                unreachable
             }
         }
     }

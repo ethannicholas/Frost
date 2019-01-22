@@ -163,11 +163,8 @@ frost$core$String* $tmp71 = frost$core$String$$ADD$frost$core$Object$R$frost$cor
 frost$core$String* $tmp73 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp71, &$s74);
 frost$io$Console$printLine$frost$core$String($tmp73);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp73));
-// unreffing REF($79:frost.core.String)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp71));
-// unreffing REF($78:frost.core.String)
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp70));
-// unreffing REF($77:frost.core.Object)
 // line 54
 frost$core$Int64 $tmp75 = (frost$core$Int64) {1};
 frost$core$System$exit$frost$core$Int64($tmp75);

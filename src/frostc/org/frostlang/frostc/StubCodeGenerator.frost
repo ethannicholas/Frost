@@ -119,7 +119,7 @@ class StubCodeGenerator : CodeGenerator {
                 when MethodDecl.Kind.INIT {
                 }
                 otherwise {
-                    assert false
+                    unreachable
                 }
             }
             out.print(m.name)

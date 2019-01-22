@@ -253,7 +253,7 @@ choice JSON {
                 return value
             }
             otherwise {
-                assert false
+                unreachable
             }
         }
     }
@@ -267,7 +267,7 @@ choice JSON {
                 return value
             }
             otherwise {
-                assert false
+                unreachable
             }
         }
     }
@@ -281,7 +281,7 @@ choice JSON {
                 return value
             }
             otherwise {
-                assert false
+                unreachable
             }
         }
     }
@@ -295,7 +295,7 @@ choice JSON {
                 return value
             }
             otherwise {
-                assert false
+                unreachable
             }
         }
     }
@@ -309,7 +309,7 @@ choice JSON {
                 return value
             }
             otherwise {
-                assert false
+                unreachable
             }
         }
     }
@@ -323,7 +323,7 @@ choice JSON {
                 return value
             }
             otherwise {
-                assert false
+                unreachable
             }
         }
     }
@@ -370,7 +370,7 @@ choice JSON {
                 return "null"
             }
             otherwise {
-                assert false
+                unreachable
             }
         }
     }

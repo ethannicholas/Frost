@@ -201,7 +201,7 @@ class Frost {
             when "<"  { return str.leftAlign(width, fill) }
             when "^"  { return str.centerAlign(width, fill) }
             when ">"  { return str.rightAlign(width, fill) }
-            otherwise { assert false, "invalid alignment string '\{specifier}'" }
+            otherwise { unreachable }
         }
     }
 
@@ -237,7 +237,7 @@ class Frost {
                     digits := "0123456789ABCDEF".utf8
                 }
                 otherwise {
-                    assert false, "invalid format string"
+                    unreachable, "invalid format string"
                 }
             }
         }

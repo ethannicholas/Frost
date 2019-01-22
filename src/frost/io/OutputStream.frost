@@ -46,6 +46,7 @@ class OutputStream {
                 write((value >> 8).asUInt8)
                 write(value.asUInt8)
             }
+            return null
         }
         fail(error) {
             return error
@@ -68,6 +69,7 @@ class OutputStream {
                 write((value >> 16).asUInt16)
                 write(value.asUInt16)
             }
+            return null
         }
         fail(error) {
             return error
@@ -90,6 +92,7 @@ class OutputStream {
                 write((value >> 32).asUInt32)
                 write(value.asUInt32)
             }
+            return null
         }
         fail(error) {
             return error
@@ -147,6 +150,7 @@ class OutputStream {
             for i in 0 .. count {
                 write(ptr[i])
             }
+            return null
         }
         fail(error) {
             return error
@@ -188,6 +192,7 @@ class OutputStream {
             for v in a {
                 write(v)
             }
+            return null
         }
         fail(error) {
             return error
@@ -207,6 +212,7 @@ class OutputStream {
             for v in a {
                 write(v)
             }
+            return null
         }
         fail(error) {
             return error
@@ -226,6 +232,7 @@ class OutputStream {
             for v in a {
                 write(v)
             }
+            return null
         }
         fail(error) {
             return error
