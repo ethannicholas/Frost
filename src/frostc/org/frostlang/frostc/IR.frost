@@ -302,7 +302,7 @@ class IR {
                     return "end"
                 }
                 when EXTRACT_FIELD(position, value, field) {
-                    return "load_field \{value}, \{field.owner.name}.\{field.name}"
+                    return "extract_field \{value}, \{field.owner.name}.\{field.name}"
                 }
                 when GET_CHOICE_FIELD_POINTER(position, target, cc, index) {
                     return "get_choice_field_pointer \{target}, \{cc.name}, \{index}"

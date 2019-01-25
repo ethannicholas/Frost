@@ -46,6 +46,7 @@ static frost$core$String $s17 = { (frost$core$Class*) &frost$core$String$class, 
 static frost$core$String $s18 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x52\x45\x53\x4f\x4c\x56\x45\x44", 8, 19694202472250213, NULL };
 static frost$core$String $s22 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x52\x45\x53\x4f\x4c\x56\x45\x44\x5f\x57\x49\x54\x48\x5f\x45\x52\x52\x4f\x52\x53", 20, 8532391582169831104, NULL };
 static frost$core$String $s23 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x52\x45\x53\x4f\x4c\x56\x45\x44\x5f\x57\x49\x54\x48\x5f\x45\x52\x52\x4f\x52\x53", 20, 8532391582169831104, NULL };
+static frost$core$String $s25 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x43\x6f\x6d\x70\x69\x6c\x65\x72\x2e\x66\x72\x6f\x73\x74", 14, -3408958966132496692, NULL };
 
 frost$core$String* org$frostlang$frostc$Compiler$Resolution$get_asString$R$frost$core$String(org$frostlang$frostc$Compiler$Resolution param0) {
 
@@ -88,43 +89,40 @@ frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) &$s22));
 return &$s23;
 block1:;
 // line 61
-goto block9;
-block9:;
-goto block9;
-block10:;
-goto block11;
-block11:;
+frost$core$Int64 $tmp24 = (frost$core$Int64) {61};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s25, $tmp24);
+abort(); // unreachable
 
 }
 void org$frostlang$frostc$Compiler$Resolution$cleanup(org$frostlang$frostc$Compiler$Resolution param0) {
 
 // line 39
-frost$core$Int64 $tmp24 = param0.$rawValue;
-frost$core$Int64 $tmp25 = (frost$core$Int64) {0};
-frost$core$Bit $tmp26 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp24, $tmp25);
-bool $tmp27 = $tmp26.value;
-if ($tmp27) goto block2; else goto block3;
+frost$core$Int64 $tmp26 = param0.$rawValue;
+frost$core$Int64 $tmp27 = (frost$core$Int64) {0};
+frost$core$Bit $tmp28 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp26, $tmp27);
+bool $tmp29 = $tmp28.value;
+if ($tmp29) goto block2; else goto block3;
 block2:;
 goto block1;
 block3:;
-frost$core$Int64 $tmp28 = (frost$core$Int64) {1};
-frost$core$Bit $tmp29 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp24, $tmp28);
-bool $tmp30 = $tmp29.value;
-if ($tmp30) goto block4; else goto block5;
+frost$core$Int64 $tmp30 = (frost$core$Int64) {1};
+frost$core$Bit $tmp31 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp26, $tmp30);
+bool $tmp32 = $tmp31.value;
+if ($tmp32) goto block4; else goto block5;
 block4:;
 goto block1;
 block5:;
-frost$core$Int64 $tmp31 = (frost$core$Int64) {2};
-frost$core$Bit $tmp32 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp24, $tmp31);
-bool $tmp33 = $tmp32.value;
-if ($tmp33) goto block6; else goto block7;
+frost$core$Int64 $tmp33 = (frost$core$Int64) {2};
+frost$core$Bit $tmp34 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp26, $tmp33);
+bool $tmp35 = $tmp34.value;
+if ($tmp35) goto block6; else goto block7;
 block6:;
 goto block1;
 block7:;
-frost$core$Int64 $tmp34 = (frost$core$Int64) {3};
-frost$core$Bit $tmp35 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp24, $tmp34);
-bool $tmp36 = $tmp35.value;
-if ($tmp36) goto block8; else goto block1;
+frost$core$Int64 $tmp36 = (frost$core$Int64) {3};
+frost$core$Bit $tmp37 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp26, $tmp36);
+bool $tmp38 = $tmp37.value;
+if ($tmp38) goto block8; else goto block1;
 block8:;
 goto block1;
 block1:;
@@ -135,31 +133,31 @@ org$frostlang$frostc$Compiler$Resolution org$frostlang$frostc$Compiler$Resolutio
 
 org$frostlang$frostc$Compiler$Resolution local0;
 // line 39
-frost$core$Int64* $tmp37 = &(&local0)->$rawValue;
-*$tmp37 = param0;
-org$frostlang$frostc$Compiler$Resolution $tmp38 = *(&local0);
-return $tmp38;
+frost$core$Int64* $tmp39 = &(&local0)->$rawValue;
+*$tmp39 = param0;
+org$frostlang$frostc$Compiler$Resolution $tmp40 = *(&local0);
+return $tmp40;
 
 }
 frost$core$Bit org$frostlang$frostc$Compiler$Resolution$$EQ$org$frostlang$frostc$Compiler$Resolution$R$frost$core$Bit(org$frostlang$frostc$Compiler$Resolution param0, org$frostlang$frostc$Compiler$Resolution param1) {
 
 // line 39
-frost$core$Int64 $tmp39 = param0.$rawValue;
-frost$core$Int64 $tmp40 = param1.$rawValue;
-int64_t $tmp41 = $tmp39.value;
-int64_t $tmp42 = $tmp40.value;
-bool $tmp43 = $tmp41 != $tmp42;
-frost$core$Bit $tmp44 = (frost$core$Bit) {$tmp43};
-bool $tmp45 = $tmp44.value;
-if ($tmp45) goto block1; else goto block2;
+frost$core$Int64 $tmp41 = param0.$rawValue;
+frost$core$Int64 $tmp42 = param1.$rawValue;
+int64_t $tmp43 = $tmp41.value;
+int64_t $tmp44 = $tmp42.value;
+bool $tmp45 = $tmp43 != $tmp44;
+frost$core$Bit $tmp46 = (frost$core$Bit) {$tmp45};
+bool $tmp47 = $tmp46.value;
+if ($tmp47) goto block1; else goto block2;
 block1:;
 // line 39
-frost$core$Bit $tmp46 = frost$core$Bit$init$builtin_bit(false);
-return $tmp46;
+frost$core$Bit $tmp48 = frost$core$Bit$init$builtin_bit(false);
+return $tmp48;
 block2:;
 // line 39
-frost$core$Bit $tmp47 = frost$core$Bit$init$builtin_bit(true);
-return $tmp47;
+frost$core$Bit $tmp49 = frost$core$Bit$init$builtin_bit(true);
+return $tmp49;
 
 }
 

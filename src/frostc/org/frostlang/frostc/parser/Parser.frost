@@ -38,7 +38,7 @@ class Parser {
 
     def regexParser:RegexParser
 
-    def errors:MessageQueue<Compiler.ErrorMsg>
+    def errors:MessageQueue<Compiler.Message>
 
     var path:File
 
@@ -56,7 +56,7 @@ class Parser {
 
     var syntaxHighlighter:SyntaxHighlighter?
 
-    init(errors:MessageQueue<Compiler.ErrorMsg>) {
+    init(errors:MessageQueue<Compiler.Message>) {
         self.errors := errors
         commaSeparatedExpressionContext.push(false)
         regexParser := RegexParser(errors)
@@ -189,7 +189,7 @@ class Parser {
 
     method error(token:Token, msg:String) {
         if speculativeBuffers.count = 0 & reportErrors {
-            errors.post(Compiler.ErrorMsg(path, token.position, msg))
+            errors.post(Compiler.Message.ERROR(path, token.position, msg))
         }
     }
 

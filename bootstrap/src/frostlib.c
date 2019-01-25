@@ -1122,8 +1122,7 @@ Error* frost$io$File$createDirectory$R$frost$core$Error$Q(File* file) {
         int result = mkdir(path, 0755);
         frostFree(path);
         if (result) {
-            const char* msg = strerror(errno);
-            return frostError(frostNewString(msg, strlen(msg)));
+            return frostError(frostFileErrorMessage("Could not create directory", path));
         }
     }
     return NULL;
@@ -1143,7 +1142,7 @@ Object* frost$io$File$list$R$frost$core$Maybe$LTfrost$collections$ListView$LTfro
     buffer[dir->path->size] = '/';
     d = opendir(path);
     if (!d) {
-        Object* result = frostMaybeError(frostFileErrorMessage("could not read directory", path));
+        Object* result = frostMaybeError(frostFileErrorMessage("Could not list directory", path));
         frostFree(path);
         return result;
     }
@@ -1187,7 +1186,7 @@ void frost$io$FileInputStream$readImpl$frost$unsafe$Pointer$LTfrost$core$UInt8$G
 Error* frost$io$FileInputStream$close$R$frost$core$Error$Q(FileInputStream* self) {
     self->closeOnCleanup.value = false;
     if (fclose(self->file)) {
-        return frostError(frostFileErrorMessage("error closing stream", NULL));
+        return frostError(frostFileErrorMessage("Error closing stream", NULL));
     }
     return NULL;
 }
@@ -1196,7 +1195,7 @@ Error* frost$io$FileInputStream$close$R$frost$core$Error$Q(FileInputStream* self
 Error* frost$io$FileOutputStream$write$frost$core$UInt8$R$frost$core$Error$Q(FileOutputStream* self,
         uint8_t ch) {
     if (fputc(ch, self->file) == EOF) {
-        const char* msg = "error writing to stream";
+        const char* msg = "Error writing to stream";
         return frostError(frostNewString(msg, strlen(msg)));
     }
     return NULL;
@@ -1205,7 +1204,7 @@ Error* frost$io$FileOutputStream$write$frost$core$UInt8$R$frost$core$Error$Q(Fil
 Error* frost$io$FileOutputStream$write$frost$unsafe$Pointer$LTfrost$core$UInt8$GT$frost$core$Int64$R$frost$core$Error$Q(
         FileOutputStream* self, void* src, int64_t count) {
     if (fwrite(src, 1, count, self->file) != count) {
-        const char* msg = "error writing to stream";
+        const char* msg = "Error writing to stream";
         return frostError(frostNewString(msg, strlen(msg)));
     }
     return NULL;
@@ -1214,14 +1213,14 @@ Error* frost$io$FileOutputStream$write$frost$unsafe$Pointer$LTfrost$core$UInt8$G
 Error* frost$io$FileOutputStream$close$R$frost$core$Error$Q(FileOutputStream* self) {
     self->closeOnCleanup.value = false;
     if (fclose(self->file)) {
-        return frostError(frostFileErrorMessage("error closing stream", NULL));
+        return frostError(frostFileErrorMessage("Error closing stream", NULL));
     }
     return NULL;
 }
 
 Error* frost$io$FileOutputStream$flush$R$frost$core$Error$Q(FileOutputStream* self) {
     if (fflush(self->file)) {
-        return frostError(frostFileErrorMessage("error flushing stream", NULL));
+        return frostError(frostFileErrorMessage("Error flushing stream", NULL));
     }
     return NULL;
 }
@@ -1230,7 +1229,7 @@ Error* frost$io$File$rename$frost$core$String(File* src, String* dst) {
     char* srcPath = frostGetCString(src->path);
     char* dstPath = frostGetCString(dst);
     if (rename(srcPath, dstPath)) {
-        return frostError(frostFileErrorMessage("error renaming file", srcPath));
+        return frostError(frostFileErrorMessage("Error renaming file", srcPath));
     }
     return NULL;
 }

@@ -20,7 +20,7 @@ org$frostlang$frostc$statement$Continue$class_type org$frostlang$frostc$statemen
 typedef org$frostlang$frostc$IR$Statement$ID (*$fn25)(org$frostlang$frostc$IR*, org$frostlang$frostc$IR$Statement*);
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x73\x74\x61\x74\x65\x6d\x65\x6e\x74\x2e\x43\x6f\x6e\x74\x69\x6e\x75\x65", 39, 4837893405445383104, NULL };
-static frost$core$String $s30 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x43\x6f\x6e\x74\x69\x6e\x75\x65\x2e\x66\x72\x6f\x73\x74", 14, -7855305760879133046, NULL };
+static frost$core$String $s28 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x43\x6f\x6e\x74\x69\x6e\x75\x65\x2e\x66\x72\x6f\x73\x74", 14, -7855305760879133046, NULL };
 
 void org$frostlang$frostc$statement$Continue$compile$org$frostlang$frostc$Compiler$org$frostlang$frostc$Position$frost$core$String$Q(org$frostlang$frostc$Compiler* param0, org$frostlang$frostc$Position param1, frost$core$String* param2) {
 
@@ -69,20 +69,14 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp21));
 goto block3;
 block5:;
 // line 18
-frost$core$Bit $tmp27 = frost$core$Bit$init$builtin_bit(false);
-bool $tmp28 = $tmp27.value;
-if ($tmp28) goto block6; else goto block7;
-block7:;
-frost$core$Int64 $tmp29 = (frost$core$Int64) {18};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s30, $tmp29);
+frost$core$Int64 $tmp27 = (frost$core$Int64) {18};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s28, $tmp27);
 abort(); // unreachable
-block6:;
-goto block3;
 block3:;
 goto block2;
 block2:;
-org$frostlang$frostc$Compiler$EnclosingContext* $tmp31 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp31));
+org$frostlang$frostc$Compiler$EnclosingContext* $tmp29 = *(&local0);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp29));
 *(&local0) = ((org$frostlang$frostc$Compiler$EnclosingContext*) NULL);
 return;
 

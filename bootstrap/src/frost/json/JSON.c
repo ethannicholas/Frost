@@ -5,9 +5,9 @@
 #include "frost/json/JSON/PathKey.h"
 #include "frost/core/String/Index.h"
 #include "frost/core/Char32.h"
-#include "frost/core/Bit.h"
 #include "frost/core/Int64.h"
 #include "frost/core/Int32.h"
+#include "frost/core/Bit.h"
 #include "frost/core/Equatable.h"
 #include "frost/core/Frost.h"
 #include "frost/core/Range.LTfrost/core/String/Index.GT.h"
@@ -23,60 +23,60 @@
 static frost$core$String $s1;
 frost$json$JSON$class_type frost$json$JSON$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { frost$json$JSON$get_asString$R$frost$core$String, frost$json$JSON$cleanup, frost$json$JSON$get$frost$core$String$R$frost$json$JSON$Q, frost$json$JSON$getInt$frost$core$String$R$frost$core$Int64$Q, frost$json$JSON$getReal$frost$core$String$R$frost$core$Real64$Q, frost$json$JSON$getBit$frost$core$String$R$frost$core$Bit$Q, frost$json$JSON$getString$frost$core$String$R$frost$core$String$Q, frost$json$JSON$getArray$frost$core$String$R$frost$collections$ListView$LTfrost$json$JSON$GT$Q, frost$json$JSON$getObject$frost$core$String$R$frost$collections$MapView$LTfrost$core$String$Cfrost$json$JSON$GT$Q, frost$json$JSON$asInt$R$frost$core$Int64, frost$json$JSON$asReal$R$frost$core$Real64, frost$json$JSON$asString$R$frost$core$String, frost$json$JSON$asBit$R$frost$core$Bit, frost$json$JSON$asObject$R$frost$collections$MapView$LTfrost$core$String$Cfrost$json$JSON$GT, frost$json$JSON$asArray$R$frost$collections$ListView$LTfrost$json$JSON$GT} };
 
-typedef frost$core$Bit (*$fn31)(frost$core$Equatable*, frost$core$Equatable*);
-typedef frost$core$Bit (*$fn83)(frost$core$Equatable*, frost$core$Equatable*);
-typedef frost$core$Object* (*$fn121)(frost$collections$MapView*, frost$core$Object*);
-typedef frost$core$Object* (*$fn155)(frost$collections$ListView*, frost$core$Int64);
-typedef frost$json$JSON* (*$fn164)(frost$json$JSON*, frost$core$String*);
-typedef frost$json$JSON* (*$fn183)(frost$json$JSON*, frost$core$String*);
-typedef frost$json$JSON* (*$fn202)(frost$json$JSON*, frost$core$String*);
-typedef frost$json$JSON* (*$fn221)(frost$json$JSON*, frost$core$String*);
-typedef frost$json$JSON* (*$fn242)(frost$json$JSON*, frost$core$String*);
-typedef frost$json$JSON* (*$fn263)(frost$json$JSON*, frost$core$String*);
-typedef frost$core$String* (*$fn371)(frost$core$Object*);
-typedef frost$core$String* (*$fn381)(frost$core$Object*);
-typedef frost$core$String* (*$fn401)(frost$core$Object*);
-typedef frost$collections$Iterator* (*$fn418)(frost$collections$MapView*);
-typedef frost$core$Bit (*$fn422)(frost$collections$Iterator*);
-typedef frost$core$Object* (*$fn427)(frost$collections$Iterator*);
-typedef frost$core$String* (*$fn438)(frost$core$Formattable*, frost$core$String*);
-typedef frost$core$Object* (*$fn448)(frost$collections$MapView*, frost$core$Object*);
-typedef frost$collections$Iterator* (*$fn479)(frost$collections$Iterable*);
-typedef frost$core$Bit (*$fn483)(frost$collections$Iterator*);
-typedef frost$core$Object* (*$fn488)(frost$collections$Iterator*);
+typedef frost$core$Bit (*$fn30)(frost$core$Equatable*, frost$core$Equatable*);
+typedef frost$core$Bit (*$fn82)(frost$core$Equatable*, frost$core$Equatable*);
+typedef frost$core$Object* (*$fn120)(frost$collections$MapView*, frost$core$Object*);
+typedef frost$core$Object* (*$fn154)(frost$collections$ListView*, frost$core$Int64);
+typedef frost$json$JSON* (*$fn163)(frost$json$JSON*, frost$core$String*);
+typedef frost$json$JSON* (*$fn182)(frost$json$JSON*, frost$core$String*);
+typedef frost$json$JSON* (*$fn201)(frost$json$JSON*, frost$core$String*);
+typedef frost$json$JSON* (*$fn220)(frost$json$JSON*, frost$core$String*);
+typedef frost$json$JSON* (*$fn241)(frost$json$JSON*, frost$core$String*);
+typedef frost$json$JSON* (*$fn262)(frost$json$JSON*, frost$core$String*);
+typedef frost$core$String* (*$fn358)(frost$core$Object*);
+typedef frost$core$String* (*$fn368)(frost$core$Object*);
+typedef frost$core$String* (*$fn388)(frost$core$Object*);
+typedef frost$collections$Iterator* (*$fn405)(frost$collections$MapView*);
+typedef frost$core$Bit (*$fn409)(frost$collections$Iterator*);
+typedef frost$core$Object* (*$fn414)(frost$collections$Iterator*);
+typedef frost$core$String* (*$fn425)(frost$core$Formattable*, frost$core$String*);
+typedef frost$core$Object* (*$fn435)(frost$collections$MapView*, frost$core$Object*);
+typedef frost$collections$Iterator* (*$fn466)(frost$collections$Iterable*);
+typedef frost$core$Bit (*$fn470)(frost$collections$Iterator*);
+typedef frost$core$Object* (*$fn475)(frost$collections$Iterator*);
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x6a\x73\x6f\x6e\x2e\x4a\x53\x4f\x4e", 15, -3431816289963872625, NULL };
-static frost$core$String $s92 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x69\x6e\x76\x61\x6c\x69\x64\x20\x4a\x53\x4f\x4e\x20\x70\x61\x74\x68\x20\x27", 19, -3401700107860536954, NULL };
-static frost$core$String $s94 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x27", 1, 140, NULL };
-static frost$core$String $s95 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x4a\x53\x4f\x4e\x2e\x66\x72\x6f\x73\x74", 10, 7834806210389722559, NULL };
-static frost$core$String $s294 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x4a\x53\x4f\x4e\x2e\x66\x72\x6f\x73\x74", 10, 7834806210389722559, NULL };
-static frost$core$String $s306 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x4a\x53\x4f\x4e\x2e\x66\x72\x6f\x73\x74", 10, 7834806210389722559, NULL };
-static frost$core$String $s320 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x4a\x53\x4f\x4e\x2e\x66\x72\x6f\x73\x74", 10, 7834806210389722559, NULL };
-static frost$core$String $s332 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x4a\x53\x4f\x4e\x2e\x66\x72\x6f\x73\x74", 10, 7834806210389722559, NULL };
-static frost$core$String $s346 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x4a\x53\x4f\x4e\x2e\x66\x72\x6f\x73\x74", 10, 7834806210389722559, NULL };
-static frost$core$String $s360 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x4a\x53\x4f\x4e\x2e\x66\x72\x6f\x73\x74", 10, 7834806210389722559, NULL };
-static frost$core$String $s391 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x66\x72\x6f\x73\x74", 5, 21242859759, NULL };
-static frost$core$String $s410 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x7b", 1, 224, NULL };
-static frost$core$String $s412 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x20", 1, 133, NULL };
-static frost$core$String $s414 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x20", 1, 133, NULL };
-static frost$core$String $s434 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "", 0, 1, NULL };
-static frost$core$String $s440 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x66\x72\x6f\x73\x74", 5, 21242859759, NULL };
-static frost$core$String $s443 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x3a\x20", 2, 16091, NULL };
-static frost$core$String $s452 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "", 0, 1, NULL };
-static frost$core$String $s453 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2c\x20", 2, 14677, NULL };
-static frost$core$String $s455 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2c\x20", 2, 14677, NULL };
-static frost$core$String $s458 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x20\x7d", 2, 13558, NULL };
-static frost$core$String $s471 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x5b", 1, 192, NULL };
-static frost$core$String $s473 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "", 0, 1, NULL };
-static frost$core$String $s475 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "", 0, 1, NULL };
-static frost$core$String $s495 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "", 0, 1, NULL };
-static frost$core$String $s499 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "", 0, 1, NULL };
-static frost$core$String $s500 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2c\x20", 2, 14677, NULL };
-static frost$core$String $s502 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2c\x20", 2, 14677, NULL };
-static frost$core$String $s505 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x5d", 1, 194, NULL };
-static frost$core$String $s514 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x6e\x75\x6c\x6c", 4, 218598044, NULL };
-static frost$core$String $s515 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x6e\x75\x6c\x6c", 4, 218598044, NULL };
-static frost$core$String $s519 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x4a\x53\x4f\x4e\x2e\x66\x72\x6f\x73\x74", 10, 7834806210389722559, NULL };
+static frost$core$String $s91 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x69\x6e\x76\x61\x6c\x69\x64\x20\x4a\x53\x4f\x4e\x20\x70\x61\x74\x68\x20\x27", 19, -3401700107860536954, NULL };
+static frost$core$String $s93 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x27", 1, 140, NULL };
+static frost$core$String $s94 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x4a\x53\x4f\x4e\x2e\x66\x72\x6f\x73\x74", 10, 7834806210389722559, NULL };
+static frost$core$String $s291 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x4a\x53\x4f\x4e\x2e\x66\x72\x6f\x73\x74", 10, 7834806210389722559, NULL };
+static frost$core$String $s301 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x4a\x53\x4f\x4e\x2e\x66\x72\x6f\x73\x74", 10, 7834806210389722559, NULL };
+static frost$core$String $s313 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x4a\x53\x4f\x4e\x2e\x66\x72\x6f\x73\x74", 10, 7834806210389722559, NULL };
+static frost$core$String $s323 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x4a\x53\x4f\x4e\x2e\x66\x72\x6f\x73\x74", 10, 7834806210389722559, NULL };
+static frost$core$String $s335 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x4a\x53\x4f\x4e\x2e\x66\x72\x6f\x73\x74", 10, 7834806210389722559, NULL };
+static frost$core$String $s347 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x4a\x53\x4f\x4e\x2e\x66\x72\x6f\x73\x74", 10, 7834806210389722559, NULL };
+static frost$core$String $s378 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x66\x72\x6f\x73\x74", 5, 21242859759, NULL };
+static frost$core$String $s397 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x7b", 1, 224, NULL };
+static frost$core$String $s399 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x20", 1, 133, NULL };
+static frost$core$String $s401 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x20", 1, 133, NULL };
+static frost$core$String $s421 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "", 0, 1, NULL };
+static frost$core$String $s427 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x66\x72\x6f\x73\x74", 5, 21242859759, NULL };
+static frost$core$String $s430 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x3a\x20", 2, 16091, NULL };
+static frost$core$String $s439 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "", 0, 1, NULL };
+static frost$core$String $s440 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2c\x20", 2, 14677, NULL };
+static frost$core$String $s442 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2c\x20", 2, 14677, NULL };
+static frost$core$String $s445 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x20\x7d", 2, 13558, NULL };
+static frost$core$String $s458 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x5b", 1, 192, NULL };
+static frost$core$String $s460 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "", 0, 1, NULL };
+static frost$core$String $s462 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "", 0, 1, NULL };
+static frost$core$String $s482 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "", 0, 1, NULL };
+static frost$core$String $s486 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "", 0, 1, NULL };
+static frost$core$String $s487 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2c\x20", 2, 14677, NULL };
+static frost$core$String $s489 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2c\x20", 2, 14677, NULL };
+static frost$core$String $s492 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x5d", 1, 194, NULL };
+static frost$core$String $s501 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x6e\x75\x6c\x6c", 4, 218598044, NULL };
+static frost$core$String $s502 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x6e\x75\x6c\x6c", 4, 218598044, NULL };
+static frost$core$String $s504 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x4a\x53\x4f\x4e\x2e\x66\x72\x6f\x73\x74", 10, 7834806210389722559, NULL };
 
 frost$json$JSON$PathKey* frost$json$JSON$nextPathKey$frost$core$String$frost$core$String$Index$R$frost$json$JSON$PathKey$Q(frost$core$String* param0, frost$core$String$Index param1) {
 
@@ -84,10 +84,9 @@ frost$core$String$Index local0;
 frost$core$String$Index local1;
 frost$core$String$Index local2;
 frost$core$Char32 local3;
-frost$core$Bit local4;
+frost$core$String$Index local4;
 frost$core$String$Index local5;
-frost$core$String$Index local6;
-frost$core$Int64$nullable local7;
+frost$core$Int64$nullable local6;
 // line 52
 frost$core$Char32 $tmp2 = frost$core$String$$IDX$frost$core$String$Index$R$frost$core$Char32(param0, param1);
 frost$core$Int32 $tmp3 = (frost$core$Int32) {47};
@@ -118,141 +117,134 @@ frost$core$Int32 $tmp13 = (frost$core$Int32) {47};
 frost$core$Char32 $tmp14 = frost$core$Char32$init$frost$core$Int32($tmp13);
 frost$core$Bit $tmp15 = frost$core$Char32$$EQ$frost$core$Char32$R$frost$core$Bit($tmp12, $tmp14);
 bool $tmp16 = $tmp15.value;
-if ($tmp16) goto block9; else goto block10;
+if ($tmp16) goto block7; else goto block9;
 block9:;
-*(&local4) = $tmp15;
-goto block11;
-block10:;
 frost$core$Char32 $tmp17 = *(&local3);
 frost$core$Int32 $tmp18 = (frost$core$Int32) {91};
 frost$core$Char32 $tmp19 = frost$core$Char32$init$frost$core$Int32($tmp18);
 frost$core$Bit $tmp20 = frost$core$Char32$$EQ$frost$core$Char32$R$frost$core$Bit($tmp17, $tmp19);
-*(&local4) = $tmp20;
-goto block11;
-block11:;
-frost$core$Bit $tmp21 = *(&local4);
-bool $tmp22 = $tmp21.value;
-if ($tmp22) goto block7; else goto block8;
+bool $tmp21 = $tmp20.value;
+if ($tmp21) goto block7; else goto block8;
 block7:;
 // line 60
 goto block6;
 block8:;
 // line 62
-frost$core$String$Index $tmp23 = *(&local2);
-frost$core$String$Index $tmp24 = frost$core$String$next$frost$core$String$Index$R$frost$core$String$Index(param0, $tmp23);
-*(&local2) = $tmp24;
+frost$core$String$Index $tmp22 = *(&local2);
+frost$core$String$Index $tmp23 = frost$core$String$next$frost$core$String$Index$R$frost$core$String$Index(param0, $tmp22);
+*(&local2) = $tmp23;
 goto block5;
 block5:;
-frost$core$String$Index $tmp25 = *(&local2);
-frost$core$String$Index$wrapper* $tmp26;
-$tmp26 = (frost$core$String$Index$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$String$Index$wrapperclass);
-$tmp26->value = $tmp25;
-frost$core$String$Index $tmp27 = *(&local0);
-frost$core$String$Index$wrapper* $tmp28;
-$tmp28 = (frost$core$String$Index$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$String$Index$wrapperclass);
-$tmp28->value = $tmp27;
-ITable* $tmp29 = ((frost$core$Equatable*) $tmp26)->$class->itable;
-while ($tmp29->$class != (frost$core$Class*) &frost$core$Equatable$class) {
-    $tmp29 = $tmp29->next;
+frost$core$String$Index $tmp24 = *(&local2);
+frost$core$String$Index$wrapper* $tmp25;
+$tmp25 = (frost$core$String$Index$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$String$Index$wrapperclass);
+$tmp25->value = $tmp24;
+frost$core$String$Index $tmp26 = *(&local0);
+frost$core$String$Index$wrapper* $tmp27;
+$tmp27 = (frost$core$String$Index$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$String$Index$wrapperclass);
+$tmp27->value = $tmp26;
+ITable* $tmp28 = ((frost$core$Equatable*) $tmp25)->$class->itable;
+while ($tmp28->$class != (frost$core$Class*) &frost$core$Equatable$class) {
+    $tmp28 = $tmp28->next;
 }
-$fn31 $tmp30 = $tmp29->methods[1];
-frost$core$Bit $tmp32 = $tmp30(((frost$core$Equatable*) $tmp26), ((frost$core$Equatable*) $tmp28));
-bool $tmp33 = $tmp32.value;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Equatable*) $tmp28)));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Equatable*) $tmp26)));
-if ($tmp33) goto block4; else goto block6;
+$fn30 $tmp29 = $tmp28->methods[1];
+frost$core$Bit $tmp31 = $tmp29(((frost$core$Equatable*) $tmp25), ((frost$core$Equatable*) $tmp27));
+bool $tmp32 = $tmp31.value;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Equatable*) $tmp27)));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Equatable*) $tmp25)));
+if ($tmp32) goto block4; else goto block6;
 block6:;
 // line 65
-frost$core$String$Index $tmp34 = *(&local1);
-frost$core$String$Index $tmp35 = *(&local2);
-frost$core$Bit $tmp36 = frost$core$String$Index$$EQ$frost$core$String$Index$R$frost$core$Bit($tmp34, $tmp35);
-bool $tmp37 = $tmp36.value;
-if ($tmp37) goto block12; else goto block13;
-block12:;
+frost$core$String$Index $tmp33 = *(&local1);
+frost$core$String$Index $tmp34 = *(&local2);
+frost$core$Bit $tmp35 = frost$core$String$Index$$EQ$frost$core$String$Index$R$frost$core$Bit($tmp33, $tmp34);
+bool $tmp36 = $tmp35.value;
+if ($tmp36) goto block10; else goto block11;
+block10:;
 // line 66
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$json$JSON$PathKey*) NULL)));
 return ((frost$json$JSON$PathKey*) NULL);
-block13:;
+block11:;
 // line 68
-frost$json$JSON$PathKey* $tmp38 = (frost$json$JSON$PathKey*) frostObjectAlloc(40, (frost$core$Class*) &frost$json$JSON$PathKey$class);
-frost$core$Int64 $tmp39 = (frost$core$Int64) {0};
-frost$core$String$Index $tmp40 = *(&local1);
-frost$core$String$Index $tmp41 = *(&local2);
-frost$core$Bit $tmp42 = frost$core$Bit$init$builtin_bit(false);
-frost$core$Range$LTfrost$core$String$Index$GT $tmp43 = frost$core$Range$LTfrost$core$String$Index$GT$init$frost$core$String$Index$frost$core$String$Index$frost$core$Bit($tmp40, $tmp41, $tmp42);
-frost$core$String* $tmp44 = frost$core$String$substring$frost$core$Range$LTfrost$core$String$Index$GT$R$frost$core$String(param0, $tmp43);
-frost$core$String$Index $tmp45 = *(&local2);
-frost$json$JSON$PathKey$init$frost$core$Int64$frost$core$String$frost$core$String$Index($tmp38, $tmp39, $tmp44, $tmp45);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp38));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp44));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp38));
-return $tmp38;
+frost$json$JSON$PathKey* $tmp37 = (frost$json$JSON$PathKey*) frostObjectAlloc(40, (frost$core$Class*) &frost$json$JSON$PathKey$class);
+frost$core$Int64 $tmp38 = (frost$core$Int64) {0};
+frost$core$String$Index $tmp39 = *(&local1);
+frost$core$String$Index $tmp40 = *(&local2);
+frost$core$Bit $tmp41 = frost$core$Bit$init$builtin_bit(false);
+frost$core$Range$LTfrost$core$String$Index$GT $tmp42 = frost$core$Range$LTfrost$core$String$Index$GT$init$frost$core$String$Index$frost$core$String$Index$frost$core$Bit($tmp39, $tmp40, $tmp41);
+frost$core$String* $tmp43 = frost$core$String$substring$frost$core$Range$LTfrost$core$String$Index$GT$R$frost$core$String(param0, $tmp42);
+frost$core$String$Index $tmp44 = *(&local2);
+frost$json$JSON$PathKey$init$frost$core$Int64$frost$core$String$frost$core$String$Index($tmp37, $tmp38, $tmp43, $tmp44);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp37));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp43));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp37));
+return $tmp37;
 block3:;
-frost$core$Int32 $tmp46 = (frost$core$Int32) {91};
-frost$core$Char32 $tmp47 = frost$core$Char32$init$frost$core$Int32($tmp46);
-frost$core$Bit $tmp48 = frost$core$Char32$$EQ$frost$core$Char32$R$frost$core$Bit($tmp2, $tmp47);
-bool $tmp49 = $tmp48.value;
-if ($tmp49) goto block14; else goto block15;
-block14:;
+frost$core$Int32 $tmp45 = (frost$core$Int32) {91};
+frost$core$Char32 $tmp46 = frost$core$Char32$init$frost$core$Int32($tmp45);
+frost$core$Bit $tmp47 = frost$core$Char32$$EQ$frost$core$Char32$R$frost$core$Bit($tmp2, $tmp46);
+bool $tmp48 = $tmp47.value;
+if ($tmp48) goto block12; else goto block13;
+block12:;
 // line 71
-frost$core$String$Index $tmp50 = frost$core$String$next$frost$core$String$Index$R$frost$core$String$Index(param0, param1);
-*(&local5) = $tmp50;
+frost$core$String$Index $tmp49 = frost$core$String$next$frost$core$String$Index$R$frost$core$String$Index(param0, param1);
+*(&local4) = $tmp49;
 // line 72
-frost$core$String$Index $tmp51 = *(&local5);
-*(&local6) = $tmp51;
+frost$core$String$Index $tmp50 = *(&local4);
+*(&local5) = $tmp50;
 // line 73
-goto block16;
-block16:;
-frost$core$String$Index $tmp52 = *(&local6);
-frost$core$Char32 $tmp53 = frost$core$String$$IDX$frost$core$String$Index$R$frost$core$Char32(param0, $tmp52);
-frost$core$Int32 $tmp54 = (frost$core$Int32) {93};
-frost$core$Char32 $tmp55 = frost$core$Char32$init$frost$core$Int32($tmp54);
-frost$core$Bit $tmp56 = frost$core$Char32$$NEQ$frost$core$Char32$R$frost$core$Bit($tmp53, $tmp55);
-bool $tmp57 = $tmp56.value;
-if ($tmp57) goto block17; else goto block18;
-block17:;
+goto block14;
+block14:;
+frost$core$String$Index $tmp51 = *(&local5);
+frost$core$Char32 $tmp52 = frost$core$String$$IDX$frost$core$String$Index$R$frost$core$Char32(param0, $tmp51);
+frost$core$Int32 $tmp53 = (frost$core$Int32) {93};
+frost$core$Char32 $tmp54 = frost$core$Char32$init$frost$core$Int32($tmp53);
+frost$core$Bit $tmp55 = frost$core$Char32$$NEQ$frost$core$Char32$R$frost$core$Bit($tmp52, $tmp54);
+bool $tmp56 = $tmp55.value;
+if ($tmp56) goto block15; else goto block16;
+block15:;
 // line 74
-frost$core$String$Index $tmp58 = *(&local6);
-frost$core$String$Index $tmp59 = frost$core$String$next$frost$core$String$Index$R$frost$core$String$Index(param0, $tmp58);
-*(&local6) = $tmp59;
-goto block16;
-block18:;
+frost$core$String$Index $tmp57 = *(&local5);
+frost$core$String$Index $tmp58 = frost$core$String$next$frost$core$String$Index$R$frost$core$String$Index(param0, $tmp57);
+*(&local5) = $tmp58;
+goto block14;
+block16:;
 // line 76
+frost$core$String$Index $tmp59 = *(&local4);
 frost$core$String$Index $tmp60 = *(&local5);
-frost$core$String$Index $tmp61 = *(&local6);
-frost$core$Bit $tmp62 = frost$core$Bit$init$builtin_bit(false);
-frost$core$Range$LTfrost$core$String$Index$GT $tmp63 = frost$core$Range$LTfrost$core$String$Index$GT$init$frost$core$String$Index$frost$core$String$Index$frost$core$Bit($tmp60, $tmp61, $tmp62);
-frost$core$String* $tmp64 = frost$core$String$substring$frost$core$Range$LTfrost$core$String$Index$GT$R$frost$core$String(param0, $tmp63);
-frost$core$Int64$nullable $tmp65 = frost$core$String$get_asInt64$R$frost$core$Int64$Q($tmp64);
-*(&local7) = $tmp65;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp64));
+frost$core$Bit $tmp61 = frost$core$Bit$init$builtin_bit(false);
+frost$core$Range$LTfrost$core$String$Index$GT $tmp62 = frost$core$Range$LTfrost$core$String$Index$GT$init$frost$core$String$Index$frost$core$String$Index$frost$core$Bit($tmp59, $tmp60, $tmp61);
+frost$core$String* $tmp63 = frost$core$String$substring$frost$core$Range$LTfrost$core$String$Index$GT$R$frost$core$String(param0, $tmp62);
+frost$core$Int64$nullable $tmp64 = frost$core$String$get_asInt64$R$frost$core$Int64$Q($tmp63);
+*(&local6) = $tmp64;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp63));
 // line 77
-frost$core$Int64$nullable $tmp66 = *(&local7);
-frost$core$Bit $tmp67 = frost$core$Bit$init$builtin_bit(!$tmp66.nonnull);
-bool $tmp68 = $tmp67.value;
-if ($tmp68) goto block19; else goto block20;
-block19:;
+frost$core$Int64$nullable $tmp65 = *(&local6);
+frost$core$Bit $tmp66 = frost$core$Bit$init$builtin_bit(!$tmp65.nonnull);
+bool $tmp67 = $tmp66.value;
+if ($tmp67) goto block17; else goto block18;
+block17:;
 // line 78
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$json$JSON$PathKey*) NULL)));
 return ((frost$json$JSON$PathKey*) NULL);
-block20:;
+block18:;
 // line 80
-frost$json$JSON$PathKey* $tmp69 = (frost$json$JSON$PathKey*) frostObjectAlloc(40, (frost$core$Class*) &frost$json$JSON$PathKey$class);
-frost$core$Int64 $tmp70 = (frost$core$Int64) {1};
-frost$core$Int64$nullable $tmp71 = *(&local7);
-frost$core$String$Index $tmp72 = *(&local6);
-frost$core$String$Index $tmp73 = frost$core$String$next$frost$core$String$Index$R$frost$core$String$Index(param0, $tmp72);
-frost$json$JSON$PathKey$init$frost$core$Int64$frost$core$Int64$frost$core$String$Index($tmp69, $tmp70, ((frost$core$Int64) $tmp71.value), $tmp73);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp69));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp69));
-return $tmp69;
-block15:;
+frost$json$JSON$PathKey* $tmp68 = (frost$json$JSON$PathKey*) frostObjectAlloc(40, (frost$core$Class*) &frost$json$JSON$PathKey$class);
+frost$core$Int64 $tmp69 = (frost$core$Int64) {1};
+frost$core$Int64$nullable $tmp70 = *(&local6);
+frost$core$String$Index $tmp71 = *(&local5);
+frost$core$String$Index $tmp72 = frost$core$String$next$frost$core$String$Index$R$frost$core$String$Index(param0, $tmp71);
+frost$json$JSON$PathKey$init$frost$core$Int64$frost$core$Int64$frost$core$String$Index($tmp68, $tmp69, ((frost$core$Int64) $tmp70.value), $tmp72);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp68));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp68));
+return $tmp68;
+block13:;
 // line 83
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$json$JSON$PathKey*) NULL)));
 return ((frost$json$JSON$PathKey*) NULL);
 block1:;
-goto block21;
-block21:;
+goto block19;
+block19:;
 
 }
 frost$json$JSON* frost$json$JSON$get$frost$core$String$R$frost$json$JSON$Q(frost$json$JSON* param0, frost$core$String* param1) {
@@ -267,218 +259,218 @@ frost$core$Int64 local6;
 frost$core$String$Index local7;
 frost$collections$ListView* local8 = NULL;
 // line 103
-frost$core$String$Index $tmp74 = frost$core$String$get_start$R$frost$core$String$Index(param1);
-*(&local0) = $tmp74;
+frost$core$String$Index $tmp73 = frost$core$String$get_start$R$frost$core$String$Index(param1);
+*(&local0) = $tmp73;
 // line 104
-frost$core$String$Index $tmp75 = frost$core$String$get_end$R$frost$core$String$Index(param1);
-*(&local1) = $tmp75;
+frost$core$String$Index $tmp74 = frost$core$String$get_end$R$frost$core$String$Index(param1);
+*(&local1) = $tmp74;
 // line 105
 *(&local2) = ((frost$json$JSON*) NULL);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param0));
-frost$json$JSON* $tmp76 = *(&local2);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp76));
+frost$json$JSON* $tmp75 = *(&local2);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp75));
 *(&local2) = param0;
 // line 106
 goto block1;
 block1:;
-frost$core$String$Index $tmp77 = *(&local0);
-frost$core$String$Index$wrapper* $tmp78;
-$tmp78 = (frost$core$String$Index$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$String$Index$wrapperclass);
-$tmp78->value = $tmp77;
-frost$core$String$Index $tmp79 = *(&local1);
-frost$core$String$Index$wrapper* $tmp80;
-$tmp80 = (frost$core$String$Index$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$String$Index$wrapperclass);
-$tmp80->value = $tmp79;
-ITable* $tmp81 = ((frost$core$Equatable*) $tmp78)->$class->itable;
-while ($tmp81->$class != (frost$core$Class*) &frost$core$Equatable$class) {
-    $tmp81 = $tmp81->next;
+frost$core$String$Index $tmp76 = *(&local0);
+frost$core$String$Index$wrapper* $tmp77;
+$tmp77 = (frost$core$String$Index$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$String$Index$wrapperclass);
+$tmp77->value = $tmp76;
+frost$core$String$Index $tmp78 = *(&local1);
+frost$core$String$Index$wrapper* $tmp79;
+$tmp79 = (frost$core$String$Index$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$String$Index$wrapperclass);
+$tmp79->value = $tmp78;
+ITable* $tmp80 = ((frost$core$Equatable*) $tmp77)->$class->itable;
+while ($tmp80->$class != (frost$core$Class*) &frost$core$Equatable$class) {
+    $tmp80 = $tmp80->next;
 }
-$fn83 $tmp82 = $tmp81->methods[1];
-frost$core$Bit $tmp84 = $tmp82(((frost$core$Equatable*) $tmp78), ((frost$core$Equatable*) $tmp80));
-bool $tmp85 = $tmp84.value;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Equatable*) $tmp80)));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Equatable*) $tmp78)));
-if ($tmp85) goto block2; else goto block3;
+$fn82 $tmp81 = $tmp80->methods[1];
+frost$core$Bit $tmp83 = $tmp81(((frost$core$Equatable*) $tmp77), ((frost$core$Equatable*) $tmp79));
+bool $tmp84 = $tmp83.value;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Equatable*) $tmp79)));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Equatable*) $tmp77)));
+if ($tmp84) goto block2; else goto block3;
 block2:;
 // line 107
-frost$core$String$Index $tmp86 = *(&local0);
-frost$json$JSON$PathKey* $tmp87 = frost$json$JSON$nextPathKey$frost$core$String$frost$core$String$Index$R$frost$json$JSON$PathKey$Q(param1, $tmp86);
-frost$core$Bit $tmp88 = frost$core$Bit$init$builtin_bit($tmp87 != NULL);
-bool $tmp89 = $tmp88.value;
-if ($tmp89) goto block4; else goto block5;
+frost$core$String$Index $tmp85 = *(&local0);
+frost$json$JSON$PathKey* $tmp86 = frost$json$JSON$nextPathKey$frost$core$String$frost$core$String$Index$R$frost$json$JSON$PathKey$Q(param1, $tmp85);
+frost$core$Bit $tmp87 = frost$core$Bit$init$builtin_bit($tmp86 != NULL);
+bool $tmp88 = $tmp87.value;
+if ($tmp88) goto block4; else goto block5;
 block5:;
-frost$core$Int64 $tmp90 = (frost$core$Int64) {107};
-frost$core$String* $tmp91 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(&$s92, param1);
-frost$core$String* $tmp93 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp91, &$s94);
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s95, $tmp90, $tmp93);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp93));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp91));
+frost$core$Int64 $tmp89 = (frost$core$Int64) {107};
+frost$core$String* $tmp90 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(&$s91, param1);
+frost$core$String* $tmp92 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp90, &$s93);
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s94, $tmp89, $tmp92);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp92));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp90));
 abort(); // unreachable
 block4:;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp87));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp86));
 // line 108
-frost$core$String$Index $tmp96 = *(&local0);
-frost$json$JSON$PathKey* $tmp97 = frost$json$JSON$nextPathKey$frost$core$String$frost$core$String$Index$R$frost$json$JSON$PathKey$Q(param1, $tmp96);
-frost$core$Int64* $tmp98 = &$tmp97->$rawValue;
-frost$core$Int64 $tmp99 = *$tmp98;
-frost$core$Int64 $tmp100 = (frost$core$Int64) {0};
-frost$core$Bit $tmp101 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp99, $tmp100);
-bool $tmp102 = $tmp101.value;
-if ($tmp102) goto block7; else goto block8;
+frost$core$String$Index $tmp95 = *(&local0);
+frost$json$JSON$PathKey* $tmp96 = frost$json$JSON$nextPathKey$frost$core$String$frost$core$String$Index$R$frost$json$JSON$PathKey$Q(param1, $tmp95);
+frost$core$Int64* $tmp97 = &$tmp96->$rawValue;
+frost$core$Int64 $tmp98 = *$tmp97;
+frost$core$Int64 $tmp99 = (frost$core$Int64) {0};
+frost$core$Bit $tmp100 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp98, $tmp99);
+bool $tmp101 = $tmp100.value;
+if ($tmp101) goto block7; else goto block8;
 block7:;
-frost$core$String** $tmp103 = (frost$core$String**) ($tmp97->$data + 0);
-frost$core$String* $tmp104 = *$tmp103;
+frost$core$String** $tmp102 = (frost$core$String**) ($tmp96->$data + 0);
+frost$core$String* $tmp103 = *$tmp102;
 *(&local3) = ((frost$core$String*) NULL);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp104));
-frost$core$String* $tmp105 = *(&local3);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp105));
-*(&local3) = $tmp104;
-frost$core$String$Index* $tmp106 = (frost$core$String$Index*) ($tmp97->$data + 8);
-frost$core$String$Index $tmp107 = *$tmp106;
-*(&local4) = $tmp107;
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp103));
+frost$core$String* $tmp104 = *(&local3);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp104));
+*(&local3) = $tmp103;
+frost$core$String$Index* $tmp105 = (frost$core$String$Index*) ($tmp96->$data + 8);
+frost$core$String$Index $tmp106 = *$tmp105;
+*(&local4) = $tmp106;
 // line 110
-frost$json$JSON* $tmp108 = *(&local2);
-frost$core$Int64* $tmp109 = &$tmp108->$rawValue;
-frost$core$Int64 $tmp110 = *$tmp109;
-frost$core$Int64 $tmp111 = (frost$core$Int64) {4};
-frost$core$Bit $tmp112 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp110, $tmp111);
-bool $tmp113 = $tmp112.value;
-if ($tmp113) goto block10; else goto block11;
+frost$json$JSON* $tmp107 = *(&local2);
+frost$core$Int64* $tmp108 = &$tmp107->$rawValue;
+frost$core$Int64 $tmp109 = *$tmp108;
+frost$core$Int64 $tmp110 = (frost$core$Int64) {4};
+frost$core$Bit $tmp111 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp109, $tmp110);
+bool $tmp112 = $tmp111.value;
+if ($tmp112) goto block10; else goto block11;
 block10:;
-frost$collections$MapView** $tmp114 = (frost$collections$MapView**) ($tmp108->$data + 0);
-frost$collections$MapView* $tmp115 = *$tmp114;
+frost$collections$MapView** $tmp113 = (frost$collections$MapView**) ($tmp107->$data + 0);
+frost$collections$MapView* $tmp114 = *$tmp113;
 *(&local5) = ((frost$collections$MapView*) NULL);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp115));
-frost$collections$MapView* $tmp116 = *(&local5);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp116));
-*(&local5) = $tmp115;
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp114));
+frost$collections$MapView* $tmp115 = *(&local5);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp115));
+*(&local5) = $tmp114;
 // line 112
-frost$collections$MapView* $tmp117 = *(&local5);
-frost$core$String* $tmp118 = *(&local3);
-ITable* $tmp119 = $tmp117->$class->itable;
-while ($tmp119->$class != (frost$core$Class*) &frost$collections$MapView$class) {
-    $tmp119 = $tmp119->next;
+frost$collections$MapView* $tmp116 = *(&local5);
+frost$core$String* $tmp117 = *(&local3);
+ITable* $tmp118 = $tmp116->$class->itable;
+while ($tmp118->$class != (frost$core$Class*) &frost$collections$MapView$class) {
+    $tmp118 = $tmp118->next;
 }
-$fn121 $tmp120 = $tmp119->methods[1];
-frost$core$Object* $tmp122 = $tmp120($tmp117, ((frost$core$Object*) $tmp118));
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$json$JSON*) $tmp122)));
-frost$json$JSON* $tmp123 = *(&local2);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp123));
-*(&local2) = ((frost$json$JSON*) $tmp122);
-frost$core$Frost$unref$frost$core$Object$Q($tmp122);
+$fn120 $tmp119 = $tmp118->methods[1];
+frost$core$Object* $tmp121 = $tmp119($tmp116, ((frost$core$Object*) $tmp117));
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$json$JSON*) $tmp121)));
+frost$json$JSON* $tmp122 = *(&local2);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp122));
+*(&local2) = ((frost$json$JSON*) $tmp121);
+frost$core$Frost$unref$frost$core$Object$Q($tmp121);
 // line 113
-frost$json$JSON* $tmp124 = *(&local2);
-frost$core$Bit $tmp125 = frost$core$Bit$init$builtin_bit($tmp124 == NULL);
-bool $tmp126 = $tmp125.value;
-if ($tmp126) goto block12; else goto block13;
+frost$json$JSON* $tmp123 = *(&local2);
+frost$core$Bit $tmp124 = frost$core$Bit$init$builtin_bit($tmp123 == NULL);
+bool $tmp125 = $tmp124.value;
+if ($tmp125) goto block12; else goto block13;
 block12:;
 // line 114
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$json$JSON*) NULL)));
-frost$collections$MapView* $tmp127 = *(&local5);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp127));
+frost$collections$MapView* $tmp126 = *(&local5);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp126));
 *(&local5) = ((frost$collections$MapView*) NULL);
-frost$core$String* $tmp128 = *(&local3);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp128));
+frost$core$String* $tmp127 = *(&local3);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp127));
 *(&local3) = ((frost$core$String*) NULL);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp97));
-frost$json$JSON* $tmp129 = *(&local2);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp129));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp96));
+frost$json$JSON* $tmp128 = *(&local2);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp128));
 *(&local2) = ((frost$json$JSON*) NULL);
 return ((frost$json$JSON*) NULL);
 block13:;
-frost$collections$MapView* $tmp130 = *(&local5);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp130));
+frost$collections$MapView* $tmp129 = *(&local5);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp129));
 *(&local5) = ((frost$collections$MapView*) NULL);
 goto block9;
 block11:;
 // line 118
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$json$JSON*) NULL)));
-frost$core$String* $tmp131 = *(&local3);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp131));
+frost$core$String* $tmp130 = *(&local3);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp130));
 *(&local3) = ((frost$core$String*) NULL);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp97));
-frost$json$JSON* $tmp132 = *(&local2);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp132));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp96));
+frost$json$JSON* $tmp131 = *(&local2);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp131));
 *(&local2) = ((frost$json$JSON*) NULL);
 return ((frost$json$JSON*) NULL);
 block9:;
 // line 121
-frost$core$String$Index $tmp133 = *(&local4);
-*(&local0) = $tmp133;
-frost$core$String* $tmp134 = *(&local3);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp134));
+frost$core$String$Index $tmp132 = *(&local4);
+*(&local0) = $tmp132;
+frost$core$String* $tmp133 = *(&local3);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp133));
 *(&local3) = ((frost$core$String*) NULL);
 goto block6;
 block8:;
-frost$core$Int64 $tmp135 = (frost$core$Int64) {1};
-frost$core$Bit $tmp136 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp99, $tmp135);
-bool $tmp137 = $tmp136.value;
-if ($tmp137) goto block14; else goto block6;
+frost$core$Int64 $tmp134 = (frost$core$Int64) {1};
+frost$core$Bit $tmp135 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp98, $tmp134);
+bool $tmp136 = $tmp135.value;
+if ($tmp136) goto block14; else goto block6;
 block14:;
-frost$core$Int64* $tmp138 = (frost$core$Int64*) ($tmp97->$data + 0);
-frost$core$Int64 $tmp139 = *$tmp138;
-*(&local6) = $tmp139;
-frost$core$String$Index* $tmp140 = (frost$core$String$Index*) ($tmp97->$data + 8);
-frost$core$String$Index $tmp141 = *$tmp140;
-*(&local7) = $tmp141;
+frost$core$Int64* $tmp137 = (frost$core$Int64*) ($tmp96->$data + 0);
+frost$core$Int64 $tmp138 = *$tmp137;
+*(&local6) = $tmp138;
+frost$core$String$Index* $tmp139 = (frost$core$String$Index*) ($tmp96->$data + 8);
+frost$core$String$Index $tmp140 = *$tmp139;
+*(&local7) = $tmp140;
 // line 124
-frost$json$JSON* $tmp142 = *(&local2);
-frost$core$Int64* $tmp143 = &$tmp142->$rawValue;
-frost$core$Int64 $tmp144 = *$tmp143;
-frost$core$Int64 $tmp145 = (frost$core$Int64) {5};
-frost$core$Bit $tmp146 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp144, $tmp145);
-bool $tmp147 = $tmp146.value;
-if ($tmp147) goto block16; else goto block17;
+frost$json$JSON* $tmp141 = *(&local2);
+frost$core$Int64* $tmp142 = &$tmp141->$rawValue;
+frost$core$Int64 $tmp143 = *$tmp142;
+frost$core$Int64 $tmp144 = (frost$core$Int64) {5};
+frost$core$Bit $tmp145 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp143, $tmp144);
+bool $tmp146 = $tmp145.value;
+if ($tmp146) goto block16; else goto block17;
 block16:;
-frost$collections$ListView** $tmp148 = (frost$collections$ListView**) ($tmp142->$data + 0);
-frost$collections$ListView* $tmp149 = *$tmp148;
+frost$collections$ListView** $tmp147 = (frost$collections$ListView**) ($tmp141->$data + 0);
+frost$collections$ListView* $tmp148 = *$tmp147;
 *(&local8) = ((frost$collections$ListView*) NULL);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp149));
-frost$collections$ListView* $tmp150 = *(&local8);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp150));
-*(&local8) = $tmp149;
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp148));
+frost$collections$ListView* $tmp149 = *(&local8);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp149));
+*(&local8) = $tmp148;
 // line 126
-frost$collections$ListView* $tmp151 = *(&local8);
-frost$core$Int64 $tmp152 = *(&local6);
-ITable* $tmp153 = $tmp151->$class->itable;
-while ($tmp153->$class != (frost$core$Class*) &frost$collections$ListView$class) {
-    $tmp153 = $tmp153->next;
+frost$collections$ListView* $tmp150 = *(&local8);
+frost$core$Int64 $tmp151 = *(&local6);
+ITable* $tmp152 = $tmp150->$class->itable;
+while ($tmp152->$class != (frost$core$Class*) &frost$collections$ListView$class) {
+    $tmp152 = $tmp152->next;
 }
-$fn155 $tmp154 = $tmp153->methods[0];
-frost$core$Object* $tmp156 = $tmp154($tmp151, $tmp152);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$json$JSON*) $tmp156)));
-frost$json$JSON* $tmp157 = *(&local2);
+$fn154 $tmp153 = $tmp152->methods[0];
+frost$core$Object* $tmp155 = $tmp153($tmp150, $tmp151);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$json$JSON*) $tmp155)));
+frost$json$JSON* $tmp156 = *(&local2);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp156));
+*(&local2) = ((frost$json$JSON*) $tmp155);
+frost$core$Frost$unref$frost$core$Object$Q($tmp155);
+frost$collections$ListView* $tmp157 = *(&local8);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp157));
-*(&local2) = ((frost$json$JSON*) $tmp156);
-frost$core$Frost$unref$frost$core$Object$Q($tmp156);
-frost$collections$ListView* $tmp158 = *(&local8);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp158));
 *(&local8) = ((frost$collections$ListView*) NULL);
 goto block15;
 block17:;
 // line 129
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$json$JSON*) NULL)));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp97));
-frost$json$JSON* $tmp159 = *(&local2);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp159));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp96));
+frost$json$JSON* $tmp158 = *(&local2);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp158));
 *(&local2) = ((frost$json$JSON*) NULL);
 return ((frost$json$JSON*) NULL);
 block15:;
 // line 132
-frost$core$String$Index $tmp160 = *(&local7);
-*(&local0) = $tmp160;
+frost$core$String$Index $tmp159 = *(&local7);
+*(&local0) = $tmp159;
 goto block6;
 block6:;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp97));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp96));
 goto block1;
 block3:;
 // line 136
+frost$json$JSON* $tmp160 = *(&local2);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp160));
 frost$json$JSON* $tmp161 = *(&local2);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp161));
-frost$json$JSON* $tmp162 = *(&local2);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp162));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp161));
 *(&local2) = ((frost$json$JSON*) NULL);
-return $tmp161;
+return $tmp160;
 
 }
 frost$core$Int64$nullable frost$json$JSON$getInt$frost$core$String$R$frost$core$Int64$Q(frost$json$JSON* param0, frost$core$String* param1) {
@@ -486,48 +478,48 @@ frost$core$Int64$nullable frost$json$JSON$getInt$frost$core$String$R$frost$core$
 frost$json$JSON* local0 = NULL;
 frost$core$Int64 local1;
 // line 143
-$fn164 $tmp163 = ($fn164) param0->$class->vtable[2];
-frost$json$JSON* $tmp165 = $tmp163(param0, param1);
+$fn163 $tmp162 = ($fn163) param0->$class->vtable[2];
+frost$json$JSON* $tmp164 = $tmp162(param0, param1);
 *(&local0) = ((frost$json$JSON*) NULL);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp165));
-frost$json$JSON* $tmp166 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp166));
-*(&local0) = $tmp165;
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp164));
+frost$json$JSON* $tmp165 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp165));
+*(&local0) = $tmp164;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp164));
 // line 144
-frost$json$JSON* $tmp167 = *(&local0);
-frost$core$Bit $tmp168 = frost$core$Bit$init$builtin_bit($tmp167 == NULL);
-bool $tmp169 = $tmp168.value;
-if ($tmp169) goto block1; else goto block2;
+frost$json$JSON* $tmp166 = *(&local0);
+frost$core$Bit $tmp167 = frost$core$Bit$init$builtin_bit($tmp166 == NULL);
+bool $tmp168 = $tmp167.value;
+if ($tmp168) goto block1; else goto block2;
 block1:;
 // line 145
-frost$json$JSON* $tmp170 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp170));
+frost$json$JSON* $tmp169 = *(&local0);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp169));
 *(&local0) = ((frost$json$JSON*) NULL);
 return ((frost$core$Int64$nullable) { .nonnull = false });
 block2:;
 // line 147
-frost$json$JSON* $tmp171 = *(&local0);
-frost$core$Int64* $tmp172 = &$tmp171->$rawValue;
-frost$core$Int64 $tmp173 = *$tmp172;
-frost$core$Int64 $tmp174 = (frost$core$Int64) {0};
-frost$core$Bit $tmp175 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp173, $tmp174);
-bool $tmp176 = $tmp175.value;
-if ($tmp176) goto block4; else goto block5;
+frost$json$JSON* $tmp170 = *(&local0);
+frost$core$Int64* $tmp171 = &$tmp170->$rawValue;
+frost$core$Int64 $tmp172 = *$tmp171;
+frost$core$Int64 $tmp173 = (frost$core$Int64) {0};
+frost$core$Bit $tmp174 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp172, $tmp173);
+bool $tmp175 = $tmp174.value;
+if ($tmp175) goto block4; else goto block5;
 block4:;
-frost$core$Int64* $tmp177 = (frost$core$Int64*) ($tmp171->$data + 0);
-frost$core$Int64 $tmp178 = *$tmp177;
-*(&local1) = $tmp178;
+frost$core$Int64* $tmp176 = (frost$core$Int64*) ($tmp170->$data + 0);
+frost$core$Int64 $tmp177 = *$tmp176;
+*(&local1) = $tmp177;
 // line 149
-frost$core$Int64 $tmp179 = *(&local1);
-frost$json$JSON* $tmp180 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp180));
+frost$core$Int64 $tmp178 = *(&local1);
+frost$json$JSON* $tmp179 = *(&local0);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp179));
 *(&local0) = ((frost$json$JSON*) NULL);
-return ((frost$core$Int64$nullable) { $tmp179, true });
+return ((frost$core$Int64$nullable) { $tmp178, true });
 block5:;
 // line 152
-frost$json$JSON* $tmp181 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp181));
+frost$json$JSON* $tmp180 = *(&local0);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp180));
 *(&local0) = ((frost$json$JSON*) NULL);
 return ((frost$core$Int64$nullable) { .nonnull = false });
 block3:;
@@ -540,48 +532,48 @@ frost$core$Real64$nullable frost$json$JSON$getReal$frost$core$String$R$frost$cor
 frost$json$JSON* local0 = NULL;
 frost$core$Real64 local1;
 // line 161
-$fn183 $tmp182 = ($fn183) param0->$class->vtable[2];
-frost$json$JSON* $tmp184 = $tmp182(param0, param1);
+$fn182 $tmp181 = ($fn182) param0->$class->vtable[2];
+frost$json$JSON* $tmp183 = $tmp181(param0, param1);
 *(&local0) = ((frost$json$JSON*) NULL);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp184));
-frost$json$JSON* $tmp185 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp185));
-*(&local0) = $tmp184;
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp183));
+frost$json$JSON* $tmp184 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp184));
+*(&local0) = $tmp183;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp183));
 // line 162
-frost$json$JSON* $tmp186 = *(&local0);
-frost$core$Bit $tmp187 = frost$core$Bit$init$builtin_bit($tmp186 == NULL);
-bool $tmp188 = $tmp187.value;
-if ($tmp188) goto block1; else goto block2;
+frost$json$JSON* $tmp185 = *(&local0);
+frost$core$Bit $tmp186 = frost$core$Bit$init$builtin_bit($tmp185 == NULL);
+bool $tmp187 = $tmp186.value;
+if ($tmp187) goto block1; else goto block2;
 block1:;
 // line 163
-frost$json$JSON* $tmp189 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp189));
+frost$json$JSON* $tmp188 = *(&local0);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp188));
 *(&local0) = ((frost$json$JSON*) NULL);
 return ((frost$core$Real64$nullable) { .nonnull = false });
 block2:;
 // line 165
-frost$json$JSON* $tmp190 = *(&local0);
-frost$core$Int64* $tmp191 = &$tmp190->$rawValue;
-frost$core$Int64 $tmp192 = *$tmp191;
-frost$core$Int64 $tmp193 = (frost$core$Int64) {1};
-frost$core$Bit $tmp194 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp192, $tmp193);
-bool $tmp195 = $tmp194.value;
-if ($tmp195) goto block4; else goto block5;
+frost$json$JSON* $tmp189 = *(&local0);
+frost$core$Int64* $tmp190 = &$tmp189->$rawValue;
+frost$core$Int64 $tmp191 = *$tmp190;
+frost$core$Int64 $tmp192 = (frost$core$Int64) {1};
+frost$core$Bit $tmp193 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp191, $tmp192);
+bool $tmp194 = $tmp193.value;
+if ($tmp194) goto block4; else goto block5;
 block4:;
-frost$core$Real64* $tmp196 = (frost$core$Real64*) ($tmp190->$data + 0);
-frost$core$Real64 $tmp197 = *$tmp196;
-*(&local1) = $tmp197;
+frost$core$Real64* $tmp195 = (frost$core$Real64*) ($tmp189->$data + 0);
+frost$core$Real64 $tmp196 = *$tmp195;
+*(&local1) = $tmp196;
 // line 167
-frost$core$Real64 $tmp198 = *(&local1);
-frost$json$JSON* $tmp199 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp199));
+frost$core$Real64 $tmp197 = *(&local1);
+frost$json$JSON* $tmp198 = *(&local0);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp198));
 *(&local0) = ((frost$json$JSON*) NULL);
-return ((frost$core$Real64$nullable) { $tmp198, true });
+return ((frost$core$Real64$nullable) { $tmp197, true });
 block5:;
 // line 170
-frost$json$JSON* $tmp200 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp200));
+frost$json$JSON* $tmp199 = *(&local0);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp199));
 *(&local0) = ((frost$json$JSON*) NULL);
 return ((frost$core$Real64$nullable) { .nonnull = false });
 block3:;
@@ -594,48 +586,48 @@ frost$core$Bit$nullable frost$json$JSON$getBit$frost$core$String$R$frost$core$Bi
 frost$json$JSON* local0 = NULL;
 frost$core$Bit local1;
 // line 179
-$fn202 $tmp201 = ($fn202) param0->$class->vtable[2];
-frost$json$JSON* $tmp203 = $tmp201(param0, param1);
+$fn201 $tmp200 = ($fn201) param0->$class->vtable[2];
+frost$json$JSON* $tmp202 = $tmp200(param0, param1);
 *(&local0) = ((frost$json$JSON*) NULL);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp203));
-frost$json$JSON* $tmp204 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp204));
-*(&local0) = $tmp203;
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp202));
+frost$json$JSON* $tmp203 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp203));
+*(&local0) = $tmp202;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp202));
 // line 180
-frost$json$JSON* $tmp205 = *(&local0);
-frost$core$Bit $tmp206 = frost$core$Bit$init$builtin_bit($tmp205 == NULL);
-bool $tmp207 = $tmp206.value;
-if ($tmp207) goto block1; else goto block2;
+frost$json$JSON* $tmp204 = *(&local0);
+frost$core$Bit $tmp205 = frost$core$Bit$init$builtin_bit($tmp204 == NULL);
+bool $tmp206 = $tmp205.value;
+if ($tmp206) goto block1; else goto block2;
 block1:;
 // line 181
-frost$json$JSON* $tmp208 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp208));
+frost$json$JSON* $tmp207 = *(&local0);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp207));
 *(&local0) = ((frost$json$JSON*) NULL);
 return ((frost$core$Bit$nullable) { .nonnull = false });
 block2:;
 // line 183
-frost$json$JSON* $tmp209 = *(&local0);
-frost$core$Int64* $tmp210 = &$tmp209->$rawValue;
-frost$core$Int64 $tmp211 = *$tmp210;
-frost$core$Int64 $tmp212 = (frost$core$Int64) {3};
-frost$core$Bit $tmp213 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp211, $tmp212);
-bool $tmp214 = $tmp213.value;
-if ($tmp214) goto block4; else goto block5;
+frost$json$JSON* $tmp208 = *(&local0);
+frost$core$Int64* $tmp209 = &$tmp208->$rawValue;
+frost$core$Int64 $tmp210 = *$tmp209;
+frost$core$Int64 $tmp211 = (frost$core$Int64) {3};
+frost$core$Bit $tmp212 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp210, $tmp211);
+bool $tmp213 = $tmp212.value;
+if ($tmp213) goto block4; else goto block5;
 block4:;
-frost$core$Bit* $tmp215 = (frost$core$Bit*) ($tmp209->$data + 0);
-frost$core$Bit $tmp216 = *$tmp215;
-*(&local1) = $tmp216;
+frost$core$Bit* $tmp214 = (frost$core$Bit*) ($tmp208->$data + 0);
+frost$core$Bit $tmp215 = *$tmp214;
+*(&local1) = $tmp215;
 // line 185
-frost$core$Bit $tmp217 = *(&local1);
-frost$json$JSON* $tmp218 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp218));
+frost$core$Bit $tmp216 = *(&local1);
+frost$json$JSON* $tmp217 = *(&local0);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp217));
 *(&local0) = ((frost$json$JSON*) NULL);
-return ((frost$core$Bit$nullable) { $tmp217, true });
+return ((frost$core$Bit$nullable) { $tmp216, true });
 block5:;
 // line 188
-frost$json$JSON* $tmp219 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp219));
+frost$json$JSON* $tmp218 = *(&local0);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp218));
 *(&local0) = ((frost$json$JSON*) NULL);
 return ((frost$core$Bit$nullable) { .nonnull = false });
 block3:;
@@ -648,58 +640,58 @@ frost$core$String* frost$json$JSON$getString$frost$core$String$R$frost$core$Stri
 frost$json$JSON* local0 = NULL;
 frost$core$String* local1 = NULL;
 // line 197
-$fn221 $tmp220 = ($fn221) param0->$class->vtable[2];
-frost$json$JSON* $tmp222 = $tmp220(param0, param1);
+$fn220 $tmp219 = ($fn220) param0->$class->vtable[2];
+frost$json$JSON* $tmp221 = $tmp219(param0, param1);
 *(&local0) = ((frost$json$JSON*) NULL);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp222));
-frost$json$JSON* $tmp223 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp223));
-*(&local0) = $tmp222;
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp221));
+frost$json$JSON* $tmp222 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp222));
+*(&local0) = $tmp221;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp221));
 // line 198
-frost$json$JSON* $tmp224 = *(&local0);
-frost$core$Bit $tmp225 = frost$core$Bit$init$builtin_bit($tmp224 == NULL);
-bool $tmp226 = $tmp225.value;
-if ($tmp226) goto block1; else goto block2;
+frost$json$JSON* $tmp223 = *(&local0);
+frost$core$Bit $tmp224 = frost$core$Bit$init$builtin_bit($tmp223 == NULL);
+bool $tmp225 = $tmp224.value;
+if ($tmp225) goto block1; else goto block2;
 block1:;
 // line 199
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$String*) NULL)));
-frost$json$JSON* $tmp227 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp227));
+frost$json$JSON* $tmp226 = *(&local0);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp226));
 *(&local0) = ((frost$json$JSON*) NULL);
 return ((frost$core$String*) NULL);
 block2:;
 // line 201
-frost$json$JSON* $tmp228 = *(&local0);
-frost$core$Int64* $tmp229 = &$tmp228->$rawValue;
-frost$core$Int64 $tmp230 = *$tmp229;
-frost$core$Int64 $tmp231 = (frost$core$Int64) {2};
-frost$core$Bit $tmp232 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp230, $tmp231);
-bool $tmp233 = $tmp232.value;
-if ($tmp233) goto block4; else goto block5;
+frost$json$JSON* $tmp227 = *(&local0);
+frost$core$Int64* $tmp228 = &$tmp227->$rawValue;
+frost$core$Int64 $tmp229 = *$tmp228;
+frost$core$Int64 $tmp230 = (frost$core$Int64) {2};
+frost$core$Bit $tmp231 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp229, $tmp230);
+bool $tmp232 = $tmp231.value;
+if ($tmp232) goto block4; else goto block5;
 block4:;
-frost$core$String** $tmp234 = (frost$core$String**) ($tmp228->$data + 0);
-frost$core$String* $tmp235 = *$tmp234;
+frost$core$String** $tmp233 = (frost$core$String**) ($tmp227->$data + 0);
+frost$core$String* $tmp234 = *$tmp233;
 *(&local1) = ((frost$core$String*) NULL);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp235));
-frost$core$String* $tmp236 = *(&local1);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp236));
-*(&local1) = $tmp235;
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp234));
+frost$core$String* $tmp235 = *(&local1);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp235));
+*(&local1) = $tmp234;
 // line 203
+frost$core$String* $tmp236 = *(&local1);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp236));
 frost$core$String* $tmp237 = *(&local1);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp237));
-frost$core$String* $tmp238 = *(&local1);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp238));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp237));
 *(&local1) = ((frost$core$String*) NULL);
-frost$json$JSON* $tmp239 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp239));
+frost$json$JSON* $tmp238 = *(&local0);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp238));
 *(&local0) = ((frost$json$JSON*) NULL);
-return $tmp237;
+return $tmp236;
 block5:;
 // line 206
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$String*) NULL)));
-frost$json$JSON* $tmp240 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp240));
+frost$json$JSON* $tmp239 = *(&local0);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp239));
 *(&local0) = ((frost$json$JSON*) NULL);
 return ((frost$core$String*) NULL);
 block3:;
@@ -712,58 +704,58 @@ frost$collections$ListView* frost$json$JSON$getArray$frost$core$String$R$frost$c
 frost$json$JSON* local0 = NULL;
 frost$collections$ListView* local1 = NULL;
 // line 215
-$fn242 $tmp241 = ($fn242) param0->$class->vtable[2];
-frost$json$JSON* $tmp243 = $tmp241(param0, param1);
+$fn241 $tmp240 = ($fn241) param0->$class->vtable[2];
+frost$json$JSON* $tmp242 = $tmp240(param0, param1);
 *(&local0) = ((frost$json$JSON*) NULL);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp243));
-frost$json$JSON* $tmp244 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp244));
-*(&local0) = $tmp243;
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp242));
+frost$json$JSON* $tmp243 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp243));
+*(&local0) = $tmp242;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp242));
 // line 216
-frost$json$JSON* $tmp245 = *(&local0);
-frost$core$Bit $tmp246 = frost$core$Bit$init$builtin_bit($tmp245 == NULL);
-bool $tmp247 = $tmp246.value;
-if ($tmp247) goto block1; else goto block2;
+frost$json$JSON* $tmp244 = *(&local0);
+frost$core$Bit $tmp245 = frost$core$Bit$init$builtin_bit($tmp244 == NULL);
+bool $tmp246 = $tmp245.value;
+if ($tmp246) goto block1; else goto block2;
 block1:;
 // line 217
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$collections$ListView*) NULL)));
-frost$json$JSON* $tmp248 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp248));
+frost$json$JSON* $tmp247 = *(&local0);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp247));
 *(&local0) = ((frost$json$JSON*) NULL);
 return ((frost$collections$ListView*) NULL);
 block2:;
 // line 219
-frost$json$JSON* $tmp249 = *(&local0);
-frost$core$Int64* $tmp250 = &$tmp249->$rawValue;
-frost$core$Int64 $tmp251 = *$tmp250;
-frost$core$Int64 $tmp252 = (frost$core$Int64) {5};
-frost$core$Bit $tmp253 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp251, $tmp252);
-bool $tmp254 = $tmp253.value;
-if ($tmp254) goto block4; else goto block5;
+frost$json$JSON* $tmp248 = *(&local0);
+frost$core$Int64* $tmp249 = &$tmp248->$rawValue;
+frost$core$Int64 $tmp250 = *$tmp249;
+frost$core$Int64 $tmp251 = (frost$core$Int64) {5};
+frost$core$Bit $tmp252 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp250, $tmp251);
+bool $tmp253 = $tmp252.value;
+if ($tmp253) goto block4; else goto block5;
 block4:;
-frost$collections$ListView** $tmp255 = (frost$collections$ListView**) ($tmp249->$data + 0);
-frost$collections$ListView* $tmp256 = *$tmp255;
+frost$collections$ListView** $tmp254 = (frost$collections$ListView**) ($tmp248->$data + 0);
+frost$collections$ListView* $tmp255 = *$tmp254;
 *(&local1) = ((frost$collections$ListView*) NULL);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp256));
-frost$collections$ListView* $tmp257 = *(&local1);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp257));
-*(&local1) = $tmp256;
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp255));
+frost$collections$ListView* $tmp256 = *(&local1);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp256));
+*(&local1) = $tmp255;
 // line 221
+frost$collections$ListView* $tmp257 = *(&local1);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp257));
 frost$collections$ListView* $tmp258 = *(&local1);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp258));
-frost$collections$ListView* $tmp259 = *(&local1);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp259));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp258));
 *(&local1) = ((frost$collections$ListView*) NULL);
-frost$json$JSON* $tmp260 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp260));
+frost$json$JSON* $tmp259 = *(&local0);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp259));
 *(&local0) = ((frost$json$JSON*) NULL);
-return $tmp258;
+return $tmp257;
 block5:;
 // line 224
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$collections$ListView*) NULL)));
-frost$json$JSON* $tmp261 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp261));
+frost$json$JSON* $tmp260 = *(&local0);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp260));
 *(&local0) = ((frost$json$JSON*) NULL);
 return ((frost$collections$ListView*) NULL);
 block3:;
@@ -776,58 +768,58 @@ frost$collections$MapView* frost$json$JSON$getObject$frost$core$String$R$frost$c
 frost$json$JSON* local0 = NULL;
 frost$collections$MapView* local1 = NULL;
 // line 233
-$fn263 $tmp262 = ($fn263) param0->$class->vtable[2];
-frost$json$JSON* $tmp264 = $tmp262(param0, param1);
+$fn262 $tmp261 = ($fn262) param0->$class->vtable[2];
+frost$json$JSON* $tmp263 = $tmp261(param0, param1);
 *(&local0) = ((frost$json$JSON*) NULL);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp264));
-frost$json$JSON* $tmp265 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp265));
-*(&local0) = $tmp264;
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp263));
+frost$json$JSON* $tmp264 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp264));
+*(&local0) = $tmp263;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp263));
 // line 234
-frost$json$JSON* $tmp266 = *(&local0);
-frost$core$Bit $tmp267 = frost$core$Bit$init$builtin_bit($tmp266 == NULL);
-bool $tmp268 = $tmp267.value;
-if ($tmp268) goto block1; else goto block2;
+frost$json$JSON* $tmp265 = *(&local0);
+frost$core$Bit $tmp266 = frost$core$Bit$init$builtin_bit($tmp265 == NULL);
+bool $tmp267 = $tmp266.value;
+if ($tmp267) goto block1; else goto block2;
 block1:;
 // line 235
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$collections$MapView*) NULL)));
-frost$json$JSON* $tmp269 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp269));
+frost$json$JSON* $tmp268 = *(&local0);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp268));
 *(&local0) = ((frost$json$JSON*) NULL);
 return ((frost$collections$MapView*) NULL);
 block2:;
 // line 237
-frost$json$JSON* $tmp270 = *(&local0);
-frost$core$Int64* $tmp271 = &$tmp270->$rawValue;
-frost$core$Int64 $tmp272 = *$tmp271;
-frost$core$Int64 $tmp273 = (frost$core$Int64) {4};
-frost$core$Bit $tmp274 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp272, $tmp273);
-bool $tmp275 = $tmp274.value;
-if ($tmp275) goto block4; else goto block5;
+frost$json$JSON* $tmp269 = *(&local0);
+frost$core$Int64* $tmp270 = &$tmp269->$rawValue;
+frost$core$Int64 $tmp271 = *$tmp270;
+frost$core$Int64 $tmp272 = (frost$core$Int64) {4};
+frost$core$Bit $tmp273 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp271, $tmp272);
+bool $tmp274 = $tmp273.value;
+if ($tmp274) goto block4; else goto block5;
 block4:;
-frost$collections$MapView** $tmp276 = (frost$collections$MapView**) ($tmp270->$data + 0);
-frost$collections$MapView* $tmp277 = *$tmp276;
+frost$collections$MapView** $tmp275 = (frost$collections$MapView**) ($tmp269->$data + 0);
+frost$collections$MapView* $tmp276 = *$tmp275;
 *(&local1) = ((frost$collections$MapView*) NULL);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp277));
-frost$collections$MapView* $tmp278 = *(&local1);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp278));
-*(&local1) = $tmp277;
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp276));
+frost$collections$MapView* $tmp277 = *(&local1);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp277));
+*(&local1) = $tmp276;
 // line 239
+frost$collections$MapView* $tmp278 = *(&local1);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp278));
 frost$collections$MapView* $tmp279 = *(&local1);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp279));
-frost$collections$MapView* $tmp280 = *(&local1);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp280));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp279));
 *(&local1) = ((frost$collections$MapView*) NULL);
-frost$json$JSON* $tmp281 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp281));
+frost$json$JSON* $tmp280 = *(&local0);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp280));
 *(&local0) = ((frost$json$JSON*) NULL);
-return $tmp279;
+return $tmp278;
 block5:;
 // line 242
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$collections$MapView*) NULL)));
-frost$json$JSON* $tmp282 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp282));
+frost$json$JSON* $tmp281 = *(&local0);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp281));
 *(&local0) = ((frost$json$JSON*) NULL);
 return ((frost$collections$MapView*) NULL);
 block3:;
@@ -839,252 +831,186 @@ frost$core$Int64 frost$json$JSON$asInt$R$frost$core$Int64(frost$json$JSON* param
 
 frost$core$Int64 local0;
 // line 251
-frost$core$Int64* $tmp283 = &param0->$rawValue;
-frost$core$Int64 $tmp284 = *$tmp283;
-frost$core$Int64 $tmp285 = (frost$core$Int64) {0};
-frost$core$Bit $tmp286 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp284, $tmp285);
-bool $tmp287 = $tmp286.value;
-if ($tmp287) goto block2; else goto block3;
+frost$core$Int64* $tmp282 = &param0->$rawValue;
+frost$core$Int64 $tmp283 = *$tmp282;
+frost$core$Int64 $tmp284 = (frost$core$Int64) {0};
+frost$core$Bit $tmp285 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp283, $tmp284);
+bool $tmp286 = $tmp285.value;
+if ($tmp286) goto block2; else goto block3;
 block2:;
-frost$core$Int64* $tmp288 = (frost$core$Int64*) (param0->$data + 0);
-frost$core$Int64 $tmp289 = *$tmp288;
-*(&local0) = $tmp289;
+frost$core$Int64* $tmp287 = (frost$core$Int64*) (param0->$data + 0);
+frost$core$Int64 $tmp288 = *$tmp287;
+*(&local0) = $tmp288;
 // line 253
-frost$core$Int64 $tmp290 = *(&local0);
-return $tmp290;
+frost$core$Int64 $tmp289 = *(&local0);
+return $tmp289;
 block3:;
 // line 256
-frost$core$Bit $tmp291 = frost$core$Bit$init$builtin_bit(false);
-bool $tmp292 = $tmp291.value;
-if ($tmp292) goto block4; else goto block5;
-block5:;
-frost$core$Int64 $tmp293 = (frost$core$Int64) {256};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s294, $tmp293);
+frost$core$Int64 $tmp290 = (frost$core$Int64) {256};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s291, $tmp290);
 abort(); // unreachable
-block4:;
-// line 257
-goto block6;
-block6:;
-goto block6;
-block7:;
-goto block1;
 block1:;
-goto block8;
-block8:;
+goto block4;
+block4:;
 
 }
 frost$core$Real64 frost$json$JSON$asReal$R$frost$core$Real64(frost$json$JSON* param0) {
 
 frost$core$Real64 local0;
-// line 266
-frost$core$Int64* $tmp295 = &param0->$rawValue;
-frost$core$Int64 $tmp296 = *$tmp295;
-frost$core$Int64 $tmp297 = (frost$core$Int64) {1};
-frost$core$Bit $tmp298 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp296, $tmp297);
-bool $tmp299 = $tmp298.value;
-if ($tmp299) goto block2; else goto block3;
+// line 265
+frost$core$Int64* $tmp292 = &param0->$rawValue;
+frost$core$Int64 $tmp293 = *$tmp292;
+frost$core$Int64 $tmp294 = (frost$core$Int64) {1};
+frost$core$Bit $tmp295 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp293, $tmp294);
+bool $tmp296 = $tmp295.value;
+if ($tmp296) goto block2; else goto block3;
 block2:;
-frost$core$Real64* $tmp300 = (frost$core$Real64*) (param0->$data + 0);
-frost$core$Real64 $tmp301 = *$tmp300;
-*(&local0) = $tmp301;
-// line 268
-frost$core$Real64 $tmp302 = *(&local0);
-return $tmp302;
+frost$core$Real64* $tmp297 = (frost$core$Real64*) (param0->$data + 0);
+frost$core$Real64 $tmp298 = *$tmp297;
+*(&local0) = $tmp298;
+// line 267
+frost$core$Real64 $tmp299 = *(&local0);
+return $tmp299;
 block3:;
-// line 271
-frost$core$Bit $tmp303 = frost$core$Bit$init$builtin_bit(false);
-bool $tmp304 = $tmp303.value;
-if ($tmp304) goto block4; else goto block5;
-block5:;
-frost$core$Int64 $tmp305 = (frost$core$Int64) {271};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s306, $tmp305);
+// line 270
+frost$core$Int64 $tmp300 = (frost$core$Int64) {270};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s301, $tmp300);
 abort(); // unreachable
-block4:;
-// line 272
-goto block6;
-block6:;
-goto block6;
-block7:;
-goto block1;
 block1:;
-goto block8;
-block8:;
+goto block4;
+block4:;
 
 }
 frost$core$String* frost$json$JSON$asString$R$frost$core$String(frost$json$JSON* param0) {
 
 frost$core$String* local0 = NULL;
-// line 281
-frost$core$Int64* $tmp307 = &param0->$rawValue;
-frost$core$Int64 $tmp308 = *$tmp307;
-frost$core$Int64 $tmp309 = (frost$core$Int64) {2};
-frost$core$Bit $tmp310 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp308, $tmp309);
-bool $tmp311 = $tmp310.value;
-if ($tmp311) goto block2; else goto block3;
+// line 279
+frost$core$Int64* $tmp302 = &param0->$rawValue;
+frost$core$Int64 $tmp303 = *$tmp302;
+frost$core$Int64 $tmp304 = (frost$core$Int64) {2};
+frost$core$Bit $tmp305 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp303, $tmp304);
+bool $tmp306 = $tmp305.value;
+if ($tmp306) goto block2; else goto block3;
 block2:;
-frost$core$String** $tmp312 = (frost$core$String**) (param0->$data + 0);
-frost$core$String* $tmp313 = *$tmp312;
+frost$core$String** $tmp307 = (frost$core$String**) (param0->$data + 0);
+frost$core$String* $tmp308 = *$tmp307;
 *(&local0) = ((frost$core$String*) NULL);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp313));
-frost$core$String* $tmp314 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp314));
-*(&local0) = $tmp313;
-// line 283
-frost$core$String* $tmp315 = *(&local0);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp315));
-frost$core$String* $tmp316 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp316));
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp308));
+frost$core$String* $tmp309 = *(&local0);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp309));
+*(&local0) = $tmp308;
+// line 281
+frost$core$String* $tmp310 = *(&local0);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp310));
+frost$core$String* $tmp311 = *(&local0);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp311));
 *(&local0) = ((frost$core$String*) NULL);
-return $tmp315;
+return $tmp310;
 block3:;
-// line 286
-frost$core$Bit $tmp317 = frost$core$Bit$init$builtin_bit(false);
-bool $tmp318 = $tmp317.value;
-if ($tmp318) goto block4; else goto block5;
-block5:;
-frost$core$Int64 $tmp319 = (frost$core$Int64) {286};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s320, $tmp319);
+// line 284
+frost$core$Int64 $tmp312 = (frost$core$Int64) {284};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s313, $tmp312);
 abort(); // unreachable
-block4:;
-// line 287
-goto block6;
-block6:;
-goto block6;
-block7:;
-goto block1;
 block1:;
-goto block8;
-block8:;
+goto block4;
+block4:;
 
 }
 frost$core$Bit frost$json$JSON$asBit$R$frost$core$Bit(frost$json$JSON* param0) {
 
 frost$core$Bit local0;
-// line 296
-frost$core$Int64* $tmp321 = &param0->$rawValue;
-frost$core$Int64 $tmp322 = *$tmp321;
-frost$core$Int64 $tmp323 = (frost$core$Int64) {3};
-frost$core$Bit $tmp324 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp322, $tmp323);
-bool $tmp325 = $tmp324.value;
-if ($tmp325) goto block2; else goto block3;
+// line 293
+frost$core$Int64* $tmp314 = &param0->$rawValue;
+frost$core$Int64 $tmp315 = *$tmp314;
+frost$core$Int64 $tmp316 = (frost$core$Int64) {3};
+frost$core$Bit $tmp317 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp315, $tmp316);
+bool $tmp318 = $tmp317.value;
+if ($tmp318) goto block2; else goto block3;
 block2:;
-frost$core$Bit* $tmp326 = (frost$core$Bit*) (param0->$data + 0);
-frost$core$Bit $tmp327 = *$tmp326;
-*(&local0) = $tmp327;
-// line 298
-frost$core$Bit $tmp328 = *(&local0);
-return $tmp328;
+frost$core$Bit* $tmp319 = (frost$core$Bit*) (param0->$data + 0);
+frost$core$Bit $tmp320 = *$tmp319;
+*(&local0) = $tmp320;
+// line 295
+frost$core$Bit $tmp321 = *(&local0);
+return $tmp321;
 block3:;
-// line 301
-frost$core$Bit $tmp329 = frost$core$Bit$init$builtin_bit(false);
-bool $tmp330 = $tmp329.value;
-if ($tmp330) goto block4; else goto block5;
-block5:;
-frost$core$Int64 $tmp331 = (frost$core$Int64) {301};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s332, $tmp331);
+// line 298
+frost$core$Int64 $tmp322 = (frost$core$Int64) {298};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s323, $tmp322);
 abort(); // unreachable
-block4:;
-// line 302
-goto block6;
-block6:;
-goto block6;
-block7:;
-goto block1;
 block1:;
-goto block8;
-block8:;
+goto block4;
+block4:;
 
 }
 frost$collections$MapView* frost$json$JSON$asObject$R$frost$collections$MapView$LTfrost$core$String$Cfrost$json$JSON$GT(frost$json$JSON* param0) {
 
 frost$collections$MapView* local0 = NULL;
-// line 311
-frost$core$Int64* $tmp333 = &param0->$rawValue;
-frost$core$Int64 $tmp334 = *$tmp333;
-frost$core$Int64 $tmp335 = (frost$core$Int64) {4};
-frost$core$Bit $tmp336 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp334, $tmp335);
-bool $tmp337 = $tmp336.value;
-if ($tmp337) goto block2; else goto block3;
+// line 307
+frost$core$Int64* $tmp324 = &param0->$rawValue;
+frost$core$Int64 $tmp325 = *$tmp324;
+frost$core$Int64 $tmp326 = (frost$core$Int64) {4};
+frost$core$Bit $tmp327 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp325, $tmp326);
+bool $tmp328 = $tmp327.value;
+if ($tmp328) goto block2; else goto block3;
 block2:;
-frost$collections$MapView** $tmp338 = (frost$collections$MapView**) (param0->$data + 0);
-frost$collections$MapView* $tmp339 = *$tmp338;
+frost$collections$MapView** $tmp329 = (frost$collections$MapView**) (param0->$data + 0);
+frost$collections$MapView* $tmp330 = *$tmp329;
 *(&local0) = ((frost$collections$MapView*) NULL);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp339));
-frost$collections$MapView* $tmp340 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp340));
-*(&local0) = $tmp339;
-// line 313
-frost$collections$MapView* $tmp341 = *(&local0);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp341));
-frost$collections$MapView* $tmp342 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp342));
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp330));
+frost$collections$MapView* $tmp331 = *(&local0);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp331));
+*(&local0) = $tmp330;
+// line 309
+frost$collections$MapView* $tmp332 = *(&local0);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp332));
+frost$collections$MapView* $tmp333 = *(&local0);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp333));
 *(&local0) = ((frost$collections$MapView*) NULL);
-return $tmp341;
+return $tmp332;
 block3:;
-// line 316
-frost$core$Bit $tmp343 = frost$core$Bit$init$builtin_bit(false);
-bool $tmp344 = $tmp343.value;
-if ($tmp344) goto block4; else goto block5;
-block5:;
-frost$core$Int64 $tmp345 = (frost$core$Int64) {316};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s346, $tmp345);
+// line 312
+frost$core$Int64 $tmp334 = (frost$core$Int64) {312};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s335, $tmp334);
 abort(); // unreachable
-block4:;
-// line 317
-goto block6;
-block6:;
-goto block6;
-block7:;
-goto block1;
 block1:;
-goto block8;
-block8:;
+goto block4;
+block4:;
 
 }
 frost$collections$ListView* frost$json$JSON$asArray$R$frost$collections$ListView$LTfrost$json$JSON$GT(frost$json$JSON* param0) {
 
 frost$collections$ListView* local0 = NULL;
-// line 326
-frost$core$Int64* $tmp347 = &param0->$rawValue;
-frost$core$Int64 $tmp348 = *$tmp347;
-frost$core$Int64 $tmp349 = (frost$core$Int64) {5};
-frost$core$Bit $tmp350 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp348, $tmp349);
-bool $tmp351 = $tmp350.value;
-if ($tmp351) goto block2; else goto block3;
+// line 321
+frost$core$Int64* $tmp336 = &param0->$rawValue;
+frost$core$Int64 $tmp337 = *$tmp336;
+frost$core$Int64 $tmp338 = (frost$core$Int64) {5};
+frost$core$Bit $tmp339 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp337, $tmp338);
+bool $tmp340 = $tmp339.value;
+if ($tmp340) goto block2; else goto block3;
 block2:;
-frost$collections$ListView** $tmp352 = (frost$collections$ListView**) (param0->$data + 0);
-frost$collections$ListView* $tmp353 = *$tmp352;
+frost$collections$ListView** $tmp341 = (frost$collections$ListView**) (param0->$data + 0);
+frost$collections$ListView* $tmp342 = *$tmp341;
 *(&local0) = ((frost$collections$ListView*) NULL);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp353));
-frost$collections$ListView* $tmp354 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp354));
-*(&local0) = $tmp353;
-// line 328
-frost$collections$ListView* $tmp355 = *(&local0);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp355));
-frost$collections$ListView* $tmp356 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp356));
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp342));
+frost$collections$ListView* $tmp343 = *(&local0);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp343));
+*(&local0) = $tmp342;
+// line 323
+frost$collections$ListView* $tmp344 = *(&local0);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp344));
+frost$collections$ListView* $tmp345 = *(&local0);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp345));
 *(&local0) = ((frost$collections$ListView*) NULL);
-return $tmp355;
+return $tmp344;
 block3:;
-// line 331
-frost$core$Bit $tmp357 = frost$core$Bit$init$builtin_bit(false);
-bool $tmp358 = $tmp357.value;
-if ($tmp358) goto block4; else goto block5;
-block5:;
-frost$core$Int64 $tmp359 = (frost$core$Int64) {331};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s360, $tmp359);
+// line 326
+frost$core$Int64 $tmp346 = (frost$core$Int64) {326};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s347, $tmp346);
 abort(); // unreachable
-block4:;
-// line 332
-goto block6;
-block6:;
-goto block6;
-block7:;
-goto block1;
 block1:;
-goto block8;
-block8:;
+goto block4;
+block4:;
 
 }
 frost$core$String* frost$json$JSON$get_asString$R$frost$core$String(frost$json$JSON* param0) {
@@ -1101,340 +1027,329 @@ frost$collections$ListView* local8 = NULL;
 frost$core$MutableString* local9 = NULL;
 frost$core$String* local10 = NULL;
 frost$json$JSON* local11 = NULL;
-// line 342
-frost$core$Int64* $tmp361 = &param0->$rawValue;
-frost$core$Int64 $tmp362 = *$tmp361;
-frost$core$Int64 $tmp363 = (frost$core$Int64) {0};
-frost$core$Bit $tmp364 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp362, $tmp363);
-bool $tmp365 = $tmp364.value;
-if ($tmp365) goto block2; else goto block3;
+// line 336
+frost$core$Int64* $tmp348 = &param0->$rawValue;
+frost$core$Int64 $tmp349 = *$tmp348;
+frost$core$Int64 $tmp350 = (frost$core$Int64) {0};
+frost$core$Bit $tmp351 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp349, $tmp350);
+bool $tmp352 = $tmp351.value;
+if ($tmp352) goto block2; else goto block3;
 block2:;
-frost$core$Int64* $tmp366 = (frost$core$Int64*) (param0->$data + 0);
-frost$core$Int64 $tmp367 = *$tmp366;
-*(&local0) = $tmp367;
-// line 344
-frost$core$Int64 $tmp368 = *(&local0);
-frost$core$Int64$wrapper* $tmp369;
-$tmp369 = (frost$core$Int64$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int64$wrapperclass);
-$tmp369->value = $tmp368;
-$fn371 $tmp370 = ($fn371) ((frost$core$Object*) $tmp369)->$class->vtable[0];
-frost$core$String* $tmp372 = $tmp370(((frost$core$Object*) $tmp369));
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp372));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp372));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp369));
-return $tmp372;
+frost$core$Int64* $tmp353 = (frost$core$Int64*) (param0->$data + 0);
+frost$core$Int64 $tmp354 = *$tmp353;
+*(&local0) = $tmp354;
+// line 338
+frost$core$Int64 $tmp355 = *(&local0);
+frost$core$Int64$wrapper* $tmp356;
+$tmp356 = (frost$core$Int64$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int64$wrapperclass);
+$tmp356->value = $tmp355;
+$fn358 $tmp357 = ($fn358) ((frost$core$Object*) $tmp356)->$class->vtable[0];
+frost$core$String* $tmp359 = $tmp357(((frost$core$Object*) $tmp356));
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp359));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp359));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp356));
+return $tmp359;
 block3:;
-frost$core$Int64 $tmp373 = (frost$core$Int64) {1};
-frost$core$Bit $tmp374 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp362, $tmp373);
-bool $tmp375 = $tmp374.value;
-if ($tmp375) goto block4; else goto block5;
+frost$core$Int64 $tmp360 = (frost$core$Int64) {1};
+frost$core$Bit $tmp361 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp349, $tmp360);
+bool $tmp362 = $tmp361.value;
+if ($tmp362) goto block4; else goto block5;
 block4:;
-frost$core$Real64* $tmp376 = (frost$core$Real64*) (param0->$data + 0);
-frost$core$Real64 $tmp377 = *$tmp376;
-*(&local1) = $tmp377;
-// line 347
-frost$core$Real64 $tmp378 = *(&local1);
-frost$core$Real64$wrapper* $tmp379;
-$tmp379 = (frost$core$Real64$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Real64$wrapperclass);
-$tmp379->value = $tmp378;
-$fn381 $tmp380 = ($fn381) ((frost$core$Object*) $tmp379)->$class->vtable[0];
-frost$core$String* $tmp382 = $tmp380(((frost$core$Object*) $tmp379));
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp382));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp382));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp379));
-return $tmp382;
+frost$core$Real64* $tmp363 = (frost$core$Real64*) (param0->$data + 0);
+frost$core$Real64 $tmp364 = *$tmp363;
+*(&local1) = $tmp364;
+// line 341
+frost$core$Real64 $tmp365 = *(&local1);
+frost$core$Real64$wrapper* $tmp366;
+$tmp366 = (frost$core$Real64$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Real64$wrapperclass);
+$tmp366->value = $tmp365;
+$fn368 $tmp367 = ($fn368) ((frost$core$Object*) $tmp366)->$class->vtable[0];
+frost$core$String* $tmp369 = $tmp367(((frost$core$Object*) $tmp366));
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp369));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp369));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp366));
+return $tmp369;
 block5:;
-frost$core$Int64 $tmp383 = (frost$core$Int64) {2};
-frost$core$Bit $tmp384 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp362, $tmp383);
-bool $tmp385 = $tmp384.value;
-if ($tmp385) goto block6; else goto block7;
+frost$core$Int64 $tmp370 = (frost$core$Int64) {2};
+frost$core$Bit $tmp371 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp349, $tmp370);
+bool $tmp372 = $tmp371.value;
+if ($tmp372) goto block6; else goto block7;
 block6:;
-frost$core$String** $tmp386 = (frost$core$String**) (param0->$data + 0);
-frost$core$String* $tmp387 = *$tmp386;
+frost$core$String** $tmp373 = (frost$core$String**) (param0->$data + 0);
+frost$core$String* $tmp374 = *$tmp373;
 *(&local2) = ((frost$core$String*) NULL);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp387));
-frost$core$String* $tmp388 = *(&local2);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp388));
-*(&local2) = $tmp387;
-// line 350
-frost$core$String* $tmp389 = *(&local2);
-frost$core$String* $tmp390 = frost$core$String$format$frost$core$String$R$frost$core$String($tmp389, &$s391);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp390));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp390));
-frost$core$String* $tmp392 = *(&local2);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp392));
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp374));
+frost$core$String* $tmp375 = *(&local2);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp375));
+*(&local2) = $tmp374;
+// line 344
+frost$core$String* $tmp376 = *(&local2);
+frost$core$String* $tmp377 = frost$core$String$format$frost$core$String$R$frost$core$String($tmp376, &$s378);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp377));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp377));
+frost$core$String* $tmp379 = *(&local2);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp379));
 *(&local2) = ((frost$core$String*) NULL);
-return $tmp390;
+return $tmp377;
 block7:;
-frost$core$Int64 $tmp393 = (frost$core$Int64) {3};
-frost$core$Bit $tmp394 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp362, $tmp393);
-bool $tmp395 = $tmp394.value;
-if ($tmp395) goto block8; else goto block9;
+frost$core$Int64 $tmp380 = (frost$core$Int64) {3};
+frost$core$Bit $tmp381 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp349, $tmp380);
+bool $tmp382 = $tmp381.value;
+if ($tmp382) goto block8; else goto block9;
 block8:;
-frost$core$Bit* $tmp396 = (frost$core$Bit*) (param0->$data + 0);
-frost$core$Bit $tmp397 = *$tmp396;
-*(&local3) = $tmp397;
-// line 353
-frost$core$Bit $tmp398 = *(&local3);
-frost$core$Bit$wrapper* $tmp399;
-$tmp399 = (frost$core$Bit$wrapper*) frostObjectAlloc(13, (frost$core$Class*) &frost$core$Bit$wrapperclass);
-$tmp399->value = $tmp398;
-$fn401 $tmp400 = ($fn401) ((frost$core$Object*) $tmp399)->$class->vtable[0];
-frost$core$String* $tmp402 = $tmp400(((frost$core$Object*) $tmp399));
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp402));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp402));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp399));
-return $tmp402;
+frost$core$Bit* $tmp383 = (frost$core$Bit*) (param0->$data + 0);
+frost$core$Bit $tmp384 = *$tmp383;
+*(&local3) = $tmp384;
+// line 347
+frost$core$Bit $tmp385 = *(&local3);
+frost$core$Bit$wrapper* $tmp386;
+$tmp386 = (frost$core$Bit$wrapper*) frostObjectAlloc(13, (frost$core$Class*) &frost$core$Bit$wrapperclass);
+$tmp386->value = $tmp385;
+$fn388 $tmp387 = ($fn388) ((frost$core$Object*) $tmp386)->$class->vtable[0];
+frost$core$String* $tmp389 = $tmp387(((frost$core$Object*) $tmp386));
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp389));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp389));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp386));
+return $tmp389;
 block9:;
-frost$core$Int64 $tmp403 = (frost$core$Int64) {4};
-frost$core$Bit $tmp404 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp362, $tmp403);
-bool $tmp405 = $tmp404.value;
-if ($tmp405) goto block10; else goto block11;
+frost$core$Int64 $tmp390 = (frost$core$Int64) {4};
+frost$core$Bit $tmp391 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp349, $tmp390);
+bool $tmp392 = $tmp391.value;
+if ($tmp392) goto block10; else goto block11;
 block10:;
-frost$collections$MapView** $tmp406 = (frost$collections$MapView**) (param0->$data + 0);
-frost$collections$MapView* $tmp407 = *$tmp406;
+frost$collections$MapView** $tmp393 = (frost$collections$MapView**) (param0->$data + 0);
+frost$collections$MapView* $tmp394 = *$tmp393;
 *(&local4) = ((frost$collections$MapView*) NULL);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp407));
-frost$collections$MapView* $tmp408 = *(&local4);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp408));
-*(&local4) = $tmp407;
-// line 356
-frost$core$MutableString* $tmp409 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
-frost$core$MutableString$init$frost$core$String($tmp409, &$s410);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp394));
+frost$collections$MapView* $tmp395 = *(&local4);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp395));
+*(&local4) = $tmp394;
+// line 350
+frost$core$MutableString* $tmp396 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
+frost$core$MutableString$init$frost$core$String($tmp396, &$s397);
 *(&local5) = ((frost$core$MutableString*) NULL);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp409));
-frost$core$MutableString* $tmp411 = *(&local5);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp411));
-*(&local5) = $tmp409;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp409));
-// line 357
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp396));
+frost$core$MutableString* $tmp398 = *(&local5);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp398));
+*(&local5) = $tmp396;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp396));
+// line 351
 *(&local6) = ((frost$core$String*) NULL);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) &$s412));
-frost$core$String* $tmp413 = *(&local6);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp413));
-*(&local6) = &$s414;
-// line 358
-frost$collections$MapView* $tmp415 = *(&local4);
-ITable* $tmp416 = $tmp415->$class->itable;
-while ($tmp416->$class != (frost$core$Class*) &frost$collections$MapView$class) {
-    $tmp416 = $tmp416->next;
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) &$s399));
+frost$core$String* $tmp400 = *(&local6);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp400));
+*(&local6) = &$s401;
+// line 352
+frost$collections$MapView* $tmp402 = *(&local4);
+ITable* $tmp403 = $tmp402->$class->itable;
+while ($tmp403->$class != (frost$core$Class*) &frost$collections$MapView$class) {
+    $tmp403 = $tmp403->next;
 }
-$fn418 $tmp417 = $tmp416->methods[3];
-frost$collections$Iterator* $tmp419 = $tmp417($tmp415);
+$fn405 $tmp404 = $tmp403->methods[3];
+frost$collections$Iterator* $tmp406 = $tmp404($tmp402);
 goto block12;
 block12:;
-ITable* $tmp420 = $tmp419->$class->itable;
-while ($tmp420->$class != (frost$core$Class*) &frost$collections$Iterator$class) {
-    $tmp420 = $tmp420->next;
+ITable* $tmp407 = $tmp406->$class->itable;
+while ($tmp407->$class != (frost$core$Class*) &frost$collections$Iterator$class) {
+    $tmp407 = $tmp407->next;
 }
-$fn422 $tmp421 = $tmp420->methods[0];
-frost$core$Bit $tmp423 = $tmp421($tmp419);
-bool $tmp424 = $tmp423.value;
-if ($tmp424) goto block14; else goto block13;
+$fn409 $tmp408 = $tmp407->methods[0];
+frost$core$Bit $tmp410 = $tmp408($tmp406);
+bool $tmp411 = $tmp410.value;
+if ($tmp411) goto block14; else goto block13;
 block13:;
 *(&local7) = ((frost$core$String*) NULL);
-ITable* $tmp425 = $tmp419->$class->itable;
-while ($tmp425->$class != (frost$core$Class*) &frost$collections$Iterator$class) {
-    $tmp425 = $tmp425->next;
+ITable* $tmp412 = $tmp406->$class->itable;
+while ($tmp412->$class != (frost$core$Class*) &frost$collections$Iterator$class) {
+    $tmp412 = $tmp412->next;
 }
-$fn427 $tmp426 = $tmp425->methods[1];
-frost$core$Object* $tmp428 = $tmp426($tmp419);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$String*) $tmp428)));
-frost$core$String* $tmp429 = *(&local7);
+$fn414 $tmp413 = $tmp412->methods[1];
+frost$core$Object* $tmp415 = $tmp413($tmp406);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$String*) $tmp415)));
+frost$core$String* $tmp416 = *(&local7);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp416));
+*(&local7) = ((frost$core$String*) $tmp415);
+// line 353
+frost$core$MutableString* $tmp417 = *(&local5);
+frost$core$String* $tmp418 = *(&local6);
+frost$core$String* $tmp419 = frost$core$String$get_asString$R$frost$core$String($tmp418);
+frost$core$String* $tmp420 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp419, &$s421);
+frost$core$String* $tmp422 = *(&local7);
+ITable* $tmp423 = ((frost$core$Formattable*) $tmp422)->$class->itable;
+while ($tmp423->$class != (frost$core$Class*) &frost$core$Formattable$class) {
+    $tmp423 = $tmp423->next;
+}
+$fn425 $tmp424 = $tmp423->methods[0];
+frost$core$String* $tmp426 = $tmp424(((frost$core$Formattable*) $tmp422), &$s427);
+frost$core$String* $tmp428 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp420, $tmp426);
+frost$core$String* $tmp429 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp428, &$s430);
+frost$collections$MapView* $tmp431 = *(&local4);
+frost$core$String* $tmp432 = *(&local7);
+ITable* $tmp433 = $tmp431->$class->itable;
+while ($tmp433->$class != (frost$core$Class*) &frost$collections$MapView$class) {
+    $tmp433 = $tmp433->next;
+}
+$fn435 $tmp434 = $tmp433->methods[1];
+frost$core$Object* $tmp436 = $tmp434($tmp431, ((frost$core$Object*) $tmp432));
+frost$core$String* $tmp437 = frost$core$String$$ADD$frost$core$Object$R$frost$core$String($tmp429, ((frost$core$Object*) ((frost$json$JSON*) $tmp436)));
+frost$core$String* $tmp438 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp437, &$s439);
+frost$core$MutableString$append$frost$core$String($tmp417, $tmp438);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp438));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp437));
+frost$core$Frost$unref$frost$core$Object$Q($tmp436);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp429));
-*(&local7) = ((frost$core$String*) $tmp428);
-// line 359
-frost$core$MutableString* $tmp430 = *(&local5);
-frost$core$String* $tmp431 = *(&local6);
-frost$core$String* $tmp432 = frost$core$String$get_asString$R$frost$core$String($tmp431);
-frost$core$String* $tmp433 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp432, &$s434);
-frost$core$String* $tmp435 = *(&local7);
-ITable* $tmp436 = ((frost$core$Formattable*) $tmp435)->$class->itable;
-while ($tmp436->$class != (frost$core$Class*) &frost$core$Formattable$class) {
-    $tmp436 = $tmp436->next;
-}
-$fn438 $tmp437 = $tmp436->methods[0];
-frost$core$String* $tmp439 = $tmp437(((frost$core$Formattable*) $tmp435), &$s440);
-frost$core$String* $tmp441 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp433, $tmp439);
-frost$core$String* $tmp442 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp441, &$s443);
-frost$collections$MapView* $tmp444 = *(&local4);
-frost$core$String* $tmp445 = *(&local7);
-ITable* $tmp446 = $tmp444->$class->itable;
-while ($tmp446->$class != (frost$core$Class*) &frost$collections$MapView$class) {
-    $tmp446 = $tmp446->next;
-}
-$fn448 $tmp447 = $tmp446->methods[1];
-frost$core$Object* $tmp449 = $tmp447($tmp444, ((frost$core$Object*) $tmp445));
-frost$core$String* $tmp450 = frost$core$String$$ADD$frost$core$Object$R$frost$core$String($tmp442, ((frost$core$Object*) ((frost$json$JSON*) $tmp449)));
-frost$core$String* $tmp451 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp450, &$s452);
-frost$core$MutableString$append$frost$core$String($tmp430, $tmp451);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp451));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp450));
-frost$core$Frost$unref$frost$core$Object$Q($tmp449);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp442));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp428));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp426));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp420));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp419));
+// line 354
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) &$s440));
+frost$core$String* $tmp441 = *(&local6);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp441));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp439));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp433));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp432));
-// line 360
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) &$s453));
-frost$core$String* $tmp454 = *(&local6);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp454));
-*(&local6) = &$s455;
-frost$core$Frost$unref$frost$core$Object$Q($tmp428);
-frost$core$String* $tmp456 = *(&local7);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp456));
+*(&local6) = &$s442;
+frost$core$Frost$unref$frost$core$Object$Q($tmp415);
+frost$core$String* $tmp443 = *(&local7);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp443));
 *(&local7) = ((frost$core$String*) NULL);
 goto block12;
 block14:;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp419));
-// line 362
-frost$core$MutableString* $tmp457 = *(&local5);
-frost$core$MutableString$append$frost$core$String($tmp457, &$s458);
-// line 363
-frost$core$MutableString* $tmp459 = *(&local5);
-frost$core$String* $tmp460 = frost$core$MutableString$finish$R$frost$core$String($tmp459);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp460));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp460));
-frost$core$String* $tmp461 = *(&local6);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp461));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp406));
+// line 356
+frost$core$MutableString* $tmp444 = *(&local5);
+frost$core$MutableString$append$frost$core$String($tmp444, &$s445);
+// line 357
+frost$core$MutableString* $tmp446 = *(&local5);
+frost$core$String* $tmp447 = frost$core$MutableString$finish$R$frost$core$String($tmp446);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp447));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp447));
+frost$core$String* $tmp448 = *(&local6);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp448));
 *(&local6) = ((frost$core$String*) NULL);
-frost$core$MutableString* $tmp462 = *(&local5);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp462));
+frost$core$MutableString* $tmp449 = *(&local5);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp449));
 *(&local5) = ((frost$core$MutableString*) NULL);
-frost$collections$MapView* $tmp463 = *(&local4);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp463));
+frost$collections$MapView* $tmp450 = *(&local4);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp450));
 *(&local4) = ((frost$collections$MapView*) NULL);
-return $tmp460;
+return $tmp447;
 block11:;
-frost$core$Int64 $tmp464 = (frost$core$Int64) {5};
-frost$core$Bit $tmp465 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp362, $tmp464);
-bool $tmp466 = $tmp465.value;
-if ($tmp466) goto block15; else goto block16;
+frost$core$Int64 $tmp451 = (frost$core$Int64) {5};
+frost$core$Bit $tmp452 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp349, $tmp451);
+bool $tmp453 = $tmp452.value;
+if ($tmp453) goto block15; else goto block16;
 block15:;
-frost$collections$ListView** $tmp467 = (frost$collections$ListView**) (param0->$data + 0);
-frost$collections$ListView* $tmp468 = *$tmp467;
+frost$collections$ListView** $tmp454 = (frost$collections$ListView**) (param0->$data + 0);
+frost$collections$ListView* $tmp455 = *$tmp454;
 *(&local8) = ((frost$collections$ListView*) NULL);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp468));
-frost$collections$ListView* $tmp469 = *(&local8);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp469));
-*(&local8) = $tmp468;
-// line 366
-frost$core$MutableString* $tmp470 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
-frost$core$MutableString$init$frost$core$String($tmp470, &$s471);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp455));
+frost$collections$ListView* $tmp456 = *(&local8);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp456));
+*(&local8) = $tmp455;
+// line 360
+frost$core$MutableString* $tmp457 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
+frost$core$MutableString$init$frost$core$String($tmp457, &$s458);
 *(&local9) = ((frost$core$MutableString*) NULL);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp470));
-frost$core$MutableString* $tmp472 = *(&local9);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp472));
-*(&local9) = $tmp470;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp470));
-// line 367
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp457));
+frost$core$MutableString* $tmp459 = *(&local9);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp459));
+*(&local9) = $tmp457;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp457));
+// line 361
 *(&local10) = ((frost$core$String*) NULL);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) &$s473));
-frost$core$String* $tmp474 = *(&local10);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp474));
-*(&local10) = &$s475;
-// line 368
-frost$collections$ListView* $tmp476 = *(&local8);
-ITable* $tmp477 = ((frost$collections$Iterable*) $tmp476)->$class->itable;
-while ($tmp477->$class != (frost$core$Class*) &frost$collections$Iterable$class) {
-    $tmp477 = $tmp477->next;
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) &$s460));
+frost$core$String* $tmp461 = *(&local10);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp461));
+*(&local10) = &$s462;
+// line 362
+frost$collections$ListView* $tmp463 = *(&local8);
+ITable* $tmp464 = ((frost$collections$Iterable*) $tmp463)->$class->itable;
+while ($tmp464->$class != (frost$core$Class*) &frost$collections$Iterable$class) {
+    $tmp464 = $tmp464->next;
 }
-$fn479 $tmp478 = $tmp477->methods[0];
-frost$collections$Iterator* $tmp480 = $tmp478(((frost$collections$Iterable*) $tmp476));
+$fn466 $tmp465 = $tmp464->methods[0];
+frost$collections$Iterator* $tmp467 = $tmp465(((frost$collections$Iterable*) $tmp463));
 goto block17;
 block17:;
-ITable* $tmp481 = $tmp480->$class->itable;
-while ($tmp481->$class != (frost$core$Class*) &frost$collections$Iterator$class) {
-    $tmp481 = $tmp481->next;
+ITable* $tmp468 = $tmp467->$class->itable;
+while ($tmp468->$class != (frost$core$Class*) &frost$collections$Iterator$class) {
+    $tmp468 = $tmp468->next;
 }
-$fn483 $tmp482 = $tmp481->methods[0];
-frost$core$Bit $tmp484 = $tmp482($tmp480);
-bool $tmp485 = $tmp484.value;
-if ($tmp485) goto block19; else goto block18;
+$fn470 $tmp469 = $tmp468->methods[0];
+frost$core$Bit $tmp471 = $tmp469($tmp467);
+bool $tmp472 = $tmp471.value;
+if ($tmp472) goto block19; else goto block18;
 block18:;
 *(&local11) = ((frost$json$JSON*) NULL);
-ITable* $tmp486 = $tmp480->$class->itable;
-while ($tmp486->$class != (frost$core$Class*) &frost$collections$Iterator$class) {
-    $tmp486 = $tmp486->next;
+ITable* $tmp473 = $tmp467->$class->itable;
+while ($tmp473->$class != (frost$core$Class*) &frost$collections$Iterator$class) {
+    $tmp473 = $tmp473->next;
 }
-$fn488 $tmp487 = $tmp486->methods[1];
-frost$core$Object* $tmp489 = $tmp487($tmp480);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$json$JSON*) $tmp489)));
+$fn475 $tmp474 = $tmp473->methods[1];
+frost$core$Object* $tmp476 = $tmp474($tmp467);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$json$JSON*) $tmp476)));
+frost$json$JSON* $tmp477 = *(&local11);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp477));
+*(&local11) = ((frost$json$JSON*) $tmp476);
+// line 363
+frost$core$MutableString* $tmp478 = *(&local9);
+frost$core$String* $tmp479 = *(&local10);
+frost$core$String* $tmp480 = frost$core$String$get_asString$R$frost$core$String($tmp479);
+frost$core$String* $tmp481 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp480, &$s482);
+frost$json$JSON* $tmp483 = *(&local11);
+frost$core$String* $tmp484 = frost$core$String$$ADD$frost$core$Object$R$frost$core$String($tmp481, ((frost$core$Object*) $tmp483));
+frost$core$String* $tmp485 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp484, &$s486);
+frost$core$MutableString$append$frost$core$String($tmp478, $tmp485);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp485));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp484));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp481));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp480));
+// line 364
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) &$s487));
+frost$core$String* $tmp488 = *(&local10);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp488));
+*(&local10) = &$s489;
+frost$core$Frost$unref$frost$core$Object$Q($tmp476);
 frost$json$JSON* $tmp490 = *(&local11);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp490));
-*(&local11) = ((frost$json$JSON*) $tmp489);
-// line 369
-frost$core$MutableString* $tmp491 = *(&local9);
-frost$core$String* $tmp492 = *(&local10);
-frost$core$String* $tmp493 = frost$core$String$get_asString$R$frost$core$String($tmp492);
-frost$core$String* $tmp494 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp493, &$s495);
-frost$json$JSON* $tmp496 = *(&local11);
-frost$core$String* $tmp497 = frost$core$String$$ADD$frost$core$Object$R$frost$core$String($tmp494, ((frost$core$Object*) $tmp496));
-frost$core$String* $tmp498 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp497, &$s499);
-frost$core$MutableString$append$frost$core$String($tmp491, $tmp498);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp498));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp497));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp494));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp493));
-// line 370
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) &$s500));
-frost$core$String* $tmp501 = *(&local10);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp501));
-*(&local10) = &$s502;
-frost$core$Frost$unref$frost$core$Object$Q($tmp489);
-frost$json$JSON* $tmp503 = *(&local11);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp503));
 *(&local11) = ((frost$json$JSON*) NULL);
 goto block17;
 block19:;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp480));
-// line 372
-frost$core$MutableString* $tmp504 = *(&local9);
-frost$core$MutableString$append$frost$core$String($tmp504, &$s505);
-// line 373
-frost$core$MutableString* $tmp506 = *(&local9);
-frost$core$String* $tmp507 = frost$core$MutableString$finish$R$frost$core$String($tmp506);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp507));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp507));
-frost$core$String* $tmp508 = *(&local10);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp508));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp467));
+// line 366
+frost$core$MutableString* $tmp491 = *(&local9);
+frost$core$MutableString$append$frost$core$String($tmp491, &$s492);
+// line 367
+frost$core$MutableString* $tmp493 = *(&local9);
+frost$core$String* $tmp494 = frost$core$MutableString$finish$R$frost$core$String($tmp493);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp494));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp494));
+frost$core$String* $tmp495 = *(&local10);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp495));
 *(&local10) = ((frost$core$String*) NULL);
-frost$core$MutableString* $tmp509 = *(&local9);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp509));
+frost$core$MutableString* $tmp496 = *(&local9);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp496));
 *(&local9) = ((frost$core$MutableString*) NULL);
-frost$collections$ListView* $tmp510 = *(&local8);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp510));
+frost$collections$ListView* $tmp497 = *(&local8);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp497));
 *(&local8) = ((frost$collections$ListView*) NULL);
-return $tmp507;
+return $tmp494;
 block16:;
-frost$core$Int64 $tmp511 = (frost$core$Int64) {6};
-frost$core$Bit $tmp512 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp362, $tmp511);
-bool $tmp513 = $tmp512.value;
-if ($tmp513) goto block20; else goto block21;
+frost$core$Int64 $tmp498 = (frost$core$Int64) {6};
+frost$core$Bit $tmp499 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp349, $tmp498);
+bool $tmp500 = $tmp499.value;
+if ($tmp500) goto block20; else goto block21;
 block20:;
-// line 376
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) &$s514));
-return &$s515;
+// line 370
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) &$s501));
+return &$s502;
 block21:;
-// line 379
-frost$core$Bit $tmp516 = frost$core$Bit$init$builtin_bit(false);
-bool $tmp517 = $tmp516.value;
-if ($tmp517) goto block22; else goto block23;
-block23:;
-frost$core$Int64 $tmp518 = (frost$core$Int64) {379};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s519, $tmp518);
+// line 373
+frost$core$Int64 $tmp503 = (frost$core$Int64) {373};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s504, $tmp503);
 abort(); // unreachable
-block22:;
-// line 380
-goto block24;
-block24:;
-goto block24;
-block25:;
-goto block1;
 block1:;
-goto block26;
-block26:;
+goto block22;
+block22:;
 
 }
 void frost$json$JSON$cleanup(frost$json$JSON* param0) {
@@ -1446,102 +1361,102 @@ frost$core$Bit local3;
 frost$collections$MapView* local4 = NULL;
 frost$collections$ListView* local5 = NULL;
 // line 6
-frost$core$Int64* $tmp520 = &param0->$rawValue;
-frost$core$Int64 $tmp521 = *$tmp520;
-frost$core$Int64 $tmp522 = (frost$core$Int64) {0};
-frost$core$Bit $tmp523 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp521, $tmp522);
-bool $tmp524 = $tmp523.value;
-if ($tmp524) goto block2; else goto block3;
+frost$core$Int64* $tmp505 = &param0->$rawValue;
+frost$core$Int64 $tmp506 = *$tmp505;
+frost$core$Int64 $tmp507 = (frost$core$Int64) {0};
+frost$core$Bit $tmp508 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp506, $tmp507);
+bool $tmp509 = $tmp508.value;
+if ($tmp509) goto block2; else goto block3;
 block2:;
-frost$core$Int64* $tmp525 = (frost$core$Int64*) (param0->$data + 0);
-frost$core$Int64 $tmp526 = *$tmp525;
-*(&local0) = $tmp526;
+frost$core$Int64* $tmp510 = (frost$core$Int64*) (param0->$data + 0);
+frost$core$Int64 $tmp511 = *$tmp510;
+*(&local0) = $tmp511;
 goto block1;
 block3:;
-frost$core$Int64 $tmp527 = (frost$core$Int64) {1};
-frost$core$Bit $tmp528 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp521, $tmp527);
-bool $tmp529 = $tmp528.value;
-if ($tmp529) goto block4; else goto block5;
+frost$core$Int64 $tmp512 = (frost$core$Int64) {1};
+frost$core$Bit $tmp513 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp506, $tmp512);
+bool $tmp514 = $tmp513.value;
+if ($tmp514) goto block4; else goto block5;
 block4:;
-frost$core$Real64* $tmp530 = (frost$core$Real64*) (param0->$data + 0);
-frost$core$Real64 $tmp531 = *$tmp530;
-*(&local1) = $tmp531;
+frost$core$Real64* $tmp515 = (frost$core$Real64*) (param0->$data + 0);
+frost$core$Real64 $tmp516 = *$tmp515;
+*(&local1) = $tmp516;
 goto block1;
 block5:;
-frost$core$Int64 $tmp532 = (frost$core$Int64) {2};
-frost$core$Bit $tmp533 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp521, $tmp532);
-bool $tmp534 = $tmp533.value;
-if ($tmp534) goto block6; else goto block7;
+frost$core$Int64 $tmp517 = (frost$core$Int64) {2};
+frost$core$Bit $tmp518 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp506, $tmp517);
+bool $tmp519 = $tmp518.value;
+if ($tmp519) goto block6; else goto block7;
 block6:;
-frost$core$String** $tmp535 = (frost$core$String**) (param0->$data + 0);
-frost$core$String* $tmp536 = *$tmp535;
+frost$core$String** $tmp520 = (frost$core$String**) (param0->$data + 0);
+frost$core$String* $tmp521 = *$tmp520;
 *(&local2) = ((frost$core$String*) NULL);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp536));
-frost$core$String* $tmp537 = *(&local2);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp537));
-*(&local2) = $tmp536;
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp521));
+frost$core$String* $tmp522 = *(&local2);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp522));
+*(&local2) = $tmp521;
 // line 1
-frost$core$String* $tmp538 = *(&local2);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp538));
-frost$core$String* $tmp539 = *(&local2);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp539));
+frost$core$String* $tmp523 = *(&local2);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp523));
+frost$core$String* $tmp524 = *(&local2);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp524));
 *(&local2) = ((frost$core$String*) NULL);
 goto block1;
 block7:;
-frost$core$Int64 $tmp540 = (frost$core$Int64) {3};
-frost$core$Bit $tmp541 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp521, $tmp540);
-bool $tmp542 = $tmp541.value;
-if ($tmp542) goto block8; else goto block9;
+frost$core$Int64 $tmp525 = (frost$core$Int64) {3};
+frost$core$Bit $tmp526 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp506, $tmp525);
+bool $tmp527 = $tmp526.value;
+if ($tmp527) goto block8; else goto block9;
 block8:;
-frost$core$Bit* $tmp543 = (frost$core$Bit*) (param0->$data + 0);
-frost$core$Bit $tmp544 = *$tmp543;
-*(&local3) = $tmp544;
+frost$core$Bit* $tmp528 = (frost$core$Bit*) (param0->$data + 0);
+frost$core$Bit $tmp529 = *$tmp528;
+*(&local3) = $tmp529;
 goto block1;
 block9:;
-frost$core$Int64 $tmp545 = (frost$core$Int64) {4};
-frost$core$Bit $tmp546 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp521, $tmp545);
-bool $tmp547 = $tmp546.value;
-if ($tmp547) goto block10; else goto block11;
+frost$core$Int64 $tmp530 = (frost$core$Int64) {4};
+frost$core$Bit $tmp531 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp506, $tmp530);
+bool $tmp532 = $tmp531.value;
+if ($tmp532) goto block10; else goto block11;
 block10:;
-frost$collections$MapView** $tmp548 = (frost$collections$MapView**) (param0->$data + 0);
-frost$collections$MapView* $tmp549 = *$tmp548;
+frost$collections$MapView** $tmp533 = (frost$collections$MapView**) (param0->$data + 0);
+frost$collections$MapView* $tmp534 = *$tmp533;
 *(&local4) = ((frost$collections$MapView*) NULL);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp549));
-frost$collections$MapView* $tmp550 = *(&local4);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp550));
-*(&local4) = $tmp549;
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp534));
+frost$collections$MapView* $tmp535 = *(&local4);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp535));
+*(&local4) = $tmp534;
 // line 1
-frost$collections$MapView* $tmp551 = *(&local4);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp551));
-frost$collections$MapView* $tmp552 = *(&local4);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp552));
+frost$collections$MapView* $tmp536 = *(&local4);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp536));
+frost$collections$MapView* $tmp537 = *(&local4);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp537));
 *(&local4) = ((frost$collections$MapView*) NULL);
 goto block1;
 block11:;
-frost$core$Int64 $tmp553 = (frost$core$Int64) {5};
-frost$core$Bit $tmp554 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp521, $tmp553);
-bool $tmp555 = $tmp554.value;
-if ($tmp555) goto block12; else goto block13;
+frost$core$Int64 $tmp538 = (frost$core$Int64) {5};
+frost$core$Bit $tmp539 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp506, $tmp538);
+bool $tmp540 = $tmp539.value;
+if ($tmp540) goto block12; else goto block13;
 block12:;
-frost$collections$ListView** $tmp556 = (frost$collections$ListView**) (param0->$data + 0);
-frost$collections$ListView* $tmp557 = *$tmp556;
+frost$collections$ListView** $tmp541 = (frost$collections$ListView**) (param0->$data + 0);
+frost$collections$ListView* $tmp542 = *$tmp541;
 *(&local5) = ((frost$collections$ListView*) NULL);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp557));
-frost$collections$ListView* $tmp558 = *(&local5);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp558));
-*(&local5) = $tmp557;
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp542));
+frost$collections$ListView* $tmp543 = *(&local5);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp543));
+*(&local5) = $tmp542;
 // line 1
-frost$collections$ListView* $tmp559 = *(&local5);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp559));
-frost$collections$ListView* $tmp560 = *(&local5);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp560));
+frost$collections$ListView* $tmp544 = *(&local5);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp544));
+frost$collections$ListView* $tmp545 = *(&local5);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp545));
 *(&local5) = ((frost$collections$ListView*) NULL);
 goto block1;
 block13:;
-frost$core$Int64 $tmp561 = (frost$core$Int64) {6};
-frost$core$Bit $tmp562 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp521, $tmp561);
-bool $tmp563 = $tmp562.value;
-if ($tmp563) goto block14; else goto block1;
+frost$core$Int64 $tmp546 = (frost$core$Int64) {6};
+frost$core$Bit $tmp547 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp506, $tmp546);
+bool $tmp548 = $tmp547.value;
+if ($tmp548) goto block14; else goto block1;
 block14:;
 goto block1;
 block1:;
@@ -1553,77 +1468,77 @@ return;
 void frost$json$JSON$init$frost$core$Int64$frost$core$Int64(frost$json$JSON* param0, frost$core$Int64 param1, frost$core$Int64 param2) {
 
 // line 6
-frost$core$Int64* $tmp564 = &param0->$rawValue;
-*$tmp564 = param1;
+frost$core$Int64* $tmp549 = &param0->$rawValue;
+*$tmp549 = param1;
 // line 6
-frost$core$Int64* $tmp565 = (frost$core$Int64*) (param0->$data + 0);
-*$tmp565 = param2;
+frost$core$Int64* $tmp550 = (frost$core$Int64*) (param0->$data + 0);
+*$tmp550 = param2;
 return;
 
 }
 void frost$json$JSON$init$frost$core$Int64$frost$core$Real64(frost$json$JSON* param0, frost$core$Int64 param1, frost$core$Real64 param2) {
 
 // line 6
-frost$core$Int64* $tmp566 = &param0->$rawValue;
-*$tmp566 = param1;
+frost$core$Int64* $tmp551 = &param0->$rawValue;
+*$tmp551 = param1;
 // line 6
-frost$core$Real64* $tmp567 = (frost$core$Real64*) (param0->$data + 0);
-*$tmp567 = param2;
+frost$core$Real64* $tmp552 = (frost$core$Real64*) (param0->$data + 0);
+*$tmp552 = param2;
 return;
 
 }
 void frost$json$JSON$init$frost$core$Int64$frost$core$String(frost$json$JSON* param0, frost$core$Int64 param1, frost$core$String* param2) {
 
 // line 6
-frost$core$Int64* $tmp568 = &param0->$rawValue;
-*$tmp568 = param1;
+frost$core$Int64* $tmp553 = &param0->$rawValue;
+*$tmp553 = param1;
 // line 6
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param2));
-frost$core$String** $tmp569 = (frost$core$String**) (param0->$data + 0);
-*$tmp569 = param2;
+frost$core$String** $tmp554 = (frost$core$String**) (param0->$data + 0);
+*$tmp554 = param2;
 return;
 
 }
 void frost$json$JSON$init$frost$core$Int64$frost$core$Bit(frost$json$JSON* param0, frost$core$Int64 param1, frost$core$Bit param2) {
 
 // line 6
-frost$core$Int64* $tmp570 = &param0->$rawValue;
-*$tmp570 = param1;
+frost$core$Int64* $tmp555 = &param0->$rawValue;
+*$tmp555 = param1;
 // line 6
-frost$core$Bit* $tmp571 = (frost$core$Bit*) (param0->$data + 0);
-*$tmp571 = param2;
+frost$core$Bit* $tmp556 = (frost$core$Bit*) (param0->$data + 0);
+*$tmp556 = param2;
 return;
 
 }
 void frost$json$JSON$init$frost$core$Int64$frost$collections$MapView$LTfrost$core$String$Cfrost$json$JSON$GT(frost$json$JSON* param0, frost$core$Int64 param1, frost$collections$MapView* param2) {
 
 // line 6
-frost$core$Int64* $tmp572 = &param0->$rawValue;
-*$tmp572 = param1;
+frost$core$Int64* $tmp557 = &param0->$rawValue;
+*$tmp557 = param1;
 // line 6
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param2));
-frost$collections$MapView** $tmp573 = (frost$collections$MapView**) (param0->$data + 0);
-*$tmp573 = param2;
+frost$collections$MapView** $tmp558 = (frost$collections$MapView**) (param0->$data + 0);
+*$tmp558 = param2;
 return;
 
 }
 void frost$json$JSON$init$frost$core$Int64$frost$collections$ListView$LTfrost$json$JSON$GT(frost$json$JSON* param0, frost$core$Int64 param1, frost$collections$ListView* param2) {
 
 // line 6
-frost$core$Int64* $tmp574 = &param0->$rawValue;
-*$tmp574 = param1;
+frost$core$Int64* $tmp559 = &param0->$rawValue;
+*$tmp559 = param1;
 // line 6
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param2));
-frost$collections$ListView** $tmp575 = (frost$collections$ListView**) (param0->$data + 0);
-*$tmp575 = param2;
+frost$collections$ListView** $tmp560 = (frost$collections$ListView**) (param0->$data + 0);
+*$tmp560 = param2;
 return;
 
 }
 void frost$json$JSON$init$frost$core$Int64(frost$json$JSON* param0, frost$core$Int64 param1) {
 
 // line 6
-frost$core$Int64* $tmp576 = &param0->$rawValue;
-*$tmp576 = param1;
+frost$core$Int64* $tmp561 = &param0->$rawValue;
+*$tmp561 = param1;
 return;
 
 }

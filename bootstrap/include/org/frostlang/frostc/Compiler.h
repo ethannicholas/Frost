@@ -32,11 +32,12 @@ typedef struct org$frostlang$frostc$Variable org$frostlang$frostc$Variable;
 typedef struct org$frostlang$frostc$IR$Value org$frostlang$frostc$IR$Value;
 typedef struct org$frostlang$frostc$MethodRef org$frostlang$frostc$MethodRef;
 #include "frost/core/Real64_types.h"
+#include "org/frostlang/frostc/IR/Block/ID_types.h"
 typedef struct org$frostlang$frostc$Compiler$EnclosingContext org$frostlang$frostc$Compiler$EnclosingContext;
 #include "org/frostlang/frostc/Variable/Kind_types.h"
 typedef struct frost$collections$Array frost$collections$Array;
 
-void org$frostlang$frostc$Compiler$init$frost$threads$MessageQueue$LTorg$frostlang$frostc$Compiler$ErrorMsg$GT$org$frostlang$frostc$CodeGenerator$org$frostlang$frostc$Compiler$Settings(org$frostlang$frostc$Compiler* self, frost$threads$MessageQueue* p_errorQueue, org$frostlang$frostc$CodeGenerator* p_codeGenerator, org$frostlang$frostc$Compiler$Settings* p_settings);
+void org$frostlang$frostc$Compiler$init$frost$threads$MessageQueue$LTorg$frostlang$frostc$Compiler$Message$GT$org$frostlang$frostc$CodeGenerator$org$frostlang$frostc$Compiler$Settings(org$frostlang$frostc$Compiler* self, frost$threads$MessageQueue* p_errorQueue, org$frostlang$frostc$CodeGenerator* p_codeGenerator, org$frostlang$frostc$Compiler$Settings* p_settings);
 void org$frostlang$frostc$Compiler$addAlias$frost$core$String(org$frostlang$frostc$Compiler* self, frost$core$String* p_name);
 frost$core$Bit org$frostlang$frostc$Compiler$isRefCounted$org$frostlang$frostc$Type$R$frost$core$Bit(org$frostlang$frostc$Compiler* self, org$frostlang$frostc$Type* p_type);
 org$frostlang$frostc$ClassDecl* org$frostlang$frostc$Compiler$tryResolveClass$frost$core$String$R$org$frostlang$frostc$ClassDecl$Q(org$frostlang$frostc$Compiler* self, frost$core$String* p_name);
@@ -157,6 +158,7 @@ org$frostlang$frostc$IR$Value* org$frostlang$frostc$Compiler$genericMethodRef$or
 org$frostlang$frostc$IR$Value* org$frostlang$frostc$Compiler$compileMethodExpression$org$frostlang$frostc$ASTNode$org$frostlang$frostc$Compiler$TypeContext$R$org$frostlang$frostc$IR$Value$Q(org$frostlang$frostc$Compiler* self, org$frostlang$frostc$ASTNode* p_expr, org$frostlang$frostc$Compiler$TypeContext* p_type);
 org$frostlang$frostc$IR$Value* org$frostlang$frostc$Compiler$compileExpression$org$frostlang$frostc$ASTNode$org$frostlang$frostc$Compiler$TypeContext$R$org$frostlang$frostc$IR$Value$Q(org$frostlang$frostc$Compiler* self, org$frostlang$frostc$ASTNode* p_expr, org$frostlang$frostc$Compiler$TypeContext* p_type);
 org$frostlang$frostc$IR$Value* org$frostlang$frostc$Compiler$compileExpression$org$frostlang$frostc$ASTNode$R$org$frostlang$frostc$IR$Value$Q(org$frostlang$frostc$Compiler* self, org$frostlang$frostc$ASTNode* p_expr);
+void org$frostlang$frostc$Compiler$compileConditionalBranch$org$frostlang$frostc$ASTNode$org$frostlang$frostc$IR$Block$ID$org$frostlang$frostc$IR$Block$ID(org$frostlang$frostc$Compiler* self, org$frostlang$frostc$ASTNode* p_test, org$frostlang$frostc$IR$Block$ID p_ifTrue, org$frostlang$frostc$IR$Block$ID p_ifFalse);
 org$frostlang$frostc$Compiler$EnclosingContext* org$frostlang$frostc$Compiler$findAndLeaveToLoopScope$org$frostlang$frostc$Position$frost$core$String$Q$R$org$frostlang$frostc$Compiler$EnclosingContext$Q(org$frostlang$frostc$Compiler* self, org$frostlang$frostc$Position p_position, frost$core$String* p_label);
 org$frostlang$frostc$Pair* org$frostlang$frostc$Compiler$getTryScope$R$org$frostlang$frostc$Pair$LTorg$frostlang$frostc$IR$Block$ID$Q$Corg$frostlang$frostc$Variable$Q$GT$Q(org$frostlang$frostc$Compiler* self);
 void org$frostlang$frostc$Compiler$leaveTryScope(org$frostlang$frostc$Compiler* self);
@@ -188,6 +190,8 @@ frost$collections$ListView* org$frostlang$frostc$Compiler$scan$frost$io$File$R$f
 void org$frostlang$frostc$Compiler$compile$frost$io$File(org$frostlang$frostc$Compiler* self, frost$io$File* p_file);
 void org$frostlang$frostc$Compiler$error$org$frostlang$frostc$Position$frost$core$String(org$frostlang$frostc$Compiler* self, org$frostlang$frostc$Position p_position, frost$core$String* p_msg);
 void org$frostlang$frostc$Compiler$error$frost$io$File$org$frostlang$frostc$Position$frost$core$String(org$frostlang$frostc$Compiler* self, frost$io$File* p_file, org$frostlang$frostc$Position p_pos, frost$core$String* p_msg);
+void org$frostlang$frostc$Compiler$warn$org$frostlang$frostc$Position$frost$core$String(org$frostlang$frostc$Compiler* self, org$frostlang$frostc$Position p_position, frost$core$String* p_msg);
+void org$frostlang$frostc$Compiler$warn$frost$io$File$org$frostlang$frostc$Position$frost$core$String(org$frostlang$frostc$Compiler* self, frost$io$File* p_file, org$frostlang$frostc$Position p_pos, frost$core$String* p_msg);
 void org$frostlang$frostc$Compiler$finish(org$frostlang$frostc$Compiler* self);
 void org$frostlang$frostc$Compiler$cleanup(org$frostlang$frostc$Compiler* self);
 

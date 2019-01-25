@@ -300,7 +300,8 @@ class Main {
             Console.printErrorLine("--root requires 'html' output format")
             System.exit(1)
         }
-        def errorCount:Int
+        var errorCount := 0
+        var warningCount := 0
         {
             def cg:CodeGenerator
             match format {
@@ -335,7 +336,7 @@ class Main {
             }
             def settings := Compiler.Settings(frostHome, imports, optimizationLevel, safetyLevel,
                     debug)
-            def errorQueue := MessageQueue<Compiler.ErrorMsg>()
+            def errorQueue := MessageQueue<Compiler.Message>()
             def compiler := Compiler(errorQueue, cg, settings)
             for s in sources {
                 for cl in compiler.scan(s) {
@@ -346,12 +347,28 @@ class Main {
                 compiler.compile(s)
             }
             compiler.finish()
-            errorCount := errorQueue.pendingMessages()
-            for i in 0 .. errorCount {
+            while errorQueue.hasMessage() {
                 def error := errorQueue.getMessage()
                 -- FIXME stderr
-                Console.printLine("\{error.file.name}:\{error.position}: error: \{error.message}")
+                match error {
+                    when Compiler.Message.ERROR(file, position, message) {
+                        errorCount += 1
+                        Console.printLine("\{file.name}:\{position}: error: \{message}")
+                    }
+                    when Compiler.Message.WARNING(file, position, message) {
+                        warningCount += 1
+                        Console.printLine("\{file.name}:\{position}: warning: \{message}")
+                    }
+                }
             }
+        }
+        if warningCount = 1 {
+            -- FIXME stderr
+            Console.printLine("1 warning")
+        }
+        else if warningCount > 0 {
+            -- FIXME stderr
+            Console.printLine("\{warningCount} warnings")
         }
         if errorCount = 0 {
             match format {
@@ -376,11 +393,6 @@ class Main {
         }
     }
     
-    @class
-    function containsError(s:String):Bit {
-        return s.contains("error")
-    }
-
     @class
     method main(args:ListView<String>) {
         if args.count > 1 & args[1] = "-repeat" {

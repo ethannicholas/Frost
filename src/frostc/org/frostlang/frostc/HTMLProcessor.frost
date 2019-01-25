@@ -79,7 +79,7 @@ class HTMLProcessor {
 
     method process(input:File, output:File, root:String) {
         try {
-            def errors := MessageQueue<Compiler.ErrorMsg>()
+            def errors := MessageQueue<Compiler.Message>()
             def parser := Parser(errors)
             parser.syntaxHighlighter := SyntaxHighlighter()
             parser.start(input, input.readFully())

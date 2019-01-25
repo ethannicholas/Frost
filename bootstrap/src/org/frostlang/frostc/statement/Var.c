@@ -22,7 +22,7 @@ typedef frost$core$Bit (*$fn8)(frost$collections$Iterator*);
 typedef frost$core$Object* (*$fn13)(frost$collections$Iterator*);
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x73\x74\x61\x74\x65\x6d\x65\x6e\x74\x2e\x56\x61\x72", 34, -8546630798215143864, NULL };
-static frost$core$String $s38 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x56\x61\x72\x2e\x66\x72\x6f\x73\x74", 9, 2035463259934498602, NULL };
+static frost$core$String $s36 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x56\x61\x72\x2e\x66\x72\x6f\x73\x74", 9, 2035463259934498602, NULL };
 
 void org$frostlang$frostc$statement$Var$compile$org$frostlang$frostc$Compiler$org$frostlang$frostc$Position$org$frostlang$frostc$Variable$Kind$org$frostlang$frostc$FixedArray$LTorg$frostlang$frostc$ASTNode$GT(org$frostlang$frostc$Compiler* param0, org$frostlang$frostc$Position param1, org$frostlang$frostc$Variable$Kind param2, org$frostlang$frostc$FixedArray* param3) {
 
@@ -99,19 +99,13 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp34));
 goto block4;
 block6:;
 // line 19
-frost$core$Bit $tmp35 = frost$core$Bit$init$builtin_bit(false);
-bool $tmp36 = $tmp35.value;
-if ($tmp36) goto block7; else goto block8;
-block8:;
-frost$core$Int64 $tmp37 = (frost$core$Int64) {19};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s38, $tmp37);
+frost$core$Int64 $tmp35 = (frost$core$Int64) {19};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s36, $tmp35);
 abort(); // unreachable
-block7:;
-goto block4;
 block4:;
 frost$core$Frost$unref$frost$core$Object$Q($tmp14);
-org$frostlang$frostc$ASTNode* $tmp39 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp39));
+org$frostlang$frostc$ASTNode* $tmp37 = *(&local0);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp37));
 *(&local0) = ((org$frostlang$frostc$ASTNode*) NULL);
 goto block1;
 block3:;

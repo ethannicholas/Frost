@@ -44,4 +44,13 @@ class And {
         def load := ir.add(IR.Statement.LOAD(position, result))
         return IR.Value.REF(load, Type.Bit())
     }
+
+    @class
+    method compileConditionalBranch(compiler:Compiler, position:Position, left:ASTNode,
+            right:ASTNode, ifTrue:IR.Block.ID, ifFalse:IR.Block.ID) {
+        def leftTrue := compiler.ir.newBlock("and left true")
+        compiler.compileConditionalBranch(left, leftTrue, ifFalse)
+        compiler.ir.setCurrentBlock(leftTrue)
+        compiler.compileConditionalBranch(right, ifTrue, ifFalse)
+    }
 }

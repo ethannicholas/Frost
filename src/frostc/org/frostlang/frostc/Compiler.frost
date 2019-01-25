@@ -62,18 +62,9 @@ class Compiler {
         }
     }
 
-    class ErrorMsg : Immutable {
-        def file:File
-
-        def position:Position
-
-        def message:String
-
-        init(file:File, position:Position, message:String) {
-            self.file := file
-            self.position := position
-            self.message := message
-        }
+    choice Message {
+        ERROR(File, Position, String)
+        WARNING(File, Position, String)
     }
 
     ================================================================================================
@@ -413,7 +404,7 @@ class Compiler {
     def codeGenerator:CodeGenerator
 
     @private
-    var errorQueue:MessageQueue<ErrorMsg>
+    var errorQueue:MessageQueue<Message>
 
     @private
     var enclosingContexts := Stack<EnclosingContext>()
@@ -481,7 +472,7 @@ class Compiler {
     @private
     def lambdaTypes := IdentityMap<ASTNode, HashSet<Type>>()
 
-    init(errorQueue:MessageQueue<ErrorMsg>, codeGenerator:CodeGenerator, settings:Settings) {
+    init(errorQueue:MessageQueue<Message>, codeGenerator:CodeGenerator, settings:Settings) {
         self.settings := settings
         self.scanner := Scanner(self)
         self.root := SymbolTable(self)
@@ -4744,6 +4735,41 @@ class Compiler {
         return compileExpression(expr, TypeContext.UNSPECIFIED)
     }
 
+    ================================================================================================
+    Logically equivalent to evaluating test and then compiling `branch test, ifTrue, ifFalse`, but
+    handles AND and OR expressions in fashion which is both simpler and more amenable to analysis.
+    ================================================================================================
+    method compileConditionalBranch(test:ASTNode, ifTrue:IR.Block.ID, ifFalse:IR.Block.ID) {
+        match test {
+            when ASTNode.BINARY(position, left, op, right) {
+                if coercionCost(left, Type.Bit()) !== null {
+                    match op {
+                        when Binary.Operator.AND {
+                            And.compileConditionalBranch(self, position, left, right, ifTrue,
+                                    ifFalse)
+                            return
+                        }
+                        when Binary.Operator.OR {
+                            Or.compileConditionalBranch(self, position, left, right, ifTrue,
+                                    ifFalse)
+                            return
+                        }
+                    }
+                }
+            }
+        }
+        def testBit:IR.Value
+        {
+            def unrefs := AutoUnrefs(self)
+            def compiledTest := compileExpression(test, TypeContext.TYPE(Type.Bit(), false))
+            if compiledTest == null {
+                return
+            }
+            testBit := extractBuiltinBit(test.position(), compiledTest)
+        }
+        ir.add(IR.Statement.CONDITIONAL_BRANCH(test.position(), testBit, ifTrue, ifFalse))
+    }
+
     method findAndLeaveToLoopScope(position:Position, label:String?):EnclosingContext? {
         for c in enclosingContexts {
             match c {
@@ -5617,7 +5643,17 @@ class Compiler {
     method error(file:File, pos:Position, msg:String) {
         if reportErrors {
             errorCount += 1
-            errorQueue.post(ErrorMsg(file, pos, msg))
+            errorQueue.post(Message.ERROR(file, pos, msg))
+        }
+    }
+
+    method warn(position:Position, msg:String) {
+        warn(currentClass[0].source, position, msg)
+    }
+
+    method warn(file:File, pos:Position, msg:String) {
+        if reportErrors {
+            errorQueue.post(Message.WARNING(file, pos, msg))
         }
     }
 

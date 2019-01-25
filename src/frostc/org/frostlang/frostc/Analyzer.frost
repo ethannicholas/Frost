@@ -1,27 +1,109 @@
 package org.frostlang.frostc
 
+uses org.frostlang.frostc.expression.Binary
+
+====================================================================================================
+Performs dataflow analysis on Frost methods to detect errors such as reassigned `def`s, missing
+returns, unreachable code, and unsafe nullable usage.
+====================================================================================================
 class Analyzer {
-    def compiler:Compiler
+    class DataFlowValue : Equatable<DataFlowValue> {
+        def type:Type
 
-    def m:MethodDecl
-
-    def ir:IR
-
-    def predecessors := HashMap<IR.Block.ID, HashSet<IR.Block.ID>>()
-
-    class State {
-        def locals:Array<Type>
-
-        def statements:HashMap<IR.Statement.ID, Type>
+        -- if this value represents a Bit or builtin_bit, then its true/false state may imply that
+        -- other values are / are not nullable. We track that here. An entry in this list means that
+        -- the value is known to be non-null when this value matches its Bit. So (LOCAL(0), true)
+        -- means that we know LOCAL(0) is non-null when this value is true.
+        def nonNullImplications:ListView<Pair<IR.Value, Bit>>?
 
         init() {
-            locals := Array<Type>()
-            statements := HashMap<IR.Statement.ID, Type>()
+            self.type := Type.Invalid()
+        }
+
+        init(type:Type) {
+            self.type := type
+        }
+
+        init(type:Type, implications:ListView<Pair<IR.Value, Bit>>?) {
+            self.type := type
+            self.nonNullImplications := implications
+        }
+
+        @override
+        function =(other:DataFlowValue):Bit {
+            return type = other.type
+        }
+
+        method union(compiler:Compiler, other:DataFlowValue):DataFlowValue {
+            def type := type.union(compiler, other.type)
+            if nonNullImplications !== null {
+                if other.nonNullImplications !== null {
+                    -- FIXME deal with duplicates
+                    def merged := Array<Pair<IR.Value, Bit>>(nonNullImplications)
+                    merged.addAll(other.nonNullImplications)
+                    return DataFlowValue(type, merged)
+                }
+                return DataFlowValue(type, nonNullImplications)
+            }
+            else if other.nonNullImplications !== null {
+                return DataFlowValue(type, other.nonNullImplications)
+            }
+            return DataFlowValue(type)
+        }
+
+        -- reverses the sense of a boolean value
+        property invert:DataFlowValue
+        function get_invert():DataFlowValue {
+            return self
+        }
+
+        @override
+        function get_asString():String {
+            if nonNullImplications !== null {
+                return "DataFlowValue(\{type}, \{nonNullImplications})"
+            }
+            return "DataFlowValue(\{type})"
+        }
+    }
+
+    ================================================================================================
+    Represents an exit from a block. Blocks which end in conditional branches have two exits (exit
+    0 for when the condition is true, and exit 1 for when it is false), blocks which end in
+    unconditional branches have only a single exit, and other blocks do not have exits.
+    ================================================================================================
+    class BlockExit : Value, Key<BlockExit> {
+        def id:IR.Block.ID
+        def exit:Int
+
+        init(id:IR.Block.ID, exit:Int) {
+            self.id := id
+            self.exit := exit
+        }
+
+        @override
+        function =(other:BlockExit):Bit {
+            return id = other.id & exit = other.exit
+        }
+
+        @override
+        function get_hash():Int {
+            return id.value ~~ exit
+        }
+    }
+
+    class State {
+        def locals:Array<DataFlowValue>
+
+        def statements:HashMap<IR.Statement.ID, DataFlowValue>
+
+        init() {
+            locals := Array<DataFlowValue>()
+            statements := HashMap<IR.Statement.ID, DataFlowValue>()
         }
 
         init(src:State) {
-            locals := Array<Type>(src.locals)
-            statements := HashMap<IR.Statement.ID, Type>(src.statements)
+            locals := Array<DataFlowValue>(src.locals)
+            statements := HashMap<IR.Statement.ID, DataFlowValue>(src.statements)
         }
 
         method add(compiler:Compiler, s:State):Bit {
@@ -37,11 +119,11 @@ class Analyzer {
             for key in s.statements.keys {
                 var mine := statements[key]
                 if mine == null {
-                    mine := Type.Invalid()
+                    mine := DataFlowValue()
                 }
                 var other := s.statements[key]
                 if other == null {
-                    other := Type.Invalid()
+                    other := DataFlowValue()
                 }
                 def union := mine.union(compiler, other)
                 if union != mine {
@@ -58,9 +140,19 @@ class Analyzer {
         }
     }
 
+    def compiler:Compiler
+
+    def m:MethodDecl
+
+    def ir:IR
+
+    def predecessors := HashMap<IR.Block.ID, HashSet<BlockExit>>()
+
     def entryStates := HashMap<IR.Block.ID, State>()
 
     def worklist := HashSet<IR.Block.ID>()
+
+    def statements := HashMap<IR.Statement.ID, IR.Statement>()
 
     init(compiler:Compiler, m:MethodDecl, ir:IR) {
         self.compiler := compiler
@@ -68,46 +160,46 @@ class Analyzer {
         self.ir := ir
     }
 
-    function getType(v:IR.Value, s:State):Type {
+    function getValue(v:IR.Value, s:State):DataFlowValue {
         match v {
-            when IR.Value.LOCAL(slot, _) {
-                if slot > s.locals.count {
-                    Console.printLine("ERROR: getting \{slot} from \{ir}")
-                }
-                return s.locals[slot]
+            when IR.Value.BIT(_) {
+                return DataFlowValue(Type.BuiltinBit())
             }
             when IR.Value.INT(_, type) {
-                return type
+                return DataFlowValue(type)
+            }
+            when IR.Value.LOCAL(slot, _) {
+                return s.locals[slot]
             }
             when IR.Value.NULL(type) {
-                return type
+                return DataFlowValue(type)
             }
             when IR.Value.PARAMETER(_, type) {
-                return type
+                return DataFlowValue(type)
             }
             when IR.Value.REAL(_, type) {
-                return type
+                return DataFlowValue(type)
             }
             when IR.Value.REF(statement, _) {
                 def result := s.statements[statement]
                 if result !== null {
                     return result
                 }
-                return Type.Invalid()
+                return DataFlowValue()
             }
             when IR.Value.STRING {
-                return Type.StringType()
+                return DataFlowValue(Type.StringType())
             }
             otherwise {
-                unreachable
+                unreachable, "unsupported value '\{v}'"
             }
         }
     }
 
-    method propagate(src:IR.Block.ID, target:IR.Block.ID) {
+    method propagate(src:BlockExit, target:IR.Block.ID) {
         var preds := predecessors[target]
         if preds == null {
-            preds := HashSet<IR.Block.ID>()
+            preds := HashSet<BlockExit>()
             predecessors[target] := preds
         }
         preds.add(src)
@@ -136,90 +228,206 @@ class Analyzer {
         unreachable
     }
 
-    method computeExitState(id:IR.Block.ID, reportErrors:Bit):State {
-        def result := State(entryStates[id])
-        def block := getBlock(id)
+    ================================================================================================
+    When this is called, we have computed a unified exit state upon reaching the end of the block.
+    But if the block ends in a conditional branch, the state that leaves the block may be different
+    depending on which exit we take. For instance, given the block:
+        $0: load LOCAL(0:frost.core.Object?)
+        $1: binary REF($0:frost.core.Object?), !==, NULL(frost.core.Object?), builtin_bit
+        $2: branch REF($1:builtin_bit), block2, block3
+
+    The type of LOCAL(0) will need to be seen differently depending on whether the branch takes us
+    to block2 (exit 0) or block3 (exit 1). This method applies that change, resulting in a
+    non-nullable LOCAL(0) entering block2 and a nullable LOCAL(1) entering block3.
+    ================================================================================================
+    method updateStateForExitIndex(b:IR.Block, exit:Int, state:State) {
+        match b.statements[b.statements.count - 1] {
+            when IR.Statement.CONDITIONAL_BRANCH(_, flag, _, _) {
+-*                for i in 0 .. b.statements.count {
+                    def s := b.statements[i]
+                    def value := state.statements[b.ids[i]]
+                    if value !== null {
+                        Console.printLine(s + " -> " + value)
+                    }
+                    else {
+                        Console.printLine(s + " -> null")
+                    }
+                }*-
+                def value := getValue(flag, state)
+                if value.nonNullImplications !== null {
+                    for impl in value.nonNullImplications {
+                        if impl.second = (exit = 0) {
+                            match impl.first {
+                                when IR.Value.REF(id, _) {
+                                    def old := state.statements[id]
+                                    assert old !== null
+                                    state.statements[id] := DataFlowValue(old.type.nonnullable())
+                                }
+                                when IR.Value.LOCAL(slot, _) {
+                                    def old := state.locals[slot]
+                                    assert old !== null
+                                    state.locals[slot] := DataFlowValue(old.type.nonnullable())
+                                }
+                                -- FIXME need to handle parameters as well
+                            }
+                        }
+                    }
+                }
+            }
+            otherwise {
+                return
+            }
+        }
+    }
+
+    method binaryValue(left:IR.Value, op:Binary.Operator, right:IR.Value, state:State,
+            type:Type):DataFlowValue {
+        match op {
+            when Binary.Operator.NIDENTITY {
+                match right {
+                    when IR.Value.NULL {
+                        assert type = Type.BuiltinBit()
+                        def nonNullImplications := [Pair<IR.Value, Bit>(left, true)]
+                        match left {
+                            when IR.Value.REF(id, _) {
+                                def ref := statements[id]
+                                match ref {
+                                    when IR.Statement.LOAD(_, value) {
+                                        nonNullImplications.add(Pair<IR.Value, Bit>(value, true))
+                                    }
+                                }
+                            }
+                        }
+                        return DataFlowValue(type, nonNullImplications)
+                    }
+                }
+            }
+            when Binary.Operator.IDENTITY {
+                match right {
+                    when IR.Value.NULL {
+                        assert type = Type.BuiltinBit()
+                        def nonNullImplications := [Pair<IR.Value, Bit>(left, false)]
+                        match left {
+                            when IR.Value.REF(id, _) {
+                                def ref := statements[id]
+                                match ref {
+                                    when IR.Statement.LOAD(_, value) {
+                                        nonNullImplications.add(Pair<IR.Value, Bit>(value, false))
+                                    }
+                                }
+                            }
+                        }
+                        return DataFlowValue(type, nonNullImplications)
+                    }
+                }
+            }
+            when Binary.Operator.AND {
+                def leftValue := getValue(left, state)
+                def rightValue := getValue(right, state)
+                return leftValue.union(compiler, rightValue)
+            }
+        }
+
+        return DataFlowValue(type)
+    }
+
+    method computeExitState(target:BlockExit, reportErrors:Bit):State {
+        def result := State(entryStates[target.id])
+        def block := getBlock(target.id)
         for i in 0 .. block.statements.count - 1 {
             def id := block.ids[i]
             match block.statements[i] {
-                when IR.Statement.BINARY(_, _, _, _, type) {
-                    result.statements[id] := type
+                when IR.Statement.BINARY(_, left, op, right, type) {
+                    result.statements[id] := binaryValue(left, op, right, result, type)
                 }
                 when IR.Statement.CAST(position, value, type, explicit) {
                     if explicit {
-                        result.statements[id] := type
+                        result.statements[id] := DataFlowValue(type)
                     }
                     else {
-                        result.statements[id] := getType(value, result)
+                        result.statements[id] := getValue(value, result)
                     }
                     if !explicit & reportErrors {
-                        if !type.isNullable & getType(value, result).isNullable {
---                            Console.printLine("cast failure at \{position}")
+                        if !type.isNullable & getValue(value, result).type.isNullable {
+--                            compiler.warn(position, "value may be null")
                         }
                     }
                 }
                 when IR.Statement.CONSTRUCT(_, cl) {
-                    result.statements[id] := cl.type
+                    result.statements[id] := DataFlowValue(cl.type)
                 }
                 when IR.Statement.DYNAMIC_CALL(_, m, _) {
                     def type := m.type()
                     if type.isPointer {
-                        result.statements[id] := type.subtypes[1].returnType
+                        result.statements[id] := DataFlowValue(type.subtypes[1].returnType)
                     }
                     else {
-                        result.statements[id] := type.returnType
+                        result.statements[id] := DataFlowValue(type.returnType)
                     }
                 }
-                when IR.Statement.EXTRACT_FIELD(_, _, f) {
-                    result.statements[id] := f.type
+                when IR.Statement.EXTRACT_FIELD(_, target, f) {
+                    if f.owner.type = Type.Bit() {
+                        result.statements[id] := DataFlowValue(f.type,
+                                getValue(target, result).nonNullImplications)
+                    }
+                    else {
+                        result.statements[id] := DataFlowValue(f.type)
+                    }
                 }
                 when IR.Statement.GET_FIELD_POINTER(_, _, f) {
-                    result.statements[id] := f.type
+                    result.statements[id] := DataFlowValue(f.type)
                 }
                 when IR.Statement.LOAD(position, v) {
-                    def type := getType(v, result)
-                    result.statements[id] := type
-                    if reportErrors & type = Type.Invalid() {
+                    def value := getValue(v, result)
+                    result.statements[id] := value
+                    if reportErrors & value.type = Type.Invalid() {
                         --Console.printLine("uninitialized value at \{position}")
                     }
                 }
                 when IR.Statement.NEGATE(_, v) {
-                    result.statements[id] := v.type()
+                    result.statements[id] := getValue(v, result)
                 }
                 when IR.Statement.NOT(_, v) {
-                    result.statements[id] := v.type()
+                    result.statements[id] := getValue(v, result).invert
                 }
                 when IR.Statement.POINTER_ALLOC(_, _, t) {
-                    result.statements[id] := Type.pointerTo(t)
+                    result.statements[id] := DataFlowValue(Type.pointerTo(t))
                 }
                 when IR.Statement.POINTER_GET(_, p) {
-                    def type := getType(p, result)
-                    assert type.isPointer
-                    result.statements[id] := type.subtypes[1]
+                    def value := getValue(p, result)
+                    assert value.type.isPointer
+                    result.statements[id] := DataFlowValue(value.type.subtypes[1])
                 }
                 when IR.Statement.POINTER_GET_INDEX(_, p, _) {
-                    def type := getType(p, result)
-                    assert type.isPointer, type.asString
-                    result.statements[id] := type.subtypes[1]
+                    def value := getValue(p, result)
+                    assert value.type.isPointer
+                    result.statements[id] := DataFlowValue(value.type.subtypes[1])
                 }
                 when IR.Statement.POINTER_OFFSET(_, p, _) {
-                    result.statements[id] := getType(p, result)
+                    result.statements[id] := getValue(p, result)
                 }
                 when IR.Statement.POINTER_REALLOC(_, p, _, _) {
-                    result.statements[id] := getType(p, result)
+                    result.statements[id] := getValue(p, result)
                 }
-                when IR.Statement.STATIC_CALL(_, m, _) {
-                    result.statements[id] := m.returnType
+                when IR.Statement.STATIC_CALL(_, m, args) {
+                    if m.returnType = Type.Bit() {
+                        result.statements[id] := DataFlowValue(m.returnType,
+                                getValue(args[0], result).nonNullImplications)
+                    }
+                    else {
+                        result.statements[id] := DataFlowValue(m.returnType)
+                    }
                 }
                 when IR.Statement.STORE(_, v, target) {
                     match target {
                         when IR.Value.LOCAL(slot, _) {
-                            result.locals[slot] := getType(v, result)
+                            result.locals[slot] := getValue(v, result)
                         }
                     }
                 }
             }
         }
+        updateStateForExitIndex(block, target.exit, result)
         return result
     }
 
@@ -227,11 +435,11 @@ class Analyzer {
         def block := getBlock(id)
         match block.statements[block.statements.count - 1] {
             when IR.Statement.BRANCH(_, id) {
-                propagate(block.id, id)
+                propagate(BlockExit(block.id, 0), id)
             }
             when IR.Statement.CONDITIONAL_BRANCH(_, _, id1, id2) {
-                propagate(block.id, id1)
-                propagate(block.id, id2)
+                propagate(BlockExit(block.id, 0), id1)
+                propagate(BlockExit(block.id, 1), id2)
             }
             when IR.Statement.END {
             }
@@ -246,13 +454,37 @@ class Analyzer {
         }
     }
 
+    method dump() {
+        Console.printLine(m.declaration)
+        for i in 0 .. ir.locals.count {
+            Console.printLine("local\{i}: \{ir.locals[i]}")
+        }
+        for b in ir.blocks {
+            Console.print("\n\{b.id}:")
+            if entryStates[b.id] !== null {
+                Console.print(" " + entryStates[b.id])
+            }
+            Console.printLine()
+            for i in 0 .. b.statements.count {
+                Console.print(b.ids[i])
+                Console.print(": ")
+                Console.printLine(b.statements[i])
+            }
+        }
+    }
+
     method analyze() {
-        def invalid := Type.Invalid()
+        def invalid := DataFlowValue(Type.Invalid())
         def startState := State()
         for i in 0 .. ir.locals.count {
             startState.locals.add(invalid)
         }
         entryStates[ir.blocks[0].id] := startState
+        for b in ir.blocks {
+            for i in 0 .. b.statements.count {
+                statements[b.ids[i]] := b.statements[i]
+            }
+        }
         worklist.add(ir.blocks[0].id)
         while worklist.count > 0 {
             def next := worklist.iterator.next()
@@ -268,7 +500,7 @@ class Analyzer {
                         }
                     }
                     otherwise {
-                        computeExitState(b.id, true)
+                        computeExitState(BlockExit(b.id, 0), true)
                     }
                 }
             }

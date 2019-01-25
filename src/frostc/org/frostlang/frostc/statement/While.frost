@@ -25,17 +25,7 @@ class While {
             def scope := AutoScope(compiler)
             ir.add(IR.Statement.BRANCH(position, testBlock))
             ir.setCurrentBlock(testBlock)
-            def testBit:IR.Value
-            {
-                def unrefs := AutoUnrefs(compiler)
-                def compiledTest := compiler.compileExpression(test,
-                        TypeContext.TYPE(Type.Bit(), false))
-                if compiledTest == null {
-                    return
-                }
-                testBit := compiler.extractBuiltinBit(position, compiledTest)
-            }
-            ir.add(IR.Statement.CONDITIONAL_BRANCH(position, testBit, bodyBlock, endBlock))
+            compiler.compileConditionalBranch(test, bodyBlock, endBlock)
             ir.setCurrentBlock(bodyBlock)
             for s in statements {
                 compiler.compileStatement(s)

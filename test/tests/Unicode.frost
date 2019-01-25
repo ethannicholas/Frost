@@ -6,7 +6,7 @@ method main() {
     Console.printLine(s[s.start])
     Console.printLine(s[s.next(s.start)])
     Console.printLine(s[..s.indexOf("不亦")])
-    Console.printLine(s[s.offset(s.indexOf("不亦"), 2)...])
+    Console.printLine(s[s.offset(s.indexOf("不亦")->String.Index, 2)...])
 
     s := "🆗🆒👍😀"
     Console.printLine(s)

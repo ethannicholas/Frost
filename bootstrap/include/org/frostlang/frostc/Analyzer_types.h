@@ -18,8 +18,9 @@ typedef struct org$frostlang$frostc$Analyzer {
     frost$collections$HashMap* predecessors;
     frost$collections$HashMap* entryStates;
     frost$collections$HashSet* worklist;
+    frost$collections$HashMap* statements;
 } org$frostlang$frostc$Analyzer;
 #include "frost/core/Class.h"
-typedef struct { frost$core$Class* cl; int32_t refCount; frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[8]; } org$frostlang$frostc$Analyzer$class_type;
+typedef struct { frost$core$Class* cl; int32_t refCount; frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[11]; } org$frostlang$frostc$Analyzer$class_type;
 extern org$frostlang$frostc$Analyzer$class_type org$frostlang$frostc$Analyzer$class;
 

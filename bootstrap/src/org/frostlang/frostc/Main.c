@@ -26,7 +26,8 @@
 #include "frost/threads/MessageQueue.h"
 #include "org/frostlang/frostc/Compiler.h"
 #include "org/frostlang/frostc/ClassDecl.h"
-#include "org/frostlang/frostc/Compiler/ErrorMsg.h"
+#include "org/frostlang/frostc/Compiler/Message.h"
+#include "org/frostlang/frostc/Position.h"
 #include "frost/core/Equatable.h"
 #include "frost/collections/CollectionView.h"
 #include "org/frostlang/frostc/HTMLProcessor.h"
@@ -34,10 +35,7 @@
 #include "org/frostlang/frostc/HCodeGenerator.h"
 #include "org/frostlang/frostc/CCodeGenerator.h"
 #include "org/frostlang/frostc/StubCodeGenerator.h"
-#include "frost/core/Range.LTfrost/core/Int64.GT.h"
-#include "frost/core/UInt64.h"
 #include "frost/core/Immutable.h"
-#include "org/frostlang/frostc/Position.h"
 
 
 static frost$core$String $s1;
@@ -56,33 +54,33 @@ typedef frost$core$Error* (*$fn211)(frost$io$OutputStream*, frost$core$String*);
 typedef frost$core$Error* (*$fn215)(frost$io$OutputStream*);
 typedef frost$core$Error* (*$fn218)(frost$io$OutputStream*, frost$core$String*);
 typedef frost$core$Error* (*$fn222)(frost$io$OutputStream*, frost$core$String*);
-typedef frost$core$Bit (*$fn243)(org$frostlang$frostc$Main$Arguments*);
-typedef frost$core$String* (*$fn249)(org$frostlang$frostc$Main$Arguments*);
-typedef frost$core$Maybe* (*$fn272)(frost$io$InputStream*, frost$io$OutputStream*);
-typedef frost$core$String* (*$fn300)(org$frostlang$frostc$Main$Arguments*, frost$core$String*);
-typedef frost$core$String* (*$fn315)(org$frostlang$frostc$Main$Arguments*, frost$core$String*);
-typedef frost$core$String* (*$fn344)(org$frostlang$frostc$Main$Arguments*, frost$core$String*);
-typedef frost$core$String* (*$fn378)(org$frostlang$frostc$Main$Arguments*, frost$core$String*);
-typedef frost$core$String* (*$fn432)(org$frostlang$frostc$Main$Arguments*, frost$core$String*);
-typedef frost$core$String* (*$fn440)(org$frostlang$frostc$Main$Arguments*, frost$core$String*);
-typedef frost$core$Bit (*$fn472)(frost$core$Equatable*, frost$core$Equatable*);
-typedef frost$core$Int64 (*$fn495)(frost$collections$CollectionView*);
-typedef frost$core$Int64 (*$fn513)(frost$collections$CollectionView*);
-typedef frost$core$Bit (*$fn567)(frost$core$Equatable*, frost$core$Equatable*);
-typedef frost$core$Bit (*$fn582)(frost$core$Equatable*, frost$core$Equatable*);
-typedef void (*$fn597)(org$frostlang$frostc$HTMLProcessor*, frost$io$File*, frost$io$File*, frost$core$String*);
-typedef frost$collections$Iterator* (*$fn691)(frost$collections$Iterable*);
-typedef frost$core$Bit (*$fn695)(frost$collections$Iterator*);
-typedef frost$core$Object* (*$fn700)(frost$collections$Iterator*);
-typedef frost$collections$Iterator* (*$fn708)(frost$collections$Iterable*);
-typedef frost$core$Bit (*$fn712)(frost$collections$Iterator*);
-typedef frost$core$Object* (*$fn717)(frost$collections$Iterator*);
-typedef frost$collections$Iterator* (*$fn727)(frost$collections$Iterable*);
-typedef frost$core$Bit (*$fn731)(frost$collections$Iterator*);
-typedef frost$core$Object* (*$fn736)(frost$collections$Iterator*);
-typedef frost$core$Int64 (*$fn857)(frost$collections$CollectionView*);
-typedef frost$core$Object* (*$fn868)(frost$collections$ListView*, frost$core$Int64);
-typedef frost$collections$ListView* (*$fn880)(frost$collections$ListView*, frost$core$Range$LTfrost$core$Int64$Q$GT);
+typedef frost$core$Bit (*$fn241)(org$frostlang$frostc$Main$Arguments*);
+typedef frost$core$String* (*$fn247)(org$frostlang$frostc$Main$Arguments*);
+typedef frost$core$Maybe* (*$fn270)(frost$io$InputStream*, frost$io$OutputStream*);
+typedef frost$core$String* (*$fn298)(org$frostlang$frostc$Main$Arguments*, frost$core$String*);
+typedef frost$core$String* (*$fn313)(org$frostlang$frostc$Main$Arguments*, frost$core$String*);
+typedef frost$core$String* (*$fn341)(org$frostlang$frostc$Main$Arguments*, frost$core$String*);
+typedef frost$core$String* (*$fn374)(org$frostlang$frostc$Main$Arguments*, frost$core$String*);
+typedef frost$core$String* (*$fn428)(org$frostlang$frostc$Main$Arguments*, frost$core$String*);
+typedef frost$core$String* (*$fn436)(org$frostlang$frostc$Main$Arguments*, frost$core$String*);
+typedef frost$core$Bit (*$fn468)(frost$core$Equatable*, frost$core$Equatable*);
+typedef frost$core$Int64 (*$fn490)(frost$collections$CollectionView*);
+typedef frost$core$Int64 (*$fn508)(frost$collections$CollectionView*);
+typedef frost$core$Bit (*$fn562)(frost$core$Equatable*, frost$core$Equatable*);
+typedef frost$core$Bit (*$fn577)(frost$core$Equatable*, frost$core$Equatable*);
+typedef void (*$fn592)(org$frostlang$frostc$HTMLProcessor*, frost$io$File*, frost$io$File*, frost$core$String*);
+typedef frost$collections$Iterator* (*$fn686)(frost$collections$Iterable*);
+typedef frost$core$Bit (*$fn690)(frost$collections$Iterator*);
+typedef frost$core$Object* (*$fn695)(frost$collections$Iterator*);
+typedef frost$collections$Iterator* (*$fn703)(frost$collections$Iterable*);
+typedef frost$core$Bit (*$fn707)(frost$collections$Iterator*);
+typedef frost$core$Object* (*$fn712)(frost$collections$Iterator*);
+typedef frost$collections$Iterator* (*$fn722)(frost$collections$Iterable*);
+typedef frost$core$Bit (*$fn726)(frost$collections$Iterator*);
+typedef frost$core$Object* (*$fn731)(frost$collections$Iterator*);
+typedef frost$core$Int64 (*$fn876)(frost$collections$CollectionView*);
+typedef frost$core$Object* (*$fn887)(frost$collections$ListView*, frost$core$Int64);
+typedef frost$collections$ListView* (*$fn898)(frost$collections$ListView*, frost$core$Range$LTfrost$core$Int64$Q$GT);
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x4d\x61\x69\x6e", 25, -2845835638820544359, NULL };
 static frost$core$String $s15 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2d\x6d\x36\x34", 4, 151541361, NULL };
@@ -108,66 +106,70 @@ static frost$core$String $s206 = { (frost$core$Class*) &frost$core$String$class,
 static frost$core$String $s213 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x53\x6f\x75\x72\x63\x65\x20\x66\x69\x6c\x65\x6e\x61\x6d\x65\x73\x20\x6d\x75\x73\x74\x20\x65\x6e\x64\x20\x69\x6e\x20\x27\x2e\x66\x72\x6f\x73\x74\x27\x2e", 38, 893295268838200741, NULL };
 static frost$core$String $s220 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x4f\x70\x74\x69\x6f\x6e\x73\x3a", 8, 19418556808290907, NULL };
 static frost$core$String $s224 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x20\x20\x2d\x6f\x20\x3c\x70\x61\x74\x68\x3e\x20\x20\x20\x20\x6f\x75\x74\x70\x75\x74\x20\x70\x61\x74\x68", 26, 7995046615041556794, NULL };
-static frost$core$String $s228 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x4d\x61\x69\x6e\x2e\x66\x72\x6f\x73\x74", 10, -7176460585918517682, NULL };
-static frost$core$String $s254 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2d\x2d\x66\x75\x7a\x7a", 6, 1539263687854, NULL };
-static frost$core$String $s257 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2f\x74\x6d\x70\x2f\x66\x75\x7a\x7a\x2e\x66\x72\x6f\x73\x74", 15, -4231800708310477877, NULL };
-static frost$core$String $s290 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2d\x6f", 2, 14857, NULL };
-static frost$core$String $s295 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x27\x2d\x6f\x27\x20\x6d\x61\x79\x20\x6f\x6e\x6c\x79\x20\x62\x65\x20\x73\x70\x65\x63\x69\x66\x69\x65\x64\x20\x6f\x6e\x63\x65", 31, -1954588545421109744, NULL };
-static frost$core$String $s302 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x61\x20\x66\x69\x6c\x65\x6e\x61\x6d\x65", 10, -4453682361287582429, NULL };
-static frost$core$String $s311 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2d\x4f", 2, 14825, NULL };
-static frost$core$String $s317 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x61\x20\x6e\x75\x6d\x62\x65\x72\x20\x66\x72\x6f\x6d\x20\x30\x2d\x33", 17, 4067655969961502935, NULL };
-static frost$core$String $s336 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x65\x78\x70\x65\x63\x74\x65\x64\x20\x61\x20\x6e\x75\x6d\x62\x65\x72\x20\x66\x72\x6f\x6d\x20\x30\x2d\x33\x20\x61\x66\x74\x65\x72\x20\x27\x2d\x4f\x27", 37, 7661197128079450357, NULL };
-static frost$core$String $s340 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2d\x53", 2, 14829, NULL };
-static frost$core$String $s346 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x61\x20\x6e\x75\x6d\x62\x65\x72\x20\x66\x72\x6f\x6d\x20\x30\x2d\x33", 17, 4067655969961502935, NULL };
-static frost$core$String $s365 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x65\x78\x70\x65\x63\x74\x65\x64\x20\x61\x20\x6e\x75\x6d\x62\x65\x72\x20\x66\x72\x6f\x6d\x20\x30\x2d\x33\x20\x61\x66\x74\x65\x72\x20\x27\x2d\x53\x27", 37, 7661197128079450761, NULL };
-static frost$core$String $s369 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2d\x66", 2, 14848, NULL };
-static frost$core$String $s374 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x27\x2d\x66\x27\x20\x6d\x61\x79\x20\x6f\x6e\x6c\x79\x20\x62\x65\x20\x73\x70\x65\x63\x69\x66\x69\x65\x64\x20\x6f\x6e\x63\x65", 31, -7344290732081110281, NULL };
-static frost$core$String $s380 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x61\x6e\x20\x6f\x75\x74\x70\x75\x74\x20\x66\x6f\x72\x6d\x61\x74", 16, -291047026475600626, NULL };
-static frost$core$String $s384 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x65\x78\x65", 3, 2072823, NULL };
-static frost$core$String $s389 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x6f", 1, 212, NULL };
-static frost$core$String $s394 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x6c\x6c", 2, 21217, NULL };
-static frost$core$String $s399 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x68", 1, 205, NULL };
-static frost$core$String $s404 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x63", 1, 200, NULL };
-static frost$core$String $s409 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x68\x74\x6d\x6c", 4, 212406138, NULL };
-static frost$core$String $s414 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x73\x74\x75\x62", 4, 223740247, NULL };
-static frost$core$String $s420 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x75\x6e\x73\x75\x70\x70\x6f\x72\x74\x65\x64\x20\x6f\x75\x74\x70\x75\x74\x20\x66\x6f\x72\x6d\x61\x74\x20\x27", 27, 7296986389419177127, NULL };
-static frost$core$String $s422 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x27", 1, 140, NULL };
-static frost$core$String $s426 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2d\x69", 2, 14851, NULL };
-static frost$core$String $s434 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x61\x20\x70\x61\x74\x68\x20\x74\x6f\x20\x61\x6e\x20\x69\x6d\x70\x6f\x72\x74\x20\x64\x69\x72\x65\x63\x74\x6f\x72\x79", 29, 3398752106607544789, NULL };
-static frost$core$String $s436 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2d\x2d\x72\x6f\x6f\x74", 6, 1539275989143, NULL };
-static frost$core$String $s442 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x61\x20\x70\x61\x74\x68", 6, 2084446227059, NULL };
-static frost$core$String $s446 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2e\x66\x72\x6f\x73\x74", 6, 1555717532905, NULL };
-static frost$core$String $s456 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x75\x6e\x72\x65\x63\x6f\x67\x6e\x69\x7a\x65\x64\x20\x61\x72\x67\x75\x6d\x65\x6e\x74\x20\x27", 23, -8362580201345122776, NULL };
-static frost$core$String $s458 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x27", 1, 140, NULL };
-static frost$core$String $s480 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x73\x74\x75\x62\x73", 5, 22597765062, NULL };
-static frost$core$String $s488 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2f\x75\x73\x72\x2f\x62\x69\x6e\x2f\x63\x6c\x61\x6e\x67", 14, 5664749286632577346, NULL };
-static frost$core$String $s500 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x6e\x6f\x20\x69\x6e\x70\x75\x74\x20\x66\x69\x6c\x65\x73\x20\x73\x70\x65\x63\x69\x66\x69\x65\x64", 24, -7743793040575712359, NULL };
-static frost$core$String $s523 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "", 0, 1, NULL };
-static frost$core$String $s525 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "", 0, 1, NULL };
-static frost$core$String $s529 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2e\x6f", 2, 14958, NULL };
-static frost$core$String $s531 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2e\x6f", 2, 14958, NULL };
-static frost$core$String $s535 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2e\x6c\x6c", 3, 1510563, NULL };
-static frost$core$String $s537 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2e\x6c\x6c", 3, 1510563, NULL };
-static frost$core$String $s541 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2e\x68\x74\x6d\x6c", 5, 15405224684, NULL };
-static frost$core$String $s543 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2e\x68\x74\x6d\x6c", 5, 15405224684, NULL };
-static frost$core$String $s547 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2e\x73\x74\x75\x62", 5, 15416558793, NULL };
-static frost$core$String $s549 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2e\x73\x74\x75\x62", 5, 15416558793, NULL };
-static frost$core$String $s550 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x6f\x75\x74\x70\x75\x74\x20\x66\x6f\x72\x6d\x61\x74\x20\x72\x65\x71\x75\x69\x72\x65\x73\x20\x61\x20\x27\x2d\x6f\x27\x20\x6f\x75\x74\x70\x75\x74\x20\x74\x6f\x20\x62\x65\x20\x73\x70\x65\x63\x69\x66\x69\x65\x64", 52, -3885254762738542379, NULL };
-static frost$core$String $s570 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x66\x6f\x72\x6d\x61\x74\x20\x27\x68\x74\x6d\x6c\x27\x20\x72\x65\x71\x75\x69\x72\x65\x73\x20\x65\x78\x61\x63\x74\x6c\x79\x20\x6f\x6e\x65\x20\x69\x6e\x70\x75\x74\x20\x66\x69\x6c\x65", 45, -841921153732773227, NULL };
-static frost$core$String $s572 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x6d\x75\x6c\x74\x69\x70\x6c\x65\x20\x69\x6e\x70\x75\x74\x20\x66\x69\x6c\x65\x73\x20\x73\x70\x65\x63\x69\x66\x69\x65\x64\x2c\x20\x6d\x75\x73\x74\x20\x75\x73\x65\x20\x27\x2d\x6f\x27\x20\x74\x6f\x20\x73\x70\x65\x63\x69\x66\x79\x20\x6f\x75\x74\x70\x75\x74\x20\x66\x69\x6c\x65", 68, 1045441728646282247, NULL };
-static frost$core$String $s588 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2e", 1, 147, NULL };
-static frost$core$String $s607 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2d\x2d\x72\x6f\x6f\x74\x20\x72\x65\x71\x75\x69\x72\x65\x73\x20\x27\x68\x74\x6d\x6c\x27\x20\x6f\x75\x74\x70\x75\x74\x20\x66\x6f\x72\x6d\x61\x74", 36, 4739207170017691060, NULL };
-static frost$core$String $s624 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2e\x6c\x6c", 3, 1510563, NULL };
-static frost$core$String $s671 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x4d\x61\x69\x6e\x2e\x66\x72\x6f\x73\x74", 10, -7176460585918517682, NULL };
-static frost$core$String $s774 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x3a", 1, 159, NULL };
-static frost$core$String $s781 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x3a\x20\x65\x72\x72\x6f\x72\x3a\x20", 9, 1725281418740475535, NULL };
-static frost$core$String $s787 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "", 0, 1, NULL };
-static frost$core$String $s824 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2e\x6c\x6c", 3, 1510563, NULL };
-static frost$core$String $s833 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2e\x6c\x6c", 3, 1510563, NULL };
-static frost$core$String $s841 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x31\x20\x65\x72\x72\x6f\x72", 7, 159574974535236, NULL };
-static frost$core$String $s845 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x20\x65\x72\x72\x6f\x72\x73", 7, 142255681664502, NULL };
-static frost$core$String $s854 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x65\x72\x72\x6f\x72", 5, 21138829555, NULL };
-static frost$core$String $s871 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2d\x72\x65\x70\x65\x61\x74", 7, 156190719979287, NULL };
+static frost$core$String $s226 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x4d\x61\x69\x6e\x2e\x66\x72\x6f\x73\x74", 10, -7176460585918517682, NULL };
+static frost$core$String $s252 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2d\x2d\x66\x75\x7a\x7a", 6, 1539263687854, NULL };
+static frost$core$String $s255 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2f\x74\x6d\x70\x2f\x66\x75\x7a\x7a\x2e\x66\x72\x6f\x73\x74", 15, -4231800708310477877, NULL };
+static frost$core$String $s288 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2d\x6f", 2, 14857, NULL };
+static frost$core$String $s293 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x27\x2d\x6f\x27\x20\x6d\x61\x79\x20\x6f\x6e\x6c\x79\x20\x62\x65\x20\x73\x70\x65\x63\x69\x66\x69\x65\x64\x20\x6f\x6e\x63\x65", 31, -1954588545421109744, NULL };
+static frost$core$String $s300 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x61\x20\x66\x69\x6c\x65\x6e\x61\x6d\x65", 10, -4453682361287582429, NULL };
+static frost$core$String $s309 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2d\x4f", 2, 14825, NULL };
+static frost$core$String $s315 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x61\x20\x6e\x75\x6d\x62\x65\x72\x20\x66\x72\x6f\x6d\x20\x30\x2d\x33", 17, 4067655969961502935, NULL };
+static frost$core$String $s333 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x65\x78\x70\x65\x63\x74\x65\x64\x20\x61\x20\x6e\x75\x6d\x62\x65\x72\x20\x66\x72\x6f\x6d\x20\x30\x2d\x33\x20\x61\x66\x74\x65\x72\x20\x27\x2d\x4f\x27", 37, 7661197128079450357, NULL };
+static frost$core$String $s337 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2d\x53", 2, 14829, NULL };
+static frost$core$String $s343 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x61\x20\x6e\x75\x6d\x62\x65\x72\x20\x66\x72\x6f\x6d\x20\x30\x2d\x33", 17, 4067655969961502935, NULL };
+static frost$core$String $s361 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x65\x78\x70\x65\x63\x74\x65\x64\x20\x61\x20\x6e\x75\x6d\x62\x65\x72\x20\x66\x72\x6f\x6d\x20\x30\x2d\x33\x20\x61\x66\x74\x65\x72\x20\x27\x2d\x53\x27", 37, 7661197128079450761, NULL };
+static frost$core$String $s365 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2d\x66", 2, 14848, NULL };
+static frost$core$String $s370 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x27\x2d\x66\x27\x20\x6d\x61\x79\x20\x6f\x6e\x6c\x79\x20\x62\x65\x20\x73\x70\x65\x63\x69\x66\x69\x65\x64\x20\x6f\x6e\x63\x65", 31, -7344290732081110281, NULL };
+static frost$core$String $s376 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x61\x6e\x20\x6f\x75\x74\x70\x75\x74\x20\x66\x6f\x72\x6d\x61\x74", 16, -291047026475600626, NULL };
+static frost$core$String $s380 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x65\x78\x65", 3, 2072823, NULL };
+static frost$core$String $s385 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x6f", 1, 212, NULL };
+static frost$core$String $s390 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x6c\x6c", 2, 21217, NULL };
+static frost$core$String $s395 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x68", 1, 205, NULL };
+static frost$core$String $s400 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x63", 1, 200, NULL };
+static frost$core$String $s405 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x68\x74\x6d\x6c", 4, 212406138, NULL };
+static frost$core$String $s410 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x73\x74\x75\x62", 4, 223740247, NULL };
+static frost$core$String $s416 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x75\x6e\x73\x75\x70\x70\x6f\x72\x74\x65\x64\x20\x6f\x75\x74\x70\x75\x74\x20\x66\x6f\x72\x6d\x61\x74\x20\x27", 27, 7296986389419177127, NULL };
+static frost$core$String $s418 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x27", 1, 140, NULL };
+static frost$core$String $s422 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2d\x69", 2, 14851, NULL };
+static frost$core$String $s430 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x61\x20\x70\x61\x74\x68\x20\x74\x6f\x20\x61\x6e\x20\x69\x6d\x70\x6f\x72\x74\x20\x64\x69\x72\x65\x63\x74\x6f\x72\x79", 29, 3398752106607544789, NULL };
+static frost$core$String $s432 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2d\x2d\x72\x6f\x6f\x74", 6, 1539275989143, NULL };
+static frost$core$String $s438 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x61\x20\x70\x61\x74\x68", 6, 2084446227059, NULL };
+static frost$core$String $s442 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2e\x66\x72\x6f\x73\x74", 6, 1555717532905, NULL };
+static frost$core$String $s452 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x75\x6e\x72\x65\x63\x6f\x67\x6e\x69\x7a\x65\x64\x20\x61\x72\x67\x75\x6d\x65\x6e\x74\x20\x27", 23, -8362580201345122776, NULL };
+static frost$core$String $s454 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x27", 1, 140, NULL };
+static frost$core$String $s475 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x73\x74\x75\x62\x73", 5, 22597765062, NULL };
+static frost$core$String $s483 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2f\x75\x73\x72\x2f\x62\x69\x6e\x2f\x63\x6c\x61\x6e\x67", 14, 5664749286632577346, NULL };
+static frost$core$String $s495 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x6e\x6f\x20\x69\x6e\x70\x75\x74\x20\x66\x69\x6c\x65\x73\x20\x73\x70\x65\x63\x69\x66\x69\x65\x64", 24, -7743793040575712359, NULL };
+static frost$core$String $s518 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "", 0, 1, NULL };
+static frost$core$String $s520 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "", 0, 1, NULL };
+static frost$core$String $s524 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2e\x6f", 2, 14958, NULL };
+static frost$core$String $s526 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2e\x6f", 2, 14958, NULL };
+static frost$core$String $s530 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2e\x6c\x6c", 3, 1510563, NULL };
+static frost$core$String $s532 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2e\x6c\x6c", 3, 1510563, NULL };
+static frost$core$String $s536 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2e\x68\x74\x6d\x6c", 5, 15405224684, NULL };
+static frost$core$String $s538 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2e\x68\x74\x6d\x6c", 5, 15405224684, NULL };
+static frost$core$String $s542 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2e\x73\x74\x75\x62", 5, 15416558793, NULL };
+static frost$core$String $s544 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2e\x73\x74\x75\x62", 5, 15416558793, NULL };
+static frost$core$String $s545 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x6f\x75\x74\x70\x75\x74\x20\x66\x6f\x72\x6d\x61\x74\x20\x72\x65\x71\x75\x69\x72\x65\x73\x20\x61\x20\x27\x2d\x6f\x27\x20\x6f\x75\x74\x70\x75\x74\x20\x74\x6f\x20\x62\x65\x20\x73\x70\x65\x63\x69\x66\x69\x65\x64", 52, -3885254762738542379, NULL };
+static frost$core$String $s565 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x66\x6f\x72\x6d\x61\x74\x20\x27\x68\x74\x6d\x6c\x27\x20\x72\x65\x71\x75\x69\x72\x65\x73\x20\x65\x78\x61\x63\x74\x6c\x79\x20\x6f\x6e\x65\x20\x69\x6e\x70\x75\x74\x20\x66\x69\x6c\x65", 45, -841921153732773227, NULL };
+static frost$core$String $s567 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x6d\x75\x6c\x74\x69\x70\x6c\x65\x20\x69\x6e\x70\x75\x74\x20\x66\x69\x6c\x65\x73\x20\x73\x70\x65\x63\x69\x66\x69\x65\x64\x2c\x20\x6d\x75\x73\x74\x20\x75\x73\x65\x20\x27\x2d\x6f\x27\x20\x74\x6f\x20\x73\x70\x65\x63\x69\x66\x79\x20\x6f\x75\x74\x70\x75\x74\x20\x66\x69\x6c\x65", 68, 1045441728646282247, NULL };
+static frost$core$String $s583 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2e", 1, 147, NULL };
+static frost$core$String $s602 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2d\x2d\x72\x6f\x6f\x74\x20\x72\x65\x71\x75\x69\x72\x65\x73\x20\x27\x68\x74\x6d\x6c\x27\x20\x6f\x75\x74\x70\x75\x74\x20\x66\x6f\x72\x6d\x61\x74", 36, 4739207170017691060, NULL };
+static frost$core$String $s621 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2e\x6c\x6c", 3, 1510563, NULL };
+static frost$core$String $s666 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x4d\x61\x69\x6e\x2e\x66\x72\x6f\x73\x74", 10, -7176460585918517682, NULL };
+static frost$core$String $s768 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x3a", 1, 159, NULL };
+static frost$core$String $s773 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x3a\x20\x65\x72\x72\x6f\x72\x3a\x20", 9, 1725281418740475535, NULL };
+static frost$core$String $s777 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "", 0, 1, NULL };
+static frost$core$String $s801 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x3a", 1, 159, NULL };
+static frost$core$String $s806 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x3a\x20\x77\x61\x72\x6e\x69\x6e\x67\x3a\x20", 11, 1594997818200825075, NULL };
+static frost$core$String $s810 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "", 0, 1, NULL };
+static frost$core$String $s822 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x31\x20\x77\x61\x72\x6e\x69\x6e\x67", 9, 1627843243923833840, NULL };
+static frost$core$String $s833 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x20\x77\x61\x72\x6e\x69\x6e\x67\x73", 9, 1453062006337443706, NULL };
+static frost$core$String $s845 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2e\x6c\x6c", 3, 1510563, NULL };
+static frost$core$String $s854 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2e\x6c\x6c", 3, 1510563, NULL };
+static frost$core$String $s862 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x31\x20\x65\x72\x72\x6f\x72", 7, 159574974535236, NULL };
+static frost$core$String $s866 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x20\x65\x72\x72\x6f\x72\x73", 7, 142255681664502, NULL };
+static frost$core$String $s890 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2d\x72\x65\x70\x65\x61\x74", 7, 156190719979287, NULL };
 
 void org$frostlang$frostc$Main$init(org$frostlang$frostc$Main* param0) {
 
@@ -737,18 +739,12 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp223));
 goto block2;
 block1:;
 // line 156
-frost$core$Bit $tmp225 = frost$core$Bit$init$builtin_bit(false);
-bool $tmp226 = $tmp225.value;
-if ($tmp226) goto block15; else goto block16;
-block16:;
-frost$core$Int64 $tmp227 = (frost$core$Int64) {156};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s228, $tmp227);
+frost$core$Int64 $tmp225 = (frost$core$Int64) {156};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s226, $tmp225);
 abort(); // unreachable
-block15:;
-goto block2;
 block2:;
-frost$core$Error* $tmp229 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp229));
+frost$core$Error* $tmp227 = *(&local0);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp227));
 *(&local0) = ((frost$core$Error*) NULL);
 return;
 
@@ -769,1502 +765,1544 @@ frost$core$Error* local10 = NULL;
 frost$io$File* local11 = NULL;
 frost$core$Error* local12 = NULL;
 frost$core$String* local13 = NULL;
-frost$core$Bit local14;
+frost$core$String* local14 = NULL;
 frost$core$String* local15 = NULL;
-frost$core$Bit local16;
-frost$core$String* local17 = NULL;
-frost$io$File* local18 = NULL;
-frost$core$Bit local19;
-frost$io$File* local20 = NULL;
-frost$core$String* local21 = NULL;
-frost$core$Int64 local22;
-org$frostlang$frostc$CodeGenerator* local23 = NULL;
-frost$core$Error* local24 = NULL;
-frost$core$Error* local25 = NULL;
-org$frostlang$frostc$Compiler$Settings* local26 = NULL;
-frost$threads$MessageQueue* local27 = NULL;
-org$frostlang$frostc$Compiler* local28 = NULL;
+frost$io$File* local16 = NULL;
+frost$io$File* local17 = NULL;
+frost$core$String* local18 = NULL;
+frost$core$Int64 local19;
+frost$core$Int64 local20;
+org$frostlang$frostc$CodeGenerator* local21 = NULL;
+frost$core$Error* local22 = NULL;
+frost$core$Error* local23 = NULL;
+org$frostlang$frostc$Compiler$Settings* local24 = NULL;
+frost$threads$MessageQueue* local25 = NULL;
+org$frostlang$frostc$Compiler* local26 = NULL;
+frost$io$File* local27 = NULL;
+org$frostlang$frostc$ClassDecl* local28 = NULL;
 frost$io$File* local29 = NULL;
-org$frostlang$frostc$ClassDecl* local30 = NULL;
+org$frostlang$frostc$Compiler$Message* local30 = NULL;
 frost$io$File* local31 = NULL;
-frost$core$Int64 local32;
-org$frostlang$frostc$Compiler$ErrorMsg* local33 = NULL;
+org$frostlang$frostc$Position local32;
+frost$core$String* local33 = NULL;
+frost$io$File* local34 = NULL;
+org$frostlang$frostc$Position local35;
+frost$core$String* local36 = NULL;
 // line 161
-org$frostlang$frostc$Main$Arguments* $tmp230 = (org$frostlang$frostc$Main$Arguments*) frostObjectAlloc(32, (frost$core$Class*) &org$frostlang$frostc$Main$Arguments$class);
-org$frostlang$frostc$Main$Arguments$init$frost$collections$ListView$LTfrost$core$String$GT($tmp230, param1);
+org$frostlang$frostc$Main$Arguments* $tmp228 = (org$frostlang$frostc$Main$Arguments*) frostObjectAlloc(32, (frost$core$Class*) &org$frostlang$frostc$Main$Arguments$class);
+org$frostlang$frostc$Main$Arguments$init$frost$collections$ListView$LTfrost$core$String$GT($tmp228, param1);
 *(&local0) = ((org$frostlang$frostc$Main$Arguments*) NULL);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp230));
-org$frostlang$frostc$Main$Arguments* $tmp231 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp231));
-*(&local0) = $tmp230;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp230));
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp228));
+org$frostlang$frostc$Main$Arguments* $tmp229 = *(&local0);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp229));
+*(&local0) = $tmp228;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp228));
 // line 162
+frost$collections$Array* $tmp230 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+frost$collections$Array$init($tmp230);
+*(&local1) = ((frost$collections$Array*) NULL);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp230));
+frost$collections$Array* $tmp231 = *(&local1);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp231));
+*(&local1) = $tmp230;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp230));
+// line 163
 frost$collections$Array* $tmp232 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
 frost$collections$Array$init($tmp232);
-*(&local1) = ((frost$collections$Array*) NULL);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp232));
-frost$collections$Array* $tmp233 = *(&local1);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp233));
-*(&local1) = $tmp232;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp232));
-// line 163
-frost$collections$Array* $tmp234 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
-frost$collections$Array$init($tmp234);
 *(&local2) = ((frost$collections$Array*) NULL);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp234));
-frost$collections$Array* $tmp235 = *(&local2);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp235));
-*(&local2) = $tmp234;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp234));
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp232));
+frost$collections$Array* $tmp233 = *(&local2);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp233));
+*(&local2) = $tmp232;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp232));
 // line 164
 *(&local3) = ((frost$io$File*) NULL);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$io$File*) NULL)));
-frost$io$File* $tmp236 = *(&local3);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp236));
+frost$io$File* $tmp234 = *(&local3);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp234));
 *(&local3) = ((frost$io$File*) NULL);
 // line 165
-frost$core$Int64 $tmp237 = (frost$core$Int64) {3};
-*(&local4) = $tmp237;
+frost$core$Int64 $tmp235 = (frost$core$Int64) {3};
+*(&local4) = $tmp235;
 // line 166
-frost$core$Int64 $tmp238 = (frost$core$Int64) {3};
-*(&local5) = $tmp238;
+frost$core$Int64 $tmp236 = (frost$core$Int64) {3};
+*(&local5) = $tmp236;
 // line 167
 *(&local6) = ((org$frostlang$frostc$Main$Format$nullable) { .nonnull = false });
 // line 168
 *(&local7) = ((frost$core$String*) NULL);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$String*) NULL)));
-frost$core$String* $tmp239 = *(&local7);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp239));
+frost$core$String* $tmp237 = *(&local7);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp237));
 *(&local7) = ((frost$core$String*) NULL);
 // line 169
-frost$core$Bit $tmp240 = frost$core$Bit$init$builtin_bit(true);
-*(&local8) = $tmp240;
+frost$core$Bit $tmp238 = frost$core$Bit$init$builtin_bit(true);
+*(&local8) = $tmp238;
 // line 170
 goto block1;
 block1:;
-org$frostlang$frostc$Main$Arguments* $tmp241 = *(&local0);
-$fn243 $tmp242 = ($fn243) $tmp241->$class->vtable[2];
-frost$core$Bit $tmp244 = $tmp242($tmp241);
-frost$core$Bit $tmp245 = frost$core$Bit$$NOT$R$frost$core$Bit($tmp244);
-bool $tmp246 = $tmp245.value;
-if ($tmp246) goto block2; else goto block3;
+org$frostlang$frostc$Main$Arguments* $tmp239 = *(&local0);
+$fn241 $tmp240 = ($fn241) $tmp239->$class->vtable[2];
+frost$core$Bit $tmp242 = $tmp240($tmp239);
+frost$core$Bit $tmp243 = frost$core$Bit$$NOT$R$frost$core$Bit($tmp242);
+bool $tmp244 = $tmp243.value;
+if ($tmp244) goto block2; else goto block3;
 block2:;
 // line 171
-org$frostlang$frostc$Main$Arguments* $tmp247 = *(&local0);
-$fn249 $tmp248 = ($fn249) $tmp247->$class->vtable[3];
-frost$core$String* $tmp250 = $tmp248($tmp247);
+org$frostlang$frostc$Main$Arguments* $tmp245 = *(&local0);
+$fn247 $tmp246 = ($fn247) $tmp245->$class->vtable[3];
+frost$core$String* $tmp248 = $tmp246($tmp245);
 *(&local9) = ((frost$core$String*) NULL);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp250));
-frost$core$String* $tmp251 = *(&local9);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp251));
-*(&local9) = $tmp250;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp250));
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp248));
+frost$core$String* $tmp249 = *(&local9);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp249));
+*(&local9) = $tmp248;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp248));
 // line 172
-frost$core$String* $tmp252 = *(&local9);
-frost$core$Bit $tmp253 = frost$core$String$$EQ$frost$core$String$R$frost$core$Bit($tmp252, &$s254);
-bool $tmp255 = $tmp253.value;
-if ($tmp255) goto block5; else goto block6;
+frost$core$String* $tmp250 = *(&local9);
+frost$core$Bit $tmp251 = frost$core$String$$EQ$frost$core$String$R$frost$core$Bit($tmp250, &$s252);
+bool $tmp253 = $tmp251.value;
+if ($tmp253) goto block5; else goto block6;
 block5:;
 // line 174
 *(&local10) = ((frost$core$Error*) NULL);
 // line 175
-frost$io$File* $tmp256 = (frost$io$File*) frostObjectAlloc(24, (frost$core$Class*) &frost$io$File$class);
-frost$io$File$init$frost$core$String($tmp256, &$s257);
+frost$io$File* $tmp254 = (frost$io$File*) frostObjectAlloc(24, (frost$core$Class*) &frost$io$File$class);
+frost$io$File$init$frost$core$String($tmp254, &$s255);
 *(&local11) = ((frost$io$File*) NULL);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp256));
-frost$io$File* $tmp258 = *(&local11);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp258));
-*(&local11) = $tmp256;
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp254));
+frost$io$File* $tmp256 = *(&local11);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp256));
+*(&local11) = $tmp254;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp254));
 // line 176
-frost$io$InputStream* $tmp259 = frost$io$Console$inputStream$R$frost$io$InputStream();
-frost$io$File* $tmp260 = *(&local11);
-frost$core$Maybe* $tmp261 = frost$io$File$openOutputStream$R$frost$core$Maybe$LTfrost$io$OutputStream$GT($tmp260);
-frost$core$Int64* $tmp262 = &$tmp261->$rawValue;
-frost$core$Int64 $tmp263 = *$tmp262;
-int64_t $tmp264 = $tmp263.value;
-bool $tmp265 = $tmp264 == 0;
-if ($tmp265) goto block9; else goto block10;
+frost$io$InputStream* $tmp257 = frost$io$Console$inputStream$R$frost$io$InputStream();
+frost$io$File* $tmp258 = *(&local11);
+frost$core$Maybe* $tmp259 = frost$io$File$openOutputStream$R$frost$core$Maybe$LTfrost$io$OutputStream$GT($tmp258);
+frost$core$Int64* $tmp260 = &$tmp259->$rawValue;
+frost$core$Int64 $tmp261 = *$tmp260;
+int64_t $tmp262 = $tmp261.value;
+bool $tmp263 = $tmp262 == 0;
+if ($tmp263) goto block9; else goto block10;
 block10:;
-frost$core$Error** $tmp266 = (frost$core$Error**) ($tmp261->$data + 0);
-frost$core$Error* $tmp267 = *$tmp266;
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp267));
-*(&local10) = $tmp267;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp261));
+frost$core$Error** $tmp264 = (frost$core$Error**) ($tmp259->$data + 0);
+frost$core$Error* $tmp265 = *$tmp264;
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp265));
+*(&local10) = $tmp265;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp259));
-frost$io$File* $tmp268 = *(&local11);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp268));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp257));
+frost$io$File* $tmp266 = *(&local11);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp266));
 *(&local11) = ((frost$io$File*) NULL);
 goto block7;
 block9:;
-frost$core$Object** $tmp269 = (frost$core$Object**) ($tmp261->$data + 0);
-frost$core$Object* $tmp270 = *$tmp269;
-$fn272 $tmp271 = ($fn272) $tmp259->$class->vtable[17];
-frost$core$Maybe* $tmp273 = $tmp271($tmp259, ((frost$io$OutputStream*) $tmp270));
-frost$core$Int64* $tmp274 = &$tmp273->$rawValue;
-frost$core$Int64 $tmp275 = *$tmp274;
-int64_t $tmp276 = $tmp275.value;
-bool $tmp277 = $tmp276 == 0;
-if ($tmp277) goto block11; else goto block12;
+frost$core$Object** $tmp267 = (frost$core$Object**) ($tmp259->$data + 0);
+frost$core$Object* $tmp268 = *$tmp267;
+$fn270 $tmp269 = ($fn270) $tmp257->$class->vtable[17];
+frost$core$Maybe* $tmp271 = $tmp269($tmp257, ((frost$io$OutputStream*) $tmp268));
+frost$core$Int64* $tmp272 = &$tmp271->$rawValue;
+frost$core$Int64 $tmp273 = *$tmp272;
+int64_t $tmp274 = $tmp273.value;
+bool $tmp275 = $tmp274 == 0;
+if ($tmp275) goto block11; else goto block12;
 block12:;
-frost$core$Error** $tmp278 = (frost$core$Error**) ($tmp273->$data + 0);
-frost$core$Error* $tmp279 = *$tmp278;
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp279));
-*(&local10) = $tmp279;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp273));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp261));
+frost$core$Error** $tmp276 = (frost$core$Error**) ($tmp271->$data + 0);
+frost$core$Error* $tmp277 = *$tmp276;
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp277));
+*(&local10) = $tmp277;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp271));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp259));
-frost$io$File* $tmp280 = *(&local11);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp280));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp257));
+frost$io$File* $tmp278 = *(&local11);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp278));
 *(&local11) = ((frost$io$File*) NULL);
 goto block7;
 block11:;
-frost$core$Object** $tmp281 = (frost$core$Object**) ($tmp273->$data + 0);
-frost$core$Object* $tmp282 = *$tmp281;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp273));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp261));
+frost$core$Object** $tmp279 = (frost$core$Object**) ($tmp271->$data + 0);
+frost$core$Object* $tmp280 = *$tmp279;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp271));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp259));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp257));
 // line 177
-frost$collections$Array* $tmp283 = *(&local1);
-frost$io$File* $tmp284 = *(&local11);
-frost$collections$Array$add$frost$collections$Array$T($tmp283, ((frost$core$Object*) $tmp284));
-frost$io$File* $tmp285 = *(&local11);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp285));
+frost$collections$Array* $tmp281 = *(&local1);
+frost$io$File* $tmp282 = *(&local11);
+frost$collections$Array$add$frost$collections$Array$T($tmp281, ((frost$core$Object*) $tmp282));
+frost$io$File* $tmp283 = *(&local11);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp283));
 *(&local11) = ((frost$io$File*) NULL);
 goto block8;
 block7:;
 // line 180
-frost$core$Error* $tmp286 = *(&local10);
-frost$io$Console$printErrorLine$frost$core$Object(((frost$core$Object*) $tmp286));
+frost$core$Error* $tmp284 = *(&local10);
+frost$io$Console$printErrorLine$frost$core$Object(((frost$core$Object*) $tmp284));
 // line 181
-frost$core$Int64 $tmp287 = (frost$core$Int64) {1};
-frost$core$System$exit$frost$core$Int64($tmp287);
+frost$core$Int64 $tmp285 = (frost$core$Int64) {1};
+frost$core$System$exit$frost$core$Int64($tmp285);
 goto block8;
 block8:;
-frost$core$Error* $tmp288 = *(&local10);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp288));
+frost$core$Error* $tmp286 = *(&local10);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp286));
 *(&local10) = ((frost$core$Error*) NULL);
 goto block4;
 block6:;
-frost$core$Bit $tmp289 = frost$core$String$$EQ$frost$core$String$R$frost$core$Bit($tmp252, &$s290);
-bool $tmp291 = $tmp289.value;
-if ($tmp291) goto block13; else goto block14;
+frost$core$Bit $tmp287 = frost$core$String$$EQ$frost$core$String$R$frost$core$Bit($tmp250, &$s288);
+bool $tmp289 = $tmp287.value;
+if ($tmp289) goto block13; else goto block14;
 block13:;
 // line 185
-frost$io$File* $tmp292 = *(&local3);
-frost$core$Bit $tmp293 = frost$core$Bit$init$builtin_bit($tmp292 != NULL);
-bool $tmp294 = $tmp293.value;
-if ($tmp294) goto block15; else goto block16;
+frost$io$File* $tmp290 = *(&local3);
+frost$core$Bit $tmp291 = frost$core$Bit$init$builtin_bit($tmp290 != NULL);
+bool $tmp292 = $tmp291.value;
+if ($tmp292) goto block15; else goto block16;
 block15:;
 // line 186
-frost$io$Console$printErrorLine$frost$core$String(&$s295);
+frost$io$Console$printErrorLine$frost$core$String(&$s293);
 // line 187
-frost$core$Int64 $tmp296 = (frost$core$Int64) {1};
-frost$core$System$exit$frost$core$Int64($tmp296);
+frost$core$Int64 $tmp294 = (frost$core$Int64) {1};
+frost$core$System$exit$frost$core$Int64($tmp294);
 goto block16;
 block16:;
 // line 189
-frost$io$File* $tmp297 = (frost$io$File*) frostObjectAlloc(24, (frost$core$Class*) &frost$io$File$class);
-org$frostlang$frostc$Main$Arguments* $tmp298 = *(&local0);
-$fn300 $tmp299 = ($fn300) $tmp298->$class->vtable[4];
-frost$core$String* $tmp301 = $tmp299($tmp298, &$s302);
-frost$io$File$init$frost$core$String($tmp297, $tmp301);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp297));
-frost$io$File* $tmp303 = *(&local3);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp303));
-*(&local3) = $tmp297;
+frost$io$File* $tmp295 = (frost$io$File*) frostObjectAlloc(24, (frost$core$Class*) &frost$io$File$class);
+org$frostlang$frostc$Main$Arguments* $tmp296 = *(&local0);
+$fn298 $tmp297 = ($fn298) $tmp296->$class->vtable[4];
+frost$core$String* $tmp299 = $tmp297($tmp296, &$s300);
+frost$io$File$init$frost$core$String($tmp295, $tmp299);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp295));
+frost$io$File* $tmp301 = *(&local3);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp301));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp297));
+*(&local3) = $tmp295;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp299));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp295));
 // line 190
 *(&local12) = ((frost$core$Error*) NULL);
 // line 191
-frost$io$File* $tmp304 = *(&local3);
-frost$io$File* $tmp305 = frost$io$File$get_parent$R$frost$io$File$Q($tmp304);
-frost$core$Error* $tmp306 = frost$io$File$createDirectories$R$frost$core$Error$Q($tmp305);
-if ($tmp306 == NULL) goto block19; else goto block20;
+frost$io$File* $tmp302 = *(&local3);
+frost$io$File* $tmp303 = frost$io$File$get_parent$R$frost$io$File$Q($tmp302);
+frost$core$Error* $tmp304 = frost$io$File$createDirectories$R$frost$core$Error$Q($tmp303);
+if ($tmp304 == NULL) goto block19; else goto block20;
 block20:;
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp306));
-*(&local12) = $tmp306;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp306));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp305));
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp304));
+*(&local12) = $tmp304;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp304));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp303));
 goto block17;
 block19:;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp306));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp305));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp304));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp303));
 goto block18;
 block17:;
 // line 194
-frost$core$Error* $tmp307 = *(&local12);
-frost$io$Console$printErrorLine$frost$core$Object(((frost$core$Object*) $tmp307));
+frost$core$Error* $tmp305 = *(&local12);
+frost$io$Console$printErrorLine$frost$core$Object(((frost$core$Object*) $tmp305));
 // line 195
-frost$core$Int64 $tmp308 = (frost$core$Int64) {1};
-frost$core$System$exit$frost$core$Int64($tmp308);
+frost$core$Int64 $tmp306 = (frost$core$Int64) {1};
+frost$core$System$exit$frost$core$Int64($tmp306);
 goto block18;
 block18:;
-frost$core$Error* $tmp309 = *(&local12);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp309));
+frost$core$Error* $tmp307 = *(&local12);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp307));
 *(&local12) = ((frost$core$Error*) NULL);
 goto block4;
 block14:;
-frost$core$Bit $tmp310 = frost$core$String$$EQ$frost$core$String$R$frost$core$Bit($tmp252, &$s311);
-bool $tmp312 = $tmp310.value;
-if ($tmp312) goto block21; else goto block22;
+frost$core$Bit $tmp308 = frost$core$String$$EQ$frost$core$String$R$frost$core$Bit($tmp250, &$s309);
+bool $tmp310 = $tmp308.value;
+if ($tmp310) goto block21; else goto block22;
 block21:;
 // line 199
-org$frostlang$frostc$Main$Arguments* $tmp313 = *(&local0);
-$fn315 $tmp314 = ($fn315) $tmp313->$class->vtable[4];
-frost$core$String* $tmp316 = $tmp314($tmp313, &$s317);
+org$frostlang$frostc$Main$Arguments* $tmp311 = *(&local0);
+$fn313 $tmp312 = ($fn313) $tmp311->$class->vtable[4];
+frost$core$String* $tmp314 = $tmp312($tmp311, &$s315);
 *(&local13) = ((frost$core$String*) NULL);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp316));
-frost$core$String* $tmp318 = *(&local13);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp318));
-*(&local13) = $tmp316;
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp314));
+frost$core$String* $tmp316 = *(&local13);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp316));
+*(&local13) = $tmp314;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp314));
 // line 200
-frost$core$String* $tmp319 = *(&local13);
-frost$core$Int64$nullable $tmp320 = frost$core$String$get_asInt64$R$frost$core$Int64$Q($tmp319);
-*(&local4) = ((frost$core$Int64) $tmp320.value);
+frost$core$String* $tmp317 = *(&local13);
+frost$core$Int64$nullable $tmp318 = frost$core$String$get_asInt64$R$frost$core$Int64$Q($tmp317);
+*(&local4) = ((frost$core$Int64) $tmp318.value);
 // line 201
-frost$core$Int64 $tmp321 = *(&local4);
-frost$core$Int64 $tmp322 = (frost$core$Int64) {3};
-int64_t $tmp323 = $tmp321.value;
-int64_t $tmp324 = $tmp322.value;
-bool $tmp325 = $tmp323 > $tmp324;
-frost$core$Bit $tmp326 = (frost$core$Bit) {$tmp325};
-bool $tmp327 = $tmp326.value;
-if ($tmp327) goto block25; else goto block26;
+frost$core$Int64 $tmp319 = *(&local4);
+frost$core$Int64 $tmp320 = (frost$core$Int64) {3};
+int64_t $tmp321 = $tmp319.value;
+int64_t $tmp322 = $tmp320.value;
+bool $tmp323 = $tmp321 > $tmp322;
+frost$core$Bit $tmp324 = (frost$core$Bit) {$tmp323};
+bool $tmp325 = $tmp324.value;
+if ($tmp325) goto block23; else goto block25;
 block25:;
-*(&local14) = $tmp326;
-goto block27;
-block26:;
-frost$core$Int64 $tmp328 = *(&local4);
-frost$core$Int64 $tmp329 = (frost$core$Int64) {0};
-int64_t $tmp330 = $tmp328.value;
-int64_t $tmp331 = $tmp329.value;
-bool $tmp332 = $tmp330 < $tmp331;
-frost$core$Bit $tmp333 = (frost$core$Bit) {$tmp332};
-*(&local14) = $tmp333;
-goto block27;
-block27:;
-frost$core$Bit $tmp334 = *(&local14);
-bool $tmp335 = $tmp334.value;
-if ($tmp335) goto block23; else goto block24;
+frost$core$Int64 $tmp326 = *(&local4);
+frost$core$Int64 $tmp327 = (frost$core$Int64) {0};
+int64_t $tmp328 = $tmp326.value;
+int64_t $tmp329 = $tmp327.value;
+bool $tmp330 = $tmp328 < $tmp329;
+frost$core$Bit $tmp331 = (frost$core$Bit) {$tmp330};
+bool $tmp332 = $tmp331.value;
+if ($tmp332) goto block23; else goto block24;
 block23:;
 // line 202
-frost$io$Console$printErrorLine$frost$core$String(&$s336);
+frost$io$Console$printErrorLine$frost$core$String(&$s333);
 // line 203
-frost$core$Int64 $tmp337 = (frost$core$Int64) {1};
-frost$core$System$exit$frost$core$Int64($tmp337);
+frost$core$Int64 $tmp334 = (frost$core$Int64) {1};
+frost$core$System$exit$frost$core$Int64($tmp334);
 goto block24;
 block24:;
-frost$core$String* $tmp338 = *(&local13);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp338));
+frost$core$String* $tmp335 = *(&local13);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp335));
 *(&local13) = ((frost$core$String*) NULL);
 goto block4;
 block22:;
-frost$core$Bit $tmp339 = frost$core$String$$EQ$frost$core$String$R$frost$core$Bit($tmp252, &$s340);
-bool $tmp341 = $tmp339.value;
-if ($tmp341) goto block28; else goto block29;
-block28:;
+frost$core$Bit $tmp336 = frost$core$String$$EQ$frost$core$String$R$frost$core$Bit($tmp250, &$s337);
+bool $tmp338 = $tmp336.value;
+if ($tmp338) goto block26; else goto block27;
+block26:;
 // line 207
-org$frostlang$frostc$Main$Arguments* $tmp342 = *(&local0);
-$fn344 $tmp343 = ($fn344) $tmp342->$class->vtable[4];
-frost$core$String* $tmp345 = $tmp343($tmp342, &$s346);
-*(&local15) = ((frost$core$String*) NULL);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp345));
-frost$core$String* $tmp347 = *(&local15);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp347));
-*(&local15) = $tmp345;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp345));
+org$frostlang$frostc$Main$Arguments* $tmp339 = *(&local0);
+$fn341 $tmp340 = ($fn341) $tmp339->$class->vtable[4];
+frost$core$String* $tmp342 = $tmp340($tmp339, &$s343);
+*(&local14) = ((frost$core$String*) NULL);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp342));
+frost$core$String* $tmp344 = *(&local14);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp344));
+*(&local14) = $tmp342;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp342));
 // line 208
-frost$core$String* $tmp348 = *(&local15);
-frost$core$Int64$nullable $tmp349 = frost$core$String$get_asInt64$R$frost$core$Int64$Q($tmp348);
-*(&local5) = ((frost$core$Int64) $tmp349.value);
+frost$core$String* $tmp345 = *(&local14);
+frost$core$Int64$nullable $tmp346 = frost$core$String$get_asInt64$R$frost$core$Int64$Q($tmp345);
+*(&local5) = ((frost$core$Int64) $tmp346.value);
 // line 209
-frost$core$Int64 $tmp350 = *(&local5);
-frost$core$Int64 $tmp351 = (frost$core$Int64) {3};
-int64_t $tmp352 = $tmp350.value;
-int64_t $tmp353 = $tmp351.value;
-bool $tmp354 = $tmp352 > $tmp353;
-frost$core$Bit $tmp355 = (frost$core$Bit) {$tmp354};
-bool $tmp356 = $tmp355.value;
-if ($tmp356) goto block32; else goto block33;
-block32:;
-*(&local16) = $tmp355;
-goto block34;
+frost$core$Int64 $tmp347 = *(&local5);
+frost$core$Int64 $tmp348 = (frost$core$Int64) {3};
+int64_t $tmp349 = $tmp347.value;
+int64_t $tmp350 = $tmp348.value;
+bool $tmp351 = $tmp349 > $tmp350;
+frost$core$Bit $tmp352 = (frost$core$Bit) {$tmp351};
+bool $tmp353 = $tmp352.value;
+if ($tmp353) goto block28; else goto block30;
+block30:;
+frost$core$Int64 $tmp354 = *(&local5);
+frost$core$Int64 $tmp355 = (frost$core$Int64) {0};
+int64_t $tmp356 = $tmp354.value;
+int64_t $tmp357 = $tmp355.value;
+bool $tmp358 = $tmp356 < $tmp357;
+frost$core$Bit $tmp359 = (frost$core$Bit) {$tmp358};
+bool $tmp360 = $tmp359.value;
+if ($tmp360) goto block28; else goto block29;
+block28:;
+// line 210
+frost$io$Console$printErrorLine$frost$core$String(&$s361);
+// line 211
+frost$core$Int64 $tmp362 = (frost$core$Int64) {1};
+frost$core$System$exit$frost$core$Int64($tmp362);
+goto block29;
+block29:;
+frost$core$String* $tmp363 = *(&local14);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp363));
+*(&local14) = ((frost$core$String*) NULL);
+goto block4;
+block27:;
+frost$core$Bit $tmp364 = frost$core$String$$EQ$frost$core$String$R$frost$core$Bit($tmp250, &$s365);
+bool $tmp366 = $tmp364.value;
+if ($tmp366) goto block31; else goto block32;
+block31:;
+// line 215
+org$frostlang$frostc$Main$Format$nullable $tmp367 = *(&local6);
+frost$core$Bit $tmp368 = frost$core$Bit$init$builtin_bit($tmp367.nonnull);
+bool $tmp369 = $tmp368.value;
+if ($tmp369) goto block33; else goto block34;
 block33:;
-frost$core$Int64 $tmp357 = *(&local5);
-frost$core$Int64 $tmp358 = (frost$core$Int64) {0};
-int64_t $tmp359 = $tmp357.value;
-int64_t $tmp360 = $tmp358.value;
-bool $tmp361 = $tmp359 < $tmp360;
-frost$core$Bit $tmp362 = (frost$core$Bit) {$tmp361};
-*(&local16) = $tmp362;
+// line 216
+frost$io$Console$printErrorLine$frost$core$String(&$s370);
+// line 217
+frost$core$Int64 $tmp371 = (frost$core$Int64) {1};
+frost$core$System$exit$frost$core$Int64($tmp371);
 goto block34;
 block34:;
-frost$core$Bit $tmp363 = *(&local16);
-bool $tmp364 = $tmp363.value;
-if ($tmp364) goto block30; else goto block31;
-block30:;
-// line 210
-frost$io$Console$printErrorLine$frost$core$String(&$s365);
-// line 211
-frost$core$Int64 $tmp366 = (frost$core$Int64) {1};
-frost$core$System$exit$frost$core$Int64($tmp366);
-goto block31;
-block31:;
-frost$core$String* $tmp367 = *(&local15);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp367));
+// line 219
+org$frostlang$frostc$Main$Arguments* $tmp372 = *(&local0);
+$fn374 $tmp373 = ($fn374) $tmp372->$class->vtable[4];
+frost$core$String* $tmp375 = $tmp373($tmp372, &$s376);
+*(&local15) = ((frost$core$String*) NULL);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp375));
+frost$core$String* $tmp377 = *(&local15);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp377));
+*(&local15) = $tmp375;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp375));
+// line 220
+frost$core$String* $tmp378 = *(&local15);
+frost$core$Bit $tmp379 = frost$core$String$$EQ$frost$core$String$R$frost$core$Bit($tmp378, &$s380);
+bool $tmp381 = $tmp379.value;
+if ($tmp381) goto block36; else goto block37;
+block36:;
+// line 221
+frost$core$Int64 $tmp382 = (frost$core$Int64) {1};
+org$frostlang$frostc$Main$Format $tmp383 = org$frostlang$frostc$Main$Format$init$frost$core$Int64($tmp382);
+*(&local6) = ((org$frostlang$frostc$Main$Format$nullable) { $tmp383, true });
+goto block35;
+block37:;
+frost$core$Bit $tmp384 = frost$core$String$$EQ$frost$core$String$R$frost$core$Bit($tmp378, &$s385);
+bool $tmp386 = $tmp384.value;
+if ($tmp386) goto block38; else goto block39;
+block38:;
+// line 222
+frost$core$Int64 $tmp387 = (frost$core$Int64) {2};
+org$frostlang$frostc$Main$Format $tmp388 = org$frostlang$frostc$Main$Format$init$frost$core$Int64($tmp387);
+*(&local6) = ((org$frostlang$frostc$Main$Format$nullable) { $tmp388, true });
+goto block35;
+block39:;
+frost$core$Bit $tmp389 = frost$core$String$$EQ$frost$core$String$R$frost$core$Bit($tmp378, &$s390);
+bool $tmp391 = $tmp389.value;
+if ($tmp391) goto block40; else goto block41;
+block40:;
+// line 223
+frost$core$Int64 $tmp392 = (frost$core$Int64) {0};
+org$frostlang$frostc$Main$Format $tmp393 = org$frostlang$frostc$Main$Format$init$frost$core$Int64($tmp392);
+*(&local6) = ((org$frostlang$frostc$Main$Format$nullable) { $tmp393, true });
+goto block35;
+block41:;
+frost$core$Bit $tmp394 = frost$core$String$$EQ$frost$core$String$R$frost$core$Bit($tmp378, &$s395);
+bool $tmp396 = $tmp394.value;
+if ($tmp396) goto block42; else goto block43;
+block42:;
+// line 224
+frost$core$Int64 $tmp397 = (frost$core$Int64) {3};
+org$frostlang$frostc$Main$Format $tmp398 = org$frostlang$frostc$Main$Format$init$frost$core$Int64($tmp397);
+*(&local6) = ((org$frostlang$frostc$Main$Format$nullable) { $tmp398, true });
+goto block35;
+block43:;
+frost$core$Bit $tmp399 = frost$core$String$$EQ$frost$core$String$R$frost$core$Bit($tmp378, &$s400);
+bool $tmp401 = $tmp399.value;
+if ($tmp401) goto block44; else goto block45;
+block44:;
+// line 225
+frost$core$Int64 $tmp402 = (frost$core$Int64) {4};
+org$frostlang$frostc$Main$Format $tmp403 = org$frostlang$frostc$Main$Format$init$frost$core$Int64($tmp402);
+*(&local6) = ((org$frostlang$frostc$Main$Format$nullable) { $tmp403, true });
+goto block35;
+block45:;
+frost$core$Bit $tmp404 = frost$core$String$$EQ$frost$core$String$R$frost$core$Bit($tmp378, &$s405);
+bool $tmp406 = $tmp404.value;
+if ($tmp406) goto block46; else goto block47;
+block46:;
+// line 226
+frost$core$Int64 $tmp407 = (frost$core$Int64) {5};
+org$frostlang$frostc$Main$Format $tmp408 = org$frostlang$frostc$Main$Format$init$frost$core$Int64($tmp407);
+*(&local6) = ((org$frostlang$frostc$Main$Format$nullable) { $tmp408, true });
+goto block35;
+block47:;
+frost$core$Bit $tmp409 = frost$core$String$$EQ$frost$core$String$R$frost$core$Bit($tmp378, &$s410);
+bool $tmp411 = $tmp409.value;
+if ($tmp411) goto block48; else goto block49;
+block48:;
+// line 227
+frost$core$Int64 $tmp412 = (frost$core$Int64) {6};
+org$frostlang$frostc$Main$Format $tmp413 = org$frostlang$frostc$Main$Format$init$frost$core$Int64($tmp412);
+*(&local6) = ((org$frostlang$frostc$Main$Format$nullable) { $tmp413, true });
+goto block35;
+block49:;
+// line 229
+frost$core$String* $tmp414 = *(&local15);
+frost$core$String* $tmp415 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(&$s416, $tmp414);
+frost$core$String* $tmp417 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp415, &$s418);
+frost$io$Console$printErrorLine$frost$core$String($tmp417);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp417));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp415));
+// line 230
+frost$core$Int64 $tmp419 = (frost$core$Int64) {1};
+frost$core$System$exit$frost$core$Int64($tmp419);
+goto block35;
+block35:;
+frost$core$String* $tmp420 = *(&local15);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp420));
 *(&local15) = ((frost$core$String*) NULL);
 goto block4;
-block29:;
-frost$core$Bit $tmp368 = frost$core$String$$EQ$frost$core$String$R$frost$core$Bit($tmp252, &$s369);
-bool $tmp370 = $tmp368.value;
-if ($tmp370) goto block35; else goto block36;
-block35:;
-// line 215
-org$frostlang$frostc$Main$Format$nullable $tmp371 = *(&local6);
-frost$core$Bit $tmp372 = frost$core$Bit$init$builtin_bit($tmp371.nonnull);
-bool $tmp373 = $tmp372.value;
-if ($tmp373) goto block37; else goto block38;
-block37:;
-// line 216
-frost$io$Console$printErrorLine$frost$core$String(&$s374);
-// line 217
-frost$core$Int64 $tmp375 = (frost$core$Int64) {1};
-frost$core$System$exit$frost$core$Int64($tmp375);
-goto block38;
-block38:;
-// line 219
-org$frostlang$frostc$Main$Arguments* $tmp376 = *(&local0);
-$fn378 $tmp377 = ($fn378) $tmp376->$class->vtable[4];
-frost$core$String* $tmp379 = $tmp377($tmp376, &$s380);
-*(&local17) = ((frost$core$String*) NULL);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp379));
-frost$core$String* $tmp381 = *(&local17);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp381));
-*(&local17) = $tmp379;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp379));
-// line 220
-frost$core$String* $tmp382 = *(&local17);
-frost$core$Bit $tmp383 = frost$core$String$$EQ$frost$core$String$R$frost$core$Bit($tmp382, &$s384);
-bool $tmp385 = $tmp383.value;
-if ($tmp385) goto block40; else goto block41;
-block40:;
-// line 221
-frost$core$Int64 $tmp386 = (frost$core$Int64) {1};
-org$frostlang$frostc$Main$Format $tmp387 = org$frostlang$frostc$Main$Format$init$frost$core$Int64($tmp386);
-*(&local6) = ((org$frostlang$frostc$Main$Format$nullable) { $tmp387, true });
-goto block39;
-block41:;
-frost$core$Bit $tmp388 = frost$core$String$$EQ$frost$core$String$R$frost$core$Bit($tmp382, &$s389);
-bool $tmp390 = $tmp388.value;
-if ($tmp390) goto block42; else goto block43;
-block42:;
-// line 222
-frost$core$Int64 $tmp391 = (frost$core$Int64) {2};
-org$frostlang$frostc$Main$Format $tmp392 = org$frostlang$frostc$Main$Format$init$frost$core$Int64($tmp391);
-*(&local6) = ((org$frostlang$frostc$Main$Format$nullable) { $tmp392, true });
-goto block39;
-block43:;
-frost$core$Bit $tmp393 = frost$core$String$$EQ$frost$core$String$R$frost$core$Bit($tmp382, &$s394);
-bool $tmp395 = $tmp393.value;
-if ($tmp395) goto block44; else goto block45;
-block44:;
-// line 223
-frost$core$Int64 $tmp396 = (frost$core$Int64) {0};
-org$frostlang$frostc$Main$Format $tmp397 = org$frostlang$frostc$Main$Format$init$frost$core$Int64($tmp396);
-*(&local6) = ((org$frostlang$frostc$Main$Format$nullable) { $tmp397, true });
-goto block39;
-block45:;
-frost$core$Bit $tmp398 = frost$core$String$$EQ$frost$core$String$R$frost$core$Bit($tmp382, &$s399);
-bool $tmp400 = $tmp398.value;
-if ($tmp400) goto block46; else goto block47;
-block46:;
-// line 224
-frost$core$Int64 $tmp401 = (frost$core$Int64) {3};
-org$frostlang$frostc$Main$Format $tmp402 = org$frostlang$frostc$Main$Format$init$frost$core$Int64($tmp401);
-*(&local6) = ((org$frostlang$frostc$Main$Format$nullable) { $tmp402, true });
-goto block39;
-block47:;
-frost$core$Bit $tmp403 = frost$core$String$$EQ$frost$core$String$R$frost$core$Bit($tmp382, &$s404);
-bool $tmp405 = $tmp403.value;
-if ($tmp405) goto block48; else goto block49;
-block48:;
-// line 225
-frost$core$Int64 $tmp406 = (frost$core$Int64) {4};
-org$frostlang$frostc$Main$Format $tmp407 = org$frostlang$frostc$Main$Format$init$frost$core$Int64($tmp406);
-*(&local6) = ((org$frostlang$frostc$Main$Format$nullable) { $tmp407, true });
-goto block39;
-block49:;
-frost$core$Bit $tmp408 = frost$core$String$$EQ$frost$core$String$R$frost$core$Bit($tmp382, &$s409);
-bool $tmp410 = $tmp408.value;
-if ($tmp410) goto block50; else goto block51;
+block32:;
+frost$core$Bit $tmp421 = frost$core$String$$EQ$frost$core$String$R$frost$core$Bit($tmp250, &$s422);
+bool $tmp423 = $tmp421.value;
+if ($tmp423) goto block50; else goto block51;
 block50:;
-// line 226
-frost$core$Int64 $tmp411 = (frost$core$Int64) {5};
-org$frostlang$frostc$Main$Format $tmp412 = org$frostlang$frostc$Main$Format$init$frost$core$Int64($tmp411);
-*(&local6) = ((org$frostlang$frostc$Main$Format$nullable) { $tmp412, true });
-goto block39;
-block51:;
-frost$core$Bit $tmp413 = frost$core$String$$EQ$frost$core$String$R$frost$core$Bit($tmp382, &$s414);
-bool $tmp415 = $tmp413.value;
-if ($tmp415) goto block52; else goto block53;
-block52:;
-// line 227
-frost$core$Int64 $tmp416 = (frost$core$Int64) {6};
-org$frostlang$frostc$Main$Format $tmp417 = org$frostlang$frostc$Main$Format$init$frost$core$Int64($tmp416);
-*(&local6) = ((org$frostlang$frostc$Main$Format$nullable) { $tmp417, true });
-goto block39;
-block53:;
-// line 229
-frost$core$String* $tmp418 = *(&local17);
-frost$core$String* $tmp419 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(&$s420, $tmp418);
-frost$core$String* $tmp421 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp419, &$s422);
-frost$io$Console$printErrorLine$frost$core$String($tmp421);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp421));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp419));
-// line 230
-frost$core$Int64 $tmp423 = (frost$core$Int64) {1};
-frost$core$System$exit$frost$core$Int64($tmp423);
-goto block39;
-block39:;
-frost$core$String* $tmp424 = *(&local17);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp424));
-*(&local17) = ((frost$core$String*) NULL);
-goto block4;
-block36:;
-frost$core$Bit $tmp425 = frost$core$String$$EQ$frost$core$String$R$frost$core$Bit($tmp252, &$s426);
-bool $tmp427 = $tmp425.value;
-if ($tmp427) goto block54; else goto block55;
-block54:;
 // line 235
-frost$collections$Array* $tmp428 = *(&local2);
-frost$io$File* $tmp429 = (frost$io$File*) frostObjectAlloc(24, (frost$core$Class*) &frost$io$File$class);
-org$frostlang$frostc$Main$Arguments* $tmp430 = *(&local0);
-$fn432 $tmp431 = ($fn432) $tmp430->$class->vtable[4];
-frost$core$String* $tmp433 = $tmp431($tmp430, &$s434);
-frost$io$File$init$frost$core$String($tmp429, $tmp433);
-frost$collections$Array$add$frost$collections$Array$T($tmp428, ((frost$core$Object*) $tmp429));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp433));
+frost$collections$Array* $tmp424 = *(&local2);
+frost$io$File* $tmp425 = (frost$io$File*) frostObjectAlloc(24, (frost$core$Class*) &frost$io$File$class);
+org$frostlang$frostc$Main$Arguments* $tmp426 = *(&local0);
+$fn428 $tmp427 = ($fn428) $tmp426->$class->vtable[4];
+frost$core$String* $tmp429 = $tmp427($tmp426, &$s430);
+frost$io$File$init$frost$core$String($tmp425, $tmp429);
+frost$collections$Array$add$frost$collections$Array$T($tmp424, ((frost$core$Object*) $tmp425));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp429));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp425));
 goto block4;
-block55:;
-frost$core$Bit $tmp435 = frost$core$String$$EQ$frost$core$String$R$frost$core$Bit($tmp252, &$s436);
-bool $tmp437 = $tmp435.value;
-if ($tmp437) goto block56; else goto block57;
-block56:;
+block51:;
+frost$core$Bit $tmp431 = frost$core$String$$EQ$frost$core$String$R$frost$core$Bit($tmp250, &$s432);
+bool $tmp433 = $tmp431.value;
+if ($tmp433) goto block52; else goto block53;
+block52:;
 // line 238
-org$frostlang$frostc$Main$Arguments* $tmp438 = *(&local0);
-$fn440 $tmp439 = ($fn440) $tmp438->$class->vtable[4];
-frost$core$String* $tmp441 = $tmp439($tmp438, &$s442);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp441));
-frost$core$String* $tmp443 = *(&local7);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp443));
-*(&local7) = $tmp441;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp441));
+org$frostlang$frostc$Main$Arguments* $tmp434 = *(&local0);
+$fn436 $tmp435 = ($fn436) $tmp434->$class->vtable[4];
+frost$core$String* $tmp437 = $tmp435($tmp434, &$s438);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp437));
+frost$core$String* $tmp439 = *(&local7);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp439));
+*(&local7) = $tmp437;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp437));
 goto block4;
-block57:;
+block53:;
 // line 241
-frost$core$String* $tmp444 = *(&local9);
-frost$core$Bit $tmp445 = frost$core$String$endsWith$frost$core$String$R$frost$core$Bit($tmp444, &$s446);
-bool $tmp447 = $tmp445.value;
-if ($tmp447) goto block58; else goto block60;
-block58:;
+frost$core$String* $tmp440 = *(&local9);
+frost$core$Bit $tmp441 = frost$core$String$endsWith$frost$core$String$R$frost$core$Bit($tmp440, &$s442);
+bool $tmp443 = $tmp441.value;
+if ($tmp443) goto block54; else goto block56;
+block54:;
 // line 242
-frost$io$File* $tmp448 = (frost$io$File*) frostObjectAlloc(24, (frost$core$Class*) &frost$io$File$class);
-frost$core$String* $tmp449 = *(&local9);
-frost$io$File$init$frost$core$String($tmp448, $tmp449);
-*(&local18) = ((frost$io$File*) NULL);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp448));
-frost$io$File* $tmp450 = *(&local18);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp450));
-*(&local18) = $tmp448;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp448));
+frost$io$File* $tmp444 = (frost$io$File*) frostObjectAlloc(24, (frost$core$Class*) &frost$io$File$class);
+frost$core$String* $tmp445 = *(&local9);
+frost$io$File$init$frost$core$String($tmp444, $tmp445);
+*(&local16) = ((frost$io$File*) NULL);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp444));
+frost$io$File* $tmp446 = *(&local16);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp446));
+*(&local16) = $tmp444;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp444));
 // line 243
-frost$collections$Array* $tmp451 = *(&local1);
-frost$io$File* $tmp452 = *(&local18);
-frost$collections$Array$add$frost$collections$Array$T($tmp451, ((frost$core$Object*) $tmp452));
-frost$io$File* $tmp453 = *(&local18);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp453));
-*(&local18) = ((frost$io$File*) NULL);
-goto block59;
-block60:;
+frost$collections$Array* $tmp447 = *(&local1);
+frost$io$File* $tmp448 = *(&local16);
+frost$collections$Array$add$frost$collections$Array$T($tmp447, ((frost$core$Object*) $tmp448));
+frost$io$File* $tmp449 = *(&local16);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp449));
+*(&local16) = ((frost$io$File*) NULL);
+goto block55;
+block56:;
 // line 1
 // line 246
-frost$core$String* $tmp454 = *(&local9);
-frost$core$String* $tmp455 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(&$s456, $tmp454);
-frost$core$String* $tmp457 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp455, &$s458);
-frost$io$Console$printErrorLine$frost$core$String($tmp457);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp457));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp455));
+frost$core$String* $tmp450 = *(&local9);
+frost$core$String* $tmp451 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(&$s452, $tmp450);
+frost$core$String* $tmp453 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp451, &$s454);
+frost$io$Console$printErrorLine$frost$core$String($tmp453);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp453));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp451));
 // line 247
-frost$core$Int64 $tmp459 = (frost$core$Int64) {1};
-frost$core$System$exit$frost$core$Int64($tmp459);
-goto block59;
-block59:;
+frost$core$Int64 $tmp455 = (frost$core$Int64) {1};
+frost$core$System$exit$frost$core$Int64($tmp455);
+goto block55;
+block55:;
 goto block4;
 block4:;
-frost$core$String* $tmp460 = *(&local9);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp460));
+frost$core$String* $tmp456 = *(&local9);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp456));
 *(&local9) = ((frost$core$String*) NULL);
 goto block1;
 block3:;
 // line 252
-org$frostlang$frostc$Main$Format$nullable $tmp461 = *(&local6);
-frost$core$Bit $tmp462 = frost$core$Bit$init$builtin_bit(!$tmp461.nonnull);
-bool $tmp463 = $tmp462.value;
-if ($tmp463) goto block63; else goto block64;
-block63:;
-*(&local19) = $tmp462;
-goto block65;
-block64:;
-org$frostlang$frostc$Main$Format$nullable $tmp464 = *(&local6);
-frost$core$Equatable* $tmp465;
-if ($tmp464.nonnull) {
-    org$frostlang$frostc$Main$Format$wrapper* $tmp466;
-    $tmp466 = (org$frostlang$frostc$Main$Format$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Main$Format$wrapperclass);
-    $tmp466->value = ((org$frostlang$frostc$Main$Format) $tmp464.value);
-    $tmp465 = ((frost$core$Equatable*) $tmp466);
+org$frostlang$frostc$Main$Format$nullable $tmp457 = *(&local6);
+frost$core$Bit $tmp458 = frost$core$Bit$init$builtin_bit(!$tmp457.nonnull);
+bool $tmp459 = $tmp458.value;
+if ($tmp459) goto block57; else goto block59;
+block59:;
+org$frostlang$frostc$Main$Format$nullable $tmp460 = *(&local6);
+frost$core$Equatable* $tmp461;
+if ($tmp460.nonnull) {
+    org$frostlang$frostc$Main$Format$wrapper* $tmp462;
+    $tmp462 = (org$frostlang$frostc$Main$Format$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Main$Format$wrapperclass);
+    $tmp462->value = ((org$frostlang$frostc$Main$Format) $tmp460.value);
+    $tmp461 = ((frost$core$Equatable*) $tmp462);
 }
 else {
-    $tmp465 = NULL;
+    $tmp461 = NULL;
 }
-frost$core$Int64 $tmp467 = (frost$core$Int64) {6};
-org$frostlang$frostc$Main$Format $tmp468 = org$frostlang$frostc$Main$Format$init$frost$core$Int64($tmp467);
-org$frostlang$frostc$Main$Format$wrapper* $tmp469;
-$tmp469 = (org$frostlang$frostc$Main$Format$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Main$Format$wrapperclass);
-$tmp469->value = $tmp468;
-ITable* $tmp470 = $tmp465->$class->itable;
-while ($tmp470->$class != (frost$core$Class*) &frost$core$Equatable$class) {
-    $tmp470 = $tmp470->next;
+frost$core$Int64 $tmp463 = (frost$core$Int64) {6};
+org$frostlang$frostc$Main$Format $tmp464 = org$frostlang$frostc$Main$Format$init$frost$core$Int64($tmp463);
+org$frostlang$frostc$Main$Format$wrapper* $tmp465;
+$tmp465 = (org$frostlang$frostc$Main$Format$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Main$Format$wrapperclass);
+$tmp465->value = $tmp464;
+ITable* $tmp466 = $tmp461->$class->itable;
+while ($tmp466->$class != (frost$core$Class*) &frost$core$Equatable$class) {
+    $tmp466 = $tmp466->next;
 }
-$fn472 $tmp471 = $tmp470->methods[1];
-frost$core$Bit $tmp473 = $tmp471($tmp465, ((frost$core$Equatable*) $tmp469));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Equatable*) $tmp469)));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp465));
-*(&local19) = $tmp473;
-goto block65;
-block65:;
-frost$core$Bit $tmp474 = *(&local19);
-bool $tmp475 = $tmp474.value;
-if ($tmp475) goto block61; else goto block62;
-block61:;
+$fn468 $tmp467 = $tmp466->methods[1];
+frost$core$Bit $tmp469 = $tmp467($tmp461, ((frost$core$Equatable*) $tmp465));
+bool $tmp470 = $tmp469.value;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Equatable*) $tmp465)));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp461));
+if ($tmp470) goto block57; else goto block58;
+block57:;
 // line 253
-frost$collections$Array* $tmp476 = *(&local2);
-frost$io$File* $tmp477 = (frost$io$File*) frostObjectAlloc(24, (frost$core$Class*) &frost$io$File$class);
-frost$core$String* $tmp478 = org$frostlang$frostc$Config$frostLibDir$R$frost$core$String();
-frost$io$File$init$frost$core$String($tmp477, $tmp478);
-frost$io$File* $tmp479 = frost$io$File$resolve$frost$core$String$R$frost$io$File($tmp477, &$s480);
-frost$collections$Array$add$frost$collections$Array$T($tmp476, ((frost$core$Object*) $tmp479));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp479));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp478));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp477));
-goto block62;
-block62:;
+frost$collections$Array* $tmp471 = *(&local2);
+frost$io$File* $tmp472 = (frost$io$File*) frostObjectAlloc(24, (frost$core$Class*) &frost$io$File$class);
+frost$core$String* $tmp473 = org$frostlang$frostc$Config$frostLibDir$R$frost$core$String();
+frost$io$File$init$frost$core$String($tmp472, $tmp473);
+frost$io$File* $tmp474 = frost$io$File$resolve$frost$core$String$R$frost$io$File($tmp472, &$s475);
+frost$collections$Array$add$frost$collections$Array$T($tmp471, ((frost$core$Object*) $tmp474));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp474));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp473));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp472));
+goto block58;
+block58:;
 // line 255
-frost$collections$Array* $tmp481 = *(&local2);
-frost$io$File** $tmp482 = &param0->frostHome;
-frost$io$File* $tmp483 = *$tmp482;
-frost$collections$Array$add$frost$collections$Array$T($tmp481, ((frost$core$Object*) $tmp483));
+frost$collections$Array* $tmp476 = *(&local2);
+frost$io$File** $tmp477 = &param0->frostHome;
+frost$io$File* $tmp478 = *$tmp477;
+frost$collections$Array$add$frost$collections$Array$T($tmp476, ((frost$core$Object*) $tmp478));
 // line 256
-frost$io$File* $tmp484 = (frost$io$File*) frostObjectAlloc(24, (frost$core$Class*) &frost$io$File$class);
-frost$core$String* $tmp485 = org$frostlang$frostc$Config$llvmDir$R$frost$core$String();
-frost$io$File$init$frost$core$String($tmp484, $tmp485);
-*(&local20) = ((frost$io$File*) NULL);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp484));
-frost$io$File* $tmp486 = *(&local20);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp486));
-*(&local20) = $tmp484;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp485));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp484));
+frost$io$File* $tmp479 = (frost$io$File*) frostObjectAlloc(24, (frost$core$Class*) &frost$io$File$class);
+frost$core$String* $tmp480 = org$frostlang$frostc$Config$llvmDir$R$frost$core$String();
+frost$io$File$init$frost$core$String($tmp479, $tmp480);
+*(&local17) = ((frost$io$File*) NULL);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp479));
+frost$io$File* $tmp481 = *(&local17);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp481));
+*(&local17) = $tmp479;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp480));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp479));
 // line 257
-frost$io$File* $tmp487 = (frost$io$File*) frostObjectAlloc(24, (frost$core$Class*) &frost$io$File$class);
-frost$io$File$init$frost$core$String($tmp487, &$s488);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp487));
-frost$io$File** $tmp489 = &param0->clang;
-frost$io$File* $tmp490 = *$tmp489;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp490));
-frost$io$File** $tmp491 = &param0->clang;
-*$tmp491 = $tmp487;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp487));
+frost$io$File* $tmp482 = (frost$io$File*) frostObjectAlloc(24, (frost$core$Class*) &frost$io$File$class);
+frost$io$File$init$frost$core$String($tmp482, &$s483);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp482));
+frost$io$File** $tmp484 = &param0->clang;
+frost$io$File* $tmp485 = *$tmp484;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp485));
+frost$io$File** $tmp486 = &param0->clang;
+*$tmp486 = $tmp482;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp482));
 // line 258
-frost$collections$Array* $tmp492 = *(&local1);
-ITable* $tmp493 = ((frost$collections$CollectionView*) $tmp492)->$class->itable;
-while ($tmp493->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
-    $tmp493 = $tmp493->next;
+frost$collections$Array* $tmp487 = *(&local1);
+ITable* $tmp488 = ((frost$collections$CollectionView*) $tmp487)->$class->itable;
+while ($tmp488->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
+    $tmp488 = $tmp488->next;
 }
-$fn495 $tmp494 = $tmp493->methods[0];
-frost$core$Int64 $tmp496 = $tmp494(((frost$collections$CollectionView*) $tmp492));
-frost$core$Int64 $tmp497 = (frost$core$Int64) {0};
-frost$core$Bit $tmp498 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp496, $tmp497);
-bool $tmp499 = $tmp498.value;
-if ($tmp499) goto block66; else goto block67;
-block66:;
+$fn490 $tmp489 = $tmp488->methods[0];
+frost$core$Int64 $tmp491 = $tmp489(((frost$collections$CollectionView*) $tmp487));
+frost$core$Int64 $tmp492 = (frost$core$Int64) {0};
+frost$core$Bit $tmp493 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp491, $tmp492);
+bool $tmp494 = $tmp493.value;
+if ($tmp494) goto block60; else goto block61;
+block60:;
 // line 259
-frost$io$Console$printErrorLine$frost$core$String(&$s500);
+frost$io$Console$printErrorLine$frost$core$String(&$s495);
 // line 260
-frost$core$Int64 $tmp501 = (frost$core$Int64) {1};
-frost$core$System$exit$frost$core$Int64($tmp501);
-goto block67;
-block67:;
+frost$core$Int64 $tmp496 = (frost$core$Int64) {1};
+frost$core$System$exit$frost$core$Int64($tmp496);
+goto block61;
+block61:;
 // line 262
-org$frostlang$frostc$Main$Format$nullable $tmp502 = *(&local6);
-frost$core$Bit $tmp503 = frost$core$Bit$init$builtin_bit(!$tmp502.nonnull);
-bool $tmp504 = $tmp503.value;
-if ($tmp504) goto block68; else goto block69;
-block68:;
+org$frostlang$frostc$Main$Format$nullable $tmp497 = *(&local6);
+frost$core$Bit $tmp498 = frost$core$Bit$init$builtin_bit(!$tmp497.nonnull);
+bool $tmp499 = $tmp498.value;
+if ($tmp499) goto block62; else goto block63;
+block62:;
 // line 263
-frost$core$Int64 $tmp505 = (frost$core$Int64) {1};
-org$frostlang$frostc$Main$Format $tmp506 = org$frostlang$frostc$Main$Format$init$frost$core$Int64($tmp505);
-*(&local6) = ((org$frostlang$frostc$Main$Format$nullable) { $tmp506, true });
-goto block69;
-block69:;
+frost$core$Int64 $tmp500 = (frost$core$Int64) {1};
+org$frostlang$frostc$Main$Format $tmp501 = org$frostlang$frostc$Main$Format$init$frost$core$Int64($tmp500);
+*(&local6) = ((org$frostlang$frostc$Main$Format$nullable) { $tmp501, true });
+goto block63;
+block63:;
 // line 265
-frost$io$File* $tmp507 = *(&local3);
-frost$core$Bit $tmp508 = frost$core$Bit$init$builtin_bit($tmp507 == NULL);
-bool $tmp509 = $tmp508.value;
-if ($tmp509) goto block70; else goto block71;
-block70:;
+frost$io$File* $tmp502 = *(&local3);
+frost$core$Bit $tmp503 = frost$core$Bit$init$builtin_bit($tmp502 == NULL);
+bool $tmp504 = $tmp503.value;
+if ($tmp504) goto block64; else goto block65;
+block64:;
 // line 266
-frost$collections$Array* $tmp510 = *(&local1);
-ITable* $tmp511 = ((frost$collections$CollectionView*) $tmp510)->$class->itable;
-while ($tmp511->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
-    $tmp511 = $tmp511->next;
+frost$collections$Array* $tmp505 = *(&local1);
+ITable* $tmp506 = ((frost$collections$CollectionView*) $tmp505)->$class->itable;
+while ($tmp506->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
+    $tmp506 = $tmp506->next;
 }
-$fn513 $tmp512 = $tmp511->methods[0];
-frost$core$Int64 $tmp514 = $tmp512(((frost$collections$CollectionView*) $tmp510));
+$fn508 $tmp507 = $tmp506->methods[0];
+frost$core$Int64 $tmp509 = $tmp507(((frost$collections$CollectionView*) $tmp505));
+frost$core$Int64 $tmp510 = (frost$core$Int64) {1};
+frost$core$Bit $tmp511 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp509, $tmp510);
+bool $tmp512 = $tmp511.value;
+if ($tmp512) goto block66; else goto block68;
+block66:;
+// line 267
+*(&local18) = ((frost$core$String*) NULL);
+// line 268
+org$frostlang$frostc$Main$Format$nullable $tmp513 = *(&local6);
+frost$core$Int64 $tmp514 = ((org$frostlang$frostc$Main$Format) $tmp513.value).$rawValue;
 frost$core$Int64 $tmp515 = (frost$core$Int64) {1};
 frost$core$Bit $tmp516 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp514, $tmp515);
 bool $tmp517 = $tmp516.value;
-if ($tmp517) goto block72; else goto block74;
-block72:;
-// line 267
-*(&local21) = ((frost$core$String*) NULL);
-// line 268
-org$frostlang$frostc$Main$Format$nullable $tmp518 = *(&local6);
-frost$core$Int64 $tmp519 = ((org$frostlang$frostc$Main$Format) $tmp518.value).$rawValue;
-frost$core$Int64 $tmp520 = (frost$core$Int64) {1};
-frost$core$Bit $tmp521 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp519, $tmp520);
-bool $tmp522 = $tmp521.value;
-if ($tmp522) goto block76; else goto block77;
-block76:;
+if ($tmp517) goto block70; else goto block71;
+block70:;
 // line 269
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) &$s523));
-frost$core$String* $tmp524 = *(&local21);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp524));
-*(&local21) = &$s525;
-goto block75;
-block77:;
-frost$core$Int64 $tmp526 = (frost$core$Int64) {2};
-frost$core$Bit $tmp527 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp519, $tmp526);
-bool $tmp528 = $tmp527.value;
-if ($tmp528) goto block78; else goto block79;
-block78:;
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) &$s518));
+frost$core$String* $tmp519 = *(&local18);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp519));
+*(&local18) = &$s520;
+goto block69;
+block71:;
+frost$core$Int64 $tmp521 = (frost$core$Int64) {2};
+frost$core$Bit $tmp522 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp514, $tmp521);
+bool $tmp523 = $tmp522.value;
+if ($tmp523) goto block72; else goto block73;
+block72:;
 // line 270
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) &$s529));
-frost$core$String* $tmp530 = *(&local21);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp530));
-*(&local21) = &$s531;
-goto block75;
-block79:;
-frost$core$Int64 $tmp532 = (frost$core$Int64) {0};
-frost$core$Bit $tmp533 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp519, $tmp532);
-bool $tmp534 = $tmp533.value;
-if ($tmp534) goto block80; else goto block81;
-block80:;
-// line 271
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) &$s535));
-frost$core$String* $tmp536 = *(&local21);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp536));
-*(&local21) = &$s537;
-goto block75;
-block81:;
-frost$core$Int64 $tmp538 = (frost$core$Int64) {5};
-frost$core$Bit $tmp539 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp519, $tmp538);
-bool $tmp540 = $tmp539.value;
-if ($tmp540) goto block82; else goto block83;
-block82:;
-// line 272
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) &$s541));
-frost$core$String* $tmp542 = *(&local21);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp542));
-*(&local21) = &$s543;
-goto block75;
-block83:;
-frost$core$Int64 $tmp544 = (frost$core$Int64) {6};
-frost$core$Bit $tmp545 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp519, $tmp544);
-bool $tmp546 = $tmp545.value;
-if ($tmp546) goto block84; else goto block85;
-block84:;
-// line 273
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) &$s547));
-frost$core$String* $tmp548 = *(&local21);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp548));
-*(&local21) = &$s549;
-goto block75;
-block85:;
-// line 275
-frost$io$Console$printErrorLine$frost$core$String(&$s550);
-// line 277
-frost$core$Int64 $tmp551 = (frost$core$Int64) {1};
-frost$core$System$exit$frost$core$Int64($tmp551);
-goto block75;
-block75:;
-// line 280
-frost$collections$Array* $tmp552 = *(&local1);
-frost$core$Int64 $tmp553 = (frost$core$Int64) {0};
-frost$core$Object* $tmp554 = frost$collections$Array$$IDX$frost$core$Int64$R$frost$collections$Array$T($tmp552, $tmp553);
-frost$core$String* $tmp555 = *(&local21);
-frost$io$File* $tmp556 = frost$io$File$withExtension$frost$core$String$R$frost$io$File(((frost$io$File*) $tmp554), $tmp555);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp556));
-frost$io$File* $tmp557 = *(&local3);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp557));
-*(&local3) = $tmp556;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp556));
-frost$core$Frost$unref$frost$core$Object$Q($tmp554);
-frost$core$String* $tmp558 = *(&local21);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp558));
-*(&local21) = ((frost$core$String*) NULL);
-goto block73;
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) &$s524));
+frost$core$String* $tmp525 = *(&local18);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp525));
+*(&local18) = &$s526;
+goto block69;
+block73:;
+frost$core$Int64 $tmp527 = (frost$core$Int64) {0};
+frost$core$Bit $tmp528 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp514, $tmp527);
+bool $tmp529 = $tmp528.value;
+if ($tmp529) goto block74; else goto block75;
 block74:;
+// line 271
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) &$s530));
+frost$core$String* $tmp531 = *(&local18);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp531));
+*(&local18) = &$s532;
+goto block69;
+block75:;
+frost$core$Int64 $tmp533 = (frost$core$Int64) {5};
+frost$core$Bit $tmp534 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp514, $tmp533);
+bool $tmp535 = $tmp534.value;
+if ($tmp535) goto block76; else goto block77;
+block76:;
+// line 272
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) &$s536));
+frost$core$String* $tmp537 = *(&local18);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp537));
+*(&local18) = &$s538;
+goto block69;
+block77:;
+frost$core$Int64 $tmp539 = (frost$core$Int64) {6};
+frost$core$Bit $tmp540 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp514, $tmp539);
+bool $tmp541 = $tmp540.value;
+if ($tmp541) goto block78; else goto block79;
+block78:;
+// line 273
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) &$s542));
+frost$core$String* $tmp543 = *(&local18);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp543));
+*(&local18) = &$s544;
+goto block69;
+block79:;
+// line 275
+frost$io$Console$printErrorLine$frost$core$String(&$s545);
+// line 277
+frost$core$Int64 $tmp546 = (frost$core$Int64) {1};
+frost$core$System$exit$frost$core$Int64($tmp546);
+goto block69;
+block69:;
+// line 280
+frost$collections$Array* $tmp547 = *(&local1);
+frost$core$Int64 $tmp548 = (frost$core$Int64) {0};
+frost$core$Object* $tmp549 = frost$collections$Array$$IDX$frost$core$Int64$R$frost$collections$Array$T($tmp547, $tmp548);
+frost$core$String* $tmp550 = *(&local18);
+frost$io$File* $tmp551 = frost$io$File$withExtension$frost$core$String$R$frost$io$File(((frost$io$File*) $tmp549), $tmp550);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp551));
+frost$io$File* $tmp552 = *(&local3);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp552));
+*(&local3) = $tmp551;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp551));
+frost$core$Frost$unref$frost$core$Object$Q($tmp549);
+frost$core$String* $tmp553 = *(&local18);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp553));
+*(&local18) = ((frost$core$String*) NULL);
+goto block67;
+block68:;
 // line 282
-org$frostlang$frostc$Main$Format$nullable $tmp559 = *(&local6);
-frost$core$Equatable* $tmp560;
-if ($tmp559.nonnull) {
-    org$frostlang$frostc$Main$Format$wrapper* $tmp561;
-    $tmp561 = (org$frostlang$frostc$Main$Format$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Main$Format$wrapperclass);
-    $tmp561->value = ((org$frostlang$frostc$Main$Format) $tmp559.value);
-    $tmp560 = ((frost$core$Equatable*) $tmp561);
+org$frostlang$frostc$Main$Format$nullable $tmp554 = *(&local6);
+frost$core$Equatable* $tmp555;
+if ($tmp554.nonnull) {
+    org$frostlang$frostc$Main$Format$wrapper* $tmp556;
+    $tmp556 = (org$frostlang$frostc$Main$Format$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Main$Format$wrapperclass);
+    $tmp556->value = ((org$frostlang$frostc$Main$Format) $tmp554.value);
+    $tmp555 = ((frost$core$Equatable*) $tmp556);
 }
 else {
-    $tmp560 = NULL;
+    $tmp555 = NULL;
 }
-frost$core$Int64 $tmp562 = (frost$core$Int64) {5};
-org$frostlang$frostc$Main$Format $tmp563 = org$frostlang$frostc$Main$Format$init$frost$core$Int64($tmp562);
-org$frostlang$frostc$Main$Format$wrapper* $tmp564;
-$tmp564 = (org$frostlang$frostc$Main$Format$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Main$Format$wrapperclass);
-$tmp564->value = $tmp563;
-ITable* $tmp565 = $tmp560->$class->itable;
-while ($tmp565->$class != (frost$core$Class*) &frost$core$Equatable$class) {
-    $tmp565 = $tmp565->next;
+frost$core$Int64 $tmp557 = (frost$core$Int64) {5};
+org$frostlang$frostc$Main$Format $tmp558 = org$frostlang$frostc$Main$Format$init$frost$core$Int64($tmp557);
+org$frostlang$frostc$Main$Format$wrapper* $tmp559;
+$tmp559 = (org$frostlang$frostc$Main$Format$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Main$Format$wrapperclass);
+$tmp559->value = $tmp558;
+ITable* $tmp560 = $tmp555->$class->itable;
+while ($tmp560->$class != (frost$core$Class*) &frost$core$Equatable$class) {
+    $tmp560 = $tmp560->next;
 }
-$fn567 $tmp566 = $tmp565->methods[0];
-frost$core$Bit $tmp568 = $tmp566($tmp560, ((frost$core$Equatable*) $tmp564));
-bool $tmp569 = $tmp568.value;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Equatable*) $tmp564)));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp560));
-if ($tmp569) goto block86; else goto block88;
-block86:;
+$fn562 $tmp561 = $tmp560->methods[0];
+frost$core$Bit $tmp563 = $tmp561($tmp555, ((frost$core$Equatable*) $tmp559));
+bool $tmp564 = $tmp563.value;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Equatable*) $tmp559)));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp555));
+if ($tmp564) goto block80; else goto block82;
+block80:;
 // line 283
-frost$io$Console$printErrorLine$frost$core$String(&$s570);
+frost$io$Console$printErrorLine$frost$core$String(&$s565);
 // line 284
-frost$core$Int64 $tmp571 = (frost$core$Int64) {1};
-frost$core$System$exit$frost$core$Int64($tmp571);
-goto block87;
-block88:;
+frost$core$Int64 $tmp566 = (frost$core$Int64) {1};
+frost$core$System$exit$frost$core$Int64($tmp566);
+goto block81;
+block82:;
 // line 1
 // line 287
-frost$io$Console$printErrorLine$frost$core$String(&$s572);
+frost$io$Console$printErrorLine$frost$core$String(&$s567);
 // line 289
-frost$core$Int64 $tmp573 = (frost$core$Int64) {1};
-frost$core$System$exit$frost$core$Int64($tmp573);
-goto block87;
-block87:;
-goto block73;
-block73:;
-goto block71;
-block71:;
+frost$core$Int64 $tmp568 = (frost$core$Int64) {1};
+frost$core$System$exit$frost$core$Int64($tmp568);
+goto block81;
+block81:;
+goto block67;
+block67:;
+goto block65;
+block65:;
 // line 292
-org$frostlang$frostc$Main$Format$nullable $tmp574 = *(&local6);
-frost$core$Equatable* $tmp575;
-if ($tmp574.nonnull) {
-    org$frostlang$frostc$Main$Format$wrapper* $tmp576;
-    $tmp576 = (org$frostlang$frostc$Main$Format$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Main$Format$wrapperclass);
-    $tmp576->value = ((org$frostlang$frostc$Main$Format) $tmp574.value);
-    $tmp575 = ((frost$core$Equatable*) $tmp576);
+org$frostlang$frostc$Main$Format$nullable $tmp569 = *(&local6);
+frost$core$Equatable* $tmp570;
+if ($tmp569.nonnull) {
+    org$frostlang$frostc$Main$Format$wrapper* $tmp571;
+    $tmp571 = (org$frostlang$frostc$Main$Format$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Main$Format$wrapperclass);
+    $tmp571->value = ((org$frostlang$frostc$Main$Format) $tmp569.value);
+    $tmp570 = ((frost$core$Equatable*) $tmp571);
 }
 else {
-    $tmp575 = NULL;
+    $tmp570 = NULL;
 }
-frost$core$Int64 $tmp577 = (frost$core$Int64) {5};
-org$frostlang$frostc$Main$Format $tmp578 = org$frostlang$frostc$Main$Format$init$frost$core$Int64($tmp577);
-org$frostlang$frostc$Main$Format$wrapper* $tmp579;
-$tmp579 = (org$frostlang$frostc$Main$Format$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Main$Format$wrapperclass);
-$tmp579->value = $tmp578;
-ITable* $tmp580 = $tmp575->$class->itable;
-while ($tmp580->$class != (frost$core$Class*) &frost$core$Equatable$class) {
-    $tmp580 = $tmp580->next;
+frost$core$Int64 $tmp572 = (frost$core$Int64) {5};
+org$frostlang$frostc$Main$Format $tmp573 = org$frostlang$frostc$Main$Format$init$frost$core$Int64($tmp572);
+org$frostlang$frostc$Main$Format$wrapper* $tmp574;
+$tmp574 = (org$frostlang$frostc$Main$Format$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Main$Format$wrapperclass);
+$tmp574->value = $tmp573;
+ITable* $tmp575 = $tmp570->$class->itable;
+while ($tmp575->$class != (frost$core$Class*) &frost$core$Equatable$class) {
+    $tmp575 = $tmp575->next;
 }
-$fn582 $tmp581 = $tmp580->methods[0];
-frost$core$Bit $tmp583 = $tmp581($tmp575, ((frost$core$Equatable*) $tmp579));
-bool $tmp584 = $tmp583.value;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Equatable*) $tmp579)));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp575));
-if ($tmp584) goto block89; else goto block90;
-block89:;
+$fn577 $tmp576 = $tmp575->methods[0];
+frost$core$Bit $tmp578 = $tmp576($tmp570, ((frost$core$Equatable*) $tmp574));
+bool $tmp579 = $tmp578.value;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Equatable*) $tmp574)));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp570));
+if ($tmp579) goto block83; else goto block84;
+block83:;
 // line 293
-frost$core$String* $tmp585 = *(&local7);
-frost$core$Bit $tmp586 = frost$core$Bit$init$builtin_bit($tmp585 == NULL);
-bool $tmp587 = $tmp586.value;
-if ($tmp587) goto block91; else goto block92;
-block91:;
+frost$core$String* $tmp580 = *(&local7);
+frost$core$Bit $tmp581 = frost$core$Bit$init$builtin_bit($tmp580 == NULL);
+bool $tmp582 = $tmp581.value;
+if ($tmp582) goto block85; else goto block86;
+block85:;
 // line 294
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) &$s588));
-frost$core$String* $tmp589 = *(&local7);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp589));
-*(&local7) = &$s588;
-goto block92;
-block92:;
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) &$s583));
+frost$core$String* $tmp584 = *(&local7);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp584));
+*(&local7) = &$s583;
+goto block86;
+block86:;
 // line 296
-org$frostlang$frostc$HTMLProcessor* $tmp590 = (org$frostlang$frostc$HTMLProcessor*) frostObjectAlloc(12, (frost$core$Class*) &org$frostlang$frostc$HTMLProcessor$class);
-org$frostlang$frostc$HTMLProcessor$init($tmp590);
-frost$collections$Array* $tmp591 = *(&local1);
-frost$core$Int64 $tmp592 = (frost$core$Int64) {0};
-frost$core$Object* $tmp593 = frost$collections$Array$$IDX$frost$core$Int64$R$frost$collections$Array$T($tmp591, $tmp592);
-frost$io$File* $tmp594 = *(&local3);
-frost$core$String* $tmp595 = *(&local7);
-$fn597 $tmp596 = ($fn597) $tmp590->$class->vtable[3];
-$tmp596($tmp590, ((frost$io$File*) $tmp593), $tmp594, $tmp595);
-frost$core$Frost$unref$frost$core$Object$Q($tmp593);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp590));
+org$frostlang$frostc$HTMLProcessor* $tmp585 = (org$frostlang$frostc$HTMLProcessor*) frostObjectAlloc(12, (frost$core$Class*) &org$frostlang$frostc$HTMLProcessor$class);
+org$frostlang$frostc$HTMLProcessor$init($tmp585);
+frost$collections$Array* $tmp586 = *(&local1);
+frost$core$Int64 $tmp587 = (frost$core$Int64) {0};
+frost$core$Object* $tmp588 = frost$collections$Array$$IDX$frost$core$Int64$R$frost$collections$Array$T($tmp586, $tmp587);
+frost$io$File* $tmp589 = *(&local3);
+frost$core$String* $tmp590 = *(&local7);
+$fn592 $tmp591 = ($fn592) $tmp585->$class->vtable[3];
+$tmp591($tmp585, ((frost$io$File*) $tmp588), $tmp589, $tmp590);
+frost$core$Frost$unref$frost$core$Object$Q($tmp588);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp585));
 // line 297
-frost$io$File* $tmp598 = *(&local20);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp598));
-*(&local20) = ((frost$io$File*) NULL);
-frost$core$String* $tmp599 = *(&local7);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp599));
+frost$io$File* $tmp593 = *(&local17);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp593));
+*(&local17) = ((frost$io$File*) NULL);
+frost$core$String* $tmp594 = *(&local7);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp594));
 *(&local7) = ((frost$core$String*) NULL);
-frost$io$File* $tmp600 = *(&local3);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp600));
+frost$io$File* $tmp595 = *(&local3);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp595));
 *(&local3) = ((frost$io$File*) NULL);
-frost$collections$Array* $tmp601 = *(&local2);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp601));
+frost$collections$Array* $tmp596 = *(&local2);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp596));
 *(&local2) = ((frost$collections$Array*) NULL);
-frost$collections$Array* $tmp602 = *(&local1);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp602));
+frost$collections$Array* $tmp597 = *(&local1);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp597));
 *(&local1) = ((frost$collections$Array*) NULL);
-org$frostlang$frostc$Main$Arguments* $tmp603 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp603));
+org$frostlang$frostc$Main$Arguments* $tmp598 = *(&local0);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp598));
 *(&local0) = ((org$frostlang$frostc$Main$Arguments*) NULL);
 return;
-block90:;
+block84:;
 // line 299
-frost$core$String* $tmp604 = *(&local7);
-frost$core$Bit $tmp605 = frost$core$Bit$init$builtin_bit($tmp604 != NULL);
-bool $tmp606 = $tmp605.value;
-if ($tmp606) goto block93; else goto block94;
-block93:;
+frost$core$String* $tmp599 = *(&local7);
+frost$core$Bit $tmp600 = frost$core$Bit$init$builtin_bit($tmp599 != NULL);
+bool $tmp601 = $tmp600.value;
+if ($tmp601) goto block87; else goto block88;
+block87:;
 // line 300
-frost$io$Console$printErrorLine$frost$core$String(&$s607);
+frost$io$Console$printErrorLine$frost$core$String(&$s602);
 // line 301
-frost$core$Int64 $tmp608 = (frost$core$Int64) {1};
-frost$core$System$exit$frost$core$Int64($tmp608);
-goto block94;
-block94:;
+frost$core$Int64 $tmp603 = (frost$core$Int64) {1};
+frost$core$System$exit$frost$core$Int64($tmp603);
+goto block88;
+block88:;
 // line 303
+frost$core$Int64 $tmp604 = (frost$core$Int64) {0};
+*(&local19) = $tmp604;
+// line 304
+frost$core$Int64 $tmp605 = (frost$core$Int64) {0};
+*(&local20) = $tmp605;
 // line 1
-// line 305
-*(&local23) = ((org$frostlang$frostc$CodeGenerator*) NULL);
 // line 306
-org$frostlang$frostc$Main$Format$nullable $tmp609 = *(&local6);
-frost$core$Int64 $tmp610 = ((org$frostlang$frostc$Main$Format) $tmp609.value).$rawValue;
-frost$core$Int64 $tmp611 = (frost$core$Int64) {0};
-frost$core$Bit $tmp612 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp610, $tmp611);
+*(&local21) = ((org$frostlang$frostc$CodeGenerator*) NULL);
+// line 307
+org$frostlang$frostc$Main$Format$nullable $tmp606 = *(&local6);
+frost$core$Int64 $tmp607 = ((org$frostlang$frostc$Main$Format) $tmp606.value).$rawValue;
+frost$core$Int64 $tmp608 = (frost$core$Int64) {0};
+frost$core$Bit $tmp609 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp607, $tmp608);
+bool $tmp610 = $tmp609.value;
+if ($tmp610) goto block90; else goto block91;
+block91:;
+frost$core$Int64 $tmp611 = (frost$core$Int64) {1};
+frost$core$Bit $tmp612 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp607, $tmp611);
 bool $tmp613 = $tmp612.value;
-if ($tmp613) goto block96; else goto block97;
-block97:;
-frost$core$Int64 $tmp614 = (frost$core$Int64) {1};
-frost$core$Bit $tmp615 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp610, $tmp614);
+if ($tmp613) goto block90; else goto block92;
+block92:;
+frost$core$Int64 $tmp614 = (frost$core$Int64) {2};
+frost$core$Bit $tmp615 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp607, $tmp614);
 bool $tmp616 = $tmp615.value;
-if ($tmp616) goto block96; else goto block98;
-block98:;
-frost$core$Int64 $tmp617 = (frost$core$Int64) {2};
-frost$core$Bit $tmp618 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp610, $tmp617);
-bool $tmp619 = $tmp618.value;
-if ($tmp619) goto block96; else goto block99;
-block96:;
-// line 308
-*(&local24) = ((frost$core$Error*) NULL);
+if ($tmp616) goto block90; else goto block93;
+block90:;
 // line 309
-org$frostlang$frostc$LLVMCodeGenerator* $tmp620 = (org$frostlang$frostc$LLVMCodeGenerator*) frostObjectAlloc(240, (frost$core$Class*) &org$frostlang$frostc$LLVMCodeGenerator$class);
-frost$core$String* $tmp621 = org$frostlang$frostc$Config$llvmTriple$R$frost$core$String();
-frost$io$File* $tmp622 = *(&local3);
-frost$io$File* $tmp623 = frost$io$File$withExtension$frost$core$String$R$frost$io$File($tmp622, &$s624);
-frost$core$Maybe* $tmp625 = frost$io$File$openOutputStream$R$frost$core$Maybe$LTfrost$io$OutputStream$GT($tmp623);
-frost$core$Int64* $tmp626 = &$tmp625->$rawValue;
-frost$core$Int64 $tmp627 = *$tmp626;
-int64_t $tmp628 = $tmp627.value;
-bool $tmp629 = $tmp628 == 0;
-if ($tmp629) goto block102; else goto block103;
-block103:;
-frost$core$Error** $tmp630 = (frost$core$Error**) ($tmp625->$data + 0);
-frost$core$Error* $tmp631 = *$tmp630;
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp631));
-*(&local24) = $tmp631;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp625));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp623));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp621));
+*(&local22) = ((frost$core$Error*) NULL);
+// line 310
+org$frostlang$frostc$LLVMCodeGenerator* $tmp617 = (org$frostlang$frostc$LLVMCodeGenerator*) frostObjectAlloc(240, (frost$core$Class*) &org$frostlang$frostc$LLVMCodeGenerator$class);
+frost$core$String* $tmp618 = org$frostlang$frostc$Config$llvmTriple$R$frost$core$String();
+frost$io$File* $tmp619 = *(&local3);
+frost$io$File* $tmp620 = frost$io$File$withExtension$frost$core$String$R$frost$io$File($tmp619, &$s621);
+frost$core$Maybe* $tmp622 = frost$io$File$openOutputStream$R$frost$core$Maybe$LTfrost$io$OutputStream$GT($tmp620);
+frost$core$Int64* $tmp623 = &$tmp622->$rawValue;
+frost$core$Int64 $tmp624 = *$tmp623;
+int64_t $tmp625 = $tmp624.value;
+bool $tmp626 = $tmp625 == 0;
+if ($tmp626) goto block96; else goto block97;
+block97:;
+frost$core$Error** $tmp627 = (frost$core$Error**) ($tmp622->$data + 0);
+frost$core$Error* $tmp628 = *$tmp627;
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp628));
+*(&local22) = $tmp628;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp622));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp620));
-goto block100;
-block102:;
-frost$core$Object** $tmp632 = (frost$core$Object**) ($tmp625->$data + 0);
-frost$core$Object* $tmp633 = *$tmp632;
-org$frostlang$frostc$LLVMCodeGenerator$init$frost$core$String$frost$io$OutputStream($tmp620, $tmp621, ((frost$io$OutputStream*) $tmp633));
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((org$frostlang$frostc$CodeGenerator*) $tmp620)));
-org$frostlang$frostc$CodeGenerator* $tmp634 = *(&local23);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp634));
-*(&local23) = ((org$frostlang$frostc$CodeGenerator*) $tmp620);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp625));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp623));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp621));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp618));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp617));
+goto block94;
+block96:;
+frost$core$Object** $tmp629 = (frost$core$Object**) ($tmp622->$data + 0);
+frost$core$Object* $tmp630 = *$tmp629;
+org$frostlang$frostc$LLVMCodeGenerator$init$frost$core$String$frost$io$OutputStream($tmp617, $tmp618, ((frost$io$OutputStream*) $tmp630));
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((org$frostlang$frostc$CodeGenerator*) $tmp617)));
+org$frostlang$frostc$CodeGenerator* $tmp631 = *(&local21);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp631));
+*(&local21) = ((org$frostlang$frostc$CodeGenerator*) $tmp617);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp622));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp620));
-goto block101;
-block100:;
-// line 313
-frost$core$Error* $tmp635 = *(&local24);
-frost$io$Console$printErrorLine$frost$core$Object(((frost$core$Object*) $tmp635));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp618));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp617));
+goto block95;
+block94:;
 // line 314
-frost$core$Int64 $tmp636 = (frost$core$Int64) {1};
-frost$core$System$exit$frost$core$Int64($tmp636);
-goto block101;
-block101:;
-frost$core$Error* $tmp637 = *(&local24);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp637));
-*(&local24) = ((frost$core$Error*) NULL);
-goto block95;
-block99:;
-frost$core$Int64 $tmp638 = (frost$core$Int64) {3};
-frost$core$Bit $tmp639 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp610, $tmp638);
-bool $tmp640 = $tmp639.value;
-if ($tmp640) goto block104; else goto block105;
-block104:;
-// line 318
-org$frostlang$frostc$HCodeGenerator* $tmp641 = (org$frostlang$frostc$HCodeGenerator*) frostObjectAlloc(152, (frost$core$Class*) &org$frostlang$frostc$HCodeGenerator$class);
-frost$io$File* $tmp642 = *(&local3);
-org$frostlang$frostc$HCodeGenerator$init$frost$io$File($tmp641, $tmp642);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((org$frostlang$frostc$CodeGenerator*) $tmp641)));
-org$frostlang$frostc$CodeGenerator* $tmp643 = *(&local23);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp643));
-*(&local23) = ((org$frostlang$frostc$CodeGenerator*) $tmp641);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp641));
-goto block95;
-block105:;
-frost$core$Int64 $tmp644 = (frost$core$Int64) {4};
-frost$core$Bit $tmp645 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp610, $tmp644);
-bool $tmp646 = $tmp645.value;
-if ($tmp646) goto block106; else goto block107;
-block106:;
-// line 321
-org$frostlang$frostc$CCodeGenerator* $tmp647 = (org$frostlang$frostc$CCodeGenerator*) frostObjectAlloc(264, (frost$core$Class*) &org$frostlang$frostc$CCodeGenerator$class);
-frost$io$File* $tmp648 = *(&local3);
-org$frostlang$frostc$CCodeGenerator$init$frost$io$File($tmp647, $tmp648);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((org$frostlang$frostc$CodeGenerator*) $tmp647)));
-org$frostlang$frostc$CodeGenerator* $tmp649 = *(&local23);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp649));
-*(&local23) = ((org$frostlang$frostc$CodeGenerator*) $tmp647);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp647));
-goto block95;
-block107:;
-frost$core$Int64 $tmp650 = (frost$core$Int64) {6};
-frost$core$Bit $tmp651 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp610, $tmp650);
-bool $tmp652 = $tmp651.value;
-if ($tmp652) goto block108; else goto block109;
-block108:;
-// line 324
-*(&local25) = ((frost$core$Error*) NULL);
-// line 325
-org$frostlang$frostc$StubCodeGenerator* $tmp653 = (org$frostlang$frostc$StubCodeGenerator*) frostObjectAlloc(32, (frost$core$Class*) &org$frostlang$frostc$StubCodeGenerator$class);
-frost$io$File* $tmp654 = *(&local3);
-frost$core$Maybe* $tmp655 = frost$io$File$openOutputStream$R$frost$core$Maybe$LTfrost$io$OutputStream$GT($tmp654);
-frost$core$Int64* $tmp656 = &$tmp655->$rawValue;
-frost$core$Int64 $tmp657 = *$tmp656;
-int64_t $tmp658 = $tmp657.value;
-bool $tmp659 = $tmp658 == 0;
-if ($tmp659) goto block112; else goto block113;
-block113:;
-frost$core$Error** $tmp660 = (frost$core$Error**) ($tmp655->$data + 0);
-frost$core$Error* $tmp661 = *$tmp660;
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp661));
-*(&local25) = $tmp661;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp655));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp653));
-goto block110;
-block112:;
-frost$core$Object** $tmp662 = (frost$core$Object**) ($tmp655->$data + 0);
-frost$core$Object* $tmp663 = *$tmp662;
-org$frostlang$frostc$StubCodeGenerator$init$frost$io$OutputStream($tmp653, ((frost$io$OutputStream*) $tmp663));
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((org$frostlang$frostc$CodeGenerator*) $tmp653)));
-org$frostlang$frostc$CodeGenerator* $tmp664 = *(&local23);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp664));
-*(&local23) = ((org$frostlang$frostc$CodeGenerator*) $tmp653);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp655));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp653));
-goto block111;
-block110:;
-// line 328
-frost$core$Error* $tmp665 = *(&local25);
-frost$io$Console$printErrorLine$frost$core$Object(((frost$core$Object*) $tmp665));
-// line 329
-frost$core$Int64 $tmp666 = (frost$core$Int64) {1};
-frost$core$System$exit$frost$core$Int64($tmp666);
-goto block111;
-block111:;
-frost$core$Error* $tmp667 = *(&local25);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp667));
-*(&local25) = ((frost$core$Error*) NULL);
-goto block95;
-block109:;
-// line 333
-frost$core$Bit $tmp668 = frost$core$Bit$init$builtin_bit(false);
-bool $tmp669 = $tmp668.value;
-if ($tmp669) goto block114; else goto block115;
-block115:;
-frost$core$Int64 $tmp670 = (frost$core$Int64) {333};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s671, $tmp670);
-abort(); // unreachable
-block114:;
+frost$core$Error* $tmp632 = *(&local22);
+frost$io$Console$printErrorLine$frost$core$Object(((frost$core$Object*) $tmp632));
+// line 315
+frost$core$Int64 $tmp633 = (frost$core$Int64) {1};
+frost$core$System$exit$frost$core$Int64($tmp633);
 goto block95;
 block95:;
-// line 336
-org$frostlang$frostc$Compiler$Settings* $tmp672 = (org$frostlang$frostc$Compiler$Settings*) frostObjectAlloc(49, (frost$core$Class*) &org$frostlang$frostc$Compiler$Settings$class);
-frost$io$File** $tmp673 = &param0->frostHome;
-frost$io$File* $tmp674 = *$tmp673;
-frost$collections$Array* $tmp675 = *(&local2);
-frost$core$Int64 $tmp676 = *(&local4);
-frost$core$Int64 $tmp677 = *(&local5);
-frost$core$Bit* $tmp678 = &param0->debug;
-frost$core$Bit $tmp679 = *$tmp678;
-org$frostlang$frostc$Compiler$Settings$init$frost$io$File$frost$collections$ListView$LTfrost$io$File$GT$frost$core$Int64$frost$core$Int64$frost$core$Bit($tmp672, $tmp674, ((frost$collections$ListView*) $tmp675), $tmp676, $tmp677, $tmp679);
-*(&local26) = ((org$frostlang$frostc$Compiler$Settings*) NULL);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp672));
-org$frostlang$frostc$Compiler$Settings* $tmp680 = *(&local26);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp680));
-*(&local26) = $tmp672;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp672));
-// line 338
-frost$threads$MessageQueue* $tmp681 = (frost$threads$MessageQueue*) frostObjectAlloc(56, (frost$core$Class*) &frost$threads$MessageQueue$class);
-frost$threads$MessageQueue$init($tmp681);
-*(&local27) = ((frost$threads$MessageQueue*) NULL);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp681));
-frost$threads$MessageQueue* $tmp682 = *(&local27);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp682));
-*(&local27) = $tmp681;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp681));
+frost$core$Error* $tmp634 = *(&local22);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp634));
+*(&local22) = ((frost$core$Error*) NULL);
+goto block89;
+block93:;
+frost$core$Int64 $tmp635 = (frost$core$Int64) {3};
+frost$core$Bit $tmp636 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp607, $tmp635);
+bool $tmp637 = $tmp636.value;
+if ($tmp637) goto block98; else goto block99;
+block98:;
+// line 319
+org$frostlang$frostc$HCodeGenerator* $tmp638 = (org$frostlang$frostc$HCodeGenerator*) frostObjectAlloc(152, (frost$core$Class*) &org$frostlang$frostc$HCodeGenerator$class);
+frost$io$File* $tmp639 = *(&local3);
+org$frostlang$frostc$HCodeGenerator$init$frost$io$File($tmp638, $tmp639);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((org$frostlang$frostc$CodeGenerator*) $tmp638)));
+org$frostlang$frostc$CodeGenerator* $tmp640 = *(&local21);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp640));
+*(&local21) = ((org$frostlang$frostc$CodeGenerator*) $tmp638);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp638));
+goto block89;
+block99:;
+frost$core$Int64 $tmp641 = (frost$core$Int64) {4};
+frost$core$Bit $tmp642 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp607, $tmp641);
+bool $tmp643 = $tmp642.value;
+if ($tmp643) goto block100; else goto block101;
+block100:;
+// line 322
+org$frostlang$frostc$CCodeGenerator* $tmp644 = (org$frostlang$frostc$CCodeGenerator*) frostObjectAlloc(264, (frost$core$Class*) &org$frostlang$frostc$CCodeGenerator$class);
+frost$io$File* $tmp645 = *(&local3);
+org$frostlang$frostc$CCodeGenerator$init$frost$io$File($tmp644, $tmp645);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((org$frostlang$frostc$CodeGenerator*) $tmp644)));
+org$frostlang$frostc$CodeGenerator* $tmp646 = *(&local21);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp646));
+*(&local21) = ((org$frostlang$frostc$CodeGenerator*) $tmp644);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp644));
+goto block89;
+block101:;
+frost$core$Int64 $tmp647 = (frost$core$Int64) {6};
+frost$core$Bit $tmp648 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp607, $tmp647);
+bool $tmp649 = $tmp648.value;
+if ($tmp649) goto block102; else goto block103;
+block102:;
+// line 325
+*(&local23) = ((frost$core$Error*) NULL);
+// line 326
+org$frostlang$frostc$StubCodeGenerator* $tmp650 = (org$frostlang$frostc$StubCodeGenerator*) frostObjectAlloc(32, (frost$core$Class*) &org$frostlang$frostc$StubCodeGenerator$class);
+frost$io$File* $tmp651 = *(&local3);
+frost$core$Maybe* $tmp652 = frost$io$File$openOutputStream$R$frost$core$Maybe$LTfrost$io$OutputStream$GT($tmp651);
+frost$core$Int64* $tmp653 = &$tmp652->$rawValue;
+frost$core$Int64 $tmp654 = *$tmp653;
+int64_t $tmp655 = $tmp654.value;
+bool $tmp656 = $tmp655 == 0;
+if ($tmp656) goto block106; else goto block107;
+block107:;
+frost$core$Error** $tmp657 = (frost$core$Error**) ($tmp652->$data + 0);
+frost$core$Error* $tmp658 = *$tmp657;
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp658));
+*(&local23) = $tmp658;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp652));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp650));
+goto block104;
+block106:;
+frost$core$Object** $tmp659 = (frost$core$Object**) ($tmp652->$data + 0);
+frost$core$Object* $tmp660 = *$tmp659;
+org$frostlang$frostc$StubCodeGenerator$init$frost$io$OutputStream($tmp650, ((frost$io$OutputStream*) $tmp660));
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((org$frostlang$frostc$CodeGenerator*) $tmp650)));
+org$frostlang$frostc$CodeGenerator* $tmp661 = *(&local21);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp661));
+*(&local21) = ((org$frostlang$frostc$CodeGenerator*) $tmp650);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp652));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp650));
+goto block105;
+block104:;
+// line 329
+frost$core$Error* $tmp662 = *(&local23);
+frost$io$Console$printErrorLine$frost$core$Object(((frost$core$Object*) $tmp662));
+// line 330
+frost$core$Int64 $tmp663 = (frost$core$Int64) {1};
+frost$core$System$exit$frost$core$Int64($tmp663);
+goto block105;
+block105:;
+frost$core$Error* $tmp664 = *(&local23);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp664));
+*(&local23) = ((frost$core$Error*) NULL);
+goto block89;
+block103:;
+// line 334
+frost$core$Int64 $tmp665 = (frost$core$Int64) {334};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s666, $tmp665);
+abort(); // unreachable
+block89:;
+// line 337
+org$frostlang$frostc$Compiler$Settings* $tmp667 = (org$frostlang$frostc$Compiler$Settings*) frostObjectAlloc(49, (frost$core$Class*) &org$frostlang$frostc$Compiler$Settings$class);
+frost$io$File** $tmp668 = &param0->frostHome;
+frost$io$File* $tmp669 = *$tmp668;
+frost$collections$Array* $tmp670 = *(&local2);
+frost$core$Int64 $tmp671 = *(&local4);
+frost$core$Int64 $tmp672 = *(&local5);
+frost$core$Bit* $tmp673 = &param0->debug;
+frost$core$Bit $tmp674 = *$tmp673;
+org$frostlang$frostc$Compiler$Settings$init$frost$io$File$frost$collections$ListView$LTfrost$io$File$GT$frost$core$Int64$frost$core$Int64$frost$core$Bit($tmp667, $tmp669, ((frost$collections$ListView*) $tmp670), $tmp671, $tmp672, $tmp674);
+*(&local24) = ((org$frostlang$frostc$Compiler$Settings*) NULL);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp667));
+org$frostlang$frostc$Compiler$Settings* $tmp675 = *(&local24);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp675));
+*(&local24) = $tmp667;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp667));
 // line 339
-org$frostlang$frostc$Compiler* $tmp683 = (org$frostlang$frostc$Compiler*) frostObjectAlloc(280, (frost$core$Class*) &org$frostlang$frostc$Compiler$class);
-frost$threads$MessageQueue* $tmp684 = *(&local27);
-org$frostlang$frostc$CodeGenerator* $tmp685 = *(&local23);
-org$frostlang$frostc$Compiler$Settings* $tmp686 = *(&local26);
-org$frostlang$frostc$Compiler$init$frost$threads$MessageQueue$LTorg$frostlang$frostc$Compiler$ErrorMsg$GT$org$frostlang$frostc$CodeGenerator$org$frostlang$frostc$Compiler$Settings($tmp683, $tmp684, $tmp685, $tmp686);
-*(&local28) = ((org$frostlang$frostc$Compiler*) NULL);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp683));
-org$frostlang$frostc$Compiler* $tmp687 = *(&local28);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp687));
-*(&local28) = $tmp683;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp683));
+frost$threads$MessageQueue* $tmp676 = (frost$threads$MessageQueue*) frostObjectAlloc(56, (frost$core$Class*) &frost$threads$MessageQueue$class);
+frost$threads$MessageQueue$init($tmp676);
+*(&local25) = ((frost$threads$MessageQueue*) NULL);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp676));
+frost$threads$MessageQueue* $tmp677 = *(&local25);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp677));
+*(&local25) = $tmp676;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp676));
 // line 340
-frost$collections$Array* $tmp688 = *(&local1);
-ITable* $tmp689 = ((frost$collections$Iterable*) $tmp688)->$class->itable;
-while ($tmp689->$class != (frost$core$Class*) &frost$collections$Iterable$class) {
-    $tmp689 = $tmp689->next;
+org$frostlang$frostc$Compiler* $tmp678 = (org$frostlang$frostc$Compiler*) frostObjectAlloc(280, (frost$core$Class*) &org$frostlang$frostc$Compiler$class);
+frost$threads$MessageQueue* $tmp679 = *(&local25);
+org$frostlang$frostc$CodeGenerator* $tmp680 = *(&local21);
+org$frostlang$frostc$Compiler$Settings* $tmp681 = *(&local24);
+org$frostlang$frostc$Compiler$init$frost$threads$MessageQueue$LTorg$frostlang$frostc$Compiler$Message$GT$org$frostlang$frostc$CodeGenerator$org$frostlang$frostc$Compiler$Settings($tmp678, $tmp679, $tmp680, $tmp681);
+*(&local26) = ((org$frostlang$frostc$Compiler*) NULL);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp678));
+org$frostlang$frostc$Compiler* $tmp682 = *(&local26);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp682));
+*(&local26) = $tmp678;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp678));
+// line 341
+frost$collections$Array* $tmp683 = *(&local1);
+ITable* $tmp684 = ((frost$collections$Iterable*) $tmp683)->$class->itable;
+while ($tmp684->$class != (frost$core$Class*) &frost$collections$Iterable$class) {
+    $tmp684 = $tmp684->next;
 }
-$fn691 $tmp690 = $tmp689->methods[0];
-frost$collections$Iterator* $tmp692 = $tmp690(((frost$collections$Iterable*) $tmp688));
-goto block116;
-block116:;
-ITable* $tmp693 = $tmp692->$class->itable;
+$fn686 $tmp685 = $tmp684->methods[0];
+frost$collections$Iterator* $tmp687 = $tmp685(((frost$collections$Iterable*) $tmp683));
+goto block108;
+block108:;
+ITable* $tmp688 = $tmp687->$class->itable;
+while ($tmp688->$class != (frost$core$Class*) &frost$collections$Iterator$class) {
+    $tmp688 = $tmp688->next;
+}
+$fn690 $tmp689 = $tmp688->methods[0];
+frost$core$Bit $tmp691 = $tmp689($tmp687);
+bool $tmp692 = $tmp691.value;
+if ($tmp692) goto block110; else goto block109;
+block109:;
+*(&local27) = ((frost$io$File*) NULL);
+ITable* $tmp693 = $tmp687->$class->itable;
 while ($tmp693->$class != (frost$core$Class*) &frost$collections$Iterator$class) {
     $tmp693 = $tmp693->next;
 }
-$fn695 $tmp694 = $tmp693->methods[0];
-frost$core$Bit $tmp696 = $tmp694($tmp692);
-bool $tmp697 = $tmp696.value;
-if ($tmp697) goto block118; else goto block117;
-block117:;
-*(&local29) = ((frost$io$File*) NULL);
-ITable* $tmp698 = $tmp692->$class->itable;
-while ($tmp698->$class != (frost$core$Class*) &frost$collections$Iterator$class) {
-    $tmp698 = $tmp698->next;
+$fn695 $tmp694 = $tmp693->methods[1];
+frost$core$Object* $tmp696 = $tmp694($tmp687);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$io$File*) $tmp696)));
+frost$io$File* $tmp697 = *(&local27);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp697));
+*(&local27) = ((frost$io$File*) $tmp696);
+// line 342
+org$frostlang$frostc$Compiler* $tmp698 = *(&local26);
+frost$io$File* $tmp699 = *(&local27);
+frost$collections$ListView* $tmp700 = org$frostlang$frostc$Compiler$scan$frost$io$File$R$frost$collections$ListView$LTorg$frostlang$frostc$ClassDecl$GT($tmp698, $tmp699);
+ITable* $tmp701 = ((frost$collections$Iterable*) $tmp700)->$class->itable;
+while ($tmp701->$class != (frost$core$Class*) &frost$collections$Iterable$class) {
+    $tmp701 = $tmp701->next;
 }
-$fn700 $tmp699 = $tmp698->methods[1];
-frost$core$Object* $tmp701 = $tmp699($tmp692);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$io$File*) $tmp701)));
-frost$io$File* $tmp702 = *(&local29);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp702));
-*(&local29) = ((frost$io$File*) $tmp701);
-// line 341
-org$frostlang$frostc$Compiler* $tmp703 = *(&local28);
-frost$io$File* $tmp704 = *(&local29);
-frost$collections$ListView* $tmp705 = org$frostlang$frostc$Compiler$scan$frost$io$File$R$frost$collections$ListView$LTorg$frostlang$frostc$ClassDecl$GT($tmp703, $tmp704);
-ITable* $tmp706 = ((frost$collections$Iterable*) $tmp705)->$class->itable;
-while ($tmp706->$class != (frost$core$Class*) &frost$collections$Iterable$class) {
-    $tmp706 = $tmp706->next;
+$fn703 $tmp702 = $tmp701->methods[0];
+frost$collections$Iterator* $tmp704 = $tmp702(((frost$collections$Iterable*) $tmp700));
+goto block111;
+block111:;
+ITable* $tmp705 = $tmp704->$class->itable;
+while ($tmp705->$class != (frost$core$Class*) &frost$collections$Iterator$class) {
+    $tmp705 = $tmp705->next;
 }
-$fn708 $tmp707 = $tmp706->methods[0];
-frost$collections$Iterator* $tmp709 = $tmp707(((frost$collections$Iterable*) $tmp705));
-goto block119;
-block119:;
-ITable* $tmp710 = $tmp709->$class->itable;
+$fn707 $tmp706 = $tmp705->methods[0];
+frost$core$Bit $tmp708 = $tmp706($tmp704);
+bool $tmp709 = $tmp708.value;
+if ($tmp709) goto block113; else goto block112;
+block112:;
+*(&local28) = ((org$frostlang$frostc$ClassDecl*) NULL);
+ITable* $tmp710 = $tmp704->$class->itable;
 while ($tmp710->$class != (frost$core$Class*) &frost$collections$Iterator$class) {
     $tmp710 = $tmp710->next;
 }
-$fn712 $tmp711 = $tmp710->methods[0];
-frost$core$Bit $tmp713 = $tmp711($tmp709);
-bool $tmp714 = $tmp713.value;
-if ($tmp714) goto block121; else goto block120;
-block120:;
-*(&local30) = ((org$frostlang$frostc$ClassDecl*) NULL);
-ITable* $tmp715 = $tmp709->$class->itable;
-while ($tmp715->$class != (frost$core$Class*) &frost$collections$Iterator$class) {
-    $tmp715 = $tmp715->next;
+$fn712 $tmp711 = $tmp710->methods[1];
+frost$core$Object* $tmp713 = $tmp711($tmp704);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((org$frostlang$frostc$ClassDecl*) $tmp713)));
+org$frostlang$frostc$ClassDecl* $tmp714 = *(&local28);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp714));
+*(&local28) = ((org$frostlang$frostc$ClassDecl*) $tmp713);
+// line 343
+org$frostlang$frostc$Compiler* $tmp715 = *(&local26);
+org$frostlang$frostc$ClassDecl* $tmp716 = *(&local28);
+org$frostlang$frostc$Compiler$markNonExternal$org$frostlang$frostc$ClassDecl($tmp715, $tmp716);
+frost$core$Frost$unref$frost$core$Object$Q($tmp713);
+org$frostlang$frostc$ClassDecl* $tmp717 = *(&local28);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp717));
+*(&local28) = ((org$frostlang$frostc$ClassDecl*) NULL);
+goto block111;
+block113:;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp704));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp700));
+frost$core$Frost$unref$frost$core$Object$Q($tmp696);
+frost$io$File* $tmp718 = *(&local27);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp718));
+*(&local27) = ((frost$io$File*) NULL);
+goto block108;
+block110:;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp687));
+// line 346
+frost$collections$Array* $tmp719 = *(&local1);
+ITable* $tmp720 = ((frost$collections$Iterable*) $tmp719)->$class->itable;
+while ($tmp720->$class != (frost$core$Class*) &frost$collections$Iterable$class) {
+    $tmp720 = $tmp720->next;
 }
-$fn717 $tmp716 = $tmp715->methods[1];
-frost$core$Object* $tmp718 = $tmp716($tmp709);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((org$frostlang$frostc$ClassDecl*) $tmp718)));
-org$frostlang$frostc$ClassDecl* $tmp719 = *(&local30);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp719));
-*(&local30) = ((org$frostlang$frostc$ClassDecl*) $tmp718);
-// line 342
-org$frostlang$frostc$Compiler* $tmp720 = *(&local28);
-org$frostlang$frostc$ClassDecl* $tmp721 = *(&local30);
-org$frostlang$frostc$Compiler$markNonExternal$org$frostlang$frostc$ClassDecl($tmp720, $tmp721);
-frost$core$Frost$unref$frost$core$Object$Q($tmp718);
-org$frostlang$frostc$ClassDecl* $tmp722 = *(&local30);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp722));
-*(&local30) = ((org$frostlang$frostc$ClassDecl*) NULL);
-goto block119;
-block121:;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp709));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp705));
-frost$core$Frost$unref$frost$core$Object$Q($tmp701);
-frost$io$File* $tmp723 = *(&local29);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp723));
+$fn722 $tmp721 = $tmp720->methods[0];
+frost$collections$Iterator* $tmp723 = $tmp721(((frost$collections$Iterable*) $tmp719));
+goto block114;
+block114:;
+ITable* $tmp724 = $tmp723->$class->itable;
+while ($tmp724->$class != (frost$core$Class*) &frost$collections$Iterator$class) {
+    $tmp724 = $tmp724->next;
+}
+$fn726 $tmp725 = $tmp724->methods[0];
+frost$core$Bit $tmp727 = $tmp725($tmp723);
+bool $tmp728 = $tmp727.value;
+if ($tmp728) goto block116; else goto block115;
+block115:;
 *(&local29) = ((frost$io$File*) NULL);
-goto block116;
-block118:;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp692));
-// line 345
-frost$collections$Array* $tmp724 = *(&local1);
-ITable* $tmp725 = ((frost$collections$Iterable*) $tmp724)->$class->itable;
-while ($tmp725->$class != (frost$core$Class*) &frost$collections$Iterable$class) {
-    $tmp725 = $tmp725->next;
-}
-$fn727 $tmp726 = $tmp725->methods[0];
-frost$collections$Iterator* $tmp728 = $tmp726(((frost$collections$Iterable*) $tmp724));
-goto block122;
-block122:;
-ITable* $tmp729 = $tmp728->$class->itable;
+ITable* $tmp729 = $tmp723->$class->itable;
 while ($tmp729->$class != (frost$core$Class*) &frost$collections$Iterator$class) {
     $tmp729 = $tmp729->next;
 }
-$fn731 $tmp730 = $tmp729->methods[0];
-frost$core$Bit $tmp732 = $tmp730($tmp728);
-bool $tmp733 = $tmp732.value;
-if ($tmp733) goto block124; else goto block123;
-block123:;
-*(&local31) = ((frost$io$File*) NULL);
-ITable* $tmp734 = $tmp728->$class->itable;
-while ($tmp734->$class != (frost$core$Class*) &frost$collections$Iterator$class) {
-    $tmp734 = $tmp734->next;
-}
-$fn736 $tmp735 = $tmp734->methods[1];
-frost$core$Object* $tmp737 = $tmp735($tmp728);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$io$File*) $tmp737)));
-frost$io$File* $tmp738 = *(&local31);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp738));
-*(&local31) = ((frost$io$File*) $tmp737);
-// line 346
-org$frostlang$frostc$Compiler* $tmp739 = *(&local28);
-frost$io$File* $tmp740 = *(&local31);
-org$frostlang$frostc$Compiler$compile$frost$io$File($tmp739, $tmp740);
-frost$core$Frost$unref$frost$core$Object$Q($tmp737);
-frost$io$File* $tmp741 = *(&local31);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp741));
-*(&local31) = ((frost$io$File*) NULL);
-goto block122;
-block124:;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp728));
-// line 348
-org$frostlang$frostc$Compiler* $tmp742 = *(&local28);
-org$frostlang$frostc$Compiler$finish($tmp742);
+$fn731 $tmp730 = $tmp729->methods[1];
+frost$core$Object* $tmp732 = $tmp730($tmp723);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$io$File*) $tmp732)));
+frost$io$File* $tmp733 = *(&local29);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp733));
+*(&local29) = ((frost$io$File*) $tmp732);
+// line 347
+org$frostlang$frostc$Compiler* $tmp734 = *(&local26);
+frost$io$File* $tmp735 = *(&local29);
+org$frostlang$frostc$Compiler$compile$frost$io$File($tmp734, $tmp735);
+frost$core$Frost$unref$frost$core$Object$Q($tmp732);
+frost$io$File* $tmp736 = *(&local29);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp736));
+*(&local29) = ((frost$io$File*) NULL);
+goto block114;
+block116:;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp723));
 // line 349
-frost$threads$MessageQueue* $tmp743 = *(&local27);
-frost$core$Int64 $tmp744 = frost$threads$MessageQueue$pendingMessages$R$frost$core$Int64($tmp743);
-*(&local22) = $tmp744;
+org$frostlang$frostc$Compiler* $tmp737 = *(&local26);
+org$frostlang$frostc$Compiler$finish($tmp737);
 // line 350
-frost$core$Int64 $tmp745 = (frost$core$Int64) {0};
-frost$core$Int64 $tmp746 = *(&local22);
-frost$core$Bit $tmp747 = frost$core$Bit$init$builtin_bit(false);
-frost$core$Range$LTfrost$core$Int64$GT $tmp748 = frost$core$Range$LTfrost$core$Int64$GT$init$frost$core$Int64$frost$core$Int64$frost$core$Bit($tmp745, $tmp746, $tmp747);
-frost$core$Int64 $tmp749 = $tmp748.min;
-*(&local32) = $tmp749;
-frost$core$Int64 $tmp750 = $tmp748.max;
-frost$core$Bit $tmp751 = $tmp748.inclusive;
-bool $tmp752 = $tmp751.value;
-frost$core$Int64 $tmp753 = (frost$core$Int64) {1};
-frost$core$UInt64 $tmp754 = frost$core$Int64$get_asUInt64$R$frost$core$UInt64($tmp753);
-if ($tmp752) goto block128; else goto block129;
-block128:;
-int64_t $tmp755 = $tmp749.value;
-int64_t $tmp756 = $tmp750.value;
-bool $tmp757 = $tmp755 <= $tmp756;
-frost$core$Bit $tmp758 = (frost$core$Bit) {$tmp757};
-bool $tmp759 = $tmp758.value;
-if ($tmp759) goto block125; else goto block126;
-block129:;
-int64_t $tmp760 = $tmp749.value;
-int64_t $tmp761 = $tmp750.value;
-bool $tmp762 = $tmp760 < $tmp761;
-frost$core$Bit $tmp763 = (frost$core$Bit) {$tmp762};
-bool $tmp764 = $tmp763.value;
-if ($tmp764) goto block125; else goto block126;
-block125:;
+goto block117;
+block117:;
+frost$threads$MessageQueue* $tmp738 = *(&local25);
+frost$core$Bit $tmp739 = frost$threads$MessageQueue$hasMessage$R$frost$core$Bit($tmp738);
+bool $tmp740 = $tmp739.value;
+if ($tmp740) goto block118; else goto block119;
+block118:;
 // line 351
-frost$threads$MessageQueue* $tmp765 = *(&local27);
-frost$core$Immutable* $tmp766 = frost$threads$MessageQueue$getMessage$R$frost$threads$MessageQueue$T($tmp765);
-*(&local33) = ((org$frostlang$frostc$Compiler$ErrorMsg*) NULL);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((org$frostlang$frostc$Compiler$ErrorMsg*) $tmp766)));
-org$frostlang$frostc$Compiler$ErrorMsg* $tmp767 = *(&local33);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp767));
-*(&local33) = ((org$frostlang$frostc$Compiler$ErrorMsg*) $tmp766);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp766));
+frost$threads$MessageQueue* $tmp741 = *(&local25);
+frost$core$Immutable* $tmp742 = frost$threads$MessageQueue$getMessage$R$frost$threads$MessageQueue$T($tmp741);
+*(&local30) = ((org$frostlang$frostc$Compiler$Message*) NULL);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((org$frostlang$frostc$Compiler$Message*) $tmp742)));
+org$frostlang$frostc$Compiler$Message* $tmp743 = *(&local30);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp743));
+*(&local30) = ((org$frostlang$frostc$Compiler$Message*) $tmp742);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp742));
 // line 353
-org$frostlang$frostc$Compiler$ErrorMsg* $tmp768 = *(&local33);
-frost$io$File** $tmp769 = &$tmp768->file;
-frost$io$File* $tmp770 = *$tmp769;
-frost$core$String* $tmp771 = frost$io$File$get_name$R$frost$core$String($tmp770);
-frost$core$String* $tmp772 = frost$core$String$get_asString$R$frost$core$String($tmp771);
-frost$core$String* $tmp773 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp772, &$s774);
-org$frostlang$frostc$Compiler$ErrorMsg* $tmp775 = *(&local33);
-org$frostlang$frostc$Position* $tmp776 = &$tmp775->position;
-org$frostlang$frostc$Position $tmp777 = *$tmp776;
-org$frostlang$frostc$Position$wrapper* $tmp778;
-$tmp778 = (org$frostlang$frostc$Position$wrapper*) frostObjectAlloc(32, (frost$core$Class*) &org$frostlang$frostc$Position$wrapperclass);
-$tmp778->value = $tmp777;
-frost$core$String* $tmp779 = frost$core$String$$ADD$frost$core$Object$R$frost$core$String($tmp773, ((frost$core$Object*) $tmp778));
-frost$core$String* $tmp780 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp779, &$s781);
-org$frostlang$frostc$Compiler$ErrorMsg* $tmp782 = *(&local33);
-frost$core$String** $tmp783 = &$tmp782->message;
-frost$core$String* $tmp784 = *$tmp783;
-frost$core$String* $tmp785 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp780, $tmp784);
-frost$core$String* $tmp786 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp785, &$s787);
-frost$io$Console$printLine$frost$core$String($tmp786);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp786));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp785));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp780));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp779));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp778));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp773));
+org$frostlang$frostc$Compiler$Message* $tmp744 = *(&local30);
+frost$core$Int64* $tmp745 = &$tmp744->$rawValue;
+frost$core$Int64 $tmp746 = *$tmp745;
+frost$core$Int64 $tmp747 = (frost$core$Int64) {0};
+frost$core$Bit $tmp748 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp746, $tmp747);
+bool $tmp749 = $tmp748.value;
+if ($tmp749) goto block121; else goto block122;
+block121:;
+frost$io$File** $tmp750 = (frost$io$File**) ($tmp744->$data + 0);
+frost$io$File* $tmp751 = *$tmp750;
+*(&local31) = ((frost$io$File*) NULL);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp751));
+frost$io$File* $tmp752 = *(&local31);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp752));
+*(&local31) = $tmp751;
+org$frostlang$frostc$Position* $tmp753 = (org$frostlang$frostc$Position*) ($tmp744->$data + 8);
+org$frostlang$frostc$Position $tmp754 = *$tmp753;
+*(&local32) = $tmp754;
+frost$core$String** $tmp755 = (frost$core$String**) ($tmp744->$data + 24);
+frost$core$String* $tmp756 = *$tmp755;
+*(&local33) = ((frost$core$String*) NULL);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp756));
+frost$core$String* $tmp757 = *(&local33);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp757));
+*(&local33) = $tmp756;
+// line 355
+frost$core$Int64 $tmp758 = *(&local19);
+frost$core$Int64 $tmp759 = (frost$core$Int64) {1};
+int64_t $tmp760 = $tmp758.value;
+int64_t $tmp761 = $tmp759.value;
+int64_t $tmp762 = $tmp760 + $tmp761;
+frost$core$Int64 $tmp763 = (frost$core$Int64) {$tmp762};
+*(&local19) = $tmp763;
+// line 356
+frost$io$File* $tmp764 = *(&local31);
+frost$core$String* $tmp765 = frost$io$File$get_name$R$frost$core$String($tmp764);
+frost$core$String* $tmp766 = frost$core$String$get_asString$R$frost$core$String($tmp765);
+frost$core$String* $tmp767 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp766, &$s768);
+org$frostlang$frostc$Position $tmp769 = *(&local32);
+org$frostlang$frostc$Position$wrapper* $tmp770;
+$tmp770 = (org$frostlang$frostc$Position$wrapper*) frostObjectAlloc(32, (frost$core$Class*) &org$frostlang$frostc$Position$wrapperclass);
+$tmp770->value = $tmp769;
+frost$core$String* $tmp771 = frost$core$String$$ADD$frost$core$Object$R$frost$core$String($tmp767, ((frost$core$Object*) $tmp770));
+frost$core$String* $tmp772 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp771, &$s773);
+frost$core$String* $tmp774 = *(&local33);
+frost$core$String* $tmp775 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp772, $tmp774);
+frost$core$String* $tmp776 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp775, &$s777);
+frost$io$Console$printLine$frost$core$String($tmp776);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp776));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp775));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp772));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp771));
-org$frostlang$frostc$Compiler$ErrorMsg* $tmp788 = *(&local33);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp788));
-*(&local33) = ((org$frostlang$frostc$Compiler$ErrorMsg*) NULL);
-goto block127;
-block127:;
-frost$core$Int64 $tmp789 = *(&local32);
-int64_t $tmp790 = $tmp750.value;
-int64_t $tmp791 = $tmp789.value;
-int64_t $tmp792 = $tmp790 - $tmp791;
-frost$core$Int64 $tmp793 = (frost$core$Int64) {$tmp792};
-frost$core$UInt64 $tmp794 = frost$core$Int64$get_asUInt64$R$frost$core$UInt64($tmp793);
-if ($tmp752) goto block131; else goto block132;
-block131:;
-uint64_t $tmp795 = $tmp794.value;
-uint64_t $tmp796 = $tmp754.value;
-bool $tmp797 = $tmp795 >= $tmp796;
-frost$core$Bit $tmp798 = (frost$core$Bit) {$tmp797};
-bool $tmp799 = $tmp798.value;
-if ($tmp799) goto block130; else goto block126;
-block132:;
-uint64_t $tmp800 = $tmp794.value;
-uint64_t $tmp801 = $tmp754.value;
-bool $tmp802 = $tmp800 > $tmp801;
-frost$core$Bit $tmp803 = (frost$core$Bit) {$tmp802};
-bool $tmp804 = $tmp803.value;
-if ($tmp804) goto block130; else goto block126;
-block130:;
-int64_t $tmp805 = $tmp789.value;
-int64_t $tmp806 = $tmp753.value;
-int64_t $tmp807 = $tmp805 + $tmp806;
-frost$core$Int64 $tmp808 = (frost$core$Int64) {$tmp807};
-*(&local32) = $tmp808;
-goto block125;
-block126:;
-org$frostlang$frostc$Compiler* $tmp809 = *(&local28);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp770));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp767));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp766));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp765));
+frost$core$String* $tmp778 = *(&local33);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp778));
+*(&local33) = ((frost$core$String*) NULL);
+frost$io$File* $tmp779 = *(&local31);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp779));
+*(&local31) = ((frost$io$File*) NULL);
+goto block120;
+block122:;
+frost$core$Int64 $tmp780 = (frost$core$Int64) {1};
+frost$core$Bit $tmp781 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp746, $tmp780);
+bool $tmp782 = $tmp781.value;
+if ($tmp782) goto block123; else goto block120;
+block123:;
+frost$io$File** $tmp783 = (frost$io$File**) ($tmp744->$data + 0);
+frost$io$File* $tmp784 = *$tmp783;
+*(&local34) = ((frost$io$File*) NULL);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp784));
+frost$io$File* $tmp785 = *(&local34);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp785));
+*(&local34) = $tmp784;
+org$frostlang$frostc$Position* $tmp786 = (org$frostlang$frostc$Position*) ($tmp744->$data + 8);
+org$frostlang$frostc$Position $tmp787 = *$tmp786;
+*(&local35) = $tmp787;
+frost$core$String** $tmp788 = (frost$core$String**) ($tmp744->$data + 24);
+frost$core$String* $tmp789 = *$tmp788;
+*(&local36) = ((frost$core$String*) NULL);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp789));
+frost$core$String* $tmp790 = *(&local36);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp790));
+*(&local36) = $tmp789;
+// line 359
+frost$core$Int64 $tmp791 = *(&local20);
+frost$core$Int64 $tmp792 = (frost$core$Int64) {1};
+int64_t $tmp793 = $tmp791.value;
+int64_t $tmp794 = $tmp792.value;
+int64_t $tmp795 = $tmp793 + $tmp794;
+frost$core$Int64 $tmp796 = (frost$core$Int64) {$tmp795};
+*(&local20) = $tmp796;
+// line 360
+frost$io$File* $tmp797 = *(&local34);
+frost$core$String* $tmp798 = frost$io$File$get_name$R$frost$core$String($tmp797);
+frost$core$String* $tmp799 = frost$core$String$get_asString$R$frost$core$String($tmp798);
+frost$core$String* $tmp800 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp799, &$s801);
+org$frostlang$frostc$Position $tmp802 = *(&local35);
+org$frostlang$frostc$Position$wrapper* $tmp803;
+$tmp803 = (org$frostlang$frostc$Position$wrapper*) frostObjectAlloc(32, (frost$core$Class*) &org$frostlang$frostc$Position$wrapperclass);
+$tmp803->value = $tmp802;
+frost$core$String* $tmp804 = frost$core$String$$ADD$frost$core$Object$R$frost$core$String($tmp800, ((frost$core$Object*) $tmp803));
+frost$core$String* $tmp805 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp804, &$s806);
+frost$core$String* $tmp807 = *(&local36);
+frost$core$String* $tmp808 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp805, $tmp807);
+frost$core$String* $tmp809 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp808, &$s810);
+frost$io$Console$printLine$frost$core$String($tmp809);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp809));
-*(&local28) = ((org$frostlang$frostc$Compiler*) NULL);
-frost$threads$MessageQueue* $tmp810 = *(&local27);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp810));
-*(&local27) = ((frost$threads$MessageQueue*) NULL);
-org$frostlang$frostc$Compiler$Settings* $tmp811 = *(&local26);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp808));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp805));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp804));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp803));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp800));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp799));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp798));
+frost$core$String* $tmp811 = *(&local36);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp811));
-*(&local26) = ((org$frostlang$frostc$Compiler$Settings*) NULL);
-org$frostlang$frostc$CodeGenerator* $tmp812 = *(&local23);
+*(&local36) = ((frost$core$String*) NULL);
+frost$io$File* $tmp812 = *(&local34);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp812));
-*(&local23) = ((org$frostlang$frostc$CodeGenerator*) NULL);
-// line 356
-frost$core$Int64 $tmp813 = *(&local22);
-frost$core$Int64 $tmp814 = (frost$core$Int64) {0};
-frost$core$Bit $tmp815 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp813, $tmp814);
-bool $tmp816 = $tmp815.value;
-if ($tmp816) goto block133; else goto block135;
-block133:;
-// line 357
-org$frostlang$frostc$Main$Format$nullable $tmp817 = *(&local6);
-frost$core$Int64 $tmp818 = ((org$frostlang$frostc$Main$Format) $tmp817.value).$rawValue;
+*(&local34) = ((frost$io$File*) NULL);
+goto block120;
+block120:;
+org$frostlang$frostc$Compiler$Message* $tmp813 = *(&local30);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp813));
+*(&local30) = ((org$frostlang$frostc$Compiler$Message*) NULL);
+goto block117;
+block119:;
+org$frostlang$frostc$Compiler* $tmp814 = *(&local26);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp814));
+*(&local26) = ((org$frostlang$frostc$Compiler*) NULL);
+frost$threads$MessageQueue* $tmp815 = *(&local25);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp815));
+*(&local25) = ((frost$threads$MessageQueue*) NULL);
+org$frostlang$frostc$Compiler$Settings* $tmp816 = *(&local24);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp816));
+*(&local24) = ((org$frostlang$frostc$Compiler$Settings*) NULL);
+org$frostlang$frostc$CodeGenerator* $tmp817 = *(&local21);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp817));
+*(&local21) = ((org$frostlang$frostc$CodeGenerator*) NULL);
+// line 365
+frost$core$Int64 $tmp818 = *(&local20);
 frost$core$Int64 $tmp819 = (frost$core$Int64) {1};
 frost$core$Bit $tmp820 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp818, $tmp819);
 bool $tmp821 = $tmp820.value;
-if ($tmp821) goto block137; else goto block138;
-block137:;
-// line 359
-frost$io$File* $tmp822 = *(&local3);
-frost$io$File* $tmp823 = frost$io$File$withExtension$frost$core$String$R$frost$io$File($tmp822, &$s824);
-frost$io$File* $tmp825 = *(&local3);
-frost$core$Bit $tmp826 = *(&local8);
-frost$io$File* $tmp827 = org$frostlang$frostc$Main$toExecutable$frost$io$File$frost$io$File$frost$core$Bit$R$frost$io$File(param0, $tmp823, $tmp825, $tmp826);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp827));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp823));
-goto block136;
-block138:;
-frost$core$Int64 $tmp828 = (frost$core$Int64) {2};
-frost$core$Bit $tmp829 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp818, $tmp828);
-bool $tmp830 = $tmp829.value;
-if ($tmp830) goto block139; else goto block136;
-block139:;
-// line 362
-frost$io$File* $tmp831 = *(&local3);
-frost$io$File* $tmp832 = frost$io$File$withExtension$frost$core$String$R$frost$io$File($tmp831, &$s833);
-frost$io$File* $tmp834 = *(&local3);
-frost$core$Bit $tmp835 = *(&local8);
-frost$io$File* $tmp836 = org$frostlang$frostc$Main$toObject$frost$io$File$frost$io$File$frost$core$Bit$R$frost$io$File(param0, $tmp832, $tmp834, $tmp835);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp836));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp832));
-goto block136;
-block136:;
-goto block134;
-block135:;
-// line 1
+if ($tmp821) goto block124; else goto block126;
+block124:;
 // line 367
-frost$core$Int64 $tmp837 = *(&local22);
-frost$core$Int64 $tmp838 = (frost$core$Int64) {1};
-frost$core$Bit $tmp839 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp837, $tmp838);
-bool $tmp840 = $tmp839.value;
-if ($tmp840) goto block140; else goto block142;
-block140:;
+frost$io$Console$printLine$frost$core$String(&$s822);
+goto block125;
+block126:;
 // line 369
-frost$io$Console$printLine$frost$core$String(&$s841);
-goto block141;
-block142:;
-// line 1
+frost$core$Int64 $tmp823 = *(&local20);
+frost$core$Int64 $tmp824 = (frost$core$Int64) {0};
+int64_t $tmp825 = $tmp823.value;
+int64_t $tmp826 = $tmp824.value;
+bool $tmp827 = $tmp825 > $tmp826;
+frost$core$Bit $tmp828 = (frost$core$Bit) {$tmp827};
+bool $tmp829 = $tmp828.value;
+if ($tmp829) goto block127; else goto block128;
+block127:;
+// line 371
+frost$core$Int64 $tmp830 = *(&local20);
+frost$core$String* $tmp831 = frost$core$Int64$get_asString$R$frost$core$String($tmp830);
+frost$core$String* $tmp832 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp831, &$s833);
+frost$io$Console$printLine$frost$core$String($tmp832);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp832));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp831));
+goto block128;
+block128:;
+goto block125;
+block125:;
 // line 373
-frost$core$Int64 $tmp842 = *(&local22);
-frost$core$String* $tmp843 = frost$core$Int64$get_asString$R$frost$core$String($tmp842);
-frost$core$String* $tmp844 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp843, &$s845);
-frost$io$Console$printLine$frost$core$String($tmp844);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp844));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp843));
-goto block141;
-block141:;
-// line 375
-frost$core$Int64 $tmp846 = (frost$core$Int64) {1};
-frost$core$System$exit$frost$core$Int64($tmp846);
-goto block134;
-block134:;
-frost$io$File* $tmp847 = *(&local20);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp847));
-*(&local20) = ((frost$io$File*) NULL);
-frost$core$String* $tmp848 = *(&local7);
+frost$core$Int64 $tmp834 = *(&local19);
+frost$core$Int64 $tmp835 = (frost$core$Int64) {0};
+frost$core$Bit $tmp836 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp834, $tmp835);
+bool $tmp837 = $tmp836.value;
+if ($tmp837) goto block129; else goto block131;
+block129:;
+// line 374
+org$frostlang$frostc$Main$Format$nullable $tmp838 = *(&local6);
+frost$core$Int64 $tmp839 = ((org$frostlang$frostc$Main$Format) $tmp838.value).$rawValue;
+frost$core$Int64 $tmp840 = (frost$core$Int64) {1};
+frost$core$Bit $tmp841 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp839, $tmp840);
+bool $tmp842 = $tmp841.value;
+if ($tmp842) goto block133; else goto block134;
+block133:;
+// line 376
+frost$io$File* $tmp843 = *(&local3);
+frost$io$File* $tmp844 = frost$io$File$withExtension$frost$core$String$R$frost$io$File($tmp843, &$s845);
+frost$io$File* $tmp846 = *(&local3);
+frost$core$Bit $tmp847 = *(&local8);
+frost$io$File* $tmp848 = org$frostlang$frostc$Main$toExecutable$frost$io$File$frost$io$File$frost$core$Bit$R$frost$io$File(param0, $tmp844, $tmp846, $tmp847);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp848));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp844));
+goto block132;
+block134:;
+frost$core$Int64 $tmp849 = (frost$core$Int64) {2};
+frost$core$Bit $tmp850 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp839, $tmp849);
+bool $tmp851 = $tmp850.value;
+if ($tmp851) goto block135; else goto block132;
+block135:;
+// line 379
+frost$io$File* $tmp852 = *(&local3);
+frost$io$File* $tmp853 = frost$io$File$withExtension$frost$core$String$R$frost$io$File($tmp852, &$s854);
+frost$io$File* $tmp855 = *(&local3);
+frost$core$Bit $tmp856 = *(&local8);
+frost$io$File* $tmp857 = org$frostlang$frostc$Main$toObject$frost$io$File$frost$io$File$frost$core$Bit$R$frost$io$File(param0, $tmp853, $tmp855, $tmp856);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp857));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp853));
+goto block132;
+block132:;
+goto block130;
+block131:;
+// line 1
+// line 384
+frost$core$Int64 $tmp858 = *(&local19);
+frost$core$Int64 $tmp859 = (frost$core$Int64) {1};
+frost$core$Bit $tmp860 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp858, $tmp859);
+bool $tmp861 = $tmp860.value;
+if ($tmp861) goto block136; else goto block138;
+block136:;
+// line 386
+frost$io$Console$printLine$frost$core$String(&$s862);
+goto block137;
+block138:;
+// line 1
+// line 390
+frost$core$Int64 $tmp863 = *(&local19);
+frost$core$String* $tmp864 = frost$core$Int64$get_asString$R$frost$core$String($tmp863);
+frost$core$String* $tmp865 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp864, &$s866);
+frost$io$Console$printLine$frost$core$String($tmp865);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp865));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp864));
+goto block137;
+block137:;
+// line 392
+frost$core$Int64 $tmp867 = (frost$core$Int64) {1};
+frost$core$System$exit$frost$core$Int64($tmp867);
+goto block130;
+block130:;
+frost$io$File* $tmp868 = *(&local17);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp868));
+*(&local17) = ((frost$io$File*) NULL);
+frost$core$String* $tmp869 = *(&local7);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp869));
 *(&local7) = ((frost$core$String*) NULL);
-frost$io$File* $tmp849 = *(&local3);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp849));
+frost$io$File* $tmp870 = *(&local3);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp870));
 *(&local3) = ((frost$io$File*) NULL);
-frost$collections$Array* $tmp850 = *(&local2);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp850));
+frost$collections$Array* $tmp871 = *(&local2);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp871));
 *(&local2) = ((frost$collections$Array*) NULL);
-frost$collections$Array* $tmp851 = *(&local1);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp851));
+frost$collections$Array* $tmp872 = *(&local1);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp872));
 *(&local1) = ((frost$collections$Array*) NULL);
-org$frostlang$frostc$Main$Arguments* $tmp852 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp852));
+org$frostlang$frostc$Main$Arguments* $tmp873 = *(&local0);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp873));
 *(&local0) = ((org$frostlang$frostc$Main$Arguments*) NULL);
 return;
-
-}
-frost$core$Bit org$frostlang$frostc$Main$containsError$frost$core$String$R$frost$core$Bit(frost$core$String* param0) {
-
-// line 381
-frost$core$Bit $tmp853 = frost$core$String$contains$frost$core$String$R$frost$core$Bit(param0, &$s854);
-return $tmp853;
 
 }
 void frostMain(frost$collections$ListView* param0) {
 
-frost$core$Bit local0;
-// line 386
-ITable* $tmp855 = ((frost$collections$CollectionView*) param0)->$class->itable;
-while ($tmp855->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
-    $tmp855 = $tmp855->next;
+// line 398
+ITable* $tmp874 = ((frost$collections$CollectionView*) param0)->$class->itable;
+while ($tmp874->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
+    $tmp874 = $tmp874->next;
 }
-$fn857 $tmp856 = $tmp855->methods[0];
-frost$core$Int64 $tmp858 = $tmp856(((frost$collections$CollectionView*) param0));
-frost$core$Int64 $tmp859 = (frost$core$Int64) {1};
-int64_t $tmp860 = $tmp858.value;
-int64_t $tmp861 = $tmp859.value;
-bool $tmp862 = $tmp860 > $tmp861;
-frost$core$Bit $tmp863 = (frost$core$Bit) {$tmp862};
-bool $tmp864 = $tmp863.value;
-if ($tmp864) goto block3; else goto block4;
+$fn876 $tmp875 = $tmp874->methods[0];
+frost$core$Int64 $tmp877 = $tmp875(((frost$collections$CollectionView*) param0));
+frost$core$Int64 $tmp878 = (frost$core$Int64) {1};
+int64_t $tmp879 = $tmp877.value;
+int64_t $tmp880 = $tmp878.value;
+bool $tmp881 = $tmp879 > $tmp880;
+frost$core$Bit $tmp882 = (frost$core$Bit) {$tmp881};
+bool $tmp883 = $tmp882.value;
+if ($tmp883) goto block3; else goto block2;
 block3:;
-frost$core$Int64 $tmp865 = (frost$core$Int64) {1};
-ITable* $tmp866 = param0->$class->itable;
-while ($tmp866->$class != (frost$core$Class*) &frost$collections$ListView$class) {
-    $tmp866 = $tmp866->next;
+frost$core$Int64 $tmp884 = (frost$core$Int64) {1};
+ITable* $tmp885 = param0->$class->itable;
+while ($tmp885->$class != (frost$core$Class*) &frost$collections$ListView$class) {
+    $tmp885 = $tmp885->next;
 }
-$fn868 $tmp867 = $tmp866->methods[0];
-frost$core$Object* $tmp869 = $tmp867(param0, $tmp865);
-frost$core$Bit $tmp870 = frost$core$String$$EQ$frost$core$String$R$frost$core$Bit(((frost$core$String*) $tmp869), &$s871);
-frost$core$Frost$unref$frost$core$Object$Q($tmp869);
-*(&local0) = $tmp870;
-goto block5;
-block4:;
-*(&local0) = $tmp863;
-goto block5;
-block5:;
-frost$core$Bit $tmp872 = *(&local0);
-bool $tmp873 = $tmp872.value;
-if ($tmp873) goto block1; else goto block2;
+$fn887 $tmp886 = $tmp885->methods[0];
+frost$core$Object* $tmp888 = $tmp886(param0, $tmp884);
+frost$core$Bit $tmp889 = frost$core$String$$EQ$frost$core$String$R$frost$core$Bit(((frost$core$String*) $tmp888), &$s890);
+bool $tmp891 = $tmp889.value;
+frost$core$Frost$unref$frost$core$Object$Q($tmp888);
+if ($tmp891) goto block1; else goto block2;
 block1:;
-// line 387
-goto block6;
-block6:;
-// line 388
-org$frostlang$frostc$Main* $tmp874 = (org$frostlang$frostc$Main*) frostObjectAlloc(33, (frost$core$Class*) &org$frostlang$frostc$Main$class);
-org$frostlang$frostc$Main$init($tmp874);
-frost$core$Int64 $tmp875 = (frost$core$Int64) {1};
-frost$core$Bit $tmp876 = frost$core$Bit$init$builtin_bit(false);
-frost$core$Range$LTfrost$core$Int64$Q$GT $tmp877 = frost$core$Range$LTfrost$core$Int64$Q$GT$init$frost$core$Int64$Q$frost$core$Int64$Q$frost$core$Bit(((frost$core$Int64$nullable) { $tmp875, true }), ((frost$core$Int64$nullable) { .nonnull = false }), $tmp876);
-ITable* $tmp878 = param0->$class->itable;
-while ($tmp878->$class != (frost$core$Class*) &frost$collections$ListView$class) {
-    $tmp878 = $tmp878->next;
+// line 399
+goto block4;
+block4:;
+// line 400
+org$frostlang$frostc$Main* $tmp892 = (org$frostlang$frostc$Main*) frostObjectAlloc(33, (frost$core$Class*) &org$frostlang$frostc$Main$class);
+org$frostlang$frostc$Main$init($tmp892);
+frost$core$Int64 $tmp893 = (frost$core$Int64) {1};
+frost$core$Bit $tmp894 = frost$core$Bit$init$builtin_bit(false);
+frost$core$Range$LTfrost$core$Int64$Q$GT $tmp895 = frost$core$Range$LTfrost$core$Int64$Q$GT$init$frost$core$Int64$Q$frost$core$Int64$Q$frost$core$Bit(((frost$core$Int64$nullable) { $tmp893, true }), ((frost$core$Int64$nullable) { .nonnull = false }), $tmp894);
+ITable* $tmp896 = param0->$class->itable;
+while ($tmp896->$class != (frost$core$Class*) &frost$collections$ListView$class) {
+    $tmp896 = $tmp896->next;
 }
-$fn880 $tmp879 = $tmp878->methods[2];
-frost$collections$ListView* $tmp881 = $tmp879(param0, $tmp877);
-org$frostlang$frostc$Main$run$frost$collections$ListView$LTfrost$core$String$GT($tmp874, $tmp881);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp881));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp874));
-goto block6;
-block7:;
+$fn898 $tmp897 = $tmp896->methods[2];
+frost$collections$ListView* $tmp899 = $tmp897(param0, $tmp895);
+org$frostlang$frostc$Main$run$frost$collections$ListView$LTfrost$core$String$GT($tmp892, $tmp899);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp899));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp892));
+goto block4;
+block5:;
 goto block2;
 block2:;
-// line 391
-org$frostlang$frostc$Main* $tmp882 = (org$frostlang$frostc$Main*) frostObjectAlloc(33, (frost$core$Class*) &org$frostlang$frostc$Main$class);
-org$frostlang$frostc$Main$init($tmp882);
-org$frostlang$frostc$Main$run$frost$collections$ListView$LTfrost$core$String$GT($tmp882, param0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp882));
+// line 403
+org$frostlang$frostc$Main* $tmp900 = (org$frostlang$frostc$Main*) frostObjectAlloc(33, (frost$core$Class*) &org$frostlang$frostc$Main$class);
+org$frostlang$frostc$Main$init($tmp900);
+org$frostlang$frostc$Main$run$frost$collections$ListView$LTfrost$core$String$GT($tmp900, param0);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp900));
 return;
 
 }
@@ -2272,12 +2310,12 @@ void org$frostlang$frostc$Main$cleanup(org$frostlang$frostc$Main* param0) {
 
 // line 9
 frost$core$Object$cleanup(((frost$core$Object*) param0));
-frost$io$File** $tmp883 = &param0->clang;
-frost$io$File* $tmp884 = *$tmp883;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp884));
-frost$io$File** $tmp885 = &param0->frostHome;
-frost$io$File* $tmp886 = *$tmp885;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp886));
+frost$io$File** $tmp901 = &param0->clang;
+frost$io$File* $tmp902 = *$tmp901;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp902));
+frost$io$File** $tmp903 = &param0->frostHome;
+frost$io$File* $tmp904 = *$tmp903;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp904));
 return;
 
 }

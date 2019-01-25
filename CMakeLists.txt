@@ -190,6 +190,8 @@ add_executable(bootstrap
     bootstrap/src/org/frostlang/frost/UInt8List.c
     bootstrap/src/org/frostlang/frostc/Alias.c
     bootstrap/src/org/frostlang/frostc/Analyzer.c
+    bootstrap/src/org/frostlang/frostc/Analyzer/BlockExit.c
+    bootstrap/src/org/frostlang/frostc/Analyzer/DataFlowValue.c
     bootstrap/src/org/frostlang/frostc/Analyzer/State.c
     bootstrap/src/org/frostlang/frostc/Annotations.c
     bootstrap/src/org/frostlang/frostc/Annotations/Expression.c
@@ -219,7 +221,7 @@ add_executable(bootstrap
     bootstrap/src/org/frostlang/frostc/Compiler/Capture.c
     bootstrap/src/org/frostlang/frostc/Compiler/CoercionKey.c
     bootstrap/src/org/frostlang/frostc/Compiler/EnclosingContext.c
-    bootstrap/src/org/frostlang/frostc/Compiler/ErrorMsg.c
+    bootstrap/src/org/frostlang/frostc/Compiler/Message.c
     bootstrap/src/org/frostlang/frostc/Compiler/Resolution.c
     bootstrap/src/org/frostlang/frostc/Compiler/Settings.c
     bootstrap/src/org/frostlang/frostc/Compiler/TypeContext.c
