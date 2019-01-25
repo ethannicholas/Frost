@@ -822,10 +822,10 @@ frost$core$UInt16$wrapperclass_type frost$core$UInt16$wrapperclass = { (frost$co
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x55\x49\x6e\x74\x31\x36", 17, 1146821090439666371, NULL };
 static frost$core$String $s3 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x55\x49\x6e\x74\x31\x36", 17, 1146821090439666371, NULL };
-static frost$core$String $s634 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x55\x49\x6e\x74\x31\x36\x2e\x66\x72\x6f\x73\x74", 12, 8497665508273682800, NULL };
-static frost$core$String $s635 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x55\x49\x6e\x74\x31\x36\x2e\x5b\x5d\x28\x69\x6e\x64\x65\x78\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x36\x34\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x42\x69\x74", 93, -7575919172661098457, NULL };
-static frost$core$String $s664 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x55\x49\x6e\x74\x31\x36\x2e\x66\x72\x6f\x73\x74", 12, 8497665508273682800, NULL };
-static frost$core$String $s665 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x55\x49\x6e\x74\x31\x36\x2e\x70\x61\x72\x73\x65\x28\x73\x74\x72\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2c\x20\x72\x61\x64\x69\x78\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x36\x34\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x55\x49\x6e\x74\x31\x36\x3f", 123, -6892138887488414678, NULL };
+static frost$core$String $s633 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x55\x49\x6e\x74\x31\x36\x2e\x66\x72\x6f\x73\x74", 12, 8497665508273682800, NULL };
+static frost$core$String $s634 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x55\x49\x6e\x74\x31\x36\x2e\x5b\x5d\x28\x69\x6e\x64\x65\x78\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x36\x34\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x42\x69\x74", 93, -7575919172661098457, NULL };
+static frost$core$String $s662 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x55\x49\x6e\x74\x31\x36\x2e\x66\x72\x6f\x73\x74", 12, 8497665508273682800, NULL };
+static frost$core$String $s663 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x55\x49\x6e\x74\x31\x36\x2e\x70\x61\x72\x73\x65\x28\x73\x74\x72\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2c\x20\x72\x61\x64\x69\x78\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x36\x34\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x55\x49\x6e\x74\x31\x36\x3f", 123, -6892138887488414678, NULL };
 
 frost$core$UInt16 frost$core$UInt16$init$builtin_uint16(uint16_t param0) {
 
@@ -2357,15 +2357,14 @@ return ((frost$collections$ListView*) $tmp615);
 }
 frost$core$Bit frost$core$UInt16$$IDX$frost$core$Int64$R$frost$core$Bit(frost$core$UInt16 param0, frost$core$Int64 param1) {
 
-frost$core$Bit local0;
 frost$core$Int64 $tmp616 = (frost$core$Int64) {0};
 int64_t $tmp617 = param1.value;
 int64_t $tmp618 = $tmp616.value;
 bool $tmp619 = $tmp617 >= $tmp618;
 frost$core$Bit $tmp620 = (frost$core$Bit) {$tmp619};
 bool $tmp621 = $tmp620.value;
-if ($tmp621) goto block1; else goto block2;
-block1:;
+if ($tmp621) goto block3; else goto block2;
+block3:;
 frost$core$UInt16$wrapper* $tmp622;
 $tmp622 = (frost$core$UInt16$wrapper*) frostObjectAlloc(14, (frost$core$Class*) &frost$core$UInt16$wrapperclass);
 $tmp622->value = param0;
@@ -2379,179 +2378,164 @@ int64_t $tmp627 = param1.value;
 int64_t $tmp628 = $tmp626.value;
 bool $tmp629 = $tmp627 < $tmp628;
 frost$core$Bit $tmp630 = (frost$core$Bit) {$tmp629};
+bool $tmp631 = $tmp630.value;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$collections$CollectionView*) $tmp622)));
-*(&local0) = $tmp630;
-goto block3;
+if ($tmp631) goto block1; else goto block2;
 block2:;
-*(&local0) = $tmp620;
-goto block3;
-block3:;
-frost$core$Bit $tmp631 = *(&local0);
-bool $tmp632 = $tmp631.value;
-if ($tmp632) goto block4; else goto block5;
-block5:;
-frost$core$Int64 $tmp633 = (frost$core$Int64) {887};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s634, $tmp633, &$s635);
+frost$core$Int64 $tmp632 = (frost$core$Int64) {887};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s633, $tmp632, &$s634);
 abort(); // unreachable
-block4:;
+block1:;
 // line 888
-frost$core$Int64 $tmp636 = (frost$core$Int64) {1};
-frost$core$Int64 $tmp637 = frost$core$Int64$$SHL$frost$core$Int64$R$frost$core$Int64($tmp636, param1);
-frost$core$Int64 $tmp638 = frost$core$UInt16$$BAND$frost$core$Int64$R$frost$core$Int64(param0, $tmp637);
-frost$core$Int64 $tmp639 = (frost$core$Int64) {0};
+frost$core$Int64 $tmp635 = (frost$core$Int64) {1};
+frost$core$Int64 $tmp636 = frost$core$Int64$$SHL$frost$core$Int64$R$frost$core$Int64($tmp635, param1);
+frost$core$Int64 $tmp637 = frost$core$UInt16$$BAND$frost$core$Int64$R$frost$core$Int64(param0, $tmp636);
+frost$core$Int64 $tmp638 = (frost$core$Int64) {0};
+int64_t $tmp639 = $tmp637.value;
 int64_t $tmp640 = $tmp638.value;
-int64_t $tmp641 = $tmp639.value;
-bool $tmp642 = $tmp640 != $tmp641;
-frost$core$Bit $tmp643 = (frost$core$Bit) {$tmp642};
-return $tmp643;
+bool $tmp641 = $tmp639 != $tmp640;
+frost$core$Bit $tmp642 = (frost$core$Bit) {$tmp641};
+return $tmp642;
 
 }
 frost$core$Int64 frost$core$UInt16$get_count$R$frost$core$Int64(frost$core$UInt16 param0) {
 
 // line 894
-frost$core$Int64 $tmp644 = (frost$core$Int64) {16};
-return $tmp644;
+frost$core$Int64 $tmp643 = (frost$core$Int64) {16};
+return $tmp643;
 
 }
 frost$collections$Iterator* frost$core$UInt16$get_iterator$R$frost$collections$Iterator$LTfrost$core$Bit$GT(frost$core$UInt16 param0) {
 
 // line 899
-org$frostlang$frost$IntBitIterator* $tmp645 = (org$frostlang$frost$IntBitIterator*) frostObjectAlloc(32, (frost$core$Class*) &org$frostlang$frost$IntBitIterator$class);
-frost$core$UInt64 $tmp646 = frost$core$UInt16$get_asUInt64$R$frost$core$UInt64(param0);
-frost$core$UInt64 $tmp647 = (frost$core$UInt64) {32768};
-org$frostlang$frost$IntBitIterator$init$frost$core$UInt64$frost$core$UInt64($tmp645, $tmp646, $tmp647);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$collections$Iterator*) $tmp645)));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp645));
-return ((frost$collections$Iterator*) $tmp645);
+org$frostlang$frost$IntBitIterator* $tmp644 = (org$frostlang$frost$IntBitIterator*) frostObjectAlloc(32, (frost$core$Class*) &org$frostlang$frost$IntBitIterator$class);
+frost$core$UInt64 $tmp645 = frost$core$UInt16$get_asUInt64$R$frost$core$UInt64(param0);
+frost$core$UInt64 $tmp646 = (frost$core$UInt64) {32768};
+org$frostlang$frost$IntBitIterator$init$frost$core$UInt64$frost$core$UInt64($tmp644, $tmp645, $tmp646);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$collections$Iterator*) $tmp644)));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp644));
+return ((frost$collections$Iterator*) $tmp644);
 
 }
 frost$core$Int64 frost$core$UInt16$get_hash$R$frost$core$Int64(frost$core$UInt16 param0) {
 
 // line 904
-uint16_t $tmp648 = param0.value;
-frost$core$Int64 $tmp649 = (frost$core$Int64) {((int64_t) $tmp648)};
-return $tmp649;
+uint16_t $tmp647 = param0.value;
+frost$core$Int64 $tmp648 = (frost$core$Int64) {((int64_t) $tmp647)};
+return $tmp648;
 
 }
 frost$core$UInt16$nullable frost$core$UInt16$parse$frost$core$String$frost$core$Int64$R$frost$core$UInt16$Q(frost$core$String* param0, frost$core$Int64 param1) {
 
-frost$core$Bit local0;
-frost$core$UInt64$nullable local1;
-frost$core$Int64 $tmp650 = (frost$core$Int64) {2};
-int64_t $tmp651 = param1.value;
-int64_t $tmp652 = $tmp650.value;
-bool $tmp653 = $tmp651 >= $tmp652;
-frost$core$Bit $tmp654 = (frost$core$Bit) {$tmp653};
-bool $tmp655 = $tmp654.value;
-if ($tmp655) goto block1; else goto block2;
-block1:;
-frost$core$Int64 $tmp656 = (frost$core$Int64) {36};
-int64_t $tmp657 = param1.value;
-int64_t $tmp658 = $tmp656.value;
-bool $tmp659 = $tmp657 <= $tmp658;
-frost$core$Bit $tmp660 = (frost$core$Bit) {$tmp659};
-*(&local0) = $tmp660;
-goto block3;
-block2:;
-*(&local0) = $tmp654;
-goto block3;
+frost$core$UInt64$nullable local0;
+frost$core$Int64 $tmp649 = (frost$core$Int64) {2};
+int64_t $tmp650 = param1.value;
+int64_t $tmp651 = $tmp649.value;
+bool $tmp652 = $tmp650 >= $tmp651;
+frost$core$Bit $tmp653 = (frost$core$Bit) {$tmp652};
+bool $tmp654 = $tmp653.value;
+if ($tmp654) goto block3; else goto block2;
 block3:;
-frost$core$Bit $tmp661 = *(&local0);
-bool $tmp662 = $tmp661.value;
-if ($tmp662) goto block4; else goto block5;
-block5:;
-frost$core$Int64 $tmp663 = (frost$core$Int64) {910};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s664, $tmp663, &$s665);
+frost$core$Int64 $tmp655 = (frost$core$Int64) {36};
+int64_t $tmp656 = param1.value;
+int64_t $tmp657 = $tmp655.value;
+bool $tmp658 = $tmp656 <= $tmp657;
+frost$core$Bit $tmp659 = (frost$core$Bit) {$tmp658};
+bool $tmp660 = $tmp659.value;
+if ($tmp660) goto block1; else goto block2;
+block2:;
+frost$core$Int64 $tmp661 = (frost$core$Int64) {910};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s662, $tmp661, &$s663);
 abort(); // unreachable
-block4:;
+block1:;
 // line 911
-frost$core$UInt64$nullable $tmp666 = frost$core$Frost$parse$frost$core$String$frost$core$Int64$R$frost$core$UInt64$Q(param0, param1);
-*(&local1) = $tmp666;
+frost$core$UInt64$nullable $tmp664 = frost$core$Frost$parse$frost$core$String$frost$core$Int64$R$frost$core$UInt64$Q(param0, param1);
+*(&local0) = $tmp664;
 // line 912
-frost$core$UInt64$nullable $tmp667 = *(&local1);
-frost$core$Bit $tmp668 = frost$core$Bit$init$builtin_bit(!$tmp667.nonnull);
-bool $tmp669 = $tmp668.value;
-if ($tmp669) goto block6; else goto block7;
-block6:;
+frost$core$UInt64$nullable $tmp665 = *(&local0);
+frost$core$Bit $tmp666 = frost$core$Bit$init$builtin_bit(!$tmp665.nonnull);
+bool $tmp667 = $tmp666.value;
+if ($tmp667) goto block4; else goto block5;
+block4:;
 // line 913
 return ((frost$core$UInt16$nullable) { .nonnull = false });
-block7:;
+block5:;
 // line 915
-frost$core$UInt64$nullable $tmp670 = *(&local1);
-frost$core$UInt16 $tmp671 = frost$core$UInt64$get_asUInt16$R$frost$core$UInt16(((frost$core$UInt64) $tmp670.value));
-return ((frost$core$UInt16$nullable) { $tmp671, true });
+frost$core$UInt64$nullable $tmp668 = *(&local0);
+frost$core$UInt16 $tmp669 = frost$core$UInt64$get_asUInt16$R$frost$core$UInt16(((frost$core$UInt64) $tmp668.value));
+return ((frost$core$UInt16$nullable) { $tmp669, true });
 
 }
 frost$core$Int8 frost$core$UInt16$get_asInt8$R$frost$core$Int8(frost$core$UInt16 param0) {
 
 // line 921
-uint16_t $tmp672 = param0.value;
-frost$core$Int8 $tmp673 = (frost$core$Int8) {((int8_t) $tmp672)};
-return $tmp673;
+uint16_t $tmp670 = param0.value;
+frost$core$Int8 $tmp671 = (frost$core$Int8) {((int8_t) $tmp670)};
+return $tmp671;
 
 }
 frost$core$Int16 frost$core$UInt16$get_asInt16$R$frost$core$Int16(frost$core$UInt16 param0) {
 
 // line 927
-uint16_t $tmp674 = param0.value;
-frost$core$Int16 $tmp675 = (frost$core$Int16) {((int16_t) $tmp674)};
-return $tmp675;
+uint16_t $tmp672 = param0.value;
+frost$core$Int16 $tmp673 = (frost$core$Int16) {((int16_t) $tmp672)};
+return $tmp673;
 
 }
 frost$core$Int32 frost$core$UInt16$get_asInt32$R$frost$core$Int32(frost$core$UInt16 param0) {
 
 // line 933
-uint16_t $tmp676 = param0.value;
-frost$core$Int32 $tmp677 = (frost$core$Int32) {((int32_t) $tmp676)};
-return $tmp677;
+uint16_t $tmp674 = param0.value;
+frost$core$Int32 $tmp675 = (frost$core$Int32) {((int32_t) $tmp674)};
+return $tmp675;
 
 }
 frost$core$Int64 frost$core$UInt16$get_asInt64$R$frost$core$Int64(frost$core$UInt16 param0) {
 
 // line 939
-uint16_t $tmp678 = param0.value;
-frost$core$Int64 $tmp679 = (frost$core$Int64) {((int64_t) $tmp678)};
-return $tmp679;
+uint16_t $tmp676 = param0.value;
+frost$core$Int64 $tmp677 = (frost$core$Int64) {((int64_t) $tmp676)};
+return $tmp677;
 
 }
 frost$core$UInt8 frost$core$UInt16$get_asUInt8$R$frost$core$UInt8(frost$core$UInt16 param0) {
 
 // line 945
-uint16_t $tmp680 = param0.value;
-frost$core$UInt8 $tmp681 = (frost$core$UInt8) {((uint8_t) $tmp680)};
-return $tmp681;
+uint16_t $tmp678 = param0.value;
+frost$core$UInt8 $tmp679 = (frost$core$UInt8) {((uint8_t) $tmp678)};
+return $tmp679;
 
 }
 frost$core$UInt32 frost$core$UInt16$get_asUInt32$R$frost$core$UInt32(frost$core$UInt16 param0) {
 
 // line 951
-uint16_t $tmp682 = param0.value;
-frost$core$UInt32 $tmp683 = (frost$core$UInt32) {((uint32_t) $tmp682)};
-return $tmp683;
+uint16_t $tmp680 = param0.value;
+frost$core$UInt32 $tmp681 = (frost$core$UInt32) {((uint32_t) $tmp680)};
+return $tmp681;
 
 }
 frost$core$UInt64 frost$core$UInt16$get_asUInt64$R$frost$core$UInt64(frost$core$UInt16 param0) {
 
 // line 957
-uint16_t $tmp684 = param0.value;
-frost$core$UInt64 $tmp685 = (frost$core$UInt64) {((uint64_t) $tmp684)};
-return $tmp685;
+uint16_t $tmp682 = param0.value;
+frost$core$UInt64 $tmp683 = (frost$core$UInt64) {((uint64_t) $tmp682)};
+return $tmp683;
 
 }
 frost$core$Real32 frost$core$UInt16$get_asReal32$R$frost$core$Real32(frost$core$UInt16 param0) {
 
 // line 963
-uint16_t $tmp686 = param0.value;
-frost$core$Real32 $tmp687 = (frost$core$Real32) {((float) $tmp686)};
-return $tmp687;
+uint16_t $tmp684 = param0.value;
+frost$core$Real32 $tmp685 = (frost$core$Real32) {((float) $tmp684)};
+return $tmp685;
 
 }
 frost$core$Real64 frost$core$UInt16$get_asReal64$R$frost$core$Real64(frost$core$UInt16 param0) {
 
 // line 969
-uint16_t $tmp688 = param0.value;
-frost$core$Real64 $tmp689 = (frost$core$Real64) {((double) $tmp688)};
-return $tmp689;
+uint16_t $tmp686 = param0.value;
+frost$core$Real64 $tmp687 = (frost$core$Real64) {((double) $tmp686)};
+return $tmp687;
 
 }
 frost$core$String* frost$core$UInt16$get_asString$R$frost$core$String(frost$core$UInt16 param0) {
@@ -2563,88 +2547,88 @@ frost$core$UInt16 local3;
 frost$core$Int64 local4;
 frost$core$Int64 local5;
 // line 975
-frost$core$Int64 $tmp690 = (frost$core$Int64) {5};
-*(&local0) = $tmp690;
+frost$core$Int64 $tmp688 = (frost$core$Int64) {5};
+*(&local0) = $tmp688;
 // line 976
-frost$core$Int64 $tmp691 = *(&local0);
-int64_t $tmp692 = $tmp691.value;
-frost$core$Char8* $tmp693 = ((frost$core$Char8*) frostAlloc($tmp692 * 1));
-*(&local1) = $tmp693;
+frost$core$Int64 $tmp689 = *(&local0);
+int64_t $tmp690 = $tmp689.value;
+frost$core$Char8* $tmp691 = ((frost$core$Char8*) frostAlloc($tmp690 * 1));
+*(&local1) = $tmp691;
 // line 977
-frost$core$Int64 $tmp694 = *(&local0);
-frost$core$Int64 $tmp695 = (frost$core$Int64) {1};
-int64_t $tmp696 = $tmp694.value;
-int64_t $tmp697 = $tmp695.value;
-int64_t $tmp698 = $tmp696 - $tmp697;
-frost$core$Int64 $tmp699 = (frost$core$Int64) {$tmp698};
-*(&local2) = $tmp699;
+frost$core$Int64 $tmp692 = *(&local0);
+frost$core$Int64 $tmp693 = (frost$core$Int64) {1};
+int64_t $tmp694 = $tmp692.value;
+int64_t $tmp695 = $tmp693.value;
+int64_t $tmp696 = $tmp694 - $tmp695;
+frost$core$Int64 $tmp697 = (frost$core$Int64) {$tmp696};
+*(&local2) = $tmp697;
 // line 978
 *(&local3) = param0;
 // line 979
-frost$core$UInt16 $tmp700 = *(&local3);
-frost$core$UInt16 $tmp701 = (frost$core$UInt16) {0};
-uint16_t $tmp702 = $tmp700.value;
-uint16_t $tmp703 = $tmp701.value;
-bool $tmp704 = $tmp702 >= $tmp703;
-frost$core$Bit $tmp705 = (frost$core$Bit) {$tmp704};
-bool $tmp706 = $tmp705.value;
-if ($tmp706) goto block1; else goto block3;
+frost$core$UInt16 $tmp698 = *(&local3);
+frost$core$UInt16 $tmp699 = (frost$core$UInt16) {0};
+uint16_t $tmp700 = $tmp698.value;
+uint16_t $tmp701 = $tmp699.value;
+bool $tmp702 = $tmp700 >= $tmp701;
+frost$core$Bit $tmp703 = (frost$core$Bit) {$tmp702};
+bool $tmp704 = $tmp703.value;
+if ($tmp704) goto block1; else goto block3;
 block1:;
 // line 980
 goto block4;
 block4:;
 // line 981
-frost$core$Char8* $tmp707 = *(&local1);
-frost$core$Int64 $tmp708 = *(&local2);
-frost$core$UInt16 $tmp709 = *(&local3);
-frost$core$UInt16 $tmp710 = (frost$core$UInt16) {10};
-frost$core$UInt32 $tmp711 = frost$core$UInt16$$REM$frost$core$UInt16$R$frost$core$UInt32($tmp709, $tmp710);
-frost$core$UInt32 $tmp712 = (frost$core$UInt32) {48};
-uint32_t $tmp713 = $tmp711.value;
-uint32_t $tmp714 = $tmp712.value;
-uint32_t $tmp715 = $tmp713 + $tmp714;
-frost$core$UInt32 $tmp716 = (frost$core$UInt32) {$tmp715};
-frost$core$UInt8 $tmp717 = frost$core$UInt32$get_asUInt8$R$frost$core$UInt8($tmp716);
-frost$core$Char8 $tmp718 = frost$core$Char8$init$frost$core$UInt8($tmp717);
-int64_t $tmp719 = $tmp708.value;
-$tmp707[$tmp719] = $tmp718;
+frost$core$Char8* $tmp705 = *(&local1);
+frost$core$Int64 $tmp706 = *(&local2);
+frost$core$UInt16 $tmp707 = *(&local3);
+frost$core$UInt16 $tmp708 = (frost$core$UInt16) {10};
+frost$core$UInt32 $tmp709 = frost$core$UInt16$$REM$frost$core$UInt16$R$frost$core$UInt32($tmp707, $tmp708);
+frost$core$UInt32 $tmp710 = (frost$core$UInt32) {48};
+uint32_t $tmp711 = $tmp709.value;
+uint32_t $tmp712 = $tmp710.value;
+uint32_t $tmp713 = $tmp711 + $tmp712;
+frost$core$UInt32 $tmp714 = (frost$core$UInt32) {$tmp713};
+frost$core$UInt8 $tmp715 = frost$core$UInt32$get_asUInt8$R$frost$core$UInt8($tmp714);
+frost$core$Char8 $tmp716 = frost$core$Char8$init$frost$core$UInt8($tmp715);
+int64_t $tmp717 = $tmp706.value;
+$tmp705[$tmp717] = $tmp716;
 // line 982
-frost$core$UInt16 $tmp720 = *(&local3);
-frost$core$UInt32 $tmp721 = frost$core$UInt32$init$frost$core$UInt16($tmp720);
-frost$core$UInt32 $tmp722 = (frost$core$UInt32) {10};
-uint32_t $tmp723 = $tmp721.value;
-uint32_t $tmp724 = $tmp722.value;
-uint32_t $tmp725 = $tmp723 / $tmp724;
-frost$core$UInt32 $tmp726 = (frost$core$UInt32) {$tmp725};
-frost$core$UInt16 $tmp727 = frost$core$UInt32$get_asUInt16$R$frost$core$UInt16($tmp726);
-*(&local3) = $tmp727;
+frost$core$UInt16 $tmp718 = *(&local3);
+frost$core$UInt32 $tmp719 = frost$core$UInt32$init$frost$core$UInt16($tmp718);
+frost$core$UInt32 $tmp720 = (frost$core$UInt32) {10};
+uint32_t $tmp721 = $tmp719.value;
+uint32_t $tmp722 = $tmp720.value;
+uint32_t $tmp723 = $tmp721 / $tmp722;
+frost$core$UInt32 $tmp724 = (frost$core$UInt32) {$tmp723};
+frost$core$UInt16 $tmp725 = frost$core$UInt32$get_asUInt16$R$frost$core$UInt16($tmp724);
+*(&local3) = $tmp725;
 // line 983
-frost$core$Int64 $tmp728 = *(&local2);
-frost$core$Int64 $tmp729 = (frost$core$Int64) {1};
-int64_t $tmp730 = $tmp728.value;
-int64_t $tmp731 = $tmp729.value;
-int64_t $tmp732 = $tmp730 - $tmp731;
-frost$core$Int64 $tmp733 = (frost$core$Int64) {$tmp732};
-*(&local2) = $tmp733;
+frost$core$Int64 $tmp726 = *(&local2);
+frost$core$Int64 $tmp727 = (frost$core$Int64) {1};
+int64_t $tmp728 = $tmp726.value;
+int64_t $tmp729 = $tmp727.value;
+int64_t $tmp730 = $tmp728 - $tmp729;
+frost$core$Int64 $tmp731 = (frost$core$Int64) {$tmp730};
+*(&local2) = $tmp731;
 goto block5;
 block5:;
-frost$core$UInt16 $tmp734 = *(&local3);
-frost$core$UInt16 $tmp735 = (frost$core$UInt16) {0};
-uint16_t $tmp736 = $tmp734.value;
-uint16_t $tmp737 = $tmp735.value;
-bool $tmp738 = $tmp736 > $tmp737;
-frost$core$Bit $tmp739 = (frost$core$Bit) {$tmp738};
-bool $tmp740 = $tmp739.value;
-if ($tmp740) goto block4; else goto block6;
+frost$core$UInt16 $tmp732 = *(&local3);
+frost$core$UInt16 $tmp733 = (frost$core$UInt16) {0};
+uint16_t $tmp734 = $tmp732.value;
+uint16_t $tmp735 = $tmp733.value;
+bool $tmp736 = $tmp734 > $tmp735;
+frost$core$Bit $tmp737 = (frost$core$Bit) {$tmp736};
+bool $tmp738 = $tmp737.value;
+if ($tmp738) goto block4; else goto block6;
 block6:;
 // line 986
-frost$core$Int64 $tmp741 = *(&local2);
-frost$core$Int64 $tmp742 = (frost$core$Int64) {1};
-int64_t $tmp743 = $tmp741.value;
-int64_t $tmp744 = $tmp742.value;
-int64_t $tmp745 = $tmp743 + $tmp744;
-frost$core$Int64 $tmp746 = (frost$core$Int64) {$tmp745};
-*(&local2) = $tmp746;
+frost$core$Int64 $tmp739 = *(&local2);
+frost$core$Int64 $tmp740 = (frost$core$Int64) {1};
+int64_t $tmp741 = $tmp739.value;
+int64_t $tmp742 = $tmp740.value;
+int64_t $tmp743 = $tmp741 + $tmp742;
+frost$core$Int64 $tmp744 = (frost$core$Int64) {$tmp743};
+*(&local2) = $tmp744;
 goto block2;
 block3:;
 // line 1
@@ -2652,159 +2636,159 @@ block3:;
 goto block7;
 block7:;
 // line 990
-frost$core$Char8* $tmp747 = *(&local1);
-frost$core$Int64 $tmp748 = *(&local2);
-frost$core$UInt32 $tmp749 = (frost$core$UInt32) {48};
-frost$core$UInt16 $tmp750 = *(&local3);
-frost$core$UInt16 $tmp751 = (frost$core$UInt16) {10};
-frost$core$UInt32 $tmp752 = frost$core$UInt16$$REM$frost$core$UInt16$R$frost$core$UInt32($tmp750, $tmp751);
-uint32_t $tmp753 = $tmp749.value;
-uint32_t $tmp754 = $tmp752.value;
-uint32_t $tmp755 = $tmp753 - $tmp754;
-frost$core$UInt32 $tmp756 = (frost$core$UInt32) {$tmp755};
-frost$core$UInt8 $tmp757 = frost$core$UInt32$get_asUInt8$R$frost$core$UInt8($tmp756);
-frost$core$Char8 $tmp758 = frost$core$Char8$init$frost$core$UInt8($tmp757);
-int64_t $tmp759 = $tmp748.value;
-$tmp747[$tmp759] = $tmp758;
+frost$core$Char8* $tmp745 = *(&local1);
+frost$core$Int64 $tmp746 = *(&local2);
+frost$core$UInt32 $tmp747 = (frost$core$UInt32) {48};
+frost$core$UInt16 $tmp748 = *(&local3);
+frost$core$UInt16 $tmp749 = (frost$core$UInt16) {10};
+frost$core$UInt32 $tmp750 = frost$core$UInt16$$REM$frost$core$UInt16$R$frost$core$UInt32($tmp748, $tmp749);
+uint32_t $tmp751 = $tmp747.value;
+uint32_t $tmp752 = $tmp750.value;
+uint32_t $tmp753 = $tmp751 - $tmp752;
+frost$core$UInt32 $tmp754 = (frost$core$UInt32) {$tmp753};
+frost$core$UInt8 $tmp755 = frost$core$UInt32$get_asUInt8$R$frost$core$UInt8($tmp754);
+frost$core$Char8 $tmp756 = frost$core$Char8$init$frost$core$UInt8($tmp755);
+int64_t $tmp757 = $tmp746.value;
+$tmp745[$tmp757] = $tmp756;
 // line 991
-frost$core$UInt16 $tmp760 = *(&local3);
-frost$core$UInt32 $tmp761 = frost$core$UInt32$init$frost$core$UInt16($tmp760);
-frost$core$UInt32 $tmp762 = (frost$core$UInt32) {10};
-uint32_t $tmp763 = $tmp761.value;
-uint32_t $tmp764 = $tmp762.value;
-uint32_t $tmp765 = $tmp763 / $tmp764;
-frost$core$UInt32 $tmp766 = (frost$core$UInt32) {$tmp765};
-frost$core$UInt16 $tmp767 = frost$core$UInt32$get_asUInt16$R$frost$core$UInt16($tmp766);
-*(&local3) = $tmp767;
+frost$core$UInt16 $tmp758 = *(&local3);
+frost$core$UInt32 $tmp759 = frost$core$UInt32$init$frost$core$UInt16($tmp758);
+frost$core$UInt32 $tmp760 = (frost$core$UInt32) {10};
+uint32_t $tmp761 = $tmp759.value;
+uint32_t $tmp762 = $tmp760.value;
+uint32_t $tmp763 = $tmp761 / $tmp762;
+frost$core$UInt32 $tmp764 = (frost$core$UInt32) {$tmp763};
+frost$core$UInt16 $tmp765 = frost$core$UInt32$get_asUInt16$R$frost$core$UInt16($tmp764);
+*(&local3) = $tmp765;
 // line 992
-frost$core$Int64 $tmp768 = *(&local2);
-frost$core$Int64 $tmp769 = (frost$core$Int64) {1};
-int64_t $tmp770 = $tmp768.value;
-int64_t $tmp771 = $tmp769.value;
-int64_t $tmp772 = $tmp770 - $tmp771;
-frost$core$Int64 $tmp773 = (frost$core$Int64) {$tmp772};
-*(&local2) = $tmp773;
+frost$core$Int64 $tmp766 = *(&local2);
+frost$core$Int64 $tmp767 = (frost$core$Int64) {1};
+int64_t $tmp768 = $tmp766.value;
+int64_t $tmp769 = $tmp767.value;
+int64_t $tmp770 = $tmp768 - $tmp769;
+frost$core$Int64 $tmp771 = (frost$core$Int64) {$tmp770};
+*(&local2) = $tmp771;
 goto block8;
 block8:;
-frost$core$UInt16 $tmp774 = *(&local3);
-frost$core$UInt16 $tmp775 = (frost$core$UInt16) {0};
-uint16_t $tmp776 = $tmp774.value;
-uint16_t $tmp777 = $tmp775.value;
-bool $tmp778 = $tmp776 < $tmp777;
-frost$core$Bit $tmp779 = (frost$core$Bit) {$tmp778};
-bool $tmp780 = $tmp779.value;
-if ($tmp780) goto block7; else goto block9;
+frost$core$UInt16 $tmp772 = *(&local3);
+frost$core$UInt16 $tmp773 = (frost$core$UInt16) {0};
+uint16_t $tmp774 = $tmp772.value;
+uint16_t $tmp775 = $tmp773.value;
+bool $tmp776 = $tmp774 < $tmp775;
+frost$core$Bit $tmp777 = (frost$core$Bit) {$tmp776};
+bool $tmp778 = $tmp777.value;
+if ($tmp778) goto block7; else goto block9;
 block9:;
 // line 995
-frost$core$Char8* $tmp781 = *(&local1);
-frost$core$Int64 $tmp782 = *(&local2);
-frost$core$UInt8 $tmp783 = (frost$core$UInt8) {45};
-frost$core$Char8 $tmp784 = frost$core$Char8$init$frost$core$UInt8($tmp783);
-int64_t $tmp785 = $tmp782.value;
-$tmp781[$tmp785] = $tmp784;
+frost$core$Char8* $tmp779 = *(&local1);
+frost$core$Int64 $tmp780 = *(&local2);
+frost$core$UInt8 $tmp781 = (frost$core$UInt8) {45};
+frost$core$Char8 $tmp782 = frost$core$Char8$init$frost$core$UInt8($tmp781);
+int64_t $tmp783 = $tmp780.value;
+$tmp779[$tmp783] = $tmp782;
 goto block2;
 block2:;
 // line 997
-frost$core$Int64 $tmp786 = *(&local0);
-frost$core$Int64 $tmp787 = *(&local2);
-int64_t $tmp788 = $tmp786.value;
-int64_t $tmp789 = $tmp787.value;
-int64_t $tmp790 = $tmp788 - $tmp789;
-frost$core$Int64 $tmp791 = (frost$core$Int64) {$tmp790};
-*(&local4) = $tmp791;
+frost$core$Int64 $tmp784 = *(&local0);
+frost$core$Int64 $tmp785 = *(&local2);
+int64_t $tmp786 = $tmp784.value;
+int64_t $tmp787 = $tmp785.value;
+int64_t $tmp788 = $tmp786 - $tmp787;
+frost$core$Int64 $tmp789 = (frost$core$Int64) {$tmp788};
+*(&local4) = $tmp789;
 // line 998
-frost$core$Int64 $tmp792 = (frost$core$Int64) {0};
-frost$core$Int64 $tmp793 = *(&local4);
-frost$core$Bit $tmp794 = frost$core$Bit$init$builtin_bit(false);
-frost$core$Range$LTfrost$core$Int64$GT $tmp795 = frost$core$Range$LTfrost$core$Int64$GT$init$frost$core$Int64$frost$core$Int64$frost$core$Bit($tmp792, $tmp793, $tmp794);
-frost$core$Int64 $tmp796 = $tmp795.min;
-*(&local5) = $tmp796;
-frost$core$Int64 $tmp797 = $tmp795.max;
-frost$core$Bit $tmp798 = $tmp795.inclusive;
-bool $tmp799 = $tmp798.value;
-frost$core$Int64 $tmp800 = (frost$core$Int64) {1};
-frost$core$UInt64 $tmp801 = frost$core$Int64$get_asUInt64$R$frost$core$UInt64($tmp800);
-if ($tmp799) goto block13; else goto block14;
+frost$core$Int64 $tmp790 = (frost$core$Int64) {0};
+frost$core$Int64 $tmp791 = *(&local4);
+frost$core$Bit $tmp792 = frost$core$Bit$init$builtin_bit(false);
+frost$core$Range$LTfrost$core$Int64$GT $tmp793 = frost$core$Range$LTfrost$core$Int64$GT$init$frost$core$Int64$frost$core$Int64$frost$core$Bit($tmp790, $tmp791, $tmp792);
+frost$core$Int64 $tmp794 = $tmp793.min;
+*(&local5) = $tmp794;
+frost$core$Int64 $tmp795 = $tmp793.max;
+frost$core$Bit $tmp796 = $tmp793.inclusive;
+bool $tmp797 = $tmp796.value;
+frost$core$Int64 $tmp798 = (frost$core$Int64) {1};
+frost$core$UInt64 $tmp799 = frost$core$Int64$get_asUInt64$R$frost$core$UInt64($tmp798);
+if ($tmp797) goto block13; else goto block14;
 block13:;
-int64_t $tmp802 = $tmp796.value;
-int64_t $tmp803 = $tmp797.value;
-bool $tmp804 = $tmp802 <= $tmp803;
-frost$core$Bit $tmp805 = (frost$core$Bit) {$tmp804};
-bool $tmp806 = $tmp805.value;
-if ($tmp806) goto block10; else goto block11;
+int64_t $tmp800 = $tmp794.value;
+int64_t $tmp801 = $tmp795.value;
+bool $tmp802 = $tmp800 <= $tmp801;
+frost$core$Bit $tmp803 = (frost$core$Bit) {$tmp802};
+bool $tmp804 = $tmp803.value;
+if ($tmp804) goto block10; else goto block11;
 block14:;
-int64_t $tmp807 = $tmp796.value;
-int64_t $tmp808 = $tmp797.value;
-bool $tmp809 = $tmp807 < $tmp808;
-frost$core$Bit $tmp810 = (frost$core$Bit) {$tmp809};
-bool $tmp811 = $tmp810.value;
-if ($tmp811) goto block10; else goto block11;
+int64_t $tmp805 = $tmp794.value;
+int64_t $tmp806 = $tmp795.value;
+bool $tmp807 = $tmp805 < $tmp806;
+frost$core$Bit $tmp808 = (frost$core$Bit) {$tmp807};
+bool $tmp809 = $tmp808.value;
+if ($tmp809) goto block10; else goto block11;
 block10:;
 // line 999
+frost$core$Char8* $tmp810 = *(&local1);
+frost$core$Int64 $tmp811 = *(&local5);
 frost$core$Char8* $tmp812 = *(&local1);
 frost$core$Int64 $tmp813 = *(&local5);
-frost$core$Char8* $tmp814 = *(&local1);
-frost$core$Int64 $tmp815 = *(&local5);
-frost$core$Int64 $tmp816 = *(&local2);
-int64_t $tmp817 = $tmp815.value;
-int64_t $tmp818 = $tmp816.value;
-int64_t $tmp819 = $tmp817 + $tmp818;
-frost$core$Int64 $tmp820 = (frost$core$Int64) {$tmp819};
-int64_t $tmp821 = $tmp820.value;
-frost$core$Char8 $tmp822 = $tmp814[$tmp821];
-int64_t $tmp823 = $tmp813.value;
-$tmp812[$tmp823] = $tmp822;
+frost$core$Int64 $tmp814 = *(&local2);
+int64_t $tmp815 = $tmp813.value;
+int64_t $tmp816 = $tmp814.value;
+int64_t $tmp817 = $tmp815 + $tmp816;
+frost$core$Int64 $tmp818 = (frost$core$Int64) {$tmp817};
+int64_t $tmp819 = $tmp818.value;
+frost$core$Char8 $tmp820 = $tmp812[$tmp819];
+int64_t $tmp821 = $tmp811.value;
+$tmp810[$tmp821] = $tmp820;
 goto block12;
 block12:;
-frost$core$Int64 $tmp824 = *(&local5);
-int64_t $tmp825 = $tmp797.value;
-int64_t $tmp826 = $tmp824.value;
-int64_t $tmp827 = $tmp825 - $tmp826;
-frost$core$Int64 $tmp828 = (frost$core$Int64) {$tmp827};
-frost$core$UInt64 $tmp829 = frost$core$Int64$get_asUInt64$R$frost$core$UInt64($tmp828);
-if ($tmp799) goto block16; else goto block17;
+frost$core$Int64 $tmp822 = *(&local5);
+int64_t $tmp823 = $tmp795.value;
+int64_t $tmp824 = $tmp822.value;
+int64_t $tmp825 = $tmp823 - $tmp824;
+frost$core$Int64 $tmp826 = (frost$core$Int64) {$tmp825};
+frost$core$UInt64 $tmp827 = frost$core$Int64$get_asUInt64$R$frost$core$UInt64($tmp826);
+if ($tmp797) goto block16; else goto block17;
 block16:;
-uint64_t $tmp830 = $tmp829.value;
-uint64_t $tmp831 = $tmp801.value;
-bool $tmp832 = $tmp830 >= $tmp831;
-frost$core$Bit $tmp833 = (frost$core$Bit) {$tmp832};
-bool $tmp834 = $tmp833.value;
-if ($tmp834) goto block15; else goto block11;
+uint64_t $tmp828 = $tmp827.value;
+uint64_t $tmp829 = $tmp799.value;
+bool $tmp830 = $tmp828 >= $tmp829;
+frost$core$Bit $tmp831 = (frost$core$Bit) {$tmp830};
+bool $tmp832 = $tmp831.value;
+if ($tmp832) goto block15; else goto block11;
 block17:;
-uint64_t $tmp835 = $tmp829.value;
-uint64_t $tmp836 = $tmp801.value;
-bool $tmp837 = $tmp835 > $tmp836;
-frost$core$Bit $tmp838 = (frost$core$Bit) {$tmp837};
-bool $tmp839 = $tmp838.value;
-if ($tmp839) goto block15; else goto block11;
+uint64_t $tmp833 = $tmp827.value;
+uint64_t $tmp834 = $tmp799.value;
+bool $tmp835 = $tmp833 > $tmp834;
+frost$core$Bit $tmp836 = (frost$core$Bit) {$tmp835};
+bool $tmp837 = $tmp836.value;
+if ($tmp837) goto block15; else goto block11;
 block15:;
-int64_t $tmp840 = $tmp824.value;
-int64_t $tmp841 = $tmp800.value;
-int64_t $tmp842 = $tmp840 + $tmp841;
-frost$core$Int64 $tmp843 = (frost$core$Int64) {$tmp842};
-*(&local5) = $tmp843;
+int64_t $tmp838 = $tmp822.value;
+int64_t $tmp839 = $tmp798.value;
+int64_t $tmp840 = $tmp838 + $tmp839;
+frost$core$Int64 $tmp841 = (frost$core$Int64) {$tmp840};
+*(&local5) = $tmp841;
 goto block10;
 block11:;
 // line 1001
-frost$core$String* $tmp844 = (frost$core$String*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$String$class);
-frost$core$Char8* $tmp845 = *(&local1);
-frost$core$Int64 $tmp846 = *(&local4);
-frost$core$String$init$frost$unsafe$Pointer$LTfrost$core$Char8$GT$frost$core$Int64($tmp844, $tmp845, $tmp846);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp844));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp844));
-return $tmp844;
+frost$core$String* $tmp842 = (frost$core$String*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$String$class);
+frost$core$Char8* $tmp843 = *(&local1);
+frost$core$Int64 $tmp844 = *(&local4);
+frost$core$String$init$frost$unsafe$Pointer$LTfrost$core$Char8$GT$frost$core$Int64($tmp842, $tmp843, $tmp844);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp842));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp842));
+return $tmp842;
 
 }
 frost$core$String* frost$core$UInt16$format$frost$core$String$R$frost$core$String(frost$core$UInt16 param0, frost$core$String* param1) {
 
 // line 1007
-frost$core$Bit $tmp847 = frost$core$Bit$init$builtin_bit(false);
-frost$core$UInt64 $tmp848 = frost$core$UInt16$get_asUInt64$R$frost$core$UInt64(param0);
-frost$core$UInt64 $tmp849 = (frost$core$UInt64) {65535};
-frost$core$String* $tmp850 = frost$core$Frost$format$frost$core$Bit$frost$core$UInt64$frost$core$UInt64$frost$core$String$R$frost$core$String($tmp847, $tmp848, $tmp849, param1);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp850));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp850));
-return $tmp850;
+frost$core$Bit $tmp845 = frost$core$Bit$init$builtin_bit(false);
+frost$core$UInt64 $tmp846 = frost$core$UInt16$get_asUInt64$R$frost$core$UInt64(param0);
+frost$core$UInt64 $tmp847 = (frost$core$UInt64) {65535};
+frost$core$String* $tmp848 = frost$core$Frost$format$frost$core$Bit$frost$core$UInt64$frost$core$UInt64$frost$core$String$R$frost$core$String($tmp845, $tmp846, $tmp847, param1);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp848));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp848));
+return $tmp848;
 
 }
 void frost$core$UInt16$cleanup(frost$core$UInt16 param0) {

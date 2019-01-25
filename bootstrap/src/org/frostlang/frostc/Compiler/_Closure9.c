@@ -22,14 +22,14 @@ static frost$core$String $s34 = { (frost$core$Class*) &frost$core$String$class, 
 
 void org$frostlang$frostc$Compiler$_Closure9$init$org$frostlang$frostc$FieldDecl$org$frostlang$frostc$Compiler(org$frostlang$frostc$Compiler$_Closure9* param0, org$frostlang$frostc$FieldDecl* param1, org$frostlang$frostc$Compiler* param2) {
 
-// line 5519
+// line 5518
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
 org$frostlang$frostc$FieldDecl** $tmp2 = &param0->f;
 org$frostlang$frostc$FieldDecl* $tmp3 = *$tmp2;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp3));
 org$frostlang$frostc$FieldDecl** $tmp4 = &param0->f;
 *$tmp4 = param1;
-// line 5519
+// line 5518
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param2));
 org$frostlang$frostc$Compiler** $tmp5 = &param0->$self;
 org$frostlang$frostc$Compiler* $tmp6 = *$tmp5;
@@ -41,7 +41,7 @@ return;
 }
 void org$frostlang$frostc$Compiler$_Closure9$cleanup(org$frostlang$frostc$Compiler$_Closure9* param0) {
 
-// line 5519
+// line 5518
 frost$core$Object$cleanup(((frost$core$Object*) param0));
 org$frostlang$frostc$FieldDecl** $tmp8 = &param0->f;
 org$frostlang$frostc$FieldDecl* $tmp9 = *$tmp8;
@@ -54,7 +54,7 @@ return;
 }
 void org$frostlang$frostc$Compiler$_Closure9$$anonymous8$frost$core$Int64$frost$core$String(org$frostlang$frostc$Compiler$_Closure9* param0, frost$core$Int64 param1, frost$core$String* param2) {
 
-// line 5520
+// line 5519
 org$frostlang$frostc$FieldDecl** $tmp12 = &param0->f;
 org$frostlang$frostc$FieldDecl* $tmp13 = *$tmp12;
 org$frostlang$frostc$Annotations** $tmp14 = &$tmp13->annotations;
@@ -70,7 +70,7 @@ frost$core$Bit $tmp23 = (frost$core$Bit) {$tmp22};
 bool $tmp24 = $tmp23.value;
 if ($tmp24) goto block1; else goto block2;
 block1:;
-// line 5521
+// line 5520
 org$frostlang$frostc$Compiler** $tmp25 = &param0->$self;
 org$frostlang$frostc$Compiler* $tmp26 = *$tmp25;
 org$frostlang$frostc$FieldDecl** $tmp27 = &param0->f;

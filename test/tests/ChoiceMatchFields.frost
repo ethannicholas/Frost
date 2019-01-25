@@ -15,6 +15,7 @@ choice Expression {
             when MUL(a, b) { return "(\{a} * \{b})" }
             when DIV(a, b) { return "(\{a} / \{b})" }
             when NEGATE(v) { return "-\{v}" }
+            otherwise { unreachable }
         }
     }
 
@@ -26,6 +27,7 @@ choice Expression {
             when MUL(a, b) { return a.evaluate() * b.evaluate() }
             when DIV(a, b) { return a.evaluate() // b.evaluate() }
             when NEGATE(v) { return -v.evaluate() }
+            otherwise { unreachable }
         }
     }
 

@@ -43,8 +43,8 @@ frost$core$String$UTF8List$class_type frost$core$String$UTF8List$class = { (fros
 typedef frost$core$Int64 (*$fn14)(frost$collections$CollectionView*);
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x55\x54\x46\x38\x4c\x69\x73\x74", 26, 7225881363511303404, NULL };
-static frost$core$String $s23 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x53\x74\x72\x69\x6e\x67\x2e\x66\x72\x6f\x73\x74", 12, -7878295538840852540, NULL };
-static frost$core$String $s24 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x55\x54\x46\x38\x4c\x69\x73\x74\x2e\x5b\x5d\x28\x69\x6e\x64\x65\x78\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x36\x34\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x43\x68\x61\x72\x38", 104, 6455346667787409135, NULL };
+static frost$core$String $s22 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x53\x74\x72\x69\x6e\x67\x2e\x66\x72\x6f\x73\x74", 12, -7878295538840852540, NULL };
+static frost$core$String $s23 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x55\x54\x46\x38\x4c\x69\x73\x74\x2e\x5b\x5d\x28\x69\x6e\x64\x65\x78\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x36\x34\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x43\x68\x61\x72\x38", 104, 6455346667787409135, NULL };
 
 void frost$core$String$UTF8List$init$frost$core$String(frost$core$String$UTF8List* param0, frost$core$String* param1) {
 
@@ -60,15 +60,14 @@ return;
 }
 frost$core$Char8 frost$core$String$UTF8List$$IDX$frost$core$Int64$R$frost$core$Char8(frost$core$String$UTF8List* param0, frost$core$Int64 param1) {
 
-frost$core$Bit local0;
 frost$core$Int64 $tmp6 = (frost$core$Int64) {0};
 int64_t $tmp7 = param1.value;
 int64_t $tmp8 = $tmp6.value;
 bool $tmp9 = $tmp7 >= $tmp8;
 frost$core$Bit $tmp10 = (frost$core$Bit) {$tmp9};
 bool $tmp11 = $tmp10.value;
-if ($tmp11) goto block1; else goto block2;
-block1:;
+if ($tmp11) goto block3; else goto block2;
+block3:;
 ITable* $tmp12 = ((frost$collections$CollectionView*) param0)->$class->itable;
 while ($tmp12->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
     $tmp12 = $tmp12->next;
@@ -79,59 +78,52 @@ int64_t $tmp16 = param1.value;
 int64_t $tmp17 = $tmp15.value;
 bool $tmp18 = $tmp16 < $tmp17;
 frost$core$Bit $tmp19 = (frost$core$Bit) {$tmp18};
-*(&local0) = $tmp19;
-goto block3;
+bool $tmp20 = $tmp19.value;
+if ($tmp20) goto block1; else goto block2;
 block2:;
-*(&local0) = $tmp10;
-goto block3;
-block3:;
-frost$core$Bit $tmp20 = *(&local0);
-bool $tmp21 = $tmp20.value;
-if ($tmp21) goto block4; else goto block5;
-block5:;
-frost$core$Int64 $tmp22 = (frost$core$Int64) {92};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s23, $tmp22, &$s24);
+frost$core$Int64 $tmp21 = (frost$core$Int64) {92};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s22, $tmp21, &$s23);
 abort(); // unreachable
-block4:;
+block1:;
 // line 93
-frost$core$String** $tmp25 = &param0->str;
-frost$core$String* $tmp26 = *$tmp25;
-frost$core$Char8** $tmp27 = &$tmp26->data;
-frost$core$Char8* $tmp28 = *$tmp27;
-int64_t $tmp29 = param1.value;
-frost$core$Char8 $tmp30 = $tmp28[$tmp29];
-return $tmp30;
+frost$core$String** $tmp24 = &param0->str;
+frost$core$String* $tmp25 = *$tmp24;
+frost$core$Char8** $tmp26 = &$tmp25->data;
+frost$core$Char8* $tmp27 = *$tmp26;
+int64_t $tmp28 = param1.value;
+frost$core$Char8 $tmp29 = $tmp27[$tmp28];
+return $tmp29;
 
 }
 frost$core$Int64 frost$core$String$UTF8List$get_count$R$frost$core$Int64(frost$core$String$UTF8List* param0) {
 
 // line 98
-frost$core$String** $tmp31 = &param0->str;
-frost$core$String* $tmp32 = *$tmp31;
-frost$core$Int64* $tmp33 = &$tmp32->_length;
-frost$core$Int64 $tmp34 = *$tmp33;
-return $tmp34;
+frost$core$String** $tmp30 = &param0->str;
+frost$core$String* $tmp31 = *$tmp30;
+frost$core$Int64* $tmp32 = &$tmp31->_length;
+frost$core$Int64 $tmp33 = *$tmp32;
+return $tmp33;
 
 }
 frost$collections$Iterator* frost$core$String$UTF8List$get_iterator$R$frost$collections$Iterator$LTfrost$core$Char8$GT(frost$core$String$UTF8List* param0) {
 
 // line 103
-frost$core$String$UTF8Iterator* $tmp35 = (frost$core$String$UTF8Iterator*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$String$UTF8Iterator$class);
-frost$core$String** $tmp36 = &param0->str;
-frost$core$String* $tmp37 = *$tmp36;
-frost$core$String$UTF8Iterator$init$frost$core$String($tmp35, $tmp37);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$collections$Iterator*) $tmp35)));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp35));
-return ((frost$collections$Iterator*) $tmp35);
+frost$core$String$UTF8Iterator* $tmp34 = (frost$core$String$UTF8Iterator*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$String$UTF8Iterator$class);
+frost$core$String** $tmp35 = &param0->str;
+frost$core$String* $tmp36 = *$tmp35;
+frost$core$String$UTF8Iterator$init$frost$core$String($tmp34, $tmp36);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$collections$Iterator*) $tmp34)));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp34));
+return ((frost$collections$Iterator*) $tmp34);
 
 }
 void frost$core$String$UTF8List$cleanup(frost$core$String$UTF8List* param0) {
 
 // line 84
 frost$core$Object$cleanup(((frost$core$Object*) param0));
-frost$core$String** $tmp38 = &param0->str;
-frost$core$String* $tmp39 = *$tmp38;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp39));
+frost$core$String** $tmp37 = &param0->str;
+frost$core$String* $tmp38 = *$tmp37;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp38));
 return;
 
 }

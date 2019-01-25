@@ -4770,6 +4770,17 @@ class Compiler {
         ir.add(IR.Statement.CONDITIONAL_BRANCH(test.position(), testBit, ifTrue, ifFalse))
     }
 
+    @pre(owner.name = context.name & owner.parameters.count = context.parameters.count)
+    method compileConditionalBranchInContext(expr:ASTNode, ifTrue:IR.Block.ID, ifFalse:IR.Block.ID,
+            owner:MethodDecl, context:MethodDecl) {
+        def symbols := AutoScope(self)
+        for i in 0 .. owner.parameters.count {
+            symbolTable.add(symbols.oldSymbolTable[context.parameters[i].name],
+                    owner.parameters[i].name)
+        }
+        compileConditionalBranch(expr, ifTrue, ifFalse)
+    }
+
     method findAndLeaveToLoopScope(position:Position, label:String?):EnclosingContext? {
         for c in enclosingContexts {
             match c {
@@ -5141,17 +5152,11 @@ class Compiler {
                                 }
                             }
                             havePre := true
-                            def value := compileExpressionInContext(expr,
-                                    TypeContext.TYPE(Type.Bit(), false), current, m)
-                            if value == null {
-                                return
-                            }
                             if start == null {
-                                start := ir.newBlock("precondition success")
+                                start := ir.newBlock("@pre success")
                             }
-                            failBlock := ir.newBlock("precondition fail")
-                            ir.add(IR.Statement.CONDITIONAL_BRANCH(m.position,
-                                    extractBuiltinBit(m.position, value), start, failBlock))
+                            failBlock := ir.newBlock("@pre fail")
+                            compileConditionalBranchInContext(expr, start, failBlock, current, m)
                             ir.setCurrentBlock(failBlock)
                         }
                         when Annotations.Expression.PRE_OR(_, expr) {
@@ -5166,17 +5171,11 @@ class Compiler {
                                 }
                             }
                             havePre := true
-                            def value := compileExpressionInContext(expr,
-                                    TypeContext.TYPE(Type.Bit(), false), current, m)
-                            if value == null {
-                                return
-                            }
                             if start == null {
-                                start := ir.newBlock("precondition success")
+                                start := ir.newBlock("@preOr success")
                             }
-                            failBlock := ir.newBlock("precondition fail")
-                            ir.add(IR.Statement.CONDITIONAL_BRANCH(m.position,
-                                    extractBuiltinBit(m.position, value), start, failBlock))
+                            failBlock := ir.newBlock("@preOr fail")
+                            compileConditionalBranchInContext(expr, start, failBlock, current, m)
                             ir.setCurrentBlock(failBlock)
                         }
                     }
@@ -5432,7 +5431,7 @@ class Compiler {
                     }
                 }
             }
-            if writeCode {
+            if writeCode & errorCount = 0 {
                 Analyzer(self, m, ir).analyze()
                 codeGenerator.write(m, ir)
             }

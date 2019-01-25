@@ -44,8 +44,8 @@ while ($tmp7->$class != (frost$core$Class*) &frost$core$Equatable$class) {
 }
 $fn9 $tmp8 = $tmp7->methods[1];
 frost$core$Bit $tmp10 = $tmp8(((frost$core$Equatable*) param4), ((frost$core$Equatable*) $tmp6));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp6));
 bool $tmp11 = $tmp10.value;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp6));
 if ($tmp11) goto block1; else goto block2;
 block2:;
 frost$core$Int64 $tmp12 = (frost$core$Int64) {31};
