@@ -1,2 +1,2 @@
-NonParameterizedGeneric2.frost:4:22: error: 'frost.collections.List' expected 1 generic argument, but found 0
+NonParameterizedGeneric2.frost:4:26: error: 'frost.collections.List' expected 1 generic argument, but found 0
 1 error

@@ -1,33 +1,14 @@
 class AmbiguousMatch {
     @class
-    method test(x:Int8) {
+    method m(o:Object, s:String) {
     }
 
     @class
-    method test(x:Int16) {
-    }
-
-    @class
-    method test(x:Int32) {
-    }
-
-    @class
-    method test(x:Int64) {
-    }
-
-    @class
-    function test2(x:Int8):Int64 {
-        return 1
-    }
-
-    @class
-    function test2(x:Int64):Int64 {
-        return 1
+    method m(s:String, o:Object) {
     }
 
     @class
     method main() {
-        test(0)
-        def a := test2(1)
+        m("Hello", "Goodbye")
     }
 }

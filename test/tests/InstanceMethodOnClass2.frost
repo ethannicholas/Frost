@@ -1,9 +1,9 @@
 class InstanceMethodOnClass2 {
-    method fail() {
+    method instance() {
     }
 
     @class
     method main() {
-        InstanceMethodOnClass2.fail()
+        InstanceMethodOnClass2.instance()
     }
 }

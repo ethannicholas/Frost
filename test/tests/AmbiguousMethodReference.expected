@@ -1,6 +1,5 @@
-AmbiguousMethodReference.frost:2:19: error: reference to method '+' is ambiguous. The following methods are equally good matches:
-    function frost.core.Int64.+(other:frost.core.Int64):frost.core.Int64 (Int64.frost:79:5)
-    function frost.core.Int64.+(other:frost.core.Int32):frost.core.Int64 (Int64.frost:74:5)
-    function frost.core.Int64.+(other:frost.core.Int16):frost.core.Int64 (Int64.frost:69:5)
-    function frost.core.Int64.+(other:frost.core.Int8):frost.core.Int64 (Int64.frost:64:5)
+AmbiguousMethodReference.frost:12:16: error: ambiguous reference to method 'm'. The following methods are equally good matches:
+    method anonymous.BareCode.m() (AmbiguousMethodReference.frost:1:1)
+    method anonymous.BareCode.m(s:frost.core.String) (AmbiguousMethodReference.frost:4:1)
+    method anonymous.BareCode.m():frost.core.Object (AmbiguousMethodReference.frost:7:1)
 1 error

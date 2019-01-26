@@ -1,0 +1,2 @@
+ChoiceConstruct.frost:6:18: error: 'anonymous.Fail' is a choice and may not be directly constructed
+1 error

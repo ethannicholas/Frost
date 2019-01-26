@@ -1088,7 +1088,12 @@ class Compiler {
 
     @post(@return | errorCount > 0 | !reportErrors)
     method resolve(f:FieldDecl):Bit {
-        if f.resolved = Resolution.UNRESOLVED {
+        if f.resolved = Resolution.IN_PROGRESS {
+            error(f.position,
+                    "encounted a circular dependency in the value of field \{f.name}")
+            f.resolved := Resolution.RESOLVED_WITH_ERRORS
+        }
+        else if f.resolved = Resolution.UNRESOLVED {
             f.resolved := Resolution.IN_PROGRESS
             if f.owner.classKind != ClassDecl.Kind.INTERFACE {
                 -- we need to mark that we are in an instance context so 'self' works. Since the
@@ -4099,7 +4104,7 @@ class Compiler {
             args:ListView<ASTNode>, type:TypeContext) {
         def msg := MutableString("call to '\{methods[0].value.name}' is ambiguous. The following " +
                 "methods are equally good matches:")
-        for m in methods {
+        for m in methods.sort((a, b) => a.value.position > b.value.position) {
             msg.append("\n    \{m.value.declaration} (\{m.value.owner.source.name}:" +
                     "\{m.value.position})")
         }
@@ -4779,7 +4784,12 @@ class Compiler {
                         }
                     }
                 }
-                error(expr.position(), "ambiguous reference to method '\{methods[0].name}'")
+                def msg := MutableString("ambiguous reference to method '\{methods[0].name}'. " +
+                        "The following methods are equally good matches:")
+                for m in methods.sort((a, b) => a.position > b.position) {
+                    msg.append("\n    \{m.declaration} (\{m.owner.source.name}:\{m.position})")
+                }
+                error(expr.position(), msg.finish())
                 return null
             }
             otherwise {

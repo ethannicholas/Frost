@@ -1,0 +1,2 @@
+InterfaceConstruct.frost:5:18: error: 'anonymous.Fail' is an interface and may not be directly constructed
+1 error

@@ -1,7 +1,7 @@
 package org.frostlang.frostc
 
 @final
-class Position : Value, Key<Position> {
+class Position : Value, Key<Position>, Comparable<Position> {
     def line:Int
 
     def column:Int
@@ -23,6 +23,17 @@ class Position : Value, Key<Position> {
     }
 
     @override
+    function >(other:Position):Bit {
+        if line > other.line {
+            return true
+        }
+        if line < other.line {
+            return false
+        }
+        return column > other.column
+    }
+
+    @override
     function get_hash():Int {
         return line << 16 + column
     }
@@ -32,3 +43,4 @@ class Position : Value, Key<Position> {
         return "\{line}:\{column}"
     }
 }
+

@@ -1,3 +1,13 @@
+method m() {
+}
+
+method m(s:String) {
+}
+
+method m():Object {
+    return "ok"
+}
+
 method main() {
-    def add := Int.+
+    def ref := m
 }

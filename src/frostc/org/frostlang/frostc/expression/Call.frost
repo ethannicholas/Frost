@@ -658,6 +658,21 @@ class Call {
                 if cl == null {
                     return null
                 }
+                if !cl.annotations.isSynthetic & !compiler.checkGenericArguments(position, cl, t) {
+                    return null
+                }
+                match cl.classKind {
+                    when ClassDecl.Kind.CHOICE {
+                        compiler.error(position, "'\{cl.name}' is a choice and may not be " +
+                                "directly constructed")
+                        return null
+                    }
+                    when ClassDecl.Kind.INTERFACE {
+                        compiler.error(position, "'\{cl.name}' is an interface and may not be " +
+                                "directly constructed")
+                        return null
+                    }
+                }
                 if !compiler.resolve(cl) {
                     return null
                 }
@@ -889,6 +904,11 @@ class Call {
             }
         }
         else if !m.value.annotations.isClass & !compiler.isValueInit(m.value) {
+            if compiler.isClassContext() {
+                compiler.error(position,
+                        "cannot call instance \{m.value.declaration} from a @class context")
+                return null
+            }
             finalTarget := compiler.coerce(position, compiler.compileSelf(position, false),
                     m.value.owner.type)
             if finalTarget == null {

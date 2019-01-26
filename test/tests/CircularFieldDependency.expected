@@ -1,8 +1,3 @@
-CircularFieldDependency.frost:11:14: error: unable to resolve field types due to a circular dependency involving:
-    FieldDependency1.F (CircularFieldDependency.frost:2:14)
-    FieldDependency2.C (CircularFieldDependency.frost:11:14)
-    FieldDependency3.D (CircularFieldDependency.frost:16:14)
-    FieldDependency3.E (CircularFieldDependency.frost:15:14)
-    FieldDependency4.A (CircularFieldDependency.frost:20:14)
-    FieldDependency5.B (CircularFieldDependency.frost:24:14)
-1 error
+CircularFieldDependency.frost:2:14: error: encounted a circular dependency in the value of field F
+CircularFieldDependency.frost:6:26: error: no match for call to 'printLine'
+2 errors

@@ -2,6 +2,7 @@ package org.frostlang.frostc.lvalue
 
 uses org.frostlang.frostc.ASTNode
 uses org.frostlang.frostc.Compiler
+uses org.frostlang.frostc.Compiler.AutoScope
 uses org.frostlang.frostc.Compiler.Resolution
 uses org.frostlang.frostc.Compiler.TypeContext
 uses org.frostlang.frostc.FieldDecl
@@ -71,6 +72,7 @@ class FieldLValue : LValue {
     method compileLoad():IR.Value? {
         if field.annotations.isClass & field.fieldKind = FieldDecl.Kind.CONSTANT {
             compiler.currentClass.push(field.owner)
+            def scope := AutoScope(compiler, compiler.getSymbolTable(field.owner))
             def result := compiler.compileExpression(field.rawValue,
                     TypeContext.TYPE(type(), false))
             compiler.currentClass.pop()

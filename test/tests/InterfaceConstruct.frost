@@ -1,0 +1,6 @@
+interface Fail {
+}
+
+method main() {
+    def f := Fail()
+}
