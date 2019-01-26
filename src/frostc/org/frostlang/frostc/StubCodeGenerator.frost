@@ -207,7 +207,7 @@ class StubCodeGenerator : CodeGenerator {
         fail(error) {
             Console.printLine(error)
             System.exit(1)
-        }    
+        }
     }
 
     @override

@@ -26,7 +26,7 @@ class Unary {
                 when Token.Kind.NOT         { return NOT }
                 when Token.Kind.BITWISENOT  { return BITWISENOT }
                 otherwise                   { unreachable, "not a unary operator: \{op}"}
-            }        
+            }
         }
 
         @override
@@ -48,20 +48,8 @@ class Unary {
             when Unary.Operator.NEGATE {
                 match operand {
                     when ASTNode.INT(_, value) {
-                        match type {
-                            when TypeContext.TYPE(t, _) {
-                                if t.typeKind = Type.Kind.BUILTIN_INT |
-                                        t.typeKind = Type.Kind.BUILTIN_UINT {
-                                    return IR.Value.INT(-value, t)
-                                }
-                                if t.isNumber {
-                                    def args := Array<ASTNode>()
-                                    args.add(ASTNode.INT(position, -value))
-                                    return Call.compile(compiler, position, IR.Value.TYPE(t), args,
-                                            type)
-                                }
-                            }
-                        }
+                        return IntLiteral.compileNegated(compiler, position,
+                                value, type)
                     }
                 }
                 def target := compiler.compileExpression(operand, TypeContext.NON_VOID)

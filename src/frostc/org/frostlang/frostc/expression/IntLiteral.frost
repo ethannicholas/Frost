@@ -3,18 +3,57 @@ package org.frostlang.frostc.expression
 uses org.frostlang.frostc.ASTNode
 uses org.frostlang.frostc.Compiler
 uses org.frostlang.frostc.Compiler.TypeContext
+uses org.frostlang.frostc.FixedArray
 uses org.frostlang.frostc.IR
+uses org.frostlang.frostc.MethodDecl
+uses org.frostlang.frostc.Methods
 uses org.frostlang.frostc.Position
+uses org.frostlang.frostc.Symbol
 uses org.frostlang.frostc.Type
 
 class IntLiteral {
+    @class
+    function requiredSize(value:Int64):Int {
+        if value >= -128 & value <= 127 {
+            return 8
+        }
+        if value >= -32768 & value <= 32767 {
+            return 16
+        }
+        if value >= -2147483648 & value <= 2147483647 {
+            return 32
+        }
+        return 64
+    }
+
+    @class
+    function requiredSize(value:UInt64):Int {
+        if value <= 255 {
+            return 8
+        }
+        if value <= 65535 {
+            return 16
+        }
+        if value <= 4294967295 {
+            return 32
+        }
+        return 64
+    }
+
     @class
     method compile(compiler:Compiler, position:Position, value:UInt64,
             type:TypeContext):IR.Value? {
         match type {
             when TypeContext.TYPE(t, _) {
                 if t.typeKind = Type.Kind.BUILTIN_INT | t.typeKind = Type.Kind.BUILTIN_UINT {
-                    return IR.Value.INT(value, t)
+                    if requiredSize(value) <= t.size {
+                        return IR.Value.INT(value, t)
+                    }
+                    else {
+                        compiler.error(position, "integer literal is out of range")
+                        assert false
+                        return null
+                    }
                 }
                 if t.typeKind = Type.Kind.BUILTIN_FLOAT {
                     return IR.Value.REAL(value, t)
@@ -26,6 +65,48 @@ class IntLiteral {
             }
         }
         return compiler.coerce(position, compile(compiler, position, value,
+                TypeContext.TYPE(Type.Int64(), false)), type)
+    }
+
+    @class
+    method compileNegated(compiler:Compiler, position:Position, value:UInt64,
+            type:TypeContext):IR.Value? {
+        if value > Int64.MAX.asUInt64 + 1 {
+            compiler.error(position, "integer literal is out of range")
+            return null
+        }
+        match type {
+            when TypeContext.TYPE(t, _) {
+                if t.typeKind = Type.Kind.BUILTIN_UINT {
+                    compiler.error(position, "integer literal is out of range")
+                    return null
+                }
+                if t.typeKind = Type.Kind.BUILTIN_INT {
+                    if requiredSize(-value.asInt64) <= t.size {
+                        return IR.Value.INT((-value.asInt64).asUInt64, t)
+                    }
+                    else {
+                        compiler.error(position, "integer literal is out of range")
+                        return null
+                    }
+                }
+                if t.typeKind = Type.Kind.BUILTIN_FLOAT {
+                    return IR.Value.REAL(-value.asInt64, t)
+                }
+                if t.isNumber {
+                    def cl := compiler.getClass(t)
+                    assert cl !== null
+                    def m := cl.methods[0]
+                    assert m.methodKind = MethodDecl.Kind.INIT
+                    def finalValue := compileNegated(compiler, position, value,
+                            TypeContext.TYPE(m.parameters[0].type, false))
+                    def result := compiler.ir.add(IR.Statement.CREATE_STRUCT(position,
+                            m.owner, FixedArray<IR.Value>.from([finalValue])))
+                    return compiler.coerce(position, IR.Value.REF(result, m.owner.type), t)
+                }
+            }
+        }
+        return compiler.coerce(position, compileNegated(compiler, position, value,
                 TypeContext.TYPE(Type.Int64(), false)), type)
     }
 }

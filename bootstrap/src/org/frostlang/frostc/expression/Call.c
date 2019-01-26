@@ -2624,7 +2624,7 @@ while ($tmp1089->$class != (frost$core$Class*) &frost$collections$CollectionView
 }
 $fn1091 $tmp1090 = $tmp1089->methods[8];
 frost$collections$Array* $tmp1092 = $tmp1090(((frost$collections$CollectionView*) $tmp1086), ((frost$core$MutableMethod*) $tmp1088));
-frost$collections$Array$init$frost$collections$ListView$LTfrost$collections$Array$T$GT($tmp1082, ((frost$collections$ListView*) $tmp1092));
+frost$collections$Array$init$frost$collections$CollectionView$LTfrost$collections$Array$T$GT($tmp1082, ((frost$collections$CollectionView*) $tmp1092));
 *(&local0) = ((frost$collections$Array*) NULL);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp1082));
 frost$collections$Array* $tmp1093 = *(&local0);

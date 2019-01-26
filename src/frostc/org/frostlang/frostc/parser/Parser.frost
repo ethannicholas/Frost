@@ -1356,15 +1356,28 @@ class Parser {
             when Token.Kind.DOTDOT, Token.Kind.ELLIPSIS {
                 def next := peek()
                 def right:ASTNode?
-                if next.kind != Token.Kind.RBRACKET & next.kind != Token.Kind.RPAREN &
-                        next.kind != Token.Kind.BY {
-                    right := additiveExpression()
-                    if right == null {
-                        return null
+                match next.kind {
+                    -- Technically there is an ambiguity here with tokens that can begin both a
+                    -- statement or an expression, like "self". You could write something beginning
+                    -- e.g. "def a := 1 ... self", and it's unclear whether that "self" is the
+                    -- beginning of a new statement or the beginning of an expression designating
+                    -- the end of the range. I don't know how likely it is that anyone will ever
+                    -- encounter this in practice (there's little reason to use a range out in the
+                    -- open like that) but it's easily worked around with some parentheses.
+                    when Token.Kind.RBRACKET, Token.Kind.RPAREN, Token.Kind.BY, Token.Kind.LBRACE,
+                            Token.Kind.RBRACE, Token.Kind.COMMA, Token.Kind.IF, Token.Kind.FOR,
+                            Token.Kind.WHILE, Token.Kind.DO, Token.Kind.LOOP, Token.Kind.ASSERT,
+                            Token.Kind.MATCH, Token.Kind.VAR, Token.Kind.DEF, Token.Kind.PROPERTY,
+                            Token.Kind.CONSTANT, Token.Kind.INIT, Token.Kind.METHOD,
+                            Token.Kind.FUNCTION, Token.Kind.TRY, Token.Kind.UNREACHABLE {
+                        right := null
                     }
-                }
-                else {
-                    right := null
+                    otherwise {
+                        right := additiveExpression()
+                        if right == null {
+                            return null
+                        }
+                    }
                 }
                 def step:ASTNode?
                 if checkNext(Token.Kind.BY) !== null {

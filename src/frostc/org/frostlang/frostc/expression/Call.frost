@@ -288,7 +288,7 @@ class Call {
     ================================================================================================
     @class
     function findGenericParameters(m:MethodDecl, t:Type):ListView<ListView<Int>>? {
-        if t.subtypes == null {
+        if !t.hasSubtypes {
             return null
         }
         var result:Array<ListView<Int>>? := null

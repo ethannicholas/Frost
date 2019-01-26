@@ -1,2 +1,2 @@
-RangeTypeMismatch2.frost:4:22: error: range endpoints must be value types, but found 'frost.core.Immutable'
+RangeTypeMismatch2.frost:4:25: error: expected 'frost.core.Value', but found 'frost.core.String'
 1 error

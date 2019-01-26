@@ -43,9 +43,9 @@ class Array<T> : List<T> {
     ================================================================================================
     Creates a new `Array` containing all the elements in another collection.
     ================================================================================================
-    init(list:ListView<T>) {
-        init(list.count.max(DEFAULT_CAPACITY))
-        for v in list {
+    init(other:CollectionView<T>) {
+        init(other.count.max(DEFAULT_CAPACITY))
+        for v in other {
             add(v)
         }
     }

@@ -3,33 +3,33 @@
 -- of the terms (what if that '4' is an Int8, the '5' is a UInt16...). This test exists primarily to
 -- ensure that we compile these expressions in a reasonable amount of time.
 method main() {
-	Console.printLine(1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10 + 11 + 12 + 13 + 14 + 15 + 16 + 17 +
-			18 + 19 + 20)
+    Console.printLine(1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10 + 11 + 12 + 13 + 14 + 15 + 16 + 17 +
+            18 + 19 + 20)
 
-	def one := 1
-	Console.printLine(one + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10 + 11 + 12 + 13 + 14 + 15 + 16 + 17 +
-			18 + 19 + 20)
+    def one := 1
+    Console.printLine(one + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10 + 11 + 12 + 13 + 14 + 15 + 16 + 17 +
+            18 + 19 + 20)
 
-	def ten := 10
-	Console.printLine(1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + ten + 11 + 12 + 13 + 14 + 15 + 16 + 17 +
-			18 + 19 + 20)
+    def ten := 10
+    Console.printLine(1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + ten + 11 + 12 + 13 + 14 + 15 + 16 + 17 +
+            18 + 19 + 20)
 
-	def twenty := 20
-	Console.printLine(1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10 + 11 + 12 + 13 + 14 + 15 + 16 + 17 +
-			18 + 19 + twenty)
+    def twenty := 20
+    Console.printLine(1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10 + 11 + 12 + 13 + 14 + 15 + 16 + 17 +
+            18 + 19 + twenty)
 
-	Console.printLine("A" + "B" + "C" + "D" + "E" + "F" + "G" + "H" + "I" + "J" + "K" + "L" + "M" +
-			"N" + "O" + "P" + "Q" + "R" + "T" + "U" + "V" + "W" + "X" + "Y" + "Z")
+    Console.printLine("A" + "B" + "C" + "D" + "E" + "F" + "G" + "H" + "I" + "J" + "K" + "L" + "M" +
+            "N" + "O" + "P" + "Q" + "R" + "T" + "U" + "V" + "W" + "X" + "Y" + "Z")
 
-	def a := "A"
-	Console.printLine(a + "B" + "C" + "D" + "E" + "F" + "G" + "H" + "I" + "J" + "K" + "L" + "M" +
-			"N" + "O" + "P" + "Q" + "R" + "T" + "U" + "V" + "W" + "X" + "Y" + "Z")
+    def a := "A"
+    Console.printLine(a + "B" + "C" + "D" + "E" + "F" + "G" + "H" + "I" + "J" + "K" + "L" + "M" +
+            "N" + "O" + "P" + "Q" + "R" + "T" + "U" + "V" + "W" + "X" + "Y" + "Z")
 
-	def m := "M"
-	Console.printLine("A" + "B" + "C" + "D" + "E" + "F" + "G" + "H" + "I" + "J" + "K" + "L" + m +
-			"N" + "O" + "P" + "Q" + "R" + "T" + "U" + "V" + "W" + "X" + "Y" + "Z")
+    def m := "M"
+    Console.printLine("A" + "B" + "C" + "D" + "E" + "F" + "G" + "H" + "I" + "J" + "K" + "L" + m +
+            "N" + "O" + "P" + "Q" + "R" + "T" + "U" + "V" + "W" + "X" + "Y" + "Z")
 
-	def z := "Z"
-	Console.printLine("A" + "B" + "C" + "D" + "E" + "F" + "G" + "H" + "I" + "J" + "K" + "L" + m +
-			"N" + "O" + "P" + "Q" + "R" + "T" + "U" + "V" + "W" + "X" + "Y" + z)
+    def z := "Z"
+    Console.printLine("A" + "B" + "C" + "D" + "E" + "F" + "G" + "H" + "I" + "J" + "K" + "L" + m +
+            "N" + "O" + "P" + "Q" + "R" + "T" + "U" + "V" + "W" + "X" + "Y" + z)
 }

@@ -1,8 +1,8 @@
 LambdaError.frost:14:28: error: lambda error
     when interpreted as '(frost.core.Int8)=>(frost.core.Int8)':
         class 'frost.core.Int8' does not have a member named 'utf8'
-    when interpreted as '(frost.core.String)=>(frost.core.String)':
-        expected 'frost.core.String', but found 'frost.collections.ListView<frost.core.Char8>'
     when interpreted as '(frost.core.Int16)=>(frost.core.Int16)':
         class 'frost.core.Int16' does not have a member named 'utf8'
+    when interpreted as '(frost.core.String)=>(frost.core.String)':
+        expected 'frost.core.String', but found 'frost.collections.ListView<frost.core.Char8>'
 1 error

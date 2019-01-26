@@ -1,29 +1,29 @@
 package test1.test2.test3
 
 class GenericMethodsExplicit {
-	@class
-	method test<A>(o:Object, a:A):Object {
-		return "method 1: " + a
-	}
+    @class
+    method test<A>(o:Object, a:A):Object {
+        return "method 1: " + a
+    }
 
-	@class
-	method test<A>(s:String, a:A):Object {
-		return s + a
-	}
+    @class
+    method test<A>(s:String, a:A):Object {
+        return s + a
+    }
 
-	@class
-	method test2<A>(s:String, a:A):Object {
-		return "test2:" + test<A>(s, a)
-	}
+    @class
+    method test2<A>(s:String, a:A):Object {
+        return "test2:" + test<A>(s, a)
+    }
 
-	@class
-	method main() {
-		Console.printLine(test<String>(5, "test2"))
-		Console.printLine(GenericMethodsExplicit.test<String>(5, "test2"))
-		Console.printLine(test1.test2.test3.GenericMethodsExplicit.test<String>(5, "test2"))
-		def x := test<String>("test1", "test2")
-		Console.printLine(x)
-		Console.printLine((x->String = "test1test2").choose<String>("it worked!", "uh oh"))
-		Console.printLine(test2<String>("test1", "test2"))
-	}
+    @class
+    method main() {
+        Console.printLine(test<String>(5, "test2"))
+        Console.printLine(GenericMethodsExplicit.test<String>(5, "test2"))
+        Console.printLine(test1.test2.test3.GenericMethodsExplicit.test<String>(5, "test2"))
+        def x := test<String>("test1", "test2")
+        Console.printLine(x)
+        Console.printLine((x->String = "test1test2").choose<String>("it worked!", "uh oh"))
+        Console.printLine(test2<String>("test1", "test2"))
+    }
 }

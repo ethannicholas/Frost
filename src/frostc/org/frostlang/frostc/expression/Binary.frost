@@ -98,7 +98,7 @@ class Binary {
                 when Token.Kind.SHIFTLEFTEQ  { return SHIFTLEFTEQ }
                 when Token.Kind.SHIFTRIGHTEQ { return SHIFTRIGHTEQ }
                 otherwise                    { unreachable, "not a binary operator: \{op.kind}" }
-            }        
+            }
         }
 
         property isAssignment:Bit

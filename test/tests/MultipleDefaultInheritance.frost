@@ -8,7 +8,7 @@ interface Example2 {
     method defaultMethod() {
         Console.writeLine("this method also has an implementation!")
     }
-}    
+}
 
 class Foo : Example2, Example1 {
 }

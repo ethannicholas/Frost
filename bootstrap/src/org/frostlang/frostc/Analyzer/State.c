@@ -5,14 +5,13 @@
 #include "frost/collections/Array.h"
 #include "frost/core/Frost.h"
 #include "frost/collections/HashMap.h"
-#include "frost/collections/ListView.h"
+#include "frost/collections/CollectionView.h"
 #include "frost/collections/MapView.h"
 #include "frost/core/Bit.h"
 #include "org/frostlang/frostc/Compiler.h"
 #include "frost/core/Int64.h"
 #include "org/frostlang/frostc/Analyzer/DataFlowValue.h"
 #include "org/frostlang/frostc/IR/Statement/ID.h"
-#include "frost/collections/CollectionView.h"
 #include "frost/core/Range.LTfrost/core/Int64.GT.h"
 #include "frost/core/UInt64.h"
 #include "frost/core/Equatable.h"
@@ -71,7 +70,7 @@ void org$frostlang$frostc$Analyzer$State$init$org$frostlang$frostc$Analyzer$Stat
 frost$collections$Array* $tmp10 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
 frost$collections$Array** $tmp11 = &param1->locals;
 frost$collections$Array* $tmp12 = *$tmp11;
-frost$collections$Array$init$frost$collections$ListView$LTfrost$collections$Array$T$GT($tmp10, ((frost$collections$ListView*) $tmp12));
+frost$collections$Array$init$frost$collections$CollectionView$LTfrost$collections$Array$T$GT($tmp10, ((frost$collections$CollectionView*) $tmp12));
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp10));
 frost$collections$Array** $tmp13 = &param0->locals;
 frost$collections$Array* $tmp14 = *$tmp13;

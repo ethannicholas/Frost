@@ -1,5 +1,5 @@
-RangeForLoopNonNumeric.frost:2:14: error: expected range start to be a Value, but found 'frost.core.String'
+RangeForLoopNonNumeric.frost:2:14: error: expected 'frost.core.Char32', but found 'frost.core.String'
 RangeForLoopNonNumeric.frost:7:9: error: for loop variable cannot have non-numeric type 'frost.core.String'
 RangeForLoopNonNumeric.frost:12:9: error: for loop variable cannot have non-numeric type 'frost.core.Bit'
-RangeForLoopNonNumeric.frost:17:25: error: expected range step to be a Value, but found 'frost.io.File'
+RangeForLoopNonNumeric.frost:17:29: error: expected 'frost.core.Int64', but found 'frost.io.File'
 4 errors

@@ -1254,7 +1254,7 @@ frost$collections$ListView* frost$collections$ListView$sort$$LPfrost$collections
 frost$collections$Array* local0 = NULL;
 // line 245
 frost$collections$Array* $tmp601 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
-frost$collections$Array$init$frost$collections$ListView$LTfrost$collections$Array$T$GT($tmp601, param0);
+frost$collections$Array$init$frost$collections$CollectionView$LTfrost$collections$Array$T$GT($tmp601, ((frost$collections$CollectionView*) param0));
 *(&local0) = ((frost$collections$Array*) NULL);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp601));
 frost$collections$Array* $tmp602 = *(&local0);

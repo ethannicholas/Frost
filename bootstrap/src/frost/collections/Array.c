@@ -127,16 +127,16 @@ frost$core$Object*** $tmp8 = &param0->data;
 return;
 
 }
-void frost$collections$Array$init$frost$collections$ListView$LTfrost$collections$Array$T$GT(frost$collections$Array* param0, frost$collections$ListView* param1) {
+void frost$collections$Array$init$frost$collections$CollectionView$LTfrost$collections$Array$T$GT(frost$collections$Array* param0, frost$collections$CollectionView* param1) {
 
 frost$core$Object* local0 = NULL;
 // line 47
-ITable* $tmp9 = ((frost$collections$CollectionView*) param1)->$class->itable;
+ITable* $tmp9 = param1->$class->itable;
 while ($tmp9->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
     $tmp9 = $tmp9->next;
 }
 $fn11 $tmp10 = $tmp9->methods[0];
-frost$core$Int64 $tmp12 = $tmp10(((frost$collections$CollectionView*) param1));
+frost$core$Int64 $tmp12 = $tmp10(param1);
 frost$core$Int64 $tmp13 = (frost$core$Int64) {16};
 frost$core$Int64 $tmp14 = frost$core$Int64$max$frost$core$Int64$R$frost$core$Int64($tmp12, $tmp13);
 frost$collections$Array$init$frost$core$Int64(param0, $tmp14);

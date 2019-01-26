@@ -28,7 +28,12 @@ class Type : Symbol, Key<Type> {
 
     def typeKind:Kind
 
-    def subtypes:FixedArray<Type>?
+    @private
+    def _subtypes:FixedArray<Type>?
+
+    property hasSubtypes:Bit
+
+    property subtypes:FixedArray<Type>
 
     -- @priority from methods (0 if not a method / no @priority)
     def priority:Int
@@ -84,7 +89,7 @@ class Type : Symbol, Key<Type> {
         self.typeKind := typeKind
         self.position := position
         self.resolved := resolved
-        self.subtypes := null
+        self._subtypes := null
         super.init(Symbol.Kind.TYPE, position, name)
     }
 
@@ -96,7 +101,7 @@ class Type : Symbol, Key<Type> {
         self.typeKind := typeKind
         self.position := Position(size, size)
         self.resolved := true
-        self.subtypes := null
+        self._subtypes := null
         super.init(Symbol.Kind.TYPE, position, name)
     }
 
@@ -115,7 +120,7 @@ class Type : Symbol, Key<Type> {
         self.position := position
         self.resolved := resolved
         self.priority := priority
-        self.subtypes := FixedArray<Type>(subtypes)
+        self._subtypes := FixedArray<Type>(subtypes)
         super.init(Symbol.Kind.TYPE, position, name)
     }
 
@@ -123,7 +128,7 @@ class Type : Symbol, Key<Type> {
         self.typeKind := Kind.GENERIC_CLASS_PARAMETER
         self.genericClassParameter := param
         self.resolved := true
-        self.subtypes := null
+        self._subtypes := null
         super.init(Symbol.Kind.TYPE, position, "\{param.owner}.\{param.name}")
     }
 
@@ -131,13 +136,13 @@ class Type : Symbol, Key<Type> {
         self.typeKind := Kind.GENERIC_METHOD_PARAMETER
         self.genericMethodParameter := param
         self.resolved := true
-        self.subtypes := null
+        self._subtypes := null
         super.init(Symbol.Kind.TYPE, position, "\{param.owner}.\{param.name}")
     }
 
     init(ref:MethodRef) {
         self.typeKind := ref.effectiveType.typeKind
-        self.subtypes := ref.effectiveType.subtypes
+        self._subtypes := ref.effectiveType.subtypes
         self.resolved := ref.effectiveType.resolved
         self.methodRef := ref
         super.init(Symbol.Kind.TYPE, ref.effectiveType.position, ref.effectiveType.name)
@@ -207,6 +212,15 @@ class Type : Symbol, Key<Type> {
         assert typeKind = Kind.BUILTIN_INT | typeKind = Kind.BUILTIN_UINT |
                 typeKind = Kind.BUILTIN_FLOAT, "not a number: \{self}"
         return position.line
+    }
+
+    function get_hasSubtypes():Bit {
+        return _subtypes !== null
+    }
+
+    function get_subtypes():FixedArray<Type> {
+        assert _subtypes !== null
+        return _subtypes
     }
 
     @override

@@ -1775,7 +1775,7 @@ class Compiler {
         if b.typeKind = Type.Kind.GENERIC_METHOD_PARAMETER {
             return 0
         }
-        if a.typeKind = b.typeKind & a.subtypes !== null & b.subtypes !== null &
+        if a.typeKind = b.typeKind & a.hasSubtypes & b.hasSubtypes &
                 a.subtypes.count = b.subtypes.count {
             var total := 0
             for i in 0 .. a.subtypes.count {
@@ -1845,7 +1845,7 @@ class Compiler {
                         return Pair<Type, Int>(type, result)
                     }
                     return null
-                }            
+                }
             }
         }
         if type.isMethod {
@@ -2307,15 +2307,64 @@ class Compiler {
     }
 
     method rangePreferredType(start:ASTNode?, end:ASTNode?, step:ASTNode?):Type? {
+        if step !== null {
+            def pref := preferredType(step)
+            if pref == null {
+                return null
+            }
+            if pref.isReal {
+                if start !== null & end !== null {
+                    return Type.SteppedRangeOf(pref, pref)
+                }
+                return Type.SteppedRangeOf(pref.nullable(), pref)
+            }
+        }
         var endpointType:Type? := null
         if start !== null {
             def endpointType:Type
-            def pref1 := preferredType(start)
+            def pref1:Type?
+            match start {
+                when ASTNode.STRING {
+                    -- must be a char literal
+                    if end !== null {
+                        -- not sure if it's 8, 16, or 32 bits - try to match the type of the
+                        -- other endpoint
+                        def pref2 := preferredType(end)
+                        if pref2 !== null & pref2.isChar {
+                            pref1 := pref2
+                        }
+                        else {
+                            pref1 := Type.Char32()
+                        }
+                    }
+                    else {
+                        pref1 := Type.Char32()
+                    }
+                }
+                otherwise {
+                    pref1 := preferredType(start)
+                }
+            }
             if pref1 == null {
                 return null
             }
             if end !== null {
-                def pref2 := preferredType(end)
+                def pref2:Type?
+                match end {
+                    when ASTNode.STRING {
+                        if pref1.isChar {
+                            -- not sure if it's 8, 16, or 32 bits - try to match the type of the
+                            -- other endpoint
+                            pref2 := pref1
+                        }
+                        else {
+                            pref2 := Type.Char32()
+                        }
+                    }
+                    otherwise {
+                        pref2 := preferredType(end)
+                    }
+                }
                 if pref2 == null {
                     return null
                 }
@@ -2330,7 +2379,15 @@ class Compiler {
             return Type.RangeOf(endpointType)
         }
         else if end !== null {
-            def pref := preferredType(end)
+            def pref:Type
+            match end {
+                when ASTNode.STRING {
+                    pref := Type.Char32()
+                }
+                otherwise {
+                    pref := preferredType(end)
+                }
+            }
             if pref == null {
                 return null
             }
@@ -2481,7 +2538,7 @@ class Compiler {
         def result := computeBinaryType(left, op, right)
         binaryTypes[key] := result
         return result
-    }   
+    }
 
     ================================================================================================
     Returns the types we should consider this expression to potentially be when evaluating method
@@ -3050,9 +3107,9 @@ class Compiler {
             }
             when ASTNode.INT(_, value) {
                 if (target.typeKind = Type.Kind.BUILTIN_INT &
-                        requiredSize(value.asInt64) <= target.size) |
+                        IntLiteral.requiredSize(value.asInt64) <= target.size) |
                         (target.typeKind = Type.Kind.BUILTIN_UINT &
-                        requiredSize(value) <= target.size) {
+                        IntLiteral.requiredSize(value) <= target.size) {
                     return Pair<Type, Int>(target, 0)
                 }
                 if target.typeKind = Type.Kind.BUILTIN_FLOAT {
@@ -3155,6 +3212,9 @@ class Compiler {
                     }
                     return null
                 }
+                if target == Type.Value() & text.length = 1 {
+                    return Pair<Type, Int>(target, 1)
+                }
                 return coercionCost(Type.StringType(), target)
             }
             when ASTNode.TYPED_LAMBDA(_, parameters, body) {
@@ -3234,32 +3294,6 @@ class Compiler {
                 unreachable
             }
         }
-    }
-
-    function requiredSize(value:Int64):Int {
-        if value >= -128 & value <= 127 {
-            return 8
-        }
-        if value >= -32768 & value <= 32767 {
-            return 16
-        }
-        if value >= -2147483648 & value <= 2147483647 {
-            return 32
-        }
-        return 64
-    }
-
-    function requiredSize(value:UInt64):Int {
-        if value <= 255 {
-            return 8
-        }
-        if value <= 65535 {
-            return 16
-        }
-        if value <= 4294967295 {
-            return 32
-        }
-        return 64
     }
 
     method canCast(type:Type, target:Type):Bit {
@@ -3793,7 +3827,6 @@ class Compiler {
     ================================================================================================
     @pre(target != Type.Void())
     method coerce(position:Position, value:IR.Value?, target:Type, explicit:Bit):IR.Value? {
-        assert target.name != "frost.unsafe.Pointer", "FIXME temp"
         if value == null {
             return null
         }
@@ -4363,6 +4396,22 @@ class Compiler {
                 }
             }
         }
+        if endpointContext = TypeContext.NON_VOID {
+            if start !== null {
+                match start {
+                    when ASTNode.STRING {
+                        endpointContext := TypeContext.TYPE(Type.Char32(), false)
+                    }
+                }
+            }
+            if end !== null {
+                match end {
+                    when ASTNode.STRING {
+                        endpointContext := TypeContext.TYPE(Type.Char32(), false)
+                    }
+                }
+            }
+        }
         def compiledStart:IR.Value?
         if start !== null {
             compiledStart := compileExpression(start, endpointContext)
@@ -4413,14 +4462,14 @@ class Compiler {
         }
         if compiledStart == null {
             if !endpointType.isNullable {
-                error(position, "expected '\{endpointType}', but found 'null'")
+                error(position, "non-nullable range requires both endpoints to be specified")
                 return null
             }
             compiledStart := IR.Value.NULL(endpointType)
         }
         if compiledEnd == null {
             if !endpointType.isNullable {
-                error(position, "expected '\{endpointType}', but found 'null'")
+                error(position, "non-nullable range requires both endpoints to be specified")
                 return null
             }
             compiledEnd := IR.Value.NULL(endpointType)
@@ -4649,11 +4698,19 @@ class Compiler {
             when ASTNode.STRING(position, text) {
                 match type {
                     when TypeContext.TYPE(t, _) {
-                        if t.isChar & text.length = 1 {
-                            return compileExpression(ASTNode.CALL(position,
-                                    ASTNode.IR_WRAPPER(position, IR.Value.TYPE(t)),
-                                    FixedArray<ASTNode>.from([ASTNode.INT(position,
-                                        text[0].asUInt64)])))
+                        if text.length = 1 {
+                            if t.isChar {
+                                return compileExpression(ASTNode.CALL(position,
+                                        ASTNode.IR_WRAPPER(position, IR.Value.TYPE(t)),
+                                        FixedArray<ASTNode>.from([ASTNode.INT(position,
+                                            text[0].asUInt64)])))
+                            }
+                            if t = Type.Value() {
+                                return coerce(position, compileExpression(ASTNode.CALL(position,
+                                        ASTNode.IR_WRAPPER(position, IR.Value.TYPE(Type.Char32())),
+                                        FixedArray<ASTNode>.from([ASTNode.INT(position,
+                                            text[0].asUInt64)]))), t)
+                            }
                         }
                     }
                 }

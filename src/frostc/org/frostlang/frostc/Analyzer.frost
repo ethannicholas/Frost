@@ -321,11 +321,6 @@ class Analyzer {
                     }
                 }
             }
-            when Binary.Operator.AND {
-                def leftValue := getValue(left, state)
-                def rightValue := getValue(right, state)
-                return leftValue.union(compiler, rightValue)
-            }
         }
 
         return DataFlowValue(type)

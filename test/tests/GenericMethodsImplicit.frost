@@ -1,20 +1,20 @@
 package test1.test2.test3
 
 class GenericMethodsImplicit {
-	@class
-	method indexOf<T:Equatable<T>>(list:ListView<T>, needle:T):Int? {
-		for i in 0 .. list.count {
-			if list[i] = needle {
-				return i
-			}
-		}
-		return null
-	}
+    @class
+    method indexOf<T:Equatable<T>>(list:ListView<T>, needle:T):Int? {
+        for i in 0 .. list.count {
+            if list[i] = needle {
+                return i
+            }
+        }
+        return null
+    }
 
-	@class
-	method main() {
-		Console.printLine(indexOf([1, 7, 2, 9, -6, 0, 5, 8, 10], 5))
-	    Console.printLine(Int[1 ... 5].combine(Int[1 ... 5], (a, b) => a + b))
-	    Console.printLine(Int[1 ... 5].combine(Int[1 ... 5], Int.*))
-	}
+    @class
+    method main() {
+        Console.printLine(indexOf([1, 7, 2, 9, -6, 0, 5, 8, 10], 5))
+        Console.printLine(Int[1 ... 5].combine(Int[1 ... 5], (a, b) => a + b))
+        Console.printLine(Int[1 ... 5].combine(Int[1 ... 5], Int.*))
+    }
 }

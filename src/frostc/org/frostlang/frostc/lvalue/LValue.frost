@@ -95,7 +95,7 @@ interface LValue {
                     }
                 }
                 compiler.error(expr.position(), "class '\{cl.name}' does not have a member named " +
-                		"'\{name}'")
+                        "'\{name}'")
                 return null
             }
             when ASTNode.IDENTIFIER(position, id) {
@@ -117,7 +117,7 @@ interface LValue {
                             def f := symbol->FieldDecl
                             if !f.annotations.isClass {
                                 return compile(compiler, 
-                                		ASTNode.DOT(position, ASTNode.SELF(position), f.name))
+                                        ASTNode.DOT(position, ASTNode.SELF(position), f.name))
                             }
                             if compiler.resolve(f) {
                                 return FieldLValue(compiler, position, null, f)

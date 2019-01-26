@@ -120,7 +120,7 @@ block4:;
 frost$collections$Array* $tmp34 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
 frost$collections$ListView** $tmp35 = &param0->nonNullImplications;
 frost$collections$ListView* $tmp36 = *$tmp35;
-frost$collections$Array$init$frost$collections$ListView$LTfrost$collections$Array$T$GT($tmp34, $tmp36);
+frost$collections$Array$init$frost$collections$CollectionView$LTfrost$collections$Array$T$GT($tmp34, ((frost$collections$CollectionView*) $tmp36));
 *(&local1) = ((frost$collections$Array*) NULL);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp34));
 frost$collections$Array* $tmp37 = *(&local1);

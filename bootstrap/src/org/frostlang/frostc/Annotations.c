@@ -6,6 +6,7 @@
 #include "frost/collections/ListView.h"
 #include "frost/core/Bit.h"
 #include "frost/collections/Array.h"
+#include "frost/collections/CollectionView.h"
 #include "frost/core/Frost.h"
 #include "frost/core/MutableString.h"
 #include "org/frostlang/frostc/Annotations/Expression.h"
@@ -67,7 +68,7 @@ if ($tmp5) goto block1; else goto block3;
 block1:;
 // line 95
 frost$collections$Array* $tmp6 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
-frost$collections$Array$init$frost$collections$ListView$LTfrost$collections$Array$T$GT($tmp6, param2);
+frost$collections$Array$init$frost$collections$CollectionView$LTfrost$collections$Array$T$GT($tmp6, ((frost$collections$CollectionView*) param2));
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp6));
 frost$collections$Array** $tmp7 = &param0->expressions;
 frost$collections$Array* $tmp8 = *$tmp7;

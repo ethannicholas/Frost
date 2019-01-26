@@ -891,7 +891,7 @@ class WriteNumbers {
         }
         fail(error) {
             unreachable, error.asString
-        }            
+        }
     }
 
     @class

@@ -89,7 +89,7 @@ class LinkResolver {
             otherwise {
                 return null
             }
-        }    
+        }
     }
 
     method resolve(link:String):String? {

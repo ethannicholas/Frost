@@ -18,6 +18,7 @@
 #include "frost/collections/HashMap.h"
 #include "frost/core/Int64.h"
 #include "org/frostlang/frostc/Symbol.h"
+#include "frost/collections/CollectionView.h"
 #include "frost/collections/List.h"
 #include "org/frostlang/frostc/Compiler/Resolution.h"
 #include "org/frostlang/frostc/Compiler.h"
@@ -27,7 +28,6 @@
 #include "org/frostlang/frostc/Type/Kind.h"
 #include "frost/core/String/Index.h"
 #include "frost/core/Range.LTfrost/core/String/Index.Q.GT.h"
-#include "frost/collections/CollectionView.h"
 #include "frost/core/MutableString.h"
 #include "org/frostlang/frostc/FieldDecl.h"
 #include "org/frostlang/frostc/MethodDecl.h"
@@ -242,7 +242,7 @@ org$frostlang$frostc$ClassDecl$Kind* $tmp69 = &param0->classKind;
 *$tmp69 = param6;
 // line 126
 frost$collections$Array* $tmp70 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
-frost$collections$Array$init$frost$collections$ListView$LTfrost$collections$Array$T$GT($tmp70, param8);
+frost$collections$Array$init$frost$collections$CollectionView$LTfrost$collections$Array$T$GT($tmp70, ((frost$collections$CollectionView*) param8));
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp70));
 frost$collections$Array** $tmp71 = &param0->declaredSupers;
 frost$collections$Array* $tmp72 = *$tmp71;

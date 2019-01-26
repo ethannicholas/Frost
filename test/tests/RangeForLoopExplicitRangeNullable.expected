@@ -1,2 +1,2 @@
-RangeForLoopExplicitRangeNullable.frost:3:14: error: expected 'frost.core.Range<frost.core.Int64>', but found 'frost.core.Range<frost.core.Int64?>'
+RangeForLoopExplicitRangeNullable.frost:3:5: error: 'for' loop cannot operate on nullable range 'frost.core.Range<frost.core.Int64?>'; loop ranges must specify both start and end
 1 error

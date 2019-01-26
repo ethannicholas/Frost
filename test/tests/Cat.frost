@@ -1,6 +1,6 @@
 method main() {
     try {
-    	Console.inputStream().sendTo(Console.outputStream())
+        Console.inputStream().sendTo(Console.outputStream())
     }
     fail(error) {
     }

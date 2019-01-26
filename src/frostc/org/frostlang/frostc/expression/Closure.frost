@@ -267,9 +267,11 @@ class Closure {
         def attempts := compiler.lambdaTypes[expr]
         if attempts !== null {
             if attempts.count > 1 {
+                def sorted := Array<Type>(attempts)
+                sorted.sort((t1, t2) => t1.name > t2.name)
                 def msg := MutableString("lambda error")
                 def old := compiler.errorQueue
-                for t in attempts {
+                for t in sorted {
                     msg.append("\n    when interpreted as '\{t}':")
                     compiler.errorQueue := MessageQueue<Message>()
                     compileUntypedLambda(compiler, position, rawParameters, expr,
