@@ -66,6 +66,9 @@ class SymbolTable {
             if overridden == m {
                 return
             }
+            if m.annotations.isDefault & test.signature = m.signature {
+                return
+            }
         }
         methods.add(m)
     }
@@ -101,6 +104,10 @@ class SymbolTable {
                         if  overridden1 == symbol->MethodDecl |
                                 overridden2 == inherited->MethodDecl |
                                 (overridden1 !== null & overridden1 == overridden2) {
+                            return symbol
+                        }
+                        if inherited->MethodDecl.annotations.isDefault &
+                                inherited->MethodDecl.signature = symbol->MethodDecl.signature {
                             return symbol
                         }
                         def methods := Array<MethodDecl>() -- FIXME literal

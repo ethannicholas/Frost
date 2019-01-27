@@ -3559,6 +3559,7 @@ class Compiler {
                     !m.annotations.isClass & m.body !== null {
                 error(m.position, "non-abstract interface method '\{m.name}' must be annotated " +
                         "with '@default'")
+                m.annotations += Annotations.Flag.DEFAULT
             }
         }
         checkAccessModifierCount(m.position, m.annotations)

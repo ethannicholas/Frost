@@ -1,7 +1,0 @@
-choice Fail {
-    FAIL
-}
-
-method main() {
-    def f := Fail()
-}

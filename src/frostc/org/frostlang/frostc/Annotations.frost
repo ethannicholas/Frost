@@ -99,6 +99,10 @@ class Annotations {
         }
     }
 
+    function +(flags:Int):Annotations {
+        return Annotations(self.flags + flags, expressions)
+    }
+
     function get_isPrivate():Bit {
         return flags && Flag.PRIVATE != 0
     }

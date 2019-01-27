@@ -51,7 +51,7 @@ class MethodDecl : Symbol {
 
     def doccomment:String?
 
-    def annotations:Annotations
+    var annotations:Annotations
 
     def methodKind:Kind
 

@@ -1,12 +1,13 @@
+-- without the @default annotations, at one point the methods were bypassing the normal @default
+-- method filtering and we ended up creating a Methods object with duplicate signatures, resulting
+-- in an assertion failure.
 interface Example1 {
-    @default
     method defaultMethod() {
         Console.printLine("this method has an implementation!")
     }
 }
 
 interface Example2 {
-    @default
     method defaultMethod() {
         Console.printLine("this method also has an implementation!")
     }

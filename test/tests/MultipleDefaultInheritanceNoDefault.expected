@@ -1,0 +1,3 @@
+MultipleDefaultInheritanceNoDefault.frost:5:5: error: non-abstract interface method 'defaultMethod' must be annotated with '@default'
+MultipleDefaultInheritanceNoDefault.frost:11:5: error: non-abstract interface method 'defaultMethod' must be annotated with '@default'
+2 errors
