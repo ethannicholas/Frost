@@ -1,4 +1,4 @@
 LambdaAmbiguous.frost:10:27: error: call to 'test' is ambiguous. The following methods are equally good matches:
-    method anonymous.BareCode.test(f:(frost.core.Int16)=>(frost.core.Int16)):frost.core.Int16 (LambdaAmbiguous.frost:5:1)
     method anonymous.BareCode.test(f:(frost.core.Int8)=>(frost.core.Int8)):frost.core.Int8 (LambdaAmbiguous.frost:1:1)
+    method anonymous.BareCode.test(f:(frost.core.Int16)=>(frost.core.Int16)):frost.core.Int16 (LambdaAmbiguous.frost:5:1)
 1 error

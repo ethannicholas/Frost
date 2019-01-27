@@ -663,9 +663,9 @@ class Call {
                 }
                 match cl.classKind {
                     when ClassDecl.Kind.CHOICE {
-                        compiler.error(position, "'\{cl.name}' is a choice and may not be " +
-                                "directly constructed")
-                        return null
+--                        compiler.error(position, "'\{cl.name}' is a choice and may not be " +
+--                                "directly constructed")
+--                        return null
                     }
                     when ClassDecl.Kind.INTERFACE {
                         compiler.error(position, "'\{cl.name}' is an interface and may not be " +

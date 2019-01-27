@@ -412,14 +412,29 @@ class Closure {
                 IR.Value.METHOD_POINTER(methodDecl, irType), Type.pointerTo(Type.Int8()))))
         args.add(target)
         def methodType:Type
+        def finalType:Type
         if immutable {
             methodType := Type.Method()
+            finalType := methodDecl.type
         }
         else {
             methodType := Type.MutableMethod()
+            def rawType := methodDecl.type
+            def parameterTypes := Array<Type>()
+            for i in 0 .. rawType.subtypes.count - 1 {
+                parameterTypes.add(rawType.parameterType(i))
+            }
+            def typeKind:Type.Kind
+            match methodDecl.methodKind {
+                when MethodDecl.Kind.METHOD { typeKind := Type.Kind.METHOD }
+                when MethodDecl.Kind.FUNCTION { typeKind := Type.Kind.FUNCTION }
+                otherwise { unreachable }
+            }
+            finalType := Type.methodType(position, typeKind, parameterTypes, rawType.returnType,
+                    rawType.priority)
         }
         def construct := compiler.cast(position, Call.compile(compiler, position,
-                IR.Value.TYPE(methodType), args, TypeContext.UNSPECIFIED), methodDecl.type)
+                IR.Value.TYPE(methodType), args, TypeContext.UNSPECIFIED), finalType)
         return compiler.coerce(position, construct, type)
     }
 }

@@ -3702,6 +3702,10 @@ class Compiler {
         return IR.Value.REF(result, m.owner.type)
     }
 
+    ================================================================================================
+    Creates an object which represents a method reference, such as `Int.+` (which has a `null`
+    `target`) or 1.+ (which has a `target` of `1`).
+    ================================================================================================
     method createMethodObject(position:Position, target:IR.Value?, m:MethodDecl):IR.Value? {
         if !resolve(m) {
             return null
@@ -3709,9 +3713,37 @@ class Compiler {
         def effectiveType:Type
         def irType:Type
         if target !== null & !target.type().isClassLiteral {
+            -- we're taking a reference which has a fixed 'self' parameter, as in '1.+'. Easiest way
+            -- to do this is compile the closure 'x => 1.+(x)'. (Well, it's not actually a lambda,
+            -- because it can be a method and return void, but you get the point)
             assert !m.annotations.isClass
             effectiveType := MethodRef(self, target.type(), m).effectiveType
-            irType := Type.pointerTo(declaredTypeWithSelf(m, m.owner.type, false))
+            closureCount += 1
+            def dummyName := "$dummy\{closureCount}"
+            compileDeclaration(position, ASTNode.IDENTIFIER(position, dummyName),
+                    ASTNode.IR_WRAPPER(position, target), Variable.Kind.DEF)
+            def parameters := Array<ASTNode>()
+            def arguments := Array<ASTNode>()
+            for i in 0 .. m.parameters.count {
+                def name := "param\{i}"
+                parameters.add(ASTNode.PARAMETER(position, name,
+                    ASTNode.IR_WRAPPER(m.position, IR.Value.TYPE(effectiveType.parameterType(i)))))
+                arguments.add(ASTNode.IDENTIFIER(position, name))
+            }
+            def call := ASTNode.CALL(position,
+                    ASTNode.DOT(position, ASTNode.IDENTIFIER(position, dummyName), m.name),
+                    FixedArray<ASTNode>.from(arguments))
+            def statement:ASTNode
+            if effectiveType.returnType != Type.Void() {
+                statement := ASTNode.RETURN(position, call)
+            }
+            else {
+                statement := call
+            }
+            return Closure.compile(self, position, m.methodKind,
+                    FixedArray<ASTNode>.from(parameters),
+                    ASTNode.IR_WRAPPER(position, IR.Value.TYPE(effectiveType.returnType)),
+                    [statement]->FixedArray<ASTNode>, TypeContext.UNSPECIFIED)
         }
         else {
             if m.annotations.isClass {
@@ -3726,20 +3758,8 @@ class Compiler {
         def args := Array<ASTNode>()
         args.add(ASTNode.IR_WRAPPER(position, cast(position, IR.Value.METHOD_POINTER(m, irType),
                 Type.pointerTo(Type.Int8()))))
-        if target !== null & !target.type().isClassLiteral {
-            args.add(ASTNode.IR_WRAPPER(position, target))
-        }
-        else {
-            args.add(ASTNode.NULL(position))
-        }
-        def methodType:Type
-        if target !== null & !isImmutable(target.type()) {
-            methodType := Type.MutableMethod()
-        }
-        else {
-            methodType := Type.Method()
-        }
-        return cast(position, Call.compile(self, position, IR.Value.TYPE(methodType), args,
+        args.add(ASTNode.NULL(position))
+        return cast(position, Call.compile(self, position, IR.Value.TYPE(Type.Method()), args,
                 TypeContext.UNSPECIFIED), effectiveType)
     }
 
@@ -4990,7 +5010,8 @@ class Compiler {
                 return
             }
             if compiledTarget.second !== null {
-                VariableLValue(self, position, compiledTarget.first).compileStore(compiledTarget.second)
+                VariableLValue(self, position,
+                        compiledTarget.first).compileStore(compiledTarget.second)
             }
         }
         if isRefCounted(compiledTarget.first.type) {

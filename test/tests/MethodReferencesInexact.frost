@@ -1,14 +1,12 @@
-function addFunction(a:Int, b:Int):Int {
-    return a + b
+function addFunction(a:Object, b:Object):Int {
+    return a.asString.asInt64->Int + b.asString.asInt64->Int
 }
 
 method main() {
-    def add:(Object, Object)=>(Object) := self.addFunction -- FIXME shouldn't need self.
+    def add:(Int, Int)=>(Int) := self.addFunction -- FIXME shouldn't need self.
     Console.printLine(add(12, 9))
-    var add2 := self.addFunction -- FIXME shouldn't need self.
+    def add2 := self.addFunction -- FIXME shouldn't need self.
     def add3:(Object, Object)=>(Object) := add2
     Console.printLine(add2(21, -5))
     Console.printLine(add3(42, 3))
-    add2 := Int.+
-    Console.printLine(add2(1, 5))
 }
