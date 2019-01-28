@@ -10,7 +10,7 @@ typedef struct org$frostlang$frostc$Position {
     frost$core$Int64 column;
 } org$frostlang$frostc$Position;
 #include "frost/core/Class.h"
-typedef struct { frost$core$Class* cl; int32_t refCount; frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[5]; } org$frostlang$frostc$Position$class_type;
+typedef struct { frost$core$Class* cl; int32_t refCount; frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[6]; } org$frostlang$frostc$Position$class_type;
 extern org$frostlang$frostc$Position$class_type org$frostlang$frostc$Position$class;
 typedef struct org$frostlang$frostc$Position$wrapper {
     frost$core$Class* cl;

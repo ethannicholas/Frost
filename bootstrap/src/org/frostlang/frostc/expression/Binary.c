@@ -329,7 +329,7 @@ while ($tmp81->$class != (frost$core$Class*) &frost$collections$ListView$class) 
     $tmp81 = $tmp81->next;
 }
 $fn83 $tmp82 = $tmp81->methods[4];
-frost$collections$ListView* $tmp84 = $tmp82(((frost$collections$ListView*) $tmp77), ((frost$core$MutableMethod*) ((frost$core$Method*) $tmp80)));
+frost$collections$ListView* $tmp84 = $tmp82(((frost$collections$ListView*) $tmp77), $tmp80);
 frost$collections$Array* $tmp85 = *(&local3);
 org$frostlang$frostc$Pair* $tmp86 = org$frostlang$frostc$expression$Call$findBestMethod$org$frostlang$frostc$Compiler$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Value$Q$frost$collections$ListView$LTorg$frostlang$frostc$MethodDecl$GT$frost$collections$ListView$LTorg$frostlang$frostc$ASTNode$GT$org$frostlang$frostc$Compiler$TypeContext$R$org$frostlang$frostc$Pair$LTfrost$collections$ListView$LTorg$frostlang$frostc$MethodRef$GT$Cfrost$core$Int64$GT$Q(param0, $tmp73, $tmp74, $tmp84, ((frost$collections$ListView*) $tmp85), param4);
 *(&local6) = ((org$frostlang$frostc$Pair*) NULL);

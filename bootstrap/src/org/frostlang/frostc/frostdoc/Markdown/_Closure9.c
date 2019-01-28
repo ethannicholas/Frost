@@ -56,7 +56,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp6));
 return;
 
 }
-frost$core$Object* org$frostlang$frostc$frostdoc$Markdown$_Closure9$$anonymous33$frost$collections$ListView$LTfrost$core$String$Q$GT$R$frost$core$Object(frost$collections$ListView* param0) {
+frost$core$Object* org$frostlang$frostc$frostdoc$Markdown$_Closure9$$anonymous36$frost$collections$ListView$LTfrost$core$String$Q$GT$R$frost$core$Object(frost$collections$ListView* param0) {
 
 // line 416
 frost$core$Int64 $tmp7 = (frost$core$Int64) {1};
@@ -129,7 +129,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp38));
 frost$core$MutableString* $tmp42 = *(&local0);
 frost$core$RegularExpression* $tmp43 = *(&local1);
 frost$core$Method* $tmp45 = (frost$core$Method*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$Method$class);
-frost$core$Method$init$frost$unsafe$Pointer$LTfrost$core$Int8$GT$frost$core$Immutable$Q($tmp45, ((frost$core$Int8*) org$frostlang$frostc$frostdoc$Markdown$_Closure9$$anonymous33$frost$collections$ListView$LTfrost$core$String$Q$GT$R$frost$core$Object), ((frost$core$Immutable*) NULL));
+frost$core$Method$init$frost$unsafe$Pointer$LTfrost$core$Int8$GT$frost$core$Immutable$Q($tmp45, ((frost$core$Int8*) org$frostlang$frostc$frostdoc$Markdown$_Closure9$$anonymous36$frost$collections$ListView$LTfrost$core$String$Q$GT$R$frost$core$Object), ((frost$core$Immutable*) NULL));
 frost$core$MutableString$replace$frost$core$RegularExpression$$LPfrost$collections$ListView$LTfrost$core$String$Q$GT$RP$EQ$GT$LPfrost$core$Object$RP($tmp42, $tmp43, ((frost$core$MutableMethod*) $tmp45));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp45));
 // line 417

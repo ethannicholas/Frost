@@ -328,32 +328,77 @@ class Call {
     }
 
     @class
+    function methodRemap(type:Type, map:HashMap<String, Type>):Type {
+        if type.typeKind = Type.Kind.NULLABLE {
+            return methodRemap(type.nonnullable(), map).nullable()
+        }
+        if type.isMethod {
+            def parameterTypes := Array<Type>()
+            for i in 0 .. type.subtypes.count - 1 {
+                parameterTypes.add(type.subtypes[i].remap(map))
+            }
+            return Type.methodType(type.position, type.typeKind, parameterTypes, type.returnType,
+                    type.priority)
+        }
+        return type
+    }
+
+    @class
     method performTypeInference(compiler:Compiler, m:MethodRef, args:ListView<ASTNode>):MethodRef? {
         if !m.requiresTypeInference {
             return m
         }
         def result := Array<Type>(m.value.genericParameters.map(p => p.bound))
-        for i in 0 .. m.value.parameters.count {
-            def paramType := m.parameterType(i)
-            def generics := findGenericParameters(m.value, paramType)
-            if generics !== null {
-                for g in generics {
+        var updated := false
+        do {
+            updated := false
+            def remaps := HashMap<String, Type>()
+            for i in 0 .. result.count {
+                remaps[m.value.owner.name + "." + m.value.name + "." +
+                        m.value.genericParameters[i].name] := result[i]
+            }
+            for i in 0 .. m.value.parameters.count {
+                def paramType := methodRemap(m.parameterType(i), remaps)
+                def generics := findGenericParameters(m.value, paramType)
+                if generics !== null {
+                    for g in generics {
+                        var argType := compiler.coercionCost(args[i], paramType)
+                        if argType == null {
+                            Console.printLine("note: can't coerce '\{args[i]}' to \{paramType.remap(remaps)}")
+                            return m
+                        }
+                        def parameter := getSubtype(m.value.parameters[i].type, g)
+                        assert parameter.typeKind = Type.Kind.GENERIC_METHOD_PARAMETER
+                        var parameterIndex := 0
+                        while Type(m.value.genericParameters[parameterIndex]) != parameter {
+                            parameterIndex += 1
+                        }
+                        def newType := result[parameterIndex].intersection(compiler,
+                                getSubtype(argType.first, g))
+                        if newType != result[parameterIndex] {
+                            result[parameterIndex] := newType
+                            updated := true
+                        }
+                    }
+                }
+                else if paramType.typeKind = Type.Kind.GENERIC_METHOD_PARAMETER {
                     var argType := compiler.coercionCost(args[i], paramType)
                     if argType == null {
-                        Console.printLine("note: can't coerce '\{args[i]}' to \{paramType}")
                         return m
                     }
-                    def parameter := getSubtype(m.value.parameters[i].type, g)
-                    assert parameter.typeKind = Type.Kind.GENERIC_METHOD_PARAMETER
                     var parameterIndex := 0
-                    while Type(m.value.genericParameters[i]) != parameter {
+                    while Type(m.value.genericParameters[parameterIndex]) != paramType {
                         parameterIndex += 1
                     }
-                    result[parameterIndex] := result[parameterIndex].intersection(compiler,
-                            getSubtype(argType.first, g))
+                    def newType := result[parameterIndex].intersection(compiler, argType.first)
+                    if newType != result[parameterIndex] {
+                        result[parameterIndex] := newType
+                        updated := true
+                    }
                 }
             }
         }
+        while updated
         return MethodRef(compiler, m.target, m.value, result) 
     }
 
@@ -658,7 +703,7 @@ class Call {
                 if cl == null {
                     return null
                 }
-                if !cl.annotations.isSynthetic & !compiler.checkGenericArguments(position, cl, t) {
+                if !cl.isSpecialization() & !compiler.checkGenericArguments(position, cl, t) {
                     return null
                 }
                 match cl.classKind {

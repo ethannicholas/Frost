@@ -1,7 +1,7 @@
 method main() {
     def first := ["Bob",   "Pete", "Sarah",   "Kathy"],
          last := ["Kelly", "Roth", "Jenkins", "Roth"]
-    def tuples := first.combine(last, (first, last) => (last, first))
+    def tuples := first.combine(last, (first, last) => (last, first)
     Console.printLine(tuples.sort((left, right) =>
-            (left[0] > right[0]).choose(left[1] > right[1], false)))
+            (left[0] > right[0]).choose((left[0] = right[0]).choose(left[1] > right[1], false), false)))
 }

@@ -3061,6 +3061,10 @@ class Compiler {
                 }
             }
             when ASTNode.BIT {
+                def result := coercionCost(Type.Bit(), target)
+                if result !== null {
+                    return result
+                }
                 return coercionCost(Type.BuiltinBit(), target)
             }
             when ASTNode.CALL(_, m, args) {
@@ -3718,7 +3722,11 @@ class Compiler {
             -- to do this is compile the closure 'x => 1.+(x)'. (Well, it's not actually a lambda,
             -- because it can be a method and return void, but you get the point)
             assert !m.annotations.isClass
+            def old := enclosingContexts
+            -- keep TRY_SCOPE from affecting effective return type
+            enclosingContexts := Stack<EnclosingContext>()
             effectiveType := MethodRef(self, target.type(), m).effectiveType
+            enclosingContexts := old
             closureCount += 1
             def dummyName := "$dummy\{closureCount}"
             compileDeclaration(position, ASTNode.IDENTIFIER(position, dummyName),

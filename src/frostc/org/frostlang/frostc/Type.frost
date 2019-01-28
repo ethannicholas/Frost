@@ -737,7 +737,9 @@ class Type : Symbol, Key<Type> {
     Returns the widest type that could be coerced to either type.
     ================================================================================================
     function intersection(compiler:Compiler, other:Type):Type {
-        -- FIXME implement
+        if compiler.coercionCost(self, other) !== null {
+            return self
+        }
         return other
     }
 

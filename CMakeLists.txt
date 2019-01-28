@@ -197,6 +197,8 @@ add_executable(bootstrap
     bootstrap/src/org/frostlang/frostc/Annotations/Expression.c
     bootstrap/src/org/frostlang/frostc/Annotations/Flag.c
     bootstrap/src/org/frostlang/frostc/ASTNode.c
+    bootstrap/src/org/frostlang/frostc/ASTNode/_Closure3.c
+    bootstrap/src/org/frostlang/frostc/ASTNode/_Closure6.c
     bootstrap/src/org/frostlang/frostc/CCodeGenerator.c
     bootstrap/src/org/frostlang/frostc/CCodeGenerator/AutoContext.c
     bootstrap/src/org/frostlang/frostc/CCodeGenerator/ClassConstant.c
@@ -211,8 +213,9 @@ add_executable(bootstrap
     bootstrap/src/org/frostlang/frostc/CodeGenerator.c
     bootstrap/src/org/frostlang/frostc/Compiler.c
     bootstrap/src/org/frostlang/frostc/Compiler/_Closure2.c
-    bootstrap/src/org/frostlang/frostc/Compiler/_Closure7.c
-    bootstrap/src/org/frostlang/frostc/Compiler/_Closure9.c
+    bootstrap/src/org/frostlang/frostc/Compiler/_Closure10.c
+    bootstrap/src/org/frostlang/frostc/Compiler/_Closure12.c
+    bootstrap/src/org/frostlang/frostc/Compiler/_Closure14.c
     bootstrap/src/org/frostlang/frostc/Compiler/AutoAtPreFlag.c
     bootstrap/src/org/frostlang/frostc/Compiler/AutoContext.c
     bootstrap/src/org/frostlang/frostc/Compiler/AutoScope.c
@@ -273,22 +276,23 @@ add_executable(bootstrap
     bootstrap/src/org/frostlang/frostc/Pair.c
     bootstrap/src/org/frostlang/frostc/frostdoc/DummyCodeGenerator.c
     bootstrap/src/org/frostlang/frostc/frostdoc/LinkResolver.c
-    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown.c
-    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure2.c
-    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure4.c
-    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure6.c
-    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure9.c
-    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure12.c
-    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure14.c
-    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure16.c
-    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure18.c
-    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure20.c
-    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure22.c
-    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure24.c
-    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure26.c
-    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure28.c
-    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure30.c
-    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure32.c
+    bootstrap//src/org/frostlang/frostc/frostdoc/Markdown.c
+    bootstrap//src/org/frostlang/frostc/frostdoc/Markdown/_Closure15.c
+    bootstrap//src/org/frostlang/frostc/frostdoc/Markdown/_Closure29.c
+    bootstrap//src/org/frostlang/frostc/frostdoc/Markdown/_Closure23.c
+    bootstrap//src/org/frostlang/frostc/frostdoc/Markdown/_Closure27.c
+    bootstrap//src/org/frostlang/frostc/frostdoc/Markdown/_Closure2.c
+    bootstrap//src/org/frostlang/frostc/frostdoc/Markdown/_Closure6.c
+    bootstrap//src/org/frostlang/frostc/frostdoc/Markdown/_Closure33.c
+    bootstrap//src/org/frostlang/frostc/frostdoc/Markdown/_Closure19.c
+    bootstrap//src/org/frostlang/frostc/frostdoc/Markdown/_Closure13.c
+    bootstrap//src/org/frostlang/frostc/frostdoc/Markdown/_Closure9.c
+    bootstrap//src/org/frostlang/frostc/frostdoc/Markdown/_Closure17.c
+    bootstrap//src/org/frostlang/frostc/frostdoc/Markdown/_Closure21.c
+    bootstrap//src/org/frostlang/frostc/frostdoc/Markdown/_Closure25.c
+    bootstrap//src/org/frostlang/frostc/frostdoc/Markdown/_Closure35.c
+    bootstrap//src/org/frostlang/frostc/frostdoc/Markdown/_Closure31.c
+    bootstrap//src/org/frostlang/frostc/frostdoc/Markdown/_Closure4.c
     bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/CodeReplacer.c
     bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/HTMLToken.c
     bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/LinkDefinition.c

@@ -499,8 +499,9 @@ class Parser {
                     -- whole lambda, as in (x:Int=>1)
                     def needClosingParen:Bit
                     if parameters.count > 1 {
-                        expect(Token.Kind.RPAREN, "')'")
-                        return null
+                        if expect(Token.Kind.RPAREN, "')'") == null {
+                            return null
+                        }
                     }
                     else {
                         needClosingParen := checkNext(Token.Kind.RPAREN) == null

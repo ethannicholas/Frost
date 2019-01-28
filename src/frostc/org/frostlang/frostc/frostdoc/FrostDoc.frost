@@ -770,14 +770,22 @@ class FrostDoc {
             writeAncestors(cl)
             if cl.rawInterfaces.count > 0 {
                 out.open("interfaces")
-                cl.rawInterfaces.apply(self.write) -- FIXME shouldn't need 'self.'
+                for intf in cl.rawInterfaces {
+                    write(intf)
+                }
                 out.close("interfaces")
             }
             writeInheritedFields(cl)
             writeInheritedMethods(cl)
-            cl.classes.apply(self.write) -- FIXME shouldn't need 'self.'
-            cl.fields.apply(self.write) -- FIXME shouldn't need 'self.'
-            cl.methods.apply(self.write) -- FIXME shouldn't need 'self.'
+            for sub in cl.classes {
+                write(cl)
+            }
+            for f in cl.fields {
+                write(f)
+            }
+            for m in cl.methods {
+                write(m)
+            }
             out.close("class")
             assert compiler.currentClass[0] == cl
             compiler.currentClass.pop()
@@ -837,7 +845,9 @@ class FrostDoc {
     method finish():Error? {
         try {
             -- FIXME shouldn't need explicit self
-            classes.apply(self.process)
+            for cl in classes {
+                process(cl)
+            }
             writePackages(tableOfContents)
             out := XMLWriter(tocFile.openOutputStream())
             tableOfContents.write(apiRelativePath, out)

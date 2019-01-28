@@ -10,6 +10,7 @@ typedef struct frost$core$String frost$core$String;
 void org$frostlang$frostc$Annotations$init(org$frostlang$frostc$Annotations* self);
 void org$frostlang$frostc$Annotations$init$frost$core$Int64(org$frostlang$frostc$Annotations* self, frost$core$Int64 p_flags);
 void org$frostlang$frostc$Annotations$init$frost$core$Int64$frost$collections$ListView$LTorg$frostlang$frostc$Annotations$Expression$GT$Q(org$frostlang$frostc$Annotations* self, frost$core$Int64 p_flags, frost$collections$ListView* p_expressions);
+org$frostlang$frostc$Annotations* org$frostlang$frostc$Annotations$$ADD$frost$core$Int64$R$org$frostlang$frostc$Annotations(org$frostlang$frostc$Annotations* self, frost$core$Int64 p_flags);
 frost$core$Bit org$frostlang$frostc$Annotations$get_isPrivate$R$frost$core$Bit(org$frostlang$frostc$Annotations* self);
 frost$core$Bit org$frostlang$frostc$Annotations$get_isProtected$R$frost$core$Bit(org$frostlang$frostc$Annotations* self);
 frost$core$Bit org$frostlang$frostc$Annotations$get_isPackage$R$frost$core$Bit(org$frostlang$frostc$Annotations* self);

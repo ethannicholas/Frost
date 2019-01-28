@@ -20,13 +20,13 @@ typedef struct org$frostlang$frostc$Type {
     frost$core$String* name;
     frost$core$Bit resolved;
     org$frostlang$frostc$Type$Kind typeKind;
-    org$frostlang$frostc$FixedArray* subtypes;
+    org$frostlang$frostc$FixedArray* _subtypes;
     frost$core$Int64 priority;
     frost$core$Weak* genericClassParameter;
     frost$core$Weak* genericMethodParameter;
     org$frostlang$frostc$MethodRef* methodRef;
 } org$frostlang$frostc$Type;
 #include "frost/core/Class.h"
-typedef struct { frost$core$Class* cl; int32_t refCount; frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[27]; } org$frostlang$frostc$Type$class_type;
+typedef struct { frost$core$Class* cl; int32_t refCount; frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[29]; } org$frostlang$frostc$Type$class_type;
 extern org$frostlang$frostc$Type$class_type org$frostlang$frostc$Type$class;
 

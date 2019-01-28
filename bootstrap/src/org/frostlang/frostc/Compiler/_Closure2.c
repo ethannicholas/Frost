@@ -16,14 +16,14 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 
 void org$frostlang$frostc$Compiler$_Closure2$init$org$frostlang$frostc$Type$org$frostlang$frostc$Compiler(org$frostlang$frostc$Compiler$_Closure2* param0, org$frostlang$frostc$Type* param1, org$frostlang$frostc$Compiler* param2) {
 
-// line 1414
+// line 1419
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
 org$frostlang$frostc$Type** $tmp2 = &param0->type;
 org$frostlang$frostc$Type* $tmp3 = *$tmp2;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp3));
 org$frostlang$frostc$Type** $tmp4 = &param0->type;
 *$tmp4 = param1;
-// line 1414
+// line 1419
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param2));
 org$frostlang$frostc$Compiler** $tmp5 = &param0->$self;
 org$frostlang$frostc$Compiler* $tmp6 = *$tmp5;
@@ -35,7 +35,7 @@ return;
 }
 void org$frostlang$frostc$Compiler$_Closure2$cleanup(org$frostlang$frostc$Compiler$_Closure2* param0) {
 
-// line 1414
+// line 1419
 frost$core$Object$cleanup(((frost$core$Object*) param0));
 org$frostlang$frostc$Type** $tmp8 = &param0->type;
 org$frostlang$frostc$Type* $tmp9 = *$tmp8;
@@ -48,7 +48,7 @@ return;
 }
 org$frostlang$frostc$MethodDecl$Parameter* org$frostlang$frostc$Compiler$_Closure2$$anonymous1$org$frostlang$frostc$MethodDecl$Parameter$R$org$frostlang$frostc$MethodDecl$Parameter(org$frostlang$frostc$Compiler$_Closure2* param0, org$frostlang$frostc$MethodDecl$Parameter* param1) {
 
-// line 1414
+// line 1419
 org$frostlang$frostc$MethodDecl$Parameter* $tmp12 = (org$frostlang$frostc$MethodDecl$Parameter*) frostObjectAlloc(40, (frost$core$Class*) &org$frostlang$frostc$MethodDecl$Parameter$class);
 frost$core$String** $tmp13 = &param1->name;
 frost$core$String* $tmp14 = *$tmp13;
