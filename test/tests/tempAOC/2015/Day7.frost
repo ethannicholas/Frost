@@ -1,0 +1,147 @@
+-*
+
+--- Day 7: Some Assembly Required ---
+
+This year, Santa brought little Bobby Tables a set of wires and bitwise logic gates! Unfortunately,
+little Bobby is a little under the recommended age range, and he needs help assembling the circuit.
+
+Each wire has an identifier (some lowercase letters) and can carry a 16-bit signal (a number from 0
+to 65535). A signal is provided to each wire by a gate, another wire, or some specific value. Each
+wire can only get a signal from one source, but can provide its signal to multiple destinations. A
+gate provides no signal until all of its inputs have a signal.
+
+The included instructions booklet describes how to connect the parts together: x AND y -> z means to
+connect wires x and y to an AND gate, and then connect its output to wire z.
+
+For example:
+
+123 -> x means that the signal 123 is provided to wire x.
+x AND y -> z means that the bitwise AND of wire x and wire y is provided to wire z.
+p LSHIFT 2 -> q means that the value from wire p is left-shifted by 2 and then provided to wire q.
+NOT e -> f means that the bitwise complement of the value from wire e is provided to wire f.
+Other possible gates include OR (bitwise OR) and RSHIFT (right-shift). If, for some reason, you'd
+like to emulate the circuit instead, almost all programming languages (for example, C, JavaScript,
+or Python) provide operators for these gates.
+
+For example, here is a simple circuit:
+
+123 -> x
+456 -> y
+x AND y -> d
+x OR y -> e
+x LSHIFT 2 -> f
+y RSHIFT 2 -> g
+NOT x -> h
+NOT y -> i
+
+After it is run, these are the signals on the wires:
+
+d: 72
+e: 507
+f: 492
+g: 114
+h: 65412
+i: 65079
+x: 123
+y: 456
+
+In little Bobby's kit's instructions booklet (provided as your puzzle input), what signal is
+ultimately provided to wire a?
+
+--- Part Two ---
+
+Now, take the signal you got on wire a, override wire b to that signal, and reset the other wires
+(including wire a). What new signal is ultimately provided to wire a?
+
+*-
+
+class Circuit {
+    def wires := HashMap<String, Wire>()
+    def cache := HashMap<String, UInt16>()
+
+    method get(s:String):UInt16 {
+        if s.asInt64 !== null {
+            return s.asInt64.asUInt16
+        }
+        var result := cache[s]
+        if result == null {
+            def w := wires[s]
+            assert w !== null
+            result := w.compute(self)
+            cache[s] := result
+        }
+        return result
+    }
+}
+
+choice Wire {
+    RAW(String)
+    AND(String, String)
+    OR(String, String)
+    LSHIFT(String, String)
+    RSHIFT(String, String)
+    NOT(String)
+
+    method compute(circuit:Circuit):UInt16 {
+        match self {
+            when RAW(a) {
+                return circuit.get(a)
+            }
+            when AND(a, b) {
+                return circuit.get(a) && circuit.get(b)
+            }
+            when OR(a, b) {
+                return circuit.get(a) || circuit.get(b)
+            }
+            when LSHIFT(a, b) {
+                return circuit.get(a) << circuit.get(b)
+            }
+            when RSHIFT(a, b) {
+                return circuit.get(a) >> circuit.get(b)
+            }
+            when NOT(a) {
+                return !!circuit.get(a)
+            }
+            otherwise {
+                unreachable
+            }
+        }
+    }
+}
+
+method main() {
+    def circuit := Circuit()
+    def regex := /(?:(\w+)|(\w+)\s+(AND|OR|LSHIFT|RSHIFT)\s+(\w+)|NOT\s+(\w+))\s*->\s*(\w+)/
+    for line in Console.inputStream().lines() {
+        def parsed := line.parse(regex)
+        assert parsed !== null
+        def id := parsed[5]
+        if parsed[0] != "" {
+            circuit.wires[id] := Wire.RAW(parsed[0])
+        }
+        else if parsed[1] != "" {
+            match parsed[2] {
+                when "AND" {
+                    circuit.wires[id] := Wire.AND(parsed[1]->String, parsed[3]->String)
+                }
+                when "OR" {
+                    circuit.wires[id] := Wire.OR(parsed[1]->String, parsed[3]->String)
+                }
+                when "LSHIFT" {
+                    circuit.wires[id] := Wire.LSHIFT(parsed[1]->String, parsed[3]->String)
+                }
+                when "RSHIFT" {
+                    circuit.wires[id] := Wire.RSHIFT(parsed[1]->String, parsed[3]->String)
+                }
+            }
+        }
+        else {
+            circuit.wires[id] := Wire.NOT(parsed[4])
+        }
+    }
+    def a := circuit.get("a")
+    Console.printLine(a)
+    circuit.cache.clear()
+    circuit.wires["b"] := Wire.RAW(a.asString)
+    Console.printLine(circuit.get("a"))
+}

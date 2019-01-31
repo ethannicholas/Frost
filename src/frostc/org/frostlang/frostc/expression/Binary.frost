@@ -458,6 +458,20 @@ class Binary {
                         return null
                     }
                     def m := matches.first[0].value
+                    if op = Operator.INDEX & compiler.isTuple(m.owner) {
+                        match right {
+                            when ASTNode.INT(_, v) {
+                                def compiledLeft := compiler.compileExpression(left,
+                                        TypeContext.NON_VOID)
+                                if compiledLeft == null {
+                                    return null
+                                }
+                                return compiler.coerce(position, compiler.cast(position,
+                                        Dot.compile(compiler, position, compiledLeft, "f\{v}"),
+                                            compiledLeft.type().subtypes[v.asInt64]), type)
+                            }
+                        }
+                    }
                     if m.annotations.isClass {
                         if m.parameters.count = 2 {
                             return Call.compile(compiler, position, IR.Value.METHOD(null, m),
