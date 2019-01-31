@@ -19,6 +19,7 @@ static frost$core$String $s21 = { (frost$core$Class*) &frost$core$String$class, 
 void org$frostlang$frostc$MethodDecl$Parameter$init$frost$core$String$org$frostlang$frostc$Type(org$frostlang$frostc$MethodDecl$Parameter* param0, frost$core$String* param1, org$frostlang$frostc$Type* param2) {
 
 // line 19
+FROST_ASSERT(24 == sizeof(frost$core$Weak));
 frost$core$Weak* $tmp2 = (frost$core$Weak*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Weak$class);
 frost$core$Weak$init$frost$core$Weak$T($tmp2, ((frost$core$Object*) ((org$frostlang$frostc$MethodDecl*) NULL)));
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp2));

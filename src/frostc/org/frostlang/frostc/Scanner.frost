@@ -93,6 +93,13 @@ class Scanner {
                 return Type.methodType(type.position(), typeKind,
                         FixedArray<Type>.from(parameters), returnType, 0)
             }
+            when ASTNode.TUPLE_TYPE(position, args) {
+                def finalArgs := Array<Type>()
+                for arg in args {
+                    finalArgs.add(convertType(arg))
+                }
+                return Type.tuple(finalArgs)
+            }
             otherwise {
                 unreachable, "unsupported type \{type}(\{type.$rawValue})"
             }

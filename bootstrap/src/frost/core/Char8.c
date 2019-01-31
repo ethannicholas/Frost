@@ -265,6 +265,7 @@ frost$core$String* frost$core$Char8$$MUL$frost$core$Int64$R$frost$core$String(fr
 frost$core$MutableString* local0 = NULL;
 frost$core$Int64 local1;
 // line 69
+FROST_ASSERT(48 == sizeof(frost$core$MutableString));
 frost$core$MutableString* $tmp48 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init($tmp48);
 *(&local0) = ((frost$core$MutableString*) NULL);
@@ -466,6 +467,7 @@ frost$core$Int64 $tmp126 = (frost$core$Int64) {0};
 int64_t $tmp127 = $tmp126.value;
 $tmp125[$tmp127] = param0;
 // line 150
+FROST_ASSERT(48 == sizeof(frost$core$String));
 frost$core$String* $tmp128 = (frost$core$String*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$String$class);
 frost$core$Char8* $tmp129 = *(&local0);
 frost$core$Int64 $tmp130 = (frost$core$Int64) {1};
@@ -500,6 +502,7 @@ frost$core$Char8 $tmp148 = frost$core$Char8$init$frost$core$UInt8($tmp147);
 int64_t $tmp149 = $tmp143.value;
 $tmp142[$tmp149] = $tmp148;
 // line 155
+FROST_ASSERT(48 == sizeof(frost$core$String));
 frost$core$String* $tmp150 = (frost$core$String*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$String$class);
 frost$core$Char8* $tmp151 = *(&local1);
 frost$core$Int64 $tmp152 = (frost$core$Int64) {2};

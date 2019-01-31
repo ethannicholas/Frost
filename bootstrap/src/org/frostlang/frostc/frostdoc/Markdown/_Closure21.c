@@ -47,6 +47,7 @@ frost$core$String* org$frostlang$frostc$frostdoc$Markdown$_Closure21$$anonymous2
 
 frost$core$MutableString* local0 = NULL;
 // line 770
+FROST_ASSERT(48 == sizeof(frost$core$MutableString));
 frost$core$MutableString* $tmp7 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$Int64 $tmp8 = (frost$core$Int64) {1};
 ITable* $tmp9 = param1->$class->itable;

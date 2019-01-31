@@ -223,8 +223,10 @@ bool $tmp67 = $tmp66.value;
 if ($tmp67) goto block1; else goto block2;
 block1:;
 // line 78
+FROST_ASSERT(32 == sizeof(frost$json$JSON));
 frost$json$JSON* $tmp68 = (frost$json$JSON*) frostObjectAlloc(32, (frost$core$Class*) &frost$json$JSON$class);
 frost$core$Int64 $tmp69 = (frost$core$Int64) {5};
+FROST_ASSERT(40 == sizeof(frost$collections$Array));
 frost$collections$Array* $tmp70 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
 frost$core$Int64 $tmp71 = (frost$core$Int64) {0};
 frost$collections$Array$init$frost$core$Int64($tmp70, $tmp71);
@@ -235,6 +237,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp68));
 return $tmp68;
 block2:;
 // line 80
+FROST_ASSERT(40 == sizeof(frost$collections$Array));
 frost$collections$Array* $tmp72 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
 frost$collections$Array$init($tmp72);
 *(&local0) = ((frost$collections$Array*) NULL);
@@ -261,6 +264,7 @@ bool $tmp81 = $tmp80.value;
 if ($tmp81) goto block6; else goto block7;
 block6:;
 // line 85
+FROST_ASSERT(32 == sizeof(frost$json$JSON));
 frost$json$JSON* $tmp82 = (frost$json$JSON*) frostObjectAlloc(32, (frost$core$Class*) &frost$json$JSON$class);
 frost$core$Int64 $tmp83 = (frost$core$Int64) {5};
 frost$collections$Array* $tmp84 = *(&local0);
@@ -305,8 +309,10 @@ bool $tmp96 = $tmp95.value;
 if ($tmp96) goto block1; else goto block2;
 block1:;
 // line 100
+FROST_ASSERT(32 == sizeof(frost$json$JSON));
 frost$json$JSON* $tmp97 = (frost$json$JSON*) frostObjectAlloc(32, (frost$core$Class*) &frost$json$JSON$class);
 frost$core$Int64 $tmp98 = (frost$core$Int64) {4};
+FROST_ASSERT(56 == sizeof(frost$collections$HashMap));
 frost$collections$HashMap* $tmp99 = (frost$collections$HashMap*) frostObjectAlloc(56, (frost$core$Class*) &frost$collections$HashMap$class);
 frost$collections$HashMap$init($tmp99);
 frost$json$JSON$init$frost$core$Int64$frost$collections$MapView$LTfrost$core$String$Cfrost$json$JSON$GT($tmp97, $tmp98, ((frost$collections$MapView*) $tmp99));
@@ -316,6 +322,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp97));
 return $tmp97;
 block2:;
 // line 102
+FROST_ASSERT(56 == sizeof(frost$collections$HashMap));
 frost$collections$HashMap* $tmp100 = (frost$collections$HashMap*) frostObjectAlloc(56, (frost$core$Class*) &frost$collections$HashMap$class);
 frost$collections$HashMap$init($tmp100);
 *(&local0) = ((frost$collections$HashMap*) NULL);
@@ -381,6 +388,7 @@ bool $tmp127 = $tmp126.value;
 if ($tmp127) goto block8; else goto block9;
 block8:;
 // line 112
+FROST_ASSERT(32 == sizeof(frost$json$JSON));
 frost$json$JSON* $tmp128 = (frost$json$JSON*) frostObjectAlloc(32, (frost$core$Class*) &frost$json$JSON$class);
 frost$core$Int64 $tmp129 = (frost$core$Int64) {4};
 frost$collections$HashMap* $tmp130 = *(&local0);
@@ -539,6 +547,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp194));
 *(&local1) = $tmp193;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp193));
 // line 146
+FROST_ASSERT(32 == sizeof(frost$json$JSON));
 frost$json$JSON* $tmp195 = (frost$json$JSON*) frostObjectAlloc(32, (frost$core$Class*) &frost$json$JSON$class);
 frost$core$Int64 $tmp196 = (frost$core$Int64) {2};
 frost$core$String* $tmp197 = *(&local1);
@@ -568,6 +577,7 @@ bool $tmp212 = $tmp211.value;
 if ($tmp212) goto block8; else goto block9;
 block8:;
 // line 149
+FROST_ASSERT(32 == sizeof(frost$json$JSON));
 frost$json$JSON* $tmp213 = (frost$json$JSON*) frostObjectAlloc(32, (frost$core$Class*) &frost$json$JSON$class);
 frost$core$Int64 $tmp214 = (frost$core$Int64) {0};
 org$frostlang$json$Token $tmp215 = *(&local0);
@@ -585,6 +595,7 @@ bool $tmp220 = $tmp219.value;
 if ($tmp220) goto block10; else goto block11;
 block10:;
 // line 152
+FROST_ASSERT(32 == sizeof(frost$json$JSON));
 frost$json$JSON* $tmp221 = (frost$json$JSON*) frostObjectAlloc(32, (frost$core$Class*) &frost$json$JSON$class);
 frost$core$Int64 $tmp222 = (frost$core$Int64) {1};
 org$frostlang$json$Token $tmp223 = *(&local0);
@@ -602,6 +613,7 @@ bool $tmp228 = $tmp227.value;
 if ($tmp228) goto block12; else goto block13;
 block12:;
 // line 155
+FROST_ASSERT(32 == sizeof(frost$json$JSON));
 frost$json$JSON* $tmp229 = (frost$json$JSON*) frostObjectAlloc(32, (frost$core$Class*) &frost$json$JSON$class);
 frost$core$Int64 $tmp230 = (frost$core$Int64) {3};
 frost$core$Bit $tmp231 = frost$core$Bit$init$builtin_bit(true);
@@ -616,6 +628,7 @@ bool $tmp234 = $tmp233.value;
 if ($tmp234) goto block14; else goto block15;
 block14:;
 // line 158
+FROST_ASSERT(32 == sizeof(frost$json$JSON));
 frost$json$JSON* $tmp235 = (frost$json$JSON*) frostObjectAlloc(32, (frost$core$Class*) &frost$json$JSON$class);
 frost$core$Int64 $tmp236 = (frost$core$Int64) {3};
 frost$core$Bit $tmp237 = frost$core$Bit$init$builtin_bit(false);
@@ -630,6 +643,7 @@ bool $tmp240 = $tmp239.value;
 if ($tmp240) goto block16; else goto block17;
 block16:;
 // line 161
+FROST_ASSERT(32 == sizeof(frost$json$JSON));
 frost$json$JSON* $tmp241 = (frost$json$JSON*) frostObjectAlloc(32, (frost$core$Class*) &frost$json$JSON$class);
 frost$core$Int64 $tmp242 = (frost$core$Int64) {6};
 frost$json$JSON$init$frost$core$Int64($tmp241, $tmp242);
@@ -656,6 +670,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp247));
 frost$core$String** $tmp248 = &param0->source;
 *$tmp248 = &$s249;
 // line 17
+FROST_ASSERT(40 == sizeof(org$frostlang$json$Lexer));
 org$frostlang$json$Lexer* $tmp250 = (org$frostlang$json$Lexer*) frostObjectAlloc(40, (frost$core$Class*) &org$frostlang$json$Lexer$class);
 org$frostlang$json$Lexer$init($tmp250);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp250));

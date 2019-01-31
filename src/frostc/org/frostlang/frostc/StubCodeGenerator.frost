@@ -34,6 +34,9 @@ class StubCodeGenerator : CodeGenerator {
             when Type.Kind.GENERIC {
                 return "\{type(t.subtypes[0])}<\{t.subtypes[1..].map(s => self.type(s)).join(", ")}>"
             }
+            when Type.Kind.TUPLE {
+                return "(\{t.subtypes.map(s => self.type(s)).join(", ")})"
+            }
             when Type.Kind.NULLABLE {
                 return type(t.subtypes[0]) + "?"
             }

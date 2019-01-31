@@ -66,6 +66,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp12));
 *(&local0) = ((frost$core$String*) $tmp11);
 frost$core$Frost$unref$frost$core$Object$Q($tmp11);
 // line 784
+FROST_ASSERT(48 == sizeof(frost$core$MutableString));
 frost$core$MutableString* $tmp13 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$Int64 $tmp14 = (frost$core$Int64) {2};
 ITable* $tmp15 = param1->$class->itable;

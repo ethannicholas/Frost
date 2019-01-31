@@ -232,6 +232,7 @@ goto block2;
 block2:;
 // line 1003
 frost$core$String* $tmp69 = *(&local1);
+FROST_ASSERT(24 == sizeof(frost$core$RegularExpression));
 frost$core$RegularExpression* $tmp70 = (frost$core$RegularExpression*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$RegularExpression$class);
 frost$core$RegularExpression$init$frost$core$String($tmp70, &$s71);
 org$frostlang$frostc$frostdoc$Markdown** $tmp72 = &param0->$self;
@@ -250,6 +251,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp78));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp70));
 // line 1004
 frost$core$String* $tmp82 = *(&local1);
+FROST_ASSERT(24 == sizeof(frost$core$RegularExpression));
 frost$core$RegularExpression* $tmp83 = (frost$core$RegularExpression*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$RegularExpression$class);
 frost$core$RegularExpression$init$frost$core$String($tmp83, &$s84);
 org$frostlang$frostc$frostdoc$Markdown** $tmp85 = &param0->$self;
@@ -267,6 +269,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp93));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp91));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp83));
 // line 1005
+FROST_ASSERT(48 == sizeof(frost$core$MutableString));
 frost$core$MutableString* $tmp95 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init($tmp95);
 *(&local6) = ((frost$core$MutableString*) NULL);

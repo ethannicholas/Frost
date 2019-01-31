@@ -40,3 +40,10 @@ value:
 
     def suffix := ("KB", 1024)
     (_, values[i]) := suffix
+
+Interfaces
+----------
+
+If every element in a tuple implements the [Equatable] interface, the tuple itself will likewise be 
+`Equatable`. If every element in a tuple implements the [Key] interface, the tuple itself will
+likewise be a `Key`.

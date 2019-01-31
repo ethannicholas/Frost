@@ -166,6 +166,7 @@ frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$json$JSON
 return ((frost$json$JSON$PathKey*) NULL);
 block11:;
 // line 68
+FROST_ASSERT(40 == sizeof(frost$json$JSON$PathKey));
 frost$json$JSON$PathKey* $tmp37 = (frost$json$JSON$PathKey*) frostObjectAlloc(40, (frost$core$Class*) &frost$json$JSON$PathKey$class);
 frost$core$Int64 $tmp38 = (frost$core$Int64) {0};
 frost$core$String$Index $tmp39 = *(&local1);
@@ -229,6 +230,7 @@ frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$json$JSON
 return ((frost$json$JSON$PathKey*) NULL);
 block18:;
 // line 80
+FROST_ASSERT(40 == sizeof(frost$json$JSON$PathKey));
 frost$json$JSON$PathKey* $tmp68 = (frost$json$JSON$PathKey*) frostObjectAlloc(40, (frost$core$Class*) &frost$json$JSON$PathKey$class);
 frost$core$Int64 $tmp69 = (frost$core$Int64) {1};
 frost$core$Int64$nullable $tmp70 = *(&local6);
@@ -1103,7 +1105,7 @@ frost$core$Bit $tmp384 = *$tmp383;
 // line 347
 frost$core$Bit $tmp385 = *(&local3);
 frost$core$Bit$wrapper* $tmp386;
-$tmp386 = (frost$core$Bit$wrapper*) frostObjectAlloc(13, (frost$core$Class*) &frost$core$Bit$wrapperclass);
+$tmp386 = (frost$core$Bit$wrapper*) frostObjectAlloc(17, (frost$core$Class*) &frost$core$Bit$wrapperclass);
 $tmp386->value = $tmp385;
 $fn388 $tmp387 = ($fn388) ((frost$core$Object*) $tmp386)->$class->vtable[0];
 frost$core$String* $tmp389 = $tmp387(((frost$core$Object*) $tmp386));
@@ -1125,6 +1127,7 @@ frost$collections$MapView* $tmp395 = *(&local4);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp395));
 *(&local4) = $tmp394;
 // line 350
+FROST_ASSERT(48 == sizeof(frost$core$MutableString));
 frost$core$MutableString* $tmp396 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init$frost$core$String($tmp396, &$s397);
 *(&local5) = ((frost$core$MutableString*) NULL);
@@ -1246,6 +1249,7 @@ frost$collections$ListView* $tmp456 = *(&local8);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp456));
 *(&local8) = $tmp455;
 // line 360
+FROST_ASSERT(48 == sizeof(frost$core$MutableString));
 frost$core$MutableString* $tmp457 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init$frost$core$String($tmp457, &$s458);
 *(&local9) = ((frost$core$MutableString*) NULL);

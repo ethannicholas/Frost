@@ -305,6 +305,7 @@ frost$core$Int64 $tmp81 = (frost$core$Int64) {0};
 frost$core$Int64* $tmp82 = &param0->dummy;
 *$tmp82 = $tmp81;
 // line 373
+FROST_ASSERT(48 == sizeof(frost$core$MutableString));
 frost$core$MutableString* $tmp83 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init($tmp83);
 *(&local0) = ((frost$core$MutableString*) NULL);
@@ -471,6 +472,7 @@ bool $tmp171 = $tmp169.value;
 if ($tmp171) goto block4; else goto block5;
 block4:;
 // line 408
+FROST_ASSERT(48 == sizeof(frost$core$MutableString));
 frost$core$MutableString* $tmp172 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init$frost$core$String($tmp172, &$s173);
 *(&local0) = ((frost$core$MutableString*) NULL);
@@ -650,6 +652,7 @@ return;
 frost$collections$ListView* frost$core$String$get_utf8$R$frost$collections$ListView$LTfrost$core$Char8$GT(frost$core$String* param0) {
 
 // line 458
+FROST_ASSERT(24 == sizeof(frost$core$String$UTF8List));
 frost$core$String$UTF8List* $tmp255 = (frost$core$String$UTF8List*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$String$UTF8List$class);
 frost$core$String$UTF8List$init$frost$core$String($tmp255, param0);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$collections$ListView*) $tmp255)));
@@ -660,6 +663,7 @@ return ((frost$collections$ListView*) $tmp255);
 frost$collections$Iterator* frost$core$String$get_utf16$R$frost$collections$Iterator$LTfrost$core$Char16$GT(frost$core$String* param0) {
 
 // line 467
+FROST_ASSERT(32 == sizeof(frost$core$String$UTF16Iterator));
 frost$core$String$UTF16Iterator* $tmp256 = (frost$core$String$UTF16Iterator*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$String$UTF16Iterator$class);
 frost$core$String$UTF16Iterator$init$frost$core$String($tmp256, param0);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$collections$Iterator*) $tmp256)));
@@ -670,6 +674,7 @@ return ((frost$collections$Iterator*) $tmp256);
 frost$collections$Iterator* frost$core$String$get_iterator$R$frost$collections$Iterator$LTfrost$core$Char32$GT(frost$core$String* param0) {
 
 // line 475
+FROST_ASSERT(32 == sizeof(frost$core$String$UTF32Iterator));
 frost$core$String$UTF32Iterator* $tmp257 = (frost$core$String$UTF32Iterator*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$String$UTF32Iterator$class);
 frost$core$String$UTF32Iterator$init$frost$core$String($tmp257, param0);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$collections$Iterator*) $tmp257)));
@@ -1190,6 +1195,7 @@ frost$core$Int64 $tmp584 = (frost$core$Int64) {$tmp583};
 goto block9;
 block10:;
 // line 552
+FROST_ASSERT(48 == sizeof(frost$core$String));
 frost$core$String* $tmp585 = (frost$core$String*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$String$class);
 frost$core$Char8* $tmp586 = *(&local0);
 frost$core$Int64* $tmp587 = &param0->_length;
@@ -1235,6 +1241,7 @@ frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$
 abort(); // unreachable
 block1:;
 // line 568
+FROST_ASSERT(48 == sizeof(frost$core$MutableString));
 frost$core$MutableString* $tmp608 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init($tmp608);
 *(&local0) = ((frost$core$MutableString*) NULL);
@@ -1332,6 +1339,7 @@ frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$
 abort(); // unreachable
 block1:;
 // line 581
+FROST_ASSERT(48 == sizeof(frost$core$MutableString));
 frost$core$MutableString* $tmp662 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init($tmp662);
 *(&local0) = ((frost$core$MutableString*) NULL);
@@ -1926,6 +1934,7 @@ frost$core$Int64 $tmp1039 = (frost$core$Int64) {$tmp1038};
 goto block2;
 block2:;
 // line 692
+FROST_ASSERT(48 == sizeof(frost$core$String));
 frost$core$String* $tmp1040 = (frost$core$String*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$String$class);
 frost$core$Char8** $tmp1041 = &param0->data;
 frost$core$Char8* $tmp1042 = *$tmp1041;
@@ -2009,6 +2018,7 @@ frost$core$String$Index $tmp1065 = param1.min;
 frost$core$Int64 $tmp1066 = $tmp1065.value;
 *(&local0) = $tmp1066;
 // line 734
+FROST_ASSERT(48 == sizeof(frost$core$MutableString));
 frost$core$MutableString* $tmp1067 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init($tmp1067);
 *(&local1) = ((frost$core$MutableString*) NULL);
@@ -2336,6 +2346,7 @@ block13:;
 goto block10;
 block10:;
 // line 830
+FROST_ASSERT(48 == sizeof(frost$core$MutableString));
 frost$core$MutableString* $tmp1221 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init($tmp1221);
 *(&local3) = ((frost$core$MutableString*) NULL);
@@ -3653,6 +3664,7 @@ bool $tmp2009 = $tmp2008.value;
 if ($tmp2009) goto block1; else goto block2;
 block1:;
 // line 1074
+FROST_ASSERT(40 == sizeof(frost$collections$Array));
 frost$collections$Array* $tmp2010 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
 frost$collections$Array$init($tmp2010);
 *(&local1) = ((frost$collections$Array*) NULL);
@@ -3763,6 +3775,7 @@ frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param0));
 return param0;
 block2:;
 // line 1094
+FROST_ASSERT(48 == sizeof(frost$core$MutableString));
 frost$core$MutableString* $tmp2064 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init($tmp2064);
 *(&local0) = ((frost$core$MutableString*) NULL);
@@ -3849,6 +3862,7 @@ frost$core$String* frost$core$String$replace$frost$core$RegularExpression$frost$
 frost$core$MutableString* local0 = NULL;
 frost$core$Matcher* local1 = NULL;
 // line 1125
+FROST_ASSERT(48 == sizeof(frost$core$MutableString));
 frost$core$MutableString* $tmp2098 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init($tmp2098);
 *(&local0) = ((frost$core$MutableString*) NULL);
@@ -3903,6 +3917,7 @@ frost$core$MutableString* local0 = NULL;
 frost$core$Matcher* local1 = NULL;
 frost$core$Object* local2 = NULL;
 // line 1152
+FROST_ASSERT(48 == sizeof(frost$core$MutableString));
 frost$core$MutableString* $tmp2113 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init($tmp2113);
 *(&local0) = ((frost$core$MutableString*) NULL);
@@ -3985,6 +4000,7 @@ frost$collections$Array* local2 = NULL;
 frost$core$Int64 local3;
 frost$core$Object* local4 = NULL;
 // line 1172
+FROST_ASSERT(48 == sizeof(frost$core$MutableString));
 frost$core$MutableString* $tmp2147 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init($tmp2147);
 *(&local0) = ((frost$core$MutableString*) NULL);
@@ -4010,6 +4026,7 @@ bool $tmp2153 = $tmp2152.value;
 if ($tmp2153) goto block2; else goto block3;
 block2:;
 // line 1175
+FROST_ASSERT(40 == sizeof(frost$collections$Array));
 frost$collections$Array* $tmp2154 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
 frost$collections$Array$init($tmp2154);
 *(&local2) = ((frost$collections$Array*) NULL);
@@ -4149,7 +4166,8 @@ return $tmp2228;
 frost$collections$Iterator* frost$core$String$find$frost$core$String$frost$core$Bit$R$frost$collections$Iterator$LTfrost$core$String$Index$GT(frost$core$String* param0, frost$core$String* param1, frost$core$Bit param2) {
 
 // line 1190
-frost$core$String$MatchIterator* $tmp2229 = (frost$core$String$MatchIterator*) frostObjectAlloc(46, (frost$core$Class*) &frost$core$String$MatchIterator$class);
+FROST_ASSERT(48 == sizeof(frost$core$String$MatchIterator));
+frost$core$String$MatchIterator* $tmp2229 = (frost$core$String$MatchIterator*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$String$MatchIterator$class);
 frost$core$String$MatchIterator$init$frost$core$String$frost$core$String$frost$core$Bit($tmp2229, param0, param1, param2);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$collections$Iterator*) $tmp2229)));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp2229));
@@ -4169,7 +4187,8 @@ return $tmp2231;
 frost$collections$Iterator* frost$core$String$find$frost$core$RegularExpression$frost$core$Bit$R$frost$collections$Iterator$LTfrost$core$String$Match$GT(frost$core$String* param0, frost$core$RegularExpression* param1, frost$core$Bit param2) {
 
 // line 1198
-frost$core$String$RegexMatchIterator* $tmp2232 = (frost$core$String$RegexMatchIterator*) frostObjectAlloc(34, (frost$core$Class*) &frost$core$String$RegexMatchIterator$class);
+FROST_ASSERT(40 == sizeof(frost$core$String$RegexMatchIterator));
+frost$core$String$RegexMatchIterator* $tmp2232 = (frost$core$String$RegexMatchIterator*) frostObjectAlloc(40, (frost$core$Class*) &frost$core$String$RegexMatchIterator$class);
 frost$core$String$RegexMatchIterator$init$frost$core$String$frost$core$RegularExpression$frost$core$Bit($tmp2232, param0, param1, param2);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$collections$Iterator*) $tmp2232)));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp2232));
@@ -4713,6 +4732,7 @@ frost$collections$Array* local0 = NULL;
 frost$core$String$Index local1;
 frost$core$String$Index$nullable local2;
 // line 1391
+FROST_ASSERT(40 == sizeof(frost$collections$Array));
 frost$collections$Array* $tmp2527 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
 frost$collections$Array$init($tmp2527);
 *(&local0) = ((frost$collections$Array*) NULL);
@@ -4833,6 +4853,7 @@ frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$
 abort(); // unreachable
 block1:;
 // line 1423
+FROST_ASSERT(40 == sizeof(frost$collections$Array));
 frost$collections$Array* $tmp2585 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
 frost$collections$Array$init($tmp2585);
 *(&local0) = ((frost$collections$Array*) NULL);

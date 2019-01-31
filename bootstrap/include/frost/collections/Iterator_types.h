@@ -9,6 +9,6 @@ typedef struct frost$collections$Iterator {
     frost$core$Int32 refCount;
 } frost$collections$Iterator;
 #include "frost/core/Class.h"
-typedef struct { frost$core$Class* cl; int32_t refCount; frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[13]; } frost$collections$Iterator$class_type;
+typedef struct { frost$core$Class* cl; int32_t refCount; frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[14]; } frost$collections$Iterator$class_type;
 extern frost$collections$Iterator$class_type frost$collections$Iterator$class;
 

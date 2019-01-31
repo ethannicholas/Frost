@@ -3,9 +3,82 @@ package org.frostlang.frostc.expression
 uses org.frostlang.frostc.ASTNode
 uses org.frostlang.frostc.Compiler
 uses org.frostlang.frostc.Compiler.TypeContext
+uses org.frostlang.frostc.FixedArray
 uses org.frostlang.frostc.IR
+uses org.frostlang.frostc.Pair
 uses org.frostlang.frostc.Position
 uses org.frostlang.frostc.Type
 
 class Tuple {
+    @class
+    function indexType(compiler:Compiler, tuple:Type, index:ASTNode):Type {
+        match index {
+            when ASTNode.INT(_, value) {
+                if value > tuple.subtypes.count.asUInt64 {
+                    compiler.error(index.position(),
+                            "tuple index '\{index}' is out of bounds for '\{tuple}'")
+                }
+                return tuple.subtypes[value.asInt64]
+            }
+        }
+        return tuple.subtypes.fold((t1, t2) => t1.union(compiler, t2))
+    }
+
+    @class
+    function possibleTypes(compiler:Compiler, args:FixedArray<ASTNode>):CollectionView<Type>? {
+        def result := Array<Type>()
+        for a in args {
+            def pref := compiler.preferredType(a)
+            if pref == null {
+                return null
+            }
+            result.add(pref)
+        }
+        return [Type.tuple(result)]
+    }
+
+    @class
+    method coercionCost(compiler:Compiler, args:FixedArray<ASTNode>,
+            target:Type):Pair<Type, Int>? {
+        if target.typeKind = Type.Kind.TUPLE & target.subtypes.count = args.count {
+            var result := 0
+            for i in 0 .. args.count {
+                def cost := compiler.coercionCost(args[i], target.subtypes[i])
+                if cost == null {
+                    return null
+                }
+                result += cost.second
+            }
+            return Pair<Type, Int>(target, result)
+        }
+        def pref := possibleTypes(compiler, args)
+        if pref == null {
+            return null
+        }
+        assert pref.count = 1
+        return compiler.coercionCost(pref.iterator.next(), target)
+    }
+
+    @class
+    method compile(compiler:Compiler, position:Position, args:FixedArray<ASTNode>,
+            type:TypeContext):IR.Value? {
+        match type {
+            when TypeContext.TYPE(t, explicit) {
+                if t.isTuple & t.subtypes.count = args.count {
+                    def classType := Type.generic(compiler.getClass(t).type, t.subtypes)
+                    return compiler.cast(position, Call.compile(compiler, position,
+                            IR.Value.TYPE(classType), args, TypeContext.UNSPECIFIED), t)
+                }
+            }
+        }
+        var pref := compiler.preferredType(ASTNode.TUPLE(position, args))
+        if pref == null {
+            pref := Type.tuple(args.map(a => Type.Any()))
+        }
+        def result := compile(compiler, position, args, TypeContext.TYPE(pref, false))
+        if result == null {
+            return null
+        }
+        return compiler.coerce(position, result, type)
+    }
 }

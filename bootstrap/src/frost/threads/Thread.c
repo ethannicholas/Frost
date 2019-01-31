@@ -29,6 +29,7 @@ frost$threads$Thread* frost$threads$Thread$start$$LP$RP$EQ$AM$GT$ST$LP$RP$R$fros
 
 frost$threads$Thread* local0 = NULL;
 // line 50
+FROST_ASSERT(24 == sizeof(frost$threads$Thread));
 frost$threads$Thread* $tmp2 = (frost$threads$Thread*) frostObjectAlloc(24, (frost$core$Class*) &frost$threads$Thread$class);
 frost$threads$Thread$init($tmp2);
 *(&local0) = ((frost$threads$Thread*) NULL);
@@ -53,6 +54,7 @@ frost$threads$Thread* frost$threads$Thread$start$$LP$RP$EQ$AM$GT$ST$LP$RP$frost$
 
 frost$threads$Thread* local0 = NULL;
 // line 57
+FROST_ASSERT(24 == sizeof(frost$threads$Thread));
 frost$threads$Thread* $tmp7 = (frost$threads$Thread*) frostObjectAlloc(24, (frost$core$Class*) &frost$threads$Thread$class);
 frost$threads$Thread$init($tmp7);
 *(&local0) = ((frost$threads$Thread*) NULL);
@@ -78,6 +80,7 @@ frost$threads$Thread* frost$threads$Thread$unsafeStart$$LP$RP$EQ$AM$GT$LP$RP$R$f
 
 frost$threads$Thread* local0 = NULL;
 // line 64
+FROST_ASSERT(24 == sizeof(frost$threads$Thread));
 frost$threads$Thread* $tmp13 = (frost$threads$Thread*) frostObjectAlloc(24, (frost$core$Class*) &frost$threads$Thread$class);
 frost$threads$Thread$init($tmp13);
 *(&local0) = ((frost$threads$Thread*) NULL);
@@ -102,6 +105,7 @@ frost$threads$Thread* frost$threads$Thread$unsafeStart$$LP$RP$EQ$AM$GT$LP$RP$fro
 
 frost$threads$Thread* local0 = NULL;
 // line 71
+FROST_ASSERT(24 == sizeof(frost$threads$Thread));
 frost$threads$Thread* $tmp18 = (frost$threads$Thread*) frostObjectAlloc(24, (frost$core$Class*) &frost$threads$Thread$class);
 frost$threads$Thread$init($tmp18);
 *(&local0) = ((frost$threads$Thread*) NULL);

@@ -92,7 +92,7 @@ class HCodeGenerator : CodeGenerator {
                     }
                 }
                 when Type.Kind.CLASS {
-                    def name := "\{escapeName(t.name)}"
+                    def name := escapeName(t.name)
                     def cl := compiler.getClass(t)
                     assert cl !== null
                     if !compiler.isValue(cl) {
@@ -153,6 +153,9 @@ class HCodeGenerator : CodeGenerator {
                 }
                 when Type.Kind.IMMUTABLE_FUNCTION, Type.Kind.IMMUTABLE_METHOD {
                     return type(Type.Method())
+                }
+                when Type.Kind.TUPLE {
+                    return type(compiler.getClass(t).type)
                 }
                 otherwise {
                     unreachable, "unsupported type '\{t}'"

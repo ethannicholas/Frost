@@ -200,6 +200,7 @@ bool $tmp76 = param3.value;
 if ($tmp76) goto block3; else goto block5;
 block3:;
 // line 136
+FROST_ASSERT(24 == sizeof(frost$core$RegularExpression));
 frost$core$RegularExpression* $tmp77 = (frost$core$RegularExpression*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$RegularExpression$class);
 frost$core$RegularExpression$init$frost$core$String($tmp77, &$s78);
 frost$core$Matcher* $tmp79 = frost$core$RegularExpression$matcher$frost$core$String$R$frost$core$Matcher($tmp77, param2);

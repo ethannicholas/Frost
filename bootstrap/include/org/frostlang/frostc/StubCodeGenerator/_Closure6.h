@@ -8,5 +8,5 @@ typedef struct org$frostlang$frostc$Type org$frostlang$frostc$Type;
 
 void org$frostlang$frostc$StubCodeGenerator$_Closure6$init$org$frostlang$frostc$StubCodeGenerator(org$frostlang$frostc$StubCodeGenerator$_Closure6* self, org$frostlang$frostc$StubCodeGenerator* p_$self);
 void org$frostlang$frostc$StubCodeGenerator$_Closure6$cleanup(org$frostlang$frostc$StubCodeGenerator$_Closure6* self);
-frost$core$String* org$frostlang$frostc$StubCodeGenerator$_Closure6$$anonymous5$org$frostlang$frostc$Type$R$frost$core$String(org$frostlang$frostc$StubCodeGenerator$_Closure6* self, org$frostlang$frostc$Type* p_f);
+frost$core$String* org$frostlang$frostc$StubCodeGenerator$_Closure6$$anonymous5$org$frostlang$frostc$Type$R$frost$core$String(org$frostlang$frostc$StubCodeGenerator$_Closure6* self, org$frostlang$frostc$Type* p_s);
 

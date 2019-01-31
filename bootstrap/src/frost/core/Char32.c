@@ -277,6 +277,7 @@ frost$core$String* frost$core$Char32$$MUL$frost$core$Int64$R$frost$core$String(f
 frost$core$MutableString* local0 = NULL;
 frost$core$Int64 local1;
 // line 64
+FROST_ASSERT(48 == sizeof(frost$core$MutableString));
 frost$core$MutableString* $tmp48 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init($tmp48);
 *(&local0) = ((frost$core$MutableString*) NULL);
@@ -480,6 +481,7 @@ frost$core$Char8 $tmp126 = frost$core$Char8$init$frost$core$UInt8($tmp125);
 int64_t $tmp127 = $tmp123.value;
 $tmp122[$tmp127] = $tmp126;
 // line 142
+FROST_ASSERT(48 == sizeof(frost$core$String));
 frost$core$String* $tmp128 = (frost$core$String*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$String$class);
 frost$core$Char8* $tmp129 = *(&local0);
 frost$core$Int64 $tmp130 = (frost$core$Int64) {1};
@@ -521,6 +523,7 @@ frost$core$Char8 $tmp152 = frost$core$Char8$init$frost$core$UInt8($tmp151);
 int64_t $tmp153 = $tmp147.value;
 $tmp146[$tmp153] = $tmp152;
 // line 148
+FROST_ASSERT(48 == sizeof(frost$core$String));
 frost$core$String* $tmp154 = (frost$core$String*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$String$class);
 frost$core$Char8* $tmp155 = *(&local1);
 frost$core$Int64 $tmp156 = (frost$core$Int64) {2};
@@ -573,6 +576,7 @@ frost$core$Char8 $tmp187 = frost$core$Char8$init$frost$core$UInt8($tmp186);
 int64_t $tmp188 = $tmp182.value;
 $tmp181[$tmp188] = $tmp187;
 // line 155
+FROST_ASSERT(48 == sizeof(frost$core$String));
 frost$core$String* $tmp189 = (frost$core$String*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$String$class);
 frost$core$Char8* $tmp190 = *(&local2);
 frost$core$Int64 $tmp191 = (frost$core$Int64) {3};
@@ -629,6 +633,7 @@ frost$core$Char8 $tmp227 = frost$core$Char8$init$frost$core$UInt8($tmp226);
 int64_t $tmp228 = $tmp222.value;
 $tmp221[$tmp228] = $tmp227;
 // line 162
+FROST_ASSERT(48 == sizeof(frost$core$String));
 frost$core$String* $tmp229 = (frost$core$String*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$String$class);
 frost$core$Char8* $tmp230 = *(&local3);
 frost$core$Int64 $tmp231 = (frost$core$Int64) {4};

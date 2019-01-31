@@ -59,6 +59,7 @@ org$frostlang$frostc$IR$Block$ID $tmp18 = *$tmp17;
 // line 15
 org$frostlang$frostc$IR** $tmp19 = &param0->ir;
 org$frostlang$frostc$IR* $tmp20 = *$tmp19;
+FROST_ASSERT(72 == sizeof(org$frostlang$frostc$IR$Statement));
 org$frostlang$frostc$IR$Statement* $tmp21 = (org$frostlang$frostc$IR$Statement*) frostObjectAlloc(72, (frost$core$Class*) &org$frostlang$frostc$IR$Statement$class);
 frost$core$Int64 $tmp22 = (frost$core$Int64) {1};
 org$frostlang$frostc$IR$Block$ID $tmp23 = *(&local1);

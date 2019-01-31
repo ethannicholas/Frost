@@ -39,7 +39,7 @@ org$frostlang$frostc$Type$Kind $tmp6 = *$tmp5;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp7;
 $tmp7 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp7->value = $tmp6;
-frost$core$Int64 $tmp8 = (frost$core$Int64) {12};
+frost$core$Int64 $tmp8 = (frost$core$Int64) {13};
 org$frostlang$frostc$Type$Kind $tmp9 = org$frostlang$frostc$Type$Kind$init$frost$core$Int64($tmp8);
 org$frostlang$frostc$Type$Kind$wrapper* $tmp10;
 $tmp10 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);

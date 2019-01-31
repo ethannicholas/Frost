@@ -27,6 +27,7 @@ static frost$core$String $s35 = { (frost$core$Class*) &frost$core$String$class, 
 void org$frostlang$frostc$ChoiceCase$init$org$frostlang$frostc$ClassDecl$org$frostlang$frostc$Position$frost$core$String$frost$core$String$Q$frost$core$Int64$frost$collections$ListView$LTorg$frostlang$frostc$Type$GT(org$frostlang$frostc$ChoiceCase* param0, org$frostlang$frostc$ClassDecl* param1, org$frostlang$frostc$Position param2, frost$core$String* param3, frost$core$String* param4, frost$core$Int64 param5, frost$collections$ListView* param6) {
 
 // line 15
+FROST_ASSERT(24 == sizeof(frost$core$Weak));
 frost$core$Weak* $tmp2 = (frost$core$Weak*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Weak$class);
 frost$core$Weak$init$frost$core$Weak$T($tmp2, ((frost$core$Object*) ((org$frostlang$frostc$MethodDecl*) NULL)));
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp2));
@@ -42,6 +43,7 @@ org$frostlang$frostc$Compiler$Resolution $tmp7 = org$frostlang$frostc$Compiler$R
 org$frostlang$frostc$Compiler$Resolution* $tmp8 = &param0->resolved;
 *$tmp8 = $tmp7;
 // line 21
+FROST_ASSERT(24 == sizeof(frost$core$Weak));
 frost$core$Weak* $tmp9 = (frost$core$Weak*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Weak$class);
 frost$core$Weak$init$frost$core$Weak$T($tmp9, ((frost$core$Object*) param1));
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp9));
@@ -62,6 +64,7 @@ frost$core$String** $tmp15 = &param0->doccomment;
 frost$core$Int64* $tmp16 = &param0->rawValue;
 *$tmp16 = param5;
 // line 24
+FROST_ASSERT(40 == sizeof(frost$collections$Array));
 frost$collections$Array* $tmp17 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
 frost$collections$Array$init$frost$collections$CollectionView$LTfrost$collections$Array$T$GT($tmp17, ((frost$collections$CollectionView*) param6));
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp17));

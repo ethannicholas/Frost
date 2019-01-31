@@ -26,5 +26,5 @@ char* frostConvertToString(void* o);
 
 void frostDebugPrintObject(void* object);
 
-#define FROST_ASSERT(x) if (!x) { printf("assertion failure: %s:%d\n", __FILE__, __LINE__); \
+#define FROST_ASSERT(x) if (!(x)) { printf("assertion failure: %s:%d\n", __FILE__, __LINE__); \
         __builtin_trap(); }

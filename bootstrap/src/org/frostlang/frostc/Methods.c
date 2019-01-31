@@ -81,6 +81,7 @@ frost$core$String* $tmp27 = *$tmp26;
 org$frostlang$frostc$Symbol$init$org$frostlang$frostc$Symbol$Kind$org$frostlang$frostc$Position$frost$core$String(((org$frostlang$frostc$Symbol*) param0), $tmp19, $tmp20, $tmp27);
 frost$core$Frost$unref$frost$core$Object$Q($tmp25);
 // line 10
+FROST_ASSERT(40 == sizeof(org$frostlang$frostc$FixedArray));
 org$frostlang$frostc$FixedArray* $tmp28 = (org$frostlang$frostc$FixedArray*) frostObjectAlloc(40, (frost$core$Class*) &org$frostlang$frostc$FixedArray$class);
 org$frostlang$frostc$FixedArray$init$frost$collections$ListView$LTorg$frostlang$frostc$FixedArray$T$GT($tmp28, param1);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp28));
@@ -99,6 +100,7 @@ frost$collections$HashSet* local0 = NULL;
 org$frostlang$frostc$MethodDecl* local1 = NULL;
 org$frostlang$frostc$MethodDecl* local2 = NULL;
 // line 15
+FROST_ASSERT(24 == sizeof(frost$collections$HashSet));
 frost$collections$HashSet* $tmp32 = (frost$collections$HashSet*) frostObjectAlloc(24, (frost$core$Class*) &frost$collections$HashSet$class);
 frost$collections$HashSet$init($tmp32);
 *(&local0) = ((frost$collections$HashSet*) NULL);

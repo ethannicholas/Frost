@@ -117,6 +117,7 @@ bool $tmp33 = $tmp32.value;
 if ($tmp33) goto block4; else goto block5;
 block4:;
 // line 42
+FROST_ASSERT(40 == sizeof(frost$collections$Array));
 frost$collections$Array* $tmp34 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
 frost$collections$ListView** $tmp35 = &param0->nonNullImplications;
 frost$collections$ListView* $tmp36 = *$tmp35;
@@ -133,6 +134,7 @@ frost$collections$ListView** $tmp39 = &param2->nonNullImplications;
 frost$collections$ListView* $tmp40 = *$tmp39;
 frost$collections$Array$addAll$frost$collections$CollectionView$LTfrost$collections$Array$T$GT($tmp38, ((frost$collections$CollectionView*) $tmp40));
 // line 44
+FROST_ASSERT(32 == sizeof(org$frostlang$frostc$Analyzer$DataFlowValue));
 org$frostlang$frostc$Analyzer$DataFlowValue* $tmp41 = (org$frostlang$frostc$Analyzer$DataFlowValue*) frostObjectAlloc(32, (frost$core$Class*) &org$frostlang$frostc$Analyzer$DataFlowValue$class);
 org$frostlang$frostc$Type* $tmp42 = *(&local0);
 frost$collections$Array* $tmp43 = *(&local1);
@@ -148,6 +150,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp45));
 return $tmp41;
 block5:;
 // line 46
+FROST_ASSERT(32 == sizeof(org$frostlang$frostc$Analyzer$DataFlowValue));
 org$frostlang$frostc$Analyzer$DataFlowValue* $tmp46 = (org$frostlang$frostc$Analyzer$DataFlowValue*) frostObjectAlloc(32, (frost$core$Class*) &org$frostlang$frostc$Analyzer$DataFlowValue$class);
 org$frostlang$frostc$Type* $tmp47 = *(&local0);
 frost$collections$ListView** $tmp48 = &param0->nonNullImplications;
@@ -168,6 +171,7 @@ bool $tmp54 = $tmp53.value;
 if ($tmp54) goto block6; else goto block7;
 block6:;
 // line 49
+FROST_ASSERT(32 == sizeof(org$frostlang$frostc$Analyzer$DataFlowValue));
 org$frostlang$frostc$Analyzer$DataFlowValue* $tmp55 = (org$frostlang$frostc$Analyzer$DataFlowValue*) frostObjectAlloc(32, (frost$core$Class*) &org$frostlang$frostc$Analyzer$DataFlowValue$class);
 org$frostlang$frostc$Type* $tmp56 = *(&local0);
 frost$collections$ListView** $tmp57 = &param2->nonNullImplications;
@@ -183,6 +187,7 @@ block7:;
 goto block2;
 block2:;
 // line 51
+FROST_ASSERT(32 == sizeof(org$frostlang$frostc$Analyzer$DataFlowValue));
 org$frostlang$frostc$Analyzer$DataFlowValue* $tmp60 = (org$frostlang$frostc$Analyzer$DataFlowValue*) frostObjectAlloc(32, (frost$core$Class*) &org$frostlang$frostc$Analyzer$DataFlowValue$class);
 org$frostlang$frostc$Type* $tmp61 = *(&local0);
 org$frostlang$frostc$Analyzer$DataFlowValue$init$org$frostlang$frostc$Type($tmp60, $tmp61);

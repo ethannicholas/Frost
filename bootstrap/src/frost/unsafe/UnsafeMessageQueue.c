@@ -28,6 +28,7 @@ void frost$unsafe$UnsafeMessageQueue$post$frost$unsafe$UnsafeMessageQueue$T(fros
 
 frost$threads$ScopedLock* local0 = NULL;
 // line 46
+FROST_ASSERT(24 == sizeof(frost$threads$ScopedLock));
 frost$threads$ScopedLock* $tmp2 = (frost$threads$ScopedLock*) frostObjectAlloc(24, (frost$core$Class*) &frost$threads$ScopedLock$class);
 frost$threads$Lock** $tmp3 = &param0->lock;
 frost$threads$Lock* $tmp4 = *$tmp3;
@@ -59,6 +60,7 @@ block4:;
 // line 49
 frost$unsafe$UnsafeMessageQueue$Message** $tmp16 = &param0->tail;
 frost$unsafe$UnsafeMessageQueue$Message* $tmp17 = *$tmp16;
+FROST_ASSERT(32 == sizeof(frost$unsafe$UnsafeMessageQueue$Message));
 frost$unsafe$UnsafeMessageQueue$Message* $tmp18 = (frost$unsafe$UnsafeMessageQueue$Message*) frostObjectAlloc(32, (frost$core$Class*) &frost$unsafe$UnsafeMessageQueue$Message$class);
 frost$unsafe$UnsafeMessageQueue$Message$init$frost$unsafe$UnsafeMessageQueue$Message$T($tmp18, param1);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp18));
@@ -95,6 +97,7 @@ frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s35, $tmp
 abort(); // unreachable
 block6:;
 // line 54
+FROST_ASSERT(32 == sizeof(frost$unsafe$UnsafeMessageQueue$Message));
 frost$unsafe$UnsafeMessageQueue$Message* $tmp36 = (frost$unsafe$UnsafeMessageQueue$Message*) frostObjectAlloc(32, (frost$core$Class*) &frost$unsafe$UnsafeMessageQueue$Message$class);
 frost$unsafe$UnsafeMessageQueue$Message$init$frost$unsafe$UnsafeMessageQueue$Message$T($tmp36, param1);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp36));
@@ -139,6 +142,7 @@ frost$core$Int64 frost$unsafe$UnsafeMessageQueue$pendingMessages$R$frost$core$In
 
 frost$threads$ScopedLock* local0 = NULL;
 // line 70
+FROST_ASSERT(24 == sizeof(frost$threads$ScopedLock));
 frost$threads$ScopedLock* $tmp56 = (frost$threads$ScopedLock*) frostObjectAlloc(24, (frost$core$Class*) &frost$threads$ScopedLock$class);
 frost$threads$Lock** $tmp57 = &param0->lock;
 frost$threads$Lock* $tmp58 = *$tmp57;
@@ -175,6 +179,7 @@ frost$core$Object* frost$unsafe$UnsafeMessageQueue$getMessage$R$frost$unsafe$Uns
 frost$threads$ScopedLock* local0 = NULL;
 frost$core$Object* local1 = NULL;
 // line 93
+FROST_ASSERT(24 == sizeof(frost$threads$ScopedLock));
 frost$threads$ScopedLock* $tmp69 = (frost$threads$ScopedLock*) frostObjectAlloc(24, (frost$core$Class*) &frost$threads$ScopedLock$class);
 frost$threads$Lock** $tmp70 = &param0->lock;
 frost$threads$Lock* $tmp71 = *$tmp70;
@@ -279,6 +284,7 @@ return;
 void frost$unsafe$UnsafeMessageQueue$init(frost$unsafe$UnsafeMessageQueue* param0) {
 
 // line 26
+FROST_ASSERT(24 == sizeof(frost$threads$Lock));
 frost$threads$Lock* $tmp112 = (frost$threads$Lock*) frostObjectAlloc(24, (frost$core$Class*) &frost$threads$Lock$class);
 frost$threads$Lock$init($tmp112);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp112));
@@ -289,6 +295,7 @@ frost$threads$Lock** $tmp115 = &param0->lock;
 *$tmp115 = $tmp112;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp112));
 // line 29
+FROST_ASSERT(32 == sizeof(frost$threads$Notifier));
 frost$threads$Notifier* $tmp116 = (frost$threads$Notifier*) frostObjectAlloc(32, (frost$core$Class*) &frost$threads$Notifier$class);
 frost$threads$Lock** $tmp117 = &param0->lock;
 frost$threads$Lock* $tmp118 = *$tmp117;

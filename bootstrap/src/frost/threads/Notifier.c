@@ -20,6 +20,7 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 void frost$threads$Notifier$init$frost$threads$Lock(frost$threads$Notifier* param0, frost$threads$Lock* param1) {
 
 // line 15
+FROST_ASSERT(24 == sizeof(frost$threads$Lock));
 frost$threads$Lock* $tmp2 = (frost$threads$Lock*) frostObjectAlloc(24, (frost$core$Class*) &frost$threads$Lock$class);
 frost$threads$Lock$init($tmp2);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp2));

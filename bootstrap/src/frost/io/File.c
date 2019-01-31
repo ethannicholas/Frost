@@ -101,6 +101,7 @@ bool $tmp7 = $tmp5.value;
 if ($tmp7) goto block1; else goto block2;
 block1:;
 // line 59
+FROST_ASSERT(24 == sizeof(frost$io$File));
 frost$io$File* $tmp8 = (frost$io$File*) frostObjectAlloc(24, (frost$core$Class*) &frost$io$File$class);
 frost$io$File$init$frost$core$String($tmp8, param1);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp8));
@@ -115,6 +116,7 @@ bool $tmp13 = $tmp11.value;
 if ($tmp13) goto block3; else goto block4;
 block3:;
 // line 62
+FROST_ASSERT(24 == sizeof(frost$io$File));
 frost$io$File* $tmp14 = (frost$io$File*) frostObjectAlloc(24, (frost$core$Class*) &frost$io$File$class);
 frost$core$String** $tmp15 = &param0->path;
 frost$core$String* $tmp16 = *$tmp15;
@@ -126,6 +128,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp14));
 return $tmp14;
 block4:;
 // line 64
+FROST_ASSERT(24 == sizeof(frost$io$File));
 frost$io$File* $tmp18 = (frost$io$File*) frostObjectAlloc(24, (frost$core$Class*) &frost$io$File$class);
 frost$core$String** $tmp19 = &param0->path;
 frost$core$String* $tmp20 = *$tmp19;
@@ -145,6 +148,7 @@ frost$core$Error* local0 = NULL;
 // line 75
 *(&local0) = ((frost$core$Error*) NULL);
 // line 76
+FROST_ASSERT(32 == sizeof(frost$core$Maybe));
 frost$core$Maybe* $tmp24 = (frost$core$Maybe*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$Maybe$class);
 frost$core$Int64 $tmp25 = (frost$core$Int64) {0};
 frost$core$Maybe* $tmp26 = frost$io$File$openInputStream$R$frost$core$Maybe$LTfrost$io$InputStream$GT(param0);
@@ -177,6 +181,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp38));
 return $tmp24;
 block1:;
 // line 79
+FROST_ASSERT(32 == sizeof(frost$core$Maybe));
 frost$core$Maybe* $tmp39 = (frost$core$Maybe*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$Maybe$class);
 frost$core$Int64 $tmp40 = (frost$core$Int64) {1};
 frost$core$Error* $tmp41 = *(&local0);
@@ -218,6 +223,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp48));
 *(&local0) = param1;
 // line 100
 frost$core$String* $tmp49 = *(&local0);
+FROST_ASSERT(24 == sizeof(frost$core$RegularExpression));
 frost$core$RegularExpression* $tmp50 = (frost$core$RegularExpression*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$RegularExpression$class);
 frost$core$RegularExpression$init$frost$core$String($tmp50, &$s51);
 frost$core$String* $tmp52 = frost$core$String$replace$frost$core$RegularExpression$frost$core$String$R$frost$core$String($tmp49, $tmp50, &$s53);
@@ -517,6 +523,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp207));
 return ((frost$io$File*) NULL);
 block2:;
 // line 143
+FROST_ASSERT(24 == sizeof(frost$io$File));
 frost$io$File* $tmp208 = (frost$io$File*) frostObjectAlloc(24, (frost$core$Class*) &frost$io$File$class);
 frost$core$String* $tmp209 = *(&local0);
 frost$io$File$init$frost$core$String($tmp208, $tmp209);
@@ -713,6 +720,7 @@ frost$core$Error* local0 = NULL;
 // line 270
 *(&local0) = ((frost$core$Error*) NULL);
 // line 271
+FROST_ASSERT(32 == sizeof(frost$core$Maybe));
 frost$core$Maybe* $tmp268 = (frost$core$Maybe*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$Maybe$class);
 frost$core$Int64 $tmp269 = (frost$core$Int64) {0};
 frost$core$Maybe* $tmp270 = frost$io$File$openInputStream$R$frost$core$Maybe$LTfrost$io$InputStream$GT(param0);
@@ -745,6 +753,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp282));
 return $tmp268;
 block1:;
 // line 274
+FROST_ASSERT(32 == sizeof(frost$core$Maybe));
 frost$core$Maybe* $tmp283 = (frost$core$Maybe*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$Maybe$class);
 frost$core$Int64 $tmp284 = (frost$core$Int64) {1};
 frost$core$Error* $tmp285 = *(&local0);
@@ -769,6 +778,7 @@ frost$core$Error* local0 = NULL;
 // line 286
 *(&local0) = ((frost$core$Error*) NULL);
 // line 287
+FROST_ASSERT(32 == sizeof(frost$core$Maybe));
 frost$core$Maybe* $tmp288 = (frost$core$Maybe*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$Maybe$class);
 frost$core$Int64 $tmp289 = (frost$core$Int64) {0};
 frost$core$Maybe* $tmp290 = frost$io$File$openInputStream$R$frost$core$Maybe$LTfrost$io$InputStream$GT(param0);
@@ -801,6 +811,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp302));
 return $tmp288;
 block1:;
 // line 290
+FROST_ASSERT(32 == sizeof(frost$core$Maybe));
 frost$core$Maybe* $tmp303 = (frost$core$Maybe*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$Maybe$class);
 frost$core$Int64 $tmp304 = (frost$core$Int64) {1};
 frost$core$Error* $tmp305 = *(&local0);

@@ -76,6 +76,7 @@ choice ASTNode {
     TRY                    (Position, FixedArray<ASTNode> -* block *-, ASTNode? -* identifier *-,
                             FixedArray<ASTNode> -* fail block *-)
     TUPLE                  (Position, FixedArray<ASTNode>)
+    TUPLE_TARGET           (Position, FixedArray<ASTNode>)
     TUPLE_TYPE             (Position, FixedArray<ASTNode>)
     TYPE                   (Position, String)
     TYPED_LAMBDA           (Position, FixedArray<ASTNode> -* PARAMETERs *-, ASTNode -* body *-)
@@ -219,6 +220,9 @@ choice ASTNode {
                 return position
             }
             when TUPLE(position, _) {
+                return position
+            }
+            when TUPLE_TARGET(position, _) {
                 return position
             }
             when TUPLE_TYPE(position, _) {
@@ -568,8 +572,11 @@ choice ASTNode {
             when TUPLE(_, arguments) {
                 return "(\{arguments.join()})"
             }
-            when TUPLE_TYPE(_, parameters) {
-                return "(\{parameters.join()})"
+            when TUPLE_TARGET(_, arguments) {
+                return "(\{arguments.join()})"
+            }
+            when TUPLE_TYPE(_, arguments) {
+                return "(\{arguments.join()})"
             }
             when TRY(_, block, error, failBlock) {
                 def result := MutableString("try {\n")

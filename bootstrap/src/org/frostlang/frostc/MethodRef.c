@@ -225,6 +225,7 @@ bool $tmp74 = $tmp73.value;
 if ($tmp74) goto block8; else goto block10;
 block8:;
 // line 45
+FROST_ASSERT(40 == sizeof(frost$collections$Array));
 frost$collections$Array* $tmp75 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
 frost$collections$Array$init($tmp75);
 *(&local3) = ((frost$collections$Array*) NULL);
@@ -282,7 +283,7 @@ bool $tmp107 = $tmp106.value;
 if ($tmp107) goto block14; else goto block15;
 block14:;
 // line 51
-frost$core$Int64 $tmp108 = (frost$core$Int64) {17};
+frost$core$Int64 $tmp108 = (frost$core$Int64) {18};
 org$frostlang$frostc$Type$Kind $tmp109 = org$frostlang$frostc$Type$Kind$init$frost$core$Int64($tmp108);
 *(&local4) = $tmp109;
 goto block13;
@@ -293,7 +294,7 @@ bool $tmp112 = $tmp111.value;
 if ($tmp112) goto block16; else goto block17;
 block16:;
 // line 54
-frost$core$Int64 $tmp113 = (frost$core$Int64) {16};
+frost$core$Int64 $tmp113 = (frost$core$Int64) {17};
 org$frostlang$frostc$Type$Kind $tmp114 = org$frostlang$frostc$Type$Kind$init$frost$core$Int64($tmp113);
 *(&local4) = $tmp114;
 goto block13;
@@ -364,7 +365,7 @@ bool $tmp149 = $tmp148.value;
 if ($tmp149) goto block22; else goto block23;
 block22:;
 // line 67
-frost$core$Int64 $tmp150 = (frost$core$Int64) {15};
+frost$core$Int64 $tmp150 = (frost$core$Int64) {16};
 org$frostlang$frostc$Type$Kind $tmp151 = org$frostlang$frostc$Type$Kind$init$frost$core$Int64($tmp150);
 *(&local5) = $tmp151;
 goto block21;
@@ -375,7 +376,7 @@ bool $tmp154 = $tmp153.value;
 if ($tmp154) goto block24; else goto block25;
 block24:;
 // line 70
-frost$core$Int64 $tmp155 = (frost$core$Int64) {14};
+frost$core$Int64 $tmp155 = (frost$core$Int64) {15};
 org$frostlang$frostc$Type$Kind $tmp156 = org$frostlang$frostc$Type$Kind$init$frost$core$Int64($tmp155);
 *(&local5) = $tmp156;
 goto block21;
@@ -513,7 +514,7 @@ org$frostlang$frostc$Type$Kind $tmp235 = *$tmp234;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp236;
 $tmp236 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp236->value = $tmp235;
-frost$core$Int64 $tmp237 = (frost$core$Int64) {10};
+frost$core$Int64 $tmp237 = (frost$core$Int64) {11};
 org$frostlang$frostc$Type$Kind $tmp238 = org$frostlang$frostc$Type$Kind$init$frost$core$Int64($tmp237);
 org$frostlang$frostc$Type$Kind$wrapper* $tmp239;
 $tmp239 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
@@ -635,6 +636,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp305));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp301));
 frost$core$Frost$unref$frost$core$Object$Q($tmp298);
 // line 97
+FROST_ASSERT(56 == sizeof(frost$collections$HashMap));
 frost$collections$HashMap* $tmp309 = (frost$collections$HashMap*) frostObjectAlloc(56, (frost$core$Class*) &frost$collections$HashMap$class);
 frost$collections$HashMap$init($tmp309);
 *(&local9) = ((frost$collections$HashMap*) NULL);

@@ -90,6 +90,7 @@ frost$core$Frost$unref$frost$core$Object$Q($tmp17);
 *(&local2) = ((frost$core$String*) NULL);
 // line 689
 frost$core$String* $tmp19 = *(&local1);
+FROST_ASSERT(24 == sizeof(frost$core$RegularExpression));
 frost$core$RegularExpression* $tmp20 = (frost$core$RegularExpression*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$RegularExpression$class);
 frost$core$RegularExpression$init$frost$core$String($tmp20, &$s21);
 frost$core$Bit $tmp22 = frost$core$String$matches$frost$core$RegularExpression$R$frost$core$Bit($tmp19, $tmp20);
@@ -114,6 +115,7 @@ goto block2;
 block2:;
 // line 698
 frost$core$String* $tmp30 = *(&local0);
+FROST_ASSERT(24 == sizeof(frost$core$RegularExpression));
 frost$core$RegularExpression* $tmp31 = (frost$core$RegularExpression*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$RegularExpression$class);
 frost$core$RegularExpression$init$frost$core$String($tmp31, &$s32);
 frost$core$String* $tmp33 = frost$core$String$replace$frost$core$RegularExpression$frost$core$String$R$frost$core$String($tmp30, $tmp31, &$s34);

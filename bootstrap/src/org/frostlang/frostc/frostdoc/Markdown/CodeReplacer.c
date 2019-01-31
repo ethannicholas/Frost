@@ -82,6 +82,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp10));
 *(&local0) = ((frost$core$String*) $tmp9);
 frost$core$Frost$unref$frost$core$Object$Q($tmp9);
 // line 451
+FROST_ASSERT(48 == sizeof(frost$core$MutableString));
 frost$core$MutableString* $tmp11 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$String* $tmp12 = *(&local0);
 frost$core$MutableString$init$frost$core$String($tmp11, $tmp12);
@@ -108,12 +109,14 @@ $fn24 $tmp23 = ($fn24) $tmp21->$class->vtable[14];
 $tmp23($tmp21, $tmp22);
 // line 455
 frost$core$MutableString* $tmp25 = *(&local1);
+FROST_ASSERT(24 == sizeof(frost$core$RegularExpression));
 frost$core$RegularExpression* $tmp26 = (frost$core$RegularExpression*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$RegularExpression$class);
 frost$core$RegularExpression$init$frost$core$String($tmp26, &$s27);
 frost$core$MutableString$replace$frost$core$RegularExpression$frost$core$String($tmp25, $tmp26, &$s28);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp26));
 // line 456
 frost$core$MutableString* $tmp29 = *(&local1);
+FROST_ASSERT(24 == sizeof(frost$core$RegularExpression));
 frost$core$RegularExpression* $tmp30 = (frost$core$RegularExpression*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$RegularExpression$class);
 frost$core$RegularExpression$init$frost$core$String($tmp30, &$s31);
 frost$core$MutableString$replace$frost$core$RegularExpression$frost$core$String($tmp29, $tmp30, &$s32);

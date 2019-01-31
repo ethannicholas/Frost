@@ -50,6 +50,13 @@ class Array<T> : List<T> {
         }
     }
 
+    init(count:Int, value:T) {
+        init(capacity)
+        for i in 0 .. count {
+            add(value)
+        }
+    }
+
     @private
     init(data:Pointer<T>, count:Int) {
         self.data := data->Pointer<T>

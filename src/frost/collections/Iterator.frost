@@ -114,9 +114,9 @@ interface Iterator<T> {
     class MapIterator<T, U> : Iterator<U> {
         def base:Iterator<T>
 
-        def map:(T)=>(U)
+        def map:(T)=&>(U)
 
-        init(base:Iterator<T>, map:(T)=>(U)) {
+        init(base:Iterator<T>, map:(T)=&>(U)) {
             self.base := base
             self.map := map
         }
@@ -132,7 +132,31 @@ interface Iterator<T> {
         }
     }
 
+    @private
+    class EnumerationIterator<T> : Iterator<(Int, T)> {
+        def base:Iterator<T>
+
+        var index := -1
+
+        init(base:Iterator<T>) {
+            self.base := base
+        }
+
+        @override
+        function get_done():Bit {
+            return base.done
+        }
+
+        @override
+        method next():(Int, T) {
+            index += 1
+            return (index, base.next())
+        }
+    }
+
     property done:Bit
+
+    property enumeration:Iterator<(Int, T)>
 
     function get_done():Bit
 
@@ -154,6 +178,18 @@ interface Iterator<T> {
             result += 1
         }
         return result
+    }
+
+    ================================================================================================
+    Returns a new `Iterator` which reads from this `Iterator`, returning `(index, value)` tuples.
+    For example, `["Hello", "Bonjour"].iterator.enumeration` returns an `Iterator<(Int, String)>`
+    which produces `(0, "Hello")` followed by `(1, "Bonjour")`. As the new `Iterator` internally
+    reads from this `Iterator`, you should not interact with an `Iterator` after calling
+    `enumeration` on it.
+    ================================================================================================
+    @default
+    function get_enumeration():Iterator<(Int, T)> {
+        return EnumerationIterator<T>(self)
     }
 
     ================================================================================================
@@ -242,10 +278,10 @@ interface Iterator<T> {
         iter.fold(Int.+)
 
     this would add the first and second elements returned by the iterator together, and
-    then add the sum of the first to elements to the third, and so forth until all of the elements
+    then add the sum of the first two elements to the third, and so forth until all of the elements
     had been added together.
 
-    Similarly, we could fold using [Int64.max(Int64)] to find the biggest number in returned by the
+    Similarly, we could fold using [Int64.max(Int64)] to find the biggest number returned by the
     iterator, [Int64.*(Int64)] to get the product of all of the numbers returned by the iterator,
     etc.
 
@@ -290,8 +326,16 @@ interface Iterator<T> {
         return result
     }
 
+    ================================================================================================
+    Returns a new iterator which reads from this iterator and applies a method to transform the
+    results. For instance,
+
+        File("/tmp/example").lines().map(line => line.length)
+
+    is an iterator which produces the length of each line in a file.
+    ================================================================================================
     @default
-    method map<U>(f:(T)=>(U)):Iterator<U> {
+    method map<U>(f:(T)=&>(U)):Iterator<U> {
         return MapIterator<T, U>(self, f)
     }
 }

@@ -13,6 +13,7 @@ uses org.frostlang.frostc.expression.Dot
 uses org.frostlang.frostc.expression.Identifier
 uses org.frostlang.frostc.expression.IntLiteral
 uses org.frostlang.frostc.expression.Or
+uses org.frostlang.frostc.expression.Tuple
 uses org.frostlang.frostc.expression.Unary
 uses org.frostlang.frostc.lvalue.ChoiceFieldLValue
 uses org.frostlang.frostc.lvalue.FieldLValue
@@ -165,6 +166,11 @@ class Compiler {
             }
             unreachable
         }
+    }
+
+    choice Target {
+        VARIABLE(Variable, IR.Value?)
+        TUPLE(FixedArray<Target>)
     }
 
     class AutoContext {
@@ -785,6 +791,18 @@ class Compiler {
                     return null
                 }
                 return Type.methodType(type.position, type.typeKind, params, returnType, 0)
+            }
+            when Type.Kind.TUPLE {
+                assert type.subtypes.count >= 2, "invalid tuple type \{type}"
+                def args := Array<Type>()
+                for a in type.subtypes {
+                    def resolved := resolve(a)
+                    if resolved == null {
+                        return null
+                    }
+                    args.add(resolved)
+                }
+                return Type.tuple(args)
             }
             otherwise {
                 unreachable
@@ -1466,6 +1484,32 @@ class Compiler {
             when Type.Kind.IMMUTABLE_METHOD, Type.Kind.IMMUTABLE_FUNCTION {
                 return getClass(Type.Method())
             }
+            when Type.Kind.TUPLE {
+                var isKey := true
+                var isEquatable := true
+                def equatable := getClass("frost.core.Equatable")
+                assert equatable !== null
+                def key := getClass("frost.collections.Key")
+                assert key !== null
+                for t in type.subtypes {
+                    if isEquatable & findType(t, equatable) == null {
+                        isEquatable := false
+                    }
+                    if isKey & findType(t, key) == null {
+                        isKey := false
+                    }
+                }
+                if isKey {
+                    return getClass(Type("frost.core.KeyTuple\{type.subtypes.count}",
+                            Type.Kind.CLASS, Position(), true))
+                }
+                if isEquatable {
+                    return getClass(Type("frost.core.EquatableTuple\{type.subtypes.count}",
+                            Type.Kind.CLASS, Position(), true))
+                }
+                return getClass(Type("frost.core.Tuple\{type.subtypes.count}", Type.Kind.CLASS,
+                        Position(), true))
+            }
             otherwise {
                 error(type.position, "type '\{type}' is not a class")
                 return null
@@ -1691,6 +1735,16 @@ class Compiler {
             when Type.Kind.GENERIC_METHOD_PARAMETER {
                 return remapType(context.genericMethodParameter.bound, raw)
             }
+            when Type.Kind.TUPLE {
+                def typeMap := HashMap<String, Type>()
+                def base := context.subtypes[0]
+                def cl := getClass(context)
+                assert cl !== null
+                for i in 0 .. context.subtypes.count {
+                    typeMap[cl.name + "." + cl.parameters[i].name] := context.subtypes[i]
+                }
+                return raw.remap(typeMap)
+            }
             otherwise {
                 return raw
             }
@@ -1851,6 +1905,20 @@ class Compiler {
                     }
                     return null
                 }
+                -- FIXME super hacky
+                if type.typeKind = Type.Kind.TUPLE &
+                        target.subtypes[0].name = "frost.core.Equatable" &
+                        target.subtypes[1] = type &
+                        getClass(type).name.startsWith("frost.core.EquatableTuple") |
+                        getClass(type).name.startsWith("frost.core.KeyTuple") {
+                    return Pair<Type, Int>(type, 0)
+                }
+                if type.typeKind = Type.Kind.TUPLE &
+                        target.subtypes[0].name = "frost.collections.Key" &
+                        target.subtypes[1] = type &
+                        getClass(type).name.startsWith("frost.core.KeyTuple") {
+                    return Pair<Type, Int>(type, 0)
+                }
             }
         }
         if type.isMethod {
@@ -1944,11 +2012,21 @@ class Compiler {
             when Type.Kind.GENERIC_METHOD_PARAMETER {
                 return coercionCost(type.genericMethodParameter.bound, target)
             }
+            when Type.Kind.TUPLE {
+                if target.name = "frost.core.Tuple\{type.subtypes.count}" |
+                        target.name = "frost.core.KeyTuple\{type.subtypes.count}" |
+                        target.name = "frost.core.EquatableTuple\{type.subtypes.count}" {
+                    return Pair<Type, Int>(target, 1)
+                }
+            }
         }
         if !target.isClass {
             return null
         }
         def targetCl := getClass(target)
+        if targetCl == null {
+            return null
+        }
         for m in targetCl.methods {
             if m.annotations.isImplicit & m.parameters.count = 1 {
                 resolve(m)
@@ -2421,6 +2499,11 @@ class Compiler {
         return 32
     }
 
+    function isTuple(cl:ClassDecl):Bit {
+        return cl.name.startsWith("frost.core.Tuple") | cl.name.startsWith("frost.core.KeyTuple") |
+                cl.name.startsWith("frost.core.EquatableTuple")
+    }
+
     function computeBinaryType(left:ASTNode, op:Binary.Operator, right:ASTNode):ListView<Type>? {
         match op {
             when Binary.Operator.CAST {
@@ -2490,6 +2573,10 @@ class Compiler {
                 def matches := Binary.findOverloadedOperator(self, left, op, right,
                         TypeContext.NON_VOID)
                 if matches !== null {
+                    if op = Binary.Operator.INDEX & matches.first.count = 1 &
+                            isTuple(matches.first[0].value.owner) {
+                        return [Tuple.indexType(self, matches.first[0].target, right)]
+                    }
                     def result := Array<Type>()
                     for m in matches.first { -- FIXME map
                         result.add(m.returnType)
@@ -2804,7 +2891,7 @@ class Compiler {
                 return result
             }
             when ASTNode.TUPLE(_, args) {
---                return Tuple.possibleTypes(args)
+                return Tuple.possibleTypes(self, args)
             }
             when ASTNode.TYPE {
                 def resolved := tryResolveType(value)
@@ -3225,6 +3312,9 @@ class Compiler {
                     return Pair<Type, Int>(target, 1)
                 }
                 return coercionCost(Type.StringType(), target)
+            }
+            when ASTNode.TUPLE(_, args) {
+                return Tuple.coercionCost(self, args, target)
             }
             when ASTNode.TYPED_LAMBDA(_, parameters, body) {
                 return typedLambdaCoercionCost(parameters, body, target)
@@ -4750,6 +4840,9 @@ class Compiler {
                 }
                 return coerce(expr.position(), IR.Value.STRING(text), type)
             }
+            when ASTNode.TUPLE(position, args) {
+                return Tuple.compile(self, position, args, type)
+            }
             when ASTNode.TYPE, ASTNode.GENERIC_TYPE {
                 def type := resolve(scanner.convertType(expr))
                 if type == null {
@@ -4936,7 +5029,7 @@ class Compiler {
     }
 
     method compileTarget(t:ASTNode, kind:Variable.Kind,
-            rawValue:ASTNode?, valueType:Type?):Pair<Variable, IR.Value?>? {
+            rawValue:ASTNode?, valueType:Type?):Target? {
         match t {
             when ASTNode.IDENTIFIER(position, name) {
                 -- no type, infer from value
@@ -4975,7 +5068,48 @@ class Compiler {
                 }
                 ir.locals.add(v.type)
                 symbolTable.add(v)
-                return Pair<Variable, IR.Value?>(v, value)
+                return Target.VARIABLE(v, value)
+            }
+            when ASTNode.TUPLE_TARGET(_, targets) {
+                def finalType:Type? := null
+                def compiledTuple:IR.Value?
+                if rawValue !== null {
+                    compiledTuple := compileExpression(rawValue, TypeContext.NON_VOID)
+                    finalType := compiledTuple.type()
+                }
+                else if valueType !== null {
+                    finalType := valueType
+                }
+                if finalType !== null & finalType.nonnullable().typeKind = Type.Kind.TUPLE {
+                    def result := Array<Target>()
+                    def valueTypes := finalType.nonnullable().subtypes
+                    if valueTypes.count != targets.count {
+                        error(t.position(), "cannot assign \{targets.count}-element tuple to " +
+                                "\{valueTypes.count}-element target")
+                        return null
+                    }
+                    for i in 0 .. targets.count {
+                        def target:Target?
+                        if compiledTuple !== null {
+                            def position := rawValue.position()
+                            def field := ASTNode.IR_WRAPPER(position, cast(position, 
+                                    Dot.compile(self, position, compiledTuple, "f\{i}"),
+                                    compiledTuple.type().subtypes[i]))
+                            assert field !== null
+                            target := compileTarget(targets[i], kind, field, null)
+                        }
+                        else {
+                            target := compileTarget(targets[i], kind, null, valueType.subtypes[i])
+                        }
+                        if target == null {
+                            return null
+                        }
+                        result.add(target)
+                    }
+                    return Target.TUPLE(FixedArray<Target>.from(result))
+                }
+                error(t.position(), "cannot use a tuple target without a tuple value")
+                return null
             }
             when ASTNode.TYPED_IDENTIFIER(position, name, rawType) {
                 def type := resolve(scanner.convertType(rawType))
@@ -5001,7 +5135,7 @@ class Compiler {
                 }
                 ir.locals.add(v.type)
                 symbolTable.add(v)
-                return Pair<Variable, IR.Value?>(v, value)
+                return Target.VARIABLE(v, value)
             }
             otherwise {
                 unreachable
@@ -5009,23 +5143,74 @@ class Compiler {
         }
     }
 
+    method createScopes(target:Target) {
+        match target {
+            when Target.VARIABLE(v, _) {
+                if isRefCounted(v.type) {
+                    enclosingContexts.push(EnclosingContext.VARIABLE_SCOPE(v))
+                }
+            }
+            when Target.TUPLE(targets) {
+                targets.apply(self.initializeTarget)
+            }
+            otherwise {
+                assert false
+            }
+        }
+    }
+
+    method initializeTarget(target:Target) {
+        match target {
+            when Target.VARIABLE(v, value) {
+                if value !== null {
+                    VariableLValue(self, v.position, v).compileStore(value)
+                }
+            }
+            when Target.TUPLE(targets) {
+                targets.apply(self.initializeTarget)
+            }
+            otherwise {
+                assert false
+            }
+        }
+    }
+
+    method compileStore(position:Position, target:Target, value:IR.Value) {
+        match target {
+            when Target.VARIABLE(v, _) {
+                VariableLValue(self, v.position, v).compileStore(value)
+            }
+            when Target.TUPLE(targets) {
+                def type := value.type().nonnullable()
+                if type.typeKind = Type.Kind.TUPLE & type.subtypes.count = targets.count {
+                    for i in 0 .. targets.count {
+                        compileStore(position, targets[i], cast(position, Dot.compile(self,
+                                position, value, "f\{i}"), type.subtypes[i]))
+                    }
+                }
+                else {
+                    error(position, "cannot store '\{value.type()}' into a tuple with " +
+                            "\{targets.count} elements")
+                }
+            }
+            otherwise {
+                assert false
+            }
+        }
+    }
+
     method compileDeclaration(position:Position, target:ASTNode, value:ASTNode?,
             varKind:Variable.Kind) {
-        def compiledTarget:Pair<Variable, IR.Value?>?
+        def compiledTarget:Target?
         {
             def unrefs := AutoUnrefs(self)
             compiledTarget := compileTarget(target, varKind, value, null)
             if compiledTarget == null {
                 return
             }
-            if compiledTarget.second !== null {
-                VariableLValue(self, position,
-                        compiledTarget.first).compileStore(compiledTarget.second)
-            }
+            initializeTarget(compiledTarget)
         }
-        if isRefCounted(compiledTarget.first.type) {
-            enclosingContexts.push(EnclosingContext.VARIABLE_SCOPE(compiledTarget.first))
-        }
+        createScopes(compiledTarget)
     }
 
     method leaveScope(c:EnclosingContext) {

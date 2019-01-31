@@ -71,6 +71,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp15));
 return ((org$frostlang$frostc$IR$Value*) NULL);
 block4:;
 // line 22
+FROST_ASSERT(24 == sizeof(org$frostlang$frostc$Compiler$AutoAtPreFlag));
 org$frostlang$frostc$Compiler$AutoAtPreFlag* $tmp16 = (org$frostlang$frostc$Compiler$AutoAtPreFlag*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Compiler$AutoAtPreFlag$class);
 org$frostlang$frostc$Compiler$AutoAtPreFlag$init$org$frostlang$frostc$Compiler($tmp16, param0);
 *(&local1) = ((org$frostlang$frostc$Compiler$AutoAtPreFlag*) NULL);

@@ -73,6 +73,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp12));
 *(&local0) = ((frost$core$String*) $tmp11);
 frost$core$Frost$unref$frost$core$Object$Q($tmp11);
 // line 179
+FROST_ASSERT(48 == sizeof(frost$core$MutableString));
 frost$core$MutableString* $tmp13 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$Int64 $tmp14 = (frost$core$Int64) {2};
 ITable* $tmp15 = param1->$class->itable;
@@ -162,6 +163,7 @@ org$frostlang$frostc$frostdoc$Markdown* $tmp54 = *$tmp53;
 frost$collections$HashMap** $tmp55 = &$tmp54->linkDefinitions;
 frost$collections$HashMap* $tmp56 = *$tmp55;
 frost$core$String* $tmp57 = *(&local0);
+FROST_ASSERT(32 == sizeof(org$frostlang$frostc$frostdoc$Markdown$LinkDefinition));
 org$frostlang$frostc$frostdoc$Markdown$LinkDefinition* $tmp58 = (org$frostlang$frostc$frostdoc$Markdown$LinkDefinition*) frostObjectAlloc(32, (frost$core$Class*) &org$frostlang$frostc$frostdoc$Markdown$LinkDefinition$class);
 frost$core$MutableString* $tmp59 = *(&local1);
 frost$core$String* $tmp60 = frost$core$MutableString$finish$R$frost$core$String($tmp59);

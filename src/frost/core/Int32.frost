@@ -292,46 +292,10 @@ class Int32 : Value, Key<Int32>, Comparable<Int32>, Formattable, ListView<Bit> {
         return value << other.value
     }
 
-    ===Returns this number shifted left by the specified number of bits.===
-    @priority(12)
-    function <<(other:Int64):Int64 {
-        return value->builtin_int64 << other.value
-    }
-
-    ===Returns this number shifted left by the specified number of bits.===
-    @priority(9)
-    function <<(other:UInt32):UInt32 {
-        return value->builtin_uint32 << other.value
-    }
-
-    ===Returns this number shifted left by the specified number of bits.===
-    @priority(11)
-    function <<(other:UInt64):UInt64 {
-        return value->builtin_uint64 << other.value
-    }
-
     ===Returns this number arithmetic shifted right by the specified number of bits.===
     @priority(20)
     function >>(other:Int32):Int32 {
         return value >> other.value
-    }
-
-    ===Returns this number arithmetic shifted right by the specified number of bits.===
-    @priority(12)
-    function >>(other:Int64):Int64 {
-        return value->builtin_int64 >> other.value
-    }
-
-    ===Returns this number arithmetic shifted right by the specified number of bits.===
-    @priority(9)
-    function >>(other:UInt32):UInt32 {
-        return value->builtin_uint32 >> other.value
-    }
-
-    ===Returns this number arithmetic shifted right by the specified number of bits.===
-    @priority(11)
-    function >>(other:UInt64):UInt64 {
-        return value->builtin_uint64 >> other.value
     }
 
     ===Returns `true` if this number is equal to the given number.===

@@ -52,6 +52,7 @@ frost$core$String* frost$core$SteppedRange$LTfrost$core$Int8$Cfrost$core$Int8$GT
 
 frost$core$MutableString* local0 = NULL;
 // line 51
+FROST_ASSERT(48 == sizeof(frost$core$MutableString));
 frost$core$MutableString* $tmp8 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init($tmp8);
 *(&local0) = ((frost$core$MutableString*) NULL);
@@ -70,7 +71,7 @@ block1:;
 frost$core$MutableString* $tmp13 = *(&local0);
 frost$core$Int8 $tmp14 = param0.start;
 frost$core$Int8$wrapper* $tmp15;
-$tmp15 = (frost$core$Int8$wrapper*) frostObjectAlloc(13, (frost$core$Class*) &frost$core$Int8$wrapperclass);
+$tmp15 = (frost$core$Int8$wrapper*) frostObjectAlloc(17, (frost$core$Class*) &frost$core$Int8$wrapperclass);
 $tmp15->value = $tmp14;
 frost$core$MutableString$append$frost$core$Object($tmp13, ((frost$core$Object*) $tmp15));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp15));
@@ -102,7 +103,7 @@ block6:;
 frost$core$MutableString* $tmp25 = *(&local0);
 frost$core$Int8 $tmp26 = param0.end;
 frost$core$Int8$wrapper* $tmp27;
-$tmp27 = (frost$core$Int8$wrapper*) frostObjectAlloc(13, (frost$core$Class*) &frost$core$Int8$wrapperclass);
+$tmp27 = (frost$core$Int8$wrapper*) frostObjectAlloc(17, (frost$core$Class*) &frost$core$Int8$wrapperclass);
 $tmp27->value = $tmp26;
 frost$core$MutableString$append$frost$core$Object($tmp25, ((frost$core$Object*) $tmp27));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp27));
@@ -115,7 +116,7 @@ frost$core$MutableString$append$frost$core$String($tmp28, &$s29);
 frost$core$MutableString* $tmp30 = *(&local0);
 frost$core$Int8 $tmp31 = param0.step;
 frost$core$Int8$wrapper* $tmp32;
-$tmp32 = (frost$core$Int8$wrapper*) frostObjectAlloc(13, (frost$core$Class*) &frost$core$Int8$wrapperclass);
+$tmp32 = (frost$core$Int8$wrapper*) frostObjectAlloc(17, (frost$core$Class*) &frost$core$Int8$wrapperclass);
 $tmp32->value = $tmp31;
 frost$core$MutableString$append$frost$core$Object($tmp30, ((frost$core$Object*) $tmp32));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp32));

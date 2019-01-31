@@ -33,6 +33,7 @@ typedef struct org$frostlang$frostc$MethodRef org$frostlang$frostc$MethodRef;
 #include "frost/core/Real64_types.h"
 #include "org/frostlang/frostc/IR/Block/ID_types.h"
 typedef struct org$frostlang$frostc$Compiler$EnclosingContext org$frostlang$frostc$Compiler$EnclosingContext;
+typedef struct org$frostlang$frostc$Compiler$Target org$frostlang$frostc$Compiler$Target;
 #include "org/frostlang/frostc/Variable/Kind_types.h"
 typedef struct frost$collections$Array frost$collections$Array;
 
@@ -164,7 +165,10 @@ org$frostlang$frostc$Pair* org$frostlang$frostc$Compiler$getTryScope$R$org$frost
 void org$frostlang$frostc$Compiler$leaveTryScope(org$frostlang$frostc$Compiler* self);
 org$frostlang$frostc$IR$Value* org$frostlang$frostc$Compiler$extractBuiltinBit$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Value$R$org$frostlang$frostc$IR$Value(org$frostlang$frostc$Compiler* self, org$frostlang$frostc$Position p_position, org$frostlang$frostc$IR$Value* p_bit);
 org$frostlang$frostc$IR$Value* org$frostlang$frostc$Compiler$extractBuiltinInt$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Value$R$org$frostlang$frostc$IR$Value(org$frostlang$frostc$Compiler* self, org$frostlang$frostc$Position p_position, org$frostlang$frostc$IR$Value* p_int);
-org$frostlang$frostc$Pair* org$frostlang$frostc$Compiler$compileTarget$org$frostlang$frostc$ASTNode$org$frostlang$frostc$Variable$Kind$org$frostlang$frostc$ASTNode$Q$org$frostlang$frostc$Type$Q$R$org$frostlang$frostc$Pair$LTorg$frostlang$frostc$Variable$Corg$frostlang$frostc$IR$Value$Q$GT$Q(org$frostlang$frostc$Compiler* self, org$frostlang$frostc$ASTNode* p_t, org$frostlang$frostc$Variable$Kind p_kind, org$frostlang$frostc$ASTNode* p_rawValue, org$frostlang$frostc$Type* p_valueType);
+org$frostlang$frostc$Compiler$Target* org$frostlang$frostc$Compiler$compileTarget$org$frostlang$frostc$ASTNode$org$frostlang$frostc$Variable$Kind$org$frostlang$frostc$ASTNode$Q$org$frostlang$frostc$Type$Q$R$org$frostlang$frostc$Compiler$Target$Q(org$frostlang$frostc$Compiler* self, org$frostlang$frostc$ASTNode* p_t, org$frostlang$frostc$Variable$Kind p_kind, org$frostlang$frostc$ASTNode* p_rawValue, org$frostlang$frostc$Type* p_valueType);
+void org$frostlang$frostc$Compiler$createScopes$org$frostlang$frostc$Compiler$Target(org$frostlang$frostc$Compiler* self, org$frostlang$frostc$Compiler$Target* p_target);
+void org$frostlang$frostc$Compiler$initializeTarget$org$frostlang$frostc$Compiler$Target(org$frostlang$frostc$Compiler* self, org$frostlang$frostc$Compiler$Target* p_target);
+void org$frostlang$frostc$Compiler$compileStore$org$frostlang$frostc$Position$org$frostlang$frostc$Compiler$Target$org$frostlang$frostc$IR$Value(org$frostlang$frostc$Compiler* self, org$frostlang$frostc$Position p_position, org$frostlang$frostc$Compiler$Target* p_target, org$frostlang$frostc$IR$Value* p_value);
 void org$frostlang$frostc$Compiler$compileDeclaration$org$frostlang$frostc$Position$org$frostlang$frostc$ASTNode$org$frostlang$frostc$ASTNode$Q$org$frostlang$frostc$Variable$Kind(org$frostlang$frostc$Compiler* self, org$frostlang$frostc$Position p_position, org$frostlang$frostc$ASTNode* p_target, org$frostlang$frostc$ASTNode* p_value, org$frostlang$frostc$Variable$Kind p_varKind);
 void org$frostlang$frostc$Compiler$leaveScope$org$frostlang$frostc$Compiler$EnclosingContext(org$frostlang$frostc$Compiler* self, org$frostlang$frostc$Compiler$EnclosingContext* p_c);
 void org$frostlang$frostc$Compiler$leaveAllScopes(org$frostlang$frostc$Compiler* self);

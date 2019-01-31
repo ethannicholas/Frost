@@ -1,8 +1,41 @@
-method writeTuple(count:Int, path:File) {
+choice Kind {
+    NORMAL
+    EQUATABLE
+    KEY
+}
+
+method writeTuple(count:Int, kind:Kind, path:File) {
     try {
         def out := path.openOutputStream()
         out.printLine("package frost.core")
-        out.printLine("class Tuple\{count}<\{Int[0 .. count].map(i => "T\{i}").join()}> {")
+        def name:String
+        match kind {
+            when Kind.NORMAL    { name := "Tuple\{count}" }
+            when Kind.EQUATABLE { name := "EquatableTuple\{count}" }
+            when Kind.KEY       { name := "KeyTuple\{count}" }
+        }
+        out.print("class \{name}<")
+        for i in 0 .. count {
+            if i > 0 {
+                out.print(", ")
+            }
+            out.print("T\{i}")
+            match kind {
+                when Kind.EQUATABLE { out.print(":Equatable<T\{i}>")}
+                when Kind.KEY { out.print(":Key<T\{i}>")}
+            }
+        }
+        out.print(">")
+        def types := "<" + Int[0 .. count].map(i => "T\{i}").join(", ") + ">"
+        match kind {
+            when Kind.EQUATABLE {
+                out.print(" : Equatable<\{name}\{types}>")
+            }
+            when Kind.KEY {
+                out.print(" : Key<\{name}\{types}>")
+            }
+        }
+        out.printLine(" {")
         for i in 0 .. count {
             out.printLine("    def f\{i}:T\{i}")
         }
@@ -23,6 +56,27 @@ method writeTuple(count:Int, path:File) {
         out.printLine("        return null")
         out.printLine("    }")
         out.printLine()
+        match kind {
+            when Kind.EQUATABLE, Kind.KEY {
+                out.printLine("    @override")
+                out.printLine("    function =(other:\{name}\{types}):Bit {")
+                for i in 0 .. count {
+                    out.printLine("        if f\{i} != other.f\{i} { return false }")
+                }
+                out.printLine("        return true")
+                out.printLine("    }")
+            }
+        }
+        if kind = Kind.KEY {
+            out.printLine("    @override")
+            out.printLine("    function get_hash():Int {")
+            out.printLine("        var result := 0")
+            for i in 0 .. count {
+                out.printLine("        result ~~= f\{i}.hash")
+            }
+            out.printLine("        return result")
+            out.printLine("    }")
+        }
         out.printLine("    @override")
         out.printLine("    function get_asString():String {")
         out.printLine("        return \"(\{Int[0 .. count].map(i => "\\{f\{i}}").join()})\"")
@@ -38,6 +92,8 @@ method writeTuple(count:Int, path:File) {
 method main() {
     def corePath := File("../src/frost/core")
     for i in 2 ... 16 {
-        writeTuple(i, corePath.resolve("Tuple\{i}.frost"))
+        writeTuple(i, Kind.NORMAL,    corePath.resolve("Tuple\{i}.frost"))
+        writeTuple(i, Kind.EQUATABLE, corePath.resolve("EquatableTuple\{i}.frost"))
+        writeTuple(i, Kind.KEY,       corePath.resolve("KeyTuple\{i}.frost"))
     }
 }

@@ -41,6 +41,7 @@ static frost$core$String $s263 = { (frost$core$Class*) &frost$core$String$class,
 void org$frostlang$frostc$IR$init(org$frostlang$frostc$IR* param0) {
 
 // line 555
+FROST_ASSERT(40 == sizeof(frost$collections$Array));
 frost$collections$Array* $tmp2 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
 frost$collections$Array$init($tmp2);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp2));
@@ -51,6 +52,7 @@ frost$collections$Array** $tmp5 = &param0->locals;
 *$tmp5 = $tmp2;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp2));
 // line 557
+FROST_ASSERT(40 == sizeof(frost$collections$Array));
 frost$collections$Array* $tmp6 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
 frost$collections$Array$init($tmp6);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp6));
@@ -276,7 +278,8 @@ frost$core$Int64 $tmp134 = (frost$core$Int64) {$tmp133};
 goto block1;
 block2:;
 // line 606
-org$frostlang$frostc$IR$Block* $tmp135 = (org$frostlang$frostc$IR$Block*) frostObjectAlloc(41, (frost$core$Class*) &org$frostlang$frostc$IR$Block$class);
+FROST_ASSERT(48 == sizeof(org$frostlang$frostc$IR$Block));
+org$frostlang$frostc$IR$Block* $tmp135 = (org$frostlang$frostc$IR$Block*) frostObjectAlloc(48, (frost$core$Class*) &org$frostlang$frostc$IR$Block$class);
 org$frostlang$frostc$IR$Block$init$org$frostlang$frostc$IR$Block$ID($tmp135, param1);
 *(&local3) = ((org$frostlang$frostc$IR$Block*) NULL);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp135));
@@ -394,6 +397,7 @@ frost$core$String* org$frostlang$frostc$IR$get_asString$R$frost$core$String(org$
 frost$core$MutableString* local0 = NULL;
 frost$core$Int64 local1;
 // line 628
+FROST_ASSERT(48 == sizeof(frost$core$MutableString));
 frost$core$MutableString* $tmp195 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init($tmp195);
 *(&local0) = ((frost$core$MutableString*) NULL);

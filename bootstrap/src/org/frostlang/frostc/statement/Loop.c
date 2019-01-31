@@ -66,7 +66,9 @@ org$frostlang$frostc$IR$Block$ID $tmp13 = $tmp11($tmp10, &$s14);
 *(&local2) = $tmp13;
 // line 1
 // line 21
+FROST_ASSERT(32 == sizeof(org$frostlang$frostc$Compiler$AutoContext));
 org$frostlang$frostc$Compiler$AutoContext* $tmp15 = (org$frostlang$frostc$Compiler$AutoContext*) frostObjectAlloc(32, (frost$core$Class*) &org$frostlang$frostc$Compiler$AutoContext$class);
+FROST_ASSERT(48 == sizeof(org$frostlang$frostc$Compiler$EnclosingContext));
 org$frostlang$frostc$Compiler$EnclosingContext* $tmp16 = (org$frostlang$frostc$Compiler$EnclosingContext*) frostObjectAlloc(48, (frost$core$Class*) &org$frostlang$frostc$Compiler$EnclosingContext$class);
 frost$core$Int64 $tmp17 = (frost$core$Int64) {0};
 org$frostlang$frostc$IR$Block$ID $tmp18 = *(&local2);
@@ -81,6 +83,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp20));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp16));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp15));
 // line 22
+FROST_ASSERT(40 == sizeof(org$frostlang$frostc$Compiler$AutoScope));
 org$frostlang$frostc$Compiler$AutoScope* $tmp21 = (org$frostlang$frostc$Compiler$AutoScope*) frostObjectAlloc(40, (frost$core$Class*) &org$frostlang$frostc$Compiler$AutoScope$class);
 org$frostlang$frostc$Compiler$AutoScope$init$org$frostlang$frostc$Compiler($tmp21, param0);
 *(&local4) = ((org$frostlang$frostc$Compiler$AutoScope*) NULL);
@@ -91,6 +94,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp22));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp21));
 // line 23
 org$frostlang$frostc$IR* $tmp23 = *(&local0);
+FROST_ASSERT(72 == sizeof(org$frostlang$frostc$IR$Statement));
 org$frostlang$frostc$IR$Statement* $tmp24 = (org$frostlang$frostc$IR$Statement*) frostObjectAlloc(72, (frost$core$Class*) &org$frostlang$frostc$IR$Statement$class);
 frost$core$Int64 $tmp25 = (frost$core$Int64) {1};
 org$frostlang$frostc$IR$Block$ID $tmp26 = *(&local1);
@@ -158,6 +162,7 @@ if ($tmp57) goto block4; else goto block5;
 block4:;
 // line 30
 org$frostlang$frostc$IR* $tmp58 = *(&local0);
+FROST_ASSERT(72 == sizeof(org$frostlang$frostc$IR$Statement));
 org$frostlang$frostc$IR$Statement* $tmp59 = (org$frostlang$frostc$IR$Statement*) frostObjectAlloc(72, (frost$core$Class*) &org$frostlang$frostc$IR$Statement$class);
 frost$core$Int64 $tmp60 = (frost$core$Int64) {1};
 org$frostlang$frostc$IR$Block$ID $tmp61 = *(&local1);

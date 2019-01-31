@@ -19,7 +19,7 @@ void org$frostlang$frostc$Compiler$Capture$cleanup(org$frostlang$frostc$Compiler
 
 org$frostlang$frostc$Variable* local0 = NULL;
 org$frostlang$frostc$FieldDecl* local1 = NULL;
-// line 293
+// line 299
 frost$core$Int64* $tmp2 = &param0->$rawValue;
 frost$core$Int64 $tmp3 = *$tmp2;
 frost$core$Int64 $tmp4 = (frost$core$Int64) {0};
@@ -69,17 +69,17 @@ if ($tmp22) goto block6; else goto block1;
 block6:;
 goto block1;
 block1:;
-// line 293
+// line 299
 frost$core$Object$cleanup(((frost$core$Object*) param0));
 return;
 
 }
 void org$frostlang$frostc$Compiler$Capture$init$frost$core$Int64$org$frostlang$frostc$Variable(org$frostlang$frostc$Compiler$Capture* param0, frost$core$Int64 param1, org$frostlang$frostc$Variable* param2) {
 
-// line 293
+// line 299
 frost$core$Int64* $tmp23 = &param0->$rawValue;
 *$tmp23 = param1;
-// line 293
+// line 299
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param2));
 org$frostlang$frostc$Variable** $tmp24 = (org$frostlang$frostc$Variable**) (param0->$data + 0);
 *$tmp24 = param2;
@@ -88,10 +88,10 @@ return;
 }
 void org$frostlang$frostc$Compiler$Capture$init$frost$core$Int64$org$frostlang$frostc$FieldDecl(org$frostlang$frostc$Compiler$Capture* param0, frost$core$Int64 param1, org$frostlang$frostc$FieldDecl* param2) {
 
-// line 293
+// line 299
 frost$core$Int64* $tmp25 = &param0->$rawValue;
 *$tmp25 = param1;
-// line 293
+// line 299
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param2));
 org$frostlang$frostc$FieldDecl** $tmp26 = (org$frostlang$frostc$FieldDecl**) (param0->$data + 0);
 *$tmp26 = param2;
@@ -100,7 +100,7 @@ return;
 }
 void org$frostlang$frostc$Compiler$Capture$init$frost$core$Int64(org$frostlang$frostc$Compiler$Capture* param0, frost$core$Int64 param1) {
 
-// line 293
+// line 299
 frost$core$Int64* $tmp27 = &param0->$rawValue;
 *$tmp27 = param1;
 return;

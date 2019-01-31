@@ -6,6 +6,7 @@ uses org.frostlang.frostc.Compiler.AutoContext
 uses org.frostlang.frostc.Compiler.AutoScope
 uses org.frostlang.frostc.Compiler.AutoUnrefs
 uses org.frostlang.frostc.Compiler.EnclosingContext
+uses org.frostlang.frostc.Compiler.Target
 uses org.frostlang.frostc.Compiler.TypeContext
 uses org.frostlang.frostc.Compiler.VariableLValue
 uses org.frostlang.frostc.FixedArray
@@ -530,15 +531,19 @@ class For {
         if target == null {
             return
         }
-        assert target.second == null
-        if compiler.isRefCounted(target.first.type) {
-            compiler.enclosingContexts.push(EnclosingContext.VARIABLE_SCOPE(target.first))
-        }
-        if listType.isRange {
-            compileSimpleRangeFor(compiler, position, label, target.first, list, statements)
-        }
-        else {
-            compileSteppedRangeFor(compiler, position, label, target.first, list, statements)
+        compiler.createScopes(target)
+        match target {
+            when Target.VARIABLE(v, _) {
+                if listType.isRange {
+                    compileSimpleRangeFor(compiler, position, label, v, list, statements)
+                }
+                else {
+                    compileSteppedRangeFor(compiler, position, label, v, list, statements)
+                }
+            }
+            otherwise {
+                assert false
+            }
         }
     }
 
@@ -622,7 +627,7 @@ class For {
         ir.setCurrentBlock(bodyBlock)
         {
             def scope := AutoScope(compiler)
-            def compiledTarget:Pair<Variable, IR.Value?>?
+            def compiledTarget:Target?
             {
                 def unrefs := AutoUnrefs(compiler)
                 compiledTarget := compiler.compileTarget(target, Variable.Kind.DEF, null,
@@ -631,18 +636,14 @@ class For {
                     return
                 }
             }
-            def targetType := compiledTarget.first.type
-            if compiler.isRefCounted(targetType) {
-                compiler.enclosingContexts.push(EnclosingContext.VARIABLE_SCOPE(
-                        compiledTarget.first))
-            }
+            compiler.createScopes(compiledTarget)
             def next:IR.Value?
             next := Call.compile(compiler, position, iterator, "next", Array<ASTNode>(),
-                    TypeContext.TYPE(targetType, false))
+                    TypeContext.UNSPECIFIED)
             if next == null {
                 return
             }
-            VariableLValue(compiler, position, compiledTarget.first).compileStore(next)
+            compiler.compileStore(position, compiledTarget, next)
             for s in statements {
                 compiler.compileStatement(s)
             }

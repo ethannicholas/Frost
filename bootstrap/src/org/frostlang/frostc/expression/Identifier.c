@@ -102,6 +102,7 @@ org$frostlang$frostc$Type** $tmp33 = &$tmp32->type;
 org$frostlang$frostc$Type* $tmp34 = *$tmp33;
 frost$core$Bit $tmp35 = org$frostlang$frostc$Compiler$checkGenericArguments$org$frostlang$frostc$Position$org$frostlang$frostc$ClassDecl$org$frostlang$frostc$Type$R$frost$core$Bit(param0, param1, $tmp31, $tmp34);
 // line 23
+FROST_ASSERT(48 == sizeof(org$frostlang$frostc$IR$Value));
 org$frostlang$frostc$IR$Value* $tmp36 = (org$frostlang$frostc$IR$Value*) frostObjectAlloc(48, (frost$core$Class*) &org$frostlang$frostc$IR$Value$class);
 frost$core$Int64 $tmp37 = (frost$core$Int64) {14};
 org$frostlang$frostc$ClassDecl* $tmp38 = *(&local2);

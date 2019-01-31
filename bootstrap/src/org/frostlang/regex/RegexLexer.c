@@ -24,6 +24,7 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 void org$frostlang$regex$RegexLexer$start$frost$core$String(org$frostlang$regex$RegexLexer* param0, frost$core$String* param1) {
 
 // line 20
+FROST_ASSERT(80 == sizeof(org$frostlang$plex$runtime$DFA));
 org$frostlang$plex$runtime$DFA* $tmp2 = (org$frostlang$plex$runtime$DFA*) frostObjectAlloc(80, (frost$core$Class*) &org$frostlang$plex$runtime$DFA$class);
 frost$core$Int64 $tmp3 = (frost$core$Int64) {20};
 frost$core$Int64*** $tmp4 = &param0->transitions;

@@ -124,6 +124,7 @@ org$frostlang$frostc$parser$SyntaxHighlighter$Kind local1;
 org$frostlang$frostc$Pair* local2 = NULL;
 frost$core$MutableString* local3 = NULL;
 // line 9
+FROST_ASSERT(48 == sizeof(frost$core$MutableString));
 frost$core$MutableString* $tmp2 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init$frost$core$String($tmp2, &$s3);
 *(&local0) = ((frost$core$MutableString*) NULL);
@@ -376,6 +377,7 @@ block9:;
 goto block8;
 block8:;
 // line 59
+FROST_ASSERT(48 == sizeof(frost$core$MutableString));
 frost$core$MutableString* $tmp127 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
 org$frostlang$frostc$Pair* $tmp128 = *(&local2);
 frost$core$Object** $tmp129 = &$tmp128->first;
@@ -570,6 +572,7 @@ frost$io$OutputStream* local8 = NULL;
 // line 81
 *(&local0) = ((frost$core$Error*) NULL);
 // line 82
+FROST_ASSERT(56 == sizeof(frost$threads$MessageQueue));
 frost$threads$MessageQueue* $tmp215 = (frost$threads$MessageQueue*) frostObjectAlloc(56, (frost$core$Class*) &frost$threads$MessageQueue$class);
 frost$threads$MessageQueue$init($tmp215);
 *(&local1) = ((frost$threads$MessageQueue*) NULL);
@@ -579,6 +582,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp216));
 *(&local1) = $tmp215;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp215));
 // line 83
+FROST_ASSERT(96 == sizeof(org$frostlang$frostc$parser$Parser));
 org$frostlang$frostc$parser$Parser* $tmp217 = (org$frostlang$frostc$parser$Parser*) frostObjectAlloc(96, (frost$core$Class*) &org$frostlang$frostc$parser$Parser$class);
 frost$threads$MessageQueue* $tmp218 = *(&local1);
 org$frostlang$frostc$parser$Parser$init$frost$threads$MessageQueue$LTorg$frostlang$frostc$Compiler$Message$GT($tmp217, $tmp218);
@@ -590,6 +594,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp219));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp217));
 // line 84
 org$frostlang$frostc$parser$Parser* $tmp220 = *(&local2);
+FROST_ASSERT(32 == sizeof(org$frostlang$frostc$parser$SyntaxHighlighter));
 org$frostlang$frostc$parser$SyntaxHighlighter* $tmp221 = (org$frostlang$frostc$parser$SyntaxHighlighter*) frostObjectAlloc(32, (frost$core$Class*) &org$frostlang$frostc$parser$SyntaxHighlighter$class);
 org$frostlang$frostc$parser$SyntaxHighlighter$init($tmp221);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp221));
@@ -679,6 +684,7 @@ frost$core$Int64 $tmp260 = frost$core$String$get_length$R$frost$core$Int64($tmp2
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp259));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp256));
 // line 93
+FROST_ASSERT(48 == sizeof(frost$core$MutableString));
 frost$core$MutableString* $tmp261 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init($tmp261);
 *(&local5) = ((frost$core$MutableString*) NULL);

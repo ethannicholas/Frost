@@ -29,6 +29,7 @@ return;
 void frost$io$MemoryOutputStream$init$frost$core$Int64(frost$io$MemoryOutputStream* param0, frost$core$Int64 param1) {
 
 // line 27
+FROST_ASSERT(48 == sizeof(frost$core$MutableString));
 frost$core$MutableString* $tmp3 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init$frost$core$Int64($tmp3, param1);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp3));

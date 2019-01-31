@@ -100,6 +100,7 @@ $fn28 $tmp27 = ($fn28) $tmp25->$class->vtable[4];
 $tmp27($tmp25, $tmp26);
 // line 1
 // line 31
+FROST_ASSERT(40 == sizeof(org$frostlang$frostc$Compiler$AutoScope));
 org$frostlang$frostc$Compiler$AutoScope* $tmp29 = (org$frostlang$frostc$Compiler$AutoScope*) frostObjectAlloc(40, (frost$core$Class*) &org$frostlang$frostc$Compiler$AutoScope$class);
 org$frostlang$frostc$Compiler$AutoScope$init$org$frostlang$frostc$Compiler($tmp29, param0);
 *(&local5) = ((org$frostlang$frostc$Compiler$AutoScope*) NULL);
@@ -160,6 +161,7 @@ if ($tmp53) goto block7; else goto block8;
 block7:;
 // line 37
 org$frostlang$frostc$IR* $tmp54 = *(&local0);
+FROST_ASSERT(72 == sizeof(org$frostlang$frostc$IR$Statement));
 org$frostlang$frostc$IR$Statement* $tmp55 = (org$frostlang$frostc$IR$Statement*) frostObjectAlloc(72, (frost$core$Class*) &org$frostlang$frostc$IR$Statement$class);
 frost$core$Int64 $tmp56 = (frost$core$Int64) {1};
 org$frostlang$frostc$IR$Block$ID $tmp57 = *(&local3);
@@ -191,6 +193,7 @@ if ($tmp72) goto block11; else goto block12;
 block11:;
 // line 43
 org$frostlang$frostc$IR* $tmp73 = *(&local0);
+FROST_ASSERT(72 == sizeof(org$frostlang$frostc$IR$Statement));
 org$frostlang$frostc$IR$Statement* $tmp74 = (org$frostlang$frostc$IR$Statement*) frostObjectAlloc(72, (frost$core$Class*) &org$frostlang$frostc$IR$Statement$class);
 frost$core$Int64 $tmp75 = (frost$core$Int64) {1};
 org$frostlang$frostc$IR$Block$ID $tmp76 = *(&local3);

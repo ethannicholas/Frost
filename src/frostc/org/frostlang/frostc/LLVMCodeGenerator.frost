@@ -84,6 +84,8 @@ class LLVMCodeGenerator : CodeGenerator {
 
     def sizes := IdentityMap<ClassDecl, Int>()
 
+    def aligments := IdentityMap<ClassDecl, Int>()
+
     def choiceDataSizes := IdentityMap<ClassDecl, Int>()
 
     def methodShims := IdentityMap<MethodDecl, MethodShim>()
@@ -215,7 +217,36 @@ class LLVMCodeGenerator : CodeGenerator {
     }
 
     function alignment(t:Type):Int {
-        return fieldSize(t).min(8)
+        if !t.isClass {
+            return fieldSize(t)
+        }
+        def cl := compiler.getClass(t)
+        assert cl !== null
+        if !compiler.resolve(cl) {
+            return POINTER_SIZE
+        }
+        if cl.name = "frost.unsafe.Pointer" | !compiler.isValue(cl) {
+            return POINTER_SIZE
+        }
+        var cached := aligments[cl]
+        if cached !== null {
+            return cached
+        }
+        var result := 0
+        for f in compiler.instanceFields(cl) {
+            if !compiler.resolve(f) {
+                continue
+            }
+            if f.type = Type.ChoiceData() {
+                -- FIXME need to respect alignment!
+                result := result.max(8)
+            }
+            else {
+                result := result.max(alignment(f.type))
+            }
+        }
+        aligments[cl] := result
+        return result
     }
 
     method sizeOf(t:Type):Int {
@@ -243,29 +274,27 @@ class LLVMCodeGenerator : CodeGenerator {
                 result += getChoiceDataSize(cl)
             }
             else {
-                def size := fieldSize(f.type)
-                def align := result % size
-                if align != 0 {
-                    result += size - align
+                def align := alignment(f.type)
+                if result % align != 0 {
+                    result += align - result % align
                 }
-                assert result % size = 0
-                result += size
+                assert result % alignment(f.type) = 0, "field \{f} has alignment \{f.type} but is at offset \{result}"
+                result += fieldSize(f.type)
             }
         }
         if compiler.isValue(cl) & t.typeKind = Type.Kind.NULLABLE {
             result += 1
+        }
+        def align := alignment(t)
+        if result % align != 0 {
+            result += align - result % align
         }
         sizes[cl] := result
         return result
     }
 
     function stride(t:Type):Int {
-        def s := fieldSize(t)
-        def a := alignment(t)
-        if s % a = 0 {
-            return s
-        }
-        return s + a - s % a
+        return fieldSize(t)
     }
 
     function sizeOfWrapper(t:Type):Int {
@@ -479,6 +508,9 @@ class LLVMCodeGenerator : CodeGenerator {
             }
             when Type.Kind.IMMUTABLE_FUNCTION, Type.Kind.IMMUTABLE_METHOD {
                 return llvmType(Type.Method())
+            }
+            when Type.Kind.TUPLE {
+                return llvmType(compiler.getClass(t).type)
             }
             otherwise {
                 return "<unsupported type '\{t}'>"

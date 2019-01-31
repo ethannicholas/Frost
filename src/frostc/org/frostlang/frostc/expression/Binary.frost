@@ -488,6 +488,15 @@ class Binary {
                 if compiledLeft == null {
                     return null
                 }
+                if op = Operator.INDEX & compiledLeft.type().isTuple {
+                    match right {
+                        when ASTNode.INT(_, v) {
+                            return compiler.coerce(position, compiler.cast(position,
+                                    Dot.compile(compiler, position, compiledLeft, "f\{v}"),
+                                        compiledLeft.type().subtypes[v.asInt64]), type)
+                        }
+                    }
+                }
                 def compiledRight := compiler.compileExpression(right,
                         TypeContext.TYPE(compiledLeft.type(), false))
                 if compiledRight == null {

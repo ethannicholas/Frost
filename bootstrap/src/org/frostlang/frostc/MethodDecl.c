@@ -100,6 +100,7 @@ frost$core$Bit $tmp5 = frost$core$Bit$init$builtin_bit(false);
 frost$core$Bit* $tmp6 = &param0->overrideKnown;
 *$tmp6 = $tmp5;
 // line 71
+FROST_ASSERT(24 == sizeof(frost$core$Weak));
 frost$core$Weak* $tmp7 = (frost$core$Weak*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Weak$class);
 frost$core$Weak$init$frost$core$Weak$T($tmp7, ((frost$core$Object*) ((org$frostlang$frostc$MethodDecl*) NULL)));
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp7));
@@ -136,6 +137,7 @@ frost$core$Int64 $tmp26 = (frost$core$Int64) {5};
 org$frostlang$frostc$Symbol$Kind $tmp27 = org$frostlang$frostc$Symbol$Kind$init$frost$core$Int64($tmp26);
 org$frostlang$frostc$Symbol$init$org$frostlang$frostc$Symbol$Kind$org$frostlang$frostc$Position$frost$core$String(((org$frostlang$frostc$Symbol*) param0), $tmp27, param2, param6);
 // line 89
+FROST_ASSERT(24 == sizeof(frost$core$Weak));
 frost$core$Weak* $tmp28 = (frost$core$Weak*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Weak$class);
 frost$core$Weak$init$frost$core$Weak$T($tmp28, ((frost$core$Object*) param1));
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp28));
@@ -200,6 +202,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp55));
 *(&local0) = ((org$frostlang$frostc$MethodDecl$Parameter*) $tmp54);
 // line 95
 org$frostlang$frostc$MethodDecl$Parameter* $tmp56 = *(&local0);
+FROST_ASSERT(24 == sizeof(frost$core$Weak));
 frost$core$Weak* $tmp57 = (frost$core$Weak*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Weak$class);
 frost$core$Weak$init$frost$core$Weak$T($tmp57, ((frost$core$Object*) param0));
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp57));
@@ -644,7 +647,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp282));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp247));
 return $tmp280;
 block10:;
-frost$core$Int64 $tmp283 = (frost$core$Int64) {48};
+frost$core$Int64 $tmp283 = (frost$core$Int64) {49};
 frost$core$Bit $tmp284 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp271, $tmp283);
 bool $tmp285 = $tmp284.value;
 if ($tmp285) goto block11; else goto block8;
@@ -745,6 +748,7 @@ frost$collections$Array* local0 = NULL;
 org$frostlang$frostc$MethodDecl$Parameter* local1 = NULL;
 org$frostlang$frostc$Type$Kind local2;
 // line 162
+FROST_ASSERT(40 == sizeof(frost$collections$Array));
 frost$collections$Array* $tmp323 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
 frost$collections$Array** $tmp324 = &param0->parameters;
 frost$collections$Array* $tmp325 = *$tmp324;
@@ -829,14 +833,14 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Eq
 if ($tmp362) goto block4; else goto block6;
 block4:;
 // line 168
-frost$core$Int64 $tmp363 = (frost$core$Int64) {16};
+frost$core$Int64 $tmp363 = (frost$core$Int64) {17};
 org$frostlang$frostc$Type$Kind $tmp364 = org$frostlang$frostc$Type$Kind$init$frost$core$Int64($tmp363);
 *(&local2) = $tmp364;
 goto block5;
 block6:;
 // line 1
 // line 171
-frost$core$Int64 $tmp365 = (frost$core$Int64) {17};
+frost$core$Int64 $tmp365 = (frost$core$Int64) {18};
 org$frostlang$frostc$Type$Kind $tmp366 = org$frostlang$frostc$Type$Kind$init$frost$core$Int64($tmp365);
 *(&local2) = $tmp366;
 goto block5;
@@ -864,6 +868,7 @@ frost$core$MutableString* local0 = NULL;
 frost$core$String* local1 = NULL;
 org$frostlang$frostc$MethodDecl$Parameter* local2 = NULL;
 // line 177
+FROST_ASSERT(48 == sizeof(frost$core$MutableString));
 frost$core$MutableString* $tmp376 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$String** $tmp377 = &((org$frostlang$frostc$Symbol*) param0)->name;
 frost$core$String* $tmp378 = *$tmp377;

@@ -133,6 +133,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp20));
 *(&local3) = $tmp19;
 // line 1035
 frost$core$String* $tmp21 = *(&local3);
+FROST_ASSERT(24 == sizeof(frost$core$RegularExpression));
 frost$core$RegularExpression* $tmp22 = (frost$core$RegularExpression*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$RegularExpression$class);
 frost$core$RegularExpression$init$frost$core$String($tmp22, &$s23);
 frost$core$String* $tmp24 = frost$core$String$replace$frost$core$RegularExpression$frost$core$String$R$frost$core$String($tmp21, $tmp22, &$s25);

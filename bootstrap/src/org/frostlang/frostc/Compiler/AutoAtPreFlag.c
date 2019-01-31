@@ -17,14 +17,14 @@ static frost$core$String $s13 = { (frost$core$Class*) &frost$core$String$class, 
 
 void org$frostlang$frostc$Compiler$AutoAtPreFlag$init$org$frostlang$frostc$Compiler(org$frostlang$frostc$Compiler$AutoAtPreFlag* param0, org$frostlang$frostc$Compiler* param1) {
 
-// line 261
+// line 267
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
 org$frostlang$frostc$Compiler** $tmp2 = &param0->compiler;
 org$frostlang$frostc$Compiler* $tmp3 = *$tmp2;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp3));
 org$frostlang$frostc$Compiler** $tmp4 = &param0->compiler;
 *$tmp4 = param1;
-// line 262
+// line 268
 frost$core$Bit $tmp5 = frost$core$Bit$init$builtin_bit(true);
 frost$core$Bit* $tmp6 = &param1->inAtPre;
 *$tmp6 = $tmp5;
@@ -33,7 +33,7 @@ return;
 }
 void org$frostlang$frostc$Compiler$AutoAtPreFlag$cleanup(org$frostlang$frostc$Compiler$AutoAtPreFlag* param0) {
 
-// line 267
+// line 273
 org$frostlang$frostc$Compiler** $tmp7 = &param0->compiler;
 org$frostlang$frostc$Compiler* $tmp8 = *$tmp7;
 frost$core$Bit* $tmp9 = &$tmp8->inAtPre;
@@ -41,17 +41,17 @@ frost$core$Bit $tmp10 = *$tmp9;
 bool $tmp11 = $tmp10.value;
 if ($tmp11) goto block1; else goto block2;
 block2:;
-frost$core$Int64 $tmp12 = (frost$core$Int64) {267};
+frost$core$Int64 $tmp12 = (frost$core$Int64) {273};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s13, $tmp12);
 abort(); // unreachable
 block1:;
-// line 268
+// line 274
 org$frostlang$frostc$Compiler** $tmp14 = &param0->compiler;
 org$frostlang$frostc$Compiler* $tmp15 = *$tmp14;
 frost$core$Bit $tmp16 = frost$core$Bit$init$builtin_bit(false);
 frost$core$Bit* $tmp17 = &$tmp15->inAtPre;
 *$tmp17 = $tmp16;
-// line 266
+// line 272
 frost$core$Object$cleanup(((frost$core$Object*) param0));
 org$frostlang$frostc$Compiler** $tmp18 = &param0->compiler;
 org$frostlang$frostc$Compiler* $tmp19 = *$tmp18;

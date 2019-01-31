@@ -1,0 +1,42 @@
+package frost.core
+class KeyTuple3<T0:Key<T0>, T1:Key<T1>, T2:Key<T2>> : Key<KeyTuple3<T0, T1, T2>> {
+    def f0:T0
+    def f1:T1
+    def f2:T2
+
+    init(f0:T0, f1:T1, f2:T2) {
+       self.f0 := f0
+       self.f1 := f1
+       self.f2 := f2
+    }
+
+    @pre(i >= 0 & i < 3)
+    function [](i:Int):Object? {
+        match i {
+            when 0 { return f0 }
+            when 1 { return f1 }
+            when 2 { return f2 }
+        }
+        return null
+    }
+
+    @override
+    function =(other:KeyTuple3<T0, T1, T2>):Bit {
+        if f0 != other.f0 { return false }
+        if f1 != other.f1 { return false }
+        if f2 != other.f2 { return false }
+        return true
+    }
+    @override
+    function get_hash():Int {
+        var result := 0
+        result ~~= f0.hash
+        result ~~= f1.hash
+        result ~~= f2.hash
+        return result
+    }
+    @override
+    function get_asString():String {
+        return "(\{f0}, \{f1}, \{f2})"
+    }
+}

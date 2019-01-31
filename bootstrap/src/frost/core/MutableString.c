@@ -2156,6 +2156,7 @@ bool $tmp1283 = $tmp1282.value;
 if ($tmp1283) goto block2; else goto block3;
 block2:;
 // line 454
+FROST_ASSERT(40 == sizeof(frost$collections$Array));
 frost$collections$Array* $tmp1284 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
 frost$collections$Array$init($tmp1284);
 *(&local1) = ((frost$collections$Array*) NULL);
@@ -2542,7 +2543,7 @@ void frost$core$MutableString$$IDXEQ$frost$core$MutableString$Index$frost$core$C
 frost$core$Bit $tmp1555 = frost$core$Bit$init$builtin_bit(true);
 frost$core$Range$LTfrost$core$MutableString$Index$GT $tmp1556 = frost$core$Range$LTfrost$core$MutableString$Index$GT$init$frost$core$MutableString$Index$frost$core$MutableString$Index$frost$core$Bit(param1, param1, $tmp1555);
 frost$core$Char32$wrapper* $tmp1557;
-$tmp1557 = (frost$core$Char32$wrapper*) frostObjectAlloc(16, (frost$core$Class*) &frost$core$Char32$wrapperclass);
+$tmp1557 = (frost$core$Char32$wrapper*) frostObjectAlloc(20, (frost$core$Class*) &frost$core$Char32$wrapperclass);
 $tmp1557->value = param2;
 $fn1559 $tmp1558 = ($fn1559) ((frost$core$Object*) $tmp1557)->$class->vtable[0];
 frost$core$String* $tmp1560 = $tmp1558(((frost$core$Object*) $tmp1557));
@@ -3248,7 +3249,7 @@ frost$core$Int64* $tmp1975 = &param0->maxLength;
 frost$core$Int64 $tmp1976 = *$tmp1975;
 int64_t $tmp1977 = $tmp1974.value;
 int64_t $tmp1978 = $tmp1976.value;
-frost$core$Char8* $tmp1979 = (frost$core$Char8*) frostRealloc($tmp1973, $tmp1977 * 8, $tmp1978 * 8);
+frost$core$Char8* $tmp1979 = (frost$core$Char8*) frostRealloc($tmp1973, $tmp1977 * 1, $tmp1978 * 1);
 frost$core$Char8** $tmp1980 = &param0->data;
 *$tmp1980 = $tmp1979;
 return;
@@ -3264,7 +3265,7 @@ frost$core$Int64 $tmp1984 = *$tmp1983;
 frost$core$Int64 $tmp1985 = (frost$core$Int64) {32};
 int64_t $tmp1986 = $tmp1984.value;
 int64_t $tmp1987 = $tmp1985.value;
-frost$core$Char8* $tmp1988 = (frost$core$Char8*) frostRealloc($tmp1982, $tmp1986 * 8, $tmp1987 * 8);
+frost$core$Char8* $tmp1988 = (frost$core$Char8*) frostRealloc($tmp1982, $tmp1986 * 1, $tmp1987 * 1);
 frost$core$Char8** $tmp1989 = &param0->data;
 *$tmp1989 = $tmp1988;
 // line 612
@@ -3359,6 +3360,7 @@ frost$core$Int64 $tmp2046 = (frost$core$Int64) {$tmp2045};
 goto block1;
 block2:;
 // line 626
+FROST_ASSERT(48 == sizeof(frost$core$String));
 frost$core$String* $tmp2047 = (frost$core$String*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$String$class);
 frost$core$Char8* $tmp2048 = *(&local0);
 frost$core$Int64* $tmp2049 = &param0->_length;
@@ -3380,7 +3382,7 @@ frost$core$Int64* $tmp2055 = &param0->_length;
 frost$core$Int64 $tmp2056 = *$tmp2055;
 int64_t $tmp2057 = $tmp2054.value;
 int64_t $tmp2058 = $tmp2056.value;
-frost$core$Char8* $tmp2059 = (frost$core$Char8*) frostRealloc($tmp2052, $tmp2057 * 8, $tmp2058 * 8);
+frost$core$Char8* $tmp2059 = (frost$core$Char8*) frostRealloc($tmp2052, $tmp2057 * 1, $tmp2058 * 1);
 frost$core$Char8** $tmp2060 = &param0->data;
 *$tmp2060 = $tmp2059;
 // line 639

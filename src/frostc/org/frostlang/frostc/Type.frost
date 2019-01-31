@@ -13,6 +13,7 @@ class Type : Symbol, Key<Type> {
         BIT_LITERAL
         BUILTIN_BIT
         BUILTIN_FLOAT
+        TUPLE
         GENERIC
         GENERIC_CLASS_PARAMETER
         GENERIC_METHOD_PARAMETER
@@ -63,6 +64,8 @@ class Type : Symbol, Key<Type> {
     property isClass:Bit
 
     property isClassLiteral:Bit
+
+    property isTuple:Bit
 
     property isMethod:Bit
 
@@ -146,6 +149,23 @@ class Type : Symbol, Key<Type> {
         self.resolved := ref.effectiveType.resolved
         self.methodRef := ref
         super.init(Symbol.Kind.TYPE, ref.effectiveType.position, ref.effectiveType.name)
+    }
+
+    @class
+    @pre(arguments.count >= 2)
+    function tuple(arguments:ListView<Type>):Type {
+        var resolved := true
+        def name := MutableString()
+        name.append("(")
+        var separator := ""
+        for a in arguments {
+            resolved &= a.resolved
+            name.append(separator)
+            name.append(a.name)
+            separator := ", "
+        }
+        name.append(")")
+        return Type(name.finish(), Kind.TUPLE, arguments[0].position, arguments, resolved)
     }
 
     @class
@@ -566,7 +586,7 @@ class Type : Symbol, Key<Type> {
         match typeKind {
             when Kind.CLASS, Kind.NULLABLE, Kind.GENERIC, Kind.GENERIC_CLASS_PARAMETER,
                     Kind.GENERIC_METHOD_PARAMETER, Kind.METHOD, Kind.FUNCTION,
-                    Kind.IMMUTABLE_METHOD, Kind.IMMUTABLE_FUNCTION {
+                    Kind.IMMUTABLE_METHOD, Kind.IMMUTABLE_FUNCTION, Kind.TUPLE {
                 return true
             }
             otherwise {
@@ -577,6 +597,10 @@ class Type : Symbol, Key<Type> {
 
     function get_isClassLiteral():Bit {
         return typeKind = Kind.GENERIC & subtypes[0] = Class()
+    }
+
+    function get_isTuple():Bit {
+        return typeKind = Kind.TUPLE
     }
 
     function get_isMethod():Bit {
@@ -763,7 +787,7 @@ class Type : Symbol, Key<Type> {
                 for i in 1 .. subtypes.count {
                     remappedArgs.add(subtypes[i].remap(types))
                 }
-                return Type.generic(base, remappedArgs)
+                return generic(base, remappedArgs)
             }
             when Kind.NULLABLE {
                 return subtypes[0].remap(types).nullable()
@@ -776,6 +800,13 @@ class Type : Symbol, Key<Type> {
                 }
                 return methodType(position, typeKind, parameters,
                         subtypes[subtypes.count - 1].remap(types), priority)
+            }
+            when Kind.TUPLE {
+                def remappedArgs := Array<Type>()
+                for a in subtypes {
+                    remappedArgs.add(a.remap(types))
+                }
+                return tuple(remappedArgs)
             }
             otherwise {
                  return self

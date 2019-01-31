@@ -7,6 +7,7 @@ uses org.frostlang.frostc.Compiler
 uses org.frostlang.frostc.Compiler.AutoScope
 uses org.frostlang.frostc.Compiler.AutoUnrefs
 uses org.frostlang.frostc.Compiler.EnclosingContext
+uses org.frostlang.frostc.Compiler.Target
 uses org.frostlang.frostc.Compiler.TypeContext
 uses org.frostlang.frostc.Compiler.VariableLValue
 uses org.frostlang.frostc.FixedArray
@@ -117,7 +118,7 @@ class Match {
                                                 if text !== null & text = "_" {
                                                     continue
                                                 }
-                                                def target:Pair<Variable, IR.Value?>?
+                                                def target:Target?
                                                 {
                                                     def unrefs := AutoUnrefs(compiler)
                                                     target := compiler.compileTarget(args[i],
@@ -126,16 +127,14 @@ class Match {
                                                                     IR.Value.REF(load,
                                                                         cc.second.fields[i])),
                                                                     null)
-                                                    VariableLValue(compiler, position,
-                                                            target.first).compileStore(
-                                                                IR.Value.REF(load,
-                                                                    cc.second.fields[i]))
+                                                    if target == null {
+                                                        return
+                                                    }
+                                                    compiler.compileStore(args[i].position(),
+                                                            target,
+                                                            IR.Value.REF(load, cc.second.fields[i]))
                                                 }
-                                                if compiler.isRefCounted(target.first.type) {
-                                                    compiler.enclosingContexts.push(
-                                                            EnclosingContext.VARIABLE_SCOPE(
-                                                                target.first))
-                                                }
+                                                compiler.createScopes(target)
                                             }
                                             continue
                                         }

@@ -270,6 +270,7 @@ return;
 frost$collections$Iterator* frost$collections$Stack$get_iterator$R$frost$collections$Iterator$LTfrost$collections$Stack$T$GT(frost$collections$Stack* param0) {
 
 // line 89
+FROST_ASSERT(32 == sizeof(frost$collections$Stack$StackIterator));
 frost$collections$Stack$StackIterator* $tmp142 = (frost$collections$Stack$StackIterator*) frostObjectAlloc(32, (frost$core$Class*) &frost$collections$Stack$StackIterator$class);
 frost$collections$Stack$StackIterator$init$frost$collections$Stack$LTfrost$collections$Stack$StackIterator$T$GT($tmp142, param0);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$collections$Iterator*) $tmp142)));
@@ -306,6 +307,7 @@ return $tmp153;
 void frost$collections$Stack$init(frost$collections$Stack* param0) {
 
 // line 34
+FROST_ASSERT(40 == sizeof(frost$collections$Array));
 frost$collections$Array* $tmp154 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
 frost$collections$Array$init($tmp154);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp154));

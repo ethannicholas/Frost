@@ -39,6 +39,7 @@ org$frostlang$frostc$Compiler$Resolution $tmp3 = org$frostlang$frostc$Compiler$R
 org$frostlang$frostc$Compiler$Resolution* $tmp4 = &param0->resolved;
 *$tmp4 = $tmp3;
 // line 29
+FROST_ASSERT(24 == sizeof(frost$core$Weak));
 frost$core$Weak* $tmp5 = (frost$core$Weak*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Weak$class);
 frost$core$Weak$init$frost$core$Weak$T($tmp5, ((frost$core$Object*) param1));
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp5));
@@ -90,6 +91,7 @@ frost$core$String* org$frostlang$frostc$FieldDecl$get_asString$R$frost$core$Stri
 
 frost$core$MutableString* local0 = NULL;
 // line 40
+FROST_ASSERT(48 == sizeof(frost$core$MutableString));
 frost$core$MutableString* $tmp24 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
 org$frostlang$frostc$Annotations** $tmp25 = &param0->annotations;
 org$frostlang$frostc$Annotations* $tmp26 = *$tmp25;

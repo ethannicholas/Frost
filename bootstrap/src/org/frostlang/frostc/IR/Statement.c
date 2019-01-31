@@ -831,7 +831,7 @@ frost$core$String* $tmp359 = frost$core$String$$ADD$frost$core$Object$R$frost$co
 frost$core$String* $tmp360 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp359, &$s361);
 frost$core$Bit $tmp362 = *(&local10);
 frost$core$Bit$wrapper* $tmp363;
-$tmp363 = (frost$core$Bit$wrapper*) frostObjectAlloc(13, (frost$core$Class*) &frost$core$Bit$wrapperclass);
+$tmp363 = (frost$core$Bit$wrapper*) frostObjectAlloc(17, (frost$core$Class*) &frost$core$Bit$wrapperclass);
 $tmp363->value = $tmp362;
 ITable* $tmp364 = ((frost$core$Formattable*) $tmp363)->$class->itable;
 while ($tmp364->$class != (frost$core$Class*) &frost$core$Formattable$class) {

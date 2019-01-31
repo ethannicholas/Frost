@@ -67,6 +67,7 @@ bool $tmp5 = $tmp4.value;
 if ($tmp5) goto block1; else goto block3;
 block1:;
 // line 95
+FROST_ASSERT(40 == sizeof(frost$collections$Array));
 frost$collections$Array* $tmp6 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
 frost$collections$Array$init$frost$collections$CollectionView$LTfrost$collections$Array$T$GT($tmp6, ((frost$collections$CollectionView*) param2));
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp6));
@@ -94,6 +95,7 @@ return;
 org$frostlang$frostc$Annotations* org$frostlang$frostc$Annotations$$ADD$frost$core$Int64$R$org$frostlang$frostc$Annotations(org$frostlang$frostc$Annotations* param0, frost$core$Int64 param1) {
 
 // line 103
+FROST_ASSERT(32 == sizeof(org$frostlang$frostc$Annotations));
 org$frostlang$frostc$Annotations* $tmp13 = (org$frostlang$frostc$Annotations*) frostObjectAlloc(32, (frost$core$Class*) &org$frostlang$frostc$Annotations$class);
 frost$core$Int64* $tmp14 = &param0->flags;
 frost$core$Int64 $tmp15 = *$tmp14;
@@ -369,6 +371,7 @@ frost$core$String* org$frostlang$frostc$Annotations$get_asString$R$frost$core$St
 frost$core$MutableString* local0 = NULL;
 org$frostlang$frostc$Annotations$Expression* local1 = NULL;
 // line 176
+FROST_ASSERT(48 == sizeof(frost$core$MutableString));
 frost$core$MutableString* $tmp175 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init($tmp175);
 *(&local0) = ((frost$core$MutableString*) NULL);

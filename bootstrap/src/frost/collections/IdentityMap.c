@@ -488,6 +488,7 @@ frost$collections$IdentityMap$Entry* $tmp226 = *(&local2);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp226));
 *(&local2) = $tmp225;
 // line 120
+FROST_ASSERT(40 == sizeof(frost$collections$IdentityMap$Entry));
 frost$collections$IdentityMap$Entry* $tmp227 = (frost$collections$IdentityMap$Entry*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$IdentityMap$Entry$class);
 frost$collections$IdentityMap$Entry$init$frost$collections$IdentityMap$Entry$K$frost$collections$IdentityMap$Entry$V($tmp227, param1, param2);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp227));
@@ -1281,6 +1282,7 @@ frost$core$String* local1 = NULL;
 frost$core$Int64 local2;
 frost$collections$IdentityMap$Entry* local3 = NULL;
 // line 235
+FROST_ASSERT(48 == sizeof(frost$core$MutableString));
 frost$core$MutableString* $tmp679 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init($tmp679);
 *(&local0) = ((frost$core$MutableString*) NULL);

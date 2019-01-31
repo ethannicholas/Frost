@@ -19,14 +19,14 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 
 void org$frostlang$frostc$Compiler$AutoUnrefs$init$org$frostlang$frostc$Compiler(org$frostlang$frostc$Compiler$AutoUnrefs* param0, org$frostlang$frostc$Compiler* param1) {
 
-// line 196
+// line 202
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
 org$frostlang$frostc$Compiler** $tmp2 = &param0->compiler;
 org$frostlang$frostc$Compiler* $tmp3 = *$tmp2;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp3));
 org$frostlang$frostc$Compiler** $tmp4 = &param0->compiler;
 *$tmp4 = param1;
-// line 197
+// line 203
 frost$collections$Stack** $tmp5 = &param1->enclosingContexts;
 frost$collections$Stack* $tmp6 = *$tmp5;
 frost$core$Int64 $tmp7 = frost$collections$Stack$get_count$R$frost$core$Int64($tmp6);
@@ -39,7 +39,7 @@ void org$frostlang$frostc$Compiler$AutoUnrefs$cleanup(org$frostlang$frostc$Compi
 
 org$frostlang$frostc$Compiler$EnclosingContext* local0 = NULL;
 org$frostlang$frostc$IR$Value* local1 = NULL;
-// line 202
+// line 208
 goto block1;
 block1:;
 org$frostlang$frostc$Compiler** $tmp9 = &param0->compiler;
@@ -56,7 +56,7 @@ frost$core$Bit $tmp19 = (frost$core$Bit) {$tmp18};
 bool $tmp20 = $tmp19.value;
 if ($tmp20) goto block2; else goto block3;
 block2:;
-// line 203
+// line 209
 org$frostlang$frostc$Compiler** $tmp21 = &param0->compiler;
 org$frostlang$frostc$Compiler* $tmp22 = *$tmp21;
 frost$collections$Stack** $tmp23 = &$tmp22->enclosingContexts;
@@ -69,7 +69,7 @@ org$frostlang$frostc$Compiler$EnclosingContext* $tmp27 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp27));
 *(&local0) = ((org$frostlang$frostc$Compiler$EnclosingContext*) $tmp26);
 frost$core$Frost$unref$frost$core$Object$Q($tmp26);
-// line 204
+// line 210
 org$frostlang$frostc$Compiler$EnclosingContext* $tmp28 = *(&local0);
 frost$core$Int64* $tmp29 = &$tmp28->$rawValue;
 frost$core$Int64 $tmp30 = *$tmp29;
@@ -85,12 +85,12 @@ frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp35));
 org$frostlang$frostc$IR$Value* $tmp36 = *(&local1);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp36));
 *(&local1) = $tmp35;
-// line 206
+// line 212
 org$frostlang$frostc$Compiler** $tmp37 = &param0->compiler;
 org$frostlang$frostc$Compiler* $tmp38 = *$tmp37;
 org$frostlang$frostc$Compiler$EnclosingContext* $tmp39 = *(&local0);
 org$frostlang$frostc$Compiler$leaveScope$org$frostlang$frostc$Compiler$EnclosingContext($tmp38, $tmp39);
-// line 207
+// line 213
 org$frostlang$frostc$Compiler** $tmp40 = &param0->compiler;
 org$frostlang$frostc$Compiler* $tmp41 = *$tmp40;
 frost$collections$Stack** $tmp42 = &$tmp41->enclosingContexts;
@@ -102,7 +102,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp45));
 *(&local1) = ((org$frostlang$frostc$IR$Value*) NULL);
 goto block4;
 block6:;
-// line 210
+// line 216
 org$frostlang$frostc$Compiler$EnclosingContext* $tmp46 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp46));
 *(&local0) = ((org$frostlang$frostc$Compiler$EnclosingContext*) NULL);
@@ -113,7 +113,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp47));
 *(&local0) = ((org$frostlang$frostc$Compiler$EnclosingContext*) NULL);
 goto block1;
 block3:;
-// line 201
+// line 207
 frost$core$Object$cleanup(((frost$core$Object*) param0));
 org$frostlang$frostc$Compiler** $tmp48 = &param0->compiler;
 org$frostlang$frostc$Compiler* $tmp49 = *$tmp48;

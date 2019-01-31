@@ -99,6 +99,7 @@ frost$core$String* $tmp26 = *(&local1);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp26));
 *(&local1) = &$s27;
 // line 75
+FROST_ASSERT(48 == sizeof(frost$core$MutableString));
 frost$core$MutableString* $tmp28 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init($tmp28);
 *(&local2) = ((frost$core$MutableString*) NULL);
@@ -198,6 +199,7 @@ return $tmp82;
 void org$frostlang$frostc$frostdoc$Protector$init(org$frostlang$frostc$frostdoc$Protector* param0) {
 
 // line 52
+FROST_ASSERT(56 == sizeof(frost$collections$HashMap));
 frost$collections$HashMap* $tmp85 = (frost$collections$HashMap*) frostObjectAlloc(56, (frost$core$Class*) &frost$collections$HashMap$class);
 frost$collections$HashMap$init($tmp85);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp85));
@@ -208,6 +210,7 @@ frost$collections$HashMap** $tmp88 = &param0->encodeMap;
 *$tmp88 = $tmp85;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp85));
 // line 54
+FROST_ASSERT(56 == sizeof(frost$collections$HashMap));
 frost$collections$HashMap* $tmp89 = (frost$collections$HashMap*) frostObjectAlloc(56, (frost$core$Class*) &frost$collections$HashMap$class);
 frost$collections$HashMap$init($tmp89);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp89));

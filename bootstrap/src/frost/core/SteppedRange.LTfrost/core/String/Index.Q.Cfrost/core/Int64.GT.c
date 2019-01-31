@@ -53,6 +53,7 @@ frost$core$String* frost$core$SteppedRange$LTfrost$core$String$Index$Q$Cfrost$co
 
 frost$core$MutableString* local0 = NULL;
 // line 51
+FROST_ASSERT(48 == sizeof(frost$core$MutableString));
 frost$core$MutableString* $tmp8 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init($tmp8);
 *(&local0) = ((frost$core$MutableString*) NULL);

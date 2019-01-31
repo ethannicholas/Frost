@@ -49,6 +49,7 @@ static frost$core$String $s269 = { (frost$core$Class*) &frost$core$String$class,
 void org$frostlang$regex$RegexParser$init$frost$threads$MessageQueue$LTorg$frostlang$frostc$Compiler$Message$GT(org$frostlang$regex$RegexParser* param0, frost$threads$MessageQueue* param1) {
 
 // line 10
+FROST_ASSERT(40 == sizeof(org$frostlang$regex$RegexLexer));
 org$frostlang$regex$RegexLexer* $tmp2 = (org$frostlang$regex$RegexLexer*) frostObjectAlloc(40, (frost$core$Class*) &org$frostlang$regex$RegexLexer$class);
 org$frostlang$regex$RegexLexer$init($tmp2);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp2));
@@ -59,6 +60,7 @@ org$frostlang$regex$RegexLexer** $tmp5 = &param0->lexer;
 *$tmp5 = $tmp2;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp2));
 // line 18
+FROST_ASSERT(40 == sizeof(frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT));
 frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT* $tmp6 = (frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$class);
 frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$init($tmp6);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp6));
@@ -309,6 +311,7 @@ void org$frostlang$regex$RegexParser$error$org$frostlang$regex$RegexToken$frost$
 // line 72
 frost$threads$MessageQueue** $tmp120 = &param0->errors;
 frost$threads$MessageQueue* $tmp121 = *$tmp120;
+FROST_ASSERT(56 == sizeof(org$frostlang$frostc$Compiler$Message));
 org$frostlang$frostc$Compiler$Message* $tmp122 = (org$frostlang$frostc$Compiler$Message*) frostObjectAlloc(56, (frost$core$Class*) &org$frostlang$frostc$Compiler$Message$class);
 frost$core$Int64 $tmp123 = (frost$core$Int64) {0};
 frost$io$File** $tmp124 = &param0->path;
@@ -855,9 +858,11 @@ frost$core$Int64 $tmp397 = (frost$core$Int64) {$tmp396};
 goto block3;
 block4:;
 // line 227
+FROST_ASSERT(104 == sizeof(org$frostlang$frostc$ASTNode));
 org$frostlang$frostc$ASTNode* $tmp398 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(104, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 frost$core$Int64 $tmp399 = (frost$core$Int64) {37};
 org$frostlang$frostc$Position $tmp400 = *(&local0);
+FROST_ASSERT(48 == sizeof(frost$core$String));
 frost$core$String* $tmp401 = (frost$core$String*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$String$class);
 frost$core$Char8* $tmp402 = *(&local4);
 frost$core$Int64 $tmp403 = *(&local3);

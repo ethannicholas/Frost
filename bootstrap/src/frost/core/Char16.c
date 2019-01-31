@@ -221,6 +221,7 @@ frost$core$String* frost$core$Char16$$MUL$frost$core$Int64$R$frost$core$String(f
 frost$core$MutableString* local0 = NULL;
 frost$core$Int64 local1;
 // line 56
+FROST_ASSERT(48 == sizeof(frost$core$MutableString));
 frost$core$MutableString* $tmp30 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init($tmp30);
 *(&local0) = ((frost$core$MutableString*) NULL);
@@ -259,7 +260,7 @@ block1:;
 // line 58
 frost$core$MutableString* $tmp51 = *(&local0);
 frost$core$Char16$wrapper* $tmp52;
-$tmp52 = (frost$core$Char16$wrapper*) frostObjectAlloc(14, (frost$core$Class*) &frost$core$Char16$wrapperclass);
+$tmp52 = (frost$core$Char16$wrapper*) frostObjectAlloc(18, (frost$core$Class*) &frost$core$Char16$wrapperclass);
 $tmp52->value = param0;
 frost$core$MutableString$append$frost$core$Object($tmp51, ((frost$core$Object*) $tmp52));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp52));
@@ -426,6 +427,7 @@ frost$core$Char8 $tmp108 = frost$core$Char8$init$frost$core$UInt8($tmp107);
 int64_t $tmp109 = $tmp106.value;
 $tmp105[$tmp109] = $tmp108;
 // line 136
+FROST_ASSERT(48 == sizeof(frost$core$String));
 frost$core$String* $tmp110 = (frost$core$String*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$String$class);
 frost$core$Char8* $tmp111 = *(&local0);
 frost$core$Int64 $tmp112 = (frost$core$Int64) {1};
@@ -467,6 +469,7 @@ frost$core$Char8 $tmp134 = frost$core$Char8$init$frost$core$UInt8($tmp133);
 int64_t $tmp135 = $tmp129.value;
 $tmp128[$tmp135] = $tmp134;
 // line 142
+FROST_ASSERT(48 == sizeof(frost$core$String));
 frost$core$String* $tmp136 = (frost$core$String*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$String$class);
 frost$core$Char8* $tmp137 = *(&local1);
 frost$core$Int64 $tmp138 = (frost$core$Int64) {2};
@@ -512,6 +515,7 @@ frost$core$Char8 $tmp165 = frost$core$Char8$init$frost$core$UInt8($tmp164);
 int64_t $tmp166 = $tmp160.value;
 $tmp159[$tmp166] = $tmp165;
 // line 148
+FROST_ASSERT(48 == sizeof(frost$core$String));
 frost$core$String* $tmp167 = (frost$core$String*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$String$class);
 frost$core$Char8* $tmp168 = *(&local2);
 frost$core$Int64 $tmp169 = (frost$core$Int64) {3};

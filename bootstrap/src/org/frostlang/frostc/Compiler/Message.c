@@ -36,7 +36,7 @@ frost$core$String* local2 = NULL;
 frost$io$File* local3 = NULL;
 org$frostlang$frostc$Position local4;
 frost$core$String* local5 = NULL;
-// line 65
+// line 66
 frost$core$Int64* $tmp2 = &param0->$rawValue;
 frost$core$Int64 $tmp3 = *$tmp2;
 frost$core$Int64 $tmp4 = (frost$core$Int64) {0};
@@ -111,24 +111,24 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp33));
 *(&local3) = ((frost$io$File*) NULL);
 goto block1;
 block1:;
-// line 65
+// line 66
 frost$core$Immutable$cleanup(((frost$core$Immutable*) param0));
 return;
 
 }
 void org$frostlang$frostc$Compiler$Message$init$frost$core$Int64$frost$io$File$org$frostlang$frostc$Position$frost$core$String(org$frostlang$frostc$Compiler$Message* param0, frost$core$Int64 param1, frost$io$File* param2, org$frostlang$frostc$Position param3, frost$core$String* param4) {
 
-// line 65
+// line 66
 frost$core$Int64* $tmp34 = &param0->$rawValue;
 *$tmp34 = param1;
-// line 65
+// line 66
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param2));
 frost$io$File** $tmp35 = (frost$io$File**) (param0->$data + 0);
 *$tmp35 = param2;
-// line 65
+// line 66
 org$frostlang$frostc$Position* $tmp36 = (org$frostlang$frostc$Position*) (param0->$data + 8);
 *$tmp36 = param3;
-// line 65
+// line 66
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param4));
 frost$core$String** $tmp37 = (frost$core$String**) (param0->$data + 24);
 *$tmp37 = param4;
@@ -137,7 +137,7 @@ return;
 }
 frost$core$Bit org$frostlang$frostc$Compiler$Message$$EQ$org$frostlang$frostc$Compiler$Message$R$frost$core$Bit(org$frostlang$frostc$Compiler$Message* param0, org$frostlang$frostc$Compiler$Message* param1) {
 
-// line 65
+// line 66
 frost$core$Int64* $tmp38 = &param0->$rawValue;
 frost$core$Int64 $tmp39 = *$tmp38;
 frost$core$Int64* $tmp40 = &param1->$rawValue;
@@ -149,11 +149,11 @@ frost$core$Bit $tmp45 = (frost$core$Bit) {$tmp44};
 bool $tmp46 = $tmp45.value;
 if ($tmp46) goto block1; else goto block2;
 block1:;
-// line 65
+// line 66
 frost$core$Bit $tmp47 = frost$core$Bit$init$builtin_bit(false);
 return $tmp47;
 block2:;
-// line 65
+// line 66
 frost$core$Bit $tmp48 = frost$core$Bit$init$builtin_bit(true);
 return $tmp48;
 

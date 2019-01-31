@@ -85,6 +85,7 @@ static frost$core$String $s425 = { (frost$core$Class*) &frost$core$String$class,
 void frost$core$Frost$init(frost$core$Frost* param0) {
 
 // line 11
+FROST_ASSERT(56 == sizeof(frost$collections$HashMap));
 frost$collections$HashMap* $tmp2 = (frost$collections$HashMap*) frostObjectAlloc(56, (frost$core$Class*) &frost$collections$HashMap$class);
 frost$collections$HashMap$init($tmp2);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp2));
@@ -95,6 +96,7 @@ frost$collections$HashMap** $tmp5 = &param0->allocations;
 *$tmp5 = $tmp2;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp2));
 // line 13
+FROST_ASSERT(56 == sizeof(frost$collections$HashMap));
 frost$collections$HashMap* $tmp6 = (frost$collections$HashMap*) frostObjectAlloc(56, (frost$core$Class*) &frost$collections$HashMap$class);
 frost$collections$HashMap$init($tmp6);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp6));
@@ -110,6 +112,7 @@ return;
 frost$core$Maybe* frost$core$Frost$success$frost$core$Object$R$frost$core$Maybe$LTfrost$core$Object$GT$Q(frost$core$Object* param0) {
 
 // line 21
+FROST_ASSERT(32 == sizeof(frost$core$Maybe));
 frost$core$Maybe* $tmp10 = (frost$core$Maybe*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$Maybe$class);
 frost$core$Int64 $tmp11 = (frost$core$Int64) {0};
 frost$core$Maybe$init$frost$core$Int64$frost$core$Maybe$T($tmp10, $tmp11, param0);
@@ -121,8 +124,10 @@ return $tmp10;
 frost$core$Maybe* frost$core$Frost$error$frost$core$String$R$frost$core$Maybe$LTfrost$core$Object$GT$Q(frost$core$String* param0) {
 
 // line 27
+FROST_ASSERT(32 == sizeof(frost$core$Maybe));
 frost$core$Maybe* $tmp12 = (frost$core$Maybe*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$Maybe$class);
 frost$core$Int64 $tmp13 = (frost$core$Int64) {1};
+FROST_ASSERT(24 == sizeof(frost$core$Error));
 frost$core$Error* $tmp14 = (frost$core$Error*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Error$class);
 frost$core$Error$init$frost$core$String($tmp14, param0);
 frost$core$Maybe$init$frost$core$Int64$frost$core$Error($tmp12, $tmp13, $tmp14);
@@ -1230,6 +1235,7 @@ frost$core$Int64 $tmp558 = (frost$core$Int64) {$tmp557};
 goto block27;
 block28:;
 // line 269
+FROST_ASSERT(48 == sizeof(frost$core$String));
 frost$core$String* $tmp559 = (frost$core$String*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$String$class);
 frost$core$Char8* $tmp560 = *(&local5);
 frost$core$Int64 $tmp561 = *(&local7);

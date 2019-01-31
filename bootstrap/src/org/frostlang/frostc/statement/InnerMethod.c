@@ -28,7 +28,8 @@ void org$frostlang$frostc$statement$InnerMethod$compile$org$frostlang$frostc$Com
 org$frostlang$frostc$IR$Value* local0 = NULL;
 org$frostlang$frostc$ASTNode* local1 = NULL;
 // line 17
-org$frostlang$frostc$Compiler$TypeContext* $tmp2 = (org$frostlang$frostc$Compiler$TypeContext*) frostObjectAlloc(33, (frost$core$Class*) &org$frostlang$frostc$Compiler$TypeContext$class);
+FROST_ASSERT(40 == sizeof(org$frostlang$frostc$Compiler$TypeContext));
+org$frostlang$frostc$Compiler$TypeContext* $tmp2 = (org$frostlang$frostc$Compiler$TypeContext*) frostObjectAlloc(40, (frost$core$Class*) &org$frostlang$frostc$Compiler$TypeContext$class);
 frost$core$Int64 $tmp3 = (frost$core$Int64) {1};
 org$frostlang$frostc$Compiler$TypeContext$init$frost$core$Int64($tmp2, $tmp3);
 org$frostlang$frostc$IR$Value* $tmp4 = org$frostlang$frostc$expression$Closure$compile$org$frostlang$frostc$Compiler$org$frostlang$frostc$Position$org$frostlang$frostc$MethodDecl$Kind$org$frostlang$frostc$FixedArray$LTorg$frostlang$frostc$ASTNode$GT$org$frostlang$frostc$ASTNode$Q$org$frostlang$frostc$FixedArray$LTorg$frostlang$frostc$ASTNode$GT$org$frostlang$frostc$Compiler$TypeContext$R$org$frostlang$frostc$IR$Value$Q(param0, param1, param2, param4, param5, param6, $tmp2);
@@ -52,11 +53,14 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp9));
 return;
 block2:;
 // line 22
+FROST_ASSERT(104 == sizeof(org$frostlang$frostc$ASTNode));
 org$frostlang$frostc$ASTNode* $tmp10 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(104, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 frost$core$Int64 $tmp11 = (frost$core$Int64) {14};
+FROST_ASSERT(104 == sizeof(org$frostlang$frostc$ASTNode));
 org$frostlang$frostc$ASTNode* $tmp12 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(104, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 frost$core$Int64 $tmp13 = (frost$core$Int64) {22};
 org$frostlang$frostc$ASTNode$init$frost$core$Int64$org$frostlang$frostc$Position$frost$core$String($tmp12, $tmp13, param1, param3);
+FROST_ASSERT(104 == sizeof(org$frostlang$frostc$ASTNode));
 org$frostlang$frostc$ASTNode* $tmp14 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(104, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 frost$core$Int64 $tmp15 = (frost$core$Int64) {26};
 org$frostlang$frostc$IR$Value* $tmp16 = *(&local0);
@@ -71,10 +75,12 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp14));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp12));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp10));
 // line 24
+FROST_ASSERT(104 == sizeof(org$frostlang$frostc$ASTNode));
 org$frostlang$frostc$ASTNode* $tmp18 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(104, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
-frost$core$Int64 $tmp19 = (frost$core$Int64) {52};
+frost$core$Int64 $tmp19 = (frost$core$Int64) {53};
 frost$core$Int64 $tmp20 = (frost$core$Int64) {1};
 org$frostlang$frostc$Variable$Kind $tmp21 = org$frostlang$frostc$Variable$Kind$init$frost$core$Int64($tmp20);
+FROST_ASSERT(40 == sizeof(frost$collections$Array));
 frost$collections$Array* $tmp22 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
 frost$core$Int64 $tmp23 = (frost$core$Int64) {1};
 frost$collections$Array$init$frost$core$Int64($tmp22, $tmp23);

@@ -167,6 +167,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp44));
 *(&local5) = $tmp43;
 // line 911
 frost$core$String* $tmp45 = *(&local5);
+FROST_ASSERT(24 == sizeof(frost$core$RegularExpression));
 frost$core$RegularExpression* $tmp46 = (frost$core$RegularExpression*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$RegularExpression$class);
 frost$core$RegularExpression$init$frost$core$String($tmp46, &$s47);
 org$frostlang$frostc$frostdoc$Markdown** $tmp48 = &param0->$self;
@@ -185,6 +186,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp54));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp46));
 // line 912
 frost$core$String* $tmp58 = *(&local5);
+FROST_ASSERT(24 == sizeof(frost$core$RegularExpression));
 frost$core$RegularExpression* $tmp59 = (frost$core$RegularExpression*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$RegularExpression$class);
 frost$core$RegularExpression$init$frost$core$String($tmp59, &$s60);
 org$frostlang$frostc$frostdoc$Markdown** $tmp61 = &param0->$self;
@@ -234,6 +236,7 @@ if ($tmp87) goto block6; else goto block7;
 block6:;
 // line 916
 frost$core$String* $tmp88 = *(&local6);
+FROST_ASSERT(24 == sizeof(frost$core$RegularExpression));
 frost$core$RegularExpression* $tmp89 = (frost$core$RegularExpression*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$RegularExpression$class);
 frost$core$RegularExpression$init$frost$core$String($tmp89, &$s90);
 org$frostlang$frostc$frostdoc$Markdown** $tmp91 = &param0->$self;
@@ -252,6 +255,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp97));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp89));
 // line 917
 frost$core$String* $tmp101 = *(&local6);
+FROST_ASSERT(24 == sizeof(frost$core$RegularExpression));
 frost$core$RegularExpression* $tmp102 = (frost$core$RegularExpression*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$RegularExpression$class);
 frost$core$RegularExpression$init$frost$core$String($tmp102, &$s103);
 org$frostlang$frostc$frostdoc$Markdown** $tmp104 = &param0->$self;

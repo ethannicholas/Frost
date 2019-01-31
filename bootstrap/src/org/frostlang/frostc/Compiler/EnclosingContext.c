@@ -46,7 +46,7 @@ org$frostlang$frostc$Variable* local3 = NULL;
 org$frostlang$frostc$IR$Value* local4 = NULL;
 org$frostlang$frostc$IR$Block$ID$nullable local5;
 org$frostlang$frostc$Variable* local6 = NULL;
-// line 145
+// line 146
 frost$core$Int64* $tmp2 = &param0->$rawValue;
 frost$core$Int64 $tmp3 = *$tmp2;
 frost$core$Int64 $tmp4 = (frost$core$Int64) {0};
@@ -67,13 +67,13 @@ org$frostlang$frostc$IR$Block$ID $tmp11 = *$tmp10;
 org$frostlang$frostc$IR$Block$ID* $tmp12 = (org$frostlang$frostc$IR$Block$ID*) (param0->$data + 16);
 org$frostlang$frostc$IR$Block$ID $tmp13 = *$tmp12;
 *(&local2) = $tmp13;
-// line 147
+// line 148
 frost$core$String* $tmp14 = *(&local0);
 frost$core$Bit $tmp15 = frost$core$Bit$init$builtin_bit($tmp14 != NULL);
 bool $tmp16 = $tmp15.value;
 if ($tmp16) goto block4; else goto block5;
 block4:;
-// line 148
+// line 149
 frost$core$String* $tmp17 = *(&local0);
 frost$core$String* $tmp18 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(&$s19, $tmp17);
 frost$core$String* $tmp20 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp18, &$s21);
@@ -103,7 +103,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp32));
 *(&local0) = ((frost$core$String*) NULL);
 return $tmp30;
 block5:;
-// line 150
+// line 151
 org$frostlang$frostc$IR$Block$ID $tmp33 = *(&local1);
 org$frostlang$frostc$IR$Block$ID$wrapper* $tmp34;
 $tmp34 = (org$frostlang$frostc$IR$Block$ID$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$IR$Block$ID$wrapperclass);
@@ -133,7 +133,7 @@ frost$core$Bit $tmp46 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($
 bool $tmp47 = $tmp46.value;
 if ($tmp47) goto block6; else goto block7;
 block6:;
-// line 153
+// line 154
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) &$s48));
 return &$s49;
 block7:;
@@ -149,7 +149,7 @@ frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp54));
 org$frostlang$frostc$Variable* $tmp55 = *(&local3);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp55));
 *(&local3) = $tmp54;
-// line 156
+// line 157
 org$frostlang$frostc$Variable* $tmp56 = *(&local3);
 frost$core$String* $tmp57 = frost$core$String$$ADD$frost$core$Object$R$frost$core$String(&$s58, ((frost$core$Object*) $tmp56));
 frost$core$String* $tmp59 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp57, &$s60);
@@ -173,7 +173,7 @@ frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp66));
 org$frostlang$frostc$IR$Value* $tmp67 = *(&local4);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp67));
 *(&local4) = $tmp66;
-// line 159
+// line 160
 org$frostlang$frostc$IR$Value* $tmp68 = *(&local4);
 frost$core$String* $tmp69 = frost$core$String$$ADD$frost$core$Object$R$frost$core$String(&$s70, ((frost$core$Object*) $tmp68));
 frost$core$String* $tmp71 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp69, &$s72);
@@ -200,7 +200,7 @@ frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp80));
 org$frostlang$frostc$Variable* $tmp81 = *(&local6);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp81));
 *(&local6) = $tmp80;
-// line 162
+// line 163
 org$frostlang$frostc$IR$Block$ID$nullable $tmp82 = *(&local5);
 frost$core$Bit $tmp83 = frost$core$Bit$init$builtin_bit($tmp82.nonnull);
 org$frostlang$frostc$IR$Block$ID$nullable $tmp84 = *(&local5);
@@ -244,8 +244,8 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp108));
 *(&local6) = ((org$frostlang$frostc$Variable*) NULL);
 return $tmp107;
 block1:;
-// line 166
-frost$core$Int64 $tmp109 = (frost$core$Int64) {166};
+// line 167
+frost$core$Int64 $tmp109 = (frost$core$Int64) {167};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s110, $tmp109);
 abort(); // unreachable
 
@@ -259,7 +259,7 @@ org$frostlang$frostc$Variable* local3 = NULL;
 org$frostlang$frostc$IR$Value* local4 = NULL;
 org$frostlang$frostc$IR$Block$ID$nullable local5;
 org$frostlang$frostc$Variable* local6 = NULL;
-// line 136
+// line 137
 frost$core$Int64* $tmp111 = &param0->$rawValue;
 frost$core$Int64 $tmp112 = *$tmp111;
 frost$core$Int64 $tmp113 = (frost$core$Int64) {0};
@@ -358,24 +358,24 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp153));
 *(&local6) = ((org$frostlang$frostc$Variable*) NULL);
 goto block1;
 block1:;
-// line 136
+// line 137
 frost$core$Object$cleanup(((frost$core$Object*) param0));
 return;
 
 }
 void org$frostlang$frostc$Compiler$EnclosingContext$init$frost$core$Int64$frost$core$String$Q$org$frostlang$frostc$IR$Block$ID$org$frostlang$frostc$IR$Block$ID(org$frostlang$frostc$Compiler$EnclosingContext* param0, frost$core$Int64 param1, frost$core$String* param2, org$frostlang$frostc$IR$Block$ID param3, org$frostlang$frostc$IR$Block$ID param4) {
 
-// line 136
+// line 137
 frost$core$Int64* $tmp154 = &param0->$rawValue;
 *$tmp154 = param1;
-// line 136
+// line 137
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param2));
 frost$core$String** $tmp155 = (frost$core$String**) (param0->$data + 0);
 *$tmp155 = param2;
-// line 136
+// line 137
 org$frostlang$frostc$IR$Block$ID* $tmp156 = (org$frostlang$frostc$IR$Block$ID*) (param0->$data + 8);
 *$tmp156 = param3;
-// line 136
+// line 137
 org$frostlang$frostc$IR$Block$ID* $tmp157 = (org$frostlang$frostc$IR$Block$ID*) (param0->$data + 16);
 *$tmp157 = param4;
 return;
@@ -383,7 +383,7 @@ return;
 }
 void org$frostlang$frostc$Compiler$EnclosingContext$init$frost$core$Int64(org$frostlang$frostc$Compiler$EnclosingContext* param0, frost$core$Int64 param1) {
 
-// line 136
+// line 137
 frost$core$Int64* $tmp158 = &param0->$rawValue;
 *$tmp158 = param1;
 return;
@@ -391,10 +391,10 @@ return;
 }
 void org$frostlang$frostc$Compiler$EnclosingContext$init$frost$core$Int64$org$frostlang$frostc$Variable(org$frostlang$frostc$Compiler$EnclosingContext* param0, frost$core$Int64 param1, org$frostlang$frostc$Variable* param2) {
 
-// line 136
+// line 137
 frost$core$Int64* $tmp159 = &param0->$rawValue;
 *$tmp159 = param1;
-// line 136
+// line 137
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param2));
 org$frostlang$frostc$Variable** $tmp160 = (org$frostlang$frostc$Variable**) (param0->$data + 0);
 *$tmp160 = param2;
@@ -403,10 +403,10 @@ return;
 }
 void org$frostlang$frostc$Compiler$EnclosingContext$init$frost$core$Int64$org$frostlang$frostc$IR$Value(org$frostlang$frostc$Compiler$EnclosingContext* param0, frost$core$Int64 param1, org$frostlang$frostc$IR$Value* param2) {
 
-// line 136
+// line 137
 frost$core$Int64* $tmp161 = &param0->$rawValue;
 *$tmp161 = param1;
-// line 136
+// line 137
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param2));
 org$frostlang$frostc$IR$Value** $tmp162 = (org$frostlang$frostc$IR$Value**) (param0->$data + 0);
 *$tmp162 = param2;
@@ -415,13 +415,13 @@ return;
 }
 void org$frostlang$frostc$Compiler$EnclosingContext$init$frost$core$Int64$org$frostlang$frostc$IR$Block$ID$Q$org$frostlang$frostc$Variable$Q(org$frostlang$frostc$Compiler$EnclosingContext* param0, frost$core$Int64 param1, org$frostlang$frostc$IR$Block$ID$nullable param2, org$frostlang$frostc$Variable* param3) {
 
-// line 136
+// line 137
 frost$core$Int64* $tmp163 = &param0->$rawValue;
 *$tmp163 = param1;
-// line 136
+// line 137
 org$frostlang$frostc$IR$Block$ID$nullable* $tmp164 = (org$frostlang$frostc$IR$Block$ID$nullable*) (param0->$data + 0);
 *$tmp164 = param2;
-// line 136
+// line 137
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param3));
 org$frostlang$frostc$Variable** $tmp165 = (org$frostlang$frostc$Variable**) (param0->$data + 9);
 *$tmp165 = param3;

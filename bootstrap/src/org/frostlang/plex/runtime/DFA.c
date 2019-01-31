@@ -157,7 +157,7 @@ block6:;
 frost$core$Char8 $tmp68 = *(&local6);
 frost$core$UInt8 $tmp69 = frost$core$Char8$get_asUInt8$R$frost$core$UInt8($tmp68);
 frost$core$UInt8$wrapper* $tmp70;
-$tmp70 = (frost$core$UInt8$wrapper*) frostObjectAlloc(13, (frost$core$Class*) &frost$core$UInt8$wrapperclass);
+$tmp70 = (frost$core$UInt8$wrapper*) frostObjectAlloc(17, (frost$core$Class*) &frost$core$UInt8$wrapperclass);
 $tmp70->value = $tmp69;
 frost$core$String* $tmp71 = frost$core$String$$ADD$frost$core$Object$R$frost$core$String(&$s72, ((frost$core$Object*) $tmp70));
 frost$core$String* $tmp73 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp71, &$s74);

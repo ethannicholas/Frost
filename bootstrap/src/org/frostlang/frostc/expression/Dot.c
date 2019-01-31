@@ -147,6 +147,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp47));
 return ((org$frostlang$frostc$IR$Value*) NULL);
 block4:;
 // line 34
+FROST_ASSERT(48 == sizeof(org$frostlang$frostc$IR$Value));
 org$frostlang$frostc$IR$Value* $tmp48 = (org$frostlang$frostc$IR$Value*) frostObjectAlloc(48, (frost$core$Class*) &org$frostlang$frostc$IR$Value$class);
 frost$core$Int64 $tmp49 = (frost$core$Int64) {14};
 org$frostlang$frostc$Type* $tmp50 = *(&local0);

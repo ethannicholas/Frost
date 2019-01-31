@@ -355,6 +355,7 @@ org$frostlang$frostc$Compiler** $tmp131 = &param0->compiler;
 org$frostlang$frostc$Compiler* $tmp132 = *$tmp131;
 frost$core$Bit $tmp133 = org$frostlang$frostc$Compiler$resolve$org$frostlang$frostc$MethodDecl$R$frost$core$Bit($tmp132, param1);
 // line 61
+FROST_ASSERT(48 == sizeof(frost$core$MutableString));
 frost$core$MutableString* $tmp134 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$Weak** $tmp135 = &param1->owner;
 frost$core$Weak* $tmp136 = *$tmp135;
@@ -588,6 +589,7 @@ frost$core$Bit $tmp238 = frost$core$Bit$init$builtin_bit($tmp237 != NULL);
 bool $tmp239 = $tmp238.value;
 if ($tmp239) goto block8; else goto block7;
 block8:;
+FROST_ASSERT(24 == sizeof(frost$core$RegularExpression));
 frost$core$RegularExpression* $tmp240 = (frost$core$RegularExpression*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$RegularExpression$class);
 frost$core$RegularExpression$init$frost$core$String($tmp240, &$s241);
 frost$core$Bit $tmp242 = frost$core$String$matches$frost$core$RegularExpression$R$frost$core$Bit(param1, $tmp240);
@@ -635,6 +637,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp260));
 goto block7;
 block7:;
 // line 109
+FROST_ASSERT(24 == sizeof(frost$core$RegularExpression));
 frost$core$RegularExpression* $tmp261 = (frost$core$RegularExpression*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$RegularExpression$class);
 frost$core$RegularExpression$init$frost$core$String($tmp261, &$s262);
 frost$core$Bit $tmp263 = frost$core$String$matches$frost$core$RegularExpression$R$frost$core$Bit(param1, $tmp261);
@@ -725,6 +728,7 @@ block14:;
 goto block12;
 block12:;
 // line 122
+FROST_ASSERT(24 == sizeof(frost$core$RegularExpression));
 frost$core$RegularExpression* $tmp303 = (frost$core$RegularExpression*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$RegularExpression$class);
 frost$core$RegularExpression$init$frost$core$String($tmp303, &$s304);
 frost$collections$ListView* $tmp305 = frost$core$String$parse$frost$core$RegularExpression$R$frost$collections$ListView$LTfrost$core$String$GT$Q(param1, $tmp303);
@@ -742,6 +746,7 @@ bool $tmp309 = $tmp308.value;
 if ($tmp309) goto block19; else goto block20;
 block19:;
 // line 124
+FROST_ASSERT(40 == sizeof(frost$collections$Array));
 frost$collections$Array* $tmp310 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
 frost$collections$Array$init($tmp310);
 *(&local5) = ((frost$collections$Array*) NULL);
@@ -776,6 +781,7 @@ org$frostlang$frostc$Compiler** $tmp325 = &param0->compiler;
 org$frostlang$frostc$Compiler* $tmp326 = *$tmp325;
 org$frostlang$frostc$parser$Parser** $tmp327 = &$tmp326->parser;
 org$frostlang$frostc$parser$Parser* $tmp328 = *$tmp327;
+FROST_ASSERT(24 == sizeof(frost$io$File));
 frost$io$File* $tmp329 = (frost$io$File*) frostObjectAlloc(24, (frost$core$Class*) &frost$io$File$class);
 frost$collections$ListView* $tmp330 = *(&local4);
 frost$core$Int64 $tmp331 = (frost$core$Int64) {1};

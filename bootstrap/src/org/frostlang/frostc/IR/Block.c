@@ -28,6 +28,7 @@ static frost$core$String $s59 = { (frost$core$Class*) &frost$core$String$class, 
 void org$frostlang$frostc$IR$Block$init$org$frostlang$frostc$IR$Block$ID(org$frostlang$frostc$IR$Block* param0, org$frostlang$frostc$IR$Block$ID param1) {
 
 // line 398
+FROST_ASSERT(40 == sizeof(frost$collections$Array));
 frost$collections$Array* $tmp2 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
 frost$collections$Array$init($tmp2);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp2));
@@ -38,6 +39,7 @@ frost$collections$Array** $tmp5 = &param0->ids;
 *$tmp5 = $tmp2;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp2));
 // line 400
+FROST_ASSERT(40 == sizeof(frost$collections$Array));
 frost$collections$Array* $tmp6 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
 frost$collections$Array$init($tmp6);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp6));
@@ -62,6 +64,7 @@ frost$core$String* org$frostlang$frostc$IR$Block$get_asString$R$frost$core$Strin
 frost$core$MutableString* local0 = NULL;
 frost$core$Int64 local1;
 // line 414
+FROST_ASSERT(48 == sizeof(frost$core$MutableString));
 frost$core$MutableString* $tmp13 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
 org$frostlang$frostc$IR$Block$ID* $tmp14 = &param0->id;
 org$frostlang$frostc$IR$Block$ID $tmp15 = *$tmp14;

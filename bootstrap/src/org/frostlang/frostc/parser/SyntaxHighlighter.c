@@ -91,6 +91,7 @@ void org$frostlang$frostc$parser$SyntaxHighlighter$add$org$frostlang$frostc$pars
 // line 89
 frost$collections$Array** $tmp22 = &param0->tokens;
 frost$collections$Array* $tmp23 = *$tmp22;
+FROST_ASSERT(32 == sizeof(org$frostlang$frostc$Pair));
 org$frostlang$frostc$Pair* $tmp24 = (org$frostlang$frostc$Pair*) frostObjectAlloc(32, (frost$core$Class*) &org$frostlang$frostc$Pair$class);
 org$frostlang$frostc$parser$Token$wrapper* $tmp25;
 $tmp25 = (org$frostlang$frostc$parser$Token$wrapper*) frostObjectAlloc(64, (frost$core$Class*) &org$frostlang$frostc$parser$Token$wrapperclass);
@@ -710,6 +711,7 @@ return;
 void org$frostlang$frostc$parser$SyntaxHighlighter$init(org$frostlang$frostc$parser$SyntaxHighlighter* param0) {
 
 // line 69
+FROST_ASSERT(24 == sizeof(frost$collections$Stack));
 frost$collections$Stack* $tmp384 = (frost$collections$Stack*) frostObjectAlloc(24, (frost$core$Class*) &frost$collections$Stack$class);
 frost$collections$Stack$init($tmp384);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp384));
@@ -720,6 +722,7 @@ frost$collections$Stack** $tmp387 = &param0->stack;
 *$tmp387 = $tmp384;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp384));
 // line 72
+FROST_ASSERT(40 == sizeof(frost$collections$Array));
 frost$collections$Array* $tmp388 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
 frost$collections$Array$init($tmp388);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp388));

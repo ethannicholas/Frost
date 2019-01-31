@@ -21,7 +21,8 @@ static frost$core$String $s58 = { (frost$core$Class*) &frost$core$String$class, 
 
 void org$frostlang$frostc$Compiler$AutoScope$init$org$frostlang$frostc$Compiler(org$frostlang$frostc$Compiler$AutoScope* param0, org$frostlang$frostc$Compiler* param1) {
 
-// line 225
+// line 231
+FROST_ASSERT(48 == sizeof(org$frostlang$frostc$SymbolTable));
 org$frostlang$frostc$SymbolTable* $tmp2 = (org$frostlang$frostc$SymbolTable*) frostObjectAlloc(48, (frost$core$Class*) &org$frostlang$frostc$SymbolTable$class);
 org$frostlang$frostc$SymbolTable** $tmp3 = &param1->symbolTable;
 org$frostlang$frostc$SymbolTable* $tmp4 = *$tmp3;
@@ -33,14 +34,14 @@ return;
 }
 void org$frostlang$frostc$Compiler$AutoScope$init$org$frostlang$frostc$Compiler$org$frostlang$frostc$SymbolTable(org$frostlang$frostc$Compiler$AutoScope* param0, org$frostlang$frostc$Compiler* param1, org$frostlang$frostc$SymbolTable* param2) {
 
-// line 229
+// line 235
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
 org$frostlang$frostc$Compiler** $tmp5 = &param0->compiler;
 org$frostlang$frostc$Compiler* $tmp6 = *$tmp5;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp6));
 org$frostlang$frostc$Compiler** $tmp7 = &param0->compiler;
 *$tmp7 = param1;
-// line 230
+// line 236
 org$frostlang$frostc$SymbolTable** $tmp8 = &param1->symbolTable;
 org$frostlang$frostc$SymbolTable* $tmp9 = *$tmp8;
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp9));
@@ -49,23 +50,24 @@ org$frostlang$frostc$SymbolTable* $tmp11 = *$tmp10;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp11));
 org$frostlang$frostc$SymbolTable** $tmp12 = &param0->oldSymbolTable;
 *$tmp12 = $tmp9;
-// line 231
+// line 237
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param2));
 org$frostlang$frostc$SymbolTable** $tmp13 = &param0->newSymbolTable;
 org$frostlang$frostc$SymbolTable* $tmp14 = *$tmp13;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp14));
 org$frostlang$frostc$SymbolTable** $tmp15 = &param0->newSymbolTable;
 *$tmp15 = param2;
-// line 232
+// line 238
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param2));
 org$frostlang$frostc$SymbolTable** $tmp16 = &param1->symbolTable;
 org$frostlang$frostc$SymbolTable* $tmp17 = *$tmp16;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp17));
 org$frostlang$frostc$SymbolTable** $tmp18 = &param1->symbolTable;
 *$tmp18 = param2;
-// line 233
+// line 239
 frost$collections$Stack** $tmp19 = &param1->enclosingContexts;
 frost$collections$Stack* $tmp20 = *$tmp19;
+FROST_ASSERT(48 == sizeof(org$frostlang$frostc$Compiler$EnclosingContext));
 org$frostlang$frostc$Compiler$EnclosingContext* $tmp21 = (org$frostlang$frostc$Compiler$EnclosingContext*) frostObjectAlloc(48, (frost$core$Class*) &org$frostlang$frostc$Compiler$EnclosingContext$class);
 frost$core$Int64 $tmp22 = (frost$core$Int64) {1};
 org$frostlang$frostc$Compiler$EnclosingContext$init$frost$core$Int64($tmp21, $tmp22);
@@ -77,10 +79,10 @@ return;
 void org$frostlang$frostc$Compiler$AutoScope$cleanup(org$frostlang$frostc$Compiler$AutoScope* param0) {
 
 org$frostlang$frostc$Compiler$EnclosingContext* local0 = NULL;
-// line 238
+// line 244
 goto block1;
 block1:;
-// line 239
+// line 245
 org$frostlang$frostc$Compiler** $tmp23 = &param0->compiler;
 org$frostlang$frostc$Compiler* $tmp24 = *$tmp23;
 frost$collections$Stack** $tmp25 = &$tmp24->enclosingContexts;
@@ -92,7 +94,7 @@ org$frostlang$frostc$Compiler$EnclosingContext* $tmp28 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp28));
 *(&local0) = ((org$frostlang$frostc$Compiler$EnclosingContext*) $tmp27);
 frost$core$Frost$unref$frost$core$Object$Q($tmp27);
-// line 240
+// line 246
 org$frostlang$frostc$Compiler$EnclosingContext* $tmp29 = *(&local0);
 frost$core$Int64* $tmp30 = &$tmp29->$rawValue;
 frost$core$Int64 $tmp31 = *$tmp30;
@@ -101,7 +103,7 @@ frost$core$Bit $tmp33 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($
 bool $tmp34 = $tmp33.value;
 if ($tmp34) goto block4; else goto block5;
 block4:;
-// line 242
+// line 248
 org$frostlang$frostc$Compiler$EnclosingContext* $tmp35 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp35));
 *(&local0) = ((org$frostlang$frostc$Compiler$EnclosingContext*) NULL);
@@ -117,15 +119,15 @@ frost$core$Bit $tmp40 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($
 bool $tmp41 = $tmp40.value;
 if ($tmp41) goto block6; else goto block8;
 block6:;
-// line 245
+// line 251
 org$frostlang$frostc$Compiler** $tmp42 = &param0->compiler;
 org$frostlang$frostc$Compiler* $tmp43 = *$tmp42;
 org$frostlang$frostc$Compiler$EnclosingContext* $tmp44 = *(&local0);
 org$frostlang$frostc$Compiler$leaveScope$org$frostlang$frostc$Compiler$EnclosingContext($tmp43, $tmp44);
 goto block3;
 block8:;
-// line 248
-frost$core$Int64 $tmp45 = (frost$core$Int64) {248};
+// line 254
+frost$core$Int64 $tmp45 = (frost$core$Int64) {254};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s46, $tmp45);
 abort(); // unreachable
 block3:;
@@ -134,7 +136,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp47));
 *(&local0) = ((org$frostlang$frostc$Compiler$EnclosingContext*) NULL);
 goto block1;
 block2:;
-// line 252
+// line 258
 org$frostlang$frostc$Compiler** $tmp48 = &param0->compiler;
 org$frostlang$frostc$Compiler* $tmp49 = *$tmp48;
 org$frostlang$frostc$SymbolTable** $tmp50 = &$tmp49->symbolTable;
@@ -146,11 +148,11 @@ frost$core$Bit $tmp55 = frost$core$Bit$init$builtin_bit($tmp54);
 bool $tmp56 = $tmp55.value;
 if ($tmp56) goto block9; else goto block10;
 block10:;
-frost$core$Int64 $tmp57 = (frost$core$Int64) {252};
+frost$core$Int64 $tmp57 = (frost$core$Int64) {258};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s58, $tmp57);
 abort(); // unreachable
 block9:;
-// line 253
+// line 259
 org$frostlang$frostc$Compiler** $tmp59 = &param0->compiler;
 org$frostlang$frostc$Compiler* $tmp60 = *$tmp59;
 org$frostlang$frostc$SymbolTable** $tmp61 = &param0->oldSymbolTable;
@@ -161,7 +163,7 @@ org$frostlang$frostc$SymbolTable* $tmp64 = *$tmp63;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp64));
 org$frostlang$frostc$SymbolTable** $tmp65 = &$tmp60->symbolTable;
 *$tmp65 = $tmp62;
-// line 237
+// line 243
 frost$core$Object$cleanup(((frost$core$Object*) param0));
 org$frostlang$frostc$Compiler** $tmp66 = &param0->compiler;
 org$frostlang$frostc$Compiler* $tmp67 = *$tmp66;

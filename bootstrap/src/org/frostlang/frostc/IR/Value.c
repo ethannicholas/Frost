@@ -379,7 +379,7 @@ frost$core$Bit $tmp120 = *$tmp119;
 // line 494
 frost$core$Bit $tmp121 = *(&local0);
 frost$core$Bit$wrapper* $tmp122;
-$tmp122 = (frost$core$Bit$wrapper*) frostObjectAlloc(13, (frost$core$Class*) &frost$core$Bit$wrapperclass);
+$tmp122 = (frost$core$Bit$wrapper*) frostObjectAlloc(17, (frost$core$Class*) &frost$core$Bit$wrapperclass);
 $tmp122->value = $tmp121;
 $fn124 $tmp123 = ($fn124) ((frost$core$Object*) $tmp122)->$class->vtable[0];
 frost$core$String* $tmp125 = $tmp123(((frost$core$Object*) $tmp122));

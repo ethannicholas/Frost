@@ -229,6 +229,7 @@ class InputStream {
     Reads from this stream until the end, returning the data read as an `Array<UInt8>`. As streams
     may contain a very large (or even infinite) amount of data, you should exercise caution when
     using `readFully`.
+    FIXME error
     ================================================================================================
     method readFully():Array<UInt8> {
         constant BUFFER_SIZE := 2048

@@ -185,21 +185,9 @@ class UInt64 : Value, Key<UInt64>, Comparable<UInt64>, Formattable, ListView<Bit
     }
 
     ===Returns this number shifted left by the specified number of bits.===
-    @priority(13)
-    function <<(other:Int64):Int64 {
-        return value->builtin_int64 << other.value
-    }
-
-    ===Returns this number shifted left by the specified number of bits.===
     @priority(20)
     function <<(other:UInt64):UInt64 {
         return value << other.value
-    }
-
-    ===Returns this number logical shifted right by the specified number of bits.===
-    @priority(13)
-    function >>(other:Int64):Int64 {
-        return value->builtin_int64 >> other.value
     }
 
     ===Returns this number logical shifted right by the specified number of bits.===

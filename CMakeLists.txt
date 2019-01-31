@@ -214,8 +214,10 @@ add_executable(bootstrap
     bootstrap/src/org/frostlang/frostc/Compiler.c
     bootstrap/src/org/frostlang/frostc/Compiler/_Closure2.c
     bootstrap/src/org/frostlang/frostc/Compiler/_Closure10.c
-    bootstrap/src/org/frostlang/frostc/Compiler/_Closure12.c
-    bootstrap/src/org/frostlang/frostc/Compiler/_Closure14.c
+    bootstrap/src/org/frostlang/frostc/Compiler/_Closure13.c
+    bootstrap/src/org/frostlang/frostc/Compiler/_Closure16.c
+    bootstrap/src/org/frostlang/frostc/Compiler/_Closure18.c
+    bootstrap/src/org/frostlang/frostc/Compiler/_Closure20.c
     bootstrap/src/org/frostlang/frostc/Compiler/AutoAtPreFlag.c
     bootstrap/src/org/frostlang/frostc/Compiler/AutoContext.c
     bootstrap/src/org/frostlang/frostc/Compiler/AutoScope.c
@@ -227,6 +229,7 @@ add_executable(bootstrap
     bootstrap/src/org/frostlang/frostc/Compiler/Message.c
     bootstrap/src/org/frostlang/frostc/Compiler/Resolution.c
     bootstrap/src/org/frostlang/frostc/Compiler/Settings.c
+    bootstrap/src/org/frostlang/frostc/Compiler/Target.c
     bootstrap/src/org/frostlang/frostc/Compiler/TypeContext.c
     bootstrap/src/org/frostlang/frostc/expression/And.c
     bootstrap/src/org/frostlang/frostc/expression/ArrayLiteral.c
@@ -241,6 +244,8 @@ add_executable(bootstrap
     bootstrap/src/org/frostlang/frostc/expression/Identifier.c
     bootstrap/src/org/frostlang/frostc/expression/IntLiteral.c
     bootstrap/src/org/frostlang/frostc/expression/Or.c
+    bootstrap/src/org/frostlang/frostc/expression/Tuple.c
+    bootstrap/src/org/frostlang/frostc/expression/Tuple/_Closure2.c
     bootstrap/src/org/frostlang/frostc/expression/Unary.c
     bootstrap/src/org/frostlang/frostc/expression/Unary/Operator.c
     bootstrap/src/org/frostlang/frostc/FieldDecl.c
@@ -326,6 +331,7 @@ add_executable(bootstrap
     bootstrap/src/org/frostlang/frostc/StubCodeGenerator/_Closure6.c
     bootstrap/src/org/frostlang/frostc/StubCodeGenerator/_Closure8.c
     bootstrap/src/org/frostlang/frostc/StubCodeGenerator/_Closure10.c
+    bootstrap/src/org/frostlang/frostc/StubCodeGenerator/_Closure12.c
     bootstrap/src/org/frostlang/frostc/Symbol.c
     bootstrap/src/org/frostlang/frostc/Symbol/Kind.c
     bootstrap/src/org/frostlang/frostc/SymbolTable.c
@@ -356,6 +362,7 @@ add_executable(bootstrap
     bootstrap/src/frost/collections/ImmutableArray/ImmutableArrayIterator.c
     bootstrap/src/frost/collections/Iterable.c
     bootstrap/src/frost/collections/Iterator.c
+    bootstrap/src/frost/collections/Iterator/EnumerationIterator.c
     bootstrap/src/frost/collections/Iterator/FilterIterator.c
     bootstrap/src/frost/collections/Iterator/MapIterator.c
     bootstrap/src/frost/collections/Iterator/RangeIterator.c
@@ -430,6 +437,21 @@ add_executable(bootstrap
     bootstrap/src/frost/core/String/UTF8List.c
     bootstrap/src/frost/core/System.c
     bootstrap/src/frost/core/System/Process.c
+    bootstrap/src/frost/core/Tuple2.c
+    bootstrap/src/frost/core/Tuple3.c
+    bootstrap/src/frost/core/Tuple4.c
+    bootstrap/src/frost/core/Tuple5.c
+    bootstrap/src/frost/core/Tuple6.c
+    bootstrap/src/frost/core/Tuple7.c
+    bootstrap/src/frost/core/Tuple8.c
+    bootstrap/src/frost/core/Tuple9.c
+    bootstrap/src/frost/core/Tuple10.c
+    bootstrap/src/frost/core/Tuple11.c
+    bootstrap/src/frost/core/Tuple12.c
+    bootstrap/src/frost/core/Tuple13.c
+    bootstrap/src/frost/core/Tuple14.c
+    bootstrap/src/frost/core/Tuple15.c
+    bootstrap/src/frost/core/Tuple16.c
     bootstrap/src/frost/core/UInt16.c
     bootstrap/src/frost/core/UInt32.c
     bootstrap/src/frost/core/UInt64.c
@@ -533,6 +555,36 @@ set(public_source
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/Tuple14.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/Tuple15.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/Tuple16.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/EquatableTuple2.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/EquatableTuple3.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/EquatableTuple4.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/EquatableTuple5.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/EquatableTuple6.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/EquatableTuple7.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/EquatableTuple8.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/EquatableTuple9.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/EquatableTuple10.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/EquatableTuple11.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/EquatableTuple12.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/EquatableTuple13.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/EquatableTuple14.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/EquatableTuple15.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/EquatableTuple16.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/KeyTuple2.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/KeyTuple3.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/KeyTuple4.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/KeyTuple5.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/KeyTuple6.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/KeyTuple7.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/KeyTuple8.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/KeyTuple9.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/KeyTuple10.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/KeyTuple11.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/KeyTuple12.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/KeyTuple13.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/KeyTuple14.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/KeyTuple15.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/KeyTuple16.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/UInt16.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/UInt32.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/UInt64.frost
@@ -648,6 +700,36 @@ add_custom_command(
            src/frost/core/Tuple14.frost
            src/frost/core/Tuple15.frost
            src/frost/core/Tuple16.frost
+           src/frost/core/EquatableTuple2.frost
+           src/frost/core/EquatableTuple3.frost
+           src/frost/core/EquatableTuple4.frost
+           src/frost/core/EquatableTuple5.frost
+           src/frost/core/EquatableTuple6.frost
+           src/frost/core/EquatableTuple7.frost
+           src/frost/core/EquatableTuple8.frost
+           src/frost/core/EquatableTuple9.frost
+           src/frost/core/EquatableTuple10.frost
+           src/frost/core/EquatableTuple11.frost
+           src/frost/core/EquatableTuple12.frost
+           src/frost/core/EquatableTuple13.frost
+           src/frost/core/EquatableTuple14.frost
+           src/frost/core/EquatableTuple15.frost
+           src/frost/core/EquatableTuple16.frost
+           src/frost/core/KeyTuple2.frost
+           src/frost/core/KeyTuple3.frost
+           src/frost/core/KeyTuple4.frost
+           src/frost/core/KeyTuple5.frost
+           src/frost/core/KeyTuple6.frost
+           src/frost/core/KeyTuple7.frost
+           src/frost/core/KeyTuple8.frost
+           src/frost/core/KeyTuple9.frost
+           src/frost/core/KeyTuple10.frost
+           src/frost/core/KeyTuple11.frost
+           src/frost/core/KeyTuple12.frost
+           src/frost/core/KeyTuple13.frost
+           src/frost/core/KeyTuple14.frost
+           src/frost/core/KeyTuple15.frost
+           src/frost/core/KeyTuple16.frost
     COMMAND ${CMAKE_CURRENT_BINARY_DIR}/writeTuples
     DEPENDS writeTuples
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
@@ -706,6 +788,36 @@ add_custom_target(generate_code
             src/frost/core/Tuple14.frost
             src/frost/core/Tuple15.frost
             src/frost/core/Tuple16.frost
+            src/frost/core/EquatableTuple2.frost
+            src/frost/core/EquatableTuple3.frost
+            src/frost/core/EquatableTuple4.frost
+            src/frost/core/EquatableTuple5.frost
+            src/frost/core/EquatableTuple6.frost
+            src/frost/core/EquatableTuple7.frost
+            src/frost/core/EquatableTuple8.frost
+            src/frost/core/EquatableTuple9.frost
+            src/frost/core/EquatableTuple10.frost
+            src/frost/core/EquatableTuple11.frost
+            src/frost/core/EquatableTuple12.frost
+            src/frost/core/EquatableTuple13.frost
+            src/frost/core/EquatableTuple14.frost
+            src/frost/core/EquatableTuple15.frost
+            src/frost/core/EquatableTuple16.frost
+            src/frost/core/KeyTuple2.frost
+            src/frost/core/KeyTuple3.frost
+            src/frost/core/KeyTuple4.frost
+            src/frost/core/KeyTuple5.frost
+            src/frost/core/KeyTuple6.frost
+            src/frost/core/KeyTuple7.frost
+            src/frost/core/KeyTuple8.frost
+            src/frost/core/KeyTuple9.frost
+            src/frost/core/KeyTuple10.frost
+            src/frost/core/KeyTuple11.frost
+            src/frost/core/KeyTuple12.frost
+            src/frost/core/KeyTuple13.frost
+            src/frost/core/KeyTuple14.frost
+            src/frost/core/KeyTuple15.frost
+            src/frost/core/KeyTuple16.frost
             src/parser/org/frostlang/json/Lexer.frost
             src/parser/org/frostlang/json/Token.frost
             test/tests/Operators.frost
@@ -850,6 +962,7 @@ set(frostc_source
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/expression/Identifier.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/expression/IntLiteral.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/expression/Or.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/expression/Tuple.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/expression/Unary.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/FieldDecl.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/FixedArray.frost
@@ -1061,12 +1174,12 @@ add_custom_command(
     DEPENDS frostc test/TestRunner.frost
 )
 
-add_custom_target(test
+add_custom_target(run_tests
     DEPENDS TestRunner
 )
 
 add_custom_command(
-    TARGET test POST_BUILD
+    TARGET run_tests POST_BUILD
     COMMAND ${CMAKE_CURRENT_BINARY_DIR}/TestRunner ${CMAKE_CURRENT_SOURCE_DIR}
             ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_C_COMPILER} ${ICU_LIBRARIES}
 )

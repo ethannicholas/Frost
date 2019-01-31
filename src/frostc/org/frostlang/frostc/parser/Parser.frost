@@ -910,17 +910,18 @@ class Parser {
                     returnType := returnTypes[0]
                 }
                 else {
-                    --returnType := ASTNode.TUPLE_TYPE(start.position, returnTypes.finish())
-                    error(start, "tuple types are not yet supported")
-                    return null
+                    returnType := ASTNode.TUPLE_TYPE(start.position,
+                            FixedArray<ASTNode>.from(returnTypes))
                 }
                 return ASTNode.METHOD_TYPE(start.position, yields.kind,
                         FixedArray<ASTNode>.from(subtypes), returnType)
             }
             otherwise {
-                --return ASTNode.TUPLE_TYPE(start.position, FixedArray<ASTNode>.from(subtypes))
-                error(start, "tuple types are not yet supported")
-                return null
+                if subtypes.count < 1 {
+                    error(start, "invalid type")
+                    return null
+                }
+                return ASTNode.TUPLE_TYPE(start.position, FixedArray<ASTNode>.from(subtypes))
             }
         }
     }
@@ -1274,7 +1275,7 @@ class Parser {
             def op := next()
             match op.kind {
                 when Token.Kind.MUL, Token.Kind.DIV, Token.Kind.INTDIV, Token.Kind.REM,
-                        Token.Kind.SHIFTLEFT, Token.Kind.BITWISEAND, Token.Kind.BITWISEOR {
+                        Token.Kind.SHIFTLEFT, Token.Kind.BITWISEAND {
                     def next := prefixExpression()
                     if next == null {
                         return null
@@ -1308,10 +1309,10 @@ class Parser {
     }
 
     ================================================================================================
-    additiveExpression = multiplicativeExpression
-            ((ADD | SUB | BITWISEOR) multiplicativeExpression)*
+    bitwiseExpression = multiplicativeExpression ((BITWISEOR | BITWISEAND | BITWISEXOR) 
+            multiplicativeExpression)*
     ================================================================================================
-    method additiveExpression():ASTNode? {
+    method bitwiseExpression():ASTNode? {
         var result := multiplicativeExpression()
         if result == null {
             return null
@@ -1319,8 +1320,36 @@ class Parser {
         loop {
             def op := next()
             match op.kind {
-                when Token.Kind.ADD, Token.Kind.SUB, Token.Kind.BITWISEXOR {
+                when Token.Kind.BITWISEOR, Token.Kind.BITWISEAND, Token.Kind.BITWISEXOR {
                     def next := multiplicativeExpression()
+                    if next == null {
+                        return null
+                    }
+                    result := ASTNode.BINARY(op.position, result, Binary.Operator.fromToken(op),
+                            next)
+                }
+                otherwise {
+                    pushback(op)
+                    return result
+                }
+            }
+        }
+    }
+
+    ================================================================================================
+    additiveExpression = bitwiseExpression
+            ((ADD | SUB | BITWISEOR) bitwiseExpression)*
+    ================================================================================================
+    method additiveExpression():ASTNode? {
+        var result := bitwiseExpression()
+        if result == null {
+            return null
+        }
+        loop {
+            def op := next()
+            match op.kind {
+                when Token.Kind.ADD, Token.Kind.SUB, Token.Kind.BITWISEXOR {
+                    def next := bitwiseExpression()
                     if next == null {
                         return null
                     }
@@ -1532,9 +1561,27 @@ class Parser {
     }
 
     ================================================================================================
-    target = IDENTIFIER (typeDeclaration?)
+    target = IDENTIFIER (typeDeclaration?) | LPAREN target (COMMA target)* RPAREN
     ================================================================================================
     method target():ASTNode? {
+        def paren := checkNext(Token.Kind.LPAREN)
+        if paren !== null {
+            def targets := Array<ASTNode>()
+            var t := target()
+            if t == null {
+                return null
+            }
+            targets.add(t)
+            while checkNext(Token.Kind.COMMA) !== null {
+                t := target()
+                if t == null {
+                    return null
+                }
+                targets.add(t)
+            }
+            expect(Token.Kind.RPAREN, "')'")
+            return ASTNode.TUPLE_TARGET(paren.position, FixedArray<ASTNode>(targets))
+        }
         def id := expect(Token.Kind.IDENTIFIER, "an identifier")
         if id == null {
             return null

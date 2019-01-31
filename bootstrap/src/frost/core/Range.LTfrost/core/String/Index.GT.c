@@ -48,6 +48,7 @@ frost$core$String* frost$core$Range$LTfrost$core$String$Index$GT$get_asString$R$
 
 frost$core$MutableString* local0 = NULL;
 // line 37
+FROST_ASSERT(48 == sizeof(frost$core$MutableString));
 frost$core$MutableString* $tmp7 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init($tmp7);
 *(&local0) = ((frost$core$MutableString*) NULL);

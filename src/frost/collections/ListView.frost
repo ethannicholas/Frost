@@ -10,6 +10,8 @@ to `count - 1`, by which it can be accessed.
 @see List
 ====================================================================================================
 interface ListView<T> : CollectionView<T> {
+    property enumeration:Iterator<(Int, T)>
+
     @private
     class ListIterator<T> : Iterator<T> {
         var list:ListView<T>
@@ -49,6 +51,7 @@ interface ListView<T> : CollectionView<T> {
     @default
     @pre(r.min >= 0 & (r.inclusive & r.min < count | !r.inclusive & r.min <= count) &
             r.max >= 0 & (r.inclusive & r.max < count | !r.inclusive & r.max <= count))
+    @priority(1) -- FIXME shouldn't be needed
     function [](r:Range<Int>):ListView<T> {
         var max := r.max
         if r.inclusive {
@@ -229,6 +232,11 @@ interface ListView<T> : CollectionView<T> {
     @override
     function get_iterator():Iterator<T> {
         return ListIterator<T>(self)
+    }
+
+    @default
+    function get_enumeration():Iterator<(Int, T)> {
+        return iterator.enumeration
     }
 
     ================================================================================================

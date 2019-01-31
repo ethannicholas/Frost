@@ -226,8 +226,6 @@ class CCodeGenerator : CodeGenerator {
 
     def methodShims := IdentityMap<MethodDecl, MethodShim>()
 
-    def choiceDataSizes := IdentityMap<ClassDecl, Int>()
-
     def refs := HashMap<IR.Statement.ID, String>()
 
     def ir:IR
@@ -242,84 +240,16 @@ class CCodeGenerator : CodeGenerator {
         return "$l\{varCount}"
     }
 
-    method getChoiceDataSize(cl:ClassDecl):Int {
-        var result := choiceDataSizes[cl]
-        if result == null {
-            result := 0
-            for entry in cl.choiceCases {
-                compiler.resolve(entry)
-                var current := 0
-                for f in entry.fields {
-                    -- FIXME need to respect alignment!
-                    current += fieldSize(f)
-                }
-                result := result.max(current)
-            }
-            choiceDataSizes[cl] := result
-        }
-        return result
-    }
-
     function fieldSize(t:Type):Int {
-        assert t.resolved
-        if t.isBuiltinNumber {
-            if t.name.endsWith("8") {
-                return 1
-            }
-            if t.name.endsWith("16") {
-                return 2
-            }
-            if t.name.endsWith("32") {
-                return 4
-            }
-            assert t.name.endsWith("64")
-            return 8
-        }
-        if t = Type.BuiltinBit() {
-            return 1
-        }
-        def cl := compiler.getClass(t)
-        assert cl !== null
-        if !compiler.isValue(cl) | cl.name = "frost.unsafe.Pointer" {
-            return POINTER_SIZE
-        }
-        var result := 0
-        for f in compiler.instanceFields(cl) {
-            if f.annotations.isClass {
-                continue
-            }
-            compiler.resolve(f)
-            if f.type = Type.ChoiceData() {
-                -- FIXME need to respect alignment!
-                result += hCodeGen.llvmCodeGen.getChoiceDataSize(cl)
-            }
-            else {
-                def size := fieldSize(f.type)
-                def align := result % size
-                if align != 0 {
-                    result += size - align
-                }
-                assert result % size = 0
-                result += size
-            }
-        }
-        if t.typeKind = Type.Kind.NULLABLE {
-            result += 1
-        }
-        return result
+        return hCodeGen.llvmCodeGen.fieldSize(t)
     }
 
     function alignment(t:Type):Int {
-        return fieldSize(t).min(8)
+        return hCodeGen.llvmCodeGen.alignment(t)
     }
 
     function stride(t:Type):Int {
-        def s := fieldSize(t)
-        def a := alignment(t)
-        if s % a = 0 {
-            return s
-        }
-        return s + a - s % a
+        return hCodeGen.llvmCodeGen.stride(t)
     }
 
     function sizeOfWrapper(t:Type):Int {
@@ -1248,6 +1178,7 @@ class CCodeGenerator : CodeGenerator {
             }
             def result := nextVar()
             def target := cl.type
+            out.printLine("FROST_ASSERT(\{sizeOf(target)} == sizeof(\{escapeName(cl.name)}));")
             out.printLine("\{cType(target)} \{result} = (\{cType(target)}) frostObjectAlloc(" +
                     "\{sizeOf(target)}, \{ccCast});")
             refs[id] := result
@@ -1469,7 +1400,7 @@ class CCodeGenerator : CodeGenerator {
             def ptrRef := getReference(ptr)
             def oldCountRef := getReference(oldCount)
             def newCountRef := getReference(newCount)
-            def elementSize := stride(ptr.type())
+            def elementSize := stride(ptr.type().subtypes[1])
             assert elementSize > 0, "invalid size for type \{ptr.type()}"
             def result := nextVar()
             out.printLine("\{cType(ptr.type())} \{result} = (\{cType(ptr.type())}) frostRealloc(" +

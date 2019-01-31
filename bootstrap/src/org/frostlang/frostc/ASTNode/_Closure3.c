@@ -14,7 +14,7 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 
 void org$frostlang$frostc$ASTNode$_Closure3$init$frost$core$MutableString(org$frostlang$frostc$ASTNode$_Closure3* param0, frost$core$MutableString* param1) {
 
-// line 576
+// line 583
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
 frost$core$MutableString** $tmp2 = &param0->$dummy1;
 frost$core$MutableString* $tmp3 = *$tmp2;
@@ -26,7 +26,7 @@ return;
 }
 void org$frostlang$frostc$ASTNode$_Closure3$cleanup(org$frostlang$frostc$ASTNode$_Closure3* param0) {
 
-// line 576
+// line 583
 frost$core$Object$cleanup(((frost$core$Object*) param0));
 frost$core$MutableString** $tmp5 = &param0->$dummy1;
 frost$core$MutableString* $tmp6 = *$tmp5;
@@ -36,7 +36,7 @@ return;
 }
 void org$frostlang$frostc$ASTNode$_Closure3$$anonymous2$frost$core$Object(org$frostlang$frostc$ASTNode$_Closure3* param0, frost$core$Object* param1) {
 
-// line 576
+// line 583
 frost$core$MutableString** $tmp7 = &param0->$dummy1;
 frost$core$MutableString* $tmp8 = *$tmp7;
 frost$core$MutableString$append$frost$core$Object($tmp8, param1);

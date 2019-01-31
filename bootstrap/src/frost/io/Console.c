@@ -104,6 +104,7 @@ frost$core$String* frost$io$Console$readLine$R$frost$core$String$Q() {
 frost$core$MutableString* local0 = NULL;
 frost$core$Char8$nullable local1;
 // line 127
+FROST_ASSERT(48 == sizeof(frost$core$MutableString));
 frost$core$MutableString* $tmp16 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init($tmp16);
 *(&local0) = ((frost$core$MutableString*) NULL);

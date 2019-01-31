@@ -37,6 +37,7 @@ static frost$core$String $s123 = { (frost$core$Class*) &frost$core$String$class,
 frost$math$Random* frost$math$Random$default$R$frost$math$Random() {
 
 // line 17
+FROST_ASSERT(32 == sizeof(frost$math$XorShift128Plus));
 frost$math$XorShift128Plus* $tmp2 = (frost$math$XorShift128Plus*) frostObjectAlloc(32, (frost$core$Class*) &frost$math$XorShift128Plus$class);
 int64_t $tmp3 = frost$core$Frost$currentTime$R$builtin_int64();
 frost$core$Int64 $tmp4 = frost$core$Int64$init$builtin_int64($tmp3);

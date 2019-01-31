@@ -1,0 +1,272 @@
+-*
+
+--- Day 4: The Ideal Stocking Stuffer ---
+
+Santa needs help mining some AdventCoins (very similar to bitcoins) to use as 
+gifts for all the economically forward-thinking little girls and boys.
+
+To do this, he needs to find MD5 hashes which, in hexadecimal, start with at 
+least five zeroes. The input to the MD5 hash is some secret key (your puzzle 
+input, given below) followed by a number in decimal. To mine AdventCoins, you 
+must find Santa the lowest positive number (no leading zeroes: 1, 2, 3, ...) 
+that produces such a hash.
+
+For example:
+
+If your secret key is abcdef, the answer is 609043, because the MD5 hash of 
+abcdef609043 starts with five zeroes (000001dbbfa...), and it is the lowest such
+number to do so.
+If your secret key is pqrstuv, the lowest number it combines with to make an MD5
+hash starting with five zeroes is 1048970; that is, the MD5 hash of 
+pqrstuv1048970 looks like 000006136ef....
+
+--- Part Two ---
+
+Now find one that starts with six zeroes.
+
+*-
+
+method main() {
+    def input := Console.inputStream().readFully()
+    def find := function(s:String):Int {
+        var i := 0
+        loop {
+            def hex := MD5.hex(MD5.md5((input + i).utf8))
+            if hex.startsWith(s) {
+                return i
+            }
+            i += 1
+        }
+    }
+-- to keep this from taking too long during tests, we actually solve a simpler instance of the
+-- problem here
+--    Console.printLine(find("00000"))
+--    Console.printLine(find("000000"))
+    Console.printLine(find("00"))
+    Console.printLine(find("000"))
+}
+
+-----
+
+class MD5 {
+    @private
+    constant CHUNK_SIZE := 64
+
+    @private
+    var a0:Int32 := 0x67452301.asInt32
+
+    @private
+    var b0:Int32 := 0xefcdab89.asInt32
+
+    @private
+    var c0:Int32 := 0x98badcfe.asInt32
+
+    @private
+    var d0:Int32 := 0x10325476.asInt32
+
+    @private
+    var bitLength := 0
+
+    @private
+    var count := 0
+
+    @private
+    def buffer := Array<UInt8>(64, 0)
+
+    @private
+    function leftRotate(x:Int32, c:Int32):Int32 {
+        return (x << c) || (x.asUInt32 >> (32 - c).asUInt32).asInt32
+    }
+
+    @private
+    function ff(a:Int32, b:Int32, c:Int32, d:Int32, x:Int32, s:Int32, 
+            ac:Int32):Int32 {
+        def t := a + ((b && c) || (!!b && d)) + x + ac
+        return leftRotate(t, s) + b
+    }
+
+    @private
+    function gg(a:Int32, b:Int32, c:Int32, d:Int32, x:Int32, s:Int32, 
+            ac:Int32):Int32 {
+        def t := a + ((b && d) || (c && !!d)) + x + ac
+        return leftRotate(t, s) + b
+    }
+
+    @private
+    function hh(a:Int32, b:Int32, c:Int32, d:Int32, x:Int32, s:Int32, 
+            ac:Int32):Int32 {
+        def t := a + (b ~~ c ~~ d) + x + ac
+        return leftRotate(t, s) + b
+    }
+
+    @private
+    function ii(a:Int32, b:Int32, c:Int32, d:Int32, x:Int32, s:Int32, 
+            ac:Int32):Int32 {
+        def t := a + (c ~~ (b || !!d)) + x + ac
+        return leftRotate(t, s) + b
+    }
+
+    @private
+    method processChunk() {
+        function word(i:Int):Int32 {
+            return (self.buffer[i * 4 + 3] << 24 ||
+                    self.buffer[i * 4 + 2] << 16 ||
+                    self.buffer[i * 4 + 1] <<  8 ||
+                    self.buffer[i * 4 + 0]).asInt32
+        }
+        var a := a0
+        var b := b0
+        var c := c0
+        var d := d0
+        a := ff(a, b, c, d, word( 0),   7, 0xd76aa478.asInt32)
+        d := ff(d, a, b, c, word( 1),  12, 0xe8c7b756.asInt32)
+        c := ff(c, d, a, b, word( 2),  17, 0x242070db.asInt32)
+        b := ff(b, c, d, a, word( 3),  22, 0xc1bdceee.asInt32)
+        a := ff(a, b, c, d, word( 4),   7, 0xf57c0faf.asInt32)
+        d := ff(d, a, b, c, word( 5),  12, 0x4787c62a.asInt32)
+        c := ff(c, d, a, b, word( 6),  17, 0xa8304613.asInt32)
+        b := ff(b, c, d, a, word( 7),  22, 0xfd469501.asInt32)
+        a := ff(a, b, c, d, word( 8),   7, 0x698098d8.asInt32)
+        d := ff(d, a, b, c, word( 9),  12, 0x8b44f7af.asInt32)
+        c := ff(c, d, a, b, word(10),  17, 0xffff5bb1.asInt32)
+        b := ff(b, c, d, a, word(11),  22, 0x895cd7be.asInt32)
+        a := ff(a, b, c, d, word(12),   7, 0x6b901122.asInt32)
+        d := ff(d, a, b, c, word(13),  12, 0xfd987193.asInt32)
+        c := ff(c, d, a, b, word(14),  17, 0xa679438e.asInt32)
+        b := ff(b, c, d, a, word(15),  22, 0x49b40821.asInt32)
+        a := gg(a, b, c, d, word( 1),   5, 0xf61e2562.asInt32)
+        d := gg(d, a, b, c, word( 6),   9, 0xc040b340.asInt32)
+        c := gg(c, d, a, b, word(11),  14, 0x265e5a51.asInt32)
+        b := gg(b, c, d, a, word( 0),  20, 0xe9b6c7aa.asInt32)
+        a := gg(a, b, c, d, word( 5),   5, 0xd62f105d.asInt32)
+        d := gg(d, a, b, c, word(10),   9,  0x2441453.asInt32)
+        c := gg(c, d, a, b, word(15),  14, 0xd8a1e681.asInt32)
+        b := gg(b, c, d, a, word( 4),  20, 0xe7d3fbc8.asInt32)
+        a := gg(a, b, c, d, word( 9),   5, 0x21e1cde6.asInt32)
+        d := gg(d, a, b, c, word(14),   9, 0xc33707d6.asInt32)
+        c := gg(c, d, a, b, word( 3),  14, 0xf4d50d87.asInt32)
+        b := gg(b, c, d, a, word( 8),  20, 0x455a14ed.asInt32)
+        a := gg(a, b, c, d, word(13),   5, 0xa9e3e905.asInt32)
+        d := gg(d, a, b, c, word( 2),   9, 0xfcefa3f8.asInt32)
+        c := gg(c, d, a, b, word( 7),  14, 0x676f02d9.asInt32)
+        b := gg(b, c, d, a, word(12),  20, 0x8d2a4c8a.asInt32)
+        a := hh(a, b, c, d, word( 5),   4, 0xfffa3942.asInt32)
+        d := hh(d, a, b, c, word( 8),  11, 0x8771f681.asInt32)
+        c := hh(c, d, a, b, word(11),  16, 0x6d9d6122.asInt32)
+        b := hh(b, c, d, a, word(14),  23, 0xfde5380c.asInt32)
+        a := hh(a, b, c, d, word( 1),   4, 0xa4beea44.asInt32)
+        d := hh(d, a, b, c, word( 4),  11, 0x4bdecfa9.asInt32)
+        c := hh(c, d, a, b, word( 7),  16, 0xf6bb4b60.asInt32)
+        b := hh(b, c, d, a, word(10),  23, 0xbebfbc70.asInt32)
+        a := hh(a, b, c, d, word(13),   4, 0x289b7ec6.asInt32)
+        d := hh(d, a, b, c, word( 0),  11, 0xeaa127fa.asInt32)
+        c := hh(c, d, a, b, word( 3),  16, 0xd4ef3085.asInt32)
+        b := hh(b, c, d, a, word( 6),  23,  0x4881d05.asInt32)
+        a := hh(a, b, c, d, word( 9),   4, 0xd9d4d039.asInt32)
+        d := hh(d, a, b, c, word(12),  11, 0xe6db99e5.asInt32)
+        c := hh(c, d, a, b, word(15),  16, 0x1fa27cf8.asInt32)
+        b := hh(b, c, d, a, word( 2),  23, 0xc4ac5665.asInt32)
+        a := ii(a, b, c, d, word( 0),   6, 0xf4292244.asInt32)
+        d := ii(d, a, b, c, word( 7),  10, 0x432aff97.asInt32)
+        c := ii(c, d, a, b, word(14),  15, 0xab9423a7.asInt32)
+        b := ii(b, c, d, a, word( 5),  21, 0xfc93a039.asInt32)
+        a := ii(a, b, c, d, word(12),   6, 0x655b59c3.asInt32)
+        d := ii(d, a, b, c, word( 3),  10, 0x8f0ccc92.asInt32)
+        c := ii(c, d, a, b, word(10),  15, 0xffeff47d.asInt32)
+        b := ii(b, c, d, a, word( 1),  21, 0x85845dd1.asInt32)
+        a := ii(a, b, c, d, word( 8),   6, 0x6fa87e4f.asInt32)
+        d := ii(d, a, b, c, word(15),  10, 0xfe2ce6e0.asInt32)
+        c := ii(c, d, a, b, word( 6),  15, 0xa3014314.asInt32)
+        b := ii(b, c, d, a, word(13),  21, 0x4e0811a1.asInt32)
+        a := ii(a, b, c, d, word( 4),   6, 0xf7537e82.asInt32)
+        d := ii(d, a, b, c, word(11),  10, 0xbd3af235.asInt32)
+        c := ii(c, d, a, b, word( 2),  15, 0x2ad7d2bb.asInt32)
+        b := ii(b, c, d, a, word( 9),  21, 0xeb86d391.asInt32)
+
+        a0 += a
+        b0 += b
+        c0 += c
+        d0 += d         
+    }
+
+    method update(message:ListView<UInt8>) {
+        for b in message {
+            buffer[count] := b
+            count += 1
+            if count = 64 {
+                processChunk()
+                bitLength += 512
+                count := 0
+            }
+        }
+    }
+
+    method finish():Array<UInt8> {
+        if count < 56 {
+            buffer[count] := 0x80
+            for i in count + 1 .. 56 {
+                buffer[i] := 0
+            }
+        }
+        else {
+            buffer[count] := 0x80
+            for i in count + 1 .. 64 {
+                buffer[i] := 0
+            }
+            processChunk()
+            for i in 0 .. 64 {
+                buffer[i] := 0
+            }
+        }
+        bitLength += count * 8
+        buffer[56] := bitLength.asUInt8
+        buffer[57] := (bitLength >> 8).asUInt8
+        buffer[58] := (bitLength >> 16).asUInt8
+        buffer[59] := (bitLength >> 24).asUInt8
+        buffer[60] := (bitLength >> 32).asUInt8
+        buffer[61] := (bitLength >> 40).asUInt8
+        buffer[62] := (bitLength >> 48).asUInt8
+        buffer[63] := (bitLength >> 56).asUInt8
+        processChunk()
+
+        def result := Array<UInt8>(32)
+        method output(i:Int32) {
+            result.add(i.asUInt8)
+            result.add((i >> 8).asUInt8)
+            result.add((i >> 16).asUInt8)
+            result.add((i >> 24).asUInt8)
+        }
+        output(a0)
+        output(b0)
+        output(c0)
+        output(d0)
+        return result
+    }
+
+    @class
+    function md5(message:ListView<Char8>):Array<UInt8> {
+        def result := MD5()
+        result.update(message.map(c => c.asUInt8))
+        return result.finish()
+    }
+
+    @class
+    function md5(message:ListView<UInt8>):Array<UInt8> {
+        def result := MD5()
+        result.update(message)
+        return result.finish()
+    }
+
+    constant DIGITS := "0123456789ABCDEF"
+    @class
+    function hex(bytes:Array<UInt8>):String {
+        def result := Array<Char8>(16)
+        for b in bytes {
+            def i1 := (b // 16)
+            result.add(DIGITS[i1].asChar8)
+            def i2 := (b % 16)
+            result.add(DIGITS[i2].asChar8)
+        }
+        return String(result)
+    }
+}

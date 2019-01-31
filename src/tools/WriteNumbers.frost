@@ -65,6 +65,9 @@ class WriteNumbers {
             when Type.UINT8, Type.UINT16, Type.UINT32, Type.UINT64 {
                 return false
             }
+            otherwise {
+                unreachable
+            }
         }
     }
 
@@ -88,6 +91,7 @@ class WriteNumbers {
             when Type.INT32, Type.UINT32, Type.REAL32 { return 32 }
             when Type.INT64, Type.UINT64, Type.REAL64 { return 64 }
         }
+        unreachable
     }
 
     @class
@@ -118,6 +122,7 @@ class WriteNumbers {
             when Type.UINT32 { return "0" }
             when Type.UINT64 { return "0" }
         }
+        unreachable
     }
 
     @class
@@ -132,6 +137,7 @@ class WriteNumbers {
             when Type.UINT32 { return "4294967295" }
             when Type.UINT64 { return "18446744073709551615" }
         }
+        unreachable
     }
 
     @class
@@ -255,6 +261,7 @@ class WriteNumbers {
             when Type.REAL32 { return 8 }
             when Type.REAL64 { return 9 }
         }
+        unreachable
     }
 
 
@@ -859,9 +866,9 @@ class WriteNumbers {
         writeOperator("~~", "Returns the bitwise XOR of this number with another number.", type,
                 false, out)
         writeOperator("<<", "Returns this number shifted left by the specified number of bits.",
-                type, false, out)
+                type, type, false, out)
         writeOperator(">>", "Returns this number \{signed(type):arithmetic|logical} shifted " +
-                "right by the specified number of bits.", type, false, out)
+                "right by the specified number of bits.", type, type, false, out)
         writeComparisonOperator("=", "Returns `true` if this number is equal to the given number.",
                 type, out)
         writeComparisonOperator("!=", "Returns `true` if this number is not equal to the given " +

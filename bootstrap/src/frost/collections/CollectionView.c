@@ -115,6 +115,7 @@ block2:;
 frost$core$Bit $tmp16 = frost$core$Bit$init$builtin_bit(true);
 *(&local0) = $tmp16;
 // line 44
+FROST_ASSERT(48 == sizeof(frost$core$MutableString));
 frost$core$MutableString* $tmp17 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init($tmp17);
 *(&local1) = ((frost$core$MutableString*) NULL);
@@ -645,6 +646,7 @@ frost$collections$Array* local0 = NULL;
 frost$core$Object* local1 = NULL;
 frost$core$Object* local2 = NULL;
 // line 157
+FROST_ASSERT(40 == sizeof(frost$collections$Array));
 frost$collections$Array* $tmp235 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
 ITable* $tmp236 = param0->$class->itable;
 while ($tmp236->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
@@ -731,6 +733,7 @@ frost$collections$Array* local0 = NULL;
 frost$core$Object* local1 = NULL;
 frost$core$Object* local2 = NULL;
 // line 166
+FROST_ASSERT(40 == sizeof(frost$collections$Array));
 frost$collections$Array* $tmp270 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
 ITable* $tmp271 = param0->$class->itable;
 while ($tmp271->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {

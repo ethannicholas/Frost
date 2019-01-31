@@ -254,14 +254,14 @@ void frostFatalError(const char* msg) {
     abort();
 }
 
-void _frostAssert(int i, int line) {
+void _frostAssert(int i, const char* file, int line) {
     if (!i) {
-        fprintf(stderr, "%s:%d: assertion failure\n", __FILE__, line);
+        fprintf(stderr, "%s:%d: assertion failure\n", file, line);
         abort();
     }
 }
 
-#define frostAssert(i) _frostAssert(i, __LINE__)
+#define frostAssert(i) _frostAssert(i, __FILE__, __LINE__)
 
 void* frostAlloc(size_t size) {
     __atomic_add_fetch(&allocations, 1, __ATOMIC_RELAXED);
@@ -310,7 +310,7 @@ void* frostRealloc(void* ptr, size_t oldSize, size_t newSize) {
 void frostFree(void* ptr) {
     __atomic_sub_fetch(&allocations, 1, __ATOMIC_RELAXED);
 #if !DEBUG_ALLOCS
-    //free(ptr);
+    // free(ptr);
 #endif
 }
 

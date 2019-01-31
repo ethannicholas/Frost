@@ -48,6 +48,7 @@ frost$core$String* frost$core$Range$LTfrost$core$UInt8$GT$get_asString$R$frost$c
 
 frost$core$MutableString* local0 = NULL;
 // line 37
+FROST_ASSERT(48 == sizeof(frost$core$MutableString));
 frost$core$MutableString* $tmp7 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init($tmp7);
 *(&local0) = ((frost$core$MutableString*) NULL);
@@ -66,7 +67,7 @@ block1:;
 frost$core$MutableString* $tmp12 = *(&local0);
 frost$core$UInt8 $tmp13 = param0.min;
 frost$core$UInt8$wrapper* $tmp14;
-$tmp14 = (frost$core$UInt8$wrapper*) frostObjectAlloc(13, (frost$core$Class*) &frost$core$UInt8$wrapperclass);
+$tmp14 = (frost$core$UInt8$wrapper*) frostObjectAlloc(17, (frost$core$Class*) &frost$core$UInt8$wrapperclass);
 $tmp14->value = $tmp13;
 frost$core$MutableString$append$frost$core$Object($tmp12, ((frost$core$Object*) $tmp14));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp14));
@@ -98,7 +99,7 @@ block6:;
 frost$core$MutableString* $tmp24 = *(&local0);
 frost$core$UInt8 $tmp25 = param0.max;
 frost$core$UInt8$wrapper* $tmp26;
-$tmp26 = (frost$core$UInt8$wrapper*) frostObjectAlloc(13, (frost$core$Class*) &frost$core$UInt8$wrapperclass);
+$tmp26 = (frost$core$UInt8$wrapper*) frostObjectAlloc(17, (frost$core$Class*) &frost$core$UInt8$wrapperclass);
 $tmp26->value = $tmp25;
 frost$core$MutableString$append$frost$core$Object($tmp24, ((frost$core$Object*) $tmp26));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp26));

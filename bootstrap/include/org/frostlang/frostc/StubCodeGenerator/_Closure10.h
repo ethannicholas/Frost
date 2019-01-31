@@ -4,9 +4,9 @@
 typedef struct org$frostlang$frostc$StubCodeGenerator$_Closure10 org$frostlang$frostc$StubCodeGenerator$_Closure10;
 typedef struct org$frostlang$frostc$StubCodeGenerator org$frostlang$frostc$StubCodeGenerator;
 typedef struct frost$core$String frost$core$String;
-typedef struct org$frostlang$frostc$ClassDecl$GenericParameter org$frostlang$frostc$ClassDecl$GenericParameter;
+typedef struct org$frostlang$frostc$MethodDecl$GenericParameter org$frostlang$frostc$MethodDecl$GenericParameter;
 
 void org$frostlang$frostc$StubCodeGenerator$_Closure10$init$org$frostlang$frostc$StubCodeGenerator(org$frostlang$frostc$StubCodeGenerator$_Closure10* self, org$frostlang$frostc$StubCodeGenerator* p_$self);
 void org$frostlang$frostc$StubCodeGenerator$_Closure10$cleanup(org$frostlang$frostc$StubCodeGenerator$_Closure10* self);
-frost$core$String* org$frostlang$frostc$StubCodeGenerator$_Closure10$$anonymous9$org$frostlang$frostc$ClassDecl$GenericParameter$R$frost$core$String(org$frostlang$frostc$StubCodeGenerator$_Closure10* self, org$frostlang$frostc$ClassDecl$GenericParameter* p_p);
+frost$core$String* org$frostlang$frostc$StubCodeGenerator$_Closure10$$anonymous9$org$frostlang$frostc$MethodDecl$GenericParameter$R$frost$core$String(org$frostlang$frostc$StubCodeGenerator$_Closure10* self, org$frostlang$frostc$MethodDecl$GenericParameter* p_p);
 

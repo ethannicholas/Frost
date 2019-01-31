@@ -46,6 +46,7 @@ frost$core$Matcher$get_end$R$frost$core$String$Index(&$tmp4, param1);
 frost$core$String$Index* $tmp5 = &param0->end;
 *$tmp5 = $tmp4;
 // line 271
+FROST_ASSERT(40 == sizeof(frost$collections$Array));
 frost$collections$Array* $tmp6 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
 frost$collections$Array$init($tmp6);
 *(&local0) = ((frost$collections$Array*) NULL);

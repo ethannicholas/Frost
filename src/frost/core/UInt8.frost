@@ -495,30 +495,6 @@ class UInt8 : Value, Key<UInt8>, Comparable<UInt8>, Formattable, ListView<Bit> {
     }
 
     ===Returns this number shifted left by the specified number of bits.===
-    @priority(1)
-    function <<(other:Int8):Int32 {
-        return value->builtin_int32 << other.value->builtin_int32
-    }
-
-    ===Returns this number shifted left by the specified number of bits.===
-    @priority(3)
-    function <<(other:Int16):Int32 {
-        return value->builtin_int32 << other.value->builtin_int32
-    }
-
-    ===Returns this number shifted left by the specified number of bits.===
-    @priority(5)
-    function <<(other:Int32):Int32 {
-        return value->builtin_int32 << other.value
-    }
-
-    ===Returns this number shifted left by the specified number of bits.===
-    @priority(7)
-    function <<(other:Int64):Int64 {
-        return value->builtin_int64 << other.value
-    }
-
-    ===Returns this number shifted left by the specified number of bits.===
     @priority(20)
     function <<(other:UInt8):UInt32 {
         return value->builtin_uint32 << other.value->builtin_uint32
@@ -527,48 +503,6 @@ class UInt8 : Value, Key<UInt8>, Comparable<UInt8>, Formattable, ListView<Bit> {
     @priority(-1)
     function <<(other:UInt8):UInt8 {
         return value << other.value
-    }
-
-    ===Returns this number shifted left by the specified number of bits.===
-    @priority(2)
-    function <<(other:UInt16):UInt32 {
-        return value->builtin_uint32 << other.value->builtin_uint32
-    }
-
-    ===Returns this number shifted left by the specified number of bits.===
-    @priority(4)
-    function <<(other:UInt32):UInt32 {
-        return value->builtin_uint32 << other.value
-    }
-
-    ===Returns this number shifted left by the specified number of bits.===
-    @priority(6)
-    function <<(other:UInt64):UInt64 {
-        return value->builtin_uint64 << other.value
-    }
-
-    ===Returns this number logical shifted right by the specified number of bits.===
-    @priority(1)
-    function >>(other:Int8):Int32 {
-        return value->builtin_int32 >> other.value->builtin_int32
-    }
-
-    ===Returns this number logical shifted right by the specified number of bits.===
-    @priority(3)
-    function >>(other:Int16):Int32 {
-        return value->builtin_int32 >> other.value->builtin_int32
-    }
-
-    ===Returns this number logical shifted right by the specified number of bits.===
-    @priority(5)
-    function >>(other:Int32):Int32 {
-        return value->builtin_int32 >> other.value
-    }
-
-    ===Returns this number logical shifted right by the specified number of bits.===
-    @priority(7)
-    function >>(other:Int64):Int64 {
-        return value->builtin_int64 >> other.value
     }
 
     ===Returns this number logical shifted right by the specified number of bits.===
@@ -580,24 +514,6 @@ class UInt8 : Value, Key<UInt8>, Comparable<UInt8>, Formattable, ListView<Bit> {
     @priority(-1)
     function >>(other:UInt8):UInt8 {
         return value >> other.value
-    }
-
-    ===Returns this number logical shifted right by the specified number of bits.===
-    @priority(2)
-    function >>(other:UInt16):UInt32 {
-        return value->builtin_uint32 >> other.value->builtin_uint32
-    }
-
-    ===Returns this number logical shifted right by the specified number of bits.===
-    @priority(4)
-    function >>(other:UInt32):UInt32 {
-        return value->builtin_uint32 >> other.value
-    }
-
-    ===Returns this number logical shifted right by the specified number of bits.===
-    @priority(6)
-    function >>(other:UInt64):UInt64 {
-        return value->builtin_uint64 >> other.value
     }
 
     ===Returns `true` if this number is equal to the given number.===

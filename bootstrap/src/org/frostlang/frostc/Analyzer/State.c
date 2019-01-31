@@ -42,6 +42,7 @@ static frost$core$String $s182 = { (frost$core$Class*) &frost$core$String$class,
 void org$frostlang$frostc$Analyzer$State$init(org$frostlang$frostc$Analyzer$State* param0) {
 
 // line 100
+FROST_ASSERT(40 == sizeof(frost$collections$Array));
 frost$collections$Array* $tmp2 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
 frost$collections$Array$init($tmp2);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp2));
@@ -52,6 +53,7 @@ frost$collections$Array** $tmp5 = &param0->locals;
 *$tmp5 = $tmp2;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp2));
 // line 101
+FROST_ASSERT(56 == sizeof(frost$collections$HashMap));
 frost$collections$HashMap* $tmp6 = (frost$collections$HashMap*) frostObjectAlloc(56, (frost$core$Class*) &frost$collections$HashMap$class);
 frost$collections$HashMap$init($tmp6);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp6));
@@ -67,6 +69,7 @@ return;
 void org$frostlang$frostc$Analyzer$State$init$org$frostlang$frostc$Analyzer$State(org$frostlang$frostc$Analyzer$State* param0, org$frostlang$frostc$Analyzer$State* param1) {
 
 // line 105
+FROST_ASSERT(40 == sizeof(frost$collections$Array));
 frost$collections$Array* $tmp10 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
 frost$collections$Array** $tmp11 = &param1->locals;
 frost$collections$Array* $tmp12 = *$tmp11;
@@ -79,6 +82,7 @@ frost$collections$Array** $tmp15 = &param0->locals;
 *$tmp15 = $tmp10;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp10));
 // line 106
+FROST_ASSERT(56 == sizeof(frost$collections$HashMap));
 frost$collections$HashMap* $tmp16 = (frost$collections$HashMap*) frostObjectAlloc(56, (frost$core$Class*) &frost$collections$HashMap$class);
 frost$collections$HashMap** $tmp17 = &param1->statements;
 frost$collections$HashMap* $tmp18 = *$tmp17;
@@ -294,6 +298,7 @@ bool $tmp135 = $tmp134.value;
 if ($tmp135) goto block16; else goto block17;
 block16:;
 // line 122
+FROST_ASSERT(32 == sizeof(org$frostlang$frostc$Analyzer$DataFlowValue));
 org$frostlang$frostc$Analyzer$DataFlowValue* $tmp136 = (org$frostlang$frostc$Analyzer$DataFlowValue*) frostObjectAlloc(32, (frost$core$Class*) &org$frostlang$frostc$Analyzer$DataFlowValue$class);
 org$frostlang$frostc$Analyzer$DataFlowValue$init($tmp136);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp136));
@@ -325,6 +330,7 @@ bool $tmp146 = $tmp145.value;
 if ($tmp146) goto block18; else goto block19;
 block18:;
 // line 126
+FROST_ASSERT(32 == sizeof(org$frostlang$frostc$Analyzer$DataFlowValue));
 org$frostlang$frostc$Analyzer$DataFlowValue* $tmp147 = (org$frostlang$frostc$Analyzer$DataFlowValue*) frostObjectAlloc(32, (frost$core$Class*) &org$frostlang$frostc$Analyzer$DataFlowValue$class);
 org$frostlang$frostc$Analyzer$DataFlowValue$init($tmp147);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp147));

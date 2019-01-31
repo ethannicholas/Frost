@@ -120,14 +120,36 @@ class TestRunner : Immutable {
         }
     }
 
+    method recursiveList(file:File):Maybe<Array<File>> {
+        try {
+            if file.isDirectory() {
+                def result := Array<File>()
+                for f in file.list() {
+                    if f.isDirectory() {
+                        result.addAll(recursiveList(f))
+                    }
+                    else {
+                        result.add(f)
+                    }
+                }
+                return Maybe<Array<File>>.SUCCESS(result)
+            }
+            return Maybe<Array<File>>.ERROR(Error("not a directory"))
+        }
+        fail(error) {
+            return Maybe<Array<File>>.ERROR(error)
+        }
+    }
+
     method run() {
         try {
             frostc := buildDir.resolve("frostc")
             testDir := frostHome.resolve("test/tests")
-            def files := Array<File>(testDir.list())
+            def files := recursiveList(testDir)
             files.sortInPlace((a, b) => greaterThan(a.name, b.name))
             var success := 0
-            def tests := files.filter(f => f.path.endsWith(".frost")).map(f => f.simpleName)
+            def tests := files.filter(f => f.path.endsWith(".frost")).map(
+                    f => f.withExtension("").path[self.testDir.path.length + 1..])
             tests.apply(workQueue.post)
             for i in 0 .. THREADS {
                 Thread.start(self.workThread)
@@ -163,7 +185,7 @@ class TestRunner : Immutable {
             Console.printLine("-------")
             if errors.count > 0 {
                 Console.print("Failures: ")
-                -- FIXME shouldn't need inference here
+                -- FIXME inference failure
                 Console.printLine(errors.map<String>(function(r:Result):String {
                     match r {
                         when Result.ERROR(name, _) {

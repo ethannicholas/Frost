@@ -51,7 +51,6 @@ class IntLiteral {
                     }
                     else {
                         compiler.error(position, "integer literal is out of range")
-                        assert false
                         return null
                     }
                 }

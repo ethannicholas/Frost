@@ -614,6 +614,7 @@ frost$collections$HashMap$Entry* $tmp283 = *(&local2);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp283));
 *(&local2) = $tmp282;
 // line 223
+FROST_ASSERT(40 == sizeof(frost$collections$HashMap$Entry));
 frost$collections$HashMap$Entry* $tmp284 = (frost$collections$HashMap$Entry*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$HashMap$Entry$class);
 frost$collections$HashMap$Entry$init$frost$collections$HashMap$Entry$K$frost$collections$HashMap$Entry$V($tmp284, param1, param2);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp284));
@@ -1387,6 +1388,7 @@ return;
 frost$collections$Iterator* frost$collections$HashMap$get_keys$R$frost$collections$Iterator$LTfrost$collections$HashMap$K$GT(frost$collections$HashMap* param0) {
 
 // line 317
+FROST_ASSERT(24 == sizeof(frost$collections$HashMap$KeyIterator));
 frost$collections$HashMap$KeyIterator* $tmp732 = (frost$collections$HashMap$KeyIterator*) frostObjectAlloc(24, (frost$core$Class*) &frost$collections$HashMap$KeyIterator$class);
 frost$collections$HashMap$KeyIterator$init$frost$collections$HashMap$LTfrost$collections$HashMap$KeyIterator$K$Cfrost$collections$HashMap$KeyIterator$V$GT($tmp732, param0);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$collections$Iterator*) $tmp732)));
@@ -1397,6 +1399,7 @@ return ((frost$collections$Iterator*) $tmp732);
 frost$collections$Iterator* frost$collections$HashMap$get_values$R$frost$collections$Iterator$LTfrost$collections$HashMap$V$GT(frost$collections$HashMap* param0) {
 
 // line 322
+FROST_ASSERT(24 == sizeof(frost$collections$HashMap$ValueIterator));
 frost$collections$HashMap$ValueIterator* $tmp733 = (frost$collections$HashMap$ValueIterator*) frostObjectAlloc(24, (frost$core$Class*) &frost$collections$HashMap$ValueIterator$class);
 frost$collections$HashMap$ValueIterator$init$frost$collections$HashMap$LTfrost$collections$HashMap$ValueIterator$K$Cfrost$collections$HashMap$ValueIterator$V$GT($tmp733, param0);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$collections$Iterator*) $tmp733)));
@@ -1419,6 +1422,7 @@ frost$core$String* local1 = NULL;
 frost$core$Int64 local2;
 frost$collections$HashMap$Entry* local3 = NULL;
 // line 338
+FROST_ASSERT(48 == sizeof(frost$core$MutableString));
 frost$core$MutableString* $tmp736 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init($tmp736);
 *(&local0) = ((frost$core$MutableString*) NULL);
