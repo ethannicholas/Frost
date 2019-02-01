@@ -14,17 +14,18 @@ typedef struct org$frostlang$frostc$parser$Token {
     org$frostlang$frostc$Position position;
 } org$frostlang$frostc$parser$Token;
 #include "frost/core/Class.h"
-typedef struct { frost$core$Class* cl; int32_t refCount; frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[2]; } org$frostlang$frostc$parser$Token$class_type;
+typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[2]; } org$frostlang$frostc$parser$Token$class_type;
 extern org$frostlang$frostc$parser$Token$class_type org$frostlang$frostc$parser$Token$class;
 typedef struct org$frostlang$frostc$parser$Token$wrapper {
     frost$core$Class* cl;
     int32_t refCount;
+    uint8_t flags;
     org$frostlang$frostc$parser$Token value;
 } org$frostlang$frostc$parser$Token$wrapper;
 typedef struct org$frostlang$frostc$parser$Token$nullable {
     org$frostlang$frostc$parser$Token value;
     bool nonnull;
 } org$frostlang$frostc$parser$Token$nullable;
-typedef struct { frost$core$Class* cl; int32_t refCount; frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[2]; } org$frostlang$frostc$parser$Token$wrapperclass_type;
+typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags; frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[2]; } org$frostlang$frostc$parser$Token$wrapperclass_type;
 extern org$frostlang$frostc$parser$Token$wrapperclass_type org$frostlang$frostc$parser$Token$wrapperclass;
 

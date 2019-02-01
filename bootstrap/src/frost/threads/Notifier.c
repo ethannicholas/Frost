@@ -12,10 +12,10 @@ __attribute__((weak)) void frost$threads$Notifier$cleanup$shim(frost$threads$Not
 }
 
 static frost$core$String $s1;
-frost$threads$Notifier$class_type frost$threads$Notifier$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Immutable$class, NULL, { frost$core$Object$get_asString$R$frost$core$String, frost$threads$Notifier$cleanup$shim, frost$threads$Notifier$wait, frost$threads$Notifier$notify, frost$threads$Notifier$notifyAll, frost$threads$Notifier$create, frost$threads$Notifier$destroy} };
+frost$threads$Notifier$class_type frost$threads$Notifier$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Immutable$class, NULL, { frost$core$Object$get_asString$R$frost$core$String, frost$threads$Notifier$cleanup$shim, frost$threads$Notifier$wait, frost$threads$Notifier$notify, frost$threads$Notifier$notifyAll, frost$threads$Notifier$create, frost$threads$Notifier$destroy} };
 
 
-static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x74\x68\x72\x65\x61\x64\x73\x2e\x4e\x6f\x74\x69\x66\x69\x65\x72", 22, 4714131101462816310, NULL };
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x74\x68\x72\x65\x61\x64\x73\x2e\x4e\x6f\x74\x69\x66\x69\x65\x72", 22, 4714131101462816310, NULL };
 
 void frost$threads$Notifier$init$frost$threads$Lock(frost$threads$Notifier* param0, frost$threads$Lock* param1) {
 

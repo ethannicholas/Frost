@@ -22,6 +22,8 @@ typedef uint8_t bool;
 
 #define DEBUG_ALLOCS 0
 
+#define FROST_WEAK_REFERENCE_FLAG 1
+
 struct Class;
 struct String;
 
@@ -34,6 +36,7 @@ typedef struct ITable {
 typedef struct Class {
     struct Class* cl;
     int32_t refcnt;
+    bool flags;
     struct String* name;
     struct Class* super;
     ITable* itable;
@@ -43,6 +46,7 @@ typedef struct Class {
 typedef struct Object {
     Class* cl;
     int32_t refcnt;
+    bool flags;
 } Object;
 
 typedef struct Bit {
@@ -85,6 +89,7 @@ extern Class frost$core$String$class;
 typedef struct String {
     Class* cl;
     int32_t refcnt;
+    bool flags;
     int8_t* data;
     int64_t size;
     int64_t hash;
@@ -98,6 +103,7 @@ typedef struct StringIndex {
 typedef struct Array {
     Class* cl;
     int32_t refcnt;
+    bool flags;
     int64_t count;
     int64_t capacity;
     Object** data;
@@ -106,18 +112,21 @@ typedef struct Array {
 typedef struct Error {
     Class* cl;
     int32_t refcnt;
+    bool flags;
     String* message;
 } Error;
 
 typedef struct File {
     Class* cl;
     int32_t refcnt;
+    bool flags;
     String* path;
 } File;
 
 typedef struct FileInputStream {
     Class* cl;
     int32_t refcnt;
+    bool flags;
     int64_t byteOrder;
     FILE* file;
     Bit closeOnCleanup;
@@ -128,6 +137,7 @@ extern Class frost$io$FileInputStream$class;
 typedef struct FileOutputStream {
     Class* cl;
     int32_t refcnt;
+    bool flags;
     int64_t byteOrder;
     String* lineEnding;
     FILE* file;
@@ -137,6 +147,7 @@ typedef struct FileOutputStream {
 typedef struct Process {
     Class* cl;
     int32_t refcnt;
+    bool flags;
     int64_t pid;
     // FIXME unsafe assumption that Object* and int64_t are the same size
     FileOutputStream* stdin;
@@ -147,6 +158,7 @@ typedef struct Process {
 typedef struct Thread {
     Class* cl;
     int32_t refcnt;
+    bool flags;
     // FIXME unsafe assumption that void* and int64_t are the same size
     void* nativeHandle;
 } Thread;
@@ -154,12 +166,14 @@ typedef struct Thread {
 typedef struct Lock {
     Class* cl;
     int32_t refcnt;
+    bool flags;
     pthread_mutex_t* mutex;
 } Lock;
 
 typedef struct Notifier {
     Class* cl;
     int32_t refcnt;
+    bool flags;
     pthread_cond_t* cond;
     Lock* lock;
 } Notifier;
@@ -167,6 +181,7 @@ typedef struct Notifier {
 typedef struct Method {
     Class* cl;
     int32_t refcnt;
+    bool flags;
     void* pointer;
     Object* target;
 } Method;
@@ -174,12 +189,14 @@ typedef struct Method {
 typedef struct RegularExpression {
     Class* cl;
     int32_t refcnt;
+    bool flags;
     void* nativeHandle;
 } RegularExpression;
 
 typedef struct Matcher {
     Class* cl;
     int32_t refcnt;
+    bool flags;
     void* nativeHandle;
     String* searchText;
     Bit matched;
@@ -230,6 +247,12 @@ void frost$io$InputStream$init(void*);
 
 void frost$io$OutputStream$init(void*);
 
+Object* frost$core$Frost$createWeakReferenceMap$R$frost$collections$IdentityMap$LTfrost$core$Object$Cfrost$collections$Array$LTfrost$core$Object$GT$GT();
+
+void frost$core$Frost$_addWeakReference$frost$core$Weak$LTfrost$core$Object$GT$frost$collections$IdentityMap$LTfrost$core$Object$Cfrost$collections$Array$LTfrost$core$Weak$LTfrost$core$Object$GT$GT$GT(Object*, Object*);
+
+void frost$core$Frost$weakReferentDestroyed$frost$core$Object$frost$collections$IdentityMap$LTfrost$core$Object$Cfrost$collections$Array$LTfrost$core$Weak$LTfrost$core$Object$GT$GT$GT(Object*, Object*);
+
 char* frostGetCString(String* s);
 
 void frostFree(void* ptr);
@@ -240,7 +263,11 @@ static int preventsExitThreads = 0;
 static pthread_cond_t preventsExitThreadsVar = PTHREAD_COND_INITIALIZER;
 static pthread_mutex_t preventsExitThreadsMutex = PTHREAD_MUTEX_INITIALIZER;
 
+static pthread_mutex_t weakReferenceMutex = PTHREAD_MUTEX_INITIALIZER;
+
 Object* frost = NULL;
+
+static Object* weakReferences = NULL;
 
 static bool refErrorReporting = true;
 
@@ -310,9 +337,7 @@ void* frostRealloc(void* ptr, size_t oldSize, size_t newSize) {
 void frostFree(void* ptr) {
     __atomic_sub_fetch(&allocations, 1, __ATOMIC_RELAXED);
 #if !DEBUG_ALLOCS
-    //free(ptr); FIXME Currently have a use-after-free which I suspect is due to a weak reference.
-    // Since weak references aren't safe yet, this is ugly to track down. Uncomment this after
-    // adding weak ref safety.
+    free(ptr);
 #endif
 }
 
@@ -326,6 +351,11 @@ void frostObjectFree(Object* o) {
         debugAllocs = true;
     }
 #endif
+    if (o->flags & FROST_WEAK_REFERENCE_FLAG) {
+        pthread_mutex_lock(&weakReferenceMutex);
+        frost$core$Frost$weakReferentDestroyed$frost$core$Object$frost$collections$IdentityMap$LTfrost$core$Object$Cfrost$collections$Array$LTfrost$core$Weak$LTfrost$core$Object$GT$GT$GT(o, weakReferences);
+        pthread_mutex_unlock(&weakReferenceMutex);
+    }
     o->refcnt = -100000;
     frostFree(o);
 }
@@ -412,6 +442,9 @@ int main(int argc, char** argv) {
         pthread_cond_wait(&preventsExitThreadsVar, &preventsExitThreadsMutex);
     }
     frost$core$Frost$unref$frost$core$Object$Q((Object*) args);
+    if (weakReferences) {
+        frost$core$Frost$unref$frost$core$Object$Q(weakReferences);
+    }
 #if DEBUG_ALLOCS
     debugAllocs = false;
 #endif
@@ -725,6 +758,15 @@ int64_t frost$core$Frost$currentTime$R$builtin_int64() {
 
 void frost$core$Frost$disableRefErrorReporting() {
     refErrorReporting = false;
+}
+
+void frost$core$Frost$addWeakReference$frost$core$Weak$LTfrost$core$Frost$addWeakReference$T$GT(Object* w) {
+    pthread_mutex_lock(&weakReferenceMutex);
+    if (!weakReferences) {
+        weakReferences = frost$core$Frost$createWeakReferenceMap$R$frost$collections$IdentityMap$LTfrost$core$Object$Cfrost$collections$Array$LTfrost$core$Object$GT$GT();
+    }
+    frost$core$Frost$_addWeakReference$frost$core$Weak$LTfrost$core$Object$GT$frost$collections$IdentityMap$LTfrost$core$Object$Cfrost$collections$Array$LTfrost$core$Weak$LTfrost$core$Object$GT$GT$GT(w, weakReferences);
+    pthread_mutex_unlock(&weakReferenceMutex);
 }
 
 // RegularExpression

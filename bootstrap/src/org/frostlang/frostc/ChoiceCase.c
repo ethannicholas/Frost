@@ -17,19 +17,19 @@
 
 
 static frost$core$String $s1;
-org$frostlang$frostc$ChoiceCase$class_type org$frostlang$frostc$ChoiceCase$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &org$frostlang$frostc$Symbol$class, NULL, { org$frostlang$frostc$ChoiceCase$get_asString$R$frost$core$String, org$frostlang$frostc$ChoiceCase$cleanup, org$frostlang$frostc$Symbol$get_heritable$R$frost$core$Bit} };
+org$frostlang$frostc$ChoiceCase$class_type org$frostlang$frostc$ChoiceCase$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &org$frostlang$frostc$Symbol$class, NULL, { org$frostlang$frostc$ChoiceCase$get_asString$R$frost$core$String, org$frostlang$frostc$ChoiceCase$cleanup, org$frostlang$frostc$Symbol$get_heritable$R$frost$core$Bit} };
 
 
-static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x43\x68\x6f\x69\x63\x65\x43\x61\x73\x65", 31, 2916299888878715327, NULL };
-static frost$core$String $s30 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2e", 1, 147, NULL };
-static frost$core$String $s35 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "", 0, 1, NULL };
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x43\x68\x6f\x69\x63\x65\x43\x61\x73\x65", 31, 2916299888878715327, NULL };
+static frost$core$String $s30 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2e", 1, 147, NULL };
+static frost$core$String $s35 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "", 0, 1, NULL };
 
 void org$frostlang$frostc$ChoiceCase$init$org$frostlang$frostc$ClassDecl$org$frostlang$frostc$Position$frost$core$String$frost$core$String$Q$frost$core$Int64$frost$collections$ListView$LTorg$frostlang$frostc$Type$GT(org$frostlang$frostc$ChoiceCase* param0, org$frostlang$frostc$ClassDecl* param1, org$frostlang$frostc$Position param2, frost$core$String* param3, frost$core$String* param4, frost$core$Int64 param5, frost$collections$ListView* param6) {
 
 // line 15
-FROST_ASSERT(24 == sizeof(frost$core$Weak));
-frost$core$Weak* $tmp2 = (frost$core$Weak*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Weak$class);
-frost$core$Weak$init$frost$core$Weak$T($tmp2, ((frost$core$Object*) ((org$frostlang$frostc$MethodDecl*) NULL)));
+FROST_ASSERT(32 == sizeof(frost$core$Weak));
+frost$core$Weak* $tmp2 = (frost$core$Weak*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$Weak$class);
+frost$core$Weak$init$frost$core$Weak$T$Q($tmp2, ((frost$core$Object*) ((org$frostlang$frostc$MethodDecl*) NULL)));
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp2));
 frost$core$Weak** $tmp3 = &param0->initMethod;
 frost$core$Weak* $tmp4 = *$tmp3;
@@ -43,9 +43,9 @@ org$frostlang$frostc$Compiler$Resolution $tmp7 = org$frostlang$frostc$Compiler$R
 org$frostlang$frostc$Compiler$Resolution* $tmp8 = &param0->resolved;
 *$tmp8 = $tmp7;
 // line 21
-FROST_ASSERT(24 == sizeof(frost$core$Weak));
-frost$core$Weak* $tmp9 = (frost$core$Weak*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Weak$class);
-frost$core$Weak$init$frost$core$Weak$T($tmp9, ((frost$core$Object*) param1));
+FROST_ASSERT(32 == sizeof(frost$core$Weak));
+frost$core$Weak* $tmp9 = (frost$core$Weak*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$Weak$class);
+frost$core$Weak$init$frost$core$Weak$T$Q($tmp9, ((frost$core$Object*) param1));
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp9));
 frost$core$Weak** $tmp10 = &param0->owner;
 frost$core$Weak* $tmp11 = *$tmp10;

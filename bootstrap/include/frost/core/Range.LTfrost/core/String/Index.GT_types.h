@@ -12,17 +12,18 @@ typedef struct frost$core$Range$LTfrost$core$String$Index$GT {
     frost$core$Bit inclusive;
 } frost$core$Range$LTfrost$core$String$Index$GT;
 #include "frost/core/Class.h"
-typedef struct { frost$core$Class* cl; int32_t refCount; frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[2]; } frost$core$Range$LTfrost$core$String$Index$GT$class_type;
+typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[2]; } frost$core$Range$LTfrost$core$String$Index$GT$class_type;
 extern frost$core$Range$LTfrost$core$String$Index$GT$class_type frost$core$Range$LTfrost$core$String$Index$GT$class;
 typedef struct frost$core$Range$LTfrost$core$String$Index$GT$wrapper {
     frost$core$Class* cl;
     int32_t refCount;
+    uint8_t flags;
     frost$core$Range$LTfrost$core$String$Index$GT value;
 } frost$core$Range$LTfrost$core$String$Index$GT$wrapper;
 typedef struct frost$core$Range$LTfrost$core$String$Index$GT$nullable {
     frost$core$Range$LTfrost$core$String$Index$GT value;
     bool nonnull;
 } frost$core$Range$LTfrost$core$String$Index$GT$nullable;
-typedef struct { frost$core$Class* cl; int32_t refCount; frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[2]; } frost$core$Range$LTfrost$core$String$Index$GT$wrapperclass_type;
+typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags; frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[2]; } frost$core$Range$LTfrost$core$String$Index$GT$wrapperclass_type;
 extern frost$core$Range$LTfrost$core$String$Index$GT$wrapperclass_type frost$core$Range$LTfrost$core$String$Index$GT$wrapperclass;
 

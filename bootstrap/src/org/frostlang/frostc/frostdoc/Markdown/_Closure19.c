@@ -11,7 +11,7 @@
 
 
 static frost$core$String $s1;
-org$frostlang$frostc$frostdoc$Markdown$_Closure19$class_type org$frostlang$frostc$frostdoc$Markdown$_Closure19$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { frost$core$Object$get_asString$R$frost$core$String, org$frostlang$frostc$frostdoc$Markdown$_Closure19$cleanup, org$frostlang$frostc$frostdoc$Markdown$_Closure19$$anonymous18$frost$collections$ListView$LTfrost$core$String$Q$GT$R$frost$core$String} };
+org$frostlang$frostc$frostdoc$Markdown$_Closure19$class_type org$frostlang$frostc$frostdoc$Markdown$_Closure19$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { frost$core$Object$get_asString$R$frost$core$String, org$frostlang$frostc$frostdoc$Markdown$_Closure19$cleanup, org$frostlang$frostc$frostdoc$Markdown$_Closure19$$anonymous18$frost$collections$ListView$LTfrost$core$String$Q$GT$R$frost$core$String} };
 
 typedef frost$core$Object* (*$fn10)(frost$collections$ListView*, frost$core$Int64);
 typedef frost$core$Object* (*$fn19)(frost$collections$ListView*, frost$core$Int64);
@@ -19,9 +19,9 @@ typedef void (*$fn34)(org$frostlang$frostc$frostdoc$Markdown*, frost$core$Mutabl
 typedef void (*$fn40)(org$frostlang$frostc$frostdoc$Markdown*, frost$core$MutableString*);
 typedef void (*$fn45)(org$frostlang$frostc$frostdoc$Markdown*, frost$core$MutableString*);
 
-static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x66\x72\x6f\x73\x74\x64\x6f\x63\x2e\x4d\x61\x72\x6b\x64\x6f\x77\x6e\x2e\x5f\x43\x6c\x6f\x73\x75\x72\x65\x31\x39", 49, -5097778637230146731, NULL };
-static frost$core$String $s49 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x3c\x6c\x69\x3e", 4, 166990836, NULL };
-static frost$core$String $s51 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x3c\x2f\x6c\x69\x3e\x0a", 6, 1697129369393, NULL };
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x66\x72\x6f\x73\x74\x64\x6f\x63\x2e\x4d\x61\x72\x6b\x64\x6f\x77\x6e\x2e\x5f\x43\x6c\x6f\x73\x75\x72\x65\x31\x39", 49, -5097778637230146731, NULL };
+static frost$core$String $s49 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x3c\x6c\x69\x3e", 4, 166990836, NULL };
+static frost$core$String $s51 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x3c\x2f\x6c\x69\x3e\x0a", 6, 1697129369393, NULL };
 
 void org$frostlang$frostc$frostdoc$Markdown$_Closure19$init$org$frostlang$frostc$frostdoc$Markdown(org$frostlang$frostc$frostdoc$Markdown$_Closure19* param0, org$frostlang$frostc$frostdoc$Markdown* param1) {
 

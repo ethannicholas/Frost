@@ -11,17 +11,18 @@ typedef struct org$frostlang$frostc$Analyzer$BlockExit {
     frost$core$Int64 exit;
 } org$frostlang$frostc$Analyzer$BlockExit;
 #include "frost/core/Class.h"
-typedef struct { frost$core$Class* cl; int32_t refCount; frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[5]; } org$frostlang$frostc$Analyzer$BlockExit$class_type;
+typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[5]; } org$frostlang$frostc$Analyzer$BlockExit$class_type;
 extern org$frostlang$frostc$Analyzer$BlockExit$class_type org$frostlang$frostc$Analyzer$BlockExit$class;
 typedef struct org$frostlang$frostc$Analyzer$BlockExit$wrapper {
     frost$core$Class* cl;
     int32_t refCount;
+    uint8_t flags;
     org$frostlang$frostc$Analyzer$BlockExit value;
 } org$frostlang$frostc$Analyzer$BlockExit$wrapper;
 typedef struct org$frostlang$frostc$Analyzer$BlockExit$nullable {
     org$frostlang$frostc$Analyzer$BlockExit value;
     bool nonnull;
 } org$frostlang$frostc$Analyzer$BlockExit$nullable;
-typedef struct { frost$core$Class* cl; int32_t refCount; frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[2]; } org$frostlang$frostc$Analyzer$BlockExit$wrapperclass_type;
+typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags; frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[2]; } org$frostlang$frostc$Analyzer$BlockExit$wrapperclass_type;
 extern org$frostlang$frostc$Analyzer$BlockExit$wrapperclass_type org$frostlang$frostc$Analyzer$BlockExit$wrapperclass;
 

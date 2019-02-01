@@ -10,7 +10,35 @@ to `count - 1`, by which it can be accessed.
 @see List
 ====================================================================================================
 interface ListView<T> : CollectionView<T> {
+    ================================================================================================
+    Returns an `Iterator` which returns `(index, value)` tuples. For example, 
+    `["Hello", "Bonjour"].enumeration` returns an `Iterator<(Int, String)>` which produces
+    `(0, "Hello")` followed by `(1, "Bonjour")`.
+    ================================================================================================
     property enumeration:Iterator<(Int, T)>
+
+    ================================================================================================
+    An `Iterator` of all possible permutations of this list. A permutation is a distinct ordering;
+    each possible shuffling of a deck of cards is a different permutation. As the number of
+    permutations is equal to the factorial of the number of elements in the list, it is only
+    practical to fully iterate the permutations of very small lists (a list with just 15 elements in
+    it has over a trillion permutations).
+
+    @returns an iterator which produces permutations of this list
+    ================================================================================================
+    property permutations:Iterator<ListView<T>>
+
+    ================================================================================================
+    Returns an `Iterator` which produces the elements of the power set of this list. The power set
+    of a list is the set of all possible subsets (including the empty list. For instance, the power
+    set of `[1, 2, 3]` is: `[], [1], [2], [1, 2], [3], [1, 3], [2, 3], [1, 2, 3]`.
+
+    As the power set of a list with `n` elements contains 2^n entries, iterating over the power set
+    is only practical for small lists. 
+
+    @returns an iterator which produces the power set of this list
+    ================================================================================================
+    property powerSet:Iterator<ListView<T>>
 
     @private
     class ListIterator<T> : Iterator<T> {
@@ -31,6 +59,136 @@ interface ListView<T> : CollectionView<T> {
         function next():T {
             index += 1
             return list[index - 1]
+        }
+    }
+
+    @private
+    class PermutationIterator<T> : Iterator<ListView<T>> {
+        def list:ListView<T>
+
+        def choices:Array<Int>
+
+        init(list:ListView<T>) {
+            self.list := list
+            self.choices := Array<Int>(list.count, 0)
+        }
+
+        @override
+        function get_done():Bit {
+            return choices[0] = -1
+        }
+
+        @override
+        function next():ListView<T> {
+            def result := Array<T>(list.count)
+            def copy := Array<T>(list)
+            for c in choices {
+                result.add(copy[c])
+                copy.removeIndex(c)
+            }
+            var i := 0
+            while i < choices.count & choices[i] = list.count - i - 1 {
+                choices[i] := 0
+                i += 1
+            }
+            if i = choices.count {
+                choices[0] := -1
+            }
+            else {
+                choices[i] += 1
+            }
+            return result
+        }
+    }
+
+    @private
+    class CombinationIterator<T> : Iterator<ListView<T>> {
+        def list:ListView<T>
+
+        def choices:List<Int>
+
+        var r := 0
+
+        var index := 0
+
+        @pre(count >= 0 & count <= list.count)
+        init(list:ListView<T>, count:Int) {
+            self.list := list
+            self.choices := Array<Int>(count)
+            for i in 0 .. count {
+                choices.add(i)
+            }
+        }
+
+        @override
+        function get_done():Bit {
+            for i in 0 .. choices.count {
+                if choices[i] + choices.count < list.count - i {
+                    return false
+                }
+            }
+            return true
+        }
+
+        @override
+        method next():ListView<T> {
+            loop {
+                if index <= list.count + r - choices.count {
+                    choices[r] := index
+                    if r = choices.count - 1 {
+                        index += 1
+                        def result := Array<T>(choices.count)
+                        for c in choices {
+                            result.add(list[c])
+                        }
+                        return result
+                    }
+                    else {
+                        index := choices[r] + 1
+                        r += 1
+                    }
+                }
+                else {
+                    r -= 1
+                    if r > 0 {
+                        index := choices[r] + 1
+                    }
+                    else {
+                        index := choices[0] + 1
+                    }
+                }
+            }
+        }
+    }
+
+    @private
+    class PowerSetIterator<T> : Iterator<ListView<T>> {
+        def list:ListView<T>
+
+        var bits:UInt64 := 0
+
+        var stop:UInt64
+
+        init(list:ListView<T>) {
+            self.list := list
+            self.stop := (1 << list.count).asUInt64
+        }
+
+        @override
+        function get_done():Bit {
+            return bits = stop
+        }
+
+        @override
+        method next():ListView<T> {
+            def result := Array<T>()
+            for i in 0 .. list.count {
+                if bits[i] {
+                    result.add(list[i])
+                }
+            }
+            bits += 1
+            return result
         }
     }
 
@@ -237,6 +395,33 @@ interface ListView<T> : CollectionView<T> {
     @default
     function get_enumeration():Iterator<(Int, T)> {
         return iterator.enumeration
+    }
+
+    @default
+    function get_permutations():Iterator<ListView<T>> {
+        return PermutationIterator<T>(self)
+    }
+
+    ================================================================================================
+    Returns an `Iterator` of all possible `n`-combinations of this list. An `n`-combination of a
+    list is a selection of `n` distinct elements from the list; the set of 5-combinations of a deck
+    of cards is the set of all possible poker hands. The combinations are chosen in such a way as to
+    preserve order: the combinations of a sorted list will themselves be sorted. Elements are
+    considered "distinct" if they appear at different positions in the input list. This means that
+    the 2-combinations of [1, 2, 2] are [1, 2], [1, 2], and [2, 2], as the two occurrences of `2`
+    are considered distinct elements.
+
+    @returns an iterator which produces the `n`-combinations of this list
+    ================================================================================================
+    @default
+    function combinations(n:Int):Iterator<ListView<T>> {
+        return CombinationIterator<T>(self, n)
+    }
+
+    @default
+    @pre(count < 64)
+    function get_powerSet():Iterator<ListView<T>> {
+        return PowerSetIterator<T>(self)
     }
 
     ================================================================================================

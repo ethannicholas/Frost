@@ -11,6 +11,9 @@ class Object {
     @private
     var refCount:Int32
 
+    @private
+    var $flags:UInt8
+
     ================================================================================================
     Returns a `String` representation of this object. The default implementation returns
     `"<Class Name>"`, but many classes override this to provide a more useful description of the

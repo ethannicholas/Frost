@@ -19,14 +19,14 @@ __attribute__((weak)) void frost$core$Range$LTfrost$core$Int8$GT$cleanup$shim(fr
 }
 
 static frost$core$String $s1;
-frost$core$Range$LTfrost$core$Int8$GT$class_type frost$core$Range$LTfrost$core$Int8$GT$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Value$class, NULL, { frost$core$Range$LTfrost$core$Int8$GT$get_asString$R$frost$core$String$shim, frost$core$Range$LTfrost$core$Int8$GT$cleanup$shim} };
+frost$core$Range$LTfrost$core$Int8$GT$class_type frost$core$Range$LTfrost$core$Int8$GT$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Value$class, NULL, { frost$core$Range$LTfrost$core$Int8$GT$get_asString$R$frost$core$String$shim, frost$core$Range$LTfrost$core$Int8$GT$cleanup$shim} };
 
 static frost$core$String $s2;
-frost$core$Range$LTfrost$core$Int8$GT$wrapperclass_type frost$core$Range$LTfrost$core$Int8$GT$wrapperclass = { (frost$core$Class*) &frost$core$Class$class, -999, &$s2, (frost$core$Class*) &frost$core$Value$class, NULL, { frost$core$Range$LTfrost$core$Int8$GT$get_asString$R$frost$core$String$shim, frost$core$Range$LTfrost$core$Int8$GT$cleanup$shim} };
-static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x52\x61\x6e\x67\x65\x3c\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x38\x3e", 33, 1682352813360030085, NULL };
-static frost$core$String $s2 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x52\x61\x6e\x67\x65\x3c\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x38\x3e", 33, 1682352813360030085, NULL };
-static frost$core$String $s18 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2e\x2e\x2e", 3, 1504239, NULL };
-static frost$core$String $s20 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2e\x2e", 2, 14893, NULL };
+frost$core$Range$LTfrost$core$Int8$GT$wrapperclass_type frost$core$Range$LTfrost$core$Int8$GT$wrapperclass = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s2, (frost$core$Class*) &frost$core$Value$class, NULL, { frost$core$Range$LTfrost$core$Int8$GT$get_asString$R$frost$core$String$shim, frost$core$Range$LTfrost$core$Int8$GT$cleanup$shim} };
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x52\x61\x6e\x67\x65\x3c\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x38\x3e", 33, 1682352813360030085, NULL };
+static frost$core$String $s2 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x52\x61\x6e\x67\x65\x3c\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x38\x3e", 33, 1682352813360030085, NULL };
+static frost$core$String $s18 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2e\x2e\x2e", 3, 1504239, NULL };
+static frost$core$String $s20 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2e\x2e", 2, 14893, NULL };
 
 frost$core$Range$LTfrost$core$Int8$GT frost$core$Range$LTfrost$core$Int8$GT$init$frost$core$Int8$frost$core$Int8$frost$core$Bit(frost$core$Int8 param0, frost$core$Int8 param1, frost$core$Bit param2) {
 

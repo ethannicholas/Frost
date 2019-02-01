@@ -7,10 +7,10 @@
 
 
 static frost$core$String $s1;
-org$frostlang$frostc$ASTNode$_Closure6$class_type org$frostlang$frostc$ASTNode$_Closure6$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { frost$core$Object$get_asString$R$frost$core$String, org$frostlang$frostc$ASTNode$_Closure6$cleanup, org$frostlang$frostc$ASTNode$_Closure6$$anonymous5$frost$core$Object} };
+org$frostlang$frostc$ASTNode$_Closure6$class_type org$frostlang$frostc$ASTNode$_Closure6$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { frost$core$Object$get_asString$R$frost$core$String, org$frostlang$frostc$ASTNode$_Closure6$cleanup, org$frostlang$frostc$ASTNode$_Closure6$$anonymous5$frost$core$Object} };
 
 
-static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x41\x53\x54\x4e\x6f\x64\x65\x2e\x5f\x43\x6c\x6f\x73\x75\x72\x65\x36", 38, 6073947464071665670, NULL };
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x41\x53\x54\x4e\x6f\x64\x65\x2e\x5f\x43\x6c\x6f\x73\x75\x72\x65\x36", 38, 6073947464071665670, NULL };
 
 void org$frostlang$frostc$ASTNode$_Closure6$init$frost$core$MutableString(org$frostlang$frostc$ASTNode$_Closure6* param0, frost$core$MutableString* param1) {
 

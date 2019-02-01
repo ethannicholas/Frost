@@ -220,7 +220,7 @@ class HCodeGenerator : CodeGenerator {
             types.level -= 1
             types.printLine("} \{escapeName(cl.name)};")
             types.printLine("#include \"frost/core/Class.h\"")
-            types.printLine("typedef struct { frost$core$Class* cl; int32_t refCount; " +
+            types.printLine("typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;" +
                     "\{type(Type.StringType())} name; \{type(Type.Class())} super; ITable* itable; " +
                     "void* vtable[\{compiler.getVTable(cl).count}]; } " +
                     "\{escapeName(cl.name)}$class_type;")
@@ -230,6 +230,7 @@ class HCodeGenerator : CodeGenerator {
                 types.level += 1
                 types.printLine("frost$core$Class* cl;")
                 types.printLine("int32_t refCount;")
+                types.printLine("uint8_t flags;")
                 types.printLine("\{type(cl.type)} value;")
                 types.level -= 1
                 types.printLine("} \{escapeName(cl.name)}$wrapper;")
@@ -242,8 +243,8 @@ class HCodeGenerator : CodeGenerator {
                 def value := compiler.getClass(Type.Value())
                 def valueVTable := compiler.getVTable(value)
                 types.printLine("typedef struct { frost$core$Class* cl; int32_t refCount; " +
-                        "frost$core$String* name; frost$core$Class* super; ITable* itable; " +
-                        "void* vtable[\{valueVTable.count}]; } " +
+                        "uint8_t flags; frost$core$String* name; frost$core$Class* super; " +
+                        "ITable* itable; void* vtable[\{valueVTable.count}]; } " +
                         "\{escapeName(cl.name)}$wrapperclass_type;")
                 types.printLine("extern \{escapeName(cl.name)}$wrapperclass_type " +
                         "\{escapeName(cl.name)}$wrapperclass;")

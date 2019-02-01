@@ -11,13 +11,13 @@
 
 
 static frost$core$String $s1;
-org$frostlang$frostc$Alias$class_type org$frostlang$frostc$Alias$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &org$frostlang$frostc$Symbol$class, NULL, { org$frostlang$frostc$Alias$get_asString$R$frost$core$String, org$frostlang$frostc$Alias$cleanup, org$frostlang$frostc$Symbol$get_heritable$R$frost$core$Bit} };
+org$frostlang$frostc$Alias$class_type org$frostlang$frostc$Alias$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &org$frostlang$frostc$Symbol$class, NULL, { org$frostlang$frostc$Alias$get_asString$R$frost$core$String, org$frostlang$frostc$Alias$cleanup, org$frostlang$frostc$Symbol$get_heritable$R$frost$core$Bit} };
 
 
-static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x41\x6c\x69\x61\x73", 26, 7718505657240452898, NULL };
-static frost$core$String $s12 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x41\x6c\x69\x61\x73\x28", 6, 1756024389231, NULL };
-static frost$core$String $s14 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2d\x3e", 2, 14808, NULL };
-static frost$core$String $s19 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x29", 1, 142, NULL };
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x41\x6c\x69\x61\x73", 26, 7718505657240452898, NULL };
+static frost$core$String $s12 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x41\x6c\x69\x61\x73\x28", 6, 1756024389231, NULL };
+static frost$core$String $s14 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2d\x3e", 2, 14808, NULL };
+static frost$core$String $s19 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x29", 1, 142, NULL };
 
 void org$frostlang$frostc$Alias$init$frost$core$String$org$frostlang$frostc$Type(org$frostlang$frostc$Alias* param0, frost$core$String* param1, org$frostlang$frostc$Type* param2) {
 

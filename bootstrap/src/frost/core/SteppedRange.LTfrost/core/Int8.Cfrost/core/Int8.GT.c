@@ -19,15 +19,15 @@ __attribute__((weak)) void frost$core$SteppedRange$LTfrost$core$Int8$Cfrost$core
 }
 
 static frost$core$String $s1;
-frost$core$SteppedRange$LTfrost$core$Int8$Cfrost$core$Int8$GT$class_type frost$core$SteppedRange$LTfrost$core$Int8$Cfrost$core$Int8$GT$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Value$class, NULL, { frost$core$SteppedRange$LTfrost$core$Int8$Cfrost$core$Int8$GT$get_asString$R$frost$core$String$shim, frost$core$SteppedRange$LTfrost$core$Int8$Cfrost$core$Int8$GT$cleanup$shim} };
+frost$core$SteppedRange$LTfrost$core$Int8$Cfrost$core$Int8$GT$class_type frost$core$SteppedRange$LTfrost$core$Int8$Cfrost$core$Int8$GT$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Value$class, NULL, { frost$core$SteppedRange$LTfrost$core$Int8$Cfrost$core$Int8$GT$get_asString$R$frost$core$String$shim, frost$core$SteppedRange$LTfrost$core$Int8$Cfrost$core$Int8$GT$cleanup$shim} };
 
 static frost$core$String $s2;
-frost$core$SteppedRange$LTfrost$core$Int8$Cfrost$core$Int8$GT$wrapperclass_type frost$core$SteppedRange$LTfrost$core$Int8$Cfrost$core$Int8$GT$wrapperclass = { (frost$core$Class*) &frost$core$Class$class, -999, &$s2, (frost$core$Class*) &frost$core$Value$class, NULL, { frost$core$SteppedRange$LTfrost$core$Int8$Cfrost$core$Int8$GT$get_asString$R$frost$core$String$shim, frost$core$SteppedRange$LTfrost$core$Int8$Cfrost$core$Int8$GT$cleanup$shim} };
-static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x65\x70\x70\x65\x64\x52\x61\x6e\x67\x65\x3c\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x38\x2c\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x38\x3e", 57, 5088066327703343328, NULL };
-static frost$core$String $s2 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x65\x70\x70\x65\x64\x52\x61\x6e\x67\x65\x3c\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x38\x2c\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x38\x3e", 57, 5088066327703343328, NULL };
-static frost$core$String $s19 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2e\x2e\x2e", 3, 1504239, NULL };
-static frost$core$String $s21 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2e\x2e", 2, 14893, NULL };
-static frost$core$String $s29 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x20\x62\x79\x20", 4, 138041984, NULL };
+frost$core$SteppedRange$LTfrost$core$Int8$Cfrost$core$Int8$GT$wrapperclass_type frost$core$SteppedRange$LTfrost$core$Int8$Cfrost$core$Int8$GT$wrapperclass = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s2, (frost$core$Class*) &frost$core$Value$class, NULL, { frost$core$SteppedRange$LTfrost$core$Int8$Cfrost$core$Int8$GT$get_asString$R$frost$core$String$shim, frost$core$SteppedRange$LTfrost$core$Int8$Cfrost$core$Int8$GT$cleanup$shim} };
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x65\x70\x70\x65\x64\x52\x61\x6e\x67\x65\x3c\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x38\x2c\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x38\x3e", 57, 5088066327703343328, NULL };
+static frost$core$String $s2 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x65\x70\x70\x65\x64\x52\x61\x6e\x67\x65\x3c\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x38\x2c\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x38\x3e", 57, 5088066327703343328, NULL };
+static frost$core$String $s19 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2e\x2e\x2e", 3, 1504239, NULL };
+static frost$core$String $s21 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2e\x2e", 2, 14893, NULL };
+static frost$core$String $s29 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x20\x62\x79\x20", 4, 138041984, NULL };
 
 frost$core$SteppedRange$LTfrost$core$Int8$Cfrost$core$Int8$GT frost$core$SteppedRange$LTfrost$core$Int8$Cfrost$core$Int8$GT$init$frost$core$Int8$frost$core$Int8$frost$core$Int8$frost$core$Bit(frost$core$Int8 param0, frost$core$Int8 param1, frost$core$Int8 param2, frost$core$Bit param3) {
 

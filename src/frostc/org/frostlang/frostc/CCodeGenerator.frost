@@ -533,7 +533,7 @@ class CCodeGenerator : CodeGenerator {
                 assert name.startsWith("&")
                 def code := MutableString("static frost$core$String \{name[1..]};\n" +
                         "\{result.name}_type \{result.name} = { " +
-                        "(frost$core$Class*) &\{clConstant.name}, \{NO_REFCNT}, " +
+                        "(frost$core$Class*) &\{clConstant.name}, \{NO_REFCNT}, 0, " +
                         "\{name}, \{superPtr}, \{getITable(cl)}, { ")
                 var separator := ""
                 for m in vtable {
@@ -582,7 +582,7 @@ class CCodeGenerator : CodeGenerator {
                     assert name.startsWith("&")
                     def code := MutableString("static frost$core$String \{name[1..]};\n" +
                             "\{result.name}_type \{result.name} = { " +
-                            "(frost$core$Class*) &\{clConstant.name}, \{NO_REFCNT}, " +
+                            "(frost$core$Class*) &\{clConstant.name}, \{NO_REFCNT}, 0, " +
                             "\{name}, \{superCast}, \{itable}, { ")
                     var separator := ""
                     for i in 0 .. valueVTable.count {
@@ -920,7 +920,7 @@ class CCodeGenerator : CodeGenerator {
             def result := "$s\{varCount}"
             cType(Type.StringType())
             strings.print("static frost$core$String \{result} = { " +
-                    "(frost$core$Class*) &frost$core$String$class, \{NO_REFCNT}, " +
+                    "(frost$core$Class*) &frost$core$String$class, \{NO_REFCNT}, 0, " +
                     "(frost$core$Char8*) \"")
             for c in s.utf8 {
                 strings.print("\\x\{c.asUInt8,0>2:x}")

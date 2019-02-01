@@ -20,15 +20,15 @@ __attribute__((weak)) frost$core$Bit org$frostlang$frostc$Analyzer$DataFlowValue
 struct { frost$core$Class* cl; ITable* next; void* methods[2]; } org$frostlang$frostc$Analyzer$DataFlowValue$_frost$core$Equatable = { (frost$core$Class*) &frost$core$Equatable$class, NULL, { org$frostlang$frostc$Analyzer$DataFlowValue$$EQ$org$frostlang$frostc$Analyzer$DataFlowValue$R$frost$core$Bit$shim, frost$core$Equatable$$NEQ$frost$core$Equatable$T$R$frost$core$Bit} };
 
 static frost$core$String $s1;
-org$frostlang$frostc$Analyzer$DataFlowValue$class_type org$frostlang$frostc$Analyzer$DataFlowValue$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Object$class, (ITable*) &org$frostlang$frostc$Analyzer$DataFlowValue$_frost$core$Equatable, { org$frostlang$frostc$Analyzer$DataFlowValue$get_asString$R$frost$core$String, org$frostlang$frostc$Analyzer$DataFlowValue$cleanup, org$frostlang$frostc$Analyzer$DataFlowValue$$EQ$org$frostlang$frostc$Analyzer$DataFlowValue$R$frost$core$Bit$shim, org$frostlang$frostc$Analyzer$DataFlowValue$union$org$frostlang$frostc$Compiler$org$frostlang$frostc$Analyzer$DataFlowValue$R$org$frostlang$frostc$Analyzer$DataFlowValue, org$frostlang$frostc$Analyzer$DataFlowValue$get_invert$R$org$frostlang$frostc$Analyzer$DataFlowValue} };
+org$frostlang$frostc$Analyzer$DataFlowValue$class_type org$frostlang$frostc$Analyzer$DataFlowValue$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Object$class, (ITable*) &org$frostlang$frostc$Analyzer$DataFlowValue$_frost$core$Equatable, { org$frostlang$frostc$Analyzer$DataFlowValue$get_asString$R$frost$core$String, org$frostlang$frostc$Analyzer$DataFlowValue$cleanup, org$frostlang$frostc$Analyzer$DataFlowValue$$EQ$org$frostlang$frostc$Analyzer$DataFlowValue$R$frost$core$Bit$shim, org$frostlang$frostc$Analyzer$DataFlowValue$union$org$frostlang$frostc$Compiler$org$frostlang$frostc$Analyzer$DataFlowValue$R$org$frostlang$frostc$Analyzer$DataFlowValue, org$frostlang$frostc$Analyzer$DataFlowValue$get_invert$R$org$frostlang$frostc$Analyzer$DataFlowValue} };
 
 
-static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x41\x6e\x61\x6c\x79\x7a\x65\x72\x2e\x44\x61\x74\x61\x46\x6c\x6f\x77\x56\x61\x6c\x75\x65", 43, -1699477569137110869, NULL };
-static frost$core$String $s70 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x44\x61\x74\x61\x46\x6c\x6f\x77\x56\x61\x6c\x75\x65\x28", 14, 5284793279823497104, NULL };
-static frost$core$String $s72 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2c\x20", 2, 14677, NULL };
-static frost$core$String $s77 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x29", 1, 142, NULL };
-static frost$core$String $s81 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x44\x61\x74\x61\x46\x6c\x6f\x77\x56\x61\x6c\x75\x65\x28", 14, 5284793279823497104, NULL };
-static frost$core$String $s83 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x29", 1, 142, NULL };
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x41\x6e\x61\x6c\x79\x7a\x65\x72\x2e\x44\x61\x74\x61\x46\x6c\x6f\x77\x56\x61\x6c\x75\x65", 43, -1699477569137110869, NULL };
+static frost$core$String $s70 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x44\x61\x74\x61\x46\x6c\x6f\x77\x56\x61\x6c\x75\x65\x28", 14, 5284793279823497104, NULL };
+static frost$core$String $s72 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2c\x20", 2, 14677, NULL };
+static frost$core$String $s77 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x29", 1, 142, NULL };
+static frost$core$String $s81 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x44\x61\x74\x61\x46\x6c\x6f\x77\x56\x61\x6c\x75\x65\x28", 14, 5284793279823497104, NULL };
+static frost$core$String $s83 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x29", 1, 142, NULL };
 
 void org$frostlang$frostc$Analyzer$DataFlowValue$init(org$frostlang$frostc$Analyzer$DataFlowValue* param0) {
 

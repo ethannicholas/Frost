@@ -6,6 +6,8 @@ typedef struct frost$core$Maybe frost$core$Maybe;
 typedef struct frost$core$Object frost$core$Object;
 typedef struct frost$core$String frost$core$String;
 typedef struct frost$core$Class frost$core$Class;
+typedef struct frost$core$Weak frost$core$Weak;
+typedef struct frost$collections$IdentityMap frost$collections$IdentityMap;
 #include "frost/core/Real64_types.h"
 #include "frost/core/Int64_types.h"
 #include "frost/core/UInt64_types.h"
@@ -25,6 +27,10 @@ void frost$core$Frost$ref$frost$core$Object$Q(frost$core$Object* p_o);
 void frost$core$Frost$unref$frost$core$Object$Q(frost$core$Object* p_o);
 void frost$core$Frost$trace$frost$core$String(frost$core$String* p_s);
 void frost$core$Frost$countTrace$frost$core$String(frost$core$Frost* self, frost$core$String* p_s);
+void frost$core$Frost$addWeakReference$frost$core$Weak$LTfrost$core$Frost$addWeakReference$T$GT(frost$core$Weak* p_w);
+void frost$core$Frost$_addWeakReference$frost$core$Weak$LTfrost$core$Object$GT$frost$collections$IdentityMap$LTfrost$core$Object$Cfrost$collections$Array$LTfrost$core$Weak$LTfrost$core$Object$GT$GT$GT(frost$core$Weak* p_w, frost$collections$IdentityMap* p_map);
+void frost$core$Frost$weakReferentDestroyed$frost$core$Object$frost$collections$IdentityMap$LTfrost$core$Object$Cfrost$collections$Array$LTfrost$core$Weak$LTfrost$core$Object$GT$GT$GT(frost$core$Object* p_o, frost$collections$IdentityMap* p_map);
+frost$collections$IdentityMap* frost$core$Frost$createWeakReferenceMap$R$frost$collections$IdentityMap$LTfrost$core$Object$Cfrost$collections$Array$LTfrost$core$Object$GT$GT();
 void frost$core$Frost$toReal64$frost$core$String$R$frost$core$Real64(frost$core$Real64* result, frost$core$String* p_s);
 void frost$core$Frost$floatToIntBits$frost$core$Real64$R$frost$core$Int64(frost$core$Int64* result, frost$core$Real64 p_r);
 void frost$core$Frost$addressOf$frost$core$Object$R$frost$core$Int64(frost$core$Int64* result, frost$core$Object* p_o);

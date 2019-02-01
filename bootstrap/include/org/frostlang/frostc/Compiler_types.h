@@ -2,6 +2,7 @@
 #include "frost_c.h"
 typedef struct frost$core$Class frost$core$Class;
 #include "frost/core/Int32_types.h"
+#include "frost/core/UInt8_types.h"
 typedef struct org$frostlang$frostc$Compiler$Settings org$frostlang$frostc$Compiler$Settings;
 typedef struct org$frostlang$frostc$parser$Parser org$frostlang$frostc$parser$Parser;
 typedef struct org$frostlang$frostc$Scanner org$frostlang$frostc$Scanner;
@@ -23,6 +24,7 @@ typedef struct frost$core$String frost$core$String;
 typedef struct org$frostlang$frostc$Compiler {
     frost$core$Class* $class;
     frost$core$Int32 refCount;
+    frost$core$UInt8 $flags;
     org$frostlang$frostc$Compiler$Settings* settings;
     org$frostlang$frostc$parser$Parser* parser;
     org$frostlang$frostc$Scanner* scanner;
@@ -57,6 +59,6 @@ typedef struct org$frostlang$frostc$Compiler {
     frost$collections$IdentityMap* lambdaTypes;
 } org$frostlang$frostc$Compiler;
 #include "frost/core/Class.h"
-typedef struct { frost$core$Class* cl; int32_t refCount; frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[156]; } org$frostlang$frostc$Compiler$class_type;
+typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[157]; } org$frostlang$frostc$Compiler$class_type;
 extern org$frostlang$frostc$Compiler$class_type org$frostlang$frostc$Compiler$class;
 

@@ -10,17 +10,18 @@ typedef struct org$frostlang$regex$RegexToken$Kind {
     int8_t $data[0];
 } org$frostlang$regex$RegexToken$Kind;
 #include "frost/core/Class.h"
-typedef struct { frost$core$Class* cl; int32_t refCount; frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[4]; } org$frostlang$regex$RegexToken$Kind$class_type;
+typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[4]; } org$frostlang$regex$RegexToken$Kind$class_type;
 extern org$frostlang$regex$RegexToken$Kind$class_type org$frostlang$regex$RegexToken$Kind$class;
 typedef struct org$frostlang$regex$RegexToken$Kind$wrapper {
     frost$core$Class* cl;
     int32_t refCount;
+    uint8_t flags;
     org$frostlang$regex$RegexToken$Kind value;
 } org$frostlang$regex$RegexToken$Kind$wrapper;
 typedef struct org$frostlang$regex$RegexToken$Kind$nullable {
     org$frostlang$regex$RegexToken$Kind value;
     bool nonnull;
 } org$frostlang$regex$RegexToken$Kind$nullable;
-typedef struct { frost$core$Class* cl; int32_t refCount; frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[2]; } org$frostlang$regex$RegexToken$Kind$wrapperclass_type;
+typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags; frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[2]; } org$frostlang$regex$RegexToken$Kind$wrapperclass_type;
 extern org$frostlang$regex$RegexToken$Kind$wrapperclass_type org$frostlang$regex$RegexToken$Kind$wrapperclass;
 

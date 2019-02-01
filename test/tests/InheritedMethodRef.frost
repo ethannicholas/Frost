@@ -1,0 +1,3 @@
+method main() {
+    Console.printLine(["A", "E", "G", "D", "C", "F", "B", "H"].sort(String.<))
+}

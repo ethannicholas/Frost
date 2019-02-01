@@ -14,17 +14,18 @@ typedef struct org$frostlang$json$Token {
     org$frostlang$json$Position position;
 } org$frostlang$json$Token;
 #include "frost/core/Class.h"
-typedef struct { frost$core$Class* cl; int32_t refCount; frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[2]; } org$frostlang$json$Token$class_type;
+typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[2]; } org$frostlang$json$Token$class_type;
 extern org$frostlang$json$Token$class_type org$frostlang$json$Token$class;
 typedef struct org$frostlang$json$Token$wrapper {
     frost$core$Class* cl;
     int32_t refCount;
+    uint8_t flags;
     org$frostlang$json$Token value;
 } org$frostlang$json$Token$wrapper;
 typedef struct org$frostlang$json$Token$nullable {
     org$frostlang$json$Token value;
     bool nonnull;
 } org$frostlang$json$Token$nullable;
-typedef struct { frost$core$Class* cl; int32_t refCount; frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[2]; } org$frostlang$json$Token$wrapperclass_type;
+typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags; frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[2]; } org$frostlang$json$Token$wrapperclass_type;
 extern org$frostlang$json$Token$wrapperclass_type org$frostlang$json$Token$wrapperclass;
 

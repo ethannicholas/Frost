@@ -10,17 +10,18 @@ typedef struct org$frostlang$frostc$Main$Format {
     int8_t $data[0];
 } org$frostlang$frostc$Main$Format;
 #include "frost/core/Class.h"
-typedef struct { frost$core$Class* cl; int32_t refCount; frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[4]; } org$frostlang$frostc$Main$Format$class_type;
+typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[4]; } org$frostlang$frostc$Main$Format$class_type;
 extern org$frostlang$frostc$Main$Format$class_type org$frostlang$frostc$Main$Format$class;
 typedef struct org$frostlang$frostc$Main$Format$wrapper {
     frost$core$Class* cl;
     int32_t refCount;
+    uint8_t flags;
     org$frostlang$frostc$Main$Format value;
 } org$frostlang$frostc$Main$Format$wrapper;
 typedef struct org$frostlang$frostc$Main$Format$nullable {
     org$frostlang$frostc$Main$Format value;
     bool nonnull;
 } org$frostlang$frostc$Main$Format$nullable;
-typedef struct { frost$core$Class* cl; int32_t refCount; frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[2]; } org$frostlang$frostc$Main$Format$wrapperclass_type;
+typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags; frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[2]; } org$frostlang$frostc$Main$Format$wrapperclass_type;
 extern org$frostlang$frostc$Main$Format$wrapperclass_type org$frostlang$frostc$Main$Format$wrapperclass;
 

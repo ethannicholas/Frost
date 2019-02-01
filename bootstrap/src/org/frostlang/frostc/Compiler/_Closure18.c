@@ -12,23 +12,23 @@
 
 
 static frost$core$String $s1;
-org$frostlang$frostc$Compiler$_Closure18$class_type org$frostlang$frostc$Compiler$_Closure18$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { frost$core$Object$get_asString$R$frost$core$String, org$frostlang$frostc$Compiler$_Closure18$cleanup, org$frostlang$frostc$Compiler$_Closure18$$anonymous17$frost$core$Int64$frost$core$String} };
+org$frostlang$frostc$Compiler$_Closure18$class_type org$frostlang$frostc$Compiler$_Closure18$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { frost$core$Object$get_asString$R$frost$core$String, org$frostlang$frostc$Compiler$_Closure18$cleanup, org$frostlang$frostc$Compiler$_Closure18$$anonymous17$frost$core$Int64$frost$core$String} };
 
 
-static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x43\x6f\x6d\x70\x69\x6c\x65\x72\x2e\x5f\x43\x6c\x6f\x73\x75\x72\x65\x31\x38", 40, 745567289659194786, NULL };
-static frost$core$String $s32 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x63\x6c\x61\x73\x73\x65\x73\x20\x6d\x61\x79\x20\x6e\x6f\x74\x20\x62\x65\x20\x61\x6e\x6e\x6f\x74\x61\x74\x65\x64\x20\x77\x69\x74\x68\x20\x27", 35, -7767658378463466233, NULL };
-static frost$core$String $s34 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x27", 1, 140, NULL };
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x43\x6f\x6d\x70\x69\x6c\x65\x72\x2e\x5f\x43\x6c\x6f\x73\x75\x72\x65\x31\x38", 40, 745567289659194786, NULL };
+static frost$core$String $s32 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x63\x6c\x61\x73\x73\x65\x73\x20\x6d\x61\x79\x20\x6e\x6f\x74\x20\x62\x65\x20\x61\x6e\x6e\x6f\x74\x61\x74\x65\x64\x20\x77\x69\x74\x68\x20\x27", 35, -7767658378463466233, NULL };
+static frost$core$String $s34 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x27", 1, 140, NULL };
 
 void org$frostlang$frostc$Compiler$_Closure18$init$org$frostlang$frostc$Compiler$org$frostlang$frostc$ClassDecl(org$frostlang$frostc$Compiler$_Closure18* param0, org$frostlang$frostc$Compiler* param1, org$frostlang$frostc$ClassDecl* param2) {
 
-// line 5712
+// line 5764
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
 org$frostlang$frostc$Compiler** $tmp2 = &param0->$self;
 org$frostlang$frostc$Compiler* $tmp3 = *$tmp2;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp3));
 org$frostlang$frostc$Compiler** $tmp4 = &param0->$self;
 *$tmp4 = param1;
-// line 5712
+// line 5764
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param2));
 org$frostlang$frostc$ClassDecl** $tmp5 = &param0->cl;
 org$frostlang$frostc$ClassDecl* $tmp6 = *$tmp5;
@@ -40,7 +40,7 @@ return;
 }
 void org$frostlang$frostc$Compiler$_Closure18$cleanup(org$frostlang$frostc$Compiler$_Closure18* param0) {
 
-// line 5712
+// line 5764
 frost$core$Object$cleanup(((frost$core$Object*) param0));
 org$frostlang$frostc$Compiler** $tmp8 = &param0->$self;
 org$frostlang$frostc$Compiler* $tmp9 = *$tmp8;
@@ -53,7 +53,7 @@ return;
 }
 void org$frostlang$frostc$Compiler$_Closure18$$anonymous17$frost$core$Int64$frost$core$String(org$frostlang$frostc$Compiler$_Closure18* param0, frost$core$Int64 param1, frost$core$String* param2) {
 
-// line 5713
+// line 5765
 org$frostlang$frostc$ClassDecl** $tmp12 = &param0->cl;
 org$frostlang$frostc$ClassDecl* $tmp13 = *$tmp12;
 org$frostlang$frostc$Annotations** $tmp14 = &$tmp13->annotations;
@@ -69,7 +69,7 @@ frost$core$Bit $tmp23 = (frost$core$Bit) {$tmp22};
 bool $tmp24 = $tmp23.value;
 if ($tmp24) goto block1; else goto block2;
 block1:;
-// line 5714
+// line 5766
 org$frostlang$frostc$Compiler** $tmp25 = &param0->$self;
 org$frostlang$frostc$Compiler* $tmp26 = *$tmp25;
 org$frostlang$frostc$ClassDecl** $tmp27 = &param0->cl;

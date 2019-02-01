@@ -67,7 +67,9 @@ add_library(c_frost
     bootstrap/src/frost/collections/Key.c
     bootstrap/src/frost/collections/List.c
     bootstrap/src/frost/collections/ListView.c
+    bootstrap/src/frost/collections/ListView/CombinationIterator.c
     bootstrap/src/frost/collections/ListView/ListIterator.c
+    bootstrap/src/frost/collections/ListView/PermutationIterator.c
     bootstrap/src/frost/collections/ListWriter.c
     bootstrap/src/frost/collections/Map.c
     bootstrap/src/frost/collections/MapView.c

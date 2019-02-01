@@ -1051,7 +1051,7 @@ class Call {
     -- discarded.
     @class
     method compile(compiler:Compiler, position:Position, m:ASTNode, args:FixedArray<ASTNode>,
-                       isStatement:Bit, type:TypeContext):IR.Value? {
+            isStatement:Bit, type:TypeContext):IR.Value? {
         match m {
             when ASTNode.GENERIC_TYPE(_, name, types) {
                 var resolved := compiler.tryResolveType(m)

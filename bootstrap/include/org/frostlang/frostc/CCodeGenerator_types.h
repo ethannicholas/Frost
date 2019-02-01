@@ -2,6 +2,7 @@
 #include "frost_c.h"
 typedef struct frost$core$Class frost$core$Class;
 #include "frost/core/Int32_types.h"
+#include "frost/core/UInt8_types.h"
 typedef struct frost$core$Weak frost$core$Weak;
 typedef struct frost$io$File frost$io$File;
 typedef struct frost$io$IndentedOutputStream frost$io$IndentedOutputStream;
@@ -20,6 +21,7 @@ typedef struct org$frostlang$frostc$IR org$frostlang$frostc$IR;
 typedef struct org$frostlang$frostc$CCodeGenerator {
     frost$core$Class* $class;
     frost$core$Int32 refCount;
+    frost$core$UInt8 $flags;
     frost$core$Weak* compiler;
     frost$io$File* outDir;
     frost$io$IndentedOutputStream* out;
@@ -52,6 +54,6 @@ typedef struct org$frostlang$frostc$CCodeGenerator {
     org$frostlang$frostc$IR* ir;
 } org$frostlang$frostc$CCodeGenerator;
 #include "frost/core/Class.h"
-typedef struct { frost$core$Class* cl; int32_t refCount; frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[83]; } org$frostlang$frostc$CCodeGenerator$class_type;
+typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[83]; } org$frostlang$frostc$CCodeGenerator$class_type;
 extern org$frostlang$frostc$CCodeGenerator$class_type org$frostlang$frostc$CCodeGenerator$class;
 

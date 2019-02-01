@@ -5,16 +5,16 @@
 
 
 static frost$core$String $s1;
-frost$core$Object$class_type frost$core$Object$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, NULL, NULL, { frost$core$Object$get_asString$R$frost$core$String, frost$core$Object$cleanup} };
+frost$core$Object$class_type frost$core$Object$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, NULL, NULL, { frost$core$Object$get_asString$R$frost$core$String, frost$core$Object$cleanup} };
 
 
-static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x4f\x62\x6a\x65\x63\x74", 17, 1146821029976304283, NULL };
-static frost$core$String $s7 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x3c", 1, 161, NULL };
-static frost$core$String $s9 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x3e", 1, 163, NULL };
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x4f\x62\x6a\x65\x63\x74", 17, 1146821029976304283, NULL };
+static frost$core$String $s7 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x3c", 1, 161, NULL };
+static frost$core$String $s9 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x3e", 1, 163, NULL };
 
 frost$core$String* frost$core$Object$get_asString$R$frost$core$String(frost$core$Object* param0) {
 
-// line 22
+// line 25
 frost$core$Class** $tmp2 = &param0->$class;
 frost$core$Class* $tmp3 = *$tmp2;
 frost$core$String** $tmp4 = &$tmp3->name;

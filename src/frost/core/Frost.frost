@@ -8,6 +8,9 @@ Contains utility methods used in the internal implementation of certain language
 @package
 @final
 class Frost {
+    -- Object.flags bit which indicates that the object has had weak references to it created
+    constant WEAK_REFERENCE_FLAG:UInt8 := 1
+
     def allocations := HashMap<String, Int>()
 
     def traces := HashMap<String, Int>()
@@ -86,6 +89,39 @@ class Frost {
             old := 0
         }
         traces[s] := old + 1
+    }
+
+    @class
+    @external
+    method addWeakReference<T>(w:Weak<T>)
+
+    @class
+    method _addWeakReference(w:Weak<Object>, map:IdentityMap<Object, Array<Weak<Object>>>) {
+        var referent := w.get()
+        var list := map[referent]
+        if list == null {
+            list := Array<Weak<Object>>()
+            map[referent] := list
+            unref(referent)
+        }
+        list.add(w)
+    }
+
+    @class
+    method weakReferentDestroyed(o:Object, map:IdentityMap<Object, Array<Weak<Object>>>) {
+        ref(o)
+        def list := map[o]
+        assert list !== null
+        for w in list {
+            w._valid := false
+            w.value := null
+        }
+        map.remove(o)
+    }
+
+    @class
+    function createWeakReferenceMap():IdentityMap<Object, Array<Object>> {
+        return IdentityMap<Object, Array<Object>>()
     }
 
     @class

@@ -7,12 +7,27 @@ participate in reference counting. Objects are destroyed when there are no remai
 ====================================================================================================
 @final
 class Weak<T> {
+    @private
+    @class
+    function checkValid(o:Object?):Bit {
+        return o !== null & o->Weak<Object>.valid
+    }
+
+    property valid:Bit
+
     -- This is special cased within the compiler
     @private
     def value:T?
 
-    init(value:T) {
+    @private
+    var _valid := true
+
+    init(value:T?) {
         self.value := value
+        if value !== null {
+            value.$flags ||= Frost.WEAK_REFERENCE_FLAG
+            Frost.addWeakReference(self)
+        }
     }
 
     ================================================================================================
@@ -20,12 +35,14 @@ class Weak<T> {
     after it has been destroyed (by having no remaining strong references to it); this will be
     detected using default compiler settings, but result in undefined behavior when safety checks
     are disabled.
-
-    FIXME actually implement this behavior :-)
     ================================================================================================
     method get():T {
-        assert refCount > 0
+        assert valid
         return value
+    }
+
+    function get_valid():Bit {
+        return _valid
     }
 
     @override

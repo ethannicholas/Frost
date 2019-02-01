@@ -21,11 +21,11 @@ struct { frost$core$Class* cl; ITable* next; void* methods[2]; } org$frostlang$f
 struct { frost$core$Class* cl; ITable* next; void* methods[1]; } org$frostlang$frostc$Compiler$BinaryKey$_frost$collections$Key = { (frost$core$Class*) &frost$collections$Key$class, (ITable*) &org$frostlang$frostc$Compiler$BinaryKey$_frost$core$Equatable, { org$frostlang$frostc$Compiler$BinaryKey$get_hash$R$frost$core$Int64} };
 
 static frost$core$String $s1;
-org$frostlang$frostc$Compiler$BinaryKey$class_type org$frostlang$frostc$Compiler$BinaryKey$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Object$class, (ITable*) &org$frostlang$frostc$Compiler$BinaryKey$_frost$collections$Key, { frost$core$Object$get_asString$R$frost$core$String, org$frostlang$frostc$Compiler$BinaryKey$cleanup, org$frostlang$frostc$Compiler$BinaryKey$$EQ$org$frostlang$frostc$Compiler$BinaryKey$R$frost$core$Bit$shim, org$frostlang$frostc$Compiler$BinaryKey$get_hash$R$frost$core$Int64} };
+org$frostlang$frostc$Compiler$BinaryKey$class_type org$frostlang$frostc$Compiler$BinaryKey$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Object$class, (ITable*) &org$frostlang$frostc$Compiler$BinaryKey$_frost$collections$Key, { frost$core$Object$get_asString$R$frost$core$String, org$frostlang$frostc$Compiler$BinaryKey$cleanup, org$frostlang$frostc$Compiler$BinaryKey$$EQ$org$frostlang$frostc$Compiler$BinaryKey$R$frost$core$Bit$shim, org$frostlang$frostc$Compiler$BinaryKey$get_hash$R$frost$core$Int64} };
 
 typedef frost$core$Bit (*$fn24)(frost$core$Equatable*, frost$core$Equatable*);
 
-static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x43\x6f\x6d\x70\x69\x6c\x65\x72\x2e\x42\x69\x6e\x61\x72\x79\x4b\x65\x79", 39, 1341198773752392507, NULL };
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x43\x6f\x6d\x70\x69\x6c\x65\x72\x2e\x42\x69\x6e\x61\x72\x79\x4b\x65\x79", 39, 1341198773752392507, NULL };
 
 void org$frostlang$frostc$Compiler$BinaryKey$init$org$frostlang$frostc$ASTNode$org$frostlang$frostc$expression$Binary$Operator$org$frostlang$frostc$ASTNode(org$frostlang$frostc$Compiler$BinaryKey* param0, org$frostlang$frostc$ASTNode* param1, org$frostlang$frostc$expression$Binary$Operator param2, org$frostlang$frostc$ASTNode* param3) {
 

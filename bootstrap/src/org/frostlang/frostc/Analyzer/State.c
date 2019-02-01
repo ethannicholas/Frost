@@ -20,7 +20,7 @@
 
 
 static frost$core$String $s1;
-org$frostlang$frostc$Analyzer$State$class_type org$frostlang$frostc$Analyzer$State$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { org$frostlang$frostc$Analyzer$State$get_asString$R$frost$core$String, org$frostlang$frostc$Analyzer$State$cleanup, org$frostlang$frostc$Analyzer$State$add$org$frostlang$frostc$Compiler$org$frostlang$frostc$Analyzer$State$R$frost$core$Bit} };
+org$frostlang$frostc$Analyzer$State$class_type org$frostlang$frostc$Analyzer$State$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { org$frostlang$frostc$Analyzer$State$get_asString$R$frost$core$String, org$frostlang$frostc$Analyzer$State$cleanup, org$frostlang$frostc$Analyzer$State$add$org$frostlang$frostc$Compiler$org$frostlang$frostc$Analyzer$State$R$frost$core$Bit} };
 
 typedef frost$core$Int64 (*$fn27)(frost$collections$CollectionView*);
 typedef frost$core$Int64 (*$fn33)(frost$collections$CollectionView*);
@@ -33,11 +33,11 @@ typedef frost$core$Object* (*$fn125)(frost$collections$Iterator*);
 typedef org$frostlang$frostc$Analyzer$DataFlowValue* (*$fn152)(org$frostlang$frostc$Analyzer$DataFlowValue*, org$frostlang$frostc$Compiler*, org$frostlang$frostc$Analyzer$DataFlowValue*);
 typedef frost$core$Bit (*$fn159)(frost$core$Equatable*, frost$core$Equatable*);
 
-static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x41\x6e\x61\x6c\x79\x7a\x65\x72\x2e\x53\x74\x61\x74\x65", 35, -2482357628948330879, NULL };
-static frost$core$String $s38 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x41\x6e\x61\x6c\x79\x7a\x65\x72\x2e\x66\x72\x6f\x73\x74", 14, -4050164034945853713, NULL };
-static frost$core$String $s175 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x53\x74\x61\x74\x65\x28", 6, 1946030631454, NULL };
-static frost$core$String $s177 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2c\x20", 2, 14677, NULL };
-static frost$core$String $s182 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x29", 1, 142, NULL };
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x41\x6e\x61\x6c\x79\x7a\x65\x72\x2e\x53\x74\x61\x74\x65", 35, -2482357628948330879, NULL };
+static frost$core$String $s38 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x41\x6e\x61\x6c\x79\x7a\x65\x72\x2e\x66\x72\x6f\x73\x74", 14, -4050164034945853713, NULL };
+static frost$core$String $s175 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x74\x61\x74\x65\x28", 6, 1946030631454, NULL };
+static frost$core$String $s177 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2c\x20", 2, 14677, NULL };
+static frost$core$String $s182 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x29", 1, 142, NULL };
 
 void org$frostlang$frostc$Analyzer$State$init(org$frostlang$frostc$Analyzer$State* param0) {
 

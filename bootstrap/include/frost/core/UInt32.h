@@ -60,14 +60,8 @@ frost$core$Int32 frost$core$UInt32$$BXOR$frost$core$Int32$R$frost$core$Int32(fro
 frost$core$Int64 frost$core$UInt32$$BXOR$frost$core$Int64$R$frost$core$Int64(frost$core$UInt32 self, frost$core$Int64 p_other);
 frost$core$UInt32 frost$core$UInt32$$BXOR$frost$core$UInt32$R$frost$core$UInt32(frost$core$UInt32 self, frost$core$UInt32 p_other);
 frost$core$UInt64 frost$core$UInt32$$BXOR$frost$core$UInt64$R$frost$core$UInt64(frost$core$UInt32 self, frost$core$UInt64 p_other);
-frost$core$Int32 frost$core$UInt32$$SHL$frost$core$Int32$R$frost$core$Int32(frost$core$UInt32 self, frost$core$Int32 p_other);
-frost$core$Int64 frost$core$UInt32$$SHL$frost$core$Int64$R$frost$core$Int64(frost$core$UInt32 self, frost$core$Int64 p_other);
 frost$core$UInt32 frost$core$UInt32$$SHL$frost$core$UInt32$R$frost$core$UInt32(frost$core$UInt32 self, frost$core$UInt32 p_other);
-frost$core$UInt64 frost$core$UInt32$$SHL$frost$core$UInt64$R$frost$core$UInt64(frost$core$UInt32 self, frost$core$UInt64 p_other);
-frost$core$Int32 frost$core$UInt32$$SHR$frost$core$Int32$R$frost$core$Int32(frost$core$UInt32 self, frost$core$Int32 p_other);
-frost$core$Int64 frost$core$UInt32$$SHR$frost$core$Int64$R$frost$core$Int64(frost$core$UInt32 self, frost$core$Int64 p_other);
 frost$core$UInt32 frost$core$UInt32$$SHR$frost$core$UInt32$R$frost$core$UInt32(frost$core$UInt32 self, frost$core$UInt32 p_other);
-frost$core$UInt64 frost$core$UInt32$$SHR$frost$core$UInt64$R$frost$core$UInt64(frost$core$UInt32 self, frost$core$UInt64 p_other);
 frost$core$Bit frost$core$UInt32$$EQ$frost$core$Int8$R$frost$core$Bit(frost$core$UInt32 self, frost$core$Int8 p_other);
 frost$core$Bit frost$core$UInt32$$EQ$frost$core$Int16$R$frost$core$Bit(frost$core$UInt32 self, frost$core$Int16 p_other);
 frost$core$Bit frost$core$UInt32$$EQ$frost$core$Int32$R$frost$core$Bit(frost$core$UInt32 self, frost$core$Int32 p_other);

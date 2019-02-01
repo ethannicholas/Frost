@@ -3757,7 +3757,6 @@ class Compiler {
                 resolve(cc)
                 def inits := getSymbolTable(cc.owner)["init"]
                 assert inits !== null
-                resolve(inits->MethodDecl)
                 def args := [ASTNode.INT(position, cc.rawValue.asUInt64)]
                 if isValue(cc.owner) {
                     return Call.compile(self, position, symbolRef(position, null, inits), args,

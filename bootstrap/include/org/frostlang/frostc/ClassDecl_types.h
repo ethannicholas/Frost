@@ -2,6 +2,7 @@
 #include "frost_c.h"
 typedef struct frost$core$Class frost$core$Class;
 #include "frost/core/Int32_types.h"
+#include "frost/core/UInt8_types.h"
 typedef struct frost$io$File frost$io$File;
 #include "org/frostlang/frostc/Position_types.h"
 typedef struct frost$core$String frost$core$String;
@@ -20,6 +21,7 @@ typedef struct frost$collections$HashMap frost$collections$HashMap;
 typedef struct org$frostlang$frostc$ClassDecl {
     frost$core$Class* $class;
     frost$core$Int32 refCount;
+    frost$core$UInt8 $flags;
     frost$io$File* source;
     org$frostlang$frostc$Position position;
     frost$core$String* name;
@@ -45,6 +47,6 @@ typedef struct org$frostlang$frostc$ClassDecl {
     org$frostlang$frostc$Compiler$Resolution resolved;
 } org$frostlang$frostc$ClassDecl;
 #include "frost/core/Class.h"
-typedef struct { frost$core$Class* cl; int32_t refCount; frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[5]; } org$frostlang$frostc$ClassDecl$class_type;
+typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[5]; } org$frostlang$frostc$ClassDecl$class_type;
 extern org$frostlang$frostc$ClassDecl$class_type org$frostlang$frostc$ClassDecl$class;
 

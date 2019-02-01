@@ -19,7 +19,7 @@ struct { frost$core$Class* cl; ITable* next; void* methods[2]; } frost$core$KeyT
 struct { frost$core$Class* cl; ITable* next; void* methods[1]; } frost$core$KeyTuple15$_frost$collections$Key = { (frost$core$Class*) &frost$collections$Key$class, (ITable*) &frost$core$KeyTuple15$_frost$core$Equatable, { frost$core$KeyTuple15$get_hash$R$frost$core$Int64} };
 
 static frost$core$String $s1;
-frost$core$KeyTuple15$class_type frost$core$KeyTuple15$class = { (frost$core$Class*) &frost$core$Class$class, -999, &$s1, (frost$core$Class*) &frost$core$Object$class, (ITable*) &frost$core$KeyTuple15$_frost$collections$Key, { frost$core$KeyTuple15$get_asString$R$frost$core$String, frost$core$KeyTuple15$cleanup, frost$core$KeyTuple15$$IDX$frost$core$Int64$R$frost$core$Object$Q, frost$core$KeyTuple15$$EQ$frost$core$KeyTuple15$LTfrost$core$KeyTuple15$T0$Cfrost$core$KeyTuple15$T1$Cfrost$core$KeyTuple15$T2$Cfrost$core$KeyTuple15$T3$Cfrost$core$KeyTuple15$T4$Cfrost$core$KeyTuple15$T5$Cfrost$core$KeyTuple15$T6$Cfrost$core$KeyTuple15$T7$Cfrost$core$KeyTuple15$T8$Cfrost$core$KeyTuple15$T9$Cfrost$core$KeyTuple15$T10$Cfrost$core$KeyTuple15$T11$Cfrost$core$KeyTuple15$T12$Cfrost$core$KeyTuple15$T13$Cfrost$core$KeyTuple15$T14$GT$R$frost$core$Bit$shim, frost$core$KeyTuple15$get_hash$R$frost$core$Int64} };
+frost$core$KeyTuple15$class_type frost$core$KeyTuple15$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Object$class, (ITable*) &frost$core$KeyTuple15$_frost$collections$Key, { frost$core$KeyTuple15$get_asString$R$frost$core$String, frost$core$KeyTuple15$cleanup, frost$core$KeyTuple15$$IDX$frost$core$Int64$R$frost$core$Object$Q, frost$core$KeyTuple15$$EQ$frost$core$KeyTuple15$LTfrost$core$KeyTuple15$T0$Cfrost$core$KeyTuple15$T1$Cfrost$core$KeyTuple15$T2$Cfrost$core$KeyTuple15$T3$Cfrost$core$KeyTuple15$T4$Cfrost$core$KeyTuple15$T5$Cfrost$core$KeyTuple15$T6$Cfrost$core$KeyTuple15$T7$Cfrost$core$KeyTuple15$T8$Cfrost$core$KeyTuple15$T9$Cfrost$core$KeyTuple15$T10$Cfrost$core$KeyTuple15$T11$Cfrost$core$KeyTuple15$T12$Cfrost$core$KeyTuple15$T13$Cfrost$core$KeyTuple15$T14$GT$R$frost$core$Bit$shim, frost$core$KeyTuple15$get_hash$R$frost$core$Int64} };
 
 typedef frost$core$Bit (*$fn143)(frost$core$Equatable*, frost$core$Equatable*);
 typedef frost$core$Bit (*$fn153)(frost$core$Equatable*, frost$core$Equatable*);
@@ -52,25 +52,25 @@ typedef frost$core$Int64 (*$fn390)(frost$collections$Key*);
 typedef frost$core$Int64 (*$fn398)(frost$collections$Key*);
 typedef frost$core$Int64 (*$fn406)(frost$collections$Key*);
 
-static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x4b\x65\x79\x54\x75\x70\x6c\x65\x31\x35", 21, 5226464502129834429, NULL };
-static frost$core$String $s60 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x4b\x65\x79\x54\x75\x70\x6c\x65\x31\x35\x2e\x66\x72\x6f\x73\x74", 16, -3512478577591776918, NULL };
-static frost$core$String $s61 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x4b\x65\x79\x54\x75\x70\x6c\x65\x31\x35\x2e\x5b\x5d\x28\x69\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x36\x34\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x4f\x62\x6a\x65\x63\x74\x3f", 97, -8078047220083016527, NULL };
-static frost$core$String $s413 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x28", 1, 141, NULL };
-static frost$core$String $s415 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2c\x20", 2, 14677, NULL };
-static frost$core$String $s420 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2c\x20", 2, 14677, NULL };
-static frost$core$String $s425 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2c\x20", 2, 14677, NULL };
-static frost$core$String $s430 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2c\x20", 2, 14677, NULL };
-static frost$core$String $s435 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2c\x20", 2, 14677, NULL };
-static frost$core$String $s440 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2c\x20", 2, 14677, NULL };
-static frost$core$String $s445 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2c\x20", 2, 14677, NULL };
-static frost$core$String $s450 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2c\x20", 2, 14677, NULL };
-static frost$core$String $s455 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2c\x20", 2, 14677, NULL };
-static frost$core$String $s460 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2c\x20", 2, 14677, NULL };
-static frost$core$String $s465 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2c\x20", 2, 14677, NULL };
-static frost$core$String $s470 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2c\x20", 2, 14677, NULL };
-static frost$core$String $s475 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2c\x20", 2, 14677, NULL };
-static frost$core$String $s480 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x2c\x20", 2, 14677, NULL };
-static frost$core$String $s485 = { (frost$core$Class*) &frost$core$String$class, -999, (frost$core$Char8*) "\x29", 1, 142, NULL };
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x4b\x65\x79\x54\x75\x70\x6c\x65\x31\x35", 21, 5226464502129834429, NULL };
+static frost$core$String $s60 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x4b\x65\x79\x54\x75\x70\x6c\x65\x31\x35\x2e\x66\x72\x6f\x73\x74", 16, -3512478577591776918, NULL };
+static frost$core$String $s61 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x4b\x65\x79\x54\x75\x70\x6c\x65\x31\x35\x2e\x5b\x5d\x28\x69\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x36\x34\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x4f\x62\x6a\x65\x63\x74\x3f", 97, -8078047220083016527, NULL };
+static frost$core$String $s413 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x28", 1, 141, NULL };
+static frost$core$String $s415 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2c\x20", 2, 14677, NULL };
+static frost$core$String $s420 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2c\x20", 2, 14677, NULL };
+static frost$core$String $s425 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2c\x20", 2, 14677, NULL };
+static frost$core$String $s430 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2c\x20", 2, 14677, NULL };
+static frost$core$String $s435 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2c\x20", 2, 14677, NULL };
+static frost$core$String $s440 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2c\x20", 2, 14677, NULL };
+static frost$core$String $s445 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2c\x20", 2, 14677, NULL };
+static frost$core$String $s450 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2c\x20", 2, 14677, NULL };
+static frost$core$String $s455 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2c\x20", 2, 14677, NULL };
+static frost$core$String $s460 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2c\x20", 2, 14677, NULL };
+static frost$core$String $s465 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2c\x20", 2, 14677, NULL };
+static frost$core$String $s470 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2c\x20", 2, 14677, NULL };
+static frost$core$String $s475 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2c\x20", 2, 14677, NULL };
+static frost$core$String $s480 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2c\x20", 2, 14677, NULL };
+static frost$core$String $s485 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x29", 1, 142, NULL };
 
 void frost$core$KeyTuple15$init$frost$core$KeyTuple15$T0$frost$core$KeyTuple15$T1$frost$core$KeyTuple15$T2$frost$core$KeyTuple15$T3$frost$core$KeyTuple15$T4$frost$core$KeyTuple15$T5$frost$core$KeyTuple15$T6$frost$core$KeyTuple15$T7$frost$core$KeyTuple15$T8$frost$core$KeyTuple15$T9$frost$core$KeyTuple15$T10$frost$core$KeyTuple15$T11$frost$core$KeyTuple15$T12$frost$core$KeyTuple15$T13$frost$core$KeyTuple15$T14(frost$core$KeyTuple15* param0, frost$collections$Key* param1, frost$collections$Key* param2, frost$collections$Key* param3, frost$collections$Key* param4, frost$collections$Key* param5, frost$collections$Key* param6, frost$collections$Key* param7, frost$collections$Key* param8, frost$collections$Key* param9, frost$collections$Key* param10, frost$collections$Key* param11, frost$collections$Key* param12, frost$collections$Key* param13, frost$collections$Key* param14, frost$collections$Key* param15) {
 
