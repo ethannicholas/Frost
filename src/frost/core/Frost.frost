@@ -11,12 +11,9 @@ class Frost {
     -- Object.flags bit which indicates that the object has had weak references to it created
     constant WEAK_REFERENCE_FLAG:UInt8 := 1
 
-    def allocations := HashMap<String, Int>()
-
-    def traces := HashMap<String, Int>()
-
     @private
-    init() {}
+    init() {
+    }
 
     @private
     @class
@@ -30,47 +27,6 @@ class Frost {
         return Maybe<Object>.ERROR(Error(msg))
     }
 
-    @private
-    @class
-    function allocationName(cl:Class):String {
-        if cl.name = "frost.core.String" | cl.name = "frost.core.MutableString" {
-            return "frost.core.String/MutableString"
-        }
-        if cl.name = "frost.collections.Array" | cl.name = "frost.collections.ImmutableArray" {
-            return "frost.collections.Array/ImmutableArray"
-        }
-        return cl.name
-    }
-
-    method countAllocation(cl:Class) {
-        def name := allocationName(cl)
-        var old := allocations[name]
-        if old == null {
-            old := 0
-        }
-        allocations[name] := old + 1
-    }
-
-    method countDeallocation(cl:Class) {
-        def name := allocationName(cl)
-        var old := allocations[name]
-        if old == null {
-            old := 0
-        }
-        allocations[name] := old - 1
-    }
-
-    method dumpReport() {
-        for k in allocations.keys { -- FIXME entries
-            if allocations[k] != 0 {
-                Console.printLine("\{k}: \{allocations[k]}")
-            }
-        }
-        for k in traces.keys { -- FIXME entries
-            Console.printLine("\{k}: \{traces[k]}")
-        }
-    }
-
     @class
     @external
     method ref(o:Object?)
@@ -78,18 +34,6 @@ class Frost {
     @class
     @external
     method unref(o:Object?)
-
-    @class
-    @external
-    method trace(s:String)
-
-    method countTrace(s:String) {
-        var old := traces[s]
-        if old == null {
-            old := 0
-        }
-        traces[s] := old + 1
-    }
 
     @class
     @external

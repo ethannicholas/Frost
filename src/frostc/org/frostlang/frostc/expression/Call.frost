@@ -655,7 +655,7 @@ class Call {
                     }
                     argTypes.add(preferred)
                 }
-                compiler.error(position, "no match for \{methods[0].name}(\{argTypes.join()})" +
+                compiler.error(position, "no match for \{methods[0].name}(\{argTypes.join(", ")})" +
                         type.description())
                 return null
             }
@@ -684,7 +684,7 @@ class Call {
                     }
                     argTypes.add(preferred)
                 }
-                compiler.error(position, "no match for \{methods[0].name}(\{argTypes.join()})" +
+                compiler.error(position, "no match for \{methods[0].name}(\{argTypes.join(", ")})" +
                         type.description())
                 return null
             }

@@ -20,8 +20,6 @@ typedef uint8_t bool;
 #define true 1
 #define false 0
 
-#define DEBUG_ALLOCS 0
-
 #define FROST_WEAK_REFERENCE_FLAG 1
 
 struct Class;
@@ -221,8 +219,6 @@ extern Class frost$core$System$Process$class;
 
 extern Class frost$core$Matcher$class;
 
-void frost$core$Frost$init(Object*);
-
 Object* frost$core$Frost$success$frost$core$Object$R$frost$core$Maybe$LTfrost$core$Object$GT$Q(Object*);
 
 Object* frost$core$Frost$error$frost$core$String$R$frost$core$Maybe$LTfrost$core$Object$GT$Q(String*);
@@ -231,15 +227,7 @@ void frost$core$Frost$ref$frost$core$Object$Q(Object*);
 
 void frost$core$Frost$unref$frost$core$Object$Q(Object*);
 
-void frost$core$Frost$dumpReport(Object*);
-
-#if DEBUG_ALLOCS
-void frost$core$Frost$countAllocation$frost$core$Class(Object*, Class*);
-
-void frost$core$Frost$countDeallocation$frost$core$Class(Object*, Class*);
-#endif
-
-void frost$core$Frost$countTrace$frost$core$String(Object*, String*);
+void frost$core$Frost$dumpReport$frost$core$Frost$TraceData(Object*);
 
 void frost$collections$Array$add$frost$collections$Array$T(Array*, Object*);
 
@@ -265,16 +253,9 @@ static pthread_mutex_t preventsExitThreadsMutex = PTHREAD_MUTEX_INITIALIZER;
 
 static pthread_mutex_t weakReferenceMutex = PTHREAD_MUTEX_INITIALIZER;
 
-Object* frost = NULL;
-
 static Object* weakReferences = NULL;
 
 static bool refErrorReporting = true;
-
-#if DEBUG_ALLOCS
-static pthread_mutex_t traceMutex = PTHREAD_MUTEX_INITIALIZER;
-bool debugAllocs = true;
-#endif
 
 void frostFatalError(const char* msg) {
     printf("%s\n", msg);
@@ -304,21 +285,6 @@ void* frostZAlloc(size_t size) {
 void frostDebugPrintObject(void* object);
 
 void* frostObjectAlloc(size_t size, Class* cl) {
-#if DEBUG_ALLOCS
-    if (debugAllocs) {
-        debugAllocs = false;
-        if (!frost) {
-            frost = frostAlloc(sizeof(Object) + sizeof(void*));
-            frost->cl = &frost$core$Frost$class;
-            frost->refcnt = 1;
-            frost$core$Frost$init(frost);
-        }
-        pthread_mutex_lock(&traceMutex);
-        frost$core$Frost$countAllocation$frost$core$Class(frost, cl);
-        pthread_mutex_unlock(&traceMutex);
-        debugAllocs = true;
-    }
-#endif
     Object* result = frostAlloc(size);
     result->cl = cl;
     result->refcnt = 1;
@@ -336,21 +302,10 @@ void* frostRealloc(void* ptr, size_t oldSize, size_t newSize) {
 
 void frostFree(void* ptr) {
     __atomic_sub_fetch(&allocations, 1, __ATOMIC_RELAXED);
-#if !DEBUG_ALLOCS
     free(ptr);
-#endif
 }
 
 void frostObjectFree(Object* o) {
-#if DEBUG_ALLOCS
-    if (debugAllocs) {
-        debugAllocs = false;
-        pthread_mutex_lock(&traceMutex);
-        frost$core$Frost$countDeallocation$frost$core$Class(frost, o->cl);
-        pthread_mutex_unlock(&traceMutex);
-        debugAllocs = true;
-    }
-#endif
     if (o->flags & FROST_WEAK_REFERENCE_FLAG) {
         pthread_mutex_lock(&weakReferenceMutex);
         frost$core$Frost$weakReferentDestroyed$frost$core$Object$frost$collections$IdentityMap$LTfrost$core$Object$Cfrost$collections$Array$LTfrost$core$Weak$LTfrost$core$Object$GT$GT$GT(o, weakReferences);
@@ -421,9 +376,6 @@ void* frostGetInterfaceMethod(Object* o, Class* intf, int index) {
 void frostMain(Array* args);
 
 int main(int argc, char** argv) {
-#if DEBUG_ALLOCS
-    printf("Warning: memory tracing is enabled. This will severely impact performance.\n");
-#endif
     Array* args = frostObjectAlloc(sizeof(Array), &frost$collections$Array$class);
     args->count = argc;
     args->capacity = argc;
@@ -443,25 +395,16 @@ int main(int argc, char** argv) {
     }
     frost$core$Frost$unref$frost$core$Object$Q((Object*) args);
     if (weakReferences) {
+        frostAssert(weakReferences->refcnt == 1);
         frost$core$Frost$unref$frost$core$Object$Q(weakReferences);
     }
-#if DEBUG_ALLOCS
-    debugAllocs = false;
-#endif
     if (refErrorReporting) {
-        if (frost) {
-            frost$core$Frost$dumpReport(frost);
-            frost$core$Frost$unref$frost$core$Object$Q(frost);
-        }
         if (allocations && allocations != 1) {
             printf("warning: %d objects were still in memory on exit\n", allocations);
         }
         else if (allocations == 1) {
             printf("warning: 1 object was still in memory on exit\n");
         }
-    }
-    else if (frost) {
-        frost$core$Frost$unref$frost$core$Object$Q(frost);
     }
     return 0;
 }
@@ -632,6 +575,58 @@ File* frost$core$System$temporaryDirectory$R$frost$io$File() {
     return file;
 }
 
+// Real32
+
+void frost$core$Real32$floor$R$frost$core$Real32(Real32* out, Real32 x) {
+    out->value = floor(x.value);
+}
+
+void frost$core$Real32$ceiling$R$frost$core$Real32(Real32* out, Real32 x) {
+    out->value = ceil(x.value);
+}
+
+void frost$core$Real32$sqrt$R$frost$core$Real32(Real32* out, Real32 x) {
+    out->value = sqrt(x.value);
+}
+
+void frost$core$Real32$sin$R$frost$core$Real32(Real32* out, Real32 x) {
+    out->value = sin(x.value);
+}
+
+void frost$core$Real32$cos$R$frost$core$Real32(Real32* out, Real32 x) {
+    out->value = cos(x.value);
+}
+
+void frost$core$Real32$tan$R$frost$core$Real32(Real32* out, Real32 x) {
+    out->value = tan(x.value);
+}
+
+// Real64
+
+void frost$core$Real64$floor$R$frost$core$Real64(Real64* out, Real64 x) {
+    out->value = floor(x.value);
+}
+
+void frost$core$Real64$ceiling$R$frost$core$Real64(Real64* out, Real64 x) {
+    out->value = ceil(x.value);
+}
+
+void frost$core$Real64$sqrt$R$frost$core$Real64(Real64* out, Real64 x) {
+    out->value = sqrt(x.value);
+}
+
+void frost$core$Real64$sin$R$frost$core$Real64(Real64* out, Real64 x) {
+    out->value = sin(x.value);
+}
+
+void frost$core$Real64$cos$R$frost$core$Real64(Real64* out, Real64 x) {
+    out->value = cos(x.value);
+}
+
+void frost$core$Real64$tan$R$frost$core$Real64(Real64* out, Real64 x) {
+    out->value = tan(x.value);
+}
+
 // Frost
 
 #define NO_REFCNT -999
@@ -657,16 +652,6 @@ String* frost$core$Frost$pointerConvert$frost$unsafe$Pointer$LTfrost$core$Object
     char buffer[32];
     int length = sprintf(buffer, "%p", ptr);
     return frostNewString(buffer, length);
-}
-
-void frost$core$Frost$trace$frost$core$String(String* s) {
-    if (!frost) {
-        frost = frostAlloc(sizeof(Object) + sizeof(void*));
-        frost->cl = &frost$core$Frost$class;
-        frost->refcnt = 1;
-        frost$core$Frost$init(frost);
-    }
-    frost$core$Frost$countTrace$frost$core$String(frost, s);
 }
 
 void frost$core$Frost$ref$frost$core$Object$Q(Object* o) {
@@ -938,7 +923,7 @@ void frost$threads$Thread$run$$LP$RP$EQ$AM$GT$LP$RP$builtin_bit(Thread* thread, 
     // If there's a system where this isn't true, we can easily use the nativeHandler as a pointer
     // to the pthread_t instead when the sizes don't match. For now, I'm just going to be lazy.
     frostAssert(sizeof(threadId) == sizeof(thread->nativeHandle));
-    thread->nativeHandle = threadId;
+    thread->nativeHandle = (void*) threadId;
 }
 
 void frost$threads$Thread$run$$LP$RP$EQ$AM$GT$ST$LP$RP$builtin_bit(Thread* thread, Method* run,

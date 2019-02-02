@@ -58,6 +58,6 @@ class Int64List : ListView<Int64> {
 
     @override
     function get_asString():String {
-        return "[\{join()}]"
+        return "[\{join(", ")}]"
     }
 }

@@ -966,7 +966,7 @@ class Compiler {
                 cl.annotations.flags ||= Annotations.Flag.FINAL
                 for m in cl.methods {
                     m.annotations.flags ||= Annotations.Flag.FINAL
-                    if scanner.shouldInline(m.annotations, m.body) {
+                    if m.body !== null & scanner.shouldInline(m.annotations, m.body) {
                         m.annotations.flags ||= Annotations.Flag.INLINE
                     }
                 }
@@ -2462,7 +2462,7 @@ class Compiler {
             return Type.RangeOf(endpointType)
         }
         else if end !== null {
-            def pref:Type
+            def pref:Type?
             match end {
                 when ASTNode.STRING {
                     pref := Type.Char32()
@@ -5150,7 +5150,7 @@ class Compiler {
                 }
             }
             when Target.TUPLE(targets) {
-                targets.apply(self.initializeTarget)
+                targets.apply(self.createScopes)
             }
             otherwise {
                 assert false

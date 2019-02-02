@@ -56,11 +56,11 @@ static frost$core$String $s165 = { (frost$core$Class*) &frost$core$String$class,
 void frost$collections$ListView$CombinationIterator$init$frost$collections$ListView$LTfrost$collections$ListView$CombinationIterator$T$GT$frost$core$Int64(frost$collections$ListView$CombinationIterator* param0, frost$collections$ListView* param1, frost$core$Int64 param2) {
 
 frost$core$Int64 local0;
-// line 84
+// line 110
 frost$core$Int64 $tmp2 = (frost$core$Int64) {0};
 frost$core$Int64* $tmp3 = &param0->r;
 *$tmp3 = $tmp2;
-// line 86
+// line 112
 frost$core$Int64 $tmp4 = (frost$core$Int64) {0};
 frost$core$Int64* $tmp5 = &param0->index;
 *$tmp5 = $tmp4;
@@ -85,18 +85,18 @@ frost$core$Bit $tmp19 = (frost$core$Bit) {$tmp18};
 bool $tmp20 = $tmp19.value;
 if ($tmp20) goto block1; else goto block2;
 block2:;
-frost$core$Int64 $tmp21 = (frost$core$Int64) {89};
+frost$core$Int64 $tmp21 = (frost$core$Int64) {115};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s22, $tmp21, &$s23);
 abort(); // unreachable
 block1:;
-// line 90
+// line 116
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
 frost$collections$ListView** $tmp24 = &param0->list;
 frost$collections$ListView* $tmp25 = *$tmp24;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp25));
 frost$collections$ListView** $tmp26 = &param0->list;
 *$tmp26 = param1;
-// line 91
+// line 117
 FROST_ASSERT(40 == sizeof(frost$collections$Array));
 frost$collections$Array* $tmp27 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
 frost$collections$Array$init$frost$core$Int64($tmp27, param2);
@@ -107,7 +107,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp29));
 frost$collections$List** $tmp30 = &param0->choices;
 *$tmp30 = ((frost$collections$List*) $tmp27);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp27));
-// line 92
+// line 118
 frost$core$Int64 $tmp31 = (frost$core$Int64) {0};
 frost$core$Bit $tmp32 = frost$core$Bit$init$builtin_bit(false);
 frost$core$Range$LTfrost$core$Int64$GT $tmp33 = frost$core$Range$LTfrost$core$Int64$GT$init$frost$core$Int64$frost$core$Int64$frost$core$Bit($tmp31, param2, $tmp32);
@@ -134,7 +134,7 @@ frost$core$Bit $tmp48 = (frost$core$Bit) {$tmp47};
 bool $tmp49 = $tmp48.value;
 if ($tmp49) goto block4; else goto block5;
 block4:;
-// line 93
+// line 119
 frost$collections$List** $tmp50 = &param0->choices;
 frost$collections$List* $tmp51 = *$tmp50;
 frost$core$Int64 $tmp52 = *(&local0);
@@ -185,7 +185,7 @@ return;
 frost$core$Bit frost$collections$ListView$CombinationIterator$get_done$R$frost$core$Bit(frost$collections$ListView$CombinationIterator* param0) {
 
 frost$core$Int64 local0;
-// line 99
+// line 125
 frost$core$Int64 $tmp77 = (frost$core$Int64) {0};
 frost$collections$List** $tmp78 = &param0->choices;
 frost$collections$List* $tmp79 = *$tmp78;
@@ -220,7 +220,7 @@ frost$core$Bit $tmp100 = (frost$core$Bit) {$tmp99};
 bool $tmp101 = $tmp100.value;
 if ($tmp101) goto block1; else goto block2;
 block1:;
-// line 100
+// line 126
 frost$collections$List** $tmp102 = &param0->choices;
 frost$collections$List* $tmp103 = *$tmp102;
 frost$core$Int64 $tmp104 = *(&local0);
@@ -263,7 +263,7 @@ bool $tmp134 = $tmp133.value;
 frost$core$Frost$unref$frost$core$Object$Q($tmp108);
 if ($tmp134) goto block6; else goto block7;
 block6:;
-// line 101
+// line 127
 frost$core$Bit $tmp135 = frost$core$Bit$init$builtin_bit(false);
 return $tmp135;
 block7:;
@@ -298,7 +298,7 @@ frost$core$Int64 $tmp155 = (frost$core$Int64) {$tmp154};
 *(&local0) = $tmp155;
 goto block1;
 block2:;
-// line 104
+// line 130
 frost$core$Bit $tmp156 = frost$core$Bit$init$builtin_bit(true);
 return $tmp156;
 
@@ -317,14 +317,14 @@ frost$core$Bit $tmp161 = frost$core$Bit$$NOT$R$frost$core$Bit($tmp160);
 bool $tmp162 = $tmp161.value;
 if ($tmp162) goto block1; else goto block2;
 block2:;
-frost$core$Int64 $tmp163 = (frost$core$Int64) {108};
+frost$core$Int64 $tmp163 = (frost$core$Int64) {134};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s164, $tmp163, &$s165);
 abort(); // unreachable
 block1:;
-// line 109
+// line 135
 goto block3;
 block3:;
-// line 110
+// line 136
 frost$core$Int64* $tmp166 = &param0->index;
 frost$core$Int64 $tmp167 = *$tmp166;
 frost$collections$ListView** $tmp168 = &param0->list;
@@ -360,7 +360,7 @@ frost$core$Bit $tmp193 = (frost$core$Bit) {$tmp192};
 bool $tmp194 = $tmp193.value;
 if ($tmp194) goto block5; else goto block7;
 block5:;
-// line 111
+// line 137
 frost$collections$List** $tmp195 = &param0->choices;
 frost$collections$List* $tmp196 = *$tmp195;
 frost$core$Int64* $tmp197 = &param0->r;
@@ -377,7 +377,7 @@ while ($tmp202->$class != (frost$core$Class*) &frost$collections$ListWriter$clas
 $fn204 $tmp203 = $tmp202->methods[0];
 $tmp203(((frost$collections$ListWriter*) $tmp196), $tmp198, ((frost$core$Object*) $tmp201));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp201));
-// line 112
+// line 138
 frost$core$Int64* $tmp205 = &param0->r;
 frost$core$Int64 $tmp206 = *$tmp205;
 frost$collections$List** $tmp207 = &param0->choices;
@@ -397,7 +397,7 @@ frost$core$Bit $tmp218 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit(
 bool $tmp219 = $tmp218.value;
 if ($tmp219) goto block8; else goto block10;
 block8:;
-// line 113
+// line 139
 frost$core$Int64* $tmp220 = &param0->index;
 frost$core$Int64 $tmp221 = *$tmp220;
 frost$core$Int64 $tmp222 = (frost$core$Int64) {1};
@@ -407,7 +407,7 @@ int64_t $tmp225 = $tmp223 + $tmp224;
 frost$core$Int64 $tmp226 = (frost$core$Int64) {$tmp225};
 frost$core$Int64* $tmp227 = &param0->index;
 *$tmp227 = $tmp226;
-// line 114
+// line 140
 FROST_ASSERT(40 == sizeof(frost$collections$Array));
 frost$collections$Array* $tmp228 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
 frost$collections$List** $tmp229 = &param0->choices;
@@ -425,7 +425,7 @@ frost$collections$Array* $tmp235 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp235));
 *(&local0) = $tmp228;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp228));
-// line 115
+// line 141
 frost$collections$List** $tmp236 = &param0->choices;
 frost$collections$List* $tmp237 = *$tmp236;
 ITable* $tmp238 = ((frost$collections$Iterable*) $tmp237)->$class->itable;
@@ -452,7 +452,7 @@ while ($tmp247->$class != (frost$core$Class*) &frost$collections$Iterator$class)
 $fn249 $tmp248 = $tmp247->methods[1];
 frost$core$Object* $tmp250 = $tmp248($tmp241);
 *(&local1) = ((frost$core$Int64$wrapper*) $tmp250)->value;
-// line 116
+// line 142
 frost$collections$Array* $tmp251 = *(&local0);
 frost$collections$ListView** $tmp252 = &param0->list;
 frost$collections$ListView* $tmp253 = *$tmp252;
@@ -469,7 +469,7 @@ frost$core$Frost$unref$frost$core$Object$Q($tmp250);
 goto block11;
 block13:;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp241));
-// line 118
+// line 144
 frost$collections$Array* $tmp259 = *(&local0);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$collections$ListView*) $tmp259)));
 frost$collections$Array* $tmp260 = *(&local0);
@@ -478,7 +478,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp260));
 return ((frost$collections$ListView*) $tmp259);
 block10:;
 // line 1
-// line 121
+// line 147
 frost$collections$List** $tmp261 = &param0->choices;
 frost$collections$List* $tmp262 = *$tmp261;
 frost$core$Int64* $tmp263 = &param0->r;
@@ -497,7 +497,7 @@ frost$core$Int64 $tmp273 = (frost$core$Int64) {$tmp272};
 frost$core$Int64* $tmp274 = &param0->index;
 *$tmp274 = $tmp273;
 frost$core$Frost$unref$frost$core$Object$Q($tmp268);
-// line 122
+// line 148
 frost$core$Int64* $tmp275 = &param0->r;
 frost$core$Int64 $tmp276 = *$tmp275;
 frost$core$Int64 $tmp277 = (frost$core$Int64) {1};
@@ -512,7 +512,7 @@ block9:;
 goto block6;
 block7:;
 // line 1
-// line 126
+// line 152
 frost$core$Int64* $tmp283 = &param0->r;
 frost$core$Int64 $tmp284 = *$tmp283;
 frost$core$Int64 $tmp285 = (frost$core$Int64) {1};
@@ -522,7 +522,7 @@ int64_t $tmp288 = $tmp286 - $tmp287;
 frost$core$Int64 $tmp289 = (frost$core$Int64) {$tmp288};
 frost$core$Int64* $tmp290 = &param0->r;
 *$tmp290 = $tmp289;
-// line 127
+// line 153
 frost$core$Int64* $tmp291 = &param0->r;
 frost$core$Int64 $tmp292 = *$tmp291;
 frost$core$Int64 $tmp293 = (frost$core$Int64) {0};
@@ -533,7 +533,7 @@ frost$core$Bit $tmp297 = (frost$core$Bit) {$tmp296};
 bool $tmp298 = $tmp297.value;
 if ($tmp298) goto block14; else goto block16;
 block14:;
-// line 128
+// line 154
 frost$collections$List** $tmp299 = &param0->choices;
 frost$collections$List* $tmp300 = *$tmp299;
 frost$core$Int64* $tmp301 = &param0->r;
@@ -555,7 +555,7 @@ frost$core$Frost$unref$frost$core$Object$Q($tmp306);
 goto block15;
 block16:;
 // line 1
-// line 131
+// line 157
 frost$collections$List** $tmp313 = &param0->choices;
 frost$collections$List* $tmp314 = *$tmp313;
 frost$core$Int64 $tmp315 = (frost$core$Int64) {0};
@@ -585,7 +585,7 @@ block17:;
 }
 void frost$collections$ListView$CombinationIterator$cleanup(frost$collections$ListView$CombinationIterator* param0) {
 
-// line 79
+// line 105
 frost$core$Object$cleanup(((frost$core$Object*) param0));
 frost$collections$ListView** $tmp326 = &param0->list;
 frost$collections$ListView* $tmp327 = *$tmp326;

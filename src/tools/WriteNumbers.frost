@@ -659,7 +659,7 @@ class WriteNumbers {
                 converted := "reinterpreted"
             }
             out.printLine("    ===Returns this number \{converted} to a\{size(target) = 8:n|} " +
-                    "bit \{signed(target):signed|unsigned} number.===")
+                    "\{size(target)} bit \{signed(target):signed|unsigned} number.===")
             out.printLine("    property as\{object(target)}:\{object(target)}")
             out.printLine("    function get_as\{object(target)}():\{object(target)} {")
             out.printLine("        return \{object(target)}(value->\{builtin(target)})")
@@ -790,6 +790,20 @@ class WriteNumbers {
     }
 
     @class
+    method writeExternalProperty(returnType:Type, name:String, doc:String, out:OutputStream) {
+        try {
+            out.printLine()
+            out.printLine("    ===\{doc}===")
+            out.printLine("    property \{name}:\{object(returnType)}")
+            out.printLine("    @external")
+            out.printLine("    function get_\{name}():\{object(returnType)}")
+        }
+        fail(error) {
+            unreachable, error.asString
+        }
+    }
+
+    @class
     function insertCommas(s:String):String {
         if s.length < 4 {
             return s
@@ -888,6 +902,8 @@ class WriteNumbers {
         writeMax(type, out)
         writeIndex(type, out)
         writeCount(type, out)
+        writeExternalProperty(type, "bitCount", "Returns the number of `1` bits in this number's " +
+                "binary representation.", out)
         writeIterator(type, out)
         writeHash(type, out)
         writeParse(type, out)
@@ -979,7 +995,7 @@ class WriteNumbers {
             out.printLine()
             out.printLine("    @override")
             out.printLine("    function get_asString():String {")
-            out.printLine("        return \"[\\{join()}]\"")
+            out.printLine("        return \"[\\{join(\", \")}]\"")
             out.printLine("    }")
             out.printLine("}")
         }
@@ -1030,11 +1046,17 @@ class WriteNumbers {
                     "the given number.", type, out)
             writeComparisonOperator("<=", "Returns `true` if this number is less than or equal to " +
                     "the given number.", type, out)
-            if signed(type) {
-                writeAbs(type, out)
-            }
+            writeAbs(type, out)
             writeMin(type, out)
             writeMax(type, out)
+            writeExternalProperty(type, "floor", "Returns this number rounded down (that is, in " +
+                    "the direction of negative infinity) to the nearest integer.", out)
+            writeExternalProperty(type, "ceiling", "Returns this number rounded up (that is, in " +
+                    "the direction of positive infinity) to the nearest integer.", out)
+            writeExternalProperty(type, "sqrt","Returns the square root of this number.", out)
+            writeExternalProperty(type, "sin", "Returns the trigonometric sine of this number.", out)
+            writeExternalProperty(type, "cos", "Returns the trigonometric cosine of this number.", out)
+            writeExternalProperty(type, "tan", "Returns the trigonometric tangent of this number.", out)
             writeHash(type, out)
             writeAs(type, out)
             writeFormat(type, out)

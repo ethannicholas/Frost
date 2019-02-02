@@ -40,7 +40,7 @@ method writeTuple(count:Int, kind:Kind, path:File) {
             out.printLine("    def f\{i}:T\{i}")
         }
         out.printLine()
-        out.printLine("    init(\{Int[0 .. count].map(i => "f\{i}:T\{i}").join()}) {")
+        out.printLine("    init(\{Int[0 .. count].map(i => "f\{i}:T\{i}").join(", ")}) {")
         for i in 0 .. count {
             out.printLine("       self.f\{i} := f\{i}")
         }
@@ -79,7 +79,7 @@ method writeTuple(count:Int, kind:Kind, path:File) {
         }
         out.printLine("    @override")
         out.printLine("    function get_asString():String {")
-        out.printLine("        return \"(\{Int[0 .. count].map(i => "\\{f\{i}}").join()})\"")
+        out.printLine("        return \"(\{Int[0 .. count].map(i => "\\{f\{i}}").join(", ")})\"")
         out.printLine("    }")
         out.printLine("}")
     }

@@ -48,6 +48,6 @@ class UInt16List : ListView<UInt16> {
 
     @override
     function get_asString():String {
-        return "[\{join()}]"
+        return "[\{join(", ")}]"
     }
 }

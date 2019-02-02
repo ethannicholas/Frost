@@ -1476,7 +1476,7 @@ ITable* $tmp529 = ((frost$collections$MapView*) $tmp528)->$class->itable;
 while ($tmp529->$class != (frost$core$Class*) &frost$collections$MapView$class) {
     $tmp529 = $tmp529->next;
 }
-$fn531 $tmp530 = $tmp529->methods[3];
+$fn531 $tmp530 = $tmp529->methods[4];
 frost$collections$Iterator* $tmp532 = $tmp530(((frost$collections$MapView*) $tmp528));
 goto block1;
 block1:;

@@ -1148,7 +1148,7 @@ ITable* $tmp403 = $tmp402->$class->itable;
 while ($tmp403->$class != (frost$core$Class*) &frost$collections$MapView$class) {
     $tmp403 = $tmp403->next;
 }
-$fn405 $tmp404 = $tmp403->methods[3];
+$fn405 $tmp404 = $tmp403->methods[4];
 frost$collections$Iterator* $tmp406 = $tmp404($tmp402);
 goto block12;
 block12:;

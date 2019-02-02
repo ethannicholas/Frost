@@ -2272,6 +2272,8 @@ return;
 void frostMain(frost$collections$ListView* param0) {
 
 // line 398
+frost$core$Frost$disableRefErrorReporting();
+// line 399
 ITable* $tmp874 = ((frost$collections$CollectionView*) param0)->$class->itable;
 while ($tmp874->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
     $tmp874 = $tmp874->next;
@@ -2298,10 +2300,10 @@ bool $tmp891 = $tmp889.value;
 frost$core$Frost$unref$frost$core$Object$Q($tmp888);
 if ($tmp891) goto block1; else goto block2;
 block1:;
-// line 399
+// line 400
 goto block4;
 block4:;
-// line 400
+// line 401
 FROST_ASSERT(40 == sizeof(org$frostlang$frostc$Main));
 org$frostlang$frostc$Main* $tmp892 = (org$frostlang$frostc$Main*) frostObjectAlloc(40, (frost$core$Class*) &org$frostlang$frostc$Main$class);
 org$frostlang$frostc$Main$init($tmp892);
@@ -2321,7 +2323,7 @@ goto block4;
 block5:;
 goto block2;
 block2:;
-// line 403
+// line 404
 FROST_ASSERT(40 == sizeof(org$frostlang$frostc$Main));
 org$frostlang$frostc$Main* $tmp900 = (org$frostlang$frostc$Main*) frostObjectAlloc(40, (frost$core$Class*) &org$frostlang$frostc$Main$class);
 org$frostlang$frostc$Main$init($tmp900);

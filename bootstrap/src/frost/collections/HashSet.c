@@ -207,7 +207,7 @@ ITable* $tmp50 = ((frost$collections$MapView*) $tmp49)->$class->itable;
 while ($tmp50->$class != (frost$core$Class*) &frost$collections$MapView$class) {
     $tmp50 = $tmp50->next;
 }
-$fn52 $tmp51 = $tmp50->methods[3];
+$fn52 $tmp51 = $tmp50->methods[4];
 frost$collections$Iterator* $tmp53 = $tmp51(((frost$collections$MapView*) $tmp49));
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp53));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp53));
@@ -251,7 +251,7 @@ ITable* $tmp65 = ((frost$collections$MapView*) $tmp64)->$class->itable;
 while ($tmp65->$class != (frost$core$Class*) &frost$collections$MapView$class) {
     $tmp65 = $tmp65->next;
 }
-$fn67 $tmp66 = $tmp65->methods[3];
+$fn67 $tmp66 = $tmp65->methods[4];
 frost$collections$Iterator* $tmp68 = $tmp66(((frost$collections$MapView*) $tmp64));
 goto block1;
 block1:;

@@ -17,14 +17,14 @@ interface CollectionView<T> : Iterable<T> {
     function get_count():Int
 
     ================================================================================================
-    Returns a comma-separated string containing all of the items in this collection, in iteration
-    order. Equivalent to `join(", ")`.
+    Returns the string concatenation of all of the items in this collection, in iteration order.
+    Equivalent to `join("")`.
 
     @see join(String)
     ================================================================================================
     @default
     function join():String {
-        return join(", ")
+        return join("")
     }
 
     ================================================================================================

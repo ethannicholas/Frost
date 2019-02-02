@@ -8,4 +8,6 @@ interface MapWriter<K, V> {
     method []:=(key:K, value:V)
 
     method remove(key:K)
+
+    method clear()
 }

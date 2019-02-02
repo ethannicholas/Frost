@@ -69,6 +69,12 @@ frost$core$Real32 frost$core$Real32$max$frost$core$UInt8$R$frost$core$Real32(fro
 frost$core$Real32 frost$core$Real32$max$frost$core$UInt16$R$frost$core$Real32(frost$core$Real32 self, frost$core$UInt16 p_other);
 frost$core$Real32 frost$core$Real32$max$frost$core$UInt32$R$frost$core$Real32(frost$core$Real32 self, frost$core$UInt32 p_other);
 frost$core$Real64 frost$core$Real32$max$frost$core$UInt64$R$frost$core$Real64(frost$core$Real32 self, frost$core$UInt64 p_other);
+void frost$core$Real32$floor$R$frost$core$Real32(frost$core$Real32* result, frost$core$Real32 self);
+void frost$core$Real32$ceiling$R$frost$core$Real32(frost$core$Real32* result, frost$core$Real32 self);
+void frost$core$Real32$sqrt$R$frost$core$Real32(frost$core$Real32* result, frost$core$Real32 self);
+void frost$core$Real32$sin$R$frost$core$Real32(frost$core$Real32* result, frost$core$Real32 self);
+void frost$core$Real32$cos$R$frost$core$Real32(frost$core$Real32* result, frost$core$Real32 self);
+void frost$core$Real32$tan$R$frost$core$Real32(frost$core$Real32* result, frost$core$Real32 self);
 frost$core$Int64 frost$core$Real32$get_hash$R$frost$core$Int64(frost$core$Real32 self);
 frost$core$Int8 frost$core$Real32$get_asInt8$R$frost$core$Int8(frost$core$Real32 self);
 frost$core$Int16 frost$core$Real32$get_asInt16$R$frost$core$Int16(frost$core$Real32 self);

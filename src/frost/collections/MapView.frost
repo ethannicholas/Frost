@@ -7,11 +7,26 @@ value, and generally does so very quickly (constant or `log n` time, depending o
 implementation).
 ====================================================================================================
 interface MapView<K, V> {
+    ================================================================================================
+    The number of key/value pairs the map contains.
+    ================================================================================================
     property count:Int
 
+    ================================================================================================
+    An iterator which returns all of the keys in the map.
+    ================================================================================================
     property keys:Iterator<K>
 
+    ================================================================================================
+    An iterator which returns all of the values in the map. Because multiple keys may map to the
+    same value, this iterator may return duplicate values.
+    ================================================================================================
     property values:Iterator<V>
+
+    ================================================================================================
+    An iterator which returns all of the (key, value) pairs in the map.
+    ================================================================================================
+    property entries:Iterator<(K, V)>
 
     function get_count():Int
 
@@ -28,7 +43,17 @@ interface MapView<K, V> {
     ================================================================================================
     function contains(key:K):Bit
 
-    function get_keys():Iterator<K>
+    function get_entries():Iterator<(K, V)>
 
-    function get_values():Iterator<V>
+    @default
+    function get_keys():Iterator<K> {
+        -- FIXME inference
+        return entries.map<K>(e => e[0])
+    }
+
+    @default
+    function get_values():Iterator<V> {
+        -- FIXME inference
+        return entries.map<V>(e => e[1])
+    }
 }

@@ -38,14 +38,14 @@ static frost$core$String $s29 = { (frost$core$Class*) &frost$core$String$class, 
 
 void frost$collections$ListView$PermutationIterator$init$frost$collections$ListView$LTfrost$collections$ListView$PermutationIterator$T$GT(frost$collections$ListView$PermutationIterator* param0, frost$collections$ListView* param1) {
 
-// line 46
+// line 72
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
 frost$collections$ListView** $tmp2 = &param0->list;
 frost$collections$ListView* $tmp3 = *$tmp2;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp3));
 frost$collections$ListView** $tmp4 = &param0->list;
 *$tmp4 = param1;
-// line 47
+// line 73
 FROST_ASSERT(40 == sizeof(frost$collections$Array));
 frost$collections$Array* $tmp5 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
 ITable* $tmp6 = ((frost$collections$CollectionView*) param1)->$class->itable;
@@ -72,7 +72,7 @@ return;
 }
 frost$core$Bit frost$collections$ListView$PermutationIterator$get_done$R$frost$core$Bit(frost$collections$ListView$PermutationIterator* param0) {
 
-// line 52
+// line 78
 frost$collections$Array** $tmp15 = &param0->choices;
 frost$collections$Array* $tmp16 = *$tmp15;
 frost$core$Int64 $tmp17 = (frost$core$Int64) {0};
@@ -99,11 +99,11 @@ frost$core$Bit $tmp25 = frost$core$Bit$$NOT$R$frost$core$Bit($tmp24);
 bool $tmp26 = $tmp25.value;
 if ($tmp26) goto block1; else goto block2;
 block2:;
-frost$core$Int64 $tmp27 = (frost$core$Int64) {56};
+frost$core$Int64 $tmp27 = (frost$core$Int64) {82};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s28, $tmp27, &$s29);
 abort(); // unreachable
 block1:;
-// line 57
+// line 83
 FROST_ASSERT(40 == sizeof(frost$collections$Array));
 frost$collections$Array* $tmp30 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
 frost$collections$ListView** $tmp31 = &param0->list;
@@ -121,7 +121,7 @@ frost$collections$Array* $tmp37 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp37));
 *(&local0) = $tmp30;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp30));
-// line 58
+// line 84
 FROST_ASSERT(40 == sizeof(frost$collections$Array));
 frost$collections$Array* $tmp38 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
 frost$collections$ListView** $tmp39 = &param0->list;
@@ -133,7 +133,7 @@ frost$collections$Array* $tmp41 = *(&local1);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp41));
 *(&local1) = $tmp38;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp38));
-// line 59
+// line 85
 frost$collections$Array** $tmp42 = &param0->choices;
 frost$collections$Array* $tmp43 = *$tmp42;
 ITable* $tmp44 = ((frost$collections$Iterable*) $tmp43)->$class->itable;
@@ -160,14 +160,14 @@ while ($tmp53->$class != (frost$core$Class*) &frost$collections$Iterator$class) 
 $fn55 $tmp54 = $tmp53->methods[1];
 frost$core$Object* $tmp56 = $tmp54($tmp47);
 *(&local2) = ((frost$core$Int64$wrapper*) $tmp56)->value;
-// line 60
+// line 86
 frost$collections$Array* $tmp57 = *(&local0);
 frost$collections$Array* $tmp58 = *(&local1);
 frost$core$Int64 $tmp59 = *(&local2);
 frost$core$Object* $tmp60 = frost$collections$Array$$IDX$frost$core$Int64$R$frost$collections$Array$T($tmp58, $tmp59);
 frost$collections$Array$add$frost$collections$Array$T($tmp57, $tmp60);
 frost$core$Frost$unref$frost$core$Object$Q($tmp60);
-// line 61
+// line 87
 frost$collections$Array* $tmp61 = *(&local1);
 frost$core$Int64 $tmp62 = *(&local2);
 frost$core$Object* $tmp63 = frost$collections$Array$removeIndex$frost$core$Int64$R$frost$collections$Array$T($tmp61, $tmp62);
@@ -176,10 +176,10 @@ frost$core$Frost$unref$frost$core$Object$Q($tmp56);
 goto block3;
 block5:;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp47));
-// line 63
+// line 89
 frost$core$Int64 $tmp64 = (frost$core$Int64) {0};
 *(&local3) = $tmp64;
-// line 64
+// line 90
 goto block6;
 block6:;
 frost$core$Int64 $tmp65 = *(&local3);
@@ -225,7 +225,7 @@ bool $tmp98 = $tmp97.value;
 frost$core$Frost$unref$frost$core$Object$Q($tmp80);
 if ($tmp98) goto block7; else goto block8;
 block7:;
-// line 65
+// line 91
 frost$collections$Array** $tmp99 = &param0->choices;
 frost$collections$Array* $tmp100 = *$tmp99;
 frost$core$Int64 $tmp101 = *(&local3);
@@ -235,7 +235,7 @@ $tmp103 = (frost$core$Int64$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &
 $tmp103->value = $tmp102;
 frost$collections$Array$$IDXEQ$frost$core$Int64$frost$collections$Array$T($tmp100, $tmp101, ((frost$core$Object*) $tmp103));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp103));
-// line 66
+// line 92
 frost$core$Int64 $tmp104 = *(&local3);
 frost$core$Int64 $tmp105 = (frost$core$Int64) {1};
 int64_t $tmp106 = $tmp104.value;
@@ -245,7 +245,7 @@ frost$core$Int64 $tmp109 = (frost$core$Int64) {$tmp108};
 *(&local3) = $tmp109;
 goto block6;
 block8:;
-// line 68
+// line 94
 frost$core$Int64 $tmp110 = *(&local3);
 frost$collections$Array** $tmp111 = &param0->choices;
 frost$collections$Array* $tmp112 = *$tmp111;
@@ -259,7 +259,7 @@ frost$core$Bit $tmp117 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit(
 bool $tmp118 = $tmp117.value;
 if ($tmp118) goto block10; else goto block12;
 block10:;
-// line 69
+// line 95
 frost$collections$Array** $tmp119 = &param0->choices;
 frost$collections$Array* $tmp120 = *$tmp119;
 frost$core$Int64 $tmp121 = (frost$core$Int64) {0};
@@ -272,7 +272,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp123));
 goto block11;
 block12:;
 // line 1
-// line 72
+// line 98
 frost$collections$Array** $tmp124 = &param0->choices;
 frost$collections$Array* $tmp125 = *$tmp124;
 frost$core$Int64 $tmp126 = *(&local3);
@@ -290,7 +290,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp133));
 frost$core$Frost$unref$frost$core$Object$Q($tmp127);
 goto block11;
 block11:;
-// line 74
+// line 100
 frost$collections$Array* $tmp134 = *(&local0);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$collections$ListView*) $tmp134)));
 frost$collections$Array* $tmp135 = *(&local1);
@@ -304,7 +304,7 @@ return ((frost$collections$ListView*) $tmp134);
 }
 void frost$collections$ListView$PermutationIterator$cleanup(frost$collections$ListView$PermutationIterator* param0) {
 
-// line 40
+// line 66
 frost$core$Object$cleanup(((frost$core$Object*) param0));
 frost$collections$ListView** $tmp137 = &param0->list;
 frost$collections$ListView* $tmp138 = *$tmp137;

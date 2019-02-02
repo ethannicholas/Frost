@@ -296,7 +296,7 @@ class IR {
                     return "create_struct \{cl.name}, \{args}"
                 }
                 when DYNAMIC_CALL(position, m, args) {
-                    return "dynamic_call \{m}(\{args.join()})"
+                    return "dynamic_call \{m}(\{args.join(", ")})"
                 }
                 when END {
                     return "end"
@@ -356,7 +356,7 @@ class IR {
                     return "return"
                 }
                 when STATIC_CALL(position, m, args) {
-                    return "static_call \{m.declaration}(\{args.join()})"
+                    return "static_call \{m.declaration}(\{args.join(", ")})"
                 }
                 when STORE(position, value, ptr) {
                     return "store \{value}, \{ptr}"

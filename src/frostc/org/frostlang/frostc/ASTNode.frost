@@ -315,14 +315,14 @@ choice ASTNode {
                 return "break"
             }
             when CALL(_, target, args) {
-                return "\{target}(\{args.join()})"
+                return "\{target}(\{args.join(", ")})"
             }
             when CHOICE_CASE(_, dc, name, fields) {
                 def result := MutableString()
                 if dc !== null {
                     result.append(dc + "\n")
                 }
-                result.append("\{name}(\{fields.join()})")
+                result.append("\{name}(\{fields.join(", ")})")
                 return result.finish()
             }
             when CHOICE_FIELD_REFERENCE(_, base, ce, index) {
@@ -343,10 +343,10 @@ choice ASTNode {
                 }
                 result.append(name)
                 if generics !== null {
-                    result.append("<\{generics.join()}>")
+                    result.append("<\{generics.join(", ")}>")
                 }
                 if supertypes !== null {
-                    result.append(": \{supertypes.join()}")
+                    result.append(": \{supertypes.join(", ")}")
                 }
                 result.append(" {\n")
                 for m in members {
@@ -416,13 +416,13 @@ choice ASTNode {
                 return result.finish()
             }
             when GENERIC_TYPE(_, name, subtypes) {
-                return "\{name}<\{subtypes.join()}>"
+                return "\{name}<\{subtypes.join(", ")}>"
             }
             when IDENTIFIER(_, name) {
                 return name
             }
             when IDENTIFIER_GENERICS(_, name, types) {
-                return "IDENTIFIER_GENERICS(\{name}<\{types.join()}>)"
+                return "IDENTIFIER_GENERICS(\{name}<\{types.join(", ")}>)"
             }
             when IF(_, test, ifTrue, ifFalse) {
                 def result := MutableString("if \{test} {\n")
@@ -480,9 +480,9 @@ choice ASTNode {
                 }
                 result.append(name)
                 if generics !== null {
-                    result.append("<\{generics.join()}>")
+                    result.append("<\{generics.join(", ")}>")
                 }
-                result.append("(\{parameters.join()})")
+                result.append("(\{parameters.join(", ")})")
                 if returnType !== null {
                     result.append(":\{returnType}")
                 }
@@ -511,7 +511,7 @@ choice ASTNode {
                         yield := "=&>*"
                     }
                 }
-                def partial := "(\{paramTypes.join()})\{yield}"
+                def partial := "(\{paramTypes.join(", ")})\{yield}"
                 if returnType !== null {
                     return "\{partial}(\{returnType})"
                 }
@@ -570,13 +570,13 @@ choice ASTNode {
                 return "super"
             }
             when TUPLE(_, arguments) {
-                return "(\{arguments.join()})"
+                return "(\{arguments.join(", ")})"
             }
             when TUPLE_TARGET(_, arguments) {
-                return "(\{arguments.join()})"
+                return "(\{arguments.join(", ")})"
             }
             when TUPLE_TYPE(_, arguments) {
-                return "(\{arguments.join()})"
+                return "(\{arguments.join(", ")})"
             }
             when TRY(_, block, error, failBlock) {
                 def result := MutableString("try {\n")
@@ -601,7 +601,7 @@ choice ASTNode {
                 return name
             }
             when TYPED_LAMBDA(_, parameters, body) {
-                return "(\{parameters.join()})=>\{body}"
+                return "(\{parameters.join(", ")})=>\{body}"
             }
             when UNARY(_, op, base) {
                 return "\{op}\{base}"
@@ -613,7 +613,7 @@ choice ASTNode {
                 return "unreachable"
             }
             when UNTYPED_LAMBDA(_, parameters, body) {
-                return "(\{parameters.join()})=>\{body}"
+                return "(\{parameters.join(", ")})=>\{body}"
             }
             when USES(_, name) {
                 return name
@@ -626,7 +626,7 @@ choice ASTNode {
                     when Variable.Kind.CONSTANT { result.append("constant ") }
                     when Variable.Kind.PROPERTY { result.append("property ") }
                 }
-                result.append(decls.join())
+                result.append(decls.join(", "))
                 return result.finish()
             }
             when WHEN(_, tests, statements) {

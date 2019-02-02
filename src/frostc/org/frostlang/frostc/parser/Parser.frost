@@ -1262,7 +1262,7 @@ class Parser {
 
     ================================================================================================
     multiplicativeExpression = prefixExpression ((MUL | DIV | INTDIV | REM | SHIFTLEFT |
-            SHIFTRIGHT | BITWISEAND | BITWISEXOR) prefixExpression)*
+            SHIFTRIGHT | BITWISEXOR) prefixExpression)*
     Note that SHIFTRIGHT is handled specially, as the lexer only produces GT and we synthesize the
     SHIFTRIGHT token here.
     ================================================================================================
@@ -1275,7 +1275,7 @@ class Parser {
             def op := next()
             match op.kind {
                 when Token.Kind.MUL, Token.Kind.DIV, Token.Kind.INTDIV, Token.Kind.REM,
-                        Token.Kind.SHIFTLEFT, Token.Kind.BITWISEAND {
+                        Token.Kind.SHIFTLEFT {
                     def next := prefixExpression()
                     if next == null {
                         return null

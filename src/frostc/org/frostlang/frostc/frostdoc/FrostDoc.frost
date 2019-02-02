@@ -67,7 +67,7 @@ class FrostDoc {
                 for s in t.subtypes {
                     simpleNames.add(simpleName(s))
                 }
-                return simpleNames[0] + "<" + simpleNames[1..].join() + ">"
+                return simpleNames[0] + "<" + simpleNames[1..].join(", ") + ">"
             }
             when Type.Kind.METHOD, Type.Kind.FUNCTION, Type.Kind.IMMUTABLE_METHOD,
                     Type.Kind.IMMUTABLE_FUNCTION {

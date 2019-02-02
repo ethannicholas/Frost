@@ -40,7 +40,7 @@ void org$frostlang$frostc$Compiler$_Closure10$$anonymous9$org$frostlang$frostc$C
 // line 5153
 org$frostlang$frostc$Compiler** $tmp7 = &param0->$dummy8;
 org$frostlang$frostc$Compiler* $tmp8 = *$tmp7;
-org$frostlang$frostc$Compiler$initializeTarget$org$frostlang$frostc$Compiler$Target($tmp8, param1);
+org$frostlang$frostc$Compiler$createScopes$org$frostlang$frostc$Compiler$Target($tmp8, param1);
 return;
 
 }

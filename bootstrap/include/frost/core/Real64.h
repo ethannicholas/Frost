@@ -67,6 +67,12 @@ frost$core$Real64 frost$core$Real64$max$frost$core$UInt8$R$frost$core$Real64(fro
 frost$core$Real64 frost$core$Real64$max$frost$core$UInt16$R$frost$core$Real64(frost$core$Real64 self, frost$core$UInt16 p_other);
 frost$core$Real64 frost$core$Real64$max$frost$core$UInt32$R$frost$core$Real64(frost$core$Real64 self, frost$core$UInt32 p_other);
 frost$core$Real64 frost$core$Real64$max$frost$core$UInt64$R$frost$core$Real64(frost$core$Real64 self, frost$core$UInt64 p_other);
+void frost$core$Real64$floor$R$frost$core$Real64(frost$core$Real64* result, frost$core$Real64 self);
+void frost$core$Real64$ceiling$R$frost$core$Real64(frost$core$Real64* result, frost$core$Real64 self);
+void frost$core$Real64$sqrt$R$frost$core$Real64(frost$core$Real64* result, frost$core$Real64 self);
+void frost$core$Real64$sin$R$frost$core$Real64(frost$core$Real64* result, frost$core$Real64 self);
+void frost$core$Real64$cos$R$frost$core$Real64(frost$core$Real64* result, frost$core$Real64 self);
+void frost$core$Real64$tan$R$frost$core$Real64(frost$core$Real64* result, frost$core$Real64 self);
 frost$core$Int64 frost$core$Real64$get_hash$R$frost$core$Int64(frost$core$Real64 self);
 frost$core$Int8 frost$core$Real64$get_asInt8$R$frost$core$Int8(frost$core$Real64 self);
 frost$core$Int16 frost$core$Real64$get_asInt16$R$frost$core$Int16(frost$core$Real64 self);

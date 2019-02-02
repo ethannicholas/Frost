@@ -32,6 +32,44 @@ class IdentityMap<K, V> : Map<K, V> {
     }
 
     @private
+    class EntryIterator<K, V> : Iterator<(K, V)> {
+        def map:IdentityMap<K, V>
+        var bucket := 0
+        var entry:Entry<K, V>? := null
+
+        init(map:IdentityMap<K, V>) {
+            self.map := map
+            while bucket < map.bucketCount & map.contents[bucket] == null {
+                bucket += 1
+            }
+            if bucket < map.bucketCount {
+                entry := map.contents[bucket]
+            }
+        }
+
+        @override
+        function get_done():Bit {
+            return bucket = map.bucketCount & entry == null
+        }
+
+        @override
+        method next():(K, V) {
+            assert entry !== null
+            assert bucket < map.bucketCount
+            def result := entry
+            entry := entry.next
+            while entry == null {
+                bucket += 1
+                if bucket = map.bucketCount {
+                    break
+                }
+                entry := map.contents[bucket]
+            }
+            return (result.key, result.value)
+        }
+    }
+
+    @private
     constant DEFAULT_BUCKET_COUNT := 16
 
     @private
@@ -161,6 +199,7 @@ class IdentityMap<K, V> : Map<K, V> {
         _count -= 1
     }
 
+    @override
     method clear() {
         changeCount += 1
         _count := 0
@@ -215,13 +254,8 @@ class IdentityMap<K, V> : Map<K, V> {
     }
 
     @override
-    function get_keys():Iterator<K> {
-        unreachable, "unimplemented"
-    }
-
-    @override
-    function get_values():Iterator<V> {
-        unreachable, "unimplemented"
+    function get_entries():Iterator<(K, V)> {
+        return EntryIterator<K, V>(self)
     }
 
     ================================================================================================

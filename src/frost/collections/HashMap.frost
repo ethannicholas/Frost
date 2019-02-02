@@ -38,7 +38,7 @@ class HashMap<K:Key<K>, V> : Map<K, V> {
     }
 
     @private
-    class EntryIterator<K:Key<K>, V> : Iterator<Entry<K, V>> {
+    class EntryIterator<K:Key<K>, V> : Iterator<(K, V)> {
         def map:HashMap<K, V>
         var bucket := 0
         var entry:Entry<K, V>? := null
@@ -59,7 +59,7 @@ class HashMap<K:Key<K>, V> : Map<K, V> {
         }
 
         @override
-        method next():Entry<K, V> {
+        method next():(K, V) {
             assert entry !== null
             assert bucket < map.bucketCount
             def result := entry
@@ -71,45 +71,7 @@ class HashMap<K:Key<K>, V> : Map<K, V> {
                 }
                 entry := map.contents[bucket]
             }
-            return result
-        }
-    }
-
-    @private
-    class KeyIterator<K:Key<K>, V> : Iterator<K> {
-        def base:EntryIterator<K, V>
-
-        init(map:HashMap<K, V>) {
-            base := EntryIterator<K, V>(map)
-        }
-
-        @override
-        function get_done():Bit {
-            return base.get_done()
-        }
-
-        @override
-        method next():K {
-            return base.next().key
-        }
-    }
-
-    @private
-    class ValueIterator<K:Key<K>, V> : Iterator<V> {
-        def base:EntryIterator<K, V>
-
-        init(map:HashMap<K, V>) {
-            base := EntryIterator<K, V>(map)
-        }
-
-        @override
-        function get_done():Bit {
-            return base.get_done()
-        }
-
-        @override
-        method next():V {
-            return base.next().value
+            return (result.key, result.value)
         }
     }
 
@@ -148,9 +110,15 @@ class HashMap<K:Key<K>, V> : Map<K, V> {
 
     init(map:MapView<K, V>) {
         init()
-        -- FIXME inefficient, need to iterate across entries rather than keys
-        for k in map.keys {
-            self[k] := map[k]->V
+        for (k, v) in map.entries {
+            self[k] := v
+        }
+    }
+
+    init(entries:CollectionView<(K, V)>) {
+        init()
+        for e in entries {
+            self[e[0]] := e[1]
         }
     }
 
@@ -264,6 +232,7 @@ class HashMap<K:Key<K>, V> : Map<K, V> {
         _count -= 1
     }
 
+    @override
     method clear() {
         changeCount += 1
         _count := 0
@@ -313,13 +282,8 @@ class HashMap<K:Key<K>, V> : Map<K, V> {
     }
 
     @override
-    function get_keys():Iterator<K> {
-        return KeyIterator<K, V>(self)
-    }
-
-    @override
-    function get_values():Iterator<V> {
-        return ValueIterator<K, V>(self)
+    function get_entries():Iterator<(K, V)> {
+        return EntryIterator<K, V>(self)
     }
 
     @override

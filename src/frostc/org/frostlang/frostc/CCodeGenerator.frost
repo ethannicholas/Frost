@@ -373,12 +373,24 @@ class CCodeGenerator : CodeGenerator {
             assert effective.isMethod
             assert effective.subtypes.count = raw.parameters.count + 2 -- self and return
             assert raw.isInstance()
-            def effectiveReturnType := effective.returnType
+            def indirect := needsStructIndirection(raw)
+            def effectiveReturnType:Type
+            if indirect {
+                effectiveReturnType := Type.Void()
+            }
+            else {
+                effectiveReturnType := effective.returnType
+            }
             def resultName := getName(raw) + "$shim"
             def resultType := MutableString(cType(effectiveReturnType))
-            out.print("__attribute__((weak)) \{resultType} \{resultName}(")
+            out.print("__attribute__((weak)) \{cType(effectiveReturnType)} \{resultName}(")
             resultType.append("(")
             var separator := ""
+            if indirect {
+                out.print(cType(effective.returnType) + "* sret")
+                resultType.append(cType(effective.returnType))
+                separator := ", "
+            }
             for i in 0 .. effective.subtypes.count - 1 {
                 def pType := cType(effective.subtypes[i])
                 resultType.append(", ")
@@ -412,18 +424,22 @@ class CCodeGenerator : CodeGenerator {
                     casts.add(p)
                 }
             }
-            if raw.returnType != Type.Void() {
+            if effectiveReturnType != Type.Void() {
                 out.print("\{cType(raw.returnType)} result = ")
             }
             out.print("\{getName(raw)}(")
             separator := ""
+            if indirect {
+                out.print("sret")
+                separator := ", "
+            }
             for i in 0 .. effective.subtypes.count - 1 {
                 out.print("\{separator}\{casts[i]}")
                 separator := ", "
             }
             out.printLine(");")
             out.printLine(unrefs)
-            if raw.returnType != Type.Void() {
+            if effectiveReturnType != Type.Void() {
                 out.printLine("return " + getCastReference("result", raw.returnType,
                         effectiveReturnType) + ";")
             }

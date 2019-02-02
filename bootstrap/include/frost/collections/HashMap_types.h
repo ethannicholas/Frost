@@ -18,6 +18,6 @@ typedef struct frost$collections$HashMap {
     frost$core$Int64 changeCount;
 } frost$collections$HashMap;
 #include "frost/core/Class.h"
-typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[12]; } frost$collections$HashMap$class_type;
+typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[11]; } frost$collections$HashMap$class_type;
 extern frost$collections$HashMap$class_type frost$collections$HashMap$class;
 

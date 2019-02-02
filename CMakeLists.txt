@@ -53,8 +53,6 @@ add_library(c_frost
     bootstrap/src/frost/collections/HashMap.c
     bootstrap/src/frost/collections/HashMap/Entry.c
     bootstrap/src/frost/collections/HashMap/EntryIterator.c
-    bootstrap/src/frost/collections/HashMap/KeyIterator.c
-    bootstrap/src/frost/collections/HashMap/ValueIterator.c
     bootstrap/src/frost/collections/HashSet.c
     bootstrap/src/frost/collections/IdentityMap.c
     bootstrap/src/frost/collections/IdentityMap/Entry.c
@@ -70,6 +68,7 @@ add_library(c_frost
     bootstrap/src/frost/collections/ListView/CombinationIterator.c
     bootstrap/src/frost/collections/ListView/ListIterator.c
     bootstrap/src/frost/collections/ListView/PermutationIterator.c
+    bootstrap/src/frost/collections/ListView/PowerSetIterator.c
     bootstrap/src/frost/collections/ListWriter.c
     bootstrap/src/frost/collections/Map.c
     bootstrap/src/frost/collections/MapView.c
@@ -355,11 +354,10 @@ add_executable(bootstrap
     bootstrap/src/frost/collections/HashMap.c
     bootstrap/src/frost/collections/HashMap/Entry.c
     bootstrap/src/frost/collections/HashMap/EntryIterator.c
-    bootstrap/src/frost/collections/HashMap/KeyIterator.c
-    bootstrap/src/frost/collections/HashMap/ValueIterator.c
     bootstrap/src/frost/collections/HashSet.c
     bootstrap/src/frost/collections/IdentityMap.c
     bootstrap/src/frost/collections/IdentityMap/Entry.c
+    bootstrap/src/frost/collections/IdentityMap/EntryIterator.c
     bootstrap/src/frost/collections/ImmutableArray.c
     bootstrap/src/frost/collections/ImmutableArray/ImmutableArrayIterator.c
     bootstrap/src/frost/collections/Iterable.c

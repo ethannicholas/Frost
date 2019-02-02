@@ -335,7 +335,7 @@ it contains:
     function text(node:Node):String {
         match node {
             when Node.TAG(name, children) {
-                return "<\{name}>\{children.map(c => text(c)).join()}</{name}>"
+                return "<\{name}>\{children.map(c => text(c)).join(", ")}</{name}>"
             }
             when Node.TEXT(text) {
                 return text

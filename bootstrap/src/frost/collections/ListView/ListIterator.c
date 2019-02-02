@@ -30,11 +30,11 @@ static frost$core$String $s24 = { (frost$core$Class*) &frost$core$String$class, 
 
 void frost$collections$ListView$ListIterator$init$frost$collections$ListView$LTfrost$collections$ListView$ListIterator$T$GT(frost$collections$ListView$ListIterator* param0, frost$collections$ListView* param1) {
 
-// line 21
+// line 47
 frost$core$Int64 $tmp2 = (frost$core$Int64) {0};
 frost$core$Int64* $tmp3 = &param0->index;
 *$tmp3 = $tmp2;
-// line 24
+// line 50
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
 frost$collections$ListView** $tmp4 = &param0->list;
 frost$collections$ListView* $tmp5 = *$tmp4;
@@ -46,7 +46,7 @@ return;
 }
 frost$core$Bit frost$collections$ListView$ListIterator$get_done$R$frost$core$Bit(frost$collections$ListView$ListIterator* param0) {
 
-// line 29
+// line 55
 frost$core$Int64* $tmp7 = &param0->index;
 frost$core$Int64 $tmp8 = *$tmp7;
 frost$collections$ListView** $tmp9 = &param0->list;
@@ -73,11 +73,11 @@ frost$core$Bit $tmp20 = frost$core$Bit$$NOT$R$frost$core$Bit($tmp19);
 bool $tmp21 = $tmp20.value;
 if ($tmp21) goto block1; else goto block2;
 block2:;
-frost$core$Int64 $tmp22 = (frost$core$Int64) {33};
+frost$core$Int64 $tmp22 = (frost$core$Int64) {59};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s23, $tmp22, &$s24);
 abort(); // unreachable
 block1:;
-// line 34
+// line 60
 frost$core$Int64* $tmp25 = &param0->index;
 frost$core$Int64 $tmp26 = *$tmp25;
 frost$core$Int64 $tmp27 = (frost$core$Int64) {1};
@@ -87,7 +87,7 @@ int64_t $tmp30 = $tmp28 + $tmp29;
 frost$core$Int64 $tmp31 = (frost$core$Int64) {$tmp30};
 frost$core$Int64* $tmp32 = &param0->index;
 *$tmp32 = $tmp31;
-// line 35
+// line 61
 frost$collections$ListView** $tmp33 = &param0->list;
 frost$collections$ListView* $tmp34 = *$tmp33;
 frost$core$Int64* $tmp35 = &param0->index;
@@ -110,7 +110,7 @@ return $tmp45;
 }
 void frost$collections$ListView$ListIterator$cleanup(frost$collections$ListView$ListIterator* param0) {
 
-// line 18
+// line 44
 frost$core$Object$cleanup(((frost$core$Object*) param0));
 frost$collections$ListView** $tmp46 = &param0->list;
 frost$collections$ListView* $tmp47 = *$tmp46;

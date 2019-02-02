@@ -2,10 +2,10 @@ Frost solutions to the Advent of Code problems at http://adventofcode.com, which
 of programming challenges you should try. 
 
 These programs are generally brief, but not heavily golfed; I have tried to strike a reasonable
-balance between elegance, readability, and performance. I have also generally tried to not take
-advantage of peculiarities in the input (for instance, it is possible to solve 2015/Day7 more easily
-by sorting the input,but the fact that that works is essentially just an accident of how the input 
-was generated, and I do not wish to take advantage of that).
+balance between elegance, readability, and performance. There are some spots where I deliberately
+stress Frost out by doing "weird" things; the fancy functional stuff in Day23 is a good example of
+this. It's completely unnecessary and slower than the naive approach, but it was fun to write and is
+a good test.
 
 I have taken the liberty of including the problem text in each program, in part so these still make
 sense on the off chance that adventofcode.com is no longer available at some point in the future.
