@@ -2,24 +2,28 @@ package org.frostlang.frostc
 
 @final
 class Position : Value, Key<Position>, Comparable<Position> {
+    def file:Int
+
     def line:Int
 
     def column:Int
 
     init() {
+        self.file := -1
         self.line := 1
         self.column := 1
     }
 
-    init(line:Int, column:Int) {
+    init(file:Int, line:Int, column:Int) {
         assert line != 0 & column != 0
+        self.file := file
         self.line := line
         self.column := column
     }
 
     @override
     function =(other:Position):Bit {
-        return line = other.line & column = other.column
+        return file = other.file & line = other.line & column = other.column
     }
 
     @override
@@ -41,6 +45,13 @@ class Position : Value, Key<Position>, Comparable<Position> {
     @override
     function get_asString():String {
         return "\{line}:\{column}"
+    }
+
+    function asString(compiler:Compiler):String {
+        if file = -1 {
+            return "<internal>:\{line}:\{column}"
+        }
+        return "\{compiler.files[file].name}:\{line}:\{column}"
     }
 }
 

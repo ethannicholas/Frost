@@ -12,6 +12,6 @@ typedef struct frost$io$File {
     frost$core$String* path;
 } frost$io$File;
 #include "frost/core/Class.h"
-typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[26]; } frost$io$File$class_type;
+typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[25]; } frost$io$File$class_type;
 extern frost$io$File$class_type frost$io$File$class;
 

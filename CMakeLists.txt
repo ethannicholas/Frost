@@ -190,16 +190,12 @@ add_executable(bootstrap
     bootstrap/src/org/frostlang/frost/UInt64List.c
     bootstrap/src/org/frostlang/frost/UInt8List.c
     bootstrap/src/org/frostlang/frostc/Alias.c
-    bootstrap/src/org/frostlang/frostc/Analyzer.c
-    bootstrap/src/org/frostlang/frostc/Analyzer/BlockExit.c
-    bootstrap/src/org/frostlang/frostc/Analyzer/DataFlowValue.c
-    bootstrap/src/org/frostlang/frostc/Analyzer/State.c
     bootstrap/src/org/frostlang/frostc/Annotations.c
     bootstrap/src/org/frostlang/frostc/Annotations/Expression.c
     bootstrap/src/org/frostlang/frostc/Annotations/Flag.c
     bootstrap/src/org/frostlang/frostc/ASTNode.c
-    bootstrap/src/org/frostlang/frostc/ASTNode/_Closure3.c
-    bootstrap/src/org/frostlang/frostc/ASTNode/_Closure6.c
+    bootstrap/src/org/frostlang/frostc/ASTNode/_Closure2.c
+    bootstrap/src/org/frostlang/frostc/ASTNode/_Closure4.c
     bootstrap/src/org/frostlang/frostc/CCodeGenerator.c
     bootstrap/src/org/frostlang/frostc/CCodeGenerator/AutoContext.c
     bootstrap/src/org/frostlang/frostc/CCodeGenerator/ClassConstant.c
@@ -214,11 +210,11 @@ add_executable(bootstrap
     bootstrap/src/org/frostlang/frostc/CodeGenerator.c
     bootstrap/src/org/frostlang/frostc/Compiler.c
     bootstrap/src/org/frostlang/frostc/Compiler/_Closure2.c
-    bootstrap/src/org/frostlang/frostc/Compiler/_Closure10.c
+    bootstrap/src/org/frostlang/frostc/Compiler/_Closure9.c
+    bootstrap/src/org/frostlang/frostc/Compiler/_Closure11.c
     bootstrap/src/org/frostlang/frostc/Compiler/_Closure13.c
-    bootstrap/src/org/frostlang/frostc/Compiler/_Closure16.c
-    bootstrap/src/org/frostlang/frostc/Compiler/_Closure18.c
-    bootstrap/src/org/frostlang/frostc/Compiler/_Closure20.c
+    bootstrap/src/org/frostlang/frostc/Compiler/_Closure15.c
+    bootstrap/src/org/frostlang/frostc/Compiler/_Closure17.c
     bootstrap/src/org/frostlang/frostc/Compiler/AutoAtPreFlag.c
     bootstrap/src/org/frostlang/frostc/Compiler/AutoContext.c
     bootstrap/src/org/frostlang/frostc/Compiler/AutoScope.c
@@ -227,6 +223,7 @@ add_executable(bootstrap
     bootstrap/src/org/frostlang/frostc/Compiler/Capture.c
     bootstrap/src/org/frostlang/frostc/Compiler/CoercionKey.c
     bootstrap/src/org/frostlang/frostc/Compiler/EnclosingContext.c
+    bootstrap/src/org/frostlang/frostc/Compiler/InlineReturn.c
     bootstrap/src/org/frostlang/frostc/Compiler/Message.c
     bootstrap/src/org/frostlang/frostc/Compiler/Resolution.c
     bootstrap/src/org/frostlang/frostc/Compiler/Settings.c
@@ -280,52 +277,8 @@ add_executable(bootstrap
     bootstrap/src/org/frostlang/frostc/MethodRef.c
     bootstrap/src/org/frostlang/frostc/Methods.c
     bootstrap/src/org/frostlang/frostc/Pair.c
-    bootstrap/src/org/frostlang/frostc/frostdoc/DummyCodeGenerator.c
-    bootstrap/src/org/frostlang/frostc/frostdoc/LinkResolver.c
-    bootstrap//src/org/frostlang/frostc/frostdoc/Markdown.c
-    bootstrap//src/org/frostlang/frostc/frostdoc/Markdown/_Closure15.c
-    bootstrap//src/org/frostlang/frostc/frostdoc/Markdown/_Closure29.c
-    bootstrap//src/org/frostlang/frostc/frostdoc/Markdown/_Closure23.c
-    bootstrap//src/org/frostlang/frostc/frostdoc/Markdown/_Closure27.c
-    bootstrap//src/org/frostlang/frostc/frostdoc/Markdown/_Closure2.c
-    bootstrap//src/org/frostlang/frostc/frostdoc/Markdown/_Closure6.c
-    bootstrap//src/org/frostlang/frostc/frostdoc/Markdown/_Closure33.c
-    bootstrap//src/org/frostlang/frostc/frostdoc/Markdown/_Closure19.c
-    bootstrap//src/org/frostlang/frostc/frostdoc/Markdown/_Closure13.c
-    bootstrap//src/org/frostlang/frostc/frostdoc/Markdown/_Closure9.c
-    bootstrap//src/org/frostlang/frostc/frostdoc/Markdown/_Closure17.c
-    bootstrap//src/org/frostlang/frostc/frostdoc/Markdown/_Closure21.c
-    bootstrap//src/org/frostlang/frostc/frostdoc/Markdown/_Closure25.c
-    bootstrap//src/org/frostlang/frostc/frostdoc/Markdown/_Closure35.c
-    bootstrap//src/org/frostlang/frostc/frostdoc/Markdown/_Closure31.c
-    bootstrap//src/org/frostlang/frostc/frostdoc/Markdown/_Closure4.c
-    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/CodeReplacer.c
-    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/HTMLToken.c
-    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/LinkDefinition.c
-    bootstrap/src/org/frostlang/frostc/frostdoc/Protector.c
-    bootstrap/src/org/frostlang/frostc/parser/Lexer.c
-    bootstrap/src/org/frostlang/frostc/parser/Parser.c
-    bootstrap/src/org/frostlang/frostc/parser/Parser/AutoSyntaxHighlight.c
-    bootstrap/src/org/frostlang/frostc/parser/SyntaxHighlighter.c
-    bootstrap/src/org/frostlang/frostc/parser/SyntaxHighlighter/Kind.c
-    bootstrap/src/org/frostlang/frostc/parser/Token.c
-    bootstrap/src/org/frostlang/frostc/parser/Token/Kind.c
     bootstrap/src/org/frostlang/frostc/Position.c
     bootstrap/src/org/frostlang/frostc/Scanner.c
-    bootstrap/src/org/frostlang/frostc/statement/Assert.c
-    bootstrap/src/org/frostlang/frostc/statement/Assignment.c
-    bootstrap/src/org/frostlang/frostc/statement/Break.c
-    bootstrap/src/org/frostlang/frostc/statement/Continue.c
-    bootstrap/src/org/frostlang/frostc/statement/Do.c
-    bootstrap/src/org/frostlang/frostc/statement/For.c
-    bootstrap/src/org/frostlang/frostc/statement/If.c
-    bootstrap/src/org/frostlang/frostc/statement/InnerMethod.c
-    bootstrap/src/org/frostlang/frostc/statement/Loop.c
-    bootstrap/src/org/frostlang/frostc/statement/Match.c
-    bootstrap/src/org/frostlang/frostc/statement/Return.c
-    bootstrap/src/org/frostlang/frostc/statement/Try.c
-    bootstrap/src/org/frostlang/frostc/statement/Var.c
-    bootstrap/src/org/frostlang/frostc/statement/While.c
     bootstrap/src/org/frostlang/frostc/StubCodeGenerator.c
     bootstrap/src/org/frostlang/frostc/StubCodeGenerator/_Closure2.c
     bootstrap/src/org/frostlang/frostc/StubCodeGenerator/_Closure4.c
@@ -341,6 +294,58 @@ add_executable(bootstrap
     bootstrap/src/org/frostlang/frostc/Variable.c
     bootstrap/src/org/frostlang/frostc/Variable/Kind.c
     bootstrap/src/org/frostlang/frostc/Variable/Storage.c
+    bootstrap/src/org/frostlang/frostc/frostdoc/DummyCodeGenerator.c
+    bootstrap/src/org/frostlang/frostc/frostdoc/LinkResolver.c
+    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown.c
+    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure12.c
+    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure14.c
+    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure16.c
+    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure18.c
+    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure2.c
+    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure20.c
+    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure22.c
+    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure24.c
+    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure26.c
+    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure28.c
+    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure30.c
+    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure32.c
+    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure34.c
+    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure4.c
+    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure6.c
+    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure9.c
+    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure4.c
+    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/CodeReplacer.c
+    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/HTMLToken.c
+    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/LinkDefinition.c
+    bootstrap/src/org/frostlang/frostc/frostdoc/Protector.c
+    bootstrap/src/org/frostlang/frostc/parser/Lexer.c
+    bootstrap/src/org/frostlang/frostc/parser/Parser.c
+    bootstrap/src/org/frostlang/frostc/parser/Parser/AutoSyntaxHighlight.c
+    bootstrap/src/org/frostlang/frostc/parser/SyntaxHighlighter.c
+    bootstrap/src/org/frostlang/frostc/parser/SyntaxHighlighter/Kind.c
+    bootstrap/src/org/frostlang/frostc/parser/Token.c
+    bootstrap/src/org/frostlang/frostc/parser/Token/Kind.c
+    bootstrap/src/org/frostlang/frostc/pass/Analyzer.c
+    bootstrap/src/org/frostlang/frostc/pass/Analyzer/BlockExit.c
+    bootstrap/src/org/frostlang/frostc/pass/Analyzer/DataFlowValue.c
+    bootstrap/src/org/frostlang/frostc/pass/Analyzer/State.c
+    bootstrap/src/org/frostlang/frostc/pass/MergeBlocks.c
+    bootstrap/src/org/frostlang/frostc/pass/RemoveAsserts.c
+    bootstrap/src/org/frostlang/frostc/pass/RemoveUnreachableBlocks.c
+    bootstrap/src/org/frostlang/frostc/statement/Assert.c
+    bootstrap/src/org/frostlang/frostc/statement/Assignment.c
+    bootstrap/src/org/frostlang/frostc/statement/Break.c
+    bootstrap/src/org/frostlang/frostc/statement/Continue.c
+    bootstrap/src/org/frostlang/frostc/statement/Do.c
+    bootstrap/src/org/frostlang/frostc/statement/For.c
+    bootstrap/src/org/frostlang/frostc/statement/If.c
+    bootstrap/src/org/frostlang/frostc/statement/InnerMethod.c
+    bootstrap/src/org/frostlang/frostc/statement/Loop.c
+    bootstrap/src/org/frostlang/frostc/statement/Match.c
+    bootstrap/src/org/frostlang/frostc/statement/Return.c
+    bootstrap/src/org/frostlang/frostc/statement/Try.c
+    bootstrap/src/org/frostlang/frostc/statement/Var.c
+    bootstrap/src/org/frostlang/frostc/statement/While.c
     bootstrap/src/org/frostlang/plex/runtime/DFA.c
     bootstrap/src/org/frostlang/plex/runtime/RawToken.c
     bootstrap/src/org/frostlang/regex/RegexLexer.c
@@ -943,7 +948,6 @@ set(frostc_source
     ${CMAKE_CURRENT_BINARY_DIR}/org/frostlang/regex/RegexLexer.frost
     ${CMAKE_CURRENT_BINARY_DIR}/org/frostlang/regex/RegexToken.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/Alias.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/Analyzer.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/Annotations.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/ASTNode.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/CCodeGenerator.frost
@@ -991,6 +995,10 @@ set(frostc_source
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/parser/Parser.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/parser/SyntaxHighlighter.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/pass/Analyzer.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/pass/MergeBlocks.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/pass/RemoveAsserts.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/pass/RemoveUnreachableBlocks.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/statement/Assert.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/statement/Assignment.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/statement/Break.frost

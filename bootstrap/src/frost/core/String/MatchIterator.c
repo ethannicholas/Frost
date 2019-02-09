@@ -22,126 +22,147 @@ struct { frost$core$Class* cl; ITable* next; void* methods[12]; } frost$core$Str
 static frost$core$String $s1;
 frost$core$String$MatchIterator$class_type frost$core$String$MatchIterator$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Object$class, (ITable*) &frost$core$String$MatchIterator$_frost$collections$Iterator, { frost$core$Object$get_asString$R$frost$core$String, frost$core$String$MatchIterator$cleanup, frost$core$String$MatchIterator$get_done$R$frost$core$Bit, frost$core$String$MatchIterator$next$R$frost$core$String$Index$shim} };
 
-typedef frost$core$Bit (*$fn19)(frost$collections$Iterator*);
+typedef frost$core$Bit (*$fn21)(frost$collections$Iterator*);
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x4d\x61\x74\x63\x68\x49\x74\x65\x72\x61\x74\x6f\x72", 31, 505867795171361900, NULL };
-static frost$core$String $s24 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x74\x72\x69\x6e\x67\x2e\x66\x72\x6f\x73\x74", 12, -7878295538840852540, NULL };
-static frost$core$String $s25 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x4d\x61\x74\x63\x68\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x6e\x65\x78\x74\x28\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x49\x6e\x64\x65\x78", 94, -864616477991308834, NULL };
+static frost$core$String $s28 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x74\x72\x69\x6e\x67\x2e\x66\x72\x6f\x73\x74", 12, -7878295538840852540, NULL };
+static frost$core$String $s29 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x4d\x61\x74\x63\x68\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x6e\x65\x78\x74\x28\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x49\x6e\x64\x65\x78", 94, -864616477991308834, NULL };
 
 void frost$core$String$MatchIterator$init$frost$core$String$frost$core$String$frost$core$Bit(frost$core$String$MatchIterator* param0, frost$core$String* param1, frost$core$String* param2, frost$core$Bit param3) {
 
-// line 222
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:222
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
 frost$core$String** $tmp3 = &param0->haystack;
 frost$core$String* $tmp4 = *$tmp3;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp4));
 frost$core$String** $tmp5 = &param0->haystack;
 *$tmp5 = param1;
-// line 223
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:223
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param2));
 frost$core$String** $tmp6 = &param0->needle;
 frost$core$String* $tmp7 = *$tmp6;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp7));
 frost$core$String** $tmp8 = &param0->needle;
 *$tmp8 = param2;
-// line 224
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:224
 frost$core$Bit* $tmp9 = &param0->allowOverlaps;
 frost$core$Bit $tmp10 = *$tmp9;
 frost$core$Bit* $tmp11 = &param0->allowOverlaps;
 *$tmp11 = $tmp10;
-// line 225
-frost$core$String$Index$nullable $tmp12 = frost$core$String$indexOf$frost$core$String$R$frost$core$String$Index$Q(param1, param2);
-frost$core$String$Index$nullable* $tmp13 = &param0->nextMatch;
-*$tmp13 = $tmp12;
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:225
+// begin inline call to function frost.core.String.indexOf(s:frost.core.String):frost.core.String.Index? from String.frost:225:42
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:978
+// begin inline call to function frost.core.String.get_start():frost.core.String.Index from String.frost:978:27
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:1205
+frost$core$Int64 $tmp12 = (frost$core$Int64) {0};
+frost$core$String$Index $tmp13 = frost$core$String$Index$init$frost$core$Int64($tmp12);
+frost$core$String$Index$nullable $tmp14 = frost$core$String$indexOf$frost$core$String$frost$core$String$Index$R$frost$core$String$Index$Q(param1, param2, $tmp13);
+frost$core$String$Index$nullable* $tmp15 = &param0->nextMatch;
+*$tmp15 = $tmp14;
 return;
 
 }
 frost$core$Bit frost$core$String$MatchIterator$get_done$R$frost$core$Bit(frost$core$String$MatchIterator* param0) {
 
-// line 230
-frost$core$String$Index$nullable* $tmp14 = &param0->nextMatch;
-frost$core$String$Index$nullable $tmp15 = *$tmp14;
-frost$core$Bit $tmp16 = frost$core$Bit$init$builtin_bit(!$tmp15.nonnull);
-return $tmp16;
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:230
+frost$core$String$Index$nullable* $tmp16 = &param0->nextMatch;
+frost$core$String$Index$nullable $tmp17 = *$tmp16;
+frost$core$Bit $tmp18 = frost$core$Bit$init$builtin_bit(!$tmp17.nonnull);
+return $tmp18;
 
 }
 frost$core$String$Index frost$core$String$MatchIterator$next$R$frost$core$String$Index(frost$core$String$MatchIterator* param0) {
 
 frost$core$String$Index$nullable local0;
 frost$core$String$Index local1;
-ITable* $tmp17 = ((frost$collections$Iterator*) param0)->$class->itable;
-while ($tmp17->$class != (frost$core$Class*) &frost$collections$Iterator$class) {
-    $tmp17 = $tmp17->next;
+frost$core$String$Index local2;
+frost$core$String$Index local3;
+ITable* $tmp19 = ((frost$collections$Iterator*) param0)->$class->itable;
+while ($tmp19->$class != (frost$core$Class*) &frost$collections$Iterator$class) {
+    $tmp19 = $tmp19->next;
 }
-$fn19 $tmp18 = $tmp17->methods[0];
-frost$core$Bit $tmp20 = $tmp18(((frost$collections$Iterator*) param0));
-frost$core$Bit $tmp21 = frost$core$Bit$$NOT$R$frost$core$Bit($tmp20);
-bool $tmp22 = $tmp21.value;
-if ($tmp22) goto block1; else goto block2;
+$fn21 $tmp20 = $tmp19->methods[0];
+frost$core$Bit $tmp22 = $tmp20(((frost$collections$Iterator*) param0));
+// begin inline call to function frost.core.Bit.!():frost.core.Bit from Iterator.stub:47:6
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
+bool $tmp23 = $tmp22.value;
+bool $tmp24 = !$tmp23;
+frost$core$Bit $tmp25 = (frost$core$Bit) {$tmp24};
+bool $tmp26 = $tmp25.value;
+if ($tmp26) goto block1; else goto block2;
 block2:;
-frost$core$Int64 $tmp23 = (frost$core$Int64) {234};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s24, $tmp23, &$s25);
+frost$core$Int64 $tmp27 = (frost$core$Int64) {234};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s28, $tmp27, &$s29);
 abort(); // unreachable
 block1:;
-// line 235
-frost$core$String$Index$nullable* $tmp26 = &param0->nextMatch;
-frost$core$String$Index$nullable $tmp27 = *$tmp26;
-*(&local0) = $tmp27;
-// line 236
-// line 237
-frost$core$Bit* $tmp28 = &param0->allowOverlaps;
-frost$core$Bit $tmp29 = *$tmp28;
-bool $tmp30 = $tmp29.value;
-if ($tmp30) goto block3; else goto block5;
-block3:;
-// line 238
-frost$core$String** $tmp31 = &param0->haystack;
-frost$core$String* $tmp32 = *$tmp31;
-frost$core$String$Index $tmp33 = *(&local1);
-frost$core$String$Index $tmp34 = frost$core$String$next$frost$core$String$Index$R$frost$core$String$Index($tmp32, $tmp33);
-*(&local1) = $tmp34;
-goto block4;
-block5:;
-// line 1
-// line 241
-frost$core$String$Index$nullable* $tmp35 = &param0->nextMatch;
-frost$core$String$Index$nullable $tmp36 = *$tmp35;
-frost$core$Int64 $tmp37 = ((frost$core$String$Index) $tmp36.value).value;
-frost$core$String** $tmp38 = &param0->needle;
-frost$core$String* $tmp39 = *$tmp38;
-frost$core$Int64 $tmp40 = frost$core$String$get_byteLength$R$frost$core$Int64($tmp39);
-int64_t $tmp41 = $tmp37.value;
-int64_t $tmp42 = $tmp40.value;
-int64_t $tmp43 = $tmp41 + $tmp42;
-frost$core$Int64 $tmp44 = (frost$core$Int64) {$tmp43};
-frost$core$String$Index $tmp45 = frost$core$String$Index$init$frost$core$Int64($tmp44);
-*(&local1) = $tmp45;
-goto block4;
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:235
+frost$core$String$Index$nullable* $tmp30 = &param0->nextMatch;
+frost$core$String$Index$nullable $tmp31 = *$tmp30;
+*(&local0) = $tmp31;
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:236
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:237
+frost$core$Bit* $tmp32 = &param0->allowOverlaps;
+frost$core$Bit $tmp33 = *$tmp32;
+bool $tmp34 = $tmp33.value;
+if ($tmp34) goto block4; else goto block6;
 block4:;
-// line 243
-frost$core$String** $tmp46 = &param0->haystack;
-frost$core$String* $tmp47 = *$tmp46;
-frost$core$String** $tmp48 = &param0->needle;
-frost$core$String* $tmp49 = *$tmp48;
-frost$core$String$Index $tmp50 = *(&local1);
-frost$core$String$Index$nullable $tmp51 = frost$core$String$indexOf$frost$core$String$frost$core$String$Index$R$frost$core$String$Index$Q($tmp47, $tmp49, $tmp50);
-frost$core$String$Index$nullable* $tmp52 = &param0->nextMatch;
-*$tmp52 = $tmp51;
-// line 244
-frost$core$String$Index$nullable $tmp53 = *(&local0);
-return ((frost$core$String$Index) $tmp53.value);
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:238
+frost$core$String** $tmp35 = &param0->haystack;
+frost$core$String* $tmp36 = *$tmp35;
+frost$core$String$Index $tmp37 = *(&local1);
+frost$core$String$Index $tmp38 = frost$core$String$next$frost$core$String$Index$R$frost$core$String$Index($tmp36, $tmp37);
+*(&local1) = $tmp38;
+goto block5;
+block6:;
+// <no location>
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:241
+frost$core$String$Index$nullable* $tmp39 = &param0->nextMatch;
+frost$core$String$Index$nullable $tmp40 = *$tmp39;
+frost$core$Int64 $tmp41 = ((frost$core$String$Index) $tmp40.value).value;
+frost$core$String** $tmp42 = &param0->needle;
+frost$core$String* $tmp43 = *$tmp42;
+// begin inline call to function frost.core.String.get_byteLength():frost.core.Int64 from String.frost:241:63
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:492
+frost$core$Int64* $tmp44 = &$tmp43->_length;
+frost$core$Int64 $tmp45 = *$tmp44;
+int64_t $tmp46 = $tmp41.value;
+int64_t $tmp47 = $tmp45.value;
+int64_t $tmp48 = $tmp46 + $tmp47;
+frost$core$Int64 $tmp49 = (frost$core$Int64) {$tmp48};
+// begin inline call to frost.core.String.Index.init(value:frost.core.Int64):frost.core.String.Index from String.frost:241:38
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:61
+frost$core$Int64* $tmp50 = &(&local3)->value;
+*$tmp50 = $tmp49;
+frost$core$String$Index $tmp51 = *(&local3);
+*(&local2) = $tmp51;
+frost$core$String$Index $tmp52 = *(&local2);
+*(&local1) = $tmp52;
+goto block5;
+block5:;
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:243
+frost$core$String** $tmp53 = &param0->haystack;
+frost$core$String* $tmp54 = *$tmp53;
+frost$core$String** $tmp55 = &param0->needle;
+frost$core$String* $tmp56 = *$tmp55;
+frost$core$String$Index $tmp57 = *(&local1);
+frost$core$String$Index$nullable $tmp58 = frost$core$String$indexOf$frost$core$String$frost$core$String$Index$R$frost$core$String$Index$Q($tmp54, $tmp56, $tmp57);
+frost$core$String$Index$nullable* $tmp59 = &param0->nextMatch;
+*$tmp59 = $tmp58;
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:244
+frost$core$String$Index$nullable $tmp60 = *(&local0);
+return ((frost$core$String$Index) $tmp60.value);
 
 }
 void frost$core$String$MatchIterator$cleanup(frost$core$String$MatchIterator* param0) {
 
-// line 212
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:212
 frost$core$Object$cleanup(((frost$core$Object*) param0));
-frost$core$String** $tmp54 = &param0->haystack;
-frost$core$String* $tmp55 = *$tmp54;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp55));
-frost$core$String** $tmp56 = &param0->needle;
-frost$core$String* $tmp57 = *$tmp56;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp57));
+frost$core$String** $tmp61 = &param0->haystack;
+frost$core$String* $tmp62 = *$tmp61;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp62));
+frost$core$String** $tmp63 = &param0->needle;
+frost$core$String* $tmp64 = *$tmp63;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp64));
 return;
 
 }

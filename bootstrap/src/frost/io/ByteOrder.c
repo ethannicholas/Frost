@@ -35,20 +35,30 @@ static frost$core$String $s2 = { (frost$core$Class*) &frost$core$String$class, -
 
 void frost$io$ByteOrder$cleanup(frost$io$ByteOrder param0) {
 
-// line 6
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/ByteOrder.frost:6
 frost$core$Int64 $tmp3 = param0.$rawValue;
 frost$core$Int64 $tmp4 = (frost$core$Int64) {0};
-frost$core$Bit $tmp5 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp3, $tmp4);
-bool $tmp6 = $tmp5.value;
-if ($tmp6) goto block2; else goto block3;
+// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from ByteOrder.frost:6:1
+// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:179
+int64_t $tmp5 = $tmp3.value;
+int64_t $tmp6 = $tmp4.value;
+bool $tmp7 = $tmp5 == $tmp6;
+frost$core$Bit $tmp8 = frost$core$Bit$init$builtin_bit($tmp7);
+bool $tmp9 = $tmp8.value;
+if ($tmp9) goto block2; else goto block3;
 block2:;
 goto block1;
 block3:;
-frost$core$Int64 $tmp7 = (frost$core$Int64) {1};
-frost$core$Bit $tmp8 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp3, $tmp7);
-bool $tmp9 = $tmp8.value;
-if ($tmp9) goto block4; else goto block1;
-block4:;
+frost$core$Int64 $tmp10 = (frost$core$Int64) {1};
+// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from ByteOrder.frost:6:1
+// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:179
+int64_t $tmp11 = $tmp3.value;
+int64_t $tmp12 = $tmp10.value;
+bool $tmp13 = $tmp11 == $tmp12;
+frost$core$Bit $tmp14 = frost$core$Bit$init$builtin_bit($tmp13);
+bool $tmp15 = $tmp14.value;
+if ($tmp15) goto block5; else goto block1;
+block5:;
 goto block1;
 block1:;
 return;
@@ -57,32 +67,32 @@ return;
 frost$io$ByteOrder frost$io$ByteOrder$init$frost$core$Int64(frost$core$Int64 param0) {
 
 frost$io$ByteOrder local0;
-// line 6
-frost$core$Int64* $tmp10 = &(&local0)->$rawValue;
-*$tmp10 = param0;
-frost$io$ByteOrder $tmp11 = *(&local0);
-return $tmp11;
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/ByteOrder.frost:6
+frost$core$Int64* $tmp16 = &(&local0)->$rawValue;
+*$tmp16 = param0;
+frost$io$ByteOrder $tmp17 = *(&local0);
+return $tmp17;
 
 }
 frost$core$Bit frost$io$ByteOrder$$EQ$frost$io$ByteOrder$R$frost$core$Bit(frost$io$ByteOrder param0, frost$io$ByteOrder param1) {
 
-// line 6
-frost$core$Int64 $tmp12 = param0.$rawValue;
-frost$core$Int64 $tmp13 = param1.$rawValue;
-int64_t $tmp14 = $tmp12.value;
-int64_t $tmp15 = $tmp13.value;
-bool $tmp16 = $tmp14 != $tmp15;
-frost$core$Bit $tmp17 = (frost$core$Bit) {$tmp16};
-bool $tmp18 = $tmp17.value;
-if ($tmp18) goto block1; else goto block2;
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/ByteOrder.frost:6
+frost$core$Int64 $tmp18 = param0.$rawValue;
+frost$core$Int64 $tmp19 = param1.$rawValue;
+int64_t $tmp20 = $tmp18.value;
+int64_t $tmp21 = $tmp19.value;
+bool $tmp22 = $tmp20 != $tmp21;
+frost$core$Bit $tmp23 = (frost$core$Bit) {$tmp22};
+bool $tmp24 = $tmp23.value;
+if ($tmp24) goto block1; else goto block2;
 block1:;
-// line 6
-frost$core$Bit $tmp19 = frost$core$Bit$init$builtin_bit(false);
-return $tmp19;
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/ByteOrder.frost:6
+frost$core$Bit $tmp25 = frost$core$Bit$init$builtin_bit(false);
+return $tmp25;
 block2:;
-// line 6
-frost$core$Bit $tmp20 = frost$core$Bit$init$builtin_bit(true);
-return $tmp20;
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/ByteOrder.frost:6
+frost$core$Bit $tmp26 = frost$core$Bit$init$builtin_bit(true);
+return $tmp26;
 
 }
 

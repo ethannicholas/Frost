@@ -295,6 +295,9 @@ choice ASTNode {
                 if op = Binary.Operator.INDEX {
                     return "\{left}[\{right}]"
                 }
+                if op.isAssignment {
+                    return "\{left} \{op} \{right}"
+                }
                 return "(\{left} \{op} \{right})"
             }
             when BIT(_, value) {
@@ -459,7 +462,7 @@ choice ASTNode {
                     result.append(w + "\n")
                 }
                 if other !== null {
-                    result.append(other + "\n")
+                    result.append("otherwise {\n" + other.join("\n") + "}")
                 }
                 result.append("}")
                 return result.finish()
@@ -634,11 +637,13 @@ choice ASTNode {
                 var separator := ""
                 for t in tests {
                     result.append("\{separator}\{t}")
+                    separator := ", "
                 }
-                result.append(":")
+                result.append(" {")
                 for s in statements {
                     result.append("\n" + s)
                 }
+                result.append("}")
                 return result.finish()
             }
             when WHILE(_, label, test, statements) {

@@ -21,7 +21,7 @@ return;
 }
 void frost$core$Immutable$cleanup(frost$core$Immutable* param0) {
 
-// line 9
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Immutable.frost:9
 frost$core$Object$cleanup(((frost$core$Object*) param0));
 return;
 

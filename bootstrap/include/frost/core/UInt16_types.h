@@ -8,7 +8,7 @@ typedef struct frost$core$UInt16 {
     uint16_t value;
 } frost$core$UInt16;
 #include "frost/core/Class.h"
-typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[140]; } frost$core$UInt16$class_type;
+typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[141]; } frost$core$UInt16$class_type;
 extern frost$core$UInt16$class_type frost$core$UInt16$class;
 typedef struct frost$core$UInt16$wrapper {
     frost$core$Class* cl;

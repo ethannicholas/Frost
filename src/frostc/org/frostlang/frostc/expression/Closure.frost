@@ -281,10 +281,10 @@ class Closure {
                                 "type \{t}"
                     while compiler.errorQueue.hasMessage() {
                         match compiler.errorQueue.getMessage() {
-                            when Message.WARNING(_, _, text) {
+                            when Message.WARNING(_, _, _, text) {
                                 msg.append("\n        \{text}")
                             }
-                            when Message.ERROR(_, _, text) {
+                            when Message.ERROR(_, _, _, text) {
                                 msg.append("\n        \{text}")
                             }
                         }

@@ -1,0 +1,69 @@
+class Node {
+    @weak
+    def parent:Node?
+
+    def children := Array<Node>()
+
+    def value:String
+
+    init() {
+        init(null, "Root")
+    }
+
+    @private
+    init(parent:Node?, value:String) {
+        self.parent := parent
+        self.value := value
+        Console.printLine("creating \{self}")
+    }
+
+    method add(s:String):Node {
+        def result := Node(self, s)
+        children.add(result)
+        return result
+    }
+
+    @override
+    method cleanup() {
+        Console.printLine("destroying \{self}")
+    }
+
+    @override
+    function get_asString():String {
+        return "\{value}(\{children.join(", ")})"
+    }
+}
+
+method add(root:Node, path:String):Node {
+    var current := root
+    outer: for token in path.split("/") {
+        for c in current.children {
+            if c.value = token {
+                current := c
+                continue outer
+            }
+        }
+        current := current.add(token)
+    }
+    return current
+}
+
+method main() {
+    def root := Node()
+    def human := add(root, "Animal/Vertebrate/Mammal/Primate/Human")
+    add(root, "Animal/Vertebrate/Mammal/Primate/Chimpanzee")
+    add(root, "Animal/Vertebrate/Mammal/Rodent/Rabbit")
+    add(root, "Animal/Vertebrate/Mammal/Rodent/Rat")
+    add(root, "Animal/Vertebrate/Fish/Tuna")
+    add(root, "Animal/Vertebrate/Fish/Shark")
+    add(root, "Animal/Vertebrate/Fish/Minnow")
+    add(root, "Animal/Invertebrate/Worm")
+    add(root, "Animal/Invertebrate/Spider")
+    add(root, "Animal/Invertebrate/Crab")
+    Console.printLine(root)
+    var current:Node? := human
+    while current !== null {
+        Console.printLine(current)
+        current := current.parent
+    }
+}

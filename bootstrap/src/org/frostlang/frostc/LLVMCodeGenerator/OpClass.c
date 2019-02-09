@@ -35,34 +35,54 @@ static frost$core$String $s2 = { (frost$core$Class*) &frost$core$String$class, -
 
 void org$frostlang$frostc$LLVMCodeGenerator$OpClass$cleanup(org$frostlang$frostc$LLVMCodeGenerator$OpClass param0) {
 
-// line 1068
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:1068
 frost$core$Int64 $tmp3 = param0.$rawValue;
 frost$core$Int64 $tmp4 = (frost$core$Int64) {0};
-frost$core$Bit $tmp5 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp3, $tmp4);
-bool $tmp6 = $tmp5.value;
-if ($tmp6) goto block2; else goto block3;
+// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from LLVMCodeGenerator.frost:1068:5
+// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:179
+int64_t $tmp5 = $tmp3.value;
+int64_t $tmp6 = $tmp4.value;
+bool $tmp7 = $tmp5 == $tmp6;
+frost$core$Bit $tmp8 = frost$core$Bit$init$builtin_bit($tmp7);
+bool $tmp9 = $tmp8.value;
+if ($tmp9) goto block2; else goto block3;
 block2:;
 goto block1;
 block3:;
-frost$core$Int64 $tmp7 = (frost$core$Int64) {1};
-frost$core$Bit $tmp8 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp3, $tmp7);
-bool $tmp9 = $tmp8.value;
-if ($tmp9) goto block4; else goto block5;
-block4:;
-goto block1;
-block5:;
-frost$core$Int64 $tmp10 = (frost$core$Int64) {2};
-frost$core$Bit $tmp11 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp3, $tmp10);
-bool $tmp12 = $tmp11.value;
-if ($tmp12) goto block6; else goto block7;
-block6:;
-goto block1;
-block7:;
-frost$core$Int64 $tmp13 = (frost$core$Int64) {3};
-frost$core$Bit $tmp14 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp3, $tmp13);
+frost$core$Int64 $tmp10 = (frost$core$Int64) {1};
+// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from LLVMCodeGenerator.frost:1068:5
+// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:179
+int64_t $tmp11 = $tmp3.value;
+int64_t $tmp12 = $tmp10.value;
+bool $tmp13 = $tmp11 == $tmp12;
+frost$core$Bit $tmp14 = frost$core$Bit$init$builtin_bit($tmp13);
 bool $tmp15 = $tmp14.value;
-if ($tmp15) goto block8; else goto block1;
+if ($tmp15) goto block5; else goto block6;
+block5:;
+goto block1;
+block6:;
+frost$core$Int64 $tmp16 = (frost$core$Int64) {2};
+// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from LLVMCodeGenerator.frost:1068:5
+// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:179
+int64_t $tmp17 = $tmp3.value;
+int64_t $tmp18 = $tmp16.value;
+bool $tmp19 = $tmp17 == $tmp18;
+frost$core$Bit $tmp20 = frost$core$Bit$init$builtin_bit($tmp19);
+bool $tmp21 = $tmp20.value;
+if ($tmp21) goto block8; else goto block9;
 block8:;
+goto block1;
+block9:;
+frost$core$Int64 $tmp22 = (frost$core$Int64) {3};
+// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from LLVMCodeGenerator.frost:1068:5
+// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:179
+int64_t $tmp23 = $tmp3.value;
+int64_t $tmp24 = $tmp22.value;
+bool $tmp25 = $tmp23 == $tmp24;
+frost$core$Bit $tmp26 = frost$core$Bit$init$builtin_bit($tmp25);
+bool $tmp27 = $tmp26.value;
+if ($tmp27) goto block11; else goto block1;
+block11:;
 goto block1;
 block1:;
 return;
@@ -71,32 +91,32 @@ return;
 org$frostlang$frostc$LLVMCodeGenerator$OpClass org$frostlang$frostc$LLVMCodeGenerator$OpClass$init$frost$core$Int64(frost$core$Int64 param0) {
 
 org$frostlang$frostc$LLVMCodeGenerator$OpClass local0;
-// line 1068
-frost$core$Int64* $tmp16 = &(&local0)->$rawValue;
-*$tmp16 = param0;
-org$frostlang$frostc$LLVMCodeGenerator$OpClass $tmp17 = *(&local0);
-return $tmp17;
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:1068
+frost$core$Int64* $tmp28 = &(&local0)->$rawValue;
+*$tmp28 = param0;
+org$frostlang$frostc$LLVMCodeGenerator$OpClass $tmp29 = *(&local0);
+return $tmp29;
 
 }
 frost$core$Bit org$frostlang$frostc$LLVMCodeGenerator$OpClass$$EQ$org$frostlang$frostc$LLVMCodeGenerator$OpClass$R$frost$core$Bit(org$frostlang$frostc$LLVMCodeGenerator$OpClass param0, org$frostlang$frostc$LLVMCodeGenerator$OpClass param1) {
 
-// line 1068
-frost$core$Int64 $tmp18 = param0.$rawValue;
-frost$core$Int64 $tmp19 = param1.$rawValue;
-int64_t $tmp20 = $tmp18.value;
-int64_t $tmp21 = $tmp19.value;
-bool $tmp22 = $tmp20 != $tmp21;
-frost$core$Bit $tmp23 = (frost$core$Bit) {$tmp22};
-bool $tmp24 = $tmp23.value;
-if ($tmp24) goto block1; else goto block2;
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:1068
+frost$core$Int64 $tmp30 = param0.$rawValue;
+frost$core$Int64 $tmp31 = param1.$rawValue;
+int64_t $tmp32 = $tmp30.value;
+int64_t $tmp33 = $tmp31.value;
+bool $tmp34 = $tmp32 != $tmp33;
+frost$core$Bit $tmp35 = (frost$core$Bit) {$tmp34};
+bool $tmp36 = $tmp35.value;
+if ($tmp36) goto block1; else goto block2;
 block1:;
-// line 1068
-frost$core$Bit $tmp25 = frost$core$Bit$init$builtin_bit(false);
-return $tmp25;
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:1068
+frost$core$Bit $tmp37 = frost$core$Bit$init$builtin_bit(false);
+return $tmp37;
 block2:;
-// line 1068
-frost$core$Bit $tmp26 = frost$core$Bit$init$builtin_bit(true);
-return $tmp26;
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:1068
+frost$core$Bit $tmp38 = frost$core$Bit$init$builtin_bit(true);
+return $tmp38;
 
 }
 

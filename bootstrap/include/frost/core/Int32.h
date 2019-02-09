@@ -125,6 +125,7 @@ frost$collections$ListView* frost$core$Int32$$IDX$frost$core$Range$LTfrost$core$
 frost$collections$ListView* frost$core$Int32$$IDX$frost$core$SteppedRange$LTfrost$core$Int32$Cfrost$core$Int32$GT$R$frost$collections$ListView$LTfrost$core$Int32$GT(frost$core$SteppedRange$LTfrost$core$Int32$Cfrost$core$Int32$GT p_range);
 frost$core$Bit frost$core$Int32$$IDX$frost$core$Int64$R$frost$core$Bit(frost$core$Int32 self, frost$core$Int64 p_index);
 frost$core$Int64 frost$core$Int32$get_count$R$frost$core$Int64(frost$core$Int32 self);
+void frost$core$Int32$get_bitCount$R$frost$core$Int32(frost$core$Int32* result, frost$core$Int32 self);
 frost$collections$Iterator* frost$core$Int32$get_iterator$R$frost$collections$Iterator$LTfrost$core$Bit$GT(frost$core$Int32 self);
 frost$core$Int64 frost$core$Int32$get_hash$R$frost$core$Int64(frost$core$Int32 self);
 frost$core$Int32$nullable frost$core$Int32$parse$frost$core$String$frost$core$Int64$R$frost$core$Int32$Q(frost$core$String* p_str, frost$core$Int64 p_radix);

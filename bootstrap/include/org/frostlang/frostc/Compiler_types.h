@@ -31,6 +31,7 @@ typedef struct org$frostlang$frostc$Compiler {
     org$frostlang$frostc$SymbolTable* root;
     org$frostlang$frostc$ClassDecl* compiling;
     frost$collections$Array* compilationQueue;
+    frost$collections$Array* files;
     frost$collections$HashMap* scans;
     frost$collections$HashMap* classes;
     frost$collections$Stack* currentClass;
@@ -43,6 +44,7 @@ typedef struct org$frostlang$frostc$Compiler {
     frost$collections$Stack* enclosingContexts;
     frost$core$Int64 errorCount;
     frost$core$Int64 closureCount;
+    frost$core$Int64 tempCount;
     frost$collections$HashMap* existenceCache;
     frost$core$Bit reportErrors;
     frost$collections$Array* pendingClasses;

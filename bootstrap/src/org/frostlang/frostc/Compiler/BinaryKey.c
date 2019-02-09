@@ -29,17 +29,17 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 
 void org$frostlang$frostc$Compiler$BinaryKey$init$org$frostlang$frostc$ASTNode$org$frostlang$frostc$expression$Binary$Operator$org$frostlang$frostc$ASTNode(org$frostlang$frostc$Compiler$BinaryKey* param0, org$frostlang$frostc$ASTNode* param1, org$frostlang$frostc$expression$Binary$Operator param2, org$frostlang$frostc$ASTNode* param3) {
 
-// line 334
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:367
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
 org$frostlang$frostc$ASTNode** $tmp2 = &param0->left;
 org$frostlang$frostc$ASTNode* $tmp3 = *$tmp2;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp3));
 org$frostlang$frostc$ASTNode** $tmp4 = &param0->left;
 *$tmp4 = param1;
-// line 335
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:368
 org$frostlang$frostc$expression$Binary$Operator* $tmp5 = &param0->op;
 *$tmp5 = param2;
-// line 336
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:369
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param3));
 org$frostlang$frostc$ASTNode** $tmp6 = &param0->right;
 org$frostlang$frostc$ASTNode* $tmp7 = *$tmp6;
@@ -53,7 +53,7 @@ frost$core$Bit org$frostlang$frostc$Compiler$BinaryKey$$EQ$org$frostlang$frostc$
 
 frost$core$Bit local0;
 frost$core$Bit local1;
-// line 341
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:374
 org$frostlang$frostc$ASTNode** $tmp9 = &param0->left;
 org$frostlang$frostc$ASTNode* $tmp10 = *$tmp9;
 org$frostlang$frostc$ASTNode** $tmp11 = &param1->left;
@@ -109,7 +109,7 @@ return $tmp34;
 }
 frost$core$Int64 org$frostlang$frostc$Compiler$BinaryKey$get_hash$R$frost$core$Int64(org$frostlang$frostc$Compiler$BinaryKey* param0) {
 
-// line 346
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:379
 org$frostlang$frostc$ASTNode** $tmp35 = &param0->left;
 org$frostlang$frostc$ASTNode* $tmp36 = *$tmp35;
 frost$core$Int64 $tmp37;
@@ -118,20 +118,25 @@ org$frostlang$frostc$ASTNode** $tmp38 = &param0->right;
 org$frostlang$frostc$ASTNode* $tmp39 = *$tmp38;
 frost$core$Int64 $tmp40;
 frost$core$Frost$addressOf$frost$core$Object$R$frost$core$Int64(&$tmp40, ((frost$core$Object*) $tmp39));
-frost$core$Int64 $tmp41 = frost$core$Int64$$BXOR$frost$core$Int64$R$frost$core$Int64($tmp37, $tmp40);
-return $tmp41;
+// begin inline call to function frost.core.Int64.~~(other:frost.core.Int64):frost.core.Int64 from Compiler.frost:379:42
+// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:143
+int64_t $tmp41 = $tmp37.value;
+int64_t $tmp42 = $tmp40.value;
+int64_t $tmp43 = $tmp41 ^ $tmp42;
+frost$core$Int64 $tmp44 = frost$core$Int64$init$builtin_int64($tmp43);
+return $tmp44;
 
 }
 void org$frostlang$frostc$Compiler$BinaryKey$cleanup(org$frostlang$frostc$Compiler$BinaryKey* param0) {
 
-// line 326
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:359
 frost$core$Object$cleanup(((frost$core$Object*) param0));
-org$frostlang$frostc$ASTNode** $tmp42 = &param0->left;
-org$frostlang$frostc$ASTNode* $tmp43 = *$tmp42;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp43));
-org$frostlang$frostc$ASTNode** $tmp44 = &param0->right;
-org$frostlang$frostc$ASTNode* $tmp45 = *$tmp44;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp45));
+org$frostlang$frostc$ASTNode** $tmp45 = &param0->left;
+org$frostlang$frostc$ASTNode* $tmp46 = *$tmp45;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp46));
+org$frostlang$frostc$ASTNode** $tmp47 = &param0->right;
+org$frostlang$frostc$ASTNode* $tmp48 = *$tmp47;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp48));
 return;
 
 }

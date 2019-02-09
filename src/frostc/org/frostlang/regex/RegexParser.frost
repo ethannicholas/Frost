@@ -13,6 +13,8 @@ class RegexParser {
 
     var path:File
 
+    var pathIndex:Int
+
     var source:String
 
     def pushbackBuffer := SpecializedArray<RegexToken>()
@@ -21,9 +23,10 @@ class RegexParser {
         self.errors := errors
     }
 
-    method start(path:File, source:String) {
+    method start(path:File, pathIndex:Int, source:String) {
         lexer.start(source)
         self.path := path
+        self.pathIndex := pathIndex
         self.source := source
         pushbackBuffer.clear()
     }
@@ -69,7 +72,8 @@ class RegexParser {
     }
 
     method error(token:RegexToken, msg:String) {
-        errors.post(Compiler.Message.ERROR(path, token.position, msg))
+        errors.post(Compiler.Message.ERROR(path.name, token.position.line, token.position.column,
+                msg))
     }
 
     function text(token:RegexToken):String {
@@ -212,7 +216,7 @@ class RegexParser {
     ================================================================================================
     method regex():ASTNode? {
         pushbackBuffer.clear()
-        def position := Position(lexer.dfa.line, lexer.dfa.column)
+        def position := Position(pathIndex, lexer.dfa.line, lexer.dfa.column)
         def start := lexer.dfa.offset
         if !expression() {
             return null

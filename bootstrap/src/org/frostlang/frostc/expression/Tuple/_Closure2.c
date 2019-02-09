@@ -15,7 +15,7 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 
 void org$frostlang$frostc$expression$Tuple$_Closure2$init$org$frostlang$frostc$Compiler(org$frostlang$frostc$expression$Tuple$_Closure2* param0, org$frostlang$frostc$Compiler* param1) {
 
-// line 24
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Tuple.frost:24
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
 org$frostlang$frostc$Compiler** $tmp2 = &param0->compiler;
 org$frostlang$frostc$Compiler* $tmp3 = *$tmp2;
@@ -27,7 +27,7 @@ return;
 }
 void org$frostlang$frostc$expression$Tuple$_Closure2$cleanup(org$frostlang$frostc$expression$Tuple$_Closure2* param0) {
 
-// line 24
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Tuple.frost:24
 frost$core$Object$cleanup(((frost$core$Object*) param0));
 org$frostlang$frostc$Compiler** $tmp5 = &param0->compiler;
 org$frostlang$frostc$Compiler* $tmp6 = *$tmp5;
@@ -37,7 +37,7 @@ return;
 }
 org$frostlang$frostc$Type* org$frostlang$frostc$expression$Tuple$_Closure2$$anonymous1$org$frostlang$frostc$Type$org$frostlang$frostc$Type$R$org$frostlang$frostc$Type(org$frostlang$frostc$expression$Tuple$_Closure2* param0, org$frostlang$frostc$Type* param1, org$frostlang$frostc$Type* param2) {
 
-// line 24
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Tuple.frost:24
 org$frostlang$frostc$Compiler** $tmp7 = &param0->compiler;
 org$frostlang$frostc$Compiler* $tmp8 = *$tmp7;
 org$frostlang$frostc$Type* $tmp9 = org$frostlang$frostc$Type$union$org$frostlang$frostc$Compiler$org$frostlang$frostc$Type$R$org$frostlang$frostc$Type(param1, $tmp8, param2);

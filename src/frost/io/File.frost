@@ -94,6 +94,7 @@ class File : Immutable, Key<File> {
     method absolute():Maybe<File>
 
     @private
+    @class
     function normalize(path:String):String? {
         var result := path
         -- coalesce multiple repeated '/'s into a single '/'

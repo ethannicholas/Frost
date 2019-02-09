@@ -62,13 +62,14 @@ class Parser {
         regexParser := RegexParser(errors)
     }
 
-    method start(path:File, source:String) {
+    method start(path:File, pathIndex:Int, source:String) {
         reportErrors := true
         lexer.start(source)
+        lexer.file := pathIndex
         self.path := path
         self.source := source
         pushbackBuffer.clear()
-        regexParser.start(path, source)
+        regexParser.start(path, pathIndex, source)
         if syntaxHighlighter !== null {
             syntaxHighlighter.reset()
         }
@@ -189,7 +190,8 @@ class Parser {
 
     method error(token:Token, msg:String) {
         if speculativeBuffers.count = 0 & reportErrors {
-            errors.post(Compiler.Message.ERROR(path, token.position, msg))
+            errors.post(Compiler.Message.ERROR(path.name, token.position.line,
+                    token.position.column, msg))
         }
     }
 

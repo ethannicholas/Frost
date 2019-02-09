@@ -4,6 +4,7 @@
 typedef struct org$frostlang$regex$RegexParser org$frostlang$regex$RegexParser;
 typedef struct frost$threads$MessageQueue frost$threads$MessageQueue;
 typedef struct frost$io$File frost$io$File;
+#include "frost/core/Int64_types.h"
 typedef struct frost$core$String frost$core$String;
 #include "org/frostlang/regex/RegexToken_types.h"
 #include "frost/core/Bit_types.h"
@@ -11,7 +12,7 @@ typedef struct frost$core$String frost$core$String;
 typedef struct org$frostlang$frostc$ASTNode org$frostlang$frostc$ASTNode;
 
 void org$frostlang$regex$RegexParser$init$frost$threads$MessageQueue$LTorg$frostlang$frostc$Compiler$Message$GT(org$frostlang$regex$RegexParser* self, frost$threads$MessageQueue* p_errors);
-void org$frostlang$regex$RegexParser$start$frost$io$File$frost$core$String(org$frostlang$regex$RegexParser* self, frost$io$File* p_path, frost$core$String* p_source);
+void org$frostlang$regex$RegexParser$start$frost$io$File$frost$core$Int64$frost$core$String(org$frostlang$regex$RegexParser* self, frost$io$File* p_path, frost$core$Int64 p_pathIndex, frost$core$String* p_source);
 org$frostlang$regex$RegexToken org$frostlang$regex$RegexParser$next$R$org$frostlang$regex$RegexToken(org$frostlang$regex$RegexParser* self);
 void org$frostlang$regex$RegexParser$pushback$org$frostlang$regex$RegexToken(org$frostlang$regex$RegexParser* self, org$frostlang$regex$RegexToken p_token);
 org$frostlang$regex$RegexToken org$frostlang$regex$RegexParser$peek$R$org$frostlang$regex$RegexToken(org$frostlang$regex$RegexParser* self);

@@ -18,7 +18,7 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 
 void frost$core$RegularExpression$init$frost$core$String(frost$core$RegularExpression* param0, frost$core$String* param1) {
 
-// line 15
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/RegularExpression.frost:15
 frost$core$Int64 $tmp2 = (frost$core$Int64) {0};
 frost$core$RegularExpression$init$frost$core$String$frost$core$Int64(param0, param1, $tmp2);
 return;
@@ -26,16 +26,16 @@ return;
 }
 void frost$core$RegularExpression$init$frost$core$String$frost$core$Int64(frost$core$RegularExpression* param0, frost$core$String* param1, frost$core$Int64 param2) {
 
-// line 19
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/RegularExpression.frost:19
 frost$core$RegularExpression$compile$frost$core$String$frost$core$Int64(param0, param1, param2);
 return;
 
 }
 void frost$core$RegularExpression$cleanup(frost$core$RegularExpression* param0) {
 
-// line 27
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/RegularExpression.frost:27
 frost$core$RegularExpression$destroy(param0);
-// line 26
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/RegularExpression.frost:26
 frost$core$Immutable$cleanup(((frost$core$Immutable*) param0));
 return;
 

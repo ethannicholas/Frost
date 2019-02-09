@@ -35,27 +35,42 @@ static frost$core$String $s2 = { (frost$core$Class*) &frost$core$String$class, -
 
 void org$frostlang$frostc$ClassDecl$Kind$cleanup(org$frostlang$frostc$ClassDecl$Kind param0) {
 
-// line 5
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/ClassDecl.frost:5
 frost$core$Int64 $tmp3 = param0.$rawValue;
 frost$core$Int64 $tmp4 = (frost$core$Int64) {0};
-frost$core$Bit $tmp5 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp3, $tmp4);
-bool $tmp6 = $tmp5.value;
-if ($tmp6) goto block2; else goto block3;
+// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from ClassDecl.frost:5:5
+// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:179
+int64_t $tmp5 = $tmp3.value;
+int64_t $tmp6 = $tmp4.value;
+bool $tmp7 = $tmp5 == $tmp6;
+frost$core$Bit $tmp8 = frost$core$Bit$init$builtin_bit($tmp7);
+bool $tmp9 = $tmp8.value;
+if ($tmp9) goto block2; else goto block3;
 block2:;
 goto block1;
 block3:;
-frost$core$Int64 $tmp7 = (frost$core$Int64) {1};
-frost$core$Bit $tmp8 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp3, $tmp7);
-bool $tmp9 = $tmp8.value;
-if ($tmp9) goto block4; else goto block5;
-block4:;
-goto block1;
+frost$core$Int64 $tmp10 = (frost$core$Int64) {1};
+// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from ClassDecl.frost:5:5
+// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:179
+int64_t $tmp11 = $tmp3.value;
+int64_t $tmp12 = $tmp10.value;
+bool $tmp13 = $tmp11 == $tmp12;
+frost$core$Bit $tmp14 = frost$core$Bit$init$builtin_bit($tmp13);
+bool $tmp15 = $tmp14.value;
+if ($tmp15) goto block5; else goto block6;
 block5:;
-frost$core$Int64 $tmp10 = (frost$core$Int64) {2};
-frost$core$Bit $tmp11 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp3, $tmp10);
-bool $tmp12 = $tmp11.value;
-if ($tmp12) goto block6; else goto block1;
+goto block1;
 block6:;
+frost$core$Int64 $tmp16 = (frost$core$Int64) {2};
+// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from ClassDecl.frost:5:5
+// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:179
+int64_t $tmp17 = $tmp3.value;
+int64_t $tmp18 = $tmp16.value;
+bool $tmp19 = $tmp17 == $tmp18;
+frost$core$Bit $tmp20 = frost$core$Bit$init$builtin_bit($tmp19);
+bool $tmp21 = $tmp20.value;
+if ($tmp21) goto block8; else goto block1;
+block8:;
 goto block1;
 block1:;
 return;
@@ -64,32 +79,32 @@ return;
 org$frostlang$frostc$ClassDecl$Kind org$frostlang$frostc$ClassDecl$Kind$init$frost$core$Int64(frost$core$Int64 param0) {
 
 org$frostlang$frostc$ClassDecl$Kind local0;
-// line 5
-frost$core$Int64* $tmp13 = &(&local0)->$rawValue;
-*$tmp13 = param0;
-org$frostlang$frostc$ClassDecl$Kind $tmp14 = *(&local0);
-return $tmp14;
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/ClassDecl.frost:5
+frost$core$Int64* $tmp22 = &(&local0)->$rawValue;
+*$tmp22 = param0;
+org$frostlang$frostc$ClassDecl$Kind $tmp23 = *(&local0);
+return $tmp23;
 
 }
 frost$core$Bit org$frostlang$frostc$ClassDecl$Kind$$EQ$org$frostlang$frostc$ClassDecl$Kind$R$frost$core$Bit(org$frostlang$frostc$ClassDecl$Kind param0, org$frostlang$frostc$ClassDecl$Kind param1) {
 
-// line 5
-frost$core$Int64 $tmp15 = param0.$rawValue;
-frost$core$Int64 $tmp16 = param1.$rawValue;
-int64_t $tmp17 = $tmp15.value;
-int64_t $tmp18 = $tmp16.value;
-bool $tmp19 = $tmp17 != $tmp18;
-frost$core$Bit $tmp20 = (frost$core$Bit) {$tmp19};
-bool $tmp21 = $tmp20.value;
-if ($tmp21) goto block1; else goto block2;
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/ClassDecl.frost:5
+frost$core$Int64 $tmp24 = param0.$rawValue;
+frost$core$Int64 $tmp25 = param1.$rawValue;
+int64_t $tmp26 = $tmp24.value;
+int64_t $tmp27 = $tmp25.value;
+bool $tmp28 = $tmp26 != $tmp27;
+frost$core$Bit $tmp29 = (frost$core$Bit) {$tmp28};
+bool $tmp30 = $tmp29.value;
+if ($tmp30) goto block1; else goto block2;
 block1:;
-// line 5
-frost$core$Bit $tmp22 = frost$core$Bit$init$builtin_bit(false);
-return $tmp22;
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/ClassDecl.frost:5
+frost$core$Bit $tmp31 = frost$core$Bit$init$builtin_bit(false);
+return $tmp31;
 block2:;
-// line 5
-frost$core$Bit $tmp23 = frost$core$Bit$init$builtin_bit(true);
-return $tmp23;
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/ClassDecl.frost:5
+frost$core$Bit $tmp32 = frost$core$Bit$init$builtin_bit(true);
+return $tmp32;
 
 }
 

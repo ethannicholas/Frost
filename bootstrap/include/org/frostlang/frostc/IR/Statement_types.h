@@ -11,7 +11,7 @@ typedef struct org$frostlang$frostc$IR$Statement {
     frost$core$Int32 refCount;
     frost$core$UInt8 $flags;
     frost$core$Int64 $rawValue;
-    int8_t $data[48];
+    int8_t $data[56];
 } org$frostlang$frostc$IR$Statement;
 #include "frost/core/Class.h"
 typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[3]; } org$frostlang$frostc$IR$Statement$class_type;

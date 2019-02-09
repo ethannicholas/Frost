@@ -427,7 +427,7 @@ class Scanner {
                 return result
             }
             when ASTNode.METHOD {
-                return INLINE_THRESHOLD
+                return INLINE_THRESHOLD + 1
             }
             when ASTNode.NULL {
                 return 1
@@ -460,13 +460,13 @@ class Scanner {
                 return 1
             }
             when ASTNode.TRY {
-                return INLINE_THRESHOLD
+                return INLINE_THRESHOLD + 1
             }
             when ASTNode.TYPE {
                 return 0
             }
             when ASTNode.TYPED_LAMBDA {
-                return INLINE_THRESHOLD
+                return INLINE_THRESHOLD + 1
             }
             when ASTNode.UNARY(_, _, base) {
                 return 1 + complexity(base)
@@ -475,7 +475,7 @@ class Scanner {
                 return 0
             }
             when ASTNode.UNTYPED_LAMBDA {
-                return INLINE_THRESHOLD
+                return INLINE_THRESHOLD + 1
             }
             when ASTNode.VAR(_, _, decls) {
                 var result := 0
@@ -851,7 +851,7 @@ class Scanner {
 
     @pre(source !== null)
     method error(position:Position, msg:String) {
-        compiler.error(source, position, msg)
+        compiler.error(position, msg)
     }
 
     method scan(source:File, file:ASTNode):ListView<ClassDecl> {

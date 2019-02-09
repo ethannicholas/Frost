@@ -5,6 +5,13 @@ uses org.frostlang.frostc.parser.SyntaxHighlighter
 
 class HTMLProcessor {
     @private
+    def compiler:Compiler
+
+    init(compiler:Compiler) {
+        self.compiler := compiler
+    }
+
+    @private
     method prettyPrint(parser:Parser):String {
         def result := MutableString("<span class=\"frostcode\">")
         var current := SyntaxHighlighter.Kind.DEFAULT
@@ -82,7 +89,8 @@ class HTMLProcessor {
             def errors := MessageQueue<Compiler.Message>()
             def parser := Parser(errors)
             parser.syntaxHighlighter := SyntaxHighlighter()
-            parser.start(input, input.readFully())
+            parser.start(input, compiler.files.count, input.readFully())
+            compiler.files.add(input)
             if parser.file() == null {
                 while errors.hasMessage() {
                     Console.printLine(errors.getMessage())

@@ -102,7 +102,7 @@ class Type : Symbol, Key<Type> {
     init(name:String, typeKind:Kind, size:Int) {
         assert !name.endsWith("?")
         self.typeKind := typeKind
-        self.position := Position(size, size)
+        self.position := Position(-1, size, size)
         self.resolved := true
         self._subtypes := null
         super.init(Symbol.Kind.TYPE, position, name)

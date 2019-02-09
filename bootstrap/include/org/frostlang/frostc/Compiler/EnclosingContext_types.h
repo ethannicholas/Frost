@@ -11,7 +11,7 @@ typedef struct org$frostlang$frostc$Compiler$EnclosingContext {
     frost$core$Int32 refCount;
     frost$core$UInt8 $flags;
     frost$core$Int64 $rawValue;
-    int8_t $data[24];
+    int8_t $data[32];
 } org$frostlang$frostc$Compiler$EnclosingContext;
 #include "frost/core/Class.h"
 typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[2]; } org$frostlang$frostc$Compiler$EnclosingContext$class_type;

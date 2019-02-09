@@ -20,6 +20,10 @@ uses org.frostlang.frostc.lvalue.FieldLValue
 uses org.frostlang.frostc.lvalue.IndexLValue
 uses org.frostlang.frostc.lvalue.LValue
 uses org.frostlang.frostc.lvalue.VariableLValue
+uses org.frostlang.frostc.pass.Analyzer
+uses org.frostlang.frostc.pass.MergeBlocks
+uses org.frostlang.frostc.pass.RemoveAsserts
+uses org.frostlang.frostc.pass.RemoveUnreachableBlocks
 uses org.frostlang.frostc.statement.Assert
 uses org.frostlang.frostc.statement.Assignment
 uses org.frostlang.frostc.statement.Break
@@ -64,8 +68,8 @@ class Compiler {
     }
 
     choice Message {
-        ERROR(File, Position, String)
-        WARNING(File, Position, String)
+        ERROR(String -* path *-, Int -* line *-, Int -* column *-, String)
+        WARNING(String -* path *-, Int -* line *-, Int -* column *-, String)
     }
 
     ================================================================================================
@@ -134,7 +138,20 @@ class Compiler {
         }
     }
 
+    class InlineReturn {
+        -- if non-null, inline call should store result into this variable
+        def variable:Variable? -* FIXME use phis and kill this *-
+        -- if variable is null, inline call should store result here
+        def value:IR.Value?
+
+        init(variable:Variable?) {
+            self.variable := variable
+        }
+    }
+
     choice EnclosingContext {
+        INLINE_CONTEXT(ListView<IR.Value> -* params *-, Int -* first local index *-, InlineReturn,
+                IR.Block.ID -* merge block *-)
         LOOP(String? -* label *-, IR.Block.ID -* break target *-, IR.Block.ID -* continue target *-)
         SCOPE
         VARIABLE_SCOPE(Variable)
@@ -144,6 +161,9 @@ class Compiler {
         @override
         function get_asString():String {
             match self {
+                when INLINE_CONTEXT(params, firstLocal, inlineReturn, mergeBlock) {
+                    return "INLINE_CONTEXT(params)"
+                }
                 when LOOP(label, breakTarget, continueTarget) {
                     if label !== null {
                         return "LOOP(\{label}, \{breakTarget}, \{continueTarget})"
@@ -244,6 +264,9 @@ class Compiler {
             loop {
                 def pop := compiler.enclosingContexts.pop()
                 match pop {
+                    when EnclosingContext.INLINE_CONTEXT {
+                        break
+                    }
                     when EnclosingContext.SCOPE {
                         break
                     }
@@ -300,6 +323,16 @@ class Compiler {
         VARIABLE(Variable)
         FIELD(FieldDecl)
         SELF
+
+        @override
+        function get_asString():String {
+            match self {
+                when VARIABLE(v) { return "VARIABLE(\{v})" }
+                when FIELD(f)    { return "FIELD(\{f})" }
+                when SELF        { return "SELF" }
+                otherwise        { unreachable }
+            }
+        }
     }
 
     class CoercionKey : Key<CoercionKey> {
@@ -385,6 +418,8 @@ class Compiler {
 
     var compilationQueue := Array<ClassDecl>()
 
+    def files := Array<File>()
+
     @private
     def scans := HashMap<File, ListView<ClassDecl>>()
 
@@ -420,6 +455,9 @@ class Compiler {
 
     @private
     var closureCount := 0
+
+    @private
+    var tempCount := 0
 
     @private
     var existenceCache := HashMap<File, Bit>()
@@ -980,19 +1018,19 @@ class Compiler {
             }
             if cl.rawSuper !== null {
                 def superclass := getClass(cl.rawSuper)
-                if superclass !== null {
+                if superclass !== null & !cl.annotations.isStub {
                     checkGenericArguments(cl.position, superclass, cl.rawSuper)
                 }
             }
             for intf in cl.rawInterfaces {
                 def intfclass := getClass(intf)
-                if intfclass !== null {
+                if intfclass !== null & !cl.annotations.isStub {
                     checkGenericArguments(cl.position, intfclass, intf)
                 }
             }
             for p in cl.parameters {
                 def cl := getClass(p.bound)
-                if cl !== null {
+                if cl !== null & !cl.annotations.isStub {
                     checkGenericArguments(cl.position, cl, p.bound)
                 }
             }
@@ -1314,8 +1352,9 @@ class Compiler {
                     scan(f)
                     result := classes[fullName]
                     if result == null & errorCount = oldErrorCount {
-                        error(f, Position(1, 1),
+                        error(Position(files.count, 1, 1),
                                 "expected file '\{f}' to contain a class named '\{fullName}'")
+                        files.add(f)
                     }
                     break
                 }
@@ -1326,8 +1365,9 @@ class Compiler {
                     scan(f)
                     result := classes[fullName]
                     if result == null & errorCount = oldErrorCount {
-                        error(f, Position(1, 1),
+                        error(Position(files.count, 1, 1),
                                 "expected file '\{f}' to contain a class named '\{fullName}'")
+                        files.add(f)
                     }
                 }
             }
@@ -3666,7 +3706,7 @@ class Compiler {
                 return i
             }
         }
-        unreachable
+        unreachable, "can't find field \{f} in \{f.owner.name} : \{fields}"
     }
 
     method capture(position:Position, v:Variable) {
@@ -3727,8 +3767,21 @@ class Compiler {
                         return IR.Value.REF(result, v.type)
                     }
                     when Variable.Storage.PARAMETER(index) {
-                        assert s->Variable.type.resolved
-                        return IR.Value.PARAMETER(index, s->Variable.type)
+                        def inline := getInlineContext()
+                        if inline !== null {
+                            match inline {
+                                when EnclosingContext.INLINE_CONTEXT(params, _, _, _) {
+                                    return params[index]
+                                }
+                                otherwise {
+                                    unreachable
+                                }
+                            }
+                        }
+                        else {
+                            assert s->Variable.type.resolved
+                            return IR.Value.PARAMETER(index, s->Variable.type)
+                        }
                     }
                     otherwise {
                         unreachable
@@ -3816,8 +3869,8 @@ class Compiler {
             enclosingContexts := Stack<EnclosingContext>()
             effectiveType := MethodRef(self, target.type(), m).effectiveType
             enclosingContexts := old
-            closureCount += 1
-            def dummyName := "$dummy\{closureCount}"
+            tempCount += 1
+            def dummyName := "$dummy\{tempCount}"
             compileDeclaration(position, ASTNode.IDENTIFIER(position, dummyName),
                     ASTNode.IR_WRAPPER(position, target), Variable.Kind.DEF)
             def parameters := Array<ASTNode>()
@@ -3918,8 +3971,8 @@ class Compiler {
                     Binary.Operator.CAST, ASTNode.IR_WRAPPER(position,
                         IR.Value.TYPE(src.subtypes[i]))))
         }
-        closureCount += 1
-        def methodCapture := ASTNode.IDENTIFIER(position, "$method\{closureCount}")
+        tempCount += 1
+        def methodCapture := ASTNode.IDENTIFIER(position, "$method\{tempCount}")
         compileDeclaration(position, methodCapture, ASTNode.IR_WRAPPER(position, value),
                 Variable.Kind.DEF)
         def c := ASTNode.CALL(position, methodCapture, FixedArray<ASTNode>.from(callParams))
@@ -4995,6 +5048,9 @@ class Compiler {
                 when EnclosingContext.TRY_SCOPE(failBlock, errorVar) {
                     return Pair<IR.Block.ID?, Variable?>(failBlock, errorVar)
                 }
+                when EnclosingContext.INLINE_CONTEXT {
+                    return null
+                }
             }
         }
         return null
@@ -5241,6 +5297,11 @@ class Compiler {
 
     method leaveAllScopes() {
         for c in enclosingContexts {
+            match c {
+                when EnclosingContext.INLINE_CONTEXT {
+                    return
+                }
+            }
             leaveScope(c)
         }
     }
@@ -5254,7 +5315,13 @@ class Compiler {
                 ir.currentBlock.containsExplicitCode := true
             }
         }
-        ir.add(IR.Statement.COMMENT(s.position(), "line \{s.position().line}"))
+        def position := s.position()
+        if position.file >= 0 {
+            ir.add(IR.Statement.COMMENT(s.position(), "\{files[position.file]}:\{position.line}"))
+        }
+        else {
+            ir.add(IR.Statement.COMMENT(s.position(), "<no location>"))
+        }
         def unrefs := AutoUnrefs(self)
         match s {
             when ASTNode.ASSERT(position, test, msg) {
@@ -5507,6 +5574,7 @@ class Compiler {
         postconditionCurrentBlock := ir.currentBlock.id
     }
 
+    @post(!ir.currentBlockFinished)
     method compilePostconditions() {
         def m := currentMethod[0]
         atPreBlock := ir.currentBlock.id
@@ -5554,7 +5622,7 @@ class Compiler {
             current := current.overridden
         }
         if havePost {
-            def returnValue:IR.Value?
+            def returnValue:IR.Value? := null
             if returnVar !== null {
                 def returnSlot:Int
                 match returnVar.storage {
@@ -5566,8 +5634,19 @@ class Compiler {
                         IR.Value.LOCAL(returnSlot, returnVar.type))),
                         returnVar.type)
             }
-            ir.add(IR.Statement.RETURN(m.position, returnValue))
-            ir.setCurrentBlock(atPreBlock)        
+            def oldReturnVar := returnVar
+            returnVar := null
+            def oldPostconditionEntryBlock := postconditionEntryBlock
+            postconditionEntryBlock := null
+            if returnValue !== null {
+                Return.compile(self, m.position, ASTNode.IR_WRAPPER(m.position, returnValue))
+            }
+            else {
+                Return.compile(self, m.position, null)
+            }
+            returnVar := oldReturnVar
+            postconditionEntryBlock := oldPostconditionEntryBlock
+            ir.setCurrentBlock(atPreBlock)
         }
         atPreBlock := null
     }
@@ -5607,6 +5686,32 @@ class Compiler {
         return false
     }
 
+    method optimize(ir:IR, analysis:Analyzer) {
+        if settings.safetyLevel < 2 {
+            RemoveAsserts().process(ir, analysis)
+        }
+        if settings.optimizationLevel > 0 {
+            var changed:Bit
+            do {
+                changed := false
+                changed |= RemoveUnreachableBlocks().process(ir, analysis)
+                changed |= MergeBlocks().process(ir, analysis)
+            }
+            while changed
+        }
+    }
+
+    function getInlineContext():EnclosingContext? {
+        for c in enclosingContexts {
+            match c {
+                when EnclosingContext.INLINE_CONTEXT {
+                    return c
+                }
+            }
+        }
+        return null
+    }
+
     method compile(m:MethodDecl, enclosingContext:SymbolTable?) {
         if !resolve(m) {
             return
@@ -5623,7 +5728,9 @@ class Compiler {
             def oldPostconditionEntryBlock := postconditionEntryBlock
             def oldPostconditionCurrentBlock := postconditionCurrentBlock
             def oldIR := ir
-            ir := IR()
+            if getInlineContext() == null {
+                ir := IR()
+            }
             atPreBlock := ir.currentBlock.id
             postconditionEntryBlock := null
             postconditionCurrentBlock := null
@@ -5664,7 +5771,7 @@ class Compiler {
                 }
                 else if !m.annotations.isClass {
                     def selfVar := Variable(m.position, Variable.Kind.DEF, SELF_NAME,
-                            m.owner.typeWithParameters(), Variable.Storage.LOCAL(0))
+                            m.owner.typeWithParameters(), Variable.Storage.LOCAL(ir.locals.count))
                     selfVar.owner := m
                     ir.locals.add(selfVar.type)
                     symbolTable.add(selfVar)
@@ -5696,7 +5803,7 @@ class Compiler {
                     index += 1
                 }
                 compilePreconditions()
-                compilePostconditions()
+--                compilePostconditions()
                 for s in m.body {
                     compileStatement(s)
                 }
@@ -5704,7 +5811,7 @@ class Compiler {
                     if m.returnType = Type.Void() | m.methodKind = MethodDecl.Kind.INIT {
                         Return.compile(self, m.position, null)
                     }
-                    else {
+                    else if getInlineContext() == null {
                         def endBlock := ir.newBlock("end")
                         ir.add(IR.Statement.BRANCH(m.position, endBlock))
                         ir.setCurrentBlock(endBlock)
@@ -5713,7 +5820,9 @@ class Compiler {
                 }
             }
             if writeCode & errorCount = 0 {
-                Analyzer(self, m, ir).analyze()
+                def analyzer := Analyzer(self, m, ir)
+                analyzer.analyze()
+                optimize(ir, analyzer)
                 codeGenerator.write(m, ir)
             }
             ir := oldIR
@@ -5886,11 +5995,12 @@ class Compiler {
     }
 
     method scan(raw:File):ListView<ClassDecl> {
-        def file := raw.absolute().get()
-        var result := scans[file]
-        if result == null {
-            try {
-                parser.start(file, file.readFully())
+        try {
+            def file := raw.absolute()
+            var result := scans[file]
+            if result == null {
+                parser.start(file, files.count, file.readFully())
+                files.add(file)
                 def parsed := parser.file()
                 if parsed !== null {
                     result := scanner.scan(file, parsed)
@@ -5901,13 +6011,15 @@ class Compiler {
                 else {
                     result := Array<ClassDecl>()
                 }
+                scans[file] := result
             }
-            fail(err) {
-                error(raw, Position(1, 1), err.message)
-            }
-            scans[file] := result
+            return result
         }
-        return result
+        fail(err) {
+            files.add(raw)
+            error(Position(files.count, 1, 1), err.message)
+            return []
+        }
     }
 
     method compile(file:File) {
@@ -5916,24 +6028,30 @@ class Compiler {
         }
     }
 
-    method error(position:Position, msg:String) {
-        error(currentClass[0].source, position, msg)
-    }
-
-    method error(file:File, pos:Position, msg:String) {
+    method error(pos:Position, msg:String) {
         if reportErrors {
             errorCount += 1
-            errorQueue.post(Message.ERROR(file, pos, msg))
+            def path:String
+            if pos.file >= 0 & pos.file < files.count {
+                path := files[pos.file].name
+            }
+            else {
+                path := "<internal>"
+            }
+            errorQueue.post(Message.ERROR(path, pos.line, pos.column, msg))
         }
     }
 
-    method warn(position:Position, msg:String) {
-        warn(currentClass[0].source, position, msg)
-    }
-
-    method warn(file:File, pos:Position, msg:String) {
+    method warn(pos:Position, msg:String) {
         if reportErrors {
-            errorQueue.post(Message.WARNING(file, pos, msg))
+            def path:String
+            if pos.file >= 0 {
+                path := files[pos.file].name
+            }
+            else {
+                path := "<internal>"
+            }
+            errorQueue.post(Message.WARNING(path, pos.line, pos.column, msg))
         }
     }
 

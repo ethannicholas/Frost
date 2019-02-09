@@ -51,8 +51,10 @@ class FieldLValue : LValue {
             base := rawType
         }
         if self.target !== null {
-            effectiveType := compiler.remapType(compiler.findType(self.target.type(), field.owner),
-                    base)
+            def found := compiler.findType(self.target.type(), field.owner)
+            assert found !== null,
+                    "could not find class \{field.owner.name} in \{self.target.type()} for \{field}"
+            effectiveType := compiler.remapType(found, base)
         }
         else {
             effectiveType := base

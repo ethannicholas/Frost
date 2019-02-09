@@ -139,12 +139,21 @@ class StubCodeGenerator : CodeGenerator {
             }
             out.print(")")
             if m.methodKind = MethodDecl.Kind.INIT {
-                out.print("{}")
+                if !m.annotations.isInline {
+                    out.print("{}")
+                }
             }
             else if m.returnType != Type.Void() {
                 out.printLine(":\{type(m.returnType)}")
             }
-            if m.annotations.isDefault {
+            if m.annotations.isInline {
+                out.print("{")
+                for s in m.body {
+                    out.printLine(s)
+                }
+                out.print("}")
+            }
+            else if m.annotations.isDefault {
                 out.print("{}")
             }
         }

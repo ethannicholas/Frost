@@ -22,7 +22,7 @@ return;
 }
 void frost$core$Class$cleanup(frost$core$Class* param0) {
 
-// line 4
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Class.frost:4
 frost$core$Immutable$cleanup(((frost$core$Immutable*) param0));
 frost$core$String** $tmp2 = &param0->name;
 frost$core$String* $tmp3 = *$tmp2;

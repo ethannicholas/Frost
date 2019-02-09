@@ -35,76 +35,126 @@ static frost$core$String $s2 = { (frost$core$Class*) &frost$core$String$class, -
 
 void org$frostlang$frostc$Symbol$Kind$cleanup(org$frostlang$frostc$Symbol$Kind param0) {
 
-// line 4
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Symbol.frost:4
 frost$core$Int64 $tmp3 = param0.$rawValue;
 frost$core$Int64 $tmp4 = (frost$core$Int64) {0};
-frost$core$Bit $tmp5 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp3, $tmp4);
-bool $tmp6 = $tmp5.value;
-if ($tmp6) goto block2; else goto block3;
+// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Symbol.frost:4:5
+// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:179
+int64_t $tmp5 = $tmp3.value;
+int64_t $tmp6 = $tmp4.value;
+bool $tmp7 = $tmp5 == $tmp6;
+frost$core$Bit $tmp8 = frost$core$Bit$init$builtin_bit($tmp7);
+bool $tmp9 = $tmp8.value;
+if ($tmp9) goto block2; else goto block3;
 block2:;
 goto block1;
 block3:;
-frost$core$Int64 $tmp7 = (frost$core$Int64) {1};
-frost$core$Bit $tmp8 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp3, $tmp7);
-bool $tmp9 = $tmp8.value;
-if ($tmp9) goto block4; else goto block5;
-block4:;
-goto block1;
-block5:;
-frost$core$Int64 $tmp10 = (frost$core$Int64) {2};
-frost$core$Bit $tmp11 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp3, $tmp10);
-bool $tmp12 = $tmp11.value;
-if ($tmp12) goto block6; else goto block7;
-block6:;
-goto block1;
-block7:;
-frost$core$Int64 $tmp13 = (frost$core$Int64) {3};
-frost$core$Bit $tmp14 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp3, $tmp13);
+frost$core$Int64 $tmp10 = (frost$core$Int64) {1};
+// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Symbol.frost:4:5
+// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:179
+int64_t $tmp11 = $tmp3.value;
+int64_t $tmp12 = $tmp10.value;
+bool $tmp13 = $tmp11 == $tmp12;
+frost$core$Bit $tmp14 = frost$core$Bit$init$builtin_bit($tmp13);
 bool $tmp15 = $tmp14.value;
-if ($tmp15) goto block8; else goto block9;
+if ($tmp15) goto block5; else goto block6;
+block5:;
+goto block1;
+block6:;
+frost$core$Int64 $tmp16 = (frost$core$Int64) {2};
+// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Symbol.frost:4:5
+// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:179
+int64_t $tmp17 = $tmp3.value;
+int64_t $tmp18 = $tmp16.value;
+bool $tmp19 = $tmp17 == $tmp18;
+frost$core$Bit $tmp20 = frost$core$Bit$init$builtin_bit($tmp19);
+bool $tmp21 = $tmp20.value;
+if ($tmp21) goto block8; else goto block9;
 block8:;
 goto block1;
 block9:;
-frost$core$Int64 $tmp16 = (frost$core$Int64) {4};
-frost$core$Bit $tmp17 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp3, $tmp16);
-bool $tmp18 = $tmp17.value;
-if ($tmp18) goto block10; else goto block11;
-block10:;
-goto block1;
+frost$core$Int64 $tmp22 = (frost$core$Int64) {3};
+// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Symbol.frost:4:5
+// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:179
+int64_t $tmp23 = $tmp3.value;
+int64_t $tmp24 = $tmp22.value;
+bool $tmp25 = $tmp23 == $tmp24;
+frost$core$Bit $tmp26 = frost$core$Bit$init$builtin_bit($tmp25);
+bool $tmp27 = $tmp26.value;
+if ($tmp27) goto block11; else goto block12;
 block11:;
-frost$core$Int64 $tmp19 = (frost$core$Int64) {5};
-frost$core$Bit $tmp20 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp3, $tmp19);
-bool $tmp21 = $tmp20.value;
-if ($tmp21) goto block12; else goto block13;
-block12:;
 goto block1;
-block13:;
-frost$core$Int64 $tmp22 = (frost$core$Int64) {6};
-frost$core$Bit $tmp23 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp3, $tmp22);
-bool $tmp24 = $tmp23.value;
-if ($tmp24) goto block14; else goto block15;
+block12:;
+frost$core$Int64 $tmp28 = (frost$core$Int64) {4};
+// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Symbol.frost:4:5
+// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:179
+int64_t $tmp29 = $tmp3.value;
+int64_t $tmp30 = $tmp28.value;
+bool $tmp31 = $tmp29 == $tmp30;
+frost$core$Bit $tmp32 = frost$core$Bit$init$builtin_bit($tmp31);
+bool $tmp33 = $tmp32.value;
+if ($tmp33) goto block14; else goto block15;
 block14:;
 goto block1;
 block15:;
-frost$core$Int64 $tmp25 = (frost$core$Int64) {7};
-frost$core$Bit $tmp26 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp3, $tmp25);
-bool $tmp27 = $tmp26.value;
-if ($tmp27) goto block16; else goto block17;
-block16:;
-goto block1;
+frost$core$Int64 $tmp34 = (frost$core$Int64) {5};
+// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Symbol.frost:4:5
+// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:179
+int64_t $tmp35 = $tmp3.value;
+int64_t $tmp36 = $tmp34.value;
+bool $tmp37 = $tmp35 == $tmp36;
+frost$core$Bit $tmp38 = frost$core$Bit$init$builtin_bit($tmp37);
+bool $tmp39 = $tmp38.value;
+if ($tmp39) goto block17; else goto block18;
 block17:;
-frost$core$Int64 $tmp28 = (frost$core$Int64) {8};
-frost$core$Bit $tmp29 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp3, $tmp28);
-bool $tmp30 = $tmp29.value;
-if ($tmp30) goto block18; else goto block19;
-block18:;
 goto block1;
-block19:;
-frost$core$Int64 $tmp31 = (frost$core$Int64) {9};
-frost$core$Bit $tmp32 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp3, $tmp31);
-bool $tmp33 = $tmp32.value;
-if ($tmp33) goto block20; else goto block1;
+block18:;
+frost$core$Int64 $tmp40 = (frost$core$Int64) {6};
+// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Symbol.frost:4:5
+// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:179
+int64_t $tmp41 = $tmp3.value;
+int64_t $tmp42 = $tmp40.value;
+bool $tmp43 = $tmp41 == $tmp42;
+frost$core$Bit $tmp44 = frost$core$Bit$init$builtin_bit($tmp43);
+bool $tmp45 = $tmp44.value;
+if ($tmp45) goto block20; else goto block21;
 block20:;
+goto block1;
+block21:;
+frost$core$Int64 $tmp46 = (frost$core$Int64) {7};
+// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Symbol.frost:4:5
+// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:179
+int64_t $tmp47 = $tmp3.value;
+int64_t $tmp48 = $tmp46.value;
+bool $tmp49 = $tmp47 == $tmp48;
+frost$core$Bit $tmp50 = frost$core$Bit$init$builtin_bit($tmp49);
+bool $tmp51 = $tmp50.value;
+if ($tmp51) goto block23; else goto block24;
+block23:;
+goto block1;
+block24:;
+frost$core$Int64 $tmp52 = (frost$core$Int64) {8};
+// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Symbol.frost:4:5
+// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:179
+int64_t $tmp53 = $tmp3.value;
+int64_t $tmp54 = $tmp52.value;
+bool $tmp55 = $tmp53 == $tmp54;
+frost$core$Bit $tmp56 = frost$core$Bit$init$builtin_bit($tmp55);
+bool $tmp57 = $tmp56.value;
+if ($tmp57) goto block26; else goto block27;
+block26:;
+goto block1;
+block27:;
+frost$core$Int64 $tmp58 = (frost$core$Int64) {9};
+// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Symbol.frost:4:5
+// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:179
+int64_t $tmp59 = $tmp3.value;
+int64_t $tmp60 = $tmp58.value;
+bool $tmp61 = $tmp59 == $tmp60;
+frost$core$Bit $tmp62 = frost$core$Bit$init$builtin_bit($tmp61);
+bool $tmp63 = $tmp62.value;
+if ($tmp63) goto block29; else goto block1;
+block29:;
 goto block1;
 block1:;
 return;
@@ -113,32 +163,32 @@ return;
 org$frostlang$frostc$Symbol$Kind org$frostlang$frostc$Symbol$Kind$init$frost$core$Int64(frost$core$Int64 param0) {
 
 org$frostlang$frostc$Symbol$Kind local0;
-// line 4
-frost$core$Int64* $tmp34 = &(&local0)->$rawValue;
-*$tmp34 = param0;
-org$frostlang$frostc$Symbol$Kind $tmp35 = *(&local0);
-return $tmp35;
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Symbol.frost:4
+frost$core$Int64* $tmp64 = &(&local0)->$rawValue;
+*$tmp64 = param0;
+org$frostlang$frostc$Symbol$Kind $tmp65 = *(&local0);
+return $tmp65;
 
 }
 frost$core$Bit org$frostlang$frostc$Symbol$Kind$$EQ$org$frostlang$frostc$Symbol$Kind$R$frost$core$Bit(org$frostlang$frostc$Symbol$Kind param0, org$frostlang$frostc$Symbol$Kind param1) {
 
-// line 4
-frost$core$Int64 $tmp36 = param0.$rawValue;
-frost$core$Int64 $tmp37 = param1.$rawValue;
-int64_t $tmp38 = $tmp36.value;
-int64_t $tmp39 = $tmp37.value;
-bool $tmp40 = $tmp38 != $tmp39;
-frost$core$Bit $tmp41 = (frost$core$Bit) {$tmp40};
-bool $tmp42 = $tmp41.value;
-if ($tmp42) goto block1; else goto block2;
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Symbol.frost:4
+frost$core$Int64 $tmp66 = param0.$rawValue;
+frost$core$Int64 $tmp67 = param1.$rawValue;
+int64_t $tmp68 = $tmp66.value;
+int64_t $tmp69 = $tmp67.value;
+bool $tmp70 = $tmp68 != $tmp69;
+frost$core$Bit $tmp71 = (frost$core$Bit) {$tmp70};
+bool $tmp72 = $tmp71.value;
+if ($tmp72) goto block1; else goto block2;
 block1:;
-// line 4
-frost$core$Bit $tmp43 = frost$core$Bit$init$builtin_bit(false);
-return $tmp43;
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Symbol.frost:4
+frost$core$Bit $tmp73 = frost$core$Bit$init$builtin_bit(false);
+return $tmp73;
 block2:;
-// line 4
-frost$core$Bit $tmp44 = frost$core$Bit$init$builtin_bit(true);
-return $tmp44;
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Symbol.frost:4
+frost$core$Bit $tmp74 = frost$core$Bit$init$builtin_bit(true);
+return $tmp74;
 
 }
 

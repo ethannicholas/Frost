@@ -87,6 +87,7 @@ frost$collections$ListView* frost$core$Int64$$IDX$frost$core$Range$LTfrost$core$
 frost$collections$ListView* frost$core$Int64$$IDX$frost$core$SteppedRange$LTfrost$core$Int64$Cfrost$core$Int64$GT$R$frost$collections$ListView$LTfrost$core$Int64$GT(frost$core$SteppedRange$LTfrost$core$Int64$Cfrost$core$Int64$GT p_range);
 frost$core$Bit frost$core$Int64$$IDX$frost$core$Int64$R$frost$core$Bit(frost$core$Int64 self, frost$core$Int64 p_index);
 frost$core$Int64 frost$core$Int64$get_count$R$frost$core$Int64(frost$core$Int64 self);
+void frost$core$Int64$get_bitCount$R$frost$core$Int64(frost$core$Int64* result, frost$core$Int64 self);
 frost$collections$Iterator* frost$core$Int64$get_iterator$R$frost$collections$Iterator$LTfrost$core$Bit$GT(frost$core$Int64 self);
 frost$core$Int64 frost$core$Int64$get_hash$R$frost$core$Int64(frost$core$Int64 self);
 frost$core$Int64$nullable frost$core$Int64$parse$frost$core$String$frost$core$Int64$R$frost$core$Int64$Q(frost$core$String* p_str, frost$core$Int64 p_radix);

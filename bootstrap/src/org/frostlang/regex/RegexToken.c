@@ -23,16 +23,16 @@ static frost$core$String $s2 = { (frost$core$Class*) &frost$core$String$class, -
 org$frostlang$regex$RegexToken org$frostlang$regex$RegexToken$init$org$frostlang$regex$RegexToken$Kind$frost$core$String$Index$frost$core$String$Index$org$frostlang$frostc$Position(org$frostlang$regex$RegexToken$Kind param0, frost$core$String$Index param1, frost$core$String$Index param2, org$frostlang$frostc$Position param3) {
 
 org$frostlang$regex$RegexToken local0;
-// line 69
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:69
 org$frostlang$regex$RegexToken$Kind* $tmp3 = &(&local0)->kind;
 *$tmp3 = param0;
-// line 70
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:70
 frost$core$String$Index* $tmp4 = &(&local0)->start;
 *$tmp4 = param1;
-// line 71
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:71
 frost$core$String$Index* $tmp5 = &(&local0)->end;
 *$tmp5 = param2;
-// line 72
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:72
 org$frostlang$frostc$Position* $tmp6 = &(&local0)->position;
 *$tmp6 = param3;
 org$frostlang$regex$RegexToken $tmp7 = *(&local0);

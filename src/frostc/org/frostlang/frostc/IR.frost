@@ -395,6 +395,8 @@ class IR {
 
         def id:ID
 
+        var forceReachable := false
+
         def ids := Array<Statement.ID>()
 
         def statements := Array<Statement>()

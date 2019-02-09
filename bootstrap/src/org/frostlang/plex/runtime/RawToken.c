@@ -22,19 +22,19 @@ static frost$core$String $s2 = { (frost$core$Class*) &frost$core$String$class, -
 org$frostlang$plex$runtime$RawToken org$frostlang$plex$runtime$RawToken$init$frost$core$Int64$frost$core$String$Index$frost$core$String$Index$frost$core$Int64$frost$core$Int64(frost$core$Int64 param0, frost$core$String$Index param1, frost$core$String$Index param2, frost$core$Int64 param3, frost$core$Int64 param4) {
 
 org$frostlang$plex$runtime$RawToken local0;
-// line 12
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/plex/runtime/RawToken.frost:12
 frost$core$Int64* $tmp3 = &(&local0)->kind;
 *$tmp3 = param0;
-// line 13
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/plex/runtime/RawToken.frost:13
 frost$core$String$Index* $tmp4 = &(&local0)->start;
 *$tmp4 = param1;
-// line 14
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/plex/runtime/RawToken.frost:14
 frost$core$String$Index* $tmp5 = &(&local0)->end;
 *$tmp5 = param2;
-// line 15
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/plex/runtime/RawToken.frost:15
 frost$core$Int64* $tmp6 = &(&local0)->line;
 *$tmp6 = param3;
-// line 16
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/plex/runtime/RawToken.frost:16
 frost$core$Int64* $tmp7 = &(&local0)->column;
 *$tmp7 = param4;
 org$frostlang$plex$runtime$RawToken $tmp8 = *(&local0);

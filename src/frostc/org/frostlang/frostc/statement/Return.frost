@@ -16,6 +16,7 @@ uses org.frostlang.frostc.Position
 uses org.frostlang.frostc.Type
 uses org.frostlang.frostc.Variable
 uses org.frostlang.frostc.lvalue.FieldLValue
+uses org.frostlang.frostc.lvalue.VariableLValue
 
 class Return {
     @class
@@ -64,11 +65,24 @@ class Return {
                 compiler.compileRef(compiled)
             }
             compiler.leaveAllScopes()
+            loop {
+                match compiler.enclosingContexts[0] {
+                    when Compiler.EnclosingContext.VALUE_SCOPE {
+                        compiler.enclosingContexts.pop()
+                    }
+                    otherwise {
+                        break
+                    }
+                }
+            }
             if compiler.returnVar !== null {
                 def returnSlot:Int
                 match compiler.returnVar.storage {
                     when Variable.Storage.LOCAL(slot) {
                         returnSlot := slot
+                    }
+                    otherwise {
+                        unreachable
                     }
                 }
                 ir.add(IR.Statement.STORE(position, compiled, IR.Value.LOCAL(returnSlot,
@@ -76,7 +90,40 @@ class Return {
                 ir.add(IR.Statement.BRANCH(position, compiler.postconditionEntryBlock))
             }
             else {
-                ir.add(IR.Statement.RETURN(position, compiled))
+                def inlineScope := compiler.getInlineContext()
+                if inlineScope !== null {
+                    match inlineScope {
+                        when Compiler.EnclosingContext.INLINE_CONTEXT(_, _, inlineReturn,
+                                mergeBlock) {
+                            if inlineReturn.variable !== null {
+                                def returnSlot:Int
+                                match inlineReturn.variable.storage {
+                                    when Variable.Storage.LOCAL(slot) {
+                                        returnSlot := slot
+                                    }
+                                    otherwise {
+                                        unreachable
+                                    }
+                                }
+                                ir.add(IR.Statement.STORE(position, compiled,
+                                        IR.Value.LOCAL(returnSlot, compiled.type())))
+                                if compiler.isRefCounted(compiled.type()) {
+                                    compiler.compileRef(compiled)
+                                }
+                            }
+                            else {
+                                inlineReturn.value := compiled
+                            }
+                            ir.add(IR.Statement.BRANCH(position, mergeBlock))
+                        }
+                        otherwise {
+                            unreachable
+                        }
+                    }
+                }
+                else {
+                    ir.add(IR.Statement.RETURN(position, compiled))
+                }
             }
         }
         else {
@@ -93,7 +140,20 @@ class Return {
                 ir.add(IR.Statement.BRANCH(position, compiler.postconditionEntryBlock))
             }
             else {
-                ir.add(IR.Statement.RETURN(position, null))
+                def inlineScope := compiler.getInlineContext()
+                if inlineScope !== null {
+                    match inlineScope {
+                        when Compiler.EnclosingContext.INLINE_CONTEXT(_, _, inlineReturn,
+                                mergeBlock) {
+                            if mergeBlock !== null {
+                                ir.add(IR.Statement.BRANCH(position, mergeBlock))                    
+                            }
+                        }
+                    }
+                }
+                else {
+                    ir.add(IR.Statement.RETURN(position, null))
+                }
             }
         }
     }

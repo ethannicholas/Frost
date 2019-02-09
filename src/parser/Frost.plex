@@ -47,6 +47,7 @@ FAIL                     := "fail"
 SELF                     := "self"
 SUPER                    := "super"
 LAZY                     := "lazy"
+MODULE                   := "module"
 IDENTIFIER               := /[A-Za-z_$][A-Za-z_$0-9]*/
 NOT                      := "!"
 BITWISENOT               := "!!"

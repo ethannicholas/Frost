@@ -1186,6 +1186,8 @@ Error* frost$io$File$rename$frost$io$File$R$frost$core$Error$Q(File* src, File* 
         frostFree(dstPath);
         return result;
     }
+    frostFree(srcPath);
+    frostFree(dstPath);
     return NULL;
 }
 
@@ -1197,6 +1199,7 @@ Error* frost$io$File$delete$R$frost$core$Error$Q(File* self) {
         frostFree(path);
         return result;
     }
+    frostFree(path);
     return NULL;
 }
 

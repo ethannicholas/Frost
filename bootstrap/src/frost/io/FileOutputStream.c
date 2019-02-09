@@ -16,7 +16,7 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 
 void frost$io$FileOutputStream$init(frost$io$FileOutputStream* param0) {
 
-// line 15
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/FileOutputStream.frost:15
 frost$io$OutputStream$init(((frost$io$OutputStream*) param0));
 return;
 
@@ -24,13 +24,13 @@ return;
 void frost$io$FileOutputStream$cleanup(frost$io$FileOutputStream* param0) {
 
 frost$core$Error* local0 = NULL;
-// line 21
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/FileOutputStream.frost:21
 frost$core$Bit* $tmp2 = &param0->closeOnCleanup;
 frost$core$Bit $tmp3 = *$tmp2;
 bool $tmp4 = $tmp3.value;
 if ($tmp4) goto block1; else goto block2;
 block1:;
-// line 22
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/FileOutputStream.frost:22
 frost$core$Error* $tmp5 = frost$io$FileOutputStream$close$R$frost$core$Error$Q(param0);
 *(&local0) = ((frost$core$Error*) NULL);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp5));
@@ -43,7 +43,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp7));
 *(&local0) = ((frost$core$Error*) NULL);
 goto block2;
 block2:;
-// line 20
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/FileOutputStream.frost:20
 frost$io$OutputStream$cleanup(((frost$io$OutputStream*) param0));
 return;
 

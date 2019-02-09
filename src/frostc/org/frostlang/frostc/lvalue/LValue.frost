@@ -56,7 +56,22 @@ interface LValue {
                                         "cannot modify value fields outside of an init method")
                                 return null
                             }
-                            compiledBase := IR.Value.LOCAL(0, compiler.currentClass[0].type)
+                            def inline := compiler.getInlineContext()
+                            if inline !== null {
+                                match inline {
+                                    when Compiler.EnclosingContext.INLINE_CONTEXT(_, selfIndex, _,
+                                            _) {
+                                        compiledBase := IR.Value.LOCAL(selfIndex,
+                                                compiler.currentClass[0].type)
+                                    }
+                                    otherwise {
+                                        unreachable
+                                    }
+                                }
+                            }
+                            else {
+                                compiledBase := IR.Value.LOCAL(0, compiler.currentClass[0].type)
+                            }
                         }
                         else {
                             compiledBase := compiler.compileExpression(base)

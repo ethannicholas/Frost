@@ -10,24 +10,26 @@
 static frost$core$String $s1;
 frost$core$Tuple2$class_type frost$core$Tuple2$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { frost$core$Tuple2$get_asString$R$frost$core$String, frost$core$Tuple2$cleanup, frost$core$Tuple2$$IDX$frost$core$Int64$R$frost$core$Object$Q} };
 
+typedef frost$core$String* (*$fn42)(frost$core$Object*);
+typedef frost$core$String* (*$fn51)(frost$core$Object*);
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x54\x75\x70\x6c\x65\x32", 17, 1146821084510207756, NULL };
 static frost$core$String $s21 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x54\x75\x70\x6c\x65\x32\x2e\x66\x72\x6f\x73\x74", 12, 4597592666033906241, NULL };
 static frost$core$String $s22 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x54\x75\x70\x6c\x65\x32\x2e\x5b\x5d\x28\x69\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x36\x34\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x4f\x62\x6a\x65\x63\x74\x3f", 93, 9096961545409291960, NULL };
-static frost$core$String $s36 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x28", 1, 141, NULL };
-static frost$core$String $s38 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2c\x20", 2, 14677, NULL };
-static frost$core$String $s43 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x29", 1, 142, NULL };
+static frost$core$String $s45 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x28", 1, 141, NULL };
+static frost$core$String $s47 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2c\x20", 2, 14677, NULL };
+static frost$core$String $s55 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x29", 1, 142, NULL };
 
 void frost$core$Tuple2$init$frost$core$Tuple2$T0$frost$core$Tuple2$T1(frost$core$Tuple2* param0, frost$core$Object* param1, frost$core$Object* param2) {
 
-// line 7
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Tuple2.frost:7
 frost$core$Frost$ref$frost$core$Object$Q(param1);
 frost$core$Object** $tmp2 = &param0->f0;
 frost$core$Object* $tmp3 = *$tmp2;
 frost$core$Frost$unref$frost$core$Object$Q($tmp3);
 frost$core$Object** $tmp4 = &param0->f0;
 *$tmp4 = param1;
-// line 8
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Tuple2.frost:8
 frost$core$Frost$ref$frost$core$Object$Q(param2);
 frost$core$Object** $tmp5 = &param0->f1;
 frost$core$Object* $tmp6 = *$tmp5;
@@ -59,63 +61,87 @@ frost$core$Int64 $tmp20 = (frost$core$Int64) {12};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s21, $tmp20, &$s22);
 abort(); // unreachable
 block1:;
-// line 13
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Tuple2.frost:13
 frost$core$Int64 $tmp23 = (frost$core$Int64) {0};
-frost$core$Bit $tmp24 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit(param1, $tmp23);
-bool $tmp25 = $tmp24.value;
-if ($tmp25) goto block5; else goto block6;
+// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Tuple2.frost:14:18
+// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:179
+int64_t $tmp24 = param1.value;
+int64_t $tmp25 = $tmp23.value;
+bool $tmp26 = $tmp24 == $tmp25;
+frost$core$Bit $tmp27 = frost$core$Bit$init$builtin_bit($tmp26);
+bool $tmp28 = $tmp27.value;
+if ($tmp28) goto block5; else goto block6;
 block5:;
-// line 14
-frost$core$Object** $tmp26 = &param0->f0;
-frost$core$Object* $tmp27 = *$tmp26;
-frost$core$Frost$ref$frost$core$Object$Q($tmp27);
-return $tmp27;
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Tuple2.frost:14
+frost$core$Object** $tmp29 = &param0->f0;
+frost$core$Object* $tmp30 = *$tmp29;
+frost$core$Frost$ref$frost$core$Object$Q($tmp30);
+return $tmp30;
 block6:;
-frost$core$Int64 $tmp28 = (frost$core$Int64) {1};
-frost$core$Bit $tmp29 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit(param1, $tmp28);
-bool $tmp30 = $tmp29.value;
-if ($tmp30) goto block7; else goto block4;
-block7:;
-// line 15
-frost$core$Object** $tmp31 = &param0->f1;
-frost$core$Object* $tmp32 = *$tmp31;
-frost$core$Frost$ref$frost$core$Object$Q($tmp32);
-return $tmp32;
+frost$core$Int64 $tmp31 = (frost$core$Int64) {1};
+// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Tuple2.frost:15:18
+// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:179
+int64_t $tmp32 = param1.value;
+int64_t $tmp33 = $tmp31.value;
+bool $tmp34 = $tmp32 == $tmp33;
+frost$core$Bit $tmp35 = frost$core$Bit$init$builtin_bit($tmp34);
+bool $tmp36 = $tmp35.value;
+if ($tmp36) goto block8; else goto block4;
+block8:;
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Tuple2.frost:15
+frost$core$Object** $tmp37 = &param0->f1;
+frost$core$Object* $tmp38 = *$tmp37;
+frost$core$Frost$ref$frost$core$Object$Q($tmp38);
+return $tmp38;
 block4:;
-// line 17
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Tuple2.frost:17
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) NULL));
 return ((frost$core$Object*) NULL);
 
 }
 frost$core$String* frost$core$Tuple2$get_asString$R$frost$core$String(frost$core$Tuple2* param0) {
 
-// line 22
-frost$core$Object** $tmp33 = &param0->f0;
-frost$core$Object* $tmp34 = *$tmp33;
-frost$core$String* $tmp35 = frost$core$String$$ADD$frost$core$Object$R$frost$core$String(&$s36, $tmp34);
-frost$core$String* $tmp37 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp35, &$s38);
-frost$core$Object** $tmp39 = &param0->f1;
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Tuple2.frost:22
+frost$core$Object** $tmp39 = &param0->f0;
 frost$core$Object* $tmp40 = *$tmp39;
-frost$core$String* $tmp41 = frost$core$String$$ADD$frost$core$Object$R$frost$core$String($tmp37, $tmp40);
-frost$core$String* $tmp42 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp41, &$s43);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp42));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp42));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp41));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp37));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp35));
-return $tmp42;
+// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Tuple2.frost:22:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
+$fn42 $tmp41 = ($fn42) $tmp40->$class->vtable[0];
+frost$core$String* $tmp43 = $tmp41($tmp40);
+frost$core$String* $tmp44 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(&$s45, $tmp43);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp44));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp44));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp43));
+frost$core$String* $tmp46 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp44, &$s47);
+frost$core$Object** $tmp48 = &param0->f1;
+frost$core$Object* $tmp49 = *$tmp48;
+// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Tuple2.frost:22:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
+$fn51 $tmp50 = ($fn51) $tmp49->$class->vtable[0];
+frost$core$String* $tmp52 = $tmp50($tmp49);
+frost$core$String* $tmp53 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp46, $tmp52);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp53));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp53));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp52));
+frost$core$String* $tmp54 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp53, &$s55);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp54));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp54));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp53));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp46));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp44));
+return $tmp54;
 
 }
 void frost$core$Tuple2$cleanup(frost$core$Tuple2* param0) {
 
-// line 2
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Tuple2.frost:2
 frost$core$Object$cleanup(((frost$core$Object*) param0));
-frost$core$Object** $tmp44 = &param0->f0;
-frost$core$Object* $tmp45 = *$tmp44;
-frost$core$Frost$unref$frost$core$Object$Q($tmp45);
-frost$core$Object** $tmp46 = &param0->f1;
-frost$core$Object* $tmp47 = *$tmp46;
-frost$core$Frost$unref$frost$core$Object$Q($tmp47);
+frost$core$Object** $tmp56 = &param0->f0;
+frost$core$Object* $tmp57 = *$tmp56;
+frost$core$Frost$unref$frost$core$Object$Q($tmp57);
+frost$core$Object** $tmp58 = &param0->f1;
+frost$core$Object* $tmp59 = *$tmp58;
+frost$core$Frost$unref$frost$core$Object$Q($tmp59);
 return;
 
 }

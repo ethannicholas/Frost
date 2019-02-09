@@ -56,7 +56,7 @@ static frost$core$String $s2 = { (frost$core$Class*) &frost$core$String$class, -
 frost$core$MutableString$Index frost$core$MutableString$Index$init$frost$core$Int64(frost$core$Int64 param0) {
 
 frost$core$MutableString$Index local0;
-// line 23
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/MutableString.frost:23
 frost$core$Int64* $tmp3 = &(&local0)->value;
 *$tmp3 = param0;
 frost$core$MutableString$Index $tmp4 = *(&local0);
@@ -65,30 +65,35 @@ return $tmp4;
 }
 frost$core$Bit frost$core$MutableString$Index$$EQ$frost$core$MutableString$Index$R$frost$core$Bit(frost$core$MutableString$Index param0, frost$core$MutableString$Index param1) {
 
-// line 28
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/MutableString.frost:28
 frost$core$Int64 $tmp5 = param0.value;
 frost$core$Int64 $tmp6 = param1.value;
-frost$core$Bit $tmp7 = frost$core$Int64$$EQ$frost$core$Int64$R$frost$core$Bit($tmp5, $tmp6);
-return $tmp7;
+// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from MutableString.frost:28:26
+// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:179
+int64_t $tmp7 = $tmp5.value;
+int64_t $tmp8 = $tmp6.value;
+bool $tmp9 = $tmp7 == $tmp8;
+frost$core$Bit $tmp10 = frost$core$Bit$init$builtin_bit($tmp9);
+return $tmp10;
 
 }
 frost$core$Bit frost$core$MutableString$Index$$GT$frost$core$MutableString$Index$R$frost$core$Bit(frost$core$MutableString$Index param0, frost$core$MutableString$Index param1) {
 
-// line 33
-frost$core$Int64 $tmp8 = param0.value;
-frost$core$Int64 $tmp9 = param1.value;
-int64_t $tmp10 = $tmp8.value;
-int64_t $tmp11 = $tmp9.value;
-bool $tmp12 = $tmp10 > $tmp11;
-frost$core$Bit $tmp13 = (frost$core$Bit) {$tmp12};
-return $tmp13;
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/MutableString.frost:33
+frost$core$Int64 $tmp11 = param0.value;
+frost$core$Int64 $tmp12 = param1.value;
+int64_t $tmp13 = $tmp11.value;
+int64_t $tmp14 = $tmp12.value;
+bool $tmp15 = $tmp13 > $tmp14;
+frost$core$Bit $tmp16 = (frost$core$Bit) {$tmp15};
+return $tmp16;
 
 }
 frost$core$Int64 frost$core$MutableString$Index$get_hash$R$frost$core$Int64(frost$core$MutableString$Index param0) {
 
-// line 38
-frost$core$Int64 $tmp14 = param0.value;
-return $tmp14;
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/MutableString.frost:38
+frost$core$Int64 $tmp17 = param0.value;
+return $tmp17;
 
 }
 void frost$core$MutableString$Index$cleanup(frost$core$MutableString$Index param0) {

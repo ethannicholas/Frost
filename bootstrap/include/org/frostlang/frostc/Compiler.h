@@ -36,6 +36,8 @@ typedef struct org$frostlang$frostc$Compiler$EnclosingContext org$frostlang$fros
 typedef struct org$frostlang$frostc$Compiler$Target org$frostlang$frostc$Compiler$Target;
 #include "org/frostlang/frostc/Variable/Kind_types.h"
 typedef struct frost$collections$Array frost$collections$Array;
+typedef struct org$frostlang$frostc$IR org$frostlang$frostc$IR;
+typedef struct org$frostlang$frostc$pass$Analyzer org$frostlang$frostc$pass$Analyzer;
 
 void org$frostlang$frostc$Compiler$init$frost$threads$MessageQueue$LTorg$frostlang$frostc$Compiler$Message$GT$org$frostlang$frostc$CodeGenerator$org$frostlang$frostc$Compiler$Settings(org$frostlang$frostc$Compiler* self, frost$threads$MessageQueue* p_errorQueue, org$frostlang$frostc$CodeGenerator* p_codeGenerator, org$frostlang$frostc$Compiler$Settings* p_settings);
 void org$frostlang$frostc$Compiler$addAlias$frost$core$String(org$frostlang$frostc$Compiler* self, frost$core$String* p_name);
@@ -184,6 +186,8 @@ void org$frostlang$frostc$Compiler$compilePostconditions(org$frostlang$frostc$Co
 frost$core$Bit org$frostlang$frostc$Compiler$hasTrivialInit$org$frostlang$frostc$ClassDecl$Q$R$frost$core$Bit(org$frostlang$frostc$Compiler* self, org$frostlang$frostc$ClassDecl* p_cl);
 void org$frostlang$frostc$Compiler$compile$org$frostlang$frostc$MethodDecl(org$frostlang$frostc$Compiler* self, org$frostlang$frostc$MethodDecl* p_m);
 frost$core$Bit org$frostlang$frostc$Compiler$hasPostconditions$org$frostlang$frostc$MethodDecl$R$frost$core$Bit(org$frostlang$frostc$Compiler* self, org$frostlang$frostc$MethodDecl* p_m);
+void org$frostlang$frostc$Compiler$optimize$org$frostlang$frostc$IR$org$frostlang$frostc$pass$Analyzer(org$frostlang$frostc$Compiler* self, org$frostlang$frostc$IR* p_ir, org$frostlang$frostc$pass$Analyzer* p_analysis);
+org$frostlang$frostc$Compiler$EnclosingContext* org$frostlang$frostc$Compiler$getInlineContext$R$org$frostlang$frostc$Compiler$EnclosingContext$Q(org$frostlang$frostc$Compiler* self);
 void org$frostlang$frostc$Compiler$compile$org$frostlang$frostc$MethodDecl$org$frostlang$frostc$SymbolTable$Q(org$frostlang$frostc$Compiler* self, org$frostlang$frostc$MethodDecl* p_m, org$frostlang$frostc$SymbolTable* p_enclosingContext);
 void org$frostlang$frostc$Compiler$markNonExternal$org$frostlang$frostc$ClassDecl(org$frostlang$frostc$Compiler* self, org$frostlang$frostc$ClassDecl* p_cl);
 void org$frostlang$frostc$Compiler$checkImmutable$org$frostlang$frostc$ClassDecl(org$frostlang$frostc$Compiler* self, org$frostlang$frostc$ClassDecl* p_cl);
@@ -193,10 +197,8 @@ void org$frostlang$frostc$Compiler$checkAnnotations$org$frostlang$frostc$FieldDe
 void org$frostlang$frostc$Compiler$compile$org$frostlang$frostc$ClassDecl(org$frostlang$frostc$Compiler* self, org$frostlang$frostc$ClassDecl* p_cl);
 frost$collections$ListView* org$frostlang$frostc$Compiler$scan$frost$io$File$R$frost$collections$ListView$LTorg$frostlang$frostc$ClassDecl$GT(org$frostlang$frostc$Compiler* self, frost$io$File* p_raw);
 void org$frostlang$frostc$Compiler$compile$frost$io$File(org$frostlang$frostc$Compiler* self, frost$io$File* p_file);
-void org$frostlang$frostc$Compiler$error$org$frostlang$frostc$Position$frost$core$String(org$frostlang$frostc$Compiler* self, org$frostlang$frostc$Position p_position, frost$core$String* p_msg);
-void org$frostlang$frostc$Compiler$error$frost$io$File$org$frostlang$frostc$Position$frost$core$String(org$frostlang$frostc$Compiler* self, frost$io$File* p_file, org$frostlang$frostc$Position p_pos, frost$core$String* p_msg);
-void org$frostlang$frostc$Compiler$warn$org$frostlang$frostc$Position$frost$core$String(org$frostlang$frostc$Compiler* self, org$frostlang$frostc$Position p_position, frost$core$String* p_msg);
-void org$frostlang$frostc$Compiler$warn$frost$io$File$org$frostlang$frostc$Position$frost$core$String(org$frostlang$frostc$Compiler* self, frost$io$File* p_file, org$frostlang$frostc$Position p_pos, frost$core$String* p_msg);
+void org$frostlang$frostc$Compiler$error$org$frostlang$frostc$Position$frost$core$String(org$frostlang$frostc$Compiler* self, org$frostlang$frostc$Position p_pos, frost$core$String* p_msg);
+void org$frostlang$frostc$Compiler$warn$org$frostlang$frostc$Position$frost$core$String(org$frostlang$frostc$Compiler* self, org$frostlang$frostc$Position p_pos, frost$core$String* p_msg);
 void org$frostlang$frostc$Compiler$finish(org$frostlang$frostc$Compiler* self);
 void org$frostlang$frostc$Compiler$cleanup(org$frostlang$frostc$Compiler* self);
 

@@ -289,17 +289,6 @@ class Main {
                 System.exit(1)
             }
         }
-        if format = Format.HTML {
-            if root == null {
-                root := "."
-            }
-            HTMLProcessor().process(sources[0], outFile, root)
-            return
-        }
-        if root !== null {
-            Console.printErrorLine("--root requires 'html' output format")
-            System.exit(1)
-        }
         var errorCount := 0
         var warningCount := 0
         {
@@ -338,6 +327,17 @@ class Main {
                     debug)
             def errorQueue := MessageQueue<Compiler.Message>()
             def compiler := Compiler(errorQueue, cg, settings)
+            if format = Format.HTML {
+                if root == null {
+                    root := "."
+                }
+                HTMLProcessor(compiler).process(sources[0], outFile, root)
+                return
+            }
+            if root !== null {
+                Console.printErrorLine("--root requires 'html' output format")
+                System.exit(1)
+            }
             for s in sources {
                 for cl in compiler.scan(s) {
                     compiler.markNonExternal(cl)
@@ -351,13 +351,13 @@ class Main {
                 def error := errorQueue.getMessage()
                 -- FIXME stderr
                 match error {
-                    when Compiler.Message.ERROR(file, position, message) {
+                    when Compiler.Message.ERROR(file, line, column, message) {
                         errorCount += 1
-                        Console.printLine("\{file.name}:\{position}: error: \{message}")
+                        Console.printLine("\{file}:\{line}:\{column}: error: \{message}")
                     }
-                    when Compiler.Message.WARNING(file, position, message) {
+                    when Compiler.Message.WARNING(file, line, column, message) {
                         warningCount += 1
-                        Console.printLine("\{file.name}:\{position}: warning: \{message}")
+                        Console.printLine("\{file}:\{line}:\{column}: warning: \{message}")
                     }
                 }
             }

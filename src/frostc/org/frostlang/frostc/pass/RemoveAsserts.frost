@@ -1,0 +1,31 @@
+package org.frostlang.frostc.pass
+
+uses org.frostlang.frostc.IR
+
+class RemoveAsserts {
+    function isAssertionFail(s:IR.Statement):Bit {
+        match s {
+            when IR.Statement.STATIC_CALL(_, m, _) {
+                return m.name = "assertionFailure" & m.owner.name = "frost.core.Frost"
+            }
+            otherwise {
+                return false
+            }
+        }
+    }
+
+    method process(ir:IR, analysis:Analyzer):Bit {
+        var changed := false
+        for i in ir.blocks.count - 1 ... 0 by -1 {
+            def b := ir.blocks[i]
+            for s in b.statements {
+                if isAssertionFail(s) {
+                    analysis.makeUnreachable(b)
+                    changed := true
+                    break
+                }
+            }
+        }
+        return changed
+    }
+}

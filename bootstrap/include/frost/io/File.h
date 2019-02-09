@@ -13,7 +13,7 @@ frost$io$File* frost$io$File$resolve$frost$core$String$R$frost$io$File(frost$io$
 frost$core$Maybe* frost$io$File$lines$R$frost$core$Maybe$LTfrost$collections$Iterator$LTfrost$core$String$GT$GT(frost$io$File* self);
 frost$core$Bit frost$io$File$get_isAbsolute$R$frost$core$Bit(frost$io$File* self);
 frost$core$Maybe* frost$io$File$absolute$R$frost$core$Maybe$LTfrost$io$File$GT(frost$io$File* self);
-frost$core$String* frost$io$File$normalize$frost$core$String$R$frost$core$String$Q(frost$io$File* self, frost$core$String* p_path);
+frost$core$String* frost$io$File$normalize$frost$core$String$R$frost$core$String$Q(frost$core$String* p_path);
 frost$io$File* frost$io$File$get_parent$R$frost$io$File$Q(frost$io$File* self);
 frost$core$String* frost$io$File$get_name$R$frost$core$String(frost$io$File* self);
 frost$core$String* frost$io$File$get_simpleName$R$frost$core$String(frost$io$File* self);

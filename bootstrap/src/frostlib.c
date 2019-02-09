@@ -51,6 +51,18 @@ typedef struct Bit {
     uint8_t value;
 } Bit;
 
+typedef struct Int8 {
+    int8_t value;
+} Int8;
+
+typedef struct Int16 {
+    int16_t value;
+} Int16;
+
+typedef struct Int32 {
+    int32_t value;
+} Int32;
+
 typedef struct Int64 {
     int64_t value;
 } Int64;
@@ -58,6 +70,18 @@ typedef struct Int64 {
 typedef struct UInt8 {
     uint8_t value;
 } UInt8;
+
+typedef struct UInt16 {
+    uint16_t value;
+} UInt16;
+
+typedef struct UInt32 {
+    uint32_t value;
+} UInt32;
+
+typedef struct UInt64 {
+    uint64_t value;
+} UInt64;
 
 typedef struct Real32 {
     double value;
@@ -575,55 +599,103 @@ File* frost$core$System$temporaryDirectory$R$frost$io$File() {
     return file;
 }
 
+// Int8
+
+void frost$core$Int8$get_bitCount$R$frost$core$Int8(Int8* out, Int8 x) {
+    out->value = __builtin_popcount(x.value);
+}
+
+// Int16
+
+void frost$core$Int16$get_bitCount$R$frost$core$Int16(Int16* out, Int16 x) {
+    out->value = __builtin_popcount(x.value);
+}
+
+// Int32
+
+void frost$core$Int32$get_bitCount$R$frost$core$Int32(Int32* out, Int32 x) {
+    out->value = __builtin_popcount(x.value);
+}
+
+// Int64
+
+void frost$core$Int64$get_bitCount$R$frost$core$Int64(Int64* out, Int64 x) {
+    out->value = __builtin_popcount(x.value);
+}
+
+// UInt8
+
+void frost$core$UInt8$get_bitCount$R$frost$core$UInt8(UInt8* out, UInt8 x) {
+    out->value = __builtin_popcount(x.value);
+}
+
+// UInt16
+
+void frost$core$UInt16$get_bitCount$R$frost$core$UInt16(UInt16* out, UInt16 x) {
+    out->value = __builtin_popcount(x.value);
+}
+
+// UInt32
+
+void frost$core$UInt32$get_bitCount$R$frost$core$UInt32(UInt32* out, UInt32 x) {
+    out->value = __builtin_popcount(x.value);
+}
+
+// UInt64
+
+void frost$core$UInt64$get_bitCount$R$frost$core$UInt64(UInt64* out, UInt64 x) {
+    out->value = __builtin_popcount(x.value);
+}
+
 // Real32
 
-void frost$core$Real32$floor$R$frost$core$Real32(Real32* out, Real32 x) {
+void frost$core$Real32$get_floor$R$frost$core$Real32(Real32* out, Real32 x) {
     out->value = floor(x.value);
 }
 
-void frost$core$Real32$ceiling$R$frost$core$Real32(Real32* out, Real32 x) {
+void frost$core$Real32$get_ceiling$R$frost$core$Real32(Real32* out, Real32 x) {
     out->value = ceil(x.value);
 }
 
-void frost$core$Real32$sqrt$R$frost$core$Real32(Real32* out, Real32 x) {
+void frost$core$Real32$get_sqrt$R$frost$core$Real32(Real32* out, Real32 x) {
     out->value = sqrt(x.value);
 }
 
-void frost$core$Real32$sin$R$frost$core$Real32(Real32* out, Real32 x) {
+void frost$core$Real32$get_sin$R$frost$core$Real32(Real32* out, Real32 x) {
     out->value = sin(x.value);
 }
 
-void frost$core$Real32$cos$R$frost$core$Real32(Real32* out, Real32 x) {
+void frost$core$Real32$get_cos$R$frost$core$Real32(Real32* out, Real32 x) {
     out->value = cos(x.value);
 }
 
-void frost$core$Real32$tan$R$frost$core$Real32(Real32* out, Real32 x) {
+void frost$core$Real32$get_tan$R$frost$core$Real32(Real32* out, Real32 x) {
     out->value = tan(x.value);
 }
 
 // Real64
 
-void frost$core$Real64$floor$R$frost$core$Real64(Real64* out, Real64 x) {
+void frost$core$Real64$get_floor$R$frost$core$Real64(Real64* out, Real64 x) {
     out->value = floor(x.value);
 }
 
-void frost$core$Real64$ceiling$R$frost$core$Real64(Real64* out, Real64 x) {
+void frost$core$Real64$get_ceiling$R$frost$core$Real64(Real64* out, Real64 x) {
     out->value = ceil(x.value);
 }
 
-void frost$core$Real64$sqrt$R$frost$core$Real64(Real64* out, Real64 x) {
+void frost$core$Real64$get_sqrt$R$frost$core$Real64(Real64* out, Real64 x) {
     out->value = sqrt(x.value);
 }
 
-void frost$core$Real64$sin$R$frost$core$Real64(Real64* out, Real64 x) {
+void frost$core$Real64$get_sin$R$frost$core$Real64(Real64* out, Real64 x) {
     out->value = sin(x.value);
 }
 
-void frost$core$Real64$cos$R$frost$core$Real64(Real64* out, Real64 x) {
+void frost$core$Real64$get_cos$R$frost$core$Real64(Real64* out, Real64 x) {
     out->value = cos(x.value);
 }
 
-void frost$core$Real64$tan$R$frost$core$Real64(Real64* out, Real64 x) {
+void frost$core$Real64$get_tan$R$frost$core$Real64(Real64* out, Real64 x) {
     out->value = tan(x.value);
 }
 
@@ -1114,6 +1186,8 @@ Error* frost$io$File$rename$frost$io$File$R$frost$core$Error$Q(File* src, File* 
         frostFree(dstPath);
         return result;
     }
+    frostFree(srcPath);
+    frostFree(dstPath);
     return NULL;
 }
 
@@ -1125,6 +1199,7 @@ Error* frost$io$File$delete$R$frost$core$Error$Q(File* self) {
         frostFree(path);
         return result;
     }
+    frostFree(path);
     return NULL;
 }
 

@@ -1,0 +1,28 @@
+package org.frostlang.frostc.pass
+
+uses org.frostlang.frostc.IR
+
+class RemoveUnreachableBlocks {
+    function isUnreachable(b:IR.Block, analysis:Analyzer):Bit {
+        if b.statements.count = 1 {
+            match b.statements[0] {
+                when IR.Statement.UNREACHABLE {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+
+    method process(ir:IR, analysis:Analyzer):Bit {
+        var changed := false
+        for i in ir.blocks.count - 1 ... 1 by -1 {
+            def b := ir.blocks[i]
+            if isUnreachable(b, analysis) {
+                analysis.removeBlock(i)
+                changed := true
+            }
+        }
+        return changed
+    }
+}

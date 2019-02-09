@@ -3,6 +3,8 @@ package org.frostlang.frostc.expression
 uses org.frostlang.frostc.ASTNode
 uses org.frostlang.frostc.ClassDecl
 uses org.frostlang.frostc.Compiler
+uses org.frostlang.frostc.Compiler.AutoContext
+uses org.frostlang.frostc.Compiler.AutoScope
 uses org.frostlang.frostc.Compiler.EnclosingContext
 uses org.frostlang.frostc.Compiler.TypeContext
 uses org.frostlang.frostc.FieldDecl
@@ -816,6 +818,141 @@ class Call {
     }
 
     @class
+    function countReturns(s:ASTNode):Int {
+        match s {
+            when ASTNode.BLOCK(_, b) {
+                return countReturns(b)
+            }
+            when ASTNode.DO(_, _, b, _) {
+                return countReturns(b)
+            }
+            when ASTNode.IF(_, _, b1, b2) {
+                var result := countReturns(b1)
+                if b2 !== null {
+                    result += countReturns(b2)
+                }
+                return result
+            }
+            when ASTNode.FOR(_, _, _, _, b) {
+                return countReturns(b) 
+            }
+            when ASTNode.LOOP(_, _, b) {
+                return countReturns(b)
+            }
+            when ASTNode.MATCH(_, _, whens, other) {
+                def o:Int
+                if other !== null {
+                    o := countReturns(other)
+                }
+                else {
+                    o := 0
+                }
+                return o + countReturns(whens)
+            }
+            when ASTNode.RETURN {
+                return 1
+            }
+            when ASTNode.WHEN(_, _, b) {
+                return countReturns(b)
+            }
+            when ASTNode.WHILE(_, _, _, b)  {
+                return countReturns(b)
+            }
+            otherwise {
+                return 0
+            }
+        }
+    }
+
+    @class
+    function countReturns(b:ListView<ASTNode>):Int {
+        var result := 0
+        for s in b {
+            result += countReturns(s)
+        }
+        return result
+    }
+
+    @class
+    method inlineCall(compiler:Compiler, position:Position, m:MethodDecl,
+            args:ListView<IR.Value>):IR.Value? {
+        compiler.ir.add(IR.Statement.COMMENT(position, "begin inline call to \{m.declaration} from \{position.asString(compiler)}"))
+        def scope:Compiler.EnclosingContext
+        def inlineReturn:Compiler.InlineReturn
+        def inlineReturnSlot:Int := -1
+        def mergeBlock := compiler.ir.newBlock("inline merge")
+        {
+            def context:AutoContext
+            if m.returnType = Type.Void() | countReturns(m.body) = 1 {
+                inlineReturn := Compiler.InlineReturn(null)
+                context := AutoContext(compiler, EnclosingContext.INLINE_CONTEXT(args,
+                        compiler.ir.locals.count, inlineReturn, mergeBlock))
+            }
+            else {
+                compiler.tempCount += 1
+                inlineReturnSlot := compiler.ir.locals.count
+                def returnVar := Variable(position, Variable.Kind.DEF,
+                        "inlineReturn\{compiler.tempCount}", m.returnType,
+                        Variable.Storage.LOCAL(inlineReturnSlot))
+                compiler.symbolTable.add(returnVar)
+                returnVar.owner := compiler.currentMethod[0]
+                if compiler.isRefCounted(returnVar.type) {
+                    compiler.enclosingContexts.push(Compiler.EnclosingContext.VARIABLE_SCOPE(
+                            returnVar))
+                }
+                compiler.ir.locals.add(returnVar.type)
+                inlineReturn := Compiler.InlineReturn(returnVar)
+                context := AutoContext(compiler, EnclosingContext.INLINE_CONTEXT(args,
+                        compiler.ir.locals.count, inlineReturn, mergeBlock))
+            }
+            compiler.currentClass.push(m.owner)
+            -- FIXME move all of this stuff into a MethodContext(?) class for easier save / restore
+            def oldCaptures := compiler.captures
+            compiler.captures := Stack<Pair<MethodDecl, Map<String, Compiler.Capture>>>()
+            def oldInAtPre := compiler.inAtPre
+            compiler.inAtPre := false
+            def oldAtPreBlock := compiler.atPreBlock
+            compiler.atPreBlock := null
+            def oldPostconditionEntryBlock := compiler.postconditionEntryBlock
+            compiler.postconditionEntryBlock := null
+            def oldPostconditionCurrentBlock := compiler.postconditionCurrentBlock
+            compiler.postconditionCurrentBlock := null
+            def oldWriteCode := compiler.writeCode
+            compiler.writeCode := false
+            def oldReturnVar := compiler.returnVar
+            compiler.returnVar := null
+            def oldInFieldCleanup := compiler.inFieldCleanup
+            compiler.inFieldCleanup := false
+            def scope := AutoScope(compiler, compiler.getSymbolTable(m.owner))
+            compiler.compile(m)
+            compiler.writeCode := oldWriteCode
+            compiler.captures := oldCaptures
+            compiler.atPreBlock := oldAtPreBlock
+            compiler.postconditionCurrentBlock := oldPostconditionCurrentBlock
+            compiler.postconditionEntryBlock := oldPostconditionEntryBlock
+            compiler.inAtPre := oldInAtPre
+            compiler.returnVar := oldReturnVar
+            compiler.inFieldCleanup := oldInFieldCleanup
+        }
+        compiler.currentClass.pop()
+        if mergeBlock !== null {
+            if !compiler.ir.currentBlockFinished {
+                compiler.ir.add(IR.Statement.BRANCH(position, mergeBlock))            
+            }
+            compiler.ir.setCurrentBlock(mergeBlock)
+        }
+        if m.returnType = Type.Void() {
+            return null
+        }
+        if inlineReturn.value !== null {
+            return inlineReturn.value
+        }
+        def load := compiler.ir.add(IR.Statement.LOAD(position,
+                IR.Value.LOCAL(inlineReturnSlot, m.returnType)))
+        return IR.Value.REF(load, m.returnType)
+    }
+
+    @class
     @post((rawM.returnType = Type.Void() & @return == null) | @return !== null |
             compiler.errorCount > 0 | !compiler.reportErrors)
     method compile(compiler:Compiler, position:Position, target:IR.Value?, rawM:MethodRef,
@@ -985,7 +1122,7 @@ class Call {
             }
             finalArgs.add(a)
         }
-        var result:IR.Statement.ID
+        var result:IR.Value
         if !isSuper & m.value.isVirtual {
             def mref:IR.Statement.ID
             if m.value.owner.classKind = ClassDecl.Kind.INTERFACE {
@@ -999,15 +1136,25 @@ class Call {
                 mref := ir.add(IR.Statement.GET_VIRTUAL_METHOD(position, finalTarget,
                         compiler.getVTableIndex(m.value), actualType))
             }
-            result := ir.add(IR.Statement.DYNAMIC_CALL(position, IR.Value.REF(mref, actualType),
-                    FixedArray<IR.Value>.from(finalArgs)))
+            result := IR.Value.REF(ir.add(IR.Statement.DYNAMIC_CALL(position, IR.Value.REF(mref,
+                    actualType), FixedArray<IR.Value>.from(finalArgs))), actualType.returnType)
         }
         else {
-            result := ir.add(IR.Statement.STATIC_CALL(position, m.value,
-                    FixedArray<IR.Value>.from(finalArgs)))
+            if compiler.settings.optimizationLevel > 1 & m.value.annotations.isInline &
+                    compiler.currentMethod.count < 3 {
+                result := inlineCall(compiler, position, m.value, finalArgs)
+                if compiler.ir.currentBlockFinished {
+                    compiler.ir.setCurrentBlock(compiler.ir.newBlock("unreachable"))
+                    compiler.ir.currentBlock.forceReachable := true
+                }
+            }
+            else {
+                result := IR.Value.REF(ir.add(IR.Statement.STATIC_CALL(position, m.value,
+                        FixedArray<IR.Value>.from(finalArgs))), actualType.returnType)
+            }
         }
         if m.value.returnType != Type.Void() {
-            var resultCast:IR.Value? := IR.Value.REF(result, actualType.returnType)
+            var resultCast:IR.Value? := result
             if compiler.isRefCounted(actualType.returnType) {
                 compiler.enclosingContexts.push(EnclosingContext.VALUE_SCOPE(resultCast))
             }

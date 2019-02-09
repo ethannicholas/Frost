@@ -4,6 +4,7 @@
 typedef struct org$frostlang$frostc$parser$Parser org$frostlang$frostc$parser$Parser;
 typedef struct frost$threads$MessageQueue frost$threads$MessageQueue;
 typedef struct frost$io$File frost$io$File;
+#include "frost/core/Int64_types.h"
 typedef struct frost$core$String frost$core$String;
 #include "org/frostlang/frostc/parser/Token_types.h"
 #include "org/frostlang/frostc/parser/Token/Kind_types.h"
@@ -13,7 +14,7 @@ typedef struct org$frostlang$frostc$ASTNode org$frostlang$frostc$ASTNode;
 typedef struct org$frostlang$frostc$FixedArray org$frostlang$frostc$FixedArray;
 
 void org$frostlang$frostc$parser$Parser$init$frost$threads$MessageQueue$LTorg$frostlang$frostc$Compiler$Message$GT(org$frostlang$frostc$parser$Parser* self, frost$threads$MessageQueue* p_errors);
-void org$frostlang$frostc$parser$Parser$start$frost$io$File$frost$core$String(org$frostlang$frostc$parser$Parser* self, frost$io$File* p_path, frost$core$String* p_source);
+void org$frostlang$frostc$parser$Parser$start$frost$io$File$frost$core$Int64$frost$core$String(org$frostlang$frostc$parser$Parser* self, frost$io$File* p_path, frost$core$Int64 p_pathIndex, frost$core$String* p_source);
 org$frostlang$frostc$parser$Token org$frostlang$frostc$parser$Parser$rawNext$R$org$frostlang$frostc$parser$Token(org$frostlang$frostc$parser$Parser* self);
 org$frostlang$frostc$parser$Token org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Token(org$frostlang$frostc$parser$Parser* self);
 void org$frostlang$frostc$parser$Parser$pushback$org$frostlang$frostc$parser$Token(org$frostlang$frostc$parser$Parser* self, org$frostlang$frostc$parser$Token p_token);

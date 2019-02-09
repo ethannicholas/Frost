@@ -20,7 +20,7 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 
 void frost$io$MemoryOutputStream$init(frost$io$MemoryOutputStream* param0) {
 
-// line 20
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/MemoryOutputStream.frost:20
 frost$core$Int64 $tmp2 = (frost$core$Int64) {1024};
 frost$io$MemoryOutputStream$init$frost$core$Int64(param0, $tmp2);
 return;
@@ -28,7 +28,7 @@ return;
 }
 void frost$io$MemoryOutputStream$init$frost$core$Int64(frost$io$MemoryOutputStream* param0, frost$core$Int64 param1) {
 
-// line 27
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/MemoryOutputStream.frost:27
 FROST_ASSERT(48 == sizeof(frost$core$MutableString));
 frost$core$MutableString* $tmp3 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init$frost$core$Int64($tmp3, param1);
@@ -39,37 +39,37 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp5));
 frost$core$MutableString** $tmp6 = &param0->data;
 *$tmp6 = $tmp3;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp3));
-// line 28
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/MemoryOutputStream.frost:28
 frost$io$OutputStream$init(((frost$io$OutputStream*) param0));
 return;
 
 }
 frost$core$Error* frost$io$MemoryOutputStream$write$frost$core$UInt8$R$frost$core$Error$Q(frost$io$MemoryOutputStream* param0, frost$core$UInt8 param1) {
 
-// line 33
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/MemoryOutputStream.frost:33
 frost$core$MutableString** $tmp7 = &param0->data;
 frost$core$MutableString* $tmp8 = *$tmp7;
 frost$core$Char8 $tmp9 = frost$core$Char8$init$frost$core$UInt8(param1);
 frost$core$MutableString$append$frost$core$Char8($tmp8, $tmp9);
-// line 34
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/MemoryOutputStream.frost:34
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Error*) NULL)));
 return ((frost$core$Error*) NULL);
 
 }
 frost$core$Error* frost$io$MemoryOutputStream$write$frost$unsafe$Pointer$LTfrost$core$UInt8$GT$frost$core$Int64$R$frost$core$Error$Q(frost$io$MemoryOutputStream* param0, frost$core$UInt8* param1, frost$core$Int64 param2) {
 
-// line 39
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/MemoryOutputStream.frost:39
 frost$core$MutableString** $tmp10 = &param0->data;
 frost$core$MutableString* $tmp11 = *$tmp10;
 frost$core$MutableString$append$frost$unsafe$Pointer$LTfrost$core$Char8$GT$frost$core$Int64($tmp11, ((frost$core$Char8*) param1), param2);
-// line 40
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/MemoryOutputStream.frost:40
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Error*) NULL)));
 return ((frost$core$Error*) NULL);
 
 }
 void frost$io$MemoryOutputStream$clear(frost$io$MemoryOutputStream* param0) {
 
-// line 47
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/MemoryOutputStream.frost:47
 frost$core$MutableString** $tmp12 = &param0->data;
 frost$core$MutableString* $tmp13 = *$tmp12;
 frost$core$MutableString$clear($tmp13);
@@ -78,7 +78,7 @@ return;
 }
 frost$core$String* frost$io$MemoryOutputStream$get_asString$R$frost$core$String(frost$io$MemoryOutputStream* param0) {
 
-// line 56
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/MemoryOutputStream.frost:56
 frost$core$MutableString** $tmp14 = &param0->data;
 frost$core$MutableString* $tmp15 = *$tmp14;
 $fn17 $tmp16 = ($fn17) ((frost$core$Object*) $tmp15)->$class->vtable[0];
@@ -90,7 +90,7 @@ return $tmp18;
 }
 frost$core$String* frost$io$MemoryOutputStream$finish$R$frost$core$String(frost$io$MemoryOutputStream* param0) {
 
-// line 66
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/MemoryOutputStream.frost:66
 frost$core$MutableString** $tmp19 = &param0->data;
 frost$core$MutableString* $tmp20 = *$tmp19;
 frost$core$String* $tmp21 = frost$core$MutableString$finish$R$frost$core$String($tmp20);
@@ -101,7 +101,7 @@ return $tmp21;
 }
 void frost$io$MemoryOutputStream$cleanup(frost$io$MemoryOutputStream* param0) {
 
-// line 9
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/MemoryOutputStream.frost:9
 frost$io$OutputStream$cleanup(((frost$io$OutputStream*) param0));
 frost$core$MutableString** $tmp22 = &param0->data;
 frost$core$MutableString* $tmp23 = *$tmp22;

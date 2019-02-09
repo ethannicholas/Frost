@@ -14,14 +14,14 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 
 void frost$collections$HashMap$Entry$init$frost$collections$HashMap$Entry$K$frost$collections$HashMap$Entry$V(frost$collections$HashMap$Entry* param0, frost$collections$Key* param1, frost$core$Object* param2) {
 
-// line 35
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:35
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
 frost$collections$Key** $tmp2 = &param0->key;
 frost$collections$Key* $tmp3 = *$tmp2;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp3));
 frost$collections$Key** $tmp4 = &param0->key;
 *$tmp4 = param1;
-// line 36
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:36
 frost$core$Frost$ref$frost$core$Object$Q(param2);
 frost$core$Object** $tmp5 = &param0->value;
 frost$core$Object* $tmp6 = *$tmp5;
@@ -33,7 +33,7 @@ return;
 }
 void frost$collections$HashMap$Entry$cleanup(frost$collections$HashMap$Entry* param0) {
 
-// line 20
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:20
 frost$core$Object$cleanup(((frost$core$Object*) param0));
 frost$collections$Key** $tmp8 = &param0->key;
 frost$collections$Key* $tmp9 = *$tmp8;

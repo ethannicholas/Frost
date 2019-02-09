@@ -6,6 +6,7 @@ typedef struct frost$core$Class frost$core$Class;
 typedef struct org$frostlang$regex$RegexLexer org$frostlang$regex$RegexLexer;
 typedef struct frost$threads$MessageQueue frost$threads$MessageQueue;
 typedef struct frost$io$File frost$io$File;
+#include "frost/core/Int64_types.h"
 typedef struct frost$core$String frost$core$String;
 typedef struct frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT;
 
@@ -16,6 +17,7 @@ typedef struct org$frostlang$regex$RegexParser {
     org$frostlang$regex$RegexLexer* lexer;
     frost$threads$MessageQueue* errors;
     frost$io$File* path;
+    frost$core$Int64 pathIndex;
     frost$core$String* source;
     frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT* pushbackBuffer;
 } org$frostlang$regex$RegexParser;

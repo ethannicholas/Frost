@@ -16,15 +16,19 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 
 frost$core$Bit frost$core$Equatable$$NEQ$frost$core$Equatable$T$R$frost$core$Bit(frost$core$Equatable* param0, frost$core$Equatable* param1) {
 
-// line 18
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Equatable.frost:18
 ITable* $tmp2 = param0->$class->itable;
 while ($tmp2->$class != (frost$core$Class*) &frost$core$Equatable$class) {
     $tmp2 = $tmp2->next;
 }
 $fn4 $tmp3 = $tmp2->methods[0];
 frost$core$Bit $tmp5 = $tmp3(param0, param1);
-frost$core$Bit $tmp6 = frost$core$Bit$$NOT$R$frost$core$Bit($tmp5);
-return $tmp6;
+// begin inline call to function frost.core.Bit.!():frost.core.Bit from Equatable.frost:18:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
+bool $tmp6 = $tmp5.value;
+bool $tmp7 = !$tmp6;
+frost$core$Bit $tmp8 = (frost$core$Bit) {$tmp7};
+return $tmp8;
 
 }
 
