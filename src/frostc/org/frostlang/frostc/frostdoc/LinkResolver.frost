@@ -69,7 +69,7 @@ class LinkResolver {
             separator := ","
         }
         result.append(")")
-        if m.returnType != Type.Void() {
+        if m.returnType.name != "void" {
             result.append(":")
             result.append(m.returnType)
         }

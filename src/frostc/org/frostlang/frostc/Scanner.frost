@@ -26,17 +26,17 @@ class Scanner {
             when ASTNode.TYPE(position, name) {
                 if name[0] = "b" {
                     match name {
-                        when "builtin_bit"     { return Type.BuiltinBit() }
-                        when "builtin_int8"    { return Type.BuiltinInt8() }
-                        when "builtin_int16"   { return Type.BuiltinInt16() }
-                        when "builtin_int32"   { return Type.BuiltinInt32() }
-                        when "builtin_int64"   { return Type.BuiltinInt64() }
-                        when "builtin_uint8"   { return Type.BuiltinUInt8() }
-                        when "builtin_uint16"  { return Type.BuiltinUInt16() }
-                        when "builtin_uint32"  { return Type.BuiltinUInt32() }
-                        when "builtin_uint64"  { return Type.BuiltinUInt64() }
-                        when "builtin_float32" { return Type.BuiltinFloat32() }
-                        when "builtin_float64" { return Type.BuiltinFloat64() }
+                        when "builtin_bit"     { return compiler.BUILTIN_BIT_TYPE }
+                        when "builtin_int8"    { return compiler.BUILTIN_INT8_TYPE }
+                        when "builtin_int16"   { return compiler.BUILTIN_INT16_TYPE }
+                        when "builtin_int32"   { return compiler.BUILTIN_INT32_TYPE }
+                        when "builtin_int64"   { return compiler.BUILTIN_INT64_TYPE }
+                        when "builtin_uint8"   { return compiler.BUILTIN_UINT8_TYPE }
+                        when "builtin_uint16"  { return compiler.BUILTIN_UINT16_TYPE }
+                        when "builtin_uint32"  { return compiler.BUILTIN_UINT32_TYPE }
+                        when "builtin_uint64"  { return compiler.BUILTIN_UINT64_TYPE }
+                        when "builtin_float32" { return compiler.BUILTIN_FLOAT32_TYPE }
+                        when "builtin_float64" { return compiler.BUILTIN_FLOAT64_TYPE }
                     }
                 }
                 return Type(name, Type.Kind.CLASS, position)
@@ -54,7 +54,7 @@ class Scanner {
             }
             when ASTNode.IR_WRAPPER(_, type) {
                 match type {
-                    when IR.Value.TYPE(t) {
+                    when IR.Value.TYPE(t, _) {
                         return t
                     }
                 }
@@ -88,9 +88,9 @@ class Scanner {
                     returnType := convertType(rawReturnType)
                 }
                 else {
-                    returnType := Type.Void()
+                    returnType := compiler.VOID_TYPE
                 }
-                return Type.methodType(type.position(), typeKind,
+                return Type.methodType(compiler, type.position(), typeKind,
                         FixedArray<Type>.from(parameters), returnType, 0)
             }
             when ASTNode.TUPLE_TYPE(position, args) {
@@ -279,7 +279,7 @@ class Scanner {
                             match target {
                                 when ASTNode.IDENTIFIER(_, id) {
                                     name := id
-                                    type := Type.Void()
+                                    type := compiler.VOID_TYPE
                                 }
                                 when ASTNode.TYPED_IDENTIFIER(_, id, idType) {
                                     name := id
@@ -555,7 +555,7 @@ class Scanner {
                 match p {
                     when ASTNode.IDENTIFIER(_, id) {
                         parameterName := id
-                        bound := Type.Any()
+                        bound := compiler.ANY_TYPE
                     }
                     when ASTNode.TYPED_IDENTIFIER(_, id, type) {
                         parameterName := id
@@ -588,9 +588,9 @@ class Scanner {
             returnType := convertType(rawReturnType)
         }
         else {
-            returnType := Type.Void()
+            returnType := compiler.VOID_TYPE
         }
-        if kind = MethodDecl.Kind.FUNCTION & returnType = Type.Void() {
+        if kind = MethodDecl.Kind.FUNCTION & returnType = compiler.VOID_TYPE {
             error(position, "functions must have a return type")
         }
         if statements !== null & shouldInline(annotations, statements) {
@@ -705,7 +705,7 @@ class Scanner {
                 match p {
                     when ASTNode.IDENTIFIER(_, id) {
                         name := id
-                        bound := Type.Any()
+                        bound := compiler.ANY_TYPE
                     }
                     when ASTNode.TYPED_IDENTIFIER(_, id, type) {
                         name := id
@@ -733,12 +733,12 @@ class Scanner {
         if kind = ClassDecl.Kind.CHOICE {
             def rawValue := FieldDecl(result, result.position, null,
                     Annotations(Annotations.Flag.SYNTHETIC), FieldDecl.Kind.DEF,
-                    ClassDecl.RAW_VALUE_NAME, Type.Int64(), null)
+                    ClassDecl.RAW_VALUE_NAME, compiler.INT64_TYPE, null)
             result.fields.add(rawValue)
             result.symbolTable.add(rawValue)
             def data := FieldDecl(result, result.position, null,
                     Annotations(Annotations.Flag.SYNTHETIC), FieldDecl.Kind.DEF,
-                    ClassDecl.CHOICE_DATA_NAME, Type.ChoiceData(), null)
+                    ClassDecl.CHOICE_DATA_NAME, compiler.CHOICE_DATA_TYPE, null)
             result.fields.add(data)
             result.symbolTable.add(data)
         }
@@ -781,7 +781,7 @@ class Scanner {
         if !foundInit & kind = ClassDecl.Kind.CLASS & result.name != "frost.unsafe.Pointer" {
             def defaultInit := MethodDecl(result, position, null,
                     Annotations(Annotations.Flag.SYNTHETIC), MethodDecl.Kind.INIT, "init",
-                    null, [], Type.Void(), FixedArray<ASTNode>())
+                    null, [], compiler.VOID_TYPE, FixedArray<ASTNode>())
             result.methods.add(defaultInit)
             result.symbolTable.add(defaultInit)
         }
@@ -789,7 +789,8 @@ class Scanner {
                 result.name != "frost.unsafe.Pointer" {
             def defaultCleanup := MethodDecl(result, position, null,
                     Annotations(Annotations.Flag.OVERRIDE || Annotations.Flag.SYNTHETIC),
-                    MethodDecl.Kind.METHOD, "cleanup", null, [], Type.Void(), FixedArray<ASTNode>())
+                    MethodDecl.Kind.METHOD, "cleanup", null, [], compiler.VOID_TYPE,
+                    FixedArray<ASTNode>())
             result.methods.add(defaultCleanup)
             result.symbolTable.add(defaultCleanup)
         }
@@ -808,7 +809,7 @@ class Scanner {
                 return null
             }
             if !haveFields {
-                result.rawSuper := Type.Value()
+                result.rawSuper := compiler.VALUE_TYPE
             }
         }
         compiler.currentClass.pop()
@@ -838,12 +839,13 @@ class Scanner {
             classes.add(bareCodeClass)
             def defaultInit := MethodDecl(bareCodeClass, Position(), null,
                     Annotations(Annotations.Flag.SYNTHETIC), MethodDecl.Kind.INIT, "init",
-                    null, [], Type.Void(), FixedArray<ASTNode>())
+                    null, [], compiler.VOID_TYPE, FixedArray<ASTNode>())
             bareCodeClass.methods.add(defaultInit)
             bareCodeClass.symbolTable.add(defaultInit)
             def defaultCleanup := MethodDecl(bareCodeClass, Position(), null,
                     Annotations(Annotations.Flag.OVERRIDE || Annotations.Flag.SYNTHETIC),
-                    MethodDecl.Kind.METHOD, "cleanup", null, [], Type.Void(), FixedArray<ASTNode>())
+                    MethodDecl.Kind.METHOD, "cleanup", null, [], compiler.VOID_TYPE,
+                    FixedArray<ASTNode>())
             bareCodeClass.methods.add(defaultCleanup)
             bareCodeClass.symbolTable.add(defaultCleanup)
         }
@@ -921,7 +923,7 @@ class Scanner {
                                     returnType := convertType(rawReturnType)
                                 }
                                 else {
-                                    returnType := Type.Void()
+                                    returnType := compiler.VOID_TYPE
                                 }
                                 def bareMain := MethodDecl(bareCodeClass, Position(), null,
                                         Annotations(Annotations.Flag.CLASS), MethodDecl.Kind.METHOD,

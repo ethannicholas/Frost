@@ -100,7 +100,7 @@ class Match {
                                                         cc.second.rawValue.asUInt64)]
                                                 def test := Call.compile(compiler, base.position(),
                                                         choiceRawValue, "=", eqArgs,
-                                                        TypeContext.TYPE(Type.Bit(), false))
+                                                        TypeContext.TYPE(compiler.BIT_TYPE, false))
                                                 assert test !== null
                                                 testBit := compiler.extractBuiltinBit(position,
                                                         test)
@@ -150,14 +150,14 @@ class Match {
                                     def args := [ASTNode.INT(t.position(),
                                             cc.second.rawValue.asUInt64)]
                                     test := Call.compile(compiler, t.position(), choiceRawValue,
-                                            "=", args, TypeContext.TYPE(Type.Bit(), false))
+                                            "=", args, TypeContext.TYPE(compiler.BIT_TYPE, false))
                                     if test == null {
                                         return
                                     }
                                 }
                                 else {
                                     test := Call.compile(compiler, t.position(), value, "=", [t],
-                                            TypeContext.TYPE(Type.Bit(), false))
+                                            TypeContext.TYPE(compiler.BIT_TYPE, false))
                                     if test == null {
                                         return
                                     }

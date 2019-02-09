@@ -58,13 +58,13 @@ class IntLiteral {
                     return IR.Value.REAL(value, t)
                 }
                 if t.isNumber {
-                    return Call.compile(compiler, position, IR.Value.TYPE(t),
+                    return Call.compile(compiler, position, compiler.literalType(t),
                             [ASTNode.INT(position, value)], type)
                 }
             }
         }
         return compiler.coerce(position, compile(compiler, position, value,
-                TypeContext.TYPE(Type.Int64(), false)), type)
+                TypeContext.TYPE(compiler.INT64_TYPE, false)), type)
     }
 
     @class
@@ -106,6 +106,6 @@ class IntLiteral {
             }
         }
         return compiler.coerce(position, compileNegated(compiler, position, value,
-                TypeContext.TYPE(Type.Int64(), false)), type)
+                TypeContext.TYPE(compiler.INT64_TYPE, false)), type)
     }
 }

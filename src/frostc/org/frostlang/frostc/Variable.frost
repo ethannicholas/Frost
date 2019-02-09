@@ -27,7 +27,7 @@ class Variable : Symbol {
     @weak
     var owner:MethodDecl? := null
 
-    @pre(type != Type.Void())
+    @pre(type.name != "void")
     init(position:Position, kind:Kind, name:String, type:Type, storage:Storage) {
         self.varKind := kind
         self.type := type

@@ -52,7 +52,7 @@ class Return {
             compiler.inFieldCleanup := false
         }
         if value !== null {
-            if currentMethod.returnType = Type.Void() {
+            if currentMethod.returnType = compiler.VOID_TYPE {
                 compiler.error(position, "cannot return a value from a method with no return type")
                 return
             }
@@ -127,7 +127,7 @@ class Return {
             }
         }
         else {
-            if currentMethod.returnType != Type.Void() {
+            if currentMethod.returnType != compiler.VOID_TYPE {
                 if currentMethod.methodKind = MethodDecl.Kind.INIT {
                     compile(compiler, position, ASTNode.SELF(position))
                     return

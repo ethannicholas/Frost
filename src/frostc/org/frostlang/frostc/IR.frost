@@ -425,7 +425,7 @@ class IR {
     }
 
     choice Value {
-        BIT(Bit)
+        BIT(Bit, Type)
         INT(UInt64, Type)
         -- value is a *pointer to* the given type
         LOCAL(Int, Type)
@@ -434,20 +434,20 @@ class IR {
         PARAMETER(Int, Type)
         REAL(Real64, Type)
         REF(Statement.ID, Type)
-        STRING(String)
+        STRING(String, Type)
 
         -- intermediate values; these never show up in finished IR sent to the code generator
-        METHOD(Value? -* target *-, MethodDecl)
-        METHODS(Value? -* target *-, FixedArray<MethodDecl>)
+        METHOD(Value? -* target *-, MethodDecl, Type)
+        METHODS(Value? -* target *-, FixedArray<MethodDecl>, Type)
         GENERIC_METHOD(Value? -* target *-, MethodDecl, FixedArray<Type>)
         GENERIC_METHODS(Value? -* target *-, FixedArray<MethodDecl>, FixedArray<Type>)
         SUPER(Type)
-        TYPE(Type)
+        TYPE(Type -* literal *-, Type -* Class<literal> *-)
 
         function type():Type {
             match self {
-                when BIT {
-                    return Type.BuiltinBit()
+                when BIT(_, type) {
+                    return type
                 }
                 when INT(_, type) {
                     return type
@@ -470,20 +470,20 @@ class IR {
                 when REF(_, type) {
                     return type
                 }
-                when STRING {
-                    return Type.StringType()
+                when STRING(_, type) {
+                    return type
                 }
-                when METHOD(_, m) {
-                    return m.type
+                when METHOD(_, m, type) {
+                    return type
                 }
-                when METHODS {
-                    return Type.Invalid()
+                when METHODS(_, _, type) {
+                    return type
                 }
                 when SUPER(type) {
                     return type
                 }
-                when TYPE(type) {
-                    return Type.ClassLiteral(type)
+                when TYPE(_, type) {
+                    return type
                 }
             }
             unreachable
@@ -492,7 +492,7 @@ class IR {
         @override
         function get_asString():String {
             match self {
-                when BIT(value) {
+                when BIT(value, _) {
                     return value.asString
                 }
                 when INT(value, _) {
@@ -516,16 +516,16 @@ class IR {
                 when REF(id, type) {
                     return "REF(\{id}:\{type})"
                 }
-                when STRING(s) {
+                when STRING(s, _) {
                     return s.format("frost")
                 }
-                when METHOD(target, m) {
+                when METHOD(target, m, _) {
                     if target !== null {
                         return "METHOD(\{target}, \{m.declaration})"
                     }
                     return "METHOD(\{m.declaration})"
                 }
-                when METHODS(target, m) {
+                when METHODS(target, m, _) {
                     if target !== null {
                         return "METHODS(\{target}, \{m})"
                     }
@@ -546,7 +546,7 @@ class IR {
                 when SUPER(type) {
                     return "SUPER(\{type})"
                 }
-                when TYPE(type) {
+                when TYPE(type, _) {
                     return "TYPE(\{type.asString})"
                 }
             }

@@ -149,10 +149,10 @@ class HCodeGenerator : CodeGenerator {
                     return type(t.genericMethodParameter.bound)
                 }
                 when Type.Kind.FUNCTION, Type.Kind.METHOD {
-                    return type(Type.MutableMethod())
+                    return type(compiler.MUTABLE_METHOD_TYPE)
                 }
                 when Type.Kind.IMMUTABLE_FUNCTION, Type.Kind.IMMUTABLE_METHOD {
-                    return type(Type.Method())
+                    return type(compiler.METHOD_TYPE)
                 }
                 when Type.Kind.TUPLE {
                     return type(compiler.getClass(t).type)
@@ -206,7 +206,7 @@ class HCodeGenerator : CodeGenerator {
             types.level += 1
             for f in compiler.instanceFields(cl) {
                 compiler.resolve(f)
-                if f.type = Type.ChoiceData() {
+                if f.type = compiler.CHOICE_DATA_TYPE {
                     types.printLine("int8_t \{f.name}[\{llvmCodeGen.getChoiceDataSize(cl)}];")
                 }
                 else {
@@ -221,8 +221,8 @@ class HCodeGenerator : CodeGenerator {
             types.printLine("} \{escapeName(cl.name)};")
             types.printLine("#include \"frost/core/Class.h\"")
             types.printLine("typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;" +
-                    "\{type(Type.StringType())} name; \{type(Type.Class())} super; ITable* itable; " +
-                    "void* vtable[\{compiler.getVTable(cl).count}]; } " +
+                    "\{type(compiler.STRING_TYPE)} name; \{type(compiler.CLASS_TYPE)} super; " +
+                    "ITable* itable; void* vtable[\{compiler.getVTable(cl).count}]; } " +
                     "\{escapeName(cl.name)}$class_type;")
             types.printLine("extern \{escapeName(cl.name)}$class_type \{escapeName(cl.name)}$class;")
             if compiler.isValue(cl) {
@@ -240,7 +240,7 @@ class HCodeGenerator : CodeGenerator {
                 types.printLine("bool nonnull;")
                 types.level -= 1
                 types.printLine("} \{escapeName(cl.name)}$nullable;")
-                def value := compiler.getClass(Type.Value())
+                def value := compiler.getClass(compiler.VALUE_TYPE)
                 def valueVTable := compiler.getVTable(value)
                 types.printLine("typedef struct { frost$core$Class* cl; int32_t refCount; " +
                         "uint8_t flags; frost$core$String* name; frost$core$Class* super; " +

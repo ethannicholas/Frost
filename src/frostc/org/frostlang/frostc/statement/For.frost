@@ -44,25 +44,25 @@ class For {
 
     @private
     @class
-    function signed(type:Type):Type {
+    function signed(compiler:Compiler, type:Type):Type {
         match type.nonnullable() {
-            when Type.UInt8()  { return Type.Int8() }
-            when Type.UInt16() { return Type.Int16() }
-            when Type.UInt32() { return Type.Int32() }
-            when Type.UInt64() { return Type.Int64() }
-            otherwise          { return type }
+            when compiler.UINT8_TYPE  { return compiler.INT8_TYPE }
+            when compiler.UINT16_TYPE { return compiler.INT16_TYPE }
+            when compiler.UINT32_TYPE { return compiler.INT32_TYPE }
+            when compiler.UINT64_TYPE { return compiler.INT64_TYPE }
+            otherwise                 { return type }
         }
     }
 
     @private
     @class
-    function unsigned(type:Type):Type {
+    function unsigned(compiler:Compiler, type:Type):Type {
         match type.nonnullable() {
-            when Type.Int8()  { return Type.UInt8() }
-            when Type.Int16() { return Type.UInt16() }
-            when Type.Int32() { return Type.UInt32() }
-            when Type.Int64() { return Type.UInt64() }
-            otherwise         { return type }
+            when compiler.INT8_TYPE  { return compiler.UINT8_TYPE }
+            when compiler.INT16_TYPE { return compiler.UINT16_TYPE }
+            when compiler.INT32_TYPE { return compiler.UINT32_TYPE }
+            when compiler.INT64_TYPE { return compiler.UINT64_TYPE }
+            otherwise                { return type }
         }
     }
 
@@ -74,18 +74,18 @@ class For {
 
     @private
     @class
-    function getIndexType(raw:Type):Type {
+    function getIndexType(compiler:Compiler, raw:Type):Type {
         if raw.typeKind = Type.Kind.NULLABLE {
-            return getIndexType(raw.nonnullable())
+            return getIndexType(compiler, raw.nonnullable())
         }
-        if raw = Type.Char8() {
-            return Type.UInt8()
+        if raw = compiler.CHAR8_TYPE {
+            return compiler.UINT8_TYPE
         }
-        else if raw = Type.Char16() {
-            return Type.UInt16()
+        else if raw = compiler.CHAR16_TYPE {
+            return compiler.UINT16_TYPE
         }
-        else if raw = Type.Char32() {
-            return Type.Int32()
+        else if raw = compiler.CHAR32_TYPE {
+            return compiler.INT32_TYPE
         }
         else {
             return raw
@@ -124,7 +124,7 @@ class For {
             }
         }
         def rawIndexType := index.type
-        def indexType := getIndexType(rawIndexType)
+        def indexType := getIndexType(compiler, rawIndexType)
 
         def rangeClass := compiler.getClass(range.type())
         if rangeClass == null {
@@ -154,7 +154,7 @@ class For {
 
         -- extract inclusive / exclusive from range
         def inclusive := compiler.extractBuiltinBit(position, IR.Value.REF(ir.add(
-                IR.Statement.EXTRACT_FIELD(position, range, rangeFields[2])), Type.Bit()))
+                IR.Statement.EXTRACT_FIELD(position, range, rangeFields[2])), compiler.BIT_TYPE))
 
         def step := compiler.compileExpression(ASTNode.INT(position, 1),
                 TypeContext.TYPE(indexType, false))
@@ -162,8 +162,8 @@ class For {
             return
         }
         def stepComparison:IR.Value?
-        if step.type() = Type.Int64() {
-            stepComparison := compiler.convert(step, Type.UInt64())
+        if step.type() = compiler.INT64_TYPE {
+            stepComparison := compiler.convert(step, compiler.UINT64_TYPE)
             if stepComparison == null {
                 return
             }
@@ -185,14 +185,14 @@ class For {
                     entryExclusive))
             ir.setCurrentBlock(entryInclusive)
             def lte := Call.compile(compiler, position, start, "<=", arg(end),
-                    TypeContext.TYPE(Type.Bit(), false))
+                    TypeContext.TYPE(compiler.BIT_TYPE, false))
             assert lte !== null
             def entryInclusiveTest := compiler.extractBuiltinBit(position, lte)
             ir.add(IR.Statement.CONDITIONAL_BRANCH(position, entryInclusiveTest, loopStart,
                     loopEnd))
             ir.setCurrentBlock(entryExclusive)
             def lt := Call.compile(compiler, position, start, "<", arg(end),
-                    TypeContext.TYPE(Type.Bit(), false))
+                    TypeContext.TYPE(compiler.BIT_TYPE, false))
             assert lt !== null
             def entryExclusiveTest := compiler.extractBuiltinBit(position, lt)
             ir.add(IR.Statement.CONDITIONAL_BRANCH(position, entryExclusiveTest, loopStart,
@@ -216,7 +216,7 @@ class For {
         -- the same sign
         def sub := Call.compile(compiler, position, end, "-", arg(indexLoad), TypeContext.NON_VOID)
         assert sub !== null
-        def delta := compiler.convert(sub, unsigned(indexType))
+        def delta := compiler.convert(sub, unsigned(compiler, indexType))
         assert delta !== null
 
         def inclusiveTest := ir.newBlock("inclusiveTest")
@@ -226,7 +226,7 @@ class For {
         -- inclusive test
         ir.setCurrentBlock(inclusiveTest)
         def gte := Call.compile(compiler, position, delta, ">=", arg(stepComparison),
-                TypeContext.TYPE(Type.Bit(), false))
+                TypeContext.TYPE(compiler.BIT_TYPE, false))
         assert gte !== null
         def inclusiveTestBit := compiler.extractBuiltinBit(position, gte)
         ir.add(IR.Statement.CONDITIONAL_BRANCH(position, inclusiveTestBit, loopInc, loopEnd))
@@ -234,7 +234,7 @@ class For {
         -- exclusive test
         ir.setCurrentBlock(exclusiveTest)
         def gt := Call.compile(compiler, position, delta, ">", arg(stepComparison),
-                TypeContext.TYPE(Type.Bit(), false))
+                TypeContext.TYPE(compiler.BIT_TYPE, false))
         assert gt !== null
         def exclusiveTestBit := compiler.extractBuiltinBit(position, gt)
         ir.add(IR.Statement.CONDITIONAL_BRANCH(position, exclusiveTestBit, loopInc, loopEnd))
@@ -287,7 +287,7 @@ class For {
             }
         }
         def rawIndexType := index.type
-        def indexType := getIndexType(rawIndexType)
+        def indexType := getIndexType(compiler, rawIndexType)
         assert indexType.typeKind != Type.Kind.NULLABLE
         def stepType := range.type().subtypes[2]
         def rangeClass := compiler.getClass(range.type())
@@ -320,21 +320,21 @@ class For {
         def step := IR.Value.REF(ir.add(IR.Statement.EXTRACT_FIELD(position, range,
                 rangeFields[2])), stepType)
         def stepComparison:IR.Value?
-        if step.type() = Type.Int64() {
-            stepComparison := compiler.convert(step, Type.UInt64())
+        if step.type() = compiler.INT64_TYPE {
+            stepComparison := compiler.convert(step, compiler.UINT64_TYPE)
             assert stepComparison !== null
         }
         else {
             stepComparison := step
         }
-        def convertedNegStep := compiler.convert(step, signed(step.type()))
+        def convertedNegStep := compiler.convert(step, signed(compiler, step.type()))
         assert convertedNegStep !== null
         def negStep := compiler.convert(Call.compile(compiler, position, convertedNegStep, "-", [],
                 TypeContext.NON_VOID), stepType)
         assert negStep !== null
         def negStepComparison:IR.Value?
-        if step.type() = Type.Int64() {
-            negStepComparison := compiler.convert(negStep, Type.UInt64())
+        if step.type() = compiler.INT64_TYPE {
+            negStepComparison := compiler.convert(negStep, compiler.UINT64_TYPE)
             assert negStepComparison !== null
         }
         else {
@@ -343,7 +343,7 @@ class For {
 
         -- extract inclusive / exclusive from range
         def inclusive := compiler.extractBuiltinBit(position, IR.Value.REF(ir.add(
-                IR.Statement.EXTRACT_FIELD(position, range, rangeFields[3])), Type.Bit()))
+                IR.Statement.EXTRACT_FIELD(position, range, rangeFields[3])), compiler.BIT_TYPE))
 
         -- start block
         def loopStart := ir.newBlock("loopStart")
@@ -358,13 +358,13 @@ class For {
             if stepType.name.startsWith("frost.core.Int") |
                     stepType.name.startsWith("frost.core.Real") {
                 def comparison := Call.compile(compiler, position, step, ">=",
-                        [ASTNode.INT(position, 0)], TypeContext.TYPE(Type.Bit(), false))
+                        [ASTNode.INT(position, 0)], TypeContext.TYPE(compiler.BIT_TYPE, false))
                 assert comparison !== null
                 direction := compiler.extractBuiltinBit(position, comparison)
             }
             else {
                 assert stepType.name.startsWith("frost.core.UInt")
-                direction := IR.Value.BIT(true)
+                direction := IR.Value.BIT(true, compiler.BIT_TYPE)
             }
             ir.add(IR.Statement.CONDITIONAL_BRANCH(position, direction, forwardEntry, backwardEntry))
             ir.setCurrentBlock(forwardEntry)
@@ -374,14 +374,14 @@ class For {
                     forwardEntryExclusive))
             ir.setCurrentBlock(forwardEntryInclusive)
             def lte := Call.compile(compiler, position, start, "<=", arg(end),
-                    TypeContext.TYPE(Type.Bit(), false))
+                    TypeContext.TYPE(compiler.BIT_TYPE, false))
             assert lte !== null
             def forwardEntryInclusiveTest := compiler.extractBuiltinBit(position, lte)
             ir.add(IR.Statement.CONDITIONAL_BRANCH(position, forwardEntryInclusiveTest, loopStart,
                     loopEnd))
             ir.setCurrentBlock(forwardEntryExclusive)
             def lt := Call.compile(compiler, position, start, "<", arg(end),
-                    TypeContext.TYPE(Type.Bit(), false))
+                    TypeContext.TYPE(compiler.BIT_TYPE, false))
             assert lt !== null
             def forwardEntryExclusiveTest := compiler.extractBuiltinBit(position, lt)
             ir.add(IR.Statement.CONDITIONAL_BRANCH(position, forwardEntryExclusiveTest, loopStart,
@@ -393,14 +393,14 @@ class For {
                     backwardEntryExclusive))
             ir.setCurrentBlock(backwardEntryInclusive)
             def gte := Call.compile(compiler, position, start, ">=", arg(end),
-                    TypeContext.TYPE(Type.Bit(), false))
+                    TypeContext.TYPE(compiler.BIT_TYPE, false))
             assert gte !== null
             def backwardEntryInclusiveTest := compiler.extractBuiltinBit(position, gte)
             ir.add(IR.Statement.CONDITIONAL_BRANCH(position, backwardEntryInclusiveTest, loopStart,
                     loopEnd))
             ir.setCurrentBlock(backwardEntryExclusive)
             def gt := Call.compile(compiler, position, start, ">", arg(end),
-                        TypeContext.TYPE(Type.Bit(), false))
+                        TypeContext.TYPE(compiler.BIT_TYPE, false))
             assert gt !== null
             def backwardEntryExclusiveTest := compiler.extractBuiltinBit(position, gt)
             ir.add(IR.Statement.CONDITIONAL_BRANCH(position, backwardEntryExclusiveTest, loopStart,
@@ -429,7 +429,7 @@ class For {
         -- always use unsigned comparison to avoid overflow; we know both the delta and the step are
         -- the same sign
         def forwardDelta := compiler.convert(Call.compile(compiler, position, end, "-",
-                arg(indexLoad), TypeContext.NON_VOID), unsigned(indexType))
+                arg(indexLoad), TypeContext.NON_VOID), unsigned(compiler, indexType))
         assert forwardDelta !== null
 
         -- forward loop; determine inclusive / exclusive
@@ -441,7 +441,7 @@ class For {
         -- forward inclusive test
         ir.setCurrentBlock(forwardInclusiveTest)
         def gte1 := Call.compile(compiler, position, forwardDelta, ">=", arg(stepComparison),
-                TypeContext.TYPE(Type.Bit(), false))
+                TypeContext.TYPE(compiler.BIT_TYPE, false))
         assert gte1 !== null
         def forwardInclusiveTestBit := compiler.extractBuiltinBit(position, gte1)
         ir.add(IR.Statement.CONDITIONAL_BRANCH(position, forwardInclusiveTestBit, loopInc, loopEnd))
@@ -449,7 +449,7 @@ class For {
         -- forward exclusive test
         ir.setCurrentBlock(forwardExclusiveTest)
         def gt1 := Call.compile(compiler, position, forwardDelta, ">", arg(stepComparison),
-                TypeContext.TYPE(Type.Bit(), false))
+                TypeContext.TYPE(compiler.BIT_TYPE, false))
         assert gt1 !== null
         def forwardExclusiveTestBit := compiler.extractBuiltinBit(position, gt1)
         ir.add(IR.Statement.CONDITIONAL_BRANCH(position, forwardExclusiveTestBit, loopInc, loopEnd))
@@ -459,7 +459,7 @@ class For {
         ir.setCurrentBlock(backwardTest)
         def sub := Call.compile(compiler, position, indexLoad, "-", arg(end), TypeContext.NON_VOID)
         assert sub !== null
-        def backwardDelta := compiler.convert(sub, unsigned(indexType))
+        def backwardDelta := compiler.convert(sub, unsigned(compiler, indexType))
         assert backwardDelta !== null
 
         -- backward loop; determine inclusive / exclusive
@@ -471,7 +471,7 @@ class For {
         -- backward inclusive test
         ir.setCurrentBlock(backwardInclusiveTest)
         def gte2 := Call.compile(compiler, position, backwardDelta, ">=", arg(negStepComparison),
-                TypeContext.TYPE(Type.Bit(), false))
+                TypeContext.TYPE(compiler.BIT_TYPE, false))
         assert gte2 !== null
         def backwardInclusiveTestBit := compiler.extractBuiltinBit(position, gte2)
         ir.add(IR.Statement.CONDITIONAL_BRANCH(position, backwardInclusiveTestBit, loopInc,
@@ -480,7 +480,7 @@ class For {
         -- backward exclusive test
         ir.setCurrentBlock(backwardExclusiveTest)
         def gt2 := Call.compile(compiler, position, backwardDelta, ">", arg(negStepComparison),
-                TypeContext.TYPE(Type.Bit(), false))
+                TypeContext.TYPE(compiler.BIT_TYPE, false))
         assert gt2 !== null
         def backwardExclusiveTestBit := compiler.extractBuiltinBit(position, gt2)
         ir.add(IR.Statement.CONDITIONAL_BRANCH(position, backwardExclusiveTestBit, loopInc,
@@ -572,10 +572,10 @@ class For {
                     when ASTNode.RANGE(_, _, _, _, step) {
                         def type:Type
                         if step !== null {
-                            type := Type.SteppedRangeOf(t)
+                            type := Type.SteppedRangeOf(compiler, t)
                         }
                         else {
-                            type := Type.RangeOf(t)
+                            type := Type.RangeOf(compiler, t)
                         }
                         list := compiler.compileExpression(rawList, TypeContext.TYPE(type, false))
                     }
@@ -588,11 +588,11 @@ class For {
                 def preferred := compiler.preferredType(rawList)
                 var type := TypeContext.NON_VOID
                 if preferred !== null & preferred.isRange {
-                    type := TypeContext.TYPE(Type.RangeOf(preferred.subtypes[1].nonnullable()),
-                            false)
+                    type := TypeContext.TYPE(Type.RangeOf(compiler,
+                            preferred.subtypes[1].nonnullable()), false)
                 }
                 else if preferred !== null & preferred.isSteppedRange {
-                    type := TypeContext.TYPE(Type.SteppedRangeOf(
+                    type := TypeContext.TYPE(Type.SteppedRangeOf(compiler,
                             preferred.subtypes[1].nonnullable(), preferred.subtypes[2]), false)
                 }
                 list := compiler.compileExpression(rawList, type)
@@ -614,11 +614,11 @@ class For {
         def endBlock := ir.newBlock("endBlock")
         def context := AutoContext(compiler, EnclosingContext.LOOP(label, endBlock, testBlock))
         assert iterator.type().typeKind = Type.Kind.GENERIC &
-                iterator.type().subtypes[0] = Type.Iterator()
+                iterator.type().subtypes[0] = compiler.ITERATOR_TYPE
         ir.add(IR.Statement.BRANCH(position, testBlock))
         ir.setCurrentBlock(testBlock)
         def compiledTest := Call.compile(compiler, position, iterator, "get_done", Array<ASTNode>(),
-                TypeContext.TYPE(Type.Bit(), false))
+                TypeContext.TYPE(compiler.BIT_TYPE, false))
         if compiledTest == null {
             return
         }
@@ -675,7 +675,7 @@ class For {
         }
         else {
             for intf in compiler.allInterfaces(list.type()) {
-                if intf.typeKind = Type.Kind.GENERIC & intf.subtypes[0] = Type.Iterator() {
+                if intf.typeKind = Type.Kind.GENERIC & intf.subtypes[0] = compiler.ITERATOR_TYPE {
                     def iterator := compiler.coerce(rawList.position(), list, intf)
                     if iterator == null {
                         return
@@ -683,7 +683,7 @@ class For {
                     compileIteratorFor(compiler, position, label, rawTarget, iterator, statements)
                     return
                 }
-                if intf.typeKind = Type.Kind.GENERIC & intf.subtypes[0] = Type.Iterable() {
+                if intf.typeKind = Type.Kind.GENERIC & intf.subtypes[0] = compiler.ITERABLE_TYPE {
                     def iterable := compiler.coerce(rawList.position(), list, intf)
                     if iterable == null {
                         return

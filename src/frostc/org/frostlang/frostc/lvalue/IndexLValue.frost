@@ -38,7 +38,7 @@ class IndexLValue : LValue {
         def types := compiler.possibleTypes(ASTNode.BINARY(position,
                 ASTNode.IR_WRAPPER(position, target), Binary.Operator.INDEX, rawIndex))
         if types == null {
-            return Type.Any()
+            return compiler.ANY_TYPE
         }
         assert types.count = 1 -- FIXME handle ambiguous matches
         return types.iterator.next()

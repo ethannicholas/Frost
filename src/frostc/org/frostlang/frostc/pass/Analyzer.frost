@@ -21,10 +21,6 @@ class Analyzer {
         -- means that we know LOCAL(0) is non-null when this value is true.
         def nonNullImplications:ListView<Pair<IR.Value, Bit>>?
 
-        init() {
-            self.type := Type.Invalid()
-        }
-
         init(type:Type) {
             self.type := type
         }
@@ -124,11 +120,11 @@ class Analyzer {
             for key in s.statements.keys {
                 var mine := statements[key]
                 if mine == null {
-                    mine := DataFlowValue()
+                    mine := DataFlowValue(compiler.INVALID_TYPE)
                 }
                 var other := s.statements[key]
                 if other == null {
-                    other := DataFlowValue()
+                    other := DataFlowValue(compiler.INVALID_TYPE)
                 }
                 def union := mine.union(compiler, other)
                 if union != mine {
@@ -169,8 +165,8 @@ class Analyzer {
 
     function getValue(v:IR.Value, s:State):DataFlowValue {
         match v {
-            when IR.Value.BIT(_) {
-                return DataFlowValue(Type.BuiltinBit())
+            when IR.Value.BIT(_, type) {
+                return DataFlowValue(type)
             }
             when IR.Value.INT(_, type) {
                 return DataFlowValue(type)
@@ -192,10 +188,10 @@ class Analyzer {
                 if result !== null {
                     return result
                 }
-                return DataFlowValue()
+                return DataFlowValue(compiler.INVALID_TYPE)
             }
-            when IR.Value.STRING {
-                return DataFlowValue(Type.StringType())
+            when IR.Value.STRING(_, type) {
+                return DataFlowValue(type)
             }
             otherwise {
                 unreachable, "unsupported value '\{v}'"
@@ -283,7 +279,7 @@ class Analyzer {
             when Binary.Operator.NIDENTITY {
                 match right {
                     when IR.Value.NULL {
-                        assert type = Type.BuiltinBit()
+                        assert type = compiler.BUILTIN_BIT_TYPE
                         def nonNullImplications := [Pair<IR.Value, Bit>(left, true)]
                         match left {
                             when IR.Value.REF(id, _) {
@@ -302,7 +298,7 @@ class Analyzer {
             when Binary.Operator.IDENTITY {
                 match right {
                     when IR.Value.NULL {
-                        assert type = Type.BuiltinBit()
+                        assert type = compiler.BUILTIN_BIT_TYPE
                         def nonNullImplications := [Pair<IR.Value, Bit>(left, false)]
                         match left {
                             when IR.Value.REF(id, _) {
@@ -358,7 +354,7 @@ class Analyzer {
                     }
                 }
                 when IR.Statement.EXTRACT_FIELD(_, target, f) {
-                    if f.owner.type = Type.Bit() {
+                    if f.owner.type = compiler.BIT_TYPE {
                         result.statements[id] := DataFlowValue(f.type,
                                 getValue(target, result).nonNullImplications)
                     }
@@ -372,7 +368,7 @@ class Analyzer {
                 when IR.Statement.LOAD(position, v) {
                     def value := getValue(v, result)
                     result.statements[id] := value
-                    if reportErrors & value.type = Type.Invalid() {
+                    if reportErrors & value.type = compiler.INVALID_TYPE {
                         --Console.printLine("uninitialized value at \{position}")
                     }
                 }
@@ -383,7 +379,7 @@ class Analyzer {
                     result.statements[id] := getValue(v, result).invert
                 }
                 when IR.Statement.POINTER_ALLOC(_, _, t) {
-                    result.statements[id] := DataFlowValue(Type.pointerTo(t))
+                    result.statements[id] := DataFlowValue(Type.pointerTo(compiler, t))
                 }
                 when IR.Statement.POINTER_GET(_, p) {
                     def value := getValue(p, result)
@@ -402,7 +398,7 @@ class Analyzer {
                     result.statements[id] := getValue(p, result)
                 }
                 when IR.Statement.STATIC_CALL(_, m, args) {
-                    if m.returnType = Type.Bit() {
+                    if m.returnType = compiler.BIT_TYPE {
                         result.statements[id] := DataFlowValue(m.returnType,
                                 getValue(args[0], result).nonNullImplications)
                     }
@@ -466,7 +462,7 @@ class Analyzer {
     }
 
     method analyze() {
-        def invalid := DataFlowValue(Type.Invalid())
+        def invalid := DataFlowValue(compiler.INVALID_TYPE)
         def startState := State()
         for i in 0 .. ir.locals.count {
             startState.locals.add(invalid)
@@ -488,7 +484,8 @@ class Analyzer {
             if entryStates[b.id] !== null {
                 match b.statements[0] {
                     when IR.Statement.END {
-                        if m.methodKind != MethodDecl.Kind.INIT & m.returnType != Type.Void() {
+                        if m.methodKind != MethodDecl.Kind.INIT &
+                                m.returnType != compiler.VOID_TYPE {
                             compiler.error(m.position, "method can exit without returning")
                         }
                     }

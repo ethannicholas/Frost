@@ -474,12 +474,12 @@ class Binary {
                     }
                     if m.annotations.isClass {
                         if m.parameters.count = 2 {
-                            return Call.compile(compiler, position, IR.Value.METHOD(null, m),
-                                    [left, right], type)
+                            return Call.compile(compiler, position, IR.Value.METHOD(null, m,
+                                    m.type(compiler)), [left, right], type)
                         }
                         assert m.parameters.count = 1
-                        return Call.compile(compiler, position, IR.Value.METHOD(null, m), [right],
-                                type)
+                        return Call.compile(compiler, position, IR.Value.METHOD(null, m,
+                                m.type(compiler)), [right], type)
                     }
                     if m.owner.name = "frost.core.Bit" {
                         if m.name = "&" {
@@ -495,8 +495,8 @@ class Binary {
                     if target == null {
                         return null
                     }
-                    return Call.compile(compiler, position, IR.Value.METHOD(target, m), [right],
-                            type)
+                    return Call.compile(compiler, position, IR.Value.METHOD(target, m,
+                            m.type(compiler)), [right], type)
                 }
                 def compiledLeft := compiler.compileExpression(left, TypeContext.NON_VOID)
                 if compiledLeft == null {
@@ -516,7 +516,7 @@ class Binary {
                 if compiledRight == null {
                     return null
                 }
-                if (compiledLeft.type() = Type.BuiltinBit() |
+                if (compiledLeft.type() = compiler.BUILTIN_BIT_TYPE |
                         compiledLeft.type().isBuiltinNumber) {
                     def resultType := compiler.preferredType(ASTNode.BINARY(position, left, op,
                              right))

@@ -31,7 +31,7 @@ class Dot {
                 if resolved == null {
                     return null
                 }
-                return compile(compiler, position, IR.Value.TYPE(resolved), name)
+                return compile(compiler, position, compiler.literalType(resolved), name)
             }
         }
         def compiledBase := compiler.compileExpression(base)

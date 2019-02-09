@@ -93,7 +93,7 @@ class FrostDoc {
                     }
                 }
                 def returnType := t.subtypes[t.subtypes.count - 1]
-                if returnType != Type.Void() {
+                if returnType != compiler.VOID_TYPE {
                     result.append(simpleName(returnType))
                 }
                 result.append(")")
@@ -493,7 +493,7 @@ class FrostDoc {
                 out.close("param")
             }
             out.close("params")
-            if m.returnType != Type.Void() {
+            if m.returnType != compiler.VOID_TYPE {
                 out.open("return")
                 write(m.returnType)
                 if returns !== null {
@@ -617,7 +617,7 @@ class FrostDoc {
             separator := ", "
         }
         result.append(")")
-        if m.returnType != Type.Void() {
+        if m.returnType != compiler.VOID_TYPE {
             result.append(":\{simpleName(m.returnType)}")
         }
         return result.finish()

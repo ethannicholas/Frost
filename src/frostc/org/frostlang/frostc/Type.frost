@@ -189,8 +189,8 @@ class Type : Symbol, Key<Type> {
     }
 
     @class
-    function methodType(position:Position, kind:Type.Kind, parameterTypes:ListView<Type>,
-            returnType:Type, priority:Int):Type {
+    function methodType(compiler:Compiler, position:Position, kind:Type.Kind,
+            parameterTypes:ListView<Type>, returnType:Type, priority:Int):Type {
         var resolved := returnType.resolved
         def name := MutableString("(")
         def subtypes := Array<Type>()
@@ -220,7 +220,7 @@ class Type : Symbol, Key<Type> {
             }
         }
         subtypes.add(returnType)
-        if returnType != Type.Void() {
+        if returnType != compiler.VOID_TYPE {
             name.append(returnType.name)
         }
         name.append(")")
@@ -254,178 +254,6 @@ class Type : Symbol, Key<Type> {
     }
 
     @class
-    method Void():Type {
-        return Type("void", Kind.VOID, Position(), true)
-    }
-
-    @class
-    method Null():Type {
-        return Type("null", Kind.NULL, Position(), true)
-    }
-
-    @class
-    method Object():Type {
-        return Type("frost.core.Object", Kind.CLASS, Position(), true)
-    }
-
-    @class
-    method Any():Type {
-        def subtypes := Array<Type>()
-        subtypes.add(Object())
-        return Type("frost.core.Object?", Kind.NULLABLE, Position(), subtypes, true)
-    }
-
-    @class
-    method Class():Type {
-        return Type("frost.core.Class", Kind.CLASS, Position(), true)
-    }
-
-    @class
-    method Immutable():Type {
-        return Type("frost.core.Immutable", Kind.CLASS, Position(), true)
-    }
-
-    @class
-    method Value():Type {
-        return Type("frost.core.Value", Kind.CLASS, Position(), true)
-    }
-
-    @class
-    method StringType():Type {
-        return Type("frost.core.String", Kind.CLASS, Position(), true)
-    }
-
-    @class
-    method Error():Type {
-        return Type("frost.core.Error", Kind.CLASS, Position(), true)
-    }
-
-    @class
-    method RegularExpression():Type {
-        return Type("frost.core.RegularExpression", Kind.CLASS, Position(), true)
-    }
-
-    @class
-    method BuiltinInt8():Type {
-        return Type("builtin_int8", Type.Kind.BUILTIN_INT, 8)
-    }
-
-    @class
-    method BuiltinInt16():Type {
-        return Type("builtin_int16", Type.Kind.BUILTIN_INT, 16)
-    }
-
-    @class
-    method BuiltinInt32():Type {
-        return Type("builtin_int32", Type.Kind.BUILTIN_INT, 32)
-    }
-
-    @class
-    method BuiltinInt64():Type {
-        return Type("builtin_int64", Type.Kind.BUILTIN_INT, 64)
-    }
-
-    @class
-    method BuiltinUInt8():Type {
-        return Type("builtin_uint8", Type.Kind.BUILTIN_UINT, 8)
-    }
-
-    @class
-    method BuiltinUInt16():Type {
-        return Type("builtin_uint16", Type.Kind.BUILTIN_UINT, 16)
-    }
-
-    @class
-    method BuiltinUInt32():Type {
-        return Type("builtin_uint32", Type.Kind.BUILTIN_UINT, 32)
-    }
-
-    @class
-    method BuiltinUInt64():Type {
-        return Type("builtin_uint64", Type.Kind.BUILTIN_UINT, 64)
-    }
-
-    @class
-    method BuiltinFloat32():Type {
-        return Type("builtin_float32", Type.Kind.BUILTIN_FLOAT, 32)
-    }
-
-    @class
-    method BuiltinFloat64():Type {
-        return Type("builtin_float64", Type.Kind.BUILTIN_FLOAT, 64)
-    }
-
-    @class
-    method Int8():Type {
-        return Type("frost.core.Int8", Kind.CLASS, Position(), true)
-    }
-
-    @class
-    method Int16():Type {
-        return Type("frost.core.Int16", Kind.CLASS, Position(), true)
-    }
-
-    @class
-    method Int32():Type {
-        return Type("frost.core.Int32", Kind.CLASS, Position(), true)
-    }
-
-    @class
-    method Int64():Type {
-        return Type("frost.core.Int64", Kind.CLASS, Position(), true)
-    }
-
-    @class
-    method UInt8():Type {
-        return Type("frost.core.UInt8", Kind.CLASS, Position(), true)
-    }
-
-    @class
-    method UInt16():Type {
-        return Type("frost.core.UInt16", Kind.CLASS, Position(), true)
-    }
-
-    @class
-    method UInt32():Type {
-        return Type("frost.core.UInt32", Kind.CLASS, Position(), true)
-    }
-
-    @class
-    method UInt64():Type {
-        return Type("frost.core.UInt64", Kind.CLASS, Position(), true)
-    }
-
-    @class
-    method Real32():Type {
-        return Type("frost.core.Real32", Kind.CLASS, Position(), true)
-    }
-
-    @class
-    method Real64():Type {
-        return Type("frost.core.Real64", Kind.CLASS, Position(), true)
-    }
-
-    @class
-    method Char8():Type {
-        return Type("frost.core.Char8", Kind.CLASS, Position(), true)
-    }
-
-    @class
-    method Char16():Type {
-        return Type("frost.core.Char16", Kind.CLASS, Position(), true)
-    }
-
-    @class
-    method Char32():Type {
-        return Type("frost.core.Char32", Kind.CLASS, Position(), true)
-    }
-
-    @class
-    method Bit():Type {
-        return Type("frost.core.Bit", Kind.CLASS, Position(), true)
-    }
-
-    @class
     method IntLiteral(value:UInt64):Type {
         return Type("IntegerLiteral(\{value})", Kind.INT_LITERAL, Position(), true)
     }
@@ -441,118 +269,61 @@ class Type : Symbol, Key<Type> {
     }
 
     @class
-    method BitLiteral():Type {
-        return Type("$bit_literal", Kind.BIT_LITERAL, Position(), true)
+    method ClassLiteral(compiler:Compiler, t:Type):Type {
+        return generic(compiler.CLASS_TYPE, [t])
     }
 
     @class
-    method ClassLiteral(t:Type):Type {
+    method WeakOf(compiler:Compiler, t:Type):Type {
+        return Type("\{Compiler.WEAK_NAME}<\{t}>", Kind.GENERIC, t.position,
+                [compiler.WEAK_TYPE, t], t.resolved)
+    }
+
+    @class
+    method pointerTo(compiler:Compiler, t:Type):Type {
+        return generic(compiler.POINTER_TYPE, [t])
+    }
+
+    @class
+    method ArrayOf(compiler:Compiler, t:Type):Type {
+        return generic(compiler.ARRAY_TYPE, [t])
+    }
+
+    @class
+    method ImmutableArrayOf(compiler:Compiler, t:Type):Type {
+        return generic(compiler.IMMUTABLE_ARRAY_TYPE, [t])
+    }
+
+    @class
+    method RangeOf(compiler:Compiler, t:Type):Type {
+        return generic(compiler.RANGE_TYPE, [t])
+    }
+
+    @class
+    method SteppedRangeOf(compiler:Compiler, t:Type):Type {
         def children := Array<Type>() -- FIXME literal
         children.add(t)
-        return generic(Class(), children)
-    }
-
-    @class
-    method BuiltinBit():Type {
-        return Type("builtin_bit", Kind.BUILTIN_BIT, Position(), true)
-    }
-
-    @class
-    method Iterator():Type {
-        return Type("frost.collections.Iterator", Kind.CLASS, Position(), true)
-    }
-
-    @class
-    method Iterable():Type {
-        return Type("frost.collections.Iterable", Kind.CLASS, Position(), true)
-    }
-
-    @class
-    method Frost():Type {
-        return Type("frost.core.Frost", Kind.CLASS, Position(), true)
-    }
-
-    @class
-    method Method():Type {
-        return Type("frost.core.Method", Kind.CLASS, Position(), true)
-    }
-
-    @class
-    method MutableMethod():Type {
-        return Type("frost.core.MutableMethod", Kind.CLASS, Position(), true)
-    }
-
-    @class
-    method WeakOf(t:Type):Type {
-        def children := Array<Type>() -- FIXME literal
-        children.add(Type(Compiler.WEAK_NAME, Kind.CLASS, Position(), true))
-        children.add(t)
-        return Type("\{Compiler.WEAK_NAME}<\{t}>", Kind.GENERIC, t.position, children, t.resolved)
-    }
-
-    @class
-    method pointerTo(t:Type):Type {
-        def children := Array<Type>() -- FIXME literal
-        children.add(t)
-        return generic(Type("frost.unsafe.Pointer", Kind.CLASS, Position(), true), children)
-    }
-
-    @class
-    method ArrayOf(t:Type):Type {
-        def children := Array<Type>() -- FIXME literal
-        children.add(t)
-        return generic(Type(Compiler.ARRAY_NAME, Kind.CLASS, Position(), true), children)
-    }
-
-    @class
-    method ImmutableArrayOf(t:Type):Type {
-        def children := Array<Type>() -- FIXME literal
-        children.add(t)
-        return generic(Type(Compiler.IMMUTABLE_ARRAY_NAME, Kind.CLASS, Position(), true), children)
-    }
-
-    @class
-    method RangeOf(t:Type):Type {
-        def children := Array<Type>() -- FIXME literal
-        children.add(t)
-        return generic(Type(Compiler.RANGE_NAME, Kind.CLASS, Position(), true), children)
-    }
-
-    @class
-    method SteppedRangeOf(t:Type):Type {
-        def children := Array<Type>() -- FIXME literal
-        children.add(t)
-        if t.nonnullable() = Char8() {
-            children.add(Int8())
+        if t.nonnullable() = compiler.CHAR8_TYPE {
+            children.add(compiler.INT8_TYPE)
         }
-        else if t.nonnullable() = Char16() {
-            children.add(Int16())
+        else if t.nonnullable() = compiler.CHAR16_TYPE {
+            children.add(compiler.INT16_TYPE)
         }
-        else if t.nonnullable() = Char32() {
-            children.add(Int32())
+        else if t.nonnullable() = compiler.CHAR32_TYPE {
+            children.add(compiler.INT32_TYPE)
         }
         else {
             children.add(t.nonnullable())
         }
-        return generic(Type(Compiler.STEPPED_RANGE_NAME, Kind.CLASS, Position(), true), children)
+        return generic(compiler.STEPPED_RANGE_TYPE, children)
     }
 
     @class
-    method SteppedRangeOf(endpoint:Type, step:Type):Type {
+    method SteppedRangeOf(compiler:Compiler, endpoint:Type, step:Type):Type {
         def children := Array<Type>() -- FIXME literal
         children.add(endpoint)
         children.add(step)
-        return generic(Type(Compiler.STEPPED_RANGE_NAME, Kind.CLASS, Position(), true), children)
-    }
-
-    @class
-    method ChoiceData():Type {
-        return Type("<choice data>", Kind.INVALID, Position(), true)
-    }
-
-    @class
-    method Invalid():Type {
-        return Type("<invalid>", Kind.INVALID, Position(), true)
+        return generic(compiler.STEPPED_RANGE_TYPE, children)
     }
 
     function get_isNumber():Bit {
@@ -596,7 +367,7 @@ class Type : Symbol, Key<Type> {
     }
 
     function get_isClassLiteral():Bit {
-        return typeKind = Kind.GENERIC & subtypes[0] = Class()
+        return typeKind = Kind.GENERIC & subtypes[0].name = "frost.core.Class"
     }
 
     function get_isTuple():Bit {
@@ -671,22 +442,22 @@ class Type : Symbol, Key<Type> {
         if self = other {
             return self
         }
-        if self = Null() {
+        if self = compiler.NULL_TYPE {
             if other.typeKind = Kind.NULLABLE {
                 return other
             }
             return other.nullable()
         }
-        if other = Null() {
+        if other = compiler.NULL_TYPE {
             if typeKind = Kind.NULLABLE {
                 return self
             }
             return nullable()
         }
-        if self = Invalid() {
+        if self = compiler.INVALID_TYPE {
             return self
         }
-        if other = Invalid() {
+        if other = compiler.INVALID_TYPE {
             return self
         }
         if typeKind = Kind.INT_LITERAL & other.isNumber {
@@ -701,9 +472,9 @@ class Type : Symbol, Key<Type> {
             }
             if other.isNumber {
                 if other.name.endsWith("64") {
-                    return Real64()
+                    return compiler.REAL64_TYPE
                 }
-                return Real32()
+                return compiler.REAL32_TYPE
             }
         }
         if other.isReal {
@@ -712,9 +483,9 @@ class Type : Symbol, Key<Type> {
             }
             if isNumber {
                 if name.endsWith("64") {
-                    return Real64()
+                    return compiler.REAL64_TYPE
                 }
-                return Real32()
+                return compiler.REAL32_TYPE
             }
         }
         if typeKind = Kind.NULLABLE {
@@ -754,7 +525,7 @@ class Type : Symbol, Key<Type> {
                 }
             }
         }
-        return Type.Object()
+        return compiler.OBJECT_TYPE
     }
 
     ================================================================================================
@@ -769,7 +540,7 @@ class Type : Symbol, Key<Type> {
 
     @pre(typeKind != Kind.INVALID)
     @post(@return.typeKind != Kind.INVALID)
-    method remap(types:HashMap<String, Type>):Type {
+    method remap(compiler:Compiler, types:HashMap<String, Type>):Type {
         if types.count = 0 {
             return self
         }
@@ -782,29 +553,29 @@ class Type : Symbol, Key<Type> {
                 return self
             }
             when Kind.GENERIC {
-                def base := subtypes[0].remap(types)
+                def base := subtypes[0].remap(compiler, types)
                 def remappedArgs := Array<Type>()
                 for i in 1 .. subtypes.count {
-                    remappedArgs.add(subtypes[i].remap(types))
+                    remappedArgs.add(subtypes[i].remap(compiler, types))
                 }
                 return generic(base, remappedArgs)
             }
             when Kind.NULLABLE {
-                return subtypes[0].remap(types).nullable()
+                return subtypes[0].remap(compiler, types).nullable()
             }
             when Kind.METHOD, Kind.FUNCTION, Kind.IMMUTABLE_METHOD, Kind.IMMUTABLE_FUNCTION {
                 def parameters := Array<Type>()
                 assert subtypes.count >= 1
                 for i in 0 .. subtypes.count - 1 {
-                    parameters.add(subtypes[i].remap(types))
+                    parameters.add(subtypes[i].remap(compiler, types))
                 }
-                return methodType(position, typeKind, parameters,
-                        subtypes[subtypes.count - 1].remap(types), priority)
+                return methodType(compiler, position, typeKind, parameters,
+                        subtypes[subtypes.count - 1].remap(compiler, types), priority)
             }
             when Kind.TUPLE {
                 def remappedArgs := Array<Type>()
                 for a in subtypes {
-                    remappedArgs.add(a.remap(types))
+                    remappedArgs.add(a.remap(compiler, types))
                 }
                 return tuple(remappedArgs)
             }

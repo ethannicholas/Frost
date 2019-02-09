@@ -20,7 +20,7 @@ class Identifier {
             def cl := compiler.tryResolveClass(name)
             if cl !== null {
                 compiler.checkGenericArguments(position, cl, cl.type)
-                return IR.Value.TYPE(cl.type)
+                return compiler.literalType(cl.type)
             }
         }
         if s !== null {

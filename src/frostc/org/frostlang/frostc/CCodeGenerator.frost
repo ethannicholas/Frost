@@ -107,10 +107,10 @@ class CCodeGenerator : CodeGenerator {
         }
         match t.typeKind {
             when Type.Kind.METHOD, Type.Kind.FUNCTION {
-                return cType(Type.MutableMethod())
+                return cType(compiler.MUTABLE_METHOD_TYPE)
             }
             when Type.Kind.IMMUTABLE_METHOD, Type.Kind.IMMUTABLE_FUNCTION {
-                return cType(Type.Method())
+                return cType(compiler.METHOD_TYPE)
             }
             when Type.Kind.GENERIC {
                 if t.subtypes[0].name = "frost.unsafe.Pointer" & t.subtypes[1].isMethod {
@@ -255,10 +255,10 @@ class CCodeGenerator : CodeGenerator {
     function sizeOfWrapper(t:Type):Int {
         def cl := compiler.getClass(t)
         assert cl !== null & compiler.isValue(cl)
-        var result := sizeOf(Type.Object())
+        var result := sizeOf(compiler.OBJECT_TYPE)
         for f in compiler.instanceFields(cl) {
             compiler.resolve(f)
-            if f.type = Type.ChoiceData() {
+            if f.type = compiler.CHOICE_DATA_TYPE {
                 -- FIXME need to respect alignment!
                 result += hCodeGen.llvmCodeGen.getChoiceDataSize(cl)
             }
@@ -334,8 +334,8 @@ class CCodeGenerator : CodeGenerator {
             def intfCC := getClassConstant(intf)
             def methods := compiler.interfaceMethods(cl, intfType)
             def name := "\{escapeName(cl.name)}$_\{escapeName(intf.name)}"
-            def result := MutableString("struct { \{cType(Type.Class())} cl; ITable* next; " +
-                    "void* methods[\{methods.count}]; } \{name} = { " +
+            def result := MutableString("struct { \{cType(compiler.CLASS_TYPE)} cl; " +
+                    "ITable* next; void* methods[\{methods.count}]; } \{name} = { " +
                     "(frost$core$Class*) &\{intfCC.name}, \{previous}, { ")
             var separator := ""
             for m in methods {
@@ -376,7 +376,7 @@ class CCodeGenerator : CodeGenerator {
             def indirect := needsStructIndirection(raw)
             def effectiveReturnType:Type
             if indirect {
-                effectiveReturnType := Type.Void()
+                effectiveReturnType := compiler.VOID_TYPE
             }
             else {
                 effectiveReturnType := effective.returnType
@@ -424,7 +424,7 @@ class CCodeGenerator : CodeGenerator {
                     casts.add(p)
                 }
             }
-            if effectiveReturnType != Type.Void() {
+            if effectiveReturnType != compiler.VOID_TYPE {
                 out.print("\{cType(raw.returnType)} result = ")
             }
             out.print("\{getName(raw)}(")
@@ -439,7 +439,7 @@ class CCodeGenerator : CodeGenerator {
             }
             out.printLine(");")
             out.printLine(unrefs)
-            if effectiveReturnType != Type.Void() {
+            if effectiveReturnType != compiler.VOID_TYPE {
                 out.printLine("return " + getCastReference("result", raw.returnType,
                         effectiveReturnType) + ";")
             }
@@ -465,9 +465,9 @@ class CCodeGenerator : CodeGenerator {
                 def intfCC := getClassConstant(intf)
                 def methods := compiler.interfaceMethods(cl, intfType)
                 def name := "\{escapeName(cl.name)}$wrapper_\{escapeName(intf.name)}"
-                def result := MutableString("struct { \{cType(Type.Class())} cl; ITable* itable; " +
-                        "void* methods[\{methods.count}]; } \{name} = { " +
-                        "(\{cType(Type.Class())}) &\{intfCC.name}, \{previous}, { ")
+                def result := MutableString("struct { \{cType(compiler.CLASS_TYPE)} cl; " +
+                        "ITable* itable; void* methods[\{methods.count}]; } \{name} = { " +
+                        "(\{cType(compiler.CLASS_TYPE)}) &\{intfCC.name}, \{previous}, { ")
                 var separator := ""
                 for m in methods {
                     result.append(separator)
@@ -503,7 +503,7 @@ class CCodeGenerator : CodeGenerator {
         def declared := compiler.declaredTypeWithSelf(m, m.owner.type, false)
         def effectiveSelf:Type
         if compiler.isValue(m.owner) {
-            effectiveSelf := Type.Object()
+            effectiveSelf := compiler.OBJECT_TYPE
         }
         else {
             effectiveSelf := m.owner.type
@@ -544,7 +544,7 @@ class CCodeGenerator : CodeGenerator {
                 else {
                     superPtr := "NULL"
                 }
-                def clConstant := getClassConstant(compiler.getClass(Type.Class()))
+                def clConstant := getClassConstant(compiler.getClass(compiler.CLASS_TYPE))
                 def name := getStringReference(cl.name)
                 assert name.startsWith("&")
                 def code := MutableString("static frost$core$String \{name[1..]};\n" +
@@ -580,20 +580,20 @@ class CCodeGenerator : CodeGenerator {
             var result := classConstants[name]
             if result == null {
                 if isExternal(cl) {
-                    cType(Type.Class())
+                    cType(compiler.CLASS_TYPE)
                     def type := "%frost$core$Class"
                     types.printLine("\{name} = external global \{type}")
                     result := ClassConstant(name, type)
                 }
                 else {
-                    def value := compiler.getClass(Type.Value())
+                    def value := compiler.getClass(compiler.VALUE_TYPE)
                     def valueVTable := compiler.getVTable(value)
                     result := ClassConstant("\{escapeName(cl.name)}$wrapperclass", "<error>")
                     def vtable := compiler.getVTable(cl)
                     def superCC := getClassConstant(compiler.getClass(cl.rawSuper))
                     def superCast := "(frost$core$Class*) &\{superCC.name}"
                     def itable := getWrapperITable(cl)
-                    def clConstant := getClassConstant(compiler.getClass(Type.Class()))
+                    def clConstant := getClassConstant(compiler.getClass(compiler.CLASS_TYPE))
                     def name := getStringReference(cl.name)
                     assert name.startsWith("&")
                     def code := MutableString("static frost$core$String \{name[1..]};\n" +
@@ -777,7 +777,7 @@ class CCodeGenerator : CodeGenerator {
                     break
                 }
             }
-            index -= compiler.getVTable(compiler.getClass(Type.Object())).count
+            index -= compiler.getVTable(compiler.getClass(compiler.OBJECT_TYPE)).count
             assert index != -1
             def result := nextVar()
             def methodType := cMethodType(compiler.inheritedTypeWithSelf(m), null)
@@ -934,7 +934,7 @@ class CCodeGenerator : CodeGenerator {
         try {
             varCount += 1
             def result := "$s\{varCount}"
-            cType(Type.StringType())
+            cType(compiler.STRING_TYPE)
             strings.print("static frost$core$String \{result} = { " +
                     "(frost$core$Class*) &frost$core$String$class, \{NO_REFCNT}, 0, " +
                     "(frost$core$Char8*) \"")
@@ -963,7 +963,7 @@ class CCodeGenerator : CodeGenerator {
 
     method getReference(v:IR.Value):String {
         match v {
-            when IR.Value.BIT(value) {
+            when IR.Value.BIT(value, _) {
                 return value.asString
             }
             when IR.Value.INT(value, _) {
@@ -994,7 +994,7 @@ class CCodeGenerator : CodeGenerator {
                 }
                 return refs[id]
             }
-            when IR.Value.STRING(s) {
+            when IR.Value.STRING(s, _) {
                 return getStringReference(s)
             }
             otherwise {
@@ -1230,7 +1230,7 @@ class CCodeGenerator : CodeGenerator {
                 type := type.subtypes[1]
             }
             def returnType := type.returnType
-            if returnType != Type.Void() {
+            if returnType != compiler.VOID_TYPE {
                 def result := nextVar()
                 out.print("\{cType(returnType)} \{result} = ")
                 refs[id] := result
@@ -1463,7 +1463,7 @@ class CCodeGenerator : CodeGenerator {
             def actualResultType := cType(m.returnType)
             var separator := ""
             def result:String?
-            if m.returnType != Type.Void() {
+            if m.returnType != compiler.VOID_TYPE {
                 result := nextVar()
                 if indirect {
                     out.printLine("\{actualResultType} \{result};")

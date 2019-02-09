@@ -23,7 +23,7 @@ class Try {
         if error !== null {
             match error {
                 when ASTNode.IDENTIFIER(_, name) {
-                    errorVar := Variable(position, Variable.Kind.DEF, name, Type.Error(),
+                    errorVar := Variable(position, Variable.Kind.DEF, name, compiler.ERROR_TYPE,
                             Variable.Storage.LOCAL(ir.locals.count))
                     errorVar.owner := compiler.currentMethod[0]
                     if compiler.isRefCounted(errorVar.type) {

@@ -20,7 +20,7 @@ class StubCodeGenerator : CodeGenerator {
         var result := "(" + types[..types.count - 1].map(s => self.type(s)).join(", ") +
                         ")\{yields}("
         def returnType := types[types.count - 1]
-        if returnType != Type.Void() {
+        if returnType != compiler.VOID_TYPE {
             result += type(returnType)
         }
         return result + ")"
@@ -143,7 +143,7 @@ class StubCodeGenerator : CodeGenerator {
                     out.print("{}")
                 }
             }
-            else if m.returnType != Type.Void() {
+            else if m.returnType != compiler.VOID_TYPE {
                 out.printLine(":\{type(m.returnType)}")
             }
             if m.annotations.isInline {

@@ -21,7 +21,7 @@ class Assert {
             def args := Array<ASTNode>()
             args.add(ASTNode.STRING(position, compiler.currentClass[0].source.name))
             args.add(ASTNode.INT(position, position.line.asUInt64))
-            def frost := compiler.getClass(Type.Frost())
+            def frost := compiler.getClass(compiler.FROST_TYPE)
             def m:MethodDecl
             if msg !== null {
                 m := compiler.getSymbolTable(frost)["assertionFailure"]->Methods.methods[0]
@@ -33,8 +33,8 @@ class Assert {
             if !compiler.resolve(m) {
                 return
             }
-            Call.compile(compiler, position, null, MethodRef(compiler, Type.Frost(), m), args,
-                    TypeContext.UNSPECIFIED)
+            Call.compile(compiler, position, null, MethodRef(compiler, compiler.FROST_TYPE, m),
+                    args, TypeContext.UNSPECIFIED)
         }
         compiler.ir.add(IR.Statement.UNREACHABLE(position))
     }
@@ -42,7 +42,8 @@ class Assert {
     @class
     method compile(compiler:Compiler, position:Position, test:ASTNode, msg:ASTNode?) {
         def ir := compiler.ir
-        def compiledTest := compiler.compileExpression(test, TypeContext.TYPE(Type.Bit(), false))
+        def compiledTest := compiler.compileExpression(test, TypeContext.TYPE(compiler.BIT_TYPE,
+                false))
         if compiledTest == null {
             return
         }

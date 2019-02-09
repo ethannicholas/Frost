@@ -14,10 +14,10 @@ class Or {
             type:TypeContext):IR.Value? {
         def ir := compiler.ir
         -- FIXME should add phis so we can avoid using a local        
-        def result := IR.Value.LOCAL(ir.locals.count, Type.Bit())
-        ir.locals.add(Type.Bit())
+        def result := IR.Value.LOCAL(ir.locals.count, compiler.BIT_TYPE)
+        ir.locals.add(compiler.BIT_TYPE)
         def compiledLeft:IR.Value?
-        compiledLeft := compiler.compileExpression(left, TypeContext.TYPE(Type.Bit(), false))
+        compiledLeft := compiler.compileExpression(left, TypeContext.TYPE(compiler.BIT_TYPE, false))
         if compiledLeft == null {
             return null
         }
@@ -33,7 +33,8 @@ class Or {
         def compiledRight:IR.Value?
         {
             def unrefs := AutoUnrefs(compiler)
-            compiledRight := compiler.compileExpression(right, TypeContext.TYPE(Type.Bit(), false))
+            compiledRight := compiler.compileExpression(right, TypeContext.TYPE(compiler.BIT_TYPE,
+                    false))
             if compiledRight == null {
                 return null
             }
@@ -42,7 +43,7 @@ class Or {
         ir.add(IR.Statement.BRANCH(position, merge))
         ir.setCurrentBlock(merge)
         def load := ir.add(IR.Statement.LOAD(position, result))
-        return IR.Value.REF(load, Type.Bit())
+        return IR.Value.REF(load, compiler.BIT_TYPE)
     }
 
     @class

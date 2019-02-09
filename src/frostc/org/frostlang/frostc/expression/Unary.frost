@@ -67,9 +67,10 @@ class Unary {
                 if target == null {
                     return null
                 }
-                if target.type() = Type.BuiltinBit() {
+                if target.type() = compiler.BUILTIN_BIT_TYPE {
                     def result := ir.add(IR.Statement.NOT(position, target))
-                    return compiler.coerce(position, IR.Value.REF(result, Type.BuiltinBit()), type)
+                    return compiler.coerce(position, IR.Value.REF(result,
+                            compiler.BUILTIN_BIT_TYPE), type)
                 }
                 return Call.compile(compiler, position, target, "!", [], type)
             }

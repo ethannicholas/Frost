@@ -39,7 +39,7 @@ class MethodRef {
         self.target := target
         def found := compiler.findType(target, value.owner)
         assert found !== null, "findType(\{target}, \{value.owner.name}) failed"
-        var methodType := value.type
+        var methodType := value.type(compiler)
         if !value.annotations.isClass & value.methodKind != MethodDecl.Kind.INIT &
                 target.isClassLiteral {
             def parameterTypes := Array<Type>()
@@ -57,7 +57,7 @@ class MethodRef {
                     unreachable
                 }
             }
-            methodType := Type.methodType(methodType.position, typeKind, parameterTypes,
+            methodType := Type.methodType(compiler, methodType.position, typeKind, parameterTypes,
                     methodType.returnType, methodType.priority)
         }
         else if !compiler.isImmutable(target) & value.methodKind != MethodDecl.Kind.INIT {
@@ -73,20 +73,20 @@ class MethodRef {
                     unreachable
                 }
             }
-            methodType := Type.methodType(methodType.position, typeKind,
+            methodType := Type.methodType(compiler, methodType.position, typeKind,
                     methodType.subtypes[0 .. methodType.subtypes.count - 1],
                     methodType.returnType, methodType.priority)
         }
         if compiler.getTryScope() !== null {
             def returnType := methodType.returnType
-            if returnType = Type.Error().nullable() {
-                methodType := Type.methodType(methodType.position, methodType.typeKind,
-                        methodType.subtypes[0 .. methodType.subtypes.count - 1], Type.Void(),
+            if returnType = compiler.ERROR_TYPE.nullable() {
+                methodType := Type.methodType(compiler, methodType.position, methodType.typeKind,
+                        methodType.subtypes[0 .. methodType.subtypes.count - 1], compiler.VOID_TYPE,
                         methodType.priority)
             }
             else if returnType.typeKind = Type.Kind.GENERIC &
                     returnType.subtypes[0].name = "frost.core.Maybe" {
-                methodType := Type.methodType(methodType.position, methodType.typeKind,
+                methodType := Type.methodType(compiler, methodType.position, methodType.typeKind,
                         methodType.subtypes[0 .. methodType.subtypes.count - 1],
                         returnType.subtypes[1], methodType.priority)
             }
@@ -98,7 +98,7 @@ class MethodRef {
             for i in 0 .. genericArguments.count {
                 map[prefix + value.genericParameters[i].name] := genericArguments[i]
             }
-            self.effectiveType := effectiveType.remap(map)
+            self.effectiveType := effectiveType.remap(compiler, map)
         }
         else {
             self.effectiveType := effectiveType

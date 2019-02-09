@@ -124,7 +124,8 @@ class FieldLValue : LValue {
             def args := Array<ASTNode>() -- FIXME literal
             args.add(ASTNode.IR_WRAPPER(position, rawValue))
             value := compiler.compileExpression(ASTNode.CALL(position,
-                    ASTNode.IR_WRAPPER(position, IR.Value.TYPE(Type.WeakOf(effectiveType))),
+                    ASTNode.IR_WRAPPER(position, compiler.literalType(Type.WeakOf(compiler,
+                        effectiveType))),
                     FixedArray<ASTNode>.from(args)))
         }
         else {

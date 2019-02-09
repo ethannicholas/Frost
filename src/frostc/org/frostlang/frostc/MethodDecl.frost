@@ -74,8 +74,6 @@ class MethodDecl : Symbol {
 
     property isVirtual:Bit
 
-    property type:Type
-
     property signature:String
 
     property declaration:String
@@ -158,7 +156,7 @@ class MethodDecl : Symbol {
         return 0
     }
 
-    function get_type():Type {
+    function type(compiler:Compiler):Type {
         def paramTypes := Array<Type>(parameters.count) -- FIXME use map
         for p in parameters {
             paramTypes.add(p.type)
@@ -170,7 +168,7 @@ class MethodDecl : Symbol {
          else {
             kind := Type.Kind.IMMUTABLE_METHOD
         }
-        return Type.methodType(position, kind, paramTypes, returnType, priority)
+        return Type.methodType(compiler, position, kind, paramTypes, returnType, priority)
     }
 
     function get_signature():String {
@@ -182,7 +180,7 @@ class MethodDecl : Symbol {
             separator := ", "
         }
         result.append(")")
-        if returnType != Type.Void() {
+        if returnType.name != "void" {
             result.append(":\{returnType}")
         }
         return result.finish()

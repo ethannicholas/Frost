@@ -38,14 +38,14 @@ class Call {
         match m.value.name {
             when "alloc" {
                 def count := compiler.compileExpression(args[0],
-                        TypeContext.TYPE(Type.Int64(), false))
+                        TypeContext.TYPE(compiler.INT64_TYPE, false))
                 if count == null {
                     return Pair<Bit, IR.Value?>(false, null)
                 }
                 def alloc := ir.add(IR.Statement.POINTER_ALLOC(position,
                         compiler.extractBuiltinInt(position, count), pointerType))
                 return Pair<Bit, IR.Value?>(true,
-                        IR.Value.REF(alloc, Type.pointerTo(pointerType)))
+                        IR.Value.REF(alloc, Type.pointerTo(compiler, pointerType)))
             }
             when "destroy" {
                 assert target !== null
@@ -55,12 +55,12 @@ class Call {
             when "realloc" {
                 assert target !== null
                 def oldCount := compiler.compileExpression(args[0],
-                        TypeContext.TYPE(Type.Int64(), false))
+                        TypeContext.TYPE(compiler.INT64_TYPE, false))
                 if oldCount == null {
                     return Pair<Bit, IR.Value?>(false, null)
                 }
                 def newCount := compiler.compileExpression(args[1],
-                        TypeContext.TYPE(Type.Int64(), false))
+                        TypeContext.TYPE(compiler.INT64_TYPE, false))
                 if newCount == null {
                     return Pair<Bit, IR.Value?>(false, null)
                 }
@@ -68,7 +68,7 @@ class Call {
                         compiler.extractBuiltinInt(position, oldCount),
                         compiler.extractBuiltinInt(position, newCount)))
                 return Pair<Bit, IR.Value?>(true,
-                        IR.Value.REF(realloc, Type.pointerTo(pointerType)))
+                        IR.Value.REF(realloc, Type.pointerTo(compiler, pointerType)))
             }
             when "get" {
                 assert target !== null
@@ -78,16 +78,16 @@ class Call {
             when "offset" {
                 assert target !== null
                 def value := compiler.compileExpression(args[0],
-                        TypeContext.TYPE(Type.Int64(), false))
+                        TypeContext.TYPE(compiler.INT64_TYPE, false))
                 def offset := ir.add(IR.Statement.POINTER_OFFSET(position, target,
                         compiler.extractBuiltinInt(position, value)))
                 return Pair<Bit, IR.Value?>(true, IR.Value.REF(offset,
-                        Type.pointerTo(pointerType)))
+                        Type.pointerTo(compiler, pointerType)))
             }
             when "[]" {
                 assert target !== null
                 def index := compiler.compileExpression(args[0],
-                        TypeContext.TYPE(Type.Int64(), false))
+                        TypeContext.TYPE(compiler.INT64_TYPE, false))
                 if index == null {
                     return Pair<Bit, IR.Value?>(false, null)
                 }
@@ -98,14 +98,15 @@ class Call {
             when "[]:=" {
                 assert target !== null
                 def index := compiler.compileExpression(args[0],
-                        TypeContext.TYPE(Type.Int64(), false))
+                        TypeContext.TYPE(compiler.INT64_TYPE, false))
                 def value := compiler.compileExpression(args[1],
                         TypeContext.TYPE(pointerType, false))
                 if index !== null & value !== null {
                     def indexValue := compiler.extractBuiltinInt(position, index)
                     if compiler.isRefCounted(pointerType) {
                         compiler.compileRef(value)
-                        def load := ir.add(IR.Statement.POINTER_GET_INDEX(position, target, indexValue))
+                        def load := ir.add(IR.Statement.POINTER_GET_INDEX(position, target,
+                                indexValue))
                         compiler.compileUnref(IR.Value.REF(load, pointerType))
                     }
                     ir.add(IR.Statement.POINTER_SET_INDEX(position, value, target, indexValue))
@@ -115,7 +116,7 @@ class Call {
             when "clear" {
                 def nullableType := pointerType.nullable()
                 def index := compiler.compileExpression(args[0],
-                        TypeContext.TYPE(Type.Int64(), false))
+                        TypeContext.TYPE(compiler.INT64_TYPE, false))
                 if compiler.isRefCounted(nullableType) {
                     def indexValue := compiler.extractBuiltinInt(position, index)
                     def load := ir.add(IR.Statement.POINTER_GET_INDEX(position, target, indexValue))
@@ -150,8 +151,8 @@ class Call {
         def builtinLeft := compiler.extractBuiltinInt(position, left)
         def builtin:IR.Statement.ID
         def builtinResultType:Type
-        if resultType = Type.Bit() {
-            builtinResultType := Type.BuiltinBit()
+        if resultType = compiler.BIT_TYPE {
+            builtinResultType := compiler.BUILTIN_BIT_TYPE
         }
         else {
             builtinResultType :=  builtinLeft.type()
@@ -160,8 +161,8 @@ class Call {
                 compiler.extractBuiltinInt(position, right), builtinResultType))
         def constructArgs := Array<ASTNode>()
         constructArgs.add(ASTNode.IR_WRAPPER(position, IR.Value.REF(builtin, builtinResultType)))
-        def construct := Call.compile(compiler, position, IR.Value.TYPE(resultType), constructArgs,
-                TypeContext.TYPE(resultType, false))
+        def construct := Call.compile(compiler, position, compiler.literalType(resultType),
+                constructArgs, TypeContext.TYPE(resultType, false))
         assert construct !== null
         return Pair<Bit, IR.Value?>(true, construct)
     }
@@ -250,7 +251,7 @@ class Call {
                 assert m.value.parameters.count = 1
                 assert args.count = 1
                 def paramType := m.value.parameters[0].type
-                if paramType = Type.BuiltinBit() {
+                if paramType = compiler.BUILTIN_BIT_TYPE {
                     def value := compiler.compileExpression(args[0],
                             TypeContext.TYPE(paramType, false))
                     if value !== null {
@@ -273,7 +274,7 @@ class Call {
         if m.target.isNumber {
             return compileNumberIntrinsic(compiler, position, target, m, args)
         }
-        if m.target = Type.Bit() {
+        if m.target = compiler.BIT_TYPE {
             return compileBitIntrinsic(compiler, position, target, m, args)
         }
         return Pair<Bit, IR.Value?>(false, null)
@@ -330,17 +331,17 @@ class Call {
     }
 
     @class
-    function methodRemap(type:Type, map:HashMap<String, Type>):Type {
+    function methodRemap(compiler:Compiler, type:Type, map:HashMap<String, Type>):Type {
         if type.typeKind = Type.Kind.NULLABLE {
-            return methodRemap(type.nonnullable(), map).nullable()
+            return methodRemap(compiler, type.nonnullable(), map).nullable()
         }
         if type.isMethod {
             def parameterTypes := Array<Type>()
             for i in 0 .. type.subtypes.count - 1 {
-                parameterTypes.add(type.subtypes[i].remap(map))
+                parameterTypes.add(type.subtypes[i].remap(compiler, map))
             }
-            return Type.methodType(type.position, type.typeKind, parameterTypes, type.returnType,
-                    type.priority)
+            return Type.methodType(compiler, type.position, type.typeKind, parameterTypes,
+                    type.returnType, type.priority)
         }
         return type
     }
@@ -360,13 +361,14 @@ class Call {
                         m.value.genericParameters[i].name] := result[i]
             }
             for i in 0 .. m.value.parameters.count {
-                def paramType := methodRemap(m.parameterType(i), remaps)
+                def paramType := methodRemap(compiler, m.parameterType(i), remaps)
                 def generics := findGenericParameters(m.value, paramType)
                 if generics !== null {
                     for g in generics {
                         var argType := compiler.coercionCost(args[i], paramType)
                         if argType == null {
-                            Console.printLine("note: can't coerce '\{args[i]}' to \{paramType.remap(remaps)}")
+                            Console.printLine("note: can't coerce '\{args[i]}' to " +
+                                    "'\{paramType.remap(compiler, remaps)}'")
                             return m
                         }
                         def parameter := getSubtype(m.value.parameters[i].type, g)
@@ -454,7 +456,7 @@ class Call {
             }
             match type {
                 when TypeContext.IMMUTABLE {
-                    if m.returnType = Type.Void() | !compiler.isImmutable(ref.returnType) {
+                    if m.returnType = compiler.VOID_TYPE | !compiler.isImmutable(ref.returnType) {
                         continue
                     }
                 }
@@ -506,7 +508,7 @@ class Call {
         }
         def result:IR.Value?
         def resultSlot := ir.locals.count
-        if t.returnType != Type.Void() {
+        if t.returnType != compiler.VOID_TYPE {
             ir.locals.add(t.returnType)
             result := IR.Value.LOCAL(resultSlot, t.returnType)
         }
@@ -516,12 +518,12 @@ class Call {
         def methodType:Type
         def targetType:Type
         if compiler.isImmutable(m.type()) {
-            methodType := Type.Method()
-            targetType := Type.Immutable()
+            methodType := compiler.METHOD_TYPE
+            targetType := compiler.IMMUTABLE_TYPE
         }
         else {
-            methodType := Type.MutableMethod()
-            targetType := Type.Object()
+            methodType := compiler.MUTABLE_METHOD_TYPE
+            targetType := compiler.OBJECT_TYPE
         }
         def st := compiler.getSymbolTable(compiler.getClass(methodType))
         def pointerField := st["pointer"]->FieldDecl
@@ -532,7 +534,7 @@ class Call {
         def methodPtrPtr := ir.add(IR.Statement.GET_FIELD_POINTER(position, methodObj,
                 pointerField))
         def methodPtr := ir.add(IR.Statement.LOAD(position, IR.Value.REF(methodPtrPtr,
-                Type.pointerTo(Type.Int8()))))
+                Type.pointerTo(compiler, compiler.INT8_TYPE))))
         def targetField := st["target"]->FieldDecl
         if !compiler.resolve(targetField) {
             return null
@@ -540,15 +542,16 @@ class Call {
         def targetPtr := ir.add(IR.Statement.GET_FIELD_POINTER(position, methodObj, targetField))
         def target := ir.add(IR.Statement.LOAD(position, IR.Value.REF(targetPtr, targetType)))
         def targetNonNull := ir.add(IR.Statement.BINARY(position, IR.Value.REF(target, targetType),
-                Binary.Operator.NIDENTITY, IR.Value.NULL(targetType.nullable()), Type.BuiltinBit()))
+                Binary.Operator.NIDENTITY, IR.Value.NULL(targetType.nullable()),
+                compiler.BUILTIN_BIT_TYPE))
         def haveTargetBlock := ir.newBlock("dynamic call with target")
         def noTargetBlock := ir.newBlock("dynamic call without target")
         def mergeBlock := ir.newBlock("dynamic call merge")
         ir.add(IR.Statement.CONDITIONAL_BRANCH(position, IR.Value.REF(targetNonNull,
-                Type.BuiltinBit()), haveTargetBlock, noTargetBlock))
+                compiler.BUILTIN_BIT_TYPE), haveTargetBlock, noTargetBlock))
         ir.setCurrentBlock(noTargetBlock)
         def noTargetCast := compiler.cast(position, IR.Value.REF(methodPtr,
-                Type.pointerTo(Type.Int8())), Type.pointerTo(t))
+                Type.pointerTo(compiler, compiler.INT8_TYPE)), Type.pointerTo(compiler, t))
         def noTargetResult := ir.add(IR.Statement.DYNAMIC_CALL(position, noTargetCast,
                 FixedArray<IR.Value>(finalArgs)))
         if result !== null {
@@ -562,10 +565,11 @@ class Call {
         for i in 0 .. t.parameterCount {
             targetParams.add(t.parameterType(i))
         }
-        def haveTargetType := Type.methodType(position, t.typeKind, targetParams,
+        def haveTargetType := Type.methodType(compiler, position, t.typeKind, targetParams,
                 t.returnType, 0)
         def haveTargetCast := compiler.cast(position, IR.Value.REF(methodPtr,
-                Type.pointerTo(Type.Int8())), Type.pointerTo(haveTargetType))
+                Type.pointerTo(compiler, compiler.INT8_TYPE)),
+                Type.pointerTo(compiler, haveTargetType))
         finalArgs.insert(0, IR.Value.REF(target, targetType))
         def haveTargetResult := ir.add(IR.Statement.DYNAMIC_CALL(position, haveTargetCast,
                 FixedArray<IR.Value>(finalArgs)))
@@ -592,7 +596,7 @@ class Call {
         def currentClass := compiler.currentClass[0]
         def ir := compiler.ir
         match m {
-            when IR.Value.METHOD(target, m) {
+            when IR.Value.METHOD(target, m, _) {
                 def targetType:Type
                 if target !== null {
                     targetType := target.type()
@@ -632,7 +636,7 @@ class Call {
                 return compile(compiler, position, target,
                         MethodRef(compiler, targetType, m, types), args, type)
             }
-            when IR.Value.METHODS(target, methods) {
+            when IR.Value.METHODS(target, methods, _) {
                 def best := findBestMethod(compiler, position, target, methods, args, type)
                 if best !== null {
                     if best.first.count > 1 {
@@ -693,7 +697,7 @@ class Call {
             when IR.Value.PARAMETER, IR.Value.REF {
                 return callMethodObject(compiler, position, m, args, type)
             }
-            when IR.Value.TYPE(t) {
+            when IR.Value.TYPE(t, _) {
                 def finalType:Type
                 if t.isClassLiteral {
                     finalType := t.subtypes[1]
@@ -751,15 +755,15 @@ class Call {
         }
         def ir := compiler.ir
         def type := v.type()
-        def errorType := Type.Error()
+        def errorType := compiler.ERROR_TYPE
         def nullableError := errorType.nullable()
         if type = nullableError {
             def test := ir.add(IR.Statement.BINARY(position, v, Binary.Operator.IDENTITY,
-                    IR.Value.NULL(nullableError), Type.BuiltinBit()))
+                    IR.Value.NULL(nullableError), compiler.BUILTIN_BIT_TYPE))
             def success := ir.newBlock("error? null")
             def failure := ir.newBlock("error? error")
-            ir.add(IR.Statement.CONDITIONAL_BRANCH(position, IR.Value.REF(test, Type.BuiltinBit()),
-                    success, failure))
+            ir.add(IR.Statement.CONDITIONAL_BRANCH(position, IR.Value.REF(test,
+                    compiler.BUILTIN_BIT_TYPE), success, failure))
             ir.setCurrentBlock(failure)
             match tryScope.second.storage {
                 when Variable.Storage.LOCAL(slot) {
@@ -782,12 +786,12 @@ class Call {
                     ClassDecl.RAW_VALUE_NAME)
             assert rawValue !== null
             def test := ir.add(IR.Statement.BINARY(position, compiler.extractBuiltinInt(position,
-                    rawValue), Binary.Operator.EQ, IR.Value.INT(0, Type.Int64()),
-                    Type.BuiltinBit()))
+                    rawValue), Binary.Operator.EQ, IR.Value.INT(0, compiler.INT64_TYPE),
+                    compiler.BUILTIN_BIT_TYPE))
             def success := ir.newBlock("maybe success")
             def failure := ir.newBlock("maybe error")
-            ir.add(IR.Statement.CONDITIONAL_BRANCH(position, IR.Value.REF(test, Type.BuiltinBit()),
-                    success, failure))
+            ir.add(IR.Statement.CONDITIONAL_BRANCH(position, IR.Value.REF(test,
+                    compiler.BUILTIN_BIT_TYPE), success, failure))
             ir.setCurrentBlock(failure)
             def errorPtr := ir.add(IR.Statement.GET_CHOICE_FIELD_POINTER(position, v,
                     cl.choiceCases[1], 0))
@@ -809,9 +813,9 @@ class Call {
             def successPtr := ir.add(IR.Statement.GET_CHOICE_FIELD_POINTER(position, v,
                     cl.choiceCases[0], 0))
             def successValue := ir.add(IR.Statement.LOAD(position, IR.Value.REF(successPtr,
-                    Type.Any())))
-            def successCast := compiler.cast(position, IR.Value.REF(successValue, Type.Any()),
-                    type.subtypes[1])
+                    compiler.ANY_TYPE)))
+            def successCast := compiler.cast(position, IR.Value.REF(successValue,
+                    compiler.ANY_TYPE), type.subtypes[1])
             return successCast
         }
         return v
@@ -883,7 +887,7 @@ class Call {
         def mergeBlock := compiler.ir.newBlock("inline merge")
         {
             def context:AutoContext
-            if m.returnType = Type.Void() | countReturns(m.body) = 1 {
+            if m.returnType = compiler.VOID_TYPE | countReturns(m.body) = 1 {
                 inlineReturn := Compiler.InlineReturn(null)
                 context := AutoContext(compiler, EnclosingContext.INLINE_CONTEXT(args,
                         compiler.ir.locals.count, inlineReturn, mergeBlock))
@@ -941,7 +945,7 @@ class Call {
             }
             compiler.ir.setCurrentBlock(mergeBlock)
         }
-        if m.returnType = Type.Void() {
+        if m.returnType = compiler.VOID_TYPE {
             return null
         }
         if inlineReturn.value !== null {
@@ -953,7 +957,7 @@ class Call {
     }
 
     @class
-    @post((rawM.returnType = Type.Void() & @return == null) | @return !== null |
+    @post((rawM.returnType = compiler.VOID_TYPE & @return == null) | @return !== null |
             compiler.errorCount > 0 | !compiler.reportErrors)
     method compile(compiler:Compiler, position:Position, target:IR.Value?, rawM:MethodRef,
             args:ListView<ASTNode>, type:TypeContext):IR.Value? {
@@ -1129,7 +1133,7 @@ class Call {
                 mref := ir.add(IR.Statement.GET_INTERFACE_METHOD(position, finalTarget,
                         m.value.owner,
                         compiler.getVTableIndex(m.value) -
-                            compiler.getVTable(compiler.getClass(Type.Object())).count,
+                            compiler.getVTable(compiler.getClass(compiler.OBJECT_TYPE)).count,
                         actualType))
             }
             else {
@@ -1153,7 +1157,7 @@ class Call {
                         FixedArray<IR.Value>.from(finalArgs))), actualType.returnType)
             }
         }
-        if m.value.returnType != Type.Void() {
+        if m.value.returnType != compiler.VOID_TYPE {
             var resultCast:IR.Value? := result
             if compiler.isRefCounted(actualType.returnType) {
                 compiler.enclosingContexts.push(EnclosingContext.VALUE_SCOPE(resultCast))
@@ -1204,7 +1208,7 @@ class Call {
                 var resolved := compiler.tryResolveType(m)
                 if resolved !== null {
                     assert !resolved.isClassLiteral
-                    return compile(compiler, position, IR.Value.TYPE(resolved), args, type)
+                    return compile(compiler, position, compiler.literalType(resolved), args, type)
                 }
                 resolved := compiler.tryResolveType(m, false)
                 if resolved !== null {
@@ -1275,7 +1279,7 @@ class Call {
         def result := compile(compiler, position, compiledM, args, type)
         if isStatement & result !== null {
             def resultType := result.type()
-            if (resultType = Type.Error().nullable() |
+            if (resultType = compiler.ERROR_TYPE.nullable() |
                     (resultType.typeKind = Type.Kind.GENERIC &
                         resultType.subtypes[0].name = "frost.core.Maybe")) {
                 compiler.error(position, "return value of type " +
