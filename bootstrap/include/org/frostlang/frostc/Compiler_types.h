@@ -3,6 +3,7 @@
 typedef struct frost$core$Class frost$core$Class;
 #include "frost/core/Int32_types.h"
 #include "frost/core/UInt8_types.h"
+typedef struct org$frostlang$frostc$Type org$frostlang$frostc$Type;
 typedef struct org$frostlang$frostc$Compiler$Settings org$frostlang$frostc$Compiler$Settings;
 typedef struct org$frostlang$frostc$parser$Parser org$frostlang$frostc$parser$Parser;
 typedef struct org$frostlang$frostc$Scanner org$frostlang$frostc$Scanner;
@@ -25,6 +26,55 @@ typedef struct org$frostlang$frostc$Compiler {
     frost$core$Class* $class;
     frost$core$Int32 refCount;
     frost$core$UInt8 $flags;
+    org$frostlang$frostc$Type* VOID_TYPE;
+    org$frostlang$frostc$Type* NULL_TYPE;
+    org$frostlang$frostc$Type* OBJECT_TYPE;
+    org$frostlang$frostc$Type* ANY_TYPE;
+    org$frostlang$frostc$Type* CLASS_TYPE;
+    org$frostlang$frostc$Type* IMMUTABLE_TYPE;
+    org$frostlang$frostc$Type* VALUE_TYPE;
+    org$frostlang$frostc$Type* STRING_TYPE;
+    org$frostlang$frostc$Type* ERROR_TYPE;
+    org$frostlang$frostc$Type* REGULAR_EXPRESSION_TYPE;
+    org$frostlang$frostc$Type* BUILTIN_INT8_TYPE;
+    org$frostlang$frostc$Type* BUILTIN_INT16_TYPE;
+    org$frostlang$frostc$Type* BUILTIN_INT32_TYPE;
+    org$frostlang$frostc$Type* BUILTIN_INT64_TYPE;
+    org$frostlang$frostc$Type* BUILTIN_UINT8_TYPE;
+    org$frostlang$frostc$Type* BUILTIN_UINT16_TYPE;
+    org$frostlang$frostc$Type* BUILTIN_UINT32_TYPE;
+    org$frostlang$frostc$Type* BUILTIN_UINT64_TYPE;
+    org$frostlang$frostc$Type* BUILTIN_FLOAT32_TYPE;
+    org$frostlang$frostc$Type* BUILTIN_FLOAT64_TYPE;
+    org$frostlang$frostc$Type* INT8_TYPE;
+    org$frostlang$frostc$Type* INT16_TYPE;
+    org$frostlang$frostc$Type* INT32_TYPE;
+    org$frostlang$frostc$Type* INT64_TYPE;
+    org$frostlang$frostc$Type* UINT8_TYPE;
+    org$frostlang$frostc$Type* UINT16_TYPE;
+    org$frostlang$frostc$Type* UINT32_TYPE;
+    org$frostlang$frostc$Type* UINT64_TYPE;
+    org$frostlang$frostc$Type* REAL32_TYPE;
+    org$frostlang$frostc$Type* REAL64_TYPE;
+    org$frostlang$frostc$Type* CHAR8_TYPE;
+    org$frostlang$frostc$Type* CHAR16_TYPE;
+    org$frostlang$frostc$Type* CHAR32_TYPE;
+    org$frostlang$frostc$Type* BIT_TYPE;
+    org$frostlang$frostc$Type* BIT_LITERAL_TYPE;
+    org$frostlang$frostc$Type* BUILTIN_BIT_TYPE;
+    org$frostlang$frostc$Type* ITERATOR_TYPE;
+    org$frostlang$frostc$Type* ITERABLE_TYPE;
+    org$frostlang$frostc$Type* FROST_TYPE;
+    org$frostlang$frostc$Type* METHOD_TYPE;
+    org$frostlang$frostc$Type* MUTABLE_METHOD_TYPE;
+    org$frostlang$frostc$Type* RANGE_TYPE;
+    org$frostlang$frostc$Type* STEPPED_RANGE_TYPE;
+    org$frostlang$frostc$Type* WEAK_TYPE;
+    org$frostlang$frostc$Type* POINTER_TYPE;
+    org$frostlang$frostc$Type* ARRAY_TYPE;
+    org$frostlang$frostc$Type* IMMUTABLE_ARRAY_TYPE;
+    org$frostlang$frostc$Type* CHOICE_DATA_TYPE;
+    org$frostlang$frostc$Type* INVALID_TYPE;
     org$frostlang$frostc$Compiler$Settings* settings;
     org$frostlang$frostc$parser$Parser* parser;
     org$frostlang$frostc$Scanner* scanner;
@@ -61,6 +111,6 @@ typedef struct org$frostlang$frostc$Compiler {
     frost$collections$IdentityMap* lambdaTypes;
 } org$frostlang$frostc$Compiler;
 #include "frost/core/Class.h"
-typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[157]; } org$frostlang$frostc$Compiler$class_type;
+typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[158]; } org$frostlang$frostc$Compiler$class_type;
 extern org$frostlang$frostc$Compiler$class_type org$frostlang$frostc$Compiler$class;
 

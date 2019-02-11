@@ -129,9 +129,9 @@ org$frostlang$frostc$Compiler* $tmp43 = *$tmp42;
 $fn45 $tmp44 = ($fn45) param0->$class->vtable[2];
 org$frostlang$frostc$Type* $tmp46 = $tmp44(param0);
 // begin inline call to method org.frostlang.frostc.Compiler.isRefCounted(type:org.frostlang.frostc.Type):frost.core.Bit from ChoiceFieldLValue.frost:40:33
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:622
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:722
 frost$core$Bit $tmp47 = org$frostlang$frostc$Type$get_isClass$R$frost$core$Bit($tmp46);
-// begin inline call to function frost.core.Bit.!():frost.core.Bit from Compiler.frost:622:12
+// begin inline call to function frost.core.Bit.!():frost.core.Bit from Compiler.frost:722:12
 // /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Bit.stub:37
 bool $tmp48 = $tmp47.value;
 bool $tmp49 = !$tmp48;
@@ -139,14 +139,14 @@ frost$core$Bit $tmp50 = (frost$core$Bit) {$tmp49};
 bool $tmp51 = $tmp50.value;
 if ($tmp51) goto block4; else goto block5;
 block4:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:623
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:723
 frost$core$Bit $tmp52 = frost$core$Bit$init$builtin_bit(false);
 *(&local0) = $tmp52;
 goto block3;
 block5:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:625
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:725
 frost$core$Bit $tmp53 = org$frostlang$frostc$Compiler$isValue$org$frostlang$frostc$Type$R$frost$core$Bit($tmp43, $tmp46);
-// begin inline call to function frost.core.Bit.!():frost.core.Bit from Compiler.frost:625:16
+// begin inline call to function frost.core.Bit.!():frost.core.Bit from Compiler.frost:725:16
 // /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Bit.stub:37
 bool $tmp54 = $tmp53.value;
 bool $tmp55 = !$tmp54;

@@ -8,7 +8,6 @@ typedef struct frost$collections$ListView frost$collections$ListView;
 typedef struct org$frostlang$frostc$Compiler org$frostlang$frostc$Compiler;
 typedef struct frost$core$String frost$core$String;
 
-void org$frostlang$frostc$pass$Analyzer$DataFlowValue$init(org$frostlang$frostc$pass$Analyzer$DataFlowValue* self);
 void org$frostlang$frostc$pass$Analyzer$DataFlowValue$init$org$frostlang$frostc$Type(org$frostlang$frostc$pass$Analyzer$DataFlowValue* self, org$frostlang$frostc$Type* p_type);
 void org$frostlang$frostc$pass$Analyzer$DataFlowValue$init$org$frostlang$frostc$Type$frost$collections$ListView$LTorg$frostlang$frostc$Pair$LTorg$frostlang$frostc$IR$Value$Cfrost$core$Bit$GT$GT$Q(org$frostlang$frostc$pass$Analyzer$DataFlowValue* self, org$frostlang$frostc$Type* p_type, frost$collections$ListView* p_implications);
 frost$core$Bit org$frostlang$frostc$pass$Analyzer$DataFlowValue$$EQ$org$frostlang$frostc$pass$Analyzer$DataFlowValue$R$frost$core$Bit(org$frostlang$frostc$pass$Analyzer$DataFlowValue* self, org$frostlang$frostc$pass$Analyzer$DataFlowValue* p_other);

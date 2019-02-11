@@ -14,6 +14,8 @@
 #include "org/frostlang/frostc/ASTNode.h"
 #include "frost/core/Int64.h"
 #include "org/frostlang/frostc/Scanner.h"
+#include "frost/collections/Array.h"
+#include "frost/collections/ListView.h"
 #include "org/frostlang/frostc/Compiler/TypeContext.h"
 
 
@@ -140,7 +142,7 @@ org$frostlang$frostc$Scanner** $tmp45 = &param0->scanner;
 org$frostlang$frostc$Scanner* $tmp46 = *$tmp45;
 org$frostlang$frostc$Type* $tmp47 = org$frostlang$frostc$Scanner$convertType$org$frostlang$frostc$ASTNode$R$org$frostlang$frostc$Type($tmp46, param2);
 // begin inline call to method org.frostlang.frostc.Compiler.resolve(type:org.frostlang.frostc.Type):org.frostlang.frostc.Type? from Dot.frost:30:49
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:852
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:952
 frost$core$Bit $tmp48 = frost$core$Bit$init$builtin_bit(true);
 org$frostlang$frostc$Type* $tmp49 = org$frostlang$frostc$Compiler$resolve$org$frostlang$frostc$Type$frost$core$Bit$R$org$frostlang$frostc$Type$Q(param0, $tmp47, $tmp48);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp49));
@@ -166,59 +168,77 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp54));
 return ((org$frostlang$frostc$IR$Value*) NULL);
 block6:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Dot.frost:34
+org$frostlang$frostc$Type* $tmp55 = *(&local0);
+// begin inline call to function org.frostlang.frostc.Compiler.literalType(t:org.frostlang.frostc.Type):org.frostlang.frostc.IR.Value from Dot.frost:34:72
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:3694
 FROST_ASSERT(48 == sizeof(org$frostlang$frostc$IR$Value));
-org$frostlang$frostc$IR$Value* $tmp55 = (org$frostlang$frostc$IR$Value*) frostObjectAlloc(48, (frost$core$Class*) &org$frostlang$frostc$IR$Value$class);
-frost$core$Int64 $tmp56 = (frost$core$Int64) {14};
-org$frostlang$frostc$Type* $tmp57 = *(&local0);
-org$frostlang$frostc$IR$Value$init$frost$core$Int64$org$frostlang$frostc$Type($tmp55, $tmp56, $tmp57);
-org$frostlang$frostc$IR$Value* $tmp58 = org$frostlang$frostc$expression$Dot$compile$org$frostlang$frostc$Compiler$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Value$frost$core$String$R$org$frostlang$frostc$IR$Value$Q(param0, param1, $tmp55, param3);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp58));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp58));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp55));
-org$frostlang$frostc$Type* $tmp59 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp59));
-*(&local0) = ((org$frostlang$frostc$Type*) NULL);
-return $tmp58;
-block1:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Dot.frost:37
-// begin inline call to method org.frostlang.frostc.Compiler.compileExpression(expr:org.frostlang.frostc.ASTNode):org.frostlang.frostc.IR.Value? from Dot.frost:37:55
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:4976
-FROST_ASSERT(40 == sizeof(org$frostlang$frostc$Compiler$TypeContext));
-org$frostlang$frostc$Compiler$TypeContext* $tmp60 = (org$frostlang$frostc$Compiler$TypeContext*) frostObjectAlloc(40, (frost$core$Class*) &org$frostlang$frostc$Compiler$TypeContext$class);
-frost$core$Int64 $tmp61 = (frost$core$Int64) {0};
-org$frostlang$frostc$Compiler$TypeContext$init$frost$core$Int64($tmp60, $tmp61);
-org$frostlang$frostc$IR$Value* $tmp62 = org$frostlang$frostc$Compiler$compileExpression$org$frostlang$frostc$ASTNode$org$frostlang$frostc$Compiler$TypeContext$R$org$frostlang$frostc$IR$Value$Q(param0, param2, $tmp60);
+org$frostlang$frostc$IR$Value* $tmp56 = (org$frostlang$frostc$IR$Value*) frostObjectAlloc(48, (frost$core$Class*) &org$frostlang$frostc$IR$Value$class);
+frost$core$Int64 $tmp57 = (frost$core$Int64) {14};
+// begin inline call to method org.frostlang.frostc.Type.ClassLiteral(compiler:org.frostlang.frostc.Compiler, t:org.frostlang.frostc.Type):org.frostlang.frostc.Type from Compiler.frost:3694:50
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:273
+org$frostlang$frostc$Type** $tmp58 = &param0->CLASS_TYPE;
+org$frostlang$frostc$Type* $tmp59 = *$tmp58;
+FROST_ASSERT(40 == sizeof(frost$collections$Array));
+frost$collections$Array* $tmp60 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+frost$core$Int64 $tmp61 = (frost$core$Int64) {1};
+frost$collections$Array$init$frost$core$Int64($tmp60, $tmp61);
+frost$collections$Array$add$frost$collections$Array$T($tmp60, ((frost$core$Object*) $tmp55));
+org$frostlang$frostc$Type* $tmp62 = org$frostlang$frostc$Type$generic$org$frostlang$frostc$Type$frost$collections$ListView$LTorg$frostlang$frostc$Type$GT$R$org$frostlang$frostc$Type($tmp59, ((frost$collections$ListView*) $tmp60));
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp62));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp62));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp60));
-*(&local1) = ((org$frostlang$frostc$IR$Value*) NULL);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp62));
-org$frostlang$frostc$IR$Value* $tmp63 = *(&local1);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp63));
-*(&local1) = $tmp62;
+org$frostlang$frostc$IR$Value$init$frost$core$Int64$org$frostlang$frostc$Type$org$frostlang$frostc$Type($tmp56, $tmp57, $tmp55, $tmp62);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp56));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp62));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp56));
+org$frostlang$frostc$IR$Value* $tmp63 = org$frostlang$frostc$expression$Dot$compile$org$frostlang$frostc$Compiler$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Value$frost$core$String$R$org$frostlang$frostc$IR$Value$Q(param0, param1, $tmp56, param3);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp63));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp63));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp56));
+org$frostlang$frostc$Type* $tmp64 = *(&local0);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp64));
+*(&local0) = ((org$frostlang$frostc$Type*) NULL);
+return $tmp63;
+block1:;
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Dot.frost:37
+// begin inline call to method org.frostlang.frostc.Compiler.compileExpression(expr:org.frostlang.frostc.ASTNode):org.frostlang.frostc.IR.Value? from Dot.frost:37:55
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5081
+FROST_ASSERT(40 == sizeof(org$frostlang$frostc$Compiler$TypeContext));
+org$frostlang$frostc$Compiler$TypeContext* $tmp65 = (org$frostlang$frostc$Compiler$TypeContext*) frostObjectAlloc(40, (frost$core$Class*) &org$frostlang$frostc$Compiler$TypeContext$class);
+frost$core$Int64 $tmp66 = (frost$core$Int64) {0};
+org$frostlang$frostc$Compiler$TypeContext$init$frost$core$Int64($tmp65, $tmp66);
+org$frostlang$frostc$IR$Value* $tmp67 = org$frostlang$frostc$Compiler$compileExpression$org$frostlang$frostc$ASTNode$org$frostlang$frostc$Compiler$TypeContext$R$org$frostlang$frostc$IR$Value$Q(param0, param2, $tmp65);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp67));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp67));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp65));
+*(&local1) = ((org$frostlang$frostc$IR$Value*) NULL);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp67));
+org$frostlang$frostc$IR$Value* $tmp68 = *(&local1);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp68));
+*(&local1) = $tmp67;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp67));
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Dot.frost:38
-org$frostlang$frostc$IR$Value* $tmp64 = *(&local1);
-frost$core$Bit $tmp65 = frost$core$Bit$init$builtin_bit($tmp64 == NULL);
-bool $tmp66 = $tmp65.value;
-if ($tmp66) goto block8; else goto block9;
-block8:;
+org$frostlang$frostc$IR$Value* $tmp69 = *(&local1);
+frost$core$Bit $tmp70 = frost$core$Bit$init$builtin_bit($tmp69 == NULL);
+bool $tmp71 = $tmp70.value;
+if ($tmp71) goto block10; else goto block11;
+block10:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Dot.frost:39
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((org$frostlang$frostc$IR$Value*) NULL)));
-org$frostlang$frostc$IR$Value* $tmp67 = *(&local1);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp67));
+org$frostlang$frostc$IR$Value* $tmp72 = *(&local1);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp72));
 *(&local1) = ((org$frostlang$frostc$IR$Value*) NULL);
 return ((org$frostlang$frostc$IR$Value*) NULL);
-block9:;
+block11:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Dot.frost:41
-org$frostlang$frostc$IR$Value* $tmp68 = *(&local1);
-org$frostlang$frostc$IR$Value* $tmp69 = org$frostlang$frostc$expression$Dot$compile$org$frostlang$frostc$Compiler$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Value$frost$core$String$R$org$frostlang$frostc$IR$Value$Q(param0, param1, $tmp68, param3);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp69));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp69));
-org$frostlang$frostc$IR$Value* $tmp70 = *(&local1);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp70));
+org$frostlang$frostc$IR$Value* $tmp73 = *(&local1);
+org$frostlang$frostc$IR$Value* $tmp74 = org$frostlang$frostc$expression$Dot$compile$org$frostlang$frostc$Compiler$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Value$frost$core$String$R$org$frostlang$frostc$IR$Value$Q(param0, param1, $tmp73, param3);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp74));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp74));
+org$frostlang$frostc$IR$Value* $tmp75 = *(&local1);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp75));
 *(&local1) = ((org$frostlang$frostc$IR$Value*) NULL);
-return $tmp69;
+return $tmp74;
 
 }
 void org$frostlang$frostc$expression$Dot$init(org$frostlang$frostc$expression$Dot* param0) {

@@ -244,6 +244,7 @@ add_executable(bootstrap
     bootstrap/src/org/frostlang/frostc/expression/Or.c
     bootstrap/src/org/frostlang/frostc/expression/Tuple.c
     bootstrap/src/org/frostlang/frostc/expression/Tuple/_Closure2.c
+    bootstrap/src/org/frostlang/frostc/expression/Tuple/_Closure4.c
     bootstrap/src/org/frostlang/frostc/expression/Unary.c
     bootstrap/src/org/frostlang/frostc/expression/Unary/Operator.c
     bootstrap/src/org/frostlang/frostc/FieldDecl.c

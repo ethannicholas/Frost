@@ -967,7 +967,7 @@ class CCodeGenerator : CodeGenerator {
                 return value.asString
             }
             when IR.Value.INT(value, _) {
-                return value.asString
+                return value.asString + "u"
             }
             when IR.Value.LOCAL(index, _) {
                 return "(&local\{index})"
@@ -1271,8 +1271,18 @@ class CCodeGenerator : CodeGenerator {
             def fieldIndex := compiler.getIndex(data)
             def result := nextVar()
             def type := cType(cc.fields[index])
-            out.printLine("\{type}* \{result} = (\{type}*) (\{targetRef}->$data " +
-                    "+ \{getChoiceFieldOffset(cc, index)});")
+            def op:String
+            if compiler.isValue(target.type()) {
+                match target {
+                    when IR.Value.LOCAL { op := "->"}
+                    otherwise { op := "." }
+                }
+            }
+            else {
+                op := "->"
+            }
+            out.printLine("\{type}* \{result} = (\{type}*) (\{targetRef}\{op}$data + " +
+                    "\{getChoiceFieldOffset(cc, index)});")
             refs[id] := result
         }
         fail(error) {

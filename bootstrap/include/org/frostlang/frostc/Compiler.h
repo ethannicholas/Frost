@@ -26,9 +26,9 @@ typedef struct org$frostlang$frostc$Symbol org$frostlang$frostc$Symbol;
 #include "frost/core/Char32_types.h"
 #include "org/frostlang/frostc/expression/Binary/Operator_types.h"
 typedef struct org$frostlang$frostc$FixedArray org$frostlang$frostc$FixedArray;
+typedef struct org$frostlang$frostc$IR$Value org$frostlang$frostc$IR$Value;
 typedef struct org$frostlang$frostc$Annotations org$frostlang$frostc$Annotations;
 typedef struct org$frostlang$frostc$Variable org$frostlang$frostc$Variable;
-typedef struct org$frostlang$frostc$IR$Value org$frostlang$frostc$IR$Value;
 typedef struct org$frostlang$frostc$MethodRef org$frostlang$frostc$MethodRef;
 #include "frost/core/Real64_types.h"
 #include "org/frostlang/frostc/IR/Block/ID_types.h"
@@ -115,6 +115,7 @@ org$frostlang$frostc$Type* org$frostlang$frostc$Compiler$declaredTypeWithSelf$or
 org$frostlang$frostc$Type* org$frostlang$frostc$Compiler$inheritedType$org$frostlang$frostc$MethodDecl$R$org$frostlang$frostc$Type(org$frostlang$frostc$Compiler* self, org$frostlang$frostc$MethodDecl* p_m);
 org$frostlang$frostc$Type* org$frostlang$frostc$Compiler$inheritedTypeWithSelf$org$frostlang$frostc$MethodDecl$R$org$frostlang$frostc$Type(org$frostlang$frostc$Compiler* self, org$frostlang$frostc$MethodDecl* p_m);
 org$frostlang$frostc$Type* org$frostlang$frostc$Compiler$inheritedTypeWithSelf$org$frostlang$frostc$MethodDecl$org$frostlang$frostc$Type$R$org$frostlang$frostc$Type(org$frostlang$frostc$Compiler* self, org$frostlang$frostc$MethodDecl* p_m, org$frostlang$frostc$Type* p_selfType);
+org$frostlang$frostc$IR$Value* org$frostlang$frostc$Compiler$literalType$org$frostlang$frostc$Type$R$org$frostlang$frostc$IR$Value(org$frostlang$frostc$Compiler* self, org$frostlang$frostc$Type* p_t);
 void org$frostlang$frostc$Compiler$createChoiceCleanup$org$frostlang$frostc$MethodDecl(org$frostlang$frostc$Compiler* self, org$frostlang$frostc$MethodDecl* p_m);
 void org$frostlang$frostc$Compiler$checkAccessModifierCount$org$frostlang$frostc$Position$org$frostlang$frostc$Annotations(org$frostlang$frostc$Compiler* self, org$frostlang$frostc$Position p_position, org$frostlang$frostc$Annotations* p_a);
 void org$frostlang$frostc$Compiler$$anonymous3$org$frostlang$frostc$Compiler$org$frostlang$frostc$MethodDecl$frost$core$Int64$frost$core$String(org$frostlang$frostc$Compiler* p_compiler, org$frostlang$frostc$MethodDecl* p_m, frost$core$Int64 p_flag, frost$core$String* p_name);

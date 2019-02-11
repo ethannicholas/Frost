@@ -2,6 +2,7 @@ package org.frostlang.frostc.lvalue
 
 uses org.frostlang.frostc.ASTNode
 uses org.frostlang.frostc.Compiler
+uses org.frostlang.frostc.Compiler.EnclosingContext
 uses org.frostlang.frostc.FieldDecl
 uses org.frostlang.frostc.IR
 uses org.frostlang.frostc.MethodDecl
@@ -40,11 +41,41 @@ interface LValue {
                 }
             }
             when ASTNode.CHOICE_FIELD_REFERENCE(position, base, cc, index) {
-                def compiledBase := compiler.compileExpression(base)
-                if compiledBase == null {
-                    return null
+                match base {
+                    when ASTNode.SELF {
+                        var target:IR.Value?
+                        if compiler.isValue(cc.owner) {
+                            def inline := compiler.getInlineContext()
+                            if inline !== null {
+                                match inline {
+                                    when EnclosingContext.INLINE_CONTEXT(_, start, _, _) {
+                                        target := IR.Value.LOCAL(start, cc.owner.type)
+                                    }
+                                    otherwise {
+                                        unreachable
+                                    }
+                                }
+                            }
+                            else {
+                                target := IR.Value.LOCAL(0, cc.owner.type)
+                            }
+                        }
+                        else {
+                            target := compiler.compileExpression(base)
+                            if target == null {
+                                return null
+                            }
+                        }
+                        target := compiler.coerce(position, target, cc.owner.type)
+                        if target == null {
+                            return null
+                        }
+                        return ChoiceFieldLValue(compiler, position, target, cc, index)
+                    }
+                    otherwise {
+                        assert false
+                    }
                 }
-                return ChoiceFieldLValue(compiler, position, compiledBase, cc, index)
             }
             when ASTNode.DOT(_, base, name) {
                 def compiledBase:IR.Value?

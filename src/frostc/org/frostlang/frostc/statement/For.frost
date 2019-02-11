@@ -364,7 +364,7 @@ class For {
             }
             else {
                 assert stepType.name.startsWith("frost.core.UInt")
-                direction := IR.Value.BIT(true, compiler.BIT_TYPE)
+                direction := IR.Value.BIT(true, compiler.BUILTIN_BIT_TYPE)
             }
             ir.add(IR.Statement.CONDITIONAL_BRANCH(position, direction, forwardEntry, backwardEntry))
             ir.setCurrentBlock(forwardEntry)

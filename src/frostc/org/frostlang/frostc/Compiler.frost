@@ -1006,12 +1006,19 @@ class Compiler {
 
     @pre(cl.classKind = ClassDecl.Kind.CHOICE)
     method choiceSuper(cl:ClassDecl):Type {
+        var value := true
         for case in cl.choiceCases {
             for f in case.fields {
                 if f.nonnullable() != cl.type & !isImmutable(f) {
                     return OBJECT_TYPE
                 }
+                if value & !isValue(f) {
+                    value := false
+                }
             }
+        }
+        if value {
+            return VALUE_TYPE
         }
         return IMMUTABLE_TYPE
     }
@@ -3695,6 +3702,9 @@ class Compiler {
     }
 
     method createChoiceCleanup(m:MethodDecl) {
+        if m.owner.rawSuper = VALUE_TYPE {
+            return
+        }
         def cl := m.owner
         def statements := Array<ASTNode>()
         def value := ASTNode.SELF(cl.position)
@@ -5908,7 +5918,7 @@ class Compiler {
                     index += 1
                 }
                 compilePreconditions()
---                compilePostconditions()
+                compilePostconditions()
                 for s in m.body {
                     compileStatement(s)
                 }
