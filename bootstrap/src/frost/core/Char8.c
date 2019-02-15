@@ -2,10 +2,10 @@
 #include "frost/core/Value.h"
 #include "frost/core/Class.h"
 #include "frost/core/String.h"
-#include "frost/core/Comparable.h"
+#include "frost/core/Equatable.h"
 #include "frost/core/Bit.h"
 #include "frost/core/Object.h"
-#include "frost/core/Equatable.h"
+#include "frost/core/Comparable.h"
 #include "frost/collections/Key.h"
 #include "frost/core/Int64.h"
 #include "frost/core/Char16.h"
@@ -21,6 +21,16 @@
 #include "frost/core/Frost.h"
 #include "frost/core/Range.LTfrost/core/Int64.GT.h"
 
+__attribute__((weak)) frost$core$Bit frost$core$Char8$$EQ$frost$core$Char8$R$frost$core$Bit$shim(frost$core$Object* p0, frost$core$Equatable* p1) {
+    frost$core$Bit result = frost$core$Char8$$EQ$frost$core$Char8$R$frost$core$Bit(((frost$core$Char8$wrapper*) p0)->value, ((frost$core$Char8$wrapper*) p1)->value);
+
+    return result;
+}
+__attribute__((weak)) frost$core$Bit frost$core$Char8$$NEQ$frost$core$Char8$R$frost$core$Bit$shim(frost$core$Object* p0, frost$core$Equatable* p1) {
+    frost$core$Bit result = frost$core$Char8$$NEQ$frost$core$Char8$R$frost$core$Bit(((frost$core$Char8$wrapper*) p0)->value, ((frost$core$Char8$wrapper*) p1)->value);
+
+    return result;
+}
 __attribute__((weak)) frost$core$Bit frost$core$Char8$$GT$frost$core$Char8$R$frost$core$Bit$shim(frost$core$Object* p0, frost$core$Comparable* p1) {
     frost$core$Bit result = frost$core$Char8$$GT$frost$core$Char8$R$frost$core$Bit(((frost$core$Char8$wrapper*) p0)->value, ((frost$core$Char8$wrapper*) p1)->value);
 
@@ -38,16 +48,6 @@ __attribute__((weak)) frost$core$Bit frost$core$Char8$$GE$frost$core$Char8$R$fro
 }
 __attribute__((weak)) frost$core$Bit frost$core$Char8$$LE$frost$core$Char8$R$frost$core$Bit$shim(frost$core$Object* p0, frost$core$Comparable* p1) {
     frost$core$Bit result = frost$core$Char8$$LE$frost$core$Char8$R$frost$core$Bit(((frost$core$Char8$wrapper*) p0)->value, ((frost$core$Char8$wrapper*) p1)->value);
-
-    return result;
-}
-__attribute__((weak)) frost$core$Bit frost$core$Char8$$EQ$frost$core$Char8$R$frost$core$Bit$shim(frost$core$Object* p0, frost$core$Equatable* p1) {
-    frost$core$Bit result = frost$core$Char8$$EQ$frost$core$Char8$R$frost$core$Bit(((frost$core$Char8$wrapper*) p0)->value, ((frost$core$Char8$wrapper*) p1)->value);
-
-    return result;
-}
-__attribute__((weak)) frost$core$Bit frost$core$Char8$$NEQ$frost$core$Char8$R$frost$core$Bit$shim(frost$core$Object* p0, frost$core$Equatable* p1) {
-    frost$core$Bit result = frost$core$Char8$$NEQ$frost$core$Char8$R$frost$core$Bit(((frost$core$Char8$wrapper*) p0)->value, ((frost$core$Char8$wrapper*) p1)->value);
 
     return result;
 }
@@ -130,25 +130,25 @@ __attribute__((weak)) void frost$core$Char8$cleanup$shim(frost$core$Object* p0) 
 
 }
 
-struct { frost$core$Class* cl; ITable* next; void* methods[4]; } frost$core$Char8$_frost$core$Comparable = { (frost$core$Class*) &frost$core$Comparable$class, NULL, { frost$core$Char8$$GT$frost$core$Char8$R$frost$core$Bit$shim, frost$core$Char8$$LT$frost$core$Char8$R$frost$core$Bit$shim, frost$core$Char8$$GE$frost$core$Char8$R$frost$core$Bit$shim, frost$core$Char8$$LE$frost$core$Char8$R$frost$core$Bit$shim} };
+struct { frost$core$Class* cl; ITable* next; void* methods[2]; } frost$core$Char8$_frost$core$Equatable = { (frost$core$Class*) &frost$core$Equatable$class, NULL, { frost$core$Char8$$EQ$frost$core$Char8$R$frost$core$Bit$shim, frost$core$Char8$$NEQ$frost$core$Char8$R$frost$core$Bit$shim} };
 
-struct { frost$core$Class* cl; ITable* next; void* methods[2]; } frost$core$Char8$_frost$core$Equatable = { (frost$core$Class*) &frost$core$Equatable$class, (ITable*) &frost$core$Char8$_frost$core$Comparable, { frost$core$Char8$$EQ$frost$core$Char8$R$frost$core$Bit$shim, frost$core$Char8$$NEQ$frost$core$Char8$R$frost$core$Bit$shim} };
+struct { frost$core$Class* cl; ITable* next; void* methods[4]; } frost$core$Char8$_frost$core$Comparable = { (frost$core$Class*) &frost$core$Comparable$class, (ITable*) &frost$core$Char8$_frost$core$Equatable, { frost$core$Char8$$GT$frost$core$Char8$R$frost$core$Bit$shim, frost$core$Char8$$LT$frost$core$Char8$R$frost$core$Bit$shim, frost$core$Char8$$GE$frost$core$Char8$R$frost$core$Bit$shim, frost$core$Char8$$LE$frost$core$Char8$R$frost$core$Bit$shim} };
 
-struct { frost$core$Class* cl; ITable* next; void* methods[1]; } frost$core$Char8$_frost$collections$Key = { (frost$core$Class*) &frost$collections$Key$class, (ITable*) &frost$core$Char8$_frost$core$Equatable, { frost$core$Char8$get_hash$R$frost$core$Int64$shim} };
+struct { frost$core$Class* cl; ITable* next; void* methods[1]; } frost$core$Char8$_frost$collections$Key = { (frost$core$Class*) &frost$collections$Key$class, (ITable*) &frost$core$Char8$_frost$core$Comparable, { frost$core$Char8$get_hash$R$frost$core$Int64$shim} };
 
 static frost$core$String $s1;
 frost$core$Char8$class_type frost$core$Char8$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Value$class, (ITable*) &frost$core$Char8$_frost$collections$Key, { frost$core$Char8$get_asString$R$frost$core$String$shim, frost$core$Value$cleanup$shim, frost$core$Char8$$EQ$frost$core$Char8$R$frost$core$Bit$shim, frost$core$Char8$$NEQ$frost$core$Char8$R$frost$core$Bit$shim, frost$core$Char8$$LT$frost$core$Char8$R$frost$core$Bit$shim, frost$core$Char8$$GT$frost$core$Char8$R$frost$core$Bit$shim, frost$core$Char8$$LE$frost$core$Char8$R$frost$core$Bit$shim, frost$core$Char8$$GE$frost$core$Char8$R$frost$core$Bit$shim, frost$core$Char8$isWhitespace$R$frost$core$Bit$shim, frost$core$Char8$$MUL$frost$core$Int64$R$frost$core$String$shim, frost$core$Char8$get_hash$R$frost$core$Int64$shim, frost$core$Char8$get_asChar16$R$frost$core$Char16$shim, frost$core$Char8$get_asChar32$R$frost$core$Char32$shim, frost$core$Char8$get_asInt8$R$frost$core$Int8$shim, frost$core$Char8$get_asInt16$R$frost$core$Int16$shim, frost$core$Char8$get_asInt32$R$frost$core$Int32$shim, frost$core$Char8$get_asInt64$R$frost$core$Int64$shim, frost$core$Char8$get_asUInt8$R$frost$core$UInt8$shim, frost$core$Char8$get_asUInt16$R$frost$core$UInt16$shim, frost$core$Char8$get_asUInt32$R$frost$core$UInt32$shim, frost$core$Char8$get_asUInt64$R$frost$core$UInt64$shim, frost$core$Char8$cleanup$shim} };
 
-struct { frost$core$Class* cl; ITable* itable; void* methods[4]; } frost$core$Char8$wrapper_frost$core$Comparable = { (frost$core$Class*) &frost$core$Comparable$class, NULL, { frost$core$Char8$$GT$frost$core$Char8$R$frost$core$Bit$shim, frost$core$Char8$$LT$frost$core$Char8$R$frost$core$Bit$shim, frost$core$Char8$$GE$frost$core$Char8$R$frost$core$Bit$shim, frost$core$Char8$$LE$frost$core$Char8$R$frost$core$Bit$shim} };
+struct { frost$core$Class* cl; ITable* itable; void* methods[2]; } frost$core$Char8$wrapper_frost$core$Equatable = { (frost$core$Class*) &frost$core$Equatable$class, NULL, { frost$core$Char8$$EQ$frost$core$Char8$R$frost$core$Bit$shim, frost$core$Char8$$NEQ$frost$core$Char8$R$frost$core$Bit$shim} };
 
-struct { frost$core$Class* cl; ITable* itable; void* methods[2]; } frost$core$Char8$wrapper_frost$core$Equatable = { (frost$core$Class*) &frost$core$Equatable$class, (ITable*) &frost$core$Char8$wrapper_frost$core$Comparable, { frost$core$Char8$$EQ$frost$core$Char8$R$frost$core$Bit$shim, frost$core$Char8$$NEQ$frost$core$Char8$R$frost$core$Bit$shim} };
+struct { frost$core$Class* cl; ITable* itable; void* methods[4]; } frost$core$Char8$wrapper_frost$core$Comparable = { (frost$core$Class*) &frost$core$Comparable$class, (ITable*) &frost$core$Char8$wrapper_frost$core$Equatable, { frost$core$Char8$$GT$frost$core$Char8$R$frost$core$Bit$shim, frost$core$Char8$$LT$frost$core$Char8$R$frost$core$Bit$shim, frost$core$Char8$$GE$frost$core$Char8$R$frost$core$Bit$shim, frost$core$Char8$$LE$frost$core$Char8$R$frost$core$Bit$shim} };
 
-struct { frost$core$Class* cl; ITable* itable; void* methods[1]; } frost$core$Char8$wrapper_frost$collections$Key = { (frost$core$Class*) &frost$collections$Key$class, (ITable*) &frost$core$Char8$wrapper_frost$core$Equatable, { frost$core$Char8$get_hash$R$frost$core$Int64$shim} };
+struct { frost$core$Class* cl; ITable* itable; void* methods[1]; } frost$core$Char8$wrapper_frost$collections$Key = { (frost$core$Class*) &frost$collections$Key$class, (ITable*) &frost$core$Char8$wrapper_frost$core$Comparable, { frost$core$Char8$get_hash$R$frost$core$Int64$shim} };
 
 static frost$core$String $s2;
 frost$core$Char8$wrapperclass_type frost$core$Char8$wrapperclass = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s2, (frost$core$Class*) &frost$core$Value$class, (ITable*) &frost$core$Char8$wrapper_frost$collections$Key, { frost$core$Char8$get_asString$R$frost$core$String$shim, frost$core$Value$cleanup$shim} };
-static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x43\x68\x61\x72\x38", 16, -3824106976667626414, NULL };
-static frost$core$String $s2 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x43\x68\x61\x72\x38", 16, -3824106976667626414, NULL };
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x43\x68\x61\x72\x38", 16, -3204358723762509960, NULL };
+static frost$core$String $s2 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x43\x68\x61\x72\x38", 16, -3204358723762509960, NULL };
 
 frost$core$Char8 frost$core$Char8$init$frost$core$UInt8(frost$core$UInt8 param0) {
 
@@ -167,7 +167,7 @@ frost$core$Bit frost$core$Char8$$EQ$frost$core$Char8$R$frost$core$Bit(frost$core
 uint8_t $tmp6 = param0.value;
 uint8_t $tmp7 = param1.value;
 bool $tmp8 = $tmp6 == $tmp7;
-frost$core$Bit $tmp9 = frost$core$Bit$init$builtin_bit($tmp8);
+frost$core$Bit $tmp9 = (frost$core$Bit) {$tmp8};
 return $tmp9;
 
 }
@@ -177,7 +177,7 @@ frost$core$Bit frost$core$Char8$$NEQ$frost$core$Char8$R$frost$core$Bit(frost$cor
 uint8_t $tmp10 = param0.value;
 uint8_t $tmp11 = param1.value;
 bool $tmp12 = $tmp10 != $tmp11;
-frost$core$Bit $tmp13 = frost$core$Bit$init$builtin_bit($tmp12);
+frost$core$Bit $tmp13 = (frost$core$Bit) {$tmp12};
 return $tmp13;
 
 }
@@ -187,7 +187,7 @@ frost$core$Bit frost$core$Char8$$LT$frost$core$Char8$R$frost$core$Bit(frost$core
 uint8_t $tmp14 = param0.value;
 uint8_t $tmp15 = param1.value;
 bool $tmp16 = $tmp14 < $tmp15;
-frost$core$Bit $tmp17 = frost$core$Bit$init$builtin_bit($tmp16);
+frost$core$Bit $tmp17 = (frost$core$Bit) {$tmp16};
 return $tmp17;
 
 }
@@ -197,7 +197,7 @@ frost$core$Bit frost$core$Char8$$GT$frost$core$Char8$R$frost$core$Bit(frost$core
 uint8_t $tmp18 = param0.value;
 uint8_t $tmp19 = param1.value;
 bool $tmp20 = $tmp18 > $tmp19;
-frost$core$Bit $tmp21 = frost$core$Bit$init$builtin_bit($tmp20);
+frost$core$Bit $tmp21 = (frost$core$Bit) {$tmp20};
 return $tmp21;
 
 }
@@ -207,7 +207,7 @@ frost$core$Bit frost$core$Char8$$LE$frost$core$Char8$R$frost$core$Bit(frost$core
 uint8_t $tmp22 = param0.value;
 uint8_t $tmp23 = param1.value;
 bool $tmp24 = $tmp22 <= $tmp23;
-frost$core$Bit $tmp25 = frost$core$Bit$init$builtin_bit($tmp24);
+frost$core$Bit $tmp25 = (frost$core$Bit) {$tmp24};
 return $tmp25;
 
 }
@@ -217,63 +217,63 @@ frost$core$Bit frost$core$Char8$$GE$frost$core$Char8$R$frost$core$Bit(frost$core
 uint8_t $tmp26 = param0.value;
 uint8_t $tmp27 = param1.value;
 bool $tmp28 = $tmp26 >= $tmp27;
-frost$core$Bit $tmp29 = frost$core$Bit$init$builtin_bit($tmp28);
+frost$core$Bit $tmp29 = (frost$core$Bit) {$tmp28};
 return $tmp29;
 
 }
 frost$core$Bit frost$core$Char8$isWhitespace$R$frost$core$Bit(frost$core$Char8 param0) {
 
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:55
-frost$core$UInt8 $tmp30 = (frost$core$UInt8) {10};
+frost$core$UInt8 $tmp30 = (frost$core$UInt8) {10u};
 frost$core$Char8 $tmp31 = frost$core$Char8$init$frost$core$UInt8($tmp30);
 // begin inline call to function frost.core.Char8.=(other:frost.core.Char8):frost.core.Bit from Char8.frost:56:18
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:26
 uint8_t $tmp32 = param0.value;
 uint8_t $tmp33 = $tmp31.value;
 bool $tmp34 = $tmp32 == $tmp33;
-frost$core$Bit $tmp35 = frost$core$Bit$init$builtin_bit($tmp34);
+frost$core$Bit $tmp35 = (frost$core$Bit) {$tmp34};
 bool $tmp36 = $tmp35.value;
 if ($tmp36) goto block2; else goto block3;
 block3:;
-frost$core$UInt8 $tmp37 = (frost$core$UInt8) {13};
+frost$core$UInt8 $tmp37 = (frost$core$UInt8) {13u};
 frost$core$Char8 $tmp38 = frost$core$Char8$init$frost$core$UInt8($tmp37);
 // begin inline call to function frost.core.Char8.=(other:frost.core.Char8):frost.core.Bit from Char8.frost:56:24
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:26
 uint8_t $tmp39 = param0.value;
 uint8_t $tmp40 = $tmp38.value;
 bool $tmp41 = $tmp39 == $tmp40;
-frost$core$Bit $tmp42 = frost$core$Bit$init$builtin_bit($tmp41);
+frost$core$Bit $tmp42 = (frost$core$Bit) {$tmp41};
 bool $tmp43 = $tmp42.value;
 if ($tmp43) goto block2; else goto block5;
 block5:;
-frost$core$UInt8 $tmp44 = (frost$core$UInt8) {9};
+frost$core$UInt8 $tmp44 = (frost$core$UInt8) {9u};
 frost$core$Char8 $tmp45 = frost$core$Char8$init$frost$core$UInt8($tmp44);
 // begin inline call to function frost.core.Char8.=(other:frost.core.Char8):frost.core.Bit from Char8.frost:56:30
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:26
 uint8_t $tmp46 = param0.value;
 uint8_t $tmp47 = $tmp45.value;
 bool $tmp48 = $tmp46 == $tmp47;
-frost$core$Bit $tmp49 = frost$core$Bit$init$builtin_bit($tmp48);
+frost$core$Bit $tmp49 = (frost$core$Bit) {$tmp48};
 bool $tmp50 = $tmp49.value;
 if ($tmp50) goto block2; else goto block7;
 block7:;
-frost$core$UInt8 $tmp51 = (frost$core$UInt8) {32};
+frost$core$UInt8 $tmp51 = (frost$core$UInt8) {32u};
 frost$core$Char8 $tmp52 = frost$core$Char8$init$frost$core$UInt8($tmp51);
 // begin inline call to function frost.core.Char8.=(other:frost.core.Char8):frost.core.Bit from Char8.frost:56:36
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:26
 uint8_t $tmp53 = param0.value;
 uint8_t $tmp54 = $tmp52.value;
 bool $tmp55 = $tmp53 == $tmp54;
-frost$core$Bit $tmp56 = frost$core$Bit$init$builtin_bit($tmp55);
+frost$core$Bit $tmp56 = (frost$core$Bit) {$tmp55};
 bool $tmp57 = $tmp56.value;
 if ($tmp57) goto block2; else goto block9;
 block2:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:57
-frost$core$Bit $tmp58 = frost$core$Bit$init$builtin_bit(true);
+frost$core$Bit $tmp58 = (frost$core$Bit) {true};
 return $tmp58;
 block9:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:60
-frost$core$Bit $tmp59 = frost$core$Bit$init$builtin_bit(false);
+frost$core$Bit $tmp59 = (frost$core$Bit) {false};
 return $tmp59;
 block1:;
 goto block11;
@@ -295,15 +295,15 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp61));
 *(&local0) = $tmp60;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp60));
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:70
-frost$core$Int64 $tmp62 = (frost$core$Int64) {0};
-frost$core$Bit $tmp63 = frost$core$Bit$init$builtin_bit(false);
+frost$core$Int64 $tmp62 = (frost$core$Int64) {0u};
+frost$core$Bit $tmp63 = (frost$core$Bit) {false};
 frost$core$Range$LTfrost$core$Int64$GT $tmp64 = frost$core$Range$LTfrost$core$Int64$GT$init$frost$core$Int64$frost$core$Int64$frost$core$Bit($tmp62, param1, $tmp63);
 frost$core$Int64 $tmp65 = $tmp64.min;
 *(&local1) = $tmp65;
 frost$core$Int64 $tmp66 = $tmp64.max;
 frost$core$Bit $tmp67 = $tmp64.inclusive;
 bool $tmp68 = $tmp67.value;
-frost$core$Int64 $tmp69 = (frost$core$Int64) {1};
+frost$core$Int64 $tmp69 = (frost$core$Int64) {1u};
 // begin inline call to function frost.core.Int64.get_asUInt64():frost.core.UInt64 from <internal>:1:1
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int64.frost:555
 int64_t $tmp70 = $tmp69.value;
@@ -387,15 +387,15 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp108));
 *(&local0) = $tmp107;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp107));
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:70
-frost$core$Int64 $tmp109 = (frost$core$Int64) {0};
-frost$core$Bit $tmp110 = frost$core$Bit$init$builtin_bit(false);
+frost$core$Int64 $tmp109 = (frost$core$Int64) {0u};
+frost$core$Bit $tmp110 = (frost$core$Bit) {false};
 frost$core$Range$LTfrost$core$Int64$GT $tmp111 = frost$core$Range$LTfrost$core$Int64$GT$init$frost$core$Int64$frost$core$Int64$frost$core$Bit($tmp109, param0, $tmp110);
 frost$core$Int64 $tmp112 = $tmp111.min;
 *(&local1) = $tmp112;
 frost$core$Int64 $tmp113 = $tmp111.max;
 frost$core$Bit $tmp114 = $tmp111.inclusive;
 bool $tmp115 = $tmp114.value;
-frost$core$Int64 $tmp116 = (frost$core$Int64) {1};
+frost$core$Int64 $tmp116 = (frost$core$Int64) {1u};
 // begin inline call to function frost.core.Int64.get_asUInt64():frost.core.UInt64 from <internal>:1:1
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int64.frost:555
 int64_t $tmp117 = $tmp116.value;
@@ -470,7 +470,7 @@ frost$core$Int64 frost$core$Char8$get_hash$R$frost$core$Int64(frost$core$Char8 p
 // begin inline call to function frost.core.Char8.get_asInt64():frost.core.Int64 from Char8.frost:86:16
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:116
 uint8_t $tmp154 = param0.value;
-int64_t $tmp155 = ((int64_t) $tmp154) & 255;
+int64_t $tmp155 = ((int64_t) $tmp154) & 255u;
 frost$core$Int64 $tmp156 = (frost$core$Int64) {$tmp155};
 return $tmp156;
 
@@ -492,7 +492,7 @@ frost$core$Char32 frost$core$Char8$get_asChar32$R$frost$core$Char32(frost$core$C
 // begin inline call to function frost.core.Char8.get_asInt32():frost.core.Int32 from Char8.frost:96:23
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:111
 uint8_t $tmp160 = param0.value;
-int32_t $tmp161 = ((int32_t) $tmp160) & 255;
+int32_t $tmp161 = ((int32_t) $tmp160) & 255u;
 frost$core$Int32 $tmp162 = (frost$core$Int32) {$tmp161};
 frost$core$Char32 $tmp163 = frost$core$Char32$init$frost$core$Int32($tmp162);
 return $tmp163;
@@ -510,7 +510,7 @@ frost$core$Int16 frost$core$Char8$get_asInt16$R$frost$core$Int16(frost$core$Char
 
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:106
 uint8_t $tmp166 = param0.value;
-int16_t $tmp167 = ((int16_t) $tmp166) & 255;
+int16_t $tmp167 = ((int16_t) $tmp166) & 255u;
 frost$core$Int16 $tmp168 = (frost$core$Int16) {$tmp167};
 return $tmp168;
 
@@ -519,7 +519,7 @@ frost$core$Int32 frost$core$Char8$get_asInt32$R$frost$core$Int32(frost$core$Char
 
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:111
 uint8_t $tmp169 = param0.value;
-int32_t $tmp170 = ((int32_t) $tmp169) & 255;
+int32_t $tmp170 = ((int32_t) $tmp169) & 255u;
 frost$core$Int32 $tmp171 = (frost$core$Int32) {$tmp170};
 return $tmp171;
 
@@ -528,7 +528,7 @@ frost$core$Int64 frost$core$Char8$get_asInt64$R$frost$core$Int64(frost$core$Char
 
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:116
 uint8_t $tmp172 = param0.value;
-int64_t $tmp173 = ((int64_t) $tmp172) & 255;
+int64_t $tmp173 = ((int64_t) $tmp172) & 255u;
 frost$core$Int64 $tmp174 = (frost$core$Int64) {$tmp173};
 return $tmp174;
 
@@ -571,52 +571,52 @@ frost$core$Char8* local0;
 frost$core$Char8* local1;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:147
 uint8_t $tmp183 = param0.value;
-bool $tmp184 = $tmp183 < 128;
-frost$core$Bit $tmp185 = frost$core$Bit$init$builtin_bit($tmp184);
+bool $tmp184 = $tmp183 < 128u;
+frost$core$Bit $tmp185 = (frost$core$Bit) {$tmp184};
 bool $tmp186 = $tmp185.value;
 if ($tmp186) goto block1; else goto block2;
 block1:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:148
-frost$core$Int64 $tmp187 = (frost$core$Int64) {1};
+frost$core$Int64 $tmp187 = (frost$core$Int64) {1u};
 int64_t $tmp188 = $tmp187.value;
 frost$core$Char8* $tmp189 = ((frost$core$Char8*) frostAlloc($tmp188 * 1));
 *(&local0) = $tmp189;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:149
 frost$core$Char8* $tmp190 = *(&local0);
-frost$core$Int64 $tmp191 = (frost$core$Int64) {0};
+frost$core$Int64 $tmp191 = (frost$core$Int64) {0u};
 int64_t $tmp192 = $tmp191.value;
 $tmp190[$tmp192] = param0;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:150
 FROST_ASSERT(48 == sizeof(frost$core$String));
 frost$core$String* $tmp193 = (frost$core$String*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$String$class);
 frost$core$Char8* $tmp194 = *(&local0);
-frost$core$Int64 $tmp195 = (frost$core$Int64) {1};
+frost$core$Int64 $tmp195 = (frost$core$Int64) {1u};
 frost$core$String$init$frost$unsafe$Pointer$LTfrost$core$Char8$GT$frost$core$Int64($tmp193, $tmp194, $tmp195);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp193));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp193));
 return $tmp193;
 block2:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:152
-frost$core$Int64 $tmp196 = (frost$core$Int64) {2};
+frost$core$Int64 $tmp196 = (frost$core$Int64) {2u};
 int64_t $tmp197 = $tmp196.value;
 frost$core$Char8* $tmp198 = ((frost$core$Char8*) frostAlloc($tmp197 * 1));
 *(&local1) = $tmp198;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:153
 frost$core$Char8* $tmp199 = *(&local1);
-frost$core$Int64 $tmp200 = (frost$core$Int64) {0};
+frost$core$Int64 $tmp200 = (frost$core$Int64) {0u};
 uint8_t $tmp201 = param0.value;
-uint16_t $tmp202 = ((uint16_t) $tmp201) >> 6;
-uint16_t $tmp203 = $tmp202 | 192;
+uint16_t $tmp202 = ((uint16_t) $tmp201) >> 6u;
+uint16_t $tmp203 = $tmp202 | 192u;
 frost$core$UInt8 $tmp204 = (frost$core$UInt8) {((uint8_t) $tmp203)};
 frost$core$Char8 $tmp205 = frost$core$Char8$init$frost$core$UInt8($tmp204);
 int64_t $tmp206 = $tmp200.value;
 $tmp199[$tmp206] = $tmp205;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:154
 frost$core$Char8* $tmp207 = *(&local1);
-frost$core$Int64 $tmp208 = (frost$core$Int64) {1};
+frost$core$Int64 $tmp208 = (frost$core$Int64) {1u};
 uint8_t $tmp209 = param0.value;
-uint16_t $tmp210 = ((uint16_t) $tmp209) & 63;
-uint16_t $tmp211 = $tmp210 | 128;
+uint16_t $tmp210 = ((uint16_t) $tmp209) & 63u;
+uint16_t $tmp211 = $tmp210 | 128u;
 frost$core$UInt8 $tmp212 = (frost$core$UInt8) {((uint8_t) $tmp211)};
 frost$core$Char8 $tmp213 = frost$core$Char8$init$frost$core$UInt8($tmp212);
 int64_t $tmp214 = $tmp208.value;
@@ -625,7 +625,7 @@ $tmp207[$tmp214] = $tmp213;
 FROST_ASSERT(48 == sizeof(frost$core$String));
 frost$core$String* $tmp215 = (frost$core$String*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$String$class);
 frost$core$Char8* $tmp216 = *(&local1);
-frost$core$Int64 $tmp217 = (frost$core$Int64) {2};
+frost$core$Int64 $tmp217 = (frost$core$Int64) {2u};
 frost$core$String$init$frost$unsafe$Pointer$LTfrost$core$Char8$GT$frost$core$Int64($tmp215, $tmp216, $tmp217);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp215));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp215));

@@ -16,12 +16,12 @@ frost$io$MemoryOutputStream$class_type frost$io$MemoryOutputStream$class = { (fr
 
 typedef frost$core$String* (*$fn17)(frost$core$Object*);
 
-static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x69\x6f\x2e\x4d\x65\x6d\x6f\x72\x79\x4f\x75\x74\x70\x75\x74\x53\x74\x72\x65\x61\x6d", 27, 7256682645707250821, NULL };
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x69\x6f\x2e\x4d\x65\x6d\x6f\x72\x79\x4f\x75\x74\x70\x75\x74\x53\x74\x72\x65\x61\x6d", 27, 2804558444258481915, NULL };
 
 void frost$io$MemoryOutputStream$init(frost$io$MemoryOutputStream* param0) {
 
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/MemoryOutputStream.frost:20
-frost$core$Int64 $tmp2 = (frost$core$Int64) {1024};
+frost$core$Int64 $tmp2 = (frost$core$Int64) {1024u};
 frost$io$MemoryOutputStream$init$frost$core$Int64(param0, $tmp2);
 return;
 

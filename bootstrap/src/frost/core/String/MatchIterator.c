@@ -24,9 +24,9 @@ frost$core$String$MatchIterator$class_type frost$core$String$MatchIterator$class
 
 typedef frost$core$Bit (*$fn21)(frost$collections$Iterator*);
 
-static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x4d\x61\x74\x63\x68\x49\x74\x65\x72\x61\x74\x6f\x72", 31, 505867795171361900, NULL };
-static frost$core$String $s28 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x74\x72\x69\x6e\x67\x2e\x66\x72\x6f\x73\x74", 12, -7878295538840852540, NULL };
-static frost$core$String $s29 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x4d\x61\x74\x63\x68\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x6e\x65\x78\x74\x28\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x49\x6e\x64\x65\x78", 94, -864616477991308834, NULL };
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x4d\x61\x74\x63\x68\x49\x74\x65\x72\x61\x74\x6f\x72", 31, -2195058790848912080, NULL };
+static frost$core$String $s28 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x74\x72\x69\x6e\x67\x2e\x66\x72\x6f\x73\x74", 12, 7542466198510074048, NULL };
+static frost$core$String $s29 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x4d\x61\x74\x63\x68\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x6e\x65\x78\x74\x28\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x49\x6e\x64\x65\x78", 94, 4224316421190324854, NULL };
 
 void frost$core$String$MatchIterator$init$frost$core$String$frost$core$String$frost$core$Bit(frost$core$String$MatchIterator* param0, frost$core$String* param1, frost$core$String* param2, frost$core$Bit param3) {
 
@@ -54,7 +54,7 @@ frost$core$Bit* $tmp11 = &param0->allowOverlaps;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:978
 // begin inline call to function frost.core.String.get_start():frost.core.String.Index from String.frost:978:27
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:1205
-frost$core$Int64 $tmp12 = (frost$core$Int64) {0};
+frost$core$Int64 $tmp12 = (frost$core$Int64) {0u};
 frost$core$String$Index $tmp13 = frost$core$String$Index$init$frost$core$Int64($tmp12);
 frost$core$String$Index$nullable $tmp14 = frost$core$String$indexOf$frost$core$String$frost$core$String$Index$R$frost$core$String$Index$Q(param1, param2, $tmp13);
 frost$core$String$Index$nullable* $tmp15 = &param0->nextMatch;
@@ -67,7 +67,7 @@ frost$core$Bit frost$core$String$MatchIterator$get_done$R$frost$core$Bit(frost$c
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:230
 frost$core$String$Index$nullable* $tmp16 = &param0->nextMatch;
 frost$core$String$Index$nullable $tmp17 = *$tmp16;
-frost$core$Bit $tmp18 = frost$core$Bit$init$builtin_bit(!$tmp17.nonnull);
+frost$core$Bit $tmp18 = (frost$core$Bit) {!$tmp17.nonnull};
 return $tmp18;
 
 }
@@ -91,7 +91,7 @@ frost$core$Bit $tmp25 = (frost$core$Bit) {$tmp24};
 bool $tmp26 = $tmp25.value;
 if ($tmp26) goto block1; else goto block2;
 block2:;
-frost$core$Int64 $tmp27 = (frost$core$Int64) {234};
+frost$core$Int64 $tmp27 = (frost$core$Int64) {234u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s28, $tmp27, &$s29);
 abort(); // unreachable
 block1:;

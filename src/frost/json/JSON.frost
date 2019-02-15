@@ -24,16 +24,15 @@ choice JSON {
     ================================================================================================
     BIT(Bit)
 
-    -- FIXME need to use ImmutableHashMap / ImmutableArray so this choice is immutable
     ================================================================================================
-    An object node.
+    A map node.
     ================================================================================================
-    OBJECT(MapView<String, JSON>)
+    MAP(MapView<String, JSON>)
 
     ================================================================================================
-    An array node.
+    A list node.
     ================================================================================================
-    ARRAY(ListView<JSON>)
+    LIST(ListView<JSON>)
 
     ================================================================================================
     A `null` node.
@@ -87,15 +86,15 @@ choice JSON {
 
     ================================================================================================
     Returns a node from the JSON subtree represented by this node by following a path specification.
-    The path of this node (the root of its subtree) is the empty string (`""`). Objects are indexed
-    by a slash followed by the name of a field, such as `"/customer"`. Arrays are index by bracketed
+    The path of this node (the root of its subtree) is the empty string (`""`). Maps are indexed
+    by a slash followed by the name of a field, such as `"/customer"`. Lists are index by bracketed
     integers, such as `[0]`. These rules may be combined to produce complex paths such as
     "/customer/address[0]/zipCode".
 
     If the specified node does not exist or cannot be resolved (for instance, by trying to index
-    into a node which is not an array), `null` is returned. Note that a `null` node in the JSON file
+    into a node which is not a list), `null` is returned. Note that a `null` node in the JSON file
     is represented by `JSON.NULL`, so successfully retrieving a `null` JSON node will result in a
-    *non-null* `JSON.NULL` return. An invalid path (due to mismatched brackets, non-numeric array
+    *non-null* `JSON.NULL` return. An invalid path (due to mismatched brackets, non-numeric list
     indices, etc.) will cause a precondition failure.
     ================================================================================================
     -- FIXME @pre(valid(path))
@@ -108,7 +107,7 @@ choice JSON {
             match nextPathKey(path, index) {
                 when PathKey.FIELD(field, next) {
                     match current {
-                        when OBJECT(fields) {
+                        when MAP(fields) {
                             current := fields[field]
                             if current == null {
                                 return null
@@ -122,7 +121,7 @@ choice JSON {
                 }
                 when PathKey.INDEX(key, next) {
                     match current {
-                        when ARRAY(nodes) {
+                        when LIST(nodes) {
                             current := nodes[key]
                         }
                         otherwise {
@@ -209,15 +208,15 @@ choice JSON {
     }
 
     ================================================================================================
-    As [get(String)], but returns the node as an array (`ListView<Node>`).
+    As [get(String)], but returns the node as a list (`ListView<Node>`).
     ================================================================================================
-    function getArray(path:String):ListView<JSON>? {
+    function getList(path:String):ListView<JSON>? {
         def result := get(path)
         if result == null {
             return null
         }
         match result {
-            when ARRAY(value) {
+            when LIST(value) {
                 return value
             }
             otherwise {
@@ -227,15 +226,15 @@ choice JSON {
     }
 
     ================================================================================================
-    As [get(String)], but returns the node as an object (`MapView<String, JSON>`).
+    As [get(String)], but returns the node as a map (`MapView<String, JSON>`).
     ================================================================================================
-    function getObject(path:String):MapView<String, JSON>? {
+    function getMap(path:String):MapView<String, JSON>? {
         def result := get(path)
         if result == null {
             return null
         }
         match result {
-            when OBJECT(value) {
+            when MAP(value) {
                 return value
             }
             otherwise {
@@ -247,7 +246,8 @@ choice JSON {
     ================================================================================================
     Returns the value of this `INT` node.
     ================================================================================================
-    function asInt():Int64 {
+    property asInt:Int64
+    function get_asInt():Int64 {
         match self {
             when INT(value) {
                 return value
@@ -261,7 +261,8 @@ choice JSON {
     ================================================================================================
     Returns the value of this `REAL` node.
     ================================================================================================
-    function asReal():Real64 {
+    property asReal:Real64
+    function get_asReal():Real64 {
         match self {
             when REAL(value) {
                 return value
@@ -273,23 +274,10 @@ choice JSON {
     }
 
     ================================================================================================
-    Returns the value of this `STRING` node.
-    ================================================================================================
-    function asString():String {
-        match self {
-            when STRING(value) {
-                return value
-            }
-            otherwise {
-                unreachable
-            }
-        }
-    }
-
-    ================================================================================================
     Returns the value of this `BIT` node.
     ================================================================================================
-    function asBit():Bit {
+    property asBit:Bit
+    function get_asBit():Bit {
         match self {
             when BIT(value) {
                 return value
@@ -301,11 +289,12 @@ choice JSON {
     }
 
     ================================================================================================
-    Returns the value of this `OBJECT` node.
+    Returns the value of this `MAP` node.
     ================================================================================================
-    function asObject():MapView<String, JSON> {
+    property asMap:MapView<String, JSON>
+    function get_asMap():MapView<String, JSON> {
         match self {
-            when OBJECT(value) {
+            when MAP(value) {
                 return value
             }
             otherwise {
@@ -315,11 +304,12 @@ choice JSON {
     }
 
     ================================================================================================
-    Returns the value of this `ARRAY` node.
+    Returns the value of this `LIST` node.
     ================================================================================================
-    function asArray():ListView<JSON> {
+    property asListView:ListView<JSON>
+    function get_asListView():ListView<JSON> {
         match self {
-            when ARRAY(value) {
+            when LIST(value) {
                 return value
             }
             otherwise {
@@ -346,7 +336,7 @@ choice JSON {
             when BIT(value) {
                 return value.asString
             }
-            when OBJECT(fields) {
+            when MAP(fields) {
                 def result := MutableString("{")
                 var separator := " "
                 for k in fields.keys { -- FIXME iterate over tuples
@@ -356,7 +346,7 @@ choice JSON {
                 result.append(" }")
                 return result.finish()
             }
-            when ARRAY(nodes) {
+            when LIST(nodes) {
                 def result := MutableString("[")
                 var separator := ""
                 for n in nodes {

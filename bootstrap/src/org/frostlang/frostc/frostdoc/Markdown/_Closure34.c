@@ -21,13 +21,13 @@ typedef frost$core$String* (*$fn37)(frost$core$Object*);
 typedef void (*$fn52)(org$frostlang$frostc$frostdoc$Markdown*, frost$core$MutableString*);
 typedef frost$core$String* (*$fn55)(frost$core$Object*);
 
-static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x66\x72\x6f\x73\x74\x64\x6f\x63\x2e\x4d\x61\x72\x6b\x64\x6f\x77\x6e\x2e\x5f\x43\x6c\x6f\x73\x75\x72\x65\x33\x34", 49, -5097778637230146534, NULL };
-static frost$core$String $s18 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x5e\x5b\x20\x5c\x74\x5d\x2b", 7, 207956274426062, NULL };
-static frost$core$String $s29 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "", 0, 1, NULL };
-static frost$core$String $s34 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x5b\x20\x5c\x74\x5d\x2b\x24", 7, 204157886156304, NULL };
-static frost$core$String $s45 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "", 0, 1, NULL };
-static frost$core$String $s58 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x3c\x63\x6f\x64\x65\x3e", 6, 1702543554134, NULL };
-static frost$core$String $s60 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x3c\x2f\x63\x6f\x64\x65\x3e", 7, 171409136343781, NULL };
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x66\x72\x6f\x73\x74\x64\x6f\x63\x2e\x4d\x61\x72\x6b\x64\x6f\x77\x6e\x2e\x5f\x43\x6c\x6f\x73\x75\x72\x65\x33\x34", 49, -4905408184155984598, NULL };
+static frost$core$String $s18 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x5e\x5b\x20\x5c\x74\x5d\x2b", 7, 2144065729583989714, NULL };
+static frost$core$String $s29 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "", 0, -3750763034362895579, NULL };
+static frost$core$String $s34 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x5b\x20\x5c\x74\x5d\x2b\x24", 7, 1065103647703566382, NULL };
+static frost$core$String $s45 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "", 0, -3750763034362895579, NULL };
+static frost$core$String $s58 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x3c\x63\x6f\x64\x65\x3e", 6, -4368029754542842124, NULL };
+static frost$core$String $s60 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x3c\x2f\x63\x6f\x64\x65\x3e", 7, 1685123786324366533, NULL };
 
 void org$frostlang$frostc$frostdoc$Markdown$_Closure34$init$org$frostlang$frostc$frostdoc$Markdown(org$frostlang$frostc$frostdoc$Markdown$_Closure34* param0, org$frostlang$frostc$frostdoc$Markdown* param1) {
 
@@ -58,7 +58,7 @@ frost$core$MutableString* local1 = NULL;
 frost$core$Matcher* local2 = NULL;
 frost$core$Matcher* local3 = NULL;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:1086
-frost$core$Int64 $tmp7 = (frost$core$Int64) {2};
+frost$core$Int64 $tmp7 = (frost$core$Int64) {2u};
 ITable* $tmp8 = param1->$class->itable;
 while ($tmp8->$class != (frost$core$Class*) &frost$collections$ListView$class) {
     $tmp8 = $tmp8->next;
@@ -89,7 +89,7 @@ frost$core$RegularExpression* $tmp17 = (frost$core$RegularExpression*) frostObje
 frost$core$RegularExpression$init$frost$core$String($tmp17, &$s18);
 // begin inline call to method frost.core.MutableString.replace(search:frost.core.RegularExpression, replacement:frost.core.String) from Markdown.frost:1088:28
 // /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/MutableString.stub:107
-frost$core$Bit $tmp19 = frost$core$Bit$init$builtin_bit(true);
+frost$core$Bit $tmp19 = (frost$core$Bit) {true};
 // begin inline call to method frost.core.MutableString.replace(search:frost.core.RegularExpression, replacement:frost.core.String, allowGroupReferences:frost.core.Bit) from MutableString.stub:107:90
 // /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/MutableString.stub:110
 $fn21 $tmp20 = ($fn21) ((frost$core$Object*) $tmp16)->$class->vtable[0];
@@ -131,7 +131,7 @@ frost$core$RegularExpression* $tmp33 = (frost$core$RegularExpression*) frostObje
 frost$core$RegularExpression$init$frost$core$String($tmp33, &$s34);
 // begin inline call to method frost.core.MutableString.replace(search:frost.core.RegularExpression, replacement:frost.core.String) from Markdown.frost:1089:28
 // /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/MutableString.stub:107
-frost$core$Bit $tmp35 = frost$core$Bit$init$builtin_bit(true);
+frost$core$Bit $tmp35 = (frost$core$Bit) {true};
 // begin inline call to method frost.core.MutableString.replace(search:frost.core.RegularExpression, replacement:frost.core.String, allowGroupReferences:frost.core.Bit) from MutableString.stub:107:90
 // /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/MutableString.stub:110
 $fn37 $tmp36 = ($fn37) ((frost$core$Object*) $tmp32)->$class->vtable[0];

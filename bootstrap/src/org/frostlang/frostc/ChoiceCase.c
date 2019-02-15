@@ -21,10 +21,10 @@ static frost$core$String $s1;
 org$frostlang$frostc$ChoiceCase$class_type org$frostlang$frostc$ChoiceCase$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &org$frostlang$frostc$Symbol$class, NULL, { org$frostlang$frostc$ChoiceCase$get_asString$R$frost$core$String, org$frostlang$frostc$ChoiceCase$cleanup, org$frostlang$frostc$Symbol$get_heritable$R$frost$core$Bit} };
 
 
-static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x43\x68\x6f\x69\x63\x65\x43\x61\x73\x65", 31, 2916299888878715327, NULL };
-static frost$core$String $s33 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x73\x74\x75\x62", 9, 2046703270578891585, NULL };
-static frost$core$String $s39 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2e", 1, 147, NULL };
-static frost$core$String $s44 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "", 0, 1, NULL };
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x43\x68\x6f\x69\x63\x65\x43\x61\x73\x65", 31, -1681702743889979521, NULL };
+static frost$core$String $s33 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x73\x74\x75\x62", 9, -1038031786811403499, NULL };
+static frost$core$String $s39 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2e", 1, -5808619545316717647, NULL };
+static frost$core$String $s44 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "", 0, -3750763034362895579, NULL };
 
 void org$frostlang$frostc$ChoiceCase$init$org$frostlang$frostc$ClassDecl$org$frostlang$frostc$Position$frost$core$String$frost$core$String$Q$frost$core$Int64$frost$collections$ListView$LTorg$frostlang$frostc$Type$GT(org$frostlang$frostc$ChoiceCase* param0, org$frostlang$frostc$ClassDecl* param1, org$frostlang$frostc$Position param2, frost$core$String* param3, frost$core$String* param4, frost$core$Int64 param5, frost$collections$ListView* param6) {
 
@@ -44,7 +44,7 @@ frost$core$Weak** $tmp5 = &param0->initMethod;
 *$tmp5 = $tmp2;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp2));
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/ChoiceCase.frost:17
-frost$core$Int64 $tmp6 = (frost$core$Int64) {0};
+frost$core$Int64 $tmp6 = (frost$core$Int64) {0u};
 // begin inline call to org.frostlang.frostc.Compiler.Resolution.init(rv:frost.core.Int64):org.frostlang.frostc.Compiler.Resolution from ChoiceCase.frost:17:60
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:44
 frost$core$Int64* $tmp7 = &(&local1)->$rawValue;
@@ -87,7 +87,7 @@ frost$collections$Array** $tmp22 = &param0->fields;
 *$tmp22 = $tmp19;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp19));
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/ChoiceCase.frost:25
-frost$core$Int64 $tmp23 = (frost$core$Int64) {1};
+frost$core$Int64 $tmp23 = (frost$core$Int64) {1u};
 // begin inline call to org.frostlang.frostc.Symbol.Kind.init(rv:frost.core.Int64):org.frostlang.frostc.Symbol.Kind from ChoiceCase.frost:25:31
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Symbol.frost:4
 frost$core$Int64* $tmp24 = &(&local3)->$rawValue;
@@ -113,7 +113,7 @@ frost$core$Bit $tmp30 = *$tmp29;
 bool $tmp31 = $tmp30.value;
 if ($tmp31) goto block3; else goto block4;
 block4:;
-frost$core$Int64 $tmp32 = (frost$core$Int64) {16};
+frost$core$Int64 $tmp32 = (frost$core$Int64) {16u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s33, $tmp32);
 abort(); // unreachable
 block3:;

@@ -24,10 +24,10 @@ typedef frost$core$Bit (*$fn12)(frost$collections$Iterator*);
 typedef void (*$fn31)(frost$io$InputStream$LineIterator*);
 typedef frost$core$String* (*$fn37)(frost$io$InputStream*);
 
-static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x69\x6f\x2e\x49\x6e\x70\x75\x74\x53\x74\x72\x65\x61\x6d\x2e\x4c\x69\x6e\x65\x49\x74\x65\x72\x61\x74\x6f\x72", 33, -7377538898649301905, NULL };
-static frost$core$String $s19 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x49\x6e\x70\x75\x74\x53\x74\x72\x65\x61\x6d\x2e\x66\x72\x6f\x73\x74", 17, -1756706896302820515, NULL };
-static frost$core$String $s20 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x66\x72\x6f\x73\x74\x2e\x69\x6f\x2e\x49\x6e\x70\x75\x74\x53\x74\x72\x65\x61\x6d\x2e\x4c\x69\x6e\x65\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x6e\x65\x78\x74\x28\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67", 90, 3806645696408232979, NULL };
-static frost$core$String $s26 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x49\x6e\x70\x75\x74\x53\x74\x72\x65\x61\x6d\x2e\x66\x72\x6f\x73\x74", 17, -1756706896302820515, NULL };
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x69\x6f\x2e\x49\x6e\x70\x75\x74\x53\x74\x72\x65\x61\x6d\x2e\x4c\x69\x6e\x65\x49\x74\x65\x72\x61\x74\x6f\x72", 33, 3084010469533370979, NULL };
+static frost$core$String $s19 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x49\x6e\x70\x75\x74\x53\x74\x72\x65\x61\x6d\x2e\x66\x72\x6f\x73\x74", 17, -3551496725332018301, NULL };
+static frost$core$String $s20 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x66\x72\x6f\x73\x74\x2e\x69\x6f\x2e\x49\x6e\x70\x75\x74\x53\x74\x72\x65\x61\x6d\x2e\x4c\x69\x6e\x65\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x6e\x65\x78\x74\x28\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67", 90, -6433029774062338755, NULL };
+static frost$core$String $s26 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x49\x6e\x70\x75\x74\x53\x74\x72\x65\x61\x6d\x2e\x66\x72\x6f\x73\x74", 17, -3551496725332018301, NULL };
 
 void frost$io$InputStream$LineIterator$init$frost$io$InputStream(frost$io$InputStream$LineIterator* param0, frost$io$InputStream* param1) {
 
@@ -49,7 +49,7 @@ frost$core$Bit frost$io$InputStream$LineIterator$get_done$R$frost$core$Bit(frost
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/InputStream.frost:28
 frost$core$String** $tmp7 = &param0->_next;
 frost$core$String* $tmp8 = *$tmp7;
-frost$core$Bit $tmp9 = frost$core$Bit$init$builtin_bit($tmp8 == NULL);
+frost$core$Bit $tmp9 = (frost$core$Bit) {$tmp8 == NULL};
 return $tmp9;
 
 }
@@ -70,18 +70,18 @@ frost$core$Bit $tmp16 = (frost$core$Bit) {$tmp15};
 bool $tmp17 = $tmp16.value;
 if ($tmp17) goto block1; else goto block2;
 block2:;
-frost$core$Int64 $tmp18 = (frost$core$Int64) {32};
+frost$core$Int64 $tmp18 = (frost$core$Int64) {32u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s19, $tmp18, &$s20);
 abort(); // unreachable
 block1:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/InputStream.frost:33
 frost$core$String** $tmp21 = &param0->_next;
 frost$core$String* $tmp22 = *$tmp21;
-frost$core$Bit $tmp23 = frost$core$Bit$init$builtin_bit($tmp22 != NULL);
+frost$core$Bit $tmp23 = (frost$core$Bit) {$tmp22 != NULL};
 bool $tmp24 = $tmp23.value;
 if ($tmp24) goto block4; else goto block5;
 block5:;
-frost$core$Int64 $tmp25 = (frost$core$Int64) {33};
+frost$core$Int64 $tmp25 = (frost$core$Int64) {33u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s26, $tmp25);
 abort(); // unreachable
 block4:;

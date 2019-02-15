@@ -14,20 +14,20 @@ frost$io$LineNumberInputStream$class_type frost$io$LineNumberInputStream$class =
 
 typedef frost$core$UInt8$nullable (*$fn14)(frost$io$InputStream*);
 
-static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x69\x6f\x2e\x4c\x69\x6e\x65\x4e\x75\x6d\x62\x65\x72\x49\x6e\x70\x75\x74\x53\x74\x72\x65\x61\x6d", 30, 677429033351455160, NULL };
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x69\x6f\x2e\x4c\x69\x6e\x65\x4e\x75\x6d\x62\x65\x72\x49\x6e\x70\x75\x74\x53\x74\x72\x65\x61\x6d", 30, 1260523631505748438, NULL };
 
 void frost$io$LineNumberInputStream$init$frost$io$InputStream(frost$io$LineNumberInputStream* param0, frost$io$InputStream* param1) {
 
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/LineNumberInputStream.frost:21
-frost$core$Int64 $tmp2 = (frost$core$Int64) {1};
+frost$core$Int64 $tmp2 = (frost$core$Int64) {1u};
 frost$core$Int64* $tmp3 = &param0->line;
 *$tmp3 = $tmp2;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/LineNumberInputStream.frost:26
-frost$core$Int64 $tmp4 = (frost$core$Int64) {1};
+frost$core$Int64 $tmp4 = (frost$core$Int64) {1u};
 frost$core$Int64* $tmp5 = &param0->column;
 *$tmp5 = $tmp4;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/LineNumberInputStream.frost:31
-frost$core$Int64 $tmp6 = (frost$core$Int64) {4};
+frost$core$Int64 $tmp6 = (frost$core$Int64) {4u};
 frost$core$Int64* $tmp7 = &param0->tabSize;
 *$tmp7 = $tmp6;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/LineNumberInputStream.frost:39
@@ -53,7 +53,7 @@ frost$core$UInt8$nullable $tmp15 = $tmp13($tmp12);
 *(&local0) = $tmp15;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/LineNumberInputStream.frost:46
 frost$core$UInt8$nullable $tmp16 = *(&local0);
-frost$core$Bit $tmp17 = frost$core$Bit$init$builtin_bit(!$tmp16.nonnull);
+frost$core$Bit $tmp17 = (frost$core$Bit) {!$tmp16.nonnull};
 bool $tmp18 = $tmp17.value;
 if ($tmp18) goto block1; else goto block2;
 block1:;
@@ -62,20 +62,20 @@ return ((frost$core$UInt8$nullable) { .nonnull = false });
 block2:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/LineNumberInputStream.frost:49
 frost$core$UInt8$nullable $tmp19 = *(&local0);
-frost$core$UInt8 $tmp20 = (frost$core$UInt8) {10};
+frost$core$UInt8 $tmp20 = (frost$core$UInt8) {10u};
 // begin inline call to function frost.core.UInt8.=(other:frost.core.UInt8):frost.core.Bit from LineNumberInputStream.frost:50:18
 // /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/UInt8.stub:455
 uint8_t $tmp21 = ((frost$core$UInt8) $tmp19.value).value;
 uint8_t $tmp22 = $tmp20.value;
 bool $tmp23 = $tmp21 == $tmp22;
-frost$core$Bit $tmp24 = frost$core$Bit$init$builtin_bit($tmp23);
+frost$core$Bit $tmp24 = (frost$core$Bit) {$tmp23};
 bool $tmp25 = $tmp24.value;
 if ($tmp25) goto block4; else goto block5;
 block4:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/LineNumberInputStream.frost:51
 frost$core$Int64* $tmp26 = &param0->line;
 frost$core$Int64 $tmp27 = *$tmp26;
-frost$core$Int64 $tmp28 = (frost$core$Int64) {1};
+frost$core$Int64 $tmp28 = (frost$core$Int64) {1u};
 int64_t $tmp29 = $tmp27.value;
 int64_t $tmp30 = $tmp28.value;
 int64_t $tmp31 = $tmp29 + $tmp30;
@@ -83,18 +83,18 @@ frost$core$Int64 $tmp32 = (frost$core$Int64) {$tmp31};
 frost$core$Int64* $tmp33 = &param0->line;
 *$tmp33 = $tmp32;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/LineNumberInputStream.frost:52
-frost$core$Int64 $tmp34 = (frost$core$Int64) {1};
+frost$core$Int64 $tmp34 = (frost$core$Int64) {1u};
 frost$core$Int64* $tmp35 = &param0->column;
 *$tmp35 = $tmp34;
 goto block3;
 block5:;
-frost$core$UInt8 $tmp36 = (frost$core$UInt8) {9};
+frost$core$UInt8 $tmp36 = (frost$core$UInt8) {9u};
 // begin inline call to function frost.core.UInt8.=(other:frost.core.UInt8):frost.core.Bit from LineNumberInputStream.frost:54:18
 // /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/UInt8.stub:455
 uint8_t $tmp37 = ((frost$core$UInt8) $tmp19.value).value;
 uint8_t $tmp38 = $tmp36.value;
 bool $tmp39 = $tmp37 == $tmp38;
-frost$core$Bit $tmp40 = frost$core$Bit$init$builtin_bit($tmp39);
+frost$core$Bit $tmp40 = (frost$core$Bit) {$tmp39};
 bool $tmp41 = $tmp40.value;
 if ($tmp41) goto block7; else goto block8;
 block7:;
@@ -112,7 +112,7 @@ frost$core$Int64 $tmp49 = *$tmp48;
 int64_t $tmp50 = $tmp47.value;
 int64_t $tmp51 = $tmp49.value;
 int64_t $tmp52 = $tmp50 % $tmp51;
-frost$core$Int64 $tmp53 = frost$core$Int64$init$builtin_int64($tmp52);
+frost$core$Int64 $tmp53 = (frost$core$Int64) {$tmp52};
 int64_t $tmp54 = $tmp45.value;
 int64_t $tmp55 = $tmp53.value;
 int64_t $tmp56 = $tmp54 - $tmp55;
@@ -128,7 +128,7 @@ block8:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/LineNumberInputStream.frost:58
 frost$core$Int64* $tmp63 = &param0->column;
 frost$core$Int64 $tmp64 = *$tmp63;
-frost$core$Int64 $tmp65 = (frost$core$Int64) {1};
+frost$core$Int64 $tmp65 = (frost$core$Int64) {1u};
 int64_t $tmp66 = $tmp64.value;
 int64_t $tmp67 = $tmp65.value;
 int64_t $tmp68 = $tmp66 + $tmp67;

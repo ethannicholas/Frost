@@ -15,7 +15,7 @@ org$frostlang$frostc$parser$Parser$AutoSyntaxHighlight$class_type org$frostlang$
 typedef void (*$fn13)(org$frostlang$frostc$parser$SyntaxHighlighter*, org$frostlang$frostc$parser$SyntaxHighlighter$Kind);
 typedef void (*$fn27)(org$frostlang$frostc$parser$SyntaxHighlighter*, org$frostlang$frostc$parser$SyntaxHighlighter$Kind);
 
-static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x70\x61\x72\x73\x65\x72\x2e\x50\x61\x72\x73\x65\x72\x2e\x41\x75\x74\x6f\x53\x79\x6e\x74\x61\x78\x48\x69\x67\x68\x6c\x69\x67\x68\x74", 54, 4707429463870608114, NULL };
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x70\x61\x72\x73\x65\x72\x2e\x50\x61\x72\x73\x65\x72\x2e\x41\x75\x74\x6f\x53\x79\x6e\x74\x61\x78\x48\x69\x67\x68\x6c\x69\x67\x68\x74", 54, 2377941989154097530, NULL };
 
 void org$frostlang$frostc$parser$Parser$AutoSyntaxHighlight$init$org$frostlang$frostc$parser$Parser$org$frostlang$frostc$parser$SyntaxHighlighter$Kind(org$frostlang$frostc$parser$Parser$AutoSyntaxHighlight* param0, org$frostlang$frostc$parser$Parser* param1, org$frostlang$frostc$parser$SyntaxHighlighter$Kind param2) {
 
@@ -32,7 +32,7 @@ org$frostlang$frostc$parser$SyntaxHighlighter$Kind* $tmp5 = &param0->kind;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:24
 org$frostlang$frostc$parser$SyntaxHighlighter** $tmp6 = &param1->syntaxHighlighter;
 org$frostlang$frostc$parser$SyntaxHighlighter* $tmp7 = *$tmp6;
-frost$core$Bit $tmp8 = frost$core$Bit$init$builtin_bit($tmp7 != NULL);
+frost$core$Bit $tmp8 = (frost$core$Bit) {$tmp7 != NULL};
 bool $tmp9 = $tmp8.value;
 if ($tmp9) goto block1; else goto block2;
 block1:;
@@ -53,7 +53,7 @@ org$frostlang$frostc$parser$Parser** $tmp14 = &param0->parser;
 org$frostlang$frostc$parser$Parser* $tmp15 = *$tmp14;
 org$frostlang$frostc$parser$SyntaxHighlighter** $tmp16 = &$tmp15->syntaxHighlighter;
 org$frostlang$frostc$parser$SyntaxHighlighter* $tmp17 = *$tmp16;
-frost$core$Bit $tmp18 = frost$core$Bit$init$builtin_bit($tmp17 != NULL);
+frost$core$Bit $tmp18 = (frost$core$Bit) {$tmp17 != NULL};
 bool $tmp19 = $tmp18.value;
 if ($tmp19) goto block1; else goto block2;
 block1:;

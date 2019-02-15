@@ -38,17 +38,17 @@ typedef frost$core$Int64 (*$fn178)(frost$collections$CollectionView*);
 typedef frost$core$Int64 (*$fn249)(frost$collections$CollectionView*);
 typedef frost$core$String* (*$fn254)(frost$core$Object*);
 
-static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x53\x74\x61\x63\x6b", 23, -799920337617151128, NULL };
-static frost$core$String $s17 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x74\x61\x63\x6b\x2e\x66\x72\x6f\x73\x74", 11, -4463479325045299737, NULL };
-static frost$core$String $s18 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x53\x74\x61\x63\x6b\x2e\x70\x6f\x70\x28\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x53\x74\x61\x63\x6b\x2e\x54", 87, 180433054594552295, NULL };
-static frost$core$String $s32 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x74\x61\x63\x6b\x2e\x66\x72\x6f\x73\x74", 11, -4463479325045299737, NULL };
-static frost$core$String $s62 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x41\x72\x72\x61\x79\x2e\x66\x72\x6f\x73\x74", 11, -2538429575782104400, NULL };
-static frost$core$String $s63 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x5b\x5d\x28\x69\x6e\x64\x65\x78\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x36\x34\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x54", 110, -2494579685283273095, NULL };
-static frost$core$String $s138 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x74\x61\x63\x6b\x2e\x66\x72\x6f\x73\x74", 11, -4463479325045299737, NULL };
-static frost$core$String $s139 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x53\x74\x61\x63\x6b\x2e\x5b\x5d\x28\x64\x65\x70\x74\x68\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x36\x34\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x53\x74\x61\x63\x6b\x2e\x54", 110, -251948532054082008, NULL };
-static frost$core$String $s152 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x74\x61\x63\x6b\x2e\x66\x72\x6f\x73\x74", 11, -4463479325045299737, NULL };
-static frost$core$String $s186 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x41\x72\x72\x61\x79\x2e\x66\x72\x6f\x73\x74", 11, -2538429575782104400, NULL };
-static frost$core$String $s187 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x5b\x5d\x28\x69\x6e\x64\x65\x78\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x36\x34\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x54", 110, -2494579685283273095, NULL };
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x53\x74\x61\x63\x6b", 23, -307227456241795868, NULL };
+static frost$core$String $s17 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x74\x61\x63\x6b\x2e\x66\x72\x6f\x73\x74", 11, 638186012983189615, NULL };
+static frost$core$String $s18 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x53\x74\x61\x63\x6b\x2e\x70\x6f\x70\x28\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x53\x74\x61\x63\x6b\x2e\x54", 87, 3682859426721205233, NULL };
+static frost$core$String $s32 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x74\x61\x63\x6b\x2e\x66\x72\x6f\x73\x74", 11, 638186012983189615, NULL };
+static frost$core$String $s62 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x41\x72\x72\x61\x79\x2e\x66\x72\x6f\x73\x74", 11, -1919842861654168654, NULL };
+static frost$core$String $s63 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x5b\x5d\x28\x69\x6e\x64\x65\x78\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x36\x34\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x54", 110, 4208646717458716543, NULL };
+static frost$core$String $s138 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x74\x61\x63\x6b\x2e\x66\x72\x6f\x73\x74", 11, 638186012983189615, NULL };
+static frost$core$String $s139 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x53\x74\x61\x63\x6b\x2e\x5b\x5d\x28\x64\x65\x70\x74\x68\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x36\x34\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x53\x74\x61\x63\x6b\x2e\x54", 110, -6780593757603597528, NULL };
+static frost$core$String $s152 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x74\x61\x63\x6b\x2e\x66\x72\x6f\x73\x74", 11, 638186012983189615, NULL };
+static frost$core$String $s186 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x41\x72\x72\x61\x79\x2e\x66\x72\x6f\x73\x74", 11, -1919842861654168654, NULL };
+static frost$core$String $s187 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x5b\x5d\x28\x69\x6e\x64\x65\x78\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x36\x34\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x54", 110, 4208646717458716543, NULL };
 
 void frost$collections$Stack$push$frost$collections$Stack$T(frost$collections$Stack* param0, frost$core$Object* param1) {
 
@@ -72,7 +72,7 @@ while ($tmp6->$class != (frost$core$Class*) &frost$collections$CollectionView$cl
 }
 $fn8 $tmp7 = $tmp6->methods[0];
 frost$core$Int64 $tmp9 = $tmp7(((frost$collections$CollectionView*) $tmp5));
-frost$core$Int64 $tmp10 = (frost$core$Int64) {0};
+frost$core$Int64 $tmp10 = (frost$core$Int64) {0u};
 int64_t $tmp11 = $tmp9.value;
 int64_t $tmp12 = $tmp10.value;
 bool $tmp13 = $tmp11 > $tmp12;
@@ -80,7 +80,7 @@ frost$core$Bit $tmp14 = (frost$core$Bit) {$tmp13};
 bool $tmp15 = $tmp14.value;
 if ($tmp15) goto block1; else goto block2;
 block2:;
-frost$core$Int64 $tmp16 = (frost$core$Int64) {51};
+frost$core$Int64 $tmp16 = (frost$core$Int64) {51u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s17, $tmp16, &$s18);
 abort(); // unreachable
 block1:;
@@ -93,7 +93,7 @@ while ($tmp21->$class != (frost$core$Class*) &frost$collections$CollectionView$c
 }
 $fn23 $tmp22 = $tmp21->methods[0];
 frost$core$Int64 $tmp24 = $tmp22(((frost$collections$CollectionView*) $tmp20));
-frost$core$Int64 $tmp25 = (frost$core$Int64) {0};
+frost$core$Int64 $tmp25 = (frost$core$Int64) {0u};
 int64_t $tmp26 = $tmp24.value;
 int64_t $tmp27 = $tmp25.value;
 bool $tmp28 = $tmp26 > $tmp27;
@@ -101,7 +101,7 @@ frost$core$Bit $tmp29 = (frost$core$Bit) {$tmp28};
 bool $tmp30 = $tmp29.value;
 if ($tmp30) goto block4; else goto block5;
 block5:;
-frost$core$Int64 $tmp31 = (frost$core$Int64) {52};
+frost$core$Int64 $tmp31 = (frost$core$Int64) {52u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s32, $tmp31);
 abort(); // unreachable
 block4:;
@@ -116,13 +116,13 @@ while ($tmp37->$class != (frost$core$Class*) &frost$collections$CollectionView$c
 }
 $fn39 $tmp38 = $tmp37->methods[0];
 frost$core$Int64 $tmp40 = $tmp38(((frost$collections$CollectionView*) $tmp36));
-frost$core$Int64 $tmp41 = (frost$core$Int64) {1};
+frost$core$Int64 $tmp41 = (frost$core$Int64) {1u};
 int64_t $tmp42 = $tmp40.value;
 int64_t $tmp43 = $tmp41.value;
 int64_t $tmp44 = $tmp42 - $tmp43;
 frost$core$Int64 $tmp45 = (frost$core$Int64) {$tmp44};
 // begin inline call to function frost.collections.Array.[](index:frost.core.Int64):frost.collections.Array.T from Stack.frost:53:31
-frost$core$Int64 $tmp46 = (frost$core$Int64) {0};
+frost$core$Int64 $tmp46 = (frost$core$Int64) {0u};
 int64_t $tmp47 = $tmp45.value;
 int64_t $tmp48 = $tmp46.value;
 bool $tmp49 = $tmp47 >= $tmp48;
@@ -143,7 +143,7 @@ frost$core$Bit $tmp59 = (frost$core$Bit) {$tmp58};
 bool $tmp60 = $tmp59.value;
 if ($tmp60) goto block7; else goto block8;
 block8:;
-frost$core$Int64 $tmp61 = (frost$core$Int64) {74};
+frost$core$Int64 $tmp61 = (frost$core$Int64) {74u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s62, $tmp61, &$s63);
 abort(); // unreachable
 block7:;
@@ -170,7 +170,7 @@ while ($tmp73->$class != (frost$core$Class*) &frost$collections$CollectionView$c
 }
 $fn75 $tmp74 = $tmp73->methods[0];
 frost$core$Int64 $tmp76 = $tmp74(((frost$collections$CollectionView*) $tmp72));
-frost$core$Int64 $tmp77 = (frost$core$Int64) {1};
+frost$core$Int64 $tmp77 = (frost$core$Int64) {1u};
 int64_t $tmp78 = $tmp76.value;
 int64_t $tmp79 = $tmp77.value;
 int64_t $tmp80 = $tmp78 - $tmp79;
@@ -199,7 +199,7 @@ while ($tmp89->$class != (frost$core$Class*) &frost$collections$CollectionView$c
 }
 $fn91 $tmp90 = $tmp89->methods[0];
 frost$core$Int64 $tmp92 = $tmp90(((frost$collections$CollectionView*) $tmp88));
-frost$core$Int64 $tmp93 = (frost$core$Int64) {1};
+frost$core$Int64 $tmp93 = (frost$core$Int64) {1u};
 int64_t $tmp94 = $tmp92.value;
 int64_t $tmp95 = $tmp93.value;
 int64_t $tmp96 = $tmp94 - $tmp95;
@@ -225,7 +225,7 @@ while ($tmp106->$class != (frost$core$Class*) &frost$collections$CollectionView$
 }
 $fn108 $tmp107 = $tmp106->methods[0];
 frost$core$Int64 $tmp109 = $tmp107(((frost$collections$CollectionView*) $tmp105));
-frost$core$Int64 $tmp110 = (frost$core$Int64) {1};
+frost$core$Int64 $tmp110 = (frost$core$Int64) {1u};
 int64_t $tmp111 = $tmp109.value;
 int64_t $tmp112 = $tmp110.value;
 int64_t $tmp113 = $tmp111 - $tmp112;
@@ -242,7 +242,7 @@ return $tmp119;
 }
 frost$core$Object* frost$collections$Stack$$IDX$frost$core$Int64$R$frost$collections$Stack$T(frost$collections$Stack* param0, frost$core$Int64 param1) {
 
-frost$core$Int64 $tmp120 = (frost$core$Int64) {0};
+frost$core$Int64 $tmp120 = (frost$core$Int64) {0u};
 int64_t $tmp121 = param1.value;
 int64_t $tmp122 = $tmp120.value;
 bool $tmp123 = $tmp121 >= $tmp122;
@@ -267,7 +267,7 @@ frost$core$Bit $tmp135 = (frost$core$Bit) {$tmp134};
 bool $tmp136 = $tmp135.value;
 if ($tmp136) goto block1; else goto block2;
 block2:;
-frost$core$Int64 $tmp137 = (frost$core$Int64) {71};
+frost$core$Int64 $tmp137 = (frost$core$Int64) {71u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s138, $tmp137, &$s139);
 abort(); // unreachable
 block1:;
@@ -287,7 +287,7 @@ frost$core$Bit $tmp149 = (frost$core$Bit) {$tmp148};
 bool $tmp150 = $tmp149.value;
 if ($tmp150) goto block5; else goto block6;
 block6:;
-frost$core$Int64 $tmp151 = (frost$core$Int64) {72};
+frost$core$Int64 $tmp151 = (frost$core$Int64) {72u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s152, $tmp151);
 abort(); // unreachable
 block5:;
@@ -302,7 +302,7 @@ while ($tmp157->$class != (frost$core$Class*) &frost$collections$CollectionView$
 }
 $fn159 $tmp158 = $tmp157->methods[0];
 frost$core$Int64 $tmp160 = $tmp158(((frost$collections$CollectionView*) $tmp156));
-frost$core$Int64 $tmp161 = (frost$core$Int64) {1};
+frost$core$Int64 $tmp161 = (frost$core$Int64) {1u};
 int64_t $tmp162 = $tmp160.value;
 int64_t $tmp163 = $tmp161.value;
 int64_t $tmp164 = $tmp162 - $tmp163;
@@ -312,7 +312,7 @@ int64_t $tmp167 = param1.value;
 int64_t $tmp168 = $tmp166 - $tmp167;
 frost$core$Int64 $tmp169 = (frost$core$Int64) {$tmp168};
 // begin inline call to function frost.collections.Array.[](index:frost.core.Int64):frost.collections.Array.T from Stack.frost:73:24
-frost$core$Int64 $tmp170 = (frost$core$Int64) {0};
+frost$core$Int64 $tmp170 = (frost$core$Int64) {0u};
 int64_t $tmp171 = $tmp169.value;
 int64_t $tmp172 = $tmp170.value;
 bool $tmp173 = $tmp171 >= $tmp172;
@@ -333,7 +333,7 @@ frost$core$Bit $tmp183 = (frost$core$Bit) {$tmp182};
 bool $tmp184 = $tmp183.value;
 if ($tmp184) goto block8; else goto block9;
 block9:;
-frost$core$Int64 $tmp185 = (frost$core$Int64) {74};
+frost$core$Int64 $tmp185 = (frost$core$Int64) {74u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s186, $tmp185, &$s187);
 abort(); // unreachable
 block8:;
@@ -356,21 +356,21 @@ frost$collections$Array** $tmp192 = &param0->contents;
 frost$collections$Array* $tmp193 = *$tmp192;
 // begin inline call to method frost.collections.Array.clear() from Stack.frost:80:23
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Array.frost:139
-frost$core$Int64 $tmp194 = (frost$core$Int64) {0};
+frost$core$Int64 $tmp194 = (frost$core$Int64) {0u};
 frost$core$Int64* $tmp195 = &$tmp193->_count;
 *$tmp195 = $tmp194;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Array.frost:140
-frost$core$Int64 $tmp196 = (frost$core$Int64) {0};
+frost$core$Int64 $tmp196 = (frost$core$Int64) {0u};
 frost$core$Int64* $tmp197 = &$tmp193->capacity;
 frost$core$Int64 $tmp198 = *$tmp197;
-frost$core$Bit $tmp199 = frost$core$Bit$init$builtin_bit(false);
+frost$core$Bit $tmp199 = (frost$core$Bit) {false};
 frost$core$Range$LTfrost$core$Int64$GT $tmp200 = frost$core$Range$LTfrost$core$Int64$GT$init$frost$core$Int64$frost$core$Int64$frost$core$Bit($tmp196, $tmp198, $tmp199);
 frost$core$Int64 $tmp201 = $tmp200.min;
 *(&local0) = $tmp201;
 frost$core$Int64 $tmp202 = $tmp200.max;
 frost$core$Bit $tmp203 = $tmp200.inclusive;
 bool $tmp204 = $tmp203.value;
-frost$core$Int64 $tmp205 = (frost$core$Int64) {1};
+frost$core$Int64 $tmp205 = (frost$core$Int64) {1u};
 // begin inline call to function frost.core.Int64.get_asUInt64():frost.core.UInt64 from <internal>:1:1
 // /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:422
 int64_t $tmp206 = $tmp205.value;

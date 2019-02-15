@@ -26,11 +26,11 @@ frost$core$SteppedRange$LTfrost$core$UInt16$Cfrost$core$UInt16$GT$wrapperclass_t
 typedef frost$core$String* (*$fn32)(frost$core$Object*);
 typedef frost$core$String* (*$fn40)(frost$core$Object*);
 
-static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x65\x70\x70\x65\x64\x52\x61\x6e\x67\x65\x3c\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x55\x49\x6e\x74\x31\x36\x2c\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x55\x49\x6e\x74\x31\x36\x3e", 61, 774876423370998480, NULL };
-static frost$core$String $s2 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x65\x70\x70\x65\x64\x52\x61\x6e\x67\x65\x3c\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x55\x49\x6e\x74\x31\x36\x2c\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x55\x49\x6e\x74\x31\x36\x3e", 61, 774876423370998480, NULL };
-static frost$core$String $s22 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2e\x2e\x2e", 3, 1504239, NULL };
-static frost$core$String $s24 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2e\x2e", 2, 14893, NULL };
-static frost$core$String $s35 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x20\x62\x79\x20", 4, 138041984, NULL };
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x65\x70\x70\x65\x64\x52\x61\x6e\x67\x65\x3c\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x55\x49\x6e\x74\x31\x36\x2c\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x55\x49\x6e\x74\x31\x36\x3e", 61, -210483017018499590, NULL };
+static frost$core$String $s2 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x65\x70\x70\x65\x64\x52\x61\x6e\x67\x65\x3c\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x55\x49\x6e\x74\x31\x36\x2c\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x55\x49\x6e\x74\x31\x36\x3e", 61, -210483017018499590, NULL };
+static frost$core$String $s22 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2e\x2e\x2e", 3, -587370003925626343, NULL };
+static frost$core$String $s24 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2e\x2e", 2, 565793323585912621, NULL };
+static frost$core$String $s35 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x20\x62\x79\x20", 4, -229567638518546866, NULL };
 
 frost$core$SteppedRange$LTfrost$core$UInt16$Cfrost$core$UInt16$GT frost$core$SteppedRange$LTfrost$core$UInt16$Cfrost$core$UInt16$GT$init$frost$core$UInt16$frost$core$UInt16$frost$core$UInt16$frost$core$Bit(frost$core$UInt16 param0, frost$core$UInt16 param1, frost$core$UInt16 param2, frost$core$Bit param3) {
 
@@ -66,7 +66,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp9));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp8));
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/SteppedRange.frost:52
 frost$core$UInt16 $tmp10 = param0.start;
-frost$core$Bit $tmp11 = frost$core$Bit$init$builtin_bit(true);
+frost$core$Bit $tmp11 = (frost$core$Bit) {true};
 bool $tmp12 = $tmp11.value;
 if ($tmp12) goto block1; else goto block2;
 block1:;
@@ -103,7 +103,7 @@ goto block5;
 block5:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/SteppedRange.frost:61
 frost$core$UInt16 $tmp25 = param0.end;
-frost$core$Bit $tmp26 = frost$core$Bit$init$builtin_bit(true);
+frost$core$Bit $tmp26 = (frost$core$Bit) {true};
 bool $tmp27 = $tmp26.value;
 if ($tmp27) goto block7; else goto block8;
 block7:;

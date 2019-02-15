@@ -44,6 +44,8 @@ typedef struct org$frostlang$frostc$LLVMCodeGenerator {
     frost$collections$IdentityMap* choiceDataSizes;
     frost$collections$IdentityMap* methodShims;
     frost$collections$HashMap* refs;
+    frost$collections$IdentityMap* nameCache;
+    frost$collections$IdentityMap* typeNames;
     org$frostlang$frostc$IR* ir;
 } org$frostlang$frostc$LLVMCodeGenerator;
 #include "frost/core/Class.h"

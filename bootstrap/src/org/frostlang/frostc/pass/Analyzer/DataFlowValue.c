@@ -29,12 +29,12 @@ typedef frost$core$String* (*$fn82)(frost$core$Object*);
 typedef frost$core$String* (*$fn91)(frost$core$Object*);
 typedef frost$core$String* (*$fn99)(frost$core$Object*);
 
-static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x70\x61\x73\x73\x2e\x41\x6e\x61\x6c\x79\x7a\x65\x72\x2e\x44\x61\x74\x61\x46\x6c\x6f\x77\x56\x61\x6c\x75\x65", 48, -1850376038430266952, NULL };
-static frost$core$String $s85 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x44\x61\x74\x61\x46\x6c\x6f\x77\x56\x61\x6c\x75\x65\x28", 14, 5284793279823497104, NULL };
-static frost$core$String $s87 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2c\x20", 2, 14677, NULL };
-static frost$core$String $s95 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x29", 1, 142, NULL };
-static frost$core$String $s102 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x44\x61\x74\x61\x46\x6c\x6f\x77\x56\x61\x6c\x75\x65\x28", 14, 5284793279823497104, NULL };
-static frost$core$String $s104 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x29", 1, 142, NULL };
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x70\x61\x73\x73\x2e\x41\x6e\x61\x6c\x79\x7a\x65\x72\x2e\x44\x61\x74\x61\x46\x6c\x6f\x77\x56\x61\x6c\x75\x65", 48, 2806633416286856336, NULL };
+static frost$core$String $s85 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x44\x61\x74\x61\x46\x6c\x6f\x77\x56\x61\x6c\x75\x65\x28", 14, -2430841278758085354, NULL };
+static frost$core$String $s87 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2c\x20", 2, 563935148934614481, NULL };
+static frost$core$String $s95 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x29", 1, -5808618445805089436, NULL };
+static frost$core$String $s102 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x44\x61\x74\x61\x46\x6c\x6f\x77\x56\x61\x6c\x75\x65\x28", 14, -2430841278758085354, NULL };
+static frost$core$String $s104 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x29", 1, -5808618445805089436, NULL };
 
 void org$frostlang$frostc$pass$Analyzer$DataFlowValue$init$org$frostlang$frostc$Type(org$frostlang$frostc$pass$Analyzer$DataFlowValue* param0, org$frostlang$frostc$Type* param1) {
 
@@ -132,14 +132,14 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp36));
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/pass/Analyzer.frost:40
 frost$collections$ListView** $tmp38 = &param0->nonNullImplications;
 frost$collections$ListView* $tmp39 = *$tmp38;
-frost$core$Bit $tmp40 = frost$core$Bit$init$builtin_bit($tmp39 != NULL);
+frost$core$Bit $tmp40 = (frost$core$Bit) {$tmp39 != NULL};
 bool $tmp41 = $tmp40.value;
 if ($tmp41) goto block1; else goto block3;
 block1:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/pass/Analyzer.frost:41
 frost$collections$ListView** $tmp42 = &param2->nonNullImplications;
 frost$collections$ListView* $tmp43 = *$tmp42;
-frost$core$Bit $tmp44 = frost$core$Bit$init$builtin_bit($tmp43 != NULL);
+frost$core$Bit $tmp44 = (frost$core$Bit) {$tmp43 != NULL};
 bool $tmp45 = $tmp44.value;
 if ($tmp45) goto block4; else goto block5;
 block4:;
@@ -193,7 +193,7 @@ block3:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/pass/Analyzer.frost:49
 frost$collections$ListView** $tmp63 = &param2->nonNullImplications;
 frost$collections$ListView* $tmp64 = *$tmp63;
-frost$core$Bit $tmp65 = frost$core$Bit$init$builtin_bit($tmp64 != NULL);
+frost$core$Bit $tmp65 = (frost$core$Bit) {$tmp64 != NULL};
 bool $tmp66 = $tmp65.value;
 if ($tmp66) goto block6; else goto block7;
 block6:;
@@ -236,7 +236,7 @@ frost$core$String* org$frostlang$frostc$pass$Analyzer$DataFlowValue$get_asString
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/pass/Analyzer.frost:63
 frost$collections$ListView** $tmp75 = &param0->nonNullImplications;
 frost$collections$ListView* $tmp76 = *$tmp75;
-frost$core$Bit $tmp77 = frost$core$Bit$init$builtin_bit($tmp76 != NULL);
+frost$core$Bit $tmp77 = (frost$core$Bit) {$tmp76 != NULL};
 bool $tmp78 = $tmp77.value;
 if ($tmp78) goto block1; else goto block2;
 block1:;

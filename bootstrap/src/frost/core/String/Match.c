@@ -27,9 +27,9 @@ static frost$core$String $s1;
 frost$core$String$Match$class_type frost$core$String$Match$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Immutable$class, NULL, { frost$core$String$Match$get_asString$R$frost$core$String$shim, frost$core$String$Match$cleanup$shim} };
 
 
-static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x4d\x61\x74\x63\x68", 23, 1490981604187616890, NULL };
-static frost$core$String $s64 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x4d\x61\x74\x63\x68\x28", 6, 1881012283434, NULL };
-static frost$core$String $s66 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x29", 1, 142, NULL };
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x4d\x61\x74\x63\x68", 23, -7089004959739480374, NULL };
+static frost$core$String $s64 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x4d\x61\x74\x63\x68\x28", 6, -3203041817595402214, NULL };
+static frost$core$String $s66 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x29", 1, -5808618445805089436, NULL };
 
 void frost$core$String$Match$init$frost$core$Matcher(frost$core$String$Match* param0, frost$core$Matcher* param1) {
 
@@ -56,17 +56,17 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp7));
 *(&local0) = $tmp6;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp6));
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:272
-frost$core$Int64 $tmp8 = (frost$core$Int64) {0};
+frost$core$Int64 $tmp8 = (frost$core$Int64) {0u};
 frost$core$Int64 $tmp9;
 frost$core$Matcher$get_groupCount$R$frost$core$Int64(&$tmp9, param1);
-frost$core$Bit $tmp10 = frost$core$Bit$init$builtin_bit(false);
+frost$core$Bit $tmp10 = (frost$core$Bit) {false};
 frost$core$Range$LTfrost$core$Int64$GT $tmp11 = frost$core$Range$LTfrost$core$Int64$GT$init$frost$core$Int64$frost$core$Int64$frost$core$Bit($tmp8, $tmp9, $tmp10);
 frost$core$Int64 $tmp12 = $tmp11.min;
 *(&local1) = $tmp12;
 frost$core$Int64 $tmp13 = $tmp11.max;
 frost$core$Bit $tmp14 = $tmp11.inclusive;
 bool $tmp15 = $tmp14.value;
-frost$core$Int64 $tmp16 = (frost$core$Int64) {1};
+frost$core$Int64 $tmp16 = (frost$core$Int64) {1u};
 // begin inline call to function frost.core.Int64.get_asUInt64():frost.core.UInt64 from <internal>:1:1
 // /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:422
 int64_t $tmp17 = $tmp16.value;
@@ -146,7 +146,7 @@ frost$core$String* frost$core$String$Match$get_asString$R$frost$core$String(fros
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:280
 frost$collections$ImmutableArray** $tmp59 = &param0->groups;
 frost$collections$ImmutableArray* $tmp60 = *$tmp59;
-frost$core$Int64 $tmp61 = (frost$core$Int64) {0};
+frost$core$Int64 $tmp61 = (frost$core$Int64) {0u};
 frost$core$Immutable* $tmp62 = frost$collections$ImmutableArray$$IDX$frost$core$Int64$R$frost$collections$ImmutableArray$T($tmp60, $tmp61);
 frost$core$String* $tmp63 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(&$s64, ((frost$core$String*) $tmp62));
 frost$core$String* $tmp65 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp63, &$s66);

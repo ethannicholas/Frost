@@ -92,6 +92,10 @@ class LLVMCodeGenerator : CodeGenerator {
 
     def refs := HashMap<IR.Statement.ID, String>()
 
+    def nameCache := IdentityMap<MethodDecl, String>()
+
+    def typeNames := IdentityMap<Type, String>()
+
     def ir:IR
 
     init(triple:String, out:OutputStream) {
@@ -443,79 +447,96 @@ class LLVMCodeGenerator : CodeGenerator {
         if !t.resolved {
             return "<unresolved type: \{t}>"
         }
-        match t.typeKind {
-            when Type.Kind.VOID {
-                return "void"
-            }
-            when Type.Kind.BUILTIN_INT, Type.Kind.BUILTIN_UINT {
-                return "i\{sizeOf(t) * 8}"
-            }
-            when Type.Kind.BUILTIN_BIT {
-                return "i1"
-            }
-            when Type.Kind.BUILTIN_FLOAT {
-                match sizeOf(t) {
-                    when 4    { return "float" }
-                    when 8    { return "double" }
-                    otherwise { unreachable }
+        var result := typeNames[t]
+        if result == null {
+            match t.typeKind {
+                when Type.Kind.VOID {
+                    result := "void"
                 }
-            }
-            when Type.Kind.CLASS {
-                writeType(t)
-                def name := "%\{escapeName(t.name)}"
-                def cl := compiler.getClass(t)
-                assert cl !== null
-                if !compiler.isValue(cl) {
-                    return name + "*"
+                when Type.Kind.BUILTIN_INT, Type.Kind.BUILTIN_UINT {
+                    result := "i\{sizeOf(t) * 8}"
                 }
-                return name
-            }
-            when Type.Kind.NULLABLE {
-                def cl := compiler.getClass(t)
-                assert cl !== null, "unable to load \{t}"
-                if compiler.isValue(cl) {
-                    return nullableType(t)
+                when Type.Kind.BUILTIN_BIT {
+                    result := "i1"
                 }
-                return llvmType(t.subtypes[0])
-            }
-            when Type.Kind.GENERIC {
-                if t.subtypes[0].name = "frost.unsafe.Pointer" {
-                    if t.subtypes[1].isMethod {
-                        return llvmMethodType(t.subtypes[1], null)
+                when Type.Kind.BUILTIN_FLOAT {
+                    match sizeOf(t) {
+                        when 4    { result := "float" }
+                        when 8    { result := "double" }
+                        otherwise { unreachable }
                     }
-                    return llvmType(t.subtypes[1]) + "*"
                 }
-                def cl := compiler.getClass(t)
-                if cl.isSpecialization() {
+                when Type.Kind.CLASS {
+                    writeType(t)
                     def name := "%\{escapeName(t.name)}"
                     def cl := compiler.getClass(t)
                     assert cl !== null
                     if !compiler.isValue(cl) {
-                        return name + "*"
+                        result := name + "*"
                     }
-                    return name
+                    else {
+                        result := name
+                    }
                 }
-                return llvmType(t.subtypes[0])
+                when Type.Kind.NULLABLE {
+                    def cl := compiler.getClass(t)
+                    assert cl !== null, "unable to load \{t}"
+                    if compiler.isValue(cl) {
+                        result := nullableType(t)
+                    }
+                    else {
+                        result := llvmType(t.subtypes[0])
+                    }
+                }
+                when Type.Kind.GENERIC {
+                    if t.subtypes[0].name = "frost.unsafe.Pointer" {
+                        if t.subtypes[1].isMethod {
+                            result := llvmMethodType(t.subtypes[1], null)
+                        }
+                        else {
+                            result := llvmType(t.subtypes[1]) + "*"
+                        }
+                    }
+                    else {
+                        def cl := compiler.getClass(t)
+                        if cl.isSpecialization() {
+                            def name := "%\{escapeName(t.name)}"
+                            def cl := compiler.getClass(t)
+                            assert cl !== null
+                            if !compiler.isValue(cl) {
+                                result := name + "*"
+                            }
+                            else {
+                                result := name
+                            }
+                        }
+                        else {
+                            result := llvmType(t.subtypes[0])
+                        }
+                    }
+                }
+                when Type.Kind.GENERIC_CLASS_PARAMETER {
+                    result := llvmType(t.genericClassParameter.bound)
+                }
+                when Type.Kind.GENERIC_METHOD_PARAMETER {
+                    result := llvmType(t.genericMethodParameter.bound)
+                }
+                when Type.Kind.FUNCTION, Type.Kind.METHOD {
+                    result := llvmType(compiler.MUTABLE_METHOD_TYPE)
+                }
+                when Type.Kind.IMMUTABLE_FUNCTION, Type.Kind.IMMUTABLE_METHOD {
+                    result := llvmType(compiler.METHOD_TYPE)
+                }
+                when Type.Kind.TUPLE {
+                    result := llvmType(compiler.getClass(t).type)
+                }
+                otherwise {
+                    result := "<unsupported type '\{t}'>"
+                }
             }
-            when Type.Kind.GENERIC_CLASS_PARAMETER {
-                return llvmType(t.genericClassParameter.bound)
-            }
-            when Type.Kind.GENERIC_METHOD_PARAMETER {
-                return llvmType(t.genericMethodParameter.bound)
-            }
-            when Type.Kind.FUNCTION, Type.Kind.METHOD {
-                return llvmType(compiler.MUTABLE_METHOD_TYPE)
-            }
-            when Type.Kind.IMMUTABLE_FUNCTION, Type.Kind.IMMUTABLE_METHOD {
-                return llvmType(compiler.METHOD_TYPE)
-            }
-            when Type.Kind.TUPLE {
-                return llvmType(compiler.getClass(t).type)
-            }
-            otherwise {
-                return "<unsupported type '\{t}'>"
-            }
+            typeNames[t] := result
         }
+        return result
     }
 
     ================================================================================================
@@ -1016,48 +1037,55 @@ class LLVMCodeGenerator : CodeGenerator {
     }
 
     function getName(m:MethodDecl):String {
-        if m.name = "main" {
-            return "@frostMain"
+        var result := nameCache[m]
+        if result == null {
+            if m.name = "main" {
+                result := "@frostMain"
+            }
+            else {
+                def name := MutableString("@")
+                name.append(escapeName(m.owner.name))
+                name.append("$")
+                match m.name {
+                    when "+"    { name.append("$ADD") }
+                    when "-"    { name.append("$SUB") }
+                    when "*"    { name.append("$MUL") }
+                    when "/"    { name.append("$DIV") }
+                    when "//"   { name.append("$INTDIV") }
+                    when "%"    { name.append("$REM") }
+                    when "^"    { name.append("$POW") }
+                    when "[]"   { name.append("$IDX") }
+                    when "[]:=" { name.append("$IDXEQ") }
+                    when "="    { name.append("$EQ") }
+                    when "!="   { name.append("$NEQ") }
+                    when ">"    { name.append("$GT") }
+                    when "<"    { name.append("$LT") }
+                    when ">="   { name.append("$GE") }
+                    when "<="   { name.append("$LE") }
+                    when "|"    { name.append("$OR") }
+                    when "||"   { name.append("$BOR") }
+                    when "&"    { name.append("$AND") }
+                    when "&&"   { name.append("$BAND") }
+                    when "~"    { name.append("$XOR") }
+                    when "~~"   { name.append("$BXOR") }
+                    when "!"    { name.append("$NOT") }
+                    when "!!"   { name.append("$BNOT") }
+                    when "<<"   { name.append("$SHL") }
+                    when ">>"   { name.append("$SHR") }
+                    otherwise   { name.append(escapeName(m.name)) }
+                }
+                for p in m.parameters {
+                    name.append("$\{escapeName(p.type.name)}")
+                }
+                if m.methodKind != MethodDecl.Kind.INIT & m.returnType != compiler.VOID_TYPE {
+                    name.append("$R$")
+                    name.append(escapeName(m.returnType.name))
+                }
+                result := name.finish()
+            }
+            nameCache[m] := result
         }
-        def result := MutableString("@")
-        result.append(escapeName(m.owner.name))
-        result.append("$")
-        match m.name {
-            when "+"    { result.append("$ADD") }
-            when "-"    { result.append("$SUB") }
-            when "*"    { result.append("$MUL") }
-            when "/"    { result.append("$DIV") }
-            when "//"   { result.append("$INTDIV") }
-            when "%"    { result.append("$REM") }
-            when "^"    { result.append("$POW") }
-            when "[]"   { result.append("$IDX") }
-            when "[]:=" { result.append("$IDXEQ") }
-            when "="    { result.append("$EQ") }
-            when "!="   { result.append("$NEQ") }
-            when ">"    { result.append("$GT") }
-            when "<"    { result.append("$LT") }
-            when ">="   { result.append("$GE") }
-            when "<="   { result.append("$LE") }
-            when "|"    { result.append("$OR") }
-            when "||"   { result.append("$BOR") }
-            when "&"    { result.append("$AND") }
-            when "&&"   { result.append("$BAND") }
-            when "~"    { result.append("$XOR") }
-            when "~~"   { result.append("$BXOR") }
-            when "!"    { result.append("$NOT") }
-            when "!!"   { result.append("$BNOT") }
-            when "<<"   { result.append("$SHL") }
-            when ">>"   { result.append("$SHR") }
-            otherwise   { result.append(escapeName(m.name)) }
-        }
-        for p in m.parameters {
-            result.append("$\{escapeName(p.type.name)}")
-        }
-        if m.methodKind != MethodDecl.Kind.INIT & m.returnType != compiler.VOID_TYPE {
-            result.append("$R$")
-            result.append(escapeName(m.returnType.name))
-        }
-        return result.finish()
+        return result
     }
 
     function getName(f:FieldDecl):String {

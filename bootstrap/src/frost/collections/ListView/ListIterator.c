@@ -24,14 +24,14 @@ typedef frost$core$Int64 (*$fn13)(frost$collections$CollectionView*);
 typedef frost$core$Bit (*$fn21)(frost$collections$Iterator*);
 typedef frost$core$Object* (*$fn49)(frost$collections$ListView*, frost$core$Int64);
 
-static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x4c\x69\x73\x74\x56\x69\x65\x77\x2e\x4c\x69\x73\x74\x49\x74\x65\x72\x61\x74\x6f\x72", 39, -4839127017351005143, NULL };
-static frost$core$String $s28 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x4c\x69\x73\x74\x56\x69\x65\x77\x2e\x66\x72\x6f\x73\x74", 14, -973627212597981440, NULL };
-static frost$core$String $s29 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x4c\x69\x73\x74\x56\x69\x65\x77\x2e\x4c\x69\x73\x74\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x6e\x65\x78\x74\x28\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x4c\x69\x73\x74\x56\x69\x65\x77\x2e\x4c\x69\x73\x74\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x54", 122, 7409156600143998782, NULL };
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x4c\x69\x73\x74\x56\x69\x65\x77\x2e\x4c\x69\x73\x74\x49\x74\x65\x72\x61\x74\x6f\x72", 39, 1118807312422195775, NULL };
+static frost$core$String $s28 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x4c\x69\x73\x74\x56\x69\x65\x77\x2e\x66\x72\x6f\x73\x74", 14, -625725483312209580, NULL };
+static frost$core$String $s29 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x4c\x69\x73\x74\x56\x69\x65\x77\x2e\x4c\x69\x73\x74\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x6e\x65\x78\x74\x28\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x4c\x69\x73\x74\x56\x69\x65\x77\x2e\x4c\x69\x73\x74\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x54", 122, -4626430657070765822, NULL };
 
 void frost$collections$ListView$ListIterator$init$frost$collections$ListView$LTfrost$collections$ListView$ListIterator$T$GT(frost$collections$ListView$ListIterator* param0, frost$collections$ListView* param1) {
 
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/ListView.frost:47
-frost$core$Int64 $tmp2 = (frost$core$Int64) {0};
+frost$core$Int64 $tmp2 = (frost$core$Int64) {0u};
 frost$core$Int64* $tmp3 = &param0->index;
 *$tmp3 = $tmp2;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/ListView.frost:50
@@ -62,7 +62,7 @@ frost$core$Int64 $tmp14 = $tmp12(((frost$collections$CollectionView*) $tmp10));
 int64_t $tmp15 = $tmp8.value;
 int64_t $tmp16 = $tmp14.value;
 bool $tmp17 = $tmp15 == $tmp16;
-frost$core$Bit $tmp18 = frost$core$Bit$init$builtin_bit($tmp17);
+frost$core$Bit $tmp18 = (frost$core$Bit) {$tmp17};
 return $tmp18;
 
 }
@@ -82,14 +82,14 @@ frost$core$Bit $tmp25 = (frost$core$Bit) {$tmp24};
 bool $tmp26 = $tmp25.value;
 if ($tmp26) goto block1; else goto block2;
 block2:;
-frost$core$Int64 $tmp27 = (frost$core$Int64) {59};
+frost$core$Int64 $tmp27 = (frost$core$Int64) {59u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s28, $tmp27, &$s29);
 abort(); // unreachable
 block1:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/ListView.frost:60
 frost$core$Int64* $tmp30 = &param0->index;
 frost$core$Int64 $tmp31 = *$tmp30;
-frost$core$Int64 $tmp32 = (frost$core$Int64) {1};
+frost$core$Int64 $tmp32 = (frost$core$Int64) {1u};
 int64_t $tmp33 = $tmp31.value;
 int64_t $tmp34 = $tmp32.value;
 int64_t $tmp35 = $tmp33 + $tmp34;
@@ -101,7 +101,7 @@ frost$collections$ListView** $tmp38 = &param0->list;
 frost$collections$ListView* $tmp39 = *$tmp38;
 frost$core$Int64* $tmp40 = &param0->index;
 frost$core$Int64 $tmp41 = *$tmp40;
-frost$core$Int64 $tmp42 = (frost$core$Int64) {1};
+frost$core$Int64 $tmp42 = (frost$core$Int64) {1u};
 int64_t $tmp43 = $tmp41.value;
 int64_t $tmp44 = $tmp42.value;
 int64_t $tmp45 = $tmp43 - $tmp44;

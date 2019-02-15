@@ -1,3 +1,25 @@
+function asSortedString(node:JSON):String {
+    match node {
+        when JSON.LIST(nodes) {
+            return "[" + nodes.map(n => self.asSortedString(n)).join(", ") + "]"
+        }
+        when JSON.MAP(map) {
+            def result := MutableString("{ ")
+            def list := map.entries.all().sort((a, b) => a[0] > b[0])
+            var separator := ""
+            for e in list {
+                result.append("\{separator}\{e[0]:frost}: \{asSortedString(e[1])}")
+                separator := ", "
+            }
+            result.append(" }")
+            return result.finish()
+        }
+        otherwise {
+            return node.asString
+        }
+    }
+}
+
 method main() {
     def p := JSONParser()
     def json1 := p.parse("[true, 1, \"hello\"]")
@@ -34,10 +56,10 @@ method main() {
                          "  \"children\": [],\n" +
                          "  \"spouse\": null\n" +
                          "}")->String)
-    Console.printLine(json2)
+    Console.printLine(asSortedString(json2))
     Console.printLine(json2.getBit("/isAlive"))
     Console.printLine(json2.getInt("/age"))
-    Console.printLine(json2.get("/address"))
+    Console.printLine(asSortedString(json2.get("/address")))
     Console.printLine(json2.getString("/firstName"))
     Console.printLine(json2.getString("/phoneNumbers[1]/number"))
     assert json2.get("/notFound") == null

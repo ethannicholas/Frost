@@ -23,13 +23,13 @@ typedef void (*$fn24)(org$frostlang$frostc$frostdoc$Markdown*, frost$core$Mutabl
 typedef frost$core$Int64 (*$fn27)(frost$collections$CollectionView*);
 typedef frost$core$Object* (*$fn38)(frost$collections$ListView*, frost$core$Int64);
 
-static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x66\x72\x6f\x73\x74\x64\x6f\x63\x2e\x4d\x61\x72\x6b\x64\x6f\x77\x6e\x2e\x5f\x43\x6c\x6f\x73\x75\x72\x65\x32", 48, -6077627060095498515, NULL };
-static frost$core$String $s44 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "", 0, 1, NULL };
-static frost$core$String $s48 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x22", 1, 135, NULL };
-static frost$core$String $s49 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x26\x71\x75\x6f\x74\x3b", 6, 1472784484255, NULL };
-static frost$core$String $s51 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "", 0, 1, NULL };
-static frost$core$String $s62 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "", 0, 1, NULL };
-static frost$core$String $s66 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "", 0, 1, NULL };
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x66\x72\x6f\x73\x74\x64\x6f\x63\x2e\x4d\x61\x72\x6b\x64\x6f\x77\x6e\x2e\x5f\x43\x6c\x6f\x73\x75\x72\x65\x32", 48, 5457374679822673613, NULL };
+static frost$core$String $s44 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "", 0, -3750763034362895579, NULL };
+static frost$core$String $s48 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x22", 1, -5808623943363230491, NULL };
+static frost$core$String $s49 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x26\x71\x75\x6f\x74\x3b", 6, -8530148639892707939, NULL };
+static frost$core$String $s51 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "", 0, -3750763034362895579, NULL };
+static frost$core$String $s62 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "", 0, -3750763034362895579, NULL };
+static frost$core$String $s66 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "", 0, -3750763034362895579, NULL };
 
 void org$frostlang$frostc$frostdoc$Markdown$_Closure2$init$org$frostlang$frostc$frostdoc$Markdown(org$frostlang$frostc$frostdoc$Markdown$_Closure2* param0, org$frostlang$frostc$frostdoc$Markdown* param1) {
 
@@ -59,7 +59,7 @@ frost$core$String* local0 = NULL;
 frost$core$MutableString* local1 = NULL;
 frost$core$String* local2 = NULL;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:178
-frost$core$Int64 $tmp7 = (frost$core$Int64) {1};
+frost$core$Int64 $tmp7 = (frost$core$Int64) {1u};
 ITable* $tmp8 = param1->$class->itable;
 while ($tmp8->$class != (frost$core$Class*) &frost$collections$ListView$class) {
     $tmp8 = $tmp8->next;
@@ -75,7 +75,7 @@ frost$core$Frost$unref$frost$core$Object$Q($tmp11);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:179
 FROST_ASSERT(48 == sizeof(frost$core$MutableString));
 frost$core$MutableString* $tmp13 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
-frost$core$Int64 $tmp14 = (frost$core$Int64) {2};
+frost$core$Int64 $tmp14 = (frost$core$Int64) {2u};
 ITable* $tmp15 = param1->$class->itable;
 while ($tmp15->$class != (frost$core$Class*) &frost$collections$ListView$class) {
     $tmp15 = $tmp15->next;
@@ -105,7 +105,7 @@ while ($tmp25->$class != (frost$core$Class*) &frost$collections$CollectionView$c
 }
 $fn27 $tmp26 = $tmp25->methods[0];
 frost$core$Int64 $tmp28 = $tmp26(((frost$collections$CollectionView*) param1));
-frost$core$Int64 $tmp29 = (frost$core$Int64) {3};
+frost$core$Int64 $tmp29 = (frost$core$Int64) {3u};
 int64_t $tmp30 = $tmp28.value;
 int64_t $tmp31 = $tmp29.value;
 bool $tmp32 = $tmp30 > $tmp31;
@@ -114,7 +114,7 @@ bool $tmp34 = $tmp33.value;
 if ($tmp34) goto block1; else goto block3;
 block1:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:183
-frost$core$Int64 $tmp35 = (frost$core$Int64) {3};
+frost$core$Int64 $tmp35 = (frost$core$Int64) {3u};
 ITable* $tmp36 = param1->$class->itable;
 while ($tmp36->$class != (frost$core$Class*) &frost$collections$ListView$class) {
     $tmp36 = $tmp36->next;
@@ -128,7 +128,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp40));
 frost$core$Frost$unref$frost$core$Object$Q($tmp39);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:184
 frost$core$String* $tmp41 = *(&local2);
-frost$core$Bit $tmp42 = frost$core$Bit$init$builtin_bit($tmp41 == NULL);
+frost$core$Bit $tmp42 = (frost$core$Bit) {$tmp41 == NULL};
 bool $tmp43 = $tmp42.value;
 if ($tmp43) goto block4; else goto block5;
 block4:;

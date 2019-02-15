@@ -13,16 +13,16 @@ frost$core$Weak$class_type frost$core$Weak$class = { (frost$core$Class*) &frost$
 
 typedef frost$core$String* (*$fn32)(frost$core$Object*);
 
-static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x57\x65\x61\x6b", 15, -3508042023515554364, NULL };
-static frost$core$String $s24 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x66\x72\x6f\x73\x74", 10, 3802845516308077121, NULL };
-static frost$core$String $s35 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x28", 5, 19668416133, NULL };
-static frost$core$String $s37 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x29", 1, 142, NULL };
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x57\x65\x61\x6b", 15, -5345919044195032932, NULL };
+static frost$core$String $s24 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x66\x72\x6f\x73\x74", 10, -4036851284011595059, NULL };
+static frost$core$String $s35 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x28", 5, 863740688373310739, NULL };
+static frost$core$String $s37 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x29", 1, -5808618445805089436, NULL };
 
 frost$core$Bit frost$core$Weak$checkValid$frost$core$Object$Q$R$frost$core$Bit(frost$core$Object* param0) {
 
 frost$core$Bit local0;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:13
-frost$core$Bit $tmp2 = frost$core$Bit$init$builtin_bit(param0 != NULL);
+frost$core$Bit $tmp2 = (frost$core$Bit) {param0 != NULL};
 bool $tmp3 = $tmp2.value;
 if ($tmp3) goto block1; else goto block2;
 block1:;
@@ -43,27 +43,27 @@ return $tmp6;
 void frost$core$Weak$init$frost$core$Weak$T$Q(frost$core$Weak* param0, frost$core$Object* param1) {
 
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:23
-frost$core$Bit $tmp7 = frost$core$Bit$init$builtin_bit(true);
+frost$core$Bit $tmp7 = (frost$core$Bit) {true};
 frost$core$Bit* $tmp8 = &param0->_valid;
 *$tmp8 = $tmp7;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:26
 frost$core$Object** $tmp9 = &param0->value;
 *$tmp9 = param1;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:27
-frost$core$Bit $tmp10 = frost$core$Bit$init$builtin_bit(param1 != NULL);
+frost$core$Bit $tmp10 = (frost$core$Bit) {param1 != NULL};
 bool $tmp11 = $tmp10.value;
 if ($tmp11) goto block1; else goto block2;
 block1:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:28
 frost$core$UInt8* $tmp12 = &param1->$flags;
 frost$core$UInt8 $tmp13 = *$tmp12;
-frost$core$UInt8 $tmp14 = (frost$core$UInt8) {1};
+frost$core$UInt8 $tmp14 = (frost$core$UInt8) {1u};
 // begin inline call to function frost.core.UInt8.||(other:frost.core.UInt8):frost.core.UInt8 from Weak.frost:28:18
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/UInt8.frost:423
 uint8_t $tmp15 = $tmp13.value;
 uint8_t $tmp16 = $tmp14.value;
 uint8_t $tmp17 = $tmp15 | $tmp16;
-frost$core$UInt8 $tmp18 = frost$core$UInt8$init$builtin_uint8($tmp17);
+frost$core$UInt8 $tmp18 = (frost$core$UInt8) {$tmp17};
 frost$core$UInt8* $tmp19 = &param1->$flags;
 *$tmp19 = $tmp18;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:29
@@ -83,7 +83,7 @@ frost$core$Bit $tmp21 = *$tmp20;
 bool $tmp22 = $tmp21.value;
 if ($tmp22) goto block2; else goto block3;
 block3:;
-frost$core$Int64 $tmp23 = (frost$core$Int64) {40};
+frost$core$Int64 $tmp23 = (frost$core$Int64) {40u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s24, $tmp23);
 abort(); // unreachable
 block2:;

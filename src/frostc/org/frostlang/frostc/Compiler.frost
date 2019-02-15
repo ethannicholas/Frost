@@ -1008,12 +1008,12 @@ class Compiler {
     method choiceSuper(cl:ClassDecl):Type {
         var value := true
         for case in cl.choiceCases {
-            for f in case.fields {
-                if f.nonnullable() != cl.type & !isImmutable(f) {
-                    return OBJECT_TYPE
-                }
-                if value & !isValue(f) {
-                    value := false
+            if case.fields.count > 0 {
+                value := false
+                for f in case.fields {
+                    if f.nonnullable() != cl.type & !isImmutable(f) {
+                        return OBJECT_TYPE
+                    }
                 }
             }
         }
@@ -3954,10 +3954,15 @@ class Compiler {
     }
 
     method implicitInit(position:Position, value:IR.Value, m:MethodDecl):IR.Value {
-        def cl := m.owner
-        assert isValue(cl)
         def coerced := coerce(position, value, m.parameters[0].type)
         assert coerced !== null
+        def intrinsic := Call.compileIntrinsic(self, position, null, MethodRef(self, m.owner.type,
+                m), [ASTNode.IR_WRAPPER(position, coerced)])
+        if intrinsic.first {
+            return intrinsic.second
+        }
+        def cl := m.owner
+        assert isValue(cl)
         def result := ir.add(IR.Statement.STATIC_CALL(position, m,
                 FixedArray<IR.Value>.from([coerced])))
         return IR.Value.REF(result, m.owner.type)
@@ -4185,7 +4190,7 @@ class Compiler {
                     def m := inits->MethodDecl
                     if m.annotations.isImplicit {
                         if resolve(m) & coercionCost(srcType, m.parameters[0].type) !== null {
-                            return implicitInit(position, value, m)
+                            return coerce(position, implicitInit(position, value, m), target)
                         }
                     }
                 }
@@ -4198,7 +4203,8 @@ class Compiler {
                                 TypeContext.UNSPECIFIED)
                         if best !== null {
                             if best.first.count = 1 {
-                                return implicitInit(position, value, best.first[0].value)
+                                return coerce(position, implicitInit(position, value,
+                                        best.first[0].value), target)
                             }
                             unreachable, "ambiguous implicit init"
                         }
@@ -5918,7 +5924,7 @@ class Compiler {
                     index += 1
                 }
                 compilePreconditions()
-                compilePostconditions()
+--                compilePostconditions()
                 for s in m.body {
                     compileStatement(s)
                 }

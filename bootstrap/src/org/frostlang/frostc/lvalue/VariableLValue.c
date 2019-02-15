@@ -35,15 +35,15 @@ typedef org$frostlang$frostc$IR$Value* (*$fn139)(org$frostlang$frostc$lvalue$Var
 typedef org$frostlang$frostc$Type* (*$fn154)(org$frostlang$frostc$lvalue$VariableLValue*);
 typedef org$frostlang$frostc$IR$Statement$ID (*$fn157)(org$frostlang$frostc$IR*, org$frostlang$frostc$IR$Statement*);
 
-static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x6c\x76\x61\x6c\x75\x65\x2e\x56\x61\x72\x69\x61\x62\x6c\x65\x4c\x56\x61\x6c\x75\x65", 42, 1688759092515817554, NULL };
-static frost$core$String $s25 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x74\x72\x79\x69\x6e\x67\x20\x74\x6f\x20\x73\x74\x6f\x72\x65\x20\x69\x6e\x74\x6f\x20\x6e\x6f\x6e\x2d\x6c\x6f\x63\x61\x6c\x20\x76\x61\x72\x69\x61\x62\x6c\x65\x20", 40, -4389980992813749051, NULL };
-static frost$core$String $s27 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x20\x61\x74\x20", 4, 138031278, NULL };
-static frost$core$String $s34 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "", 0, 1, NULL };
-static frost$core$String $s35 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x56\x61\x72\x69\x61\x62\x6c\x65\x4c\x56\x61\x6c\x75\x65\x2e\x66\x72\x6f\x73\x74", 20, -554897390060984052, NULL };
-static frost$core$String $s60 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x41\x72\x72\x61\x79\x2e\x73\x74\x75\x62", 10, -1668902239978348156, NULL };
-static frost$core$String $s61 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x5b\x5d\x28\x69\x6e\x64\x65\x78\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x36\x34\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x54", 110, -2494579685283273095, NULL };
-static frost$core$String $s111 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x41\x72\x72\x61\x79\x2e\x73\x74\x75\x62", 10, -1668902239978348156, NULL };
-static frost$core$String $s112 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x5b\x5d\x28\x69\x6e\x64\x65\x78\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x36\x34\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x54", 110, -2494579685283273095, NULL };
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x6c\x76\x61\x6c\x75\x65\x2e\x56\x61\x72\x69\x61\x62\x6c\x65\x4c\x56\x61\x6c\x75\x65", 42, -7965962857027405548, NULL };
+static frost$core$String $s25 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x74\x72\x79\x69\x6e\x67\x20\x74\x6f\x20\x73\x74\x6f\x72\x65\x20\x69\x6e\x74\x6f\x20\x6e\x6f\x6e\x2d\x6c\x6f\x63\x61\x6c\x20\x76\x61\x72\x69\x61\x62\x6c\x65\x20", 40, 1486801200006233533, NULL };
+static frost$core$String $s27 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x20\x61\x74\x20", 4, 299896688342426654, NULL };
+static frost$core$String $s34 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "", 0, -3750763034362895579, NULL };
+static frost$core$String $s35 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x56\x61\x72\x69\x61\x62\x6c\x65\x4c\x56\x61\x6c\x75\x65\x2e\x66\x72\x6f\x73\x74", 20, -3684104756208286480, NULL };
+static frost$core$String $s60 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x41\x72\x72\x61\x79\x2e\x73\x74\x75\x62", 10, -775704626125802412, NULL };
+static frost$core$String $s61 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x5b\x5d\x28\x69\x6e\x64\x65\x78\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x36\x34\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x54", 110, 4208646717458716543, NULL };
+static frost$core$String $s111 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x41\x72\x72\x61\x79\x2e\x73\x74\x75\x62", 10, -775704626125802412, NULL };
+static frost$core$String $s112 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x5b\x5d\x28\x69\x6e\x64\x65\x78\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x36\x34\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x54", 110, 4208646717458716543, NULL };
 
 void org$frostlang$frostc$lvalue$VariableLValue$init$org$frostlang$frostc$Compiler$org$frostlang$frostc$Position$org$frostlang$frostc$Variable(org$frostlang$frostc$lvalue$VariableLValue* param0, org$frostlang$frostc$Compiler* param1, org$frostlang$frostc$Position param2, org$frostlang$frostc$Variable* param3) {
 
@@ -60,13 +60,13 @@ org$frostlang$frostc$Variable$Storage** $tmp5 = &param3->storage;
 org$frostlang$frostc$Variable$Storage* $tmp6 = *$tmp5;
 frost$core$Int64* $tmp7 = &$tmp6->$rawValue;
 frost$core$Int64 $tmp8 = *$tmp7;
-frost$core$Int64 $tmp9 = (frost$core$Int64) {0};
+frost$core$Int64 $tmp9 = (frost$core$Int64) {0u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from VariableLValue.frost:19:34
 // /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:179
 int64_t $tmp10 = $tmp8.value;
 int64_t $tmp11 = $tmp9.value;
 bool $tmp12 = $tmp10 == $tmp11;
-frost$core$Bit $tmp13 = frost$core$Bit$init$builtin_bit($tmp12);
+frost$core$Bit $tmp13 = (frost$core$Bit) {$tmp12};
 bool $tmp14 = $tmp13.value;
 if ($tmp14) goto block2; else goto block3;
 block2:;
@@ -83,7 +83,7 @@ org$frostlang$frostc$Position* $tmp19 = &param0->position;
 return;
 block3:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/lvalue/VariableLValue.frost:23
-frost$core$Int64 $tmp20 = (frost$core$Int64) {23};
+frost$core$Int64 $tmp20 = (frost$core$Int64) {23u};
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from VariableLValue.frost:23:30
 // /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:154
 $fn22 $tmp21 = ($fn22) ((frost$core$Object*) param3)->$class->vtable[0];
@@ -126,7 +126,7 @@ frost$collections$Array* $tmp41 = *$tmp40;
 frost$core$Int64* $tmp42 = &param0->slot;
 frost$core$Int64 $tmp43 = *$tmp42;
 // begin inline call to function frost.collections.Array.[](index:frost.core.Int64):frost.collections.Array.T from VariableLValue.frost:31:34
-frost$core$Int64 $tmp44 = (frost$core$Int64) {0};
+frost$core$Int64 $tmp44 = (frost$core$Int64) {0u};
 int64_t $tmp45 = $tmp43.value;
 int64_t $tmp46 = $tmp44.value;
 bool $tmp47 = $tmp45 >= $tmp46;
@@ -147,7 +147,7 @@ frost$core$Bit $tmp57 = (frost$core$Bit) {$tmp56};
 bool $tmp58 = $tmp57.value;
 if ($tmp58) goto block2; else goto block3;
 block3:;
-frost$core$Int64 $tmp59 = (frost$core$Int64) {22};
+frost$core$Int64 $tmp59 = (frost$core$Int64) {22u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s60, $tmp59, &$s61);
 abort(); // unreachable
 block2:;
@@ -172,12 +172,12 @@ org$frostlang$frostc$IR** $tmp68 = &$tmp67->ir;
 org$frostlang$frostc$IR* $tmp69 = *$tmp68;
 FROST_ASSERT(80 == sizeof(org$frostlang$frostc$IR$Statement));
 org$frostlang$frostc$IR$Statement* $tmp70 = (org$frostlang$frostc$IR$Statement*) frostObjectAlloc(80, (frost$core$Class*) &org$frostlang$frostc$IR$Statement$class);
-frost$core$Int64 $tmp71 = (frost$core$Int64) {14};
+frost$core$Int64 $tmp71 = (frost$core$Int64) {14u};
 org$frostlang$frostc$Position* $tmp72 = &param0->position;
 org$frostlang$frostc$Position $tmp73 = *$tmp72;
 FROST_ASSERT(48 == sizeof(org$frostlang$frostc$IR$Value));
 org$frostlang$frostc$IR$Value* $tmp74 = (org$frostlang$frostc$IR$Value*) frostObjectAlloc(48, (frost$core$Class*) &org$frostlang$frostc$IR$Value$class);
-frost$core$Int64 $tmp75 = (frost$core$Int64) {2};
+frost$core$Int64 $tmp75 = (frost$core$Int64) {2u};
 frost$core$Int64* $tmp76 = &param0->slot;
 frost$core$Int64 $tmp77 = *$tmp76;
 $fn79 $tmp78 = ($fn79) param0->$class->vtable[2];
@@ -193,7 +193,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp70));
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/lvalue/VariableLValue.frost:37
 FROST_ASSERT(48 == sizeof(org$frostlang$frostc$IR$Value));
 org$frostlang$frostc$IR$Value* $tmp84 = (org$frostlang$frostc$IR$Value*) frostObjectAlloc(48, (frost$core$Class*) &org$frostlang$frostc$IR$Value$class);
-frost$core$Int64 $tmp85 = (frost$core$Int64) {7};
+frost$core$Int64 $tmp85 = (frost$core$Int64) {7u};
 org$frostlang$frostc$IR$Statement$ID $tmp86 = *(&local0);
 org$frostlang$frostc$Compiler** $tmp87 = &param0->compiler;
 org$frostlang$frostc$Compiler* $tmp88 = *$tmp87;
@@ -204,7 +204,7 @@ frost$collections$Array* $tmp92 = *$tmp91;
 frost$core$Int64* $tmp93 = &param0->slot;
 frost$core$Int64 $tmp94 = *$tmp93;
 // begin inline call to function frost.collections.Array.[](index:frost.core.Int64):frost.collections.Array.T from VariableLValue.frost:37:55
-frost$core$Int64 $tmp95 = (frost$core$Int64) {0};
+frost$core$Int64 $tmp95 = (frost$core$Int64) {0u};
 int64_t $tmp96 = $tmp94.value;
 int64_t $tmp97 = $tmp95.value;
 bool $tmp98 = $tmp96 >= $tmp97;
@@ -225,7 +225,7 @@ frost$core$Bit $tmp108 = (frost$core$Bit) {$tmp107};
 bool $tmp109 = $tmp108.value;
 if ($tmp109) goto block2; else goto block3;
 block3:;
-frost$core$Int64 $tmp110 = (frost$core$Int64) {22};
+frost$core$Int64 $tmp110 = (frost$core$Int64) {22u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s111, $tmp110, &$s112);
 abort(); // unreachable
 block2:;
@@ -262,7 +262,7 @@ bool $tmp126 = $tmp125.value;
 if ($tmp126) goto block4; else goto block5;
 block4:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:723
-frost$core$Bit $tmp127 = frost$core$Bit$init$builtin_bit(false);
+frost$core$Bit $tmp127 = (frost$core$Bit) {false};
 *(&local0) = $tmp127;
 goto block3;
 block5:;
@@ -301,12 +301,12 @@ org$frostlang$frostc$IR** $tmp143 = &$tmp142->ir;
 org$frostlang$frostc$IR* $tmp144 = *$tmp143;
 FROST_ASSERT(80 == sizeof(org$frostlang$frostc$IR$Statement));
 org$frostlang$frostc$IR$Statement* $tmp145 = (org$frostlang$frostc$IR$Statement*) frostObjectAlloc(80, (frost$core$Class*) &org$frostlang$frostc$IR$Statement$class);
-frost$core$Int64 $tmp146 = (frost$core$Int64) {27};
+frost$core$Int64 $tmp146 = (frost$core$Int64) {27u};
 org$frostlang$frostc$Position* $tmp147 = &param0->position;
 org$frostlang$frostc$Position $tmp148 = *$tmp147;
 FROST_ASSERT(48 == sizeof(org$frostlang$frostc$IR$Value));
 org$frostlang$frostc$IR$Value* $tmp149 = (org$frostlang$frostc$IR$Value*) frostObjectAlloc(48, (frost$core$Class*) &org$frostlang$frostc$IR$Value$class);
-frost$core$Int64 $tmp150 = (frost$core$Int64) {2};
+frost$core$Int64 $tmp150 = (frost$core$Int64) {2u};
 frost$core$Int64* $tmp151 = &param0->slot;
 frost$core$Int64 $tmp152 = *$tmp151;
 $fn154 $tmp153 = ($fn154) param0->$class->vtable[2];

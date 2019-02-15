@@ -73,31 +73,31 @@ class JSONParser {
     }
 
     @private
-    method array():JSON {
+    method list():JSON {
         if checkNext(Token.Kind.RBRACKET) !== null {
-            return JSON.ARRAY([])
+            return JSON.LIST([])
         }
         def result := Array<JSON>()
         loop {
             result.add(node())
             match next().kind {
                 when Token.Kind.RBRACKET {
-                    return JSON.ARRAY(result)
+                    return JSON.LIST(result)
                 }
                 when Token.Kind.COMMA {
                     continue
                 }
                 otherwise {
-                    unreachable, "expected end of array"
+                    unreachable, "expected end of list"
                 }
             }
         }
     }
 
     @private
-    method object():JSON {
+    method map():JSON {
         if checkNext(Token.Kind.RBRACE) !== null {
-            return JSON.OBJECT(HashMap<String, JSON>())
+            return JSON.MAP(HashMap<String, JSON>())
         }
         def result := HashMap<String, JSON>()
         loop {
@@ -109,13 +109,13 @@ class JSONParser {
             result[key] := node()
             match next().kind {
                 when Token.Kind.RBRACE {
-                    return JSON.OBJECT(result)
+                    return JSON.MAP(result)
                 }
                 when Token.Kind.COMMA {
                     continue
                 }
                 otherwise {
-                    unreachable, "expected end of object"
+                    unreachable, "expected end of map"
                 }
             }
         }
@@ -136,10 +136,10 @@ class JSONParser {
         def token := next()
         match token.kind {
             when Token.Kind.LBRACE {
-                return object()
+                return map()
             }
             when Token.Kind.LBRACKET {
-                return array()
+                return list()
             }
             when Token.Kind.STRING {
                 def s := text(token)

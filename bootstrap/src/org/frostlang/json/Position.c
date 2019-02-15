@@ -23,21 +23,21 @@ org$frostlang$json$Position$class_type org$frostlang$json$Position$class = { (fr
 static frost$core$String $s2;
 org$frostlang$json$Position$wrapperclass_type org$frostlang$json$Position$wrapperclass = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s2, (frost$core$Class*) &frost$core$Value$class, NULL, { org$frostlang$json$Position$get_asString$R$frost$core$String$shim, org$frostlang$json$Position$cleanup$shim} };typedef frost$core$String* (*$fn33)(frost$core$Object*);
 
-static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x6a\x73\x6f\x6e\x2e\x50\x6f\x73\x69\x74\x69\x6f\x6e", 27, -792457632813778362, NULL };
-static frost$core$String $s2 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x6a\x73\x6f\x6e\x2e\x50\x6f\x73\x69\x74\x69\x6f\x6e", 27, -792457632813778362, NULL };
-static frost$core$String $s22 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x50\x6f\x73\x69\x74\x69\x6f\x6e\x2e\x66\x72\x6f\x73\x74", 14, -2904814051032449202, NULL };
-static frost$core$String $s29 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x3a", 1, 159, NULL };
-static frost$core$String $s37 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "", 0, 1, NULL };
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x6a\x73\x6f\x6e\x2e\x50\x6f\x73\x69\x74\x69\x6f\x6e", 27, 7520947739033505064, NULL };
+static frost$core$String $s2 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x6a\x73\x6f\x6e\x2e\x50\x6f\x73\x69\x74\x69\x6f\x6e", 27, 7520947739033505064, NULL };
+static frost$core$String $s22 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x50\x6f\x73\x69\x74\x69\x6f\x6e\x2e\x66\x72\x6f\x73\x74", 14, 805330372391573046, NULL };
+static frost$core$String $s29 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x3a", 1, -5808597555084153427, NULL };
+static frost$core$String $s37 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "", 0, -3750763034362895579, NULL };
 
 org$frostlang$json$Position org$frostlang$json$Position$init() {
 
 org$frostlang$json$Position local0;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Position.frost:10
-frost$core$Int64 $tmp3 = (frost$core$Int64) {1};
+frost$core$Int64 $tmp3 = (frost$core$Int64) {1u};
 frost$core$Int64* $tmp4 = &(&local0)->line;
 *$tmp4 = $tmp3;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Position.frost:11
-frost$core$Int64 $tmp5 = (frost$core$Int64) {1};
+frost$core$Int64 $tmp5 = (frost$core$Int64) {1u};
 frost$core$Int64* $tmp6 = &(&local0)->column;
 *$tmp6 = $tmp5;
 org$frostlang$json$Position $tmp7 = *(&local0);
@@ -49,7 +49,7 @@ org$frostlang$json$Position org$frostlang$json$Position$init$frost$core$Int64$fr
 org$frostlang$json$Position local0;
 frost$core$Bit local1;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Position.frost:15
-frost$core$Int64 $tmp8 = (frost$core$Int64) {0};
+frost$core$Int64 $tmp8 = (frost$core$Int64) {0u};
 int64_t $tmp9 = param0.value;
 int64_t $tmp10 = $tmp8.value;
 bool $tmp11 = $tmp9 != $tmp10;
@@ -57,7 +57,7 @@ frost$core$Bit $tmp12 = (frost$core$Bit) {$tmp11};
 bool $tmp13 = $tmp12.value;
 if ($tmp13) goto block1; else goto block2;
 block1:;
-frost$core$Int64 $tmp14 = (frost$core$Int64) {0};
+frost$core$Int64 $tmp14 = (frost$core$Int64) {0u};
 int64_t $tmp15 = param1.value;
 int64_t $tmp16 = $tmp14.value;
 bool $tmp17 = $tmp15 != $tmp16;
@@ -72,7 +72,7 @@ frost$core$Bit $tmp19 = *(&local1);
 bool $tmp20 = $tmp19.value;
 if ($tmp20) goto block4; else goto block5;
 block5:;
-frost$core$Int64 $tmp21 = (frost$core$Int64) {15};
+frost$core$Int64 $tmp21 = (frost$core$Int64) {15u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s22, $tmp21);
 abort(); // unreachable
 block4:;

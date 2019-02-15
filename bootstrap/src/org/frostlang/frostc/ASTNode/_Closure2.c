@@ -11,7 +11,7 @@ org$frostlang$frostc$ASTNode$_Closure2$class_type org$frostlang$frostc$ASTNode$_
 
 typedef frost$core$String* (*$fn10)(frost$core$Object*);
 
-static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x41\x53\x54\x4e\x6f\x64\x65\x2e\x5f\x43\x6c\x6f\x73\x75\x72\x65\x32", 38, 6073947464071665666, NULL };
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x41\x53\x54\x4e\x6f\x64\x65\x2e\x5f\x43\x6c\x6f\x73\x75\x72\x65\x32", 38, 7134155981402944006, NULL };
 
 void org$frostlang$frostc$ASTNode$_Closure2$init$frost$core$MutableString(org$frostlang$frostc$ASTNode$_Closure2* param0, frost$core$MutableString* param1) {
 

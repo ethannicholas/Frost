@@ -18,13 +18,13 @@ typedef frost$core$String* (*$fn7)(frost$core$Object*);
 typedef frost$core$String* (*$fn13)(frost$core$Object*);
 typedef frost$core$String* (*$fn16)(frost$core$Object*);
 
-static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x69\x6f\x2e\x43\x6f\x6e\x73\x6f\x6c\x65", 16, 2730678735001696262, NULL };
-static frost$core$String $s2 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x0a", 1, 111, NULL };
-static frost$core$String $s9 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x0a", 1, 111, NULL };
-static frost$core$String $s10 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x0a", 1, 111, NULL };
-static frost$core$String $s11 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x0a", 1, 111, NULL };
-static frost$core$String $s18 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x0a", 1, 111, NULL };
-static frost$core$String $s19 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x0a", 1, 111, NULL };
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x69\x6f\x2e\x43\x6f\x6e\x73\x6f\x6c\x65", 16, -964513568563874098, NULL };
+static frost$core$String $s2 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x0a", 1, -5808579962898102051, NULL };
+static frost$core$String $s9 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x0a", 1, -5808579962898102051, NULL };
+static frost$core$String $s10 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x0a", 1, -5808579962898102051, NULL };
+static frost$core$String $s11 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x0a", 1, -5808579962898102051, NULL };
+static frost$core$String $s18 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x0a", 1, -5808579962898102051, NULL };
+static frost$core$String $s19 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x0a", 1, -5808579962898102051, NULL };
 
 void frost$io$Console$init(frost$io$Console* param0) {
 
@@ -142,7 +142,7 @@ frost$io$Console$read$R$frost$core$Char8$Q(&$tmp22);
 *(&local1) = $tmp22;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/Console.frost:130
 frost$core$Char8$nullable $tmp23 = *(&local1);
-frost$core$Bit $tmp24 = frost$core$Bit$init$builtin_bit(!$tmp23.nonnull);
+frost$core$Bit $tmp24 = (frost$core$Bit) {!$tmp23.nonnull};
 bool $tmp25 = $tmp24.value;
 if ($tmp25) goto block3; else goto block4;
 block3:;
@@ -150,13 +150,13 @@ block3:;
 frost$core$MutableString* $tmp26 = *(&local0);
 frost$core$Int64* $tmp27 = &$tmp26->_length;
 frost$core$Int64 $tmp28 = *$tmp27;
-frost$core$Int64 $tmp29 = (frost$core$Int64) {0};
+frost$core$Int64 $tmp29 = (frost$core$Int64) {0u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Console.frost:131:35
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int64.frost:240
 int64_t $tmp30 = $tmp28.value;
 int64_t $tmp31 = $tmp29.value;
 bool $tmp32 = $tmp30 == $tmp31;
-frost$core$Bit $tmp33 = frost$core$Bit$init$builtin_bit($tmp32);
+frost$core$Bit $tmp33 = (frost$core$Bit) {$tmp32};
 bool $tmp34 = $tmp33.value;
 if ($tmp34) goto block5; else goto block6;
 block5:;
@@ -172,14 +172,14 @@ goto block2;
 block4:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/Console.frost:136
 frost$core$Char8$nullable $tmp36 = *(&local1);
-frost$core$UInt8 $tmp37 = (frost$core$UInt8) {10};
+frost$core$UInt8 $tmp37 = (frost$core$UInt8) {10u};
 frost$core$Char8 $tmp38 = frost$core$Char8$init$frost$core$UInt8($tmp37);
 // begin inline call to function frost.core.Char8.=(other:frost.core.Char8):frost.core.Bit from Console.frost:136:18
 // /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Char8.stub:19
 uint8_t $tmp39 = ((frost$core$Char8) $tmp36.value).value;
 uint8_t $tmp40 = $tmp38.value;
 bool $tmp41 = $tmp39 == $tmp40;
-frost$core$Bit $tmp42 = frost$core$Bit$init$builtin_bit($tmp41);
+frost$core$Bit $tmp42 = (frost$core$Bit) {$tmp41};
 bool $tmp43 = $tmp42.value;
 if ($tmp43) goto block8; else goto block9;
 block8:;

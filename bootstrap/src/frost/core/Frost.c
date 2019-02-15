@@ -55,25 +55,25 @@ typedef frost$core$Object* (*$fn649)(frost$collections$ListView*, frost$core$Int
 typedef frost$core$Bit (*$fn657)(frost$core$Object*, frost$core$Object*);
 typedef frost$core$Bit (*$fn659)(frost$core$Object*, frost$core$Object*, frost$core$Object*);
 
-static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x46\x72\x6f\x73\x74", 16, -3824106976344999226, NULL };
-static frost$core$String $s11 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x66\x72\x6f\x73\x74", 10, 3802845516308077121, NULL };
-static frost$core$String $s35 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x46\x72\x6f\x73\x74\x2e\x66\x72\x6f\x73\x74", 11, -3660250246602200665, NULL };
-static frost$core$String $s61 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x61\x73\x73\x65\x72\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x28", 19, -2375112016343986227, NULL };
-static frost$core$String $s63 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x3a", 1, 159, NULL };
-static frost$core$String $s70 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x29", 1, 142, NULL };
-static frost$core$String $s77 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x61\x73\x73\x65\x72\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x28", 19, -2375112016343986227, NULL };
-static frost$core$String $s79 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x3a", 1, 159, NULL };
-static frost$core$String $s86 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x29\x3a\x20", 3, 1454432, NULL };
-static frost$core$String $s89 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "", 0, 1, NULL };
-static frost$core$String $s177 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "", 0, 1, NULL };
-static frost$core$String $s242 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x69\x6e\x76\x61\x6c\x69\x64\x20\x61\x6c\x69\x67\x6e\x6d\x65\x6e\x74\x20\x73\x74\x72\x69\x6e\x67\x20\x27", 26, -833928138110598455, NULL };
-static frost$core$String $s244 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x27", 1, 140, NULL };
-static frost$core$String $s245 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x46\x72\x6f\x73\x74\x2e\x66\x72\x6f\x73\x74", 11, -3660250246602200665, NULL };
-static frost$core$String $s336 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x46\x72\x6f\x73\x74\x2e\x66\x72\x6f\x73\x74", 11, -3660250246602200665, NULL };
-static frost$core$String $s343 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x30\x31\x32\x33\x34\x35\x36\x37\x38\x39\x61\x62\x63\x64\x65\x66", 16, 6478845731788479527, NULL };
-static frost$core$String $s422 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x30\x31\x32\x33\x34\x35\x36\x37\x38\x39\x41\x42\x43\x44\x45\x46", 16, 6478845392102031335, NULL };
-static frost$core$String $s425 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x46\x72\x6f\x73\x74\x2e\x66\x72\x6f\x73\x74", 11, -3660250246602200665, NULL };
-static frost$core$String $s426 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x69\x6e\x76\x61\x6c\x69\x64\x20\x66\x6f\x72\x6d\x61\x74\x20\x73\x74\x72\x69\x6e\x67", 21, 8772831143845743696, NULL };
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x46\x72\x6f\x73\x74", 16, 4237142976622831502, NULL };
+static frost$core$String $s11 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x66\x72\x6f\x73\x74", 10, -4036851284011595059, NULL };
+static frost$core$String $s35 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x46\x72\x6f\x73\x74\x2e\x66\x72\x6f\x73\x74", 11, -5225481299595787999, NULL };
+static frost$core$String $s61 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x61\x73\x73\x65\x72\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x28", 19, 7669895969177076905, NULL };
+static frost$core$String $s63 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x3a", 1, -5808597555084153427, NULL };
+static frost$core$String $s70 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x29", 1, -5808618445805089436, NULL };
+static frost$core$String $s77 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x61\x73\x73\x65\x72\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x28", 19, 7669895969177076905, NULL };
+static frost$core$String $s79 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x3a", 1, -5808597555084153427, NULL };
+static frost$core$String $s86 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x29\x3a\x20", 3, 48285155966961582, NULL };
+static frost$core$String $s89 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "", 0, -3750763034362895579, NULL };
+static frost$core$String $s177 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "", 0, -3750763034362895579, NULL };
+static frost$core$String $s242 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x69\x6e\x76\x61\x6c\x69\x64\x20\x61\x6c\x69\x67\x6e\x6d\x65\x6e\x74\x20\x73\x74\x72\x69\x6e\x67\x20\x27", 26, -6606133885720023461, NULL };
+static frost$core$String $s244 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x27", 1, -5808629440921371546, NULL };
+static frost$core$String $s245 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x46\x72\x6f\x73\x74\x2e\x66\x72\x6f\x73\x74", 11, -5225481299595787999, NULL };
+static frost$core$String $s336 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x46\x72\x6f\x73\x74\x2e\x66\x72\x6f\x73\x74", 11, -5225481299595787999, NULL };
+static frost$core$String $s343 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x30\x31\x32\x33\x34\x35\x36\x37\x38\x39\x61\x62\x63\x64\x65\x66", 16, 3330193207084279677, NULL };
+static frost$core$String $s422 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x30\x31\x32\x33\x34\x35\x36\x37\x38\x39\x41\x42\x43\x44\x45\x46", 16, -1839289420917840067, NULL };
+static frost$core$String $s425 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x46\x72\x6f\x73\x74\x2e\x66\x72\x6f\x73\x74", 11, -5225481299595787999, NULL };
+static frost$core$String $s426 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x69\x6e\x76\x61\x6c\x69\x64\x20\x66\x6f\x72\x6d\x61\x74\x20\x73\x74\x72\x69\x6e\x67", 21, 3626147090372997348, NULL };
 
 void frost$core$Frost$init(frost$core$Frost* param0) {
 
@@ -85,7 +85,7 @@ frost$core$Maybe* frost$core$Frost$success$frost$core$Object$R$frost$core$Maybe$
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Frost.frost:21
 FROST_ASSERT(32 == sizeof(frost$core$Maybe));
 frost$core$Maybe* $tmp2 = (frost$core$Maybe*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$Maybe$class);
-frost$core$Int64 $tmp3 = (frost$core$Int64) {0};
+frost$core$Int64 $tmp3 = (frost$core$Int64) {0u};
 frost$core$Maybe$init$frost$core$Int64$frost$core$Maybe$T($tmp2, $tmp3, param0);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp2));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp2));
@@ -97,7 +97,7 @@ frost$core$Maybe* frost$core$Frost$error$frost$core$String$R$frost$core$Maybe$LT
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Frost.frost:27
 FROST_ASSERT(32 == sizeof(frost$core$Maybe));
 frost$core$Maybe* $tmp4 = (frost$core$Maybe*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$Maybe$class);
-frost$core$Int64 $tmp5 = (frost$core$Int64) {1};
+frost$core$Int64 $tmp5 = (frost$core$Int64) {1u};
 FROST_ASSERT(24 == sizeof(frost$core$Error));
 frost$core$Error* $tmp6 = (frost$core$Error*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Error$class);
 frost$core$Error$init$frost$core$String($tmp6, param0);
@@ -122,7 +122,7 @@ frost$core$Bit $tmp8 = *$tmp7;
 bool $tmp9 = $tmp8.value;
 if ($tmp9) goto block3; else goto block4;
 block4:;
-frost$core$Int64 $tmp10 = (frost$core$Int64) {40};
+frost$core$Int64 $tmp10 = (frost$core$Int64) {40u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s11, $tmp10);
 abort(); // unreachable
 block3:;
@@ -147,7 +147,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp17));
 frost$core$Frost$unref$frost$core$Object$Q($tmp16);
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Frost.frost:46
 frost$collections$Array* $tmp18 = *(&local1);
-frost$core$Bit $tmp19 = frost$core$Bit$init$builtin_bit($tmp18 == NULL);
+frost$core$Bit $tmp19 = (frost$core$Bit) {$tmp18 == NULL};
 bool $tmp20 = $tmp19.value;
 if ($tmp20) goto block5; else goto block6;
 block5:;
@@ -197,11 +197,11 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp30));
 frost$core$Frost$unref$frost$core$Object$Q($tmp29);
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Frost.frost:58
 frost$collections$Array* $tmp31 = *(&local0);
-frost$core$Bit $tmp32 = frost$core$Bit$init$builtin_bit($tmp31 != NULL);
+frost$core$Bit $tmp32 = (frost$core$Bit) {$tmp31 != NULL};
 bool $tmp33 = $tmp32.value;
 if ($tmp33) goto block1; else goto block2;
 block2:;
-frost$core$Int64 $tmp34 = (frost$core$Int64) {58};
+frost$core$Int64 $tmp34 = (frost$core$Int64) {58u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s35, $tmp34);
 abort(); // unreachable
 block1:;
@@ -237,7 +237,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp50));
 *(&local1) = ((frost$core$Weak*) $tmp49);
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Frost.frost:60
 frost$core$Weak* $tmp51 = *(&local1);
-frost$core$Bit $tmp52 = frost$core$Bit$init$builtin_bit(false);
+frost$core$Bit $tmp52 = (frost$core$Bit) {false};
 frost$core$Bit* $tmp53 = &$tmp51->_valid;
 *$tmp53 = $tmp52;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Frost.frost:61
@@ -385,25 +385,25 @@ return;
 frost$core$UInt64$nullable frost$core$Frost$digit$frost$core$Char32$R$frost$core$UInt64$Q(frost$core$Char32 param0) {
 
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Frost.frost:105
-frost$core$Int32 $tmp94 = (frost$core$Int32) {48};
+frost$core$Int32 $tmp94 = (frost$core$Int32) {48u};
 frost$core$Char32 $tmp95 = frost$core$Char32$init$frost$core$Int32($tmp94);
 // begin inline call to function frost.core.Char32.>=(other:frost.core.Char32):frost.core.Bit from Frost.frost:105:14
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char32.frost:52
 int32_t $tmp96 = param0.value;
 int32_t $tmp97 = $tmp95.value;
 bool $tmp98 = $tmp96 >= $tmp97;
-frost$core$Bit $tmp99 = frost$core$Bit$init$builtin_bit($tmp98);
+frost$core$Bit $tmp99 = (frost$core$Bit) {$tmp98};
 bool $tmp100 = $tmp99.value;
 if ($tmp100) goto block3; else goto block2;
 block3:;
-frost$core$Int32 $tmp101 = (frost$core$Int32) {57};
+frost$core$Int32 $tmp101 = (frost$core$Int32) {57u};
 frost$core$Char32 $tmp102 = frost$core$Char32$init$frost$core$Int32($tmp101);
 // begin inline call to function frost.core.Char32.<=(other:frost.core.Char32):frost.core.Bit from Frost.frost:105:25
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char32.frost:47
 int32_t $tmp103 = param0.value;
 int32_t $tmp104 = $tmp102.value;
 bool $tmp105 = $tmp103 <= $tmp104;
-frost$core$Bit $tmp106 = frost$core$Bit$init$builtin_bit($tmp105);
+frost$core$Bit $tmp106 = (frost$core$Bit) {$tmp105};
 bool $tmp107 = $tmp106.value;
 if ($tmp107) goto block1; else goto block2;
 block1:;
@@ -412,7 +412,7 @@ block1:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char32.frost:131
 int32_t $tmp108 = param0.value;
 frost$core$UInt64 $tmp109 = (frost$core$UInt64) {((uint64_t) $tmp108)};
-frost$core$UInt8 $tmp110 = (frost$core$UInt8) {48};
+frost$core$UInt8 $tmp110 = (frost$core$UInt8) {48u};
 frost$core$Char8 $tmp111 = frost$core$Char8$init$frost$core$UInt8($tmp110);
 // begin inline call to function frost.core.Char8.get_asUInt64():frost.core.UInt64 from Frost.frost:106:36
 // /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Char8.stub:110
@@ -425,25 +425,25 @@ frost$core$UInt64 $tmp117 = (frost$core$UInt64) {$tmp116};
 return ((frost$core$UInt64$nullable) { $tmp117, true });
 block2:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Frost.frost:108
-frost$core$Int32 $tmp118 = (frost$core$Int32) {65};
+frost$core$Int32 $tmp118 = (frost$core$Int32) {65u};
 frost$core$Char32 $tmp119 = frost$core$Char32$init$frost$core$Int32($tmp118);
 // begin inline call to function frost.core.Char32.>=(other:frost.core.Char32):frost.core.Bit from Frost.frost:108:14
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char32.frost:52
 int32_t $tmp120 = param0.value;
 int32_t $tmp121 = $tmp119.value;
 bool $tmp122 = $tmp120 >= $tmp121;
-frost$core$Bit $tmp123 = frost$core$Bit$init$builtin_bit($tmp122);
+frost$core$Bit $tmp123 = (frost$core$Bit) {$tmp122};
 bool $tmp124 = $tmp123.value;
 if ($tmp124) goto block10; else goto block9;
 block10:;
-frost$core$Int32 $tmp125 = (frost$core$Int32) {90};
+frost$core$Int32 $tmp125 = (frost$core$Int32) {90u};
 frost$core$Char32 $tmp126 = frost$core$Char32$init$frost$core$Int32($tmp125);
 // begin inline call to function frost.core.Char32.<=(other:frost.core.Char32):frost.core.Bit from Frost.frost:108:25
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char32.frost:47
 int32_t $tmp127 = param0.value;
 int32_t $tmp128 = $tmp126.value;
 bool $tmp129 = $tmp127 <= $tmp128;
-frost$core$Bit $tmp130 = frost$core$Bit$init$builtin_bit($tmp129);
+frost$core$Bit $tmp130 = (frost$core$Bit) {$tmp129};
 bool $tmp131 = $tmp130.value;
 if ($tmp131) goto block8; else goto block9;
 block8:;
@@ -452,7 +452,7 @@ block8:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char32.frost:131
 int32_t $tmp132 = param0.value;
 frost$core$UInt64 $tmp133 = (frost$core$UInt64) {((uint64_t) $tmp132)};
-frost$core$UInt8 $tmp134 = (frost$core$UInt8) {65};
+frost$core$UInt8 $tmp134 = (frost$core$UInt8) {65u};
 frost$core$Char8 $tmp135 = frost$core$Char8$init$frost$core$UInt8($tmp134);
 // begin inline call to function frost.core.Char8.get_asUInt64():frost.core.UInt64 from Frost.frost:109:36
 // /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Char8.stub:110
@@ -462,7 +462,7 @@ uint64_t $tmp138 = $tmp133.value;
 uint64_t $tmp139 = $tmp137.value;
 uint64_t $tmp140 = $tmp138 - $tmp139;
 frost$core$UInt64 $tmp141 = (frost$core$UInt64) {$tmp140};
-frost$core$UInt64 $tmp142 = (frost$core$UInt64) {10};
+frost$core$UInt64 $tmp142 = (frost$core$UInt64) {10u};
 uint64_t $tmp143 = $tmp141.value;
 uint64_t $tmp144 = $tmp142.value;
 uint64_t $tmp145 = $tmp143 + $tmp144;
@@ -470,25 +470,25 @@ frost$core$UInt64 $tmp146 = (frost$core$UInt64) {$tmp145};
 return ((frost$core$UInt64$nullable) { $tmp146, true });
 block9:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Frost.frost:111
-frost$core$Int32 $tmp147 = (frost$core$Int32) {97};
+frost$core$Int32 $tmp147 = (frost$core$Int32) {97u};
 frost$core$Char32 $tmp148 = frost$core$Char32$init$frost$core$Int32($tmp147);
 // begin inline call to function frost.core.Char32.>=(other:frost.core.Char32):frost.core.Bit from Frost.frost:111:14
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char32.frost:52
 int32_t $tmp149 = param0.value;
 int32_t $tmp150 = $tmp148.value;
 bool $tmp151 = $tmp149 >= $tmp150;
-frost$core$Bit $tmp152 = frost$core$Bit$init$builtin_bit($tmp151);
+frost$core$Bit $tmp152 = (frost$core$Bit) {$tmp151};
 bool $tmp153 = $tmp152.value;
 if ($tmp153) goto block17; else goto block16;
 block17:;
-frost$core$Int32 $tmp154 = (frost$core$Int32) {122};
+frost$core$Int32 $tmp154 = (frost$core$Int32) {122u};
 frost$core$Char32 $tmp155 = frost$core$Char32$init$frost$core$Int32($tmp154);
 // begin inline call to function frost.core.Char32.<=(other:frost.core.Char32):frost.core.Bit from Frost.frost:111:25
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char32.frost:47
 int32_t $tmp156 = param0.value;
 int32_t $tmp157 = $tmp155.value;
 bool $tmp158 = $tmp156 <= $tmp157;
-frost$core$Bit $tmp159 = frost$core$Bit$init$builtin_bit($tmp158);
+frost$core$Bit $tmp159 = (frost$core$Bit) {$tmp158};
 bool $tmp160 = $tmp159.value;
 if ($tmp160) goto block15; else goto block16;
 block15:;
@@ -497,7 +497,7 @@ block15:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char32.frost:131
 int32_t $tmp161 = param0.value;
 frost$core$UInt64 $tmp162 = (frost$core$UInt64) {((uint64_t) $tmp161)};
-frost$core$UInt8 $tmp163 = (frost$core$UInt8) {97};
+frost$core$UInt8 $tmp163 = (frost$core$UInt8) {97u};
 frost$core$Char8 $tmp164 = frost$core$Char8$init$frost$core$UInt8($tmp163);
 // begin inline call to function frost.core.Char8.get_asUInt64():frost.core.UInt64 from Frost.frost:112:36
 // /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Char8.stub:110
@@ -507,7 +507,7 @@ uint64_t $tmp167 = $tmp162.value;
 uint64_t $tmp168 = $tmp166.value;
 uint64_t $tmp169 = $tmp167 - $tmp168;
 frost$core$UInt64 $tmp170 = (frost$core$UInt64) {$tmp169};
-frost$core$UInt64 $tmp171 = (frost$core$UInt64) {10};
+frost$core$UInt64 $tmp171 = (frost$core$UInt64) {10u};
 uint64_t $tmp172 = $tmp170.value;
 uint64_t $tmp173 = $tmp171.value;
 uint64_t $tmp174 = $tmp172 + $tmp173;
@@ -537,7 +537,7 @@ block1:;
 return ((frost$core$UInt64$nullable) { .nonnull = false });
 block2:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Frost.frost:125
-frost$core$UInt64 $tmp179 = (frost$core$UInt64) {0};
+frost$core$UInt64 $tmp179 = (frost$core$UInt64) {0u};
 *(&local0) = $tmp179;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Frost.frost:126
 // begin inline call to function frost.core.Int64.get_asUInt64():frost.core.UInt64 from Frost.frost:126:30
@@ -548,7 +548,7 @@ frost$core$UInt64 $tmp181 = (frost$core$UInt64) {((uint64_t) $tmp180)};
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Frost.frost:127
 // begin inline call to function frost.core.String.get_start():frost.core.String.Index from Frost.frost:127:25
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:1205
-frost$core$Int64 $tmp182 = (frost$core$Int64) {0};
+frost$core$Int64 $tmp182 = (frost$core$Int64) {0u};
 // begin inline call to frost.core.String.Index.init(value:frost.core.Int64):frost.core.String.Index from String.frost:1205:21
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:61
 frost$core$Int64* $tmp183 = &(&local3)->value;
@@ -596,7 +596,7 @@ frost$core$UInt64$nullable $tmp201 = frost$core$Frost$digit$frost$core$Char32$R$
 *(&local7) = $tmp201;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Frost.frost:130
 frost$core$UInt64$nullable $tmp202 = *(&local7);
-frost$core$Bit $tmp203 = frost$core$Bit$init$builtin_bit(!$tmp202.nonnull);
+frost$core$Bit $tmp203 = (frost$core$Bit) {!$tmp202.nonnull};
 bool $tmp204 = $tmp203.value;
 if ($tmp204) goto block11; else goto block13;
 block13:;
@@ -665,7 +665,7 @@ while ($tmp230->$class != (frost$core$Class*) &frost$collections$Iterator$class)
 $fn232 $tmp231 = $tmp230->methods[2];
 frost$core$Int64 $tmp233 = $tmp231($tmp229);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp229));
-frost$core$Int64 $tmp234 = (frost$core$Int64) {2};
+frost$core$Int64 $tmp234 = (frost$core$Int64) {2u};
 int64_t $tmp235 = $tmp233.value;
 int64_t $tmp236 = $tmp234.value;
 bool $tmp237 = $tmp235 >= $tmp236;
@@ -673,7 +673,7 @@ frost$core$Bit $tmp238 = (frost$core$Bit) {$tmp237};
 bool $tmp239 = $tmp238.value;
 if ($tmp239) goto block2; else goto block3;
 block3:;
-frost$core$Int64 $tmp240 = (frost$core$Int64) {162};
+frost$core$Int64 $tmp240 = (frost$core$Int64) {162u};
 frost$core$String* $tmp241 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(&$s242, param1);
 frost$core$String* $tmp243 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp241, &$s244);
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s245, $tmp240, $tmp243);
@@ -684,7 +684,7 @@ block2:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Frost.frost:163
 // begin inline call to function frost.core.String.get_start():frost.core.String.Index from Frost.frost:163:46
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:1205
-frost$core$Int64 $tmp246 = (frost$core$Int64) {0};
+frost$core$Int64 $tmp246 = (frost$core$Int64) {0u};
 // begin inline call to frost.core.String.Index.init(value:frost.core.Int64):frost.core.String.Index from String.frost:1205:21
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:61
 frost$core$Int64* $tmp247 = &(&local1)->value;
@@ -697,36 +697,36 @@ frost$core$String$Index $tmp250 = frost$core$String$next$frost$core$String$Index
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Frost.frost:164
 frost$core$String$Index $tmp251 = *(&local2);
 frost$core$Char32 $tmp252 = frost$core$String$$IDX$frost$core$String$Index$R$frost$core$Char32(param1, $tmp251);
-frost$core$Int32 $tmp253 = (frost$core$Int32) {60};
+frost$core$Int32 $tmp253 = (frost$core$Int32) {60u};
 frost$core$Char32 $tmp254 = frost$core$Char32$init$frost$core$Int32($tmp253);
 // begin inline call to function frost.core.Char32.=(other:frost.core.Char32):frost.core.Bit from Frost.frost:165:18
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char32.frost:27
 int32_t $tmp255 = $tmp252.value;
 int32_t $tmp256 = $tmp254.value;
 bool $tmp257 = $tmp255 == $tmp256;
-frost$core$Bit $tmp258 = frost$core$Bit$init$builtin_bit($tmp257);
+frost$core$Bit $tmp258 = (frost$core$Bit) {$tmp257};
 bool $tmp259 = $tmp258.value;
 if ($tmp259) goto block7; else goto block8;
 block8:;
-frost$core$Int32 $tmp260 = (frost$core$Int32) {94};
+frost$core$Int32 $tmp260 = (frost$core$Int32) {94u};
 frost$core$Char32 $tmp261 = frost$core$Char32$init$frost$core$Int32($tmp260);
 // begin inline call to function frost.core.Char32.=(other:frost.core.Char32):frost.core.Bit from Frost.frost:165:23
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char32.frost:27
 int32_t $tmp262 = $tmp252.value;
 int32_t $tmp263 = $tmp261.value;
 bool $tmp264 = $tmp262 == $tmp263;
-frost$core$Bit $tmp265 = frost$core$Bit$init$builtin_bit($tmp264);
+frost$core$Bit $tmp265 = (frost$core$Bit) {$tmp264};
 bool $tmp266 = $tmp265.value;
 if ($tmp266) goto block7; else goto block10;
 block10:;
-frost$core$Int32 $tmp267 = (frost$core$Int32) {62};
+frost$core$Int32 $tmp267 = (frost$core$Int32) {62u};
 frost$core$Char32 $tmp268 = frost$core$Char32$init$frost$core$Int32($tmp267);
 // begin inline call to function frost.core.Char32.=(other:frost.core.Char32):frost.core.Bit from Frost.frost:165:28
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char32.frost:27
 int32_t $tmp269 = $tmp252.value;
 int32_t $tmp270 = $tmp268.value;
 bool $tmp271 = $tmp269 == $tmp270;
-frost$core$Bit $tmp272 = frost$core$Bit$init$builtin_bit($tmp271);
+frost$core$Bit $tmp272 = (frost$core$Bit) {$tmp271};
 bool $tmp273 = $tmp272.value;
 if ($tmp273) goto block7; else goto block12;
 block7:;
@@ -735,7 +735,7 @@ block12:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Frost.frost:169
 // begin inline call to function frost.core.String.get_start():frost.core.String.Index from Frost.frost:169:35
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:1205
-frost$core$Int64 $tmp274 = (frost$core$Int64) {0};
+frost$core$Int64 $tmp274 = (frost$core$Int64) {0u};
 // begin inline call to frost.core.String.Index.init(value:frost.core.Int64):frost.core.String.Index from String.frost:1205:21
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:61
 frost$core$Int64* $tmp275 = &(&local4)->value;
@@ -749,7 +749,7 @@ block6:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Frost.frost:172
 frost$core$String$Index $tmp278 = *(&local2);
 frost$core$String$Index $tmp279 = frost$core$String$next$frost$core$String$Index$R$frost$core$String$Index(param1, $tmp278);
-frost$core$Bit $tmp280 = frost$core$Bit$init$builtin_bit(false);
+frost$core$Bit $tmp280 = (frost$core$Bit) {false};
 frost$core$Range$LTfrost$core$String$Index$Q$GT $tmp281 = frost$core$Range$LTfrost$core$String$Index$Q$GT$init$frost$core$String$Index$Q$frost$core$String$Index$Q$frost$core$Bit(((frost$core$String$Index$nullable) { $tmp279, true }), ((frost$core$String$Index$nullable) { .nonnull = false }), $tmp280);
 frost$core$String* $tmp282 = frost$core$String$$IDX$frost$core$Range$LTfrost$core$String$Index$Q$GT$R$frost$core$String(param1, $tmp281);
 frost$core$Int64$nullable $tmp283 = frost$core$String$get_asInt64$R$frost$core$Int64$Q($tmp282);
@@ -760,7 +760,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp282));
 frost$core$String$Index $tmp284 = *(&local2);
 // begin inline call to function frost.core.String.get_start():frost.core.String.Index from Frost.frost:174:29
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:1205
-frost$core$Int64 $tmp285 = (frost$core$Int64) {0};
+frost$core$Int64 $tmp285 = (frost$core$Int64) {0u};
 // begin inline call to frost.core.String.Index.init(value:frost.core.Int64):frost.core.String.Index from String.frost:1205:21
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:61
 frost$core$Int64* $tmp286 = &(&local8)->value;
@@ -777,12 +777,12 @@ frost$core$Int64 $tmp290 = $tmp288.value;
 int64_t $tmp291 = $tmp289.value;
 int64_t $tmp292 = $tmp290.value;
 bool $tmp293 = $tmp291 == $tmp292;
-frost$core$Bit $tmp294 = frost$core$Bit$init$builtin_bit($tmp293);
+frost$core$Bit $tmp294 = (frost$core$Bit) {$tmp293};
 bool $tmp295 = $tmp294.value;
 if ($tmp295) goto block16; else goto block18;
 block16:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Frost.frost:175
-frost$core$Int32 $tmp296 = (frost$core$Int32) {32};
+frost$core$Int32 $tmp296 = (frost$core$Int32) {32u};
 frost$core$Char32 $tmp297 = frost$core$Char32$init$frost$core$Int32($tmp296);
 *(&local6) = $tmp297;
 goto block17;
@@ -791,7 +791,7 @@ block18:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Frost.frost:178
 // begin inline call to function frost.core.String.get_start():frost.core.String.Index from Frost.frost:178:40
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:1205
-frost$core$Int64 $tmp298 = (frost$core$Int64) {0};
+frost$core$Int64 $tmp298 = (frost$core$Int64) {0u};
 // begin inline call to frost.core.String.Index.init(value:frost.core.Int64):frost.core.String.Index from String.frost:1205:21
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:61
 frost$core$Int64* $tmp299 = &(&local10)->value;
@@ -806,14 +806,14 @@ block17:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Frost.frost:180
 frost$core$String$Index $tmp303 = *(&local2);
 frost$core$Char32 $tmp304 = frost$core$String$$IDX$frost$core$String$Index$R$frost$core$Char32(param1, $tmp303);
-frost$core$Int32 $tmp305 = (frost$core$Int32) {60};
+frost$core$Int32 $tmp305 = (frost$core$Int32) {60u};
 frost$core$Char32 $tmp306 = frost$core$Char32$init$frost$core$Int32($tmp305);
 // begin inline call to function frost.core.Char32.=(other:frost.core.Char32):frost.core.Bit from Frost.frost:181:18
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char32.frost:27
 int32_t $tmp307 = $tmp304.value;
 int32_t $tmp308 = $tmp306.value;
 bool $tmp309 = $tmp307 == $tmp308;
-frost$core$Bit $tmp310 = frost$core$Bit$init$builtin_bit($tmp309);
+frost$core$Bit $tmp310 = (frost$core$Bit) {$tmp309};
 bool $tmp311 = $tmp310.value;
 if ($tmp311) goto block26; else goto block27;
 block26:;
@@ -825,14 +825,14 @@ frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp314));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp314));
 return $tmp314;
 block27:;
-frost$core$Int32 $tmp315 = (frost$core$Int32) {94};
+frost$core$Int32 $tmp315 = (frost$core$Int32) {94u};
 frost$core$Char32 $tmp316 = frost$core$Char32$init$frost$core$Int32($tmp315);
 // begin inline call to function frost.core.Char32.=(other:frost.core.Char32):frost.core.Bit from Frost.frost:182:18
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char32.frost:27
 int32_t $tmp317 = $tmp304.value;
 int32_t $tmp318 = $tmp316.value;
 bool $tmp319 = $tmp317 == $tmp318;
-frost$core$Bit $tmp320 = frost$core$Bit$init$builtin_bit($tmp319);
+frost$core$Bit $tmp320 = (frost$core$Bit) {$tmp319};
 bool $tmp321 = $tmp320.value;
 if ($tmp321) goto block29; else goto block30;
 block29:;
@@ -844,14 +844,14 @@ frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp324));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp324));
 return $tmp324;
 block30:;
-frost$core$Int32 $tmp325 = (frost$core$Int32) {62};
+frost$core$Int32 $tmp325 = (frost$core$Int32) {62u};
 frost$core$Char32 $tmp326 = frost$core$Char32$init$frost$core$Int32($tmp325);
 // begin inline call to function frost.core.Char32.=(other:frost.core.Char32):frost.core.Bit from Frost.frost:183:18
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char32.frost:27
 int32_t $tmp327 = $tmp304.value;
 int32_t $tmp328 = $tmp326.value;
 bool $tmp329 = $tmp327 == $tmp328;
-frost$core$Bit $tmp330 = frost$core$Bit$init$builtin_bit($tmp329);
+frost$core$Bit $tmp330 = (frost$core$Bit) {$tmp329};
 bool $tmp331 = $tmp330.value;
 if ($tmp331) goto block32; else goto block33;
 block32:;
@@ -864,7 +864,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp334));
 return $tmp334;
 block33:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Frost.frost:184
-frost$core$Int64 $tmp335 = (frost$core$Int64) {184};
+frost$core$Int64 $tmp335 = (frost$core$Int64) {184u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s336, $tmp335);
 abort(); // unreachable
 block25:;
@@ -890,7 +890,7 @@ frost$core$Int64 local12;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Frost.frost:198
 // begin inline call to function frost.core.String.get_start():frost.core.String.Index from Frost.frost:198:25
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:1205
-frost$core$Int64 $tmp337 = (frost$core$Int64) {0};
+frost$core$Int64 $tmp337 = (frost$core$Int64) {0u};
 // begin inline call to frost.core.String.Index.init(value:frost.core.Int64):frost.core.String.Index from String.frost:1205:21
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:61
 frost$core$Int64* $tmp338 = &(&local1)->value;
@@ -900,7 +900,7 @@ frost$core$String$Index $tmp339 = *(&local1);
 frost$core$String$Index $tmp340 = *(&local0);
 *(&local2) = $tmp340;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Frost.frost:199
-frost$core$UInt64 $tmp341 = (frost$core$UInt64) {10};
+frost$core$UInt64 $tmp341 = (frost$core$UInt64) {10u};
 *(&local3) = $tmp341;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Frost.frost:200
 // begin inline call to function frost.core.String.get_utf8():frost.collections.ListView<frost.core.Char8> from Frost.frost:200:41
@@ -949,116 +949,116 @@ block4:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Frost.frost:202
 frost$core$String$Index $tmp358 = *(&local2);
 frost$core$Char32 $tmp359 = frost$core$String$$IDX$frost$core$String$Index$R$frost$core$Char32(param3, $tmp358);
-frost$core$Int32 $tmp360 = (frost$core$Int32) {98};
+frost$core$Int32 $tmp360 = (frost$core$Int32) {98u};
 frost$core$Char32 $tmp361 = frost$core$Char32$init$frost$core$Int32($tmp360);
 // begin inline call to function frost.core.Char32.=(other:frost.core.Char32):frost.core.Bit from Frost.frost:203:22
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char32.frost:27
 int32_t $tmp362 = $tmp359.value;
 int32_t $tmp363 = $tmp361.value;
 bool $tmp364 = $tmp362 == $tmp363;
-frost$core$Bit $tmp365 = frost$core$Bit$init$builtin_bit($tmp364);
+frost$core$Bit $tmp365 = (frost$core$Bit) {$tmp364};
 bool $tmp366 = $tmp365.value;
 if ($tmp366) goto block9; else goto block10;
 block10:;
-frost$core$Int32 $tmp367 = (frost$core$Int32) {66};
+frost$core$Int32 $tmp367 = (frost$core$Int32) {66u};
 frost$core$Char32 $tmp368 = frost$core$Char32$init$frost$core$Int32($tmp367);
 // begin inline call to function frost.core.Char32.=(other:frost.core.Char32):frost.core.Bit from Frost.frost:203:27
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char32.frost:27
 int32_t $tmp369 = $tmp359.value;
 int32_t $tmp370 = $tmp368.value;
 bool $tmp371 = $tmp369 == $tmp370;
-frost$core$Bit $tmp372 = frost$core$Bit$init$builtin_bit($tmp371);
+frost$core$Bit $tmp372 = (frost$core$Bit) {$tmp371};
 bool $tmp373 = $tmp372.value;
 if ($tmp373) goto block9; else goto block12;
 block9:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Frost.frost:204
-frost$core$UInt64 $tmp374 = (frost$core$UInt64) {2};
+frost$core$UInt64 $tmp374 = (frost$core$UInt64) {2u};
 *(&local3) = $tmp374;
 goto block8;
 block12:;
-frost$core$Int32 $tmp375 = (frost$core$Int32) {111};
+frost$core$Int32 $tmp375 = (frost$core$Int32) {111u};
 frost$core$Char32 $tmp376 = frost$core$Char32$init$frost$core$Int32($tmp375);
 // begin inline call to function frost.core.Char32.=(other:frost.core.Char32):frost.core.Bit from Frost.frost:206:22
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char32.frost:27
 int32_t $tmp377 = $tmp359.value;
 int32_t $tmp378 = $tmp376.value;
 bool $tmp379 = $tmp377 == $tmp378;
-frost$core$Bit $tmp380 = frost$core$Bit$init$builtin_bit($tmp379);
+frost$core$Bit $tmp380 = (frost$core$Bit) {$tmp379};
 bool $tmp381 = $tmp380.value;
 if ($tmp381) goto block14; else goto block15;
 block15:;
-frost$core$Int32 $tmp382 = (frost$core$Int32) {79};
+frost$core$Int32 $tmp382 = (frost$core$Int32) {79u};
 frost$core$Char32 $tmp383 = frost$core$Char32$init$frost$core$Int32($tmp382);
 // begin inline call to function frost.core.Char32.=(other:frost.core.Char32):frost.core.Bit from Frost.frost:206:27
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char32.frost:27
 int32_t $tmp384 = $tmp359.value;
 int32_t $tmp385 = $tmp383.value;
 bool $tmp386 = $tmp384 == $tmp385;
-frost$core$Bit $tmp387 = frost$core$Bit$init$builtin_bit($tmp386);
+frost$core$Bit $tmp387 = (frost$core$Bit) {$tmp386};
 bool $tmp388 = $tmp387.value;
 if ($tmp388) goto block14; else goto block17;
 block14:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Frost.frost:207
-frost$core$UInt64 $tmp389 = (frost$core$UInt64) {8};
+frost$core$UInt64 $tmp389 = (frost$core$UInt64) {8u};
 *(&local3) = $tmp389;
 goto block8;
 block17:;
-frost$core$Int32 $tmp390 = (frost$core$Int32) {100};
+frost$core$Int32 $tmp390 = (frost$core$Int32) {100u};
 frost$core$Char32 $tmp391 = frost$core$Char32$init$frost$core$Int32($tmp390);
 // begin inline call to function frost.core.Char32.=(other:frost.core.Char32):frost.core.Bit from Frost.frost:209:22
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char32.frost:27
 int32_t $tmp392 = $tmp359.value;
 int32_t $tmp393 = $tmp391.value;
 bool $tmp394 = $tmp392 == $tmp393;
-frost$core$Bit $tmp395 = frost$core$Bit$init$builtin_bit($tmp394);
+frost$core$Bit $tmp395 = (frost$core$Bit) {$tmp394};
 bool $tmp396 = $tmp395.value;
 if ($tmp396) goto block19; else goto block20;
 block20:;
-frost$core$Int32 $tmp397 = (frost$core$Int32) {68};
+frost$core$Int32 $tmp397 = (frost$core$Int32) {68u};
 frost$core$Char32 $tmp398 = frost$core$Char32$init$frost$core$Int32($tmp397);
 // begin inline call to function frost.core.Char32.=(other:frost.core.Char32):frost.core.Bit from Frost.frost:209:27
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char32.frost:27
 int32_t $tmp399 = $tmp359.value;
 int32_t $tmp400 = $tmp398.value;
 bool $tmp401 = $tmp399 == $tmp400;
-frost$core$Bit $tmp402 = frost$core$Bit$init$builtin_bit($tmp401);
+frost$core$Bit $tmp402 = (frost$core$Bit) {$tmp401};
 bool $tmp403 = $tmp402.value;
 if ($tmp403) goto block19; else goto block22;
 block19:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Frost.frost:210
-frost$core$UInt64 $tmp404 = (frost$core$UInt64) {10};
+frost$core$UInt64 $tmp404 = (frost$core$UInt64) {10u};
 *(&local3) = $tmp404;
 goto block8;
 block22:;
-frost$core$Int32 $tmp405 = (frost$core$Int32) {120};
+frost$core$Int32 $tmp405 = (frost$core$Int32) {120u};
 frost$core$Char32 $tmp406 = frost$core$Char32$init$frost$core$Int32($tmp405);
 // begin inline call to function frost.core.Char32.=(other:frost.core.Char32):frost.core.Bit from Frost.frost:212:22
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char32.frost:27
 int32_t $tmp407 = $tmp359.value;
 int32_t $tmp408 = $tmp406.value;
 bool $tmp409 = $tmp407 == $tmp408;
-frost$core$Bit $tmp410 = frost$core$Bit$init$builtin_bit($tmp409);
+frost$core$Bit $tmp410 = (frost$core$Bit) {$tmp409};
 bool $tmp411 = $tmp410.value;
 if ($tmp411) goto block24; else goto block25;
 block24:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Frost.frost:213
-frost$core$UInt64 $tmp412 = (frost$core$UInt64) {16};
+frost$core$UInt64 $tmp412 = (frost$core$UInt64) {16u};
 *(&local3) = $tmp412;
 goto block8;
 block25:;
-frost$core$Int32 $tmp413 = (frost$core$Int32) {88};
+frost$core$Int32 $tmp413 = (frost$core$Int32) {88u};
 frost$core$Char32 $tmp414 = frost$core$Char32$init$frost$core$Int32($tmp413);
 // begin inline call to function frost.core.Char32.=(other:frost.core.Char32):frost.core.Bit from Frost.frost:215:22
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char32.frost:27
 int32_t $tmp415 = $tmp359.value;
 int32_t $tmp416 = $tmp414.value;
 bool $tmp417 = $tmp415 == $tmp416;
-frost$core$Bit $tmp418 = frost$core$Bit$init$builtin_bit($tmp417);
+frost$core$Bit $tmp418 = (frost$core$Bit) {$tmp417};
 bool $tmp419 = $tmp418.value;
 if ($tmp419) goto block27; else goto block28;
 block27:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Frost.frost:216
-frost$core$UInt64 $tmp420 = (frost$core$UInt64) {16};
+frost$core$UInt64 $tmp420 = (frost$core$UInt64) {16u};
 *(&local3) = $tmp420;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Frost.frost:217
 // begin inline call to function frost.core.String.get_utf8():frost.collections.ListView<frost.core.Char8> from Frost.frost:217:49
@@ -1076,7 +1076,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$collect
 goto block8;
 block28:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Frost.frost:220
-frost$core$Int64 $tmp424 = (frost$core$Int64) {220};
+frost$core$Int64 $tmp424 = (frost$core$Int64) {220u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s425, $tmp424, &$s426);
 abort(); // unreachable
 block8:;
@@ -1088,7 +1088,7 @@ bool $tmp427 = param0.value;
 if ($tmp427) goto block34; else goto block33;
 block34:;
 frost$core$UInt64 $tmp428 = *(&local3);
-frost$core$UInt64 $tmp429 = (frost$core$UInt64) {10};
+frost$core$UInt64 $tmp429 = (frost$core$UInt64) {10u};
 uint64_t $tmp430 = $tmp428.value;
 uint64_t $tmp431 = $tmp429.value;
 bool $tmp432 = $tmp430 != $tmp431;
@@ -1115,7 +1115,7 @@ frost$core$UInt64 $tmp441 = (frost$core$UInt64) {((uint64_t) $tmp440)};
 uint64_t $tmp442 = $tmp441.value;
 uint64_t $tmp443 = param2.value;
 uint64_t $tmp444 = $tmp442 & $tmp443;
-frost$core$UInt64 $tmp445 = frost$core$UInt64$init$builtin_uint64($tmp444);
+frost$core$UInt64 $tmp445 = (frost$core$UInt64) {$tmp444};
 *(&local7) = $tmp445;
 goto block32;
 block33:;
@@ -1125,7 +1125,7 @@ block33:;
 goto block32;
 block32:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Frost.frost:231
-frost$core$Int64 $tmp446 = (frost$core$Int64) {64};
+frost$core$Int64 $tmp446 = (frost$core$Int64) {64u};
 *(&local8) = $tmp446;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Frost.frost:232
 frost$core$Int64 $tmp447 = *(&local8);
@@ -1134,7 +1134,7 @@ frost$core$Char8* $tmp449 = ((frost$core$Char8*) frostAlloc($tmp448 * 1));
 *(&local9) = $tmp449;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Frost.frost:233
 frost$core$Int64 $tmp450 = *(&local8);
-frost$core$Int64 $tmp451 = (frost$core$Int64) {1};
+frost$core$Int64 $tmp451 = (frost$core$Int64) {1u};
 int64_t $tmp452 = $tmp450.value;
 int64_t $tmp453 = $tmp451.value;
 int64_t $tmp454 = $tmp452 - $tmp453;
@@ -1154,7 +1154,7 @@ frost$core$UInt64 $tmp460 = *(&local3);
 uint64_t $tmp461 = $tmp459.value;
 uint64_t $tmp462 = $tmp460.value;
 uint64_t $tmp463 = $tmp461 % $tmp462;
-frost$core$UInt64 $tmp464 = frost$core$UInt64$init$builtin_uint64($tmp463);
+frost$core$UInt64 $tmp464 = (frost$core$UInt64) {$tmp463};
 // begin inline call to function frost.core.UInt64.get_asInt64():frost.core.Int64 from Frost.frost:235:54
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/UInt64.frost:500
 uint64_t $tmp465 = $tmp464.value;
@@ -1178,14 +1178,14 @@ frost$core$UInt64 $tmp477 = (frost$core$UInt64) {$tmp476};
 *(&local7) = $tmp477;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Frost.frost:237
 frost$core$Int64 $tmp478 = *(&local10);
-frost$core$Int64 $tmp479 = (frost$core$Int64) {1};
+frost$core$Int64 $tmp479 = (frost$core$Int64) {1u};
 int64_t $tmp480 = $tmp478.value;
 int64_t $tmp481 = $tmp479.value;
 int64_t $tmp482 = $tmp480 - $tmp481;
 frost$core$Int64 $tmp483 = (frost$core$Int64) {$tmp482};
 *(&local10) = $tmp483;
 frost$core$UInt64 $tmp484 = *(&local7);
-frost$core$UInt64 $tmp485 = (frost$core$UInt64) {0};
+frost$core$UInt64 $tmp485 = (frost$core$UInt64) {0u};
 uint64_t $tmp486 = $tmp484.value;
 uint64_t $tmp487 = $tmp485.value;
 bool $tmp488 = $tmp486 > $tmp487;
@@ -1198,26 +1198,26 @@ bool $tmp491 = param0.value;
 if ($tmp491) goto block46; else goto block45;
 block46:;
 frost$core$UInt64 $tmp492 = *(&local3);
-frost$core$UInt64 $tmp493 = (frost$core$UInt64) {10};
+frost$core$UInt64 $tmp493 = (frost$core$UInt64) {10u};
 // begin inline call to function frost.core.UInt64.=(other:frost.core.UInt64):frost.core.Bit from Frost.frost:240:24
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/UInt64.frost:221
 uint64_t $tmp494 = $tmp492.value;
 uint64_t $tmp495 = $tmp493.value;
 bool $tmp496 = $tmp494 == $tmp495;
-frost$core$Bit $tmp497 = frost$core$Bit$init$builtin_bit($tmp496);
+frost$core$Bit $tmp497 = (frost$core$Bit) {$tmp496};
 bool $tmp498 = $tmp497.value;
 if ($tmp498) goto block44; else goto block45;
 block44:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Frost.frost:241
 frost$core$Char8* $tmp499 = *(&local9);
 frost$core$Int64 $tmp500 = *(&local10);
-frost$core$UInt8 $tmp501 = (frost$core$UInt8) {45};
+frost$core$UInt8 $tmp501 = (frost$core$UInt8) {45u};
 frost$core$Char8 $tmp502 = frost$core$Char8$init$frost$core$UInt8($tmp501);
 int64_t $tmp503 = $tmp500.value;
 $tmp499[$tmp503] = $tmp502;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Frost.frost:242
 frost$core$Int64 $tmp504 = *(&local10);
-frost$core$Int64 $tmp505 = (frost$core$Int64) {1};
+frost$core$Int64 $tmp505 = (frost$core$Int64) {1u};
 int64_t $tmp506 = $tmp504.value;
 int64_t $tmp507 = $tmp505.value;
 int64_t $tmp508 = $tmp506 - $tmp507;
@@ -1227,7 +1227,7 @@ goto block45;
 block45:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Frost.frost:244
 frost$core$Int64 $tmp510 = *(&local10);
-frost$core$Int64 $tmp511 = (frost$core$Int64) {1};
+frost$core$Int64 $tmp511 = (frost$core$Int64) {1u};
 int64_t $tmp512 = $tmp510.value;
 int64_t $tmp513 = $tmp511.value;
 int64_t $tmp514 = $tmp512 + $tmp513;
@@ -1242,16 +1242,16 @@ int64_t $tmp520 = $tmp518 - $tmp519;
 frost$core$Int64 $tmp521 = (frost$core$Int64) {$tmp520};
 *(&local11) = $tmp521;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Frost.frost:246
-frost$core$Int64 $tmp522 = (frost$core$Int64) {0};
+frost$core$Int64 $tmp522 = (frost$core$Int64) {0u};
 frost$core$Int64 $tmp523 = *(&local11);
-frost$core$Bit $tmp524 = frost$core$Bit$init$builtin_bit(false);
+frost$core$Bit $tmp524 = (frost$core$Bit) {false};
 frost$core$Range$LTfrost$core$Int64$GT $tmp525 = frost$core$Range$LTfrost$core$Int64$GT$init$frost$core$Int64$frost$core$Int64$frost$core$Bit($tmp522, $tmp523, $tmp524);
 frost$core$Int64 $tmp526 = $tmp525.min;
 *(&local12) = $tmp526;
 frost$core$Int64 $tmp527 = $tmp525.max;
 frost$core$Bit $tmp528 = $tmp525.inclusive;
 bool $tmp529 = $tmp528.value;
-frost$core$Int64 $tmp530 = (frost$core$Int64) {1};
+frost$core$Int64 $tmp530 = (frost$core$Int64) {1u};
 // begin inline call to function frost.core.Int64.get_asUInt64():frost.core.UInt64 from <internal>:1:1
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int64.frost:555
 int64_t $tmp531 = $tmp530.value;
@@ -1399,7 +1399,7 @@ int64_t $tmp602 = param2.value;
 int64_t $tmp603 = param1.value;
 int64_t $tmp604 = $tmp602 - $tmp603;
 frost$core$Int64 $tmp605 = (frost$core$Int64) {$tmp604};
-frost$core$Int64 $tmp606 = (frost$core$Int64) {2};
+frost$core$Int64 $tmp606 = (frost$core$Int64) {2u};
 int64_t $tmp607 = $tmp605.value;
 int64_t $tmp608 = $tmp606.value;
 int64_t $tmp609 = $tmp607 / $tmp608;
@@ -1429,19 +1429,19 @@ frost$core$Frost$swap$frost$collections$List$LTfrost$core$Frost$swap$T$GT$frost$
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Frost.frost:286
 *(&local2) = param1;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Frost.frost:287
-frost$core$Int64 $tmp622 = (frost$core$Int64) {1};
+frost$core$Int64 $tmp622 = (frost$core$Int64) {1u};
 int64_t $tmp623 = param2.value;
 int64_t $tmp624 = $tmp622.value;
 int64_t $tmp625 = $tmp623 - $tmp624;
 frost$core$Int64 $tmp626 = (frost$core$Int64) {$tmp625};
-frost$core$Bit $tmp627 = frost$core$Bit$init$builtin_bit(true);
+frost$core$Bit $tmp627 = (frost$core$Bit) {true};
 frost$core$Range$LTfrost$core$Int64$GT $tmp628 = frost$core$Range$LTfrost$core$Int64$GT$init$frost$core$Int64$frost$core$Int64$frost$core$Bit(param1, $tmp626, $tmp627);
 frost$core$Int64 $tmp629 = $tmp628.min;
 *(&local3) = $tmp629;
 frost$core$Int64 $tmp630 = $tmp628.max;
 frost$core$Bit $tmp631 = $tmp628.inclusive;
 bool $tmp632 = $tmp631.value;
-frost$core$Int64 $tmp633 = (frost$core$Int64) {1};
+frost$core$Int64 $tmp633 = (frost$core$Int64) {1u};
 // begin inline call to function frost.core.Int64.get_asUInt64():frost.core.UInt64 from <internal>:1:1
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int64.frost:555
 int64_t $tmp634 = $tmp633.value;
@@ -1502,7 +1502,7 @@ frost$core$Int64 $tmp667 = *(&local2);
 frost$core$Frost$swap$frost$collections$List$LTfrost$core$Frost$swap$T$GT$frost$core$Int64$frost$core$Int64(param0, $tmp666, $tmp667);
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Frost.frost:290
 frost$core$Int64 $tmp668 = *(&local2);
-frost$core$Int64 $tmp669 = (frost$core$Int64) {1};
+frost$core$Int64 $tmp669 = (frost$core$Int64) {1u};
 int64_t $tmp670 = $tmp668.value;
 int64_t $tmp671 = $tmp669.value;
 int64_t $tmp672 = $tmp670 + $tmp671;
@@ -1547,7 +1547,7 @@ frost$core$Int64 $tmp695 = *(&local2);
 frost$core$Frost$swap$frost$collections$List$LTfrost$core$Frost$swap$T$GT$frost$core$Int64$frost$core$Int64(param0, $tmp695, param2);
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Frost.frost:294
 frost$core$Int64 $tmp696 = *(&local2);
-frost$core$Int64 $tmp697 = (frost$core$Int64) {1};
+frost$core$Int64 $tmp697 = (frost$core$Int64) {1u};
 int64_t $tmp698 = $tmp696.value;
 int64_t $tmp699 = $tmp697.value;
 int64_t $tmp700 = $tmp698 - $tmp699;
@@ -1555,7 +1555,7 @@ frost$core$Int64 $tmp701 = (frost$core$Int64) {$tmp700};
 frost$core$Frost$sort$frost$collections$List$LTfrost$core$Frost$sort$T$GT$frost$core$Int64$frost$core$Int64$$LPfrost$core$Frost$sort$T$Cfrost$core$Frost$sort$T$RP$EQ$AM$GT$LPfrost$core$Bit$RP(param0, param1, $tmp701, param3);
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Frost.frost:295
 frost$core$Int64 $tmp702 = *(&local2);
-frost$core$Int64 $tmp703 = (frost$core$Int64) {1};
+frost$core$Int64 $tmp703 = (frost$core$Int64) {1u};
 int64_t $tmp704 = $tmp702.value;
 int64_t $tmp705 = $tmp703.value;
 int64_t $tmp706 = $tmp704 + $tmp705;

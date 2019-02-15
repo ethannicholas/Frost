@@ -13,7 +13,7 @@ static frost$core$String $s1;
 frost$threads$Lock$class_type frost$threads$Lock$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Immutable$class, NULL, { frost$core$Object$get_asString$R$frost$core$String, frost$threads$Lock$cleanup$shim, frost$threads$Lock$lock, frost$threads$Lock$unlock, frost$threads$Lock$create, frost$threads$Lock$destroy} };
 
 
-static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x74\x68\x72\x65\x61\x64\x73\x2e\x4c\x6f\x63\x6b", 18, 878080470133442863, NULL };
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x74\x68\x72\x65\x61\x64\x73\x2e\x4c\x6f\x63\x6b", 18, 4968142814039504275, NULL };
 
 void frost$threads$Lock$init(frost$threads$Lock* param0) {
 

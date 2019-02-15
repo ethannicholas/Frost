@@ -1520,19 +1520,13 @@ class String : Immutable, Key<String>, Comparable<String>, Iterable<Char32>, For
     ================================================================================================
     @override
     function get_hash():Int {
-        var h := 1
+        -- FNV-1a hash, thanks to Fowler, Landon, and Vo. This algorithm is in the public
+        -- domain: http://www.isthe.com/chongo/tech/comp/fnv/index.html#public_domain
+        var h := 0xcbf29ce484222325
         for i in 0 .. _length {
-            h := h * 101 + Int64(data[i].value->builtin_int64)
+            h ~~= data[i].asInt8
+            h *= 0x100000001b3
         }
--*
-            -- FNV-1a hash, thanks to Fowler, Landon, and Vo. This algorithm is in the public
-            -- domain: http://www.isthe.com/chongo/tech/comp/fnv/index.html#public_domain
-            var h := 0xcbf29ce484222325
-            for i in 0 .. _length {
-                h ~~= data[i].convert()
-                h *= 0x100000001b3
-            }
-*-
         return h
     }
 }

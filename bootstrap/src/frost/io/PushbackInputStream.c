@@ -34,9 +34,9 @@ typedef frost$core$Object* (*$fn337)(frost$collections$ListView*, frost$core$Int
 typedef frost$core$Int64 (*$fn384)(frost$collections$CollectionView*);
 typedef frost$core$Object* (*$fn436)(frost$collections$ListView*, frost$core$Int64);
 
-static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x69\x6f\x2e\x50\x75\x73\x68\x62\x61\x63\x6b\x49\x6e\x70\x75\x74\x53\x74\x72\x65\x61\x6d", 28, -1765293573228874696, NULL };
-static frost$core$String $s50 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x41\x72\x72\x61\x79\x2e\x73\x74\x75\x62", 10, -1668902239978348156, NULL };
-static frost$core$String $s51 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x5b\x5d\x28\x69\x6e\x64\x65\x78\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x36\x34\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x54", 110, -2494579685283273095, NULL };
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x69\x6f\x2e\x50\x75\x73\x68\x62\x61\x63\x6b\x49\x6e\x70\x75\x74\x53\x74\x72\x65\x61\x6d", 28, 8789994324960517746, NULL };
+static frost$core$String $s50 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x41\x72\x72\x61\x79\x2e\x73\x74\x75\x62", 10, -775704626125802412, NULL };
+static frost$core$String $s51 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x5b\x5d\x28\x69\x6e\x64\x65\x78\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x36\x34\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x54", 110, 4208646717458716543, NULL };
 
 void frost$io$PushbackInputStream$init$frost$io$InputStream(frost$io$PushbackInputStream* param0, frost$io$InputStream* param1) {
 
@@ -75,7 +75,7 @@ while ($tmp11->$class != (frost$core$Class*) &frost$collections$CollectionView$c
 }
 $fn13 $tmp12 = $tmp11->methods[0];
 frost$core$Int64 $tmp14 = $tmp12(((frost$collections$CollectionView*) $tmp10));
-frost$core$Int64 $tmp15 = (frost$core$Int64) {0};
+frost$core$Int64 $tmp15 = (frost$core$Int64) {0u};
 int64_t $tmp16 = $tmp14.value;
 int64_t $tmp17 = $tmp15.value;
 bool $tmp18 = $tmp16 > $tmp17;
@@ -94,13 +94,13 @@ while ($tmp25->$class != (frost$core$Class*) &frost$collections$CollectionView$c
 }
 $fn27 $tmp26 = $tmp25->methods[0];
 frost$core$Int64 $tmp28 = $tmp26(((frost$collections$CollectionView*) $tmp24));
-frost$core$Int64 $tmp29 = (frost$core$Int64) {1};
+frost$core$Int64 $tmp29 = (frost$core$Int64) {1u};
 int64_t $tmp30 = $tmp28.value;
 int64_t $tmp31 = $tmp29.value;
 int64_t $tmp32 = $tmp30 - $tmp31;
 frost$core$Int64 $tmp33 = (frost$core$Int64) {$tmp32};
 // begin inline call to function frost.collections.Array.[](index:frost.core.Int64):frost.collections.Array.T from PushbackInputStream.frost:36:41
-frost$core$Int64 $tmp34 = (frost$core$Int64) {0};
+frost$core$Int64 $tmp34 = (frost$core$Int64) {0u};
 int64_t $tmp35 = $tmp33.value;
 int64_t $tmp36 = $tmp34.value;
 bool $tmp37 = $tmp35 >= $tmp36;
@@ -121,7 +121,7 @@ frost$core$Bit $tmp47 = (frost$core$Bit) {$tmp46};
 bool $tmp48 = $tmp47.value;
 if ($tmp48) goto block4; else goto block5;
 block5:;
-frost$core$Int64 $tmp49 = (frost$core$Int64) {22};
+frost$core$Int64 $tmp49 = (frost$core$Int64) {22u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s50, $tmp49, &$s51);
 abort(); // unreachable
 block4:;
@@ -144,7 +144,7 @@ while ($tmp60->$class != (frost$core$Class*) &frost$collections$CollectionView$c
 }
 $fn62 $tmp61 = $tmp60->methods[0];
 frost$core$Int64 $tmp63 = $tmp61(((frost$collections$CollectionView*) $tmp59));
-frost$core$Int64 $tmp64 = (frost$core$Int64) {1};
+frost$core$Int64 $tmp64 = (frost$core$Int64) {1u};
 int64_t $tmp65 = $tmp63.value;
 int64_t $tmp66 = $tmp64.value;
 int64_t $tmp67 = $tmp65 - $tmp66;
@@ -203,14 +203,14 @@ while ($tmp84->$class != (frost$core$Class*) &frost$collections$CollectionView$c
 }
 $fn86 $tmp85 = $tmp84->methods[0];
 frost$core$Int64 $tmp87 = $tmp85(((frost$collections$CollectionView*) param1));
-frost$core$Int64 $tmp88 = (frost$core$Int64) {1};
+frost$core$Int64 $tmp88 = (frost$core$Int64) {1u};
 int64_t $tmp89 = $tmp87.value;
 int64_t $tmp90 = $tmp88.value;
 int64_t $tmp91 = $tmp89 - $tmp90;
 frost$core$Int64 $tmp92 = (frost$core$Int64) {$tmp91};
-frost$core$Int64 $tmp93 = (frost$core$Int64) {0};
-frost$core$Int64 $tmp94 = (frost$core$Int64) {18446744073709551615};
-frost$core$Bit $tmp95 = frost$core$Bit$init$builtin_bit(true);
+frost$core$Int64 $tmp93 = (frost$core$Int64) {0u};
+frost$core$Int64 $tmp94 = (frost$core$Int64) {18446744073709551615u};
+frost$core$Bit $tmp95 = (frost$core$Bit) {true};
 frost$core$SteppedRange$LTfrost$core$Int64$Cfrost$core$Int64$GT $tmp96 = frost$core$SteppedRange$LTfrost$core$Int64$Cfrost$core$Int64$GT$init$frost$core$Int64$frost$core$Int64$frost$core$Int64$frost$core$Bit($tmp92, $tmp93, $tmp94, $tmp95);
 frost$core$Int64 $tmp97 = $tmp96.start;
 *(&local0) = $tmp97;
@@ -231,7 +231,7 @@ int64_t $tmp105 = $tmp104.value;
 frost$core$UInt64 $tmp106 = (frost$core$UInt64) {((uint64_t) $tmp105)};
 frost$core$Bit $tmp107 = $tmp96.inclusive;
 bool $tmp108 = $tmp107.value;
-frost$core$Int64 $tmp109 = (frost$core$Int64) {0};
+frost$core$Int64 $tmp109 = (frost$core$Int64) {0u};
 int64_t $tmp110 = $tmp99.value;
 int64_t $tmp111 = $tmp109.value;
 bool $tmp112 = $tmp110 >= $tmp111;
@@ -360,14 +360,14 @@ while ($tmp180->$class != (frost$core$Class*) &frost$collections$CollectionView$
 }
 $fn182 $tmp181 = $tmp180->methods[0];
 frost$core$Int64 $tmp183 = $tmp181(((frost$collections$CollectionView*) param1));
-frost$core$Int64 $tmp184 = (frost$core$Int64) {1};
+frost$core$Int64 $tmp184 = (frost$core$Int64) {1u};
 int64_t $tmp185 = $tmp183.value;
 int64_t $tmp186 = $tmp184.value;
 int64_t $tmp187 = $tmp185 - $tmp186;
 frost$core$Int64 $tmp188 = (frost$core$Int64) {$tmp187};
-frost$core$Int64 $tmp189 = (frost$core$Int64) {0};
-frost$core$Int64 $tmp190 = (frost$core$Int64) {18446744073709551615};
-frost$core$Bit $tmp191 = frost$core$Bit$init$builtin_bit(true);
+frost$core$Int64 $tmp189 = (frost$core$Int64) {0u};
+frost$core$Int64 $tmp190 = (frost$core$Int64) {18446744073709551615u};
+frost$core$Bit $tmp191 = (frost$core$Bit) {true};
 frost$core$SteppedRange$LTfrost$core$Int64$Cfrost$core$Int64$GT $tmp192 = frost$core$SteppedRange$LTfrost$core$Int64$Cfrost$core$Int64$GT$init$frost$core$Int64$frost$core$Int64$frost$core$Int64$frost$core$Bit($tmp188, $tmp189, $tmp190, $tmp191);
 frost$core$Int64 $tmp193 = $tmp192.start;
 *(&local0) = $tmp193;
@@ -388,7 +388,7 @@ int64_t $tmp201 = $tmp200.value;
 frost$core$UInt64 $tmp202 = (frost$core$UInt64) {((uint64_t) $tmp201)};
 frost$core$Bit $tmp203 = $tmp192.inclusive;
 bool $tmp204 = $tmp203.value;
-frost$core$Int64 $tmp205 = (frost$core$Int64) {0};
+frost$core$Int64 $tmp205 = (frost$core$Int64) {0u};
 int64_t $tmp206 = $tmp195.value;
 int64_t $tmp207 = $tmp205.value;
 bool $tmp208 = $tmp206 >= $tmp207;
@@ -540,14 +540,14 @@ while ($tmp283->$class != (frost$core$Class*) &frost$collections$CollectionView$
 }
 $fn285 $tmp284 = $tmp283->methods[0];
 frost$core$Int64 $tmp286 = $tmp284(((frost$collections$CollectionView*) param1));
-frost$core$Int64 $tmp287 = (frost$core$Int64) {1};
+frost$core$Int64 $tmp287 = (frost$core$Int64) {1u};
 int64_t $tmp288 = $tmp286.value;
 int64_t $tmp289 = $tmp287.value;
 int64_t $tmp290 = $tmp288 - $tmp289;
 frost$core$Int64 $tmp291 = (frost$core$Int64) {$tmp290};
-frost$core$Int64 $tmp292 = (frost$core$Int64) {0};
-frost$core$Int64 $tmp293 = (frost$core$Int64) {18446744073709551615};
-frost$core$Bit $tmp294 = frost$core$Bit$init$builtin_bit(true);
+frost$core$Int64 $tmp292 = (frost$core$Int64) {0u};
+frost$core$Int64 $tmp293 = (frost$core$Int64) {18446744073709551615u};
+frost$core$Bit $tmp294 = (frost$core$Bit) {true};
 frost$core$SteppedRange$LTfrost$core$Int64$Cfrost$core$Int64$GT $tmp295 = frost$core$SteppedRange$LTfrost$core$Int64$Cfrost$core$Int64$GT$init$frost$core$Int64$frost$core$Int64$frost$core$Int64$frost$core$Bit($tmp291, $tmp292, $tmp293, $tmp294);
 frost$core$Int64 $tmp296 = $tmp295.start;
 *(&local0) = $tmp296;
@@ -568,7 +568,7 @@ int64_t $tmp304 = $tmp303.value;
 frost$core$UInt64 $tmp305 = (frost$core$UInt64) {((uint64_t) $tmp304)};
 frost$core$Bit $tmp306 = $tmp295.inclusive;
 bool $tmp307 = $tmp306.value;
-frost$core$Int64 $tmp308 = (frost$core$Int64) {0};
+frost$core$Int64 $tmp308 = (frost$core$Int64) {0u};
 int64_t $tmp309 = $tmp298.value;
 int64_t $tmp310 = $tmp308.value;
 bool $tmp311 = $tmp309 >= $tmp310;
@@ -712,14 +712,14 @@ while ($tmp382->$class != (frost$core$Class*) &frost$collections$CollectionView$
 }
 $fn384 $tmp383 = $tmp382->methods[0];
 frost$core$Int64 $tmp385 = $tmp383(((frost$collections$CollectionView*) ((frost$collections$ListView*) $tmp381)));
-frost$core$Int64 $tmp386 = (frost$core$Int64) {1};
+frost$core$Int64 $tmp386 = (frost$core$Int64) {1u};
 int64_t $tmp387 = $tmp385.value;
 int64_t $tmp388 = $tmp386.value;
 int64_t $tmp389 = $tmp387 - $tmp388;
 frost$core$Int64 $tmp390 = (frost$core$Int64) {$tmp389};
-frost$core$Int64 $tmp391 = (frost$core$Int64) {0};
-frost$core$Int64 $tmp392 = (frost$core$Int64) {18446744073709551615};
-frost$core$Bit $tmp393 = frost$core$Bit$init$builtin_bit(true);
+frost$core$Int64 $tmp391 = (frost$core$Int64) {0u};
+frost$core$Int64 $tmp392 = (frost$core$Int64) {18446744073709551615u};
+frost$core$Bit $tmp393 = (frost$core$Bit) {true};
 frost$core$SteppedRange$LTfrost$core$Int64$Cfrost$core$Int64$GT $tmp394 = frost$core$SteppedRange$LTfrost$core$Int64$Cfrost$core$Int64$GT$init$frost$core$Int64$frost$core$Int64$frost$core$Int64$frost$core$Bit($tmp390, $tmp391, $tmp392, $tmp393);
 frost$core$Int64 $tmp395 = $tmp394.start;
 *(&local0) = $tmp395;
@@ -740,7 +740,7 @@ int64_t $tmp403 = $tmp402.value;
 frost$core$UInt64 $tmp404 = (frost$core$UInt64) {((uint64_t) $tmp403)};
 frost$core$Bit $tmp405 = $tmp394.inclusive;
 bool $tmp406 = $tmp405.value;
-frost$core$Int64 $tmp407 = (frost$core$Int64) {0};
+frost$core$Int64 $tmp407 = (frost$core$Int64) {0u};
 int64_t $tmp408 = $tmp397.value;
 int64_t $tmp409 = $tmp407.value;
 bool $tmp410 = $tmp408 >= $tmp409;

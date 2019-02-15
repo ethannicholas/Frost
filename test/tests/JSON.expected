@@ -2,9 +2,9 @@
 true
 1
 hello
-{ "lastName": "Smith", "isAlive": true, "firstName": "John", "age": 27, "phoneNumbers": [{ "type": "home", "number": "212 555-1234" }, { "type": "office", "number": "646 555-4567" }, { "type": "mobile", "number": "123 456-7890" }], "spouse": null, "children": [], "address": { "city": "New York", "postalCode": "10021-3100", "streetAddress": "21 2nd Street", "state": "NY" } }
+{ "address": { "city": "New York", "postalCode": "10021-3100", "state": "NY", "streetAddress": "21 2nd Street" }, "age": 27, "children": [], "firstName": "John", "isAlive": true, "lastName": "Smith", "phoneNumbers": [{ "number": "212 555-1234", "type": "home" }, { "number": "646 555-4567", "type": "office" }, { "number": "123 456-7890", "type": "mobile" }], "spouse": null }
 true
 27
-{ "city": "New York", "postalCode": "10021-3100", "streetAddress": "21 2nd Street", "state": "NY" }
+{ "city": "New York", "postalCode": "10021-3100", "state": "NY", "streetAddress": "21 2nd Street" }
 John
 646 555-4567

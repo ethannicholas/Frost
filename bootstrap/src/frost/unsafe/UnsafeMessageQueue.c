@@ -20,9 +20,9 @@ static frost$core$String $s1;
 frost$unsafe$UnsafeMessageQueue$class_type frost$unsafe$UnsafeMessageQueue$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Immutable$class, NULL, { frost$core$Object$get_asString$R$frost$core$String, frost$unsafe$UnsafeMessageQueue$cleanup$shim, frost$unsafe$UnsafeMessageQueue$post$frost$unsafe$UnsafeMessageQueue$T, frost$unsafe$UnsafeMessageQueue$pendingMessages$R$frost$core$Int64, frost$unsafe$UnsafeMessageQueue$hasMessage$R$frost$core$Bit, frost$unsafe$UnsafeMessageQueue$getMessage$R$frost$unsafe$UnsafeMessageQueue$T, frost$unsafe$UnsafeMessageQueue$clear} };
 
 
-static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x75\x6e\x73\x61\x66\x65\x2e\x55\x6e\x73\x61\x66\x65\x4d\x65\x73\x73\x61\x67\x65\x51\x75\x65\x75\x65", 31, 8925915866225365425, NULL };
-static frost$core$String $s15 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x55\x6e\x73\x61\x66\x65\x4d\x65\x73\x73\x61\x67\x65\x51\x75\x65\x75\x65\x2e\x66\x72\x6f\x73\x74", 24, -3268556064045328107, NULL };
-static frost$core$String $s38 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x55\x6e\x73\x61\x66\x65\x4d\x65\x73\x73\x61\x67\x65\x51\x75\x65\x75\x65\x2e\x66\x72\x6f\x73\x74", 24, -3268556064045328107, NULL };
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x75\x6e\x73\x61\x66\x65\x2e\x55\x6e\x73\x61\x66\x65\x4d\x65\x73\x73\x61\x67\x65\x51\x75\x65\x75\x65", 31, 6963980427423725683, NULL };
+static frost$core$String $s15 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x55\x6e\x73\x61\x66\x65\x4d\x65\x73\x73\x61\x67\x65\x51\x75\x65\x75\x65\x2e\x66\x72\x6f\x73\x74", 24, 22806725603529557, NULL };
+static frost$core$String $s38 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x55\x6e\x73\x61\x66\x65\x4d\x65\x73\x73\x61\x67\x65\x51\x75\x65\x75\x65\x2e\x66\x72\x6f\x73\x74", 24, 22806725603529557, NULL };
 
 void frost$unsafe$UnsafeMessageQueue$post$frost$unsafe$UnsafeMessageQueue$T(frost$unsafe$UnsafeMessageQueue* param0, frost$core$Object* param1) {
 
@@ -42,18 +42,18 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp2));
 // /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/UnsafeMessageQueue.frost:47
 frost$unsafe$UnsafeMessageQueue$Message** $tmp6 = &param0->tail;
 frost$unsafe$UnsafeMessageQueue$Message* $tmp7 = *$tmp6;
-frost$core$Bit $tmp8 = frost$core$Bit$init$builtin_bit($tmp7 != NULL);
+frost$core$Bit $tmp8 = (frost$core$Bit) {$tmp7 != NULL};
 bool $tmp9 = $tmp8.value;
 if ($tmp9) goto block1; else goto block3;
 block1:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/UnsafeMessageQueue.frost:48
 frost$unsafe$UnsafeMessageQueue$Message** $tmp10 = &param0->head;
 frost$unsafe$UnsafeMessageQueue$Message* $tmp11 = *$tmp10;
-frost$core$Bit $tmp12 = frost$core$Bit$init$builtin_bit($tmp11 != NULL);
+frost$core$Bit $tmp12 = (frost$core$Bit) {$tmp11 != NULL};
 bool $tmp13 = $tmp12.value;
 if ($tmp13) goto block4; else goto block5;
 block5:;
-frost$core$Int64 $tmp14 = (frost$core$Int64) {48};
+frost$core$Int64 $tmp14 = (frost$core$Int64) {48u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s15, $tmp14);
 abort(); // unreachable
 block4:;
@@ -87,17 +87,17 @@ block3:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/UnsafeMessageQueue.frost:53
 frost$core$Int64* $tmp29 = &param0->count;
 frost$core$Int64 $tmp30 = *$tmp29;
-frost$core$Int64 $tmp31 = (frost$core$Int64) {0};
+frost$core$Int64 $tmp31 = (frost$core$Int64) {0u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from UnsafeMessageQueue.frost:53:26
 // /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:179
 int64_t $tmp32 = $tmp30.value;
 int64_t $tmp33 = $tmp31.value;
 bool $tmp34 = $tmp32 == $tmp33;
-frost$core$Bit $tmp35 = frost$core$Bit$init$builtin_bit($tmp34);
+frost$core$Bit $tmp35 = (frost$core$Bit) {$tmp34};
 bool $tmp36 = $tmp35.value;
 if ($tmp36) goto block7; else goto block8;
 block8:;
-frost$core$Int64 $tmp37 = (frost$core$Int64) {53};
+frost$core$Int64 $tmp37 = (frost$core$Int64) {53u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s38, $tmp37);
 abort(); // unreachable
 block7:;
@@ -126,7 +126,7 @@ block2:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/UnsafeMessageQueue.frost:57
 frost$core$Int64* $tmp48 = &param0->count;
 frost$core$Int64 $tmp49 = *$tmp48;
-frost$core$Int64 $tmp50 = (frost$core$Int64) {1};
+frost$core$Int64 $tmp50 = (frost$core$Int64) {1u};
 int64_t $tmp51 = $tmp49.value;
 int64_t $tmp52 = $tmp50.value;
 int64_t $tmp53 = $tmp51 + $tmp52;
@@ -190,7 +190,7 @@ frost$core$Int64 $tmp71 = *$tmp70;
 frost$threads$ScopedLock* $tmp72 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp72));
 *(&local0) = ((frost$threads$ScopedLock*) NULL);
-frost$core$Int64 $tmp73 = (frost$core$Int64) {0};
+frost$core$Int64 $tmp73 = (frost$core$Int64) {0u};
 int64_t $tmp74 = $tmp71.value;
 int64_t $tmp75 = $tmp73.value;
 bool $tmp76 = $tmp74 > $tmp75;
@@ -219,7 +219,7 @@ goto block1;
 block1:;
 frost$unsafe$UnsafeMessageQueue$Message** $tmp82 = &param0->head;
 frost$unsafe$UnsafeMessageQueue$Message* $tmp83 = *$tmp82;
-frost$core$Bit $tmp84 = frost$core$Bit$init$builtin_bit($tmp83 == NULL);
+frost$core$Bit $tmp84 = (frost$core$Bit) {$tmp83 == NULL};
 bool $tmp85 = $tmp84.value;
 if ($tmp85) goto block2; else goto block3;
 block2:;
@@ -253,7 +253,7 @@ frost$unsafe$UnsafeMessageQueue$Message** $tmp99 = &param0->head;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/UnsafeMessageQueue.frost:99
 frost$unsafe$UnsafeMessageQueue$Message** $tmp100 = &param0->head;
 frost$unsafe$UnsafeMessageQueue$Message* $tmp101 = *$tmp100;
-frost$core$Bit $tmp102 = frost$core$Bit$init$builtin_bit($tmp101 == NULL);
+frost$core$Bit $tmp102 = (frost$core$Bit) {$tmp101 == NULL};
 bool $tmp103 = $tmp102.value;
 if ($tmp103) goto block4; else goto block5;
 block4:;
@@ -269,7 +269,7 @@ block5:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/UnsafeMessageQueue.frost:102
 frost$core$Int64* $tmp107 = &param0->count;
 frost$core$Int64 $tmp108 = *$tmp107;
-frost$core$Int64 $tmp109 = (frost$core$Int64) {1};
+frost$core$Int64 $tmp109 = (frost$core$Int64) {1u};
 int64_t $tmp110 = $tmp108.value;
 int64_t $tmp111 = $tmp109.value;
 int64_t $tmp112 = $tmp110 - $tmp111;
@@ -315,7 +315,7 @@ frost$core$Int64 $tmp123 = *$tmp122;
 frost$threads$ScopedLock* $tmp124 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp124));
 *(&local0) = ((frost$threads$ScopedLock*) NULL);
-frost$core$Int64 $tmp125 = (frost$core$Int64) {0};
+frost$core$Int64 $tmp125 = (frost$core$Int64) {0u};
 int64_t $tmp126 = $tmp123.value;
 int64_t $tmp127 = $tmp125.value;
 bool $tmp128 = $tmp126 > $tmp127;
@@ -358,7 +358,7 @@ frost$threads$Notifier** $tmp141 = &param0->notifier;
 *$tmp141 = $tmp136;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp136));
 // /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/UnsafeMessageQueue.frost:32
-frost$core$Int64 $tmp142 = (frost$core$Int64) {0};
+frost$core$Int64 $tmp142 = (frost$core$Int64) {0u};
 frost$core$Int64* $tmp143 = &param0->count;
 *$tmp143 = $tmp142;
 return;

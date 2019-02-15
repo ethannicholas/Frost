@@ -25,7 +25,7 @@ org$frostlang$frostc$Compiler$BinaryKey$class_type org$frostlang$frostc$Compiler
 
 typedef frost$core$Bit (*$fn24)(frost$core$Equatable*, frost$core$Equatable*);
 
-static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x43\x6f\x6d\x70\x69\x6c\x65\x72\x2e\x42\x69\x6e\x61\x72\x79\x4b\x65\x79", 39, 1341198773752392507, NULL };
+static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x43\x6f\x6d\x70\x69\x6c\x65\x72\x2e\x42\x69\x6e\x61\x72\x79\x4b\x65\x79", 39, 1144513384746375751, NULL };
 
 void org$frostlang$frostc$Compiler$BinaryKey$init$org$frostlang$frostc$ASTNode$org$frostlang$frostc$expression$Binary$Operator$org$frostlang$frostc$ASTNode(org$frostlang$frostc$Compiler$BinaryKey* param0, org$frostlang$frostc$ASTNode* param1, org$frostlang$frostc$expression$Binary$Operator param2, org$frostlang$frostc$ASTNode* param3) {
 
@@ -59,7 +59,7 @@ org$frostlang$frostc$ASTNode* $tmp10 = *$tmp9;
 org$frostlang$frostc$ASTNode** $tmp11 = &param1->left;
 org$frostlang$frostc$ASTNode* $tmp12 = *$tmp11;
 bool $tmp13 = $tmp10 == $tmp12;
-frost$core$Bit $tmp14 = frost$core$Bit$init$builtin_bit($tmp13);
+frost$core$Bit $tmp14 = (frost$core$Bit) {$tmp13};
 bool $tmp15 = $tmp14.value;
 if ($tmp15) goto block1; else goto block2;
 block1:;
@@ -96,7 +96,7 @@ org$frostlang$frostc$ASTNode* $tmp29 = *$tmp28;
 org$frostlang$frostc$ASTNode** $tmp30 = &param1->right;
 org$frostlang$frostc$ASTNode* $tmp31 = *$tmp30;
 bool $tmp32 = $tmp29 == $tmp31;
-frost$core$Bit $tmp33 = frost$core$Bit$init$builtin_bit($tmp32);
+frost$core$Bit $tmp33 = (frost$core$Bit) {$tmp32};
 *(&local0) = $tmp33;
 goto block6;
 block5:;
@@ -123,7 +123,7 @@ frost$core$Frost$addressOf$frost$core$Object$R$frost$core$Int64(&$tmp40, ((frost
 int64_t $tmp41 = $tmp37.value;
 int64_t $tmp42 = $tmp40.value;
 int64_t $tmp43 = $tmp41 ^ $tmp42;
-frost$core$Int64 $tmp44 = frost$core$Int64$init$builtin_int64($tmp43);
+frost$core$Int64 $tmp44 = (frost$core$Int64) {$tmp43};
 return $tmp44;
 
 }
