@@ -106,7 +106,7 @@ class NFAtoDFA {
             stateCount := stateCount.max(transitions[i].count)
         }
         def outTransitions := Pointer<Pointer<Int>>.alloc(transitions.count)
-        for i in 0 ... DFA.END_CHAR.asInt64 {
+        for i in 0 ... DFA.END_CHAR.asInt {
             outTransitions[i] := Pointer<Int>.alloc(stateCount)
             for j in 0 .. stateCount {
                 if i < transitions.count & j < transitions[i].count {

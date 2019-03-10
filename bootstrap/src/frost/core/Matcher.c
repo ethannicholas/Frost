@@ -4,17 +4,18 @@
 #include "frost/core/String.h"
 #include "frost/core/Bit.h"
 #include "frost/core/String/Index.h"
-#include "frost/core/Int64.h"
+#include "frost/core/Int.h"
 #include "frost/core/Frost.h"
 #include "frost/core/Comparable.h"
 #include "frost/core/MutableString.h"
+#include "frost/core/Int64.h"
 #include "frost/core/Range.LTfrost/core/String/Index.GT.h"
 #include "frost/core/RegularExpression.h"
 #include "frost/core/Range.LTfrost/core/String/Index.Q.GT.h"
 
 
 static frost$core$String $s1;
-frost$core$Matcher$class_type frost$core$Matcher$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { frost$core$Object$get_asString$R$frost$core$String, frost$core$Matcher$cleanup, frost$core$Matcher$matches$R$frost$core$Bit, frost$core$Matcher$find$R$frost$core$Bit, frost$core$Matcher$find$frost$core$String$Index$R$frost$core$Bit, frost$core$Matcher$appendReplacement$frost$core$MutableString$frost$core$String, frost$core$Matcher$appendReplacement$frost$core$MutableString$frost$core$String$frost$core$Bit, frost$core$Matcher$appendTail$frost$core$MutableString, frost$core$Matcher$nativeFind$frost$core$String$Index$R$frost$core$Bit, frost$core$Matcher$get_start$R$frost$core$String$Index, frost$core$Matcher$get_end$R$frost$core$String$Index, frost$core$Matcher$get_groupCount$R$frost$core$Int64, frost$core$Matcher$group$frost$core$Int64$R$frost$core$String$Q, frost$core$Matcher$destroy} };
+frost$core$Matcher$class_type frost$core$Matcher$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { frost$core$Object$get_asString$R$frost$core$String, frost$core$Matcher$cleanup, frost$core$Matcher$matches$R$frost$core$Bit, frost$core$Matcher$find$R$frost$core$Bit, frost$core$Matcher$find$frost$core$String$Index$R$frost$core$Bit, frost$core$Matcher$appendReplacement$frost$core$MutableString$frost$core$String, frost$core$Matcher$appendReplacement$frost$core$MutableString$frost$core$String$frost$core$Bit, frost$core$Matcher$appendTail$frost$core$MutableString, frost$core$Matcher$nativeFind$frost$core$String$Index$R$frost$core$Bit, frost$core$Matcher$get_start$R$frost$core$String$Index, frost$core$Matcher$get_end$R$frost$core$String$Index, frost$core$Matcher$get_groupCount$R$frost$core$Int, frost$core$Matcher$group$frost$core$Int$R$frost$core$String$Q, frost$core$Matcher$destroy} };
 
 typedef frost$core$Bit (*$fn52)(frost$core$Comparable*, frost$core$Comparable*);
 
@@ -26,7 +27,7 @@ static frost$core$String $s80 = { (frost$core$Class*) &frost$core$String$class, 
 static frost$core$String $s86 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x4d\x61\x74\x63\x68\x65\x72\x2e\x66\x72\x6f\x73\x74", 13, -7494374276615964475, NULL };
 static frost$core$String $s87 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x4d\x61\x74\x63\x68\x65\x72\x2e\x61\x70\x70\x65\x6e\x64\x52\x65\x70\x6c\x61\x63\x65\x6d\x65\x6e\x74\x28\x74\x61\x72\x67\x65\x74\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x4d\x75\x74\x61\x62\x6c\x65\x53\x74\x72\x69\x6e\x67\x2c\x20\x72\x65\x70\x6c\x61\x63\x65\x6d\x65\x6e\x74\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2c\x20\x61\x6c\x6c\x6f\x77\x47\x72\x6f\x75\x70\x52\x65\x66\x65\x72\x65\x6e\x63\x65\x73\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x42\x69\x74\x29", 169, -7827482256334505836, NULL };
 static frost$core$String $s98 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x5c\x24\x28\x30\x7c\x5b\x31\x2d\x39\x5d\x5c\x64\x2a\x29", 14, 7414632169519064601, NULL };
-static frost$core$String $s157 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x24", 1, -5808630540432999757, NULL };
+static frost$core$String $s164 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x24", 1, -5808630540432999757, NULL };
 
 void frost$core$Matcher$init(frost$core$Matcher* param0) {
 
@@ -53,20 +54,20 @@ frost$core$String** $tmp7 = &param0->searchText;
 frost$core$String* $tmp8 = *$tmp7;
 // begin inline call to function frost.core.String.get_start():frost.core.String.Index from Matcher.frost:54:49
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:1205
-frost$core$Int64 $tmp9 = (frost$core$Int64) {0u};
-// begin inline call to frost.core.String.Index.init(value:frost.core.Int64):frost.core.String.Index from String.frost:1205:21
+frost$core$Int $tmp9 = (frost$core$Int) {0u};
+// begin inline call to frost.core.String.Index.init(value:frost.core.Int):frost.core.String.Index from String.frost:1205:21
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:61
-frost$core$Int64* $tmp10 = &(&local1)->value;
+frost$core$Int* $tmp10 = &(&local1)->value;
 *$tmp10 = $tmp9;
 frost$core$String$Index $tmp11 = *(&local1);
 *(&local0) = $tmp11;
 frost$core$String$Index $tmp12 = *(&local0);
 // begin inline call to function frost.core.String.Index.=(other:frost.core.String.Index):frost.core.Bit from Matcher.frost:54:37
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:66
-frost$core$Int64 $tmp13 = $tmp6.value;
-frost$core$Int64 $tmp14 = $tmp12.value;
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from String.frost:66:26
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
+frost$core$Int $tmp13 = $tmp6.value;
+frost$core$Int $tmp14 = $tmp12.value;
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from String.frost:66:26
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp15 = $tmp13.value;
 int64_t $tmp16 = $tmp14.value;
 bool $tmp17 = $tmp15 == $tmp16;
@@ -74,8 +75,8 @@ frost$core$Bit $tmp18 = (frost$core$Bit) {$tmp17};
 bool $tmp19 = $tmp18.value;
 if ($tmp19) goto block1; else goto block2;
 block2:;
-frost$core$Int64 $tmp20 = (frost$core$Int64) {55u};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s21, $tmp20, &$s22);
+frost$core$Int $tmp20 = (frost$core$Int) {55u};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s21, $tmp20, &$s22);
 abort(); // unreachable
 block1:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Matcher.frost:56
@@ -95,10 +96,10 @@ frost$core$Matcher$get_start$R$frost$core$String$Index(&$tmp27, param0);
 frost$core$String$Index $tmp28 = *(&local2);
 // begin inline call to function frost.core.String.Index.=(other:frost.core.String.Index):frost.core.Bit from Matcher.frost:59:27
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:66
-frost$core$Int64 $tmp29 = $tmp27.value;
-frost$core$Int64 $tmp30 = $tmp28.value;
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from String.frost:66:26
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
+frost$core$Int $tmp29 = $tmp27.value;
+frost$core$Int $tmp30 = $tmp28.value;
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from String.frost:66:26
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp31 = $tmp29.value;
 int64_t $tmp32 = $tmp30.value;
 bool $tmp33 = $tmp31 == $tmp32;
@@ -121,11 +122,11 @@ frost$core$String** $tmp42 = &param0->searchText;
 frost$core$String* $tmp43 = *$tmp42;
 // begin inline call to function frost.core.String.get_end():frost.core.String.Index from Matcher.frost:61:39
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:1212
-frost$core$Int64* $tmp44 = &$tmp43->_length;
-frost$core$Int64 $tmp45 = *$tmp44;
-// begin inline call to frost.core.String.Index.init(value:frost.core.Int64):frost.core.String.Index from String.frost:1212:21
+frost$core$Int* $tmp44 = &$tmp43->_length;
+frost$core$Int $tmp45 = *$tmp44;
+// begin inline call to frost.core.String.Index.init(value:frost.core.Int):frost.core.String.Index from String.frost:1212:21
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:61
-frost$core$Int64* $tmp46 = &(&local4)->value;
+frost$core$Int* $tmp46 = &(&local4)->value;
 *$tmp46 = $tmp45;
 frost$core$String$Index $tmp47 = *(&local4);
 *(&local3) = $tmp47;
@@ -163,10 +164,10 @@ frost$core$String** $tmp59 = &param0->searchText;
 frost$core$String* $tmp60 = *$tmp59;
 // begin inline call to function frost.core.String.get_start():frost.core.String.Index from Matcher.frost:68:32
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:1205
-frost$core$Int64 $tmp61 = (frost$core$Int64) {0u};
-// begin inline call to frost.core.String.Index.init(value:frost.core.Int64):frost.core.String.Index from String.frost:1205:21
+frost$core$Int $tmp61 = (frost$core$Int) {0u};
+// begin inline call to frost.core.String.Index.init(value:frost.core.Int):frost.core.String.Index from String.frost:1205:21
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:61
-frost$core$Int64* $tmp62 = &(&local6)->value;
+frost$core$Int* $tmp62 = &(&local6)->value;
 *$tmp62 = $tmp61;
 frost$core$String$Index $tmp63 = *(&local6);
 *(&local5) = $tmp63;
@@ -209,8 +210,8 @@ frost$core$Bit $tmp76 = *$tmp75;
 bool $tmp77 = $tmp76.value;
 if ($tmp77) goto block1; else goto block2;
 block2:;
-frost$core$Int64 $tmp78 = (frost$core$Int64) {116u};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s79, $tmp78, &$s80);
+frost$core$Int $tmp78 = (frost$core$Int) {116u};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s79, $tmp78, &$s80);
 abort(); // unreachable
 block1:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Matcher.frost:117
@@ -225,16 +226,18 @@ frost$core$Matcher* local0 = NULL;
 frost$core$String$Index local1;
 frost$core$String$Index local2;
 frost$core$String$Index local3;
-frost$core$Int64$nullable local4;
+frost$core$Int$nullable local4;
 frost$core$Int64$nullable local5;
-frost$core$String$Index local6;
+frost$core$Int$nullable local6;
+frost$core$Int$nullable local7;
+frost$core$String$Index local8;
 frost$core$Bit* $tmp82 = &param0->matched;
 frost$core$Bit $tmp83 = *$tmp82;
 bool $tmp84 = $tmp83.value;
 if ($tmp84) goto block1; else goto block2;
 block2:;
-frost$core$Int64 $tmp85 = (frost$core$Int64) {133u};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s86, $tmp85, &$s87);
+frost$core$Int $tmp85 = (frost$core$Int) {133u};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s86, $tmp85, &$s87);
 abort(); // unreachable
 block1:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Matcher.frost:134
@@ -270,10 +273,10 @@ frost$core$String** $tmp101 = &param0->searchText;
 frost$core$String* $tmp102 = *$tmp101;
 // begin inline call to function frost.core.String.get_start():frost.core.String.Index from Matcher.frost:137:51
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:1205
-frost$core$Int64 $tmp103 = (frost$core$Int64) {0u};
-// begin inline call to frost.core.String.Index.init(value:frost.core.Int64):frost.core.String.Index from String.frost:1205:21
+frost$core$Int $tmp103 = (frost$core$Int) {0u};
+// begin inline call to frost.core.String.Index.init(value:frost.core.Int):frost.core.String.Index from String.frost:1205:21
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:61
-frost$core$Int64* $tmp104 = &(&local2)->value;
+frost$core$Int* $tmp104 = &(&local2)->value;
 *$tmp104 = $tmp103;
 frost$core$String$Index $tmp105 = *(&local2);
 *(&local1) = $tmp105;
@@ -289,105 +292,128 @@ if ($tmp109) goto block9; else goto block10;
 block9:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Matcher.frost:139
 frost$core$Matcher* $tmp110 = *(&local0);
-frost$core$Int64 $tmp111 = (frost$core$Int64) {1u};
-frost$core$String* $tmp112 = frost$core$Matcher$group$frost$core$Int64$R$frost$core$String$Q($tmp110, $tmp111);
+frost$core$Int $tmp111 = (frost$core$Int) {1u};
+frost$core$String* $tmp112 = frost$core$Matcher$group$frost$core$Int$R$frost$core$String$Q($tmp110, $tmp111);
+// begin inline call to function frost.core.String.get_asInt():frost.core.Int? from Matcher.frost:139:45
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:1454
 frost$core$Int64$nullable $tmp113 = frost$core$String$get_asInt64$R$frost$core$Int64$Q($tmp112);
-*(&local4) = $tmp113;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp112));
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Matcher.frost:140
-frost$core$Int64$nullable $tmp114 = *(&local4);
-*(&local5) = $tmp114;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Matcher.frost:141
-frost$core$Matcher* $tmp115 = *(&local0);
-frost$core$String$Index $tmp116;
-frost$core$Matcher$get_end$R$frost$core$String$Index(&$tmp116, $tmp115);
-*(&local6) = $tmp116;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Matcher.frost:142
-goto block11;
-block11:;
-frost$core$Int64$nullable $tmp117 = *(&local5);
-frost$core$Int64 $tmp118;
-frost$core$Matcher$get_groupCount$R$frost$core$Int64(&$tmp118, param0);
-int64_t $tmp119 = ((frost$core$Int64) $tmp117.value).value;
-int64_t $tmp120 = $tmp118.value;
-bool $tmp121 = $tmp119 >= $tmp120;
-frost$core$Bit $tmp122 = (frost$core$Bit) {$tmp121};
-bool $tmp123 = $tmp122.value;
-if ($tmp123) goto block12; else goto block13;
+*(&local5) = $tmp113;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:1455
+frost$core$Int64$nullable $tmp114 = *(&local5);
+frost$core$Bit $tmp115 = (frost$core$Bit) {$tmp114.nonnull};
+bool $tmp116 = $tmp115.value;
+if ($tmp116) goto block12; else goto block13;
 block12:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Matcher.frost:143
-frost$core$Int64$nullable $tmp124 = *(&local5);
-frost$core$Int64 $tmp125 = (frost$core$Int64) {10u};
-int64_t $tmp126 = ((frost$core$Int64) $tmp124.value).value;
-int64_t $tmp127 = $tmp125.value;
-int64_t $tmp128 = $tmp126 / $tmp127;
-frost$core$Int64 $tmp129 = (frost$core$Int64) {$tmp128};
-*(&local5) = ((frost$core$Int64$nullable) { $tmp129, true });
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Matcher.frost:144
-frost$core$String** $tmp130 = &param0->searchText;
-frost$core$String* $tmp131 = *$tmp130;
-frost$core$String$Index $tmp132 = *(&local6);
-frost$core$String$Index $tmp133 = frost$core$String$previous$frost$core$String$Index$R$frost$core$String$Index($tmp131, $tmp132);
-*(&local6) = $tmp133;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:1456
+frost$core$Int64$nullable $tmp117 = *(&local5);
+// begin inline call to function frost.core.Int64.get_asInt():frost.core.Int from String.frost:1456:26
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:580
+int64_t $tmp118 = ((frost$core$Int64) $tmp117.value).value;
+frost$core$Int $tmp119 = (frost$core$Int) {$tmp118};
+*(&local4) = ((frost$core$Int$nullable) { $tmp119, true });
 goto block11;
 block13:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Matcher.frost:146
-frost$core$String$Index $tmp134 = *(&local3);
-frost$core$Matcher* $tmp135 = *(&local0);
-frost$core$String$Index $tmp136;
-frost$core$Matcher$get_start$R$frost$core$String$Index(&$tmp136, $tmp135);
-frost$core$Bit $tmp137 = (frost$core$Bit) {false};
-frost$core$Range$LTfrost$core$String$Index$GT $tmp138 = frost$core$Range$LTfrost$core$String$Index$GT$init$frost$core$String$Index$frost$core$String$Index$frost$core$Bit($tmp134, $tmp136, $tmp137);
-frost$core$String* $tmp139 = frost$core$String$$IDX$frost$core$Range$LTfrost$core$String$Index$GT$R$frost$core$String(param2, $tmp138);
-frost$core$MutableString$append$frost$core$String(param1, $tmp139);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp139));
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Matcher.frost:147
-frost$core$String$Index $tmp140 = *(&local6);
-*(&local3) = $tmp140;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Matcher.frost:148
-frost$core$Int64$nullable $tmp141 = *(&local5);
-frost$core$Int64 $tmp142 = (frost$core$Int64) {0u};
-int64_t $tmp143 = ((frost$core$Int64) $tmp141.value).value;
-int64_t $tmp144 = $tmp142.value;
-bool $tmp145 = $tmp143 > $tmp144;
-frost$core$Bit $tmp146 = (frost$core$Bit) {$tmp145};
-bool $tmp147 = $tmp146.value;
-if ($tmp147) goto block14; else goto block17;
-block17:;
-frost$core$Int64$nullable $tmp148 = *(&local4);
-frost$core$Int64 $tmp149 = (frost$core$Int64) {0u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Matcher.frost:148:44
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp150 = ((frost$core$Int64) $tmp148.value).value;
-int64_t $tmp151 = $tmp149.value;
-bool $tmp152 = $tmp150 == $tmp151;
-frost$core$Bit $tmp153 = (frost$core$Bit) {$tmp152};
-bool $tmp154 = $tmp153.value;
-if ($tmp154) goto block14; else goto block16;
-block14:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Matcher.frost:149
-frost$core$Int64$nullable $tmp155 = *(&local5);
-frost$core$String* $tmp156 = frost$core$Matcher$group$frost$core$Int64$R$frost$core$String$Q(param0, ((frost$core$Int64) $tmp155.value));
-frost$core$MutableString$append$frost$core$String(param1, $tmp156);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp156));
-goto block15;
-block16:;
-// <no location>
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Matcher.frost:152
-frost$core$MutableString$append$frost$core$String(param1, &$s157);
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:1458
+*(&local4) = ((frost$core$Int$nullable) { .nonnull = false });
+goto block11;
+block11:;
+frost$core$Int$nullable $tmp120 = *(&local4);
+*(&local6) = $tmp120;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp112));
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Matcher.frost:140
+frost$core$Int$nullable $tmp121 = *(&local6);
+*(&local7) = $tmp121;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Matcher.frost:141
+frost$core$Matcher* $tmp122 = *(&local0);
+frost$core$String$Index $tmp123;
+frost$core$Matcher$get_end$R$frost$core$String$Index(&$tmp123, $tmp122);
+*(&local8) = $tmp123;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Matcher.frost:142
 goto block15;
 block15:;
+frost$core$Int$nullable $tmp124 = *(&local7);
+frost$core$Int $tmp125;
+frost$core$Matcher$get_groupCount$R$frost$core$Int(&$tmp125, param0);
+int64_t $tmp126 = ((frost$core$Int) $tmp124.value).value;
+int64_t $tmp127 = $tmp125.value;
+bool $tmp128 = $tmp126 >= $tmp127;
+frost$core$Bit $tmp129 = (frost$core$Bit) {$tmp128};
+bool $tmp130 = $tmp129.value;
+if ($tmp130) goto block16; else goto block17;
+block16:;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Matcher.frost:143
+frost$core$Int$nullable $tmp131 = *(&local7);
+frost$core$Int $tmp132 = (frost$core$Int) {10u};
+int64_t $tmp133 = ((frost$core$Int) $tmp131.value).value;
+int64_t $tmp134 = $tmp132.value;
+int64_t $tmp135 = $tmp133 / $tmp134;
+frost$core$Int $tmp136 = (frost$core$Int) {$tmp135};
+*(&local7) = ((frost$core$Int$nullable) { $tmp136, true });
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Matcher.frost:144
+frost$core$String** $tmp137 = &param0->searchText;
+frost$core$String* $tmp138 = *$tmp137;
+frost$core$String$Index $tmp139 = *(&local8);
+frost$core$String$Index $tmp140 = frost$core$String$previous$frost$core$String$Index$R$frost$core$String$Index($tmp138, $tmp139);
+*(&local8) = $tmp140;
+goto block15;
+block17:;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Matcher.frost:146
+frost$core$String$Index $tmp141 = *(&local3);
+frost$core$Matcher* $tmp142 = *(&local0);
+frost$core$String$Index $tmp143;
+frost$core$Matcher$get_start$R$frost$core$String$Index(&$tmp143, $tmp142);
+frost$core$Bit $tmp144 = (frost$core$Bit) {false};
+frost$core$Range$LTfrost$core$String$Index$GT $tmp145 = frost$core$Range$LTfrost$core$String$Index$GT$init$frost$core$String$Index$frost$core$String$Index$frost$core$Bit($tmp141, $tmp143, $tmp144);
+frost$core$String* $tmp146 = frost$core$String$$IDX$frost$core$Range$LTfrost$core$String$Index$GT$R$frost$core$String(param2, $tmp145);
+frost$core$MutableString$append$frost$core$String(param1, $tmp146);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp146));
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Matcher.frost:147
+frost$core$String$Index $tmp147 = *(&local8);
+*(&local3) = $tmp147;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Matcher.frost:148
+frost$core$Int$nullable $tmp148 = *(&local7);
+frost$core$Int $tmp149 = (frost$core$Int) {0u};
+int64_t $tmp150 = ((frost$core$Int) $tmp148.value).value;
+int64_t $tmp151 = $tmp149.value;
+bool $tmp152 = $tmp150 > $tmp151;
+frost$core$Bit $tmp153 = (frost$core$Bit) {$tmp152};
+bool $tmp154 = $tmp153.value;
+if ($tmp154) goto block18; else goto block21;
+block21:;
+frost$core$Int$nullable $tmp155 = *(&local6);
+frost$core$Int $tmp156 = (frost$core$Int) {0u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Matcher.frost:148:44
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
+int64_t $tmp157 = ((frost$core$Int) $tmp155.value).value;
+int64_t $tmp158 = $tmp156.value;
+bool $tmp159 = $tmp157 == $tmp158;
+frost$core$Bit $tmp160 = (frost$core$Bit) {$tmp159};
+bool $tmp161 = $tmp160.value;
+if ($tmp161) goto block18; else goto block20;
+block18:;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Matcher.frost:149
+frost$core$Int$nullable $tmp162 = *(&local7);
+frost$core$String* $tmp163 = frost$core$Matcher$group$frost$core$Int$R$frost$core$String$Q(param0, ((frost$core$Int) $tmp162.value));
+frost$core$MutableString$append$frost$core$String(param1, $tmp163);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp163));
+goto block19;
+block20:;
+// <no location>
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Matcher.frost:152
+frost$core$MutableString$append$frost$core$String(param1, &$s164);
+goto block19;
+block19:;
 goto block8;
 block10:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Matcher.frost:155
-frost$core$String$Index $tmp158 = *(&local3);
-frost$core$Bit $tmp159 = (frost$core$Bit) {false};
-frost$core$Range$LTfrost$core$String$Index$Q$GT $tmp160 = frost$core$Range$LTfrost$core$String$Index$Q$GT$init$frost$core$String$Index$Q$frost$core$String$Index$Q$frost$core$Bit(((frost$core$String$Index$nullable) { $tmp158, true }), ((frost$core$String$Index$nullable) { .nonnull = false }), $tmp159);
-frost$core$String* $tmp161 = frost$core$String$$IDX$frost$core$Range$LTfrost$core$String$Index$Q$GT$R$frost$core$String(param2, $tmp160);
-frost$core$MutableString$append$frost$core$String(param1, $tmp161);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp161));
-frost$core$Matcher* $tmp162 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp162));
+frost$core$String$Index $tmp165 = *(&local3);
+frost$core$Bit $tmp166 = (frost$core$Bit) {false};
+frost$core$Range$LTfrost$core$String$Index$Q$GT $tmp167 = frost$core$Range$LTfrost$core$String$Index$Q$GT$init$frost$core$String$Index$Q$frost$core$String$Index$Q$frost$core$Bit(((frost$core$String$Index$nullable) { $tmp165, true }), ((frost$core$String$Index$nullable) { .nonnull = false }), $tmp166);
+frost$core$String* $tmp168 = frost$core$String$$IDX$frost$core$Range$LTfrost$core$String$Index$Q$GT$R$frost$core$String(param2, $tmp167);
+frost$core$MutableString$append$frost$core$String(param1, $tmp168);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp168));
+frost$core$Matcher* $tmp169 = *(&local0);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp169));
 *(&local0) = ((frost$core$Matcher*) NULL);
 goto block4;
 block5:;
@@ -397,25 +423,25 @@ frost$core$MutableString$append$frost$core$String(param1, param2);
 goto block4;
 block4:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Matcher.frost:160
-frost$core$String$Index $tmp163;
-frost$core$Matcher$get_end$R$frost$core$String$Index(&$tmp163, param0);
-frost$core$String$Index* $tmp164 = &param0->replacementIndex;
-*$tmp164 = $tmp163;
+frost$core$String$Index $tmp170;
+frost$core$Matcher$get_end$R$frost$core$String$Index(&$tmp170, param0);
+frost$core$String$Index* $tmp171 = &param0->replacementIndex;
+*$tmp171 = $tmp170;
 return;
 
 }
 void frost$core$Matcher$appendTail$frost$core$MutableString(frost$core$Matcher* param0, frost$core$MutableString* param1) {
 
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Matcher.frost:171
-frost$core$String** $tmp165 = &param0->searchText;
-frost$core$String* $tmp166 = *$tmp165;
-frost$core$String$Index* $tmp167 = &param0->replacementIndex;
-frost$core$String$Index $tmp168 = *$tmp167;
-frost$core$Bit $tmp169 = (frost$core$Bit) {false};
-frost$core$Range$LTfrost$core$String$Index$Q$GT $tmp170 = frost$core$Range$LTfrost$core$String$Index$Q$GT$init$frost$core$String$Index$Q$frost$core$String$Index$Q$frost$core$Bit(((frost$core$String$Index$nullable) { $tmp168, true }), ((frost$core$String$Index$nullable) { .nonnull = false }), $tmp169);
-frost$core$String* $tmp171 = frost$core$String$$IDX$frost$core$Range$LTfrost$core$String$Index$Q$GT$R$frost$core$String($tmp166, $tmp170);
-frost$core$MutableString$append$frost$core$String(param1, $tmp171);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp171));
+frost$core$String** $tmp172 = &param0->searchText;
+frost$core$String* $tmp173 = *$tmp172;
+frost$core$String$Index* $tmp174 = &param0->replacementIndex;
+frost$core$String$Index $tmp175 = *$tmp174;
+frost$core$Bit $tmp176 = (frost$core$Bit) {false};
+frost$core$Range$LTfrost$core$String$Index$Q$GT $tmp177 = frost$core$Range$LTfrost$core$String$Index$Q$GT$init$frost$core$String$Index$Q$frost$core$String$Index$Q$frost$core$Bit(((frost$core$String$Index$nullable) { $tmp175, true }), ((frost$core$String$Index$nullable) { .nonnull = false }), $tmp176);
+frost$core$String* $tmp178 = frost$core$String$$IDX$frost$core$Range$LTfrost$core$String$Index$Q$GT$R$frost$core$String($tmp173, $tmp177);
+frost$core$MutableString$append$frost$core$String(param1, $tmp178);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp178));
 return;
 
 }
@@ -425,9 +451,9 @@ void frost$core$Matcher$cleanup(frost$core$Matcher* param0) {
 frost$core$Matcher$destroy(param0);
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Matcher.frost:191
 frost$core$Object$cleanup(((frost$core$Object*) param0));
-frost$core$String** $tmp172 = &param0->searchText;
-frost$core$String* $tmp173 = *$tmp172;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp173));
+frost$core$String** $tmp179 = &param0->searchText;
+frost$core$String* $tmp180 = *$tmp179;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp180));
 return;
 
 }

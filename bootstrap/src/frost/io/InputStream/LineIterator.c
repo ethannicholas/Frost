@@ -6,7 +6,7 @@
 #include "frost/io/InputStream.h"
 #include "frost/core/Frost.h"
 #include "frost/core/Bit.h"
-#include "frost/core/Int64.h"
+#include "frost/core/Int.h"
 
 __attribute__((weak)) frost$core$Object* frost$io$InputStream$LineIterator$next$R$frost$core$String$shim(frost$io$InputStream$LineIterator* p0) {
     frost$core$String* result = frost$io$InputStream$LineIterator$next$R$frost$core$String(p0);
@@ -14,7 +14,7 @@ __attribute__((weak)) frost$core$Object* frost$io$InputStream$LineIterator$next$
     return ((frost$core$Object*) result);
 }
 
-struct { frost$core$Class* cl; ITable* next; void* methods[12]; } frost$io$InputStream$LineIterator$_frost$collections$Iterator = { (frost$core$Class*) &frost$collections$Iterator$class, NULL, { frost$io$InputStream$LineIterator$get_done$R$frost$core$Bit, frost$io$InputStream$LineIterator$next$R$frost$core$String$shim, frost$collections$Iterator$count$R$frost$core$Int64, frost$collections$Iterator$get_enumeration$R$frost$collections$Iterator$LT$LPfrost$core$Int64$Cfrost$collections$Iterator$T$RP$GT, frost$collections$Iterator$filter$$LPfrost$collections$Iterator$T$RP$EQ$GT$LPfrost$core$Bit$RP$R$frost$collections$Iterator$LTfrost$collections$Iterator$T$GT, frost$collections$Iterator$$IDX$frost$core$Range$LTfrost$core$Int64$Q$GT$R$frost$collections$Iterator$LTfrost$collections$Iterator$T$GT, frost$collections$Iterator$$IDX$frost$core$SteppedRange$LTfrost$core$Int64$Q$Cfrost$core$Int64$GT$R$frost$collections$Iterator$LTfrost$collections$Iterator$T$GT, frost$collections$Iterator$all$R$frost$collections$Array$LTfrost$collections$Iterator$T$GT, frost$collections$Iterator$apply$$LPfrost$collections$Iterator$T$RP$EQ$AM$GT$LP$RP, frost$collections$Iterator$fold$$LPfrost$collections$Iterator$T$Cfrost$collections$Iterator$T$RP$EQ$GT$LPfrost$collections$Iterator$T$RP$R$frost$collections$Iterator$T, frost$collections$Iterator$fold$$LPfrost$collections$Iterator$T$Cfrost$collections$Iterator$T$RP$EQ$GT$LPfrost$collections$Iterator$T$RP$frost$collections$Iterator$T$R$frost$collections$Iterator$T, frost$collections$Iterator$map$$LPfrost$collections$Iterator$T$RP$EQ$AM$GT$LPfrost$collections$Iterator$map$U$RP$R$frost$collections$Iterator$LTfrost$collections$Iterator$map$U$GT} };
+struct { frost$core$Class* cl; ITable* next; void* methods[12]; } frost$io$InputStream$LineIterator$_frost$collections$Iterator = { (frost$core$Class*) &frost$collections$Iterator$class, NULL, { frost$io$InputStream$LineIterator$get_done$R$frost$core$Bit, frost$io$InputStream$LineIterator$next$R$frost$core$String$shim, frost$collections$Iterator$count$R$frost$core$Int, frost$collections$Iterator$get_enumeration$R$frost$collections$Iterator$LT$LPfrost$core$Int$Cfrost$collections$Iterator$T$RP$GT, frost$collections$Iterator$filter$$LPfrost$collections$Iterator$T$RP$EQ$GT$LPfrost$core$Bit$RP$R$frost$collections$Iterator$LTfrost$collections$Iterator$T$GT, frost$collections$Iterator$$IDX$frost$core$Range$LTfrost$core$Int$Q$GT$R$frost$collections$Iterator$LTfrost$collections$Iterator$T$GT, frost$collections$Iterator$$IDX$frost$core$SteppedRange$LTfrost$core$Int$Q$Cfrost$core$Int$GT$R$frost$collections$Iterator$LTfrost$collections$Iterator$T$GT, frost$collections$Iterator$all$R$frost$collections$Array$LTfrost$collections$Iterator$T$GT, frost$collections$Iterator$apply$$LPfrost$collections$Iterator$T$RP$EQ$AM$GT$LP$RP, frost$collections$Iterator$fold$$LPfrost$collections$Iterator$T$Cfrost$collections$Iterator$T$RP$EQ$GT$LPfrost$collections$Iterator$T$RP$R$frost$collections$Iterator$T, frost$collections$Iterator$fold$$LPfrost$collections$Iterator$T$Cfrost$collections$Iterator$T$RP$EQ$GT$LPfrost$collections$Iterator$T$RP$frost$collections$Iterator$T$R$frost$collections$Iterator$T, frost$collections$Iterator$map$$LPfrost$collections$Iterator$T$RP$EQ$AM$GT$LPfrost$collections$Iterator$map$U$RP$R$frost$collections$Iterator$LTfrost$collections$Iterator$map$U$GT} };
 
 static frost$core$String $s1;
 frost$io$InputStream$LineIterator$class_type frost$io$InputStream$LineIterator$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Object$class, (ITable*) &frost$io$InputStream$LineIterator$_frost$collections$Iterator, { frost$core$Object$get_asString$R$frost$core$String, frost$io$InputStream$LineIterator$cleanup, frost$io$InputStream$LineIterator$get_done$R$frost$core$Bit, frost$io$InputStream$LineIterator$next$R$frost$core$String$shim, frost$io$InputStream$LineIterator$readNext} };
@@ -70,8 +70,8 @@ frost$core$Bit $tmp16 = (frost$core$Bit) {$tmp15};
 bool $tmp17 = $tmp16.value;
 if ($tmp17) goto block1; else goto block2;
 block2:;
-frost$core$Int64 $tmp18 = (frost$core$Int64) {32u};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s19, $tmp18, &$s20);
+frost$core$Int $tmp18 = (frost$core$Int) {32u};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s19, $tmp18, &$s20);
 abort(); // unreachable
 block1:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/io/InputStream.frost:33
@@ -81,8 +81,8 @@ frost$core$Bit $tmp23 = (frost$core$Bit) {$tmp22 != NULL};
 bool $tmp24 = $tmp23.value;
 if ($tmp24) goto block4; else goto block5;
 block5:;
-frost$core$Int64 $tmp25 = (frost$core$Int64) {33u};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s26, $tmp25);
+frost$core$Int $tmp25 = (frost$core$Int) {33u};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s26, $tmp25);
 abort(); // unreachable
 block4:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/io/InputStream.frost:34

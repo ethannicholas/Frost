@@ -5,7 +5,7 @@
 #include "frost/core/Bit.h"
 #include "frost/core/UInt8.h"
 #include "frost/core/Frost.h"
-#include "frost/core/Int64.h"
+#include "frost/core/Int.h"
 
 
 static frost$core$String $s1;
@@ -59,7 +59,7 @@ frost$core$UInt8* $tmp12 = &param1->$flags;
 frost$core$UInt8 $tmp13 = *$tmp12;
 frost$core$UInt8 $tmp14 = (frost$core$UInt8) {1u};
 // begin inline call to function frost.core.UInt8.||(other:frost.core.UInt8):frost.core.UInt8 from Weak.frost:28:18
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/UInt8.frost:423
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/UInt8.frost:501
 uint8_t $tmp15 = $tmp13.value;
 uint8_t $tmp16 = $tmp14.value;
 uint8_t $tmp17 = $tmp15 | $tmp16;
@@ -83,8 +83,8 @@ frost$core$Bit $tmp21 = *$tmp20;
 bool $tmp22 = $tmp21.value;
 if ($tmp22) goto block2; else goto block3;
 block3:;
-frost$core$Int64 $tmp23 = (frost$core$Int64) {40u};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s24, $tmp23);
+frost$core$Int $tmp23 = (frost$core$Int) {40u};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s24, $tmp23);
 abort(); // unreachable
 block2:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Weak.frost:41

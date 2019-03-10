@@ -5,10 +5,10 @@ typedef struct org$frostlang$frostc$Compiler$BinaryKey org$frostlang$frostc$Comp
 typedef struct org$frostlang$frostc$ASTNode org$frostlang$frostc$ASTNode;
 #include "org/frostlang/frostc/expression/Binary/Operator_types.h"
 #include "frost/core/Bit_types.h"
-#include "frost/core/Int64_types.h"
+#include "frost/core/Int_types.h"
 
 void org$frostlang$frostc$Compiler$BinaryKey$init$org$frostlang$frostc$ASTNode$org$frostlang$frostc$expression$Binary$Operator$org$frostlang$frostc$ASTNode(org$frostlang$frostc$Compiler$BinaryKey* self, org$frostlang$frostc$ASTNode* p_left, org$frostlang$frostc$expression$Binary$Operator p_op, org$frostlang$frostc$ASTNode* p_right);
 frost$core$Bit org$frostlang$frostc$Compiler$BinaryKey$$EQ$org$frostlang$frostc$Compiler$BinaryKey$R$frost$core$Bit(org$frostlang$frostc$Compiler$BinaryKey* self, org$frostlang$frostc$Compiler$BinaryKey* p_other);
-frost$core$Int64 org$frostlang$frostc$Compiler$BinaryKey$get_hash$R$frost$core$Int64(org$frostlang$frostc$Compiler$BinaryKey* self);
+frost$core$Int org$frostlang$frostc$Compiler$BinaryKey$get_hash$R$frost$core$Int(org$frostlang$frostc$Compiler$BinaryKey* self);
 void org$frostlang$frostc$Compiler$BinaryKey$cleanup(org$frostlang$frostc$Compiler$BinaryKey* self);
 

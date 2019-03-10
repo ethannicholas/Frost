@@ -8,6 +8,7 @@
 #include "org/frostlang/frostc/ASTNode.h"
 #include "org/frostlang/frostc/expression/Binary/Operator.h"
 #include "frost/core/Frost.h"
+#include "frost/core/Int.h"
 #include "frost/core/Int64.h"
 
 __attribute__((weak)) frost$core$Bit org$frostlang$frostc$Compiler$BinaryKey$$EQ$org$frostlang$frostc$Compiler$BinaryKey$R$frost$core$Bit$shim(org$frostlang$frostc$Compiler$BinaryKey* p0, frost$core$Equatable* p1) {
@@ -18,10 +19,10 @@ __attribute__((weak)) frost$core$Bit org$frostlang$frostc$Compiler$BinaryKey$$EQ
 
 struct { frost$core$Class* cl; ITable* next; void* methods[2]; } org$frostlang$frostc$Compiler$BinaryKey$_frost$core$Equatable = { (frost$core$Class*) &frost$core$Equatable$class, NULL, { org$frostlang$frostc$Compiler$BinaryKey$$EQ$org$frostlang$frostc$Compiler$BinaryKey$R$frost$core$Bit$shim, frost$core$Equatable$$NEQ$frost$core$Equatable$T$R$frost$core$Bit} };
 
-struct { frost$core$Class* cl; ITable* next; void* methods[1]; } org$frostlang$frostc$Compiler$BinaryKey$_frost$collections$Key = { (frost$core$Class*) &frost$collections$Key$class, (ITable*) &org$frostlang$frostc$Compiler$BinaryKey$_frost$core$Equatable, { org$frostlang$frostc$Compiler$BinaryKey$get_hash$R$frost$core$Int64} };
+struct { frost$core$Class* cl; ITable* next; void* methods[1]; } org$frostlang$frostc$Compiler$BinaryKey$_frost$collections$Key = { (frost$core$Class*) &frost$collections$Key$class, (ITable*) &org$frostlang$frostc$Compiler$BinaryKey$_frost$core$Equatable, { org$frostlang$frostc$Compiler$BinaryKey$get_hash$R$frost$core$Int} };
 
 static frost$core$String $s1;
-org$frostlang$frostc$Compiler$BinaryKey$class_type org$frostlang$frostc$Compiler$BinaryKey$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Object$class, (ITable*) &org$frostlang$frostc$Compiler$BinaryKey$_frost$collections$Key, { frost$core$Object$get_asString$R$frost$core$String, org$frostlang$frostc$Compiler$BinaryKey$cleanup, org$frostlang$frostc$Compiler$BinaryKey$$EQ$org$frostlang$frostc$Compiler$BinaryKey$R$frost$core$Bit$shim, org$frostlang$frostc$Compiler$BinaryKey$get_hash$R$frost$core$Int64} };
+org$frostlang$frostc$Compiler$BinaryKey$class_type org$frostlang$frostc$Compiler$BinaryKey$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Object$class, (ITable*) &org$frostlang$frostc$Compiler$BinaryKey$_frost$collections$Key, { frost$core$Object$get_asString$R$frost$core$String, org$frostlang$frostc$Compiler$BinaryKey$cleanup, org$frostlang$frostc$Compiler$BinaryKey$$EQ$org$frostlang$frostc$Compiler$BinaryKey$R$frost$core$Bit$shim, org$frostlang$frostc$Compiler$BinaryKey$get_hash$R$frost$core$Int} };
 
 typedef frost$core$Bit (*$fn24)(frost$core$Equatable*, frost$core$Equatable*);
 
@@ -107,7 +108,7 @@ frost$core$Bit $tmp34 = *(&local0);
 return $tmp34;
 
 }
-frost$core$Int64 org$frostlang$frostc$Compiler$BinaryKey$get_hash$R$frost$core$Int64(org$frostlang$frostc$Compiler$BinaryKey* param0) {
+frost$core$Int org$frostlang$frostc$Compiler$BinaryKey$get_hash$R$frost$core$Int(org$frostlang$frostc$Compiler$BinaryKey* param0) {
 
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Compiler.frost:384
 org$frostlang$frostc$ASTNode** $tmp35 = &param0->left;
@@ -118,25 +119,29 @@ org$frostlang$frostc$ASTNode** $tmp38 = &param0->right;
 org$frostlang$frostc$ASTNode* $tmp39 = *$tmp38;
 frost$core$Int64 $tmp40;
 frost$core$Frost$addressOf$frost$core$Object$R$frost$core$Int64(&$tmp40, ((frost$core$Object*) $tmp39));
-// begin inline call to function frost.core.Int64.~~(other:frost.core.Int64):frost.core.Int64 from Compiler.frost:384:42
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:197
+// begin inline call to function frost.core.Int64.~~(other:frost.core.Int64):frost.core.Int64 from Compiler.frost:384:43
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:202
 int64_t $tmp41 = $tmp37.value;
 int64_t $tmp42 = $tmp40.value;
 int64_t $tmp43 = $tmp41 ^ $tmp42;
 frost$core$Int64 $tmp44 = (frost$core$Int64) {$tmp43};
-return $tmp44;
+// begin inline call to function frost.core.Int64.get_asInt():frost.core.Int from Compiler.frost:384:69
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:580
+int64_t $tmp45 = $tmp44.value;
+frost$core$Int $tmp46 = (frost$core$Int) {$tmp45};
+return $tmp46;
 
 }
 void org$frostlang$frostc$Compiler$BinaryKey$cleanup(org$frostlang$frostc$Compiler$BinaryKey* param0) {
 
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Compiler.frost:364
 frost$core$Object$cleanup(((frost$core$Object*) param0));
-org$frostlang$frostc$ASTNode** $tmp45 = &param0->left;
-org$frostlang$frostc$ASTNode* $tmp46 = *$tmp45;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp46));
-org$frostlang$frostc$ASTNode** $tmp47 = &param0->right;
+org$frostlang$frostc$ASTNode** $tmp47 = &param0->left;
 org$frostlang$frostc$ASTNode* $tmp48 = *$tmp47;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp48));
+org$frostlang$frostc$ASTNode** $tmp49 = &param0->right;
+org$frostlang$frostc$ASTNode* $tmp50 = *$tmp49;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp50));
 return;
 
 }

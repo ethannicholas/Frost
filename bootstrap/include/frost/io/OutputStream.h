@@ -11,6 +11,7 @@ typedef struct frost$io$OutputStream frost$io$OutputStream;
 #include "frost/core/Int16_types.h"
 #include "frost/core/Int32_types.h"
 #include "frost/core/Int64_types.h"
+#include "frost/core/Int_types.h"
 #include "frost/core/Char8_types.h"
 typedef struct frost$collections$Array frost$collections$Array;
 typedef struct frost$core$String frost$core$String;
@@ -24,12 +25,12 @@ frost$core$Error* frost$io$OutputStream$write$frost$core$Int8$R$frost$core$Error
 frost$core$Error* frost$io$OutputStream$write$frost$core$Int16$R$frost$core$Error$Q(frost$io$OutputStream* self, frost$core$Int16 p_value);
 frost$core$Error* frost$io$OutputStream$write$frost$core$Int32$R$frost$core$Error$Q(frost$io$OutputStream* self, frost$core$Int32 p_value);
 frost$core$Error* frost$io$OutputStream$write$frost$core$Int64$R$frost$core$Error$Q(frost$io$OutputStream* self, frost$core$Int64 p_value);
-frost$core$Error* frost$io$OutputStream$write$frost$unsafe$Pointer$LTfrost$core$UInt8$GT$frost$core$Int64$R$frost$core$Error$Q(frost$io$OutputStream* self, frost$core$UInt8* p_ptr, frost$core$Int64 p_count);
-frost$core$Error* frost$io$OutputStream$write$frost$unsafe$Pointer$LTfrost$core$Int8$GT$frost$core$Int64$R$frost$core$Error$Q(frost$io$OutputStream* self, frost$core$Int8* p_ptr, frost$core$Int64 p_count);
-frost$core$Error* frost$io$OutputStream$write$frost$unsafe$Pointer$LTfrost$core$Char8$GT$frost$core$Int64$R$frost$core$Error$Q(frost$io$OutputStream* self, frost$core$Char8* p_ptr, frost$core$Int64 p_count);
-frost$core$Error* frost$io$OutputStream$write$frost$collections$Array$LTfrost$core$UInt8$GT$frost$core$Int64$R$frost$core$Error$Q(frost$io$OutputStream* self, frost$collections$Array* p_a, frost$core$Int64 p_count);
-frost$core$Error* frost$io$OutputStream$write$frost$collections$Array$LTfrost$core$Int8$GT$frost$core$Int64$R$frost$core$Error$Q(frost$io$OutputStream* self, frost$collections$Array* p_a, frost$core$Int64 p_count);
-frost$core$Error* frost$io$OutputStream$write$frost$collections$Array$LTfrost$core$Char8$GT$frost$core$Int64$R$frost$core$Error$Q(frost$io$OutputStream* self, frost$collections$Array* p_a, frost$core$Int64 p_count);
+frost$core$Error* frost$io$OutputStream$write$frost$unsafe$Pointer$LTfrost$core$UInt8$GT$frost$core$Int$R$frost$core$Error$Q(frost$io$OutputStream* self, frost$core$UInt8* p_ptr, frost$core$Int p_count);
+frost$core$Error* frost$io$OutputStream$write$frost$unsafe$Pointer$LTfrost$core$Int8$GT$frost$core$Int$R$frost$core$Error$Q(frost$io$OutputStream* self, frost$core$Int8* p_ptr, frost$core$Int p_count);
+frost$core$Error* frost$io$OutputStream$write$frost$unsafe$Pointer$LTfrost$core$Char8$GT$frost$core$Int$R$frost$core$Error$Q(frost$io$OutputStream* self, frost$core$Char8* p_ptr, frost$core$Int p_count);
+frost$core$Error* frost$io$OutputStream$write$frost$collections$Array$LTfrost$core$UInt8$GT$frost$core$Int$R$frost$core$Error$Q(frost$io$OutputStream* self, frost$collections$Array* p_a, frost$core$Int p_count);
+frost$core$Error* frost$io$OutputStream$write$frost$collections$Array$LTfrost$core$Int8$GT$frost$core$Int$R$frost$core$Error$Q(frost$io$OutputStream* self, frost$collections$Array* p_a, frost$core$Int p_count);
+frost$core$Error* frost$io$OutputStream$write$frost$collections$Array$LTfrost$core$Char8$GT$frost$core$Int$R$frost$core$Error$Q(frost$io$OutputStream* self, frost$collections$Array* p_a, frost$core$Int p_count);
 frost$core$Error* frost$io$OutputStream$write$frost$core$Char8$R$frost$core$Error$Q(frost$io$OutputStream* self, frost$core$Char8 p_value);
 frost$core$Error* frost$io$OutputStream$print$frost$core$String$R$frost$core$Error$Q(frost$io$OutputStream* self, frost$core$String* p_s);
 frost$core$Error* frost$io$OutputStream$print$frost$core$Object$R$frost$core$Error$Q(frost$io$OutputStream* self, frost$core$Object* p_o);

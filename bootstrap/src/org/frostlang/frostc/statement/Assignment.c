@@ -98,7 +98,7 @@ frost$core$Int64* $tmp19 = &param2->$rawValue;
 frost$core$Int64 $tmp20 = *$tmp19;
 frost$core$Int64 $tmp21 = (frost$core$Int64) {5u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Assignment.frost:22:29
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
 int64_t $tmp22 = $tmp20.value;
 int64_t $tmp23 = $tmp21.value;
 bool $tmp24 = $tmp22 == $tmp23;

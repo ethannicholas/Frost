@@ -6,13 +6,14 @@
 #include "org/frostlang/frostc/Compiler.h"
 #include "org/frostlang/frostc/Position.h"
 #include "org/frostlang/frostc/Compiler/TypeContext.h"
-#include "frost/core/Int64.h"
+#include "frost/core/Int.h"
 #include "org/frostlang/frostc/IR/Statement/ID.h"
 #include "org/frostlang/frostc/Variable.h"
 #include "frost/core/Bit.h"
 #include "frost/core/Frost.h"
 #include "org/frostlang/frostc/IR/Block/ID.h"
 #include "org/frostlang/frostc/Variable/Storage.h"
+#include "frost/core/Int64.h"
 #include "org/frostlang/frostc/IR.h"
 #include "org/frostlang/frostc/IR/Statement.h"
 #include "org/frostlang/frostc/Type.h"
@@ -30,8 +31,8 @@ static frost$core$String $s15 = { (frost$core$Class*) &frost$core$String$class, 
 
 org$frostlang$frostc$IR$Value* org$frostlang$frostc$expression$AtReturn$compile$org$frostlang$frostc$Compiler$org$frostlang$frostc$Position$org$frostlang$frostc$Compiler$TypeContext$R$org$frostlang$frostc$IR$Value$Q(org$frostlang$frostc$Compiler* param0, org$frostlang$frostc$Position param1, org$frostlang$frostc$Compiler$TypeContext* param2) {
 
-frost$core$Int64 local0;
-frost$core$Int64 local1;
+frost$core$Int local0;
+frost$core$Int local1;
 org$frostlang$frostc$IR$Statement$ID local2;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/expression/AtReturn.frost:14
 org$frostlang$frostc$Variable** $tmp2 = &param0->returnVar;
@@ -81,7 +82,7 @@ frost$core$Int64* $tmp20 = &$tmp19->$rawValue;
 frost$core$Int64 $tmp21 = *$tmp20;
 frost$core$Int64 $tmp22 = (frost$core$Int64) {0u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from AtReturn.frost:29:34
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
 int64_t $tmp23 = $tmp21.value;
 int64_t $tmp24 = $tmp22.value;
 bool $tmp25 = $tmp23 == $tmp24;
@@ -89,11 +90,11 @@ frost$core$Bit $tmp26 = (frost$core$Bit) {$tmp25};
 bool $tmp27 = $tmp26.value;
 if ($tmp27) goto block8; else goto block7;
 block8:;
-frost$core$Int64* $tmp28 = (frost$core$Int64*) ($tmp19->$data + 0);
-frost$core$Int64 $tmp29 = *$tmp28;
+frost$core$Int* $tmp28 = (frost$core$Int*) ($tmp19->$data + 0);
+frost$core$Int $tmp29 = *$tmp28;
 *(&local1) = $tmp29;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/expression/AtReturn.frost:30
-frost$core$Int64 $tmp30 = *(&local1);
+frost$core$Int $tmp30 = *(&local1);
 *(&local0) = $tmp30;
 goto block7;
 block7:;
@@ -106,12 +107,12 @@ frost$core$Int64 $tmp34 = (frost$core$Int64) {14u};
 FROST_ASSERT(48 == sizeof(org$frostlang$frostc$IR$Value));
 org$frostlang$frostc$IR$Value* $tmp35 = (org$frostlang$frostc$IR$Value*) frostObjectAlloc(48, (frost$core$Class*) &org$frostlang$frostc$IR$Value$class);
 frost$core$Int64 $tmp36 = (frost$core$Int64) {2u};
-frost$core$Int64 $tmp37 = *(&local0);
+frost$core$Int $tmp37 = *(&local0);
 org$frostlang$frostc$Variable** $tmp38 = &param0->returnVar;
 org$frostlang$frostc$Variable* $tmp39 = *$tmp38;
 org$frostlang$frostc$Type** $tmp40 = &$tmp39->type;
 org$frostlang$frostc$Type* $tmp41 = *$tmp40;
-org$frostlang$frostc$IR$Value$init$frost$core$Int64$frost$core$Int64$org$frostlang$frostc$Type($tmp35, $tmp36, $tmp37, $tmp41);
+org$frostlang$frostc$IR$Value$init$frost$core$Int64$frost$core$Int$org$frostlang$frostc$Type($tmp35, $tmp36, $tmp37, $tmp41);
 org$frostlang$frostc$IR$Statement$init$frost$core$Int64$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Value($tmp33, $tmp34, param1, $tmp35);
 $fn43 $tmp42 = ($fn43) $tmp32->$class->vtable[2];
 org$frostlang$frostc$IR$Statement$ID $tmp44 = $tmp42($tmp32, $tmp33);

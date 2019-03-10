@@ -1390,7 +1390,7 @@ class LLVMCodeGenerator : CodeGenerator {
                     "%frost$core$UInt8 { i8 undef }, i8 0, 0), " +
                     "%frost$core$Char8* bitcast(\{charsType}* \{chars} " +
                     "to %frost$core$Char8*), \{INT_CLASS} { \{INT_TYPE} \{s.utf8.count} }, " +
-                    "\{INT_CLASS} { \{INT_TYPE} \{s.hash} }, i8* null }")
+                    "\{INT_CLASS} { \{INT_TYPE} \{s.hash.asInt64} }, i8* null }")
             return result
         }
         fail(error) {

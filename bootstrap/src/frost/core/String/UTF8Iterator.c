@@ -4,9 +4,10 @@
 #include "frost/core/String.h"
 #include "frost/collections/Iterator.h"
 #include "frost/core/Char8.h"
-#include "frost/core/Int64.h"
+#include "frost/core/Int.h"
 #include "frost/core/Frost.h"
 #include "frost/core/Bit.h"
+#include "frost/core/Int64.h"
 
 __attribute__((weak)) frost$core$Object* frost$core$String$UTF8Iterator$next$R$frost$core$Char8$shim(frost$core$String$UTF8Iterator* p0) {
     frost$core$Char8 result = frost$core$String$UTF8Iterator$next$R$frost$core$Char8(p0);
@@ -17,7 +18,7 @@ __attribute__((weak)) frost$core$Object* frost$core$String$UTF8Iterator$next$R$f
     return ((frost$core$Object*) $tmp2);
 }
 
-struct { frost$core$Class* cl; ITable* next; void* methods[12]; } frost$core$String$UTF8Iterator$_frost$collections$Iterator = { (frost$core$Class*) &frost$collections$Iterator$class, NULL, { frost$core$String$UTF8Iterator$get_done$R$frost$core$Bit, frost$core$String$UTF8Iterator$next$R$frost$core$Char8$shim, frost$collections$Iterator$count$R$frost$core$Int64, frost$collections$Iterator$get_enumeration$R$frost$collections$Iterator$LT$LPfrost$core$Int64$Cfrost$collections$Iterator$T$RP$GT, frost$collections$Iterator$filter$$LPfrost$collections$Iterator$T$RP$EQ$GT$LPfrost$core$Bit$RP$R$frost$collections$Iterator$LTfrost$collections$Iterator$T$GT, frost$collections$Iterator$$IDX$frost$core$Range$LTfrost$core$Int64$Q$GT$R$frost$collections$Iterator$LTfrost$collections$Iterator$T$GT, frost$collections$Iterator$$IDX$frost$core$SteppedRange$LTfrost$core$Int64$Q$Cfrost$core$Int64$GT$R$frost$collections$Iterator$LTfrost$collections$Iterator$T$GT, frost$collections$Iterator$all$R$frost$collections$Array$LTfrost$collections$Iterator$T$GT, frost$collections$Iterator$apply$$LPfrost$collections$Iterator$T$RP$EQ$AM$GT$LP$RP, frost$collections$Iterator$fold$$LPfrost$collections$Iterator$T$Cfrost$collections$Iterator$T$RP$EQ$GT$LPfrost$collections$Iterator$T$RP$R$frost$collections$Iterator$T, frost$collections$Iterator$fold$$LPfrost$collections$Iterator$T$Cfrost$collections$Iterator$T$RP$EQ$GT$LPfrost$collections$Iterator$T$RP$frost$collections$Iterator$T$R$frost$collections$Iterator$T, frost$collections$Iterator$map$$LPfrost$collections$Iterator$T$RP$EQ$AM$GT$LPfrost$collections$Iterator$map$U$RP$R$frost$collections$Iterator$LTfrost$collections$Iterator$map$U$GT} };
+struct { frost$core$Class* cl; ITable* next; void* methods[12]; } frost$core$String$UTF8Iterator$_frost$collections$Iterator = { (frost$core$Class*) &frost$collections$Iterator$class, NULL, { frost$core$String$UTF8Iterator$get_done$R$frost$core$Bit, frost$core$String$UTF8Iterator$next$R$frost$core$Char8$shim, frost$collections$Iterator$count$R$frost$core$Int, frost$collections$Iterator$get_enumeration$R$frost$collections$Iterator$LT$LPfrost$core$Int$Cfrost$collections$Iterator$T$RP$GT, frost$collections$Iterator$filter$$LPfrost$collections$Iterator$T$RP$EQ$GT$LPfrost$core$Bit$RP$R$frost$collections$Iterator$LTfrost$collections$Iterator$T$GT, frost$collections$Iterator$$IDX$frost$core$Range$LTfrost$core$Int$Q$GT$R$frost$collections$Iterator$LTfrost$collections$Iterator$T$GT, frost$collections$Iterator$$IDX$frost$core$SteppedRange$LTfrost$core$Int$Q$Cfrost$core$Int$GT$R$frost$collections$Iterator$LTfrost$collections$Iterator$T$GT, frost$collections$Iterator$all$R$frost$collections$Array$LTfrost$collections$Iterator$T$GT, frost$collections$Iterator$apply$$LPfrost$collections$Iterator$T$RP$EQ$AM$GT$LP$RP, frost$collections$Iterator$fold$$LPfrost$collections$Iterator$T$Cfrost$collections$Iterator$T$RP$EQ$GT$LPfrost$collections$Iterator$T$RP$R$frost$collections$Iterator$T, frost$collections$Iterator$fold$$LPfrost$collections$Iterator$T$Cfrost$collections$Iterator$T$RP$EQ$GT$LPfrost$collections$Iterator$T$RP$frost$collections$Iterator$T$R$frost$collections$Iterator$T, frost$collections$Iterator$map$$LPfrost$collections$Iterator$T$RP$EQ$AM$GT$LPfrost$collections$Iterator$map$U$RP$R$frost$collections$Iterator$LTfrost$collections$Iterator$map$U$GT} };
 
 static frost$core$String $s1;
 frost$core$String$UTF8Iterator$class_type frost$core$String$UTF8Iterator$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Object$class, (ITable*) &frost$core$String$UTF8Iterator$_frost$collections$Iterator, { frost$core$Object$get_asString$R$frost$core$String, frost$core$String$UTF8Iterator$cleanup, frost$core$String$UTF8Iterator$get_done$R$frost$core$Bit, frost$core$String$UTF8Iterator$next$R$frost$core$Char8$shim} };
@@ -31,8 +32,8 @@ static frost$core$String $s28 = { (frost$core$Class*) &frost$core$String$class, 
 void frost$core$String$UTF8Iterator$init$frost$core$String(frost$core$String$UTF8Iterator* param0, frost$core$String* param1) {
 
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:109
-frost$core$Int64 $tmp3 = (frost$core$Int64) {0u};
-frost$core$Int64* $tmp4 = &param0->index;
+frost$core$Int $tmp3 = (frost$core$Int) {0u};
+frost$core$Int* $tmp4 = &param0->index;
 *$tmp4 = $tmp3;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:114
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
@@ -47,12 +48,12 @@ return;
 frost$core$Bit frost$core$String$UTF8Iterator$get_done$R$frost$core$Bit(frost$core$String$UTF8Iterator* param0) {
 
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:119
-frost$core$Int64* $tmp8 = &param0->index;
-frost$core$Int64 $tmp9 = *$tmp8;
+frost$core$Int* $tmp8 = &param0->index;
+frost$core$Int $tmp9 = *$tmp8;
 frost$core$String** $tmp10 = &param0->str;
 frost$core$String* $tmp11 = *$tmp10;
-frost$core$Int64* $tmp12 = &$tmp11->_length;
-frost$core$Int64 $tmp13 = *$tmp12;
+frost$core$Int* $tmp12 = &$tmp11->_length;
+frost$core$Int $tmp13 = *$tmp12;
 int64_t $tmp14 = $tmp9.value;
 int64_t $tmp15 = $tmp13.value;
 bool $tmp16 = $tmp14 >= $tmp15;
@@ -76,44 +77,45 @@ frost$core$Bit $tmp24 = (frost$core$Bit) {$tmp23};
 bool $tmp25 = $tmp24.value;
 if ($tmp25) goto block1; else goto block2;
 block2:;
-frost$core$Int64 $tmp26 = (frost$core$Int64) {123u};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s27, $tmp26, &$s28);
+frost$core$Int $tmp26 = (frost$core$Int) {123u};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s27, $tmp26, &$s28);
 abort(); // unreachable
 block1:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:124
-frost$core$Int64* $tmp29 = &param0->index;
-frost$core$Int64 $tmp30 = *$tmp29;
-frost$core$Int64 $tmp31 = (frost$core$Int64) {1u};
+frost$core$Int* $tmp29 = &param0->index;
+frost$core$Int $tmp30 = *$tmp29;
+frost$core$Int $tmp31 = (frost$core$Int) {1u};
 int64_t $tmp32 = $tmp30.value;
 int64_t $tmp33 = $tmp31.value;
 int64_t $tmp34 = $tmp32 + $tmp33;
-frost$core$Int64 $tmp35 = (frost$core$Int64) {$tmp34};
-frost$core$Int64* $tmp36 = &param0->index;
+frost$core$Int $tmp35 = (frost$core$Int) {$tmp34};
+frost$core$Int* $tmp36 = &param0->index;
 *$tmp36 = $tmp35;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:125
 frost$core$String** $tmp37 = &param0->str;
 frost$core$String* $tmp38 = *$tmp37;
 frost$core$Char8** $tmp39 = &$tmp38->data;
 frost$core$Char8* $tmp40 = *$tmp39;
-frost$core$Int64* $tmp41 = &param0->index;
-frost$core$Int64 $tmp42 = *$tmp41;
-frost$core$Int64 $tmp43 = (frost$core$Int64) {1u};
-int64_t $tmp44 = $tmp42.value;
+frost$core$Int* $tmp41 = &param0->index;
+frost$core$Int $tmp42 = *$tmp41;
+frost$core$Int64 $tmp43 = frost$core$Int64$init$frost$core$Int($tmp42);
+frost$core$Int64 $tmp44 = (frost$core$Int64) {1u};
 int64_t $tmp45 = $tmp43.value;
-int64_t $tmp46 = $tmp44 - $tmp45;
-frost$core$Int64 $tmp47 = (frost$core$Int64) {$tmp46};
-int64_t $tmp48 = $tmp47.value;
-frost$core$Char8 $tmp49 = $tmp40[$tmp48];
-return $tmp49;
+int64_t $tmp46 = $tmp44.value;
+int64_t $tmp47 = $tmp45 - $tmp46;
+frost$core$Int64 $tmp48 = (frost$core$Int64) {$tmp47};
+int64_t $tmp49 = $tmp48.value;
+frost$core$Char8 $tmp50 = $tmp40[$tmp49];
+return $tmp50;
 
 }
 void frost$core$String$UTF8Iterator$cleanup(frost$core$String$UTF8Iterator* param0) {
 
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:108
 frost$core$Object$cleanup(((frost$core$Object*) param0));
-frost$core$String** $tmp50 = &param0->str;
-frost$core$String* $tmp51 = *$tmp50;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp51));
+frost$core$String** $tmp51 = &param0->str;
+frost$core$String* $tmp52 = *$tmp51;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp52));
 return;
 
 }

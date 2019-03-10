@@ -5,7 +5,7 @@
 #include "org/frostlang/frostc/Compiler.h"
 #include "frost/core/Frost.h"
 #include "frost/core/Bit.h"
-#include "frost/core/Int64.h"
+#include "frost/core/Int.h"
 
 
 static frost$core$String $s1;
@@ -41,8 +41,8 @@ frost$core$Bit $tmp10 = *$tmp9;
 bool $tmp11 = $tmp10.value;
 if ($tmp11) goto block1; else goto block2;
 block2:;
-frost$core$Int64 $tmp12 = (frost$core$Int64) {299u};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s13, $tmp12);
+frost$core$Int $tmp12 = (frost$core$Int) {299u};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s13, $tmp12);
 abort(); // unreachable
 block1:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Compiler.frost:300

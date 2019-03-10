@@ -27,7 +27,7 @@ class Int64List : ListView<Int64> {
             } else if range.end > range.start {
                 return 0
             }
-            return ((range.end - range.start) // range.step).max(0) + 1
+            return (((range.end - range.start) // range.step).max(0) + 1).asInt
         }
         else {
             def offset:Int64
@@ -42,7 +42,7 @@ class Int64List : ListView<Int64> {
                 }
                 offset := 1
             }
-            return ((range.end - range.start + offset) // range.step).max(0) + 1
+            return (((range.end - range.start + offset) // range.step).max(0) + 1).asInt
         }
     }
 

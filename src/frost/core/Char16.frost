@@ -70,7 +70,7 @@ class Char16 : Value, Key<Char16>, Comparable<Char16> {
 
     @override
     function get_hash():Int {
-        return asInt64
+        return asInt
     }
 
     property asChar8:Char8
@@ -103,6 +103,11 @@ class Char16 : Value, Key<Char16>, Comparable<Char16> {
         return Int64(value->builtin_int64)
     }
 
+    property asInt:Int
+    function get_asInt():Int {
+        return Int(value->builtin_int64)
+    }
+
     property asUInt8:UInt8
     function get_asUInt8():UInt8 {
         return UInt8(value->builtin_uint8)
@@ -121,6 +126,11 @@ class Char16 : Value, Key<Char16>, Comparable<Char16> {
     property asUInt64:UInt64
     function get_asUInt64():UInt64 {
         return UInt64(value->builtin_uint64)
+    }
+
+    property asUInt:UInt
+    function get_asUInt():UInt {
+        return UInt(value->builtin_uint)
     }
 
     ================================================================================================

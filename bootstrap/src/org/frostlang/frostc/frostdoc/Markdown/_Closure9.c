@@ -5,7 +5,7 @@
 #include "org/frostlang/frostc/frostdoc/Markdown.h"
 #include "frost/core/Frost.h"
 #include "frost/collections/ListView.h"
-#include "frost/core/Int64.h"
+#include "frost/core/Int.h"
 #include "frost/core/MutableString.h"
 #include "frost/core/Matcher.h"
 #include "frost/core/RegularExpression.h"
@@ -18,8 +18,8 @@
 static frost$core$String $s1;
 org$frostlang$frostc$frostdoc$Markdown$_Closure9$class_type org$frostlang$frostc$frostdoc$Markdown$_Closure9$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { frost$core$Object$get_asString$R$frost$core$String, org$frostlang$frostc$frostdoc$Markdown$_Closure9$cleanup, org$frostlang$frostc$frostdoc$Markdown$_Closure9$$anonymous7$frost$collections$ListView$LTfrost$core$String$Q$GT$R$frost$core$Object} };
 
-typedef frost$core$Object* (*$fn10)(frost$collections$ListView*, frost$core$Int64);
-typedef frost$core$Object* (*$fn19)(frost$collections$ListView*, frost$core$Int64);
+typedef frost$core$Object* (*$fn10)(frost$collections$ListView*, frost$core$Int);
+typedef frost$core$Object* (*$fn19)(frost$collections$ListView*, frost$core$Int);
 typedef frost$core$String* (*$fn27)(frost$core$Object*);
 typedef frost$core$String* (*$fn43)(frost$core$Object*);
 typedef void (*$fn58)(org$frostlang$frostc$frostdoc$Markdown*, frost$core$MutableString*);
@@ -64,7 +64,7 @@ return;
 frost$core$Object* org$frostlang$frostc$frostdoc$Markdown$_Closure9$$anonymous35$frost$collections$ListView$LTfrost$core$String$Q$GT$R$frost$core$Object(frost$collections$ListView* param0) {
 
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:416
-frost$core$Int64 $tmp7 = (frost$core$Int64) {1u};
+frost$core$Int $tmp7 = (frost$core$Int) {1u};
 ITable* $tmp8 = param0->$class->itable;
 while ($tmp8->$class != (frost$core$Class*) &frost$collections$ListView$class) {
     $tmp8 = $tmp8->next;
@@ -87,7 +87,7 @@ frost$core$RegularExpression* local3 = NULL;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:409
 FROST_ASSERT(48 == sizeof(frost$core$MutableString));
 frost$core$MutableString* $tmp15 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
-frost$core$Int64 $tmp16 = (frost$core$Int64) {1u};
+frost$core$Int $tmp16 = (frost$core$Int) {1u};
 ITable* $tmp17 = param1->$class->itable;
 while ($tmp17->$class != (frost$core$Class*) &frost$collections$ListView$class) {
     $tmp17 = $tmp17->next;
@@ -198,8 +198,8 @@ frost$core$MutableString$replace$frost$core$String$frost$core$String($tmp59, &$s
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:415
 FROST_ASSERT(24 == sizeof(frost$core$RegularExpression));
 frost$core$RegularExpression* $tmp62 = (frost$core$RegularExpression*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$RegularExpression$class);
-frost$core$Int64 $tmp63 = (frost$core$Int64) {4u};
-frost$core$RegularExpression$init$frost$core$String$frost$core$Int64($tmp62, &$s64, $tmp63);
+frost$core$Int $tmp63 = (frost$core$Int) {4u};
+frost$core$RegularExpression$init$frost$core$String$frost$core$Int($tmp62, &$s64, $tmp63);
 *(&local3) = ((frost$core$RegularExpression*) NULL);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp62));
 frost$core$RegularExpression* $tmp65 = *(&local3);

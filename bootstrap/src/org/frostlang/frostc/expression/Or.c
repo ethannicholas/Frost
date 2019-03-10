@@ -15,6 +15,7 @@
 #include "frost/core/Int64.h"
 #include "frost/collections/Array.h"
 #include "frost/collections/CollectionView.h"
+#include "frost/core/Int.h"
 #include "org/frostlang/frostc/Type.h"
 #include "frost/core/Bit.h"
 #include "org/frostlang/frostc/IR/Statement.h"
@@ -23,7 +24,7 @@
 static frost$core$String $s1;
 org$frostlang$frostc$expression$Or$class_type org$frostlang$frostc$expression$Or$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { frost$core$Object$get_asString$R$frost$core$String, org$frostlang$frostc$expression$Or$cleanup} };
 
-typedef frost$core$Int64 (*$fn12)(frost$collections$CollectionView*);
+typedef frost$core$Int (*$fn12)(frost$collections$CollectionView*);
 typedef org$frostlang$frostc$IR$Block$ID (*$fn37)(org$frostlang$frostc$IR*, frost$core$String*);
 typedef org$frostlang$frostc$IR$Block$ID (*$fn42)(org$frostlang$frostc$IR*, frost$core$String*);
 typedef org$frostlang$frostc$IR$Block$ID (*$fn47)(org$frostlang$frostc$IR*, frost$core$String*);
@@ -76,10 +77,10 @@ while ($tmp10->$class != (frost$core$Class*) &frost$collections$CollectionView$c
     $tmp10 = $tmp10->next;
 }
 $fn12 $tmp11 = $tmp10->methods[0];
-frost$core$Int64 $tmp13 = $tmp11(((frost$collections$CollectionView*) $tmp9));
+frost$core$Int $tmp13 = $tmp11(((frost$collections$CollectionView*) $tmp9));
 org$frostlang$frostc$Type** $tmp14 = &param0->BIT_TYPE;
 org$frostlang$frostc$Type* $tmp15 = *$tmp14;
-org$frostlang$frostc$IR$Value$init$frost$core$Int64$frost$core$Int64$org$frostlang$frostc$Type($tmp5, $tmp6, $tmp13, $tmp15);
+org$frostlang$frostc$IR$Value$init$frost$core$Int64$frost$core$Int$org$frostlang$frostc$Type($tmp5, $tmp6, $tmp13, $tmp15);
 *(&local1) = ((org$frostlang$frostc$IR$Value*) NULL);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp5));
 org$frostlang$frostc$IR$Value* $tmp16 = *(&local1);

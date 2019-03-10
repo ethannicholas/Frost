@@ -15,6 +15,7 @@
 #include "frost/core/Int64.h"
 #include "org/frostlang/frostc/Scanner.h"
 #include "frost/collections/Array.h"
+#include "frost/core/Int.h"
 #include "frost/collections/ListView.h"
 #include "org/frostlang/frostc/Compiler/TypeContext.h"
 
@@ -129,7 +130,7 @@ frost$core$Int64* $tmp37 = &param2->$rawValue;
 frost$core$Int64 $tmp38 = *$tmp37;
 frost$core$Int64 $tmp39 = (frost$core$Int64) {21u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Dot.frost:29:25
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
 int64_t $tmp40 = $tmp38.value;
 int64_t $tmp41 = $tmp39.value;
 bool $tmp42 = $tmp40 == $tmp41;
@@ -180,8 +181,8 @@ org$frostlang$frostc$Type** $tmp58 = &param0->CLASS_TYPE;
 org$frostlang$frostc$Type* $tmp59 = *$tmp58;
 FROST_ASSERT(40 == sizeof(frost$collections$Array));
 frost$collections$Array* $tmp60 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
-frost$core$Int64 $tmp61 = (frost$core$Int64) {1u};
-frost$collections$Array$init$frost$core$Int64($tmp60, $tmp61);
+frost$core$Int $tmp61 = (frost$core$Int) {1u};
+frost$collections$Array$init$frost$core$Int($tmp60, $tmp61);
 frost$collections$Array$add$frost$collections$Array$T($tmp60, ((frost$core$Object*) $tmp55));
 org$frostlang$frostc$Type* $tmp62 = org$frostlang$frostc$Type$generic$org$frostlang$frostc$Type$frost$collections$ListView$LTorg$frostlang$frostc$Type$GT$R$org$frostlang$frostc$Type($tmp59, ((frost$collections$ListView*) $tmp60));
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp62));

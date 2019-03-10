@@ -9,6 +9,7 @@ typedef struct frost$core$Weak frost$core$Weak;
 typedef struct frost$collections$IdentityMap frost$collections$IdentityMap;
 #include "frost/core/Real64_types.h"
 #include "frost/core/Int64_types.h"
+#include "frost/core/Int_types.h"
 #include "frost/core/UInt64_types.h"
 #include "frost/core/Char32_types.h"
 #include "frost/core/Bit_types.h"
@@ -27,10 +28,10 @@ frost$collections$IdentityMap* frost$core$Frost$createWeakReferenceMap$R$frost$c
 void frost$core$Frost$toReal64$frost$core$String$R$frost$core$Real64(frost$core$Real64* result, frost$core$String* p_s);
 void frost$core$Frost$floatToIntBits$frost$core$Real64$R$frost$core$Int64(frost$core$Int64* result, frost$core$Real64 p_r);
 void frost$core$Frost$addressOf$frost$core$Object$R$frost$core$Int64(frost$core$Int64* result, frost$core$Object* p_o);
-void frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(frost$core$String* p_file, frost$core$Int64 p_line);
-void frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(frost$core$String* p_file, frost$core$Int64 p_line, frost$core$String* p_msg);
+void frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(frost$core$String* p_file, frost$core$Int p_line);
+void frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(frost$core$String* p_file, frost$core$Int p_line, frost$core$String* p_msg);
 frost$core$UInt64$nullable frost$core$Frost$digit$frost$core$Char32$R$frost$core$UInt64$Q(frost$core$Char32 p_c);
-frost$core$UInt64$nullable frost$core$Frost$parse$frost$core$String$frost$core$Int64$R$frost$core$UInt64$Q(frost$core$String* p_str, frost$core$Int64 p_rawRadix);
+frost$core$UInt64$nullable frost$core$Frost$parse$frost$core$String$frost$core$Int$R$frost$core$UInt64$Q(frost$core$String* p_str, frost$core$Int p_rawRadix);
 float frost$core$Frost$sqrt$builtin_float32$R$builtin_float32(float p_v);
 double frost$core$Frost$sqrt$builtin_float64$R$builtin_float64(double p_v);
 int64_t frost$core$Frost$currentTime$R$builtin_int64();
@@ -40,7 +41,7 @@ void frost$core$Frost$debugPrint$builtin_int64(int64_t p_i);
 void frost$core$Frost$debugPrint$frost$core$Object(frost$core$Object* p_o);
 frost$core$String* frost$core$Frost$pointerConvert$frost$unsafe$Pointer$LTfrost$core$Object$Q$GT$R$frost$core$String(frost$core$Object** p_p);
 void frost$core$Frost$disableRefErrorReporting();
-void frost$core$Frost$swap$frost$collections$List$LTfrost$core$Frost$swap$T$GT$frost$core$Int64$frost$core$Int64(frost$collections$List* p_a, frost$core$Int64 p_i1, frost$core$Int64 p_i2);
-void frost$core$Frost$sort$frost$collections$List$LTfrost$core$Frost$sort$T$GT$frost$core$Int64$frost$core$Int64$$LPfrost$core$Frost$sort$T$Cfrost$core$Frost$sort$T$RP$EQ$AM$GT$LPfrost$core$Bit$RP(frost$collections$List* p_a, frost$core$Int64 p_left, frost$core$Int64 p_right, frost$core$MutableMethod* p_greater);
+void frost$core$Frost$swap$frost$collections$List$LTfrost$core$Frost$swap$T$GT$frost$core$Int$frost$core$Int(frost$collections$List* p_a, frost$core$Int p_i1, frost$core$Int p_i2);
+void frost$core$Frost$sort$frost$collections$List$LTfrost$core$Frost$sort$T$GT$frost$core$Int$frost$core$Int$$LPfrost$core$Frost$sort$T$Cfrost$core$Frost$sort$T$RP$EQ$AM$GT$LPfrost$core$Bit$RP(frost$collections$List* p_a, frost$core$Int p_left, frost$core$Int p_right, frost$core$MutableMethod* p_greater);
 void frost$core$Frost$cleanup(frost$core$Frost* self);
 

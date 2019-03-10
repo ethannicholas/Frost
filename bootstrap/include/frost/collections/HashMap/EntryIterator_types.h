@@ -4,7 +4,7 @@ typedef struct frost$core$Class frost$core$Class;
 #include "frost/core/Int32_types.h"
 #include "frost/core/UInt8_types.h"
 typedef struct frost$collections$HashMap frost$collections$HashMap;
-#include "frost/core/Int64_types.h"
+#include "frost/core/Int_types.h"
 typedef struct frost$collections$HashMap$Entry frost$collections$HashMap$Entry;
 typedef struct frost$core$String frost$core$String;
 
@@ -13,7 +13,7 @@ typedef struct frost$collections$HashMap$EntryIterator {
     frost$core$Int32 refCount;
     frost$core$UInt8 $flags;
     frost$collections$HashMap* map;
-    frost$core$Int64 bucket;
+    frost$core$Int bucket;
     frost$collections$HashMap$Entry* entry;
 } frost$collections$HashMap$EntryIterator;
 #include "frost/core/Class.h"

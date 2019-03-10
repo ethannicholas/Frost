@@ -6,7 +6,7 @@
 #include "frost/core/MutableString.h"
 #include "frost/core/Char8.h"
 #include "frost/core/Bit.h"
-#include "frost/core/Int64.h"
+#include "frost/core/Int.h"
 #include "frost/core/UInt8.h"
 
 
@@ -148,11 +148,11 @@ if ($tmp25) goto block3; else goto block4;
 block3:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/io/Console.frost:131
 frost$core$MutableString* $tmp26 = *(&local0);
-frost$core$Int64* $tmp27 = &$tmp26->_length;
-frost$core$Int64 $tmp28 = *$tmp27;
-frost$core$Int64 $tmp29 = (frost$core$Int64) {0u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Console.frost:131:35
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
+frost$core$Int* $tmp27 = &$tmp26->_length;
+frost$core$Int $tmp28 = *$tmp27;
+frost$core$Int $tmp29 = (frost$core$Int) {0u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Console.frost:131:35
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp30 = $tmp28.value;
 int64_t $tmp31 = $tmp29.value;
 bool $tmp32 = $tmp30 == $tmp31;

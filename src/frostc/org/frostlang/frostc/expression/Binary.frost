@@ -468,7 +468,7 @@ class Binary {
                                 }
                                 return compiler.coerce(position, compiler.cast(position,
                                         Dot.compile(compiler, position, compiledLeft, "f\{v}"),
-                                            compiledLeft.type().subtypes[v.asInt64]), type)
+                                            compiledLeft.type().subtypes[v.asInt]), type)
                             }
                         }
                     }
@@ -507,7 +507,7 @@ class Binary {
                         when ASTNode.INT(_, v) {
                             return compiler.coerce(position, compiler.cast(position,
                                     Dot.compile(compiler, position, compiledLeft, "f\{v}"),
-                                        compiledLeft.type().subtypes[v.asInt64]), type)
+                                        compiledLeft.type().subtypes[v.asInt]), type)
                         }
                     }
                 }

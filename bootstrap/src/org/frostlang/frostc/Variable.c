@@ -13,6 +13,7 @@
 #include "frost/core/Frost.h"
 #include "frost/core/Equatable.h"
 #include "frost/core/Bit.h"
+#include "frost/core/Int.h"
 #include "frost/core/Int64.h"
 
 
@@ -52,8 +53,8 @@ frost$core$Bit $tmp12 = $tmp10(((frost$core$Equatable*) $tmp7), ((frost$core$Equ
 bool $tmp13 = $tmp12.value;
 if ($tmp13) goto block1; else goto block2;
 block2:;
-frost$core$Int64 $tmp14 = (frost$core$Int64) {31u};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s15, $tmp14, &$s16);
+frost$core$Int $tmp14 = (frost$core$Int) {31u};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s15, $tmp14, &$s16);
 abort(); // unreachable
 block1:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Variable.frost:32

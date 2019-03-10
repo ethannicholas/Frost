@@ -10,6 +10,7 @@
 #include "frost/core/Int64.h"
 #include "frost/collections/Array.h"
 #include "frost/core/Bit.h"
+#include "frost/core/Int.h"
 
 
 static frost$core$String $s1;
@@ -105,7 +106,7 @@ frost$core$Int64* $tmp32 = &$tmp31->$rawValue;
 frost$core$Int64 $tmp33 = *$tmp32;
 frost$core$Int64 $tmp34 = (frost$core$Int64) {0u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Compiler.frost:270:42
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
 int64_t $tmp35 = $tmp33.value;
 int64_t $tmp36 = $tmp34.value;
 bool $tmp37 = $tmp35 == $tmp36;
@@ -121,7 +122,7 @@ goto block2;
 block5:;
 frost$core$Int64 $tmp41 = (frost$core$Int64) {2u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Compiler.frost:273:42
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
 int64_t $tmp42 = $tmp33.value;
 int64_t $tmp43 = $tmp41.value;
 bool $tmp44 = $tmp42 == $tmp43;
@@ -137,7 +138,7 @@ goto block2;
 block8:;
 frost$core$Int64 $tmp48 = (frost$core$Int64) {3u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Compiler.frost:276:42
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
 int64_t $tmp49 = $tmp33.value;
 int64_t $tmp50 = $tmp48.value;
 bool $tmp51 = $tmp49 == $tmp50;
@@ -147,7 +148,7 @@ if ($tmp53) goto block10; else goto block11;
 block11:;
 frost$core$Int64 $tmp54 = (frost$core$Int64) {4u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Compiler.frost:276:75
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
 int64_t $tmp55 = $tmp33.value;
 int64_t $tmp56 = $tmp54.value;
 bool $tmp57 = $tmp55 == $tmp56;
@@ -166,8 +167,8 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp63));
 goto block1;
 block13:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Compiler.frost:280
-frost$core$Int64 $tmp64 = (frost$core$Int64) {280u};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s65, $tmp64);
+frost$core$Int $tmp64 = (frost$core$Int) {280u};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s65, $tmp64);
 abort(); // unreachable
 block2:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Compiler.frost:284
@@ -182,8 +183,8 @@ frost$core$Bit $tmp73 = (frost$core$Bit) {$tmp72};
 bool $tmp74 = $tmp73.value;
 if ($tmp74) goto block15; else goto block16;
 block16:;
-frost$core$Int64 $tmp75 = (frost$core$Int64) {284u};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s76, $tmp75);
+frost$core$Int $tmp75 = (frost$core$Int) {284u};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s76, $tmp75);
 abort(); // unreachable
 block15:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Compiler.frost:285

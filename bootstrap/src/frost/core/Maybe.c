@@ -3,8 +3,9 @@
 #include "frost/core/Class.h"
 #include "frost/core/String.h"
 #include "frost/core/Bit.h"
-#include "frost/core/Int64.h"
+#include "frost/core/Int.h"
 #include "frost/core/Frost.h"
+#include "frost/core/Int64.h"
 #include "frost/core/Error.h"
 
 
@@ -38,8 +39,8 @@ frost$core$Bit $tmp4 = $tmp2(param0);
 bool $tmp5 = $tmp4.value;
 if ($tmp5) goto block1; else goto block2;
 block2:;
-frost$core$Int64 $tmp6 = (frost$core$Int64) {22u};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s7, $tmp6, &$s8);
+frost$core$Int $tmp6 = (frost$core$Int) {22u};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s7, $tmp6, &$s8);
 abort(); // unreachable
 block1:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Maybe.frost:23
@@ -47,7 +48,7 @@ frost$core$Int64* $tmp9 = &param0->$rawValue;
 frost$core$Int64 $tmp10 = *$tmp9;
 frost$core$Int64 $tmp11 = (frost$core$Int64) {0u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Maybe.frost:24:18
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
 int64_t $tmp12 = $tmp10.value;
 int64_t $tmp13 = $tmp11.value;
 bool $tmp14 = $tmp12 == $tmp13;
@@ -71,8 +72,8 @@ frost$core$Frost$unref$frost$core$Object$Q($tmp21);
 return $tmp20;
 block3:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Maybe.frost:28
-frost$core$Int64 $tmp22 = (frost$core$Int64) {28u};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s23, $tmp22);
+frost$core$Int $tmp22 = (frost$core$Int) {28u};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s23, $tmp22);
 abort(); // unreachable
 
 }
@@ -89,8 +90,8 @@ frost$core$Bit $tmp29 = (frost$core$Bit) {$tmp28};
 bool $tmp30 = $tmp29.value;
 if ($tmp30) goto block1; else goto block2;
 block2:;
-frost$core$Int64 $tmp31 = (frost$core$Int64) {35u};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s32, $tmp31, &$s33);
+frost$core$Int $tmp31 = (frost$core$Int) {35u};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s32, $tmp31, &$s33);
 abort(); // unreachable
 block1:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Maybe.frost:36
@@ -98,7 +99,7 @@ frost$core$Int64* $tmp34 = &param0->$rawValue;
 frost$core$Int64 $tmp35 = *$tmp34;
 frost$core$Int64 $tmp36 = (frost$core$Int64) {1u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Maybe.frost:37:18
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
 int64_t $tmp37 = $tmp35.value;
 int64_t $tmp38 = $tmp36.value;
 bool $tmp39 = $tmp37 == $tmp38;
@@ -122,8 +123,8 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp46));
 return $tmp45;
 block4:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Maybe.frost:41
-frost$core$Int64 $tmp47 = (frost$core$Int64) {41u};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s48, $tmp47);
+frost$core$Int $tmp47 = (frost$core$Int) {41u};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s48, $tmp47);
 abort(); // unreachable
 
 }
@@ -134,7 +135,7 @@ frost$core$Int64* $tmp49 = &param0->$rawValue;
 frost$core$Int64 $tmp50 = *$tmp49;
 frost$core$Int64 $tmp51 = (frost$core$Int64) {0u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Maybe.frost:49:18
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
 int64_t $tmp52 = $tmp50.value;
 int64_t $tmp53 = $tmp51.value;
 bool $tmp54 = $tmp52 == $tmp53;
@@ -148,7 +149,7 @@ return $tmp57;
 block3:;
 frost$core$Int64 $tmp58 = (frost$core$Int64) {1u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Maybe.frost:52:18
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
 int64_t $tmp59 = $tmp50.value;
 int64_t $tmp60 = $tmp58.value;
 bool $tmp61 = $tmp59 == $tmp60;
@@ -161,8 +162,8 @@ frost$core$Bit $tmp64 = (frost$core$Bit) {false};
 return $tmp64;
 block1:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Maybe.frost:56
-frost$core$Int64 $tmp65 = (frost$core$Int64) {56u};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s66, $tmp65);
+frost$core$Int $tmp65 = (frost$core$Int) {56u};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s66, $tmp65);
 abort(); // unreachable
 
 }
@@ -175,7 +176,7 @@ frost$core$Int64* $tmp67 = &param0->$rawValue;
 frost$core$Int64 $tmp68 = *$tmp67;
 frost$core$Int64 $tmp69 = (frost$core$Int64) {0u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Maybe.frost:62:18
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
 int64_t $tmp70 = $tmp68.value;
 int64_t $tmp71 = $tmp69.value;
 bool $tmp72 = $tmp70 == $tmp71;
@@ -211,7 +212,7 @@ return $tmp84;
 block3:;
 frost$core$Int64 $tmp87 = (frost$core$Int64) {1u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Maybe.frost:65:18
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
 int64_t $tmp88 = $tmp68.value;
 int64_t $tmp89 = $tmp87.value;
 bool $tmp90 = $tmp88 == $tmp89;
@@ -246,8 +247,8 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp104));
 return $tmp102;
 block1:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Maybe.frost:69
-frost$core$Int64 $tmp105 = (frost$core$Int64) {69u};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s106, $tmp105);
+frost$core$Int $tmp105 = (frost$core$Int) {69u};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s106, $tmp105);
 abort(); // unreachable
 
 }
@@ -260,7 +261,7 @@ frost$core$Int64* $tmp107 = &param0->$rawValue;
 frost$core$Int64 $tmp108 = *$tmp107;
 frost$core$Int64 $tmp109 = (frost$core$Int64) {0u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Maybe.frost:7:1
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
 int64_t $tmp110 = $tmp108.value;
 int64_t $tmp111 = $tmp109.value;
 bool $tmp112 = $tmp110 == $tmp111;
@@ -285,7 +286,7 @@ goto block1;
 block3:;
 frost$core$Int64 $tmp120 = (frost$core$Int64) {1u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Maybe.frost:7:1
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
 int64_t $tmp121 = $tmp108.value;
 int64_t $tmp122 = $tmp120.value;
 bool $tmp123 = $tmp121 == $tmp122;

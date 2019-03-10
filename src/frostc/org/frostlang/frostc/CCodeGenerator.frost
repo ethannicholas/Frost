@@ -941,7 +941,7 @@ class CCodeGenerator : CodeGenerator {
             for c in s.utf8 {
                 strings.print("\\x\{c.asUInt8,0>2:x}")
             }
-            strings.printLine("\", \{s.utf8.count}, \{s.hash}, NULL };")
+            strings.printLine("\", \{s.utf8.count}, \{s.hash.asInt64}, NULL };")
             return "&\{result}"
         }
         fail(error) {

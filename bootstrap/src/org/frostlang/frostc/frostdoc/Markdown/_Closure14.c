@@ -5,7 +5,7 @@
 #include "org/frostlang/frostc/frostdoc/Markdown.h"
 #include "frost/core/Frost.h"
 #include "frost/collections/ListView.h"
-#include "frost/core/Int64.h"
+#include "frost/core/Int.h"
 #include "frost/core/RegularExpression.h"
 #include "frost/core/Matcher.h"
 #include "frost/core/Bit.h"
@@ -14,8 +14,8 @@
 static frost$core$String $s1;
 org$frostlang$frostc$frostdoc$Markdown$_Closure14$class_type org$frostlang$frostc$frostdoc$Markdown$_Closure14$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { frost$core$Object$get_asString$R$frost$core$String, org$frostlang$frostc$frostdoc$Markdown$_Closure14$cleanup, org$frostlang$frostc$frostdoc$Markdown$_Closure14$$anonymous13$frost$collections$ListView$LTfrost$core$String$Q$GT$R$frost$core$Object} };
 
-typedef frost$core$Object* (*$fn10)(frost$collections$ListView*, frost$core$Int64);
-typedef frost$core$Object* (*$fn16)(frost$collections$ListView*, frost$core$Int64);
+typedef frost$core$Object* (*$fn10)(frost$collections$ListView*, frost$core$Int);
+typedef frost$core$Object* (*$fn16)(frost$collections$ListView*, frost$core$Int);
 typedef frost$core$String* (*$fn42)(org$frostlang$frostc$frostdoc$Markdown*, frost$core$String*);
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x66\x72\x6f\x73\x74\x64\x6f\x63\x2e\x4d\x61\x72\x6b\x64\x6f\x77\x6e\x2e\x5f\x43\x6c\x6f\x73\x75\x72\x65\x31\x34", 49, -4907400499225924480, NULL };
@@ -62,7 +62,7 @@ frost$core$String* local1 = NULL;
 frost$core$String* local2 = NULL;
 frost$core$String* local3 = NULL;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:659
-frost$core$Int64 $tmp7 = (frost$core$Int64) {1u};
+frost$core$Int $tmp7 = (frost$core$Int) {1u};
 ITable* $tmp8 = param1->$class->itable;
 while ($tmp8->$class != (frost$core$Class*) &frost$collections$ListView$class) {
     $tmp8 = $tmp8->next;
@@ -76,7 +76,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp12));
 *(&local0) = ((frost$core$String*) $tmp11);
 frost$core$Frost$unref$frost$core$Object$Q($tmp11);
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:660
-frost$core$Int64 $tmp13 = (frost$core$Int64) {3u};
+frost$core$Int $tmp13 = (frost$core$Int) {3u};
 ITable* $tmp14 = param1->$class->itable;
 while ($tmp14->$class != (frost$core$Class*) &frost$collections$ListView$class) {
     $tmp14 = $tmp14->next;

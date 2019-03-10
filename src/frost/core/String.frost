@@ -1451,7 +1451,11 @@ class String : Immutable, Key<String>, Comparable<String>, Iterable<Char32>, For
 
     property asInt:Int?
     function get_asInt():Int? {
-        return asInt64
+        def result := asInt64
+        if result !== null {
+            return result.asInt
+        }
+        return null
     }
 
     ================================================================================================

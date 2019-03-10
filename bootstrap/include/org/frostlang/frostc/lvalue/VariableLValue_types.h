@@ -5,7 +5,7 @@ typedef struct frost$core$Class frost$core$Class;
 #include "frost/core/UInt8_types.h"
 typedef struct org$frostlang$frostc$Compiler org$frostlang$frostc$Compiler;
 #include "org/frostlang/frostc/Position_types.h"
-#include "frost/core/Int64_types.h"
+#include "frost/core/Int_types.h"
 typedef struct frost$core$String frost$core$String;
 
 typedef struct org$frostlang$frostc$lvalue$VariableLValue {
@@ -14,7 +14,7 @@ typedef struct org$frostlang$frostc$lvalue$VariableLValue {
     frost$core$UInt8 $flags;
     org$frostlang$frostc$Compiler* compiler;
     org$frostlang$frostc$Position position;
-    frost$core$Int64 slot;
+    frost$core$Int slot;
 } org$frostlang$frostc$lvalue$VariableLValue;
 #include "frost/core/Class.h"
 typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[5]; } org$frostlang$frostc$lvalue$VariableLValue$class_type;

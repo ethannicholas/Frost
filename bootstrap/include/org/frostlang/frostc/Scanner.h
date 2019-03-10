@@ -5,7 +5,7 @@ typedef struct org$frostlang$frostc$Scanner org$frostlang$frostc$Scanner;
 typedef struct org$frostlang$frostc$Compiler org$frostlang$frostc$Compiler;
 typedef struct org$frostlang$frostc$Type org$frostlang$frostc$Type;
 typedef struct org$frostlang$frostc$ASTNode org$frostlang$frostc$ASTNode;
-#include "frost/core/Int64_types.h"
+#include "frost/core/Int_types.h"
 #include "org/frostlang/frostc/Position_types.h"
 #include "frost/core/Bit_types.h"
 typedef struct frost$core$String frost$core$String;
@@ -23,11 +23,11 @@ typedef struct frost$collections$List frost$collections$List;
 
 void org$frostlang$frostc$Scanner$init$org$frostlang$frostc$Compiler(org$frostlang$frostc$Scanner* self, org$frostlang$frostc$Compiler* p_compiler);
 org$frostlang$frostc$Type* org$frostlang$frostc$Scanner$convertType$org$frostlang$frostc$ASTNode$R$org$frostlang$frostc$Type(org$frostlang$frostc$Scanner* self, org$frostlang$frostc$ASTNode* p_type);
-frost$core$Int64 org$frostlang$frostc$Scanner$add$org$frostlang$frostc$Position$frost$core$Int64$frost$core$Int64$R$frost$core$Int64(org$frostlang$frostc$Scanner* self, org$frostlang$frostc$Position p_position, frost$core$Int64 p_flags, frost$core$Int64 p_flag);
+frost$core$Int org$frostlang$frostc$Scanner$add$org$frostlang$frostc$Position$frost$core$Int$frost$core$Int$R$frost$core$Int(org$frostlang$frostc$Scanner* self, org$frostlang$frostc$Position p_position, frost$core$Int p_flags, frost$core$Int p_flag);
 frost$core$Bit org$frostlang$frostc$Scanner$$anonymous1$org$frostlang$frostc$Scanner$org$frostlang$frostc$Position$frost$core$String$org$frostlang$frostc$ASTNode$Q$R$frost$core$Bit(org$frostlang$frostc$Scanner* p_scanner, org$frostlang$frostc$Position p_position, frost$core$String* p_text, org$frostlang$frostc$ASTNode* p_expr);
 org$frostlang$frostc$Annotations* org$frostlang$frostc$Scanner$convertAnnotations$org$frostlang$frostc$FixedArray$LTorg$frostlang$frostc$ASTNode$GT$R$org$frostlang$frostc$Annotations(org$frostlang$frostc$Scanner* self, org$frostlang$frostc$FixedArray* p_a);
 void org$frostlang$frostc$Scanner$scanFields$org$frostlang$frostc$ClassDecl$org$frostlang$frostc$Position$org$frostlang$frostc$ASTNode$Q$org$frostlang$frostc$FixedArray$LTorg$frostlang$frostc$ASTNode$GT$org$frostlang$frostc$ASTNode(org$frostlang$frostc$Scanner* self, org$frostlang$frostc$ClassDecl* p_owner, org$frostlang$frostc$Position p_position, org$frostlang$frostc$ASTNode* p_rawDoccomment, org$frostlang$frostc$FixedArray* p_rawAnnotations, org$frostlang$frostc$ASTNode* p_varDecl);
-frost$core$Int64 org$frostlang$frostc$Scanner$complexity$org$frostlang$frostc$ASTNode$R$frost$core$Int64(org$frostlang$frostc$Scanner* self, org$frostlang$frostc$ASTNode* p_node);
+frost$core$Int org$frostlang$frostc$Scanner$complexity$org$frostlang$frostc$ASTNode$R$frost$core$Int(org$frostlang$frostc$Scanner* self, org$frostlang$frostc$ASTNode* p_node);
 frost$core$Bit org$frostlang$frostc$Scanner$shouldInline$org$frostlang$frostc$Annotations$frost$collections$ListView$LTorg$frostlang$frostc$ASTNode$GT$R$frost$core$Bit(org$frostlang$frostc$Scanner* self, org$frostlang$frostc$Annotations* p_annotations, frost$collections$ListView* p_statements);
 org$frostlang$frostc$MethodDecl* org$frostlang$frostc$Scanner$scanMethod$org$frostlang$frostc$ClassDecl$org$frostlang$frostc$Position$org$frostlang$frostc$ASTNode$Q$org$frostlang$frostc$FixedArray$LTorg$frostlang$frostc$ASTNode$GT$org$frostlang$frostc$MethodDecl$Kind$frost$core$String$org$frostlang$frostc$FixedArray$LTorg$frostlang$frostc$ASTNode$GT$Q$org$frostlang$frostc$FixedArray$LTorg$frostlang$frostc$ASTNode$GT$org$frostlang$frostc$ASTNode$Q$org$frostlang$frostc$FixedArray$LTorg$frostlang$frostc$ASTNode$GT$Q$R$org$frostlang$frostc$MethodDecl$Q(org$frostlang$frostc$Scanner* self, org$frostlang$frostc$ClassDecl* p_owner, org$frostlang$frostc$Position p_position, org$frostlang$frostc$ASTNode* p_rawDoccomment, org$frostlang$frostc$FixedArray* p_rawAnnotations, org$frostlang$frostc$MethodDecl$Kind p_kind, frost$core$String* p_name, org$frostlang$frostc$FixedArray* p_rawGenerics, org$frostlang$frostc$FixedArray* p_rawParameters, org$frostlang$frostc$ASTNode* p_rawReturnType, org$frostlang$frostc$FixedArray* p_statements);
 void org$frostlang$frostc$Scanner$scanClassChild$org$frostlang$frostc$ClassDecl$org$frostlang$frostc$ASTNode(org$frostlang$frostc$Scanner* self, org$frostlang$frostc$ClassDecl* p_cl, org$frostlang$frostc$ASTNode* p_node);

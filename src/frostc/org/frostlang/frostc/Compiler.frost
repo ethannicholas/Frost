@@ -357,7 +357,7 @@ class Compiler {
 
         @override
         function get_hash():Int {
-            return Frost.addressOf(expr) ~~ target.hash
+            return Frost.addressOf(expr).asInt ~~ target.hash
         }
     }
 
@@ -381,7 +381,7 @@ class Compiler {
 
         @override
         function get_hash():Int {
-            return Frost.addressOf(left) ~~ Frost.addressOf(right)
+            return (Frost.addressOf(left) ~~ Frost.addressOf(right)).asInt
         }
     }
 

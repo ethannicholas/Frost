@@ -169,7 +169,7 @@ class Frost {
                 index := specifier.start
             }
         }
-        def width := specifier[specifier.next(index)..].asInt64
+        def width := specifier[specifier.next(index)..].asInt
         def fill:Char32
         if index = specifier.start {
             fill := " "
@@ -232,7 +232,7 @@ class Frost {
         def chars := Pointer<Char8>.alloc(max)
         var charIndex := max - 1
         do {
-            chars[charIndex] := digits[(value % base).asInt64]
+            chars[charIndex] := digits[(value % base).asInt]
             value //= base
             charIndex -= 1
         }

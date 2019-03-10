@@ -10,8 +10,9 @@
 #include "frost/core/Bit.h"
 #include "org/frostlang/frostc/SymbolTable.h"
 #include "frost/core/Frost.h"
-#include "frost/core/Int64.h"
+#include "frost/core/Int.h"
 #include "org/frostlang/frostc/Type.h"
+#include "frost/core/Int64.h"
 #include "frost/collections/Array.h"
 #include "frost/collections/ListView.h"
 
@@ -53,8 +54,8 @@ frost$core$Bit $tmp11 = (frost$core$Bit) {$tmp10 != NULL};
 bool $tmp12 = $tmp11.value;
 if ($tmp12) goto block3; else goto block4;
 block4:;
-frost$core$Int64 $tmp13 = (frost$core$Int64) {15u};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s14, $tmp13, &$s15);
+frost$core$Int $tmp13 = (frost$core$Int) {15u};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s14, $tmp13, &$s15);
 abort(); // unreachable
 block3:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/expression/Identifier.frost:16
@@ -118,8 +119,8 @@ org$frostlang$frostc$Type** $tmp41 = &param0->CLASS_TYPE;
 org$frostlang$frostc$Type* $tmp42 = *$tmp41;
 FROST_ASSERT(40 == sizeof(frost$collections$Array));
 frost$collections$Array* $tmp43 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
-frost$core$Int64 $tmp44 = (frost$core$Int64) {1u};
-frost$collections$Array$init$frost$core$Int64($tmp43, $tmp44);
+frost$core$Int $tmp44 = (frost$core$Int) {1u};
+frost$collections$Array$init$frost$core$Int($tmp43, $tmp44);
 frost$collections$Array$add$frost$collections$Array$T($tmp43, ((frost$core$Object*) $tmp38));
 org$frostlang$frostc$Type* $tmp45 = org$frostlang$frostc$Type$generic$org$frostlang$frostc$Type$frost$collections$ListView$LTorg$frostlang$frostc$Type$GT$R$org$frostlang$frostc$Type($tmp42, ((frost$collections$ListView*) $tmp43));
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp45));

@@ -9,7 +9,7 @@ typedef struct frost$core$Weak frost$core$Weak;
 typedef struct frost$io$MemoryOutputStream frost$io$MemoryOutputStream;
 typedef struct frost$collections$HashSet frost$collections$HashSet;
 typedef struct frost$collections$HashMap frost$collections$HashMap;
-#include "frost/core/Int64_types.h"
+#include "frost/core/Int_types.h"
 #include "org/frostlang/frostc/Position_types.h"
 typedef struct frost$collections$IdentityMap frost$collections$IdentityMap;
 typedef struct org$frostlang$frostc$IR org$frostlang$frostc$IR;
@@ -33,9 +33,9 @@ typedef struct org$frostlang$frostc$LLVMCodeGenerator {
     frost$collections$HashSet* writtenTypes;
     frost$collections$HashSet* writtenWrappers;
     frost$collections$HashMap* classConstants;
-    frost$core$Int64 varCount;
-    frost$core$Int64 labelCount;
-    frost$core$Int64 metadataCount;
+    frost$core$Int varCount;
+    frost$core$Int labelCount;
+    frost$core$Int metadataCount;
     frost$core$String* currentFileMetadata;
     frost$core$String* currentMethodMetadata;
     org$frostlang$frostc$Position lastDebugPosition;

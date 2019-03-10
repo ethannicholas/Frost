@@ -6,7 +6,7 @@
 #include "frost/core/Bit.h"
 #include "frost/collections/Key.h"
 #include "frost/core/Frost.h"
-#include "frost/core/Int64.h"
+#include "frost/core/Int.h"
 
 __attribute__((weak)) frost$core$Bit frost$core$KeyTuple14$$EQ$frost$core$KeyTuple14$LTfrost$core$KeyTuple14$T0$Cfrost$core$KeyTuple14$T1$Cfrost$core$KeyTuple14$T2$Cfrost$core$KeyTuple14$T3$Cfrost$core$KeyTuple14$T4$Cfrost$core$KeyTuple14$T5$Cfrost$core$KeyTuple14$T6$Cfrost$core$KeyTuple14$T7$Cfrost$core$KeyTuple14$T8$Cfrost$core$KeyTuple14$T9$Cfrost$core$KeyTuple14$T10$Cfrost$core$KeyTuple14$T11$Cfrost$core$KeyTuple14$T12$Cfrost$core$KeyTuple14$T13$GT$R$frost$core$Bit$shim(frost$core$KeyTuple14* p0, frost$core$Equatable* p1) {
     frost$core$Bit result = frost$core$KeyTuple14$$EQ$frost$core$KeyTuple14$LTfrost$core$KeyTuple14$T0$Cfrost$core$KeyTuple14$T1$Cfrost$core$KeyTuple14$T2$Cfrost$core$KeyTuple14$T3$Cfrost$core$KeyTuple14$T4$Cfrost$core$KeyTuple14$T5$Cfrost$core$KeyTuple14$T6$Cfrost$core$KeyTuple14$T7$Cfrost$core$KeyTuple14$T8$Cfrost$core$KeyTuple14$T9$Cfrost$core$KeyTuple14$T10$Cfrost$core$KeyTuple14$T11$Cfrost$core$KeyTuple14$T12$Cfrost$core$KeyTuple14$T13$GT$R$frost$core$Bit(p0, ((frost$core$KeyTuple14*) p1));
@@ -16,10 +16,10 @@ __attribute__((weak)) frost$core$Bit frost$core$KeyTuple14$$EQ$frost$core$KeyTup
 
 struct { frost$core$Class* cl; ITable* next; void* methods[2]; } frost$core$KeyTuple14$_frost$core$Equatable = { (frost$core$Class*) &frost$core$Equatable$class, NULL, { frost$core$KeyTuple14$$EQ$frost$core$KeyTuple14$LTfrost$core$KeyTuple14$T0$Cfrost$core$KeyTuple14$T1$Cfrost$core$KeyTuple14$T2$Cfrost$core$KeyTuple14$T3$Cfrost$core$KeyTuple14$T4$Cfrost$core$KeyTuple14$T5$Cfrost$core$KeyTuple14$T6$Cfrost$core$KeyTuple14$T7$Cfrost$core$KeyTuple14$T8$Cfrost$core$KeyTuple14$T9$Cfrost$core$KeyTuple14$T10$Cfrost$core$KeyTuple14$T11$Cfrost$core$KeyTuple14$T12$Cfrost$core$KeyTuple14$T13$GT$R$frost$core$Bit$shim, frost$core$Equatable$$NEQ$frost$core$Equatable$T$R$frost$core$Bit} };
 
-struct { frost$core$Class* cl; ITable* next; void* methods[1]; } frost$core$KeyTuple14$_frost$collections$Key = { (frost$core$Class*) &frost$collections$Key$class, (ITable*) &frost$core$KeyTuple14$_frost$core$Equatable, { frost$core$KeyTuple14$get_hash$R$frost$core$Int64} };
+struct { frost$core$Class* cl; ITable* next; void* methods[1]; } frost$core$KeyTuple14$_frost$collections$Key = { (frost$core$Class*) &frost$collections$Key$class, (ITable*) &frost$core$KeyTuple14$_frost$core$Equatable, { frost$core$KeyTuple14$get_hash$R$frost$core$Int} };
 
 static frost$core$String $s1;
-frost$core$KeyTuple14$class_type frost$core$KeyTuple14$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Object$class, (ITable*) &frost$core$KeyTuple14$_frost$collections$Key, { frost$core$KeyTuple14$get_asString$R$frost$core$String, frost$core$KeyTuple14$cleanup, frost$core$KeyTuple14$$IDX$frost$core$Int64$R$frost$core$Object$Q, frost$core$KeyTuple14$$EQ$frost$core$KeyTuple14$LTfrost$core$KeyTuple14$T0$Cfrost$core$KeyTuple14$T1$Cfrost$core$KeyTuple14$T2$Cfrost$core$KeyTuple14$T3$Cfrost$core$KeyTuple14$T4$Cfrost$core$KeyTuple14$T5$Cfrost$core$KeyTuple14$T6$Cfrost$core$KeyTuple14$T7$Cfrost$core$KeyTuple14$T8$Cfrost$core$KeyTuple14$T9$Cfrost$core$KeyTuple14$T10$Cfrost$core$KeyTuple14$T11$Cfrost$core$KeyTuple14$T12$Cfrost$core$KeyTuple14$T13$GT$R$frost$core$Bit$shim, frost$core$KeyTuple14$get_hash$R$frost$core$Int64} };
+frost$core$KeyTuple14$class_type frost$core$KeyTuple14$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Object$class, (ITable*) &frost$core$KeyTuple14$_frost$collections$Key, { frost$core$KeyTuple14$get_asString$R$frost$core$String, frost$core$KeyTuple14$cleanup, frost$core$KeyTuple14$$IDX$frost$core$Int$R$frost$core$Object$Q, frost$core$KeyTuple14$$EQ$frost$core$KeyTuple14$LTfrost$core$KeyTuple14$T0$Cfrost$core$KeyTuple14$T1$Cfrost$core$KeyTuple14$T2$Cfrost$core$KeyTuple14$T3$Cfrost$core$KeyTuple14$T4$Cfrost$core$KeyTuple14$T5$Cfrost$core$KeyTuple14$T6$Cfrost$core$KeyTuple14$T7$Cfrost$core$KeyTuple14$T8$Cfrost$core$KeyTuple14$T9$Cfrost$core$KeyTuple14$T10$Cfrost$core$KeyTuple14$T11$Cfrost$core$KeyTuple14$T12$Cfrost$core$KeyTuple14$T13$GT$R$frost$core$Bit$shim, frost$core$KeyTuple14$get_hash$R$frost$core$Int} };
 
 typedef frost$core$Bit (*$fn177)(frost$core$Equatable*, frost$core$Equatable*);
 typedef frost$core$Bit (*$fn187)(frost$core$Equatable*, frost$core$Equatable*);
@@ -35,20 +35,20 @@ typedef frost$core$Bit (*$fn277)(frost$core$Equatable*, frost$core$Equatable*);
 typedef frost$core$Bit (*$fn287)(frost$core$Equatable*, frost$core$Equatable*);
 typedef frost$core$Bit (*$fn297)(frost$core$Equatable*, frost$core$Equatable*);
 typedef frost$core$Bit (*$fn307)(frost$core$Equatable*, frost$core$Equatable*);
-typedef frost$core$Int64 (*$fn318)(frost$collections$Key*);
-typedef frost$core$Int64 (*$fn329)(frost$collections$Key*);
-typedef frost$core$Int64 (*$fn340)(frost$collections$Key*);
-typedef frost$core$Int64 (*$fn351)(frost$collections$Key*);
-typedef frost$core$Int64 (*$fn362)(frost$collections$Key*);
-typedef frost$core$Int64 (*$fn373)(frost$collections$Key*);
-typedef frost$core$Int64 (*$fn384)(frost$collections$Key*);
-typedef frost$core$Int64 (*$fn395)(frost$collections$Key*);
-typedef frost$core$Int64 (*$fn406)(frost$collections$Key*);
-typedef frost$core$Int64 (*$fn417)(frost$collections$Key*);
-typedef frost$core$Int64 (*$fn428)(frost$collections$Key*);
-typedef frost$core$Int64 (*$fn439)(frost$collections$Key*);
-typedef frost$core$Int64 (*$fn450)(frost$collections$Key*);
-typedef frost$core$Int64 (*$fn461)(frost$collections$Key*);
+typedef frost$core$Int (*$fn318)(frost$collections$Key*);
+typedef frost$core$Int (*$fn329)(frost$collections$Key*);
+typedef frost$core$Int (*$fn340)(frost$collections$Key*);
+typedef frost$core$Int (*$fn351)(frost$collections$Key*);
+typedef frost$core$Int (*$fn362)(frost$collections$Key*);
+typedef frost$core$Int (*$fn373)(frost$collections$Key*);
+typedef frost$core$Int (*$fn384)(frost$collections$Key*);
+typedef frost$core$Int (*$fn395)(frost$collections$Key*);
+typedef frost$core$Int (*$fn406)(frost$collections$Key*);
+typedef frost$core$Int (*$fn417)(frost$collections$Key*);
+typedef frost$core$Int (*$fn428)(frost$collections$Key*);
+typedef frost$core$Int (*$fn439)(frost$collections$Key*);
+typedef frost$core$Int (*$fn450)(frost$collections$Key*);
+typedef frost$core$Int (*$fn461)(frost$collections$Key*);
 typedef frost$core$String* (*$fn471)(frost$core$Object*);
 typedef frost$core$String* (*$fn480)(frost$core$Object*);
 typedef frost$core$String* (*$fn488)(frost$core$Object*);
@@ -66,7 +66,7 @@ typedef frost$core$String* (*$fn576)(frost$core$Object*);
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x4b\x65\x79\x54\x75\x70\x6c\x65\x31\x34", 21, 3192517647188727142, NULL };
 static frost$core$String $s57 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x4b\x65\x79\x54\x75\x70\x6c\x65\x31\x34\x2e\x66\x72\x6f\x73\x74", 16, 6004324867249189391, NULL };
-static frost$core$String $s58 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x4b\x65\x79\x54\x75\x70\x6c\x65\x31\x34\x2e\x5b\x5d\x28\x69\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x36\x34\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x4f\x62\x6a\x65\x63\x74\x3f", 97, 1480498616880563258, NULL };
+static frost$core$String $s58 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x4b\x65\x79\x54\x75\x70\x6c\x65\x31\x34\x2e\x5b\x5d\x28\x69\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x4f\x62\x6a\x65\x63\x74\x3f", 95, -4213642322402352040, NULL };
 static frost$core$String $s474 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x28", 1, -5808617346293461225, NULL };
 static frost$core$String $s476 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2c\x20", 2, 563935148934614481, NULL };
 static frost$core$String $s484 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2c\x20", 2, 563935148934614481, NULL };
@@ -186,9 +186,9 @@ frost$collections$Key** $tmp43 = &param0->f13;
 return;
 
 }
-frost$core$Object* frost$core$KeyTuple14$$IDX$frost$core$Int64$R$frost$core$Object$Q(frost$core$KeyTuple14* param0, frost$core$Int64 param1) {
+frost$core$Object* frost$core$KeyTuple14$$IDX$frost$core$Int$R$frost$core$Object$Q(frost$core$KeyTuple14* param0, frost$core$Int param1) {
 
-frost$core$Int64 $tmp44 = (frost$core$Int64) {0u};
+frost$core$Int $tmp44 = (frost$core$Int) {0u};
 int64_t $tmp45 = param1.value;
 int64_t $tmp46 = $tmp44.value;
 bool $tmp47 = $tmp45 >= $tmp46;
@@ -196,7 +196,7 @@ frost$core$Bit $tmp48 = (frost$core$Bit) {$tmp47};
 bool $tmp49 = $tmp48.value;
 if ($tmp49) goto block3; else goto block2;
 block3:;
-frost$core$Int64 $tmp50 = (frost$core$Int64) {14u};
+frost$core$Int $tmp50 = (frost$core$Int) {14u};
 int64_t $tmp51 = param1.value;
 int64_t $tmp52 = $tmp50.value;
 bool $tmp53 = $tmp51 < $tmp52;
@@ -204,14 +204,14 @@ frost$core$Bit $tmp54 = (frost$core$Bit) {$tmp53};
 bool $tmp55 = $tmp54.value;
 if ($tmp55) goto block1; else goto block2;
 block2:;
-frost$core$Int64 $tmp56 = (frost$core$Int64) {36u};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s57, $tmp56, &$s58);
+frost$core$Int $tmp56 = (frost$core$Int) {36u};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s57, $tmp56, &$s58);
 abort(); // unreachable
 block1:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/KeyTuple14.frost:37
-frost$core$Int64 $tmp59 = (frost$core$Int64) {0u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from KeyTuple14.frost:38:18
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
+frost$core$Int $tmp59 = (frost$core$Int) {0u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from KeyTuple14.frost:38:18
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp60 = param1.value;
 int64_t $tmp61 = $tmp59.value;
 bool $tmp62 = $tmp60 == $tmp61;
@@ -225,9 +225,9 @@ frost$collections$Key* $tmp66 = *$tmp65;
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp66));
 return ((frost$core$Object*) $tmp66);
 block6:;
-frost$core$Int64 $tmp67 = (frost$core$Int64) {1u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from KeyTuple14.frost:39:18
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
+frost$core$Int $tmp67 = (frost$core$Int) {1u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from KeyTuple14.frost:39:18
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp68 = param1.value;
 int64_t $tmp69 = $tmp67.value;
 bool $tmp70 = $tmp68 == $tmp69;
@@ -241,9 +241,9 @@ frost$collections$Key* $tmp74 = *$tmp73;
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp74));
 return ((frost$core$Object*) $tmp74);
 block9:;
-frost$core$Int64 $tmp75 = (frost$core$Int64) {2u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from KeyTuple14.frost:40:18
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
+frost$core$Int $tmp75 = (frost$core$Int) {2u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from KeyTuple14.frost:40:18
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp76 = param1.value;
 int64_t $tmp77 = $tmp75.value;
 bool $tmp78 = $tmp76 == $tmp77;
@@ -257,9 +257,9 @@ frost$collections$Key* $tmp82 = *$tmp81;
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp82));
 return ((frost$core$Object*) $tmp82);
 block12:;
-frost$core$Int64 $tmp83 = (frost$core$Int64) {3u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from KeyTuple14.frost:41:18
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
+frost$core$Int $tmp83 = (frost$core$Int) {3u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from KeyTuple14.frost:41:18
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp84 = param1.value;
 int64_t $tmp85 = $tmp83.value;
 bool $tmp86 = $tmp84 == $tmp85;
@@ -273,9 +273,9 @@ frost$collections$Key* $tmp90 = *$tmp89;
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp90));
 return ((frost$core$Object*) $tmp90);
 block15:;
-frost$core$Int64 $tmp91 = (frost$core$Int64) {4u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from KeyTuple14.frost:42:18
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
+frost$core$Int $tmp91 = (frost$core$Int) {4u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from KeyTuple14.frost:42:18
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp92 = param1.value;
 int64_t $tmp93 = $tmp91.value;
 bool $tmp94 = $tmp92 == $tmp93;
@@ -289,9 +289,9 @@ frost$collections$Key* $tmp98 = *$tmp97;
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp98));
 return ((frost$core$Object*) $tmp98);
 block18:;
-frost$core$Int64 $tmp99 = (frost$core$Int64) {5u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from KeyTuple14.frost:43:18
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
+frost$core$Int $tmp99 = (frost$core$Int) {5u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from KeyTuple14.frost:43:18
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp100 = param1.value;
 int64_t $tmp101 = $tmp99.value;
 bool $tmp102 = $tmp100 == $tmp101;
@@ -305,9 +305,9 @@ frost$collections$Key* $tmp106 = *$tmp105;
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp106));
 return ((frost$core$Object*) $tmp106);
 block21:;
-frost$core$Int64 $tmp107 = (frost$core$Int64) {6u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from KeyTuple14.frost:44:18
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
+frost$core$Int $tmp107 = (frost$core$Int) {6u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from KeyTuple14.frost:44:18
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp108 = param1.value;
 int64_t $tmp109 = $tmp107.value;
 bool $tmp110 = $tmp108 == $tmp109;
@@ -321,9 +321,9 @@ frost$collections$Key* $tmp114 = *$tmp113;
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp114));
 return ((frost$core$Object*) $tmp114);
 block24:;
-frost$core$Int64 $tmp115 = (frost$core$Int64) {7u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from KeyTuple14.frost:45:18
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
+frost$core$Int $tmp115 = (frost$core$Int) {7u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from KeyTuple14.frost:45:18
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp116 = param1.value;
 int64_t $tmp117 = $tmp115.value;
 bool $tmp118 = $tmp116 == $tmp117;
@@ -337,9 +337,9 @@ frost$collections$Key* $tmp122 = *$tmp121;
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp122));
 return ((frost$core$Object*) $tmp122);
 block27:;
-frost$core$Int64 $tmp123 = (frost$core$Int64) {8u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from KeyTuple14.frost:46:18
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
+frost$core$Int $tmp123 = (frost$core$Int) {8u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from KeyTuple14.frost:46:18
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp124 = param1.value;
 int64_t $tmp125 = $tmp123.value;
 bool $tmp126 = $tmp124 == $tmp125;
@@ -353,9 +353,9 @@ frost$collections$Key* $tmp130 = *$tmp129;
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp130));
 return ((frost$core$Object*) $tmp130);
 block30:;
-frost$core$Int64 $tmp131 = (frost$core$Int64) {9u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from KeyTuple14.frost:47:18
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
+frost$core$Int $tmp131 = (frost$core$Int) {9u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from KeyTuple14.frost:47:18
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp132 = param1.value;
 int64_t $tmp133 = $tmp131.value;
 bool $tmp134 = $tmp132 == $tmp133;
@@ -369,9 +369,9 @@ frost$collections$Key* $tmp138 = *$tmp137;
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp138));
 return ((frost$core$Object*) $tmp138);
 block33:;
-frost$core$Int64 $tmp139 = (frost$core$Int64) {10u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from KeyTuple14.frost:48:18
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
+frost$core$Int $tmp139 = (frost$core$Int) {10u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from KeyTuple14.frost:48:18
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp140 = param1.value;
 int64_t $tmp141 = $tmp139.value;
 bool $tmp142 = $tmp140 == $tmp141;
@@ -385,9 +385,9 @@ frost$collections$Key* $tmp146 = *$tmp145;
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp146));
 return ((frost$core$Object*) $tmp146);
 block36:;
-frost$core$Int64 $tmp147 = (frost$core$Int64) {11u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from KeyTuple14.frost:49:18
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
+frost$core$Int $tmp147 = (frost$core$Int) {11u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from KeyTuple14.frost:49:18
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp148 = param1.value;
 int64_t $tmp149 = $tmp147.value;
 bool $tmp150 = $tmp148 == $tmp149;
@@ -401,9 +401,9 @@ frost$collections$Key* $tmp154 = *$tmp153;
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp154));
 return ((frost$core$Object*) $tmp154);
 block39:;
-frost$core$Int64 $tmp155 = (frost$core$Int64) {12u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from KeyTuple14.frost:50:18
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
+frost$core$Int $tmp155 = (frost$core$Int) {12u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from KeyTuple14.frost:50:18
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp156 = param1.value;
 int64_t $tmp157 = $tmp155.value;
 bool $tmp158 = $tmp156 == $tmp157;
@@ -417,9 +417,9 @@ frost$collections$Key* $tmp162 = *$tmp161;
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp162));
 return ((frost$core$Object*) $tmp162);
 block42:;
-frost$core$Int64 $tmp163 = (frost$core$Int64) {13u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from KeyTuple14.frost:51:18
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
+frost$core$Int $tmp163 = (frost$core$Int) {13u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from KeyTuple14.frost:51:18
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp164 = param1.value;
 int64_t $tmp165 = $tmp163.value;
 bool $tmp166 = $tmp164 == $tmp165;
@@ -697,14 +697,14 @@ frost$core$Bit $tmp311 = (frost$core$Bit) {true};
 return $tmp311;
 
 }
-frost$core$Int64 frost$core$KeyTuple14$get_hash$R$frost$core$Int64(frost$core$KeyTuple14* param0) {
+frost$core$Int frost$core$KeyTuple14$get_hash$R$frost$core$Int(frost$core$KeyTuple14* param0) {
 
-frost$core$Int64 local0;
+frost$core$Int local0;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/KeyTuple14.frost:76
-frost$core$Int64 $tmp312 = (frost$core$Int64) {0u};
+frost$core$Int $tmp312 = (frost$core$Int) {0u};
 *(&local0) = $tmp312;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/KeyTuple14.frost:77
-frost$core$Int64 $tmp313 = *(&local0);
+frost$core$Int $tmp313 = *(&local0);
 frost$collections$Key** $tmp314 = &param0->f0;
 frost$collections$Key* $tmp315 = *$tmp314;
 ITable* $tmp316 = $tmp315->$class->itable;
@@ -712,16 +712,16 @@ while ($tmp316->$class != (frost$core$Class*) &frost$collections$Key$class) {
     $tmp316 = $tmp316->next;
 }
 $fn318 $tmp317 = $tmp316->methods[0];
-frost$core$Int64 $tmp319 = $tmp317($tmp315);
-// begin inline call to function frost.core.Int64.~~(other:frost.core.Int64):frost.core.Int64 from KeyTuple14.frost:77:9
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:197
+frost$core$Int $tmp319 = $tmp317($tmp315);
+// begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from KeyTuple14.frost:77:9
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:365
 int64_t $tmp320 = $tmp313.value;
 int64_t $tmp321 = $tmp319.value;
 int64_t $tmp322 = $tmp320 ^ $tmp321;
-frost$core$Int64 $tmp323 = (frost$core$Int64) {$tmp322};
+frost$core$Int $tmp323 = (frost$core$Int) {$tmp322};
 *(&local0) = $tmp323;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/KeyTuple14.frost:78
-frost$core$Int64 $tmp324 = *(&local0);
+frost$core$Int $tmp324 = *(&local0);
 frost$collections$Key** $tmp325 = &param0->f1;
 frost$collections$Key* $tmp326 = *$tmp325;
 ITable* $tmp327 = $tmp326->$class->itable;
@@ -729,16 +729,16 @@ while ($tmp327->$class != (frost$core$Class*) &frost$collections$Key$class) {
     $tmp327 = $tmp327->next;
 }
 $fn329 $tmp328 = $tmp327->methods[0];
-frost$core$Int64 $tmp330 = $tmp328($tmp326);
-// begin inline call to function frost.core.Int64.~~(other:frost.core.Int64):frost.core.Int64 from KeyTuple14.frost:78:9
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:197
+frost$core$Int $tmp330 = $tmp328($tmp326);
+// begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from KeyTuple14.frost:78:9
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:365
 int64_t $tmp331 = $tmp324.value;
 int64_t $tmp332 = $tmp330.value;
 int64_t $tmp333 = $tmp331 ^ $tmp332;
-frost$core$Int64 $tmp334 = (frost$core$Int64) {$tmp333};
+frost$core$Int $tmp334 = (frost$core$Int) {$tmp333};
 *(&local0) = $tmp334;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/KeyTuple14.frost:79
-frost$core$Int64 $tmp335 = *(&local0);
+frost$core$Int $tmp335 = *(&local0);
 frost$collections$Key** $tmp336 = &param0->f2;
 frost$collections$Key* $tmp337 = *$tmp336;
 ITable* $tmp338 = $tmp337->$class->itable;
@@ -746,16 +746,16 @@ while ($tmp338->$class != (frost$core$Class*) &frost$collections$Key$class) {
     $tmp338 = $tmp338->next;
 }
 $fn340 $tmp339 = $tmp338->methods[0];
-frost$core$Int64 $tmp341 = $tmp339($tmp337);
-// begin inline call to function frost.core.Int64.~~(other:frost.core.Int64):frost.core.Int64 from KeyTuple14.frost:79:9
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:197
+frost$core$Int $tmp341 = $tmp339($tmp337);
+// begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from KeyTuple14.frost:79:9
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:365
 int64_t $tmp342 = $tmp335.value;
 int64_t $tmp343 = $tmp341.value;
 int64_t $tmp344 = $tmp342 ^ $tmp343;
-frost$core$Int64 $tmp345 = (frost$core$Int64) {$tmp344};
+frost$core$Int $tmp345 = (frost$core$Int) {$tmp344};
 *(&local0) = $tmp345;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/KeyTuple14.frost:80
-frost$core$Int64 $tmp346 = *(&local0);
+frost$core$Int $tmp346 = *(&local0);
 frost$collections$Key** $tmp347 = &param0->f3;
 frost$collections$Key* $tmp348 = *$tmp347;
 ITable* $tmp349 = $tmp348->$class->itable;
@@ -763,16 +763,16 @@ while ($tmp349->$class != (frost$core$Class*) &frost$collections$Key$class) {
     $tmp349 = $tmp349->next;
 }
 $fn351 $tmp350 = $tmp349->methods[0];
-frost$core$Int64 $tmp352 = $tmp350($tmp348);
-// begin inline call to function frost.core.Int64.~~(other:frost.core.Int64):frost.core.Int64 from KeyTuple14.frost:80:9
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:197
+frost$core$Int $tmp352 = $tmp350($tmp348);
+// begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from KeyTuple14.frost:80:9
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:365
 int64_t $tmp353 = $tmp346.value;
 int64_t $tmp354 = $tmp352.value;
 int64_t $tmp355 = $tmp353 ^ $tmp354;
-frost$core$Int64 $tmp356 = (frost$core$Int64) {$tmp355};
+frost$core$Int $tmp356 = (frost$core$Int) {$tmp355};
 *(&local0) = $tmp356;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/KeyTuple14.frost:81
-frost$core$Int64 $tmp357 = *(&local0);
+frost$core$Int $tmp357 = *(&local0);
 frost$collections$Key** $tmp358 = &param0->f4;
 frost$collections$Key* $tmp359 = *$tmp358;
 ITable* $tmp360 = $tmp359->$class->itable;
@@ -780,16 +780,16 @@ while ($tmp360->$class != (frost$core$Class*) &frost$collections$Key$class) {
     $tmp360 = $tmp360->next;
 }
 $fn362 $tmp361 = $tmp360->methods[0];
-frost$core$Int64 $tmp363 = $tmp361($tmp359);
-// begin inline call to function frost.core.Int64.~~(other:frost.core.Int64):frost.core.Int64 from KeyTuple14.frost:81:9
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:197
+frost$core$Int $tmp363 = $tmp361($tmp359);
+// begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from KeyTuple14.frost:81:9
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:365
 int64_t $tmp364 = $tmp357.value;
 int64_t $tmp365 = $tmp363.value;
 int64_t $tmp366 = $tmp364 ^ $tmp365;
-frost$core$Int64 $tmp367 = (frost$core$Int64) {$tmp366};
+frost$core$Int $tmp367 = (frost$core$Int) {$tmp366};
 *(&local0) = $tmp367;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/KeyTuple14.frost:82
-frost$core$Int64 $tmp368 = *(&local0);
+frost$core$Int $tmp368 = *(&local0);
 frost$collections$Key** $tmp369 = &param0->f5;
 frost$collections$Key* $tmp370 = *$tmp369;
 ITable* $tmp371 = $tmp370->$class->itable;
@@ -797,16 +797,16 @@ while ($tmp371->$class != (frost$core$Class*) &frost$collections$Key$class) {
     $tmp371 = $tmp371->next;
 }
 $fn373 $tmp372 = $tmp371->methods[0];
-frost$core$Int64 $tmp374 = $tmp372($tmp370);
-// begin inline call to function frost.core.Int64.~~(other:frost.core.Int64):frost.core.Int64 from KeyTuple14.frost:82:9
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:197
+frost$core$Int $tmp374 = $tmp372($tmp370);
+// begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from KeyTuple14.frost:82:9
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:365
 int64_t $tmp375 = $tmp368.value;
 int64_t $tmp376 = $tmp374.value;
 int64_t $tmp377 = $tmp375 ^ $tmp376;
-frost$core$Int64 $tmp378 = (frost$core$Int64) {$tmp377};
+frost$core$Int $tmp378 = (frost$core$Int) {$tmp377};
 *(&local0) = $tmp378;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/KeyTuple14.frost:83
-frost$core$Int64 $tmp379 = *(&local0);
+frost$core$Int $tmp379 = *(&local0);
 frost$collections$Key** $tmp380 = &param0->f6;
 frost$collections$Key* $tmp381 = *$tmp380;
 ITable* $tmp382 = $tmp381->$class->itable;
@@ -814,16 +814,16 @@ while ($tmp382->$class != (frost$core$Class*) &frost$collections$Key$class) {
     $tmp382 = $tmp382->next;
 }
 $fn384 $tmp383 = $tmp382->methods[0];
-frost$core$Int64 $tmp385 = $tmp383($tmp381);
-// begin inline call to function frost.core.Int64.~~(other:frost.core.Int64):frost.core.Int64 from KeyTuple14.frost:83:9
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:197
+frost$core$Int $tmp385 = $tmp383($tmp381);
+// begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from KeyTuple14.frost:83:9
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:365
 int64_t $tmp386 = $tmp379.value;
 int64_t $tmp387 = $tmp385.value;
 int64_t $tmp388 = $tmp386 ^ $tmp387;
-frost$core$Int64 $tmp389 = (frost$core$Int64) {$tmp388};
+frost$core$Int $tmp389 = (frost$core$Int) {$tmp388};
 *(&local0) = $tmp389;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/KeyTuple14.frost:84
-frost$core$Int64 $tmp390 = *(&local0);
+frost$core$Int $tmp390 = *(&local0);
 frost$collections$Key** $tmp391 = &param0->f7;
 frost$collections$Key* $tmp392 = *$tmp391;
 ITable* $tmp393 = $tmp392->$class->itable;
@@ -831,16 +831,16 @@ while ($tmp393->$class != (frost$core$Class*) &frost$collections$Key$class) {
     $tmp393 = $tmp393->next;
 }
 $fn395 $tmp394 = $tmp393->methods[0];
-frost$core$Int64 $tmp396 = $tmp394($tmp392);
-// begin inline call to function frost.core.Int64.~~(other:frost.core.Int64):frost.core.Int64 from KeyTuple14.frost:84:9
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:197
+frost$core$Int $tmp396 = $tmp394($tmp392);
+// begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from KeyTuple14.frost:84:9
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:365
 int64_t $tmp397 = $tmp390.value;
 int64_t $tmp398 = $tmp396.value;
 int64_t $tmp399 = $tmp397 ^ $tmp398;
-frost$core$Int64 $tmp400 = (frost$core$Int64) {$tmp399};
+frost$core$Int $tmp400 = (frost$core$Int) {$tmp399};
 *(&local0) = $tmp400;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/KeyTuple14.frost:85
-frost$core$Int64 $tmp401 = *(&local0);
+frost$core$Int $tmp401 = *(&local0);
 frost$collections$Key** $tmp402 = &param0->f8;
 frost$collections$Key* $tmp403 = *$tmp402;
 ITable* $tmp404 = $tmp403->$class->itable;
@@ -848,16 +848,16 @@ while ($tmp404->$class != (frost$core$Class*) &frost$collections$Key$class) {
     $tmp404 = $tmp404->next;
 }
 $fn406 $tmp405 = $tmp404->methods[0];
-frost$core$Int64 $tmp407 = $tmp405($tmp403);
-// begin inline call to function frost.core.Int64.~~(other:frost.core.Int64):frost.core.Int64 from KeyTuple14.frost:85:9
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:197
+frost$core$Int $tmp407 = $tmp405($tmp403);
+// begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from KeyTuple14.frost:85:9
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:365
 int64_t $tmp408 = $tmp401.value;
 int64_t $tmp409 = $tmp407.value;
 int64_t $tmp410 = $tmp408 ^ $tmp409;
-frost$core$Int64 $tmp411 = (frost$core$Int64) {$tmp410};
+frost$core$Int $tmp411 = (frost$core$Int) {$tmp410};
 *(&local0) = $tmp411;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/KeyTuple14.frost:86
-frost$core$Int64 $tmp412 = *(&local0);
+frost$core$Int $tmp412 = *(&local0);
 frost$collections$Key** $tmp413 = &param0->f9;
 frost$collections$Key* $tmp414 = *$tmp413;
 ITable* $tmp415 = $tmp414->$class->itable;
@@ -865,16 +865,16 @@ while ($tmp415->$class != (frost$core$Class*) &frost$collections$Key$class) {
     $tmp415 = $tmp415->next;
 }
 $fn417 $tmp416 = $tmp415->methods[0];
-frost$core$Int64 $tmp418 = $tmp416($tmp414);
-// begin inline call to function frost.core.Int64.~~(other:frost.core.Int64):frost.core.Int64 from KeyTuple14.frost:86:9
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:197
+frost$core$Int $tmp418 = $tmp416($tmp414);
+// begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from KeyTuple14.frost:86:9
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:365
 int64_t $tmp419 = $tmp412.value;
 int64_t $tmp420 = $tmp418.value;
 int64_t $tmp421 = $tmp419 ^ $tmp420;
-frost$core$Int64 $tmp422 = (frost$core$Int64) {$tmp421};
+frost$core$Int $tmp422 = (frost$core$Int) {$tmp421};
 *(&local0) = $tmp422;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/KeyTuple14.frost:87
-frost$core$Int64 $tmp423 = *(&local0);
+frost$core$Int $tmp423 = *(&local0);
 frost$collections$Key** $tmp424 = &param0->f10;
 frost$collections$Key* $tmp425 = *$tmp424;
 ITable* $tmp426 = $tmp425->$class->itable;
@@ -882,16 +882,16 @@ while ($tmp426->$class != (frost$core$Class*) &frost$collections$Key$class) {
     $tmp426 = $tmp426->next;
 }
 $fn428 $tmp427 = $tmp426->methods[0];
-frost$core$Int64 $tmp429 = $tmp427($tmp425);
-// begin inline call to function frost.core.Int64.~~(other:frost.core.Int64):frost.core.Int64 from KeyTuple14.frost:87:9
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:197
+frost$core$Int $tmp429 = $tmp427($tmp425);
+// begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from KeyTuple14.frost:87:9
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:365
 int64_t $tmp430 = $tmp423.value;
 int64_t $tmp431 = $tmp429.value;
 int64_t $tmp432 = $tmp430 ^ $tmp431;
-frost$core$Int64 $tmp433 = (frost$core$Int64) {$tmp432};
+frost$core$Int $tmp433 = (frost$core$Int) {$tmp432};
 *(&local0) = $tmp433;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/KeyTuple14.frost:88
-frost$core$Int64 $tmp434 = *(&local0);
+frost$core$Int $tmp434 = *(&local0);
 frost$collections$Key** $tmp435 = &param0->f11;
 frost$collections$Key* $tmp436 = *$tmp435;
 ITable* $tmp437 = $tmp436->$class->itable;
@@ -899,16 +899,16 @@ while ($tmp437->$class != (frost$core$Class*) &frost$collections$Key$class) {
     $tmp437 = $tmp437->next;
 }
 $fn439 $tmp438 = $tmp437->methods[0];
-frost$core$Int64 $tmp440 = $tmp438($tmp436);
-// begin inline call to function frost.core.Int64.~~(other:frost.core.Int64):frost.core.Int64 from KeyTuple14.frost:88:9
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:197
+frost$core$Int $tmp440 = $tmp438($tmp436);
+// begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from KeyTuple14.frost:88:9
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:365
 int64_t $tmp441 = $tmp434.value;
 int64_t $tmp442 = $tmp440.value;
 int64_t $tmp443 = $tmp441 ^ $tmp442;
-frost$core$Int64 $tmp444 = (frost$core$Int64) {$tmp443};
+frost$core$Int $tmp444 = (frost$core$Int) {$tmp443};
 *(&local0) = $tmp444;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/KeyTuple14.frost:89
-frost$core$Int64 $tmp445 = *(&local0);
+frost$core$Int $tmp445 = *(&local0);
 frost$collections$Key** $tmp446 = &param0->f12;
 frost$collections$Key* $tmp447 = *$tmp446;
 ITable* $tmp448 = $tmp447->$class->itable;
@@ -916,16 +916,16 @@ while ($tmp448->$class != (frost$core$Class*) &frost$collections$Key$class) {
     $tmp448 = $tmp448->next;
 }
 $fn450 $tmp449 = $tmp448->methods[0];
-frost$core$Int64 $tmp451 = $tmp449($tmp447);
-// begin inline call to function frost.core.Int64.~~(other:frost.core.Int64):frost.core.Int64 from KeyTuple14.frost:89:9
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:197
+frost$core$Int $tmp451 = $tmp449($tmp447);
+// begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from KeyTuple14.frost:89:9
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:365
 int64_t $tmp452 = $tmp445.value;
 int64_t $tmp453 = $tmp451.value;
 int64_t $tmp454 = $tmp452 ^ $tmp453;
-frost$core$Int64 $tmp455 = (frost$core$Int64) {$tmp454};
+frost$core$Int $tmp455 = (frost$core$Int) {$tmp454};
 *(&local0) = $tmp455;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/KeyTuple14.frost:90
-frost$core$Int64 $tmp456 = *(&local0);
+frost$core$Int $tmp456 = *(&local0);
 frost$collections$Key** $tmp457 = &param0->f13;
 frost$collections$Key* $tmp458 = *$tmp457;
 ITable* $tmp459 = $tmp458->$class->itable;
@@ -933,16 +933,16 @@ while ($tmp459->$class != (frost$core$Class*) &frost$collections$Key$class) {
     $tmp459 = $tmp459->next;
 }
 $fn461 $tmp460 = $tmp459->methods[0];
-frost$core$Int64 $tmp462 = $tmp460($tmp458);
-// begin inline call to function frost.core.Int64.~~(other:frost.core.Int64):frost.core.Int64 from KeyTuple14.frost:90:9
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:197
+frost$core$Int $tmp462 = $tmp460($tmp458);
+// begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from KeyTuple14.frost:90:9
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:365
 int64_t $tmp463 = $tmp456.value;
 int64_t $tmp464 = $tmp462.value;
 int64_t $tmp465 = $tmp463 ^ $tmp464;
-frost$core$Int64 $tmp466 = (frost$core$Int64) {$tmp465};
+frost$core$Int $tmp466 = (frost$core$Int) {$tmp465};
 *(&local0) = $tmp466;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/KeyTuple14.frost:91
-frost$core$Int64 $tmp467 = *(&local0);
+frost$core$Int $tmp467 = *(&local0);
 return $tmp467;
 
 }

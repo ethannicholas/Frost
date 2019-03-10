@@ -1,12 +1,12 @@
 #pragma once
 #include "frost_c.h"
-#include "frost/core/Int64_types.h"
+#include "frost/core/Int_types.h"
 typedef struct frost$core$String frost$core$String;
 typedef struct frost$core$Class frost$core$Class;
 #include "org/frostlang/frostc/IR/Block/ID_types.h"
 
 typedef struct org$frostlang$frostc$IR$Block$ID {
-    frost$core$Int64 value;
+    frost$core$Int value;
 } org$frostlang$frostc$IR$Block$ID;
 #include "frost/core/Class.h"
 typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[5]; } org$frostlang$frostc$IR$Block$ID$class_type;

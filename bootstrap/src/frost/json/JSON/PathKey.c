@@ -6,6 +6,7 @@
 #include "frost/core/Bit.h"
 #include "frost/core/Object.h"
 #include "frost/core/String/Index.h"
+#include "frost/core/Int.h"
 #include "frost/core/Int64.h"
 #include "frost/core/Frost.h"
 
@@ -31,14 +32,14 @@ void frost$json$JSON$PathKey$cleanup(frost$json$JSON$PathKey* param0) {
 
 frost$core$String* local0 = NULL;
 frost$core$String$Index local1;
-frost$core$Int64 local2;
+frost$core$Int local2;
 frost$core$String$Index local3;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/json/JSON.frost:43
 frost$core$Int64* $tmp2 = &param0->$rawValue;
 frost$core$Int64 $tmp3 = *$tmp2;
 frost$core$Int64 $tmp4 = (frost$core$Int64) {0u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from JSON.frost:43:5
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
 int64_t $tmp5 = $tmp3.value;
 int64_t $tmp6 = $tmp4.value;
 bool $tmp7 = $tmp5 == $tmp6;
@@ -66,7 +67,7 @@ goto block1;
 block3:;
 frost$core$Int64 $tmp17 = (frost$core$Int64) {1u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from JSON.frost:43:5
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
 int64_t $tmp18 = $tmp3.value;
 int64_t $tmp19 = $tmp17.value;
 bool $tmp20 = $tmp18 == $tmp19;
@@ -74,8 +75,8 @@ frost$core$Bit $tmp21 = (frost$core$Bit) {$tmp20};
 bool $tmp22 = $tmp21.value;
 if ($tmp22) goto block5; else goto block1;
 block5:;
-frost$core$Int64* $tmp23 = (frost$core$Int64*) (param0->$data + 0);
-frost$core$Int64 $tmp24 = *$tmp23;
+frost$core$Int* $tmp23 = (frost$core$Int*) (param0->$data + 0);
+frost$core$Int $tmp24 = *$tmp23;
 *(&local2) = $tmp24;
 frost$core$String$Index* $tmp25 = (frost$core$String$Index*) (param0->$data + 8);
 frost$core$String$Index $tmp26 = *$tmp25;
@@ -102,13 +103,13 @@ frost$core$String$Index* $tmp29 = (frost$core$String$Index*) (param0->$data + 8)
 return;
 
 }
-void frost$json$JSON$PathKey$init$frost$core$Int64$frost$core$Int64$frost$core$String$Index(frost$json$JSON$PathKey* param0, frost$core$Int64 param1, frost$core$Int64 param2, frost$core$String$Index param3) {
+void frost$json$JSON$PathKey$init$frost$core$Int64$frost$core$Int$frost$core$String$Index(frost$json$JSON$PathKey* param0, frost$core$Int64 param1, frost$core$Int param2, frost$core$String$Index param3) {
 
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/json/JSON.frost:43
 frost$core$Int64* $tmp30 = &param0->$rawValue;
 *$tmp30 = param1;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/json/JSON.frost:43
-frost$core$Int64* $tmp31 = (frost$core$Int64*) (param0->$data + 0);
+frost$core$Int* $tmp31 = (frost$core$Int*) (param0->$data + 0);
 *$tmp31 = param2;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/json/JSON.frost:43
 frost$core$String$Index* $tmp32 = (frost$core$String$Index*) (param0->$data + 8);

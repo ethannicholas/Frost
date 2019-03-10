@@ -26,7 +26,6 @@ class Int64 : Value, Key<Int64>, Comparable<Int64>, Formattable, ListView<Bit> {
 
     @private
     @implicit
-    @priority(1)
     init(value:builtin_int64) {
         self.value := value
     }
@@ -64,6 +63,12 @@ class Int64 : Value, Key<Int64>, Comparable<Int64>, Formattable, ListView<Bit> {
     @implicit
     @priority(-1)
     init(value:UInt32) {
+        self.value := value.value->builtin_int64
+    }
+
+    @implicit
+    @priority(-4)
+    init(value:Int) {
         self.value := value.value->builtin_int64
     }
 
@@ -151,13 +156,13 @@ class Int64 : Value, Key<Int64>, Comparable<Int64>, Formattable, ListView<Bit> {
     }
 
     ===Divides this number by another number.===
-    @priority(15)
+    @priority(17)
     function /(other:Real32):Real64 {
         return value->builtin_float64 / other.value->builtin_float64
     }
 
     ===Divides this number by another number.===
-    @priority(16)
+    @priority(18)
     function /(other:Real64):Real64 {
         return value->builtin_float64 / other.value
     }
@@ -240,6 +245,12 @@ class Int64 : Value, Key<Int64>, Comparable<Int64>, Formattable, ListView<Bit> {
         return value = other.value
     }
 
+    ===Returns `true` if this number is equal to the given number.===
+    @priority(16)
+    function =(other:Int):Bit {
+        return value = other.value->builtin_int64
+    }
+
     ===Returns `true` if this number is not equal to the given number.===
     @priority(8)
     function !=(other:Int8):Bit {
@@ -263,6 +274,12 @@ class Int64 : Value, Key<Int64>, Comparable<Int64>, Formattable, ListView<Bit> {
     @priority(20)
     function !=(other:Int64):Bit {
         return value != other.value
+    }
+
+    ===Returns `true` if this number is not equal to the given number.===
+    @priority(16)
+    function !=(other:Int):Bit {
+        return value != other.value->builtin_int64
     }
 
     ===Returns `true` if this number is less than the given number.===
@@ -290,6 +307,12 @@ class Int64 : Value, Key<Int64>, Comparable<Int64>, Formattable, ListView<Bit> {
         return value < other.value
     }
 
+    ===Returns `true` if this number is less than the given number.===
+    @priority(16)
+    function <(other:Int):Bit {
+        return value < other.value->builtin_int64
+    }
+
     ===Returns `true` if this number is greater than the given number.===
     @priority(8)
     function >(other:Int8):Bit {
@@ -313,6 +336,12 @@ class Int64 : Value, Key<Int64>, Comparable<Int64>, Formattable, ListView<Bit> {
     @priority(20)
     function >(other:Int64):Bit {
         return value > other.value
+    }
+
+    ===Returns `true` if this number is greater than the given number.===
+    @priority(16)
+    function >(other:Int):Bit {
+        return value > other.value->builtin_int64
     }
 
     ===Returns `true` if this number is greater than or equal to the given number.===
@@ -340,6 +369,12 @@ class Int64 : Value, Key<Int64>, Comparable<Int64>, Formattable, ListView<Bit> {
         return value >= other.value
     }
 
+    ===Returns `true` if this number is greater than or equal to the given number.===
+    @priority(16)
+    function >=(other:Int):Bit {
+        return value >= other.value->builtin_int64
+    }
+
     ===Returns `true` if this number is less than or equal to the given number.===
     @priority(8)
     function <=(other:Int8):Bit {
@@ -363,6 +398,12 @@ class Int64 : Value, Key<Int64>, Comparable<Int64>, Formattable, ListView<Bit> {
     @priority(20)
     function <=(other:Int64):Bit {
         return value <= other.value
+    }
+
+    ===Returns `true` if this number is less than or equal to the given number.===
+    @priority(16)
+    function <=(other:Int):Bit {
+        return value <= other.value->builtin_int64
     }
 
     ===The absolute value of this number.===
@@ -410,6 +451,16 @@ class Int64 : Value, Key<Int64>, Comparable<Int64>, Formattable, ListView<Bit> {
         return other.value
     }
 
+    ===Returns the smaller (closest to negative infinity) of this number and another number.===
+    @priority(16)
+    function min(other:Int):Int64 {
+        if value < other.value->builtin_int64 {
+            return value
+        }
+        return other.value->builtin_int64
+    }
+
+
 
 
 
@@ -450,6 +501,16 @@ class Int64 : Value, Key<Int64>, Comparable<Int64>, Formattable, ListView<Bit> {
         return other.value
     }
 
+    ===Returns the larger (closest to positive infinity) of this number and another number.===
+    @priority(16)
+    function max(other:Int):Int64 {
+        if value > other.value->builtin_int64 {
+            return value
+        }
+        return other.value->builtin_int64
+    }
+
+
 
 
 
@@ -468,7 +529,7 @@ class Int64 : Value, Key<Int64>, Comparable<Int64>, Formattable, ListView<Bit> {
 
     ===Returns a single bit from this number, where index 0 is the least significant bit.===
     @override
-    function [](index:Int64):Bit {
+    function [](index:Int):Bit {
         return self && (1 << index) != 0
     }
 
@@ -490,7 +551,7 @@ class Int64 : Value, Key<Int64>, Comparable<Int64>, Formattable, ListView<Bit> {
 
     @override
     function get_hash():Int {
-        return Int(value)
+        return Int(value->builtin_int64)
     }
 
     ===Parses a string as a number in the specified radix. Returns `null` if the parse fails.===
@@ -513,6 +574,12 @@ class Int64 : Value, Key<Int64>, Comparable<Int64>, Formattable, ListView<Bit> {
         }
     }
 
+    ===Returns this number truncated to a 32 bit signed number.===
+    property asInt:Int
+    function get_asInt():Int {
+        return Int(value->builtin_int64)
+    }
+
     ===Returns this number truncated to an 8 bit signed number.===
     property asInt8:Int8
     function get_asInt8():Int8 {
@@ -529,6 +596,12 @@ class Int64 : Value, Key<Int64>, Comparable<Int64>, Formattable, ListView<Bit> {
     property asInt32:Int32
     function get_asInt32():Int32 {
         return Int32(value->builtin_int32)
+    }
+
+    ===Returns this number truncated to a 32 bit unsigned number.===
+    property asUInt:UInt
+    function get_asUInt():UInt {
+        return UInt(value->builtin_uint)
     }
 
     ===Returns this number truncated to an 8 bit unsigned number.===

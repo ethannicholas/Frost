@@ -5,12 +5,13 @@
 #include "frost/core/UInt8_types.h"
 #include "frost/core/Bit_types.h"
 typedef struct frost$core$String frost$core$String;
-#include "frost/core/Int64_types.h"
+#include "frost/core/Int_types.h"
 #include "frost/core/Char16_types.h"
 #include "frost/core/Char32_types.h"
 #include "frost/core/Int8_types.h"
 #include "frost/core/Int16_types.h"
 #include "frost/core/Int32_types.h"
+#include "frost/core/Int64_types.h"
 #include "frost/core/UInt16_types.h"
 #include "frost/core/UInt32_types.h"
 #include "frost/core/UInt64_types.h"
@@ -23,12 +24,12 @@ frost$core$Bit frost$core$Char8$$GT$frost$core$Char8$R$frost$core$Bit(frost$core
 frost$core$Bit frost$core$Char8$$LE$frost$core$Char8$R$frost$core$Bit(frost$core$Char8 self, frost$core$Char8 p_other);
 frost$core$Bit frost$core$Char8$$GE$frost$core$Char8$R$frost$core$Bit(frost$core$Char8 self, frost$core$Char8 p_other);
 frost$core$Bit frost$core$Char8$isWhitespace$R$frost$core$Bit(frost$core$Char8 self);
-frost$core$String* frost$core$Char8$$MUL$frost$core$Int64$R$frost$core$String(frost$core$Char8 self, frost$core$Int64 p_count);
-frost$core$String* frost$core$Char8$$MUL$frost$core$Int64$frost$core$Char8$R$frost$core$String(frost$core$Int64 p_count, frost$core$Char8 p_char);
-frost$core$Int64 frost$core$Char8$get_hash$R$frost$core$Int64(frost$core$Char8 self);
+frost$core$String* frost$core$Char8$$MUL$frost$core$Int$R$frost$core$String(frost$core$Char8 self, frost$core$Int p_count);
+frost$core$String* frost$core$Char8$$MUL$frost$core$Int$frost$core$Char8$R$frost$core$String(frost$core$Int p_count, frost$core$Char8 p_char);
+frost$core$Int frost$core$Char8$get_hash$R$frost$core$Int(frost$core$Char8 self);
 frost$core$Char16 frost$core$Char8$get_asChar16$R$frost$core$Char16(frost$core$Char8 self);
 frost$core$Char32 frost$core$Char8$get_asChar32$R$frost$core$Char32(frost$core$Char8 self);
-frost$core$Int64 frost$core$Char8$get_asInt$R$frost$core$Int64(frost$core$Char8 self);
+frost$core$Int frost$core$Char8$get_asInt$R$frost$core$Int(frost$core$Char8 self);
 frost$core$Int8 frost$core$Char8$get_asInt8$R$frost$core$Int8(frost$core$Char8 self);
 frost$core$Int16 frost$core$Char8$get_asInt16$R$frost$core$Int16(frost$core$Char8 self);
 frost$core$Int32 frost$core$Char8$get_asInt32$R$frost$core$Int32(frost$core$Char8 self);

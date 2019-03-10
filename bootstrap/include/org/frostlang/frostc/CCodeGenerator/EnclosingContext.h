@@ -8,5 +8,5 @@ typedef struct frost$collections$Map frost$collections$Map;
 
 void org$frostlang$frostc$CCodeGenerator$EnclosingContext$cleanup(org$frostlang$frostc$CCodeGenerator$EnclosingContext* self);
 void org$frostlang$frostc$CCodeGenerator$EnclosingContext$init$frost$core$Int64$frost$core$String$Q$frost$core$String$frost$core$String(org$frostlang$frostc$CCodeGenerator$EnclosingContext* self, frost$core$Int64 p_rv, frost$core$String* p_f0, frost$core$String* p_f1, frost$core$String* p_f2);
-void org$frostlang$frostc$CCodeGenerator$EnclosingContext$init$frost$core$Int64$frost$core$String$frost$collections$Map$LTfrost$core$String$Corg$frostlang$frostc$Pair$LTfrost$core$Int64$Cfrost$core$String$GT$GT$frost$core$String(org$frostlang$frostc$CCodeGenerator$EnclosingContext* self, frost$core$Int64 p_rv, frost$core$String* p_f0, frost$collections$Map* p_f1, frost$core$String* p_f2);
+void org$frostlang$frostc$CCodeGenerator$EnclosingContext$init$frost$core$Int64$frost$core$String$frost$collections$Map$LTfrost$core$String$Corg$frostlang$frostc$Pair$LTfrost$core$Int$Cfrost$core$String$GT$GT$frost$core$String(org$frostlang$frostc$CCodeGenerator$EnclosingContext* self, frost$core$Int64 p_rv, frost$core$String* p_f0, frost$collections$Map* p_f1, frost$core$String* p_f2);
 

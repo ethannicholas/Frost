@@ -9,6 +9,7 @@
 #include "org/frostlang/frostc/Type.h"
 #include "frost/core/Equatable.h"
 #include "frost/core/Int64.h"
+#include "frost/core/Int.h"
 #include "frost/core/Frost.h"
 
 
@@ -62,7 +63,7 @@ frost$core$Bit $tmp16 = $tmp14(((frost$core$Equatable*) $tmp7), ((frost$core$Equ
 bool $tmp17 = $tmp16.value;
 if ($tmp17) goto block4; else goto block5;
 block5:;
-frost$core$Int64 $tmp18 = (frost$core$Int64) {25u};
+frost$core$Int $tmp18 = (frost$core$Int) {25u};
 org$frostlang$frostc$Type$Kind* $tmp19 = &((org$frostlang$frostc$Type*) param0)->typeKind;
 org$frostlang$frostc$Type$Kind $tmp20 = *$tmp19;
 frost$core$Int64 $tmp21 = $tmp20.$rawValue;
@@ -78,7 +79,7 @@ frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp26));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp26));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp25));
 frost$core$String* $tmp28 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp26, &$s29);
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s30, $tmp18, $tmp28);
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s30, $tmp18, $tmp28);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp28));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp26));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp22));
@@ -111,8 +112,8 @@ frost$core$Bit $tmp40 = $tmp38(((frost$core$Equatable*) param3), ((frost$core$Eq
 bool $tmp41 = $tmp40.value;
 if ($tmp41) goto block7; else goto block8;
 block8:;
-frost$core$Int64 $tmp42 = (frost$core$Int64) {30u};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s43, $tmp42);
+frost$core$Int $tmp42 = (frost$core$Int) {30u};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s43, $tmp42);
 abort(); // unreachable
 block7:;
 return;

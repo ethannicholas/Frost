@@ -10,6 +10,7 @@
 #include "frost/core/Frost.h"
 #include "org/frostlang/frostc/Symbol.h"
 #include "org/frostlang/frostc/Type/Kind.h"
+#include "frost/core/Int.h"
 #include "frost/core/Int64.h"
 
 __attribute__((weak)) frost$core$Bit org$frostlang$frostc$Compiler$CoercionKey$$EQ$org$frostlang$frostc$Compiler$CoercionKey$R$frost$core$Bit$shim(org$frostlang$frostc$Compiler$CoercionKey* p0, frost$core$Equatable* p1) {
@@ -20,13 +21,13 @@ __attribute__((weak)) frost$core$Bit org$frostlang$frostc$Compiler$CoercionKey$$
 
 struct { frost$core$Class* cl; ITable* next; void* methods[2]; } org$frostlang$frostc$Compiler$CoercionKey$_frost$core$Equatable = { (frost$core$Class*) &frost$core$Equatable$class, NULL, { org$frostlang$frostc$Compiler$CoercionKey$$EQ$org$frostlang$frostc$Compiler$CoercionKey$R$frost$core$Bit$shim, frost$core$Equatable$$NEQ$frost$core$Equatable$T$R$frost$core$Bit} };
 
-struct { frost$core$Class* cl; ITable* next; void* methods[1]; } org$frostlang$frostc$Compiler$CoercionKey$_frost$collections$Key = { (frost$core$Class*) &frost$collections$Key$class, (ITable*) &org$frostlang$frostc$Compiler$CoercionKey$_frost$core$Equatable, { org$frostlang$frostc$Compiler$CoercionKey$get_hash$R$frost$core$Int64} };
+struct { frost$core$Class* cl; ITable* next; void* methods[1]; } org$frostlang$frostc$Compiler$CoercionKey$_frost$collections$Key = { (frost$core$Class*) &frost$collections$Key$class, (ITable*) &org$frostlang$frostc$Compiler$CoercionKey$_frost$core$Equatable, { org$frostlang$frostc$Compiler$CoercionKey$get_hash$R$frost$core$Int} };
 
 static frost$core$String $s1;
-org$frostlang$frostc$Compiler$CoercionKey$class_type org$frostlang$frostc$Compiler$CoercionKey$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Object$class, (ITable*) &org$frostlang$frostc$Compiler$CoercionKey$_frost$collections$Key, { frost$core$Object$get_asString$R$frost$core$String, org$frostlang$frostc$Compiler$CoercionKey$cleanup, org$frostlang$frostc$Compiler$CoercionKey$$EQ$org$frostlang$frostc$Compiler$CoercionKey$R$frost$core$Bit$shim, org$frostlang$frostc$Compiler$CoercionKey$get_hash$R$frost$core$Int64} };
+org$frostlang$frostc$Compiler$CoercionKey$class_type org$frostlang$frostc$Compiler$CoercionKey$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Object$class, (ITable*) &org$frostlang$frostc$Compiler$CoercionKey$_frost$collections$Key, { frost$core$Object$get_asString$R$frost$core$String, org$frostlang$frostc$Compiler$CoercionKey$cleanup, org$frostlang$frostc$Compiler$CoercionKey$$EQ$org$frostlang$frostc$Compiler$CoercionKey$R$frost$core$Bit$shim, org$frostlang$frostc$Compiler$CoercionKey$get_hash$R$frost$core$Int} };
 
 typedef frost$core$Bit (*$fn33)(frost$core$Equatable*, frost$core$Equatable*);
-typedef frost$core$Int64 (*$fn44)(frost$collections$Key*);
+typedef frost$core$Int (*$fn46)(frost$collections$Key*);
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x43\x6f\x6d\x70\x69\x6c\x65\x72\x2e\x43\x6f\x65\x72\x63\x69\x6f\x6e\x4b\x65\x79", 41, -6870882282179802560, NULL };
 
@@ -112,40 +113,44 @@ frost$core$Bit $tmp36 = *(&local0);
 return $tmp36;
 
 }
-frost$core$Int64 org$frostlang$frostc$Compiler$CoercionKey$get_hash$R$frost$core$Int64(org$frostlang$frostc$Compiler$CoercionKey* param0) {
+frost$core$Int org$frostlang$frostc$Compiler$CoercionKey$get_hash$R$frost$core$Int(org$frostlang$frostc$Compiler$CoercionKey* param0) {
 
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Compiler.frost:360
 org$frostlang$frostc$ASTNode** $tmp37 = &param0->expr;
 org$frostlang$frostc$ASTNode* $tmp38 = *$tmp37;
 frost$core$Int64 $tmp39;
 frost$core$Frost$addressOf$frost$core$Object$R$frost$core$Int64(&$tmp39, ((frost$core$Object*) $tmp38));
-org$frostlang$frostc$Type** $tmp40 = &param0->target;
-org$frostlang$frostc$Type* $tmp41 = *$tmp40;
-ITable* $tmp42 = ((frost$collections$Key*) $tmp41)->$class->itable;
-while ($tmp42->$class != (frost$core$Class*) &frost$collections$Key$class) {
-    $tmp42 = $tmp42->next;
+// begin inline call to function frost.core.Int64.get_asInt():frost.core.Int from Compiler.frost:360:41
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:580
+int64_t $tmp40 = $tmp39.value;
+frost$core$Int $tmp41 = (frost$core$Int) {$tmp40};
+org$frostlang$frostc$Type** $tmp42 = &param0->target;
+org$frostlang$frostc$Type* $tmp43 = *$tmp42;
+ITable* $tmp44 = ((frost$collections$Key*) $tmp43)->$class->itable;
+while ($tmp44->$class != (frost$core$Class*) &frost$collections$Key$class) {
+    $tmp44 = $tmp44->next;
 }
-$fn44 $tmp43 = $tmp42->methods[0];
-frost$core$Int64 $tmp45 = $tmp43(((frost$collections$Key*) $tmp41));
-// begin inline call to function frost.core.Int64.~~(other:frost.core.Int64):frost.core.Int64 from Compiler.frost:360:42
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:197
-int64_t $tmp46 = $tmp39.value;
-int64_t $tmp47 = $tmp45.value;
-int64_t $tmp48 = $tmp46 ^ $tmp47;
-frost$core$Int64 $tmp49 = (frost$core$Int64) {$tmp48};
-return $tmp49;
+$fn46 $tmp45 = $tmp44->methods[0];
+frost$core$Int $tmp47 = $tmp45(((frost$collections$Key*) $tmp43));
+// begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from Compiler.frost:360:48
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:365
+int64_t $tmp48 = $tmp41.value;
+int64_t $tmp49 = $tmp47.value;
+int64_t $tmp50 = $tmp48 ^ $tmp49;
+frost$core$Int $tmp51 = (frost$core$Int) {$tmp50};
+return $tmp51;
 
 }
 void org$frostlang$frostc$Compiler$CoercionKey$cleanup(org$frostlang$frostc$Compiler$CoercionKey* param0) {
 
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Compiler.frost:343
 frost$core$Object$cleanup(((frost$core$Object*) param0));
-org$frostlang$frostc$ASTNode** $tmp50 = &param0->expr;
-org$frostlang$frostc$ASTNode* $tmp51 = *$tmp50;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp51));
-org$frostlang$frostc$Type** $tmp52 = &param0->target;
-org$frostlang$frostc$Type* $tmp53 = *$tmp52;
+org$frostlang$frostc$ASTNode** $tmp52 = &param0->expr;
+org$frostlang$frostc$ASTNode* $tmp53 = *$tmp52;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp53));
+org$frostlang$frostc$Type** $tmp54 = &param0->target;
+org$frostlang$frostc$Type* $tmp55 = *$tmp54;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp55));
 return;
 
 }

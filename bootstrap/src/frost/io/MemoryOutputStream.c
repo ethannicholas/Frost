@@ -2,7 +2,7 @@
 #include "frost/io/OutputStream.h"
 #include "frost/core/Class.h"
 #include "frost/core/String.h"
-#include "frost/core/Int64.h"
+#include "frost/core/Int.h"
 #include "frost/core/MutableString.h"
 #include "frost/core/Object.h"
 #include "frost/core/Frost.h"
@@ -12,7 +12,7 @@
 
 
 static frost$core$String $s1;
-frost$io$MemoryOutputStream$class_type frost$io$MemoryOutputStream$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$io$OutputStream$class, NULL, { frost$io$MemoryOutputStream$get_asString$R$frost$core$String, frost$io$MemoryOutputStream$cleanup, frost$io$MemoryOutputStream$write$frost$core$UInt8$R$frost$core$Error$Q, frost$io$OutputStream$write$frost$core$UInt16$R$frost$core$Error$Q, frost$io$OutputStream$write$frost$core$UInt32$R$frost$core$Error$Q, frost$io$OutputStream$write$frost$core$UInt64$R$frost$core$Error$Q, frost$io$OutputStream$write$frost$core$Int8$R$frost$core$Error$Q, frost$io$OutputStream$write$frost$core$Int16$R$frost$core$Error$Q, frost$io$OutputStream$write$frost$core$Int32$R$frost$core$Error$Q, frost$io$OutputStream$write$frost$core$Int64$R$frost$core$Error$Q, frost$io$MemoryOutputStream$write$frost$unsafe$Pointer$LTfrost$core$UInt8$GT$frost$core$Int64$R$frost$core$Error$Q, frost$io$OutputStream$write$frost$unsafe$Pointer$LTfrost$core$Int8$GT$frost$core$Int64$R$frost$core$Error$Q, frost$io$OutputStream$write$frost$unsafe$Pointer$LTfrost$core$Char8$GT$frost$core$Int64$R$frost$core$Error$Q, frost$io$OutputStream$write$frost$collections$Array$LTfrost$core$UInt8$GT$frost$core$Int64$R$frost$core$Error$Q, frost$io$OutputStream$write$frost$collections$Array$LTfrost$core$Int8$GT$frost$core$Int64$R$frost$core$Error$Q, frost$io$OutputStream$write$frost$collections$Array$LTfrost$core$Char8$GT$frost$core$Int64$R$frost$core$Error$Q, frost$io$OutputStream$write$frost$core$Char8$R$frost$core$Error$Q, frost$io$OutputStream$print$frost$core$String$R$frost$core$Error$Q, frost$io$OutputStream$print$frost$core$Object$R$frost$core$Error$Q, frost$io$OutputStream$printLine$frost$core$String$R$frost$core$Error$Q, frost$io$OutputStream$printLine$frost$core$Object$R$frost$core$Error$Q, frost$io$OutputStream$printLine$R$frost$core$Error$Q, frost$io$OutputStream$flush$R$frost$core$Error$Q, frost$io$OutputStream$close$R$frost$core$Error$Q, frost$io$MemoryOutputStream$clear, frost$io$MemoryOutputStream$finish$R$frost$core$String} };
+frost$io$MemoryOutputStream$class_type frost$io$MemoryOutputStream$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$io$OutputStream$class, NULL, { frost$io$MemoryOutputStream$get_asString$R$frost$core$String, frost$io$MemoryOutputStream$cleanup, frost$io$MemoryOutputStream$write$frost$core$UInt8$R$frost$core$Error$Q, frost$io$OutputStream$write$frost$core$UInt16$R$frost$core$Error$Q, frost$io$OutputStream$write$frost$core$UInt32$R$frost$core$Error$Q, frost$io$OutputStream$write$frost$core$UInt64$R$frost$core$Error$Q, frost$io$OutputStream$write$frost$core$Int8$R$frost$core$Error$Q, frost$io$OutputStream$write$frost$core$Int16$R$frost$core$Error$Q, frost$io$OutputStream$write$frost$core$Int32$R$frost$core$Error$Q, frost$io$OutputStream$write$frost$core$Int64$R$frost$core$Error$Q, frost$io$MemoryOutputStream$write$frost$unsafe$Pointer$LTfrost$core$UInt8$GT$frost$core$Int$R$frost$core$Error$Q, frost$io$OutputStream$write$frost$unsafe$Pointer$LTfrost$core$Int8$GT$frost$core$Int$R$frost$core$Error$Q, frost$io$OutputStream$write$frost$unsafe$Pointer$LTfrost$core$Char8$GT$frost$core$Int$R$frost$core$Error$Q, frost$io$OutputStream$write$frost$collections$Array$LTfrost$core$UInt8$GT$frost$core$Int$R$frost$core$Error$Q, frost$io$OutputStream$write$frost$collections$Array$LTfrost$core$Int8$GT$frost$core$Int$R$frost$core$Error$Q, frost$io$OutputStream$write$frost$collections$Array$LTfrost$core$Char8$GT$frost$core$Int$R$frost$core$Error$Q, frost$io$OutputStream$write$frost$core$Char8$R$frost$core$Error$Q, frost$io$OutputStream$print$frost$core$String$R$frost$core$Error$Q, frost$io$OutputStream$print$frost$core$Object$R$frost$core$Error$Q, frost$io$OutputStream$printLine$frost$core$String$R$frost$core$Error$Q, frost$io$OutputStream$printLine$frost$core$Object$R$frost$core$Error$Q, frost$io$OutputStream$printLine$R$frost$core$Error$Q, frost$io$OutputStream$flush$R$frost$core$Error$Q, frost$io$OutputStream$close$R$frost$core$Error$Q, frost$io$MemoryOutputStream$clear, frost$io$MemoryOutputStream$finish$R$frost$core$String} };
 
 typedef frost$core$String* (*$fn17)(frost$core$Object*);
 
@@ -21,17 +21,17 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 void frost$io$MemoryOutputStream$init(frost$io$MemoryOutputStream* param0) {
 
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/io/MemoryOutputStream.frost:20
-frost$core$Int64 $tmp2 = (frost$core$Int64) {1024u};
-frost$io$MemoryOutputStream$init$frost$core$Int64(param0, $tmp2);
+frost$core$Int $tmp2 = (frost$core$Int) {1024u};
+frost$io$MemoryOutputStream$init$frost$core$Int(param0, $tmp2);
 return;
 
 }
-void frost$io$MemoryOutputStream$init$frost$core$Int64(frost$io$MemoryOutputStream* param0, frost$core$Int64 param1) {
+void frost$io$MemoryOutputStream$init$frost$core$Int(frost$io$MemoryOutputStream* param0, frost$core$Int param1) {
 
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/io/MemoryOutputStream.frost:27
 FROST_ASSERT(48 == sizeof(frost$core$MutableString));
 frost$core$MutableString* $tmp3 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
-frost$core$MutableString$init$frost$core$Int64($tmp3, param1);
+frost$core$MutableString$init$frost$core$Int($tmp3, param1);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp3));
 frost$core$MutableString** $tmp4 = &param0->data;
 frost$core$MutableString* $tmp5 = *$tmp4;
@@ -56,12 +56,12 @@ frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Erro
 return ((frost$core$Error*) NULL);
 
 }
-frost$core$Error* frost$io$MemoryOutputStream$write$frost$unsafe$Pointer$LTfrost$core$UInt8$GT$frost$core$Int64$R$frost$core$Error$Q(frost$io$MemoryOutputStream* param0, frost$core$UInt8* param1, frost$core$Int64 param2) {
+frost$core$Error* frost$io$MemoryOutputStream$write$frost$unsafe$Pointer$LTfrost$core$UInt8$GT$frost$core$Int$R$frost$core$Error$Q(frost$io$MemoryOutputStream* param0, frost$core$UInt8* param1, frost$core$Int param2) {
 
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/io/MemoryOutputStream.frost:39
 frost$core$MutableString** $tmp10 = &param0->data;
 frost$core$MutableString* $tmp11 = *$tmp10;
-frost$core$MutableString$append$frost$unsafe$Pointer$LTfrost$core$Char8$GT$frost$core$Int64($tmp11, ((frost$core$Char8*) param1), param2);
+frost$core$MutableString$append$frost$unsafe$Pointer$LTfrost$core$Char8$GT$frost$core$Int($tmp11, ((frost$core$Char8*) param1), param2);
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/io/MemoryOutputStream.frost:40
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Error*) NULL)));
 return ((frost$core$Error*) NULL);

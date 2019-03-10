@@ -7,7 +7,7 @@
 #include "frost/collections/ListView.h"
 #include "frost/core/MutableString.h"
 #include "frost/core/Matcher.h"
-#include "frost/core/Int64.h"
+#include "frost/core/Int.h"
 #include "frost/core/RegularExpression.h"
 #include "frost/core/Bit.h"
 
@@ -15,7 +15,7 @@
 static frost$core$String $s1;
 org$frostlang$frostc$frostdoc$Markdown$_Closure34$class_type org$frostlang$frostc$frostdoc$Markdown$_Closure34$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { frost$core$Object$get_asString$R$frost$core$String, org$frostlang$frostc$frostdoc$Markdown$_Closure34$cleanup, org$frostlang$frostc$frostdoc$Markdown$_Closure34$$anonymous33$frost$collections$ListView$LTfrost$core$String$Q$GT$R$frost$core$String} };
 
-typedef frost$core$Object* (*$fn10)(frost$collections$ListView*, frost$core$Int64);
+typedef frost$core$Object* (*$fn10)(frost$collections$ListView*, frost$core$Int);
 typedef frost$core$String* (*$fn21)(frost$core$Object*);
 typedef frost$core$String* (*$fn37)(frost$core$Object*);
 typedef void (*$fn52)(org$frostlang$frostc$frostdoc$Markdown*, frost$core$MutableString*);
@@ -58,7 +58,7 @@ frost$core$MutableString* local1 = NULL;
 frost$core$Matcher* local2 = NULL;
 frost$core$Matcher* local3 = NULL;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:1086
-frost$core$Int64 $tmp7 = (frost$core$Int64) {2u};
+frost$core$Int $tmp7 = (frost$core$Int) {2u};
 ITable* $tmp8 = param1->$class->itable;
 while ($tmp8->$class != (frost$core$Class*) &frost$collections$ListView$class) {
     $tmp8 = $tmp8->next;

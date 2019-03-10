@@ -5,14 +5,14 @@
 #include "org/frostlang/frostc/frostdoc/Markdown.h"
 #include "frost/core/Frost.h"
 #include "frost/collections/ListView.h"
-#include "frost/core/Int64.h"
+#include "frost/core/Int.h"
 #include "org/frostlang/frostc/frostdoc/Protector.h"
 
 
 static frost$core$String $s1;
 org$frostlang$frostc$frostdoc$Markdown$_Closure4$class_type org$frostlang$frostc$frostdoc$Markdown$_Closure4$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { frost$core$Object$get_asString$R$frost$core$String, org$frostlang$frostc$frostdoc$Markdown$_Closure4$cleanup, org$frostlang$frostc$frostdoc$Markdown$_Closure4$$anonymous3$frost$collections$ListView$LTfrost$core$String$Q$GT$R$frost$core$String} };
 
-typedef frost$core$Object* (*$fn10)(frost$collections$ListView*, frost$core$Int64);
+typedef frost$core$Object* (*$fn10)(frost$collections$ListView*, frost$core$Int);
 typedef frost$core$String* (*$fn19)(org$frostlang$frostc$frostdoc$Protector*, frost$core$String*);
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x66\x72\x6f\x73\x74\x64\x6f\x63\x2e\x4d\x61\x72\x6b\x64\x6f\x77\x6e\x2e\x5f\x43\x6c\x6f\x73\x75\x72\x65\x34", 48, 5457368082752904347, NULL };
@@ -45,7 +45,7 @@ frost$core$String* org$frostlang$frostc$frostdoc$Markdown$_Closure4$$anonymous3$
 
 frost$core$String* local0 = NULL;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:278
-frost$core$Int64 $tmp7 = (frost$core$Int64) {0u};
+frost$core$Int $tmp7 = (frost$core$Int) {0u};
 ITable* $tmp8 = param1->$class->itable;
 while ($tmp8->$class != (frost$core$Class*) &frost$collections$ListView$class) {
     $tmp8 = $tmp8->next;

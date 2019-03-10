@@ -10,7 +10,7 @@ typedef struct frost$core$MutableMethod frost$core$MutableMethod;
 typedef struct frost$collections$HashMap frost$collections$HashMap;
 typedef struct org$frostlang$frostc$frostdoc$Protector org$frostlang$frostc$frostdoc$Protector;
 typedef struct frost$math$Random frost$math$Random;
-#include "frost/core/Int64_types.h"
+#include "frost/core/Int_types.h"
 typedef struct frost$core$String frost$core$String;
 
 typedef struct org$frostlang$frostc$frostdoc$Markdown {
@@ -25,7 +25,7 @@ typedef struct org$frostlang$frostc$frostdoc$Markdown {
     org$frostlang$frostc$frostdoc$Protector* charProtector;
     org$frostlang$frostc$frostdoc$Protector* htmlProtector;
     frost$math$Random* random;
-    frost$core$Int64 listLevel;
+    frost$core$Int listLevel;
 } org$frostlang$frostc$frostdoc$Markdown;
 #include "frost/core/Class.h"
 typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[30]; } org$frostlang$frostc$frostdoc$Markdown$class_type;

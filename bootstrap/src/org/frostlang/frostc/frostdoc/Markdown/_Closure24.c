@@ -6,7 +6,7 @@
 #include "frost/core/Frost.h"
 #include "frost/collections/ListView.h"
 #include "frost/core/MutableString.h"
-#include "frost/core/Int64.h"
+#include "frost/core/Int.h"
 #include "frost/collections/Iterable.h"
 #include "frost/collections/Iterator.h"
 
@@ -14,11 +14,11 @@
 static frost$core$String $s1;
 org$frostlang$frostc$frostdoc$Markdown$_Closure24$class_type org$frostlang$frostc$frostdoc$Markdown$_Closure24$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { frost$core$Object$get_asString$R$frost$core$String, org$frostlang$frostc$frostdoc$Markdown$_Closure24$cleanup, org$frostlang$frostc$frostdoc$Markdown$_Closure24$$anonymous23$frost$collections$ListView$LTfrost$core$String$Q$GT$R$frost$core$Object} };
 
-typedef frost$core$Object* (*$fn10)(frost$collections$ListView*, frost$core$Int64);
-typedef frost$core$Object* (*$fn17)(frost$collections$ListView*, frost$core$Int64);
+typedef frost$core$Object* (*$fn10)(frost$collections$ListView*, frost$core$Int);
+typedef frost$core$Object* (*$fn17)(frost$collections$ListView*, frost$core$Int);
 typedef void (*$fn24)(org$frostlang$frostc$frostdoc$Markdown*, frost$core$MutableString*);
 typedef frost$collections$Iterator* (*$fn28)(frost$collections$Iterable*);
-typedef frost$core$Int64 (*$fn32)(frost$collections$Iterator*);
+typedef frost$core$Int (*$fn32)(frost$collections$Iterator*);
 typedef frost$core$String* (*$fn37)(frost$core$Object*);
 typedef frost$core$String* (*$fn49)(frost$core$Object*);
 
@@ -55,10 +55,10 @@ frost$core$Object* org$frostlang$frostc$frostdoc$Markdown$_Closure24$$anonymous2
 
 frost$core$String* local0 = NULL;
 frost$core$MutableString* local1 = NULL;
-frost$core$Int64 local2;
+frost$core$Int local2;
 frost$core$String* local3 = NULL;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:783
-frost$core$Int64 $tmp7 = (frost$core$Int64) {1u};
+frost$core$Int $tmp7 = (frost$core$Int) {1u};
 ITable* $tmp8 = param1->$class->itable;
 while ($tmp8->$class != (frost$core$Class*) &frost$collections$ListView$class) {
     $tmp8 = $tmp8->next;
@@ -74,7 +74,7 @@ frost$core$Frost$unref$frost$core$Object$Q($tmp11);
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:784
 FROST_ASSERT(48 == sizeof(frost$core$MutableString));
 frost$core$MutableString* $tmp13 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
-frost$core$Int64 $tmp14 = (frost$core$Int64) {2u};
+frost$core$Int $tmp14 = (frost$core$Int) {2u};
 ITable* $tmp15 = param1->$class->itable;
 while ($tmp15->$class != (frost$core$Class*) &frost$collections$ListView$class) {
     $tmp15 = $tmp15->next;
@@ -97,7 +97,7 @@ $fn24 $tmp23 = ($fn24) $tmp21->$class->vtable[22];
 $tmp23($tmp21, $tmp22);
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:786
 frost$core$String* $tmp25 = *(&local0);
-// begin inline call to function frost.core.String.get_length():frost.core.Int64 from Markdown.frost:786:32
+// begin inline call to function frost.core.String.get_length():frost.core.Int from Markdown.frost:786:32
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:485
 ITable* $tmp26 = ((frost$collections$Iterable*) $tmp25)->$class->itable;
 while ($tmp26->$class != (frost$core$Class*) &frost$collections$Iterable$class) {
@@ -110,13 +110,13 @@ while ($tmp30->$class != (frost$core$Class*) &frost$collections$Iterator$class) 
     $tmp30 = $tmp30->next;
 }
 $fn32 $tmp31 = $tmp30->methods[2];
-frost$core$Int64 $tmp33 = $tmp31($tmp29);
+frost$core$Int $tmp33 = $tmp31($tmp29);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp29));
 *(&local2) = $tmp33;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:787
-frost$core$Int64 $tmp34 = *(&local2);
-frost$core$Int64$wrapper* $tmp35;
-$tmp35 = (frost$core$Int64$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int64$wrapperclass);
+frost$core$Int $tmp34 = *(&local2);
+frost$core$Int$wrapper* $tmp35;
+$tmp35 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp35->value = $tmp34;
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Markdown.frost:787:28
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:560

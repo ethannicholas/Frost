@@ -137,13 +137,13 @@ class MethodDecl : Symbol {
                     when Annotations.Expression.PRIORITY(_, expr) {
                         match expr {
                             when ASTNode.INT(_, value) {
-                                return value.asInt64
+                                return value.asInt
                             }
                             when ASTNode.UNARY(_, op, base) {
                                 if op = Unary.Operator.NEGATE {
                                     match base {
                                         when ASTNode.INT(_, value) {
-                                            return -(value.asInt64)
+                                            return -(value.asInt)
                                         }
                                     }
                                 }

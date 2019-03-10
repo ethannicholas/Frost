@@ -51,14 +51,14 @@ interface Random {
     @default
     @pre(n >= 1)
     @post(@return >= 0 & @return < n)
-    method int(n:Int64):Int64 {
+    method int(n:Int):Int {
         if n = 1 {
             return 0
         }
 
         def min := -n % n
         loop {
-            def x := int64()
+            def x := int64().asInt
             if x >= min {
                 return x % n
             }

@@ -3,7 +3,7 @@
 typedef struct frost$core$Class frost$core$Class;
 #include "frost/core/Int32_types.h"
 #include "frost/core/UInt8_types.h"
-#include "frost/core/Int64_types.h"
+#include "frost/core/Int_types.h"
 #include "org/frostlang/frostc/parser/Token_types.h"
 typedef struct frost$core$String frost$core$String;
 
@@ -11,8 +11,8 @@ typedef struct frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$
     frost$core$Class* $class;
     frost$core$Int32 refCount;
     frost$core$UInt8 $flags;
-    frost$core$Int64 _count;
-    frost$core$Int64 capacity;
+    frost$core$Int _count;
+    frost$core$Int capacity;
     org$frostlang$frostc$parser$Token* data;
 } frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT;
 #include "frost/core/Class.h"

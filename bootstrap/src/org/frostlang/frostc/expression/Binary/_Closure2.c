@@ -8,8 +8,9 @@
 #include "org/frostlang/frostc/MethodDecl.h"
 #include "org/frostlang/frostc/Type/Kind.h"
 #include "org/frostlang/frostc/Annotations.h"
-#include "frost/core/Int64.h"
+#include "frost/core/Int.h"
 #include "frost/core/Equatable.h"
+#include "frost/core/Int64.h"
 #include "org/frostlang/frostc/FixedArray.h"
 #include "org/frostlang/frostc/Symbol.h"
 
@@ -55,16 +56,16 @@ org$frostlang$frostc$Annotations** $tmp7 = &param1->annotations;
 org$frostlang$frostc$Annotations* $tmp8 = *$tmp7;
 // begin inline call to function org.frostlang.frostc.Annotations.get_isClass():frost.core.Bit from Binary.frost:215:55
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Annotations.frost:119
-frost$core$Int64* $tmp9 = &$tmp8->flags;
-frost$core$Int64 $tmp10 = *$tmp9;
-frost$core$Int64 $tmp11 = (frost$core$Int64) {16u};
-// begin inline call to function frost.core.Int64.&&(other:frost.core.Int64):frost.core.Int64 from Annotations.frost:119:22
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:173
+frost$core$Int* $tmp9 = &$tmp8->flags;
+frost$core$Int $tmp10 = *$tmp9;
+frost$core$Int $tmp11 = (frost$core$Int) {16u};
+// begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:119:22
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:293
 int64_t $tmp12 = $tmp10.value;
 int64_t $tmp13 = $tmp11.value;
 int64_t $tmp14 = $tmp12 & $tmp13;
-frost$core$Int64 $tmp15 = (frost$core$Int64) {$tmp14};
-frost$core$Int64 $tmp16 = (frost$core$Int64) {0u};
+frost$core$Int $tmp15 = (frost$core$Int) {$tmp14};
+frost$core$Int $tmp16 = (frost$core$Int) {0u};
 int64_t $tmp17 = $tmp15.value;
 int64_t $tmp18 = $tmp16.value;
 bool $tmp19 = $tmp17 != $tmp18;
@@ -106,16 +107,16 @@ frost$core$Bit $tmp38 = (frost$core$Bit) {$tmp37 != NULL};
 bool $tmp39 = $tmp38.value;
 if ($tmp39) goto block9; else goto block10;
 block10:;
-frost$core$Int64 $tmp40 = (frost$core$Int64) {242u};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s41, $tmp40);
+frost$core$Int $tmp40 = (frost$core$Int) {242u};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s41, $tmp40);
 abort(); // unreachable
 block9:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Type.frost:243
 org$frostlang$frostc$FixedArray** $tmp42 = &$tmp22->_subtypes;
 org$frostlang$frostc$FixedArray* $tmp43 = *$tmp42;
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp43));
-frost$core$Int64 $tmp44 = (frost$core$Int64) {0u};
-frost$core$Object* $tmp45 = org$frostlang$frostc$FixedArray$$IDX$frost$core$Int64$R$org$frostlang$frostc$FixedArray$T($tmp43, $tmp44);
+frost$core$Int $tmp44 = (frost$core$Int) {0u};
+frost$core$Object* $tmp45 = org$frostlang$frostc$FixedArray$$IDX$frost$core$Int$R$org$frostlang$frostc$FixedArray$T($tmp43, $tmp44);
 frost$core$String** $tmp46 = &((org$frostlang$frostc$Symbol*) ((org$frostlang$frostc$Type*) $tmp45))->name;
 frost$core$String* $tmp47 = *$tmp46;
 frost$core$Bit $tmp48 = frost$core$String$$EQ$frost$core$String$R$frost$core$Bit($tmp47, &$s49);

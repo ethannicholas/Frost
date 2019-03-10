@@ -3,7 +3,7 @@
 #include "frost/core/Class.h"
 #include "frost/core/String.h"
 #include "frost/core/Object.h"
-#include "frost/core/Int64.h"
+#include "frost/core/Int.h"
 #include "frost/core/Bit.h"
 #include "frost/core/Frost.h"
 
@@ -33,23 +33,23 @@ org$frostlang$json$Position org$frostlang$json$Position$init() {
 
 org$frostlang$json$Position local0;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/org/frostlang/json/Position.frost:10
-frost$core$Int64 $tmp3 = (frost$core$Int64) {1u};
-frost$core$Int64* $tmp4 = &(&local0)->line;
+frost$core$Int $tmp3 = (frost$core$Int) {1u};
+frost$core$Int* $tmp4 = &(&local0)->line;
 *$tmp4 = $tmp3;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/org/frostlang/json/Position.frost:11
-frost$core$Int64 $tmp5 = (frost$core$Int64) {1u};
-frost$core$Int64* $tmp6 = &(&local0)->column;
+frost$core$Int $tmp5 = (frost$core$Int) {1u};
+frost$core$Int* $tmp6 = &(&local0)->column;
 *$tmp6 = $tmp5;
 org$frostlang$json$Position $tmp7 = *(&local0);
 return $tmp7;
 
 }
-org$frostlang$json$Position org$frostlang$json$Position$init$frost$core$Int64$frost$core$Int64(frost$core$Int64 param0, frost$core$Int64 param1) {
+org$frostlang$json$Position org$frostlang$json$Position$init$frost$core$Int$frost$core$Int(frost$core$Int param0, frost$core$Int param1) {
 
 org$frostlang$json$Position local0;
 frost$core$Bit local1;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/org/frostlang/json/Position.frost:15
-frost$core$Int64 $tmp8 = (frost$core$Int64) {0u};
+frost$core$Int $tmp8 = (frost$core$Int) {0u};
 int64_t $tmp9 = param0.value;
 int64_t $tmp10 = $tmp8.value;
 bool $tmp11 = $tmp9 != $tmp10;
@@ -57,7 +57,7 @@ frost$core$Bit $tmp12 = (frost$core$Bit) {$tmp11};
 bool $tmp13 = $tmp12.value;
 if ($tmp13) goto block1; else goto block2;
 block1:;
-frost$core$Int64 $tmp14 = (frost$core$Int64) {0u};
+frost$core$Int $tmp14 = (frost$core$Int) {0u};
 int64_t $tmp15 = param1.value;
 int64_t $tmp16 = $tmp14.value;
 bool $tmp17 = $tmp15 != $tmp16;
@@ -72,15 +72,15 @@ frost$core$Bit $tmp19 = *(&local1);
 bool $tmp20 = $tmp19.value;
 if ($tmp20) goto block4; else goto block5;
 block5:;
-frost$core$Int64 $tmp21 = (frost$core$Int64) {15u};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s22, $tmp21);
+frost$core$Int $tmp21 = (frost$core$Int) {15u};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s22, $tmp21);
 abort(); // unreachable
 block4:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/org/frostlang/json/Position.frost:16
-frost$core$Int64* $tmp23 = &(&local0)->line;
+frost$core$Int* $tmp23 = &(&local0)->line;
 *$tmp23 = param0;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/org/frostlang/json/Position.frost:17
-frost$core$Int64* $tmp24 = &(&local0)->column;
+frost$core$Int* $tmp24 = &(&local0)->column;
 *$tmp24 = param1;
 org$frostlang$json$Position $tmp25 = *(&local0);
 return $tmp25;
@@ -89,12 +89,12 @@ return $tmp25;
 frost$core$String* org$frostlang$json$Position$get_asString$R$frost$core$String(org$frostlang$json$Position param0) {
 
 // /Users/ethannicholas/Dropbox/Frost-Int/src/org/frostlang/json/Position.frost:22
-frost$core$Int64 $tmp26 = param0.line;
-frost$core$String* $tmp27 = frost$core$Int64$get_asString$R$frost$core$String($tmp26);
+frost$core$Int $tmp26 = param0.line;
+frost$core$String* $tmp27 = frost$core$Int$get_asString$R$frost$core$String($tmp26);
 frost$core$String* $tmp28 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp27, &$s29);
-frost$core$Int64 $tmp30 = param0.column;
-frost$core$Int64$wrapper* $tmp31;
-$tmp31 = (frost$core$Int64$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int64$wrapperclass);
+frost$core$Int $tmp30 = param0.column;
+frost$core$Int$wrapper* $tmp31;
+$tmp31 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp31->value = $tmp30;
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Position.frost:22:19
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:560

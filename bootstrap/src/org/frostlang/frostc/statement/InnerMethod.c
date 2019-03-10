@@ -15,6 +15,7 @@
 #include "frost/core/Frost.h"
 #include "frost/core/Bit.h"
 #include "frost/collections/Array.h"
+#include "frost/core/Int.h"
 
 
 static frost$core$String $s1;
@@ -90,8 +91,8 @@ org$frostlang$frostc$Variable$Kind $tmp22 = *(&local3);
 org$frostlang$frostc$Variable$Kind $tmp23 = *(&local2);
 FROST_ASSERT(40 == sizeof(frost$collections$Array));
 frost$collections$Array* $tmp24 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
-frost$core$Int64 $tmp25 = (frost$core$Int64) {1u};
-frost$collections$Array$init$frost$core$Int64($tmp24, $tmp25);
+frost$core$Int $tmp25 = (frost$core$Int) {1u};
+frost$collections$Array$init$frost$core$Int($tmp24, $tmp25);
 org$frostlang$frostc$ASTNode* $tmp26 = *(&local1);
 frost$collections$Array$add$frost$collections$Array$T($tmp24, ((frost$core$Object*) $tmp26));
 org$frostlang$frostc$FixedArray* $tmp27 = org$frostlang$frostc$FixedArray$from$frost$collections$Array$LTorg$frostlang$frostc$FixedArray$T$GT$R$org$frostlang$frostc$FixedArray$LTorg$frostlang$frostc$FixedArray$T$GT($tmp24);

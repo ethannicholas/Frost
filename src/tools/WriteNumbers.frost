@@ -436,10 +436,12 @@ class WriteNumbers {
             writeComparisonOperator(op, doc, type, Type.INT16,  out)
             writeComparisonOperator(op, doc, type, Type.INT32,  out)
             writeComparisonOperator(op, doc, type, Type.INT64,  out)
+            writeComparisonOperator(op, doc, type, Type.INT, out)
             writeComparisonOperator(op, doc, type, Type.UINT8,  out)
             writeComparisonOperator(op, doc, type, Type.UINT16, out)
             writeComparisonOperator(op, doc, type, Type.UINT32, out)
             writeComparisonOperator(op, doc, type, Type.UINT64, out)
+            writeComparisonOperator(op, doc, type, Type.UINT, out)
         }
     }
 
@@ -975,12 +977,19 @@ class WriteNumbers {
             out.printLine()
             out.printLine("    @class")
             out.printLine("    function computeCount(range:SteppedRange<\{cl}, \{cl}>):Int {")
-            def cast:String
+            def cast1:String
             if type = Type.UINT64 {
-                cast := ".asInt64"
+                cast1 := ".asInt64"
             }
             else {
-                cast := ""
+                cast1 := ""
+            }
+            def cast2:String
+            if size(type) > 32 | !signed(type) {
+                cast2 := ".asInt"
+            }
+            else {
+                cast2 := ""
             }
             out.printLine("        if range.inclusive {")
             out.printLine("            if range.step > 0 {")
@@ -990,7 +999,8 @@ class WriteNumbers {
             out.printLine("            } else if range.end > range.start {")
             out.printLine("                return 0")
             out.printLine("            }")
-            out.printLine("            return ((range.end - range.start) // range.step)\{cast}.max(0) + 1")
+            out.printLine("            return (((range.end - range.start) // " +
+                    "range.step)\{cast1}.max(0) + 1)\{cast2}")
             out.printLine("        }")
             out.printLine("        else {")
             out.printLine("            def offset:\{cl}")
@@ -1010,8 +1020,8 @@ class WriteNumbers {
             else {
                 out.printLine("        offset := 1")
             }
-            out.printLine("            return ((range.end - range.start + offset) // range.step)" +
-                    "\{cast}.max(0) + 1")
+            out.printLine("            return (((range.end - range.start + offset) // range.step)" +
+                    "\{cast1}.max(0) + 1)\{cast2}")
             out.printLine("        }")
             out.printLine("    }")
             out.printLine()

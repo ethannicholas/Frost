@@ -6,7 +6,7 @@
 #include "frost/core/String/Index.h"
 #include "frost/core/Bit.h"
 #include "frost/core/Frost.h"
-#include "frost/core/Int64.h"
+#include "frost/core/Int.h"
 
 __attribute__((weak)) frost$core$Object* frost$core$String$MatchIterator$next$R$frost$core$String$Index$shim(frost$core$String$MatchIterator* p0) {
     frost$core$String$Index result = frost$core$String$MatchIterator$next$R$frost$core$String$Index(p0);
@@ -17,7 +17,7 @@ __attribute__((weak)) frost$core$Object* frost$core$String$MatchIterator$next$R$
     return ((frost$core$Object*) $tmp2);
 }
 
-struct { frost$core$Class* cl; ITable* next; void* methods[12]; } frost$core$String$MatchIterator$_frost$collections$Iterator = { (frost$core$Class*) &frost$collections$Iterator$class, NULL, { frost$core$String$MatchIterator$get_done$R$frost$core$Bit, frost$core$String$MatchIterator$next$R$frost$core$String$Index$shim, frost$collections$Iterator$count$R$frost$core$Int64, frost$collections$Iterator$get_enumeration$R$frost$collections$Iterator$LT$LPfrost$core$Int64$Cfrost$collections$Iterator$T$RP$GT, frost$collections$Iterator$filter$$LPfrost$collections$Iterator$T$RP$EQ$GT$LPfrost$core$Bit$RP$R$frost$collections$Iterator$LTfrost$collections$Iterator$T$GT, frost$collections$Iterator$$IDX$frost$core$Range$LTfrost$core$Int64$Q$GT$R$frost$collections$Iterator$LTfrost$collections$Iterator$T$GT, frost$collections$Iterator$$IDX$frost$core$SteppedRange$LTfrost$core$Int64$Q$Cfrost$core$Int64$GT$R$frost$collections$Iterator$LTfrost$collections$Iterator$T$GT, frost$collections$Iterator$all$R$frost$collections$Array$LTfrost$collections$Iterator$T$GT, frost$collections$Iterator$apply$$LPfrost$collections$Iterator$T$RP$EQ$AM$GT$LP$RP, frost$collections$Iterator$fold$$LPfrost$collections$Iterator$T$Cfrost$collections$Iterator$T$RP$EQ$GT$LPfrost$collections$Iterator$T$RP$R$frost$collections$Iterator$T, frost$collections$Iterator$fold$$LPfrost$collections$Iterator$T$Cfrost$collections$Iterator$T$RP$EQ$GT$LPfrost$collections$Iterator$T$RP$frost$collections$Iterator$T$R$frost$collections$Iterator$T, frost$collections$Iterator$map$$LPfrost$collections$Iterator$T$RP$EQ$AM$GT$LPfrost$collections$Iterator$map$U$RP$R$frost$collections$Iterator$LTfrost$collections$Iterator$map$U$GT} };
+struct { frost$core$Class* cl; ITable* next; void* methods[12]; } frost$core$String$MatchIterator$_frost$collections$Iterator = { (frost$core$Class*) &frost$collections$Iterator$class, NULL, { frost$core$String$MatchIterator$get_done$R$frost$core$Bit, frost$core$String$MatchIterator$next$R$frost$core$String$Index$shim, frost$collections$Iterator$count$R$frost$core$Int, frost$collections$Iterator$get_enumeration$R$frost$collections$Iterator$LT$LPfrost$core$Int$Cfrost$collections$Iterator$T$RP$GT, frost$collections$Iterator$filter$$LPfrost$collections$Iterator$T$RP$EQ$GT$LPfrost$core$Bit$RP$R$frost$collections$Iterator$LTfrost$collections$Iterator$T$GT, frost$collections$Iterator$$IDX$frost$core$Range$LTfrost$core$Int$Q$GT$R$frost$collections$Iterator$LTfrost$collections$Iterator$T$GT, frost$collections$Iterator$$IDX$frost$core$SteppedRange$LTfrost$core$Int$Q$Cfrost$core$Int$GT$R$frost$collections$Iterator$LTfrost$collections$Iterator$T$GT, frost$collections$Iterator$all$R$frost$collections$Array$LTfrost$collections$Iterator$T$GT, frost$collections$Iterator$apply$$LPfrost$collections$Iterator$T$RP$EQ$AM$GT$LP$RP, frost$collections$Iterator$fold$$LPfrost$collections$Iterator$T$Cfrost$collections$Iterator$T$RP$EQ$GT$LPfrost$collections$Iterator$T$RP$R$frost$collections$Iterator$T, frost$collections$Iterator$fold$$LPfrost$collections$Iterator$T$Cfrost$collections$Iterator$T$RP$EQ$GT$LPfrost$collections$Iterator$T$RP$frost$collections$Iterator$T$R$frost$collections$Iterator$T, frost$collections$Iterator$map$$LPfrost$collections$Iterator$T$RP$EQ$AM$GT$LPfrost$collections$Iterator$map$U$RP$R$frost$collections$Iterator$LTfrost$collections$Iterator$map$U$GT} };
 
 static frost$core$String $s1;
 frost$core$String$MatchIterator$class_type frost$core$String$MatchIterator$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Object$class, (ITable*) &frost$core$String$MatchIterator$_frost$collections$Iterator, { frost$core$Object$get_asString$R$frost$core$String, frost$core$String$MatchIterator$cleanup, frost$core$String$MatchIterator$get_done$R$frost$core$Bit, frost$core$String$MatchIterator$next$R$frost$core$String$Index$shim} };
@@ -54,8 +54,8 @@ frost$core$Bit* $tmp11 = &param0->allowOverlaps;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:978
 // begin inline call to function frost.core.String.get_start():frost.core.String.Index from String.frost:978:27
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:1205
-frost$core$Int64 $tmp12 = (frost$core$Int64) {0u};
-frost$core$String$Index $tmp13 = frost$core$String$Index$init$frost$core$Int64($tmp12);
+frost$core$Int $tmp12 = (frost$core$Int) {0u};
+frost$core$String$Index $tmp13 = frost$core$String$Index$init$frost$core$Int($tmp12);
 frost$core$String$Index$nullable $tmp14 = frost$core$String$indexOf$frost$core$String$frost$core$String$Index$R$frost$core$String$Index$Q(param1, param2, $tmp13);
 frost$core$String$Index$nullable* $tmp15 = &param0->nextMatch;
 *$tmp15 = $tmp14;
@@ -91,8 +91,8 @@ frost$core$Bit $tmp25 = (frost$core$Bit) {$tmp24};
 bool $tmp26 = $tmp25.value;
 if ($tmp26) goto block1; else goto block2;
 block2:;
-frost$core$Int64 $tmp27 = (frost$core$Int64) {234u};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s28, $tmp27, &$s29);
+frost$core$Int $tmp27 = (frost$core$Int) {234u};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s28, $tmp27, &$s29);
 abort(); // unreachable
 block1:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:235
@@ -118,20 +118,20 @@ block6:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:241
 frost$core$String$Index$nullable* $tmp39 = &param0->nextMatch;
 frost$core$String$Index$nullable $tmp40 = *$tmp39;
-frost$core$Int64 $tmp41 = ((frost$core$String$Index) $tmp40.value).value;
+frost$core$Int $tmp41 = ((frost$core$String$Index) $tmp40.value).value;
 frost$core$String** $tmp42 = &param0->needle;
 frost$core$String* $tmp43 = *$tmp42;
-// begin inline call to function frost.core.String.get_byteLength():frost.core.Int64 from String.frost:241:63
+// begin inline call to function frost.core.String.get_byteLength():frost.core.Int from String.frost:241:63
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:492
-frost$core$Int64* $tmp44 = &$tmp43->_length;
-frost$core$Int64 $tmp45 = *$tmp44;
+frost$core$Int* $tmp44 = &$tmp43->_length;
+frost$core$Int $tmp45 = *$tmp44;
 int64_t $tmp46 = $tmp41.value;
 int64_t $tmp47 = $tmp45.value;
 int64_t $tmp48 = $tmp46 + $tmp47;
-frost$core$Int64 $tmp49 = (frost$core$Int64) {$tmp48};
-// begin inline call to frost.core.String.Index.init(value:frost.core.Int64):frost.core.String.Index from String.frost:241:38
+frost$core$Int $tmp49 = (frost$core$Int) {$tmp48};
+// begin inline call to frost.core.String.Index.init(value:frost.core.Int):frost.core.String.Index from String.frost:241:38
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:61
-frost$core$Int64* $tmp50 = &(&local3)->value;
+frost$core$Int* $tmp50 = &(&local3)->value;
 *$tmp50 = $tmp49;
 frost$core$String$Index $tmp51 = *(&local3);
 *(&local2) = $tmp51;

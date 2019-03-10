@@ -9,7 +9,7 @@ typedef struct frost$core$String frost$core$String;
 #include "frost/core/Bit_types.h"
 #include "org/frostlang/frostc/Type/Kind_types.h"
 typedef struct org$frostlang$frostc$FixedArray org$frostlang$frostc$FixedArray;
-#include "frost/core/Int64_types.h"
+#include "frost/core/Int_types.h"
 typedef struct frost$core$Weak frost$core$Weak;
 typedef struct org$frostlang$frostc$MethodRef org$frostlang$frostc$MethodRef;
 
@@ -23,7 +23,7 @@ typedef struct org$frostlang$frostc$Type {
     frost$core$Bit resolved;
     org$frostlang$frostc$Type$Kind typeKind;
     org$frostlang$frostc$FixedArray* _subtypes;
-    frost$core$Int64 priority;
+    frost$core$Int priority;
     frost$core$Weak* genericClassParameter;
     frost$core$Weak* genericMethodParameter;
     org$frostlang$frostc$MethodRef* methodRef;

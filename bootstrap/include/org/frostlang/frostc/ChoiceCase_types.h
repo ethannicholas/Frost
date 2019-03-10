@@ -8,7 +8,7 @@ typedef struct frost$core$Class frost$core$Class;
 typedef struct frost$core$String frost$core$String;
 typedef struct frost$core$Weak frost$core$Weak;
 typedef struct frost$collections$Array frost$collections$Array;
-#include "frost/core/Int64_types.h"
+#include "frost/core/Int_types.h"
 #include "org/frostlang/frostc/Compiler/Resolution_types.h"
 
 typedef struct org$frostlang$frostc$ChoiceCase {
@@ -21,7 +21,7 @@ typedef struct org$frostlang$frostc$ChoiceCase {
     frost$core$Weak* owner;
     frost$core$String* doccomment;
     frost$collections$Array* fields;
-    frost$core$Int64 rawValue;
+    frost$core$Int rawValue;
     frost$core$Weak* initMethod;
     org$frostlang$frostc$Compiler$Resolution resolved;
 } org$frostlang$frostc$ChoiceCase;

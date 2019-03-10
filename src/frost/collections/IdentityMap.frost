@@ -117,7 +117,7 @@ class IdentityMap<K, V> : Map<K, V> {
     ================================================================================================
     @private
     function indexFor(key:K):Int {
-        return frost.core.Frost.addressOf(key) % bucketCount
+        return (frost.core.Frost.addressOf(key) % bucketCount).asInt
     }
     
     @override

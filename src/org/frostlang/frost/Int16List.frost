@@ -27,7 +27,7 @@ class Int16List : ListView<Int16> {
             } else if range.end > range.start {
                 return 0
             }
-            return ((range.end - range.start) // range.step).max(0) + 1
+            return (((range.end - range.start) // range.step).max(0) + 1)
         }
         else {
             def offset:Int16
@@ -42,7 +42,7 @@ class Int16List : ListView<Int16> {
                 }
                 offset := 1
             }
-            return ((range.end - range.start + offset) // range.step).max(0) + 1
+            return (((range.end - range.start + offset) // range.step).max(0) + 1)
         }
     }
 

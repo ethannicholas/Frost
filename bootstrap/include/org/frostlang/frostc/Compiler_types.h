@@ -16,7 +16,7 @@ typedef struct frost$collections$Stack frost$collections$Stack;
 typedef struct org$frostlang$frostc$IR org$frostlang$frostc$IR;
 typedef struct org$frostlang$frostc$CodeGenerator org$frostlang$frostc$CodeGenerator;
 typedef struct frost$threads$MessageQueue frost$threads$MessageQueue;
-#include "frost/core/Int64_types.h"
+#include "frost/core/Int_types.h"
 typedef struct org$frostlang$frostc$Variable org$frostlang$frostc$Variable;
 #include "org/frostlang/frostc/IR/Block/ID_types.h"
 typedef struct frost$collections$IdentityMap frost$collections$IdentityMap;
@@ -97,9 +97,9 @@ typedef struct org$frostlang$frostc$Compiler {
     org$frostlang$frostc$CodeGenerator* codeGenerator;
     frost$threads$MessageQueue* errorQueue;
     frost$collections$Stack* enclosingContexts;
-    frost$core$Int64 errorCount;
-    frost$core$Int64 closureCount;
-    frost$core$Int64 tempCount;
+    frost$core$Int errorCount;
+    frost$core$Int closureCount;
+    frost$core$Int tempCount;
     frost$collections$HashMap* existenceCache;
     frost$core$Bit reportErrors;
     frost$collections$Array* pendingClasses;

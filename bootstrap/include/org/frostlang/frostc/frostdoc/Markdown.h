@@ -8,7 +8,7 @@ typedef struct frost$core$MutableString frost$core$MutableString;
 typedef struct frost$collections$ListView frost$collections$ListView;
 typedef struct org$frostlang$frostc$parser$Parser org$frostlang$frostc$parser$Parser;
 #include "frost/core/Bit_types.h"
-#include "frost/core/Int64_types.h"
+#include "frost/core/Int_types.h"
 
 void org$frostlang$frostc$frostdoc$Markdown$init(org$frostlang$frostc$frostdoc$Markdown* self);
 void org$frostlang$frostc$frostdoc$Markdown$init$$LPfrost$core$String$RP$EQ$AM$GT$LPfrost$core$String$Q$RP$Q(org$frostlang$frostc$frostdoc$Markdown* self, frost$core$MutableMethod* p_linkResolver);
@@ -37,7 +37,7 @@ frost$core$Bit org$frostlang$frostc$frostdoc$Markdown$hasParagraphBreak$frost$co
 frost$core$Bit org$frostlang$frostc$frostdoc$Markdown$isEmptyString$frost$core$String$Q$R$frost$core$Bit(frost$core$String* p_leadingLine);
 void org$frostlang$frostc$frostdoc$Markdown$doHeaders$frost$core$MutableString(org$frostlang$frostc$frostdoc$Markdown* self, frost$core$MutableString* p_markup);
 void org$frostlang$frostc$frostdoc$Markdown$runSpanGamut$frost$core$MutableString(org$frostlang$frostc$frostdoc$Markdown* self, frost$core$MutableString* p_text);
-frost$core$String* org$frostlang$frostc$frostdoc$Markdown$nestedTagsRegex$frost$core$Int64$R$frost$core$String(frost$core$Int64 p_depth);
+frost$core$String* org$frostlang$frostc$frostdoc$Markdown$nestedTagsRegex$frost$core$Int$R$frost$core$String(frost$core$Int p_depth);
 frost$collections$ListView* org$frostlang$frostc$frostdoc$Markdown$tokenizeHTML$frost$core$String$R$frost$collections$ListView$LTorg$frostlang$frostc$frostdoc$Markdown$HTMLToken$GT(org$frostlang$frostc$frostdoc$Markdown* self, frost$core$String* p_text);
 void org$frostlang$frostc$frostdoc$Markdown$escapeSpecialCharsWithinTagAttributes$frost$core$MutableString(org$frostlang$frostc$frostdoc$Markdown* self, frost$core$MutableString* p_text);
 void org$frostlang$frostc$frostdoc$Markdown$doImages$frost$core$MutableString(org$frostlang$frostc$frostdoc$Markdown* self, frost$core$MutableString* p_text);

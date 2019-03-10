@@ -27,12 +27,12 @@ class UInt64List : ListView<UInt64> {
             } else if range.end > range.start {
                 return 0
             }
-            return ((range.end - range.start) // range.step).asInt64.max(0) + 1
+            return (((range.end - range.start) // range.step).asInt64.max(0) + 1).asInt
         }
         else {
             def offset:UInt64
         offset := 1
-            return ((range.end - range.start + offset) // range.step).asInt64.max(0) + 1
+            return (((range.end - range.start + offset) // range.step).asInt64.max(0) + 1).asInt
         }
     }
 

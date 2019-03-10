@@ -15,7 +15,7 @@ typedef struct frost$collections$IdentityMap frost$collections$IdentityMap;
 typedef struct frost$core$String frost$core$String;
 typedef struct org$frostlang$frostc$MethodDecl org$frostlang$frostc$MethodDecl;
 typedef struct frost$collections$Stack frost$collections$Stack;
-#include "frost/core/Int64_types.h"
+#include "frost/core/Int_types.h"
 typedef struct org$frostlang$frostc$IR org$frostlang$frostc$IR;
 
 typedef struct org$frostlang$frostc$CCodeGenerator {
@@ -48,7 +48,7 @@ typedef struct org$frostlang$frostc$CCodeGenerator {
     org$frostlang$frostc$MethodDecl* currentMethod;
     frost$core$String* returnValueVar;
     frost$collections$Stack* enclosingContexts;
-    frost$core$Int64 varCount;
+    frost$core$Int varCount;
     frost$collections$IdentityMap* methodShims;
     frost$collections$HashMap* refs;
     org$frostlang$frostc$IR* ir;

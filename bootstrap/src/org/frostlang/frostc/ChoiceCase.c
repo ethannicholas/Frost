@@ -4,7 +4,7 @@
 #include "frost/core/String.h"
 #include "org/frostlang/frostc/ClassDecl.h"
 #include "org/frostlang/frostc/Position.h"
-#include "frost/core/Int64.h"
+#include "frost/core/Int.h"
 #include "frost/collections/ListView.h"
 #include "org/frostlang/frostc/Compiler/Resolution.h"
 #include "org/frostlang/frostc/Symbol/Kind.h"
@@ -12,6 +12,7 @@
 #include "org/frostlang/frostc/MethodDecl.h"
 #include "frost/core/Object.h"
 #include "frost/core/Frost.h"
+#include "frost/core/Int64.h"
 #include "frost/collections/Array.h"
 #include "frost/collections/CollectionView.h"
 #include "frost/core/Bit.h"
@@ -26,7 +27,7 @@ static frost$core$String $s33 = { (frost$core$Class*) &frost$core$String$class, 
 static frost$core$String $s39 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2e", 1, -5808619545316717647, NULL };
 static frost$core$String $s44 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "", 0, -3750763034362895579, NULL };
 
-void org$frostlang$frostc$ChoiceCase$init$org$frostlang$frostc$ClassDecl$org$frostlang$frostc$Position$frost$core$String$frost$core$String$Q$frost$core$Int64$frost$collections$ListView$LTorg$frostlang$frostc$Type$GT(org$frostlang$frostc$ChoiceCase* param0, org$frostlang$frostc$ClassDecl* param1, org$frostlang$frostc$Position param2, frost$core$String* param3, frost$core$String* param4, frost$core$Int64 param5, frost$collections$ListView* param6) {
+void org$frostlang$frostc$ChoiceCase$init$org$frostlang$frostc$ClassDecl$org$frostlang$frostc$Position$frost$core$String$frost$core$String$Q$frost$core$Int$frost$collections$ListView$LTorg$frostlang$frostc$Type$GT(org$frostlang$frostc$ChoiceCase* param0, org$frostlang$frostc$ClassDecl* param1, org$frostlang$frostc$Position param2, frost$core$String* param3, frost$core$String* param4, frost$core$Int param5, frost$collections$ListView* param6) {
 
 org$frostlang$frostc$Compiler$Resolution local0;
 org$frostlang$frostc$Compiler$Resolution local1;
@@ -73,7 +74,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp16));
 frost$core$String** $tmp17 = &param0->doccomment;
 *$tmp17 = param4;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/ChoiceCase.frost:23
-frost$core$Int64* $tmp18 = &param0->rawValue;
+frost$core$Int* $tmp18 = &param0->rawValue;
 *$tmp18 = param5;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/ChoiceCase.frost:24
 FROST_ASSERT(40 == sizeof(frost$collections$Array));
@@ -113,8 +114,8 @@ frost$core$Bit $tmp30 = *$tmp29;
 bool $tmp31 = $tmp30.value;
 if ($tmp31) goto block3; else goto block4;
 block4:;
-frost$core$Int64 $tmp32 = (frost$core$Int64) {40u};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s33, $tmp32);
+frost$core$Int $tmp32 = (frost$core$Int) {40u};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s33, $tmp32);
 abort(); // unreachable
 block3:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Weak.frost:41

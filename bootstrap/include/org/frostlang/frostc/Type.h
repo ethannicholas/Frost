@@ -6,7 +6,7 @@ typedef struct frost$core$String frost$core$String;
 #include "org/frostlang/frostc/Type/Kind_types.h"
 #include "org/frostlang/frostc/Position_types.h"
 #include "frost/core/Bit_types.h"
-#include "frost/core/Int64_types.h"
+#include "frost/core/Int_types.h"
 typedef struct frost$collections$ListView frost$collections$ListView;
 typedef struct org$frostlang$frostc$ClassDecl$GenericParameter org$frostlang$frostc$ClassDecl$GenericParameter;
 typedef struct org$frostlang$frostc$MethodDecl$GenericParameter org$frostlang$frostc$MethodDecl$GenericParameter;
@@ -19,16 +19,16 @@ typedef struct frost$collections$HashMap frost$collections$HashMap;
 
 void org$frostlang$frostc$Type$init$frost$core$String$org$frostlang$frostc$Type$Kind$org$frostlang$frostc$Position(org$frostlang$frostc$Type* self, frost$core$String* p_name, org$frostlang$frostc$Type$Kind p_typeKind, org$frostlang$frostc$Position p_position);
 void org$frostlang$frostc$Type$init$frost$core$String$org$frostlang$frostc$Type$Kind$org$frostlang$frostc$Position$frost$core$Bit(org$frostlang$frostc$Type* self, frost$core$String* p_name, org$frostlang$frostc$Type$Kind p_typeKind, org$frostlang$frostc$Position p_position, frost$core$Bit p_resolved);
-void org$frostlang$frostc$Type$init$frost$core$String$org$frostlang$frostc$Type$Kind$frost$core$Int64(org$frostlang$frostc$Type* self, frost$core$String* p_name, org$frostlang$frostc$Type$Kind p_typeKind, frost$core$Int64 p_size);
+void org$frostlang$frostc$Type$init$frost$core$String$org$frostlang$frostc$Type$Kind$frost$core$Int(org$frostlang$frostc$Type* self, frost$core$String* p_name, org$frostlang$frostc$Type$Kind p_typeKind, frost$core$Int p_size);
 void org$frostlang$frostc$Type$init$frost$core$String$org$frostlang$frostc$Type$Kind$org$frostlang$frostc$Position$frost$collections$ListView$LTorg$frostlang$frostc$Type$GT$frost$core$Bit(org$frostlang$frostc$Type* self, frost$core$String* p_name, org$frostlang$frostc$Type$Kind p_typeKind, org$frostlang$frostc$Position p_position, frost$collections$ListView* p_subtypes, frost$core$Bit p_resolved);
-void org$frostlang$frostc$Type$init$frost$core$String$org$frostlang$frostc$Type$Kind$org$frostlang$frostc$Position$frost$collections$ListView$LTorg$frostlang$frostc$Type$GT$frost$core$Bit$frost$core$Int64(org$frostlang$frostc$Type* self, frost$core$String* p_name, org$frostlang$frostc$Type$Kind p_typeKind, org$frostlang$frostc$Position p_position, frost$collections$ListView* p_subtypes, frost$core$Bit p_resolved, frost$core$Int64 p_priority);
+void org$frostlang$frostc$Type$init$frost$core$String$org$frostlang$frostc$Type$Kind$org$frostlang$frostc$Position$frost$collections$ListView$LTorg$frostlang$frostc$Type$GT$frost$core$Bit$frost$core$Int(org$frostlang$frostc$Type* self, frost$core$String* p_name, org$frostlang$frostc$Type$Kind p_typeKind, org$frostlang$frostc$Position p_position, frost$collections$ListView* p_subtypes, frost$core$Bit p_resolved, frost$core$Int p_priority);
 void org$frostlang$frostc$Type$init$org$frostlang$frostc$ClassDecl$GenericParameter(org$frostlang$frostc$Type* self, org$frostlang$frostc$ClassDecl$GenericParameter* p_param);
 void org$frostlang$frostc$Type$init$org$frostlang$frostc$MethodDecl$GenericParameter(org$frostlang$frostc$Type* self, org$frostlang$frostc$MethodDecl$GenericParameter* p_param);
 void org$frostlang$frostc$Type$init$org$frostlang$frostc$MethodRef(org$frostlang$frostc$Type* self, org$frostlang$frostc$MethodRef* p_ref);
 org$frostlang$frostc$Type* org$frostlang$frostc$Type$tuple$frost$collections$ListView$LTorg$frostlang$frostc$Type$GT$R$org$frostlang$frostc$Type(frost$collections$ListView* p_arguments);
 org$frostlang$frostc$Type* org$frostlang$frostc$Type$generic$org$frostlang$frostc$Type$frost$collections$ListView$LTorg$frostlang$frostc$Type$GT$R$org$frostlang$frostc$Type(org$frostlang$frostc$Type* p_base, frost$collections$ListView* p_arguments);
-org$frostlang$frostc$Type* org$frostlang$frostc$Type$methodType$org$frostlang$frostc$Compiler$org$frostlang$frostc$Position$org$frostlang$frostc$Type$Kind$frost$collections$ListView$LTorg$frostlang$frostc$Type$GT$org$frostlang$frostc$Type$frost$core$Int64$R$org$frostlang$frostc$Type(org$frostlang$frostc$Compiler* p_compiler, org$frostlang$frostc$Position p_position, org$frostlang$frostc$Type$Kind p_kind, frost$collections$ListView* p_parameterTypes, org$frostlang$frostc$Type* p_returnType, frost$core$Int64 p_priority);
-frost$core$Int64 org$frostlang$frostc$Type$get_size$R$frost$core$Int64(org$frostlang$frostc$Type* self);
+org$frostlang$frostc$Type* org$frostlang$frostc$Type$methodType$org$frostlang$frostc$Compiler$org$frostlang$frostc$Position$org$frostlang$frostc$Type$Kind$frost$collections$ListView$LTorg$frostlang$frostc$Type$GT$org$frostlang$frostc$Type$frost$core$Int$R$org$frostlang$frostc$Type(org$frostlang$frostc$Compiler* p_compiler, org$frostlang$frostc$Position p_position, org$frostlang$frostc$Type$Kind p_kind, frost$collections$ListView* p_parameterTypes, org$frostlang$frostc$Type* p_returnType, frost$core$Int p_priority);
+frost$core$Int org$frostlang$frostc$Type$get_size$R$frost$core$Int(org$frostlang$frostc$Type* self);
 frost$core$Bit org$frostlang$frostc$Type$get_hasSubtypes$R$frost$core$Bit(org$frostlang$frostc$Type* self);
 org$frostlang$frostc$FixedArray* org$frostlang$frostc$Type$get_subtypes$R$org$frostlang$frostc$FixedArray$LTorg$frostlang$frostc$Type$GT(org$frostlang$frostc$Type* self);
 frost$core$Bit org$frostlang$frostc$Type$$EQ$org$frostlang$frostc$Type$R$frost$core$Bit(org$frostlang$frostc$Type* self, org$frostlang$frostc$Type* p_other);
@@ -59,13 +59,13 @@ frost$core$Bit org$frostlang$frostc$Type$get_isSteppedRange$R$frost$core$Bit(org
 frost$core$Bit org$frostlang$frostc$Type$get_isNullable$R$frost$core$Bit(org$frostlang$frostc$Type* self);
 org$frostlang$frostc$Type* org$frostlang$frostc$Type$nullable$R$org$frostlang$frostc$Type(org$frostlang$frostc$Type* self);
 org$frostlang$frostc$Type* org$frostlang$frostc$Type$nonnullable$R$org$frostlang$frostc$Type(org$frostlang$frostc$Type* self);
-frost$core$Int64 org$frostlang$frostc$Type$get_parameterCount$R$frost$core$Int64(org$frostlang$frostc$Type* self);
-org$frostlang$frostc$Type* org$frostlang$frostc$Type$parameterType$frost$core$Int64$R$org$frostlang$frostc$Type(org$frostlang$frostc$Type* self, frost$core$Int64 p_i);
+frost$core$Int org$frostlang$frostc$Type$get_parameterCount$R$frost$core$Int(org$frostlang$frostc$Type* self);
+org$frostlang$frostc$Type* org$frostlang$frostc$Type$parameterType$frost$core$Int$R$org$frostlang$frostc$Type(org$frostlang$frostc$Type* self, frost$core$Int p_i);
 org$frostlang$frostc$Type* org$frostlang$frostc$Type$get_returnType$R$org$frostlang$frostc$Type(org$frostlang$frostc$Type* self);
 org$frostlang$frostc$Type* org$frostlang$frostc$Type$union$org$frostlang$frostc$Compiler$org$frostlang$frostc$Type$R$org$frostlang$frostc$Type(org$frostlang$frostc$Type* self, org$frostlang$frostc$Compiler* p_compiler, org$frostlang$frostc$Type* p_other);
 org$frostlang$frostc$Type* org$frostlang$frostc$Type$intersection$org$frostlang$frostc$Compiler$org$frostlang$frostc$Type$R$org$frostlang$frostc$Type(org$frostlang$frostc$Type* self, org$frostlang$frostc$Compiler* p_compiler, org$frostlang$frostc$Type* p_other);
 org$frostlang$frostc$Type* org$frostlang$frostc$Type$remap$org$frostlang$frostc$Compiler$frost$collections$HashMap$LTfrost$core$String$Corg$frostlang$frostc$Type$GT$R$org$frostlang$frostc$Type(org$frostlang$frostc$Type* self, org$frostlang$frostc$Compiler* p_compiler, frost$collections$HashMap* p_types);
-frost$core$Int64 org$frostlang$frostc$Type$get_hash$R$frost$core$Int64(org$frostlang$frostc$Type* self);
+frost$core$Int org$frostlang$frostc$Type$get_hash$R$frost$core$Int(org$frostlang$frostc$Type* self);
 frost$core$String* org$frostlang$frostc$Type$get_asString$R$frost$core$String(org$frostlang$frostc$Type* self);
 void org$frostlang$frostc$Type$cleanup(org$frostlang$frostc$Type* self);
 

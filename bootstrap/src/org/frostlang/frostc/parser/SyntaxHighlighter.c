@@ -2,11 +2,11 @@
 #include "frost/core/Object.h"
 #include "frost/core/Class.h"
 #include "frost/core/String.h"
-#include "frost/core/Int64.h"
+#include "frost/core/Int.h"
 #include "frost/collections/Array.h"
 #include "frost/core/Bit.h"
-#include "frost/core/Range.LTfrost/core/Int64.GT.h"
-#include "frost/core/UInt64.h"
+#include "frost/core/Range.LTfrost/core/Int.GT.h"
+#include "frost/core/Int64.h"
 #include "frost/core/Frost.h"
 #include "frost/collections/Stack.h"
 #include "org/frostlang/frostc/parser/SyntaxHighlighter/Kind.h"
@@ -19,376 +19,369 @@
 static frost$core$String $s1;
 org$frostlang$frostc$parser$SyntaxHighlighter$class_type org$frostlang$frostc$parser$SyntaxHighlighter$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { frost$core$Object$get_asString$R$frost$core$String, org$frostlang$frostc$parser$SyntaxHighlighter$cleanup, org$frostlang$frostc$parser$SyntaxHighlighter$reset, org$frostlang$frostc$parser$SyntaxHighlighter$open$org$frostlang$frostc$parser$SyntaxHighlighter$Kind, org$frostlang$frostc$parser$SyntaxHighlighter$close$org$frostlang$frostc$parser$SyntaxHighlighter$Kind, org$frostlang$frostc$parser$SyntaxHighlighter$add$org$frostlang$frostc$parser$Token$org$frostlang$frostc$parser$SyntaxHighlighter$Kind, org$frostlang$frostc$parser$SyntaxHighlighter$add$org$frostlang$frostc$parser$Token, org$frostlang$frostc$parser$SyntaxHighlighter$rewind} };
 
-typedef frost$core$Int64 (*$fn124)(frost$collections$CollectionView*);
-typedef frost$core$Int64 (*$fn138)(frost$collections$CollectionView*);
-typedef frost$core$Int64 (*$fn153)(frost$collections$CollectionView*);
-typedef frost$core$Int64 (*$fn172)(frost$collections$CollectionView*);
-typedef frost$core$Int64 (*$fn209)(frost$collections$CollectionView*);
-typedef frost$core$Int64 (*$fn230)(frost$collections$CollectionView*);
-typedef frost$core$Int64 (*$fn244)(frost$collections$CollectionView*);
-typedef frost$core$Int64 (*$fn259)(frost$collections$CollectionView*);
-typedef frost$core$Int64 (*$fn278)(frost$collections$CollectionView*);
-typedef void (*$fn293)(org$frostlang$frostc$parser$SyntaxHighlighter*, org$frostlang$frostc$parser$Token, org$frostlang$frostc$parser$SyntaxHighlighter$Kind);
-typedef void (*$fn307)(org$frostlang$frostc$parser$SyntaxHighlighter*, org$frostlang$frostc$parser$Token, org$frostlang$frostc$parser$SyntaxHighlighter$Kind);
-typedef void (*$fn361)(org$frostlang$frostc$parser$SyntaxHighlighter*, org$frostlang$frostc$parser$Token, org$frostlang$frostc$parser$SyntaxHighlighter$Kind);
-typedef void (*$fn379)(org$frostlang$frostc$parser$SyntaxHighlighter*, org$frostlang$frostc$parser$Token, org$frostlang$frostc$parser$SyntaxHighlighter$Kind);
-typedef void (*$fn391)(org$frostlang$frostc$parser$SyntaxHighlighter*, org$frostlang$frostc$parser$Token, org$frostlang$frostc$parser$SyntaxHighlighter$Kind);
-typedef void (*$fn403)(org$frostlang$frostc$parser$SyntaxHighlighter*, org$frostlang$frostc$parser$Token, org$frostlang$frostc$parser$SyntaxHighlighter$Kind);
-typedef void (*$fn415)(org$frostlang$frostc$parser$SyntaxHighlighter*, org$frostlang$frostc$parser$Token, org$frostlang$frostc$parser$SyntaxHighlighter$Kind);
-typedef void (*$fn505)(org$frostlang$frostc$parser$SyntaxHighlighter*, org$frostlang$frostc$parser$Token, org$frostlang$frostc$parser$SyntaxHighlighter$Kind);
-typedef void (*$fn601)(org$frostlang$frostc$parser$SyntaxHighlighter*, org$frostlang$frostc$parser$Token, org$frostlang$frostc$parser$SyntaxHighlighter$Kind);
-typedef void (*$fn619)(org$frostlang$frostc$parser$SyntaxHighlighter*, org$frostlang$frostc$parser$Token, org$frostlang$frostc$parser$SyntaxHighlighter$Kind);
-typedef void (*$fn919)(org$frostlang$frostc$parser$SyntaxHighlighter*, org$frostlang$frostc$parser$Token, org$frostlang$frostc$parser$SyntaxHighlighter$Kind);
-typedef void (*$fn925)(org$frostlang$frostc$parser$SyntaxHighlighter*, org$frostlang$frostc$parser$Token, org$frostlang$frostc$parser$SyntaxHighlighter$Kind);
-typedef frost$core$Int64 (*$fn932)(frost$collections$CollectionView*);
+typedef frost$core$Int (*$fn120)(frost$collections$CollectionView*);
+typedef frost$core$Int (*$fn134)(frost$collections$CollectionView*);
+typedef frost$core$Int (*$fn149)(frost$collections$CollectionView*);
+typedef frost$core$Int (*$fn168)(frost$collections$CollectionView*);
+typedef frost$core$Int (*$fn206)(frost$collections$CollectionView*);
+typedef frost$core$Int (*$fn227)(frost$collections$CollectionView*);
+typedef frost$core$Int (*$fn241)(frost$collections$CollectionView*);
+typedef frost$core$Int (*$fn256)(frost$collections$CollectionView*);
+typedef frost$core$Int (*$fn275)(frost$collections$CollectionView*);
+typedef void (*$fn291)(org$frostlang$frostc$parser$SyntaxHighlighter*, org$frostlang$frostc$parser$Token, org$frostlang$frostc$parser$SyntaxHighlighter$Kind);
+typedef void (*$fn305)(org$frostlang$frostc$parser$SyntaxHighlighter*, org$frostlang$frostc$parser$Token, org$frostlang$frostc$parser$SyntaxHighlighter$Kind);
+typedef void (*$fn359)(org$frostlang$frostc$parser$SyntaxHighlighter*, org$frostlang$frostc$parser$Token, org$frostlang$frostc$parser$SyntaxHighlighter$Kind);
+typedef void (*$fn377)(org$frostlang$frostc$parser$SyntaxHighlighter*, org$frostlang$frostc$parser$Token, org$frostlang$frostc$parser$SyntaxHighlighter$Kind);
+typedef void (*$fn389)(org$frostlang$frostc$parser$SyntaxHighlighter*, org$frostlang$frostc$parser$Token, org$frostlang$frostc$parser$SyntaxHighlighter$Kind);
+typedef void (*$fn401)(org$frostlang$frostc$parser$SyntaxHighlighter*, org$frostlang$frostc$parser$Token, org$frostlang$frostc$parser$SyntaxHighlighter$Kind);
+typedef void (*$fn413)(org$frostlang$frostc$parser$SyntaxHighlighter*, org$frostlang$frostc$parser$Token, org$frostlang$frostc$parser$SyntaxHighlighter$Kind);
+typedef void (*$fn503)(org$frostlang$frostc$parser$SyntaxHighlighter*, org$frostlang$frostc$parser$Token, org$frostlang$frostc$parser$SyntaxHighlighter$Kind);
+typedef void (*$fn599)(org$frostlang$frostc$parser$SyntaxHighlighter*, org$frostlang$frostc$parser$Token, org$frostlang$frostc$parser$SyntaxHighlighter$Kind);
+typedef void (*$fn617)(org$frostlang$frostc$parser$SyntaxHighlighter*, org$frostlang$frostc$parser$Token, org$frostlang$frostc$parser$SyntaxHighlighter$Kind);
+typedef void (*$fn917)(org$frostlang$frostc$parser$SyntaxHighlighter*, org$frostlang$frostc$parser$Token, org$frostlang$frostc$parser$SyntaxHighlighter$Kind);
+typedef void (*$fn923)(org$frostlang$frostc$parser$SyntaxHighlighter*, org$frostlang$frostc$parser$Token, org$frostlang$frostc$parser$SyntaxHighlighter$Kind);
+typedef frost$core$Int (*$fn930)(frost$collections$CollectionView*);
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x70\x61\x72\x73\x65\x72\x2e\x53\x79\x6e\x74\x61\x78\x48\x69\x67\x68\x6c\x69\x67\x68\x74\x65\x72", 45, -2825424854296992849, NULL };
-static frost$core$String $s132 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x74\x61\x63\x6b\x2e\x66\x72\x6f\x73\x74", 11, 638186012983189615, NULL };
-static frost$core$String $s133 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x53\x74\x61\x63\x6b\x2e\x5b\x5d\x28\x64\x65\x70\x74\x68\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x36\x34\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x53\x74\x61\x63\x6b\x2e\x54", 110, -6780593757603597528, NULL };
-static frost$core$String $s146 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x74\x61\x63\x6b\x2e\x66\x72\x6f\x73\x74", 11, 638186012983189615, NULL };
-static frost$core$String $s180 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x41\x72\x72\x61\x79\x2e\x66\x72\x6f\x73\x74", 11, -1919842861654168654, NULL };
-static frost$core$String $s181 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x5b\x5d\x28\x69\x6e\x64\x65\x78\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x36\x34\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x54", 110, 4208646717458716543, NULL };
-static frost$core$String $s194 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x79\x6e\x74\x61\x78\x48\x69\x67\x68\x6c\x69\x67\x68\x74\x65\x72\x2e\x66\x72\x6f\x73\x74", 23, -3132022240999228739, NULL };
-static frost$core$String $s238 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x74\x61\x63\x6b\x2e\x66\x72\x6f\x73\x74", 11, 638186012983189615, NULL };
-static frost$core$String $s239 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x53\x74\x61\x63\x6b\x2e\x5b\x5d\x28\x64\x65\x70\x74\x68\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x36\x34\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x53\x74\x61\x63\x6b\x2e\x54", 110, -6780593757603597528, NULL };
-static frost$core$String $s252 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x74\x61\x63\x6b\x2e\x66\x72\x6f\x73\x74", 11, 638186012983189615, NULL };
-static frost$core$String $s286 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x41\x72\x72\x61\x79\x2e\x66\x72\x6f\x73\x74", 11, -1919842861654168654, NULL };
-static frost$core$String $s287 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x5b\x5d\x28\x69\x6e\x64\x65\x78\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x36\x34\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x54", 110, 4208646717458716543, NULL };
+static frost$core$String $s128 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x74\x61\x63\x6b\x2e\x66\x72\x6f\x73\x74", 11, 638186012983189615, NULL };
+static frost$core$String $s129 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x53\x74\x61\x63\x6b\x2e\x5b\x5d\x28\x64\x65\x70\x74\x68\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x53\x74\x61\x63\x6b\x2e\x54", 108, 1355402247663454874, NULL };
+static frost$core$String $s142 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x74\x61\x63\x6b\x2e\x66\x72\x6f\x73\x74", 11, 638186012983189615, NULL };
+static frost$core$String $s176 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x41\x72\x72\x61\x79\x2e\x66\x72\x6f\x73\x74", 11, -1919842861654168654, NULL };
+static frost$core$String $s177 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x5b\x5d\x28\x69\x6e\x64\x65\x78\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x54", 108, 4065685528380894665, NULL };
+static frost$core$String $s191 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x79\x6e\x74\x61\x78\x48\x69\x67\x68\x6c\x69\x67\x68\x74\x65\x72\x2e\x66\x72\x6f\x73\x74", 23, -3132022240999228739, NULL };
+static frost$core$String $s235 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x74\x61\x63\x6b\x2e\x66\x72\x6f\x73\x74", 11, 638186012983189615, NULL };
+static frost$core$String $s236 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x53\x74\x61\x63\x6b\x2e\x5b\x5d\x28\x64\x65\x70\x74\x68\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x53\x74\x61\x63\x6b\x2e\x54", 108, 1355402247663454874, NULL };
+static frost$core$String $s249 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x74\x61\x63\x6b\x2e\x66\x72\x6f\x73\x74", 11, 638186012983189615, NULL };
+static frost$core$String $s283 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x41\x72\x72\x61\x79\x2e\x66\x72\x6f\x73\x74", 11, -1919842861654168654, NULL };
+static frost$core$String $s284 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x5b\x5d\x28\x69\x6e\x64\x65\x78\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x54", 108, 4065685528380894665, NULL };
 
 void org$frostlang$frostc$parser$SyntaxHighlighter$reset(org$frostlang$frostc$parser$SyntaxHighlighter* param0) {
 
-frost$core$Int64 local0;
-frost$core$Int64 local1;
+frost$core$Int local0;
+frost$core$Int local1;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/parser/SyntaxHighlighter.frost:75
 frost$collections$Array** $tmp2 = &param0->tokens;
 frost$collections$Array* $tmp3 = *$tmp2;
 // begin inline call to method frost.collections.Array.clear() from SyntaxHighlighter.frost:75:21
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Array.frost:139
-frost$core$Int64 $tmp4 = (frost$core$Int64) {0u};
-frost$core$Int64* $tmp5 = &$tmp3->_count;
+frost$core$Int $tmp4 = (frost$core$Int) {0u};
+frost$core$Int* $tmp5 = &$tmp3->_count;
 *$tmp5 = $tmp4;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Array.frost:140
-frost$core$Int64 $tmp6 = (frost$core$Int64) {0u};
-frost$core$Int64* $tmp7 = &$tmp3->capacity;
-frost$core$Int64 $tmp8 = *$tmp7;
+frost$core$Int $tmp6 = (frost$core$Int) {0u};
+frost$core$Int* $tmp7 = &$tmp3->capacity;
+frost$core$Int $tmp8 = *$tmp7;
 frost$core$Bit $tmp9 = (frost$core$Bit) {false};
-frost$core$Range$LTfrost$core$Int64$GT $tmp10 = frost$core$Range$LTfrost$core$Int64$GT$init$frost$core$Int64$frost$core$Int64$frost$core$Bit($tmp6, $tmp8, $tmp9);
-frost$core$Int64 $tmp11 = $tmp10.min;
+frost$core$Range$LTfrost$core$Int$GT $tmp10 = frost$core$Range$LTfrost$core$Int$GT$init$frost$core$Int$frost$core$Int$frost$core$Bit($tmp6, $tmp8, $tmp9);
+frost$core$Int $tmp11 = $tmp10.min;
 *(&local0) = $tmp11;
-frost$core$Int64 $tmp12 = $tmp10.max;
+frost$core$Int $tmp12 = $tmp10.max;
 frost$core$Bit $tmp13 = $tmp10.inclusive;
 bool $tmp14 = $tmp13.value;
-frost$core$Int64 $tmp15 = (frost$core$Int64) {1u};
-// begin inline call to function frost.core.Int64.get_asUInt64():frost.core.UInt64 from <internal>:1:1
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:555
-int64_t $tmp16 = $tmp15.value;
-frost$core$UInt64 $tmp17 = (frost$core$UInt64) {((uint64_t) $tmp16)};
-if ($tmp14) goto block6; else goto block7;
+frost$core$Int $tmp15 = (frost$core$Int) {1u};
+if ($tmp14) goto block5; else goto block6;
+block5:;
+int64_t $tmp16 = $tmp11.value;
+int64_t $tmp17 = $tmp12.value;
+bool $tmp18 = $tmp16 <= $tmp17;
+frost$core$Bit $tmp19 = (frost$core$Bit) {$tmp18};
+bool $tmp20 = $tmp19.value;
+if ($tmp20) goto block2; else goto block3;
 block6:;
-int64_t $tmp18 = $tmp11.value;
-int64_t $tmp19 = $tmp12.value;
-bool $tmp20 = $tmp18 <= $tmp19;
-frost$core$Bit $tmp21 = (frost$core$Bit) {$tmp20};
-bool $tmp22 = $tmp21.value;
-if ($tmp22) goto block3; else goto block4;
-block7:;
-int64_t $tmp23 = $tmp11.value;
-int64_t $tmp24 = $tmp12.value;
-bool $tmp25 = $tmp23 < $tmp24;
-frost$core$Bit $tmp26 = (frost$core$Bit) {$tmp25};
-bool $tmp27 = $tmp26.value;
-if ($tmp27) goto block3; else goto block4;
-block3:;
+int64_t $tmp21 = $tmp11.value;
+int64_t $tmp22 = $tmp12.value;
+bool $tmp23 = $tmp21 < $tmp22;
+frost$core$Bit $tmp24 = (frost$core$Bit) {$tmp23};
+bool $tmp25 = $tmp24.value;
+if ($tmp25) goto block2; else goto block3;
+block2:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Array.frost:141
-frost$core$Object*** $tmp28 = &$tmp3->data;
-frost$core$Object** $tmp29 = *$tmp28;
-frost$core$Int64 $tmp30 = *(&local0);
-int64_t $tmp31 = $tmp30.value;
-frost$core$Object* $tmp32 = $tmp29[$tmp31];
-frost$core$Frost$unref$frost$core$Object$Q($tmp32);
-$tmp29[$tmp31] = ((frost$core$Object*) NULL);
-frost$core$Int64 $tmp33 = *(&local0);
-int64_t $tmp34 = $tmp12.value;
-int64_t $tmp35 = $tmp33.value;
-int64_t $tmp36 = $tmp34 - $tmp35;
-frost$core$Int64 $tmp37 = (frost$core$Int64) {$tmp36};
-// begin inline call to function frost.core.Int64.get_asUInt64():frost.core.UInt64 from <internal>:1:1
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:555
-int64_t $tmp38 = $tmp37.value;
-frost$core$UInt64 $tmp39 = (frost$core$UInt64) {((uint64_t) $tmp38)};
-if ($tmp14) goto block10; else goto block11;
-block10:;
-uint64_t $tmp40 = $tmp39.value;
-uint64_t $tmp41 = $tmp17.value;
-bool $tmp42 = $tmp40 >= $tmp41;
-frost$core$Bit $tmp43 = (frost$core$Bit) {$tmp42};
-bool $tmp44 = $tmp43.value;
-if ($tmp44) goto block8; else goto block4;
-block11:;
-uint64_t $tmp45 = $tmp39.value;
-uint64_t $tmp46 = $tmp17.value;
-bool $tmp47 = $tmp45 > $tmp46;
-frost$core$Bit $tmp48 = (frost$core$Bit) {$tmp47};
-bool $tmp49 = $tmp48.value;
-if ($tmp49) goto block8; else goto block4;
+frost$core$Object*** $tmp26 = &$tmp3->data;
+frost$core$Object** $tmp27 = *$tmp26;
+frost$core$Int $tmp28 = *(&local0);
+frost$core$Int64 $tmp29 = frost$core$Int64$init$frost$core$Int($tmp28);
+int64_t $tmp30 = $tmp29.value;
+frost$core$Object* $tmp31 = $tmp27[$tmp30];
+frost$core$Frost$unref$frost$core$Object$Q($tmp31);
+$tmp27[$tmp30] = ((frost$core$Object*) NULL);
+frost$core$Int $tmp32 = *(&local0);
+int64_t $tmp33 = $tmp12.value;
+int64_t $tmp34 = $tmp32.value;
+int64_t $tmp35 = $tmp33 - $tmp34;
+frost$core$Int $tmp36 = (frost$core$Int) {$tmp35};
+if ($tmp14) goto block8; else goto block9;
 block8:;
-int64_t $tmp50 = $tmp33.value;
-int64_t $tmp51 = $tmp15.value;
-int64_t $tmp52 = $tmp50 + $tmp51;
-frost$core$Int64 $tmp53 = (frost$core$Int64) {$tmp52};
-*(&local0) = $tmp53;
-goto block3;
-block4:;
+int64_t $tmp37 = $tmp36.value;
+int64_t $tmp38 = $tmp15.value;
+bool $tmp39 = $tmp37 >= $tmp38;
+frost$core$Bit $tmp40 = (frost$core$Bit) {$tmp39};
+bool $tmp41 = $tmp40.value;
+if ($tmp41) goto block7; else goto block3;
+block9:;
+int64_t $tmp42 = $tmp36.value;
+int64_t $tmp43 = $tmp15.value;
+bool $tmp44 = $tmp42 > $tmp43;
+frost$core$Bit $tmp45 = (frost$core$Bit) {$tmp44};
+bool $tmp46 = $tmp45.value;
+if ($tmp46) goto block7; else goto block3;
+block7:;
+int64_t $tmp47 = $tmp32.value;
+int64_t $tmp48 = $tmp15.value;
+int64_t $tmp49 = $tmp47 + $tmp48;
+frost$core$Int $tmp50 = (frost$core$Int) {$tmp49};
+*(&local0) = $tmp50;
+goto block2;
+block3:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/parser/SyntaxHighlighter.frost:76
-frost$collections$Stack** $tmp54 = &param0->stack;
-frost$collections$Stack* $tmp55 = *$tmp54;
+frost$collections$Stack** $tmp51 = &param0->stack;
+frost$collections$Stack* $tmp52 = *$tmp51;
 // begin inline call to method frost.collections.Stack.clear() from SyntaxHighlighter.frost:76:20
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Stack.frost:80
-frost$collections$Array** $tmp56 = &$tmp55->contents;
-frost$collections$Array* $tmp57 = *$tmp56;
+frost$collections$Array** $tmp53 = &$tmp52->contents;
+frost$collections$Array* $tmp54 = *$tmp53;
 // begin inline call to method frost.collections.Array.clear() from Stack.frost:80:23
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Array.frost:139
-frost$core$Int64 $tmp58 = (frost$core$Int64) {0u};
-frost$core$Int64* $tmp59 = &$tmp57->_count;
-*$tmp59 = $tmp58;
+frost$core$Int $tmp55 = (frost$core$Int) {0u};
+frost$core$Int* $tmp56 = &$tmp54->_count;
+*$tmp56 = $tmp55;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Array.frost:140
-frost$core$Int64 $tmp60 = (frost$core$Int64) {0u};
-frost$core$Int64* $tmp61 = &$tmp57->capacity;
-frost$core$Int64 $tmp62 = *$tmp61;
-frost$core$Bit $tmp63 = (frost$core$Bit) {false};
-frost$core$Range$LTfrost$core$Int64$GT $tmp64 = frost$core$Range$LTfrost$core$Int64$GT$init$frost$core$Int64$frost$core$Int64$frost$core$Bit($tmp60, $tmp62, $tmp63);
-frost$core$Int64 $tmp65 = $tmp64.min;
-*(&local1) = $tmp65;
-frost$core$Int64 $tmp66 = $tmp64.max;
-frost$core$Bit $tmp67 = $tmp64.inclusive;
-bool $tmp68 = $tmp67.value;
-frost$core$Int64 $tmp69 = (frost$core$Int64) {1u};
-frost$core$UInt64 $tmp70 = frost$core$Int64$get_asUInt64$R$frost$core$UInt64($tmp69);
-if ($tmp68) goto block17; else goto block18;
-block17:;
-int64_t $tmp71 = $tmp65.value;
-int64_t $tmp72 = $tmp66.value;
-bool $tmp73 = $tmp71 <= $tmp72;
-frost$core$Bit $tmp74 = (frost$core$Bit) {$tmp73};
-bool $tmp75 = $tmp74.value;
-if ($tmp75) goto block14; else goto block15;
-block18:;
-int64_t $tmp76 = $tmp65.value;
-int64_t $tmp77 = $tmp66.value;
-bool $tmp78 = $tmp76 < $tmp77;
-frost$core$Bit $tmp79 = (frost$core$Bit) {$tmp78};
-bool $tmp80 = $tmp79.value;
-if ($tmp80) goto block14; else goto block15;
-block14:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Array.frost:141
-frost$core$Object*** $tmp81 = &$tmp57->data;
-frost$core$Object** $tmp82 = *$tmp81;
-frost$core$Int64 $tmp83 = *(&local1);
-int64_t $tmp84 = $tmp83.value;
-frost$core$Object* $tmp85 = $tmp82[$tmp84];
-frost$core$Frost$unref$frost$core$Object$Q($tmp85);
-$tmp82[$tmp84] = ((frost$core$Object*) NULL);
-frost$core$Int64 $tmp86 = *(&local1);
-int64_t $tmp87 = $tmp66.value;
-int64_t $tmp88 = $tmp86.value;
-int64_t $tmp89 = $tmp87 - $tmp88;
-frost$core$Int64 $tmp90 = (frost$core$Int64) {$tmp89};
-frost$core$UInt64 $tmp91 = frost$core$Int64$get_asUInt64$R$frost$core$UInt64($tmp90);
-if ($tmp68) goto block20; else goto block21;
-block20:;
-uint64_t $tmp92 = $tmp91.value;
-uint64_t $tmp93 = $tmp70.value;
-bool $tmp94 = $tmp92 >= $tmp93;
-frost$core$Bit $tmp95 = (frost$core$Bit) {$tmp94};
-bool $tmp96 = $tmp95.value;
-if ($tmp96) goto block19; else goto block15;
-block21:;
-uint64_t $tmp97 = $tmp91.value;
-uint64_t $tmp98 = $tmp70.value;
-bool $tmp99 = $tmp97 > $tmp98;
-frost$core$Bit $tmp100 = (frost$core$Bit) {$tmp99};
-bool $tmp101 = $tmp100.value;
-if ($tmp101) goto block19; else goto block15;
-block19:;
-int64_t $tmp102 = $tmp86.value;
-int64_t $tmp103 = $tmp69.value;
-int64_t $tmp104 = $tmp102 + $tmp103;
-frost$core$Int64 $tmp105 = (frost$core$Int64) {$tmp104};
-*(&local1) = $tmp105;
-goto block14;
+frost$core$Int $tmp57 = (frost$core$Int) {0u};
+frost$core$Int* $tmp58 = &$tmp54->capacity;
+frost$core$Int $tmp59 = *$tmp58;
+frost$core$Bit $tmp60 = (frost$core$Bit) {false};
+frost$core$Range$LTfrost$core$Int$GT $tmp61 = frost$core$Range$LTfrost$core$Int$GT$init$frost$core$Int$frost$core$Int$frost$core$Bit($tmp57, $tmp59, $tmp60);
+frost$core$Int $tmp62 = $tmp61.min;
+*(&local1) = $tmp62;
+frost$core$Int $tmp63 = $tmp61.max;
+frost$core$Bit $tmp64 = $tmp61.inclusive;
+bool $tmp65 = $tmp64.value;
+frost$core$Int $tmp66 = (frost$core$Int) {1u};
+if ($tmp65) goto block15; else goto block16;
 block15:;
+int64_t $tmp67 = $tmp62.value;
+int64_t $tmp68 = $tmp63.value;
+bool $tmp69 = $tmp67 <= $tmp68;
+frost$core$Bit $tmp70 = (frost$core$Bit) {$tmp69};
+bool $tmp71 = $tmp70.value;
+if ($tmp71) goto block12; else goto block13;
+block16:;
+int64_t $tmp72 = $tmp62.value;
+int64_t $tmp73 = $tmp63.value;
+bool $tmp74 = $tmp72 < $tmp73;
+frost$core$Bit $tmp75 = (frost$core$Bit) {$tmp74};
+bool $tmp76 = $tmp75.value;
+if ($tmp76) goto block12; else goto block13;
+block12:;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Array.frost:141
+frost$core$Object*** $tmp77 = &$tmp54->data;
+frost$core$Object** $tmp78 = *$tmp77;
+frost$core$Int $tmp79 = *(&local1);
+frost$core$Int64 $tmp80 = frost$core$Int64$init$frost$core$Int($tmp79);
+int64_t $tmp81 = $tmp80.value;
+frost$core$Object* $tmp82 = $tmp78[$tmp81];
+frost$core$Frost$unref$frost$core$Object$Q($tmp82);
+$tmp78[$tmp81] = ((frost$core$Object*) NULL);
+frost$core$Int $tmp83 = *(&local1);
+int64_t $tmp84 = $tmp63.value;
+int64_t $tmp85 = $tmp83.value;
+int64_t $tmp86 = $tmp84 - $tmp85;
+frost$core$Int $tmp87 = (frost$core$Int) {$tmp86};
+if ($tmp65) goto block18; else goto block19;
+block18:;
+int64_t $tmp88 = $tmp87.value;
+int64_t $tmp89 = $tmp66.value;
+bool $tmp90 = $tmp88 >= $tmp89;
+frost$core$Bit $tmp91 = (frost$core$Bit) {$tmp90};
+bool $tmp92 = $tmp91.value;
+if ($tmp92) goto block17; else goto block13;
+block19:;
+int64_t $tmp93 = $tmp87.value;
+int64_t $tmp94 = $tmp66.value;
+bool $tmp95 = $tmp93 > $tmp94;
+frost$core$Bit $tmp96 = (frost$core$Bit) {$tmp95};
+bool $tmp97 = $tmp96.value;
+if ($tmp97) goto block17; else goto block13;
+block17:;
+int64_t $tmp98 = $tmp83.value;
+int64_t $tmp99 = $tmp66.value;
+int64_t $tmp100 = $tmp98 + $tmp99;
+frost$core$Int $tmp101 = (frost$core$Int) {$tmp100};
+*(&local1) = $tmp101;
+goto block12;
+block13:;
 return;
 
 }
 void org$frostlang$frostc$parser$SyntaxHighlighter$open$org$frostlang$frostc$parser$SyntaxHighlighter$Kind(org$frostlang$frostc$parser$SyntaxHighlighter* param0, org$frostlang$frostc$parser$SyntaxHighlighter$Kind param1) {
 
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/parser/SyntaxHighlighter.frost:80
-frost$collections$Stack** $tmp106 = &param0->stack;
-frost$collections$Stack* $tmp107 = *$tmp106;
-org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper* $tmp108;
-$tmp108 = (org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapperclass);
-$tmp108->value = param1;
+frost$collections$Stack** $tmp102 = &param0->stack;
+frost$collections$Stack* $tmp103 = *$tmp102;
+org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper* $tmp104;
+$tmp104 = (org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapperclass);
+$tmp104->value = param1;
 // begin inline call to method frost.collections.Stack.push(v:frost.collections.Stack.T) from SyntaxHighlighter.frost:80:19
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Stack.frost:42
-frost$collections$Array** $tmp109 = &$tmp107->contents;
-frost$collections$Array* $tmp110 = *$tmp109;
-frost$collections$Array$add$frost$collections$Array$T($tmp110, ((frost$core$Object*) $tmp108));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp108));
+frost$collections$Array** $tmp105 = &$tmp103->contents;
+frost$collections$Array* $tmp106 = *$tmp105;
+frost$collections$Array$add$frost$collections$Array$T($tmp106, ((frost$core$Object*) $tmp104));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp104));
 return;
 
 }
 void org$frostlang$frostc$parser$SyntaxHighlighter$close$org$frostlang$frostc$parser$SyntaxHighlighter$Kind(org$frostlang$frostc$parser$SyntaxHighlighter* param0, org$frostlang$frostc$parser$SyntaxHighlighter$Kind param1) {
 
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/parser/SyntaxHighlighter.frost:84
-frost$collections$Stack** $tmp111 = &param0->stack;
-frost$collections$Stack* $tmp112 = *$tmp111;
-frost$core$Int64 $tmp113 = (frost$core$Int64) {0u};
-// begin inline call to function frost.collections.Stack.[](depth:frost.core.Int64):frost.collections.Stack.T from SyntaxHighlighter.frost:84:21
-frost$core$Int64 $tmp114 = (frost$core$Int64) {0u};
-int64_t $tmp115 = $tmp113.value;
-int64_t $tmp116 = $tmp114.value;
-bool $tmp117 = $tmp115 >= $tmp116;
-frost$core$Bit $tmp118 = (frost$core$Bit) {$tmp117};
-bool $tmp119 = $tmp118.value;
-if ($tmp119) goto block4; else goto block3;
+frost$collections$Stack** $tmp107 = &param0->stack;
+frost$collections$Stack* $tmp108 = *$tmp107;
+frost$core$Int $tmp109 = (frost$core$Int) {0u};
+// begin inline call to function frost.collections.Stack.[](depth:frost.core.Int):frost.collections.Stack.T from SyntaxHighlighter.frost:84:21
+frost$core$Int $tmp110 = (frost$core$Int) {0u};
+int64_t $tmp111 = $tmp109.value;
+int64_t $tmp112 = $tmp110.value;
+bool $tmp113 = $tmp111 >= $tmp112;
+frost$core$Bit $tmp114 = (frost$core$Bit) {$tmp113};
+bool $tmp115 = $tmp114.value;
+if ($tmp115) goto block4; else goto block3;
 block4:;
-// begin inline call to function frost.collections.Stack.get_count():frost.core.Int64 from Stack.frost:70:31
+// begin inline call to function frost.collections.Stack.get_count():frost.core.Int from Stack.frost:70:31
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Stack.frost:93
-frost$collections$Array** $tmp120 = &$tmp112->contents;
-frost$collections$Array* $tmp121 = *$tmp120;
-ITable* $tmp122 = ((frost$collections$CollectionView*) $tmp121)->$class->itable;
-while ($tmp122->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
-    $tmp122 = $tmp122->next;
+frost$collections$Array** $tmp116 = &$tmp108->contents;
+frost$collections$Array* $tmp117 = *$tmp116;
+ITable* $tmp118 = ((frost$collections$CollectionView*) $tmp117)->$class->itable;
+while ($tmp118->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
+    $tmp118 = $tmp118->next;
 }
-$fn124 $tmp123 = $tmp122->methods[0];
-frost$core$Int64 $tmp125 = $tmp123(((frost$collections$CollectionView*) $tmp121));
-int64_t $tmp126 = $tmp113.value;
-int64_t $tmp127 = $tmp125.value;
-bool $tmp128 = $tmp126 < $tmp127;
-frost$core$Bit $tmp129 = (frost$core$Bit) {$tmp128};
-bool $tmp130 = $tmp129.value;
-if ($tmp130) goto block2; else goto block3;
+$fn120 $tmp119 = $tmp118->methods[0];
+frost$core$Int $tmp121 = $tmp119(((frost$collections$CollectionView*) $tmp117));
+int64_t $tmp122 = $tmp109.value;
+int64_t $tmp123 = $tmp121.value;
+bool $tmp124 = $tmp122 < $tmp123;
+frost$core$Bit $tmp125 = (frost$core$Bit) {$tmp124};
+bool $tmp126 = $tmp125.value;
+if ($tmp126) goto block2; else goto block3;
 block3:;
-frost$core$Int64 $tmp131 = (frost$core$Int64) {71u};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s132, $tmp131, &$s133);
+frost$core$Int $tmp127 = (frost$core$Int) {71u};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s128, $tmp127, &$s129);
 abort(); // unreachable
 block2:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Stack.frost:72
-frost$collections$Array** $tmp134 = &$tmp112->contents;
-frost$collections$Array* $tmp135 = *$tmp134;
-ITable* $tmp136 = ((frost$collections$CollectionView*) $tmp135)->$class->itable;
-while ($tmp136->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
-    $tmp136 = $tmp136->next;
+frost$collections$Array** $tmp130 = &$tmp108->contents;
+frost$collections$Array* $tmp131 = *$tmp130;
+ITable* $tmp132 = ((frost$collections$CollectionView*) $tmp131)->$class->itable;
+while ($tmp132->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
+    $tmp132 = $tmp132->next;
 }
-$fn138 $tmp137 = $tmp136->methods[0];
-frost$core$Int64 $tmp139 = $tmp137(((frost$collections$CollectionView*) $tmp135));
-int64_t $tmp140 = $tmp139.value;
-int64_t $tmp141 = $tmp113.value;
-bool $tmp142 = $tmp140 > $tmp141;
-frost$core$Bit $tmp143 = (frost$core$Bit) {$tmp142};
-bool $tmp144 = $tmp143.value;
-if ($tmp144) goto block6; else goto block7;
+$fn134 $tmp133 = $tmp132->methods[0];
+frost$core$Int $tmp135 = $tmp133(((frost$collections$CollectionView*) $tmp131));
+int64_t $tmp136 = $tmp135.value;
+int64_t $tmp137 = $tmp109.value;
+bool $tmp138 = $tmp136 > $tmp137;
+frost$core$Bit $tmp139 = (frost$core$Bit) {$tmp138};
+bool $tmp140 = $tmp139.value;
+if ($tmp140) goto block6; else goto block7;
 block7:;
-frost$core$Int64 $tmp145 = (frost$core$Int64) {72u};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s146, $tmp145);
+frost$core$Int $tmp141 = (frost$core$Int) {72u};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s142, $tmp141);
 abort(); // unreachable
 block6:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Stack.frost:73
-frost$collections$Array** $tmp147 = &$tmp112->contents;
-frost$collections$Array* $tmp148 = *$tmp147;
-frost$collections$Array** $tmp149 = &$tmp112->contents;
-frost$collections$Array* $tmp150 = *$tmp149;
-ITable* $tmp151 = ((frost$collections$CollectionView*) $tmp150)->$class->itable;
-while ($tmp151->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
-    $tmp151 = $tmp151->next;
+frost$collections$Array** $tmp143 = &$tmp108->contents;
+frost$collections$Array* $tmp144 = *$tmp143;
+frost$collections$Array** $tmp145 = &$tmp108->contents;
+frost$collections$Array* $tmp146 = *$tmp145;
+ITable* $tmp147 = ((frost$collections$CollectionView*) $tmp146)->$class->itable;
+while ($tmp147->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
+    $tmp147 = $tmp147->next;
 }
-$fn153 $tmp152 = $tmp151->methods[0];
-frost$core$Int64 $tmp154 = $tmp152(((frost$collections$CollectionView*) $tmp150));
-frost$core$Int64 $tmp155 = (frost$core$Int64) {1u};
-int64_t $tmp156 = $tmp154.value;
-int64_t $tmp157 = $tmp155.value;
+$fn149 $tmp148 = $tmp147->methods[0];
+frost$core$Int $tmp150 = $tmp148(((frost$collections$CollectionView*) $tmp146));
+frost$core$Int $tmp151 = (frost$core$Int) {1u};
+int64_t $tmp152 = $tmp150.value;
+int64_t $tmp153 = $tmp151.value;
+int64_t $tmp154 = $tmp152 - $tmp153;
+frost$core$Int $tmp155 = (frost$core$Int) {$tmp154};
+int64_t $tmp156 = $tmp155.value;
+int64_t $tmp157 = $tmp109.value;
 int64_t $tmp158 = $tmp156 - $tmp157;
-frost$core$Int64 $tmp159 = (frost$core$Int64) {$tmp158};
-int64_t $tmp160 = $tmp159.value;
-int64_t $tmp161 = $tmp113.value;
-int64_t $tmp162 = $tmp160 - $tmp161;
-frost$core$Int64 $tmp163 = (frost$core$Int64) {$tmp162};
-// begin inline call to function frost.collections.Array.[](index:frost.core.Int64):frost.collections.Array.T from Stack.frost:73:24
-frost$core$Int64 $tmp164 = (frost$core$Int64) {0u};
-int64_t $tmp165 = $tmp163.value;
-int64_t $tmp166 = $tmp164.value;
-bool $tmp167 = $tmp165 >= $tmp166;
-frost$core$Bit $tmp168 = (frost$core$Bit) {$tmp167};
-bool $tmp169 = $tmp168.value;
-if ($tmp169) goto block11; else goto block10;
+frost$core$Int $tmp159 = (frost$core$Int) {$tmp158};
+// begin inline call to function frost.collections.Array.[](index:frost.core.Int):frost.collections.Array.T from Stack.frost:73:24
+frost$core$Int $tmp160 = (frost$core$Int) {0u};
+int64_t $tmp161 = $tmp159.value;
+int64_t $tmp162 = $tmp160.value;
+bool $tmp163 = $tmp161 >= $tmp162;
+frost$core$Bit $tmp164 = (frost$core$Bit) {$tmp163};
+bool $tmp165 = $tmp164.value;
+if ($tmp165) goto block11; else goto block10;
 block11:;
-ITable* $tmp170 = ((frost$collections$CollectionView*) $tmp148)->$class->itable;
-while ($tmp170->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
-    $tmp170 = $tmp170->next;
+ITable* $tmp166 = ((frost$collections$CollectionView*) $tmp144)->$class->itable;
+while ($tmp166->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
+    $tmp166 = $tmp166->next;
 }
-$fn172 $tmp171 = $tmp170->methods[0];
-frost$core$Int64 $tmp173 = $tmp171(((frost$collections$CollectionView*) $tmp148));
-int64_t $tmp174 = $tmp163.value;
-int64_t $tmp175 = $tmp173.value;
-bool $tmp176 = $tmp174 < $tmp175;
-frost$core$Bit $tmp177 = (frost$core$Bit) {$tmp176};
-bool $tmp178 = $tmp177.value;
-if ($tmp178) goto block9; else goto block10;
+$fn168 $tmp167 = $tmp166->methods[0];
+frost$core$Int $tmp169 = $tmp167(((frost$collections$CollectionView*) $tmp144));
+int64_t $tmp170 = $tmp159.value;
+int64_t $tmp171 = $tmp169.value;
+bool $tmp172 = $tmp170 < $tmp171;
+frost$core$Bit $tmp173 = (frost$core$Bit) {$tmp172};
+bool $tmp174 = $tmp173.value;
+if ($tmp174) goto block9; else goto block10;
 block10:;
-frost$core$Int64 $tmp179 = (frost$core$Int64) {74u};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s180, $tmp179, &$s181);
+frost$core$Int $tmp175 = (frost$core$Int) {74u};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s176, $tmp175, &$s177);
 abort(); // unreachable
 block9:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Array.frost:75
-frost$core$Object*** $tmp182 = &$tmp148->data;
-frost$core$Object** $tmp183 = *$tmp182;
-int64_t $tmp184 = $tmp163.value;
-frost$core$Object* $tmp185 = $tmp183[$tmp184];
-frost$core$Frost$ref$frost$core$Object$Q($tmp185);
-frost$core$Frost$ref$frost$core$Object$Q($tmp185);
-frost$core$Frost$unref$frost$core$Object$Q($tmp185);
-frost$core$Int64 $tmp186 = ((org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) $tmp185)->value.$rawValue;
-frost$core$Int64 $tmp187 = param1.$rawValue;
+frost$core$Object*** $tmp178 = &$tmp144->data;
+frost$core$Object** $tmp179 = *$tmp178;
+frost$core$Int64 $tmp180 = frost$core$Int64$init$frost$core$Int($tmp159);
+int64_t $tmp181 = $tmp180.value;
+frost$core$Object* $tmp182 = $tmp179[$tmp181];
+frost$core$Frost$ref$frost$core$Object$Q($tmp182);
+frost$core$Frost$ref$frost$core$Object$Q($tmp182);
+frost$core$Frost$unref$frost$core$Object$Q($tmp182);
+frost$core$Int64 $tmp183 = ((org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) $tmp182)->value.$rawValue;
+frost$core$Int64 $tmp184 = param1.$rawValue;
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:84:35
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp188 = $tmp186.value;
-int64_t $tmp189 = $tmp187.value;
-bool $tmp190 = $tmp188 == $tmp189;
-frost$core$Bit $tmp191 = (frost$core$Bit) {$tmp190};
-bool $tmp192 = $tmp191.value;
-if ($tmp192) goto block13; else goto block14;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp185 = $tmp183.value;
+int64_t $tmp186 = $tmp184.value;
+bool $tmp187 = $tmp185 == $tmp186;
+frost$core$Bit $tmp188 = (frost$core$Bit) {$tmp187};
+bool $tmp189 = $tmp188.value;
+if ($tmp189) goto block13; else goto block14;
 block14:;
-frost$core$Int64 $tmp193 = (frost$core$Int64) {84u};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s194, $tmp193);
+frost$core$Int $tmp190 = (frost$core$Int) {84u};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s191, $tmp190);
 abort(); // unreachable
 block13:;
-frost$core$Frost$unref$frost$core$Object$Q($tmp185);
+frost$core$Frost$unref$frost$core$Object$Q($tmp182);
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/parser/SyntaxHighlighter.frost:85
-frost$collections$Stack** $tmp195 = &param0->stack;
-frost$collections$Stack* $tmp196 = *$tmp195;
-frost$core$Object* $tmp197 = frost$collections$Stack$pop$R$frost$collections$Stack$T($tmp196);
-frost$core$Frost$unref$frost$core$Object$Q($tmp197);
+frost$collections$Stack** $tmp192 = &param0->stack;
+frost$collections$Stack* $tmp193 = *$tmp192;
+frost$core$Object* $tmp194 = frost$collections$Stack$pop$R$frost$collections$Stack$T($tmp193);
+frost$core$Frost$unref$frost$core$Object$Q($tmp194);
 return;
 
 }
 void org$frostlang$frostc$parser$SyntaxHighlighter$add$org$frostlang$frostc$parser$Token$org$frostlang$frostc$parser$SyntaxHighlighter$Kind(org$frostlang$frostc$parser$SyntaxHighlighter* param0, org$frostlang$frostc$parser$Token param1, org$frostlang$frostc$parser$SyntaxHighlighter$Kind param2) {
 
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/parser/SyntaxHighlighter.frost:89
-frost$collections$Array** $tmp198 = &param0->tokens;
-frost$collections$Array* $tmp199 = *$tmp198;
+frost$collections$Array** $tmp195 = &param0->tokens;
+frost$collections$Array* $tmp196 = *$tmp195;
 FROST_ASSERT(32 == sizeof(org$frostlang$frostc$Pair));
-org$frostlang$frostc$Pair* $tmp200 = (org$frostlang$frostc$Pair*) frostObjectAlloc(32, (frost$core$Class*) &org$frostlang$frostc$Pair$class);
-org$frostlang$frostc$parser$Token$wrapper* $tmp201;
-$tmp201 = (org$frostlang$frostc$parser$Token$wrapper*) frostObjectAlloc(72, (frost$core$Class*) &org$frostlang$frostc$parser$Token$wrapperclass);
-$tmp201->value = param1;
-org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper* $tmp202;
-$tmp202 = (org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapperclass);
-$tmp202->value = param2;
-org$frostlang$frostc$Pair$init$org$frostlang$frostc$Pair$A$org$frostlang$frostc$Pair$B($tmp200, ((frost$core$Object*) $tmp201), ((frost$core$Object*) $tmp202));
-frost$collections$Array$add$frost$collections$Array$T($tmp199, ((frost$core$Object*) $tmp200));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp202));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp201));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp200));
+org$frostlang$frostc$Pair* $tmp197 = (org$frostlang$frostc$Pair*) frostObjectAlloc(32, (frost$core$Class*) &org$frostlang$frostc$Pair$class);
+org$frostlang$frostc$parser$Token$wrapper* $tmp198;
+$tmp198 = (org$frostlang$frostc$parser$Token$wrapper*) frostObjectAlloc(72, (frost$core$Class*) &org$frostlang$frostc$parser$Token$wrapperclass);
+$tmp198->value = param1;
+org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper* $tmp199;
+$tmp199 = (org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapperclass);
+$tmp199->value = param2;
+org$frostlang$frostc$Pair$init$org$frostlang$frostc$Pair$A$org$frostlang$frostc$Pair$B($tmp197, ((frost$core$Object*) $tmp198), ((frost$core$Object*) $tmp199));
+frost$collections$Array$add$frost$collections$Array$T($tmp196, ((frost$core$Object*) $tmp197));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp199));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp198));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp197));
 return;
 
 }
@@ -417,1224 +410,1225 @@ org$frostlang$frostc$parser$SyntaxHighlighter$Kind local19;
 org$frostlang$frostc$parser$SyntaxHighlighter$Kind local20;
 org$frostlang$frostc$parser$SyntaxHighlighter$Kind local21;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/parser/SyntaxHighlighter.frost:93
-frost$collections$Stack** $tmp203 = &param0->stack;
-frost$collections$Stack* $tmp204 = *$tmp203;
-// begin inline call to function frost.collections.Stack.get_count():frost.core.Int64 from SyntaxHighlighter.frost:93:17
+frost$collections$Stack** $tmp200 = &param0->stack;
+frost$collections$Stack* $tmp201 = *$tmp200;
+// begin inline call to function frost.collections.Stack.get_count():frost.core.Int from SyntaxHighlighter.frost:93:17
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Stack.frost:93
-frost$collections$Array** $tmp205 = &$tmp204->contents;
-frost$collections$Array* $tmp206 = *$tmp205;
-ITable* $tmp207 = ((frost$collections$CollectionView*) $tmp206)->$class->itable;
-while ($tmp207->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
-    $tmp207 = $tmp207->next;
+frost$collections$Array** $tmp202 = &$tmp201->contents;
+frost$collections$Array* $tmp203 = *$tmp202;
+ITable* $tmp204 = ((frost$collections$CollectionView*) $tmp203)->$class->itable;
+while ($tmp204->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
+    $tmp204 = $tmp204->next;
 }
-$fn209 $tmp208 = $tmp207->methods[0];
-frost$core$Int64 $tmp210 = $tmp208(((frost$collections$CollectionView*) $tmp206));
-frost$core$Int64 $tmp211 = (frost$core$Int64) {0u};
-int64_t $tmp212 = $tmp210.value;
-int64_t $tmp213 = $tmp211.value;
-bool $tmp214 = $tmp212 > $tmp213;
-frost$core$Bit $tmp215 = (frost$core$Bit) {$tmp214};
-bool $tmp216 = $tmp215.value;
-if ($tmp216) goto block1; else goto block2;
+$fn206 $tmp205 = $tmp204->methods[0];
+frost$core$Int $tmp207 = $tmp205(((frost$collections$CollectionView*) $tmp203));
+frost$core$Int $tmp208 = (frost$core$Int) {0u};
+int64_t $tmp209 = $tmp207.value;
+int64_t $tmp210 = $tmp208.value;
+bool $tmp211 = $tmp209 > $tmp210;
+frost$core$Bit $tmp212 = (frost$core$Bit) {$tmp211};
+bool $tmp213 = $tmp212.value;
+if ($tmp213) goto block1; else goto block2;
 block1:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/parser/SyntaxHighlighter.frost:94
-frost$collections$Stack** $tmp217 = &param0->stack;
-frost$collections$Stack* $tmp218 = *$tmp217;
-frost$core$Int64 $tmp219 = (frost$core$Int64) {0u};
-// begin inline call to function frost.collections.Stack.[](depth:frost.core.Int64):frost.collections.Stack.T from SyntaxHighlighter.frost:94:29
-frost$core$Int64 $tmp220 = (frost$core$Int64) {0u};
-int64_t $tmp221 = $tmp219.value;
-int64_t $tmp222 = $tmp220.value;
-bool $tmp223 = $tmp221 >= $tmp222;
-frost$core$Bit $tmp224 = (frost$core$Bit) {$tmp223};
-bool $tmp225 = $tmp224.value;
-if ($tmp225) goto block7; else goto block6;
+frost$collections$Stack** $tmp214 = &param0->stack;
+frost$collections$Stack* $tmp215 = *$tmp214;
+frost$core$Int $tmp216 = (frost$core$Int) {0u};
+// begin inline call to function frost.collections.Stack.[](depth:frost.core.Int):frost.collections.Stack.T from SyntaxHighlighter.frost:94:29
+frost$core$Int $tmp217 = (frost$core$Int) {0u};
+int64_t $tmp218 = $tmp216.value;
+int64_t $tmp219 = $tmp217.value;
+bool $tmp220 = $tmp218 >= $tmp219;
+frost$core$Bit $tmp221 = (frost$core$Bit) {$tmp220};
+bool $tmp222 = $tmp221.value;
+if ($tmp222) goto block7; else goto block6;
 block7:;
-// begin inline call to function frost.collections.Stack.get_count():frost.core.Int64 from Stack.frost:70:31
+// begin inline call to function frost.collections.Stack.get_count():frost.core.Int from Stack.frost:70:31
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Stack.frost:93
-frost$collections$Array** $tmp226 = &$tmp218->contents;
-frost$collections$Array* $tmp227 = *$tmp226;
-ITable* $tmp228 = ((frost$collections$CollectionView*) $tmp227)->$class->itable;
-while ($tmp228->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
-    $tmp228 = $tmp228->next;
+frost$collections$Array** $tmp223 = &$tmp215->contents;
+frost$collections$Array* $tmp224 = *$tmp223;
+ITable* $tmp225 = ((frost$collections$CollectionView*) $tmp224)->$class->itable;
+while ($tmp225->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
+    $tmp225 = $tmp225->next;
 }
-$fn230 $tmp229 = $tmp228->methods[0];
-frost$core$Int64 $tmp231 = $tmp229(((frost$collections$CollectionView*) $tmp227));
-int64_t $tmp232 = $tmp219.value;
-int64_t $tmp233 = $tmp231.value;
-bool $tmp234 = $tmp232 < $tmp233;
-frost$core$Bit $tmp235 = (frost$core$Bit) {$tmp234};
-bool $tmp236 = $tmp235.value;
-if ($tmp236) goto block5; else goto block6;
+$fn227 $tmp226 = $tmp225->methods[0];
+frost$core$Int $tmp228 = $tmp226(((frost$collections$CollectionView*) $tmp224));
+int64_t $tmp229 = $tmp216.value;
+int64_t $tmp230 = $tmp228.value;
+bool $tmp231 = $tmp229 < $tmp230;
+frost$core$Bit $tmp232 = (frost$core$Bit) {$tmp231};
+bool $tmp233 = $tmp232.value;
+if ($tmp233) goto block5; else goto block6;
 block6:;
-frost$core$Int64 $tmp237 = (frost$core$Int64) {71u};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s238, $tmp237, &$s239);
+frost$core$Int $tmp234 = (frost$core$Int) {71u};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s235, $tmp234, &$s236);
 abort(); // unreachable
 block5:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Stack.frost:72
-frost$collections$Array** $tmp240 = &$tmp218->contents;
-frost$collections$Array* $tmp241 = *$tmp240;
-ITable* $tmp242 = ((frost$collections$CollectionView*) $tmp241)->$class->itable;
-while ($tmp242->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
-    $tmp242 = $tmp242->next;
+frost$collections$Array** $tmp237 = &$tmp215->contents;
+frost$collections$Array* $tmp238 = *$tmp237;
+ITable* $tmp239 = ((frost$collections$CollectionView*) $tmp238)->$class->itable;
+while ($tmp239->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
+    $tmp239 = $tmp239->next;
 }
-$fn244 $tmp243 = $tmp242->methods[0];
-frost$core$Int64 $tmp245 = $tmp243(((frost$collections$CollectionView*) $tmp241));
-int64_t $tmp246 = $tmp245.value;
-int64_t $tmp247 = $tmp219.value;
-bool $tmp248 = $tmp246 > $tmp247;
-frost$core$Bit $tmp249 = (frost$core$Bit) {$tmp248};
-bool $tmp250 = $tmp249.value;
-if ($tmp250) goto block9; else goto block10;
+$fn241 $tmp240 = $tmp239->methods[0];
+frost$core$Int $tmp242 = $tmp240(((frost$collections$CollectionView*) $tmp238));
+int64_t $tmp243 = $tmp242.value;
+int64_t $tmp244 = $tmp216.value;
+bool $tmp245 = $tmp243 > $tmp244;
+frost$core$Bit $tmp246 = (frost$core$Bit) {$tmp245};
+bool $tmp247 = $tmp246.value;
+if ($tmp247) goto block9; else goto block10;
 block10:;
-frost$core$Int64 $tmp251 = (frost$core$Int64) {72u};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s252, $tmp251);
+frost$core$Int $tmp248 = (frost$core$Int) {72u};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s249, $tmp248);
 abort(); // unreachable
 block9:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Stack.frost:73
-frost$collections$Array** $tmp253 = &$tmp218->contents;
-frost$collections$Array* $tmp254 = *$tmp253;
-frost$collections$Array** $tmp255 = &$tmp218->contents;
-frost$collections$Array* $tmp256 = *$tmp255;
-ITable* $tmp257 = ((frost$collections$CollectionView*) $tmp256)->$class->itable;
-while ($tmp257->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
-    $tmp257 = $tmp257->next;
+frost$collections$Array** $tmp250 = &$tmp215->contents;
+frost$collections$Array* $tmp251 = *$tmp250;
+frost$collections$Array** $tmp252 = &$tmp215->contents;
+frost$collections$Array* $tmp253 = *$tmp252;
+ITable* $tmp254 = ((frost$collections$CollectionView*) $tmp253)->$class->itable;
+while ($tmp254->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
+    $tmp254 = $tmp254->next;
 }
-$fn259 $tmp258 = $tmp257->methods[0];
-frost$core$Int64 $tmp260 = $tmp258(((frost$collections$CollectionView*) $tmp256));
-frost$core$Int64 $tmp261 = (frost$core$Int64) {1u};
-int64_t $tmp262 = $tmp260.value;
-int64_t $tmp263 = $tmp261.value;
-int64_t $tmp264 = $tmp262 - $tmp263;
-frost$core$Int64 $tmp265 = (frost$core$Int64) {$tmp264};
-int64_t $tmp266 = $tmp265.value;
-int64_t $tmp267 = $tmp219.value;
-int64_t $tmp268 = $tmp266 - $tmp267;
-frost$core$Int64 $tmp269 = (frost$core$Int64) {$tmp268};
-// begin inline call to function frost.collections.Array.[](index:frost.core.Int64):frost.collections.Array.T from Stack.frost:73:24
-frost$core$Int64 $tmp270 = (frost$core$Int64) {0u};
-int64_t $tmp271 = $tmp269.value;
-int64_t $tmp272 = $tmp270.value;
-bool $tmp273 = $tmp271 >= $tmp272;
-frost$core$Bit $tmp274 = (frost$core$Bit) {$tmp273};
-bool $tmp275 = $tmp274.value;
-if ($tmp275) goto block14; else goto block13;
+$fn256 $tmp255 = $tmp254->methods[0];
+frost$core$Int $tmp257 = $tmp255(((frost$collections$CollectionView*) $tmp253));
+frost$core$Int $tmp258 = (frost$core$Int) {1u};
+int64_t $tmp259 = $tmp257.value;
+int64_t $tmp260 = $tmp258.value;
+int64_t $tmp261 = $tmp259 - $tmp260;
+frost$core$Int $tmp262 = (frost$core$Int) {$tmp261};
+int64_t $tmp263 = $tmp262.value;
+int64_t $tmp264 = $tmp216.value;
+int64_t $tmp265 = $tmp263 - $tmp264;
+frost$core$Int $tmp266 = (frost$core$Int) {$tmp265};
+// begin inline call to function frost.collections.Array.[](index:frost.core.Int):frost.collections.Array.T from Stack.frost:73:24
+frost$core$Int $tmp267 = (frost$core$Int) {0u};
+int64_t $tmp268 = $tmp266.value;
+int64_t $tmp269 = $tmp267.value;
+bool $tmp270 = $tmp268 >= $tmp269;
+frost$core$Bit $tmp271 = (frost$core$Bit) {$tmp270};
+bool $tmp272 = $tmp271.value;
+if ($tmp272) goto block14; else goto block13;
 block14:;
-ITable* $tmp276 = ((frost$collections$CollectionView*) $tmp254)->$class->itable;
-while ($tmp276->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
-    $tmp276 = $tmp276->next;
+ITable* $tmp273 = ((frost$collections$CollectionView*) $tmp251)->$class->itable;
+while ($tmp273->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
+    $tmp273 = $tmp273->next;
 }
-$fn278 $tmp277 = $tmp276->methods[0];
-frost$core$Int64 $tmp279 = $tmp277(((frost$collections$CollectionView*) $tmp254));
-int64_t $tmp280 = $tmp269.value;
-int64_t $tmp281 = $tmp279.value;
-bool $tmp282 = $tmp280 < $tmp281;
-frost$core$Bit $tmp283 = (frost$core$Bit) {$tmp282};
-bool $tmp284 = $tmp283.value;
-if ($tmp284) goto block12; else goto block13;
+$fn275 $tmp274 = $tmp273->methods[0];
+frost$core$Int $tmp276 = $tmp274(((frost$collections$CollectionView*) $tmp251));
+int64_t $tmp277 = $tmp266.value;
+int64_t $tmp278 = $tmp276.value;
+bool $tmp279 = $tmp277 < $tmp278;
+frost$core$Bit $tmp280 = (frost$core$Bit) {$tmp279};
+bool $tmp281 = $tmp280.value;
+if ($tmp281) goto block12; else goto block13;
 block13:;
-frost$core$Int64 $tmp285 = (frost$core$Int64) {74u};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s286, $tmp285, &$s287);
+frost$core$Int $tmp282 = (frost$core$Int) {74u};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s283, $tmp282, &$s284);
 abort(); // unreachable
 block12:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Array.frost:75
-frost$core$Object*** $tmp288 = &$tmp254->data;
-frost$core$Object** $tmp289 = *$tmp288;
-int64_t $tmp290 = $tmp269.value;
-frost$core$Object* $tmp291 = $tmp289[$tmp290];
-frost$core$Frost$ref$frost$core$Object$Q($tmp291);
-frost$core$Frost$ref$frost$core$Object$Q($tmp291);
-frost$core$Frost$unref$frost$core$Object$Q($tmp291);
-$fn293 $tmp292 = ($fn293) param0->$class->vtable[5];
-$tmp292(param0, param1, ((org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) $tmp291)->value);
-frost$core$Frost$unref$frost$core$Object$Q($tmp291);
+frost$core$Object*** $tmp285 = &$tmp251->data;
+frost$core$Object** $tmp286 = *$tmp285;
+frost$core$Int64 $tmp287 = frost$core$Int64$init$frost$core$Int($tmp266);
+int64_t $tmp288 = $tmp287.value;
+frost$core$Object* $tmp289 = $tmp286[$tmp288];
+frost$core$Frost$ref$frost$core$Object$Q($tmp289);
+frost$core$Frost$ref$frost$core$Object$Q($tmp289);
+frost$core$Frost$unref$frost$core$Object$Q($tmp289);
+$fn291 $tmp290 = ($fn291) param0->$class->vtable[5];
+$tmp290(param0, param1, ((org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) $tmp289)->value);
+frost$core$Frost$unref$frost$core$Object$Q($tmp289);
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/parser/SyntaxHighlighter.frost:95
 return;
 block2:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/parser/SyntaxHighlighter.frost:98
-org$frostlang$frostc$parser$Token$Kind $tmp294 = param1.kind;
-frost$core$Int64 $tmp295 = $tmp294.$rawValue;
-frost$core$Int64 $tmp296 = (frost$core$Int64) {1u};
+org$frostlang$frostc$parser$Token$Kind $tmp292 = param1.kind;
+frost$core$Int64 $tmp293 = $tmp292.$rawValue;
+frost$core$Int64 $tmp294 = (frost$core$Int64) {1u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:99:28
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp297 = $tmp295.value;
-int64_t $tmp298 = $tmp296.value;
-bool $tmp299 = $tmp297 == $tmp298;
-frost$core$Bit $tmp300 = (frost$core$Bit) {$tmp299};
-bool $tmp301 = $tmp300.value;
-if ($tmp301) goto block16; else goto block17;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp295 = $tmp293.value;
+int64_t $tmp296 = $tmp294.value;
+bool $tmp297 = $tmp295 == $tmp296;
+frost$core$Bit $tmp298 = (frost$core$Bit) {$tmp297};
+bool $tmp299 = $tmp298.value;
+if ($tmp299) goto block16; else goto block17;
 block16:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/parser/SyntaxHighlighter.frost:100
-frost$core$Int64 $tmp302 = (frost$core$Int64) {11u};
+frost$core$Int64 $tmp300 = (frost$core$Int64) {11u};
 // begin inline call to org.frostlang.frostc.parser.SyntaxHighlighter.Kind.init(rv:frost.core.Int64):org.frostlang.frostc.parser.SyntaxHighlighter.Kind from SyntaxHighlighter.frost:100:32
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/parser/SyntaxHighlighter.frost:6
-frost$core$Int64* $tmp303 = &(&local1)->$rawValue;
-*$tmp303 = $tmp302;
-org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp304 = *(&local1);
-*(&local0) = $tmp304;
-org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp305 = *(&local0);
-$fn307 $tmp306 = ($fn307) param0->$class->vtable[5];
-$tmp306(param0, param1, $tmp305);
+frost$core$Int64* $tmp301 = &(&local1)->$rawValue;
+*$tmp301 = $tmp300;
+org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp302 = *(&local1);
+*(&local0) = $tmp302;
+org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp303 = *(&local0);
+$fn305 $tmp304 = ($fn305) param0->$class->vtable[5];
+$tmp304(param0, param1, $tmp303);
 goto block15;
 block17:;
-frost$core$Int64 $tmp308 = (frost$core$Int64) {3u};
+frost$core$Int64 $tmp306 = (frost$core$Int64) {3u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:102:28
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp309 = $tmp295.value;
-int64_t $tmp310 = $tmp308.value;
-bool $tmp311 = $tmp309 == $tmp310;
-frost$core$Bit $tmp312 = (frost$core$Bit) {$tmp311};
-bool $tmp313 = $tmp312.value;
-if ($tmp313) goto block20; else goto block21;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp307 = $tmp293.value;
+int64_t $tmp308 = $tmp306.value;
+bool $tmp309 = $tmp307 == $tmp308;
+frost$core$Bit $tmp310 = (frost$core$Bit) {$tmp309};
+bool $tmp311 = $tmp310.value;
+if ($tmp311) goto block20; else goto block21;
 block21:;
-frost$core$Int64 $tmp314 = (frost$core$Int64) {4u};
+frost$core$Int64 $tmp312 = (frost$core$Int64) {4u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:102:48
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp315 = $tmp295.value;
-int64_t $tmp316 = $tmp314.value;
-bool $tmp317 = $tmp315 == $tmp316;
-frost$core$Bit $tmp318 = (frost$core$Bit) {$tmp317};
-bool $tmp319 = $tmp318.value;
-if ($tmp319) goto block20; else goto block23;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp313 = $tmp293.value;
+int64_t $tmp314 = $tmp312.value;
+bool $tmp315 = $tmp313 == $tmp314;
+frost$core$Bit $tmp316 = (frost$core$Bit) {$tmp315};
+bool $tmp317 = $tmp316.value;
+if ($tmp317) goto block20; else goto block23;
 block23:;
-frost$core$Int64 $tmp320 = (frost$core$Int64) {5u};
+frost$core$Int64 $tmp318 = (frost$core$Int64) {5u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:102:67
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp321 = $tmp295.value;
-int64_t $tmp322 = $tmp320.value;
-bool $tmp323 = $tmp321 == $tmp322;
-frost$core$Bit $tmp324 = (frost$core$Bit) {$tmp323};
-bool $tmp325 = $tmp324.value;
-if ($tmp325) goto block20; else goto block25;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp319 = $tmp293.value;
+int64_t $tmp320 = $tmp318.value;
+bool $tmp321 = $tmp319 == $tmp320;
+frost$core$Bit $tmp322 = (frost$core$Bit) {$tmp321};
+bool $tmp323 = $tmp322.value;
+if ($tmp323) goto block20; else goto block25;
 block25:;
-frost$core$Int64 $tmp326 = (frost$core$Int64) {6u};
+frost$core$Int64 $tmp324 = (frost$core$Int64) {6u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:102:83
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp327 = $tmp295.value;
-int64_t $tmp328 = $tmp326.value;
-bool $tmp329 = $tmp327 == $tmp328;
-frost$core$Bit $tmp330 = (frost$core$Bit) {$tmp329};
-bool $tmp331 = $tmp330.value;
-if ($tmp331) goto block20; else goto block27;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp325 = $tmp293.value;
+int64_t $tmp326 = $tmp324.value;
+bool $tmp327 = $tmp325 == $tmp326;
+frost$core$Bit $tmp328 = (frost$core$Bit) {$tmp327};
+bool $tmp329 = $tmp328.value;
+if ($tmp329) goto block20; else goto block27;
 block27:;
-frost$core$Int64 $tmp332 = (frost$core$Int64) {42u};
+frost$core$Int64 $tmp330 = (frost$core$Int64) {42u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:103:31
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp333 = $tmp295.value;
-int64_t $tmp334 = $tmp332.value;
-bool $tmp335 = $tmp333 == $tmp334;
-frost$core$Bit $tmp336 = (frost$core$Bit) {$tmp335};
-bool $tmp337 = $tmp336.value;
-if ($tmp337) goto block20; else goto block29;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp331 = $tmp293.value;
+int64_t $tmp332 = $tmp330.value;
+bool $tmp333 = $tmp331 == $tmp332;
+frost$core$Bit $tmp334 = (frost$core$Bit) {$tmp333};
+bool $tmp335 = $tmp334.value;
+if ($tmp335) goto block20; else goto block29;
 block29:;
-frost$core$Int64 $tmp338 = (frost$core$Int64) {43u};
+frost$core$Int64 $tmp336 = (frost$core$Int64) {43u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:103:48
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp339 = $tmp295.value;
-int64_t $tmp340 = $tmp338.value;
-bool $tmp341 = $tmp339 == $tmp340;
-frost$core$Bit $tmp342 = (frost$core$Bit) {$tmp341};
-bool $tmp343 = $tmp342.value;
-if ($tmp343) goto block20; else goto block31;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp337 = $tmp293.value;
+int64_t $tmp338 = $tmp336.value;
+bool $tmp339 = $tmp337 == $tmp338;
+frost$core$Bit $tmp340 = (frost$core$Bit) {$tmp339};
+bool $tmp341 = $tmp340.value;
+if ($tmp341) goto block20; else goto block31;
 block31:;
-frost$core$Int64 $tmp344 = (frost$core$Int64) {44u};
+frost$core$Int64 $tmp342 = (frost$core$Int64) {44u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:103:66
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp345 = $tmp295.value;
-int64_t $tmp346 = $tmp344.value;
-bool $tmp347 = $tmp345 == $tmp346;
-frost$core$Bit $tmp348 = (frost$core$Bit) {$tmp347};
-bool $tmp349 = $tmp348.value;
-if ($tmp349) goto block20; else goto block33;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp343 = $tmp293.value;
+int64_t $tmp344 = $tmp342.value;
+bool $tmp345 = $tmp343 == $tmp344;
+frost$core$Bit $tmp346 = (frost$core$Bit) {$tmp345};
+bool $tmp347 = $tmp346.value;
+if ($tmp347) goto block20; else goto block33;
 block33:;
-frost$core$Int64 $tmp350 = (frost$core$Int64) {2u};
+frost$core$Int64 $tmp348 = (frost$core$Int64) {2u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:103:83
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp351 = $tmp295.value;
-int64_t $tmp352 = $tmp350.value;
-bool $tmp353 = $tmp351 == $tmp352;
-frost$core$Bit $tmp354 = (frost$core$Bit) {$tmp353};
-bool $tmp355 = $tmp354.value;
-if ($tmp355) goto block20; else goto block35;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp349 = $tmp293.value;
+int64_t $tmp350 = $tmp348.value;
+bool $tmp351 = $tmp349 == $tmp350;
+frost$core$Bit $tmp352 = (frost$core$Bit) {$tmp351};
+bool $tmp353 = $tmp352.value;
+if ($tmp353) goto block20; else goto block35;
 block20:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/parser/SyntaxHighlighter.frost:104
-frost$core$Int64 $tmp356 = (frost$core$Int64) {9u};
+frost$core$Int64 $tmp354 = (frost$core$Int64) {9u};
 // begin inline call to org.frostlang.frostc.parser.SyntaxHighlighter.Kind.init(rv:frost.core.Int64):org.frostlang.frostc.parser.SyntaxHighlighter.Kind from SyntaxHighlighter.frost:104:32
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/parser/SyntaxHighlighter.frost:6
-frost$core$Int64* $tmp357 = &(&local3)->$rawValue;
-*$tmp357 = $tmp356;
-org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp358 = *(&local3);
-*(&local2) = $tmp358;
-org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp359 = *(&local2);
-$fn361 $tmp360 = ($fn361) param0->$class->vtable[5];
-$tmp360(param0, param1, $tmp359);
+frost$core$Int64* $tmp355 = &(&local3)->$rawValue;
+*$tmp355 = $tmp354;
+org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp356 = *(&local3);
+*(&local2) = $tmp356;
+org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp357 = *(&local2);
+$fn359 $tmp358 = ($fn359) param0->$class->vtable[5];
+$tmp358(param0, param1, $tmp357);
 goto block15;
 block35:;
-frost$core$Int64 $tmp362 = (frost$core$Int64) {9u};
+frost$core$Int64 $tmp360 = (frost$core$Int64) {9u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:106:28
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp363 = $tmp295.value;
-int64_t $tmp364 = $tmp362.value;
-bool $tmp365 = $tmp363 == $tmp364;
-frost$core$Bit $tmp366 = (frost$core$Bit) {$tmp365};
-bool $tmp367 = $tmp366.value;
-if ($tmp367) goto block38; else goto block39;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp361 = $tmp293.value;
+int64_t $tmp362 = $tmp360.value;
+bool $tmp363 = $tmp361 == $tmp362;
+frost$core$Bit $tmp364 = (frost$core$Bit) {$tmp363};
+bool $tmp365 = $tmp364.value;
+if ($tmp365) goto block38; else goto block39;
 block39:;
-frost$core$Int64 $tmp368 = (frost$core$Int64) {10u};
+frost$core$Int64 $tmp366 = (frost$core$Int64) {10u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:106:53
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp369 = $tmp295.value;
-int64_t $tmp370 = $tmp368.value;
-bool $tmp371 = $tmp369 == $tmp370;
-frost$core$Bit $tmp372 = (frost$core$Bit) {$tmp371};
-bool $tmp373 = $tmp372.value;
-if ($tmp373) goto block38; else goto block41;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp367 = $tmp293.value;
+int64_t $tmp368 = $tmp366.value;
+bool $tmp369 = $tmp367 == $tmp368;
+frost$core$Bit $tmp370 = (frost$core$Bit) {$tmp369};
+bool $tmp371 = $tmp370.value;
+if ($tmp371) goto block38; else goto block41;
 block38:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/parser/SyntaxHighlighter.frost:107
-frost$core$Int64 $tmp374 = (frost$core$Int64) {1u};
+frost$core$Int64 $tmp372 = (frost$core$Int64) {1u};
 // begin inline call to org.frostlang.frostc.parser.SyntaxHighlighter.Kind.init(rv:frost.core.Int64):org.frostlang.frostc.parser.SyntaxHighlighter.Kind from SyntaxHighlighter.frost:107:32
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/parser/SyntaxHighlighter.frost:6
-frost$core$Int64* $tmp375 = &(&local5)->$rawValue;
-*$tmp375 = $tmp374;
-org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp376 = *(&local5);
-*(&local4) = $tmp376;
-org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp377 = *(&local4);
-$fn379 $tmp378 = ($fn379) param0->$class->vtable[5];
-$tmp378(param0, param1, $tmp377);
+frost$core$Int64* $tmp373 = &(&local5)->$rawValue;
+*$tmp373 = $tmp372;
+org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp374 = *(&local5);
+*(&local4) = $tmp374;
+org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp375 = *(&local4);
+$fn377 $tmp376 = ($fn377) param0->$class->vtable[5];
+$tmp376(param0, param1, $tmp375);
 goto block15;
 block41:;
-frost$core$Int64 $tmp380 = (frost$core$Int64) {11u};
+frost$core$Int64 $tmp378 = (frost$core$Int64) {11u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:109:28
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp381 = $tmp295.value;
-int64_t $tmp382 = $tmp380.value;
-bool $tmp383 = $tmp381 == $tmp382;
-frost$core$Bit $tmp384 = (frost$core$Bit) {$tmp383};
-bool $tmp385 = $tmp384.value;
-if ($tmp385) goto block44; else goto block45;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp379 = $tmp293.value;
+int64_t $tmp380 = $tmp378.value;
+bool $tmp381 = $tmp379 == $tmp380;
+frost$core$Bit $tmp382 = (frost$core$Bit) {$tmp381};
+bool $tmp383 = $tmp382.value;
+if ($tmp383) goto block44; else goto block45;
 block44:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/parser/SyntaxHighlighter.frost:110
-frost$core$Int64 $tmp386 = (frost$core$Int64) {1u};
+frost$core$Int64 $tmp384 = (frost$core$Int64) {1u};
 // begin inline call to org.frostlang.frostc.parser.SyntaxHighlighter.Kind.init(rv:frost.core.Int64):org.frostlang.frostc.parser.SyntaxHighlighter.Kind from SyntaxHighlighter.frost:110:32
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/parser/SyntaxHighlighter.frost:6
-frost$core$Int64* $tmp387 = &(&local7)->$rawValue;
-*$tmp387 = $tmp386;
-org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp388 = *(&local7);
-*(&local6) = $tmp388;
-org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp389 = *(&local6);
-$fn391 $tmp390 = ($fn391) param0->$class->vtable[5];
-$tmp390(param0, param1, $tmp389);
+frost$core$Int64* $tmp385 = &(&local7)->$rawValue;
+*$tmp385 = $tmp384;
+org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp386 = *(&local7);
+*(&local6) = $tmp386;
+org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp387 = *(&local6);
+$fn389 $tmp388 = ($fn389) param0->$class->vtable[5];
+$tmp388(param0, param1, $tmp387);
 goto block15;
 block45:;
-frost$core$Int64 $tmp392 = (frost$core$Int64) {12u};
+frost$core$Int64 $tmp390 = (frost$core$Int64) {12u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:112:28
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp393 = $tmp295.value;
-int64_t $tmp394 = $tmp392.value;
-bool $tmp395 = $tmp393 == $tmp394;
-frost$core$Bit $tmp396 = (frost$core$Bit) {$tmp395};
-bool $tmp397 = $tmp396.value;
-if ($tmp397) goto block48; else goto block49;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp391 = $tmp293.value;
+int64_t $tmp392 = $tmp390.value;
+bool $tmp393 = $tmp391 == $tmp392;
+frost$core$Bit $tmp394 = (frost$core$Bit) {$tmp393};
+bool $tmp395 = $tmp394.value;
+if ($tmp395) goto block48; else goto block49;
 block48:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/parser/SyntaxHighlighter.frost:113
-frost$core$Int64 $tmp398 = (frost$core$Int64) {2u};
+frost$core$Int64 $tmp396 = (frost$core$Int64) {2u};
 // begin inline call to org.frostlang.frostc.parser.SyntaxHighlighter.Kind.init(rv:frost.core.Int64):org.frostlang.frostc.parser.SyntaxHighlighter.Kind from SyntaxHighlighter.frost:113:32
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/parser/SyntaxHighlighter.frost:6
-frost$core$Int64* $tmp399 = &(&local9)->$rawValue;
-*$tmp399 = $tmp398;
-org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp400 = *(&local9);
-*(&local8) = $tmp400;
-org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp401 = *(&local8);
-$fn403 $tmp402 = ($fn403) param0->$class->vtable[5];
-$tmp402(param0, param1, $tmp401);
+frost$core$Int64* $tmp397 = &(&local9)->$rawValue;
+*$tmp397 = $tmp396;
+org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp398 = *(&local9);
+*(&local8) = $tmp398;
+org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp399 = *(&local8);
+$fn401 $tmp400 = ($fn401) param0->$class->vtable[5];
+$tmp400(param0, param1, $tmp399);
 goto block15;
 block49:;
-frost$core$Int64 $tmp404 = (frost$core$Int64) {14u};
+frost$core$Int64 $tmp402 = (frost$core$Int64) {14u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:115:28
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp405 = $tmp295.value;
-int64_t $tmp406 = $tmp404.value;
-bool $tmp407 = $tmp405 == $tmp406;
-frost$core$Bit $tmp408 = (frost$core$Bit) {$tmp407};
-bool $tmp409 = $tmp408.value;
-if ($tmp409) goto block52; else goto block53;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp403 = $tmp293.value;
+int64_t $tmp404 = $tmp402.value;
+bool $tmp405 = $tmp403 == $tmp404;
+frost$core$Bit $tmp406 = (frost$core$Bit) {$tmp405};
+bool $tmp407 = $tmp406.value;
+if ($tmp407) goto block52; else goto block53;
 block52:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/parser/SyntaxHighlighter.frost:116
-frost$core$Int64 $tmp410 = (frost$core$Int64) {3u};
+frost$core$Int64 $tmp408 = (frost$core$Int64) {3u};
 // begin inline call to org.frostlang.frostc.parser.SyntaxHighlighter.Kind.init(rv:frost.core.Int64):org.frostlang.frostc.parser.SyntaxHighlighter.Kind from SyntaxHighlighter.frost:116:32
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/parser/SyntaxHighlighter.frost:6
-frost$core$Int64* $tmp411 = &(&local11)->$rawValue;
-*$tmp411 = $tmp410;
-org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp412 = *(&local11);
-*(&local10) = $tmp412;
-org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp413 = *(&local10);
-$fn415 $tmp414 = ($fn415) param0->$class->vtable[5];
-$tmp414(param0, param1, $tmp413);
+frost$core$Int64* $tmp409 = &(&local11)->$rawValue;
+*$tmp409 = $tmp408;
+org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp410 = *(&local11);
+*(&local10) = $tmp410;
+org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp411 = *(&local10);
+$fn413 $tmp412 = ($fn413) param0->$class->vtable[5];
+$tmp412(param0, param1, $tmp411);
 goto block15;
 block53:;
-frost$core$Int64 $tmp416 = (frost$core$Int64) {15u};
+frost$core$Int64 $tmp414 = (frost$core$Int64) {15u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:118:28
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp417 = $tmp295.value;
-int64_t $tmp418 = $tmp416.value;
-bool $tmp419 = $tmp417 == $tmp418;
-frost$core$Bit $tmp420 = (frost$core$Bit) {$tmp419};
-bool $tmp421 = $tmp420.value;
-if ($tmp421) goto block56; else goto block57;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp415 = $tmp293.value;
+int64_t $tmp416 = $tmp414.value;
+bool $tmp417 = $tmp415 == $tmp416;
+frost$core$Bit $tmp418 = (frost$core$Bit) {$tmp417};
+bool $tmp419 = $tmp418.value;
+if ($tmp419) goto block56; else goto block57;
 block57:;
-frost$core$Int64 $tmp422 = (frost$core$Int64) {16u};
+frost$core$Int64 $tmp420 = (frost$core$Int64) {16u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:118:48
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp423 = $tmp295.value;
-int64_t $tmp424 = $tmp422.value;
-bool $tmp425 = $tmp423 == $tmp424;
-frost$core$Bit $tmp426 = (frost$core$Bit) {$tmp425};
-bool $tmp427 = $tmp426.value;
-if ($tmp427) goto block56; else goto block59;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp421 = $tmp293.value;
+int64_t $tmp422 = $tmp420.value;
+bool $tmp423 = $tmp421 == $tmp422;
+frost$core$Bit $tmp424 = (frost$core$Bit) {$tmp423};
+bool $tmp425 = $tmp424.value;
+if ($tmp425) goto block56; else goto block59;
 block59:;
-frost$core$Int64 $tmp428 = (frost$core$Int64) {17u};
+frost$core$Int64 $tmp426 = (frost$core$Int64) {17u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:118:65
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp429 = $tmp295.value;
-int64_t $tmp430 = $tmp428.value;
-bool $tmp431 = $tmp429 == $tmp430;
-frost$core$Bit $tmp432 = (frost$core$Bit) {$tmp431};
-bool $tmp433 = $tmp432.value;
-if ($tmp433) goto block56; else goto block61;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp427 = $tmp293.value;
+int64_t $tmp428 = $tmp426.value;
+bool $tmp429 = $tmp427 == $tmp428;
+frost$core$Bit $tmp430 = (frost$core$Bit) {$tmp429};
+bool $tmp431 = $tmp430.value;
+if ($tmp431) goto block56; else goto block61;
 block61:;
-frost$core$Int64 $tmp434 = (frost$core$Int64) {18u};
+frost$core$Int64 $tmp432 = (frost$core$Int64) {18u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:118:80
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp435 = $tmp295.value;
-int64_t $tmp436 = $tmp434.value;
-bool $tmp437 = $tmp435 == $tmp436;
-frost$core$Bit $tmp438 = (frost$core$Bit) {$tmp437};
-bool $tmp439 = $tmp438.value;
-if ($tmp439) goto block56; else goto block63;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp433 = $tmp293.value;
+int64_t $tmp434 = $tmp432.value;
+bool $tmp435 = $tmp433 == $tmp434;
+frost$core$Bit $tmp436 = (frost$core$Bit) {$tmp435};
+bool $tmp437 = $tmp436.value;
+if ($tmp437) goto block56; else goto block63;
 block63:;
-frost$core$Int64 $tmp440 = (frost$core$Int64) {19u};
+frost$core$Int64 $tmp438 = (frost$core$Int64) {19u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:119:31
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp441 = $tmp295.value;
-int64_t $tmp442 = $tmp440.value;
-bool $tmp443 = $tmp441 == $tmp442;
-frost$core$Bit $tmp444 = (frost$core$Bit) {$tmp443};
-bool $tmp445 = $tmp444.value;
-if ($tmp445) goto block56; else goto block65;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp439 = $tmp293.value;
+int64_t $tmp440 = $tmp438.value;
+bool $tmp441 = $tmp439 == $tmp440;
+frost$core$Bit $tmp442 = (frost$core$Bit) {$tmp441};
+bool $tmp443 = $tmp442.value;
+if ($tmp443) goto block56; else goto block65;
 block65:;
-frost$core$Int64 $tmp446 = (frost$core$Int64) {20u};
+frost$core$Int64 $tmp444 = (frost$core$Int64) {20u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:119:53
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp447 = $tmp295.value;
-int64_t $tmp448 = $tmp446.value;
-bool $tmp449 = $tmp447 == $tmp448;
-frost$core$Bit $tmp450 = (frost$core$Bit) {$tmp449};
-bool $tmp451 = $tmp450.value;
-if ($tmp451) goto block56; else goto block67;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp445 = $tmp293.value;
+int64_t $tmp446 = $tmp444.value;
+bool $tmp447 = $tmp445 == $tmp446;
+frost$core$Bit $tmp448 = (frost$core$Bit) {$tmp447};
+bool $tmp449 = $tmp448.value;
+if ($tmp449) goto block56; else goto block67;
 block67:;
-frost$core$Int64 $tmp452 = (frost$core$Int64) {21u};
+frost$core$Int64 $tmp450 = (frost$core$Int64) {21u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:119:72
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp453 = $tmp295.value;
-int64_t $tmp454 = $tmp452.value;
-bool $tmp455 = $tmp453 == $tmp454;
-frost$core$Bit $tmp456 = (frost$core$Bit) {$tmp455};
-bool $tmp457 = $tmp456.value;
-if ($tmp457) goto block56; else goto block69;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp451 = $tmp293.value;
+int64_t $tmp452 = $tmp450.value;
+bool $tmp453 = $tmp451 == $tmp452;
+frost$core$Bit $tmp454 = (frost$core$Bit) {$tmp453};
+bool $tmp455 = $tmp454.value;
+if ($tmp455) goto block56; else goto block69;
 block69:;
-frost$core$Int64 $tmp458 = (frost$core$Int64) {22u};
+frost$core$Int64 $tmp456 = (frost$core$Int64) {22u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:120:31
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp459 = $tmp295.value;
-int64_t $tmp460 = $tmp458.value;
-bool $tmp461 = $tmp459 == $tmp460;
-frost$core$Bit $tmp462 = (frost$core$Bit) {$tmp461};
-bool $tmp463 = $tmp462.value;
-if ($tmp463) goto block56; else goto block71;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp457 = $tmp293.value;
+int64_t $tmp458 = $tmp456.value;
+bool $tmp459 = $tmp457 == $tmp458;
+frost$core$Bit $tmp460 = (frost$core$Bit) {$tmp459};
+bool $tmp461 = $tmp460.value;
+if ($tmp461) goto block56; else goto block71;
 block71:;
-frost$core$Int64 $tmp464 = (frost$core$Int64) {24u};
+frost$core$Int64 $tmp462 = (frost$core$Int64) {24u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:120:50
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp465 = $tmp295.value;
-int64_t $tmp466 = $tmp464.value;
-bool $tmp467 = $tmp465 == $tmp466;
-frost$core$Bit $tmp468 = (frost$core$Bit) {$tmp467};
-bool $tmp469 = $tmp468.value;
-if ($tmp469) goto block56; else goto block73;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp463 = $tmp293.value;
+int64_t $tmp464 = $tmp462.value;
+bool $tmp465 = $tmp463 == $tmp464;
+frost$core$Bit $tmp466 = (frost$core$Bit) {$tmp465};
+bool $tmp467 = $tmp466.value;
+if ($tmp467) goto block56; else goto block73;
 block73:;
-frost$core$Int64 $tmp470 = (frost$core$Int64) {25u};
+frost$core$Int64 $tmp468 = (frost$core$Int64) {25u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:120:66
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp471 = $tmp295.value;
-int64_t $tmp472 = $tmp470.value;
-bool $tmp473 = $tmp471 == $tmp472;
-frost$core$Bit $tmp474 = (frost$core$Bit) {$tmp473};
-bool $tmp475 = $tmp474.value;
-if ($tmp475) goto block56; else goto block75;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp469 = $tmp293.value;
+int64_t $tmp470 = $tmp468.value;
+bool $tmp471 = $tmp469 == $tmp470;
+frost$core$Bit $tmp472 = (frost$core$Bit) {$tmp471};
+bool $tmp473 = $tmp472.value;
+if ($tmp473) goto block56; else goto block75;
 block75:;
-frost$core$Int64 $tmp476 = (frost$core$Int64) {26u};
+frost$core$Int64 $tmp474 = (frost$core$Int64) {26u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:120:82
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp477 = $tmp295.value;
-int64_t $tmp478 = $tmp476.value;
-bool $tmp479 = $tmp477 == $tmp478;
-frost$core$Bit $tmp480 = (frost$core$Bit) {$tmp479};
-bool $tmp481 = $tmp480.value;
-if ($tmp481) goto block56; else goto block77;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp475 = $tmp293.value;
+int64_t $tmp476 = $tmp474.value;
+bool $tmp477 = $tmp475 == $tmp476;
+frost$core$Bit $tmp478 = (frost$core$Bit) {$tmp477};
+bool $tmp479 = $tmp478.value;
+if ($tmp479) goto block56; else goto block77;
 block77:;
-frost$core$Int64 $tmp482 = (frost$core$Int64) {27u};
+frost$core$Int64 $tmp480 = (frost$core$Int64) {27u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:121:31
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp483 = $tmp295.value;
-int64_t $tmp484 = $tmp482.value;
-bool $tmp485 = $tmp483 == $tmp484;
-frost$core$Bit $tmp486 = (frost$core$Bit) {$tmp485};
-bool $tmp487 = $tmp486.value;
-if ($tmp487) goto block56; else goto block79;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp481 = $tmp293.value;
+int64_t $tmp482 = $tmp480.value;
+bool $tmp483 = $tmp481 == $tmp482;
+frost$core$Bit $tmp484 = (frost$core$Bit) {$tmp483};
+bool $tmp485 = $tmp484.value;
+if ($tmp485) goto block56; else goto block79;
 block79:;
-frost$core$Int64 $tmp488 = (frost$core$Int64) {34u};
+frost$core$Int64 $tmp486 = (frost$core$Int64) {34u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:121:52
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp489 = $tmp295.value;
-int64_t $tmp490 = $tmp488.value;
-bool $tmp491 = $tmp489 == $tmp490;
-frost$core$Bit $tmp492 = (frost$core$Bit) {$tmp491};
-bool $tmp493 = $tmp492.value;
-if ($tmp493) goto block56; else goto block81;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp487 = $tmp293.value;
+int64_t $tmp488 = $tmp486.value;
+bool $tmp489 = $tmp487 == $tmp488;
+frost$core$Bit $tmp490 = (frost$core$Bit) {$tmp489};
+bool $tmp491 = $tmp490.value;
+if ($tmp491) goto block56; else goto block81;
 block81:;
-frost$core$Int64 $tmp494 = (frost$core$Int64) {35u};
+frost$core$Int64 $tmp492 = (frost$core$Int64) {35u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:121:67
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp495 = $tmp295.value;
-int64_t $tmp496 = $tmp494.value;
-bool $tmp497 = $tmp495 == $tmp496;
-frost$core$Bit $tmp498 = (frost$core$Bit) {$tmp497};
-bool $tmp499 = $tmp498.value;
-if ($tmp499) goto block56; else goto block83;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp493 = $tmp293.value;
+int64_t $tmp494 = $tmp492.value;
+bool $tmp495 = $tmp493 == $tmp494;
+frost$core$Bit $tmp496 = (frost$core$Bit) {$tmp495};
+bool $tmp497 = $tmp496.value;
+if ($tmp497) goto block56; else goto block83;
 block56:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/parser/SyntaxHighlighter.frost:122
-frost$core$Int64 $tmp500 = (frost$core$Int64) {7u};
+frost$core$Int64 $tmp498 = (frost$core$Int64) {7u};
 // begin inline call to org.frostlang.frostc.parser.SyntaxHighlighter.Kind.init(rv:frost.core.Int64):org.frostlang.frostc.parser.SyntaxHighlighter.Kind from SyntaxHighlighter.frost:122:32
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/parser/SyntaxHighlighter.frost:6
-frost$core$Int64* $tmp501 = &(&local13)->$rawValue;
-*$tmp501 = $tmp500;
-org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp502 = *(&local13);
-*(&local12) = $tmp502;
-org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp503 = *(&local12);
-$fn505 $tmp504 = ($fn505) param0->$class->vtable[5];
-$tmp504(param0, param1, $tmp503);
+frost$core$Int64* $tmp499 = &(&local13)->$rawValue;
+*$tmp499 = $tmp498;
+org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp500 = *(&local13);
+*(&local12) = $tmp500;
+org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp501 = *(&local12);
+$fn503 $tmp502 = ($fn503) param0->$class->vtable[5];
+$tmp502(param0, param1, $tmp501);
 goto block15;
 block83:;
-frost$core$Int64 $tmp506 = (frost$core$Int64) {28u};
+frost$core$Int64 $tmp504 = (frost$core$Int64) {28u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:124:28
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp507 = $tmp295.value;
-int64_t $tmp508 = $tmp506.value;
-bool $tmp509 = $tmp507 == $tmp508;
-frost$core$Bit $tmp510 = (frost$core$Bit) {$tmp509};
-bool $tmp511 = $tmp510.value;
-if ($tmp511) goto block86; else goto block87;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp505 = $tmp293.value;
+int64_t $tmp506 = $tmp504.value;
+bool $tmp507 = $tmp505 == $tmp506;
+frost$core$Bit $tmp508 = (frost$core$Bit) {$tmp507};
+bool $tmp509 = $tmp508.value;
+if ($tmp509) goto block86; else goto block87;
 block87:;
-frost$core$Int64 $tmp512 = (frost$core$Int64) {29u};
+frost$core$Int64 $tmp510 = (frost$core$Int64) {29u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:124:47
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp513 = $tmp295.value;
-int64_t $tmp514 = $tmp512.value;
-bool $tmp515 = $tmp513 == $tmp514;
-frost$core$Bit $tmp516 = (frost$core$Bit) {$tmp515};
-bool $tmp517 = $tmp516.value;
-if ($tmp517) goto block86; else goto block89;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp511 = $tmp293.value;
+int64_t $tmp512 = $tmp510.value;
+bool $tmp513 = $tmp511 == $tmp512;
+frost$core$Bit $tmp514 = (frost$core$Bit) {$tmp513};
+bool $tmp515 = $tmp514.value;
+if ($tmp515) goto block86; else goto block89;
 block89:;
-frost$core$Int64 $tmp518 = (frost$core$Int64) {30u};
+frost$core$Int64 $tmp516 = (frost$core$Int64) {30u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:124:65
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp519 = $tmp295.value;
-int64_t $tmp520 = $tmp518.value;
-bool $tmp521 = $tmp519 == $tmp520;
-frost$core$Bit $tmp522 = (frost$core$Bit) {$tmp521};
-bool $tmp523 = $tmp522.value;
-if ($tmp523) goto block86; else goto block91;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp517 = $tmp293.value;
+int64_t $tmp518 = $tmp516.value;
+bool $tmp519 = $tmp517 == $tmp518;
+frost$core$Bit $tmp520 = (frost$core$Bit) {$tmp519};
+bool $tmp521 = $tmp520.value;
+if ($tmp521) goto block86; else goto block91;
 block91:;
-frost$core$Int64 $tmp524 = (frost$core$Int64) {31u};
+frost$core$Int64 $tmp522 = (frost$core$Int64) {31u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:124:86
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp525 = $tmp295.value;
-int64_t $tmp526 = $tmp524.value;
-bool $tmp527 = $tmp525 == $tmp526;
-frost$core$Bit $tmp528 = (frost$core$Bit) {$tmp527};
-bool $tmp529 = $tmp528.value;
-if ($tmp529) goto block86; else goto block93;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp523 = $tmp293.value;
+int64_t $tmp524 = $tmp522.value;
+bool $tmp525 = $tmp523 == $tmp524;
+frost$core$Bit $tmp526 = (frost$core$Bit) {$tmp525};
+bool $tmp527 = $tmp526.value;
+if ($tmp527) goto block86; else goto block93;
 block93:;
-frost$core$Int64 $tmp530 = (frost$core$Int64) {32u};
+frost$core$Int64 $tmp528 = (frost$core$Int64) {32u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:125:31
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp531 = $tmp295.value;
-int64_t $tmp532 = $tmp530.value;
-bool $tmp533 = $tmp531 == $tmp532;
-frost$core$Bit $tmp534 = (frost$core$Bit) {$tmp533};
-bool $tmp535 = $tmp534.value;
-if ($tmp535) goto block86; else goto block95;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp529 = $tmp293.value;
+int64_t $tmp530 = $tmp528.value;
+bool $tmp531 = $tmp529 == $tmp530;
+frost$core$Bit $tmp532 = (frost$core$Bit) {$tmp531};
+bool $tmp533 = $tmp532.value;
+if ($tmp533) goto block86; else goto block95;
 block95:;
-frost$core$Int64 $tmp536 = (frost$core$Int64) {33u};
+frost$core$Int64 $tmp534 = (frost$core$Int64) {33u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:125:49
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp537 = $tmp295.value;
-int64_t $tmp538 = $tmp536.value;
-bool $tmp539 = $tmp537 == $tmp538;
-frost$core$Bit $tmp540 = (frost$core$Bit) {$tmp539};
-bool $tmp541 = $tmp540.value;
-if ($tmp541) goto block86; else goto block97;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp535 = $tmp293.value;
+int64_t $tmp536 = $tmp534.value;
+bool $tmp537 = $tmp535 == $tmp536;
+frost$core$Bit $tmp538 = (frost$core$Bit) {$tmp537};
+bool $tmp539 = $tmp538.value;
+if ($tmp539) goto block86; else goto block97;
 block97:;
-frost$core$Int64 $tmp542 = (frost$core$Int64) {36u};
+frost$core$Int64 $tmp540 = (frost$core$Int64) {36u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:125:65
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp543 = $tmp295.value;
-int64_t $tmp544 = $tmp542.value;
-bool $tmp545 = $tmp543 == $tmp544;
-frost$core$Bit $tmp546 = (frost$core$Bit) {$tmp545};
-bool $tmp547 = $tmp546.value;
-if ($tmp547) goto block86; else goto block99;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp541 = $tmp293.value;
+int64_t $tmp542 = $tmp540.value;
+bool $tmp543 = $tmp541 == $tmp542;
+frost$core$Bit $tmp544 = (frost$core$Bit) {$tmp543};
+bool $tmp545 = $tmp544.value;
+if ($tmp545) goto block86; else goto block99;
 block99:;
-frost$core$Int64 $tmp548 = (frost$core$Int64) {37u};
+frost$core$Int64 $tmp546 = (frost$core$Int64) {37u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:125:82
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp549 = $tmp295.value;
-int64_t $tmp550 = $tmp548.value;
-bool $tmp551 = $tmp549 == $tmp550;
-frost$core$Bit $tmp552 = (frost$core$Bit) {$tmp551};
-bool $tmp553 = $tmp552.value;
-if ($tmp553) goto block86; else goto block101;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp547 = $tmp293.value;
+int64_t $tmp548 = $tmp546.value;
+bool $tmp549 = $tmp547 == $tmp548;
+frost$core$Bit $tmp550 = (frost$core$Bit) {$tmp549};
+bool $tmp551 = $tmp550.value;
+if ($tmp551) goto block86; else goto block101;
 block101:;
-frost$core$Int64 $tmp554 = (frost$core$Int64) {38u};
+frost$core$Int64 $tmp552 = (frost$core$Int64) {38u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:126:31
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp555 = $tmp295.value;
-int64_t $tmp556 = $tmp554.value;
-bool $tmp557 = $tmp555 == $tmp556;
-frost$core$Bit $tmp558 = (frost$core$Bit) {$tmp557};
-bool $tmp559 = $tmp558.value;
-if ($tmp559) goto block86; else goto block103;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp553 = $tmp293.value;
+int64_t $tmp554 = $tmp552.value;
+bool $tmp555 = $tmp553 == $tmp554;
+frost$core$Bit $tmp556 = (frost$core$Bit) {$tmp555};
+bool $tmp557 = $tmp556.value;
+if ($tmp557) goto block86; else goto block103;
 block103:;
-frost$core$Int64 $tmp560 = (frost$core$Int64) {39u};
+frost$core$Int64 $tmp558 = (frost$core$Int64) {39u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:126:48
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp561 = $tmp295.value;
-int64_t $tmp562 = $tmp560.value;
-bool $tmp563 = $tmp561 == $tmp562;
-frost$core$Bit $tmp564 = (frost$core$Bit) {$tmp563};
-bool $tmp565 = $tmp564.value;
-if ($tmp565) goto block86; else goto block105;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp559 = $tmp293.value;
+int64_t $tmp560 = $tmp558.value;
+bool $tmp561 = $tmp559 == $tmp560;
+frost$core$Bit $tmp562 = (frost$core$Bit) {$tmp561};
+bool $tmp563 = $tmp562.value;
+if ($tmp563) goto block86; else goto block105;
 block105:;
-frost$core$Int64 $tmp566 = (frost$core$Int64) {40u};
+frost$core$Int64 $tmp564 = (frost$core$Int64) {40u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:126:66
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp567 = $tmp295.value;
-int64_t $tmp568 = $tmp566.value;
-bool $tmp569 = $tmp567 == $tmp568;
-frost$core$Bit $tmp570 = (frost$core$Bit) {$tmp569};
-bool $tmp571 = $tmp570.value;
-if ($tmp571) goto block86; else goto block107;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp565 = $tmp293.value;
+int64_t $tmp566 = $tmp564.value;
+bool $tmp567 = $tmp565 == $tmp566;
+frost$core$Bit $tmp568 = (frost$core$Bit) {$tmp567};
+bool $tmp569 = $tmp568.value;
+if ($tmp569) goto block86; else goto block107;
 block107:;
-frost$core$Int64 $tmp572 = (frost$core$Int64) {41u};
+frost$core$Int64 $tmp570 = (frost$core$Int64) {41u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:126:83
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp573 = $tmp295.value;
-int64_t $tmp574 = $tmp572.value;
-bool $tmp575 = $tmp573 == $tmp574;
-frost$core$Bit $tmp576 = (frost$core$Bit) {$tmp575};
-bool $tmp577 = $tmp576.value;
-if ($tmp577) goto block86; else goto block109;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp571 = $tmp293.value;
+int64_t $tmp572 = $tmp570.value;
+bool $tmp573 = $tmp571 == $tmp572;
+frost$core$Bit $tmp574 = (frost$core$Bit) {$tmp573};
+bool $tmp575 = $tmp574.value;
+if ($tmp575) goto block86; else goto block109;
 block109:;
-frost$core$Int64 $tmp578 = (frost$core$Int64) {23u};
+frost$core$Int64 $tmp576 = (frost$core$Int64) {23u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:127:31
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp579 = $tmp295.value;
-int64_t $tmp580 = $tmp578.value;
-bool $tmp581 = $tmp579 == $tmp580;
-frost$core$Bit $tmp582 = (frost$core$Bit) {$tmp581};
-bool $tmp583 = $tmp582.value;
-if ($tmp583) goto block86; else goto block111;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp577 = $tmp293.value;
+int64_t $tmp578 = $tmp576.value;
+bool $tmp579 = $tmp577 == $tmp578;
+frost$core$Bit $tmp580 = (frost$core$Bit) {$tmp579};
+bool $tmp581 = $tmp580.value;
+if ($tmp581) goto block86; else goto block111;
 block111:;
-frost$core$Int64 $tmp584 = (frost$core$Int64) {45u};
+frost$core$Int64 $tmp582 = (frost$core$Int64) {45u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:127:48
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp585 = $tmp295.value;
-int64_t $tmp586 = $tmp584.value;
-bool $tmp587 = $tmp585 == $tmp586;
-frost$core$Bit $tmp588 = (frost$core$Bit) {$tmp587};
-bool $tmp589 = $tmp588.value;
-if ($tmp589) goto block86; else goto block113;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp583 = $tmp293.value;
+int64_t $tmp584 = $tmp582.value;
+bool $tmp585 = $tmp583 == $tmp584;
+frost$core$Bit $tmp586 = (frost$core$Bit) {$tmp585};
+bool $tmp587 = $tmp586.value;
+if ($tmp587) goto block86; else goto block113;
 block113:;
-frost$core$Int64 $tmp590 = (frost$core$Int64) {46u};
+frost$core$Int64 $tmp588 = (frost$core$Int64) {46u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:127:67
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp591 = $tmp295.value;
-int64_t $tmp592 = $tmp590.value;
-bool $tmp593 = $tmp591 == $tmp592;
-frost$core$Bit $tmp594 = (frost$core$Bit) {$tmp593};
-bool $tmp595 = $tmp594.value;
-if ($tmp595) goto block86; else goto block115;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp589 = $tmp293.value;
+int64_t $tmp590 = $tmp588.value;
+bool $tmp591 = $tmp589 == $tmp590;
+frost$core$Bit $tmp592 = (frost$core$Bit) {$tmp591};
+bool $tmp593 = $tmp592.value;
+if ($tmp593) goto block86; else goto block115;
 block86:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/parser/SyntaxHighlighter.frost:128
-frost$core$Int64 $tmp596 = (frost$core$Int64) {8u};
+frost$core$Int64 $tmp594 = (frost$core$Int64) {8u};
 // begin inline call to org.frostlang.frostc.parser.SyntaxHighlighter.Kind.init(rv:frost.core.Int64):org.frostlang.frostc.parser.SyntaxHighlighter.Kind from SyntaxHighlighter.frost:128:32
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/parser/SyntaxHighlighter.frost:6
-frost$core$Int64* $tmp597 = &(&local15)->$rawValue;
-*$tmp597 = $tmp596;
-org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp598 = *(&local15);
-*(&local14) = $tmp598;
-org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp599 = *(&local14);
-$fn601 $tmp600 = ($fn601) param0->$class->vtable[5];
-$tmp600(param0, param1, $tmp599);
+frost$core$Int64* $tmp595 = &(&local15)->$rawValue;
+*$tmp595 = $tmp594;
+org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp596 = *(&local15);
+*(&local14) = $tmp596;
+org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp597 = *(&local14);
+$fn599 $tmp598 = ($fn599) param0->$class->vtable[5];
+$tmp598(param0, param1, $tmp597);
 goto block15;
 block115:;
-frost$core$Int64 $tmp602 = (frost$core$Int64) {49u};
+frost$core$Int64 $tmp600 = (frost$core$Int64) {49u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:130:28
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp603 = $tmp295.value;
-int64_t $tmp604 = $tmp602.value;
-bool $tmp605 = $tmp603 == $tmp604;
-frost$core$Bit $tmp606 = (frost$core$Bit) {$tmp605};
-bool $tmp607 = $tmp606.value;
-if ($tmp607) goto block118; else goto block119;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp601 = $tmp293.value;
+int64_t $tmp602 = $tmp600.value;
+bool $tmp603 = $tmp601 == $tmp602;
+frost$core$Bit $tmp604 = (frost$core$Bit) {$tmp603};
+bool $tmp605 = $tmp604.value;
+if ($tmp605) goto block118; else goto block119;
 block119:;
-frost$core$Int64 $tmp608 = (frost$core$Int64) {50u};
+frost$core$Int64 $tmp606 = (frost$core$Int64) {50u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:130:45
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp609 = $tmp295.value;
-int64_t $tmp610 = $tmp608.value;
-bool $tmp611 = $tmp609 == $tmp610;
-frost$core$Bit $tmp612 = (frost$core$Bit) {$tmp611};
-bool $tmp613 = $tmp612.value;
-if ($tmp613) goto block118; else goto block121;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp607 = $tmp293.value;
+int64_t $tmp608 = $tmp606.value;
+bool $tmp609 = $tmp607 == $tmp608;
+frost$core$Bit $tmp610 = (frost$core$Bit) {$tmp609};
+bool $tmp611 = $tmp610.value;
+if ($tmp611) goto block118; else goto block121;
 block118:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/parser/SyntaxHighlighter.frost:131
-frost$core$Int64 $tmp614 = (frost$core$Int64) {9u};
+frost$core$Int64 $tmp612 = (frost$core$Int64) {9u};
 // begin inline call to org.frostlang.frostc.parser.SyntaxHighlighter.Kind.init(rv:frost.core.Int64):org.frostlang.frostc.parser.SyntaxHighlighter.Kind from SyntaxHighlighter.frost:131:32
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/parser/SyntaxHighlighter.frost:6
-frost$core$Int64* $tmp615 = &(&local17)->$rawValue;
-*$tmp615 = $tmp614;
-org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp616 = *(&local17);
-*(&local16) = $tmp616;
-org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp617 = *(&local16);
-$fn619 $tmp618 = ($fn619) param0->$class->vtable[5];
-$tmp618(param0, param1, $tmp617);
+frost$core$Int64* $tmp613 = &(&local17)->$rawValue;
+*$tmp613 = $tmp612;
+org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp614 = *(&local17);
+*(&local16) = $tmp614;
+org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp615 = *(&local16);
+$fn617 $tmp616 = ($fn617) param0->$class->vtable[5];
+$tmp616(param0, param1, $tmp615);
 goto block15;
 block121:;
-frost$core$Int64 $tmp620 = (frost$core$Int64) {54u};
+frost$core$Int64 $tmp618 = (frost$core$Int64) {54u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:133:28
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp621 = $tmp295.value;
-int64_t $tmp622 = $tmp620.value;
-bool $tmp623 = $tmp621 == $tmp622;
-frost$core$Bit $tmp624 = (frost$core$Bit) {$tmp623};
-bool $tmp625 = $tmp624.value;
-if ($tmp625) goto block124; else goto block125;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp619 = $tmp293.value;
+int64_t $tmp620 = $tmp618.value;
+bool $tmp621 = $tmp619 == $tmp620;
+frost$core$Bit $tmp622 = (frost$core$Bit) {$tmp621};
+bool $tmp623 = $tmp622.value;
+if ($tmp623) goto block124; else goto block125;
 block125:;
-frost$core$Int64 $tmp626 = (frost$core$Int64) {55u};
+frost$core$Int64 $tmp624 = (frost$core$Int64) {55u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:133:44
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp627 = $tmp295.value;
-int64_t $tmp628 = $tmp626.value;
-bool $tmp629 = $tmp627 == $tmp628;
-frost$core$Bit $tmp630 = (frost$core$Bit) {$tmp629};
-bool $tmp631 = $tmp630.value;
-if ($tmp631) goto block124; else goto block127;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp625 = $tmp293.value;
+int64_t $tmp626 = $tmp624.value;
+bool $tmp627 = $tmp625 == $tmp626;
+frost$core$Bit $tmp628 = (frost$core$Bit) {$tmp627};
+bool $tmp629 = $tmp628.value;
+if ($tmp629) goto block124; else goto block127;
 block127:;
-frost$core$Int64 $tmp632 = (frost$core$Int64) {56u};
+frost$core$Int64 $tmp630 = (frost$core$Int64) {56u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:133:67
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp633 = $tmp295.value;
-int64_t $tmp634 = $tmp632.value;
-bool $tmp635 = $tmp633 == $tmp634;
-frost$core$Bit $tmp636 = (frost$core$Bit) {$tmp635};
-bool $tmp637 = $tmp636.value;
-if ($tmp637) goto block124; else goto block129;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp631 = $tmp293.value;
+int64_t $tmp632 = $tmp630.value;
+bool $tmp633 = $tmp631 == $tmp632;
+frost$core$Bit $tmp634 = (frost$core$Bit) {$tmp633};
+bool $tmp635 = $tmp634.value;
+if ($tmp635) goto block124; else goto block129;
 block129:;
-frost$core$Int64 $tmp638 = (frost$core$Int64) {57u};
+frost$core$Int64 $tmp636 = (frost$core$Int64) {57u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:133:83
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp639 = $tmp295.value;
-int64_t $tmp640 = $tmp638.value;
-bool $tmp641 = $tmp639 == $tmp640;
-frost$core$Bit $tmp642 = (frost$core$Bit) {$tmp641};
-bool $tmp643 = $tmp642.value;
-if ($tmp643) goto block124; else goto block131;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp637 = $tmp293.value;
+int64_t $tmp638 = $tmp636.value;
+bool $tmp639 = $tmp637 == $tmp638;
+frost$core$Bit $tmp640 = (frost$core$Bit) {$tmp639};
+bool $tmp641 = $tmp640.value;
+if ($tmp641) goto block124; else goto block131;
 block131:;
-frost$core$Int64 $tmp644 = (frost$core$Int64) {58u};
+frost$core$Int64 $tmp642 = (frost$core$Int64) {58u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:134:31
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp645 = $tmp295.value;
-int64_t $tmp646 = $tmp644.value;
-bool $tmp647 = $tmp645 == $tmp646;
-frost$core$Bit $tmp648 = (frost$core$Bit) {$tmp647};
-bool $tmp649 = $tmp648.value;
-if ($tmp649) goto block124; else goto block133;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp643 = $tmp293.value;
+int64_t $tmp644 = $tmp642.value;
+bool $tmp645 = $tmp643 == $tmp644;
+frost$core$Bit $tmp646 = (frost$core$Bit) {$tmp645};
+bool $tmp647 = $tmp646.value;
+if ($tmp647) goto block124; else goto block133;
 block133:;
-frost$core$Int64 $tmp650 = (frost$core$Int64) {59u};
+frost$core$Int64 $tmp648 = (frost$core$Int64) {59u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:134:47
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp651 = $tmp295.value;
-int64_t $tmp652 = $tmp650.value;
-bool $tmp653 = $tmp651 == $tmp652;
-frost$core$Bit $tmp654 = (frost$core$Bit) {$tmp653};
-bool $tmp655 = $tmp654.value;
-if ($tmp655) goto block124; else goto block135;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp649 = $tmp293.value;
+int64_t $tmp650 = $tmp648.value;
+bool $tmp651 = $tmp649 == $tmp650;
+frost$core$Bit $tmp652 = (frost$core$Bit) {$tmp651};
+bool $tmp653 = $tmp652.value;
+if ($tmp653) goto block124; else goto block135;
 block135:;
-frost$core$Int64 $tmp656 = (frost$core$Int64) {60u};
+frost$core$Int64 $tmp654 = (frost$core$Int64) {60u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:134:63
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp657 = $tmp295.value;
-int64_t $tmp658 = $tmp656.value;
-bool $tmp659 = $tmp657 == $tmp658;
-frost$core$Bit $tmp660 = (frost$core$Bit) {$tmp659};
-bool $tmp661 = $tmp660.value;
-if ($tmp661) goto block124; else goto block137;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp655 = $tmp293.value;
+int64_t $tmp656 = $tmp654.value;
+bool $tmp657 = $tmp655 == $tmp656;
+frost$core$Bit $tmp658 = (frost$core$Bit) {$tmp657};
+bool $tmp659 = $tmp658.value;
+if ($tmp659) goto block124; else goto block137;
 block137:;
-frost$core$Int64 $tmp662 = (frost$core$Int64) {61u};
+frost$core$Int64 $tmp660 = (frost$core$Int64) {61u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:134:82
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp663 = $tmp295.value;
-int64_t $tmp664 = $tmp662.value;
-bool $tmp665 = $tmp663 == $tmp664;
-frost$core$Bit $tmp666 = (frost$core$Bit) {$tmp665};
-bool $tmp667 = $tmp666.value;
-if ($tmp667) goto block124; else goto block139;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp661 = $tmp293.value;
+int64_t $tmp662 = $tmp660.value;
+bool $tmp663 = $tmp661 == $tmp662;
+frost$core$Bit $tmp664 = (frost$core$Bit) {$tmp663};
+bool $tmp665 = $tmp664.value;
+if ($tmp665) goto block124; else goto block139;
 block139:;
-frost$core$Int64 $tmp668 = (frost$core$Int64) {62u};
+frost$core$Int64 $tmp666 = (frost$core$Int64) {62u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:135:31
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp669 = $tmp295.value;
-int64_t $tmp670 = $tmp668.value;
-bool $tmp671 = $tmp669 == $tmp670;
-frost$core$Bit $tmp672 = (frost$core$Bit) {$tmp671};
-bool $tmp673 = $tmp672.value;
-if ($tmp673) goto block124; else goto block141;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp667 = $tmp293.value;
+int64_t $tmp668 = $tmp666.value;
+bool $tmp669 = $tmp667 == $tmp668;
+frost$core$Bit $tmp670 = (frost$core$Bit) {$tmp669};
+bool $tmp671 = $tmp670.value;
+if ($tmp671) goto block124; else goto block141;
 block141:;
-frost$core$Int64 $tmp674 = (frost$core$Int64) {63u};
+frost$core$Int64 $tmp672 = (frost$core$Int64) {63u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:135:47
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp675 = $tmp295.value;
-int64_t $tmp676 = $tmp674.value;
-bool $tmp677 = $tmp675 == $tmp676;
-frost$core$Bit $tmp678 = (frost$core$Bit) {$tmp677};
-bool $tmp679 = $tmp678.value;
-if ($tmp679) goto block124; else goto block143;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp673 = $tmp293.value;
+int64_t $tmp674 = $tmp672.value;
+bool $tmp675 = $tmp673 == $tmp674;
+frost$core$Bit $tmp676 = (frost$core$Bit) {$tmp675};
+bool $tmp677 = $tmp676.value;
+if ($tmp677) goto block124; else goto block143;
 block143:;
-frost$core$Int64 $tmp680 = (frost$core$Int64) {64u};
+frost$core$Int64 $tmp678 = (frost$core$Int64) {64u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:135:62
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp681 = $tmp295.value;
-int64_t $tmp682 = $tmp680.value;
-bool $tmp683 = $tmp681 == $tmp682;
-frost$core$Bit $tmp684 = (frost$core$Bit) {$tmp683};
-bool $tmp685 = $tmp684.value;
-if ($tmp685) goto block124; else goto block145;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp679 = $tmp293.value;
+int64_t $tmp680 = $tmp678.value;
+bool $tmp681 = $tmp679 == $tmp680;
+frost$core$Bit $tmp682 = (frost$core$Bit) {$tmp681};
+bool $tmp683 = $tmp682.value;
+if ($tmp683) goto block124; else goto block145;
 block145:;
-frost$core$Int64 $tmp686 = (frost$core$Int64) {65u};
+frost$core$Int64 $tmp684 = (frost$core$Int64) {65u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:135:78
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp687 = $tmp295.value;
-int64_t $tmp688 = $tmp686.value;
-bool $tmp689 = $tmp687 == $tmp688;
-frost$core$Bit $tmp690 = (frost$core$Bit) {$tmp689};
-bool $tmp691 = $tmp690.value;
-if ($tmp691) goto block124; else goto block147;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp685 = $tmp293.value;
+int64_t $tmp686 = $tmp684.value;
+bool $tmp687 = $tmp685 == $tmp686;
+frost$core$Bit $tmp688 = (frost$core$Bit) {$tmp687};
+bool $tmp689 = $tmp688.value;
+if ($tmp689) goto block124; else goto block147;
 block147:;
-frost$core$Int64 $tmp692 = (frost$core$Int64) {66u};
+frost$core$Int64 $tmp690 = (frost$core$Int64) {66u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:136:31
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp693 = $tmp295.value;
-int64_t $tmp694 = $tmp692.value;
-bool $tmp695 = $tmp693 == $tmp694;
-frost$core$Bit $tmp696 = (frost$core$Bit) {$tmp695};
-bool $tmp697 = $tmp696.value;
-if ($tmp697) goto block124; else goto block149;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp691 = $tmp293.value;
+int64_t $tmp692 = $tmp690.value;
+bool $tmp693 = $tmp691 == $tmp692;
+frost$core$Bit $tmp694 = (frost$core$Bit) {$tmp693};
+bool $tmp695 = $tmp694.value;
+if ($tmp695) goto block124; else goto block149;
 block149:;
-frost$core$Int64 $tmp698 = (frost$core$Int64) {67u};
+frost$core$Int64 $tmp696 = (frost$core$Int64) {67u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:136:53
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp699 = $tmp295.value;
-int64_t $tmp700 = $tmp698.value;
-bool $tmp701 = $tmp699 == $tmp700;
-frost$core$Bit $tmp702 = (frost$core$Bit) {$tmp701};
-bool $tmp703 = $tmp702.value;
-if ($tmp703) goto block124; else goto block151;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp697 = $tmp293.value;
+int64_t $tmp698 = $tmp696.value;
+bool $tmp699 = $tmp697 == $tmp698;
+frost$core$Bit $tmp700 = (frost$core$Bit) {$tmp699};
+bool $tmp701 = $tmp700.value;
+if ($tmp701) goto block124; else goto block151;
 block151:;
-frost$core$Int64 $tmp704 = (frost$core$Int64) {68u};
+frost$core$Int64 $tmp702 = (frost$core$Int64) {68u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:136:68
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp705 = $tmp295.value;
-int64_t $tmp706 = $tmp704.value;
-bool $tmp707 = $tmp705 == $tmp706;
-frost$core$Bit $tmp708 = (frost$core$Bit) {$tmp707};
-bool $tmp709 = $tmp708.value;
-if ($tmp709) goto block124; else goto block153;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp703 = $tmp293.value;
+int64_t $tmp704 = $tmp702.value;
+bool $tmp705 = $tmp703 == $tmp704;
+frost$core$Bit $tmp706 = (frost$core$Bit) {$tmp705};
+bool $tmp707 = $tmp706.value;
+if ($tmp707) goto block124; else goto block153;
 block153:;
-frost$core$Int64 $tmp710 = (frost$core$Int64) {69u};
+frost$core$Int64 $tmp708 = (frost$core$Int64) {69u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:136:83
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp711 = $tmp295.value;
-int64_t $tmp712 = $tmp710.value;
-bool $tmp713 = $tmp711 == $tmp712;
-frost$core$Bit $tmp714 = (frost$core$Bit) {$tmp713};
-bool $tmp715 = $tmp714.value;
-if ($tmp715) goto block124; else goto block155;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp709 = $tmp293.value;
+int64_t $tmp710 = $tmp708.value;
+bool $tmp711 = $tmp709 == $tmp710;
+frost$core$Bit $tmp712 = (frost$core$Bit) {$tmp711};
+bool $tmp713 = $tmp712.value;
+if ($tmp713) goto block124; else goto block155;
 block155:;
-frost$core$Int64 $tmp716 = (frost$core$Int64) {70u};
+frost$core$Int64 $tmp714 = (frost$core$Int64) {70u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:137:31
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp717 = $tmp295.value;
-int64_t $tmp718 = $tmp716.value;
-bool $tmp719 = $tmp717 == $tmp718;
-frost$core$Bit $tmp720 = (frost$core$Bit) {$tmp719};
-bool $tmp721 = $tmp720.value;
-if ($tmp721) goto block124; else goto block157;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp715 = $tmp293.value;
+int64_t $tmp716 = $tmp714.value;
+bool $tmp717 = $tmp715 == $tmp716;
+frost$core$Bit $tmp718 = (frost$core$Bit) {$tmp717};
+bool $tmp719 = $tmp718.value;
+if ($tmp719) goto block124; else goto block157;
 block157:;
-frost$core$Int64 $tmp722 = (frost$core$Int64) {71u};
+frost$core$Int64 $tmp720 = (frost$core$Int64) {71u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:137:48
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp723 = $tmp295.value;
-int64_t $tmp724 = $tmp722.value;
-bool $tmp725 = $tmp723 == $tmp724;
-frost$core$Bit $tmp726 = (frost$core$Bit) {$tmp725};
-bool $tmp727 = $tmp726.value;
-if ($tmp727) goto block124; else goto block159;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp721 = $tmp293.value;
+int64_t $tmp722 = $tmp720.value;
+bool $tmp723 = $tmp721 == $tmp722;
+frost$core$Bit $tmp724 = (frost$core$Bit) {$tmp723};
+bool $tmp725 = $tmp724.value;
+if ($tmp725) goto block124; else goto block159;
 block159:;
-frost$core$Int64 $tmp728 = (frost$core$Int64) {72u};
+frost$core$Int64 $tmp726 = (frost$core$Int64) {72u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:137:64
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp729 = $tmp295.value;
-int64_t $tmp730 = $tmp728.value;
-bool $tmp731 = $tmp729 == $tmp730;
-frost$core$Bit $tmp732 = (frost$core$Bit) {$tmp731};
-bool $tmp733 = $tmp732.value;
-if ($tmp733) goto block124; else goto block161;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp727 = $tmp293.value;
+int64_t $tmp728 = $tmp726.value;
+bool $tmp729 = $tmp727 == $tmp728;
+frost$core$Bit $tmp730 = (frost$core$Bit) {$tmp729};
+bool $tmp731 = $tmp730.value;
+if ($tmp731) goto block124; else goto block161;
 block161:;
-frost$core$Int64 $tmp734 = (frost$core$Int64) {73u};
+frost$core$Int64 $tmp732 = (frost$core$Int64) {73u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:137:87
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp735 = $tmp295.value;
-int64_t $tmp736 = $tmp734.value;
-bool $tmp737 = $tmp735 == $tmp736;
-frost$core$Bit $tmp738 = (frost$core$Bit) {$tmp737};
-bool $tmp739 = $tmp738.value;
-if ($tmp739) goto block124; else goto block163;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp733 = $tmp293.value;
+int64_t $tmp734 = $tmp732.value;
+bool $tmp735 = $tmp733 == $tmp734;
+frost$core$Bit $tmp736 = (frost$core$Bit) {$tmp735};
+bool $tmp737 = $tmp736.value;
+if ($tmp737) goto block124; else goto block163;
 block163:;
-frost$core$Int64 $tmp740 = (frost$core$Int64) {74u};
+frost$core$Int64 $tmp738 = (frost$core$Int64) {74u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:138:31
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp741 = $tmp295.value;
-int64_t $tmp742 = $tmp740.value;
-bool $tmp743 = $tmp741 == $tmp742;
-frost$core$Bit $tmp744 = (frost$core$Bit) {$tmp743};
-bool $tmp745 = $tmp744.value;
-if ($tmp745) goto block124; else goto block165;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp739 = $tmp293.value;
+int64_t $tmp740 = $tmp738.value;
+bool $tmp741 = $tmp739 == $tmp740;
+frost$core$Bit $tmp742 = (frost$core$Bit) {$tmp741};
+bool $tmp743 = $tmp742.value;
+if ($tmp743) goto block124; else goto block165;
 block165:;
-frost$core$Int64 $tmp746 = (frost$core$Int64) {75u};
+frost$core$Int64 $tmp744 = (frost$core$Int64) {75u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:138:53
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp747 = $tmp295.value;
-int64_t $tmp748 = $tmp746.value;
-bool $tmp749 = $tmp747 == $tmp748;
-frost$core$Bit $tmp750 = (frost$core$Bit) {$tmp749};
-bool $tmp751 = $tmp750.value;
-if ($tmp751) goto block124; else goto block167;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp745 = $tmp293.value;
+int64_t $tmp746 = $tmp744.value;
+bool $tmp747 = $tmp745 == $tmp746;
+frost$core$Bit $tmp748 = (frost$core$Bit) {$tmp747};
+bool $tmp749 = $tmp748.value;
+if ($tmp749) goto block124; else goto block167;
 block167:;
-frost$core$Int64 $tmp752 = (frost$core$Int64) {76u};
+frost$core$Int64 $tmp750 = (frost$core$Int64) {76u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:138:69
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp753 = $tmp295.value;
-int64_t $tmp754 = $tmp752.value;
-bool $tmp755 = $tmp753 == $tmp754;
-frost$core$Bit $tmp756 = (frost$core$Bit) {$tmp755};
-bool $tmp757 = $tmp756.value;
-if ($tmp757) goto block124; else goto block169;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp751 = $tmp293.value;
+int64_t $tmp752 = $tmp750.value;
+bool $tmp753 = $tmp751 == $tmp752;
+frost$core$Bit $tmp754 = (frost$core$Bit) {$tmp753};
+bool $tmp755 = $tmp754.value;
+if ($tmp755) goto block124; else goto block169;
 block169:;
-frost$core$Int64 $tmp758 = (frost$core$Int64) {77u};
+frost$core$Int64 $tmp756 = (frost$core$Int64) {77u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:139:31
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp759 = $tmp295.value;
-int64_t $tmp760 = $tmp758.value;
-bool $tmp761 = $tmp759 == $tmp760;
-frost$core$Bit $tmp762 = (frost$core$Bit) {$tmp761};
-bool $tmp763 = $tmp762.value;
-if ($tmp763) goto block124; else goto block171;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp757 = $tmp293.value;
+int64_t $tmp758 = $tmp756.value;
+bool $tmp759 = $tmp757 == $tmp758;
+frost$core$Bit $tmp760 = (frost$core$Bit) {$tmp759};
+bool $tmp761 = $tmp760.value;
+if ($tmp761) goto block124; else goto block171;
 block171:;
-frost$core$Int64 $tmp764 = (frost$core$Int64) {78u};
+frost$core$Int64 $tmp762 = (frost$core$Int64) {78u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:139:53
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp765 = $tmp295.value;
-int64_t $tmp766 = $tmp764.value;
-bool $tmp767 = $tmp765 == $tmp766;
-frost$core$Bit $tmp768 = (frost$core$Bit) {$tmp767};
-bool $tmp769 = $tmp768.value;
-if ($tmp769) goto block124; else goto block173;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp763 = $tmp293.value;
+int64_t $tmp764 = $tmp762.value;
+bool $tmp765 = $tmp763 == $tmp764;
+frost$core$Bit $tmp766 = (frost$core$Bit) {$tmp765};
+bool $tmp767 = $tmp766.value;
+if ($tmp767) goto block124; else goto block173;
 block173:;
-frost$core$Int64 $tmp770 = (frost$core$Int64) {79u};
+frost$core$Int64 $tmp768 = (frost$core$Int64) {79u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:139:76
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp771 = $tmp295.value;
-int64_t $tmp772 = $tmp770.value;
-bool $tmp773 = $tmp771 == $tmp772;
-frost$core$Bit $tmp774 = (frost$core$Bit) {$tmp773};
-bool $tmp775 = $tmp774.value;
-if ($tmp775) goto block124; else goto block175;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp769 = $tmp293.value;
+int64_t $tmp770 = $tmp768.value;
+bool $tmp771 = $tmp769 == $tmp770;
+frost$core$Bit $tmp772 = (frost$core$Bit) {$tmp771};
+bool $tmp773 = $tmp772.value;
+if ($tmp773) goto block124; else goto block175;
 block175:;
-frost$core$Int64 $tmp776 = (frost$core$Int64) {80u};
+frost$core$Int64 $tmp774 = (frost$core$Int64) {80u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:139:94
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp777 = $tmp295.value;
-int64_t $tmp778 = $tmp776.value;
-bool $tmp779 = $tmp777 == $tmp778;
-frost$core$Bit $tmp780 = (frost$core$Bit) {$tmp779};
-bool $tmp781 = $tmp780.value;
-if ($tmp781) goto block124; else goto block177;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp775 = $tmp293.value;
+int64_t $tmp776 = $tmp774.value;
+bool $tmp777 = $tmp775 == $tmp776;
+frost$core$Bit $tmp778 = (frost$core$Bit) {$tmp777};
+bool $tmp779 = $tmp778.value;
+if ($tmp779) goto block124; else goto block177;
 block177:;
-frost$core$Int64 $tmp782 = (frost$core$Int64) {81u};
+frost$core$Int64 $tmp780 = (frost$core$Int64) {81u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:140:31
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp783 = $tmp295.value;
-int64_t $tmp784 = $tmp782.value;
-bool $tmp785 = $tmp783 == $tmp784;
-frost$core$Bit $tmp786 = (frost$core$Bit) {$tmp785};
-bool $tmp787 = $tmp786.value;
-if ($tmp787) goto block124; else goto block179;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp781 = $tmp293.value;
+int64_t $tmp782 = $tmp780.value;
+bool $tmp783 = $tmp781 == $tmp782;
+frost$core$Bit $tmp784 = (frost$core$Bit) {$tmp783};
+bool $tmp785 = $tmp784.value;
+if ($tmp785) goto block124; else goto block179;
 block179:;
-frost$core$Int64 $tmp788 = (frost$core$Int64) {82u};
+frost$core$Int64 $tmp786 = (frost$core$Int64) {82u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:140:49
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp789 = $tmp295.value;
-int64_t $tmp790 = $tmp788.value;
-bool $tmp791 = $tmp789 == $tmp790;
-frost$core$Bit $tmp792 = (frost$core$Bit) {$tmp791};
-bool $tmp793 = $tmp792.value;
-if ($tmp793) goto block124; else goto block181;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp787 = $tmp293.value;
+int64_t $tmp788 = $tmp786.value;
+bool $tmp789 = $tmp787 == $tmp788;
+frost$core$Bit $tmp790 = (frost$core$Bit) {$tmp789};
+bool $tmp791 = $tmp790.value;
+if ($tmp791) goto block124; else goto block181;
 block181:;
-frost$core$Int64 $tmp794 = (frost$core$Int64) {83u};
+frost$core$Int64 $tmp792 = (frost$core$Int64) {83u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:140:67
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp795 = $tmp295.value;
-int64_t $tmp796 = $tmp794.value;
-bool $tmp797 = $tmp795 == $tmp796;
-frost$core$Bit $tmp798 = (frost$core$Bit) {$tmp797};
-bool $tmp799 = $tmp798.value;
-if ($tmp799) goto block124; else goto block183;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp793 = $tmp293.value;
+int64_t $tmp794 = $tmp792.value;
+bool $tmp795 = $tmp793 == $tmp794;
+frost$core$Bit $tmp796 = (frost$core$Bit) {$tmp795};
+bool $tmp797 = $tmp796.value;
+if ($tmp797) goto block124; else goto block183;
 block183:;
-frost$core$Int64 $tmp800 = (frost$core$Int64) {84u};
+frost$core$Int64 $tmp798 = (frost$core$Int64) {84u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:140:85
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp801 = $tmp295.value;
-int64_t $tmp802 = $tmp800.value;
-bool $tmp803 = $tmp801 == $tmp802;
-frost$core$Bit $tmp804 = (frost$core$Bit) {$tmp803};
-bool $tmp805 = $tmp804.value;
-if ($tmp805) goto block124; else goto block185;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp799 = $tmp293.value;
+int64_t $tmp800 = $tmp798.value;
+bool $tmp801 = $tmp799 == $tmp800;
+frost$core$Bit $tmp802 = (frost$core$Bit) {$tmp801};
+bool $tmp803 = $tmp802.value;
+if ($tmp803) goto block124; else goto block185;
 block185:;
-frost$core$Int64 $tmp806 = (frost$core$Int64) {85u};
+frost$core$Int64 $tmp804 = (frost$core$Int64) {85u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:141:31
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp807 = $tmp295.value;
-int64_t $tmp808 = $tmp806.value;
-bool $tmp809 = $tmp807 == $tmp808;
-frost$core$Bit $tmp810 = (frost$core$Bit) {$tmp809};
-bool $tmp811 = $tmp810.value;
-if ($tmp811) goto block124; else goto block187;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp805 = $tmp293.value;
+int64_t $tmp806 = $tmp804.value;
+bool $tmp807 = $tmp805 == $tmp806;
+frost$core$Bit $tmp808 = (frost$core$Bit) {$tmp807};
+bool $tmp809 = $tmp808.value;
+if ($tmp809) goto block124; else goto block187;
 block187:;
-frost$core$Int64 $tmp812 = (frost$core$Int64) {86u};
+frost$core$Int64 $tmp810 = (frost$core$Int64) {86u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:141:49
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp813 = $tmp295.value;
-int64_t $tmp814 = $tmp812.value;
-bool $tmp815 = $tmp813 == $tmp814;
-frost$core$Bit $tmp816 = (frost$core$Bit) {$tmp815};
-bool $tmp817 = $tmp816.value;
-if ($tmp817) goto block124; else goto block189;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp811 = $tmp293.value;
+int64_t $tmp812 = $tmp810.value;
+bool $tmp813 = $tmp811 == $tmp812;
+frost$core$Bit $tmp814 = (frost$core$Bit) {$tmp813};
+bool $tmp815 = $tmp814.value;
+if ($tmp815) goto block124; else goto block189;
 block189:;
-frost$core$Int64 $tmp818 = (frost$core$Int64) {87u};
+frost$core$Int64 $tmp816 = (frost$core$Int64) {87u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:141:66
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp819 = $tmp295.value;
-int64_t $tmp820 = $tmp818.value;
-bool $tmp821 = $tmp819 == $tmp820;
-frost$core$Bit $tmp822 = (frost$core$Bit) {$tmp821};
-bool $tmp823 = $tmp822.value;
-if ($tmp823) goto block124; else goto block191;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp817 = $tmp293.value;
+int64_t $tmp818 = $tmp816.value;
+bool $tmp819 = $tmp817 == $tmp818;
+frost$core$Bit $tmp820 = (frost$core$Bit) {$tmp819};
+bool $tmp821 = $tmp820.value;
+if ($tmp821) goto block124; else goto block191;
 block191:;
-frost$core$Int64 $tmp824 = (frost$core$Int64) {88u};
+frost$core$Int64 $tmp822 = (frost$core$Int64) {88u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:141:90
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp825 = $tmp295.value;
-int64_t $tmp826 = $tmp824.value;
-bool $tmp827 = $tmp825 == $tmp826;
-frost$core$Bit $tmp828 = (frost$core$Bit) {$tmp827};
-bool $tmp829 = $tmp828.value;
-if ($tmp829) goto block124; else goto block193;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp823 = $tmp293.value;
+int64_t $tmp824 = $tmp822.value;
+bool $tmp825 = $tmp823 == $tmp824;
+frost$core$Bit $tmp826 = (frost$core$Bit) {$tmp825};
+bool $tmp827 = $tmp826.value;
+if ($tmp827) goto block124; else goto block193;
 block193:;
-frost$core$Int64 $tmp830 = (frost$core$Int64) {89u};
+frost$core$Int64 $tmp828 = (frost$core$Int64) {89u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:142:31
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp831 = $tmp295.value;
-int64_t $tmp832 = $tmp830.value;
-bool $tmp833 = $tmp831 == $tmp832;
-frost$core$Bit $tmp834 = (frost$core$Bit) {$tmp833};
-bool $tmp835 = $tmp834.value;
-if ($tmp835) goto block124; else goto block195;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp829 = $tmp293.value;
+int64_t $tmp830 = $tmp828.value;
+bool $tmp831 = $tmp829 == $tmp830;
+frost$core$Bit $tmp832 = (frost$core$Bit) {$tmp831};
+bool $tmp833 = $tmp832.value;
+if ($tmp833) goto block124; else goto block195;
 block195:;
-frost$core$Int64 $tmp836 = (frost$core$Int64) {90u};
+frost$core$Int64 $tmp834 = (frost$core$Int64) {90u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:142:56
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp837 = $tmp295.value;
-int64_t $tmp838 = $tmp836.value;
-bool $tmp839 = $tmp837 == $tmp838;
-frost$core$Bit $tmp840 = (frost$core$Bit) {$tmp839};
-bool $tmp841 = $tmp840.value;
-if ($tmp841) goto block124; else goto block197;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp835 = $tmp293.value;
+int64_t $tmp836 = $tmp834.value;
+bool $tmp837 = $tmp835 == $tmp836;
+frost$core$Bit $tmp838 = (frost$core$Bit) {$tmp837};
+bool $tmp839 = $tmp838.value;
+if ($tmp839) goto block124; else goto block197;
 block197:;
-frost$core$Int64 $tmp842 = (frost$core$Int64) {91u};
+frost$core$Int64 $tmp840 = (frost$core$Int64) {91u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:142:74
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp843 = $tmp295.value;
-int64_t $tmp844 = $tmp842.value;
-bool $tmp845 = $tmp843 == $tmp844;
-frost$core$Bit $tmp846 = (frost$core$Bit) {$tmp845};
-bool $tmp847 = $tmp846.value;
-if ($tmp847) goto block124; else goto block199;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp841 = $tmp293.value;
+int64_t $tmp842 = $tmp840.value;
+bool $tmp843 = $tmp841 == $tmp842;
+frost$core$Bit $tmp844 = (frost$core$Bit) {$tmp843};
+bool $tmp845 = $tmp844.value;
+if ($tmp845) goto block124; else goto block199;
 block199:;
-frost$core$Int64 $tmp848 = (frost$core$Int64) {92u};
+frost$core$Int64 $tmp846 = (frost$core$Int64) {92u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:143:31
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp849 = $tmp295.value;
-int64_t $tmp850 = $tmp848.value;
-bool $tmp851 = $tmp849 == $tmp850;
-frost$core$Bit $tmp852 = (frost$core$Bit) {$tmp851};
-bool $tmp853 = $tmp852.value;
-if ($tmp853) goto block124; else goto block201;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp847 = $tmp293.value;
+int64_t $tmp848 = $tmp846.value;
+bool $tmp849 = $tmp847 == $tmp848;
+frost$core$Bit $tmp850 = (frost$core$Bit) {$tmp849};
+bool $tmp851 = $tmp850.value;
+if ($tmp851) goto block124; else goto block201;
 block201:;
-frost$core$Int64 $tmp854 = (frost$core$Int64) {93u};
+frost$core$Int64 $tmp852 = (frost$core$Int64) {93u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:143:55
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp855 = $tmp295.value;
-int64_t $tmp856 = $tmp854.value;
-bool $tmp857 = $tmp855 == $tmp856;
-frost$core$Bit $tmp858 = (frost$core$Bit) {$tmp857};
-bool $tmp859 = $tmp858.value;
-if ($tmp859) goto block124; else goto block203;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp853 = $tmp293.value;
+int64_t $tmp854 = $tmp852.value;
+bool $tmp855 = $tmp853 == $tmp854;
+frost$core$Bit $tmp856 = (frost$core$Bit) {$tmp855};
+bool $tmp857 = $tmp856.value;
+if ($tmp857) goto block124; else goto block203;
 block203:;
-frost$core$Int64 $tmp860 = (frost$core$Int64) {94u};
+frost$core$Int64 $tmp858 = (frost$core$Int64) {94u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:143:80
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp861 = $tmp295.value;
-int64_t $tmp862 = $tmp860.value;
-bool $tmp863 = $tmp861 == $tmp862;
-frost$core$Bit $tmp864 = (frost$core$Bit) {$tmp863};
-bool $tmp865 = $tmp864.value;
-if ($tmp865) goto block124; else goto block205;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp859 = $tmp293.value;
+int64_t $tmp860 = $tmp858.value;
+bool $tmp861 = $tmp859 == $tmp860;
+frost$core$Bit $tmp862 = (frost$core$Bit) {$tmp861};
+bool $tmp863 = $tmp862.value;
+if ($tmp863) goto block124; else goto block205;
 block205:;
-frost$core$Int64 $tmp866 = (frost$core$Int64) {95u};
+frost$core$Int64 $tmp864 = (frost$core$Int64) {95u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:144:31
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp867 = $tmp295.value;
-int64_t $tmp868 = $tmp866.value;
-bool $tmp869 = $tmp867 == $tmp868;
-frost$core$Bit $tmp870 = (frost$core$Bit) {$tmp869};
-bool $tmp871 = $tmp870.value;
-if ($tmp871) goto block124; else goto block207;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp865 = $tmp293.value;
+int64_t $tmp866 = $tmp864.value;
+bool $tmp867 = $tmp865 == $tmp866;
+frost$core$Bit $tmp868 = (frost$core$Bit) {$tmp867};
+bool $tmp869 = $tmp868.value;
+if ($tmp869) goto block124; else goto block207;
 block207:;
-frost$core$Int64 $tmp872 = (frost$core$Int64) {96u};
+frost$core$Int64 $tmp870 = (frost$core$Int64) {96u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:144:50
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp873 = $tmp295.value;
-int64_t $tmp874 = $tmp872.value;
-bool $tmp875 = $tmp873 == $tmp874;
-frost$core$Bit $tmp876 = (frost$core$Bit) {$tmp875};
-bool $tmp877 = $tmp876.value;
-if ($tmp877) goto block124; else goto block209;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp871 = $tmp293.value;
+int64_t $tmp872 = $tmp870.value;
+bool $tmp873 = $tmp871 == $tmp872;
+frost$core$Bit $tmp874 = (frost$core$Bit) {$tmp873};
+bool $tmp875 = $tmp874.value;
+if ($tmp875) goto block124; else goto block209;
 block209:;
-frost$core$Int64 $tmp878 = (frost$core$Int64) {97u};
+frost$core$Int64 $tmp876 = (frost$core$Int64) {97u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:144:76
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp879 = $tmp295.value;
-int64_t $tmp880 = $tmp878.value;
-bool $tmp881 = $tmp879 == $tmp880;
-frost$core$Bit $tmp882 = (frost$core$Bit) {$tmp881};
-bool $tmp883 = $tmp882.value;
-if ($tmp883) goto block124; else goto block211;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp877 = $tmp293.value;
+int64_t $tmp878 = $tmp876.value;
+bool $tmp879 = $tmp877 == $tmp878;
+frost$core$Bit $tmp880 = (frost$core$Bit) {$tmp879};
+bool $tmp881 = $tmp880.value;
+if ($tmp881) goto block124; else goto block211;
 block211:;
-frost$core$Int64 $tmp884 = (frost$core$Int64) {98u};
+frost$core$Int64 $tmp882 = (frost$core$Int64) {98u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:145:31
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp885 = $tmp295.value;
-int64_t $tmp886 = $tmp884.value;
-bool $tmp887 = $tmp885 == $tmp886;
-frost$core$Bit $tmp888 = (frost$core$Bit) {$tmp887};
-bool $tmp889 = $tmp888.value;
-if ($tmp889) goto block124; else goto block213;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp883 = $tmp293.value;
+int64_t $tmp884 = $tmp882.value;
+bool $tmp885 = $tmp883 == $tmp884;
+frost$core$Bit $tmp886 = (frost$core$Bit) {$tmp885};
+bool $tmp887 = $tmp886.value;
+if ($tmp887) goto block124; else goto block213;
 block213:;
-frost$core$Int64 $tmp890 = (frost$core$Int64) {99u};
+frost$core$Int64 $tmp888 = (frost$core$Int64) {99u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:145:67
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp891 = $tmp295.value;
-int64_t $tmp892 = $tmp890.value;
-bool $tmp893 = $tmp891 == $tmp892;
-frost$core$Bit $tmp894 = (frost$core$Bit) {$tmp893};
-bool $tmp895 = $tmp894.value;
-if ($tmp895) goto block124; else goto block215;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp889 = $tmp293.value;
+int64_t $tmp890 = $tmp888.value;
+bool $tmp891 = $tmp889 == $tmp890;
+frost$core$Bit $tmp892 = (frost$core$Bit) {$tmp891};
+bool $tmp893 = $tmp892.value;
+if ($tmp893) goto block124; else goto block215;
 block215:;
-frost$core$Int64 $tmp896 = (frost$core$Int64) {100u};
+frost$core$Int64 $tmp894 = (frost$core$Int64) {100u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:145:88
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp897 = $tmp295.value;
-int64_t $tmp898 = $tmp896.value;
-bool $tmp899 = $tmp897 == $tmp898;
-frost$core$Bit $tmp900 = (frost$core$Bit) {$tmp899};
-bool $tmp901 = $tmp900.value;
-if ($tmp901) goto block124; else goto block217;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp895 = $tmp293.value;
+int64_t $tmp896 = $tmp894.value;
+bool $tmp897 = $tmp895 == $tmp896;
+frost$core$Bit $tmp898 = (frost$core$Bit) {$tmp897};
+bool $tmp899 = $tmp898.value;
+if ($tmp899) goto block124; else goto block217;
 block217:;
-frost$core$Int64 $tmp902 = (frost$core$Int64) {101u};
+frost$core$Int64 $tmp900 = (frost$core$Int64) {101u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:146:31
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp903 = $tmp295.value;
-int64_t $tmp904 = $tmp902.value;
-bool $tmp905 = $tmp903 == $tmp904;
-frost$core$Bit $tmp906 = (frost$core$Bit) {$tmp905};
-bool $tmp907 = $tmp906.value;
-if ($tmp907) goto block124; else goto block219;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp901 = $tmp293.value;
+int64_t $tmp902 = $tmp900.value;
+bool $tmp903 = $tmp901 == $tmp902;
+frost$core$Bit $tmp904 = (frost$core$Bit) {$tmp903};
+bool $tmp905 = $tmp904.value;
+if ($tmp905) goto block124; else goto block219;
 block219:;
-frost$core$Int64 $tmp908 = (frost$core$Int64) {102u};
+frost$core$Int64 $tmp906 = (frost$core$Int64) {102u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from SyntaxHighlighter.frost:146:52
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
-int64_t $tmp909 = $tmp295.value;
-int64_t $tmp910 = $tmp908.value;
-bool $tmp911 = $tmp909 == $tmp910;
-frost$core$Bit $tmp912 = (frost$core$Bit) {$tmp911};
-bool $tmp913 = $tmp912.value;
-if ($tmp913) goto block124; else goto block221;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+int64_t $tmp907 = $tmp293.value;
+int64_t $tmp908 = $tmp906.value;
+bool $tmp909 = $tmp907 == $tmp908;
+frost$core$Bit $tmp910 = (frost$core$Bit) {$tmp909};
+bool $tmp911 = $tmp910.value;
+if ($tmp911) goto block124; else goto block221;
 block124:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/parser/SyntaxHighlighter.frost:147
-frost$core$Int64 $tmp914 = (frost$core$Int64) {11u};
+frost$core$Int64 $tmp912 = (frost$core$Int64) {11u};
 // begin inline call to org.frostlang.frostc.parser.SyntaxHighlighter.Kind.init(rv:frost.core.Int64):org.frostlang.frostc.parser.SyntaxHighlighter.Kind from SyntaxHighlighter.frost:147:32
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/parser/SyntaxHighlighter.frost:6
-frost$core$Int64* $tmp915 = &(&local19)->$rawValue;
-*$tmp915 = $tmp914;
-org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp916 = *(&local19);
-*(&local18) = $tmp916;
-org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp917 = *(&local18);
-$fn919 $tmp918 = ($fn919) param0->$class->vtable[5];
-$tmp918(param0, param1, $tmp917);
+frost$core$Int64* $tmp913 = &(&local19)->$rawValue;
+*$tmp913 = $tmp912;
+org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp914 = *(&local19);
+*(&local18) = $tmp914;
+org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp915 = *(&local18);
+$fn917 $tmp916 = ($fn917) param0->$class->vtable[5];
+$tmp916(param0, param1, $tmp915);
 goto block15;
 block221:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/parser/SyntaxHighlighter.frost:150
-frost$core$Int64 $tmp920 = (frost$core$Int64) {0u};
+frost$core$Int64 $tmp918 = (frost$core$Int64) {0u};
 // begin inline call to org.frostlang.frostc.parser.SyntaxHighlighter.Kind.init(rv:frost.core.Int64):org.frostlang.frostc.parser.SyntaxHighlighter.Kind from SyntaxHighlighter.frost:150:32
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/parser/SyntaxHighlighter.frost:6
-frost$core$Int64* $tmp921 = &(&local21)->$rawValue;
-*$tmp921 = $tmp920;
-org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp922 = *(&local21);
-*(&local20) = $tmp922;
-org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp923 = *(&local20);
-$fn925 $tmp924 = ($fn925) param0->$class->vtable[5];
-$tmp924(param0, param1, $tmp923);
+frost$core$Int64* $tmp919 = &(&local21)->$rawValue;
+*$tmp919 = $tmp918;
+org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp920 = *(&local21);
+*(&local20) = $tmp920;
+org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp921 = *(&local20);
+$fn923 $tmp922 = ($fn923) param0->$class->vtable[5];
+$tmp922(param0, param1, $tmp921);
 goto block15;
 block15:;
 return;
@@ -1643,23 +1637,23 @@ return;
 void org$frostlang$frostc$parser$SyntaxHighlighter$rewind(org$frostlang$frostc$parser$SyntaxHighlighter* param0) {
 
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/parser/SyntaxHighlighter.frost:156
+frost$collections$Array** $tmp924 = &param0->tokens;
+frost$collections$Array* $tmp925 = *$tmp924;
 frost$collections$Array** $tmp926 = &param0->tokens;
 frost$collections$Array* $tmp927 = *$tmp926;
-frost$collections$Array** $tmp928 = &param0->tokens;
-frost$collections$Array* $tmp929 = *$tmp928;
-ITable* $tmp930 = ((frost$collections$CollectionView*) $tmp929)->$class->itable;
-while ($tmp930->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
-    $tmp930 = $tmp930->next;
+ITable* $tmp928 = ((frost$collections$CollectionView*) $tmp927)->$class->itable;
+while ($tmp928->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
+    $tmp928 = $tmp928->next;
 }
-$fn932 $tmp931 = $tmp930->methods[0];
-frost$core$Int64 $tmp933 = $tmp931(((frost$collections$CollectionView*) $tmp929));
-frost$core$Int64 $tmp934 = (frost$core$Int64) {1u};
-int64_t $tmp935 = $tmp933.value;
-int64_t $tmp936 = $tmp934.value;
-int64_t $tmp937 = $tmp935 - $tmp936;
-frost$core$Int64 $tmp938 = (frost$core$Int64) {$tmp937};
-frost$core$Object* $tmp939 = frost$collections$Array$removeIndex$frost$core$Int64$R$frost$collections$Array$T($tmp927, $tmp938);
-frost$core$Frost$unref$frost$core$Object$Q($tmp939);
+$fn930 $tmp929 = $tmp928->methods[0];
+frost$core$Int $tmp931 = $tmp929(((frost$collections$CollectionView*) $tmp927));
+frost$core$Int $tmp932 = (frost$core$Int) {1u};
+int64_t $tmp933 = $tmp931.value;
+int64_t $tmp934 = $tmp932.value;
+int64_t $tmp935 = $tmp933 - $tmp934;
+frost$core$Int $tmp936 = (frost$core$Int) {$tmp935};
+frost$core$Object* $tmp937 = frost$collections$Array$removeIndex$frost$core$Int$R$frost$collections$Array$T($tmp925, $tmp936);
+frost$core$Frost$unref$frost$core$Object$Q($tmp937);
 return;
 
 }
@@ -1667,26 +1661,26 @@ void org$frostlang$frostc$parser$SyntaxHighlighter$init(org$frostlang$frostc$par
 
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/parser/SyntaxHighlighter.frost:69
 FROST_ASSERT(24 == sizeof(frost$collections$Stack));
-frost$collections$Stack* $tmp940 = (frost$collections$Stack*) frostObjectAlloc(24, (frost$core$Class*) &frost$collections$Stack$class);
-frost$collections$Stack$init($tmp940);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp940));
-frost$collections$Stack** $tmp941 = &param0->stack;
-frost$collections$Stack* $tmp942 = *$tmp941;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp942));
-frost$collections$Stack** $tmp943 = &param0->stack;
-*$tmp943 = $tmp940;
+frost$collections$Stack* $tmp938 = (frost$collections$Stack*) frostObjectAlloc(24, (frost$core$Class*) &frost$collections$Stack$class);
+frost$collections$Stack$init($tmp938);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp938));
+frost$collections$Stack** $tmp939 = &param0->stack;
+frost$collections$Stack* $tmp940 = *$tmp939;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp940));
+frost$collections$Stack** $tmp941 = &param0->stack;
+*$tmp941 = $tmp938;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp938));
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/parser/SyntaxHighlighter.frost:72
 FROST_ASSERT(40 == sizeof(frost$collections$Array));
-frost$collections$Array* $tmp944 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
-frost$collections$Array$init($tmp944);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp944));
-frost$collections$Array** $tmp945 = &param0->tokens;
-frost$collections$Array* $tmp946 = *$tmp945;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp946));
-frost$collections$Array** $tmp947 = &param0->tokens;
-*$tmp947 = $tmp944;
+frost$collections$Array* $tmp942 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+frost$collections$Array$init($tmp942);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp942));
+frost$collections$Array** $tmp943 = &param0->tokens;
+frost$collections$Array* $tmp944 = *$tmp943;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp944));
+frost$collections$Array** $tmp945 = &param0->tokens;
+*$tmp945 = $tmp942;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp942));
 return;
 
 }
@@ -1694,12 +1688,12 @@ void org$frostlang$frostc$parser$SyntaxHighlighter$cleanup(org$frostlang$frostc$
 
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/parser/SyntaxHighlighter.frost:5
 frost$core$Object$cleanup(((frost$core$Object*) param0));
-frost$collections$Stack** $tmp948 = &param0->stack;
-frost$collections$Stack* $tmp949 = *$tmp948;
+frost$collections$Stack** $tmp946 = &param0->stack;
+frost$collections$Stack* $tmp947 = *$tmp946;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp947));
+frost$collections$Array** $tmp948 = &param0->tokens;
+frost$collections$Array* $tmp949 = *$tmp948;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp949));
-frost$collections$Array** $tmp950 = &param0->tokens;
-frost$collections$Array* $tmp951 = *$tmp950;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp951));
 return;
 
 }

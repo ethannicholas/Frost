@@ -27,7 +27,7 @@ class IntList : ListView<Int> {
             } else if range.end > range.start {
                 return 0
             }
-            return ((range.end - range.start) // range.step).max(0) + 1
+            return (((range.end - range.start) // range.step).max(0) + 1)
         }
         else {
             def offset:Int
@@ -42,7 +42,7 @@ class IntList : ListView<Int> {
                 }
                 offset := 1
             }
-            return ((range.end - range.start + offset) // range.step).max(0) + 1
+            return (((range.end - range.start + offset) // range.step).max(0) + 1)
         }
     }
 
@@ -53,7 +53,7 @@ class IntList : ListView<Int> {
 
     @override
     function [](index:Int):Int {
-        return (range.start + range.step * index.asInt)
+        return (range.start + range.step * index)
     }
 
     @override

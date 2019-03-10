@@ -18,7 +18,7 @@ class Tuple {
                     compiler.error(index.position(),
                             "tuple index '\{index}' is out of bounds for '\{tuple}'")
                 }
-                return tuple.subtypes[value.asInt64]
+                return tuple.subtypes[value.asInt]
             }
         }
         return tuple.subtypes.fold((t1, t2) => t1.union(compiler, t2))

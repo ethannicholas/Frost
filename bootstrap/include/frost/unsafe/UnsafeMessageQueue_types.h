@@ -5,7 +5,7 @@ typedef struct frost$core$Class frost$core$Class;
 #include "frost/core/UInt8_types.h"
 typedef struct frost$threads$Lock frost$threads$Lock;
 typedef struct frost$threads$Notifier frost$threads$Notifier;
-#include "frost/core/Int64_types.h"
+#include "frost/core/Int_types.h"
 typedef struct frost$unsafe$UnsafeMessageQueue$Message frost$unsafe$UnsafeMessageQueue$Message;
 typedef struct frost$core$String frost$core$String;
 
@@ -15,7 +15,7 @@ typedef struct frost$unsafe$UnsafeMessageQueue {
     frost$core$UInt8 $flags;
     frost$threads$Lock* lock;
     frost$threads$Notifier* notifier;
-    frost$core$Int64 count;
+    frost$core$Int count;
     frost$unsafe$UnsafeMessageQueue$Message* head;
     frost$unsafe$UnsafeMessageQueue$Message* tail;
 } frost$unsafe$UnsafeMessageQueue;

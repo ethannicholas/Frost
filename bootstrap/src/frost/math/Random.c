@@ -7,6 +7,7 @@
 #include "frost/core/Int64.h"
 #include "frost/core/Bit.h"
 #include "frost/core/Int32.h"
+#include "frost/core/Int.h"
 #include "frost/core/Real32.h"
 #include "frost/core/UInt32.h"
 #include "frost/core/Real64.h"
@@ -56,7 +57,7 @@ frost$core$Int64 $tmp8 = $tmp6(param0);
 frost$core$Int64 $tmp9 = *(&local0);
 frost$core$Int64 $tmp10 = (frost$core$Int64) {1u};
 // begin inline call to function frost.core.Int64.&&(other:frost.core.Int64):frost.core.Int64 from Random.frost:28:21
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:173
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:178
 int64_t $tmp11 = $tmp9.value;
 int64_t $tmp12 = $tmp10.value;
 int64_t $tmp13 = $tmp11 & $tmp12;
@@ -79,7 +80,7 @@ while ($tmp20->$class != (frost$core$Class*) &frost$math$Random$class) {
 $fn22 $tmp21 = $tmp20->methods[2];
 frost$core$Int64 $tmp23 = $tmp21(param0);
 // begin inline call to function frost.core.Int64.get_asInt32():frost.core.Int32 from Random.frost:36:23
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:531
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:598
 int64_t $tmp24 = $tmp23.value;
 frost$core$Int32 $tmp25 = (frost$core$Int32) {((int32_t) $tmp24)};
 return $tmp25;
@@ -97,14 +98,14 @@ frost$core$Bit $tmp30 = (frost$core$Bit) {$tmp29};
 bool $tmp31 = $tmp30.value;
 if ($tmp31) goto block1; else goto block2;
 block2:;
-frost$core$Int64 $tmp32 = (frost$core$Int64) {54u};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s33, $tmp32, &$s34);
+frost$core$Int $tmp32 = (frost$core$Int) {54u};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s33, $tmp32, &$s34);
 abort(); // unreachable
 block1:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/math/Random.frost:55
 frost$core$Int64 $tmp35 = (frost$core$Int64) {1u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Random.frost:55:14
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
 int64_t $tmp36 = param1.value;
 int64_t $tmp37 = $tmp35.value;
 bool $tmp38 = $tmp36 == $tmp37;
@@ -118,12 +119,12 @@ return $tmp41;
 block4:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/math/Random.frost:59
 // begin inline call to function frost.core.Int64.-():frost.core.Int64 from Random.frost:59:20
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:84
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:89
 int64_t $tmp42 = param1.value;
 int64_t $tmp43 = -$tmp42;
 frost$core$Int64 $tmp44 = (frost$core$Int64) {$tmp43};
 // begin inline call to function frost.core.Int64.%(other:frost.core.Int64):frost.core.Int64 from Random.frost:59:23
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:102
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:107
 int64_t $tmp45 = $tmp44.value;
 int64_t $tmp46 = param1.value;
 int64_t $tmp47 = $tmp45 % $tmp46;
@@ -153,7 +154,7 @@ block10:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/math/Random.frost:63
 frost$core$Int64 $tmp60 = *(&local1);
 // begin inline call to function frost.core.Int64.%(other:frost.core.Int64):frost.core.Int64 from Random.frost:63:26
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:102
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:107
 int64_t $tmp61 = $tmp60.value;
 int64_t $tmp62 = param1.value;
 int64_t $tmp63 = $tmp61 % $tmp62;
@@ -176,19 +177,19 @@ while ($tmp65->$class != (frost$core$Class*) &frost$math$Random$class) {
 $fn67 $tmp66 = $tmp65->methods[1];
 frost$core$Int32 $tmp68 = $tmp66(param0);
 // begin inline call to function frost.core.Int32.get_asUInt32():frost.core.UInt32 from Random.frost:76:24
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int32.frost:786
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int32.frost:1002
 int32_t $tmp69 = $tmp68.value;
 frost$core$UInt32 $tmp70 = (frost$core$UInt32) {((uint32_t) $tmp69)};
 frost$core$UInt32 $tmp71 = (frost$core$UInt32) {8u};
 // begin inline call to function frost.core.UInt32.>>(other:frost.core.UInt32):frost.core.UInt32 from Random.frost:76:34
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/UInt32.frost:286
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/UInt32.frost:382
 uint32_t $tmp72 = $tmp70.value;
 uint32_t $tmp73 = $tmp71.value;
 uint32_t $tmp74 = $tmp72 >> $tmp73;
 frost$core$UInt32 $tmp75 = (frost$core$UInt32) {$tmp74};
 frost$core$UInt32 $tmp76 = (frost$core$UInt32) {16777216u};
 // begin inline call to function frost.core.UInt32./(other:frost.core.UInt32):frost.core.Real32 from Random.frost:76:41
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/UInt32.frost:179
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/UInt32.frost:239
 uint32_t $tmp77 = $tmp75.value;
 uint32_t $tmp78 = $tmp76.value;
 float $tmp79 = ((float) $tmp77) / ((float) $tmp78);
@@ -206,19 +207,19 @@ while ($tmp81->$class != (frost$core$Class*) &frost$math$Random$class) {
 $fn83 $tmp82 = $tmp81->methods[2];
 frost$core$Int64 $tmp84 = $tmp82(param0);
 // begin inline call to function frost.core.Int64.get_asUInt64():frost.core.UInt64 from Random.frost:87:24
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:555
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:628
 int64_t $tmp85 = $tmp84.value;
 frost$core$UInt64 $tmp86 = (frost$core$UInt64) {((uint64_t) $tmp85)};
 frost$core$UInt64 $tmp87 = (frost$core$UInt64) {11u};
 // begin inline call to function frost.core.UInt64.>>(other:frost.core.UInt64):frost.core.UInt64 from Random.frost:87:34
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/UInt64.frost:196
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/UInt64.frost:202
 uint64_t $tmp88 = $tmp86.value;
 uint64_t $tmp89 = $tmp87.value;
 uint64_t $tmp90 = $tmp88 >> $tmp89;
 frost$core$UInt64 $tmp91 = (frost$core$UInt64) {$tmp90};
 frost$core$UInt64 $tmp92 = (frost$core$UInt64) {9007199254740992u};
 // begin inline call to function frost.core.UInt64./(other:frost.core.UInt64):frost.core.Real64 from Random.frost:87:42
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/UInt64.frost:131
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/UInt64.frost:137
 uint64_t $tmp93 = $tmp91.value;
 uint64_t $tmp94 = $tmp92.value;
 double $tmp95 = ((double) $tmp93) / ((double) $tmp94);

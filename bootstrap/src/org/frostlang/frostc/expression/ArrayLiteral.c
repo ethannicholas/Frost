@@ -14,6 +14,7 @@
 #include "frost/core/Bit.h"
 #include "frost/core/Frost.h"
 #include "frost/collections/Array.h"
+#include "frost/core/Int.h"
 #include "frost/collections/ListView.h"
 #include "frost/collections/CollectionView.h"
 #include "frost/core/UInt64.h"
@@ -25,7 +26,7 @@
 static frost$core$String $s1;
 org$frostlang$frostc$expression$ArrayLiteral$class_type org$frostlang$frostc$expression$ArrayLiteral$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { frost$core$Object$get_asString$R$frost$core$String, org$frostlang$frostc$expression$ArrayLiteral$cleanup} };
 
-typedef frost$core$Int64 (*$fn76)(frost$collections$CollectionView*);
+typedef frost$core$Int (*$fn76)(frost$collections$CollectionView*);
 typedef frost$collections$Iterator* (*$fn92)(frost$collections$Iterable*);
 typedef frost$core$Bit (*$fn96)(frost$collections$Iterator*);
 typedef frost$core$Object* (*$fn101)(frost$collections$Iterator*);
@@ -51,7 +52,7 @@ frost$core$Int64* $tmp2 = &param3->$rawValue;
 frost$core$Int64 $tmp3 = *$tmp2;
 frost$core$Int64 $tmp4 = (frost$core$Int64) {3u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from ArrayLiteral.frost:18:29
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
 int64_t $tmp5 = $tmp3.value;
 int64_t $tmp6 = $tmp4.value;
 bool $tmp7 = $tmp5 == $tmp6;
@@ -194,8 +195,8 @@ org$frostlang$frostc$Type** $tmp56 = &param0->ARRAY_TYPE;
 org$frostlang$frostc$Type* $tmp57 = *$tmp56;
 FROST_ASSERT(40 == sizeof(frost$collections$Array));
 frost$collections$Array* $tmp58 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
-frost$core$Int64 $tmp59 = (frost$core$Int64) {1u};
-frost$collections$Array$init$frost$core$Int64($tmp58, $tmp59);
+frost$core$Int $tmp59 = (frost$core$Int) {1u};
+frost$collections$Array$init$frost$core$Int($tmp58, $tmp59);
 frost$collections$Array$add$frost$collections$Array$T($tmp58, ((frost$core$Object*) ((org$frostlang$frostc$Type*) $tmp55)));
 org$frostlang$frostc$Type* $tmp60 = org$frostlang$frostc$Type$generic$org$frostlang$frostc$Type$frost$collections$ListView$LTorg$frostlang$frostc$Type$GT$R$org$frostlang$frostc$Type($tmp57, ((frost$collections$ListView*) $tmp58));
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp60));
@@ -220,8 +221,8 @@ org$frostlang$frostc$Type** $tmp65 = &param0->CLASS_TYPE;
 org$frostlang$frostc$Type* $tmp66 = *$tmp65;
 FROST_ASSERT(40 == sizeof(frost$collections$Array));
 frost$collections$Array* $tmp67 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
-frost$core$Int64 $tmp68 = (frost$core$Int64) {1u};
-frost$collections$Array$init$frost$core$Int64($tmp67, $tmp68);
+frost$core$Int $tmp68 = (frost$core$Int) {1u};
+frost$collections$Array$init$frost$core$Int($tmp67, $tmp68);
 frost$collections$Array$add$frost$collections$Array$T($tmp67, ((frost$core$Object*) $tmp62));
 org$frostlang$frostc$Type* $tmp69 = org$frostlang$frostc$Type$generic$org$frostlang$frostc$Type$frost$collections$ListView$LTorg$frostlang$frostc$Type$GT$R$org$frostlang$frostc$Type($tmp66, ((frost$collections$ListView*) $tmp67));
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp69));
@@ -233,8 +234,8 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp69));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp63));
 FROST_ASSERT(40 == sizeof(frost$collections$Array));
 frost$collections$Array* $tmp70 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
-frost$core$Int64 $tmp71 = (frost$core$Int64) {1u};
-frost$collections$Array$init$frost$core$Int64($tmp70, $tmp71);
+frost$core$Int $tmp71 = (frost$core$Int) {1u};
+frost$collections$Array$init$frost$core$Int($tmp70, $tmp71);
 FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
 org$frostlang$frostc$ASTNode* $tmp72 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 frost$core$Int64 $tmp73 = (frost$core$Int64) {25u};
@@ -243,9 +244,9 @@ while ($tmp74->$class != (frost$core$Class*) &frost$collections$CollectionView$c
     $tmp74 = $tmp74->next;
 }
 $fn76 $tmp75 = $tmp74->methods[0];
-frost$core$Int64 $tmp77 = $tmp75(((frost$collections$CollectionView*) param2));
-// begin inline call to function frost.core.Int64.get_asUInt64():frost.core.UInt64 from ArrayLiteral.frost:43:54
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:555
+frost$core$Int $tmp77 = $tmp75(((frost$collections$CollectionView*) param2));
+// begin inline call to function frost.core.Int.get_asUInt64():frost.core.UInt64 from ArrayLiteral.frost:43:54
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:1009
 int64_t $tmp78 = $tmp77.value;
 frost$core$UInt64 $tmp79 = (frost$core$UInt64) {((uint64_t) $tmp78)};
 org$frostlang$frostc$ASTNode$init$frost$core$Int64$org$frostlang$frostc$Position$frost$core$UInt64($tmp72, $tmp73, param1, $tmp79);
@@ -317,8 +318,8 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp103));
 org$frostlang$frostc$IR$Value* $tmp104 = *(&local5);
 FROST_ASSERT(40 == sizeof(frost$collections$Array));
 frost$collections$Array* $tmp105 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
-frost$core$Int64 $tmp106 = (frost$core$Int64) {1u};
-frost$collections$Array$init$frost$core$Int64($tmp105, $tmp106);
+frost$core$Int $tmp106 = (frost$core$Int) {1u};
+frost$collections$Array$init$frost$core$Int($tmp105, $tmp106);
 org$frostlang$frostc$ASTNode* $tmp107 = *(&local6);
 frost$collections$Array$add$frost$collections$Array$T($tmp105, ((frost$core$Object*) $tmp107));
 FROST_ASSERT(40 == sizeof(org$frostlang$frostc$Compiler$TypeContext));
@@ -358,8 +359,8 @@ org$frostlang$frostc$Type** $tmp123 = &param0->IMMUTABLE_ARRAY_TYPE;
 org$frostlang$frostc$Type* $tmp124 = *$tmp123;
 FROST_ASSERT(40 == sizeof(frost$collections$Array));
 frost$collections$Array* $tmp125 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
-frost$core$Int64 $tmp126 = (frost$core$Int64) {1u};
-frost$collections$Array$init$frost$core$Int64($tmp125, $tmp126);
+frost$core$Int $tmp126 = (frost$core$Int) {1u};
+frost$collections$Array$init$frost$core$Int($tmp125, $tmp126);
 frost$collections$Array$add$frost$collections$Array$T($tmp125, ((frost$core$Object*) ((org$frostlang$frostc$Type*) $tmp122)));
 org$frostlang$frostc$Type* $tmp127 = org$frostlang$frostc$Type$generic$org$frostlang$frostc$Type$frost$collections$ListView$LTorg$frostlang$frostc$Type$GT$R$org$frostlang$frostc$Type($tmp124, ((frost$collections$ListView*) $tmp125));
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp127));
@@ -376,8 +377,8 @@ org$frostlang$frostc$Type** $tmp130 = &param0->CLASS_TYPE;
 org$frostlang$frostc$Type* $tmp131 = *$tmp130;
 FROST_ASSERT(40 == sizeof(frost$collections$Array));
 frost$collections$Array* $tmp132 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
-frost$core$Int64 $tmp133 = (frost$core$Int64) {1u};
-frost$collections$Array$init$frost$core$Int64($tmp132, $tmp133);
+frost$core$Int $tmp133 = (frost$core$Int) {1u};
+frost$collections$Array$init$frost$core$Int($tmp132, $tmp133);
 frost$collections$Array$add$frost$collections$Array$T($tmp132, ((frost$core$Object*) $tmp127));
 org$frostlang$frostc$Type* $tmp134 = org$frostlang$frostc$Type$generic$org$frostlang$frostc$Type$frost$collections$ListView$LTorg$frostlang$frostc$Type$GT$R$org$frostlang$frostc$Type($tmp131, ((frost$collections$ListView*) $tmp132));
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp134));
@@ -389,8 +390,8 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp134));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp128));
 FROST_ASSERT(40 == sizeof(frost$collections$Array));
 frost$collections$Array* $tmp135 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
-frost$core$Int64 $tmp136 = (frost$core$Int64) {1u};
-frost$collections$Array$init$frost$core$Int64($tmp135, $tmp136);
+frost$core$Int $tmp136 = (frost$core$Int) {1u};
+frost$collections$Array$init$frost$core$Int($tmp135, $tmp136);
 FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
 org$frostlang$frostc$ASTNode* $tmp137 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 frost$core$Int64 $tmp138 = (frost$core$Int64) {26u};

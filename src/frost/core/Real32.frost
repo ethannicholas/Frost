@@ -43,6 +43,12 @@ class Real32 : Value, Key<Real32>, Comparable<Real32>, Formattable {
     }
 
     @implicit
+    @priority(-3)
+    init(value:Int) {
+        self.value := value.value->builtin_float32
+    }
+
+    @implicit
     @priority(-2)
     init(value:UInt8) {
         self.value := value.value->builtin_float32
@@ -66,6 +72,12 @@ class Real32 : Value, Key<Real32>, Comparable<Real32>, Formattable {
         self.value := value.value->builtin_float32
     }
 
+    @implicit
+    @priority(0)
+    init(value:UInt) {
+        self.value := value.value->builtin_float32
+    }
+
     ===Adds another number to this number.===
     @priority(20)
     function +(other:Real32):Real32 {
@@ -73,7 +85,7 @@ class Real32 : Value, Key<Real32>, Comparable<Real32>, Formattable {
     }
 
     ===Adds another number to this number.===
-    @priority(17)
+    @priority(21)
     function +(other:Real64):Real64 {
         return value->builtin_float64 + other.value
     }
@@ -85,7 +97,7 @@ class Real32 : Value, Key<Real32>, Comparable<Real32>, Formattable {
     }
 
     ===Subtracts another number from this number.===
-    @priority(17)
+    @priority(21)
     function -(other:Real64):Real64 {
         return value->builtin_float64 - other.value
     }
@@ -102,55 +114,55 @@ class Real32 : Value, Key<Real32>, Comparable<Real32>, Formattable {
     }
 
     ===Multiplies this number by another number.===
-    @priority(17)
+    @priority(21)
     function *(other:Real64):Real64 {
         return value->builtin_float64 * other.value
     }
 
     ===Divides this number by another number.===
-    @priority(9)
+    @priority(11)
     function /(other:Int8):Real32 {
         return value / other.value->builtin_float32
     }
 
     ===Divides this number by another number.===
-    @priority(11)
+    @priority(13)
     function /(other:Int16):Real32 {
         return value / other.value->builtin_float32
     }
 
     ===Divides this number by another number.===
-    @priority(13)
+    @priority(15)
     function /(other:Int32):Real32 {
         return value / other.value->builtin_float32
     }
 
     ===Divides this number by another number.===
-    @priority(15)
+    @priority(17)
     function /(other:Int64):Real64 {
         return value->builtin_float64 / other.value->builtin_float64
     }
 
     ===Divides this number by another number.===
-    @priority(8)
+    @priority(10)
     function /(other:UInt8):Real32 {
         return value / other.value->builtin_float32
     }
 
     ===Divides this number by another number.===
-    @priority(10)
+    @priority(12)
     function /(other:UInt16):Real32 {
         return value / other.value->builtin_float32
     }
 
     ===Divides this number by another number.===
-    @priority(12)
+    @priority(14)
     function /(other:UInt32):Real32 {
         return value / other.value->builtin_float32
     }
 
     ===Divides this number by another number.===
-    @priority(14)
+    @priority(16)
     function /(other:UInt64):Real64 {
         return value->builtin_float64 / other.value->builtin_float64
     }
@@ -162,7 +174,7 @@ class Real32 : Value, Key<Real32>, Comparable<Real32>, Formattable {
     }
 
     ===Divides this number by another number.===
-    @priority(17)
+    @priority(21)
     function /(other:Real64):Real64 {
         return value->builtin_float64 / other.value
     }
@@ -175,7 +187,7 @@ class Real32 : Value, Key<Real32>, Comparable<Real32>, Formattable {
     }
 
     ===Returns `true` if this number is equal to the given number.===
-    @priority(17)
+    @priority(21)
     function =(other:Real64):Bit {
         return value->builtin_float64 = other.value
     }
@@ -188,7 +200,7 @@ class Real32 : Value, Key<Real32>, Comparable<Real32>, Formattable {
     }
 
     ===Returns `true` if this number is not equal to the given number.===
-    @priority(17)
+    @priority(21)
     function !=(other:Real64):Bit {
         return value->builtin_float64 != other.value
     }
@@ -201,7 +213,7 @@ class Real32 : Value, Key<Real32>, Comparable<Real32>, Formattable {
     }
 
     ===Returns `true` if this number is less than the given number.===
-    @priority(17)
+    @priority(21)
     function <(other:Real64):Bit {
         return value->builtin_float64 < other.value
     }
@@ -214,7 +226,7 @@ class Real32 : Value, Key<Real32>, Comparable<Real32>, Formattable {
     }
 
     ===Returns `true` if this number is greater than the given number.===
-    @priority(17)
+    @priority(21)
     function >(other:Real64):Bit {
         return value->builtin_float64 > other.value
     }
@@ -227,7 +239,7 @@ class Real32 : Value, Key<Real32>, Comparable<Real32>, Formattable {
     }
 
     ===Returns `true` if this number is greater than or equal to the given number.===
-    @priority(17)
+    @priority(21)
     function >=(other:Real64):Bit {
         return value->builtin_float64 >= other.value
     }
@@ -240,7 +252,7 @@ class Real32 : Value, Key<Real32>, Comparable<Real32>, Formattable {
     }
 
     ===Returns `true` if this number is less than or equal to the given number.===
-    @priority(17)
+    @priority(21)
     function <=(other:Real64):Bit {
         return value->builtin_float64 <= other.value
     }
@@ -255,7 +267,7 @@ class Real32 : Value, Key<Real32>, Comparable<Real32>, Formattable {
     }
 
     ===Returns the smaller (closest to negative infinity) of this number and another number.===
-    @priority(9)
+    @priority(11)
     function min(other:Int8):Real32 {
         if value < other.value->builtin_float32 {
             return value
@@ -264,7 +276,7 @@ class Real32 : Value, Key<Real32>, Comparable<Real32>, Formattable {
     }
 
     ===Returns the smaller (closest to negative infinity) of this number and another number.===
-    @priority(11)
+    @priority(13)
     function min(other:Int16):Real32 {
         if value < other.value->builtin_float32 {
             return value
@@ -273,7 +285,7 @@ class Real32 : Value, Key<Real32>, Comparable<Real32>, Formattable {
     }
 
     ===Returns the smaller (closest to negative infinity) of this number and another number.===
-    @priority(13)
+    @priority(15)
     function min(other:Int32):Real32 {
         if value < other.value->builtin_float32 {
             return value
@@ -282,7 +294,7 @@ class Real32 : Value, Key<Real32>, Comparable<Real32>, Formattable {
     }
 
     ===Returns the smaller (closest to negative infinity) of this number and another number.===
-    @priority(15)
+    @priority(17)
     function min(other:Int64):Real64 {
         if value->builtin_float64 < other.value->builtin_float64 {
             return value->builtin_float64
@@ -291,7 +303,16 @@ class Real32 : Value, Key<Real32>, Comparable<Real32>, Formattable {
     }
 
     ===Returns the smaller (closest to negative infinity) of this number and another number.===
-    @priority(8)
+    @priority(19)
+    function min(other:Int):Real32 {
+        if value < other.value->builtin_float32 {
+            return value
+        }
+        return other.value->builtin_float32
+    }
+
+    ===Returns the smaller (closest to negative infinity) of this number and another number.===
+    @priority(10)
     function min(other:UInt8):Real32 {
         if value < other.value->builtin_float32 {
             return value
@@ -300,7 +321,7 @@ class Real32 : Value, Key<Real32>, Comparable<Real32>, Formattable {
     }
 
     ===Returns the smaller (closest to negative infinity) of this number and another number.===
-    @priority(10)
+    @priority(12)
     function min(other:UInt16):Real32 {
         if value < other.value->builtin_float32 {
             return value
@@ -309,7 +330,7 @@ class Real32 : Value, Key<Real32>, Comparable<Real32>, Formattable {
     }
 
     ===Returns the smaller (closest to negative infinity) of this number and another number.===
-    @priority(12)
+    @priority(14)
     function min(other:UInt32):Real32 {
         if value < other.value->builtin_float32 {
             return value
@@ -318,7 +339,7 @@ class Real32 : Value, Key<Real32>, Comparable<Real32>, Formattable {
     }
 
     ===Returns the smaller (closest to negative infinity) of this number and another number.===
-    @priority(14)
+    @priority(16)
     function min(other:UInt64):Real64 {
         if value->builtin_float64 < other.value->builtin_float64 {
             return value->builtin_float64
@@ -326,8 +347,17 @@ class Real32 : Value, Key<Real32>, Comparable<Real32>, Formattable {
         return other.value->builtin_float64
     }
 
+    ===Returns the smaller (closest to negative infinity) of this number and another number.===
+    @priority(18)
+    function min(other:UInt):Real32 {
+        if value < other.value->builtin_float32 {
+            return value
+        }
+        return other.value->builtin_float32
+    }
+
     ===Returns the larger (closest to positive infinity) of this number and another number.===
-    @priority(9)
+    @priority(11)
     function max(other:Int8):Real32 {
         if value > other.value->builtin_float32 {
             return value
@@ -336,7 +366,7 @@ class Real32 : Value, Key<Real32>, Comparable<Real32>, Formattable {
     }
 
     ===Returns the larger (closest to positive infinity) of this number and another number.===
-    @priority(11)
+    @priority(13)
     function max(other:Int16):Real32 {
         if value > other.value->builtin_float32 {
             return value
@@ -345,7 +375,7 @@ class Real32 : Value, Key<Real32>, Comparable<Real32>, Formattable {
     }
 
     ===Returns the larger (closest to positive infinity) of this number and another number.===
-    @priority(13)
+    @priority(15)
     function max(other:Int32):Real32 {
         if value > other.value->builtin_float32 {
             return value
@@ -354,7 +384,7 @@ class Real32 : Value, Key<Real32>, Comparable<Real32>, Formattable {
     }
 
     ===Returns the larger (closest to positive infinity) of this number and another number.===
-    @priority(15)
+    @priority(17)
     function max(other:Int64):Real64 {
         if value->builtin_float64 > other.value->builtin_float64 {
             return value->builtin_float64
@@ -363,8 +393,8 @@ class Real32 : Value, Key<Real32>, Comparable<Real32>, Formattable {
     }
 
     ===Returns the larger (closest to positive infinity) of this number and another number.===
-    @priority(8)
-    function max(other:UInt8):Real32 {
+    @priority(19)
+    function max(other:Int):Real32 {
         if value > other.value->builtin_float32 {
             return value
         }
@@ -373,7 +403,7 @@ class Real32 : Value, Key<Real32>, Comparable<Real32>, Formattable {
 
     ===Returns the larger (closest to positive infinity) of this number and another number.===
     @priority(10)
-    function max(other:UInt16):Real32 {
+    function max(other:UInt8):Real32 {
         if value > other.value->builtin_float32 {
             return value
         }
@@ -382,7 +412,7 @@ class Real32 : Value, Key<Real32>, Comparable<Real32>, Formattable {
 
     ===Returns the larger (closest to positive infinity) of this number and another number.===
     @priority(12)
-    function max(other:UInt32):Real32 {
+    function max(other:UInt16):Real32 {
         if value > other.value->builtin_float32 {
             return value
         }
@@ -391,11 +421,29 @@ class Real32 : Value, Key<Real32>, Comparable<Real32>, Formattable {
 
     ===Returns the larger (closest to positive infinity) of this number and another number.===
     @priority(14)
+    function max(other:UInt32):Real32 {
+        if value > other.value->builtin_float32 {
+            return value
+        }
+        return other.value->builtin_float32
+    }
+
+    ===Returns the larger (closest to positive infinity) of this number and another number.===
+    @priority(16)
     function max(other:UInt64):Real64 {
         if value->builtin_float64 > other.value->builtin_float64 {
             return value->builtin_float64
         }
         return other.value->builtin_float64
+    }
+
+    ===Returns the larger (closest to positive infinity) of this number and another number.===
+    @priority(18)
+    function max(other:UInt):Real32 {
+        if value > other.value->builtin_float32 {
+            return value
+        }
+        return other.value->builtin_float32
     }
 
     ===Returns this number rounded down (that is, in the direction of negative infinity) to the nearest integer.===
@@ -433,6 +481,12 @@ class Real32 : Value, Key<Real32>, Comparable<Real32>, Formattable {
         return Int(value->builtin_int64)
     }
 
+    ===Returns this number reinterpreted to a 32 bit signed number.===
+    property asInt:Int
+    function get_asInt():Int {
+        return Int(value->builtin_int64)
+    }
+
     ===Returns this number truncated to an 8 bit signed number.===
     property asInt8:Int8
     function get_asInt8():Int8 {
@@ -455,6 +509,12 @@ class Real32 : Value, Key<Real32>, Comparable<Real32>, Formattable {
     property asInt64:Int64
     function get_asInt64():Int64 {
         return Int64(value->builtin_int64)
+    }
+
+    ===Returns this number reinterpreted to a 32 bit unsigned number.===
+    property asUInt:UInt
+    function get_asUInt():UInt {
+        return UInt(value->builtin_uint)
     }
 
     ===Returns this number truncated to an 8 bit unsigned number.===

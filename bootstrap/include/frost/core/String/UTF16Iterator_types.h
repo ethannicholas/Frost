@@ -3,14 +3,14 @@
 typedef struct frost$core$Class frost$core$Class;
 #include "frost/core/Int32_types.h"
 #include "frost/core/UInt8_types.h"
-#include "frost/core/Int64_types.h"
+#include "frost/core/Int_types.h"
 typedef struct frost$core$String frost$core$String;
 
 typedef struct frost$core$String$UTF16Iterator {
     frost$core$Class* $class;
     frost$core$Int32 refCount;
     frost$core$UInt8 $flags;
-    frost$core$Int64 index;
+    frost$core$Int index;
     frost$core$String* str;
 } frost$core$String$UTF16Iterator;
 #include "frost/core/Class.h"

@@ -4,7 +4,7 @@ typedef struct frost$core$Class frost$core$Class;
 #include "frost/core/Int32_types.h"
 #include "frost/core/UInt8_types.h"
 #include "frost/core/Char8_types.h"
-#include "frost/core/Int64_types.h"
+#include "frost/core/Int_types.h"
 typedef struct frost$core$String frost$core$String;
 
 typedef struct frost$core$String {
@@ -12,8 +12,8 @@ typedef struct frost$core$String {
     frost$core$Int32 refCount;
     frost$core$UInt8 $flags;
     frost$core$Char8* data;
-    frost$core$Int64 _length;
-    frost$core$Int64 dummy;
+    frost$core$Int _length;
+    frost$core$Int dummy;
     frost$core$String* owner;
 } frost$core$String;
 #include "frost/core/Class.h"

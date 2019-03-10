@@ -19,7 +19,21 @@ class UInt16List : ListView<UInt16> {
 
     @class
     function computeCount(range:SteppedRange<UInt16, UInt16>):Int {
-        unreachable
+        if range.inclusive {
+            if range.step > 0 {
+                if range.end < range.start {
+                    return 0
+                }
+            } else if range.end > range.start {
+                return 0
+            }
+            return (((range.end - range.start) // range.step).max(0) + 1).asInt
+        }
+        else {
+            def offset:UInt16
+        offset := 1
+            return (((range.end - range.start + offset) // range.step).max(0) + 1).asInt
+        }
     }
 
     @override

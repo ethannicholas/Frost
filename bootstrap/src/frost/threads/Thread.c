@@ -7,7 +7,7 @@
 #include "frost/core/Frost.h"
 #include "frost/core/MutableMethod.h"
 #include "frost/core/Bit.h"
-#include "frost/core/Int64.h"
+#include "frost/core/Int.h"
 
 __attribute__((weak)) void frost$threads$Thread$cleanup$shim(frost$threads$Thread* p0) {
     frost$threads$Thread$cleanup(p0);
@@ -127,10 +127,10 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp23));
 return $tmp22;
 
 }
-frost$core$Int64 frost$threads$Thread$preferredThreadCount$R$frost$core$Int64() {
+frost$core$Int frost$threads$Thread$preferredThreadCount$R$frost$core$Int() {
 
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/threads/Thread.frost:93
-frost$core$Int64 $tmp24 = (frost$core$Int64) {8u};
+frost$core$Int $tmp24 = (frost$core$Int) {8u};
 return $tmp24;
 
 }
