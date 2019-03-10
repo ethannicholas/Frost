@@ -55,7 +55,7 @@ static frost$core$String $s20 = { (frost$core$Class*) &frost$core$String$class, 
 org$frostlang$frostc$IR$Statement$ID org$frostlang$frostc$IR$Statement$ID$init$frost$core$Int64(frost$core$Int64 param0) {
 
 org$frostlang$frostc$IR$Statement$ID local0;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/IR.frost:161
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/IR.frost:161
 frost$core$Int64* $tmp3 = &(&local0)->value;
 *$tmp3 = param0;
 org$frostlang$frostc$IR$Statement$ID $tmp4 = *(&local0);
@@ -64,18 +64,18 @@ return $tmp4;
 }
 frost$core$Int64 org$frostlang$frostc$IR$Statement$ID$get_hash$R$frost$core$Int64(org$frostlang$frostc$IR$Statement$ID param0) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/IR.frost:166
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/IR.frost:166
 frost$core$Int64 $tmp5 = param0.value;
 return $tmp5;
 
 }
 frost$core$Bit org$frostlang$frostc$IR$Statement$ID$$EQ$org$frostlang$frostc$IR$Statement$ID$R$frost$core$Bit(org$frostlang$frostc$IR$Statement$ID param0, org$frostlang$frostc$IR$Statement$ID param1) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/IR.frost:171
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/IR.frost:171
 frost$core$Int64 $tmp6 = param0.value;
 frost$core$Int64 $tmp7 = param1.value;
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from IR.frost:171:30
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:179
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
 int64_t $tmp8 = $tmp6.value;
 int64_t $tmp9 = $tmp7.value;
 bool $tmp10 = $tmp8 == $tmp9;
@@ -85,13 +85,13 @@ return $tmp11;
 }
 frost$core$String* org$frostlang$frostc$IR$Statement$ID$get_asString$R$frost$core$String(org$frostlang$frostc$IR$Statement$ID param0) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/IR.frost:176
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/IR.frost:176
 frost$core$Int64 $tmp12 = param0.value;
 frost$core$Int64$wrapper* $tmp13;
 $tmp13 = (frost$core$Int64$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int64$wrapperclass);
 $tmp13->value = $tmp12;
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from IR.frost:176:24
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:154
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:560
 $fn15 $tmp14 = ($fn15) ((frost$core$Object*) $tmp13)->$class->vtable[0];
 frost$core$String* $tmp16 = $tmp14(((frost$core$Object*) $tmp13));
 frost$core$String* $tmp17 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(&$s18, $tmp16);

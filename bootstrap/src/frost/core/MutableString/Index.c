@@ -56,7 +56,7 @@ static frost$core$String $s2 = { (frost$core$Class*) &frost$core$String$class, -
 frost$core$MutableString$Index frost$core$MutableString$Index$init$frost$core$Int64(frost$core$Int64 param0) {
 
 frost$core$MutableString$Index local0;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/MutableString.frost:23
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/MutableString.frost:23
 frost$core$Int64* $tmp3 = &(&local0)->value;
 *$tmp3 = param0;
 frost$core$MutableString$Index $tmp4 = *(&local0);
@@ -65,11 +65,11 @@ return $tmp4;
 }
 frost$core$Bit frost$core$MutableString$Index$$EQ$frost$core$MutableString$Index$R$frost$core$Bit(frost$core$MutableString$Index param0, frost$core$MutableString$Index param1) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/MutableString.frost:28
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/MutableString.frost:28
 frost$core$Int64 $tmp5 = param0.value;
 frost$core$Int64 $tmp6 = param1.value;
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from MutableString.frost:28:26
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:179
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
 int64_t $tmp7 = $tmp5.value;
 int64_t $tmp8 = $tmp6.value;
 bool $tmp9 = $tmp7 == $tmp8;
@@ -79,7 +79,7 @@ return $tmp10;
 }
 frost$core$Bit frost$core$MutableString$Index$$GT$frost$core$MutableString$Index$R$frost$core$Bit(frost$core$MutableString$Index param0, frost$core$MutableString$Index param1) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/MutableString.frost:33
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/MutableString.frost:33
 frost$core$Int64 $tmp11 = param0.value;
 frost$core$Int64 $tmp12 = param1.value;
 int64_t $tmp13 = $tmp11.value;
@@ -91,7 +91,7 @@ return $tmp16;
 }
 frost$core$Int64 frost$core$MutableString$Index$get_hash$R$frost$core$Int64(frost$core$MutableString$Index param0) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/MutableString.frost:38
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/MutableString.frost:38
 frost$core$Int64 $tmp17 = param0.value;
 return $tmp17;
 

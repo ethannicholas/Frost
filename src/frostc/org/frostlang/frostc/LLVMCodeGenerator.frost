@@ -37,6 +37,7 @@ class LLVMCodeGenerator : CodeGenerator {
     constant VTABLE_INDEX        := 6
 
     constant INT_TYPE  := "i64"
+    def INT_CLASS:String
     constant SIZE_TYPE := "i64"
 
     def physicalOut:OutputStream
@@ -120,6 +121,12 @@ class LLVMCodeGenerator : CodeGenerator {
     @override
     method setCompiler(compiler:Compiler) {
         self.compiler := compiler
+        if compiler.INT_EXISTS {
+            INT_CLASS := "%frost$core$Int"
+        }
+        else {
+            INT_CLASS := "%frost$core$Int64"
+        }
     }
 
     @override
@@ -181,8 +188,10 @@ class LLVMCodeGenerator : CodeGenerator {
             if t.name.endsWith("32") {
                 return 4
             }
-            assert t.name.endsWith("64")
-            return 8
+            if t.name.endsWith("64") {
+                return 8
+            }
+            return compiler.settings.intSize
         }
         if t = compiler.BUILTIN_BIT_TYPE {
             return 1
@@ -1380,8 +1389,8 @@ class LLVMCodeGenerator : CodeGenerator {
                     "{ i32 undef }, i32 \{NO_REFCNT}, 0), %frost$core$UInt8 insertvalue(" +
                     "%frost$core$UInt8 { i8 undef }, i8 0, 0), " +
                     "%frost$core$Char8* bitcast(\{charsType}* \{chars} " +
-                    "to %frost$core$Char8*), %frost$core$Int64 { i64 \{s.utf8.count} }, " +
-                    "%frost$core$Int64 { i64 \{s.hash} }, i8* null }")
+                    "to %frost$core$Char8*), \{INT_CLASS} { \{INT_TYPE} \{s.utf8.count} }, " +
+                    "\{INT_CLASS} { \{INT_TYPE} \{s.hash} }, i8* null }")
             return result
         }
         fail(error) {

@@ -48,7 +48,7 @@ static frost$core$String $s23 = { (frost$core$Class*) &frost$core$String$class, 
 
 void frost$core$String$UTF8List$init$frost$core$String(frost$core$String$UTF8List* param0, frost$core$String* param1) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:88
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:88
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
 frost$core$String** $tmp3 = &param0->str;
 frost$core$String* $tmp4 = *$tmp3;
@@ -85,7 +85,7 @@ frost$core$Int64 $tmp21 = (frost$core$Int64) {92u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s22, $tmp21, &$s23);
 abort(); // unreachable
 block1:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:93
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:93
 frost$core$String** $tmp24 = &param0->str;
 frost$core$String* $tmp25 = *$tmp24;
 frost$core$Char8** $tmp26 = &$tmp25->data;
@@ -97,7 +97,7 @@ return $tmp29;
 }
 frost$core$Int64 frost$core$String$UTF8List$get_count$R$frost$core$Int64(frost$core$String$UTF8List* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:98
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:98
 frost$core$String** $tmp30 = &param0->str;
 frost$core$String* $tmp31 = *$tmp30;
 frost$core$Int64* $tmp32 = &$tmp31->_length;
@@ -107,7 +107,7 @@ return $tmp33;
 }
 frost$collections$Iterator* frost$core$String$UTF8List$get_iterator$R$frost$collections$Iterator$LTfrost$core$Char8$GT(frost$core$String$UTF8List* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:103
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:103
 FROST_ASSERT(32 == sizeof(frost$core$String$UTF8Iterator));
 frost$core$String$UTF8Iterator* $tmp34 = (frost$core$String$UTF8Iterator*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$String$UTF8Iterator$class);
 frost$core$String** $tmp35 = &param0->str;
@@ -120,7 +120,7 @@ return ((frost$collections$Iterator*) $tmp34);
 }
 void frost$core$String$UTF8List$cleanup(frost$core$String$UTF8List* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:84
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:84
 frost$core$Object$cleanup(((frost$core$Object*) param0));
 frost$core$String** $tmp37 = &param0->str;
 frost$core$String* $tmp38 = *$tmp37;

@@ -37,10 +37,10 @@ typedef frost$core$Int64 (*$fn129)(frost$collections$CollectionView*);
 typedef frost$core$Int64 (*$fn148)(frost$collections$CollectionView*);
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x70\x61\x73\x73\x2e\x4d\x65\x72\x67\x65\x42\x6c\x6f\x63\x6b\x73", 37, -1664802375534301975, NULL };
-static frost$core$String $s75 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x41\x72\x72\x61\x79\x2e\x73\x74\x75\x62", 10, -775704626125802412, NULL };
+static frost$core$String $s75 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x41\x72\x72\x61\x79\x2e\x66\x72\x6f\x73\x74", 11, -1919842861654168654, NULL };
 static frost$core$String $s76 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x5b\x5d\x28\x69\x6e\x64\x65\x78\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x36\x34\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x54", 110, 4208646717458716543, NULL };
 static frost$core$String $s123 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x4d\x65\x72\x67\x65\x42\x6c\x6f\x63\x6b\x73\x2e\x66\x72\x6f\x73\x74", 17, -6522198512651000971, NULL };
-static frost$core$String $s156 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x41\x72\x72\x61\x79\x2e\x73\x74\x75\x62", 10, -775704626125802412, NULL };
+static frost$core$String $s156 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x41\x72\x72\x61\x79\x2e\x66\x72\x6f\x73\x74", 11, -1919842861654168654, NULL };
 static frost$core$String $s157 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x5b\x5d\x28\x69\x6e\x64\x65\x78\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x36\x34\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x54", 110, 4208646717458716543, NULL };
 static frost$core$String $s186 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x4d\x65\x72\x67\x65\x42\x6c\x6f\x63\x6b\x73\x2e\x66\x72\x6f\x73\x74", 17, -6522198512651000971, NULL };
 
@@ -56,10 +56,10 @@ org$frostlang$frostc$Position local6;
 org$frostlang$frostc$IR$Block$ID local7;
 frost$core$Int64 local8;
 frost$core$Int64 local9;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/pass/MergeBlocks.frost:7
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/pass/MergeBlocks.frost:7
 frost$core$Bit $tmp2 = (frost$core$Bit) {false};
 *(&local0) = $tmp2;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/pass/MergeBlocks.frost:8
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/pass/MergeBlocks.frost:8
 frost$collections$Array** $tmp3 = &param1->blocks;
 frost$collections$Array* $tmp4 = *$tmp3;
 ITable* $tmp5 = ((frost$collections$CollectionView*) $tmp4)->$class->itable;
@@ -82,16 +82,16 @@ frost$core$Int64 $tmp18 = $tmp17.start;
 frost$core$Int64 $tmp19 = $tmp17.end;
 frost$core$Int64 $tmp20 = $tmp17.step;
 // begin inline call to function frost.core.Int64.get_asUInt64():frost.core.UInt64 from <internal>:1:1
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:422
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:555
 int64_t $tmp21 = $tmp20.value;
 frost$core$UInt64 $tmp22 = (frost$core$UInt64) {((uint64_t) $tmp21)};
 // begin inline call to function frost.core.Int64.-():frost.core.Int64 from MergeBlocks.frost:8:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:49
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:84
 int64_t $tmp23 = $tmp20.value;
 int64_t $tmp24 = -$tmp23;
 frost$core$Int64 $tmp25 = (frost$core$Int64) {$tmp24};
 // begin inline call to function frost.core.Int64.get_asUInt64():frost.core.UInt64 from <internal>:1:1
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:422
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:555
 int64_t $tmp26 = $tmp25.value;
 frost$core$UInt64 $tmp27 = (frost$core$UInt64) {((uint64_t) $tmp26)};
 frost$core$Bit $tmp28 = $tmp17.inclusive;
@@ -136,7 +136,7 @@ frost$core$Bit $tmp54 = (frost$core$Bit) {$tmp53};
 bool $tmp55 = $tmp54.value;
 if ($tmp55) goto block4; else goto block5;
 block4:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/pass/MergeBlocks.frost:9
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/pass/MergeBlocks.frost:9
 frost$collections$Array** $tmp56 = &param1->blocks;
 frost$collections$Array* $tmp57 = *$tmp56;
 frost$core$Int64 $tmp58 = *(&local1);
@@ -162,11 +162,11 @@ frost$core$Bit $tmp72 = (frost$core$Bit) {$tmp71};
 bool $tmp73 = $tmp72.value;
 if ($tmp73) goto block14; else goto block15;
 block15:;
-frost$core$Int64 $tmp74 = (frost$core$Int64) {22u};
+frost$core$Int64 $tmp74 = (frost$core$Int64) {74u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s75, $tmp74, &$s76);
 abort(); // unreachable
 block14:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/collections/Array.stub:23
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Array.frost:75
 frost$core$Object*** $tmp77 = &$tmp57->data;
 frost$core$Object** $tmp78 = *$tmp77;
 int64_t $tmp79 = $tmp58.value;
@@ -178,7 +178,7 @@ org$frostlang$frostc$IR$Block* $tmp81 = *(&local2);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp81));
 *(&local2) = ((org$frostlang$frostc$IR$Block*) $tmp80);
 frost$core$Frost$unref$frost$core$Object$Q($tmp80);
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/pass/MergeBlocks.frost:10
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/pass/MergeBlocks.frost:10
 frost$collections$HashMap** $tmp82 = &param2->predecessors;
 frost$collections$HashMap* $tmp83 = *$tmp82;
 org$frostlang$frostc$IR$Block* $tmp84 = *(&local2);
@@ -195,7 +195,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp89));
 *(&local3) = ((frost$collections$HashSet*) $tmp88);
 frost$core$Frost$unref$frost$core$Object$Q($tmp88);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$collections$Key*) $tmp87)));
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/pass/MergeBlocks.frost:11
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/pass/MergeBlocks.frost:11
 frost$collections$HashSet* $tmp90 = *(&local3);
 frost$core$Bit $tmp91 = (frost$core$Bit) {$tmp90 != NULL};
 bool $tmp92 = $tmp91.value;
@@ -210,7 +210,7 @@ $fn96 $tmp95 = $tmp94->methods[0];
 frost$core$Int64 $tmp97 = $tmp95(((frost$collections$CollectionView*) $tmp93));
 frost$core$Int64 $tmp98 = (frost$core$Int64) {1u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from MergeBlocks.frost:11:45
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:179
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
 int64_t $tmp99 = $tmp97.value;
 int64_t $tmp100 = $tmp98.value;
 bool $tmp101 = $tmp99 == $tmp100;
@@ -218,7 +218,7 @@ frost$core$Bit $tmp102 = (frost$core$Bit) {$tmp101};
 bool $tmp103 = $tmp102.value;
 if ($tmp103) goto block17; else goto block18;
 block17:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/pass/MergeBlocks.frost:12
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/pass/MergeBlocks.frost:12
 frost$collections$HashMap** $tmp104 = &param2->blocks;
 frost$collections$HashMap* $tmp105 = *$tmp104;
 frost$collections$HashSet* $tmp106 = *(&local3);
@@ -248,7 +248,7 @@ frost$core$Frost$unref$frost$core$Object$Q($tmp117);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$collections$Key*) $tmp116)));
 frost$core$Frost$unref$frost$core$Object$Q($tmp114);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp110));
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/pass/MergeBlocks.frost:13
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/pass/MergeBlocks.frost:13
 org$frostlang$frostc$IR$Block* $tmp119 = *(&local4);
 frost$core$Bit $tmp120 = (frost$core$Bit) {$tmp119 != NULL};
 bool $tmp121 = $tmp120.value;
@@ -258,7 +258,7 @@ frost$core$Int64 $tmp122 = (frost$core$Int64) {13u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s123, $tmp122);
 abort(); // unreachable
 block21:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/pass/MergeBlocks.frost:14
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/pass/MergeBlocks.frost:14
 org$frostlang$frostc$IR$Block* $tmp124 = *(&local4);
 frost$collections$Array** $tmp125 = &$tmp124->statements;
 frost$collections$Array* $tmp126 = *$tmp125;
@@ -274,7 +274,7 @@ int64_t $tmp133 = $tmp131.value;
 int64_t $tmp134 = $tmp132 - $tmp133;
 frost$core$Int64 $tmp135 = (frost$core$Int64) {$tmp134};
 *(&local5) = $tmp135;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/pass/MergeBlocks.frost:15
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/pass/MergeBlocks.frost:15
 org$frostlang$frostc$IR$Block* $tmp136 = *(&local4);
 frost$collections$Array** $tmp137 = &$tmp136->statements;
 frost$collections$Array* $tmp138 = *$tmp137;
@@ -301,11 +301,11 @@ frost$core$Bit $tmp153 = (frost$core$Bit) {$tmp152};
 bool $tmp154 = $tmp153.value;
 if ($tmp154) goto block24; else goto block25;
 block25:;
-frost$core$Int64 $tmp155 = (frost$core$Int64) {22u};
+frost$core$Int64 $tmp155 = (frost$core$Int64) {74u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s156, $tmp155, &$s157);
 abort(); // unreachable
 block24:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/collections/Array.stub:23
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Array.frost:75
 frost$core$Object*** $tmp158 = &$tmp138->data;
 frost$core$Object** $tmp159 = *$tmp158;
 int64_t $tmp160 = $tmp139.value;
@@ -315,7 +315,7 @@ frost$core$Int64* $tmp162 = &((org$frostlang$frostc$IR$Statement*) $tmp161)->$ra
 frost$core$Int64 $tmp163 = *$tmp162;
 frost$core$Int64 $tmp164 = (frost$core$Int64) {1u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from MergeBlocks.frost:16:38
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:179
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
 int64_t $tmp165 = $tmp163.value;
 int64_t $tmp166 = $tmp164.value;
 bool $tmp167 = $tmp165 == $tmp166;
@@ -329,17 +329,17 @@ org$frostlang$frostc$Position $tmp171 = *$tmp170;
 org$frostlang$frostc$IR$Block$ID* $tmp172 = (org$frostlang$frostc$IR$Block$ID*) (((org$frostlang$frostc$IR$Statement*) $tmp161)->$data + 24);
 org$frostlang$frostc$IR$Block$ID $tmp173 = *$tmp172;
 *(&local7) = $tmp173;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/pass/MergeBlocks.frost:17
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/pass/MergeBlocks.frost:17
 org$frostlang$frostc$IR$Block$ID $tmp174 = *(&local7);
 org$frostlang$frostc$IR$Block* $tmp175 = *(&local2);
 org$frostlang$frostc$IR$Block$ID* $tmp176 = &$tmp175->id;
 org$frostlang$frostc$IR$Block$ID $tmp177 = *$tmp176;
 // begin inline call to function org.frostlang.frostc.IR.Block.ID.=(other:org.frostlang.frostc.IR.Block.ID):frost.core.Bit from MergeBlocks.frost:17:39
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/IR.frost:382
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/IR.frost:382
 frost$core$Int64 $tmp178 = $tmp174.value;
 frost$core$Int64 $tmp179 = $tmp177.value;
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from IR.frost:382:30
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:179
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
 int64_t $tmp180 = $tmp178.value;
 int64_t $tmp181 = $tmp179.value;
 bool $tmp182 = $tmp180 == $tmp181;
@@ -351,21 +351,21 @@ frost$core$Int64 $tmp185 = (frost$core$Int64) {17u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s186, $tmp185);
 abort(); // unreachable
 block32:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/pass/MergeBlocks.frost:18
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/pass/MergeBlocks.frost:18
 org$frostlang$frostc$IR$Block* $tmp187 = *(&local4);
 frost$collections$Array** $tmp188 = &$tmp187->statements;
 frost$collections$Array* $tmp189 = *$tmp188;
 frost$core$Int64 $tmp190 = *(&local5);
 frost$core$Object* $tmp191 = frost$collections$Array$removeIndex$frost$core$Int64$R$frost$collections$Array$T($tmp189, $tmp190);
 frost$core$Frost$unref$frost$core$Object$Q($tmp191);
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/pass/MergeBlocks.frost:19
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/pass/MergeBlocks.frost:19
 org$frostlang$frostc$IR$Block* $tmp192 = *(&local4);
 frost$collections$Array** $tmp193 = &$tmp192->ids;
 frost$collections$Array* $tmp194 = *$tmp193;
 frost$core$Int64 $tmp195 = *(&local5);
 frost$core$Object* $tmp196 = frost$collections$Array$removeIndex$frost$core$Int64$R$frost$collections$Array$T($tmp194, $tmp195);
 frost$core$Frost$unref$frost$core$Object$Q($tmp196);
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/pass/MergeBlocks.frost:20
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/pass/MergeBlocks.frost:20
 org$frostlang$frostc$IR$Block* $tmp197 = *(&local4);
 frost$collections$Array** $tmp198 = &$tmp197->statements;
 frost$collections$Array* $tmp199 = *$tmp198;
@@ -373,7 +373,7 @@ org$frostlang$frostc$IR$Block* $tmp200 = *(&local2);
 frost$collections$Array** $tmp201 = &$tmp200->statements;
 frost$collections$Array* $tmp202 = *$tmp201;
 frost$collections$Array$addAll$frost$collections$CollectionView$LTfrost$collections$Array$T$GT($tmp199, ((frost$collections$CollectionView*) $tmp202));
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/pass/MergeBlocks.frost:21
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/pass/MergeBlocks.frost:21
 org$frostlang$frostc$IR$Block* $tmp203 = *(&local4);
 frost$collections$Array** $tmp204 = &$tmp203->ids;
 frost$collections$Array* $tmp205 = *$tmp204;
@@ -381,16 +381,16 @@ org$frostlang$frostc$IR$Block* $tmp206 = *(&local2);
 frost$collections$Array** $tmp207 = &$tmp206->ids;
 frost$collections$Array* $tmp208 = *$tmp207;
 frost$collections$Array$addAll$frost$collections$CollectionView$LTfrost$collections$Array$T$GT($tmp205, ((frost$collections$CollectionView*) $tmp208));
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/pass/MergeBlocks.frost:22
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/pass/MergeBlocks.frost:22
 org$frostlang$frostc$IR$Block* $tmp209 = *(&local2);
 frost$collections$Array** $tmp210 = &$tmp209->statements;
 frost$collections$Array* $tmp211 = *$tmp210;
 // begin inline call to method frost.collections.Array.clear() from MergeBlocks.frost:22:43
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/collections/Array.stub:46
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Array.frost:139
 frost$core$Int64 $tmp212 = (frost$core$Int64) {0u};
 frost$core$Int64* $tmp213 = &$tmp211->_count;
 *$tmp213 = $tmp212;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/collections/Array.stub:47
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Array.frost:140
 frost$core$Int64 $tmp214 = (frost$core$Int64) {0u};
 frost$core$Int64* $tmp215 = &$tmp211->capacity;
 frost$core$Int64 $tmp216 = *$tmp215;
@@ -403,7 +403,7 @@ frost$core$Bit $tmp221 = $tmp218.inclusive;
 bool $tmp222 = $tmp221.value;
 frost$core$Int64 $tmp223 = (frost$core$Int64) {1u};
 // begin inline call to function frost.core.Int64.get_asUInt64():frost.core.UInt64 from <internal>:1:1
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:422
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:555
 int64_t $tmp224 = $tmp223.value;
 frost$core$UInt64 $tmp225 = (frost$core$UInt64) {((uint64_t) $tmp224)};
 if ($tmp222) goto block39; else goto block40;
@@ -422,7 +422,7 @@ frost$core$Bit $tmp234 = (frost$core$Bit) {$tmp233};
 bool $tmp235 = $tmp234.value;
 if ($tmp235) goto block36; else goto block37;
 block36:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/collections/Array.stub:48
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Array.frost:141
 frost$core$Object*** $tmp236 = &$tmp211->data;
 frost$core$Object** $tmp237 = *$tmp236;
 frost$core$Int64 $tmp238 = *(&local8);
@@ -436,7 +436,7 @@ int64_t $tmp243 = $tmp241.value;
 int64_t $tmp244 = $tmp242 - $tmp243;
 frost$core$Int64 $tmp245 = (frost$core$Int64) {$tmp244};
 // begin inline call to function frost.core.Int64.get_asUInt64():frost.core.UInt64 from <internal>:1:1
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:422
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:555
 int64_t $tmp246 = $tmp245.value;
 frost$core$UInt64 $tmp247 = (frost$core$UInt64) {((uint64_t) $tmp246)};
 if ($tmp222) goto block43; else goto block44;
@@ -462,16 +462,16 @@ frost$core$Int64 $tmp261 = (frost$core$Int64) {$tmp260};
 *(&local8) = $tmp261;
 goto block36;
 block37:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/pass/MergeBlocks.frost:23
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/pass/MergeBlocks.frost:23
 org$frostlang$frostc$IR$Block* $tmp262 = *(&local2);
 frost$collections$Array** $tmp263 = &$tmp262->ids;
 frost$collections$Array* $tmp264 = *$tmp263;
 // begin inline call to method frost.collections.Array.clear() from MergeBlocks.frost:23:36
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/collections/Array.stub:46
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Array.frost:139
 frost$core$Int64 $tmp265 = (frost$core$Int64) {0u};
 frost$core$Int64* $tmp266 = &$tmp264->_count;
 *$tmp266 = $tmp265;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/collections/Array.stub:47
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Array.frost:140
 frost$core$Int64 $tmp267 = (frost$core$Int64) {0u};
 frost$core$Int64* $tmp268 = &$tmp264->capacity;
 frost$core$Int64 $tmp269 = *$tmp268;
@@ -484,7 +484,7 @@ frost$core$Bit $tmp274 = $tmp271.inclusive;
 bool $tmp275 = $tmp274.value;
 frost$core$Int64 $tmp276 = (frost$core$Int64) {1u};
 // begin inline call to function frost.core.Int64.get_asUInt64():frost.core.UInt64 from <internal>:1:1
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:422
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:555
 int64_t $tmp277 = $tmp276.value;
 frost$core$UInt64 $tmp278 = (frost$core$UInt64) {((uint64_t) $tmp277)};
 if ($tmp275) goto block50; else goto block51;
@@ -503,7 +503,7 @@ frost$core$Bit $tmp287 = (frost$core$Bit) {$tmp286};
 bool $tmp288 = $tmp287.value;
 if ($tmp288) goto block47; else goto block48;
 block47:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/collections/Array.stub:48
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Array.frost:141
 frost$core$Object*** $tmp289 = &$tmp264->data;
 frost$core$Object** $tmp290 = *$tmp289;
 frost$core$Int64 $tmp291 = *(&local9);
@@ -517,7 +517,7 @@ int64_t $tmp296 = $tmp294.value;
 int64_t $tmp297 = $tmp295 - $tmp296;
 frost$core$Int64 $tmp298 = (frost$core$Int64) {$tmp297};
 // begin inline call to function frost.core.Int64.get_asUInt64():frost.core.UInt64 from <internal>:1:1
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:422
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:555
 int64_t $tmp299 = $tmp298.value;
 frost$core$UInt64 $tmp300 = (frost$core$UInt64) {((uint64_t) $tmp299)};
 if ($tmp275) goto block54; else goto block55;
@@ -543,7 +543,7 @@ frost$core$Int64 $tmp314 = (frost$core$Int64) {$tmp313};
 *(&local9) = $tmp314;
 goto block47;
 block48:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/pass/MergeBlocks.frost:24
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/pass/MergeBlocks.frost:24
 org$frostlang$frostc$IR$Block* $tmp315 = *(&local2);
 frost$collections$Array** $tmp316 = &$tmp315->statements;
 frost$collections$Array* $tmp317 = *$tmp316;
@@ -554,7 +554,7 @@ org$frostlang$frostc$Position $tmp320 = *(&local6);
 org$frostlang$frostc$IR$Statement$init$frost$core$Int64$org$frostlang$frostc$Position($tmp318, $tmp319, $tmp320);
 frost$collections$Array$add$frost$collections$Array$T($tmp317, ((frost$core$Object*) $tmp318));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp318));
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/pass/MergeBlocks.frost:25
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/pass/MergeBlocks.frost:25
 frost$core$Bit $tmp321 = (frost$core$Bit) {true};
 *(&local0) = $tmp321;
 goto block27;
@@ -579,7 +579,7 @@ int64_t $tmp327 = $tmp325.value;
 int64_t $tmp328 = $tmp326 - $tmp327;
 frost$core$Int64 $tmp329 = (frost$core$Int64) {$tmp328};
 // begin inline call to function frost.core.Int64.get_asUInt64():frost.core.UInt64 from <internal>:1:1
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:422
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:555
 int64_t $tmp330 = $tmp329.value;
 frost$core$UInt64 $tmp331 = (frost$core$UInt64) {((uint64_t) $tmp330)};
 if ($tmp29) goto block60; else goto block61;
@@ -603,7 +603,7 @@ int64_t $tmp343 = $tmp19.value;
 int64_t $tmp344 = $tmp342 - $tmp343;
 frost$core$Int64 $tmp345 = (frost$core$Int64) {$tmp344};
 // begin inline call to function frost.core.Int64.get_asUInt64():frost.core.UInt64 from <internal>:1:1
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:422
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:555
 int64_t $tmp346 = $tmp345.value;
 frost$core$UInt64 $tmp347 = (frost$core$UInt64) {((uint64_t) $tmp346)};
 if ($tmp29) goto block63; else goto block64;
@@ -629,7 +629,7 @@ frost$core$Int64 $tmp361 = (frost$core$Int64) {$tmp360};
 *(&local1) = $tmp361;
 goto block4;
 block5:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/pass/MergeBlocks.frost:30
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/pass/MergeBlocks.frost:30
 frost$core$Bit $tmp362 = *(&local0);
 return $tmp362;
 
@@ -641,7 +641,7 @@ return;
 }
 void org$frostlang$frostc$pass$MergeBlocks$cleanup(org$frostlang$frostc$pass$MergeBlocks* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/pass/MergeBlocks.frost:5
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/pass/MergeBlocks.frost:5
 frost$core$Object$cleanup(((frost$core$Object*) param0));
 return;
 

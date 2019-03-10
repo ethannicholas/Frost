@@ -31,14 +31,14 @@ static frost$core$String $s26 = { (frost$core$Class*) &frost$core$String$class, 
 
 void frost$io$InputStream$LineIterator$init$frost$io$InputStream(frost$io$InputStream$LineIterator* param0, frost$io$InputStream* param1) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/InputStream.frost:22
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/io/InputStream.frost:22
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
 frost$io$InputStream** $tmp2 = &param0->input;
 frost$io$InputStream* $tmp3 = *$tmp2;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp3));
 frost$io$InputStream** $tmp4 = &param0->input;
 *$tmp4 = param1;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/InputStream.frost:23
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/io/InputStream.frost:23
 $fn6 $tmp5 = ($fn6) param0->$class->vtable[4];
 $tmp5(param0);
 return;
@@ -46,7 +46,7 @@ return;
 }
 frost$core$Bit frost$io$InputStream$LineIterator$get_done$R$frost$core$Bit(frost$io$InputStream$LineIterator* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/InputStream.frost:28
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/io/InputStream.frost:28
 frost$core$String** $tmp7 = &param0->_next;
 frost$core$String* $tmp8 = *$tmp7;
 frost$core$Bit $tmp9 = (frost$core$Bit) {$tmp8 == NULL};
@@ -62,8 +62,8 @@ while ($tmp10->$class != (frost$core$Class*) &frost$collections$Iterator$class) 
 }
 $fn12 $tmp11 = $tmp10->methods[0];
 frost$core$Bit $tmp13 = $tmp11(((frost$collections$Iterator*) param0));
-// begin inline call to function frost.core.Bit.!():frost.core.Bit from Iterator.stub:47:6
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
+// begin inline call to function frost.core.Bit.!():frost.core.Bit from Iterator.frost:166:10
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Bit.frost:42
 bool $tmp14 = $tmp13.value;
 bool $tmp15 = !$tmp14;
 frost$core$Bit $tmp16 = (frost$core$Bit) {$tmp15};
@@ -74,7 +74,7 @@ frost$core$Int64 $tmp18 = (frost$core$Int64) {32u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s19, $tmp18, &$s20);
 abort(); // unreachable
 block1:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/InputStream.frost:33
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/io/InputStream.frost:33
 frost$core$String** $tmp21 = &param0->_next;
 frost$core$String* $tmp22 = *$tmp21;
 frost$core$Bit $tmp23 = (frost$core$Bit) {$tmp22 != NULL};
@@ -85,7 +85,7 @@ frost$core$Int64 $tmp25 = (frost$core$Int64) {33u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s26, $tmp25);
 abort(); // unreachable
 block4:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/InputStream.frost:34
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/io/InputStream.frost:34
 frost$core$String** $tmp27 = &param0->_next;
 frost$core$String* $tmp28 = *$tmp27;
 *(&local0) = ((frost$core$String*) NULL);
@@ -93,10 +93,10 @@ frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp28));
 frost$core$String* $tmp29 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp29));
 *(&local0) = $tmp28;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/InputStream.frost:35
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/io/InputStream.frost:35
 $fn31 $tmp30 = ($fn31) param0->$class->vtable[4];
 $tmp30(param0);
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/InputStream.frost:36
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/io/InputStream.frost:36
 frost$core$String* $tmp32 = *(&local0);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp32));
 frost$core$String* $tmp33 = *(&local0);
@@ -107,7 +107,7 @@ return $tmp32;
 }
 void frost$io$InputStream$LineIterator$readNext(frost$io$InputStream$LineIterator* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/InputStream.frost:40
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/io/InputStream.frost:40
 frost$io$InputStream** $tmp34 = &param0->input;
 frost$io$InputStream* $tmp35 = *$tmp34;
 $fn37 $tmp36 = ($fn37) $tmp35->$class->vtable[16];
@@ -124,7 +124,7 @@ return;
 }
 void frost$io$InputStream$LineIterator$cleanup(frost$io$InputStream$LineIterator* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/InputStream.frost:17
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/io/InputStream.frost:17
 frost$core$Object$cleanup(((frost$core$Object*) param0));
 frost$io$InputStream** $tmp42 = &param0->input;
 frost$io$InputStream* $tmp43 = *$tmp42;

@@ -32,14 +32,14 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 
 void org$frostlang$frostc$Compiler$CoercionKey$init$org$frostlang$frostc$ASTNode$org$frostlang$frostc$Type(org$frostlang$frostc$Compiler$CoercionKey* param0, org$frostlang$frostc$ASTNode* param1, org$frostlang$frostc$Type* param2) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:344
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Compiler.frost:349
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
 org$frostlang$frostc$ASTNode** $tmp2 = &param0->expr;
 org$frostlang$frostc$ASTNode* $tmp3 = *$tmp2;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp3));
 org$frostlang$frostc$ASTNode** $tmp4 = &param0->expr;
 *$tmp4 = param1;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:345
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Compiler.frost:350
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param2));
 org$frostlang$frostc$Type** $tmp5 = &param0->target;
 org$frostlang$frostc$Type* $tmp6 = *$tmp5;
@@ -53,7 +53,7 @@ frost$core$Bit org$frostlang$frostc$Compiler$CoercionKey$$EQ$org$frostlang$frost
 
 frost$core$Bit local0;
 frost$core$Bit local1;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:350
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Compiler.frost:355
 org$frostlang$frostc$ASTNode** $tmp8 = &param0->expr;
 org$frostlang$frostc$ASTNode* $tmp9 = *$tmp8;
 org$frostlang$frostc$ASTNode** $tmp10 = &param1->expr;
@@ -67,8 +67,8 @@ org$frostlang$frostc$Type** $tmp15 = &param0->target;
 org$frostlang$frostc$Type* $tmp16 = *$tmp15;
 org$frostlang$frostc$Type** $tmp17 = &param1->target;
 org$frostlang$frostc$Type* $tmp18 = *$tmp17;
-// begin inline call to function org.frostlang.frostc.Type.=(other:org.frostlang.frostc.Type):frost.core.Bit from Compiler.frost:350:48
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:253
+// begin inline call to function org.frostlang.frostc.Type.=(other:org.frostlang.frostc.Type):frost.core.Bit from Compiler.frost:355:48
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Type.frost:253
 frost$core$String** $tmp19 = &((org$frostlang$frostc$Symbol*) $tmp16)->name;
 frost$core$String* $tmp20 = *$tmp19;
 frost$core$String** $tmp21 = &((org$frostlang$frostc$Symbol*) $tmp18)->name;
@@ -114,7 +114,7 @@ return $tmp36;
 }
 frost$core$Int64 org$frostlang$frostc$Compiler$CoercionKey$get_hash$R$frost$core$Int64(org$frostlang$frostc$Compiler$CoercionKey* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:355
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Compiler.frost:360
 org$frostlang$frostc$ASTNode** $tmp37 = &param0->expr;
 org$frostlang$frostc$ASTNode* $tmp38 = *$tmp37;
 frost$core$Int64 $tmp39;
@@ -127,8 +127,8 @@ while ($tmp42->$class != (frost$core$Class*) &frost$collections$Key$class) {
 }
 $fn44 $tmp43 = $tmp42->methods[0];
 frost$core$Int64 $tmp45 = $tmp43(((frost$collections$Key*) $tmp41));
-// begin inline call to function frost.core.Int64.~~(other:frost.core.Int64):frost.core.Int64 from Compiler.frost:355:42
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:143
+// begin inline call to function frost.core.Int64.~~(other:frost.core.Int64):frost.core.Int64 from Compiler.frost:360:42
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:197
 int64_t $tmp46 = $tmp39.value;
 int64_t $tmp47 = $tmp45.value;
 int64_t $tmp48 = $tmp46 ^ $tmp47;
@@ -138,7 +138,7 @@ return $tmp49;
 }
 void org$frostlang$frostc$Compiler$CoercionKey$cleanup(org$frostlang$frostc$Compiler$CoercionKey* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:338
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Compiler.frost:343
 frost$core$Object$cleanup(((frost$core$Object*) param0));
 org$frostlang$frostc$ASTNode** $tmp50 = &param0->expr;
 org$frostlang$frostc$ASTNode* $tmp51 = *$tmp50;

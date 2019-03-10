@@ -16,7 +16,7 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 
 void org$frostlang$frostc$expression$Tuple$_Closure4$init$org$frostlang$frostc$Compiler(org$frostlang$frostc$expression$Tuple$_Closure4* param0, org$frostlang$frostc$Compiler* param1) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Tuple.frost:76
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/expression/Tuple.frost:76
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
 org$frostlang$frostc$Compiler** $tmp2 = &param0->compiler;
 org$frostlang$frostc$Compiler* $tmp3 = *$tmp2;
@@ -28,7 +28,7 @@ return;
 }
 void org$frostlang$frostc$expression$Tuple$_Closure4$cleanup(org$frostlang$frostc$expression$Tuple$_Closure4* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Tuple.frost:76
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/expression/Tuple.frost:76
 frost$core$Object$cleanup(((frost$core$Object*) param0));
 org$frostlang$frostc$Compiler** $tmp5 = &param0->compiler;
 org$frostlang$frostc$Compiler* $tmp6 = *$tmp5;
@@ -38,7 +38,7 @@ return;
 }
 org$frostlang$frostc$Type* org$frostlang$frostc$expression$Tuple$_Closure4$$anonymous3$org$frostlang$frostc$ASTNode$R$org$frostlang$frostc$Type(org$frostlang$frostc$expression$Tuple$_Closure4* param0, org$frostlang$frostc$ASTNode* param1) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Tuple.frost:76
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/expression/Tuple.frost:76
 org$frostlang$frostc$Compiler** $tmp7 = &param0->compiler;
 org$frostlang$frostc$Compiler* $tmp8 = *$tmp7;
 org$frostlang$frostc$Type** $tmp9 = &$tmp8->ANY_TYPE;

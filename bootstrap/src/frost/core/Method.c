@@ -30,10 +30,10 @@ static frost$core$String $s31 = { (frost$core$Class*) &frost$core$String$class, 
 
 void frost$core$Method$init$frost$unsafe$Pointer$LTfrost$core$Int8$GT$frost$core$Immutable$Q(frost$core$Method* param0, frost$core$Int8* param1, frost$core$Immutable* param2) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Method.frost:37
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Method.frost:37
 frost$core$Int8** $tmp2 = &param0->pointer;
 *$tmp2 = param1;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Method.frost:38
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Method.frost:38
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param2));
 frost$core$Immutable** $tmp3 = &param0->target;
 frost$core$Immutable* $tmp4 = *$tmp3;
@@ -45,14 +45,14 @@ return;
 }
 frost$core$String* frost$core$Method$get_asString$R$frost$core$String(frost$core$Method* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Method.frost:43
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Method.frost:43
 frost$core$Immutable** $tmp6 = &param0->target;
 frost$core$Immutable* $tmp7 = *$tmp6;
 frost$core$Bit $tmp8 = (frost$core$Bit) {$tmp7 != NULL};
 bool $tmp9 = $tmp8.value;
 if ($tmp9) goto block1; else goto block2;
 block1:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Method.frost:44
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Method.frost:44
 frost$core$Int8** $tmp10 = &param0->pointer;
 frost$core$Int8* $tmp11 = *$tmp10;
 frost$core$String* $tmp12 = frost$core$Frost$pointerConvert$frost$unsafe$Pointer$LTfrost$core$Object$Q$GT$R$frost$core$String(((frost$core$Object**) $tmp11));
@@ -61,7 +61,7 @@ frost$core$String* $tmp15 = frost$core$String$$ADD$frost$core$String$R$frost$cor
 frost$core$Immutable** $tmp17 = &param0->target;
 frost$core$Immutable* $tmp18 = *$tmp17;
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Method.frost:44:20
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:560
 $fn20 $tmp19 = ($fn20) ((frost$core$Object*) $tmp18)->$class->vtable[0];
 frost$core$String* $tmp21 = $tmp19(((frost$core$Object*) $tmp18));
 frost$core$String* $tmp22 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp15, $tmp21);
@@ -77,7 +77,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp13));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp12));
 return $tmp23;
 block2:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Method.frost:46
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Method.frost:46
 frost$core$Int8** $tmp25 = &param0->pointer;
 frost$core$Int8* $tmp26 = *$tmp25;
 frost$core$String* $tmp27 = frost$core$Frost$pointerConvert$frost$unsafe$Pointer$LTfrost$core$Object$Q$GT$R$frost$core$String(((frost$core$Object**) $tmp26));
@@ -92,7 +92,7 @@ return $tmp30;
 }
 void frost$core$Method$cleanup(frost$core$Method* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Method.frost:7
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Method.frost:7
 frost$core$Immutable$cleanup(((frost$core$Immutable*) param0));
 frost$core$Immutable** $tmp32 = &param0->target;
 frost$core$Immutable* $tmp33 = *$tmp32;

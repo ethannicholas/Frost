@@ -595,6 +595,7 @@ set(public_source
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/UInt32.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/UInt64.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/UInt8.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/UInt.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/Matcher.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/Maybe.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/MutableString.frost

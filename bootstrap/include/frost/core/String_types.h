@@ -17,6 +17,6 @@ typedef struct frost$core$String {
     frost$core$String* owner;
 } frost$core$String;
 #include "frost/core/Class.h"
-typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[62]; } frost$core$String$class_type;
+typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[63]; } frost$core$String$class_type;
 extern frost$core$String$class_type frost$core$String$class;
 

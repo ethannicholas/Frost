@@ -1,9 +1,11 @@
 class WriteNumbers {
     choice Type {
+        INT
         INT8
         INT16
         INT32
         INT64
+        UINT
         UINT8
         UINT16
         UINT32
@@ -16,10 +18,12 @@ class WriteNumbers {
     @class
     function builtin(type:Type):String {
         match type {
+            when Type.INT    { return "builtin_int" }
             when Type.INT8   { return "builtin_int8" }
             when Type.INT16  { return "builtin_int16" }
             when Type.INT32  { return "builtin_int32" }
             when Type.INT64  { return "builtin_int64" }
+            when Type.UINT   { return "builtin_uint" }
             when Type.UINT8  { return "builtin_uint8" }
             when Type.UINT16 { return "builtin_uint16" }
             when Type.UINT32 { return "builtin_uint32" }
@@ -33,10 +37,12 @@ class WriteNumbers {
     @class
     function object(type:Type):String {
         match type {
+            when Type.INT    { return "Int" }
             when Type.INT8   { return "Int8" }
             when Type.INT16  { return "Int16" }
             when Type.INT32  { return "Int32" }
             when Type.INT64  { return "Int64" }
+            when Type.UINT   { return "UInt" }
             when Type.UINT8  { return "UInt8" }
             when Type.UINT16 { return "UInt16" }
             when Type.UINT32 { return "UInt32" }
@@ -59,10 +65,11 @@ class WriteNumbers {
     @class
     function signed(type:Type):Bit {
         match type {
-            when Type.INT8,  Type.INT16,  Type.INT32,  Type.INT64, Type.REAL32, Type.REAL64 {
+            when Type.INT, Type.INT8,  Type.INT16,  Type.INT32,  Type.INT64, Type.REAL32,
+                    Type.REAL64 {
                 return true
             }
-            when Type.UINT8, Type.UINT16, Type.UINT32, Type.UINT64 {
+            when Type.UINT, Type.UINT8, Type.UINT16, Type.UINT32, Type.UINT64 {
                 return false
             }
             otherwise {
@@ -90,6 +97,7 @@ class WriteNumbers {
             when Type.INT16, Type.UINT16              { return 16 }
             when Type.INT32, Type.UINT32, Type.REAL32 { return 32 }
             when Type.INT64, Type.UINT64, Type.REAL64 { return 64 }
+            when Type.INT,   Type.UINT                { return 32 }   
         }
         unreachable
     }
@@ -117,10 +125,12 @@ class WriteNumbers {
             when Type.INT16  { return "-32768" }
             when Type.INT32  { return "-2147483648" }
             when Type.INT64  { return "-9223372036854775808" }
+            when Type.INT    { return "Int64.MIN.asInt" }
             when Type.UINT8  { return "0" }
             when Type.UINT16 { return "0" }
             when Type.UINT32 { return "0" }
             when Type.UINT64 { return "0" }
+            when Type.UINT   { return "0" }
         }
         unreachable
     }
@@ -132,10 +142,12 @@ class WriteNumbers {
             when Type.INT16  { return "32767" }
             when Type.INT32  { return "2147483647" }
             when Type.INT64  { return "9223372036854775807" }
+            when Type.INT    { return "Int64.MAX.asInt" }
             when Type.UINT8  { return "255" }
             when Type.UINT16 { return "65535" }
             when Type.UINT32 { return "4294967295" }
             when Type.UINT64 { return "18446744073709551615" }
+            when Type.UINT   { return "UInt64.MAX.asUInt" }
         }
         unreachable
     }
@@ -218,10 +230,12 @@ class WriteNumbers {
             writeInit(type, Type.INT16,  out)
             writeInit(type, Type.INT32,  out)
             writeInit(type, Type.INT64,  out)
+            writeInit(type, Type.INT,    out)
             writeInit(type, Type.UINT8,  out)
             writeInit(type, Type.UINT16, out)
             writeInit(type, Type.UINT32, out)
             writeInit(type, Type.UINT64, out)
+            writeInit(type, Type.UINT,   out)
             if type = Type.REAL64 {
                 writeInit(type, Type.REAL32, out)
             }
@@ -245,6 +259,12 @@ class WriteNumbers {
         if size(type) > size(Type.UINT32) {
             writeInit(type, Type.UINT32, out)
         }
+        if type = Type.INT64 {
+            writeInit(type, Type.INT, out)
+        }
+        if type = Type.UINT64 {
+            writeInit(type, Type.UINT, out)
+        }
     }
 
     @class
@@ -258,8 +278,10 @@ class WriteNumbers {
             when Type.INT32  { return 5 }
             when Type.UINT64 { return 6 }
             when Type.INT64  { return 7 }
-            when Type.REAL32 { return 8 }
-            when Type.REAL64 { return 9 }
+            when Type.UINT   { return 8 }
+            when Type.INT    { return 9 }
+            when Type.REAL32 { return 10 }
+            when Type.REAL64 { return 11 }
         }
         unreachable
     }
@@ -319,10 +341,12 @@ class WriteNumbers {
             writeOperator(op, doc, type, Type.INT16,  signMatters, out)
             writeOperator(op, doc, type, Type.INT32,  signMatters, out)
             writeOperator(op, doc, type, Type.INT64,  signMatters, out)
+            writeOperator(op, doc, type, Type.INT,    signMatters, out)
             writeOperator(op, doc, type, Type.UINT8,  signMatters, out)
             writeOperator(op, doc, type, Type.UINT16, signMatters, out)
             writeOperator(op, doc, type, Type.UINT32, signMatters, out)
             writeOperator(op, doc, type, Type.UINT64, signMatters, out)
+            writeOperator(op, doc, type, Type.UINT,   signMatters, out)
         }
     }
 
@@ -449,10 +473,12 @@ class WriteNumbers {
         writeMax(type, Type.INT16,  out)
         writeMax(type, Type.INT32,  out)
         writeMax(type, Type.INT64,  out)
+        writeMax(type, Type.INT,    out)
         writeMax(type, Type.UINT8,  out)
         writeMax(type, Type.UINT16, out)
         writeMax(type, Type.UINT32, out)
         writeMax(type, Type.UINT64, out)
+        writeMax(type, Type.UINT,   out)
     }
 
     @class
@@ -485,10 +511,12 @@ class WriteNumbers {
         writeMin(type, Type.INT16,  out)
         writeMin(type, Type.INT32,  out)
         writeMin(type, Type.INT64,  out)
+        writeMin(type, Type.INT,    out)
         writeMin(type, Type.UINT8,  out)
         writeMin(type, Type.UINT16, out)
         writeMin(type, Type.UINT32, out)
         writeMin(type, Type.UINT64, out)
+        writeMin(type, Type.UINT,   out)
     }
 
     @class
@@ -497,9 +525,7 @@ class WriteNumbers {
             out.printLine()
             out.printLine("    ===Returns a single bit from this number, where index 0 is the " +
                     "least significant bit.===")
-            if rightType = Type.INT64 {
-                out.printLine("    @override")
-            }
+            out.printLine("    @override")
             out.printLine("    function [](index:\{object(rightType)}):Bit {")
             out.printLine("        return self && (1 << index) != 0")
             out.printLine("    }")
@@ -538,7 +564,7 @@ class WriteNumbers {
                     "ListView<\{object(type)}> {")
             out.printLine("        return org.frostlang.frost.\{object(type)}List(range)")
             out.printLine("    }")
-            writeIndex(type, Type.INT64,  out)
+            writeIndex(type, Type.INT, out)
         }
         fail(error) {
             unreachable, error.asString
@@ -582,7 +608,7 @@ class WriteNumbers {
             out.printLine()
             out.printLine("    @override")
             out.printLine("    function get_hash():Int {")
-            out.printLine("        return Int(value\{cast(type, Type.INT64)})")
+            out.printLine("        return Int(value\{cast(type, Type.INT)})")
             out.printLine("    }")
         }
         fail(error) {
@@ -672,6 +698,9 @@ class WriteNumbers {
 
     @class
     method writeAs(type:Type, out:OutputStream) {
+        if type != Type.INT {
+            writeAs(type, Type.INT, out)
+        }
         if type != Type.INT8 {
             writeAs(type, Type.INT8, out)
         }
@@ -683,6 +712,9 @@ class WriteNumbers {
         }
         if type != Type.INT64 {
             writeAs(type, Type.INT64, out)
+        }
+        if type != Type.UINT {
+            writeAs(type, Type.UINT, out)
         }
         if type != Type.UINT8 {
             writeAs(type, Type.UINT8, out)
@@ -707,6 +739,7 @@ class WriteNumbers {
             out.printLine()
             def mask:String
             match size(type) {
+                when -1 { mask := "0xFFFFFFFFFFFFFFFF" }
                 when  8 { mask := "0xFF" }
                 when 16 { mask := "0xFFFF" }
                 when 32 { mask := "0xFFFFFFFF" }
@@ -851,7 +884,7 @@ class WriteNumbers {
             out.printLine()
             out.printLine("    @private")
             out.printLine("    @implicit")
-            if type = Type.INT64 {
+            if type = Type.INT {
                 out.printLine("    @priority(1)")
             }
             out.printLine("    init(value:\{builtin(type)}) {")
@@ -1071,20 +1104,24 @@ class WriteNumbers {
     method main() {
         try {
             def corePath := File("../src/frost/core")
+            writeInt(Type.INT, corePath.resolve("Int.frost").openOutputStream())
             writeInt(Type.INT8, corePath.resolve("Int8.frost").openOutputStream())
             writeInt(Type.INT16, corePath.resolve("Int16.frost").openOutputStream())
             writeInt(Type.INT32, corePath.resolve("Int32.frost").openOutputStream())
             writeInt(Type.INT64, corePath.resolve("Int64.frost").openOutputStream())
+            writeInt(Type.UINT, corePath.resolve("UInt.frost").openOutputStream())
             writeInt(Type.UINT8, corePath.resolve("UInt8.frost").openOutputStream())
             writeInt(Type.UINT16, corePath.resolve("UInt16.frost").openOutputStream())
             writeInt(Type.UINT32, corePath.resolve("UInt32.frost").openOutputStream())
             writeInt(Type.UINT64, corePath.resolve("UInt64.frost").openOutputStream())
 
             def listPath := File("../src/org/frostlang/frost")
+            writeIntList(Type.INT, listPath.resolve("IntList.frost").openOutputStream())
             writeIntList(Type.INT8, listPath.resolve("Int8List.frost").openOutputStream())
             writeIntList(Type.INT16, listPath.resolve("Int16List.frost").openOutputStream())
             writeIntList(Type.INT32, listPath.resolve("Int32List.frost").openOutputStream())
             writeIntList(Type.INT64, listPath.resolve("Int64List.frost").openOutputStream())
+            writeIntList(Type.UINT, listPath.resolve("UIntList.frost").openOutputStream())
             writeIntList(Type.UINT8, listPath.resolve("UInt8List.frost").openOutputStream())
             writeIntList(Type.UINT16, listPath.resolve("UInt16List.frost").openOutputStream())
             writeIntList(Type.UINT32, listPath.resolve("UInt32List.frost").openOutputStream())

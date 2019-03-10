@@ -22,7 +22,7 @@ static frost$core$String $s34 = { (frost$core$Class*) &frost$core$String$class, 
 
 void frost$unsafe$UnsafeMessageQueue$Message$init$frost$unsafe$UnsafeMessageQueue$Message$T(frost$unsafe$UnsafeMessageQueue$Message* param0, frost$core$Object* param1) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/UnsafeMessageQueue.frost:13
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/unsafe/UnsafeMessageQueue.frost:13
 frost$core$Frost$ref$frost$core$Object$Q(param1);
 frost$core$Object** $tmp2 = &param0->payload;
 frost$core$Object* $tmp3 = *$tmp2;
@@ -34,18 +34,18 @@ return;
 }
 frost$core$String* frost$unsafe$UnsafeMessageQueue$Message$get_asString$R$frost$core$String(frost$unsafe$UnsafeMessageQueue$Message* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/UnsafeMessageQueue.frost:18
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/unsafe/UnsafeMessageQueue.frost:18
 frost$unsafe$UnsafeMessageQueue$Message** $tmp5 = &param0->next;
 frost$unsafe$UnsafeMessageQueue$Message* $tmp6 = *$tmp5;
 frost$core$Bit $tmp7 = (frost$core$Bit) {$tmp6 != NULL};
 bool $tmp8 = $tmp7.value;
 if ($tmp8) goto block1; else goto block2;
 block1:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/UnsafeMessageQueue.frost:19
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/unsafe/UnsafeMessageQueue.frost:19
 frost$core$Object** $tmp9 = &param0->payload;
 frost$core$Object* $tmp10 = *$tmp9;
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from UnsafeMessageQueue.frost:19:24
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:560
 $fn12 $tmp11 = ($fn12) $tmp10->$class->vtable[0];
 frost$core$String* $tmp13 = $tmp11($tmp10);
 frost$core$String* $tmp14 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(&$s15, $tmp13);
@@ -56,7 +56,7 @@ frost$core$String* $tmp16 = frost$core$String$$ADD$frost$core$String$R$frost$cor
 frost$unsafe$UnsafeMessageQueue$Message** $tmp18 = &param0->next;
 frost$unsafe$UnsafeMessageQueue$Message* $tmp19 = *$tmp18;
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from UnsafeMessageQueue.frost:19:24
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:560
 $fn21 $tmp20 = ($fn21) ((frost$core$Object*) $tmp19)->$class->vtable[0];
 frost$core$String* $tmp22 = $tmp20(((frost$core$Object*) $tmp19));
 frost$core$String* $tmp23 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp16, $tmp22);
@@ -71,11 +71,11 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp16));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp14));
 return $tmp24;
 block2:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/UnsafeMessageQueue.frost:21
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/unsafe/UnsafeMessageQueue.frost:21
 frost$core$Object** $tmp26 = &param0->payload;
 frost$core$Object* $tmp27 = *$tmp26;
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from UnsafeMessageQueue.frost:21:20
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:560
 $fn29 $tmp28 = ($fn29) $tmp27->$class->vtable[0];
 frost$core$String* $tmp30 = $tmp28($tmp27);
 frost$core$String* $tmp31 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(&$s32, $tmp30);
@@ -91,7 +91,7 @@ return $tmp33;
 }
 void frost$unsafe$UnsafeMessageQueue$Message$cleanup(frost$unsafe$UnsafeMessageQueue$Message* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frost/unsafe/UnsafeMessageQueue.frost:7
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/unsafe/UnsafeMessageQueue.frost:7
 frost$core$Object$cleanup(((frost$core$Object*) param0));
 frost$core$Object** $tmp35 = &param0->payload;
 frost$core$Object* $tmp36 = *$tmp35;

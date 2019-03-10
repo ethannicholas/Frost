@@ -424,7 +424,7 @@ class Type : Symbol, Key<Type> {
     }
 
     @pre((typeKind = Kind.FUNCTION | typeKind = Kind.METHOD | typeKind = Kind.IMMUTABLE_FUNCTION |
-            typeKind = Kind.IMMUTABLE_METHOD) & i >= 0 & i < subtypes.count - 1)
+            typeKind = Kind.IMMUTABLE_METHOD) & i >= 0 & i < subtypes.count - 1->Int)
     function parameterType(i:Int):Type {
         return subtypes[i]
     }

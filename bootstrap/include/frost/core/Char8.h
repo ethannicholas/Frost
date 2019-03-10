@@ -28,6 +28,7 @@ frost$core$String* frost$core$Char8$$MUL$frost$core$Int64$frost$core$Char8$R$fro
 frost$core$Int64 frost$core$Char8$get_hash$R$frost$core$Int64(frost$core$Char8 self);
 frost$core$Char16 frost$core$Char8$get_asChar16$R$frost$core$Char16(frost$core$Char8 self);
 frost$core$Char32 frost$core$Char8$get_asChar32$R$frost$core$Char32(frost$core$Char8 self);
+frost$core$Int64 frost$core$Char8$get_asInt$R$frost$core$Int64(frost$core$Char8 self);
 frost$core$Int8 frost$core$Char8$get_asInt8$R$frost$core$Int8(frost$core$Char8 self);
 frost$core$Int16 frost$core$Char8$get_asInt16$R$frost$core$Int16(frost$core$Char8 self);
 frost$core$Int32 frost$core$Char8$get_asInt32$R$frost$core$Int32(frost$core$Char8 self);

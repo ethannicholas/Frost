@@ -33,18 +33,18 @@ static frost$core$String $s31 = { (frost$core$Class*) &frost$core$String$class, 
 
 void frost$core$String$UTF16Iterator$init$frost$core$String(frost$core$String$UTF16Iterator* param0, frost$core$String* param1) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:131
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:131
 frost$core$Int64 $tmp3 = (frost$core$Int64) {0u};
 frost$core$Int64* $tmp4 = &param0->index;
 *$tmp4 = $tmp3;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:136
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:136
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
 frost$core$String** $tmp5 = &param0->str;
 frost$core$String* $tmp6 = *$tmp5;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp6));
 frost$core$String** $tmp7 = &param0->str;
 *$tmp7 = param1;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:137
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:137
 frost$core$Int64 $tmp8 = (frost$core$Int64) {137u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s9, $tmp8, &$s10);
 abort(); // unreachable
@@ -52,7 +52,7 @@ abort(); // unreachable
 }
 frost$core$Bit frost$core$String$UTF16Iterator$get_done$R$frost$core$Bit(frost$core$String$UTF16Iterator* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:142
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:142
 frost$core$Int64* $tmp11 = &param0->index;
 frost$core$Int64 $tmp12 = *$tmp11;
 frost$core$String** $tmp13 = &param0->str;
@@ -74,8 +74,8 @@ while ($tmp21->$class != (frost$core$Class*) &frost$collections$Iterator$class) 
 }
 $fn23 $tmp22 = $tmp21->methods[0];
 frost$core$Bit $tmp24 = $tmp22(((frost$collections$Iterator*) param0));
-// begin inline call to function frost.core.Bit.!():frost.core.Bit from Iterator.stub:47:6
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
+// begin inline call to function frost.core.Bit.!():frost.core.Bit from Iterator.frost:166:10
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Bit.frost:42
 bool $tmp25 = $tmp24.value;
 bool $tmp26 = !$tmp25;
 frost$core$Bit $tmp27 = (frost$core$Bit) {$tmp26};
@@ -86,7 +86,7 @@ frost$core$Int64 $tmp29 = (frost$core$Int64) {146u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s30, $tmp29, &$s31);
 abort(); // unreachable
 block1:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:147
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:147
 frost$core$Int64* $tmp32 = &param0->index;
 frost$core$Int64 $tmp33 = *$tmp32;
 frost$core$Int64 $tmp34 = (frost$core$Int64) {1u};
@@ -96,7 +96,7 @@ int64_t $tmp37 = $tmp35 + $tmp36;
 frost$core$Int64 $tmp38 = (frost$core$Int64) {$tmp37};
 frost$core$Int64* $tmp39 = &param0->index;
 *$tmp39 = $tmp38;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:148
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:148
 frost$core$UInt16 $tmp40 = (frost$core$UInt16) {1u};
 frost$core$Char16 $tmp41 = frost$core$Char16$init$frost$core$UInt16($tmp40);
 return $tmp41;
@@ -104,7 +104,7 @@ return $tmp41;
 }
 void frost$core$String$UTF16Iterator$cleanup(frost$core$String$UTF16Iterator* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:130
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:130
 frost$core$Object$cleanup(((frost$core$Object*) param0));
 frost$core$String** $tmp42 = &param0->str;
 frost$core$String* $tmp43 = *$tmp42;

@@ -84,7 +84,7 @@ class Array<T> : List<T> {
     method insert(index:Int, value:T) {
         ensureCapacity(count + 1)
         for i in count .. index by -1 {
-            data[i] := data[i - 1]
+            data[i] := data[i - 1->Int]
         }
         _count += 1
         data[index] := value

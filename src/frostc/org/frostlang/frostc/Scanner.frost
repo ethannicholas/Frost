@@ -334,7 +334,7 @@ class Scanner {
                 return 0
             }
             when ASTNode.BINARY(_, left, _, right) {
-                return 1 + complexity(left) + complexity(right)
+                return 1->Int + complexity(left) + complexity(right)
             }
             when ASTNode.BIT {
                 return 1
@@ -469,7 +469,7 @@ class Scanner {
                 return INLINE_THRESHOLD + 1
             }
             when ASTNode.UNARY(_, _, base) {
-                return 1 + complexity(base)
+                return 1->Int + complexity(base)
             }
             when ASTNode.UNREACHABLE {
                 return 0

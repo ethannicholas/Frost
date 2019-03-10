@@ -35,17 +35,17 @@ void frost$core$String$Match$init$frost$core$Matcher(frost$core$String$Match* pa
 
 frost$collections$Array* local0 = NULL;
 frost$core$Int64 local1;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:269
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:269
 frost$core$String$Index $tmp2;
 frost$core$Matcher$get_start$R$frost$core$String$Index(&$tmp2, param1);
 frost$core$String$Index* $tmp3 = &param0->start;
 *$tmp3 = $tmp2;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:270
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:270
 frost$core$String$Index $tmp4;
 frost$core$Matcher$get_end$R$frost$core$String$Index(&$tmp4, param1);
 frost$core$String$Index* $tmp5 = &param0->end;
 *$tmp5 = $tmp4;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:271
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:271
 FROST_ASSERT(40 == sizeof(frost$collections$Array));
 frost$collections$Array* $tmp6 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
 frost$collections$Array$init($tmp6);
@@ -55,7 +55,7 @@ frost$collections$Array* $tmp7 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp7));
 *(&local0) = $tmp6;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp6));
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:272
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:272
 frost$core$Int64 $tmp8 = (frost$core$Int64) {0u};
 frost$core$Int64 $tmp9;
 frost$core$Matcher$get_groupCount$R$frost$core$Int64(&$tmp9, param1);
@@ -68,7 +68,7 @@ frost$core$Bit $tmp14 = $tmp11.inclusive;
 bool $tmp15 = $tmp14.value;
 frost$core$Int64 $tmp16 = (frost$core$Int64) {1u};
 // begin inline call to function frost.core.Int64.get_asUInt64():frost.core.UInt64 from <internal>:1:1
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:422
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:555
 int64_t $tmp17 = $tmp16.value;
 frost$core$UInt64 $tmp18 = (frost$core$UInt64) {((uint64_t) $tmp17)};
 if ($tmp15) goto block5; else goto block6;
@@ -87,7 +87,7 @@ frost$core$Bit $tmp27 = (frost$core$Bit) {$tmp26};
 bool $tmp28 = $tmp27.value;
 if ($tmp28) goto block2; else goto block3;
 block2:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:273
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:273
 frost$collections$Array* $tmp29 = *(&local0);
 frost$core$Int64 $tmp30 = *(&local1);
 frost$core$String* $tmp31 = frost$core$Matcher$group$frost$core$Int64$R$frost$core$String$Q(param1, $tmp30);
@@ -99,7 +99,7 @@ int64_t $tmp34 = $tmp32.value;
 int64_t $tmp35 = $tmp33 - $tmp34;
 frost$core$Int64 $tmp36 = (frost$core$Int64) {$tmp35};
 // begin inline call to function frost.core.Int64.get_asUInt64():frost.core.UInt64 from <internal>:1:1
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:422
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:555
 int64_t $tmp37 = $tmp36.value;
 frost$core$UInt64 $tmp38 = (frost$core$UInt64) {((uint64_t) $tmp37)};
 if ($tmp15) goto block9; else goto block10;
@@ -125,7 +125,7 @@ frost$core$Int64 $tmp52 = (frost$core$Int64) {$tmp51};
 *(&local1) = $tmp52;
 goto block2;
 block3:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:275
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:275
 frost$collections$Array* $tmp53 = *(&local0);
 frost$collections$ImmutableArray* $tmp54 = frost$collections$ImmutableArray$from$frost$collections$Array$LTfrost$collections$ImmutableArray$T$GT$R$frost$collections$ImmutableArray$LTfrost$collections$ImmutableArray$T$GT($tmp53);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp54));
@@ -143,7 +143,7 @@ return;
 }
 frost$core$String* frost$core$String$Match$get_asString$R$frost$core$String(frost$core$String$Match* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:280
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:280
 frost$collections$ImmutableArray** $tmp59 = &param0->groups;
 frost$collections$ImmutableArray* $tmp60 = *$tmp59;
 frost$core$Int64 $tmp61 = (frost$core$Int64) {0u};
@@ -159,7 +159,7 @@ return $tmp65;
 }
 void frost$core$String$Match$cleanup(frost$core$String$Match* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:251
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:251
 frost$core$Immutable$cleanup(((frost$core$Immutable*) param0));
 frost$collections$ImmutableArray** $tmp67 = &param0->groups;
 frost$collections$ImmutableArray* $tmp68 = *$tmp67;

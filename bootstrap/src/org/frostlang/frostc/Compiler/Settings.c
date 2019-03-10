@@ -23,46 +23,50 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 
 void org$frostlang$frostc$Compiler$Settings$init$frost$io$File$frost$collections$ListView$LTfrost$io$File$GT$frost$core$Int64$frost$core$Int64$frost$core$Bit(org$frostlang$frostc$Compiler$Settings* param0, frost$io$File* param1, frost$collections$ListView* param2, frost$core$Int64 param3, frost$core$Int64 param4, frost$core$Bit param5) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:314
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Compiler.frost:315
+frost$core$Int64 $tmp2 = (frost$core$Int64) {8u};
+frost$core$Int64* $tmp3 = &param0->intSize;
+*$tmp3 = $tmp2;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Compiler.frost:319
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
-frost$io$File** $tmp2 = &param0->frostHome;
-frost$io$File* $tmp3 = *$tmp2;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp3));
 frost$io$File** $tmp4 = &param0->frostHome;
-*$tmp4 = param1;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:315
-FROST_ASSERT(40 == sizeof(frost$collections$ImmutableArray));
-frost$collections$ImmutableArray* $tmp5 = (frost$collections$ImmutableArray*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$ImmutableArray$class);
-frost$collections$ImmutableArray$init$frost$collections$ListView$LTfrost$collections$ImmutableArray$T$GT($tmp5, param2);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp5));
-frost$collections$ImmutableArray** $tmp6 = &param0->importDirs;
-frost$collections$ImmutableArray* $tmp7 = *$tmp6;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp7));
-frost$collections$ImmutableArray** $tmp8 = &param0->importDirs;
-*$tmp8 = $tmp5;
+frost$io$File* $tmp5 = *$tmp4;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp5));
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:316
-frost$core$Int64* $tmp9 = &param0->optimizationLevel;
-*$tmp9 = param3;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:317
-frost$core$Int64* $tmp10 = &param0->safetyLevel;
-*$tmp10 = param4;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:318
-frost$core$Bit* $tmp11 = &param0->debug;
-*$tmp11 = param5;
+frost$io$File** $tmp6 = &param0->frostHome;
+*$tmp6 = param1;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Compiler.frost:320
+FROST_ASSERT(40 == sizeof(frost$collections$ImmutableArray));
+frost$collections$ImmutableArray* $tmp7 = (frost$collections$ImmutableArray*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$ImmutableArray$class);
+frost$collections$ImmutableArray$init$frost$collections$ListView$LTfrost$collections$ImmutableArray$T$GT($tmp7, param2);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp7));
+frost$collections$ImmutableArray** $tmp8 = &param0->importDirs;
+frost$collections$ImmutableArray* $tmp9 = *$tmp8;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp9));
+frost$collections$ImmutableArray** $tmp10 = &param0->importDirs;
+*$tmp10 = $tmp7;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp7));
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Compiler.frost:321
+frost$core$Int64* $tmp11 = &param0->optimizationLevel;
+*$tmp11 = param3;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Compiler.frost:322
+frost$core$Int64* $tmp12 = &param0->safetyLevel;
+*$tmp12 = param4;
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Compiler.frost:323
+frost$core$Bit* $tmp13 = &param0->debug;
+*$tmp13 = param5;
 return;
 
 }
 void org$frostlang$frostc$Compiler$Settings$cleanup(org$frostlang$frostc$Compiler$Settings* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:301
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Compiler.frost:304
 frost$core$Immutable$cleanup(((frost$core$Immutable*) param0));
-frost$io$File** $tmp12 = &param0->frostHome;
-frost$io$File* $tmp13 = *$tmp12;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp13));
-frost$collections$ImmutableArray** $tmp14 = &param0->importDirs;
-frost$collections$ImmutableArray* $tmp15 = *$tmp14;
+frost$io$File** $tmp14 = &param0->frostHome;
+frost$io$File* $tmp15 = *$tmp14;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp15));
+frost$collections$ImmutableArray** $tmp16 = &param0->importDirs;
+frost$collections$ImmutableArray* $tmp17 = *$tmp16;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp17));
 return;
 
 }

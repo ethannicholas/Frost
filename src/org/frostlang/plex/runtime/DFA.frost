@@ -53,7 +53,7 @@ class DFA {
                 Console.printLine("invalid token \{c.asUInt8}")
                 System.exit(1)
             }
-            state := transitions[c.asInt64][state]
+            state := transitions[c.asInt][state]
             if state != 0 {
                 offset += 1
                 match c.asUInt8 {
@@ -62,7 +62,7 @@ class DFA {
                         column := 1
                     }
                     when 9 {
-                        column += 4 - column % 4
+                        column += 4->Int - column % 4
                     }
                     otherwise {
                         column += 1

@@ -85,6 +85,7 @@ frost$collections$Array* frost$core$String$split$frost$core$String$R$frost$colle
 frost$collections$Array* frost$core$String$split$frost$core$String$frost$core$Int64$R$frost$collections$Array$LTfrost$core$String$GT(frost$core$String* self, frost$core$String* p_delimiter, frost$core$Int64 p_maxResults);
 frost$collections$Array* frost$core$String$split$frost$core$RegularExpression$frost$core$Int64$R$frost$collections$Array$LTfrost$core$String$GT(frost$core$String* self, frost$core$RegularExpression* p_delimiter, frost$core$Int64 p_maxResults);
 frost$collections$Array* frost$core$String$split$frost$core$RegularExpression$R$frost$collections$Array$LTfrost$core$String$GT(frost$core$String* self, frost$core$RegularExpression* p_delimiter);
+frost$core$Int64$nullable frost$core$String$get_asInt$R$frost$core$Int64$Q(frost$core$String* self);
 frost$core$Int64$nullable frost$core$String$get_asInt64$R$frost$core$Int64$Q(frost$core$String* self);
 frost$core$UInt64$nullable frost$core$String$get_asUInt64$R$frost$core$UInt64$Q(frost$core$String* self);
 frost$core$Real64$nullable frost$core$String$get_asReal64$R$frost$core$Real64$Q(frost$core$String* self);

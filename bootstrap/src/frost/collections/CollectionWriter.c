@@ -24,7 +24,7 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 void frost$collections$CollectionWriter$addAll$frost$collections$CollectionView$LTfrost$collections$CollectionWriter$T$GT(frost$collections$CollectionWriter* param0, frost$collections$CollectionView* param1) {
 
 frost$core$Object* local0 = NULL;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionWriter.frost:27
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/CollectionWriter.frost:27
 ITable* $tmp2 = ((frost$collections$Iterable*) param1)->$class->itable;
 while ($tmp2->$class != (frost$core$Class*) &frost$collections$Iterable$class) {
     $tmp2 = $tmp2->next;
@@ -53,7 +53,7 @@ frost$core$Frost$ref$frost$core$Object$Q($tmp14);
 frost$core$Object* $tmp15 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q($tmp15);
 *(&local0) = $tmp14;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionWriter.frost:28
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/CollectionWriter.frost:28
 frost$core$Object* $tmp16 = *(&local0);
 ITable* $tmp17 = param0->$class->itable;
 while ($tmp17->$class != (frost$core$Class*) &frost$collections$CollectionWriter$class) {

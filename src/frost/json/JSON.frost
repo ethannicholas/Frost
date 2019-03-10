@@ -72,7 +72,7 @@ choice JSON {
                 while path[index] != "]" {
                     index := path.next(index)
                 }
-                def parsed := path.substring(indexStart .. index).asInt64
+                def parsed := path.substring(indexStart .. index).asInt
                 if parsed == null {
                     return null
                 }

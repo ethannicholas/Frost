@@ -41,7 +41,7 @@ return;
 org$frostlang$frostc$Main$Format org$frostlang$frostc$Main$Format$init$frost$core$Int64(frost$core$Int64 param0) {
 
 org$frostlang$frostc$Main$Format local0;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Main.frost:10
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Main.frost:10
 frost$core$Int64* $tmp3 = &(&local0)->$rawValue;
 *$tmp3 = param0;
 org$frostlang$frostc$Main$Format $tmp4 = *(&local0);
@@ -50,7 +50,7 @@ return $tmp4;
 }
 frost$core$Bit org$frostlang$frostc$Main$Format$$EQ$org$frostlang$frostc$Main$Format$R$frost$core$Bit(org$frostlang$frostc$Main$Format param0, org$frostlang$frostc$Main$Format param1) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Main.frost:10
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Main.frost:10
 frost$core$Int64 $tmp5 = param0.$rawValue;
 frost$core$Int64 $tmp6 = param1.$rawValue;
 int64_t $tmp7 = $tmp5.value;
@@ -60,11 +60,11 @@ frost$core$Bit $tmp10 = (frost$core$Bit) {$tmp9};
 bool $tmp11 = $tmp10.value;
 if ($tmp11) goto block1; else goto block2;
 block1:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Main.frost:10
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Main.frost:10
 frost$core$Bit $tmp12 = (frost$core$Bit) {false};
 return $tmp12;
 block2:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Main.frost:10
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Main.frost:10
 frost$core$Bit $tmp13 = (frost$core$Bit) {true};
 return $tmp13;
 

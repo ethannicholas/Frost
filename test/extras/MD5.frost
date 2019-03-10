@@ -154,7 +154,6 @@ class MD5 {
                 i += CHUNK_SIZE
             }
             if i < message.count {
-                Console.printLine("addAll2")
                 buffer.addAll(message[i .. length - i])
             }
         }

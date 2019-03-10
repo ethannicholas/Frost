@@ -17,7 +17,7 @@ return;
 }
 void org$frostlang$frostc$Annotations$Flag$cleanup(org$frostlang$frostc$Annotations$Flag* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:5
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Annotations.frost:5
 frost$core$Object$cleanup(((frost$core$Object*) param0));
 return;
 

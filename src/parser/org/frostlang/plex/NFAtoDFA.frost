@@ -44,10 +44,10 @@ class NFAtoDFA {
     }
 
     method addTransition(c:Char8, start:Int, next:Int) {
-        while transitions.count <= c.asInt64 {
+        while transitions.count <= c.asInt {
             transitions.add(Array<Int>())
         }
-        def a := transitions[c.asInt64]
+        def a := transitions[c.asInt]
         while a.count <= start {
             a.add(-1)
         }
@@ -59,7 +59,7 @@ class NFAtoDFA {
         state.scanned := true
         for c in DFA.START_CHAR ... DFA.END_CHAR  { -- FIXME iterate over Char8 directly
             def next := Array<Int>()
-            var bestAccept := Int64.MAX
+            var bestAccept := Int.MAX
             for idx in state.label.states {
                 def nfaState := nfa.states[idx]
                 if nfaState.accept(Char8(c)) {

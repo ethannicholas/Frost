@@ -26,14 +26,14 @@ typedef frost$core$Bit (*$fn131)(org$frostlang$frostc$pass$RemoveUnreachableBloc
 typedef void (*$fn136)(org$frostlang$frostc$pass$Analyzer*, frost$core$Int64);
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x70\x61\x73\x73\x2e\x52\x65\x6d\x6f\x76\x65\x55\x6e\x72\x65\x61\x63\x68\x61\x62\x6c\x65\x42\x6c\x6f\x63\x6b\x73", 49, -1383285895974991665, NULL };
-static frost$core$String $s33 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x41\x72\x72\x61\x79\x2e\x73\x74\x75\x62", 10, -775704626125802412, NULL };
+static frost$core$String $s33 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x41\x72\x72\x61\x79\x2e\x66\x72\x6f\x73\x74", 11, -1919842861654168654, NULL };
 static frost$core$String $s34 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x5b\x5d\x28\x69\x6e\x64\x65\x78\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x36\x34\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x54", 110, 4208646717458716543, NULL };
-static frost$core$String $s122 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x41\x72\x72\x61\x79\x2e\x73\x74\x75\x62", 10, -775704626125802412, NULL };
+static frost$core$String $s122 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x41\x72\x72\x61\x79\x2e\x66\x72\x6f\x73\x74", 11, -1919842861654168654, NULL };
 static frost$core$String $s123 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x5b\x5d\x28\x69\x6e\x64\x65\x78\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x36\x34\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x54", 110, 4208646717458716543, NULL };
 
 frost$core$Bit org$frostlang$frostc$pass$RemoveUnreachableBlocks$isUnreachable$org$frostlang$frostc$IR$Block$org$frostlang$frostc$pass$Analyzer$R$frost$core$Bit(org$frostlang$frostc$pass$RemoveUnreachableBlocks* param0, org$frostlang$frostc$IR$Block* param1, org$frostlang$frostc$pass$Analyzer* param2) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/pass/RemoveUnreachableBlocks.frost:7
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/pass/RemoveUnreachableBlocks.frost:7
 frost$collections$Array** $tmp2 = &param1->statements;
 frost$collections$Array* $tmp3 = *$tmp2;
 ITable* $tmp4 = ((frost$collections$CollectionView*) $tmp3)->$class->itable;
@@ -44,7 +44,7 @@ $fn6 $tmp5 = $tmp4->methods[0];
 frost$core$Int64 $tmp7 = $tmp5(((frost$collections$CollectionView*) $tmp3));
 frost$core$Int64 $tmp8 = (frost$core$Int64) {1u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from RemoveUnreachableBlocks.frost:7:31
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:179
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
 int64_t $tmp9 = $tmp7.value;
 int64_t $tmp10 = $tmp8.value;
 bool $tmp11 = $tmp9 == $tmp10;
@@ -52,7 +52,7 @@ frost$core$Bit $tmp12 = (frost$core$Bit) {$tmp11};
 bool $tmp13 = $tmp12.value;
 if ($tmp13) goto block1; else goto block2;
 block1:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/pass/RemoveUnreachableBlocks.frost:8
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/pass/RemoveUnreachableBlocks.frost:8
 frost$collections$Array** $tmp14 = &param1->statements;
 frost$collections$Array* $tmp15 = *$tmp14;
 frost$core$Int64 $tmp16 = (frost$core$Int64) {0u};
@@ -78,11 +78,11 @@ frost$core$Bit $tmp30 = (frost$core$Bit) {$tmp29};
 bool $tmp31 = $tmp30.value;
 if ($tmp31) goto block5; else goto block6;
 block6:;
-frost$core$Int64 $tmp32 = (frost$core$Int64) {22u};
+frost$core$Int64 $tmp32 = (frost$core$Int64) {74u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s33, $tmp32, &$s34);
 abort(); // unreachable
 block5:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/collections/Array.stub:23
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Array.frost:75
 frost$core$Object*** $tmp35 = &$tmp15->data;
 frost$core$Object** $tmp36 = *$tmp35;
 int64_t $tmp37 = $tmp16.value;
@@ -92,7 +92,7 @@ frost$core$Int64* $tmp39 = &((org$frostlang$frostc$IR$Statement*) $tmp38)->$rawV
 frost$core$Int64 $tmp40 = *$tmp39;
 frost$core$Int64 $tmp41 = (frost$core$Int64) {28u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from RemoveUnreachableBlocks.frost:9:34
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:179
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
 int64_t $tmp42 = $tmp40.value;
 int64_t $tmp43 = $tmp41.value;
 bool $tmp44 = $tmp42 == $tmp43;
@@ -100,7 +100,7 @@ frost$core$Bit $tmp45 = (frost$core$Bit) {$tmp44};
 bool $tmp46 = $tmp45.value;
 if ($tmp46) goto block9; else goto block8;
 block9:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/pass/RemoveUnreachableBlocks.frost:10
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/pass/RemoveUnreachableBlocks.frost:10
 frost$core$Bit $tmp47 = (frost$core$Bit) {true};
 frost$core$Frost$unref$frost$core$Object$Q($tmp38);
 return $tmp47;
@@ -108,7 +108,7 @@ block8:;
 frost$core$Frost$unref$frost$core$Object$Q($tmp38);
 goto block2;
 block2:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/pass/RemoveUnreachableBlocks.frost:14
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/pass/RemoveUnreachableBlocks.frost:14
 frost$core$Bit $tmp48 = (frost$core$Bit) {false};
 return $tmp48;
 
@@ -118,10 +118,10 @@ frost$core$Bit org$frostlang$frostc$pass$RemoveUnreachableBlocks$process$org$fro
 frost$core$Bit local0;
 frost$core$Int64 local1;
 org$frostlang$frostc$IR$Block* local2 = NULL;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/pass/RemoveUnreachableBlocks.frost:18
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/pass/RemoveUnreachableBlocks.frost:18
 frost$core$Bit $tmp49 = (frost$core$Bit) {false};
 *(&local0) = $tmp49;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/pass/RemoveUnreachableBlocks.frost:19
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/pass/RemoveUnreachableBlocks.frost:19
 frost$collections$Array** $tmp50 = &param1->blocks;
 frost$collections$Array* $tmp51 = *$tmp50;
 ITable* $tmp52 = ((frost$collections$CollectionView*) $tmp51)->$class->itable;
@@ -144,16 +144,16 @@ frost$core$Int64 $tmp65 = $tmp64.start;
 frost$core$Int64 $tmp66 = $tmp64.end;
 frost$core$Int64 $tmp67 = $tmp64.step;
 // begin inline call to function frost.core.Int64.get_asUInt64():frost.core.UInt64 from <internal>:1:1
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:422
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:555
 int64_t $tmp68 = $tmp67.value;
 frost$core$UInt64 $tmp69 = (frost$core$UInt64) {((uint64_t) $tmp68)};
 // begin inline call to function frost.core.Int64.-():frost.core.Int64 from RemoveUnreachableBlocks.frost:19:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:49
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:84
 int64_t $tmp70 = $tmp67.value;
 int64_t $tmp71 = -$tmp70;
 frost$core$Int64 $tmp72 = (frost$core$Int64) {$tmp71};
 // begin inline call to function frost.core.Int64.get_asUInt64():frost.core.UInt64 from <internal>:1:1
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:422
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:555
 int64_t $tmp73 = $tmp72.value;
 frost$core$UInt64 $tmp74 = (frost$core$UInt64) {((uint64_t) $tmp73)};
 frost$core$Bit $tmp75 = $tmp64.inclusive;
@@ -198,7 +198,7 @@ frost$core$Bit $tmp101 = (frost$core$Bit) {$tmp100};
 bool $tmp102 = $tmp101.value;
 if ($tmp102) goto block4; else goto block5;
 block4:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/pass/RemoveUnreachableBlocks.frost:20
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/pass/RemoveUnreachableBlocks.frost:20
 frost$collections$Array** $tmp103 = &param1->blocks;
 frost$collections$Array* $tmp104 = *$tmp103;
 frost$core$Int64 $tmp105 = *(&local1);
@@ -224,11 +224,11 @@ frost$core$Bit $tmp119 = (frost$core$Bit) {$tmp118};
 bool $tmp120 = $tmp119.value;
 if ($tmp120) goto block14; else goto block15;
 block15:;
-frost$core$Int64 $tmp121 = (frost$core$Int64) {22u};
+frost$core$Int64 $tmp121 = (frost$core$Int64) {74u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s122, $tmp121, &$s123);
 abort(); // unreachable
 block14:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/collections/Array.stub:23
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Array.frost:75
 frost$core$Object*** $tmp124 = &$tmp104->data;
 frost$core$Object** $tmp125 = *$tmp124;
 int64_t $tmp126 = $tmp105.value;
@@ -240,18 +240,18 @@ org$frostlang$frostc$IR$Block* $tmp128 = *(&local2);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp128));
 *(&local2) = ((org$frostlang$frostc$IR$Block*) $tmp127);
 frost$core$Frost$unref$frost$core$Object$Q($tmp127);
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/pass/RemoveUnreachableBlocks.frost:21
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/pass/RemoveUnreachableBlocks.frost:21
 org$frostlang$frostc$IR$Block* $tmp129 = *(&local2);
 $fn131 $tmp130 = ($fn131) param0->$class->vtable[2];
 frost$core$Bit $tmp132 = $tmp130(param0, $tmp129, param2);
 bool $tmp133 = $tmp132.value;
 if ($tmp133) goto block17; else goto block18;
 block17:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/pass/RemoveUnreachableBlocks.frost:22
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/pass/RemoveUnreachableBlocks.frost:22
 frost$core$Int64 $tmp134 = *(&local1);
 $fn136 $tmp135 = ($fn136) param2->$class->vtable[12];
 $tmp135(param2, $tmp134);
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/pass/RemoveUnreachableBlocks.frost:23
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/pass/RemoveUnreachableBlocks.frost:23
 frost$core$Bit $tmp137 = (frost$core$Bit) {true};
 *(&local0) = $tmp137;
 goto block18;
@@ -267,7 +267,7 @@ int64_t $tmp141 = $tmp139.value;
 int64_t $tmp142 = $tmp140 - $tmp141;
 frost$core$Int64 $tmp143 = (frost$core$Int64) {$tmp142};
 // begin inline call to function frost.core.Int64.get_asUInt64():frost.core.UInt64 from <internal>:1:1
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:422
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:555
 int64_t $tmp144 = $tmp143.value;
 frost$core$UInt64 $tmp145 = (frost$core$UInt64) {((uint64_t) $tmp144)};
 if ($tmp76) goto block23; else goto block24;
@@ -291,7 +291,7 @@ int64_t $tmp157 = $tmp66.value;
 int64_t $tmp158 = $tmp156 - $tmp157;
 frost$core$Int64 $tmp159 = (frost$core$Int64) {$tmp158};
 // begin inline call to function frost.core.Int64.get_asUInt64():frost.core.UInt64 from <internal>:1:1
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:422
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:555
 int64_t $tmp160 = $tmp159.value;
 frost$core$UInt64 $tmp161 = (frost$core$UInt64) {((uint64_t) $tmp160)};
 if ($tmp76) goto block26; else goto block27;
@@ -317,7 +317,7 @@ frost$core$Int64 $tmp175 = (frost$core$Int64) {$tmp174};
 *(&local1) = $tmp175;
 goto block4;
 block5:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/pass/RemoveUnreachableBlocks.frost:26
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/pass/RemoveUnreachableBlocks.frost:26
 frost$core$Bit $tmp176 = *(&local0);
 return $tmp176;
 
@@ -329,7 +329,7 @@ return;
 }
 void org$frostlang$frostc$pass$RemoveUnreachableBlocks$cleanup(org$frostlang$frostc$pass$RemoveUnreachableBlocks* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/pass/RemoveUnreachableBlocks.frost:5
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/pass/RemoveUnreachableBlocks.frost:5
 frost$core$Object$cleanup(((frost$core$Object*) param0));
 return;
 

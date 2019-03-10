@@ -18,6 +18,7 @@ typedef struct org$frostlang$frostc$Compiler$Settings {
     frost$core$Int64 optimizationLevel;
     frost$core$Int64 safetyLevel;
     frost$core$Bit debug;
+    frost$core$Int64 intSize;
 } org$frostlang$frostc$Compiler$Settings;
 #include "frost/core/Class.h"
 typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[2]; } org$frostlang$frostc$Compiler$Settings$class_type;

@@ -3,13 +3,13 @@
 typedef struct frost$core$Class frost$core$Class;
 #include "frost/core/Int32_types.h"
 #include "frost/core/UInt8_types.h"
+typedef struct frost$core$String frost$core$String;
 typedef struct frost$io$OutputStream frost$io$OutputStream;
 typedef struct frost$core$Weak frost$core$Weak;
 typedef struct frost$io$MemoryOutputStream frost$io$MemoryOutputStream;
 typedef struct frost$collections$HashSet frost$collections$HashSet;
 typedef struct frost$collections$HashMap frost$collections$HashMap;
 #include "frost/core/Int64_types.h"
-typedef struct frost$core$String frost$core$String;
 #include "org/frostlang/frostc/Position_types.h"
 typedef struct frost$collections$IdentityMap frost$collections$IdentityMap;
 typedef struct org$frostlang$frostc$IR org$frostlang$frostc$IR;
@@ -18,6 +18,7 @@ typedef struct org$frostlang$frostc$LLVMCodeGenerator {
     frost$core$Class* $class;
     frost$core$Int32 refCount;
     frost$core$UInt8 $flags;
+    frost$core$String* INT_CLASS;
     frost$io$OutputStream* physicalOut;
     frost$io$OutputStream* out;
     frost$core$Weak* compiler;

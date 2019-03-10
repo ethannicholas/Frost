@@ -29,19 +29,19 @@ class Token : Value {
         @override
         function get_asString():String {
             match self {
-                when COMMA { return "COMMA" }
-                when LBRACE { return "LBRACE" }
+                when TRUE { return "TRUE" }
+                when RBRACE { return "RBRACE" }
                 when REAL { return "REAL" }
                 when RBRACKET { return "RBRACKET" }
-                when COLON { return "COLON" }
-                when STRING { return "STRING" }
+                when NULL { return "NULL" }
+                when COMMA { return "COMMA" }
                 when WS { return "WS" }
+                when FALSE { return "FALSE" }
+                when COLON { return "COLON" }
+                when LBRACE { return "LBRACE" }
                 when INT { return "INT" }
                 when LBRACKET { return "LBRACKET" }
-                when NULL { return "NULL" }
-                when TRUE { return "TRUE" }
-                when FALSE { return "FALSE" }
-                when RBRACE { return "RBRACE" }
+                when STRING { return "STRING" }
                 when EOF { return "EOF" }
                 when SHIFTRIGHT { return ">>" }
                 when REGEX { return "REGEX" }

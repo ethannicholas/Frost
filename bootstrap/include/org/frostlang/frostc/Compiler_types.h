@@ -3,6 +3,7 @@
 typedef struct frost$core$Class frost$core$Class;
 #include "frost/core/Int32_types.h"
 #include "frost/core/UInt8_types.h"
+#include "frost/core/Bit_types.h"
 typedef struct org$frostlang$frostc$Type org$frostlang$frostc$Type;
 typedef struct org$frostlang$frostc$Compiler$Settings org$frostlang$frostc$Compiler$Settings;
 typedef struct org$frostlang$frostc$parser$Parser org$frostlang$frostc$parser$Parser;
@@ -16,7 +17,6 @@ typedef struct org$frostlang$frostc$IR org$frostlang$frostc$IR;
 typedef struct org$frostlang$frostc$CodeGenerator org$frostlang$frostc$CodeGenerator;
 typedef struct frost$threads$MessageQueue frost$threads$MessageQueue;
 #include "frost/core/Int64_types.h"
-#include "frost/core/Bit_types.h"
 typedef struct org$frostlang$frostc$Variable org$frostlang$frostc$Variable;
 #include "org/frostlang/frostc/IR/Block/ID_types.h"
 typedef struct frost$collections$IdentityMap frost$collections$IdentityMap;
@@ -26,6 +26,7 @@ typedef struct org$frostlang$frostc$Compiler {
     frost$core$Class* $class;
     frost$core$Int32 refCount;
     frost$core$UInt8 $flags;
+    frost$core$Bit INT_EXISTS;
     org$frostlang$frostc$Type* VOID_TYPE;
     org$frostlang$frostc$Type* NULL_TYPE;
     org$frostlang$frostc$Type* OBJECT_TYPE;
@@ -36,10 +37,12 @@ typedef struct org$frostlang$frostc$Compiler {
     org$frostlang$frostc$Type* STRING_TYPE;
     org$frostlang$frostc$Type* ERROR_TYPE;
     org$frostlang$frostc$Type* REGULAR_EXPRESSION_TYPE;
+    org$frostlang$frostc$Type* BUILTIN_INT_TYPE;
     org$frostlang$frostc$Type* BUILTIN_INT8_TYPE;
     org$frostlang$frostc$Type* BUILTIN_INT16_TYPE;
     org$frostlang$frostc$Type* BUILTIN_INT32_TYPE;
     org$frostlang$frostc$Type* BUILTIN_INT64_TYPE;
+    org$frostlang$frostc$Type* BUILTIN_UINT_TYPE;
     org$frostlang$frostc$Type* BUILTIN_UINT8_TYPE;
     org$frostlang$frostc$Type* BUILTIN_UINT16_TYPE;
     org$frostlang$frostc$Type* BUILTIN_UINT32_TYPE;
@@ -50,10 +53,12 @@ typedef struct org$frostlang$frostc$Compiler {
     org$frostlang$frostc$Type* INT16_TYPE;
     org$frostlang$frostc$Type* INT32_TYPE;
     org$frostlang$frostc$Type* INT64_TYPE;
+    org$frostlang$frostc$Type* INT_TYPE;
     org$frostlang$frostc$Type* UINT8_TYPE;
     org$frostlang$frostc$Type* UINT16_TYPE;
     org$frostlang$frostc$Type* UINT32_TYPE;
     org$frostlang$frostc$Type* UINT64_TYPE;
+    org$frostlang$frostc$Type* UINT_TYPE;
     org$frostlang$frostc$Type* REAL32_TYPE;
     org$frostlang$frostc$Type* REAL64_TYPE;
     org$frostlang$frostc$Type* CHAR8_TYPE;

@@ -83,11 +83,11 @@ static frost$core$String $s905 = { (frost$core$Class*) &frost$core$String$class,
 void frost$collections$HashMap$init(frost$collections$HashMap* param0) {
 
 frost$core$Int64 local0;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:95
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:95
 frost$core$Int64 $tmp2 = (frost$core$Int64) {0u};
 frost$core$Int64* $tmp3 = &param0->changeCount;
 *$tmp3 = $tmp2;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:101
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:101
 frost$core$Int64* $tmp4 = &param0->changeCount;
 frost$core$Int64 $tmp5 = *$tmp4;
 frost$core$Int64 $tmp6 = (frost$core$Int64) {1u};
@@ -97,22 +97,22 @@ int64_t $tmp9 = $tmp7 + $tmp8;
 frost$core$Int64 $tmp10 = (frost$core$Int64) {$tmp9};
 frost$core$Int64* $tmp11 = &param0->changeCount;
 *$tmp11 = $tmp10;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:102
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:102
 frost$core$Int64 $tmp12 = (frost$core$Int64) {0u};
 frost$core$Int64* $tmp13 = &param0->_count;
 *$tmp13 = $tmp12;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:103
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:103
 frost$core$Int64 $tmp14 = (frost$core$Int64) {16u};
 frost$core$Int64* $tmp15 = &param0->bucketCount;
 *$tmp15 = $tmp14;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:104
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:104
 frost$core$Int64* $tmp16 = &param0->bucketCount;
 frost$core$Int64 $tmp17 = *$tmp16;
 int64_t $tmp18 = $tmp17.value;
 frost$collections$HashMap$Entry** $tmp19 = ((frost$collections$HashMap$Entry**) frostAlloc($tmp18 * 8));
 frost$collections$HashMap$Entry*** $tmp20 = &param0->contents;
 *$tmp20 = $tmp19;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:105
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:105
 frost$core$Int64 $tmp21 = (frost$core$Int64) {0u};
 frost$core$Int64* $tmp22 = &param0->bucketCount;
 frost$core$Int64 $tmp23 = *$tmp22;
@@ -125,7 +125,7 @@ frost$core$Bit $tmp28 = $tmp25.inclusive;
 bool $tmp29 = $tmp28.value;
 frost$core$Int64 $tmp30 = (frost$core$Int64) {1u};
 // begin inline call to function frost.core.Int64.get_asUInt64():frost.core.UInt64 from <internal>:1:1
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:422
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:555
 int64_t $tmp31 = $tmp30.value;
 frost$core$UInt64 $tmp32 = (frost$core$UInt64) {((uint64_t) $tmp31)};
 if ($tmp29) goto block5; else goto block6;
@@ -144,7 +144,7 @@ frost$core$Bit $tmp41 = (frost$core$Bit) {$tmp40};
 bool $tmp42 = $tmp41.value;
 if ($tmp42) goto block2; else goto block3;
 block2:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:106
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:106
 frost$collections$HashMap$Entry*** $tmp43 = &param0->contents;
 frost$collections$HashMap$Entry** $tmp44 = *$tmp43;
 frost$core$Int64 $tmp45 = *(&local0);
@@ -159,7 +159,7 @@ int64_t $tmp50 = $tmp48.value;
 int64_t $tmp51 = $tmp49 - $tmp50;
 frost$core$Int64 $tmp52 = (frost$core$Int64) {$tmp51};
 // begin inline call to function frost.core.Int64.get_asUInt64():frost.core.UInt64 from <internal>:1:1
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:422
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:555
 int64_t $tmp53 = $tmp52.value;
 frost$core$UInt64 $tmp54 = (frost$core$UInt64) {((uint64_t) $tmp53)};
 if ($tmp29) goto block9; else goto block10;
@@ -185,7 +185,7 @@ frost$core$Int64 $tmp68 = (frost$core$Int64) {$tmp67};
 *(&local0) = $tmp68;
 goto block2;
 block3:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:108
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:108
 frost$core$Int64* $tmp69 = &param0->bucketCount;
 frost$core$Int64 $tmp70 = *$tmp69;
 frost$core$Int64 $tmp71 = (frost$core$Int64) {3u};
@@ -207,9 +207,9 @@ void frost$collections$HashMap$init$frost$collections$MapView$LTfrost$collection
 
 frost$collections$Key* local0 = NULL;
 frost$core$Object* local1 = NULL;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:112
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:112
 frost$collections$HashMap$init(param0);
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:113
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:113
 ITable* $tmp82 = param1->$class->itable;
 while ($tmp82->$class != (frost$core$Class*) &frost$collections$MapView$class) {
     $tmp82 = $tmp82->next;
@@ -247,7 +247,7 @@ frost$core$Frost$ref$frost$core$Object$Q($tmp99);
 frost$core$Object* $tmp100 = *(&local1);
 frost$core$Frost$unref$frost$core$Object$Q($tmp100);
 *(&local1) = $tmp99;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:114
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:114
 frost$collections$Key* $tmp101 = *(&local0);
 frost$core$Object* $tmp102 = *(&local1);
 frost$collections$HashMap$$IDXEQ$frost$collections$HashMap$K$frost$collections$HashMap$V(param0, $tmp101, $tmp102);
@@ -267,9 +267,9 @@ return;
 void frost$collections$HashMap$init$frost$collections$CollectionView$LT$LPfrost$collections$HashMap$K$Cfrost$collections$HashMap$V$RP$GT(frost$collections$HashMap* param0, frost$collections$CollectionView* param1) {
 
 frost$core$Tuple2* local0 = NULL;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:119
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:119
 frost$collections$HashMap$init(param0);
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:120
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:120
 ITable* $tmp105 = ((frost$collections$Iterable*) param1)->$class->itable;
 while ($tmp105->$class != (frost$core$Class*) &frost$collections$Iterable$class) {
     $tmp105 = $tmp105->next;
@@ -298,7 +298,7 @@ frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Tupl
 frost$core$Tuple2* $tmp118 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp118));
 *(&local0) = ((frost$core$Tuple2*) $tmp117);
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:121
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:121
 frost$core$Tuple2* $tmp119 = *(&local0);
 frost$core$Object** $tmp120 = &$tmp119->f0;
 frost$core$Object* $tmp121 = *$tmp120;
@@ -319,7 +319,7 @@ return;
 void frost$collections$HashMap$cleanup(frost$collections$HashMap* param0) {
 
 frost$core$Int64 local0;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:127
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:127
 frost$core$Int64 $tmp126 = (frost$core$Int64) {0u};
 frost$core$Int64* $tmp127 = &param0->bucketCount;
 frost$core$Int64 $tmp128 = *$tmp127;
@@ -332,7 +332,7 @@ frost$core$Bit $tmp133 = $tmp130.inclusive;
 bool $tmp134 = $tmp133.value;
 frost$core$Int64 $tmp135 = (frost$core$Int64) {1u};
 // begin inline call to function frost.core.Int64.get_asUInt64():frost.core.UInt64 from <internal>:1:1
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:422
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:555
 int64_t $tmp136 = $tmp135.value;
 frost$core$UInt64 $tmp137 = (frost$core$UInt64) {((uint64_t) $tmp136)};
 if ($tmp134) goto block5; else goto block6;
@@ -351,7 +351,7 @@ frost$core$Bit $tmp146 = (frost$core$Bit) {$tmp145};
 bool $tmp147 = $tmp146.value;
 if ($tmp147) goto block2; else goto block3;
 block2:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:128
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:128
 frost$collections$HashMap$Entry*** $tmp148 = &param0->contents;
 frost$collections$HashMap$Entry** $tmp149 = *$tmp148;
 frost$core$Int64 $tmp150 = *(&local0);
@@ -361,7 +361,7 @@ frost$core$Bit $tmp153 = (frost$core$Bit) {$tmp152 != NULL};
 bool $tmp154 = $tmp153.value;
 if ($tmp154) goto block7; else goto block8;
 block7:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:129
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:129
 frost$collections$HashMap$Entry*** $tmp155 = &param0->contents;
 frost$collections$HashMap$Entry** $tmp156 = *$tmp155;
 frost$core$Int64 $tmp157 = *(&local0);
@@ -376,7 +376,7 @@ int64_t $tmp162 = $tmp160.value;
 int64_t $tmp163 = $tmp161 - $tmp162;
 frost$core$Int64 $tmp164 = (frost$core$Int64) {$tmp163};
 // begin inline call to function frost.core.Int64.get_asUInt64():frost.core.UInt64 from <internal>:1:1
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:422
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:555
 int64_t $tmp165 = $tmp164.value;
 frost$core$UInt64 $tmp166 = (frost$core$UInt64) {((uint64_t) $tmp165)};
 if ($tmp134) goto block11; else goto block12;
@@ -402,11 +402,11 @@ frost$core$Int64 $tmp180 = (frost$core$Int64) {$tmp179};
 *(&local0) = $tmp180;
 goto block2;
 block3:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:132
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:132
 frost$collections$HashMap$Entry*** $tmp181 = &param0->contents;
 frost$collections$HashMap$Entry** $tmp182 = *$tmp181;
 frostFree($tmp182);
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:126
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:126
 frost$core$Object$cleanup(((frost$core$Object*) param0));
 return;
 
@@ -414,19 +414,19 @@ return;
 frost$core$Int64 frost$collections$HashMap$indexFor$frost$collections$HashMap$K$R$frost$core$Int64(frost$collections$HashMap* param0, frost$collections$Key* param1) {
 
 frost$core$Int64 local0;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:140
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:141
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:140
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:141
 frost$core$Bit $tmp183 = (frost$core$Bit) {false};
 bool $tmp184 = $tmp183.value;
 if ($tmp184) goto block1; else goto block3;
 block1:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:142
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:142
 frost$core$Int64 $tmp185 = (frost$core$Int64) {0u};
 *(&local0) = $tmp185;
 goto block2;
 block3:;
 // <no location>
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:145
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:145
 ITable* $tmp186 = param1->$class->itable;
 while ($tmp186->$class != (frost$core$Class*) &frost$collections$Key$class) {
     $tmp186 = $tmp186->next;
@@ -436,12 +436,12 @@ frost$core$Int64 $tmp189 = $tmp187(param1);
 *(&local0) = $tmp189;
 goto block2;
 block2:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:149
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:149
 frost$core$Int64 $tmp190 = *(&local0);
 frost$core$Int64 $tmp191 = *(&local0);
 frost$core$Int64 $tmp192 = (frost$core$Int64) {20u};
 // begin inline call to function frost.core.Int64.>>(other:frost.core.Int64):frost.core.Int64 from HashMap.frost:149:18
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:158
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:215
 int64_t $tmp193 = $tmp191.value;
 int64_t $tmp194 = $tmp192.value;
 int64_t $tmp195 = $tmp193 >> $tmp194;
@@ -449,13 +449,13 @@ frost$core$Int64 $tmp196 = (frost$core$Int64) {$tmp195};
 frost$core$Int64 $tmp197 = *(&local0);
 frost$core$Int64 $tmp198 = (frost$core$Int64) {12u};
 // begin inline call to function frost.core.Int64.>>(other:frost.core.Int64):frost.core.Int64 from HashMap.frost:149:32
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:158
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:215
 int64_t $tmp199 = $tmp197.value;
 int64_t $tmp200 = $tmp198.value;
 int64_t $tmp201 = $tmp199 >> $tmp200;
 frost$core$Int64 $tmp202 = (frost$core$Int64) {$tmp201};
 // begin inline call to function frost.core.Int64.~~(other:frost.core.Int64):frost.core.Int64 from HashMap.frost:149:26
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:143
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:197
 int64_t $tmp203 = $tmp196.value;
 int64_t $tmp204 = $tmp202.value;
 int64_t $tmp205 = $tmp203 ^ $tmp204;
@@ -463,13 +463,13 @@ frost$core$Int64 $tmp206 = (frost$core$Int64) {$tmp205};
 frost$core$Int64 $tmp207 = *(&local0);
 frost$core$Int64 $tmp208 = (frost$core$Int64) {7u};
 // begin inline call to function frost.core.Int64.>>(other:frost.core.Int64):frost.core.Int64 from HashMap.frost:149:46
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:158
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:215
 int64_t $tmp209 = $tmp207.value;
 int64_t $tmp210 = $tmp208.value;
 int64_t $tmp211 = $tmp209 >> $tmp210;
 frost$core$Int64 $tmp212 = (frost$core$Int64) {$tmp211};
 // begin inline call to function frost.core.Int64.~~(other:frost.core.Int64):frost.core.Int64 from HashMap.frost:149:40
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:143
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:197
 int64_t $tmp213 = $tmp206.value;
 int64_t $tmp214 = $tmp212.value;
 int64_t $tmp215 = $tmp213 ^ $tmp214;
@@ -477,25 +477,25 @@ frost$core$Int64 $tmp216 = (frost$core$Int64) {$tmp215};
 frost$core$Int64 $tmp217 = *(&local0);
 frost$core$Int64 $tmp218 = (frost$core$Int64) {4u};
 // begin inline call to function frost.core.Int64.>>(other:frost.core.Int64):frost.core.Int64 from HashMap.frost:149:59
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:158
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:215
 int64_t $tmp219 = $tmp217.value;
 int64_t $tmp220 = $tmp218.value;
 int64_t $tmp221 = $tmp219 >> $tmp220;
 frost$core$Int64 $tmp222 = (frost$core$Int64) {$tmp221};
 // begin inline call to function frost.core.Int64.~~(other:frost.core.Int64):frost.core.Int64 from HashMap.frost:149:53
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:143
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:197
 int64_t $tmp223 = $tmp216.value;
 int64_t $tmp224 = $tmp222.value;
 int64_t $tmp225 = $tmp223 ^ $tmp224;
 frost$core$Int64 $tmp226 = (frost$core$Int64) {$tmp225};
 // begin inline call to function frost.core.Int64.~~(other:frost.core.Int64):frost.core.Int64 from HashMap.frost:149:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:143
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:197
 int64_t $tmp227 = $tmp190.value;
 int64_t $tmp228 = $tmp226.value;
 int64_t $tmp229 = $tmp227 ^ $tmp228;
 frost$core$Int64 $tmp230 = (frost$core$Int64) {$tmp229};
 *(&local0) = $tmp230;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:152
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:152
 frost$core$Int64 $tmp231 = *(&local0);
 frost$core$Int64* $tmp232 = &param0->bucketCount;
 frost$core$Int64 $tmp233 = *$tmp232;
@@ -505,13 +505,13 @@ int64_t $tmp236 = $tmp234.value;
 int64_t $tmp237 = $tmp235 - $tmp236;
 frost$core$Int64 $tmp238 = (frost$core$Int64) {$tmp237};
 // begin inline call to function frost.core.Int64.&&(other:frost.core.Int64):frost.core.Int64 from HashMap.frost:152:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:123
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:173
 int64_t $tmp239 = $tmp231.value;
 int64_t $tmp240 = $tmp238.value;
 int64_t $tmp241 = $tmp239 & $tmp240;
 frost$core$Int64 $tmp242 = (frost$core$Int64) {$tmp241};
 *(&local0) = $tmp242;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:153
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:153
 frost$core$Int64 $tmp243 = *(&local0);
 return $tmp243;
 
@@ -520,10 +520,10 @@ frost$core$Object* frost$collections$HashMap$$IDX$frost$collections$HashMap$K$R$
 
 frost$core$Int64 local0;
 frost$collections$HashMap$Entry* local1 = NULL;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:158
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:158
 frost$core$Int64 $tmp244 = frost$collections$HashMap$indexFor$frost$collections$HashMap$K$R$frost$core$Int64(param0, param1);
 *(&local0) = $tmp244;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:159
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:159
 frost$collections$HashMap$Entry*** $tmp245 = &param0->contents;
 frost$collections$HashMap$Entry** $tmp246 = *$tmp245;
 frost$core$Int64 $tmp247 = *(&local0);
@@ -534,7 +534,7 @@ frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp249));
 frost$collections$HashMap$Entry* $tmp250 = *(&local1);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp250));
 *(&local1) = $tmp249;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:160
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:160
 goto block1;
 block1:;
 frost$collections$HashMap$Entry* $tmp251 = *(&local1);
@@ -554,7 +554,7 @@ frost$core$Bit $tmp260 = $tmp258(((frost$core$Equatable*) $tmp256), ((frost$core
 bool $tmp261 = $tmp260.value;
 if ($tmp261) goto block2; else goto block3;
 block2:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:161
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:161
 frost$collections$HashMap$Entry* $tmp262 = *(&local1);
 frost$collections$HashMap$Entry** $tmp263 = &$tmp262->next;
 frost$collections$HashMap$Entry* $tmp264 = *$tmp263;
@@ -564,13 +564,13 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp265));
 *(&local1) = $tmp264;
 goto block1;
 block3:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:163
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:163
 frost$collections$HashMap$Entry* $tmp266 = *(&local1);
 frost$core$Bit $tmp267 = (frost$core$Bit) {$tmp266 != NULL};
 bool $tmp268 = $tmp267.value;
 if ($tmp268) goto block5; else goto block7;
 block5:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:164
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:164
 frost$collections$HashMap$Entry* $tmp269 = *(&local1);
 frost$core$Object** $tmp270 = &$tmp269->value;
 frost$core$Object* $tmp271 = *$tmp270;
@@ -581,7 +581,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp272));
 return $tmp271;
 block7:;
 // <no location>
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:167
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:167
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) NULL));
 frost$collections$HashMap$Entry* $tmp273 = *(&local1);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp273));
@@ -596,10 +596,10 @@ frost$core$Bit frost$collections$HashMap$contains$frost$collections$HashMap$K$R$
 
 frost$core$Int64 local0;
 frost$collections$HashMap$Entry* local1 = NULL;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:173
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:173
 frost$core$Int64 $tmp274 = frost$collections$HashMap$indexFor$frost$collections$HashMap$K$R$frost$core$Int64(param0, param1);
 *(&local0) = $tmp274;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:174
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:174
 frost$collections$HashMap$Entry*** $tmp275 = &param0->contents;
 frost$collections$HashMap$Entry** $tmp276 = *$tmp275;
 frost$core$Int64 $tmp277 = *(&local0);
@@ -610,7 +610,7 @@ frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp279));
 frost$collections$HashMap$Entry* $tmp280 = *(&local1);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp280));
 *(&local1) = $tmp279;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:175
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:175
 goto block1;
 block1:;
 frost$collections$HashMap$Entry* $tmp281 = *(&local1);
@@ -630,7 +630,7 @@ frost$core$Bit $tmp290 = $tmp288(((frost$core$Equatable*) $tmp286), ((frost$core
 bool $tmp291 = $tmp290.value;
 if ($tmp291) goto block2; else goto block3;
 block2:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:176
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:176
 frost$collections$HashMap$Entry* $tmp292 = *(&local1);
 frost$collections$HashMap$Entry** $tmp293 = &$tmp292->next;
 frost$collections$HashMap$Entry* $tmp294 = *$tmp293;
@@ -640,7 +640,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp295));
 *(&local1) = $tmp294;
 goto block1;
 block3:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:178
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:178
 frost$collections$HashMap$Entry* $tmp296 = *(&local1);
 frost$core$Bit $tmp297 = (frost$core$Bit) {$tmp296 != NULL};
 frost$collections$HashMap$Entry* $tmp298 = *(&local1);
@@ -654,7 +654,7 @@ void frost$collections$HashMap$$IDXEQ$frost$collections$HashMap$K$frost$collecti
 frost$core$Int64 local0;
 frost$collections$HashMap$Entry* local1 = NULL;
 frost$collections$HashMap$Entry* local2 = NULL;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:183
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:183
 frost$core$Int64* $tmp299 = &param0->changeCount;
 frost$core$Int64 $tmp300 = *$tmp299;
 frost$core$Int64 $tmp301 = (frost$core$Int64) {1u};
@@ -664,10 +664,10 @@ int64_t $tmp304 = $tmp302 + $tmp303;
 frost$core$Int64 $tmp305 = (frost$core$Int64) {$tmp304};
 frost$core$Int64* $tmp306 = &param0->changeCount;
 *$tmp306 = $tmp305;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:184
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:184
 frost$core$Int64 $tmp307 = frost$collections$HashMap$indexFor$frost$collections$HashMap$K$R$frost$core$Int64(param0, param1);
 *(&local0) = $tmp307;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:185
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:185
 frost$collections$HashMap$Entry*** $tmp308 = &param0->contents;
 frost$collections$HashMap$Entry** $tmp309 = *$tmp308;
 frost$core$Int64 $tmp310 = *(&local0);
@@ -678,7 +678,7 @@ frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp312));
 frost$collections$HashMap$Entry* $tmp313 = *(&local1);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp313));
 *(&local1) = $tmp312;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:186
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:186
 goto block1;
 block1:;
 frost$collections$HashMap$Entry* $tmp314 = *(&local1);
@@ -698,7 +698,7 @@ frost$core$Bit $tmp323 = $tmp321(((frost$core$Equatable*) $tmp319), ((frost$core
 bool $tmp324 = $tmp323.value;
 if ($tmp324) goto block2; else goto block3;
 block2:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:187
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:187
 frost$collections$HashMap$Entry* $tmp325 = *(&local1);
 frost$collections$HashMap$Entry** $tmp326 = &$tmp325->next;
 frost$collections$HashMap$Entry* $tmp327 = *$tmp326;
@@ -708,13 +708,13 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp328));
 *(&local1) = $tmp327;
 goto block1;
 block3:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:189
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:189
 frost$collections$HashMap$Entry* $tmp329 = *(&local1);
 frost$core$Bit $tmp330 = (frost$core$Bit) {$tmp329 == NULL};
 bool $tmp331 = $tmp330.value;
 if ($tmp331) goto block5; else goto block7;
 block5:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:190
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:190
 frost$collections$HashMap$Entry*** $tmp332 = &param0->contents;
 frost$collections$HashMap$Entry** $tmp333 = *$tmp332;
 frost$core$Int64 $tmp334 = *(&local0);
@@ -725,18 +725,18 @@ frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp336));
 frost$collections$HashMap$Entry* $tmp337 = *(&local2);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp337));
 *(&local2) = $tmp336;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:191
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:191
 FROST_ASSERT(40 == sizeof(frost$collections$HashMap$Entry));
 frost$collections$HashMap$Entry* $tmp338 = (frost$collections$HashMap$Entry*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$HashMap$Entry$class);
 // begin inline call to frost.collections.HashMap.Entry.init(key:frost.collections.HashMap.Entry.K, value:frost.collections.HashMap.Entry.V) from HashMap.frost:191:29
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:35
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:35
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
 frost$collections$Key** $tmp339 = &$tmp338->key;
 frost$collections$Key* $tmp340 = *$tmp339;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp340));
 frost$collections$Key** $tmp341 = &$tmp338->key;
 *$tmp341 = param1;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:36
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:36
 frost$core$Frost$ref$frost$core$Object$Q(param2);
 frost$core$Object** $tmp342 = &$tmp338->value;
 frost$core$Object* $tmp343 = *$tmp342;
@@ -748,7 +748,7 @@ frost$collections$HashMap$Entry* $tmp345 = *(&local1);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp345));
 *(&local1) = $tmp338;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp338));
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:192
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:192
 frost$collections$HashMap$Entry* $tmp346 = *(&local1);
 frost$collections$HashMap$Entry* $tmp347 = *(&local2);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp347));
@@ -757,7 +757,7 @@ frost$collections$HashMap$Entry* $tmp349 = *$tmp348;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp349));
 frost$collections$HashMap$Entry** $tmp350 = &$tmp346->next;
 *$tmp350 = $tmp347;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:193
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:193
 frost$collections$HashMap$Entry*** $tmp351 = &param0->contents;
 frost$collections$HashMap$Entry** $tmp352 = *$tmp351;
 frost$core$Int64 $tmp353 = *(&local0);
@@ -767,7 +767,7 @@ frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp354));
 frost$collections$HashMap$Entry* $tmp356 = $tmp352[$tmp355];
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp356));
 $tmp352[$tmp355] = $tmp354;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:194
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:194
 frost$collections$HashMap$incrementCount(param0);
 frost$collections$HashMap$Entry* $tmp357 = *(&local2);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp357));
@@ -775,7 +775,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp357));
 goto block6;
 block7:;
 // <no location>
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:197
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:197
 frost$collections$HashMap$Entry* $tmp358 = *(&local1);
 frost$core$Frost$ref$frost$core$Object$Q(param2);
 frost$core$Object** $tmp359 = &$tmp358->value;
@@ -797,7 +797,7 @@ frost$core$Int64 local0;
 frost$collections$HashMap$Entry* local1 = NULL;
 frost$collections$HashMap$Entry* local2 = NULL;
 frost$collections$HashMap$Entry* local3 = NULL;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:203
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:203
 frost$core$Int64* $tmp363 = &param0->changeCount;
 frost$core$Int64 $tmp364 = *$tmp363;
 frost$core$Int64 $tmp365 = (frost$core$Int64) {1u};
@@ -807,10 +807,10 @@ int64_t $tmp368 = $tmp366 + $tmp367;
 frost$core$Int64 $tmp369 = (frost$core$Int64) {$tmp368};
 frost$core$Int64* $tmp370 = &param0->changeCount;
 *$tmp370 = $tmp369;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:204
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:204
 frost$core$Int64 $tmp371 = frost$collections$HashMap$indexFor$frost$collections$HashMap$K$R$frost$core$Int64(param0, param1);
 *(&local0) = $tmp371;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:205
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:205
 frost$collections$HashMap$Entry*** $tmp372 = &param0->contents;
 frost$collections$HashMap$Entry** $tmp373 = *$tmp372;
 frost$core$Int64 $tmp374 = *(&local0);
@@ -821,19 +821,19 @@ frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp376));
 frost$collections$HashMap$Entry* $tmp377 = *(&local1);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp377));
 *(&local1) = $tmp376;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:207
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:207
 frost$collections$HashMap$Entry* $tmp378 = *(&local1);
 frost$core$Bit $tmp379 = (frost$core$Bit) {$tmp378 == NULL};
 bool $tmp380 = $tmp379.value;
 if ($tmp380) goto block1; else goto block2;
 block1:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:208
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:208
 frost$collections$HashMap$Entry* $tmp381 = *(&local1);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp381));
 *(&local1) = ((frost$collections$HashMap$Entry*) NULL);
 return;
 block2:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:211
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:211
 frost$collections$HashMap$Entry* $tmp382 = *(&local1);
 frost$collections$Key** $tmp383 = &$tmp382->key;
 frost$collections$Key* $tmp384 = *$tmp383;
@@ -846,7 +846,7 @@ frost$core$Bit $tmp388 = $tmp386(((frost$core$Equatable*) $tmp384), ((frost$core
 bool $tmp389 = $tmp388.value;
 if ($tmp389) goto block3; else goto block4;
 block3:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:212
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:212
 frost$collections$HashMap$Entry*** $tmp390 = &param0->contents;
 frost$collections$HashMap$Entry** $tmp391 = *$tmp390;
 frost$core$Int64 $tmp392 = *(&local0);
@@ -858,7 +858,7 @@ frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp395));
 frost$collections$HashMap$Entry* $tmp397 = $tmp391[$tmp396];
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp397));
 $tmp391[$tmp396] = $tmp395;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:213
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:213
 frost$core$Int64* $tmp398 = &param0->_count;
 frost$core$Int64 $tmp399 = *$tmp398;
 frost$core$Int64 $tmp400 = (frost$core$Int64) {1u};
@@ -868,16 +868,16 @@ int64_t $tmp403 = $tmp401 - $tmp402;
 frost$core$Int64 $tmp404 = (frost$core$Int64) {$tmp403};
 frost$core$Int64* $tmp405 = &param0->_count;
 *$tmp405 = $tmp404;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:214
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:214
 frost$collections$HashMap$Entry* $tmp406 = *(&local1);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp406));
 *(&local1) = ((frost$collections$HashMap$Entry*) NULL);
 return;
 block4:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:216
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:216
 goto block5;
 block5:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:217
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:217
 frost$collections$HashMap$Entry* $tmp407 = *(&local1);
 frost$collections$HashMap$Entry** $tmp408 = &$tmp407->next;
 frost$collections$HashMap$Entry* $tmp409 = *$tmp408;
@@ -886,13 +886,13 @@ frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp409));
 frost$collections$HashMap$Entry* $tmp410 = *(&local2);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp410));
 *(&local2) = $tmp409;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:218
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:218
 frost$collections$HashMap$Entry* $tmp411 = *(&local2);
 frost$core$Bit $tmp412 = (frost$core$Bit) {$tmp411 == NULL};
 bool $tmp413 = $tmp412.value;
 if ($tmp413) goto block7; else goto block8;
 block7:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:220
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:220
 frost$collections$HashMap$Entry* $tmp414 = *(&local2);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp414));
 *(&local2) = ((frost$collections$HashMap$Entry*) NULL);
@@ -901,7 +901,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp415));
 *(&local1) = ((frost$collections$HashMap$Entry*) NULL);
 return;
 block8:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:222
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:222
 frost$collections$HashMap$Entry* $tmp416 = *(&local2);
 frost$collections$Key** $tmp417 = &$tmp416->key;
 frost$collections$Key* $tmp418 = *$tmp417;
@@ -914,11 +914,11 @@ frost$core$Bit $tmp422 = $tmp420(((frost$core$Equatable*) $tmp418), ((frost$core
 bool $tmp423 = $tmp422.value;
 if ($tmp423) goto block9; else goto block10;
 block9:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:224
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:224
 frost$collections$HashMap$Entry* $tmp424 = *(&local2);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp424));
 *(&local2) = ((frost$collections$HashMap$Entry*) NULL);
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:229
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:229
 frost$collections$HashMap$Entry* $tmp425 = *(&local1);
 frost$collections$HashMap$Entry** $tmp426 = &$tmp425->next;
 frost$collections$HashMap$Entry* $tmp427 = *$tmp426;
@@ -927,13 +927,13 @@ frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp427));
 frost$collections$HashMap$Entry* $tmp428 = *(&local3);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp428));
 *(&local3) = $tmp427;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:230
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:230
 frost$collections$HashMap$Entry* $tmp429 = *(&local3);
 frost$core$Bit $tmp430 = (frost$core$Bit) {$tmp429 != NULL};
 bool $tmp431 = $tmp430.value;
 if ($tmp431) goto block11; else goto block12;
 block10:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:226
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:226
 frost$collections$HashMap$Entry* $tmp432 = *(&local2);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp432));
 frost$collections$HashMap$Entry* $tmp433 = *(&local1);
@@ -948,7 +948,7 @@ frost$core$Int64 $tmp435 = (frost$core$Int64) {230u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s436, $tmp435);
 abort(); // unreachable
 block11:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:231
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:231
 frost$collections$HashMap$Entry* $tmp437 = *(&local1);
 frost$collections$HashMap$Entry* $tmp438 = *(&local3);
 frost$collections$HashMap$Entry** $tmp439 = &$tmp438->next;
@@ -959,7 +959,7 @@ frost$collections$HashMap$Entry* $tmp442 = *$tmp441;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp442));
 frost$collections$HashMap$Entry** $tmp443 = &$tmp437->next;
 *$tmp443 = $tmp440;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:232
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:232
 frost$core$Int64* $tmp444 = &param0->_count;
 frost$core$Int64 $tmp445 = *$tmp444;
 frost$core$Int64 $tmp446 = (frost$core$Int64) {1u};
@@ -982,7 +982,7 @@ void frost$collections$HashMap$clear(frost$collections$HashMap* param0) {
 
 frost$core$Int64 local0;
 frost$core$Int64 local1;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:237
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:237
 frost$core$Int64* $tmp454 = &param0->changeCount;
 frost$core$Int64 $tmp455 = *$tmp454;
 frost$core$Int64 $tmp456 = (frost$core$Int64) {1u};
@@ -992,11 +992,11 @@ int64_t $tmp459 = $tmp457 + $tmp458;
 frost$core$Int64 $tmp460 = (frost$core$Int64) {$tmp459};
 frost$core$Int64* $tmp461 = &param0->changeCount;
 *$tmp461 = $tmp460;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:238
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:238
 frost$core$Int64 $tmp462 = (frost$core$Int64) {0u};
 frost$core$Int64* $tmp463 = &param0->_count;
 *$tmp463 = $tmp462;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:239
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:239
 frost$core$Int64 $tmp464 = (frost$core$Int64) {0u};
 frost$core$Int64* $tmp465 = &param0->bucketCount;
 frost$core$Int64 $tmp466 = *$tmp465;
@@ -1009,7 +1009,7 @@ frost$core$Bit $tmp471 = $tmp468.inclusive;
 bool $tmp472 = $tmp471.value;
 frost$core$Int64 $tmp473 = (frost$core$Int64) {1u};
 // begin inline call to function frost.core.Int64.get_asUInt64():frost.core.UInt64 from <internal>:1:1
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:422
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:555
 int64_t $tmp474 = $tmp473.value;
 frost$core$UInt64 $tmp475 = (frost$core$UInt64) {((uint64_t) $tmp474)};
 if ($tmp472) goto block5; else goto block6;
@@ -1028,7 +1028,7 @@ frost$core$Bit $tmp484 = (frost$core$Bit) {$tmp483};
 bool $tmp485 = $tmp484.value;
 if ($tmp485) goto block2; else goto block3;
 block2:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:240
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:240
 frost$collections$HashMap$Entry*** $tmp486 = &param0->contents;
 frost$collections$HashMap$Entry** $tmp487 = *$tmp486;
 frost$core$Int64 $tmp488 = *(&local0);
@@ -1038,7 +1038,7 @@ frost$core$Bit $tmp491 = (frost$core$Bit) {$tmp490 != NULL};
 bool $tmp492 = $tmp491.value;
 if ($tmp492) goto block7; else goto block8;
 block7:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:241
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:241
 frost$collections$HashMap$Entry*** $tmp493 = &param0->contents;
 frost$collections$HashMap$Entry** $tmp494 = *$tmp493;
 frost$core$Int64 $tmp495 = *(&local0);
@@ -1053,7 +1053,7 @@ int64_t $tmp500 = $tmp498.value;
 int64_t $tmp501 = $tmp499 - $tmp500;
 frost$core$Int64 $tmp502 = (frost$core$Int64) {$tmp501};
 // begin inline call to function frost.core.Int64.get_asUInt64():frost.core.UInt64 from <internal>:1:1
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:422
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:555
 int64_t $tmp503 = $tmp502.value;
 frost$core$UInt64 $tmp504 = (frost$core$UInt64) {((uint64_t) $tmp503)};
 if ($tmp472) goto block11; else goto block12;
@@ -1079,22 +1079,22 @@ frost$core$Int64 $tmp518 = (frost$core$Int64) {$tmp517};
 *(&local0) = $tmp518;
 goto block2;
 block3:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:244
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:244
 frost$collections$HashMap$Entry*** $tmp519 = &param0->contents;
 frost$collections$HashMap$Entry** $tmp520 = *$tmp519;
 frostFree($tmp520);
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:245
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:245
 frost$core$Int64 $tmp521 = (frost$core$Int64) {16u};
 frost$core$Int64* $tmp522 = &param0->bucketCount;
 *$tmp522 = $tmp521;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:246
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:246
 frost$core$Int64* $tmp523 = &param0->bucketCount;
 frost$core$Int64 $tmp524 = *$tmp523;
 int64_t $tmp525 = $tmp524.value;
 frost$collections$HashMap$Entry** $tmp526 = ((frost$collections$HashMap$Entry**) frostAlloc($tmp525 * 8));
 frost$collections$HashMap$Entry*** $tmp527 = &param0->contents;
 *$tmp527 = $tmp526;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:247
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:247
 frost$core$Int64 $tmp528 = (frost$core$Int64) {0u};
 frost$core$Int64* $tmp529 = &param0->bucketCount;
 frost$core$Int64 $tmp530 = *$tmp529;
@@ -1107,7 +1107,7 @@ frost$core$Bit $tmp535 = $tmp532.inclusive;
 bool $tmp536 = $tmp535.value;
 frost$core$Int64 $tmp537 = (frost$core$Int64) {1u};
 // begin inline call to function frost.core.Int64.get_asUInt64():frost.core.UInt64 from <internal>:1:1
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:422
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:555
 int64_t $tmp538 = $tmp537.value;
 frost$core$UInt64 $tmp539 = (frost$core$UInt64) {((uint64_t) $tmp538)};
 if ($tmp536) goto block17; else goto block18;
@@ -1126,7 +1126,7 @@ frost$core$Bit $tmp548 = (frost$core$Bit) {$tmp547};
 bool $tmp549 = $tmp548.value;
 if ($tmp549) goto block14; else goto block15;
 block14:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:248
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:248
 frost$collections$HashMap$Entry*** $tmp550 = &param0->contents;
 frost$collections$HashMap$Entry** $tmp551 = *$tmp550;
 frost$core$Int64 $tmp552 = *(&local1);
@@ -1136,7 +1136,7 @@ frost$core$Bit $tmp555 = (frost$core$Bit) {$tmp554 != NULL};
 bool $tmp556 = $tmp555.value;
 if ($tmp556) goto block19; else goto block20;
 block19:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:249
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:249
 frost$collections$HashMap$Entry*** $tmp557 = &param0->contents;
 frost$collections$HashMap$Entry** $tmp558 = *$tmp557;
 frost$core$Int64 $tmp559 = *(&local1);
@@ -1153,7 +1153,7 @@ int64_t $tmp564 = $tmp562.value;
 int64_t $tmp565 = $tmp563 - $tmp564;
 frost$core$Int64 $tmp566 = (frost$core$Int64) {$tmp565};
 // begin inline call to function frost.core.Int64.get_asUInt64():frost.core.UInt64 from <internal>:1:1
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:422
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:555
 int64_t $tmp567 = $tmp566.value;
 frost$core$UInt64 $tmp568 = (frost$core$UInt64) {((uint64_t) $tmp567)};
 if ($tmp536) goto block23; else goto block24;
@@ -1179,7 +1179,7 @@ frost$core$Int64 $tmp582 = (frost$core$Int64) {$tmp581};
 *(&local1) = $tmp582;
 goto block14;
 block15:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:252
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:252
 frost$core$Int64* $tmp583 = &param0->bucketCount;
 frost$core$Int64 $tmp584 = *$tmp583;
 frost$core$Int64 $tmp585 = (frost$core$Int64) {3u};
@@ -1205,7 +1205,7 @@ frost$core$Int64 local2;
 frost$core$Int64 local3;
 frost$collections$HashMap$Entry* local4 = NULL;
 frost$core$Int64 local5;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:257
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:257
 frost$core$Int64* $tmp596 = &param0->_count;
 frost$core$Int64 $tmp597 = *$tmp596;
 frost$core$Int64 $tmp598 = (frost$core$Int64) {1u};
@@ -1215,7 +1215,7 @@ int64_t $tmp601 = $tmp599 + $tmp600;
 frost$core$Int64 $tmp602 = (frost$core$Int64) {$tmp601};
 frost$core$Int64* $tmp603 = &param0->_count;
 *$tmp603 = $tmp602;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:258
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:258
 frost$core$Int64* $tmp604 = &param0->_count;
 frost$core$Int64 $tmp605 = *$tmp604;
 frost$core$Int64* $tmp606 = &param0->threshold;
@@ -1227,15 +1227,15 @@ frost$core$Bit $tmp611 = (frost$core$Bit) {$tmp610};
 bool $tmp612 = $tmp611.value;
 if ($tmp612) goto block1; else goto block2;
 block1:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:259
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:259
 frost$collections$HashMap$Entry*** $tmp613 = &param0->contents;
 frost$collections$HashMap$Entry** $tmp614 = *$tmp613;
 *(&local0) = $tmp614;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:260
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:260
 frost$core$Int64* $tmp615 = &param0->bucketCount;
 frost$core$Int64 $tmp616 = *$tmp615;
 *(&local1) = $tmp616;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:261
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:261
 frost$core$Int64* $tmp617 = &param0->bucketCount;
 frost$core$Int64 $tmp618 = *$tmp617;
 frost$core$Int64 $tmp619 = (frost$core$Int64) {2u};
@@ -1245,14 +1245,14 @@ int64_t $tmp622 = $tmp620 * $tmp621;
 frost$core$Int64 $tmp623 = (frost$core$Int64) {$tmp622};
 frost$core$Int64* $tmp624 = &param0->bucketCount;
 *$tmp624 = $tmp623;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:262
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:262
 frost$core$Int64* $tmp625 = &param0->bucketCount;
 frost$core$Int64 $tmp626 = *$tmp625;
 int64_t $tmp627 = $tmp626.value;
 frost$collections$HashMap$Entry** $tmp628 = ((frost$collections$HashMap$Entry**) frostAlloc($tmp627 * 8));
 frost$collections$HashMap$Entry*** $tmp629 = &param0->contents;
 *$tmp629 = $tmp628;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:263
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:263
 frost$core$Int64 $tmp630 = (frost$core$Int64) {0u};
 frost$core$Int64* $tmp631 = &param0->bucketCount;
 frost$core$Int64 $tmp632 = *$tmp631;
@@ -1265,7 +1265,7 @@ frost$core$Bit $tmp637 = $tmp634.inclusive;
 bool $tmp638 = $tmp637.value;
 frost$core$Int64 $tmp639 = (frost$core$Int64) {1u};
 // begin inline call to function frost.core.Int64.get_asUInt64():frost.core.UInt64 from <internal>:1:1
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:422
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:555
 int64_t $tmp640 = $tmp639.value;
 frost$core$UInt64 $tmp641 = (frost$core$UInt64) {((uint64_t) $tmp640)};
 if ($tmp638) goto block7; else goto block8;
@@ -1284,7 +1284,7 @@ frost$core$Bit $tmp650 = (frost$core$Bit) {$tmp649};
 bool $tmp651 = $tmp650.value;
 if ($tmp651) goto block4; else goto block5;
 block4:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:264
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:264
 frost$collections$HashMap$Entry*** $tmp652 = &param0->contents;
 frost$collections$HashMap$Entry** $tmp653 = *$tmp652;
 frost$core$Int64 $tmp654 = *(&local2);
@@ -1299,7 +1299,7 @@ int64_t $tmp659 = $tmp657.value;
 int64_t $tmp660 = $tmp658 - $tmp659;
 frost$core$Int64 $tmp661 = (frost$core$Int64) {$tmp660};
 // begin inline call to function frost.core.Int64.get_asUInt64():frost.core.UInt64 from <internal>:1:1
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:422
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:555
 int64_t $tmp662 = $tmp661.value;
 frost$core$UInt64 $tmp663 = (frost$core$UInt64) {((uint64_t) $tmp662)};
 if ($tmp638) goto block11; else goto block12;
@@ -1325,7 +1325,7 @@ frost$core$Int64 $tmp677 = (frost$core$Int64) {$tmp676};
 *(&local2) = $tmp677;
 goto block4;
 block5:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:266
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:266
 frost$core$Int64* $tmp678 = &param0->threshold;
 frost$core$Int64 $tmp679 = *$tmp678;
 frost$core$Int64 $tmp680 = (frost$core$Int64) {2u};
@@ -1335,11 +1335,11 @@ int64_t $tmp683 = $tmp681 * $tmp682;
 frost$core$Int64 $tmp684 = (frost$core$Int64) {$tmp683};
 frost$core$Int64* $tmp685 = &param0->threshold;
 *$tmp685 = $tmp684;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:267
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:267
 frost$core$Int64 $tmp686 = (frost$core$Int64) {0u};
 frost$core$Int64* $tmp687 = &param0->_count;
 *$tmp687 = $tmp686;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:268
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:268
 frost$core$Int64 $tmp688 = (frost$core$Int64) {0u};
 frost$core$Int64 $tmp689 = *(&local1);
 frost$core$Bit $tmp690 = (frost$core$Bit) {false};
@@ -1351,7 +1351,7 @@ frost$core$Bit $tmp694 = $tmp691.inclusive;
 bool $tmp695 = $tmp694.value;
 frost$core$Int64 $tmp696 = (frost$core$Int64) {1u};
 // begin inline call to function frost.core.Int64.get_asUInt64():frost.core.UInt64 from <internal>:1:1
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:422
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:555
 int64_t $tmp697 = $tmp696.value;
 frost$core$UInt64 $tmp698 = (frost$core$UInt64) {((uint64_t) $tmp697)};
 if ($tmp695) goto block17; else goto block18;
@@ -1370,7 +1370,7 @@ frost$core$Bit $tmp707 = (frost$core$Bit) {$tmp706};
 bool $tmp708 = $tmp707.value;
 if ($tmp708) goto block14; else goto block15;
 block14:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:269
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:269
 frost$collections$HashMap$Entry** $tmp709 = *(&local0);
 frost$core$Int64 $tmp710 = *(&local3);
 int64_t $tmp711 = $tmp710.value;
@@ -1380,7 +1380,7 @@ frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp712));
 frost$collections$HashMap$Entry* $tmp713 = *(&local4);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp713));
 *(&local4) = $tmp712;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:270
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:270
 goto block19;
 block19:;
 frost$collections$HashMap$Entry* $tmp714 = *(&local4);
@@ -1388,7 +1388,7 @@ frost$core$Bit $tmp715 = (frost$core$Bit) {$tmp714 != NULL};
 bool $tmp716 = $tmp715.value;
 if ($tmp716) goto block20; else goto block21;
 block20:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:271
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:271
 frost$collections$HashMap$Entry* $tmp717 = *(&local4);
 frost$collections$Key** $tmp718 = &$tmp717->key;
 frost$collections$Key* $tmp719 = *$tmp718;
@@ -1396,7 +1396,7 @@ frost$collections$HashMap$Entry* $tmp720 = *(&local4);
 frost$core$Object** $tmp721 = &$tmp720->value;
 frost$core$Object* $tmp722 = *$tmp721;
 frost$collections$HashMap$$IDXEQ$frost$collections$HashMap$K$frost$collections$HashMap$V(param0, $tmp719, $tmp722);
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:272
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:272
 frost$collections$HashMap$Entry* $tmp723 = *(&local4);
 frost$collections$HashMap$Entry** $tmp724 = &$tmp723->next;
 frost$collections$HashMap$Entry* $tmp725 = *$tmp724;
@@ -1415,7 +1415,7 @@ int64_t $tmp730 = $tmp728.value;
 int64_t $tmp731 = $tmp729 - $tmp730;
 frost$core$Int64 $tmp732 = (frost$core$Int64) {$tmp731};
 // begin inline call to function frost.core.Int64.get_asUInt64():frost.core.UInt64 from <internal>:1:1
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:422
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:555
 int64_t $tmp733 = $tmp732.value;
 frost$core$UInt64 $tmp734 = (frost$core$UInt64) {((uint64_t) $tmp733)};
 if ($tmp695) goto block24; else goto block25;
@@ -1441,7 +1441,7 @@ frost$core$Int64 $tmp748 = (frost$core$Int64) {$tmp747};
 *(&local3) = $tmp748;
 goto block14;
 block15:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:275
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:275
 frost$core$Int64 $tmp749 = (frost$core$Int64) {0u};
 frost$core$Int64 $tmp750 = *(&local1);
 frost$core$Bit $tmp751 = (frost$core$Bit) {false};
@@ -1453,7 +1453,7 @@ frost$core$Bit $tmp755 = $tmp752.inclusive;
 bool $tmp756 = $tmp755.value;
 frost$core$Int64 $tmp757 = (frost$core$Int64) {1u};
 // begin inline call to function frost.core.Int64.get_asUInt64():frost.core.UInt64 from <internal>:1:1
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:422
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:555
 int64_t $tmp758 = $tmp757.value;
 frost$core$UInt64 $tmp759 = (frost$core$UInt64) {((uint64_t) $tmp758)};
 if ($tmp756) goto block30; else goto block31;
@@ -1472,7 +1472,7 @@ frost$core$Bit $tmp768 = (frost$core$Bit) {$tmp767};
 bool $tmp769 = $tmp768.value;
 if ($tmp769) goto block27; else goto block28;
 block27:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:276
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:276
 frost$collections$HashMap$Entry** $tmp770 = *(&local0);
 frost$core$Int64 $tmp771 = *(&local5);
 int64_t $tmp772 = $tmp771.value;
@@ -1481,7 +1481,7 @@ frost$core$Bit $tmp774 = (frost$core$Bit) {$tmp773 != NULL};
 bool $tmp775 = $tmp774.value;
 if ($tmp775) goto block32; else goto block33;
 block32:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:277
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:277
 frost$collections$HashMap$Entry** $tmp776 = *(&local0);
 frost$core$Int64 $tmp777 = *(&local5);
 int64_t $tmp778 = $tmp777.value;
@@ -1495,7 +1495,7 @@ int64_t $tmp782 = $tmp780.value;
 int64_t $tmp783 = $tmp781 - $tmp782;
 frost$core$Int64 $tmp784 = (frost$core$Int64) {$tmp783};
 // begin inline call to function frost.core.Int64.get_asUInt64():frost.core.UInt64 from <internal>:1:1
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:422
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:555
 int64_t $tmp785 = $tmp784.value;
 frost$core$UInt64 $tmp786 = (frost$core$UInt64) {((uint64_t) $tmp785)};
 if ($tmp756) goto block36; else goto block37;
@@ -1521,7 +1521,7 @@ frost$core$Int64 $tmp800 = (frost$core$Int64) {$tmp799};
 *(&local5) = $tmp800;
 goto block27;
 block28:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:280
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:280
 frost$collections$HashMap$Entry** $tmp801 = *(&local0);
 frostFree($tmp801);
 goto block2;
@@ -1531,7 +1531,7 @@ return;
 }
 frost$collections$Iterator* frost$collections$HashMap$get_entries$R$frost$collections$Iterator$LT$LPfrost$collections$HashMap$K$Cfrost$collections$HashMap$V$RP$GT(frost$collections$HashMap* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:286
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:286
 FROST_ASSERT(40 == sizeof(frost$collections$HashMap$EntryIterator));
 frost$collections$HashMap$EntryIterator* $tmp802 = (frost$collections$HashMap$EntryIterator*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$HashMap$EntryIterator$class);
 frost$collections$HashMap$EntryIterator$init$frost$collections$HashMap$LTfrost$collections$HashMap$EntryIterator$K$Cfrost$collections$HashMap$EntryIterator$V$GT($tmp802, param0);
@@ -1542,7 +1542,7 @@ return ((frost$collections$Iterator*) $tmp802);
 }
 frost$core$Int64 frost$collections$HashMap$get_count$R$frost$core$Int64(frost$collections$HashMap* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:291
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:291
 frost$core$Int64* $tmp803 = &param0->_count;
 frost$core$Int64 $tmp804 = *$tmp803;
 return $tmp804;
@@ -1554,7 +1554,7 @@ frost$core$MutableString* local0 = NULL;
 frost$core$String* local1 = NULL;
 frost$core$Int64 local2;
 frost$collections$HashMap$Entry* local3 = NULL;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:302
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:302
 FROST_ASSERT(48 == sizeof(frost$core$MutableString));
 frost$core$MutableString* $tmp805 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init($tmp805);
@@ -1564,16 +1564,16 @@ frost$core$MutableString* $tmp806 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp806));
 *(&local0) = $tmp805;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp805));
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:303
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:303
 frost$core$MutableString* $tmp807 = *(&local0);
 frost$core$MutableString$append$frost$core$String($tmp807, &$s808);
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:304
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:304
 *(&local1) = ((frost$core$String*) NULL);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) &$s809));
 frost$core$String* $tmp810 = *(&local1);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp810));
 *(&local1) = &$s811;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:305
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:305
 frost$core$Int64 $tmp812 = (frost$core$Int64) {0u};
 frost$core$Int64* $tmp813 = &param0->bucketCount;
 frost$core$Int64 $tmp814 = *$tmp813;
@@ -1586,7 +1586,7 @@ frost$core$Bit $tmp819 = $tmp816.inclusive;
 bool $tmp820 = $tmp819.value;
 frost$core$Int64 $tmp821 = (frost$core$Int64) {1u};
 // begin inline call to function frost.core.Int64.get_asUInt64():frost.core.UInt64 from <internal>:1:1
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:422
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:555
 int64_t $tmp822 = $tmp821.value;
 frost$core$UInt64 $tmp823 = (frost$core$UInt64) {((uint64_t) $tmp822)};
 if ($tmp820) goto block5; else goto block6;
@@ -1605,7 +1605,7 @@ frost$core$Bit $tmp832 = (frost$core$Bit) {$tmp831};
 bool $tmp833 = $tmp832.value;
 if ($tmp833) goto block2; else goto block3;
 block2:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:306
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:306
 frost$collections$HashMap$Entry*** $tmp834 = &param0->contents;
 frost$collections$HashMap$Entry** $tmp835 = *$tmp834;
 frost$core$Int64 $tmp836 = *(&local2);
@@ -1616,7 +1616,7 @@ frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp838));
 frost$collections$HashMap$Entry* $tmp839 = *(&local3);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp839));
 *(&local3) = $tmp838;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:307
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:307
 goto block7;
 block7:;
 frost$collections$HashMap$Entry* $tmp840 = *(&local3);
@@ -1624,11 +1624,11 @@ frost$core$Bit $tmp841 = (frost$core$Bit) {$tmp840 != NULL};
 bool $tmp842 = $tmp841.value;
 if ($tmp842) goto block8; else goto block9;
 block8:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:308
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:308
 frost$core$MutableString* $tmp843 = *(&local0);
 frost$core$String* $tmp844 = *(&local1);
 frost$core$MutableString$append$frost$core$String($tmp843, $tmp844);
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:309
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:309
 frost$collections$HashMap$Entry* $tmp845 = *(&local3);
 frost$collections$Key** $tmp846 = &$tmp845->key;
 frost$collections$Key* $tmp847 = *$tmp846;
@@ -1636,13 +1636,13 @@ frost$core$Bit $tmp848 = (frost$core$Bit) {true};
 bool $tmp849 = $tmp848.value;
 if ($tmp849) goto block10; else goto block12;
 block10:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:310
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:310
 frost$core$MutableString* $tmp850 = *(&local0);
 frost$collections$HashMap$Entry* $tmp851 = *(&local3);
 frost$collections$Key** $tmp852 = &$tmp851->key;
 frost$collections$Key* $tmp853 = *$tmp852;
 // begin inline call to method frost.core.MutableString.append(o:frost.core.Object) from HashMap.frost:310:34
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/MutableString.stub:46
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/MutableString.frost:150
 $fn855 $tmp854 = ($fn855) ((frost$core$Object*) $tmp853)->$class->vtable[0];
 frost$core$String* $tmp856 = $tmp854(((frost$core$Object*) $tmp853));
 frost$core$MutableString$append$frost$core$String($tmp850, $tmp856);
@@ -1650,15 +1650,15 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp856));
 goto block11;
 block12:;
 // <no location>
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:313
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:313
 frost$core$MutableString* $tmp857 = *(&local0);
 frost$core$MutableString$append$frost$core$String($tmp857, &$s858);
 goto block11;
 block11:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:315
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:315
 frost$core$MutableString* $tmp859 = *(&local0);
 frost$core$MutableString$append$frost$core$String($tmp859, &$s860);
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:316
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:316
 frost$collections$HashMap$Entry* $tmp861 = *(&local3);
 frost$core$Object** $tmp862 = &$tmp861->value;
 frost$core$Object* $tmp863 = *$tmp862;
@@ -1666,13 +1666,13 @@ frost$core$Bit $tmp864 = (frost$core$Bit) {true};
 bool $tmp865 = $tmp864.value;
 if ($tmp865) goto block14; else goto block16;
 block14:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:317
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:317
 frost$core$MutableString* $tmp866 = *(&local0);
 frost$collections$HashMap$Entry* $tmp867 = *(&local3);
 frost$core$Object** $tmp868 = &$tmp867->value;
 frost$core$Object* $tmp869 = *$tmp868;
 // begin inline call to method frost.core.MutableString.append(o:frost.core.Object) from HashMap.frost:317:34
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/MutableString.stub:46
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/MutableString.frost:150
 $fn871 $tmp870 = ($fn871) $tmp869->$class->vtable[0];
 frost$core$String* $tmp872 = $tmp870($tmp869);
 frost$core$MutableString$append$frost$core$String($tmp866, $tmp872);
@@ -1680,12 +1680,12 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp872));
 goto block15;
 block16:;
 // <no location>
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:320
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:320
 frost$core$MutableString* $tmp873 = *(&local0);
 frost$core$MutableString$append$frost$core$String($tmp873, &$s874);
 goto block15;
 block15:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:322
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:322
 frost$collections$HashMap$Entry* $tmp875 = *(&local3);
 frost$collections$HashMap$Entry** $tmp876 = &$tmp875->next;
 frost$collections$HashMap$Entry* $tmp877 = *$tmp876;
@@ -1693,7 +1693,7 @@ frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp877));
 frost$collections$HashMap$Entry* $tmp878 = *(&local3);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp878));
 *(&local3) = $tmp877;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:323
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:323
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) &$s879));
 frost$core$String* $tmp880 = *(&local1);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp880));
@@ -1709,7 +1709,7 @@ int64_t $tmp885 = $tmp883.value;
 int64_t $tmp886 = $tmp884 - $tmp885;
 frost$core$Int64 $tmp887 = (frost$core$Int64) {$tmp886};
 // begin inline call to function frost.core.Int64.get_asUInt64():frost.core.UInt64 from <internal>:1:1
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:422
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:555
 int64_t $tmp888 = $tmp887.value;
 frost$core$UInt64 $tmp889 = (frost$core$UInt64) {((uint64_t) $tmp888)};
 if ($tmp820) goto block20; else goto block21;
@@ -1735,10 +1735,10 @@ frost$core$Int64 $tmp903 = (frost$core$Int64) {$tmp902};
 *(&local2) = $tmp903;
 goto block2;
 block3:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:326
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:326
 frost$core$MutableString* $tmp904 = *(&local0);
 frost$core$MutableString$append$frost$core$String($tmp904, &$s905);
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:327
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/HashMap.frost:327
 frost$core$MutableString* $tmp906 = *(&local0);
 frost$core$String* $tmp907 = frost$core$MutableString$finish$R$frost$core$String($tmp906);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp907));

@@ -12,7 +12,7 @@ class TableState : State {
 
     @override
     function accept(c:Char8):Bit {
-        def i := c.asInt64
+        def i := c.asInt
         def value:Bit
         if i < acceptStates.count {
             value := acceptStates[i]

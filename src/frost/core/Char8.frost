@@ -96,6 +96,11 @@ class Char8 : Value, Key<Char8>, Comparable<Char8> {
         return Char32(asInt32)
     }
 
+    property asInt:Int
+    function get_asInt():Int {
+        return asInt64
+    }
+
     property asInt8:Int8
     function get_asInt8():Int8 {
         return Int8(value->builtin_int8)

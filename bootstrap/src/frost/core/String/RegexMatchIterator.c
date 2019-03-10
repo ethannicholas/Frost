@@ -30,19 +30,19 @@ static frost$core$String $s31 = { (frost$core$Class*) &frost$core$String$class, 
 
 void frost$core$String$RegexMatchIterator$init$frost$core$String$frost$core$RegularExpression$frost$core$Bit(frost$core$String$RegexMatchIterator* param0, frost$core$String* param1, frost$core$RegularExpression* param2, frost$core$Bit param3) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:295
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:295
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
 frost$core$String** $tmp2 = &param0->haystack;
 frost$core$String* $tmp3 = *$tmp2;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp3));
 frost$core$String** $tmp4 = &param0->haystack;
 *$tmp4 = param1;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:296
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:296
 frost$core$Bit* $tmp5 = &param0->allowOverlaps;
 frost$core$Bit $tmp6 = *$tmp5;
 frost$core$Bit* $tmp7 = &param0->allowOverlaps;
 *$tmp7 = $tmp6;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:297
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:297
 frost$core$Matcher* $tmp8 = frost$core$RegularExpression$matcher$frost$core$String$R$frost$core$Matcher(param2, param1);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp8));
 frost$core$Matcher** $tmp9 = &param0->matcher;
@@ -51,7 +51,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp10));
 frost$core$Matcher** $tmp11 = &param0->matcher;
 *$tmp11 = $tmp8;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp8));
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:298
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:298
 frost$core$Matcher** $tmp12 = &param0->matcher;
 frost$core$Matcher* $tmp13 = *$tmp12;
 frost$core$Bit $tmp14 = frost$core$Matcher$find$R$frost$core$Bit($tmp13);
@@ -62,11 +62,11 @@ return;
 }
 frost$core$Bit frost$core$String$RegexMatchIterator$get_done$R$frost$core$Bit(frost$core$String$RegexMatchIterator* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:303
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:303
 frost$core$Bit* $tmp16 = &param0->found;
 frost$core$Bit $tmp17 = *$tmp16;
 // begin inline call to function frost.core.Bit.!():frost.core.Bit from String.frost:303:20
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Bit.frost:42
 bool $tmp18 = $tmp17.value;
 bool $tmp19 = !$tmp18;
 frost$core$Bit $tmp20 = (frost$core$Bit) {$tmp19};
@@ -83,8 +83,8 @@ while ($tmp21->$class != (frost$core$Class*) &frost$collections$Iterator$class) 
 }
 $fn23 $tmp22 = $tmp21->methods[0];
 frost$core$Bit $tmp24 = $tmp22(((frost$collections$Iterator*) param0));
-// begin inline call to function frost.core.Bit.!():frost.core.Bit from Iterator.stub:47:6
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
+// begin inline call to function frost.core.Bit.!():frost.core.Bit from Iterator.frost:166:10
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Bit.frost:42
 bool $tmp25 = $tmp24.value;
 bool $tmp26 = !$tmp25;
 frost$core$Bit $tmp27 = (frost$core$Bit) {$tmp26};
@@ -95,7 +95,7 @@ frost$core$Int64 $tmp29 = (frost$core$Int64) {307u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s30, $tmp29, &$s31);
 abort(); // unreachable
 block1:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:308
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:308
 FROST_ASSERT(40 == sizeof(frost$core$String$Match));
 frost$core$String$Match* $tmp32 = (frost$core$String$Match*) frostObjectAlloc(40, (frost$core$Class*) &frost$core$String$Match$class);
 frost$core$Matcher** $tmp33 = &param0->matcher;
@@ -107,14 +107,14 @@ frost$core$String$Match* $tmp35 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp35));
 *(&local0) = $tmp32;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp32));
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:309
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:310
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:309
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:310
 frost$core$Bit* $tmp36 = &param0->allowOverlaps;
 frost$core$Bit $tmp37 = *$tmp36;
 bool $tmp38 = $tmp37.value;
 if ($tmp38) goto block4; else goto block6;
 block4:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:311
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:311
 frost$core$String** $tmp39 = &param0->haystack;
 frost$core$String* $tmp40 = *$tmp39;
 frost$core$Matcher** $tmp41 = &param0->matcher;
@@ -126,7 +126,7 @@ frost$core$String$Index $tmp44 = frost$core$String$next$frost$core$String$Index$
 goto block5;
 block6:;
 // <no location>
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:314
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:314
 frost$core$Matcher** $tmp45 = &param0->matcher;
 frost$core$Matcher* $tmp46 = *$tmp45;
 frost$core$String$Index $tmp47;
@@ -134,25 +134,25 @@ frost$core$Matcher$get_end$R$frost$core$String$Index(&$tmp47, $tmp46);
 *(&local1) = $tmp47;
 goto block5;
 block5:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:316
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:316
 frost$core$Matcher** $tmp48 = &param0->matcher;
 frost$core$Matcher* $tmp49 = *$tmp48;
 frost$core$String$Index $tmp50 = *(&local1);
 // begin inline call to method frost.core.Matcher.find(start:frost.core.String.Index):frost.core.Bit from String.frost:316:34
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:86
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Matcher.frost:86
 frost$core$String$Index* $tmp51 = &$tmp49->replacementIndex;
 *$tmp51 = $tmp50;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:87
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Matcher.frost:87
 frost$core$Bit $tmp52;
 frost$core$Matcher$nativeFind$frost$core$String$Index$R$frost$core$Bit(&$tmp52, $tmp49, $tmp50);
 frost$core$Bit* $tmp53 = &$tmp49->matched;
 *$tmp53 = $tmp52;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:88
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Matcher.frost:88
 frost$core$Bit* $tmp54 = &$tmp49->matched;
 frost$core$Bit $tmp55 = *$tmp54;
 frost$core$Bit* $tmp56 = &param0->found;
 *$tmp56 = $tmp55;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:317
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:317
 frost$core$String$Match* $tmp57 = *(&local0);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp57));
 frost$core$String$Match* $tmp58 = *(&local0);
@@ -163,7 +163,7 @@ return $tmp57;
 }
 void frost$core$String$RegexMatchIterator$cleanup(frost$core$String$RegexMatchIterator* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:285
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:285
 frost$core$Object$cleanup(((frost$core$Object*) param0));
 frost$core$Matcher** $tmp59 = &param0->matcher;
 frost$core$Matcher* $tmp60 = *$tmp59;

@@ -435,6 +435,11 @@ int main(int argc, char** argv) {
 
 // System
 
+void frost$core$System$exit$frost$core$Int(Int64 code) {
+    exit(code.value);
+}
+
+// FIXME delete
 void frost$core$System$exit$frost$core$Int64(Int64 code) {
     exit(code.value);
 }
@@ -561,6 +566,19 @@ void frost$core$System$Process$_cleanup(Process* p) {
     frost$core$Frost$unref$frost$core$Object$Q((Object*) p->stderr);
 }
 
+void frost$core$System$Process$exitCode$R$frost$core$Int$Q(NullableInt* result, Process* p) {
+    int status;
+    waitpid(p->pid, &status, WNOHANG);
+    if (WIFEXITED(status)) {
+        result->nonnull = true;
+        result->value = WEXITSTATUS(status);
+    }
+    else {
+        result->nonnull = false;
+    }
+}
+
+// FIXME delete 
 void frost$core$System$Process$exitCode$R$frost$core$Int64$Q(NullableInt* result, Process* p) {
     int status;
     waitpid(p->pid, &status, WNOHANG);
@@ -573,6 +591,13 @@ void frost$core$System$Process$exitCode$R$frost$core$Int64$Q(NullableInt* result
     }
 }
 
+void frost$core$System$Process$waitFor$R$frost$core$Int(Int64* result, Process* p) {
+    int status;
+    waitpid(p->pid, &status, 0);
+    result->value = WEXITSTATUS(status);
+}
+
+// FIXME delete
 void frost$core$System$Process$waitFor$R$frost$core$Int64(Int64* result, Process* p) {
     int status;
     waitpid(p->pid, &status, 0);
@@ -623,6 +648,12 @@ void frost$core$Int64$get_bitCount$R$frost$core$Int64(Int64* out, Int64 x) {
     out->value = __builtin_popcount(x.value);
 }
 
+// Int
+
+void frost$core$Int$get_bitCount$R$frost$core$Int(Int64* out, Int64 x) {
+    out->value = __builtin_popcount(x.value);
+}
+
 // UInt8
 
 void frost$core$UInt8$get_bitCount$R$frost$core$UInt8(UInt8* out, UInt8 x) {
@@ -644,6 +675,12 @@ void frost$core$UInt32$get_bitCount$R$frost$core$UInt32(UInt32* out, UInt32 x) {
 // UInt64
 
 void frost$core$UInt64$get_bitCount$R$frost$core$UInt64(UInt64* out, UInt64 x) {
+    out->value = __builtin_popcount(x.value);
+}
+
+// UInt
+
+void frost$core$UInt$get_bitCount$R$frost$core$UInt(UInt64* out, UInt64 x) {
     out->value = __builtin_popcount(x.value);
 }
 
@@ -763,6 +800,11 @@ void frost$core$Frost$unref$frost$core$Object$Q(Object* o) {
     }
 }
 
+void frost$core$Frost$addressOf$frost$core$Object$R$frost$core$Int(Int64* result, void* o) {
+    result->value = (int64_t) o;
+}
+
+// FIXME delete
 void frost$core$Frost$addressOf$frost$core$Object$R$frost$core$Int64(Int64* result, void* o) {
     result->value = (int64_t) o;
 }
@@ -828,6 +870,35 @@ void frost$core$Frost$addWeakReference$frost$core$Weak$LTfrost$core$Frost$addWea
 
 // RegularExpression
 
+void frost$core$RegularExpression$compile$frost$core$String$frost$core$Int(RegularExpression* r,
+        String* regex, Int64 flags) {
+    UErrorCode status = U_ZERO_ERROR;
+    char* text = frostGetCString(regex);
+    UText* ut = utext_openUTF8(NULL, text, regex->size, &status);
+    if (U_FAILURE(status)) {
+        frostFatalError(u_errorName(status));
+    }
+    UParseError parseStatus;
+    int icuFlags = 0;
+    if (flags.value & 1) {
+        icuFlags |= UREGEX_MULTILINE;
+    }
+    if (flags.value & 2) {
+        icuFlags |= UREGEX_CASE_INSENSITIVE;
+    }
+    if (flags.value & 4) {
+        icuFlags |= UREGEX_DOTALL;
+    }
+    r->nativeHandle = uregex_openUText(ut, icuFlags, &parseStatus, &status);
+    ++allocations;
+    utext_close(ut);
+    frostFree(text);
+    if (U_FAILURE(status)) {
+        frostFatalError(u_errorName(status));
+    }
+}
+
+// FIXME delete
 void frost$core$RegularExpression$compile$frost$core$String$frost$core$Int64(RegularExpression* r,
         String* regex, Int64 flags) {
     UErrorCode status = U_ZERO_ERROR;
@@ -921,6 +992,15 @@ void frost$core$Matcher$get_end$R$frost$core$String$Index(Int64* result, Matcher
 
 }
 
+void frost$core$Matcher$get_groupCount$R$frost$core$Int(Int64* result, Matcher* self) {
+    UErrorCode status = U_ZERO_ERROR;
+    result->value = uregex_groupCount(self->nativeHandle, &status) + 1;
+    if (U_FAILURE(status)) {
+        frostFatalError(u_errorName(status));
+    }
+}
+
+// FIXME delete
 void frost$core$Matcher$get_groupCount$R$frost$core$Int64(Int64* result, Matcher* self) {
     UErrorCode status = U_ZERO_ERROR;
     result->value = uregex_groupCount(self->nativeHandle, &status) + 1;
@@ -929,6 +1009,21 @@ void frost$core$Matcher$get_groupCount$R$frost$core$Int64(Int64* result, Matcher
     }
 }
 
+String* frost$core$Matcher$group$frost$core$Int$R$frost$core$String$Q(Matcher* self,
+        Int64 group) {
+    UErrorCode status = U_ZERO_ERROR;
+    int64_t length;
+    UText* ut = uregex_groupUText(self->nativeHandle, group.value, NULL, &length, &status);
+    if (U_FAILURE(status)) {
+        frostFatalError(u_errorName(status));
+    }
+    const char* utf8 = (ut->context + (int) UTEXT_GETNATIVEINDEX(ut));
+    String* result = frostNewString(utf8, length);
+    utext_close(ut);
+    return result;
+}
+
+// FIXME delete
 String* frost$core$Matcher$group$frost$core$Int64$R$frost$core$String$Q(Matcher* self,
         Int64 group) {
     UErrorCode status = U_ZERO_ERROR;
@@ -1164,7 +1259,7 @@ Object* frost$io$File$absolute$R$frost$core$Maybe$LTfrost$io$File$GT(File* file)
     char path[PATH_MAX];
     char* rawPath = frostGetCString(file->path);
     if (!realpath(rawPath, path)) {
-        Object* result = frostMaybeError(frostFileErrorMessage("Could not determine absolute path",
+        Object* result = frostMaybeError(frostFileErrorMessage("Could not read",
                 rawPath));
         frostFree(rawPath);
         return result;
@@ -1282,6 +1377,12 @@ void frost$io$FileInputStream$readImpl$R$frost$core$UInt8$Q(NullableUInt8* resul
     }
 }
 
+void frost$io$FileInputStream$readImpl$frost$unsafe$Pointer$LTfrost$core$UInt8$GT$frost$core$Int$R$frost$core$Int(
+        int64_t* result, FileInputStream* self, void* buffer, int max) {
+    *result = fread(buffer, 1, max, self->file);
+}
+
+// FIXME delete
 void frost$io$FileInputStream$readImpl$frost$unsafe$Pointer$LTfrost$core$UInt8$GT$frost$core$Int64$R$frost$core$Int64(
         int64_t* result, FileInputStream* self, void* buffer, int max) {
     *result = fread(buffer, 1, max, self->file);
@@ -1305,6 +1406,16 @@ Error* frost$io$FileOutputStream$write$frost$core$UInt8$R$frost$core$Error$Q(Fil
     return NULL;
 }
 
+Error* frost$io$FileOutputStream$write$frost$unsafe$Pointer$LTfrost$core$UInt8$GT$frost$core$Int$R$frost$core$Error$Q(
+        FileOutputStream* self, void* src, int64_t count) {
+    if (fwrite(src, 1, count, self->file) != count) {
+        const char* msg = "Error writing to stream";
+        return frostError(frostNewString(msg, strlen(msg)));
+    }
+    return NULL;
+}
+
+// FIXME delete
 Error* frost$io$FileOutputStream$write$frost$unsafe$Pointer$LTfrost$core$UInt8$GT$frost$core$Int64$R$frost$core$Error$Q(
         FileOutputStream* self, void* src, int64_t count) {
     if (fwrite(src, 1, count, self->file) != count) {

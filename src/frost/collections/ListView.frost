@@ -87,7 +87,7 @@ interface ListView<T> : CollectionView<T> {
                 copy.removeIndex(c)
             }
             var i := 0
-            while i < choices.count & choices[i] = list.count - i - 1 {
+            while i < choices.count & choices[i] = list.count - i - 1->Int {
                 choices[i] := 0
                 i += 1
             }
@@ -135,7 +135,7 @@ interface ListView<T> : CollectionView<T> {
             loop {
                 if index <= list.count + r - choices.count {
                     choices[r] := index
-                    if r = choices.count - 1 {
+                    if r = choices.count - 1->Int {
                         index += 1
                         def result := Array<T>(choices.count)
                         for c in choices {

@@ -19,7 +19,7 @@ class Main {
 
     var clang:File
     def frostHome:File
-    var debug:Bit := true
+    var debug:Bit := false
 
     init() {
         frostHome := File(Config.frostSourceDir())
@@ -197,7 +197,7 @@ class Main {
                 }
                 when "-O" {
                     def level := args.next("a number from 0-3")
-                    optimizationLevel := level.asInt64
+                    optimizationLevel := level.asInt
                     if optimizationLevel > 3 | optimizationLevel < 0 {
                         Console.printErrorLine("expected a number from 0-3 after '-O'")
                         System.exit(1)
@@ -205,7 +205,7 @@ class Main {
                 }
                 when "-S" {
                     def level := args.next("a number from 0-3")
-                    safetyLevel := level.asInt64
+                    safetyLevel := level.asInt
                     if safetyLevel > 3 | safetyLevel < 0 {
                         Console.printErrorLine("expected a number from 0-3 after '-S'")
                         System.exit(1)

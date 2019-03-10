@@ -70,6 +70,9 @@ class HCodeGenerator : CodeGenerator {
     }
 
     method type(t:Type):String {
+        if t.name = "frost.core.$Int" {
+            return type(compiler.INT64_TYPE)
+        }
         try {
             match t.typeKind {
                 when Type.Kind.VOID {

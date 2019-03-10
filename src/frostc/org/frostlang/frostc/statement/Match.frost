@@ -61,7 +61,7 @@ class Match {
                             if nextBlock != ir.currentBlock.id {
                                 ir.setCurrentBlock(nextBlock)
                             }
-                            if j < tests.count - 1 | i < whens.count - 1 | other !== null {
+                            if j < tests.count - 1->Int | i < whens.count - 1->Int | other !== null {
                                 nextBlock := ir.newBlock("match")
                             }
                             else {

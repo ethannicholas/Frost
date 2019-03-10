@@ -41,6 +41,9 @@ uses org.frostlang.frostc.statement.Var
 
 @final
 class Compiler {
+    -- FIXME remove this
+    def INT_EXISTS:Bit
+
     choice Resolution {
         UNRESOLVED
         IN_PROGRESS
@@ -309,6 +312,8 @@ class Compiler {
 
         def debug:Bit
 
+        def intSize := 8
+
         init(frostHome:File, importDirs:ListView<File>, optimizationLevel:Int, safetyLevel:Int,
              debug:Bit) {
             self.frostHome := frostHome
@@ -415,6 +420,8 @@ class Compiler {
     def REGULAR_EXPRESSION_TYPE := Type("frost.core.RegularExpression", Type.Kind.CLASS, Position(),
             true)
 
+    def BUILTIN_INT_TYPE := Type("builtin_int", Type.Kind.BUILTIN_INT, 64)
+
     def BUILTIN_INT8_TYPE := Type("builtin_int8", Type.Kind.BUILTIN_INT, 8)
 
     def BUILTIN_INT16_TYPE := Type("builtin_int16", Type.Kind.BUILTIN_INT, 16)
@@ -422,6 +429,8 @@ class Compiler {
     def BUILTIN_INT32_TYPE := Type("builtin_int32", Type.Kind.BUILTIN_INT, 32)
 
     def BUILTIN_INT64_TYPE := Type("builtin_int64", Type.Kind.BUILTIN_INT, 64)
+
+    def BUILTIN_UINT_TYPE := Type("builtin_uint", Type.Kind.BUILTIN_UINT, 64)
 
     def BUILTIN_UINT8_TYPE := Type("builtin_uint8", Type.Kind.BUILTIN_UINT, 8)
 
@@ -443,6 +452,8 @@ class Compiler {
 
     def INT64_TYPE := Type("frost.core.Int64", Type.Kind.CLASS, Position(), true)
 
+    def INT_TYPE := Type("frost.core.Int", Type.Kind.CLASS, Position(), true)
+
     def UINT8_TYPE := Type("frost.core.UInt8", Type.Kind.CLASS, Position(), true)
 
     def UINT16_TYPE := Type("frost.core.UInt16", Type.Kind.CLASS, Position(), true)
@@ -450,6 +461,8 @@ class Compiler {
     def UINT32_TYPE := Type("frost.core.UInt32", Type.Kind.CLASS, Position(), true)
 
     def UINT64_TYPE := Type("frost.core.UInt64", Type.Kind.CLASS, Position(), true)
+
+    def UINT_TYPE := Type("frost.core.UInt", Type.Kind.CLASS, Position(), true)
 
     def REAL32_TYPE := Type("frost.core.Real32", Type.Kind.CLASS, Position(), true)
 
@@ -624,20 +637,19 @@ class Compiler {
         self.symbolTable := root
         self.codeGenerator := codeGenerator
         self.errorQueue := errorQueue
-        codeGenerator.setCompiler(self)
         root.add(BUILTIN_BIT_TYPE)
+        root.add(BUILTIN_INT_TYPE)
         root.add(BUILTIN_INT8_TYPE)
         root.add(BUILTIN_INT16_TYPE)
         root.add(BUILTIN_INT32_TYPE)
         root.add(BUILTIN_INT64_TYPE)
+        root.add(BUILTIN_UINT_TYPE)
         root.add(BUILTIN_UINT8_TYPE)
         root.add(BUILTIN_UINT16_TYPE)
         root.add(BUILTIN_UINT32_TYPE)
         root.add(BUILTIN_UINT64_TYPE)
         root.add(BUILTIN_FLOAT32_TYPE)
         root.add(BUILTIN_FLOAT64_TYPE)
-        root.add(Alias("Int", INT64_TYPE))
-        root.add(Alias("UInt", UINT64_TYPE))
         root.add(Alias("Real", REAL64_TYPE))
         addAlias("frost.collections.Array")
         addAlias("frost.collections.Collection")
@@ -671,6 +683,13 @@ class Compiler {
         addAlias("frost.core.Int16")
         addAlias("frost.core.Int32")
         addAlias("frost.core.Int64")
+        INT_EXISTS := settings.frostHome.resolve("frost/core/Int.frost").exists()
+        if INT_EXISTS {
+            addAlias("frost.core.Int")
+        }
+        else {
+            root.add(Alias("Int", INT64_TYPE))
+        }
         addAlias("frost.core.Immutable")
         addAlias("frost.core.Maybe")
         addAlias("frost.core.Method")
@@ -689,6 +708,12 @@ class Compiler {
         addAlias("frost.core.UInt16")
         addAlias("frost.core.UInt32")
         addAlias("frost.core.UInt64")
+        if INT_EXISTS {
+            addAlias("frost.core.UInt")
+        }
+        else {
+            root.add(Alias("UInt", UINT64_TYPE))
+        }
         addAlias("frost.core.Value")
         addAlias("frost.core.Weak")
         addAlias("frost.math.MersenneTwister")
@@ -710,6 +735,7 @@ class Compiler {
         addAlias("frost.threads.Thread")
         addAlias("frost.json.JSON")
         addAlias("frost.json.JSONParser")
+        codeGenerator.setCompiler(self)
     }
 
     @private
@@ -1920,7 +1946,12 @@ class Compiler {
                 return BIT_TYPE
             }
             when ASTNode.INT {
-                return INT64_TYPE
+                if INT_EXISTS {
+                    return INT_TYPE
+                }
+                else {
+                    return INT64_TYPE
+                }
             }
             when ASTNode.UNARY(_, op, base) {
                 def baseType := preferredType(base)
@@ -2055,16 +2086,20 @@ class Compiler {
                 -- FIXME super hacky
                 if type.typeKind = Type.Kind.TUPLE &
                         target.subtypes[0].name = "frost.core.Equatable" &
-                        target.subtypes[1] = type &
-                        getClass(type).name.startsWith("frost.core.EquatableTuple") |
-                        getClass(type).name.startsWith("frost.core.KeyTuple") {
-                    return Pair<Type, Int>(type, 0)
+                        target.subtypes[1] = type {
+                    def cl := getClass(type)
+                    if cl !== null & (cl.name.startsWith("frost.core.EquatableTuple") |
+                            cl.name.startsWith("frost.core.KeyTuple")) {
+                        return Pair<Type, Int>(type, 0)
+                    }
                 }
                 if type.typeKind = Type.Kind.TUPLE &
                         target.subtypes[0].name = "frost.collections.Key" &
-                        target.subtypes[1] = type &
-                        getClass(type).name.startsWith("frost.core.KeyTuple") {
-                    return Pair<Type, Int>(type, 0)
+                        target.subtypes[1] = type {
+                    def cl := getClass(type)
+                    if cl !== null & cl.name.startsWith("frost.core.KeyTuple") {
+                        return Pair<Type, Int>(type, 0)
+                    }
                 }
             }
         }
@@ -2180,7 +2215,7 @@ class Compiler {
                 if type = m.parameters[0].type {
                     -- FIXME I don't remember where this 6 came from. Figure this out, and if it's
                     -- necessary figure out what the right value is for it and use a named constant.
-                    return Pair<Type, Int>(target, 6 - m.priority)
+                    return Pair<Type, Int>(target, 6->Int - m.priority)
                 }
             }
         }
@@ -2263,7 +2298,7 @@ class Compiler {
                     m.typeKind != Type.Kind.IMMUTABLE_FUNCTION {
                 continue
             }
-            if m.subtypes.count != args.count + 1 {
+            if m.subtypes.count != args.count + 1->Int {
                 continue
             }
             var cost := -m.priority
@@ -2437,7 +2472,7 @@ class Compiler {
 
     method dotTypes(base:Type, name:String, genericArguments:ListView<ASTNode>?):ListView<Type>? {
         if base.isClass {
-            def cl:ClassDecl
+            def cl:ClassDecl?
             def isClass := base.isClassLiteral
             if isClass {
                 -- class literal, grab the class itself rather than frost.core.Class
@@ -2939,6 +2974,10 @@ class Compiler {
                 }
                 result.add(BUILTIN_INT64_TYPE)
                 result.add(INT64_TYPE)
+                if INT_EXISTS {
+                    result.add(INT_TYPE)
+                    result.add(UINT_TYPE)
+                }
                 if value >= UInt8.MIN.asUInt64 & value <= UInt8.MAX.asUInt64 {
                     result.add(BUILTIN_UINT8_TYPE)
                     result.add(UINT8_TYPE)
@@ -3360,13 +3399,13 @@ class Compiler {
                 }
                 if target.isNumber {
                     def cl := getClass(target)
-                    assert cl !== null
+                    assert cl !== null, "could not load class \{target} at \{currentClass[0].name}:\{expr.position()}"
                     def initMethod := cl.methods[0]
                     assert initMethod.methodKind = MethodDecl.Kind.INIT
                     assert initMethod.annotations.isImplicit
                     -- FIXME figure out where this 2 came from and whether it's the right value,
                     -- make it a constant if it's necessarys
-                    return Pair<Type, Int>(target, 2 - initMethod.priority)
+                    return Pair<Type, Int>(target, 2->Int - initMethod.priority)
                 }
                 def preferred := preferredType(expr)
                 assert preferred !== null
@@ -3585,7 +3624,7 @@ class Compiler {
         }
         outer: for m in cl.methods {
             if m.methodKind != MethodDecl.Kind.INIT |
-                    m.parameters.count != entry.fields.count + 1 {
+                    m.parameters.count != entry.fields.count + 1->Int {
                 continue
             }
             assert m.parameters[0].type = INT64_TYPE
@@ -4386,6 +4425,12 @@ class Compiler {
         else if leftSize <= 32 & rightSize <= 32 {
             return INT64_TYPE
         }
+        else if leftSize < 64 | rightSize < 64 {
+            if leftType = INT_TYPE | rightType = INT_TYPE {
+                return INT_TYPE
+            }
+            return INT64_TYPE
+        }
         else {
             unreachable
         }
@@ -4421,7 +4466,7 @@ class Compiler {
         if startClass == target {
             return start.nonnullable()
         }
-        assert startClass.name != target.name, "duplicate class: \{startClass.name}"
+        -- FIXME uncomment assert startClass.name != target.name, "duplicate class: \{startClass.name}"
         if startClass.rawSuper !== null {
             def result := findType(remapType(start, startClass.rawSuper),
                     target)
@@ -4754,7 +4799,20 @@ class Compiler {
             return null
         }
         if !isValue(cl) {
-            error(position, "range endpoints must be value types, but found '\{endpointType}'")
+            if compiledStart !== null {
+                if compiledEnd !== null {
+                    error(position, "range endpoints must be value types, but found " +
+                            "'\{compiledStart.type()}', '\{compiledEnd.type()}'")
+                }
+                else {
+                    error(position, "range endpoints must be value types, but found " +
+                            "'\{compiledStart.type()}'")
+                }
+            }
+            else {
+                error(position, "range endpoints must be value types, but found " +
+                        "'\{compiledEnd.type()}'")
+            }
             return null
         }
         if compiledStart == null {

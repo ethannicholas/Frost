@@ -1449,6 +1449,11 @@ class String : Immutable, Key<String>, Comparable<String>, Iterable<Char32>, For
         return split(delimiter, Int.MAX)
     }
 
+    property asInt:Int?
+    function get_asInt():Int? {
+        return asInt64
+    }
+
     ================================================================================================
     Converts this string to a signed number. The string must be a sequence of decimal digits,
     optionally preceded by a minus sign (`-`), whose numeric representation can fit into an `Int64`.

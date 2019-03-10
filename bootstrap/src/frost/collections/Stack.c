@@ -52,7 +52,7 @@ static frost$core$String $s187 = { (frost$core$Class*) &frost$core$String$class,
 
 void frost$collections$Stack$push$frost$collections$Stack$T(frost$collections$Stack* param0, frost$core$Object* param1) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Stack.frost:42
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Stack.frost:42
 frost$collections$Array** $tmp2 = &param0->contents;
 frost$collections$Array* $tmp3 = *$tmp2;
 frost$collections$Array$add$frost$collections$Array$T($tmp3, param1);
@@ -63,7 +63,7 @@ frost$core$Object* frost$collections$Stack$pop$R$frost$collections$Stack$T(frost
 
 frost$core$Object* local0 = NULL;
 // begin inline call to function frost.collections.Stack.get_count():frost.core.Int64 from Stack.frost:50:10
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Stack.frost:93
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Stack.frost:93
 frost$collections$Array** $tmp4 = &param0->contents;
 frost$collections$Array* $tmp5 = *$tmp4;
 ITable* $tmp6 = ((frost$collections$CollectionView*) $tmp5)->$class->itable;
@@ -84,7 +84,7 @@ frost$core$Int64 $tmp16 = (frost$core$Int64) {51u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s17, $tmp16, &$s18);
 abort(); // unreachable
 block1:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Stack.frost:52
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Stack.frost:52
 frost$collections$Array** $tmp19 = &param0->contents;
 frost$collections$Array* $tmp20 = *$tmp19;
 ITable* $tmp21 = ((frost$collections$CollectionView*) $tmp20)->$class->itable;
@@ -105,7 +105,7 @@ frost$core$Int64 $tmp31 = (frost$core$Int64) {52u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s32, $tmp31);
 abort(); // unreachable
 block4:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Stack.frost:53
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Stack.frost:53
 frost$collections$Array** $tmp33 = &param0->contents;
 frost$collections$Array* $tmp34 = *$tmp33;
 frost$collections$Array** $tmp35 = &param0->contents;
@@ -147,7 +147,7 @@ frost$core$Int64 $tmp61 = (frost$core$Int64) {74u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s62, $tmp61, &$s63);
 abort(); // unreachable
 block7:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Array.frost:75
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Array.frost:75
 frost$core$Object*** $tmp64 = &$tmp34->data;
 frost$core$Object** $tmp65 = *$tmp64;
 int64_t $tmp66 = $tmp45.value;
@@ -159,7 +159,7 @@ frost$core$Object* $tmp68 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q($tmp68);
 *(&local0) = $tmp67;
 frost$core$Frost$unref$frost$core$Object$Q($tmp67);
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Stack.frost:54
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Stack.frost:54
 frost$collections$Array** $tmp69 = &param0->contents;
 frost$collections$Array* $tmp70 = *$tmp69;
 frost$collections$Array** $tmp71 = &param0->contents;
@@ -177,7 +177,7 @@ int64_t $tmp80 = $tmp78 - $tmp79;
 frost$core$Int64 $tmp81 = (frost$core$Int64) {$tmp80};
 frost$core$Object* $tmp82 = frost$collections$Array$removeIndex$frost$core$Int64$R$frost$collections$Array$T($tmp70, $tmp81);
 frost$core$Frost$unref$frost$core$Object$Q($tmp82);
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Stack.frost:55
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Stack.frost:55
 frost$core$Object* $tmp83 = *(&local0);
 frost$core$Frost$ref$frost$core$Object$Q($tmp83);
 frost$core$Object* $tmp84 = *(&local0);
@@ -188,7 +188,7 @@ return $tmp83;
 }
 void frost$collections$Stack$insert$frost$core$Int64$frost$collections$Stack$T(frost$collections$Stack* param0, frost$core$Int64 param1, frost$core$Object* param2) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Stack.frost:59
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Stack.frost:59
 frost$collections$Array** $tmp85 = &param0->contents;
 frost$collections$Array* $tmp86 = *$tmp85;
 frost$collections$Array** $tmp87 = &param0->contents;
@@ -214,7 +214,7 @@ return;
 }
 frost$core$Object* frost$collections$Stack$removeIndex$frost$core$Int64$R$frost$collections$Stack$T(frost$collections$Stack* param0, frost$core$Int64 param1) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Stack.frost:63
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Stack.frost:63
 frost$collections$Array** $tmp102 = &param0->contents;
 frost$collections$Array* $tmp103 = *$tmp102;
 frost$collections$Array** $tmp104 = &param0->contents;
@@ -251,7 +251,7 @@ bool $tmp125 = $tmp124.value;
 if ($tmp125) goto block3; else goto block2;
 block3:;
 // begin inline call to function frost.collections.Stack.get_count():frost.core.Int64 from Stack.frost:70:31
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Stack.frost:93
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Stack.frost:93
 frost$collections$Array** $tmp126 = &param0->contents;
 frost$collections$Array* $tmp127 = *$tmp126;
 ITable* $tmp128 = ((frost$collections$CollectionView*) $tmp127)->$class->itable;
@@ -271,7 +271,7 @@ frost$core$Int64 $tmp137 = (frost$core$Int64) {71u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s138, $tmp137, &$s139);
 abort(); // unreachable
 block1:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Stack.frost:72
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Stack.frost:72
 frost$collections$Array** $tmp140 = &param0->contents;
 frost$collections$Array* $tmp141 = *$tmp140;
 ITable* $tmp142 = ((frost$collections$CollectionView*) $tmp141)->$class->itable;
@@ -291,7 +291,7 @@ frost$core$Int64 $tmp151 = (frost$core$Int64) {72u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64(&$s152, $tmp151);
 abort(); // unreachable
 block5:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Stack.frost:73
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Stack.frost:73
 frost$collections$Array** $tmp153 = &param0->contents;
 frost$collections$Array* $tmp154 = *$tmp153;
 frost$collections$Array** $tmp155 = &param0->contents;
@@ -337,7 +337,7 @@ frost$core$Int64 $tmp185 = (frost$core$Int64) {74u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int64$frost$core$String(&$s186, $tmp185, &$s187);
 abort(); // unreachable
 block8:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Array.frost:75
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Array.frost:75
 frost$core$Object*** $tmp188 = &$tmp154->data;
 frost$core$Object** $tmp189 = *$tmp188;
 int64_t $tmp190 = $tmp169.value;
@@ -351,15 +351,15 @@ return $tmp191;
 void frost$collections$Stack$clear(frost$collections$Stack* param0) {
 
 frost$core$Int64 local0;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Stack.frost:80
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Stack.frost:80
 frost$collections$Array** $tmp192 = &param0->contents;
 frost$collections$Array* $tmp193 = *$tmp192;
 // begin inline call to method frost.collections.Array.clear() from Stack.frost:80:23
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Array.frost:139
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Array.frost:139
 frost$core$Int64 $tmp194 = (frost$core$Int64) {0u};
 frost$core$Int64* $tmp195 = &$tmp193->_count;
 *$tmp195 = $tmp194;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Array.frost:140
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Array.frost:140
 frost$core$Int64 $tmp196 = (frost$core$Int64) {0u};
 frost$core$Int64* $tmp197 = &$tmp193->capacity;
 frost$core$Int64 $tmp198 = *$tmp197;
@@ -372,7 +372,7 @@ frost$core$Bit $tmp203 = $tmp200.inclusive;
 bool $tmp204 = $tmp203.value;
 frost$core$Int64 $tmp205 = (frost$core$Int64) {1u};
 // begin inline call to function frost.core.Int64.get_asUInt64():frost.core.UInt64 from <internal>:1:1
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:422
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:555
 int64_t $tmp206 = $tmp205.value;
 frost$core$UInt64 $tmp207 = (frost$core$UInt64) {((uint64_t) $tmp206)};
 if ($tmp204) goto block6; else goto block7;
@@ -391,7 +391,7 @@ frost$core$Bit $tmp216 = (frost$core$Bit) {$tmp215};
 bool $tmp217 = $tmp216.value;
 if ($tmp217) goto block3; else goto block4;
 block3:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Array.frost:141
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Array.frost:141
 frost$core$Object*** $tmp218 = &$tmp193->data;
 frost$core$Object** $tmp219 = *$tmp218;
 frost$core$Int64 $tmp220 = *(&local0);
@@ -405,7 +405,7 @@ int64_t $tmp225 = $tmp223.value;
 int64_t $tmp226 = $tmp224 - $tmp225;
 frost$core$Int64 $tmp227 = (frost$core$Int64) {$tmp226};
 // begin inline call to function frost.core.Int64.get_asUInt64():frost.core.UInt64 from <internal>:1:1
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:422
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:555
 int64_t $tmp228 = $tmp227.value;
 frost$core$UInt64 $tmp229 = (frost$core$UInt64) {((uint64_t) $tmp228)};
 if ($tmp204) goto block10; else goto block11;
@@ -436,7 +436,7 @@ return;
 }
 frost$collections$Iterator* frost$collections$Stack$get_iterator$R$frost$collections$Iterator$LTfrost$collections$Stack$T$GT(frost$collections$Stack* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Stack.frost:89
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Stack.frost:89
 FROST_ASSERT(32 == sizeof(frost$collections$Stack$StackIterator));
 frost$collections$Stack$StackIterator* $tmp244 = (frost$collections$Stack$StackIterator*) frostObjectAlloc(32, (frost$core$Class*) &frost$collections$Stack$StackIterator$class);
 frost$collections$Stack$StackIterator$init$frost$collections$Stack$LTfrost$collections$Stack$StackIterator$T$GT($tmp244, param0);
@@ -447,7 +447,7 @@ return ((frost$collections$Iterator*) $tmp244);
 }
 frost$core$Int64 frost$collections$Stack$get_count$R$frost$core$Int64(frost$collections$Stack* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Stack.frost:93
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Stack.frost:93
 frost$collections$Array** $tmp245 = &param0->contents;
 frost$collections$Array* $tmp246 = *$tmp245;
 ITable* $tmp247 = ((frost$collections$CollectionView*) $tmp246)->$class->itable;
@@ -461,7 +461,7 @@ return $tmp250;
 }
 frost$core$String* frost$collections$Stack$get_asString$R$frost$core$String(frost$collections$Stack* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Stack.frost:98
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Stack.frost:98
 frost$collections$Array** $tmp251 = &param0->contents;
 frost$collections$Array* $tmp252 = *$tmp251;
 $fn254 $tmp253 = ($fn254) ((frost$core$Object*) $tmp252)->$class->vtable[0];
@@ -473,7 +473,7 @@ return $tmp255;
 }
 void frost$collections$Stack$init(frost$collections$Stack* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Stack.frost:34
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Stack.frost:34
 FROST_ASSERT(40 == sizeof(frost$collections$Array));
 frost$collections$Array* $tmp256 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
 frost$collections$Array$init($tmp256);
@@ -489,7 +489,7 @@ return;
 }
 void frost$collections$Stack$cleanup(frost$collections$Stack* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Stack.frost:9
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Stack.frost:9
 frost$core$Object$cleanup(((frost$core$Object*) param0));
 frost$collections$Array** $tmp260 = &param0->contents;
 frost$collections$Array* $tmp261 = *$tmp260;

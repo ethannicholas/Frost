@@ -56,7 +56,7 @@ static frost$core$String $s2 = { (frost$core$Class*) &frost$core$String$class, -
 frost$core$String$Index frost$core$String$Index$init$frost$core$Int64(frost$core$Int64 param0) {
 
 frost$core$String$Index local0;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:61
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:61
 frost$core$Int64* $tmp3 = &(&local0)->value;
 *$tmp3 = param0;
 frost$core$String$Index $tmp4 = *(&local0);
@@ -65,11 +65,11 @@ return $tmp4;
 }
 frost$core$Bit frost$core$String$Index$$EQ$frost$core$String$Index$R$frost$core$Bit(frost$core$String$Index param0, frost$core$String$Index param1) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:66
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:66
 frost$core$Int64 $tmp5 = param0.value;
 frost$core$Int64 $tmp6 = param1.value;
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from String.frost:66:26
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:179
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:240
 int64_t $tmp7 = $tmp5.value;
 int64_t $tmp8 = $tmp6.value;
 bool $tmp9 = $tmp7 == $tmp8;
@@ -79,7 +79,7 @@ return $tmp10;
 }
 frost$core$Bit frost$core$String$Index$$GT$frost$core$String$Index$R$frost$core$Bit(frost$core$String$Index param0, frost$core$String$Index param1) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:71
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:71
 frost$core$Int64 $tmp11 = param0.value;
 frost$core$Int64 $tmp12 = param1.value;
 int64_t $tmp13 = $tmp11.value;
@@ -91,7 +91,7 @@ return $tmp16;
 }
 frost$core$Int64 frost$core$String$Index$get_hash$R$frost$core$Int64(frost$core$String$Index param0) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:79
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:79
 frost$core$Int64 $tmp17 = param0.value;
 return $tmp17;
 
