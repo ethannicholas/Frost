@@ -6,11 +6,10 @@
 #include "org/frostlang/frostc/Compiler.h"
 #include "org/frostlang/frostc/ASTNode.h"
 #include "frost/core/UInt64.h"
-#include "frost/core/Int64.h"
+#include "frost/core/Int.h"
 #include "frost/core/Bit.h"
 #include "org/frostlang/frostc/Position.h"
 #include "org/frostlang/frostc/FixedArray.h"
-#include "frost/core/Int.h"
 #include "frost/core/Frost.h"
 #include "frost/collections/CollectionView.h"
 #include "org/frostlang/frostc/expression/Tuple/_Closure2.h"
@@ -72,11 +71,11 @@ org$frostlang$frostc$Type* org$frostlang$frostc$expression$Tuple$indexType$org$f
 
 frost$core$UInt64 local0;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/expression/Tuple.frost:15
-frost$core$Int64* $tmp2 = &param2->$rawValue;
-frost$core$Int64 $tmp3 = *$tmp2;
-frost$core$Int64 $tmp4 = (frost$core$Int64) {25u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Tuple.frost:16:25
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int* $tmp2 = &param2->$rawValue;
+frost$core$Int $tmp3 = *$tmp2;
+frost$core$Int $tmp4 = (frost$core$Int) {25u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Tuple.frost:16:25
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp5 = $tmp3.value;
 int64_t $tmp6 = $tmp4.value;
 bool $tmp7 = $tmp5 == $tmp6;
@@ -347,10 +346,10 @@ org$frostlang$frostc$Type$Kind $tmp116 = *$tmp115;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp117;
 $tmp117 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp117->value = $tmp116;
-frost$core$Int64 $tmp118 = (frost$core$Int64) {10u};
-// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int64):org.frostlang.frostc.Type.Kind from Tuple.frost:43:39
+frost$core$Int $tmp118 = (frost$core$Int) {10u};
+// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Tuple.frost:43:39
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Type.frost:5
-frost$core$Int64* $tmp119 = &(&local1)->$rawValue;
+frost$core$Int* $tmp119 = &(&local1)->$rawValue;
 *$tmp119 = $tmp118;
 org$frostlang$frostc$Type$Kind $tmp120 = *(&local1);
 *(&local0) = $tmp120;
@@ -618,11 +617,11 @@ org$frostlang$frostc$Type* local4 = NULL;
 org$frostlang$frostc$Type* local5 = NULL;
 org$frostlang$frostc$IR$Value* local6 = NULL;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/expression/Tuple.frost:65
-frost$core$Int64* $tmp251 = &param3->$rawValue;
-frost$core$Int64 $tmp252 = *$tmp251;
-frost$core$Int64 $tmp253 = (frost$core$Int64) {3u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Tuple.frost:66:29
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int* $tmp251 = &param3->$rawValue;
+frost$core$Int $tmp252 = *$tmp251;
+frost$core$Int $tmp253 = (frost$core$Int) {3u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Tuple.frost:66:29
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp254 = $tmp252.value;
 int64_t $tmp255 = $tmp253.value;
 bool $tmp256 = $tmp254 == $tmp255;
@@ -649,10 +648,10 @@ org$frostlang$frostc$Type$Kind $tmp266 = *$tmp265;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp267;
 $tmp267 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp267->value = $tmp266;
-frost$core$Int64 $tmp268 = (frost$core$Int64) {10u};
-// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int64):org.frostlang.frostc.Type.Kind from Type.frost:374:31
+frost$core$Int $tmp268 = (frost$core$Int) {10u};
+// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:374:31
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Type.frost:5
-frost$core$Int64* $tmp269 = &(&local3)->$rawValue;
+frost$core$Int* $tmp269 = &(&local3)->$rawValue;
 *$tmp269 = $tmp268;
 org$frostlang$frostc$Type$Kind $tmp270 = *(&local3);
 *(&local2) = $tmp270;
@@ -747,7 +746,7 @@ org$frostlang$frostc$Type* $tmp315 = *(&local4);
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Compiler.frost:3740
 FROST_ASSERT(48 == sizeof(org$frostlang$frostc$IR$Value));
 org$frostlang$frostc$IR$Value* $tmp316 = (org$frostlang$frostc$IR$Value*) frostObjectAlloc(48, (frost$core$Class*) &org$frostlang$frostc$IR$Value$class);
-frost$core$Int64 $tmp317 = (frost$core$Int64) {14u};
+frost$core$Int $tmp317 = (frost$core$Int) {14u};
 // begin inline call to method org.frostlang.frostc.Type.ClassLiteral(compiler:org.frostlang.frostc.Compiler, t:org.frostlang.frostc.Type):org.frostlang.frostc.Type from Compiler.frost:3740:50
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Type.frost:273
 org$frostlang$frostc$Type** $tmp318 = &param0->CLASS_TYPE;
@@ -761,14 +760,14 @@ org$frostlang$frostc$Type* $tmp322 = org$frostlang$frostc$Type$generic$org$frost
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp322));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp322));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp320));
-org$frostlang$frostc$IR$Value$init$frost$core$Int64$org$frostlang$frostc$Type$org$frostlang$frostc$Type($tmp316, $tmp317, $tmp315, $tmp322);
+org$frostlang$frostc$IR$Value$init$frost$core$Int$org$frostlang$frostc$Type$org$frostlang$frostc$Type($tmp316, $tmp317, $tmp315, $tmp322);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp316));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp322));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp316));
 FROST_ASSERT(40 == sizeof(org$frostlang$frostc$Compiler$TypeContext));
 org$frostlang$frostc$Compiler$TypeContext* $tmp323 = (org$frostlang$frostc$Compiler$TypeContext*) frostObjectAlloc(40, (frost$core$Class*) &org$frostlang$frostc$Compiler$TypeContext$class);
-frost$core$Int64 $tmp324 = (frost$core$Int64) {0u};
-org$frostlang$frostc$Compiler$TypeContext$init$frost$core$Int64($tmp323, $tmp324);
+frost$core$Int $tmp324 = (frost$core$Int) {0u};
+org$frostlang$frostc$Compiler$TypeContext$init$frost$core$Int($tmp323, $tmp324);
 org$frostlang$frostc$IR$Value* $tmp325 = org$frostlang$frostc$expression$Call$compile$org$frostlang$frostc$Compiler$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Value$frost$collections$ListView$LTorg$frostlang$frostc$ASTNode$GT$org$frostlang$frostc$Compiler$TypeContext$R$org$frostlang$frostc$IR$Value$Q(param0, param1, $tmp316, ((frost$collections$ListView*) param2), $tmp323);
 org$frostlang$frostc$Type* $tmp326 = *(&local0);
 org$frostlang$frostc$IR$Value* $tmp327 = org$frostlang$frostc$Compiler$cast$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Value$Q$org$frostlang$frostc$Type$R$org$frostlang$frostc$IR$Value$Q(param0, param1, $tmp325, $tmp326);
@@ -793,8 +792,8 @@ block1:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/expression/Tuple.frost:74
 FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
 org$frostlang$frostc$ASTNode* $tmp331 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
-frost$core$Int64 $tmp332 = (frost$core$Int64) {43u};
-org$frostlang$frostc$ASTNode$init$frost$core$Int64$org$frostlang$frostc$Position$org$frostlang$frostc$FixedArray$LTorg$frostlang$frostc$ASTNode$GT($tmp331, $tmp332, param1, param2);
+frost$core$Int $tmp332 = (frost$core$Int) {43u};
+org$frostlang$frostc$ASTNode$init$frost$core$Int$org$frostlang$frostc$Position$org$frostlang$frostc$FixedArray$LTorg$frostlang$frostc$ASTNode$GT($tmp331, $tmp332, param1, param2);
 org$frostlang$frostc$Type* $tmp333 = org$frostlang$frostc$Compiler$preferredType$org$frostlang$frostc$ASTNode$R$org$frostlang$frostc$Type$Q(param0, $tmp331);
 *(&local5) = ((org$frostlang$frostc$Type*) NULL);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp333));
@@ -846,10 +845,10 @@ block19:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/expression/Tuple.frost:78
 FROST_ASSERT(40 == sizeof(org$frostlang$frostc$Compiler$TypeContext));
 org$frostlang$frostc$Compiler$TypeContext* $tmp351 = (org$frostlang$frostc$Compiler$TypeContext*) frostObjectAlloc(40, (frost$core$Class*) &org$frostlang$frostc$Compiler$TypeContext$class);
-frost$core$Int64 $tmp352 = (frost$core$Int64) {3u};
+frost$core$Int $tmp352 = (frost$core$Int) {3u};
 org$frostlang$frostc$Type* $tmp353 = *(&local5);
 frost$core$Bit $tmp354 = (frost$core$Bit) {false};
-org$frostlang$frostc$Compiler$TypeContext$init$frost$core$Int64$org$frostlang$frostc$Type$frost$core$Bit($tmp351, $tmp352, $tmp353, $tmp354);
+org$frostlang$frostc$Compiler$TypeContext$init$frost$core$Int$org$frostlang$frostc$Type$frost$core$Bit($tmp351, $tmp352, $tmp353, $tmp354);
 org$frostlang$frostc$IR$Value* $tmp355 = org$frostlang$frostc$expression$Tuple$compile$org$frostlang$frostc$Compiler$org$frostlang$frostc$Position$org$frostlang$frostc$FixedArray$LTorg$frostlang$frostc$ASTNode$GT$org$frostlang$frostc$Compiler$TypeContext$R$org$frostlang$frostc$IR$Value$Q(param0, param1, param2, $tmp351);
 *(&local6) = ((org$frostlang$frostc$IR$Value*) NULL);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp355));

@@ -362,7 +362,7 @@ class UInt16 : Value, Key<UInt16>, Comparable<UInt16>, Formattable, ListView<Bit
     ===Returns the bitwise AND of this number with another number.===
     @priority(11)
     function &&(other:Int):Int {
-        return value->builtin_int64 && other.value
+        return value->builtin_int && other.value
     }
 
     ===Returns the bitwise AND of this number with another number.===
@@ -415,7 +415,7 @@ class UInt16 : Value, Key<UInt16>, Comparable<UInt16>, Formattable, ListView<Bit
     ===Returns the bitwise OR of this number with another number.===
     @priority(11)
     function ||(other:Int):Int {
-        return value->builtin_int64 || other.value
+        return value->builtin_int || other.value
     }
 
     ===Returns the bitwise OR of this number with another number.===
@@ -468,7 +468,7 @@ class UInt16 : Value, Key<UInt16>, Comparable<UInt16>, Formattable, ListView<Bit
     ===Returns the bitwise XOR of this number with another number.===
     @priority(11)
     function ~~(other:Int):Int {
-        return value->builtin_int64 ~~ other.value
+        return value->builtin_int ~~ other.value
     }
 
     ===Returns the bitwise XOR of this number with another number.===
@@ -1050,7 +1050,7 @@ class UInt16 : Value, Key<UInt16>, Comparable<UInt16>, Formattable, ListView<Bit
 
     @override
     function get_hash():Int {
-        return Int(value->builtin_int64)
+        return Int(value->builtin_int)
     }
 
     ===Parses a string as a number in the specified radix. Returns `null` if the parse fails.===
@@ -1067,7 +1067,7 @@ class UInt16 : Value, Key<UInt16>, Comparable<UInt16>, Formattable, ListView<Bit
     ===Returns this number zero extended to a 32 bit signed number.===
     property asInt:Int
     function get_asInt():Int {
-        return Int(value->builtin_int64)
+        return Int(value->builtin_int)
     }
 
     ===Returns this number truncated to an 8 bit signed number.===

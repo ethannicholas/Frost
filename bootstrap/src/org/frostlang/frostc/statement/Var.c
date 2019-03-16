@@ -11,7 +11,6 @@
 #include "frost/collections/Iterator.h"
 #include "frost/core/Bit.h"
 #include "frost/core/Frost.h"
-#include "frost/core/Int64.h"
 #include "frost/core/Int.h"
 
 
@@ -62,11 +61,11 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp15));
 *(&local0) = ((org$frostlang$frostc$ASTNode*) $tmp14);
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/statement/Var.frost:14
 org$frostlang$frostc$ASTNode* $tmp16 = *(&local0);
-frost$core$Int64* $tmp17 = &$tmp16->$rawValue;
-frost$core$Int64 $tmp18 = *$tmp17;
-frost$core$Int64 $tmp19 = (frost$core$Int64) {14u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Var.frost:15:29
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int* $tmp17 = &$tmp16->$rawValue;
+frost$core$Int $tmp18 = *$tmp17;
+frost$core$Int $tmp19 = (frost$core$Int) {14u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Var.frost:15:29
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp20 = $tmp18.value;
 int64_t $tmp21 = $tmp19.value;
 bool $tmp22 = $tmp20 == $tmp21;

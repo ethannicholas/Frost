@@ -4,7 +4,7 @@
 #include "frost/core/String.h"
 #include "org/frostlang/frostc/Type.h"
 #include "org/frostlang/frostc/Symbol/Kind.h"
-#include "frost/core/Int64.h"
+#include "frost/core/Int.h"
 #include "org/frostlang/frostc/Position.h"
 #include "frost/core/Object.h"
 #include "frost/core/Frost.h"
@@ -25,10 +25,10 @@ void org$frostlang$frostc$Alias$init$frost$core$String$org$frostlang$frostc$Type
 org$frostlang$frostc$Symbol$Kind local0;
 org$frostlang$frostc$Symbol$Kind local1;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Alias.frost:8
-frost$core$Int64 $tmp2 = (frost$core$Int64) {0u};
-// begin inline call to org.frostlang.frostc.Symbol.Kind.init(rv:frost.core.Int64):org.frostlang.frostc.Symbol.Kind from Alias.frost:8:24
+frost$core$Int $tmp2 = (frost$core$Int) {0u};
+// begin inline call to org.frostlang.frostc.Symbol.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Symbol.Kind from Alias.frost:8:24
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Symbol.frost:4
-frost$core$Int64* $tmp3 = &(&local1)->$rawValue;
+frost$core$Int* $tmp3 = &(&local1)->$rawValue;
 *$tmp3 = $tmp2;
 org$frostlang$frostc$Symbol$Kind $tmp4 = *(&local1);
 *(&local0) = $tmp4;

@@ -524,7 +524,7 @@ class UInt64 : Value, Key<UInt64>, Comparable<UInt64>, Formattable, ListView<Bit
 
     @override
     function get_hash():Int {
-        return Int(value->builtin_int64)
+        return Int(value->builtin_int)
     }
 
     ===Parses a string as a number in the specified radix. Returns `null` if the parse fails.===
@@ -541,7 +541,7 @@ class UInt64 : Value, Key<UInt64>, Comparable<UInt64>, Formattable, ListView<Bit
     ===Returns this number truncated to a 32 bit signed number.===
     property asInt:Int
     function get_asInt():Int {
-        return Int(value->builtin_int64)
+        return Int(value->builtin_int)
     }
 
     ===Returns this number truncated to an 8 bit signed number.===

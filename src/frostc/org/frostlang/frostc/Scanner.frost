@@ -733,7 +733,7 @@ class Scanner {
         if kind = ClassDecl.Kind.CHOICE {
             def rawValue := FieldDecl(result, result.position, null,
                     Annotations(Annotations.Flag.SYNTHETIC), FieldDecl.Kind.DEF,
-                    ClassDecl.RAW_VALUE_NAME, compiler.INT64_TYPE, null)
+                    ClassDecl.RAW_VALUE_NAME, compiler.INT_TYPE, null)
             result.fields.add(rawValue)
             result.symbolTable.add(rawValue)
             def data := FieldDecl(result, result.position, null,

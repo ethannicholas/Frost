@@ -5,13 +5,12 @@
 #include "frost/core/Bit.h"
 #include "org/frostlang/frostc/IR/Statement.h"
 #include "org/frostlang/frostc/MethodDecl.h"
-#include "frost/core/Int64.h"
+#include "frost/core/Int.h"
 #include "org/frostlang/frostc/Position.h"
 #include "frost/core/Frost.h"
 #include "org/frostlang/frostc/FixedArray.h"
 #include "org/frostlang/frostc/Symbol.h"
 #include "frost/core/Weak.h"
-#include "frost/core/Int.h"
 #include "org/frostlang/frostc/ClassDecl.h"
 #include "org/frostlang/frostc/IR.h"
 #include "org/frostlang/frostc/pass/Analyzer.h"
@@ -19,6 +18,7 @@
 #include "frost/collections/Array.h"
 #include "frost/collections/CollectionView.h"
 #include "frost/core/SteppedRange.LTfrost/core/Int.Cfrost/core/Int.GT.h"
+#include "frost/core/Int64.h"
 #include "frost/collections/Iterable.h"
 #include "frost/collections/Iterator.h"
 
@@ -46,11 +46,11 @@ frost$core$Bit org$frostlang$frostc$pass$RemoveAsserts$isAssertionFail$org$frost
 org$frostlang$frostc$MethodDecl* local0 = NULL;
 frost$core$Bit local1;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/pass/RemoveAsserts.frost:7
-frost$core$Int64* $tmp2 = &param1->$rawValue;
-frost$core$Int64 $tmp3 = *$tmp2;
-frost$core$Int64 $tmp4 = (frost$core$Int64) {26u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from RemoveAsserts.frost:8:30
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int* $tmp2 = &param1->$rawValue;
+frost$core$Int $tmp3 = *$tmp2;
+frost$core$Int $tmp4 = (frost$core$Int) {26u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RemoveAsserts.frost:8:30
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp5 = $tmp3.value;
 int64_t $tmp6 = $tmp4.value;
 bool $tmp7 = $tmp5 == $tmp6;

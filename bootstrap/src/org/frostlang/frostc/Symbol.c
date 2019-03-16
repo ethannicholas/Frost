@@ -8,7 +8,6 @@
 #include "frost/core/Bit.h"
 #include "org/frostlang/frostc/Type.h"
 #include "frost/core/Equatable.h"
-#include "frost/core/Int64.h"
 #include "frost/core/Int.h"
 #include "frost/core/Frost.h"
 
@@ -43,10 +42,10 @@ org$frostlang$frostc$Type$Kind $tmp6 = *$tmp5;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp7;
 $tmp7 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp7->value = $tmp6;
-frost$core$Int64 $tmp8 = (frost$core$Int64) {13u};
-// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int64):org.frostlang.frostc.Type.Kind from Symbol.frost:25:51
+frost$core$Int $tmp8 = (frost$core$Int) {13u};
+// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Symbol.frost:25:51
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Type.frost:5
-frost$core$Int64* $tmp9 = &(&local1)->$rawValue;
+frost$core$Int* $tmp9 = &(&local1)->$rawValue;
 *$tmp9 = $tmp8;
 org$frostlang$frostc$Type$Kind $tmp10 = *(&local1);
 *(&local0) = $tmp10;
@@ -66,9 +65,9 @@ block5:;
 frost$core$Int $tmp18 = (frost$core$Int) {25u};
 org$frostlang$frostc$Type$Kind* $tmp19 = &((org$frostlang$frostc$Type*) param0)->typeKind;
 org$frostlang$frostc$Type$Kind $tmp20 = *$tmp19;
-frost$core$Int64 $tmp21 = $tmp20.$rawValue;
-frost$core$Int64$wrapper* $tmp22;
-$tmp22 = (frost$core$Int64$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int64$wrapperclass);
+frost$core$Int $tmp21 = $tmp20.$rawValue;
+frost$core$Int$wrapper* $tmp22;
+$tmp22 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp22->value = $tmp21;
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Symbol.frost:25:78
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:560

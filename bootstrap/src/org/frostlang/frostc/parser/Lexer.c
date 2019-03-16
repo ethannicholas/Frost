@@ -33713,39 +33713,38 @@ org$frostlang$plex$runtime$RawToken $tmp25372 = org$frostlang$plex$runtime$DFA$n
 // /Users/ethannicholas/Dropbox/Frost-Int/build/org/frostlang/frostc/parser/Lexer.frost:3423
 org$frostlang$plex$runtime$RawToken $tmp25373 = *(&local0);
 frost$core$Int $tmp25374 = $tmp25373.kind;
-frost$core$Int64 $tmp25375 = frost$core$Int64$init$frost$core$Int($tmp25374);
-// begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int64):org.frostlang.frostc.parser.Token.Kind from Lexer.frost:3423:88
+// begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Lexer.frost:3423:88
 // /Users/ethannicholas/Dropbox/Frost-Int/build/org/frostlang/frostc/parser/Token.frost:11
-frost$core$Int64* $tmp25376 = &(&local2)->$rawValue;
-*$tmp25376 = $tmp25375;
-org$frostlang$frostc$parser$Token$Kind $tmp25377 = *(&local2);
-*(&local1) = $tmp25377;
-org$frostlang$frostc$parser$Token$Kind $tmp25378 = *(&local1);
-org$frostlang$plex$runtime$RawToken $tmp25379 = *(&local0);
-frost$core$String$Index $tmp25380 = $tmp25379.start;
-org$frostlang$plex$runtime$RawToken $tmp25381 = *(&local0);
-frost$core$String$Index $tmp25382 = $tmp25381.end;
-frost$core$Int* $tmp25383 = &param0->file;
-frost$core$Int $tmp25384 = *$tmp25383;
-org$frostlang$plex$runtime$RawToken $tmp25385 = *(&local0);
-frost$core$Int $tmp25386 = $tmp25385.line;
-org$frostlang$plex$runtime$RawToken $tmp25387 = *(&local0);
-frost$core$Int $tmp25388 = $tmp25387.column;
-org$frostlang$frostc$Position $tmp25389 = org$frostlang$frostc$Position$init$frost$core$Int$frost$core$Int$frost$core$Int($tmp25384, $tmp25386, $tmp25388);
-org$frostlang$frostc$parser$Token $tmp25390 = org$frostlang$frostc$parser$Token$init$org$frostlang$frostc$parser$Token$Kind$frost$core$String$Index$frost$core$String$Index$org$frostlang$frostc$Position($tmp25378, $tmp25380, $tmp25382, $tmp25389);
-return $tmp25390;
+frost$core$Int* $tmp25375 = &(&local2)->$rawValue;
+*$tmp25375 = $tmp25374;
+org$frostlang$frostc$parser$Token$Kind $tmp25376 = *(&local2);
+*(&local1) = $tmp25376;
+org$frostlang$frostc$parser$Token$Kind $tmp25377 = *(&local1);
+org$frostlang$plex$runtime$RawToken $tmp25378 = *(&local0);
+frost$core$String$Index $tmp25379 = $tmp25378.start;
+org$frostlang$plex$runtime$RawToken $tmp25380 = *(&local0);
+frost$core$String$Index $tmp25381 = $tmp25380.end;
+frost$core$Int* $tmp25382 = &param0->file;
+frost$core$Int $tmp25383 = *$tmp25382;
+org$frostlang$plex$runtime$RawToken $tmp25384 = *(&local0);
+frost$core$Int $tmp25385 = $tmp25384.line;
+org$frostlang$plex$runtime$RawToken $tmp25386 = *(&local0);
+frost$core$Int $tmp25387 = $tmp25386.column;
+org$frostlang$frostc$Position $tmp25388 = org$frostlang$frostc$Position$init$frost$core$Int$frost$core$Int$frost$core$Int($tmp25383, $tmp25385, $tmp25387);
+org$frostlang$frostc$parser$Token $tmp25389 = org$frostlang$frostc$parser$Token$init$org$frostlang$frostc$parser$Token$Kind$frost$core$String$Index$frost$core$String$Index$org$frostlang$frostc$Position($tmp25377, $tmp25379, $tmp25381, $tmp25388);
+return $tmp25389;
 
 }
 void org$frostlang$frostc$parser$Lexer$init(org$frostlang$frostc$parser$Lexer* param0) {
 
 // /Users/ethannicholas/Dropbox/Frost-Int/build/org/frostlang/frostc/parser/Lexer.frost:15
-frost$core$Int** $tmp25391 = org$frostlang$frostc$parser$Lexer$getTransitions$R$frost$unsafe$Pointer$LTfrost$unsafe$Pointer$LTfrost$core$Int$GT$GT();
-frost$core$Int*** $tmp25392 = &param0->transitions;
-*$tmp25392 = $tmp25391;
+frost$core$Int** $tmp25390 = org$frostlang$frostc$parser$Lexer$getTransitions$R$frost$unsafe$Pointer$LTfrost$unsafe$Pointer$LTfrost$core$Int$GT$GT();
+frost$core$Int*** $tmp25391 = &param0->transitions;
+*$tmp25391 = $tmp25390;
 // /Users/ethannicholas/Dropbox/Frost-Int/build/org/frostlang/frostc/parser/Lexer.frost:17
-frost$core$Int* $tmp25393 = org$frostlang$frostc$parser$Lexer$getAccepts$R$frost$unsafe$Pointer$LTfrost$core$Int$GT();
-frost$core$Int** $tmp25394 = &param0->accepts;
-*$tmp25394 = $tmp25393;
+frost$core$Int* $tmp25392 = org$frostlang$frostc$parser$Lexer$getAccepts$R$frost$unsafe$Pointer$LTfrost$core$Int$GT();
+frost$core$Int** $tmp25393 = &param0->accepts;
+*$tmp25393 = $tmp25392;
 return;
 
 }

@@ -5,7 +5,7 @@
 #include "frost/core/Equatable.h"
 #include "frost/core/Bit.h"
 #include "frost/core/Object.h"
-#include "frost/core/Int64.h"
+#include "frost/core/Int.h"
 
 __attribute__((weak)) frost$core$Bit org$frostlang$frostc$Main$Format$$EQ$org$frostlang$frostc$Main$Format$R$frost$core$Bit$shim(frost$core$Object* p0, frost$core$Equatable* p1) {
     frost$core$Bit result = org$frostlang$frostc$Main$Format$$EQ$org$frostlang$frostc$Main$Format$R$frost$core$Bit(((org$frostlang$frostc$Main$Format$wrapper*) p0)->value, ((org$frostlang$frostc$Main$Format$wrapper*) p1)->value);
@@ -38,11 +38,11 @@ void org$frostlang$frostc$Main$Format$cleanup(org$frostlang$frostc$Main$Format p
 return;
 
 }
-org$frostlang$frostc$Main$Format org$frostlang$frostc$Main$Format$init$frost$core$Int64(frost$core$Int64 param0) {
+org$frostlang$frostc$Main$Format org$frostlang$frostc$Main$Format$init$frost$core$Int(frost$core$Int param0) {
 
 org$frostlang$frostc$Main$Format local0;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Main.frost:10
-frost$core$Int64* $tmp3 = &(&local0)->$rawValue;
+frost$core$Int* $tmp3 = &(&local0)->$rawValue;
 *$tmp3 = param0;
 org$frostlang$frostc$Main$Format $tmp4 = *(&local0);
 return $tmp4;
@@ -51,8 +51,8 @@ return $tmp4;
 frost$core$Bit org$frostlang$frostc$Main$Format$$EQ$org$frostlang$frostc$Main$Format$R$frost$core$Bit(org$frostlang$frostc$Main$Format param0, org$frostlang$frostc$Main$Format param1) {
 
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Main.frost:10
-frost$core$Int64 $tmp5 = param0.$rawValue;
-frost$core$Int64 $tmp6 = param1.$rawValue;
+frost$core$Int $tmp5 = param0.$rawValue;
+frost$core$Int $tmp6 = param1.$rawValue;
 int64_t $tmp7 = $tmp5.value;
 int64_t $tmp8 = $tmp6.value;
 bool $tmp9 = $tmp7 != $tmp8;

@@ -305,11 +305,11 @@ frost$core$Int64 $tmp157 = frost$core$Int64$init$frost$core$Int($tmp136);
 int64_t $tmp158 = $tmp157.value;
 frost$core$Object* $tmp159 = $tmp156[$tmp158];
 frost$core$Frost$ref$frost$core$Object$Q($tmp159);
-frost$core$Int64* $tmp160 = &((org$frostlang$frostc$IR$Statement*) $tmp159)->$rawValue;
-frost$core$Int64 $tmp161 = *$tmp160;
-frost$core$Int64 $tmp162 = (frost$core$Int64) {1u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from MergeBlocks.frost:16:38
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int* $tmp160 = &((org$frostlang$frostc$IR$Statement*) $tmp159)->$rawValue;
+frost$core$Int $tmp161 = *$tmp160;
+frost$core$Int $tmp162 = (frost$core$Int) {1u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from MergeBlocks.frost:16:38
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp163 = $tmp161.value;
 int64_t $tmp164 = $tmp162.value;
 bool $tmp165 = $tmp163 == $tmp164;
@@ -529,9 +529,9 @@ frost$collections$Array** $tmp308 = &$tmp307->statements;
 frost$collections$Array* $tmp309 = *$tmp308;
 FROST_ASSERT(80 == sizeof(org$frostlang$frostc$IR$Statement));
 org$frostlang$frostc$IR$Statement* $tmp310 = (org$frostlang$frostc$IR$Statement*) frostObjectAlloc(80, (frost$core$Class*) &org$frostlang$frostc$IR$Statement$class);
-frost$core$Int64 $tmp311 = (frost$core$Int64) {28u};
+frost$core$Int $tmp311 = (frost$core$Int) {28u};
 org$frostlang$frostc$Position $tmp312 = *(&local6);
-org$frostlang$frostc$IR$Statement$init$frost$core$Int64$org$frostlang$frostc$Position($tmp310, $tmp311, $tmp312);
+org$frostlang$frostc$IR$Statement$init$frost$core$Int$org$frostlang$frostc$Position($tmp310, $tmp311, $tmp312);
 frost$collections$Array$add$frost$collections$Array$T($tmp309, ((frost$core$Object*) $tmp310));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp310));
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/pass/MergeBlocks.frost:25

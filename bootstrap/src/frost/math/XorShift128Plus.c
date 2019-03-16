@@ -7,7 +7,7 @@
 #include "frost/core/Bit.h"
 
 
-struct { frost$core$Class* cl; ITable* next; void* methods[6]; } frost$math$XorShift128Plus$_frost$math$Random = { (frost$core$Class*) &frost$math$Random$class, NULL, { frost$math$Random$bit$R$frost$core$Bit, frost$math$Random$int32$R$frost$core$Int32, frost$math$XorShift128Plus$int64$R$frost$core$Int64, frost$math$Random$int$frost$core$Int64$R$frost$core$Int64, frost$math$Random$real32$R$frost$core$Real32, frost$math$Random$real64$R$frost$core$Real64} };
+struct { frost$core$Class* cl; ITable* next; void* methods[6]; } frost$math$XorShift128Plus$_frost$math$Random = { (frost$core$Class*) &frost$math$Random$class, NULL, { frost$math$Random$bit$R$frost$core$Bit, frost$math$Random$int32$R$frost$core$Int32, frost$math$XorShift128Plus$int64$R$frost$core$Int64, frost$math$Random$int$frost$core$Int$R$frost$core$Int, frost$math$Random$real32$R$frost$core$Real32, frost$math$Random$real64$R$frost$core$Real64} };
 
 static frost$core$String $s1;
 frost$math$XorShift128Plus$class_type frost$math$XorShift128Plus$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Object$class, (ITable*) &frost$math$XorShift128Plus$_frost$math$Random, { frost$core$Object$get_asString$R$frost$core$String, frost$math$XorShift128Plus$cleanup, frost$math$XorShift128Plus$int64$R$frost$core$Int64} };

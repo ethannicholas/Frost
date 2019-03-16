@@ -9,7 +9,6 @@
 #include "frost/core/Int.h"
 #include "frost/core/Bit.h"
 #include "frost/core/Frost.h"
-#include "frost/core/Int64.h"
 #include "org/frostlang/frostc/Position.h"
 #include "org/frostlang/frostc/MethodDecl.h"
 #include "org/frostlang/frostc/FixedArray.h"
@@ -76,10 +75,10 @@ frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$St
 abort(); // unreachable
 block1:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Methods.frost:9
-frost$core$Int64 $tmp20 = (frost$core$Int64) {6u};
-// begin inline call to org.frostlang.frostc.Symbol.Kind.init(rv:frost.core.Int64):org.frostlang.frostc.Symbol.Kind from Methods.frost:9:24
+frost$core$Int $tmp20 = (frost$core$Int) {6u};
+// begin inline call to org.frostlang.frostc.Symbol.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Symbol.Kind from Methods.frost:9:24
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Symbol.frost:4
-frost$core$Int64* $tmp21 = &(&local1)->$rawValue;
+frost$core$Int* $tmp21 = &(&local1)->$rawValue;
 *$tmp21 = $tmp20;
 org$frostlang$frostc$Symbol$Kind $tmp22 = *(&local1);
 *(&local0) = $tmp22;

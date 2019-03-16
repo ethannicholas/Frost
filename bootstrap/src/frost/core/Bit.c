@@ -236,7 +236,7 @@ frost$core$Int64 $tmp39 = (frost$core$Int64) {9223372036854775807u};
 // begin inline call to function frost.core.Int64.get_asInt():frost.core.Int from Int.frost:22:34
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:580
 int64_t $tmp40 = $tmp39.value;
-frost$core$Int $tmp41 = (frost$core$Int) {$tmp40};
+frost$core$Int $tmp41 = (frost$core$Int) {((int64_t) $tmp40)};
 frost$collections$Array* $tmp42 = frost$core$String$split$frost$core$String$frost$core$Int$R$frost$collections$Array$LTfrost$core$String$GT(param1, &$s43, $tmp41);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp42));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp42));

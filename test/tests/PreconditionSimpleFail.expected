@@ -1,1 +1,1 @@
-assertion failure (PreconditionSimpleFail.frost:4): precondition failure for method anonymous.PreconditionSimpleFail.test(x:frost.core.Int64)
+assertion failure (PreconditionSimpleFail.frost:4): precondition failure for method anonymous.PreconditionSimpleFail.test(x:frost.core.Int)

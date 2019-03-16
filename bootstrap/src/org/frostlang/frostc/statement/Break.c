@@ -8,11 +8,10 @@
 #include "org/frostlang/frostc/IR/Block/ID.h"
 #include "frost/core/Frost.h"
 #include "frost/core/Bit.h"
-#include "frost/core/Int64.h"
+#include "frost/core/Int.h"
 #include "org/frostlang/frostc/IR.h"
 #include "org/frostlang/frostc/IR/Statement.h"
 #include "org/frostlang/frostc/IR/Statement/ID.h"
-#include "frost/core/Int.h"
 
 
 static frost$core$String $s1;
@@ -43,11 +42,11 @@ if ($tmp6) goto block1; else goto block2;
 block1:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/statement/Break.frost:13
 org$frostlang$frostc$Compiler$EnclosingContext* $tmp7 = *(&local0);
-frost$core$Int64* $tmp8 = &$tmp7->$rawValue;
-frost$core$Int64 $tmp9 = *$tmp8;
-frost$core$Int64 $tmp10 = (frost$core$Int64) {1u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Break.frost:14:38
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int* $tmp8 = &$tmp7->$rawValue;
+frost$core$Int $tmp9 = *$tmp8;
+frost$core$Int $tmp10 = (frost$core$Int) {1u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Break.frost:14:38
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp11 = $tmp9.value;
 int64_t $tmp12 = $tmp10.value;
 bool $tmp13 = $tmp11 == $tmp12;
@@ -67,9 +66,9 @@ org$frostlang$frostc$IR** $tmp22 = &param0->ir;
 org$frostlang$frostc$IR* $tmp23 = *$tmp22;
 FROST_ASSERT(80 == sizeof(org$frostlang$frostc$IR$Statement));
 org$frostlang$frostc$IR$Statement* $tmp24 = (org$frostlang$frostc$IR$Statement*) frostObjectAlloc(80, (frost$core$Class*) &org$frostlang$frostc$IR$Statement$class);
-frost$core$Int64 $tmp25 = (frost$core$Int64) {1u};
+frost$core$Int $tmp25 = (frost$core$Int) {1u};
 org$frostlang$frostc$IR$Block$ID $tmp26 = *(&local1);
-org$frostlang$frostc$IR$Statement$init$frost$core$Int64$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Block$ID($tmp24, $tmp25, param1, $tmp26);
+org$frostlang$frostc$IR$Statement$init$frost$core$Int$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Block$ID($tmp24, $tmp25, param1, $tmp26);
 $fn28 $tmp27 = ($fn28) $tmp23->$class->vtable[2];
 org$frostlang$frostc$IR$Statement$ID $tmp29 = $tmp27($tmp23, $tmp24);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp24));

@@ -20,7 +20,7 @@ typedef struct frost$collections$ListView frost$collections$ListView;
 typedef struct frost$collections$Iterator frost$collections$Iterator;
 typedef struct frost$core$String frost$core$String;
 
-frost$core$Int frost$core$Int$init$builtin_int64(int64_t p_value);
+frost$core$Int frost$core$Int$init$builtin_int(int64_t p_value);
 frost$core$Int frost$core$Int$init$frost$core$Int8(frost$core$Int8 p_value);
 frost$core$Int frost$core$Int$init$frost$core$Int16(frost$core$Int16 p_value);
 frost$core$Int frost$core$Int$init$frost$core$UInt8(frost$core$UInt8 p_value);

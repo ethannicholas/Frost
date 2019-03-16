@@ -6,7 +6,7 @@
 #include "frost/core/UInt16.h"
 #include "frost/io/ByteOrder.h"
 #include "frost/core/Equatable.h"
-#include "frost/core/Int64.h"
+#include "frost/core/Int.h"
 #include "frost/core/Bit.h"
 #include "frost/core/Frost.h"
 #include "frost/core/UInt8.h"
@@ -15,7 +15,7 @@
 #include "frost/core/Int8.h"
 #include "frost/core/Int16.h"
 #include "frost/core/Int32.h"
-#include "frost/core/Int.h"
+#include "frost/core/Int64.h"
 #include "frost/core/Range.LTfrost/core/Int.GT.h"
 #include "frost/collections/Array.h"
 #include "frost/collections/Iterable.h"
@@ -87,10 +87,10 @@ frost$io$ByteOrder $tmp3 = *$tmp2;
 frost$io$ByteOrder$wrapper* $tmp4;
 $tmp4 = (frost$io$ByteOrder$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$io$ByteOrder$wrapperclass);
 $tmp4->value = $tmp3;
-frost$core$Int64 $tmp5 = (frost$core$Int64) {0u};
-// begin inline call to frost.io.ByteOrder.init(rv:frost.core.Int64):frost.io.ByteOrder from OutputStream.frost:41:37
+frost$core$Int $tmp5 = (frost$core$Int) {0u};
+// begin inline call to frost.io.ByteOrder.init(rv:frost.core.Int):frost.io.ByteOrder from OutputStream.frost:41:37
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/io/ByteOrder.frost:6
-frost$core$Int64* $tmp6 = &(&local2)->$rawValue;
+frost$core$Int* $tmp6 = &(&local2)->$rawValue;
 *$tmp6 = $tmp5;
 frost$io$ByteOrder $tmp7 = *(&local2);
 *(&local1) = $tmp7;
@@ -223,10 +223,10 @@ frost$io$ByteOrder $tmp50 = *$tmp49;
 frost$io$ByteOrder$wrapper* $tmp51;
 $tmp51 = (frost$io$ByteOrder$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$io$ByteOrder$wrapperclass);
 $tmp51->value = $tmp50;
-frost$core$Int64 $tmp52 = (frost$core$Int64) {0u};
-// begin inline call to frost.io.ByteOrder.init(rv:frost.core.Int64):frost.io.ByteOrder from OutputStream.frost:64:37
+frost$core$Int $tmp52 = (frost$core$Int) {0u};
+// begin inline call to frost.io.ByteOrder.init(rv:frost.core.Int):frost.io.ByteOrder from OutputStream.frost:64:37
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/io/ByteOrder.frost:6
-frost$core$Int64* $tmp53 = &(&local2)->$rawValue;
+frost$core$Int* $tmp53 = &(&local2)->$rawValue;
 *$tmp53 = $tmp52;
 frost$io$ByteOrder $tmp54 = *(&local2);
 *(&local1) = $tmp54;
@@ -359,10 +359,10 @@ frost$io$ByteOrder $tmp97 = *$tmp96;
 frost$io$ByteOrder$wrapper* $tmp98;
 $tmp98 = (frost$io$ByteOrder$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$io$ByteOrder$wrapperclass);
 $tmp98->value = $tmp97;
-frost$core$Int64 $tmp99 = (frost$core$Int64) {0u};
-// begin inline call to frost.io.ByteOrder.init(rv:frost.core.Int64):frost.io.ByteOrder from OutputStream.frost:87:37
+frost$core$Int $tmp99 = (frost$core$Int) {0u};
+// begin inline call to frost.io.ByteOrder.init(rv:frost.core.Int):frost.io.ByteOrder from OutputStream.frost:87:37
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/io/ByteOrder.frost:6
-frost$core$Int64* $tmp100 = &(&local2)->$rawValue;
+frost$core$Int* $tmp100 = &(&local2)->$rawValue;
 *$tmp100 = $tmp99;
 frost$io$ByteOrder $tmp101 = *(&local2);
 *(&local1) = $tmp101;
@@ -1004,10 +1004,10 @@ void frost$io$OutputStream$init(frost$io$OutputStream* param0) {
 frost$io$ByteOrder local0;
 frost$io$ByteOrder local1;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/io/OutputStream.frost:17
-frost$core$Int64 $tmp321 = (frost$core$Int64) {0u};
-// begin inline call to frost.io.ByteOrder.init(rv:frost.core.Int64):frost.io.ByteOrder from OutputStream.frost:17:31
+frost$core$Int $tmp321 = (frost$core$Int) {0u};
+// begin inline call to frost.io.ByteOrder.init(rv:frost.core.Int):frost.io.ByteOrder from OutputStream.frost:17:31
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/io/ByteOrder.frost:6
-frost$core$Int64* $tmp322 = &(&local1)->$rawValue;
+frost$core$Int* $tmp322 = &(&local1)->$rawValue;
 *$tmp322 = $tmp321;
 frost$io$ByteOrder $tmp323 = *(&local1);
 *(&local0) = $tmp323;

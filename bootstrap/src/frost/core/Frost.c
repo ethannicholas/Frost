@@ -3,13 +3,12 @@
 #include "frost/core/Class.h"
 #include "frost/core/String.h"
 #include "frost/core/Maybe.h"
-#include "frost/core/Int64.h"
+#include "frost/core/Int.h"
 #include "frost/core/Error.h"
 #include "frost/core/Weak.h"
 #include "frost/collections/IdentityMap.h"
 #include "frost/collections/Array.h"
 #include "frost/core/Bit.h"
-#include "frost/core/Int.h"
 #include "frost/collections/Iterable.h"
 #include "frost/collections/Iterator.h"
 #include "frost/io/Console.h"
@@ -22,6 +21,7 @@
 #include "frost/core/Char8.h"
 #include "frost/core/String/Index.h"
 #include "frost/core/Equatable.h"
+#include "frost/core/Int64.h"
 #include "frost/core/Range.LTfrost/core/String/Index.Q.GT.h"
 #include "frost/collections/ListView.h"
 #include "frost/core/String/UTF8List.h"
@@ -86,8 +86,8 @@ frost$core$Maybe* frost$core$Frost$success$frost$core$Object$R$frost$core$Maybe$
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Frost.frost:21
 FROST_ASSERT(32 == sizeof(frost$core$Maybe));
 frost$core$Maybe* $tmp2 = (frost$core$Maybe*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$Maybe$class);
-frost$core$Int64 $tmp3 = (frost$core$Int64) {0u};
-frost$core$Maybe$init$frost$core$Int64$frost$core$Maybe$T($tmp2, $tmp3, param0);
+frost$core$Int $tmp3 = (frost$core$Int) {0u};
+frost$core$Maybe$init$frost$core$Int$frost$core$Maybe$T($tmp2, $tmp3, param0);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp2));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp2));
 return $tmp2;
@@ -98,11 +98,11 @@ frost$core$Maybe* frost$core$Frost$error$frost$core$String$R$frost$core$Maybe$LT
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Frost.frost:27
 FROST_ASSERT(32 == sizeof(frost$core$Maybe));
 frost$core$Maybe* $tmp4 = (frost$core$Maybe*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$Maybe$class);
-frost$core$Int64 $tmp5 = (frost$core$Int64) {1u};
+frost$core$Int $tmp5 = (frost$core$Int) {1u};
 FROST_ASSERT(24 == sizeof(frost$core$Error));
 frost$core$Error* $tmp6 = (frost$core$Error*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Error$class);
 frost$core$Error$init$frost$core$String($tmp6, param0);
-frost$core$Maybe$init$frost$core$Int64$frost$core$Error($tmp4, $tmp5, $tmp6);
+frost$core$Maybe$init$frost$core$Int$frost$core$Error($tmp4, $tmp5, $tmp6);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp4));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp6));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp4));
@@ -770,7 +770,7 @@ frost$core$Int64$nullable $tmp287 = *(&local6);
 // begin inline call to function frost.core.Int64.get_asInt():frost.core.Int from String.frost:1456:26
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:580
 int64_t $tmp288 = ((frost$core$Int64) $tmp287.value).value;
-frost$core$Int $tmp289 = (frost$core$Int) {$tmp288};
+frost$core$Int $tmp289 = (frost$core$Int) {((int64_t) $tmp288)};
 *(&local5) = ((frost$core$Int$nullable) { $tmp289, true });
 goto block16;
 block18:;

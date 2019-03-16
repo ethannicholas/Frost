@@ -10,13 +10,13 @@
 #include "frost/core/Frost.h"
 #include "frost/core/Maybe.h"
 #include "frost/core/Error.h"
-#include "frost/core/Int64.h"
 #include "frost/io/InputStream.h"
 #include "frost/collections/Iterator.h"
 #include "frost/collections/Array.h"
 #include "frost/core/RegularExpression.h"
 #include "frost/collections/Iterable.h"
 #include "frost/core/Range.LTfrost/core/Int.Q.GT.h"
+#include "frost/core/Int64.h"
 #include "frost/collections/CollectionView.h"
 #include "frost/core/Range.LTfrost/core/Int.GT.h"
 #include "frost/core/String/Index.h"
@@ -164,10 +164,10 @@ frost$core$Error* local0 = NULL;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/io/File.frost:76
 FROST_ASSERT(32 == sizeof(frost$core$Maybe));
 frost$core$Maybe* $tmp24 = (frost$core$Maybe*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$Maybe$class);
-frost$core$Int64 $tmp25 = (frost$core$Int64) {0u};
+frost$core$Int $tmp25 = (frost$core$Int) {0u};
 frost$core$Maybe* $tmp26 = frost$io$File$openInputStream$R$frost$core$Maybe$LTfrost$io$InputStream$GT(param0);
-frost$core$Int64* $tmp27 = &$tmp26->$rawValue;
-frost$core$Int64 $tmp28 = *$tmp27;
+frost$core$Int* $tmp27 = &$tmp26->$rawValue;
+frost$core$Int $tmp28 = *$tmp27;
 int64_t $tmp29 = $tmp28.value;
 bool $tmp30 = $tmp29 == 0u;
 if ($tmp30) goto block3; else goto block4;
@@ -181,9 +181,9 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp24));
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/io/File.frost:79
 FROST_ASSERT(32 == sizeof(frost$core$Maybe));
 frost$core$Maybe* $tmp33 = (frost$core$Maybe*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$Maybe$class);
-frost$core$Int64 $tmp34 = (frost$core$Int64) {1u};
+frost$core$Int $tmp34 = (frost$core$Int) {1u};
 frost$core$Error* $tmp35 = *(&local0);
-frost$core$Maybe$init$frost$core$Int64$frost$core$Error($tmp33, $tmp34, $tmp35);
+frost$core$Maybe$init$frost$core$Int$frost$core$Error($tmp33, $tmp34, $tmp35);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp33));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp33));
 frost$core$Error* $tmp36 = *(&local0);
@@ -195,7 +195,7 @@ frost$core$Object** $tmp37 = (frost$core$Object**) ($tmp26->$data + 0);
 frost$core$Object* $tmp38 = *$tmp37;
 $fn40 $tmp39 = ($fn40) ((frost$io$InputStream*) $tmp38)->$class->vtable[18];
 frost$collections$Iterator* $tmp41 = $tmp39(((frost$io$InputStream*) $tmp38));
-frost$core$Maybe$init$frost$core$Int64$frost$core$Maybe$T($tmp24, $tmp25, ((frost$core$Object*) $tmp41));
+frost$core$Maybe$init$frost$core$Int$frost$core$Maybe$T($tmp24, $tmp25, ((frost$core$Object*) $tmp41));
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp24));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp41));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp26));
@@ -335,7 +335,7 @@ frost$core$Int64 $tmp97 = (frost$core$Int64) {9223372036854775807u};
 // begin inline call to function frost.core.Int64.get_asInt():frost.core.Int from Int.frost:22:34
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:580
 int64_t $tmp98 = $tmp97.value;
-frost$core$Int $tmp99 = (frost$core$Int) {$tmp98};
+frost$core$Int $tmp99 = (frost$core$Int) {((int64_t) $tmp98)};
 frost$collections$Array* $tmp100 = frost$core$String$split$frost$core$String$frost$core$Int$R$frost$collections$Array$LTfrost$core$String$GT($tmp96, &$s101, $tmp99);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp100));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp100));
@@ -1094,10 +1094,10 @@ frost$core$Error* local0 = NULL;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/io/File.frost:272
 FROST_ASSERT(32 == sizeof(frost$core$Maybe));
 frost$core$Maybe* $tmp420 = (frost$core$Maybe*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$Maybe$class);
-frost$core$Int64 $tmp421 = (frost$core$Int64) {0u};
+frost$core$Int $tmp421 = (frost$core$Int) {0u};
 frost$core$Maybe* $tmp422 = frost$io$File$openInputStream$R$frost$core$Maybe$LTfrost$io$InputStream$GT(param0);
-frost$core$Int64* $tmp423 = &$tmp422->$rawValue;
-frost$core$Int64 $tmp424 = *$tmp423;
+frost$core$Int* $tmp423 = &$tmp422->$rawValue;
+frost$core$Int $tmp424 = *$tmp423;
 int64_t $tmp425 = $tmp424.value;
 bool $tmp426 = $tmp425 == 0u;
 if ($tmp426) goto block3; else goto block4;
@@ -1111,9 +1111,9 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp420));
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/io/File.frost:275
 FROST_ASSERT(32 == sizeof(frost$core$Maybe));
 frost$core$Maybe* $tmp429 = (frost$core$Maybe*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$Maybe$class);
-frost$core$Int64 $tmp430 = (frost$core$Int64) {1u};
+frost$core$Int $tmp430 = (frost$core$Int) {1u};
 frost$core$Error* $tmp431 = *(&local0);
-frost$core$Maybe$init$frost$core$Int64$frost$core$Error($tmp429, $tmp430, $tmp431);
+frost$core$Maybe$init$frost$core$Int$frost$core$Error($tmp429, $tmp430, $tmp431);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp429));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp429));
 frost$core$Error* $tmp432 = *(&local0);
@@ -1125,7 +1125,7 @@ frost$core$Object** $tmp433 = (frost$core$Object**) ($tmp422->$data + 0);
 frost$core$Object* $tmp434 = *$tmp433;
 $fn436 $tmp435 = ($fn436) ((frost$io$InputStream*) $tmp434)->$class->vtable[14];
 frost$core$String* $tmp437 = $tmp435(((frost$io$InputStream*) $tmp434));
-frost$core$Maybe$init$frost$core$Int64$frost$core$Maybe$T($tmp420, $tmp421, ((frost$core$Object*) $tmp437));
+frost$core$Maybe$init$frost$core$Int$frost$core$Maybe$T($tmp420, $tmp421, ((frost$core$Object*) $tmp437));
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp420));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp437));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp422));
@@ -1150,10 +1150,10 @@ frost$core$Error* local0 = NULL;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/io/File.frost:288
 FROST_ASSERT(32 == sizeof(frost$core$Maybe));
 frost$core$Maybe* $tmp440 = (frost$core$Maybe*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$Maybe$class);
-frost$core$Int64 $tmp441 = (frost$core$Int64) {0u};
+frost$core$Int $tmp441 = (frost$core$Int) {0u};
 frost$core$Maybe* $tmp442 = frost$io$File$openInputStream$R$frost$core$Maybe$LTfrost$io$InputStream$GT(param0);
-frost$core$Int64* $tmp443 = &$tmp442->$rawValue;
-frost$core$Int64 $tmp444 = *$tmp443;
+frost$core$Int* $tmp443 = &$tmp442->$rawValue;
+frost$core$Int $tmp444 = *$tmp443;
 int64_t $tmp445 = $tmp444.value;
 bool $tmp446 = $tmp445 == 0u;
 if ($tmp446) goto block3; else goto block4;
@@ -1167,9 +1167,9 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp440));
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/io/File.frost:291
 FROST_ASSERT(32 == sizeof(frost$core$Maybe));
 frost$core$Maybe* $tmp449 = (frost$core$Maybe*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$Maybe$class);
-frost$core$Int64 $tmp450 = (frost$core$Int64) {1u};
+frost$core$Int $tmp450 = (frost$core$Int) {1u};
 frost$core$Error* $tmp451 = *(&local0);
-frost$core$Maybe$init$frost$core$Int64$frost$core$Error($tmp449, $tmp450, $tmp451);
+frost$core$Maybe$init$frost$core$Int$frost$core$Error($tmp449, $tmp450, $tmp451);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp449));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp449));
 frost$core$Error* $tmp452 = *(&local0);
@@ -1181,7 +1181,7 @@ frost$core$Object** $tmp453 = (frost$core$Object**) ($tmp442->$data + 0);
 frost$core$Object* $tmp454 = *$tmp453;
 $fn456 $tmp455 = ($fn456) ((frost$io$InputStream*) $tmp454)->$class->vtable[15];
 frost$collections$Array* $tmp457 = $tmp455(((frost$io$InputStream*) $tmp454));
-frost$core$Maybe$init$frost$core$Int64$frost$core$Maybe$T($tmp440, $tmp441, ((frost$core$Object*) $tmp457));
+frost$core$Maybe$init$frost$core$Int$frost$core$Maybe$T($tmp440, $tmp441, ((frost$core$Object*) $tmp457));
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp440));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp457));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp442));
@@ -1205,8 +1205,8 @@ frost$core$Error* local0 = NULL;
 *(&local0) = ((frost$core$Error*) NULL);
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/io/File.frost:303
 frost$core$Maybe* $tmp460 = frost$io$File$openOutputStream$R$frost$core$Maybe$LTfrost$io$OutputStream$GT(param0);
-frost$core$Int64* $tmp461 = &$tmp460->$rawValue;
-frost$core$Int64 $tmp462 = *$tmp461;
+frost$core$Int* $tmp461 = &$tmp460->$rawValue;
+frost$core$Int $tmp462 = *$tmp461;
 int64_t $tmp463 = $tmp462.value;
 bool $tmp464 = $tmp463 == 0u;
 if ($tmp464) goto block3; else goto block4;

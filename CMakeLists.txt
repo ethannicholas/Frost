@@ -195,6 +195,7 @@ add_library(c_frost
     bootstrap/src/org/frostlang/frostc/Compiler/_Closure2.c
     bootstrap/src/org/frostlang/frostc/Compiler/Capture.c
     bootstrap/src/org/frostlang/frostc/Compiler/InlineReturn.c
+    bootstrap/src/org/frostlang/frostc/Compiler/_Closure19.c
     bootstrap/src/org/frostlang/frostc/Compiler/_Closure13.c
     bootstrap/src/org/frostlang/frostc/Compiler/AutoUnrefs.c
     bootstrap/src/org/frostlang/frostc/Compiler/Settings.c

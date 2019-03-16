@@ -22,37 +22,37 @@ class Int : Value, Key<Int>, Comparable<Int>, Formattable, ListView<Bit> {
     constant MAX:Int := Int64.MAX.asInt
 
     @private
-    def value:builtin_int64
+    def value:builtin_int
 
     @private
     @implicit
     @priority(1)
-    init(value:builtin_int64) {
+    init(value:builtin_int) {
         self.value := value
     }
 
     @implicit
     @priority(-5)
     init(value:Int8) {
-        self.value := value.value->builtin_int64
+        self.value := value.value->builtin_int
     }
 
     @implicit
     @priority(-4)
     init(value:Int16) {
-        self.value := value.value->builtin_int64
+        self.value := value.value->builtin_int
     }
 
     @implicit
     @priority(-2)
     init(value:UInt8) {
-        self.value := value.value->builtin_int64
+        self.value := value.value->builtin_int
     }
 
     @implicit
     @priority(-1)
     init(value:UInt16) {
-        self.value := value.value->builtin_int64
+        self.value := value.value->builtin_int
     }
 
     ===Adds another number to this number.===
@@ -398,13 +398,13 @@ class Int : Value, Key<Int>, Comparable<Int>, Formattable, ListView<Bit> {
     ===Returns `true` if this number is equal to the given number.===
     @priority(10)
     function =(other:Int8):Bit {
-        return value = other.value->builtin_int64
+        return value = other.value->builtin_int
     }
 
     ===Returns `true` if this number is equal to the given number.===
     @priority(12)
     function =(other:Int16):Bit {
-        return value = other.value->builtin_int64
+        return value = other.value->builtin_int
     }
 
     ===Returns `true` if this number is equal to the given number.===
@@ -453,13 +453,13 @@ class Int : Value, Key<Int>, Comparable<Int>, Formattable, ListView<Bit> {
     ===Returns `true` if this number is not equal to the given number.===
     @priority(10)
     function !=(other:Int8):Bit {
-        return value != other.value->builtin_int64
+        return value != other.value->builtin_int
     }
 
     ===Returns `true` if this number is not equal to the given number.===
     @priority(12)
     function !=(other:Int16):Bit {
-        return value != other.value->builtin_int64
+        return value != other.value->builtin_int
     }
 
     ===Returns `true` if this number is not equal to the given number.===
@@ -508,13 +508,13 @@ class Int : Value, Key<Int>, Comparable<Int>, Formattable, ListView<Bit> {
     ===Returns `true` if this number is less than the given number.===
     @priority(10)
     function <(other:Int8):Bit {
-        return value < other.value->builtin_int64
+        return value < other.value->builtin_int
     }
 
     ===Returns `true` if this number is less than the given number.===
     @priority(12)
     function <(other:Int16):Bit {
-        return value < other.value->builtin_int64
+        return value < other.value->builtin_int
     }
 
     ===Returns `true` if this number is less than the given number.===
@@ -563,13 +563,13 @@ class Int : Value, Key<Int>, Comparable<Int>, Formattable, ListView<Bit> {
     ===Returns `true` if this number is greater than the given number.===
     @priority(10)
     function >(other:Int8):Bit {
-        return value > other.value->builtin_int64
+        return value > other.value->builtin_int
     }
 
     ===Returns `true` if this number is greater than the given number.===
     @priority(12)
     function >(other:Int16):Bit {
-        return value > other.value->builtin_int64
+        return value > other.value->builtin_int
     }
 
     ===Returns `true` if this number is greater than the given number.===
@@ -618,13 +618,13 @@ class Int : Value, Key<Int>, Comparable<Int>, Formattable, ListView<Bit> {
     ===Returns `true` if this number is greater than or equal to the given number.===
     @priority(10)
     function >=(other:Int8):Bit {
-        return value >= other.value->builtin_int64
+        return value >= other.value->builtin_int
     }
 
     ===Returns `true` if this number is greater than or equal to the given number.===
     @priority(12)
     function >=(other:Int16):Bit {
-        return value >= other.value->builtin_int64
+        return value >= other.value->builtin_int
     }
 
     ===Returns `true` if this number is greater than or equal to the given number.===
@@ -673,13 +673,13 @@ class Int : Value, Key<Int>, Comparable<Int>, Formattable, ListView<Bit> {
     ===Returns `true` if this number is less than or equal to the given number.===
     @priority(10)
     function <=(other:Int8):Bit {
-        return value <= other.value->builtin_int64
+        return value <= other.value->builtin_int
     }
 
     ===Returns `true` if this number is less than or equal to the given number.===
     @priority(12)
     function <=(other:Int16):Bit {
-        return value <= other.value->builtin_int64
+        return value <= other.value->builtin_int
     }
 
     ===Returns `true` if this number is less than or equal to the given number.===
@@ -737,19 +737,19 @@ class Int : Value, Key<Int>, Comparable<Int>, Formattable, ListView<Bit> {
     ===Returns the smaller (closest to negative infinity) of this number and another number.===
     @priority(10)
     function min(other:Int8):Int {
-        if value < other.value->builtin_int64 {
+        if value < other.value->builtin_int {
             return value
         }
-        return other.value->builtin_int64
+        return other.value->builtin_int
     }
 
     ===Returns the smaller (closest to negative infinity) of this number and another number.===
     @priority(12)
     function min(other:Int16):Int {
-        if value < other.value->builtin_int64 {
+        if value < other.value->builtin_int {
             return value
         }
-        return other.value->builtin_int64
+        return other.value->builtin_int
     }
 
     ===Returns the smaller (closest to negative infinity) of this number and another number.===
@@ -819,19 +819,19 @@ class Int : Value, Key<Int>, Comparable<Int>, Formattable, ListView<Bit> {
     ===Returns the larger (closest to positive infinity) of this number and another number.===
     @priority(10)
     function max(other:Int8):Int {
-        if value > other.value->builtin_int64 {
+        if value > other.value->builtin_int {
             return value
         }
-        return other.value->builtin_int64
+        return other.value->builtin_int
     }
 
     ===Returns the larger (closest to positive infinity) of this number and another number.===
     @priority(12)
     function max(other:Int16):Int {
-        if value > other.value->builtin_int64 {
+        if value > other.value->builtin_int {
             return value
         }
-        return other.value->builtin_int64
+        return other.value->builtin_int
     }
 
     ===Returns the larger (closest to positive infinity) of this number and another number.===

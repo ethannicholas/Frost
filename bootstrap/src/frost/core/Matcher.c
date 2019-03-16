@@ -309,7 +309,7 @@ frost$core$Int64$nullable $tmp117 = *(&local5);
 // begin inline call to function frost.core.Int64.get_asInt():frost.core.Int from String.frost:1456:26
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:580
 int64_t $tmp118 = ((frost$core$Int64) $tmp117.value).value;
-frost$core$Int $tmp119 = (frost$core$Int) {$tmp118};
+frost$core$Int $tmp119 = (frost$core$Int) {((int64_t) $tmp118)};
 *(&local4) = ((frost$core$Int$nullable) { $tmp119, true });
 goto block11;
 block13:;

@@ -11,7 +11,7 @@
 #include "org/frostlang/frostc/lvalue/LValue.h"
 #include "frost/core/Bit.h"
 #include "frost/core/Equatable.h"
-#include "frost/core/Int64.h"
+#include "frost/core/Int.h"
 #include "frost/core/Frost.h"
 #include "org/frostlang/frostc/Compiler/TypeContext.h"
 #include "frost/collections/ListView.h"
@@ -71,10 +71,10 @@ block2:;
 org$frostlang$frostc$expression$Binary$Operator$wrapper* $tmp8;
 $tmp8 = (org$frostlang$frostc$expression$Binary$Operator$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$expression$Binary$Operator$wrapperclass);
 $tmp8->value = param3;
-frost$core$Int64 $tmp9 = (frost$core$Int64) {24u};
-// begin inline call to org.frostlang.frostc.expression.Binary.Operator.init(rv:frost.core.Int64):org.frostlang.frostc.expression.Binary.Operator from Assignment.frost:20:32
+frost$core$Int $tmp9 = (frost$core$Int) {24u};
+// begin inline call to org.frostlang.frostc.expression.Binary.Operator.init(rv:frost.core.Int):org.frostlang.frostc.expression.Binary.Operator from Assignment.frost:20:32
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/expression/Binary.frost:17
-frost$core$Int64* $tmp10 = &(&local1)->$rawValue;
+frost$core$Int* $tmp10 = &(&local1)->$rawValue;
 *$tmp10 = $tmp9;
 org$frostlang$frostc$expression$Binary$Operator $tmp11 = *(&local1);
 *(&local0) = $tmp11;
@@ -94,11 +94,11 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Eq
 if ($tmp18) goto block4; else goto block5;
 block4:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/statement/Assignment.frost:21
-frost$core$Int64* $tmp19 = &param2->$rawValue;
-frost$core$Int64 $tmp20 = *$tmp19;
-frost$core$Int64 $tmp21 = (frost$core$Int64) {5u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Assignment.frost:22:29
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int* $tmp19 = &param2->$rawValue;
+frost$core$Int $tmp20 = *$tmp19;
+frost$core$Int $tmp21 = (frost$core$Int) {5u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Assignment.frost:22:29
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp22 = $tmp20.value;
 int64_t $tmp23 = $tmp21.value;
 bool $tmp24 = $tmp22 == $tmp23;
@@ -131,10 +131,10 @@ org$frostlang$frostc$expression$Binary$Operator $tmp37 = *(&local4);
 org$frostlang$frostc$expression$Binary$Operator$wrapper* $tmp38;
 $tmp38 = (org$frostlang$frostc$expression$Binary$Operator$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$expression$Binary$Operator$wrapperclass);
 $tmp38->value = $tmp37;
-frost$core$Int64 $tmp39 = (frost$core$Int64) {20u};
-// begin inline call to org.frostlang.frostc.expression.Binary.Operator.init(rv:frost.core.Int64):org.frostlang.frostc.expression.Binary.Operator from Assignment.frost:23:44
+frost$core$Int $tmp39 = (frost$core$Int) {20u};
+// begin inline call to org.frostlang.frostc.expression.Binary.Operator.init(rv:frost.core.Int):org.frostlang.frostc.expression.Binary.Operator from Assignment.frost:23:44
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/expression/Binary.frost:17
-frost$core$Int64* $tmp40 = &(&local7)->$rawValue;
+frost$core$Int* $tmp40 = &(&local7)->$rawValue;
 *$tmp40 = $tmp39;
 org$frostlang$frostc$expression$Binary$Operator $tmp41 = *(&local7);
 *(&local6) = $tmp41;
@@ -167,8 +167,8 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp49));
 org$frostlang$frostc$ASTNode* $tmp51 = *(&local3);
 FROST_ASSERT(40 == sizeof(org$frostlang$frostc$Compiler$TypeContext));
 org$frostlang$frostc$Compiler$TypeContext* $tmp52 = (org$frostlang$frostc$Compiler$TypeContext*) frostObjectAlloc(40, (frost$core$Class*) &org$frostlang$frostc$Compiler$TypeContext$class);
-frost$core$Int64 $tmp53 = (frost$core$Int64) {1u};
-org$frostlang$frostc$Compiler$TypeContext$init$frost$core$Int64($tmp52, $tmp53);
+frost$core$Int $tmp53 = (frost$core$Int) {1u};
+org$frostlang$frostc$Compiler$TypeContext$init$frost$core$Int($tmp52, $tmp53);
 org$frostlang$frostc$IR$Value* $tmp54 = org$frostlang$frostc$Compiler$compileExpression$org$frostlang$frostc$ASTNode$org$frostlang$frostc$Compiler$TypeContext$R$org$frostlang$frostc$IR$Value$Q(param0, $tmp51, $tmp52);
 *(&local9) = ((org$frostlang$frostc$IR$Value*) NULL);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp54));
@@ -211,8 +211,8 @@ org$frostlang$frostc$IR$Value* $tmp67 = *(&local9);
 frost$collections$Array* $tmp68 = *(&local8);
 FROST_ASSERT(40 == sizeof(org$frostlang$frostc$Compiler$TypeContext));
 org$frostlang$frostc$Compiler$TypeContext* $tmp69 = (org$frostlang$frostc$Compiler$TypeContext*) frostObjectAlloc(40, (frost$core$Class*) &org$frostlang$frostc$Compiler$TypeContext$class);
-frost$core$Int64 $tmp70 = (frost$core$Int64) {0u};
-org$frostlang$frostc$Compiler$TypeContext$init$frost$core$Int64($tmp69, $tmp70);
+frost$core$Int $tmp70 = (frost$core$Int) {0u};
+org$frostlang$frostc$Compiler$TypeContext$init$frost$core$Int($tmp69, $tmp70);
 org$frostlang$frostc$IR$Value* $tmp71 = org$frostlang$frostc$expression$Call$compile$org$frostlang$frostc$Compiler$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Value$frost$core$String$frost$collections$ListView$LTorg$frostlang$frostc$ASTNode$GT$org$frostlang$frostc$Compiler$TypeContext$R$org$frostlang$frostc$IR$Value$Q(param0, $tmp66, $tmp67, &$s72, ((frost$collections$ListView*) $tmp68), $tmp69);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp71));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp69));
@@ -267,10 +267,10 @@ block16:;
 org$frostlang$frostc$expression$Binary$Operator$wrapper* $tmp85;
 $tmp85 = (org$frostlang$frostc$expression$Binary$Operator$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$expression$Binary$Operator$wrapperclass);
 $tmp85->value = param3;
-frost$core$Int64 $tmp86 = (frost$core$Int64) {24u};
-// begin inline call to org.frostlang.frostc.expression.Binary.Operator.init(rv:frost.core.Int64):org.frostlang.frostc.expression.Binary.Operator from Assignment.frost:43:32
+frost$core$Int $tmp86 = (frost$core$Int) {24u};
+// begin inline call to org.frostlang.frostc.expression.Binary.Operator.init(rv:frost.core.Int):org.frostlang.frostc.expression.Binary.Operator from Assignment.frost:43:32
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/expression/Binary.frost:17
-frost$core$Int64* $tmp87 = &(&local13)->$rawValue;
+frost$core$Int* $tmp87 = &(&local13)->$rawValue;
 *$tmp87 = $tmp86;
 org$frostlang$frostc$expression$Binary$Operator $tmp88 = *(&local13);
 *(&local12) = $tmp88;
@@ -292,7 +292,7 @@ block17:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/statement/Assignment.frost:44
 FROST_ASSERT(40 == sizeof(org$frostlang$frostc$Compiler$TypeContext));
 org$frostlang$frostc$Compiler$TypeContext* $tmp96 = (org$frostlang$frostc$Compiler$TypeContext*) frostObjectAlloc(40, (frost$core$Class*) &org$frostlang$frostc$Compiler$TypeContext$class);
-frost$core$Int64 $tmp97 = (frost$core$Int64) {3u};
+frost$core$Int $tmp97 = (frost$core$Int) {3u};
 org$frostlang$frostc$lvalue$LValue* $tmp98 = *(&local10);
 ITable* $tmp99 = $tmp98->$class->itable;
 while ($tmp99->$class != (frost$core$Class*) &org$frostlang$frostc$lvalue$LValue$class) {
@@ -301,7 +301,7 @@ while ($tmp99->$class != (frost$core$Class*) &org$frostlang$frostc$lvalue$LValue
 $fn101 $tmp100 = $tmp99->methods[0];
 org$frostlang$frostc$Type* $tmp102 = $tmp100($tmp98);
 frost$core$Bit $tmp103 = (frost$core$Bit) {false};
-org$frostlang$frostc$Compiler$TypeContext$init$frost$core$Int64$org$frostlang$frostc$Type$frost$core$Bit($tmp96, $tmp97, $tmp102, $tmp103);
+org$frostlang$frostc$Compiler$TypeContext$init$frost$core$Int$org$frostlang$frostc$Type$frost$core$Bit($tmp96, $tmp97, $tmp102, $tmp103);
 org$frostlang$frostc$IR$Value* $tmp104 = org$frostlang$frostc$Compiler$compileExpression$org$frostlang$frostc$ASTNode$org$frostlang$frostc$Compiler$TypeContext$R$org$frostlang$frostc$IR$Value$Q(param0, param4, $tmp96);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp104));
 org$frostlang$frostc$IR$Value* $tmp105 = *(&local11);
@@ -348,13 +348,13 @@ block22:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/statement/Assignment.frost:51
 FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
 org$frostlang$frostc$ASTNode* $tmp118 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
-frost$core$Int64 $tmp119 = (frost$core$Int64) {26u};
+frost$core$Int $tmp119 = (frost$core$Int) {26u};
 org$frostlang$frostc$IR$Value* $tmp120 = *(&local14);
-org$frostlang$frostc$ASTNode$init$frost$core$Int64$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Value($tmp118, $tmp119, param1, $tmp120);
+org$frostlang$frostc$ASTNode$init$frost$core$Int$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Value($tmp118, $tmp119, param1, $tmp120);
 org$frostlang$frostc$expression$Binary$Operator $tmp121 = org$frostlang$frostc$expression$Binary$Operator$removeAssignment$R$org$frostlang$frostc$expression$Binary$Operator(param3);
 FROST_ASSERT(40 == sizeof(org$frostlang$frostc$Compiler$TypeContext));
 org$frostlang$frostc$Compiler$TypeContext* $tmp122 = (org$frostlang$frostc$Compiler$TypeContext*) frostObjectAlloc(40, (frost$core$Class*) &org$frostlang$frostc$Compiler$TypeContext$class);
-frost$core$Int64 $tmp123 = (frost$core$Int64) {3u};
+frost$core$Int $tmp123 = (frost$core$Int) {3u};
 org$frostlang$frostc$lvalue$LValue* $tmp124 = *(&local10);
 ITable* $tmp125 = $tmp124->$class->itable;
 while ($tmp125->$class != (frost$core$Class*) &org$frostlang$frostc$lvalue$LValue$class) {
@@ -363,7 +363,7 @@ while ($tmp125->$class != (frost$core$Class*) &org$frostlang$frostc$lvalue$LValu
 $fn127 $tmp126 = $tmp125->methods[0];
 org$frostlang$frostc$Type* $tmp128 = $tmp126($tmp124);
 frost$core$Bit $tmp129 = (frost$core$Bit) {false};
-org$frostlang$frostc$Compiler$TypeContext$init$frost$core$Int64$org$frostlang$frostc$Type$frost$core$Bit($tmp122, $tmp123, $tmp128, $tmp129);
+org$frostlang$frostc$Compiler$TypeContext$init$frost$core$Int$org$frostlang$frostc$Type$frost$core$Bit($tmp122, $tmp123, $tmp128, $tmp129);
 org$frostlang$frostc$IR$Value* $tmp130 = org$frostlang$frostc$expression$Binary$compile$org$frostlang$frostc$Compiler$org$frostlang$frostc$Position$org$frostlang$frostc$ASTNode$org$frostlang$frostc$expression$Binary$Operator$org$frostlang$frostc$ASTNode$org$frostlang$frostc$Compiler$TypeContext$R$org$frostlang$frostc$IR$Value$Q(param0, param1, $tmp118, $tmp121, param4, $tmp122);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp130));
 org$frostlang$frostc$IR$Value* $tmp131 = *(&local11);

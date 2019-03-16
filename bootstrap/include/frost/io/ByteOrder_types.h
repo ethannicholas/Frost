@@ -1,12 +1,12 @@
 #pragma once
 #include "frost_c.h"
-#include "frost/core/Int64_types.h"
+#include "frost/core/Int_types.h"
 typedef struct frost$core$String frost$core$String;
 typedef struct frost$core$Class frost$core$Class;
 #include "frost/io/ByteOrder_types.h"
 
 typedef struct frost$io$ByteOrder {
-    frost$core$Int64 $rawValue;
+    frost$core$Int $rawValue;
     int8_t $data[0];
 } frost$io$ByteOrder;
 #include "frost/core/Class.h"

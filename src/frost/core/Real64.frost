@@ -466,13 +466,13 @@ class Real64 : Value, Key<Real64>, Comparable<Real64>, Formattable {
 
     @override
     function get_hash():Int {
-        return Int(value->builtin_int64)
+        return Int(value->builtin_int)
     }
 
     ===Returns this number truncated to a 32 bit signed number.===
     property asInt:Int
     function get_asInt():Int {
-        return Int(value->builtin_int64)
+        return Int(value->builtin_int)
     }
 
     ===Returns this number truncated to an 8 bit signed number.===

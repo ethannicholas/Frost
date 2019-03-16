@@ -207,11 +207,11 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp109));
 frost$core$Frost$unref$frost$core$Object$Q($tmp108);
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Compiler.frost:233
 org$frostlang$frostc$Compiler$EnclosingContext* $tmp110 = *(&local0);
-frost$core$Int64* $tmp111 = &$tmp110->$rawValue;
-frost$core$Int64 $tmp112 = *$tmp111;
-frost$core$Int64 $tmp113 = (frost$core$Int64) {4u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Compiler.frost:234:42
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int* $tmp111 = &$tmp110->$rawValue;
+frost$core$Int $tmp112 = *$tmp111;
+frost$core$Int $tmp113 = (frost$core$Int) {4u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Compiler.frost:234:42
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp114 = $tmp112.value;
 int64_t $tmp115 = $tmp113.value;
 bool $tmp116 = $tmp114 == $tmp115;

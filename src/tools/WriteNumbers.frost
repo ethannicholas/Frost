@@ -160,6 +160,14 @@ class WriteNumbers {
             }
             return Type.REAL32
         }
+        var leftSize := size(leftType)
+        if leftSize = -1 {
+            leftSize := 64
+        }
+        var rightSize := size(rightType)
+        if rightSize = -1 {
+            rightSize := 64
+        }
         if signed(leftType) = signed(rightType) | !signMatters {
             def leftPromoted:Type
             def rightPromoted:Type
@@ -179,7 +187,7 @@ class WriteNumbers {
             }
             return rightPromoted
         }
-        else if size(leftType) = 8 & size(rightType) = 8 {
+        else if leftSize = 8 & rightSize = 8 {
             if promote32 {
                 return Type.INT32
             }
@@ -187,10 +195,10 @@ class WriteNumbers {
                 return Type.INT16
             }
         }
-        else if size(leftType) <= 16 & size(rightType) <= 16 {
+        else if leftSize <= 16 & rightSize <= 16 {
             return Type.INT32
         }
-        else if size(leftType) <= 32 & size(rightType) <= 32 {
+        else if leftSize <= 32 & rightSize <= 32 {
             return Type.INT64
         }
         else {
@@ -1033,7 +1041,7 @@ class WriteNumbers {
             out.printLine("    @override")
             out.printLine("    function [](index:Int):\{cl} {")
             out.printLine("        return (range.start + range.step * index" +
-                    "\{castInt(Type.INT64, type)})\{castInt(max32(type), type)}")
+                    "\{castInt(Type.INT, type)})\{castInt(max32(type), type)}")
             out.printLine("    }")
             out.printLine()
             out.printLine("    @override")

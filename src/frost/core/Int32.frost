@@ -69,7 +69,7 @@ class Int32 : Value, Key<Int32>, Comparable<Int32>, Formattable, ListView<Bit> {
     ===Adds another number to this number.===
     @priority(14)
     function +(other:Int):Int {
-        return value->builtin_int64 + other.value
+        return value->builtin_int + other.value
     }
 
     ===Adds another number to this number.===
@@ -99,7 +99,7 @@ class Int32 : Value, Key<Int32>, Comparable<Int32>, Formattable, ListView<Bit> {
     ===Subtracts another number from this number.===
     @priority(14)
     function -(other:Int):Int {
-        return value->builtin_int64 - other.value
+        return value->builtin_int - other.value
     }
 
     ===Subtracts another number from this number.===
@@ -134,7 +134,7 @@ class Int32 : Value, Key<Int32>, Comparable<Int32>, Formattable, ListView<Bit> {
     ===Multiplies this number by another number.===
     @priority(14)
     function *(other:Int):Int {
-        return value->builtin_int64 * other.value
+        return value->builtin_int * other.value
     }
 
     ===Multiplies this number by another number.===
@@ -164,7 +164,7 @@ class Int32 : Value, Key<Int32>, Comparable<Int32>, Formattable, ListView<Bit> {
     ===Divides this number by another number, returning the whole number portion.===
     @priority(14)
     function //(other:Int):Int {
-        return value->builtin_int64 // other.value
+        return value->builtin_int // other.value
     }
 
     ===Divides this number by another number, returning the whole number portion.===
@@ -194,7 +194,7 @@ class Int32 : Value, Key<Int32>, Comparable<Int32>, Formattable, ListView<Bit> {
     ===Returns the remainder of dividing this number by another number.===
     @priority(14)
     function %(other:Int):Int {
-        return value->builtin_int64 % other.value
+        return value->builtin_int % other.value
     }
 
     ===Returns the remainder of dividing this number by another number.===
@@ -289,7 +289,7 @@ class Int32 : Value, Key<Int32>, Comparable<Int32>, Formattable, ListView<Bit> {
     ===Returns the bitwise AND of this number with another number.===
     @priority(14)
     function &&(other:Int):Int {
-        return value->builtin_int64 && other.value
+        return value->builtin_int && other.value
     }
 
     ===Returns the bitwise AND of this number with another number.===
@@ -325,7 +325,7 @@ class Int32 : Value, Key<Int32>, Comparable<Int32>, Formattable, ListView<Bit> {
     ===Returns the bitwise OR of this number with another number.===
     @priority(14)
     function ||(other:Int):Int {
-        return value->builtin_int64 || other.value
+        return value->builtin_int || other.value
     }
 
     ===Returns the bitwise OR of this number with another number.===
@@ -361,7 +361,7 @@ class Int32 : Value, Key<Int32>, Comparable<Int32>, Formattable, ListView<Bit> {
     ===Returns the bitwise XOR of this number with another number.===
     @priority(14)
     function ~~(other:Int):Int {
-        return value->builtin_int64 ~~ other.value
+        return value->builtin_int ~~ other.value
     }
 
     ===Returns the bitwise XOR of this number with another number.===
@@ -422,7 +422,7 @@ class Int32 : Value, Key<Int32>, Comparable<Int32>, Formattable, ListView<Bit> {
     ===Returns `true` if this number is equal to the given number.===
     @priority(14)
     function =(other:Int):Bit {
-        return value->builtin_int64 = other.value
+        return value->builtin_int = other.value
     }
 
     ===Returns `true` if this number is equal to the given number.===
@@ -477,7 +477,7 @@ class Int32 : Value, Key<Int32>, Comparable<Int32>, Formattable, ListView<Bit> {
     ===Returns `true` if this number is not equal to the given number.===
     @priority(14)
     function !=(other:Int):Bit {
-        return value->builtin_int64 != other.value
+        return value->builtin_int != other.value
     }
 
     ===Returns `true` if this number is not equal to the given number.===
@@ -532,7 +532,7 @@ class Int32 : Value, Key<Int32>, Comparable<Int32>, Formattable, ListView<Bit> {
     ===Returns `true` if this number is less than the given number.===
     @priority(14)
     function <(other:Int):Bit {
-        return value->builtin_int64 < other.value
+        return value->builtin_int < other.value
     }
 
     ===Returns `true` if this number is less than the given number.===
@@ -587,7 +587,7 @@ class Int32 : Value, Key<Int32>, Comparable<Int32>, Formattable, ListView<Bit> {
     ===Returns `true` if this number is greater than the given number.===
     @priority(14)
     function >(other:Int):Bit {
-        return value->builtin_int64 > other.value
+        return value->builtin_int > other.value
     }
 
     ===Returns `true` if this number is greater than the given number.===
@@ -642,7 +642,7 @@ class Int32 : Value, Key<Int32>, Comparable<Int32>, Formattable, ListView<Bit> {
     ===Returns `true` if this number is greater than or equal to the given number.===
     @priority(14)
     function >=(other:Int):Bit {
-        return value->builtin_int64 >= other.value
+        return value->builtin_int >= other.value
     }
 
     ===Returns `true` if this number is greater than or equal to the given number.===
@@ -697,7 +697,7 @@ class Int32 : Value, Key<Int32>, Comparable<Int32>, Formattable, ListView<Bit> {
     ===Returns `true` if this number is less than or equal to the given number.===
     @priority(14)
     function <=(other:Int):Bit {
-        return value->builtin_int64 <= other.value
+        return value->builtin_int <= other.value
     }
 
     ===Returns `true` if this number is less than or equal to the given number.===
@@ -772,8 +772,8 @@ class Int32 : Value, Key<Int32>, Comparable<Int32>, Formattable, ListView<Bit> {
     ===Returns the smaller (closest to negative infinity) of this number and another number.===
     @priority(14)
     function min(other:Int):Int {
-        if value->builtin_int64 < other.value {
-            return value->builtin_int64
+        if value->builtin_int < other.value {
+            return value->builtin_int
         }
         return other.value
     }
@@ -854,8 +854,8 @@ class Int32 : Value, Key<Int32>, Comparable<Int32>, Formattable, ListView<Bit> {
     ===Returns the larger (closest to positive infinity) of this number and another number.===
     @priority(14)
     function max(other:Int):Int {
-        if value->builtin_int64 > other.value {
-            return value->builtin_int64
+        if value->builtin_int > other.value {
+            return value->builtin_int
         }
         return other.value
     }
@@ -931,7 +931,7 @@ class Int32 : Value, Key<Int32>, Comparable<Int32>, Formattable, ListView<Bit> {
 
     @override
     function get_hash():Int {
-        return Int(value->builtin_int64)
+        return Int(value->builtin_int)
     }
 
     ===Parses a string as a number in the specified radix. Returns `null` if the parse fails.===
@@ -957,7 +957,7 @@ class Int32 : Value, Key<Int32>, Comparable<Int32>, Formattable, ListView<Bit> {
     ===Returns this number reinterpreted to a 32 bit signed number.===
     property asInt:Int
     function get_asInt():Int {
-        return Int(value->builtin_int64)
+        return Int(value->builtin_int)
     }
 
     ===Returns this number truncated to an 8 bit signed number.===

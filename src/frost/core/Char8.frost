@@ -98,7 +98,7 @@ class Char8 : Value, Key<Char8>, Comparable<Char8> {
 
     property asInt:Int
     function get_asInt():Int {
-        return Int(value->builtin_int64)
+        return Int(value->builtin_int)
     }
 
     property asInt8:Int8

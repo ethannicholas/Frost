@@ -12,7 +12,6 @@
 #include "frost/core/Frost.h"
 #include "frost/core/Int.h"
 #include "org/frostlang/frostc/Type.h"
-#include "frost/core/Int64.h"
 #include "frost/collections/Array.h"
 #include "frost/collections/ListView.h"
 
@@ -112,7 +111,7 @@ org$frostlang$frostc$Type* $tmp38 = *$tmp37;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Compiler.frost:3740
 FROST_ASSERT(48 == sizeof(org$frostlang$frostc$IR$Value));
 org$frostlang$frostc$IR$Value* $tmp39 = (org$frostlang$frostc$IR$Value*) frostObjectAlloc(48, (frost$core$Class*) &org$frostlang$frostc$IR$Value$class);
-frost$core$Int64 $tmp40 = (frost$core$Int64) {14u};
+frost$core$Int $tmp40 = (frost$core$Int) {14u};
 // begin inline call to method org.frostlang.frostc.Type.ClassLiteral(compiler:org.frostlang.frostc.Compiler, t:org.frostlang.frostc.Type):org.frostlang.frostc.Type from Compiler.frost:3740:50
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Type.frost:273
 org$frostlang$frostc$Type** $tmp41 = &param0->CLASS_TYPE;
@@ -126,7 +125,7 @@ org$frostlang$frostc$Type* $tmp45 = org$frostlang$frostc$Type$generic$org$frostl
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp45));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp45));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp43));
-org$frostlang$frostc$IR$Value$init$frost$core$Int64$org$frostlang$frostc$Type$org$frostlang$frostc$Type($tmp39, $tmp40, $tmp38, $tmp45);
+org$frostlang$frostc$IR$Value$init$frost$core$Int$org$frostlang$frostc$Type$org$frostlang$frostc$Type($tmp39, $tmp40, $tmp38, $tmp45);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp39));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp45));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp39));

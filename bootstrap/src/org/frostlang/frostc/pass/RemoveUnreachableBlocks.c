@@ -89,11 +89,11 @@ frost$core$Int64 $tmp37 = frost$core$Int64$init$frost$core$Int($tmp16);
 int64_t $tmp38 = $tmp37.value;
 frost$core$Object* $tmp39 = $tmp36[$tmp38];
 frost$core$Frost$ref$frost$core$Object$Q($tmp39);
-frost$core$Int64* $tmp40 = &((org$frostlang$frostc$IR$Statement*) $tmp39)->$rawValue;
-frost$core$Int64 $tmp41 = *$tmp40;
-frost$core$Int64 $tmp42 = (frost$core$Int64) {28u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from RemoveUnreachableBlocks.frost:9:34
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int* $tmp40 = &((org$frostlang$frostc$IR$Statement*) $tmp39)->$rawValue;
+frost$core$Int $tmp41 = *$tmp40;
+frost$core$Int $tmp42 = (frost$core$Int) {28u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RemoveUnreachableBlocks.frost:9:34
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp43 = $tmp41.value;
 int64_t $tmp44 = $tmp42.value;
 bool $tmp45 = $tmp43 == $tmp44;

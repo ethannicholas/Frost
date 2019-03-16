@@ -678,10 +678,10 @@ frost$core$String* org$frostlang$frostc$frostdoc$LinkResolver$linkTo$org$frostla
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/frostdoc/LinkResolver.frost:82
 org$frostlang$frostc$Symbol$Kind* $tmp295 = &param1->kind;
 org$frostlang$frostc$Symbol$Kind $tmp296 = *$tmp295;
-frost$core$Int64 $tmp297 = $tmp296.$rawValue;
-frost$core$Int64 $tmp298 = (frost$core$Int64) {2u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from LinkResolver.frost:83:29
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp297 = $tmp296.$rawValue;
+frost$core$Int $tmp298 = (frost$core$Int) {2u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from LinkResolver.frost:83:29
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp299 = $tmp297.value;
 int64_t $tmp300 = $tmp298.value;
 bool $tmp301 = $tmp299 == $tmp300;
@@ -696,9 +696,9 @@ frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp306));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp306));
 return $tmp306;
 block3:;
-frost$core$Int64 $tmp307 = (frost$core$Int64) {5u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from LinkResolver.frost:86:29
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp307 = (frost$core$Int) {5u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from LinkResolver.frost:86:29
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp308 = $tmp297.value;
 int64_t $tmp309 = $tmp307.value;
 bool $tmp310 = $tmp308 == $tmp309;
@@ -1315,10 +1315,10 @@ org$frostlang$frostc$Compiler** $tmp571 = &param0->compiler;
 org$frostlang$frostc$Compiler* $tmp572 = *$tmp571;
 org$frostlang$frostc$parser$Parser** $tmp573 = &$tmp572->parser;
 org$frostlang$frostc$parser$Parser* $tmp574 = *$tmp573;
-frost$core$Int64 $tmp575 = (frost$core$Int64) {110u};
-// begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int64):org.frostlang.frostc.parser.Token.Kind from LinkResolver.frost:141:60
+frost$core$Int $tmp575 = (frost$core$Int) {110u};
+// begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from LinkResolver.frost:141:60
 // /Users/ethannicholas/Dropbox/Frost-Int/build/org/frostlang/frostc/parser/Token.frost:11
-frost$core$Int64* $tmp576 = &(&local15)->$rawValue;
+frost$core$Int* $tmp576 = &(&local15)->$rawValue;
 *$tmp576 = $tmp575;
 org$frostlang$frostc$parser$Token$Kind $tmp577 = *(&local15);
 *(&local14) = $tmp577;
@@ -1526,10 +1526,10 @@ block66:;
 org$frostlang$frostc$Symbol* $tmp659 = *(&local21);
 org$frostlang$frostc$Symbol$Kind* $tmp660 = &$tmp659->kind;
 org$frostlang$frostc$Symbol$Kind $tmp661 = *$tmp660;
-frost$core$Int64 $tmp662 = $tmp661.$rawValue;
-frost$core$Int64 $tmp663 = (frost$core$Int64) {5u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from LinkResolver.frost:163:37
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp662 = $tmp661.$rawValue;
+frost$core$Int $tmp663 = (frost$core$Int) {5u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from LinkResolver.frost:163:37
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp664 = $tmp662.value;
 int64_t $tmp665 = $tmp663.value;
 bool $tmp666 = $tmp664 == $tmp665;
@@ -1577,9 +1577,9 @@ return $tmp678;
 block72:;
 goto block67;
 block69:;
-frost$core$Int64 $tmp686 = (frost$core$Int64) {6u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from LinkResolver.frost:168:37
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp686 = (frost$core$Int) {6u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from LinkResolver.frost:168:37
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp687 = $tmp662.value;
 int64_t $tmp688 = $tmp686.value;
 bool $tmp689 = $tmp687 == $tmp688;

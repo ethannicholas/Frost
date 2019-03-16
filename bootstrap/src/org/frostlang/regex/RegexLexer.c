@@ -4355,39 +4355,38 @@ org$frostlang$plex$runtime$RawToken $tmp3115 = org$frostlang$plex$runtime$DFA$ne
 // /Users/ethannicholas/Dropbox/Frost-Int/build/org/frostlang/regex/RegexLexer.frost:385
 org$frostlang$plex$runtime$RawToken $tmp3116 = *(&local0);
 frost$core$Int $tmp3117 = $tmp3116.kind;
-frost$core$Int64 $tmp3118 = frost$core$Int64$init$frost$core$Int($tmp3117);
-// begin inline call to org.frostlang.regex.RegexToken.Kind.init(rv:frost.core.Int64):org.frostlang.regex.RegexToken.Kind from RegexLexer.frost:385:82
+// begin inline call to org.frostlang.regex.RegexToken.Kind.init(rv:frost.core.Int):org.frostlang.regex.RegexToken.Kind from RegexLexer.frost:385:82
 // /Users/ethannicholas/Dropbox/Frost-Int/build/org/frostlang/regex/RegexToken.frost:11
-frost$core$Int64* $tmp3119 = &(&local2)->$rawValue;
-*$tmp3119 = $tmp3118;
-org$frostlang$regex$RegexToken$Kind $tmp3120 = *(&local2);
-*(&local1) = $tmp3120;
-org$frostlang$regex$RegexToken$Kind $tmp3121 = *(&local1);
-org$frostlang$plex$runtime$RawToken $tmp3122 = *(&local0);
-frost$core$String$Index $tmp3123 = $tmp3122.start;
-org$frostlang$plex$runtime$RawToken $tmp3124 = *(&local0);
-frost$core$String$Index $tmp3125 = $tmp3124.end;
-frost$core$Int* $tmp3126 = &param0->file;
-frost$core$Int $tmp3127 = *$tmp3126;
-org$frostlang$plex$runtime$RawToken $tmp3128 = *(&local0);
-frost$core$Int $tmp3129 = $tmp3128.line;
-org$frostlang$plex$runtime$RawToken $tmp3130 = *(&local0);
-frost$core$Int $tmp3131 = $tmp3130.column;
-org$frostlang$frostc$Position $tmp3132 = org$frostlang$frostc$Position$init$frost$core$Int$frost$core$Int$frost$core$Int($tmp3127, $tmp3129, $tmp3131);
-org$frostlang$regex$RegexToken $tmp3133 = org$frostlang$regex$RegexToken$init$org$frostlang$regex$RegexToken$Kind$frost$core$String$Index$frost$core$String$Index$org$frostlang$frostc$Position($tmp3121, $tmp3123, $tmp3125, $tmp3132);
-return $tmp3133;
+frost$core$Int* $tmp3118 = &(&local2)->$rawValue;
+*$tmp3118 = $tmp3117;
+org$frostlang$regex$RegexToken$Kind $tmp3119 = *(&local2);
+*(&local1) = $tmp3119;
+org$frostlang$regex$RegexToken$Kind $tmp3120 = *(&local1);
+org$frostlang$plex$runtime$RawToken $tmp3121 = *(&local0);
+frost$core$String$Index $tmp3122 = $tmp3121.start;
+org$frostlang$plex$runtime$RawToken $tmp3123 = *(&local0);
+frost$core$String$Index $tmp3124 = $tmp3123.end;
+frost$core$Int* $tmp3125 = &param0->file;
+frost$core$Int $tmp3126 = *$tmp3125;
+org$frostlang$plex$runtime$RawToken $tmp3127 = *(&local0);
+frost$core$Int $tmp3128 = $tmp3127.line;
+org$frostlang$plex$runtime$RawToken $tmp3129 = *(&local0);
+frost$core$Int $tmp3130 = $tmp3129.column;
+org$frostlang$frostc$Position $tmp3131 = org$frostlang$frostc$Position$init$frost$core$Int$frost$core$Int$frost$core$Int($tmp3126, $tmp3128, $tmp3130);
+org$frostlang$regex$RegexToken $tmp3132 = org$frostlang$regex$RegexToken$init$org$frostlang$regex$RegexToken$Kind$frost$core$String$Index$frost$core$String$Index$org$frostlang$frostc$Position($tmp3120, $tmp3122, $tmp3124, $tmp3131);
+return $tmp3132;
 
 }
 void org$frostlang$regex$RegexLexer$init(org$frostlang$regex$RegexLexer* param0) {
 
 // /Users/ethannicholas/Dropbox/Frost-Int/build/org/frostlang/regex/RegexLexer.frost:15
-frost$core$Int** $tmp3134 = org$frostlang$regex$RegexLexer$getTransitions$R$frost$unsafe$Pointer$LTfrost$unsafe$Pointer$LTfrost$core$Int$GT$GT();
-frost$core$Int*** $tmp3135 = &param0->transitions;
-*$tmp3135 = $tmp3134;
+frost$core$Int** $tmp3133 = org$frostlang$regex$RegexLexer$getTransitions$R$frost$unsafe$Pointer$LTfrost$unsafe$Pointer$LTfrost$core$Int$GT$GT();
+frost$core$Int*** $tmp3134 = &param0->transitions;
+*$tmp3134 = $tmp3133;
 // /Users/ethannicholas/Dropbox/Frost-Int/build/org/frostlang/regex/RegexLexer.frost:17
-frost$core$Int* $tmp3136 = org$frostlang$regex$RegexLexer$getAccepts$R$frost$unsafe$Pointer$LTfrost$core$Int$GT();
-frost$core$Int** $tmp3137 = &param0->accepts;
-*$tmp3137 = $tmp3136;
+frost$core$Int* $tmp3135 = org$frostlang$regex$RegexLexer$getAccepts$R$frost$unsafe$Pointer$LTfrost$core$Int$GT();
+frost$core$Int** $tmp3136 = &param0->accepts;
+*$tmp3136 = $tmp3135;
 return;
 
 }

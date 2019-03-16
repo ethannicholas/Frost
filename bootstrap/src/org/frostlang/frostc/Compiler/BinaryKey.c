@@ -128,7 +128,7 @@ frost$core$Int64 $tmp44 = (frost$core$Int64) {$tmp43};
 // begin inline call to function frost.core.Int64.get_asInt():frost.core.Int from Compiler.frost:384:69
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:580
 int64_t $tmp45 = $tmp44.value;
-frost$core$Int $tmp46 = (frost$core$Int) {$tmp45};
+frost$core$Int $tmp46 = (frost$core$Int) {((int64_t) $tmp45)};
 return $tmp46;
 
 }

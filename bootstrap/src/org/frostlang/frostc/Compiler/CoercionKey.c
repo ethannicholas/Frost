@@ -123,7 +123,7 @@ frost$core$Frost$addressOf$frost$core$Object$R$frost$core$Int64(&$tmp39, ((frost
 // begin inline call to function frost.core.Int64.get_asInt():frost.core.Int from Compiler.frost:360:41
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:580
 int64_t $tmp40 = $tmp39.value;
-frost$core$Int $tmp41 = (frost$core$Int) {$tmp40};
+frost$core$Int $tmp41 = (frost$core$Int) {((int64_t) $tmp40)};
 org$frostlang$frostc$Type** $tmp42 = &param0->target;
 org$frostlang$frostc$Type* $tmp43 = *$tmp42;
 ITable* $tmp44 = ((frost$collections$Key*) $tmp43)->$class->itable;

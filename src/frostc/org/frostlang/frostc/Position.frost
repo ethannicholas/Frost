@@ -9,7 +9,7 @@ class Position : Value, Key<Position>, Comparable<Position> {
     def column:Int
 
     init() {
-        self.file := -1
+        self.file := 0-1 -- FIXME negative literals failing
         self.line := 1
         self.column := 1
     }

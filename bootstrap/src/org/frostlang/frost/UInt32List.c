@@ -127,7 +127,7 @@ frost$core$Int $tmp42 = (frost$core$Int) {0u};
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/UInt32.frost:828
 uint32_t $tmp43 = $tmp41.value;
 int64_t $tmp44 = $tmp42.value;
-bool $tmp45 = ((int64_t) $tmp43) > $tmp44;
+bool $tmp45 = ((int64_t) $tmp43) > ((int64_t) $tmp44);
 frost$core$Bit $tmp46 = (frost$core$Bit) {$tmp45};
 bool $tmp47 = $tmp46.value;
 if ($tmp47) goto block12; else goto block13;
@@ -140,7 +140,7 @@ goto block11;
 block13:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/UInt32.frost:831
 int64_t $tmp50 = $tmp42.value;
-frost$core$Int64 $tmp51 = (frost$core$Int64) {$tmp50};
+frost$core$Int64 $tmp51 = (frost$core$Int64) {((int64_t) $tmp50)};
 *(&local0) = $tmp51;
 goto block11;
 block11:;
@@ -153,7 +153,7 @@ frost$core$Int64 $tmp57 = (frost$core$Int64) {$tmp56};
 // begin inline call to function frost.core.Int64.get_asInt():frost.core.Int from UInt32List.frost:30:74
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:580
 int64_t $tmp58 = $tmp57.value;
-frost$core$Int $tmp59 = (frost$core$Int) {$tmp58};
+frost$core$Int $tmp59 = (frost$core$Int) {((int64_t) $tmp58)};
 return $tmp59;
 block3:;
 // <no location>
@@ -183,7 +183,7 @@ frost$core$Int $tmp77 = (frost$core$Int) {0u};
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/UInt32.frost:828
 uint32_t $tmp78 = $tmp76.value;
 int64_t $tmp79 = $tmp77.value;
-bool $tmp80 = ((int64_t) $tmp78) > $tmp79;
+bool $tmp80 = ((int64_t) $tmp78) > ((int64_t) $tmp79);
 frost$core$Bit $tmp81 = (frost$core$Bit) {$tmp80};
 bool $tmp82 = $tmp81.value;
 if ($tmp82) goto block16; else goto block17;
@@ -196,7 +196,7 @@ goto block15;
 block17:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/UInt32.frost:831
 int64_t $tmp85 = $tmp77.value;
-frost$core$Int64 $tmp86 = (frost$core$Int64) {$tmp85};
+frost$core$Int64 $tmp86 = (frost$core$Int64) {((int64_t) $tmp85)};
 *(&local2) = $tmp86;
 goto block15;
 block15:;
@@ -209,7 +209,7 @@ frost$core$Int64 $tmp92 = (frost$core$Int64) {$tmp91};
 // begin inline call to function frost.core.Int64.get_asInt():frost.core.Int from UInt32List.frost:35:83
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:580
 int64_t $tmp93 = $tmp92.value;
-frost$core$Int $tmp94 = (frost$core$Int) {$tmp93};
+frost$core$Int $tmp94 = (frost$core$Int) {((int64_t) $tmp93)};
 return $tmp94;
 block2:;
 goto block19;

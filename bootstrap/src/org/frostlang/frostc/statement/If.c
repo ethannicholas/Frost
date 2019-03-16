@@ -15,7 +15,7 @@
 #include "frost/collections/Iterable.h"
 #include "frost/collections/Iterator.h"
 #include "org/frostlang/frostc/IR/Statement.h"
-#include "frost/core/Int64.h"
+#include "frost/core/Int.h"
 #include "org/frostlang/frostc/IR/Statement/ID.h"
 
 
@@ -167,9 +167,9 @@ block7:;
 org$frostlang$frostc$IR* $tmp56 = *(&local0);
 FROST_ASSERT(80 == sizeof(org$frostlang$frostc$IR$Statement));
 org$frostlang$frostc$IR$Statement* $tmp57 = (org$frostlang$frostc$IR$Statement*) frostObjectAlloc(80, (frost$core$Class*) &org$frostlang$frostc$IR$Statement$class);
-frost$core$Int64 $tmp58 = (frost$core$Int64) {1u};
+frost$core$Int $tmp58 = (frost$core$Int) {1u};
 org$frostlang$frostc$IR$Block$ID $tmp59 = *(&local3);
-org$frostlang$frostc$IR$Statement$init$frost$core$Int64$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Block$ID($tmp57, $tmp58, param1, $tmp59);
+org$frostlang$frostc$IR$Statement$init$frost$core$Int$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Block$ID($tmp57, $tmp58, param1, $tmp59);
 $fn61 $tmp60 = ($fn61) $tmp56->$class->vtable[2];
 org$frostlang$frostc$IR$Statement$ID $tmp62 = $tmp60($tmp56, $tmp57);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp57));
@@ -203,9 +203,9 @@ block12:;
 org$frostlang$frostc$IR* $tmp77 = *(&local0);
 FROST_ASSERT(80 == sizeof(org$frostlang$frostc$IR$Statement));
 org$frostlang$frostc$IR$Statement* $tmp78 = (org$frostlang$frostc$IR$Statement*) frostObjectAlloc(80, (frost$core$Class*) &org$frostlang$frostc$IR$Statement$class);
-frost$core$Int64 $tmp79 = (frost$core$Int64) {1u};
+frost$core$Int $tmp79 = (frost$core$Int) {1u};
 org$frostlang$frostc$IR$Block$ID $tmp80 = *(&local3);
-org$frostlang$frostc$IR$Statement$init$frost$core$Int64$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Block$ID($tmp78, $tmp79, param1, $tmp80);
+org$frostlang$frostc$IR$Statement$init$frost$core$Int$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Block$ID($tmp78, $tmp79, param1, $tmp80);
 $fn82 $tmp81 = ($fn82) $tmp77->$class->vtable[2];
 org$frostlang$frostc$IR$Statement$ID $tmp83 = $tmp81($tmp77, $tmp78);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp78));

@@ -157,7 +157,7 @@ frost$core$Int64 $tmp59 = (frost$core$Int64) {$tmp58};
 // begin inline call to function frost.core.Int64.get_asInt():frost.core.Int from UInt64List.frost:30:82
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:580
 int64_t $tmp60 = $tmp59.value;
-frost$core$Int $tmp61 = (frost$core$Int) {$tmp60};
+frost$core$Int $tmp61 = (frost$core$Int) {((int64_t) $tmp60)};
 return $tmp61;
 block3:;
 // <no location>
@@ -217,7 +217,7 @@ frost$core$Int64 $tmp96 = (frost$core$Int64) {$tmp95};
 // begin inline call to function frost.core.Int64.get_asInt():frost.core.Int from UInt64List.frost:35:91
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:580
 int64_t $tmp97 = $tmp96.value;
-frost$core$Int $tmp98 = (frost$core$Int) {$tmp97};
+frost$core$Int $tmp98 = (frost$core$Int) {((int64_t) $tmp97)};
 return $tmp98;
 block2:;
 goto block21;

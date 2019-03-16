@@ -22,7 +22,6 @@
 #include "frost/core/Error.h"
 #include "org/frostlang/frostc/Symbol.h"
 #include "org/frostlang/frostc/Type/Kind.h"
-#include "frost/core/Int64.h"
 #include "frost/collections/Key.h"
 #include "frost/collections/HashMap.h"
 #include "org/frostlang/frostc/FixedArray.h"
@@ -634,10 +633,10 @@ block2:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/HCodeGenerator.frost:77
 org$frostlang$frostc$Type$Kind* $tmp141 = &param1->typeKind;
 org$frostlang$frostc$Type$Kind $tmp142 = *$tmp141;
-frost$core$Int64 $tmp143 = $tmp142.$rawValue;
-frost$core$Int64 $tmp144 = (frost$core$Int64) {4u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from HCodeGenerator.frost:78:31
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp143 = $tmp142.$rawValue;
+frost$core$Int $tmp144 = (frost$core$Int) {4u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from HCodeGenerator.frost:78:31
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp145 = $tmp143.value;
 int64_t $tmp146 = $tmp144.value;
 bool $tmp147 = $tmp145 == $tmp146;
@@ -652,9 +651,9 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp151));
 *(&local0) = ((frost$core$Error*) NULL);
 return &$s152;
 block11:;
-frost$core$Int64 $tmp153 = (frost$core$Int64) {2u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from HCodeGenerator.frost:81:31
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp153 = (frost$core$Int) {2u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from HCodeGenerator.frost:81:31
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp154 = $tmp143.value;
 int64_t $tmp155 = $tmp153.value;
 bool $tmp156 = $tmp154 == $tmp155;
@@ -694,9 +693,9 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp175));
 *(&local0) = ((frost$core$Error*) NULL);
 return $tmp173;
 block14:;
-frost$core$Int64 $tmp176 = (frost$core$Int64) {3u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from HCodeGenerator.frost:84:31
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp176 = (frost$core$Int) {3u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from HCodeGenerator.frost:84:31
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp177 = $tmp143.value;
 int64_t $tmp178 = $tmp176.value;
 bool $tmp179 = $tmp177 == $tmp178;
@@ -736,9 +735,9 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp198));
 *(&local0) = ((frost$core$Error*) NULL);
 return $tmp196;
 block19:;
-frost$core$Int64 $tmp199 = (frost$core$Int64) {8u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from HCodeGenerator.frost:87:31
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp199 = (frost$core$Int) {8u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from HCodeGenerator.frost:87:31
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp200 = $tmp143.value;
 int64_t $tmp201 = $tmp199.value;
 bool $tmp202 = $tmp200 == $tmp201;
@@ -753,9 +752,9 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp206));
 *(&local0) = ((frost$core$Error*) NULL);
 return &$s207;
 block24:;
-frost$core$Int64 $tmp208 = (frost$core$Int64) {9u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from HCodeGenerator.frost:90:31
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp208 = (frost$core$Int) {9u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from HCodeGenerator.frost:90:31
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp209 = $tmp143.value;
 int64_t $tmp210 = $tmp208.value;
 bool $tmp211 = $tmp209 == $tmp210;
@@ -808,9 +807,9 @@ frost$core$Int $tmp235 = (frost$core$Int) {94u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s236, $tmp235);
 abort(); // unreachable
 block27:;
-frost$core$Int64 $tmp237 = (frost$core$Int64) {0u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from HCodeGenerator.frost:97:31
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp237 = (frost$core$Int) {0u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from HCodeGenerator.frost:97:31
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp238 = $tmp143.value;
 int64_t $tmp239 = $tmp237.value;
 bool $tmp240 = $tmp238 == $tmp239;
@@ -1063,9 +1062,9 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp353));
 *(&local0) = ((frost$core$Error*) NULL);
 return $tmp349;
 block38:;
-frost$core$Int64 $tmp354 = (frost$core$Int64) {1u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from HCodeGenerator.frost:115:31
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp354 = (frost$core$Int) {1u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from HCodeGenerator.frost:115:31
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp355 = $tmp143.value;
 int64_t $tmp356 = $tmp354.value;
 bool $tmp357 = $tmp355 == $tmp356;
@@ -1203,9 +1202,9 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp415));
 *(&local0) = ((frost$core$Error*) NULL);
 return $tmp413;
 block69:;
-frost$core$Int64 $tmp416 = (frost$core$Int64) {11u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from HCodeGenerator.frost:123:31
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp416 = (frost$core$Int) {11u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from HCodeGenerator.frost:123:31
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp417 = $tmp143.value;
 int64_t $tmp418 = $tmp416.value;
 bool $tmp419 = $tmp417 == $tmp418;
@@ -1607,9 +1606,9 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp598));
 *(&local0) = ((frost$core$Error*) NULL);
 return $tmp596;
 block90:;
-frost$core$Int64 $tmp599 = (frost$core$Int64) {12u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from HCodeGenerator.frost:148:31
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp599 = (frost$core$Int) {12u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from HCodeGenerator.frost:148:31
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp600 = $tmp143.value;
 int64_t $tmp601 = $tmp599.value;
 bool $tmp602 = $tmp600 == $tmp601;
@@ -1648,9 +1647,9 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp617));
 *(&local0) = ((frost$core$Error*) NULL);
 return $tmp616;
 block141:;
-frost$core$Int64 $tmp618 = (frost$core$Int64) {13u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from HCodeGenerator.frost:151:31
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp618 = (frost$core$Int) {13u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from HCodeGenerator.frost:151:31
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp619 = $tmp143.value;
 int64_t $tmp620 = $tmp618.value;
 bool $tmp621 = $tmp619 == $tmp620;
@@ -1689,9 +1688,9 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp636));
 *(&local0) = ((frost$core$Error*) NULL);
 return $tmp635;
 block148:;
-frost$core$Int64 $tmp637 = (frost$core$Int64) {15u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from HCodeGenerator.frost:154:31
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp637 = (frost$core$Int) {15u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from HCodeGenerator.frost:154:31
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp638 = $tmp143.value;
 int64_t $tmp639 = $tmp637.value;
 bool $tmp640 = $tmp638 == $tmp639;
@@ -1699,9 +1698,9 @@ frost$core$Bit $tmp641 = (frost$core$Bit) {$tmp640};
 bool $tmp642 = $tmp641.value;
 if ($tmp642) goto block154; else goto block155;
 block155:;
-frost$core$Int64 $tmp643 = (frost$core$Int64) {16u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from HCodeGenerator.frost:154:51
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp643 = (frost$core$Int) {16u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from HCodeGenerator.frost:154:51
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp644 = $tmp143.value;
 int64_t $tmp645 = $tmp643.value;
 bool $tmp646 = $tmp644 == $tmp645;
@@ -1740,9 +1739,9 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp661));
 *(&local0) = ((frost$core$Error*) NULL);
 return $tmp660;
 block157:;
-frost$core$Int64 $tmp662 = (frost$core$Int64) {17u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from HCodeGenerator.frost:157:31
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp662 = (frost$core$Int) {17u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from HCodeGenerator.frost:157:31
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp663 = $tmp143.value;
 int64_t $tmp664 = $tmp662.value;
 bool $tmp665 = $tmp663 == $tmp664;
@@ -1750,9 +1749,9 @@ frost$core$Bit $tmp666 = (frost$core$Bit) {$tmp665};
 bool $tmp667 = $tmp666.value;
 if ($tmp667) goto block163; else goto block164;
 block164:;
-frost$core$Int64 $tmp668 = (frost$core$Int64) {18u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from HCodeGenerator.frost:157:61
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp668 = (frost$core$Int) {18u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from HCodeGenerator.frost:157:61
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp669 = $tmp143.value;
 int64_t $tmp670 = $tmp668.value;
 bool $tmp671 = $tmp669 == $tmp670;
@@ -1791,9 +1790,9 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp686));
 *(&local0) = ((frost$core$Error*) NULL);
 return $tmp685;
 block166:;
-frost$core$Int64 $tmp687 = (frost$core$Int64) {10u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from HCodeGenerator.frost:160:31
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp687 = (frost$core$Int) {10u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from HCodeGenerator.frost:160:31
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp688 = $tmp143.value;
 int64_t $tmp689 = $tmp687.value;
 bool $tmp690 = $tmp688 == $tmp689;
@@ -2093,8 +2092,8 @@ FROST_ASSERT(72 == sizeof(frost$io$IndentedOutputStream));
 frost$io$IndentedOutputStream* $tmp800 = (frost$io$IndentedOutputStream*) frostObjectAlloc(72, (frost$core$Class*) &frost$io$IndentedOutputStream$class);
 frost$io$File* $tmp801 = *(&local1);
 frost$core$Maybe* $tmp802 = frost$io$File$openOutputStream$R$frost$core$Maybe$LTfrost$io$OutputStream$GT($tmp801);
-frost$core$Int64* $tmp803 = &$tmp802->$rawValue;
-frost$core$Int64 $tmp804 = *$tmp803;
+frost$core$Int* $tmp803 = &$tmp802->$rawValue;
+frost$core$Int $tmp804 = *$tmp803;
 int64_t $tmp805 = $tmp804.value;
 bool $tmp806 = $tmp805 == 0u;
 if ($tmp806) goto block15; else goto block16;
@@ -2145,8 +2144,8 @@ FROST_ASSERT(72 == sizeof(frost$io$IndentedOutputStream));
 frost$io$IndentedOutputStream* $tmp822 = (frost$io$IndentedOutputStream*) frostObjectAlloc(72, (frost$core$Class*) &frost$io$IndentedOutputStream$class);
 frost$io$File* $tmp823 = *(&local4);
 frost$core$Maybe* $tmp824 = frost$io$File$openOutputStream$R$frost$core$Maybe$LTfrost$io$OutputStream$GT($tmp823);
-frost$core$Int64* $tmp825 = &$tmp824->$rawValue;
-frost$core$Int64 $tmp826 = *$tmp825;
+frost$core$Int* $tmp825 = &$tmp824->$rawValue;
+frost$core$Int $tmp826 = *$tmp825;
 int64_t $tmp827 = $tmp826.value;
 bool $tmp828 = $tmp827 == 0u;
 if ($tmp828) goto block18; else goto block19;
@@ -3804,10 +3803,10 @@ org$frostlang$frostc$MethodDecl$Kind $tmp1550 = *$tmp1549;
 org$frostlang$frostc$MethodDecl$Kind$wrapper* $tmp1551;
 $tmp1551 = (org$frostlang$frostc$MethodDecl$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$MethodDecl$Kind$wrapperclass);
 $tmp1551->value = $tmp1550;
-frost$core$Int64 $tmp1552 = (frost$core$Int64) {2u};
-// begin inline call to org.frostlang.frostc.MethodDecl.Kind.init(rv:frost.core.Int64):org.frostlang.frostc.MethodDecl.Kind from HCodeGenerator.frost:263:42
+frost$core$Int $tmp1552 = (frost$core$Int) {2u};
+// begin inline call to org.frostlang.frostc.MethodDecl.Kind.init(rv:frost.core.Int):org.frostlang.frostc.MethodDecl.Kind from HCodeGenerator.frost:263:42
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/MethodDecl.frost:7
-frost$core$Int64* $tmp1553 = &(&local2)->$rawValue;
+frost$core$Int* $tmp1553 = &(&local2)->$rawValue;
 *$tmp1553 = $tmp1552;
 org$frostlang$frostc$MethodDecl$Kind $tmp1554 = *(&local2);
 *(&local1) = $tmp1554;
@@ -4322,10 +4321,10 @@ org$frostlang$frostc$MethodDecl$Kind $tmp1798 = *$tmp1797;
 org$frostlang$frostc$MethodDecl$Kind$wrapper* $tmp1799;
 $tmp1799 = (org$frostlang$frostc$MethodDecl$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$MethodDecl$Kind$wrapperclass);
 $tmp1799->value = $tmp1798;
-frost$core$Int64 $tmp1800 = (frost$core$Int64) {2u};
-// begin inline call to org.frostlang.frostc.MethodDecl.Kind.init(rv:frost.core.Int64):org.frostlang.frostc.MethodDecl.Kind from Compiler.frost:3992:46
+frost$core$Int $tmp1800 = (frost$core$Int) {2u};
+// begin inline call to org.frostlang.frostc.MethodDecl.Kind.init(rv:frost.core.Int):org.frostlang.frostc.MethodDecl.Kind from Compiler.frost:3992:46
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/MethodDecl.frost:7
-frost$core$Int64* $tmp1801 = &(&local6)->$rawValue;
+frost$core$Int* $tmp1801 = &(&local6)->$rawValue;
 *$tmp1801 = $tmp1800;
 org$frostlang$frostc$MethodDecl$Kind $tmp1802 = *(&local6);
 *(&local5) = $tmp1802;

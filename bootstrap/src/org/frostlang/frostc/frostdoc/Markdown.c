@@ -1688,7 +1688,7 @@ frost$core$Int64 $tmp554 = (frost$core$Int64) {9223372036854775807u};
 // begin inline call to function frost.core.Int64.get_asInt():frost.core.Int from Int.frost:22:34
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:580
 int64_t $tmp555 = $tmp554.value;
-frost$core$Int $tmp556 = (frost$core$Int) {$tmp555};
+frost$core$Int $tmp556 = (frost$core$Int) {((int64_t) $tmp555)};
 frost$collections$Array* $tmp557 = frost$core$String$split$frost$core$RegularExpression$frost$core$Int$R$frost$collections$Array$LTfrost$core$String$GT($tmp551, $tmp552, $tmp556);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp557));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp557));
@@ -2593,10 +2593,10 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp969));
 *(&local0) = $tmp967;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp967));
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:506
-frost$core$Int64 $tmp970 = (frost$core$Int64) {0u};
-// begin inline call to org.frostlang.frostc.parser.SyntaxHighlighter.Kind.init(rv:frost.core.Int64):org.frostlang.frostc.parser.SyntaxHighlighter.Kind from Markdown.frost:506:46
+frost$core$Int $tmp970 = (frost$core$Int) {0u};
+// begin inline call to org.frostlang.frostc.parser.SyntaxHighlighter.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.SyntaxHighlighter.Kind from Markdown.frost:506:46
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/parser/SyntaxHighlighter.frost:6
-frost$core$Int64* $tmp971 = &(&local2)->$rawValue;
+frost$core$Int* $tmp971 = &(&local2)->$rawValue;
 *$tmp971 = $tmp970;
 org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp972 = *(&local2);
 *(&local1) = $tmp972;
@@ -2661,10 +2661,10 @@ org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp1003 = *(&local3);
 org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper* $tmp1004;
 $tmp1004 = (org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapperclass);
 $tmp1004->value = $tmp1003;
-frost$core$Int64 $tmp1005 = (frost$core$Int64) {0u};
-// begin inline call to org.frostlang.frostc.parser.SyntaxHighlighter.Kind.init(rv:frost.core.Int64):org.frostlang.frostc.parser.SyntaxHighlighter.Kind from Markdown.frost:508:71
+frost$core$Int $tmp1005 = (frost$core$Int) {0u};
+// begin inline call to org.frostlang.frostc.parser.SyntaxHighlighter.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.SyntaxHighlighter.Kind from Markdown.frost:508:71
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/parser/SyntaxHighlighter.frost:6
-frost$core$Int64* $tmp1006 = &(&local6)->$rawValue;
+frost$core$Int* $tmp1006 = &(&local6)->$rawValue;
 *$tmp1006 = $tmp1005;
 org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp1007 = *(&local6);
 *(&local5) = $tmp1007;
@@ -2717,10 +2717,10 @@ frost$core$Object* $tmp1030 = *$tmp1029;
 *(&local3) = ((org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) $tmp1030)->value;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:513
 org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp1031 = *(&local3);
-frost$core$Int64 $tmp1032 = $tmp1031.$rawValue;
-frost$core$Int64 $tmp1033 = (frost$core$Int64) {0u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Markdown.frost:514:48
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp1032 = $tmp1031.$rawValue;
+frost$core$Int $tmp1033 = (frost$core$Int) {0u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Markdown.frost:514:48
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp1034 = $tmp1032.value;
 int64_t $tmp1035 = $tmp1033.value;
 bool $tmp1036 = $tmp1034 == $tmp1035;
@@ -2730,9 +2730,9 @@ if ($tmp1038) goto block12; else goto block13;
 block12:;
 goto block11;
 block13:;
-frost$core$Int64 $tmp1039 = (frost$core$Int64) {1u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Markdown.frost:517:48
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp1039 = (frost$core$Int) {1u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Markdown.frost:517:48
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp1040 = $tmp1032.value;
 int64_t $tmp1041 = $tmp1039.value;
 bool $tmp1042 = $tmp1040 == $tmp1041;
@@ -2740,9 +2740,9 @@ frost$core$Bit $tmp1043 = (frost$core$Bit) {$tmp1042};
 bool $tmp1044 = $tmp1043.value;
 if ($tmp1044) goto block15; else goto block16;
 block16:;
-frost$core$Int64 $tmp1045 = (frost$core$Int64) {2u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Markdown.frost:517:80
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp1045 = (frost$core$Int) {2u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Markdown.frost:517:80
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp1046 = $tmp1032.value;
 int64_t $tmp1047 = $tmp1045.value;
 bool $tmp1048 = $tmp1046 == $tmp1047;
@@ -2755,9 +2755,9 @@ frost$core$MutableString* $tmp1051 = *(&local0);
 frost$core$MutableString$append$frost$core$String($tmp1051, &$s1052);
 goto block11;
 block18:;
-frost$core$Int64 $tmp1053 = (frost$core$Int64) {3u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Markdown.frost:520:48
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp1053 = (frost$core$Int) {3u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Markdown.frost:520:48
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp1054 = $tmp1032.value;
 int64_t $tmp1055 = $tmp1053.value;
 bool $tmp1056 = $tmp1054 == $tmp1055;
@@ -2770,9 +2770,9 @@ frost$core$MutableString* $tmp1059 = *(&local0);
 frost$core$MutableString$append$frost$core$String($tmp1059, &$s1060);
 goto block11;
 block21:;
-frost$core$Int64 $tmp1061 = (frost$core$Int64) {4u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Markdown.frost:523:48
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp1061 = (frost$core$Int) {4u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Markdown.frost:523:48
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp1062 = $tmp1032.value;
 int64_t $tmp1063 = $tmp1061.value;
 bool $tmp1064 = $tmp1062 == $tmp1063;
@@ -2785,9 +2785,9 @@ frost$core$MutableString* $tmp1067 = *(&local0);
 frost$core$MutableString$append$frost$core$String($tmp1067, &$s1068);
 goto block11;
 block24:;
-frost$core$Int64 $tmp1069 = (frost$core$Int64) {5u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Markdown.frost:526:48
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp1069 = (frost$core$Int) {5u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Markdown.frost:526:48
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp1070 = $tmp1032.value;
 int64_t $tmp1071 = $tmp1069.value;
 bool $tmp1072 = $tmp1070 == $tmp1071;
@@ -2800,9 +2800,9 @@ frost$core$MutableString* $tmp1075 = *(&local0);
 frost$core$MutableString$append$frost$core$String($tmp1075, &$s1076);
 goto block11;
 block27:;
-frost$core$Int64 $tmp1077 = (frost$core$Int64) {6u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Markdown.frost:529:48
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp1077 = (frost$core$Int) {6u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Markdown.frost:529:48
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp1078 = $tmp1032.value;
 int64_t $tmp1079 = $tmp1077.value;
 bool $tmp1080 = $tmp1078 == $tmp1079;
@@ -2815,9 +2815,9 @@ frost$core$MutableString* $tmp1083 = *(&local0);
 frost$core$MutableString$append$frost$core$String($tmp1083, &$s1084);
 goto block11;
 block30:;
-frost$core$Int64 $tmp1085 = (frost$core$Int64) {7u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Markdown.frost:532:48
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp1085 = (frost$core$Int) {7u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Markdown.frost:532:48
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp1086 = $tmp1032.value;
 int64_t $tmp1087 = $tmp1085.value;
 bool $tmp1088 = $tmp1086 == $tmp1087;
@@ -2830,9 +2830,9 @@ frost$core$MutableString* $tmp1091 = *(&local0);
 frost$core$MutableString$append$frost$core$String($tmp1091, &$s1092);
 goto block11;
 block33:;
-frost$core$Int64 $tmp1093 = (frost$core$Int64) {8u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Markdown.frost:535:48
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp1093 = (frost$core$Int) {8u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Markdown.frost:535:48
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp1094 = $tmp1032.value;
 int64_t $tmp1095 = $tmp1093.value;
 bool $tmp1096 = $tmp1094 == $tmp1095;
@@ -2845,9 +2845,9 @@ frost$core$MutableString* $tmp1099 = *(&local0);
 frost$core$MutableString$append$frost$core$String($tmp1099, &$s1100);
 goto block11;
 block36:;
-frost$core$Int64 $tmp1101 = (frost$core$Int64) {9u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Markdown.frost:538:48
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp1101 = (frost$core$Int) {9u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Markdown.frost:538:48
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp1102 = $tmp1032.value;
 int64_t $tmp1103 = $tmp1101.value;
 bool $tmp1104 = $tmp1102 == $tmp1103;
@@ -2860,9 +2860,9 @@ frost$core$MutableString* $tmp1107 = *(&local0);
 frost$core$MutableString$append$frost$core$String($tmp1107, &$s1108);
 goto block11;
 block39:;
-frost$core$Int64 $tmp1109 = (frost$core$Int64) {10u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Markdown.frost:541:48
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp1109 = (frost$core$Int) {10u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Markdown.frost:541:48
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp1110 = $tmp1032.value;
 int64_t $tmp1111 = $tmp1109.value;
 bool $tmp1112 = $tmp1110 == $tmp1111;
@@ -2875,9 +2875,9 @@ frost$core$MutableString* $tmp1115 = *(&local0);
 frost$core$MutableString$append$frost$core$String($tmp1115, &$s1116);
 goto block11;
 block42:;
-frost$core$Int64 $tmp1117 = (frost$core$Int64) {11u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Markdown.frost:544:48
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp1117 = (frost$core$Int) {11u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Markdown.frost:544:48
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp1118 = $tmp1032.value;
 int64_t $tmp1119 = $tmp1117.value;
 bool $tmp1120 = $tmp1118 == $tmp1119;
@@ -2890,9 +2890,9 @@ frost$core$MutableString* $tmp1123 = *(&local0);
 frost$core$MutableString$append$frost$core$String($tmp1123, &$s1124);
 goto block11;
 block45:;
-frost$core$Int64 $tmp1125 = (frost$core$Int64) {12u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Markdown.frost:547:48
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp1125 = (frost$core$Int) {12u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Markdown.frost:547:48
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp1126 = $tmp1032.value;
 int64_t $tmp1127 = $tmp1125.value;
 bool $tmp1128 = $tmp1126 == $tmp1127;
@@ -2991,10 +2991,10 @@ org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp1196 = *(&local3);
 org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper* $tmp1197;
 $tmp1197 = (org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapperclass);
 $tmp1197->value = $tmp1196;
-frost$core$Int64 $tmp1198 = (frost$core$Int64) {1u};
-// begin inline call to org.frostlang.frostc.parser.SyntaxHighlighter.Kind.init(rv:frost.core.Int64):org.frostlang.frostc.parser.SyntaxHighlighter.Kind from Markdown.frost:564:49
+frost$core$Int $tmp1198 = (frost$core$Int) {1u};
+// begin inline call to org.frostlang.frostc.parser.SyntaxHighlighter.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.SyntaxHighlighter.Kind from Markdown.frost:564:49
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/parser/SyntaxHighlighter.frost:6
-frost$core$Int64* $tmp1199 = &(&local9)->$rawValue;
+frost$core$Int* $tmp1199 = &(&local9)->$rawValue;
 *$tmp1199 = $tmp1198;
 org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp1200 = *(&local9);
 *(&local8) = $tmp1200;
@@ -3017,10 +3017,10 @@ org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp1208 = *(&local3);
 org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper* $tmp1209;
 $tmp1209 = (org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapperclass);
 $tmp1209->value = $tmp1208;
-frost$core$Int64 $tmp1210 = (frost$core$Int64) {2u};
-// begin inline call to org.frostlang.frostc.parser.SyntaxHighlighter.Kind.init(rv:frost.core.Int64):org.frostlang.frostc.parser.SyntaxHighlighter.Kind from Markdown.frost:565:54
+frost$core$Int $tmp1210 = (frost$core$Int) {2u};
+// begin inline call to org.frostlang.frostc.parser.SyntaxHighlighter.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.SyntaxHighlighter.Kind from Markdown.frost:565:54
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/parser/SyntaxHighlighter.frost:6
-frost$core$Int64* $tmp1211 = &(&local11)->$rawValue;
+frost$core$Int* $tmp1211 = &(&local11)->$rawValue;
 *$tmp1211 = $tmp1210;
 org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp1212 = *(&local11);
 *(&local10) = $tmp1212;
@@ -3077,10 +3077,10 @@ org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp1238 = *(&local3);
 org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper* $tmp1239;
 $tmp1239 = (org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapperclass);
 $tmp1239->value = $tmp1238;
-frost$core$Int64 $tmp1240 = (frost$core$Int64) {1u};
-// begin inline call to org.frostlang.frostc.parser.SyntaxHighlighter.Kind.init(rv:frost.core.Int64):org.frostlang.frostc.parser.SyntaxHighlighter.Kind from Markdown.frost:569:49
+frost$core$Int $tmp1240 = (frost$core$Int) {1u};
+// begin inline call to org.frostlang.frostc.parser.SyntaxHighlighter.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.SyntaxHighlighter.Kind from Markdown.frost:569:49
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/parser/SyntaxHighlighter.frost:6
-frost$core$Int64* $tmp1241 = &(&local13)->$rawValue;
+frost$core$Int* $tmp1241 = &(&local13)->$rawValue;
 *$tmp1241 = $tmp1240;
 org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp1242 = *(&local13);
 *(&local12) = $tmp1242;
@@ -3103,10 +3103,10 @@ org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp1250 = *(&local3);
 org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper* $tmp1251;
 $tmp1251 = (org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapperclass);
 $tmp1251->value = $tmp1250;
-frost$core$Int64 $tmp1252 = (frost$core$Int64) {2u};
-// begin inline call to org.frostlang.frostc.parser.SyntaxHighlighter.Kind.init(rv:frost.core.Int64):org.frostlang.frostc.parser.SyntaxHighlighter.Kind from Markdown.frost:570:54
+frost$core$Int $tmp1252 = (frost$core$Int) {2u};
+// begin inline call to org.frostlang.frostc.parser.SyntaxHighlighter.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.SyntaxHighlighter.Kind from Markdown.frost:570:54
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/parser/SyntaxHighlighter.frost:6
-frost$core$Int64* $tmp1253 = &(&local15)->$rawValue;
+frost$core$Int* $tmp1253 = &(&local15)->$rawValue;
 *$tmp1253 = $tmp1252;
 org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp1254 = *(&local15);
 *(&local14) = $tmp1254;
@@ -3145,10 +3145,10 @@ org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp1266 = *(&local3);
 org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper* $tmp1267;
 $tmp1267 = (org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapperclass);
 $tmp1267->value = $tmp1266;
-frost$core$Int64 $tmp1268 = (frost$core$Int64) {0u};
-// begin inline call to org.frostlang.frostc.parser.SyntaxHighlighter.Kind.init(rv:frost.core.Int64):org.frostlang.frostc.parser.SyntaxHighlighter.Kind from Markdown.frost:574:45
+frost$core$Int $tmp1268 = (frost$core$Int) {0u};
+// begin inline call to org.frostlang.frostc.parser.SyntaxHighlighter.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.SyntaxHighlighter.Kind from Markdown.frost:574:45
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/parser/SyntaxHighlighter.frost:6
-frost$core$Int64* $tmp1269 = &(&local17)->$rawValue;
+frost$core$Int* $tmp1269 = &(&local17)->$rawValue;
 *$tmp1269 = $tmp1268;
 org$frostlang$frostc$parser$SyntaxHighlighter$Kind $tmp1270 = *(&local17);
 *(&local16) = $tmp1270;
@@ -3422,10 +3422,10 @@ org$frostlang$frostc$parser$Token$Kind $tmp1404 = $tmp1403.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1405;
 $tmp1405 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1405->value = $tmp1404;
-frost$core$Int64 $tmp1406 = (frost$core$Int64) {0u};
-// begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int64):org.frostlang.frostc.parser.Token.Kind from Markdown.frost:593:47
+frost$core$Int $tmp1406 = (frost$core$Int) {0u};
+// begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Markdown.frost:593:47
 // /Users/ethannicholas/Dropbox/Frost-Int/build/org/frostlang/frostc/parser/Token.frost:11
-frost$core$Int64* $tmp1407 = &(&local4)->$rawValue;
+frost$core$Int* $tmp1407 = &(&local4)->$rawValue;
 *$tmp1407 = $tmp1406;
 org$frostlang$frostc$parser$Token$Kind $tmp1408 = *(&local4);
 *(&local3) = $tmp1408;
@@ -3645,10 +3645,10 @@ org$frostlang$frostc$parser$Token$Kind $tmp1525 = $tmp1524.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1526;
 $tmp1526 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1526->value = $tmp1525;
-frost$core$Int64 $tmp1527 = (frost$core$Int64) {0u};
-// begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int64):org.frostlang.frostc.parser.Token.Kind from Markdown.frost:603:47
+frost$core$Int $tmp1527 = (frost$core$Int) {0u};
+// begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Markdown.frost:603:47
 // /Users/ethannicholas/Dropbox/Frost-Int/build/org/frostlang/frostc/parser/Token.frost:11
-frost$core$Int64* $tmp1528 = &(&local8)->$rawValue;
+frost$core$Int* $tmp1528 = &(&local8)->$rawValue;
 *$tmp1528 = $tmp1527;
 org$frostlang$frostc$parser$Token$Kind $tmp1529 = *(&local8);
 *(&local7) = $tmp1529;
@@ -3800,10 +3800,10 @@ org$frostlang$frostc$parser$Token$Kind $tmp1599 = $tmp1598.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1600;
 $tmp1600 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1600->value = $tmp1599;
-frost$core$Int64 $tmp1601 = (frost$core$Int64) {0u};
-// begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int64):org.frostlang.frostc.parser.Token.Kind from Markdown.frost:615:38
+frost$core$Int $tmp1601 = (frost$core$Int) {0u};
+// begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Markdown.frost:615:38
 // /Users/ethannicholas/Dropbox/Frost-Int/build/org/frostlang/frostc/parser/Token.frost:11
-frost$core$Int64* $tmp1602 = &(&local13)->$rawValue;
+frost$core$Int* $tmp1602 = &(&local13)->$rawValue;
 *$tmp1602 = $tmp1601;
 org$frostlang$frostc$parser$Token$Kind $tmp1603 = *(&local13);
 *(&local12) = $tmp1603;
@@ -4463,7 +4463,7 @@ block6:;
 frost$collections$Array* $tmp1866 = *(&local0);
 FROST_ASSERT(32 == sizeof(org$frostlang$frostc$frostdoc$Markdown$HTMLToken));
 org$frostlang$frostc$frostdoc$Markdown$HTMLToken* $tmp1867 = (org$frostlang$frostc$frostdoc$Markdown$HTMLToken*) frostObjectAlloc(32, (frost$core$Class*) &org$frostlang$frostc$frostdoc$Markdown$HTMLToken$class);
-frost$core$Int64 $tmp1868 = (frost$core$Int64) {1u};
+frost$core$Int $tmp1868 = (frost$core$Int) {1u};
 frost$core$String$Index $tmp1869 = *(&local6);
 frost$core$Matcher* $tmp1870 = *(&local3);
 frost$core$String$Index $tmp1871;
@@ -4471,7 +4471,7 @@ frost$core$Matcher$get_start$R$frost$core$String$Index(&$tmp1871, $tmp1870);
 frost$core$Bit $tmp1872 = (frost$core$Bit) {false};
 frost$core$Range$LTfrost$core$String$Index$GT $tmp1873 = frost$core$Range$LTfrost$core$String$Index$GT$init$frost$core$String$Index$frost$core$String$Index$frost$core$Bit($tmp1869, $tmp1871, $tmp1872);
 frost$core$String* $tmp1874 = frost$core$String$substring$frost$core$Range$LTfrost$core$String$Index$GT$R$frost$core$String(param1, $tmp1873);
-org$frostlang$frostc$frostdoc$Markdown$HTMLToken$init$frost$core$Int64$frost$core$String($tmp1867, $tmp1868, $tmp1874);
+org$frostlang$frostc$frostdoc$Markdown$HTMLToken$init$frost$core$Int$frost$core$String($tmp1867, $tmp1868, $tmp1874);
 frost$collections$Array$add$frost$collections$Array$T($tmp1866, ((frost$core$Object*) $tmp1867));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp1874));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp1867));
@@ -4481,7 +4481,7 @@ block7:;
 frost$collections$Array* $tmp1875 = *(&local0);
 FROST_ASSERT(32 == sizeof(org$frostlang$frostc$frostdoc$Markdown$HTMLToken));
 org$frostlang$frostc$frostdoc$Markdown$HTMLToken* $tmp1876 = (org$frostlang$frostc$frostdoc$Markdown$HTMLToken*) frostObjectAlloc(32, (frost$core$Class*) &org$frostlang$frostc$frostdoc$Markdown$HTMLToken$class);
-frost$core$Int64 $tmp1877 = (frost$core$Int64) {0u};
+frost$core$Int $tmp1877 = (frost$core$Int) {0u};
 frost$core$Matcher* $tmp1878 = *(&local3);
 frost$core$String$Index $tmp1879;
 frost$core$Matcher$get_start$R$frost$core$String$Index(&$tmp1879, $tmp1878);
@@ -4491,7 +4491,7 @@ frost$core$Matcher$get_end$R$frost$core$String$Index(&$tmp1881, $tmp1880);
 frost$core$Bit $tmp1882 = (frost$core$Bit) {false};
 frost$core$Range$LTfrost$core$String$Index$GT $tmp1883 = frost$core$Range$LTfrost$core$String$Index$GT$init$frost$core$String$Index$frost$core$String$Index$frost$core$Bit($tmp1879, $tmp1881, $tmp1882);
 frost$core$String* $tmp1884 = frost$core$String$substring$frost$core$Range$LTfrost$core$String$Index$GT$R$frost$core$String(param1, $tmp1883);
-org$frostlang$frostc$frostdoc$Markdown$HTMLToken$init$frost$core$Int64$frost$core$String($tmp1876, $tmp1877, $tmp1884);
+org$frostlang$frostc$frostdoc$Markdown$HTMLToken$init$frost$core$Int$frost$core$String($tmp1876, $tmp1877, $tmp1884);
 frost$collections$Array$add$frost$collections$Array$T($tmp1875, ((frost$core$Object*) $tmp1876));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp1884));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp1876));
@@ -4536,7 +4536,7 @@ block8:;
 frost$collections$Array* $tmp1900 = *(&local0);
 FROST_ASSERT(32 == sizeof(org$frostlang$frostc$frostdoc$Markdown$HTMLToken));
 org$frostlang$frostc$frostdoc$Markdown$HTMLToken* $tmp1901 = (org$frostlang$frostc$frostdoc$Markdown$HTMLToken*) frostObjectAlloc(32, (frost$core$Class*) &org$frostlang$frostc$frostdoc$Markdown$HTMLToken$class);
-frost$core$Int64 $tmp1902 = (frost$core$Int64) {1u};
+frost$core$Int $tmp1902 = (frost$core$Int) {1u};
 frost$core$String$Index $tmp1903 = *(&local6);
 // begin inline call to function frost.core.String.get_end():frost.core.String.Index from Markdown.frost:850:69
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:1212
@@ -4552,7 +4552,7 @@ frost$core$String$Index $tmp1908 = *(&local9);
 frost$core$Bit $tmp1909 = (frost$core$Bit) {false};
 frost$core$Range$LTfrost$core$String$Index$GT $tmp1910 = frost$core$Range$LTfrost$core$String$Index$GT$init$frost$core$String$Index$frost$core$String$Index$frost$core$Bit($tmp1903, $tmp1908, $tmp1909);
 frost$core$String* $tmp1911 = frost$core$String$substring$frost$core$Range$LTfrost$core$String$Index$GT$R$frost$core$String(param1, $tmp1910);
-org$frostlang$frostc$frostdoc$Markdown$HTMLToken$init$frost$core$Int64$frost$core$String($tmp1901, $tmp1902, $tmp1911);
+org$frostlang$frostc$frostdoc$Markdown$HTMLToken$init$frost$core$Int$frost$core$String($tmp1901, $tmp1902, $tmp1911);
 frost$collections$Array$add$frost$collections$Array$T($tmp1900, ((frost$core$Object*) $tmp1901));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp1911));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp1901));
@@ -4631,11 +4631,11 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp1938));
 *(&local2) = ((frost$core$String*) NULL);
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:871
 org$frostlang$frostc$frostdoc$Markdown$HTMLToken* $tmp1939 = *(&local1);
-frost$core$Int64* $tmp1940 = &$tmp1939->$rawValue;
-frost$core$Int64 $tmp1941 = *$tmp1940;
-frost$core$Int64 $tmp1942 = (frost$core$Int64) {0u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Markdown.frost:872:31
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int* $tmp1940 = &$tmp1939->$rawValue;
+frost$core$Int $tmp1941 = *$tmp1940;
+frost$core$Int $tmp1942 = (frost$core$Int) {0u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Markdown.frost:872:31
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp1943 = $tmp1941.value;
 int64_t $tmp1944 = $tmp1942.value;
 bool $tmp1945 = $tmp1943 == $tmp1944;
@@ -4713,9 +4713,9 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp1993));
 *(&local3) = ((frost$core$String*) NULL);
 goto block4;
 block6:;
-frost$core$Int64 $tmp1994 = (frost$core$Int64) {1u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Markdown.frost:879:31
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp1994 = (frost$core$Int) {1u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Markdown.frost:879:31
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp1995 = $tmp1941.value;
 int64_t $tmp1996 = $tmp1994.value;
 bool $tmp1997 = $tmp1995 == $tmp1996;

@@ -5819,7 +5819,7 @@ frost$core$Int64 $tmp3027 = (frost$core$Int64) {9223372036854775807u};
 // begin inline call to function frost.core.Int64.get_asInt():frost.core.Int from Int.frost:22:34
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:580
 int64_t $tmp3028 = $tmp3027.value;
-frost$core$Int $tmp3029 = (frost$core$Int) {$tmp3028};
+frost$core$Int $tmp3029 = (frost$core$Int) {((int64_t) $tmp3028)};
 frost$collections$Array* $tmp3030 = frost$core$String$split$frost$core$String$frost$core$Int$R$frost$collections$Array$LTfrost$core$String$GT(param0, param1, $tmp3029);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp3030));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp3030));
@@ -6133,7 +6133,7 @@ frost$core$Int64 $tmp3164 = (frost$core$Int64) {9223372036854775807u};
 // begin inline call to function frost.core.Int64.get_asInt():frost.core.Int from Int.frost:22:34
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:580
 int64_t $tmp3165 = $tmp3164.value;
-frost$core$Int $tmp3166 = (frost$core$Int) {$tmp3165};
+frost$core$Int $tmp3166 = (frost$core$Int) {((int64_t) $tmp3165)};
 frost$collections$Array* $tmp3167 = frost$core$String$split$frost$core$RegularExpression$frost$core$Int$R$frost$collections$Array$LTfrost$core$String$GT(param0, param1, $tmp3166);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp3167));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp3167));
@@ -6157,7 +6157,7 @@ frost$core$Int64$nullable $tmp3172 = *(&local0);
 // begin inline call to function frost.core.Int64.get_asInt():frost.core.Int from String.frost:1456:26
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:580
 int64_t $tmp3173 = ((frost$core$Int64) $tmp3172.value).value;
-frost$core$Int $tmp3174 = (frost$core$Int) {$tmp3173};
+frost$core$Int $tmp3174 = (frost$core$Int) {((int64_t) $tmp3173)};
 return ((frost$core$Int$nullable) { $tmp3174, true });
 block2:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:1458

@@ -7,7 +7,7 @@
 #include "org/frostlang/frostc/Symbol/Kind.h"
 #include "frost/core/Object.h"
 #include "frost/core/Frost.h"
-#include "frost/core/Int64.h"
+#include "frost/core/Int.h"
 
 
 static frost$core$String $s1;
@@ -39,10 +39,10 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp6));
 org$frostlang$frostc$Type** $tmp7 = &param0->bound;
 *$tmp7 = param4;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/MethodDecl.frost:40
-frost$core$Int64 $tmp8 = (frost$core$Int64) {4u};
-// begin inline call to org.frostlang.frostc.Symbol.Kind.init(rv:frost.core.Int64):org.frostlang.frostc.Symbol.Kind from MethodDecl.frost:40:35
+frost$core$Int $tmp8 = (frost$core$Int) {4u};
+// begin inline call to org.frostlang.frostc.Symbol.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Symbol.Kind from MethodDecl.frost:40:35
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Symbol.frost:4
-frost$core$Int64* $tmp9 = &(&local1)->$rawValue;
+frost$core$Int* $tmp9 = &(&local1)->$rawValue;
 *$tmp9 = $tmp8;
 org$frostlang$frostc$Symbol$Kind $tmp10 = *(&local1);
 *(&local0) = $tmp10;

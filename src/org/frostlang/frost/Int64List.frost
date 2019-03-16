@@ -53,7 +53,7 @@ class Int64List : ListView<Int64> {
 
     @override
     function [](index:Int):Int64 {
-        return (range.start + range.step * index)
+        return (range.start + range.step * index.asInt64)
     }
 
     @override

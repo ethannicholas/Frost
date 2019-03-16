@@ -5150,37 +5150,36 @@ org$frostlang$plex$runtime$RawToken $tmp3664 = org$frostlang$plex$runtime$DFA$ne
 // /Users/ethannicholas/Dropbox/Frost-Int/src/org/frostlang/json/Lexer.frost:432
 org$frostlang$plex$runtime$RawToken $tmp3665 = *(&local0);
 frost$core$Int $tmp3666 = $tmp3665.kind;
-frost$core$Int64 $tmp3667 = frost$core$Int64$init$frost$core$Int($tmp3666);
-// begin inline call to org.frostlang.json.Token.Kind.init(rv:frost.core.Int64):org.frostlang.json.Token.Kind from Lexer.frost:432:70
+// begin inline call to org.frostlang.json.Token.Kind.init(rv:frost.core.Int):org.frostlang.json.Token.Kind from Lexer.frost:432:70
 // /Users/ethannicholas/Dropbox/Frost-Int/src/org/frostlang/json/Token.frost:11
-frost$core$Int64* $tmp3668 = &(&local2)->$rawValue;
-*$tmp3668 = $tmp3667;
-org$frostlang$json$Token$Kind $tmp3669 = *(&local2);
-*(&local1) = $tmp3669;
-org$frostlang$json$Token$Kind $tmp3670 = *(&local1);
-org$frostlang$plex$runtime$RawToken $tmp3671 = *(&local0);
-frost$core$String$Index $tmp3672 = $tmp3671.start;
-org$frostlang$plex$runtime$RawToken $tmp3673 = *(&local0);
-frost$core$String$Index $tmp3674 = $tmp3673.end;
-org$frostlang$plex$runtime$RawToken $tmp3675 = *(&local0);
-frost$core$Int $tmp3676 = $tmp3675.line;
-org$frostlang$plex$runtime$RawToken $tmp3677 = *(&local0);
-frost$core$Int $tmp3678 = $tmp3677.column;
-org$frostlang$json$Position $tmp3679 = org$frostlang$json$Position$init$frost$core$Int$frost$core$Int($tmp3676, $tmp3678);
-org$frostlang$json$Token $tmp3680 = org$frostlang$json$Token$init$org$frostlang$json$Token$Kind$frost$core$String$Index$frost$core$String$Index$org$frostlang$json$Position($tmp3670, $tmp3672, $tmp3674, $tmp3679);
-return $tmp3680;
+frost$core$Int* $tmp3667 = &(&local2)->$rawValue;
+*$tmp3667 = $tmp3666;
+org$frostlang$json$Token$Kind $tmp3668 = *(&local2);
+*(&local1) = $tmp3668;
+org$frostlang$json$Token$Kind $tmp3669 = *(&local1);
+org$frostlang$plex$runtime$RawToken $tmp3670 = *(&local0);
+frost$core$String$Index $tmp3671 = $tmp3670.start;
+org$frostlang$plex$runtime$RawToken $tmp3672 = *(&local0);
+frost$core$String$Index $tmp3673 = $tmp3672.end;
+org$frostlang$plex$runtime$RawToken $tmp3674 = *(&local0);
+frost$core$Int $tmp3675 = $tmp3674.line;
+org$frostlang$plex$runtime$RawToken $tmp3676 = *(&local0);
+frost$core$Int $tmp3677 = $tmp3676.column;
+org$frostlang$json$Position $tmp3678 = org$frostlang$json$Position$init$frost$core$Int$frost$core$Int($tmp3675, $tmp3677);
+org$frostlang$json$Token $tmp3679 = org$frostlang$json$Token$init$org$frostlang$json$Token$Kind$frost$core$String$Index$frost$core$String$Index$org$frostlang$json$Position($tmp3669, $tmp3671, $tmp3673, $tmp3678);
+return $tmp3679;
 
 }
 void org$frostlang$json$Lexer$init(org$frostlang$json$Lexer* param0) {
 
 // /Users/ethannicholas/Dropbox/Frost-Int/src/org/frostlang/json/Lexer.frost:15
-frost$core$Int** $tmp3681 = org$frostlang$json$Lexer$getTransitions$R$frost$unsafe$Pointer$LTfrost$unsafe$Pointer$LTfrost$core$Int$GT$GT();
-frost$core$Int*** $tmp3682 = &param0->transitions;
-*$tmp3682 = $tmp3681;
+frost$core$Int** $tmp3680 = org$frostlang$json$Lexer$getTransitions$R$frost$unsafe$Pointer$LTfrost$unsafe$Pointer$LTfrost$core$Int$GT$GT();
+frost$core$Int*** $tmp3681 = &param0->transitions;
+*$tmp3681 = $tmp3680;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/org/frostlang/json/Lexer.frost:17
-frost$core$Int* $tmp3683 = org$frostlang$json$Lexer$getAccepts$R$frost$unsafe$Pointer$LTfrost$core$Int$GT();
-frost$core$Int** $tmp3684 = &param0->accepts;
-*$tmp3684 = $tmp3683;
+frost$core$Int* $tmp3682 = org$frostlang$json$Lexer$getAccepts$R$frost$unsafe$Pointer$LTfrost$core$Int$GT();
+frost$core$Int** $tmp3683 = &param0->accepts;
+*$tmp3683 = $tmp3682;
 return;
 
 }

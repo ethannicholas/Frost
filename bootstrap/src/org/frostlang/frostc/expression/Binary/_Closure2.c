@@ -10,7 +10,6 @@
 #include "org/frostlang/frostc/Annotations.h"
 #include "frost/core/Int.h"
 #include "frost/core/Equatable.h"
-#include "frost/core/Int64.h"
 #include "org/frostlang/frostc/FixedArray.h"
 #include "org/frostlang/frostc/Symbol.h"
 
@@ -79,10 +78,10 @@ org$frostlang$frostc$Type$Kind $tmp24 = *$tmp23;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp25;
 $tmp25 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp25->value = $tmp24;
-frost$core$Int64 $tmp26 = (frost$core$Int64) {11u};
-// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int64):org.frostlang.frostc.Type.Kind from Type.frost:370:31
+frost$core$Int $tmp26 = (frost$core$Int) {11u};
+// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:370:31
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Type.frost:5
-frost$core$Int64* $tmp27 = &(&local2)->$rawValue;
+frost$core$Int* $tmp27 = &(&local2)->$rawValue;
 *$tmp27 = $tmp26;
 org$frostlang$frostc$Type$Kind $tmp28 = *(&local2);
 *(&local1) = $tmp28;

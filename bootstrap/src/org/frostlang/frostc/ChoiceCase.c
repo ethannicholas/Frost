@@ -12,7 +12,6 @@
 #include "org/frostlang/frostc/MethodDecl.h"
 #include "frost/core/Object.h"
 #include "frost/core/Frost.h"
-#include "frost/core/Int64.h"
 #include "frost/collections/Array.h"
 #include "frost/collections/CollectionView.h"
 #include "frost/core/Bit.h"
@@ -45,10 +44,10 @@ frost$core$Weak** $tmp5 = &param0->initMethod;
 *$tmp5 = $tmp2;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp2));
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/ChoiceCase.frost:17
-frost$core$Int64 $tmp6 = (frost$core$Int64) {0u};
-// begin inline call to org.frostlang.frostc.Compiler.Resolution.init(rv:frost.core.Int64):org.frostlang.frostc.Compiler.Resolution from ChoiceCase.frost:17:60
+frost$core$Int $tmp6 = (frost$core$Int) {0u};
+// begin inline call to org.frostlang.frostc.Compiler.Resolution.init(rv:frost.core.Int):org.frostlang.frostc.Compiler.Resolution from ChoiceCase.frost:17:60
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Compiler.frost:47
-frost$core$Int64* $tmp7 = &(&local1)->$rawValue;
+frost$core$Int* $tmp7 = &(&local1)->$rawValue;
 *$tmp7 = $tmp6;
 org$frostlang$frostc$Compiler$Resolution $tmp8 = *(&local1);
 *(&local0) = $tmp8;
@@ -88,10 +87,10 @@ frost$collections$Array** $tmp22 = &param0->fields;
 *$tmp22 = $tmp19;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp19));
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/ChoiceCase.frost:25
-frost$core$Int64 $tmp23 = (frost$core$Int64) {1u};
-// begin inline call to org.frostlang.frostc.Symbol.Kind.init(rv:frost.core.Int64):org.frostlang.frostc.Symbol.Kind from ChoiceCase.frost:25:31
+frost$core$Int $tmp23 = (frost$core$Int) {1u};
+// begin inline call to org.frostlang.frostc.Symbol.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Symbol.Kind from ChoiceCase.frost:25:31
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Symbol.frost:4
-frost$core$Int64* $tmp24 = &(&local3)->$rawValue;
+frost$core$Int* $tmp24 = &(&local3)->$rawValue;
 *$tmp24 = $tmp23;
 org$frostlang$frostc$Symbol$Kind $tmp25 = *(&local3);
 *(&local2) = $tmp25;

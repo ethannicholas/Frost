@@ -14,7 +14,6 @@
 #include "frost/core/Equatable.h"
 #include "frost/core/Bit.h"
 #include "frost/core/Int.h"
-#include "frost/core/Int64.h"
 
 
 static frost$core$String $s1;
@@ -75,10 +74,10 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp22));
 org$frostlang$frostc$Variable$Storage** $tmp23 = &param0->storage;
 *$tmp23 = param5;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Variable.frost:35
-frost$core$Int64 $tmp24 = (frost$core$Int64) {9u};
-// begin inline call to org.frostlang.frostc.Symbol.Kind.init(rv:frost.core.Int64):org.frostlang.frostc.Symbol.Kind from Variable.frost:35:31
+frost$core$Int $tmp24 = (frost$core$Int) {9u};
+// begin inline call to org.frostlang.frostc.Symbol.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Symbol.Kind from Variable.frost:35:31
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Symbol.frost:4
-frost$core$Int64* $tmp25 = &(&local1)->$rawValue;
+frost$core$Int* $tmp25 = &(&local1)->$rawValue;
 *$tmp25 = $tmp24;
 org$frostlang$frostc$Symbol$Kind $tmp26 = *(&local1);
 *(&local0) = $tmp26;

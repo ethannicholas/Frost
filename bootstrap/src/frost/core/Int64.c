@@ -596,7 +596,7 @@ frost$core$Int64 local0;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:72
 int64_t $tmp24 = param0.value;
 int64_t* $tmp25 = &(&local0)->value;
-*$tmp25 = $tmp24;
+*$tmp25 = ((int64_t) $tmp24);
 frost$core$Int64 $tmp26 = *(&local0);
 return $tmp26;
 
@@ -894,7 +894,7 @@ frost$core$Bit frost$core$Int64$$EQ$frost$core$Int$R$frost$core$Bit(frost$core$I
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:251
 int64_t $tmp141 = param0.value;
 int64_t $tmp142 = param1.value;
-bool $tmp143 = $tmp141 == $tmp142;
+bool $tmp143 = $tmp141 == ((int64_t) $tmp142);
 frost$core$Bit $tmp144 = (frost$core$Bit) {$tmp143};
 return $tmp144;
 
@@ -944,7 +944,7 @@ frost$core$Bit frost$core$Int64$$NEQ$frost$core$Int$R$frost$core$Bit(frost$core$
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:282
 int64_t $tmp161 = param0.value;
 int64_t $tmp162 = param1.value;
-bool $tmp163 = $tmp161 != $tmp162;
+bool $tmp163 = $tmp161 != ((int64_t) $tmp162);
 frost$core$Bit $tmp164 = (frost$core$Bit) {$tmp163};
 return $tmp164;
 
@@ -994,7 +994,7 @@ frost$core$Bit frost$core$Int64$$LT$frost$core$Int$R$frost$core$Bit(frost$core$I
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:313
 int64_t $tmp181 = param0.value;
 int64_t $tmp182 = param1.value;
-bool $tmp183 = $tmp181 < $tmp182;
+bool $tmp183 = $tmp181 < ((int64_t) $tmp182);
 frost$core$Bit $tmp184 = (frost$core$Bit) {$tmp183};
 return $tmp184;
 
@@ -1044,7 +1044,7 @@ frost$core$Bit frost$core$Int64$$GT$frost$core$Int$R$frost$core$Bit(frost$core$I
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:344
 int64_t $tmp201 = param0.value;
 int64_t $tmp202 = param1.value;
-bool $tmp203 = $tmp201 > $tmp202;
+bool $tmp203 = $tmp201 > ((int64_t) $tmp202);
 frost$core$Bit $tmp204 = (frost$core$Bit) {$tmp203};
 return $tmp204;
 
@@ -1094,7 +1094,7 @@ frost$core$Bit frost$core$Int64$$GE$frost$core$Int$R$frost$core$Bit(frost$core$I
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:375
 int64_t $tmp221 = param0.value;
 int64_t $tmp222 = param1.value;
-bool $tmp223 = $tmp221 >= $tmp222;
+bool $tmp223 = $tmp221 >= ((int64_t) $tmp222);
 frost$core$Bit $tmp224 = (frost$core$Bit) {$tmp223};
 return $tmp224;
 
@@ -1144,7 +1144,7 @@ frost$core$Bit frost$core$Int64$$LE$frost$core$Int$R$frost$core$Bit(frost$core$I
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:406
 int64_t $tmp241 = param0.value;
 int64_t $tmp242 = param1.value;
-bool $tmp243 = $tmp241 <= $tmp242;
+bool $tmp243 = $tmp241 <= ((int64_t) $tmp242);
 frost$core$Bit $tmp244 = (frost$core$Bit) {$tmp243};
 return $tmp244;
 
@@ -1261,7 +1261,7 @@ frost$core$Int64 frost$core$Int64$min$frost$core$Int$R$frost$core$Int64(frost$co
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:457
 int64_t $tmp290 = param0.value;
 int64_t $tmp291 = param1.value;
-bool $tmp292 = $tmp290 < $tmp291;
+bool $tmp292 = $tmp290 < ((int64_t) $tmp291);
 frost$core$Bit $tmp293 = (frost$core$Bit) {$tmp292};
 bool $tmp294 = $tmp293.value;
 if ($tmp294) goto block1; else goto block2;
@@ -1273,7 +1273,7 @@ return $tmp296;
 block2:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:460
 int64_t $tmp297 = param1.value;
-frost$core$Int64 $tmp298 = (frost$core$Int64) {$tmp297};
+frost$core$Int64 $tmp298 = (frost$core$Int64) {((int64_t) $tmp297)};
 return $tmp298;
 
 }
@@ -1366,7 +1366,7 @@ frost$core$Int64 frost$core$Int64$max$frost$core$Int$R$frost$core$Int64(frost$co
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:507
 int64_t $tmp335 = param0.value;
 int64_t $tmp336 = param1.value;
-bool $tmp337 = $tmp335 > $tmp336;
+bool $tmp337 = $tmp335 > ((int64_t) $tmp336);
 frost$core$Bit $tmp338 = (frost$core$Bit) {$tmp337};
 bool $tmp339 = $tmp338.value;
 if ($tmp339) goto block1; else goto block2;
@@ -1378,7 +1378,7 @@ return $tmp341;
 block2:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:510
 int64_t $tmp342 = param1.value;
-frost$core$Int64 $tmp343 = (frost$core$Int64) {$tmp342};
+frost$core$Int64 $tmp343 = (frost$core$Int64) {((int64_t) $tmp342)};
 return $tmp343;
 
 }
@@ -1533,7 +1533,7 @@ frost$core$Int frost$core$Int64$get_hash$R$frost$core$Int(frost$core$Int64 param
 
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:554
 int64_t $tmp421 = param0.value;
-frost$core$Int $tmp422 = (frost$core$Int) {$tmp421};
+frost$core$Int $tmp422 = (frost$core$Int) {((int64_t) $tmp421)};
 return $tmp422;
 
 }
@@ -1625,7 +1625,7 @@ frost$core$Int frost$core$Int64$get_asInt$R$frost$core$Int(frost$core$Int64 para
 
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:580
 int64_t $tmp462 = param0.value;
-frost$core$Int $tmp463 = (frost$core$Int) {$tmp462};
+frost$core$Int $tmp463 = (frost$core$Int) {((int64_t) $tmp462)};
 return $tmp463;
 
 }

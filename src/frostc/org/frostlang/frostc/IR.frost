@@ -559,10 +559,10 @@ class IR {
     def blocks := Array<Block>()
 
     @private
-    var currentStatementId := -1
+    var currentStatementId := 0-1 -- FIXME negative literal failing
 
     @private
-    var currentBlockID := -1
+    var currentBlockID := 0-1
 
     @private
     def currentBlock:Block

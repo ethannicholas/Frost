@@ -1,4 +1,4 @@
 RangeTypeMismatch.frost:3:36: error: integer literal is out of range
-RangeTypeMismatch.frost:9:9: error: for loop cannot iterate over 'frost.core.SteppedRange<frost.core.UInt64, frost.core.Int64>'; endpoint and step types are not compatible
-RangeTypeMismatch.frost:15:9: error: expected 'frost.core.Int8', but found 'frost.core.Int64'
+RangeTypeMismatch.frost:9:9: error: for loop cannot iterate over 'frost.core.SteppedRange<frost.core.UInt, frost.core.Int>'; endpoint and step types are not compatible
+RangeTypeMismatch.frost:15:9: error: expected 'frost.core.Int8', but found 'frost.core.Int'
 3 errors

@@ -7,7 +7,6 @@
 #include "frost/core/Object.h"
 #include "org/frostlang/frostc/parser/Token.h"
 #include "org/frostlang/frostc/parser/Token/Kind.h"
-#include "frost/core/Int64.h"
 #include "frost/core/Int.h"
 #include "frost/core/Frost.h"
 
@@ -63,10 +62,10 @@ org$frostlang$frostc$expression$Unary$Operator local4;
 org$frostlang$frostc$expression$Unary$Operator local5;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/expression/Unary.frost:24
 org$frostlang$frostc$parser$Token$Kind $tmp3 = param0.kind;
-frost$core$Int64 $tmp4 = $tmp3.$rawValue;
-frost$core$Int64 $tmp5 = (frost$core$Int64) {57u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Unary.frost:25:32
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp4 = $tmp3.$rawValue;
+frost$core$Int $tmp5 = (frost$core$Int) {57u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Unary.frost:25:32
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp6 = $tmp4.value;
 int64_t $tmp7 = $tmp5.value;
 bool $tmp8 = $tmp6 == $tmp7;
@@ -75,19 +74,19 @@ bool $tmp10 = $tmp9.value;
 if ($tmp10) goto block2; else goto block3;
 block2:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/expression/Unary.frost:25
-frost$core$Int64 $tmp11 = (frost$core$Int64) {2u};
-// begin inline call to org.frostlang.frostc.expression.Unary.Operator.init(rv:frost.core.Int64):org.frostlang.frostc.expression.Unary.Operator from Unary.frost:25:54
+frost$core$Int $tmp11 = (frost$core$Int) {2u};
+// begin inline call to org.frostlang.frostc.expression.Unary.Operator.init(rv:frost.core.Int):org.frostlang.frostc.expression.Unary.Operator from Unary.frost:25:54
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/expression/Unary.frost:17
-frost$core$Int64* $tmp12 = &(&local1)->$rawValue;
+frost$core$Int* $tmp12 = &(&local1)->$rawValue;
 *$tmp12 = $tmp11;
 org$frostlang$frostc$expression$Unary$Operator $tmp13 = *(&local1);
 *(&local0) = $tmp13;
 org$frostlang$frostc$expression$Unary$Operator $tmp14 = *(&local0);
 return $tmp14;
 block3:;
-frost$core$Int64 $tmp15 = (frost$core$Int64) {54u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Unary.frost:26:32
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp15 = (frost$core$Int) {54u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Unary.frost:26:32
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp16 = $tmp4.value;
 int64_t $tmp17 = $tmp15.value;
 bool $tmp18 = $tmp16 == $tmp17;
@@ -96,19 +95,19 @@ bool $tmp20 = $tmp19.value;
 if ($tmp20) goto block6; else goto block7;
 block6:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/expression/Unary.frost:26
-frost$core$Int64 $tmp21 = (frost$core$Int64) {0u};
-// begin inline call to org.frostlang.frostc.expression.Unary.Operator.init(rv:frost.core.Int64):org.frostlang.frostc.expression.Unary.Operator from Unary.frost:26:54
+frost$core$Int $tmp21 = (frost$core$Int) {0u};
+// begin inline call to org.frostlang.frostc.expression.Unary.Operator.init(rv:frost.core.Int):org.frostlang.frostc.expression.Unary.Operator from Unary.frost:26:54
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/expression/Unary.frost:17
-frost$core$Int64* $tmp22 = &(&local3)->$rawValue;
+frost$core$Int* $tmp22 = &(&local3)->$rawValue;
 *$tmp22 = $tmp21;
 org$frostlang$frostc$expression$Unary$Operator $tmp23 = *(&local3);
 *(&local2) = $tmp23;
 org$frostlang$frostc$expression$Unary$Operator $tmp24 = *(&local2);
 return $tmp24;
 block7:;
-frost$core$Int64 $tmp25 = (frost$core$Int64) {55u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Unary.frost:27:32
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp25 = (frost$core$Int) {55u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Unary.frost:27:32
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp26 = $tmp4.value;
 int64_t $tmp27 = $tmp25.value;
 bool $tmp28 = $tmp26 == $tmp27;
@@ -117,10 +116,10 @@ bool $tmp30 = $tmp29.value;
 if ($tmp30) goto block10; else goto block11;
 block10:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/expression/Unary.frost:27
-frost$core$Int64 $tmp31 = (frost$core$Int64) {1u};
-// begin inline call to org.frostlang.frostc.expression.Unary.Operator.init(rv:frost.core.Int64):org.frostlang.frostc.expression.Unary.Operator from Unary.frost:27:54
+frost$core$Int $tmp31 = (frost$core$Int) {1u};
+// begin inline call to org.frostlang.frostc.expression.Unary.Operator.init(rv:frost.core.Int):org.frostlang.frostc.expression.Unary.Operator from Unary.frost:27:54
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/expression/Unary.frost:17
-frost$core$Int64* $tmp32 = &(&local5)->$rawValue;
+frost$core$Int* $tmp32 = &(&local5)->$rawValue;
 *$tmp32 = $tmp31;
 org$frostlang$frostc$expression$Unary$Operator $tmp33 = *(&local5);
 *(&local4) = $tmp33;
@@ -154,10 +153,10 @@ block15:;
 frost$core$String* org$frostlang$frostc$expression$Unary$Operator$get_asString$R$frost$core$String(org$frostlang$frostc$expression$Unary$Operator param0) {
 
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/expression/Unary.frost:34
-frost$core$Int64 $tmp45 = param0.$rawValue;
-frost$core$Int64 $tmp46 = (frost$core$Int64) {0u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Unary.frost:35:22
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp45 = param0.$rawValue;
+frost$core$Int $tmp46 = (frost$core$Int) {0u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Unary.frost:35:22
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp47 = $tmp45.value;
 int64_t $tmp48 = $tmp46.value;
 bool $tmp49 = $tmp47 == $tmp48;
@@ -169,9 +168,9 @@ block2:;
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) &$s52));
 return &$s53;
 block3:;
-frost$core$Int64 $tmp54 = (frost$core$Int64) {1u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Unary.frost:36:22
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp54 = (frost$core$Int) {1u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Unary.frost:36:22
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp55 = $tmp45.value;
 int64_t $tmp56 = $tmp54.value;
 bool $tmp57 = $tmp55 == $tmp56;
@@ -183,9 +182,9 @@ block5:;
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) &$s60));
 return &$s61;
 block6:;
-frost$core$Int64 $tmp62 = (frost$core$Int64) {2u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Unary.frost:37:22
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp62 = (frost$core$Int) {2u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Unary.frost:37:22
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp63 = $tmp45.value;
 int64_t $tmp64 = $tmp62.value;
 bool $tmp65 = $tmp63 == $tmp64;
@@ -211,11 +210,11 @@ void org$frostlang$frostc$expression$Unary$Operator$cleanup(org$frostlang$frostc
 return;
 
 }
-org$frostlang$frostc$expression$Unary$Operator org$frostlang$frostc$expression$Unary$Operator$init$frost$core$Int64(frost$core$Int64 param0) {
+org$frostlang$frostc$expression$Unary$Operator org$frostlang$frostc$expression$Unary$Operator$init$frost$core$Int(frost$core$Int param0) {
 
 org$frostlang$frostc$expression$Unary$Operator local0;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/expression/Unary.frost:17
-frost$core$Int64* $tmp72 = &(&local0)->$rawValue;
+frost$core$Int* $tmp72 = &(&local0)->$rawValue;
 *$tmp72 = param0;
 org$frostlang$frostc$expression$Unary$Operator $tmp73 = *(&local0);
 return $tmp73;
@@ -224,8 +223,8 @@ return $tmp73;
 frost$core$Bit org$frostlang$frostc$expression$Unary$Operator$$EQ$org$frostlang$frostc$expression$Unary$Operator$R$frost$core$Bit(org$frostlang$frostc$expression$Unary$Operator param0, org$frostlang$frostc$expression$Unary$Operator param1) {
 
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/expression/Unary.frost:17
-frost$core$Int64 $tmp74 = param0.$rawValue;
-frost$core$Int64 $tmp75 = param1.$rawValue;
+frost$core$Int $tmp74 = param0.$rawValue;
+frost$core$Int $tmp75 = param1.$rawValue;
 int64_t $tmp76 = $tmp74.value;
 int64_t $tmp77 = $tmp75.value;
 bool $tmp78 = $tmp76 != $tmp77;

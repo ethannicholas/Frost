@@ -206,14 +206,14 @@ block16:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/json/JSON.frost:67
 FROST_ASSERT(40 == sizeof(frost$json$JSON$PathKey));
 frost$json$JSON$PathKey* $tmp55 = (frost$json$JSON$PathKey*) frostObjectAlloc(40, (frost$core$Class*) &frost$json$JSON$PathKey$class);
-frost$core$Int64 $tmp56 = (frost$core$Int64) {0u};
+frost$core$Int $tmp56 = (frost$core$Int) {0u};
 frost$core$String$Index $tmp57 = *(&local3);
 frost$core$String$Index $tmp58 = *(&local4);
 frost$core$Bit $tmp59 = (frost$core$Bit) {false};
 frost$core$Range$LTfrost$core$String$Index$GT $tmp60 = frost$core$Range$LTfrost$core$String$Index$GT$init$frost$core$String$Index$frost$core$String$Index$frost$core$Bit($tmp57, $tmp58, $tmp59);
 frost$core$String* $tmp61 = frost$core$String$substring$frost$core$Range$LTfrost$core$String$Index$GT$R$frost$core$String(param0, $tmp60);
 frost$core$String$Index $tmp62 = *(&local4);
-frost$json$JSON$PathKey$init$frost$core$Int64$frost$core$String$frost$core$String$Index($tmp55, $tmp56, $tmp61, $tmp62);
+frost$json$JSON$PathKey$init$frost$core$Int$frost$core$String$frost$core$String$Index($tmp55, $tmp56, $tmp61, $tmp62);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp55));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp61));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp55));
@@ -279,7 +279,7 @@ frost$core$Int64$nullable $tmp92 = *(&local9);
 // begin inline call to function frost.core.Int64.get_asInt():frost.core.Int from String.frost:1456:26
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:580
 int64_t $tmp93 = ((frost$core$Int64) $tmp92.value).value;
-frost$core$Int $tmp94 = (frost$core$Int) {$tmp93};
+frost$core$Int $tmp94 = (frost$core$Int) {((int64_t) $tmp93)};
 *(&local8) = ((frost$core$Int$nullable) { $tmp94, true });
 goto block26;
 block28:;
@@ -303,11 +303,11 @@ block31:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/json/JSON.frost:79
 FROST_ASSERT(40 == sizeof(frost$json$JSON$PathKey));
 frost$json$JSON$PathKey* $tmp99 = (frost$json$JSON$PathKey*) frostObjectAlloc(40, (frost$core$Class*) &frost$json$JSON$PathKey$class);
-frost$core$Int64 $tmp100 = (frost$core$Int64) {1u};
+frost$core$Int $tmp100 = (frost$core$Int) {1u};
 frost$core$Int$nullable $tmp101 = *(&local10);
 frost$core$String$Index $tmp102 = *(&local7);
 frost$core$String$Index $tmp103 = frost$core$String$next$frost$core$String$Index$R$frost$core$String$Index(param0, $tmp102);
-frost$json$JSON$PathKey$init$frost$core$Int64$frost$core$Int$frost$core$String$Index($tmp99, $tmp100, ((frost$core$Int) $tmp101.value), $tmp103);
+frost$json$JSON$PathKey$init$frost$core$Int$frost$core$Int$frost$core$String$Index($tmp99, $tmp100, ((frost$core$Int) $tmp101.value), $tmp103);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp99));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp99));
 return $tmp99;
@@ -407,11 +407,11 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp124));
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/json/JSON.frost:107
 frost$core$String$Index $tmp133 = *(&local2);
 frost$json$JSON$PathKey* $tmp134 = frost$json$JSON$nextPathKey$frost$core$String$frost$core$String$Index$R$frost$json$JSON$PathKey$Q(param1, $tmp133);
-frost$core$Int64* $tmp135 = &$tmp134->$rawValue;
-frost$core$Int64 $tmp136 = *$tmp135;
-frost$core$Int64 $tmp137 = (frost$core$Int64) {0u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from JSON.frost:108:29
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int* $tmp135 = &$tmp134->$rawValue;
+frost$core$Int $tmp136 = *$tmp135;
+frost$core$Int $tmp137 = (frost$core$Int) {0u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from JSON.frost:108:29
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp138 = $tmp136.value;
 int64_t $tmp139 = $tmp137.value;
 bool $tmp140 = $tmp138 == $tmp139;
@@ -431,11 +431,11 @@ frost$core$String$Index $tmp147 = *$tmp146;
 *(&local8) = $tmp147;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/json/JSON.frost:109
 frost$json$JSON* $tmp148 = *(&local6);
-frost$core$Int64* $tmp149 = &$tmp148->$rawValue;
-frost$core$Int64 $tmp150 = *$tmp149;
-frost$core$Int64 $tmp151 = (frost$core$Int64) {4u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from JSON.frost:110:30
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int* $tmp149 = &$tmp148->$rawValue;
+frost$core$Int $tmp150 = *$tmp149;
+frost$core$Int $tmp151 = (frost$core$Int) {4u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from JSON.frost:110:30
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp152 = $tmp150.value;
 int64_t $tmp153 = $tmp151.value;
 bool $tmp154 = $tmp152 == $tmp153;
@@ -506,9 +506,9 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp177));
 *(&local6) = ((frost$json$JSON*) NULL);
 return ((frost$json$JSON*) NULL);
 block12:;
-frost$core$Int64 $tmp178 = (frost$core$Int64) {1u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from JSON.frost:122:29
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp178 = (frost$core$Int) {1u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from JSON.frost:122:29
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp179 = $tmp136.value;
 int64_t $tmp180 = $tmp178.value;
 bool $tmp181 = $tmp179 == $tmp180;
@@ -524,11 +524,11 @@ frost$core$String$Index $tmp187 = *$tmp186;
 *(&local11) = $tmp187;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/json/JSON.frost:123
 frost$json$JSON* $tmp188 = *(&local6);
-frost$core$Int64* $tmp189 = &$tmp188->$rawValue;
-frost$core$Int64 $tmp190 = *$tmp189;
-frost$core$Int64 $tmp191 = (frost$core$Int64) {5u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from JSON.frost:124:30
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int* $tmp189 = &$tmp188->$rawValue;
+frost$core$Int $tmp190 = *$tmp189;
+frost$core$Int $tmp191 = (frost$core$Int) {5u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from JSON.frost:124:30
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp192 = $tmp190.value;
 int64_t $tmp193 = $tmp191.value;
 bool $tmp194 = $tmp192 == $tmp193;
@@ -612,11 +612,11 @@ return ((frost$core$Int64$nullable) { .nonnull = false });
 block2:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/json/JSON.frost:146
 frost$json$JSON* $tmp220 = *(&local0);
-frost$core$Int64* $tmp221 = &$tmp220->$rawValue;
-frost$core$Int64 $tmp222 = *$tmp221;
-frost$core$Int64 $tmp223 = (frost$core$Int64) {0u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from JSON.frost:147:18
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int* $tmp221 = &$tmp220->$rawValue;
+frost$core$Int $tmp222 = *$tmp221;
+frost$core$Int $tmp223 = (frost$core$Int) {0u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from JSON.frost:147:18
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp224 = $tmp222.value;
 int64_t $tmp225 = $tmp223.value;
 bool $tmp226 = $tmp224 == $tmp225;
@@ -671,11 +671,11 @@ return ((frost$core$Real64$nullable) { .nonnull = false });
 block2:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/json/JSON.frost:164
 frost$json$JSON* $tmp242 = *(&local0);
-frost$core$Int64* $tmp243 = &$tmp242->$rawValue;
-frost$core$Int64 $tmp244 = *$tmp243;
-frost$core$Int64 $tmp245 = (frost$core$Int64) {1u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from JSON.frost:165:18
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int* $tmp243 = &$tmp242->$rawValue;
+frost$core$Int $tmp244 = *$tmp243;
+frost$core$Int $tmp245 = (frost$core$Int) {1u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from JSON.frost:165:18
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp246 = $tmp244.value;
 int64_t $tmp247 = $tmp245.value;
 bool $tmp248 = $tmp246 == $tmp247;
@@ -730,11 +730,11 @@ return ((frost$core$Bit$nullable) { .nonnull = false });
 block2:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/json/JSON.frost:182
 frost$json$JSON* $tmp264 = *(&local0);
-frost$core$Int64* $tmp265 = &$tmp264->$rawValue;
-frost$core$Int64 $tmp266 = *$tmp265;
-frost$core$Int64 $tmp267 = (frost$core$Int64) {3u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from JSON.frost:183:18
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int* $tmp265 = &$tmp264->$rawValue;
+frost$core$Int $tmp266 = *$tmp265;
+frost$core$Int $tmp267 = (frost$core$Int) {3u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from JSON.frost:183:18
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp268 = $tmp266.value;
 int64_t $tmp269 = $tmp267.value;
 bool $tmp270 = $tmp268 == $tmp269;
@@ -790,11 +790,11 @@ return ((frost$core$String*) NULL);
 block2:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/json/JSON.frost:200
 frost$json$JSON* $tmp286 = *(&local0);
-frost$core$Int64* $tmp287 = &$tmp286->$rawValue;
-frost$core$Int64 $tmp288 = *$tmp287;
-frost$core$Int64 $tmp289 = (frost$core$Int64) {2u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from JSON.frost:201:18
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int* $tmp287 = &$tmp286->$rawValue;
+frost$core$Int $tmp288 = *$tmp287;
+frost$core$Int $tmp289 = (frost$core$Int) {2u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from JSON.frost:201:18
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp290 = $tmp288.value;
 int64_t $tmp291 = $tmp289.value;
 bool $tmp292 = $tmp290 == $tmp291;
@@ -859,11 +859,11 @@ return ((frost$collections$ListView*) NULL);
 block2:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/json/JSON.frost:218
 frost$json$JSON* $tmp310 = *(&local0);
-frost$core$Int64* $tmp311 = &$tmp310->$rawValue;
-frost$core$Int64 $tmp312 = *$tmp311;
-frost$core$Int64 $tmp313 = (frost$core$Int64) {5u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from JSON.frost:219:18
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int* $tmp311 = &$tmp310->$rawValue;
+frost$core$Int $tmp312 = *$tmp311;
+frost$core$Int $tmp313 = (frost$core$Int) {5u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from JSON.frost:219:18
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp314 = $tmp312.value;
 int64_t $tmp315 = $tmp313.value;
 bool $tmp316 = $tmp314 == $tmp315;
@@ -928,11 +928,11 @@ return ((frost$collections$MapView*) NULL);
 block2:;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/json/JSON.frost:236
 frost$json$JSON* $tmp334 = *(&local0);
-frost$core$Int64* $tmp335 = &$tmp334->$rawValue;
-frost$core$Int64 $tmp336 = *$tmp335;
-frost$core$Int64 $tmp337 = (frost$core$Int64) {4u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from JSON.frost:237:18
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int* $tmp335 = &$tmp334->$rawValue;
+frost$core$Int $tmp336 = *$tmp335;
+frost$core$Int $tmp337 = (frost$core$Int) {4u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from JSON.frost:237:18
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp338 = $tmp336.value;
 int64_t $tmp339 = $tmp337.value;
 bool $tmp340 = $tmp338 == $tmp339;
@@ -973,11 +973,11 @@ frost$core$Int64 frost$json$JSON$get_asInt$R$frost$core$Int64(frost$json$JSON* p
 
 frost$core$Int64 local0;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/json/JSON.frost:251
-frost$core$Int64* $tmp350 = &param0->$rawValue;
-frost$core$Int64 $tmp351 = *$tmp350;
-frost$core$Int64 $tmp352 = (frost$core$Int64) {0u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from JSON.frost:252:18
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int* $tmp350 = &param0->$rawValue;
+frost$core$Int $tmp351 = *$tmp350;
+frost$core$Int $tmp352 = (frost$core$Int) {0u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from JSON.frost:252:18
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp353 = $tmp351.value;
 int64_t $tmp354 = $tmp352.value;
 bool $tmp355 = $tmp353 == $tmp354;
@@ -1005,11 +1005,11 @@ frost$core$Real64 frost$json$JSON$get_asReal$R$frost$core$Real64(frost$json$JSON
 
 frost$core$Real64 local0;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/json/JSON.frost:266
-frost$core$Int64* $tmp363 = &param0->$rawValue;
-frost$core$Int64 $tmp364 = *$tmp363;
-frost$core$Int64 $tmp365 = (frost$core$Int64) {1u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from JSON.frost:267:18
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int* $tmp363 = &param0->$rawValue;
+frost$core$Int $tmp364 = *$tmp363;
+frost$core$Int $tmp365 = (frost$core$Int) {1u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from JSON.frost:267:18
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp366 = $tmp364.value;
 int64_t $tmp367 = $tmp365.value;
 bool $tmp368 = $tmp366 == $tmp367;
@@ -1037,11 +1037,11 @@ frost$core$Bit frost$json$JSON$get_asBit$R$frost$core$Bit(frost$json$JSON* param
 
 frost$core$Bit local0;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/json/JSON.frost:281
-frost$core$Int64* $tmp376 = &param0->$rawValue;
-frost$core$Int64 $tmp377 = *$tmp376;
-frost$core$Int64 $tmp378 = (frost$core$Int64) {3u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from JSON.frost:282:18
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int* $tmp376 = &param0->$rawValue;
+frost$core$Int $tmp377 = *$tmp376;
+frost$core$Int $tmp378 = (frost$core$Int) {3u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from JSON.frost:282:18
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp379 = $tmp377.value;
 int64_t $tmp380 = $tmp378.value;
 bool $tmp381 = $tmp379 == $tmp380;
@@ -1069,11 +1069,11 @@ frost$collections$MapView* frost$json$JSON$get_asMap$R$frost$collections$MapView
 
 frost$collections$MapView* local0 = NULL;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/json/JSON.frost:296
-frost$core$Int64* $tmp389 = &param0->$rawValue;
-frost$core$Int64 $tmp390 = *$tmp389;
-frost$core$Int64 $tmp391 = (frost$core$Int64) {4u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from JSON.frost:297:18
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int* $tmp389 = &param0->$rawValue;
+frost$core$Int $tmp390 = *$tmp389;
+frost$core$Int $tmp391 = (frost$core$Int) {4u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from JSON.frost:297:18
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp392 = $tmp390.value;
 int64_t $tmp393 = $tmp391.value;
 bool $tmp394 = $tmp392 == $tmp393;
@@ -1109,11 +1109,11 @@ frost$collections$ListView* frost$json$JSON$get_asListView$R$frost$collections$L
 
 frost$collections$ListView* local0 = NULL;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/json/JSON.frost:311
-frost$core$Int64* $tmp404 = &param0->$rawValue;
-frost$core$Int64 $tmp405 = *$tmp404;
-frost$core$Int64 $tmp406 = (frost$core$Int64) {5u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from JSON.frost:312:18
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int* $tmp404 = &param0->$rawValue;
+frost$core$Int $tmp405 = *$tmp404;
+frost$core$Int $tmp406 = (frost$core$Int) {5u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from JSON.frost:312:18
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp407 = $tmp405.value;
 int64_t $tmp408 = $tmp406.value;
 bool $tmp409 = $tmp407 == $tmp408;
@@ -1160,11 +1160,11 @@ frost$core$MutableString* local9 = NULL;
 frost$core$String* local10 = NULL;
 frost$json$JSON* local11 = NULL;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/json/JSON.frost:326
-frost$core$Int64* $tmp419 = &param0->$rawValue;
-frost$core$Int64 $tmp420 = *$tmp419;
-frost$core$Int64 $tmp421 = (frost$core$Int64) {0u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from JSON.frost:327:18
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int* $tmp419 = &param0->$rawValue;
+frost$core$Int $tmp420 = *$tmp419;
+frost$core$Int $tmp421 = (frost$core$Int) {0u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from JSON.frost:327:18
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp422 = $tmp420.value;
 int64_t $tmp423 = $tmp421.value;
 bool $tmp424 = $tmp422 == $tmp423;
@@ -1187,9 +1187,9 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp433));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp430));
 return $tmp433;
 block3:;
-frost$core$Int64 $tmp434 = (frost$core$Int64) {1u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from JSON.frost:330:18
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp434 = (frost$core$Int) {1u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from JSON.frost:330:18
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp435 = $tmp420.value;
 int64_t $tmp436 = $tmp434.value;
 bool $tmp437 = $tmp435 == $tmp436;
@@ -1212,9 +1212,9 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp446));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp443));
 return $tmp446;
 block6:;
-frost$core$Int64 $tmp447 = (frost$core$Int64) {2u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from JSON.frost:333:18
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp447 = (frost$core$Int) {2u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from JSON.frost:333:18
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp448 = $tmp420.value;
 int64_t $tmp449 = $tmp447.value;
 bool $tmp450 = $tmp448 == $tmp449;
@@ -1239,9 +1239,9 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp459));
 *(&local2) = ((frost$core$String*) NULL);
 return $tmp457;
 block9:;
-frost$core$Int64 $tmp460 = (frost$core$Int64) {3u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from JSON.frost:336:18
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp460 = (frost$core$Int) {3u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from JSON.frost:336:18
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp461 = $tmp420.value;
 int64_t $tmp462 = $tmp460.value;
 bool $tmp463 = $tmp461 == $tmp462;
@@ -1264,9 +1264,9 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp472));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp469));
 return $tmp472;
 block12:;
-frost$core$Int64 $tmp473 = (frost$core$Int64) {4u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from JSON.frost:339:18
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp473 = (frost$core$Int) {4u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from JSON.frost:339:18
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp474 = $tmp420.value;
 int64_t $tmp475 = $tmp473.value;
 bool $tmp476 = $tmp474 == $tmp475;
@@ -1400,9 +1400,9 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp538));
 *(&local4) = ((frost$collections$MapView*) NULL);
 return $tmp535;
 block15:;
-frost$core$Int64 $tmp539 = (frost$core$Int64) {5u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from JSON.frost:349:18
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp539 = (frost$core$Int) {5u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from JSON.frost:349:18
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp540 = $tmp420.value;
 int64_t $tmp541 = $tmp539.value;
 bool $tmp542 = $tmp540 == $tmp541;
@@ -1516,9 +1516,9 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp590));
 *(&local8) = ((frost$collections$ListView*) NULL);
 return $tmp587;
 block23:;
-frost$core$Int64 $tmp591 = (frost$core$Int64) {6u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from JSON.frost:359:18
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp591 = (frost$core$Int) {6u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from JSON.frost:359:18
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp592 = $tmp420.value;
 int64_t $tmp593 = $tmp591.value;
 bool $tmp594 = $tmp592 == $tmp593;
@@ -1548,11 +1548,11 @@ frost$core$Bit local3;
 frost$collections$MapView* local4 = NULL;
 frost$collections$ListView* local5 = NULL;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/json/JSON.frost:6
-frost$core$Int64* $tmp601 = &param0->$rawValue;
-frost$core$Int64 $tmp602 = *$tmp601;
-frost$core$Int64 $tmp603 = (frost$core$Int64) {0u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from JSON.frost:6:1
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int* $tmp601 = &param0->$rawValue;
+frost$core$Int $tmp602 = *$tmp601;
+frost$core$Int $tmp603 = (frost$core$Int) {0u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from JSON.frost:6:1
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp604 = $tmp602.value;
 int64_t $tmp605 = $tmp603.value;
 bool $tmp606 = $tmp604 == $tmp605;
@@ -1565,9 +1565,9 @@ frost$core$Int64 $tmp610 = *$tmp609;
 *(&local0) = $tmp610;
 goto block1;
 block3:;
-frost$core$Int64 $tmp611 = (frost$core$Int64) {1u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from JSON.frost:6:1
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp611 = (frost$core$Int) {1u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from JSON.frost:6:1
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp612 = $tmp602.value;
 int64_t $tmp613 = $tmp611.value;
 bool $tmp614 = $tmp612 == $tmp613;
@@ -1580,9 +1580,9 @@ frost$core$Real64 $tmp618 = *$tmp617;
 *(&local1) = $tmp618;
 goto block1;
 block6:;
-frost$core$Int64 $tmp619 = (frost$core$Int64) {2u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from JSON.frost:6:1
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp619 = (frost$core$Int) {2u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from JSON.frost:6:1
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp620 = $tmp602.value;
 int64_t $tmp621 = $tmp619.value;
 bool $tmp622 = $tmp620 == $tmp621;
@@ -1605,9 +1605,9 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp629));
 *(&local2) = ((frost$core$String*) NULL);
 goto block1;
 block9:;
-frost$core$Int64 $tmp630 = (frost$core$Int64) {3u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from JSON.frost:6:1
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp630 = (frost$core$Int) {3u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from JSON.frost:6:1
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp631 = $tmp602.value;
 int64_t $tmp632 = $tmp630.value;
 bool $tmp633 = $tmp631 == $tmp632;
@@ -1620,9 +1620,9 @@ frost$core$Bit $tmp637 = *$tmp636;
 *(&local3) = $tmp637;
 goto block1;
 block12:;
-frost$core$Int64 $tmp638 = (frost$core$Int64) {4u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from JSON.frost:6:1
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp638 = (frost$core$Int) {4u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from JSON.frost:6:1
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp639 = $tmp602.value;
 int64_t $tmp640 = $tmp638.value;
 bool $tmp641 = $tmp639 == $tmp640;
@@ -1645,9 +1645,9 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp648));
 *(&local4) = ((frost$collections$MapView*) NULL);
 goto block1;
 block15:;
-frost$core$Int64 $tmp649 = (frost$core$Int64) {5u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from JSON.frost:6:1
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp649 = (frost$core$Int) {5u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from JSON.frost:6:1
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp650 = $tmp602.value;
 int64_t $tmp651 = $tmp649.value;
 bool $tmp652 = $tmp650 == $tmp651;
@@ -1670,9 +1670,9 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp659));
 *(&local5) = ((frost$collections$ListView*) NULL);
 goto block1;
 block18:;
-frost$core$Int64 $tmp660 = (frost$core$Int64) {6u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from JSON.frost:6:1
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp660 = (frost$core$Int) {6u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from JSON.frost:6:1
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp661 = $tmp602.value;
 int64_t $tmp662 = $tmp660.value;
 bool $tmp663 = $tmp661 == $tmp662;
@@ -1687,10 +1687,10 @@ frost$core$Object$cleanup(((frost$core$Object*) param0));
 return;
 
 }
-void frost$json$JSON$init$frost$core$Int64$frost$core$Int64(frost$json$JSON* param0, frost$core$Int64 param1, frost$core$Int64 param2) {
+void frost$json$JSON$init$frost$core$Int$frost$core$Int64(frost$json$JSON* param0, frost$core$Int param1, frost$core$Int64 param2) {
 
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/json/JSON.frost:6
-frost$core$Int64* $tmp666 = &param0->$rawValue;
+frost$core$Int* $tmp666 = &param0->$rawValue;
 *$tmp666 = param1;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/json/JSON.frost:6
 frost$core$Int64* $tmp667 = (frost$core$Int64*) (param0->$data + 0);
@@ -1698,10 +1698,10 @@ frost$core$Int64* $tmp667 = (frost$core$Int64*) (param0->$data + 0);
 return;
 
 }
-void frost$json$JSON$init$frost$core$Int64$frost$core$Real64(frost$json$JSON* param0, frost$core$Int64 param1, frost$core$Real64 param2) {
+void frost$json$JSON$init$frost$core$Int$frost$core$Real64(frost$json$JSON* param0, frost$core$Int param1, frost$core$Real64 param2) {
 
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/json/JSON.frost:6
-frost$core$Int64* $tmp668 = &param0->$rawValue;
+frost$core$Int* $tmp668 = &param0->$rawValue;
 *$tmp668 = param1;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/json/JSON.frost:6
 frost$core$Real64* $tmp669 = (frost$core$Real64*) (param0->$data + 0);
@@ -1709,10 +1709,10 @@ frost$core$Real64* $tmp669 = (frost$core$Real64*) (param0->$data + 0);
 return;
 
 }
-void frost$json$JSON$init$frost$core$Int64$frost$core$String(frost$json$JSON* param0, frost$core$Int64 param1, frost$core$String* param2) {
+void frost$json$JSON$init$frost$core$Int$frost$core$String(frost$json$JSON* param0, frost$core$Int param1, frost$core$String* param2) {
 
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/json/JSON.frost:6
-frost$core$Int64* $tmp670 = &param0->$rawValue;
+frost$core$Int* $tmp670 = &param0->$rawValue;
 *$tmp670 = param1;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/json/JSON.frost:6
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param2));
@@ -1721,10 +1721,10 @@ frost$core$String** $tmp671 = (frost$core$String**) (param0->$data + 0);
 return;
 
 }
-void frost$json$JSON$init$frost$core$Int64$frost$core$Bit(frost$json$JSON* param0, frost$core$Int64 param1, frost$core$Bit param2) {
+void frost$json$JSON$init$frost$core$Int$frost$core$Bit(frost$json$JSON* param0, frost$core$Int param1, frost$core$Bit param2) {
 
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/json/JSON.frost:6
-frost$core$Int64* $tmp672 = &param0->$rawValue;
+frost$core$Int* $tmp672 = &param0->$rawValue;
 *$tmp672 = param1;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/json/JSON.frost:6
 frost$core$Bit* $tmp673 = (frost$core$Bit*) (param0->$data + 0);
@@ -1732,10 +1732,10 @@ frost$core$Bit* $tmp673 = (frost$core$Bit*) (param0->$data + 0);
 return;
 
 }
-void frost$json$JSON$init$frost$core$Int64$frost$collections$MapView$LTfrost$core$String$Cfrost$json$JSON$GT(frost$json$JSON* param0, frost$core$Int64 param1, frost$collections$MapView* param2) {
+void frost$json$JSON$init$frost$core$Int$frost$collections$MapView$LTfrost$core$String$Cfrost$json$JSON$GT(frost$json$JSON* param0, frost$core$Int param1, frost$collections$MapView* param2) {
 
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/json/JSON.frost:6
-frost$core$Int64* $tmp674 = &param0->$rawValue;
+frost$core$Int* $tmp674 = &param0->$rawValue;
 *$tmp674 = param1;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/json/JSON.frost:6
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param2));
@@ -1744,10 +1744,10 @@ frost$collections$MapView** $tmp675 = (frost$collections$MapView**) (param0->$da
 return;
 
 }
-void frost$json$JSON$init$frost$core$Int64$frost$collections$ListView$LTfrost$json$JSON$GT(frost$json$JSON* param0, frost$core$Int64 param1, frost$collections$ListView* param2) {
+void frost$json$JSON$init$frost$core$Int$frost$collections$ListView$LTfrost$json$JSON$GT(frost$json$JSON* param0, frost$core$Int param1, frost$collections$ListView* param2) {
 
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/json/JSON.frost:6
-frost$core$Int64* $tmp676 = &param0->$rawValue;
+frost$core$Int* $tmp676 = &param0->$rawValue;
 *$tmp676 = param1;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/json/JSON.frost:6
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param2));
@@ -1756,10 +1756,10 @@ frost$collections$ListView** $tmp677 = (frost$collections$ListView**) (param0->$
 return;
 
 }
-void frost$json$JSON$init$frost$core$Int64(frost$json$JSON* param0, frost$core$Int64 param1) {
+void frost$json$JSON$init$frost$core$Int(frost$json$JSON* param0, frost$core$Int param1) {
 
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/json/JSON.frost:6
-frost$core$Int64* $tmp678 = &param0->$rawValue;
+frost$core$Int* $tmp678 = &param0->$rawValue;
 *$tmp678 = param1;
 return;
 

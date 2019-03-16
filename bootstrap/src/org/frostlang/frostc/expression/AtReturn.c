@@ -13,7 +13,6 @@
 #include "frost/core/Frost.h"
 #include "org/frostlang/frostc/IR/Block/ID.h"
 #include "org/frostlang/frostc/Variable/Storage.h"
-#include "frost/core/Int64.h"
 #include "org/frostlang/frostc/IR.h"
 #include "org/frostlang/frostc/IR/Statement.h"
 #include "org/frostlang/frostc/Type.h"
@@ -78,11 +77,11 @@ org$frostlang$frostc$Variable** $tmp16 = &param0->returnVar;
 org$frostlang$frostc$Variable* $tmp17 = *$tmp16;
 org$frostlang$frostc$Variable$Storage** $tmp18 = &$tmp17->storage;
 org$frostlang$frostc$Variable$Storage* $tmp19 = *$tmp18;
-frost$core$Int64* $tmp20 = &$tmp19->$rawValue;
-frost$core$Int64 $tmp21 = *$tmp20;
-frost$core$Int64 $tmp22 = (frost$core$Int64) {0u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from AtReturn.frost:29:34
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int* $tmp20 = &$tmp19->$rawValue;
+frost$core$Int $tmp21 = *$tmp20;
+frost$core$Int $tmp22 = (frost$core$Int) {0u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from AtReturn.frost:29:34
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp23 = $tmp21.value;
 int64_t $tmp24 = $tmp22.value;
 bool $tmp25 = $tmp23 == $tmp24;
@@ -103,17 +102,17 @@ org$frostlang$frostc$IR** $tmp31 = &param0->ir;
 org$frostlang$frostc$IR* $tmp32 = *$tmp31;
 FROST_ASSERT(80 == sizeof(org$frostlang$frostc$IR$Statement));
 org$frostlang$frostc$IR$Statement* $tmp33 = (org$frostlang$frostc$IR$Statement*) frostObjectAlloc(80, (frost$core$Class*) &org$frostlang$frostc$IR$Statement$class);
-frost$core$Int64 $tmp34 = (frost$core$Int64) {14u};
+frost$core$Int $tmp34 = (frost$core$Int) {14u};
 FROST_ASSERT(48 == sizeof(org$frostlang$frostc$IR$Value));
 org$frostlang$frostc$IR$Value* $tmp35 = (org$frostlang$frostc$IR$Value*) frostObjectAlloc(48, (frost$core$Class*) &org$frostlang$frostc$IR$Value$class);
-frost$core$Int64 $tmp36 = (frost$core$Int64) {2u};
+frost$core$Int $tmp36 = (frost$core$Int) {2u};
 frost$core$Int $tmp37 = *(&local0);
 org$frostlang$frostc$Variable** $tmp38 = &param0->returnVar;
 org$frostlang$frostc$Variable* $tmp39 = *$tmp38;
 org$frostlang$frostc$Type** $tmp40 = &$tmp39->type;
 org$frostlang$frostc$Type* $tmp41 = *$tmp40;
-org$frostlang$frostc$IR$Value$init$frost$core$Int64$frost$core$Int$org$frostlang$frostc$Type($tmp35, $tmp36, $tmp37, $tmp41);
-org$frostlang$frostc$IR$Statement$init$frost$core$Int64$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Value($tmp33, $tmp34, param1, $tmp35);
+org$frostlang$frostc$IR$Value$init$frost$core$Int$frost$core$Int$org$frostlang$frostc$Type($tmp35, $tmp36, $tmp37, $tmp41);
+org$frostlang$frostc$IR$Statement$init$frost$core$Int$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Value($tmp33, $tmp34, param1, $tmp35);
 $fn43 $tmp42 = ($fn43) $tmp32->$class->vtable[2];
 org$frostlang$frostc$IR$Statement$ID $tmp44 = $tmp42($tmp32, $tmp33);
 *(&local2) = $tmp44;
@@ -122,13 +121,13 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp33));
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/expression/AtReturn.frost:35
 FROST_ASSERT(48 == sizeof(org$frostlang$frostc$IR$Value));
 org$frostlang$frostc$IR$Value* $tmp45 = (org$frostlang$frostc$IR$Value*) frostObjectAlloc(48, (frost$core$Class*) &org$frostlang$frostc$IR$Value$class);
-frost$core$Int64 $tmp46 = (frost$core$Int64) {7u};
+frost$core$Int $tmp46 = (frost$core$Int) {7u};
 org$frostlang$frostc$IR$Statement$ID $tmp47 = *(&local2);
 org$frostlang$frostc$Variable** $tmp48 = &param0->returnVar;
 org$frostlang$frostc$Variable* $tmp49 = *$tmp48;
 org$frostlang$frostc$Type** $tmp50 = &$tmp49->type;
 org$frostlang$frostc$Type* $tmp51 = *$tmp50;
-org$frostlang$frostc$IR$Value$init$frost$core$Int64$org$frostlang$frostc$IR$Statement$ID$org$frostlang$frostc$Type($tmp45, $tmp46, $tmp47, $tmp51);
+org$frostlang$frostc$IR$Value$init$frost$core$Int$org$frostlang$frostc$IR$Statement$ID$org$frostlang$frostc$Type($tmp45, $tmp46, $tmp47, $tmp51);
 org$frostlang$frostc$IR$Value* $tmp52 = org$frostlang$frostc$Compiler$coerce$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Value$Q$org$frostlang$frostc$Compiler$TypeContext$R$org$frostlang$frostc$IR$Value$Q(param0, param1, $tmp45, param2);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp52));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp52));

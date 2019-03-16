@@ -5,9 +5,8 @@
 #include "frost/core/Equatable.h"
 #include "frost/core/Bit.h"
 #include "frost/core/Object.h"
-#include "frost/core/Int64.h"
-#include "frost/core/Frost.h"
 #include "frost/core/Int.h"
+#include "frost/core/Frost.h"
 
 __attribute__((weak)) frost$core$Bit org$frostlang$frostc$Compiler$Resolution$$EQ$org$frostlang$frostc$Compiler$Resolution$R$frost$core$Bit$shim(frost$core$Object* p0, frost$core$Equatable* p1) {
     frost$core$Bit result = org$frostlang$frostc$Compiler$Resolution$$EQ$org$frostlang$frostc$Compiler$Resolution$R$frost$core$Bit(((org$frostlang$frostc$Compiler$Resolution$wrapper*) p0)->value, ((org$frostlang$frostc$Compiler$Resolution$wrapper*) p1)->value);
@@ -52,10 +51,10 @@ static frost$core$String $s37 = { (frost$core$Class*) &frost$core$String$class, 
 frost$core$String* org$frostlang$frostc$Compiler$Resolution$get_asString$R$frost$core$String(org$frostlang$frostc$Compiler$Resolution param0) {
 
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Compiler.frost:55
-frost$core$Int64 $tmp3 = param0.$rawValue;
-frost$core$Int64 $tmp4 = (frost$core$Int64) {0u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Compiler.frost:56:22
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp3 = param0.$rawValue;
+frost$core$Int $tmp4 = (frost$core$Int) {0u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Compiler.frost:56:22
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp5 = $tmp3.value;
 int64_t $tmp6 = $tmp4.value;
 bool $tmp7 = $tmp5 == $tmp6;
@@ -67,9 +66,9 @@ block2:;
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) &$s10));
 return &$s11;
 block3:;
-frost$core$Int64 $tmp12 = (frost$core$Int64) {1u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Compiler.frost:59:22
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp12 = (frost$core$Int) {1u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Compiler.frost:59:22
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp13 = $tmp3.value;
 int64_t $tmp14 = $tmp12.value;
 bool $tmp15 = $tmp13 == $tmp14;
@@ -81,9 +80,9 @@ block5:;
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) &$s18));
 return &$s19;
 block6:;
-frost$core$Int64 $tmp20 = (frost$core$Int64) {2u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Compiler.frost:62:22
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp20 = (frost$core$Int) {2u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Compiler.frost:62:22
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp21 = $tmp3.value;
 int64_t $tmp22 = $tmp20.value;
 bool $tmp23 = $tmp21 == $tmp22;
@@ -95,9 +94,9 @@ block8:;
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) &$s26));
 return &$s27;
 block9:;
-frost$core$Int64 $tmp28 = (frost$core$Int64) {3u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from Compiler.frost:65:22
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp28 = (frost$core$Int) {3u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Compiler.frost:65:22
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp29 = $tmp3.value;
 int64_t $tmp30 = $tmp28.value;
 bool $tmp31 = $tmp29 == $tmp30;
@@ -120,11 +119,11 @@ void org$frostlang$frostc$Compiler$Resolution$cleanup(org$frostlang$frostc$Compi
 return;
 
 }
-org$frostlang$frostc$Compiler$Resolution org$frostlang$frostc$Compiler$Resolution$init$frost$core$Int64(frost$core$Int64 param0) {
+org$frostlang$frostc$Compiler$Resolution org$frostlang$frostc$Compiler$Resolution$init$frost$core$Int(frost$core$Int param0) {
 
 org$frostlang$frostc$Compiler$Resolution local0;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Compiler.frost:47
-frost$core$Int64* $tmp38 = &(&local0)->$rawValue;
+frost$core$Int* $tmp38 = &(&local0)->$rawValue;
 *$tmp38 = param0;
 org$frostlang$frostc$Compiler$Resolution $tmp39 = *(&local0);
 return $tmp39;
@@ -133,8 +132,8 @@ return $tmp39;
 frost$core$Bit org$frostlang$frostc$Compiler$Resolution$$EQ$org$frostlang$frostc$Compiler$Resolution$R$frost$core$Bit(org$frostlang$frostc$Compiler$Resolution param0, org$frostlang$frostc$Compiler$Resolution param1) {
 
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Compiler.frost:47
-frost$core$Int64 $tmp40 = param0.$rawValue;
-frost$core$Int64 $tmp41 = param1.$rawValue;
+frost$core$Int $tmp40 = param0.$rawValue;
+frost$core$Int $tmp41 = param1.$rawValue;
 int64_t $tmp42 = $tmp40.value;
 int64_t $tmp43 = $tmp41.value;
 bool $tmp44 = $tmp42 != $tmp43;

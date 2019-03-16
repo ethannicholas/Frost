@@ -284,7 +284,7 @@ frost$core$Int64 $tmp89 = (frost$core$Int64) {9223372036854775807u};
 // begin inline call to function frost.core.Int64.get_asInt():frost.core.Int from Int.frost:22:34
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:580
 int64_t $tmp90 = $tmp89.value;
-frost$core$Int $tmp91 = (frost$core$Int) {$tmp90};
+frost$core$Int $tmp91 = (frost$core$Int) {((int64_t) $tmp90)};
 frost$collections$Array* $tmp92 = frost$core$String$split$frost$core$String$frost$core$Int$R$frost$collections$Array$LTfrost$core$String$GT(param1, &$s93, $tmp91);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp92));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp92));

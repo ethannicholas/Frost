@@ -19,9 +19,8 @@
 #include "frost/core/Weak.h"
 #include "frost/collections/HashMap.h"
 #include "frost/core/Equatable.h"
-#include "frost/core/Int64.h"
-#include "org/frostlang/frostc/FixedArray.h"
 #include "frost/core/Int.h"
+#include "org/frostlang/frostc/FixedArray.h"
 #include "org/frostlang/frostc/Symbol.h"
 #include "frost/collections/CollectionView.h"
 #include "frost/collections/List.h"
@@ -29,6 +28,7 @@
 #include "frost/collections/Stack.h"
 #include "frost/collections/Iterable.h"
 #include "frost/collections/Iterator.h"
+#include "frost/core/Int64.h"
 #include "frost/core/String/Index.h"
 #include "frost/core/Range.LTfrost/core/String/Index.Q.GT.h"
 #include "frost/core/MutableString.h"
@@ -218,10 +218,10 @@ org$frostlang$frostc$Type$Kind $tmp42 = *$tmp41;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp43;
 $tmp43 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp43->value = $tmp42;
-frost$core$Int64 $tmp44 = (frost$core$Int64) {11u};
-// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int64):org.frostlang.frostc.Type.Kind from Type.frost:370:31
+frost$core$Int $tmp44 = (frost$core$Int) {11u};
+// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:370:31
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Type.frost:5
-frost$core$Int64* $tmp45 = &(&local2)->$rawValue;
+frost$core$Int* $tmp45 = &(&local2)->$rawValue;
 *$tmp45 = $tmp44;
 org$frostlang$frostc$Type$Kind $tmp46 = *(&local2);
 *(&local1) = $tmp46;
@@ -366,10 +366,10 @@ org$frostlang$frostc$SymbolTable** $tmp109 = &param0->symbolTable;
 *$tmp109 = $tmp106;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp106));
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/ClassDecl.frost:129
-frost$core$Int64 $tmp110 = (frost$core$Int64) {0u};
-// begin inline call to org.frostlang.frostc.Compiler.Resolution.init(rv:frost.core.Int64):org.frostlang.frostc.Compiler.Resolution from ClassDecl.frost:129:45
+frost$core$Int $tmp110 = (frost$core$Int) {0u};
+// begin inline call to org.frostlang.frostc.Compiler.Resolution.init(rv:frost.core.Int):org.frostlang.frostc.Compiler.Resolution from ClassDecl.frost:129:45
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Compiler.frost:47
-frost$core$Int64* $tmp111 = &(&local4)->$rawValue;
+frost$core$Int* $tmp111 = &(&local4)->$rawValue;
 *$tmp111 = $tmp110;
 org$frostlang$frostc$Compiler$Resolution $tmp112 = *(&local4);
 *(&local3) = $tmp112;
@@ -629,10 +629,10 @@ org$frostlang$frostc$Type$Kind local1;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/ClassDecl.frost:141
 FROST_ASSERT(112 == sizeof(org$frostlang$frostc$Type));
 org$frostlang$frostc$Type* $tmp256 = (org$frostlang$frostc$Type*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$Type$class);
-frost$core$Int64 $tmp257 = (frost$core$Int64) {0u};
-// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int64):org.frostlang.frostc.Type.Kind from ClassDecl.frost:142:37
+frost$core$Int $tmp257 = (frost$core$Int) {0u};
+// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from ClassDecl.frost:142:37
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Type.frost:5
-frost$core$Int64* $tmp258 = &(&local1)->$rawValue;
+frost$core$Int* $tmp258 = &(&local1)->$rawValue;
 *$tmp258 = $tmp257;
 org$frostlang$frostc$Type$Kind $tmp259 = *(&local1);
 *(&local0) = $tmp259;

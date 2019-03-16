@@ -10,7 +10,7 @@
 #include "org/frostlang/frostc/ASTNode.h"
 #include "org/frostlang/frostc/Compiler/Resolution.h"
 #include "org/frostlang/frostc/Symbol/Kind.h"
-#include "frost/core/Int64.h"
+#include "frost/core/Int.h"
 #include "frost/core/Weak.h"
 #include "frost/core/Object.h"
 #include "frost/core/Frost.h"
@@ -40,10 +40,10 @@ org$frostlang$frostc$Compiler$Resolution local1;
 org$frostlang$frostc$Symbol$Kind local2;
 org$frostlang$frostc$Symbol$Kind local3;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/FieldDecl.frost:25
-frost$core$Int64 $tmp2 = (frost$core$Int64) {0u};
-// begin inline call to org.frostlang.frostc.Compiler.Resolution.init(rv:frost.core.Int64):org.frostlang.frostc.Compiler.Resolution from FieldDecl.frost:25:40
+frost$core$Int $tmp2 = (frost$core$Int) {0u};
+// begin inline call to org.frostlang.frostc.Compiler.Resolution.init(rv:frost.core.Int):org.frostlang.frostc.Compiler.Resolution from FieldDecl.frost:25:40
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Compiler.frost:47
-frost$core$Int64* $tmp3 = &(&local1)->$rawValue;
+frost$core$Int* $tmp3 = &(&local1)->$rawValue;
 *$tmp3 = $tmp2;
 org$frostlang$frostc$Compiler$Resolution $tmp4 = *(&local1);
 *(&local0) = $tmp4;
@@ -93,10 +93,10 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp22));
 org$frostlang$frostc$ASTNode** $tmp23 = &param0->rawValue;
 *$tmp23 = param8;
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/FieldDecl.frost:35
-frost$core$Int64 $tmp24 = (frost$core$Int64) {2u};
-// begin inline call to org.frostlang.frostc.Symbol.Kind.init(rv:frost.core.Int64):org.frostlang.frostc.Symbol.Kind from FieldDecl.frost:35:31
+frost$core$Int $tmp24 = (frost$core$Int) {2u};
+// begin inline call to org.frostlang.frostc.Symbol.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Symbol.Kind from FieldDecl.frost:35:31
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Symbol.frost:4
-frost$core$Int64* $tmp25 = &(&local3)->$rawValue;
+frost$core$Int* $tmp25 = &(&local3)->$rawValue;
 *$tmp25 = $tmp24;
 org$frostlang$frostc$Symbol$Kind $tmp26 = *(&local3);
 *(&local2) = $tmp26;
@@ -126,10 +126,10 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp28));
 // /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/FieldDecl.frost:41
 org$frostlang$frostc$FieldDecl$Kind* $tmp35 = &param0->fieldKind;
 org$frostlang$frostc$FieldDecl$Kind $tmp36 = *$tmp35;
-frost$core$Int64 $tmp37 = $tmp36.$rawValue;
-frost$core$Int64 $tmp38 = (frost$core$Int64) {0u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from FieldDecl.frost:42:22
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp37 = $tmp36.$rawValue;
+frost$core$Int $tmp38 = (frost$core$Int) {0u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from FieldDecl.frost:42:22
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp39 = $tmp37.value;
 int64_t $tmp40 = $tmp38.value;
 bool $tmp41 = $tmp39 == $tmp40;
@@ -142,9 +142,9 @@ frost$core$MutableString* $tmp44 = *(&local0);
 frost$core$MutableString$append$frost$core$String($tmp44, &$s45);
 goto block1;
 block3:;
-frost$core$Int64 $tmp46 = (frost$core$Int64) {1u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from FieldDecl.frost:43:22
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp46 = (frost$core$Int) {1u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from FieldDecl.frost:43:22
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp47 = $tmp37.value;
 int64_t $tmp48 = $tmp46.value;
 bool $tmp49 = $tmp47 == $tmp48;
@@ -157,9 +157,9 @@ frost$core$MutableString* $tmp52 = *(&local0);
 frost$core$MutableString$append$frost$core$String($tmp52, &$s53);
 goto block1;
 block6:;
-frost$core$Int64 $tmp54 = (frost$core$Int64) {2u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from FieldDecl.frost:44:22
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp54 = (frost$core$Int) {2u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from FieldDecl.frost:44:22
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp55 = $tmp37.value;
 int64_t $tmp56 = $tmp54.value;
 bool $tmp57 = $tmp55 == $tmp56;
@@ -172,9 +172,9 @@ frost$core$MutableString* $tmp60 = *(&local0);
 frost$core$MutableString$append$frost$core$String($tmp60, &$s61);
 goto block1;
 block9:;
-frost$core$Int64 $tmp62 = (frost$core$Int64) {3u};
-// begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from FieldDecl.frost:45:22
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:245
+frost$core$Int $tmp62 = (frost$core$Int) {3u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from FieldDecl.frost:45:22
+// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
 int64_t $tmp63 = $tmp37.value;
 int64_t $tmp64 = $tmp62.value;
 bool $tmp65 = $tmp63 == $tmp64;

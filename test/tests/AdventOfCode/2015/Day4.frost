@@ -260,9 +260,9 @@ class MD5 {
         def result := Array<Char8>(16)
         for b in bytes {
             def i1 := (b // 16)
-            result.add(DIGITS[i1].asChar8)
+            result.add(DIGITS[i1.asInt].asChar8)
             def i2 := (b % 16)
-            result.add(DIGITS[i2].asChar8)
+            result.add(DIGITS[i2.asInt].asChar8)
         }
         return String(result)
     }
