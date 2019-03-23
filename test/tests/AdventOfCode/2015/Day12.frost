@@ -40,10 +40,10 @@ function findNumbers(input:JSON, exclude:String?):Int {
         when JSON.INT(v) {
             return v
         }
-        when JSON.ARRAY(values) {
+        when JSON.LIST(values) {
             return values.map(o => self.findNumbers(o, exclude)).fold(Int.+)
         }
-        when JSON.OBJECT(table) {
+        when JSON.MAP(table) {
             var result := 0
             for v in table.values {
                 if exclude !== null {

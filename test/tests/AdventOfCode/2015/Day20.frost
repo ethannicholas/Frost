@@ -35,7 +35,7 @@ puzzle input?
 *-
 
 method main() {
-    def input := Console.inputStream().readFully().trimmed.asInt64
+    def input := Console.inputStream().readFully().trimmed.asInt
     var values := Array<Int>(input // 10, 0)
     for i in 1 .. values.count {
         for j in i .. values.count by i {

@@ -41,9 +41,6 @@ uses org.frostlang.frostc.statement.Var
 
 @final
 class Compiler {
-    -- FIXME remove this
-    def INT_EXISTS:Bit
-
     choice Resolution {
         UNRESOLVED
         IN_PROGRESS
@@ -357,7 +354,7 @@ class Compiler {
 
         @override
         function get_hash():Int {
-            return Frost.addressOf(expr).asInt ~~ target.hash
+            return Frost.addressOf(expr) ~~ target.hash
         }
     }
 
@@ -381,7 +378,7 @@ class Compiler {
 
         @override
         function get_hash():Int {
-            return (Frost.addressOf(left) ~~ Frost.addressOf(right)).asInt
+            return Frost.addressOf(left) ~~ Frost.addressOf(right)
         }
     }
 
@@ -683,13 +680,7 @@ class Compiler {
         addAlias("frost.core.Int16")
         addAlias("frost.core.Int32")
         addAlias("frost.core.Int64")
-        INT_EXISTS := settings.frostHome.resolve("frost/core/Int.frost").exists()
-        if INT_EXISTS {
-            addAlias("frost.core.Int")
-        }
-        else {
-            root.add(Alias("Int", INT64_TYPE))
-        }
+        addAlias("frost.core.Int")
         addAlias("frost.core.Immutable")
         addAlias("frost.core.Maybe")
         addAlias("frost.core.Method")
@@ -708,12 +699,7 @@ class Compiler {
         addAlias("frost.core.UInt16")
         addAlias("frost.core.UInt32")
         addAlias("frost.core.UInt64")
-        if INT_EXISTS {
-            addAlias("frost.core.UInt")
-        }
-        else {
-            root.add(Alias("UInt", UINT64_TYPE))
-        }
+        addAlias("frost.core.UInt")
         addAlias("frost.core.Value")
         addAlias("frost.core.Weak")
         addAlias("frost.math.MersenneTwister")
@@ -1946,12 +1932,7 @@ class Compiler {
                 return BIT_TYPE
             }
             when ASTNode.INT {
-                if INT_EXISTS {
-                    return INT_TYPE
-                }
-                else {
-                    return INT64_TYPE
-                }
+                return INT_TYPE
             }
             when ASTNode.UNARY(_, op, base) {
                 def baseType := preferredType(base)
@@ -2974,10 +2955,8 @@ class Compiler {
                 }
                 result.add(BUILTIN_INT64_TYPE)
                 result.add(INT64_TYPE)
-                if INT_EXISTS {
-                    result.add(INT_TYPE)
-                    result.add(UINT_TYPE)
-                }
+                result.add(INT_TYPE)
+                result.add(UINT_TYPE)
                 if value >= UInt8.MIN.asUInt64 & value <= UInt8.MAX.asUInt64 {
                     result.add(BUILTIN_UINT8_TYPE)
                     result.add(UINT8_TYPE)
@@ -4423,7 +4402,7 @@ class Compiler {
             return INT32_TYPE
         }
         else if leftSize <= 32 & rightSize <= 32 {
-            return INT_TYPE
+            return INT64_TYPE
         }
         else if leftSize < 64 | rightSize < 64 {
             if leftType = INT_TYPE | rightType = INT_TYPE {
@@ -5982,7 +5961,7 @@ class Compiler {
                     index += 1
                 }
                 compilePreconditions()
---                compilePostconditions()
+                compilePostconditions()
                 for s in m.body {
                     compileStatement(s)
                 }

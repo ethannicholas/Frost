@@ -64,7 +64,7 @@ class IntLiteral {
             }
         }
         return compiler.coerce(position, compile(compiler, position, value,
-                TypeContext.TYPE(compiler.INT64_TYPE, false)), type)
+                TypeContext.TYPE(compiler.INT_TYPE, false)), type)
     }
 
     @class
@@ -97,6 +97,9 @@ class IntLiteral {
                     assert cl !== null
                     def m := cl.methods[0]
                     assert m.methodKind = MethodDecl.Kind.INIT
+                    if !compiler.resolve(m) {
+                        return null
+                    }
                     def finalValue := compileNegated(compiler, position, value,
                             TypeContext.TYPE(m.parameters[0].type, false))
                     def result := compiler.ir.add(IR.Statement.CREATE_STRUCT(position,
@@ -106,6 +109,6 @@ class IntLiteral {
             }
         }
         return compiler.coerce(position, compileNegated(compiler, position, value,
-                TypeContext.TYPE(compiler.INT64_TYPE, false)), type)
+                TypeContext.TYPE(compiler.INT_TYPE, false)), type)
     }
 }

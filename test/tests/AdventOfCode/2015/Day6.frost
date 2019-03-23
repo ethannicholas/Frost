@@ -64,8 +64,8 @@ method main() {
             when "turn off" { f := s => (false, (s[1] - 1).max(0)) }
             when "toggle"   { f := s => (!s[0], s[1] + 2) }
         }
-        for x in parsed[1].asInt64 ... parsed[3].asInt64 {
-            for y in parsed[2].asInt64 ... parsed[4].asInt64 {
+        for x in parsed[1].asInt ... parsed[3].asInt {
+            for y in parsed[2].asInt ... parsed[4].asInt {
                 lights[x][y] := f(lights[x][y])
             }
         }

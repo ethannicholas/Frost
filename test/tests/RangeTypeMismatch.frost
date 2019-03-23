@@ -6,13 +6,13 @@ class RangeTypeMismatch {
     }
 
     method test2() {
-        for i in SteppedRange<UInt64, Int64>(10, 0, -1, true) {
+        for i in SteppedRange<UInt, Int>(10, 0, -1, true) {
             Console.printLine(i)
         }
     }
 
     method test3() {
-        for i:Int8 in Range<Int64>(0, 10, true) {
+        for i:Int8 in Range<Int>(0, 10, true) {
             Console.printLine(i)
         }
     }

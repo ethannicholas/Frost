@@ -96,9 +96,9 @@ method fight(items:ListView<Array<Int>>, enemyHP:Int, enemyDamage:Int,
 method main() {
     def input := Console.inputStream().readFully().parse(
             /Hit Points: (\d+)\nDamage: (\d+)\nArmor: (\d+)/)
-    def enemyHP := input[0].asInt64
-    def enemyDamage := input[1].asInt64
-    def enemyArmor := input[2].asInt64
+    def enemyHP := input[0].asInt
+    def enemyDamage := input[1].asInt
+    def enemyArmor := input[2].asInt
     var bests := (Int.MAX, 0)
     for weapon in weapons {
         for armor in armor {

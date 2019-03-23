@@ -57,7 +57,7 @@ class Day23 {
             self.registers[reg] := f(self.registers[reg])
         }
         method jump(s:String) {
-            process("ip", (s.replace("+", "").asInt64 - 1).+)    
+            process("ip", (s.replace("+", "").asInt - 1).+)    
         }
         def cmd := cmds[registers["ip"]].split(/[\s,]+/)
         match cmd[0] {

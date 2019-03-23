@@ -167,7 +167,6 @@ class Call {
         return Pair<Bit, IR.Value?>(true, construct)
     }
 
-    -- just a stopgap until proper inlining is in
     @class
     method compileNumberIntrinsic(compiler:Compiler, position:Position, target:IR.Value?,
             m:MethodRef, args:ListView<ASTNode>):Pair<Bit, IR.Value?> {
@@ -242,7 +241,6 @@ class Call {
         return Pair<Bit, IR.Value?>(false, null)
     }
 
-    -- just a stopgap until proper inlining is in
     @class
     method compileBitIntrinsic(compiler:Compiler, position:Position, target:IR.Value?, m:MethodRef,
             args:ListView<ASTNode>):Pair<Bit, IR.Value?> {

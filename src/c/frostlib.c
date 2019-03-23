@@ -804,11 +804,6 @@ void frost$core$Frost$addressOf$frost$core$Object$R$frost$core$Int(Int64* result
     result->value = (int64_t) o;
 }
 
-// FIXME delete
-void frost$core$Frost$addressOf$frost$core$Object$R$frost$core$Int64(Int64* result, void* o) {
-    result->value = (int64_t) o;
-}
-
 void frost$core$Frost$toReal64$frost$core$String$R$frost$core$Real64(Real64* result, String* s) {
     char* cstr = frostGetCString(s);
     result->value = atof(cstr);
@@ -1103,7 +1098,7 @@ void frost$threads$Thread$waitFor(Thread* thread) {
     pthread_join((pthread_t) thread->nativeHandle, NULL);
 }
 
-void frost$threads$Thread$sleep$frost$core$Int64(int64_t millis) {
+void frost$threads$Thread$sleep$frost$core$Int(int64_t millis) {
     usleep(millis * 1000);
 }
 

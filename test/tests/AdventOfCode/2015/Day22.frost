@@ -243,11 +243,11 @@ class Day22 {
         def text := Console.inputStream().readFully()
         def parsed := text.parse(/[^\d]*(\d+)\n[^\d]*(\d+)/)
         assert parsed !== null
-        var d := Day22(parsed[0].asInt64, parsed[1].asInt64, false)
+        var d := Day22(parsed[0].asInt, parsed[1].asInt, false)
         d.test(State(d))
         Console.printLine(d.best)
 
-        d := Day22(parsed[0].asInt64, parsed[1].asInt64, true)
+        d := Day22(parsed[0].asInt, parsed[1].asInt, true)
         d.test(State(d))
         Console.printLine(d.best)
     }

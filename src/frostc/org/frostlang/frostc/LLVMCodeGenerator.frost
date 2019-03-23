@@ -37,7 +37,7 @@ class LLVMCodeGenerator : CodeGenerator {
     constant VTABLE_INDEX        := 6
 
     constant INT_TYPE  := "i64"
-    def INT_CLASS:String
+    def INT_CLASS := "%frost$core$Int"
     constant SIZE_TYPE := "i64"
 
     def physicalOut:OutputStream
@@ -121,12 +121,6 @@ class LLVMCodeGenerator : CodeGenerator {
     @override
     method setCompiler(compiler:Compiler) {
         self.compiler := compiler
-        if compiler.INT_EXISTS {
-            INT_CLASS := "%frost$core$Int"
-        }
-        else {
-            INT_CLASS := "%frost$core$Int64"
-        }
     }
 
     @override

@@ -195,7 +195,6 @@ add_library(c_frost
     bootstrap/src/org/frostlang/frostc/Compiler/_Closure2.c
     bootstrap/src/org/frostlang/frostc/Compiler/Capture.c
     bootstrap/src/org/frostlang/frostc/Compiler/InlineReturn.c
-    bootstrap/src/org/frostlang/frostc/Compiler/_Closure19.c
     bootstrap/src/org/frostlang/frostc/Compiler/_Closure13.c
     bootstrap/src/org/frostlang/frostc/Compiler/AutoUnrefs.c
     bootstrap/src/org/frostlang/frostc/Compiler/Settings.c
@@ -262,7 +261,6 @@ add_library(c_frost
     bootstrap/src/frost/core/Range.LTfrost/core/String/Index.Q.GT.c
     bootstrap/src/frost/core/Range.LTfrost/core/String/Index.GT.c
     bootstrap/src/frost/core/Range.LTfrost/core/UInt.GT.c
-    bootstrap/src/frost/core/Range.LTfrost/core/Int64.Q.GT.c
     bootstrap/src/frost/core/Tuple7.c
     bootstrap/src/frost/core/Tuple15.c
     bootstrap/src/frost/core/Tuple11.c
@@ -323,9 +321,7 @@ add_library(c_frost
     bootstrap/src/frost/core/SteppedRange.LTfrost/core/UInt32.Cfrost/core/UInt32.GT.c
     bootstrap/src/frost/core/SteppedRange.LTfrost/core/UInt16.Cfrost/core/UInt16.GT.c
     bootstrap/src/frost/core/SteppedRange.LTfrost/core/Int64.Cfrost/core/Int64.GT.c
-    bootstrap/src/frost/core/SteppedRange.LTfrost/core/String/Index.Q.Cfrost/core/Int64.GT.c
     bootstrap/src/frost/core/SteppedRange.LTfrost/core/String/Index.Q.Cfrost/core/Int.GT.c
-    bootstrap/src/frost/core/SteppedRange.LTfrost/core/Int64.Q.Cfrost/core/Int64.GT.c
     bootstrap/src/frost/core/SteppedRange.LTfrost/core/UInt.Cfrost/core/UInt.GT.c
     bootstrap/src/frost/core/SteppedRange.LTfrost/core/Int.Q.Cfrost/core/Int.GT.c
     bootstrap/src/frost/core/SteppedRange.LTfrost/core/Int8.Cfrost/core/Int8.GT.c
@@ -643,7 +639,6 @@ add_executable(bootstrap
     bootstrap/src/frost/core/Range.LTfrost/core/Int16.GT.c
     bootstrap/src/frost/core/Range.LTfrost/core/Int32.GT.c
     bootstrap/src/frost/core/Range.LTfrost/core/Int64.GT.c
-    bootstrap/src/frost/core/Range.LTfrost/core/Int64.Q.GT.c
     bootstrap/src/frost/core/Range.LTfrost/core/Int8.GT.c
     bootstrap/src/frost/core/Range.LTfrost/core/MutableString/Index.GT.c
     bootstrap/src/frost/core/Range.LTfrost/core/MutableString/Index.Q.GT.c
@@ -659,9 +654,7 @@ add_executable(bootstrap
     bootstrap/src/frost/core/SteppedRange.LTfrost/core/Int16.Cfrost/core/Int16.GT.c
     bootstrap/src/frost/core/SteppedRange.LTfrost/core/Int32.Cfrost/core/Int32.GT.c
     bootstrap/src/frost/core/SteppedRange.LTfrost/core/Int64.Cfrost/core/Int64.GT.c
-    bootstrap/src/frost/core/SteppedRange.LTfrost/core/Int64.Q.Cfrost/core/Int64.GT.c
     bootstrap/src/frost/core/SteppedRange.LTfrost/core/Int8.Cfrost/core/Int8.GT.c
-    bootstrap/src/frost/core/SteppedRange.LTfrost/core/String/Index.Q.Cfrost/core/Int64.GT.c
     bootstrap/src/frost/core/SteppedRange.LTfrost/core/UInt16.Cfrost/core/UInt16.GT.c
     bootstrap/src/frost/core/SteppedRange.LTfrost/core/UInt32.Cfrost/core/UInt32.GT.c
     bootstrap/src/frost/core/SteppedRange.LTfrost/core/UInt64.Cfrost/core/UInt64.GT.c

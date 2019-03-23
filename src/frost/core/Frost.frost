@@ -78,7 +78,7 @@ class Frost {
 
     @class
     @external
-    function addressOf(o:Object):Int64
+    function addressOf(o:Object):Int
 
     @class
     method assertionFailure(file:String, line:Int) {

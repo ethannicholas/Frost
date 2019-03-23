@@ -65,7 +65,7 @@ method scan(lines:CollectionView<String>, compare:(String, Int, Int)=>(Bit)) {
     outer: for line in lines {
         def parsed := line.parse(/.*?(\d+).*?(\w+).*?(\d+).*?(\w+).*?(\d+).*?(\w+).*?(\d+)/)
         for i in 1 ... 5 by 2 {
-            if !compare(parsed[i], target[parsed[i]], parsed[i + 1].asInt64) {
+            if !compare(parsed[i], target[parsed[i]], parsed[i + 1].asInt) {
                 continue outer            
             }
         }

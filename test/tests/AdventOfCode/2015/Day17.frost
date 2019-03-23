@@ -35,7 +35,7 @@ Your puzzle answer was 17.
 method main() {
     def sizes := Array<Int>()
     for line in Console.inputStream().lines() {
-        sizes.add(line.asInt64)
+        sizes.add(line.asInt)
     }
     var counts := Array<Int>()
     for bits in 0 .. 1 << sizes.count {

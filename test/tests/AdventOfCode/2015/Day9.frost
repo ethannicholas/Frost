@@ -50,10 +50,10 @@ method main() {
     for line in Console.inputStream().lines() {
         def parsed := line.parse(regex)
         if parsed[0] < parsed[1] {
-            edges[(parsed[0], parsed[1])] := parsed[2].asInt64
+            edges[(parsed[0], parsed[1])] := parsed[2].asInt
         }
         else {
-            edges[(parsed[1], parsed[0])] := parsed[2].asInt64
+            edges[(parsed[1], parsed[0])] := parsed[2].asInt
         }
         vertices.add(parsed[0])
         vertices.add(parsed[1])

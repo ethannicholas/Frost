@@ -1,6 +1,6 @@
 RangeForLoopNull.frost:3:23: error: expected 'frost.core.Object', but found 'null'
-RangeForLoopNull.frost:3:20: error: range endpoints must be value types, but found 'frost.core.Object'
+RangeForLoopNull.frost:3:20: error: range endpoints must be value types, but found 'frost.core.Object', 'frost.core.Object'
 RangeForLoopNull.frost:8:18: error: expected 'frost.core.Object', but found 'null'
-RangeForLoopNull.frost:8:23: error: range endpoints must be value types, but found 'frost.core.Object'
+RangeForLoopNull.frost:8:23: error: range endpoints must be value types, but found 'frost.core.Object', 'frost.core.Object'
 RangeForLoopNull.frost:13:29: error: expected 'frost.core.Int', but found 'null'
 5 errors

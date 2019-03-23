@@ -119,7 +119,7 @@ method main() {
             people.add(name2)
         }
         def pair := pairs[(name1, name2)]
-        var happiness := parsed[2].asInt64
+        var happiness := parsed[2].asInt
         if parsed[1] = "lose" {
             happiness := -happiness
         }

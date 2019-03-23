@@ -55,8 +55,8 @@ method main() {
     for line in Console.inputStream().lines() {
         def parsed := line.parse(/.*?(\d+).*?(\d+).*?(\d+).+/)
         assert parsed !== null
-        reindeer.add((parsed[0].asInt64, parsed[1].asInt64, parsed[2].asInt64))
-        states.add((true, parsed[1].asInt64, 0, 0))
+        reindeer.add((parsed[0].asInt, parsed[1].asInt, parsed[2].asInt))
+        states.add((true, parsed[1].asInt, 0, 0))
     }
 
     for i in 1 ... 2503 {
