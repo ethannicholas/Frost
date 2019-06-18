@@ -360,7 +360,7 @@ class LLVMCodeGenerator : CodeGenerator {
             }
             writtenTypes.add(t.name)
             def cl := compiler.getClass(t)
-            assert cl !== null
+            assert cl !== null, "could not find class \{t}"
             assert !cl.annotations.isSpecialize
             compiler.resolve(cl)
             if cl.resolved != Compiler.Resolution.RESOLVED {

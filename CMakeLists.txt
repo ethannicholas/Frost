@@ -854,6 +854,7 @@ set(public_source
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/threads/MessageQueue.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/threads/ScopedLock.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/threads/Thread.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/time/Timer.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/unsafe/UnsafeMessageQueue.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/org/frostlang/json/Lexer.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/org/frostlang/json/Position.frost
@@ -1182,7 +1183,9 @@ set(frostc_source
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/Alias.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/Annotations.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/ASTNode.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/Bench.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/CCodeGenerator.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/Compiler.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/ChoiceCase.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/ClassDecl.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/CodeGenerator.frost

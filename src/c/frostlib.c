@@ -15,6 +15,11 @@
 
 #include "unicode/uregex.h"
 
+#ifdef __APPLE__
+#define MACH_TIMER
+#include <mach/mach_time.h>
+#endif
+
 typedef uint8_t bool;
 
 #define true 1
@@ -224,6 +229,17 @@ typedef struct Matcher {
     Bit matched;
     StringIndex replacementIndex;
 } Matcher;
+
+typedef struct Timer {
+    Class* cl;
+    int32_t refcnt;
+#ifdef MACH_TIMER
+    double scale;
+#else
+    int64_t native;
+#endif
+    double basis;
+} Timer;
 
 extern Class frost$core$Frost$class;
 
@@ -1444,3 +1460,22 @@ Error* frost$io$File$rename$frost$core$String(File* src, String* dst) {
     return NULL;
 }
 
+// Timer
+
+void frost$time$Timer$setup(Timer* timer) {
+#ifdef MACH_TIMER
+    mach_timebase_info_data_t info;
+    mach_timebase_info(&info);
+    timer->scale = (double) info.numer / (double) info.denom / 1000000000.0;
+#endif
+}
+
+double frost$time$Timer$now$R$builtin_float64(Timer* timer) {
+#ifdef MACH_TIMER
+    return mach_absolute_time() * timer->scale;
+#endif
+    return 0;
+}
+
+void frost$time$Timer$destroy(Timer* timer) {
+}

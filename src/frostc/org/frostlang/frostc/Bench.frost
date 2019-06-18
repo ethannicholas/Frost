@@ -1,0 +1,56 @@
+package org.frostlang.frostc
+
+class Bench {
+    constant COUNT := 5
+
+    method bench(name:String, src:String, optimizationLevel:Int, safetyLevel:Int) {
+        def timer := frost.time.Timer()
+        timer.reset()
+        for i in 0 .. COUNT {
+            def settings := Compiler.Settings(File(Config.frostSourceDir()),
+                    [File(Config.frostSourceDir())], optimizationLevel, safetyLevel, false)
+            def errorQueue := MessageQueue<Compiler.Message>()
+            def out := MemoryOutputStream()
+            def cg := LLVMCodeGenerator(Config.llvmTriple(), out)
+            def compiler := Compiler(errorQueue, cg, settings)
+            compiler.compile(File("/fake/path/BenchDummy.frost"), src)
+            compiler.finish()
+            while errorQueue.hasMessage() {
+                def error := errorQueue.getMessage()
+                match error {
+                    when Compiler.Message.ERROR(file, line, column, message) {
+                        Console.printLine("\{file}:\{line}:\{column}: error: \{message}")
+                    }
+                    when Compiler.Message.WARNING(file, line, column, message) {
+                        Console.printLine("\{file}:\{line}:\{column}: warning: \{message}")
+                    }
+                }
+            }
+            assert(compiler.errorCount = 0)
+        }
+        Console.printLine("\{name}: \{timer.elapsed() / 5}")
+    }
+
+    method bench(name:String, src:String) {
+        bench(name + "-O0", src, 0, 0)
+        bench(name + "-O3", src, 3, 3)
+    }
+
+    method run() {
+        try {
+            bench("Hello", "method main() { Console.printLine(\"Hello, World!\") }")
+            def wumpus := File(Config.frostSourceDir()).resolve("../test/tests/Wumpus.frost")
+            bench("Wumpus", wumpus.readFully())
+            def big := MutableString("method main() {\n")
+            for i in 1 ... 10000 {
+                big.append("    Console.printLine(\"\{i}\")")
+            }
+            big.append("}")
+            bench("Big", big.finish())
+        }
+        fail(err) {
+            Console.printLine(err)
+            System.crash()
+        }
+    }
+}

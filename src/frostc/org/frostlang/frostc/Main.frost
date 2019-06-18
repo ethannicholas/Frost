@@ -395,10 +395,14 @@ class Main {
     
     @class
     method main(args:ListView<String>) {
-        if args.count > 1 & args[1] = "-repeat" {
+        if args.count > 1 & args[1] = "--repeat" {
             loop {
                 Main().run(args[1..])
             }
+        }
+        if args.count = 2 & args[1] = "--bench" {
+            Bench().run()
+            return
         }
         Main().run(args)
     }

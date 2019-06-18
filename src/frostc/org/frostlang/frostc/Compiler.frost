@@ -719,6 +719,7 @@ class Compiler {
         addAlias("frost.threads.Notifier")
         addAlias("frost.threads.ScopedLock")
         addAlias("frost.threads.Thread")
+        addAlias("frost.time.Timer")
         addAlias("frost.json.JSON")
         addAlias("frost.json.JSONParser")
         codeGenerator.setCompiler(self)
@@ -6152,42 +6153,56 @@ class Compiler {
         assert compilationQueue.count = 0
     }
 
-    method scan(raw:File):ListView<ClassDecl> {
+    method scan(file:File):ListView<ClassDecl> {
         try {
-            def file := raw.absolute()
-            var result := scans[file]
-            if result == null {
-                parser.start(file, files.count, file.readFully())
-                files.add(file)
-                def parsed := parser.file()
-                if parsed !== null {
-                    result := scanner.scan(file, parsed)
-                    for cl in result {
-                        classes[cl.name] := cl
-                    }
-                }
-                else {
-                    result := Array<ClassDecl>()
-                }
-                scans[file] := result
-            }
-            return result
+            def path := file.absolute()
+            return scan(path, file.readFully())
         }
         fail(err) {
-            files.add(raw)
+            files.add(file)
             error(Position(files.count, 1, 1), err.message)
             return []
         }
     }
 
+    method scan(path:File, text:String):ListView<ClassDecl> {
+        var result := scans[path]
+        if result == null {
+            parser.start(path, files.count, text)
+            files.add(path)
+            def parsed := parser.file()
+            if parsed !== null {
+                result := scanner.scan(path, parsed)
+                for cl in result {
+                    classes[cl.name] := cl
+                }
+            }
+            else {
+                result := Array<ClassDecl>()
+            }
+            scans[path] := result
+        }
+        return result
+    }
+
     method compile(file:File) {
-        for cl in scan(file) {
+        try {
+            compile(file, file.readFully())
+        }
+        fail(err) {
+            error(Position(files.count, 1, 1), err.message)
+        }
+    }
+
+    method compile(path:File, text:String) {
+        for cl in scan(path, text) {
             compile(cl)
         }
     }
 
     method error(pos:Position, msg:String) {
         if reportErrors {
+        System.crash()
             errorCount += 1
             def path:String
             if pos.file >= 0 & pos.file < files.count {
