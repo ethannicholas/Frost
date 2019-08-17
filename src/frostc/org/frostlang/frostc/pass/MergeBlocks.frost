@@ -11,16 +11,13 @@ class MergeBlocks {
             if preds !== null & preds.count = 1 {
                 def p := analysis.blocks[preds.iterator.next().id]
                 assert p !== null
-                def last := p.statements.count - 1
-                match p.statements[last] {
+                match p.statements.last {
                     when IR.Statement.BRANCH(position, target) {
                         assert target = b.id
-                        p.statements.removeIndex(last)
-                        p.ids.removeIndex(last)
-                        p.statements.addAll(b.statements)
-                        p.ids.addAll(b.ids)
-                        b.statements.clear()
-                        b.ids.clear()
+                        p.statements.removeLast()
+                        p.ids.removeLast()
+                        p.statements.merge(b.statements)
+                        p.ids.merge(b.ids)
                         b.statements.add(IR.Statement.UNREACHABLE(position))
                         changed := true
                     }

@@ -30,30 +30,30 @@ static frost$core$String $s29 = { (frost$core$Class*) &frost$core$String$class, 
 
 void frost$core$String$MatchIterator$init$frost$core$String$frost$core$String$frost$core$Bit(frost$core$String$MatchIterator* param0, frost$core$String* param1, frost$core$String* param2, frost$core$Bit param3) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:222
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:222
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
 frost$core$String** $tmp3 = &param0->haystack;
 frost$core$String* $tmp4 = *$tmp3;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp4));
 frost$core$String** $tmp5 = &param0->haystack;
 *$tmp5 = param1;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:223
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:223
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param2));
 frost$core$String** $tmp6 = &param0->needle;
 frost$core$String* $tmp7 = *$tmp6;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp7));
 frost$core$String** $tmp8 = &param0->needle;
 *$tmp8 = param2;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:224
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:224
 frost$core$Bit* $tmp9 = &param0->allowOverlaps;
 frost$core$Bit $tmp10 = *$tmp9;
 frost$core$Bit* $tmp11 = &param0->allowOverlaps;
 *$tmp11 = $tmp10;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:225
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:225
 // begin inline call to function frost.core.String.indexOf(s:frost.core.String):frost.core.String.Index? from String.frost:225:42
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:978
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:978
 // begin inline call to function frost.core.String.get_start():frost.core.String.Index from String.frost:978:27
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:1205
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:1205
 frost$core$Int $tmp12 = (frost$core$Int) {0u};
 frost$core$String$Index $tmp13 = frost$core$String$Index$init$frost$core$Int($tmp12);
 frost$core$String$Index$nullable $tmp14 = frost$core$String$indexOf$frost$core$String$frost$core$String$Index$R$frost$core$String$Index$Q(param1, param2, $tmp13);
@@ -64,7 +64,7 @@ return;
 }
 frost$core$Bit frost$core$String$MatchIterator$get_done$R$frost$core$Bit(frost$core$String$MatchIterator* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:230
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:230
 frost$core$String$Index$nullable* $tmp16 = &param0->nextMatch;
 frost$core$String$Index$nullable $tmp17 = *$tmp16;
 frost$core$Bit $tmp18 = (frost$core$Bit) {!$tmp17.nonnull};
@@ -84,7 +84,7 @@ while ($tmp19->$class != (frost$core$Class*) &frost$collections$Iterator$class) 
 $fn21 $tmp20 = $tmp19->methods[0];
 frost$core$Bit $tmp22 = $tmp20(((frost$collections$Iterator*) param0));
 // begin inline call to function frost.core.Bit.!():frost.core.Bit from Iterator.frost:166:10
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Bit.frost:42
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
 bool $tmp23 = $tmp22.value;
 bool $tmp24 = !$tmp23;
 frost$core$Bit $tmp25 = (frost$core$Bit) {$tmp24};
@@ -95,18 +95,18 @@ frost$core$Int $tmp27 = (frost$core$Int) {234u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s28, $tmp27, &$s29);
 abort(); // unreachable
 block1:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:235
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:235
 frost$core$String$Index$nullable* $tmp30 = &param0->nextMatch;
 frost$core$String$Index$nullable $tmp31 = *$tmp30;
 *(&local0) = $tmp31;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:236
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:237
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:236
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:237
 frost$core$Bit* $tmp32 = &param0->allowOverlaps;
 frost$core$Bit $tmp33 = *$tmp32;
 bool $tmp34 = $tmp33.value;
 if ($tmp34) goto block4; else goto block6;
 block4:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:238
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:238
 frost$core$String** $tmp35 = &param0->haystack;
 frost$core$String* $tmp36 = *$tmp35;
 frost$core$String$Index $tmp37 = *(&local1);
@@ -115,14 +115,14 @@ frost$core$String$Index $tmp38 = frost$core$String$next$frost$core$String$Index$
 goto block5;
 block6:;
 // <no location>
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:241
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:241
 frost$core$String$Index$nullable* $tmp39 = &param0->nextMatch;
 frost$core$String$Index$nullable $tmp40 = *$tmp39;
 frost$core$Int $tmp41 = ((frost$core$String$Index) $tmp40.value).value;
 frost$core$String** $tmp42 = &param0->needle;
 frost$core$String* $tmp43 = *$tmp42;
 // begin inline call to function frost.core.String.get_byteLength():frost.core.Int from String.frost:241:63
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:492
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:492
 frost$core$Int* $tmp44 = &$tmp43->_length;
 frost$core$Int $tmp45 = *$tmp44;
 int64_t $tmp46 = $tmp41.value;
@@ -130,7 +130,7 @@ int64_t $tmp47 = $tmp45.value;
 int64_t $tmp48 = $tmp46 + $tmp47;
 frost$core$Int $tmp49 = (frost$core$Int) {$tmp48};
 // begin inline call to frost.core.String.Index.init(value:frost.core.Int):frost.core.String.Index from String.frost:241:38
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:61
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:61
 frost$core$Int* $tmp50 = &(&local3)->value;
 *$tmp50 = $tmp49;
 frost$core$String$Index $tmp51 = *(&local3);
@@ -139,7 +139,7 @@ frost$core$String$Index $tmp52 = *(&local2);
 *(&local1) = $tmp52;
 goto block5;
 block5:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:243
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:243
 frost$core$String** $tmp53 = &param0->haystack;
 frost$core$String* $tmp54 = *$tmp53;
 frost$core$String** $tmp55 = &param0->needle;
@@ -148,14 +148,14 @@ frost$core$String$Index $tmp57 = *(&local1);
 frost$core$String$Index$nullable $tmp58 = frost$core$String$indexOf$frost$core$String$frost$core$String$Index$R$frost$core$String$Index$Q($tmp54, $tmp56, $tmp57);
 frost$core$String$Index$nullable* $tmp59 = &param0->nextMatch;
 *$tmp59 = $tmp58;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:244
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:244
 frost$core$String$Index$nullable $tmp60 = *(&local0);
 return ((frost$core$String$Index) $tmp60.value);
 
 }
 void frost$core$String$MatchIterator$cleanup(frost$core$String$MatchIterator* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:212
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:212
 frost$core$Object$cleanup(((frost$core$Object*) param0));
 frost$core$String** $tmp61 = &param0->haystack;
 frost$core$String* $tmp62 = *$tmp61;

@@ -30,12 +30,12 @@ void org$frostlang$frostc$frostdoc$Markdown$HTMLToken$cleanup(org$frostlang$fros
 
 frost$core$String* local0 = NULL;
 frost$core$String* local1 = NULL;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:813
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:813
 frost$core$Int* $tmp2 = &param0->$rawValue;
 frost$core$Int $tmp3 = *$tmp2;
 frost$core$Int $tmp4 = (frost$core$Int) {0u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Markdown.frost:813:5
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 int64_t $tmp5 = $tmp3.value;
 int64_t $tmp6 = $tmp4.value;
 bool $tmp7 = $tmp5 == $tmp6;
@@ -60,7 +60,7 @@ goto block1;
 block3:;
 frost$core$Int $tmp15 = (frost$core$Int) {1u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Markdown.frost:813:5
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 int64_t $tmp16 = $tmp3.value;
 int64_t $tmp17 = $tmp15.value;
 bool $tmp18 = $tmp16 == $tmp17;
@@ -83,17 +83,17 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp25));
 *(&local1) = ((frost$core$String*) NULL);
 goto block1;
 block1:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:813
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:813
 frost$core$Immutable$cleanup(((frost$core$Immutable*) param0));
 return;
 
 }
 void org$frostlang$frostc$frostdoc$Markdown$HTMLToken$init$frost$core$Int$frost$core$String(org$frostlang$frostc$frostdoc$Markdown$HTMLToken* param0, frost$core$Int param1, frost$core$String* param2) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:813
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:813
 frost$core$Int* $tmp26 = &param0->$rawValue;
 *$tmp26 = param1;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:813
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:813
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param2));
 frost$core$String** $tmp27 = (frost$core$String**) (param0->$data + 0);
 *$tmp27 = param2;
@@ -102,7 +102,7 @@ return;
 }
 frost$core$Bit org$frostlang$frostc$frostdoc$Markdown$HTMLToken$$EQ$org$frostlang$frostc$frostdoc$Markdown$HTMLToken$R$frost$core$Bit(org$frostlang$frostc$frostdoc$Markdown$HTMLToken* param0, org$frostlang$frostc$frostdoc$Markdown$HTMLToken* param1) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:813
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:813
 frost$core$Int* $tmp28 = &param0->$rawValue;
 frost$core$Int $tmp29 = *$tmp28;
 frost$core$Int* $tmp30 = &param1->$rawValue;
@@ -114,11 +114,11 @@ frost$core$Bit $tmp35 = (frost$core$Bit) {$tmp34};
 bool $tmp36 = $tmp35.value;
 if ($tmp36) goto block1; else goto block2;
 block1:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:813
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:813
 frost$core$Bit $tmp37 = (frost$core$Bit) {false};
 return $tmp37;
 block2:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:813
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:813
 frost$core$Bit $tmp38 = (frost$core$Bit) {true};
 return $tmp38;
 

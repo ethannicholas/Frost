@@ -1,0 +1,137 @@
+package org.frostlang.frostc
+
+class LinkedList<T> : Collection<T> {
+    @private
+    class Node<T> {
+        def value:T
+        def next:Node<T>?
+        @weak
+        def prev:Node<T>?
+
+        init(value:T) {
+            self.value := value
+        }
+    }
+
+    @private
+    class LinkedListIterator<T> : Iterator<T> {
+        var current:Node<T>?
+
+        init(current:Node<T>) {
+            self.current := current
+        }
+
+        @override
+        method next():T {
+            assert current !== null
+            def result := current.value
+            current := current.next
+            return result
+        }
+
+        @override
+        function get_done():Bit {
+            return current == null
+        }
+    }
+
+    @private
+    var _count := 0
+
+    @private
+    var head:Node<T>?
+
+    @private
+    var tail:Node<T>?
+
+    @override
+    function get_count():Int {
+        return _count
+    }
+
+    @override
+    function get_iterator():Iterator<T> {
+        return LinkedListIterator<T>(head)
+    }
+
+    @override
+    method add(value:T) {
+        if tail !== null {
+            assert count > 0
+            tail.next := Node<T>(value)
+            tail.next.prev := tail
+            tail := tail.next
+        }
+        else {
+            assert count = 0
+            head := Node<T>(value)
+            tail := head
+        }
+        _count += 1
+    }
+
+    ================================================================================================
+    Removes all elements from the specified `LinkedList` and adds them to this list. Unlike
+    `addAll()`, which takes time proportional to the number of elements, `merge()` takes constant
+    time.
+    ================================================================================================
+    method merge(other:LinkedList<T>) {
+        if count > 0 {
+            tail.next := other.head
+            other.head.prev := tail
+            tail := other.tail
+            _count += other._count
+            other.clear()
+        }
+        else {
+            head := other.head
+            tail := other.tail
+            _count := other._count
+            other.clear()
+        }
+    }
+
+    property last:T
+    @pre(count > 0)
+    function get_last():T {
+        return tail.value
+    }
+
+    @pre(count > 0)
+    method removeLast() {
+        if _count > 1 {
+            tail.prev.next := null
+            tail := tail.prev
+            _count -= 1
+        }
+        else {
+            clear()
+        }
+    }
+
+    @override
+    method clear() {
+        head := null
+        tail := null
+        _count := 0
+    }
+
+    @override
+    function get_asString():String {
+        def result := MutableString()
+        result.append("[")
+        var separator := ""
+        for v in self {
+            result.append(separator)
+            separator := ", "
+            if v !== null {
+                result.append(v)
+            }
+            else {
+                result.append("<null>")
+            }
+        }
+        result.append("]")
+        return result.finish()
+    }
+}

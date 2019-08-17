@@ -23,16 +23,16 @@ static frost$core$String $s2 = { (frost$core$Class*) &frost$core$String$class, -
 org$frostlang$frostc$parser$Token org$frostlang$frostc$parser$Token$init$org$frostlang$frostc$parser$Token$Kind$frost$core$String$Index$frost$core$String$Index$org$frostlang$frostc$Position(org$frostlang$frostc$parser$Token$Kind param0, frost$core$String$Index param1, frost$core$String$Index param2, org$frostlang$frostc$Position param3) {
 
 org$frostlang$frostc$parser$Token local0;
-// /Users/ethannicholas/Dropbox/Frost-Int/build/org/frostlang/frostc/parser/Token.frost:253
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:253
 org$frostlang$frostc$parser$Token$Kind* $tmp3 = &(&local0)->kind;
 *$tmp3 = param0;
-// /Users/ethannicholas/Dropbox/Frost-Int/build/org/frostlang/frostc/parser/Token.frost:254
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:254
 frost$core$String$Index* $tmp4 = &(&local0)->start;
 *$tmp4 = param1;
-// /Users/ethannicholas/Dropbox/Frost-Int/build/org/frostlang/frostc/parser/Token.frost:255
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:255
 frost$core$String$Index* $tmp5 = &(&local0)->end;
 *$tmp5 = param2;
-// /Users/ethannicholas/Dropbox/Frost-Int/build/org/frostlang/frostc/parser/Token.frost:256
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:256
 org$frostlang$frostc$Position* $tmp6 = &(&local0)->position;
 *$tmp6 = param3;
 org$frostlang$frostc$parser$Token $tmp7 = *(&local0);

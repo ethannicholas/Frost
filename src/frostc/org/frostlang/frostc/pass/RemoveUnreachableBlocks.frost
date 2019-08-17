@@ -5,7 +5,7 @@ uses org.frostlang.frostc.IR
 class RemoveUnreachableBlocks {
     function isUnreachable(b:IR.Block, analysis:Analyzer):Bit {
         if b.statements.count = 1 {
-            match b.statements[0] {
+            match b.statements.first {
                 when IR.Statement.UNREACHABLE {
                     return true
                 }

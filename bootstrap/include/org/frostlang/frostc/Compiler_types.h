@@ -3,7 +3,6 @@
 typedef struct frost$core$Class frost$core$Class;
 #include "frost/core/Int32_types.h"
 #include "frost/core/UInt8_types.h"
-#include "frost/core/Bit_types.h"
 typedef struct org$frostlang$frostc$Type org$frostlang$frostc$Type;
 typedef struct org$frostlang$frostc$Compiler$Settings org$frostlang$frostc$Compiler$Settings;
 typedef struct org$frostlang$frostc$parser$Parser org$frostlang$frostc$parser$Parser;
@@ -17,6 +16,7 @@ typedef struct org$frostlang$frostc$IR org$frostlang$frostc$IR;
 typedef struct org$frostlang$frostc$CodeGenerator org$frostlang$frostc$CodeGenerator;
 typedef struct frost$threads$MessageQueue frost$threads$MessageQueue;
 #include "frost/core/Int_types.h"
+#include "frost/core/Bit_types.h"
 typedef struct org$frostlang$frostc$Variable org$frostlang$frostc$Variable;
 #include "org/frostlang/frostc/IR/Block/ID_types.h"
 typedef struct frost$collections$IdentityMap frost$collections$IdentityMap;
@@ -26,7 +26,6 @@ typedef struct org$frostlang$frostc$Compiler {
     frost$core$Class* $class;
     frost$core$Int32 refCount;
     frost$core$UInt8 $flags;
-    frost$core$Bit INT_EXISTS;
     org$frostlang$frostc$Type* VOID_TYPE;
     org$frostlang$frostc$Type* NULL_TYPE;
     org$frostlang$frostc$Type* OBJECT_TYPE;
@@ -116,6 +115,6 @@ typedef struct org$frostlang$frostc$Compiler {
     frost$collections$IdentityMap* lambdaTypes;
 } org$frostlang$frostc$Compiler;
 #include "frost/core/Class.h"
-typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[158]; } org$frostlang$frostc$Compiler$class_type;
+typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[160]; } org$frostlang$frostc$Compiler$class_type;
 extern org$frostlang$frostc$Compiler$class_type org$frostlang$frostc$Compiler$class;
 

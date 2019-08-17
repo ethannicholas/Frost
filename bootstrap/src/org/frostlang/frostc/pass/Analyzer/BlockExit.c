@@ -47,10 +47,10 @@ static frost$core$String $s2 = { (frost$core$Class*) &frost$core$String$class, -
 org$frostlang$frostc$pass$Analyzer$BlockExit org$frostlang$frostc$pass$Analyzer$BlockExit$init$org$frostlang$frostc$IR$Block$ID$frost$core$Int(org$frostlang$frostc$IR$Block$ID param0, frost$core$Int param1) {
 
 org$frostlang$frostc$pass$Analyzer$BlockExit local0;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/pass/Analyzer.frost:80
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/pass/Analyzer.frost:81
 org$frostlang$frostc$IR$Block$ID* $tmp3 = &(&local0)->id;
 *$tmp3 = param0;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/pass/Analyzer.frost:81
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/pass/Analyzer.frost:82
 frost$core$Int* $tmp4 = &(&local0)->exit;
 *$tmp4 = param1;
 org$frostlang$frostc$pass$Analyzer$BlockExit $tmp5 = *(&local0);
@@ -60,15 +60,15 @@ return $tmp5;
 frost$core$Bit org$frostlang$frostc$pass$Analyzer$BlockExit$$EQ$org$frostlang$frostc$pass$Analyzer$BlockExit$R$frost$core$Bit(org$frostlang$frostc$pass$Analyzer$BlockExit param0, org$frostlang$frostc$pass$Analyzer$BlockExit param1) {
 
 frost$core$Bit local0;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/pass/Analyzer.frost:86
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/pass/Analyzer.frost:87
 org$frostlang$frostc$IR$Block$ID $tmp6 = param0.id;
 org$frostlang$frostc$IR$Block$ID $tmp7 = param1.id;
-// begin inline call to function org.frostlang.frostc.IR.Block.ID.=(other:org.frostlang.frostc.IR.Block.ID):frost.core.Bit from Analyzer.frost:86:23
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/IR.frost:382
+// begin inline call to function org.frostlang.frostc.IR.Block.ID.=(other:org.frostlang.frostc.IR.Block.ID):frost.core.Bit from Analyzer.frost:87:23
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/IR.frost:382
 frost$core$Int $tmp8 = $tmp6.value;
 frost$core$Int $tmp9 = $tmp7.value;
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from IR.frost:382:30
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 int64_t $tmp10 = $tmp8.value;
 int64_t $tmp11 = $tmp9.value;
 bool $tmp12 = $tmp10 == $tmp11;
@@ -78,8 +78,8 @@ if ($tmp14) goto block3; else goto block4;
 block3:;
 frost$core$Int $tmp15 = param0.exit;
 frost$core$Int $tmp16 = param1.exit;
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Analyzer.frost:86:41
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Analyzer.frost:87:41
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 int64_t $tmp17 = $tmp15.value;
 int64_t $tmp18 = $tmp16.value;
 bool $tmp19 = $tmp17 == $tmp18;
@@ -96,12 +96,12 @@ return $tmp21;
 }
 frost$core$Int org$frostlang$frostc$pass$Analyzer$BlockExit$get_hash$R$frost$core$Int(org$frostlang$frostc$pass$Analyzer$BlockExit param0) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/pass/Analyzer.frost:91
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/pass/Analyzer.frost:92
 org$frostlang$frostc$IR$Block$ID $tmp22 = param0.id;
 frost$core$Int $tmp23 = $tmp22.value;
 frost$core$Int $tmp24 = param0.exit;
-// begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from Analyzer.frost:91:29
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:365
+// begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from Analyzer.frost:92:29
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:365
 int64_t $tmp25 = $tmp23.value;
 int64_t $tmp26 = $tmp24.value;
 int64_t $tmp27 = $tmp25 ^ $tmp26;

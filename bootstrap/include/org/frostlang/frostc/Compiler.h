@@ -196,8 +196,10 @@ void org$frostlang$frostc$Compiler$checkValue$org$frostlang$frostc$ClassDecl(org
 void org$frostlang$frostc$Compiler$checkAnnotations$org$frostlang$frostc$ClassDecl(org$frostlang$frostc$Compiler* self, org$frostlang$frostc$ClassDecl* p_cl);
 void org$frostlang$frostc$Compiler$checkAnnotations$org$frostlang$frostc$FieldDecl(org$frostlang$frostc$Compiler* self, org$frostlang$frostc$FieldDecl* p_f);
 void org$frostlang$frostc$Compiler$compile$org$frostlang$frostc$ClassDecl(org$frostlang$frostc$Compiler* self, org$frostlang$frostc$ClassDecl* p_cl);
-frost$collections$ListView* org$frostlang$frostc$Compiler$scan$frost$io$File$R$frost$collections$ListView$LTorg$frostlang$frostc$ClassDecl$GT(org$frostlang$frostc$Compiler* self, frost$io$File* p_raw);
+frost$collections$ListView* org$frostlang$frostc$Compiler$scan$frost$io$File$R$frost$collections$ListView$LTorg$frostlang$frostc$ClassDecl$GT(org$frostlang$frostc$Compiler* self, frost$io$File* p_file);
+frost$collections$ListView* org$frostlang$frostc$Compiler$scan$frost$io$File$frost$core$String$R$frost$collections$ListView$LTorg$frostlang$frostc$ClassDecl$GT(org$frostlang$frostc$Compiler* self, frost$io$File* p_path, frost$core$String* p_text);
 void org$frostlang$frostc$Compiler$compile$frost$io$File(org$frostlang$frostc$Compiler* self, frost$io$File* p_file);
+void org$frostlang$frostc$Compiler$compile$frost$io$File$frost$core$String(org$frostlang$frostc$Compiler* self, frost$io$File* p_path, frost$core$String* p_text);
 void org$frostlang$frostc$Compiler$error$org$frostlang$frostc$Position$frost$core$String(org$frostlang$frostc$Compiler* self, org$frostlang$frostc$Position p_pos, frost$core$String* p_msg);
 void org$frostlang$frostc$Compiler$warn$org$frostlang$frostc$Position$frost$core$String(org$frostlang$frostc$Compiler* self, org$frostlang$frostc$Position p_pos, frost$core$String* p_msg);
 void org$frostlang$frostc$Compiler$finish(org$frostlang$frostc$Compiler* self);

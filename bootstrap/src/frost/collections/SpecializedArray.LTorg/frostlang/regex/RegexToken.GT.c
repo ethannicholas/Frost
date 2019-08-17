@@ -32,6 +32,11 @@ __attribute__((weak)) void frost$collections$SpecializedArray$LTorg$frostlang$re
     frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$addAll$frost$collections$CollectionView$LTorg$frostlang$regex$RegexToken$GT(p0, p1);
 
 }
+__attribute__((weak)) frost$core$Object* frost$collections$ListView$get_first$R$frost$collections$ListView$T$shim(frost$collections$ListView* p0) {
+    frost$core$Object* result = frost$collections$ListView$get_first$R$frost$collections$ListView$T(p0);
+
+    return result;
+}
 __attribute__((weak)) void frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$$IDXEQ$frost$core$Int$org$frostlang$regex$RegexToken$shim(frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT* p0, frost$core$Int p1, frost$core$Object* p2) {
     frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$$IDXEQ$frost$core$Int$org$frostlang$regex$RegexToken(p0, p1, ((org$frostlang$regex$RegexToken$wrapper*) p2)->value);
 
@@ -59,15 +64,15 @@ __attribute__((weak)) frost$core$Object* frost$collections$SpecializedArray$LTor
 
 struct { frost$core$Class* cl; ITable* next; void* methods[1]; } frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$_frost$collections$Iterable = { (frost$core$Class*) &frost$collections$Iterable$class, NULL, { frost$collections$ListView$get_iterator$R$frost$collections$Iterator$LTfrost$collections$ListView$T$GT$shim} };
 
-struct { frost$core$Class* cl; ITable* next; void* methods[3]; } frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$_frost$collections$CollectionWriter = { (frost$core$Class*) &frost$collections$CollectionWriter$class, (ITable*) &frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$_frost$collections$Iterable, { frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$add$org$frostlang$regex$RegexToken$shim, frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$addAll$frost$collections$CollectionView$LTorg$frostlang$regex$RegexToken$GT$shim, frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$clear} };
+struct { frost$core$Class* cl; ITable* next; void* methods[4]; } frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$_frost$collections$CollectionWriter = { (frost$core$Class*) &frost$collections$CollectionWriter$class, (ITable*) &frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$_frost$collections$Iterable, { frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$get_count$R$frost$core$Int, frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$add$org$frostlang$regex$RegexToken$shim, frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$addAll$frost$collections$CollectionView$LTorg$frostlang$regex$RegexToken$GT$shim, frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$clear} };
 
 struct { frost$core$Class* cl; ITable* next; void* methods[4]; } frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$_frost$collections$List = { (frost$core$Class*) &frost$collections$List$class, (ITable*) &frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$_frost$collections$CollectionWriter, { frost$collections$List$$IDXEQ$frost$core$Range$LTfrost$core$Int$GT$frost$collections$ListView$LTfrost$collections$List$T$GT, frost$collections$List$$IDXEQ$frost$core$Range$LTfrost$core$Int$Q$GT$frost$collections$ListView$LTfrost$collections$List$T$GT, frost$collections$List$filterInPlace$$LPfrost$collections$List$T$RP$EQ$AM$GT$LPfrost$core$Bit$RP, frost$collections$List$sortInPlace$$LPfrost$collections$List$T$Cfrost$collections$List$T$RP$EQ$AM$GT$LPfrost$core$Bit$RP} };
 
-struct { frost$core$Class* cl; ITable* next; void* methods[10]; } frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$_frost$collections$CollectionView = { (frost$core$Class*) &frost$collections$CollectionView$class, (ITable*) &frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$_frost$collections$List, { frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$get_count$R$frost$core$Int, frost$collections$CollectionView$join$R$frost$core$String, frost$collections$CollectionView$join$frost$core$String$R$frost$core$String, frost$collections$CollectionView$fold$$LPfrost$collections$CollectionView$T$Cfrost$collections$CollectionView$T$RP$EQ$GT$LPfrost$collections$CollectionView$T$RP$R$frost$collections$CollectionView$T, frost$collections$CollectionView$fold$$LPfrost$collections$CollectionView$T$Cfrost$collections$CollectionView$T$RP$EQ$AM$GT$LPfrost$collections$CollectionView$T$RP$R$frost$collections$CollectionView$T, frost$collections$CollectionView$fold$$LPfrost$collections$CollectionView$T$Cfrost$collections$CollectionView$T$RP$EQ$GT$LPfrost$collections$CollectionView$T$RP$frost$collections$CollectionView$T$R$frost$collections$CollectionView$T, frost$collections$CollectionView$fold$$LPfrost$collections$CollectionView$T$Cfrost$collections$CollectionView$T$RP$EQ$AM$GT$LPfrost$collections$CollectionView$T$RP$frost$collections$CollectionView$T$R$frost$collections$CollectionView$T, frost$collections$CollectionView$apply$$LPfrost$collections$CollectionView$T$RP$EQ$AM$GT$LP$RP, frost$collections$CollectionView$map$$LPfrost$collections$CollectionView$T$RP$EQ$GT$LPfrost$collections$CollectionView$map$U$RP$R$frost$collections$Array$LTfrost$collections$CollectionView$map$U$GT, frost$collections$CollectionView$map$$LPfrost$collections$CollectionView$T$RP$EQ$AM$GT$LPfrost$collections$CollectionView$map$U$RP$R$frost$collections$Array$LTfrost$collections$CollectionView$map$U$GT} };
+struct { frost$core$Class* cl; ITable* next; void* methods[11]; } frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$_frost$collections$CollectionView = { (frost$core$Class*) &frost$collections$CollectionView$class, (ITable*) &frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$_frost$collections$List, { frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$get_count$R$frost$core$Int, frost$collections$ListView$get_first$R$frost$collections$ListView$T$shim, frost$collections$CollectionView$join$R$frost$core$String, frost$collections$CollectionView$join$frost$core$String$R$frost$core$String, frost$collections$CollectionView$fold$$LPfrost$collections$CollectionView$T$Cfrost$collections$CollectionView$T$RP$EQ$GT$LPfrost$collections$CollectionView$T$RP$R$frost$collections$CollectionView$T, frost$collections$CollectionView$fold$$LPfrost$collections$CollectionView$T$Cfrost$collections$CollectionView$T$RP$EQ$AM$GT$LPfrost$collections$CollectionView$T$RP$R$frost$collections$CollectionView$T, frost$collections$CollectionView$fold$$LPfrost$collections$CollectionView$T$Cfrost$collections$CollectionView$T$RP$EQ$GT$LPfrost$collections$CollectionView$T$RP$frost$collections$CollectionView$T$R$frost$collections$CollectionView$T, frost$collections$CollectionView$fold$$LPfrost$collections$CollectionView$T$Cfrost$collections$CollectionView$T$RP$EQ$AM$GT$LPfrost$collections$CollectionView$T$RP$frost$collections$CollectionView$T$R$frost$collections$CollectionView$T, frost$collections$CollectionView$apply$$LPfrost$collections$CollectionView$T$RP$EQ$AM$GT$LP$RP, frost$collections$CollectionView$map$$LPfrost$collections$CollectionView$T$RP$EQ$GT$LPfrost$collections$CollectionView$map$U$RP$R$frost$collections$Array$LTfrost$collections$CollectionView$map$U$GT, frost$collections$CollectionView$map$$LPfrost$collections$CollectionView$T$RP$EQ$AM$GT$LPfrost$collections$CollectionView$map$U$RP$R$frost$collections$Array$LTfrost$collections$CollectionView$map$U$GT} };
 
-struct { frost$core$Class* cl; ITable* next; void* methods[3]; } frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$_frost$collections$ListWriter = { (frost$core$Class*) &frost$collections$ListWriter$class, (ITable*) &frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$_frost$collections$CollectionView, { frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$$IDXEQ$frost$core$Int$org$frostlang$regex$RegexToken$shim, frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$insert$frost$core$Int$org$frostlang$regex$RegexToken$shim, frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$removeIndex$frost$core$Int$R$org$frostlang$regex$RegexToken$shim} };
+struct { frost$core$Class* cl; ITable* next; void* methods[4]; } frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$_frost$collections$ListWriter = { (frost$core$Class*) &frost$collections$ListWriter$class, (ITable*) &frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$_frost$collections$CollectionView, { frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$$IDXEQ$frost$core$Int$org$frostlang$regex$RegexToken$shim, frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$insert$frost$core$Int$org$frostlang$regex$RegexToken$shim, frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$removeIndex$frost$core$Int$R$org$frostlang$regex$RegexToken$shim, frost$collections$ListWriter$removeLast} };
 
-struct { frost$core$Class* cl; ITable* next; void* methods[14]; } frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$_frost$collections$ListView = { (frost$core$Class*) &frost$collections$ListView$class, (ITable*) &frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$_frost$collections$ListWriter, { frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$$IDX$frost$core$Int$R$org$frostlang$regex$RegexToken$shim, frost$collections$ListView$$IDX$frost$core$Range$LTfrost$core$Int$GT$R$frost$collections$ListView$LTfrost$collections$ListView$T$GT, frost$collections$ListView$$IDX$frost$core$Range$LTfrost$core$Int$Q$GT$R$frost$collections$ListView$LTfrost$collections$ListView$T$GT, frost$collections$ListView$$IDX$frost$core$SteppedRange$LTfrost$core$Int$Q$Cfrost$core$Int$GT$R$frost$collections$ListView$LTfrost$collections$ListView$T$GT, frost$collections$ListView$filter$$LPfrost$collections$ListView$T$RP$EQ$GT$LPfrost$core$Bit$RP$R$frost$collections$ListView$LTfrost$collections$ListView$T$GT, frost$collections$ListView$filter$$LPfrost$collections$ListView$T$RP$EQ$AM$GT$LPfrost$core$Bit$RP$R$frost$collections$ListView$LTfrost$collections$ListView$T$GT, frost$collections$ListView$combine$frost$collections$ListView$LTfrost$collections$ListView$combine$U$GT$$LPfrost$collections$ListView$T$Cfrost$collections$ListView$combine$U$RP$EQ$GT$LPfrost$collections$ListView$combine$V$RP$R$frost$collections$ListView$LTfrost$collections$ListView$combine$V$GT, frost$collections$ListView$combine$frost$collections$ListView$LTfrost$collections$ListView$combine$U$GT$$LPfrost$collections$ListView$T$Cfrost$collections$ListView$combine$U$RP$EQ$AM$GT$LPfrost$collections$ListView$combine$V$RP$R$frost$collections$ListView$LTfrost$collections$ListView$combine$V$GT, frost$collections$ListView$get_iterator$R$frost$collections$Iterator$LTfrost$collections$ListView$T$GT$shim, frost$collections$ListView$get_enumeration$R$frost$collections$Iterator$LT$LPfrost$core$Int$Cfrost$collections$ListView$T$RP$GT, frost$collections$ListView$get_permutations$R$frost$collections$Iterator$LTfrost$collections$ListView$LTfrost$collections$ListView$T$GT$GT, frost$collections$ListView$combinations$frost$core$Int$R$frost$collections$Iterator$LTfrost$collections$ListView$LTfrost$collections$ListView$T$GT$GT, frost$collections$ListView$get_powerSet$R$frost$collections$Iterator$LTfrost$collections$ListView$LTfrost$collections$ListView$T$GT$GT, frost$collections$ListView$sort$$LPfrost$collections$ListView$T$Cfrost$collections$ListView$T$RP$EQ$GT$LPfrost$core$Bit$RP$R$frost$collections$ListView$LTfrost$collections$ListView$T$GT} };
+struct { frost$core$Class* cl; ITable* next; void* methods[16]; } frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$_frost$collections$ListView = { (frost$core$Class*) &frost$collections$ListView$class, (ITable*) &frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$_frost$collections$ListWriter, { frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$$IDX$frost$core$Int$R$org$frostlang$regex$RegexToken$shim, frost$collections$ListView$$IDX$frost$core$Range$LTfrost$core$Int$GT$R$frost$collections$ListView$LTfrost$collections$ListView$T$GT, frost$collections$ListView$$IDX$frost$core$Range$LTfrost$core$Int$Q$GT$R$frost$collections$ListView$LTfrost$collections$ListView$T$GT, frost$collections$ListView$$IDX$frost$core$SteppedRange$LTfrost$core$Int$Q$Cfrost$core$Int$GT$R$frost$collections$ListView$LTfrost$collections$ListView$T$GT, frost$collections$ListView$get_first$R$frost$collections$ListView$T$shim, frost$collections$ListView$get_last$R$frost$collections$ListView$T, frost$collections$ListView$filter$$LPfrost$collections$ListView$T$RP$EQ$GT$LPfrost$core$Bit$RP$R$frost$collections$ListView$LTfrost$collections$ListView$T$GT, frost$collections$ListView$filter$$LPfrost$collections$ListView$T$RP$EQ$AM$GT$LPfrost$core$Bit$RP$R$frost$collections$ListView$LTfrost$collections$ListView$T$GT, frost$collections$ListView$combine$frost$collections$ListView$LTfrost$collections$ListView$combine$U$GT$$LPfrost$collections$ListView$T$Cfrost$collections$ListView$combine$U$RP$EQ$GT$LPfrost$collections$ListView$combine$V$RP$R$frost$collections$ListView$LTfrost$collections$ListView$combine$V$GT, frost$collections$ListView$combine$frost$collections$ListView$LTfrost$collections$ListView$combine$U$GT$$LPfrost$collections$ListView$T$Cfrost$collections$ListView$combine$U$RP$EQ$AM$GT$LPfrost$collections$ListView$combine$V$RP$R$frost$collections$ListView$LTfrost$collections$ListView$combine$V$GT, frost$collections$ListView$get_iterator$R$frost$collections$Iterator$LTfrost$collections$ListView$T$GT$shim, frost$collections$ListView$get_enumeration$R$frost$collections$Iterator$LT$LPfrost$core$Int$Cfrost$collections$ListView$T$RP$GT, frost$collections$ListView$get_permutations$R$frost$collections$Iterator$LTfrost$collections$ListView$LTfrost$collections$ListView$T$GT$GT, frost$collections$ListView$combinations$frost$core$Int$R$frost$collections$Iterator$LTfrost$collections$ListView$LTfrost$collections$ListView$T$GT$GT, frost$collections$ListView$get_powerSet$R$frost$collections$Iterator$LTfrost$collections$ListView$LTfrost$collections$ListView$T$GT$GT, frost$collections$ListView$sort$$LPfrost$collections$ListView$T$Cfrost$collections$ListView$T$RP$EQ$GT$LPfrost$core$Bit$RP$R$frost$collections$ListView$LTfrost$collections$ListView$T$GT} };
 
 struct { frost$core$Class* cl; ITable* next; void* methods[1]; } frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$_frost$collections$Collection = { (frost$core$Class*) &frost$collections$Collection$class, (ITable*) &frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$_frost$collections$ListView, { frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$clear} };
 
@@ -122,7 +127,7 @@ static frost$core$String $s574 = { (frost$core$Class*) &frost$core$String$class,
 
 void frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$init(frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/SpecializedArray.frost:32
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:32
 frost$core$Int $tmp4 = (frost$core$Int) {16u};
 frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$init$frost$core$Int(param0, $tmp4);
 return;
@@ -130,14 +135,14 @@ return;
 }
 void frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$init$frost$core$Int(frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT* param0, frost$core$Int param1) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/SpecializedArray.frost:20
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:20
 frost$core$Int $tmp5 = (frost$core$Int) {0u};
 frost$core$Int* $tmp6 = &param0->_count;
 *$tmp6 = $tmp5;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/SpecializedArray.frost:40
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:40
 frost$core$Int* $tmp7 = &param0->capacity;
 *$tmp7 = param1;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/SpecializedArray.frost:41
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:41
 frost$core$Int64 $tmp8 = frost$core$Int64$init$frost$core$Int(param1);
 int64_t $tmp9 = $tmp8.value;
 org$frostlang$regex$RegexToken* $tmp10 = ((org$frostlang$regex$RegexToken*) frostAlloc($tmp9 * 48));
@@ -150,7 +155,7 @@ void frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$init
 
 frost$core$Int local0;
 org$frostlang$regex$RegexToken local1;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/SpecializedArray.frost:48
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:48
 ITable* $tmp12 = ((frost$collections$CollectionView*) param1)->$class->itable;
 while ($tmp12->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
     $tmp12 = $tmp12->next;
@@ -159,7 +164,7 @@ $fn14 $tmp13 = $tmp12->methods[0];
 frost$core$Int $tmp15 = $tmp13(((frost$collections$CollectionView*) param1));
 frost$core$Int $tmp16 = (frost$core$Int) {16u};
 // begin inline call to function frost.core.Int.max(other:frost.core.Int):frost.core.Int from SpecializedArray.frost:48:28
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:858
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:858
 int64_t $tmp17 = $tmp15.value;
 int64_t $tmp18 = $tmp16.value;
 bool $tmp19 = $tmp17 > $tmp18;
@@ -167,13 +172,13 @@ frost$core$Bit $tmp20 = (frost$core$Bit) {$tmp19};
 bool $tmp21 = $tmp20.value;
 if ($tmp21) goto block2; else goto block3;
 block2:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:859
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:859
 int64_t $tmp22 = $tmp15.value;
 frost$core$Int $tmp23 = (frost$core$Int) {$tmp22};
 *(&local0) = $tmp23;
 goto block1;
 block3:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:861
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:861
 int64_t $tmp24 = $tmp16.value;
 frost$core$Int $tmp25 = (frost$core$Int) {$tmp24};
 *(&local0) = $tmp25;
@@ -181,7 +186,7 @@ goto block1;
 block1:;
 frost$core$Int $tmp26 = *(&local0);
 frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$init$frost$core$Int(param0, $tmp26);
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/SpecializedArray.frost:49
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:49
 ITable* $tmp27 = ((frost$collections$Iterable*) param1)->$class->itable;
 while ($tmp27->$class != (frost$core$Class*) &frost$collections$Iterable$class) {
     $tmp27 = $tmp27->next;
@@ -206,7 +211,7 @@ while ($tmp36->$class != (frost$core$Class*) &frost$collections$Iterator$class) 
 $fn38 $tmp37 = $tmp36->methods[1];
 frost$core$Object* $tmp39 = $tmp37($tmp30);
 *(&local1) = ((org$frostlang$regex$RegexToken$wrapper*) $tmp39)->value;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/SpecializedArray.frost:50
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:50
 org$frostlang$regex$RegexToken $tmp40 = *(&local1);
 frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$add$org$frostlang$regex$RegexToken(param0, $tmp40);
 frost$core$Frost$unref$frost$core$Object$Q($tmp39);
@@ -218,17 +223,17 @@ return;
 }
 void frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$init$frost$unsafe$Pointer$LTorg$frostlang$regex$RegexToken$GT$frost$core$Int(frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT* param0, org$frostlang$regex$RegexToken* param1, frost$core$Int param2) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/SpecializedArray.frost:20
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:20
 frost$core$Int $tmp41 = (frost$core$Int) {0u};
 frost$core$Int* $tmp42 = &param0->_count;
 *$tmp42 = $tmp41;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/SpecializedArray.frost:56
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:56
 org$frostlang$regex$RegexToken** $tmp43 = &param0->data;
 *$tmp43 = param1;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/SpecializedArray.frost:57
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:57
 frost$core$Int* $tmp44 = &param0->_count;
 *$tmp44 = param2;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/SpecializedArray.frost:58
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:58
 frost$core$Int* $tmp45 = &param0->capacity;
 *$tmp45 = param2;
 return;
@@ -236,11 +241,11 @@ return;
 }
 void frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$cleanup(frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/SpecializedArray.frost:63
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:63
 org$frostlang$regex$RegexToken** $tmp46 = &param0->data;
 org$frostlang$regex$RegexToken* $tmp47 = *$tmp46;
 frostFree($tmp47);
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/SpecializedArray.frost:62
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:62
 frost$core$Object$cleanup(((frost$core$Object*) param0));
 return;
 
@@ -272,7 +277,7 @@ frost$core$Int $tmp63 = (frost$core$Int) {67u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s64, $tmp63, &$s65);
 abort(); // unreachable
 block1:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/SpecializedArray.frost:68
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:68
 org$frostlang$regex$RegexToken** $tmp66 = &param0->data;
 org$frostlang$regex$RegexToken* $tmp67 = *$tmp66;
 frost$core$Int64 $tmp68 = frost$core$Int64$init$frost$core$Int(param1);
@@ -308,7 +313,7 @@ frost$core$Int $tmp86 = (frost$core$Int) {72u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s87, $tmp86, &$s88);
 abort(); // unreachable
 block1:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/SpecializedArray.frost:73
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:73
 org$frostlang$regex$RegexToken** $tmp89 = &param0->data;
 org$frostlang$regex$RegexToken* $tmp90 = *$tmp89;
 frost$core$Int64 $tmp91 = frost$core$Int64$init$frost$core$Int(param1);
@@ -345,7 +350,7 @@ frost$core$Int $tmp108 = (frost$core$Int) {77u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s109, $tmp108, &$s110);
 abort(); // unreachable
 block1:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/SpecializedArray.frost:78
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:78
 ITable* $tmp111 = ((frost$collections$CollectionView*) param0)->$class->itable;
 while ($tmp111->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
     $tmp111 = $tmp111->next;
@@ -358,7 +363,7 @@ int64_t $tmp117 = $tmp115.value;
 int64_t $tmp118 = $tmp116 + $tmp117;
 frost$core$Int $tmp119 = (frost$core$Int) {$tmp118};
 frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$ensureCapacity$frost$core$Int(param0, $tmp119);
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/SpecializedArray.frost:79
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:79
 ITable* $tmp120 = ((frost$collections$CollectionView*) param0)->$class->itable;
 while ($tmp120->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
     $tmp120 = $tmp120->next;
@@ -373,7 +378,7 @@ frost$core$Int $tmp127 = $tmp126.start;
 frost$core$Int $tmp128 = $tmp126.end;
 frost$core$Int $tmp129 = $tmp126.step;
 // begin inline call to function frost.core.Int.-():frost.core.Int from SpecializedArray.frost:79:9
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:120
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:120
 int64_t $tmp130 = $tmp129.value;
 int64_t $tmp131 = -$tmp130;
 frost$core$Int $tmp132 = (frost$core$Int) {$tmp131};
@@ -419,7 +424,7 @@ frost$core$Bit $tmp159 = (frost$core$Bit) {$tmp158};
 bool $tmp160 = $tmp159.value;
 if ($tmp160) goto block5; else goto block6;
 block5:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/SpecializedArray.frost:80
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:80
 org$frostlang$regex$RegexToken** $tmp161 = &param0->data;
 org$frostlang$regex$RegexToken* $tmp162 = *$tmp161;
 frost$core$Int $tmp163 = *(&local0);
@@ -487,7 +492,7 @@ frost$core$Int $tmp209 = (frost$core$Int) {$tmp208};
 *(&local0) = $tmp209;
 goto block5;
 block6:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/SpecializedArray.frost:82
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:82
 frost$core$Int* $tmp210 = &param0->_count;
 frost$core$Int $tmp211 = *$tmp210;
 frost$core$Int $tmp212 = (frost$core$Int) {1u};
@@ -497,7 +502,7 @@ int64_t $tmp215 = $tmp213 + $tmp214;
 frost$core$Int $tmp216 = (frost$core$Int) {$tmp215};
 frost$core$Int* $tmp217 = &param0->_count;
 *$tmp217 = $tmp216;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/SpecializedArray.frost:83
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:83
 org$frostlang$regex$RegexToken** $tmp218 = &param0->data;
 org$frostlang$regex$RegexToken* $tmp219 = *$tmp218;
 frost$core$Int64 $tmp220 = frost$core$Int64$init$frost$core$Int(param1);
@@ -508,7 +513,7 @@ return;
 }
 void frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$add$org$frostlang$regex$RegexToken(frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT* param0, org$frostlang$regex$RegexToken param1) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/SpecializedArray.frost:88
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:88
 frost$core$Int* $tmp222 = &param0->_count;
 frost$core$Int $tmp223 = *$tmp222;
 frost$core$Int $tmp224 = (frost$core$Int) {1u};
@@ -517,7 +522,7 @@ int64_t $tmp226 = $tmp224.value;
 int64_t $tmp227 = $tmp225 + $tmp226;
 frost$core$Int $tmp228 = (frost$core$Int) {$tmp227};
 frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$ensureCapacity$frost$core$Int(param0, $tmp228);
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/SpecializedArray.frost:89
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:89
 org$frostlang$regex$RegexToken** $tmp229 = &param0->data;
 org$frostlang$regex$RegexToken* $tmp230 = *$tmp229;
 frost$core$Int* $tmp231 = &param0->_count;
@@ -525,7 +530,7 @@ frost$core$Int $tmp232 = *$tmp231;
 frost$core$Int64 $tmp233 = frost$core$Int64$init$frost$core$Int($tmp232);
 int64_t $tmp234 = $tmp233.value;
 $tmp230[$tmp234] = param1;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/SpecializedArray.frost:90
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:90
 frost$core$Int* $tmp235 = &param0->_count;
 frost$core$Int $tmp236 = *$tmp235;
 frost$core$Int $tmp237 = (frost$core$Int) {1u};
@@ -541,7 +546,7 @@ return;
 void frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$addAll$frost$collections$CollectionView$LTorg$frostlang$regex$RegexToken$GT(frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT* param0, frost$collections$CollectionView* param1) {
 
 org$frostlang$regex$RegexToken local0;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/SpecializedArray.frost:95
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:95
 frost$core$Int* $tmp243 = &param0->_count;
 frost$core$Int $tmp244 = *$tmp243;
 ITable* $tmp245 = param1->$class->itable;
@@ -555,7 +560,7 @@ int64_t $tmp250 = $tmp248.value;
 int64_t $tmp251 = $tmp249 + $tmp250;
 frost$core$Int $tmp252 = (frost$core$Int) {$tmp251};
 frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$ensureCapacity$frost$core$Int(param0, $tmp252);
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/SpecializedArray.frost:96
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:96
 ITable* $tmp253 = ((frost$collections$Iterable*) param1)->$class->itable;
 while ($tmp253->$class != (frost$core$Class*) &frost$collections$Iterable$class) {
     $tmp253 = $tmp253->next;
@@ -580,7 +585,7 @@ while ($tmp262->$class != (frost$core$Class*) &frost$collections$Iterator$class)
 $fn264 $tmp263 = $tmp262->methods[1];
 frost$core$Object* $tmp265 = $tmp263($tmp256);
 *(&local0) = ((org$frostlang$regex$RegexToken$wrapper*) $tmp265)->value;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/SpecializedArray.frost:97
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:97
 org$frostlang$regex$RegexToken** $tmp266 = &param0->data;
 org$frostlang$regex$RegexToken* $tmp267 = *$tmp266;
 frost$core$Int* $tmp268 = &param0->_count;
@@ -589,7 +594,7 @@ frost$core$Int64 $tmp270 = frost$core$Int64$init$frost$core$Int($tmp269);
 org$frostlang$regex$RegexToken $tmp271 = *(&local0);
 int64_t $tmp272 = $tmp270.value;
 $tmp267[$tmp272] = $tmp271;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/SpecializedArray.frost:98
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:98
 frost$core$Int* $tmp273 = &param0->_count;
 frost$core$Int $tmp274 = *$tmp273;
 frost$core$Int $tmp275 = (frost$core$Int) {1u};
@@ -610,7 +615,7 @@ void frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$ensu
 
 frost$core$Int local0;
 frost$core$Int local1;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/SpecializedArray.frost:103
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:103
 frost$core$Int* $tmp281 = &param0->capacity;
 frost$core$Int $tmp282 = *$tmp281;
 frost$core$Int $tmp283 = (frost$core$Int) {0u};
@@ -625,7 +630,7 @@ frost$core$Int $tmp289 = (frost$core$Int) {103u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s290, $tmp289);
 abort(); // unreachable
 block1:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/SpecializedArray.frost:104
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:104
 frost$core$Int* $tmp291 = &param0->capacity;
 frost$core$Int $tmp292 = *$tmp291;
 int64_t $tmp293 = param1.value;
@@ -635,19 +640,19 @@ frost$core$Bit $tmp296 = (frost$core$Bit) {$tmp295};
 bool $tmp297 = $tmp296.value;
 if ($tmp297) goto block3; else goto block4;
 block3:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/SpecializedArray.frost:105
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:105
 return;
 block4:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/SpecializedArray.frost:107
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:107
 frost$core$Int* $tmp298 = &param0->capacity;
 frost$core$Int $tmp299 = *$tmp298;
 *(&local0) = $tmp299;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/SpecializedArray.frost:108
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:108
 frost$core$Int* $tmp300 = &param0->capacity;
 frost$core$Int $tmp301 = *$tmp300;
 frost$core$Int $tmp302 = (frost$core$Int) {1u};
 // begin inline call to function frost.core.Int.max(other:frost.core.Int):frost.core.Int from SpecializedArray.frost:108:33
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:858
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:858
 int64_t $tmp303 = $tmp301.value;
 int64_t $tmp304 = $tmp302.value;
 bool $tmp305 = $tmp303 > $tmp304;
@@ -655,13 +660,13 @@ frost$core$Bit $tmp306 = (frost$core$Bit) {$tmp305};
 bool $tmp307 = $tmp306.value;
 if ($tmp307) goto block6; else goto block7;
 block6:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:859
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:859
 int64_t $tmp308 = $tmp301.value;
 frost$core$Int $tmp309 = (frost$core$Int) {$tmp308};
 *(&local1) = $tmp309;
 goto block5;
 block7:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:861
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:861
 int64_t $tmp310 = $tmp302.value;
 frost$core$Int $tmp311 = (frost$core$Int) {$tmp310};
 *(&local1) = $tmp311;
@@ -670,7 +675,7 @@ block5:;
 frost$core$Int $tmp312 = *(&local1);
 frost$core$Int* $tmp313 = &param0->capacity;
 *$tmp313 = $tmp312;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/SpecializedArray.frost:109
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:109
 goto block8;
 block8:;
 frost$core$Int* $tmp314 = &param0->capacity;
@@ -682,7 +687,7 @@ frost$core$Bit $tmp319 = (frost$core$Bit) {$tmp318};
 bool $tmp320 = $tmp319.value;
 if ($tmp320) goto block9; else goto block10;
 block9:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/SpecializedArray.frost:110
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:110
 frost$core$Int* $tmp321 = &param0->capacity;
 frost$core$Int $tmp322 = *$tmp321;
 frost$core$Int $tmp323 = (frost$core$Int) {2u};
@@ -694,7 +699,7 @@ frost$core$Int* $tmp328 = &param0->capacity;
 *$tmp328 = $tmp327;
 goto block8;
 block10:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/SpecializedArray.frost:112
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:112
 org$frostlang$regex$RegexToken** $tmp329 = &param0->data;
 org$frostlang$regex$RegexToken* $tmp330 = *$tmp329;
 frost$core$Int $tmp331 = *(&local0);
@@ -712,7 +717,7 @@ return;
 }
 frost$core$Int frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$get_count$R$frost$core$Int(frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/SpecializedArray.frost:117
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:117
 frost$core$Int* $tmp340 = &param0->_count;
 frost$core$Int $tmp341 = *$tmp340;
 return $tmp341;
@@ -747,7 +752,7 @@ frost$core$Int $tmp357 = (frost$core$Int) {121u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s358, $tmp357, &$s359);
 abort(); // unreachable
 block1:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/SpecializedArray.frost:122
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:122
 // begin inline call to function frost.collections.SpecializedArray<org.frostlang.regex.RegexToken>.[](index:frost.core.Int):org.frostlang.regex.RegexToken from SpecializedArray.frost:122:27
 frost$core$Int $tmp360 = (frost$core$Int) {0u};
 int64_t $tmp361 = param1.value;
@@ -774,14 +779,14 @@ frost$core$Int $tmp375 = (frost$core$Int) {67u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s376, $tmp375, &$s377);
 abort(); // unreachable
 block5:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/SpecializedArray.frost:68
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:68
 org$frostlang$regex$RegexToken** $tmp378 = &param0->data;
 org$frostlang$regex$RegexToken* $tmp379 = *$tmp378;
 frost$core$Int64 $tmp380 = frost$core$Int64$init$frost$core$Int(param1);
 int64_t $tmp381 = $tmp380.value;
 org$frostlang$regex$RegexToken $tmp382 = $tmp379[$tmp381];
 *(&local0) = $tmp382;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/SpecializedArray.frost:123
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:123
 frost$core$Int* $tmp383 = &param0->_count;
 frost$core$Int $tmp384 = *$tmp383;
 frost$core$Int $tmp385 = (frost$core$Int) {1u};
@@ -813,7 +818,7 @@ frost$core$Bit $tmp405 = (frost$core$Bit) {$tmp404};
 bool $tmp406 = $tmp405.value;
 if ($tmp406) goto block8; else goto block9;
 block8:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/SpecializedArray.frost:124
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:124
 frost$core$Int $tmp407 = *(&local1);
 frost$core$Int $tmp408 = *(&local1);
 frost$core$Int $tmp409 = (frost$core$Int) {1u};
@@ -847,7 +852,7 @@ frost$core$Int $tmp429 = (frost$core$Int) {67u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s430, $tmp429, &$s431);
 abort(); // unreachable
 block14:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/SpecializedArray.frost:68
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:68
 org$frostlang$regex$RegexToken** $tmp432 = &param0->data;
 org$frostlang$regex$RegexToken* $tmp433 = *$tmp432;
 frost$core$Int64 $tmp434 = frost$core$Int64$init$frost$core$Int($tmp413);
@@ -879,7 +884,7 @@ frost$core$Int $tmp452 = (frost$core$Int) {72u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s453, $tmp452, &$s454);
 abort(); // unreachable
 block18:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/SpecializedArray.frost:73
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:73
 org$frostlang$regex$RegexToken** $tmp455 = &param0->data;
 org$frostlang$regex$RegexToken* $tmp456 = *$tmp455;
 frost$core$Int64 $tmp457 = frost$core$Int64$init$frost$core$Int($tmp407);
@@ -913,7 +918,7 @@ frost$core$Int $tmp477 = (frost$core$Int) {$tmp476};
 *(&local1) = $tmp477;
 goto block8;
 block9:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/SpecializedArray.frost:126
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:126
 frost$core$Int* $tmp478 = &param0->_count;
 frost$core$Int $tmp479 = *$tmp478;
 frost$core$Int $tmp480 = (frost$core$Int) {1u};
@@ -923,13 +928,13 @@ int64_t $tmp483 = $tmp481 - $tmp482;
 frost$core$Int $tmp484 = (frost$core$Int) {$tmp483};
 frost$core$Int* $tmp485 = &param0->_count;
 *$tmp485 = $tmp484;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/SpecializedArray.frost:127
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:127
 org$frostlang$regex$RegexToken** $tmp486 = &param0->data;
 org$frostlang$regex$RegexToken* $tmp487 = *$tmp486;
 frost$core$Int* $tmp488 = &param0->_count;
 frost$core$Int $tmp489 = *$tmp488;
 frost$core$Int64 $tmp490 = frost$core$Int64$init$frost$core$Int($tmp489);
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/SpecializedArray.frost:128
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:128
 org$frostlang$regex$RegexToken $tmp491 = *(&local0);
 return $tmp491;
 
@@ -937,11 +942,11 @@ return $tmp491;
 void frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$clear(frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT* param0) {
 
 frost$core$Int local0;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/SpecializedArray.frost:133
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:133
 frost$core$Int $tmp492 = (frost$core$Int) {0u};
 frost$core$Int* $tmp493 = &param0->_count;
 *$tmp493 = $tmp492;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/SpecializedArray.frost:134
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:134
 frost$core$Int $tmp494 = (frost$core$Int) {0u};
 frost$core$Int* $tmp495 = &param0->capacity;
 frost$core$Int $tmp496 = *$tmp495;
@@ -969,7 +974,7 @@ frost$core$Bit $tmp512 = (frost$core$Bit) {$tmp511};
 bool $tmp513 = $tmp512.value;
 if ($tmp513) goto block1; else goto block2;
 block1:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/SpecializedArray.frost:135
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:135
 org$frostlang$regex$RegexToken** $tmp514 = &param0->data;
 org$frostlang$regex$RegexToken* $tmp515 = *$tmp514;
 frost$core$Int $tmp516 = *(&local0);
@@ -1010,7 +1015,7 @@ frost$core$String* frost$collections$SpecializedArray$LTorg$frostlang$regex$Rege
 frost$core$MutableString* local0 = NULL;
 frost$core$String* local1 = NULL;
 org$frostlang$regex$RegexToken local2;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/SpecializedArray.frost:141
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:141
 FROST_ASSERT(48 == sizeof(frost$core$MutableString));
 frost$core$MutableString* $tmp537 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init($tmp537);
@@ -1020,16 +1025,16 @@ frost$core$MutableString* $tmp538 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp538));
 *(&local0) = $tmp537;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp537));
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/SpecializedArray.frost:142
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:142
 frost$core$MutableString* $tmp539 = *(&local0);
 frost$core$MutableString$append$frost$core$String($tmp539, &$s540);
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/SpecializedArray.frost:143
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:143
 *(&local1) = ((frost$core$String*) NULL);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) &$s541));
 frost$core$String* $tmp542 = *(&local1);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp542));
 *(&local1) = &$s543;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/SpecializedArray.frost:144
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:144
 ITable* $tmp544 = ((frost$collections$Iterable*) param0)->$class->itable;
 while ($tmp544->$class != (frost$core$Class*) &frost$collections$Iterable$class) {
     $tmp544 = $tmp544->next;
@@ -1054,29 +1059,29 @@ while ($tmp553->$class != (frost$core$Class*) &frost$collections$Iterator$class)
 $fn555 $tmp554 = $tmp553->methods[1];
 frost$core$Object* $tmp556 = $tmp554($tmp547);
 *(&local2) = ((org$frostlang$regex$RegexToken$wrapper*) $tmp556)->value;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/SpecializedArray.frost:145
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:145
 frost$core$MutableString* $tmp557 = *(&local0);
 frost$core$String* $tmp558 = *(&local1);
 frost$core$MutableString$append$frost$core$String($tmp557, $tmp558);
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/SpecializedArray.frost:146
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:146
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) &$s559));
 frost$core$String* $tmp560 = *(&local1);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp560));
 *(&local1) = &$s561;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/SpecializedArray.frost:147
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:147
 org$frostlang$regex$RegexToken $tmp562 = *(&local2);
 frost$core$Bit $tmp563 = (frost$core$Bit) {true};
 bool $tmp564 = $tmp563.value;
 if ($tmp564) goto block4; else goto block6;
 block4:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/SpecializedArray.frost:148
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:148
 frost$core$MutableString* $tmp565 = *(&local0);
 org$frostlang$regex$RegexToken $tmp566 = *(&local2);
 org$frostlang$regex$RegexToken$wrapper* $tmp567;
 $tmp567 = (org$frostlang$regex$RegexToken$wrapper*) frostObjectAlloc(72, (frost$core$Class*) &org$frostlang$regex$RegexToken$wrapperclass);
 $tmp567->value = $tmp566;
 // begin inline call to method frost.core.MutableString.append(o:frost.core.Object) from SpecializedArray.frost:148:30
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/MutableString.frost:150
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/MutableString.frost:150
 $fn569 $tmp568 = ($fn569) ((frost$core$Object*) $tmp567)->$class->vtable[0];
 frost$core$String* $tmp570 = $tmp568(((frost$core$Object*) $tmp567));
 frost$core$MutableString$append$frost$core$String($tmp565, $tmp570);
@@ -1085,7 +1090,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp567));
 goto block5;
 block6:;
 // <no location>
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/SpecializedArray.frost:151
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:151
 frost$core$MutableString* $tmp571 = *(&local0);
 frost$core$MutableString$append$frost$core$String($tmp571, &$s572);
 goto block5;
@@ -1094,10 +1099,10 @@ frost$core$Frost$unref$frost$core$Object$Q($tmp556);
 goto block1;
 block3:;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp547));
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/SpecializedArray.frost:154
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:154
 frost$core$MutableString* $tmp573 = *(&local0);
 frost$core$MutableString$append$frost$core$String($tmp573, &$s574);
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/SpecializedArray.frost:155
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:155
 frost$core$MutableString* $tmp575 = *(&local0);
 frost$core$String* $tmp576 = frost$core$MutableString$finish$R$frost$core$String($tmp575);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp576));

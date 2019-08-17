@@ -17,16 +17,16 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 
 void frost$threads$Lock$init(frost$threads$Lock* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/threads/Lock.frost:17
+// /Users/ethannicholas/Dropbox/Frost/src/frost/threads/Lock.frost:17
 frost$threads$Lock$create(param0);
 return;
 
 }
 void frost$threads$Lock$cleanup(frost$threads$Lock* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/threads/Lock.frost:44
+// /Users/ethannicholas/Dropbox/Frost/src/frost/threads/Lock.frost:44
 frost$threads$Lock$destroy(param0);
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/threads/Lock.frost:43
+// /Users/ethannicholas/Dropbox/Frost/src/frost/threads/Lock.frost:43
 frost$core$Immutable$cleanup(((frost$core$Immutable*) param0));
 return;
 

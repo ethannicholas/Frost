@@ -1627,8 +1627,10 @@ class CCodeGenerator : CodeGenerator {
                 else {
                     currentBlock := "0"
                 }
-                for j in 0 .. block.statements.count {
-                    writeStatement(block.ids[j], block.statements[j])
+                def iter1 := block.ids.iterator
+                def iter2 := block.statements.iterator
+                while !iter1.done {
+                    writeStatement(iter1.next(), iter2.next())
                 }
             }
         }
@@ -1666,6 +1668,7 @@ class CCodeGenerator : CodeGenerator {
             methods.printLine(buffer)
             methods.printLine("}")
             out := old
+            refs.clear()
         }
         fail(error) {
             unreachable

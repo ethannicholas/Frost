@@ -6,29 +6,27 @@ class Bench {
     method bench(name:String, src:String, optimizationLevel:Int, safetyLevel:Int) {
         def timer := frost.time.Timer()
         timer.reset()
-        for i in 0 .. COUNT {
-            def settings := Compiler.Settings(File(Config.frostSourceDir()),
-                    [File(Config.frostSourceDir())], optimizationLevel, safetyLevel, false)
-            def errorQueue := MessageQueue<Compiler.Message>()
-            def out := MemoryOutputStream()
-            def cg := LLVMCodeGenerator(Config.llvmTriple(), out)
-            def compiler := Compiler(errorQueue, cg, settings)
-            compiler.compile(File("/fake/path/BenchDummy.frost"), src)
-            compiler.finish()
-            while errorQueue.hasMessage() {
-                def error := errorQueue.getMessage()
-                match error {
-                    when Compiler.Message.ERROR(file, line, column, message) {
-                        Console.printLine("\{file}:\{line}:\{column}: error: \{message}")
-                    }
-                    when Compiler.Message.WARNING(file, line, column, message) {
-                        Console.printLine("\{file}:\{line}:\{column}: warning: \{message}")
-                    }
+        def settings := Compiler.Settings(File(Config.frostSourceDir()),
+                [File(Config.frostSourceDir())], optimizationLevel, safetyLevel, false)
+        def errorQueue := MessageQueue<Compiler.Message>()
+        def out := MemoryOutputStream()
+        def cg := LLVMCodeGenerator(Config.llvmTriple(), out)
+        def compiler := Compiler(errorQueue, cg, settings)
+        compiler.compile(File("/fake/path/BenchDummy.frost"), src)
+        compiler.finish()
+        while errorQueue.hasMessage() {
+            def error := errorQueue.getMessage()
+            match error {
+                when Compiler.Message.ERROR(file, line, column, message) {
+                    Console.printLine("\{file}:\{line}:\{column}: error: \{message}")
+                }
+                when Compiler.Message.WARNING(file, line, column, message) {
+                    Console.printLine("\{file}:\{line}:\{column}: warning: \{message}")
                 }
             }
-            assert(compiler.errorCount = 0)
         }
-        Console.printLine("\{name}: \{timer.elapsed() / 5}")
+        assert(compiler.errorCount = 0)
+        Console.printLine("\{name}: \{timer.elapsed()}")
     }
 
     method bench(name:String, src:String) {

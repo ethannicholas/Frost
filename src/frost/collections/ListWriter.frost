@@ -36,4 +36,10 @@ interface ListWriter<T> : CollectionWriter<T> {
     ================================================================================================
     @pre(index >= 0 & index < count)
     method removeIndex(index:Int):T
+
+    @pre(count > 0)
+    @default
+    method removeLast() {
+        removeIndex(count - 1)
+    }
 }

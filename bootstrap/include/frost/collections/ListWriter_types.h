@@ -11,6 +11,6 @@ typedef struct frost$collections$ListWriter {
     frost$core$UInt8 $flags;
 } frost$collections$ListWriter;
 #include "frost/core/Class.h"
-typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[5]; } frost$collections$ListWriter$class_type;
+typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[6]; } frost$collections$ListWriter$class_type;
 extern frost$collections$ListWriter$class_type frost$collections$ListWriter$class;
 

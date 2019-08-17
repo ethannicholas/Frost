@@ -29,11 +29,11 @@ static frost$core$String $s23 = { (frost$core$Class*) &frost$core$String$class, 
 
 void frost$collections$Iterator$EnumerationIterator$init$frost$collections$Iterator$LTfrost$collections$Iterator$EnumerationIterator$T$GT(frost$collections$Iterator$EnumerationIterator* param0, frost$collections$Iterator* param1) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Iterator.frost:139
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Iterator.frost:139
 frost$core$Int $tmp2 = (frost$core$Int) {18446744073709551615u};
 frost$core$Int* $tmp3 = &param0->index;
 *$tmp3 = $tmp2;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Iterator.frost:142
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Iterator.frost:142
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
 frost$collections$Iterator** $tmp4 = &param0->base;
 frost$collections$Iterator* $tmp5 = *$tmp4;
@@ -45,7 +45,7 @@ return;
 }
 frost$core$Bit frost$collections$Iterator$EnumerationIterator$get_done$R$frost$core$Bit(frost$collections$Iterator$EnumerationIterator* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Iterator.frost:147
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Iterator.frost:147
 frost$collections$Iterator** $tmp7 = &param0->base;
 frost$collections$Iterator* $tmp8 = *$tmp7;
 ITable* $tmp9 = $tmp8->$class->itable;
@@ -66,7 +66,7 @@ while ($tmp13->$class != (frost$core$Class*) &frost$collections$Iterator$class) 
 $fn15 $tmp14 = $tmp13->methods[0];
 frost$core$Bit $tmp16 = $tmp14(((frost$collections$Iterator*) param0));
 // begin inline call to function frost.core.Bit.!():frost.core.Bit from Iterator.frost:166:10
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Bit.frost:42
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
 bool $tmp17 = $tmp16.value;
 bool $tmp18 = !$tmp17;
 frost$core$Bit $tmp19 = (frost$core$Bit) {$tmp18};
@@ -77,7 +77,7 @@ frost$core$Int $tmp21 = (frost$core$Int) {151u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s22, $tmp21, &$s23);
 abort(); // unreachable
 block1:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Iterator.frost:152
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Iterator.frost:152
 frost$core$Int* $tmp24 = &param0->index;
 frost$core$Int $tmp25 = *$tmp24;
 frost$core$Int $tmp26 = (frost$core$Int) {1u};
@@ -87,7 +87,7 @@ int64_t $tmp29 = $tmp27 + $tmp28;
 frost$core$Int $tmp30 = (frost$core$Int) {$tmp29};
 frost$core$Int* $tmp31 = &param0->index;
 *$tmp31 = $tmp30;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Iterator.frost:153
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Iterator.frost:153
 FROST_ASSERT(32 == sizeof(frost$core$Tuple2));
 frost$core$Tuple2* $tmp32 = (frost$core$Tuple2*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$Tuple2$class);
 frost$core$Int* $tmp33 = &param0->index;
@@ -113,7 +113,7 @@ return $tmp32;
 }
 void frost$collections$Iterator$EnumerationIterator$cleanup(frost$collections$Iterator$EnumerationIterator* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Iterator.frost:136
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Iterator.frost:136
 frost$core$Object$cleanup(((frost$core$Object*) param0));
 frost$collections$Iterator** $tmp42 = &param0->base;
 frost$collections$Iterator* $tmp43 = *$tmp42;

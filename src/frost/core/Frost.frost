@@ -40,32 +40,30 @@ class Frost {
     method addWeakReference<T>(w:Weak<T>)
 
     @class
-    method _addWeakReference(w:Weak<Object>, map:IdentityMap<Object, Array<Weak<Object>>>) {
-        var referent := w.get()
-        var list := map[referent]
+    method _addWeakReference(w:Weak<Object>, map:HashMap<Int, Array<Weak<Object>>>) {
+        var address := addressOf(w.get())
+        var list := map[address]
         if list == null {
             list := Array<Weak<Object>>()
-            map[referent] := list
-            unref(referent)
+            map[address] := list
         }
         list.add(w)
     }
 
     @class
-    method weakReferentDestroyed(o:Object, map:IdentityMap<Object, Array<Weak<Object>>>) {
-        ref(o)
-        def list := map[o]
+    method weakReferentDestroyed(address:Int, map:HashMap<Int, Array<Weak<Object>>>) {
+        def list := map[address]
         assert list !== null
         for w in list {
             w._valid := false
             w.value := null
         }
-        map.remove(o)
+        map.remove(address)
     }
 
     @class
-    function createWeakReferenceMap():IdentityMap<Object, Array<Object>> {
-        return IdentityMap<Object, Array<Object>>()
+    function createWeakReferenceMap():HashMap<Int, Array<Object>> {
+        return HashMap<Int, Array<Object>>()
     }
 
     @class

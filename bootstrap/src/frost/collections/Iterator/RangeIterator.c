@@ -36,7 +36,7 @@ static frost$core$String $s110 = { (frost$core$Class*) &frost$core$String$class,
 void frost$collections$Iterator$RangeIterator$init$frost$collections$Iterator$LTfrost$collections$Iterator$RangeIterator$T$GT$frost$core$Int$Q$frost$core$Int$Q$frost$core$Bit$frost$core$Int(frost$collections$Iterator$RangeIterator* param0, frost$collections$Iterator* param1, frost$core$Int$nullable param2, frost$core$Int$nullable param3, frost$core$Bit param4, frost$core$Int param5) {
 
 frost$core$Int local0;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Iterator.frost:59
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Iterator.frost:59
 frost$core$Bit $tmp2 = (frost$core$Bit) {false};
 frost$core$Bit* $tmp3 = &param0->_done;
 *$tmp3 = $tmp2;
@@ -52,19 +52,19 @@ frost$core$Int $tmp10 = (frost$core$Int) {62u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s11, $tmp10, &$s12);
 abort(); // unreachable
 block1:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Iterator.frost:63
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Iterator.frost:63
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
 frost$collections$Iterator** $tmp13 = &param0->base;
 frost$collections$Iterator* $tmp14 = *$tmp13;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp14));
 frost$collections$Iterator** $tmp15 = &param0->base;
 *$tmp15 = param1;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Iterator.frost:64
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Iterator.frost:64
 frost$core$Bit $tmp16 = (frost$core$Bit) {param2.nonnull};
 bool $tmp17 = $tmp16.value;
 if ($tmp17) goto block3; else goto block5;
 block3:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Iterator.frost:65
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Iterator.frost:65
 frost$core$Int $tmp18 = (frost$core$Int) {0u};
 frost$core$Bit $tmp19 = (frost$core$Bit) {false};
 frost$core$Range$LTfrost$core$Int$GT $tmp20 = frost$core$Range$LTfrost$core$Int$GT$init$frost$core$Int$frost$core$Int$frost$core$Bit($tmp18, ((frost$core$Int) param2.value), $tmp19);
@@ -90,7 +90,7 @@ frost$core$Bit $tmp34 = (frost$core$Bit) {$tmp33};
 bool $tmp35 = $tmp34.value;
 if ($tmp35) goto block6; else goto block7;
 block6:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Iterator.frost:66
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Iterator.frost:66
 ITable* $tmp36 = param1->$class->itable;
 while ($tmp36->$class != (frost$core$Class*) &frost$collections$Iterator$class) {
     $tmp36 = $tmp36->next;
@@ -98,14 +98,14 @@ while ($tmp36->$class != (frost$core$Class*) &frost$collections$Iterator$class) 
 $fn38 $tmp37 = $tmp36->methods[0];
 frost$core$Bit $tmp39 = $tmp37(param1);
 // begin inline call to function frost.core.Bit.!():frost.core.Bit from Iterator.frost:66:24
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Bit.frost:42
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
 bool $tmp40 = $tmp39.value;
 bool $tmp41 = !$tmp40;
 frost$core$Bit $tmp42 = (frost$core$Bit) {$tmp41};
 bool $tmp43 = $tmp42.value;
 if ($tmp43) goto block11; else goto block12;
 block11:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Iterator.frost:67
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Iterator.frost:67
 ITable* $tmp44 = param1->$class->itable;
 while ($tmp44->$class != (frost$core$Class*) &frost$collections$Iterator$class) {
     $tmp44 = $tmp44->next;
@@ -143,28 +143,28 @@ frost$core$Int $tmp66 = (frost$core$Int) {$tmp65};
 *(&local0) = $tmp66;
 goto block6;
 block7:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Iterator.frost:70
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Iterator.frost:70
 frost$core$Int* $tmp67 = &param0->current;
 *$tmp67 = ((frost$core$Int) param2.value);
 goto block4;
 block5:;
 // <no location>
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Iterator.frost:73
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Iterator.frost:73
 frost$core$Int $tmp68 = (frost$core$Int) {0u};
 frost$core$Int* $tmp69 = &param0->current;
 *$tmp69 = $tmp68;
 goto block4;
 block4:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Iterator.frost:75
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Iterator.frost:75
 frost$core$Bit $tmp70 = (frost$core$Bit) {param3.nonnull};
 bool $tmp71 = $tmp70.value;
 if ($tmp71) goto block17; else goto block18;
 block17:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Iterator.frost:76
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Iterator.frost:76
 bool $tmp72 = param4.value;
 if ($tmp72) goto block19; else goto block21;
 block19:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Iterator.frost:77
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Iterator.frost:77
 frost$core$Int $tmp73 = (frost$core$Int) {1u};
 int64_t $tmp74 = ((frost$core$Int) param3.value).value;
 int64_t $tmp75 = $tmp73.value;
@@ -175,17 +175,17 @@ frost$core$Int$nullable* $tmp78 = &param0->end;
 goto block20;
 block21:;
 // <no location>
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Iterator.frost:80
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Iterator.frost:80
 frost$core$Int$nullable* $tmp79 = &param0->end;
 *$tmp79 = param3;
 goto block20;
 block20:;
 goto block18;
 block18:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Iterator.frost:83
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Iterator.frost:83
 frost$core$Int* $tmp80 = &param0->step;
 *$tmp80 = param5;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Iterator.frost:84
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Iterator.frost:84
 ITable* $tmp81 = param1->$class->itable;
 while ($tmp81->$class != (frost$core$Class*) &frost$collections$Iterator$class) {
     $tmp81 = $tmp81->next;
@@ -193,14 +193,14 @@ while ($tmp81->$class != (frost$core$Class*) &frost$collections$Iterator$class) 
 $fn83 $tmp82 = $tmp81->methods[0];
 frost$core$Bit $tmp84 = $tmp82(param1);
 // begin inline call to function frost.core.Bit.!():frost.core.Bit from Iterator.frost:84:16
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Bit.frost:42
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
 bool $tmp85 = $tmp84.value;
 bool $tmp86 = !$tmp85;
 frost$core$Bit $tmp87 = (frost$core$Bit) {$tmp86};
 bool $tmp88 = $tmp87.value;
 if ($tmp88) goto block22; else goto block24;
 block22:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Iterator.frost:85
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Iterator.frost:85
 ITable* $tmp89 = param1->$class->itable;
 while ($tmp89->$class != (frost$core$Class*) &frost$collections$Iterator$class) {
     $tmp89 = $tmp89->next;
@@ -217,7 +217,7 @@ frost$core$Frost$unref$frost$core$Object$Q($tmp92);
 goto block23;
 block24:;
 // <no location>
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Iterator.frost:88
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Iterator.frost:88
 frost$core$Bit $tmp96 = (frost$core$Bit) {true};
 frost$core$Bit* $tmp97 = &param0->_done;
 *$tmp97 = $tmp96;
@@ -228,7 +228,7 @@ return;
 }
 frost$core$Bit frost$collections$Iterator$RangeIterator$get_done$R$frost$core$Bit(frost$collections$Iterator$RangeIterator* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Iterator.frost:94
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Iterator.frost:94
 frost$core$Bit* $tmp98 = &param0->_done;
 frost$core$Bit $tmp99 = *$tmp98;
 return $tmp99;
@@ -247,7 +247,7 @@ while ($tmp100->$class != (frost$core$Class*) &frost$collections$Iterator$class)
 $fn102 $tmp101 = $tmp100->methods[0];
 frost$core$Bit $tmp103 = $tmp101(((frost$collections$Iterator*) param0));
 // begin inline call to function frost.core.Bit.!():frost.core.Bit from Iterator.frost:166:10
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Bit.frost:42
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
 bool $tmp104 = $tmp103.value;
 bool $tmp105 = !$tmp104;
 frost$core$Bit $tmp106 = (frost$core$Bit) {$tmp105};
@@ -258,7 +258,7 @@ frost$core$Int $tmp108 = (frost$core$Int) {98u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s109, $tmp108, &$s110);
 abort(); // unreachable
 block1:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Iterator.frost:99
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Iterator.frost:99
 frost$core$Object** $tmp111 = &param0->pending;
 frost$core$Object* $tmp112 = *$tmp111;
 *(&local0) = ((frost$core$Object*) NULL);
@@ -266,7 +266,7 @@ frost$core$Frost$ref$frost$core$Object$Q($tmp112);
 frost$core$Object* $tmp113 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q($tmp113);
 *(&local0) = $tmp112;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Iterator.frost:100
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Iterator.frost:100
 frost$core$Int $tmp114 = (frost$core$Int) {0u};
 frost$core$Int* $tmp115 = &param0->step;
 frost$core$Int $tmp116 = *$tmp115;
@@ -294,7 +294,7 @@ frost$core$Bit $tmp132 = (frost$core$Bit) {$tmp131};
 bool $tmp133 = $tmp132.value;
 if ($tmp133) goto block4; else goto block5;
 block4:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Iterator.frost:101
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Iterator.frost:101
 frost$core$Int* $tmp134 = &param0->current;
 frost$core$Int $tmp135 = *$tmp134;
 frost$core$Int $tmp136 = (frost$core$Int) {1u};
@@ -304,7 +304,7 @@ int64_t $tmp139 = $tmp137 + $tmp138;
 frost$core$Int $tmp140 = (frost$core$Int) {$tmp139};
 frost$core$Int* $tmp141 = &param0->current;
 *$tmp141 = $tmp140;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Iterator.frost:102
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Iterator.frost:102
 frost$core$Int$nullable* $tmp142 = &param0->end;
 frost$core$Int$nullable $tmp143 = *$tmp142;
 frost$core$Bit $tmp144 = (frost$core$Bit) {$tmp143.nonnull};
@@ -346,23 +346,23 @@ block14:;
 frost$core$Bit $tmp162 = *(&local2);
 frost$core$Bit* $tmp163 = &param0->_done;
 *$tmp163 = $tmp162;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Iterator.frost:103
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Iterator.frost:103
 frost$core$Bit* $tmp164 = &param0->_done;
 frost$core$Bit $tmp165 = *$tmp164;
 bool $tmp166 = $tmp165.value;
 if ($tmp166) goto block15; else goto block16;
 block15:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Iterator.frost:104
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Iterator.frost:104
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) NULL));
 frost$core$Object** $tmp167 = &param0->pending;
 frost$core$Object* $tmp168 = *$tmp167;
 frost$core$Frost$unref$frost$core$Object$Q($tmp168);
 frost$core$Object** $tmp169 = &param0->pending;
 *$tmp169 = ((frost$core$Object*) NULL);
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Iterator.frost:105
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Iterator.frost:105
 goto block5;
 block16:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Iterator.frost:107
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Iterator.frost:107
 frost$collections$Iterator** $tmp170 = &param0->base;
 frost$collections$Iterator* $tmp171 = *$tmp170;
 ITable* $tmp172 = $tmp171->$class->itable;
@@ -406,7 +406,7 @@ frost$core$Int $tmp197 = (frost$core$Int) {$tmp196};
 *(&local1) = $tmp197;
 goto block4;
 block5:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Iterator.frost:109
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Iterator.frost:109
 frost$core$Object* $tmp198 = *(&local0);
 frost$core$Frost$ref$frost$core$Object$Q($tmp198);
 frost$core$Object* $tmp199 = *(&local0);
@@ -417,7 +417,7 @@ return $tmp198;
 }
 void frost$collections$Iterator$RangeIterator$cleanup(frost$collections$Iterator$RangeIterator* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Iterator.frost:48
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Iterator.frost:48
 frost$core$Object$cleanup(((frost$core$Object*) param0));
 frost$collections$Iterator** $tmp200 = &param0->base;
 frost$collections$Iterator* $tmp201 = *$tmp200;

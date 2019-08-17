@@ -34,17 +34,17 @@ void frost$core$String$Match$init$frost$core$Matcher(frost$core$String$Match* pa
 
 frost$collections$Array* local0 = NULL;
 frost$core$Int local1;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:269
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:269
 frost$core$String$Index $tmp2;
 frost$core$Matcher$get_start$R$frost$core$String$Index(&$tmp2, param1);
 frost$core$String$Index* $tmp3 = &param0->start;
 *$tmp3 = $tmp2;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:270
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:270
 frost$core$String$Index $tmp4;
 frost$core$Matcher$get_end$R$frost$core$String$Index(&$tmp4, param1);
 frost$core$String$Index* $tmp5 = &param0->end;
 *$tmp5 = $tmp4;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:271
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:271
 FROST_ASSERT(40 == sizeof(frost$collections$Array));
 frost$collections$Array* $tmp6 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
 frost$collections$Array$init($tmp6);
@@ -54,7 +54,7 @@ frost$collections$Array* $tmp7 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp7));
 *(&local0) = $tmp6;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp6));
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:272
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:272
 frost$core$Int $tmp8 = (frost$core$Int) {0u};
 frost$core$Int $tmp9;
 frost$core$Matcher$get_groupCount$R$frost$core$Int(&$tmp9, param1);
@@ -82,7 +82,7 @@ frost$core$Bit $tmp25 = (frost$core$Bit) {$tmp24};
 bool $tmp26 = $tmp25.value;
 if ($tmp26) goto block1; else goto block2;
 block1:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:273
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:273
 frost$collections$Array* $tmp27 = *(&local0);
 frost$core$Int $tmp28 = *(&local1);
 frost$core$String* $tmp29 = frost$core$Matcher$group$frost$core$Int$R$frost$core$String$Q(param1, $tmp28);
@@ -116,7 +116,7 @@ frost$core$Int $tmp48 = (frost$core$Int) {$tmp47};
 *(&local1) = $tmp48;
 goto block1;
 block2:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:275
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:275
 frost$collections$Array* $tmp49 = *(&local0);
 frost$collections$ImmutableArray* $tmp50 = frost$collections$ImmutableArray$from$frost$collections$Array$LTfrost$collections$ImmutableArray$T$GT$R$frost$collections$ImmutableArray$LTfrost$collections$ImmutableArray$T$GT($tmp49);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp50));
@@ -134,7 +134,7 @@ return;
 }
 frost$core$String* frost$core$String$Match$get_asString$R$frost$core$String(frost$core$String$Match* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:280
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:280
 frost$collections$ImmutableArray** $tmp55 = &param0->groups;
 frost$collections$ImmutableArray* $tmp56 = *$tmp55;
 frost$core$Int $tmp57 = (frost$core$Int) {0u};
@@ -150,7 +150,7 @@ return $tmp61;
 }
 void frost$core$String$Match$cleanup(frost$core$String$Match* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:251
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:251
 frost$core$Immutable$cleanup(((frost$core$Immutable*) param0));
 frost$collections$ImmutableArray** $tmp63 = &param0->groups;
 frost$collections$ImmutableArray* $tmp64 = *$tmp63;

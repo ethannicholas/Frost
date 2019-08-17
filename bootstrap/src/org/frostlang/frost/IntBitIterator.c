@@ -30,10 +30,10 @@ static frost$core$String $s22 = { (frost$core$Class*) &frost$core$String$class, 
 
 void org$frostlang$frost$IntBitIterator$init$frost$core$UInt64$frost$core$UInt64(org$frostlang$frost$IntBitIterator* param0, frost$core$UInt64 param1, frost$core$UInt64 param2) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/org/frostlang/frost/IntBitIterator.frost:12
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/frost/IntBitIterator.frost:12
 frost$core$UInt64* $tmp3 = &param0->value;
 *$tmp3 = param1;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/org/frostlang/frost/IntBitIterator.frost:13
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/frost/IntBitIterator.frost:13
 frost$core$UInt64* $tmp4 = &param0->mask;
 *$tmp4 = param2;
 return;
@@ -41,12 +41,12 @@ return;
 }
 frost$core$Bit org$frostlang$frost$IntBitIterator$get_done$R$frost$core$Bit(org$frostlang$frost$IntBitIterator* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/org/frostlang/frost/IntBitIterator.frost:18
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/frost/IntBitIterator.frost:18
 frost$core$UInt64* $tmp5 = &param0->mask;
 frost$core$UInt64 $tmp6 = *$tmp5;
 frost$core$UInt64 $tmp7 = (frost$core$UInt64) {0u};
 // begin inline call to function frost.core.UInt64.=(other:frost.core.UInt64):frost.core.Bit from IntBitIterator.frost:18:21
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/UInt64.frost:227
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/UInt64.frost:227
 uint64_t $tmp8 = $tmp6.value;
 uint64_t $tmp9 = $tmp7.value;
 bool $tmp10 = $tmp8 == $tmp9;
@@ -64,7 +64,7 @@ while ($tmp12->$class != (frost$core$Class*) &frost$collections$Iterator$class) 
 $fn14 $tmp13 = $tmp12->methods[0];
 frost$core$Bit $tmp15 = $tmp13(((frost$collections$Iterator*) param0));
 // begin inline call to function frost.core.Bit.!():frost.core.Bit from Iterator.frost:166:10
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Bit.frost:42
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
 bool $tmp16 = $tmp15.value;
 bool $tmp17 = !$tmp16;
 frost$core$Bit $tmp18 = (frost$core$Bit) {$tmp17};
@@ -75,13 +75,13 @@ frost$core$Int $tmp20 = (frost$core$Int) {22u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s21, $tmp20, &$s22);
 abort(); // unreachable
 block1:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/org/frostlang/frost/IntBitIterator.frost:23
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/frost/IntBitIterator.frost:23
 frost$core$UInt64* $tmp23 = &param0->value;
 frost$core$UInt64 $tmp24 = *$tmp23;
 frost$core$UInt64* $tmp25 = &param0->mask;
 frost$core$UInt64 $tmp26 = *$tmp25;
 // begin inline call to function frost.core.UInt64.&&(other:frost.core.UInt64):frost.core.UInt64 from IntBitIterator.frost:23:29
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/UInt64.frost:166
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/UInt64.frost:166
 uint64_t $tmp27 = $tmp24.value;
 uint64_t $tmp28 = $tmp26.value;
 uint64_t $tmp29 = $tmp27 & $tmp28;
@@ -92,26 +92,26 @@ uint64_t $tmp33 = $tmp31.value;
 bool $tmp34 = $tmp32 != $tmp33;
 frost$core$Bit $tmp35 = (frost$core$Bit) {$tmp34};
 *(&local0) = $tmp35;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/org/frostlang/frost/IntBitIterator.frost:24
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/frost/IntBitIterator.frost:24
 frost$core$UInt64* $tmp36 = &param0->mask;
 frost$core$UInt64 $tmp37 = *$tmp36;
 frost$core$UInt64 $tmp38 = (frost$core$UInt64) {1u};
 // begin inline call to function frost.core.UInt64.>>(other:frost.core.UInt64):frost.core.UInt64 from IntBitIterator.frost:24:9
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/UInt64.frost:202
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/UInt64.frost:202
 uint64_t $tmp39 = $tmp37.value;
 uint64_t $tmp40 = $tmp38.value;
 uint64_t $tmp41 = $tmp39 >> $tmp40;
 frost$core$UInt64 $tmp42 = (frost$core$UInt64) {$tmp41};
 frost$core$UInt64* $tmp43 = &param0->mask;
 *$tmp43 = $tmp42;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/org/frostlang/frost/IntBitIterator.frost:25
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/frost/IntBitIterator.frost:25
 frost$core$Bit $tmp44 = *(&local0);
 return $tmp44;
 
 }
 void org$frostlang$frost$IntBitIterator$cleanup(org$frostlang$frost$IntBitIterator* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/org/frostlang/frost/IntBitIterator.frost:4
+// /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/frost/IntBitIterator.frost:4
 frost$core$Object$cleanup(((frost$core$Object*) param0));
 return;
 

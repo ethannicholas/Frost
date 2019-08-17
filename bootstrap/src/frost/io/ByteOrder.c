@@ -41,7 +41,7 @@ return;
 frost$io$ByteOrder frost$io$ByteOrder$init$frost$core$Int(frost$core$Int param0) {
 
 frost$io$ByteOrder local0;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/io/ByteOrder.frost:6
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/ByteOrder.frost:6
 frost$core$Int* $tmp3 = &(&local0)->$rawValue;
 *$tmp3 = param0;
 frost$io$ByteOrder $tmp4 = *(&local0);
@@ -50,7 +50,7 @@ return $tmp4;
 }
 frost$core$Bit frost$io$ByteOrder$$EQ$frost$io$ByteOrder$R$frost$core$Bit(frost$io$ByteOrder param0, frost$io$ByteOrder param1) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/io/ByteOrder.frost:6
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/ByteOrder.frost:6
 frost$core$Int $tmp5 = param0.$rawValue;
 frost$core$Int $tmp6 = param1.$rawValue;
 int64_t $tmp7 = $tmp5.value;
@@ -60,11 +60,11 @@ frost$core$Bit $tmp10 = (frost$core$Bit) {$tmp9};
 bool $tmp11 = $tmp10.value;
 if ($tmp11) goto block1; else goto block2;
 block1:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/io/ByteOrder.frost:6
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/ByteOrder.frost:6
 frost$core$Bit $tmp12 = (frost$core$Bit) {false};
 return $tmp12;
 block2:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/io/ByteOrder.frost:6
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/ByteOrder.frost:6
 frost$core$Bit $tmp13 = (frost$core$Bit) {true};
 return $tmp13;
 

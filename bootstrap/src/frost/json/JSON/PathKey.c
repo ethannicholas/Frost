@@ -33,12 +33,12 @@ frost$core$String* local0 = NULL;
 frost$core$String$Index local1;
 frost$core$Int local2;
 frost$core$String$Index local3;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/json/JSON.frost:43
+// /Users/ethannicholas/Dropbox/Frost/src/frost/json/JSON.frost:43
 frost$core$Int* $tmp2 = &param0->$rawValue;
 frost$core$Int $tmp3 = *$tmp2;
 frost$core$Int $tmp4 = (frost$core$Int) {0u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from JSON.frost:43:5
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 int64_t $tmp5 = $tmp3.value;
 int64_t $tmp6 = $tmp4.value;
 bool $tmp7 = $tmp5 == $tmp6;
@@ -66,7 +66,7 @@ goto block1;
 block3:;
 frost$core$Int $tmp17 = (frost$core$Int) {1u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from JSON.frost:43:5
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 int64_t $tmp18 = $tmp3.value;
 int64_t $tmp19 = $tmp17.value;
 bool $tmp20 = $tmp18 == $tmp19;
@@ -82,21 +82,21 @@ frost$core$String$Index $tmp26 = *$tmp25;
 *(&local3) = $tmp26;
 goto block1;
 block1:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/json/JSON.frost:43
+// /Users/ethannicholas/Dropbox/Frost/src/frost/json/JSON.frost:43
 frost$core$Immutable$cleanup(((frost$core$Immutable*) param0));
 return;
 
 }
 void frost$json$JSON$PathKey$init$frost$core$Int$frost$core$String$frost$core$String$Index(frost$json$JSON$PathKey* param0, frost$core$Int param1, frost$core$String* param2, frost$core$String$Index param3) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/json/JSON.frost:43
+// /Users/ethannicholas/Dropbox/Frost/src/frost/json/JSON.frost:43
 frost$core$Int* $tmp27 = &param0->$rawValue;
 *$tmp27 = param1;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/json/JSON.frost:43
+// /Users/ethannicholas/Dropbox/Frost/src/frost/json/JSON.frost:43
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param2));
 frost$core$String** $tmp28 = (frost$core$String**) (param0->$data + 0);
 *$tmp28 = param2;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/json/JSON.frost:43
+// /Users/ethannicholas/Dropbox/Frost/src/frost/json/JSON.frost:43
 frost$core$String$Index* $tmp29 = (frost$core$String$Index*) (param0->$data + 8);
 *$tmp29 = param3;
 return;
@@ -104,13 +104,13 @@ return;
 }
 void frost$json$JSON$PathKey$init$frost$core$Int$frost$core$Int$frost$core$String$Index(frost$json$JSON$PathKey* param0, frost$core$Int param1, frost$core$Int param2, frost$core$String$Index param3) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/json/JSON.frost:43
+// /Users/ethannicholas/Dropbox/Frost/src/frost/json/JSON.frost:43
 frost$core$Int* $tmp30 = &param0->$rawValue;
 *$tmp30 = param1;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/json/JSON.frost:43
+// /Users/ethannicholas/Dropbox/Frost/src/frost/json/JSON.frost:43
 frost$core$Int* $tmp31 = (frost$core$Int*) (param0->$data + 0);
 *$tmp31 = param2;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/json/JSON.frost:43
+// /Users/ethannicholas/Dropbox/Frost/src/frost/json/JSON.frost:43
 frost$core$String$Index* $tmp32 = (frost$core$String$Index*) (param0->$data + 8);
 *$tmp32 = param3;
 return;
@@ -118,7 +118,7 @@ return;
 }
 frost$core$Bit frost$json$JSON$PathKey$$EQ$frost$json$JSON$PathKey$R$frost$core$Bit(frost$json$JSON$PathKey* param0, frost$json$JSON$PathKey* param1) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/json/JSON.frost:43
+// /Users/ethannicholas/Dropbox/Frost/src/frost/json/JSON.frost:43
 frost$core$Int* $tmp33 = &param0->$rawValue;
 frost$core$Int $tmp34 = *$tmp33;
 frost$core$Int* $tmp35 = &param1->$rawValue;
@@ -130,11 +130,11 @@ frost$core$Bit $tmp40 = (frost$core$Bit) {$tmp39};
 bool $tmp41 = $tmp40.value;
 if ($tmp41) goto block1; else goto block2;
 block1:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/json/JSON.frost:43
+// /Users/ethannicholas/Dropbox/Frost/src/frost/json/JSON.frost:43
 frost$core$Bit $tmp42 = (frost$core$Bit) {false};
 return $tmp42;
 block2:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/json/JSON.frost:43
+// /Users/ethannicholas/Dropbox/Frost/src/frost/json/JSON.frost:43
 frost$core$Bit $tmp43 = (frost$core$Bit) {true};
 return $tmp43;
 

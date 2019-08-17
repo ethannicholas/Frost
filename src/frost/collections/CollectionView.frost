@@ -16,6 +16,13 @@ interface CollectionView<T> : Iterable<T> {
 
     function get_count():Int
 
+    property first:T
+
+    @default
+    function get_first():T {
+        return iterator.next()
+    }
+
     ================================================================================================
     Returns the string concatenation of all of the items in this collection, in iteration order.
     Equivalent to `join("")`.

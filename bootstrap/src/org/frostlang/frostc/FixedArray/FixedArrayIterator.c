@@ -29,11 +29,11 @@ static frost$core$String $s29 = { (frost$core$Class*) &frost$core$String$class, 
 
 void org$frostlang$frostc$FixedArray$FixedArrayIterator$init$org$frostlang$frostc$FixedArray$LTorg$frostlang$frostc$FixedArray$FixedArrayIterator$T$GT(org$frostlang$frostc$FixedArray$FixedArrayIterator* param0, org$frostlang$frostc$FixedArray* param1) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/FixedArray.frost:11
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/FixedArray.frost:11
 frost$core$Int $tmp2 = (frost$core$Int) {0u};
 frost$core$Int* $tmp3 = &param0->index;
 *$tmp3 = $tmp2;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/FixedArray.frost:14
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/FixedArray.frost:14
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
 org$frostlang$frostc$FixedArray** $tmp4 = &param0->array;
 org$frostlang$frostc$FixedArray* $tmp5 = *$tmp4;
@@ -45,7 +45,7 @@ return;
 }
 frost$core$Bit org$frostlang$frostc$FixedArray$FixedArrayIterator$get_done$R$frost$core$Bit(org$frostlang$frostc$FixedArray$FixedArrayIterator* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/FixedArray.frost:19
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/FixedArray.frost:19
 frost$core$Int* $tmp7 = &param0->index;
 frost$core$Int $tmp8 = *$tmp7;
 org$frostlang$frostc$FixedArray** $tmp9 = &param0->array;
@@ -57,7 +57,7 @@ while ($tmp11->$class != (frost$core$Class*) &frost$collections$CollectionView$c
 $fn13 $tmp12 = $tmp11->methods[0];
 frost$core$Int $tmp14 = $tmp12(((frost$collections$CollectionView*) $tmp10));
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from FixedArray.frost:19:26
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 int64_t $tmp15 = $tmp8.value;
 int64_t $tmp16 = $tmp14.value;
 bool $tmp17 = $tmp15 == $tmp16;
@@ -74,7 +74,7 @@ while ($tmp19->$class != (frost$core$Class*) &frost$collections$Iterator$class) 
 $fn21 $tmp20 = $tmp19->methods[0];
 frost$core$Bit $tmp22 = $tmp20(((frost$collections$Iterator*) param0));
 // begin inline call to function frost.core.Bit.!():frost.core.Bit from Iterator.frost:166:10
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Bit.frost:42
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
 bool $tmp23 = $tmp22.value;
 bool $tmp24 = !$tmp23;
 frost$core$Bit $tmp25 = (frost$core$Bit) {$tmp24};
@@ -85,7 +85,7 @@ frost$core$Int $tmp27 = (frost$core$Int) {23u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s28, $tmp27, &$s29);
 abort(); // unreachable
 block1:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/FixedArray.frost:24
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/FixedArray.frost:24
 frost$core$Int* $tmp30 = &param0->index;
 frost$core$Int $tmp31 = *$tmp30;
 frost$core$Int $tmp32 = (frost$core$Int) {1u};
@@ -95,7 +95,7 @@ int64_t $tmp35 = $tmp33 + $tmp34;
 frost$core$Int $tmp36 = (frost$core$Int) {$tmp35};
 frost$core$Int* $tmp37 = &param0->index;
 *$tmp37 = $tmp36;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/FixedArray.frost:25
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/FixedArray.frost:25
 org$frostlang$frostc$FixedArray** $tmp38 = &param0->array;
 org$frostlang$frostc$FixedArray* $tmp39 = *$tmp38;
 frost$core$Int* $tmp40 = &param0->index;
@@ -113,7 +113,7 @@ return $tmp47;
 }
 void org$frostlang$frostc$FixedArray$FixedArrayIterator$cleanup(org$frostlang$frostc$FixedArray$FixedArrayIterator* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/FixedArray.frost:8
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/FixedArray.frost:8
 frost$core$Object$cleanup(((frost$core$Object*) param0));
 org$frostlang$frostc$FixedArray** $tmp48 = &param0->array;
 org$frostlang$frostc$FixedArray* $tmp49 = *$tmp48;

@@ -16,7 +16,7 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 
 void org$frostlang$frostc$frostdoc$Markdown$_Closure12$init$org$frostlang$frostc$frostdoc$Markdown$CodeReplacer(org$frostlang$frostc$frostdoc$Markdown$_Closure12* param0, org$frostlang$frostc$frostdoc$Markdown$CodeReplacer* param1) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:501
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:501
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
 org$frostlang$frostc$frostdoc$Markdown$CodeReplacer** $tmp2 = &param0->$dummy2;
 org$frostlang$frostc$frostdoc$Markdown$CodeReplacer* $tmp3 = *$tmp2;
@@ -28,7 +28,7 @@ return;
 }
 void org$frostlang$frostc$frostdoc$Markdown$_Closure12$cleanup(org$frostlang$frostc$frostdoc$Markdown$_Closure12* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:501
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:501
 frost$core$Object$cleanup(((frost$core$Object*) param0));
 org$frostlang$frostc$frostdoc$Markdown$CodeReplacer** $tmp5 = &param0->$dummy2;
 org$frostlang$frostc$frostdoc$Markdown$CodeReplacer* $tmp6 = *$tmp5;
@@ -38,7 +38,7 @@ return;
 }
 frost$core$String* org$frostlang$frostc$frostdoc$Markdown$_Closure12$$anonymous11$frost$collections$ListView$LTfrost$core$String$Q$GT$R$frost$core$String(org$frostlang$frostc$frostdoc$Markdown$_Closure12* param0, frost$collections$ListView* param1) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:501
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:501
 org$frostlang$frostc$frostdoc$Markdown$CodeReplacer** $tmp7 = &param0->$dummy2;
 org$frostlang$frostc$frostdoc$Markdown$CodeReplacer* $tmp8 = *$tmp7;
 $fn10 $tmp9 = ($fn10) $tmp8->$class->vtable[2];

@@ -19,25 +19,25 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 
 void frost$threads$ScopedLock$init$frost$threads$Lock(frost$threads$ScopedLock* param0, frost$threads$Lock* param1) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/threads/ScopedLock.frost:20
+// /Users/ethannicholas/Dropbox/Frost/src/frost/threads/ScopedLock.frost:20
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
 frost$threads$Lock** $tmp2 = &param0->lock;
 frost$threads$Lock* $tmp3 = *$tmp2;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp3));
 frost$threads$Lock** $tmp4 = &param0->lock;
 *$tmp4 = param1;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/threads/ScopedLock.frost:21
+// /Users/ethannicholas/Dropbox/Frost/src/frost/threads/ScopedLock.frost:21
 frost$threads$Lock$lock(param1);
 return;
 
 }
 void frost$threads$ScopedLock$cleanup(frost$threads$ScopedLock* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/threads/ScopedLock.frost:26
+// /Users/ethannicholas/Dropbox/Frost/src/frost/threads/ScopedLock.frost:26
 frost$threads$Lock** $tmp5 = &param0->lock;
 frost$threads$Lock* $tmp6 = *$tmp5;
 frost$threads$Lock$unlock($tmp6);
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/threads/ScopedLock.frost:25
+// /Users/ethannicholas/Dropbox/Frost/src/frost/threads/ScopedLock.frost:25
 frost$core$Immutable$cleanup(((frost$core$Immutable*) param0));
 frost$threads$Lock** $tmp7 = &param0->lock;
 frost$threads$Lock* $tmp8 = *$tmp7;

@@ -24,7 +24,7 @@ static frost$core$String $s8 = { (frost$core$Class*) &frost$core$String$class, -
 
 void frost$core$Error$init$frost$core$String(frost$core$Error* param0, frost$core$String* param1) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Error.frost:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Error.frost:16
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
 frost$core$String** $tmp2 = &param0->message;
 frost$core$String* $tmp3 = *$tmp2;
@@ -36,11 +36,11 @@ return;
 }
 frost$core$String* frost$core$Error$get_asString$R$frost$core$String(frost$core$Error* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Error.frost:21
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Error.frost:21
 frost$core$String** $tmp5 = &param0->message;
 frost$core$String* $tmp6 = *$tmp5;
 // begin inline call to function frost.core.String.get_asString():frost.core.String from Error.frost:21:19
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:390
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:390
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp6));
 frost$core$String* $tmp7 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp6, &$s8);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp7));
@@ -51,7 +51,7 @@ return $tmp7;
 }
 void frost$core$Error$cleanup(frost$core$Error* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Error.frost:6
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Error.frost:6
 frost$core$Immutable$cleanup(((frost$core$Immutable*) param0));
 frost$core$String** $tmp9 = &param0->message;
 frost$core$String* $tmp10 = *$tmp9;

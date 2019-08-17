@@ -55,6 +55,7 @@ class Analyzer {
         -- reverses the sense of a boolean value
         property invert:DataFlowValue
         function get_invert():DataFlowValue {
+            -- FIXME implement
             return self
         }
 
@@ -95,16 +96,12 @@ class Analyzer {
     class State {
         def locals:Array<DataFlowValue>
 
-        def statements:HashMap<IR.Statement.ID, DataFlowValue>
-
         init() {
             locals := Array<DataFlowValue>()
-            statements := HashMap<IR.Statement.ID, DataFlowValue>()
         }
 
         init(src:State) {
             locals := Array<DataFlowValue>(src.locals)
-            statements := HashMap<IR.Statement.ID, DataFlowValue>(src.statements)
         }
 
         method add(compiler:Compiler, s:State):Bit {
@@ -117,27 +114,12 @@ class Analyzer {
                     locals[i] := union
                 }
             }
-            for key in s.statements.keys {
-                var mine := statements[key]
-                if mine == null {
-                    mine := DataFlowValue(compiler.INVALID_TYPE)
-                }
-                var other := s.statements[key]
-                if other == null {
-                    other := DataFlowValue(compiler.INVALID_TYPE)
-                }
-                def union := mine.union(compiler, other)
-                if union != mine {
-                    modified := true
-                    statements[key] := union
-                }
-            }
             return modified
         }
 
         @override
         function get_asString():String {
-            return "State(\{locals}, \{statements})"
+            return "State(\{locals})"
         }
     }
 
@@ -157,10 +139,104 @@ class Analyzer {
 
     def statements := HashMap<IR.Statement.ID, IR.Statement>()
 
+    var reportErrors := false
+
     init(compiler:Compiler, m:MethodDecl, ir:IR) {
         self.compiler := compiler
         self.m := m
         self.ir := ir
+    }
+
+    function getValue(stmt:IR.Statement.ID, state:State):DataFlowValue {
+        match statements[stmt] {
+            when IR.Statement.BINARY(_, left, op, right, type) {
+                return binaryValue(left, op, right, state, type)
+            }
+            when IR.Statement.CAST(position, value, type, explicit) {
+                if explicit {
+                    return DataFlowValue(type)
+                }
+                else {
+                    return getValue(value, state)
+                }
+                if !explicit & reportErrors & !type.isNullable &
+                        getValue(value, state).type.isNullable {
+                    compiler.warn(position, "value may be null")
+                }
+            }
+            when IR.Statement.CONSTRUCT(_, cl) {
+                return DataFlowValue(cl.type)
+            }
+            when IR.Statement.CREATE_STRUCT(_, cl, _) {
+                return DataFlowValue(cl.type)
+            }
+            when IR.Statement.DYNAMIC_CALL(_, m, _) {
+                def type := m.type()
+                if type.isPointer {
+                    return DataFlowValue(type.subtypes[1].returnType)
+                }
+                else {
+                    return DataFlowValue(type.returnType)
+                }
+            }
+            when IR.Statement.EXTRACT_FIELD(_, target, f) {
+                if f.owner.type = compiler.BIT_TYPE {
+                    return DataFlowValue(f.type, getValue(target, state).nonNullImplications)
+                }
+                else {
+                    return DataFlowValue(f.type)
+                }
+            }
+            when IR.Statement.GET_CHOICE_FIELD_POINTER(_, _, cc, index) {
+                return DataFlowValue(Type.pointerTo(compiler, cc.fields[index]))
+            }
+            when IR.Statement.GET_FIELD_POINTER(_, _, f) {
+                return DataFlowValue(f.type)
+            }
+            when IR.Statement.LOAD(position, v) {
+                def value := getValue(v, state)
+                if reportErrors & value.type = compiler.INVALID_TYPE {
+                    compiler.warn(position, "value \{stmt}:\{v} has not been initialized")
+                }
+                return value
+            }
+            when IR.Statement.NEGATE(_, v) {
+                return getValue(v, state)
+            }
+            when IR.Statement.NOT(_, v) {
+                return getValue(v, state).invert
+            }
+            when IR.Statement.POINTER_ALLOC(_, _, t) {
+                return DataFlowValue(Type.pointerTo(compiler, t))
+            }
+            when IR.Statement.POINTER_GET(_, p) {
+                def value := getValue(p, state)
+                assert value.type.isPointer
+                return DataFlowValue(value.type.subtypes[1])
+            }
+            when IR.Statement.POINTER_GET_INDEX(_, p, _) {
+                def value := getValue(p, state)
+                assert value.type.isPointer
+                return DataFlowValue(value.type.subtypes[1])
+            }
+            when IR.Statement.POINTER_OFFSET(_, p, _) {
+                return getValue(p, state)
+            }
+            when IR.Statement.POINTER_REALLOC(_, p, _, _) {
+                return getValue(p, state)
+            }
+            when IR.Statement.STATIC_CALL(_, m, args) {
+                if m.returnType = compiler.BIT_TYPE {
+                    return DataFlowValue(m.returnType, getValue(args[0], state).nonNullImplications)
+                }
+                else {
+                    return DataFlowValue(m.returnType)
+                }
+            }
+            otherwise {
+                unreachable, "unsupported statement: \{statements[stmt]}"
+            }
+        }
     }
 
     function getValue(v:IR.Value, s:State):DataFlowValue {
@@ -184,11 +260,7 @@ class Analyzer {
                 return DataFlowValue(type)
             }
             when IR.Value.REF(statement, _) {
-                def result := s.statements[statement]
-                if result !== null {
-                    return result
-                }
-                return DataFlowValue(compiler.INVALID_TYPE)
+                return getValue(statement, s)
             }
             when IR.Value.STRING(_, type) {
                 return DataFlowValue(type)
@@ -210,25 +282,16 @@ class Analyzer {
         def predIterator := preds.iterator
         var entry := entryStates[target]
         if entry == null {
-            entry := computeExitState(predIterator.next(), false)
+            entry := computeExitState(predIterator.next())
             entryStates[target] := entry
             updated := true
         }
         for pred in predIterator {
-            updated |= entry.add(compiler, computeExitState(pred, false))
+            updated |= entry.add(compiler, computeExitState(pred))
         }
         if updated {
             worklist.add(target)
         }
-    }
-
-    function getBlock(id:IR.Block.ID):IR.Block {
-        for b in ir.blocks {
-            if b.id = id {
-                return b
-            }
-        }
-        unreachable
     }
 
     ================================================================================================
@@ -244,24 +307,18 @@ class Analyzer {
     non-nullable LOCAL(0) entering block2 and a nullable LOCAL(1) entering block3.
     ================================================================================================
     method updateStateForExitIndex(b:IR.Block, exit:Int, state:State) {
-        match b.statements[b.statements.count - 1] {
+        match b.statements.last {
             when IR.Statement.CONDITIONAL_BRANCH(_, flag, _, _) {
                 def value := getValue(flag, state)
                 if value.nonNullImplications !== null {
                     for impl in value.nonNullImplications {
                         if impl.second = (exit = 0) {
                             match impl.first {
-                                when IR.Value.REF(id, _) {
-                                    def old := state.statements[id]
-                                    assert old !== null
-                                    state.statements[id] := DataFlowValue(old.type.nonnullable())
-                                }
                                 when IR.Value.LOCAL(slot, _) {
                                     def old := state.locals[slot]
                                     assert old !== null
                                     state.locals[slot] := DataFlowValue(old.type.nonnullable())
                                 }
-                                -- FIXME need to handle parameters as well
                             }
                         }
                     }
@@ -319,97 +376,29 @@ class Analyzer {
         return DataFlowValue(type)
     }
 
-    method computeExitState(target:BlockExit, reportErrors:Bit):State {
+    method computeExitState(target:BlockExit):State {
         def result := State(entryStates[target.id])
-        def block := getBlock(target.id)
-        for i in 0 .. block.statements.count - 1 {
-            def id := block.ids[i]
-            match block.statements[i] {
-                when IR.Statement.BINARY(_, left, op, right, type) {
-                    result.statements[id] := binaryValue(left, op, right, result, type)
-                }
-                when IR.Statement.CAST(position, value, type, explicit) {
-                    if explicit {
-                        result.statements[id] := DataFlowValue(type)
-                    }
-                    else {
-                        result.statements[id] := getValue(value, result)
-                    }
-                    if !explicit & reportErrors {
-                        if !type.isNullable & getValue(value, result).type.isNullable {
-                            --compiler.warn(position, "value may be null")
-                        }
-                    }
-                }
-                when IR.Statement.CONSTRUCT(_, cl) {
-                    result.statements[id] := DataFlowValue(cl.type)
-                }
-                when IR.Statement.DYNAMIC_CALL(_, m, _) {
-                    def type := m.type()
-                    if type.isPointer {
-                        result.statements[id] := DataFlowValue(type.subtypes[1].returnType)
-                    }
-                    else {
-                        result.statements[id] := DataFlowValue(type.returnType)
-                    }
-                }
-                when IR.Statement.EXTRACT_FIELD(_, target, f) {
-                    if f.owner.type = compiler.BIT_TYPE {
-                        result.statements[id] := DataFlowValue(f.type,
-                                getValue(target, result).nonNullImplications)
-                    }
-                    else {
-                        result.statements[id] := DataFlowValue(f.type)
-                    }
-                }
-                when IR.Statement.GET_FIELD_POINTER(_, _, f) {
-                    result.statements[id] := DataFlowValue(f.type)
-                }
-                when IR.Statement.LOAD(position, v) {
-                    def value := getValue(v, result)
-                    result.statements[id] := value
-                    if reportErrors & value.type = compiler.INVALID_TYPE {
-                        --Console.printLine("uninitialized value at \{position}")
-                    }
-                }
-                when IR.Statement.NEGATE(_, v) {
-                    result.statements[id] := getValue(v, result)
-                }
-                when IR.Statement.NOT(_, v) {
-                    result.statements[id] := getValue(v, result).invert
-                }
-                when IR.Statement.POINTER_ALLOC(_, _, t) {
-                    result.statements[id] := DataFlowValue(Type.pointerTo(compiler, t))
-                }
-                when IR.Statement.POINTER_GET(_, p) {
-                    def value := getValue(p, result)
-                    assert value.type.isPointer
-                    result.statements[id] := DataFlowValue(value.type.subtypes[1])
-                }
-                when IR.Statement.POINTER_GET_INDEX(_, p, _) {
-                    def value := getValue(p, result)
-                    assert value.type.isPointer
-                    result.statements[id] := DataFlowValue(value.type.subtypes[1])
-                }
-                when IR.Statement.POINTER_OFFSET(_, p, _) {
-                    result.statements[id] := getValue(p, result)
-                }
-                when IR.Statement.POINTER_REALLOC(_, p, _, _) {
-                    result.statements[id] := getValue(p, result)
-                }
-                when IR.Statement.STATIC_CALL(_, m, args) {
-                    if m.returnType = compiler.BIT_TYPE {
-                        result.statements[id] := DataFlowValue(m.returnType,
-                                getValue(args[0], result).nonNullImplications)
-                    }
-                    else {
-                        result.statements[id] := DataFlowValue(m.returnType)
-                    }
-                }
+        def block := blocks[target.id]
+        def iter1 := block.ids.iterator
+        def iter2 := block.statements.iterator
+        while !iter1.done {
+            def id := iter1.next()
+            match iter2.next() {
                 when IR.Statement.STORE(_, v, target) {
                     match target {
                         when IR.Value.LOCAL(slot, _) {
                             result.locals[slot] := getValue(v, result)
+                        }
+                        when IR.Value.REF(s, _) {
+                            match statements[s] {
+                                when IR.Statement.GET_FIELD_POINTER(_, v, _) {
+                                    match v {
+                                        when IR.Value.LOCAL(slot, _) {
+                                            result.locals[slot] := DataFlowValue(ir.locals[slot])
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -420,8 +409,8 @@ class Analyzer {
     }
 
     method process(id:IR.Block.ID) {
-        def block := getBlock(id)
-        match block.statements[block.statements.count - 1] {
+        def block := blocks[id]
+        match block.statements.last {
             when IR.Statement.BRANCH(_, id) {
                 propagate(BlockExit(block.id, 0), id)
             }
@@ -436,8 +425,7 @@ class Analyzer {
             when IR.Statement.UNREACHABLE {
             }
             otherwise {
-                unreachable, "block ended in nonterminal statement " +
-                        block.statements[block.statements.count - 1]
+                unreachable, "block ended in nonterminal statement " + block.statements.last
             }
         }
     }
@@ -453,10 +441,12 @@ class Analyzer {
                 Console.print(" " + entryStates[b.id])
             }
             Console.printLine()
-            for i in 0 .. b.statements.count {
-                Console.print(b.ids[i])
+            def iter1 := b.ids.iterator
+            def iter2 := b.statements.iterator
+            while !iter1.done {
+                Console.print(iter1.next())
                 Console.print(": ")
-                Console.printLine(b.statements[i])
+                Console.printLine(iter2.next())
             }
         }
     }
@@ -470,8 +460,10 @@ class Analyzer {
         entryStates[ir.blocks[0].id] := startState
         for b in ir.blocks {
             blocks[b.id] := b
-            for i in 0 .. b.statements.count {
-                statements[b.ids[i]] := b.statements[i]
+            def iter1 := b.ids.iterator
+            def iter2 := b.statements.iterator
+            while !iter1.done {            
+                statements[iter1.next()] := iter2.next()
             }
         }
         worklist.add(ir.blocks[0].id)
@@ -480,9 +472,10 @@ class Analyzer {
             worklist.remove(next)
             process(next)
         }
+        reportErrors := true
         for b in ir.blocks {
             if entryStates[b.id] !== null {
-                match b.statements[0] {
+                match b.statements.first {
                     when IR.Statement.END {
                         if m.methodKind != MethodDecl.Kind.INIT &
                                 m.returnType != compiler.VOID_TYPE {
@@ -490,7 +483,7 @@ class Analyzer {
                         }
                     }
                     otherwise {
-                        computeExitState(BlockExit(b.id, 0), true)
+                        computeExitState(BlockExit(b.id, 0))
                     }
                 }
             }
@@ -501,11 +494,12 @@ class Analyzer {
     }
 
     method makeUnreachable(b:IR.Block) {
-        b.statements[0] := IR.Statement.UNREACHABLE(b.statements[0].position)
-        for j in b.statements.count -1 ... 1 by -1 {
-            b.statements.removeIndex(j)
-            b.ids.removeIndex(j)
-        }    
+        def id := b.ids.first
+        def pos := b.statements.first.position
+        b.ids.clear()
+        b.ids.add(id)
+        b.statements.clear()
+        b.statements.add(IR.Statement.UNREACHABLE(pos))
     }
 
     method removeBlock(index:Int) {
@@ -513,7 +507,7 @@ class Analyzer {
         ir.blocks.removeIndex(index)
         for b in ir.blocks {
             def last := b.statements.count - 1
-            match b.statements[last] {
+            match b.statements.last {
                 when IR.Statement.BRANCH(_, id) {
                     if id = removed {
                         makeUnreachable(b)
@@ -522,10 +516,12 @@ class Analyzer {
                 when IR.Statement.CONDITIONAL_BRANCH(position, _, ifTrue, ifFalse) {
                     assert ifTrue != ifFalse
                     if ifTrue = removed {
-                        b.statements[last] := IR.Statement.BRANCH(position, ifFalse)
+--                        b.statements[last] := IR.Statement.BRANCH(position, ifFalse)
+                        System.crash()
                     }
                     else if ifFalse = removed {
-                        b.statements[last] := IR.Statement.BRANCH(position, ifTrue)
+--                        b.statements[last] := IR.Statement.BRANCH(position, ifTrue)
+                        System.crash()
                     }
                 }
             }

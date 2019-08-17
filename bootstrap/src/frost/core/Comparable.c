@@ -21,7 +21,7 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 
 frost$core$Bit frost$core$Comparable$$LT$frost$core$Comparable$T$R$frost$core$Bit(frost$core$Comparable* param0, frost$core$Comparable* param1) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Comparable.frost:13
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Comparable.frost:13
 ITable* $tmp2 = param1->$class->itable;
 while ($tmp2->$class != (frost$core$Class*) &frost$core$Comparable$class) {
     $tmp2 = $tmp2->next;
@@ -33,7 +33,7 @@ return $tmp5;
 }
 frost$core$Bit frost$core$Comparable$$GE$frost$core$Comparable$T$R$frost$core$Bit(frost$core$Comparable* param0, frost$core$Comparable* param1) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Comparable.frost:18
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Comparable.frost:18
 ITable* $tmp6 = param0->$class->itable;
 while ($tmp6->$class != (frost$core$Class*) &frost$core$Comparable$class) {
     $tmp6 = $tmp6->next;
@@ -41,7 +41,7 @@ while ($tmp6->$class != (frost$core$Class*) &frost$core$Comparable$class) {
 $fn8 $tmp7 = $tmp6->methods[1];
 frost$core$Bit $tmp9 = $tmp7(param0, param1);
 // begin inline call to function frost.core.Bit.!():frost.core.Bit from Comparable.frost:18:16
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Bit.frost:42
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
 bool $tmp10 = $tmp9.value;
 bool $tmp11 = !$tmp10;
 frost$core$Bit $tmp12 = (frost$core$Bit) {$tmp11};
@@ -50,7 +50,7 @@ return $tmp12;
 }
 frost$core$Bit frost$core$Comparable$$LE$frost$core$Comparable$T$R$frost$core$Bit(frost$core$Comparable* param0, frost$core$Comparable* param1) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Comparable.frost:23
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Comparable.frost:23
 ITable* $tmp13 = param0->$class->itable;
 while ($tmp13->$class != (frost$core$Class*) &frost$core$Comparable$class) {
     $tmp13 = $tmp13->next;
@@ -58,7 +58,7 @@ while ($tmp13->$class != (frost$core$Class*) &frost$core$Comparable$class) {
 $fn15 $tmp14 = $tmp13->methods[0];
 frost$core$Bit $tmp16 = $tmp14(param0, param1);
 // begin inline call to function frost.core.Bit.!():frost.core.Bit from Comparable.frost:23:16
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Bit.frost:42
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
 bool $tmp17 = $tmp16.value;
 bool $tmp18 = !$tmp17;
 frost$core$Bit $tmp19 = (frost$core$Bit) {$tmp18};

@@ -26,7 +26,7 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 
 frost$core$Object* frost$collections$MapView$$anonymous1$$LPfrost$collections$MapView$K$Cfrost$collections$MapView$V$RP$R$frost$collections$MapView$K(frost$core$Tuple2* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/MapView.frost:51
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/MapView.frost:51
 frost$core$Object** $tmp2 = &param0->f0;
 frost$core$Object* $tmp3 = *$tmp2;
 frost$core$Frost$ref$frost$core$Object$Q($tmp3);
@@ -35,7 +35,7 @@ return $tmp3;
 }
 frost$collections$Iterator* frost$collections$MapView$get_keys$R$frost$collections$Iterator$LTfrost$collections$MapView$K$GT(frost$collections$MapView* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/MapView.frost:51
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/MapView.frost:51
 ITable* $tmp4 = param0->$class->itable;
 while ($tmp4->$class != (frost$core$Class*) &frost$collections$MapView$class) {
     $tmp4 = $tmp4->next;
@@ -45,10 +45,10 @@ frost$collections$Iterator* $tmp7 = $tmp5(param0);
 FROST_ASSERT(32 == sizeof(frost$core$Method));
 frost$core$Method* $tmp9 = (frost$core$Method*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$Method$class);
 // begin inline call to frost.core.Method.init(pointer:frost.unsafe.Pointer<frost.core.Int8>, target:frost.core.Immutable?) from MapView.frost:51:31
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Method.frost:37
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Method.frost:37
 frost$core$Int8** $tmp10 = &$tmp9->pointer;
 *$tmp10 = ((frost$core$Int8*) frost$collections$MapView$$anonymous1$$LPfrost$collections$MapView$K$Cfrost$collections$MapView$V$RP$R$frost$collections$MapView$K);
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Method.frost:38
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Method.frost:38
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Immutable*) NULL)));
 frost$core$Immutable** $tmp11 = &$tmp9->target;
 frost$core$Immutable* $tmp12 = *$tmp11;
@@ -70,7 +70,7 @@ return $tmp17;
 }
 frost$core$Object* frost$collections$MapView$$anonymous2$$LPfrost$collections$MapView$K$Cfrost$collections$MapView$V$RP$R$frost$collections$MapView$V(frost$core$Tuple2* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/MapView.frost:57
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/MapView.frost:57
 frost$core$Object** $tmp18 = &param0->f1;
 frost$core$Object* $tmp19 = *$tmp18;
 frost$core$Frost$ref$frost$core$Object$Q($tmp19);
@@ -79,7 +79,7 @@ return $tmp19;
 }
 frost$collections$Iterator* frost$collections$MapView$get_values$R$frost$collections$Iterator$LTfrost$collections$MapView$V$GT(frost$collections$MapView* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/MapView.frost:57
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/MapView.frost:57
 ITable* $tmp20 = param0->$class->itable;
 while ($tmp20->$class != (frost$core$Class*) &frost$collections$MapView$class) {
     $tmp20 = $tmp20->next;
@@ -89,10 +89,10 @@ frost$collections$Iterator* $tmp23 = $tmp21(param0);
 FROST_ASSERT(32 == sizeof(frost$core$Method));
 frost$core$Method* $tmp25 = (frost$core$Method*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$Method$class);
 // begin inline call to frost.core.Method.init(pointer:frost.unsafe.Pointer<frost.core.Int8>, target:frost.core.Immutable?) from MapView.frost:57:31
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Method.frost:37
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Method.frost:37
 frost$core$Int8** $tmp26 = &$tmp25->pointer;
 *$tmp26 = ((frost$core$Int8*) frost$collections$MapView$$anonymous2$$LPfrost$collections$MapView$K$Cfrost$collections$MapView$V$RP$R$frost$collections$MapView$V);
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Method.frost:38
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Method.frost:38
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Immutable*) NULL)));
 frost$core$Immutable** $tmp27 = &$tmp25->target;
 frost$core$Immutable* $tmp28 = *$tmp27;

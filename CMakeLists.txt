@@ -129,6 +129,7 @@ add_library(c_frost
     bootstrap/src/org/frostlang/frostc/MethodDecl/Parameter.c
     bootstrap/src/org/frostlang/frostc/MethodDecl/Kind.c
     bootstrap/src/org/frostlang/frostc/FieldDecl.c
+    bootstrap/src/org/frostlang/frostc/Bench.c
     bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure20.c
     bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure24.c
     bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure34.c
@@ -153,6 +154,9 @@ add_library(c_frost
     bootstrap/src/org/frostlang/frostc/frostdoc/Protector.c
     bootstrap/src/org/frostlang/frostc/frostdoc/LinkResolver.c
     bootstrap/src/org/frostlang/frostc/IR.c
+    bootstrap/src/org/frostlang/frostc/LinkedList.c
+    bootstrap/src/org/frostlang/frostc/LinkedList/LinkedListIterator.c
+    bootstrap/src/org/frostlang/frostc/LinkedList/Node.c
     bootstrap/src/org/frostlang/frostc/expression/Or.c
     bootstrap/src/org/frostlang/frostc/expression/Unary/Operator.c
     bootstrap/src/org/frostlang/frostc/expression/Dot.c
@@ -401,6 +405,7 @@ add_library(c_frost
     bootstrap/src/frost/collections/Stack/StackIterator.c
     bootstrap/src/frost/collections/Key.c
     bootstrap/src/frost/collections/HashMap.c
+    bootstrap/src/frost/time/Timer.c
     bootstrap/src/frostlib.c
 )
 
@@ -1208,6 +1213,7 @@ set(frostc_source
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/HCodeGenerator.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/HTMLProcessor.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/IR.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/LinkedList.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/lvalue/ChoiceFieldLValue.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/lvalue/FieldLValue.frost

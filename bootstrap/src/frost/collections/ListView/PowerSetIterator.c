@@ -38,18 +38,18 @@ static frost$core$String $s85 = { (frost$core$Class*) &frost$core$String$class, 
 
 void frost$collections$ListView$PowerSetIterator$init$frost$collections$ListView$LTfrost$collections$ListView$PowerSetIterator$T$GT(frost$collections$ListView$PowerSetIterator* param0, frost$collections$ListView* param1) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/ListView.frost:168
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/ListView.frost:170
 frost$core$UInt64 $tmp2 = (frost$core$UInt64) {0u};
 frost$core$UInt64* $tmp3 = &param0->bits;
 *$tmp3 = $tmp2;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/ListView.frost:173
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/ListView.frost:175
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
 frost$collections$ListView** $tmp4 = &param0->list;
 frost$collections$ListView* $tmp5 = *$tmp4;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp5));
 frost$collections$ListView** $tmp6 = &param0->list;
 *$tmp6 = param1;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/ListView.frost:174
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/ListView.frost:176
 frost$core$Int $tmp7 = (frost$core$Int) {1u};
 ITable* $tmp8 = ((frost$collections$CollectionView*) param1)->$class->itable;
 while ($tmp8->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
@@ -57,14 +57,14 @@ while ($tmp8->$class != (frost$core$Class*) &frost$collections$CollectionView$cl
 }
 $fn10 $tmp9 = $tmp8->methods[0];
 frost$core$Int $tmp11 = $tmp9(((frost$collections$CollectionView*) param1));
-// begin inline call to function frost.core.Int.<<(other:frost.core.Int):frost.core.Int from ListView.frost:174:29
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:389
+// begin inline call to function frost.core.Int.<<(other:frost.core.Int):frost.core.Int from ListView.frost:176:29
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:389
 int64_t $tmp12 = $tmp7.value;
 int64_t $tmp13 = $tmp11.value;
 int64_t $tmp14 = $tmp12 << $tmp13;
 frost$core$Int $tmp15 = (frost$core$Int) {$tmp14};
-// begin inline call to function frost.core.Int.get_asUInt64():frost.core.UInt64 from ListView.frost:174:43
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:1009
+// begin inline call to function frost.core.Int.get_asUInt64():frost.core.UInt64 from ListView.frost:176:43
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:1009
 int64_t $tmp16 = $tmp15.value;
 frost$core$UInt64 $tmp17 = (frost$core$UInt64) {((uint64_t) $tmp16)};
 frost$core$UInt64* $tmp18 = &param0->stop;
@@ -74,13 +74,13 @@ return;
 }
 frost$core$Bit frost$collections$ListView$PowerSetIterator$get_done$R$frost$core$Bit(frost$collections$ListView$PowerSetIterator* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/ListView.frost:179
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/ListView.frost:181
 frost$core$UInt64* $tmp19 = &param0->bits;
 frost$core$UInt64 $tmp20 = *$tmp19;
 frost$core$UInt64* $tmp21 = &param0->stop;
 frost$core$UInt64 $tmp22 = *$tmp21;
-// begin inline call to function frost.core.UInt64.=(other:frost.core.UInt64):frost.core.Bit from ListView.frost:179:25
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/UInt64.frost:227
+// begin inline call to function frost.core.UInt64.=(other:frost.core.UInt64):frost.core.Bit from ListView.frost:181:25
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/UInt64.frost:227
 uint64_t $tmp23 = $tmp20.value;
 uint64_t $tmp24 = $tmp22.value;
 bool $tmp25 = $tmp23 == $tmp24;
@@ -99,18 +99,18 @@ while ($tmp27->$class != (frost$core$Class*) &frost$collections$Iterator$class) 
 $fn29 $tmp28 = $tmp27->methods[0];
 frost$core$Bit $tmp30 = $tmp28(((frost$collections$Iterator*) param0));
 // begin inline call to function frost.core.Bit.!():frost.core.Bit from Iterator.frost:166:10
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Bit.frost:42
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
 bool $tmp31 = $tmp30.value;
 bool $tmp32 = !$tmp31;
 frost$core$Bit $tmp33 = (frost$core$Bit) {$tmp32};
 bool $tmp34 = $tmp33.value;
 if ($tmp34) goto block1; else goto block2;
 block2:;
-frost$core$Int $tmp35 = (frost$core$Int) {183u};
+frost$core$Int $tmp35 = (frost$core$Int) {185u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s36, $tmp35, &$s37);
 abort(); // unreachable
 block1:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/ListView.frost:184
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/ListView.frost:186
 FROST_ASSERT(40 == sizeof(frost$collections$Array));
 frost$collections$Array* $tmp38 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
 frost$collections$Array$init($tmp38);
@@ -120,7 +120,7 @@ frost$collections$Array* $tmp39 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp39));
 *(&local0) = $tmp38;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp38));
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/ListView.frost:185
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/ListView.frost:187
 frost$core$Int $tmp40 = (frost$core$Int) {0u};
 frost$collections$ListView** $tmp41 = &param0->list;
 frost$collections$ListView* $tmp42 = *$tmp41;
@@ -154,11 +154,11 @@ frost$core$Bit $tmp62 = (frost$core$Bit) {$tmp61};
 bool $tmp63 = $tmp62.value;
 if ($tmp63) goto block4; else goto block5;
 block4:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/ListView.frost:186
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/ListView.frost:188
 frost$core$UInt64* $tmp64 = &param0->bits;
 frost$core$UInt64 $tmp65 = *$tmp64;
 frost$core$Int $tmp66 = *(&local1);
-// begin inline call to function frost.core.UInt64.[](index:frost.core.Int):frost.core.Bit from ListView.frost:186:24
+// begin inline call to function frost.core.UInt64.[](index:frost.core.Int):frost.core.Bit from ListView.frost:188:24
 frost$core$Int $tmp67 = (frost$core$Int) {0u};
 int64_t $tmp68 = $tmp66.value;
 int64_t $tmp69 = $tmp67.value;
@@ -188,17 +188,17 @@ frost$core$Int $tmp83 = (frost$core$Int) {505u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s84, $tmp83, &$s85);
 abort(); // unreachable
 block12:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/UInt64.frost:506
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/UInt64.frost:506
 frost$core$Int $tmp86 = (frost$core$Int) {1u};
 // begin inline call to function frost.core.Int.<<(other:frost.core.Int):frost.core.Int from UInt64.frost:506:27
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:389
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:389
 int64_t $tmp87 = $tmp86.value;
 int64_t $tmp88 = $tmp66.value;
 int64_t $tmp89 = $tmp87 << $tmp88;
 frost$core$Int $tmp90 = (frost$core$Int) {$tmp89};
 frost$core$Int64 $tmp91 = frost$core$Int64$init$frost$core$Int($tmp90);
 // begin inline call to function frost.core.UInt64.&&(other:frost.core.Int64):frost.core.Int64 from UInt64.frost:506:21
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/UInt64.frost:160
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/UInt64.frost:160
 uint64_t $tmp92 = $tmp65.value;
 int64_t $tmp93 = $tmp91.value;
 int64_t $tmp94 = ((int64_t) $tmp92) & $tmp93;
@@ -211,7 +211,7 @@ frost$core$Bit $tmp100 = (frost$core$Bit) {$tmp99};
 bool $tmp101 = $tmp100.value;
 if ($tmp101) goto block9; else goto block10;
 block9:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/ListView.frost:187
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/ListView.frost:189
 frost$collections$Array* $tmp102 = *(&local0);
 frost$collections$ListView** $tmp103 = &param0->list;
 frost$collections$ListView* $tmp104 = *$tmp103;
@@ -254,7 +254,7 @@ frost$core$Int $tmp128 = (frost$core$Int) {$tmp127};
 *(&local1) = $tmp128;
 goto block4;
 block5:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/ListView.frost:190
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/ListView.frost:192
 frost$core$UInt64* $tmp129 = &param0->bits;
 frost$core$UInt64 $tmp130 = *$tmp129;
 frost$core$UInt64 $tmp131 = (frost$core$UInt64) {1u};
@@ -264,7 +264,7 @@ uint64_t $tmp134 = $tmp132 + $tmp133;
 frost$core$UInt64 $tmp135 = (frost$core$UInt64) {$tmp134};
 frost$core$UInt64* $tmp136 = &param0->bits;
 *$tmp136 = $tmp135;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/ListView.frost:191
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/ListView.frost:193
 frost$collections$Array* $tmp137 = *(&local0);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((frost$collections$ListView*) $tmp137)));
 frost$collections$Array* $tmp138 = *(&local0);
@@ -275,7 +275,7 @@ return ((frost$collections$ListView*) $tmp137);
 }
 void frost$collections$ListView$PowerSetIterator$cleanup(frost$collections$ListView$PowerSetIterator* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/ListView.frost:165
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/ListView.frost:167
 frost$core$Object$cleanup(((frost$core$Object*) param0));
 frost$collections$ListView** $tmp139 = &param0->list;
 frost$collections$ListView* $tmp140 = *$tmp139;

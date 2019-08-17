@@ -14,7 +14,7 @@ static frost$core$String $s9 = { (frost$core$Class*) &frost$core$String$class, -
 
 frost$core$String* frost$core$Object$get_asString$R$frost$core$String(frost$core$Object* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Object.frost:25
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Object.frost:25
 frost$core$Class** $tmp2 = &param0->$class;
 frost$core$Class* $tmp3 = *$tmp2;
 frost$core$String** $tmp4 = &$tmp3->name;

@@ -55,9 +55,9 @@ org$frostlang$frostc$Type* $tmp4 = $tmp2(param3);
 frost$core$Weak** $tmp5 = &param4->owner;
 frost$core$Weak* $tmp6 = *$tmp5;
 // begin inline call to method frost.core.Weak.get():frost.core.Weak.T from ChoiceFieldLValue.frost:20:36
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Weak.frost:40
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
 // begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.frost:40:16
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Weak.frost:45
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:45
 frost$core$Bit* $tmp7 = &$tmp6->_valid;
 frost$core$Bit $tmp8 = *$tmp7;
 bool $tmp9 = $tmp8.value;
@@ -67,14 +67,14 @@ frost$core$Int $tmp10 = (frost$core$Int) {40u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s11, $tmp10);
 abort(); // unreachable
 block5:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Weak.frost:41
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:41
 frost$core$Object** $tmp12 = &$tmp6->value;
 frost$core$Object* $tmp13 = *$tmp12;
 frost$core$Frost$ref$frost$core$Object$Q($tmp13);
 org$frostlang$frostc$Type** $tmp14 = &((org$frostlang$frostc$ClassDecl*) $tmp13)->type;
 org$frostlang$frostc$Type* $tmp15 = *$tmp14;
 // begin inline call to function org.frostlang.frostc.Type.=(other:org.frostlang.frostc.Type):frost.core.Bit from ChoiceFieldLValue.frost:20:24
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Type.frost:253
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:253
 frost$core$String** $tmp16 = &((org$frostlang$frostc$Symbol*) $tmp4)->name;
 frost$core$String* $tmp17 = *$tmp16;
 frost$core$String** $tmp18 = &((org$frostlang$frostc$Symbol*) $tmp15)->name;
@@ -117,28 +117,28 @@ frost$core$Int $tmp34 = (frost$core$Int) {21u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s35, $tmp34, &$s36);
 abort(); // unreachable
 block1:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/lvalue/ChoiceFieldLValue.frost:23
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/lvalue/ChoiceFieldLValue.frost:23
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
 org$frostlang$frostc$Compiler** $tmp37 = &param0->compiler;
 org$frostlang$frostc$Compiler* $tmp38 = *$tmp37;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp38));
 org$frostlang$frostc$Compiler** $tmp39 = &param0->compiler;
 *$tmp39 = param1;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/lvalue/ChoiceFieldLValue.frost:24
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/lvalue/ChoiceFieldLValue.frost:24
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param3));
 org$frostlang$frostc$IR$Value** $tmp40 = &param0->target;
 org$frostlang$frostc$IR$Value* $tmp41 = *$tmp40;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp41));
 org$frostlang$frostc$IR$Value** $tmp42 = &param0->target;
 *$tmp42 = param3;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/lvalue/ChoiceFieldLValue.frost:25
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/lvalue/ChoiceFieldLValue.frost:25
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param4));
 org$frostlang$frostc$ChoiceCase** $tmp43 = &param0->choiceCase;
 org$frostlang$frostc$ChoiceCase* $tmp44 = *$tmp43;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp44));
 org$frostlang$frostc$ChoiceCase** $tmp45 = &param0->choiceCase;
 *$tmp45 = param4;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/lvalue/ChoiceFieldLValue.frost:26
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/lvalue/ChoiceFieldLValue.frost:26
 frost$core$Int* $tmp46 = &param0->index;
 *$tmp46 = param5;
 return;
@@ -146,7 +146,7 @@ return;
 }
 org$frostlang$frostc$Type* org$frostlang$frostc$lvalue$ChoiceFieldLValue$type$R$org$frostlang$frostc$Type(org$frostlang$frostc$lvalue$ChoiceFieldLValue* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/lvalue/ChoiceFieldLValue.frost:31
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/lvalue/ChoiceFieldLValue.frost:31
 org$frostlang$frostc$ChoiceCase** $tmp47 = &param0->choiceCase;
 org$frostlang$frostc$ChoiceCase* $tmp48 = *$tmp47;
 frost$collections$Array** $tmp49 = &$tmp48->fields;
@@ -179,7 +179,7 @@ frost$core$Int $tmp68 = (frost$core$Int) {74u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s69, $tmp68, &$s70);
 abort(); // unreachable
 block2:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Array.frost:75
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Array.frost:75
 frost$core$Object*** $tmp71 = &$tmp50->data;
 frost$core$Object** $tmp72 = *$tmp71;
 frost$core$Int64 $tmp73 = frost$core$Int64$init$frost$core$Int($tmp52);
@@ -193,7 +193,7 @@ return ((org$frostlang$frostc$Type*) $tmp75);
 }
 org$frostlang$frostc$IR$Value* org$frostlang$frostc$lvalue$ChoiceFieldLValue$compileLoad$R$org$frostlang$frostc$IR$Value$Q(org$frostlang$frostc$lvalue$ChoiceFieldLValue* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/lvalue/ChoiceFieldLValue.frost:36
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/lvalue/ChoiceFieldLValue.frost:36
 frost$core$Int $tmp76 = (frost$core$Int) {36u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s77, $tmp76);
 abort(); // unreachable
@@ -203,31 +203,31 @@ void org$frostlang$frostc$lvalue$ChoiceFieldLValue$compileStore$org$frostlang$fr
 
 frost$core$Bit local0;
 org$frostlang$frostc$IR$Statement$ID local1;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/lvalue/ChoiceFieldLValue.frost:41
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/lvalue/ChoiceFieldLValue.frost:41
 org$frostlang$frostc$Compiler** $tmp78 = &param0->compiler;
 org$frostlang$frostc$Compiler* $tmp79 = *$tmp78;
 $fn81 $tmp80 = ($fn81) param0->$class->vtable[2];
 org$frostlang$frostc$Type* $tmp82 = $tmp80(param0);
 // begin inline call to method org.frostlang.frostc.Compiler.isRefCounted(type:org.frostlang.frostc.Type):frost.core.Bit from ChoiceFieldLValue.frost:41:33
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Compiler.frost:748
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:735
 frost$core$Bit $tmp83 = org$frostlang$frostc$Type$get_isClass$R$frost$core$Bit($tmp82);
-// begin inline call to function frost.core.Bit.!():frost.core.Bit from Compiler.frost:748:12
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Bit.frost:42
+// begin inline call to function frost.core.Bit.!():frost.core.Bit from Compiler.frost:735:12
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
 bool $tmp84 = $tmp83.value;
 bool $tmp85 = !$tmp84;
 frost$core$Bit $tmp86 = (frost$core$Bit) {$tmp85};
 bool $tmp87 = $tmp86.value;
 if ($tmp87) goto block4; else goto block5;
 block4:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Compiler.frost:749
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:736
 frost$core$Bit $tmp88 = (frost$core$Bit) {false};
 *(&local0) = $tmp88;
 goto block3;
 block5:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Compiler.frost:751
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:738
 frost$core$Bit $tmp89 = org$frostlang$frostc$Compiler$isValue$org$frostlang$frostc$Type$R$frost$core$Bit($tmp79, $tmp82);
-// begin inline call to function frost.core.Bit.!():frost.core.Bit from Compiler.frost:751:16
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Bit.frost:42
+// begin inline call to function frost.core.Bit.!():frost.core.Bit from Compiler.frost:738:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
 bool $tmp90 = $tmp89.value;
 bool $tmp91 = !$tmp90;
 frost$core$Bit $tmp92 = (frost$core$Bit) {$tmp91};
@@ -239,13 +239,13 @@ bool $tmp94 = $tmp93.value;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp82));
 if ($tmp94) goto block1; else goto block2;
 block1:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/lvalue/ChoiceFieldLValue.frost:42
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/lvalue/ChoiceFieldLValue.frost:42
 org$frostlang$frostc$Compiler** $tmp95 = &param0->compiler;
 org$frostlang$frostc$Compiler* $tmp96 = *$tmp95;
 org$frostlang$frostc$Compiler$compileRef$org$frostlang$frostc$IR$Value($tmp96, param1);
 goto block2;
 block2:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/lvalue/ChoiceFieldLValue.frost:44
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/lvalue/ChoiceFieldLValue.frost:44
 org$frostlang$frostc$Compiler** $tmp97 = &param0->compiler;
 org$frostlang$frostc$Compiler* $tmp98 = *$tmp97;
 org$frostlang$frostc$IR** $tmp99 = &$tmp98->ir;
@@ -266,7 +266,7 @@ $fn112 $tmp111 = ($fn112) $tmp100->$class->vtable[2];
 org$frostlang$frostc$IR$Statement$ID $tmp113 = $tmp111($tmp100, $tmp101);
 *(&local1) = $tmp113;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp101));
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/lvalue/ChoiceFieldLValue.frost:46
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/lvalue/ChoiceFieldLValue.frost:46
 org$frostlang$frostc$Compiler** $tmp114 = &param0->compiler;
 org$frostlang$frostc$Compiler* $tmp115 = *$tmp114;
 org$frostlang$frostc$IR** $tmp116 = &$tmp115->ir;
@@ -312,7 +312,7 @@ frost$core$Int $tmp146 = (frost$core$Int) {74u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s147, $tmp146, &$s148);
 abort(); // unreachable
 block9:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Array.frost:75
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Array.frost:75
 frost$core$Object*** $tmp149 = &$tmp128->data;
 frost$core$Object** $tmp150 = *$tmp149;
 frost$core$Int64 $tmp151 = frost$core$Int64$init$frost$core$Int($tmp130);
@@ -331,7 +331,7 @@ return;
 }
 void org$frostlang$frostc$lvalue$ChoiceFieldLValue$cleanup(org$frostlang$frostc$lvalue$ChoiceFieldLValue* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/lvalue/ChoiceFieldLValue.frost:9
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/lvalue/ChoiceFieldLValue.frost:9
 frost$core$Object$cleanup(((frost$core$Object*) param0));
 org$frostlang$frostc$Compiler** $tmp157 = &param0->compiler;
 org$frostlang$frostc$Compiler* $tmp158 = *$tmp157;

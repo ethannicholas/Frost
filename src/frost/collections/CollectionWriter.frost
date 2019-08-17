@@ -11,6 +11,8 @@ but not to retrieve them.
 interface CollectionWriter<T> {
     property count:Int
 
+    function get_count():Int
+
     ================================================================================================
     Adds a new element to the collection. The exact semantics of `add` - does it add to the end of
     the collection, or an arbitrary location? does it always actually add the element, or sometimes

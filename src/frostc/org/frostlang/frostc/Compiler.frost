@@ -5962,7 +5962,7 @@ class Compiler {
                     index += 1
                 }
                 compilePreconditions()
-                compilePostconditions()
+--                compilePostconditions()
                 for s in m.body {
                     compileStatement(s)
                 }
@@ -6187,7 +6187,7 @@ class Compiler {
 
     method compile(file:File) {
         try {
-            compile(file, file.readFully())
+            compile(file.absolute(), file.readFully())
         }
         fail(err) {
             error(Position(files.count, 1, 1), err.message)
@@ -6202,7 +6202,6 @@ class Compiler {
 
     method error(pos:Position, msg:String) {
         if reportErrors {
-        System.crash()
             errorCount += 1
             def path:String
             if pos.file >= 0 & pos.file < files.count {

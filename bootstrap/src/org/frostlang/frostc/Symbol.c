@@ -31,12 +31,12 @@ void org$frostlang$frostc$Symbol$init$org$frostlang$frostc$Symbol$Kind$org$frost
 
 org$frostlang$frostc$Type$Kind local0;
 org$frostlang$frostc$Type$Kind local1;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Symbol.frost:24
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Symbol.frost:24
 frost$core$Bit $tmp2 = frost$core$String$$EQ$frost$core$String$R$frost$core$Bit(param3, &$s3);
 bool $tmp4 = $tmp2.value;
 if ($tmp4) goto block1; else goto block2;
 block1:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Symbol.frost:25
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Symbol.frost:25
 org$frostlang$frostc$Type$Kind* $tmp5 = &((org$frostlang$frostc$Type*) param0)->typeKind;
 org$frostlang$frostc$Type$Kind $tmp6 = *$tmp5;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp7;
@@ -44,7 +44,7 @@ $tmp7 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$co
 $tmp7->value = $tmp6;
 frost$core$Int $tmp8 = (frost$core$Int) {13u};
 // begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Symbol.frost:25:51
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Type.frost:5
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:5
 frost$core$Int* $tmp9 = &(&local1)->$rawValue;
 *$tmp9 = $tmp8;
 org$frostlang$frostc$Type$Kind $tmp10 = *(&local1);
@@ -70,7 +70,7 @@ frost$core$Int$wrapper* $tmp22;
 $tmp22 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp22->value = $tmp21;
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Symbol.frost:25:78
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:560
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 $fn24 $tmp23 = ($fn24) ((frost$core$Object*) $tmp22)->$class->vtable[0];
 frost$core$String* $tmp25 = $tmp23(((frost$core$Object*) $tmp22));
 frost$core$String* $tmp26 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(&$s27, $tmp25);
@@ -88,20 +88,20 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Eq
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Equatable*) $tmp7)));
 goto block2;
 block2:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Symbol.frost:27
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Symbol.frost:27
 org$frostlang$frostc$Symbol$Kind* $tmp31 = &param0->kind;
 *$tmp31 = param1;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Symbol.frost:28
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Symbol.frost:28
 org$frostlang$frostc$Position* $tmp32 = &param0->position;
 *$tmp32 = param2;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Symbol.frost:29
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Symbol.frost:29
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param3));
 frost$core$String** $tmp33 = &param0->name;
 frost$core$String* $tmp34 = *$tmp33;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp34));
 frost$core$String** $tmp35 = &param0->name;
 *$tmp35 = param3;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Symbol.frost:30
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Symbol.frost:30
 ITable* $tmp37 = ((frost$core$Equatable*) param3)->$class->itable;
 while ($tmp37->$class != (frost$core$Class*) &frost$core$Equatable$class) {
     $tmp37 = $tmp37->next;
@@ -120,14 +120,14 @@ return;
 }
 frost$core$Bit org$frostlang$frostc$Symbol$get_heritable$R$frost$core$Bit(org$frostlang$frostc$Symbol* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Symbol.frost:34
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Symbol.frost:34
 frost$core$Bit $tmp44 = (frost$core$Bit) {true};
 return $tmp44;
 
 }
 void org$frostlang$frostc$Symbol$cleanup(org$frostlang$frostc$Symbol* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Symbol.frost:3
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Symbol.frost:3
 frost$core$Object$cleanup(((frost$core$Object*) param0));
 frost$core$String** $tmp45 = &param0->name;
 frost$core$String* $tmp46 = *$tmp45;

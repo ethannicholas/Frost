@@ -35,25 +35,25 @@ static frost$core$String $s113 = { (frost$core$Class*) &frost$core$String$class,
 
 void org$frostlang$frostc$Compiler$AutoContext$init$org$frostlang$frostc$Compiler$org$frostlang$frostc$Compiler$EnclosingContext(org$frostlang$frostc$Compiler$AutoContext* param0, org$frostlang$frostc$Compiler* param1, org$frostlang$frostc$Compiler$EnclosingContext* param2) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Compiler.frost:205
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:202
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
 org$frostlang$frostc$Compiler** $tmp2 = &param0->compiler;
 org$frostlang$frostc$Compiler* $tmp3 = *$tmp2;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp3));
 org$frostlang$frostc$Compiler** $tmp4 = &param0->compiler;
 *$tmp4 = param1;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Compiler.frost:206
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:203
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param2));
 org$frostlang$frostc$Compiler$EnclosingContext** $tmp5 = &param0->context;
 org$frostlang$frostc$Compiler$EnclosingContext* $tmp6 = *$tmp5;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp6));
 org$frostlang$frostc$Compiler$EnclosingContext** $tmp7 = &param0->context;
 *$tmp7 = param2;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Compiler.frost:207
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:204
 frost$collections$Stack** $tmp8 = &param1->enclosingContexts;
 frost$collections$Stack* $tmp9 = *$tmp8;
-// begin inline call to method frost.collections.Stack.push(v:frost.collections.Stack.T) from Compiler.frost:207:44
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Stack.frost:42
+// begin inline call to method frost.collections.Stack.push(v:frost.collections.Stack.T) from Compiler.frost:204:44
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Stack.frost:42
 frost$collections$Array** $tmp10 = &$tmp9->contents;
 frost$collections$Array* $tmp11 = *$tmp10;
 frost$collections$Array$add$frost$collections$Array$T($tmp11, ((frost$core$Object*) param2));
@@ -62,13 +62,13 @@ return;
 }
 void org$frostlang$frostc$Compiler$AutoContext$cleanup(org$frostlang$frostc$Compiler$AutoContext* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Compiler.frost:212
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:209
 org$frostlang$frostc$Compiler** $tmp12 = &param0->compiler;
 org$frostlang$frostc$Compiler* $tmp13 = *$tmp12;
 frost$collections$Stack** $tmp14 = &$tmp13->enclosingContexts;
 frost$collections$Stack* $tmp15 = *$tmp14;
 frost$core$Int $tmp16 = (frost$core$Int) {0u};
-// begin inline call to function frost.collections.Stack.[](depth:frost.core.Int):frost.collections.Stack.T from Compiler.frost:212:46
+// begin inline call to function frost.collections.Stack.[](depth:frost.core.Int):frost.collections.Stack.T from Compiler.frost:209:46
 frost$core$Int $tmp17 = (frost$core$Int) {0u};
 int64_t $tmp18 = $tmp16.value;
 int64_t $tmp19 = $tmp17.value;
@@ -78,7 +78,7 @@ bool $tmp22 = $tmp21.value;
 if ($tmp22) goto block4; else goto block3;
 block4:;
 // begin inline call to function frost.collections.Stack.get_count():frost.core.Int from Stack.frost:70:31
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Stack.frost:93
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Stack.frost:93
 frost$collections$Array** $tmp23 = &$tmp15->contents;
 frost$collections$Array* $tmp24 = *$tmp23;
 ITable* $tmp25 = ((frost$collections$CollectionView*) $tmp24)->$class->itable;
@@ -98,7 +98,7 @@ frost$core$Int $tmp34 = (frost$core$Int) {71u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s35, $tmp34, &$s36);
 abort(); // unreachable
 block2:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Stack.frost:72
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Stack.frost:72
 frost$collections$Array** $tmp37 = &$tmp15->contents;
 frost$collections$Array* $tmp38 = *$tmp37;
 ITable* $tmp39 = ((frost$collections$CollectionView*) $tmp38)->$class->itable;
@@ -118,7 +118,7 @@ frost$core$Int $tmp48 = (frost$core$Int) {72u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s49, $tmp48);
 abort(); // unreachable
 block6:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Stack.frost:73
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Stack.frost:73
 frost$collections$Array** $tmp50 = &$tmp15->contents;
 frost$collections$Array* $tmp51 = *$tmp50;
 frost$collections$Array** $tmp52 = &$tmp15->contents;
@@ -164,7 +164,7 @@ frost$core$Int $tmp82 = (frost$core$Int) {74u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s83, $tmp82, &$s84);
 abort(); // unreachable
 block9:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Array.frost:75
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Array.frost:75
 frost$core$Object*** $tmp85 = &$tmp51->data;
 frost$core$Object** $tmp86 = *$tmp85;
 frost$core$Int64 $tmp87 = frost$core$Int64$init$frost$core$Int($tmp66);
@@ -180,11 +180,11 @@ frost$core$Bit $tmp93 = (frost$core$Bit) {$tmp92};
 bool $tmp94 = $tmp93.value;
 if ($tmp94) goto block12; else goto block13;
 block13:;
-frost$core$Int $tmp95 = (frost$core$Int) {212u};
+frost$core$Int $tmp95 = (frost$core$Int) {209u};
 org$frostlang$frostc$Compiler$EnclosingContext** $tmp96 = &param0->context;
 org$frostlang$frostc$Compiler$EnclosingContext* $tmp97 = *$tmp96;
-// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Compiler.frost:213:21
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:560
+// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Compiler.frost:210:21
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 $fn99 $tmp98 = ($fn99) ((frost$core$Object*) $tmp97)->$class->vtable[0];
 frost$core$String* $tmp100 = $tmp98(((frost$core$Object*) $tmp97));
 frost$core$String* $tmp101 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(&$s102, $tmp100);
@@ -196,8 +196,8 @@ org$frostlang$frostc$Compiler** $tmp105 = &param0->compiler;
 org$frostlang$frostc$Compiler* $tmp106 = *$tmp105;
 frost$collections$Stack** $tmp107 = &$tmp106->enclosingContexts;
 frost$collections$Stack* $tmp108 = *$tmp107;
-// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Compiler.frost:213:79
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:560
+// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Compiler.frost:210:79
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 $fn110 $tmp109 = ($fn110) ((frost$core$Object*) $tmp108)->$class->vtable[0];
 frost$core$String* $tmp111 = $tmp109(((frost$core$Object*) $tmp108));
 frost$core$String* $tmp112 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp103, $tmp111);
@@ -211,14 +211,14 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp101));
 abort(); // unreachable
 block12:;
 frost$core$Frost$unref$frost$core$Object$Q($tmp89);
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Compiler.frost:215
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:212
 org$frostlang$frostc$Compiler** $tmp114 = &param0->compiler;
 org$frostlang$frostc$Compiler* $tmp115 = *$tmp114;
 frost$collections$Stack** $tmp116 = &$tmp115->enclosingContexts;
 frost$collections$Stack* $tmp117 = *$tmp116;
 frost$core$Object* $tmp118 = frost$collections$Stack$pop$R$frost$collections$Stack$T($tmp117);
 frost$core$Frost$unref$frost$core$Object$Q($tmp118);
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/Compiler.frost:211
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:208
 frost$core$Object$cleanup(((frost$core$Object*) param0));
 org$frostlang$frostc$Compiler** $tmp119 = &param0->compiler;
 org$frostlang$frostc$Compiler* $tmp120 = *$tmp119;

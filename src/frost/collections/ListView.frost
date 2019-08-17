@@ -40,6 +40,8 @@ interface ListView<T> : CollectionView<T> {
     ================================================================================================
     property powerSet:Iterator<ListView<T>>
 
+    property last:T
+
     @private
     class ListIterator<T> : Iterator<T> {
         var list:ListView<T>
@@ -334,6 +336,17 @@ interface ListView<T> : CollectionView<T> {
             result.add(self[current])
         }
         return result
+    }
+
+    @override
+    @default
+    function get_first():T {
+        return self[0]
+    }
+
+    @default
+    function get_last():T {
+        return self[count - 1]
     }
 
     ================================================================================================

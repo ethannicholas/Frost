@@ -13,14 +13,14 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 
 void org$frostlang$frostc$LLVMCodeGenerator$MethodShim$init$frost$core$String$frost$core$String(org$frostlang$frostc$LLVMCodeGenerator$MethodShim* param0, frost$core$String* param1, frost$core$String* param2) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:28
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:28
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
 frost$core$String** $tmp2 = &param0->name;
 frost$core$String* $tmp3 = *$tmp2;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp3));
 frost$core$String** $tmp4 = &param0->name;
 *$tmp4 = param1;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:29
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:29
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param2));
 frost$core$String** $tmp5 = &param0->type;
 frost$core$String* $tmp6 = *$tmp5;
@@ -32,7 +32,7 @@ return;
 }
 void org$frostlang$frostc$LLVMCodeGenerator$MethodShim$cleanup(org$frostlang$frostc$LLVMCodeGenerator$MethodShim* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:23
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:23
 frost$core$Object$cleanup(((frost$core$Object*) param0));
 frost$core$String** $tmp8 = &param0->name;
 frost$core$String* $tmp9 = *$tmp8;

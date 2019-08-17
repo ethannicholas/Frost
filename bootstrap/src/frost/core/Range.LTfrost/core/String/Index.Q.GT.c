@@ -33,13 +33,13 @@ static frost$core$String $s24 = { (frost$core$Class*) &frost$core$String$class, 
 frost$core$Range$LTfrost$core$String$Index$Q$GT frost$core$Range$LTfrost$core$String$Index$Q$GT$init$frost$core$String$Index$Q$frost$core$String$Index$Q$frost$core$Bit(frost$core$String$Index$nullable param0, frost$core$String$Index$nullable param1, frost$core$Bit param2) {
 
 frost$core$Range$LTfrost$core$String$Index$Q$GT local0;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Range.frost:30
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Range.frost:30
 frost$core$String$Index$nullable* $tmp3 = &(&local0)->min;
 *$tmp3 = param0;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Range.frost:31
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Range.frost:31
 frost$core$String$Index$nullable* $tmp4 = &(&local0)->max;
 *$tmp4 = param1;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Range.frost:32
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Range.frost:32
 frost$core$Bit* $tmp5 = &(&local0)->inclusive;
 *$tmp5 = param2;
 frost$core$Range$LTfrost$core$String$Index$Q$GT $tmp6 = *(&local0);
@@ -49,7 +49,7 @@ return $tmp6;
 frost$core$String* frost$core$Range$LTfrost$core$String$Index$Q$GT$get_asString$R$frost$core$String(frost$core$Range$LTfrost$core$String$Index$Q$GT param0) {
 
 frost$core$MutableString* local0 = NULL;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Range.frost:37
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Range.frost:37
 FROST_ASSERT(48 == sizeof(frost$core$MutableString));
 frost$core$MutableString* $tmp7 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init($tmp7);
@@ -59,13 +59,13 @@ frost$core$MutableString* $tmp8 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp8));
 *(&local0) = $tmp7;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp7));
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Range.frost:38
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Range.frost:38
 frost$core$String$Index$nullable $tmp9 = param0.min;
 frost$core$Bit $tmp10 = (frost$core$Bit) {$tmp9.nonnull};
 bool $tmp11 = $tmp10.value;
 if ($tmp11) goto block1; else goto block2;
 block1:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Range.frost:39
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Range.frost:39
 frost$core$MutableString* $tmp12 = *(&local0);
 frost$core$String$Index$nullable $tmp13 = param0.min;
 frost$core$Object* $tmp14;
@@ -79,7 +79,7 @@ else {
     $tmp14 = NULL;
 }
 // begin inline call to method frost.core.MutableString.append(o:frost.core.Object) from Range.frost:39:26
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/MutableString.frost:150
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/MutableString.frost:150
 $fn17 $tmp16 = ($fn17) $tmp14->$class->vtable[0];
 frost$core$String* $tmp18 = $tmp16($tmp14);
 frost$core$MutableString$append$frost$core$String($tmp12, $tmp18);
@@ -87,29 +87,29 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp18));
 frost$core$Frost$unref$frost$core$Object$Q($tmp14);
 goto block2;
 block2:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Range.frost:41
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Range.frost:41
 frost$core$Bit $tmp19 = param0.inclusive;
 bool $tmp20 = $tmp19.value;
 if ($tmp20) goto block4; else goto block6;
 block4:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Range.frost:42
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Range.frost:42
 frost$core$MutableString* $tmp21 = *(&local0);
 frost$core$MutableString$append$frost$core$String($tmp21, &$s22);
 goto block5;
 block6:;
 // <no location>
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Range.frost:45
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Range.frost:45
 frost$core$MutableString* $tmp23 = *(&local0);
 frost$core$MutableString$append$frost$core$String($tmp23, &$s24);
 goto block5;
 block5:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Range.frost:47
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Range.frost:47
 frost$core$String$Index$nullable $tmp25 = param0.max;
 frost$core$Bit $tmp26 = (frost$core$Bit) {$tmp25.nonnull};
 bool $tmp27 = $tmp26.value;
 if ($tmp27) goto block7; else goto block8;
 block7:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Range.frost:48
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Range.frost:48
 frost$core$MutableString* $tmp28 = *(&local0);
 frost$core$String$Index$nullable $tmp29 = param0.max;
 frost$core$Object* $tmp30;
@@ -123,7 +123,7 @@ else {
     $tmp30 = NULL;
 }
 // begin inline call to method frost.core.MutableString.append(o:frost.core.Object) from Range.frost:48:26
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/MutableString.frost:150
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/MutableString.frost:150
 $fn33 $tmp32 = ($fn33) $tmp30->$class->vtable[0];
 frost$core$String* $tmp34 = $tmp32($tmp30);
 frost$core$MutableString$append$frost$core$String($tmp28, $tmp34);
@@ -131,7 +131,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp34));
 frost$core$Frost$unref$frost$core$Object$Q($tmp30);
 goto block8;
 block8:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Range.frost:50
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Range.frost:50
 frost$core$MutableString* $tmp35 = *(&local0);
 frost$core$String* $tmp36 = frost$core$MutableString$finish$R$frost$core$String($tmp35);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp36));

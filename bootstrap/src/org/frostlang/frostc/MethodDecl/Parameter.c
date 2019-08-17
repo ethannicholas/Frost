@@ -19,7 +19,7 @@ static frost$core$String $s23 = { (frost$core$Class*) &frost$core$String$class, 
 
 void org$frostlang$frostc$MethodDecl$Parameter$init$frost$core$String$org$frostlang$frostc$Type(org$frostlang$frostc$MethodDecl$Parameter* param0, frost$core$String* param1, org$frostlang$frostc$Type* param2) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/MethodDecl.frost:19
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/MethodDecl.frost:19
 FROST_ASSERT(32 == sizeof(frost$core$Weak));
 frost$core$Weak* $tmp2 = (frost$core$Weak*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$Weak$class);
 frost$core$Weak$init$frost$core$Weak$T$Q($tmp2, ((frost$core$Object*) ((org$frostlang$frostc$MethodDecl*) NULL)));
@@ -30,14 +30,14 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp4));
 frost$core$Weak** $tmp5 = &param0->owner;
 *$tmp5 = $tmp2;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp2));
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/MethodDecl.frost:22
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/MethodDecl.frost:22
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
 frost$core$String** $tmp6 = &param0->name;
 frost$core$String* $tmp7 = *$tmp6;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp7));
 frost$core$String** $tmp8 = &param0->name;
 *$tmp8 = param1;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/MethodDecl.frost:23
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/MethodDecl.frost:23
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param2));
 org$frostlang$frostc$Type** $tmp9 = &param0->type;
 org$frostlang$frostc$Type* $tmp10 = *$tmp9;
@@ -49,17 +49,17 @@ return;
 }
 frost$core$String* org$frostlang$frostc$MethodDecl$Parameter$get_asString$R$frost$core$String(org$frostlang$frostc$MethodDecl$Parameter* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/MethodDecl.frost:28
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/MethodDecl.frost:28
 frost$core$String** $tmp12 = &param0->name;
 frost$core$String* $tmp13 = *$tmp12;
 // begin inline call to function frost.core.String.get_asString():frost.core.String from MethodDecl.frost:28:23
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:390
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:390
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp13));
 frost$core$String* $tmp14 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp13, &$s15);
 org$frostlang$frostc$Type** $tmp16 = &param0->type;
 org$frostlang$frostc$Type* $tmp17 = *$tmp16;
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from MethodDecl.frost:28:23
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:560
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 $fn19 $tmp18 = ($fn19) ((frost$core$Object*) $tmp17)->$class->vtable[0];
 frost$core$String* $tmp20 = $tmp18(((frost$core$Object*) $tmp17));
 frost$core$String* $tmp21 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp14, $tmp20);
@@ -77,7 +77,7 @@ return $tmp22;
 }
 void org$frostlang$frostc$MethodDecl$Parameter$cleanup(org$frostlang$frostc$MethodDecl$Parameter* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/MethodDecl.frost:13
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/MethodDecl.frost:13
 frost$core$Object$cleanup(((frost$core$Object*) param0));
 frost$core$String** $tmp24 = &param0->name;
 frost$core$String* $tmp25 = *$tmp24;

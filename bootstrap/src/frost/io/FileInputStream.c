@@ -18,7 +18,7 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 
 void frost$io$FileInputStream$init(frost$io$FileInputStream* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/io/FileInputStream.frost:15
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/FileInputStream.frost:15
 frost$io$InputStream$init(((frost$io$InputStream*) param0));
 return;
 
@@ -26,13 +26,13 @@ return;
 void frost$io$FileInputStream$cleanup(frost$io$FileInputStream* param0) {
 
 frost$core$Error* local0 = NULL;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/io/FileInputStream.frost:21
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/FileInputStream.frost:21
 frost$core$Bit* $tmp2 = &param0->closeOnCleanup;
 frost$core$Bit $tmp3 = *$tmp2;
 bool $tmp4 = $tmp3.value;
 if ($tmp4) goto block1; else goto block2;
 block1:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/io/FileInputStream.frost:22
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/FileInputStream.frost:22
 frost$core$Error* $tmp5 = frost$io$FileInputStream$close$R$frost$core$Error$Q(param0);
 *(&local0) = ((frost$core$Error*) NULL);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp5));
@@ -45,14 +45,14 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp7));
 *(&local0) = ((frost$core$Error*) NULL);
 goto block2;
 block2:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/io/FileInputStream.frost:20
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/FileInputStream.frost:20
 frost$io$InputStream$cleanup(((frost$io$InputStream*) param0));
 return;
 
 }
 frost$core$UInt8$nullable frost$io$FileInputStream$read$R$frost$core$UInt8$Q(frost$io$FileInputStream* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/io/FileInputStream.frost:32
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/FileInputStream.frost:32
 frost$core$UInt8$nullable $tmp8;
 frost$io$FileInputStream$readImpl$R$frost$core$UInt8$Q(&$tmp8, param0);
 return $tmp8;
@@ -60,7 +60,7 @@ return $tmp8;
 }
 frost$core$Int frost$io$FileInputStream$read$frost$unsafe$Pointer$LTfrost$core$UInt8$GT$frost$core$Int$R$frost$core$Int(frost$io$FileInputStream* param0, frost$core$UInt8* param1, frost$core$Int param2) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/io/FileInputStream.frost:41
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/FileInputStream.frost:41
 frost$core$Int $tmp9;
 frost$io$FileInputStream$readImpl$frost$unsafe$Pointer$LTfrost$core$UInt8$GT$frost$core$Int$R$frost$core$Int(&$tmp9, param0, param1, param2);
 return $tmp9;

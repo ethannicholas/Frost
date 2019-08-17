@@ -19,7 +19,7 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 
 void frost$threads$Notifier$init$frost$threads$Lock(frost$threads$Notifier* param0, frost$threads$Lock* param1) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/threads/Notifier.frost:15
+// /Users/ethannicholas/Dropbox/Frost/src/frost/threads/Notifier.frost:15
 FROST_ASSERT(24 == sizeof(frost$threads$Lock));
 frost$threads$Lock* $tmp2 = (frost$threads$Lock*) frostObjectAlloc(24, (frost$core$Class*) &frost$threads$Lock$class);
 frost$threads$Lock$init($tmp2);
@@ -30,23 +30,23 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp4));
 frost$threads$Lock** $tmp5 = &param0->lock;
 *$tmp5 = $tmp2;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp2));
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/threads/Notifier.frost:18
+// /Users/ethannicholas/Dropbox/Frost/src/frost/threads/Notifier.frost:18
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
 frost$threads$Lock** $tmp6 = &param0->lock;
 frost$threads$Lock* $tmp7 = *$tmp6;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp7));
 frost$threads$Lock** $tmp8 = &param0->lock;
 *$tmp8 = param1;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/threads/Notifier.frost:19
+// /Users/ethannicholas/Dropbox/Frost/src/frost/threads/Notifier.frost:19
 frost$threads$Notifier$create(param0);
 return;
 
 }
 void frost$threads$Notifier$cleanup(frost$threads$Notifier* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/threads/Notifier.frost:44
+// /Users/ethannicholas/Dropbox/Frost/src/frost/threads/Notifier.frost:44
 frost$threads$Notifier$destroy(param0);
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/threads/Notifier.frost:43
+// /Users/ethannicholas/Dropbox/Frost/src/frost/threads/Notifier.frost:43
 frost$core$Immutable$cleanup(((frost$core$Immutable*) param0));
 frost$threads$Lock** $tmp9 = &param0->lock;
 frost$threads$Lock* $tmp10 = *$tmp9;

@@ -6,10 +6,10 @@ typedef struct frost$core$Maybe frost$core$Maybe;
 typedef struct frost$core$Object frost$core$Object;
 typedef struct frost$core$String frost$core$String;
 typedef struct frost$core$Weak frost$core$Weak;
-typedef struct frost$collections$IdentityMap frost$collections$IdentityMap;
+typedef struct frost$collections$HashMap frost$collections$HashMap;
+#include "frost/core/Int_types.h"
 #include "frost/core/Real64_types.h"
 #include "frost/core/Int64_types.h"
-#include "frost/core/Int_types.h"
 #include "frost/core/UInt64_types.h"
 #include "frost/core/Char32_types.h"
 #include "frost/core/Bit_types.h"
@@ -22,12 +22,12 @@ frost$core$Maybe* frost$core$Frost$error$frost$core$String$R$frost$core$Maybe$LT
 void frost$core$Frost$ref$frost$core$Object$Q(frost$core$Object* p_o);
 void frost$core$Frost$unref$frost$core$Object$Q(frost$core$Object* p_o);
 void frost$core$Frost$addWeakReference$frost$core$Weak$LTfrost$core$Frost$addWeakReference$T$GT(frost$core$Weak* p_w);
-void frost$core$Frost$_addWeakReference$frost$core$Weak$LTfrost$core$Object$GT$frost$collections$IdentityMap$LTfrost$core$Object$Cfrost$collections$Array$LTfrost$core$Weak$LTfrost$core$Object$GT$GT$GT(frost$core$Weak* p_w, frost$collections$IdentityMap* p_map);
-void frost$core$Frost$weakReferentDestroyed$frost$core$Object$frost$collections$IdentityMap$LTfrost$core$Object$Cfrost$collections$Array$LTfrost$core$Weak$LTfrost$core$Object$GT$GT$GT(frost$core$Object* p_o, frost$collections$IdentityMap* p_map);
-frost$collections$IdentityMap* frost$core$Frost$createWeakReferenceMap$R$frost$collections$IdentityMap$LTfrost$core$Object$Cfrost$collections$Array$LTfrost$core$Object$GT$GT();
+void frost$core$Frost$_addWeakReference$frost$core$Weak$LTfrost$core$Object$GT$frost$collections$HashMap$LTfrost$core$Int$Cfrost$collections$Array$LTfrost$core$Weak$LTfrost$core$Object$GT$GT$GT(frost$core$Weak* p_w, frost$collections$HashMap* p_map);
+void frost$core$Frost$weakReferentDestroyed$frost$core$Int$frost$collections$HashMap$LTfrost$core$Int$Cfrost$collections$Array$LTfrost$core$Weak$LTfrost$core$Object$GT$GT$GT(frost$core$Int p_address, frost$collections$HashMap* p_map);
+frost$collections$HashMap* frost$core$Frost$createWeakReferenceMap$R$frost$collections$HashMap$LTfrost$core$Int$Cfrost$collections$Array$LTfrost$core$Object$GT$GT();
 void frost$core$Frost$toReal64$frost$core$String$R$frost$core$Real64(frost$core$Real64* result, frost$core$String* p_s);
 void frost$core$Frost$floatToIntBits$frost$core$Real64$R$frost$core$Int64(frost$core$Int64* result, frost$core$Real64 p_r);
-void frost$core$Frost$addressOf$frost$core$Object$R$frost$core$Int64(frost$core$Int64* result, frost$core$Object* p_o);
+void frost$core$Frost$addressOf$frost$core$Object$R$frost$core$Int(frost$core$Int* result, frost$core$Object* p_o);
 void frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(frost$core$String* p_file, frost$core$Int p_line);
 void frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(frost$core$String* p_file, frost$core$Int p_line, frost$core$String* p_msg);
 frost$core$UInt64$nullable frost$core$Frost$digit$frost$core$Char32$R$frost$core$UInt64$Q(frost$core$Char32 p_c);

@@ -15,7 +15,7 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 
 void org$frostlang$frostc$ASTNode$_Closure4$init$frost$core$MutableString(org$frostlang$frostc$ASTNode$_Closure4* param0, frost$core$MutableString* param1) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/ASTNode.frost:593
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/ASTNode.frost:593
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
 frost$core$MutableString** $tmp2 = &param0->$dummy3;
 frost$core$MutableString* $tmp3 = *$tmp2;
@@ -27,7 +27,7 @@ return;
 }
 void org$frostlang$frostc$ASTNode$_Closure4$cleanup(org$frostlang$frostc$ASTNode$_Closure4* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/ASTNode.frost:593
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/ASTNode.frost:593
 frost$core$Object$cleanup(((frost$core$Object*) param0));
 frost$core$MutableString** $tmp5 = &param0->$dummy3;
 frost$core$MutableString* $tmp6 = *$tmp5;
@@ -37,11 +37,11 @@ return;
 }
 void org$frostlang$frostc$ASTNode$_Closure4$$anonymous3$frost$core$Object(org$frostlang$frostc$ASTNode$_Closure4* param0, frost$core$Object* param1) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/ASTNode.frost:593
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/ASTNode.frost:593
 frost$core$MutableString** $tmp7 = &param0->$dummy3;
 frost$core$MutableString* $tmp8 = *$tmp7;
 // begin inline call to method frost.core.MutableString.append(o:frost.core.Object) from ASTNode.frost:593:39
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/MutableString.frost:150
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/MutableString.frost:150
 $fn10 $tmp9 = ($fn10) param1->$class->vtable[0];
 frost$core$String* $tmp11 = $tmp9(param1);
 frost$core$MutableString$append$frost$core$String($tmp8, $tmp11);

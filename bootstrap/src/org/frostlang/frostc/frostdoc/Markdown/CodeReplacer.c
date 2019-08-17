@@ -58,7 +58,7 @@ static frost$core$String $s160 = { (frost$core$Class*) &frost$core$String$class,
 
 void org$frostlang$frostc$frostdoc$Markdown$CodeReplacer$init$org$frostlang$frostc$frostdoc$Markdown(org$frostlang$frostc$frostdoc$Markdown$CodeReplacer* param0, org$frostlang$frostc$frostdoc$Markdown* param1) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:446
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:446
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
 org$frostlang$frostc$frostdoc$Markdown** $tmp2 = &param0->markdown;
 org$frostlang$frostc$frostdoc$Markdown* $tmp3 = *$tmp2;
@@ -77,7 +77,7 @@ frost$core$Matcher* local3 = NULL;
 frost$core$String* local4 = NULL;
 frost$core$String* local5 = NULL;
 frost$core$String* local6 = NULL;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:450
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:450
 frost$core$Int $tmp5 = (frost$core$Int) {1u};
 ITable* $tmp6 = param1->$class->itable;
 while ($tmp6->$class != (frost$core$Class*) &frost$collections$ListView$class) {
@@ -91,7 +91,7 @@ frost$core$String* $tmp10 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp10));
 *(&local0) = ((frost$core$String*) $tmp9);
 frost$core$Frost$unref$frost$core$Object$Q($tmp9);
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:451
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:451
 FROST_ASSERT(48 == sizeof(frost$core$MutableString));
 frost$core$MutableString* $tmp11 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$String* $tmp12 = *(&local0);
@@ -102,31 +102,31 @@ frost$core$MutableString* $tmp13 = *(&local1);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp13));
 *(&local1) = $tmp11;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp11));
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:452
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:452
 frost$core$MutableString* $tmp14 = *(&local1);
 org$frostlang$frostc$frostdoc$Markdown$outdent$frost$core$MutableString($tmp14);
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:453
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:453
 org$frostlang$frostc$frostdoc$Markdown** $tmp15 = &param0->markdown;
 org$frostlang$frostc$frostdoc$Markdown* $tmp16 = *$tmp15;
 frost$core$MutableString* $tmp17 = *(&local1);
 $fn19 $tmp18 = ($fn19) $tmp16->$class->vtable[18];
 $tmp18($tmp16, $tmp17);
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:454
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:454
 org$frostlang$frostc$frostdoc$Markdown** $tmp20 = &param0->markdown;
 org$frostlang$frostc$frostdoc$Markdown* $tmp21 = *$tmp20;
 frost$core$MutableString* $tmp22 = *(&local1);
 $fn24 $tmp23 = ($fn24) $tmp21->$class->vtable[14];
 $tmp23($tmp21, $tmp22);
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:455
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:455
 frost$core$MutableString* $tmp25 = *(&local1);
 FROST_ASSERT(24 == sizeof(frost$core$RegularExpression));
 frost$core$RegularExpression* $tmp26 = (frost$core$RegularExpression*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$RegularExpression$class);
 frost$core$RegularExpression$init$frost$core$String($tmp26, &$s27);
 // begin inline call to method frost.core.MutableString.replace(search:frost.core.RegularExpression, replacement:frost.core.String) from Markdown.frost:455:23
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/MutableString.frost:401
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/MutableString.frost:401
 frost$core$Bit $tmp28 = (frost$core$Bit) {true};
 // begin inline call to method frost.core.MutableString.replace(search:frost.core.RegularExpression, replacement:frost.core.String, allowGroupReferences:frost.core.Bit) from MutableString.frost:401:16
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/MutableString.frost:406
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/MutableString.frost:406
 $fn30 $tmp29 = ($fn30) ((frost$core$Object*) $tmp25)->$class->vtable[0];
 frost$core$String* $tmp31 = $tmp29(((frost$core$Object*) $tmp25));
 frost$core$Matcher* $tmp32 = frost$core$RegularExpression$matcher$frost$core$String$R$frost$core$Matcher($tmp26, $tmp31);
@@ -137,9 +137,9 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp33));
 *(&local2) = $tmp32;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp32));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp31));
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/MutableString.frost:407
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/MutableString.frost:407
 frost$core$MutableString$clear($tmp25);
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/MutableString.frost:408
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/MutableString.frost:408
 goto block3;
 block3:;
 frost$core$Matcher* $tmp34 = *(&local2);
@@ -147,28 +147,28 @@ frost$core$Bit $tmp35 = frost$core$Matcher$find$R$frost$core$Bit($tmp34);
 bool $tmp36 = $tmp35.value;
 if ($tmp36) goto block4; else goto block5;
 block4:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/MutableString.frost:409
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/MutableString.frost:409
 frost$core$Matcher* $tmp37 = *(&local2);
 frost$core$Matcher$appendReplacement$frost$core$MutableString$frost$core$String$frost$core$Bit($tmp37, $tmp25, &$s38, $tmp28);
 goto block3;
 block5:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/MutableString.frost:411
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/MutableString.frost:411
 frost$core$Matcher* $tmp39 = *(&local2);
 frost$core$Matcher$appendTail$frost$core$MutableString($tmp39, $tmp25);
 frost$core$Matcher* $tmp40 = *(&local2);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp40));
 *(&local2) = ((frost$core$Matcher*) NULL);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp26));
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:456
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:456
 frost$core$MutableString* $tmp41 = *(&local1);
 FROST_ASSERT(24 == sizeof(frost$core$RegularExpression));
 frost$core$RegularExpression* $tmp42 = (frost$core$RegularExpression*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$RegularExpression$class);
 frost$core$RegularExpression$init$frost$core$String($tmp42, &$s43);
 // begin inline call to method frost.core.MutableString.replace(search:frost.core.RegularExpression, replacement:frost.core.String) from Markdown.frost:456:23
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/MutableString.frost:401
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/MutableString.frost:401
 frost$core$Bit $tmp44 = (frost$core$Bit) {true};
 // begin inline call to method frost.core.MutableString.replace(search:frost.core.RegularExpression, replacement:frost.core.String, allowGroupReferences:frost.core.Bit) from MutableString.frost:401:16
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/MutableString.frost:406
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/MutableString.frost:406
 $fn46 $tmp45 = ($fn46) ((frost$core$Object*) $tmp41)->$class->vtable[0];
 frost$core$String* $tmp47 = $tmp45(((frost$core$Object*) $tmp41));
 frost$core$Matcher* $tmp48 = frost$core$RegularExpression$matcher$frost$core$String$R$frost$core$Matcher($tmp42, $tmp47);
@@ -179,9 +179,9 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp49));
 *(&local3) = $tmp48;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp48));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp47));
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/MutableString.frost:407
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/MutableString.frost:407
 frost$core$MutableString$clear($tmp41);
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/MutableString.frost:408
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/MutableString.frost:408
 goto block8;
 block8:;
 frost$core$Matcher* $tmp50 = *(&local3);
@@ -189,19 +189,19 @@ frost$core$Bit $tmp51 = frost$core$Matcher$find$R$frost$core$Bit($tmp50);
 bool $tmp52 = $tmp51.value;
 if ($tmp52) goto block9; else goto block10;
 block9:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/MutableString.frost:409
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/MutableString.frost:409
 frost$core$Matcher* $tmp53 = *(&local3);
 frost$core$Matcher$appendReplacement$frost$core$MutableString$frost$core$String$frost$core$Bit($tmp53, $tmp41, &$s54, $tmp44);
 goto block8;
 block10:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/MutableString.frost:411
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/MutableString.frost:411
 frost$core$Matcher* $tmp55 = *(&local3);
 frost$core$Matcher$appendTail$frost$core$MutableString($tmp55, $tmp41);
 frost$core$Matcher* $tmp56 = *(&local3);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp56));
 *(&local3) = ((frost$core$Matcher*) NULL);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp42));
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:457
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:457
 frost$core$MutableString* $tmp57 = *(&local1);
 $fn59 $tmp58 = ($fn59) ((frost$core$Object*) $tmp57)->$class->vtable[0];
 frost$core$String* $tmp60 = $tmp58(((frost$core$Object*) $tmp57));
@@ -211,9 +211,9 @@ frost$core$String* $tmp61 = *(&local4);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp61));
 *(&local4) = $tmp60;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp60));
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:458
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:458
 *(&local5) = ((frost$core$String*) NULL);
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:459
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:459
 frost$core$String* $tmp62 = *(&local4);
 $fn64 $tmp63 = ($fn64) param0->$class->vtable[3];
 frost$core$String* $tmp65 = $tmp63(param0, $tmp62);
@@ -223,14 +223,14 @@ frost$core$String* $tmp66 = *(&local6);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp66));
 *(&local6) = $tmp65;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp65));
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:460
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:460
 frost$core$String* $tmp67 = *(&local6);
 $fn69 $tmp68 = ($fn69) param0->$class->vtable[4];
 frost$core$Bit $tmp70 = $tmp68(param0, $tmp67);
 bool $tmp71 = $tmp70.value;
 if ($tmp71) goto block11; else goto block13;
 block11:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:461
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:461
 frost$core$String* $tmp72 = *(&local6);
 frost$core$String* $tmp73 = *(&local4);
 $fn75 $tmp74 = ($fn75) param0->$class->vtable[5];
@@ -243,7 +243,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp76));
 goto block12;
 block13:;
 // <no location>
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:464
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:464
 frost$core$String* $tmp78 = *(&local4);
 $fn80 $tmp79 = ($fn80) param0->$class->vtable[6];
 frost$core$String* $tmp81 = $tmp79(param0, $tmp78);
@@ -254,7 +254,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp82));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp81));
 goto block12;
 block12:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:466
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:466
 frost$core$String* $tmp83 = *(&local5);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp83));
 frost$core$String* $tmp84 = *(&local6);
@@ -277,12 +277,12 @@ return $tmp83;
 }
 frost$core$String* org$frostlang$frostc$frostdoc$Markdown$CodeReplacer$firstLine$frost$core$String$R$frost$core$String(org$frostlang$frostc$frostdoc$Markdown$CodeReplacer* param0, frost$core$String* param1) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:470
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:470
 // begin inline call to function frost.core.String.split(delimiter:frost.core.String):frost.collections.Array<frost.core.String> from Markdown.frost:470:30
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:1378
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:1378
 frost$core$Int64 $tmp89 = (frost$core$Int64) {9223372036854775807u};
 // begin inline call to function frost.core.Int64.get_asInt():frost.core.Int from Int.frost:22:34
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:580
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int64.frost:580
 int64_t $tmp90 = $tmp89.value;
 frost$core$Int $tmp91 = (frost$core$Int) {((int64_t) $tmp90)};
 frost$collections$Array* $tmp92 = frost$core$String$split$frost$core$String$frost$core$Int$R$frost$collections$Array$LTfrost$core$String$GT(param1, &$s93, $tmp91);
@@ -315,7 +315,7 @@ frost$core$Int $tmp110 = (frost$core$Int) {74u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s111, $tmp110, &$s112);
 abort(); // unreachable
 block4:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Array.frost:75
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Array.frost:75
 frost$core$Object*** $tmp113 = &$tmp92->data;
 frost$core$Object** $tmp114 = *$tmp113;
 frost$core$Int64 $tmp115 = frost$core$Int64$init$frost$core$Int($tmp94);
@@ -331,18 +331,18 @@ return ((frost$core$String*) $tmp117);
 frost$core$Bit org$frostlang$frostc$frostdoc$Markdown$CodeReplacer$isLanguageIdentifier$frost$core$String$R$frost$core$Bit(org$frostlang$frostc$frostdoc$Markdown$CodeReplacer* param0, frost$core$String* param1) {
 
 frost$core$String* local0 = NULL;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:474
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:474
 *(&local0) = ((frost$core$String*) NULL);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) &$s118));
 frost$core$String* $tmp119 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp119));
 *(&local0) = &$s120;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:475
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:475
 frost$core$Bit $tmp121 = frost$core$String$startsWith$frost$core$String$R$frost$core$Bit(param1, &$s122);
 bool $tmp123 = $tmp121.value;
 if ($tmp123) goto block1; else goto block2;
 block1:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:476
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:476
 frost$core$String* $tmp124 = frost$core$String$replace$frost$core$String$frost$core$String$R$frost$core$String(param1, &$s125, &$s126);
 frost$core$String* $tmp127 = frost$core$String$get_trimmed$R$frost$core$String($tmp124);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp127));
@@ -353,7 +353,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp127));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp124));
 goto block2;
 block2:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:478
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:478
 frost$core$String* $tmp129 = *(&local0);
 ITable* $tmp131 = ((frost$core$Equatable*) $tmp129)->$class->itable;
 while ($tmp131->$class != (frost$core$Class*) &frost$core$Equatable$class) {
@@ -371,7 +371,7 @@ frost$core$String* org$frostlang$frostc$frostdoc$Markdown$CodeReplacer$languageB
 
 frost$core$String* local0 = NULL;
 frost$core$String* local1 = NULL;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:482
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:482
 frost$core$String* $tmp136 = frost$core$String$replace$frost$core$String$frost$core$String$R$frost$core$String(param1, &$s137, &$s138);
 frost$core$String* $tmp139 = frost$core$String$get_trimmed$R$frost$core$String($tmp136);
 *(&local0) = ((frost$core$String*) NULL);
@@ -381,7 +381,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp140));
 *(&local0) = $tmp139;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp139));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp136));
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:483
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:483
 frost$core$String* $tmp141 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(param1, &$s142);
 frost$core$String* $tmp143 = frost$core$String$replace$frost$core$String$frost$core$String$R$frost$core$String(param2, $tmp141, &$s144);
 *(&local1) = ((frost$core$String*) NULL);
@@ -391,7 +391,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp145));
 *(&local1) = $tmp143;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp143));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp141));
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:484
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:484
 frost$core$String* $tmp146 = *(&local0);
 frost$core$String* $tmp147 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(&$s148, $tmp146);
 frost$core$String* $tmp149 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp147, &$s150);
@@ -414,7 +414,7 @@ return $tmp153;
 }
 frost$core$String* org$frostlang$frostc$frostdoc$Markdown$CodeReplacer$genericCodeBlock$frost$core$String$R$frost$core$String(org$frostlang$frostc$frostdoc$Markdown$CodeReplacer* param0, frost$core$String* param1) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:488
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:488
 frost$core$String* $tmp157 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(&$s158, param1);
 frost$core$String* $tmp159 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp157, &$s160);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp159));
@@ -425,7 +425,7 @@ return $tmp159;
 }
 void org$frostlang$frostc$frostdoc$Markdown$CodeReplacer$cleanup(org$frostlang$frostc$frostdoc$Markdown$CodeReplacer* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:440
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:440
 frost$core$Object$cleanup(((frost$core$Object*) param0));
 org$frostlang$frostc$frostdoc$Markdown** $tmp161 = &param0->markdown;
 org$frostlang$frostc$frostdoc$Markdown* $tmp162 = *$tmp161;

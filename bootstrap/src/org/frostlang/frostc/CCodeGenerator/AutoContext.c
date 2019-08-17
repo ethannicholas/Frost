@@ -31,25 +31,25 @@ static frost$core$String $s96 = { (frost$core$Class*) &frost$core$String$class, 
 
 void org$frostlang$frostc$CCodeGenerator$AutoContext$init$org$frostlang$frostc$CCodeGenerator$org$frostlang$frostc$CCodeGenerator$EnclosingContext(org$frostlang$frostc$CCodeGenerator$AutoContext* param0, org$frostlang$frostc$CCodeGenerator* param1, org$frostlang$frostc$CCodeGenerator$EnclosingContext* param2) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/CCodeGenerator.frost:26
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/CCodeGenerator.frost:26
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
 org$frostlang$frostc$CCodeGenerator** $tmp2 = &param0->cg;
 org$frostlang$frostc$CCodeGenerator* $tmp3 = *$tmp2;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp3));
 org$frostlang$frostc$CCodeGenerator** $tmp4 = &param0->cg;
 *$tmp4 = param1;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/CCodeGenerator.frost:27
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/CCodeGenerator.frost:27
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param2));
 org$frostlang$frostc$CCodeGenerator$EnclosingContext** $tmp5 = &param0->context;
 org$frostlang$frostc$CCodeGenerator$EnclosingContext* $tmp6 = *$tmp5;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp6));
 org$frostlang$frostc$CCodeGenerator$EnclosingContext** $tmp7 = &param0->context;
 *$tmp7 = param2;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/CCodeGenerator.frost:28
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/CCodeGenerator.frost:28
 frost$collections$Stack** $tmp8 = &param1->enclosingContexts;
 frost$collections$Stack* $tmp9 = *$tmp8;
 // begin inline call to method frost.collections.Stack.push(v:frost.collections.Stack.T) from CCodeGenerator.frost:28:38
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Stack.frost:42
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Stack.frost:42
 frost$collections$Array** $tmp10 = &$tmp9->contents;
 frost$collections$Array* $tmp11 = *$tmp10;
 frost$collections$Array$add$frost$collections$Array$T($tmp11, ((frost$core$Object*) param2));
@@ -58,7 +58,7 @@ return;
 }
 void org$frostlang$frostc$CCodeGenerator$AutoContext$cleanup(org$frostlang$frostc$CCodeGenerator$AutoContext* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/CCodeGenerator.frost:33
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/CCodeGenerator.frost:33
 org$frostlang$frostc$CCodeGenerator** $tmp12 = &param0->cg;
 org$frostlang$frostc$CCodeGenerator* $tmp13 = *$tmp12;
 frost$collections$Stack** $tmp14 = &$tmp13->enclosingContexts;
@@ -74,7 +74,7 @@ bool $tmp22 = $tmp21.value;
 if ($tmp22) goto block4; else goto block3;
 block4:;
 // begin inline call to function frost.collections.Stack.get_count():frost.core.Int from Stack.frost:70:31
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Stack.frost:93
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Stack.frost:93
 frost$collections$Array** $tmp23 = &$tmp15->contents;
 frost$collections$Array* $tmp24 = *$tmp23;
 ITable* $tmp25 = ((frost$collections$CollectionView*) $tmp24)->$class->itable;
@@ -94,7 +94,7 @@ frost$core$Int $tmp34 = (frost$core$Int) {71u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s35, $tmp34, &$s36);
 abort(); // unreachable
 block2:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Stack.frost:72
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Stack.frost:72
 frost$collections$Array** $tmp37 = &$tmp15->contents;
 frost$collections$Array* $tmp38 = *$tmp37;
 ITable* $tmp39 = ((frost$collections$CollectionView*) $tmp38)->$class->itable;
@@ -114,7 +114,7 @@ frost$core$Int $tmp48 = (frost$core$Int) {72u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s49, $tmp48);
 abort(); // unreachable
 block6:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Stack.frost:73
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Stack.frost:73
 frost$collections$Array** $tmp50 = &$tmp15->contents;
 frost$collections$Array* $tmp51 = *$tmp50;
 frost$collections$Array** $tmp52 = &$tmp15->contents;
@@ -160,7 +160,7 @@ frost$core$Int $tmp82 = (frost$core$Int) {74u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s83, $tmp82, &$s84);
 abort(); // unreachable
 block9:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Array.frost:75
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Array.frost:75
 frost$core$Object*** $tmp85 = &$tmp51->data;
 frost$core$Object** $tmp86 = *$tmp85;
 frost$core$Int64 $tmp87 = frost$core$Int64$init$frost$core$Int($tmp66);
@@ -181,14 +181,14 @@ frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s96, $tmp95
 abort(); // unreachable
 block12:;
 frost$core$Frost$unref$frost$core$Object$Q($tmp89);
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/CCodeGenerator.frost:34
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/CCodeGenerator.frost:34
 org$frostlang$frostc$CCodeGenerator** $tmp97 = &param0->cg;
 org$frostlang$frostc$CCodeGenerator* $tmp98 = *$tmp97;
 frost$collections$Stack** $tmp99 = &$tmp98->enclosingContexts;
 frost$collections$Stack* $tmp100 = *$tmp99;
 frost$core$Object* $tmp101 = frost$collections$Stack$pop$R$frost$collections$Stack$T($tmp100);
 frost$core$Frost$unref$frost$core$Object$Q($tmp101);
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/CCodeGenerator.frost:32
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/CCodeGenerator.frost:32
 frost$core$Object$cleanup(((frost$core$Object*) param0));
 org$frostlang$frostc$CCodeGenerator** $tmp102 = &param0->cg;
 org$frostlang$frostc$CCodeGenerator* $tmp103 = *$tmp102;

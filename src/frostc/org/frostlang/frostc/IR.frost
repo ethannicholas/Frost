@@ -397,9 +397,9 @@ class IR {
 
         var forceReachable := false
 
-        def ids := Array<Statement.ID>()
+        def ids := LinkedList<Statement.ID>()
 
-        def statements := Array<Statement>()
+        def statements := LinkedList<Statement>()
 
         -- we may end up with blocks containing only implicit code (unrefs upon leaving scope, etc.)
         -- due to e.g. merge blocks after a control flow merge, which never end up with any explicit
@@ -414,10 +414,12 @@ class IR {
         @override
         function get_asString():String {
             def result := MutableString("\{id}:\n")
-            for i in 0 .. statements.count {
-                result.append(ids[i])
+            def iter1 := ids.iterator
+            def iter2 := statements.iterator
+            while !iter1.done {
+                result.append(iter1.next())
                 result.append(": ")
-                result.append(statements[i])
+                result.append(iter2.next())
                 result.append("\n")
             }
             return result.finish()
@@ -614,7 +616,7 @@ class IR {
         if currentBlock.statements.count = 0 {
             return false
         }
-        match currentBlock.statements[currentBlock.statements.count - 1] {
+        match currentBlock.statements.last {
             when Statement.BRANCH, Statement.CONDITIONAL_BRANCH, Statement.END, Statement.RETURN,
                     Statement.UNREACHABLE {
                 return true

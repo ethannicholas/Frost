@@ -109,7 +109,7 @@ static frost$core$String $s108 = { (frost$core$Class*) &frost$core$String$class,
 frost$core$Bit frost$core$Bit$init$builtin_bit(bool param0) {
 
 frost$core$Bit local0;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Bit.frost:10
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:10
 bool* $tmp3 = &(&local0)->value;
 *$tmp3 = param0;
 frost$core$Bit $tmp4 = *(&local0);
@@ -118,16 +118,16 @@ return $tmp4;
 }
 frost$core$String* frost$core$Bit$get_asString$R$frost$core$String(frost$core$Bit param0) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Bit.frost:15
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:15
 bool $tmp5 = param0.value;
 if ($tmp5) goto block1; else goto block3;
 block1:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Bit.frost:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:16
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) &$s6));
 return &$s7;
 block3:;
 // <no location>
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Bit.frost:19
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:19
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) &$s8));
 return &$s9;
 block2:;
@@ -137,7 +137,7 @@ block4:;
 }
 frost$core$Bit frost$core$Bit$$EQ$frost$core$Bit$R$frost$core$Bit(frost$core$Bit param0, frost$core$Bit param1) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Bit.frost:25
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:25
 bool $tmp10 = param0.value;
 bool $tmp11 = param1.value;
 bool $tmp12 = $tmp10 == $tmp11;
@@ -147,7 +147,7 @@ return $tmp13;
 }
 frost$core$Bit frost$core$Bit$$NEQ$frost$core$Bit$R$frost$core$Bit(frost$core$Bit param0, frost$core$Bit param1) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Bit.frost:30
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:30
 bool $tmp14 = param0.value;
 bool $tmp15 = param1.value;
 bool $tmp16 = $tmp14 != $tmp15;
@@ -157,24 +157,24 @@ return $tmp17;
 }
 frost$core$Int frost$core$Bit$get_hash$R$frost$core$Int(frost$core$Bit param0) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Bit.frost:35
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:35
 bool $tmp18 = param0.value;
 frost$core$Bit $tmp19 = (frost$core$Bit) {$tmp18};
 bool $tmp20 = $tmp19.value;
 if ($tmp20) goto block1; else goto block2;
 block1:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Bit.frost:36
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:36
 frost$core$Int $tmp21 = (frost$core$Int) {1u};
 return $tmp21;
 block2:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Bit.frost:38
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:38
 frost$core$Int $tmp22 = (frost$core$Int) {0u};
 return $tmp22;
 
 }
 frost$core$Bit frost$core$Bit$$NOT$R$frost$core$Bit(frost$core$Bit param0) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Bit.frost:42
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
 bool $tmp23 = param0.value;
 bool $tmp24 = !$tmp23;
 frost$core$Bit $tmp25 = (frost$core$Bit) {$tmp24};
@@ -183,7 +183,7 @@ return $tmp25;
 }
 frost$core$Bit frost$core$Bit$$OR$frost$core$Bit$R$frost$core$Bit(frost$core$Bit param0, frost$core$Bit param1) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Bit.frost:49
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:49
 bool $tmp26 = param0.value;
 bool $tmp27 = param1.value;
 bool $tmp28 = $tmp26 | $tmp27;
@@ -193,7 +193,7 @@ return $tmp29;
 }
 frost$core$Bit frost$core$Bit$$AND$frost$core$Bit$R$frost$core$Bit(frost$core$Bit param0, frost$core$Bit param1) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Bit.frost:53
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:53
 bool $tmp30 = param0.value;
 bool $tmp31 = param1.value;
 bool $tmp32 = $tmp30 & $tmp31;
@@ -203,7 +203,7 @@ return $tmp33;
 }
 frost$core$Bit frost$core$Bit$$XOR$frost$core$Bit$R$frost$core$Bit(frost$core$Bit param0, frost$core$Bit param1) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Bit.frost:57
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:57
 bool $tmp34 = param0.value;
 bool $tmp35 = param1.value;
 bool $tmp36 = $tmp34 ^ $tmp35;
@@ -213,15 +213,15 @@ return $tmp37;
 }
 frost$core$Object* frost$core$Bit$choose$frost$core$Bit$choose$T$frost$core$Bit$choose$T$R$frost$core$Bit$choose$T(frost$core$Bit param0, frost$core$Object* param1, frost$core$Object* param2) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Bit.frost:62
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:62
 bool $tmp38 = param0.value;
 if ($tmp38) goto block1; else goto block2;
 block1:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Bit.frost:63
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:63
 frost$core$Frost$ref$frost$core$Object$Q(param1);
 return param1;
 block2:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Bit.frost:65
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:65
 frost$core$Frost$ref$frost$core$Object$Q(param2);
 return param2;
 
@@ -229,12 +229,12 @@ return param2;
 frost$core$String* frost$core$Bit$format$frost$core$String$R$frost$core$String(frost$core$Bit param0, frost$core$String* param1) {
 
 frost$collections$Array* local0 = NULL;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Bit.frost:75
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:75
 // begin inline call to function frost.core.String.split(delimiter:frost.core.String):frost.collections.Array<frost.core.String> from Bit.frost:75:27
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:1378
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:1378
 frost$core$Int64 $tmp39 = (frost$core$Int64) {9223372036854775807u};
 // begin inline call to function frost.core.Int64.get_asInt():frost.core.Int from Int.frost:22:34
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int64.frost:580
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int64.frost:580
 int64_t $tmp40 = $tmp39.value;
 frost$core$Int $tmp41 = (frost$core$Int) {((int64_t) $tmp40)};
 frost$collections$Array* $tmp42 = frost$core$String$split$frost$core$String$frost$core$Int$R$frost$collections$Array$LTfrost$core$String$GT(param1, &$s43, $tmp41);
@@ -246,7 +246,7 @@ frost$collections$Array* $tmp44 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp44));
 *(&local0) = $tmp42;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp42));
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Bit.frost:76
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:76
 frost$collections$Array* $tmp45 = *(&local0);
 ITable* $tmp46 = ((frost$collections$CollectionView*) $tmp45)->$class->itable;
 while ($tmp46->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
@@ -256,7 +256,7 @@ $fn48 $tmp47 = $tmp46->methods[0];
 frost$core$Int $tmp49 = $tmp47(((frost$collections$CollectionView*) $tmp45));
 frost$core$Int $tmp50 = (frost$core$Int) {2u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Bit.frost:76:24
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 int64_t $tmp51 = $tmp49.value;
 int64_t $tmp52 = $tmp50.value;
 bool $tmp53 = $tmp51 == $tmp52;
@@ -272,11 +272,11 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp59));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp57));
 abort(); // unreachable
 block4:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Bit.frost:77
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:77
 bool $tmp62 = param0.value;
 if ($tmp62) goto block6; else goto block7;
 block6:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Bit.frost:78
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:78
 frost$collections$Array* $tmp63 = *(&local0);
 frost$core$Int $tmp64 = (frost$core$Int) {0u};
 // begin inline call to function frost.collections.Array.[](index:frost.core.Int):frost.collections.Array.T from Bit.frost:78:21
@@ -305,7 +305,7 @@ frost$core$Int $tmp80 = (frost$core$Int) {74u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s81, $tmp80, &$s82);
 abort(); // unreachable
 block9:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Array.frost:75
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Array.frost:75
 frost$core$Object*** $tmp83 = &$tmp63->data;
 frost$core$Object** $tmp84 = *$tmp83;
 frost$core$Int64 $tmp85 = frost$core$Int64$init$frost$core$Int($tmp64);
@@ -319,7 +319,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp88));
 *(&local0) = ((frost$collections$Array*) NULL);
 return ((frost$core$String*) $tmp87);
 block7:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Bit.frost:80
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:80
 frost$collections$Array* $tmp89 = *(&local0);
 frost$core$Int $tmp90 = (frost$core$Int) {1u};
 // begin inline call to function frost.collections.Array.[](index:frost.core.Int):frost.collections.Array.T from Bit.frost:80:17
@@ -348,7 +348,7 @@ frost$core$Int $tmp106 = (frost$core$Int) {74u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s107, $tmp106, &$s108);
 abort(); // unreachable
 block13:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/Array.frost:75
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Array.frost:75
 frost$core$Object*** $tmp109 = &$tmp89->data;
 frost$core$Object** $tmp110 = *$tmp109;
 frost$core$Int64 $tmp111 = frost$core$Int64$init$frost$core$Int($tmp90);

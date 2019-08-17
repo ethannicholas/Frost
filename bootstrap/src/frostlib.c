@@ -15,6 +15,11 @@
 
 #include "unicode/uregex.h"
 
+#ifdef __APPLE__
+#define MACH_TIMER
+#include <mach/mach_time.h>
+#endif
+
 typedef uint8_t bool;
 
 #define true 1
@@ -225,6 +230,17 @@ typedef struct Matcher {
     StringIndex replacementIndex;
 } Matcher;
 
+typedef struct Timer {
+    Class* cl;
+    int32_t refcnt;
+#ifdef MACH_TIMER
+    double scale;
+#else
+    int64_t native;
+#endif
+    double basis;
+} Timer;
+
 extern Class frost$core$Frost$class;
 
 extern Class frost$core$Error$class;
@@ -259,11 +275,11 @@ void frost$io$InputStream$init(void*);
 
 void frost$io$OutputStream$init(void*);
 
-Object* frost$core$Frost$createWeakReferenceMap$R$frost$collections$IdentityMap$LTfrost$core$Object$Cfrost$collections$Array$LTfrost$core$Object$GT$GT();
+Object* frost$core$Frost$createWeakReferenceMap$R$frost$collections$HashMap$LTfrost$core$Int$Cfrost$collections$Array$LTfrost$core$Object$GT$GT();
 
-void frost$core$Frost$_addWeakReference$frost$core$Weak$LTfrost$core$Object$GT$frost$collections$IdentityMap$LTfrost$core$Object$Cfrost$collections$Array$LTfrost$core$Weak$LTfrost$core$Object$GT$GT$GT(Object*, Object*);
+void frost$core$Frost$_addWeakReference$frost$core$Weak$LTfrost$core$Object$GT$frost$collections$HashMap$LTfrost$core$Int$Cfrost$collections$Array$LTfrost$core$Weak$LTfrost$core$Object$GT$GT$GT(Object*, Object*);
 
-void frost$core$Frost$weakReferentDestroyed$frost$core$Object$frost$collections$IdentityMap$LTfrost$core$Object$Cfrost$collections$Array$LTfrost$core$Weak$LTfrost$core$Object$GT$GT$GT(Object*, Object*);
+void frost$core$Frost$weakReferentDestroyed$frost$core$Int$frost$collections$HashMap$LTfrost$core$Int$Cfrost$collections$Array$LTfrost$core$Weak$LTfrost$core$Object$GT$GT$GT(Object*, Object*);
 
 char* frostGetCString(String* s);
 
@@ -332,7 +348,7 @@ void frostFree(void* ptr) {
 void frostObjectFree(Object* o) {
     if (o->flags & FROST_WEAK_REFERENCE_FLAG) {
         pthread_mutex_lock(&weakReferenceMutex);
-        frost$core$Frost$weakReferentDestroyed$frost$core$Object$frost$collections$IdentityMap$LTfrost$core$Object$Cfrost$collections$Array$LTfrost$core$Weak$LTfrost$core$Object$GT$GT$GT(o, weakReferences);
+        frost$core$Frost$weakReferentDestroyed$frost$core$Int$frost$collections$HashMap$LTfrost$core$Int$Cfrost$collections$Array$LTfrost$core$Weak$LTfrost$core$Object$GT$GT$GT(o, weakReferences);
         pthread_mutex_unlock(&weakReferenceMutex);
     }
     o->refcnt = -100000;
@@ -804,11 +820,6 @@ void frost$core$Frost$addressOf$frost$core$Object$R$frost$core$Int(Int64* result
     result->value = (int64_t) o;
 }
 
-// FIXME delete
-void frost$core$Frost$addressOf$frost$core$Object$R$frost$core$Int64(Int64* result, void* o) {
-    result->value = (int64_t) o;
-}
-
 void frost$core$Frost$toReal64$frost$core$String$R$frost$core$Real64(Real64* result, String* s) {
     char* cstr = frostGetCString(s);
     result->value = atof(cstr);
@@ -862,9 +873,9 @@ void frost$core$Frost$disableRefErrorReporting() {
 void frost$core$Frost$addWeakReference$frost$core$Weak$LTfrost$core$Frost$addWeakReference$T$GT(Object* w) {
     pthread_mutex_lock(&weakReferenceMutex);
     if (!weakReferences) {
-        weakReferences = frost$core$Frost$createWeakReferenceMap$R$frost$collections$IdentityMap$LTfrost$core$Object$Cfrost$collections$Array$LTfrost$core$Object$GT$GT();
+        weakReferences = frost$core$Frost$createWeakReferenceMap$R$frost$collections$HashMap$LTfrost$core$Int$Cfrost$collections$Array$LTfrost$core$Object$GT$GT();
     }
-    frost$core$Frost$_addWeakReference$frost$core$Weak$LTfrost$core$Object$GT$frost$collections$IdentityMap$LTfrost$core$Object$Cfrost$collections$Array$LTfrost$core$Weak$LTfrost$core$Object$GT$GT$GT(w, weakReferences);
+    frost$core$Frost$_addWeakReference$frost$core$Weak$LTfrost$core$Object$GT$frost$collections$HashMap$LTfrost$core$Int$Cfrost$collections$Array$LTfrost$core$Weak$LTfrost$core$Object$GT$GT$GT(w, weakReferences);
     pthread_mutex_unlock(&weakReferenceMutex);
 }
 
@@ -1103,7 +1114,7 @@ void frost$threads$Thread$waitFor(Thread* thread) {
     pthread_join((pthread_t) thread->nativeHandle, NULL);
 }
 
-void frost$threads$Thread$sleep$frost$core$Int64(int64_t millis) {
+void frost$threads$Thread$sleep$frost$core$Int(int64_t millis) {
     usleep(millis * 1000);
 }
 
@@ -1449,3 +1460,22 @@ Error* frost$io$File$rename$frost$core$String(File* src, String* dst) {
     return NULL;
 }
 
+// Timer
+
+void frost$time$Timer$setup(Timer* timer) {
+#ifdef MACH_TIMER
+    mach_timebase_info_data_t info;
+    mach_timebase_info(&info);
+    timer->scale = (double) info.numer / (double) info.denom / 1000000000.0;
+#endif
+}
+
+double frost$time$Timer$now$R$builtin_float64(Timer* timer) {
+#ifdef MACH_TIMER
+    return mach_absolute_time() * timer->scale;
+#endif
+    return 0;
+}
+
+void frost$time$Timer$destroy(Timer* timer) {
+}

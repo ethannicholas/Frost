@@ -5,7 +5,7 @@ typedef struct frost$core$Class frost$core$Class;
 #include "frost/core/UInt8_types.h"
 #include "org/frostlang/frostc/IR/Block/ID_types.h"
 #include "frost/core/Bit_types.h"
-typedef struct frost$collections$Array frost$collections$Array;
+typedef struct org$frostlang$frostc$LinkedList org$frostlang$frostc$LinkedList;
 typedef struct frost$core$String frost$core$String;
 
 typedef struct org$frostlang$frostc$IR$Block {
@@ -14,8 +14,8 @@ typedef struct org$frostlang$frostc$IR$Block {
     frost$core$UInt8 $flags;
     org$frostlang$frostc$IR$Block$ID id;
     frost$core$Bit forceReachable;
-    frost$collections$Array* ids;
-    frost$collections$Array* statements;
+    org$frostlang$frostc$LinkedList* ids;
+    org$frostlang$frostc$LinkedList* statements;
     frost$core$Bit containsExplicitCode;
 } org$frostlang$frostc$IR$Block;
 #include "frost/core/Class.h"

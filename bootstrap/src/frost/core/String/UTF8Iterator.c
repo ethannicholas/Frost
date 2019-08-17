@@ -31,11 +31,11 @@ static frost$core$String $s28 = { (frost$core$Class*) &frost$core$String$class, 
 
 void frost$core$String$UTF8Iterator$init$frost$core$String(frost$core$String$UTF8Iterator* param0, frost$core$String* param1) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:109
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:109
 frost$core$Int $tmp3 = (frost$core$Int) {0u};
 frost$core$Int* $tmp4 = &param0->index;
 *$tmp4 = $tmp3;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:114
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:114
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
 frost$core$String** $tmp5 = &param0->str;
 frost$core$String* $tmp6 = *$tmp5;
@@ -47,7 +47,7 @@ return;
 }
 frost$core$Bit frost$core$String$UTF8Iterator$get_done$R$frost$core$Bit(frost$core$String$UTF8Iterator* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:119
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:119
 frost$core$Int* $tmp8 = &param0->index;
 frost$core$Int $tmp9 = *$tmp8;
 frost$core$String** $tmp10 = &param0->str;
@@ -70,7 +70,7 @@ while ($tmp18->$class != (frost$core$Class*) &frost$collections$Iterator$class) 
 $fn20 $tmp19 = $tmp18->methods[0];
 frost$core$Bit $tmp21 = $tmp19(((frost$collections$Iterator*) param0));
 // begin inline call to function frost.core.Bit.!():frost.core.Bit from Iterator.frost:166:10
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Bit.frost:42
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
 bool $tmp22 = $tmp21.value;
 bool $tmp23 = !$tmp22;
 frost$core$Bit $tmp24 = (frost$core$Bit) {$tmp23};
@@ -81,7 +81,7 @@ frost$core$Int $tmp26 = (frost$core$Int) {123u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s27, $tmp26, &$s28);
 abort(); // unreachable
 block1:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:124
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:124
 frost$core$Int* $tmp29 = &param0->index;
 frost$core$Int $tmp30 = *$tmp29;
 frost$core$Int $tmp31 = (frost$core$Int) {1u};
@@ -91,7 +91,7 @@ int64_t $tmp34 = $tmp32 + $tmp33;
 frost$core$Int $tmp35 = (frost$core$Int) {$tmp34};
 frost$core$Int* $tmp36 = &param0->index;
 *$tmp36 = $tmp35;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:125
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:125
 frost$core$String** $tmp37 = &param0->str;
 frost$core$String* $tmp38 = *$tmp37;
 frost$core$Char8** $tmp39 = &$tmp38->data;
@@ -111,7 +111,7 @@ return $tmp50;
 }
 void frost$core$String$UTF8Iterator$cleanup(frost$core$String$UTF8Iterator* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:108
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:108
 frost$core$Object$cleanup(((frost$core$Object*) param0));
 frost$core$String** $tmp51 = &param0->str;
 frost$core$String* $tmp52 = *$tmp51;

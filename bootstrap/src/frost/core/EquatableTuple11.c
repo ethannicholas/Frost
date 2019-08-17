@@ -59,77 +59,77 @@ static frost$core$String $s337 = { (frost$core$Class*) &frost$core$String$class,
 
 void frost$core$EquatableTuple11$init$frost$core$EquatableTuple11$T0$frost$core$EquatableTuple11$T1$frost$core$EquatableTuple11$T2$frost$core$EquatableTuple11$T3$frost$core$EquatableTuple11$T4$frost$core$EquatableTuple11$T5$frost$core$EquatableTuple11$T6$frost$core$EquatableTuple11$T7$frost$core$EquatableTuple11$T8$frost$core$EquatableTuple11$T9$frost$core$EquatableTuple11$T10(frost$core$EquatableTuple11* param0, frost$core$Equatable* param1, frost$core$Equatable* param2, frost$core$Equatable* param3, frost$core$Equatable* param4, frost$core$Equatable* param5, frost$core$Equatable* param6, frost$core$Equatable* param7, frost$core$Equatable* param8, frost$core$Equatable* param9, frost$core$Equatable* param10, frost$core$Equatable* param11) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/EquatableTuple11.frost:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/EquatableTuple11.frost:16
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
 frost$core$Equatable** $tmp2 = &param0->f0;
 frost$core$Equatable* $tmp3 = *$tmp2;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp3));
 frost$core$Equatable** $tmp4 = &param0->f0;
 *$tmp4 = param1;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/EquatableTuple11.frost:17
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/EquatableTuple11.frost:17
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param2));
 frost$core$Equatable** $tmp5 = &param0->f1;
 frost$core$Equatable* $tmp6 = *$tmp5;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp6));
 frost$core$Equatable** $tmp7 = &param0->f1;
 *$tmp7 = param2;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/EquatableTuple11.frost:18
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/EquatableTuple11.frost:18
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param3));
 frost$core$Equatable** $tmp8 = &param0->f2;
 frost$core$Equatable* $tmp9 = *$tmp8;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp9));
 frost$core$Equatable** $tmp10 = &param0->f2;
 *$tmp10 = param3;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/EquatableTuple11.frost:19
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/EquatableTuple11.frost:19
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param4));
 frost$core$Equatable** $tmp11 = &param0->f3;
 frost$core$Equatable* $tmp12 = *$tmp11;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp12));
 frost$core$Equatable** $tmp13 = &param0->f3;
 *$tmp13 = param4;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/EquatableTuple11.frost:20
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/EquatableTuple11.frost:20
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param5));
 frost$core$Equatable** $tmp14 = &param0->f4;
 frost$core$Equatable* $tmp15 = *$tmp14;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp15));
 frost$core$Equatable** $tmp16 = &param0->f4;
 *$tmp16 = param5;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/EquatableTuple11.frost:21
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/EquatableTuple11.frost:21
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param6));
 frost$core$Equatable** $tmp17 = &param0->f5;
 frost$core$Equatable* $tmp18 = *$tmp17;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp18));
 frost$core$Equatable** $tmp19 = &param0->f5;
 *$tmp19 = param6;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/EquatableTuple11.frost:22
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/EquatableTuple11.frost:22
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param7));
 frost$core$Equatable** $tmp20 = &param0->f6;
 frost$core$Equatable* $tmp21 = *$tmp20;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp21));
 frost$core$Equatable** $tmp22 = &param0->f6;
 *$tmp22 = param7;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/EquatableTuple11.frost:23
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/EquatableTuple11.frost:23
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param8));
 frost$core$Equatable** $tmp23 = &param0->f7;
 frost$core$Equatable* $tmp24 = *$tmp23;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp24));
 frost$core$Equatable** $tmp25 = &param0->f7;
 *$tmp25 = param8;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/EquatableTuple11.frost:24
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/EquatableTuple11.frost:24
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param9));
 frost$core$Equatable** $tmp26 = &param0->f8;
 frost$core$Equatable* $tmp27 = *$tmp26;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp27));
 frost$core$Equatable** $tmp28 = &param0->f8;
 *$tmp28 = param9;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/EquatableTuple11.frost:25
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/EquatableTuple11.frost:25
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param10));
 frost$core$Equatable** $tmp29 = &param0->f9;
 frost$core$Equatable* $tmp30 = *$tmp29;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp30));
 frost$core$Equatable** $tmp31 = &param0->f9;
 *$tmp31 = param10;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/EquatableTuple11.frost:26
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/EquatableTuple11.frost:26
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param11));
 frost$core$Equatable** $tmp32 = &param0->f10;
 frost$core$Equatable* $tmp33 = *$tmp32;
@@ -161,10 +161,10 @@ frost$core$Int $tmp47 = (frost$core$Int) {30u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s48, $tmp47, &$s49);
 abort(); // unreachable
 block1:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/EquatableTuple11.frost:31
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/EquatableTuple11.frost:31
 frost$core$Int $tmp50 = (frost$core$Int) {0u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from EquatableTuple11.frost:32:18
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 int64_t $tmp51 = param1.value;
 int64_t $tmp52 = $tmp50.value;
 bool $tmp53 = $tmp51 == $tmp52;
@@ -172,7 +172,7 @@ frost$core$Bit $tmp54 = (frost$core$Bit) {$tmp53};
 bool $tmp55 = $tmp54.value;
 if ($tmp55) goto block5; else goto block6;
 block5:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/EquatableTuple11.frost:32
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/EquatableTuple11.frost:32
 frost$core$Equatable** $tmp56 = &param0->f0;
 frost$core$Equatable* $tmp57 = *$tmp56;
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp57));
@@ -180,7 +180,7 @@ return ((frost$core$Object*) $tmp57);
 block6:;
 frost$core$Int $tmp58 = (frost$core$Int) {1u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from EquatableTuple11.frost:33:18
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 int64_t $tmp59 = param1.value;
 int64_t $tmp60 = $tmp58.value;
 bool $tmp61 = $tmp59 == $tmp60;
@@ -188,7 +188,7 @@ frost$core$Bit $tmp62 = (frost$core$Bit) {$tmp61};
 bool $tmp63 = $tmp62.value;
 if ($tmp63) goto block8; else goto block9;
 block8:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/EquatableTuple11.frost:33
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/EquatableTuple11.frost:33
 frost$core$Equatable** $tmp64 = &param0->f1;
 frost$core$Equatable* $tmp65 = *$tmp64;
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp65));
@@ -196,7 +196,7 @@ return ((frost$core$Object*) $tmp65);
 block9:;
 frost$core$Int $tmp66 = (frost$core$Int) {2u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from EquatableTuple11.frost:34:18
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 int64_t $tmp67 = param1.value;
 int64_t $tmp68 = $tmp66.value;
 bool $tmp69 = $tmp67 == $tmp68;
@@ -204,7 +204,7 @@ frost$core$Bit $tmp70 = (frost$core$Bit) {$tmp69};
 bool $tmp71 = $tmp70.value;
 if ($tmp71) goto block11; else goto block12;
 block11:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/EquatableTuple11.frost:34
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/EquatableTuple11.frost:34
 frost$core$Equatable** $tmp72 = &param0->f2;
 frost$core$Equatable* $tmp73 = *$tmp72;
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp73));
@@ -212,7 +212,7 @@ return ((frost$core$Object*) $tmp73);
 block12:;
 frost$core$Int $tmp74 = (frost$core$Int) {3u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from EquatableTuple11.frost:35:18
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 int64_t $tmp75 = param1.value;
 int64_t $tmp76 = $tmp74.value;
 bool $tmp77 = $tmp75 == $tmp76;
@@ -220,7 +220,7 @@ frost$core$Bit $tmp78 = (frost$core$Bit) {$tmp77};
 bool $tmp79 = $tmp78.value;
 if ($tmp79) goto block14; else goto block15;
 block14:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/EquatableTuple11.frost:35
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/EquatableTuple11.frost:35
 frost$core$Equatable** $tmp80 = &param0->f3;
 frost$core$Equatable* $tmp81 = *$tmp80;
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp81));
@@ -228,7 +228,7 @@ return ((frost$core$Object*) $tmp81);
 block15:;
 frost$core$Int $tmp82 = (frost$core$Int) {4u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from EquatableTuple11.frost:36:18
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 int64_t $tmp83 = param1.value;
 int64_t $tmp84 = $tmp82.value;
 bool $tmp85 = $tmp83 == $tmp84;
@@ -236,7 +236,7 @@ frost$core$Bit $tmp86 = (frost$core$Bit) {$tmp85};
 bool $tmp87 = $tmp86.value;
 if ($tmp87) goto block17; else goto block18;
 block17:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/EquatableTuple11.frost:36
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/EquatableTuple11.frost:36
 frost$core$Equatable** $tmp88 = &param0->f4;
 frost$core$Equatable* $tmp89 = *$tmp88;
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp89));
@@ -244,7 +244,7 @@ return ((frost$core$Object*) $tmp89);
 block18:;
 frost$core$Int $tmp90 = (frost$core$Int) {5u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from EquatableTuple11.frost:37:18
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 int64_t $tmp91 = param1.value;
 int64_t $tmp92 = $tmp90.value;
 bool $tmp93 = $tmp91 == $tmp92;
@@ -252,7 +252,7 @@ frost$core$Bit $tmp94 = (frost$core$Bit) {$tmp93};
 bool $tmp95 = $tmp94.value;
 if ($tmp95) goto block20; else goto block21;
 block20:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/EquatableTuple11.frost:37
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/EquatableTuple11.frost:37
 frost$core$Equatable** $tmp96 = &param0->f5;
 frost$core$Equatable* $tmp97 = *$tmp96;
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp97));
@@ -260,7 +260,7 @@ return ((frost$core$Object*) $tmp97);
 block21:;
 frost$core$Int $tmp98 = (frost$core$Int) {6u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from EquatableTuple11.frost:38:18
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 int64_t $tmp99 = param1.value;
 int64_t $tmp100 = $tmp98.value;
 bool $tmp101 = $tmp99 == $tmp100;
@@ -268,7 +268,7 @@ frost$core$Bit $tmp102 = (frost$core$Bit) {$tmp101};
 bool $tmp103 = $tmp102.value;
 if ($tmp103) goto block23; else goto block24;
 block23:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/EquatableTuple11.frost:38
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/EquatableTuple11.frost:38
 frost$core$Equatable** $tmp104 = &param0->f6;
 frost$core$Equatable* $tmp105 = *$tmp104;
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp105));
@@ -276,7 +276,7 @@ return ((frost$core$Object*) $tmp105);
 block24:;
 frost$core$Int $tmp106 = (frost$core$Int) {7u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from EquatableTuple11.frost:39:18
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 int64_t $tmp107 = param1.value;
 int64_t $tmp108 = $tmp106.value;
 bool $tmp109 = $tmp107 == $tmp108;
@@ -284,7 +284,7 @@ frost$core$Bit $tmp110 = (frost$core$Bit) {$tmp109};
 bool $tmp111 = $tmp110.value;
 if ($tmp111) goto block26; else goto block27;
 block26:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/EquatableTuple11.frost:39
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/EquatableTuple11.frost:39
 frost$core$Equatable** $tmp112 = &param0->f7;
 frost$core$Equatable* $tmp113 = *$tmp112;
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp113));
@@ -292,7 +292,7 @@ return ((frost$core$Object*) $tmp113);
 block27:;
 frost$core$Int $tmp114 = (frost$core$Int) {8u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from EquatableTuple11.frost:40:18
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 int64_t $tmp115 = param1.value;
 int64_t $tmp116 = $tmp114.value;
 bool $tmp117 = $tmp115 == $tmp116;
@@ -300,7 +300,7 @@ frost$core$Bit $tmp118 = (frost$core$Bit) {$tmp117};
 bool $tmp119 = $tmp118.value;
 if ($tmp119) goto block29; else goto block30;
 block29:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/EquatableTuple11.frost:40
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/EquatableTuple11.frost:40
 frost$core$Equatable** $tmp120 = &param0->f8;
 frost$core$Equatable* $tmp121 = *$tmp120;
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp121));
@@ -308,7 +308,7 @@ return ((frost$core$Object*) $tmp121);
 block30:;
 frost$core$Int $tmp122 = (frost$core$Int) {9u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from EquatableTuple11.frost:41:18
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 int64_t $tmp123 = param1.value;
 int64_t $tmp124 = $tmp122.value;
 bool $tmp125 = $tmp123 == $tmp124;
@@ -316,7 +316,7 @@ frost$core$Bit $tmp126 = (frost$core$Bit) {$tmp125};
 bool $tmp127 = $tmp126.value;
 if ($tmp127) goto block32; else goto block33;
 block32:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/EquatableTuple11.frost:41
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/EquatableTuple11.frost:41
 frost$core$Equatable** $tmp128 = &param0->f9;
 frost$core$Equatable* $tmp129 = *$tmp128;
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp129));
@@ -324,7 +324,7 @@ return ((frost$core$Object*) $tmp129);
 block33:;
 frost$core$Int $tmp130 = (frost$core$Int) {10u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from EquatableTuple11.frost:42:18
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Int.frost:426
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 int64_t $tmp131 = param1.value;
 int64_t $tmp132 = $tmp130.value;
 bool $tmp133 = $tmp131 == $tmp132;
@@ -332,20 +332,20 @@ frost$core$Bit $tmp134 = (frost$core$Bit) {$tmp133};
 bool $tmp135 = $tmp134.value;
 if ($tmp135) goto block35; else goto block4;
 block35:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/EquatableTuple11.frost:42
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/EquatableTuple11.frost:42
 frost$core$Equatable** $tmp136 = &param0->f10;
 frost$core$Equatable* $tmp137 = *$tmp136;
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp137));
 return ((frost$core$Object*) $tmp137);
 block4:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/EquatableTuple11.frost:44
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/EquatableTuple11.frost:44
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) NULL));
 return ((frost$core$Object*) NULL);
 
 }
 frost$core$Bit frost$core$EquatableTuple11$$EQ$frost$core$EquatableTuple11$LTfrost$core$EquatableTuple11$T0$Cfrost$core$EquatableTuple11$T1$Cfrost$core$EquatableTuple11$T2$Cfrost$core$EquatableTuple11$T3$Cfrost$core$EquatableTuple11$T4$Cfrost$core$EquatableTuple11$T5$Cfrost$core$EquatableTuple11$T6$Cfrost$core$EquatableTuple11$T7$Cfrost$core$EquatableTuple11$T8$Cfrost$core$EquatableTuple11$T9$Cfrost$core$EquatableTuple11$T10$GT$R$frost$core$Bit(frost$core$EquatableTuple11* param0, frost$core$EquatableTuple11* param1) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/EquatableTuple11.frost:49
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/EquatableTuple11.frost:49
 frost$core$Equatable** $tmp138 = &param0->f0;
 frost$core$Equatable* $tmp139 = *$tmp138;
 frost$core$Equatable** $tmp140 = &param1->f0;
@@ -359,11 +359,11 @@ frost$core$Bit $tmp145 = $tmp143($tmp139, $tmp141);
 bool $tmp146 = $tmp145.value;
 if ($tmp146) goto block1; else goto block2;
 block1:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/EquatableTuple11.frost:49
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/EquatableTuple11.frost:49
 frost$core$Bit $tmp147 = (frost$core$Bit) {false};
 return $tmp147;
 block2:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/EquatableTuple11.frost:50
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/EquatableTuple11.frost:50
 frost$core$Equatable** $tmp148 = &param0->f1;
 frost$core$Equatable* $tmp149 = *$tmp148;
 frost$core$Equatable** $tmp150 = &param1->f1;
@@ -377,11 +377,11 @@ frost$core$Bit $tmp155 = $tmp153($tmp149, $tmp151);
 bool $tmp156 = $tmp155.value;
 if ($tmp156) goto block3; else goto block4;
 block3:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/EquatableTuple11.frost:50
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/EquatableTuple11.frost:50
 frost$core$Bit $tmp157 = (frost$core$Bit) {false};
 return $tmp157;
 block4:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/EquatableTuple11.frost:51
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/EquatableTuple11.frost:51
 frost$core$Equatable** $tmp158 = &param0->f2;
 frost$core$Equatable* $tmp159 = *$tmp158;
 frost$core$Equatable** $tmp160 = &param1->f2;
@@ -395,11 +395,11 @@ frost$core$Bit $tmp165 = $tmp163($tmp159, $tmp161);
 bool $tmp166 = $tmp165.value;
 if ($tmp166) goto block5; else goto block6;
 block5:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/EquatableTuple11.frost:51
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/EquatableTuple11.frost:51
 frost$core$Bit $tmp167 = (frost$core$Bit) {false};
 return $tmp167;
 block6:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/EquatableTuple11.frost:52
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/EquatableTuple11.frost:52
 frost$core$Equatable** $tmp168 = &param0->f3;
 frost$core$Equatable* $tmp169 = *$tmp168;
 frost$core$Equatable** $tmp170 = &param1->f3;
@@ -413,11 +413,11 @@ frost$core$Bit $tmp175 = $tmp173($tmp169, $tmp171);
 bool $tmp176 = $tmp175.value;
 if ($tmp176) goto block7; else goto block8;
 block7:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/EquatableTuple11.frost:52
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/EquatableTuple11.frost:52
 frost$core$Bit $tmp177 = (frost$core$Bit) {false};
 return $tmp177;
 block8:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/EquatableTuple11.frost:53
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/EquatableTuple11.frost:53
 frost$core$Equatable** $tmp178 = &param0->f4;
 frost$core$Equatable* $tmp179 = *$tmp178;
 frost$core$Equatable** $tmp180 = &param1->f4;
@@ -431,11 +431,11 @@ frost$core$Bit $tmp185 = $tmp183($tmp179, $tmp181);
 bool $tmp186 = $tmp185.value;
 if ($tmp186) goto block9; else goto block10;
 block9:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/EquatableTuple11.frost:53
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/EquatableTuple11.frost:53
 frost$core$Bit $tmp187 = (frost$core$Bit) {false};
 return $tmp187;
 block10:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/EquatableTuple11.frost:54
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/EquatableTuple11.frost:54
 frost$core$Equatable** $tmp188 = &param0->f5;
 frost$core$Equatable* $tmp189 = *$tmp188;
 frost$core$Equatable** $tmp190 = &param1->f5;
@@ -449,11 +449,11 @@ frost$core$Bit $tmp195 = $tmp193($tmp189, $tmp191);
 bool $tmp196 = $tmp195.value;
 if ($tmp196) goto block11; else goto block12;
 block11:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/EquatableTuple11.frost:54
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/EquatableTuple11.frost:54
 frost$core$Bit $tmp197 = (frost$core$Bit) {false};
 return $tmp197;
 block12:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/EquatableTuple11.frost:55
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/EquatableTuple11.frost:55
 frost$core$Equatable** $tmp198 = &param0->f6;
 frost$core$Equatable* $tmp199 = *$tmp198;
 frost$core$Equatable** $tmp200 = &param1->f6;
@@ -467,11 +467,11 @@ frost$core$Bit $tmp205 = $tmp203($tmp199, $tmp201);
 bool $tmp206 = $tmp205.value;
 if ($tmp206) goto block13; else goto block14;
 block13:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/EquatableTuple11.frost:55
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/EquatableTuple11.frost:55
 frost$core$Bit $tmp207 = (frost$core$Bit) {false};
 return $tmp207;
 block14:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/EquatableTuple11.frost:56
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/EquatableTuple11.frost:56
 frost$core$Equatable** $tmp208 = &param0->f7;
 frost$core$Equatable* $tmp209 = *$tmp208;
 frost$core$Equatable** $tmp210 = &param1->f7;
@@ -485,11 +485,11 @@ frost$core$Bit $tmp215 = $tmp213($tmp209, $tmp211);
 bool $tmp216 = $tmp215.value;
 if ($tmp216) goto block15; else goto block16;
 block15:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/EquatableTuple11.frost:56
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/EquatableTuple11.frost:56
 frost$core$Bit $tmp217 = (frost$core$Bit) {false};
 return $tmp217;
 block16:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/EquatableTuple11.frost:57
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/EquatableTuple11.frost:57
 frost$core$Equatable** $tmp218 = &param0->f8;
 frost$core$Equatable* $tmp219 = *$tmp218;
 frost$core$Equatable** $tmp220 = &param1->f8;
@@ -503,11 +503,11 @@ frost$core$Bit $tmp225 = $tmp223($tmp219, $tmp221);
 bool $tmp226 = $tmp225.value;
 if ($tmp226) goto block17; else goto block18;
 block17:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/EquatableTuple11.frost:57
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/EquatableTuple11.frost:57
 frost$core$Bit $tmp227 = (frost$core$Bit) {false};
 return $tmp227;
 block18:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/EquatableTuple11.frost:58
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/EquatableTuple11.frost:58
 frost$core$Equatable** $tmp228 = &param0->f9;
 frost$core$Equatable* $tmp229 = *$tmp228;
 frost$core$Equatable** $tmp230 = &param1->f9;
@@ -521,11 +521,11 @@ frost$core$Bit $tmp235 = $tmp233($tmp229, $tmp231);
 bool $tmp236 = $tmp235.value;
 if ($tmp236) goto block19; else goto block20;
 block19:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/EquatableTuple11.frost:58
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/EquatableTuple11.frost:58
 frost$core$Bit $tmp237 = (frost$core$Bit) {false};
 return $tmp237;
 block20:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/EquatableTuple11.frost:59
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/EquatableTuple11.frost:59
 frost$core$Equatable** $tmp238 = &param0->f10;
 frost$core$Equatable* $tmp239 = *$tmp238;
 frost$core$Equatable** $tmp240 = &param1->f10;
@@ -539,22 +539,22 @@ frost$core$Bit $tmp245 = $tmp243($tmp239, $tmp241);
 bool $tmp246 = $tmp245.value;
 if ($tmp246) goto block21; else goto block22;
 block21:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/EquatableTuple11.frost:59
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/EquatableTuple11.frost:59
 frost$core$Bit $tmp247 = (frost$core$Bit) {false};
 return $tmp247;
 block22:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/EquatableTuple11.frost:60
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/EquatableTuple11.frost:60
 frost$core$Bit $tmp248 = (frost$core$Bit) {true};
 return $tmp248;
 
 }
 frost$core$String* frost$core$EquatableTuple11$get_asString$R$frost$core$String(frost$core$EquatableTuple11* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/EquatableTuple11.frost:64
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/EquatableTuple11.frost:64
 frost$core$Equatable** $tmp249 = &param0->f0;
 frost$core$Equatable* $tmp250 = *$tmp249;
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from EquatableTuple11.frost:64:16
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:560
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 $fn252 $tmp251 = ($fn252) ((frost$core$Object*) $tmp250)->$class->vtable[0];
 frost$core$String* $tmp253 = $tmp251(((frost$core$Object*) $tmp250));
 frost$core$String* $tmp254 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(&$s255, $tmp253);
@@ -565,7 +565,7 @@ frost$core$String* $tmp256 = frost$core$String$$ADD$frost$core$String$R$frost$co
 frost$core$Equatable** $tmp258 = &param0->f1;
 frost$core$Equatable* $tmp259 = *$tmp258;
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from EquatableTuple11.frost:64:16
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:560
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 $fn261 $tmp260 = ($fn261) ((frost$core$Object*) $tmp259)->$class->vtable[0];
 frost$core$String* $tmp262 = $tmp260(((frost$core$Object*) $tmp259));
 frost$core$String* $tmp263 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp256, $tmp262);
@@ -576,7 +576,7 @@ frost$core$String* $tmp264 = frost$core$String$$ADD$frost$core$String$R$frost$co
 frost$core$Equatable** $tmp266 = &param0->f2;
 frost$core$Equatable* $tmp267 = *$tmp266;
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from EquatableTuple11.frost:64:16
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:560
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 $fn269 $tmp268 = ($fn269) ((frost$core$Object*) $tmp267)->$class->vtable[0];
 frost$core$String* $tmp270 = $tmp268(((frost$core$Object*) $tmp267));
 frost$core$String* $tmp271 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp264, $tmp270);
@@ -587,7 +587,7 @@ frost$core$String* $tmp272 = frost$core$String$$ADD$frost$core$String$R$frost$co
 frost$core$Equatable** $tmp274 = &param0->f3;
 frost$core$Equatable* $tmp275 = *$tmp274;
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from EquatableTuple11.frost:64:16
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:560
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 $fn277 $tmp276 = ($fn277) ((frost$core$Object*) $tmp275)->$class->vtable[0];
 frost$core$String* $tmp278 = $tmp276(((frost$core$Object*) $tmp275));
 frost$core$String* $tmp279 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp272, $tmp278);
@@ -598,7 +598,7 @@ frost$core$String* $tmp280 = frost$core$String$$ADD$frost$core$String$R$frost$co
 frost$core$Equatable** $tmp282 = &param0->f4;
 frost$core$Equatable* $tmp283 = *$tmp282;
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from EquatableTuple11.frost:64:16
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:560
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 $fn285 $tmp284 = ($fn285) ((frost$core$Object*) $tmp283)->$class->vtable[0];
 frost$core$String* $tmp286 = $tmp284(((frost$core$Object*) $tmp283));
 frost$core$String* $tmp287 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp280, $tmp286);
@@ -609,7 +609,7 @@ frost$core$String* $tmp288 = frost$core$String$$ADD$frost$core$String$R$frost$co
 frost$core$Equatable** $tmp290 = &param0->f5;
 frost$core$Equatable* $tmp291 = *$tmp290;
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from EquatableTuple11.frost:64:16
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:560
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 $fn293 $tmp292 = ($fn293) ((frost$core$Object*) $tmp291)->$class->vtable[0];
 frost$core$String* $tmp294 = $tmp292(((frost$core$Object*) $tmp291));
 frost$core$String* $tmp295 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp288, $tmp294);
@@ -620,7 +620,7 @@ frost$core$String* $tmp296 = frost$core$String$$ADD$frost$core$String$R$frost$co
 frost$core$Equatable** $tmp298 = &param0->f6;
 frost$core$Equatable* $tmp299 = *$tmp298;
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from EquatableTuple11.frost:64:16
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:560
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 $fn301 $tmp300 = ($fn301) ((frost$core$Object*) $tmp299)->$class->vtable[0];
 frost$core$String* $tmp302 = $tmp300(((frost$core$Object*) $tmp299));
 frost$core$String* $tmp303 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp296, $tmp302);
@@ -631,7 +631,7 @@ frost$core$String* $tmp304 = frost$core$String$$ADD$frost$core$String$R$frost$co
 frost$core$Equatable** $tmp306 = &param0->f7;
 frost$core$Equatable* $tmp307 = *$tmp306;
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from EquatableTuple11.frost:64:16
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:560
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 $fn309 $tmp308 = ($fn309) ((frost$core$Object*) $tmp307)->$class->vtable[0];
 frost$core$String* $tmp310 = $tmp308(((frost$core$Object*) $tmp307));
 frost$core$String* $tmp311 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp304, $tmp310);
@@ -642,7 +642,7 @@ frost$core$String* $tmp312 = frost$core$String$$ADD$frost$core$String$R$frost$co
 frost$core$Equatable** $tmp314 = &param0->f8;
 frost$core$Equatable* $tmp315 = *$tmp314;
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from EquatableTuple11.frost:64:16
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:560
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 $fn317 $tmp316 = ($fn317) ((frost$core$Object*) $tmp315)->$class->vtable[0];
 frost$core$String* $tmp318 = $tmp316(((frost$core$Object*) $tmp315));
 frost$core$String* $tmp319 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp312, $tmp318);
@@ -653,7 +653,7 @@ frost$core$String* $tmp320 = frost$core$String$$ADD$frost$core$String$R$frost$co
 frost$core$Equatable** $tmp322 = &param0->f9;
 frost$core$Equatable* $tmp323 = *$tmp322;
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from EquatableTuple11.frost:64:16
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:560
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 $fn325 $tmp324 = ($fn325) ((frost$core$Object*) $tmp323)->$class->vtable[0];
 frost$core$String* $tmp326 = $tmp324(((frost$core$Object*) $tmp323));
 frost$core$String* $tmp327 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp320, $tmp326);
@@ -664,7 +664,7 @@ frost$core$String* $tmp328 = frost$core$String$$ADD$frost$core$String$R$frost$co
 frost$core$Equatable** $tmp330 = &param0->f10;
 frost$core$Equatable* $tmp331 = *$tmp330;
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from EquatableTuple11.frost:64:16
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:560
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 $fn333 $tmp332 = ($fn333) ((frost$core$Object*) $tmp331)->$class->vtable[0];
 frost$core$String* $tmp334 = $tmp332(((frost$core$Object*) $tmp331));
 frost$core$String* $tmp335 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp328, $tmp334);
@@ -700,7 +700,7 @@ return $tmp336;
 }
 void frost$core$EquatableTuple11$cleanup(frost$core$EquatableTuple11* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/EquatableTuple11.frost:2
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/EquatableTuple11.frost:2
 frost$core$Object$cleanup(((frost$core$Object*) param0));
 frost$core$Equatable** $tmp338 = &param0->f0;
 frost$core$Equatable* $tmp339 = *$tmp338;

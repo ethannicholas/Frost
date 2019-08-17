@@ -972,8 +972,8 @@ class Call {
                         validTarget := true
                     }
                     when IR.Value.REF(id, _) {
-                        if id = ir.currentBlock.ids[ir.currentBlock.ids.count - 1] {
-                            def last := ir.currentBlock.statements[ir.currentBlock.statements.count - 1]
+                        if id = ir.currentBlock.ids.last {
+                            def last := ir.currentBlock.statements.last
                             match last {
                                 when IR.Statement.CONSTRUCT {
                                     validTarget := true

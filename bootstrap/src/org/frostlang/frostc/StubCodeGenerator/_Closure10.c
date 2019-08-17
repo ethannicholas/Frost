@@ -19,7 +19,7 @@ static frost$core$String $s18 = { (frost$core$Class*) &frost$core$String$class, 
 
 void org$frostlang$frostc$StubCodeGenerator$_Closure10$init$org$frostlang$frostc$StubCodeGenerator(org$frostlang$frostc$StubCodeGenerator$_Closure10* param0, org$frostlang$frostc$StubCodeGenerator* param1) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/StubCodeGenerator.frost:131
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/StubCodeGenerator.frost:131
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
 org$frostlang$frostc$StubCodeGenerator** $tmp2 = &param0->$self;
 org$frostlang$frostc$StubCodeGenerator* $tmp3 = *$tmp2;
@@ -31,7 +31,7 @@ return;
 }
 void org$frostlang$frostc$StubCodeGenerator$_Closure10$cleanup(org$frostlang$frostc$StubCodeGenerator$_Closure10* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/StubCodeGenerator.frost:131
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/StubCodeGenerator.frost:131
 frost$core$Object$cleanup(((frost$core$Object*) param0));
 org$frostlang$frostc$StubCodeGenerator** $tmp5 = &param0->$self;
 org$frostlang$frostc$StubCodeGenerator* $tmp6 = *$tmp5;
@@ -41,11 +41,11 @@ return;
 }
 frost$core$String* org$frostlang$frostc$StubCodeGenerator$_Closure10$$anonymous9$org$frostlang$frostc$MethodDecl$GenericParameter$R$frost$core$String(org$frostlang$frostc$StubCodeGenerator$_Closure10* param0, org$frostlang$frostc$MethodDecl$GenericParameter* param1) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/StubCodeGenerator.frost:131
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/StubCodeGenerator.frost:131
 frost$core$String** $tmp7 = &((org$frostlang$frostc$Symbol*) param1)->name;
 frost$core$String* $tmp8 = *$tmp7;
 // begin inline call to function frost.core.String.get_asString():frost.core.String from StubCodeGenerator.frost:131:58
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/String.frost:390
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:390
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp8));
 frost$core$String* $tmp9 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp8, &$s10);
 org$frostlang$frostc$StubCodeGenerator** $tmp11 = &param0->$self;

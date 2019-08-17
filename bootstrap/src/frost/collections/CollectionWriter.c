@@ -9,10 +9,10 @@
 #include "frost/core/Frost.h"
 
 
-struct { frost$core$Class* cl; ITable* next; void* methods[3]; } frost$collections$CollectionWriter$_frost$collections$CollectionWriter = { (frost$core$Class*) &frost$collections$CollectionWriter$class, NULL, { NULL, frost$collections$CollectionWriter$addAll$frost$collections$CollectionView$LTfrost$collections$CollectionWriter$T$GT, NULL} };
+struct { frost$core$Class* cl; ITable* next; void* methods[4]; } frost$collections$CollectionWriter$_frost$collections$CollectionWriter = { (frost$core$Class*) &frost$collections$CollectionWriter$class, NULL, { NULL, NULL, frost$collections$CollectionWriter$addAll$frost$collections$CollectionView$LTfrost$collections$CollectionWriter$T$GT, NULL} };
 
 static frost$core$String $s1;
-frost$collections$CollectionWriter$class_type frost$collections$CollectionWriter$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Object$class, (ITable*) &frost$collections$CollectionWriter$_frost$collections$CollectionWriter, { frost$core$Object$get_asString$R$frost$core$String, frost$core$Object$cleanup, NULL, frost$collections$CollectionWriter$addAll$frost$collections$CollectionView$LTfrost$collections$CollectionWriter$T$GT, NULL} };
+frost$collections$CollectionWriter$class_type frost$collections$CollectionWriter$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Object$class, (ITable*) &frost$collections$CollectionWriter$_frost$collections$CollectionWriter, { frost$core$Object$get_asString$R$frost$core$String, frost$core$Object$cleanup, NULL, NULL, frost$collections$CollectionWriter$addAll$frost$collections$CollectionView$LTfrost$collections$CollectionWriter$T$GT, NULL} };
 
 typedef frost$collections$Iterator* (*$fn4)(frost$collections$Iterable*);
 typedef frost$core$Bit (*$fn8)(frost$collections$Iterator*);
@@ -24,7 +24,7 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 void frost$collections$CollectionWriter$addAll$frost$collections$CollectionView$LTfrost$collections$CollectionWriter$T$GT(frost$collections$CollectionWriter* param0, frost$collections$CollectionView* param1) {
 
 frost$core$Object* local0 = NULL;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/CollectionWriter.frost:27
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionWriter.frost:29
 ITable* $tmp2 = ((frost$collections$Iterable*) param1)->$class->itable;
 while ($tmp2->$class != (frost$core$Class*) &frost$collections$Iterable$class) {
     $tmp2 = $tmp2->next;
@@ -53,13 +53,13 @@ frost$core$Frost$ref$frost$core$Object$Q($tmp14);
 frost$core$Object* $tmp15 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q($tmp15);
 *(&local0) = $tmp14;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/collections/CollectionWriter.frost:28
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionWriter.frost:30
 frost$core$Object* $tmp16 = *(&local0);
 ITable* $tmp17 = param0->$class->itable;
 while ($tmp17->$class != (frost$core$Class*) &frost$collections$CollectionWriter$class) {
     $tmp17 = $tmp17->next;
 }
-$fn19 $tmp18 = $tmp17->methods[0];
+$fn19 $tmp18 = $tmp17->methods[1];
 $tmp18(param0, $tmp16);
 frost$core$Frost$unref$frost$core$Object$Q($tmp14);
 frost$core$Object* $tmp20 = *(&local0);

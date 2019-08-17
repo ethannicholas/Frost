@@ -8,6 +8,7 @@ typedef struct org$frostlang$frostc$MethodDecl org$frostlang$frostc$MethodDecl;
 typedef struct org$frostlang$frostc$IR org$frostlang$frostc$IR;
 typedef struct frost$collections$HashMap frost$collections$HashMap;
 typedef struct frost$collections$HashSet frost$collections$HashSet;
+#include "frost/core/Bit_types.h"
 typedef struct frost$core$String frost$core$String;
 
 typedef struct org$frostlang$frostc$pass$Analyzer {
@@ -22,6 +23,7 @@ typedef struct org$frostlang$frostc$pass$Analyzer {
     frost$collections$HashMap* entryStates;
     frost$collections$HashSet* worklist;
     frost$collections$HashMap* statements;
+    frost$core$Bit reportErrors;
 } org$frostlang$frostc$pass$Analyzer;
 #include "frost/core/Class.h"
 typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[13]; } org$frostlang$frostc$pass$Analyzer$class_type;

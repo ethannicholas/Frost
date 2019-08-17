@@ -17,7 +17,7 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 
 void frost$core$Value$cleanup(frost$core$Value* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frost/core/Value.frost:44
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Value.frost:44
 frost$core$Immutable$cleanup(((frost$core$Immutable*) param0));
 return;
 

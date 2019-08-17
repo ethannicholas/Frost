@@ -41,7 +41,7 @@ return;
 org$frostlang$frostc$ClassDecl$Kind org$frostlang$frostc$ClassDecl$Kind$init$frost$core$Int(frost$core$Int param0) {
 
 org$frostlang$frostc$ClassDecl$Kind local0;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/ClassDecl.frost:5
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/ClassDecl.frost:5
 frost$core$Int* $tmp3 = &(&local0)->$rawValue;
 *$tmp3 = param0;
 org$frostlang$frostc$ClassDecl$Kind $tmp4 = *(&local0);
@@ -50,7 +50,7 @@ return $tmp4;
 }
 frost$core$Bit org$frostlang$frostc$ClassDecl$Kind$$EQ$org$frostlang$frostc$ClassDecl$Kind$R$frost$core$Bit(org$frostlang$frostc$ClassDecl$Kind param0, org$frostlang$frostc$ClassDecl$Kind param1) {
 
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/ClassDecl.frost:5
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/ClassDecl.frost:5
 frost$core$Int $tmp5 = param0.$rawValue;
 frost$core$Int $tmp6 = param1.$rawValue;
 int64_t $tmp7 = $tmp5.value;
@@ -60,11 +60,11 @@ frost$core$Bit $tmp10 = (frost$core$Bit) {$tmp9};
 bool $tmp11 = $tmp10.value;
 if ($tmp11) goto block1; else goto block2;
 block1:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/ClassDecl.frost:5
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/ClassDecl.frost:5
 frost$core$Bit $tmp12 = (frost$core$Bit) {false};
 return $tmp12;
 block2:;
-// /Users/ethannicholas/Dropbox/Frost-Int/src/frostc/org/frostlang/frostc/ClassDecl.frost:5
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/ClassDecl.frost:5
 frost$core$Bit $tmp13 = (frost$core$Bit) {true};
 return $tmp13;
 
