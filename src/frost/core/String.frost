@@ -1068,10 +1068,10 @@ class String : Immutable, Key<String>, Comparable<String>, Iterable<Char32>, For
     @returns a list of the capture groups, or `null` if the string did not match
     ================================================================================================
     -- @safeReturn FIXME
-    function parse(regex:RegularExpression):ListView<String>? {
+    function parse(regex:RegularExpression):ListView<String?>? {
         def matcher := regex.matcher(self)
         if matcher.matches() {
-            def result := Array<String>()
+            def result := Array<String?>()
             for i in 1 .. matcher.get_groupCount() {
                 result.add(matcher.group(i))
             }

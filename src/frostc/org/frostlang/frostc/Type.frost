@@ -239,8 +239,7 @@ class Type : Symbol, Key<Type> {
     }
 
     function get_subtypes():FixedArray<Type> {
-        assert _subtypes !== null
-        return _subtypes
+        return _subtypes!
     }
 
     @override
@@ -432,7 +431,7 @@ class Type : Symbol, Key<Type> {
     @pre(typeKind = Kind.FUNCTION | typeKind = Kind.METHOD | typeKind = Kind.IMMUTABLE_FUNCTION |
             typeKind = Kind.IMMUTABLE_METHOD)
     function get_returnType():Type {
-        return subtypes[subtypes.count - 1]
+        return subtypes.last
     }
 
     ================================================================================================

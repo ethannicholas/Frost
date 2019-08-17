@@ -189,7 +189,7 @@ org$frostlang$frostc$Pair* $tmp53 = *(&local0);
 frost$core$Object** $tmp54 = &$tmp53->second;
 frost$core$Object* $tmp55 = *$tmp54;
 // begin inline call to method org.frostlang.frostc.Type.ArrayOf(compiler:org.frostlang.frostc.Compiler, t:org.frostlang.frostc.Type):org.frostlang.frostc.Type from ArrayLiteral.frost:41:38
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:289
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:288
 org$frostlang$frostc$Type** $tmp56 = &param0->ARRAY_TYPE;
 org$frostlang$frostc$Type* $tmp57 = *$tmp56;
 FROST_ASSERT(40 == sizeof(frost$collections$Array));
@@ -215,7 +215,7 @@ FROST_ASSERT(48 == sizeof(org$frostlang$frostc$IR$Value));
 org$frostlang$frostc$IR$Value* $tmp63 = (org$frostlang$frostc$IR$Value*) frostObjectAlloc(48, (frost$core$Class*) &org$frostlang$frostc$IR$Value$class);
 frost$core$Int $tmp64 = (frost$core$Int) {14u};
 // begin inline call to method org.frostlang.frostc.Type.ClassLiteral(compiler:org.frostlang.frostc.Compiler, t:org.frostlang.frostc.Type):org.frostlang.frostc.Type from Compiler.frost:3685:50
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:273
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:272
 org$frostlang$frostc$Type** $tmp65 = &param0->CLASS_TYPE;
 org$frostlang$frostc$Type* $tmp66 = *$tmp65;
 FROST_ASSERT(40 == sizeof(frost$collections$Array));
@@ -353,7 +353,7 @@ org$frostlang$frostc$Pair* $tmp120 = *(&local0);
 frost$core$Object** $tmp121 = &$tmp120->second;
 frost$core$Object* $tmp122 = *$tmp121;
 // begin inline call to method org.frostlang.frostc.Type.ImmutableArrayOf(compiler:org.frostlang.frostc.Compiler, t:org.frostlang.frostc.Type):org.frostlang.frostc.Type from ArrayLiteral.frost:53:63
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:294
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:293
 org$frostlang$frostc$Type** $tmp123 = &param0->IMMUTABLE_ARRAY_TYPE;
 org$frostlang$frostc$Type* $tmp124 = *$tmp123;
 FROST_ASSERT(40 == sizeof(frost$collections$Array));
@@ -371,7 +371,7 @@ FROST_ASSERT(48 == sizeof(org$frostlang$frostc$IR$Value));
 org$frostlang$frostc$IR$Value* $tmp128 = (org$frostlang$frostc$IR$Value*) frostObjectAlloc(48, (frost$core$Class*) &org$frostlang$frostc$IR$Value$class);
 frost$core$Int $tmp129 = (frost$core$Int) {14u};
 // begin inline call to method org.frostlang.frostc.Type.ClassLiteral(compiler:org.frostlang.frostc.Compiler, t:org.frostlang.frostc.Type):org.frostlang.frostc.Type from Compiler.frost:3685:50
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:273
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:272
 org$frostlang$frostc$Type** $tmp130 = &param0->CLASS_TYPE;
 org$frostlang$frostc$Type* $tmp131 = *$tmp130;
 FROST_ASSERT(40 == sizeof(frost$collections$Array));

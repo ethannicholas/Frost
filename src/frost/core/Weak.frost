@@ -38,7 +38,7 @@ class Weak<T> {
     ================================================================================================
     method get():T {
         assert valid
-        return value
+        return value!
     }
 
     function get_valid():Bit {

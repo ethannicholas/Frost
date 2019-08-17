@@ -76,7 +76,7 @@ org$frostlang$frostc$Type* $tmp12 = *$tmp11;
 org$frostlang$frostc$Type** $tmp13 = &param1->type;
 org$frostlang$frostc$Type* $tmp14 = *$tmp13;
 // begin inline call to function org.frostlang.frostc.Type.=(other:org.frostlang.frostc.Type):frost.core.Bit from Analyzer.frost:35:25
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:253
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:252
 frost$core$String** $tmp15 = &((org$frostlang$frostc$Symbol*) $tmp12)->name;
 frost$core$String* $tmp16 = *$tmp15;
 frost$core$String** $tmp17 = &((org$frostlang$frostc$Symbol*) $tmp14)->name;

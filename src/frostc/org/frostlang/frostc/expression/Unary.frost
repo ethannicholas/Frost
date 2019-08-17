@@ -143,11 +143,17 @@ class Unary {
             }
             when Operator.NONNULL {
                 def value := compiler.compileExpression(operand, TypeContext.NON_VOID)
-                if value.type().isNullable {
-                    Console.printLine("casting to \{value.type().nonnullable()}")
+                def type := value.type()
+-*                if type.isNullable |
+                        (type.typeKind = Type.Kind.GENERIC_CLASS_PARAMETER &
+                            type.genericClassParameter.bound.isNullable) |
+                        (type.typeKind = Type.Kind.GENERIC_METHOD_PARAMETER &
+                            type.genericMethodParameter.bound.isNullable) |
+                        compiler.currentClass[0].annotations.isSynthetic {*-
                     return compiler.cast(position, value, value.type().nonnullable())
-                }
+-*                }
                 compiler.error(position, "value of type '\{value.type()}' is already non-null")
+                return null*-
             }
         }
         unreachable

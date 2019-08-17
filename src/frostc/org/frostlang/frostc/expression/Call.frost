@@ -766,7 +766,8 @@ class Call {
             match tryScope.second.storage {
                 when Variable.Storage.LOCAL(slot) {
                     compiler.compileRef(v)
-                    ir.add(IR.Statement.STORE(position, v, IR.Value.LOCAL(slot, errorType)))
+                    def nonnull := compiler.cast(position, v, errorType)
+                    ir.add(IR.Statement.STORE(position, nonnull, IR.Value.LOCAL(slot, errorType)))
                 }
                 otherwise {
                     unreachable

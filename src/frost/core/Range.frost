@@ -36,7 +36,7 @@ class Range<T:Value?> : Value {
     function get_asString():String {
         def result := MutableString()
         if min !== null {
-            result.append(min)
+            result.append(min!)
         }
         if inclusive {
             result.append("...")
@@ -45,7 +45,7 @@ class Range<T:Value?> : Value {
             result.append("..")
         }
         if max !== null {
-            result.append(max)
+            result.append(max!)
         }
         return result.finish()
     }

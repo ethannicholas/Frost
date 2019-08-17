@@ -772,7 +772,7 @@ org$frostlang$frostc$Type* $tmp345 = *$tmp344;
 org$frostlang$frostc$Type** $tmp346 = &param0->VOID_TYPE;
 org$frostlang$frostc$Type* $tmp347 = *$tmp346;
 // begin inline call to function org.frostlang.frostc.Type.=(other:org.frostlang.frostc.Type):frost.core.Bit from Return.frost:55:41
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:253
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:252
 frost$core$String** $tmp348 = &((org$frostlang$frostc$Symbol*) $tmp345)->name;
 frost$core$String* $tmp349 = *$tmp348;
 frost$core$String** $tmp350 = &((org$frostlang$frostc$Symbol*) $tmp347)->name;

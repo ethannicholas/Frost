@@ -61,7 +61,7 @@ frost$core$String$Index$nullable frost$core$String$lastIndexOf$frost$core$String
 frost$core$String$Index$nullable frost$core$String$lastIndexOf$frost$core$String$frost$core$String$Index$R$frost$core$String$Index$Q(frost$core$String* self, frost$core$String* p_s, frost$core$String$Index p_start);
 frost$core$Bit frost$core$String$matches$frost$core$RegularExpression$R$frost$core$Bit(frost$core$String* self, frost$core$RegularExpression* p_regex);
 frost$core$Bit frost$core$String$contains$frost$core$RegularExpression$R$frost$core$Bit(frost$core$String* self, frost$core$RegularExpression* p_needle);
-frost$collections$ListView* frost$core$String$parse$frost$core$RegularExpression$R$frost$collections$ListView$LTfrost$core$String$GT$Q(frost$core$String* self, frost$core$RegularExpression* p_regex);
+frost$collections$ListView* frost$core$String$parse$frost$core$RegularExpression$R$frost$collections$ListView$LTfrost$core$String$Q$GT$Q(frost$core$String* self, frost$core$RegularExpression* p_regex);
 frost$core$String* frost$core$String$replace$frost$core$String$frost$core$String$R$frost$core$String(frost$core$String* self, frost$core$String* p_search, frost$core$String* p_replacement);
 frost$core$String* frost$core$String$replace$frost$core$RegularExpression$frost$core$String$R$frost$core$String(frost$core$String* self, frost$core$RegularExpression* p_search, frost$core$String* p_replacement);
 frost$core$String* frost$core$String$replace$frost$core$RegularExpression$frost$core$String$frost$core$Bit$R$frost$core$String(frost$core$String* self, frost$core$RegularExpression* p_search, frost$core$String* p_replacement, frost$core$Bit p_allowGroupReferences);

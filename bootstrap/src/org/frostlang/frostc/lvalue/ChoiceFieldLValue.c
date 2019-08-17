@@ -74,7 +74,7 @@ frost$core$Frost$ref$frost$core$Object$Q($tmp13);
 org$frostlang$frostc$Type** $tmp14 = &((org$frostlang$frostc$ClassDecl*) $tmp13)->type;
 org$frostlang$frostc$Type* $tmp15 = *$tmp14;
 // begin inline call to function org.frostlang.frostc.Type.=(other:org.frostlang.frostc.Type):frost.core.Bit from ChoiceFieldLValue.frost:20:24
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:253
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:252
 frost$core$String** $tmp16 = &((org$frostlang$frostc$Symbol*) $tmp4)->name;
 frost$core$String* $tmp17 = *$tmp16;
 frost$core$String** $tmp18 = &((org$frostlang$frostc$Symbol*) $tmp15)->name;

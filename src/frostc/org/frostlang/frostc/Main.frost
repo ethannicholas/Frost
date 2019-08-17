@@ -104,7 +104,7 @@ class Main {
         def icuLibs := Config.icuLibraries().split(";")
         for lib in icuLibs {
             def libFile := File(lib)
-            args.add("-L" + libFile.parent)
+            args.add("-L" + libFile.parent!)
             var simpleName := libFile.simpleName
             assert simpleName.startsWith("lib")
             simpleName := simpleName[3..]
@@ -188,7 +188,7 @@ class Main {
                     }
                     outFile := File(args.next("a filename"))
                     try {
-                        outFile.parent.createDirectories()
+                        outFile.parent!.createDirectories()
                     }
                     fail(error) {
                         Console.printErrorLine(error)
@@ -197,19 +197,23 @@ class Main {
                 }
                 when "-O" {
                     def level := args.next("a number from 0-3")
-                    optimizationLevel := level.asInt
-                    if optimizationLevel > 3 | optimizationLevel < 0 {
+                    var parsed := level.asInt
+                    if parsed == null | parsed > 3 | parsed < 0 {
                         Console.printErrorLine("expected a number from 0-3 after '-O'")
                         System.exit(1)
+                        unreachable
                     }
+                    optimizationLevel := parsed
                 }
                 when "-S" {
                     def level := args.next("a number from 0-3")
-                    safetyLevel := level.asInt
-                    if safetyLevel > 3 | safetyLevel < 0 {
+                    def parsed := level.asInt
+                    if parsed == null | parsed > 3 | parsed < 0 {
                         Console.printErrorLine("expected a number from 0-3 after '-S'")
                         System.exit(1)
+                        unreachable
                     }
+                    safetyLevel := parsed
                 }
                 when "-f" {
                     if format !== null {
@@ -275,6 +279,7 @@ class Main {
                         Console.printErrorLine("output format requires a '-o' output to be " +
                                 "specified")
                         System.exit(1)
+                        unreachable
                     }
                 }
                 outFile := sources[0].withExtension(extension)
@@ -282,11 +287,13 @@ class Main {
             else if format = Format.HTML {
                 Console.printErrorLine("format 'html' requires exactly one input file")
                 System.exit(1)
+                unreachable
             }
             else {
                 Console.printErrorLine("multiple input files specified, must use '-o' to specify " +
                         "output file")
                 System.exit(1)
+                unreachable
             }
         }
         var errorCount := 0

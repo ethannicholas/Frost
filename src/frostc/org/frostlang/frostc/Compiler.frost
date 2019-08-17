@@ -1532,9 +1532,9 @@ class Compiler {
     to fulfill matching requests.
 
     As a concrete example, suppose we have `class Foo<T, U> { ... }`, and we request
-    `Foo<String, Int64>`. Since `String` is just a pointer and the `Foo` class has to be written as if
-    `T` were an `Object?` anyway, it really doesn't matter whether the class is instantiated to use
-    `String` or `File` or whatever else as a type parameter. So we can specialize `T` against the
+    `Foo<String, Int64>`. Since `String` is just a pointer and the `Foo` class has to be written as
+    if `T` were an `Object?` anyway, it really doesn't matter whether the class is instantiated to
+    use `String` or `File` or whatever else as a type parameter. So we can specialize `T` against
     the bound of `T`, in this case `Object?`.
 
     But `Int64` is a `Value`, not a pointer. We actually end up producing different code to handle

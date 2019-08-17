@@ -182,7 +182,7 @@ class File : Immutable, Key<File> {
     ================================================================================================
     function withExtension(ext:String):File {
         -- FIXME remove ! when analysis is finished
-        return parent.resolve(simpleName + ext)
+        return parent!.resolve(simpleName + ext)
     }
 
     ================================================================================================

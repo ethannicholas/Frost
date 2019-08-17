@@ -964,7 +964,7 @@ block17:;
 FROST_ASSERT(24 == sizeof(frost$core$RegularExpression));
 frost$core$RegularExpression* $tmp410 = (frost$core$RegularExpression*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$RegularExpression$class);
 frost$core$RegularExpression$init$frost$core$String($tmp410, &$s411);
-// begin inline call to function frost.core.String.parse(regex:frost.core.RegularExpression):frost.collections.ListView<frost.core.String>? from LinkResolver.frost:122:33
+// begin inline call to function frost.core.String.parse(regex:frost.core.RegularExpression):frost.collections.ListView<frost.core.String?>? from LinkResolver.frost:122:33
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:1072
 frost$core$Matcher* $tmp412 = frost$core$RegularExpression$matcher$frost$core$String$R$frost$core$Matcher($tmp410, param1);
 *(&local5) = ((frost$core$Matcher*) NULL);

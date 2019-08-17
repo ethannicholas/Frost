@@ -68,7 +68,7 @@ org$frostlang$frostc$Type* $tmp16 = *$tmp15;
 org$frostlang$frostc$Type** $tmp17 = &param1->target;
 org$frostlang$frostc$Type* $tmp18 = *$tmp17;
 // begin inline call to function org.frostlang.frostc.Type.=(other:org.frostlang.frostc.Type):frost.core.Bit from Compiler.frost:352:48
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:253
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:252
 frost$core$String** $tmp19 = &((org$frostlang$frostc$Symbol*) $tmp16)->name;
 frost$core$String* $tmp20 = *$tmp19;
 frost$core$String** $tmp21 = &((org$frostlang$frostc$Symbol*) $tmp18)->name;
