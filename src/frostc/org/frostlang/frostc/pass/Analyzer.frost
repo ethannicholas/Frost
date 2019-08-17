@@ -153,21 +153,24 @@ class Analyzer {
                 return binaryValue(left, op, right, state, type)
             }
             when IR.Statement.CAST(position, value, type, explicit) {
+                if !explicit & reportErrors & !type.isNullable &
+                        getValue(value, state).type.isNullable {
+                    compiler.warn(position, "value of type '\{value.type()}' may be null")
+                }
                 if explicit {
                     return DataFlowValue(type)
                 }
                 else {
                     return getValue(value, state)
                 }
-                if !explicit & reportErrors & !type.isNullable &
-                        getValue(value, state).type.isNullable {
-                    compiler.warn(position, "value may be null")
-                }
             }
             when IR.Statement.CONSTRUCT(_, cl) {
                 return DataFlowValue(cl.type)
             }
-            when IR.Statement.CREATE_STRUCT(_, cl, _) {
+            when IR.Statement.CREATE_STRUCT(_, cl, args) {
+                if cl.type = compiler.BIT_TYPE {
+                    return DataFlowValue(cl.type, getValue(args[0], state).nonNullImplications)
+                }
                 return DataFlowValue(cl.type)
             }
             when IR.Statement.DYNAMIC_CALL(_, m, _) {
@@ -402,6 +405,11 @@ class Analyzer {
                         }
                     }
                 }
+                when IR.Statement.CAST {
+                    if reportErrors {
+                        getValue(id, result)
+                    }
+                }
             }
         }
         updateStateForExitIndex(block, target.exit, result)
@@ -488,7 +496,7 @@ class Analyzer {
                 }
             }
             else if b.containsExplicitCode & !b.forceReachable {
---                compiler.error(b.statements[0].position, "unreachable")
+                compiler.error(b.statements.first.position, "unreachable")
             }
         }
     }

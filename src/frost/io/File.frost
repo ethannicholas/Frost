@@ -25,7 +25,7 @@ class File : Immutable, Key<File> {
     The directory containing this file, or `null` if this is the root directory. The parent is
     computed based purely on the path string, without accessing the filesystem.
     ================================================================================================
-    property parent:File
+    property parent:File?
 
     ================================================================================================
     The name (not including directory) of this file. For instance, `File("/tmp/data/log.txt").name`
@@ -167,7 +167,8 @@ class File : Immutable, Key<File> {
     Removes the extension (including the period) from this path and replaces it with a new
     extension. This does not alter the file on disk; it merely performs string manipulation to
     compute a new path. The new extension does not have to contain a period; it is possible to turn
-    a path with an extension into one without using this method.
+    a path with an extension into one without using this method. It is an error to call this on the
+    root directory.
 
     Examples:
 
@@ -180,6 +181,7 @@ class File : Immutable, Key<File> {
     @returns the path with a new extension
     ================================================================================================
     function withExtension(ext:String):File {
+        -- FIXME remove ! when analysis is finished
         return parent.resolve(simpleName + ext)
     }
 

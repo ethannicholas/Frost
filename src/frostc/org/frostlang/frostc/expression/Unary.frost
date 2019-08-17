@@ -3,6 +3,7 @@ package org.frostlang.frostc.expression
 uses org.frostlang.frostc.ASTNode
 uses org.frostlang.frostc.Compiler
 uses org.frostlang.frostc.Compiler.TypeContext
+uses org.frostlang.frostc.FixedArray
 uses org.frostlang.frostc.IR
 uses org.frostlang.frostc.MethodDecl
 uses org.frostlang.frostc.MethodRef
@@ -18,16 +19,7 @@ class Unary {
         NOT
         BITWISENOT
         NEGATE
-
-        @class
-        function fromToken(op:Token):Operator {
-            match op.kind {
-                when Token.Kind.SUB         { return NEGATE }
-                when Token.Kind.NOT         { return NOT }
-                when Token.Kind.BITWISENOT  { return BITWISENOT }
-                otherwise                   { unreachable, "not a unary operator: \{op}"}
-            }
-        }
+        NONNULL
 
         @override
         function get_asString():String {
@@ -35,17 +27,81 @@ class Unary {
                 when NOT        { return "!" }
                 when BITWISENOT { return "!!" }
                 when NEGATE     { return "-" }
+                when NONNULL    { return "(nonnull)"}
                 otherwise       { unreachable }
             }
         }
     }
 
     @class
-    method compile(compiler:Compiler, position:Position, op:Unary.Operator, operand:ASTNode,
+    method possibleTypes(compiler:Compiler, position:Position, op:Operator,
+            operand:ASTNode):CollectionView<Type>? {
+        if op = Operator.NONNULL {
+            return compiler.possibleTypes(operand).map(t => t.nonnullable())
+        }
+        return compiler.possibleTypes(ASTNode.CALL(position,
+                ASTNode.DOT(position, operand, op.asString),
+                FixedArray<ASTNode>()))
+    }
+
+    @class
+    method preferredType(compiler:Compiler, position:Position, op:Operator, operand:ASTNode):Type? {
+        def baseType := compiler.preferredType(operand)
+        if baseType !== null {
+            if op = Operator.NONNULL {
+                return baseType.nonnullable()
+            }
+             -- fake target, just used for matching
+            def target := IR.Value.REF(IR.Statement.ID(-1), baseType)
+            return compiler.preferredType(ASTNode.CALL(position,
+                    ASTNode.DOT(position, ASTNode.IR_WRAPPER(position, target), op.asString),
+                    FixedArray<ASTNode>()))
+        }
+        return null
+    }
+
+    @class
+    method coercionCost(compiler:Compiler, position:Position, op:Operator,
+            operand:ASTNode, target:Type):Pair<Type, Int>? {
+        -- need to special-case things like -128, which can fit into an Int8 despite 128 not
+        -- doing so
+        match op {
+            when Operator.NEGATE {
+                match operand {
+                    when ASTNode.INT(_, value) {
+                        if value = 128 {
+                            return compiler.coercionCost(compiler.BUILTIN_INT8_TYPE, target)
+                        }
+                        if value = 32768 {
+                            return compiler.coercionCost(compiler.BUILTIN_INT16_TYPE, target)
+                        }
+                        if value = 2147483648 {
+                            return compiler.coercionCost(compiler.BUILTIN_INT32_TYPE, target)
+                        }
+                    }
+                }
+            }
+            when Operator.NONNULL {
+                return compiler.coercionCost(preferredType(compiler, position, op, operand), target)
+            }
+        }
+        def preferred := compiler.preferredType(operand)
+        if preferred !== null & (preferred = compiler.BUILTIN_BIT_TYPE |
+                preferred.isBuiltinNumber) {
+            return compiler.coercionCost(preferred, target)
+        }
+        return compiler.coercionCost(ASTNode.CALL(position,
+                ASTNode.DOT(position, operand, op.asString),
+                    FixedArray<ASTNode>()),
+                target)
+    }
+
+    @class
+    method compile(compiler:Compiler, position:Position, op:Operator, operand:ASTNode,
             type:TypeContext):IR.Value? {
         def ir := compiler.ir
         match op {
-            when Unary.Operator.NEGATE {
+            when Operator.NEGATE {
                 match operand {
                     when ASTNode.INT(_, value) {
                         return IntLiteral.compileNegated(compiler, position,
@@ -62,7 +118,7 @@ class Unary {
                 }
                 return Call.compile(compiler, position, target, "-", [], type)
             }
-            when Unary.Operator.NOT {
+            when Operator.NOT {
                 def target := compiler.compileExpression(operand, TypeContext.NON_VOID)
                 if target == null {
                     return null
@@ -74,7 +130,7 @@ class Unary {
                 }
                 return Call.compile(compiler, position, target, "!", [], type)
             }
-            when Unary.Operator.BITWISENOT {
+            when Operator.BITWISENOT {
                 def target := compiler.compileExpression(operand, TypeContext.NON_VOID)
                 if target == null {
                     return null
@@ -84,6 +140,14 @@ class Unary {
                     return compiler.coerce(position, IR.Value.REF(result, target.type()), type)
                 }
                 return Call.compile(compiler, position, target, "!!", [], type)
+            }
+            when Operator.NONNULL {
+                def value := compiler.compileExpression(operand, TypeContext.NON_VOID)
+                if value.type().isNullable {
+                    Console.printLine("casting to \{value.type().nonnullable()}")
+                    return compiler.cast(position, value, value.type().nonnullable())
+                }
+                compiler.error(position, "value of type '\{value.type()}' is already non-null")
             }
         }
         unreachable

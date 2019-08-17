@@ -1181,7 +1181,7 @@ org$frostlang$frostc$Compiler* $tmp519 = *$tmp518;
 org$frostlang$frostc$parser$Parser** $tmp520 = &$tmp519->parser;
 org$frostlang$frostc$parser$Parser* $tmp521 = *$tmp520;
 // begin inline call to method org.frostlang.frostc.parser.Parser.type():org.frostlang.frostc.ASTNode? from LinkResolver.frost:130:53
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:851
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:852
 frost$core$Bit $tmp522 = (frost$core$Bit) {true};
 org$frostlang$frostc$ASTNode* $tmp523 = org$frostlang$frostc$parser$Parser$type$frost$core$Bit$R$org$frostlang$frostc$ASTNode$Q($tmp521, $tmp522);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp523));

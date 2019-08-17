@@ -871,7 +871,7 @@ $tmp397 = (org$frostlang$frostc$expression$Unary$Operator$wrapper*) frostObjectA
 $tmp397->value = $tmp396;
 frost$core$Int $tmp398 = (frost$core$Int) {2u};
 // begin inline call to org.frostlang.frostc.expression.Unary.Operator.init(rv:frost.core.Int):org.frostlang.frostc.expression.Unary.Operator from MethodDecl.frost:143:55
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:17
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:18
 frost$core$Int* $tmp399 = &(&local6)->$rawValue;
 *$tmp399 = $tmp398;
 org$frostlang$frostc$expression$Unary$Operator $tmp400 = *(&local6);

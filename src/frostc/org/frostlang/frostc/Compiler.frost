@@ -1935,16 +1935,8 @@ class Compiler {
             when ASTNode.INT {
                 return INT_TYPE
             }
-            when ASTNode.UNARY(_, op, base) {
-                def baseType := preferredType(base)
-                if baseType !== null {
-                    def p := expr.position()
-                     -- fake target, just used for matching
-                    def target := IR.Value.REF(IR.Statement.ID(-1), baseType)
-                    return preferredType(ASTNode.CALL(p,
-                            ASTNode.DOT(p, ASTNode.IR_WRAPPER(p, target), op.asString),
-                            FixedArray<ASTNode>()))
-                }
+            when ASTNode.UNARY(position, op, operand) {
+                return Unary.preferredType(self, position, op, operand)
             }
             when ASTNode.REAL {
                 return REAL64_TYPE
@@ -2986,9 +2978,7 @@ class Compiler {
                 return [ANY_TYPE]
             }
             when ASTNode.UNARY(position, op, operand) {
-                return possibleTypes(ASTNode.CALL(position,
-                        ASTNode.DOT(position, operand, op.asString),
-                        FixedArray<ASTNode>()))
+                return Unary.possibleTypes(self, position, op, operand)
             }
             when ASTNode.RANGE(_, start, _, end, step) {
                 def result := rangePreferredType(start, end, step)
@@ -3486,32 +3476,7 @@ class Compiler {
                 return typedLambdaCoercionCost(parameters, body, target)
             }
             when ASTNode.UNARY(position, op, operand) {
-                -- need to special-case things like -128, which can fit into an Int8 despite 128 not
-                -- doing so
-                if op = Unary.Operator.NEGATE {
-                    match operand {
-                        when ASTNode.INT(_, value) {
-                            if value = 128 {
-                                return coercionCost(BUILTIN_INT8_TYPE, target)
-                            }
-                            if value = 32768 {
-                                return coercionCost(BUILTIN_INT16_TYPE, target)
-                            }
-                            if value = 2147483648 {
-                                return coercionCost(BUILTIN_INT32_TYPE, target)
-                            }
-                        }
-                    }
-                }
-                def preferred := preferredType(operand)
-                if preferred !== null & (preferred = BUILTIN_BIT_TYPE |
-                        preferred.isBuiltinNumber) {
-                    return coercionCost(preferred, target)
-                }
-                return coercionCost(ASTNode.CALL(position,
-                        ASTNode.DOT(position, operand, op.asString),
-                            FixedArray<ASTNode>()),
-                        target)
+                return Unary.coercionCost(self, position, op, operand, target)
             }
             when ASTNode.UNTYPED_LAMBDA(_, parameters, body) {
                 return untypedLambdaCoercionCost(parameters, body, target)

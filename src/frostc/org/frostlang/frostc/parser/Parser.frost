@@ -504,6 +504,7 @@ class Parser {
                         if expect(Token.Kind.RPAREN, "')'") == null {
                             return null
                         }
+                        needClosingParen := false
                     }
                     else {
                         needClosingParen := checkNext(Token.Kind.RPAREN) == null
@@ -1035,7 +1036,7 @@ class Parser {
     ================================================================================================
     postfixExpression = term ((LPAREN (expression (COMMA expression)*)? RPAREN |
             DOT (methodName | INIT) typeSpecifiers? | LBRACKET expression RBRACKET)* |
-            (CAST | INSTANCEOF | NINSTANCEOF) type)*
+            (CAST | INSTANCEOF | NINSTANCEOF) type)* | NOT
             (<if result so far is a valid class name> LT type (COMMA type)* GT)?
     Note there is a great deal of special handling to deal with class names, due to ambiguities
     between generic parameters and comparison expressions, e.g. foo(X < Y, Z > ... could be either a
@@ -1119,6 +1120,9 @@ class Parser {
                         return null
                     }
                     result := ASTNode.BINARY(token.position, result, Binary.Operator.CAST, target)
+                }
+                when Token.Kind.NOT {
+                    result := ASTNode.UNARY(token.position, Unary.Operator.NONNULL, result)
                 }
                 when Token.Kind.LT {
                     -- this is where we need to be careful. First, we make sure it makes sense to
@@ -1253,7 +1257,14 @@ class Parser {
                 if base == null {
                     return null
                 }
-                return ASTNode.UNARY(op.position, Unary.Operator.fromToken(op), base)
+                def uop:Unary.Operator
+                match op.kind {
+                    when Token.Kind.SUB        { uop := Unary.Operator.NEGATE }
+                    when Token.Kind.NOT        { uop := Unary.Operator.NOT }
+                    when Token.Kind.BITWISENOT { uop := Unary.Operator.BITWISENOT }
+                    otherwise                  { unreachable, "not a unary operator: \{op}"}
+                }
+                return ASTNode.UNARY(op.position, uop, base)
             }
             otherwise {
                 pushback(op)

@@ -4286,14 +4286,14 @@ frost$core$Object** $tmp1782 = &$tmp1776->value;
 frost$core$Object* $tmp1783 = *$tmp1782;
 frost$core$Frost$ref$frost$core$Object$Q($tmp1783);
 // begin inline call to method org.frostlang.frostc.Compiler.isValueInit(m:org.frostlang.frostc.MethodDecl):frost.core.Bit from HCodeGenerator.frost:313:62
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:3972
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:3937
 org$frostlang$frostc$MethodDecl$Kind* $tmp1784 = &param1->methodKind;
 org$frostlang$frostc$MethodDecl$Kind $tmp1785 = *$tmp1784;
 org$frostlang$frostc$MethodDecl$Kind$wrapper* $tmp1786;
 $tmp1786 = (org$frostlang$frostc$MethodDecl$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$MethodDecl$Kind$wrapperclass);
 $tmp1786->value = $tmp1785;
 frost$core$Int $tmp1787 = (frost$core$Int) {2u};
-// begin inline call to org.frostlang.frostc.MethodDecl.Kind.init(rv:frost.core.Int):org.frostlang.frostc.MethodDecl.Kind from Compiler.frost:3972:46
+// begin inline call to org.frostlang.frostc.MethodDecl.Kind.init(rv:frost.core.Int):org.frostlang.frostc.MethodDecl.Kind from Compiler.frost:3937:46
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/MethodDecl.frost:7
 frost$core$Int* $tmp1788 = &(&local6)->$rawValue;
 *$tmp1788 = $tmp1787;
@@ -4314,7 +4314,7 @@ if ($tmp1796) goto block29; else goto block30;
 block29:;
 frost$core$Weak** $tmp1797 = &param1->owner;
 frost$core$Weak* $tmp1798 = *$tmp1797;
-// begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Compiler.frost:3972:63
+// begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Compiler.frost:3937:63
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
 frost$core$Bit $tmp1799 = frost$core$Weak$get_valid$R$frost$core$Bit($tmp1798);
 bool $tmp1800 = $tmp1799.value;
