@@ -201,7 +201,6 @@ class Main {
                     if parsed == null | parsed > 3 | parsed < 0 {
                         Console.printErrorLine("expected a number from 0-3 after '-O'")
                         System.exit(1)
-                        unreachable
                     }
                     optimizationLevel := parsed
                 }
@@ -211,7 +210,6 @@ class Main {
                     if parsed == null | parsed > 3 | parsed < 0 {
                         Console.printErrorLine("expected a number from 0-3 after '-S'")
                         System.exit(1)
-                        unreachable
                     }
                     safetyLevel := parsed
                 }
@@ -279,7 +277,6 @@ class Main {
                         Console.printErrorLine("output format requires a '-o' output to be " +
                                 "specified")
                         System.exit(1)
-                        unreachable
                     }
                 }
                 outFile := sources[0].withExtension(extension)
@@ -287,13 +284,11 @@ class Main {
             else if format = Format.HTML {
                 Console.printErrorLine("format 'html' requires exactly one input file")
                 System.exit(1)
-                unreachable
             }
             else {
                 Console.printErrorLine("multiple input files specified, must use '-o' to specify " +
                         "output file")
                 System.exit(1)
-                unreachable
             }
         }
         var errorCount := 0

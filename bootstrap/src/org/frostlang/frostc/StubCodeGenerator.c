@@ -884,11 +884,11 @@ org$frostlang$frostc$FieldDecl$Kind local2;
 org$frostlang$frostc$Annotations** $tmp304 = &param1->annotations;
 org$frostlang$frostc$Annotations* $tmp305 = *$tmp304;
 // begin inline call to function org.frostlang.frostc.Annotations.get_isSynthetic():frost.core.Bit from StubCodeGenerator.frost:78:25
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:155
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:158
 frost$core$Int* $tmp306 = &$tmp305->flags;
 frost$core$Int $tmp307 = *$tmp306;
 frost$core$Int $tmp308 = (frost$core$Int) {8192u};
-// begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:155:22
+// begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:158:22
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 int64_t $tmp309 = $tmp307.value;
 int64_t $tmp310 = $tmp308.value;
@@ -1198,11 +1198,11 @@ org$frostlang$frostc$ASTNode* local5 = NULL;
 org$frostlang$frostc$Annotations** $tmp442 = &param1->annotations;
 org$frostlang$frostc$Annotations* $tmp443 = *$tmp442;
 // begin inline call to function org.frostlang.frostc.Annotations.get_isSynthetic():frost.core.Bit from StubCodeGenerator.frost:107:25
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:155
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:158
 frost$core$Int* $tmp444 = &$tmp443->flags;
 frost$core$Int $tmp445 = *$tmp444;
 frost$core$Int $tmp446 = (frost$core$Int) {8192u};
-// begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:155:22
+// begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:158:22
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 int64_t $tmp447 = $tmp445.value;
 int64_t $tmp448 = $tmp446.value;
@@ -1582,11 +1582,11 @@ block47:;
 org$frostlang$frostc$Annotations** $tmp623 = &param1->annotations;
 org$frostlang$frostc$Annotations* $tmp624 = *$tmp623;
 // begin inline call to function org.frostlang.frostc.Annotations.get_isInline():frost.core.Bit from StubCodeGenerator.frost:142:34
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:143
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:146
 frost$core$Int* $tmp625 = &$tmp624->flags;
 frost$core$Int $tmp626 = *$tmp625;
 frost$core$Int $tmp627 = (frost$core$Int) {1024u};
-// begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:143:22
+// begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:146:22
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 int64_t $tmp628 = $tmp626.value;
 int64_t $tmp629 = $tmp627.value;
@@ -1694,11 +1694,11 @@ block48:;
 org$frostlang$frostc$Annotations** $tmp679 = &param1->annotations;
 org$frostlang$frostc$Annotations* $tmp680 = *$tmp679;
 // begin inline call to function org.frostlang.frostc.Annotations.get_isInline():frost.core.Bit from StubCodeGenerator.frost:149:29
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:143
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:146
 frost$core$Int* $tmp681 = &$tmp680->flags;
 frost$core$Int $tmp682 = *$tmp681;
 frost$core$Int $tmp683 = (frost$core$Int) {1024u};
-// begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:143:22
+// begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:146:22
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 int64_t $tmp684 = $tmp682.value;
 int64_t $tmp685 = $tmp683.value;
@@ -1810,11 +1810,11 @@ block68:;
 org$frostlang$frostc$Annotations** $tmp733 = &param1->annotations;
 org$frostlang$frostc$Annotations* $tmp734 = *$tmp733;
 // begin inline call to function org.frostlang.frostc.Annotations.get_isDefault():frost.core.Bit from StubCodeGenerator.frost:156:34
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:163
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:166
 frost$core$Int* $tmp735 = &$tmp734->flags;
 frost$core$Int $tmp736 = *$tmp735;
 frost$core$Int $tmp737 = (frost$core$Int) {32768u};
-// begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:163:22
+// begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:166:22
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 int64_t $tmp738 = $tmp736.value;
 int64_t $tmp739 = $tmp737.value;
@@ -2921,11 +2921,11 @@ block3:;
 org$frostlang$frostc$Annotations** $tmp1202 = &param1->annotations;
 org$frostlang$frostc$Annotations* $tmp1203 = *$tmp1202;
 // begin inline call to function org.frostlang.frostc.Annotations.get_isSynthetic():frost.core.Bit from StubCodeGenerator.frost:227:46
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:155
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:158
 frost$core$Int* $tmp1204 = &$tmp1203->flags;
 frost$core$Int $tmp1205 = *$tmp1204;
 frost$core$Int $tmp1206 = (frost$core$Int) {8192u};
-// begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:155:22
+// begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:158:22
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 int64_t $tmp1207 = $tmp1205.value;
 int64_t $tmp1208 = $tmp1206.value;

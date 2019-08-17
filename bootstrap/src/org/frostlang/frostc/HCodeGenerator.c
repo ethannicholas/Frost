@@ -3793,11 +3793,11 @@ block2:;
 org$frostlang$frostc$Annotations** $tmp1540 = &param1->annotations;
 org$frostlang$frostc$Annotations* $tmp1541 = *$tmp1540;
 // begin inline call to function org.frostlang.frostc.Annotations.get_isExternal():frost.core.Bit from HCodeGenerator.frost:289:36
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:127
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:130
 frost$core$Int* $tmp1542 = &$tmp1541->flags;
 frost$core$Int $tmp1543 = *$tmp1542;
 frost$core$Int $tmp1544 = (frost$core$Int) {64u};
-// begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:127:22
+// begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:130:22
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 int64_t $tmp1545 = $tmp1543.value;
 int64_t $tmp1546 = $tmp1544.value;
@@ -3893,11 +3893,11 @@ block22:;
 org$frostlang$frostc$Annotations** $tmp1588 = &param1->annotations;
 org$frostlang$frostc$Annotations* $tmp1589 = *$tmp1588;
 // begin inline call to function org.frostlang.frostc.Annotations.get_isOverride():frost.core.Bit from HCodeGenerator.frost:295:41
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:123
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:126
 frost$core$Int* $tmp1590 = &$tmp1589->flags;
 frost$core$Int $tmp1591 = *$tmp1590;
 frost$core$Int $tmp1592 = (frost$core$Int) {32u};
-// begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:123:22
+// begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:126:22
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 int64_t $tmp1593 = $tmp1591.value;
 int64_t $tmp1594 = $tmp1592.value;
@@ -3919,11 +3919,11 @@ block27:;
 org$frostlang$frostc$Annotations** $tmp1606 = &param1->annotations;
 org$frostlang$frostc$Annotations* $tmp1607 = *$tmp1606;
 // begin inline call to function org.frostlang.frostc.Annotations.get_isFinal():frost.core.Bit from HCodeGenerator.frost:295:69
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:135
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:138
 frost$core$Int* $tmp1608 = &$tmp1607->flags;
 frost$core$Int $tmp1609 = *$tmp1608;
 frost$core$Int $tmp1610 = (frost$core$Int) {256u};
-// begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:135:22
+// begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:138:22
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 int64_t $tmp1611 = $tmp1609.value;
 int64_t $tmp1612 = $tmp1610.value;
@@ -3943,11 +3943,11 @@ block33:;
 org$frostlang$frostc$Annotations** $tmp1621 = &param1->annotations;
 org$frostlang$frostc$Annotations* $tmp1622 = *$tmp1621;
 // begin inline call to function org.frostlang.frostc.Annotations.get_isClass():frost.core.Bit from HCodeGenerator.frost:296:30
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:119
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:122
 frost$core$Int* $tmp1623 = &$tmp1622->flags;
 frost$core$Int $tmp1624 = *$tmp1623;
 frost$core$Int $tmp1625 = (frost$core$Int) {16u};
-// begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:119:22
+// begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:122:22
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 int64_t $tmp1626 = $tmp1624.value;
 int64_t $tmp1627 = $tmp1625.value;
@@ -4183,11 +4183,11 @@ block4:;
 org$frostlang$frostc$Annotations** $tmp1727 = &param1->annotations;
 org$frostlang$frostc$Annotations* $tmp1728 = *$tmp1727;
 // begin inline call to function org.frostlang.frostc.Annotations.get_isClass():frost.core.Bit from HCodeGenerator.frost:313:30
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:119
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:122
 frost$core$Int* $tmp1729 = &$tmp1728->flags;
 frost$core$Int $tmp1730 = *$tmp1729;
 frost$core$Int $tmp1731 = (frost$core$Int) {16u};
-// begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:119:22
+// begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:122:22
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 int64_t $tmp1732 = $tmp1730.value;
 int64_t $tmp1733 = $tmp1731.value;
@@ -4226,14 +4226,14 @@ frost$core$Object** $tmp1752 = &$tmp1746->value;
 frost$core$Object* $tmp1753 = *$tmp1752;
 frost$core$Frost$ref$frost$core$Object$Q($tmp1753);
 // begin inline call to method org.frostlang.frostc.Compiler.isValueInit(m:org.frostlang.frostc.MethodDecl):frost.core.Bit from HCodeGenerator.frost:313:62
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:3937
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:3942
 org$frostlang$frostc$MethodDecl$Kind* $tmp1754 = &param1->methodKind;
 org$frostlang$frostc$MethodDecl$Kind $tmp1755 = *$tmp1754;
 org$frostlang$frostc$MethodDecl$Kind$wrapper* $tmp1756;
 $tmp1756 = (org$frostlang$frostc$MethodDecl$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$MethodDecl$Kind$wrapperclass);
 $tmp1756->value = $tmp1755;
 frost$core$Int $tmp1757 = (frost$core$Int) {2u};
-// begin inline call to org.frostlang.frostc.MethodDecl.Kind.init(rv:frost.core.Int):org.frostlang.frostc.MethodDecl.Kind from Compiler.frost:3937:46
+// begin inline call to org.frostlang.frostc.MethodDecl.Kind.init(rv:frost.core.Int):org.frostlang.frostc.MethodDecl.Kind from Compiler.frost:3942:46
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/MethodDecl.frost:7
 frost$core$Int* $tmp1758 = &(&local6)->$rawValue;
 *$tmp1758 = $tmp1757;
@@ -4254,7 +4254,7 @@ if ($tmp1766) goto block29; else goto block30;
 block29:;
 frost$core$Weak** $tmp1767 = &param1->owner;
 frost$core$Weak* $tmp1768 = *$tmp1767;
-// begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Compiler.frost:3937:63
+// begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Compiler.frost:3942:63
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
 frost$core$Bit $tmp1769 = frost$core$Weak$get_valid$R$frost$core$Bit($tmp1768);
 bool $tmp1770 = $tmp1769.value;

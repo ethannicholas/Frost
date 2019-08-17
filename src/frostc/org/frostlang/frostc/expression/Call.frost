@@ -18,6 +18,7 @@ uses org.frostlang.frostc.Symbol
 uses org.frostlang.frostc.Type
 uses org.frostlang.frostc.Variable
 uses org.frostlang.frostc.parser.Token
+uses org.frostlang.frostc.statement.Assert
 
 class Call {
     @class
@@ -1155,6 +1156,10 @@ class Call {
                 result := IR.Value.REF(ir.add(IR.Statement.STATIC_CALL(position, m.value,
                         FixedArray<IR.Value>.from(finalArgs))), actualType.returnType)
             }
+        }
+        if m.value.annotations.isNoReturn {
+            Assert.compileFail(compiler, position, ASTNode.STRING(position,
+                        "returned from @noReturn method"))
         }
         if m.value.returnType != compiler.VOID_TYPE {
             var resultCast:IR.Value? := result

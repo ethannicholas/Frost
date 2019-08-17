@@ -21,6 +21,7 @@ class Annotations {
         -- tags a field in a closure class which is used to represent a captured value
         constant CAPTURE         :Int := 1 << 16
         constant STUB            :Int := 1 << 17
+        constant NO_RETURN       :Int := 1 << 18
     }
 
     choice Expression {
@@ -80,6 +81,8 @@ class Annotations {
     property isCapture:Bit
 
     property isStub:Bit
+
+    property isNoReturn:Bit
 
     init() {
         init(0)
@@ -171,6 +174,10 @@ class Annotations {
         return flags && Flag.STUB != 0
     }
 
+    function get_isNoReturn():Bit {
+        return flags && Flag.NO_RETURN != 0
+    }
+
     @override
     function get_asString():String {
         def result := MutableString()
@@ -221,6 +228,9 @@ class Annotations {
         }
         if isCapture {
             result.append("@capture\n")
+        }
+        if isNoReturn {
+            result.append("@noReturn\n")
         }
         if expressions !== null {
             for expr in expressions {

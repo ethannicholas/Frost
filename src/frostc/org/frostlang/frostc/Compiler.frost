@@ -3725,13 +3725,13 @@ class Compiler {
 
     method checkAccessModifierCount(position:Position, a:Annotations) {
         var count := 0
-        if a.flags && Annotations.Flag.PRIVATE != 0 {
+        if a.isPrivate {
             count += 1
         }
-        if a.flags && Annotations.Flag.PROTECTED != 0 {
+        if a.isProtected {
             count += 1
         }
-        if a.flags && Annotations.Flag.PACKAGE != 0 {
+        if a.isPackage {
             count += 1
         }
         if count > 1 {
@@ -3749,36 +3749,41 @@ class Compiler {
         disallow(self, m, Annotations.Flag.WEAK,             "@weak")
         disallow(self, m, Annotations.Flag.UNSAFE_IMMUTABLE, "@unsafeImmutable")
         if m.methodKind = MethodDecl.Kind.INIT {
-            if m.annotations.flags && Annotations.Flag.EXTERNAL != 0 {
+            if m.annotations.isExternal {
                 error(m.position, "init methods may not be annotated with '@external'")
             }
-            if m.annotations.flags && Annotations.Flag.CLASS != 0 {
+            if m.annotations.isClass {
                 error(m.position, "init methods may not be annotated with '@class'")
             }
-            if m.annotations.flags && Annotations.Flag.ABSTRACT != 0 {
+            if m.annotations.isAbstract {
                 error(m.position, "init methods may not be annotated with '@abstract'")
             }
-            if m.annotations.flags && Annotations.Flag.OVERRIDE != 0 {
+            if m.annotations.isOverride {
                 error(m.position, "init methods may not be annotated with '@override'")
             }
         }
-        if m.annotations.flags && Annotations.Flag.EXTERNAL != 0 & m.body !== null {
+        if m.annotations.isExternal & m.body !== null {
             error(m.position, "methods annotated with '@external' may not have a body")
         }
-        if m.annotations.flags && Annotations.Flag.ABSTRACT != 0 & m.body !== null {
+        if m.annotations.isAbstract & m.body !== null {
             error(m.position, "methods annotated with '@abstract' may not have a body")
         }
-        if m.annotations.flags && Annotations.Flag.OVERRIDE != 0 &
-                m.annotations.flags && Annotations.Flag.CLASS != 0 {
+        if m.annotations.isOverride & m.annotations.isClass {
             error(m.position, "class methods may not be annotated with '@override'")
         }
+        if m.annotations.isNoReturn {
+            if m.methodKind = MethodDecl.Kind.FUNCTION {
+                error(m.position, "functions may not be annotated with '@noReturn'")
+            }
+            if m.returnType != VOID_TYPE {
+                error(m.position, "method is annotated '@noReturn', but has a return type")
+            }
+        }
         if !m.owner.annotations.isStub {
-            if m.annotations.flags && Annotations.Flag.ABSTRACT = 0 &
-                    m.annotations.flags && Annotations.Flag.EXTERNAL = 0 &
-                    m.body == null {
+            if m.annotations.isAbstract & m.annotations.isExternal & m.body == null {
                 error(m.position, "expected non-abstract method '\{m.name}' to have a body")
             }
-            if m.annotations.flags && Annotations.Flag.DEFAULT != 0 {
+            if m.annotations.isDefault {
                 if m.owner.classKind != ClassDecl.Kind.INTERFACE {
                     error(m.position, "annotation '@default' may only appear on interface methods")
                 }
@@ -5432,6 +5437,10 @@ class Compiler {
 
     @post(symbolTable == @pre(symbolTable))
     method compileStatement(s:ASTNode) {
+        if ir.currentBlockFinished {
+            error(s.position(), "unreachable")
+            return
+        }
         match s {
             when ASTNode.UNREACHABLE {
             }
@@ -5457,7 +5466,12 @@ class Compiler {
             when ASTNode.BLOCK(position, statements) {
                 def symbols := AutoScope(self)
                 for stmt in statements {
+                    def finished := ir.currentBlockFinished
                     compileStatement(stmt)
+                    if finished {
+                        assert errorCount > 0
+                        break
+                    }
                 }
             }
             when ASTNode.BREAK(position, label) {
@@ -6007,6 +6021,7 @@ class Compiler {
         disallow(Annotations.Flag.INLINE,    "@inline")
         disallow(Annotations.Flag.WEAK,      "@weak")
         disallow(Annotations.Flag.DEFAULT,   "@default")
+        disallow(Annotations.Flag.NO_RETURN, "@noReturn")
         if cl.annotations.expressions !== null {
             for expr in cl.annotations.expressions {
                 match expr {
@@ -6042,6 +6057,7 @@ class Compiler {
         disallow(Annotations.Flag.SPECIALIZE,       "@specialize")
         disallow(Annotations.Flag.UNSAFE_IMMUTABLE, "@unsafeImmutable")
         disallow(Annotations.Flag.DEFAULT,          "@default")
+        disallow(Annotations.Flag.NO_RETURN, "@noReturn")
         if f.annotations.expressions !== null {
             for expr in f.annotations.expressions {
                 match expr {

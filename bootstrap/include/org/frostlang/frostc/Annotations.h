@@ -28,6 +28,7 @@ frost$core$Bit org$frostlang$frostc$Annotations$get_isUnsafeImmutable$R$frost$co
 frost$core$Bit org$frostlang$frostc$Annotations$get_isDefault$R$frost$core$Bit(org$frostlang$frostc$Annotations* self);
 frost$core$Bit org$frostlang$frostc$Annotations$get_isCapture$R$frost$core$Bit(org$frostlang$frostc$Annotations* self);
 frost$core$Bit org$frostlang$frostc$Annotations$get_isStub$R$frost$core$Bit(org$frostlang$frostc$Annotations* self);
+frost$core$Bit org$frostlang$frostc$Annotations$get_isNoReturn$R$frost$core$Bit(org$frostlang$frostc$Annotations* self);
 frost$core$String* org$frostlang$frostc$Annotations$get_asString$R$frost$core$String(org$frostlang$frostc$Annotations* self);
 void org$frostlang$frostc$Annotations$cleanup(org$frostlang$frostc$Annotations* self);
 

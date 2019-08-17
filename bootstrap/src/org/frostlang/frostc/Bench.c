@@ -204,7 +204,7 @@ FROST_ASSERT(24 == sizeof(frost$io$File));
 frost$io$File* $tmp31 = (frost$io$File*) frostObjectAlloc(24, (frost$core$Class*) &frost$io$File$class);
 frost$io$File$init$frost$core$String($tmp31, &$s32);
 // begin inline call to method org.frostlang.frostc.Compiler.compile(path:frost.io.File, text:frost.core.String) from Bench.frost:15:25
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:6163
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:6179
 frost$collections$ListView* $tmp33 = org$frostlang$frostc$Compiler$scan$frost$io$File$frost$core$String$R$frost$collections$ListView$LTorg$frostlang$frostc$ClassDecl$GT($tmp30, $tmp31, param2);
 ITable* $tmp34 = ((frost$collections$Iterable*) $tmp33)->$class->itable;
 while ($tmp34->$class != (frost$core$Class*) &frost$collections$Iterable$class) {
@@ -234,7 +234,7 @@ frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((org$frostlang$f
 org$frostlang$frostc$ClassDecl* $tmp47 = *(&local6);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp47));
 *(&local6) = ((org$frostlang$frostc$ClassDecl*) $tmp46);
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:6164
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:6180
 org$frostlang$frostc$ClassDecl* $tmp48 = *(&local6);
 org$frostlang$frostc$Compiler$compile$org$frostlang$frostc$ClassDecl($tmp30, $tmp48);
 frost$core$Frost$unref$frost$core$Object$Q($tmp46);
@@ -249,7 +249,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp31));
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Bench.frost:16
 org$frostlang$frostc$Compiler* $tmp50 = *(&local5);
 // begin inline call to method org.frostlang.frostc.Compiler.finish() from Bench.frost:16:24
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:6196
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:6212
 goto block6;
 block6:;
 frost$collections$Array** $tmp51 = &$tmp50->pendingClasses;
@@ -268,7 +268,7 @@ frost$core$Bit $tmp61 = (frost$core$Bit) {$tmp60};
 bool $tmp62 = $tmp61.value;
 if ($tmp62) goto block7; else goto block8;
 block7:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:6197
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:6213
 frost$collections$Array** $tmp63 = &$tmp50->pendingClasses;
 frost$collections$Array* $tmp64 = *$tmp63;
 frost$collections$Array** $tmp65 = &$tmp50->pendingClasses;
@@ -291,7 +291,7 @@ org$frostlang$frostc$ClassDecl* $tmp77 = *(&local7);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp77));
 *(&local7) = ((org$frostlang$frostc$ClassDecl*) $tmp76);
 frost$core$Frost$unref$frost$core$Object$Q($tmp76);
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:6198
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:6214
 org$frostlang$frostc$ClassDecl* $tmp78 = *(&local7);
 org$frostlang$frostc$Compiler$compile$org$frostlang$frostc$ClassDecl($tmp50, $tmp78);
 org$frostlang$frostc$ClassDecl* $tmp79 = *(&local7);
@@ -299,7 +299,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp79));
 *(&local7) = ((org$frostlang$frostc$ClassDecl*) NULL);
 goto block6;
 block8:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:6200
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:6216
 org$frostlang$frostc$CodeGenerator** $tmp80 = &$tmp50->codeGenerator;
 org$frostlang$frostc$CodeGenerator* $tmp81 = *$tmp80;
 ITable* $tmp82 = $tmp81->$class->itable;

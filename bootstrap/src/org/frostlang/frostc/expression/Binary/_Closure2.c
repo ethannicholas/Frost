@@ -53,11 +53,11 @@ org$frostlang$frostc$Type$Kind local2;
 org$frostlang$frostc$Annotations** $tmp7 = &param1->annotations;
 org$frostlang$frostc$Annotations* $tmp8 = *$tmp7;
 // begin inline call to function org.frostlang.frostc.Annotations.get_isClass():frost.core.Bit from Binary.frost:215:55
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:119
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:122
 frost$core$Int* $tmp9 = &$tmp8->flags;
 frost$core$Int $tmp10 = *$tmp9;
 frost$core$Int $tmp11 = (frost$core$Int) {16u};
-// begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:119:22
+// begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:122:22
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 int64_t $tmp12 = $tmp10.value;
 int64_t $tmp13 = $tmp11.value;
