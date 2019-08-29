@@ -46,8 +46,8 @@ class UnsafeMessageQueue<T> : Immutable {
         def scope := ScopedLock(lock)
         if tail !== null {
             assert head !== null
-            tail.next := Message<T>(data)
-            tail := tail.next
+            tail!.next := Message<T>(data)
+            tail := tail!.next
         }
         else {
             assert count = 0

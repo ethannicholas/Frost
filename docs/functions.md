@@ -18,9 +18,9 @@ Note that functions are still considered methods, just methods with additional r
 affect pure Frost code. "Unpredictable" state is state which could change without Frost's knowledge;
 for instance, whether or not a file exists on the filesystem is "unpredictable" in that a program
 could check for the file's existence multiple times and receive a different answer each time,
-without having done anything to the filesystem itself. The `File.exists()` method is therefore a
-method, rather than a function. If your program is written in 100% Frost and you do not use any
-of the (clearly marked) unsafe APIs, you should never need to worry about this restriction.
+without having done anything to the filesystem itself. The built-in `File.exists()` method is
+therefore a method, rather than a function. If your program is written in 100% Frost and you do not
+use any of the (clearly marked) unsafe APIs, you should never need to worry about this restriction.
 
 "Side effects" are defined in Frost as "making changes to state which are visible outside of the
 function itself". Functions may freely modify state that only they can see; for instance, the

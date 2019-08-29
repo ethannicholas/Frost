@@ -67,7 +67,7 @@ Calling Superclass Inits
 Frost requires a superclass `init` method to be invoked after the subclass initializes its own
 fields, and before the subclass calls any instance methods.
 
-If you do not explicitly invoke another `init` method, Frost inserts an implicit call to the
+If you do not explicitly invoke another `init` method, Frost appends an implicit call to the
 no-argument superclass `init` method, exactly as if your `init` method ended with a call to
 `super.init()`. Of course, if there is no no-argument superclass `init`, or if it is not legal to
 call the superclass `init` at this point (because you have already called an instance method), an

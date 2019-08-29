@@ -5,7 +5,7 @@ typedef struct org$frostlang$frostc$Compiler$_Closure11 org$frostlang$frostc$Com
 typedef struct org$frostlang$frostc$Compiler org$frostlang$frostc$Compiler;
 typedef struct org$frostlang$frostc$Compiler$Target org$frostlang$frostc$Compiler$Target;
 
-void org$frostlang$frostc$Compiler$_Closure11$init$org$frostlang$frostc$Compiler(org$frostlang$frostc$Compiler$_Closure11* self, org$frostlang$frostc$Compiler* p_$dummy479);
+void org$frostlang$frostc$Compiler$_Closure11$init$org$frostlang$frostc$Compiler(org$frostlang$frostc$Compiler$_Closure11* self, org$frostlang$frostc$Compiler* p_$dummy484);
 void org$frostlang$frostc$Compiler$_Closure11$cleanup(org$frostlang$frostc$Compiler$_Closure11* self);
 void org$frostlang$frostc$Compiler$_Closure11$$anonymous10$org$frostlang$frostc$Compiler$Target(org$frostlang$frostc$Compiler$_Closure11* self, org$frostlang$frostc$Compiler$Target* p_param0);
 

@@ -20,7 +20,9 @@ org$frostlang$frostc$expression$Binary$_Closure2$class_type org$frostlang$frostc
 typedef frost$core$Bit (*$fn33)(frost$core$Equatable*, frost$core$Equatable*);
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x65\x78\x70\x72\x65\x73\x73\x69\x6f\x6e\x2e\x42\x69\x6e\x61\x72\x79\x2e\x5f\x43\x6c\x6f\x73\x75\x72\x65\x32", 48, 5724515677484241007, NULL };
-static frost$core$String $s43 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x43\x6c\x61\x73\x73", 16, -6222778858933417332, NULL };
+static frost$core$String $s41 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x54\x79\x70\x65\x2e\x66\x72\x6f\x73\x74", 10, -6889415344013242207, NULL };
+static frost$core$String $s42 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x46\x69\x78\x65\x64\x41\x72\x72\x61\x79\x3c\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x54\x79\x70\x65\x3e\x3f\x20\x74\x6f\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x46\x69\x78\x65\x64\x41\x72\x72\x61\x79\x3c\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x54\x79\x70\x65\x3e", 155, 85577287644488619, NULL };
+static frost$core$String $s48 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x43\x6c\x61\x73\x73", 16, -6222778858933417332, NULL };
 
 void org$frostlang$frostc$expression$Binary$_Closure2$init$org$frostlang$frostc$Type(org$frostlang$frostc$expression$Binary$_Closure2* param0, org$frostlang$frostc$Type* param1) {
 
@@ -101,30 +103,38 @@ block5:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:242
 org$frostlang$frostc$FixedArray** $tmp36 = &$tmp22->_subtypes;
 org$frostlang$frostc$FixedArray* $tmp37 = *$tmp36;
+frost$core$Bit $tmp38 = (frost$core$Bit) {$tmp37 != NULL};
+bool $tmp39 = $tmp38.value;
+if ($tmp39) goto block9; else goto block10;
+block10:;
+frost$core$Int $tmp40 = (frost$core$Int) {242u};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s41, $tmp40, &$s42);
+abort(); // unreachable
+block9:;
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp37));
-frost$core$Int $tmp38 = (frost$core$Int) {0u};
-frost$core$Object* $tmp39 = org$frostlang$frostc$FixedArray$$IDX$frost$core$Int$R$org$frostlang$frostc$FixedArray$T($tmp37, $tmp38);
-frost$core$String** $tmp40 = &((org$frostlang$frostc$Symbol*) ((org$frostlang$frostc$Type*) $tmp39))->name;
-frost$core$String* $tmp41 = *$tmp40;
-frost$core$Bit $tmp42 = frost$core$String$$EQ$frost$core$String$R$frost$core$Bit($tmp41, &$s43);
-frost$core$Frost$unref$frost$core$Object$Q($tmp39);
+frost$core$Int $tmp43 = (frost$core$Int) {0u};
+frost$core$Object* $tmp44 = org$frostlang$frostc$FixedArray$$IDX$frost$core$Int$R$org$frostlang$frostc$FixedArray$T($tmp37, $tmp43);
+frost$core$String** $tmp45 = &((org$frostlang$frostc$Symbol*) ((org$frostlang$frostc$Type*) $tmp44))->name;
+frost$core$String* $tmp46 = *$tmp45;
+frost$core$Bit $tmp47 = frost$core$String$$EQ$frost$core$String$R$frost$core$Bit($tmp46, &$s48);
+frost$core$Frost$unref$frost$core$Object$Q($tmp44);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp37));
-*(&local0) = $tmp42;
+*(&local0) = $tmp47;
 goto block7;
 block6:;
 *(&local0) = $tmp34;
 goto block7;
 block7:;
-frost$core$Bit $tmp44 = *(&local0);
+frost$core$Bit $tmp49 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Equatable*) $tmp30)));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Equatable*) $tmp25)));
 // begin inline call to function frost.core.Bit.=(other:frost.core.Bit):frost.core.Bit from Binary.frost:215:64
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:25
-bool $tmp45 = $tmp20.value;
-bool $tmp46 = $tmp44.value;
-bool $tmp47 = $tmp45 == $tmp46;
-frost$core$Bit $tmp48 = (frost$core$Bit) {$tmp47};
-return $tmp48;
+bool $tmp50 = $tmp20.value;
+bool $tmp51 = $tmp49.value;
+bool $tmp52 = $tmp50 == $tmp51;
+frost$core$Bit $tmp53 = (frost$core$Bit) {$tmp52};
+return $tmp53;
 
 }
 

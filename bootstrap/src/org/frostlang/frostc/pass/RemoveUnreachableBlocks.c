@@ -214,7 +214,7 @@ if ($tmp111) goto block15; else goto block16;
 block15:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/pass/RemoveUnreachableBlocks.frost:22
 frost$core$Int $tmp112 = *(&local1);
-$fn114 $tmp113 = ($fn114) param2->$class->vtable[12];
+$fn114 $tmp113 = ($fn114) param2->$class->vtable[14];
 $tmp113(param2, $tmp112);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/pass/RemoveUnreachableBlocks.frost:23
 frost$core$Bit $tmp115 = (frost$core$Bit) {true};

@@ -11,6 +11,7 @@ typedef struct org$frostlang$frostc$pass$Analyzer$State {
     frost$core$Int32 refCount;
     frost$core$UInt8 $flags;
     frost$collections$Array* locals;
+    frost$collections$Array* parameters;
 } org$frostlang$frostc$pass$Analyzer$State;
 #include "frost/core/Class.h"
 typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[3]; } org$frostlang$frostc$pass$Analyzer$State$class_type;

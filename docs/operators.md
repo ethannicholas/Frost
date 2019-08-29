@@ -25,8 +25,8 @@ Frost's arithmetic operators operate on [numbers](basicTypes.html#numbers), and 
 least an `Int32` value, even if the [types](types.html) you are operating on are smaller than that.
 If either of the two operands is `Real`, the result is `Real`. If either of the two operands is 64
 bits long, the result is 64 bits long. Thus `Int8 * Int16 = Int32`, `Int64 * Real32 = Real64`, and 
-`Real32 * Int32 = Real32`. Mixing signed and unsigned values results in a signed type big enough to
-hold either of its operands, so adding an `Int32` and a `UInt32` results in an `Int64`. It is an
+`Real32 * Int32 = Real32`. Mixing signed and unsigned integers results in a signed type big enough
+to hold either of its operands, so adding an `Int32` and a `UInt32` results in an `Int64`. It is an
 error to add an `Int64` and a `UInt64`, because there is no signed type big enough to hold all
 `UInt64` values.
 
@@ -151,6 +151,8 @@ Cast
 ----
 
 * `->` (cast): `object->(String)` casts `object` to a `String`
+* `!` (force non-null): `object!` casts `object` from a [nullable](nonNullability.html) type to a
+                        non-nullable type
 
 The cast operator tells the compiler to treat an object as being a different
 [type](types.html). For instance, in
@@ -169,8 +171,26 @@ this via the *cast* operator:
     processString(x->String)
 
 This statement *casts* `x` to the type `String`. Casting doesn't actually change the value; 
-it just instructs the compiler to assume that it is a different type. For safety, these casts are
-normally verified at runtime, but it is possible to disable safety checks during compilation.
+it just instructs the compiler to assume that it is a different type. An invalid cast - that is,
+casting an object whose runtime type turns out to not actually match the target type - is a
+[safety violation](safetyViolations.html).
+
+The *force non-null* operator (postfix exclamation mark, `!`) is shorthand for casting a nullable
+value to its non-nullable equivalent. If `nullableString` represents a value of type
+`frost.core.String?`, the expression `nullableString!` is exactly equivalent to the expression
+`nullableString->String`.
+
+There is one situation in which the force non-null operator may behave in a surprising fashion. If
+you have a generic type, such as in:
+
+    class Example<T> {
+        def field:T?
+    }
+
+then the expression `field!` casts `field` from `T?` to `T`. But since `T` is a generic type, it
+might *also* be nullable. This means that it is actually ok for `field` to be `null`, despite the
+presence of the force non-null operator. In this example the expression `field!` will never result
+in a safety violation, even when `field` is `null`.
 
 <a name="index"></a>
 Index

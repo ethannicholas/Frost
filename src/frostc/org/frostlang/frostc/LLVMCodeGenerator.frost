@@ -586,7 +586,7 @@ class LLVMCodeGenerator : CodeGenerator {
         def result := MutableString()
         result.append(llvmType(inheritedType.returnType))
         result.append("(")
-        assert m.isInstance()
+        assert m.isInstance
         result.append("%\{escapeName(m.owner.name)}")
         if compiler!.isValue(m.owner) {
             result.append("$wrapper")
@@ -663,7 +663,7 @@ class LLVMCodeGenerator : CodeGenerator {
             out := shims
             assert effective.isMethod
             assert effective.subtypes.count = raw.parameters.count + 2 -- self and return
-            assert raw.isInstance()
+            assert raw.isInstance
             def unrefs := MemoryOutputStream()
             def indirect := needsStructIndirection(raw)
             def oldVarCount := varCount

@@ -62,8 +62,8 @@ class HashMap<K:Key<K>, V> : Map<K, V> {
         method next():(K, V) {
             assert entry !== null
             assert bucket < map.bucketCount
-            def result := entry
-            entry := entry.next
+            def result := entry!
+            entry := entry!.next
             while entry == null {
                 bucket += 1
                 if bucket = map.bucketCount {

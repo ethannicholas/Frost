@@ -402,6 +402,7 @@ add_library(c_frost
     bootstrap/src/frost/collections/CollectionView.c
     bootstrap/src/frost/collections/Map.c
     bootstrap/src/frost/collections/IdentityMap.c
+    bootstrap/src/frost/collections/IdentitySet.c
     bootstrap/src/frost/collections/Stack/StackIterator.c
     bootstrap/src/frost/collections/Key.c
     bootstrap/src/frost/collections/HashMap.c
@@ -564,6 +565,7 @@ add_executable(bootstrap
     bootstrap/src/org/frostlang/frostc/pass/Analyzer.c
     bootstrap/src/org/frostlang/frostc/pass/Analyzer/BlockExit.c
     bootstrap/src/org/frostlang/frostc/pass/Analyzer/DataFlowValue.c
+    bootstrap/src/org/frostlang/frostc/pass/Analyzer/Definition.c
     bootstrap/src/org/frostlang/frostc/pass/Analyzer/State.c
     bootstrap/src/org/frostlang/frostc/pass/MergeBlocks.c
     bootstrap/src/org/frostlang/frostc/pass/RemoveAsserts.c
@@ -753,6 +755,7 @@ set(public_source
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/collections/HashMap.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/collections/HashSet.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/collections/IdentityMap.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/collections/IdentitySet.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/collections/ImmutableArray.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/collections/Iterable.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/collections/Iterator.frost

@@ -168,6 +168,7 @@ class Frost {
             }
         }
         def width := specifier[specifier.next(index)..].asInt
+        assert width !== null, "invalid alignment string '\{specifier}'"
         def fill:Char32
         if index = specifier.start {
             fill := " "

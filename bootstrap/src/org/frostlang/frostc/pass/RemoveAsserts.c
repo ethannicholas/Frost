@@ -284,7 +284,7 @@ if ($tmp138) goto block18; else goto block19;
 block18:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/pass/RemoveAsserts.frost:23
 org$frostlang$frostc$IR$Block* $tmp139 = *(&local2);
-$fn141 $tmp140 = ($fn141) param2->$class->vtable[11];
+$fn141 $tmp140 = ($fn141) param2->$class->vtable[13];
 $tmp140(param2, $tmp139);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/pass/RemoveAsserts.frost:24
 frost$core$Bit $tmp142 = (frost$core$Bit) {true};

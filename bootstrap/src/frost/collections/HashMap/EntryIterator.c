@@ -30,6 +30,10 @@ static frost$core$String $s79 = { (frost$core$Class*) &frost$core$String$class, 
 static frost$core$String $s80 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x48\x61\x73\x68\x4d\x61\x70\x2e\x45\x6e\x74\x72\x79\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x6e\x65\x78\x74\x28\x29\x3a\x28\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x48\x61\x73\x68\x4d\x61\x70\x2e\x45\x6e\x74\x72\x79\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x4b\x2c\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x48\x61\x73\x68\x4d\x61\x70\x2e\x45\x6e\x74\x72\x79\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x56\x29", 165, 6278041426078439422, NULL };
 static frost$core$String $s86 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x48\x61\x73\x68\x4d\x61\x70\x2e\x66\x72\x6f\x73\x74", 13, -4513074356147737087, NULL };
 static frost$core$String $s99 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x48\x61\x73\x68\x4d\x61\x70\x2e\x66\x72\x6f\x73\x74", 13, -4513074356147737087, NULL };
+static frost$core$String $s105 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x48\x61\x73\x68\x4d\x61\x70\x2e\x66\x72\x6f\x73\x74", 13, -4513074356147737087, NULL };
+static frost$core$String $s106 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x48\x61\x73\x68\x4d\x61\x70\x2e\x45\x6e\x74\x72\x79\x3c\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x48\x61\x73\x68\x4d\x61\x70\x2e\x45\x6e\x74\x72\x79\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x4b\x2c\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x48\x61\x73\x68\x4d\x61\x70\x2e\x45\x6e\x74\x72\x79\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x56\x3e\x3f\x20\x74\x6f\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x48\x61\x73\x68\x4d\x61\x70\x2e\x45\x6e\x74\x72\x79\x3c\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x48\x61\x73\x68\x4d\x61\x70\x2e\x45\x6e\x74\x72\x79\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x4b\x2c\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x48\x61\x73\x68\x4d\x61\x70\x2e\x45\x6e\x74\x72\x79\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x56\x3e", 273, 4111340678981763157, NULL };
+static frost$core$String $s113 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x48\x61\x73\x68\x4d\x61\x70\x2e\x66\x72\x6f\x73\x74", 13, -4513074356147737087, NULL };
+static frost$core$String $s114 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x48\x61\x73\x68\x4d\x61\x70\x2e\x45\x6e\x74\x72\x79\x3c\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x48\x61\x73\x68\x4d\x61\x70\x2e\x45\x6e\x74\x72\x79\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x4b\x2c\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x48\x61\x73\x68\x4d\x61\x70\x2e\x45\x6e\x74\x72\x79\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x56\x3e\x3f\x20\x74\x6f\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x48\x61\x73\x68\x4d\x61\x70\x2e\x45\x6e\x74\x72\x79\x3c\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x48\x61\x73\x68\x4d\x61\x70\x2e\x45\x6e\x74\x72\x79\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x4b\x2c\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x48\x61\x73\x68\x4d\x61\x70\x2e\x45\x6e\x74\x72\x79\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x56\x3e", 273, 4111340678981763157, NULL };
 
 void frost$collections$HashMap$EntryIterator$init$frost$collections$HashMap$LTfrost$collections$HashMap$EntryIterator$K$Cfrost$collections$HashMap$EntryIterator$V$GT(frost$collections$HashMap$EntryIterator* param0, frost$collections$HashMap* param1) {
 
@@ -204,106 +208,122 @@ block6:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:65
 frost$collections$HashMap$Entry** $tmp100 = &param0->entry;
 frost$collections$HashMap$Entry* $tmp101 = *$tmp100;
+frost$core$Bit $tmp102 = (frost$core$Bit) {$tmp101 != NULL};
+bool $tmp103 = $tmp102.value;
+if ($tmp103) goto block8; else goto block9;
+block9:;
+frost$core$Int $tmp104 = (frost$core$Int) {65u};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s105, $tmp104, &$s106);
+abort(); // unreachable
+block8:;
 *(&local0) = ((frost$collections$HashMap$Entry*) NULL);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp101));
-frost$collections$HashMap$Entry* $tmp102 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp102));
+frost$collections$HashMap$Entry* $tmp107 = *(&local0);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp107));
 *(&local0) = $tmp101;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:66
-frost$collections$HashMap$Entry** $tmp103 = &param0->entry;
-frost$collections$HashMap$Entry* $tmp104 = *$tmp103;
-frost$collections$HashMap$Entry** $tmp105 = &$tmp104->next;
-frost$collections$HashMap$Entry* $tmp106 = *$tmp105;
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp106));
-frost$collections$HashMap$Entry** $tmp107 = &param0->entry;
-frost$collections$HashMap$Entry* $tmp108 = *$tmp107;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp108));
-frost$collections$HashMap$Entry** $tmp109 = &param0->entry;
-*$tmp109 = $tmp106;
+frost$collections$HashMap$Entry** $tmp108 = &param0->entry;
+frost$collections$HashMap$Entry* $tmp109 = *$tmp108;
+frost$core$Bit $tmp110 = (frost$core$Bit) {$tmp109 != NULL};
+bool $tmp111 = $tmp110.value;
+if ($tmp111) goto block10; else goto block11;
+block11:;
+frost$core$Int $tmp112 = (frost$core$Int) {66u};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s113, $tmp112, &$s114);
+abort(); // unreachable
+block10:;
+frost$collections$HashMap$Entry** $tmp115 = &$tmp109->next;
+frost$collections$HashMap$Entry* $tmp116 = *$tmp115;
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp116));
+frost$collections$HashMap$Entry** $tmp117 = &param0->entry;
+frost$collections$HashMap$Entry* $tmp118 = *$tmp117;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp118));
+frost$collections$HashMap$Entry** $tmp119 = &param0->entry;
+*$tmp119 = $tmp116;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:67
-goto block8;
-block8:;
-frost$collections$HashMap$Entry** $tmp110 = &param0->entry;
-frost$collections$HashMap$Entry* $tmp111 = *$tmp110;
-frost$core$Bit $tmp112 = (frost$core$Bit) {$tmp111 == NULL};
-bool $tmp113 = $tmp112.value;
-if ($tmp113) goto block9; else goto block10;
-block9:;
+goto block12;
+block12:;
+frost$collections$HashMap$Entry** $tmp120 = &param0->entry;
+frost$collections$HashMap$Entry* $tmp121 = *$tmp120;
+frost$core$Bit $tmp122 = (frost$core$Bit) {$tmp121 == NULL};
+bool $tmp123 = $tmp122.value;
+if ($tmp123) goto block13; else goto block14;
+block13:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:68
-frost$core$Int* $tmp114 = &param0->bucket;
-frost$core$Int $tmp115 = *$tmp114;
-frost$core$Int $tmp116 = (frost$core$Int) {1u};
-int64_t $tmp117 = $tmp115.value;
-int64_t $tmp118 = $tmp116.value;
-int64_t $tmp119 = $tmp117 + $tmp118;
-frost$core$Int $tmp120 = (frost$core$Int) {$tmp119};
-frost$core$Int* $tmp121 = &param0->bucket;
-*$tmp121 = $tmp120;
+frost$core$Int* $tmp124 = &param0->bucket;
+frost$core$Int $tmp125 = *$tmp124;
+frost$core$Int $tmp126 = (frost$core$Int) {1u};
+int64_t $tmp127 = $tmp125.value;
+int64_t $tmp128 = $tmp126.value;
+int64_t $tmp129 = $tmp127 + $tmp128;
+frost$core$Int $tmp130 = (frost$core$Int) {$tmp129};
+frost$core$Int* $tmp131 = &param0->bucket;
+*$tmp131 = $tmp130;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:69
-frost$core$Int* $tmp122 = &param0->bucket;
-frost$core$Int $tmp123 = *$tmp122;
-frost$collections$HashMap** $tmp124 = &param0->map;
-frost$collections$HashMap* $tmp125 = *$tmp124;
-frost$core$Int* $tmp126 = &$tmp125->bucketCount;
-frost$core$Int $tmp127 = *$tmp126;
+frost$core$Int* $tmp132 = &param0->bucket;
+frost$core$Int $tmp133 = *$tmp132;
+frost$collections$HashMap** $tmp134 = &param0->map;
+frost$collections$HashMap* $tmp135 = *$tmp134;
+frost$core$Int* $tmp136 = &$tmp135->bucketCount;
+frost$core$Int $tmp137 = *$tmp136;
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from HashMap.frost:69:27
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
-int64_t $tmp128 = $tmp123.value;
-int64_t $tmp129 = $tmp127.value;
-bool $tmp130 = $tmp128 == $tmp129;
-frost$core$Bit $tmp131 = (frost$core$Bit) {$tmp130};
-bool $tmp132 = $tmp131.value;
-if ($tmp132) goto block11; else goto block12;
-block11:;
+int64_t $tmp138 = $tmp133.value;
+int64_t $tmp139 = $tmp137.value;
+bool $tmp140 = $tmp138 == $tmp139;
+frost$core$Bit $tmp141 = (frost$core$Bit) {$tmp140};
+bool $tmp142 = $tmp141.value;
+if ($tmp142) goto block15; else goto block16;
+block15:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:70
-goto block10;
-block12:;
+goto block14;
+block16:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:72
-frost$collections$HashMap** $tmp133 = &param0->map;
-frost$collections$HashMap* $tmp134 = *$tmp133;
-frost$collections$HashMap$Entry*** $tmp135 = &$tmp134->contents;
-frost$collections$HashMap$Entry** $tmp136 = *$tmp135;
-frost$core$Int* $tmp137 = &param0->bucket;
-frost$core$Int $tmp138 = *$tmp137;
-frost$core$Int64 $tmp139 = frost$core$Int64$init$frost$core$Int($tmp138);
-int64_t $tmp140 = $tmp139.value;
-frost$collections$HashMap$Entry* $tmp141 = $tmp136[$tmp140];
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp141));
-frost$collections$HashMap$Entry** $tmp142 = &param0->entry;
-frost$collections$HashMap$Entry* $tmp143 = *$tmp142;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp143));
-frost$collections$HashMap$Entry** $tmp144 = &param0->entry;
-*$tmp144 = $tmp141;
-goto block8;
-block10:;
+frost$collections$HashMap** $tmp143 = &param0->map;
+frost$collections$HashMap* $tmp144 = *$tmp143;
+frost$collections$HashMap$Entry*** $tmp145 = &$tmp144->contents;
+frost$collections$HashMap$Entry** $tmp146 = *$tmp145;
+frost$core$Int* $tmp147 = &param0->bucket;
+frost$core$Int $tmp148 = *$tmp147;
+frost$core$Int64 $tmp149 = frost$core$Int64$init$frost$core$Int($tmp148);
+int64_t $tmp150 = $tmp149.value;
+frost$collections$HashMap$Entry* $tmp151 = $tmp146[$tmp150];
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp151));
+frost$collections$HashMap$Entry** $tmp152 = &param0->entry;
+frost$collections$HashMap$Entry* $tmp153 = *$tmp152;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp153));
+frost$collections$HashMap$Entry** $tmp154 = &param0->entry;
+*$tmp154 = $tmp151;
+goto block12;
+block14:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:74
 FROST_ASSERT(32 == sizeof(frost$core$Tuple2));
-frost$core$Tuple2* $tmp145 = (frost$core$Tuple2*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$Tuple2$class);
-frost$collections$HashMap$Entry* $tmp146 = *(&local0);
-frost$collections$Key** $tmp147 = &$tmp146->key;
-frost$collections$Key* $tmp148 = *$tmp147;
-frost$collections$HashMap$Entry* $tmp149 = *(&local0);
-frost$core$Object** $tmp150 = &$tmp149->value;
-frost$core$Object* $tmp151 = *$tmp150;
-frost$core$Tuple2$init$frost$core$Tuple2$T0$frost$core$Tuple2$T1($tmp145, ((frost$core$Object*) $tmp148), $tmp151);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp145));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp145));
-frost$collections$HashMap$Entry* $tmp152 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp152));
+frost$core$Tuple2* $tmp155 = (frost$core$Tuple2*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$Tuple2$class);
+frost$collections$HashMap$Entry* $tmp156 = *(&local0);
+frost$collections$Key** $tmp157 = &$tmp156->key;
+frost$collections$Key* $tmp158 = *$tmp157;
+frost$collections$HashMap$Entry* $tmp159 = *(&local0);
+frost$core$Object** $tmp160 = &$tmp159->value;
+frost$core$Object* $tmp161 = *$tmp160;
+frost$core$Tuple2$init$frost$core$Tuple2$T0$frost$core$Tuple2$T1($tmp155, ((frost$core$Object*) $tmp158), $tmp161);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp155));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp155));
+frost$collections$HashMap$Entry* $tmp162 = *(&local0);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp162));
 *(&local0) = ((frost$collections$HashMap$Entry*) NULL);
-return $tmp145;
+return $tmp155;
 
 }
 void frost$collections$HashMap$EntryIterator$cleanup(frost$collections$HashMap$EntryIterator* param0) {
 
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:41
 frost$core$Object$cleanup(((frost$core$Object*) param0));
-frost$collections$HashMap** $tmp153 = &param0->map;
-frost$collections$HashMap* $tmp154 = *$tmp153;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp154));
-frost$collections$HashMap$Entry** $tmp155 = &param0->entry;
-frost$collections$HashMap$Entry* $tmp156 = *$tmp155;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp156));
+frost$collections$HashMap** $tmp163 = &param0->map;
+frost$collections$HashMap* $tmp164 = *$tmp163;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp164));
+frost$collections$HashMap$Entry** $tmp165 = &param0->entry;
+frost$collections$HashMap$Entry* $tmp166 = *$tmp165;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp166));
 return;
 
 }

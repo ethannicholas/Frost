@@ -28,7 +28,7 @@ interface Iterator<T> {
                 }
                 nextValue := base.next()
             }
-            while !filter(nextValue)
+            while !filter(nextValue!)
         }
 
         @override
@@ -38,7 +38,7 @@ interface Iterator<T> {
 
         @override
         method next():T {
-            def result := nextValue
+            def result := nextValue!
             getNext()
             return result
         }
@@ -96,7 +96,7 @@ interface Iterator<T> {
 
         @override
         method next():T {
-            def result := pending
+            def result := pending!
             for i in 0 .. step {
                 current += 1
                 _done := (end !== null & current >= end) | base.done
@@ -218,7 +218,7 @@ interface Iterator<T> {
     not produce enough elements to finish the range, iteration will simply end at that point.
     ================================================================================================
     @default
-    @pre(range.min == null | range.min >= 0 & range.max == null | range.min >= 0)
+    @pre(range.min == null | range.min! >= 0 & range.max == null | range.max! >= 0)
     function [](range:Range<Int?>):Iterator<T> {
         return RangeIterator<T>(self, range.min, range.max, range.inclusive, 1)
     }
@@ -235,7 +235,8 @@ interface Iterator<T> {
     This will loop over every odd-numbered element in `arr`.
     ================================================================================================
     @default
-    @pre(range.start == null | range.start >= 0 & range.end == null | range.end >= 0 & range.step > 0)
+    @pre(range.start == null | range.start! >= 0 & range.end == null |
+            range.end! >= 0 & range.step > 0)
     function [](range:SteppedRange<Int?, Int>):Iterator<T> {
         return RangeIterator<T>(self, range.start, range.end, range.inclusive, range.step)
     }

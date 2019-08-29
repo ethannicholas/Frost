@@ -24,6 +24,8 @@ static frost$core$String $s2 = { (frost$core$Class*) &frost$core$String$class, -
 static frost$core$String $s86 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x69\x6e\x76\x61\x6c\x69\x64\x20\x74\x6f\x6b\x65\x6e\x20", 14, 7507302848059021343, NULL };
 static frost$core$String $s88 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "", 0, -3750763034362895579, NULL };
 static frost$core$String $s89 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x0a", 1, -5808579962898102051, NULL };
+static frost$core$String $s92 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x44\x46\x41\x2e\x66\x72\x6f\x73\x74", 9, -6532934594591490442, NULL };
+static frost$core$String $s93 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x72\x65\x74\x75\x72\x6e\x65\x64\x20\x66\x72\x6f\x6d\x20\x40\x6e\x6f\x52\x65\x74\x75\x72\x6e\x20\x6d\x65\x74\x68\x6f\x64", 30, 1170110763298107664, NULL };
 
 void org$frostlang$plex$runtime$DFA$init$frost$core$Int$frost$unsafe$Pointer$LTfrost$unsafe$Pointer$LTfrost$core$Int$GT$GT$frost$unsafe$Pointer$LTfrost$core$Int$GT(org$frostlang$plex$runtime$DFA* param0, frost$core$Int param1, frost$core$Int** param2, frost$core$Int* param3) {
 
@@ -219,148 +221,150 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp81));
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/plex/runtime/DFA.frost:54
 frost$core$Int $tmp90 = (frost$core$Int) {1u};
 frost$core$System$exit$frost$core$Int($tmp90);
-goto block10;
+frost$core$Int $tmp91 = (frost$core$Int) {54u};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s92, $tmp91, &$s93);
+abort(); // unreachable
 block10:;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/plex/runtime/DFA.frost:56
-frost$core$Int*** $tmp91 = &param0->transitions;
-frost$core$Int** $tmp92 = *$tmp91;
-frost$core$Char8 $tmp93 = *(&local10);
+frost$core$Int*** $tmp94 = &param0->transitions;
+frost$core$Int** $tmp95 = *$tmp94;
+frost$core$Char8 $tmp96 = *(&local10);
 // begin inline call to function frost.core.Char8.get_asInt():frost.core.Int from DFA.frost:56:35
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:101
-uint8_t $tmp94 = $tmp93.value;
-frost$core$Int $tmp95 = (frost$core$Int) {((int64_t) $tmp94)};
-frost$core$Int64 $tmp96 = frost$core$Int64$init$frost$core$Int($tmp95);
-int64_t $tmp97 = $tmp96.value;
-frost$core$Int* $tmp98 = $tmp92[$tmp97];
-frost$core$Int $tmp99 = *(&local0);
-frost$core$Int64 $tmp100 = frost$core$Int64$init$frost$core$Int($tmp99);
-int64_t $tmp101 = $tmp100.value;
-frost$core$Int $tmp102 = $tmp98[$tmp101];
-*(&local0) = $tmp102;
+uint8_t $tmp97 = $tmp96.value;
+frost$core$Int $tmp98 = (frost$core$Int) {((int64_t) $tmp97)};
+frost$core$Int64 $tmp99 = frost$core$Int64$init$frost$core$Int($tmp98);
+int64_t $tmp100 = $tmp99.value;
+frost$core$Int* $tmp101 = $tmp95[$tmp100];
+frost$core$Int $tmp102 = *(&local0);
+frost$core$Int64 $tmp103 = frost$core$Int64$init$frost$core$Int($tmp102);
+int64_t $tmp104 = $tmp103.value;
+frost$core$Int $tmp105 = $tmp101[$tmp104];
+*(&local0) = $tmp105;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/plex/runtime/DFA.frost:57
-frost$core$Int $tmp103 = *(&local0);
-frost$core$Int $tmp104 = (frost$core$Int) {0u};
-int64_t $tmp105 = $tmp103.value;
-int64_t $tmp106 = $tmp104.value;
-bool $tmp107 = $tmp105 != $tmp106;
-frost$core$Bit $tmp108 = (frost$core$Bit) {$tmp107};
-bool $tmp109 = $tmp108.value;
-if ($tmp109) goto block17; else goto block19;
+frost$core$Int $tmp106 = *(&local0);
+frost$core$Int $tmp107 = (frost$core$Int) {0u};
+int64_t $tmp108 = $tmp106.value;
+int64_t $tmp109 = $tmp107.value;
+bool $tmp110 = $tmp108 != $tmp109;
+frost$core$Bit $tmp111 = (frost$core$Bit) {$tmp110};
+bool $tmp112 = $tmp111.value;
+if ($tmp112) goto block17; else goto block19;
 block17:;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/plex/runtime/DFA.frost:58
-frost$core$Int* $tmp110 = &param0->offset;
-frost$core$Int $tmp111 = *$tmp110;
-frost$core$Int $tmp112 = (frost$core$Int) {1u};
-int64_t $tmp113 = $tmp111.value;
-int64_t $tmp114 = $tmp112.value;
-int64_t $tmp115 = $tmp113 + $tmp114;
-frost$core$Int $tmp116 = (frost$core$Int) {$tmp115};
-frost$core$Int* $tmp117 = &param0->offset;
-*$tmp117 = $tmp116;
+frost$core$Int* $tmp113 = &param0->offset;
+frost$core$Int $tmp114 = *$tmp113;
+frost$core$Int $tmp115 = (frost$core$Int) {1u};
+int64_t $tmp116 = $tmp114.value;
+int64_t $tmp117 = $tmp115.value;
+int64_t $tmp118 = $tmp116 + $tmp117;
+frost$core$Int $tmp119 = (frost$core$Int) {$tmp118};
+frost$core$Int* $tmp120 = &param0->offset;
+*$tmp120 = $tmp119;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/plex/runtime/DFA.frost:59
-frost$core$Char8 $tmp118 = *(&local10);
+frost$core$Char8 $tmp121 = *(&local10);
 // begin inline call to function frost.core.Char8.get_asUInt8():frost.core.UInt8 from DFA.frost:59:24
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:126
-uint8_t $tmp119 = $tmp118.value;
-frost$core$UInt8 $tmp120 = (frost$core$UInt8) {$tmp119};
-frost$core$UInt8 $tmp121 = (frost$core$UInt8) {10u};
+uint8_t $tmp122 = $tmp121.value;
+frost$core$UInt8 $tmp123 = (frost$core$UInt8) {$tmp122};
+frost$core$UInt8 $tmp124 = (frost$core$UInt8) {10u};
 // begin inline call to function frost.core.UInt8.=(other:frost.core.UInt8):frost.core.Bit from DFA.frost:60:26
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/UInt8.frost:643
-uint8_t $tmp122 = $tmp120.value;
-uint8_t $tmp123 = $tmp121.value;
-bool $tmp124 = $tmp122 == $tmp123;
-frost$core$Bit $tmp125 = (frost$core$Bit) {$tmp124};
-bool $tmp126 = $tmp125.value;
-if ($tmp126) goto block22; else goto block23;
+uint8_t $tmp125 = $tmp123.value;
+uint8_t $tmp126 = $tmp124.value;
+bool $tmp127 = $tmp125 == $tmp126;
+frost$core$Bit $tmp128 = (frost$core$Bit) {$tmp127};
+bool $tmp129 = $tmp128.value;
+if ($tmp129) goto block22; else goto block23;
 block22:;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/plex/runtime/DFA.frost:61
-frost$core$Int* $tmp127 = &param0->line;
-frost$core$Int $tmp128 = *$tmp127;
-frost$core$Int $tmp129 = (frost$core$Int) {1u};
-int64_t $tmp130 = $tmp128.value;
-int64_t $tmp131 = $tmp129.value;
-int64_t $tmp132 = $tmp130 + $tmp131;
-frost$core$Int $tmp133 = (frost$core$Int) {$tmp132};
-frost$core$Int* $tmp134 = &param0->line;
-*$tmp134 = $tmp133;
+frost$core$Int* $tmp130 = &param0->line;
+frost$core$Int $tmp131 = *$tmp130;
+frost$core$Int $tmp132 = (frost$core$Int) {1u};
+int64_t $tmp133 = $tmp131.value;
+int64_t $tmp134 = $tmp132.value;
+int64_t $tmp135 = $tmp133 + $tmp134;
+frost$core$Int $tmp136 = (frost$core$Int) {$tmp135};
+frost$core$Int* $tmp137 = &param0->line;
+*$tmp137 = $tmp136;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/plex/runtime/DFA.frost:62
-frost$core$Int $tmp135 = (frost$core$Int) {1u};
-frost$core$Int* $tmp136 = &param0->column;
-*$tmp136 = $tmp135;
+frost$core$Int $tmp138 = (frost$core$Int) {1u};
+frost$core$Int* $tmp139 = &param0->column;
+*$tmp139 = $tmp138;
 goto block21;
 block23:;
-frost$core$UInt8 $tmp137 = (frost$core$UInt8) {9u};
+frost$core$UInt8 $tmp140 = (frost$core$UInt8) {9u};
 // begin inline call to function frost.core.UInt8.=(other:frost.core.UInt8):frost.core.Bit from DFA.frost:64:26
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/UInt8.frost:643
-uint8_t $tmp138 = $tmp120.value;
-uint8_t $tmp139 = $tmp137.value;
-bool $tmp140 = $tmp138 == $tmp139;
-frost$core$Bit $tmp141 = (frost$core$Bit) {$tmp140};
-bool $tmp142 = $tmp141.value;
-if ($tmp142) goto block25; else goto block26;
+uint8_t $tmp141 = $tmp123.value;
+uint8_t $tmp142 = $tmp140.value;
+bool $tmp143 = $tmp141 == $tmp142;
+frost$core$Bit $tmp144 = (frost$core$Bit) {$tmp143};
+bool $tmp145 = $tmp144.value;
+if ($tmp145) goto block25; else goto block26;
 block25:;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/plex/runtime/DFA.frost:65
-frost$core$Int* $tmp143 = &param0->column;
-frost$core$Int $tmp144 = *$tmp143;
-frost$core$Int $tmp145 = (frost$core$Int) {4u};
 frost$core$Int* $tmp146 = &param0->column;
 frost$core$Int $tmp147 = *$tmp146;
 frost$core$Int $tmp148 = (frost$core$Int) {4u};
+frost$core$Int* $tmp149 = &param0->column;
+frost$core$Int $tmp150 = *$tmp149;
+frost$core$Int $tmp151 = (frost$core$Int) {4u};
 // begin inline call to function frost.core.Int.%(other:frost.core.Int):frost.core.Int from DFA.frost:65:51
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:198
-int64_t $tmp149 = $tmp147.value;
-int64_t $tmp150 = $tmp148.value;
-int64_t $tmp151 = $tmp149 % $tmp150;
-frost$core$Int $tmp152 = (frost$core$Int) {$tmp151};
-int64_t $tmp153 = $tmp145.value;
-int64_t $tmp154 = $tmp152.value;
-int64_t $tmp155 = $tmp153 - $tmp154;
-frost$core$Int $tmp156 = (frost$core$Int) {$tmp155};
-int64_t $tmp157 = $tmp144.value;
-int64_t $tmp158 = $tmp156.value;
-int64_t $tmp159 = $tmp157 + $tmp158;
-frost$core$Int $tmp160 = (frost$core$Int) {$tmp159};
-frost$core$Int* $tmp161 = &param0->column;
-*$tmp161 = $tmp160;
+int64_t $tmp152 = $tmp150.value;
+int64_t $tmp153 = $tmp151.value;
+int64_t $tmp154 = $tmp152 % $tmp153;
+frost$core$Int $tmp155 = (frost$core$Int) {$tmp154};
+int64_t $tmp156 = $tmp148.value;
+int64_t $tmp157 = $tmp155.value;
+int64_t $tmp158 = $tmp156 - $tmp157;
+frost$core$Int $tmp159 = (frost$core$Int) {$tmp158};
+int64_t $tmp160 = $tmp147.value;
+int64_t $tmp161 = $tmp159.value;
+int64_t $tmp162 = $tmp160 + $tmp161;
+frost$core$Int $tmp163 = (frost$core$Int) {$tmp162};
+frost$core$Int* $tmp164 = &param0->column;
+*$tmp164 = $tmp163;
 goto block21;
 block26:;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/plex/runtime/DFA.frost:68
-frost$core$Int* $tmp162 = &param0->column;
-frost$core$Int $tmp163 = *$tmp162;
-frost$core$Int $tmp164 = (frost$core$Int) {1u};
-int64_t $tmp165 = $tmp163.value;
-int64_t $tmp166 = $tmp164.value;
-int64_t $tmp167 = $tmp165 + $tmp166;
-frost$core$Int $tmp168 = (frost$core$Int) {$tmp167};
-frost$core$Int* $tmp169 = &param0->column;
-*$tmp169 = $tmp168;
+frost$core$Int* $tmp165 = &param0->column;
+frost$core$Int $tmp166 = *$tmp165;
+frost$core$Int $tmp167 = (frost$core$Int) {1u};
+int64_t $tmp168 = $tmp166.value;
+int64_t $tmp169 = $tmp167.value;
+int64_t $tmp170 = $tmp168 + $tmp169;
+frost$core$Int $tmp171 = (frost$core$Int) {$tmp170};
+frost$core$Int* $tmp172 = &param0->column;
+*$tmp172 = $tmp171;
 goto block21;
 block21:;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/plex/runtime/DFA.frost:71
-frost$core$Int** $tmp170 = &param0->accepts;
-frost$core$Int* $tmp171 = *$tmp170;
-frost$core$Int $tmp172 = *(&local0);
-frost$core$Int64 $tmp173 = frost$core$Int64$init$frost$core$Int($tmp172);
-int64_t $tmp174 = $tmp173.value;
-frost$core$Int $tmp175 = $tmp171[$tmp174];
-*(&local11) = $tmp175;
+frost$core$Int** $tmp173 = &param0->accepts;
+frost$core$Int* $tmp174 = *$tmp173;
+frost$core$Int $tmp175 = *(&local0);
+frost$core$Int64 $tmp176 = frost$core$Int64$init$frost$core$Int($tmp175);
+int64_t $tmp177 = $tmp176.value;
+frost$core$Int $tmp178 = $tmp174[$tmp177];
+*(&local11) = $tmp178;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/plex/runtime/DFA.frost:72
-frost$core$Int $tmp176 = *(&local11);
-frost$core$Int $tmp177 = (frost$core$Int) {18446744073709551615u};
-int64_t $tmp178 = $tmp176.value;
-int64_t $tmp179 = $tmp177.value;
-bool $tmp180 = $tmp178 != $tmp179;
-frost$core$Bit $tmp181 = (frost$core$Bit) {$tmp180};
-bool $tmp182 = $tmp181.value;
-if ($tmp182) goto block29; else goto block30;
+frost$core$Int $tmp179 = *(&local11);
+frost$core$Int $tmp180 = (frost$core$Int) {18446744073709551615u};
+int64_t $tmp181 = $tmp179.value;
+int64_t $tmp182 = $tmp180.value;
+bool $tmp183 = $tmp181 != $tmp182;
+frost$core$Bit $tmp184 = (frost$core$Bit) {$tmp183};
+bool $tmp185 = $tmp184.value;
+if ($tmp185) goto block29; else goto block30;
 block29:;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/plex/runtime/DFA.frost:73
-frost$core$Int $tmp183 = *(&local11);
-*(&local5) = $tmp183;
+frost$core$Int $tmp186 = *(&local11);
+*(&local5) = $tmp186;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/plex/runtime/DFA.frost:74
-frost$core$Int* $tmp184 = &param0->offset;
-frost$core$Int $tmp185 = *$tmp184;
-*(&local7) = $tmp185;
+frost$core$Int* $tmp187 = &param0->offset;
+frost$core$Int $tmp188 = *$tmp187;
+*(&local7) = $tmp188;
 goto block30;
 block30:;
 goto block6;
@@ -370,31 +374,31 @@ block19:;
 goto block8;
 block8:;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/plex/runtime/DFA.frost:81
-frost$core$Int $tmp186 = *(&local7);
-frost$core$Int* $tmp187 = &param0->offset;
-*$tmp187 = $tmp186;
+frost$core$Int $tmp189 = *(&local7);
+frost$core$Int* $tmp190 = &param0->offset;
+*$tmp190 = $tmp189;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/plex/runtime/DFA.frost:82
-frost$core$Int $tmp188 = *(&local5);
-frost$core$Int $tmp189 = *(&local6);
+frost$core$Int $tmp191 = *(&local5);
+frost$core$Int $tmp192 = *(&local6);
 // begin inline call to frost.core.String.Index.init(value:frost.core.Int):frost.core.String.Index from DFA.frost:82:43
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:61
-frost$core$Int* $tmp190 = &(&local13)->value;
-*$tmp190 = $tmp189;
-frost$core$String$Index $tmp191 = *(&local13);
-*(&local12) = $tmp191;
-frost$core$String$Index $tmp192 = *(&local12);
-frost$core$Int $tmp193 = *(&local7);
+frost$core$Int* $tmp193 = &(&local13)->value;
+*$tmp193 = $tmp192;
+frost$core$String$Index $tmp194 = *(&local13);
+*(&local12) = $tmp194;
+frost$core$String$Index $tmp195 = *(&local12);
+frost$core$Int $tmp196 = *(&local7);
 // begin inline call to frost.core.String.Index.init(value:frost.core.Int):frost.core.String.Index from DFA.frost:82:64
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:61
-frost$core$Int* $tmp194 = &(&local15)->value;
-*$tmp194 = $tmp193;
-frost$core$String$Index $tmp195 = *(&local15);
-*(&local14) = $tmp195;
-frost$core$String$Index $tmp196 = *(&local14);
-frost$core$Int $tmp197 = *(&local8);
-frost$core$Int $tmp198 = *(&local9);
-org$frostlang$plex$runtime$RawToken $tmp199 = org$frostlang$plex$runtime$RawToken$init$frost$core$Int$frost$core$String$Index$frost$core$String$Index$frost$core$Int$frost$core$Int($tmp188, $tmp192, $tmp196, $tmp197, $tmp198);
-return $tmp199;
+frost$core$Int* $tmp197 = &(&local15)->value;
+*$tmp197 = $tmp196;
+frost$core$String$Index $tmp198 = *(&local15);
+*(&local14) = $tmp198;
+frost$core$String$Index $tmp199 = *(&local14);
+frost$core$Int $tmp200 = *(&local8);
+frost$core$Int $tmp201 = *(&local9);
+org$frostlang$plex$runtime$RawToken $tmp202 = org$frostlang$plex$runtime$RawToken$init$frost$core$Int$frost$core$String$Index$frost$core$String$Index$frost$core$Int$frost$core$Int($tmp191, $tmp195, $tmp199, $tmp200, $tmp201);
+return $tmp202;
 
 }
 void org$frostlang$plex$runtime$DFA$cleanup(org$frostlang$plex$runtime$DFA* param0) {

@@ -419,14 +419,14 @@ org$frostlang$frostc$MethodDecl* local2 = NULL;
 org$frostlang$frostc$MethodDecl* local3 = NULL;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/SymbolTable.frost:61
 // begin inline call to function org.frostlang.frostc.MethodDecl.get_heritable():frost.core.Bit from SymbolTable.frost:61:28
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/MethodDecl.frost:102
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/MethodDecl.frost:104
 org$frostlang$frostc$MethodDecl$Kind* $tmp138 = &param1->methodKind;
 org$frostlang$frostc$MethodDecl$Kind $tmp139 = *$tmp138;
 org$frostlang$frostc$MethodDecl$Kind$wrapper* $tmp140;
 $tmp140 = (org$frostlang$frostc$MethodDecl$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$MethodDecl$Kind$wrapperclass);
 $tmp140->value = $tmp139;
 frost$core$Int $tmp141 = (frost$core$Int) {2u};
-// begin inline call to org.frostlang.frostc.MethodDecl.Kind.init(rv:frost.core.Int):org.frostlang.frostc.MethodDecl.Kind from MethodDecl.frost:102:34
+// begin inline call to org.frostlang.frostc.MethodDecl.Kind.init(rv:frost.core.Int):org.frostlang.frostc.MethodDecl.Kind from MethodDecl.frost:104:34
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/MethodDecl.frost:7
 frost$core$Int* $tmp142 = &(&local1)->$rawValue;
 *$tmp142 = $tmp141;

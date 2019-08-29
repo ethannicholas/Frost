@@ -74,6 +74,8 @@ class MethodDecl : Symbol {
 
     property isVirtual:Bit
 
+    property isInstance:Bit
+
     property signature:String
 
     property declaration:String
@@ -106,7 +108,7 @@ class MethodDecl : Symbol {
         return !annotations.isClass & methodKind != Kind.INIT & !annotations.isFinal
     }
 
-    function isInstance():Bit {
+    function get_isInstance():Bit {
         return !annotations.isClass
     }
 

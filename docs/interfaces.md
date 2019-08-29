@@ -90,7 +90,7 @@ to interfaces listed later. For example, given the code:
 
 The statement `Foo().defaultMethod()` will result in the output
 `"this method also has an implementation!"`. `defaultMethod()` implementations are present in both
-`Example1` and `Example1`, but as class Foo lists `Example2` first, that interface's implementation
+`Example1` and `Example2`, but as class Foo lists `Example2` first, that interface's implementation
 of `defaultMethod()` will be inherited. If `Foo` defined its own implementation of `defaultMethod`
 (or inherited one from a superclass), it would be used in preference to either interface's default
 implementation.

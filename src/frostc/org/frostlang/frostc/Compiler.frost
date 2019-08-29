@@ -654,6 +654,7 @@ class Compiler {
         addAlias("frost.collections.CollectionWriter")
         addAlias("frost.collections.HashSet")
         addAlias("frost.collections.IdentityMap")
+        addAlias("frost.collections.IdentitySet")
         addAlias("frost.collections.ImmutableArray")
         addAlias("frost.collections.Iterable")
         addAlias("frost.collections.Iterator")
@@ -727,7 +728,7 @@ class Compiler {
 
     @private
     method addAlias(name:String) {
-        root.add(Alias(name[name.next(name.lastIndexOf("."))..],
+        root.add(Alias(name[name.next(name.lastIndexOf(".")!)..],
                 Type(name, Type.Kind.CLASS, Position(), true)))
     }
 
@@ -775,7 +776,7 @@ class Compiler {
                 result := getClass(current.name + "." + name)
             }
             if result == null & current.owner !== null {
-                currentClass.push(current.owner)
+                currentClass.push(current.owner!)
                 result := tryResolveClass(name)
                 currentClass.pop()
             }
@@ -805,10 +806,10 @@ class Compiler {
     function typeParameters(type:Type):ListView<Type> {
         match type.typeKind {
             when Type.Kind.GENERIC_CLASS_PARAMETER {
-                return typeParameters(type.genericClassParameter.bound)
+                return typeParameters(type.genericClassParameter!.bound)
             }
             when Type.Kind.GENERIC_METHOD_PARAMETER {
-                return typeParameters(type.genericMethodParameter.bound)
+                return typeParameters(type.genericMethodParameter!.bound)
             }
             when Type.Kind.GENERIC {
                 assert type.subtypes.count >= 2
@@ -1341,7 +1342,7 @@ class Compiler {
         currentClass.pop()
     }
 
-    method isValue(cl:ClassDecl?):Bit {
+    method isValue(cl:ClassDecl):Bit {
         if !resolve(cl) {
             return false
         }
@@ -1560,7 +1561,7 @@ class Compiler {
         if !resolve(cl) {
             return cl
         }
-        def type := specializedType(cl, resolve(rawType).nonnullable())
+        def type := specializedType(cl, resolve(rawType)!.nonnullable())
         if type.typeKind = Type.Kind.CLASS {
             return cl
         }
@@ -4108,6 +4109,10 @@ class Compiler {
     lexicon, means to perform a typecast which can be performed implicitly, without being explicitly
     specified by the user. This includes things like widenining conversions or converting a literal
     to any of the types it can legally represent.
+
+    Even though coercion by definition always could have been implicit, explicit coercion can happen
+    when delegating from an explicit cast (i.e. a cast in which it *would have been possible* to
+    coerce will be handled as coercion with an 'explicit' parameter of true).
     ================================================================================================
     @pre(target != VOID_TYPE)
     method coerce(position:Position, value:IR.Value?, target:Type, explicit:Bit):IR.Value? {
@@ -4201,15 +4206,14 @@ class Compiler {
                 }
             }
             assert srcType.isClass
--*            if value.type().isNullable & !target.isNullable &
+            if explicit & value.type().isNullable & !target.isNullable &
                     target.typeKind != Type.Kind.GENERIC_CLASS_PARAMETER &
                     target.typeKind != Type.Kind.GENERIC_METHOD_PARAMETER {
-                -- FIXME remove this when compile-time nullability checks are in
                 Assert.compile(self, position, ASTNode.BINARY(position,
                         ASTNode.IR_WRAPPER(position, value), Binary.Operator.NIDENTITY,
                         ASTNode.NULL(position)), ASTNode.STRING(position,
                                 "unexpected null reference casting \{value.type()} to \{target}"))
-            }*-
+            }
             def result := IR.Value.REF(ir.add(IR.Statement.CAST(position, value, target, explicit)),
                     target)
             if !isRefCounted(srcType) & isRefCounted(target) {
@@ -4261,7 +4265,7 @@ class Compiler {
             return value
         }
         if coercionCost(value.type(), target) !== null {
-            return coerce(Position(), value, TypeContext.TYPE(target, true))
+            return coerce(position, value, TypeContext.TYPE(target, true))
         }
         if target.isMethod {
             if valueType.isMethod {
@@ -4272,7 +4276,10 @@ class Compiler {
                 error(position, "non-method objects may not be cast to methods")
             }
         }
-        -- FIXME error on impossible casts
+        if !canCast(value.type(), target) {
+--            error(position, "value of type '\{value.type()}' cannot possibly be an instance of " +
+--                    "'\{target}'")
+        }
         def result := IR.Value.REF(ir.add(IR.Statement.CAST(position, value, target, true)), target)
         if !isRefCounted(value.type()) & isRefCounted(target) {
             enclosingContexts.push(EnclosingContext.VALUE_SCOPE(result))
@@ -4306,7 +4313,6 @@ class Compiler {
         unreachable, "could not find \{m.declaration} in vtable for \{m.owner.name}"
     }
 
-    @pre(isRefCounted(v.type()))
     method compileRef(v:IR.Value) {
         def args := Array<ASTNode>()
         args.add(ASTNode.IR_WRAPPER(Position(), v))

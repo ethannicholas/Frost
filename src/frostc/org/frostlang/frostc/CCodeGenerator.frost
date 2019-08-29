@@ -57,7 +57,7 @@ class CCodeGenerator : CodeGenerator {
 
     init(outDir:File) {
         hCodeGenRetain := HCodeGenerator(outDir, self)
-        init(outDir, hCodeGenRetain)
+        init(outDir, hCodeGenRetain!)
     }
 
     init(outDir:File, hCodeGen:HCodeGenerator) {
@@ -101,16 +101,16 @@ class CCodeGenerator : CodeGenerator {
     method cType(t:Type):String {
         assert t.resolved, "unresolved type \{t}"
         if t.isClass {
-            def cl := compiler.getClass(t)
+            def cl := compiler!.getClass(t)
             assert cl !== null
             writeImport(cl)
         }
         match t.typeKind {
             when Type.Kind.METHOD, Type.Kind.FUNCTION {
-                return cType(compiler.MUTABLE_METHOD_TYPE)
+                return cType(compiler!.MUTABLE_METHOD_TYPE)
             }
             when Type.Kind.IMMUTABLE_METHOD, Type.Kind.IMMUTABLE_FUNCTION {
-                return cType(compiler.METHOD_TYPE)
+                return cType(compiler!.METHOD_TYPE)
             }
             when Type.Kind.GENERIC {
                 if t.subtypes[0].name = "frost.unsafe.Pointer" & t.subtypes[1].isMethod {
@@ -133,7 +133,7 @@ class CCodeGenerator : CodeGenerator {
         code.append(")(")
         var separator := ""
         if selfType !== null {
-            code.append(cType(selfType))
+            code.append(cType(selfType!))
             separator := ", "
         }
         for i in 0 .. t.subtypes.count - 1 {
@@ -253,12 +253,12 @@ class CCodeGenerator : CodeGenerator {
     }
 
     function sizeOfWrapper(t:Type):Int {
-        def cl := compiler.getClass(t)
-        assert cl !== null & compiler.isValue(cl)
-        var result := sizeOf(compiler.OBJECT_TYPE)
-        for f in compiler.instanceFields(cl) {
-            compiler.resolve(f)
-            if f.type = compiler.CHOICE_DATA_TYPE {
+        def cl := compiler!.getClass(t)
+        assert cl !== null & compiler!.isValue(cl)
+        var result := sizeOf(compiler!.OBJECT_TYPE)
+        for f in compiler!.instanceFields(cl) {
+            compiler!.resolve(f)
+            if f.type = compiler!.CHOICE_DATA_TYPE {
                 -- FIXME need to respect alignment!
                 result += hCodeGen.llvmCodeGen.getChoiceDataSize(cl)
             }
@@ -289,7 +289,7 @@ class CCodeGenerator : CodeGenerator {
     }
 
     method wrapperTypeName(t:Type):String {
-        def cl := compiler.getClass(t)
+        def cl := compiler!.getClass(t)
         assert cl !== null
         writeImport(cl)
         if t.typeKind = Type.Kind.NULLABLE {
@@ -303,13 +303,13 @@ class CCodeGenerator : CodeGenerator {
     }
 
     method wrapperType(m:MethodDecl):String {
-        def inheritedType := compiler.inheritedType(m)
+        def inheritedType := compiler!.inheritedType(m)
         def result := MutableString()
         result.append(cType(inheritedType.returnType))
         result.append("(")
-        assert m.isInstance()
+        assert m.isInstance
         result.append("\{escapeName(m.owner.name)}")
-        if compiler.isValue(m.owner) {
+        if compiler!.isValue(m.owner) {
             result.append("$wrapper")
         }
         result.append("*")
@@ -327,14 +327,14 @@ class CCodeGenerator : CodeGenerator {
     }
 
     method getITable(cl:ClassDecl):String {
-        def interfaces := compiler.allInterfaces(cl.type)
+        def interfaces := compiler!.allInterfaces(cl.type)
         var previous := "NULL"
         for intfType in interfaces {
-            def intf := compiler.getClass(intfType)
+            def intf := compiler!.getClass(intfType)!
             def intfCC := getClassConstant(intf)
-            def methods := compiler.interfaceMethods(cl, intfType)
+            def methods := compiler!.interfaceMethods(cl, intfType)
             def name := "\{escapeName(cl.name)}$_\{escapeName(intf.name)}"
-            def result := MutableString("struct { \{cType(compiler.CLASS_TYPE)} cl; " +
+            def result := MutableString("struct { \{cType(compiler!.CLASS_TYPE)} cl; " +
                     "ITable* next; void* methods[\{methods.count}]; } \{name} = { " +
                     "(frost$core$Class*) &\{intfCC.name}, \{previous}, { ")
             var separator := ""
@@ -372,11 +372,11 @@ class CCodeGenerator : CodeGenerator {
             out := IndentedOutputStream(outBuffer)
             assert effective.isMethod
             assert effective.subtypes.count = raw.parameters.count + 2 -- self and return
-            assert raw.isInstance()
+            assert raw.isInstance
             def indirect := needsStructIndirection(raw)
             def effectiveReturnType:Type
             if indirect {
-                effectiveReturnType := compiler.VOID_TYPE
+                effectiveReturnType := compiler!.VOID_TYPE
             }
             else {
                 effectiveReturnType := effective.returnType
@@ -415,7 +415,7 @@ class CCodeGenerator : CodeGenerator {
                 if rawType != effective.subtypes[i] {
                     def cast := getCastReference(p, effective.subtypes[i], rawType)
                     casts.add(cast)
-                    if compiler.isValue(effective.subtypes[i]) & !compiler.isValue(rawType) {
+                    if compiler!.isValue(effective.subtypes[i]) & !compiler!.isValue(rawType) {
                         unrefs.printLine("frost$core$Frost$unref$frost$core$Object$Q(" +
                                 "(frost$core$Object*) \{cast});")
                     }
@@ -424,7 +424,7 @@ class CCodeGenerator : CodeGenerator {
                     casts.add(p)
                 }
             }
-            if effectiveReturnType != compiler.VOID_TYPE {
+            if effectiveReturnType != compiler!.VOID_TYPE {
                 out.print("\{cType(raw.returnType)} result = ")
             }
             out.print("\{getName(raw)}(")
@@ -439,7 +439,7 @@ class CCodeGenerator : CodeGenerator {
             }
             out.printLine(");")
             out.printLine(unrefs)
-            if effectiveReturnType != compiler.VOID_TYPE {
+            if effectiveReturnType != compiler!.VOID_TYPE {
                 out.printLine("return " + getCastReference("result", raw.returnType,
                         effectiveReturnType) + ";")
             }
@@ -458,16 +458,16 @@ class CCodeGenerator : CodeGenerator {
 
     method getWrapperITable(cl:ClassDecl):String {
         try {
-            def interfaces := compiler.allInterfaces(cl.type)
+            def interfaces := compiler!.allInterfaces(cl.type)
             var previous := "NULL"
             for intfType in interfaces {
-                def intf := compiler.getClass(intfType)
+                def intf := compiler!.getClass(intfType)!
                 def intfCC := getClassConstant(intf)
-                def methods := compiler.interfaceMethods(cl, intfType)
+                def methods := compiler!.interfaceMethods(cl, intfType)
                 def name := "\{escapeName(cl.name)}$wrapper_\{escapeName(intf.name)}"
-                def result := MutableString("struct { \{cType(compiler.CLASS_TYPE)} cl; " +
+                def result := MutableString("struct { \{cType(compiler!.CLASS_TYPE)} cl; " +
                         "ITable* itable; void* methods[\{methods.count}]; } \{name} = { " +
-                        "(\{cType(compiler.CLASS_TYPE)}) &\{intfCC.name}, \{previous}, { ")
+                        "(\{cType(compiler!.CLASS_TYPE)}) &\{intfCC.name}, \{previous}, { ")
                 var separator := ""
                 for m in methods {
                     result.append(separator)
@@ -495,20 +495,20 @@ class CCodeGenerator : CodeGenerator {
     }
 
     method getMethodTableEntry(m:MethodDecl):String {
-        compiler.resolve(m)
+        compiler!.resolve(m)
         if isExternal(m.owner) {
             writeDeclaration(m)
         }
         def result:String
-        def declared := compiler.declaredTypeWithSelf(m, m.owner.type, false)
+        def declared := compiler!.declaredTypeWithSelf(m, m.owner.type, false)
         def effectiveSelf:Type
-        if compiler.isValue(m.owner) {
-            effectiveSelf := compiler.OBJECT_TYPE
+        if compiler!.isValue(m.owner) {
+            effectiveSelf := compiler!.OBJECT_TYPE
         }
         else {
             effectiveSelf := m.owner.type
         }
-        def inherited := compiler.inheritedTypeWithSelf(m, effectiveSelf)
+        def inherited := compiler!.inheritedTypeWithSelf(m, effectiveSelf)
         if declared != inherited {
             def shim := createMethodShim(m, inherited)
             result := shim.name
@@ -524,27 +524,27 @@ class CCodeGenerator : CodeGenerator {
             var result := classConstants[cl.name]
             if result == null {
                 writeImport(cl)
-                compiler.resolve(cl)
+                compiler!.resolve(cl)
                 def type:String
                 if isExternal(cl) {
                     result := ClassConstant("\{escapeName(cl.type.name)}$class",
                             "%frost$core$Class")
                     classConstants[cl.name] := result
-                    return classConstants[cl.name]
+                    return classConstants[cl.name]!
                 }
-                compiler.currentClass.push(cl)
-                def vtable := compiler.getVTable(cl)
+                compiler!.currentClass.push(cl)
+                def vtable := compiler!.getVTable(cl)
                 result := ClassConstant("\{escapeName(cl.type.name)}$class", "<error>")
                 classConstants[cl.name] := result
                 def superPtr:String
                 if cl.rawSuper !== null {
-                    def superCC := getClassConstant(compiler.getClass(cl.rawSuper))
+                    def superCC := getClassConstant(compiler!.getClass(cl.rawSuper!)!)
                     superPtr := "(frost$core$Class*) &\{superCC.name}"
                 }
                 else {
                     superPtr := "NULL"
                 }
-                def clConstant := getClassConstant(compiler.getClass(compiler.CLASS_TYPE))
+                def clConstant := getClassConstant(compiler!.getClass(compiler!.CLASS_TYPE)!)
                 def name := getStringReference(cl.name)
                 assert name.startsWith("&")
                 def code := MutableString("static frost$core$String \{name[1..]};\n" +
@@ -564,8 +564,8 @@ class CCodeGenerator : CodeGenerator {
                 }
                 code.append("} };\n")
                 types.printLine(code.finish())
-                assert compiler.currentClass[0] == cl
-                compiler.currentClass.pop()
+                assert compiler!.currentClass[0] == cl
+                compiler!.currentClass.pop()
             }
             return result
         }
@@ -580,20 +580,20 @@ class CCodeGenerator : CodeGenerator {
             var result := classConstants[name]
             if result == null {
                 if isExternal(cl) {
-                    cType(compiler.CLASS_TYPE)
+                    cType(compiler!.CLASS_TYPE)
                     def type := "%frost$core$Class"
                     types.printLine("\{name} = external global \{type}")
                     result := ClassConstant(name, type)
                 }
                 else {
-                    def value := compiler.getClass(compiler.VALUE_TYPE)
-                    def valueVTable := compiler.getVTable(value)
+                    def value := compiler!.getClass(compiler!.VALUE_TYPE)!
+                    def valueVTable := compiler!.getVTable(value)
                     result := ClassConstant("\{escapeName(cl.name)}$wrapperclass", "<error>")
-                    def vtable := compiler.getVTable(cl)
-                    def superCC := getClassConstant(compiler.getClass(cl.rawSuper))
+                    def vtable := compiler!.getVTable(cl)
+                    def superCC := getClassConstant(compiler!.getClass(cl.rawSuper))
                     def superCast := "(frost$core$Class*) &\{superCC.name}"
                     def itable := getWrapperITable(cl)
-                    def clConstant := getClassConstant(compiler.getClass(compiler.CLASS_TYPE))
+                    def clConstant := getClassConstant(compiler!.getClass(compiler!.CLASS_TYPE))
                     def name := getStringReference(cl.name)
                     assert name.startsWith("&")
                     def code := MutableString("static frost$core$String \{name[1..]};\n" +
@@ -746,7 +746,7 @@ class CCodeGenerator : CodeGenerator {
     method getVirtualMethodReference(target:String, m:MethodDecl, out:IndentedOutputStream):String {
         def cc := getClassConstant(m.owner)
         var index := -1
-        def vtable := compiler.getVTable(m.owner)
+        def vtable := compiler!.getVTable(m.owner)
         for i in 0 .. vtable.count {
             if vtable[i]->MethodDecl == m {
                 index := i
@@ -754,7 +754,7 @@ class CCodeGenerator : CodeGenerator {
             }
         }
         assert index != -1
-        return "((\{cMethodType(compiler.inheritedTypeWithSelf(m), null)}) " +
+        return "((\{cMethodType(compiler!.inheritedTypeWithSelf(m), null)}) " +
                 "\{target}->$class->vtable[\{index}])"
     }
 
@@ -770,17 +770,17 @@ class CCodeGenerator : CodeGenerator {
             out.level -= 1
             out.printLine("}")
             var index := -1
-            def vtable := compiler.getVTable(m.owner)
+            def vtable := compiler!.getVTable(m.owner)
             for i in 0 .. vtable.count {
                 if vtable[i]->MethodDecl == m {
                     index := i
                     break
                 }
             }
-            index -= compiler.getVTable(compiler.getClass(compiler.OBJECT_TYPE)).count
+            index -= compiler!.getVTable(compiler!.getClass(compiler!.OBJECT_TYPE)).count
             assert index != -1
             def result := nextVar()
-            def methodType := cMethodType(compiler.inheritedTypeWithSelf(m), null)
+            def methodType := cMethodType(compiler!.inheritedTypeWithSelf(m), null)
             out.printLine("\{methodType} \{result} = \{itable}->methods[\{index}];")
             return result
         }
@@ -881,21 +881,21 @@ class CCodeGenerator : CodeGenerator {
             return "((\{cType(target)}) \{value})"
         }
         else {
-            def srcClass := compiler.getClass(src)
+            def srcClass := compiler!.getClass(src)
             assert srcClass !== null
-            def targetClass := compiler.getClass(target)
+            def targetClass := compiler!.getClass(target)
             assert targetClass !== null
-            if compiler.isValue(srcClass) & !compiler.isValue(targetClass) {
+            if compiler!.isValue(srcClass) & !compiler!.isValue(targetClass) {
                 return wrapValue(value, src, target, out)
             }
-            else if !compiler.isValue(srcClass) & compiler.isValue(targetClass) {
+            else if !compiler!.isValue(srcClass) & compiler!.isValue(targetClass) {
                 return unwrapValue(value, src, target, out)
             }
-            else if compiler.isValue(srcClass) & target.typeKind = Type.Kind.NULLABLE &
+            else if compiler!.isValue(srcClass) & target.typeKind = Type.Kind.NULLABLE &
                     target.subtypes[0] = src {
                 return toNullableValue(value, src, target, out)
             }
-            else if compiler.isValue(targetClass) & src.typeKind = Type.Kind.NULLABLE &
+            else if compiler!.isValue(targetClass) & src.typeKind = Type.Kind.NULLABLE &
                     src.subtypes[0] = target {
                 return toNonNullableValue(value, src, target, out)
             }
@@ -934,7 +934,7 @@ class CCodeGenerator : CodeGenerator {
         try {
             varCount += 1
             def result := "$s\{varCount}"
-            cType(compiler.STRING_TYPE)
+            cType(compiler!.STRING_TYPE)
             strings.print("static frost$core$String \{result} = { " +
                     "(frost$core$Class*) &frost$core$String$class, \{NO_REFCNT}, 0, " +
                     "(frost$core$Char8*) \"")
@@ -951,9 +951,9 @@ class CCodeGenerator : CodeGenerator {
 
     method getNullReference(t:Type):String {
         assert t.typeKind = Type.Kind.NULLABLE, "not nullable: \{t}"
-        def cl := compiler.getClass(t.subtypes[0])
+        def cl := compiler!.getClass(t.subtypes[0])
         assert cl !== null
-        if compiler.isValue(cl) {
+        if compiler!.isValue(cl) {
             return "((\{nullableType(t)}) { .nonnull = false })"
         }
         else {
@@ -1022,10 +1022,10 @@ class CCodeGenerator : CodeGenerator {
 
     method writeIsNull(id:IR.Statement.ID, value:IR.Value) {
         def ref := getReference(value)
-        def cl := compiler.getClass(value.type())
+        def cl := compiler!.getClass(value.type())
         assert cl !== null
         def bit:String
-        if compiler.isValue(cl) {
+        if compiler!.isValue(cl) {
             if value.type().typeKind != Type.Kind.NULLABLE {
                 bit := "false"
             }
@@ -1041,10 +1041,10 @@ class CCodeGenerator : CodeGenerator {
 
     method writeIsNonNull(id:IR.Statement.ID, value:IR.Value) {
         def ref := getReference(value)
-        def cl := compiler.getClass(value.type())
+        def cl := compiler!.getClass(value.type())
         assert cl !== null
         def bit:String
-        if compiler.isValue(cl) {
+        if compiler!.isValue(cl) {
             if value.type().typeKind != Type.Kind.NULLABLE {
                 bit := "true"
             }
@@ -1183,7 +1183,7 @@ class CCodeGenerator : CodeGenerator {
 
     method writeConstruct(id:IR.Statement.ID, cl:ClassDecl) {
         try {
-            assert !compiler.isValue(cl)
+            assert !compiler!.isValue(cl)
             def cc := getClassConstant(cl)
             def ccCast:String
             if cc.type != "frost$core$Class" {
@@ -1206,7 +1206,7 @@ class CCodeGenerator : CodeGenerator {
 
     method writeCreateStruct(id:IR.Statement.ID, cl:ClassDecl, args:FixedArray<IR.Value>) {
         try {
-            assert compiler.isValue(cl)
+            assert compiler!.isValue(cl)
             def result := nextVar()
             def target := cl.type
             out.print("\{cType(target)} \{result} = (\{cType(target)}) {")
@@ -1230,7 +1230,7 @@ class CCodeGenerator : CodeGenerator {
                 type := type.subtypes[1]
             }
             def returnType := type.returnType
-            if returnType != compiler.VOID_TYPE {
+            if returnType != compiler!.VOID_TYPE {
                 def result := nextVar()
                 out.print("\{cType(returnType)} \{result} = ")
                 refs[id] := result
@@ -1251,7 +1251,7 @@ class CCodeGenerator : CodeGenerator {
 
     method writeExtractField(id:IR.Statement.ID, target:IR.Value, field:FieldDecl) {
         try {
-            compiler.resolve(field)
+            compiler!.resolve(field)
             var targetRef := getReference(target)
             def result := nextVar()
             out.printLine("\{cType(field.type)} \{result} = \{targetRef}.\{field.name};")
@@ -1268,11 +1268,11 @@ class CCodeGenerator : CodeGenerator {
             def data := cc.owner.fields[1]
             assert data.name = ClassDecl.CHOICE_DATA_NAME
             def targetRef := getReference(target)
-            def fieldIndex := compiler.getIndex(data)
+            def fieldIndex := compiler!.getIndex(data)
             def result := nextVar()
             def type := cType(cc.fields[index])
             def op:String
-            if compiler.isValue(target.type()) {
+            if compiler!.isValue(target.type()) {
                 match target {
                     when IR.Value.LOCAL { op := "->"}
                     otherwise { op := "." }
@@ -1473,7 +1473,7 @@ class CCodeGenerator : CodeGenerator {
             def actualResultType := cType(m.returnType)
             var separator := ""
             def result:String?
-            if m.returnType != compiler.VOID_TYPE {
+            if m.returnType != compiler!.VOID_TYPE {
                 result := nextVar()
                 if indirect {
                     out.printLine("\{actualResultType} \{result};")
@@ -1613,7 +1613,7 @@ class CCodeGenerator : CodeGenerator {
                 def name := "local\{i}"
                 def type := cType(ir.locals[i])
                 out.print("\{type} \{name}")
-                if compiler.isRefCounted(ir.locals[i]) {
+                if compiler!.isRefCounted(ir.locals[i]) {
                     out.print(" = NULL")
                 }
                 out.printLine(";")
@@ -1650,7 +1650,7 @@ class CCodeGenerator : CodeGenerator {
             out.print("\{cType(m.returnType)} \{getName(m)}(")
             var separator := ""
             var index := 0
-            if compiler.hasSelfParam(m) {
+            if compiler!.hasSelfParam(m) {
                 out.print("\{selfType(m)} param\{index}")
                 index += 1
                 separator := ", "
@@ -1698,12 +1698,12 @@ class CCodeGenerator : CodeGenerator {
             out := IndentedOutputStream(path.openOutputStream())
             out.flush()
             getClassConstant(cl)
-            if compiler.isValue(cl) {
+            if compiler!.isValue(cl) {
                 getWrapperClassConstant(cl)
             }
         }
         fail(error) {
-            compiler.error(cl.position, error.message)
+            compiler!.error(cl.position, error.message)
         }
     }
 

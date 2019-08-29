@@ -55,7 +55,7 @@ frost$core$Bit org$frostlang$frostc$Compiler$resolve$org$frostlang$frostc$Method
 void org$frostlang$frostc$Compiler$determineRawType$org$frostlang$frostc$FieldDecl(org$frostlang$frostc$Compiler* self, org$frostlang$frostc$FieldDecl* p_f);
 frost$core$Bit org$frostlang$frostc$Compiler$resolve$org$frostlang$frostc$FieldDecl$R$frost$core$Bit(org$frostlang$frostc$Compiler* self, org$frostlang$frostc$FieldDecl* p_f);
 void org$frostlang$frostc$Compiler$resolve$org$frostlang$frostc$ChoiceCase(org$frostlang$frostc$Compiler* self, org$frostlang$frostc$ChoiceCase* p_c);
-frost$core$Bit org$frostlang$frostc$Compiler$isValue$org$frostlang$frostc$ClassDecl$Q$R$frost$core$Bit(org$frostlang$frostc$Compiler* self, org$frostlang$frostc$ClassDecl* p_cl);
+frost$core$Bit org$frostlang$frostc$Compiler$isValue$org$frostlang$frostc$ClassDecl$R$frost$core$Bit(org$frostlang$frostc$Compiler* self, org$frostlang$frostc$ClassDecl* p_cl);
 frost$core$Bit org$frostlang$frostc$Compiler$isValue$org$frostlang$frostc$Type$R$frost$core$Bit(org$frostlang$frostc$Compiler* self, org$frostlang$frostc$Type* p_t);
 frost$core$Bit org$frostlang$frostc$Compiler$isImmutable$org$frostlang$frostc$ClassDecl$R$frost$core$Bit(org$frostlang$frostc$Compiler* self, org$frostlang$frostc$ClassDecl* p_cl);
 frost$core$Bit org$frostlang$frostc$Compiler$isImmutable$org$frostlang$frostc$Type$R$frost$core$Bit(org$frostlang$frostc$Compiler* self, org$frostlang$frostc$Type* p_t);

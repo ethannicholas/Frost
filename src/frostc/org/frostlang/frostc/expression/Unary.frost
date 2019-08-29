@@ -37,7 +37,11 @@ class Unary {
     method possibleTypes(compiler:Compiler, position:Position, op:Operator,
             operand:ASTNode):CollectionView<Type>? {
         if op = Operator.NONNULL {
-            return compiler.possibleTypes(operand).map(t => t.nonnullable())
+            var result := compiler.possibleTypes(operand)
+            if result !== null {
+                result := result.map(t => t.nonnullable())
+            }
+            return result
         }
         return compiler.possibleTypes(ASTNode.CALL(position,
                 ASTNode.DOT(position, operand, op.asString),
@@ -82,7 +86,11 @@ class Unary {
                 }
             }
             when Operator.NONNULL {
-                return compiler.coercionCost(preferredType(compiler, position, op, operand), target)
+                def pref := preferredType(compiler, position, op, operand)
+                if pref == null {
+                    return null
+                }
+                return compiler.coercionCost(pref, target)
             }
         }
         def preferred := compiler.preferredType(operand)
@@ -143,17 +151,20 @@ class Unary {
             }
             when Operator.NONNULL {
                 def value := compiler.compileExpression(operand, TypeContext.NON_VOID)
+                if value == null {
+                    return null
+                }
                 def type := value.type()
--*                if type.isNullable |
+                if type.isNullable |
                         (type.typeKind = Type.Kind.GENERIC_CLASS_PARAMETER &
-                            type.genericClassParameter.bound.isNullable) |
+                            type.genericClassParameter!.bound.isNullable) |
                         (type.typeKind = Type.Kind.GENERIC_METHOD_PARAMETER &
-                            type.genericMethodParameter.bound.isNullable) |
-                        compiler.currentClass[0].annotations.isSynthetic {*-
+                            type.genericMethodParameter!.bound.isNullable) |
+                        compiler.currentClass[0].isSpecialization() {
                     return compiler.cast(position, value, value.type().nonnullable())
--*                }
+                }
                 compiler.error(position, "value of type '\{value.type()}' is already non-null")
-                return null*-
+                return null
             }
         }
         unreachable

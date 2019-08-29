@@ -254,9 +254,9 @@ org$frostlang$frostc$Compiler* $tmp120 = *$tmp119;
 $fn122 $tmp121 = ($fn122) param0->$class->vtable[2];
 org$frostlang$frostc$Type* $tmp123 = $tmp121(param0);
 // begin inline call to method org.frostlang.frostc.Compiler.isRefCounted(type:org.frostlang.frostc.Type):frost.core.Bit from VariableLValue.frost:42:33
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:735
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:736
 frost$core$Bit $tmp124 = org$frostlang$frostc$Type$get_isClass$R$frost$core$Bit($tmp123);
-// begin inline call to function frost.core.Bit.!():frost.core.Bit from Compiler.frost:735:12
+// begin inline call to function frost.core.Bit.!():frost.core.Bit from Compiler.frost:736:12
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
 bool $tmp125 = $tmp124.value;
 bool $tmp126 = !$tmp125;
@@ -264,14 +264,14 @@ frost$core$Bit $tmp127 = (frost$core$Bit) {$tmp126};
 bool $tmp128 = $tmp127.value;
 if ($tmp128) goto block4; else goto block5;
 block4:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:736
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:737
 frost$core$Bit $tmp129 = (frost$core$Bit) {false};
 *(&local0) = $tmp129;
 goto block3;
 block5:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:738
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:739
 frost$core$Bit $tmp130 = org$frostlang$frostc$Compiler$isValue$org$frostlang$frostc$Type$R$frost$core$Bit($tmp120, $tmp123);
-// begin inline call to function frost.core.Bit.!():frost.core.Bit from Compiler.frost:738:16
+// begin inline call to function frost.core.Bit.!():frost.core.Bit from Compiler.frost:739:16
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
 bool $tmp131 = $tmp130.value;
 bool $tmp132 = !$tmp131;

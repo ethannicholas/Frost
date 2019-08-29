@@ -1260,7 +1260,7 @@ org$frostlang$frostc$Compiler** $tmp552 = &param0->compiler;
 org$frostlang$frostc$Compiler* $tmp553 = *$tmp552;
 org$frostlang$frostc$Type* $tmp554 = *(&local12);
 // begin inline call to method org.frostlang.frostc.Compiler.resolve(type:org.frostlang.frostc.Type):org.frostlang.frostc.Type? from LinkResolver.frost:136:53
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:965
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:966
 frost$core$Bit $tmp555 = (frost$core$Bit) {true};
 org$frostlang$frostc$Type* $tmp556 = org$frostlang$frostc$Compiler$resolve$org$frostlang$frostc$Type$frost$core$Bit$R$org$frostlang$frostc$Type$Q($tmp553, $tmp554, $tmp555);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp556));

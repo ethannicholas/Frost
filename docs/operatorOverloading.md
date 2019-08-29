@@ -1,8 +1,8 @@
 Operator Overloading
 ====================
 
-Frost classes may provide their own implementations of [operators](operators.html), which is called
-*operator overloading*.
+Frost classes may provide their own implementations of most [operators](operators.html), which is
+called *operator overloading*.
 
     -- this won't compile, keep reading!
     class OperatorExample {
@@ -34,8 +34,7 @@ We can tell Frost how to add these together by providing an implementation of th
         return OperatorExample(value + right.value)
     }
 
-If you define this function and recompile the example, it will now run and 
-produce:
+If you define this function and recompile the example, it will now run and produce:
 
     OperatorExample: 28
 

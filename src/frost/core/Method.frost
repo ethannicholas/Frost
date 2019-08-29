@@ -41,7 +41,7 @@ class Method : Immutable {
     @override
     function get_asString():String {
         if target !== null {
-            return "Method<\{Frost.pointerConvert(pointer->Pointer<Object?>)}, \{target}>"
+            return "Method<\{Frost.pointerConvert(pointer->Pointer<Object?>)}, \{target!}>"
         }
         return "Method<\{Frost.pointerConvert(pointer->Pointer<Object?>)}>"
     }

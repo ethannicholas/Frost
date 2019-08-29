@@ -26,6 +26,6 @@ typedef struct org$frostlang$frostc$pass$Analyzer {
     frost$core$Bit reportErrors;
 } org$frostlang$frostc$pass$Analyzer;
 #include "frost/core/Class.h"
-typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[13]; } org$frostlang$frostc$pass$Analyzer$class_type;
+typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[15]; } org$frostlang$frostc$pass$Analyzer$class_type;
 extern org$frostlang$frostc$pass$Analyzer$class_type org$frostlang$frostc$pass$Analyzer$class;
 

@@ -24,11 +24,6 @@ class Node {
     }
 
     @override
-    method cleanup() {
-        Console.printLine("destroying \{self}")
-    }
-
-    @override
     function get_asString():String {
         return "\{value}(\{children.join(", ")})"
     }

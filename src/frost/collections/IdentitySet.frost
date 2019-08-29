@@ -1,0 +1,69 @@
+package frost.collections
+
+uses frost.unsafe.Pointer
+
+@final
+class IdentitySet<T> : Collection<T> {
+    @private
+    def contents := IdentityMap<T, T>()
+
+    init() {
+    }
+
+    init(c:CollectionView<T>) {
+        addAll(c)
+    }
+
+    @override
+    method add(value:T) {
+        contents[value] := value
+    }
+
+    @override
+    method addAll(c:CollectionView<T>) {
+        for v in c {
+            add(v)
+        }
+    }
+
+    method remove(value:T) {
+        contents.remove(value)
+    }
+
+    @override
+    function get_count():Int {
+        return contents.count
+    }
+
+    @override
+    method clear() {
+        contents.clear()
+    }
+
+    @override
+    function get_iterator():Iterator<T> {
+        return contents.keys
+    }
+
+    function contains(value:T):Bit {
+        return contents.contains(value)
+    }
+
+    @override
+    function get_asString():String {
+        def result := MutableString("[")
+        var separator := ""
+        for v in contents.keys {
+            result.append(separator)
+            if v !== null {
+                result.append(v)
+            }
+            else {
+                result.append("<null>")
+            }
+            separator := ", "
+        }
+        result.append("]")
+        return result.finish()
+    }
+}
