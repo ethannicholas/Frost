@@ -14,6 +14,6 @@ typedef struct frost$json$JSON$PathKey {
     int8_t $data[16];
 } frost$json$JSON$PathKey;
 #include "frost/core/Class.h"
-typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[3]; } frost$json$JSON$PathKey$class_type;
+typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[4]; } frost$json$JSON$PathKey$class_type;
 extern frost$json$JSON$PathKey$class_type frost$json$JSON$PathKey$class;
 

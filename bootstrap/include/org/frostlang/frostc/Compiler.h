@@ -49,6 +49,8 @@ org$frostlang$frostc$Type* org$frostlang$frostc$Compiler$resolve$org$frostlang$f
 org$frostlang$frostc$Type* org$frostlang$frostc$Compiler$resolve$org$frostlang$frostc$Type$R$org$frostlang$frostc$Type$Q(org$frostlang$frostc$Compiler* self, org$frostlang$frostc$Type* p_type);
 void org$frostlang$frostc$Compiler$addAllSupertypes$org$frostlang$frostc$ClassDecl$frost$collections$HashSet$LTfrost$core$String$GT(org$frostlang$frostc$Compiler* self, org$frostlang$frostc$ClassDecl* p_cl, frost$collections$HashSet* p_set);
 void org$frostlang$frostc$Compiler$createChoiceEqualsIfNeeded$org$frostlang$frostc$ClassDecl(org$frostlang$frostc$Compiler* self, org$frostlang$frostc$ClassDecl* p_cl);
+void org$frostlang$frostc$Compiler$createChoiceHashIfNeeded$org$frostlang$frostc$ClassDecl(org$frostlang$frostc$Compiler* self, org$frostlang$frostc$ClassDecl* p_cl);
+void org$frostlang$frostc$Compiler$createChoiceAsStringIfNeeded$org$frostlang$frostc$ClassDecl(org$frostlang$frostc$Compiler* self, org$frostlang$frostc$ClassDecl* p_cl);
 org$frostlang$frostc$Type* org$frostlang$frostc$Compiler$choiceSuper$org$frostlang$frostc$ClassDecl$R$org$frostlang$frostc$Type(org$frostlang$frostc$Compiler* self, org$frostlang$frostc$ClassDecl* p_cl);
 frost$core$Bit org$frostlang$frostc$Compiler$resolve$org$frostlang$frostc$ClassDecl$R$frost$core$Bit(org$frostlang$frostc$Compiler* self, org$frostlang$frostc$ClassDecl* p_cl);
 frost$core$Bit org$frostlang$frostc$Compiler$resolve$org$frostlang$frostc$MethodDecl$R$frost$core$Bit(org$frostlang$frostc$Compiler* self, org$frostlang$frostc$MethodDecl* p_m);

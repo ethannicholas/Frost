@@ -15,7 +15,7 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 
 void org$frostlang$frostc$Compiler$InlineReturn$init$org$frostlang$frostc$Variable$Q(org$frostlang$frostc$Compiler$InlineReturn* param0, org$frostlang$frostc$Variable* param1) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:148
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:110
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
 org$frostlang$frostc$Variable** $tmp2 = &param0->variable;
 org$frostlang$frostc$Variable* $tmp3 = *$tmp2;
@@ -27,7 +27,7 @@ return;
 }
 void org$frostlang$frostc$Compiler$InlineReturn$cleanup(org$frostlang$frostc$Compiler$InlineReturn* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:141
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:103
 frost$core$Object$cleanup(((frost$core$Object*) param0));
 org$frostlang$frostc$Variable** $tmp5 = &param0->variable;
 org$frostlang$frostc$Variable* $tmp6 = *$tmp5;

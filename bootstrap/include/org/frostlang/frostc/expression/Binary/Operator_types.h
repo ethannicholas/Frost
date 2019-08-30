@@ -10,7 +10,7 @@ typedef struct org$frostlang$frostc$expression$Binary$Operator {
     int8_t $data[0];
 } org$frostlang$frostc$expression$Binary$Operator;
 #include "frost/core/Class.h"
-typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[6]; } org$frostlang$frostc$expression$Binary$Operator$class_type;
+typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[7]; } org$frostlang$frostc$expression$Binary$Operator$class_type;
 extern org$frostlang$frostc$expression$Binary$Operator$class_type org$frostlang$frostc$expression$Binary$Operator$class;
 typedef struct org$frostlang$frostc$expression$Binary$Operator$wrapper {
     frost$core$Class* cl;

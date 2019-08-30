@@ -115,6 +115,6 @@ typedef struct org$frostlang$frostc$Compiler {
     frost$collections$IdentityMap* lambdaTypes;
 } org$frostlang$frostc$Compiler;
 #include "frost/core/Class.h"
-typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[160]; } org$frostlang$frostc$Compiler$class_type;
+typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[162]; } org$frostlang$frostc$Compiler$class_type;
 extern org$frostlang$frostc$Compiler$class_type org$frostlang$frostc$Compiler$class;
 

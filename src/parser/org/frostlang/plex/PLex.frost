@@ -88,23 +88,6 @@ class PLex {
                     assert line.byteLength = 0, "error parsing '\{line}'"
                 }
             }
-            token.printLine()
-            token.printLine("@override")
-            token.printLine("function get_asString():String {") -- FIXME this should be automatic in choice
-            token.level += 1
-            token.printLine("match self {")
-            token.level += 1
-            for id in tokens.keys {
-                token.printLine("when \{id} { return \{id.format("frost")} }")
-            }
-            token.printLine("when EOF { return \"EOF\" }")
-            token.printLine("when SHIFTRIGHT { return \">>\" }")
-            token.printLine("when REGEX { return \"REGEX\" }")
-            token.level -= 1
-            token.printLine("}")
-            token.printLine("unreachable")
-            token.level -= 1
-            token.printLine("}")
             token.level -= 1
             token.printLine("}")
             token.printLine()

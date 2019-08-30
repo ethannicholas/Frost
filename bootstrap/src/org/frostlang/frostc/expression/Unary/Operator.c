@@ -2,12 +2,18 @@
 #include "frost/core/Value.h"
 #include "frost/core/Class.h"
 #include "frost/core/String.h"
+#include "frost/collections/Key.h"
+#include "frost/core/Int.h"
+#include "frost/core/Object.h"
 #include "frost/core/Equatable.h"
 #include "frost/core/Bit.h"
-#include "frost/core/Object.h"
-#include "frost/core/Int.h"
 #include "frost/core/Frost.h"
 
+__attribute__((weak)) frost$core$Int org$frostlang$frostc$expression$Unary$Operator$get_hash$R$frost$core$Int$shim(frost$core$Object* p0) {
+    frost$core$Int result = org$frostlang$frostc$expression$Unary$Operator$get_hash$R$frost$core$Int(((org$frostlang$frostc$expression$Unary$Operator$wrapper*) p0)->value);
+
+    return result;
+}
 __attribute__((weak)) frost$core$Bit org$frostlang$frostc$expression$Unary$Operator$$EQ$org$frostlang$frostc$expression$Unary$Operator$R$frost$core$Bit$shim(frost$core$Object* p0, frost$core$Equatable* p1) {
     frost$core$Bit result = org$frostlang$frostc$expression$Unary$Operator$$EQ$org$frostlang$frostc$expression$Unary$Operator$R$frost$core$Bit(((org$frostlang$frostc$expression$Unary$Operator$wrapper*) p0)->value, ((org$frostlang$frostc$expression$Unary$Operator$wrapper*) p1)->value);
 
@@ -27,12 +33,16 @@ __attribute__((weak)) void org$frostlang$frostc$expression$Unary$Operator$cleanu
 
 }
 
-struct { frost$core$Class* cl; ITable* next; void* methods[2]; } org$frostlang$frostc$expression$Unary$Operator$_frost$core$Equatable = { (frost$core$Class*) &frost$core$Equatable$class, NULL, { org$frostlang$frostc$expression$Unary$Operator$$EQ$org$frostlang$frostc$expression$Unary$Operator$R$frost$core$Bit$shim, frost$core$Equatable$$NEQ$frost$core$Equatable$T$R$frost$core$Bit} };
+struct { frost$core$Class* cl; ITable* next; void* methods[1]; } org$frostlang$frostc$expression$Unary$Operator$_frost$collections$Key = { (frost$core$Class*) &frost$collections$Key$class, NULL, { org$frostlang$frostc$expression$Unary$Operator$get_hash$R$frost$core$Int$shim} };
+
+struct { frost$core$Class* cl; ITable* next; void* methods[2]; } org$frostlang$frostc$expression$Unary$Operator$_frost$core$Equatable = { (frost$core$Class*) &frost$core$Equatable$class, (ITable*) &org$frostlang$frostc$expression$Unary$Operator$_frost$collections$Key, { org$frostlang$frostc$expression$Unary$Operator$$EQ$org$frostlang$frostc$expression$Unary$Operator$R$frost$core$Bit$shim, frost$core$Equatable$$NEQ$frost$core$Equatable$T$R$frost$core$Bit} };
 
 static frost$core$String $s1;
-org$frostlang$frostc$expression$Unary$Operator$class_type org$frostlang$frostc$expression$Unary$Operator$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Value$class, (ITable*) &org$frostlang$frostc$expression$Unary$Operator$_frost$core$Equatable, { org$frostlang$frostc$expression$Unary$Operator$get_asString$R$frost$core$String$shim, frost$core$Value$cleanup$shim, org$frostlang$frostc$expression$Unary$Operator$cleanup$shim, org$frostlang$frostc$expression$Unary$Operator$$EQ$org$frostlang$frostc$expression$Unary$Operator$R$frost$core$Bit$shim} };
+org$frostlang$frostc$expression$Unary$Operator$class_type org$frostlang$frostc$expression$Unary$Operator$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Value$class, (ITable*) &org$frostlang$frostc$expression$Unary$Operator$_frost$core$Equatable, { org$frostlang$frostc$expression$Unary$Operator$get_asString$R$frost$core$String$shim, frost$core$Value$cleanup$shim, org$frostlang$frostc$expression$Unary$Operator$cleanup$shim, org$frostlang$frostc$expression$Unary$Operator$$EQ$org$frostlang$frostc$expression$Unary$Operator$R$frost$core$Bit$shim, org$frostlang$frostc$expression$Unary$Operator$get_hash$R$frost$core$Int$shim} };
 
-struct { frost$core$Class* cl; ITable* itable; void* methods[2]; } org$frostlang$frostc$expression$Unary$Operator$wrapper_frost$core$Equatable = { (frost$core$Class*) &frost$core$Equatable$class, NULL, { org$frostlang$frostc$expression$Unary$Operator$$EQ$org$frostlang$frostc$expression$Unary$Operator$R$frost$core$Bit$shim, frost$core$Equatable$$NEQ$frost$core$Equatable$T$R$frost$core$Bit} };
+struct { frost$core$Class* cl; ITable* itable; void* methods[1]; } org$frostlang$frostc$expression$Unary$Operator$wrapper_frost$collections$Key = { (frost$core$Class*) &frost$collections$Key$class, NULL, { org$frostlang$frostc$expression$Unary$Operator$get_hash$R$frost$core$Int$shim} };
+
+struct { frost$core$Class* cl; ITable* itable; void* methods[2]; } org$frostlang$frostc$expression$Unary$Operator$wrapper_frost$core$Equatable = { (frost$core$Class*) &frost$core$Equatable$class, (ITable*) &org$frostlang$frostc$expression$Unary$Operator$wrapper_frost$collections$Key, { org$frostlang$frostc$expression$Unary$Operator$$EQ$org$frostlang$frostc$expression$Unary$Operator$R$frost$core$Bit$shim, frost$core$Equatable$$NEQ$frost$core$Equatable$T$R$frost$core$Bit} };
 
 static frost$core$String $s2;
 org$frostlang$frostc$expression$Unary$Operator$wrapperclass_type org$frostlang$frostc$expression$Unary$Operator$wrapperclass = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s2, (frost$core$Class*) &frost$core$Value$class, (ITable*) &org$frostlang$frostc$expression$Unary$Operator$wrapper_frost$core$Equatable, { org$frostlang$frostc$expression$Unary$Operator$get_asString$R$frost$core$String$shim, frost$core$Value$cleanup$shim} };
@@ -47,6 +57,7 @@ static frost$core$String $s27 = { (frost$core$Class*) &frost$core$String$class, 
 static frost$core$String $s34 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x28\x6e\x6f\x6e\x6e\x75\x6c\x6c\x29", 9, 6104512261600802090, NULL };
 static frost$core$String $s35 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x28\x6e\x6f\x6e\x6e\x75\x6c\x6c\x29", 9, 6104512261600802090, NULL };
 static frost$core$String $s37 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x55\x6e\x61\x72\x79\x2e\x66\x72\x6f\x73\x74", 11, -2122636747489765608, NULL };
+static frost$core$String $s79 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x55\x6e\x61\x72\x79\x2e\x66\x72\x6f\x73\x74", 11, -2122636747489765608, NULL };
 
 frost$core$String* org$frostlang$frostc$expression$Unary$Operator$get_asString$R$frost$core$String(org$frostlang$frostc$expression$Unary$Operator param0) {
 
@@ -151,6 +162,75 @@ block2:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:18
 frost$core$Bit $tmp48 = (frost$core$Bit) {true};
 return $tmp48;
+
+}
+frost$core$Int org$frostlang$frostc$expression$Unary$Operator$get_hash$R$frost$core$Int(org$frostlang$frostc$expression$Unary$Operator param0) {
+
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:18
+frost$core$Int $tmp49 = param0.$rawValue;
+frost$core$Int $tmp50 = (frost$core$Int) {0u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Unary.frost:18:5
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
+int64_t $tmp51 = $tmp49.value;
+int64_t $tmp52 = $tmp50.value;
+bool $tmp53 = $tmp51 == $tmp52;
+frost$core$Bit $tmp54 = (frost$core$Bit) {$tmp53};
+bool $tmp55 = $tmp54.value;
+if ($tmp55) goto block2; else goto block3;
+block2:;
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:18
+frost$core$Int $tmp56 = (frost$core$Int) {1008608909626454407u};
+return $tmp56;
+block3:;
+frost$core$Int $tmp57 = (frost$core$Int) {1u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Unary.frost:18:5
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
+int64_t $tmp58 = $tmp49.value;
+int64_t $tmp59 = $tmp57.value;
+bool $tmp60 = $tmp58 == $tmp59;
+frost$core$Bit $tmp61 = (frost$core$Bit) {$tmp60};
+bool $tmp62 = $tmp61.value;
+if ($tmp62) goto block5; else goto block6;
+block5:;
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:18
+frost$core$Int $tmp63 = (frost$core$Int) {2017217819252908814u};
+return $tmp63;
+block6:;
+frost$core$Int $tmp64 = (frost$core$Int) {2u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Unary.frost:18:5
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
+int64_t $tmp65 = $tmp49.value;
+int64_t $tmp66 = $tmp64.value;
+bool $tmp67 = $tmp65 == $tmp66;
+frost$core$Bit $tmp68 = (frost$core$Bit) {$tmp67};
+bool $tmp69 = $tmp68.value;
+if ($tmp69) goto block8; else goto block9;
+block8:;
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:18
+frost$core$Int $tmp70 = (frost$core$Int) {3025826728879363221u};
+return $tmp70;
+block9:;
+frost$core$Int $tmp71 = (frost$core$Int) {3u};
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Unary.frost:18:5
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
+int64_t $tmp72 = $tmp49.value;
+int64_t $tmp73 = $tmp71.value;
+bool $tmp74 = $tmp72 == $tmp73;
+frost$core$Bit $tmp75 = (frost$core$Bit) {$tmp74};
+bool $tmp76 = $tmp75.value;
+if ($tmp76) goto block11; else goto block12;
+block11:;
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:18
+frost$core$Int $tmp77 = (frost$core$Int) {4034435638505817628u};
+return $tmp77;
+block12:;
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Unary.frost:18
+frost$core$Int $tmp78 = (frost$core$Int) {18u};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s79, $tmp78);
+abort(); // unreachable
+block1:;
+goto block14;
+block14:;
 
 }
 

@@ -2,7 +2,7 @@ package frost.core
 
 ====================================================================================================
 Holds either a value or an `Error`. `Maybe` is intended for use as a return type for a method which
-returns a value but is not always guaranteed to succeed.
+returns a value, but is not always guaranteed to succeed.
 ====================================================================================================
 choice Maybe<T> {
     ================================================================================================
@@ -51,19 +51,6 @@ choice Maybe<T> {
             }
             when ERROR {
                 return false
-            }
-        }
-        unreachable
-    }
-
-    @override
-    function get_asString():String {
-        match self {
-            when SUCCESS(v) {
-                return "SUCCESS(\{v})"
-            }
-            when ERROR(e) {
-                return "ERROR(\{e})"
             }
         }
         unreachable

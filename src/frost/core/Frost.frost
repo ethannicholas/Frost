@@ -249,6 +249,22 @@ class Frost {
     }
 
     @class
+    function hash<T:Equatable<T>>(o:Key<T>?):Int {
+        if o !== null {
+            return o.hash
+        }
+        return 0
+    }
+
+    @class
+    function string(o:Object?):String {
+        if o !== null {
+            return o.asString
+        }
+        return "<null>"
+    }
+
+    @class
     @external
     method debugPrint(i:builtin_int64)
 

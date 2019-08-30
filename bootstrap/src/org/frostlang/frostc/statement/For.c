@@ -2043,11 +2043,11 @@ frost$core$Bit $tmp662 = $tmp660(((frost$core$Equatable*) $tmp656), ((frost$core
 bool $tmp663 = $tmp662.value;
 if ($tmp663) goto block25; else goto block26;
 block26:;
-frost$core$Int $tmp664 = (frost$core$Int) {4102u};
+frost$core$Int $tmp664 = (frost$core$Int) {4126u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s665, $tmp664, &$s666);
 abort(); // unreachable
 block25:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:4103
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:4127
 frost$core$Bit $tmp667 = (frost$core$Bit) {false};
 org$frostlang$frostc$IR$Value* $tmp668 = org$frostlang$frostc$Compiler$coerce$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Value$Q$org$frostlang$frostc$Type$frost$core$Bit$R$org$frostlang$frostc$IR$Value$Q(param0, param1, $tmp630, $tmp656, $tmp667);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp668));
@@ -2164,11 +2164,11 @@ frost$core$Bit $tmp726 = $tmp724(((frost$core$Equatable*) $tmp720), ((frost$core
 bool $tmp727 = $tmp726.value;
 if ($tmp727) goto block33; else goto block34;
 block34:;
-frost$core$Int $tmp728 = (frost$core$Int) {4102u};
+frost$core$Int $tmp728 = (frost$core$Int) {4126u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s729, $tmp728, &$s730);
 abort(); // unreachable
 block33:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:4103
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:4127
 frost$core$Bit $tmp731 = (frost$core$Bit) {false};
 org$frostlang$frostc$IR$Value* $tmp732 = org$frostlang$frostc$Compiler$coerce$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Value$Q$org$frostlang$frostc$Type$frost$core$Bit$R$org$frostlang$frostc$IR$Value$Q(param0, param1, $tmp694, $tmp720, $tmp731);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp732));
@@ -3804,11 +3804,11 @@ frost$core$Bit $tmp1475 = $tmp1473(((frost$core$Equatable*) $tmp1469), ((frost$c
 bool $tmp1476 = $tmp1475.value;
 if ($tmp1476) goto block31; else goto block32;
 block32:;
-frost$core$Int $tmp1477 = (frost$core$Int) {4102u};
+frost$core$Int $tmp1477 = (frost$core$Int) {4126u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s1478, $tmp1477, &$s1479);
 abort(); // unreachable
 block31:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:4103
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:4127
 frost$core$Bit $tmp1480 = (frost$core$Bit) {false};
 org$frostlang$frostc$IR$Value* $tmp1481 = org$frostlang$frostc$Compiler$coerce$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Value$Q$org$frostlang$frostc$Type$frost$core$Bit$R$org$frostlang$frostc$IR$Value$Q(param0, param1, $tmp1443, $tmp1469, $tmp1480);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp1481));
@@ -3928,11 +3928,11 @@ frost$core$Bit $tmp1540 = $tmp1538(((frost$core$Equatable*) $tmp1534), ((frost$c
 bool $tmp1541 = $tmp1540.value;
 if ($tmp1541) goto block39; else goto block40;
 block40:;
-frost$core$Int $tmp1542 = (frost$core$Int) {4102u};
+frost$core$Int $tmp1542 = (frost$core$Int) {4126u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s1543, $tmp1542, &$s1544);
 abort(); // unreachable
 block39:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:4103
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:4127
 frost$core$Bit $tmp1545 = (frost$core$Bit) {false};
 org$frostlang$frostc$IR$Value* $tmp1546 = org$frostlang$frostc$Compiler$coerce$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Value$Q$org$frostlang$frostc$Type$frost$core$Bit$R$org$frostlang$frostc$IR$Value$Q(param0, param1, $tmp1508, $tmp1534, $tmp1545);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp1546));
@@ -7013,7 +7013,7 @@ org$frostlang$frostc$Scanner* $tmp2990 = *$tmp2989;
 org$frostlang$frostc$ASTNode* $tmp2991 = *(&local3);
 org$frostlang$frostc$Type* $tmp2992 = org$frostlang$frostc$Scanner$convertType$org$frostlang$frostc$ASTNode$R$org$frostlang$frostc$Type($tmp2990, $tmp2991);
 // begin inline call to method org.frostlang.frostc.Compiler.resolve(type:org.frostlang.frostc.Type):org.frostlang.frostc.Type? from For.frost:558:42
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:966
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:889
 frost$core$Bit $tmp2993 = (frost$core$Bit) {true};
 org$frostlang$frostc$Type* $tmp2994 = org$frostlang$frostc$Compiler$resolve$org$frostlang$frostc$Type$frost$core$Bit$R$org$frostlang$frostc$Type$Q(param0, $tmp2992, $tmp2993);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp2994));
@@ -8105,7 +8105,7 @@ return;
 block1:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/statement/For.frost:668
 // begin inline call to method org.frostlang.frostc.Compiler.compileExpression(expr:org.frostlang.frostc.ASTNode):org.frostlang.frostc.IR.Value? from For.frost:668:47
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5111
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5136
 FROST_ASSERT(40 == sizeof(org$frostlang$frostc$Compiler$TypeContext));
 org$frostlang$frostc$Compiler$TypeContext* $tmp3451 = (org$frostlang$frostc$Compiler$TypeContext*) frostObjectAlloc(40, (frost$core$Class*) &org$frostlang$frostc$Compiler$TypeContext$class);
 frost$core$Int $tmp3452 = (frost$core$Int) {0u};
@@ -8300,11 +8300,11 @@ frost$core$Bit $tmp3551 = $tmp3549(((frost$core$Equatable*) $tmp3545), ((frost$c
 bool $tmp3552 = $tmp3551.value;
 if ($tmp3552) goto block28; else goto block29;
 block29:;
-frost$core$Int $tmp3553 = (frost$core$Int) {4102u};
+frost$core$Int $tmp3553 = (frost$core$Int) {4126u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s3554, $tmp3553, &$s3555);
 abort(); // unreachable
 block28:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:4103
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:4127
 frost$core$Bit $tmp3556 = (frost$core$Bit) {false};
 org$frostlang$frostc$IR$Value* $tmp3557 = org$frostlang$frostc$Compiler$coerce$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Value$Q$org$frostlang$frostc$Type$frost$core$Bit$R$org$frostlang$frostc$IR$Value$Q(param0, $tmp3543, $tmp3544, $tmp3545, $tmp3556);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp3557));
@@ -8460,11 +8460,11 @@ frost$core$Bit $tmp3623 = $tmp3621(((frost$core$Equatable*) $tmp3617), ((frost$c
 bool $tmp3624 = $tmp3623.value;
 if ($tmp3624) goto block44; else goto block45;
 block45:;
-frost$core$Int $tmp3625 = (frost$core$Int) {4102u};
+frost$core$Int $tmp3625 = (frost$core$Int) {4126u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s3626, $tmp3625, &$s3627);
 abort(); // unreachable
 block44:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:4103
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:4127
 frost$core$Bit $tmp3628 = (frost$core$Bit) {false};
 org$frostlang$frostc$IR$Value* $tmp3629 = org$frostlang$frostc$Compiler$coerce$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Value$Q$org$frostlang$frostc$Type$frost$core$Bit$R$org$frostlang$frostc$IR$Value$Q(param0, $tmp3615, $tmp3616, $tmp3617, $tmp3628);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp3629));

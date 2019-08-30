@@ -63,6 +63,15 @@ class WriteNumbers {
     }
 
     @class
+    function fixedSize(type:Type):Type {
+        match type {
+            when Type.INT { return Type.INT64 }
+            when Type.UINT { return Type.UINT64 }
+            otherwise { return type }
+        }
+    }
+
+    @class
     function signed(type:Type):Bit {
         match type {
             when Type.INT, Type.INT8,  Type.INT16,  Type.INT32,  Type.INT64, Type.REAL32,
@@ -639,7 +648,7 @@ class WriteNumbers {
             out.printLine("    ===Returns this number converted to a decimal string.===")
             out.printLine("    @override")
             out.printLine("    function get_asString():String {")
-            var max := max(type).asString.length
+            var max := max(fixedSize(type)).asString.length
             if signed(type) {
                 max += 1 -- for minus sign
             }
@@ -993,7 +1002,7 @@ class WriteNumbers {
                 cast1 := ""
             }
             def cast2:String
-            if size(type) > 32 | !signed(type) {
+            if (size(type) > 32 | !signed(type)) & type != Type.INT {
                 cast2 := ".asInt"
             }
             else {

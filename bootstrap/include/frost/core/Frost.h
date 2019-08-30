@@ -13,6 +13,7 @@ typedef struct frost$collections$HashMap frost$collections$HashMap;
 #include "frost/core/UInt64_types.h"
 #include "frost/core/Char32_types.h"
 #include "frost/core/Bit_types.h"
+typedef struct frost$collections$Key frost$collections$Key;
 typedef struct frost$collections$List frost$collections$List;
 typedef struct frost$core$MutableMethod frost$core$MutableMethod;
 
@@ -37,6 +38,8 @@ double frost$core$Frost$sqrt$builtin_float64$R$builtin_float64(double p_v);
 int64_t frost$core$Frost$currentTime$R$builtin_int64();
 frost$core$String* frost$core$Frost$align$frost$core$String$frost$core$String$R$frost$core$String(frost$core$String* p_str, frost$core$String* p_specifier);
 frost$core$String* frost$core$Frost$format$frost$core$Bit$frost$core$UInt64$frost$core$UInt64$frost$core$String$R$frost$core$String(frost$core$Bit p_sign, frost$core$UInt64 p_rawValue, frost$core$UInt64 p_mask, frost$core$String* p_fmt);
+frost$core$Int frost$core$Frost$hash$frost$collections$Key$LTfrost$core$Frost$hash$T$GT$Q$R$frost$core$Int(frost$collections$Key* p_o);
+frost$core$String* frost$core$Frost$string$frost$core$Object$Q$R$frost$core$String(frost$core$Object* p_o);
 void frost$core$Frost$debugPrint$builtin_int64(int64_t p_i);
 void frost$core$Frost$debugPrint$frost$core$Object(frost$core$Object* p_o);
 frost$core$String* frost$core$Frost$pointerConvert$frost$unsafe$Pointer$LTfrost$core$Object$Q$GT$R$frost$core$String(frost$core$Object** p_p);

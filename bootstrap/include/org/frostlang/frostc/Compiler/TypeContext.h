@@ -8,9 +8,10 @@ typedef struct org$frostlang$frostc$Type org$frostlang$frostc$Type;
 #include "frost/core/Bit_types.h"
 
 frost$core$String* org$frostlang$frostc$Compiler$TypeContext$description$R$frost$core$String(org$frostlang$frostc$Compiler$TypeContext* self);
-frost$core$String* org$frostlang$frostc$Compiler$TypeContext$get_asString$R$frost$core$String(org$frostlang$frostc$Compiler$TypeContext* self);
 void org$frostlang$frostc$Compiler$TypeContext$cleanup(org$frostlang$frostc$Compiler$TypeContext* self);
 void org$frostlang$frostc$Compiler$TypeContext$init$frost$core$Int(org$frostlang$frostc$Compiler$TypeContext* self, frost$core$Int p_rv);
 void org$frostlang$frostc$Compiler$TypeContext$init$frost$core$Int$org$frostlang$frostc$Type$frost$core$Bit(org$frostlang$frostc$Compiler$TypeContext* self, frost$core$Int p_rv, org$frostlang$frostc$Type* p_f0, frost$core$Bit p_f1);
 frost$core$Bit org$frostlang$frostc$Compiler$TypeContext$$EQ$org$frostlang$frostc$Compiler$TypeContext$R$frost$core$Bit(org$frostlang$frostc$Compiler$TypeContext* self, org$frostlang$frostc$Compiler$TypeContext* p_other);
+frost$core$Int org$frostlang$frostc$Compiler$TypeContext$get_hash$R$frost$core$Int(org$frostlang$frostc$Compiler$TypeContext* self);
+frost$core$String* org$frostlang$frostc$Compiler$TypeContext$get_asString$R$frost$core$String(org$frostlang$frostc$Compiler$TypeContext* self);
 

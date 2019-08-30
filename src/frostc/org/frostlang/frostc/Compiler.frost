@@ -46,25 +46,6 @@ class Compiler {
         IN_PROGRESS
         RESOLVED
         RESOLVED_WITH_ERRORS
-
-        @override
-        function get_asString():String {
-            match self {
-                when UNRESOLVED {
-                    return "UNRESOLVED"
-                }
-                when IN_PROGRESS {
-                    return "IN_PROGRESS"
-                }
-                when RESOLVED {
-                    return "RESOLVED"
-                }
-                when RESOLVED_WITH_ERRORS {
-                    return "RESOLVED_WITH_ERRORS"
-                }
-            }
-            unreachable
-        }
     }
 
     choice Message {
@@ -117,25 +98,6 @@ class Compiler {
             }
             unreachable
         }
-
-        @override
-        function get_asString():String {
-            match self {
-                when UNSPECIFIED {
-                    return "UNSPECIFIED"
-                }
-                when NON_VOID {
-                    return "NON_VOID"
-                }
-                when IMMUTABLE {
-                    return "IMMUTABLE"
-                }
-                when TYPE(type, _) {
-                    return "TYPE(\{type})"
-                }
-            }
-            unreachable
-        }
     }
 
     class InlineReturn {
@@ -157,35 +119,6 @@ class Compiler {
         VARIABLE_SCOPE(Variable)
         VALUE_SCOPE(IR.Value)
         TRY_SCOPE(IR.Block.ID?, Variable?)
-
-        @override
-        function get_asString():String {
-            match self {
-                when INLINE_CONTEXT(params, firstLocal, inlineReturn, mergeBlock) {
-                    return "INLINE_CONTEXT(params)"
-                }
-                when LOOP(label, breakTarget, continueTarget) {
-                    if label !== null {
-                        return "LOOP(\{label}, \{breakTarget}, \{continueTarget})"
-                    }
-                    return "LOOP(<null>, \{breakTarget}, \{continueTarget})"
-                }
-                when SCOPE {
-                    return "SCOPE"
-                }
-                when VARIABLE_SCOPE(v) {
-                    return "VARIABLE_SCOPE(\{v})"
-                }
-                when VALUE_SCOPE(v) {
-                    return "VALUE_SCOPE(\{v})"
-                }
-                when TRY_SCOPE(block, v) {
-                    return "TRY_SCOPE(\{(block !== null).choose(block.asString, "<null>")}, " +
-                            "\{(v !== null).choose(v.asString, "<null>")})"
-                }
-            }
-            unreachable
-        }
     }
 
     choice Target {
@@ -325,16 +258,6 @@ class Compiler {
         VARIABLE(Variable)
         FIELD(FieldDecl)
         SELF
-
-        @override
-        function get_asString():String {
-            match self {
-                when VARIABLE(v) { return "VARIABLE(\{v})" }
-                when FIELD(f)    { return "FIELD(\{f})" }
-                when SELF        { return "SELF" }
-                otherwise        { unreachable }
-            }
-        }
     }
 
     class CoercionKey : Key<CoercionKey> {
@@ -988,8 +911,7 @@ class Compiler {
 
     @pre(cl.classKind = ClassDecl.Kind.CHOICE)
     method createChoiceEqualsIfNeeded(cl:ClassDecl) {
-        def equatable := getClass("frost.core.Equatable")
-        assert equatable !== null
+        def equatable := getClass("frost.core.Equatable")!
         for cc in cl.choiceCases {
             assert cc.resolved != Resolution.UNRESOLVED
             if cc.resolved != Resolution.RESOLVED {
@@ -1016,6 +938,106 @@ class Compiler {
                 MethodDecl.Kind.FUNCTION, "=", null, parameters, BIT_TYPE,
                 FixedArray<ASTNode>.from(body))
         cl.methods.add(eq)
+    }
+
+    @pre(cl.classKind = ClassDecl.Kind.CHOICE)
+    method createChoiceHashIfNeeded(cl:ClassDecl) {
+        def key := getClass("frost.collections.Key")!
+        for cc in cl.choiceCases {
+            assert cc.resolved != Resolution.UNRESOLVED
+            if cc.resolved != Resolution.RESOLVED {
+                return
+            }
+            for f in cc.fields {
+                if findType(f, key) == null {
+                    return
+                }
+            }
+        }
+        -- every field of every choice is a key, make the choice a key
+        cl.declaredSupers.add(Type.generic(key.type, [cl.type]))
+        def p := cl.position
+        def whens := Array<ASTNode>()
+        for i in 0 .. cl.choiceCases.count {
+            def cc := cl.choiceCases[i]
+            var statement := ASTNode.INT(p, cl.name.hash.asUInt64 * (i + 1).asUInt64)
+            def params := Array<ASTNode>()
+            for i in 0 .. cc.fields.count {
+                def name := "field\{i}"
+                params.add(ASTNode.IDENTIFIER(p, name))
+                var value := ASTNode.IDENTIFIER(p, name)
+                if cc.fields[i].typeKind = Type.Kind.NULLABLE {
+                    value := ASTNode.CALL(p, ASTNode.DOT(p, ASTNode.DOT(p, ASTNode.DOT(p,
+                            ASTNode.IDENTIFIER(p, "frost"), "core"), "Frost"), "hash"),
+                            FixedArray<ASTNode>.from([value]))
+                }
+                else {
+                    value := ASTNode.DOT(p, ASTNode.IDENTIFIER(p, name), "hash")
+                }
+                statement := ASTNode.BINARY(p, statement, Binary.Operator.BITWISEXOR, value)
+            }
+            statement := ASTNode.RETURN(p, statement)
+            whens.add(ASTNode.WHEN(p, FixedArray<ASTNode>.from([ASTNode.CALL(p,
+                    ASTNode.IDENTIFIER(p, cc.name), FixedArray<ASTNode>.from(params))]),
+                    FixedArray<ASTNode>.from([statement])))
+        }
+        def body := Array<ASTNode>()
+        body.add(ASTNode.MATCH(p, ASTNode.SELF(p), FixedArray<ASTNode>.from(whens),
+                FixedArray<ASTNode>.from([ASTNode.UNREACHABLE(p, null)])))
+        def hash := MethodDecl(cl, p, null, Annotations(Annotations.Flag.OVERRIDE ||
+                    Annotations.Flag.SYNTHETIC),
+                MethodDecl.Kind.FUNCTION, "get_hash", null, [], INT_TYPE,
+                FixedArray<ASTNode>.from(body))
+        cl.methods.add(hash)
+    }
+
+    @pre(cl.classKind = ClassDecl.Kind.CHOICE)
+    method createChoiceAsStringIfNeeded(cl:ClassDecl) {
+        for m in cl.methods {
+            if m.name = "get_asString" & m.parameters.count = 0 {
+                def returnType := resolve(m.returnType)
+                if returnType !== null & returnType = STRING_TYPE {
+                    return
+                }
+            }
+        }
+        def p := cl.position
+        def whens := Array<ASTNode>()
+        for cc in cl.choiceCases {
+            var statement := ASTNode.STRING(p, cc.name)
+            def params := Array<ASTNode>()
+            var separator := "("
+            for i in 0 .. cc.fields.count {
+                def name := "field\{i}"
+                params.add(ASTNode.IDENTIFIER(p, name))
+                statement := ASTNode.BINARY(p, statement, Binary.Operator.ADD,
+                        ASTNode.STRING(p, separator))
+                separator := ", "
+                var value := ASTNode.IDENTIFIER(p, name)
+                if cc.fields[i].typeKind = Type.Kind.NULLABLE {
+                    value := ASTNode.CALL(p, ASTNode.DOT(p, ASTNode.DOT(p, ASTNode.DOT(p,
+                            ASTNode.IDENTIFIER(p, "frost"), "core"), "Frost"), "string"),
+                            FixedArray<ASTNode>.from([value]))
+                }
+                statement := ASTNode.BINARY(p, statement, Binary.Operator.ADD, value)
+            }
+            if cc.fields.count > 0 {
+                statement := ASTNode.BINARY(p, statement, Binary.Operator.ADD,
+                        ASTNode.STRING(p, ")"))
+            }
+            statement := ASTNode.RETURN(p, statement)
+            whens.add(ASTNode.WHEN(p, FixedArray<ASTNode>.from([ASTNode.CALL(p,
+                    ASTNode.IDENTIFIER(p, cc.name), FixedArray<ASTNode>.from(params))]),
+                    FixedArray<ASTNode>.from([statement])))
+        }
+        def body := Array<ASTNode>()
+        body.add(ASTNode.MATCH(p, ASTNode.SELF(p), FixedArray<ASTNode>.from(whens),
+                FixedArray<ASTNode>.from([ASTNode.UNREACHABLE(p, null)])))
+        def hash := MethodDecl(cl, p, null, Annotations(Annotations.Flag.OVERRIDE ||
+                    Annotations.Flag.SYNTHETIC),
+                MethodDecl.Kind.FUNCTION, "get_asString", null, [], STRING_TYPE,
+                FixedArray<ASTNode>.from(body))
+        cl.methods.add(hash)
     }
 
     @pre(cl.classKind = ClassDecl.Kind.CHOICE)
@@ -1061,6 +1083,8 @@ class Compiler {
             }
             if cl.classKind = ClassDecl.Kind.CHOICE {
                 createChoiceEqualsIfNeeded(cl)
+                createChoiceHashIfNeeded(cl)
+                createChoiceAsStringIfNeeded(cl)
             }
             def supertypes := HashSet<String>()
             for rawS in cl.declaredSupers {
@@ -4221,6 +4245,7 @@ class Compiler {
             }
             return result
         }
+        Console.printLine("### error in \{currentMethod[0]}")
         error(position, "expected '\{target}', but found '\{srcType}'")
         return null
     }

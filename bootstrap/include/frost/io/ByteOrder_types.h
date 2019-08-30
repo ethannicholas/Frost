@@ -10,7 +10,7 @@ typedef struct frost$io$ByteOrder {
     int8_t $data[0];
 } frost$io$ByteOrder;
 #include "frost/core/Class.h"
-typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[4]; } frost$io$ByteOrder$class_type;
+typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[5]; } frost$io$ByteOrder$class_type;
 extern frost$io$ByteOrder$class_type frost$io$ByteOrder$class;
 typedef struct frost$io$ByteOrder$wrapper {
     frost$core$Class* cl;

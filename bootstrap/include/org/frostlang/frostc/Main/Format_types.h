@@ -10,7 +10,7 @@ typedef struct org$frostlang$frostc$Main$Format {
     int8_t $data[0];
 } org$frostlang$frostc$Main$Format;
 #include "frost/core/Class.h"
-typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[4]; } org$frostlang$frostc$Main$Format$class_type;
+typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[5]; } org$frostlang$frostc$Main$Format$class_type;
 extern org$frostlang$frostc$Main$Format$class_type org$frostlang$frostc$Main$Format$class;
 typedef struct org$frostlang$frostc$Main$Format$wrapper {
     frost$core$Class* cl;

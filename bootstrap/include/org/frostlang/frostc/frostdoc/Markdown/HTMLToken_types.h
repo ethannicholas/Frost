@@ -14,6 +14,6 @@ typedef struct org$frostlang$frostc$frostdoc$Markdown$HTMLToken {
     int8_t $data[8];
 } org$frostlang$frostc$frostdoc$Markdown$HTMLToken;
 #include "frost/core/Class.h"
-typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[3]; } org$frostlang$frostc$frostdoc$Markdown$HTMLToken$class_type;
+typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[4]; } org$frostlang$frostc$frostdoc$Markdown$HTMLToken$class_type;
 extern org$frostlang$frostc$frostdoc$Markdown$HTMLToken$class_type org$frostlang$frostc$frostdoc$Markdown$HTMLToken$class;
 

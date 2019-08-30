@@ -17,52 +17,6 @@ class SyntaxHighlighter {
         STRING
         OPERATOR
         LABEL
-
-        @override -- FIXME should be automatic
-        function get_asString():String {
-            match self {
-                when DEFAULT {
-                    return "DEFAULT"
-                }
-                when COMMENT {
-                    return "COMMENT"
-                }
-                when DOC_COMMENT {
-                    return "DOC_COMMENT"
-                }
-                when ANNOTATION {
-                    return "ANNOTATION"
-                }
-                when METHOD_NAME {
-                    return "METHOD_NAME"
-                }
-                when METHOD_PARAMETER {
-                    return "METHOD_PARAMETER"
-                }
-                when TYPE {
-                    return "TYPE"
-                }
-                when KEYWORD {
-                    return "KEYWORD"
-                }
-                when CONTROL_KEYWORD {
-                    return "CONTROL_KEYWORD"
-                }
-                when LITERAL {
-                    return "LITERAL"
-                }
-                when STRING {
-                    return "STRING"
-                }
-                when OPERATOR {
-                    return "OPERATOR"
-                }
-                when LABEL {
-                    return "LABEL"
-                }
-            }
-            unreachable
-        }
     }
 
     @private
@@ -81,7 +35,7 @@ class SyntaxHighlighter {
     }
 
     method close(kind:Kind) {
-        assert stack[0].$rawValue = kind.$rawValue -- FIXME see FIXME in Stack.pop(T) for why we're not using that
+        assert stack[0].$rawValue = kind.$rawValue
         stack.pop()
     }
 

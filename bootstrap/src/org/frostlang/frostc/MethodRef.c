@@ -1084,7 +1084,7 @@ goto block19;
 block19:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/MethodRef.frost:80
 // begin inline call to function org.frostlang.frostc.Compiler.getTryScope():org.frostlang.frostc.Pair<org.frostlang.frostc.IR.Block.ID?, org.frostlang.frostc.Variable?>? from MethodRef.frost:80:32
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5181
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5206
 frost$collections$Stack** $tmp432 = &param1->enclosingContexts;
 frost$collections$Stack* $tmp433 = *$tmp432;
 ITable* $tmp434 = ((frost$collections$Iterable*) $tmp433)->$class->itable;
@@ -1115,12 +1115,12 @@ frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((org$frostlang$f
 org$frostlang$frostc$Compiler$EnclosingContext* $tmp447 = *(&local40);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp447));
 *(&local40) = ((org$frostlang$frostc$Compiler$EnclosingContext*) $tmp446);
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5182
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5207
 org$frostlang$frostc$Compiler$EnclosingContext* $tmp448 = *(&local40);
 frost$core$Int* $tmp449 = &$tmp448->$rawValue;
 frost$core$Int $tmp450 = *$tmp449;
 frost$core$Int $tmp451 = (frost$core$Int) {5u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Compiler.frost:5183:38
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Compiler.frost:5208:38
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 int64_t $tmp452 = $tmp450.value;
 int64_t $tmp453 = $tmp451.value;
@@ -1139,7 +1139,7 @@ frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp460));
 org$frostlang$frostc$Variable* $tmp461 = *(&local42);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp461));
 *(&local42) = $tmp460;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5184
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5209
 FROST_ASSERT(32 == sizeof(org$frostlang$frostc$Pair));
 org$frostlang$frostc$Pair* $tmp462 = (org$frostlang$frostc$Pair*) frostObjectAlloc(32, (frost$core$Class*) &org$frostlang$frostc$Pair$class);
 org$frostlang$frostc$IR$Block$ID$nullable $tmp463 = *(&local41);
@@ -1171,7 +1171,7 @@ frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp462));
 goto block101;
 block107:;
 frost$core$Int $tmp469 = (frost$core$Int) {0u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Compiler.frost:5186:38
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Compiler.frost:5211:38
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 int64_t $tmp470 = $tmp450.value;
 int64_t $tmp471 = $tmp469.value;
@@ -1180,7 +1180,7 @@ frost$core$Bit $tmp473 = (frost$core$Bit) {$tmp472};
 bool $tmp474 = $tmp473.value;
 if ($tmp474) goto block109; else goto block105;
 block109:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5187
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5212
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((org$frostlang$frostc$Pair*) NULL)));
 frost$core$Frost$unref$frost$core$Object$Q($tmp446);
 org$frostlang$frostc$Compiler$EnclosingContext* $tmp475 = *(&local40);
@@ -1198,7 +1198,7 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp476));
 goto block102;
 block104:;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp437));
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5191
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5216
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((org$frostlang$frostc$Pair*) NULL)));
 *(&local39) = ((org$frostlang$frostc$Pair*) NULL);
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((org$frostlang$frostc$Pair*) NULL)));

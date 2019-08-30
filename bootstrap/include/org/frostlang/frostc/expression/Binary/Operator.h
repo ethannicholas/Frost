@@ -14,4 +14,5 @@ frost$core$String* org$frostlang$frostc$expression$Binary$Operator$get_asString$
 void org$frostlang$frostc$expression$Binary$Operator$cleanup(org$frostlang$frostc$expression$Binary$Operator self);
 org$frostlang$frostc$expression$Binary$Operator org$frostlang$frostc$expression$Binary$Operator$init$frost$core$Int(frost$core$Int p_rv);
 frost$core$Bit org$frostlang$frostc$expression$Binary$Operator$$EQ$org$frostlang$frostc$expression$Binary$Operator$R$frost$core$Bit(org$frostlang$frostc$expression$Binary$Operator self, org$frostlang$frostc$expression$Binary$Operator p_other);
+frost$core$Int org$frostlang$frostc$expression$Binary$Operator$get_hash$R$frost$core$Int(org$frostlang$frostc$expression$Binary$Operator self);
 

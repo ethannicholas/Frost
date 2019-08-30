@@ -14,6 +14,6 @@ typedef struct org$frostlang$frostc$Compiler$Message {
     int8_t $data[32];
 } org$frostlang$frostc$Compiler$Message;
 #include "frost/core/Class.h"
-typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[3]; } org$frostlang$frostc$Compiler$Message$class_type;
+typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[4]; } org$frostlang$frostc$Compiler$Message$class_type;
 extern org$frostlang$frostc$Compiler$Message$class_type org$frostlang$frostc$Compiler$Message$class;
 

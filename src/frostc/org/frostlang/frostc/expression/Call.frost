@@ -361,7 +361,7 @@ class Call {
             }
             for i in 0 .. m.value.parameters.count {
                 def paramType := methodRemap(compiler, m.parameterType(i), remaps)
-                def generics := findGenericParameters(m.value, paramType)
+                def generics := findGenericParameters(m.value, paramType.nonnullable())
                 if generics !== null {
                     for g in generics {
                         var argType := compiler.coercionCost(args[i], paramType)
@@ -370,14 +370,14 @@ class Call {
                                     "'\{paramType.remap(compiler, remaps)}'")
                             return m
                         }
-                        def parameter := getSubtype(m.value.parameters[i].type, g)
+                        def parameter := getSubtype(m.value.parameters[i].type.nonnullable(), g)
                         assert parameter.typeKind = Type.Kind.GENERIC_METHOD_PARAMETER
                         var parameterIndex := 0
                         while Type(m.value.genericParameters[parameterIndex]) != parameter {
                             parameterIndex += 1
                         }
                         def newType := result[parameterIndex].intersection(compiler,
-                                getSubtype(argType.first, g))
+                                getSubtype(argType.first.nonnullable(), g))
                         if newType != result[parameterIndex] {
                             result[parameterIndex] := newType
                             updated := true

@@ -25,29 +25,6 @@ class Token : Value {
         RBRACKET
         COMMA
         COLON
-
-        @override
-        function get_asString():String {
-            match self {
-                when TRUE { return "TRUE" }
-                when RBRACE { return "RBRACE" }
-                when REAL { return "REAL" }
-                when RBRACKET { return "RBRACKET" }
-                when NULL { return "NULL" }
-                when COMMA { return "COMMA" }
-                when WS { return "WS" }
-                when FALSE { return "FALSE" }
-                when COLON { return "COLON" }
-                when LBRACE { return "LBRACE" }
-                when INT { return "INT" }
-                when LBRACKET { return "LBRACKET" }
-                when STRING { return "STRING" }
-                when EOF { return "EOF" }
-                when SHIFTRIGHT { return ">>" }
-                when REGEX { return "REGEX" }
-            }
-            unreachable
-        }
     }
 
     def kind:Kind

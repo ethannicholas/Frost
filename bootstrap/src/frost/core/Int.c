@@ -2689,7 +2689,7 @@ frost$core$Int local3;
 frost$core$Int local4;
 frost$core$Int local5;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:1027
-frost$core$Int $tmp739 = (frost$core$Int) {16u};
+frost$core$Int $tmp739 = (frost$core$Int) {20u};
 *(&local0) = $tmp739;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:1028
 frost$core$Int $tmp740 = *(&local0);

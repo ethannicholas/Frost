@@ -10,7 +10,7 @@ typedef struct org$frostlang$frostc$parser$Token$Kind {
     int8_t $data[0];
 } org$frostlang$frostc$parser$Token$Kind;
 #include "frost/core/Class.h"
-typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[4]; } org$frostlang$frostc$parser$Token$Kind$class_type;
+typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[5]; } org$frostlang$frostc$parser$Token$Kind$class_type;
 extern org$frostlang$frostc$parser$Token$Kind$class_type org$frostlang$frostc$parser$Token$Kind$class;
 typedef struct org$frostlang$frostc$parser$Token$Kind$wrapper {
     frost$core$Class* cl;
