@@ -13,6 +13,6 @@ typedef struct frost$collections$IdentitySet {
     frost$collections$IdentityMap* contents;
 } frost$collections$IdentitySet;
 #include "frost/core/Class.h"
-typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[9]; } frost$collections$IdentitySet$class_type;
+typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[10]; } frost$collections$IdentitySet$class_type;
 extern frost$collections$IdentitySet$class_type frost$collections$IdentitySet$class;
 

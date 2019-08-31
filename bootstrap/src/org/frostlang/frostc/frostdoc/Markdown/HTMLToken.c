@@ -4,7 +4,7 @@
 #include "frost/core/String.h"
 #include "frost/core/Equatable.h"
 #include "frost/core/Bit.h"
-#include "frost/collections/Key.h"
+#include "frost/collections/HashKey.h"
 #include "frost/core/Int.h"
 #include "frost/core/Object.h"
 #include "frost/core/Frost.h"
@@ -31,13 +31,13 @@ __attribute__((weak)) void org$frostlang$frostc$frostdoc$Markdown$HTMLToken$clea
 
 struct { frost$core$Class* cl; ITable* next; void* methods[2]; } org$frostlang$frostc$frostdoc$Markdown$HTMLToken$_frost$core$Equatable = { (frost$core$Class*) &frost$core$Equatable$class, NULL, { org$frostlang$frostc$frostdoc$Markdown$HTMLToken$$EQ$org$frostlang$frostc$frostdoc$Markdown$HTMLToken$R$frost$core$Bit$shim, frost$core$Equatable$$NEQ$frost$core$Equatable$T$R$frost$core$Bit} };
 
-struct { frost$core$Class* cl; ITable* next; void* methods[1]; } org$frostlang$frostc$frostdoc$Markdown$HTMLToken$_frost$collections$Key = { (frost$core$Class*) &frost$collections$Key$class, (ITable*) &org$frostlang$frostc$frostdoc$Markdown$HTMLToken$_frost$core$Equatable, { org$frostlang$frostc$frostdoc$Markdown$HTMLToken$get_hash$R$frost$core$Int$shim} };
+struct { frost$core$Class* cl; ITable* next; void* methods[1]; } org$frostlang$frostc$frostdoc$Markdown$HTMLToken$_frost$collections$HashKey = { (frost$core$Class*) &frost$collections$HashKey$class, (ITable*) &org$frostlang$frostc$frostdoc$Markdown$HTMLToken$_frost$core$Equatable, { org$frostlang$frostc$frostdoc$Markdown$HTMLToken$get_hash$R$frost$core$Int$shim} };
 
 static frost$core$String $s1;
-org$frostlang$frostc$frostdoc$Markdown$HTMLToken$class_type org$frostlang$frostc$frostdoc$Markdown$HTMLToken$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Immutable$class, (ITable*) &org$frostlang$frostc$frostdoc$Markdown$HTMLToken$_frost$collections$Key, { org$frostlang$frostc$frostdoc$Markdown$HTMLToken$get_asString$R$frost$core$String$shim, org$frostlang$frostc$frostdoc$Markdown$HTMLToken$cleanup$shim, org$frostlang$frostc$frostdoc$Markdown$HTMLToken$$EQ$org$frostlang$frostc$frostdoc$Markdown$HTMLToken$R$frost$core$Bit$shim, org$frostlang$frostc$frostdoc$Markdown$HTMLToken$get_hash$R$frost$core$Int$shim} };
+org$frostlang$frostc$frostdoc$Markdown$HTMLToken$class_type org$frostlang$frostc$frostdoc$Markdown$HTMLToken$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Immutable$class, (ITable*) &org$frostlang$frostc$frostdoc$Markdown$HTMLToken$_frost$collections$HashKey, { org$frostlang$frostc$frostdoc$Markdown$HTMLToken$get_asString$R$frost$core$String$shim, org$frostlang$frostc$frostdoc$Markdown$HTMLToken$cleanup$shim, org$frostlang$frostc$frostdoc$Markdown$HTMLToken$$EQ$org$frostlang$frostc$frostdoc$Markdown$HTMLToken$R$frost$core$Bit$shim, org$frostlang$frostc$frostdoc$Markdown$HTMLToken$get_hash$R$frost$core$Int$shim} };
 
-typedef frost$core$Int (*$fn54)(frost$collections$Key*);
-typedef frost$core$Int (*$fn74)(frost$collections$Key*);
+typedef frost$core$Int (*$fn54)(frost$collections$HashKey*);
+typedef frost$core$Int (*$fn74)(frost$collections$HashKey*);
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x66\x72\x6f\x73\x74\x64\x6f\x63\x2e\x4d\x61\x72\x6b\x64\x6f\x77\x6e\x2e\x48\x54\x4d\x4c\x54\x6f\x6b\x65\x6e", 48, -7589272969880814545, NULL };
 static frost$core$String $s82 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x4d\x61\x72\x6b\x64\x6f\x77\x6e\x2e\x66\x72\x6f\x73\x74", 14, -4595392010584278012, NULL };
@@ -171,12 +171,12 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp49));
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:813
 frost$core$Int $tmp50 = (frost$core$Int) {10857471103828737071u};
 frost$core$String* $tmp51 = *(&local0);
-ITable* $tmp52 = ((frost$collections$Key*) $tmp51)->$class->itable;
-while ($tmp52->$class != (frost$core$Class*) &frost$collections$Key$class) {
+ITable* $tmp52 = ((frost$collections$HashKey*) $tmp51)->$class->itable;
+while ($tmp52->$class != (frost$core$Class*) &frost$collections$HashKey$class) {
     $tmp52 = $tmp52->next;
 }
 $fn54 $tmp53 = $tmp52->methods[0];
-frost$core$Int $tmp55 = $tmp53(((frost$collections$Key*) $tmp51));
+frost$core$Int $tmp55 = $tmp53(((frost$collections$HashKey*) $tmp51));
 // begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from Markdown.frost:813:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:365
 int64_t $tmp56 = $tmp50.value;
@@ -208,12 +208,12 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp69));
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:813
 frost$core$Int $tmp70 = (frost$core$Int) {3268198133947922526u};
 frost$core$String* $tmp71 = *(&local1);
-ITable* $tmp72 = ((frost$collections$Key*) $tmp71)->$class->itable;
-while ($tmp72->$class != (frost$core$Class*) &frost$collections$Key$class) {
+ITable* $tmp72 = ((frost$collections$HashKey*) $tmp71)->$class->itable;
+while ($tmp72->$class != (frost$core$Class*) &frost$collections$HashKey$class) {
     $tmp72 = $tmp72->next;
 }
 $fn74 $tmp73 = $tmp72->methods[0];
-frost$core$Int $tmp75 = $tmp73(((frost$collections$Key*) $tmp71));
+frost$core$Int $tmp75 = $tmp73(((frost$collections$HashKey*) $tmp71));
 // begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from Markdown.frost:813:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:365
 int64_t $tmp76 = $tmp70.value;

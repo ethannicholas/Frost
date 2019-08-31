@@ -2,7 +2,7 @@
 #include "frost/core/Object.h"
 #include "frost/core/Class.h"
 #include "frost/core/String.h"
-#include "frost/collections/Key.h"
+#include "frost/collections/HashKey.h"
 #include "frost/core/Frost.h"
 
 
@@ -12,14 +12,14 @@ frost$collections$HashMap$Entry$class_type frost$collections$HashMap$Entry$class
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x48\x61\x73\x68\x4d\x61\x70\x2e\x45\x6e\x74\x72\x79", 31, -4426476962637377112, NULL };
 
-void frost$collections$HashMap$Entry$init$frost$collections$HashMap$Entry$K$frost$collections$HashMap$Entry$V(frost$collections$HashMap$Entry* param0, frost$collections$Key* param1, frost$core$Object* param2) {
+void frost$collections$HashMap$Entry$init$frost$collections$HashMap$Entry$K$frost$collections$HashMap$Entry$V(frost$collections$HashMap$Entry* param0, frost$collections$HashKey* param1, frost$core$Object* param2) {
 
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:35
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
-frost$collections$Key** $tmp2 = &param0->key;
-frost$collections$Key* $tmp3 = *$tmp2;
+frost$collections$HashKey** $tmp2 = &param0->key;
+frost$collections$HashKey* $tmp3 = *$tmp2;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp3));
-frost$collections$Key** $tmp4 = &param0->key;
+frost$collections$HashKey** $tmp4 = &param0->key;
 *$tmp4 = param1;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:36
 frost$core$Frost$ref$frost$core$Object$Q(param2);
@@ -35,8 +35,8 @@ void frost$collections$HashMap$Entry$cleanup(frost$collections$HashMap$Entry* pa
 
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:20
 frost$core$Object$cleanup(((frost$core$Object*) param0));
-frost$collections$Key** $tmp8 = &param0->key;
-frost$collections$Key* $tmp9 = *$tmp8;
+frost$collections$HashKey** $tmp8 = &param0->key;
+frost$collections$HashKey* $tmp9 = *$tmp8;
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp9));
 frost$core$Object** $tmp10 = &param0->value;
 frost$core$Object* $tmp11 = *$tmp10;

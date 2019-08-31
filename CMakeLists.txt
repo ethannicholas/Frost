@@ -403,8 +403,9 @@ add_library(c_frost
     bootstrap/src/frost/collections/Map.c
     bootstrap/src/frost/collections/IdentityMap.c
     bootstrap/src/frost/collections/IdentitySet.c
+    bootstrap/src/frost/collections/IdentitySet/_Closure2.c
     bootstrap/src/frost/collections/Stack/StackIterator.c
-    bootstrap/src/frost/collections/Key.c
+    bootstrap/src/frost/collections/HashKey.c
     bootstrap/src/frost/collections/HashMap.c
     bootstrap/src/frost/time/Timer.c
     bootstrap/src/frostlib.c
@@ -598,6 +599,7 @@ add_executable(bootstrap
     bootstrap/src/frost/collections/HashMap/Entry.c
     bootstrap/src/frost/collections/HashMap/EntryIterator.c
     bootstrap/src/frost/collections/HashSet.c
+    bootstrap/src/frost/collections/HashSet/_Closure2.c
     bootstrap/src/frost/collections/IdentityMap.c
     bootstrap/src/frost/collections/IdentityMap/Entry.c
     bootstrap/src/frost/collections/IdentityMap/EntryIterator.c
@@ -609,7 +611,6 @@ add_executable(bootstrap
     bootstrap/src/frost/collections/Iterator/FilterIterator.c
     bootstrap/src/frost/collections/Iterator/MapIterator.c
     bootstrap/src/frost/collections/Iterator/RangeIterator.c
-    bootstrap/src/frost/collections/Key.c
     bootstrap/src/frost/collections/List.c
     bootstrap/src/frost/collections/ListView.c
     bootstrap/src/frost/collections/ListView/ListIterator.c
@@ -752,6 +753,7 @@ set(public_source
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/collections/Collection.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/collections/CollectionView.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/collections/CollectionWriter.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/collections/HashKey.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/collections/HashMap.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/collections/HashSet.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/collections/IdentityMap.frost
@@ -759,7 +761,6 @@ set(public_source
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/collections/ImmutableArray.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/collections/Iterable.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/collections/Iterator.frost
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/collections/Key.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/collections/List.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/collections/ListView.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/collections/ListWriter.frost

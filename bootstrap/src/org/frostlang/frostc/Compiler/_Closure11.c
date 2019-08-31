@@ -15,7 +15,7 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 
 void org$frostlang$frostc$Compiler$_Closure11$init$org$frostlang$frostc$Compiler(org$frostlang$frostc$Compiler$_Closure11* param0, org$frostlang$frostc$Compiler* param1) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5385
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5388
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
 org$frostlang$frostc$Compiler** $tmp2 = &param0->$dummy496;
 org$frostlang$frostc$Compiler* $tmp3 = *$tmp2;
@@ -27,7 +27,7 @@ return;
 }
 void org$frostlang$frostc$Compiler$_Closure11$cleanup(org$frostlang$frostc$Compiler$_Closure11* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5385
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5388
 frost$core$Object$cleanup(((frost$core$Object*) param0));
 org$frostlang$frostc$Compiler** $tmp5 = &param0->$dummy496;
 org$frostlang$frostc$Compiler* $tmp6 = *$tmp5;
@@ -37,7 +37,7 @@ return;
 }
 void org$frostlang$frostc$Compiler$_Closure11$$anonymous10$org$frostlang$frostc$Compiler$Target(org$frostlang$frostc$Compiler$_Closure11* param0, org$frostlang$frostc$Compiler$Target* param1) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5385
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5388
 org$frostlang$frostc$Compiler** $tmp7 = &param0->$dummy496;
 org$frostlang$frostc$Compiler* $tmp8 = *$tmp7;
 org$frostlang$frostc$Compiler$initializeTarget$org$frostlang$frostc$Compiler$Target($tmp8, param1);

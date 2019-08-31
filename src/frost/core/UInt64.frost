@@ -10,7 +10,7 @@ uses frost.unsafe.Pointer
 A 64-bit unsigned integer.
 ===
 @final
-class UInt64 : Value, Key<UInt64>, Comparable<UInt64>, Formattable, ListView<Bit> {
+class UInt64 : Value, HashKey<UInt64>, Comparable<UInt64>, Formattable, ListView<Bit> {
     ===
     The smallest value this type can hold (0).
     ===

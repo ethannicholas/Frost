@@ -25,6 +25,10 @@ static frost$core$String $s10 = { (frost$core$Class*) &frost$core$String$class, 
 static frost$core$String $s11 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x0a", 1, -5808579962898102051, NULL };
 static frost$core$String $s18 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x0a", 1, -5808579962898102051, NULL };
 static frost$core$String $s19 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x0a", 1, -5808579962898102051, NULL };
+static frost$core$String $s40 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x43\x6f\x6e\x73\x6f\x6c\x65\x2e\x66\x72\x6f\x73\x74", 13, 397585341085301174, NULL };
+static frost$core$String $s41 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x43\x68\x61\x72\x38\x3f\x20\x74\x6f\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x43\x68\x61\x72\x38", 71, -5598996583363859745, NULL };
+static frost$core$String $s54 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x43\x6f\x6e\x73\x6f\x6c\x65\x2e\x66\x72\x6f\x73\x74", 13, 397585341085301174, NULL };
+static frost$core$String $s55 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x43\x68\x61\x72\x38\x3f\x20\x74\x6f\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x43\x68\x61\x72\x38", 71, -5598996583363859745, NULL };
 
 void frost$io$Console$init(frost$io$Console* param0) {
 
@@ -172,35 +176,51 @@ goto block2;
 block4:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/Console.frost:136
 frost$core$Char8$nullable $tmp36 = *(&local1);
-frost$core$UInt8 $tmp37 = (frost$core$UInt8) {10u};
-frost$core$Char8 $tmp38 = frost$core$Char8$init$frost$core$UInt8($tmp37);
+frost$core$Bit $tmp37 = (frost$core$Bit) {$tmp36.nonnull};
+bool $tmp38 = $tmp37.value;
+if ($tmp38) goto block10; else goto block11;
+block11:;
+frost$core$Int $tmp39 = (frost$core$Int) {136u};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s40, $tmp39, &$s41);
+abort(); // unreachable
+block10:;
+frost$core$UInt8 $tmp42 = (frost$core$UInt8) {10u};
+frost$core$Char8 $tmp43 = frost$core$Char8$init$frost$core$UInt8($tmp42);
 // begin inline call to function frost.core.Char8.=(other:frost.core.Char8):frost.core.Bit from Console.frost:136:18
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:26
-uint8_t $tmp39 = ((frost$core$Char8) $tmp36.value).value;
-uint8_t $tmp40 = $tmp38.value;
-bool $tmp41 = $tmp39 == $tmp40;
-frost$core$Bit $tmp42 = (frost$core$Bit) {$tmp41};
-bool $tmp43 = $tmp42.value;
-if ($tmp43) goto block8; else goto block9;
+uint8_t $tmp44 = ((frost$core$Char8) $tmp36.value).value;
+uint8_t $tmp45 = $tmp43.value;
+bool $tmp46 = $tmp44 == $tmp45;
+frost$core$Bit $tmp47 = (frost$core$Bit) {$tmp46};
+bool $tmp48 = $tmp47.value;
+if ($tmp48) goto block8; else goto block9;
 block8:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/Console.frost:137
 goto block2;
 block9:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/Console.frost:139
-frost$core$MutableString* $tmp44 = *(&local0);
-frost$core$Char8$nullable $tmp45 = *(&local1);
-frost$core$MutableString$append$frost$core$Char8($tmp44, ((frost$core$Char8) $tmp45.value));
+frost$core$MutableString* $tmp49 = *(&local0);
+frost$core$Char8$nullable $tmp50 = *(&local1);
+frost$core$Bit $tmp51 = (frost$core$Bit) {$tmp50.nonnull};
+bool $tmp52 = $tmp51.value;
+if ($tmp52) goto block13; else goto block14;
+block14:;
+frost$core$Int $tmp53 = (frost$core$Int) {139u};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s54, $tmp53, &$s55);
+abort(); // unreachable
+block13:;
+frost$core$MutableString$append$frost$core$Char8($tmp49, ((frost$core$Char8) $tmp50.value));
 goto block1;
 block2:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/Console.frost:141
-frost$core$MutableString* $tmp46 = *(&local0);
-frost$core$String* $tmp47 = frost$core$MutableString$finish$R$frost$core$String($tmp46);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp47));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp47));
-frost$core$MutableString* $tmp48 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp48));
+frost$core$MutableString* $tmp56 = *(&local0);
+frost$core$String* $tmp57 = frost$core$MutableString$finish$R$frost$core$String($tmp56);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp57));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp57));
+frost$core$MutableString* $tmp58 = *(&local0);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp58));
 *(&local0) = ((frost$core$MutableString*) NULL);
-return $tmp47;
+return $tmp57;
 
 }
 void frost$io$Console$cleanup(frost$io$Console* param0) {

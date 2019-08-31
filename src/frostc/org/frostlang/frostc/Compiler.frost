@@ -260,7 +260,7 @@ class Compiler {
         SELF
     }
 
-    class CoercionKey : Key<CoercionKey> {
+    class CoercionKey : HashKey<CoercionKey> {
         def expr:ASTNode
 
         def target:Type
@@ -281,7 +281,7 @@ class Compiler {
         }
     }
 
-    class BinaryKey : Key<BinaryKey> {
+    class BinaryKey : HashKey<BinaryKey> {
         def left:ASTNode
 
         def op:Binary.Operator
@@ -475,7 +475,7 @@ class Compiler {
     var methodSymbolTable:SymbolTable
 
     @private
-    def codeGenerator:CodeGenerator
+    def codeGenerator:CodeGenerator?
 
     @private
     var errorQueue:MessageQueue<Message>
@@ -549,7 +549,7 @@ class Compiler {
     @private
     def lambdaTypes := IdentityMap<ASTNode, HashSet<Type>>()
 
-    init(errorQueue:MessageQueue<Message>, codeGenerator:CodeGenerator, settings:Settings) {
+    init(errorQueue:MessageQueue<Message>, codeGenerator:CodeGenerator?, settings:Settings) {
         self.settings := settings
         self.scanner := Scanner(self)
         self.root := SymbolTable(self)
@@ -575,13 +575,13 @@ class Compiler {
         addAlias("frost.collections.Collection")
         addAlias("frost.collections.CollectionView")
         addAlias("frost.collections.CollectionWriter")
+        addAlias("frost.collections.HashKey")
         addAlias("frost.collections.HashSet")
         addAlias("frost.collections.IdentityMap")
         addAlias("frost.collections.IdentitySet")
         addAlias("frost.collections.ImmutableArray")
         addAlias("frost.collections.Iterable")
         addAlias("frost.collections.Iterator")
-        addAlias("frost.collections.Key")
         addAlias("frost.collections.List")
         addAlias("frost.collections.ListView")
         addAlias("frost.collections.ListWriter")
@@ -646,7 +646,9 @@ class Compiler {
         addAlias("frost.time.Timer")
         addAlias("frost.json.JSON")
         addAlias("frost.json.JSONParser")
-        codeGenerator.setCompiler(self)
+        if codeGenerator !== null {
+            codeGenerator.setCompiler(self)
+        }
     }
 
     @private
@@ -942,7 +944,7 @@ class Compiler {
 
     @pre(cl.classKind = ClassDecl.Kind.CHOICE)
     method createChoiceHashIfNeeded(cl:ClassDecl) {
-        def key := getClass("frost.collections.Key")!
+        def key := getClass("frost.collections.HashKey")!
         for cc in cl.choiceCases {
             assert cc.resolved != Resolution.UNRESOLVED
             if cc.resolved != Resolution.RESOLVED {
@@ -1674,7 +1676,7 @@ class Compiler {
                 var isEquatable := true
                 def equatable := getClass("frost.core.Equatable")
                 assert equatable !== null
-                def key := getClass("frost.collections.Key")
+                def key := getClass("frost.collections.HashKey")
                 assert key !== null
                 for t in type.subtypes {
                     if isEquatable & findType(t, equatable) == null {
@@ -2093,7 +2095,7 @@ class Compiler {
                     }
                 }
                 if type.typeKind = Type.Kind.TUPLE &
-                        target.subtypes[0].name = "frost.collections.Key" &
+                        target.subtypes[0].name = "frost.collections.HashKey" &
                         target.subtypes[1] = type {
                     def cl := getClass(type)
                     if cl !== null & cl.name.startsWith("frost.core.KeyTuple") {
@@ -4230,7 +4232,9 @@ class Compiler {
                 }
             }
             assert srcType.isClass
-            if explicit & value.type().isNullable & !target.isNullable &
+            -- FIXME add explicit check back in when null safety becomes an error instead of a
+            -- warning
+            if -*explicit & *-value.type().isNullable & !target.isNullable &
                     target.typeKind != Type.Kind.GENERIC_CLASS_PARAMETER &
                     target.typeKind != Type.Kind.GENERIC_METHOD_PARAMETER {
                 Assert.compile(self, position, ASTNode.BINARY(position,
@@ -4245,7 +4249,6 @@ class Compiler {
             }
             return result
         }
-        Console.printLine("### error in \{currentMethod[0]}")
         error(position, "expected '\{target}', but found '\{srcType}'")
         return null
     }

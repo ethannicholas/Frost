@@ -2,7 +2,7 @@
 #include "frost/core/Value.h"
 #include "frost/core/Class.h"
 #include "frost/core/String.h"
-#include "frost/collections/Key.h"
+#include "frost/collections/HashKey.h"
 #include "frost/core/Int.h"
 #include "frost/core/Object.h"
 #include "frost/core/Equatable.h"
@@ -33,16 +33,16 @@ __attribute__((weak)) void org$frostlang$frostc$parser$SyntaxHighlighter$Kind$cl
 
 }
 
-struct { frost$core$Class* cl; ITable* next; void* methods[1]; } org$frostlang$frostc$parser$SyntaxHighlighter$Kind$_frost$collections$Key = { (frost$core$Class*) &frost$collections$Key$class, NULL, { org$frostlang$frostc$parser$SyntaxHighlighter$Kind$get_hash$R$frost$core$Int$shim} };
+struct { frost$core$Class* cl; ITable* next; void* methods[1]; } org$frostlang$frostc$parser$SyntaxHighlighter$Kind$_frost$collections$HashKey = { (frost$core$Class*) &frost$collections$HashKey$class, NULL, { org$frostlang$frostc$parser$SyntaxHighlighter$Kind$get_hash$R$frost$core$Int$shim} };
 
-struct { frost$core$Class* cl; ITable* next; void* methods[2]; } org$frostlang$frostc$parser$SyntaxHighlighter$Kind$_frost$core$Equatable = { (frost$core$Class*) &frost$core$Equatable$class, (ITable*) &org$frostlang$frostc$parser$SyntaxHighlighter$Kind$_frost$collections$Key, { org$frostlang$frostc$parser$SyntaxHighlighter$Kind$$EQ$org$frostlang$frostc$parser$SyntaxHighlighter$Kind$R$frost$core$Bit$shim, frost$core$Equatable$$NEQ$frost$core$Equatable$T$R$frost$core$Bit} };
+struct { frost$core$Class* cl; ITable* next; void* methods[2]; } org$frostlang$frostc$parser$SyntaxHighlighter$Kind$_frost$core$Equatable = { (frost$core$Class*) &frost$core$Equatable$class, (ITable*) &org$frostlang$frostc$parser$SyntaxHighlighter$Kind$_frost$collections$HashKey, { org$frostlang$frostc$parser$SyntaxHighlighter$Kind$$EQ$org$frostlang$frostc$parser$SyntaxHighlighter$Kind$R$frost$core$Bit$shim, frost$core$Equatable$$NEQ$frost$core$Equatable$T$R$frost$core$Bit} };
 
 static frost$core$String $s1;
 org$frostlang$frostc$parser$SyntaxHighlighter$Kind$class_type org$frostlang$frostc$parser$SyntaxHighlighter$Kind$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Value$class, (ITable*) &org$frostlang$frostc$parser$SyntaxHighlighter$Kind$_frost$core$Equatable, { org$frostlang$frostc$parser$SyntaxHighlighter$Kind$get_asString$R$frost$core$String$shim, frost$core$Value$cleanup$shim, org$frostlang$frostc$parser$SyntaxHighlighter$Kind$cleanup$shim, org$frostlang$frostc$parser$SyntaxHighlighter$Kind$$EQ$org$frostlang$frostc$parser$SyntaxHighlighter$Kind$R$frost$core$Bit$shim, org$frostlang$frostc$parser$SyntaxHighlighter$Kind$get_hash$R$frost$core$Int$shim} };
 
-struct { frost$core$Class* cl; ITable* itable; void* methods[1]; } org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper_frost$collections$Key = { (frost$core$Class*) &frost$collections$Key$class, NULL, { org$frostlang$frostc$parser$SyntaxHighlighter$Kind$get_hash$R$frost$core$Int$shim} };
+struct { frost$core$Class* cl; ITable* itable; void* methods[1]; } org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper_frost$collections$HashKey = { (frost$core$Class*) &frost$collections$HashKey$class, NULL, { org$frostlang$frostc$parser$SyntaxHighlighter$Kind$get_hash$R$frost$core$Int$shim} };
 
-struct { frost$core$Class* cl; ITable* itable; void* methods[2]; } org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper_frost$core$Equatable = { (frost$core$Class*) &frost$core$Equatable$class, (ITable*) &org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper_frost$collections$Key, { org$frostlang$frostc$parser$SyntaxHighlighter$Kind$$EQ$org$frostlang$frostc$parser$SyntaxHighlighter$Kind$R$frost$core$Bit$shim, frost$core$Equatable$$NEQ$frost$core$Equatable$T$R$frost$core$Bit} };
+struct { frost$core$Class* cl; ITable* itable; void* methods[2]; } org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper_frost$core$Equatable = { (frost$core$Class*) &frost$core$Equatable$class, (ITable*) &org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper_frost$collections$HashKey, { org$frostlang$frostc$parser$SyntaxHighlighter$Kind$$EQ$org$frostlang$frostc$parser$SyntaxHighlighter$Kind$R$frost$core$Bit$shim, frost$core$Equatable$$NEQ$frost$core$Equatable$T$R$frost$core$Bit} };
 
 static frost$core$String $s2;
 org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapperclass_type org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapperclass = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s2, (frost$core$Class*) &frost$core$Value$class, (ITable*) &org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper_frost$core$Equatable, { org$frostlang$frostc$parser$SyntaxHighlighter$Kind$get_asString$R$frost$core$String$shim, frost$core$Value$cleanup$shim} };

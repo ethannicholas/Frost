@@ -2,20 +2,20 @@
 #include "frost/core/Value.h"
 #include "frost/core/Class.h"
 #include "frost/core/String.h"
+#include "frost/collections/HashKey.h"
+#include "frost/core/Int.h"
+#include "frost/core/Object.h"
 #include "frost/core/Equatable.h"
 #include "frost/core/Bit.h"
-#include "frost/core/Object.h"
-#include "frost/collections/Key.h"
-#include "frost/core/Int.h"
 #include "frost/core/Frost.h"
 
-__attribute__((weak)) frost$core$Bit org$frostlang$frostc$Symbol$Kind$$EQ$org$frostlang$frostc$Symbol$Kind$R$frost$core$Bit$shim(frost$core$Object* p0, frost$core$Equatable* p1) {
-    frost$core$Bit result = org$frostlang$frostc$Symbol$Kind$$EQ$org$frostlang$frostc$Symbol$Kind$R$frost$core$Bit(((org$frostlang$frostc$Symbol$Kind$wrapper*) p0)->value, ((org$frostlang$frostc$Symbol$Kind$wrapper*) p1)->value);
+__attribute__((weak)) frost$core$Int org$frostlang$frostc$Symbol$Kind$get_hash$R$frost$core$Int$shim(frost$core$Object* p0) {
+    frost$core$Int result = org$frostlang$frostc$Symbol$Kind$get_hash$R$frost$core$Int(((org$frostlang$frostc$Symbol$Kind$wrapper*) p0)->value);
 
     return result;
 }
-__attribute__((weak)) frost$core$Int org$frostlang$frostc$Symbol$Kind$get_hash$R$frost$core$Int$shim(frost$core$Object* p0) {
-    frost$core$Int result = org$frostlang$frostc$Symbol$Kind$get_hash$R$frost$core$Int(((org$frostlang$frostc$Symbol$Kind$wrapper*) p0)->value);
+__attribute__((weak)) frost$core$Bit org$frostlang$frostc$Symbol$Kind$$EQ$org$frostlang$frostc$Symbol$Kind$R$frost$core$Bit$shim(frost$core$Object* p0, frost$core$Equatable* p1) {
+    frost$core$Bit result = org$frostlang$frostc$Symbol$Kind$$EQ$org$frostlang$frostc$Symbol$Kind$R$frost$core$Bit(((org$frostlang$frostc$Symbol$Kind$wrapper*) p0)->value, ((org$frostlang$frostc$Symbol$Kind$wrapper*) p1)->value);
 
     return result;
 }
@@ -33,19 +33,19 @@ __attribute__((weak)) void org$frostlang$frostc$Symbol$Kind$cleanup$shim(frost$c
 
 }
 
-struct { frost$core$Class* cl; ITable* next; void* methods[2]; } org$frostlang$frostc$Symbol$Kind$_frost$core$Equatable = { (frost$core$Class*) &frost$core$Equatable$class, NULL, { org$frostlang$frostc$Symbol$Kind$$EQ$org$frostlang$frostc$Symbol$Kind$R$frost$core$Bit$shim, frost$core$Equatable$$NEQ$frost$core$Equatable$T$R$frost$core$Bit} };
+struct { frost$core$Class* cl; ITable* next; void* methods[1]; } org$frostlang$frostc$Symbol$Kind$_frost$collections$HashKey = { (frost$core$Class*) &frost$collections$HashKey$class, NULL, { org$frostlang$frostc$Symbol$Kind$get_hash$R$frost$core$Int$shim} };
 
-struct { frost$core$Class* cl; ITable* next; void* methods[1]; } org$frostlang$frostc$Symbol$Kind$_frost$collections$Key = { (frost$core$Class*) &frost$collections$Key$class, (ITable*) &org$frostlang$frostc$Symbol$Kind$_frost$core$Equatable, { org$frostlang$frostc$Symbol$Kind$get_hash$R$frost$core$Int$shim} };
+struct { frost$core$Class* cl; ITable* next; void* methods[2]; } org$frostlang$frostc$Symbol$Kind$_frost$core$Equatable = { (frost$core$Class*) &frost$core$Equatable$class, (ITable*) &org$frostlang$frostc$Symbol$Kind$_frost$collections$HashKey, { org$frostlang$frostc$Symbol$Kind$$EQ$org$frostlang$frostc$Symbol$Kind$R$frost$core$Bit$shim, frost$core$Equatable$$NEQ$frost$core$Equatable$T$R$frost$core$Bit} };
 
 static frost$core$String $s1;
-org$frostlang$frostc$Symbol$Kind$class_type org$frostlang$frostc$Symbol$Kind$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Value$class, (ITable*) &org$frostlang$frostc$Symbol$Kind$_frost$collections$Key, { org$frostlang$frostc$Symbol$Kind$get_asString$R$frost$core$String$shim, frost$core$Value$cleanup$shim, org$frostlang$frostc$Symbol$Kind$cleanup$shim, org$frostlang$frostc$Symbol$Kind$$EQ$org$frostlang$frostc$Symbol$Kind$R$frost$core$Bit$shim, org$frostlang$frostc$Symbol$Kind$get_hash$R$frost$core$Int$shim} };
+org$frostlang$frostc$Symbol$Kind$class_type org$frostlang$frostc$Symbol$Kind$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Value$class, (ITable*) &org$frostlang$frostc$Symbol$Kind$_frost$core$Equatable, { org$frostlang$frostc$Symbol$Kind$get_asString$R$frost$core$String$shim, frost$core$Value$cleanup$shim, org$frostlang$frostc$Symbol$Kind$cleanup$shim, org$frostlang$frostc$Symbol$Kind$$EQ$org$frostlang$frostc$Symbol$Kind$R$frost$core$Bit$shim, org$frostlang$frostc$Symbol$Kind$get_hash$R$frost$core$Int$shim} };
 
-struct { frost$core$Class* cl; ITable* itable; void* methods[2]; } org$frostlang$frostc$Symbol$Kind$wrapper_frost$core$Equatable = { (frost$core$Class*) &frost$core$Equatable$class, NULL, { org$frostlang$frostc$Symbol$Kind$$EQ$org$frostlang$frostc$Symbol$Kind$R$frost$core$Bit$shim, frost$core$Equatable$$NEQ$frost$core$Equatable$T$R$frost$core$Bit} };
+struct { frost$core$Class* cl; ITable* itable; void* methods[1]; } org$frostlang$frostc$Symbol$Kind$wrapper_frost$collections$HashKey = { (frost$core$Class*) &frost$collections$HashKey$class, NULL, { org$frostlang$frostc$Symbol$Kind$get_hash$R$frost$core$Int$shim} };
 
-struct { frost$core$Class* cl; ITable* itable; void* methods[1]; } org$frostlang$frostc$Symbol$Kind$wrapper_frost$collections$Key = { (frost$core$Class*) &frost$collections$Key$class, (ITable*) &org$frostlang$frostc$Symbol$Kind$wrapper_frost$core$Equatable, { org$frostlang$frostc$Symbol$Kind$get_hash$R$frost$core$Int$shim} };
+struct { frost$core$Class* cl; ITable* itable; void* methods[2]; } org$frostlang$frostc$Symbol$Kind$wrapper_frost$core$Equatable = { (frost$core$Class*) &frost$core$Equatable$class, (ITable*) &org$frostlang$frostc$Symbol$Kind$wrapper_frost$collections$HashKey, { org$frostlang$frostc$Symbol$Kind$$EQ$org$frostlang$frostc$Symbol$Kind$R$frost$core$Bit$shim, frost$core$Equatable$$NEQ$frost$core$Equatable$T$R$frost$core$Bit} };
 
 static frost$core$String $s2;
-org$frostlang$frostc$Symbol$Kind$wrapperclass_type org$frostlang$frostc$Symbol$Kind$wrapperclass = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s2, (frost$core$Class*) &frost$core$Value$class, (ITable*) &org$frostlang$frostc$Symbol$Kind$wrapper_frost$collections$Key, { org$frostlang$frostc$Symbol$Kind$get_asString$R$frost$core$String$shim, frost$core$Value$cleanup$shim} };
+org$frostlang$frostc$Symbol$Kind$wrapperclass_type org$frostlang$frostc$Symbol$Kind$wrapperclass = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s2, (frost$core$Class*) &frost$core$Value$class, (ITable*) &org$frostlang$frostc$Symbol$Kind$wrapper_frost$core$Equatable, { org$frostlang$frostc$Symbol$Kind$get_asString$R$frost$core$String$shim, frost$core$Value$cleanup$shim} };
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x53\x79\x6d\x62\x6f\x6c\x2e\x4b\x69\x6e\x64", 32, -3091620321510185720, NULL };
 static frost$core$String $s2 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x53\x79\x6d\x62\x6f\x6c\x2e\x4b\x69\x6e\x64", 32, -3091620321510185720, NULL };
 static frost$core$String $s86 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x79\x6d\x62\x6f\x6c\x2e\x66\x72\x6f\x73\x74", 12, -7360959199834389899, NULL };

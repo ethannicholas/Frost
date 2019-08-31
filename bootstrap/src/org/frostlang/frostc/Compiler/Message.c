@@ -2,7 +2,7 @@
 #include "frost/core/Immutable.h"
 #include "frost/core/Class.h"
 #include "frost/core/String.h"
-#include "frost/collections/Key.h"
+#include "frost/collections/HashKey.h"
 #include "frost/core/Int.h"
 #include "frost/core/Equatable.h"
 #include "frost/core/Bit.h"
@@ -29,21 +29,21 @@ __attribute__((weak)) void org$frostlang$frostc$Compiler$Message$cleanup$shim(or
 
 }
 
-struct { frost$core$Class* cl; ITable* next; void* methods[1]; } org$frostlang$frostc$Compiler$Message$_frost$collections$Key = { (frost$core$Class*) &frost$collections$Key$class, NULL, { org$frostlang$frostc$Compiler$Message$get_hash$R$frost$core$Int$shim} };
+struct { frost$core$Class* cl; ITable* next; void* methods[1]; } org$frostlang$frostc$Compiler$Message$_frost$collections$HashKey = { (frost$core$Class*) &frost$collections$HashKey$class, NULL, { org$frostlang$frostc$Compiler$Message$get_hash$R$frost$core$Int$shim} };
 
-struct { frost$core$Class* cl; ITable* next; void* methods[2]; } org$frostlang$frostc$Compiler$Message$_frost$core$Equatable = { (frost$core$Class*) &frost$core$Equatable$class, (ITable*) &org$frostlang$frostc$Compiler$Message$_frost$collections$Key, { org$frostlang$frostc$Compiler$Message$$EQ$org$frostlang$frostc$Compiler$Message$R$frost$core$Bit$shim, frost$core$Equatable$$NEQ$frost$core$Equatable$T$R$frost$core$Bit} };
+struct { frost$core$Class* cl; ITable* next; void* methods[2]; } org$frostlang$frostc$Compiler$Message$_frost$core$Equatable = { (frost$core$Class*) &frost$core$Equatable$class, (ITable*) &org$frostlang$frostc$Compiler$Message$_frost$collections$HashKey, { org$frostlang$frostc$Compiler$Message$$EQ$org$frostlang$frostc$Compiler$Message$R$frost$core$Bit$shim, frost$core$Equatable$$NEQ$frost$core$Equatable$T$R$frost$core$Bit} };
 
 static frost$core$String $s1;
 org$frostlang$frostc$Compiler$Message$class_type org$frostlang$frostc$Compiler$Message$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Immutable$class, (ITable*) &org$frostlang$frostc$Compiler$Message$_frost$core$Equatable, { org$frostlang$frostc$Compiler$Message$get_asString$R$frost$core$String$shim, org$frostlang$frostc$Compiler$Message$cleanup$shim, org$frostlang$frostc$Compiler$Message$$EQ$org$frostlang$frostc$Compiler$Message$R$frost$core$Bit$shim, org$frostlang$frostc$Compiler$Message$get_hash$R$frost$core$Int$shim} };
 
-typedef frost$core$Int (*$fn82)(frost$collections$Key*);
-typedef frost$core$Int (*$fn92)(frost$collections$Key*);
-typedef frost$core$Int (*$fn102)(frost$collections$Key*);
-typedef frost$core$Int (*$fn111)(frost$collections$Key*);
-typedef frost$core$Int (*$fn139)(frost$collections$Key*);
-typedef frost$core$Int (*$fn149)(frost$collections$Key*);
-typedef frost$core$Int (*$fn159)(frost$collections$Key*);
-typedef frost$core$Int (*$fn168)(frost$collections$Key*);
+typedef frost$core$Int (*$fn82)(frost$collections$HashKey*);
+typedef frost$core$Int (*$fn92)(frost$collections$HashKey*);
+typedef frost$core$Int (*$fn102)(frost$collections$HashKey*);
+typedef frost$core$Int (*$fn111)(frost$collections$HashKey*);
+typedef frost$core$Int (*$fn139)(frost$collections$HashKey*);
+typedef frost$core$Int (*$fn149)(frost$collections$HashKey*);
+typedef frost$core$Int (*$fn159)(frost$collections$HashKey*);
+typedef frost$core$Int (*$fn168)(frost$collections$HashKey*);
 typedef frost$core$String* (*$fn204)(frost$core$Object*);
 typedef frost$core$String* (*$fn212)(frost$core$Object*);
 typedef frost$core$String* (*$fn247)(frost$core$Object*);
@@ -260,12 +260,12 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp77));
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:51
 frost$core$Int $tmp78 = (frost$core$Int) {1320719138988270736u};
 frost$core$String* $tmp79 = *(&local0);
-ITable* $tmp80 = ((frost$collections$Key*) $tmp79)->$class->itable;
-while ($tmp80->$class != (frost$core$Class*) &frost$collections$Key$class) {
+ITable* $tmp80 = ((frost$collections$HashKey*) $tmp79)->$class->itable;
+while ($tmp80->$class != (frost$core$Class*) &frost$collections$HashKey$class) {
     $tmp80 = $tmp80->next;
 }
 $fn82 $tmp81 = $tmp80->methods[0];
-frost$core$Int $tmp83 = $tmp81(((frost$collections$Key*) $tmp79));
+frost$core$Int $tmp83 = $tmp81(((frost$collections$HashKey*) $tmp79));
 // begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from Compiler.frost:51:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:365
 int64_t $tmp84 = $tmp78.value;
@@ -276,12 +276,12 @@ frost$core$Int $tmp88 = *(&local1);
 frost$core$Int$wrapper* $tmp89;
 $tmp89 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp89->value = $tmp88;
-ITable* $tmp90 = ((frost$collections$Key*) $tmp89)->$class->itable;
-while ($tmp90->$class != (frost$core$Class*) &frost$collections$Key$class) {
+ITable* $tmp90 = ((frost$collections$HashKey*) $tmp89)->$class->itable;
+while ($tmp90->$class != (frost$core$Class*) &frost$collections$HashKey$class) {
     $tmp90 = $tmp90->next;
 }
 $fn92 $tmp91 = $tmp90->methods[0];
-frost$core$Int $tmp93 = $tmp91(((frost$collections$Key*) $tmp89));
+frost$core$Int $tmp93 = $tmp91(((frost$collections$HashKey*) $tmp89));
 // begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from Compiler.frost:51:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:365
 int64_t $tmp94 = $tmp87.value;
@@ -292,12 +292,12 @@ frost$core$Int $tmp98 = *(&local2);
 frost$core$Int$wrapper* $tmp99;
 $tmp99 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp99->value = $tmp98;
-ITable* $tmp100 = ((frost$collections$Key*) $tmp99)->$class->itable;
-while ($tmp100->$class != (frost$core$Class*) &frost$collections$Key$class) {
+ITable* $tmp100 = ((frost$collections$HashKey*) $tmp99)->$class->itable;
+while ($tmp100->$class != (frost$core$Class*) &frost$collections$HashKey$class) {
     $tmp100 = $tmp100->next;
 }
 $fn102 $tmp101 = $tmp100->methods[0];
-frost$core$Int $tmp103 = $tmp101(((frost$collections$Key*) $tmp99));
+frost$core$Int $tmp103 = $tmp101(((frost$collections$HashKey*) $tmp99));
 // begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from Compiler.frost:51:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:365
 int64_t $tmp104 = $tmp97.value;
@@ -305,20 +305,20 @@ int64_t $tmp105 = $tmp103.value;
 int64_t $tmp106 = $tmp104 ^ $tmp105;
 frost$core$Int $tmp107 = (frost$core$Int) {$tmp106};
 frost$core$String* $tmp108 = *(&local3);
-ITable* $tmp109 = ((frost$collections$Key*) $tmp108)->$class->itable;
-while ($tmp109->$class != (frost$core$Class*) &frost$collections$Key$class) {
+ITable* $tmp109 = ((frost$collections$HashKey*) $tmp108)->$class->itable;
+while ($tmp109->$class != (frost$core$Class*) &frost$collections$HashKey$class) {
     $tmp109 = $tmp109->next;
 }
 $fn111 $tmp110 = $tmp109->methods[0];
-frost$core$Int $tmp112 = $tmp110(((frost$collections$Key*) $tmp108));
+frost$core$Int $tmp112 = $tmp110(((frost$collections$HashKey*) $tmp108));
 // begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from Compiler.frost:51:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:365
 int64_t $tmp113 = $tmp107.value;
 int64_t $tmp114 = $tmp112.value;
 int64_t $tmp115 = $tmp113 ^ $tmp114;
 frost$core$Int $tmp116 = (frost$core$Int) {$tmp115};
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$collections$Key*) $tmp99)));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$collections$Key*) $tmp89)));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$collections$HashKey*) $tmp99)));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$collections$HashKey*) $tmp89)));
 frost$core$String* $tmp117 = *(&local3);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp117));
 *(&local3) = ((frost$core$String*) NULL);
@@ -360,12 +360,12 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp134));
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:51
 frost$core$Int $tmp135 = (frost$core$Int) {2641438277976541472u};
 frost$core$String* $tmp136 = *(&local4);
-ITable* $tmp137 = ((frost$collections$Key*) $tmp136)->$class->itable;
-while ($tmp137->$class != (frost$core$Class*) &frost$collections$Key$class) {
+ITable* $tmp137 = ((frost$collections$HashKey*) $tmp136)->$class->itable;
+while ($tmp137->$class != (frost$core$Class*) &frost$collections$HashKey$class) {
     $tmp137 = $tmp137->next;
 }
 $fn139 $tmp138 = $tmp137->methods[0];
-frost$core$Int $tmp140 = $tmp138(((frost$collections$Key*) $tmp136));
+frost$core$Int $tmp140 = $tmp138(((frost$collections$HashKey*) $tmp136));
 // begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from Compiler.frost:51:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:365
 int64_t $tmp141 = $tmp135.value;
@@ -376,12 +376,12 @@ frost$core$Int $tmp145 = *(&local5);
 frost$core$Int$wrapper* $tmp146;
 $tmp146 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp146->value = $tmp145;
-ITable* $tmp147 = ((frost$collections$Key*) $tmp146)->$class->itable;
-while ($tmp147->$class != (frost$core$Class*) &frost$collections$Key$class) {
+ITable* $tmp147 = ((frost$collections$HashKey*) $tmp146)->$class->itable;
+while ($tmp147->$class != (frost$core$Class*) &frost$collections$HashKey$class) {
     $tmp147 = $tmp147->next;
 }
 $fn149 $tmp148 = $tmp147->methods[0];
-frost$core$Int $tmp150 = $tmp148(((frost$collections$Key*) $tmp146));
+frost$core$Int $tmp150 = $tmp148(((frost$collections$HashKey*) $tmp146));
 // begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from Compiler.frost:51:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:365
 int64_t $tmp151 = $tmp144.value;
@@ -392,12 +392,12 @@ frost$core$Int $tmp155 = *(&local6);
 frost$core$Int$wrapper* $tmp156;
 $tmp156 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp156->value = $tmp155;
-ITable* $tmp157 = ((frost$collections$Key*) $tmp156)->$class->itable;
-while ($tmp157->$class != (frost$core$Class*) &frost$collections$Key$class) {
+ITable* $tmp157 = ((frost$collections$HashKey*) $tmp156)->$class->itable;
+while ($tmp157->$class != (frost$core$Class*) &frost$collections$HashKey$class) {
     $tmp157 = $tmp157->next;
 }
 $fn159 $tmp158 = $tmp157->methods[0];
-frost$core$Int $tmp160 = $tmp158(((frost$collections$Key*) $tmp156));
+frost$core$Int $tmp160 = $tmp158(((frost$collections$HashKey*) $tmp156));
 // begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from Compiler.frost:51:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:365
 int64_t $tmp161 = $tmp154.value;
@@ -405,20 +405,20 @@ int64_t $tmp162 = $tmp160.value;
 int64_t $tmp163 = $tmp161 ^ $tmp162;
 frost$core$Int $tmp164 = (frost$core$Int) {$tmp163};
 frost$core$String* $tmp165 = *(&local7);
-ITable* $tmp166 = ((frost$collections$Key*) $tmp165)->$class->itable;
-while ($tmp166->$class != (frost$core$Class*) &frost$collections$Key$class) {
+ITable* $tmp166 = ((frost$collections$HashKey*) $tmp165)->$class->itable;
+while ($tmp166->$class != (frost$core$Class*) &frost$collections$HashKey$class) {
     $tmp166 = $tmp166->next;
 }
 $fn168 $tmp167 = $tmp166->methods[0];
-frost$core$Int $tmp169 = $tmp167(((frost$collections$Key*) $tmp165));
+frost$core$Int $tmp169 = $tmp167(((frost$collections$HashKey*) $tmp165));
 // begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from Compiler.frost:51:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:365
 int64_t $tmp170 = $tmp164.value;
 int64_t $tmp171 = $tmp169.value;
 int64_t $tmp172 = $tmp170 ^ $tmp171;
 frost$core$Int $tmp173 = (frost$core$Int) {$tmp172};
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$collections$Key*) $tmp156)));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$collections$Key*) $tmp146)));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$collections$HashKey*) $tmp156)));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$collections$HashKey*) $tmp146)));
 frost$core$String* $tmp174 = *(&local7);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp174));
 *(&local7) = ((frost$core$String*) NULL);

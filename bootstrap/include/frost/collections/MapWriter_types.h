@@ -11,6 +11,6 @@ typedef struct frost$collections$MapWriter {
     frost$core$UInt8 $flags;
 } frost$collections$MapWriter;
 #include "frost/core/Class.h"
-typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[5]; } frost$collections$MapWriter$class_type;
+typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[6]; } frost$collections$MapWriter$class_type;
 extern frost$collections$MapWriter$class_type frost$collections$MapWriter$class;
 

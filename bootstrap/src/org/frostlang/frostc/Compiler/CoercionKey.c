@@ -4,7 +4,7 @@
 #include "frost/core/String.h"
 #include "frost/core/Equatable.h"
 #include "frost/core/Bit.h"
-#include "frost/collections/Key.h"
+#include "frost/collections/HashKey.h"
 #include "org/frostlang/frostc/ASTNode.h"
 #include "org/frostlang/frostc/Type.h"
 #include "frost/core/Frost.h"
@@ -20,13 +20,13 @@ __attribute__((weak)) frost$core$Bit org$frostlang$frostc$Compiler$CoercionKey$$
 
 struct { frost$core$Class* cl; ITable* next; void* methods[2]; } org$frostlang$frostc$Compiler$CoercionKey$_frost$core$Equatable = { (frost$core$Class*) &frost$core$Equatable$class, NULL, { org$frostlang$frostc$Compiler$CoercionKey$$EQ$org$frostlang$frostc$Compiler$CoercionKey$R$frost$core$Bit$shim, frost$core$Equatable$$NEQ$frost$core$Equatable$T$R$frost$core$Bit} };
 
-struct { frost$core$Class* cl; ITable* next; void* methods[1]; } org$frostlang$frostc$Compiler$CoercionKey$_frost$collections$Key = { (frost$core$Class*) &frost$collections$Key$class, (ITable*) &org$frostlang$frostc$Compiler$CoercionKey$_frost$core$Equatable, { org$frostlang$frostc$Compiler$CoercionKey$get_hash$R$frost$core$Int} };
+struct { frost$core$Class* cl; ITable* next; void* methods[1]; } org$frostlang$frostc$Compiler$CoercionKey$_frost$collections$HashKey = { (frost$core$Class*) &frost$collections$HashKey$class, (ITable*) &org$frostlang$frostc$Compiler$CoercionKey$_frost$core$Equatable, { org$frostlang$frostc$Compiler$CoercionKey$get_hash$R$frost$core$Int} };
 
 static frost$core$String $s1;
-org$frostlang$frostc$Compiler$CoercionKey$class_type org$frostlang$frostc$Compiler$CoercionKey$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Object$class, (ITable*) &org$frostlang$frostc$Compiler$CoercionKey$_frost$collections$Key, { frost$core$Object$get_asString$R$frost$core$String, org$frostlang$frostc$Compiler$CoercionKey$cleanup, org$frostlang$frostc$Compiler$CoercionKey$$EQ$org$frostlang$frostc$Compiler$CoercionKey$R$frost$core$Bit$shim, org$frostlang$frostc$Compiler$CoercionKey$get_hash$R$frost$core$Int} };
+org$frostlang$frostc$Compiler$CoercionKey$class_type org$frostlang$frostc$Compiler$CoercionKey$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Object$class, (ITable*) &org$frostlang$frostc$Compiler$CoercionKey$_frost$collections$HashKey, { frost$core$Object$get_asString$R$frost$core$String, org$frostlang$frostc$Compiler$CoercionKey$cleanup, org$frostlang$frostc$Compiler$CoercionKey$$EQ$org$frostlang$frostc$Compiler$CoercionKey$R$frost$core$Bit$shim, org$frostlang$frostc$Compiler$CoercionKey$get_hash$R$frost$core$Int} };
 
 typedef frost$core$Bit (*$fn33)(frost$core$Equatable*, frost$core$Equatable*);
-typedef frost$core$Int (*$fn44)(frost$collections$Key*);
+typedef frost$core$Int (*$fn44)(frost$collections$HashKey*);
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x43\x6f\x6d\x70\x69\x6c\x65\x72\x2e\x43\x6f\x65\x72\x63\x69\x6f\x6e\x4b\x65\x79", 41, -6870882282179802560, NULL };
 
@@ -121,12 +121,12 @@ frost$core$Int $tmp39;
 frost$core$Frost$addressOf$frost$core$Object$R$frost$core$Int(&$tmp39, ((frost$core$Object*) $tmp38));
 org$frostlang$frostc$Type** $tmp40 = &param0->target;
 org$frostlang$frostc$Type* $tmp41 = *$tmp40;
-ITable* $tmp42 = ((frost$collections$Key*) $tmp41)->$class->itable;
-while ($tmp42->$class != (frost$core$Class*) &frost$collections$Key$class) {
+ITable* $tmp42 = ((frost$collections$HashKey*) $tmp41)->$class->itable;
+while ($tmp42->$class != (frost$core$Class*) &frost$collections$HashKey$class) {
     $tmp42 = $tmp42->next;
 }
 $fn44 $tmp43 = $tmp42->methods[0];
-frost$core$Int $tmp45 = $tmp43(((frost$collections$Key*) $tmp41));
+frost$core$Int $tmp45 = $tmp43(((frost$collections$HashKey*) $tmp41));
 // begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from Compiler.frost:280:42
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:365
 int64_t $tmp46 = $tmp39.value;

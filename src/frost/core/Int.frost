@@ -10,7 +10,7 @@ uses frost.unsafe.Pointer
 A 32-bit signed integer.
 ===
 @final
-class Int : Value, Key<Int>, Comparable<Int>, Formattable, ListView<Bit> {
+class Int : Value, HashKey<Int>, Comparable<Int>, Formattable, ListView<Bit> {
     ===
     The smallest value this type can hold (Int,64.,MIN,.as,Int).
     ===

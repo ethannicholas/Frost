@@ -4,7 +4,7 @@
 #include "frost/core/String.h"
 #include "frost/core/Equatable.h"
 #include "frost/core/Bit.h"
-#include "frost/collections/Key.h"
+#include "frost/collections/HashKey.h"
 #include "frost/core/Int.h"
 #include "frost/core/String/Index.h"
 #include "frost/core/Object.h"
@@ -32,15 +32,15 @@ __attribute__((weak)) void frost$json$JSON$PathKey$cleanup$shim(frost$json$JSON$
 
 struct { frost$core$Class* cl; ITable* next; void* methods[2]; } frost$json$JSON$PathKey$_frost$core$Equatable = { (frost$core$Class*) &frost$core$Equatable$class, NULL, { frost$json$JSON$PathKey$$EQ$frost$json$JSON$PathKey$R$frost$core$Bit$shim, frost$core$Equatable$$NEQ$frost$core$Equatable$T$R$frost$core$Bit} };
 
-struct { frost$core$Class* cl; ITable* next; void* methods[1]; } frost$json$JSON$PathKey$_frost$collections$Key = { (frost$core$Class*) &frost$collections$Key$class, (ITable*) &frost$json$JSON$PathKey$_frost$core$Equatable, { frost$json$JSON$PathKey$get_hash$R$frost$core$Int$shim} };
+struct { frost$core$Class* cl; ITable* next; void* methods[1]; } frost$json$JSON$PathKey$_frost$collections$HashKey = { (frost$core$Class*) &frost$collections$HashKey$class, (ITable*) &frost$json$JSON$PathKey$_frost$core$Equatable, { frost$json$JSON$PathKey$get_hash$R$frost$core$Int$shim} };
 
 static frost$core$String $s1;
-frost$json$JSON$PathKey$class_type frost$json$JSON$PathKey$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Immutable$class, (ITable*) &frost$json$JSON$PathKey$_frost$collections$Key, { frost$json$JSON$PathKey$get_asString$R$frost$core$String$shim, frost$json$JSON$PathKey$cleanup$shim, frost$json$JSON$PathKey$$EQ$frost$json$JSON$PathKey$R$frost$core$Bit$shim, frost$json$JSON$PathKey$get_hash$R$frost$core$Int$shim} };
+frost$json$JSON$PathKey$class_type frost$json$JSON$PathKey$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Immutable$class, (ITable*) &frost$json$JSON$PathKey$_frost$collections$HashKey, { frost$json$JSON$PathKey$get_asString$R$frost$core$String$shim, frost$json$JSON$PathKey$cleanup$shim, frost$json$JSON$PathKey$$EQ$frost$json$JSON$PathKey$R$frost$core$Bit$shim, frost$json$JSON$PathKey$get_hash$R$frost$core$Int$shim} };
 
-typedef frost$core$Int (*$fn61)(frost$collections$Key*);
-typedef frost$core$Int (*$fn71)(frost$collections$Key*);
-typedef frost$core$Int (*$fn93)(frost$collections$Key*);
-typedef frost$core$Int (*$fn103)(frost$collections$Key*);
+typedef frost$core$Int (*$fn61)(frost$collections$HashKey*);
+typedef frost$core$Int (*$fn71)(frost$collections$HashKey*);
+typedef frost$core$Int (*$fn93)(frost$collections$HashKey*);
+typedef frost$core$Int (*$fn103)(frost$collections$HashKey*);
 typedef frost$core$String* (*$fn132)(frost$core$Object*);
 typedef frost$core$String* (*$fn151)(frost$core$Object*);
 typedef frost$core$String* (*$fn160)(frost$core$Object*);
@@ -199,12 +199,12 @@ frost$core$String$Index $tmp56 = *$tmp55;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/json/JSON.frost:43
 frost$core$Int $tmp57 = (frost$core$Int) {4907892411442390093u};
 frost$core$String* $tmp58 = *(&local0);
-ITable* $tmp59 = ((frost$collections$Key*) $tmp58)->$class->itable;
-while ($tmp59->$class != (frost$core$Class*) &frost$collections$Key$class) {
+ITable* $tmp59 = ((frost$collections$HashKey*) $tmp58)->$class->itable;
+while ($tmp59->$class != (frost$core$Class*) &frost$collections$HashKey$class) {
     $tmp59 = $tmp59->next;
 }
 $fn61 $tmp60 = $tmp59->methods[0];
-frost$core$Int $tmp62 = $tmp60(((frost$collections$Key*) $tmp58));
+frost$core$Int $tmp62 = $tmp60(((frost$collections$HashKey*) $tmp58));
 // begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from JSON.frost:43:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:365
 int64_t $tmp63 = $tmp57.value;
@@ -215,19 +215,19 @@ frost$core$String$Index $tmp67 = *(&local1);
 frost$core$String$Index$wrapper* $tmp68;
 $tmp68 = (frost$core$String$Index$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$String$Index$wrapperclass);
 $tmp68->value = $tmp67;
-ITable* $tmp69 = ((frost$collections$Key*) $tmp68)->$class->itable;
-while ($tmp69->$class != (frost$core$Class*) &frost$collections$Key$class) {
+ITable* $tmp69 = ((frost$collections$HashKey*) $tmp68)->$class->itable;
+while ($tmp69->$class != (frost$core$Class*) &frost$collections$HashKey$class) {
     $tmp69 = $tmp69->next;
 }
 $fn71 $tmp70 = $tmp69->methods[0];
-frost$core$Int $tmp72 = $tmp70(((frost$collections$Key*) $tmp68));
+frost$core$Int $tmp72 = $tmp70(((frost$collections$HashKey*) $tmp68));
 // begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from JSON.frost:43:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:365
 int64_t $tmp73 = $tmp66.value;
 int64_t $tmp74 = $tmp72.value;
 int64_t $tmp75 = $tmp73 ^ $tmp74;
 frost$core$Int $tmp76 = (frost$core$Int) {$tmp75};
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$collections$Key*) $tmp68)));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$collections$HashKey*) $tmp68)));
 frost$core$String* $tmp77 = *(&local0);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp77));
 *(&local0) = ((frost$core$String*) NULL);
@@ -255,12 +255,12 @@ frost$core$Int $tmp89 = *(&local2);
 frost$core$Int$wrapper* $tmp90;
 $tmp90 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp90->value = $tmp89;
-ITable* $tmp91 = ((frost$collections$Key*) $tmp90)->$class->itable;
-while ($tmp91->$class != (frost$core$Class*) &frost$collections$Key$class) {
+ITable* $tmp91 = ((frost$collections$HashKey*) $tmp90)->$class->itable;
+while ($tmp91->$class != (frost$core$Class*) &frost$collections$HashKey$class) {
     $tmp91 = $tmp91->next;
 }
 $fn93 $tmp92 = $tmp91->methods[0];
-frost$core$Int $tmp94 = $tmp92(((frost$collections$Key*) $tmp90));
+frost$core$Int $tmp94 = $tmp92(((frost$collections$HashKey*) $tmp90));
 // begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from JSON.frost:43:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:365
 int64_t $tmp95 = $tmp88.value;
@@ -271,20 +271,20 @@ frost$core$String$Index $tmp99 = *(&local3);
 frost$core$String$Index$wrapper* $tmp100;
 $tmp100 = (frost$core$String$Index$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$String$Index$wrapperclass);
 $tmp100->value = $tmp99;
-ITable* $tmp101 = ((frost$collections$Key*) $tmp100)->$class->itable;
-while ($tmp101->$class != (frost$core$Class*) &frost$collections$Key$class) {
+ITable* $tmp101 = ((frost$collections$HashKey*) $tmp100)->$class->itable;
+while ($tmp101->$class != (frost$core$Class*) &frost$collections$HashKey$class) {
     $tmp101 = $tmp101->next;
 }
 $fn103 $tmp102 = $tmp101->methods[0];
-frost$core$Int $tmp104 = $tmp102(((frost$collections$Key*) $tmp100));
+frost$core$Int $tmp104 = $tmp102(((frost$collections$HashKey*) $tmp100));
 // begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from JSON.frost:43:5
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:365
 int64_t $tmp105 = $tmp98.value;
 int64_t $tmp106 = $tmp104.value;
 int64_t $tmp107 = $tmp105 ^ $tmp106;
 frost$core$Int $tmp108 = (frost$core$Int) {$tmp107};
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$collections$Key*) $tmp100)));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$collections$Key*) $tmp90)));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$collections$HashKey*) $tmp100)));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$collections$HashKey*) $tmp90)));
 return $tmp108;
 block8:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/json/JSON.frost:43

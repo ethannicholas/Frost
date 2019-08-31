@@ -11,7 +11,7 @@ codepoints 0 to 65535) may be used wherever a `Char16` is expected. That is, it 
     def c:Char16 := "A"
 ====================================================================================================
 @final
-class Char16 : Value, Key<Char16>, Comparable<Char16> {
+class Char16 : Value, HashKey<Char16>, Comparable<Char16> {
     @private
     def value:builtin_uint16
 

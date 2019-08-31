@@ -85,10 +85,13 @@ class FieldLValue : LValue {
             -- should have already reported an error
             return null
         }
-        var result:IR.Value
+        var result:IR.Value?
         if field.fieldKind = FieldDecl.Kind.PROPERTY {
             result := Call.compile(compiler, position, target, "get_\{field.name}",
                     Array<ASTNode>(), TypeContext.TYPE(rawType, false))
+            if result == null {
+                return null
+            }
         }
         else {
             def load:IR.Statement.ID
@@ -105,6 +108,9 @@ class FieldLValue : LValue {
         if !compiler.inFieldCleanup & field.annotations.isWeak {
             result := Call.compile(compiler, position, result, "get", FixedArray<ASTNode>(),
                     TypeContext.UNSPECIFIED)
+            if result == null {
+                return null
+            }
         }
         if effectiveType != result.type() {
             result := compiler.cast(position, result, effectiveType)

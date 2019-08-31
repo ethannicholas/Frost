@@ -10,7 +10,7 @@ struct { frost$core$Class* cl; ITable* next; void* methods[6]; } frost$collectio
 
 struct { frost$core$Class* cl; ITable* next; void* methods[0]; } frost$collections$Map$_frost$collections$Map = { (frost$core$Class*) &frost$collections$Map$class, (ITable*) &frost$collections$Map$_frost$collections$MapView, { } };
 
-struct { frost$core$Class* cl; ITable* next; void* methods[3]; } frost$collections$Map$_frost$collections$MapWriter = { (frost$core$Class*) &frost$collections$MapWriter$class, (ITable*) &frost$collections$Map$_frost$collections$Map, { NULL, NULL, NULL} };
+struct { frost$core$Class* cl; ITable* next; void* methods[4]; } frost$collections$Map$_frost$collections$MapWriter = { (frost$core$Class*) &frost$collections$MapWriter$class, (ITable*) &frost$collections$Map$_frost$collections$Map, { NULL, NULL, NULL, NULL} };
 
 static frost$core$String $s1;
 frost$collections$Map$class_type frost$collections$Map$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Object$class, (ITable*) &frost$collections$Map$_frost$collections$MapWriter, { frost$core$Object$get_asString$R$frost$core$String, frost$core$Object$cleanup} };

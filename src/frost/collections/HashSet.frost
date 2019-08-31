@@ -3,7 +3,7 @@ package frost.collections
 uses frost.unsafe.Pointer
 
 @final
-class HashSet<T:Key<T>> : Collection<T> {
+class HashSet<T:HashKey<T>> : Collection<T> {
     @private
     def contents := HashMap<T, T>()
 
@@ -47,6 +47,11 @@ class HashSet<T:Key<T>> : Collection<T> {
 
     function contains(value:T):Bit {
         return contents.contains(value)
+    }
+
+    @override
+    method filterInPlace(test:(T)=>(Bit)) {
+        contents.filterInPlace((k, v) => test(k))
     }
 
     @override

@@ -18,6 +18,6 @@ typedef struct frost$collections$IdentityMap {
     frost$core$Int changeCount;
 } frost$collections$IdentityMap;
 #include "frost/core/Class.h"
-typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[11]; } frost$collections$IdentityMap$class_type;
+typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[12]; } frost$collections$IdentityMap$class_type;
 extern frost$collections$IdentityMap$class_type frost$collections$IdentityMap$class;
 

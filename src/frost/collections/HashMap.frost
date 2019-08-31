@@ -15,9 +15,9 @@ number of values can be stored in a `HashMap` and then retrieved in constant ave
 This will display the value `"good"`.
 ====================================================================================================
 @final
-class HashMap<K:Key<K>, V> : Map<K, V> {
+class HashMap<K:HashKey<K>, V> : Map<K, V> {
     @private
-    class Entry<K:Key<K>, V> {
+    class Entry<K:HashKey<K>, V> {
         ============================================================================================
         The entry's key.
         ============================================================================================
@@ -38,7 +38,7 @@ class HashMap<K:Key<K>, V> : Map<K, V> {
     }
 
     @private
-    class EntryIterator<K:Key<K>, V> : Iterator<(K, V)> {
+    class EntryIterator<K:HashKey<K>, V> : Iterator<(K, V)> {
         def map:HashMap<K, V>
         var bucket := 0
         var entry:Entry<K, V>? := null
@@ -289,6 +289,24 @@ class HashMap<K:Key<K>, V> : Map<K, V> {
     @override
     function get_count():Int {
         return _count
+    }
+
+    @override
+    method filterInPlace(test:(K, V)=>(Bit)) {
+        for i in 0 .. bucketCount {
+            var e := contents[i]
+            while e !== null & !test(e.key, e.value) {
+                e := e.next
+                contents[i] := e
+            }
+            var next := e.next
+            while next !== null {
+                if !test(next.key, next.value) {
+                    e.next := next
+                }
+                next := next.next
+            }
+        }
     }
 
     ================================================================================================

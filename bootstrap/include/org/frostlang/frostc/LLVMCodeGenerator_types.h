@@ -41,7 +41,7 @@ typedef struct org$frostlang$frostc$LLVMCodeGenerator {
     org$frostlang$frostc$Position lastDebugPosition;
     frost$core$String* currentBlock;
     frost$collections$IdentityMap* sizes;
-    frost$collections$IdentityMap* aligments;
+    frost$collections$IdentityMap* alignments;
     frost$collections$IdentityMap* choiceDataSizes;
     frost$collections$IdentityMap* methodShims;
     frost$collections$HashMap* refs;

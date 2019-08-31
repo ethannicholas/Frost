@@ -38,16 +38,16 @@ typedef frost$core$Int (*$fn178)(frost$collections$CollectionView*);
 typedef frost$core$Int (*$fn193)(frost$collections$CollectionView*);
 typedef frost$core$Bit (*$fn215)(frost$core$Equatable*, frost$core$Equatable*);
 typedef frost$core$Bit (*$fn230)(frost$core$Equatable*, frost$core$Equatable*);
-typedef frost$core$Bit (*$fn345)(frost$core$Equatable*, frost$core$Equatable*);
-typedef frost$core$Bit (*$fn371)(frost$core$Equatable*, frost$core$Equatable*);
-typedef frost$core$Bit (*$fn409)(frost$core$Equatable*, frost$core$Equatable*);
-typedef frost$core$Int (*$fn436)(frost$collections$CollectionView*);
-typedef frost$core$Int (*$fn453)(frost$collections$CollectionView*);
-typedef frost$core$Int (*$fn468)(frost$collections$CollectionView*);
-typedef frost$core$Bit (*$fn573)(frost$core$Equatable*, frost$core$Equatable*);
-typedef frost$core$Bit (*$fn660)(frost$core$Equatable*, frost$core$Equatable*);
-typedef frost$core$Bit (*$fn686)(frost$core$Equatable*, frost$core$Equatable*);
-typedef frost$core$Bit (*$fn718)(frost$core$Equatable*, frost$core$Equatable*);
+typedef frost$core$Bit (*$fn355)(frost$core$Equatable*, frost$core$Equatable*);
+typedef frost$core$Bit (*$fn381)(frost$core$Equatable*, frost$core$Equatable*);
+typedef frost$core$Bit (*$fn419)(frost$core$Equatable*, frost$core$Equatable*);
+typedef frost$core$Int (*$fn446)(frost$collections$CollectionView*);
+typedef frost$core$Int (*$fn463)(frost$collections$CollectionView*);
+typedef frost$core$Int (*$fn478)(frost$collections$CollectionView*);
+typedef frost$core$Bit (*$fn583)(frost$core$Equatable*, frost$core$Equatable*);
+typedef frost$core$Bit (*$fn670)(frost$core$Equatable*, frost$core$Equatable*);
+typedef frost$core$Bit (*$fn696)(frost$core$Equatable*, frost$core$Equatable*);
+typedef frost$core$Bit (*$fn728)(frost$core$Equatable*, frost$core$Equatable*);
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x72\x65\x67\x65\x78\x2e\x52\x65\x67\x65\x78\x50\x61\x72\x73\x65\x72", 31, -6942695123981101410, NULL };
 static frost$core$String $s120 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x70\x65\x63\x69\x61\x6c\x69\x7a\x65\x64\x41\x72\x72\x61\x79\x2e\x66\x72\x6f\x73\x74", 22, 6468124764262308515, NULL };
@@ -58,16 +58,20 @@ static frost$core$String $s236 = { (frost$core$Class*) &frost$core$String$class,
 static frost$core$String $s238 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2c\x20\x62\x75\x74\x20\x66\x6f\x75\x6e\x64\x20\x27", 13, -2601544468634851439, NULL };
 static frost$core$String $s249 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x27", 1, -5808629440921371546, NULL };
 static frost$core$String $s259 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2f", 1, -5808620644828345858, NULL };
-static frost$core$String $s291 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2f", 1, -5808620644828345858, NULL };
-static frost$core$String $s329 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x5d", 1, -5808499698549242648, NULL };
-static frost$core$String $s354 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x61\x6e\x20\x69\x6e\x74\x65\x67\x65\x72", 10, 3145872080886222316, NULL };
-static frost$core$String $s476 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x70\x65\x63\x69\x61\x6c\x69\x7a\x65\x64\x41\x72\x72\x61\x79\x2e\x66\x72\x6f\x73\x74", 22, 6468124764262308515, NULL };
-static frost$core$String $s477 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x53\x70\x65\x63\x69\x61\x6c\x69\x7a\x65\x64\x41\x72\x72\x61\x79\x3c\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x72\x65\x67\x65\x78\x2e\x52\x65\x67\x65\x78\x54\x6f\x6b\x65\x6e\x3e\x2e\x5b\x5d\x28\x69\x6e\x64\x65\x78\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x29\x3a\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x72\x65\x67\x65\x78\x2e\x52\x65\x67\x65\x78\x54\x6f\x6b\x65\x6e", 156, 7846330876313425210, NULL };
-static frost$core$String $s613 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x27\x29\x27", 3, -6209632553346483666, NULL };
-static frost$core$String $s631 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x27\x5d\x27", 3, -6228684890836339374, NULL };
-static frost$core$String $s643 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x61\x6e\x20\x69\x6e\x74\x65\x67\x65\x72", 10, 3145872080886222316, NULL };
-static frost$core$String $s701 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x61\x6e\x20\x69\x6e\x74\x65\x67\x65\x72", 10, 3145872080886222316, NULL };
-static frost$core$String $s733 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x27\x7d\x27", 3, -6259365663303883918, NULL };
+static frost$core$String $s271 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x46\x69\x6c\x65\x2e\x66\x72\x6f\x73\x74", 10, 1666587044368153811, NULL };
+static frost$core$String $s272 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x49\x6e\x64\x65\x78\x3f\x20\x74\x6f\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x49\x6e\x64\x65\x78", 85, -1074977990553908571, NULL };
+static frost$core$String $s296 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2f", 1, -5808620644828345858, NULL };
+static frost$core$String $s308 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x46\x69\x6c\x65\x2e\x66\x72\x6f\x73\x74", 10, 1666587044368153811, NULL };
+static frost$core$String $s309 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x49\x6e\x64\x65\x78\x3f\x20\x74\x6f\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x49\x6e\x64\x65\x78", 85, -1074977990553908571, NULL };
+static frost$core$String $s339 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x5d", 1, -5808499698549242648, NULL };
+static frost$core$String $s364 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x61\x6e\x20\x69\x6e\x74\x65\x67\x65\x72", 10, 3145872080886222316, NULL };
+static frost$core$String $s486 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x70\x65\x63\x69\x61\x6c\x69\x7a\x65\x64\x41\x72\x72\x61\x79\x2e\x66\x72\x6f\x73\x74", 22, 6468124764262308515, NULL };
+static frost$core$String $s487 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x53\x70\x65\x63\x69\x61\x6c\x69\x7a\x65\x64\x41\x72\x72\x61\x79\x3c\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x72\x65\x67\x65\x78\x2e\x52\x65\x67\x65\x78\x54\x6f\x6b\x65\x6e\x3e\x2e\x5b\x5d\x28\x69\x6e\x64\x65\x78\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x29\x3a\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x72\x65\x67\x65\x78\x2e\x52\x65\x67\x65\x78\x54\x6f\x6b\x65\x6e", 156, 7846330876313425210, NULL };
+static frost$core$String $s623 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x27\x29\x27", 3, -6209632553346483666, NULL };
+static frost$core$String $s641 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x27\x5d\x27", 3, -6228684890836339374, NULL };
+static frost$core$String $s653 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x61\x6e\x20\x69\x6e\x74\x65\x67\x65\x72", 10, 3145872080886222316, NULL };
+static frost$core$String $s711 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x61\x6e\x20\x69\x6e\x74\x65\x67\x65\x72", 10, 3145872080886222316, NULL };
+static frost$core$String $s743 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x27\x7d\x27", 3, -6259365663303883918, NULL };
 
 void org$frostlang$regex$RegexParser$init$frost$threads$MessageQueue$LTorg$frostlang$frostc$Compiler$Message$GT(org$frostlang$regex$RegexParser* param0, frost$threads$MessageQueue* param1) {
 
@@ -547,37 +551,45 @@ frost$core$String* $tmp264 = *$tmp263;
 frost$core$String** $tmp265 = &$tmp255->path;
 frost$core$String* $tmp266 = *$tmp265;
 frost$core$String$Index$nullable $tmp267 = *(&local2);
-frost$core$String$Index $tmp268 = frost$core$String$next$frost$core$String$Index$R$frost$core$String$Index($tmp266, ((frost$core$String$Index) $tmp267.value));
-frost$core$Bit $tmp269 = (frost$core$Bit) {false};
-frost$core$Range$LTfrost$core$String$Index$Q$GT $tmp270 = frost$core$Range$LTfrost$core$String$Index$Q$GT$init$frost$core$String$Index$Q$frost$core$String$Index$Q$frost$core$Bit(((frost$core$String$Index$nullable) { $tmp268, true }), ((frost$core$String$Index$nullable) { .nonnull = false }), $tmp269);
-frost$core$String* $tmp271 = frost$core$String$$IDX$frost$core$Range$LTfrost$core$String$Index$Q$GT$R$frost$core$String($tmp264, $tmp270);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp271));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp271));
-*(&local1) = $tmp271;
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp271));
+frost$core$Bit $tmp268 = (frost$core$Bit) {$tmp267.nonnull};
+bool $tmp269 = $tmp268.value;
+if ($tmp269) goto block9; else goto block10;
+block10:;
+frost$core$Int $tmp270 = (frost$core$Int) {150u};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s271, $tmp270, &$s272);
+abort(); // unreachable
+block9:;
+frost$core$String$Index $tmp273 = frost$core$String$next$frost$core$String$Index$R$frost$core$String$Index($tmp266, ((frost$core$String$Index) $tmp267.value));
+frost$core$Bit $tmp274 = (frost$core$Bit) {false};
+frost$core$Range$LTfrost$core$String$Index$Q$GT $tmp275 = frost$core$Range$LTfrost$core$String$Index$Q$GT$init$frost$core$String$Index$Q$frost$core$String$Index$Q$frost$core$Bit(((frost$core$String$Index$nullable) { $tmp273, true }), ((frost$core$String$Index$nullable) { .nonnull = false }), $tmp274);
+frost$core$String* $tmp276 = frost$core$String$$IDX$frost$core$Range$LTfrost$core$String$Index$Q$GT$R$frost$core$String($tmp264, $tmp275);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp276));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp276));
+*(&local1) = $tmp276;
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp276));
 goto block5;
 block8:;
 // <no location>
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:153
-frost$core$String** $tmp272 = &$tmp255->path;
-frost$core$String* $tmp273 = *$tmp272;
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp273));
-*(&local1) = $tmp273;
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp273));
+frost$core$String** $tmp277 = &$tmp255->path;
+frost$core$String* $tmp278 = *$tmp277;
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp278));
+*(&local1) = $tmp278;
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp278));
 goto block5;
 block7:;
 goto block5;
 block5:;
-frost$core$String* $tmp274 = *(&local1);
-org$frostlang$frostc$Position $tmp275 = $tmp234.position;
-frost$core$Int $tmp276 = $tmp275.line;
-org$frostlang$frostc$Position $tmp277 = $tmp234.position;
-frost$core$Int $tmp278 = $tmp277.column;
-org$frostlang$frostc$Compiler$Message$init$frost$core$Int$frost$core$String$frost$core$Int$frost$core$Int$frost$core$String($tmp252, $tmp253, $tmp274, $tmp276, $tmp278, $tmp248);
-frost$threads$MessageQueue$post$frost$threads$MessageQueue$T($tmp251, ((frost$core$Immutable*) $tmp252));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp274));
 frost$core$String* $tmp279 = *(&local1);
+org$frostlang$frostc$Position $tmp280 = $tmp234.position;
+frost$core$Int $tmp281 = $tmp280.line;
+org$frostlang$frostc$Position $tmp282 = $tmp234.position;
+frost$core$Int $tmp283 = $tmp282.column;
+org$frostlang$frostc$Compiler$Message$init$frost$core$Int$frost$core$String$frost$core$Int$frost$core$Int$frost$core$String($tmp252, $tmp253, $tmp279, $tmp281, $tmp283, $tmp248);
+frost$threads$MessageQueue$post$frost$threads$MessageQueue$T($tmp251, ((frost$core$Immutable*) $tmp252));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp279));
+frost$core$String* $tmp284 = *(&local1);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp284));
 *(&local1) = ((frost$core$String*) NULL);
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp252));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp248));
@@ -586,8 +598,8 @@ frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp246));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp237));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp235));
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:71
-frost$core$Bit $tmp280 = (frost$core$Bit) {false};
-return $tmp280;
+frost$core$Bit $tmp285 = (frost$core$Bit) {false};
+return $tmp285;
 
 }
 void org$frostlang$regex$RegexParser$error$org$frostlang$regex$RegexToken$frost$core$String(org$frostlang$regex$RegexParser* param0, org$frostlang$regex$RegexToken param1, frost$core$String* param2) {
@@ -595,83 +607,91 @@ void org$frostlang$regex$RegexParser$error$org$frostlang$regex$RegexToken$frost$
 frost$core$String* local0 = NULL;
 frost$core$String$Index$nullable local1;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:75
-frost$threads$MessageQueue** $tmp281 = &param0->errors;
-frost$threads$MessageQueue* $tmp282 = *$tmp281;
+frost$threads$MessageQueue** $tmp286 = &param0->errors;
+frost$threads$MessageQueue* $tmp287 = *$tmp286;
 FROST_ASSERT(56 == sizeof(org$frostlang$frostc$Compiler$Message));
-org$frostlang$frostc$Compiler$Message* $tmp283 = (org$frostlang$frostc$Compiler$Message*) frostObjectAlloc(56, (frost$core$Class*) &org$frostlang$frostc$Compiler$Message$class);
-frost$core$Int $tmp284 = (frost$core$Int) {0u};
-frost$io$File** $tmp285 = &param0->path;
-frost$io$File* $tmp286 = *$tmp285;
+org$frostlang$frostc$Compiler$Message* $tmp288 = (org$frostlang$frostc$Compiler$Message*) frostObjectAlloc(56, (frost$core$Class*) &org$frostlang$frostc$Compiler$Message$class);
+frost$core$Int $tmp289 = (frost$core$Int) {0u};
+frost$io$File** $tmp290 = &param0->path;
+frost$io$File* $tmp291 = *$tmp290;
 // begin inline call to function frost.io.File.get_name():frost.core.String from RegexParser.frost:75:48
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:148
-frost$core$String** $tmp287 = &$tmp286->path;
-frost$core$String* $tmp288 = *$tmp287;
+frost$core$String** $tmp292 = &$tmp291->path;
+frost$core$String* $tmp293 = *$tmp292;
 // begin inline call to function frost.core.String.lastIndexOf(s:frost.core.String):frost.core.String.Index? from File.frost:148:38
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:1012
-frost$core$String$Index $tmp289 = frost$core$String$get_end$R$frost$core$String$Index($tmp288);
-frost$core$String$Index$nullable $tmp290 = frost$core$String$lastIndexOf$frost$core$String$frost$core$String$Index$R$frost$core$String$Index$Q($tmp288, &$s291, $tmp289);
-*(&local1) = $tmp290;
+frost$core$String$Index $tmp294 = frost$core$String$get_end$R$frost$core$String$Index($tmp293);
+frost$core$String$Index$nullable $tmp295 = frost$core$String$lastIndexOf$frost$core$String$frost$core$String$Index$R$frost$core$String$Index$Q($tmp293, &$s296, $tmp294);
+*(&local1) = $tmp295;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:149
-frost$core$String$Index$nullable $tmp292 = *(&local1);
-frost$core$Bit $tmp293 = (frost$core$Bit) {$tmp292.nonnull};
-bool $tmp294 = $tmp293.value;
-if ($tmp294) goto block3; else goto block5;
+frost$core$String$Index$nullable $tmp297 = *(&local1);
+frost$core$Bit $tmp298 = (frost$core$Bit) {$tmp297.nonnull};
+bool $tmp299 = $tmp298.value;
+if ($tmp299) goto block3; else goto block5;
 block3:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:150
-frost$core$String** $tmp295 = &$tmp286->path;
-frost$core$String* $tmp296 = *$tmp295;
-frost$core$String** $tmp297 = &$tmp286->path;
-frost$core$String* $tmp298 = *$tmp297;
-frost$core$String$Index$nullable $tmp299 = *(&local1);
-frost$core$String$Index $tmp300 = frost$core$String$next$frost$core$String$Index$R$frost$core$String$Index($tmp298, ((frost$core$String$Index) $tmp299.value));
-frost$core$Bit $tmp301 = (frost$core$Bit) {false};
-frost$core$Range$LTfrost$core$String$Index$Q$GT $tmp302 = frost$core$Range$LTfrost$core$String$Index$Q$GT$init$frost$core$String$Index$Q$frost$core$String$Index$Q$frost$core$Bit(((frost$core$String$Index$nullable) { $tmp300, true }), ((frost$core$String$Index$nullable) { .nonnull = false }), $tmp301);
-frost$core$String* $tmp303 = frost$core$String$$IDX$frost$core$Range$LTfrost$core$String$Index$Q$GT$R$frost$core$String($tmp296, $tmp302);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp303));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp303));
-*(&local0) = $tmp303;
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp303));
+frost$core$String** $tmp300 = &$tmp291->path;
+frost$core$String* $tmp301 = *$tmp300;
+frost$core$String** $tmp302 = &$tmp291->path;
+frost$core$String* $tmp303 = *$tmp302;
+frost$core$String$Index$nullable $tmp304 = *(&local1);
+frost$core$Bit $tmp305 = (frost$core$Bit) {$tmp304.nonnull};
+bool $tmp306 = $tmp305.value;
+if ($tmp306) goto block6; else goto block7;
+block7:;
+frost$core$Int $tmp307 = (frost$core$Int) {150u};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s308, $tmp307, &$s309);
+abort(); // unreachable
+block6:;
+frost$core$String$Index $tmp310 = frost$core$String$next$frost$core$String$Index$R$frost$core$String$Index($tmp303, ((frost$core$String$Index) $tmp304.value));
+frost$core$Bit $tmp311 = (frost$core$Bit) {false};
+frost$core$Range$LTfrost$core$String$Index$Q$GT $tmp312 = frost$core$Range$LTfrost$core$String$Index$Q$GT$init$frost$core$String$Index$Q$frost$core$String$Index$Q$frost$core$Bit(((frost$core$String$Index$nullable) { $tmp310, true }), ((frost$core$String$Index$nullable) { .nonnull = false }), $tmp311);
+frost$core$String* $tmp313 = frost$core$String$$IDX$frost$core$Range$LTfrost$core$String$Index$Q$GT$R$frost$core$String($tmp301, $tmp312);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp313));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp313));
+*(&local0) = $tmp313;
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp313));
 goto block1;
 block5:;
 // <no location>
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:153
-frost$core$String** $tmp304 = &$tmp286->path;
-frost$core$String* $tmp305 = *$tmp304;
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp305));
-*(&local0) = $tmp305;
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp305));
+frost$core$String** $tmp314 = &$tmp291->path;
+frost$core$String* $tmp315 = *$tmp314;
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp315));
+*(&local0) = $tmp315;
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp315));
 goto block1;
 block4:;
 goto block1;
 block1:;
-frost$core$String* $tmp306 = *(&local0);
-org$frostlang$frostc$Position $tmp307 = param1.position;
-frost$core$Int $tmp308 = $tmp307.line;
-org$frostlang$frostc$Position $tmp309 = param1.position;
-frost$core$Int $tmp310 = $tmp309.column;
-org$frostlang$frostc$Compiler$Message$init$frost$core$Int$frost$core$String$frost$core$Int$frost$core$Int$frost$core$String($tmp283, $tmp284, $tmp306, $tmp308, $tmp310, param2);
-frost$threads$MessageQueue$post$frost$threads$MessageQueue$T($tmp282, ((frost$core$Immutable*) $tmp283));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp306));
-frost$core$String* $tmp311 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp311));
+frost$core$String* $tmp316 = *(&local0);
+org$frostlang$frostc$Position $tmp317 = param1.position;
+frost$core$Int $tmp318 = $tmp317.line;
+org$frostlang$frostc$Position $tmp319 = param1.position;
+frost$core$Int $tmp320 = $tmp319.column;
+org$frostlang$frostc$Compiler$Message$init$frost$core$Int$frost$core$String$frost$core$Int$frost$core$Int$frost$core$String($tmp288, $tmp289, $tmp316, $tmp318, $tmp320, param2);
+frost$threads$MessageQueue$post$frost$threads$MessageQueue$T($tmp287, ((frost$core$Immutable*) $tmp288));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp316));
+frost$core$String* $tmp321 = *(&local0);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp321));
 *(&local0) = ((frost$core$String*) NULL);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp283));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp288));
 return;
 
 }
 frost$core$String* org$frostlang$regex$RegexParser$text$org$frostlang$regex$RegexToken$R$frost$core$String(org$frostlang$regex$RegexParser* param0, org$frostlang$regex$RegexToken param1) {
 
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:80
-frost$core$String** $tmp312 = &param0->source;
-frost$core$String* $tmp313 = *$tmp312;
-frost$core$String$Index $tmp314 = param1.start;
-frost$core$String$Index $tmp315 = param1.end;
-frost$core$Bit $tmp316 = (frost$core$Bit) {false};
-frost$core$Range$LTfrost$core$String$Index$GT $tmp317 = frost$core$Range$LTfrost$core$String$Index$GT$init$frost$core$String$Index$frost$core$String$Index$frost$core$Bit($tmp314, $tmp315, $tmp316);
-frost$core$String* $tmp318 = frost$core$String$substring$frost$core$Range$LTfrost$core$String$Index$GT$R$frost$core$String($tmp313, $tmp317);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp318));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp318));
-return $tmp318;
+frost$core$String** $tmp322 = &param0->source;
+frost$core$String* $tmp323 = *$tmp322;
+frost$core$String$Index $tmp324 = param1.start;
+frost$core$String$Index $tmp325 = param1.end;
+frost$core$Bit $tmp326 = (frost$core$Bit) {false};
+frost$core$Range$LTfrost$core$String$Index$GT $tmp327 = frost$core$Range$LTfrost$core$String$Index$GT$init$frost$core$String$Index$frost$core$String$Index$frost$core$Bit($tmp324, $tmp325, $tmp326);
+frost$core$String* $tmp328 = frost$core$String$substring$frost$core$Range$LTfrost$core$String$Index$GT$R$frost$core$String($tmp323, $tmp327);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp328));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp328));
+return $tmp328;
 
 }
 frost$core$Bit org$frostlang$regex$RegexParser$characterClass$R$frost$core$Bit(org$frostlang$regex$RegexParser* param0) {
@@ -683,68 +703,68 @@ org$frostlang$regex$RegexToken$Kind local2;
 goto block1;
 block1:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:88
-org$frostlang$regex$RegexToken $tmp319 = org$frostlang$regex$RegexParser$next$R$org$frostlang$regex$RegexToken(param0);
-*(&local0) = $tmp319;
+org$frostlang$regex$RegexToken $tmp329 = org$frostlang$regex$RegexParser$next$R$org$frostlang$regex$RegexToken(param0);
+*(&local0) = $tmp329;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:89
-org$frostlang$regex$RegexToken $tmp320 = *(&local0);
+org$frostlang$regex$RegexToken $tmp330 = *(&local0);
 // begin inline call to function org.frostlang.regex.RegexParser.text(token:org.frostlang.regex.RegexToken):frost.core.String from RegexParser.frost:89:20
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:80
-frost$core$String** $tmp321 = &param0->source;
-frost$core$String* $tmp322 = *$tmp321;
-frost$core$String$Index $tmp323 = $tmp320.start;
-frost$core$String$Index $tmp324 = $tmp320.end;
-frost$core$Bit $tmp325 = (frost$core$Bit) {false};
-frost$core$Range$LTfrost$core$String$Index$GT $tmp326 = frost$core$Range$LTfrost$core$String$Index$GT$init$frost$core$String$Index$frost$core$String$Index$frost$core$Bit($tmp323, $tmp324, $tmp325);
-frost$core$String* $tmp327 = frost$core$String$substring$frost$core$Range$LTfrost$core$String$Index$GT$R$frost$core$String($tmp322, $tmp326);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp327));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp327));
-frost$core$Bit $tmp328 = frost$core$String$$EQ$frost$core$String$R$frost$core$Bit($tmp327, &$s329);
-bool $tmp330 = $tmp328.value;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp327));
-if ($tmp330) goto block3; else goto block4;
+frost$core$String** $tmp331 = &param0->source;
+frost$core$String* $tmp332 = *$tmp331;
+frost$core$String$Index $tmp333 = $tmp330.start;
+frost$core$String$Index $tmp334 = $tmp330.end;
+frost$core$Bit $tmp335 = (frost$core$Bit) {false};
+frost$core$Range$LTfrost$core$String$Index$GT $tmp336 = frost$core$Range$LTfrost$core$String$Index$GT$init$frost$core$String$Index$frost$core$String$Index$frost$core$Bit($tmp333, $tmp334, $tmp335);
+frost$core$String* $tmp337 = frost$core$String$substring$frost$core$Range$LTfrost$core$String$Index$GT$R$frost$core$String($tmp332, $tmp336);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp337));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp337));
+frost$core$Bit $tmp338 = frost$core$String$$EQ$frost$core$String$R$frost$core$Bit($tmp337, &$s339);
+bool $tmp340 = $tmp338.value;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp337));
+if ($tmp340) goto block3; else goto block4;
 block3:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:90
-org$frostlang$regex$RegexToken $tmp331 = *(&local0);
+org$frostlang$regex$RegexToken $tmp341 = *(&local0);
 // begin inline call to method org.frostlang.regex.RegexParser.pushback(token:org.frostlang.regex.RegexToken) from RegexParser.frost:90:25
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:46
-frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT** $tmp332 = &param0->pushbackBuffer;
-frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT* $tmp333 = *$tmp332;
-frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$add$org$frostlang$regex$RegexToken($tmp333, $tmp331);
+frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT** $tmp342 = &param0->pushbackBuffer;
+frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT* $tmp343 = *$tmp342;
+frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$add$org$frostlang$regex$RegexToken($tmp343, $tmp341);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:91
-frost$core$Bit $tmp334 = (frost$core$Bit) {true};
-return $tmp334;
+frost$core$Bit $tmp344 = (frost$core$Bit) {true};
+return $tmp344;
 block4:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:93
-org$frostlang$regex$RegexToken $tmp335 = *(&local0);
-org$frostlang$regex$RegexToken$Kind $tmp336 = $tmp335.kind;
-org$frostlang$regex$RegexToken$Kind$wrapper* $tmp337;
-$tmp337 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
-$tmp337->value = $tmp336;
-frost$core$Int $tmp338 = (frost$core$Int) {0u};
+org$frostlang$regex$RegexToken $tmp345 = *(&local0);
+org$frostlang$regex$RegexToken$Kind $tmp346 = $tmp345.kind;
+org$frostlang$regex$RegexToken$Kind$wrapper* $tmp347;
+$tmp347 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
+$tmp347->value = $tmp346;
+frost$core$Int $tmp348 = (frost$core$Int) {0u};
 // begin inline call to org.frostlang.regex.RegexToken.Kind.init(rv:frost.core.Int):org.frostlang.regex.RegexToken.Kind from RegexParser.frost:93:43
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
-frost$core$Int* $tmp339 = &(&local2)->$rawValue;
-*$tmp339 = $tmp338;
-org$frostlang$regex$RegexToken$Kind $tmp340 = *(&local2);
-*(&local1) = $tmp340;
-org$frostlang$regex$RegexToken$Kind $tmp341 = *(&local1);
-org$frostlang$regex$RegexToken$Kind$wrapper* $tmp342;
-$tmp342 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
-$tmp342->value = $tmp341;
-ITable* $tmp343 = ((frost$core$Equatable*) $tmp337)->$class->itable;
-while ($tmp343->$class != (frost$core$Class*) &frost$core$Equatable$class) {
-    $tmp343 = $tmp343->next;
+frost$core$Int* $tmp349 = &(&local2)->$rawValue;
+*$tmp349 = $tmp348;
+org$frostlang$regex$RegexToken$Kind $tmp350 = *(&local2);
+*(&local1) = $tmp350;
+org$frostlang$regex$RegexToken$Kind $tmp351 = *(&local1);
+org$frostlang$regex$RegexToken$Kind$wrapper* $tmp352;
+$tmp352 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
+$tmp352->value = $tmp351;
+ITable* $tmp353 = ((frost$core$Equatable*) $tmp347)->$class->itable;
+while ($tmp353->$class != (frost$core$Class*) &frost$core$Equatable$class) {
+    $tmp353 = $tmp353->next;
 }
-$fn345 $tmp344 = $tmp343->methods[0];
-frost$core$Bit $tmp346 = $tmp344(((frost$core$Equatable*) $tmp337), ((frost$core$Equatable*) $tmp342));
-bool $tmp347 = $tmp346.value;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Equatable*) $tmp342)));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Equatable*) $tmp337)));
-if ($tmp347) goto block7; else goto block8;
+$fn355 $tmp354 = $tmp353->methods[0];
+frost$core$Bit $tmp356 = $tmp354(((frost$core$Equatable*) $tmp347), ((frost$core$Equatable*) $tmp352));
+bool $tmp357 = $tmp356.value;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Equatable*) $tmp352)));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Equatable*) $tmp347)));
+if ($tmp357) goto block7; else goto block8;
 block7:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:94
-frost$core$Bit $tmp348 = (frost$core$Bit) {false};
-return $tmp348;
+frost$core$Bit $tmp358 = (frost$core$Bit) {false};
+return $tmp358;
 block8:;
 goto block1;
 block2:;
@@ -761,88 +781,88 @@ org$frostlang$regex$RegexToken$Kind local3;
 frost$core$Bit local4;
 org$frostlang$regex$RegexToken local5;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:103
-frost$core$Int $tmp349 = (frost$core$Int) {4u};
+frost$core$Int $tmp359 = (frost$core$Int) {4u};
 // begin inline call to org.frostlang.regex.RegexToken.Kind.init(rv:frost.core.Int):org.frostlang.regex.RegexToken.Kind from RegexParser.frost:103:35
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
-frost$core$Int* $tmp350 = &(&local1)->$rawValue;
-*$tmp350 = $tmp349;
-org$frostlang$regex$RegexToken$Kind $tmp351 = *(&local1);
-*(&local0) = $tmp351;
-org$frostlang$regex$RegexToken$Kind $tmp352 = *(&local0);
-frost$core$Bit $tmp353 = org$frostlang$regex$RegexParser$expect$org$frostlang$regex$RegexToken$Kind$frost$core$String$R$frost$core$Bit(param0, $tmp352, &$s354);
+frost$core$Int* $tmp360 = &(&local1)->$rawValue;
+*$tmp360 = $tmp359;
+org$frostlang$regex$RegexToken$Kind $tmp361 = *(&local1);
+*(&local0) = $tmp361;
+org$frostlang$regex$RegexToken$Kind $tmp362 = *(&local0);
+frost$core$Bit $tmp363 = org$frostlang$regex$RegexParser$expect$org$frostlang$regex$RegexToken$Kind$frost$core$String$R$frost$core$Bit(param0, $tmp362, &$s364);
 // begin inline call to function frost.core.Bit.!():frost.core.Bit from RegexParser.frost:103:12
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
-bool $tmp355 = $tmp353.value;
-bool $tmp356 = !$tmp355;
-frost$core$Bit $tmp357 = (frost$core$Bit) {$tmp356};
-bool $tmp358 = $tmp357.value;
-if ($tmp358) goto block1; else goto block2;
+bool $tmp365 = $tmp363.value;
+bool $tmp366 = !$tmp365;
+frost$core$Bit $tmp367 = (frost$core$Bit) {$tmp366};
+bool $tmp368 = $tmp367.value;
+if ($tmp368) goto block1; else goto block2;
 block1:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:104
-frost$core$Bit $tmp359 = (frost$core$Bit) {false};
-return $tmp359;
+frost$core$Bit $tmp369 = (frost$core$Bit) {false};
+return $tmp369;
 block2:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:106
 goto block5;
 block5:;
-frost$core$Int $tmp360 = (frost$core$Int) {4u};
+frost$core$Int $tmp370 = (frost$core$Int) {4u};
 // begin inline call to org.frostlang.regex.RegexToken.Kind.init(rv:frost.core.Int):org.frostlang.regex.RegexToken.Kind from RegexParser.frost:106:40
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
-frost$core$Int* $tmp361 = &(&local3)->$rawValue;
-*$tmp361 = $tmp360;
-org$frostlang$regex$RegexToken$Kind $tmp362 = *(&local3);
-*(&local2) = $tmp362;
-org$frostlang$regex$RegexToken$Kind $tmp363 = *(&local2);
+frost$core$Int* $tmp371 = &(&local3)->$rawValue;
+*$tmp371 = $tmp370;
+org$frostlang$regex$RegexToken$Kind $tmp372 = *(&local3);
+*(&local2) = $tmp372;
+org$frostlang$regex$RegexToken$Kind $tmp373 = *(&local2);
 // begin inline call to method org.frostlang.regex.RegexParser.checkNext(kind:org.frostlang.regex.RegexToken.Kind):frost.core.Bit from RegexParser.frost:106:24
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:57
-org$frostlang$regex$RegexToken $tmp364 = org$frostlang$regex$RegexParser$next$R$org$frostlang$regex$RegexToken(param0);
-*(&local5) = $tmp364;
+org$frostlang$regex$RegexToken $tmp374 = org$frostlang$regex$RegexParser$next$R$org$frostlang$regex$RegexToken(param0);
+*(&local5) = $tmp374;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:58
-org$frostlang$regex$RegexToken $tmp365 = *(&local5);
-org$frostlang$regex$RegexToken$Kind $tmp366 = $tmp365.kind;
-org$frostlang$regex$RegexToken$Kind$wrapper* $tmp367;
-$tmp367 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
-$tmp367->value = $tmp366;
-org$frostlang$regex$RegexToken$Kind$wrapper* $tmp368;
-$tmp368 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
-$tmp368->value = $tmp363;
-ITable* $tmp369 = ((frost$core$Equatable*) $tmp367)->$class->itable;
-while ($tmp369->$class != (frost$core$Class*) &frost$core$Equatable$class) {
-    $tmp369 = $tmp369->next;
+org$frostlang$regex$RegexToken $tmp375 = *(&local5);
+org$frostlang$regex$RegexToken$Kind $tmp376 = $tmp375.kind;
+org$frostlang$regex$RegexToken$Kind$wrapper* $tmp377;
+$tmp377 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
+$tmp377->value = $tmp376;
+org$frostlang$regex$RegexToken$Kind$wrapper* $tmp378;
+$tmp378 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
+$tmp378->value = $tmp373;
+ITable* $tmp379 = ((frost$core$Equatable*) $tmp377)->$class->itable;
+while ($tmp379->$class != (frost$core$Class*) &frost$core$Equatable$class) {
+    $tmp379 = $tmp379->next;
 }
-$fn371 $tmp370 = $tmp369->methods[0];
-frost$core$Bit $tmp372 = $tmp370(((frost$core$Equatable*) $tmp367), ((frost$core$Equatable*) $tmp368));
-bool $tmp373 = $tmp372.value;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Equatable*) $tmp368)));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Equatable*) $tmp367)));
-if ($tmp373) goto block10; else goto block11;
+$fn381 $tmp380 = $tmp379->methods[0];
+frost$core$Bit $tmp382 = $tmp380(((frost$core$Equatable*) $tmp377), ((frost$core$Equatable*) $tmp378));
+bool $tmp383 = $tmp382.value;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Equatable*) $tmp378)));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Equatable*) $tmp377)));
+if ($tmp383) goto block10; else goto block11;
 block10:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:59
-frost$core$Bit $tmp374 = (frost$core$Bit) {true};
-*(&local4) = $tmp374;
+frost$core$Bit $tmp384 = (frost$core$Bit) {true};
+*(&local4) = $tmp384;
 goto block9;
 block11:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:61
-org$frostlang$regex$RegexToken $tmp375 = *(&local5);
+org$frostlang$regex$RegexToken $tmp385 = *(&local5);
 // begin inline call to method org.frostlang.regex.RegexParser.pushback(token:org.frostlang.regex.RegexToken) from RegexParser.frost:61:17
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:46
-frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT** $tmp376 = &param0->pushbackBuffer;
-frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT* $tmp377 = *$tmp376;
-frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$add$org$frostlang$regex$RegexToken($tmp377, $tmp375);
+frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT** $tmp386 = &param0->pushbackBuffer;
+frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT* $tmp387 = *$tmp386;
+frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$add$org$frostlang$regex$RegexToken($tmp387, $tmp385);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:62
-frost$core$Bit $tmp378 = (frost$core$Bit) {false};
-*(&local4) = $tmp378;
+frost$core$Bit $tmp388 = (frost$core$Bit) {false};
+*(&local4) = $tmp388;
 goto block9;
 block9:;
-frost$core$Bit $tmp379 = *(&local4);
-bool $tmp380 = $tmp379.value;
-if ($tmp380) goto block6; else goto block7;
+frost$core$Bit $tmp389 = *(&local4);
+bool $tmp390 = $tmp389.value;
+if ($tmp390) goto block6; else goto block7;
 block6:;
 goto block5;
 block7:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:108
-frost$core$Bit $tmp381 = (frost$core$Bit) {true};
-return $tmp381;
+frost$core$Bit $tmp391 = (frost$core$Bit) {true};
+return $tmp391;
 
 }
 frost$core$Bit org$frostlang$regex$RegexParser$metacharacter$R$frost$core$Bit(org$frostlang$regex$RegexParser* param0) {
@@ -853,239 +873,239 @@ org$frostlang$regex$RegexToken$Kind local2;
 frost$core$Bit local3;
 org$frostlang$regex$RegexToken local4;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:115
-org$frostlang$regex$RegexToken $tmp382 = org$frostlang$regex$RegexParser$next$R$org$frostlang$regex$RegexToken(param0);
-*(&local0) = $tmp382;
+org$frostlang$regex$RegexToken $tmp392 = org$frostlang$regex$RegexParser$next$R$org$frostlang$regex$RegexToken(param0);
+*(&local0) = $tmp392;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:116
-org$frostlang$regex$RegexToken $tmp383 = *(&local0);
-org$frostlang$regex$RegexToken$Kind $tmp384 = $tmp383.kind;
-frost$core$Int $tmp385 = $tmp384.$rawValue;
-frost$core$Int $tmp386 = (frost$core$Int) {5u};
+org$frostlang$regex$RegexToken $tmp393 = *(&local0);
+org$frostlang$regex$RegexToken$Kind $tmp394 = $tmp393.kind;
+frost$core$Int $tmp395 = $tmp394.$rawValue;
+frost$core$Int $tmp396 = (frost$core$Int) {5u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexParser.frost:117:33
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
-int64_t $tmp387 = $tmp385.value;
-int64_t $tmp388 = $tmp386.value;
-bool $tmp389 = $tmp387 == $tmp388;
-frost$core$Bit $tmp390 = (frost$core$Bit) {$tmp389};
-bool $tmp391 = $tmp390.value;
-if ($tmp391) goto block2; else goto block3;
+int64_t $tmp397 = $tmp395.value;
+int64_t $tmp398 = $tmp396.value;
+bool $tmp399 = $tmp397 == $tmp398;
+frost$core$Bit $tmp400 = (frost$core$Bit) {$tmp399};
+bool $tmp401 = $tmp400.value;
+if ($tmp401) goto block2; else goto block3;
 block3:;
-frost$core$Int $tmp392 = (frost$core$Int) {6u};
+frost$core$Int $tmp402 = (frost$core$Int) {6u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexParser.frost:117:55
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
-int64_t $tmp393 = $tmp385.value;
-int64_t $tmp394 = $tmp392.value;
-bool $tmp395 = $tmp393 == $tmp394;
-frost$core$Bit $tmp396 = (frost$core$Bit) {$tmp395};
-bool $tmp397 = $tmp396.value;
-if ($tmp397) goto block2; else goto block5;
+int64_t $tmp403 = $tmp395.value;
+int64_t $tmp404 = $tmp402.value;
+bool $tmp405 = $tmp403 == $tmp404;
+frost$core$Bit $tmp406 = (frost$core$Bit) {$tmp405};
+bool $tmp407 = $tmp406.value;
+if ($tmp407) goto block2; else goto block5;
 block2:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:118
-frost$core$Int $tmp398 = (frost$core$Int) {7u};
+frost$core$Int $tmp408 = (frost$core$Int) {7u};
 // begin inline call to org.frostlang.regex.RegexToken.Kind.init(rv:frost.core.Int):org.frostlang.regex.RegexToken.Kind from RegexParser.frost:118:42
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
-frost$core$Int* $tmp399 = &(&local2)->$rawValue;
-*$tmp399 = $tmp398;
-org$frostlang$regex$RegexToken$Kind $tmp400 = *(&local2);
-*(&local1) = $tmp400;
-org$frostlang$regex$RegexToken$Kind $tmp401 = *(&local1);
+frost$core$Int* $tmp409 = &(&local2)->$rawValue;
+*$tmp409 = $tmp408;
+org$frostlang$regex$RegexToken$Kind $tmp410 = *(&local2);
+*(&local1) = $tmp410;
+org$frostlang$regex$RegexToken$Kind $tmp411 = *(&local1);
 // begin inline call to method org.frostlang.regex.RegexParser.checkNext(kind:org.frostlang.regex.RegexToken.Kind):frost.core.Bit from RegexParser.frost:118:26
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:57
-org$frostlang$regex$RegexToken $tmp402 = org$frostlang$regex$RegexParser$next$R$org$frostlang$regex$RegexToken(param0);
-*(&local4) = $tmp402;
+org$frostlang$regex$RegexToken $tmp412 = org$frostlang$regex$RegexParser$next$R$org$frostlang$regex$RegexToken(param0);
+*(&local4) = $tmp412;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:58
-org$frostlang$regex$RegexToken $tmp403 = *(&local4);
-org$frostlang$regex$RegexToken$Kind $tmp404 = $tmp403.kind;
-org$frostlang$regex$RegexToken$Kind$wrapper* $tmp405;
-$tmp405 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
-$tmp405->value = $tmp404;
-org$frostlang$regex$RegexToken$Kind$wrapper* $tmp406;
-$tmp406 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
-$tmp406->value = $tmp401;
-ITable* $tmp407 = ((frost$core$Equatable*) $tmp405)->$class->itable;
-while ($tmp407->$class != (frost$core$Class*) &frost$core$Equatable$class) {
-    $tmp407 = $tmp407->next;
+org$frostlang$regex$RegexToken $tmp413 = *(&local4);
+org$frostlang$regex$RegexToken$Kind $tmp414 = $tmp413.kind;
+org$frostlang$regex$RegexToken$Kind$wrapper* $tmp415;
+$tmp415 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
+$tmp415->value = $tmp414;
+org$frostlang$regex$RegexToken$Kind$wrapper* $tmp416;
+$tmp416 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
+$tmp416->value = $tmp411;
+ITable* $tmp417 = ((frost$core$Equatable*) $tmp415)->$class->itable;
+while ($tmp417->$class != (frost$core$Class*) &frost$core$Equatable$class) {
+    $tmp417 = $tmp417->next;
 }
-$fn409 $tmp408 = $tmp407->methods[0];
-frost$core$Bit $tmp410 = $tmp408(((frost$core$Equatable*) $tmp405), ((frost$core$Equatable*) $tmp406));
-bool $tmp411 = $tmp410.value;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Equatable*) $tmp406)));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Equatable*) $tmp405)));
-if ($tmp411) goto block9; else goto block10;
+$fn419 $tmp418 = $tmp417->methods[0];
+frost$core$Bit $tmp420 = $tmp418(((frost$core$Equatable*) $tmp415), ((frost$core$Equatable*) $tmp416));
+bool $tmp421 = $tmp420.value;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Equatable*) $tmp416)));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Equatable*) $tmp415)));
+if ($tmp421) goto block9; else goto block10;
 block9:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:59
-frost$core$Bit $tmp412 = (frost$core$Bit) {true};
-*(&local3) = $tmp412;
+frost$core$Bit $tmp422 = (frost$core$Bit) {true};
+*(&local3) = $tmp422;
 goto block8;
 block10:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:61
-org$frostlang$regex$RegexToken $tmp413 = *(&local4);
+org$frostlang$regex$RegexToken $tmp423 = *(&local4);
 // begin inline call to method org.frostlang.regex.RegexParser.pushback(token:org.frostlang.regex.RegexToken) from RegexParser.frost:61:17
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:46
-frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT** $tmp414 = &param0->pushbackBuffer;
-frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT* $tmp415 = *$tmp414;
-frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$add$org$frostlang$regex$RegexToken($tmp415, $tmp413);
+frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT** $tmp424 = &param0->pushbackBuffer;
+frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT* $tmp425 = *$tmp424;
+frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$add$org$frostlang$regex$RegexToken($tmp425, $tmp423);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:62
-frost$core$Bit $tmp416 = (frost$core$Bit) {false};
-*(&local3) = $tmp416;
+frost$core$Bit $tmp426 = (frost$core$Bit) {false};
+*(&local3) = $tmp426;
 goto block8;
 block8:;
-frost$core$Bit $tmp417 = *(&local3);
+frost$core$Bit $tmp427 = *(&local3);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:119
-frost$core$Bit $tmp418 = (frost$core$Bit) {true};
-return $tmp418;
+frost$core$Bit $tmp428 = (frost$core$Bit) {true};
+return $tmp428;
 block5:;
-frost$core$Int $tmp419 = (frost$core$Int) {7u};
+frost$core$Int $tmp429 = (frost$core$Int) {7u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexParser.frost:121:33
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
-int64_t $tmp420 = $tmp385.value;
-int64_t $tmp421 = $tmp419.value;
-bool $tmp422 = $tmp420 == $tmp421;
-frost$core$Bit $tmp423 = (frost$core$Bit) {$tmp422};
-bool $tmp424 = $tmp423.value;
-if ($tmp424) goto block12; else goto block13;
+int64_t $tmp430 = $tmp395.value;
+int64_t $tmp431 = $tmp429.value;
+bool $tmp432 = $tmp430 == $tmp431;
+frost$core$Bit $tmp433 = (frost$core$Bit) {$tmp432};
+bool $tmp434 = $tmp433.value;
+if ($tmp434) goto block12; else goto block13;
 block12:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:122
-frost$core$Bit $tmp425 = (frost$core$Bit) {true};
-return $tmp425;
+frost$core$Bit $tmp435 = (frost$core$Bit) {true};
+return $tmp435;
 block13:;
-frost$core$Int $tmp426 = (frost$core$Int) {17u};
+frost$core$Int $tmp436 = (frost$core$Int) {17u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexParser.frost:124:33
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
-int64_t $tmp427 = $tmp385.value;
-int64_t $tmp428 = $tmp426.value;
-bool $tmp429 = $tmp427 == $tmp428;
-frost$core$Bit $tmp430 = (frost$core$Bit) {$tmp429};
-bool $tmp431 = $tmp430.value;
-if ($tmp431) goto block15; else goto block16;
+int64_t $tmp437 = $tmp395.value;
+int64_t $tmp438 = $tmp436.value;
+bool $tmp439 = $tmp437 == $tmp438;
+frost$core$Bit $tmp440 = (frost$core$Bit) {$tmp439};
+bool $tmp441 = $tmp440.value;
+if ($tmp441) goto block15; else goto block16;
 block15:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:125
 // begin inline call to method org.frostlang.regex.RegexParser.peek():org.frostlang.regex.RegexToken from RegexParser.frost:125:27
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:50
-frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT** $tmp432 = &param0->pushbackBuffer;
-frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT* $tmp433 = *$tmp432;
-ITable* $tmp434 = ((frost$collections$CollectionView*) $tmp433)->$class->itable;
-while ($tmp434->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
-    $tmp434 = $tmp434->next;
+frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT** $tmp442 = &param0->pushbackBuffer;
+frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT* $tmp443 = *$tmp442;
+ITable* $tmp444 = ((frost$collections$CollectionView*) $tmp443)->$class->itable;
+while ($tmp444->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
+    $tmp444 = $tmp444->next;
 }
-$fn436 $tmp435 = $tmp434->methods[0];
-frost$core$Int $tmp437 = $tmp435(((frost$collections$CollectionView*) $tmp433));
-frost$core$Int $tmp438 = (frost$core$Int) {0u};
+$fn446 $tmp445 = $tmp444->methods[0];
+frost$core$Int $tmp447 = $tmp445(((frost$collections$CollectionView*) $tmp443));
+frost$core$Int $tmp448 = (frost$core$Int) {0u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexParser.frost:50:33
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
-int64_t $tmp439 = $tmp437.value;
-int64_t $tmp440 = $tmp438.value;
-bool $tmp441 = $tmp439 == $tmp440;
-frost$core$Bit $tmp442 = (frost$core$Bit) {$tmp441};
-bool $tmp443 = $tmp442.value;
-if ($tmp443) goto block19; else goto block20;
+int64_t $tmp449 = $tmp447.value;
+int64_t $tmp450 = $tmp448.value;
+bool $tmp451 = $tmp449 == $tmp450;
+frost$core$Bit $tmp452 = (frost$core$Bit) {$tmp451};
+bool $tmp453 = $tmp452.value;
+if ($tmp453) goto block19; else goto block20;
 block19:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:51
-org$frostlang$regex$RegexToken $tmp444 = org$frostlang$regex$RegexParser$next$R$org$frostlang$regex$RegexToken(param0);
+org$frostlang$regex$RegexToken $tmp454 = org$frostlang$regex$RegexParser$next$R$org$frostlang$regex$RegexToken(param0);
 // begin inline call to method org.frostlang.regex.RegexParser.pushback(token:org.frostlang.regex.RegexToken) from RegexParser.frost:51:21
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:46
-frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT** $tmp445 = &param0->pushbackBuffer;
-frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT* $tmp446 = *$tmp445;
-frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$add$org$frostlang$regex$RegexToken($tmp446, $tmp444);
+frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT** $tmp455 = &param0->pushbackBuffer;
+frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT* $tmp456 = *$tmp455;
+frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$add$org$frostlang$regex$RegexToken($tmp456, $tmp454);
 goto block20;
 block20:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:53
-frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT** $tmp447 = &param0->pushbackBuffer;
-frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT* $tmp448 = *$tmp447;
-frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT** $tmp449 = &param0->pushbackBuffer;
-frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT* $tmp450 = *$tmp449;
-ITable* $tmp451 = ((frost$collections$CollectionView*) $tmp450)->$class->itable;
-while ($tmp451->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
-    $tmp451 = $tmp451->next;
+frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT** $tmp457 = &param0->pushbackBuffer;
+frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT* $tmp458 = *$tmp457;
+frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT** $tmp459 = &param0->pushbackBuffer;
+frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT* $tmp460 = *$tmp459;
+ITable* $tmp461 = ((frost$collections$CollectionView*) $tmp460)->$class->itable;
+while ($tmp461->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
+    $tmp461 = $tmp461->next;
 }
-$fn453 $tmp452 = $tmp451->methods[0];
-frost$core$Int $tmp454 = $tmp452(((frost$collections$CollectionView*) $tmp450));
-frost$core$Int $tmp455 = (frost$core$Int) {1u};
-int64_t $tmp456 = $tmp454.value;
-int64_t $tmp457 = $tmp455.value;
-int64_t $tmp458 = $tmp456 - $tmp457;
-frost$core$Int $tmp459 = (frost$core$Int) {$tmp458};
+$fn463 $tmp462 = $tmp461->methods[0];
+frost$core$Int $tmp464 = $tmp462(((frost$collections$CollectionView*) $tmp460));
+frost$core$Int $tmp465 = (frost$core$Int) {1u};
+int64_t $tmp466 = $tmp464.value;
+int64_t $tmp467 = $tmp465.value;
+int64_t $tmp468 = $tmp466 - $tmp467;
+frost$core$Int $tmp469 = (frost$core$Int) {$tmp468};
 // begin inline call to function frost.collections.SpecializedArray<org.frostlang.regex.RegexToken>.[](index:frost.core.Int):org.frostlang.regex.RegexToken from RegexParser.frost:53:30
-frost$core$Int $tmp460 = (frost$core$Int) {0u};
-int64_t $tmp461 = $tmp459.value;
-int64_t $tmp462 = $tmp460.value;
-bool $tmp463 = $tmp461 >= $tmp462;
-frost$core$Bit $tmp464 = (frost$core$Bit) {$tmp463};
-bool $tmp465 = $tmp464.value;
-if ($tmp465) goto block26; else goto block25;
-block26:;
-ITable* $tmp466 = ((frost$collections$CollectionView*) $tmp448)->$class->itable;
-while ($tmp466->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
-    $tmp466 = $tmp466->next;
-}
-$fn468 $tmp467 = $tmp466->methods[0];
-frost$core$Int $tmp469 = $tmp467(((frost$collections$CollectionView*) $tmp448));
-int64_t $tmp470 = $tmp459.value;
+frost$core$Int $tmp470 = (frost$core$Int) {0u};
 int64_t $tmp471 = $tmp469.value;
-bool $tmp472 = $tmp470 < $tmp471;
-frost$core$Bit $tmp473 = (frost$core$Bit) {$tmp472};
-bool $tmp474 = $tmp473.value;
-if ($tmp474) goto block24; else goto block25;
+int64_t $tmp472 = $tmp470.value;
+bool $tmp473 = $tmp471 >= $tmp472;
+frost$core$Bit $tmp474 = (frost$core$Bit) {$tmp473};
+bool $tmp475 = $tmp474.value;
+if ($tmp475) goto block26; else goto block25;
+block26:;
+ITable* $tmp476 = ((frost$collections$CollectionView*) $tmp458)->$class->itable;
+while ($tmp476->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
+    $tmp476 = $tmp476->next;
+}
+$fn478 $tmp477 = $tmp476->methods[0];
+frost$core$Int $tmp479 = $tmp477(((frost$collections$CollectionView*) $tmp458));
+int64_t $tmp480 = $tmp469.value;
+int64_t $tmp481 = $tmp479.value;
+bool $tmp482 = $tmp480 < $tmp481;
+frost$core$Bit $tmp483 = (frost$core$Bit) {$tmp482};
+bool $tmp484 = $tmp483.value;
+if ($tmp484) goto block24; else goto block25;
 block25:;
-frost$core$Int $tmp475 = (frost$core$Int) {67u};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s476, $tmp475, &$s477);
+frost$core$Int $tmp485 = (frost$core$Int) {67u};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s486, $tmp485, &$s487);
 abort(); // unreachable
 block24:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:68
-org$frostlang$regex$RegexToken** $tmp478 = &$tmp448->data;
-org$frostlang$regex$RegexToken* $tmp479 = *$tmp478;
-frost$core$Int64 $tmp480 = frost$core$Int64$init$frost$core$Int($tmp459);
-int64_t $tmp481 = $tmp480.value;
-org$frostlang$regex$RegexToken $tmp482 = $tmp479[$tmp481];
-org$frostlang$regex$RegexToken$Kind $tmp483 = $tmp482.kind;
-frost$core$Int $tmp484 = $tmp483.$rawValue;
-frost$core$Int $tmp485 = (frost$core$Int) {18u};
+org$frostlang$regex$RegexToken** $tmp488 = &$tmp458->data;
+org$frostlang$regex$RegexToken* $tmp489 = *$tmp488;
+frost$core$Int64 $tmp490 = frost$core$Int64$init$frost$core$Int($tmp469);
+int64_t $tmp491 = $tmp490.value;
+org$frostlang$regex$RegexToken $tmp492 = $tmp489[$tmp491];
+org$frostlang$regex$RegexToken$Kind $tmp493 = $tmp492.kind;
+frost$core$Int $tmp494 = $tmp493.$rawValue;
+frost$core$Int $tmp495 = (frost$core$Int) {18u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexParser.frost:126:41
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
-int64_t $tmp486 = $tmp484.value;
-int64_t $tmp487 = $tmp485.value;
-bool $tmp488 = $tmp486 == $tmp487;
-frost$core$Bit $tmp489 = (frost$core$Bit) {$tmp488};
-bool $tmp490 = $tmp489.value;
-if ($tmp490) goto block28; else goto block29;
+int64_t $tmp496 = $tmp494.value;
+int64_t $tmp497 = $tmp495.value;
+bool $tmp498 = $tmp496 == $tmp497;
+frost$core$Bit $tmp499 = (frost$core$Bit) {$tmp498};
+bool $tmp500 = $tmp499.value;
+if ($tmp500) goto block28; else goto block29;
 block29:;
-frost$core$Int $tmp491 = (frost$core$Int) {19u};
+frost$core$Int $tmp501 = (frost$core$Int) {19u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexParser.frost:126:67
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
-int64_t $tmp492 = $tmp484.value;
-int64_t $tmp493 = $tmp491.value;
-bool $tmp494 = $tmp492 == $tmp493;
-frost$core$Bit $tmp495 = (frost$core$Bit) {$tmp494};
-bool $tmp496 = $tmp495.value;
-if ($tmp496) goto block28; else goto block31;
+int64_t $tmp502 = $tmp494.value;
+int64_t $tmp503 = $tmp501.value;
+bool $tmp504 = $tmp502 == $tmp503;
+frost$core$Bit $tmp505 = (frost$core$Bit) {$tmp504};
+bool $tmp506 = $tmp505.value;
+if ($tmp506) goto block28; else goto block31;
 block31:;
-frost$core$Int $tmp497 = (frost$core$Int) {17u};
+frost$core$Int $tmp507 = (frost$core$Int) {17u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexParser.frost:127:44
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
-int64_t $tmp498 = $tmp484.value;
-int64_t $tmp499 = $tmp497.value;
-bool $tmp500 = $tmp498 == $tmp499;
-frost$core$Bit $tmp501 = (frost$core$Bit) {$tmp500};
-bool $tmp502 = $tmp501.value;
-if ($tmp502) goto block28; else goto block27;
+int64_t $tmp508 = $tmp494.value;
+int64_t $tmp509 = $tmp507.value;
+bool $tmp510 = $tmp508 == $tmp509;
+frost$core$Bit $tmp511 = (frost$core$Bit) {$tmp510};
+bool $tmp512 = $tmp511.value;
+if ($tmp512) goto block28; else goto block27;
 block28:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:128
-org$frostlang$regex$RegexToken $tmp503 = org$frostlang$regex$RegexParser$next$R$org$frostlang$regex$RegexToken(param0);
+org$frostlang$regex$RegexToken $tmp513 = org$frostlang$regex$RegexParser$next$R$org$frostlang$regex$RegexToken(param0);
 goto block27;
 block27:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:131
-frost$core$Bit $tmp504 = (frost$core$Bit) {true};
-return $tmp504;
+frost$core$Bit $tmp514 = (frost$core$Bit) {true};
+return $tmp514;
 block16:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:134
-org$frostlang$regex$RegexToken $tmp505 = *(&local0);
+org$frostlang$regex$RegexToken $tmp515 = *(&local0);
 // begin inline call to method org.frostlang.regex.RegexParser.pushback(token:org.frostlang.regex.RegexToken) from RegexParser.frost:134:25
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:46
-frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT** $tmp506 = &param0->pushbackBuffer;
-frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT* $tmp507 = *$tmp506;
-frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$add$org$frostlang$regex$RegexToken($tmp507, $tmp505);
+frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT** $tmp516 = &param0->pushbackBuffer;
+frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT* $tmp517 = *$tmp516;
+frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$add$org$frostlang$regex$RegexToken($tmp517, $tmp515);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:135
-frost$core$Bit $tmp508 = (frost$core$Bit) {false};
-return $tmp508;
+frost$core$Bit $tmp518 = (frost$core$Bit) {false};
+return $tmp518;
 block1:;
 goto block35;
 block35:;
@@ -1126,540 +1146,540 @@ org$frostlang$regex$RegexToken local29;
 org$frostlang$regex$RegexToken$Kind local30;
 org$frostlang$regex$RegexToken$Kind local31;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:145
-org$frostlang$regex$RegexToken $tmp509 = org$frostlang$regex$RegexParser$next$R$org$frostlang$regex$RegexToken(param0);
-*(&local0) = $tmp509;
+org$frostlang$regex$RegexToken $tmp519 = org$frostlang$regex$RegexParser$next$R$org$frostlang$regex$RegexToken(param0);
+*(&local0) = $tmp519;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:146
-org$frostlang$regex$RegexToken $tmp510 = *(&local0);
-org$frostlang$regex$RegexToken$Kind $tmp511 = $tmp510.kind;
-frost$core$Int $tmp512 = $tmp511.$rawValue;
-frost$core$Int $tmp513 = (frost$core$Int) {3u};
+org$frostlang$regex$RegexToken $tmp520 = *(&local0);
+org$frostlang$regex$RegexToken$Kind $tmp521 = $tmp520.kind;
+frost$core$Int $tmp522 = $tmp521.$rawValue;
+frost$core$Int $tmp523 = (frost$core$Int) {3u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexParser.frost:147:33
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
-int64_t $tmp514 = $tmp512.value;
-int64_t $tmp515 = $tmp513.value;
-bool $tmp516 = $tmp514 == $tmp515;
-frost$core$Bit $tmp517 = (frost$core$Bit) {$tmp516};
-bool $tmp518 = $tmp517.value;
-if ($tmp518) goto block2; else goto block3;
+int64_t $tmp524 = $tmp522.value;
+int64_t $tmp525 = $tmp523.value;
+bool $tmp526 = $tmp524 == $tmp525;
+frost$core$Bit $tmp527 = (frost$core$Bit) {$tmp526};
+bool $tmp528 = $tmp527.value;
+if ($tmp528) goto block2; else goto block3;
 block3:;
-frost$core$Int $tmp519 = (frost$core$Int) {4u};
+frost$core$Int $tmp529 = (frost$core$Int) {4u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexParser.frost:147:57
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
-int64_t $tmp520 = $tmp512.value;
-int64_t $tmp521 = $tmp519.value;
-bool $tmp522 = $tmp520 == $tmp521;
-frost$core$Bit $tmp523 = (frost$core$Bit) {$tmp522};
-bool $tmp524 = $tmp523.value;
-if ($tmp524) goto block2; else goto block5;
+int64_t $tmp530 = $tmp522.value;
+int64_t $tmp531 = $tmp529.value;
+bool $tmp532 = $tmp530 == $tmp531;
+frost$core$Bit $tmp533 = (frost$core$Bit) {$tmp532};
+bool $tmp534 = $tmp533.value;
+if ($tmp534) goto block2; else goto block5;
 block5:;
-frost$core$Int $tmp525 = (frost$core$Int) {17u};
+frost$core$Int $tmp535 = (frost$core$Int) {17u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexParser.frost:147:80
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
-int64_t $tmp526 = $tmp512.value;
-int64_t $tmp527 = $tmp525.value;
-bool $tmp528 = $tmp526 == $tmp527;
-frost$core$Bit $tmp529 = (frost$core$Bit) {$tmp528};
-bool $tmp530 = $tmp529.value;
-if ($tmp530) goto block2; else goto block7;
+int64_t $tmp536 = $tmp522.value;
+int64_t $tmp537 = $tmp535.value;
+bool $tmp538 = $tmp536 == $tmp537;
+frost$core$Bit $tmp539 = (frost$core$Bit) {$tmp538};
+bool $tmp540 = $tmp539.value;
+if ($tmp540) goto block2; else goto block7;
 block7:;
-frost$core$Int $tmp531 = (frost$core$Int) {16u};
+frost$core$Int $tmp541 = (frost$core$Int) {16u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexParser.frost:148:36
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
-int64_t $tmp532 = $tmp512.value;
-int64_t $tmp533 = $tmp531.value;
-bool $tmp534 = $tmp532 == $tmp533;
-frost$core$Bit $tmp535 = (frost$core$Bit) {$tmp534};
-bool $tmp536 = $tmp535.value;
-if ($tmp536) goto block2; else goto block9;
+int64_t $tmp542 = $tmp522.value;
+int64_t $tmp543 = $tmp541.value;
+bool $tmp544 = $tmp542 == $tmp543;
+frost$core$Bit $tmp545 = (frost$core$Bit) {$tmp544};
+bool $tmp546 = $tmp545.value;
+if ($tmp546) goto block2; else goto block9;
 block9:;
-frost$core$Int $tmp537 = (frost$core$Int) {18u};
+frost$core$Int $tmp547 = (frost$core$Int) {18u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexParser.frost:148:59
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
-int64_t $tmp538 = $tmp512.value;
-int64_t $tmp539 = $tmp537.value;
-bool $tmp540 = $tmp538 == $tmp539;
-frost$core$Bit $tmp541 = (frost$core$Bit) {$tmp540};
-bool $tmp542 = $tmp541.value;
-if ($tmp542) goto block2; else goto block11;
+int64_t $tmp548 = $tmp522.value;
+int64_t $tmp549 = $tmp547.value;
+bool $tmp550 = $tmp548 == $tmp549;
+frost$core$Bit $tmp551 = (frost$core$Bit) {$tmp550};
+bool $tmp552 = $tmp551.value;
+if ($tmp552) goto block2; else goto block11;
 block11:;
-frost$core$Int $tmp543 = (frost$core$Int) {19u};
+frost$core$Int $tmp553 = (frost$core$Int) {19u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexParser.frost:148:85
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
-int64_t $tmp544 = $tmp512.value;
-int64_t $tmp545 = $tmp543.value;
-bool $tmp546 = $tmp544 == $tmp545;
-frost$core$Bit $tmp547 = (frost$core$Bit) {$tmp546};
-bool $tmp548 = $tmp547.value;
-if ($tmp548) goto block2; else goto block13;
+int64_t $tmp554 = $tmp522.value;
+int64_t $tmp555 = $tmp553.value;
+bool $tmp556 = $tmp554 == $tmp555;
+frost$core$Bit $tmp557 = (frost$core$Bit) {$tmp556};
+bool $tmp558 = $tmp557.value;
+if ($tmp558) goto block2; else goto block13;
 block13:;
-frost$core$Int $tmp549 = (frost$core$Int) {20u};
+frost$core$Int $tmp559 = (frost$core$Int) {20u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexParser.frost:149:36
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
-int64_t $tmp550 = $tmp512.value;
-int64_t $tmp551 = $tmp549.value;
-bool $tmp552 = $tmp550 == $tmp551;
-frost$core$Bit $tmp553 = (frost$core$Bit) {$tmp552};
-bool $tmp554 = $tmp553.value;
-if ($tmp554) goto block2; else goto block15;
+int64_t $tmp560 = $tmp522.value;
+int64_t $tmp561 = $tmp559.value;
+bool $tmp562 = $tmp560 == $tmp561;
+frost$core$Bit $tmp563 = (frost$core$Bit) {$tmp562};
+bool $tmp564 = $tmp563.value;
+if ($tmp564) goto block2; else goto block15;
 block2:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:150
-frost$core$Bit $tmp555 = (frost$core$Bit) {true};
-return $tmp555;
+frost$core$Bit $tmp565 = (frost$core$Bit) {true};
+return $tmp565;
 block15:;
-frost$core$Int $tmp556 = (frost$core$Int) {8u};
+frost$core$Int $tmp566 = (frost$core$Int) {8u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexParser.frost:152:33
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
-int64_t $tmp557 = $tmp512.value;
-int64_t $tmp558 = $tmp556.value;
-bool $tmp559 = $tmp557 == $tmp558;
-frost$core$Bit $tmp560 = (frost$core$Bit) {$tmp559};
-bool $tmp561 = $tmp560.value;
-if ($tmp561) goto block17; else goto block18;
+int64_t $tmp567 = $tmp522.value;
+int64_t $tmp568 = $tmp566.value;
+bool $tmp569 = $tmp567 == $tmp568;
+frost$core$Bit $tmp570 = (frost$core$Bit) {$tmp569};
+bool $tmp571 = $tmp570.value;
+if ($tmp571) goto block17; else goto block18;
 block17:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:153
-frost$core$Int $tmp562 = (frost$core$Int) {7u};
+frost$core$Int $tmp572 = (frost$core$Int) {7u};
 // begin inline call to org.frostlang.regex.RegexToken.Kind.init(rv:frost.core.Int):org.frostlang.regex.RegexToken.Kind from RegexParser.frost:153:42
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
-frost$core$Int* $tmp563 = &(&local2)->$rawValue;
-*$tmp563 = $tmp562;
-org$frostlang$regex$RegexToken$Kind $tmp564 = *(&local2);
-*(&local1) = $tmp564;
-org$frostlang$regex$RegexToken$Kind $tmp565 = *(&local1);
+frost$core$Int* $tmp573 = &(&local2)->$rawValue;
+*$tmp573 = $tmp572;
+org$frostlang$regex$RegexToken$Kind $tmp574 = *(&local2);
+*(&local1) = $tmp574;
+org$frostlang$regex$RegexToken$Kind $tmp575 = *(&local1);
 // begin inline call to method org.frostlang.regex.RegexParser.checkNext(kind:org.frostlang.regex.RegexToken.Kind):frost.core.Bit from RegexParser.frost:153:26
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:57
-org$frostlang$regex$RegexToken $tmp566 = org$frostlang$regex$RegexParser$next$R$org$frostlang$regex$RegexToken(param0);
-*(&local4) = $tmp566;
+org$frostlang$regex$RegexToken $tmp576 = org$frostlang$regex$RegexParser$next$R$org$frostlang$regex$RegexToken(param0);
+*(&local4) = $tmp576;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:58
-org$frostlang$regex$RegexToken $tmp567 = *(&local4);
-org$frostlang$regex$RegexToken$Kind $tmp568 = $tmp567.kind;
-org$frostlang$regex$RegexToken$Kind$wrapper* $tmp569;
-$tmp569 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
-$tmp569->value = $tmp568;
-org$frostlang$regex$RegexToken$Kind$wrapper* $tmp570;
-$tmp570 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
-$tmp570->value = $tmp565;
-ITable* $tmp571 = ((frost$core$Equatable*) $tmp569)->$class->itable;
-while ($tmp571->$class != (frost$core$Class*) &frost$core$Equatable$class) {
-    $tmp571 = $tmp571->next;
+org$frostlang$regex$RegexToken $tmp577 = *(&local4);
+org$frostlang$regex$RegexToken$Kind $tmp578 = $tmp577.kind;
+org$frostlang$regex$RegexToken$Kind$wrapper* $tmp579;
+$tmp579 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
+$tmp579->value = $tmp578;
+org$frostlang$regex$RegexToken$Kind$wrapper* $tmp580;
+$tmp580 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
+$tmp580->value = $tmp575;
+ITable* $tmp581 = ((frost$core$Equatable*) $tmp579)->$class->itable;
+while ($tmp581->$class != (frost$core$Class*) &frost$core$Equatable$class) {
+    $tmp581 = $tmp581->next;
 }
-$fn573 $tmp572 = $tmp571->methods[0];
-frost$core$Bit $tmp574 = $tmp572(((frost$core$Equatable*) $tmp569), ((frost$core$Equatable*) $tmp570));
-bool $tmp575 = $tmp574.value;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Equatable*) $tmp570)));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Equatable*) $tmp569)));
-if ($tmp575) goto block22; else goto block23;
+$fn583 $tmp582 = $tmp581->methods[0];
+frost$core$Bit $tmp584 = $tmp582(((frost$core$Equatable*) $tmp579), ((frost$core$Equatable*) $tmp580));
+bool $tmp585 = $tmp584.value;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Equatable*) $tmp580)));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Equatable*) $tmp579)));
+if ($tmp585) goto block22; else goto block23;
 block22:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:59
-frost$core$Bit $tmp576 = (frost$core$Bit) {true};
-*(&local3) = $tmp576;
+frost$core$Bit $tmp586 = (frost$core$Bit) {true};
+*(&local3) = $tmp586;
 goto block21;
 block23:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:61
-org$frostlang$regex$RegexToken $tmp577 = *(&local4);
+org$frostlang$regex$RegexToken $tmp587 = *(&local4);
 // begin inline call to method org.frostlang.regex.RegexParser.pushback(token:org.frostlang.regex.RegexToken) from RegexParser.frost:61:17
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:46
-frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT** $tmp578 = &param0->pushbackBuffer;
-frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT* $tmp579 = *$tmp578;
-frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$add$org$frostlang$regex$RegexToken($tmp579, $tmp577);
+frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT** $tmp588 = &param0->pushbackBuffer;
+frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT* $tmp589 = *$tmp588;
+frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$add$org$frostlang$regex$RegexToken($tmp589, $tmp587);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:62
-frost$core$Bit $tmp580 = (frost$core$Bit) {false};
-*(&local3) = $tmp580;
+frost$core$Bit $tmp590 = (frost$core$Bit) {false};
+*(&local3) = $tmp590;
 goto block21;
 block21:;
-frost$core$Bit $tmp581 = *(&local3);
+frost$core$Bit $tmp591 = *(&local3);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:154
 // begin inline call to method org.frostlang.regex.RegexParser.expression():frost.core.Bit from RegexParser.frost:154:31
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:207
 // begin inline call to method org.frostlang.regex.RegexParser.term():frost.core.Bit from RegexParser.frost:207:17
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:196
-frost$core$Bit $tmp582 = org$frostlang$regex$RegexParser$factor$R$frost$core$Bit(param0);
-frost$core$Bit $tmp583 = frost$core$Bit$$NOT$R$frost$core$Bit($tmp582);
-bool $tmp584 = $tmp583.value;
-if ($tmp584) goto block31; else goto block32;
+frost$core$Bit $tmp592 = org$frostlang$regex$RegexParser$factor$R$frost$core$Bit(param0);
+frost$core$Bit $tmp593 = frost$core$Bit$$NOT$R$frost$core$Bit($tmp592);
+bool $tmp594 = $tmp593.value;
+if ($tmp594) goto block31; else goto block32;
 block31:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:197
-frost$core$Bit $tmp585 = (frost$core$Bit) {false};
-*(&local6) = $tmp585;
+frost$core$Bit $tmp595 = (frost$core$Bit) {false};
+*(&local6) = $tmp595;
 goto block30;
 block32:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:199
-frost$core$Bit $tmp586 = org$frostlang$regex$RegexParser$term$R$frost$core$Bit(param0);
+frost$core$Bit $tmp596 = org$frostlang$regex$RegexParser$term$R$frost$core$Bit(param0);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:200
-frost$core$Bit $tmp587 = (frost$core$Bit) {true};
-*(&local6) = $tmp587;
+frost$core$Bit $tmp597 = (frost$core$Bit) {true};
+*(&local6) = $tmp597;
 goto block30;
 block30:;
-frost$core$Bit $tmp588 = *(&local6);
+frost$core$Bit $tmp598 = *(&local6);
 // begin inline call to function frost.core.Bit.!():frost.core.Bit from RegexParser.frost:207:12
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
-bool $tmp589 = $tmp588.value;
-bool $tmp590 = !$tmp589;
-frost$core$Bit $tmp591 = (frost$core$Bit) {$tmp590};
-bool $tmp592 = $tmp591.value;
-if ($tmp592) goto block28; else goto block29;
+bool $tmp599 = $tmp598.value;
+bool $tmp600 = !$tmp599;
+frost$core$Bit $tmp601 = (frost$core$Bit) {$tmp600};
+bool $tmp602 = $tmp601.value;
+if ($tmp602) goto block28; else goto block29;
 block28:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:208
-frost$core$Bit $tmp593 = (frost$core$Bit) {false};
-*(&local5) = $tmp593;
+frost$core$Bit $tmp603 = (frost$core$Bit) {false};
+*(&local5) = $tmp603;
 goto block27;
 block29:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:210
 // begin inline call to method org.frostlang.regex.RegexParser.expression():frost.core.Bit from RegexParser.frost:210:19
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:207
-frost$core$Bit $tmp594 = org$frostlang$regex$RegexParser$term$R$frost$core$Bit(param0);
-frost$core$Bit $tmp595 = frost$core$Bit$$NOT$R$frost$core$Bit($tmp594);
-bool $tmp596 = $tmp595.value;
-if ($tmp596) goto block35; else goto block36;
+frost$core$Bit $tmp604 = org$frostlang$regex$RegexParser$term$R$frost$core$Bit(param0);
+frost$core$Bit $tmp605 = frost$core$Bit$$NOT$R$frost$core$Bit($tmp604);
+bool $tmp606 = $tmp605.value;
+if ($tmp606) goto block35; else goto block36;
 block35:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:208
-frost$core$Bit $tmp597 = (frost$core$Bit) {false};
-*(&local7) = $tmp597;
+frost$core$Bit $tmp607 = (frost$core$Bit) {false};
+*(&local7) = $tmp607;
 goto block34;
 block36:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:210
-frost$core$Bit $tmp598 = org$frostlang$regex$RegexParser$expression$R$frost$core$Bit(param0);
+frost$core$Bit $tmp608 = org$frostlang$regex$RegexParser$expression$R$frost$core$Bit(param0);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:211
-frost$core$Bit $tmp599 = (frost$core$Bit) {true};
-*(&local7) = $tmp599;
+frost$core$Bit $tmp609 = (frost$core$Bit) {true};
+*(&local7) = $tmp609;
 goto block34;
 block34:;
-frost$core$Bit $tmp600 = *(&local7);
+frost$core$Bit $tmp610 = *(&local7);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:211
-frost$core$Bit $tmp601 = (frost$core$Bit) {true};
-*(&local5) = $tmp601;
+frost$core$Bit $tmp611 = (frost$core$Bit) {true};
+*(&local5) = $tmp611;
 goto block27;
 block27:;
-frost$core$Bit $tmp602 = *(&local5);
+frost$core$Bit $tmp612 = *(&local5);
 // begin inline call to function frost.core.Bit.!():frost.core.Bit from RegexParser.frost:154:20
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
-bool $tmp603 = $tmp602.value;
-bool $tmp604 = !$tmp603;
-frost$core$Bit $tmp605 = (frost$core$Bit) {$tmp604};
-bool $tmp606 = $tmp605.value;
-if ($tmp606) goto block25; else goto block26;
+bool $tmp613 = $tmp612.value;
+bool $tmp614 = !$tmp613;
+frost$core$Bit $tmp615 = (frost$core$Bit) {$tmp614};
+bool $tmp616 = $tmp615.value;
+if ($tmp616) goto block25; else goto block26;
 block25:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:155
-frost$core$Bit $tmp607 = (frost$core$Bit) {false};
-return $tmp607;
+frost$core$Bit $tmp617 = (frost$core$Bit) {false};
+return $tmp617;
 block26:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:157
-frost$core$Int $tmp608 = (frost$core$Int) {9u};
+frost$core$Int $tmp618 = (frost$core$Int) {9u};
 // begin inline call to org.frostlang.regex.RegexToken.Kind.init(rv:frost.core.Int):org.frostlang.regex.RegexToken.Kind from RegexParser.frost:157:46
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
-frost$core$Int* $tmp609 = &(&local9)->$rawValue;
-*$tmp609 = $tmp608;
-org$frostlang$regex$RegexToken$Kind $tmp610 = *(&local9);
-*(&local8) = $tmp610;
-org$frostlang$regex$RegexToken$Kind $tmp611 = *(&local8);
-frost$core$Bit $tmp612 = org$frostlang$regex$RegexParser$expect$org$frostlang$regex$RegexToken$Kind$frost$core$String$R$frost$core$Bit(param0, $tmp611, &$s613);
-return $tmp612;
+frost$core$Int* $tmp619 = &(&local9)->$rawValue;
+*$tmp619 = $tmp618;
+org$frostlang$regex$RegexToken$Kind $tmp620 = *(&local9);
+*(&local8) = $tmp620;
+org$frostlang$regex$RegexToken$Kind $tmp621 = *(&local8);
+frost$core$Bit $tmp622 = org$frostlang$regex$RegexParser$expect$org$frostlang$regex$RegexToken$Kind$frost$core$String$R$frost$core$Bit(param0, $tmp621, &$s623);
+return $tmp622;
 block18:;
-frost$core$Int $tmp614 = (frost$core$Int) {12u};
+frost$core$Int $tmp624 = (frost$core$Int) {12u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexParser.frost:159:33
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
-int64_t $tmp615 = $tmp512.value;
-int64_t $tmp616 = $tmp614.value;
-bool $tmp617 = $tmp615 == $tmp616;
-frost$core$Bit $tmp618 = (frost$core$Bit) {$tmp617};
-bool $tmp619 = $tmp618.value;
-if ($tmp619) goto block39; else goto block40;
+int64_t $tmp625 = $tmp522.value;
+int64_t $tmp626 = $tmp624.value;
+bool $tmp627 = $tmp625 == $tmp626;
+frost$core$Bit $tmp628 = (frost$core$Bit) {$tmp627};
+bool $tmp629 = $tmp628.value;
+if ($tmp629) goto block39; else goto block40;
 block39:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:160
-frost$core$Bit $tmp620 = org$frostlang$regex$RegexParser$characterClass$R$frost$core$Bit(param0);
+frost$core$Bit $tmp630 = org$frostlang$regex$RegexParser$characterClass$R$frost$core$Bit(param0);
 // begin inline call to function frost.core.Bit.!():frost.core.Bit from RegexParser.frost:160:20
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
-bool $tmp621 = $tmp620.value;
-bool $tmp622 = !$tmp621;
-frost$core$Bit $tmp623 = (frost$core$Bit) {$tmp622};
-bool $tmp624 = $tmp623.value;
-if ($tmp624) goto block42; else goto block43;
+bool $tmp631 = $tmp630.value;
+bool $tmp632 = !$tmp631;
+frost$core$Bit $tmp633 = (frost$core$Bit) {$tmp632};
+bool $tmp634 = $tmp633.value;
+if ($tmp634) goto block42; else goto block43;
 block42:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:161
-frost$core$Bit $tmp625 = (frost$core$Bit) {false};
-return $tmp625;
+frost$core$Bit $tmp635 = (frost$core$Bit) {false};
+return $tmp635;
 block43:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:163
-frost$core$Int $tmp626 = (frost$core$Int) {13u};
+frost$core$Int $tmp636 = (frost$core$Int) {13u};
 // begin inline call to org.frostlang.regex.RegexToken.Kind.init(rv:frost.core.Int):org.frostlang.regex.RegexToken.Kind from RegexParser.frost:163:46
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
-frost$core$Int* $tmp627 = &(&local11)->$rawValue;
-*$tmp627 = $tmp626;
-org$frostlang$regex$RegexToken$Kind $tmp628 = *(&local11);
-*(&local10) = $tmp628;
-org$frostlang$regex$RegexToken$Kind $tmp629 = *(&local10);
-frost$core$Bit $tmp630 = org$frostlang$regex$RegexParser$expect$org$frostlang$regex$RegexToken$Kind$frost$core$String$R$frost$core$Bit(param0, $tmp629, &$s631);
-return $tmp630;
+frost$core$Int* $tmp637 = &(&local11)->$rawValue;
+*$tmp637 = $tmp636;
+org$frostlang$regex$RegexToken$Kind $tmp638 = *(&local11);
+*(&local10) = $tmp638;
+org$frostlang$regex$RegexToken$Kind $tmp639 = *(&local10);
+frost$core$Bit $tmp640 = org$frostlang$regex$RegexParser$expect$org$frostlang$regex$RegexToken$Kind$frost$core$String$R$frost$core$Bit(param0, $tmp639, &$s641);
+return $tmp640;
 block40:;
-frost$core$Int $tmp632 = (frost$core$Int) {10u};
+frost$core$Int $tmp642 = (frost$core$Int) {10u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexParser.frost:165:33
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
-int64_t $tmp633 = $tmp512.value;
-int64_t $tmp634 = $tmp632.value;
-bool $tmp635 = $tmp633 == $tmp634;
-frost$core$Bit $tmp636 = (frost$core$Bit) {$tmp635};
-bool $tmp637 = $tmp636.value;
-if ($tmp637) goto block46; else goto block47;
+int64_t $tmp643 = $tmp522.value;
+int64_t $tmp644 = $tmp642.value;
+bool $tmp645 = $tmp643 == $tmp644;
+frost$core$Bit $tmp646 = (frost$core$Bit) {$tmp645};
+bool $tmp647 = $tmp646.value;
+if ($tmp647) goto block46; else goto block47;
 block46:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:166
 // begin inline call to method org.frostlang.regex.RegexParser.integer():frost.core.Bit from RegexParser.frost:166:28
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:103
-frost$core$Int $tmp638 = (frost$core$Int) {4u};
+frost$core$Int $tmp648 = (frost$core$Int) {4u};
 // begin inline call to org.frostlang.regex.RegexToken.Kind.init(rv:frost.core.Int):org.frostlang.regex.RegexToken.Kind from RegexParser.frost:103:35
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
-frost$core$Int* $tmp639 = &(&local14)->$rawValue;
-*$tmp639 = $tmp638;
-org$frostlang$regex$RegexToken$Kind $tmp640 = *(&local14);
-*(&local13) = $tmp640;
-org$frostlang$regex$RegexToken$Kind $tmp641 = *(&local13);
-frost$core$Bit $tmp642 = org$frostlang$regex$RegexParser$expect$org$frostlang$regex$RegexToken$Kind$frost$core$String$R$frost$core$Bit(param0, $tmp641, &$s643);
+frost$core$Int* $tmp649 = &(&local14)->$rawValue;
+*$tmp649 = $tmp648;
+org$frostlang$regex$RegexToken$Kind $tmp650 = *(&local14);
+*(&local13) = $tmp650;
+org$frostlang$regex$RegexToken$Kind $tmp651 = *(&local13);
+frost$core$Bit $tmp652 = org$frostlang$regex$RegexParser$expect$org$frostlang$regex$RegexToken$Kind$frost$core$String$R$frost$core$Bit(param0, $tmp651, &$s653);
 // begin inline call to function frost.core.Bit.!():frost.core.Bit from RegexParser.frost:103:12
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
-bool $tmp644 = $tmp642.value;
-bool $tmp645 = !$tmp644;
-frost$core$Bit $tmp646 = (frost$core$Bit) {$tmp645};
-bool $tmp647 = $tmp646.value;
-if ($tmp647) goto block52; else goto block53;
+bool $tmp654 = $tmp652.value;
+bool $tmp655 = !$tmp654;
+frost$core$Bit $tmp656 = (frost$core$Bit) {$tmp655};
+bool $tmp657 = $tmp656.value;
+if ($tmp657) goto block52; else goto block53;
 block52:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:104
-frost$core$Bit $tmp648 = (frost$core$Bit) {false};
-*(&local12) = $tmp648;
+frost$core$Bit $tmp658 = (frost$core$Bit) {false};
+*(&local12) = $tmp658;
 goto block51;
 block53:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:106
 goto block56;
 block56:;
-frost$core$Int $tmp649 = (frost$core$Int) {4u};
+frost$core$Int $tmp659 = (frost$core$Int) {4u};
 // begin inline call to org.frostlang.regex.RegexToken.Kind.init(rv:frost.core.Int):org.frostlang.regex.RegexToken.Kind from RegexParser.frost:106:40
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
-frost$core$Int* $tmp650 = &(&local16)->$rawValue;
-*$tmp650 = $tmp649;
-org$frostlang$regex$RegexToken$Kind $tmp651 = *(&local16);
-*(&local15) = $tmp651;
-org$frostlang$regex$RegexToken$Kind $tmp652 = *(&local15);
+frost$core$Int* $tmp660 = &(&local16)->$rawValue;
+*$tmp660 = $tmp659;
+org$frostlang$regex$RegexToken$Kind $tmp661 = *(&local16);
+*(&local15) = $tmp661;
+org$frostlang$regex$RegexToken$Kind $tmp662 = *(&local15);
 // begin inline call to method org.frostlang.regex.RegexParser.checkNext(kind:org.frostlang.regex.RegexToken.Kind):frost.core.Bit from RegexParser.frost:106:24
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:57
-org$frostlang$regex$RegexToken $tmp653 = org$frostlang$regex$RegexParser$next$R$org$frostlang$regex$RegexToken(param0);
-*(&local18) = $tmp653;
+org$frostlang$regex$RegexToken $tmp663 = org$frostlang$regex$RegexParser$next$R$org$frostlang$regex$RegexToken(param0);
+*(&local18) = $tmp663;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:58
-org$frostlang$regex$RegexToken $tmp654 = *(&local18);
-org$frostlang$regex$RegexToken$Kind $tmp655 = $tmp654.kind;
-org$frostlang$regex$RegexToken$Kind$wrapper* $tmp656;
-$tmp656 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
-$tmp656->value = $tmp655;
-org$frostlang$regex$RegexToken$Kind$wrapper* $tmp657;
-$tmp657 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
-$tmp657->value = $tmp652;
-ITable* $tmp658 = ((frost$core$Equatable*) $tmp656)->$class->itable;
-while ($tmp658->$class != (frost$core$Class*) &frost$core$Equatable$class) {
-    $tmp658 = $tmp658->next;
+org$frostlang$regex$RegexToken $tmp664 = *(&local18);
+org$frostlang$regex$RegexToken$Kind $tmp665 = $tmp664.kind;
+org$frostlang$regex$RegexToken$Kind$wrapper* $tmp666;
+$tmp666 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
+$tmp666->value = $tmp665;
+org$frostlang$regex$RegexToken$Kind$wrapper* $tmp667;
+$tmp667 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
+$tmp667->value = $tmp662;
+ITable* $tmp668 = ((frost$core$Equatable*) $tmp666)->$class->itable;
+while ($tmp668->$class != (frost$core$Class*) &frost$core$Equatable$class) {
+    $tmp668 = $tmp668->next;
 }
-$fn660 $tmp659 = $tmp658->methods[0];
-frost$core$Bit $tmp661 = $tmp659(((frost$core$Equatable*) $tmp656), ((frost$core$Equatable*) $tmp657));
-bool $tmp662 = $tmp661.value;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Equatable*) $tmp657)));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Equatable*) $tmp656)));
-if ($tmp662) goto block61; else goto block62;
+$fn670 $tmp669 = $tmp668->methods[0];
+frost$core$Bit $tmp671 = $tmp669(((frost$core$Equatable*) $tmp666), ((frost$core$Equatable*) $tmp667));
+bool $tmp672 = $tmp671.value;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Equatable*) $tmp667)));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Equatable*) $tmp666)));
+if ($tmp672) goto block61; else goto block62;
 block61:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:59
-frost$core$Bit $tmp663 = (frost$core$Bit) {true};
-*(&local17) = $tmp663;
+frost$core$Bit $tmp673 = (frost$core$Bit) {true};
+*(&local17) = $tmp673;
 goto block60;
 block62:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:61
-org$frostlang$regex$RegexToken $tmp664 = *(&local18);
-org$frostlang$regex$RegexParser$pushback$org$frostlang$regex$RegexToken(param0, $tmp664);
+org$frostlang$regex$RegexToken $tmp674 = *(&local18);
+org$frostlang$regex$RegexParser$pushback$org$frostlang$regex$RegexToken(param0, $tmp674);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:62
-frost$core$Bit $tmp665 = (frost$core$Bit) {false};
-*(&local17) = $tmp665;
+frost$core$Bit $tmp675 = (frost$core$Bit) {false};
+*(&local17) = $tmp675;
 goto block60;
 block60:;
-frost$core$Bit $tmp666 = *(&local17);
-bool $tmp667 = $tmp666.value;
-if ($tmp667) goto block57; else goto block58;
+frost$core$Bit $tmp676 = *(&local17);
+bool $tmp677 = $tmp676.value;
+if ($tmp677) goto block57; else goto block58;
 block57:;
 goto block56;
 block58:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:108
-frost$core$Bit $tmp668 = (frost$core$Bit) {true};
-*(&local12) = $tmp668;
+frost$core$Bit $tmp678 = (frost$core$Bit) {true};
+*(&local12) = $tmp678;
 goto block51;
 block51:;
-frost$core$Bit $tmp669 = *(&local12);
+frost$core$Bit $tmp679 = *(&local12);
 // begin inline call to function frost.core.Bit.!():frost.core.Bit from RegexParser.frost:166:20
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
-bool $tmp670 = $tmp669.value;
-bool $tmp671 = !$tmp670;
-frost$core$Bit $tmp672 = (frost$core$Bit) {$tmp671};
-bool $tmp673 = $tmp672.value;
-if ($tmp673) goto block49; else goto block50;
+bool $tmp680 = $tmp679.value;
+bool $tmp681 = !$tmp680;
+frost$core$Bit $tmp682 = (frost$core$Bit) {$tmp681};
+bool $tmp683 = $tmp682.value;
+if ($tmp683) goto block49; else goto block50;
 block49:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:167
-frost$core$Bit $tmp674 = (frost$core$Bit) {false};
-return $tmp674;
+frost$core$Bit $tmp684 = (frost$core$Bit) {false};
+return $tmp684;
 block50:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:169
-frost$core$Int $tmp675 = (frost$core$Int) {14u};
+frost$core$Int $tmp685 = (frost$core$Int) {14u};
 // begin inline call to org.frostlang.regex.RegexToken.Kind.init(rv:frost.core.Int):org.frostlang.regex.RegexToken.Kind from RegexParser.frost:169:45
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
-frost$core$Int* $tmp676 = &(&local20)->$rawValue;
-*$tmp676 = $tmp675;
-org$frostlang$regex$RegexToken$Kind $tmp677 = *(&local20);
-*(&local19) = $tmp677;
-org$frostlang$regex$RegexToken$Kind $tmp678 = *(&local19);
+frost$core$Int* $tmp686 = &(&local20)->$rawValue;
+*$tmp686 = $tmp685;
+org$frostlang$regex$RegexToken$Kind $tmp687 = *(&local20);
+*(&local19) = $tmp687;
+org$frostlang$regex$RegexToken$Kind $tmp688 = *(&local19);
 // begin inline call to method org.frostlang.regex.RegexParser.checkNext(kind:org.frostlang.regex.RegexToken.Kind):frost.core.Bit from RegexParser.frost:169:29
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:57
-org$frostlang$regex$RegexToken $tmp679 = org$frostlang$regex$RegexParser$next$R$org$frostlang$regex$RegexToken(param0);
-*(&local22) = $tmp679;
+org$frostlang$regex$RegexToken $tmp689 = org$frostlang$regex$RegexParser$next$R$org$frostlang$regex$RegexToken(param0);
+*(&local22) = $tmp689;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:58
-org$frostlang$regex$RegexToken $tmp680 = *(&local22);
-org$frostlang$regex$RegexToken$Kind $tmp681 = $tmp680.kind;
-org$frostlang$regex$RegexToken$Kind$wrapper* $tmp682;
-$tmp682 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
-$tmp682->value = $tmp681;
-org$frostlang$regex$RegexToken$Kind$wrapper* $tmp683;
-$tmp683 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
-$tmp683->value = $tmp678;
-ITable* $tmp684 = ((frost$core$Equatable*) $tmp682)->$class->itable;
-while ($tmp684->$class != (frost$core$Class*) &frost$core$Equatable$class) {
-    $tmp684 = $tmp684->next;
+org$frostlang$regex$RegexToken $tmp690 = *(&local22);
+org$frostlang$regex$RegexToken$Kind $tmp691 = $tmp690.kind;
+org$frostlang$regex$RegexToken$Kind$wrapper* $tmp692;
+$tmp692 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
+$tmp692->value = $tmp691;
+org$frostlang$regex$RegexToken$Kind$wrapper* $tmp693;
+$tmp693 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
+$tmp693->value = $tmp688;
+ITable* $tmp694 = ((frost$core$Equatable*) $tmp692)->$class->itable;
+while ($tmp694->$class != (frost$core$Class*) &frost$core$Equatable$class) {
+    $tmp694 = $tmp694->next;
 }
-$fn686 $tmp685 = $tmp684->methods[0];
-frost$core$Bit $tmp687 = $tmp685(((frost$core$Equatable*) $tmp682), ((frost$core$Equatable*) $tmp683));
-bool $tmp688 = $tmp687.value;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Equatable*) $tmp683)));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Equatable*) $tmp682)));
-if ($tmp688) goto block68; else goto block69;
+$fn696 $tmp695 = $tmp694->methods[0];
+frost$core$Bit $tmp697 = $tmp695(((frost$core$Equatable*) $tmp692), ((frost$core$Equatable*) $tmp693));
+bool $tmp698 = $tmp697.value;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Equatable*) $tmp693)));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Equatable*) $tmp692)));
+if ($tmp698) goto block68; else goto block69;
 block68:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:59
-frost$core$Bit $tmp689 = (frost$core$Bit) {true};
-*(&local21) = $tmp689;
+frost$core$Bit $tmp699 = (frost$core$Bit) {true};
+*(&local21) = $tmp699;
 goto block67;
 block69:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:61
-org$frostlang$regex$RegexToken $tmp690 = *(&local22);
+org$frostlang$regex$RegexToken $tmp700 = *(&local22);
 // begin inline call to method org.frostlang.regex.RegexParser.pushback(token:org.frostlang.regex.RegexToken) from RegexParser.frost:61:17
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:46
-frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT** $tmp691 = &param0->pushbackBuffer;
-frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT* $tmp692 = *$tmp691;
-frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$add$org$frostlang$regex$RegexToken($tmp692, $tmp690);
+frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT** $tmp701 = &param0->pushbackBuffer;
+frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT* $tmp702 = *$tmp701;
+frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$add$org$frostlang$regex$RegexToken($tmp702, $tmp700);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:62
-frost$core$Bit $tmp693 = (frost$core$Bit) {false};
-*(&local21) = $tmp693;
+frost$core$Bit $tmp703 = (frost$core$Bit) {false};
+*(&local21) = $tmp703;
 goto block67;
 block67:;
-frost$core$Bit $tmp694 = *(&local21);
-bool $tmp695 = $tmp694.value;
-if ($tmp695) goto block64; else goto block65;
+frost$core$Bit $tmp704 = *(&local21);
+bool $tmp705 = $tmp704.value;
+if ($tmp705) goto block64; else goto block65;
 block64:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:170
 // begin inline call to method org.frostlang.regex.RegexParser.integer():frost.core.Bit from RegexParser.frost:170:28
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:103
-frost$core$Int $tmp696 = (frost$core$Int) {4u};
+frost$core$Int $tmp706 = (frost$core$Int) {4u};
 // begin inline call to org.frostlang.regex.RegexToken.Kind.init(rv:frost.core.Int):org.frostlang.regex.RegexToken.Kind from RegexParser.frost:103:35
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
-frost$core$Int* $tmp697 = &(&local25)->$rawValue;
-*$tmp697 = $tmp696;
-org$frostlang$regex$RegexToken$Kind $tmp698 = *(&local25);
-*(&local24) = $tmp698;
-org$frostlang$regex$RegexToken$Kind $tmp699 = *(&local24);
-frost$core$Bit $tmp700 = org$frostlang$regex$RegexParser$expect$org$frostlang$regex$RegexToken$Kind$frost$core$String$R$frost$core$Bit(param0, $tmp699, &$s701);
+frost$core$Int* $tmp707 = &(&local25)->$rawValue;
+*$tmp707 = $tmp706;
+org$frostlang$regex$RegexToken$Kind $tmp708 = *(&local25);
+*(&local24) = $tmp708;
+org$frostlang$regex$RegexToken$Kind $tmp709 = *(&local24);
+frost$core$Bit $tmp710 = org$frostlang$regex$RegexParser$expect$org$frostlang$regex$RegexToken$Kind$frost$core$String$R$frost$core$Bit(param0, $tmp709, &$s711);
 // begin inline call to function frost.core.Bit.!():frost.core.Bit from RegexParser.frost:103:12
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
-bool $tmp702 = $tmp700.value;
-bool $tmp703 = !$tmp702;
-frost$core$Bit $tmp704 = (frost$core$Bit) {$tmp703};
-bool $tmp705 = $tmp704.value;
-if ($tmp705) goto block72; else goto block73;
+bool $tmp712 = $tmp710.value;
+bool $tmp713 = !$tmp712;
+frost$core$Bit $tmp714 = (frost$core$Bit) {$tmp713};
+bool $tmp715 = $tmp714.value;
+if ($tmp715) goto block72; else goto block73;
 block72:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:104
-frost$core$Bit $tmp706 = (frost$core$Bit) {false};
-*(&local23) = $tmp706;
+frost$core$Bit $tmp716 = (frost$core$Bit) {false};
+*(&local23) = $tmp716;
 goto block71;
 block73:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:106
 goto block76;
 block76:;
-frost$core$Int $tmp707 = (frost$core$Int) {4u};
+frost$core$Int $tmp717 = (frost$core$Int) {4u};
 // begin inline call to org.frostlang.regex.RegexToken.Kind.init(rv:frost.core.Int):org.frostlang.regex.RegexToken.Kind from RegexParser.frost:106:40
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
-frost$core$Int* $tmp708 = &(&local27)->$rawValue;
-*$tmp708 = $tmp707;
-org$frostlang$regex$RegexToken$Kind $tmp709 = *(&local27);
-*(&local26) = $tmp709;
-org$frostlang$regex$RegexToken$Kind $tmp710 = *(&local26);
+frost$core$Int* $tmp718 = &(&local27)->$rawValue;
+*$tmp718 = $tmp717;
+org$frostlang$regex$RegexToken$Kind $tmp719 = *(&local27);
+*(&local26) = $tmp719;
+org$frostlang$regex$RegexToken$Kind $tmp720 = *(&local26);
 // begin inline call to method org.frostlang.regex.RegexParser.checkNext(kind:org.frostlang.regex.RegexToken.Kind):frost.core.Bit from RegexParser.frost:106:24
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:57
-org$frostlang$regex$RegexToken $tmp711 = org$frostlang$regex$RegexParser$next$R$org$frostlang$regex$RegexToken(param0);
-*(&local29) = $tmp711;
+org$frostlang$regex$RegexToken $tmp721 = org$frostlang$regex$RegexParser$next$R$org$frostlang$regex$RegexToken(param0);
+*(&local29) = $tmp721;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:58
-org$frostlang$regex$RegexToken $tmp712 = *(&local29);
-org$frostlang$regex$RegexToken$Kind $tmp713 = $tmp712.kind;
-org$frostlang$regex$RegexToken$Kind$wrapper* $tmp714;
-$tmp714 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
-$tmp714->value = $tmp713;
-org$frostlang$regex$RegexToken$Kind$wrapper* $tmp715;
-$tmp715 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
-$tmp715->value = $tmp710;
-ITable* $tmp716 = ((frost$core$Equatable*) $tmp714)->$class->itable;
-while ($tmp716->$class != (frost$core$Class*) &frost$core$Equatable$class) {
-    $tmp716 = $tmp716->next;
+org$frostlang$regex$RegexToken $tmp722 = *(&local29);
+org$frostlang$regex$RegexToken$Kind $tmp723 = $tmp722.kind;
+org$frostlang$regex$RegexToken$Kind$wrapper* $tmp724;
+$tmp724 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
+$tmp724->value = $tmp723;
+org$frostlang$regex$RegexToken$Kind$wrapper* $tmp725;
+$tmp725 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
+$tmp725->value = $tmp720;
+ITable* $tmp726 = ((frost$core$Equatable*) $tmp724)->$class->itable;
+while ($tmp726->$class != (frost$core$Class*) &frost$core$Equatable$class) {
+    $tmp726 = $tmp726->next;
 }
-$fn718 $tmp717 = $tmp716->methods[0];
-frost$core$Bit $tmp719 = $tmp717(((frost$core$Equatable*) $tmp714), ((frost$core$Equatable*) $tmp715));
-bool $tmp720 = $tmp719.value;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Equatable*) $tmp715)));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Equatable*) $tmp714)));
-if ($tmp720) goto block81; else goto block82;
+$fn728 $tmp727 = $tmp726->methods[0];
+frost$core$Bit $tmp729 = $tmp727(((frost$core$Equatable*) $tmp724), ((frost$core$Equatable*) $tmp725));
+bool $tmp730 = $tmp729.value;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Equatable*) $tmp725)));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) ((frost$core$Equatable*) $tmp724)));
+if ($tmp730) goto block81; else goto block82;
 block81:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:59
-frost$core$Bit $tmp721 = (frost$core$Bit) {true};
-*(&local28) = $tmp721;
+frost$core$Bit $tmp731 = (frost$core$Bit) {true};
+*(&local28) = $tmp731;
 goto block80;
 block82:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:61
-org$frostlang$regex$RegexToken $tmp722 = *(&local29);
-org$frostlang$regex$RegexParser$pushback$org$frostlang$regex$RegexToken(param0, $tmp722);
+org$frostlang$regex$RegexToken $tmp732 = *(&local29);
+org$frostlang$regex$RegexParser$pushback$org$frostlang$regex$RegexToken(param0, $tmp732);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:62
-frost$core$Bit $tmp723 = (frost$core$Bit) {false};
-*(&local28) = $tmp723;
+frost$core$Bit $tmp733 = (frost$core$Bit) {false};
+*(&local28) = $tmp733;
 goto block80;
 block80:;
-frost$core$Bit $tmp724 = *(&local28);
-bool $tmp725 = $tmp724.value;
-if ($tmp725) goto block77; else goto block78;
+frost$core$Bit $tmp734 = *(&local28);
+bool $tmp735 = $tmp734.value;
+if ($tmp735) goto block77; else goto block78;
 block77:;
 goto block76;
 block78:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:108
-frost$core$Bit $tmp726 = (frost$core$Bit) {true};
-*(&local23) = $tmp726;
+frost$core$Bit $tmp736 = (frost$core$Bit) {true};
+*(&local23) = $tmp736;
 goto block71;
 block71:;
-frost$core$Bit $tmp727 = *(&local23);
+frost$core$Bit $tmp737 = *(&local23);
 goto block65;
 block65:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:172
-frost$core$Int $tmp728 = (frost$core$Int) {11u};
+frost$core$Int $tmp738 = (frost$core$Int) {11u};
 // begin inline call to org.frostlang.regex.RegexToken.Kind.init(rv:frost.core.Int):org.frostlang.regex.RegexToken.Kind from RegexParser.frost:172:46
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexToken.frost:11
-frost$core$Int* $tmp729 = &(&local31)->$rawValue;
-*$tmp729 = $tmp728;
-org$frostlang$regex$RegexToken$Kind $tmp730 = *(&local31);
-*(&local30) = $tmp730;
-org$frostlang$regex$RegexToken$Kind $tmp731 = *(&local30);
-frost$core$Bit $tmp732 = org$frostlang$regex$RegexParser$expect$org$frostlang$regex$RegexToken$Kind$frost$core$String$R$frost$core$Bit(param0, $tmp731, &$s733);
-return $tmp732;
+frost$core$Int* $tmp739 = &(&local31)->$rawValue;
+*$tmp739 = $tmp738;
+org$frostlang$regex$RegexToken$Kind $tmp740 = *(&local31);
+*(&local30) = $tmp740;
+org$frostlang$regex$RegexToken$Kind $tmp741 = *(&local30);
+frost$core$Bit $tmp742 = org$frostlang$regex$RegexParser$expect$org$frostlang$regex$RegexToken$Kind$frost$core$String$R$frost$core$Bit(param0, $tmp741, &$s743);
+return $tmp742;
 block47:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:175
-org$frostlang$regex$RegexToken $tmp734 = *(&local0);
+org$frostlang$regex$RegexToken $tmp744 = *(&local0);
 // begin inline call to method org.frostlang.regex.RegexParser.pushback(token:org.frostlang.regex.RegexToken) from RegexParser.frost:175:25
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:46
-frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT** $tmp735 = &param0->pushbackBuffer;
-frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT* $tmp736 = *$tmp735;
-frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$add$org$frostlang$regex$RegexToken($tmp736, $tmp734);
+frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT** $tmp745 = &param0->pushbackBuffer;
+frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT* $tmp746 = *$tmp745;
+frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$add$org$frostlang$regex$RegexToken($tmp746, $tmp744);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:176
-frost$core$Bit $tmp737 = (frost$core$Bit) {false};
-return $tmp737;
+frost$core$Bit $tmp747 = (frost$core$Bit) {false};
+return $tmp747;
 block1:;
 goto block85;
 block85:;
@@ -1668,24 +1688,24 @@ block85:;
 frost$core$Bit org$frostlang$regex$RegexParser$factor$R$frost$core$Bit(org$frostlang$regex$RegexParser* param0) {
 
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:185
-frost$core$Bit $tmp738 = org$frostlang$regex$RegexParser$atom$R$frost$core$Bit(param0);
+frost$core$Bit $tmp748 = org$frostlang$regex$RegexParser$atom$R$frost$core$Bit(param0);
 // begin inline call to function frost.core.Bit.!():frost.core.Bit from RegexParser.frost:185:12
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
-bool $tmp739 = $tmp738.value;
-bool $tmp740 = !$tmp739;
-frost$core$Bit $tmp741 = (frost$core$Bit) {$tmp740};
-bool $tmp742 = $tmp741.value;
-if ($tmp742) goto block1; else goto block2;
+bool $tmp749 = $tmp748.value;
+bool $tmp750 = !$tmp749;
+frost$core$Bit $tmp751 = (frost$core$Bit) {$tmp750};
+bool $tmp752 = $tmp751.value;
+if ($tmp752) goto block1; else goto block2;
 block1:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:186
-frost$core$Bit $tmp743 = (frost$core$Bit) {false};
-return $tmp743;
+frost$core$Bit $tmp753 = (frost$core$Bit) {false};
+return $tmp753;
 block2:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:188
-frost$core$Bit $tmp744 = org$frostlang$regex$RegexParser$metacharacter$R$frost$core$Bit(param0);
+frost$core$Bit $tmp754 = org$frostlang$regex$RegexParser$metacharacter$R$frost$core$Bit(param0);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:189
-frost$core$Bit $tmp745 = (frost$core$Bit) {true};
-return $tmp745;
+frost$core$Bit $tmp755 = (frost$core$Bit) {true};
+return $tmp755;
 
 }
 frost$core$Bit org$frostlang$regex$RegexParser$term$R$frost$core$Bit(org$frostlang$regex$RegexParser* param0) {
@@ -1697,106 +1717,106 @@ frost$core$Bit local3;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:196
 // begin inline call to method org.frostlang.regex.RegexParser.factor():frost.core.Bit from RegexParser.frost:196:19
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:185
-frost$core$Bit $tmp746 = org$frostlang$regex$RegexParser$atom$R$frost$core$Bit(param0);
+frost$core$Bit $tmp756 = org$frostlang$regex$RegexParser$atom$R$frost$core$Bit(param0);
 // begin inline call to function frost.core.Bit.!():frost.core.Bit from RegexParser.frost:185:12
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
-bool $tmp747 = $tmp746.value;
-bool $tmp748 = !$tmp747;
-frost$core$Bit $tmp749 = (frost$core$Bit) {$tmp748};
-bool $tmp750 = $tmp749.value;
-if ($tmp750) goto block4; else goto block5;
+bool $tmp757 = $tmp756.value;
+bool $tmp758 = !$tmp757;
+frost$core$Bit $tmp759 = (frost$core$Bit) {$tmp758};
+bool $tmp760 = $tmp759.value;
+if ($tmp760) goto block4; else goto block5;
 block4:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:186
-frost$core$Bit $tmp751 = (frost$core$Bit) {false};
-*(&local0) = $tmp751;
+frost$core$Bit $tmp761 = (frost$core$Bit) {false};
+*(&local0) = $tmp761;
 goto block3;
 block5:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:188
-frost$core$Bit $tmp752 = org$frostlang$regex$RegexParser$metacharacter$R$frost$core$Bit(param0);
+frost$core$Bit $tmp762 = org$frostlang$regex$RegexParser$metacharacter$R$frost$core$Bit(param0);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:189
-frost$core$Bit $tmp753 = (frost$core$Bit) {true};
-*(&local0) = $tmp753;
+frost$core$Bit $tmp763 = (frost$core$Bit) {true};
+*(&local0) = $tmp763;
 goto block3;
 block3:;
-frost$core$Bit $tmp754 = *(&local0);
+frost$core$Bit $tmp764 = *(&local0);
 // begin inline call to function frost.core.Bit.!():frost.core.Bit from RegexParser.frost:196:12
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
-bool $tmp755 = $tmp754.value;
-bool $tmp756 = !$tmp755;
-frost$core$Bit $tmp757 = (frost$core$Bit) {$tmp756};
-bool $tmp758 = $tmp757.value;
-if ($tmp758) goto block1; else goto block2;
+bool $tmp765 = $tmp764.value;
+bool $tmp766 = !$tmp765;
+frost$core$Bit $tmp767 = (frost$core$Bit) {$tmp766};
+bool $tmp768 = $tmp767.value;
+if ($tmp768) goto block1; else goto block2;
 block1:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:197
-frost$core$Bit $tmp759 = (frost$core$Bit) {false};
-return $tmp759;
+frost$core$Bit $tmp769 = (frost$core$Bit) {false};
+return $tmp769;
 block2:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:199
 // begin inline call to method org.frostlang.regex.RegexParser.term():frost.core.Bit from RegexParser.frost:199:13
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:196
 // begin inline call to method org.frostlang.regex.RegexParser.factor():frost.core.Bit from RegexParser.frost:196:19
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:185
-frost$core$Bit $tmp760 = org$frostlang$regex$RegexParser$atom$R$frost$core$Bit(param0);
-frost$core$Bit $tmp761 = frost$core$Bit$$NOT$R$frost$core$Bit($tmp760);
-bool $tmp762 = $tmp761.value;
-if ($tmp762) goto block12; else goto block13;
+frost$core$Bit $tmp770 = org$frostlang$regex$RegexParser$atom$R$frost$core$Bit(param0);
+frost$core$Bit $tmp771 = frost$core$Bit$$NOT$R$frost$core$Bit($tmp770);
+bool $tmp772 = $tmp771.value;
+if ($tmp772) goto block12; else goto block13;
 block12:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:186
-frost$core$Bit $tmp763 = (frost$core$Bit) {false};
-*(&local2) = $tmp763;
+frost$core$Bit $tmp773 = (frost$core$Bit) {false};
+*(&local2) = $tmp773;
 goto block11;
 block13:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:188
-frost$core$Bit $tmp764 = org$frostlang$regex$RegexParser$metacharacter$R$frost$core$Bit(param0);
+frost$core$Bit $tmp774 = org$frostlang$regex$RegexParser$metacharacter$R$frost$core$Bit(param0);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:189
-frost$core$Bit $tmp765 = (frost$core$Bit) {true};
-*(&local2) = $tmp765;
+frost$core$Bit $tmp775 = (frost$core$Bit) {true};
+*(&local2) = $tmp775;
 goto block11;
 block11:;
-frost$core$Bit $tmp766 = *(&local2);
+frost$core$Bit $tmp776 = *(&local2);
 // begin inline call to function frost.core.Bit.!():frost.core.Bit from RegexParser.frost:196:12
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
-bool $tmp767 = $tmp766.value;
-bool $tmp768 = !$tmp767;
-frost$core$Bit $tmp769 = (frost$core$Bit) {$tmp768};
-bool $tmp770 = $tmp769.value;
-if ($tmp770) goto block9; else goto block10;
+bool $tmp777 = $tmp776.value;
+bool $tmp778 = !$tmp777;
+frost$core$Bit $tmp779 = (frost$core$Bit) {$tmp778};
+bool $tmp780 = $tmp779.value;
+if ($tmp780) goto block9; else goto block10;
 block9:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:197
-frost$core$Bit $tmp771 = (frost$core$Bit) {false};
-*(&local1) = $tmp771;
+frost$core$Bit $tmp781 = (frost$core$Bit) {false};
+*(&local1) = $tmp781;
 goto block8;
 block10:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:199
 // begin inline call to method org.frostlang.regex.RegexParser.term():frost.core.Bit from RegexParser.frost:199:13
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:196
-frost$core$Bit $tmp772 = org$frostlang$regex$RegexParser$factor$R$frost$core$Bit(param0);
-frost$core$Bit $tmp773 = frost$core$Bit$$NOT$R$frost$core$Bit($tmp772);
-bool $tmp774 = $tmp773.value;
-if ($tmp774) goto block16; else goto block17;
+frost$core$Bit $tmp782 = org$frostlang$regex$RegexParser$factor$R$frost$core$Bit(param0);
+frost$core$Bit $tmp783 = frost$core$Bit$$NOT$R$frost$core$Bit($tmp782);
+bool $tmp784 = $tmp783.value;
+if ($tmp784) goto block16; else goto block17;
 block16:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:197
-frost$core$Bit $tmp775 = (frost$core$Bit) {false};
-*(&local3) = $tmp775;
+frost$core$Bit $tmp785 = (frost$core$Bit) {false};
+*(&local3) = $tmp785;
 goto block15;
 block17:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:199
-frost$core$Bit $tmp776 = org$frostlang$regex$RegexParser$term$R$frost$core$Bit(param0);
+frost$core$Bit $tmp786 = org$frostlang$regex$RegexParser$term$R$frost$core$Bit(param0);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:200
-frost$core$Bit $tmp777 = (frost$core$Bit) {true};
-*(&local3) = $tmp777;
+frost$core$Bit $tmp787 = (frost$core$Bit) {true};
+*(&local3) = $tmp787;
 goto block15;
 block15:;
-frost$core$Bit $tmp778 = *(&local3);
+frost$core$Bit $tmp788 = *(&local3);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:200
-frost$core$Bit $tmp779 = (frost$core$Bit) {true};
-*(&local1) = $tmp779;
+frost$core$Bit $tmp789 = (frost$core$Bit) {true};
+*(&local1) = $tmp789;
 goto block8;
 block8:;
-frost$core$Bit $tmp780 = *(&local1);
+frost$core$Bit $tmp790 = *(&local1);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:200
-frost$core$Bit $tmp781 = (frost$core$Bit) {true};
-return $tmp781;
+frost$core$Bit $tmp791 = (frost$core$Bit) {true};
+return $tmp791;
 
 }
 frost$core$Bit org$frostlang$regex$RegexParser$expression$R$frost$core$Bit(org$frostlang$regex$RegexParser* param0) {
@@ -1812,142 +1832,142 @@ frost$core$Bit local5;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:196
 // begin inline call to method org.frostlang.regex.RegexParser.factor():frost.core.Bit from RegexParser.frost:196:19
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:185
-frost$core$Bit $tmp782 = org$frostlang$regex$RegexParser$atom$R$frost$core$Bit(param0);
-frost$core$Bit $tmp783 = frost$core$Bit$$NOT$R$frost$core$Bit($tmp782);
-bool $tmp784 = $tmp783.value;
-if ($tmp784) goto block7; else goto block8;
+frost$core$Bit $tmp792 = org$frostlang$regex$RegexParser$atom$R$frost$core$Bit(param0);
+frost$core$Bit $tmp793 = frost$core$Bit$$NOT$R$frost$core$Bit($tmp792);
+bool $tmp794 = $tmp793.value;
+if ($tmp794) goto block7; else goto block8;
 block7:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:186
-frost$core$Bit $tmp785 = (frost$core$Bit) {false};
-*(&local1) = $tmp785;
+frost$core$Bit $tmp795 = (frost$core$Bit) {false};
+*(&local1) = $tmp795;
 goto block6;
 block8:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:188
-frost$core$Bit $tmp786 = org$frostlang$regex$RegexParser$metacharacter$R$frost$core$Bit(param0);
+frost$core$Bit $tmp796 = org$frostlang$regex$RegexParser$metacharacter$R$frost$core$Bit(param0);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:189
-frost$core$Bit $tmp787 = (frost$core$Bit) {true};
-*(&local1) = $tmp787;
+frost$core$Bit $tmp797 = (frost$core$Bit) {true};
+*(&local1) = $tmp797;
 goto block6;
 block6:;
-frost$core$Bit $tmp788 = *(&local1);
+frost$core$Bit $tmp798 = *(&local1);
 // begin inline call to function frost.core.Bit.!():frost.core.Bit from RegexParser.frost:196:12
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
-bool $tmp789 = $tmp788.value;
-bool $tmp790 = !$tmp789;
-frost$core$Bit $tmp791 = (frost$core$Bit) {$tmp790};
-bool $tmp792 = $tmp791.value;
-if ($tmp792) goto block4; else goto block5;
+bool $tmp799 = $tmp798.value;
+bool $tmp800 = !$tmp799;
+frost$core$Bit $tmp801 = (frost$core$Bit) {$tmp800};
+bool $tmp802 = $tmp801.value;
+if ($tmp802) goto block4; else goto block5;
 block4:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:197
-frost$core$Bit $tmp793 = (frost$core$Bit) {false};
-*(&local0) = $tmp793;
+frost$core$Bit $tmp803 = (frost$core$Bit) {false};
+*(&local0) = $tmp803;
 goto block3;
 block5:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:199
 // begin inline call to method org.frostlang.regex.RegexParser.term():frost.core.Bit from RegexParser.frost:199:13
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:196
-frost$core$Bit $tmp794 = org$frostlang$regex$RegexParser$factor$R$frost$core$Bit(param0);
-frost$core$Bit $tmp795 = frost$core$Bit$$NOT$R$frost$core$Bit($tmp794);
-bool $tmp796 = $tmp795.value;
-if ($tmp796) goto block11; else goto block12;
+frost$core$Bit $tmp804 = org$frostlang$regex$RegexParser$factor$R$frost$core$Bit(param0);
+frost$core$Bit $tmp805 = frost$core$Bit$$NOT$R$frost$core$Bit($tmp804);
+bool $tmp806 = $tmp805.value;
+if ($tmp806) goto block11; else goto block12;
 block11:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:197
-frost$core$Bit $tmp797 = (frost$core$Bit) {false};
-*(&local2) = $tmp797;
+frost$core$Bit $tmp807 = (frost$core$Bit) {false};
+*(&local2) = $tmp807;
 goto block10;
 block12:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:199
-frost$core$Bit $tmp798 = org$frostlang$regex$RegexParser$term$R$frost$core$Bit(param0);
+frost$core$Bit $tmp808 = org$frostlang$regex$RegexParser$term$R$frost$core$Bit(param0);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:200
-frost$core$Bit $tmp799 = (frost$core$Bit) {true};
-*(&local2) = $tmp799;
+frost$core$Bit $tmp809 = (frost$core$Bit) {true};
+*(&local2) = $tmp809;
 goto block10;
 block10:;
-frost$core$Bit $tmp800 = *(&local2);
+frost$core$Bit $tmp810 = *(&local2);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:200
-frost$core$Bit $tmp801 = (frost$core$Bit) {true};
-*(&local0) = $tmp801;
+frost$core$Bit $tmp811 = (frost$core$Bit) {true};
+*(&local0) = $tmp811;
 goto block3;
 block3:;
-frost$core$Bit $tmp802 = *(&local0);
+frost$core$Bit $tmp812 = *(&local0);
 // begin inline call to function frost.core.Bit.!():frost.core.Bit from RegexParser.frost:207:12
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
-bool $tmp803 = $tmp802.value;
-bool $tmp804 = !$tmp803;
-frost$core$Bit $tmp805 = (frost$core$Bit) {$tmp804};
-bool $tmp806 = $tmp805.value;
-if ($tmp806) goto block1; else goto block2;
+bool $tmp813 = $tmp812.value;
+bool $tmp814 = !$tmp813;
+frost$core$Bit $tmp815 = (frost$core$Bit) {$tmp814};
+bool $tmp816 = $tmp815.value;
+if ($tmp816) goto block1; else goto block2;
 block1:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:208
-frost$core$Bit $tmp807 = (frost$core$Bit) {false};
-return $tmp807;
+frost$core$Bit $tmp817 = (frost$core$Bit) {false};
+return $tmp817;
 block2:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:210
 // begin inline call to method org.frostlang.regex.RegexParser.expression():frost.core.Bit from RegexParser.frost:210:19
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:207
 // begin inline call to method org.frostlang.regex.RegexParser.term():frost.core.Bit from RegexParser.frost:207:17
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:196
-frost$core$Bit $tmp808 = org$frostlang$regex$RegexParser$factor$R$frost$core$Bit(param0);
-frost$core$Bit $tmp809 = frost$core$Bit$$NOT$R$frost$core$Bit($tmp808);
-bool $tmp810 = $tmp809.value;
-if ($tmp810) goto block18; else goto block19;
+frost$core$Bit $tmp818 = org$frostlang$regex$RegexParser$factor$R$frost$core$Bit(param0);
+frost$core$Bit $tmp819 = frost$core$Bit$$NOT$R$frost$core$Bit($tmp818);
+bool $tmp820 = $tmp819.value;
+if ($tmp820) goto block18; else goto block19;
 block18:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:197
-frost$core$Bit $tmp811 = (frost$core$Bit) {false};
-*(&local4) = $tmp811;
+frost$core$Bit $tmp821 = (frost$core$Bit) {false};
+*(&local4) = $tmp821;
 goto block17;
 block19:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:199
-frost$core$Bit $tmp812 = org$frostlang$regex$RegexParser$term$R$frost$core$Bit(param0);
+frost$core$Bit $tmp822 = org$frostlang$regex$RegexParser$term$R$frost$core$Bit(param0);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:200
-frost$core$Bit $tmp813 = (frost$core$Bit) {true};
-*(&local4) = $tmp813;
+frost$core$Bit $tmp823 = (frost$core$Bit) {true};
+*(&local4) = $tmp823;
 goto block17;
 block17:;
-frost$core$Bit $tmp814 = *(&local4);
+frost$core$Bit $tmp824 = *(&local4);
 // begin inline call to function frost.core.Bit.!():frost.core.Bit from RegexParser.frost:207:12
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
-bool $tmp815 = $tmp814.value;
-bool $tmp816 = !$tmp815;
-frost$core$Bit $tmp817 = (frost$core$Bit) {$tmp816};
-bool $tmp818 = $tmp817.value;
-if ($tmp818) goto block15; else goto block16;
+bool $tmp825 = $tmp824.value;
+bool $tmp826 = !$tmp825;
+frost$core$Bit $tmp827 = (frost$core$Bit) {$tmp826};
+bool $tmp828 = $tmp827.value;
+if ($tmp828) goto block15; else goto block16;
 block15:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:208
-frost$core$Bit $tmp819 = (frost$core$Bit) {false};
-*(&local3) = $tmp819;
+frost$core$Bit $tmp829 = (frost$core$Bit) {false};
+*(&local3) = $tmp829;
 goto block14;
 block16:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:210
 // begin inline call to method org.frostlang.regex.RegexParser.expression():frost.core.Bit from RegexParser.frost:210:19
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:207
-frost$core$Bit $tmp820 = org$frostlang$regex$RegexParser$term$R$frost$core$Bit(param0);
-frost$core$Bit $tmp821 = frost$core$Bit$$NOT$R$frost$core$Bit($tmp820);
-bool $tmp822 = $tmp821.value;
-if ($tmp822) goto block22; else goto block23;
+frost$core$Bit $tmp830 = org$frostlang$regex$RegexParser$term$R$frost$core$Bit(param0);
+frost$core$Bit $tmp831 = frost$core$Bit$$NOT$R$frost$core$Bit($tmp830);
+bool $tmp832 = $tmp831.value;
+if ($tmp832) goto block22; else goto block23;
 block22:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:208
-frost$core$Bit $tmp823 = (frost$core$Bit) {false};
-*(&local5) = $tmp823;
+frost$core$Bit $tmp833 = (frost$core$Bit) {false};
+*(&local5) = $tmp833;
 goto block21;
 block23:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:210
-frost$core$Bit $tmp824 = org$frostlang$regex$RegexParser$expression$R$frost$core$Bit(param0);
+frost$core$Bit $tmp834 = org$frostlang$regex$RegexParser$expression$R$frost$core$Bit(param0);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:211
-frost$core$Bit $tmp825 = (frost$core$Bit) {true};
-*(&local5) = $tmp825;
+frost$core$Bit $tmp835 = (frost$core$Bit) {true};
+*(&local5) = $tmp835;
 goto block21;
 block21:;
-frost$core$Bit $tmp826 = *(&local5);
+frost$core$Bit $tmp836 = *(&local5);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:211
-frost$core$Bit $tmp827 = (frost$core$Bit) {true};
-*(&local3) = $tmp827;
+frost$core$Bit $tmp837 = (frost$core$Bit) {true};
+*(&local3) = $tmp837;
 goto block14;
 block14:;
-frost$core$Bit $tmp828 = *(&local3);
+frost$core$Bit $tmp838 = *(&local3);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:211
-frost$core$Bit $tmp829 = (frost$core$Bit) {true};
-return $tmp829;
+frost$core$Bit $tmp839 = (frost$core$Bit) {true};
+return $tmp839;
 
 }
 org$frostlang$frostc$ASTNode* org$frostlang$regex$RegexParser$regex$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$regex$RegexParser* param0) {
@@ -1963,322 +1983,322 @@ frost$core$Int local7;
 frost$core$Char8* local8;
 frost$core$Int local9;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:218
-frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT** $tmp830 = &param0->pushbackBuffer;
-frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT* $tmp831 = *$tmp830;
+frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT** $tmp840 = &param0->pushbackBuffer;
+frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT* $tmp841 = *$tmp840;
 // begin inline call to method frost.collections.SpecializedArray<org.frostlang.regex.RegexToken>.clear() from RegexParser.frost:218:29
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:133
-frost$core$Int $tmp832 = (frost$core$Int) {0u};
-frost$core$Int* $tmp833 = &$tmp831->_count;
-*$tmp833 = $tmp832;
+frost$core$Int $tmp842 = (frost$core$Int) {0u};
+frost$core$Int* $tmp843 = &$tmp841->_count;
+*$tmp843 = $tmp842;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:134
-frost$core$Int $tmp834 = (frost$core$Int) {0u};
-frost$core$Int* $tmp835 = &$tmp831->capacity;
-frost$core$Int $tmp836 = *$tmp835;
-frost$core$Bit $tmp837 = (frost$core$Bit) {false};
-frost$core$Range$LTfrost$core$Int$GT $tmp838 = frost$core$Range$LTfrost$core$Int$GT$init$frost$core$Int$frost$core$Int$frost$core$Bit($tmp834, $tmp836, $tmp837);
-frost$core$Int $tmp839 = $tmp838.min;
-*(&local0) = $tmp839;
-frost$core$Int $tmp840 = $tmp838.max;
-frost$core$Bit $tmp841 = $tmp838.inclusive;
-bool $tmp842 = $tmp841.value;
-frost$core$Int $tmp843 = (frost$core$Int) {1u};
-if ($tmp842) goto block5; else goto block6;
+frost$core$Int $tmp844 = (frost$core$Int) {0u};
+frost$core$Int* $tmp845 = &$tmp841->capacity;
+frost$core$Int $tmp846 = *$tmp845;
+frost$core$Bit $tmp847 = (frost$core$Bit) {false};
+frost$core$Range$LTfrost$core$Int$GT $tmp848 = frost$core$Range$LTfrost$core$Int$GT$init$frost$core$Int$frost$core$Int$frost$core$Bit($tmp844, $tmp846, $tmp847);
+frost$core$Int $tmp849 = $tmp848.min;
+*(&local0) = $tmp849;
+frost$core$Int $tmp850 = $tmp848.max;
+frost$core$Bit $tmp851 = $tmp848.inclusive;
+bool $tmp852 = $tmp851.value;
+frost$core$Int $tmp853 = (frost$core$Int) {1u};
+if ($tmp852) goto block5; else goto block6;
 block5:;
-int64_t $tmp844 = $tmp839.value;
-int64_t $tmp845 = $tmp840.value;
-bool $tmp846 = $tmp844 <= $tmp845;
-frost$core$Bit $tmp847 = (frost$core$Bit) {$tmp846};
-bool $tmp848 = $tmp847.value;
-if ($tmp848) goto block2; else goto block3;
+int64_t $tmp854 = $tmp849.value;
+int64_t $tmp855 = $tmp850.value;
+bool $tmp856 = $tmp854 <= $tmp855;
+frost$core$Bit $tmp857 = (frost$core$Bit) {$tmp856};
+bool $tmp858 = $tmp857.value;
+if ($tmp858) goto block2; else goto block3;
 block6:;
-int64_t $tmp849 = $tmp839.value;
-int64_t $tmp850 = $tmp840.value;
-bool $tmp851 = $tmp849 < $tmp850;
-frost$core$Bit $tmp852 = (frost$core$Bit) {$tmp851};
-bool $tmp853 = $tmp852.value;
-if ($tmp853) goto block2; else goto block3;
+int64_t $tmp859 = $tmp849.value;
+int64_t $tmp860 = $tmp850.value;
+bool $tmp861 = $tmp859 < $tmp860;
+frost$core$Bit $tmp862 = (frost$core$Bit) {$tmp861};
+bool $tmp863 = $tmp862.value;
+if ($tmp863) goto block2; else goto block3;
 block2:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:135
-org$frostlang$regex$RegexToken** $tmp854 = &$tmp831->data;
-org$frostlang$regex$RegexToken* $tmp855 = *$tmp854;
-frost$core$Int $tmp856 = *(&local0);
-frost$core$Int64 $tmp857 = frost$core$Int64$init$frost$core$Int($tmp856);
-frost$core$Int $tmp858 = *(&local0);
-int64_t $tmp859 = $tmp840.value;
-int64_t $tmp860 = $tmp858.value;
-int64_t $tmp861 = $tmp859 - $tmp860;
-frost$core$Int $tmp862 = (frost$core$Int) {$tmp861};
-if ($tmp842) goto block8; else goto block9;
+org$frostlang$regex$RegexToken** $tmp864 = &$tmp841->data;
+org$frostlang$regex$RegexToken* $tmp865 = *$tmp864;
+frost$core$Int $tmp866 = *(&local0);
+frost$core$Int64 $tmp867 = frost$core$Int64$init$frost$core$Int($tmp866);
+frost$core$Int $tmp868 = *(&local0);
+int64_t $tmp869 = $tmp850.value;
+int64_t $tmp870 = $tmp868.value;
+int64_t $tmp871 = $tmp869 - $tmp870;
+frost$core$Int $tmp872 = (frost$core$Int) {$tmp871};
+if ($tmp852) goto block8; else goto block9;
 block8:;
-int64_t $tmp863 = $tmp862.value;
-int64_t $tmp864 = $tmp843.value;
-bool $tmp865 = $tmp863 >= $tmp864;
-frost$core$Bit $tmp866 = (frost$core$Bit) {$tmp865};
-bool $tmp867 = $tmp866.value;
-if ($tmp867) goto block7; else goto block3;
+int64_t $tmp873 = $tmp872.value;
+int64_t $tmp874 = $tmp853.value;
+bool $tmp875 = $tmp873 >= $tmp874;
+frost$core$Bit $tmp876 = (frost$core$Bit) {$tmp875};
+bool $tmp877 = $tmp876.value;
+if ($tmp877) goto block7; else goto block3;
 block9:;
-int64_t $tmp868 = $tmp862.value;
-int64_t $tmp869 = $tmp843.value;
-bool $tmp870 = $tmp868 > $tmp869;
-frost$core$Bit $tmp871 = (frost$core$Bit) {$tmp870};
-bool $tmp872 = $tmp871.value;
-if ($tmp872) goto block7; else goto block3;
+int64_t $tmp878 = $tmp872.value;
+int64_t $tmp879 = $tmp853.value;
+bool $tmp880 = $tmp878 > $tmp879;
+frost$core$Bit $tmp881 = (frost$core$Bit) {$tmp880};
+bool $tmp882 = $tmp881.value;
+if ($tmp882) goto block7; else goto block3;
 block7:;
-int64_t $tmp873 = $tmp858.value;
-int64_t $tmp874 = $tmp843.value;
-int64_t $tmp875 = $tmp873 + $tmp874;
-frost$core$Int $tmp876 = (frost$core$Int) {$tmp875};
-*(&local0) = $tmp876;
+int64_t $tmp883 = $tmp868.value;
+int64_t $tmp884 = $tmp853.value;
+int64_t $tmp885 = $tmp883 + $tmp884;
+frost$core$Int $tmp886 = (frost$core$Int) {$tmp885};
+*(&local0) = $tmp886;
 goto block2;
 block3:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:219
-frost$core$Int* $tmp877 = &param0->pathIndex;
-frost$core$Int $tmp878 = *$tmp877;
-org$frostlang$regex$RegexLexer** $tmp879 = &param0->lexer;
-org$frostlang$regex$RegexLexer* $tmp880 = *$tmp879;
-org$frostlang$plex$runtime$DFA** $tmp881 = &$tmp880->dfa;
-org$frostlang$plex$runtime$DFA* $tmp882 = *$tmp881;
-frost$core$Int* $tmp883 = &$tmp882->line;
-frost$core$Int $tmp884 = *$tmp883;
-org$frostlang$regex$RegexLexer** $tmp885 = &param0->lexer;
-org$frostlang$regex$RegexLexer* $tmp886 = *$tmp885;
-org$frostlang$plex$runtime$DFA** $tmp887 = &$tmp886->dfa;
-org$frostlang$plex$runtime$DFA* $tmp888 = *$tmp887;
-frost$core$Int* $tmp889 = &$tmp888->column;
-frost$core$Int $tmp890 = *$tmp889;
-org$frostlang$frostc$Position $tmp891 = org$frostlang$frostc$Position$init$frost$core$Int$frost$core$Int$frost$core$Int($tmp878, $tmp884, $tmp890);
-*(&local1) = $tmp891;
+frost$core$Int* $tmp887 = &param0->pathIndex;
+frost$core$Int $tmp888 = *$tmp887;
+org$frostlang$regex$RegexLexer** $tmp889 = &param0->lexer;
+org$frostlang$regex$RegexLexer* $tmp890 = *$tmp889;
+org$frostlang$plex$runtime$DFA** $tmp891 = &$tmp890->dfa;
+org$frostlang$plex$runtime$DFA* $tmp892 = *$tmp891;
+frost$core$Int* $tmp893 = &$tmp892->line;
+frost$core$Int $tmp894 = *$tmp893;
+org$frostlang$regex$RegexLexer** $tmp895 = &param0->lexer;
+org$frostlang$regex$RegexLexer* $tmp896 = *$tmp895;
+org$frostlang$plex$runtime$DFA** $tmp897 = &$tmp896->dfa;
+org$frostlang$plex$runtime$DFA* $tmp898 = *$tmp897;
+frost$core$Int* $tmp899 = &$tmp898->column;
+frost$core$Int $tmp900 = *$tmp899;
+org$frostlang$frostc$Position $tmp901 = org$frostlang$frostc$Position$init$frost$core$Int$frost$core$Int$frost$core$Int($tmp888, $tmp894, $tmp900);
+*(&local1) = $tmp901;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:220
-org$frostlang$regex$RegexLexer** $tmp892 = &param0->lexer;
-org$frostlang$regex$RegexLexer* $tmp893 = *$tmp892;
-org$frostlang$plex$runtime$DFA** $tmp894 = &$tmp893->dfa;
-org$frostlang$plex$runtime$DFA* $tmp895 = *$tmp894;
-frost$core$Int* $tmp896 = &$tmp895->offset;
-frost$core$Int $tmp897 = *$tmp896;
-*(&local2) = $tmp897;
+org$frostlang$regex$RegexLexer** $tmp902 = &param0->lexer;
+org$frostlang$regex$RegexLexer* $tmp903 = *$tmp902;
+org$frostlang$plex$runtime$DFA** $tmp904 = &$tmp903->dfa;
+org$frostlang$plex$runtime$DFA* $tmp905 = *$tmp904;
+frost$core$Int* $tmp906 = &$tmp905->offset;
+frost$core$Int $tmp907 = *$tmp906;
+*(&local2) = $tmp907;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:221
 // begin inline call to method org.frostlang.regex.RegexParser.expression():frost.core.Bit from RegexParser.frost:221:23
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:207
 // begin inline call to method org.frostlang.regex.RegexParser.term():frost.core.Bit from RegexParser.frost:207:17
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:196
-frost$core$Bit $tmp898 = org$frostlang$regex$RegexParser$factor$R$frost$core$Bit(param0);
-frost$core$Bit $tmp899 = frost$core$Bit$$NOT$R$frost$core$Bit($tmp898);
-bool $tmp900 = $tmp899.value;
-if ($tmp900) goto block16; else goto block17;
+frost$core$Bit $tmp908 = org$frostlang$regex$RegexParser$factor$R$frost$core$Bit(param0);
+frost$core$Bit $tmp909 = frost$core$Bit$$NOT$R$frost$core$Bit($tmp908);
+bool $tmp910 = $tmp909.value;
+if ($tmp910) goto block16; else goto block17;
 block16:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:197
-frost$core$Bit $tmp901 = (frost$core$Bit) {false};
-*(&local4) = $tmp901;
+frost$core$Bit $tmp911 = (frost$core$Bit) {false};
+*(&local4) = $tmp911;
 goto block15;
 block17:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:199
-frost$core$Bit $tmp902 = org$frostlang$regex$RegexParser$term$R$frost$core$Bit(param0);
+frost$core$Bit $tmp912 = org$frostlang$regex$RegexParser$term$R$frost$core$Bit(param0);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:200
-frost$core$Bit $tmp903 = (frost$core$Bit) {true};
-*(&local4) = $tmp903;
+frost$core$Bit $tmp913 = (frost$core$Bit) {true};
+*(&local4) = $tmp913;
 goto block15;
 block15:;
-frost$core$Bit $tmp904 = *(&local4);
+frost$core$Bit $tmp914 = *(&local4);
 // begin inline call to function frost.core.Bit.!():frost.core.Bit from RegexParser.frost:207:12
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
-bool $tmp905 = $tmp904.value;
-bool $tmp906 = !$tmp905;
-frost$core$Bit $tmp907 = (frost$core$Bit) {$tmp906};
-bool $tmp908 = $tmp907.value;
-if ($tmp908) goto block13; else goto block14;
+bool $tmp915 = $tmp914.value;
+bool $tmp916 = !$tmp915;
+frost$core$Bit $tmp917 = (frost$core$Bit) {$tmp916};
+bool $tmp918 = $tmp917.value;
+if ($tmp918) goto block13; else goto block14;
 block13:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:208
-frost$core$Bit $tmp909 = (frost$core$Bit) {false};
-*(&local3) = $tmp909;
+frost$core$Bit $tmp919 = (frost$core$Bit) {false};
+*(&local3) = $tmp919;
 goto block12;
 block14:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:210
 // begin inline call to method org.frostlang.regex.RegexParser.expression():frost.core.Bit from RegexParser.frost:210:19
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:207
-frost$core$Bit $tmp910 = org$frostlang$regex$RegexParser$term$R$frost$core$Bit(param0);
-frost$core$Bit $tmp911 = frost$core$Bit$$NOT$R$frost$core$Bit($tmp910);
-bool $tmp912 = $tmp911.value;
-if ($tmp912) goto block20; else goto block21;
+frost$core$Bit $tmp920 = org$frostlang$regex$RegexParser$term$R$frost$core$Bit(param0);
+frost$core$Bit $tmp921 = frost$core$Bit$$NOT$R$frost$core$Bit($tmp920);
+bool $tmp922 = $tmp921.value;
+if ($tmp922) goto block20; else goto block21;
 block20:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:208
-frost$core$Bit $tmp913 = (frost$core$Bit) {false};
-*(&local5) = $tmp913;
+frost$core$Bit $tmp923 = (frost$core$Bit) {false};
+*(&local5) = $tmp923;
 goto block19;
 block21:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:210
-frost$core$Bit $tmp914 = org$frostlang$regex$RegexParser$expression$R$frost$core$Bit(param0);
+frost$core$Bit $tmp924 = org$frostlang$regex$RegexParser$expression$R$frost$core$Bit(param0);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:211
-frost$core$Bit $tmp915 = (frost$core$Bit) {true};
-*(&local5) = $tmp915;
+frost$core$Bit $tmp925 = (frost$core$Bit) {true};
+*(&local5) = $tmp925;
 goto block19;
 block19:;
-frost$core$Bit $tmp916 = *(&local5);
+frost$core$Bit $tmp926 = *(&local5);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:211
-frost$core$Bit $tmp917 = (frost$core$Bit) {true};
-*(&local3) = $tmp917;
+frost$core$Bit $tmp927 = (frost$core$Bit) {true};
+*(&local3) = $tmp927;
 goto block12;
 block12:;
-frost$core$Bit $tmp918 = *(&local3);
+frost$core$Bit $tmp928 = *(&local3);
 // begin inline call to function frost.core.Bit.!():frost.core.Bit from RegexParser.frost:221:12
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
-bool $tmp919 = $tmp918.value;
-bool $tmp920 = !$tmp919;
-frost$core$Bit $tmp921 = (frost$core$Bit) {$tmp920};
-bool $tmp922 = $tmp921.value;
-if ($tmp922) goto block10; else goto block11;
+bool $tmp929 = $tmp928.value;
+bool $tmp930 = !$tmp929;
+frost$core$Bit $tmp931 = (frost$core$Bit) {$tmp930};
+bool $tmp932 = $tmp931.value;
+if ($tmp932) goto block10; else goto block11;
 block10:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:222
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) ((org$frostlang$frostc$ASTNode*) NULL)));
 return ((org$frostlang$frostc$ASTNode*) NULL);
 block11:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:224
-org$frostlang$regex$RegexLexer** $tmp923 = &param0->lexer;
-org$frostlang$regex$RegexLexer* $tmp924 = *$tmp923;
-org$frostlang$plex$runtime$DFA** $tmp925 = &$tmp924->dfa;
-org$frostlang$plex$runtime$DFA* $tmp926 = *$tmp925;
-frost$core$Int* $tmp927 = &$tmp926->offset;
-frost$core$Int $tmp928 = *$tmp927;
-frost$core$Int $tmp929 = (frost$core$Int) {1u};
-int64_t $tmp930 = $tmp928.value;
-int64_t $tmp931 = $tmp929.value;
-int64_t $tmp932 = $tmp930 - $tmp931;
-frost$core$Int $tmp933 = (frost$core$Int) {$tmp932};
-frost$core$Int* $tmp934 = &$tmp926->offset;
-*$tmp934 = $tmp933;
+org$frostlang$regex$RegexLexer** $tmp933 = &param0->lexer;
+org$frostlang$regex$RegexLexer* $tmp934 = *$tmp933;
+org$frostlang$plex$runtime$DFA** $tmp935 = &$tmp934->dfa;
+org$frostlang$plex$runtime$DFA* $tmp936 = *$tmp935;
+frost$core$Int* $tmp937 = &$tmp936->offset;
+frost$core$Int $tmp938 = *$tmp937;
+frost$core$Int $tmp939 = (frost$core$Int) {1u};
+int64_t $tmp940 = $tmp938.value;
+int64_t $tmp941 = $tmp939.value;
+int64_t $tmp942 = $tmp940 - $tmp941;
+frost$core$Int $tmp943 = (frost$core$Int) {$tmp942};
+frost$core$Int* $tmp944 = &$tmp936->offset;
+*$tmp944 = $tmp943;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:225
-org$frostlang$regex$RegexLexer** $tmp935 = &param0->lexer;
-org$frostlang$regex$RegexLexer* $tmp936 = *$tmp935;
-org$frostlang$plex$runtime$DFA** $tmp937 = &$tmp936->dfa;
-org$frostlang$plex$runtime$DFA* $tmp938 = *$tmp937;
-frost$core$Int* $tmp939 = &$tmp938->offset;
-frost$core$Int $tmp940 = *$tmp939;
-*(&local6) = $tmp940;
+org$frostlang$regex$RegexLexer** $tmp945 = &param0->lexer;
+org$frostlang$regex$RegexLexer* $tmp946 = *$tmp945;
+org$frostlang$plex$runtime$DFA** $tmp947 = &$tmp946->dfa;
+org$frostlang$plex$runtime$DFA* $tmp948 = *$tmp947;
+frost$core$Int* $tmp949 = &$tmp948->offset;
+frost$core$Int $tmp950 = *$tmp949;
+*(&local6) = $tmp950;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:226
-frost$core$Int $tmp941 = *(&local6);
-frost$core$Int $tmp942 = *(&local2);
-int64_t $tmp943 = $tmp941.value;
-int64_t $tmp944 = $tmp942.value;
-int64_t $tmp945 = $tmp943 - $tmp944;
-frost$core$Int $tmp946 = (frost$core$Int) {$tmp945};
-*(&local7) = $tmp946;
+frost$core$Int $tmp951 = *(&local6);
+frost$core$Int $tmp952 = *(&local2);
+int64_t $tmp953 = $tmp951.value;
+int64_t $tmp954 = $tmp952.value;
+int64_t $tmp955 = $tmp953 - $tmp954;
+frost$core$Int $tmp956 = (frost$core$Int) {$tmp955};
+*(&local7) = $tmp956;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:227
-frost$core$Int $tmp947 = *(&local7);
-frost$core$Int64 $tmp948 = frost$core$Int64$init$frost$core$Int($tmp947);
-int64_t $tmp949 = $tmp948.value;
-frost$core$Char8* $tmp950 = ((frost$core$Char8*) frostAlloc($tmp949 * 1));
-*(&local8) = $tmp950;
+frost$core$Int $tmp957 = *(&local7);
+frost$core$Int64 $tmp958 = frost$core$Int64$init$frost$core$Int($tmp957);
+int64_t $tmp959 = $tmp958.value;
+frost$core$Char8* $tmp960 = ((frost$core$Char8*) frostAlloc($tmp959 * 1));
+*(&local8) = $tmp960;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:228
-frost$core$Int $tmp951 = *(&local2);
-frost$core$Int $tmp952 = *(&local6);
-frost$core$Bit $tmp953 = (frost$core$Bit) {false};
-frost$core$Range$LTfrost$core$Int$GT $tmp954 = frost$core$Range$LTfrost$core$Int$GT$init$frost$core$Int$frost$core$Int$frost$core$Bit($tmp951, $tmp952, $tmp953);
-frost$core$Int $tmp955 = $tmp954.min;
-*(&local9) = $tmp955;
-frost$core$Int $tmp956 = $tmp954.max;
-frost$core$Bit $tmp957 = $tmp954.inclusive;
-bool $tmp958 = $tmp957.value;
-frost$core$Int $tmp959 = (frost$core$Int) {1u};
-if ($tmp958) goto block26; else goto block27;
+frost$core$Int $tmp961 = *(&local2);
+frost$core$Int $tmp962 = *(&local6);
+frost$core$Bit $tmp963 = (frost$core$Bit) {false};
+frost$core$Range$LTfrost$core$Int$GT $tmp964 = frost$core$Range$LTfrost$core$Int$GT$init$frost$core$Int$frost$core$Int$frost$core$Bit($tmp961, $tmp962, $tmp963);
+frost$core$Int $tmp965 = $tmp964.min;
+*(&local9) = $tmp965;
+frost$core$Int $tmp966 = $tmp964.max;
+frost$core$Bit $tmp967 = $tmp964.inclusive;
+bool $tmp968 = $tmp967.value;
+frost$core$Int $tmp969 = (frost$core$Int) {1u};
+if ($tmp968) goto block26; else goto block27;
 block26:;
-int64_t $tmp960 = $tmp955.value;
-int64_t $tmp961 = $tmp956.value;
-bool $tmp962 = $tmp960 <= $tmp961;
-frost$core$Bit $tmp963 = (frost$core$Bit) {$tmp962};
-bool $tmp964 = $tmp963.value;
-if ($tmp964) goto block23; else goto block24;
+int64_t $tmp970 = $tmp965.value;
+int64_t $tmp971 = $tmp966.value;
+bool $tmp972 = $tmp970 <= $tmp971;
+frost$core$Bit $tmp973 = (frost$core$Bit) {$tmp972};
+bool $tmp974 = $tmp973.value;
+if ($tmp974) goto block23; else goto block24;
 block27:;
-int64_t $tmp965 = $tmp955.value;
-int64_t $tmp966 = $tmp956.value;
-bool $tmp967 = $tmp965 < $tmp966;
-frost$core$Bit $tmp968 = (frost$core$Bit) {$tmp967};
-bool $tmp969 = $tmp968.value;
-if ($tmp969) goto block23; else goto block24;
+int64_t $tmp975 = $tmp965.value;
+int64_t $tmp976 = $tmp966.value;
+bool $tmp977 = $tmp975 < $tmp976;
+frost$core$Bit $tmp978 = (frost$core$Bit) {$tmp977};
+bool $tmp979 = $tmp978.value;
+if ($tmp979) goto block23; else goto block24;
 block23:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:229
-frost$core$Char8* $tmp970 = *(&local8);
-frost$core$Int $tmp971 = *(&local9);
-frost$core$Int $tmp972 = *(&local2);
-int64_t $tmp973 = $tmp971.value;
-int64_t $tmp974 = $tmp972.value;
-int64_t $tmp975 = $tmp973 - $tmp974;
-frost$core$Int $tmp976 = (frost$core$Int) {$tmp975};
-frost$core$Int64 $tmp977 = frost$core$Int64$init$frost$core$Int($tmp976);
-org$frostlang$regex$RegexLexer** $tmp978 = &param0->lexer;
-org$frostlang$regex$RegexLexer* $tmp979 = *$tmp978;
-org$frostlang$plex$runtime$DFA** $tmp980 = &$tmp979->dfa;
-org$frostlang$plex$runtime$DFA* $tmp981 = *$tmp980;
-frost$core$Char8** $tmp982 = &$tmp981->source;
-frost$core$Char8* $tmp983 = *$tmp982;
-frost$core$Int $tmp984 = *(&local9);
-frost$core$Int64 $tmp985 = frost$core$Int64$init$frost$core$Int($tmp984);
-int64_t $tmp986 = $tmp985.value;
-frost$core$Char8 $tmp987 = $tmp983[$tmp986];
-int64_t $tmp988 = $tmp977.value;
-$tmp970[$tmp988] = $tmp987;
-frost$core$Int $tmp989 = *(&local9);
-int64_t $tmp990 = $tmp956.value;
-int64_t $tmp991 = $tmp989.value;
-int64_t $tmp992 = $tmp990 - $tmp991;
-frost$core$Int $tmp993 = (frost$core$Int) {$tmp992};
-if ($tmp958) goto block29; else goto block30;
+frost$core$Char8* $tmp980 = *(&local8);
+frost$core$Int $tmp981 = *(&local9);
+frost$core$Int $tmp982 = *(&local2);
+int64_t $tmp983 = $tmp981.value;
+int64_t $tmp984 = $tmp982.value;
+int64_t $tmp985 = $tmp983 - $tmp984;
+frost$core$Int $tmp986 = (frost$core$Int) {$tmp985};
+frost$core$Int64 $tmp987 = frost$core$Int64$init$frost$core$Int($tmp986);
+org$frostlang$regex$RegexLexer** $tmp988 = &param0->lexer;
+org$frostlang$regex$RegexLexer* $tmp989 = *$tmp988;
+org$frostlang$plex$runtime$DFA** $tmp990 = &$tmp989->dfa;
+org$frostlang$plex$runtime$DFA* $tmp991 = *$tmp990;
+frost$core$Char8** $tmp992 = &$tmp991->source;
+frost$core$Char8* $tmp993 = *$tmp992;
+frost$core$Int $tmp994 = *(&local9);
+frost$core$Int64 $tmp995 = frost$core$Int64$init$frost$core$Int($tmp994);
+int64_t $tmp996 = $tmp995.value;
+frost$core$Char8 $tmp997 = $tmp993[$tmp996];
+int64_t $tmp998 = $tmp987.value;
+$tmp980[$tmp998] = $tmp997;
+frost$core$Int $tmp999 = *(&local9);
+int64_t $tmp1000 = $tmp966.value;
+int64_t $tmp1001 = $tmp999.value;
+int64_t $tmp1002 = $tmp1000 - $tmp1001;
+frost$core$Int $tmp1003 = (frost$core$Int) {$tmp1002};
+if ($tmp968) goto block29; else goto block30;
 block29:;
-int64_t $tmp994 = $tmp993.value;
-int64_t $tmp995 = $tmp959.value;
-bool $tmp996 = $tmp994 >= $tmp995;
-frost$core$Bit $tmp997 = (frost$core$Bit) {$tmp996};
-bool $tmp998 = $tmp997.value;
-if ($tmp998) goto block28; else goto block24;
+int64_t $tmp1004 = $tmp1003.value;
+int64_t $tmp1005 = $tmp969.value;
+bool $tmp1006 = $tmp1004 >= $tmp1005;
+frost$core$Bit $tmp1007 = (frost$core$Bit) {$tmp1006};
+bool $tmp1008 = $tmp1007.value;
+if ($tmp1008) goto block28; else goto block24;
 block30:;
-int64_t $tmp999 = $tmp993.value;
-int64_t $tmp1000 = $tmp959.value;
-bool $tmp1001 = $tmp999 > $tmp1000;
-frost$core$Bit $tmp1002 = (frost$core$Bit) {$tmp1001};
-bool $tmp1003 = $tmp1002.value;
-if ($tmp1003) goto block28; else goto block24;
+int64_t $tmp1009 = $tmp1003.value;
+int64_t $tmp1010 = $tmp969.value;
+bool $tmp1011 = $tmp1009 > $tmp1010;
+frost$core$Bit $tmp1012 = (frost$core$Bit) {$tmp1011};
+bool $tmp1013 = $tmp1012.value;
+if ($tmp1013) goto block28; else goto block24;
 block28:;
-int64_t $tmp1004 = $tmp989.value;
-int64_t $tmp1005 = $tmp959.value;
-int64_t $tmp1006 = $tmp1004 + $tmp1005;
-frost$core$Int $tmp1007 = (frost$core$Int) {$tmp1006};
-*(&local9) = $tmp1007;
+int64_t $tmp1014 = $tmp999.value;
+int64_t $tmp1015 = $tmp969.value;
+int64_t $tmp1016 = $tmp1014 + $tmp1015;
+frost$core$Int $tmp1017 = (frost$core$Int) {$tmp1016};
+*(&local9) = $tmp1017;
 goto block23;
 block24:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:231
 FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-org$frostlang$frostc$ASTNode* $tmp1008 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
-frost$core$Int $tmp1009 = (frost$core$Int) {37u};
-org$frostlang$frostc$Position $tmp1010 = *(&local1);
+org$frostlang$frostc$ASTNode* $tmp1018 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+frost$core$Int $tmp1019 = (frost$core$Int) {37u};
+org$frostlang$frostc$Position $tmp1020 = *(&local1);
 FROST_ASSERT(48 == sizeof(frost$core$String));
-frost$core$String* $tmp1011 = (frost$core$String*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$String$class);
-frost$core$Char8* $tmp1012 = *(&local8);
-frost$core$Int $tmp1013 = *(&local7);
-frost$core$String$init$frost$unsafe$Pointer$LTfrost$core$Char8$GT$frost$core$Int($tmp1011, $tmp1012, $tmp1013);
-org$frostlang$frostc$ASTNode$init$frost$core$Int$org$frostlang$frostc$Position$frost$core$String($tmp1008, $tmp1009, $tmp1010, $tmp1011);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp1008));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp1011));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp1008));
-return $tmp1008;
+frost$core$String* $tmp1021 = (frost$core$String*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$String$class);
+frost$core$Char8* $tmp1022 = *(&local8);
+frost$core$Int $tmp1023 = *(&local7);
+frost$core$String$init$frost$unsafe$Pointer$LTfrost$core$Char8$GT$frost$core$Int($tmp1021, $tmp1022, $tmp1023);
+org$frostlang$frostc$ASTNode$init$frost$core$Int$org$frostlang$frostc$Position$frost$core$String($tmp1018, $tmp1019, $tmp1020, $tmp1021);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp1018));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp1021));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp1018));
+return $tmp1018;
 
 }
 void org$frostlang$regex$RegexParser$cleanup(org$frostlang$regex$RegexParser* param0) {
 
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:9
 frost$core$Object$cleanup(((frost$core$Object*) param0));
-org$frostlang$regex$RegexLexer** $tmp1014 = &param0->lexer;
-org$frostlang$regex$RegexLexer* $tmp1015 = *$tmp1014;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp1015));
-frost$threads$MessageQueue** $tmp1016 = &param0->errors;
-frost$threads$MessageQueue* $tmp1017 = *$tmp1016;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp1017));
-frost$io$File** $tmp1018 = &param0->path;
-frost$io$File* $tmp1019 = *$tmp1018;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp1019));
-frost$core$String** $tmp1020 = &param0->source;
-frost$core$String* $tmp1021 = *$tmp1020;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp1021));
-frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT** $tmp1022 = &param0->pushbackBuffer;
-frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT* $tmp1023 = *$tmp1022;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp1023));
+org$frostlang$regex$RegexLexer** $tmp1024 = &param0->lexer;
+org$frostlang$regex$RegexLexer* $tmp1025 = *$tmp1024;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp1025));
+frost$threads$MessageQueue** $tmp1026 = &param0->errors;
+frost$threads$MessageQueue* $tmp1027 = *$tmp1026;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp1027));
+frost$io$File** $tmp1028 = &param0->path;
+frost$io$File* $tmp1029 = *$tmp1028;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp1029));
+frost$core$String** $tmp1030 = &param0->source;
+frost$core$String* $tmp1031 = *$tmp1030;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp1031));
+frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT** $tmp1032 = &param0->pushbackBuffer;
+frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT* $tmp1033 = *$tmp1032;
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp1033));
 return;
 
 }

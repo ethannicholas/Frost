@@ -10,7 +10,7 @@
 #include "frost/core/Frost.h"
 #include "frost/core/Bit.h"
 #include "frost/core/Int64.h"
-#include "frost/collections/Key.h"
+#include "frost/collections/HashKey.h"
 
 __attribute__((weak)) frost$core$Object* frost$collections$HashMap$EntryIterator$next$R$$LPfrost$collections$HashMap$EntryIterator$K$Cfrost$collections$HashMap$EntryIterator$V$RP$shim(frost$collections$HashMap$EntryIterator* p0) {
     frost$core$Tuple2* result = frost$collections$HashMap$EntryIterator$next$R$$LPfrost$collections$HashMap$EntryIterator$K$Cfrost$collections$HashMap$EntryIterator$V$RP(p0);
@@ -300,8 +300,8 @@ block14:;
 FROST_ASSERT(32 == sizeof(frost$core$Tuple2));
 frost$core$Tuple2* $tmp155 = (frost$core$Tuple2*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$Tuple2$class);
 frost$collections$HashMap$Entry* $tmp156 = *(&local0);
-frost$collections$Key** $tmp157 = &$tmp156->key;
-frost$collections$Key* $tmp158 = *$tmp157;
+frost$collections$HashKey** $tmp157 = &$tmp156->key;
+frost$collections$HashKey* $tmp158 = *$tmp157;
 frost$collections$HashMap$Entry* $tmp159 = *(&local0);
 frost$core$Object** $tmp160 = &$tmp159->value;
 frost$core$Object* $tmp161 = *$tmp160;

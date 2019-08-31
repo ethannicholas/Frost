@@ -1126,7 +1126,7 @@ class Call {
             }
             finalArgs.add(a)
         }
-        var result:IR.Value
+        var result:IR.Value?
         if !isSuper & m.value.isVirtual {
             def mref:IR.Statement.ID
             if m.value.owner.classKind = ClassDecl.Kind.INTERFACE {
@@ -1147,6 +1147,9 @@ class Call {
             if compiler.settings.optimizationLevel > 1 & m.value.annotations.isInline &
                     compiler.currentMethod.count < 3 {
                 result := inlineCall(compiler, position, m.value, finalArgs)
+                if result == null {
+                    return null
+                }
                 if compiler.ir.currentBlockFinished {
                     compiler.ir.setCurrentBlock(compiler.ir.newBlock("unreachable"))
                     compiler.ir.currentBlock.forceReachable := true

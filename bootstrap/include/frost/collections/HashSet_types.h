@@ -13,6 +13,6 @@ typedef struct frost$collections$HashSet {
     frost$collections$HashMap* contents;
 } frost$collections$HashSet;
 #include "frost/core/Class.h"
-typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[9]; } frost$collections$HashSet$class_type;
+typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[10]; } frost$collections$HashSet$class_type;
 extern frost$collections$HashSet$class_type frost$collections$HashSet$class;
 

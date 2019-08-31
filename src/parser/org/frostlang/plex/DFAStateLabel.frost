@@ -1,6 +1,6 @@
 package org.frostlang.plex
 
-class DFAStateLabel : Key<DFAStateLabel> {
+class DFAStateLabel : HashKey<DFAStateLabel> {
     def states:List<Int>
 
     init(states:List<Int>) {

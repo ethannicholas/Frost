@@ -29,8 +29,10 @@ method process(input:File, frostdoc:FrostDoc):Error? {
 
 method recursiveDelete(root:File, currentPath:File):Error? {
     try {
-        for f in currentPath.list() {
-            recursiveDelete(root, f)
+        if currentPath.isDirectory() {
+            for f in currentPath.list() {
+                recursiveDelete(root, f)
+            }
         }
         -- deleting a directory tree on an end user's machine is scary, so let's be extra careful...
         if !currentPath.absolute().path.startsWith(root.absolute().path) {

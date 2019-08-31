@@ -690,7 +690,8 @@ class For {
                     }
                     def iterator := Call.compile(compiler, position, iterable, "get_iterator",
                             Array<ASTNode>(), TypeContext.NON_VOID)
-                    assert iterator !== null
+                    assert iterator !== null,
+                            "call to get_interator failed on \{iterable} at \{position}"
                     compileIteratorFor(compiler, position, label, rawTarget, iterator, statements)
                     return
                 }

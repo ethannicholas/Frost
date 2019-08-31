@@ -294,7 +294,7 @@ class Main {
         var errorCount := 0
         var warningCount := 0
         {
-            def cg:CodeGenerator
+            def cg:CodeGenerator? := null
             match format {
                 when Format.LLVM, Format.EXECUTABLE, Format.OBJECT {
                     try {
@@ -320,9 +320,6 @@ class Main {
                         Console.printErrorLine(error)
                         System.exit(1)
                     }
-                }
-                otherwise {
-                    unreachable
                 }
             }
             def settings := Compiler.Settings(frostHome, imports, optimizationLevel, safetyLevel,

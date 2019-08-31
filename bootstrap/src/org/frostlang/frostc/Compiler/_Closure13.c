@@ -15,7 +15,7 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 
 void org$frostlang$frostc$Compiler$_Closure13$init$org$frostlang$frostc$SymbolTable(org$frostlang$frostc$Compiler$_Closure13* param0, org$frostlang$frostc$SymbolTable* param1) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5914
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5917
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
 org$frostlang$frostc$SymbolTable** $tmp2 = &param0->$dummy504;
 org$frostlang$frostc$SymbolTable* $tmp3 = *$tmp2;
@@ -27,7 +27,7 @@ return;
 }
 void org$frostlang$frostc$Compiler$_Closure13$cleanup(org$frostlang$frostc$Compiler$_Closure13* param0) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5914
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5917
 frost$core$Object$cleanup(((frost$core$Object*) param0));
 org$frostlang$frostc$SymbolTable** $tmp5 = &param0->$dummy504;
 org$frostlang$frostc$SymbolTable* $tmp6 = *$tmp5;
@@ -37,10 +37,10 @@ return;
 }
 void org$frostlang$frostc$Compiler$_Closure13$$anonymous12$org$frostlang$frostc$Symbol(org$frostlang$frostc$Compiler$_Closure13* param0, org$frostlang$frostc$Symbol* param1) {
 
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5914
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5917
 org$frostlang$frostc$SymbolTable** $tmp7 = &param0->$dummy504;
 org$frostlang$frostc$SymbolTable* $tmp8 = *$tmp7;
-// begin inline call to method org.frostlang.frostc.SymbolTable.add(s:org.frostlang.frostc.Symbol) from Compiler.frost:5914:58
+// begin inline call to method org.frostlang.frostc.SymbolTable.add(s:org.frostlang.frostc.Symbol) from Compiler.frost:5917:58
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/SymbolTable.frost:27
 frost$core$String** $tmp9 = &param1->name;
 frost$core$String* $tmp10 = *$tmp9;

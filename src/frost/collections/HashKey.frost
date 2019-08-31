@@ -12,7 +12,7 @@ object.  A hash code is a number with the following properties:
 If requirements 1 or 2 are violated, the [HashMap] or [HashSet] will have undefined behavior.
 Violating requirement 3 will not break anything, but will reduce performance.
 ====================================================================================================
-interface Key<T:Equatable<T>> : Equatable<T> {
+interface HashKey<T:Equatable<T>> : Equatable<T> {
     ================================================================================================
     Returns a hash code for this object. While hash codes must be stable within a single run of a
     program, they are not, in general, guaranteed to remain stable across different runs of the same

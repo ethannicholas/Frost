@@ -5,7 +5,7 @@
 #include "frost/core/Equatable.h"
 #include "frost/core/Bit.h"
 #include "frost/core/Object.h"
-#include "frost/collections/Key.h"
+#include "frost/collections/HashKey.h"
 #include "frost/core/Int.h"
 #include "frost/core/Comparable.h"
 #include "org/frostlang/frostc/Compiler.h"
@@ -53,26 +53,26 @@ __attribute__((weak)) void org$frostlang$frostc$Position$cleanup$shim(frost$core
 
 struct { frost$core$Class* cl; ITable* next; void* methods[2]; } org$frostlang$frostc$Position$_frost$core$Equatable = { (frost$core$Class*) &frost$core$Equatable$class, NULL, { org$frostlang$frostc$Position$$EQ$org$frostlang$frostc$Position$R$frost$core$Bit$shim, frost$core$Equatable$$NEQ$frost$core$Equatable$T$R$frost$core$Bit} };
 
-struct { frost$core$Class* cl; ITable* next; void* methods[1]; } org$frostlang$frostc$Position$_frost$collections$Key = { (frost$core$Class*) &frost$collections$Key$class, (ITable*) &org$frostlang$frostc$Position$_frost$core$Equatable, { org$frostlang$frostc$Position$get_hash$R$frost$core$Int$shim} };
+struct { frost$core$Class* cl; ITable* next; void* methods[1]; } org$frostlang$frostc$Position$_frost$collections$HashKey = { (frost$core$Class*) &frost$collections$HashKey$class, (ITable*) &org$frostlang$frostc$Position$_frost$core$Equatable, { org$frostlang$frostc$Position$get_hash$R$frost$core$Int$shim} };
 
-struct { frost$core$Class* cl; ITable* next; void* methods[4]; } org$frostlang$frostc$Position$_frost$core$Comparable = { (frost$core$Class*) &frost$core$Comparable$class, (ITable*) &org$frostlang$frostc$Position$_frost$collections$Key, { org$frostlang$frostc$Position$$GT$org$frostlang$frostc$Position$R$frost$core$Bit$shim, frost$core$Comparable$$LT$frost$core$Comparable$T$R$frost$core$Bit, frost$core$Comparable$$GE$frost$core$Comparable$T$R$frost$core$Bit, frost$core$Comparable$$LE$frost$core$Comparable$T$R$frost$core$Bit} };
+struct { frost$core$Class* cl; ITable* next; void* methods[4]; } org$frostlang$frostc$Position$_frost$core$Comparable = { (frost$core$Class*) &frost$core$Comparable$class, (ITable*) &org$frostlang$frostc$Position$_frost$collections$HashKey, { org$frostlang$frostc$Position$$GT$org$frostlang$frostc$Position$R$frost$core$Bit$shim, frost$core$Comparable$$LT$frost$core$Comparable$T$R$frost$core$Bit, frost$core$Comparable$$GE$frost$core$Comparable$T$R$frost$core$Bit, frost$core$Comparable$$LE$frost$core$Comparable$T$R$frost$core$Bit} };
 
 static frost$core$String $s1;
 org$frostlang$frostc$Position$class_type org$frostlang$frostc$Position$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Value$class, (ITable*) &org$frostlang$frostc$Position$_frost$core$Comparable, { org$frostlang$frostc$Position$get_asString$R$frost$core$String$shim, frost$core$Value$cleanup$shim, org$frostlang$frostc$Position$$EQ$org$frostlang$frostc$Position$R$frost$core$Bit$shim, org$frostlang$frostc$Position$$GT$org$frostlang$frostc$Position$R$frost$core$Bit$shim, org$frostlang$frostc$Position$get_hash$R$frost$core$Int$shim, org$frostlang$frostc$Position$asString$org$frostlang$frostc$Compiler$R$frost$core$String$shim, org$frostlang$frostc$Position$cleanup$shim} };
 
 struct { frost$core$Class* cl; ITable* itable; void* methods[2]; } org$frostlang$frostc$Position$wrapper_frost$core$Equatable = { (frost$core$Class*) &frost$core$Equatable$class, NULL, { org$frostlang$frostc$Position$$EQ$org$frostlang$frostc$Position$R$frost$core$Bit$shim, frost$core$Equatable$$NEQ$frost$core$Equatable$T$R$frost$core$Bit} };
 
-struct { frost$core$Class* cl; ITable* itable; void* methods[1]; } org$frostlang$frostc$Position$wrapper_frost$collections$Key = { (frost$core$Class*) &frost$collections$Key$class, (ITable*) &org$frostlang$frostc$Position$wrapper_frost$core$Equatable, { org$frostlang$frostc$Position$get_hash$R$frost$core$Int$shim} };
+struct { frost$core$Class* cl; ITable* itable; void* methods[1]; } org$frostlang$frostc$Position$wrapper_frost$collections$HashKey = { (frost$core$Class*) &frost$collections$HashKey$class, (ITable*) &org$frostlang$frostc$Position$wrapper_frost$core$Equatable, { org$frostlang$frostc$Position$get_hash$R$frost$core$Int$shim} };
 
-struct { frost$core$Class* cl; ITable* itable; void* methods[4]; } org$frostlang$frostc$Position$wrapper_frost$core$Comparable = { (frost$core$Class*) &frost$core$Comparable$class, (ITable*) &org$frostlang$frostc$Position$wrapper_frost$collections$Key, { org$frostlang$frostc$Position$$GT$org$frostlang$frostc$Position$R$frost$core$Bit$shim, frost$core$Comparable$$LT$frost$core$Comparable$T$R$frost$core$Bit, frost$core$Comparable$$GE$frost$core$Comparable$T$R$frost$core$Bit, frost$core$Comparable$$LE$frost$core$Comparable$T$R$frost$core$Bit} };
+struct { frost$core$Class* cl; ITable* itable; void* methods[4]; } org$frostlang$frostc$Position$wrapper_frost$core$Comparable = { (frost$core$Class*) &frost$core$Comparable$class, (ITable*) &org$frostlang$frostc$Position$wrapper_frost$collections$HashKey, { org$frostlang$frostc$Position$$GT$org$frostlang$frostc$Position$R$frost$core$Bit$shim, frost$core$Comparable$$LT$frost$core$Comparable$T$R$frost$core$Bit, frost$core$Comparable$$GE$frost$core$Comparable$T$R$frost$core$Bit, frost$core$Comparable$$LE$frost$core$Comparable$T$R$frost$core$Bit} };
 
 static frost$core$String $s2;
 org$frostlang$frostc$Position$wrapperclass_type org$frostlang$frostc$Position$wrapperclass = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s2, (frost$core$Class*) &frost$core$Value$class, (ITable*) &org$frostlang$frostc$Position$wrapper_frost$core$Comparable, { org$frostlang$frostc$Position$get_asString$R$frost$core$String$shim, frost$core$Value$cleanup$shim} };typedef frost$core$String* (*$fn91)(frost$core$Object*);
 typedef frost$core$String* (*$fn106)(frost$core$Object*);
 typedef frost$core$String* (*$fn115)(frost$core$Object*);
 typedef frost$core$Int (*$fn131)(frost$collections$CollectionView*);
-typedef frost$core$String* (*$fn171)(frost$core$Object*);
-typedef frost$core$String* (*$fn179)(frost$core$Object*);
+typedef frost$core$String* (*$fn176)(frost$core$Object*);
+typedef frost$core$String* (*$fn184)(frost$core$Object*);
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x50\x6f\x73\x69\x74\x69\x6f\x6e", 29, 9043357439141894955, NULL };
 static frost$core$String $s2 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x50\x6f\x73\x69\x74\x69\x6f\x6e", 29, 9043357439141894955, NULL };
@@ -85,9 +85,11 @@ static frost$core$String $s119 = { (frost$core$Class*) &frost$core$String$class,
 static frost$core$String $s139 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x41\x72\x72\x61\x79\x2e\x66\x72\x6f\x73\x74", 11, -1919842861654168654, NULL };
 static frost$core$String $s140 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x5b\x5d\x28\x69\x6e\x64\x65\x78\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x54", 108, 4065685528380894665, NULL };
 static frost$core$String $s150 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2f", 1, -5808620644828345858, NULL };
-static frost$core$String $s167 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x3a", 1, -5808597555084153427, NULL };
-static frost$core$String $s175 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x3a", 1, -5808597555084153427, NULL };
-static frost$core$String $s183 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "", 0, -3750763034362895579, NULL };
+static frost$core$String $s162 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x46\x69\x6c\x65\x2e\x66\x72\x6f\x73\x74", 10, 1666587044368153811, NULL };
+static frost$core$String $s163 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x49\x6e\x64\x65\x78\x3f\x20\x74\x6f\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x49\x6e\x64\x65\x78", 85, -1074977990553908571, NULL };
+static frost$core$String $s172 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x3a", 1, -5808597555084153427, NULL };
+static frost$core$String $s180 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x3a", 1, -5808597555084153427, NULL };
+static frost$core$String $s188 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "", 0, -3750763034362895579, NULL };
 
 org$frostlang$frostc$Position org$frostlang$frostc$Position$init() {
 
@@ -402,73 +404,81 @@ frost$core$String* $tmp155 = *$tmp154;
 frost$core$String** $tmp156 = &((frost$io$File*) $tmp145)->path;
 frost$core$String* $tmp157 = *$tmp156;
 frost$core$String$Index$nullable $tmp158 = *(&local1);
-frost$core$String$Index $tmp159 = frost$core$String$next$frost$core$String$Index$R$frost$core$String$Index($tmp157, ((frost$core$String$Index) $tmp158.value));
-frost$core$Bit $tmp160 = (frost$core$Bit) {false};
-frost$core$Range$LTfrost$core$String$Index$Q$GT $tmp161 = frost$core$Range$LTfrost$core$String$Index$Q$GT$init$frost$core$String$Index$Q$frost$core$String$Index$Q$frost$core$Bit(((frost$core$String$Index$nullable) { $tmp159, true }), ((frost$core$String$Index$nullable) { .nonnull = false }), $tmp160);
-frost$core$String* $tmp162 = frost$core$String$$IDX$frost$core$Range$LTfrost$core$String$Index$Q$GT$R$frost$core$String($tmp155, $tmp161);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp162));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp162));
-*(&local0) = $tmp162;
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp162));
+frost$core$Bit $tmp159 = (frost$core$Bit) {$tmp158.nonnull};
+bool $tmp160 = $tmp159.value;
+if ($tmp160) goto block15; else goto block16;
+block16:;
+frost$core$Int $tmp161 = (frost$core$Int) {150u};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s162, $tmp161, &$s163);
+abort(); // unreachable
+block15:;
+frost$core$String$Index $tmp164 = frost$core$String$next$frost$core$String$Index$R$frost$core$String$Index($tmp157, ((frost$core$String$Index) $tmp158.value));
+frost$core$Bit $tmp165 = (frost$core$Bit) {false};
+frost$core$Range$LTfrost$core$String$Index$Q$GT $tmp166 = frost$core$Range$LTfrost$core$String$Index$Q$GT$init$frost$core$String$Index$Q$frost$core$String$Index$Q$frost$core$Bit(((frost$core$String$Index$nullable) { $tmp164, true }), ((frost$core$String$Index$nullable) { .nonnull = false }), $tmp165);
+frost$core$String* $tmp167 = frost$core$String$$IDX$frost$core$Range$LTfrost$core$String$Index$Q$GT$R$frost$core$String($tmp155, $tmp166);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp167));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp167));
+*(&local0) = $tmp167;
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp167));
 goto block10;
 block14:;
 // <no location>
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:153
-frost$core$String** $tmp163 = &((frost$io$File*) $tmp145)->path;
-frost$core$String* $tmp164 = *$tmp163;
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp164));
-*(&local0) = $tmp164;
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp164));
+frost$core$String** $tmp168 = &((frost$io$File*) $tmp145)->path;
+frost$core$String* $tmp169 = *$tmp168;
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp169));
+*(&local0) = $tmp169;
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp169));
 goto block10;
 block13:;
 goto block10;
 block10:;
-frost$core$String* $tmp165 = *(&local0);
+frost$core$String* $tmp170 = *(&local0);
 // begin inline call to function frost.core.String.get_asString():frost.core.String from Position.frost:54:39
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:390
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp165));
-frost$core$String* $tmp166 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp165, &$s167);
-frost$core$Int $tmp168 = param0.line;
-frost$core$Int$wrapper* $tmp169;
-$tmp169 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
-$tmp169->value = $tmp168;
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp170));
+frost$core$String* $tmp171 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp170, &$s172);
+frost$core$Int $tmp173 = param0.line;
+frost$core$Int$wrapper* $tmp174;
+$tmp174 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp174->value = $tmp173;
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Position.frost:54:39
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
-$fn171 $tmp170 = ($fn171) ((frost$core$Object*) $tmp169)->$class->vtable[0];
-frost$core$String* $tmp172 = $tmp170(((frost$core$Object*) $tmp169));
-frost$core$String* $tmp173 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp166, $tmp172);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp173));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp173));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp172));
-frost$core$String* $tmp174 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp173, &$s175);
-frost$core$Int $tmp176 = param0.column;
-frost$core$Int$wrapper* $tmp177;
-$tmp177 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
-$tmp177->value = $tmp176;
-// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Position.frost:54:39
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
-$fn179 $tmp178 = ($fn179) ((frost$core$Object*) $tmp177)->$class->vtable[0];
-frost$core$String* $tmp180 = $tmp178(((frost$core$Object*) $tmp177));
-frost$core$String* $tmp181 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp174, $tmp180);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp181));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp181));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp180));
-frost$core$String* $tmp182 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp181, &$s183);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp182));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp182));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp181));
+$fn176 $tmp175 = ($fn176) ((frost$core$Object*) $tmp174)->$class->vtable[0];
+frost$core$String* $tmp177 = $tmp175(((frost$core$Object*) $tmp174));
+frost$core$String* $tmp178 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp171, $tmp177);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp178));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp178));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp177));
+frost$core$String* $tmp179 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp178, &$s180);
+frost$core$Int $tmp181 = param0.column;
+frost$core$Int$wrapper* $tmp182;
+$tmp182 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp182->value = $tmp181;
+// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Position.frost:54:39
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
+$fn184 $tmp183 = ($fn184) ((frost$core$Object*) $tmp182)->$class->vtable[0];
+frost$core$String* $tmp185 = $tmp183(((frost$core$Object*) $tmp182));
+frost$core$String* $tmp186 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp179, $tmp185);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp186));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp186));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp185));
+frost$core$String* $tmp187 = frost$core$String$$ADD$frost$core$String$R$frost$core$String($tmp186, &$s188);
+frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp187));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp187));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp186));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp182));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp179));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp178));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp174));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp173));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp169));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp166));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp165));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp165));
-frost$core$String* $tmp184 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp184));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp171));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp170));
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp170));
+frost$core$String* $tmp189 = *(&local0);
+frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp189));
 *(&local0) = ((frost$core$String*) NULL);
 frost$core$Frost$unref$frost$core$Object$Q($tmp145);
-return $tmp182;
+return $tmp187;
 
 }
 void org$frostlang$frostc$Position$cleanup(org$frostlang$frostc$Position param0) {

@@ -10,7 +10,7 @@
 
 struct { frost$core$Class* cl; ITable* next; void* methods[4]; } frost$collections$ListWriter$_frost$collections$ListWriter = { (frost$core$Class*) &frost$collections$ListWriter$class, NULL, { NULL, NULL, NULL, frost$collections$ListWriter$removeLast} };
 
-struct { frost$core$Class* cl; ITable* next; void* methods[4]; } frost$collections$ListWriter$_frost$collections$CollectionWriter = { (frost$core$Class*) &frost$collections$CollectionWriter$class, (ITable*) &frost$collections$ListWriter$_frost$collections$ListWriter, { NULL, NULL, frost$collections$CollectionWriter$addAll$frost$collections$CollectionView$LTfrost$collections$CollectionWriter$T$GT, NULL} };
+struct { frost$core$Class* cl; ITable* next; void* methods[5]; } frost$collections$ListWriter$_frost$collections$CollectionWriter = { (frost$core$Class*) &frost$collections$CollectionWriter$class, (ITable*) &frost$collections$ListWriter$_frost$collections$ListWriter, { NULL, NULL, frost$collections$CollectionWriter$addAll$frost$collections$CollectionView$LTfrost$collections$CollectionWriter$T$GT, NULL, NULL} };
 
 static frost$core$String $s1;
 frost$collections$ListWriter$class_type frost$collections$ListWriter$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Object$class, (ITable*) &frost$collections$ListWriter$_frost$collections$CollectionWriter, { frost$core$Object$get_asString$R$frost$core$String, frost$core$Object$cleanup, NULL, NULL, NULL, frost$collections$ListWriter$removeLast} };

@@ -189,7 +189,7 @@ class Analyzer {
     0 for when the condition is true, and exit 1 for when it is false), blocks which end in
     unconditional branches have only a single exit, and other blocks do not have exits.
     ================================================================================================
-    class BlockExit : Value, Key<BlockExit> {
+    class BlockExit : Value, HashKey<BlockExit> {
         def id:IR.Block.ID
         def exit:Int
 

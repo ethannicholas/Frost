@@ -249,7 +249,7 @@ class Frost {
     }
 
     @class
-    function hash<T:Equatable<T>>(o:Key<T>?):Int {
+    function hash<T:Equatable<T>>(o:HashKey<T>?):Int {
         if o !== null {
             return o.hash
         }

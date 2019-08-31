@@ -14,7 +14,7 @@ class MutableString {
     ================================================================================================
     Represents the position of a Unicode codepoint within a `MutableString`.
     ================================================================================================
-    class Index : Value, Key<Index>, Comparable<Index> {
+    class Index : Value, HashKey<Index>, Comparable<Index> {
         @private
         def value:Int
 

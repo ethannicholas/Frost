@@ -154,7 +154,7 @@ class IR {
 
         UNREACHABLE(Position)
 
-        class ID : frost.core.Value, Key<ID> {
+        class ID : frost.core.Value, HashKey<ID> {
             def value:Int
 
             init(value:Int) {
@@ -370,7 +370,7 @@ class IR {
     }
 
     class Block {
-        class ID : frost.core.Value, Key<ID> {
+        class ID : frost.core.Value, HashKey<ID> {
             def value:Int
 
             init(value:Int) {

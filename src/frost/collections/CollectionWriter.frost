@@ -1,8 +1,8 @@
 package frost.collections
 
 ====================================================================================================
-A write-only view of a collection of elements. `CollectionWriter` provides methods to add elements,
-but not to retrieve them.
+A write-only view of a collection of elements. `CollectionWriter` provides methods to add and
+remove elements, but not to retrieve them.
 
 @see CollectionView
 @see Collection
@@ -34,5 +34,15 @@ interface CollectionWriter<T> {
     ================================================================================================
     Removes all elements in the collection.
     ================================================================================================
+    @post(count = 0)
     method clear()
+
+    ================================================================================================
+    Calls the `test` function on each element in the collection, removing all elements for which the
+    function returns `false`.
+
+    For example, calling `filterInPlace(x => x % 2 = 1)` on `[1, 2, 3, 4, 5]` will result in
+    `[1, 3, 5]`, as the filter function returns true only for elements with odd values.
+    ================================================================================================
+    method filterInPlace(test:(T)=>(Bit))
 }

@@ -11,6 +11,6 @@ typedef struct frost$collections$Collection {
     frost$core$UInt8 $flags;
 } frost$collections$Collection;
 #include "frost/core/Class.h"
-typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[3]; } frost$collections$Collection$class_type;
+typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[2]; } frost$collections$Collection$class_type;
 extern frost$collections$Collection$class_type frost$collections$Collection$class;
 

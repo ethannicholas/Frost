@@ -10,7 +10,7 @@ is, those that do not begin with `"/"`) are interpreted relative to [System.work
 which never changes while a program is running.
 ====================================================================================================
 @final
-class File : Immutable, Key<File> {
+class File : Immutable, HashKey<File> {
     ================================================================================================
     The path represented by this `File`.
     ================================================================================================

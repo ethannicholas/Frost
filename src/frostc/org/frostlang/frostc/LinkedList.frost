@@ -117,6 +117,11 @@ class LinkedList<T> : Collection<T> {
     }
 
     @override
+    method filterInPlace(test:(T)=>(Bit)) {
+        unreachable
+    }
+
+    @override
     function get_asString():String {
         def result := MutableString()
         result.append("[")

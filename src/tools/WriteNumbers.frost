@@ -886,7 +886,7 @@ class WriteNumbers {
                     "\{signed(type):signed|unsigned} integer.")
             out.printLine("===")
             out.printLine("@final")
-            out.printLine("class \{object(type)} : Value, Key<\{object(type)}>, " +
+            out.printLine("class \{object(type)} : Value, HashKey<\{object(type)}>, " +
                     "Comparable<\{object(type)}>, Formattable, ListView<Bit> {")
             out.printLine("    ===")
             out.printLine("    The smallest value this type can hold (\{insertCommas(min(type))}).")
@@ -1077,7 +1077,7 @@ class WriteNumbers {
             out.printLine("A \{size(type)}-bit floating point number.")
             out.printLine("===")
             out.printLine("@final")
-            out.printLine("class \{object(type)} : Value, Key<\{object(type)}>, " +
+            out.printLine("class \{object(type)} : Value, HashKey<\{object(type)}>, " +
                     "Comparable<\{object(type)}>, Formattable {")
             out.printLine("    @private")
             out.printLine("    def value:\{builtin(type)}")

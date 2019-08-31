@@ -59,12 +59,12 @@ Shift
 * `>>` (shift right): `-20 >> 2` is `-5`
 
 The *shift left* operator shifts the bits in a [number](basicTypes.html#numbers) to the left,
-inserting zero bits on the right. Left shifting by `n` bits is equivalent to multiplying by `2^n`
+inserting zero bits on the right. Left shifting by `n` bits is equivalent to multiplying by 2^n
 with no overflow checking.
 
 The *shift right* operator shifts the bits in a number to the right. For unsigned types zero bits
 are inserted on the left, and for signed types copies of the sign bit are inserted on the left.
-Right shifting by `n` bits is equivalent to dividing by `2^n`.
+Right shifting by `n` bits is equivalent to dividing by 2^n.
 
 <a name="comparison"></a>
 Comparison

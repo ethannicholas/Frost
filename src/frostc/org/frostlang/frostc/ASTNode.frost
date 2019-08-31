@@ -607,6 +607,9 @@ choice ASTNode {
                 return "(\{parameters.join(", ")})=>\{body}"
             }
             when UNARY(_, op, base) {
+                if op = Unary.Operator.NONNULL {
+                    return base + "!"
+                }
                 return "\{op}\{base}"
             }
             when UNREACHABLE(_, message) {

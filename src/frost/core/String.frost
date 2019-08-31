@@ -48,11 +48,11 @@ that creates many temporary objects. Instead create a [MutableString], repeatedl
 it, and then finally turn it into an immutable `String` using [finish](MutableString.finish).
 ====================================================================================================
 @final
-class String : Immutable, Key<String>, Comparable<String>, Iterable<Char32>, Formattable {
+class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>, Formattable {
     ================================================================================================
     Represents the position of a Unicode codepoint within a `String`.
     ================================================================================================
-    class Index : Value, Key<Index>, Comparable<Index> {
+    class Index : Value, HashKey<Index>, Comparable<Index> {
         @private
         def value:Int
 

@@ -14,7 +14,7 @@ Note that a string which visually appears to be a single character may in fact c
 one Unicode codepoint, and thus not be accepted as a `Char32` literal.
 ====================================================================================================
 @final
-class Char32 : Value, Key<Char32>, Comparable<Char32> {
+class Char32 : Value, HashKey<Char32>, Comparable<Char32> {
     @private
     def value:builtin_int32
 

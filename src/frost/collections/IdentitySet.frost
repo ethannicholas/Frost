@@ -50,6 +50,11 @@ class IdentitySet<T> : Collection<T> {
     }
 
     @override
+    method filterInPlace(test:(T)=>(Bit)) {
+        contents.filterInPlace((k, v) => test(k))
+    }
+
+    @override
     function get_asString():String {
         def result := MutableString("[")
         var separator := ""

@@ -16,6 +16,6 @@ typedef struct org$frostlang$frostc$LinkedList {
     org$frostlang$frostc$LinkedList$Node* tail;
 } org$frostlang$frostc$LinkedList;
 #include "frost/core/Class.h"
-typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[9]; } org$frostlang$frostc$LinkedList$class_type;
+typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[10]; } org$frostlang$frostc$LinkedList$class_type;
 extern org$frostlang$frostc$LinkedList$class_type org$frostlang$frostc$LinkedList$class;
 

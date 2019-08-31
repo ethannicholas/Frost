@@ -39,10 +39,11 @@ interface List<T> : ListView<T>, ListWriter<T>, Collection<T> {
         self[Range<Int>(min, max, range.inclusive)] := list
     }
 
+    @override
     @default
-    method filterInPlace(f:(T)=&>(Bit)) {
+    method filterInPlace(test:(T)=>(Bit)) {
         for i in count - 1 ... 0 by -1 {
-            if !f(self[i]) {
+            if !test(self[i]) {
                 removeIndex(i)
             }
         }

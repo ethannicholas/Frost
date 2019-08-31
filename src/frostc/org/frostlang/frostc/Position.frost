@@ -1,7 +1,7 @@
 package org.frostlang.frostc
 
 @final
-class Position : Value, Key<Position>, Comparable<Position> {
+class Position : Value, HashKey<Position>, Comparable<Position> {
     def file:Int
 
     def line:Int

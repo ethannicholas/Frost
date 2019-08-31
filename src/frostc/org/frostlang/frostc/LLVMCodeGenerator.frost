@@ -85,7 +85,7 @@ class LLVMCodeGenerator : CodeGenerator {
 
     def sizes := IdentityMap<ClassDecl, Int>()
 
-    def aligments := IdentityMap<ClassDecl, Int>()
+    def alignments := IdentityMap<ClassDecl, Int>()
 
     def choiceDataSizes := IdentityMap<ClassDecl, Int>()
 
@@ -220,6 +220,10 @@ class LLVMCodeGenerator : CodeGenerator {
         if t.typeKind = Type.Kind.NULLABLE {
             result += 1
         }
+        def align := alignment(t)
+        if result % align != 0 {
+            result += align - result % align
+        }
         return result
     }
 
@@ -235,7 +239,7 @@ class LLVMCodeGenerator : CodeGenerator {
         if cl.name = "frost.unsafe.Pointer" | !compiler!.isValue(cl) {
             return POINTER_SIZE
         }
-        var cached := aligments[cl]
+        var cached := alignments[cl]
         if cached !== null {
             return cached
         }
@@ -252,7 +256,7 @@ class LLVMCodeGenerator : CodeGenerator {
                 result := result.max(alignment(f.type))
             }
         }
-        aligments[cl] := result
+        alignments[cl] := result
         return result
     }
 
@@ -285,7 +289,8 @@ class LLVMCodeGenerator : CodeGenerator {
                 if result % align != 0 {
                     result += align - result % align
                 }
-                assert result % alignment(f.type) = 0, "field \{f} has alignment \{f.type} but is at offset \{result}"
+                assert result % alignment(f.type) = 0,
+                        "field \{f} has alignment \{f.type} but is at offset \{result}"
                 result += fieldSize(f.type)
             }
         }

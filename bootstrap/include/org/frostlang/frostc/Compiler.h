@@ -39,7 +39,7 @@ typedef struct frost$collections$Array frost$collections$Array;
 typedef struct org$frostlang$frostc$IR org$frostlang$frostc$IR;
 typedef struct org$frostlang$frostc$pass$Analyzer org$frostlang$frostc$pass$Analyzer;
 
-void org$frostlang$frostc$Compiler$init$frost$threads$MessageQueue$LTorg$frostlang$frostc$Compiler$Message$GT$org$frostlang$frostc$CodeGenerator$org$frostlang$frostc$Compiler$Settings(org$frostlang$frostc$Compiler* self, frost$threads$MessageQueue* p_errorQueue, org$frostlang$frostc$CodeGenerator* p_codeGenerator, org$frostlang$frostc$Compiler$Settings* p_settings);
+void org$frostlang$frostc$Compiler$init$frost$threads$MessageQueue$LTorg$frostlang$frostc$Compiler$Message$GT$org$frostlang$frostc$CodeGenerator$Q$org$frostlang$frostc$Compiler$Settings(org$frostlang$frostc$Compiler* self, frost$threads$MessageQueue* p_errorQueue, org$frostlang$frostc$CodeGenerator* p_codeGenerator, org$frostlang$frostc$Compiler$Settings* p_settings);
 void org$frostlang$frostc$Compiler$addAlias$frost$core$String(org$frostlang$frostc$Compiler* self, frost$core$String* p_name);
 frost$core$Bit org$frostlang$frostc$Compiler$isRefCounted$org$frostlang$frostc$Type$R$frost$core$Bit(org$frostlang$frostc$Compiler* self, org$frostlang$frostc$Type* p_type);
 org$frostlang$frostc$ClassDecl* org$frostlang$frostc$Compiler$tryResolveClass$frost$core$String$R$org$frostlang$frostc$ClassDecl$Q(org$frostlang$frostc$Compiler* self, frost$core$String* p_name);

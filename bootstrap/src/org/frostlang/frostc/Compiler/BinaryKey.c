@@ -4,7 +4,7 @@
 #include "frost/core/String.h"
 #include "frost/core/Equatable.h"
 #include "frost/core/Bit.h"
-#include "frost/collections/Key.h"
+#include "frost/collections/HashKey.h"
 #include "org/frostlang/frostc/ASTNode.h"
 #include "org/frostlang/frostc/expression/Binary/Operator.h"
 #include "frost/core/Frost.h"
@@ -18,10 +18,10 @@ __attribute__((weak)) frost$core$Bit org$frostlang$frostc$Compiler$BinaryKey$$EQ
 
 struct { frost$core$Class* cl; ITable* next; void* methods[2]; } org$frostlang$frostc$Compiler$BinaryKey$_frost$core$Equatable = { (frost$core$Class*) &frost$core$Equatable$class, NULL, { org$frostlang$frostc$Compiler$BinaryKey$$EQ$org$frostlang$frostc$Compiler$BinaryKey$R$frost$core$Bit$shim, frost$core$Equatable$$NEQ$frost$core$Equatable$T$R$frost$core$Bit} };
 
-struct { frost$core$Class* cl; ITable* next; void* methods[1]; } org$frostlang$frostc$Compiler$BinaryKey$_frost$collections$Key = { (frost$core$Class*) &frost$collections$Key$class, (ITable*) &org$frostlang$frostc$Compiler$BinaryKey$_frost$core$Equatable, { org$frostlang$frostc$Compiler$BinaryKey$get_hash$R$frost$core$Int} };
+struct { frost$core$Class* cl; ITable* next; void* methods[1]; } org$frostlang$frostc$Compiler$BinaryKey$_frost$collections$HashKey = { (frost$core$Class*) &frost$collections$HashKey$class, (ITable*) &org$frostlang$frostc$Compiler$BinaryKey$_frost$core$Equatable, { org$frostlang$frostc$Compiler$BinaryKey$get_hash$R$frost$core$Int} };
 
 static frost$core$String $s1;
-org$frostlang$frostc$Compiler$BinaryKey$class_type org$frostlang$frostc$Compiler$BinaryKey$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Object$class, (ITable*) &org$frostlang$frostc$Compiler$BinaryKey$_frost$collections$Key, { frost$core$Object$get_asString$R$frost$core$String, org$frostlang$frostc$Compiler$BinaryKey$cleanup, org$frostlang$frostc$Compiler$BinaryKey$$EQ$org$frostlang$frostc$Compiler$BinaryKey$R$frost$core$Bit$shim, org$frostlang$frostc$Compiler$BinaryKey$get_hash$R$frost$core$Int} };
+org$frostlang$frostc$Compiler$BinaryKey$class_type org$frostlang$frostc$Compiler$BinaryKey$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Object$class, (ITable*) &org$frostlang$frostc$Compiler$BinaryKey$_frost$collections$HashKey, { frost$core$Object$get_asString$R$frost$core$String, org$frostlang$frostc$Compiler$BinaryKey$cleanup, org$frostlang$frostc$Compiler$BinaryKey$$EQ$org$frostlang$frostc$Compiler$BinaryKey$R$frost$core$Bit$shim, org$frostlang$frostc$Compiler$BinaryKey$get_hash$R$frost$core$Int} };
 
 typedef frost$core$Bit (*$fn24)(frost$core$Equatable*, frost$core$Equatable*);
 

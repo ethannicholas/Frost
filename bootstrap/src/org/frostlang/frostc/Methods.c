@@ -15,7 +15,7 @@
 #include "frost/collections/HashSet.h"
 #include "frost/collections/Iterable.h"
 #include "frost/collections/Iterator.h"
-#include "frost/collections/Key.h"
+#include "frost/collections/HashKey.h"
 #include "frost/collections/HashMap.h"
 #include "frost/io/Console.h"
 
@@ -170,7 +170,7 @@ frost$core$String* $tmp57 = org$frostlang$frostc$MethodDecl$get_signature$R$fros
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashSet.frost:19
 frost$collections$HashMap** $tmp58 = &$tmp55->contents;
 frost$collections$HashMap* $tmp59 = *$tmp58;
-frost$collections$HashMap$$IDXEQ$frost$collections$HashMap$K$frost$collections$HashMap$V($tmp59, ((frost$collections$Key*) $tmp57), ((frost$core$Object*) ((frost$collections$Key*) $tmp57)));
+frost$collections$HashMap$$IDXEQ$frost$collections$HashMap$K$frost$collections$HashMap$V($tmp59, ((frost$collections$HashKey*) $tmp57), ((frost$core$Object*) ((frost$collections$HashKey*) $tmp57)));
 frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp57));
 frost$core$Frost$unref$frost$core$Object$Q($tmp53);
 org$frostlang$frostc$MethodDecl* $tmp60 = *(&local1);

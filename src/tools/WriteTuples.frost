@@ -22,7 +22,7 @@ method writeTuple(count:Int, kind:Kind, path:File) {
             out.print("T\{i}")
             match kind {
                 when Kind.EQUATABLE { out.print(":Equatable<T\{i}>")}
-                when Kind.KEY { out.print(":Key<T\{i}>")}
+                when Kind.KEY { out.print(":HashKey<T\{i}>")}
             }
         }
         out.print(">")
@@ -32,7 +32,7 @@ method writeTuple(count:Int, kind:Kind, path:File) {
                 out.print(" : Equatable<\{name}\{types}>")
             }
             when Kind.KEY {
-                out.print(" : Key<\{name}\{types}>")
+                out.print(" : HashKey<\{name}\{types}>")
             }
         }
         out.printLine(" {")

@@ -2,20 +2,20 @@
 #include "frost/core/Value.h"
 #include "frost/core/Class.h"
 #include "frost/core/String.h"
+#include "frost/collections/HashKey.h"
+#include "frost/core/Int.h"
+#include "frost/core/Object.h"
 #include "frost/core/Equatable.h"
 #include "frost/core/Bit.h"
-#include "frost/core/Object.h"
-#include "frost/collections/Key.h"
-#include "frost/core/Int.h"
 #include "frost/core/Comparable.h"
 
-__attribute__((weak)) frost$core$Bit frost$core$String$Index$$EQ$frost$core$String$Index$R$frost$core$Bit$shim(frost$core$Object* p0, frost$core$Equatable* p1) {
-    frost$core$Bit result = frost$core$String$Index$$EQ$frost$core$String$Index$R$frost$core$Bit(((frost$core$String$Index$wrapper*) p0)->value, ((frost$core$String$Index$wrapper*) p1)->value);
+__attribute__((weak)) frost$core$Int frost$core$String$Index$get_hash$R$frost$core$Int$shim(frost$core$Object* p0) {
+    frost$core$Int result = frost$core$String$Index$get_hash$R$frost$core$Int(((frost$core$String$Index$wrapper*) p0)->value);
 
     return result;
 }
-__attribute__((weak)) frost$core$Int frost$core$String$Index$get_hash$R$frost$core$Int$shim(frost$core$Object* p0) {
-    frost$core$Int result = frost$core$String$Index$get_hash$R$frost$core$Int(((frost$core$String$Index$wrapper*) p0)->value);
+__attribute__((weak)) frost$core$Bit frost$core$String$Index$$EQ$frost$core$String$Index$R$frost$core$Bit$shim(frost$core$Object* p0, frost$core$Equatable* p1) {
+    frost$core$Bit result = frost$core$String$Index$$EQ$frost$core$String$Index$R$frost$core$Bit(((frost$core$String$Index$wrapper*) p0)->value, ((frost$core$String$Index$wrapper*) p1)->value);
 
     return result;
 }
@@ -33,20 +33,20 @@ __attribute__((weak)) void frost$core$String$Index$cleanup$shim(frost$core$Objec
 
 }
 
-struct { frost$core$Class* cl; ITable* next; void* methods[2]; } frost$core$String$Index$_frost$core$Equatable = { (frost$core$Class*) &frost$core$Equatable$class, NULL, { frost$core$String$Index$$EQ$frost$core$String$Index$R$frost$core$Bit$shim, frost$core$Equatable$$NEQ$frost$core$Equatable$T$R$frost$core$Bit} };
+struct { frost$core$Class* cl; ITable* next; void* methods[1]; } frost$core$String$Index$_frost$collections$HashKey = { (frost$core$Class*) &frost$collections$HashKey$class, NULL, { frost$core$String$Index$get_hash$R$frost$core$Int$shim} };
 
-struct { frost$core$Class* cl; ITable* next; void* methods[1]; } frost$core$String$Index$_frost$collections$Key = { (frost$core$Class*) &frost$collections$Key$class, (ITable*) &frost$core$String$Index$_frost$core$Equatable, { frost$core$String$Index$get_hash$R$frost$core$Int$shim} };
+struct { frost$core$Class* cl; ITable* next; void* methods[2]; } frost$core$String$Index$_frost$core$Equatable = { (frost$core$Class*) &frost$core$Equatable$class, (ITable*) &frost$core$String$Index$_frost$collections$HashKey, { frost$core$String$Index$$EQ$frost$core$String$Index$R$frost$core$Bit$shim, frost$core$Equatable$$NEQ$frost$core$Equatable$T$R$frost$core$Bit} };
 
-struct { frost$core$Class* cl; ITable* next; void* methods[4]; } frost$core$String$Index$_frost$core$Comparable = { (frost$core$Class*) &frost$core$Comparable$class, (ITable*) &frost$core$String$Index$_frost$collections$Key, { frost$core$String$Index$$GT$frost$core$String$Index$R$frost$core$Bit$shim, frost$core$Comparable$$LT$frost$core$Comparable$T$R$frost$core$Bit, frost$core$Comparable$$GE$frost$core$Comparable$T$R$frost$core$Bit, frost$core$Comparable$$LE$frost$core$Comparable$T$R$frost$core$Bit} };
+struct { frost$core$Class* cl; ITable* next; void* methods[4]; } frost$core$String$Index$_frost$core$Comparable = { (frost$core$Class*) &frost$core$Comparable$class, (ITable*) &frost$core$String$Index$_frost$core$Equatable, { frost$core$String$Index$$GT$frost$core$String$Index$R$frost$core$Bit$shim, frost$core$Comparable$$LT$frost$core$Comparable$T$R$frost$core$Bit, frost$core$Comparable$$GE$frost$core$Comparable$T$R$frost$core$Bit, frost$core$Comparable$$LE$frost$core$Comparable$T$R$frost$core$Bit} };
 
 static frost$core$String $s1;
 frost$core$String$Index$class_type frost$core$String$Index$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Value$class, (ITable*) &frost$core$String$Index$_frost$core$Comparable, { frost$core$Object$get_asString$R$frost$core$String, frost$core$Value$cleanup$shim, frost$core$String$Index$$EQ$frost$core$String$Index$R$frost$core$Bit$shim, frost$core$String$Index$$GT$frost$core$String$Index$R$frost$core$Bit$shim, frost$core$String$Index$get_hash$R$frost$core$Int$shim, frost$core$String$Index$cleanup$shim} };
 
-struct { frost$core$Class* cl; ITable* itable; void* methods[2]; } frost$core$String$Index$wrapper_frost$core$Equatable = { (frost$core$Class*) &frost$core$Equatable$class, NULL, { frost$core$String$Index$$EQ$frost$core$String$Index$R$frost$core$Bit$shim, frost$core$Equatable$$NEQ$frost$core$Equatable$T$R$frost$core$Bit} };
+struct { frost$core$Class* cl; ITable* itable; void* methods[1]; } frost$core$String$Index$wrapper_frost$collections$HashKey = { (frost$core$Class*) &frost$collections$HashKey$class, NULL, { frost$core$String$Index$get_hash$R$frost$core$Int$shim} };
 
-struct { frost$core$Class* cl; ITable* itable; void* methods[1]; } frost$core$String$Index$wrapper_frost$collections$Key = { (frost$core$Class*) &frost$collections$Key$class, (ITable*) &frost$core$String$Index$wrapper_frost$core$Equatable, { frost$core$String$Index$get_hash$R$frost$core$Int$shim} };
+struct { frost$core$Class* cl; ITable* itable; void* methods[2]; } frost$core$String$Index$wrapper_frost$core$Equatable = { (frost$core$Class*) &frost$core$Equatable$class, (ITable*) &frost$core$String$Index$wrapper_frost$collections$HashKey, { frost$core$String$Index$$EQ$frost$core$String$Index$R$frost$core$Bit$shim, frost$core$Equatable$$NEQ$frost$core$Equatable$T$R$frost$core$Bit} };
 
-struct { frost$core$Class* cl; ITable* itable; void* methods[4]; } frost$core$String$Index$wrapper_frost$core$Comparable = { (frost$core$Class*) &frost$core$Comparable$class, (ITable*) &frost$core$String$Index$wrapper_frost$collections$Key, { frost$core$String$Index$$GT$frost$core$String$Index$R$frost$core$Bit$shim, frost$core$Comparable$$LT$frost$core$Comparable$T$R$frost$core$Bit, frost$core$Comparable$$GE$frost$core$Comparable$T$R$frost$core$Bit, frost$core$Comparable$$LE$frost$core$Comparable$T$R$frost$core$Bit} };
+struct { frost$core$Class* cl; ITable* itable; void* methods[4]; } frost$core$String$Index$wrapper_frost$core$Comparable = { (frost$core$Class*) &frost$core$Comparable$class, (ITable*) &frost$core$String$Index$wrapper_frost$core$Equatable, { frost$core$String$Index$$GT$frost$core$String$Index$R$frost$core$Bit$shim, frost$core$Comparable$$LT$frost$core$Comparable$T$R$frost$core$Bit, frost$core$Comparable$$GE$frost$core$Comparable$T$R$frost$core$Bit, frost$core$Comparable$$LE$frost$core$Comparable$T$R$frost$core$Bit} };
 
 static frost$core$String $s2;
 frost$core$String$Index$wrapperclass_type frost$core$String$Index$wrapperclass = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s2, (frost$core$Class*) &frost$core$Value$class, (ITable*) &frost$core$String$Index$wrapper_frost$core$Comparable, { frost$core$Object$get_asString$R$frost$core$String, frost$core$Value$cleanup$shim} };
