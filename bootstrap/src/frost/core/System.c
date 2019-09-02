@@ -17,8 +17,10 @@ return;
 }
 void frost$core$System$cleanup(frost$core$System* param0) {
 
+frost$core$Object* _1;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/System.frost:7
-frost$core$Object$cleanup(((frost$core$Object*) param0));
+_1 = ((frost$core$Object*) param0);
+frost$core$Object$cleanup(_1);
 return;
 
 }

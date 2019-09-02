@@ -23,20 +23,25 @@ static frost$core$String $s2 = { (frost$core$Class*) &frost$core$String$class, -
 org$frostlang$json$Token org$frostlang$json$Token$init$org$frostlang$json$Token$Kind$frost$core$String$Index$frost$core$String$Index$org$frostlang$json$Position(org$frostlang$json$Token$Kind param0, frost$core$String$Index param1, frost$core$String$Index param2, org$frostlang$json$Position param3) {
 
 org$frostlang$json$Token local0;
+org$frostlang$json$Token$Kind* _1;
+frost$core$String$Index* _4;
+frost$core$String$Index* _7;
+org$frostlang$json$Position* _10;
+org$frostlang$json$Token _12;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Token.frost:36
-org$frostlang$json$Token$Kind* $tmp3 = &(&local0)->kind;
-*$tmp3 = param0;
+_1 = &(&local0)->kind;
+*_1 = param0;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Token.frost:37
-frost$core$String$Index* $tmp4 = &(&local0)->start;
-*$tmp4 = param1;
+_4 = &(&local0)->start;
+*_4 = param1;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Token.frost:38
-frost$core$String$Index* $tmp5 = &(&local0)->end;
-*$tmp5 = param2;
+_7 = &(&local0)->end;
+*_7 = param2;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Token.frost:39
-org$frostlang$json$Position* $tmp6 = &(&local0)->position;
-*$tmp6 = param3;
-org$frostlang$json$Token $tmp7 = *(&local0);
-return $tmp7;
+_10 = &(&local0)->position;
+*_10 = param3;
+_12 = *(&local0);
+return _12;
 
 }
 void org$frostlang$json$Token$cleanup(org$frostlang$json$Token param0) {

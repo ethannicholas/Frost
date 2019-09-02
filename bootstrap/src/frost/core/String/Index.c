@@ -56,44 +56,59 @@ static frost$core$String $s2 = { (frost$core$Class*) &frost$core$String$class, -
 frost$core$String$Index frost$core$String$Index$init$frost$core$Int(frost$core$Int param0) {
 
 frost$core$String$Index local0;
+frost$core$Int* _1;
+frost$core$String$Index _3;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:61
-frost$core$Int* $tmp3 = &(&local0)->value;
-*$tmp3 = param0;
-frost$core$String$Index $tmp4 = *(&local0);
-return $tmp4;
+_1 = &(&local0)->value;
+*_1 = param0;
+_3 = *(&local0);
+return _3;
 
 }
 frost$core$Bit frost$core$String$Index$$EQ$frost$core$String$Index$R$frost$core$Bit(frost$core$String$Index param0, frost$core$String$Index param1) {
 
+frost$core$Int _1;
+frost$core$Int _2;
+int64_t _5;
+int64_t _6;
+bool _7;
+frost$core$Bit _8;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:66
-frost$core$Int $tmp5 = param0.value;
-frost$core$Int $tmp6 = param1.value;
+_1 = param0.value;
+_2 = param1.value;
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from String.frost:66:26
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
-int64_t $tmp7 = $tmp5.value;
-int64_t $tmp8 = $tmp6.value;
-bool $tmp9 = $tmp7 == $tmp8;
-frost$core$Bit $tmp10 = (frost$core$Bit) {$tmp9};
-return $tmp10;
+_5 = _1.value;
+_6 = _2.value;
+_7 = _5 == _6;
+_8 = (frost$core$Bit) {_7};
+return _8;
 
 }
 frost$core$Bit frost$core$String$Index$$GT$frost$core$String$Index$R$frost$core$Bit(frost$core$String$Index param0, frost$core$String$Index param1) {
 
+frost$core$Int _1;
+frost$core$Int _2;
+int64_t _3;
+int64_t _4;
+bool _5;
+frost$core$Bit _6;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:71
-frost$core$Int $tmp11 = param0.value;
-frost$core$Int $tmp12 = param1.value;
-int64_t $tmp13 = $tmp11.value;
-int64_t $tmp14 = $tmp12.value;
-bool $tmp15 = $tmp13 > $tmp14;
-frost$core$Bit $tmp16 = (frost$core$Bit) {$tmp15};
-return $tmp16;
+_1 = param0.value;
+_2 = param1.value;
+_3 = _1.value;
+_4 = _2.value;
+_5 = _3 > _4;
+_6 = (frost$core$Bit) {_5};
+return _6;
 
 }
 frost$core$Int frost$core$String$Index$get_hash$R$frost$core$Int(frost$core$String$Index param0) {
 
+frost$core$Int _1;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:79
-frost$core$Int $tmp17 = param0.value;
-return $tmp17;
+_1 = param0.value;
+return _1;
 
 }
 void frost$core$String$Index$cleanup(frost$core$String$Index param0) {

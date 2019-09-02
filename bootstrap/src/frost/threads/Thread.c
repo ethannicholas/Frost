@@ -4,8 +4,8 @@
 #include "frost/core/String.h"
 #include "frost/core/Object.h"
 #include "frost/core/Method.h"
-#include "frost/core/Frost.h"
 #include "frost/core/MutableMethod.h"
+#include "frost/core/Frost.h"
 #include "frost/core/Bit.h"
 #include "frost/core/Int.h"
 
@@ -28,116 +28,185 @@ return;
 frost$threads$Thread* frost$threads$Thread$start$$LP$RP$EQ$AM$GT$ST$LP$RP$R$frost$threads$Thread(frost$core$Method* param0) {
 
 frost$threads$Thread* local0 = NULL;
+frost$threads$Thread* _1;
+frost$core$Object* _5;
+frost$threads$Thread* _7;
+frost$core$Object* _8;
+frost$core$Object* _11;
+frost$threads$Thread* _14;
+frost$core$MutableMethod* _15;
+frost$threads$Thread* _18;
+frost$core$Object* _19;
+frost$threads$Thread* _21;
+frost$core$Object* _22;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/threads/Thread.frost:50
 FROST_ASSERT(24 == sizeof(frost$threads$Thread));
-frost$threads$Thread* $tmp2 = (frost$threads$Thread*) frostObjectAlloc(24, (frost$core$Class*) &frost$threads$Thread$class);
+_1 = (frost$threads$Thread*) frostObjectAlloc(24, (frost$core$Class*) &frost$threads$Thread$class);
 // begin inline call to frost.threads.Thread.init() from Thread.frost:50:29
 *(&local0) = ((frost$threads$Thread*) NULL);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp2));
-frost$threads$Thread* $tmp3 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp3));
-*(&local0) = $tmp2;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp2));
+_5 = ((frost$core$Object*) _1);
+frost$core$Frost$ref$frost$core$Object$Q(_5);
+_7 = *(&local0);
+_8 = ((frost$core$Object*) _7);
+frost$core$Frost$unref$frost$core$Object$Q(_8);
+*(&local0) = _1;
+_11 = ((frost$core$Object*) _1);
+frost$core$Frost$unref$frost$core$Object$Q(_11);
 // /Users/ethannicholas/Dropbox/Frost/src/frost/threads/Thread.frost:51
-frost$threads$Thread* $tmp4 = *(&local0);
-frost$threads$Thread$run$$LP$RP$EQ$AM$GT$LP$RP$builtin_bit($tmp4, ((frost$core$MutableMethod*) param0), true);
+_14 = *(&local0);
+_15 = ((frost$core$MutableMethod*) param0);
+frost$threads$Thread$run$$LP$RP$EQ$AM$GT$LP$RP$builtin_bit(_14, _15, true);
 // /Users/ethannicholas/Dropbox/Frost/src/frost/threads/Thread.frost:52
-frost$threads$Thread* $tmp5 = *(&local0);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp5));
-frost$threads$Thread* $tmp6 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp6));
+_18 = *(&local0);
+_19 = ((frost$core$Object*) _18);
+frost$core$Frost$ref$frost$core$Object$Q(_19);
+_21 = *(&local0);
+_22 = ((frost$core$Object*) _21);
+frost$core$Frost$unref$frost$core$Object$Q(_22);
 *(&local0) = ((frost$threads$Thread*) NULL);
-return $tmp5;
+return _18;
 
 }
 frost$threads$Thread* frost$threads$Thread$start$$LP$RP$EQ$AM$GT$ST$LP$RP$frost$core$Bit$R$frost$threads$Thread(frost$core$Method* param0, frost$core$Bit param1) {
 
 frost$threads$Thread* local0 = NULL;
+frost$threads$Thread* _1;
+frost$core$Object* _5;
+frost$threads$Thread* _7;
+frost$core$Object* _8;
+frost$core$Object* _11;
+frost$threads$Thread* _14;
+frost$core$MutableMethod* _15;
+bool _16;
+frost$threads$Thread* _19;
+frost$core$Object* _20;
+frost$threads$Thread* _22;
+frost$core$Object* _23;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/threads/Thread.frost:57
 FROST_ASSERT(24 == sizeof(frost$threads$Thread));
-frost$threads$Thread* $tmp7 = (frost$threads$Thread*) frostObjectAlloc(24, (frost$core$Class*) &frost$threads$Thread$class);
+_1 = (frost$threads$Thread*) frostObjectAlloc(24, (frost$core$Class*) &frost$threads$Thread$class);
 // begin inline call to frost.threads.Thread.init() from Thread.frost:57:29
 *(&local0) = ((frost$threads$Thread*) NULL);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp7));
-frost$threads$Thread* $tmp8 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp8));
-*(&local0) = $tmp7;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp7));
+_5 = ((frost$core$Object*) _1);
+frost$core$Frost$ref$frost$core$Object$Q(_5);
+_7 = *(&local0);
+_8 = ((frost$core$Object*) _7);
+frost$core$Frost$unref$frost$core$Object$Q(_8);
+*(&local0) = _1;
+_11 = ((frost$core$Object*) _1);
+frost$core$Frost$unref$frost$core$Object$Q(_11);
 // /Users/ethannicholas/Dropbox/Frost/src/frost/threads/Thread.frost:58
-frost$threads$Thread* $tmp9 = *(&local0);
-bool $tmp10 = param1.value;
-frost$threads$Thread$run$$LP$RP$EQ$AM$GT$LP$RP$builtin_bit($tmp9, ((frost$core$MutableMethod*) param0), $tmp10);
+_14 = *(&local0);
+_15 = ((frost$core$MutableMethod*) param0);
+_16 = param1.value;
+frost$threads$Thread$run$$LP$RP$EQ$AM$GT$LP$RP$builtin_bit(_14, _15, _16);
 // /Users/ethannicholas/Dropbox/Frost/src/frost/threads/Thread.frost:59
-frost$threads$Thread* $tmp11 = *(&local0);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp11));
-frost$threads$Thread* $tmp12 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp12));
+_19 = *(&local0);
+_20 = ((frost$core$Object*) _19);
+frost$core$Frost$ref$frost$core$Object$Q(_20);
+_22 = *(&local0);
+_23 = ((frost$core$Object*) _22);
+frost$core$Frost$unref$frost$core$Object$Q(_23);
 *(&local0) = ((frost$threads$Thread*) NULL);
-return $tmp11;
+return _19;
 
 }
 frost$threads$Thread* frost$threads$Thread$unsafeStart$$LP$RP$EQ$AM$GT$LP$RP$R$frost$threads$Thread(frost$core$MutableMethod* param0) {
 
 frost$threads$Thread* local0 = NULL;
+frost$threads$Thread* _1;
+frost$core$Object* _5;
+frost$threads$Thread* _7;
+frost$core$Object* _8;
+frost$core$Object* _11;
+frost$threads$Thread* _14;
+frost$threads$Thread* _17;
+frost$core$Object* _18;
+frost$threads$Thread* _20;
+frost$core$Object* _21;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/threads/Thread.frost:64
 FROST_ASSERT(24 == sizeof(frost$threads$Thread));
-frost$threads$Thread* $tmp13 = (frost$threads$Thread*) frostObjectAlloc(24, (frost$core$Class*) &frost$threads$Thread$class);
+_1 = (frost$threads$Thread*) frostObjectAlloc(24, (frost$core$Class*) &frost$threads$Thread$class);
 // begin inline call to frost.threads.Thread.init() from Thread.frost:64:29
 *(&local0) = ((frost$threads$Thread*) NULL);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp13));
-frost$threads$Thread* $tmp14 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp14));
-*(&local0) = $tmp13;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp13));
+_5 = ((frost$core$Object*) _1);
+frost$core$Frost$ref$frost$core$Object$Q(_5);
+_7 = *(&local0);
+_8 = ((frost$core$Object*) _7);
+frost$core$Frost$unref$frost$core$Object$Q(_8);
+*(&local0) = _1;
+_11 = ((frost$core$Object*) _1);
+frost$core$Frost$unref$frost$core$Object$Q(_11);
 // /Users/ethannicholas/Dropbox/Frost/src/frost/threads/Thread.frost:65
-frost$threads$Thread* $tmp15 = *(&local0);
-frost$threads$Thread$run$$LP$RP$EQ$AM$GT$LP$RP$builtin_bit($tmp15, param0, true);
+_14 = *(&local0);
+frost$threads$Thread$run$$LP$RP$EQ$AM$GT$LP$RP$builtin_bit(_14, param0, true);
 // /Users/ethannicholas/Dropbox/Frost/src/frost/threads/Thread.frost:66
-frost$threads$Thread* $tmp16 = *(&local0);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp16));
-frost$threads$Thread* $tmp17 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp17));
+_17 = *(&local0);
+_18 = ((frost$core$Object*) _17);
+frost$core$Frost$ref$frost$core$Object$Q(_18);
+_20 = *(&local0);
+_21 = ((frost$core$Object*) _20);
+frost$core$Frost$unref$frost$core$Object$Q(_21);
 *(&local0) = ((frost$threads$Thread*) NULL);
-return $tmp16;
+return _17;
 
 }
 frost$threads$Thread* frost$threads$Thread$unsafeStart$$LP$RP$EQ$AM$GT$LP$RP$frost$core$Bit$R$frost$threads$Thread(frost$core$MutableMethod* param0, frost$core$Bit param1) {
 
 frost$threads$Thread* local0 = NULL;
+frost$threads$Thread* _1;
+frost$core$Object* _5;
+frost$threads$Thread* _7;
+frost$core$Object* _8;
+frost$core$Object* _11;
+frost$threads$Thread* _14;
+bool _15;
+frost$threads$Thread* _18;
+frost$core$Object* _19;
+frost$threads$Thread* _21;
+frost$core$Object* _22;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/threads/Thread.frost:71
 FROST_ASSERT(24 == sizeof(frost$threads$Thread));
-frost$threads$Thread* $tmp18 = (frost$threads$Thread*) frostObjectAlloc(24, (frost$core$Class*) &frost$threads$Thread$class);
+_1 = (frost$threads$Thread*) frostObjectAlloc(24, (frost$core$Class*) &frost$threads$Thread$class);
 // begin inline call to frost.threads.Thread.init() from Thread.frost:71:29
 *(&local0) = ((frost$threads$Thread*) NULL);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp18));
-frost$threads$Thread* $tmp19 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp19));
-*(&local0) = $tmp18;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp18));
+_5 = ((frost$core$Object*) _1);
+frost$core$Frost$ref$frost$core$Object$Q(_5);
+_7 = *(&local0);
+_8 = ((frost$core$Object*) _7);
+frost$core$Frost$unref$frost$core$Object$Q(_8);
+*(&local0) = _1;
+_11 = ((frost$core$Object*) _1);
+frost$core$Frost$unref$frost$core$Object$Q(_11);
 // /Users/ethannicholas/Dropbox/Frost/src/frost/threads/Thread.frost:72
-frost$threads$Thread* $tmp20 = *(&local0);
-bool $tmp21 = param1.value;
-frost$threads$Thread$run$$LP$RP$EQ$AM$GT$LP$RP$builtin_bit($tmp20, param0, $tmp21);
+_14 = *(&local0);
+_15 = param1.value;
+frost$threads$Thread$run$$LP$RP$EQ$AM$GT$LP$RP$builtin_bit(_14, param0, _15);
 // /Users/ethannicholas/Dropbox/Frost/src/frost/threads/Thread.frost:73
-frost$threads$Thread* $tmp22 = *(&local0);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp22));
-frost$threads$Thread* $tmp23 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp23));
+_18 = *(&local0);
+_19 = ((frost$core$Object*) _18);
+frost$core$Frost$ref$frost$core$Object$Q(_19);
+_21 = *(&local0);
+_22 = ((frost$core$Object*) _21);
+frost$core$Frost$unref$frost$core$Object$Q(_22);
 *(&local0) = ((frost$threads$Thread*) NULL);
-return $tmp22;
+return _18;
 
 }
 frost$core$Int frost$threads$Thread$preferredThreadCount$R$frost$core$Int() {
 
+frost$core$Int _1;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/threads/Thread.frost:93
-frost$core$Int $tmp24 = (frost$core$Int) {8u};
-return $tmp24;
+_1 = (frost$core$Int) {8u};
+return _1;
 
 }
 void frost$threads$Thread$cleanup(frost$threads$Thread* param0) {
 
+frost$core$Immutable* _1;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/threads/Thread.frost:23
-frost$core$Immutable$cleanup(((frost$core$Immutable*) param0));
+_1 = ((frost$core$Immutable*) param0);
+frost$core$Immutable$cleanup(_1);
 return;
 
 }

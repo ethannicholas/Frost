@@ -15,35 +15,55 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 
 void org$frostlang$frostc$StubCodeGenerator$_Closure4$init$org$frostlang$frostc$StubCodeGenerator(org$frostlang$frostc$StubCodeGenerator$_Closure4* param0, org$frostlang$frostc$StubCodeGenerator* param1) {
 
+frost$core$Object* _1;
+org$frostlang$frostc$StubCodeGenerator** _3;
+org$frostlang$frostc$StubCodeGenerator* _4;
+frost$core$Object* _5;
+org$frostlang$frostc$StubCodeGenerator** _7;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/StubCodeGenerator.frost:35
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
-org$frostlang$frostc$StubCodeGenerator** $tmp2 = &param0->$self;
-org$frostlang$frostc$StubCodeGenerator* $tmp3 = *$tmp2;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp3));
-org$frostlang$frostc$StubCodeGenerator** $tmp4 = &param0->$self;
-*$tmp4 = param1;
+_1 = ((frost$core$Object*) param1);
+frost$core$Frost$ref$frost$core$Object$Q(_1);
+_3 = &param0->$self;
+_4 = *_3;
+_5 = ((frost$core$Object*) _4);
+frost$core$Frost$unref$frost$core$Object$Q(_5);
+_7 = &param0->$self;
+*_7 = param1;
 return;
 
 }
 void org$frostlang$frostc$StubCodeGenerator$_Closure4$cleanup(org$frostlang$frostc$StubCodeGenerator$_Closure4* param0) {
 
+frost$core$Object* _1;
+org$frostlang$frostc$StubCodeGenerator** _3;
+org$frostlang$frostc$StubCodeGenerator* _4;
+frost$core$Object* _5;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/StubCodeGenerator.frost:35
-frost$core$Object$cleanup(((frost$core$Object*) param0));
-org$frostlang$frostc$StubCodeGenerator** $tmp5 = &param0->$self;
-org$frostlang$frostc$StubCodeGenerator* $tmp6 = *$tmp5;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp6));
+_1 = ((frost$core$Object*) param0);
+frost$core$Object$cleanup(_1);
+_3 = &param0->$self;
+_4 = *_3;
+_5 = ((frost$core$Object*) _4);
+frost$core$Frost$unref$frost$core$Object$Q(_5);
 return;
 
 }
 frost$core$String* org$frostlang$frostc$StubCodeGenerator$_Closure4$$anonymous3$org$frostlang$frostc$Type$R$frost$core$String(org$frostlang$frostc$StubCodeGenerator$_Closure4* param0, org$frostlang$frostc$Type* param1) {
 
+org$frostlang$frostc$StubCodeGenerator** _1;
+org$frostlang$frostc$StubCodeGenerator* _2;
+frost$core$String* _3;
+frost$core$Object* _4;
+frost$core$Object* _6;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/StubCodeGenerator.frost:35
-org$frostlang$frostc$StubCodeGenerator** $tmp7 = &param0->$self;
-org$frostlang$frostc$StubCodeGenerator* $tmp8 = *$tmp7;
-frost$core$String* $tmp9 = org$frostlang$frostc$StubCodeGenerator$type$org$frostlang$frostc$Type$R$frost$core$String($tmp8, param1);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp9));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp9));
-return $tmp9;
+_1 = &param0->$self;
+_2 = *_1;
+_3 = org$frostlang$frostc$StubCodeGenerator$type$org$frostlang$frostc$Type$R$frost$core$String(_2, param1);
+_4 = ((frost$core$Object*) _3);
+frost$core$Frost$ref$frost$core$Object$Q(_4);
+_6 = ((frost$core$Object*) _3);
+frost$core$Frost$unref$frost$core$Object$Q(_6);
+return _3;
 
 }
 

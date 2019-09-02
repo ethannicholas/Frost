@@ -54,8 +54,10 @@ return;
 }
 void org$frostlang$frostc$frostdoc$DummyCodeGenerator$cleanup(org$frostlang$frostc$frostdoc$DummyCodeGenerator* param0) {
 
+frost$core$Object* _1;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/frostdoc/DummyCodeGenerator.frost:10
-frost$core$Object$cleanup(((frost$core$Object*) param0));
+_1 = ((frost$core$Object*) param0);
+frost$core$Object$cleanup(_1);
 return;
 
 }

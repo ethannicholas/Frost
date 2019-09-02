@@ -17,48 +17,75 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 
 void frost$math$XorShift128Plus$init$frost$core$Int64(frost$math$XorShift128Plus* param0, frost$core$Int64 param1) {
 
+frost$core$Int64 _1;
+int64_t _2;
+int64_t _3;
+int64_t _4;
+frost$core$Int64 _5;
+frost$core$Int64 _6;
+int64_t _7;
+int64_t _8;
+int64_t _9;
+frost$core$Int64 _10;
+frost$core$Int64* _11;
+frost$core$Int64* _14;
+frost$core$Int64 _15;
+frost$core$Int64 _16;
+int64_t _19;
+int64_t _20;
+bool _21;
+frost$core$Bit _22;
+bool _24;
+frost$core$Int64 _27;
+frost$core$Int64* _28;
+frost$core$Int64* _32;
+frost$core$Int64 _33;
+int64_t _36;
+int64_t _37;
+frost$core$Int64 _38;
+frost$core$Int64* _40;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/math/XorShift128Plus.frost:29
-frost$core$Int64 $tmp2 = (frost$core$Int64) {6713u};
-int64_t $tmp3 = param1.value;
-int64_t $tmp4 = $tmp2.value;
-int64_t $tmp5 = $tmp3 * $tmp4;
-frost$core$Int64 $tmp6 = (frost$core$Int64) {$tmp5};
-frost$core$Int64 $tmp7 = (frost$core$Int64) {123456789u};
-int64_t $tmp8 = $tmp6.value;
-int64_t $tmp9 = $tmp7.value;
-int64_t $tmp10 = $tmp8 + $tmp9;
-frost$core$Int64 $tmp11 = (frost$core$Int64) {$tmp10};
-frost$core$Int64* $tmp12 = &param0->state1;
-*$tmp12 = $tmp11;
+_1 = (frost$core$Int64) {6713u};
+_2 = param1.value;
+_3 = _1.value;
+_4 = _2 * _3;
+_5 = (frost$core$Int64) {_4};
+_6 = (frost$core$Int64) {123456789u};
+_7 = _5.value;
+_8 = _6.value;
+_9 = _7 + _8;
+_10 = (frost$core$Int64) {_9};
+_11 = &param0->state1;
+*_11 = _10;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/math/XorShift128Plus.frost:30
-frost$core$Int64* $tmp13 = &param0->state1;
-frost$core$Int64 $tmp14 = *$tmp13;
-frost$core$Int64 $tmp15 = (frost$core$Int64) {0u};
+_14 = &param0->state1;
+_15 = *_14;
+_16 = (frost$core$Int64) {0u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from XorShift128Plus.frost:30:19
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int64.frost:245
-int64_t $tmp16 = $tmp14.value;
-int64_t $tmp17 = $tmp15.value;
-bool $tmp18 = $tmp16 == $tmp17;
-frost$core$Bit $tmp19 = (frost$core$Bit) {$tmp18};
-bool $tmp20 = $tmp19.value;
-if ($tmp20) goto block1; else goto block2;
+// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:182
+_19 = _15.value;
+_20 = _16.value;
+_21 = _19 == _20;
+_22 = (frost$core$Bit) {_21};
+_24 = _22.value;
+if (_24) goto block1; else goto block2;
 block1:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/math/XorShift128Plus.frost:32
-frost$core$Int64 $tmp21 = (frost$core$Int64) {123456789u};
-frost$core$Int64* $tmp22 = &param0->state1;
-*$tmp22 = $tmp21;
+_27 = (frost$core$Int64) {123456789u};
+_28 = &param0->state1;
+*_28 = _27;
 goto block2;
 block2:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/math/XorShift128Plus.frost:34
-frost$core$Int64* $tmp23 = &param0->state1;
-frost$core$Int64 $tmp24 = *$tmp23;
+_32 = &param0->state1;
+_33 = *_32;
 // begin inline call to function frost.core.Int64.!!():frost.core.Int64 from XorShift128Plus.frost:34:19
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int64.frost:172
-int64_t $tmp25 = $tmp24.value;
-int64_t $tmp26 = !$tmp25;
-frost$core$Int64 $tmp27 = (frost$core$Int64) {$tmp26};
-frost$core$Int64* $tmp28 = &param0->state2;
-*$tmp28 = $tmp27;
+// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:121
+_36 = _33.value;
+_37 = !_36;
+_38 = (frost$core$Int64) {_37};
+_40 = &param0->state2;
+*_40 = _38;
 return;
 
 }
@@ -66,89 +93,142 @@ frost$core$Int64 frost$math$XorShift128Plus$int64$R$frost$core$Int64(frost$math$
 
 frost$core$Int64 local0;
 frost$core$Int64 local1;
+frost$core$Int64* _1;
+frost$core$Int64 _2;
+frost$core$Int64* _5;
+frost$core$Int64 _6;
+frost$core$Int64 _9;
+frost$core$Int64* _10;
+frost$core$Int64 _13;
+frost$core$Int64 _14;
+frost$core$Int64 _15;
+int64_t _18;
+int64_t _19;
+int64_t _20;
+frost$core$Int64 _21;
+int64_t _25;
+int64_t _26;
+int64_t _27;
+frost$core$Int64 _28;
+frost$core$Int64 _32;
+frost$core$Int64 _33;
+int64_t _36;
+int64_t _37;
+int64_t _38;
+frost$core$Int64 _39;
+frost$core$Int64 _41;
+frost$core$Int64 _42;
+int64_t _45;
+int64_t _46;
+int64_t _47;
+frost$core$Int64 _48;
+int64_t _52;
+int64_t _53;
+int64_t _54;
+frost$core$Int64 _55;
+frost$core$Int64 _57;
+frost$core$Int64 _58;
+int64_t _61;
+int64_t _62;
+int64_t _63;
+frost$core$Int64 _64;
+int64_t _68;
+int64_t _69;
+int64_t _70;
+frost$core$Int64 _71;
+frost$core$Int64* _73;
+frost$core$Int64* _76;
+frost$core$Int64 _77;
+frost$core$Int64 _78;
+int64_t _79;
+int64_t _80;
+int64_t _81;
+frost$core$Int64 _82;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/math/XorShift128Plus.frost:39
-frost$core$Int64* $tmp29 = &param0->state1;
-frost$core$Int64 $tmp30 = *$tmp29;
-*(&local0) = $tmp30;
+_1 = &param0->state1;
+_2 = *_1;
+*(&local0) = _2;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/math/XorShift128Plus.frost:40
-frost$core$Int64* $tmp31 = &param0->state2;
-frost$core$Int64 $tmp32 = *$tmp31;
-*(&local1) = $tmp32;
+_5 = &param0->state2;
+_6 = *_5;
+*(&local1) = _6;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/math/XorShift128Plus.frost:41
-frost$core$Int64 $tmp33 = *(&local1);
-frost$core$Int64* $tmp34 = &param0->state1;
-*$tmp34 = $tmp33;
+_9 = *(&local1);
+_10 = &param0->state1;
+*_10 = _9;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/math/XorShift128Plus.frost:42
-frost$core$Int64 $tmp35 = *(&local0);
-frost$core$Int64 $tmp36 = *(&local0);
-frost$core$Int64 $tmp37 = (frost$core$Int64) {23u};
+_13 = *(&local0);
+_14 = *(&local0);
+_15 = (frost$core$Int64) {23u};
 // begin inline call to function frost.core.Int64.<<(other:frost.core.Int64):frost.core.Int64 from XorShift128Plus.frost:42:17
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int64.frost:214
-int64_t $tmp38 = $tmp36.value;
-int64_t $tmp39 = $tmp37.value;
-int64_t $tmp40 = $tmp38 << $tmp39;
-frost$core$Int64 $tmp41 = (frost$core$Int64) {$tmp40};
+// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:156
+_18 = _14.value;
+_19 = _15.value;
+_20 = _18 << _19;
+_21 = (frost$core$Int64) {_20};
 // begin inline call to function frost.core.Int64.~~(other:frost.core.Int64):frost.core.Int64 from XorShift128Plus.frost:42:9
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int64.frost:202
-int64_t $tmp42 = $tmp35.value;
-int64_t $tmp43 = $tmp41.value;
-int64_t $tmp44 = $tmp42 ^ $tmp43;
-frost$core$Int64 $tmp45 = (frost$core$Int64) {$tmp44};
-*(&local0) = $tmp45;
+// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:146
+_25 = _13.value;
+_26 = _21.value;
+_27 = _25 ^ _26;
+_28 = (frost$core$Int64) {_27};
+*(&local0) = _28;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/math/XorShift128Plus.frost:43
-frost$core$Int64 $tmp46 = *(&local0);
-frost$core$Int64 $tmp47 = *(&local1);
+_32 = *(&local0);
+_33 = *(&local1);
 // begin inline call to function frost.core.Int64.~~(other:frost.core.Int64):frost.core.Int64 from XorShift128Plus.frost:43:21
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int64.frost:202
-int64_t $tmp48 = $tmp46.value;
-int64_t $tmp49 = $tmp47.value;
-int64_t $tmp50 = $tmp48 ^ $tmp49;
-frost$core$Int64 $tmp51 = (frost$core$Int64) {$tmp50};
-frost$core$Int64 $tmp52 = *(&local0);
-frost$core$Int64 $tmp53 = (frost$core$Int64) {17u};
+// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:146
+_36 = _32.value;
+_37 = _33.value;
+_38 = _36 ^ _37;
+_39 = (frost$core$Int64) {_38};
+_41 = *(&local0);
+_42 = (frost$core$Int64) {17u};
 // begin inline call to function frost.core.Int64.>>(other:frost.core.Int64):frost.core.Int64 from XorShift128Plus.frost:43:32
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int64.frost:220
-int64_t $tmp54 = $tmp52.value;
-int64_t $tmp55 = $tmp53.value;
-int64_t $tmp56 = $tmp54 >> $tmp55;
-frost$core$Int64 $tmp57 = (frost$core$Int64) {$tmp56};
+// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:161
+_45 = _41.value;
+_46 = _42.value;
+_47 = _45 >> _46;
+_48 = (frost$core$Int64) {_47};
 // begin inline call to function frost.core.Int64.~~(other:frost.core.Int64):frost.core.Int64 from XorShift128Plus.frost:43:26
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int64.frost:202
-int64_t $tmp58 = $tmp51.value;
-int64_t $tmp59 = $tmp57.value;
-int64_t $tmp60 = $tmp58 ^ $tmp59;
-frost$core$Int64 $tmp61 = (frost$core$Int64) {$tmp60};
-frost$core$Int64 $tmp62 = *(&local1);
-frost$core$Int64 $tmp63 = (frost$core$Int64) {26u};
+// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:146
+_52 = _39.value;
+_53 = _48.value;
+_54 = _52 ^ _53;
+_55 = (frost$core$Int64) {_54};
+_57 = *(&local1);
+_58 = (frost$core$Int64) {26u};
 // begin inline call to function frost.core.Int64.>>(other:frost.core.Int64):frost.core.Int64 from XorShift128Plus.frost:43:46
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int64.frost:220
-int64_t $tmp64 = $tmp62.value;
-int64_t $tmp65 = $tmp63.value;
-int64_t $tmp66 = $tmp64 >> $tmp65;
-frost$core$Int64 $tmp67 = (frost$core$Int64) {$tmp66};
+// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:161
+_61 = _57.value;
+_62 = _58.value;
+_63 = _61 >> _62;
+_64 = (frost$core$Int64) {_63};
 // begin inline call to function frost.core.Int64.~~(other:frost.core.Int64):frost.core.Int64 from XorShift128Plus.frost:43:40
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int64.frost:202
-int64_t $tmp68 = $tmp61.value;
-int64_t $tmp69 = $tmp67.value;
-int64_t $tmp70 = $tmp68 ^ $tmp69;
-frost$core$Int64 $tmp71 = (frost$core$Int64) {$tmp70};
-frost$core$Int64* $tmp72 = &param0->state2;
-*$tmp72 = $tmp71;
+// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:146
+_68 = _55.value;
+_69 = _64.value;
+_70 = _68 ^ _69;
+_71 = (frost$core$Int64) {_70};
+_73 = &param0->state2;
+*_73 = _71;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/math/XorShift128Plus.frost:44
-frost$core$Int64* $tmp73 = &param0->state2;
-frost$core$Int64 $tmp74 = *$tmp73;
-frost$core$Int64 $tmp75 = *(&local1);
-int64_t $tmp76 = $tmp74.value;
-int64_t $tmp77 = $tmp75.value;
-int64_t $tmp78 = $tmp76 + $tmp77;
-frost$core$Int64 $tmp79 = (frost$core$Int64) {$tmp78};
-return $tmp79;
+_76 = &param0->state2;
+_77 = *_76;
+_78 = *(&local1);
+_79 = _77.value;
+_80 = _78.value;
+_81 = _79 + _80;
+_82 = (frost$core$Int64) {_81};
+return _82;
 
 }
 void frost$math$XorShift128Plus$cleanup(frost$math$XorShift128Plus* param0) {
 
+frost$core$Object* _1;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/math/XorShift128Plus.frost:10
-frost$core$Object$cleanup(((frost$core$Object*) param0));
+_1 = ((frost$core$Object*) param0);
+frost$core$Object$cleanup(_1);
 return;
 
 }

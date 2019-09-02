@@ -47,6 +47,7 @@ file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/docs")
 
 add_library(c_frost
     bootstrap/src/org/frostlang/frostc/CCodeGenerator.c
+    bootstrap/src/org/frostlang/frostc/CCodeGenerator/_Closure2.c
     bootstrap/src/org/frostlang/frostc/Scanner.c
     bootstrap/src/org/frostlang/frostc/ClassDecl.c
     bootstrap/src/org/frostlang/frostc/LLVMCodeGenerator/OpClass.c

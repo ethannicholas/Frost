@@ -13,33 +13,57 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 
 void org$frostlang$frostc$CCodeGenerator$MethodShim$init$frost$core$String$frost$core$String(org$frostlang$frostc$CCodeGenerator$MethodShim* param0, frost$core$String* param1, frost$core$String* param2) {
 
+frost$core$Object* _1;
+frost$core$String** _3;
+frost$core$String* _4;
+frost$core$Object* _5;
+frost$core$String** _7;
+frost$core$Object* _10;
+frost$core$String** _12;
+frost$core$String* _13;
+frost$core$Object* _14;
+frost$core$String** _16;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/CCodeGenerator.frost:175
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
-frost$core$String** $tmp2 = &param0->name;
-frost$core$String* $tmp3 = *$tmp2;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp3));
-frost$core$String** $tmp4 = &param0->name;
-*$tmp4 = param1;
+_1 = ((frost$core$Object*) param1);
+frost$core$Frost$ref$frost$core$Object$Q(_1);
+_3 = &param0->name;
+_4 = *_3;
+_5 = ((frost$core$Object*) _4);
+frost$core$Frost$unref$frost$core$Object$Q(_5);
+_7 = &param0->name;
+*_7 = param1;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/CCodeGenerator.frost:176
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param2));
-frost$core$String** $tmp5 = &param0->type;
-frost$core$String* $tmp6 = *$tmp5;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp6));
-frost$core$String** $tmp7 = &param0->type;
-*$tmp7 = param2;
+_10 = ((frost$core$Object*) param2);
+frost$core$Frost$ref$frost$core$Object$Q(_10);
+_12 = &param0->type;
+_13 = *_12;
+_14 = ((frost$core$Object*) _13);
+frost$core$Frost$unref$frost$core$Object$Q(_14);
+_16 = &param0->type;
+*_16 = param2;
 return;
 
 }
 void org$frostlang$frostc$CCodeGenerator$MethodShim$cleanup(org$frostlang$frostc$CCodeGenerator$MethodShim* param0) {
 
+frost$core$Object* _1;
+frost$core$String** _3;
+frost$core$String* _4;
+frost$core$Object* _5;
+frost$core$String** _7;
+frost$core$String* _8;
+frost$core$Object* _9;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/CCodeGenerator.frost:170
-frost$core$Object$cleanup(((frost$core$Object*) param0));
-frost$core$String** $tmp8 = &param0->name;
-frost$core$String* $tmp9 = *$tmp8;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp9));
-frost$core$String** $tmp10 = &param0->type;
-frost$core$String* $tmp11 = *$tmp10;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp11));
+_1 = ((frost$core$Object*) param0);
+frost$core$Object$cleanup(_1);
+_3 = &param0->name;
+_4 = *_3;
+_5 = ((frost$core$Object*) _4);
+frost$core$Frost$unref$frost$core$Object$Q(_5);
+_7 = &param0->type;
+_8 = *_7;
+_9 = ((frost$core$Object*) _8);
+frost$core$Frost$unref$frost$core$Object$Q(_9);
 return;
 
 }

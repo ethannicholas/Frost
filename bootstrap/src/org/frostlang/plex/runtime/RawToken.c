@@ -22,23 +22,29 @@ static frost$core$String $s2 = { (frost$core$Class*) &frost$core$String$class, -
 org$frostlang$plex$runtime$RawToken org$frostlang$plex$runtime$RawToken$init$frost$core$Int$frost$core$String$Index$frost$core$String$Index$frost$core$Int$frost$core$Int(frost$core$Int param0, frost$core$String$Index param1, frost$core$String$Index param2, frost$core$Int param3, frost$core$Int param4) {
 
 org$frostlang$plex$runtime$RawToken local0;
+frost$core$Int* _1;
+frost$core$String$Index* _4;
+frost$core$String$Index* _7;
+frost$core$Int* _10;
+frost$core$Int* _13;
+org$frostlang$plex$runtime$RawToken _15;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/plex/runtime/RawToken.frost:12
-frost$core$Int* $tmp3 = &(&local0)->kind;
-*$tmp3 = param0;
+_1 = &(&local0)->kind;
+*_1 = param0;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/plex/runtime/RawToken.frost:13
-frost$core$String$Index* $tmp4 = &(&local0)->start;
-*$tmp4 = param1;
+_4 = &(&local0)->start;
+*_4 = param1;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/plex/runtime/RawToken.frost:14
-frost$core$String$Index* $tmp5 = &(&local0)->end;
-*$tmp5 = param2;
+_7 = &(&local0)->end;
+*_7 = param2;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/plex/runtime/RawToken.frost:15
-frost$core$Int* $tmp6 = &(&local0)->line;
-*$tmp6 = param3;
+_10 = &(&local0)->line;
+*_10 = param3;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/plex/runtime/RawToken.frost:16
-frost$core$Int* $tmp7 = &(&local0)->column;
-*$tmp7 = param4;
-org$frostlang$plex$runtime$RawToken $tmp8 = *(&local0);
-return $tmp8;
+_13 = &(&local0)->column;
+*_13 = param4;
+_15 = *(&local0);
+return _15;
 
 }
 void org$frostlang$plex$runtime$RawToken$cleanup(org$frostlang$plex$runtime$RawToken param0) {

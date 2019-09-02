@@ -19,8 +19,8 @@
 #include "frost/core/UInt32.h"
 #include "frost/core/UInt64.h"
 #include "frost/core/MutableString.h"
-#include "frost/core/Frost.h"
 #include "frost/core/Range.LTfrost/core/Int.GT.h"
+#include "frost/core/Frost.h"
 
 __attribute__((weak)) frost$core$Int frost$core$Char8$get_hash$R$frost$core$Int$shim(frost$core$Object* p0) {
     frost$core$Int result = frost$core$Char8$get_hash$R$frost$core$Int(((frost$core$Char8$wrapper*) p0)->value);
@@ -159,128 +159,185 @@ static frost$core$String $s2 = { (frost$core$Class*) &frost$core$String$class, -
 frost$core$Char8 frost$core$Char8$init$frost$core$UInt8(frost$core$UInt8 param0) {
 
 frost$core$Char8 local0;
+uint8_t _1;
+uint8_t* _2;
+frost$core$Char8 _4;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:21
-uint8_t $tmp3 = param0.value;
-uint8_t* $tmp4 = &(&local0)->value;
-*$tmp4 = $tmp3;
-frost$core$Char8 $tmp5 = *(&local0);
-return $tmp5;
+_1 = param0.value;
+_2 = &(&local0)->value;
+*_2 = _1;
+_4 = *(&local0);
+return _4;
 
 }
 frost$core$Bit frost$core$Char8$$EQ$frost$core$Char8$R$frost$core$Bit(frost$core$Char8 param0, frost$core$Char8 param1) {
 
+uint8_t _1;
+uint8_t _2;
+bool _3;
+frost$core$Bit _4;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:26
-uint8_t $tmp6 = param0.value;
-uint8_t $tmp7 = param1.value;
-bool $tmp8 = $tmp6 == $tmp7;
-frost$core$Bit $tmp9 = (frost$core$Bit) {$tmp8};
-return $tmp9;
+_1 = param0.value;
+_2 = param1.value;
+_3 = _1 == _2;
+_4 = (frost$core$Bit) {_3};
+return _4;
 
 }
 frost$core$Bit frost$core$Char8$$NEQ$frost$core$Char8$R$frost$core$Bit(frost$core$Char8 param0, frost$core$Char8 param1) {
 
+uint8_t _1;
+uint8_t _2;
+bool _3;
+frost$core$Bit _4;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:31
-uint8_t $tmp10 = param0.value;
-uint8_t $tmp11 = param1.value;
-bool $tmp12 = $tmp10 != $tmp11;
-frost$core$Bit $tmp13 = (frost$core$Bit) {$tmp12};
-return $tmp13;
+_1 = param0.value;
+_2 = param1.value;
+_3 = _1 != _2;
+_4 = (frost$core$Bit) {_3};
+return _4;
 
 }
 frost$core$Bit frost$core$Char8$$LT$frost$core$Char8$R$frost$core$Bit(frost$core$Char8 param0, frost$core$Char8 param1) {
 
+uint8_t _1;
+uint8_t _2;
+bool _3;
+frost$core$Bit _4;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:36
-uint8_t $tmp14 = param0.value;
-uint8_t $tmp15 = param1.value;
-bool $tmp16 = $tmp14 < $tmp15;
-frost$core$Bit $tmp17 = (frost$core$Bit) {$tmp16};
-return $tmp17;
+_1 = param0.value;
+_2 = param1.value;
+_3 = _1 < _2;
+_4 = (frost$core$Bit) {_3};
+return _4;
 
 }
 frost$core$Bit frost$core$Char8$$GT$frost$core$Char8$R$frost$core$Bit(frost$core$Char8 param0, frost$core$Char8 param1) {
 
+uint8_t _1;
+uint8_t _2;
+bool _3;
+frost$core$Bit _4;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:41
-uint8_t $tmp18 = param0.value;
-uint8_t $tmp19 = param1.value;
-bool $tmp20 = $tmp18 > $tmp19;
-frost$core$Bit $tmp21 = (frost$core$Bit) {$tmp20};
-return $tmp21;
+_1 = param0.value;
+_2 = param1.value;
+_3 = _1 > _2;
+_4 = (frost$core$Bit) {_3};
+return _4;
 
 }
 frost$core$Bit frost$core$Char8$$LE$frost$core$Char8$R$frost$core$Bit(frost$core$Char8 param0, frost$core$Char8 param1) {
 
+uint8_t _1;
+uint8_t _2;
+bool _3;
+frost$core$Bit _4;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:46
-uint8_t $tmp22 = param0.value;
-uint8_t $tmp23 = param1.value;
-bool $tmp24 = $tmp22 <= $tmp23;
-frost$core$Bit $tmp25 = (frost$core$Bit) {$tmp24};
-return $tmp25;
+_1 = param0.value;
+_2 = param1.value;
+_3 = _1 <= _2;
+_4 = (frost$core$Bit) {_3};
+return _4;
 
 }
 frost$core$Bit frost$core$Char8$$GE$frost$core$Char8$R$frost$core$Bit(frost$core$Char8 param0, frost$core$Char8 param1) {
 
+uint8_t _1;
+uint8_t _2;
+bool _3;
+frost$core$Bit _4;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:51
-uint8_t $tmp26 = param0.value;
-uint8_t $tmp27 = param1.value;
-bool $tmp28 = $tmp26 >= $tmp27;
-frost$core$Bit $tmp29 = (frost$core$Bit) {$tmp28};
-return $tmp29;
+_1 = param0.value;
+_2 = param1.value;
+_3 = _1 >= _2;
+_4 = (frost$core$Bit) {_3};
+return _4;
 
 }
 frost$core$Bit frost$core$Char8$isWhitespace$R$frost$core$Bit(frost$core$Char8 param0) {
 
+frost$core$UInt8 _1;
+frost$core$Char8 _2;
+uint8_t _5;
+uint8_t _6;
+bool _7;
+frost$core$Bit _8;
+bool _10;
+frost$core$UInt8 _12;
+frost$core$Char8 _13;
+uint8_t _16;
+uint8_t _17;
+bool _18;
+frost$core$Bit _19;
+bool _21;
+frost$core$UInt8 _23;
+frost$core$Char8 _24;
+uint8_t _27;
+uint8_t _28;
+bool _29;
+frost$core$Bit _30;
+bool _32;
+frost$core$UInt8 _34;
+frost$core$Char8 _35;
+uint8_t _38;
+uint8_t _39;
+bool _40;
+frost$core$Bit _41;
+bool _43;
+frost$core$Bit _46;
+frost$core$Bit _49;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:55
-frost$core$UInt8 $tmp30 = (frost$core$UInt8) {10u};
-frost$core$Char8 $tmp31 = frost$core$Char8$init$frost$core$UInt8($tmp30);
+_1 = (frost$core$UInt8) {10u};
+_2 = frost$core$Char8$init$frost$core$UInt8(_1);
 // begin inline call to function frost.core.Char8.=(other:frost.core.Char8):frost.core.Bit from Char8.frost:56:18
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:26
-uint8_t $tmp32 = param0.value;
-uint8_t $tmp33 = $tmp31.value;
-bool $tmp34 = $tmp32 == $tmp33;
-frost$core$Bit $tmp35 = (frost$core$Bit) {$tmp34};
-bool $tmp36 = $tmp35.value;
-if ($tmp36) goto block2; else goto block3;
+_5 = param0.value;
+_6 = _2.value;
+_7 = _5 == _6;
+_8 = (frost$core$Bit) {_7};
+_10 = _8.value;
+if (_10) goto block2; else goto block3;
 block3:;
-frost$core$UInt8 $tmp37 = (frost$core$UInt8) {13u};
-frost$core$Char8 $tmp38 = frost$core$Char8$init$frost$core$UInt8($tmp37);
+_12 = (frost$core$UInt8) {13u};
+_13 = frost$core$Char8$init$frost$core$UInt8(_12);
 // begin inline call to function frost.core.Char8.=(other:frost.core.Char8):frost.core.Bit from Char8.frost:56:24
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:26
-uint8_t $tmp39 = param0.value;
-uint8_t $tmp40 = $tmp38.value;
-bool $tmp41 = $tmp39 == $tmp40;
-frost$core$Bit $tmp42 = (frost$core$Bit) {$tmp41};
-bool $tmp43 = $tmp42.value;
-if ($tmp43) goto block2; else goto block5;
+_16 = param0.value;
+_17 = _13.value;
+_18 = _16 == _17;
+_19 = (frost$core$Bit) {_18};
+_21 = _19.value;
+if (_21) goto block2; else goto block5;
 block5:;
-frost$core$UInt8 $tmp44 = (frost$core$UInt8) {9u};
-frost$core$Char8 $tmp45 = frost$core$Char8$init$frost$core$UInt8($tmp44);
+_23 = (frost$core$UInt8) {9u};
+_24 = frost$core$Char8$init$frost$core$UInt8(_23);
 // begin inline call to function frost.core.Char8.=(other:frost.core.Char8):frost.core.Bit from Char8.frost:56:30
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:26
-uint8_t $tmp46 = param0.value;
-uint8_t $tmp47 = $tmp45.value;
-bool $tmp48 = $tmp46 == $tmp47;
-frost$core$Bit $tmp49 = (frost$core$Bit) {$tmp48};
-bool $tmp50 = $tmp49.value;
-if ($tmp50) goto block2; else goto block7;
+_27 = param0.value;
+_28 = _24.value;
+_29 = _27 == _28;
+_30 = (frost$core$Bit) {_29};
+_32 = _30.value;
+if (_32) goto block2; else goto block7;
 block7:;
-frost$core$UInt8 $tmp51 = (frost$core$UInt8) {32u};
-frost$core$Char8 $tmp52 = frost$core$Char8$init$frost$core$UInt8($tmp51);
+_34 = (frost$core$UInt8) {32u};
+_35 = frost$core$Char8$init$frost$core$UInt8(_34);
 // begin inline call to function frost.core.Char8.=(other:frost.core.Char8):frost.core.Bit from Char8.frost:56:36
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:26
-uint8_t $tmp53 = param0.value;
-uint8_t $tmp54 = $tmp52.value;
-bool $tmp55 = $tmp53 == $tmp54;
-frost$core$Bit $tmp56 = (frost$core$Bit) {$tmp55};
-bool $tmp57 = $tmp56.value;
-if ($tmp57) goto block2; else goto block9;
+_38 = param0.value;
+_39 = _35.value;
+_40 = _38 == _39;
+_41 = (frost$core$Bit) {_40};
+_43 = _41.value;
+if (_43) goto block2; else goto block9;
 block2:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:57
-frost$core$Bit $tmp58 = (frost$core$Bit) {true};
-return $tmp58;
+_46 = (frost$core$Bit) {true};
+return _46;
 block9:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:60
-frost$core$Bit $tmp59 = (frost$core$Bit) {false};
-return $tmp59;
+_49 = (frost$core$Bit) {false};
+return _49;
 block1:;
 goto block11;
 block11:;
@@ -290,343 +347,560 @@ frost$core$String* frost$core$Char8$$MUL$frost$core$Int$R$frost$core$String(fros
 
 frost$core$MutableString* local0 = NULL;
 frost$core$Int local1;
+frost$core$MutableString* _1;
+frost$core$Object* _4;
+frost$core$MutableString* _6;
+frost$core$Object* _7;
+frost$core$Object* _10;
+frost$core$Int _13;
+frost$core$Bit _14;
+frost$core$Range$LTfrost$core$Int$GT _15;
+frost$core$Int _16;
+frost$core$Int _18;
+frost$core$Bit _19;
+bool _20;
+frost$core$Int _21;
+int64_t _23;
+int64_t _24;
+bool _25;
+frost$core$Bit _26;
+bool _27;
+int64_t _29;
+int64_t _30;
+bool _31;
+frost$core$Bit _32;
+bool _33;
+frost$core$MutableString* _36;
+frost$core$Int _39;
+int64_t _40;
+int64_t _41;
+int64_t _42;
+frost$core$Int _43;
+int64_t _45;
+int64_t _46;
+bool _47;
+frost$core$Bit _48;
+bool _49;
+int64_t _51;
+int64_t _52;
+bool _53;
+frost$core$Bit _54;
+bool _55;
+int64_t _57;
+int64_t _58;
+int64_t _59;
+frost$core$Int _60;
+frost$core$MutableString* _64;
+frost$core$String* _65;
+frost$core$Object* _66;
+frost$core$Object* _68;
+frost$core$MutableString* _70;
+frost$core$Object* _71;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:69
 FROST_ASSERT(48 == sizeof(frost$core$MutableString));
-frost$core$MutableString* $tmp60 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
-frost$core$MutableString$init($tmp60);
+_1 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
+frost$core$MutableString$init(_1);
 *(&local0) = ((frost$core$MutableString*) NULL);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp60));
-frost$core$MutableString* $tmp61 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp61));
-*(&local0) = $tmp60;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp60));
+_4 = ((frost$core$Object*) _1);
+frost$core$Frost$ref$frost$core$Object$Q(_4);
+_6 = *(&local0);
+_7 = ((frost$core$Object*) _6);
+frost$core$Frost$unref$frost$core$Object$Q(_7);
+*(&local0) = _1;
+_10 = ((frost$core$Object*) _1);
+frost$core$Frost$unref$frost$core$Object$Q(_10);
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:70
-frost$core$Int $tmp62 = (frost$core$Int) {0u};
-frost$core$Bit $tmp63 = (frost$core$Bit) {false};
-frost$core$Range$LTfrost$core$Int$GT $tmp64 = frost$core$Range$LTfrost$core$Int$GT$init$frost$core$Int$frost$core$Int$frost$core$Bit($tmp62, param1, $tmp63);
-frost$core$Int $tmp65 = $tmp64.min;
-*(&local1) = $tmp65;
-frost$core$Int $tmp66 = $tmp64.max;
-frost$core$Bit $tmp67 = $tmp64.inclusive;
-bool $tmp68 = $tmp67.value;
-frost$core$Int $tmp69 = (frost$core$Int) {1u};
-if ($tmp68) goto block4; else goto block5;
+_13 = (frost$core$Int) {0u};
+_14 = (frost$core$Bit) {false};
+_15 = frost$core$Range$LTfrost$core$Int$GT$init$frost$core$Int$frost$core$Int$frost$core$Bit(_13, param1, _14);
+_16 = _15.min;
+*(&local1) = _16;
+_18 = _15.max;
+_19 = _15.inclusive;
+_20 = _19.value;
+_21 = (frost$core$Int) {1u};
+if (_20) goto block4; else goto block5;
 block4:;
-int64_t $tmp70 = $tmp65.value;
-int64_t $tmp71 = $tmp66.value;
-bool $tmp72 = $tmp70 <= $tmp71;
-frost$core$Bit $tmp73 = (frost$core$Bit) {$tmp72};
-bool $tmp74 = $tmp73.value;
-if ($tmp74) goto block1; else goto block2;
+_23 = _16.value;
+_24 = _18.value;
+_25 = _23 <= _24;
+_26 = (frost$core$Bit) {_25};
+_27 = _26.value;
+if (_27) goto block1; else goto block2;
 block5:;
-int64_t $tmp75 = $tmp65.value;
-int64_t $tmp76 = $tmp66.value;
-bool $tmp77 = $tmp75 < $tmp76;
-frost$core$Bit $tmp78 = (frost$core$Bit) {$tmp77};
-bool $tmp79 = $tmp78.value;
-if ($tmp79) goto block1; else goto block2;
+_29 = _16.value;
+_30 = _18.value;
+_31 = _29 < _30;
+_32 = (frost$core$Bit) {_31};
+_33 = _32.value;
+if (_33) goto block1; else goto block2;
 block1:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:71
-frost$core$MutableString* $tmp80 = *(&local0);
-frost$core$MutableString$append$frost$core$Char8($tmp80, param0);
-frost$core$Int $tmp81 = *(&local1);
-int64_t $tmp82 = $tmp66.value;
-int64_t $tmp83 = $tmp81.value;
-int64_t $tmp84 = $tmp82 - $tmp83;
-frost$core$Int $tmp85 = (frost$core$Int) {$tmp84};
-if ($tmp68) goto block7; else goto block8;
+_36 = *(&local0);
+frost$core$MutableString$append$frost$core$Char8(_36, param0);
+_39 = *(&local1);
+_40 = _18.value;
+_41 = _39.value;
+_42 = _40 - _41;
+_43 = (frost$core$Int) {_42};
+if (_20) goto block7; else goto block8;
 block7:;
-int64_t $tmp86 = $tmp85.value;
-int64_t $tmp87 = $tmp69.value;
-bool $tmp88 = $tmp86 >= $tmp87;
-frost$core$Bit $tmp89 = (frost$core$Bit) {$tmp88};
-bool $tmp90 = $tmp89.value;
-if ($tmp90) goto block6; else goto block2;
+_45 = _43.value;
+_46 = _21.value;
+_47 = _45 >= _46;
+_48 = (frost$core$Bit) {_47};
+_49 = _48.value;
+if (_49) goto block6; else goto block2;
 block8:;
-int64_t $tmp91 = $tmp85.value;
-int64_t $tmp92 = $tmp69.value;
-bool $tmp93 = $tmp91 > $tmp92;
-frost$core$Bit $tmp94 = (frost$core$Bit) {$tmp93};
-bool $tmp95 = $tmp94.value;
-if ($tmp95) goto block6; else goto block2;
+_51 = _43.value;
+_52 = _21.value;
+_53 = _51 > _52;
+_54 = (frost$core$Bit) {_53};
+_55 = _54.value;
+if (_55) goto block6; else goto block2;
 block6:;
-int64_t $tmp96 = $tmp81.value;
-int64_t $tmp97 = $tmp69.value;
-int64_t $tmp98 = $tmp96 + $tmp97;
-frost$core$Int $tmp99 = (frost$core$Int) {$tmp98};
-*(&local1) = $tmp99;
+_57 = _39.value;
+_58 = _21.value;
+_59 = _57 + _58;
+_60 = (frost$core$Int) {_59};
+*(&local1) = _60;
 goto block1;
 block2:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:73
-frost$core$MutableString* $tmp100 = *(&local0);
-frost$core$String* $tmp101 = frost$core$MutableString$finish$R$frost$core$String($tmp100);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp101));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp101));
-frost$core$MutableString* $tmp102 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp102));
+_64 = *(&local0);
+_65 = frost$core$MutableString$finish$R$frost$core$String(_64);
+_66 = ((frost$core$Object*) _65);
+frost$core$Frost$ref$frost$core$Object$Q(_66);
+_68 = ((frost$core$Object*) _65);
+frost$core$Frost$unref$frost$core$Object$Q(_68);
+_70 = *(&local0);
+_71 = ((frost$core$Object*) _70);
+frost$core$Frost$unref$frost$core$Object$Q(_71);
 *(&local0) = ((frost$core$MutableString*) NULL);
-return $tmp101;
+return _65;
 
 }
 frost$core$String* frost$core$Char8$$MUL$frost$core$Int$frost$core$Char8$R$frost$core$String(frost$core$Int param0, frost$core$Char8 param1) {
 
 frost$core$MutableString* local0 = NULL;
 frost$core$Int local1;
+frost$core$MutableString* _3;
+frost$core$Object* _6;
+frost$core$MutableString* _8;
+frost$core$Object* _9;
+frost$core$Object* _12;
+frost$core$Int _15;
+frost$core$Bit _16;
+frost$core$Range$LTfrost$core$Int$GT _17;
+frost$core$Int _18;
+frost$core$Int _20;
+frost$core$Bit _21;
+bool _22;
+frost$core$Int _23;
+int64_t _25;
+int64_t _26;
+bool _27;
+frost$core$Bit _28;
+bool _29;
+int64_t _31;
+int64_t _32;
+bool _33;
+frost$core$Bit _34;
+bool _35;
+frost$core$MutableString* _38;
+frost$core$Int _41;
+int64_t _42;
+int64_t _43;
+int64_t _44;
+frost$core$Int _45;
+int64_t _47;
+int64_t _48;
+bool _49;
+frost$core$Bit _50;
+bool _51;
+int64_t _53;
+int64_t _54;
+bool _55;
+frost$core$Bit _56;
+bool _57;
+int64_t _59;
+int64_t _60;
+int64_t _61;
+frost$core$Int _62;
+frost$core$MutableString* _66;
+frost$core$String* _67;
+frost$core$Object* _68;
+frost$core$Object* _70;
+frost$core$MutableString* _72;
+frost$core$Object* _73;
+frost$core$Object* _77;
+frost$core$Object* _79;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:81
 // begin inline call to function frost.core.Char8.*(count:frost.core.Int):frost.core.String from Char8.frost:81:21
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:69
 FROST_ASSERT(48 == sizeof(frost$core$MutableString));
-frost$core$MutableString* $tmp103 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
-frost$core$MutableString$init($tmp103);
+_3 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
+frost$core$MutableString$init(_3);
 *(&local0) = ((frost$core$MutableString*) NULL);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp103));
-frost$core$MutableString* $tmp104 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp104));
-*(&local0) = $tmp103;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp103));
+_6 = ((frost$core$Object*) _3);
+frost$core$Frost$ref$frost$core$Object$Q(_6);
+_8 = *(&local0);
+_9 = ((frost$core$Object*) _8);
+frost$core$Frost$unref$frost$core$Object$Q(_9);
+*(&local0) = _3;
+_12 = ((frost$core$Object*) _3);
+frost$core$Frost$unref$frost$core$Object$Q(_12);
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:70
-frost$core$Int $tmp105 = (frost$core$Int) {0u};
-frost$core$Bit $tmp106 = (frost$core$Bit) {false};
-frost$core$Range$LTfrost$core$Int$GT $tmp107 = frost$core$Range$LTfrost$core$Int$GT$init$frost$core$Int$frost$core$Int$frost$core$Bit($tmp105, param0, $tmp106);
-frost$core$Int $tmp108 = $tmp107.min;
-*(&local1) = $tmp108;
-frost$core$Int $tmp109 = $tmp107.max;
-frost$core$Bit $tmp110 = $tmp107.inclusive;
-bool $tmp111 = $tmp110.value;
-frost$core$Int $tmp112 = (frost$core$Int) {1u};
-if ($tmp111) goto block5; else goto block6;
+_15 = (frost$core$Int) {0u};
+_16 = (frost$core$Bit) {false};
+_17 = frost$core$Range$LTfrost$core$Int$GT$init$frost$core$Int$frost$core$Int$frost$core$Bit(_15, param0, _16);
+_18 = _17.min;
+*(&local1) = _18;
+_20 = _17.max;
+_21 = _17.inclusive;
+_22 = _21.value;
+_23 = (frost$core$Int) {1u};
+if (_22) goto block5; else goto block6;
 block5:;
-int64_t $tmp113 = $tmp108.value;
-int64_t $tmp114 = $tmp109.value;
-bool $tmp115 = $tmp113 <= $tmp114;
-frost$core$Bit $tmp116 = (frost$core$Bit) {$tmp115};
-bool $tmp117 = $tmp116.value;
-if ($tmp117) goto block2; else goto block3;
+_25 = _18.value;
+_26 = _20.value;
+_27 = _25 <= _26;
+_28 = (frost$core$Bit) {_27};
+_29 = _28.value;
+if (_29) goto block2; else goto block3;
 block6:;
-int64_t $tmp118 = $tmp108.value;
-int64_t $tmp119 = $tmp109.value;
-bool $tmp120 = $tmp118 < $tmp119;
-frost$core$Bit $tmp121 = (frost$core$Bit) {$tmp120};
-bool $tmp122 = $tmp121.value;
-if ($tmp122) goto block2; else goto block3;
+_31 = _18.value;
+_32 = _20.value;
+_33 = _31 < _32;
+_34 = (frost$core$Bit) {_33};
+_35 = _34.value;
+if (_35) goto block2; else goto block3;
 block2:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:71
-frost$core$MutableString* $tmp123 = *(&local0);
-frost$core$MutableString$append$frost$core$Char8($tmp123, param1);
-frost$core$Int $tmp124 = *(&local1);
-int64_t $tmp125 = $tmp109.value;
-int64_t $tmp126 = $tmp124.value;
-int64_t $tmp127 = $tmp125 - $tmp126;
-frost$core$Int $tmp128 = (frost$core$Int) {$tmp127};
-if ($tmp111) goto block8; else goto block9;
+_38 = *(&local0);
+frost$core$MutableString$append$frost$core$Char8(_38, param1);
+_41 = *(&local1);
+_42 = _20.value;
+_43 = _41.value;
+_44 = _42 - _43;
+_45 = (frost$core$Int) {_44};
+if (_22) goto block8; else goto block9;
 block8:;
-int64_t $tmp129 = $tmp128.value;
-int64_t $tmp130 = $tmp112.value;
-bool $tmp131 = $tmp129 >= $tmp130;
-frost$core$Bit $tmp132 = (frost$core$Bit) {$tmp131};
-bool $tmp133 = $tmp132.value;
-if ($tmp133) goto block7; else goto block3;
+_47 = _45.value;
+_48 = _23.value;
+_49 = _47 >= _48;
+_50 = (frost$core$Bit) {_49};
+_51 = _50.value;
+if (_51) goto block7; else goto block3;
 block9:;
-int64_t $tmp134 = $tmp128.value;
-int64_t $tmp135 = $tmp112.value;
-bool $tmp136 = $tmp134 > $tmp135;
-frost$core$Bit $tmp137 = (frost$core$Bit) {$tmp136};
-bool $tmp138 = $tmp137.value;
-if ($tmp138) goto block7; else goto block3;
+_53 = _45.value;
+_54 = _23.value;
+_55 = _53 > _54;
+_56 = (frost$core$Bit) {_55};
+_57 = _56.value;
+if (_57) goto block7; else goto block3;
 block7:;
-int64_t $tmp139 = $tmp124.value;
-int64_t $tmp140 = $tmp112.value;
-int64_t $tmp141 = $tmp139 + $tmp140;
-frost$core$Int $tmp142 = (frost$core$Int) {$tmp141};
-*(&local1) = $tmp142;
+_59 = _41.value;
+_60 = _23.value;
+_61 = _59 + _60;
+_62 = (frost$core$Int) {_61};
+*(&local1) = _62;
 goto block2;
 block3:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:73
-frost$core$MutableString* $tmp143 = *(&local0);
-frost$core$String* $tmp144 = frost$core$MutableString$finish$R$frost$core$String($tmp143);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp144));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp144));
-frost$core$MutableString* $tmp145 = *(&local0);
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp145));
+_66 = *(&local0);
+_67 = frost$core$MutableString$finish$R$frost$core$String(_66);
+_68 = ((frost$core$Object*) _67);
+frost$core$Frost$ref$frost$core$Object$Q(_68);
+_70 = ((frost$core$Object*) _67);
+frost$core$Frost$unref$frost$core$Object$Q(_70);
+_72 = *(&local0);
+_73 = ((frost$core$Object*) _72);
+frost$core$Frost$unref$frost$core$Object$Q(_73);
 *(&local0) = ((frost$core$MutableString*) NULL);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp144));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp144));
-return $tmp144;
+_77 = ((frost$core$Object*) _67);
+frost$core$Frost$ref$frost$core$Object$Q(_77);
+_79 = ((frost$core$Object*) _67);
+frost$core$Frost$unref$frost$core$Object$Q(_79);
+return _67;
 
 }
 frost$core$Int frost$core$Char8$get_hash$R$frost$core$Int(frost$core$Char8 param0) {
 
+uint8_t _3;
+int64_t _4;
+frost$core$Int _5;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:86
 // begin inline call to function frost.core.Char8.get_asInt():frost.core.Int from Char8.frost:86:16
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:101
-uint8_t $tmp146 = param0.value;
-frost$core$Int $tmp147 = (frost$core$Int) {((int64_t) $tmp146)};
-return $tmp147;
+_3 = param0.value;
+_4 = ((int64_t) _3);
+_5 = (frost$core$Int) {_4};
+return _5;
 
 }
 frost$core$Char16 frost$core$Char8$get_asChar16$R$frost$core$Char16(frost$core$Char8 param0) {
 
+uint8_t _3;
+uint16_t _4;
+frost$core$UInt16 _5;
+frost$core$Char16 _7;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:91
 // begin inline call to function frost.core.Char8.get_asUInt16():frost.core.UInt16 from Char8.frost:91:23
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:131
-uint8_t $tmp148 = param0.value;
-frost$core$UInt16 $tmp149 = (frost$core$UInt16) {((uint16_t) $tmp148)};
-frost$core$Char16 $tmp150 = frost$core$Char16$init$frost$core$UInt16($tmp149);
-return $tmp150;
+_3 = param0.value;
+_4 = ((uint16_t) _3);
+_5 = (frost$core$UInt16) {_4};
+_7 = frost$core$Char16$init$frost$core$UInt16(_5);
+return _7;
 
 }
 frost$core$Char32 frost$core$Char8$get_asChar32$R$frost$core$Char32(frost$core$Char8 param0) {
 
+uint8_t _3;
+int32_t _4;
+int32_t _5;
+frost$core$Int32 _6;
+frost$core$Char32 _8;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:96
 // begin inline call to function frost.core.Char8.get_asInt32():frost.core.Int32 from Char8.frost:96:23
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:116
-uint8_t $tmp151 = param0.value;
-int32_t $tmp152 = ((int32_t) $tmp151) & 255u;
-frost$core$Int32 $tmp153 = (frost$core$Int32) {$tmp152};
-frost$core$Char32 $tmp154 = frost$core$Char32$init$frost$core$Int32($tmp153);
-return $tmp154;
+_3 = param0.value;
+_4 = ((int32_t) _3);
+_5 = _4 & 255u;
+_6 = (frost$core$Int32) {_5};
+_8 = frost$core$Char32$init$frost$core$Int32(_6);
+return _8;
 
 }
 frost$core$Int frost$core$Char8$get_asInt$R$frost$core$Int(frost$core$Char8 param0) {
 
+uint8_t _1;
+int64_t _2;
+frost$core$Int _3;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:101
-uint8_t $tmp155 = param0.value;
-frost$core$Int $tmp156 = (frost$core$Int) {((int64_t) $tmp155)};
-return $tmp156;
+_1 = param0.value;
+_2 = ((int64_t) _1);
+_3 = (frost$core$Int) {_2};
+return _3;
 
 }
 frost$core$Int8 frost$core$Char8$get_asInt8$R$frost$core$Int8(frost$core$Char8 param0) {
 
+uint8_t _1;
+int8_t _2;
+frost$core$Int8 _3;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:106
-uint8_t $tmp157 = param0.value;
-frost$core$Int8 $tmp158 = (frost$core$Int8) {((int8_t) $tmp157)};
-return $tmp158;
+_1 = param0.value;
+_2 = ((int8_t) _1);
+_3 = (frost$core$Int8) {_2};
+return _3;
 
 }
 frost$core$Int16 frost$core$Char8$get_asInt16$R$frost$core$Int16(frost$core$Char8 param0) {
 
+uint8_t _1;
+int16_t _2;
+int16_t _3;
+frost$core$Int16 _4;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:111
-uint8_t $tmp159 = param0.value;
-int16_t $tmp160 = ((int16_t) $tmp159) & 255u;
-frost$core$Int16 $tmp161 = (frost$core$Int16) {$tmp160};
-return $tmp161;
+_1 = param0.value;
+_2 = ((int16_t) _1);
+_3 = _2 & 255u;
+_4 = (frost$core$Int16) {_3};
+return _4;
 
 }
 frost$core$Int32 frost$core$Char8$get_asInt32$R$frost$core$Int32(frost$core$Char8 param0) {
 
+uint8_t _1;
+int32_t _2;
+int32_t _3;
+frost$core$Int32 _4;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:116
-uint8_t $tmp162 = param0.value;
-int32_t $tmp163 = ((int32_t) $tmp162) & 255u;
-frost$core$Int32 $tmp164 = (frost$core$Int32) {$tmp163};
-return $tmp164;
+_1 = param0.value;
+_2 = ((int32_t) _1);
+_3 = _2 & 255u;
+_4 = (frost$core$Int32) {_3};
+return _4;
 
 }
 frost$core$Int64 frost$core$Char8$get_asInt64$R$frost$core$Int64(frost$core$Char8 param0) {
 
+uint8_t _1;
+int64_t _2;
+int64_t _3;
+frost$core$Int64 _4;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:121
-uint8_t $tmp165 = param0.value;
-int64_t $tmp166 = ((int64_t) $tmp165) & 255u;
-frost$core$Int64 $tmp167 = (frost$core$Int64) {$tmp166};
-return $tmp167;
+_1 = param0.value;
+_2 = ((int64_t) _1);
+_3 = _2 & 255u;
+_4 = (frost$core$Int64) {_3};
+return _4;
 
 }
 frost$core$UInt8 frost$core$Char8$get_asUInt8$R$frost$core$UInt8(frost$core$Char8 param0) {
 
+uint8_t _1;
+frost$core$UInt8 _2;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:126
-uint8_t $tmp168 = param0.value;
-frost$core$UInt8 $tmp169 = (frost$core$UInt8) {$tmp168};
-return $tmp169;
+_1 = param0.value;
+_2 = (frost$core$UInt8) {_1};
+return _2;
 
 }
 frost$core$UInt16 frost$core$Char8$get_asUInt16$R$frost$core$UInt16(frost$core$Char8 param0) {
 
+uint8_t _1;
+uint16_t _2;
+frost$core$UInt16 _3;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:131
-uint8_t $tmp170 = param0.value;
-frost$core$UInt16 $tmp171 = (frost$core$UInt16) {((uint16_t) $tmp170)};
-return $tmp171;
+_1 = param0.value;
+_2 = ((uint16_t) _1);
+_3 = (frost$core$UInt16) {_2};
+return _3;
 
 }
 frost$core$UInt32 frost$core$Char8$get_asUInt32$R$frost$core$UInt32(frost$core$Char8 param0) {
 
+uint8_t _1;
+uint32_t _2;
+frost$core$UInt32 _3;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:136
-uint8_t $tmp172 = param0.value;
-frost$core$UInt32 $tmp173 = (frost$core$UInt32) {((uint32_t) $tmp172)};
-return $tmp173;
+_1 = param0.value;
+_2 = ((uint32_t) _1);
+_3 = (frost$core$UInt32) {_2};
+return _3;
 
 }
 frost$core$UInt64 frost$core$Char8$get_asUInt64$R$frost$core$UInt64(frost$core$Char8 param0) {
 
+uint8_t _1;
+uint64_t _2;
+frost$core$UInt64 _3;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:141
-uint8_t $tmp174 = param0.value;
-frost$core$UInt64 $tmp175 = (frost$core$UInt64) {((uint64_t) $tmp174)};
-return $tmp175;
+_1 = param0.value;
+_2 = ((uint64_t) _1);
+_3 = (frost$core$UInt64) {_2};
+return _3;
 
 }
 frost$core$String* frost$core$Char8$get_asString$R$frost$core$String(frost$core$Char8 param0) {
 
 frost$core$Char8* local0;
 frost$core$Char8* local1;
+uint8_t _1;
+bool _2;
+frost$core$Bit _3;
+bool _4;
+frost$core$Int64 _7;
+int64_t _8;
+frost$core$Char8* _9;
+frost$core$Char8* _12;
+frost$core$Int64 _13;
+int64_t _14;
+frost$core$String* _17;
+frost$core$Char8* _18;
+frost$core$Int _19;
+frost$core$Object* _21;
+frost$core$Object* _23;
+frost$core$Int64 _27;
+int64_t _28;
+frost$core$Char8* _29;
+frost$core$Char8* _32;
+frost$core$Int64 _33;
+uint8_t _34;
+uint16_t _35;
+uint16_t _36;
+uint16_t _37;
+uint8_t _38;
+frost$core$UInt8 _39;
+frost$core$Char8 _40;
+int64_t _41;
+frost$core$Char8* _44;
+frost$core$Int64 _45;
+uint8_t _46;
+uint16_t _47;
+uint16_t _48;
+uint16_t _49;
+uint8_t _50;
+frost$core$UInt8 _51;
+frost$core$Char8 _52;
+int64_t _53;
+frost$core$String* _56;
+frost$core$Char8* _57;
+frost$core$Int _58;
+frost$core$Object* _60;
+frost$core$Object* _62;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:152
-uint8_t $tmp176 = param0.value;
-bool $tmp177 = $tmp176 < 128u;
-frost$core$Bit $tmp178 = (frost$core$Bit) {$tmp177};
-bool $tmp179 = $tmp178.value;
-if ($tmp179) goto block1; else goto block2;
+_1 = param0.value;
+_2 = _1 < 128u;
+_3 = (frost$core$Bit) {_2};
+_4 = _3.value;
+if (_4) goto block1; else goto block2;
 block1:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:153
-frost$core$Int64 $tmp180 = (frost$core$Int64) {1u};
-int64_t $tmp181 = $tmp180.value;
-frost$core$Char8* $tmp182 = ((frost$core$Char8*) frostAlloc($tmp181 * 1));
-*(&local0) = $tmp182;
+_7 = (frost$core$Int64) {1u};
+_8 = _7.value;
+_9 = ((frost$core$Char8*) frostAlloc(_8 * 1));
+*(&local0) = _9;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:154
-frost$core$Char8* $tmp183 = *(&local0);
-frost$core$Int64 $tmp184 = (frost$core$Int64) {0u};
-int64_t $tmp185 = $tmp184.value;
-$tmp183[$tmp185] = param0;
+_12 = *(&local0);
+_13 = (frost$core$Int64) {0u};
+_14 = _13.value;
+_12[_14] = param0;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:155
 FROST_ASSERT(48 == sizeof(frost$core$String));
-frost$core$String* $tmp186 = (frost$core$String*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$String$class);
-frost$core$Char8* $tmp187 = *(&local0);
-frost$core$Int $tmp188 = (frost$core$Int) {1u};
-frost$core$String$init$frost$unsafe$Pointer$LTfrost$core$Char8$GT$frost$core$Int($tmp186, $tmp187, $tmp188);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp186));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp186));
-return $tmp186;
+_17 = (frost$core$String*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$String$class);
+_18 = *(&local0);
+_19 = (frost$core$Int) {1u};
+frost$core$String$init$frost$unsafe$Pointer$LTfrost$core$Char8$GT$frost$core$Int(_17, _18, _19);
+_21 = ((frost$core$Object*) _17);
+frost$core$Frost$ref$frost$core$Object$Q(_21);
+_23 = ((frost$core$Object*) _17);
+frost$core$Frost$unref$frost$core$Object$Q(_23);
+return _17;
 block2:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:157
-frost$core$Int64 $tmp189 = (frost$core$Int64) {2u};
-int64_t $tmp190 = $tmp189.value;
-frost$core$Char8* $tmp191 = ((frost$core$Char8*) frostAlloc($tmp190 * 1));
-*(&local1) = $tmp191;
+_27 = (frost$core$Int64) {2u};
+_28 = _27.value;
+_29 = ((frost$core$Char8*) frostAlloc(_28 * 1));
+*(&local1) = _29;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:158
-frost$core$Char8* $tmp192 = *(&local1);
-frost$core$Int64 $tmp193 = (frost$core$Int64) {0u};
-uint8_t $tmp194 = param0.value;
-uint16_t $tmp195 = ((uint16_t) $tmp194) >> 6u;
-uint16_t $tmp196 = $tmp195 | 192u;
-frost$core$UInt8 $tmp197 = (frost$core$UInt8) {((uint8_t) $tmp196)};
-frost$core$Char8 $tmp198 = frost$core$Char8$init$frost$core$UInt8($tmp197);
-int64_t $tmp199 = $tmp193.value;
-$tmp192[$tmp199] = $tmp198;
+_32 = *(&local1);
+_33 = (frost$core$Int64) {0u};
+_34 = param0.value;
+_35 = ((uint16_t) _34);
+_36 = _35 >> 6u;
+_37 = _36 | 192u;
+_38 = ((uint8_t) _37);
+_39 = (frost$core$UInt8) {_38};
+_40 = frost$core$Char8$init$frost$core$UInt8(_39);
+_41 = _33.value;
+_32[_41] = _40;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:159
-frost$core$Char8* $tmp200 = *(&local1);
-frost$core$Int64 $tmp201 = (frost$core$Int64) {1u};
-uint8_t $tmp202 = param0.value;
-uint16_t $tmp203 = ((uint16_t) $tmp202) & 63u;
-uint16_t $tmp204 = $tmp203 | 128u;
-frost$core$UInt8 $tmp205 = (frost$core$UInt8) {((uint8_t) $tmp204)};
-frost$core$Char8 $tmp206 = frost$core$Char8$init$frost$core$UInt8($tmp205);
-int64_t $tmp207 = $tmp201.value;
-$tmp200[$tmp207] = $tmp206;
+_44 = *(&local1);
+_45 = (frost$core$Int64) {1u};
+_46 = param0.value;
+_47 = ((uint16_t) _46);
+_48 = _47 & 63u;
+_49 = _48 | 128u;
+_50 = ((uint8_t) _49);
+_51 = (frost$core$UInt8) {_50};
+_52 = frost$core$Char8$init$frost$core$UInt8(_51);
+_53 = _45.value;
+_44[_53] = _52;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:160
 FROST_ASSERT(48 == sizeof(frost$core$String));
-frost$core$String* $tmp208 = (frost$core$String*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$String$class);
-frost$core$Char8* $tmp209 = *(&local1);
-frost$core$Int $tmp210 = (frost$core$Int) {2u};
-frost$core$String$init$frost$unsafe$Pointer$LTfrost$core$Char8$GT$frost$core$Int($tmp208, $tmp209, $tmp210);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp208));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp208));
-return $tmp208;
+_56 = (frost$core$String*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$String$class);
+_57 = *(&local1);
+_58 = (frost$core$Int) {2u};
+frost$core$String$init$frost$unsafe$Pointer$LTfrost$core$Char8$GT$frost$core$Int(_56, _57, _58);
+_60 = ((frost$core$Object*) _56);
+frost$core$Frost$ref$frost$core$Object$Q(_60);
+_62 = ((frost$core$Object*) _56);
+frost$core$Frost$unref$frost$core$Object$Q(_62);
+return _56;
 
 }
 void frost$core$Char8$cleanup(frost$core$Char8 param0) {

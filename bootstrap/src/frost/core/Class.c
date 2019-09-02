@@ -22,14 +22,24 @@ return;
 }
 void frost$core$Class$cleanup(frost$core$Class* param0) {
 
+frost$core$Immutable* _1;
+frost$core$String** _3;
+frost$core$String* _4;
+frost$core$Object* _5;
+frost$core$Class** _7;
+frost$core$Class* _8;
+frost$core$Object* _9;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Class.frost:4
-frost$core$Immutable$cleanup(((frost$core$Immutable*) param0));
-frost$core$String** $tmp2 = &param0->name;
-frost$core$String* $tmp3 = *$tmp2;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp3));
-frost$core$Class** $tmp4 = &param0->superclass;
-frost$core$Class* $tmp5 = *$tmp4;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp5));
+_1 = ((frost$core$Immutable*) param0);
+frost$core$Immutable$cleanup(_1);
+_3 = &param0->name;
+_4 = *_3;
+_5 = ((frost$core$Object*) _4);
+frost$core$Frost$unref$frost$core$Object$Q(_5);
+_7 = &param0->superclass;
+_8 = *_7;
+_9 = ((frost$core$Object*) _8);
+frost$core$Frost$unref$frost$core$Object$Q(_9);
 return;
 
 }

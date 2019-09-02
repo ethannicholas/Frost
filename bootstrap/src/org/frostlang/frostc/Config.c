@@ -23,36 +23,46 @@ static frost$core$String $s11 = { (frost$core$Class*) &frost$core$String$class, 
 
 frost$core$String* org$frostlang$frostc$Config$frostSourceDir$R$frost$core$String() {
 
+frost$core$Object* _1;
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/Config.frost:3
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) &$s2));
+_1 = ((frost$core$Object*) &$s2);
+frost$core$Frost$ref$frost$core$Object$Q(_1);
 return &$s3;
 
 }
 frost$core$String* org$frostlang$frostc$Config$frostLibDir$R$frost$core$String() {
 
+frost$core$Object* _1;
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/Config.frost:4
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) &$s4));
+_1 = ((frost$core$Object*) &$s4);
+frost$core$Frost$ref$frost$core$Object$Q(_1);
 return &$s5;
 
 }
 frost$core$String* org$frostlang$frostc$Config$llvmDir$R$frost$core$String() {
 
+frost$core$Object* _1;
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/Config.frost:5
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) &$s6));
+_1 = ((frost$core$Object*) &$s6);
+frost$core$Frost$ref$frost$core$Object$Q(_1);
 return &$s7;
 
 }
 frost$core$String* org$frostlang$frostc$Config$llvmTriple$R$frost$core$String() {
 
+frost$core$Object* _1;
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/Config.frost:6
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) &$s8));
+_1 = ((frost$core$Object*) &$s8);
+frost$core$Frost$ref$frost$core$Object$Q(_1);
 return &$s9;
 
 }
 frost$core$String* org$frostlang$frostc$Config$icuLibraries$R$frost$core$String() {
 
+frost$core$Object* _1;
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/Config.frost:7
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) &$s10));
+_1 = ((frost$core$Object*) &$s10);
+frost$core$Frost$ref$frost$core$Object$Q(_1);
 return &$s11;
 
 }
@@ -63,8 +73,10 @@ return;
 }
 void org$frostlang$frostc$Config$cleanup(org$frostlang$frostc$Config* param0) {
 
+frost$core$Object* _1;
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/Config.frost:2
-frost$core$Object$cleanup(((frost$core$Object*) param0));
+_1 = ((frost$core$Object*) param0);
+frost$core$Object$cleanup(_1);
 return;
 
 }

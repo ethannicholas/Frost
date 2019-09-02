@@ -15,35 +15,55 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 
 void org$frostlang$frostc$expression$Tuple$_Closure2$init$org$frostlang$frostc$Compiler(org$frostlang$frostc$expression$Tuple$_Closure2* param0, org$frostlang$frostc$Compiler* param1) {
 
+frost$core$Object* _1;
+org$frostlang$frostc$Compiler** _3;
+org$frostlang$frostc$Compiler* _4;
+frost$core$Object* _5;
+org$frostlang$frostc$Compiler** _7;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Tuple.frost:24
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
-org$frostlang$frostc$Compiler** $tmp2 = &param0->compiler;
-org$frostlang$frostc$Compiler* $tmp3 = *$tmp2;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp3));
-org$frostlang$frostc$Compiler** $tmp4 = &param0->compiler;
-*$tmp4 = param1;
+_1 = ((frost$core$Object*) param1);
+frost$core$Frost$ref$frost$core$Object$Q(_1);
+_3 = &param0->compiler;
+_4 = *_3;
+_5 = ((frost$core$Object*) _4);
+frost$core$Frost$unref$frost$core$Object$Q(_5);
+_7 = &param0->compiler;
+*_7 = param1;
 return;
 
 }
 void org$frostlang$frostc$expression$Tuple$_Closure2$cleanup(org$frostlang$frostc$expression$Tuple$_Closure2* param0) {
 
+frost$core$Object* _1;
+org$frostlang$frostc$Compiler** _3;
+org$frostlang$frostc$Compiler* _4;
+frost$core$Object* _5;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Tuple.frost:24
-frost$core$Object$cleanup(((frost$core$Object*) param0));
-org$frostlang$frostc$Compiler** $tmp5 = &param0->compiler;
-org$frostlang$frostc$Compiler* $tmp6 = *$tmp5;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp6));
+_1 = ((frost$core$Object*) param0);
+frost$core$Object$cleanup(_1);
+_3 = &param0->compiler;
+_4 = *_3;
+_5 = ((frost$core$Object*) _4);
+frost$core$Frost$unref$frost$core$Object$Q(_5);
 return;
 
 }
 org$frostlang$frostc$Type* org$frostlang$frostc$expression$Tuple$_Closure2$$anonymous1$org$frostlang$frostc$Type$org$frostlang$frostc$Type$R$org$frostlang$frostc$Type(org$frostlang$frostc$expression$Tuple$_Closure2* param0, org$frostlang$frostc$Type* param1, org$frostlang$frostc$Type* param2) {
 
+org$frostlang$frostc$Compiler** _1;
+org$frostlang$frostc$Compiler* _2;
+org$frostlang$frostc$Type* _3;
+frost$core$Object* _4;
+frost$core$Object* _6;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Tuple.frost:24
-org$frostlang$frostc$Compiler** $tmp7 = &param0->compiler;
-org$frostlang$frostc$Compiler* $tmp8 = *$tmp7;
-org$frostlang$frostc$Type* $tmp9 = org$frostlang$frostc$Type$union$org$frostlang$frostc$Compiler$org$frostlang$frostc$Type$R$org$frostlang$frostc$Type(param1, $tmp8, param2);
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp9));
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp9));
-return $tmp9;
+_1 = &param0->compiler;
+_2 = *_1;
+_3 = org$frostlang$frostc$Type$union$org$frostlang$frostc$Compiler$org$frostlang$frostc$Type$R$org$frostlang$frostc$Type(param1, _2, param2);
+_4 = ((frost$core$Object*) _3);
+frost$core$Frost$ref$frost$core$Object$Q(_4);
+_6 = ((frost$core$Object*) _3);
+frost$core$Frost$unref$frost$core$Object$Q(_6);
+return _3;
 
 }
 

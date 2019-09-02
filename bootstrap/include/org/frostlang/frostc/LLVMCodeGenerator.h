@@ -5,6 +5,7 @@ typedef struct org$frostlang$frostc$LLVMCodeGenerator org$frostlang$frostc$LLVMC
 typedef struct frost$core$String frost$core$String;
 typedef struct frost$io$OutputStream frost$io$OutputStream;
 typedef struct org$frostlang$frostc$Compiler org$frostlang$frostc$Compiler;
+#include "org/frostlang/frostc/IR/Statement/ID_types.h"
 #include "frost/core/Int_types.h"
 typedef struct org$frostlang$frostc$Type org$frostlang$frostc$Type;
 typedef struct org$frostlang$frostc$ClassDecl org$frostlang$frostc$ClassDecl;
@@ -20,7 +21,6 @@ typedef struct org$frostlang$frostc$FieldDecl org$frostlang$frostc$FieldDecl;
 #include "frost/core/Real64_types.h"
 typedef struct org$frostlang$frostc$ChoiceCase org$frostlang$frostc$ChoiceCase;
 typedef struct org$frostlang$frostc$IR$Value org$frostlang$frostc$IR$Value;
-#include "org/frostlang/frostc/IR/Statement/ID_types.h"
 #include "org/frostlang/frostc/expression/Binary/Operator_types.h"
 #include "org/frostlang/frostc/IR/Block/ID_types.h"
 typedef struct org$frostlang$frostc$FixedArray org$frostlang$frostc$FixedArray;
@@ -31,6 +31,7 @@ typedef struct org$frostlang$frostc$IR org$frostlang$frostc$IR;
 void org$frostlang$frostc$LLVMCodeGenerator$init$frost$core$String$frost$io$OutputStream(org$frostlang$frostc$LLVMCodeGenerator* self, frost$core$String* p_triple, frost$io$OutputStream* p_out);
 void org$frostlang$frostc$LLVMCodeGenerator$setCompiler$org$frostlang$frostc$Compiler(org$frostlang$frostc$LLVMCodeGenerator* self, org$frostlang$frostc$Compiler* p_compiler);
 void org$frostlang$frostc$LLVMCodeGenerator$finish(org$frostlang$frostc$LLVMCodeGenerator* self);
+frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$name$org$frostlang$frostc$IR$Statement$ID$R$frost$core$String(org$frostlang$frostc$LLVMCodeGenerator* self, org$frostlang$frostc$IR$Statement$ID p_id);
 frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$nextVar$R$frost$core$String(org$frostlang$frostc$LLVMCodeGenerator* self);
 frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$nextLabel$R$frost$core$String(org$frostlang$frostc$LLVMCodeGenerator* self);
 frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$nextMetadata$R$frost$core$String(org$frostlang$frostc$LLVMCodeGenerator* self);
@@ -62,11 +63,12 @@ frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$getName$org$frostlang$
 frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$getName$org$frostlang$frostc$MethodDecl$R$frost$core$String(org$frostlang$frostc$LLVMCodeGenerator* self, org$frostlang$frostc$MethodDecl* p_m);
 frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$getName$org$frostlang$frostc$FieldDecl$R$frost$core$String(org$frostlang$frostc$LLVMCodeGenerator* self, org$frostlang$frostc$FieldDecl* p_f);
 org$frostlang$frostc$LLVMCodeGenerator$OpClass org$frostlang$frostc$LLVMCodeGenerator$opClass$org$frostlang$frostc$Type$R$org$frostlang$frostc$LLVMCodeGenerator$OpClass(org$frostlang$frostc$LLVMCodeGenerator* self, org$frostlang$frostc$Type* p_t);
-frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$wrapValue$org$frostlang$frostc$Position$frost$core$String$org$frostlang$frostc$Type$org$frostlang$frostc$Type$frost$io$OutputStream$R$frost$core$String(org$frostlang$frostc$LLVMCodeGenerator* self, org$frostlang$frostc$Position p_position, frost$core$String* p_value, org$frostlang$frostc$Type* p_srcType, org$frostlang$frostc$Type* p_dstType, frost$io$OutputStream* p_out);
-frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$unwrapValue$org$frostlang$frostc$Position$frost$core$String$org$frostlang$frostc$Type$org$frostlang$frostc$Type$frost$io$OutputStream$R$frost$core$String(org$frostlang$frostc$LLVMCodeGenerator* self, org$frostlang$frostc$Position p_position, frost$core$String* p_value, org$frostlang$frostc$Type* p_srcType, org$frostlang$frostc$Type* p_dstType, frost$io$OutputStream* p_out);
-frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$toNullableValue$org$frostlang$frostc$Position$frost$core$String$org$frostlang$frostc$Type$org$frostlang$frostc$Type$frost$io$OutputStream$R$frost$core$String(org$frostlang$frostc$LLVMCodeGenerator* self, org$frostlang$frostc$Position p_position, frost$core$String* p_value, org$frostlang$frostc$Type* p_srcType, org$frostlang$frostc$Type* p_dstType, frost$io$OutputStream* p_out);
-frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$toNonNullableValue$org$frostlang$frostc$Position$frost$core$String$org$frostlang$frostc$Type$org$frostlang$frostc$Type$frost$io$OutputStream$R$frost$core$String(org$frostlang$frostc$LLVMCodeGenerator* self, org$frostlang$frostc$Position p_position, frost$core$String* p_value, org$frostlang$frostc$Type* p_srcType, org$frostlang$frostc$Type* p_dstType, frost$io$OutputStream* p_out);
+void org$frostlang$frostc$LLVMCodeGenerator$wrapValue$org$frostlang$frostc$Position$frost$core$String$frost$core$String$org$frostlang$frostc$Type$org$frostlang$frostc$Type$frost$io$OutputStream(org$frostlang$frostc$LLVMCodeGenerator* self, org$frostlang$frostc$Position p_position, frost$core$String* p_result, frost$core$String* p_value, org$frostlang$frostc$Type* p_srcType, org$frostlang$frostc$Type* p_dstType, frost$io$OutputStream* p_out);
+void org$frostlang$frostc$LLVMCodeGenerator$unwrapValue$org$frostlang$frostc$Position$frost$core$String$frost$core$String$org$frostlang$frostc$Type$org$frostlang$frostc$Type$frost$io$OutputStream(org$frostlang$frostc$LLVMCodeGenerator* self, org$frostlang$frostc$Position p_position, frost$core$String* p_result, frost$core$String* p_value, org$frostlang$frostc$Type* p_srcType, org$frostlang$frostc$Type* p_dstType, frost$io$OutputStream* p_out);
+void org$frostlang$frostc$LLVMCodeGenerator$toNullableValue$org$frostlang$frostc$Position$frost$core$String$frost$core$String$org$frostlang$frostc$Type$org$frostlang$frostc$Type$frost$io$OutputStream(org$frostlang$frostc$LLVMCodeGenerator* self, org$frostlang$frostc$Position p_position, frost$core$String* p_result, frost$core$String* p_value, org$frostlang$frostc$Type* p_srcType, org$frostlang$frostc$Type* p_dstType, frost$io$OutputStream* p_out);
+void org$frostlang$frostc$LLVMCodeGenerator$toNonNullableValue$org$frostlang$frostc$Position$frost$core$String$frost$core$String$org$frostlang$frostc$Type$org$frostlang$frostc$Type$frost$io$OutputStream(org$frostlang$frostc$LLVMCodeGenerator* self, org$frostlang$frostc$Position p_position, frost$core$String* p_result, frost$core$String* p_value, org$frostlang$frostc$Type* p_srcType, org$frostlang$frostc$Type* p_dstType, frost$io$OutputStream* p_out);
 frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$getCastReference$org$frostlang$frostc$Position$frost$core$String$org$frostlang$frostc$Type$org$frostlang$frostc$Type$R$frost$core$String(org$frostlang$frostc$LLVMCodeGenerator* self, org$frostlang$frostc$Position p_position, frost$core$String* p_value, org$frostlang$frostc$Type* p_src, org$frostlang$frostc$Type* p_target);
+void org$frostlang$frostc$LLVMCodeGenerator$writeCast$org$frostlang$frostc$Position$frost$core$String$frost$core$String$org$frostlang$frostc$Type$org$frostlang$frostc$Type(org$frostlang$frostc$LLVMCodeGenerator* self, org$frostlang$frostc$Position p_position, frost$core$String* p_result, frost$core$String* p_value, org$frostlang$frostc$Type* p_src, org$frostlang$frostc$Type* p_target);
 frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$getRealReference$org$frostlang$frostc$Type$frost$core$Real64$R$frost$core$String(org$frostlang$frostc$LLVMCodeGenerator* self, org$frostlang$frostc$Type* p_t, frost$core$Real64 p_r64);
 frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$getStringReference$frost$core$String$R$frost$core$String(org$frostlang$frostc$LLVMCodeGenerator* self, frost$core$String* p_s);
 frost$core$Bit org$frostlang$frostc$LLVMCodeGenerator$haveSelfValuePointer$R$frost$core$Bit(org$frostlang$frostc$LLVMCodeGenerator* self);

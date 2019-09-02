@@ -226,8 +226,6 @@ class CCodeGenerator : CodeGenerator {
 
     def methodShims := IdentityMap<MethodDecl, MethodShim>()
 
-    def refs := HashMap<IR.Statement.ID, String>()
-
     def ir:IR
 
     method nextVar():String {
@@ -961,6 +959,10 @@ class CCodeGenerator : CodeGenerator {
         }
     }
 
+    function name(id:IR.Statement.ID):String {
+        return "_" + id.value
+    }
+
     method getReference(v:IR.Value):String {
         match v {
             when IR.Value.BIT(value, _) {
@@ -988,11 +990,7 @@ class CCodeGenerator : CodeGenerator {
                 return getRealReference(type, value)
             }
             when IR.Value.REF(id, _) {
-                assert refs[id] !== null, "id \{id} has not been defined"
-                if refs[id] == null {
-                    return "undefined ref: \{id}"
-                }
-                return refs[id]
+                return name(id)
             }
             when IR.Value.STRING(s, _) {
                 return getStringReference(s)
@@ -1021,41 +1019,51 @@ class CCodeGenerator : CodeGenerator {
     }
 
     method writeIsNull(id:IR.Statement.ID, value:IR.Value) {
-        def ref := getReference(value)
-        def cl := compiler!.getClass(value.type())
-        assert cl !== null
-        def bit:String
-        if compiler!.isValue(cl) {
-            if value.type().typeKind != Type.Kind.NULLABLE {
-                bit := "false"
+        try {
+            def ref := getReference(value)
+            def cl := compiler!.getClass(value.type())
+            assert cl !== null
+            def bit:String
+            if compiler!.isValue(cl) {
+                if value.type().typeKind != Type.Kind.NULLABLE {
+                    bit := "false"
+                }
+                else {
+                    bit := "!\{ref}.nonnull"
+                }
             }
             else {
-                bit := "!\{ref}.nonnull"
+                bit := "\{ref} == NULL"
             }
+            out.printLine("\{name(id)} = \{bit};")
         }
-        else {
-            bit := "\{ref} == NULL"
+        fail(error) {
+            unreachable
         }
-        refs[id] := bit
     }
 
     method writeIsNonNull(id:IR.Statement.ID, value:IR.Value) {
-        def ref := getReference(value)
-        def cl := compiler!.getClass(value.type())
-        assert cl !== null
-        def bit:String
-        if compiler!.isValue(cl) {
-            if value.type().typeKind != Type.Kind.NULLABLE {
-                bit := "true"
+        try {
+            def ref := getReference(value)
+            def cl := compiler!.getClass(value.type())
+            assert cl !== null
+            def bit:String
+            if compiler!.isValue(cl) {
+                if value.type().typeKind != Type.Kind.NULLABLE {
+                    bit := "true"
+                }
+                else {
+                    bit := "\{ref}.nonnull"
+                }
             }
             else {
-                bit := "\{ref}.nonnull"
+                bit := "\{ref} != NULL"
             }
+            out.printLine("\{name(id)} = \{bit};")
         }
-        else {
-            bit := "\{ref} != NULL"
+        fail(error) {
+            unreachable
         }
-        refs[id] := bit
     }
 
     function isNull(v:IR.Value):Bit {
@@ -1149,14 +1157,12 @@ class CCodeGenerator : CodeGenerator {
                 unreachable
             }
         }
-        def result := nextVar()
         try {
-            out.printLine("\{cType(type)} \{result} = \{leftRef} \{cOp} \{rightRef};")
+            out.printLine("\{name(id)} = \{leftRef} \{cOp} \{rightRef};")
         }
         fail(error) {
             unreachable
         }
-        refs[id] := result
     }
 
     method writeBranch(target:IR.Block.ID) {
@@ -1169,7 +1175,13 @@ class CCodeGenerator : CodeGenerator {
     }
 
     method writeCast(id:IR.Statement.ID, value:IR.Value, target:Type) {
-        refs[id] := getCastReference(getReference(value), value.type(), target)
+        try {
+            def result := getCastReference(getReference(value), value.type(), target)
+            out.printLine("\{name(id)} = \{result};")
+        }
+        fail(error) {
+            unreachable
+        }
     }
 
     method writeConditionalBranch(test:IR.Value, ifTrue:IR.Block.ID, ifFalse:IR.Block.ID) {
@@ -1192,12 +1204,10 @@ class CCodeGenerator : CodeGenerator {
             else {
                 ccCast := "&\{cc.name}"
             }
-            def result := nextVar()
             def target := cl.type
             out.printLine("FROST_ASSERT(\{sizeOf(target)} == sizeof(\{escapeName(cl.name)}));")
-            out.printLine("\{cType(target)} \{result} = (\{cType(target)}) frostObjectAlloc(" +
+            out.printLine("\{name(id)} = (\{cType(target)}) frostObjectAlloc(" +
                     "\{sizeOf(target)}, \{ccCast});")
-            refs[id] := result
         }
         fail(error) {
             unreachable
@@ -1207,16 +1217,14 @@ class CCodeGenerator : CodeGenerator {
     method writeCreateStruct(id:IR.Statement.ID, cl:ClassDecl, args:FixedArray<IR.Value>) {
         try {
             assert compiler!.isValue(cl)
-            def result := nextVar()
             def target := cl.type
-            out.print("\{cType(target)} \{result} = (\{cType(target)}) {")
+            out.print("\{name(id)} = (\{cType(target)}) {")
             var separator := ""
             for v in args {
                 out.print("\{separator}\{getReference(v)}")
                 separator := ", "
             }
             out.printLine("};")
-            refs[id] := result
         }
         fail(error) {
             unreachable
@@ -1231,9 +1239,7 @@ class CCodeGenerator : CodeGenerator {
             }
             def returnType := type.returnType
             if returnType != compiler!.VOID_TYPE {
-                def result := nextVar()
-                out.print("\{cType(returnType)} \{result} = ")
-                refs[id] := result
+                out.print("\{name(id)} = ")
             }
             out.print("\{getReference(m)}(")
             var separator := ""
@@ -1253,9 +1259,7 @@ class CCodeGenerator : CodeGenerator {
         try {
             compiler!.resolve(field)
             var targetRef := getReference(target)
-            def result := nextVar()
-            out.printLine("\{cType(field.type)} \{result} = \{targetRef}.\{field.name};")
-            refs[id] := result
+            out.printLine("\{name(id)} = \{targetRef}.\{field.name};")
         }
         fail(error) {
             unreachable
@@ -1269,7 +1273,6 @@ class CCodeGenerator : CodeGenerator {
             assert data.name = ClassDecl.CHOICE_DATA_NAME
             def targetRef := getReference(target)
             def fieldIndex := compiler!.getIndex(data)
-            def result := nextVar()
             def type := cType(cc.fields[index])
             def op:String
             if compiler!.isValue(target.type()) {
@@ -1281,9 +1284,8 @@ class CCodeGenerator : CodeGenerator {
             else {
                 op := "->"
             }
-            out.printLine("\{type}* \{result} = (\{type}*) (\{targetRef}\{op}$data + " +
+            out.printLine("\{name(id)} = (\{type}*) (\{targetRef}\{op}$data + " +
                     "\{getChoiceFieldOffset(cc, index)});")
-            refs[id] := result
         }
         fail(error) {
             unreachable
@@ -1293,9 +1295,7 @@ class CCodeGenerator : CodeGenerator {
     method writeGetFieldPointer(id:IR.Statement.ID, target:IR.Value, field:FieldDecl) {
         try {
             def targetRef := getReference(target)
-            def result := nextVar()
-            out.printLine("\{cType(field.type)}* \{result} = &\{targetRef}->\{field.name};")
-            refs[id] := result
+            out.printLine("\{name(id)} = &\{targetRef}->\{field.name};")
         }
         fail(error) {
             unreachable
@@ -1313,10 +1313,7 @@ class CCodeGenerator : CodeGenerator {
             out.printLine("\{itable} = \{itable}->next;")
             out.level -= 1
             out.printLine("}")
-            def result := nextVar()
-            def methodType := cMethodType(type, null)
-            out.printLine("\{methodType} \{result} = \{itable}->methods[\{index}];")
-            refs[id] := result
+            out.printLine("\{name(id)} = \{itable}->methods[\{index}];")
         }
         fail(error) {
             unreachable
@@ -1325,11 +1322,9 @@ class CCodeGenerator : CodeGenerator {
 
     method writeGetVirtualMethod(id:IR.Statement.ID, value:IR.Value, index:Int, type:Type) {
         try {
-            def result := nextVar()
             def methodType := cMethodType(type, null)
-            out.printLine("\{methodType} \{result} = (\{methodType}) " +
+            out.printLine("\{name(id)} = (\{methodType}) " +
                     "\{getReference(value)}->$class->vtable[\{index}];")
-            refs[id] := result
         }
         fail(error) {
             unreachable
@@ -1338,9 +1333,7 @@ class CCodeGenerator : CodeGenerator {
 
     method writeLoad(id:IR.Statement.ID, ptr:IR.Value) {
         try {
-            def result := nextVar()
-            out.printLine("\{cType(ptr.type())} \{result} = *\{getReference(ptr)};")
-            refs[id] := result
+            out.printLine("\{name(id)} = *\{getReference(ptr)};")
         }
         fail(error) {
             unreachable
@@ -1349,9 +1342,7 @@ class CCodeGenerator : CodeGenerator {
 
     method writeNegate(id:IR.Statement.ID, value:IR.Value) {
         try {
-            def result := nextVar()
-            out.printLine("\{cType(value.type())} \{result} = -\{getReference(value)};")
-            refs[id] := result
+            out.printLine("\{name(id)} = -\{getReference(value)};")
         }
         fail(error) {
             unreachable
@@ -1360,9 +1351,7 @@ class CCodeGenerator : CodeGenerator {
 
     method writeNot(id:IR.Statement.ID, value:IR.Value) {
         try {
-            def result := nextVar()
-            out.printLine("\{cType(value.type())} \{result} = !\{getReference(value)};")
-            refs[id] := result
+            out.printLine("\{name(id)} = !\{getReference(value)};")
         }
         fail(error) {
             unreachable
@@ -1374,10 +1363,8 @@ class CCodeGenerator : CodeGenerator {
             def countRef := getReference(count)
             def elementSize := stride(t)
             def type := cType(t)
-            def result := nextVar()
-            out.printLine("\{type}* \{result} = ((\{type}*) frostAlloc(\{countRef} * " +
+            out.printLine("\{name(id)} = ((\{type}*) frostAlloc(\{countRef} * " +
                     "\{elementSize}));")
-            refs[id] := result
         }
         fail(error) {
             unreachable
@@ -1398,9 +1385,7 @@ class CCodeGenerator : CodeGenerator {
         try {
             def base := getReference(ptr)
             def indexRef := getReference(index)
-            def result := nextVar()
-            out.printLine("\{cType(ptr.type().subtypes[1])} \{result} = \{base}[\{indexRef}];")
-            refs[id] := result
+            out.printLine("\{name(id)} = \{base}[\{indexRef}];")
         }
         fail(error) {
             unreachable
@@ -1411,9 +1396,7 @@ class CCodeGenerator : CodeGenerator {
         try {
             def base := getReference(ptr)
             def offsetRef := getReference(offset)
-            def result := nextVar()
-            out.printLine("\{cType(ptr.type())} \{result} = \{base} + \{offsetRef};")
-            refs[id] := result
+            out.printLine("\{name(id)} = \{base} + \{offsetRef};")
         }
         fail(error) {
             unreachable
@@ -1428,10 +1411,8 @@ class CCodeGenerator : CodeGenerator {
             def newCountRef := getReference(newCount)
             def elementSize := stride(ptr.type().subtypes[1])
             assert elementSize > 0, "invalid size for type \{ptr.type()}"
-            def result := nextVar()
-            out.printLine("\{cType(ptr.type())} \{result} = (\{cType(ptr.type())}) frostRealloc(" +
+            out.printLine("\{name(id)} = (\{cType(ptr.type())}) frostRealloc(" +
                     "\{ptrRef}, \{oldCountRef} * \{elementSize}, \{newCountRef} * \{elementSize});")
-            refs[id] := result
         }
         fail(error) {
             unreachable
@@ -1474,14 +1455,10 @@ class CCodeGenerator : CodeGenerator {
             var separator := ""
             def result:String?
             if m.returnType != compiler!.VOID_TYPE {
-                result := nextVar()
-                if indirect {
-                    out.printLine("\{actualResultType} \{result};")
+                result := name(id)
+                if !indirect {
+                    out.print("\{result} = ")
                 }
-                else {
-                    out.print("\{actualResultType} \{result} = ")
-                }
-                refs[id] := result
             }
             out.print("\{getName(m)}(")
             if indirect {
@@ -1602,6 +1579,89 @@ class CCodeGenerator : CodeGenerator {
         }
     }
 
+    method writeStatementDeclaration(id:IR.Statement.ID, s:IR.Statement) {
+        method write(type:String) {
+            try {
+                self.out.printLine("\{type} \{self.name(id)};")
+            }
+            fail(error) {
+                unreachable
+            }
+        }
+        try {
+            match s {
+                when IR.Statement.BINARY(_, _, _, _, type) {
+                    write(cType(type))
+                }
+                when IR.Statement.CAST(_, _, type, _) {
+                    write(cType(type))
+                }
+                when IR.Statement.CONSTRUCT(_, cl) {
+                    write(cType(cl.type))
+                }
+                when IR.Statement.CREATE_STRUCT(_, cl, _) {
+                    write(cType(cl.type))
+                }
+                when IR.Statement.DYNAMIC_CALL(_, m, _) {
+                    var type := m.type()
+                    if type.isPointer {
+                        type := type.subtypes[1]
+                    }
+                    if type.returnType != compiler!.VOID_TYPE {
+                        write(cType(type.returnType))
+                    }
+                }
+                when IR.Statement.EXTRACT_FIELD(_, _, field) {
+                    write(cType(field.type))
+                }
+                when IR.Statement.GET_CHOICE_FIELD_POINTER(_, _, cc, index) {
+                    write(cType(cc.fields[index]) + "*")
+                }
+                when IR.Statement.GET_FIELD_POINTER(_, _, field) {
+                    write(cType(field.type) + "*")
+                }
+                when IR.Statement.GET_INTERFACE_METHOD(_, _, _, _, type) {
+                    write(cMethodType(type, null))
+                }
+                when IR.Statement.GET_VIRTUAL_METHOD(_, _, _, type) {
+                    write(cMethodType(type, null))
+                }
+                when IR.Statement.LOAD(_, ptr) {
+                    write(cType(ptr.type()))
+                }
+                when IR.Statement.NEGATE(_, value) {
+                    write(cType(value.type()))
+                }
+                when IR.Statement.NOT(_, value) {
+                    write(cType(value.type()))
+                }
+                when IR.Statement.POINTER_ALLOC(_, _, type) {
+                    write("\{cType(type)}*")
+                }
+                when IR.Statement.POINTER_GET_INDEX(_, ptr, _) {
+                    write("\{cType(ptr.type().subtypes[1])}")
+                }
+                when IR.Statement.POINTER_OFFSET(_, ptr, _) {
+                    write("\{cType(ptr.type())}")
+                }
+                when IR.Statement.POINTER_REALLOC(_, ptr, _, _) {
+                    write("\{cType(ptr.type())}")
+                }
+                when IR.Statement.STATIC_CALL(_, m, _) {
+                    def type := m.type(compiler).returnType
+                    if type != compiler!.VOID_TYPE {
+                        write(cType(type))
+                    }
+                }
+                otherwise {
+                }
+            }
+        }
+        fail(error) {
+            unreachable
+        }
+    }
+
     @override
     method writeDeclaration(m:MethodDecl) {
         writeImport(m.owner)
@@ -1617,6 +1677,14 @@ class CCodeGenerator : CodeGenerator {
                     out.print(" = NULL")
                 }
                 out.printLine(";")
+            }
+            for i in 0 .. ir.blocks.count {
+                def block := ir.blocks[i]
+                def iter1 := block.ids.iterator
+                def iter2 := block.statements.iterator
+                while !iter1.done {
+                    writeStatementDeclaration(iter1.next(), iter2.next())
+                }
             }
             for i in 0 .. ir.blocks.count {
                 def block := ir.blocks[i]
@@ -1668,7 +1736,6 @@ class CCodeGenerator : CodeGenerator {
             methods.printLine(buffer)
             methods.printLine("}")
             out := old
-            refs.clear()
         }
         fail(error) {
             unreachable

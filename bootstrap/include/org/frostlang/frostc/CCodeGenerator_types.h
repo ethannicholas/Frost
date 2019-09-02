@@ -50,10 +50,9 @@ typedef struct org$frostlang$frostc$CCodeGenerator {
     frost$collections$Stack* enclosingContexts;
     frost$core$Int varCount;
     frost$collections$IdentityMap* methodShims;
-    frost$collections$HashMap* refs;
     org$frostlang$frostc$IR* ir;
 } org$frostlang$frostc$CCodeGenerator;
 #include "frost/core/Class.h"
-typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[83]; } org$frostlang$frostc$CCodeGenerator$class_type;
+typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[85]; } org$frostlang$frostc$CCodeGenerator$class_type;
 extern org$frostlang$frostc$CCodeGenerator$class_type org$frostlang$frostc$CCodeGenerator$class;
 

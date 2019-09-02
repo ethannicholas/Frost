@@ -20,9 +20,9 @@ typedef struct org$frostlang$frostc$FieldDecl org$frostlang$frostc$FieldDecl;
 typedef struct frost$io$IndentedOutputStream frost$io$IndentedOutputStream;
 #include "frost/core/UInt64_types.h"
 #include "frost/core/Real64_types.h"
+#include "org/frostlang/frostc/IR/Statement/ID_types.h"
 typedef struct org$frostlang$frostc$IR$Value org$frostlang$frostc$IR$Value;
 typedef struct org$frostlang$frostc$ChoiceCase org$frostlang$frostc$ChoiceCase;
-#include "org/frostlang/frostc/IR/Statement/ID_types.h"
 #include "org/frostlang/frostc/IR/Block/ID_types.h"
 typedef struct org$frostlang$frostc$FixedArray org$frostlang$frostc$FixedArray;
 typedef struct frost$collections$ListView frost$collections$ListView;
@@ -75,6 +75,7 @@ frost$core$String* org$frostlang$frostc$CCodeGenerator$getRealReference$org$fros
 frost$core$String* org$frostlang$frostc$CCodeGenerator$getBitReference$frost$core$Bit$frost$io$IndentedOutputStream$R$frost$core$String(org$frostlang$frostc$CCodeGenerator* self, frost$core$Bit p_bit, frost$io$IndentedOutputStream* p_out);
 frost$core$String* org$frostlang$frostc$CCodeGenerator$getStringReference$frost$core$String$R$frost$core$String(org$frostlang$frostc$CCodeGenerator* self, frost$core$String* p_s);
 frost$core$String* org$frostlang$frostc$CCodeGenerator$getNullReference$org$frostlang$frostc$Type$R$frost$core$String(org$frostlang$frostc$CCodeGenerator* self, org$frostlang$frostc$Type* p_t);
+frost$core$String* org$frostlang$frostc$CCodeGenerator$name$org$frostlang$frostc$IR$Statement$ID$R$frost$core$String(org$frostlang$frostc$CCodeGenerator* self, org$frostlang$frostc$IR$Statement$ID p_id);
 frost$core$String* org$frostlang$frostc$CCodeGenerator$getReference$org$frostlang$frostc$IR$Value$R$frost$core$String(org$frostlang$frostc$CCodeGenerator* self, org$frostlang$frostc$IR$Value* p_v);
 frost$core$Int org$frostlang$frostc$CCodeGenerator$getChoiceFieldOffset$org$frostlang$frostc$ChoiceCase$frost$core$Int$R$frost$core$Int(org$frostlang$frostc$CCodeGenerator* self, org$frostlang$frostc$ChoiceCase* p_e, frost$core$Int p_index);
 frost$core$String* org$frostlang$frostc$CCodeGenerator$selfType$org$frostlang$frostc$MethodDecl$R$frost$core$String(org$frostlang$frostc$CCodeGenerator* self, org$frostlang$frostc$MethodDecl* p_m);
@@ -106,6 +107,7 @@ void org$frostlang$frostc$CCodeGenerator$writeReturn$org$frostlang$frostc$IR$Val
 void org$frostlang$frostc$CCodeGenerator$writeStaticCall$org$frostlang$frostc$IR$Statement$ID$org$frostlang$frostc$MethodDecl$frost$collections$ListView$LTorg$frostlang$frostc$IR$Value$GT(org$frostlang$frostc$CCodeGenerator* self, org$frostlang$frostc$IR$Statement$ID p_id, org$frostlang$frostc$MethodDecl* p_m, frost$collections$ListView* p_args);
 void org$frostlang$frostc$CCodeGenerator$writeStore$org$frostlang$frostc$IR$Value$org$frostlang$frostc$IR$Value(org$frostlang$frostc$CCodeGenerator* self, org$frostlang$frostc$IR$Value* p_value, org$frostlang$frostc$IR$Value* p_ptr);
 void org$frostlang$frostc$CCodeGenerator$writeStatement$org$frostlang$frostc$IR$Statement$ID$org$frostlang$frostc$IR$Statement(org$frostlang$frostc$CCodeGenerator* self, org$frostlang$frostc$IR$Statement$ID p_id, org$frostlang$frostc$IR$Statement* p_s);
+void org$frostlang$frostc$CCodeGenerator$writeStatementDeclaration$org$frostlang$frostc$IR$Statement$ID$org$frostlang$frostc$IR$Statement(org$frostlang$frostc$CCodeGenerator* self, org$frostlang$frostc$IR$Statement$ID p_id, org$frostlang$frostc$IR$Statement* p_s);
 void org$frostlang$frostc$CCodeGenerator$writeDeclaration$org$frostlang$frostc$MethodDecl(org$frostlang$frostc$CCodeGenerator* self, org$frostlang$frostc$MethodDecl* p_m);
 void org$frostlang$frostc$CCodeGenerator$writeIR$org$frostlang$frostc$IR(org$frostlang$frostc$CCodeGenerator* self, org$frostlang$frostc$IR* p_ir);
 void org$frostlang$frostc$CCodeGenerator$write$org$frostlang$frostc$MethodDecl$org$frostlang$frostc$IR(org$frostlang$frostc$CCodeGenerator* self, org$frostlang$frostc$MethodDecl* p_m, org$frostlang$frostc$IR* p_ir);

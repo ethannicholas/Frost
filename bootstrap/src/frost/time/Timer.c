@@ -13,10 +13,12 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 
 void frost$time$Timer$init(frost$time$Timer* param0) {
 
+frost$core$Real64 _1;
+frost$core$Real64* _2;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/time/Timer.frost:12
-frost$core$Real64 $tmp2 = (frost$core$Real64) {0.0};
-frost$core$Real64* $tmp3 = &param0->basis;
-*$tmp3 = $tmp2;
+_1 = (frost$core$Real64) {0.0};
+_2 = &param0->basis;
+*_2 = _1;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/time/Timer.frost:15
 frost$time$Timer$setup(param0);
 return;
@@ -24,34 +26,47 @@ return;
 }
 void frost$time$Timer$cleanup(frost$time$Timer* param0) {
 
+frost$core$Object* _3;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/time/Timer.frost:20
 frost$time$Timer$destroy(param0);
 // /Users/ethannicholas/Dropbox/Frost/src/frost/time/Timer.frost:19
-frost$core$Object$cleanup(((frost$core$Object*) param0));
+_3 = ((frost$core$Object*) param0);
+frost$core$Object$cleanup(_3);
 return;
 
 }
 frost$core$Real64 frost$time$Timer$elapsed$R$frost$core$Real64(frost$time$Timer* param0) {
 
+double _1;
+frost$core$Real64 _2;
+frost$core$Real64* _3;
+frost$core$Real64 _4;
+double _5;
+double _6;
+double _7;
+frost$core$Real64 _8;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/time/Timer.frost:36
-double $tmp4 = frost$time$Timer$now$R$builtin_float64(param0);
-frost$core$Real64 $tmp5 = (frost$core$Real64) {$tmp4};
-frost$core$Real64* $tmp6 = &param0->basis;
-frost$core$Real64 $tmp7 = *$tmp6;
-double $tmp8 = $tmp5.value;
-double $tmp9 = $tmp7.value;
-double $tmp10 = $tmp8 - $tmp9;
-frost$core$Real64 $tmp11 = (frost$core$Real64) {$tmp10};
-return $tmp11;
+_1 = frost$time$Timer$now$R$builtin_float64(param0);
+_2 = (frost$core$Real64) {_1};
+_3 = &param0->basis;
+_4 = *_3;
+_5 = _2.value;
+_6 = _4.value;
+_7 = _5 - _6;
+_8 = (frost$core$Real64) {_7};
+return _8;
 
 }
 void frost$time$Timer$reset(frost$time$Timer* param0) {
 
+double _1;
+frost$core$Real64 _2;
+frost$core$Real64* _3;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/time/Timer.frost:47
-double $tmp12 = frost$time$Timer$now$R$builtin_float64(param0);
-frost$core$Real64 $tmp13 = (frost$core$Real64) {$tmp12};
-frost$core$Real64* $tmp14 = &param0->basis;
-*$tmp14 = $tmp13;
+_1 = frost$time$Timer$now$R$builtin_float64(param0);
+_2 = (frost$core$Real64) {_1};
+_3 = &param0->basis;
+*_3 = _2;
 return;
 
 }

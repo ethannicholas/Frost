@@ -19,13 +19,20 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 
 void frost$threads$ScopedLock$init$frost$threads$Lock(frost$threads$ScopedLock* param0, frost$threads$Lock* param1) {
 
+frost$core$Object* _1;
+frost$threads$Lock** _3;
+frost$threads$Lock* _4;
+frost$core$Object* _5;
+frost$threads$Lock** _7;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/threads/ScopedLock.frost:20
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) param1));
-frost$threads$Lock** $tmp2 = &param0->lock;
-frost$threads$Lock* $tmp3 = *$tmp2;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp3));
-frost$threads$Lock** $tmp4 = &param0->lock;
-*$tmp4 = param1;
+_1 = ((frost$core$Object*) param1);
+frost$core$Frost$ref$frost$core$Object$Q(_1);
+_3 = &param0->lock;
+_4 = *_3;
+_5 = ((frost$core$Object*) _4);
+frost$core$Frost$unref$frost$core$Object$Q(_5);
+_7 = &param0->lock;
+*_7 = param1;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/threads/ScopedLock.frost:21
 frost$threads$Lock$lock(param1);
 return;
@@ -33,15 +40,23 @@ return;
 }
 void frost$threads$ScopedLock$cleanup(frost$threads$ScopedLock* param0) {
 
+frost$threads$Lock** _1;
+frost$threads$Lock* _2;
+frost$core$Immutable* _5;
+frost$threads$Lock** _7;
+frost$threads$Lock* _8;
+frost$core$Object* _9;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/threads/ScopedLock.frost:26
-frost$threads$Lock** $tmp5 = &param0->lock;
-frost$threads$Lock* $tmp6 = *$tmp5;
-frost$threads$Lock$unlock($tmp6);
+_1 = &param0->lock;
+_2 = *_1;
+frost$threads$Lock$unlock(_2);
 // /Users/ethannicholas/Dropbox/Frost/src/frost/threads/ScopedLock.frost:25
-frost$core$Immutable$cleanup(((frost$core$Immutable*) param0));
-frost$threads$Lock** $tmp7 = &param0->lock;
-frost$threads$Lock* $tmp8 = *$tmp7;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp8));
+_5 = ((frost$core$Immutable*) param0);
+frost$core$Immutable$cleanup(_5);
+_7 = &param0->lock;
+_8 = *_7;
+_9 = ((frost$core$Object*) _8);
+frost$core$Frost$unref$frost$core$Object$Q(_9);
 return;
 
 }

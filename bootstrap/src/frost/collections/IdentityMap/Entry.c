@@ -13,36 +13,74 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 
 void frost$collections$IdentityMap$Entry$init$frost$collections$IdentityMap$Entry$K$frost$collections$IdentityMap$Entry$V(frost$collections$IdentityMap$Entry* param0, frost$core$Object* param1, frost$core$Object* param2) {
 
+frost$collections$IdentityMap$Entry* _1;
+frost$core$Object* _2;
+frost$core$Object** _4;
+frost$core$Object* _5;
+frost$core$Object* _6;
+frost$core$Object** _8;
+frost$collections$IdentityMap$Entry* _11;
+frost$core$Object* _12;
+frost$core$Object** _14;
+frost$core$Object* _15;
+frost$core$Object* _16;
+frost$core$Object** _18;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/IdentityMap.frost:29
-frost$core$Frost$ref$frost$core$Object$Q(param1);
-frost$core$Object** $tmp2 = &param0->key;
-frost$core$Object* $tmp3 = *$tmp2;
-frost$core$Frost$unref$frost$core$Object$Q($tmp3);
-frost$core$Object** $tmp4 = &param0->key;
-*$tmp4 = param1;
+_1 = param0;
+_2 = param1;
+frost$core$Frost$ref$frost$core$Object$Q(_2);
+_4 = &_1->key;
+_5 = *_4;
+_6 = _5;
+frost$core$Frost$unref$frost$core$Object$Q(_6);
+_8 = &_1->key;
+*_8 = param1;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/IdentityMap.frost:30
-frost$core$Frost$ref$frost$core$Object$Q(param2);
-frost$core$Object** $tmp5 = &param0->value;
-frost$core$Object* $tmp6 = *$tmp5;
-frost$core$Frost$unref$frost$core$Object$Q($tmp6);
-frost$core$Object** $tmp7 = &param0->value;
-*$tmp7 = param2;
+_11 = param0;
+_12 = param2;
+frost$core$Frost$ref$frost$core$Object$Q(_12);
+_14 = &_11->value;
+_15 = *_14;
+_16 = _15;
+frost$core$Frost$unref$frost$core$Object$Q(_16);
+_18 = &_11->value;
+*_18 = param2;
 return;
 
 }
 void frost$collections$IdentityMap$Entry$cleanup(frost$collections$IdentityMap$Entry* param0) {
 
+frost$core$Object* _1;
+frost$collections$IdentityMap$Entry* _3;
+frost$core$Object** _4;
+frost$core$Object* _5;
+frost$core$Object* _6;
+frost$collections$IdentityMap$Entry* _8;
+frost$core$Object** _9;
+frost$core$Object* _10;
+frost$core$Object* _11;
+frost$collections$IdentityMap$Entry* _13;
+frost$collections$IdentityMap$Entry** _14;
+frost$collections$IdentityMap$Entry* _15;
+frost$core$Object* _16;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/IdentityMap.frost:14
-frost$core$Object$cleanup(((frost$core$Object*) param0));
-frost$core$Object** $tmp8 = &param0->key;
-frost$core$Object* $tmp9 = *$tmp8;
-frost$core$Frost$unref$frost$core$Object$Q($tmp9);
-frost$core$Object** $tmp10 = &param0->value;
-frost$core$Object* $tmp11 = *$tmp10;
-frost$core$Frost$unref$frost$core$Object$Q($tmp11);
-frost$collections$IdentityMap$Entry** $tmp12 = &param0->next;
-frost$collections$IdentityMap$Entry* $tmp13 = *$tmp12;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp13));
+_1 = ((frost$core$Object*) param0);
+frost$core$Object$cleanup(_1);
+_3 = param0;
+_4 = &_3->key;
+_5 = *_4;
+_6 = _5;
+frost$core$Frost$unref$frost$core$Object$Q(_6);
+_8 = param0;
+_9 = &_8->value;
+_10 = *_9;
+_11 = _10;
+frost$core$Frost$unref$frost$core$Object$Q(_11);
+_13 = param0;
+_14 = &_13->next;
+_15 = *_14;
+_16 = ((frost$core$Object*) _15);
+frost$core$Frost$unref$frost$core$Object$Q(_16);
 return;
 
 }

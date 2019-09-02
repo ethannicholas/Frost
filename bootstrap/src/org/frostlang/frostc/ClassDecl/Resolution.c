@@ -15,38 +15,72 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 
 void org$frostlang$frostc$ClassDecl$Resolution$init$org$frostlang$frostc$ClassDecl$Q(org$frostlang$frostc$ClassDecl$Resolution* param0, org$frostlang$frostc$ClassDecl* param1) {
 
+frost$core$Weak* _1;
+frost$core$Weak* _2;
+frost$core$Object* _3;
+frost$core$Object* _5;
+frost$core$Weak** _7;
+frost$core$Weak* _8;
+frost$core$Object* _9;
+frost$core$Weak** _11;
+frost$core$Object* _13;
+frost$core$Weak* _16;
+frost$core$Weak* _17;
+frost$core$Object* _18;
+frost$core$Object* _20;
+frost$core$Weak** _22;
+frost$core$Weak* _23;
+frost$core$Object* _24;
+frost$core$Weak** _26;
+frost$core$Object* _28;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/ClassDecl.frost:41
 FROST_ASSERT(32 == sizeof(frost$core$Weak));
-frost$core$Weak* $tmp2 = (frost$core$Weak*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$Weak$class);
-frost$core$Weak$init$frost$core$Weak$T$Q($tmp2, ((frost$core$Object*) ((org$frostlang$frostc$ClassDecl*) NULL)));
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp2));
-frost$core$Weak** $tmp3 = &param0->value;
-frost$core$Weak* $tmp4 = *$tmp3;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp4));
-frost$core$Weak** $tmp5 = &param0->value;
-*$tmp5 = $tmp2;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp2));
+_1 = (frost$core$Weak*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$Weak$class);
+_2 = _1;
+_3 = ((frost$core$Object*) ((org$frostlang$frostc$ClassDecl*) NULL));
+frost$core$Weak$init$frost$core$Weak$T$Q(_2, _3);
+_5 = ((frost$core$Object*) _1);
+frost$core$Frost$ref$frost$core$Object$Q(_5);
+_7 = &param0->value;
+_8 = *_7;
+_9 = ((frost$core$Object*) _8);
+frost$core$Frost$unref$frost$core$Object$Q(_9);
+_11 = &param0->value;
+*_11 = _1;
+_13 = ((frost$core$Object*) _1);
+frost$core$Frost$unref$frost$core$Object$Q(_13);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/ClassDecl.frost:44
 FROST_ASSERT(32 == sizeof(frost$core$Weak));
-frost$core$Weak* $tmp6 = (frost$core$Weak*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$Weak$class);
-frost$core$Weak$init$frost$core$Weak$T$Q($tmp6, ((frost$core$Object*) param1));
-frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) $tmp6));
-frost$core$Weak** $tmp7 = &param0->value;
-frost$core$Weak* $tmp8 = *$tmp7;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp8));
-frost$core$Weak** $tmp9 = &param0->value;
-*$tmp9 = $tmp6;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp6));
+_16 = (frost$core$Weak*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$Weak$class);
+_17 = _16;
+_18 = ((frost$core$Object*) param1);
+frost$core$Weak$init$frost$core$Weak$T$Q(_17, _18);
+_20 = ((frost$core$Object*) _16);
+frost$core$Frost$ref$frost$core$Object$Q(_20);
+_22 = &param0->value;
+_23 = *_22;
+_24 = ((frost$core$Object*) _23);
+frost$core$Frost$unref$frost$core$Object$Q(_24);
+_26 = &param0->value;
+*_26 = _16;
+_28 = ((frost$core$Object*) _16);
+frost$core$Frost$unref$frost$core$Object$Q(_28);
 return;
 
 }
 void org$frostlang$frostc$ClassDecl$Resolution$cleanup(org$frostlang$frostc$ClassDecl$Resolution* param0) {
 
+frost$core$Object* _1;
+frost$core$Weak** _3;
+frost$core$Weak* _4;
+frost$core$Object* _5;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/ClassDecl.frost:39
-frost$core$Object$cleanup(((frost$core$Object*) param0));
-frost$core$Weak** $tmp10 = &param0->value;
-frost$core$Weak* $tmp11 = *$tmp10;
-frost$core$Frost$unref$frost$core$Object$Q(((frost$core$Object*) $tmp11));
+_1 = ((frost$core$Object*) param0);
+frost$core$Object$cleanup(_1);
+_3 = &param0->value;
+_4 = *_3;
+_5 = ((frost$core$Object*) _4);
+frost$core$Frost$unref$frost$core$Object$Q(_5);
 return;
 
 }

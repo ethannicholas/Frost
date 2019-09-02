@@ -91,8 +91,6 @@ class LLVMCodeGenerator : CodeGenerator {
 
     def methodShims := IdentityMap<MethodDecl, MethodShim>()
 
-    def refs := HashMap<IR.Statement.ID, String>()
-
     def nameCache := IdentityMap<MethodDecl, String>()
 
     def typeNames := IdentityMap<Type, String>()
@@ -141,9 +139,13 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
+    method name(id:IR.Statement.ID):String {
+        return "%s\{id}"
+    }
+
     method nextVar():String {
         varCount += 1
-        return "%\{varCount}"
+        return "%tmp\{varCount}"
     }
 
     method nextLabel():String {
@@ -671,8 +673,6 @@ class LLVMCodeGenerator : CodeGenerator {
             assert raw.isInstance
             def unrefs := MemoryOutputStream()
             def indirect := needsStructIndirection(raw)
-            def oldVarCount := varCount
-            varCount := 0
             def effectiveReturnType:Type
             if indirect {
                 effectiveReturnType := compiler!.VOID_TYPE
@@ -769,7 +769,6 @@ class LLVMCodeGenerator : CodeGenerator {
             out.printLine(unrefs)
             out.printLine("ret \{returnValue}")
             out.printLine("}")
-            varCount := oldVarCount
             def result := MethodShim(resultName, resultType.finish())
             methodShims[raw] := result
             out := oldOut
@@ -1125,8 +1124,8 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
-    method wrapValue(position:Position, value:String, srcType:Type, dstType:Type,
-            out:OutputStream):String {
+    method wrapValue(position:Position, result:String, value:String, srcType:Type, dstType:Type,
+            out:OutputStream) {
         try {
             def src := compiler!.getClass(srcType)
             assert src !== null
@@ -1141,16 +1140,15 @@ class LLVMCodeGenerator : CodeGenerator {
                 out.printLine("br i1 \{isNonNull}, label %\{nonNullLabel}, label %\{endLabel}" +
                         debugInfo(position))
                 createBlock(nonNullLabel, out)
-                def unwrapped := toNonNullableValue(position, value, srcType, srcType.subtypes[0],
-                        out)
-                def nonNullValue := wrapValue(position, unwrapped, srcType.subtypes[0], dstType,
-                        out)
+                def unwrapped := nextVar()
+                toNonNullableValue(position, unwrapped, value, srcType, srcType.subtypes[0], out)
+                def nonNullValue := nextVar()
+                wrapValue(position, nonNullValue, unwrapped, srcType.subtypes[0], dstType, out)
                 out.printLine("br label %\{endLabel}\{debugInfo(position)}")
                 createBlock(endLabel, out)
-                def result := nextVar()
                 out.printLine("\{result} = phi \{llvmType(dstType)} [null, %\{testStart}], " +
                         "[\{nonNullValue}, %\{nonNullLabel}]")
-                return result
+                return
             }
             def cc := getWrapperClassConstant(src)
             def ccCast:String
@@ -1166,7 +1164,13 @@ class LLVMCodeGenerator : CodeGenerator {
                     debugInfo(position))
             def wrapperTypeName := wrapperTypeName(src.type)
             def wrapperType := wrapperType(src.type)
-            def wrapperCast := nextVar()
+            def wrapperCast:String
+            if wrapperType != llvmType(dstType) {
+                wrapperCast := nextVar()
+            }
+            else {
+                wrapperCast := result
+            }
             out.printLine("\{wrapperCast} = bitcast i8* \{mallocRef} to \{wrapperType}" +
                     debugInfo(position))
             def target := nextVar()
@@ -1176,20 +1180,17 @@ class LLVMCodeGenerator : CodeGenerator {
             out.printLine("store \{llvmType(srcType)} \{value}, \{llvmType(srcType)}* \{target}" +
                     debugInfo(position))
             if wrapperType != llvmType(dstType) {
-                def result := nextVar()
                 out.printLine("\{result} = bitcast \{wrapperType} \{wrapperCast} to " +
                         llvmType(dstType) + debugInfo(position))
-                return result
             }
-            return wrapperCast
         }
         fail(error) {
             unreachable
         }
     }
 
-    method unwrapValue(position:Position, value:String, srcType:Type, dstType:Type,
-            out:OutputStream):String {
+    method unwrapValue(position:Position, result:String, value:String, srcType:Type, dstType:Type,
+            out:OutputStream) {
         try {
             def target := compiler!.getClass(dstType)
             assert target !== null
@@ -1204,16 +1205,16 @@ class LLVMCodeGenerator : CodeGenerator {
                 out.printLine("br i1 \{isNonNull}, label %\{nonNullLabel}, label %\{endLabel}" +
                         debugInfo(position))
                 createBlock(nonNullLabel, out)
-                def wrapped := unwrapValue(position, value, srcType, dstType.subtypes[0], out)
-                def nonNullValue := toNullableValue(position, wrapped, dstType.subtypes[0], dstType,
-                        out)
+                def wrapped := nextVar()
+                unwrapValue(position, wrapped, value, srcType, dstType.subtypes[0], out)
+                def nonNullValue := nextVar()
+                toNullableValue(position, nonNullValue, wrapped, dstType.subtypes[0], dstType, out)
                 out.printLine("br label %\{endLabel}\{debugInfo(position)}")
                 createBlock(endLabel, out)
-                def result := nextVar()
                 out.printLine("\{result} = phi \{llvmType(dstType)} " +
                         "[{ \{llvmType(dstType.subtypes[0])} undef, i1 0 }, " +
                         "%\{testStart}], [\{nonNullValue}, %\{nonNullLabel}]")
-                return result
+                return
             }
             def targetType := llvmType(dstType)
             def wrapperTypeName := wrapperTypeName(dstType)
@@ -1224,38 +1225,32 @@ class LLVMCodeGenerator : CodeGenerator {
             def load := nextVar()
             out.printLine("\{load} = load \{wrapperTypeName}, \{wrapperType} \{srcCast}" +
                     debugInfo(position))
-            def result := nextVar()
             out.printLine("\{result} = extractvalue \{wrapperTypeName} \{load}, " +
                     "\{OBJECT_FIELD_COUNT}\{debugInfo(position)}")
-            return result
         }
         fail(error) {
             unreachable
         }
     }
 
-    method toNullableValue(position:Position, value:String, srcType:Type, dstType:Type,
-            out:OutputStream):String {
+    method toNullableValue(position:Position, result:String, value:String, srcType:Type,
+            dstType:Type, out:OutputStream) {
         try {
             def nullableType := nullableType(dstType)
-            def result := nextVar()
             out.printLine("\{result} = insertvalue \{nullableType} " +
                     "{ \{llvmType(srcType)} undef, i1 true }, \{llvmType(srcType)} \{value}, 0" +
                     debugInfo(position))
-            return result
         }
         fail(error) {
             unreachable
         }
     }
 
-    method toNonNullableValue(position:Position, value:String, srcType:Type, dstType:Type,
-            out:OutputStream):String {
+    method toNonNullableValue(position:Position, result:String, value:String, srcType:Type,
+            dstType:Type, out:OutputStream) {
         try {
-            def result := nextVar()
             out.printLine("\{result} = extractvalue \{llvmType(srcType)} \{value}, 0" +
                     debugInfo(position))
-            return result
         }
         fail(error) {
             unreachable
@@ -1263,95 +1258,107 @@ class LLVMCodeGenerator : CodeGenerator {
     }
 
     method getCastReference(position:Position, value:String, src:Type, target:Type):String {
-        def op:String
-        if target.isBuiltinNumber {
-            assert src.isBuiltinNumber
-            def size1 := sizeOf(src)
-            def size2 := sizeOf(target)
-            if src.typeKind = Type.Kind.BUILTIN_FLOAT {
-                if target.typeKind = Type.Kind.BUILTIN_FLOAT {
-                    if size1 > size2 {
-                        op := "fptrunc"
-                    }
-                    else if size1 < size2 {
-                        op := "fpext"
-                    }
-                    else {
-                        return value
-                    }
-                }
-                else if target.typeKind = Type.Kind.BUILTIN_INT {
-                    op := "fptosi"
-                }
-                else {
-                    assert target.typeKind = Type.Kind.BUILTIN_UINT
-                    op := "fptoui"
-                }
-            }
-            else if target.typeKind = Type.Kind.BUILTIN_FLOAT {
-                if src.typeKind = Type.Kind.BUILTIN_INT {
-                    op := "sitofp"
-                }
-                else {
-                    assert src.typeKind = Type.Kind.BUILTIN_UINT
-                    op := "uitofp"
-                }
-            }
-            else {
-                if size1 > size2 {
-                    op := "trunc"
-                }
-                else if size1 < size2 {
-                    if src.typeKind = Type.Kind.BUILTIN_INT {
-                        op := "sext"
-                    }
-                    else {
-                        op := "zext"
-                    }
-                }
-                else {
-                    return value
-                }
-            }
-        }
-        else if src.isPointer | target.isPointer {
-            op := "bitcast"
-        }
-        else {
-            def srcClass := compiler!.getClass(src)
-            assert srcClass !== null, "class \{src} not found"
-            def targetClass := compiler!.getClass(target)
-            assert targetClass !== null, "class \{target} not found"
-            if compiler!.isValue(srcClass) & !compiler!.isValue(targetClass) {
-                return wrapValue(position, value, src, target, out)
-            }
-            else if !compiler!.isValue(srcClass) & compiler!.isValue(targetClass) {
-                return unwrapValue(position, value, src, target, out)
-            }
-            else if compiler!.isValue(srcClass) & target.typeKind = Type.Kind.NULLABLE &
-                    target.subtypes[0] = src {
-                return toNullableValue(position, value, src, target, out)
-            }
-            else if compiler!.isValue(targetClass) & src.typeKind = Type.Kind.NULLABLE &
-                    src.subtypes[0] = target {
-                return toNonNullableValue(position, value, src, target, out)
-            }
-            op := "bitcast"
-        }
-        def srcType := llvmType(src)
-        def dstType := llvmType(target)
-        if srcType = dstType {
+        if src = target {
             return value
         }
         def result := nextVar()
+        writeCast(position, result, value, src, target)
+        return result
+    }
+
+    method writeCast(position:Position, result:String, value:String, src:Type, target:Type) {
         try {
+            def op:String
+            if target.isBuiltinNumber {
+                assert src.isBuiltinNumber
+                def size1 := sizeOf(src)
+                def size2 := sizeOf(target)
+                if src.typeKind = Type.Kind.BUILTIN_FLOAT {
+                    if target.typeKind = Type.Kind.BUILTIN_FLOAT {
+                        if size1 > size2 {
+                            op := "fptrunc"
+                        }
+                        else if size1 < size2 {
+                            op := "fpext"
+                        }
+                        else {
+                            -- same LLVM type, write out a useless add 0
+                            out.printLine("\{result} = add \{llvmType(target)} \{value}, 0x0")
+                            return
+                        }
+                    }
+                    else if target.typeKind = Type.Kind.BUILTIN_INT {
+                        op := "fptosi"
+                    }
+                    else {
+                        assert target.typeKind = Type.Kind.BUILTIN_UINT
+                        op := "fptoui"
+                    }
+                }
+                else if target.typeKind = Type.Kind.BUILTIN_FLOAT {
+                    if src.typeKind = Type.Kind.BUILTIN_INT {
+                        op := "sitofp"
+                    }
+                    else {
+                        assert src.typeKind = Type.Kind.BUILTIN_UINT
+                        op := "uitofp"
+                    }
+                }
+                else {
+                    if size1 > size2 {
+                        op := "trunc"
+                    }
+                    else if size1 < size2 {
+                        if src.typeKind = Type.Kind.BUILTIN_INT {
+                            op := "sext"
+                        }
+                        else {
+                            op := "zext"
+                        }
+                    }
+                    else {
+                        -- same LLVM type, write out a useless add 0
+                        out.printLine("\{result} = add \{llvmType(target)} \{value}, 0")
+                        return
+                    }
+                }
+            }
+            else if src.isPointer | target.isPointer {
+                op := "bitcast"
+            }
+            else {
+                def srcClass := compiler!.getClass(src)
+                assert srcClass !== null, "class \{src} not found"
+                def targetClass := compiler!.getClass(target)
+                assert targetClass !== null, "class \{target} not found"
+                if compiler!.isValue(srcClass) & !compiler!.isValue(targetClass) {
+                    wrapValue(position, result, value, src, target, out)
+                    return
+                }
+                else if !compiler!.isValue(srcClass) & compiler!.isValue(targetClass) {
+                    unwrapValue(position, result, value, src, target, out)
+                    return
+                }
+                else if compiler!.isValue(srcClass) & target.typeKind = Type.Kind.NULLABLE &
+                        target.subtypes[0] = src {
+                    toNullableValue(position, result, value, src, target, out)
+                    return
+                }
+                else if compiler!.isValue(targetClass) & src.typeKind = Type.Kind.NULLABLE &
+                        src.subtypes[0] = target {
+                    toNonNullableValue(position, result, value, src, target, out)
+                    return
+                }
+                op := "bitcast"
+            }
+            def srcType := llvmType(src)
+            def dstType := llvmType(target)
             out.printLine("\{result} = \{op} \{srcType} \{value} to \{dstType}" +
                     debugInfo(position))
         }
         fail(error) {
             unreachable, error.asString
         }
-        return result
     }
 
     method getRealReference(t:Type, r64:Real64):String {
@@ -1531,8 +1538,7 @@ class LLVMCodeGenerator : CodeGenerator {
                 return getRealReference(type, value)
             }
             when IR.Value.REF(id, _) {
-                assert refs[id] !== null, "id \{id} has not been defined"
-                return refs[id]
+                return name(id)
             }
             when IR.Value.STRING(s, _) {
                 return getStringReference(s)
@@ -1572,20 +1578,12 @@ class LLVMCodeGenerator : CodeGenerator {
             def cl := compiler!.getClass(value.type())
             def resultValue:String
             if compiler!.isValue(cl) {
-                if value.type().typeKind != Type.Kind.NULLABLE {
-                    refs[id] := "0"
-                    return
-                }
                 def field := nextVar()
                 out.printLine("\{field} = extractvalue \{valueRef}, 1\{debugInfo(position)}")
-                def result := nextVar()
-                out.printLine("\{result} = xor i1 \{field}, -1\{debugInfo(position)}")
-                refs[id] := result
+                out.printLine("\{name(id)} = xor i1 \{field}, -1\{debugInfo(position)}")
             }
             else {
-                def result := nextVar()
-                out.printLine("\{result} = icmp eq \{valueRef}, null\{debugInfo(position)}")
-                refs[id] := result
+                out.printLine("\{name(id)} = icmp eq \{valueRef}, null\{debugInfo(position)}")
             }
         }
         fail(error) {
@@ -1598,18 +1596,10 @@ class LLVMCodeGenerator : CodeGenerator {
             def valueRef := getTypedReference(value)
             def cl := compiler!.getClass(value.type())
             if compiler!.isValue(cl) {
-                if value.type().typeKind != Type.Kind.NULLABLE {
-                    refs[id] := "1"
-                    return
-                }
-                def result := nextVar()
-                out.printLine("\{result} = extractvalue \{valueRef}, 1\{debugInfo(position)}")
-                refs[id] := result
+                out.printLine("\{name(id)} = extractvalue \{valueRef}, 1\{debugInfo(position)}")
             }
             else {
-                def result := nextVar()
-                out.printLine("\{result} = icmp ne \{valueRef}, null\{debugInfo(position)}")
-                refs[id] := result
+                out.printLine("\{name(id)} = icmp ne \{valueRef}, null\{debugInfo(position)}")
             }
         }
         fail(error) {
@@ -1640,7 +1630,7 @@ class LLVMCodeGenerator : CodeGenerator {
                     when Binary.Operator.SHIFTLEFT  { llvmOp := "shl" }
                     when Binary.Operator.SHIFTRIGHT { llvmOp := "ashr" }
                     when Binary.Operator.BITWISEAND { llvmOp := "and" }
-                    when Binary.Operator.BITWISEOR  {  llvmOp := "or" }
+                    when Binary.Operator.BITWISEOR  { llvmOp := "or" }
                     when Binary.Operator.BITWISEXOR,
                             Binary.Operator.XOR     { llvmOp := "xor" }
                     when Binary.Operator.EQ         { llvmOp := "icmp eq" }
@@ -1731,13 +1721,12 @@ class LLVMCodeGenerator : CodeGenerator {
         def leftRef := getReference(left)
         def rightRef := getReference(right)
         try {
-            out.printLine("\{result} = \{llvmOp} \{llvmType(left.type())} \{leftRef}, \{rightRef}" +
-                    debugInfo(position))
+            out.printLine("\{name(id)} = \{llvmOp} \{llvmType(left.type())} \{leftRef}, " +
+                    rightRef + debugInfo(position))
         }
         fail(error) {
             unreachable, error.asString
         }
-        refs[id] := result
     }
 
     method writeBranch(position:Position, target:IR.Block.ID) {
@@ -1750,7 +1739,7 @@ class LLVMCodeGenerator : CodeGenerator {
     }
 
     method writeCast(position:Position, id:IR.Statement.ID, value:IR.Value, target:Type) {
-        refs[id] := getCastReference(position, getReference(value), value.type(), target)
+        writeCast(position, name(id), getReference(value), value.type(), target)
     }
 
     method writeConditionalBranch(position:Position, test:IR.Value, ifTrue:IR.Block.ID,
@@ -1780,10 +1769,8 @@ class LLVMCodeGenerator : CodeGenerator {
             def target := cl.type
             out.printLine("\{callRef} = call i8* @frostObjectAlloc(i64 \{sizeOf(target)}, " +
                     "%frost$core$Class* \{ccCast})\{debugInfo(position)}")
-            def result := nextVar()
-            out.printLine("\{result} = bitcast i8* \{callRef} to \{llvmType(target)}" +
+            out.printLine("\{name(id)} = bitcast i8* \{callRef} to \{llvmType(target)}" +
                     debugInfo(position))
-            refs[id] := result
         }
         fail(error) {
             unreachable, error.asString
@@ -1799,11 +1786,16 @@ class LLVMCodeGenerator : CodeGenerator {
             var current := "undef"
             for i in 0 .. args.count {
                 def value := getTypedReference(args[i])
-                def next := nextVar()
+                def next:String
+                if i = args.count - 1 {
+                    next := name(id)
+                }
+                else {
+                    next := nextVar()
+                }
                 out.printLine("\{next} = insertvalue \{type} \{current}, \{value}, \{i}")
                 current := next
             }
-            refs[id] := current
         }
         fail(error) {
             unreachable, error.asString
@@ -1819,9 +1811,7 @@ class LLVMCodeGenerator : CodeGenerator {
             }
             def returnType := type.returnType
             if returnType != compiler!.VOID_TYPE {
-                def result := nextVar()
-                out.print("\{result} = ")
-                refs[id] := result
+                out.print("\{name(id)} = ")
             }
             out.print("call \{llvmType(returnType)} \{getReference(m)}(")
             var separator := ""
@@ -1856,9 +1846,7 @@ class LLVMCodeGenerator : CodeGenerator {
         try {
             var targetRef := getTypedReference(target)
             def index := compiler!.getIndex(field)
-            def result := nextVar()
-            out.printLine("\{result} = extractvalue \{targetRef}, \{index}\{debugInfo(position)}")
-            refs[id] := result
+            out.printLine("\{name(id)} = extractvalue \{targetRef}, \{index}\{debugInfo(position)}")
         }
         fail(error) {
             unreachable, error.asString
@@ -1881,10 +1869,8 @@ class LLVMCodeGenerator : CodeGenerator {
             out.printLine("\{offset} = getelementptr [\{size} x i8], [\{size} x i8]* " +
                     "\{dataPointer}, i64 0, i64 \{getChoiceFieldOffset(cc, index)}" +
                     debugInfo(position))
-            def cast := nextVar()
-            out.printLine("\{cast} = bitcast i8* \{offset} to \{llvmType(cc.fields[index])}*" +
+            out.printLine("\{name(id)} = bitcast i8* \{offset} to \{llvmType(cc.fields[index])}*" +
                     debugInfo(position))
-            refs[id] := cast
         }
         fail(error) {
             unreachable, error.asString
@@ -1896,18 +1882,20 @@ class LLVMCodeGenerator : CodeGenerator {
         try {
             def targetRef := getReference(target)
             def index := compiler!.getIndex(field)
-            def result := nextVar()
-            out.printLine("\{result} = getelementptr \{typeName(target.type())}, " +
-                    "\{typeName(target.type())}* \{targetRef}, i64 0, i32 \{index}" +
-                    debugInfo(position))
-            if compiler!.isValue(field.type) {
-                refs[id] := result
+            def value := compiler.isValue(field.type)
+            def raw:String
+            if value {
+                raw := name(id)
             }
             else {
-                def cast := nextVar()
-                out.printLine("\{cast} = bitcast i8** \{result} to \{llvmType(field.type)}*" +
+                raw := nextVar()
+            }
+            out.printLine("\{raw} = getelementptr \{typeName(target.type())}, " +
+                    "\{typeName(target.type())}* \{targetRef}, i64 0, i32 \{index}" +
+                    debugInfo(position))
+            if !value {
+                out.printLine("\{name(id)} = bitcast i8** \{raw} to \{llvmType(field.type)}*" +
                         debugInfo(position))
-                refs[id] := cast
             }
         }
         fail(error) {
@@ -1976,10 +1964,8 @@ class LLVMCodeGenerator : CodeGenerator {
             def cast := nextVar()
             out.printLine("\{cast} = bitcast i8** \{methodPtrPtr} to \{methodTypeString}*" +
                     debugInfo(position))
-            def methodPtr := nextVar()
-            out.printLine("\{methodPtr} = load \{methodTypeString}, \{methodTypeString}* \{cast}" +
+            out.printLine("\{name(id)} = load \{methodTypeString}, \{methodTypeString}* \{cast}" +
                     debugInfo(position))
-            refs[id] := methodPtr
         }
         fail(error) {
             unreachable, error.asString
@@ -2003,10 +1989,8 @@ class LLVMCodeGenerator : CodeGenerator {
                     "i64 0, i32 \{VTABLE_INDEX}, i64 \{index}\{debugInfo(position)}")
             def load := nextVar()
             out.printLine("\{load} = load i8*, i8** \{ptr}\{debugInfo(position)}")
-            def result := nextVar()
-            out.printLine("\{result} = bitcast i8* \{load} to \{llvmMethodType(type, null)}" +
+            out.printLine("\{name(id)} = bitcast i8* \{load} to \{llvmMethodType(type, null)}" +
                     debugInfo(position))
-            refs[id] := result
         }
         fail(error) {
             unreachable, error.asString
@@ -2015,10 +1999,8 @@ class LLVMCodeGenerator : CodeGenerator {
 
     method writeLoad(position:Position, id:IR.Statement.ID, ptr:IR.Value) {
         try {
-            def result := nextVar()
-            out.printLine("\{result} = load \{llvmType(ptr.type())}, \{llvmType(ptr.type())}* " +
+            out.printLine("\{name(id)} = load \{llvmType(ptr.type())}, \{llvmType(ptr.type())}* " +
                     getReference(ptr) + debugInfo(position))
-            refs[id] := result
         }
         fail(error) {
             unreachable, error.asString
@@ -2027,16 +2009,14 @@ class LLVMCodeGenerator : CodeGenerator {
 
     method writeNegate(position:Position, id:IR.Statement.ID, value:IR.Value) {
         try {
-            def result := nextVar()
             if value.type().typeKind = Type.Kind.BUILTIN_FLOAT {
-                out.printLine("\{result} = fsub \{llvmType(value.type())} 0x0, " +
+                out.printLine("\{name(id)} = fsub \{llvmType(value.type())} 0x0, " +
                         "\{getReference(value)}\{debugInfo(position)}")
             }
             else {
-                out.printLine("\{result} = sub \{llvmType(value.type())} 0, " +
+                out.printLine("\{name(id)} = sub \{llvmType(value.type())} 0, " +
                         "\{getReference(value)}\{debugInfo(position)}")
             }
-            refs[id] := result
         }
         fail(error) {
             unreachable, error.asString
@@ -2045,9 +2025,7 @@ class LLVMCodeGenerator : CodeGenerator {
 
     method writeNot(position:Position, id:IR.Statement.ID, value:IR.Value) {
         try {
-            def result := nextVar()
-            out.printLine("\{result} = xor \{getTypedReference(value)}, -1\{debugInfo(position)}")
-            refs[id] := result
+            out.printLine("\{name(id)} = xor \{getTypedReference(value)}, -1\{debugInfo(position)}")
         }
         fail(error) {
             unreachable, error.asString
@@ -2064,10 +2042,8 @@ class LLVMCodeGenerator : CodeGenerator {
             def malloc := nextVar()
             out.printLine("\{malloc} = call i8* @frostAlloc(\{SIZE_TYPE} \{size})" +
                     debugInfo(position))
-            def result := nextVar()
-            out.printLine("\{result} = bitcast i8* \{malloc} to " +
+            out.printLine("\{name(id)} = bitcast i8* \{malloc} to " +
                     " \{llvmType(Type.pointerTo(compiler, type))}" + debugInfo(position))
-            refs[id] := result
         }
         fail(error) {
             unreachable, error.asString
@@ -2095,9 +2071,8 @@ class LLVMCodeGenerator : CodeGenerator {
             def offset := nextVar()
             out.printLine("\{offset} = getelementptr inbounds \{baseType}, " +
                     "\{base}, \{indexRef}\{debugInfo(position)}")
-            def result := nextVar()
-            out.printLine("\{result} = load \{baseType}, \{baseType}* \{offset}\{debugInfo(position)}")
-            refs[id] := result
+            out.printLine("\{name(id)} = load \{baseType}, \{baseType}* " +
+                    "\{offset}\{debugInfo(position)}")
         }
         fail(error) {
             unreachable, error.asString
@@ -2110,10 +2085,8 @@ class LLVMCodeGenerator : CodeGenerator {
             def base := getTypedReference(ptr)
             def offsetRef := getTypedReference(offset)
             def baseType := llvmType(ptr.type().subtypes[1])
-            def result := nextVar()
-            out.printLine("\{result} = getelementptr inbounds \{baseType}, " +
+            out.printLine("\{name(id)} = getelementptr inbounds \{baseType}, " +
                     "\{base}, \{offsetRef}\{debugInfo(position)}")
-            refs[id] := result
         }
         fail(error) {
             unreachable, error.asString
@@ -2137,10 +2110,8 @@ class LLVMCodeGenerator : CodeGenerator {
             def realloc := nextVar()
             out.printLine("\{realloc} = call i8* @frostRealloc(i8* \{cast}, " +
                     "\{SIZE_TYPE} \{oldSize}, \{SIZE_TYPE} \{newSize})\{debugInfo(position)}")
-            def result := nextVar()
-            out.printLine("\{result} = bitcast i8* \{realloc} to \{llvmType(ptr.type())}" +
+            out.printLine("\{name(id)} = bitcast i8* \{realloc} to \{llvmType(ptr.type())}" +
                     debugInfo(position))
-            refs[id] := result
         }
         fail(error) {
             unreachable, error.asString
@@ -2188,16 +2159,13 @@ class LLVMCodeGenerator : CodeGenerator {
             var separator := ""
             def result:String?
             if indirect {
-                labelCount += 1
-                result := "%tmp\{labelCount}"
+                result := name(id) + "_result"
                 methodHeader.printLine("\{result} = alloca \{actualResultType}")
                 out.print("call void \{getName(m)}(\{actualResultType}* \{result}")
                 separator := ", "
             }
             else if m.returnType != compiler!.VOID_TYPE {
-                result := nextVar()
-                out.print("\{result} = call \{actualResultType} \{getName(m)}(")
-                refs[id] := result
+                out.print("\{name(id)} = call \{actualResultType} \{getName(m)}(")
             }
             else {
                 out.print("call void \{getName(m)}(")
@@ -2209,11 +2177,8 @@ class LLVMCodeGenerator : CodeGenerator {
             }
             out.printLine(")\{debugInfo(position)}")
             if indirect {
-                assert result !== null
-                def load := nextVar()
-                out.printLine("\{load} = load \{actualResultType}, \{actualResultType}* " +
+                out.printLine("\{name(id)} = load \{actualResultType}, \{actualResultType}* " +
                             result)
-                refs[id] := load
             }
         }
         fail(error) {
@@ -2362,7 +2327,6 @@ class LLVMCodeGenerator : CodeGenerator {
             out := methods
             methodHeader.clear()
             self.ir := ir
-            varCount := 0
             out.print("define ")
             if m.owner.isSpecialization() {
                 out.print("linkonce_odr ")

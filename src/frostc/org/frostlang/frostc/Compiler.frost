@@ -4945,7 +4945,7 @@ class Compiler {
     resolving this expression using `compileExpression` will result in an actual `ImmutableMethod`
     object constructor.
     ================================================================================================
-    @post(typeMatch(@return, type) & (@return !== null | errorCount > 0 | !reportErrors))
+--    @post(typeMatch(@return, type) & (@return !== null | errorCount > 0 | !reportErrors))
     method compileMethodExpression(expr:ASTNode, type:TypeContext):IR.Value? {
         match expr {
             when ASTNode.ARRAY(position, elements) {
@@ -5554,7 +5554,7 @@ class Compiler {
                 While.compile(self, position, label, test, statements)
             }
             otherwise {
-                unreachable
+                error(position, "not a statement")
             }
         }
     }
@@ -5811,7 +5811,7 @@ class Compiler {
             def oldPostconditionEntryBlock := postconditionEntryBlock
             postconditionEntryBlock := null
             if returnValue !== null {
-                Return.compile(self, m.position, ASTNode.IR_WRAPPER(m.position, returnValue))
+                Return.compile(self, m.position, ASTNode.IR_WRAPPER(m.position, returnValue), false)
             }
             else {
                 Return.compile(self, m.position, null)
@@ -5975,7 +5975,7 @@ class Compiler {
                     index += 1
                 }
                 compilePreconditions()
---                compilePostconditions()
+                compilePostconditions()
                 for s in m.body {
                     compileStatement(s)
                 }

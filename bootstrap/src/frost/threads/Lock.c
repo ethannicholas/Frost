@@ -24,10 +24,12 @@ return;
 }
 void frost$threads$Lock$cleanup(frost$threads$Lock* param0) {
 
+frost$core$Immutable* _3;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/threads/Lock.frost:44
 frost$threads$Lock$destroy(param0);
 // /Users/ethannicholas/Dropbox/Frost/src/frost/threads/Lock.frost:43
-frost$core$Immutable$cleanup(((frost$core$Immutable*) param0));
+_3 = ((frost$core$Immutable*) param0);
+frost$core$Immutable$cleanup(_3);
 return;
 
 }

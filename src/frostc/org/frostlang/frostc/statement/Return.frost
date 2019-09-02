@@ -21,6 +21,11 @@ uses org.frostlang.frostc.lvalue.VariableLValue
 class Return {
     @class
     method compile(compiler:Compiler, position:Position, value:ASTNode?) {
+        compile(compiler, position, value, true)
+    }
+
+    @class
+    method compile(compiler:Compiler, position:Position, value:ASTNode?, refResult:Bit) {
         def ir := compiler.ir
         def currentClass := compiler.currentClass[0]
         def currentMethod := compiler.currentMethod[0]
@@ -61,7 +66,7 @@ class Return {
             if compiled == null {
                 return
             }
-            if compiler.isRefCounted(compiled.type()) {
+            if refResult & compiler.isRefCounted(compiled.type()) {
                 compiler.compileRef(compiled)
             }
             compiler.leaveAllScopes()
@@ -107,7 +112,7 @@ class Return {
                                 }
                                 ir.add(IR.Statement.STORE(position, compiled,
                                         IR.Value.LOCAL(returnSlot, compiled.type())))
-                                if compiler.isRefCounted(compiled.type()) {
+                                if refResult & compiler.isRefCounted(compiled.type()) {
                                     compiler.compileRef(compiled)
                                 }
                             }

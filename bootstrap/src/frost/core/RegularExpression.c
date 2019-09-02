@@ -18,9 +18,10 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 
 void frost$core$RegularExpression$init$frost$core$String(frost$core$RegularExpression* param0, frost$core$String* param1) {
 
+frost$core$Int _1;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/RegularExpression.frost:15
-frost$core$Int $tmp2 = (frost$core$Int) {0u};
-frost$core$RegularExpression$init$frost$core$String$frost$core$Int(param0, param1, $tmp2);
+_1 = (frost$core$Int) {0u};
+frost$core$RegularExpression$init$frost$core$String$frost$core$Int(param0, param1, _1);
 return;
 
 }
@@ -33,10 +34,12 @@ return;
 }
 void frost$core$RegularExpression$cleanup(frost$core$RegularExpression* param0) {
 
+frost$core$Immutable* _3;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/RegularExpression.frost:27
 frost$core$RegularExpression$destroy(param0);
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/RegularExpression.frost:26
-frost$core$Immutable$cleanup(((frost$core$Immutable*) param0));
+_3 = ((frost$core$Immutable*) param0);
+frost$core$Immutable$cleanup(_3);
 return;
 
 }
