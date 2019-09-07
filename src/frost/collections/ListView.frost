@@ -30,8 +30,9 @@ interface ListView<T> : CollectionView<T> {
 
     ================================================================================================
     Returns an `Iterator` which produces the elements of the power set of this list. The power set
-    of a list is the set of all possible subsets (including the empty list. For instance, the power
-    set of `[1, 2, 3]` is: `[], [1], [2], [1, 2], [3], [1, 3], [2, 3], [1, 2, 3]`.
+    of a list is the set of all possible subsets (including the empty list). For instance, the power
+    set of `[1, 2, 3]` is: `[], [1], [2], [1, 2], [3], [1, 3], [2, 3], [1, 2, 3]`. The iteration
+    order is not guaranteed.
 
     As the power set of a list with `n` elements contains 2^n entries, iterating over the power set
     is only practical for small lists. 
@@ -379,6 +380,16 @@ interface ListView<T> : CollectionView<T> {
     }
 
     @default
+    @pre(count = other.count)
+    function combine<U>(other:ListView<U>):ListView<(T, U)> {
+        def result := Array<(T, U)>(count)
+        for i in 0 .. count {
+            result.add((self[i], other[i]))
+        }
+        return result
+    }
+
+    @default
     @priority(1)
     @pre(count = other.count)
     function combine<U, V>(other:ListView<U>, f:(T, U)=>(V)):ListView<V> {
@@ -449,7 +460,7 @@ interface ListView<T> : CollectionView<T> {
     @default
     method sort(greater:(T, T)=>(Bit)):ListView<T> {
         def result := Array<T>(self)
-        Frost.sort<T>(result, 0, count - 1, greater)
+        MergeSort.sort(result, greater)
         return result
     }
 }

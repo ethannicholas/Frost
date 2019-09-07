@@ -283,7 +283,7 @@ _101 = *(&local0);
 _102 = ($fn25) _101->$class->vtable[5];
 _103 = _102(_101);
 // begin inline call to function frost.core.Bit.!():frost.core.Bit from If.frost:36:12
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Bit.stub:37
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
 _106 = _103.value;
 _107 = !_106;
 _108 = (frost$core$Bit) {_107};
@@ -331,7 +331,7 @@ _144 = *(&local0);
 _145 = ($fn30) _144->$class->vtable[5];
 _146 = _145(_144);
 // begin inline call to function frost.core.Bit.!():frost.core.Bit from If.frost:42:16
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Bit.stub:37
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
 _149 = _146.value;
 _150 = !_149;
 _151 = (frost$core$Bit) {_150};

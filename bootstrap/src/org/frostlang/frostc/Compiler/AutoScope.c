@@ -121,7 +121,7 @@ _43 = (frost$core$Int) {2u};
 org$frostlang$frostc$Compiler$EnclosingContext$init$frost$core$Int(_42, _43);
 _45 = ((frost$core$Object*) _42);
 // begin inline call to method frost.collections.Stack.push(v:frost.collections.Stack.T) from Compiler.frost:192:44
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/collections/Stack.stub:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Stack.frost:42
 _48 = &_41->contents;
 _49 = *_48;
 _50 = _49;
@@ -238,7 +238,7 @@ _21 = &_20->$rawValue;
 _22 = *_21;
 _23 = (frost$core$Int) {0u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Compiler.frost:200:42
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _26 = _22.value;
 _27 = _23.value;
 _28 = _26 == _27;
@@ -255,7 +255,7 @@ goto block2;
 block5:;
 _39 = (frost$core$Int) {2u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Compiler.frost:203:42
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _42 = _22.value;
 _43 = _39.value;
 _44 = _42 == _43;
@@ -272,7 +272,7 @@ goto block2;
 block8:;
 _55 = (frost$core$Int) {3u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Compiler.frost:206:42
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _58 = _22.value;
 _59 = _55.value;
 _60 = _58 == _59;
@@ -282,7 +282,7 @@ if (_63) goto block10; else goto block11;
 block11:;
 _65 = (frost$core$Int) {4u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Compiler.frost:206:75
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _68 = _22.value;
 _69 = _65.value;
 _70 = _68 == _69;

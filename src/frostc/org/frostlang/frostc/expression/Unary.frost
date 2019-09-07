@@ -154,14 +154,18 @@ class Unary {
                 if value == null {
                     return null
                 }
-                def type := value.type()
-                if type.isNullable |
-                        (type.typeKind = Type.Kind.GENERIC_CLASS_PARAMETER &
-                            type.genericClassParameter!.bound.isNullable) |
-                        (type.typeKind = Type.Kind.GENERIC_METHOD_PARAMETER &
-                            type.genericMethodParameter!.bound.isNullable) |
+                def raw := value.type()
+                if raw.isNullable |
+                        (raw.typeKind = Type.Kind.GENERIC_CLASS_PARAMETER &
+                            raw.genericClassParameter!.bound.isNullable) |
+                        (raw.typeKind = Type.Kind.GENERIC_METHOD_PARAMETER &
+                            raw.genericMethodParameter!.bound.isNullable) |
                         compiler.currentClass[0].isSpecialization() {
-                    return compiler.cast(position, value, value.type().nonnullable())
+                    def nonnull := compiler.cast(position, value, value.type().nonnullable())
+                    if nonnull == null {
+                        return null
+                    }
+                    return compiler.coerce(position, nonnull, type)
                 }
                 compiler.error(position, "value of type '\{value.type()}' is already non-null")
                 return null

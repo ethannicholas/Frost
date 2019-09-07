@@ -272,7 +272,7 @@ _21 = *_20;
 _22 = _21.$rawValue;
 _23 = (frost$core$Int) {0u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from FieldDecl.frost:42:22
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _26 = _22.value;
 _27 = _23.value;
 _28 = _26 == _27;
@@ -287,7 +287,7 @@ goto block1;
 block3:;
 _37 = (frost$core$Int) {1u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from FieldDecl.frost:43:22
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _40 = _22.value;
 _41 = _37.value;
 _42 = _40 == _41;
@@ -302,7 +302,7 @@ goto block1;
 block6:;
 _51 = (frost$core$Int) {2u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from FieldDecl.frost:44:22
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _54 = _22.value;
 _55 = _51.value;
 _56 = _54 == _55;
@@ -317,7 +317,7 @@ goto block1;
 block9:;
 _65 = (frost$core$Int) {3u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from FieldDecl.frost:45:22
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _68 = _22.value;
 _69 = _65.value;
 _70 = _68 == _69;
@@ -345,7 +345,7 @@ _90 = &param0->type;
 _91 = *_90;
 _92 = ((frost$core$Object*) _91);
 // begin inline call to method frost.core.MutableString.append(o:frost.core.Object) from FieldDecl.frost:49:22
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/MutableString.stub:46
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/MutableString.frost:150
 _95 = ($fn11) _92->$class->vtable[0];
 _96 = _95(_92);
 frost$core$MutableString$append$frost$core$String(_89, _96);
@@ -377,7 +377,7 @@ abort(); // unreachable
 block16:;
 _122 = ((frost$core$Object*) _114);
 // begin inline call to method frost.core.MutableString.append(o:frost.core.Object) from FieldDecl.frost:52:26
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/MutableString.stub:46
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/MutableString.frost:150
 _125 = ($fn15) _122->$class->vtable[0];
 _126 = _125(_122);
 frost$core$MutableString$append$frost$core$String(_112, _126);

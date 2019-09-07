@@ -245,28 +245,28 @@ typedef frost$core$String* (*$fn687)(frost$core$Object*);
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x53\x63\x61\x6e\x6e\x65\x72", 28, 7937364740017265678, NULL };
 static frost$core$String $s17 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x62\x75\x69\x6c\x74\x69\x6e\x5f\x62\x69\x74", 11, -6541439029621442568, NULL };
-static frost$core$String $s18 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x73\x74\x75\x62", 9, -1038031786811403499, NULL };
+static frost$core$String $s18 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x66\x72\x6f\x73\x74", 10, -4036851284011595059, NULL };
 static frost$core$String $s19 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x62\x75\x69\x6c\x74\x69\x6e\x5f\x69\x6e\x74\x38", 12, -8407340892165143446, NULL };
-static frost$core$String $s20 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x73\x74\x75\x62", 9, -1038031786811403499, NULL };
+static frost$core$String $s20 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x66\x72\x6f\x73\x74", 10, -4036851284011595059, NULL };
 static frost$core$String $s21 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x62\x75\x69\x6c\x74\x69\x6e\x5f\x69\x6e\x74\x31\x36", 13, -6941121115643176919, NULL };
-static frost$core$String $s22 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x73\x74\x75\x62", 9, -1038031786811403499, NULL };
+static frost$core$String $s22 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x66\x72\x6f\x73\x74", 10, -4036851284011595059, NULL };
 static frost$core$String $s23 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x62\x75\x69\x6c\x74\x69\x6e\x5f\x69\x6e\x74\x33\x32", 13, -6943069450247988361, NULL };
-static frost$core$String $s24 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x73\x74\x75\x62", 9, -1038031786811403499, NULL };
+static frost$core$String $s24 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x66\x72\x6f\x73\x74", 10, -4036851284011595059, NULL };
 static frost$core$String $s25 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x62\x75\x69\x6c\x74\x69\x6e\x5f\x69\x6e\x74\x36\x34", 13, -6947880913132093572, NULL };
-static frost$core$String $s26 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x73\x74\x75\x62", 9, -1038031786811403499, NULL };
+static frost$core$String $s26 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x66\x72\x6f\x73\x74", 10, -4036851284011595059, NULL };
 static frost$core$String $s27 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x62\x75\x69\x6c\x74\x69\x6e\x5f\x75\x69\x6e\x74\x38", 13, 1636909511958265571, NULL };
-static frost$core$String $s28 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x73\x74\x75\x62", 9, -1038031786811403499, NULL };
+static frost$core$String $s28 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x66\x72\x6f\x73\x74", 10, -4036851284011595059, NULL };
 static frost$core$String $s29 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x62\x75\x69\x6c\x74\x69\x6e\x5f\x75\x69\x6e\x74\x31\x36", 14, 6113830950894022042, NULL };
-static frost$core$String $s30 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x73\x74\x75\x62", 9, -1038031786811403499, NULL };
+static frost$core$String $s30 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x66\x72\x6f\x73\x74", 10, -4036851284011595059, NULL };
 static frost$core$String $s31 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x62\x75\x69\x6c\x74\x69\x6e\x5f\x75\x69\x6e\x74\x33\x32", 14, 6115664936289499540, NULL };
-static frost$core$String $s32 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x73\x74\x75\x62", 9, -1038031786811403499, NULL };
+static frost$core$String $s32 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x66\x72\x6f\x73\x74", 10, -4036851284011595059, NULL };
 static frost$core$String $s33 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x62\x75\x69\x6c\x74\x69\x6e\x5f\x75\x69\x6e\x74\x36\x34", 14, 6120445612848014843, NULL };
-static frost$core$String $s34 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x73\x74\x75\x62", 9, -1038031786811403499, NULL };
+static frost$core$String $s34 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x66\x72\x6f\x73\x74", 10, -4036851284011595059, NULL };
 static frost$core$String $s35 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x62\x75\x69\x6c\x74\x69\x6e\x5f\x66\x6c\x6f\x61\x74\x33\x32", 15, -7692517852738059576, NULL };
-static frost$core$String $s36 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x73\x74\x75\x62", 9, -1038031786811403499, NULL };
+static frost$core$String $s36 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x66\x72\x6f\x73\x74", 10, -4036851284011595059, NULL };
 static frost$core$String $s37 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x62\x75\x69\x6c\x74\x69\x6e\x5f\x66\x6c\x6f\x61\x74\x36\x34", 15, -7695345796645250593, NULL };
-static frost$core$String $s38 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x73\x74\x75\x62", 9, -1038031786811403499, NULL };
-static frost$core$String $s40 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x41\x72\x72\x61\x79\x2e\x73\x74\x75\x62", 10, -775704626125802412, NULL };
+static frost$core$String $s38 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x66\x72\x6f\x73\x74", 10, -4036851284011595059, NULL };
+static frost$core$String $s40 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x41\x72\x72\x61\x79\x2e\x66\x72\x6f\x73\x74", 11, -1919842861654168654, NULL };
 static frost$core$String $s41 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x5b\x5d\x28\x69\x6e\x64\x65\x78\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x54", 108, 4065685528380894665, NULL };
 static frost$core$String $s42 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x3f", 1, -5808603052642294482, NULL };
 static frost$core$String $s48 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x73\x75\x70\x70\x6f\x72\x74\x65\x64\x20\x74\x79\x70\x65\x3a\x20", 18, 2075497417580251538, NULL };
@@ -276,8 +276,8 @@ static frost$core$String $s51 = { (frost$core$Class*) &frost$core$String$class, 
 static frost$core$String $s52 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x73\x75\x70\x70\x6f\x72\x74\x65\x64", 11, 7272646099210467152, NULL };
 static frost$core$String $s56 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x63\x61\x6e\x6e\x65\x72\x2e\x66\x72\x6f\x73\x74", 13, 951771403658311961, NULL };
 static frost$core$String $s57 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x41\x53\x54\x4e\x6f\x64\x65\x3f\x20\x74\x6f\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x41\x53\x54\x4e\x6f\x64\x65", 95, 7721999553369549811, NULL };
-static frost$core$String $s58 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x73\x74\x75\x62", 9, -1038031786811403499, NULL };
-static frost$core$String $s59 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x73\x74\x75\x62", 9, -1038031786811403499, NULL };
+static frost$core$String $s58 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x66\x72\x6f\x73\x74", 10, -4036851284011595059, NULL };
+static frost$core$String $s59 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x66\x72\x6f\x73\x74", 10, -4036851284011595059, NULL };
 static frost$core$String $s65 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x73\x75\x70\x70\x6f\x72\x74\x65\x64\x20\x74\x79\x70\x65\x20", 17, -4705630147413002136, NULL };
 static frost$core$String $s66 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x28", 1, -5808617346293461225, NULL };
 static frost$core$String $s69 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x29", 1, -5808618445805089436, NULL };
@@ -285,7 +285,7 @@ static frost$core$String $s70 = { (frost$core$Class*) &frost$core$String$class, 
 static frost$core$String $s71 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x63\x61\x6e\x6e\x65\x72\x2e\x66\x72\x6f\x73\x74", 13, 951771403658311961, NULL };
 static frost$core$String $s72 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x63\x61\x6e\x6e\x65\x72\x2e\x66\x72\x6f\x73\x74", 13, 951771403658311961, NULL };
 static frost$core$String $s73 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x53\x63\x61\x6e\x6e\x65\x72\x2e\x65\x72\x72\x6f\x72\x28\x70\x6f\x73\x69\x74\x69\x6f\x6e\x3a\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x50\x6f\x73\x69\x74\x69\x6f\x6e\x2c\x20\x6d\x73\x67\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x29", 129, 3424171414808300191, NULL };
-static frost$core$String $s74 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x73\x74\x75\x62", 9, -1038031786811403499, NULL };
+static frost$core$String $s74 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x66\x72\x6f\x73\x74", 10, -4036851284011595059, NULL };
 static frost$core$String $s75 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x64\x75\x70\x6c\x69\x63\x61\x74\x65\x20\x61\x6e\x6e\x6f\x74\x61\x74\x69\x6f\x6e", 20, -565795814387083701, NULL };
 static frost$core$String $s76 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x61\x6e\x6e\x6f\x74\x61\x74\x69\x6f\x6e\x20\x27", 12, 1726036079575195661, NULL };
 static frost$core$String $s77 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x27\x20\x72\x65\x71\x75\x69\x72\x65\x73\x20\x61\x6e\x20\x65\x78\x70\x72\x65\x73\x73\x69\x6f\x6e", 24, 1659788717951863933, NULL };
@@ -346,17 +346,17 @@ static frost$core$String $s158 = { (frost$core$Class*) &frost$core$String$class,
 static frost$core$String $s159 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x27", 1, -5808629440921371546, NULL };
 static frost$core$String $s160 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x63\x61\x6e\x6e\x65\x72\x2e\x66\x72\x6f\x73\x74", 13, 951771403658311961, NULL };
 static frost$core$String $s161 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x53\x63\x61\x6e\x6e\x65\x72\x2e\x65\x72\x72\x6f\x72\x28\x70\x6f\x73\x69\x74\x69\x6f\x6e\x3a\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x50\x6f\x73\x69\x74\x69\x6f\x6e\x2c\x20\x6d\x73\x67\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x29", 129, 3424171414808300191, NULL };
-static frost$core$String $s162 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x73\x74\x75\x62", 9, -1038031786811403499, NULL };
+static frost$core$String $s162 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x66\x72\x6f\x73\x74", 10, -4036851284011595059, NULL };
 static frost$core$String $s163 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x27", 1, -5808629440921371546, NULL };
 static frost$core$String $s164 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x27\x20\x61\x6e\x6e\x6f\x74\x61\x74\x69\x6f\x6e\x20\x64\x6f\x65\x73\x20\x6e\x6f\x74\x20\x61\x63\x63\x65\x70\x74\x20\x70\x61\x72\x61\x6d\x65\x74\x65\x72\x73", 39, 3933979906453277221, NULL };
 static frost$core$String $s165 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x63\x61\x6e\x6e\x65\x72\x2e\x66\x72\x6f\x73\x74", 13, 951771403658311961, NULL };
 static frost$core$String $s166 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x53\x63\x61\x6e\x6e\x65\x72\x2e\x65\x72\x72\x6f\x72\x28\x70\x6f\x73\x69\x74\x69\x6f\x6e\x3a\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x50\x6f\x73\x69\x74\x69\x6f\x6e\x2c\x20\x6d\x73\x67\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x29", 129, 3424171414808300191, NULL };
-static frost$core$String $s167 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x73\x74\x75\x62", 9, -1038031786811403499, NULL };
+static frost$core$String $s167 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x66\x72\x6f\x73\x74", 10, -4036851284011595059, NULL };
 static frost$core$String $s168 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x63\x61\x6e\x6e\x65\x72\x2e\x66\x72\x6f\x73\x74", 13, 951771403658311961, NULL };
 static frost$core$String $s173 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x63\x61\x6e\x6e\x65\x72\x2e\x66\x72\x6f\x73\x74", 13, 951771403658311961, NULL };
 static frost$core$String $s174 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x41\x53\x54\x4e\x6f\x64\x65\x3f\x20\x74\x6f\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x41\x53\x54\x4e\x6f\x64\x65", 95, 7721999553369549811, NULL };
 static frost$core$String $s175 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x63\x61\x6e\x6e\x65\x72\x2e\x66\x72\x6f\x73\x74", 13, 951771403658311961, NULL };
-static frost$core$String $s179 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x73\x74\x75\x62", 9, -1038031786811403499, NULL };
+static frost$core$String $s179 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x66\x72\x6f\x73\x74", 10, -4036851284011595059, NULL };
 static frost$core$String $s180 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x63\x61\x6e\x6e\x65\x72\x2e\x66\x72\x6f\x73\x74", 13, 951771403658311961, NULL };
 static frost$core$String $s181 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x41\x53\x54\x4e\x6f\x64\x65\x3f\x20\x74\x6f\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x41\x53\x54\x4e\x6f\x64\x65", 95, 7721999553369549811, NULL };
 static frost$core$String $s182 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x63\x61\x6e\x6e\x65\x72\x2e\x66\x72\x6f\x73\x74", 13, 951771403658311961, NULL };
@@ -371,7 +371,7 @@ static frost$core$String $s256 = { (frost$core$Class*) &frost$core$String$class,
 static frost$core$String $s260 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x63\x61\x6e\x6e\x65\x72\x2e\x66\x72\x6f\x73\x74", 13, 951771403658311961, NULL };
 static frost$core$String $s261 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x41\x53\x54\x4e\x6f\x64\x65\x3f\x20\x74\x6f\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x41\x53\x54\x4e\x6f\x64\x65", 95, 7721999553369549811, NULL };
 static frost$core$String $s274 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x63\x61\x6e\x6e\x65\x72\x2e\x66\x72\x6f\x73\x74", 13, 951771403658311961, NULL };
-static frost$core$String $s278 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x73\x74\x75\x62", 9, -1038031786811403499, NULL };
+static frost$core$String $s278 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x66\x72\x6f\x73\x74", 10, -4036851284011595059, NULL };
 static frost$core$String $s293 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x63\x61\x6e\x6e\x65\x72\x2e\x66\x72\x6f\x73\x74", 13, 951771403658311961, NULL };
 static frost$core$String $s294 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x41\x53\x54\x4e\x6f\x64\x65\x3f\x20\x74\x6f\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x41\x53\x54\x4e\x6f\x64\x65", 95, 7721999553369549811, NULL };
 static frost$core$String $s295 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x63\x61\x6e\x6e\x65\x72\x2e\x66\x72\x6f\x73\x74", 13, 951771403658311961, NULL };
@@ -379,7 +379,7 @@ static frost$core$String $s299 = { (frost$core$Class*) &frost$core$String$class,
 static frost$core$String $s300 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "", 0, -3750763034362895579, NULL };
 static frost$core$String $s301 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x63\x61\x6e\x6e\x65\x72\x2e\x66\x72\x6f\x73\x74", 13, 951771403658311961, NULL };
 static frost$core$String $s302 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x46\x69\x78\x65\x64\x41\x72\x72\x61\x79\x3c\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x41\x53\x54\x4e\x6f\x64\x65\x3e\x3f\x20\x74\x6f\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x49\x74\x65\x72\x61\x62\x6c\x65\x3c\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x41\x53\x54\x4e\x6f\x64\x65\x3e", 156, 1977603186615208662, NULL };
-static frost$core$String $s306 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x73\x74\x75\x62", 9, -1038031786811403499, NULL };
+static frost$core$String $s306 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x66\x72\x6f\x73\x74", 10, -4036851284011595059, NULL };
 static frost$core$String $s307 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x63\x61\x6e\x6e\x65\x72\x2e\x66\x72\x6f\x73\x74", 13, 951771403658311961, NULL };
 static frost$core$String $s308 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x41\x53\x54\x4e\x6f\x64\x65\x3f\x20\x74\x6f\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x41\x53\x54\x4e\x6f\x64\x65", 95, 7721999553369549811, NULL };
 static frost$core$String $s309 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x63\x61\x6e\x6e\x65\x72\x2e\x66\x72\x6f\x73\x74", 13, 951771403658311961, NULL };
@@ -388,17 +388,17 @@ static frost$core$String $s311 = { (frost$core$Class*) &frost$core$String$class,
 static frost$core$String $s316 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x63\x61\x6e\x6e\x65\x72\x2e\x66\x72\x6f\x73\x74", 13, 951771403658311961, NULL };
 static frost$core$String $s317 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x63\x61\x6e\x6e\x65\x72\x2e\x66\x72\x6f\x73\x74", 13, 951771403658311961, NULL };
 static frost$core$String $s318 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x41\x53\x54\x4e\x6f\x64\x65\x3f\x20\x74\x6f\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x41\x53\x54\x4e\x6f\x64\x65", 95, 7721999553369549811, NULL };
-static frost$core$String $s319 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x73\x74\x75\x62", 9, -1038031786811403499, NULL };
-static frost$core$String $s323 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x73\x74\x75\x62", 9, -1038031786811403499, NULL };
+static frost$core$String $s319 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x66\x72\x6f\x73\x74", 10, -4036851284011595059, NULL };
+static frost$core$String $s323 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x66\x72\x6f\x73\x74", 10, -4036851284011595059, NULL };
 static frost$core$String $s327 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x63\x61\x6e\x6e\x65\x72\x2e\x66\x72\x6f\x73\x74", 13, 951771403658311961, NULL };
 static frost$core$String $s328 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x53\x63\x61\x6e\x6e\x65\x72\x2e\x65\x72\x72\x6f\x72\x28\x70\x6f\x73\x69\x74\x69\x6f\x6e\x3a\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x50\x6f\x73\x69\x74\x69\x6f\x6e\x2c\x20\x6d\x73\x67\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x29", 129, 3424171414808300191, NULL };
-static frost$core$String $s329 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x73\x74\x75\x62", 9, -1038031786811403499, NULL };
+static frost$core$String $s329 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x66\x72\x6f\x73\x74", 10, -4036851284011595059, NULL };
 static frost$core$String $s330 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x75\x6e\x63\x74\x69\x6f\x6e\x73\x20\x6d\x75\x73\x74\x20\x68\x61\x76\x65\x20\x61\x20\x72\x65\x74\x75\x72\x6e\x20\x74\x79\x70\x65", 33, 4631530323501320402, NULL };
 static frost$core$String $s331 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x63\x61\x6e\x6e\x65\x72\x2e\x66\x72\x6f\x73\x74", 13, 951771403658311961, NULL };
 static frost$core$String $s332 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x46\x69\x78\x65\x64\x41\x72\x72\x61\x79\x3c\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x41\x53\x54\x4e\x6f\x64\x65\x3e\x3f\x20\x74\x6f\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x4c\x69\x73\x74\x56\x69\x65\x77\x3c\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x41\x53\x54\x4e\x6f\x64\x65\x3e", 156, 2793886441670762213, NULL };
 static frost$core$String $s336 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x63\x61\x6e\x6e\x65\x72\x2e\x66\x72\x6f\x73\x74", 13, 951771403658311961, NULL };
 static frost$core$String $s337 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x53\x63\x61\x6e\x6e\x65\x72\x2e\x65\x72\x72\x6f\x72\x28\x70\x6f\x73\x69\x74\x69\x6f\x6e\x3a\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x50\x6f\x73\x69\x74\x69\x6f\x6e\x2c\x20\x6d\x73\x67\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x29", 129, 3424171414808300191, NULL };
-static frost$core$String $s338 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x73\x74\x75\x62", 9, -1038031786811403499, NULL };
+static frost$core$String $s338 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x66\x72\x6f\x73\x74", 10, -4036851284011595059, NULL };
 static frost$core$String $s339 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x69\x6e\x74\x65\x72\x66\x61\x63\x65\x20\x6d\x65\x74\x68\x6f\x64\x73\x20\x61\x72\x65\x20\x61\x62\x73\x74\x72\x61\x63\x74\x20\x62\x79\x20\x64\x65\x66\x61\x75\x6c\x74\x20\x61\x6e\x64\x20\x6d\x61\x79\x20\x6e\x6f\x74\x20\x68\x61\x76\x65\x20\x61\x6e\x20\x65\x78\x70\x6c\x69\x63\x69\x74\x20\x27\x40\x61\x62\x73\x74\x72\x61\x63\x74\x27\x20\x61\x6e\x6e\x6f\x74\x61\x74\x69\x6f\x6e", 93, -2702568160131628339, NULL };
 static frost$core$String $s343 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x63\x61\x6e\x6e\x65\x72\x2e\x66\x72\x6f\x73\x74", 13, 951771403658311961, NULL };
 static frost$core$String $s344 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x4d\x65\x74\x68\x6f\x64\x44\x65\x63\x6c\x3f\x20\x74\x6f\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x53\x79\x6d\x62\x6f\x6c", 97, 5778656569050840872, NULL };
@@ -437,57 +437,57 @@ static frost$core$String $s419 = { (frost$core$Class*) &frost$core$String$class,
 static frost$core$String $s420 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x63\x61\x6e\x6e\x65\x72\x2e\x66\x72\x6f\x73\x74", 13, 951771403658311961, NULL };
 static frost$core$String $s421 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x63\x61\x6e\x6e\x65\x72\x2e\x66\x72\x6f\x73\x74", 13, 951771403658311961, NULL };
 static frost$core$String $s422 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x46\x69\x78\x65\x64\x41\x72\x72\x61\x79\x3c\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x41\x53\x54\x4e\x6f\x64\x65\x3e\x3f\x20\x74\x6f\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x49\x74\x65\x72\x61\x62\x6c\x65\x3c\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x41\x53\x54\x4e\x6f\x64\x65\x3e", 156, 1977603186615208662, NULL };
-static frost$core$String $s426 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x73\x74\x75\x62", 9, -1038031786811403499, NULL };
+static frost$core$String $s426 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x66\x72\x6f\x73\x74", 10, -4036851284011595059, NULL };
 static frost$core$String $s427 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x63\x61\x6e\x6e\x65\x72\x2e\x66\x72\x6f\x73\x74", 13, 951771403658311961, NULL };
 static frost$core$String $s428 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x41\x53\x54\x4e\x6f\x64\x65\x3f\x20\x74\x6f\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x41\x53\x54\x4e\x6f\x64\x65", 95, 7721999553369549811, NULL };
 static frost$core$String $s429 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x63\x61\x6e\x6e\x65\x72\x2e\x66\x72\x6f\x73\x74", 13, 951771403658311961, NULL };
 static frost$core$String $s434 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x63\x61\x6e\x6e\x65\x72\x2e\x66\x72\x6f\x73\x74", 13, 951771403658311961, NULL };
 static frost$core$String $s435 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x53\x63\x61\x6e\x6e\x65\x72\x2e\x65\x72\x72\x6f\x72\x28\x70\x6f\x73\x69\x74\x69\x6f\x6e\x3a\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x50\x6f\x73\x69\x74\x69\x6f\x6e\x2c\x20\x6d\x73\x67\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x29", 129, 3424171414808300191, NULL };
-static frost$core$String $s436 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x73\x74\x75\x62", 9, -1038031786811403499, NULL };
+static frost$core$String $s436 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x66\x72\x6f\x73\x74", 10, -4036851284011595059, NULL };
 static frost$core$String $s437 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x63\x68\x6f\x69\x63\x65\x73\x20\x6d\x61\x79\x20\x6e\x6f\x74\x20\x73\x70\x65\x63\x69\x66\x79\x20\x73\x75\x70\x65\x72\x74\x79\x70\x65\x73", 34, -3719689727633176608, NULL };
 static frost$core$String $s438 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x63\x61\x6e\x6e\x65\x72\x2e\x66\x72\x6f\x73\x74", 13, 951771403658311961, NULL };
 static frost$core$String $s439 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x46\x69\x78\x65\x64\x41\x72\x72\x61\x79\x3c\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x41\x53\x54\x4e\x6f\x64\x65\x3e\x3f\x20\x74\x6f\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x49\x74\x65\x72\x61\x62\x6c\x65\x3c\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x41\x53\x54\x4e\x6f\x64\x65\x3e", 156, 1977603186615208662, NULL };
-static frost$core$String $s443 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x73\x74\x75\x62", 9, -1038031786811403499, NULL };
-static frost$core$String $s444 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x73\x74\x75\x62", 9, -1038031786811403499, NULL };
-static frost$core$String $s448 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x73\x74\x75\x62", 9, -1038031786811403499, NULL };
+static frost$core$String $s443 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x66\x72\x6f\x73\x74", 10, -4036851284011595059, NULL };
+static frost$core$String $s444 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x66\x72\x6f\x73\x74", 10, -4036851284011595059, NULL };
+static frost$core$String $s448 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x66\x72\x6f\x73\x74", 10, -4036851284011595059, NULL };
 static frost$core$String $s449 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x24\x72\x61\x77\x56\x61\x6c\x75\x65", 9, -2729473888161922992, NULL };
-static frost$core$String $s450 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x73\x74\x75\x62", 9, -1038031786811403499, NULL };
+static frost$core$String $s450 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x66\x72\x6f\x73\x74", 10, -4036851284011595059, NULL };
 static frost$core$String $s451 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x24\x64\x61\x74\x61", 5, 8996675876247625211, NULL };
 static frost$core$String $s458 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x63\x61\x6e\x6e\x65\x72\x2e\x66\x72\x6f\x73\x74", 13, 951771403658311961, NULL };
 static frost$core$String $s459 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x53\x63\x61\x6e\x6e\x65\x72\x2e\x65\x72\x72\x6f\x72\x28\x70\x6f\x73\x69\x74\x69\x6f\x6e\x3a\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x50\x6f\x73\x69\x74\x69\x6f\x6e\x2c\x20\x6d\x73\x67\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x29", 129, 3424171414808300191, NULL };
-static frost$core$String $s460 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x73\x74\x75\x62", 9, -1038031786811403499, NULL };
+static frost$core$String $s460 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x66\x72\x6f\x73\x74", 10, -4036851284011595059, NULL };
 static frost$core$String $s461 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x69\x6e\x74\x65\x72\x66\x61\x63\x65\x73\x20\x6d\x61\x79\x20\x6e\x6f\x74\x20\x68\x61\x76\x65\x20\x27\x69\x6e\x69\x74\x27\x20\x6d\x65\x74\x68\x6f\x64\x73", 38, -3178355849381906807, NULL };
 static frost$core$String $s462 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x63\x61\x6e\x6e\x65\x72\x2e\x66\x72\x6f\x73\x74", 13, 951771403658311961, NULL };
 static frost$core$String $s463 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x53\x63\x61\x6e\x6e\x65\x72\x2e\x65\x72\x72\x6f\x72\x28\x70\x6f\x73\x69\x74\x69\x6f\x6e\x3a\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x50\x6f\x73\x69\x74\x69\x6f\x6e\x2c\x20\x6d\x73\x67\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x29", 129, 3424171414808300191, NULL };
-static frost$core$String $s464 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x73\x74\x75\x62", 9, -1038031786811403499, NULL };
+static frost$core$String $s464 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x66\x72\x6f\x73\x74", 10, -4036851284011595059, NULL };
 static frost$core$String $s465 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x63\x68\x6f\x69\x63\x65\x73\x20\x6d\x61\x79\x20\x6e\x6f\x74\x20\x68\x61\x76\x65\x20\x27\x69\x6e\x69\x74\x27\x20\x6d\x65\x74\x68\x6f\x64\x73", 35, -8426410652778701193, NULL };
 static frost$core$String $s472 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x63\x6c\x65\x61\x6e\x75\x70", 7, -6028003110606329165, NULL };
 static frost$core$String $s477 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x63\x61\x6e\x6e\x65\x72\x2e\x66\x72\x6f\x73\x74", 13, 951771403658311961, NULL };
 static frost$core$String $s478 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x53\x63\x61\x6e\x6e\x65\x72\x2e\x65\x72\x72\x6f\x72\x28\x70\x6f\x73\x69\x74\x69\x6f\x6e\x3a\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x50\x6f\x73\x69\x74\x69\x6f\x6e\x2c\x20\x6d\x73\x67\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x29", 129, 3424171414808300191, NULL };
-static frost$core$String $s479 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x73\x74\x75\x62", 9, -1038031786811403499, NULL };
+static frost$core$String $s479 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x66\x72\x6f\x73\x74", 10, -4036851284011595059, NULL };
 static frost$core$String $s480 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x63\x68\x6f\x69\x63\x65\x20\x63\x6c\x65\x61\x6e\x75\x70\x20\x6d\x65\x74\x68\x6f\x64\x20\x63\x61\x6e\x6e\x6f\x74\x20\x62\x65\x20\x6f\x76\x65\x72\x72\x69\x64\x64\x65\x6e", 42, 1323168004075572057, NULL };
 static frost$core$String $s484 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x75\x6e\x73\x61\x66\x65\x2e\x50\x6f\x69\x6e\x74\x65\x72", 20, -770938211666792916, NULL };
-static frost$core$String $s486 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x73\x74\x75\x62", 9, -1038031786811403499, NULL };
+static frost$core$String $s486 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x66\x72\x6f\x73\x74", 10, -4036851284011595059, NULL };
 static frost$core$String $s487 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x69\x6e\x69\x74", 4, -733330526605839853, NULL };
 static frost$core$String $s494 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x75\x6e\x73\x61\x66\x65\x2e\x50\x6f\x69\x6e\x74\x65\x72", 20, -770938211666792916, NULL };
-static frost$core$String $s496 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x73\x74\x75\x62", 9, -1038031786811403499, NULL };
+static frost$core$String $s496 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x66\x72\x6f\x73\x74", 10, -4036851284011595059, NULL };
 static frost$core$String $s497 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x63\x6c\x65\x61\x6e\x75\x70", 7, -6028003110606329165, NULL };
 static frost$core$String $s506 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x63\x61\x6e\x6e\x65\x72\x2e\x66\x72\x6f\x73\x74", 13, 951771403658311961, NULL };
 static frost$core$String $s507 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x53\x63\x61\x6e\x6e\x65\x72\x2e\x65\x72\x72\x6f\x72\x28\x70\x6f\x73\x69\x74\x69\x6f\x6e\x3a\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x50\x6f\x73\x69\x74\x69\x6f\x6e\x2c\x20\x6d\x73\x67\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x29", 129, 3424171414808300191, NULL };
-static frost$core$String $s508 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x73\x74\x75\x62", 9, -1038031786811403499, NULL };
+static frost$core$String $s508 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x66\x72\x6f\x73\x74", 10, -4036851284011595059, NULL };
 static frost$core$String $s509 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x27\x63\x68\x6f\x69\x63\x65\x27\x20\x6d\x75\x73\x74\x20\x68\x61\x76\x65\x20\x61\x74\x20\x6c\x65\x61\x73\x74\x20\x6f\x6e\x65\x20\x65\x6e\x74\x72\x79", 37, -157497934161719815, NULL };
-static frost$core$String $s510 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x73\x74\x75\x62", 9, -1038031786811403499, NULL };
-static frost$core$String $s511 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x73\x74\x75\x62", 9, -1038031786811403499, NULL };
+static frost$core$String $s510 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x66\x72\x6f\x73\x74", 10, -4036851284011595059, NULL };
+static frost$core$String $s511 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x66\x72\x6f\x73\x74", 10, -4036851284011595059, NULL };
 static frost$core$String $s532 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "", 0, -3750763034362895579, NULL };
 static frost$core$String $s534 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2e\x42\x61\x72\x65\x43\x6f\x64\x65", 9, 4069187544645537896, NULL };
 static frost$core$String $s535 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x61\x6e\x6f\x6e\x79\x6d\x6f\x75\x73\x2e\x42\x61\x72\x65\x43\x6f\x64\x65", 18, 8709918089330709925, NULL };
 static frost$core$String $s536 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x61\x6e\x6f\x6e\x79\x6d\x6f\x75\x73\x2e\x42\x61\x72\x65\x43\x6f\x64\x65", 18, 8709918089330709925, NULL };
-static frost$core$String $s537 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x73\x74\x75\x62", 9, -1038031786811403499, NULL };
+static frost$core$String $s537 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x66\x72\x6f\x73\x74", 10, -4036851284011595059, NULL };
 static frost$core$String $s538 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x63\x61\x6e\x6e\x65\x72\x2e\x66\x72\x6f\x73\x74", 13, 951771403658311961, NULL };
 static frost$core$String $s539 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x43\x6c\x61\x73\x73\x44\x65\x63\x6c\x3f\x20\x74\x6f\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x43\x6c\x61\x73\x73\x44\x65\x63\x6c", 99, -4241746971283918425, NULL };
 static frost$core$String $s541 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x63\x61\x6e\x6e\x65\x72\x2e\x66\x72\x6f\x73\x74", 13, 951771403658311961, NULL };
 static frost$core$String $s542 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x43\x6c\x61\x73\x73\x44\x65\x63\x6c\x3f\x20\x74\x6f\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x43\x6c\x61\x73\x73\x44\x65\x63\x6c", 99, -4241746971283918425, NULL };
-static frost$core$String $s543 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x73\x74\x75\x62", 9, -1038031786811403499, NULL };
+static frost$core$String $s543 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x66\x72\x6f\x73\x74", 10, -4036851284011595059, NULL };
 static frost$core$String $s544 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x69\x6e\x69\x74", 4, -733330526605839853, NULL };
 static frost$core$String $s545 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x63\x61\x6e\x6e\x65\x72\x2e\x66\x72\x6f\x73\x74", 13, 951771403658311961, NULL };
 static frost$core$String $s546 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x43\x6c\x61\x73\x73\x44\x65\x63\x6c\x3f\x20\x74\x6f\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x43\x6c\x61\x73\x73\x44\x65\x63\x6c", 99, -4241746971283918425, NULL };
@@ -495,7 +495,7 @@ static frost$core$String $s547 = { (frost$core$Class*) &frost$core$String$class,
 static frost$core$String $s548 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x43\x6c\x61\x73\x73\x44\x65\x63\x6c\x3f\x20\x74\x6f\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x43\x6c\x61\x73\x73\x44\x65\x63\x6c", 99, -4241746971283918425, NULL };
 static frost$core$String $s549 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x63\x61\x6e\x6e\x65\x72\x2e\x66\x72\x6f\x73\x74", 13, 951771403658311961, NULL };
 static frost$core$String $s550 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x43\x6c\x61\x73\x73\x44\x65\x63\x6c\x3f\x20\x74\x6f\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x43\x6c\x61\x73\x73\x44\x65\x63\x6c", 99, -4241746971283918425, NULL };
-static frost$core$String $s551 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x73\x74\x75\x62", 9, -1038031786811403499, NULL };
+static frost$core$String $s551 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x66\x72\x6f\x73\x74", 10, -4036851284011595059, NULL };
 static frost$core$String $s552 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x63\x6c\x65\x61\x6e\x75\x70", 7, -6028003110606329165, NULL };
 static frost$core$String $s553 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x63\x61\x6e\x6e\x65\x72\x2e\x66\x72\x6f\x73\x74", 13, 951771403658311961, NULL };
 static frost$core$String $s554 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x43\x6c\x61\x73\x73\x44\x65\x63\x6c\x3f\x20\x74\x6f\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x43\x6c\x61\x73\x73\x44\x65\x63\x6c", 99, -4241746971283918425, NULL };
@@ -503,7 +503,7 @@ static frost$core$String $s555 = { (frost$core$Class*) &frost$core$String$class,
 static frost$core$String $s556 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x43\x6c\x61\x73\x73\x44\x65\x63\x6c\x3f\x20\x74\x6f\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x43\x6c\x61\x73\x73\x44\x65\x63\x6c", 99, -4241746971283918425, NULL };
 static frost$core$String $s557 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x63\x61\x6e\x6e\x65\x72\x2e\x66\x72\x6f\x73\x74", 13, 951771403658311961, NULL };
 static frost$core$String $s558 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x53\x63\x61\x6e\x6e\x65\x72\x2e\x65\x72\x72\x6f\x72\x28\x70\x6f\x73\x69\x74\x69\x6f\x6e\x3a\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x50\x6f\x73\x69\x74\x69\x6f\x6e\x2c\x20\x6d\x73\x67\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x29", 129, 3424171414808300191, NULL };
-static frost$core$String $s559 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x73\x74\x75\x62", 9, -1038031786811403499, NULL };
+static frost$core$String $s559 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x66\x72\x6f\x73\x74", 10, -4036851284011595059, NULL };
 static frost$core$String $s585 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x61\x6e\x6f\x6e\x79\x6d\x6f\x75\x73", 9, 1410721983868311694, NULL };
 static frost$core$String $s586 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x61\x6e\x6f\x6e\x79\x6d\x6f\x75\x73", 9, 1410721983868311694, NULL };
 static frost$core$String $s590 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2e", 1, -5808619545316717647, NULL };
@@ -513,7 +513,7 @@ static frost$core$String $s593 = { (frost$core$Class*) &frost$core$String$class,
 static frost$core$String $s594 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x43\x6c\x61\x73\x73\x44\x65\x63\x6c\x3f\x20\x74\x6f\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x43\x6c\x61\x73\x73\x44\x65\x63\x6c", 99, -4241746971283918425, NULL };
 static frost$core$String $s604 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x63\x61\x6e\x6e\x65\x72\x2e\x66\x72\x6f\x73\x74", 13, 951771403658311961, NULL };
 static frost$core$String $s605 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x53\x63\x61\x6e\x6e\x65\x72\x2e\x65\x72\x72\x6f\x72\x28\x70\x6f\x73\x69\x74\x69\x6f\x6e\x3a\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x50\x6f\x73\x69\x74\x69\x6f\x6e\x2c\x20\x6d\x73\x67\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x29", 129, 3424171414808300191, NULL };
-static frost$core$String $s606 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x73\x74\x75\x62", 9, -1038031786811403499, NULL };
+static frost$core$String $s606 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x66\x72\x6f\x73\x74", 10, -4036851284011595059, NULL };
 static frost$core$String $s607 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x27\x69\x6e\x69\x74\x27\x20\x6d\x65\x74\x68\x6f\x64\x73\x20\x6d\x75\x73\x74\x20\x62\x65\x20\x69\x6e\x73\x69\x64\x65\x20\x61\x20\x63\x6c\x61\x73\x73", 37, 4149591465855488060, NULL };
 static frost$core$String $s608 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6d\x61\x69\x6e", 4, 2258945139493307336, NULL };
 static frost$core$String $s609 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x24\x62\x61\x72\x65\x4d\x61\x69\x6e", 9, -1472219934221974406, NULL };
@@ -522,13 +522,13 @@ static frost$core$String $s614 = { (frost$core$Class*) &frost$core$String$class,
 static frost$core$String $s615 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x42\x61\x72\x65\x43\x6f\x64\x65", 8, 6449659721254005836, NULL };
 static frost$core$String $s616 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x63\x61\x6e\x6e\x65\x72\x2e\x66\x72\x6f\x73\x74", 13, 951771403658311961, NULL };
 static frost$core$String $s617 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x41\x53\x54\x4e\x6f\x64\x65\x3f\x20\x74\x6f\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x41\x53\x54\x4e\x6f\x64\x65", 95, 7721999553369549811, NULL };
-static frost$core$String $s618 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x73\x74\x75\x62", 9, -1038031786811403499, NULL };
+static frost$core$String $s618 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x66\x72\x6f\x73\x74", 10, -4036851284011595059, NULL };
 static frost$core$String $s619 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x63\x61\x6e\x6e\x65\x72\x2e\x66\x72\x6f\x73\x74", 13, 951771403658311961, NULL };
 static frost$core$String $s620 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x43\x6c\x61\x73\x73\x44\x65\x63\x6c\x3f\x20\x74\x6f\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x43\x6c\x61\x73\x73\x44\x65\x63\x6c", 99, -4241746971283918425, NULL };
 static frost$core$String $s621 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6d\x61\x69\x6e", 4, 2258945139493307336, NULL };
 static frost$core$String $s622 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x63\x61\x6e\x6e\x65\x72\x2e\x66\x72\x6f\x73\x74", 13, 951771403658311961, NULL };
 static frost$core$String $s623 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x43\x6c\x61\x73\x73\x44\x65\x63\x6c\x3f\x20\x74\x6f\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x43\x6c\x61\x73\x73\x44\x65\x63\x6c", 99, -4241746971283918425, NULL };
-static frost$core$String $s624 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x73\x74\x75\x62", 9, -1038031786811403499, NULL };
+static frost$core$String $s624 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x66\x72\x6f\x73\x74", 10, -4036851284011595059, NULL };
 static frost$core$String $s625 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x63\x61\x6e\x6e\x65\x72\x2e\x66\x72\x6f\x73\x74", 13, 951771403658311961, NULL };
 static frost$core$String $s626 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x43\x6c\x61\x73\x73\x44\x65\x63\x6c\x3f\x20\x74\x6f\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x43\x6c\x61\x73\x73\x44\x65\x63\x6c", 99, -4241746971283918425, NULL };
 static frost$core$String $s627 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x63\x61\x6e\x6e\x65\x72\x2e\x66\x72\x6f\x73\x74", 13, 951771403658311961, NULL };
@@ -539,18 +539,18 @@ static frost$core$String $s631 = { (frost$core$Class*) &frost$core$String$class,
 static frost$core$String $s632 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x4d\x65\x74\x68\x6f\x64\x44\x65\x63\x6c\x3f\x20\x74\x6f\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x53\x79\x6d\x62\x6f\x6c", 97, 5778656569050840872, NULL };
 static frost$core$String $s633 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x63\x61\x6e\x6e\x65\x72\x2e\x66\x72\x6f\x73\x74", 13, 951771403658311961, NULL };
 static frost$core$String $s634 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x53\x63\x61\x6e\x6e\x65\x72\x2e\x65\x72\x72\x6f\x72\x28\x70\x6f\x73\x69\x74\x69\x6f\x6e\x3a\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x50\x6f\x73\x69\x74\x69\x6f\x6e\x2c\x20\x6d\x73\x67\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x29", 129, 3424171414808300191, NULL };
-static frost$core$String $s635 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x73\x74\x75\x62", 9, -1038031786811403499, NULL };
+static frost$core$String $s635 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x66\x72\x6f\x73\x74", 10, -4036851284011595059, NULL };
 static frost$core$String $s636 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x27\x40\x63\x6c\x61\x73\x73\x27\x20\x61\x6e\x6e\x6f\x74\x61\x74\x69\x6f\x6e\x20\x6d\x61\x79\x20\x6e\x6f\x74\x20\x62\x65\x20\x75\x73\x65\x64\x20\x6f\x75\x74\x73\x69\x64\x65\x20\x6f\x66\x20\x61\x20\x63\x6c\x61\x73\x73", 54, 2772314849070967545, NULL };
 static frost$core$String $s637 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x63\x61\x6e\x6e\x65\x72\x2e\x66\x72\x6f\x73\x74", 13, 951771403658311961, NULL };
 static frost$core$String $s638 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x4d\x65\x74\x68\x6f\x64\x44\x65\x63\x6c\x3f\x20\x74\x6f\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x4d\x65\x74\x68\x6f\x64\x44\x65\x63\x6c", 101, 7363539685333061901, NULL };
-static frost$core$String $s639 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x73\x74\x75\x62", 9, -1038031786811403499, NULL };
-static frost$core$String $s641 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x74\x61\x63\x6b\x2e\x73\x74\x75\x62", 10, -1937609415336213925, NULL };
+static frost$core$String $s639 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x66\x72\x6f\x73\x74", 10, -4036851284011595059, NULL };
+static frost$core$String $s641 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x74\x61\x63\x6b\x2e\x66\x72\x6f\x73\x74", 11, 638186012983189615, NULL };
 static frost$core$String $s642 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x53\x74\x61\x63\x6b\x2e\x5b\x5d\x28\x64\x65\x70\x74\x68\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x53\x74\x61\x63\x6b\x2e\x54", 108, 1355402247663454874, NULL };
-static frost$core$String $s644 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x74\x61\x63\x6b\x2e\x73\x74\x75\x62", 10, -1937609415336213925, NULL };
-static frost$core$String $s647 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x41\x72\x72\x61\x79\x2e\x73\x74\x75\x62", 10, -775704626125802412, NULL };
+static frost$core$String $s644 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x74\x61\x63\x6b\x2e\x66\x72\x6f\x73\x74", 11, 638186012983189615, NULL };
+static frost$core$String $s647 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x41\x72\x72\x61\x79\x2e\x66\x72\x6f\x73\x74", 11, -1919842861654168654, NULL };
 static frost$core$String $s648 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x5b\x5d\x28\x69\x6e\x64\x65\x78\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x54", 108, 4065685528380894665, NULL };
 static frost$core$String $s649 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x63\x61\x6e\x6e\x65\x72\x2e\x66\x72\x6f\x73\x74", 13, 951771403658311961, NULL };
-static frost$core$String $s650 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x73\x74\x75\x62", 9, -1038031786811403499, NULL };
+static frost$core$String $s650 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x66\x72\x6f\x73\x74", 10, -4036851284011595059, NULL };
 static frost$core$String $s651 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x63\x61\x6e\x6e\x65\x72\x2e\x66\x72\x6f\x73\x74", 13, 951771403658311961, NULL };
 static frost$core$String $s652 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x43\x6c\x61\x73\x73\x44\x65\x63\x6c\x3f\x20\x74\x6f\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x43\x6c\x61\x73\x73\x44\x65\x63\x6c", 99, -4241746971283918425, NULL };
 static frost$core$String $s653 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x63\x61\x6e\x6e\x65\x72\x2e\x66\x72\x6f\x73\x74", 13, 951771403658311961, NULL };
@@ -567,11 +567,11 @@ static frost$core$String $s664 = { (frost$core$Class*) &frost$core$String$class,
 static frost$core$String $s665 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x43\x6c\x61\x73\x73\x44\x65\x63\x6c\x3f\x20\x74\x6f\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x43\x6c\x61\x73\x73\x44\x65\x63\x6c", 99, -4241746971283918425, NULL };
 static frost$core$String $s667 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x63\x61\x6e\x6e\x65\x72\x2e\x66\x72\x6f\x73\x74", 13, 951771403658311961, NULL };
 static frost$core$String $s668 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x43\x6c\x61\x73\x73\x44\x65\x63\x6c\x3f\x20\x74\x6f\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x43\x6c\x61\x73\x73\x44\x65\x63\x6c", 99, -4241746971283918425, NULL };
-static frost$core$String $s670 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x41\x72\x72\x61\x79\x2e\x73\x74\x75\x62", 10, -775704626125802412, NULL };
+static frost$core$String $s670 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x41\x72\x72\x61\x79\x2e\x66\x72\x6f\x73\x74", 11, -1919842861654168654, NULL };
 static frost$core$String $s671 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x5b\x5d\x28\x69\x6e\x64\x65\x78\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x54", 108, 4065685528380894665, NULL };
 static frost$core$String $s675 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x63\x61\x6e\x6e\x65\x72\x2e\x66\x72\x6f\x73\x74", 13, 951771403658311961, NULL };
 static frost$core$String $s676 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x53\x63\x61\x6e\x6e\x65\x72\x2e\x65\x72\x72\x6f\x72\x28\x70\x6f\x73\x69\x74\x69\x6f\x6e\x3a\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x50\x6f\x73\x69\x74\x69\x6f\x6e\x2c\x20\x6d\x73\x67\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x29", 129, 3424171414808300191, NULL };
-static frost$core$String $s677 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x73\x74\x75\x62", 9, -1038031786811403499, NULL };
+static frost$core$String $s677 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x66\x72\x6f\x73\x74", 10, -4036851284011595059, NULL };
 static frost$core$String $s678 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x27\x40\x63\x6c\x61\x73\x73\x27\x20\x61\x6e\x6e\x6f\x74\x61\x74\x69\x6f\x6e\x20\x6d\x61\x79\x20\x6e\x6f\x74\x20\x62\x65\x20\x75\x73\x65\x64\x20\x6f\x75\x74\x73\x69\x64\x65\x20\x6f\x66\x20\x61\x20\x63\x6c\x61\x73\x73", 54, 2772314849070967545, NULL };
 static frost$core$String $s680 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x73\x75\x70\x70\x6f\x72\x74\x65\x64\x3a\x20", 13, 3524753437392098394, NULL };
 static frost$core$String $s681 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x28", 1, -5808617346293461225, NULL };
@@ -1350,7 +1350,7 @@ _1 = &param1->$rawValue;
 _2 = *_1;
 _3 = (frost$core$Int) {46u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:26:25
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _6 = _2.value;
 _7 = _3.value;
 _8 = _6 == _7;
@@ -1374,9 +1374,9 @@ frost$core$Frost$unref$frost$core$Object$Q(_22);
 _26 = *(&local1);
 _27 = (frost$core$Int) {0u};
 // begin inline call to function frost.core.String.[](index:frost.core.Int):frost.core.Char32 from Scanner.frost:27:24
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:191
-// begin inline call to function frost.core.String.get_start():frost.core.String.Index from String.stub:191:21
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:284
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:675
+// begin inline call to function frost.core.String.get_start():frost.core.String.Index from String.frost:675:28
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:1205
 _32 = (frost$core$Int) {0u};
 _33 = frost$core$String$Index$init$frost$core$Int(_32);
 _35 = frost$core$String$offset$frost$core$String$Index$frost$core$Int$R$frost$core$String$Index(_26, _33, _27);
@@ -1403,19 +1403,19 @@ _55 = &param0->compiler;
 _56 = *_55;
 _57 = _56;
 // begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Scanner.frost:29:57
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:16
-// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.stub:16:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:21
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
+// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.frost:40:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:45
 _62 = &_57->_valid;
 _63 = *_62;
 _65 = _63.value;
 if (_65) goto block15; else goto block16;
 block16:;
-_67 = (frost$core$Int) {16u};
+_67 = (frost$core$Int) {40u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s18, _67);
 abort(); // unreachable
 block15:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:17
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:41
 _71 = &_57->value;
 _72 = *_71;
 _73 = _72;
@@ -1443,19 +1443,19 @@ _93 = &param0->compiler;
 _94 = *_93;
 _95 = _94;
 // begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Scanner.frost:30:57
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:16
-// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.stub:16:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:21
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
+// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.frost:40:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:45
 _100 = &_95->_valid;
 _101 = *_100;
 _103 = _101.value;
 if (_103) goto block21; else goto block22;
 block22:;
-_105 = (frost$core$Int) {16u};
+_105 = (frost$core$Int) {40u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s20, _105);
 abort(); // unreachable
 block21:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:17
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:41
 _109 = &_95->value;
 _110 = *_109;
 _111 = _110;
@@ -1483,19 +1483,19 @@ _131 = &param0->compiler;
 _132 = *_131;
 _133 = _132;
 // begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Scanner.frost:31:57
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:16
-// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.stub:16:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:21
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
+// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.frost:40:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:45
 _138 = &_133->_valid;
 _139 = *_138;
 _141 = _139.value;
 if (_141) goto block27; else goto block28;
 block28:;
-_143 = (frost$core$Int) {16u};
+_143 = (frost$core$Int) {40u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s22, _143);
 abort(); // unreachable
 block27:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:17
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:41
 _147 = &_133->value;
 _148 = *_147;
 _149 = _148;
@@ -1523,19 +1523,19 @@ _169 = &param0->compiler;
 _170 = *_169;
 _171 = _170;
 // begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Scanner.frost:32:57
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:16
-// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.stub:16:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:21
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
+// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.frost:40:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:45
 _176 = &_171->_valid;
 _177 = *_176;
 _179 = _177.value;
 if (_179) goto block33; else goto block34;
 block34:;
-_181 = (frost$core$Int) {16u};
+_181 = (frost$core$Int) {40u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s24, _181);
 abort(); // unreachable
 block33:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:17
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:41
 _185 = &_171->value;
 _186 = *_185;
 _187 = _186;
@@ -1563,19 +1563,19 @@ _207 = &param0->compiler;
 _208 = *_207;
 _209 = _208;
 // begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Scanner.frost:33:57
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:16
-// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.stub:16:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:21
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
+// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.frost:40:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:45
 _214 = &_209->_valid;
 _215 = *_214;
 _217 = _215.value;
 if (_217) goto block39; else goto block40;
 block40:;
-_219 = (frost$core$Int) {16u};
+_219 = (frost$core$Int) {40u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s26, _219);
 abort(); // unreachable
 block39:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:17
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:41
 _223 = &_209->value;
 _224 = *_223;
 _225 = _224;
@@ -1603,19 +1603,19 @@ _245 = &param0->compiler;
 _246 = *_245;
 _247 = _246;
 // begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Scanner.frost:34:57
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:16
-// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.stub:16:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:21
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
+// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.frost:40:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:45
 _252 = &_247->_valid;
 _253 = *_252;
 _255 = _253.value;
 if (_255) goto block45; else goto block46;
 block46:;
-_257 = (frost$core$Int) {16u};
+_257 = (frost$core$Int) {40u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s28, _257);
 abort(); // unreachable
 block45:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:17
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:41
 _261 = &_247->value;
 _262 = *_261;
 _263 = _262;
@@ -1643,19 +1643,19 @@ _283 = &param0->compiler;
 _284 = *_283;
 _285 = _284;
 // begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Scanner.frost:35:57
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:16
-// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.stub:16:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:21
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
+// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.frost:40:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:45
 _290 = &_285->_valid;
 _291 = *_290;
 _293 = _291.value;
 if (_293) goto block51; else goto block52;
 block52:;
-_295 = (frost$core$Int) {16u};
+_295 = (frost$core$Int) {40u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s30, _295);
 abort(); // unreachable
 block51:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:17
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:41
 _299 = &_285->value;
 _300 = *_299;
 _301 = _300;
@@ -1683,19 +1683,19 @@ _321 = &param0->compiler;
 _322 = *_321;
 _323 = _322;
 // begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Scanner.frost:36:57
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:16
-// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.stub:16:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:21
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
+// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.frost:40:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:45
 _328 = &_323->_valid;
 _329 = *_328;
 _331 = _329.value;
 if (_331) goto block57; else goto block58;
 block58:;
-_333 = (frost$core$Int) {16u};
+_333 = (frost$core$Int) {40u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s32, _333);
 abort(); // unreachable
 block57:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:17
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:41
 _337 = &_323->value;
 _338 = *_337;
 _339 = _338;
@@ -1723,19 +1723,19 @@ _359 = &param0->compiler;
 _360 = *_359;
 _361 = _360;
 // begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Scanner.frost:37:57
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:16
-// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.stub:16:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:21
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
+// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.frost:40:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:45
 _366 = &_361->_valid;
 _367 = *_366;
 _369 = _367.value;
 if (_369) goto block63; else goto block64;
 block64:;
-_371 = (frost$core$Int) {16u};
+_371 = (frost$core$Int) {40u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s34, _371);
 abort(); // unreachable
 block63:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:17
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:41
 _375 = &_361->value;
 _376 = *_375;
 _377 = _376;
@@ -1763,19 +1763,19 @@ _397 = &param0->compiler;
 _398 = *_397;
 _399 = _398;
 // begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Scanner.frost:38:57
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:16
-// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.stub:16:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:21
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
+// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.frost:40:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:45
 _404 = &_399->_valid;
 _405 = *_404;
 _407 = _405.value;
 if (_407) goto block69; else goto block70;
 block70:;
-_409 = (frost$core$Int) {16u};
+_409 = (frost$core$Int) {40u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s36, _409);
 abort(); // unreachable
 block69:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:17
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:41
 _413 = &_399->value;
 _414 = *_413;
 _415 = _414;
@@ -1803,19 +1803,19 @@ _435 = &param0->compiler;
 _436 = *_435;
 _437 = _436;
 // begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Scanner.frost:39:57
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:16
-// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.stub:16:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:21
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
+// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.frost:40:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:45
 _442 = &_437->_valid;
 _443 = *_442;
 _445 = _443.value;
 if (_445) goto block74; else goto block75;
 block75:;
-_447 = (frost$core$Int) {16u};
+_447 = (frost$core$Int) {40u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s38, _447);
 abort(); // unreachable
 block74:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:17
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:41
 _451 = &_437->value;
 _452 = *_451;
 _453 = _452;
@@ -1837,8 +1837,8 @@ block10:;
 goto block6;
 block6:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Scanner.frost:42
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$Type));
-_471 = (org$frostlang$frostc$Type*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$Type$class);
+FROST_ASSERT(120 == sizeof(org$frostlang$frostc$Type));
+_471 = (org$frostlang$frostc$Type*) frostObjectAlloc(120, (frost$core$Class*) &org$frostlang$frostc$Type$class);
 _472 = *(&local1);
 _473 = (frost$core$Int) {0u};
 // begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Scanner.frost:42:44
@@ -1862,7 +1862,7 @@ return _471;
 block3:;
 _493 = (frost$core$Int) {32u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:44:25
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _496 = _2.value;
 _497 = _493.value;
 _498 = _496 == _497;
@@ -1905,8 +1905,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_532);
 _534 = ((frost$core$Object*) _516);
 frost$core$Frost$unref$frost$core$Object$Q(_534);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Scanner.frost:46
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$Type));
-_537 = (org$frostlang$frostc$Type*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$Type$class);
+FROST_ASSERT(120 == sizeof(org$frostlang$frostc$Type));
+_537 = (org$frostlang$frostc$Type*) frostObjectAlloc(120, (frost$core$Class*) &org$frostlang$frostc$Type$class);
 _538 = *(&local6);
 _539 = _538;
 _540 = (frost$core$Int) {0u};
@@ -1933,11 +1933,11 @@ _555 = (frost$core$Bit) {_554};
 _556 = _555.value;
 if (_556) goto block81; else goto block82;
 block82:;
-_558 = (frost$core$Int) {22u};
+_558 = (frost$core$Int) {74u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s40, _558, &$s41);
 abort(); // unreachable
 block81:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/collections/Array.stub:23
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Array.frost:75
 _562 = &_539->data;
 _563 = *_562;
 _564 = frost$core$Int64$init$frost$core$Int(_540);
@@ -1983,7 +1983,7 @@ return _537;
 block78:;
 _606 = (frost$core$Int) {21u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:48:25
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _609 = _2.value;
 _610 = _606.value;
 _611 = _609 == _610;
@@ -2084,8 +2084,8 @@ block90:;
 _690 = ((frost$core$Object*) _655);
 frost$core$Frost$unref$frost$core$Object$Q(_690);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Scanner.frost:53
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$Type));
-_693 = (org$frostlang$frostc$Type*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$Type$class);
+FROST_ASSERT(120 == sizeof(org$frostlang$frostc$Type));
+_693 = (org$frostlang$frostc$Type*) frostObjectAlloc(120, (frost$core$Class*) &org$frostlang$frostc$Type$class);
 _694 = *(&local10);
 _695 = (frost$core$Int) {0u};
 // begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Scanner.frost:53:57
@@ -2123,7 +2123,7 @@ return _709;
 block86:;
 _729 = (frost$core$Int) {26u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:55:25
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _732 = _2.value;
 _733 = _729.value;
 _734 = _732 == _733;
@@ -2148,7 +2148,7 @@ _752 = &_751->$rawValue;
 _753 = *_752;
 _754 = (frost$core$Int) {14u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:57:34
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _757 = _753.value;
 _758 = _754.value;
 _759 = _757 == _758;
@@ -2186,7 +2186,7 @@ _789 = (frost$core$Int) {61u};
 _790 = *(&local16);
 _791 = ((frost$core$Object*) _790);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Scanner.frost:61:30
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:155
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 _794 = ($fn47) _791->$class->vtable[0];
 _795 = _794(_791);
 _796 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(&$s48, _795);
@@ -2206,7 +2206,7 @@ abort(); // unreachable
 block93:;
 _811 = (frost$core$Int) {30u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:63:25
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _814 = _2.value;
 _815 = _811.value;
 _816 = _814 == _815;
@@ -2244,7 +2244,7 @@ _847 = *(&local19);
 _848 = _847.$rawValue;
 _849 = (frost$core$Int) {95u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:66:36
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _852 = _848.value;
 _853 = _849.value;
 _854 = _852 == _853;
@@ -2266,7 +2266,7 @@ goto block102;
 block104:;
 _871 = (frost$core$Int) {96u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:69:36
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _874 = _848.value;
 _875 = _871.value;
 _876 = _874 == _875;
@@ -2288,7 +2288,7 @@ goto block102;
 block108:;
 _893 = (frost$core$Int) {97u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:72:36
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _896 = _848.value;
 _897 = _893.value;
 _898 = _896 == _897;
@@ -2310,7 +2310,7 @@ goto block102;
 block112:;
 _915 = (frost$core$Int) {98u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:75:36
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _918 = _848.value;
 _919 = _915.value;
 _920 = _918 == _919;
@@ -2444,19 +2444,19 @@ _1026 = &param0->compiler;
 _1027 = *_1026;
 _1028 = _1027;
 // begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Scanner.frost:91:35
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:16
-// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.stub:16:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:21
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
+// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.frost:40:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:45
 _1033 = &_1028->_valid;
 _1034 = *_1033;
 _1036 = _1034.value;
 if (_1036) goto block129; else goto block130;
 block130:;
-_1038 = (frost$core$Int) {16u};
+_1038 = (frost$core$Int) {40u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s58, _1038);
 abort(); // unreachable
 block129:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:17
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:41
 _1042 = &_1028->value;
 _1043 = *_1042;
 _1044 = _1043;
@@ -2480,19 +2480,19 @@ _1061 = &param0->compiler;
 _1062 = *_1061;
 _1063 = _1062;
 // begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Scanner.frost:93:40
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:16
-// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.stub:16:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:21
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
+// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.frost:40:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:45
 _1068 = &_1063->_valid;
 _1069 = *_1068;
 _1071 = _1069.value;
 if (_1071) goto block133; else goto block134;
 block134:;
-_1073 = (frost$core$Int) {16u};
+_1073 = (frost$core$Int) {40u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s59, _1073);
 abort(); // unreachable
 block133:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:17
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:41
 _1077 = &_1063->value;
 _1078 = *_1077;
 _1079 = _1078;
@@ -2538,7 +2538,7 @@ return _1094;
 block100:;
 _1120 = (frost$core$Int) {45u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:96:25
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _1123 = _2.value;
 _1124 = _1120.value;
 _1125 = _1123 == _1124;
@@ -2651,7 +2651,7 @@ block136:;
 _1215 = (frost$core$Int) {104u};
 _1216 = ((frost$core$Object*) param1);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Scanner.frost:104:30
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:155
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 _1219 = ($fn64) _1216->$class->vtable[0];
 _1220 = _1219(_1216);
 _1221 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(&$s65, _1220);
@@ -2669,7 +2669,7 @@ $tmp67 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &fro
 $tmp67->value = _1231;
 _1232 = ((frost$core$Object*) $tmp67);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Scanner.frost:104:30
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:155
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 _1235 = ($fn68) _1232->$class->vtable[0];
 _1236 = _1235(_1232);
 _1237 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_1229, _1236);
@@ -2735,7 +2735,7 @@ int64_t _56;
 frost$core$Int _57;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Scanner.frost:111
 // begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Scanner.frost:111:18
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:231
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 _3 = param2.value;
 _4 = param3.value;
 _5 = _3 & _4;
@@ -2766,16 +2766,16 @@ _27 = &param0->compiler;
 _28 = *_27;
 _29 = _28;
 // begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Scanner.frost:859:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
 _32 = frost$core$Weak$get_valid$R$frost$core$Bit(_29);
 _33 = _32.value;
 if (_33) goto block8; else goto block9;
 block9:;
-_35 = (frost$core$Int) {16u};
+_35 = (frost$core$Int) {40u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s74, _35);
 abort(); // unreachable
 block8:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:17
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:41
 _39 = &_29->value;
 _40 = *_39;
 _41 = _40;
@@ -2789,7 +2789,7 @@ goto block2;
 block2:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Scanner.frost:114
 // begin inline call to function frost.core.Int.||(other:frost.core.Int):frost.core.Int from Scanner.frost:114:22
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:261
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:329
 _54 = param2.value;
 _55 = param3.value;
 _56 = _54 | _55;
@@ -3464,7 +3464,7 @@ _62 = &_61->$rawValue;
 _63 = *_62;
 _64 = (frost$core$Int) {0u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:129:29
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _67 = _63.value;
 _68 = _64.value;
 _69 = _67 == _68;
@@ -4262,16 +4262,16 @@ _741 = &param0->compiler;
 _742 = *_741;
 _743 = _742;
 // begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Scanner.frost:859:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
 _746 = frost$core$Weak$get_valid$R$frost$core$Bit(_743);
 _747 = _746.value;
 if (_747) goto block121; else goto block122;
 block122:;
-_749 = (frost$core$Int) {16u};
+_749 = (frost$core$Int) {40u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s162, _749);
 abort(); // unreachable
 block121:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:17
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:41
 _753 = &_743->value;
 _754 = *_753;
 _755 = _754;
@@ -4316,16 +4316,16 @@ _791 = &param0->compiler;
 _792 = *_791;
 _793 = _792;
 // begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Scanner.frost:859:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
 _796 = frost$core$Weak$get_valid$R$frost$core$Bit(_793);
 _797 = _796.value;
 if (_797) goto block129; else goto block130;
 block130:;
-_799 = (frost$core$Int) {16u};
+_799 = (frost$core$Int) {40u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s167, _799);
 abort(); // unreachable
 block129:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:17
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:41
 _803 = &_793->value;
 _804 = *_803;
 _805 = _804;
@@ -4774,7 +4774,7 @@ _25 = &_24->$rawValue;
 _26 = *_25;
 _27 = (frost$core$Int) {40u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:250:29
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _30 = _26.value;
 _31 = _27.value;
 _32 = _30 == _31;
@@ -4831,7 +4831,7 @@ _81 = &param5->$rawValue;
 _82 = *_81;
 _83 = (frost$core$Int) {53u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:261:25
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _86 = _82.value;
 _87 = _83.value;
 _88 = _86 == _87;
@@ -4858,7 +4858,7 @@ _108 = *(&local5);
 _109 = _108.$rawValue;
 _110 = (frost$core$Int) {0u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:263:39
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _113 = _109.value;
 _114 = _110.value;
 _115 = _113 == _114;
@@ -4880,7 +4880,7 @@ goto block14;
 block16:;
 _132 = (frost$core$Int) {1u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:266:39
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _135 = _109.value;
 _136 = _132.value;
 _137 = _135 == _136;
@@ -4902,7 +4902,7 @@ goto block14;
 block20:;
 _154 = (frost$core$Int) {2u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:269:39
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _157 = _109.value;
 _158 = _154.value;
 _159 = _157 == _158;
@@ -4926,7 +4926,7 @@ _177 = &_176->flags;
 _178 = *_177;
 _179 = (frost$core$Int) {16u};
 // begin inline call to function frost.core.Int.||(other:frost.core.Int):frost.core.Int from Scanner.frost:271:36
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:261
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:329
 _182 = _178.value;
 _183 = _179.value;
 _184 = _182 | _183;
@@ -4937,7 +4937,7 @@ goto block14;
 block24:;
 _190 = (frost$core$Int) {3u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:273:39
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _193 = _109.value;
 _194 = _190.value;
 _195 = _193 == _194;
@@ -5001,7 +5001,7 @@ _238 = &_237->$rawValue;
 _239 = *_238;
 _240 = (frost$core$Int) {14u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:279:37
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _243 = _239.value;
 _244 = _240.value;
 _245 = _243 == _244;
@@ -5040,7 +5040,7 @@ _277 = &_276->$rawValue;
 _278 = *_277;
 _279 = (frost$core$Int) {22u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:283:45
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _282 = _278.value;
 _283 = _279.value;
 _284 = _282 == _283;
@@ -5072,19 +5072,19 @@ _309 = &param0->compiler;
 _310 = *_309;
 _311 = _310;
 // begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Scanner.frost:285:45
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:16
-// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.stub:16:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:21
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
+// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.frost:40:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:45
 _316 = &_311->_valid;
 _317 = *_316;
 _319 = _317.value;
 if (_319) goto block44; else goto block45;
 block45:;
-_321 = (frost$core$Int) {16u};
+_321 = (frost$core$Int) {40u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s179, _321);
 abort(); // unreachable
 block44:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:17
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:41
 _325 = &_311->value;
 _326 = *_325;
 _327 = _326;
@@ -5109,7 +5109,7 @@ goto block38;
 block40:;
 _347 = (frost$core$Int) {48u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:287:45
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _350 = _278.value;
 _351 = _347.value;
 _352 = _350 == _351;
@@ -5197,7 +5197,7 @@ _428 = &_425->flags;
 _429 = *_428;
 _430 = (frost$core$Int) {4096u};
 // begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:154:22
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:231
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 _433 = _429.value;
 _434 = _430.value;
 _435 = _433 & _434;
@@ -6461,7 +6461,7 @@ _1 = &param1->$rawValue;
 _2 = *_1;
 _3 = (frost$core$Int) {1u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:323:25
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _6 = _2.value;
 _7 = _3.value;
 _8 = _6 == _7;
@@ -6550,7 +6550,7 @@ return _70;
 block3:;
 _76 = (frost$core$Int) {2u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:330:25
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _79 = _2.value;
 _80 = _76.value;
 _81 = _79 == _80;
@@ -6582,7 +6582,7 @@ return _101;
 block9:;
 _107 = (frost$core$Int) {3u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:333:25
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _110 = _2.value;
 _111 = _107.value;
 _112 = _110 == _111;
@@ -6596,7 +6596,7 @@ return _118;
 block12:;
 _120 = (frost$core$Int) {4u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:336:25
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _123 = _2.value;
 _124 = _120.value;
 _125 = _123 == _124;
@@ -6610,7 +6610,7 @@ return _131;
 block15:;
 _133 = (frost$core$Int) {5u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:339:25
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _136 = _2.value;
 _137 = _133.value;
 _138 = _136 == _137;
@@ -6666,7 +6666,7 @@ return _178;
 block18:;
 _188 = (frost$core$Int) {6u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:342:25
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _191 = _2.value;
 _192 = _188.value;
 _193 = _191 == _192;
@@ -6680,7 +6680,7 @@ return _199;
 block21:;
 _201 = (frost$core$Int) {7u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:345:25
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _204 = _2.value;
 _205 = _201.value;
 _206 = _204 == _205;
@@ -6769,7 +6769,7 @@ return _268;
 block24:;
 _274 = (frost$core$Int) {8u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:352:25
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _277 = _2.value;
 _278 = _274.value;
 _279 = _277 == _278;
@@ -6783,7 +6783,7 @@ return _285;
 block30:;
 _287 = (frost$core$Int) {9u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:355:25
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _290 = _2.value;
 _291 = _287.value;
 _292 = _290 == _291;
@@ -6886,7 +6886,7 @@ return _364;
 block33:;
 _374 = (frost$core$Int) {11u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:362:25
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _377 = _2.value;
 _378 = _374.value;
 _379 = _377 == _378;
@@ -6920,7 +6920,7 @@ return _401;
 block39:;
 _407 = (frost$core$Int) {13u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:365:25
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _410 = _2.value;
 _411 = _407.value;
 _412 = _410 == _411;
@@ -6934,7 +6934,7 @@ return _418;
 block42:;
 _420 = (frost$core$Int) {14u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:368:25
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _423 = _2.value;
 _424 = _420.value;
 _425 = _423 == _424;
@@ -6991,7 +6991,7 @@ return _466;
 block45:;
 _472 = (frost$core$Int) {15u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:374:25
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _475 = _2.value;
 _476 = _472.value;
 _477 = _475 == _476;
@@ -7096,7 +7096,7 @@ return _551;
 block52:;
 _561 = (frost$core$Int) {16u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:381:25
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _564 = _2.value;
 _565 = _561.value;
 _566 = _564 == _565;
@@ -7128,7 +7128,7 @@ return _586;
 block58:;
 _592 = (frost$core$Int) {17u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:384:25
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _595 = _2.value;
 _596 = _592.value;
 _597 = _595 == _596;
@@ -7162,7 +7162,7 @@ return _619;
 block61:;
 _625 = (frost$core$Int) {20u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:387:25
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _628 = _2.value;
 _629 = _625.value;
 _630 = _628 == _629;
@@ -7269,7 +7269,7 @@ return _706;
 block64:;
 _716 = (frost$core$Int) {21u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:394:25
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _719 = _2.value;
 _720 = _716.value;
 _721 = _719 == _720;
@@ -7283,7 +7283,7 @@ return _727;
 block70:;
 _729 = (frost$core$Int) {22u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:397:25
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _732 = _2.value;
 _733 = _729.value;
 _734 = _732 == _733;
@@ -7297,7 +7297,7 @@ return _740;
 block73:;
 _742 = (frost$core$Int) {24u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:400:25
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _745 = _2.value;
 _746 = _742.value;
 _747 = _745 == _746;
@@ -7441,7 +7441,7 @@ return _852;
 block76:;
 _866 = (frost$core$Int) {25u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:410:25
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _869 = _2.value;
 _870 = _866.value;
 _871 = _869 == _870;
@@ -7455,7 +7455,7 @@ return _877;
 block86:;
 _879 = (frost$core$Int) {27u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:413:25
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _882 = _2.value;
 _883 = _879.value;
 _884 = _882 == _883;
@@ -7546,7 +7546,7 @@ return _948;
 block89:;
 _954 = (frost$core$Int) {28u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:420:25
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _957 = _2.value;
 _958 = _954.value;
 _959 = _957 == _958;
@@ -7737,7 +7737,7 @@ return _1096;
 block95:;
 _1110 = (frost$core$Int) {29u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:432:25
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _1113 = _2.value;
 _1114 = _1110.value;
 _1115 = _1113 == _1114;
@@ -7756,7 +7756,7 @@ return _1126;
 block108:;
 _1128 = (frost$core$Int) {31u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:435:25
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _1131 = _2.value;
 _1132 = _1128.value;
 _1133 = _1131 == _1132;
@@ -7770,7 +7770,7 @@ return _1139;
 block111:;
 _1141 = (frost$core$Int) {32u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:438:25
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _1144 = _2.value;
 _1145 = _1141.value;
 _1146 = _1144 == _1145;
@@ -7784,7 +7784,7 @@ return _1152;
 block114:;
 _1154 = (frost$core$Int) {35u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:441:25
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _1157 = _2.value;
 _1158 = _1154.value;
 _1159 = _1157 == _1158;
@@ -7798,7 +7798,7 @@ return _1165;
 block117:;
 _1167 = (frost$core$Int) {36u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:444:25
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _1170 = _2.value;
 _1171 = _1167.value;
 _1172 = _1170 == _1171;
@@ -7812,7 +7812,7 @@ return _1178;
 block120:;
 _1180 = (frost$core$Int) {37u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:447:25
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _1183 = _2.value;
 _1184 = _1180.value;
 _1185 = _1183 == _1184;
@@ -7826,7 +7826,7 @@ return _1191;
 block123:;
 _1193 = (frost$core$Int) {38u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:450:25
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _1196 = _2.value;
 _1197 = _1193.value;
 _1198 = _1196 == _1197;
@@ -7881,7 +7881,7 @@ return _1237;
 block126:;
 _1243 = (frost$core$Int) {39u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:456:25
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _1246 = _2.value;
 _1247 = _1243.value;
 _1248 = _1246 == _1247;
@@ -7895,7 +7895,7 @@ return _1254;
 block133:;
 _1256 = (frost$core$Int) {40u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:459:25
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _1259 = _2.value;
 _1260 = _1256.value;
 _1261 = _1259 == _1260;
@@ -7909,7 +7909,7 @@ return _1267;
 block136:;
 _1269 = (frost$core$Int) {41u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:462:25
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _1272 = _2.value;
 _1273 = _1269.value;
 _1274 = _1272 == _1273;
@@ -7923,7 +7923,7 @@ return _1280;
 block139:;
 _1282 = (frost$core$Int) {42u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:465:25
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _1285 = _2.value;
 _1286 = _1282.value;
 _1287 = _1285 == _1286;
@@ -7942,7 +7942,7 @@ return _1298;
 block142:;
 _1300 = (frost$core$Int) {46u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:468:25
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _1303 = _2.value;
 _1304 = _1300.value;
 _1305 = _1303 == _1304;
@@ -7956,7 +7956,7 @@ return _1311;
 block145:;
 _1313 = (frost$core$Int) {47u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:471:25
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _1316 = _2.value;
 _1317 = _1313.value;
 _1318 = _1316 == _1317;
@@ -7975,7 +7975,7 @@ return _1329;
 block148:;
 _1331 = (frost$core$Int) {49u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:474:25
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _1334 = _2.value;
 _1335 = _1331.value;
 _1336 = _1334 == _1335;
@@ -8012,7 +8012,7 @@ return _1361;
 block151:;
 _1367 = (frost$core$Int) {50u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:477:25
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _1370 = _2.value;
 _1371 = _1367.value;
 _1372 = _1370 == _1371;
@@ -8026,7 +8026,7 @@ return _1378;
 block154:;
 _1380 = (frost$core$Int) {51u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:480:25
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _1383 = _2.value;
 _1384 = _1380.value;
 _1385 = _1383 == _1384;
@@ -8045,7 +8045,7 @@ return _1396;
 block157:;
 _1398 = (frost$core$Int) {53u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:483:25
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _1401 = _2.value;
 _1402 = _1398.value;
 _1403 = _1401 == _1402;
@@ -8136,7 +8136,7 @@ return _1467;
 block160:;
 _1473 = (frost$core$Int) {54u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:490:25
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _1476 = _2.value;
 _1477 = _1473.value;
 _1478 = _1476 == _1477;
@@ -8295,7 +8295,7 @@ return _1591;
 block166:;
 _1601 = (frost$core$Int) {55u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:500:25
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _1604 = _2.value;
 _1605 = _1601.value;
 _1606 = _1604 == _1605;
@@ -8510,19 +8510,19 @@ _1 = &param0->compiler;
 _2 = *_1;
 _3 = _2;
 // begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Scanner.frost:514:12
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:16
-// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.stub:16:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:21
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
+// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.frost:40:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:45
 _8 = &_3->_valid;
 _9 = *_8;
 _11 = _9.value;
 if (_11) goto block7; else goto block8;
 block8:;
-_13 = (frost$core$Int) {16u};
+_13 = (frost$core$Int) {40u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s278, _13);
 abort(); // unreachable
 block7:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:17
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:41
 _17 = &_3->value;
 _18 = *_17;
 _19 = _18;
@@ -8549,7 +8549,7 @@ _39 = &param1->flags;
 _40 = *_39;
 _41 = (frost$core$Int) {1024u};
 // begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:146:22
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:231
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 _44 = _40.value;
 _45 = _41.value;
 _46 = _44 & _45;
@@ -8573,7 +8573,7 @@ _65 = &param1->flags;
 _66 = *_65;
 _67 = (frost$core$Int) {256u};
 // begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:138:22
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:231
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 _70 = _66.value;
 _71 = _67.value;
 _72 = _70 & _71;
@@ -9247,7 +9247,7 @@ _25 = &_24->$rawValue;
 _26 = *_25;
 _27 = (frost$core$Int) {40u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:539:29
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _30 = _26.value;
 _31 = _27.value;
 _32 = _30 == _31;
@@ -9337,7 +9337,7 @@ _104 = &_101->flags;
 _105 = *_104;
 _106 = (frost$core$Int) {256u};
 // begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:138:22
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:231
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 _109 = _105.value;
 _110 = _106.value;
 _111 = _109 & _110;
@@ -9357,7 +9357,7 @@ _125 = &_122->flags;
 _126 = *_125;
 _127 = (frost$core$Int) {2u};
 // begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:110:22
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:231
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 _130 = _126.value;
 _131 = _127.value;
 _132 = _130 & _131;
@@ -9376,7 +9376,7 @@ _145 = &_144->flags;
 _146 = *_145;
 _147 = (frost$core$Int) {256u};
 // begin inline call to function frost.core.Int.||(other:frost.core.Int):frost.core.Int from Scanner.frost:549:24
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:261
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:329
 _150 = _146.value;
 _151 = _147.value;
 _152 = _150 | _151;
@@ -9411,7 +9411,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_176);
 _179 = &param1->name;
 _180 = *_179;
 // begin inline call to function frost.core.String.get_asString():frost.core.String from Scanner.frost:554:37
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:112
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:390
 _183 = ((frost$core$Object*) _180);
 frost$core$Frost$ref$frost$core$Object$Q(_183);
 _186 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_180, &$s299);
@@ -9488,7 +9488,7 @@ _240 = &_239->$rawValue;
 _241 = *_240;
 _242 = (frost$core$Int) {22u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:559:33
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _245 = _241.value;
 _246 = _242.value;
 _247 = _245 == _246;
@@ -9520,19 +9520,19 @@ _272 = &param0->compiler;
 _273 = *_272;
 _274 = _273;
 // begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Scanner.frost:561:34
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:16
-// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.stub:16:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:21
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
+// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.frost:40:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:45
 _279 = &_274->_valid;
 _280 = *_279;
 _282 = _280.value;
 if (_282) goto block35; else goto block36;
 block36:;
-_284 = (frost$core$Int) {16u};
+_284 = (frost$core$Int) {40u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s306, _284);
 abort(); // unreachable
 block35:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:17
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:41
 _288 = &_274->value;
 _289 = *_288;
 _290 = _289;
@@ -9557,7 +9557,7 @@ goto block29;
 block31:;
 _310 = (frost$core$Int) {48u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:563:33
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _313 = _241.value;
 _314 = _310.value;
 _315 = _313 == _314;
@@ -9745,7 +9745,7 @@ _471 = &_470->$rawValue;
 _472 = *_471;
 _473 = (frost$core$Int) {34u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:581:29
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _476 = _472.value;
 _477 = _473.value;
 _478 = _476 == _477;
@@ -9847,19 +9847,19 @@ _567 = &param0->compiler;
 _568 = *_567;
 _569 = _568;
 // begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Scanner.frost:594:27
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:16
-// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.stub:16:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:21
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
+// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.frost:40:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:45
 _574 = &_569->_valid;
 _575 = *_574;
 _577 = _575.value;
 if (_577) goto block58; else goto block59;
 block59:;
-_579 = (frost$core$Int) {16u};
+_579 = (frost$core$Int) {40u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s319, _579);
 abort(); // unreachable
 block58:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:17
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:41
 _583 = &_569->value;
 _584 = *_583;
 _585 = _584;
@@ -9914,19 +9914,19 @@ _623 = &param0->compiler;
 _624 = *_623;
 _625 = _624;
 // begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Scanner.frost:596:59
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:16
-// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.stub:16:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:21
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
+// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.frost:40:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:45
 _630 = &_625->_valid;
 _631 = *_630;
 _633 = _631.value;
 if (_633) goto block66; else goto block67;
 block67:;
-_635 = (frost$core$Int) {16u};
+_635 = (frost$core$Int) {40u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s323, _635);
 abort(); // unreachable
 block66:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:17
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:41
 _639 = &_625->value;
 _640 = *_639;
 _641 = _640;
@@ -9936,7 +9936,7 @@ _645 = ((org$frostlang$frostc$Compiler*) _641);
 _646 = &_645->VOID_TYPE;
 _647 = *_646;
 // begin inline call to function org.frostlang.frostc.Type.=(other:org.frostlang.frostc.Type):frost.core.Bit from Scanner.frost:596:57
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:252
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:277
 _650 = ((org$frostlang$frostc$Symbol*) _622);
 _651 = &_650->name;
 _652 = *_651;
@@ -10000,16 +10000,16 @@ _694 = &param0->compiler;
 _695 = *_694;
 _696 = _695;
 // begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Scanner.frost:859:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
 _699 = frost$core$Weak$get_valid$R$frost$core$Bit(_696);
 _700 = _699.value;
 if (_700) goto block76; else goto block77;
 block77:;
-_702 = (frost$core$Int) {16u};
+_702 = (frost$core$Int) {40u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s329, _702);
 abort(); // unreachable
 block76:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:17
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:41
 _706 = &_696->value;
 _707 = *_706;
 _708 = _707;
@@ -10048,7 +10048,7 @@ _737 = &_736->flags;
 _738 = *_737;
 _739 = (frost$core$Int) {1024u};
 // begin inline call to function frost.core.Int.||(other:frost.core.Int):frost.core.Int from Scanner.frost:600:24
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:261
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:329
 _742 = _738.value;
 _743 = _739.value;
 _744 = _742 | _743;
@@ -10103,7 +10103,7 @@ _781 = &_778->flags;
 _782 = *_781;
 _783 = (frost$core$Int) {131072u};
 // begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:174:22
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:231
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 _786 = _782.value;
 _787 = _783.value;
 _788 = _786 & _787;
@@ -10127,7 +10127,7 @@ _807 = &_806->flags;
 _808 = *_807;
 _809 = (frost$core$Int) {512u};
 // begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Scanner.frost:604:34
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:231
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 _812 = _808.value;
 _813 = _809.value;
 _814 = _812 & _813;
@@ -10158,16 +10158,16 @@ _836 = &param0->compiler;
 _837 = *_836;
 _838 = _837;
 // begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Scanner.frost:859:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
 _841 = frost$core$Weak$get_valid$R$frost$core$Bit(_838);
 _842 = _841.value;
 if (_842) goto block99; else goto block100;
 block100:;
-_844 = (frost$core$Int) {16u};
+_844 = (frost$core$Int) {40u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s338, _844);
 abort(); // unreachable
 block99:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:17
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:41
 _848 = &_838->value;
 _849 = *_848;
 _850 = _849;
@@ -10185,7 +10185,7 @@ _862 = &_861->flags;
 _863 = *_862;
 _864 = (frost$core$Int) {512u};
 // begin inline call to function frost.core.Int.||(other:frost.core.Int):frost.core.Int from Scanner.frost:608:24
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:261
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:329
 _867 = _863.value;
 _868 = _864.value;
 _869 = _867 | _868;
@@ -10655,7 +10655,7 @@ _1 = &param2->$rawValue;
 _2 = *_1;
 _3 = (frost$core$Int) {18u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:616:25
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _6 = _2.value;
 _7 = _3.value;
 _8 = _6 == _7;
@@ -10715,7 +10715,7 @@ goto block1;
 block3:;
 _62 = (frost$core$Int) {29u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:619:25
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _65 = _2.value;
 _66 = _62.value;
 _67 = _65 == _66;
@@ -10893,7 +10893,7 @@ goto block1;
 block6:;
 _234 = (frost$core$Int) {12u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:628:25
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _237 = _2.value;
 _238 = _234.value;
 _239 = _237 == _238;
@@ -11086,7 +11086,7 @@ _412 = *_411;
 _413 = &param1->name;
 _414 = *_413;
 // begin inline call to function frost.core.String.get_length():frost.core.Int from Scanner.frost:636:64
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:139
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:485
 _417 = ((frost$collections$Iterable*) _414);
 ITable* $tmp357 = _417->$class->itable;
 while ($tmp357->$class != (frost$core$Class*) &frost$collections$Iterable$class) {
@@ -11158,7 +11158,7 @@ _471 = (org$frostlang$frostc$Alias*) frostObjectAlloc(64, (frost$core$Class*) &o
 _474 = &param1->name;
 _475 = *_474;
 // begin inline call to function frost.core.String.lastIndexOf(s:frost.core.String):frost.core.String.Index? from ClassDecl.frost:146:38
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:230
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:1012
 _478 = frost$core$String$get_end$R$frost$core$String$Index(_475);
 _479 = frost$core$String$lastIndexOf$frost$core$String$frost$core$String$Index$R$frost$core$String$Index$Q(_475, &$s363, _478);
 *(&local24) = _479;
@@ -11261,7 +11261,7 @@ goto block1;
 block16:;
 _573 = (frost$core$Int) {10u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:640:25
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _576 = _2.value;
 _577 = _573.value;
 _578 = _576 == _577;
@@ -11323,7 +11323,7 @@ block44:;
 _633 = (frost$core$Int) {644u};
 _634 = ((frost$core$Object*) param2);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Scanner.frost:644:30
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:155
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 _637 = ($fn366) _634->$class->vtable[0];
 _638 = _637(_634);
 _639 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(&$s367, _638);
@@ -11485,7 +11485,7 @@ _25 = &_24->$rawValue;
 _26 = *_25;
 _27 = (frost$core$Int) {40u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:658:29
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _30 = _26.value;
 _31 = _27.value;
 _32 = _30 == _31;
@@ -12678,7 +12678,7 @@ if (_8) goto block1; else goto block3;
 block1:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Scanner.frost:682
 // begin inline call to function frost.core.String.get_asString():frost.core.String from Scanner.frost:682:28
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:112
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:390
 _13 = ((frost$core$Object*) param3);
 frost$core$Frost$ref$frost$core$Object$Q(_13);
 _16 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(param3, &$s416);
@@ -12743,7 +12743,7 @@ _68 = &_67->$rawValue;
 _69 = *_68;
 _70 = (frost$core$Int) {40u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:694:29
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _73 = _69.value;
 _74 = _70.value;
 _75 = _73 == _74;
@@ -12870,7 +12870,7 @@ _176 = &_175->$rawValue;
 _177 = *_176;
 _178 = (frost$core$Int) {22u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:709:33
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _181 = _177.value;
 _182 = _178.value;
 _183 = _181 == _182;
@@ -12902,19 +12902,19 @@ _208 = &param0->compiler;
 _209 = *_208;
 _210 = _209;
 // begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Scanner.frost:711:34
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:16
-// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.stub:16:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:21
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
+// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.frost:40:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:45
 _215 = &_210->_valid;
 _216 = *_215;
 _218 = _216.value;
 if (_218) goto block27; else goto block28;
 block28:;
-_220 = (frost$core$Int) {16u};
+_220 = (frost$core$Int) {40u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s426, _220);
 abort(); // unreachable
 block27:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:17
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:41
 _224 = &_210->value;
 _225 = *_224;
 _226 = _225;
@@ -12939,7 +12939,7 @@ goto block21;
 block23:;
 _246 = (frost$core$Int) {48u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:713:33
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _249 = _177.value;
 _250 = _246.value;
 _251 = _249 == _250;
@@ -13116,16 +13116,16 @@ _400 = &param0->compiler;
 _401 = *_400;
 _402 = _401;
 // begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Scanner.frost:859:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
 _405 = frost$core$Weak$get_valid$R$frost$core$Bit(_402);
 _406 = _405.value;
 if (_406) goto block43; else goto block44;
 block44:;
-_408 = (frost$core$Int) {16u};
+_408 = (frost$core$Int) {40u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s436, _408);
 abort(); // unreachable
 block43:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:17
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:41
 _412 = &_402->value;
 _413 = *_412;
 _414 = _413;
@@ -13217,19 +13217,19 @@ _481 = &param0->compiler;
 _482 = *_481;
 _483 = _482;
 // begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Scanner.frost:734:41
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:16
-// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.stub:16:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:21
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
+// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.frost:40:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:45
 _488 = &_483->_valid;
 _489 = *_488;
 _491 = _489.value;
 if (_491) goto block52; else goto block53;
 block53:;
-_493 = (frost$core$Int) {16u};
+_493 = (frost$core$Int) {40u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s443, _493);
 abort(); // unreachable
 block52:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:17
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:41
 _497 = &_483->value;
 _498 = *_497;
 _499 = _498;
@@ -13255,19 +13255,19 @@ _519 = &param0->compiler;
 _520 = *_519;
 _521 = _520;
 // begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Scanner.frost:735:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:16
-// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.stub:16:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:21
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
+// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.frost:40:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:45
 _526 = &_521->_valid;
 _527 = *_526;
 _529 = _527.value;
 if (_529) goto block56; else goto block57;
 block57:;
-_531 = (frost$core$Int) {16u};
+_531 = (frost$core$Int) {40u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s444, _531);
 abort(); // unreachable
 block56:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:17
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:41
 _535 = &_521->value;
 _536 = *_535;
 _537 = _536;
@@ -13280,7 +13280,7 @@ _544 = _543;
 _545 = *(&local16);
 _546 = ((frost$core$Object*) _545);
 // begin inline call to method frost.collections.Stack.push(v:frost.collections.Stack.T) from Scanner.frost:735:35
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/collections/Stack.stub:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Stack.frost:42
 _549 = &_544->contents;
 _550 = *_549;
 _551 = _550;
@@ -13342,19 +13342,19 @@ _596 = &param0->compiler;
 _597 = *_596;
 _598 = _597;
 // begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Scanner.frost:739:47
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:16
-// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.stub:16:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:21
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
+// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.frost:40:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:45
 _603 = &_598->_valid;
 _604 = *_603;
 _606 = _604.value;
 if (_606) goto block65; else goto block66;
 block66:;
-_608 = (frost$core$Int) {16u};
+_608 = (frost$core$Int) {40u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s448, _608);
 abort(); // unreachable
 block65:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:17
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:41
 _612 = &_598->value;
 _613 = *_612;
 _614 = _613;
@@ -13419,19 +13419,19 @@ _673 = &param0->compiler;
 _674 = *_673;
 _675 = _674;
 // begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Scanner.frost:744:49
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:16
-// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.stub:16:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:21
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
+// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.frost:40:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:45
 _680 = &_675->_valid;
 _681 = *_680;
 _683 = _681.value;
 if (_683) goto block71; else goto block72;
 block72:;
-_685 = (frost$core$Int) {16u};
+_685 = (frost$core$Int) {40u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s450, _685);
 abort(); // unreachable
 block71:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:17
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:41
 _689 = &_675->value;
 _690 = *_689;
 _691 = _690;
@@ -13526,7 +13526,7 @@ _766 = &_765->$rawValue;
 _767 = *_766;
 _768 = (frost$core$Int) {29u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:750:29
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _771 = _767.value;
 _772 = _768.value;
 _773 = _771 == _772;
@@ -13590,7 +13590,7 @@ block81:;
 _821 = param7.$rawValue;
 _822 = (frost$core$Int) {0u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:753:48
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _825 = _821.value;
 _826 = _822.value;
 _827 = _825 == _826;
@@ -13602,7 +13602,7 @@ goto block84;
 block86:;
 _833 = (frost$core$Int) {1u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:756:48
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _836 = _821.value;
 _837 = _833.value;
 _838 = _836 == _837;
@@ -13629,16 +13629,16 @@ _856 = &param0->compiler;
 _857 = *_856;
 _858 = _857;
 // begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Scanner.frost:859:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
 _861 = frost$core$Weak$get_valid$R$frost$core$Bit(_858);
 _862 = _861.value;
 if (_862) goto block95; else goto block96;
 block96:;
-_864 = (frost$core$Int) {16u};
+_864 = (frost$core$Int) {40u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s460, _864);
 abort(); // unreachable
 block95:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:17
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:41
 _868 = &_858->value;
 _869 = *_868;
 _870 = _869;
@@ -13652,7 +13652,7 @@ goto block84;
 block89:;
 _880 = (frost$core$Int) {2u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:759:48
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _883 = _821.value;
 _884 = _880.value;
 _885 = _883 == _884;
@@ -13679,16 +13679,16 @@ _903 = &param0->compiler;
 _904 = *_903;
 _905 = _904;
 // begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Scanner.frost:859:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
 _908 = frost$core$Weak$get_valid$R$frost$core$Bit(_905);
 _909 = _908.value;
 if (_909) goto block103; else goto block104;
 block104:;
-_911 = (frost$core$Int) {16u};
+_911 = (frost$core$Int) {40u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s464, _911);
 abort(); // unreachable
 block103:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:17
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:41
 _915 = &_905->value;
 _916 = *_915;
 _917 = _916;
@@ -13826,7 +13826,7 @@ _1015 = $tmp473->methods[0];
 _1016 = _1015(_1014);
 _1017 = (frost$core$Int) {0u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:777:56
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _1020 = _1016.value;
 _1021 = _1017.value;
 _1022 = _1020 == _1021;
@@ -13886,16 +13886,16 @@ _1063 = &param0->compiler;
 _1064 = *_1063;
 _1065 = _1064;
 // begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Scanner.frost:859:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
 _1068 = frost$core$Weak$get_valid$R$frost$core$Bit(_1065);
 _1069 = _1068.value;
 if (_1069) goto block122; else goto block123;
 block123:;
-_1071 = (frost$core$Int) {16u};
+_1071 = (frost$core$Int) {40u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s479, _1071);
 abort(); // unreachable
 block122:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:17
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:41
 _1075 = &_1065->value;
 _1076 = *_1075;
 _1077 = _1076;
@@ -13999,19 +13999,19 @@ _1156 = &param0->compiler;
 _1157 = *_1156;
 _1158 = _1157;
 // begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Scanner.frost:787:31
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:16
-// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.stub:16:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:21
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
+// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.frost:40:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:45
 _1163 = &_1158->_valid;
 _1164 = *_1163;
 _1166 = _1164.value;
 if (_1166) goto block133; else goto block134;
 block134:;
-_1168 = (frost$core$Int) {16u};
+_1168 = (frost$core$Int) {40u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s486, _1168);
 abort(); // unreachable
 block133:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:17
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:41
 _1172 = &_1158->value;
 _1173 = *_1172;
 _1174 = _1173;
@@ -14162,7 +14162,7 @@ _1291 = (org$frostlang$frostc$Annotations*) frostObjectAlloc(32, (frost$core$Cla
 _1292 = (frost$core$Int) {32u};
 _1293 = (frost$core$Int) {8192u};
 // begin inline call to function frost.core.Int.||(other:frost.core.Int):frost.core.Int from Scanner.frost:794:59
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:261
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:329
 _1296 = _1292.value;
 _1297 = _1293.value;
 _1298 = _1296 | _1297;
@@ -14185,19 +14185,19 @@ _1315 = &param0->compiler;
 _1316 = *_1315;
 _1317 = _1316;
 // begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Scanner.frost:795:66
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:16
-// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.stub:16:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:21
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
+// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.frost:40:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:45
 _1322 = &_1317->_valid;
 _1323 = *_1322;
 _1325 = _1323.value;
 if (_1325) goto block148; else goto block149;
 block149:;
-_1327 = (frost$core$Int) {16u};
+_1327 = (frost$core$Int) {40u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s496, _1327);
 abort(); // unreachable
 block148:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:17
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:41
 _1331 = &_1317->value;
 _1332 = *_1331;
 _1333 = _1332;
@@ -14420,16 +14420,16 @@ _1502 = &param0->compiler;
 _1503 = *_1502;
 _1504 = _1503;
 // begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Scanner.frost:859:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
 _1507 = frost$core$Weak$get_valid$R$frost$core$Bit(_1504);
 _1508 = _1507.value;
 if (_1508) goto block166; else goto block167;
 block167:;
-_1510 = (frost$core$Int) {16u};
+_1510 = (frost$core$Int) {40u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s508, _1510);
 abort(); // unreachable
 block166:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:17
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:41
 _1514 = &_1504->value;
 _1515 = *_1514;
 _1516 = _1515;
@@ -14474,19 +14474,19 @@ _1565 = &param0->compiler;
 _1566 = *_1565;
 _1567 = _1566;
 // begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Scanner.frost:815:36
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:16
-// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.stub:16:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:21
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
+// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.frost:40:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:45
 _1572 = &_1567->_valid;
 _1573 = *_1572;
 _1575 = _1573.value;
 if (_1575) goto block173; else goto block174;
 block174:;
-_1577 = (frost$core$Int) {16u};
+_1577 = (frost$core$Int) {40u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s510, _1577);
 abort(); // unreachable
 block173:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:17
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:41
 _1581 = &_1567->value;
 _1582 = *_1581;
 _1583 = _1582;
@@ -14515,19 +14515,19 @@ _1604 = &param0->compiler;
 _1605 = *_1604;
 _1606 = _1605;
 // begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Scanner.frost:818:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:16
-// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.stub:16:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:21
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
+// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.frost:40:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:45
 _1611 = &_1606->_valid;
 _1612 = *_1611;
 _1614 = _1612.value;
 if (_1614) goto block177; else goto block178;
 block178:;
-_1616 = (frost$core$Int) {16u};
+_1616 = (frost$core$Int) {40u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s511, _1616);
 abort(); // unreachable
 block177:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:17
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:41
 _1620 = &_1606->value;
 _1621 = *_1620;
 _1622 = _1621;
@@ -15078,7 +15078,7 @@ if (_15) goto block3; else goto block5;
 block3:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Scanner.frost:834
 // begin inline call to function frost.core.String.get_asString():frost.core.String from Scanner.frost:834:32
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:112
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:390
 _20 = ((frost$core$Object*) param3);
 frost$core$Frost$ref$frost$core$Object$Q(_20);
 _23 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(param3, &$s534);
@@ -15133,19 +15133,19 @@ _66 = &param0->compiler;
 _67 = *_66;
 _68 = _67;
 // begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Scanner.frost:841:58
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:16
-// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.stub:16:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:21
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
+// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.frost:40:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:45
 _73 = &_68->_valid;
 _74 = *_73;
 _76 = _74.value;
 if (_76) goto block10; else goto block11;
 block11:;
-_78 = (frost$core$Int) {16u};
+_78 = (frost$core$Int) {40u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s537, _78);
 abort(); // unreachable
 block10:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:17
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:41
 _82 = &_68->value;
 _83 = *_82;
 _84 = _83;
@@ -15232,19 +15232,19 @@ _155 = &param0->compiler;
 _156 = *_155;
 _157 = _156;
 // begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Scanner.frost:845:31
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:16
-// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.stub:16:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:21
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
+// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.frost:40:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:45
 _162 = &_157->_valid;
 _163 = *_162;
 _165 = _163.value;
 if (_165) goto block19; else goto block20;
 block20:;
-_167 = (frost$core$Int) {16u};
+_167 = (frost$core$Int) {40u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s543, _167);
 abort(); // unreachable
 block19:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:17
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:41
 _171 = &_157->value;
 _172 = *_171;
 _173 = _172;
@@ -15338,7 +15338,7 @@ _253 = (org$frostlang$frostc$Annotations*) frostObjectAlloc(32, (frost$core$Clas
 _254 = (frost$core$Int) {32u};
 _255 = (frost$core$Int) {8192u};
 // begin inline call to function frost.core.Int.||(other:frost.core.Int):frost.core.Int from Scanner.frost:849:59
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:261
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:329
 _258 = _254.value;
 _259 = _255.value;
 _260 = _258 | _259;
@@ -15361,19 +15361,19 @@ _277 = &param0->compiler;
 _278 = *_277;
 _279 = _278;
 // begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Scanner.frost:850:66
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:16
-// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.stub:16:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:21
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
+// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.frost:40:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:45
 _284 = &_279->_valid;
 _285 = *_284;
 _287 = _285.value;
 if (_287) goto block32; else goto block33;
 block33:;
-_289 = (frost$core$Int) {16u};
+_289 = (frost$core$Int) {40u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s551, _289);
 abort(); // unreachable
 block32:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:17
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:41
 _293 = &_279->value;
 _294 = *_293;
 _295 = _294;
@@ -15500,19 +15500,19 @@ _10 = &param0->compiler;
 _11 = *_10;
 _12 = _11;
 // begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Scanner.frost:859:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:16
-// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.stub:16:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:21
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
+// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.frost:40:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:45
 _17 = &_12->_valid;
 _18 = *_17;
 _20 = _18.value;
 if (_20) goto block5; else goto block6;
 block6:;
-_22 = (frost$core$Int) {16u};
+_22 = (frost$core$Int) {40u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s559, _22);
 abort(); // unreachable
 block5:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:17
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:41
 _26 = &_12->value;
 _27 = *_26;
 _28 = _27;
@@ -16700,7 +16700,7 @@ _11 = &param2->$rawValue;
 _12 = *_11;
 _13 = (frost$core$Int) {19u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:865:25
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _16 = _12.value;
 _17 = _13.value;
 _18 = _16 == _17;
@@ -16797,7 +16797,7 @@ _92 = &_91->$rawValue;
 _93 = *_92;
 _94 = (frost$core$Int) {33u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:871:37
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _97 = _93.value;
 _98 = _94.value;
 _99 = _97 == _98;
@@ -16832,7 +16832,7 @@ goto block7;
 block9:;
 _128 = (frost$core$Int) {52u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:874:37
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _131 = _93.value;
 _132 = _128.value;
 _133 = _131 == _132;
@@ -16854,9 +16854,9 @@ frost$core$Frost$unref$frost$core$Object$Q(_146);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Scanner.frost:875
 _150 = *(&local6);
 // begin inline call to function frost.core.String.lastIndexOf(s:frost.core.String):frost.core.String.Index? from Scanner.frost:875:60
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:230
-// begin inline call to function frost.core.String.get_end():frost.core.String.Index from String.stub:230:24
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:288
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:1012
+// begin inline call to function frost.core.String.get_end():frost.core.String.Index from String.frost:1012:31
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:1212
 _155 = &_150->_length;
 _156 = *_155;
 _157 = frost$core$String$Index$init$frost$core$Int(_156);
@@ -16931,7 +16931,7 @@ goto block7;
 block12:;
 _223 = (frost$core$Int) {12u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:885:37
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _226 = _93.value;
 _227 = _223.value;
 _228 = _226 == _227;
@@ -17188,7 +17188,7 @@ goto block7;
 block22:;
 _447 = (frost$core$Int) {29u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:893:37
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _450 = _93.value;
 _451 = _447.value;
 _452 = _450 == _451;
@@ -17316,16 +17316,16 @@ _561 = &param0->compiler;
 _562 = *_561;
 _563 = _562;
 // begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Scanner.frost:859:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
 _566 = frost$core$Weak$get_valid$R$frost$core$Bit(_563);
 _567 = _566.value;
 if (_567) goto block46; else goto block47;
 block47:;
-_569 = (frost$core$Int) {16u};
+_569 = (frost$core$Int) {40u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s606, _569);
 abort(); // unreachable
 block46:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:17
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:41
 _573 = &_563->value;
 _574 = *_573;
 _575 = _574;
@@ -17480,7 +17480,7 @@ _706 = &_705->$rawValue;
 _707 = *_706;
 _708 = (frost$core$Int) {34u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:908:53
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _711 = _707.value;
 _712 = _708.value;
 _713 = _711 == _712;
@@ -17653,19 +17653,19 @@ _867 = &param0->compiler;
 _868 = *_867;
 _869 = _868;
 // begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Scanner.frost:929:51
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:16
-// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.stub:16:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:21
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
+// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.frost:40:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:45
 _874 = &_869->_valid;
 _875 = *_874;
 _877 = _875.value;
 if (_877) goto block65; else goto block66;
 block66:;
-_879 = (frost$core$Int) {16u};
+_879 = (frost$core$Int) {40u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s618, _879);
 abort(); // unreachable
 block65:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:17
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:41
 _883 = &_869->value;
 _884 = *_883;
 _885 = _884;
@@ -17794,19 +17794,19 @@ _1000 = &param0->compiler;
 _1001 = *_1000;
 _1002 = _1001;
 // begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Scanner.frost:940:29
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:16
-// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.stub:16:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:21
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
+// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.frost:40:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:45
 _1007 = &_1002->_valid;
 _1008 = *_1007;
 _1010 = _1008.value;
 if (_1010) goto block74; else goto block75;
 block75:;
-_1012 = (frost$core$Int) {16u};
+_1012 = (frost$core$Int) {40u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s624, _1012);
 abort(); // unreachable
 block74:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:17
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:41
 _1016 = &_1002->value;
 _1017 = *_1016;
 _1018 = _1017;
@@ -17830,7 +17830,7 @@ block76:;
 _1035 = _1027;
 _1036 = ((frost$core$Object*) _1035);
 // begin inline call to method frost.collections.Stack.push(v:frost.collections.Stack.T) from Scanner.frost:940:55
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/collections/Stack.stub:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Stack.frost:42
 _1039 = &_1025->contents;
 _1040 = *_1039;
 _1041 = _1040;
@@ -17890,7 +17890,7 @@ _1091 = &_1088->flags;
 _1092 = *_1091;
 _1093 = (frost$core$Int) {16u};
 // begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:122:22
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:231
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 _1096 = _1092.value;
 _1097 = _1093.value;
 _1098 = _1096 & _1097;
@@ -17934,16 +17934,16 @@ _1132 = &param0->compiler;
 _1133 = *_1132;
 _1134 = _1133;
 // begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Scanner.frost:859:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
 _1137 = frost$core$Weak$get_valid$R$frost$core$Bit(_1134);
 _1138 = _1137.value;
 if (_1138) goto block93; else goto block94;
 block94:;
-_1140 = (frost$core$Int) {16u};
+_1140 = (frost$core$Int) {40u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s635, _1140);
 abort(); // unreachable
 block93:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:17
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:41
 _1144 = &_1134->value;
 _1145 = *_1144;
 _1146 = _1145;
@@ -17971,12 +17971,12 @@ _1167 = &_1166->flags;
 _1168 = *_1167;
 _1169 = (frost$core$Int) {16u};
 // begin inline call to function frost.core.Int.!!():frost.core.Int from Scanner.frost:946:57
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:216
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:275
 _1172 = _1169.value;
 _1173 = !_1172;
 _1174 = (frost$core$Int) {_1173};
 // begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Scanner.frost:946:46
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:231
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 _1178 = _1168.value;
 _1179 = _1174.value;
 _1180 = _1178 & _1179;
@@ -17990,19 +17990,19 @@ _1187 = &param0->compiler;
 _1188 = *_1187;
 _1189 = _1188;
 // begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Scanner.frost:948:36
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:16
-// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.stub:16:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:21
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
+// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.frost:40:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:45
 _1194 = &_1189->_valid;
 _1195 = *_1194;
 _1197 = _1195.value;
 if (_1197) goto block101; else goto block102;
 block102:;
-_1199 = (frost$core$Int) {16u};
+_1199 = (frost$core$Int) {40u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s639, _1199);
 abort(); // unreachable
 block101:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:17
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:41
 _1203 = &_1189->value;
 _1204 = *_1203;
 _1205 = _1204;
@@ -18022,8 +18022,8 @@ _1219 = (frost$core$Bit) {_1218};
 _1220 = _1219.value;
 if (_1220) goto block106; else goto block105;
 block106:;
-// begin inline call to function frost.collections.Stack.get_count():frost.core.Int from Stack.stub:29:31
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/collections/Stack.stub:44
+// begin inline call to function frost.collections.Stack.get_count():frost.core.Int from Stack.frost:70:31
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Stack.frost:93
 _1224 = &_1212->contents;
 _1225 = *_1224;
 _1226 = ((frost$collections$CollectionView*) _1225);
@@ -18040,11 +18040,11 @@ _1233 = (frost$core$Bit) {_1232};
 _1234 = _1233.value;
 if (_1234) goto block104; else goto block105;
 block105:;
-_1236 = (frost$core$Int) {30u};
+_1236 = (frost$core$Int) {71u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s641, _1236, &$s642);
 abort(); // unreachable
 block104:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/collections/Stack.stub:31
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Stack.frost:72
 _1240 = &_1212->contents;
 _1241 = *_1240;
 _1242 = ((frost$collections$CollectionView*) _1241);
@@ -18061,11 +18061,11 @@ _1248 = (frost$core$Bit) {_1247};
 _1249 = _1248.value;
 if (_1249) goto block108; else goto block109;
 block109:;
-_1251 = (frost$core$Int) {31u};
+_1251 = (frost$core$Int) {72u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s644, _1251);
 abort(); // unreachable
 block108:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/collections/Stack.stub:32
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Stack.frost:73
 _1255 = &_1212->contents;
 _1256 = *_1255;
 _1257 = _1256;
@@ -18087,7 +18087,7 @@ _1268 = _1267.value;
 _1269 = _1213.value;
 _1270 = _1268 - _1269;
 _1271 = (frost$core$Int) {_1270};
-// begin inline call to function frost.collections.Array.[](index:frost.core.Int):frost.collections.Array.T from Stack.stub:32:16
+// begin inline call to function frost.collections.Array.[](index:frost.core.Int):frost.collections.Array.T from Stack.frost:73:24
 _1273 = (frost$core$Int) {0u};
 _1274 = _1271.value;
 _1275 = _1273.value;
@@ -18110,11 +18110,11 @@ _1286 = (frost$core$Bit) {_1285};
 _1287 = _1286.value;
 if (_1287) goto block111; else goto block112;
 block112:;
-_1289 = (frost$core$Int) {22u};
+_1289 = (frost$core$Int) {74u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s647, _1289, &$s648);
 abort(); // unreachable
 block111:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/collections/Array.stub:23
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Array.frost:75
 _1293 = &_1257->data;
 _1294 = *_1293;
 _1295 = frost$core$Int64$init$frost$core$Int(_1271);
@@ -18148,19 +18148,19 @@ _1322 = &param0->compiler;
 _1323 = *_1322;
 _1324 = _1323;
 // begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Scanner.frost:949:29
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:16
-// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.stub:16:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:21
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
+// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.frost:40:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:45
 _1329 = &_1324->_valid;
 _1330 = *_1329;
 _1332 = _1330.value;
 if (_1332) goto block118; else goto block119;
 block119:;
-_1334 = (frost$core$Int) {16u};
+_1334 = (frost$core$Int) {40u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s650, _1334);
 abort(); // unreachable
 block118:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:17
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:41
 _1338 = &_1324->value;
 _1339 = *_1338;
 _1340 = _1339;
@@ -18276,7 +18276,7 @@ goto block7;
 block37:;
 _1444 = (frost$core$Int) {18u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Scanner.frost:953:37
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _1447 = _93.value;
 _1448 = _1444.value;
 _1449 = _1447 == _1448;
@@ -18449,11 +18449,11 @@ _1591 = (frost$core$Bit) {_1590};
 _1592 = _1591.value;
 if (_1592) goto block146; else goto block147;
 block147:;
-_1594 = (frost$core$Int) {22u};
+_1594 = (frost$core$Int) {74u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s670, _1594, &$s671);
 abort(); // unreachable
 block146:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/collections/Array.stub:23
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Array.frost:75
 _1598 = &_1575->data;
 _1599 = *_1598;
 _1600 = frost$core$Int64$init$frost$core$Int(_1576);
@@ -18514,7 +18514,7 @@ _1645 = &_1642->flags;
 _1646 = *_1645;
 _1647 = (frost$core$Int) {16u};
 // begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:122:22
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:231
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 _1650 = _1646.value;
 _1651 = _1647.value;
 _1652 = _1650 & _1651;
@@ -18549,16 +18549,16 @@ _1679 = &param0->compiler;
 _1680 = *_1679;
 _1681 = _1680;
 // begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Scanner.frost:859:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
 _1684 = frost$core$Weak$get_valid$R$frost$core$Bit(_1681);
 _1685 = _1684.value;
 if (_1685) goto block159; else goto block160;
 block160:;
-_1687 = (frost$core$Int) {16u};
+_1687 = (frost$core$Int) {40u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s677, _1687);
 abort(); // unreachable
 block159:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:17
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:41
 _1691 = &_1681->value;
 _1692 = *_1691;
 _1693 = _1692;
@@ -18621,7 +18621,7 @@ _1746 = (frost$core$Int) {967u};
 _1747 = *(&local4);
 _1748 = ((frost$core$Object*) _1747);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Scanner.frost:967:42
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:155
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 _1751 = ($fn679) _1748->$class->vtable[0];
 _1752 = _1751(_1748);
 _1753 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(&$s680, _1752);
@@ -18640,7 +18640,7 @@ $tmp682 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &fr
 $tmp682->value = _1764;
 _1765 = ((frost$core$Object*) $tmp682);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Scanner.frost:967:42
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:155
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 _1768 = ($fn683) _1765->$class->vtable[0];
 _1769 = _1768(_1765);
 _1770 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_1761, _1769);
@@ -18659,7 +18659,7 @@ $tmp686 = (org$frostlang$frostc$Position$wrapper*) frostObjectAlloc(40, (frost$c
 $tmp686->value = _1781;
 _1782 = ((frost$core$Object*) $tmp686);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Scanner.frost:967:42
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:155
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 _1785 = ($fn687) _1782->$class->vtable[0];
 _1786 = _1785(_1782);
 _1787 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_1778, _1786);

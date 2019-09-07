@@ -75,7 +75,7 @@ _4 = $tmp4->methods[0];
 _5 = _4(_3);
 _6 = (frost$core$Int) {1u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RemoveUnreachableBlocks.frost:7:31
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _9 = _5.value;
 _10 = _6.value;
 _11 = _9 == _10;
@@ -98,7 +98,7 @@ _23 = &_22->$rawValue;
 _24 = *_23;
 _25 = (frost$core$Int) {28u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RemoveUnreachableBlocks.frost:9:34
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _28 = _24.value;
 _29 = _25.value;
 _30 = _28 == _29;
@@ -275,7 +275,7 @@ _18 = _17.start;
 _20 = _17.end;
 _21 = _17.step;
 // begin inline call to function frost.core.Int.-():frost.core.Int from RemoveUnreachableBlocks.frost:19:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:87
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:120
 _24 = _21.value;
 _25 = -_24;
 _26 = (frost$core$Int) {_25};

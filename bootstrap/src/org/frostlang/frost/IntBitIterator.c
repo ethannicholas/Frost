@@ -55,7 +55,7 @@ _1 = &param0->mask;
 _2 = *_1;
 _3 = (frost$core$UInt64) {0u};
 // begin inline call to function frost.core.UInt64.=(other:frost.core.UInt64):frost.core.Bit from IntBitIterator.frost:18:21
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/UInt64.stub:175
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/UInt64.frost:227
 _6 = _2.value;
 _7 = _3.value;
 _8 = _6 == _7;
@@ -103,8 +103,8 @@ while ($tmp4->$class != (frost$core$Class*) &frost$collections$Iterator$class) {
 }
 _1 = $tmp4->methods[0];
 _2 = _1(_0);
-// begin inline call to function frost.core.Bit.!():frost.core.Bit from Iterator.stub:47:6
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Bit.stub:37
+// begin inline call to function frost.core.Bit.!():frost.core.Bit from Iterator.frost:166:10
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
 _5 = _2.value;
 _6 = !_5;
 _7 = (frost$core$Bit) {_6};
@@ -121,7 +121,7 @@ _16 = *_15;
 _17 = &param0->mask;
 _18 = *_17;
 // begin inline call to function frost.core.UInt64.&&(other:frost.core.UInt64):frost.core.UInt64 from IntBitIterator.frost:23:29
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/UInt64.stub:124
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/UInt64.frost:166
 _21 = _16.value;
 _22 = _18.value;
 _23 = _21 & _22;
@@ -137,7 +137,7 @@ _33 = &param0->mask;
 _34 = *_33;
 _35 = (frost$core$UInt64) {1u};
 // begin inline call to function frost.core.UInt64.>>(other:frost.core.UInt64):frost.core.UInt64 from IntBitIterator.frost:24:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/UInt64.stub:154
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/UInt64.frost:202
 _38 = _34.value;
 _39 = _35.value;
 _40 = _38 >> _39;

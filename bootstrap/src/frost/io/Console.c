@@ -263,7 +263,7 @@ _56 = ((frost$core$Char8) _48.value);
 _57 = (frost$core$UInt8) {10u};
 _58 = frost$core$Char8$init$frost$core$UInt8(_57);
 // begin inline call to function frost.core.Char8.=(other:frost.core.Char8):frost.core.Bit from Console.frost:136:18
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Char8.stub:20
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:26
 _61 = _56.value;
 _62 = _58.value;
 _63 = _61 == _62;

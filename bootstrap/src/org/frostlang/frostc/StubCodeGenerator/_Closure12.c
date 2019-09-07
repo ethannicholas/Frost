@@ -77,7 +77,7 @@ _1 = ((org$frostlang$frostc$Symbol*) param1);
 _2 = &_1->name;
 _3 = *_2;
 // begin inline call to function frost.core.String.get_asString():frost.core.String from StubCodeGenerator.frost:191:52
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:112
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:390
 _6 = ((frost$core$Object*) _3);
 frost$core$Frost$ref$frost$core$Object$Q(_6);
 _9 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_3, &$s2);

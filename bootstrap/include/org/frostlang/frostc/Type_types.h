@@ -6,10 +6,11 @@ typedef struct frost$core$Class frost$core$Class;
 #include "org/frostlang/frostc/Symbol/Kind_types.h"
 #include "org/frostlang/frostc/Position_types.h"
 typedef struct frost$core$String frost$core$String;
+#include "frost/core/Int_types.h"
+#include "frost/core/Int8_types.h"
 #include "frost/core/Bit_types.h"
 #include "org/frostlang/frostc/Type/Kind_types.h"
 typedef struct org$frostlang$frostc$FixedArray org$frostlang$frostc$FixedArray;
-#include "frost/core/Int_types.h"
 typedef struct frost$core$Weak frost$core$Weak;
 typedef struct org$frostlang$frostc$MethodRef org$frostlang$frostc$MethodRef;
 
@@ -20,6 +21,8 @@ typedef struct org$frostlang$frostc$Type {
     org$frostlang$frostc$Symbol$Kind kind;
     org$frostlang$frostc$Position position;
     frost$core$String* name;
+    frost$core$Int RESOLVED;
+    frost$core$Int8 flags;
     frost$core$Bit resolved;
     org$frostlang$frostc$Type$Kind typeKind;
     org$frostlang$frostc$FixedArray* _subtypes;
@@ -29,6 +32,6 @@ typedef struct org$frostlang$frostc$Type {
     org$frostlang$frostc$MethodRef* methodRef;
 } org$frostlang$frostc$Type;
 #include "frost/core/Class.h"
-typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[30]; } org$frostlang$frostc$Type$class_type;
+typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[31]; } org$frostlang$frostc$Type$class_type;
 extern org$frostlang$frostc$Type$class_type org$frostlang$frostc$Type$class;
 

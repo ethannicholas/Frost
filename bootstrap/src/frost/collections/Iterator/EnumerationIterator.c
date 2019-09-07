@@ -124,7 +124,7 @@ while ($tmp6->$class != (frost$core$Class*) &frost$collections$Iterator$class) {
 _1 = $tmp6->methods[0];
 _2 = _1(_0);
 // begin inline call to function frost.core.Bit.!():frost.core.Bit from Iterator.frost:166:10
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Bit.stub:37
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
 _5 = _2.value;
 _6 = !_5;
 _7 = (frost$core$Bit) {_6};

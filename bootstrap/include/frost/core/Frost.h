@@ -14,8 +14,6 @@ typedef struct frost$collections$HashMap frost$collections$HashMap;
 #include "frost/core/Char32_types.h"
 #include "frost/core/Bit_types.h"
 typedef struct frost$collections$HashKey frost$collections$HashKey;
-typedef struct frost$collections$List frost$collections$List;
-typedef struct frost$core$MutableMethod frost$core$MutableMethod;
 
 void frost$core$Frost$init(frost$core$Frost* self);
 frost$core$Maybe* frost$core$Frost$success$frost$core$Object$R$frost$core$Maybe$LTfrost$core$Object$GT$Q(frost$core$Object* p_o);
@@ -44,7 +42,5 @@ void frost$core$Frost$debugPrint$builtin_int64(int64_t p_i);
 void frost$core$Frost$debugPrint$frost$core$Object(frost$core$Object* p_o);
 frost$core$String* frost$core$Frost$pointerConvert$frost$unsafe$Pointer$LTfrost$core$Object$Q$GT$R$frost$core$String(frost$core$Object** p_p);
 void frost$core$Frost$disableRefErrorReporting();
-void frost$core$Frost$swap$frost$collections$List$LTfrost$core$Frost$swap$T$GT$frost$core$Int$frost$core$Int(frost$collections$List* p_a, frost$core$Int p_i1, frost$core$Int p_i2);
-void frost$core$Frost$sort$frost$collections$List$LTfrost$core$Frost$sort$T$GT$frost$core$Int$frost$core$Int$$LPfrost$core$Frost$sort$T$Cfrost$core$Frost$sort$T$RP$EQ$AM$GT$LPfrost$core$Bit$RP(frost$collections$List* p_a, frost$core$Int p_left, frost$core$Int p_right, frost$core$MutableMethod* p_greater);
 void frost$core$Frost$cleanup(frost$core$Frost* self);
 

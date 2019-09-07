@@ -62,10 +62,10 @@ static frost$core$String $s30 = { (frost$core$Class*) &frost$core$String$class, 
 static frost$core$String $s31 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2c\x20\x62\x75\x74\x20\x66\x6f\x75\x6e\x64\x20\x27", 13, -2601544468634851439, NULL };
 static frost$core$String $s32 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x27", 1, -5808629440921371546, NULL };
 static frost$core$String $s33 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2f", 1, -5808620644828345858, NULL };
-static frost$core$String $s34 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x46\x69\x6c\x65\x2e\x73\x74\x75\x62", 9, 5794948594323210015, NULL };
+static frost$core$String $s34 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x46\x69\x6c\x65\x2e\x66\x72\x6f\x73\x74", 10, 1666587044368153811, NULL };
 static frost$core$String $s35 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x49\x6e\x64\x65\x78\x3f\x20\x74\x6f\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x49\x6e\x64\x65\x78", 85, -1074977990553908571, NULL };
 static frost$core$String $s36 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2f", 1, -5808620644828345858, NULL };
-static frost$core$String $s37 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x46\x69\x6c\x65\x2e\x73\x74\x75\x62", 9, 5794948594323210015, NULL };
+static frost$core$String $s37 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x46\x69\x6c\x65\x2e\x66\x72\x6f\x73\x74", 10, 1666587044368153811, NULL };
 static frost$core$String $s38 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x49\x6e\x64\x65\x78\x3f\x20\x74\x6f\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x49\x6e\x64\x65\x78", 85, -1074977990553908571, NULL };
 static frost$core$String $s40 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x5d", 1, -5808499698549242648, NULL };
 static frost$core$String $s45 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x61\x6e\x20\x69\x6e\x74\x65\x67\x65\x72", 10, 3145872080886222316, NULL };
@@ -347,7 +347,7 @@ _49 = $tmp3->methods[0];
 _50 = _49(_48);
 _51 = (frost$core$Int) {0u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from CollectionWriter.frost:37:17
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _54 = _50.value;
 _55 = _51.value;
 _56 = _54 == _55;
@@ -631,7 +631,7 @@ _4 = $tmp17->methods[0];
 _5 = _4(_3);
 _6 = (frost$core$Int) {0u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexParser.frost:50:33
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _9 = _5.value;
 _10 = _6.value;
 _11 = _9 == _10;
@@ -911,19 +911,19 @@ _47 = (frost$core$Int) {0u};
 _48 = &param0->path;
 _49 = *_48;
 // begin inline call to function frost.io.File.get_name():frost.core.String from RegexParser.frost:75:48
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/io/File.stub:35
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:148
 _52 = &_49->path;
 _53 = *_52;
 _54 = frost$core$String$lastIndexOf$frost$core$String$R$frost$core$String$Index$Q(_53, &$s33);
 *(&local2) = _54;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/io/File.stub:36
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:149
 _57 = *(&local2);
 _58 = _57.nonnull;
 _59 = (frost$core$Bit) {_58};
 _60 = _59.value;
 if (_60) goto block6; else goto block8;
 block6:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/io/File.stub:37
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:150
 _63 = &_49->path;
 _64 = *_63;
 _65 = &_49->path;
@@ -934,7 +934,7 @@ _69 = (frost$core$Bit) {_68};
 _70 = _69.value;
 if (_70) goto block9; else goto block10;
 block10:;
-_72 = (frost$core$Int) {37u};
+_72 = (frost$core$Int) {150u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s34, _72, &$s35);
 abort(); // unreachable
 block9:;
@@ -954,7 +954,7 @@ frost$core$Frost$ref$frost$core$Object$Q(_86);
 goto block5;
 block8:;
 // <no location>
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/io/File.stub:40
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:153
 _91 = &_49->path;
 _92 = *_91;
 _93 = ((frost$core$Object*) _92);
@@ -1058,22 +1058,22 @@ _5 = (frost$core$Int) {0u};
 _6 = &param0->path;
 _7 = *_6;
 // begin inline call to function frost.io.File.get_name():frost.core.String from RegexParser.frost:75:48
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/io/File.stub:35
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:148
 _10 = &_7->path;
 _11 = *_10;
-// begin inline call to function frost.core.String.lastIndexOf(s:frost.core.String):frost.core.String.Index? from File.stub:35:31
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:230
+// begin inline call to function frost.core.String.lastIndexOf(s:frost.core.String):frost.core.String.Index? from File.frost:148:38
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:1012
 _14 = frost$core$String$get_end$R$frost$core$String$Index(_11);
 _15 = frost$core$String$lastIndexOf$frost$core$String$frost$core$String$Index$R$frost$core$String$Index$Q(_11, &$s36, _14);
 *(&local1) = _15;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/io/File.stub:36
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:149
 _19 = *(&local1);
 _20 = _19.nonnull;
 _21 = (frost$core$Bit) {_20};
 _22 = _21.value;
 if (_22) goto block3; else goto block5;
 block3:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/io/File.stub:37
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:150
 _25 = &_7->path;
 _26 = *_25;
 _27 = &_7->path;
@@ -1084,7 +1084,7 @@ _31 = (frost$core$Bit) {_30};
 _32 = _31.value;
 if (_32) goto block6; else goto block7;
 block7:;
-_34 = (frost$core$Int) {37u};
+_34 = (frost$core$Int) {150u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s37, _34, &$s38);
 abort(); // unreachable
 block6:;
@@ -1104,7 +1104,7 @@ frost$core$Frost$ref$frost$core$Object$Q(_48);
 goto block1;
 block5:;
 // <no location>
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/io/File.stub:40
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:153
 _53 = &_7->path;
 _54 = *_53;
 _55 = ((frost$core$Object*) _54);
@@ -1550,7 +1550,7 @@ _5 = _4.kind;
 _6 = _5.$rawValue;
 _7 = (frost$core$Int) {5u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexParser.frost:117:33
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _10 = _6.value;
 _11 = _7.value;
 _12 = _10 == _11;
@@ -1560,7 +1560,7 @@ if (_15) goto block2; else goto block3;
 block3:;
 _17 = (frost$core$Int) {6u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexParser.frost:117:55
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _20 = _6.value;
 _21 = _17.value;
 _22 = _20 == _21;
@@ -1630,7 +1630,7 @@ return _73;
 block5:;
 _75 = (frost$core$Int) {7u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexParser.frost:121:33
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _78 = _6.value;
 _79 = _75.value;
 _80 = _78 == _79;
@@ -1644,7 +1644,7 @@ return _86;
 block13:;
 _88 = (frost$core$Int) {17u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexParser.frost:124:33
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _91 = _6.value;
 _92 = _88.value;
 _93 = _91 == _92;
@@ -1666,7 +1666,7 @@ _104 = $tmp56->methods[0];
 _105 = _104(_103);
 _106 = (frost$core$Int) {0u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexParser.frost:50:33
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _109 = _105.value;
 _110 = _106.value;
 _111 = _109 == _110;
@@ -1737,7 +1737,7 @@ _166 = _163.kind;
 _167 = _166.$rawValue;
 _168 = (frost$core$Int) {18u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexParser.frost:126:41
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _171 = _167.value;
 _172 = _168.value;
 _173 = _171 == _172;
@@ -1747,7 +1747,7 @@ if (_176) goto block28; else goto block29;
 block29:;
 _178 = (frost$core$Int) {19u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexParser.frost:126:67
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _181 = _167.value;
 _182 = _178.value;
 _183 = _181 == _182;
@@ -1757,7 +1757,7 @@ if (_186) goto block28; else goto block31;
 block31:;
 _188 = (frost$core$Int) {17u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexParser.frost:127:44
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _191 = _167.value;
 _192 = _188.value;
 _193 = _191 == _192;
@@ -2059,7 +2059,7 @@ _5 = _4.kind;
 _6 = _5.$rawValue;
 _7 = (frost$core$Int) {3u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexParser.frost:147:33
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _10 = _6.value;
 _11 = _7.value;
 _12 = _10 == _11;
@@ -2069,7 +2069,7 @@ if (_15) goto block2; else goto block3;
 block3:;
 _17 = (frost$core$Int) {4u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexParser.frost:147:57
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _20 = _6.value;
 _21 = _17.value;
 _22 = _20 == _21;
@@ -2079,7 +2079,7 @@ if (_25) goto block2; else goto block5;
 block5:;
 _27 = (frost$core$Int) {17u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexParser.frost:147:80
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _30 = _6.value;
 _31 = _27.value;
 _32 = _30 == _31;
@@ -2089,7 +2089,7 @@ if (_35) goto block2; else goto block7;
 block7:;
 _37 = (frost$core$Int) {16u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexParser.frost:148:36
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _40 = _6.value;
 _41 = _37.value;
 _42 = _40 == _41;
@@ -2099,7 +2099,7 @@ if (_45) goto block2; else goto block9;
 block9:;
 _47 = (frost$core$Int) {18u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexParser.frost:148:59
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _50 = _6.value;
 _51 = _47.value;
 _52 = _50 == _51;
@@ -2109,7 +2109,7 @@ if (_55) goto block2; else goto block11;
 block11:;
 _57 = (frost$core$Int) {19u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexParser.frost:148:85
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _60 = _6.value;
 _61 = _57.value;
 _62 = _60 == _61;
@@ -2119,7 +2119,7 @@ if (_65) goto block2; else goto block13;
 block13:;
 _67 = (frost$core$Int) {20u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexParser.frost:149:36
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _70 = _6.value;
 _71 = _67.value;
 _72 = _70 == _71;
@@ -2133,7 +2133,7 @@ return _78;
 block15:;
 _80 = (frost$core$Int) {8u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexParser.frost:152:33
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _83 = _6.value;
 _84 = _80.value;
 _85 = _83 == _84;
@@ -2286,7 +2286,7 @@ return _211;
 block18:;
 _213 = (frost$core$Int) {12u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexParser.frost:159:33
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _216 = _6.value;
 _217 = _213.value;
 _218 = _216 == _217;
@@ -2322,7 +2322,7 @@ return _246;
 block40:;
 _248 = (frost$core$Int) {10u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from RegexParser.frost:165:33
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _251 = _6.value;
 _252 = _248.value;
 _253 = _251 == _252;
@@ -3276,7 +3276,7 @@ _5 = $tmp83->methods[0];
 _6 = _5(_4);
 _7 = (frost$core$Int) {0u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from CollectionWriter.frost:37:17
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _10 = _6.value;
 _11 = _7.value;
 _12 = _10 == _11;

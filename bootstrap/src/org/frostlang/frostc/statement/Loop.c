@@ -267,7 +267,7 @@ _111 = *(&local0);
 _112 = ($fn21) _111->$class->vtable[5];
 _113 = _112(_111);
 // begin inline call to function frost.core.Bit.!():frost.core.Bit from Loop.frost:29:12
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Bit.stub:37
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
 _116 = _113.value;
 _117 = !_116;
 _118 = (frost$core$Bit) {_117};

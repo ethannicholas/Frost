@@ -96,7 +96,7 @@ _6 = &param0->type;
 _7 = *_6;
 _8 = ((frost$core$Object*) _7);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Alias.frost:14:16
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:155
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 _11 = ($fn5) _8->$class->vtable[0];
 _12 = _11(_8);
 _13 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_5, _12);

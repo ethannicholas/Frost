@@ -339,8 +339,10 @@ class Call {
             for i in 0 .. type.subtypes.count - 1 {
                 parameterTypes.add(type.subtypes[i].remap(compiler, map))
             }
-            return Type.methodType(compiler, type.position, type.typeKind, parameterTypes,
-                    type.returnType, type.priority)
+            def returnType := type.returnType.remap(compiler, map)
+            def result := Type.methodType(compiler, type.position, type.typeKind, parameterTypes,
+                    returnType, type.priority)
+            return result
         }
         return type
     }
@@ -349,6 +351,9 @@ class Call {
     method performTypeInference(compiler:Compiler, m:MethodRef, args:ListView<ASTNode>):MethodRef? {
         if !m.requiresTypeInference {
             return m
+        }
+        if m.value.parameters.count != args.count {
+            return null
         }
         def result := Array<Type>(m.value.genericParameters.map(p => p.bound))
         var updated := false
@@ -363,6 +368,7 @@ class Call {
                 def paramType := methodRemap(compiler, m.parameterType(i), remaps)
                 def generics := findGenericParameters(m.value, paramType.nonnullable())
                 if generics !== null {
+                    Console.printLine("generics: \{generics}")
                     for g in generics {
                         var argType := compiler.coercionCost(args[i], paramType)
                         if argType == null {
@@ -383,6 +389,7 @@ class Call {
                             updated := true
                         }
                     }
+                    Console.printLine("updated to: \{result}")
                 }
                 else if paramType.typeKind = Type.Kind.GENERIC_METHOD_PARAMETER {
                     var argType := compiler.coercionCost(args[i], paramType)
@@ -397,6 +404,45 @@ class Call {
                     if newType != result[parameterIndex] {
                         result[parameterIndex] := newType
                         updated := true
+                    }
+                }
+                else {
+                    match args[i] {
+                        when ASTNode.UNTYPED_LAMBDA(_, parameterNames, expr) {
+                            def rawType := m.parameterType(i).nonnullable()
+                            if rawType.isMethod {
+                                def returnGenerics := findGenericParameters(m.value,
+                                        rawType.returnType)
+                                if returnGenerics !== null {
+                                    unreachable
+                                }
+                                else if rawType.returnType.typeKind = Type.Kind.GENERIC_METHOD_PARAMETER {
+                                    def parameters := Array<ASTNode>()
+                                    for (i, n) in parameterNames.enumeration {
+                                        match n {
+                                            when ASTNode.IDENTIFIER(position, name) {
+                                                def t := compiler.literalType(rawType.parameterType(i))
+                                                parameters.add(ASTNode.PARAMETER(position,
+                                                        name, ASTNode.IR_WRAPPER(position, t)))
+                                            }
+                                            otherwise {
+                                                unreachable
+                                            }
+                                        }
+                                    }
+                                    def type := Closure.typedLambdaType(compiler, parameters, expr,
+                                            TypeContext.NON_VOID)
+                                    if type !== null {
+                                        var parameterIndex := 0
+                                        while Type(m.value.genericParameters[parameterIndex]) !=
+                                                rawType.returnType {
+                                            parameterIndex += 1
+                                        }
+                                        result[parameterIndex] := type.returnType
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -1183,7 +1229,7 @@ class Call {
             return compiler.coerce(position, resultCast, type)
         }
         if type != TypeContext.UNSPECIFIED {
-            compiler.error(position, "\{m.value.declaration} does not return a value")
+            compiler.error(position, "\{m.value.declaration} does not return a value (expected \{type})")
         }
         return null
     }

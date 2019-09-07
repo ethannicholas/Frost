@@ -150,7 +150,7 @@ frost$core$Object* _82;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/IndentedOutputStream.frost:51
 _3 = (frost$core$UInt8) {10u};
 // begin inline call to function frost.core.UInt8.=(other:frost.core.UInt8):frost.core.Bit from IndentedOutputStream.frost:51:18
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/UInt8.stub:542
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/UInt8.frost:643
 _6 = param1.value;
 _7 = _3.value;
 _8 = _6 == _7;
@@ -397,7 +397,7 @@ _20 = _19.value;
 _21 = param1[_20];
 _22 = (frost$core$UInt8) {10u};
 // begin inline call to function frost.core.UInt8.=(other:frost.core.UInt8):frost.core.Bit from IndentedOutputStream.frost:71:33
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/UInt8.stub:542
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/UInt8.frost:643
 _25 = _21.value;
 _26 = _22.value;
 _27 = _25 == _26;

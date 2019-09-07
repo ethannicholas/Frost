@@ -254,7 +254,7 @@ _7 = _6;
 _8 = &_7->bucketCount;
 _9 = *_8;
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from HashMap.frost:58:27
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _12 = _3.value;
 _13 = _9.value;
 _14 = _12 == _13;
@@ -540,7 +540,7 @@ _115 = _114;
 _116 = &_115->bucketCount;
 _117 = *_116;
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from HashMap.frost:69:27
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _120 = _111.value;
 _121 = _117.value;
 _122 = _120 == _121;

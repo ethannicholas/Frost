@@ -103,7 +103,7 @@ if (_8) goto block3; else goto block2;
 block3:;
 _10 = org$frostlang$frostc$Methods$containsDuplicates$frost$collections$ListView$LTorg$frostlang$frostc$MethodDecl$GT$R$frost$core$Bit(param1);
 // begin inline call to function frost.core.Bit.!():frost.core.Bit from Methods.frost:7:30
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Bit.stub:37
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
 _13 = _10.value;
 _14 = !_13;
 _15 = (frost$core$Bit) {_14};
@@ -319,7 +319,7 @@ _46 = *(&local1);
 _47 = org$frostlang$frostc$MethodDecl$get_signature$R$frost$core$String(_46);
 _48 = ((frost$collections$HashKey*) _47);
 // begin inline call to method frost.collections.HashSet.add(value:frost.collections.HashSet.T) from Methods.frost:18:21
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/collections/HashSet.stub:8
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashSet.frost:19
 _51 = &_45->contents;
 _52 = *_51;
 _53 = _52;
@@ -363,11 +363,11 @@ if (_81) goto block7; else goto block8;
 block7:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Methods.frost:21
 // begin inline call to method frost.io.Console.printLine(s:frost.core.String) from Methods.frost:21:30
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/io/Console.stub:25
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/Console.frost:45
 frost$io$Console$print$frost$core$String(&$s23);
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/io/Console.stub:26
-// begin inline call to method frost.io.Console.printLine() from Console.stub:26:10
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/io/Console.stub:38
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/Console.frost:46
+// begin inline call to method frost.io.Console.printLine() from Console.frost:46:18
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/Console.frost:70
 frost$io$Console$print$frost$core$String(&$s24);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Methods.frost:22
 _94 = ((frost$collections$Iterable*) param0);
@@ -410,11 +410,11 @@ frost$core$Frost$unref$frost$core$Object$Q(_113);
 _117 = *(&local2);
 _118 = org$frostlang$frostc$MethodDecl$get_declaration$R$frost$core$String(_117);
 // begin inline call to method frost.io.Console.printLine(s:frost.core.String) from Methods.frost:23:34
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/io/Console.stub:25
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/Console.frost:45
 frost$io$Console$print$frost$core$String(_118);
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/io/Console.stub:26
-// begin inline call to method frost.io.Console.printLine() from Console.stub:26:10
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/io/Console.stub:38
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/Console.frost:46
+// begin inline call to method frost.io.Console.printLine() from Console.frost:46:18
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/Console.frost:70
 frost$io$Console$print$frost$core$String(&$s28);
 _128 = ((frost$core$Object*) _118);
 frost$core$Frost$unref$frost$core$Object$Q(_128);

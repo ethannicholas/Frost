@@ -124,7 +124,7 @@ $tmp9 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &fros
 $tmp9->value = _28;
 _29 = ((frost$core$Object*) $tmp9);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Symbol.frost:25:78
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:155
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 _32 = ($fn10) _29->$class->vtable[0];
 _33 = _32(_29);
 _34 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(&$s11, _33);

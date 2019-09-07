@@ -117,7 +117,7 @@ $tmp5 = (frost$core$UInt8$wrapper*) frostObjectAlloc(17, (frost$core$Class*) &fr
 $tmp5->value = _19;
 _20 = ((frost$core$Object*) $tmp5);
 // begin inline call to method frost.core.MutableString.append(o:frost.core.Object) from Range.frost:39:26
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/MutableString.stub:46
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/MutableString.frost:150
 _23 = ($fn6) _20->$class->vtable[0];
 _24 = _23(_20);
 frost$core$MutableString$append$frost$core$String(_18, _24);
@@ -157,7 +157,7 @@ $tmp9 = (frost$core$UInt8$wrapper*) frostObjectAlloc(17, (frost$core$Class*) &fr
 $tmp9->value = _52;
 _53 = ((frost$core$Object*) $tmp9);
 // begin inline call to method frost.core.MutableString.append(o:frost.core.Object) from Range.frost:48:26
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/MutableString.stub:46
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/MutableString.frost:150
 _56 = ($fn10) _53->$class->vtable[0];
 _57 = _56(_53);
 frost$core$MutableString$append$frost$core$String(_51, _57);

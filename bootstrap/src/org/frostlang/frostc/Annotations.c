@@ -77,18 +77,19 @@ bool _13;
 frost$core$Int _15;
 frost$collections$ListView* _18;
 frost$collections$CollectionView* _19;
-frost$collections$Array* _21;
-frost$core$Object* _22;
-frost$collections$Array** _24;
-frost$collections$Array* _25;
-frost$core$Object* _26;
-frost$collections$Array** _28;
-frost$core$Object* _30;
-frost$core$Object* _35;
-frost$collections$Array** _37;
-frost$collections$Array* _38;
-frost$core$Object* _39;
-frost$collections$Array** _41;
+frost$collections$CollectionView* _20;
+frost$collections$Array* _22;
+frost$core$Object* _23;
+frost$collections$Array** _25;
+frost$collections$Array* _26;
+frost$core$Object* _27;
+frost$collections$Array** _29;
+frost$core$Object* _31;
+frost$core$Object* _36;
+frost$collections$Array** _38;
+frost$collections$Array* _39;
+frost$core$Object* _40;
+frost$collections$Array** _42;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:96
 _1 = &param0->flags;
 *_1 = param1;
@@ -113,30 +114,31 @@ abort(); // unreachable
 block4:;
 _18 = param2;
 _19 = ((frost$collections$CollectionView*) _18);
-frost$collections$Array$init$frost$collections$CollectionView$LTfrost$collections$Array$T$GT(_10, _19);
-_21 = _9;
-_22 = ((frost$core$Object*) _21);
-frost$core$Frost$ref$frost$core$Object$Q(_22);
-_24 = &param0->expressions;
-_25 = *_24;
-_26 = ((frost$core$Object*) _25);
-frost$core$Frost$unref$frost$core$Object$Q(_26);
-_28 = &param0->expressions;
-*_28 = _21;
-_30 = ((frost$core$Object*) _9);
-frost$core$Frost$unref$frost$core$Object$Q(_30);
+_20 = _19;
+frost$collections$Array$init$frost$collections$CollectionView$LTfrost$collections$Array$T$GT(_10, _20);
+_22 = _9;
+_23 = ((frost$core$Object*) _22);
+frost$core$Frost$ref$frost$core$Object$Q(_23);
+_25 = &param0->expressions;
+_26 = *_25;
+_27 = ((frost$core$Object*) _26);
+frost$core$Frost$unref$frost$core$Object$Q(_27);
+_29 = &param0->expressions;
+*_29 = _22;
+_31 = ((frost$core$Object*) _9);
+frost$core$Frost$unref$frost$core$Object$Q(_31);
 goto block2;
 block3:;
 // <no location>
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:101
-_35 = ((frost$core$Object*) ((frost$collections$Array*) NULL));
-frost$core$Frost$ref$frost$core$Object$Q(_35);
-_37 = &param0->expressions;
-_38 = *_37;
-_39 = ((frost$core$Object*) _38);
-frost$core$Frost$unref$frost$core$Object$Q(_39);
-_41 = &param0->expressions;
-*_41 = ((frost$collections$Array*) NULL);
+_36 = ((frost$core$Object*) ((frost$collections$Array*) NULL));
+frost$core$Frost$ref$frost$core$Object$Q(_36);
+_38 = &param0->expressions;
+_39 = *_38;
+_40 = ((frost$core$Object*) _39);
+frost$core$Frost$unref$frost$core$Object$Q(_40);
+_42 = &param0->expressions;
+*_42 = ((frost$collections$Array*) NULL);
 goto block2;
 block2:;
 return;
@@ -195,7 +197,7 @@ _1 = &param0->flags;
 _2 = *_1;
 _3 = (frost$core$Int) {2u};
 // begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:110:22
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:231
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 _6 = _2.value;
 _7 = _3.value;
 _8 = _6 & _7;
@@ -227,7 +229,7 @@ _1 = &param0->flags;
 _2 = *_1;
 _3 = (frost$core$Int) {4u};
 // begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:114:22
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:231
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 _6 = _2.value;
 _7 = _3.value;
 _8 = _6 & _7;
@@ -259,7 +261,7 @@ _1 = &param0->flags;
 _2 = *_1;
 _3 = (frost$core$Int) {8u};
 // begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:118:22
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:231
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 _6 = _2.value;
 _7 = _3.value;
 _8 = _6 & _7;
@@ -291,7 +293,7 @@ _1 = &param0->flags;
 _2 = *_1;
 _3 = (frost$core$Int) {16u};
 // begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:122:22
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:231
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 _6 = _2.value;
 _7 = _3.value;
 _8 = _6 & _7;
@@ -323,7 +325,7 @@ _1 = &param0->flags;
 _2 = *_1;
 _3 = (frost$core$Int) {32u};
 // begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:126:22
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:231
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 _6 = _2.value;
 _7 = _3.value;
 _8 = _6 & _7;
@@ -355,7 +357,7 @@ _1 = &param0->flags;
 _2 = *_1;
 _3 = (frost$core$Int) {64u};
 // begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:130:22
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:231
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 _6 = _2.value;
 _7 = _3.value;
 _8 = _6 & _7;
@@ -387,7 +389,7 @@ _1 = &param0->flags;
 _2 = *_1;
 _3 = (frost$core$Int) {128u};
 // begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:134:22
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:231
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 _6 = _2.value;
 _7 = _3.value;
 _8 = _6 & _7;
@@ -419,7 +421,7 @@ _1 = &param0->flags;
 _2 = *_1;
 _3 = (frost$core$Int) {256u};
 // begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:138:22
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:231
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 _6 = _2.value;
 _7 = _3.value;
 _8 = _6 & _7;
@@ -451,7 +453,7 @@ _1 = &param0->flags;
 _2 = *_1;
 _3 = (frost$core$Int) {512u};
 // begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:142:22
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:231
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 _6 = _2.value;
 _7 = _3.value;
 _8 = _6 & _7;
@@ -483,7 +485,7 @@ _1 = &param0->flags;
 _2 = *_1;
 _3 = (frost$core$Int) {1024u};
 // begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:146:22
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:231
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 _6 = _2.value;
 _7 = _3.value;
 _8 = _6 & _7;
@@ -515,7 +517,7 @@ _1 = &param0->flags;
 _2 = *_1;
 _3 = (frost$core$Int) {2048u};
 // begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:150:22
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:231
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 _6 = _2.value;
 _7 = _3.value;
 _8 = _6 & _7;
@@ -547,7 +549,7 @@ _1 = &param0->flags;
 _2 = *_1;
 _3 = (frost$core$Int) {4096u};
 // begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:154:22
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:231
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 _6 = _2.value;
 _7 = _3.value;
 _8 = _6 & _7;
@@ -579,7 +581,7 @@ _1 = &param0->flags;
 _2 = *_1;
 _3 = (frost$core$Int) {8192u};
 // begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:158:22
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:231
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 _6 = _2.value;
 _7 = _3.value;
 _8 = _6 & _7;
@@ -611,7 +613,7 @@ _1 = &param0->flags;
 _2 = *_1;
 _3 = (frost$core$Int) {16384u};
 // begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:162:22
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:231
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 _6 = _2.value;
 _7 = _3.value;
 _8 = _6 & _7;
@@ -643,7 +645,7 @@ _1 = &param0->flags;
 _2 = *_1;
 _3 = (frost$core$Int) {32768u};
 // begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:166:22
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:231
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 _6 = _2.value;
 _7 = _3.value;
 _8 = _6 & _7;
@@ -675,7 +677,7 @@ _1 = &param0->flags;
 _2 = *_1;
 _3 = (frost$core$Int) {65536u};
 // begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:170:22
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:231
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 _6 = _2.value;
 _7 = _3.value;
 _8 = _6 & _7;
@@ -707,7 +709,7 @@ _1 = &param0->flags;
 _2 = *_1;
 _3 = (frost$core$Int) {131072u};
 // begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:174:22
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:231
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 _6 = _2.value;
 _7 = _3.value;
 _8 = _6 & _7;
@@ -739,7 +741,7 @@ _1 = &param0->flags;
 _2 = *_1;
 _3 = (frost$core$Int) {262144u};
 // begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:178:22
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:231
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 _6 = _2.value;
 _7 = _3.value;
 _8 = _6 & _7;
@@ -1064,7 +1066,7 @@ _15 = &param0->flags;
 _16 = *_15;
 _17 = (frost$core$Int) {2u};
 // begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:110:22
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:231
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 _20 = _16.value;
 _21 = _17.value;
 _22 = _20 & _21;
@@ -1089,7 +1091,7 @@ _40 = &param0->flags;
 _41 = *_40;
 _42 = (frost$core$Int) {4u};
 // begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:114:22
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:231
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 _45 = _41.value;
 _46 = _42.value;
 _47 = _45 & _46;
@@ -1114,7 +1116,7 @@ _65 = &param0->flags;
 _66 = *_65;
 _67 = (frost$core$Int) {8u};
 // begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:118:22
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:231
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 _70 = _66.value;
 _71 = _67.value;
 _72 = _70 & _71;
@@ -1139,7 +1141,7 @@ _90 = &param0->flags;
 _91 = *_90;
 _92 = (frost$core$Int) {16u};
 // begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:122:22
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:231
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 _95 = _91.value;
 _96 = _92.value;
 _97 = _95 & _96;
@@ -1164,7 +1166,7 @@ _115 = &param0->flags;
 _116 = *_115;
 _117 = (frost$core$Int) {32u};
 // begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:126:22
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:231
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 _120 = _116.value;
 _121 = _117.value;
 _122 = _120 & _121;
@@ -1189,7 +1191,7 @@ _140 = &param0->flags;
 _141 = *_140;
 _142 = (frost$core$Int) {64u};
 // begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:130:22
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:231
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 _145 = _141.value;
 _146 = _142.value;
 _147 = _145 & _146;
@@ -1214,7 +1216,7 @@ _165 = &param0->flags;
 _166 = *_165;
 _167 = (frost$core$Int) {128u};
 // begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:134:22
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:231
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 _170 = _166.value;
 _171 = _167.value;
 _172 = _170 & _171;
@@ -1239,7 +1241,7 @@ _190 = &param0->flags;
 _191 = *_190;
 _192 = (frost$core$Int) {256u};
 // begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:138:22
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:231
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 _195 = _191.value;
 _196 = _192.value;
 _197 = _195 & _196;
@@ -1264,7 +1266,7 @@ _215 = &param0->flags;
 _216 = *_215;
 _217 = (frost$core$Int) {512u};
 // begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:142:22
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:231
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 _220 = _216.value;
 _221 = _217.value;
 _222 = _220 & _221;
@@ -1289,7 +1291,7 @@ _240 = &param0->flags;
 _241 = *_240;
 _242 = (frost$core$Int) {1024u};
 // begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:146:22
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:231
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 _245 = _241.value;
 _246 = _242.value;
 _247 = _245 & _246;
@@ -1314,7 +1316,7 @@ _265 = &param0->flags;
 _266 = *_265;
 _267 = (frost$core$Int) {2048u};
 // begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:150:22
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:231
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 _270 = _266.value;
 _271 = _267.value;
 _272 = _270 & _271;
@@ -1339,7 +1341,7 @@ _290 = &param0->flags;
 _291 = *_290;
 _292 = (frost$core$Int) {4096u};
 // begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:154:22
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:231
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 _295 = _291.value;
 _296 = _292.value;
 _297 = _295 & _296;
@@ -1364,7 +1366,7 @@ _315 = &param0->flags;
 _316 = *_315;
 _317 = (frost$core$Int) {8192u};
 // begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:158:22
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:231
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 _320 = _316.value;
 _321 = _317.value;
 _322 = _320 & _321;
@@ -1389,7 +1391,7 @@ _340 = &param0->flags;
 _341 = *_340;
 _342 = (frost$core$Int) {16384u};
 // begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:162:22
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:231
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 _345 = _341.value;
 _346 = _342.value;
 _347 = _345 & _346;
@@ -1414,7 +1416,7 @@ _365 = &param0->flags;
 _366 = *_365;
 _367 = (frost$core$Int) {32768u};
 // begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:166:22
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:231
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 _370 = _366.value;
 _371 = _367.value;
 _372 = _370 & _371;
@@ -1439,7 +1441,7 @@ _390 = &param0->flags;
 _391 = *_390;
 _392 = (frost$core$Int) {65536u};
 // begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:170:22
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:231
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 _395 = _391.value;
 _396 = _392.value;
 _397 = _395 & _396;
@@ -1464,7 +1466,7 @@ _415 = &param0->flags;
 _416 = *_415;
 _417 = (frost$core$Int) {262144u};
 // begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:178:22
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:231
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 _420 = _416.value;
 _421 = _417.value;
 _422 = _420 & _421;

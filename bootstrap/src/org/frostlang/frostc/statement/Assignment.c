@@ -299,7 +299,7 @@ frost$core$Object* _417;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/statement/Assignment.frost:16
 _1 = org$frostlang$frostc$expression$Binary$Operator$get_isAssignment$R$frost$core$Bit(param3);
 // begin inline call to function frost.core.Bit.!():frost.core.Bit from Assignment.frost:16:12
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Bit.stub:37
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
 _4 = _1.value;
 _5 = !_4;
 _6 = (frost$core$Bit) {_5};
@@ -347,7 +347,7 @@ _36 = &param2->$rawValue;
 _37 = *_36;
 _38 = (frost$core$Int) {5u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Assignment.frost:22:29
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _41 = _37.value;
 _42 = _38.value;
 _43 = _41 == _42;

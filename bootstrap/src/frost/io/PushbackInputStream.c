@@ -36,7 +36,7 @@ typedef frost$core$Int (*$fn32)(frost$collections$CollectionView*);
 typedef frost$core$Object* (*$fn33)(frost$collections$ListView*, frost$core$Int);
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x69\x6f\x2e\x50\x75\x73\x68\x62\x61\x63\x6b\x49\x6e\x70\x75\x74\x53\x74\x72\x65\x61\x6d", 28, 8789994324960517746, NULL };
-static frost$core$String $s10 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x41\x72\x72\x61\x79\x2e\x73\x74\x75\x62", 10, -775704626125802412, NULL };
+static frost$core$String $s10 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x41\x72\x72\x61\x79\x2e\x66\x72\x6f\x73\x74", 11, -1919842861654168654, NULL };
 static frost$core$String $s11 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x5b\x5d\x28\x69\x6e\x64\x65\x78\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x54", 108, 4065685528380894665, NULL };
 
 void frost$io$PushbackInputStream$init$frost$io$InputStream(frost$io$PushbackInputStream* param0, frost$io$InputStream* param1) {
@@ -216,11 +216,11 @@ _41 = (frost$core$Bit) {_40};
 _42 = _41.value;
 if (_42) goto block4; else goto block5;
 block5:;
-_44 = (frost$core$Int) {22u};
+_44 = (frost$core$Int) {74u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s10, _44, &$s11);
 abort(); // unreachable
 block4:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/collections/Array.stub:23
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Array.frost:75
 _48 = &_16->data;
 _49 = *_48;
 _50 = frost$core$Int64$init$frost$core$Int(_26);
@@ -303,7 +303,7 @@ _1 = &param0->pushbackBuffer;
 _2 = *_1;
 _3 = _2;
 // begin inline call to function frost.core.Int8.get_asUInt8():frost.core.UInt8 from PushbackInputStream.frost:60:29
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int8.stub:1005
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int8.frost:1208
 _6 = param1.value;
 _7 = ((uint8_t) _6);
 _8 = (frost$core$UInt8) {_7};
@@ -432,7 +432,7 @@ _13 = _12.start;
 _15 = _12.end;
 _16 = _12.step;
 // begin inline call to function frost.core.Int.-():frost.core.Int from PushbackInputStream.frost:69:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:87
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:120
 _19 = _16.value;
 _20 = -_19;
 _21 = (frost$core$Int) {_20};
@@ -673,7 +673,7 @@ _13 = _12.start;
 _15 = _12.end;
 _16 = _12.step;
 // begin inline call to function frost.core.Int.-():frost.core.Int from PushbackInputStream.frost:80:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:87
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:120
 _19 = _16.value;
 _20 = -_19;
 _21 = (frost$core$Int) {_20};
@@ -735,7 +735,7 @@ _66 = &param0->pushbackBuffer;
 _67 = *_66;
 _68 = _67;
 // begin inline call to function frost.core.Int8.get_asUInt8():frost.core.UInt8 from PushbackInputStream.frost:60:29
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int8.stub:1005
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int8.frost:1208
 _71 = _63.value;
 _72 = ((uint8_t) _71);
 _73 = (frost$core$UInt8) {_72};
@@ -812,7 +812,7 @@ frost$core$Object* _11;
 frost$core$Object* _13;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/PushbackInputStream.frost:91
 // begin inline call to function frost.core.Char8.get_asUInt8():frost.core.UInt8 from PushbackInputStream.frost:91:19
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Char8.stub:103
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:126
 _3 = param1.value;
 _4 = (frost$core$UInt8) {_3};
 // begin inline call to method frost.io.PushbackInputStream.pushback(v:frost.core.UInt8) from PushbackInputStream.frost:91:17
@@ -947,7 +947,7 @@ _13 = _12.start;
 _15 = _12.end;
 _16 = _12.step;
 // begin inline call to function frost.core.Int.-():frost.core.Int from PushbackInputStream.frost:100:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:87
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:120
 _19 = _16.value;
 _20 = -_19;
 _21 = (frost$core$Int) {_20};
@@ -1006,7 +1006,7 @@ _63 = ((frost$core$Char8$wrapper*) _62)->value;
 // begin inline call to method frost.io.PushbackInputStream.pushback(c:frost.core.Char8) from PushbackInputStream.frost:101:21
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/PushbackInputStream.frost:91
 // begin inline call to function frost.core.Char8.get_asUInt8():frost.core.UInt8 from PushbackInputStream.frost:91:19
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Char8.stub:103
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:126
 _68 = _63.value;
 _69 = (frost$core$UInt8) {_68};
 // begin inline call to method frost.io.PushbackInputStream.pushback(v:frost.core.UInt8) from PushbackInputStream.frost:91:17
@@ -1172,7 +1172,7 @@ frost$core$Int _123;
 frost$core$Object* _127;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/PushbackInputStream.frost:111
 // begin inline call to function frost.core.String.get_utf8():frost.collections.ListView<frost.core.Char8> from PushbackInputStream.frost:111:19
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:126
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:458
 FROST_ASSERT(24 == sizeof(frost$core$String$UTF8List));
 _3 = (frost$core$String$UTF8List*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$String$UTF8List$class);
 frost$core$String$UTF8List$init$frost$core$String(_3, param1);
@@ -1204,7 +1204,7 @@ _25 = _24.start;
 _27 = _24.end;
 _28 = _24.step;
 // begin inline call to function frost.core.Int.-():frost.core.Int from PushbackInputStream.frost:100:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:87
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:120
 _31 = _28.value;
 _32 = -_31;
 _33 = (frost$core$Int) {_32};

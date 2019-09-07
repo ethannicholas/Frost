@@ -255,7 +255,7 @@ _7 = _6;
 _8 = &_7->bucketCount;
 _9 = *_8;
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from IdentityMap.frost:52:27
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _12 = _3.value;
 _13 = _9.value;
 _14 = _12 == _13;
@@ -418,7 +418,7 @@ while ($tmp3->$class != (frost$core$Class*) &frost$collections$Iterator$class) {
 _1 = $tmp3->methods[0];
 _2 = _1(_0);
 // begin inline call to function frost.core.Bit.!():frost.core.Bit from Iterator.frost:166:10
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Bit.stub:37
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
 _5 = _2.value;
 _6 = !_5;
 _7 = (frost$core$Bit) {_6};
@@ -534,7 +534,7 @@ _107 = _106;
 _108 = &_107->bucketCount;
 _109 = *_108;
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from IdentityMap.frost:63:27
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _112 = _103.value;
 _113 = _109.value;
 _114 = _112 == _113;

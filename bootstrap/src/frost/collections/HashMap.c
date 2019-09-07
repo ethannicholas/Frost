@@ -845,7 +845,7 @@ _17 = *(&local0);
 _18 = *(&local0);
 _19 = (frost$core$Int) {20u};
 // begin inline call to function frost.core.Int.>>(other:frost.core.Int):frost.core.Int from HashMap.frost:149:18
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:316
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:395
 _22 = _18.value;
 _23 = _19.value;
 _24 = _22 >> _23;
@@ -853,13 +853,13 @@ _25 = (frost$core$Int) {_24};
 _27 = *(&local0);
 _28 = (frost$core$Int) {12u};
 // begin inline call to function frost.core.Int.>>(other:frost.core.Int):frost.core.Int from HashMap.frost:149:32
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:316
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:395
 _31 = _27.value;
 _32 = _28.value;
 _33 = _31 >> _32;
 _34 = (frost$core$Int) {_33};
 // begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from HashMap.frost:149:26
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:291
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:365
 _38 = _25.value;
 _39 = _34.value;
 _40 = _38 ^ _39;
@@ -867,13 +867,13 @@ _41 = (frost$core$Int) {_40};
 _43 = *(&local0);
 _44 = (frost$core$Int) {7u};
 // begin inline call to function frost.core.Int.>>(other:frost.core.Int):frost.core.Int from HashMap.frost:149:46
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:316
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:395
 _47 = _43.value;
 _48 = _44.value;
 _49 = _47 >> _48;
 _50 = (frost$core$Int) {_49};
 // begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from HashMap.frost:149:40
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:291
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:365
 _54 = _41.value;
 _55 = _50.value;
 _56 = _54 ^ _55;
@@ -881,19 +881,19 @@ _57 = (frost$core$Int) {_56};
 _59 = *(&local0);
 _60 = (frost$core$Int) {4u};
 // begin inline call to function frost.core.Int.>>(other:frost.core.Int):frost.core.Int from HashMap.frost:149:59
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:316
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:395
 _63 = _59.value;
 _64 = _60.value;
 _65 = _63 >> _64;
 _66 = (frost$core$Int) {_65};
 // begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from HashMap.frost:149:53
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:291
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:365
 _70 = _57.value;
 _71 = _66.value;
 _72 = _70 ^ _71;
 _73 = (frost$core$Int) {_72};
 // begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from HashMap.frost:149:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:291
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:365
 _77 = _17.value;
 _78 = _73.value;
 _79 = _77 ^ _78;
@@ -910,7 +910,7 @@ _90 = _88.value;
 _91 = _89 - _90;
 _92 = (frost$core$Int) {_91};
 // begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from HashMap.frost:152:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:231
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 _95 = _84.value;
 _96 = _92.value;
 _97 = _95 & _96;
@@ -3874,7 +3874,7 @@ _103 = *_102;
 _104 = _103;
 _105 = ((frost$core$Object*) _104);
 // begin inline call to method frost.core.MutableString.append(o:frost.core.Object) from HashMap.frost:328:34
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/MutableString.stub:46
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/MutableString.frost:150
 _108 = ($fn98) _105->$class->vtable[0];
 _109 = _108(_105);
 frost$core$MutableString$append$frost$core$String(_92, _109);
@@ -3928,7 +3928,7 @@ _151 = *_150;
 _152 = _151;
 _153 = _152;
 // begin inline call to method frost.core.MutableString.append(o:frost.core.Object) from HashMap.frost:335:34
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/MutableString.stub:46
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/MutableString.frost:150
 _156 = ($fn105) _153->$class->vtable[0];
 _157 = _156(_153);
 frost$core$MutableString$append$frost$core$String(_140, _157);

@@ -60,7 +60,7 @@ frost$core$Object* _8;
 _1 = &param0->$dummy2;
 _2 = *_1;
 // begin inline call to method frost.core.MutableString.append(o:frost.core.Object) from ASTNode.frost:586:35
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/MutableString.stub:46
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/MutableString.frost:150
 _5 = ($fn3) param1->$class->vtable[0];
 _6 = _5(param1);
 frost$core$MutableString$append$frost$core$String(_2, _6);

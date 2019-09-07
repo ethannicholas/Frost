@@ -248,7 +248,7 @@ while ($tmp10->$class != (frost$core$Class*) &frost$collections$Iterator$class) 
 _63 = $tmp10->methods[0];
 _64 = _63(_62);
 // begin inline call to function frost.core.Bit.!():frost.core.Bit from Iterator.frost:66:24
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Bit.stub:37
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
 _67 = _64.value;
 _68 = !_67;
 _69 = (frost$core$Bit) {_68};
@@ -374,7 +374,7 @@ while ($tmp16->$class != (frost$core$Class*) &frost$collections$Iterator$class) 
 _166 = $tmp16->methods[0];
 _167 = _166(_165);
 // begin inline call to function frost.core.Bit.!():frost.core.Bit from Iterator.frost:84:16
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Bit.stub:37
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
 _170 = _167.value;
 _171 = !_170;
 _172 = (frost$core$Bit) {_171};
@@ -566,7 +566,7 @@ while ($tmp21->$class != (frost$core$Class*) &frost$collections$Iterator$class) 
 _1 = $tmp21->methods[0];
 _2 = _1(_0);
 // begin inline call to function frost.core.Bit.!():frost.core.Bit from Iterator.frost:166:10
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Bit.stub:37
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
 _5 = _2.value;
 _6 = !_5;
 _7 = (frost$core$Bit) {_6};

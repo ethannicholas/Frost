@@ -124,7 +124,7 @@ frost$core$Int _29;
 _1 = param0.$rawValue;
 _2 = (frost$core$Int) {0u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from ByteOrder.frost:6:1
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _5 = _1.value;
 _6 = _2.value;
 _7 = _5 == _6;
@@ -138,7 +138,7 @@ return _13;
 block3:;
 _15 = (frost$core$Int) {1u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from ByteOrder.frost:6:1
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _18 = _1.value;
 _19 = _15.value;
 _20 = _18 == _19;
@@ -181,7 +181,7 @@ frost$core$Int _31;
 _1 = param0.$rawValue;
 _2 = (frost$core$Int) {0u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from ByteOrder.frost:6:1
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _5 = _1.value;
 _6 = _2.value;
 _7 = _5 == _6;
@@ -196,7 +196,7 @@ return &$s5;
 block3:;
 _16 = (frost$core$Int) {1u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from ByteOrder.frost:6:1
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _19 = _1.value;
 _20 = _16.value;
 _21 = _19 == _20;

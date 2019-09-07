@@ -136,7 +136,7 @@ static frost$core$String $s71 = { (frost$core$Class*) &frost$core$String$class, 
 static frost$core$String $s101 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x0a", 1, -5808579962898102051, NULL };
 static frost$core$String $s110 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x3c\x73\x70\x61\x6e\x20\x63\x6c\x61\x73\x73\x3d\x22\x6c\x69\x6e\x65\x4e\x75\x6d\x62\x65\x72\x22\x3e", 25, -8814482118997729913, NULL };
 static frost$core$String $s111 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x3c\x2f\x73\x70\x61\x6e\x3e\x20\x20", 9, 2697689956412709694, NULL };
-static frost$core$String $s113 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x41\x72\x72\x61\x79\x2e\x73\x74\x75\x62", 10, -775704626125802412, NULL };
+static frost$core$String $s113 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x41\x72\x72\x61\x79\x2e\x66\x72\x6f\x73\x74", 11, -1919842861654168654, NULL };
 static frost$core$String $s114 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x5b\x5d\x28\x69\x6e\x64\x65\x78\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x54", 108, 4065685528380894665, NULL };
 static frost$core$String $s115 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x0a", 1, -5808579962898102051, NULL };
 static frost$core$String $s117 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x3c\x68\x74\x6d\x6c\x3e", 6, 683364003274147512, NULL };
@@ -1024,7 +1024,7 @@ $tmp55 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, 
 $tmp55->value = _401;
 _402 = ((frost$core$Object*) $tmp55);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from HTMLProcessor.frost:72:31
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:155
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 _405 = ($fn56) _402->$class->vtable[0];
 _406 = _405(_402);
 _407 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(&$s57, _406);
@@ -1049,7 +1049,7 @@ _425 = *(&local0);
 _426 = *(&local7);
 _427 = ((frost$core$Object*) _426);
 // begin inline call to method frost.core.MutableString.append(o:frost.core.Object) from HTMLProcessor.frost:74:26
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/MutableString.stub:46
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/MutableString.frost:150
 _430 = ($fn59) _427->$class->vtable[0];
 _431 = _430(_427);
 frost$core$MutableString$append$frost$core$String(_425, _431);
@@ -1980,9 +1980,9 @@ block7:;
 _100 = *(&local1);
 _101 = _100;
 // begin inline call to method frost.threads.MessageQueue.hasMessage():frost.core.Bit from HTMLProcessor.frost:95:40
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/threads/MessageQueue.stub:25
-// begin inline call to method frost.threads.MessageQueue.pendingMessages():frost.core.Int from MessageQueue.stub:25:25
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/threads/MessageQueue.stub:20
+// /Users/ethannicholas/Dropbox/Frost/src/frost/threads/MessageQueue.frost:89
+// begin inline call to method frost.threads.MessageQueue.pendingMessages():frost.core.Int from MessageQueue.frost:89:31
+// /Users/ethannicholas/Dropbox/Frost/src/frost/threads/MessageQueue.frost:76
 FROST_ASSERT(24 == sizeof(frost$threads$ScopedLock));
 _106 = (frost$threads$ScopedLock*) frostObjectAlloc(24, (frost$core$Class*) &frost$threads$ScopedLock$class);
 _107 = &_101->lock;
@@ -1997,7 +1997,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_114);
 *(&local3) = _106;
 _117 = ((frost$core$Object*) _106);
 frost$core$Frost$unref$frost$core$Object$Q(_117);
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/threads/MessageQueue.stub:21
+// /Users/ethannicholas/Dropbox/Frost/src/frost/threads/MessageQueue.frost:77
 _120 = &_101->count;
 _121 = *_120;
 _122 = *(&local3);
@@ -2019,13 +2019,13 @@ _138 = frost$threads$MessageQueue$getMessage$R$frost$threads$MessageQueue$T(_137
 _139 = ((org$frostlang$frostc$Compiler$Message*) _138);
 _140 = ((frost$core$Object*) _139);
 // begin inline call to method frost.io.Console.printLine(o:frost.core.Object) from HTMLProcessor.frost:96:38
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/io/Console.stub:34
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/Console.frost:62
 _143 = ($fn100) _140->$class->vtable[0];
 _144 = _143(_140);
-// begin inline call to method frost.io.Console.printLine(s:frost.core.String) from Console.stub:34:48
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/io/Console.stub:25
+// begin inline call to method frost.io.Console.printLine(s:frost.core.String) from Console.frost:62:18
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/Console.frost:45
 frost$io$Console$print$frost$core$String(_144);
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/io/Console.stub:26
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/Console.frost:46
 frost$io$Console$printLine();
 _151 = ((frost$core$Object*) _144);
 frost$core$Frost$unref$frost$core$Object$Q(_151);
@@ -2039,7 +2039,7 @@ block6:;
 _159 = *(&local2);
 _160 = org$frostlang$frostc$HTMLProcessor$prettyPrint$org$frostlang$frostc$parser$Parser$R$frost$core$String(param0, _159);
 // begin inline call to function frost.core.String.split(delimiter:frost.core.String):frost.collections.Array<frost.core.String> from HTMLProcessor.frost:99:51
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:316
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:1378
 _163 = (frost$core$Int64) {9223372036854775807u};
 // begin inline call to function frost.core.Int64.get_asInt():frost.core.Int from Int.frost:22:34
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int64.frost:580
@@ -2078,7 +2078,7 @@ _192 = ((frost$core$Object*) $tmp103);
 _193 = ($fn104) _192->$class->vtable[0];
 _194 = _193(_192);
 // begin inline call to function frost.core.String.get_length():frost.core.Int from HTMLProcessor.frost:100:46
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:139
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:485
 _197 = ((frost$collections$Iterable*) _194);
 ITable* $tmp105 = _197->$class->itable;
 while ($tmp105->$class != (frost$core$Class*) &frost$collections$Iterable$class) {
@@ -2163,7 +2163,7 @@ _259 = ($fn109) _258->$class->vtable[0];
 _260 = _259(_258);
 _261 = *(&local5);
 // begin inline call to function frost.core.String.rightAlign(width:frost.core.Int):frost.core.String from HTMLProcessor.frost:103:62
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:304
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:1313
 _264 = (frost$core$Int32) {32u};
 _265 = frost$core$Char32$init$frost$core$Int32(_264);
 _266 = frost$core$String$rightAlign$frost$core$Int$frost$core$Char32$R$frost$core$String(_260, _261, _265);
@@ -2215,11 +2215,11 @@ _307 = (frost$core$Bit) {_306};
 _308 = _307.value;
 if (_308) goto block24; else goto block25;
 block25:;
-_310 = (frost$core$Int) {22u};
+_310 = (frost$core$Int) {74u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s113, _310, &$s114);
 abort(); // unreachable
 block24:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/collections/Array.stub:23
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Array.frost:75
 _314 = &_291->data;
 _315 = *_314;
 _316 = frost$core$Int64$init$frost$core$Int(_292);
@@ -3167,13 +3167,13 @@ block1:;
 _1181 = *(&local0);
 _1182 = ((frost$core$Object*) _1181);
 // begin inline call to method frost.io.Console.printLine(o:frost.core.Object) from HTMLProcessor.frost:126:30
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/io/Console.stub:34
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/Console.frost:62
 _1185 = ($fn186) _1182->$class->vtable[0];
 _1186 = _1185(_1182);
-// begin inline call to method frost.io.Console.printLine(s:frost.core.String) from Console.stub:34:48
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/io/Console.stub:25
+// begin inline call to method frost.io.Console.printLine(s:frost.core.String) from Console.frost:62:18
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/Console.frost:45
 frost$io$Console$print$frost$core$String(_1186);
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/io/Console.stub:26
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/Console.frost:46
 frost$io$Console$printLine();
 _1193 = ((frost$core$Object*) _1186);
 frost$core$Frost$unref$frost$core$Object$Q(_1193);

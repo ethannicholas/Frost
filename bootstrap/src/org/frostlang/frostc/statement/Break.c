@@ -103,7 +103,7 @@ _27 = &_26->$rawValue;
 _28 = *_27;
 _29 = (frost$core$Int) {1u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Break.frost:14:38
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _32 = _28.value;
 _33 = _29.value;
 _34 = _32 == _33;

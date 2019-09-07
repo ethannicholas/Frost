@@ -1620,8 +1620,8 @@ class Compiler {
                                 remapType(type, p.bound)))
                     }
                 }
-                def parameters := m.parameters.map(
-                        p => MethodDecl.Parameter(p.name, self.remapType(type, p.type)))
+                def parameters := m.parameters.map(p => MethodDecl.Parameter(p.name,
+                        self.remapType(type, p.type)))
                 def clone := MethodDecl(result, m.position, m.doccomment, m.annotations,
                         m.methodKind, m.name, generics, parameters, remapType(type, m.returnType),
                         m.body)
@@ -1893,6 +1893,11 @@ class Compiler {
         return cl.virtualMethods
     }
 
+    ================================================================================================
+    Return the concrete version of a type appearing in the context of another type. For instance,
+    if we reference `ListView<T>` from within the type `Array<String>`, we are really referring to
+    `ListView<String>`.
+    ================================================================================================
     method remapType(context:Type, raw:Type):Type {
         if context.isClassLiteral {
             return remapType(context.subtypes[1], raw)
@@ -2063,11 +2068,7 @@ class Compiler {
                 return null
             }
             when Type.Kind.GENERIC_METHOD_PARAMETER {
-                def raw := coercionCost(type, target.genericMethodParameter.bound)
-                if raw == null {
-                    return null
-                }
-                return Pair<Type, Int>(type, raw.second)
+                return null
             }
             when Type.Kind.CLASS {
                 if type.typeKind = Type.Kind.GENERIC {
@@ -2291,6 +2292,9 @@ class Compiler {
             var m := raw.nonnullable()
             if m.methodRef !== null & m.methodRef.value.genericParameters !== null {
                 def inferred := Call.performTypeInference(self, m.methodRef, args)
+                if inferred == null {
+                    continue
+                }
                 m := Type(inferred)
             }
             if m.typeKind != Type.Kind.METHOD &
@@ -3203,86 +3207,6 @@ class Compiler {
         return coercionCost(type, target)
     }
 
-    method typedLambdaCoercionCost(parameters:ListView<ASTNode>, body:ASTNode,
-            target:Type):Pair<Type, Int>? {
-        if !target.nonnullable().isMethod {
-            return coercionCost(MUTABLE_METHOD_TYPE, target)
-        }
-        if target.typeKind = Type.Kind.NULLABLE {
-            def result := typedLambdaCoercionCost(parameters, body, target.nonnullable())
-            if result == null {
-                return null
-            }
-            return Pair<Type, Int>(result.first, result.second + NONNULLABLE_TO_NULLABLE_CAST_COST)
-        }
-        if target.parameterCount != parameters.count {
-            return null
-        }
-        var cost := 0
-        for i in 0 .. parameters.count {
-            match parameters[i] {
-                when ASTNode.PARAMETER(_, _, type) {
-                    def resolved := tryResolveType(type)
-                    if resolved == null {
-                        return null
-                    }
-                    def parameterCost := coercionCost(target.parameterType(i), resolved)
-                    if parameterCost == null {
-                        return null
-                    }
-                    cost += parameterCost.second
-                }
-            }
-        }
-        def type := Closure.typedLambdaType(self, parameters, body, TypeContext.TYPE(target, false))
-        if type == null {
-            return null
-        }
-        def returnCost := coercionCost(type.returnType, target.returnType)
-        assert returnCost !== null
-        cost += returnCost.second
-        return Pair<Type, Int>(type, cost)
-    }
-
-    method untypedLambdaCoercionCost(parameters:ListView<ASTNode>, body:ASTNode,
-            target:Type):Pair<Type, Int>? {
-        if !target.nonnullable().isMethod {
-            return coercionCost(MUTABLE_METHOD_TYPE, target)
-        }
-        if target.typeKind = Type.Kind.NULLABLE {
-            def result := untypedLambdaCoercionCost(parameters, body, target.nonnullable())
-            if result == null {
-                return null
-            }
-            return Pair<Type, Int>(result.first, result.second + NONNULLABLE_TO_NULLABLE_CAST_COST)
-        }
-        if target.parameterCount != parameters.count {
-            return null
-        }
-        def typedParameters := Array<ASTNode>()
-        for i in 0 .. parameters.count {
-            match parameters[i] {
-                when ASTNode.IDENTIFIER(position, name) {
-                    typedParameters.add(ASTNode.PARAMETER(position, name,
-                            ASTNode.IR_WRAPPER(position, literalType(target.parameterType(i)))))
-                }
-                otherwise {
-                    unreachable
-                }
-            }
-        }
-        def result := typedLambdaCoercionCost(typedParameters, body, target)
-        if result == null {
-            var list := lambdaTypes[body]
-            if list == null {
-                list := HashSet<Type>()
-                lambdaTypes[body] := list
-            }
-            list.add(target)
-        }
-        return result
-    }
-
     method arrayCoercionCost(position:Position, elements:FixedArray<ASTNode>,
             target:Type):Pair<Type, Int>? {
         def t := getListType(target)
@@ -3500,13 +3424,13 @@ class Compiler {
                 return Tuple.coercionCost(self, args, target)
             }
             when ASTNode.TYPED_LAMBDA(_, parameters, body) {
-                return typedLambdaCoercionCost(parameters, body, target)
+                return Closure.typedLambdaCoercionCost(self, parameters, body, target)
             }
             when ASTNode.UNARY(position, op, operand) {
                 return Unary.coercionCost(self, position, op, operand, target)
             }
             when ASTNode.UNTYPED_LAMBDA(_, parameters, body) {
-                return untypedLambdaCoercionCost(parameters, body, target)
+                return Closure.untypedLambdaCoercionCost(self, parameters, body, target)
             }
             otherwise {
                 unreachable
@@ -4945,7 +4869,7 @@ class Compiler {
     resolving this expression using `compileExpression` will result in an actual `ImmutableMethod`
     object constructor.
     ================================================================================================
---    @post(typeMatch(@return, type) & (@return !== null | errorCount > 0 | !reportErrors))
+    @post(typeMatch(@return, type) & (@return !== null | errorCount > 0 | !reportErrors))
     method compileMethodExpression(expr:ASTNode, type:TypeContext):IR.Value? {
         match expr {
             when ASTNode.ARRAY(position, elements) {

@@ -85,7 +85,7 @@ while ($tmp3->$class != (frost$core$Class*) &frost$collections$CollectionView$cl
 _6 = $tmp3->methods[0];
 _7 = _6(_5);
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Main.frost:42:26
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _10 = _2.value;
 _11 = _7.value;
 _12 = _10 == _11;
@@ -129,7 +129,7 @@ frost$core$Object* _40;
 _1 = ($fn6) param0->$class->vtable[2];
 _2 = _1(param0);
 // begin inline call to function frost.core.Bit.!():frost.core.Bit from Main.frost:46:20
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Bit.stub:37
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
 _5 = _2.value;
 _6 = !_5;
 _7 = (frost$core$Bit) {_6};
@@ -247,11 +247,11 @@ _23 = ((frost$core$String*) _22);
 _24 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_7, _23);
 _25 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_24, &$s18);
 // begin inline call to method frost.io.Console.printErrorLine(s:frost.core.String) from Main.frost:53:39
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/io/Console.stub:45
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/Console.frost:85
 frost$io$Console$printError$frost$core$String(_25);
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/io/Console.stub:46
-// begin inline call to method frost.io.Console.printErrorLine() from Console.stub:46:15
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/io/Console.stub:58
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/Console.frost:86
+// begin inline call to method frost.io.Console.printErrorLine() from Console.frost:86:23
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/Console.frost:110
 frost$io$Console$printError$frost$core$String(&$s19);
 _35 = ((frost$core$Object*) _25);
 frost$core$Frost$unref$frost$core$Object$Q(_35);

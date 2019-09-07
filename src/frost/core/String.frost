@@ -1472,7 +1472,7 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
         }
         var result:Int64 := 0
         var start:Int
-        if data[0] = Char8(45) {
+        if data[0] = "-" {
             start := 1
         }
         else {
@@ -1485,7 +1485,7 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
             }
             result := result * 10 + digit
         }
-        if data[0] = Char8(45) {
+        if data[0] = "-" {
             result := -result
         }
         return result

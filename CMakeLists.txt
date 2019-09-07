@@ -378,6 +378,7 @@ add_library(c_frost
     bootstrap/src/frost/collections/IdentityMap/EntryIterator.c
     bootstrap/src/frost/collections/IdentityMap/Entry.c
     bootstrap/src/frost/collections/MapWriter.c
+    bootstrap/src/frost/collections/MergeSort.c
     bootstrap/src/frost/collections/Array.c
     bootstrap/src/frost/collections/Stack.c
     bootstrap/src/frost/collections/HashSet.c
@@ -886,6 +887,7 @@ set(public_source
 
 set(core_source
     ${public_source}
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/collections/MergeSort.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/Method.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/MutableMethod.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frost/core/Frost.frost

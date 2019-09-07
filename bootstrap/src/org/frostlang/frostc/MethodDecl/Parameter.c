@@ -101,7 +101,7 @@ frost$core$Object* _33;
 _1 = &param0->name;
 _2 = *_1;
 // begin inline call to function frost.core.String.get_asString():frost.core.String from MethodDecl.frost:28:23
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:112
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:390
 _5 = ((frost$core$Object*) _2);
 frost$core$Frost$ref$frost$core$Object$Q(_5);
 _8 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_2, &$s3);
@@ -109,7 +109,7 @@ _9 = &param0->type;
 _10 = *_9;
 _11 = ((frost$core$Object*) _10);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from MethodDecl.frost:28:23
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:155
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 _14 = ($fn4) _11->$class->vtable[0];
 _15 = _14(_11);
 _16 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_8, _15);

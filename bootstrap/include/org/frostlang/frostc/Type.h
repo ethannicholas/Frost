@@ -60,6 +60,7 @@ frost$core$Bit org$frostlang$frostc$Type$get_isNullable$R$frost$core$Bit(org$fro
 org$frostlang$frostc$Type* org$frostlang$frostc$Type$nullable$R$org$frostlang$frostc$Type(org$frostlang$frostc$Type* self);
 org$frostlang$frostc$Type* org$frostlang$frostc$Type$nonnullable$R$org$frostlang$frostc$Type(org$frostlang$frostc$Type* self);
 frost$core$Int org$frostlang$frostc$Type$get_parameterCount$R$frost$core$Int(org$frostlang$frostc$Type* self);
+frost$collections$ListView* org$frostlang$frostc$Type$get_parameterTypes$R$frost$collections$ListView$LTorg$frostlang$frostc$Type$GT(org$frostlang$frostc$Type* self);
 org$frostlang$frostc$Type* org$frostlang$frostc$Type$parameterType$frost$core$Int$R$org$frostlang$frostc$Type(org$frostlang$frostc$Type* self, frost$core$Int p_i);
 org$frostlang$frostc$Type* org$frostlang$frostc$Type$get_returnType$R$org$frostlang$frostc$Type(org$frostlang$frostc$Type* self);
 org$frostlang$frostc$Type* org$frostlang$frostc$Type$union$org$frostlang$frostc$Compiler$org$frostlang$frostc$Type$R$org$frostlang$frostc$Type(org$frostlang$frostc$Type* self, org$frostlang$frostc$Compiler* p_compiler, org$frostlang$frostc$Type* p_other);

@@ -22,7 +22,7 @@ org$frostlang$frostc$ChoiceCase$class_type org$frostlang$frostc$ChoiceCase$class
 
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x43\x68\x6f\x69\x63\x65\x43\x61\x73\x65", 31, -1681702743889979521, NULL };
-static frost$core$String $s2 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x73\x74\x75\x62", 9, -1038031786811403499, NULL };
+static frost$core$String $s2 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x66\x72\x6f\x73\x74", 10, -4036851284011595059, NULL };
 static frost$core$String $s3 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2e", 1, -5808619545316717647, NULL };
 static frost$core$String $s4 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "", 0, -3750763034362895579, NULL };
 
@@ -198,19 +198,19 @@ _1 = &param0->owner;
 _2 = *_1;
 _3 = _2;
 // begin inline call to method frost.core.Weak.get():frost.core.Weak.T from ChoiceCase.frost:30:19
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:16
-// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.stub:16:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:21
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
+// begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.frost:40:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:45
 _8 = &_3->_valid;
 _9 = *_8;
 _11 = _9.value;
 if (_11) goto block3; else goto block4;
 block4:;
-_13 = (frost$core$Int) {16u};
+_13 = (frost$core$Int) {40u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s2, _13);
 abort(); // unreachable
 block3:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Weak.stub:17
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:41
 _17 = &_3->value;
 _18 = *_17;
 _19 = _18;
@@ -220,7 +220,7 @@ _23 = ((org$frostlang$frostc$ClassDecl*) _19);
 _24 = &_23->name;
 _25 = *_24;
 // begin inline call to function frost.core.String.get_asString():frost.core.String from ChoiceCase.frost:30:24
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:112
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:390
 _28 = ((frost$core$Object*) _25);
 frost$core$Frost$ref$frost$core$Object$Q(_28);
 _31 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_25, &$s3);

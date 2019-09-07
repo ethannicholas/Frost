@@ -207,7 +207,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_49);
 _52 = *(&local2);
 _53 = org$frostlang$frostc$frostdoc$Markdown$isEmptyString$frost$core$String$Q$R$frost$core$Bit(_52);
 // begin inline call to function frost.core.Bit.!():frost.core.Bit from Markdown.frost:740:16
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Bit.stub:37
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
 _56 = _53.value;
 _57 = !_56;
 _58 = (frost$core$Bit) {_57};
@@ -255,7 +255,7 @@ frost$core$MutableString$trim(_94);
 _97 = *(&local1);
 _98 = ((frost$core$Object*) _97);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Markdown.frost:751:20
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:155
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 _101 = ($fn15) _98->$class->vtable[0];
 _102 = _101(_98);
 _103 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(&$s16, _102);

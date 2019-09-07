@@ -227,7 +227,7 @@ FROST_ASSERT(24 == sizeof(frost$core$RegularExpression));
 _42 = (frost$core$RegularExpression*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$RegularExpression$class);
 frost$core$RegularExpression$init$frost$core$String(_42, &$s9);
 // begin inline call to function frost.core.String.matches(regex:frost.core.RegularExpression):frost.core.Bit from Markdown.frost:689:37
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:236
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:1047
 _46 = frost$core$RegularExpression$matcher$frost$core$String$R$frost$core$Matcher(_42, _41);
 frost$core$Matcher$matches$R$frost$core$Bit(&_47, _46);
 _48 = ((frost$core$Object*) _46);
@@ -272,7 +272,7 @@ FROST_ASSERT(24 == sizeof(frost$core$RegularExpression));
 _82 = (frost$core$RegularExpression*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$RegularExpression$class);
 frost$core$RegularExpression$init$frost$core$String(_82, &$s16);
 // begin inline call to function frost.core.String.replace(search:frost.core.RegularExpression, replacement:frost.core.String):frost.core.String from Markdown.frost:698:37
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:258
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:1120
 _86 = (frost$core$Bit) {true};
 _87 = frost$core$String$replace$frost$core$RegularExpression$frost$core$String$frost$core$Bit$R$frost$core$String(_81, _82, &$s17, _86);
 _88 = ((frost$core$Object*) _87);

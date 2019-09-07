@@ -223,7 +223,7 @@ frost$core$Int _172;
 _1 = param0.$rawValue;
 _2 = (frost$core$Int) {0u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:6:5
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _5 = _1.value;
 _6 = _2.value;
 _7 = _5 == _6;
@@ -237,7 +237,7 @@ return _13;
 block3:;
 _15 = (frost$core$Int) {1u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:6:5
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _18 = _1.value;
 _19 = _15.value;
 _20 = _18 == _19;
@@ -251,7 +251,7 @@ return _26;
 block6:;
 _28 = (frost$core$Int) {2u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:6:5
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _31 = _1.value;
 _32 = _28.value;
 _33 = _31 == _32;
@@ -265,7 +265,7 @@ return _39;
 block9:;
 _41 = (frost$core$Int) {3u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:6:5
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _44 = _1.value;
 _45 = _41.value;
 _46 = _44 == _45;
@@ -279,7 +279,7 @@ return _52;
 block12:;
 _54 = (frost$core$Int) {4u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:6:5
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _57 = _1.value;
 _58 = _54.value;
 _59 = _57 == _58;
@@ -293,7 +293,7 @@ return _65;
 block15:;
 _67 = (frost$core$Int) {5u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:6:5
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _70 = _1.value;
 _71 = _67.value;
 _72 = _70 == _71;
@@ -307,7 +307,7 @@ return _78;
 block18:;
 _80 = (frost$core$Int) {6u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:6:5
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _83 = _1.value;
 _84 = _80.value;
 _85 = _83 == _84;
@@ -321,7 +321,7 @@ return _91;
 block21:;
 _93 = (frost$core$Int) {7u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:6:5
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _96 = _1.value;
 _97 = _93.value;
 _98 = _96 == _97;
@@ -335,7 +335,7 @@ return _104;
 block24:;
 _106 = (frost$core$Int) {8u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:6:5
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _109 = _1.value;
 _110 = _106.value;
 _111 = _109 == _110;
@@ -349,7 +349,7 @@ return _117;
 block27:;
 _119 = (frost$core$Int) {9u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:6:5
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _122 = _1.value;
 _123 = _119.value;
 _124 = _122 == _123;
@@ -363,7 +363,7 @@ return _130;
 block30:;
 _132 = (frost$core$Int) {10u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:6:5
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _135 = _1.value;
 _136 = _132.value;
 _137 = _135 == _136;
@@ -377,7 +377,7 @@ return _143;
 block33:;
 _145 = (frost$core$Int) {11u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:6:5
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _148 = _1.value;
 _149 = _145.value;
 _150 = _148 == _149;
@@ -391,7 +391,7 @@ return _156;
 block36:;
 _158 = (frost$core$Int) {12u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:6:5
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _161 = _1.value;
 _162 = _158.value;
 _163 = _161 == _162;
@@ -511,7 +511,7 @@ frost$core$Int _185;
 _1 = param0.$rawValue;
 _2 = (frost$core$Int) {0u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:6:5
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _5 = _1.value;
 _6 = _2.value;
 _7 = _5 == _6;
@@ -526,7 +526,7 @@ return &$s5;
 block3:;
 _16 = (frost$core$Int) {1u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:6:5
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _19 = _1.value;
 _20 = _16.value;
 _21 = _19 == _20;
@@ -541,7 +541,7 @@ return &$s7;
 block6:;
 _30 = (frost$core$Int) {2u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:6:5
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _33 = _1.value;
 _34 = _30.value;
 _35 = _33 == _34;
@@ -556,7 +556,7 @@ return &$s9;
 block9:;
 _44 = (frost$core$Int) {3u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:6:5
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _47 = _1.value;
 _48 = _44.value;
 _49 = _47 == _48;
@@ -571,7 +571,7 @@ return &$s11;
 block12:;
 _58 = (frost$core$Int) {4u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:6:5
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _61 = _1.value;
 _62 = _58.value;
 _63 = _61 == _62;
@@ -586,7 +586,7 @@ return &$s13;
 block15:;
 _72 = (frost$core$Int) {5u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:6:5
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _75 = _1.value;
 _76 = _72.value;
 _77 = _75 == _76;
@@ -601,7 +601,7 @@ return &$s15;
 block18:;
 _86 = (frost$core$Int) {6u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:6:5
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _89 = _1.value;
 _90 = _86.value;
 _91 = _89 == _90;
@@ -616,7 +616,7 @@ return &$s17;
 block21:;
 _100 = (frost$core$Int) {7u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:6:5
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _103 = _1.value;
 _104 = _100.value;
 _105 = _103 == _104;
@@ -631,7 +631,7 @@ return &$s19;
 block24:;
 _114 = (frost$core$Int) {8u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:6:5
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _117 = _1.value;
 _118 = _114.value;
 _119 = _117 == _118;
@@ -646,7 +646,7 @@ return &$s21;
 block27:;
 _128 = (frost$core$Int) {9u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:6:5
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _131 = _1.value;
 _132 = _128.value;
 _133 = _131 == _132;
@@ -661,7 +661,7 @@ return &$s23;
 block30:;
 _142 = (frost$core$Int) {10u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:6:5
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _145 = _1.value;
 _146 = _142.value;
 _147 = _145 == _146;
@@ -676,7 +676,7 @@ return &$s25;
 block33:;
 _156 = (frost$core$Int) {11u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:6:5
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _159 = _1.value;
 _160 = _156.value;
 _161 = _159 == _160;
@@ -691,7 +691,7 @@ return &$s27;
 block36:;
 _170 = (frost$core$Int) {12u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:6:5
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _173 = _1.value;
 _174 = _170.value;
 _175 = _173 == _174;

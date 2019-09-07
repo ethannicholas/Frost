@@ -87,10 +87,10 @@ static frost$core$String $s8 = { (frost$core$Class*) &frost$core$String$class, -
 static frost$core$String $s16 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x3c\x69\x6e\x74\x65\x72\x6e\x61\x6c\x3e\x3a", 11, 3848044038881794386, NULL };
 static frost$core$String $s17 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x3a", 1, -5808597555084153427, NULL };
 static frost$core$String $s20 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "", 0, -3750763034362895579, NULL };
-static frost$core$String $s22 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x41\x72\x72\x61\x79\x2e\x73\x74\x75\x62", 10, -775704626125802412, NULL };
+static frost$core$String $s22 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x41\x72\x72\x61\x79\x2e\x66\x72\x6f\x73\x74", 11, -1919842861654168654, NULL };
 static frost$core$String $s23 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x5b\x5d\x28\x69\x6e\x64\x65\x78\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x54", 108, 4065685528380894665, NULL };
 static frost$core$String $s24 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2f", 1, -5808620644828345858, NULL };
-static frost$core$String $s25 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x46\x69\x6c\x65\x2e\x73\x74\x75\x62", 9, 5794948594323210015, NULL };
+static frost$core$String $s25 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x46\x69\x6c\x65\x2e\x66\x72\x6f\x73\x74", 10, 1666587044368153811, NULL };
 static frost$core$String $s26 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x49\x6e\x64\x65\x78\x3f\x20\x74\x6f\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x49\x6e\x64\x65\x78", 85, -1074977990553908571, NULL };
 static frost$core$String $s27 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x3a", 1, -5808597555084153427, NULL };
 static frost$core$String $s30 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x3a", 1, -5808597555084153427, NULL };
@@ -215,7 +215,7 @@ frost$core$Bit _41;
 _1 = param0.file;
 _2 = param1.file;
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Position.frost:26:21
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _5 = _1.value;
 _6 = _2.value;
 _7 = _5 == _6;
@@ -226,7 +226,7 @@ block2:;
 _12 = param0.line;
 _13 = param1.line;
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Position.frost:26:41
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _16 = _12.value;
 _17 = _13.value;
 _18 = _16 == _17;
@@ -244,7 +244,7 @@ block6:;
 _28 = param0.column;
 _29 = param1.column;
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Position.frost:26:63
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _32 = _28.value;
 _33 = _29.value;
 _34 = _32 == _33;
@@ -338,7 +338,7 @@ frost$core$Int _14;
 _1 = param0.line;
 _2 = (frost$core$Int) {16u};
 // begin inline call to function frost.core.Int.<<(other:frost.core.Int):frost.core.Int from Position.frost:42:21
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:311
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:389
 _5 = _1.value;
 _6 = _2.value;
 _7 = _5 << _6;
@@ -381,7 +381,7 @@ $tmp6 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &fros
 $tmp6->value = _4;
 _5 = ((frost$core$Object*) $tmp6);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Position.frost:47:19
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:155
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 _8 = ($fn7) _5->$class->vtable[0];
 _9 = _8(_5);
 _10 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_3, _9);
@@ -537,7 +537,7 @@ frost$core$Object* _208;
 _1 = param0.file;
 _2 = (frost$core$Int) {18446744073709551615u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Position.frost:51:17
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _5 = _1.value;
 _6 = _2.value;
 _7 = _5 == _6;
@@ -552,7 +552,7 @@ $tmp14 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &fro
 $tmp14->value = _13;
 _14 = ((frost$core$Object*) $tmp14);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Position.frost:52:20
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:155
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 _17 = ($fn15) _14->$class->vtable[0];
 _18 = _17(_14);
 _19 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(&$s16, _18);
@@ -569,7 +569,7 @@ $tmp18 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &fro
 $tmp18->value = _28;
 _29 = ((frost$core$Object*) $tmp18);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Position.frost:52:20
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:155
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 _32 = ($fn19) _29->$class->vtable[0];
 _33 = _32(_29);
 _34 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_27, _33);
@@ -624,11 +624,11 @@ _77 = (frost$core$Bit) {_76};
 _78 = _77.value;
 if (_78) goto block7; else goto block8;
 block8:;
-_80 = (frost$core$Int) {22u};
+_80 = (frost$core$Int) {74u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s22, _80, &$s23);
 abort(); // unreachable
 block7:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/collections/Array.stub:23
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Array.frost:75
 _84 = &_61->data;
 _85 = *_84;
 _86 = frost$core$Int64$init$frost$core$Int(_62);
@@ -638,22 +638,22 @@ _89 = _88;
 frost$core$Frost$ref$frost$core$Object$Q(_89);
 _92 = ((frost$io$File*) _88);
 // begin inline call to function frost.io.File.get_name():frost.core.String from Position.frost:54:39
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/io/File.stub:35
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:148
 _95 = &_92->path;
 _96 = *_95;
-// begin inline call to function frost.core.String.lastIndexOf(s:frost.core.String):frost.core.String.Index? from File.stub:35:31
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:230
+// begin inline call to function frost.core.String.lastIndexOf(s:frost.core.String):frost.core.String.Index? from File.frost:148:38
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:1012
 _99 = frost$core$String$get_end$R$frost$core$String$Index(_96);
 _100 = frost$core$String$lastIndexOf$frost$core$String$frost$core$String$Index$R$frost$core$String$Index$Q(_96, &$s24, _99);
 *(&local1) = _100;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/io/File.stub:36
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:149
 _104 = *(&local1);
 _105 = _104.nonnull;
 _106 = (frost$core$Bit) {_105};
 _107 = _106.value;
 if (_107) goto block12; else goto block14;
 block12:;
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/io/File.stub:37
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:150
 _110 = &_92->path;
 _111 = *_110;
 _112 = &_92->path;
@@ -664,7 +664,7 @@ _116 = (frost$core$Bit) {_115};
 _117 = _116.value;
 if (_117) goto block15; else goto block16;
 block16:;
-_119 = (frost$core$Int) {37u};
+_119 = (frost$core$Int) {150u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s25, _119, &$s26);
 abort(); // unreachable
 block15:;
@@ -684,7 +684,7 @@ frost$core$Frost$ref$frost$core$Object$Q(_133);
 goto block10;
 block14:;
 // <no location>
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/io/File.stub:40
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:153
 _138 = &_92->path;
 _139 = *_138;
 _140 = ((frost$core$Object*) _139);
@@ -698,7 +698,7 @@ goto block10;
 block10:;
 _147 = *(&local0);
 // begin inline call to function frost.core.String.get_asString():frost.core.String from Position.frost:54:39
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:112
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:390
 _150 = ((frost$core$Object*) _147);
 frost$core$Frost$ref$frost$core$Object$Q(_150);
 _153 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_147, &$s27);
@@ -708,7 +708,7 @@ $tmp28 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &fro
 $tmp28->value = _154;
 _155 = ((frost$core$Object*) $tmp28);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Position.frost:54:39
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:155
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 _158 = ($fn29) _155->$class->vtable[0];
 _159 = _158(_155);
 _160 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_153, _159);
@@ -725,7 +725,7 @@ $tmp31 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &fro
 $tmp31->value = _169;
 _170 = ((frost$core$Object*) $tmp31);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Position.frost:54:39
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:155
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 _173 = ($fn32) _170->$class->vtable[0];
 _174 = _173(_170);
 _175 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_168, _174);

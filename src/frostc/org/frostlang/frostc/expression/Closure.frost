@@ -172,6 +172,9 @@ class Closure {
                     compiler.symbolTable.add(Variable(position, Variable.Kind.DEF, name, type,
                             Variable.Storage.PARAMETER(-1)))
                 }
+                otherwise {
+                    unreachable
+                }
             }
         }
         def returnType:Type?
@@ -256,7 +259,7 @@ class Closure {
                         }
                     }
                     def returnType := t.nonnullable().returnType
-                    return Closure.compile(compiler, position, MethodDecl.Kind.FUNCTION,
+                    return compile(compiler, position, MethodDecl.Kind.FUNCTION,
                             FixedArray<ASTNode>.from(parameters),
                             ASTNode.IR_WRAPPER(position, compiler.literalType(returnType)),
                             FixedArray<ASTNode>.from([ASTNode.RETURN(position, expr)]), type)
@@ -295,14 +298,109 @@ class Closure {
                 return null
             }
             else {
-                compileUntypedLambda(compiler, position, rawParameters, expr,
+                return compileUntypedLambda(compiler, position, rawParameters, expr,
                         TypeContext.TYPE(attempts.iterator.next(), false))
-                return null
             }
         }
         compiler.error(position, "lambda type was not specified and cannot be determined from " +
                 "context")
         return null
+    }
+
+    @class
+    method untypedLambdaCoercionCost(compiler:Compiler, parameters:ListView<ASTNode>, body:ASTNode,
+            target:Type):Pair<Type, Int>? {
+        if !target.nonnullable().isMethod {
+            return compiler.coercionCost(compiler.MUTABLE_METHOD_TYPE, target)
+        }
+        if target.typeKind = Type.Kind.NULLABLE {
+            def result := untypedLambdaCoercionCost(compiler, parameters, body,
+                                                    target.nonnullable())
+            if result == null {
+                return null
+            }
+            return Pair<Type, Int>(result.first, result.second +
+                    compiler.NONNULLABLE_TO_NULLABLE_CAST_COST)
+        }
+        if target.typeKind != Type.Kind.FUNCTION {
+            def result := untypedLambdaCoercionCost(compiler, parameters, body,
+                    Type.methodType(compiler, target.position, Type.Kind.FUNCTION,
+                                    target.parameterTypes,
+                    target.returnType, target.priority))
+            if result == null {
+                return null
+            }
+            return Pair<Type, Int>(result.first, result.second + 1)
+        }
+        if target.parameterCount != parameters.count {
+            return null
+        }
+        def typedParameters := Array<ASTNode>()
+        for i in 0 .. parameters.count {
+            match parameters[i] {
+                when ASTNode.IDENTIFIER(position, name) {
+                    typedParameters.add(ASTNode.PARAMETER(position, name,
+                            ASTNode.IR_WRAPPER(position, 
+                                compiler.literalType(target.parameterType(i)))))
+                }
+                otherwise {
+                    unreachable
+                }
+            }
+        }
+        def result := typedLambdaCoercionCost(compiler, typedParameters, body, target)
+        if result !== null {
+            var list := compiler.lambdaTypes[body]
+            if list == null {
+                list := HashSet<Type>()
+                compiler.lambdaTypes[body] := list
+            }
+            list.add(target)
+        }
+        return result
+    }
+
+    @class
+    method typedLambdaCoercionCost(compiler:Compiler, parameters:ListView<ASTNode>, body:ASTNode,
+            target:Type):Pair<Type, Int>? {
+        if !target.nonnullable().isMethod {
+            return compiler.coercionCost(compiler.MUTABLE_METHOD_TYPE, target)
+        }
+        if target.typeKind = Type.Kind.NULLABLE {
+            def result := typedLambdaCoercionCost(compiler, parameters, body, target.nonnullable())
+            if result == null {
+                return null
+            }
+            return Pair<Type, Int>(result.first, result.second +
+                    compiler.NONNULLABLE_TO_NULLABLE_CAST_COST)
+        }
+        if target.parameterCount != parameters.count {
+            return null
+        }
+        var cost := 0
+        for i in 0 .. parameters.count {
+            match parameters[i] {
+                when ASTNode.PARAMETER(_, _, type) {
+                    def resolved := compiler.tryResolveType(type)
+                    if resolved == null {
+                        return null
+                    }
+                    def parameterCost := compiler.coercionCost(target.parameterType(i), resolved)
+                    if parameterCost == null {
+                        return null
+                    }
+                    cost += parameterCost.second
+                }
+            }
+        }
+        def type := typedLambdaType(compiler, parameters, body, TypeContext.TYPE(target, false))
+        if type == null {
+            return null
+        }
+        def returnCost := compiler.coercionCost(type.returnType, target.returnType)
+        assert returnCost !== null
+        cost += returnCost.second
+        return Pair<Type, Int>(type, cost)
     }
 
     @class

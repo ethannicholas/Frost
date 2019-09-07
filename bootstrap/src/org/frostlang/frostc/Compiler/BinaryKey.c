@@ -178,7 +178,7 @@ _6 = *_5;
 _7 = ((frost$core$Object*) _6);
 frost$core$Frost$addressOf$frost$core$Object$R$frost$core$Int(&_8, _7);
 // begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from Compiler.frost:304:42
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:291
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:365
 _11 = _4.value;
 _12 = _8.value;
 _13 = _11 ^ _12;

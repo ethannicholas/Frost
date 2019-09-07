@@ -46,7 +46,7 @@ _8 = &param0->data;
 *_8 = _7;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/MemoryInputStream.frost:29
 // begin inline call to function frost.core.String.get_byteLength():frost.core.Int from MemoryInputStream.frost:29:30
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:143
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:492
 _13 = &param1->_length;
 _14 = *_13;
 _16 = &param0->length;

@@ -71,7 +71,7 @@ _15 = &param0->offset;
 *_15 = _14;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/plex/runtime/DFA.frost:34
 // begin inline call to function frost.core.String.get_byteLength():frost.core.Int from DFA.frost:34:33
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:143
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:492
 _20 = &param1->_length;
 _21 = *_20;
 _23 = &param0->sourceEnd;
@@ -301,7 +301,7 @@ _5 = *_4;
 _6 = &param0->sourceEnd;
 _7 = *_6;
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from DFA.frost:42:19
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _10 = _5.value;
 _11 = _7.value;
 _12 = _10 == _11;
@@ -314,7 +314,7 @@ _18 = (frost$core$Int) {0u};
 _19 = &param0->offset;
 _20 = *_19;
 // begin inline call to frost.core.String.Index.init(value:frost.core.Int):frost.core.String.Index from DFA.frost:43:44
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:10
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:61
 _23 = &(&local2)->value;
 *_23 = _20;
 _25 = *(&local2);
@@ -323,7 +323,7 @@ _28 = *(&local1);
 _29 = &param0->offset;
 _30 = *_29;
 // begin inline call to frost.core.String.Index.init(value:frost.core.Int):frost.core.String.Index from DFA.frost:43:66
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:10
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:61
 _33 = &(&local4)->value;
 *_33 = _30;
 _35 = *(&local4);
@@ -381,7 +381,7 @@ _83 = _78[_82];
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/plex/runtime/DFA.frost:52
 _86 = *(&local10);
 // begin inline call to function frost.core.Char8.get_asUInt8():frost.core.UInt8 from DFA.frost:52:17
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Char8.stub:103
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:126
 _89 = _86.value;
 _90 = (frost$core$UInt8) {_89};
 _92 = (frost$core$UInt8) {255u};
@@ -395,7 +395,7 @@ block9:;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/plex/runtime/DFA.frost:53
 _100 = *(&local10);
 // begin inline call to function frost.core.Char8.get_asUInt8():frost.core.UInt8 from DFA.frost:53:53
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Char8.stub:103
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:126
 _103 = _100.value;
 _104 = (frost$core$UInt8) {_103};
 frost$core$UInt8$wrapper* $tmp4;
@@ -403,7 +403,7 @@ $tmp4 = (frost$core$UInt8$wrapper*) frostObjectAlloc(17, (frost$core$Class*) &fr
 $tmp4->value = _104;
 _106 = ((frost$core$Object*) $tmp4);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from DFA.frost:53:35
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:155
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 _109 = ($fn5) _106->$class->vtable[0];
 _110 = _109(_106);
 _111 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(&$s6, _110);
@@ -415,11 +415,11 @@ _116 = ((frost$core$Object*) _110);
 frost$core$Frost$unref$frost$core$Object$Q(_116);
 _119 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_111, &$s7);
 // begin inline call to method frost.io.Console.printLine(s:frost.core.String) from DFA.frost:53:34
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/io/Console.stub:25
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/Console.frost:45
 frost$io$Console$print$frost$core$String(_119);
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/io/Console.stub:26
-// begin inline call to method frost.io.Console.printLine() from Console.stub:26:10
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/io/Console.stub:38
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/Console.frost:46
+// begin inline call to method frost.io.Console.printLine() from Console.frost:46:18
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/Console.frost:70
 frost$io$Console$print$frost$core$String(&$s8);
 _129 = ((frost$core$Object*) _119);
 frost$core$Frost$unref$frost$core$Object$Q(_129);
@@ -439,7 +439,7 @@ _142 = &param0->transitions;
 _143 = *_142;
 _144 = *(&local10);
 // begin inline call to function frost.core.Char8.get_asInt():frost.core.Int from DFA.frost:56:35
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Char8.stub:83
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:101
 _147 = _144.value;
 _148 = ((int64_t) _147);
 _149 = (frost$core$Int) {_148};
@@ -474,12 +474,12 @@ _176 = &param0->offset;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/plex/runtime/DFA.frost:59
 _179 = *(&local10);
 // begin inline call to function frost.core.Char8.get_asUInt8():frost.core.UInt8 from DFA.frost:59:24
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Char8.stub:103
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char8.frost:126
 _182 = _179.value;
 _183 = (frost$core$UInt8) {_182};
 _185 = (frost$core$UInt8) {10u};
 // begin inline call to function frost.core.UInt8.=(other:frost.core.UInt8):frost.core.Bit from DFA.frost:60:26
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/UInt8.stub:542
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/UInt8.frost:643
 _188 = _183.value;
 _189 = _185.value;
 _190 = _188 == _189;
@@ -505,7 +505,7 @@ goto block21;
 block23:;
 _210 = (frost$core$UInt8) {9u};
 // begin inline call to function frost.core.UInt8.=(other:frost.core.UInt8):frost.core.Bit from DFA.frost:64:26
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/UInt8.stub:542
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/UInt8.frost:643
 _213 = _183.value;
 _214 = _210.value;
 _215 = _213 == _214;
@@ -521,7 +521,7 @@ _224 = &param0->column;
 _225 = *_224;
 _226 = (frost$core$Int) {4u};
 // begin inline call to function frost.core.Int.%(other:frost.core.Int):frost.core.Int from DFA.frost:65:51
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:152
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:198
 _229 = _225.value;
 _230 = _226.value;
 _231 = _229 % _230;
@@ -591,7 +591,7 @@ _288 = &param0->offset;
 _291 = *(&local5);
 _292 = *(&local6);
 // begin inline call to frost.core.String.Index.init(value:frost.core.Int):frost.core.String.Index from DFA.frost:82:43
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:10
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:61
 _295 = &(&local13)->value;
 *_295 = _292;
 _297 = *(&local13);
@@ -599,7 +599,7 @@ _297 = *(&local13);
 _300 = *(&local12);
 _301 = *(&local7);
 // begin inline call to frost.core.String.Index.init(value:frost.core.Int):frost.core.String.Index from DFA.frost:82:64
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:10
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:61
 _304 = &(&local15)->value;
 *_304 = _301;
 _306 = *(&local15);

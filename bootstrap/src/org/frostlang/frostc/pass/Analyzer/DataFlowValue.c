@@ -151,7 +151,7 @@ _2 = *_1;
 _3 = &param1->type;
 _4 = *_3;
 // begin inline call to function org.frostlang.frostc.Type.=(other:org.frostlang.frostc.Type):frost.core.Bit from Analyzer.frost:155:25
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:252
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:277
 _7 = ((org$frostlang$frostc$Symbol*) _2);
 _8 = &_7->name;
 _9 = *_8;
@@ -586,7 +586,7 @@ _8 = &param0->type;
 _9 = *_8;
 _10 = ((frost$core$Object*) _9);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Analyzer.frost:181:24
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:155
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 _13 = ($fn17) _10->$class->vtable[0];
 _14 = _13(_10);
 _15 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(&$s18, _14);
@@ -601,7 +601,7 @@ _24 = &param0->definition;
 _25 = *_24;
 _26 = ((frost$core$Object*) _25);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Analyzer.frost:181:24
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:155
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 _29 = ($fn20) _26->$class->vtable[0];
 _30 = _29(_26);
 _31 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_23, _30);
@@ -625,7 +625,7 @@ abort(); // unreachable
 block5:;
 _49 = ((frost$core$Object*) _41);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Analyzer.frost:181:24
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:155
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 _52 = ($fn24) _49->$class->vtable[0];
 _53 = _52(_49);
 _54 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_39, _53);
@@ -657,7 +657,7 @@ _79 = &param0->type;
 _80 = *_79;
 _81 = ((frost$core$Object*) _80);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Analyzer.frost:183:20
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:155
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 _84 = ($fn26) _81->$class->vtable[0];
 _85 = _84(_81);
 _86 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(&$s27, _85);
@@ -672,7 +672,7 @@ _95 = &param0->definition;
 _96 = *_95;
 _97 = ((frost$core$Object*) _96);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Analyzer.frost:183:20
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:155
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 _100 = ($fn29) _97->$class->vtable[0];
 _101 = _100(_97);
 _102 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_94, _101);

@@ -114,7 +114,7 @@ _1 = &param0->$rawValue;
 _2 = *_1;
 _3 = (frost$core$Int) {0u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from CCodeGenerator.frost:13:5
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _6 = _2.value;
 _7 = _3.value;
 _8 = _6 == _7;
@@ -177,7 +177,7 @@ goto block1;
 block3:;
 _65 = (frost$core$Int) {1u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from CCodeGenerator.frost:13:5
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _68 = _2.value;
 _69 = _65.value;
 _70 = _68 == _69;
@@ -433,7 +433,7 @@ _1 = &param0->$rawValue;
 _2 = *_1;
 _3 = (frost$core$Int) {0u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from CCodeGenerator.frost:13:5
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _6 = _2.value;
 _7 = _3.value;
 _8 = _6 == _7;
@@ -553,7 +553,7 @@ return _83;
 block3:;
 _117 = (frost$core$Int) {1u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from CCodeGenerator.frost:13:5
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _120 = _2.value;
 _121 = _117.value;
 _122 = _120 == _121;
@@ -595,7 +595,7 @@ _157 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_156, &$s15)
 _158 = *(&local5);
 _159 = ((frost$core$Object*) _158);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from CCodeGenerator.frost:13:5
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:155
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 _162 = ($fn16) _159->$class->vtable[0];
 _163 = _162(_159);
 _164 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_157, _163);

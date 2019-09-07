@@ -638,7 +638,7 @@ _209 = *_208;
 _210 = ($fn35) _209->$class->vtable[2];
 _211 = _210(_209, &$s36);
 // begin inline call to function frost.core.String.replace(search:frost.core.RegularExpression, replacement:frost.core.String):frost.core.String from Markdown.frost:1003:31
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:258
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:1120
 _214 = (frost$core$Bit) {true};
 _215 = frost$core$String$replace$frost$core$RegularExpression$frost$core$String$frost$core$Bit$R$frost$core$String(_203, _204, _211, _214);
 _216 = ((frost$core$Object*) _215);
@@ -680,7 +680,7 @@ _249 = *_248;
 _250 = ($fn40) _249->$class->vtable[2];
 _251 = _250(_249, &$s41);
 // begin inline call to function frost.core.String.replace(search:frost.core.RegularExpression, replacement:frost.core.String):frost.core.String from Markdown.frost:1004:31
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:258
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:1120
 _254 = (frost$core$Bit) {true};
 _255 = frost$core$String$replace$frost$core$RegularExpression$frost$core$String$frost$core$Bit$R$frost$core$String(_243, _244, _251, _254);
 _256 = ((frost$core$Object*) _255);

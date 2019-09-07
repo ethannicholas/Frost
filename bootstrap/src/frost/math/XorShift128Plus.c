@@ -62,7 +62,7 @@ _14 = &param0->state1;
 _15 = *_14;
 _16 = (frost$core$Int64) {0u};
 // begin inline call to function frost.core.Int64.=(other:frost.core.Int64):frost.core.Bit from XorShift128Plus.frost:30:19
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:182
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int64.frost:245
 _19 = _15.value;
 _20 = _16.value;
 _21 = _19 == _20;
@@ -80,7 +80,7 @@ block2:;
 _32 = &param0->state1;
 _33 = *_32;
 // begin inline call to function frost.core.Int64.!!():frost.core.Int64 from XorShift128Plus.frost:34:19
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:121
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int64.frost:172
 _36 = _33.value;
 _37 = !_36;
 _38 = (frost$core$Int64) {_37};
@@ -161,13 +161,13 @@ _13 = *(&local0);
 _14 = *(&local0);
 _15 = (frost$core$Int64) {23u};
 // begin inline call to function frost.core.Int64.<<(other:frost.core.Int64):frost.core.Int64 from XorShift128Plus.frost:42:17
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:156
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int64.frost:214
 _18 = _14.value;
 _19 = _15.value;
 _20 = _18 << _19;
 _21 = (frost$core$Int64) {_20};
 // begin inline call to function frost.core.Int64.~~(other:frost.core.Int64):frost.core.Int64 from XorShift128Plus.frost:42:9
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:146
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int64.frost:202
 _25 = _13.value;
 _26 = _21.value;
 _27 = _25 ^ _26;
@@ -177,7 +177,7 @@ _28 = (frost$core$Int64) {_27};
 _32 = *(&local0);
 _33 = *(&local1);
 // begin inline call to function frost.core.Int64.~~(other:frost.core.Int64):frost.core.Int64 from XorShift128Plus.frost:43:21
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:146
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int64.frost:202
 _36 = _32.value;
 _37 = _33.value;
 _38 = _36 ^ _37;
@@ -185,13 +185,13 @@ _39 = (frost$core$Int64) {_38};
 _41 = *(&local0);
 _42 = (frost$core$Int64) {17u};
 // begin inline call to function frost.core.Int64.>>(other:frost.core.Int64):frost.core.Int64 from XorShift128Plus.frost:43:32
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:161
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int64.frost:220
 _45 = _41.value;
 _46 = _42.value;
 _47 = _45 >> _46;
 _48 = (frost$core$Int64) {_47};
 // begin inline call to function frost.core.Int64.~~(other:frost.core.Int64):frost.core.Int64 from XorShift128Plus.frost:43:26
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:146
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int64.frost:202
 _52 = _39.value;
 _53 = _48.value;
 _54 = _52 ^ _53;
@@ -199,13 +199,13 @@ _55 = (frost$core$Int64) {_54};
 _57 = *(&local1);
 _58 = (frost$core$Int64) {26u};
 // begin inline call to function frost.core.Int64.>>(other:frost.core.Int64):frost.core.Int64 from XorShift128Plus.frost:43:46
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:161
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int64.frost:220
 _61 = _57.value;
 _62 = _58.value;
 _63 = _61 >> _62;
 _64 = (frost$core$Int64) {_63};
 // begin inline call to function frost.core.Int64.~~(other:frost.core.Int64):frost.core.Int64 from XorShift128Plus.frost:43:40
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:146
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int64.frost:202
 _68 = _55.value;
 _69 = _64.value;
 _70 = _68 ^ _69;

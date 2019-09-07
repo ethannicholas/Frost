@@ -87,7 +87,7 @@ while ($tmp3->$class != (frost$core$Class*) &frost$collections$CollectionView$cl
 _8 = $tmp3->methods[0];
 _9 = _8(_7);
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from ImmutableArray.frost:19:26
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _12 = _3.value;
 _13 = _9.value;
 _14 = _12 == _13;

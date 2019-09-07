@@ -336,7 +336,7 @@ _50 = &param0->random;
 _51 = *_50;
 _52 = *(&local1);
 // begin inline call to function frost.core.String.get_byteLength():frost.core.Int from Markdown.frost:77:59
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:143
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:492
 _55 = &_52->_length;
 _56 = *_55;
 ITable* $tmp13 = _51->$class->itable;
@@ -346,9 +346,9 @@ while ($tmp13->$class != (frost$core$Class*) &frost$math$Random$class) {
 _58 = $tmp13->methods[3];
 _59 = _58(_51, _56);
 // begin inline call to function frost.core.String.[](index:frost.core.Int):frost.core.Char32 from Markdown.frost:77:37
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:191
-// begin inline call to function frost.core.String.get_start():frost.core.String.Index from String.stub:191:21
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:284
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:675
+// begin inline call to function frost.core.String.get_start():frost.core.String.Index from String.frost:675:28
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:1205
 _64 = (frost$core$Int) {0u};
 _65 = frost$core$String$Index$init$frost$core$Int(_64);
 _67 = frost$core$String$offset$frost$core$String$Index$frost$core$Int$R$frost$core$String$Index(_49, _65, _59);

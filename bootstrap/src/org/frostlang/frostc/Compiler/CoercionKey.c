@@ -114,7 +114,7 @@ _10 = *_9;
 _11 = &param1->target;
 _12 = *_11;
 // begin inline call to function org.frostlang.frostc.Type.=(other:org.frostlang.frostc.Type):frost.core.Bit from Compiler.frost:275:48
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:252
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:277
 _15 = ((org$frostlang$frostc$Symbol*) _10);
 _16 = &_15->name;
 _17 = *_16;
@@ -195,7 +195,7 @@ while ($tmp7->$class != (frost$core$Class*) &frost$collections$HashKey$class) {
 _8 = $tmp7->methods[0];
 _9 = _8(_7);
 // begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from Compiler.frost:280:42
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:291
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:365
 _12 = _4.value;
 _13 = _9.value;
 _14 = _12 ^ _13;

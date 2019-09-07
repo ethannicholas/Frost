@@ -1,0 +1,95 @@
+package frost.collections
+
+@package
+class MergeSort {
+    constant RUN := 128
+  
+    ================================================================================================
+    Sort from a[left] to a[right].
+    ================================================================================================
+    @private
+    @class
+    @pre(right - left < RUN)
+    method insertionSort<T>(a:List<T>, left:Int, right:Int, greater:(T, T)=>(Bit)) { 
+        for i in left + 1 ... right {
+            def temp := a[i]
+            var j := i - 1
+            while j >= left & greater(a[j], temp) { 
+                a[j + 1] := a[j]
+                j -= 1
+            }
+            a[j + 1] := temp
+        }
+    }
+  
+    ================================================================================================
+    Merge the sorted runs.
+    ================================================================================================
+    @private
+    @class
+    method merge<T>(a:List<T>, start:Int, middle:Int, end:Int, greater:(T, T)=>(Bit)) {
+        -- split range into two arrays
+        def len1 := middle - start + 1,
+            len2 := end - middle
+        def left := Array<T>(len1)
+        def right := Array<T>(len2)
+        for i in start ... middle {
+            left.add(a[i])
+        }
+        for i in middle + 1 ... end {
+            right.add(a[i])
+        }
+
+        def i := 0,
+            j := 0, 
+            k := start
+  
+        -- compare and merge
+        while i < len1 & j < len2 {
+            if greater(left[i], right[j]) {
+                a[k] := right[j]
+                j += 1
+            }
+            else {
+                a[k] := left[i]
+                i += 1
+            }
+            k += 1
+        }
+
+        -- copy remaining elements of left
+        while i < len1 {
+            a[k] := left[i]
+            k += 1 
+            i += 1
+        }
+  
+        -- copy remaining elements of right
+        while j < len2 { 
+            a[k] := right[j]
+            k += 1
+            j += 1
+        }
+    }
+
+
+    @class  
+    method sort<T>(a:List<T>, greater:(T, T)=>(Bit)) {
+        -- sort individual subarrays of size RUN
+        def n := a.count
+        for i in 0 .. n by RUN { 
+            insertionSort<T>(a, i, (i + RUN - 1).min(n - 1), greater)
+        }
+
+        -- merge the runs together
+        var size := RUN
+        while size < n {
+            for left in 0 .. n - size by size * 2 { 
+                def mid := left + size - 1
+                def right := (left + 2 * size - 1).min(n - 1)
+                merge<T>(a, left, mid, right, greater)
+            }
+            size *= 2
+        }
+    }
+}

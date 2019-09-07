@@ -225,7 +225,7 @@ _64 = *_63;
 _65 = *(&local1);
 _66 = ((frost$core$Object*) _65);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Markdown.frost:364:41
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:155
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 _69 = ($fn14) _66->$class->vtable[0];
 _70 = _69(_66);
 _71 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(&$s15, _70);

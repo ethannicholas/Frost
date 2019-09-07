@@ -235,7 +235,7 @@ abort(); // unreachable
 block3:;
 _57 = _49;
 // begin inline call to function frost.core.String.get_length():frost.core.Int from Markdown.frost:786:32
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:139
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:485
 _60 = ((frost$collections$Iterable*) _57);
 ITable* $tmp16 = _60->$class->itable;
 while ($tmp16->$class != (frost$core$Class*) &frost$collections$Iterable$class) {
@@ -261,7 +261,7 @@ $tmp18 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &fro
 $tmp18->value = _72;
 _73 = ((frost$core$Object*) $tmp18);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Markdown.frost:787:28
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:155
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 _76 = ($fn19) _73->$class->vtable[0];
 _77 = _76(_73);
 _78 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(&$s20, _77);
@@ -289,7 +289,7 @@ _100 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_99, &$s22);
 _101 = *(&local1);
 _102 = ((frost$core$Object*) _101);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Markdown.frost:788:20
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:155
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 _105 = ($fn23) _102->$class->vtable[0];
 _106 = _105(_102);
 _107 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_100, _106);

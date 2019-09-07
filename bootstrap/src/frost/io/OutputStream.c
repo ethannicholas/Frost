@@ -277,7 +277,7 @@ if (_19) goto block3; else goto block5;
 block3:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/OutputStream.frost:42
 // begin inline call to function frost.core.UInt16.get_asUInt8():frost.core.UInt8 from OutputStream.frost:42:28
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/UInt16.stub:929
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/UInt16.frost:1106
 _28 = param1.value;
 _29 = ((uint8_t) _28);
 _30 = (frost$core$UInt8) {_29};
@@ -308,7 +308,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_50);
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/OutputStream.frost:43
 _53 = (frost$core$UInt16) {8u};
 // begin inline call to function frost.core.UInt16.>>(other:frost.core.UInt16):frost.core.UInt32 from OutputStream.frost:43:30
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/UInt16.stub:433
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/UInt16.frost:517
 _56 = param1.value;
 _57 = ((uint32_t) _56);
 _58 = _53.value;
@@ -316,7 +316,7 @@ _59 = ((uint32_t) _58);
 _60 = _57 >> _59;
 _61 = (frost$core$UInt32) {_60};
 // begin inline call to function frost.core.UInt32.get_asUInt8():frost.core.UInt8 from OutputStream.frost:43:36
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/UInt32.stub:801
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/UInt32.frost:966
 _65 = _61.value;
 _66 = ((uint8_t) _65);
 _67 = (frost$core$UInt8) {_66};
@@ -350,7 +350,7 @@ block5:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/OutputStream.frost:46
 _92 = (frost$core$UInt16) {8u};
 // begin inline call to function frost.core.UInt16.>>(other:frost.core.UInt16):frost.core.UInt32 from OutputStream.frost:46:30
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/UInt16.stub:433
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/UInt16.frost:517
 _95 = param1.value;
 _96 = ((uint32_t) _95);
 _97 = _92.value;
@@ -358,7 +358,7 @@ _98 = ((uint32_t) _97);
 _99 = _96 >> _98;
 _100 = (frost$core$UInt32) {_99};
 // begin inline call to function frost.core.UInt32.get_asUInt8():frost.core.UInt8 from OutputStream.frost:46:36
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/UInt32.stub:801
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/UInt32.frost:966
 _104 = _100.value;
 _105 = ((uint8_t) _104);
 _106 = (frost$core$UInt8) {_105};
@@ -388,7 +388,7 @@ _126 = ((frost$core$Object*) _109);
 frost$core$Frost$unref$frost$core$Object$Q(_126);
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/OutputStream.frost:47
 // begin inline call to function frost.core.UInt16.get_asUInt8():frost.core.UInt8 from OutputStream.frost:47:28
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/UInt16.stub:929
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/UInt16.frost:1106
 _131 = param1.value;
 _132 = ((uint8_t) _131);
 _133 = (frost$core$UInt8) {_132};
@@ -578,7 +578,7 @@ if (_19) goto block3; else goto block5;
 block3:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/OutputStream.frost:65
 // begin inline call to function frost.core.UInt32.get_asUInt16():frost.core.UInt16 from OutputStream.frost:65:28
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/UInt32.stub:805
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/UInt32.frost:972
 _28 = param1.value;
 _29 = ((uint16_t) _28);
 _30 = (frost$core$UInt16) {_29};
@@ -609,13 +609,13 @@ frost$core$Frost$unref$frost$core$Object$Q(_50);
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/OutputStream.frost:66
 _53 = (frost$core$UInt32) {16u};
 // begin inline call to function frost.core.UInt32.>>(other:frost.core.UInt32):frost.core.UInt32 from OutputStream.frost:66:30
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/UInt32.stub:310
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/UInt32.frost:382
 _56 = param1.value;
 _57 = _53.value;
 _58 = _56 >> _57;
 _59 = (frost$core$UInt32) {_58};
 // begin inline call to function frost.core.UInt32.get_asUInt16():frost.core.UInt16 from OutputStream.frost:66:37
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/UInt32.stub:805
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/UInt32.frost:972
 _63 = _59.value;
 _64 = ((uint16_t) _63);
 _65 = (frost$core$UInt16) {_64};
@@ -649,13 +649,13 @@ block5:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/OutputStream.frost:69
 _90 = (frost$core$UInt32) {16u};
 // begin inline call to function frost.core.UInt32.>>(other:frost.core.UInt32):frost.core.UInt32 from OutputStream.frost:69:30
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/UInt32.stub:310
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/UInt32.frost:382
 _93 = param1.value;
 _94 = _90.value;
 _95 = _93 >> _94;
 _96 = (frost$core$UInt32) {_95};
 // begin inline call to function frost.core.UInt32.get_asUInt16():frost.core.UInt16 from OutputStream.frost:69:37
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/UInt32.stub:805
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/UInt32.frost:972
 _100 = _96.value;
 _101 = ((uint16_t) _100);
 _102 = (frost$core$UInt16) {_101};
@@ -685,7 +685,7 @@ _122 = ((frost$core$Object*) _105);
 frost$core$Frost$unref$frost$core$Object$Q(_122);
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/OutputStream.frost:70
 // begin inline call to function frost.core.UInt32.get_asUInt16():frost.core.UInt16 from OutputStream.frost:70:28
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/UInt32.stub:805
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/UInt32.frost:972
 _127 = param1.value;
 _128 = ((uint16_t) _127);
 _129 = (frost$core$UInt16) {_128};
@@ -875,7 +875,7 @@ if (_19) goto block3; else goto block5;
 block3:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/OutputStream.frost:88
 // begin inline call to function frost.core.UInt64.get_asUInt32():frost.core.UInt32 from OutputStream.frost:88:28
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/UInt64.stub:471
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/UInt64.frost:592
 _28 = param1.value;
 _29 = ((uint32_t) _28);
 _30 = (frost$core$UInt32) {_29};
@@ -906,13 +906,13 @@ frost$core$Frost$unref$frost$core$Object$Q(_50);
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/OutputStream.frost:89
 _53 = (frost$core$UInt64) {32u};
 // begin inline call to function frost.core.UInt64.>>(other:frost.core.UInt64):frost.core.UInt64 from OutputStream.frost:89:30
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/UInt64.stub:154
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/UInt64.frost:202
 _56 = param1.value;
 _57 = _53.value;
 _58 = _56 >> _57;
 _59 = (frost$core$UInt64) {_58};
 // begin inline call to function frost.core.UInt64.get_asUInt32():frost.core.UInt32 from OutputStream.frost:89:37
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/UInt64.stub:471
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/UInt64.frost:592
 _63 = _59.value;
 _64 = ((uint32_t) _63);
 _65 = (frost$core$UInt32) {_64};
@@ -946,13 +946,13 @@ block5:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/OutputStream.frost:92
 _90 = (frost$core$UInt64) {32u};
 // begin inline call to function frost.core.UInt64.>>(other:frost.core.UInt64):frost.core.UInt64 from OutputStream.frost:92:30
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/UInt64.stub:154
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/UInt64.frost:202
 _93 = param1.value;
 _94 = _90.value;
 _95 = _93 >> _94;
 _96 = (frost$core$UInt64) {_95};
 // begin inline call to function frost.core.UInt64.get_asUInt32():frost.core.UInt32 from OutputStream.frost:92:37
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/UInt64.stub:471
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/UInt64.frost:592
 _100 = _96.value;
 _101 = ((uint32_t) _100);
 _102 = (frost$core$UInt32) {_101};
@@ -982,7 +982,7 @@ _122 = ((frost$core$Object*) _105);
 frost$core$Frost$unref$frost$core$Object$Q(_122);
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/OutputStream.frost:93
 // begin inline call to function frost.core.UInt64.get_asUInt32():frost.core.UInt32 from OutputStream.frost:93:28
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/UInt64.stub:471
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/UInt64.frost:592
 _127 = param1.value;
 _128 = ((uint32_t) _127);
 _129 = (frost$core$UInt32) {_128};
@@ -1051,7 +1051,7 @@ frost$core$Object* _9;
 frost$core$Object* _11;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/OutputStream.frost:109
 // begin inline call to function frost.core.Int8.get_asUInt8():frost.core.UInt8 from OutputStream.frost:109:27
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int8.stub:1005
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int8.frost:1208
 _3 = param1.value;
 _4 = ((uint8_t) _3);
 _5 = (frost$core$UInt8) {_4};
@@ -1075,7 +1075,7 @@ frost$core$Object* _9;
 frost$core$Object* _11;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/OutputStream.frost:119
 // begin inline call to function frost.core.Int16.get_asUInt16():frost.core.UInt16 from OutputStream.frost:119:27
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int16.stub:933
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int16.frost:1130
 _3 = param1.value;
 _4 = ((uint16_t) _3);
 _5 = (frost$core$UInt16) {_4};
@@ -1099,7 +1099,7 @@ frost$core$Object* _9;
 frost$core$Object* _11;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/OutputStream.frost:129
 // begin inline call to function frost.core.Int32.get_asUInt32():frost.core.UInt32 from OutputStream.frost:129:27
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int32.stub:811
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int32.frost:1002
 _3 = param1.value;
 _4 = ((uint32_t) _3);
 _5 = (frost$core$UInt32) {_4};
@@ -1123,7 +1123,7 @@ frost$core$Object* _9;
 frost$core$Object* _11;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/OutputStream.frost:139
 // begin inline call to function frost.core.Int64.get_asUInt64():frost.core.UInt64 from OutputStream.frost:139:27
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int64.stub:479
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int64.frost:628
 _3 = param1.value;
 _4 = ((uint64_t) _3);
 _5 = (frost$core$UInt64) {_4};
@@ -1573,7 +1573,7 @@ _20 = *(&local1);
 // begin inline call to method frost.io.OutputStream.write(value:frost.core.Int8):frost.core.Error? from OutputStream.frost:213:22
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/OutputStream.frost:109
 // begin inline call to function frost.core.Int8.get_asUInt8():frost.core.UInt8 from OutputStream.frost:109:27
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int8.stub:1005
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int8.frost:1208
 _25 = _20.value;
 _26 = ((uint8_t) _25);
 _27 = (frost$core$UInt8) {_26};

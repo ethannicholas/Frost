@@ -53,7 +53,7 @@ interface List<T> : ListView<T>, ListWriter<T>, Collection<T> {
     As [sorted], but performs the sort in-place rather than returning a new list.
     ================================================================================================
     @default
-    method sortInPlace(greater:(T, T)=&>(Bit)) {
-        Frost.sort<T>(self, 0, count - 1, greater)
+    method sortInPlace(greater:(T, T)=>(Bit)) {
+        MergeSort.sort(self, greater)
     }
 }

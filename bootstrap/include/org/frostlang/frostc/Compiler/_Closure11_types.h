@@ -10,7 +10,7 @@ typedef struct org$frostlang$frostc$Compiler$_Closure11 {
     frost$core$Class* $class;
     frost$core$Int32 refCount;
     frost$core$UInt8 $flags;
-    org$frostlang$frostc$Compiler* $dummy496;
+    org$frostlang$frostc$Compiler* $dummy460;
 } org$frostlang$frostc$Compiler$_Closure11;
 #include "frost/core/Class.h"
 typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[3]; } org$frostlang$frostc$Compiler$_Closure11$class_type;

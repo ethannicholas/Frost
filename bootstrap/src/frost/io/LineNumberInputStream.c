@@ -166,7 +166,7 @@ block6:;
 _23 = ((frost$core$UInt8) _15.value);
 _24 = (frost$core$UInt8) {10u};
 // begin inline call to function frost.core.UInt8.=(other:frost.core.UInt8):frost.core.Bit from LineNumberInputStream.frost:50:18
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/UInt8.stub:542
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/UInt8.frost:643
 _27 = _23.value;
 _28 = _24.value;
 _29 = _27 == _28;
@@ -202,7 +202,7 @@ block11:;
 _56 = ((frost$core$UInt8) _15.value);
 _57 = (frost$core$UInt8) {9u};
 // begin inline call to function frost.core.UInt8.=(other:frost.core.UInt8):frost.core.Bit from LineNumberInputStream.frost:54:18
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/UInt8.stub:542
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/UInt8.frost:643
 _60 = _56.value;
 _61 = _57.value;
 _62 = _60 == _61;
@@ -220,7 +220,7 @@ _73 = *_72;
 _74 = &param0->tabSize;
 _75 = *_74;
 // begin inline call to function frost.core.Int.%(other:frost.core.Int):frost.core.Int from LineNumberInputStream.frost:55:44
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:152
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:198
 _78 = _73.value;
 _79 = _75.value;
 _80 = _78 % _79;

@@ -400,7 +400,7 @@ _1 = $tmp17->methods[0];
 _2 = _1(_0);
 _3 = (frost$core$Int) {0u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from CollectionWriter.frost:37:17
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _6 = _2.value;
 _7 = _3.value;
 _8 = _6 == _7;
@@ -648,7 +648,7 @@ _55 = *(&local0);
 _56 = *(&local2);
 _57 = _56;
 // begin inline call to method frost.core.MutableString.append(o:frost.core.Object) from IdentitySet.frost:64:30
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/MutableString.stub:46
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/MutableString.frost:150
 _60 = ($fn33) _57->$class->vtable[0];
 _61 = _60(_57);
 frost$core$MutableString$append$frost$core$String(_55, _61);

@@ -487,8 +487,11 @@ class IR {
                 when TYPE(_, type) {
                     return type
                 }
+                when METHOD, METHODS, GENERIC_METHOD, GENERIC_METHODS, SUPER, TYPE {
+                    return Type("<invalid>", Type.Kind.INVALID, Position(), true)
+                }
             }
-            unreachable
+            unreachable, self.asString
         }
 
         @override

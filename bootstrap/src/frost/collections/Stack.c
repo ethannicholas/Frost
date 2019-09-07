@@ -764,7 +764,7 @@ _7 = $tmp35->methods[0];
 _8 = _7(_6);
 _9 = (frost$core$Int) {0u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from CollectionWriter.frost:37:17
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _12 = _8.value;
 _13 = _9.value;
 _14 = _12 == _13;

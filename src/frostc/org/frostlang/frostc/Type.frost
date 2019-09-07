@@ -25,7 +25,17 @@ class Type : Symbol, HashKey<Type> {
         REAL_LITERAL
     }
 
-    def resolved:Bit
+        def RESOLVED             := 1
+    @private
+    class Flag {
+--        def RESOLVED             := 1
+    }
+
+    @private
+    def flags:Int8
+
+    --property resolved:Bit
+    var resolved:Bit
 
     def typeKind:Kind
 
@@ -78,6 +88,8 @@ class Type : Symbol, HashKey<Type> {
     property isNullable:Bit
 
     property parameterCount:Int
+
+    property parameterTypes:ListView<Type>
 
     property returnType:Type
 
@@ -227,6 +239,19 @@ class Type : Symbol, HashKey<Type> {
         return Type(name.finish(), kind, position, FixedArray<Type>.from(subtypes), resolved,
                 priority)
     }
+
+-*    function get_resolved():Bit {
+        return flags && RESOLVED != 0
+    }
+
+    method set_resolved(value:Bit) {
+        if value {
+            flags ||= RESOLVED
+        }
+        else {
+            flags &&= !!RESOLVED
+        }
+    }*-
 
     function get_size():Int {
         assert typeKind = Kind.BUILTIN_INT | typeKind = Kind.BUILTIN_UINT |
@@ -420,6 +445,10 @@ class Type : Symbol, HashKey<Type> {
             typeKind = Kind.IMMUTABLE_METHOD)
     function get_parameterCount():Int {
         return subtypes.count - 1
+    }
+
+    function get_parameterTypes():ListView<Type> {
+        return subtypes[0 .. subtypes.count - 1]
     }
 
     @pre((typeKind = Kind.FUNCTION | typeKind = Kind.METHOD | typeKind = Kind.IMMUTABLE_FUNCTION |

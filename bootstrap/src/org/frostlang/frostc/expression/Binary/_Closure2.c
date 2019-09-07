@@ -126,7 +126,7 @@ _5 = &_2->flags;
 _6 = *_5;
 _7 = (frost$core$Int) {16u};
 // begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Annotations.frost:122:22
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:231
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 _10 = _6.value;
 _11 = _7.value;
 _12 = _10 & _11;
@@ -139,7 +139,7 @@ _19 = (frost$core$Bit) {_18};
 _21 = &param0->left;
 _22 = *_21;
 // begin inline call to function org.frostlang.frostc.Type.get_isClassLiteral():frost.core.Bit from Binary.frost:215:70
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:369
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:394
 _25 = &_22->typeKind;
 _26 = *_25;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp3;
@@ -148,7 +148,7 @@ $tmp3->value = _26;
 _27 = ((frost$core$Equatable*) $tmp3);
 _28 = _27;
 _29 = (frost$core$Int) {11u};
-// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:369:31
+// begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Type.frost:394:31
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:5
 _32 = &(&local2)->$rawValue;
 *_32 = _29;
@@ -168,8 +168,8 @@ _40 = _39(_28, _38);
 _41 = _40.value;
 if (_41) goto block5; else goto block6;
 block5:;
-// begin inline call to function org.frostlang.frostc.Type.get_subtypes():org.frostlang.frostc.FixedArray<org.frostlang.frostc.Type> from Type.frost:369:42
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:242
+// begin inline call to function org.frostlang.frostc.Type.get_subtypes():org.frostlang.frostc.FixedArray<org.frostlang.frostc.Type> from Type.frost:394:42
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:267
 _45 = &_22->_subtypes;
 _46 = *_45;
 _47 = _46 != NULL;
@@ -177,7 +177,7 @@ _48 = (frost$core$Bit) {_47};
 _49 = _48.value;
 if (_49) goto block9; else goto block10;
 block10:;
-_51 = (frost$core$Int) {242u};
+_51 = (frost$core$Int) {267u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s6, _51, &$s7);
 abort(); // unreachable
 block9:;
@@ -208,7 +208,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_75);
 _77 = ((frost$core$Object*) _27);
 frost$core$Frost$unref$frost$core$Object$Q(_77);
 // begin inline call to function frost.core.Bit.=(other:frost.core.Bit):frost.core.Bit from Binary.frost:215:64
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Bit.stub:20
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:25
 _82 = _19.value;
 _83 = _74.value;
 _84 = _82 == _83;

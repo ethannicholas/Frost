@@ -176,7 +176,7 @@ _51 = &_50->$rawValue;
 _52 = *_51;
 _53 = (frost$core$Int) {0u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from AtReturn.frost:29:34
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _56 = _52.value;
 _57 = _53.value;
 _58 = _56 == _57;

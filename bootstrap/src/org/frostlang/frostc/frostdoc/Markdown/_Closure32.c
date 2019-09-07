@@ -495,7 +495,7 @@ FROST_ASSERT(24 == sizeof(frost$core$RegularExpression));
 _51 = (frost$core$RegularExpression*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$RegularExpression$class);
 frost$core$RegularExpression$init$frost$core$String(_51, &$s15);
 // begin inline call to function frost.core.String.replace(search:frost.core.RegularExpression, replacement:frost.core.String):frost.core.String from Markdown.frost:1035:29
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:258
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:1120
 _55 = (frost$core$Bit) {true};
 _56 = frost$core$String$replace$frost$core$RegularExpression$frost$core$String$frost$core$Bit$R$frost$core$String(_50, _51, &$s16, _55);
 _57 = ((frost$core$Object*) _56);

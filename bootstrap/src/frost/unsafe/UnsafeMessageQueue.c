@@ -244,7 +244,7 @@ _92 = &_91->count;
 _93 = *_92;
 _94 = (frost$core$Int) {0u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from UnsafeMessageQueue.frost:53:26
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _97 = _93.value;
 _98 = _94.value;
 _99 = _97 == _98;

@@ -100,7 +100,7 @@ _2 = param1.id;
 _5 = _1.value;
 _6 = _2.value;
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from IR.frost:382:30
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _9 = _5.value;
 _10 = _6.value;
 _11 = _9 == _10;
@@ -111,7 +111,7 @@ block3:;
 _17 = param0.exit;
 _18 = param1.exit;
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Analyzer.frost:203:41
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:342
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _21 = _17.value;
 _22 = _18.value;
 _23 = _21 == _22;
@@ -160,7 +160,7 @@ $tmp5 = (org$frostlang$frostc$IR$Block$ID$wrapper*) frostObjectAlloc(24, (frost$
 $tmp5->value = _1;
 _2 = ((frost$core$Object*) $tmp5);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Analyzer.frost:208:20
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:155
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 _5 = ($fn6) _2->$class->vtable[0];
 _6 = _5(_2);
 _7 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(&$s7, _6);
@@ -177,7 +177,7 @@ $tmp9 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &fros
 $tmp9->value = _16;
 _17 = ((frost$core$Object*) $tmp9);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Analyzer.frost:208:20
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/String.stub:155
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 _20 = ($fn10) _17->$class->vtable[0];
 _21 = _20(_17);
 _22 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_15, _21);
@@ -219,7 +219,7 @@ _1 = param0.id;
 _2 = _1.value;
 _3 = param0.exit;
 // begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from Analyzer.frost:213:29
-// /Users/ethannicholas/Dropbox/Frost/build/stubs/frost/core/Int.stub:291
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:365
 _6 = _2.value;
 _7 = _3.value;
 _8 = _6 ^ _7;

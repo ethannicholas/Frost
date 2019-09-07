@@ -147,6 +147,11 @@ class Match {
                                 def test:IR.Value?
                                 def cc := compiler.getChoiceCase(t)
                                 if cc !== null {
+                                    if choiceRawValue == null {
+                                        compiler.error(position, "'\{value.type()}' is not an " +
+                                                "instance of '\{cc.second.owner.name}'")
+                                        return
+                                    }
                                     def args := [ASTNode.INT(t.position(),
                                             cc.second.rawValue.asUInt64)]
                                     test := Call.compile(compiler, t.position(), choiceRawValue,
