@@ -1,0 +1,11 @@
+function singleton<T>(o:T):Array<T> {
+    def a := Array<T>()
+    a.add(o)
+    return a
+}
+
+method main() {
+    Console.printLine(singleton(12))
+    def arrayOfNumbers:Array<Int> := singleton(42)
+    Console.printLine(arrayOfNumbers)
+}

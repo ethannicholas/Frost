@@ -114,7 +114,7 @@ _10 = *_9;
 _11 = &param1->target;
 _12 = *_11;
 // begin inline call to function org.frostlang.frostc.Type.=(other:org.frostlang.frostc.Type):frost.core.Bit from Compiler.frost:275:48
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:277
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:254
 _15 = ((org$frostlang$frostc$Symbol*) _10);
 _16 = &_15->name;
 _17 = *_16;

@@ -138,7 +138,7 @@ _24 = ((org$frostlang$frostc$ClassDecl*) _20);
 _25 = &_24->type;
 _26 = *_25;
 // begin inline call to function org.frostlang.frostc.Type.=(other:org.frostlang.frostc.Type):frost.core.Bit from ChoiceFieldLValue.frost:20:24
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:277
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:254
 _29 = ((org$frostlang$frostc$Symbol*) _1);
 _30 = &_29->name;
 _31 = *_30;

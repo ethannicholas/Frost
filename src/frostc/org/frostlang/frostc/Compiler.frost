@@ -2284,82 +2284,6 @@ class Compiler {
         return null
     }
 
-    method possibleMatches(methodTypes:CollectionView<Type>, args:ListView<ASTNode>,
-            type:TypeContext):Pair<CollectionView<Type>, Int>? {
-        var bestCost := Int.MAX
-        def best := Array<Type>()
-        outer: for raw in methodTypes {
-            var m := raw.nonnullable()
-            if m.methodRef !== null & m.methodRef.value.genericParameters !== null {
-                def inferred := Call.performTypeInference(self, m.methodRef, args)
-                if inferred == null {
-                    continue
-                }
-                m := Type(inferred)
-            }
-            if m.typeKind != Type.Kind.METHOD &
-                    m.typeKind != Type.Kind.FUNCTION &
-                    m.typeKind != Type.Kind.IMMUTABLE_METHOD &
-                    m.typeKind != Type.Kind.IMMUTABLE_FUNCTION {
-                continue
-            }
-            if m.subtypes.count != args.count + 1->Int {
-                continue
-            }
-            var cost := -m.priority
-            for i in 0 .. args.count {
-                def argCost := coercionCost(args[i], m.subtypes[i])
-                if argCost == null {
-                    continue outer
-                }
-                cost += argCost.second
-            }
-            def returnType := m.returnType
-            match type {
-                when TypeContext.IMMUTABLE {
-                    if returnType = VOID_TYPE | !isImmutable(returnType) {
-                        continue
-                    }
-                }
-                when TypeContext.TYPE(t, _) {
-                    def returnCost := coercionCost(returnType, t)
-                    if returnCost == null {
-                        continue
-                    }
-                    cost += returnCost.second
-                }
-                when TypeContext.NON_VOID {
-                    if returnType = VOID_TYPE {
-                        continue
-                    }
-                }
-            }
-            if cost < bestCost {
-                bestCost := cost
-                best.clear()
-            }
-            if cost = bestCost {
-                best.add(m)
-            }
-        }
-        if best.count = 0 {
-            return null
-        }
-        return Pair<CollectionView<Type>, Int>(best, bestCost)
-    }
-
-    method callCost(methodTypes:CollectionView<Type>, args:ListView<ASTNode>,
-            type:TypeContext):Pair<Type, Int>? {
-        def result := possibleMatches(methodTypes, args, type)
-        if result !== null {
-            -- we still might not actually be able to successfully perform the coercion, in the
-            -- event that it's ambiguous, but for error reporting purposes we act like it's going to
-            -- be ok right now
-            return Pair<Type, Int>(result.first.iterator.next().returnType, result.second)
-        }
-        return null
-    }
-
     function isClassContext():Bit {
         return currentMethod[0].annotations.isClass
     }
@@ -2862,33 +2786,7 @@ class Compiler {
                 return [BIT_TYPE, BUILTIN_BIT_TYPE]
             }
             when ASTNode.CALL(_, m, args) {
-                def methodTypes := possibleTypes(m)
-                if methodTypes == null {
-                    return null
-                }
-                if methodTypes.count = 1 {
-                    def t := methodTypes.iterator.next()
-                    if t.isClass {
-                        def cl := getClass(t)
-                        if cl !== null & cl.classKind = ClassDecl.Kind.CHOICE {
-                            -- choice case
-                            return [t]
-                        }
-                    }
-                    if t.typeKind = Type.Kind.GENERIC & t.subtypes[0] = CLASS_TYPE {
-                        -- calling a class literal, this is actually object construction
-                        return [t.subtypes[1]]
-                    }
-                }
-                def result := possibleMatches(methodTypes, args, TypeContext.NON_VOID)
-                if result !== null {
-                    def resultTypes := HashSet<Type>()
-                    for m in result.first {
-                        resultTypes.add(m.returnType)
-                    }
-                    return resultTypes
-                }
-                return null
+                return Call.possibleTypes(self, m, args)
             }
             when ASTNode.DOT(position, base, name) {
                 def type := tryResolveType(value)
@@ -3002,8 +2900,12 @@ class Compiler {
             when ASTNode.IR_WRAPPER(_, node) {
                 return [node.type()]
             }
-            when ASTNode.METHOD {
-                return null
+            when ASTNode.METHOD(position, _, _, kind, _, _, parameters, returnType, _) {
+                def result := Closure.methodType(self, position, kind, parameters, returnType)
+                if result == null {
+                    return null
+                }
+                return [result]
             }
             when ASTNode.NULL {
                 return [ANY_TYPE]
@@ -3262,30 +3164,7 @@ class Compiler {
                 return coercionCost(BUILTIN_BIT_TYPE, target)
             }
             when ASTNode.CALL(_, m, args) {
-                var methodTypes := possibleTypes(m)
-                if methodTypes == null {
-                    return null
-                }
-                if methodTypes.count = 1 {
-                    def t := methodTypes.iterator.next()
-                    if t.isClassLiteral {
-                        def resultCost := coercionCost(t.subtypes[1], target)
-                        if resultCost == null {
-                            return null
-                        }
-                        methodTypes := possibleTypes(ASTNode.DOT(m.position(), m, "init"))
-                        if methodTypes == null {
-                            return null
-                        }
-                        def callCost := callCost(methodTypes, args, TypeContext.UNSPECIFIED)
-                        if callCost == null {
-                            return null
-                        }
-                        return Pair<Type, Int>(resultCost.first, callCost.second +
-                                resultCost.second)
-                    }
-                }
-                return callCost(methodTypes, args, TypeContext.TYPE(target, false))
+                return Call.coercionCost(self, m, args, target)
             }
             when ASTNode.DOT, ASTNode.DOT_GENERICS {
                 def types := possibleTypes(expr)
@@ -3845,6 +3724,17 @@ class Compiler {
             when Symbol.Kind.FIELD {
                 def f := s->FieldDecl
                 if resolve(f) {
+                    if target !== null {
+                        match target {
+                            when IR.Value.TYPE {
+                                if !f.annotations.isClass {
+                                    error(position, "instance field '\{f.name}' cannot be " +
+                                            "accessed from a class context")
+                                    return null
+                                }
+                            }
+                        }
+                    }
                     if f.annotations.isCapture {
                         capture(position, f)
                     }
@@ -4074,8 +3964,15 @@ class Compiler {
             return value
         }
         match value {
-            when IR.Value.METHOD(targetObj, m, _) {
-                def result := createMethodObject(position, targetObj, m)
+            when IR.Value.METHOD(rawTarget, m, _) {
+                def finalTarget:IR.Value
+                if rawTarget == null & !isClassContext() & !m.annotations.isClass {
+                    finalTarget := compileSelf(position, false)
+                }
+                else {
+                    finalTarget := rawTarget
+                }
+                def result := createMethodObject(position, finalTarget, m)
                 if coercionCost(result.type(), target) == null {
                     error(position, "expected '\{target}', but found '\{result.type()}'")
                     return null
@@ -4087,7 +3984,15 @@ class Compiler {
                 var bestCost := Int.MAX
                 for m in methods {
                     if resolve(m) {
-                        def ref := MethodRef(self, targetObj.type(), m)
+                        def o:Object? := targetObj
+                        def targetType:Type
+                        if targetObj !== null {
+                            targetType := targetObj.type()
+                        }
+                        else {
+                            targetType := m.owner.type
+                        }
+                        def ref := MethodRef(self, targetType, m)
                         def cost := coercionCost(ref.effectiveType, target)
                         if cost !== null {
                             if cost.second < bestCost {

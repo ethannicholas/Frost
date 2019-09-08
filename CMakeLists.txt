@@ -175,6 +175,8 @@ add_library(c_frost
     bootstrap/src/org/frostlang/frostc/expression/Binary/_Closure2.c
     bootstrap/src/org/frostlang/frostc/expression/Binary/Operator.c
     bootstrap/src/org/frostlang/frostc/expression/Call.c
+    bootstrap/src/org/frostlang/frostc/expression/Call/_Closure2.c
+    bootstrap/src/org/frostlang/frostc/expression/Call/ImplicationsResult.c
     bootstrap/src/org/frostlang/frostc/expression/Identifier.c
     bootstrap/src/org/frostlang/frostc/ASTNode.c
     bootstrap/src/org/frostlang/frostc/Main/Format.c

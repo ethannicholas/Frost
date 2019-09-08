@@ -64,7 +64,7 @@ frost$collections$ListView* org$frostlang$frostc$Type$get_parameterTypes$R$frost
 org$frostlang$frostc$Type* org$frostlang$frostc$Type$parameterType$frost$core$Int$R$org$frostlang$frostc$Type(org$frostlang$frostc$Type* self, frost$core$Int p_i);
 org$frostlang$frostc$Type* org$frostlang$frostc$Type$get_returnType$R$org$frostlang$frostc$Type(org$frostlang$frostc$Type* self);
 org$frostlang$frostc$Type* org$frostlang$frostc$Type$union$org$frostlang$frostc$Compiler$org$frostlang$frostc$Type$R$org$frostlang$frostc$Type(org$frostlang$frostc$Type* self, org$frostlang$frostc$Compiler* p_compiler, org$frostlang$frostc$Type* p_other);
-org$frostlang$frostc$Type* org$frostlang$frostc$Type$intersection$org$frostlang$frostc$Compiler$org$frostlang$frostc$Type$R$org$frostlang$frostc$Type(org$frostlang$frostc$Type* self, org$frostlang$frostc$Compiler* p_compiler, org$frostlang$frostc$Type* p_other);
+org$frostlang$frostc$Type* org$frostlang$frostc$Type$intersection$org$frostlang$frostc$Compiler$org$frostlang$frostc$Type$R$org$frostlang$frostc$Type$Q(org$frostlang$frostc$Type* self, org$frostlang$frostc$Compiler* p_compiler, org$frostlang$frostc$Type* p_other);
 org$frostlang$frostc$Type* org$frostlang$frostc$Type$remap$org$frostlang$frostc$Compiler$frost$collections$HashMap$LTfrost$core$String$Corg$frostlang$frostc$Type$GT$R$org$frostlang$frostc$Type(org$frostlang$frostc$Type* self, org$frostlang$frostc$Compiler* p_compiler, frost$collections$HashMap* p_types);
 frost$core$Int org$frostlang$frostc$Type$get_hash$R$frost$core$Int(org$frostlang$frostc$Type* self);
 frost$core$String* org$frostlang$frostc$Type$get_asString$R$frost$core$String(org$frostlang$frostc$Type* self);

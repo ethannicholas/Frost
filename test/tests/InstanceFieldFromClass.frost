@@ -1,0 +1,12 @@
+class InstanceField {
+    def x:Int
+
+    @class
+    method test() {
+        Console.printLine(x)
+    }
+}
+
+method main() {
+    Console.printLine(InstanceField.x)
+}

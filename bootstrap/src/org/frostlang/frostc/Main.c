@@ -6103,11 +6103,11 @@ frost$core$Frost$unref$frost$core$Object$Q(_2134);
 _2138 = *(&local64);
 _2139 = *(&local68);
 // begin inline call to method org.frostlang.frostc.Compiler.markNonExternal(cl:org.frostlang.frostc.ClassDecl) from Main.frost:342:45
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5933
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5838
 _2142 = (frost$core$Bit) {false};
 _2143 = &_2139->external;
 *_2143 = _2142;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5934
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5839
 _2146 = &_2139->classes;
 _2147 = *_2146;
 _2148 = ((frost$collections$Iterable*) _2147);
@@ -6146,14 +6146,14 @@ _2166 = *(&local69);
 _2167 = ((frost$core$Object*) _2166);
 frost$core$Frost$unref$frost$core$Object$Q(_2167);
 *(&local69) = _2163;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5935
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5840
 _2171 = *(&local69);
-// begin inline call to method org.frostlang.frostc.Compiler.markNonExternal(cl:org.frostlang.frostc.ClassDecl) from Compiler.frost:5935:28
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5933
+// begin inline call to method org.frostlang.frostc.Compiler.markNonExternal(cl:org.frostlang.frostc.ClassDecl) from Compiler.frost:5840:28
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5838
 _2174 = (frost$core$Bit) {false};
 _2175 = &_2171->external;
 *_2175 = _2174;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5934
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5839
 _2178 = &_2171->classes;
 _2179 = *_2178;
 _2180 = ((frost$collections$Iterable*) _2179);
@@ -6192,7 +6192,7 @@ _2198 = *(&local70);
 _2199 = ((frost$core$Object*) _2198);
 frost$core$Frost$unref$frost$core$Object$Q(_2199);
 *(&local70) = _2195;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5935
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5840
 _2203 = *(&local70);
 org$frostlang$frostc$Compiler$markNonExternal$org$frostlang$frostc$ClassDecl(_2138, _2203);
 _2205 = _2194;
@@ -6292,7 +6292,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_2280);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Main.frost:348
 _2283 = *(&local64);
 // begin inline call to method org.frostlang.frostc.Compiler.finish() from Main.frost:348:28
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:6170
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:6075
 goto block269;
 block269:;
 _2287 = &_2283->pendingClasses;
@@ -6312,7 +6312,7 @@ _2296 = (frost$core$Bit) {_2295};
 _2297 = _2296.value;
 if (_2297) goto block270; else goto block271;
 block270:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:6171
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:6076
 _2300 = &_2283->pendingClasses;
 _2301 = *_2300;
 _2302 = _2301;
@@ -6341,7 +6341,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_2319);
 *(&local72) = _2314;
 _2322 = _2313;
 frost$core$Frost$unref$frost$core$Object$Q(_2322);
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:6172
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:6077
 _2325 = *(&local72);
 org$frostlang$frostc$Compiler$compile$org$frostlang$frostc$ClassDecl(_2283, _2325);
 _2327 = *(&local72);
@@ -6350,7 +6350,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_2328);
 *(&local72) = ((org$frostlang$frostc$ClassDecl*) NULL);
 goto block269;
 block271:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:6174
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:6079
 _2333 = &_2283->codeGenerator;
 _2334 = *_2333;
 _2335 = _2334 != NULL;
@@ -6358,7 +6358,7 @@ _2336 = (frost$core$Bit) {_2335};
 _2337 = _2336.value;
 if (_2337) goto block272; else goto block273;
 block273:;
-_2339 = (frost$core$Int) {6174u};
+_2339 = (frost$core$Int) {6079u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s342, _2339, &$s343);
 abort(); // unreachable
 block272:;

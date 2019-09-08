@@ -151,7 +151,7 @@ _2 = *_1;
 _3 = &param1->type;
 _4 = *_3;
 // begin inline call to function org.frostlang.frostc.Type.=(other:org.frostlang.frostc.Type):frost.core.Bit from Analyzer.frost:155:25
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:277
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:254
 _7 = ((org$frostlang$frostc$Symbol*) _2);
 _8 = &_7->name;
 _9 = *_8;

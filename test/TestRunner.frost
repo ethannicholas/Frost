@@ -163,7 +163,7 @@ class TestRunner : Immutable {
             if errors.count > 0 {
                 Console.print("Failures: ")
                 -- FIXME inference failure
-                Console.printLine(errors.map<String>(function(r:Result):String {
+                Console.printLine(errors.map(function(r:Result):String {
                     match r {
                         when Result.ERROR(name, _) {
                             return name

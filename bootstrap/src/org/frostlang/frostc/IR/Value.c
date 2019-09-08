@@ -898,8 +898,8 @@ _462 = _460.value;
 if (_462) goto block41; else goto block1;
 block41:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/IR.frost:491
-FROST_ASSERT(120 == sizeof(org$frostlang$frostc$Type));
-_465 = (org$frostlang$frostc$Type*) frostObjectAlloc(120, (frost$core$Class*) &org$frostlang$frostc$Type$class);
+FROST_ASSERT(112 == sizeof(org$frostlang$frostc$Type));
+_465 = (org$frostlang$frostc$Type*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$Type$class);
 _466 = (frost$core$Int) {6u};
 // begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from IR.frost:491:55
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:5

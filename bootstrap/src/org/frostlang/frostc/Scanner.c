@@ -1837,8 +1837,8 @@ block10:;
 goto block6;
 block6:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Scanner.frost:42
-FROST_ASSERT(120 == sizeof(org$frostlang$frostc$Type));
-_471 = (org$frostlang$frostc$Type*) frostObjectAlloc(120, (frost$core$Class*) &org$frostlang$frostc$Type$class);
+FROST_ASSERT(112 == sizeof(org$frostlang$frostc$Type));
+_471 = (org$frostlang$frostc$Type*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$Type$class);
 _472 = *(&local1);
 _473 = (frost$core$Int) {0u};
 // begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Scanner.frost:42:44
@@ -1905,8 +1905,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_532);
 _534 = ((frost$core$Object*) _516);
 frost$core$Frost$unref$frost$core$Object$Q(_534);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Scanner.frost:46
-FROST_ASSERT(120 == sizeof(org$frostlang$frostc$Type));
-_537 = (org$frostlang$frostc$Type*) frostObjectAlloc(120, (frost$core$Class*) &org$frostlang$frostc$Type$class);
+FROST_ASSERT(112 == sizeof(org$frostlang$frostc$Type));
+_537 = (org$frostlang$frostc$Type*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$Type$class);
 _538 = *(&local6);
 _539 = _538;
 _540 = (frost$core$Int) {0u};
@@ -2084,8 +2084,8 @@ block90:;
 _690 = ((frost$core$Object*) _655);
 frost$core$Frost$unref$frost$core$Object$Q(_690);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Scanner.frost:53
-FROST_ASSERT(120 == sizeof(org$frostlang$frostc$Type));
-_693 = (org$frostlang$frostc$Type*) frostObjectAlloc(120, (frost$core$Class*) &org$frostlang$frostc$Type$class);
+FROST_ASSERT(112 == sizeof(org$frostlang$frostc$Type));
+_693 = (org$frostlang$frostc$Type*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$Type$class);
 _694 = *(&local10);
 _695 = (frost$core$Int) {0u};
 // begin inline call to org.frostlang.frostc.Type.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Type.Kind from Scanner.frost:53:57
@@ -9936,7 +9936,7 @@ _645 = ((org$frostlang$frostc$Compiler*) _641);
 _646 = &_645->VOID_TYPE;
 _647 = *_646;
 // begin inline call to function org.frostlang.frostc.Type.=(other:org.frostlang.frostc.Type):frost.core.Bit from Scanner.frost:596:57
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:277
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:254
 _650 = ((org$frostlang$frostc$Symbol*) _622);
 _651 = &_650->name;
 _652 = *_651;

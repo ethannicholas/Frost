@@ -87,7 +87,7 @@ method solve(people:Array<String>, pairs:Map<(String, String), Int>) {
     Console.printLine(best)
 }
 
-function contains<T:Equatable>(a:Array<T>, needle:T):Bit {
+function contains<T:Equatable<T>>(a:Array<T>, needle:T):Bit {
     for v in a {
         if v = needle {
             return true
@@ -101,10 +101,9 @@ method main() {
     def people := Array<String>()
     def pairs := HashMap<(String, String), Int>()
     for line in Console.inputStream().lines() {
-        def parsed := line.parse(/(\w+) would (gain|lose) (\d+) happiness units by sitting next to (\w+)./)
-        assert parsed !== null
+        def parsed := line.parse(/(\w+) would (gain|lose) (\d+) happiness units by sitting next to (\w+)./)!
         def name1:String, name2:String
-        if parsed[0] < parsed[3] {
+        if parsed[0]! < parsed[3]! {
             name1 := parsed[0]
             name2 := parsed[3]
         }

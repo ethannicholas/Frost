@@ -47,6 +47,7 @@ function repeat<T>(f:(T)=>(T), count:Int):(T)=>(T) {
 
 method main() {
     def seq := Console.inputStream().readFully()
-    Console.printLine(repeat(self.lookAndSay, 40)(seq).length)
-    Console.printLine(repeat(self.lookAndSay, 50)(seq).length)
+    def first := repeat(self.lookAndSay, 40)(seq)
+    Console.printLine(first.length)
+    Console.printLine(repeat(self.lookAndSay, 10)(first).length)
 }

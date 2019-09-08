@@ -1,0 +1,3 @@
+InstanceFieldFromClass.frost:6:27: error: cannot reference 'self' from a @class context
+InstanceFieldFromClass.frost:11:36: error: instance field 'x' cannot be accessed from a class context
+2 errors

@@ -103,7 +103,7 @@ method main() {
     for line in Console.inputStream().lines() {
         def parsed := line.split(/[^\d-]+/)
         assert parsed.count = 6
-        ingredients.add(parsed[1..].map(p => p.asInt))
+        ingredients.add(parsed[1..].map(p => p.asInt!))
     }
     Console.printLine(bestOverall(100, [], ingredients.count, score(ingredients, 
             null)))

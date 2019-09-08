@@ -25,16 +25,6 @@ class Type : Symbol, HashKey<Type> {
         REAL_LITERAL
     }
 
-        def RESOLVED             := 1
-    @private
-    class Flag {
---        def RESOLVED             := 1
-    }
-
-    @private
-    def flags:Int8
-
-    --property resolved:Bit
     var resolved:Bit
 
     def typeKind:Kind
@@ -239,19 +229,6 @@ class Type : Symbol, HashKey<Type> {
         return Type(name.finish(), kind, position, FixedArray<Type>.from(subtypes), resolved,
                 priority)
     }
-
--*    function get_resolved():Bit {
-        return flags && RESOLVED != 0
-    }
-
-    method set_resolved(value:Bit) {
-        if value {
-            flags ||= RESOLVED
-        }
-        else {
-            flags &&= !!RESOLVED
-        }
-    }*-
 
     function get_size():Int {
         assert typeKind = Kind.BUILTIN_INT | typeKind = Kind.BUILTIN_UINT |
@@ -559,11 +536,14 @@ class Type : Symbol, HashKey<Type> {
     ================================================================================================
     Returns the widest type that could be coerced to either type.
     ================================================================================================
-    function intersection(compiler:Compiler, other:Type):Type {
+    function intersection(compiler:Compiler, other:Type):Type? {
         if compiler.coercionCost(self, other) !== null {
             return self
         }
-        return other
+        if compiler.coercionCost(other, self) !== null {
+            return other
+        }
+        return null
     }
 
     @pre(typeKind != Kind.INVALID)

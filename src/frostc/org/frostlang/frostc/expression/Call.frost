@@ -22,6 +22,146 @@ uses org.frostlang.frostc.statement.Assert
 
 class Call {
     @class
+    method possibleTypes(compiler:Compiler, m:ASTNode,
+            args:FixedArray<ASTNode>):CollectionView<Type>? {
+        def methodTypes := compiler.possibleTypes(m)
+        if methodTypes == null {
+            return null
+        }
+        if methodTypes.count = 1 {
+            def t := methodTypes.iterator.next()
+            if t.isClass {
+                def cl := compiler.getClass(t)
+                if cl !== null & cl.classKind = ClassDecl.Kind.CHOICE {
+                    -- choice case
+                    return [t]
+                }
+            }
+            if t.typeKind = Type.Kind.GENERIC & t.subtypes[0] = compiler.CLASS_TYPE {
+                -- calling a class literal, this is actually object construction
+                return [t.subtypes[1]]
+            }
+        }
+        def result := possibleMatches(compiler, methodTypes, args, Compiler.TypeContext.NON_VOID)
+        if result !== null {
+            def resultTypes := HashSet<Type>()
+            for m in result.first {
+                resultTypes.add(m.returnType)
+            }
+            return resultTypes
+        }
+        return null
+    }
+
+    @private
+    @class
+    method possibleMatches(compiler:Compiler, methodTypes:CollectionView<Type>,
+            args:ListView<ASTNode>, type:TypeContext):Pair<CollectionView<Type>, Int>? {
+        var bestCost := Int.MAX
+        def best := Array<Type>()
+        outer: for raw in methodTypes {
+            var m := raw.nonnullable()
+            if m.methodRef !== null & m.methodRef.value.genericParameters !== null {
+                def inferred := Call.performTypeInference(compiler, m.methodRef, args)
+                if inferred == null {
+                    continue
+                }
+                m := Type(inferred)
+            }
+            if m.typeKind != Type.Kind.METHOD &
+                    m.typeKind != Type.Kind.FUNCTION &
+                    m.typeKind != Type.Kind.IMMUTABLE_METHOD &
+                    m.typeKind != Type.Kind.IMMUTABLE_FUNCTION {
+                continue
+            }
+            if m.subtypes.count != args.count + 1->Int {
+                continue
+            }
+            var cost := -m.priority
+            for i in 0 .. args.count {
+                def argCost := compiler.coercionCost(args[i], m.subtypes[i])
+                if argCost == null {
+                    continue outer
+                }
+                cost += argCost.second
+            }
+            def returnType := m.returnType
+            match type {
+                when TypeContext.IMMUTABLE {
+                    if returnType = compiler.VOID_TYPE | !compiler.isImmutable(returnType) {
+                        continue
+                    }
+                }
+                when TypeContext.TYPE(t, _) {
+                    def returnCost := compiler.coercionCost(returnType, t)
+                    if returnCost == null {
+                        continue
+                    }
+                    cost += returnCost.second
+                }
+                when TypeContext.NON_VOID {
+                    if returnType = compiler.VOID_TYPE {
+                        continue
+                    }
+                }
+            }
+            if cost < bestCost {
+                bestCost := cost
+                best.clear()
+            }
+            if cost = bestCost {
+                best.add(m)
+            }
+        }
+        if best.count = 0 {
+            return null
+        }
+        return Pair<CollectionView<Type>, Int>(best, bestCost)
+    }
+
+    @private
+    @class
+    method callCost(compiler:Compiler, methodTypes:CollectionView<Type>, args:ListView<ASTNode>,
+            type:TypeContext):Pair<Type, Int>? {
+        def result := possibleMatches(compiler, methodTypes, args, type)
+        if result !== null {
+            -- we still might not actually be able to successfully perform the coercion, in the
+            -- event that it's ambiguous, but for error reporting purposes we act like it's going to
+            -- be ok right now
+            return Pair<Type, Int>(result.first.iterator.next().returnType, result.second)
+        }
+        return null
+    }
+
+    @class
+    method coercionCost(compiler:Compiler, m:ASTNode, args:FixedArray<ASTNode>,
+            target:Type):Pair<Type, Int>? {
+        var methodTypes := compiler.possibleTypes(m)
+        if methodTypes == null {
+            return null
+        }
+        if methodTypes.count = 1 {
+            def t := methodTypes.iterator.next()
+            if t.isClassLiteral {
+                def resultCost := compiler.coercionCost(t.subtypes[1], target)
+                if resultCost == null {
+                    return null
+                }
+                methodTypes := compiler.possibleTypes(ASTNode.DOT(m.position(), m, "init"))
+                if methodTypes == null {
+                    return null
+                }
+                def cc := callCost(compiler, methodTypes, args, TypeContext.UNSPECIFIED)
+                if cc == null {
+                    return null
+                }
+                return Pair<Type, Int>(resultCost.first, cc.second + resultCost.second)
+            }
+        }
+        return callCost(compiler, methodTypes, args, TypeContext.TYPE(target, false))
+    }
+
+    @class
     method compilePointerIntrinsic(compiler:Compiler, position:Position, target:IR.Value?,
             m:MethodRef, args:ListView<ASTNode>):Pair<Bit, IR.Value?> {
         def ir := compiler.ir
@@ -133,7 +273,6 @@ class Call {
         }
     }
 
-    -- FIXME removing @class here results in a crash instead of an error
     @class
     method compileNumberIntrinsic(compiler:Compiler, position:Position, target:IR.Value,
             op:Binary.Operator, args:ListView<ASTNode>, operandType:Type,
@@ -347,6 +486,143 @@ class Call {
         return type
     }
 
+    ================================================================================================
+    Return value of the [determineImplications] method.
+    ================================================================================================
+    choice ImplicationsResult {
+        ============================================================================================
+        The call was successful and the mappings were updated.
+        ============================================================================================
+        UPDATED
+
+        ============================================================================================
+        The call was successful, but the mappings were not updated.
+        ============================================================================================
+        NOT_UPDATED
+
+        ============================================================================================
+        It is not possible to use this argument as this type with these `currentMappings`.
+        ============================================================================================
+        FAILED
+    }
+
+    @class
+    method determineImplications(compiler:Compiler, m:MethodDecl, src:Type, target:Type,
+            currentMapping:HashMap<String, Type>):ImplicationsResult {
+        if target.typeKind = Type.Kind.GENERIC_METHOD_PARAMETER {
+            def newType := currentMapping[target.name].intersection(compiler, src)
+            if newType == null {
+                return ImplicationsResult.FAILED
+            }
+            if newType != currentMapping[target.name] {
+                currentMapping[target.name] := newType
+                return ImplicationsResult.UPDATED
+            }
+            return ImplicationsResult.NOT_UPDATED
+        }
+        else {
+            def generics := findGenericParameters(m, target.nonnullable())
+            var result := ImplicationsResult.NOT_UPDATED
+            if generics !== null {
+                for g in generics {
+                    def parameter := getSubtype(target.nonnullable(), g)
+                    assert parameter.typeKind = Type.Kind.GENERIC_METHOD_PARAMETER
+                    def newType := currentMapping[parameter.name].intersection(compiler,
+                            getSubtype(src.nonnullable(), g))
+                    if newType == null {
+                        return ImplicationsResult.FAILED
+                    }
+                    if newType != currentMapping[parameter.name] {
+                        currentMapping[parameter.name] := newType
+                        result := ImplicationsResult.UPDATED
+                    }
+                }
+            }
+            return result
+        }
+    }
+
+    ================================================================================================
+    Update `currentMapping` with the implications of trying to use `src` as a parameter of type
+    `target`. For instance, if we tried to use `Int.+`, which has type `(Int, Int)=>*(Int)`, as a
+    parameter of type `(T, T)=>(U)`, the implication is that `T` and `U` are both `Int`.
+    ================================================================================================
+    @class
+    method determineImplications(compiler:Compiler, m:MethodDecl, src:ASTNode, target:Type,
+            currentMapping:HashMap<String, Type>):ImplicationsResult {
+        match src {
+            when ASTNode.UNTYPED_LAMBDA(_, parameterNames, expr) {
+                def rawType := target.nonnullable()
+                if rawType.isMethod {
+                    def returnGenerics := findGenericParameters(m, rawType.returnType)
+                    if returnGenerics !== null {
+                        unreachable
+                    }
+                    else if rawType.returnType.typeKind = Type.Kind.GENERIC_METHOD_PARAMETER {
+                        def parameters := Array<ASTNode>()
+                        for (i, n) in parameterNames.enumeration {
+                            match n {
+                                when ASTNode.IDENTIFIER(position, name) {
+                                    def t := compiler.literalType(rawType.parameterType(i))
+                                    parameters.add(ASTNode.PARAMETER(position,
+                                            name, ASTNode.IR_WRAPPER(position, t)))
+                                }
+                                otherwise {
+                                    unreachable
+                                }
+                            }
+                        }
+                        def type := Closure.typedLambdaType(compiler, parameters, expr,
+                                TypeContext.NON_VOID)
+                        if type !== null {
+                            def name := rawType.returnType.name
+                            def newType := currentMapping[name].intersection(compiler,
+                                    type.returnType)
+                            if newType == null {
+                                return ImplicationsResult.FAILED
+                            }
+                            if newType != currentMapping[name] {
+                                currentMapping[name] := newType
+                                return ImplicationsResult.UPDATED
+                            }
+                            return ImplicationsResult.NOT_UPDATED
+                        }
+                    }
+                }
+            }
+        }
+-*        def targetRemapped := methodRemap(compiler, target, currentMapping)
+        var argType := compiler.coercionCost(src, targetRemapped)
+        if argType !== null {
+            return determineImplications(compiler, m, argType.first, target, currentMapping)
+        }*-
+        def preferred := compiler.preferredType(src)
+        if preferred !== null {
+            def impl := determineImplications(compiler, m, preferred, target, currentMapping)
+            if impl != ImplicationsResult.FAILED {
+                return impl
+            }
+        }
+        def possible := compiler.possibleTypes(src)
+        if possible !== null {
+            var type:Type? := null
+            for p in possible {
+                def tmp := HashMap<String, Type>(currentMapping)
+                if determineImplications(compiler, m, p, target, tmp) != ImplicationsResult.FAILED {
+                    if type !== null {
+                        type := null
+                        break
+                    }
+                    type := p
+                }
+            }
+            if type !== null {
+                return determineImplications(compiler, m, type, target, currentMapping)
+            }
+        }
+        return ImplicationsResult.NOT_UPDATED
+    }
+
     @class
     method performTypeInference(compiler:Compiler, m:MethodRef, args:ListView<ASTNode>):MethodRef? {
         if !m.requiresTypeInference {
@@ -355,100 +631,32 @@ class Call {
         if m.value.parameters.count != args.count {
             return null
         }
-        def result := Array<Type>(m.value.genericParameters.map(p => p.bound))
+        def remaps := HashMap<String, Type>()
+        for p in m.value.genericParameters {
+            remaps[m.value.owner.name + "." + m.value.name + "." + p.name] := p.bound
+        }
         var updated := false
         do {
             updated := false
-            def remaps := HashMap<String, Type>()
-            for i in 0 .. result.count {
-                remaps[m.value.owner.name + "." + m.value.name + "." +
-                        m.value.genericParameters[i].name] := result[i]
-            }
             for i in 0 .. m.value.parameters.count {
-                def paramType := methodRemap(compiler, m.parameterType(i), remaps)
-                def generics := findGenericParameters(m.value, paramType.nonnullable())
-                if generics !== null {
-                    Console.printLine("generics: \{generics}")
-                    for g in generics {
-                        var argType := compiler.coercionCost(args[i], paramType)
-                        if argType == null {
-                            Console.printLine("note: can't coerce '\{args[i]}' to " +
-                                    "'\{paramType.remap(compiler, remaps)}'")
-                            return m
-                        }
-                        def parameter := getSubtype(m.value.parameters[i].type.nonnullable(), g)
-                        assert parameter.typeKind = Type.Kind.GENERIC_METHOD_PARAMETER
-                        var parameterIndex := 0
-                        while Type(m.value.genericParameters[parameterIndex]) != parameter {
-                            parameterIndex += 1
-                        }
-                        def newType := result[parameterIndex].intersection(compiler,
-                                getSubtype(argType.first.nonnullable(), g))
-                        if newType != result[parameterIndex] {
-                            result[parameterIndex] := newType
-                            updated := true
-                        }
-                    }
-                    Console.printLine("updated to: \{result}")
-                }
-                else if paramType.typeKind = Type.Kind.GENERIC_METHOD_PARAMETER {
-                    var argType := compiler.coercionCost(args[i], paramType)
-                    if argType == null {
-                        return m
-                    }
-                    var parameterIndex := 0
-                    while Type(m.value.genericParameters[parameterIndex]) != paramType {
-                        parameterIndex += 1
-                    }
-                    def newType := result[parameterIndex].intersection(compiler, argType.first)
-                    if newType != result[parameterIndex] {
-                        result[parameterIndex] := newType
+                def paramType := m.parameterType(i)
+                def result := determineImplications(compiler, m.value, args[i], paramType, remaps)
+                match result {
+                    when ImplicationsResult.UPDATED {
                         updated := true
                     }
-                }
-                else {
-                    match args[i] {
-                        when ASTNode.UNTYPED_LAMBDA(_, parameterNames, expr) {
-                            def rawType := m.parameterType(i).nonnullable()
-                            if rawType.isMethod {
-                                def returnGenerics := findGenericParameters(m.value,
-                                        rawType.returnType)
-                                if returnGenerics !== null {
-                                    unreachable
-                                }
-                                else if rawType.returnType.typeKind = Type.Kind.GENERIC_METHOD_PARAMETER {
-                                    def parameters := Array<ASTNode>()
-                                    for (i, n) in parameterNames.enumeration {
-                                        match n {
-                                            when ASTNode.IDENTIFIER(position, name) {
-                                                def t := compiler.literalType(rawType.parameterType(i))
-                                                parameters.add(ASTNode.PARAMETER(position,
-                                                        name, ASTNode.IR_WRAPPER(position, t)))
-                                            }
-                                            otherwise {
-                                                unreachable
-                                            }
-                                        }
-                                    }
-                                    def type := Closure.typedLambdaType(compiler, parameters, expr,
-                                            TypeContext.NON_VOID)
-                                    if type !== null {
-                                        var parameterIndex := 0
-                                        while Type(m.value.genericParameters[parameterIndex]) !=
-                                                rawType.returnType {
-                                            parameterIndex += 1
-                                        }
-                                        result[parameterIndex] := type.returnType
-                                    }
-                                }
-                            }
-                        }
+                    when ImplicationsResult.NOT_UPDATED {
+                    }
+                    when ImplicationsResult.FAILED {
+                        return null
                     }
                 }
             }
         }
         while updated
-        return MethodRef(compiler, m.target, m.value, result) 
+        def result := m.value.genericParameters.map(p => remaps[m.value.owner.name + "." +
+                m.value.name + "." + p.name]!)
+        return MethodRef(compiler, m.target, m.value, result)
     }
 
     @class
@@ -1229,7 +1437,7 @@ class Call {
             return compiler.coerce(position, resultCast, type)
         }
         if type != TypeContext.UNSPECIFIED {
-            compiler.error(position, "\{m.value.declaration} does not return a value (expected \{type})")
+            compiler.error(position, "\{m.value.declaration} does not return a value")
         }
         return null
     }

@@ -22,6 +22,38 @@ uses org.frostlang.frostc.parser.Token
 
 class Closure {
     @class
+    function methodType(compiler:Compiler, position:Position, kind:MethodDecl.Kind,
+            parameters:FixedArray<ASTNode>, returnType:ASTNode):Type? {
+        def finalParameters := Array<Type>(parameters.count)
+        for p in parameters {
+            match p {
+                when ASTNode.PARAMETER(_, _, type) {
+                    def converted := compiler.resolve(compiler.scanner.convertType(type))
+                    if converted == null {
+                        return null
+                    }
+                    finalParameters.add(converted)
+                }
+                otherwise {
+                    unreachable
+                }
+            }
+        }
+        def finalReturnType := compiler.resolve(compiler.scanner.convertType(returnType))
+        if finalReturnType == null {
+            return null
+        }
+        def finalKind:Type.Kind
+        if kind = MethodDecl.Kind.FUNCTION {
+            finalKind := Type.Kind.FUNCTION
+        }
+        else {
+            finalKind := Type.Kind.METHOD
+        }
+        return Type.methodType(compiler, position, finalKind, finalParameters, finalReturnType, 0)
+    }
+
+    @class
     function capturedSelfType(compiler:Compiler):Type {
         var cl := compiler.currentClass[0]
         loop {
