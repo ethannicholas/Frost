@@ -1222,46 +1222,52 @@ String* frostFileErrorMessage(const char* msg, const char* path) {
 }
 
 Object* frost$io$File$openInputStream$R$frost$core$Maybe$LTfrost$io$InputStream$GT(File* self) {
+    char* str = frostGetCString(self->path);
+    FILE* file = fopen(str, "rb");
+    if (!file) {
+        String* error = frostFileErrorMessage("Could not read", str);
+        frostFree(str);
+        return frostMaybeError(error);
+    }
+    frostFree(str);
     FileInputStream* result = frostObjectAlloc(sizeof(FileInputStream),
             &frost$io$FileInputStream$class);
     frost$io$InputStream$init(result);
-    char* str = frostGetCString(self->path);
-    result->file = fopen(str, "rb");
-    if (!result->file) {
-        frostFree(str);
-        return frostMaybeError(frostFileErrorMessage("Could not read", str));
-    }
-    frostFree(str);
+    result->file = file;
     result->closeOnCleanup.value = true;
     return frostMaybeSuccess((Object*) result);
 }
 
 Object* frost$io$File$openOutputStream$R$frost$core$Maybe$LTfrost$io$OutputStream$GT(File* self) {
+    char* str = frostGetCString(self->path);
+    FILE* file = fopen(str, "wb");
+    if (!file) {
+        String* error = frostFileErrorMessage("Could not write", str);
+        frostFree(str);
+        return frostMaybeError(error);
+    }
+    frostFree(str);
     FileOutputStream* result = frostObjectAlloc(sizeof(FileOutputStream),
             &frost$io$FileOutputStream$class);
     frost$io$OutputStream$init(result);
-    char* str = frostGetCString(self->path);
-    result->file = fopen(str, "wb");
-    if (!result->file) {
-        frostFree(str);
-        return frostMaybeError(frostFileErrorMessage("Could not write", str));
-    }
-    frostFree(str);
+    result->file = file;
     result->closeOnCleanup.value = true;
     return frostMaybeSuccess((Object*) result);
 }
 
 Object* frost$io$File$openForAppend$R$frost$core$Maybe$LTfrost$io$OutputStream$GT(File* self) {
+    char* str = frostGetCString(self->path);
+    FILE* file = fopen(str, "ab");
+    if (!file) {
+        String* error = frostFileErrorMessage("Could not write", str);
+        frostFree(str);
+        return frostMaybeError(error);
+    }
+    frostFree(str);
     FileOutputStream* result = frostObjectAlloc(sizeof(FileOutputStream),
             &frost$io$FileOutputStream$class);
     frost$io$OutputStream$init(result);
-    char* str = frostGetCString(self->path);
-    result->file = fopen(str, "ab");
-    if (!result->file) {
-        frostFree(str);
-        return frostMaybeError(frostFileErrorMessage("Could not write", str));
-    }
-    frostFree(str);
+    result->file = file;
     result->closeOnCleanup.value = true;
     return frostMaybeSuccess((Object*) result);
 }

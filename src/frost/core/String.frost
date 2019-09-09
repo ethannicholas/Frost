@@ -175,7 +175,7 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
             }
             if c.value->builtin_int64 && 0xFF < 0b11000000 {
                 if index + 1 < str._length {
-                    result := result && 0b11111 << 6 + str.data[index + 1].asInt32 &&
+                    result := (result && 0b11111) << 6 + str.data[index + 1].asInt32 &&
                             0b111111
                 }
                 else {
@@ -186,8 +186,8 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
             }
             if c.value->builtin_int64 && 0xFF < 0b11100000 {
                 if index + 2 < str._length {
-                    result := result && 0b1111 << 12 + str.data[index + 1].asInt32 &&
-                            0b111111 << 6 + str.data[index + 2].asInt32 && 0b111111
+                    result := (result && 0b1111) << 12 + (str.data[index + 1].asInt32 &&
+                            0b111111) << 6 + str.data[index + 2].asInt32 && 0b111111
                 }
                 else {
                     result := 0
@@ -196,8 +196,8 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
                 return Char32(result)
             }
             if index + 3 < str._length {
-                result := result && 0b111 << 18 + str.data[index + 1].asInt32 &&
-                        0b111111 << 12 + str.data[index + 2].asInt32 && 0b111111 << 6 +
+                result := (result && 0b111) << 18 + (str.data[index + 1].asInt32 &&
+                        0b111111) << 12 + (str.data[index + 2].asInt32 && 0b111111) << 6 +
                         str.data[index + 3].asInt32 && 0b111111
             }
             else {
@@ -645,23 +645,23 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
         def idx := index.value
         def c := data[idx]
         var result := c.asInt32
-        if c.value->builtin_int64 && 0xFF < 0b11000000 {
+        if c.asUInt8 < 0b11000000 {
             return Char32(result)
         }
-        if c.value->builtin_int64 && 0xFF < 0b11100000 {
+        if c.asUInt8 < 0b11100000 {
             assert idx + 1 < _length
-            result := result && 0b11111 << 6 + data[idx + 1].asInt32 && 0b111111
+            result := (result && 0b11111) << 6 + data[idx + 1].asInt32 && 0b111111
             return Char32(result)
         }
-        if c.value->builtin_int64 && 0xFF < 0b11110000 {
+        if c.asUInt8 < 0b11110000 {
             assert idx + 2 < _length
-            result := result && 0b1111 << 12 + data[idx + 1].asInt32 && 0b111111 << 6 +
+            result := (result && 0b1111) << 12 + (data[idx + 1].asInt32 && 0b111111) << 6 +
                     data[idx + 2].asInt32 && 0b111111
             return Char32(result)
         }
         assert idx + 3 < _length
-        result := result && 0b111 << 18 + data[idx + 1].asInt32 && 0b111111 << 12 +
-                data[idx + 2].asInt32 && 0b111111 << 6 +
+        result := (result && 0b111) << 18 + (data[idx + 1].asInt32 && 0b111111) << 12 +
+                (data[idx + 2].asInt32 && 0b111111) << 6 +
                 data[idx + 3].asInt32 && 0b111111
         return Char32(result)
     }
@@ -740,15 +740,15 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
             def c := data[current]
             result.append(c)
             current += 1
-            if c.value->builtin_int64 && 0xFF >= 0b11000000 {
+            if c.asUInt8 >= 0b11000000 {
                 result.append(data[current])
                 current += 1
             }
-            if c.value->builtin_int64 && 0xFF >= 0b11100000 {
+            if c.asUInt8 >= 0b11100000 {
                 result.append(data[current])
                 current += 1
             }
-            if c.value->builtin_int64 && 0xFF >= 0b11110000 {
+            if c.asUInt8 >= 0b11110000 {
                 result.append(data[current])
                 current += 1
             }
@@ -833,15 +833,15 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
                 def c := data[current]
                 result.append(c)
                 current += 1
-                if c.value->builtin_int64 && 0xFF >= 0b11000000 {
+                if c.asUInt8 >= 0b11000000 {
                     result.append(data[current])
                     current += 1
                 }
-                if c.value->builtin_int64 && 0xFF >= 0b11100000 {
+                if c.asUInt8 >= 0b11100000 {
                     result.append(data[current])
                     current += 1
                 }
-                if c.value->builtin_int64 && 0xFF >= 0b11110000 {
+                if c.asUInt8 >= 0b11110000 {
                     result.append(data[current])
                     current += 1
                 }
@@ -860,19 +860,19 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
                 result.append(c)
                 def old := current
                 current += 1
-                if c.value->builtin_int64 && 0xFF >= 0b11000000 {
+                if c.asUInt8 >= 0b11000000 {
                     result.append(data[current])
                     current += 1
                 }
-                if c.value->builtin_int64 && 0xFF >= 0b11100000 {
+                if c.asUInt8 >= 0b11100000 {
                     result.append(data[current])
                     current += 1
                 }
-                if c.value->builtin_int64 && 0xFF >= 0b11110000 {
+                if c.asUInt8 >= 0b11110000 {
                     result.append(data[current])
                 }
                 current := old - 1
-                while data[current].value->builtin_int64 && 0xFF >= 0b10000000 & data[current].value->builtin_int64 && 0xFF < 0b11000000 {
+                while data[current].asUInt8 >= 0b10000000 & data[current].asUInt8 < 0b11000000 {
                     current -= 1
                 }
                 for i in -1 .. step by -1 {
@@ -887,15 +887,15 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
             def c := data[current]
             result.append(c)
             current += 1
-            if c.value->builtin_int64 && 0xFF >= 0b11000000 {
+            if c.asUInt8 >= 0b11000000 {
                 result.append(data[current])
                 current += 1
             }
-            if c.value->builtin_int64 && 0xFF >= 0b11100000 {
+            if c.asUInt8 >= 0b11100000 {
                 result.append(data[current])
                 current += 1
             }
-            if c.value->builtin_int64 && 0xFF >= 0b11110000 {
+            if c.asUInt8 >= 0b11110000 {
                 result.append(data[current])
             }
         }
@@ -1220,7 +1220,7 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
     ================================================================================================
     function next(i:Index):Index {
         assert i.value < _length
-        def c := data[i.value].value->builtin_int64 && 0xFF
+        def c := data[i.value].asUInt8
         if c >= 0b11110000 {
             return Index(i.value + 4)
         }

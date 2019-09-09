@@ -97,7 +97,6 @@ function contains<T:Equatable<T>>(a:Array<T>, needle:T):Bit {
 }
 
 method main() {
-    def lines := File("input").lines()
     def people := Array<String>()
     def pairs := HashMap<(String, String), Int>()
     for line in Console.inputStream().lines() {
