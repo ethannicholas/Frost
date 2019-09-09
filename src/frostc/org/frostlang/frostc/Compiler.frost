@@ -1105,18 +1105,20 @@ class Compiler {
                         addAllSupertypes(sClass, supertypes)
                         if sClass.classKind = ClassDecl.Kind.CLASS {
                             if cl.classKind = ClassDecl.Kind.INTERFACE {
-                                error(s.position, "interface '\{cl.name}' cannot extend class " +
+                                error(rawS.position, "interface '\{cl.name}' cannot extend class " +
                                         "'\{s.name}'")
                             }
                             if cl.rawSuper == null {
                                 cl.rawSuper := s
                                 if cl.rawInterfaces.count > 0 {
-                                    error(s.position, "superclass '\{s}' of class '\{cl.name}' must be " +
-                                            "listed before any superinterfaces")
+                                    error(rawS.position, "superclass '\{s}' of class " +
+                                            "'\{cl.name}' must be listed before any " +
+                                            "superinterfaces")
                                 }
                             }
                             else {
-                                error(s.position, "class '\{cl.name}' has more than one superclass")
+                                error(rawS.position, "class '\{cl.name}' has more than one " +
+                                        "superclass")
                             }
                         }
                         else {
@@ -1275,7 +1277,10 @@ class Compiler {
             currentClass.pop()
             return
         }
+        def old := currentMethod
+        currentMethod := Stack<MethodDecl>()
         def preferred := preferredType(f.rawValue)
+        currentMethod := old
         if preferred == null {
             -- report error
             if compileExpression(f.rawValue) !== null {
@@ -1961,6 +1966,15 @@ class Compiler {
 
     method preferredType(expr:ASTNode):Type? {
         match expr {
+            when ASTNode.ARRAY {
+                def possible := possibleTypes(expr)
+                if possible == null {
+                    return null
+                }
+                assert possible.count = 2 &
+                        possible.first.name.startsWith("frost.collections.Array<")
+                return possible.first
+            }
             when ASTNode.BIT {
                 return BIT_TYPE
             }
@@ -2767,6 +2781,9 @@ class Compiler {
                             union := union.union(self, type)
                         }
                         result.add(Type.ArrayOf(self, union))
+                        if isImmutable(union) {
+                            result.add(Type.ImmutableArrayOf(self, union))
+                        }
                         return result
                     }
                 }
@@ -2901,7 +2918,8 @@ class Compiler {
                 return [node.type()]
             }
             when ASTNode.METHOD(position, _, _, kind, _, _, parameters, returnType, _) {
-                def result := Closure.methodType(self, position, kind, parameters, returnType)
+                def result := Closure.methodType(self, position, kind, parameters, returnType,
+                        currentMethod.count = 0)
                 if result == null {
                     return null
                 }
@@ -5779,6 +5797,7 @@ class Compiler {
                 }
                 if m.methodKind = MethodDecl.Kind.INIT {
                     if !callsSelfInit(m.body) {
+                        -- initialize instance fields
                         def unrefs := AutoUnrefs(self)
                         for f in m.owner.fields {
                             if f.rawValue !== null & !f.annotations.isClass {

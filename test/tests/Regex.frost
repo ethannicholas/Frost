@@ -31,7 +31,7 @@ method main() {
     Console.printLine("123".replace(/\d/, "$1"))
     Console.printLine("123".replace(/(\d)/, "$12"))
     Console.printLine("123".replace(/\d/, "$01"))
-    Console.printLine("1,2,3,4,5,6,7,8,9,10".replace(/\d+/, s => s!.asInt * 2))
+    Console.printLine("1,2,3,4,5,6,7,8,9,10".replace(/\d+/, s => s.asInt! * 2))
     Console.printLine("Curie, Marie\nNewton, Isaac\nEinstein, Albert".replace(
             /(\w+)\s*,\s*(\w+)/, groups:ListView<String?> => "\{groups[2]!} \{groups[1]!}"))
     Console.printLine()

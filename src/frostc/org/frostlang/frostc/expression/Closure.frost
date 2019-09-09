@@ -23,7 +23,7 @@ uses org.frostlang.frostc.parser.Token
 class Closure {
     @class
     function methodType(compiler:Compiler, position:Position, kind:MethodDecl.Kind,
-            parameters:FixedArray<ASTNode>, returnType:ASTNode):Type? {
+            parameters:FixedArray<ASTNode>, returnType:ASTNode?, immutable:Bit):Type? {
         def finalParameters := Array<Type>(parameters.count)
         for p in parameters {
             match p {
@@ -39,16 +39,32 @@ class Closure {
                 }
             }
         }
-        def finalReturnType := compiler.resolve(compiler.scanner.convertType(returnType))
-        if finalReturnType == null {
-            return null
+        def finalReturnType:Type
+        if returnType !== null {
+            finalReturnType := compiler.resolve(compiler.scanner.convertType(returnType))
+            if finalReturnType == null {
+                return null
+            }
+        }
+        else {
+            finalReturnType := compiler.VOID_TYPE
         }
         def finalKind:Type.Kind
         if kind = MethodDecl.Kind.FUNCTION {
-            finalKind := Type.Kind.FUNCTION
+            if immutable {
+                finalKind := Type.Kind.IMMUTABLE_FUNCTION
+            }
+            else {
+                finalKind := Type.Kind.FUNCTION
+            }
         }
         else {
-            finalKind := Type.Kind.METHOD
+            if immutable {
+                finalKind := Type.Kind.IMMUTABLE_METHOD
+            }
+            else {
+                finalKind := Type.Kind.METHOD
+            }
         }
         return Type.methodType(compiler, position, finalKind, finalParameters, finalReturnType, 0)
     }

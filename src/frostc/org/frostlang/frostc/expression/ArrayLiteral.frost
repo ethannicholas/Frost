@@ -33,6 +33,7 @@ class ArrayLiteral {
             otherwise {
                 def t := compiler.preferredType(ASTNode.ARRAY(position, elements))
                 if t == null {
+                    compiler.error(position, "cannot determine type of array literal")
                     return null
                 }
                 listType := compiler.getListType(t)

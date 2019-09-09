@@ -1,2 +1,2 @@
-MultipleSuperclasses.frost:1:1: error: class 'anonymous.MultipleSuperclasses' has more than one superclass
+MultipleSuperclasses.frost:1:38: error: class 'anonymous.MultipleSuperclasses' has more than one superclass
 1 error

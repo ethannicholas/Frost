@@ -117,7 +117,7 @@ method find(weights:Array<Int>, target:Int) {
 }
 
 method main() {
-    def weights := Console.inputStream().lines().map(line => line.asInt).all()
+    def weights := Console.inputStream().lines().map(line => line.asInt!).all()
     def total := weights.fold(Int.+)
     find(weights, total // 3)
     find(weights, total // 4)

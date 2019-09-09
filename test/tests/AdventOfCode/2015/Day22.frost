@@ -140,7 +140,7 @@ and still win the fight?
 *-
 
 class Day22 {
-    constant SPELLS := [
+    def spells:Array<(Int, Int, Int, Int, (State)=&>()?, (State)=&>()?)> := [
         (53, 4, 0, 0, null, null),
         (73, 2, 2, 0, null, null),
         (113, 0, 0, 6, method(state:State) { state.myArmor := 7 },
@@ -165,7 +165,7 @@ class Day22 {
         var spent := 0
 
         init() {
-            effects := Array<Int>(SPELLS.count, 0)
+            effects := Array<Int>(6, 0)
         }
 
         init(base:Day22) {
@@ -196,10 +196,10 @@ class Day22 {
     method applyEffects(state:State) {
         for i in 0 .. state.effects.count {
             if state.effects[i] > 0 {
-                SPELLS[i][4](state)
+                spells[i][4](state)
                 state.effects[i] -= 1
-                if state.effects[i] = 0 & SPELLS[i][5] !== null {
-                    SPELLS[i][5](state)
+                if state.effects[i] = 0 & spells[i][5] !== null {
+                    spells[i][5](state)
                 }
             }
         }
