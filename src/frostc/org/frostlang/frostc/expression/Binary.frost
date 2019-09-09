@@ -39,6 +39,7 @@ class Binary {
         IDENTITY
         NIDENTITY
         CAST
+        IMPLICIT_CAST
         ASSIGNMENT
         ADDEQ
         SUBEQ
@@ -138,45 +139,46 @@ class Binary {
         @override
         function get_asString():String {
             match self {
-                when ADD          { return "+" }
-                when SUB          { return "-" }
-                when MUL          { return "*" }
-                when DIV          { return "/" }
-                when INTDIV       { return "//" }
-                when REM          { return "%" }
-                when EQ           { return "=" }
-                when NEQ          { return "!=" }
-                when GT           { return ">" }
-                when LT           { return "<" }
-                when GTEQ         { return ">=" }
-                when LTEQ         { return "<=" }
-                when OR           { return "|" }
-                when BITWISEOR    { return "||" }
-                when AND          { return "&" }
-                when BITWISEAND   { return "&&" }
-                when XOR          { return "~" }
-                when BITWISEXOR   { return "~~" }
-                when SHIFTLEFT    { return "<<" }
-                when SHIFTRIGHT   { return ">>" }
-                when INDEX        { return "[]" }
-                when IDENTITY     { return "==" }
-                when NIDENTITY    { return "!==" }
-                when CAST         { return "->" }
-                when ASSIGNMENT   { return ":=" }
-                when ADDEQ        { return "+=" }
-                when SUBEQ        { return "-=" }
-                when MULEQ        { return "*=" }
-                when DIVEQ        { return "/=" }
-                when INTDIVEQ     { return "//=" }
-                when REMEQ        { return "%=" }
-                when OREQ         { return "|=" }
-                when BITWISEOREQ  { return "||=" }
-                when ANDEQ        { return "&=" }
-                when BITWISEANDEQ { return "&&=" }
-                when XOREQ        { return "~=" }
-                when BITWISEXOREQ { return "~~=" }
-                when SHIFTLEFTEQ  { return "<<=" }
-                when SHIFTRIGHTEQ { return ">>=" }
+                when ADD           { return "+" }
+                when SUB           { return "-" }
+                when MUL           { return "*" }
+                when DIV           { return "/" }
+                when INTDIV        { return "//" }
+                when REM           { return "%" }
+                when EQ            { return "=" }
+                when NEQ           { return "!=" }
+                when GT            { return ">" }
+                when LT            { return "<" }
+                when GTEQ          { return ">=" }
+                when LTEQ          { return "<=" }
+                when OR            { return "|" }
+                when BITWISEOR     { return "||" }
+                when AND           { return "&" }
+                when BITWISEAND    { return "&&" }
+                when XOR           { return "~" }
+                when BITWISEXOR    { return "~~" }
+                when SHIFTLEFT     { return "<<" }
+                when SHIFTRIGHT    { return ">>" }
+                when INDEX         { return "[]" }
+                when IDENTITY      { return "==" }
+                when NIDENTITY     { return "!==" }
+                when CAST          { return "->" }
+                when IMPLICIT_CAST { return "-(implicit)>" }
+                when ASSIGNMENT    { return ":=" }
+                when ADDEQ         { return "+=" }
+                when SUBEQ         { return "-=" }
+                when MULEQ         { return "*=" }
+                when DIVEQ         { return "/=" }
+                when INTDIVEQ      { return "//=" }
+                when REMEQ         { return "%=" }
+                when OREQ          { return "|=" }
+                when BITWISEOREQ   { return "||=" }
+                when ANDEQ         { return "&=" }
+                when BITWISEANDEQ  { return "&&=" }
+                when XOREQ         { return "~=" }
+                when BITWISEXOREQ  { return "~~=" }
+                when SHIFTLEFTEQ   { return "<<=" }
+                when SHIFTRIGHTEQ  { return ">>=" }
             }
             unreachable
         }
@@ -445,7 +447,13 @@ class Binary {
         match op {
             when Operator.CAST {
                 def target := compiler.scanner.convertType(right)
-                return compiler.coerce(position, compiler.compileCast(position, left, target), type)
+                return compiler.coerce(position, compiler.compileCast(position, left, target, true),
+                        type)
+            }
+            when Operator.IMPLICIT_CAST {
+                def target := compiler.scanner.convertType(right)
+                return compiler.coerce(position, compiler.compileCast(position, left, target,
+                        false), type)
             }
             when Operator.IDENTITY, Operator.NIDENTITY {
                 return compiler.compileIdentityComparison(position, left, op, right, type)
@@ -511,19 +519,28 @@ class Binary {
                         }
                     }
                 }
-                def compiledRight := compiler.compileExpression(right,
-                        TypeContext.TYPE(compiledLeft.type(), false))
-                if compiledRight == null {
-                    return null
+                def compiledRight:IR.Value?
+                if compiler.coercionCost(right, compiledLeft.type()) !== null {
+                    compiledRight := compiler.compileExpression(right,
+                            TypeContext.TYPE(compiledLeft.type(), false))
+                    if compiledRight == null {
+                        return null
+                    }
+                    if (compiledLeft.type() = compiler.BUILTIN_BIT_TYPE |
+                            compiledLeft.type().isBuiltinNumber) {
+                        def resultType := compiler.preferredType(ASTNode.BINARY(position, left, op,
+                                 right))
+                        if resultType !== null {
+                            def result := compiler.ir.add(IR.Statement.BINARY(position, compiledLeft,
+                                    op, compiledRight, resultType))
+                            return compiler.coerce(position, IR.Value.REF(result, resultType), type)
+                        }
+                    }
                 }
-                if (compiledLeft.type() = compiler.BUILTIN_BIT_TYPE |
-                        compiledLeft.type().isBuiltinNumber) {
-                    def resultType := compiler.preferredType(ASTNode.BINARY(position, left, op,
-                             right))
-                    if resultType !== null {
-                        def result := compiler.ir.add(IR.Statement.BINARY(position, compiledLeft,
-                                op, compiledRight, resultType))
-                        return compiler.coerce(position, IR.Value.REF(result, resultType), type)
+                else {
+                    compiledRight := compiler.compileExpression(right, TypeContext.NON_VOID)
+                    if compiledRight == null {
+                        return null
                     }
                 }
                 compiler.error(position, "no match for '\{op.asString}' on " +

@@ -5,6 +5,7 @@ uses org.frostlang.frostc.Compiler
 uses org.frostlang.frostc.Compiler.TypeContext
 uses org.frostlang.frostc.IR
 uses org.frostlang.frostc.Position
+uses org.frostlang.frostc.Symbol
 
 class Dot {
     @class
@@ -15,9 +16,9 @@ class Dot {
             return null
         }
         def symbol := compiler.getSymbolTable(cl)[name]
-        if symbol == null {
+        if symbol == null | symbol.kind = Symbol.Kind.ALIAS {
             compiler.error(position,
-                    "class '\{target.type()}' does not have a member named '\{name}'")
+                    "class '\{cl.name}' does not have a member named '\{name}'")
             return null
         }
         return compiler.symbolRef(position, target, symbol)

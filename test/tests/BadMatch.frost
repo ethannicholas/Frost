@@ -1,0 +1,12 @@
+choice BadMatchTest {
+    VALID
+}
+
+method main() {
+    match BadMatchTest.VALID {
+        when BadMatchTest.INVALID1 { unreachable }
+    }
+    match BadMatchTest.VALID {
+        when BadMatchTest.INVALID2 { unreachable }
+    }
+}

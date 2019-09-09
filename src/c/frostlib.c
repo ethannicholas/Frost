@@ -901,7 +901,7 @@ void frost$core$RegularExpression$compile$frost$core$String$frost$core$Int(Regul
         icuFlags |= UREGEX_DOTALL;
     }
     r->nativeHandle = uregex_openUText(ut, icuFlags, &parseStatus, &status);
-    ++allocations;
+    __atomic_add_fetch(&allocations, 1, __ATOMIC_RELAXED);
     utext_close(ut);
     frostFree(text);
     if (U_FAILURE(status)) {
@@ -930,7 +930,7 @@ void frost$core$RegularExpression$compile$frost$core$String$frost$core$Int64(Reg
         icuFlags |= UREGEX_DOTALL;
     }
     r->nativeHandle = uregex_openUText(ut, icuFlags, &parseStatus, &status);
-    ++allocations;
+    __atomic_add_fetch(&allocations, 1, __ATOMIC_RELAXED);
     utext_close(ut);
     frostFree(text);
     if (U_FAILURE(status)) {
@@ -942,7 +942,7 @@ Matcher* frost$core$RegularExpression$matcher$frost$core$String$R$frost$core$Mat
         RegularExpression* self, String* s) {
     Matcher* result = frostObjectAlloc(sizeof(Matcher), &frost$core$Matcher$class);
     UErrorCode status = U_ZERO_ERROR;
-    ++allocations;
+    __atomic_add_fetch(&allocations, 1, __ATOMIC_RELAXED);
     result->nativeHandle = uregex_clone(self->nativeHandle, &status);
     if (U_FAILURE(status)) {
         frostFatalError(u_errorName(status));

@@ -504,6 +504,9 @@ class Compiler {
     @private
     var inAtPre := false
 
+    @private
+    var resolvingFieldType := false
+
     -- local variable in which to store the return value, for postcondition purposes, or null to
     -- just do a straight return
     @private
@@ -1277,10 +1280,10 @@ class Compiler {
             currentClass.pop()
             return
         }
-        def old := currentMethod
-        currentMethod := Stack<MethodDecl>()
+        def old := resolvingFieldType
+        resolvingFieldType := true
         def preferred := preferredType(f.rawValue)
-        currentMethod := old
+        resolvingFieldType := false
         if preferred == null {
             -- report error
             if compileExpression(f.rawValue) !== null {
@@ -1893,6 +1896,24 @@ class Compiler {
                     cl.virtualMethods.add(derived)
                 }
             }
+            def intfs := allInterfaces(cl.type)
+            -- check if there are any abstract methods with default interface method
+            -- implementations
+            for i in 0 .. cl.virtualMethods.count {
+                def m := cl.virtualMethods[i]
+                if m.annotations.isAbstract {
+                    for intf in cl.rawInterfaces {
+                        def resolved := resolve(intf)
+                        if resolved !== null {
+                            def found := findMethod(resolved, m.name, m.type(self), true)
+                            if found !== null {
+                                cl.virtualMethods[i] := found
+                                break
+                            }
+                        }
+                    }
+                }
+            }
             currentClass.pop()
         }
         return cl.virtualMethods
@@ -1971,8 +1992,7 @@ class Compiler {
                 if possible == null {
                     return null
                 }
-                assert possible.count = 2 &
-                        possible.first.name.startsWith("frost.collections.Array<")
+                assert possible.first.name.startsWith("frost.collections.Array<")
                 return possible.first
             }
             when ASTNode.BIT {
@@ -2048,6 +2068,10 @@ class Compiler {
     }
 
     method coercionCost(type:Type, target:Type):Pair<Type, Int>? {
+        return coercionCost(type, target, true)
+    }
+
+    method coercionCost(type:Type, target:Type, permitImplicitConstruction:Bit):Pair<Type, Int>? {
         assert type.resolved, "unresolved type '\{type}'"
         assert target.resolved, "unresolved type '\{target}'"
         if type = target {
@@ -2225,13 +2249,16 @@ class Compiler {
         if targetCl == null {
             return null
         }
-        for m in targetCl.methods {
-            if m.annotations.isImplicit & m.parameters.count = 1 {
-                resolve(m)
-                if type = m.parameters[0].type {
-                    -- FIXME I don't remember where this 6 came from. Figure this out, and if it's
-                    -- necessary figure out what the right value is for it and use a named constant.
-                    return Pair<Type, Int>(target, 6->Int - m.priority)
+        if permitImplicitConstruction {
+            for m in targetCl.methods {
+                if m.annotations.isImplicit & m.parameters.count = 1 {
+                    resolve(m)
+                    if type = m.parameters[0].type {
+                        -- FIXME I don't remember where this 6 came from. Figure this out, and if
+                        -- it's necessary figure out what the right value is for it and use a named
+                        -- constant.
+                        return Pair<Type, Int>(target, 6->Int - m.priority)
+                    }
                 }
             }
         }
@@ -2919,7 +2946,7 @@ class Compiler {
             }
             when ASTNode.METHOD(position, _, _, kind, _, _, parameters, returnType, _) {
                 def result := Closure.methodType(self, position, kind, parameters, returnType,
-                        currentMethod.count = 0)
+                        resolvingFieldType)
                 if result == null {
                     return null
                 }
@@ -3393,7 +3420,7 @@ class Compiler {
         if type.typeKind = Type.Kind.INVALID {
             return false
         }
-        return coercionCost(target, type) !== null
+        return coercionCost(target, type, false) !== null
     }
 
     -- FIXME figure out how to handle list comparisons
@@ -3628,7 +3655,7 @@ class Compiler {
             }
         }
         if !m.owner.annotations.isStub {
-            if m.annotations.isAbstract & m.annotations.isExternal & m.body == null {
+            if !m.annotations.isAbstract & !m.annotations.isExternal & m.body == null {
                 error(m.position, "expected non-abstract method '\{m.name}' to have a body")
             }
             if m.annotations.isDefault {
@@ -3935,7 +3962,7 @@ class Compiler {
             rawParams.add(ASTNode.PARAMETER(position, name, ASTNode.IR_WRAPPER(position,
                     literalType(target.subtypes[i]))))
             callParams.add(ASTNode.BINARY(position, ASTNode.IDENTIFIER(position, name),
-                    Binary.Operator.CAST, ASTNode.IR_WRAPPER(position,
+                    Binary.Operator.IMPLICIT_CAST, ASTNode.IR_WRAPPER(position,
                         literalType(src.subtypes[i]))))
         }
         tempCount += 1
@@ -3945,7 +3972,8 @@ class Compiler {
         def c := ASTNode.CALL(position, methodCapture, FixedArray<ASTNode>.from(callParams))
         def body:Array<ASTNode>
         if target.returnType != VOID_TYPE {
-            body := [ASTNode.RETURN(position, ASTNode.BINARY(position, c, Binary.Operator.CAST,
+            body := [ASTNode.RETURN(position, ASTNode.BINARY(position, c,
+                    Binary.Operator.IMPLICIT_CAST,
                     ASTNode.IR_WRAPPER(position, literalType(target.returnType))))]
         }
         else {
@@ -3983,7 +4011,7 @@ class Compiler {
         }
         match value {
             when IR.Value.METHOD(rawTarget, m, _) {
-                def finalTarget:IR.Value
+                def finalTarget:IR.Value?
                 if rawTarget == null & !isClassContext() & !m.annotations.isClass {
                     finalTarget := compileSelf(position, false)
                 }
@@ -4124,6 +4152,10 @@ class Compiler {
         }
     }
 
+    method cast(position:Position, value:IR.Value?, target:Type):IR.Value? {
+        return cast(position, value, target, false)
+    }
+
     ================================================================================================
     Casts a value to a different type, returning a new value representing the converted type (or
     report an error and return `null` if no such cast is possible). "Cast", in Frost's lexicon,
@@ -4131,7 +4163,7 @@ class Compiler {
     expression `object->String`.
     ================================================================================================
     @pre(target != VOID_TYPE & target.resolved)
-    method cast(position:Position, value:IR.Value?, target:Type):IR.Value? {
+    method cast(position:Position, value:IR.Value?, target:Type, explicit:Bit):IR.Value? {
         if value == null {
             return null
         }
@@ -4151,9 +4183,9 @@ class Compiler {
                 error(position, "non-method objects may not be cast to methods")
             }
         }
-        if !canCast(value.type(), target) {
---            error(position, "value of type '\{value.type()}' cannot possibly be an instance of " +
---                    "'\{target}'")
+        if explicit & !canCast(value.type(), target) {
+            error(position, "value of type '\{value.type()}' cannot possibly be an instance of " +
+                    "'\{target}'")
         }
         def result := IR.Value.REF(ir.add(IR.Statement.CAST(position, value, target, true)), target)
         if !isRefCounted(value.type()) & isRefCounted(target) {
@@ -4442,7 +4474,7 @@ class Compiler {
         return null
     }
 
-    method compileCast(position:Position, value:ASTNode, rawTarget:Type):IR.Value? {
+    method compileCast(position:Position, value:ASTNode, rawTarget:Type, explicit:Bit):IR.Value? {
         def index := rawTarget.name.lastIndexOf(".")
         if rawTarget.typeKind = Type.Kind.CLASS & index !== null {
             -- we have a dotted name which might not be entirely a type - for example we might have
@@ -4455,7 +4487,7 @@ class Compiler {
             reportErrors := old
             if type == null {
                 def base := compileCast(position, value,
-                        Type(rawTarget.name[..index], Type.Kind.CLASS, position))
+                        Type(rawTarget.name[..index], Type.Kind.CLASS, position), explicit)
                 if base == null {
                     return null
                 }
@@ -4470,7 +4502,7 @@ class Compiler {
         if coercionCost(value, target) !== null {
             return compileExpression(value, TypeContext.TYPE(target, true))
         }
-        return cast(position, compileExpression(value, TypeContext.NON_VOID), target)
+        return cast(position, compileExpression(value, TypeContext.NON_VOID), target, explicit)
     }
 
     function isNull(v:IR.Value):Bit {
@@ -5738,7 +5770,6 @@ class Compiler {
         coercionCosts.clear()
         binaryTypes.clear()
         currentMethod.push(m)
-        checkAnnotations(m)
         if m.owner.classKind = ClassDecl.Kind.CHOICE & m.name = "cleanup" {
             createChoiceCleanup(m)
         }
@@ -6001,6 +6032,7 @@ class Compiler {
             started := true
         }
         for m in cl.methods {
+            checkAnnotations(m)
             compile(m)
         }
         if started {

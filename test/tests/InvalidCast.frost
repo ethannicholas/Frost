@@ -1,0 +1,6 @@
+-- Int8->Int64 is permitted due to an @implicit init(Int8) in Int64. At one point this was causing
+-- problems with the converse cast from Int64->Int8 due to how we check cast safety.
+method main() {
+    def a:Int64 := 5
+    def b:Int8 := a->Int8
+}

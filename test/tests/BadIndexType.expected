@@ -1,0 +1,2 @@
+BadIndexType.frost:3:24: error: no match for '[]' on 'frost.collections.Array<frost.core.Int>', 'frost.core.String'
+1 error

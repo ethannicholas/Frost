@@ -1,2 +1,2 @@
-ChoiceMismatch.frost:10:32: error: expected 'anonymous.A', but found 'anonymous.B'
+ChoiceMismatch.frost:10:29: error: no match for '=' on 'anonymous.A', 'anonymous.B'
 1 error

@@ -1,5 +1,5 @@
 function addFunction(a:Object, b:Object):Int {
-    return a.asString.asInt64->Int + b.asString.asInt64->Int
+    return a.asString.asInt! + b.asString.asInt!
 }
 
 method main() {

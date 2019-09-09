@@ -102,6 +102,9 @@ class IntLiteral {
                     }
                     def finalValue := compileNegated(compiler, position, value,
                             TypeContext.TYPE(m.parameters[0].type, false))
+                    if finalValue == null {
+                        return null
+                    }
                     def result := compiler.ir.add(IR.Statement.CREATE_STRUCT(position,
                             m.owner, FixedArray<IR.Value>.from([finalValue])))
                     return compiler.coerce(position, IR.Value.REF(result, m.owner.type), t)
