@@ -2403,7 +2403,11 @@ class Compiler {
                 }
             }
             when Symbol.Kind.METHODS {
-                for m in s->Methods.methods { -- FIXME use map
+                for m in s->Methods.methods {
+                    if genericArguments !== null & (m.genericParameters == null |
+                            genericArguments.count != m.genericParameters.count) {
+                        continue
+                    }
                     if resolve(m) {
                         if m.annotations.isClass {
                             result.add(Type(MethodRef(self, Type.ClassLiteral(self, m.owner.type),
@@ -3837,7 +3841,8 @@ class Compiler {
             return intrinsic.second
         }
         def cl := m.owner
-        assert isValue(cl)
+        assert isValue(cl), "can't implicit init \{cl.name} using \{m.declaration}:\{m.position} " +
+                "at \{files[position.file]}:\{position} because it is not a value"
         def result := ir.add(IR.Statement.STATIC_CALL(position, m,
                 FixedArray<IR.Value>.from([coerced])))
         return IR.Value.REF(result, m.owner.type)
@@ -3888,7 +3893,7 @@ class Compiler {
             return Closure.compile(self, position, m.methodKind,
                     FixedArray<ASTNode>.from(parameters),
                     ASTNode.IR_WRAPPER(position, literalType(effectiveType.returnType)),
-                    [statement]->FixedArray<ASTNode>, TypeContext.UNSPECIFIED)
+                    FixedArray<ASTNode>.from([statement]), TypeContext.UNSPECIFIED)
         }
         else {
             if m.annotations.isClass {

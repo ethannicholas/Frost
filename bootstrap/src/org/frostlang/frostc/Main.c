@@ -1279,7 +1279,7 @@ _115 = *(&local0);
 _116 = _115;
 _117 = *(&local3);
 // begin inline call to function frost.io.File.get_parent():frost.io.File? from Main.frost:107:36
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:140
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:139
 _120 = frost$io$File$resolve$frost$core$String$R$frost$io$File(_117, &$s40);
 _121 = &_120->path;
 _122 = *_121;
@@ -1295,14 +1295,14 @@ _131 = ((frost$core$Object*) _123);
 frost$core$Frost$unref$frost$core$Object$Q(_131);
 _133 = ((frost$core$Object*) _120);
 frost$core$Frost$unref$frost$core$Object$Q(_133);
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:141
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:140
 _136 = *(&local5);
 _137 = _136 == NULL;
 _138 = (frost$core$Bit) {_137};
 _139 = _138.value;
 if (_139) goto block7; else goto block8;
 block7:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:142
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:141
 _142 = ((frost$core$Object*) ((frost$io$File*) NULL));
 frost$core$Frost$ref$frost$core$Object$Q(_142);
 _144 = *(&local5);
@@ -1314,7 +1314,7 @@ _149 = ((frost$core$Object*) ((frost$io$File*) NULL));
 frost$core$Frost$ref$frost$core$Object$Q(_149);
 goto block6;
 block8:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:144
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:143
 FROST_ASSERT(24 == sizeof(frost$io$File));
 _153 = (frost$io$File*) frostObjectAlloc(24, (frost$core$Class*) &frost$io$File$class);
 _154 = *(&local5);
@@ -1323,7 +1323,7 @@ _156 = (frost$core$Bit) {_155};
 _157 = _156.value;
 if (_157) goto block9; else goto block10;
 block10:;
-_159 = (frost$core$Int) {144u};
+_159 = (frost$core$Int) {143u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s41, _159, &$s42);
 abort(); // unreachable
 block9:;
@@ -1375,21 +1375,21 @@ frost$core$Frost$unref$frost$core$Object$Q(_203);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Main.frost:108
 _206 = *(&local3);
 // begin inline call to function frost.io.File.get_simpleName():frost.core.String from Main.frost:108:38
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:158
-// begin inline call to function frost.io.File.get_name():frost.core.String from File.frost:158:23
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:148
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:157
+// begin inline call to function frost.io.File.get_name():frost.core.String from File.frost:157:23
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:147
 _211 = &_206->path;
 _212 = *_211;
 _213 = frost$core$String$lastIndexOf$frost$core$String$R$frost$core$String$Index$Q(_212, &$s47);
 *(&local8) = _213;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:149
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:148
 _216 = *(&local8);
 _217 = _216.nonnull;
 _218 = (frost$core$Bit) {_217};
 _219 = _218.value;
 if (_219) goto block16; else goto block18;
 block16:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:150
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:149
 _222 = &_206->path;
 _223 = *_222;
 _224 = &_206->path;
@@ -1400,7 +1400,7 @@ _228 = (frost$core$Bit) {_227};
 _229 = _228.value;
 if (_229) goto block19; else goto block20;
 block20:;
-_231 = (frost$core$Int) {150u};
+_231 = (frost$core$Int) {149u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s48, _231, &$s49);
 abort(); // unreachable
 block19:;
@@ -1420,7 +1420,7 @@ frost$core$Frost$ref$frost$core$Object$Q(_245);
 goto block15;
 block18:;
 // <no location>
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:153
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:152
 _250 = &_206->path;
 _251 = *_250;
 _252 = ((frost$core$Object*) _251);
@@ -1442,21 +1442,21 @@ frost$core$Frost$unref$frost$core$Object$Q(_264);
 *(&local9) = _259;
 _267 = ((frost$core$Object*) _259);
 frost$core$Frost$unref$frost$core$Object$Q(_267);
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:159
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:158
 _270 = *(&local9);
-// begin inline call to function frost.core.String.lastIndexOf(s:frost.core.String):frost.core.String.Index? from File.frost:159:40
+// begin inline call to function frost.core.String.lastIndexOf(s:frost.core.String):frost.core.String.Index? from File.frost:158:40
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:1012
 _273 = frost$core$String$get_end$R$frost$core$String$Index(_270);
 _274 = frost$core$String$lastIndexOf$frost$core$String$frost$core$String$Index$R$frost$core$String$Index$Q(_270, &$s50, _273);
 *(&local10) = _274;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:160
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:159
 _278 = *(&local10);
 _279 = !_278.nonnull;
 _280 = (frost$core$Bit) {_279};
 _281 = _280.value;
 if (_281) goto block22; else goto block23;
 block22:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:161
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:160
 _284 = *(&local9);
 _285 = ((frost$core$Object*) _284);
 frost$core$Frost$ref$frost$core$Object$Q(_285);
@@ -1473,7 +1473,7 @@ _296 = ((frost$core$Object*) _284);
 frost$core$Frost$ref$frost$core$Object$Q(_296);
 goto block14;
 block23:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:163
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:162
 _300 = *(&local9);
 _301 = *(&local10);
 _302 = (frost$core$Bit) {false};
@@ -4014,7 +4014,7 @@ abort(); // unreachable
 block24:;
 _261 = _253;
 // begin inline call to function frost.io.File.get_parent():frost.io.File? from Main.frost:191:32
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:140
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:139
 _264 = frost$io$File$resolve$frost$core$String$R$frost$io$File(_261, &$s159);
 _265 = &_264->path;
 _266 = *_265;
@@ -4030,14 +4030,14 @@ _275 = ((frost$core$Object*) _267);
 frost$core$Frost$unref$frost$core$Object$Q(_275);
 _277 = ((frost$core$Object*) _264);
 frost$core$Frost$unref$frost$core$Object$Q(_277);
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:141
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:140
 _280 = *(&local14);
 _281 = _280 == NULL;
 _282 = (frost$core$Bit) {_281};
 _283 = _282.value;
 if (_283) goto block27; else goto block28;
 block27:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:142
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:141
 _286 = ((frost$core$Object*) ((frost$io$File*) NULL));
 frost$core$Frost$ref$frost$core$Object$Q(_286);
 _288 = *(&local14);
@@ -4049,7 +4049,7 @@ _293 = ((frost$core$Object*) ((frost$io$File*) NULL));
 frost$core$Frost$ref$frost$core$Object$Q(_293);
 goto block26;
 block28:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:144
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:143
 FROST_ASSERT(24 == sizeof(frost$io$File));
 _297 = (frost$io$File*) frostObjectAlloc(24, (frost$core$Class*) &frost$io$File$class);
 _298 = *(&local14);
@@ -4058,7 +4058,7 @@ _300 = (frost$core$Bit) {_299};
 _301 = _300.value;
 if (_301) goto block29; else goto block30;
 block30:;
-_303 = (frost$core$Int) {144u};
+_303 = (frost$core$Int) {143u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s160, _303, &$s161);
 abort(); // unreachable
 block29:;
@@ -5066,9 +5066,9 @@ frost$core$Frost$ref$frost$core$Object$Q(_1212);
 _1215 = ((frost$io$File*) _1211);
 _1216 = *(&local44);
 // begin inline call to function frost.io.File.withExtension(ext:frost.core.String):frost.io.File from Main.frost:282:52
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:185
-// begin inline call to function frost.io.File.get_parent():frost.io.File? from File.frost:185:16
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:140
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:184
+// begin inline call to function frost.io.File.get_parent():frost.io.File? from File.frost:184:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:139
 _1221 = frost$io$File$resolve$frost$core$String$R$frost$io$File(_1215, &$s263);
 _1222 = &_1221->path;
 _1223 = *_1222;
@@ -5084,14 +5084,14 @@ _1232 = ((frost$core$Object*) _1224);
 frost$core$Frost$unref$frost$core$Object$Q(_1232);
 _1234 = ((frost$core$Object*) _1221);
 frost$core$Frost$unref$frost$core$Object$Q(_1234);
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:141
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:140
 _1237 = *(&local46);
 _1238 = _1237 == NULL;
 _1239 = (frost$core$Bit) {_1238};
 _1240 = _1239.value;
 if (_1240) goto block164; else goto block165;
 block164:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:142
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:141
 _1243 = ((frost$core$Object*) ((frost$io$File*) NULL));
 frost$core$Frost$ref$frost$core$Object$Q(_1243);
 _1245 = *(&local46);
@@ -5103,7 +5103,7 @@ _1250 = ((frost$core$Object*) ((frost$io$File*) NULL));
 frost$core$Frost$ref$frost$core$Object$Q(_1250);
 goto block163;
 block165:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:144
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:143
 FROST_ASSERT(24 == sizeof(frost$io$File));
 _1254 = (frost$io$File*) frostObjectAlloc(24, (frost$core$Class*) &frost$io$File$class);
 _1255 = *(&local46);
@@ -5112,7 +5112,7 @@ _1257 = (frost$core$Bit) {_1256};
 _1258 = _1257.value;
 if (_1258) goto block166; else goto block167;
 block167:;
-_1260 = (frost$core$Int) {144u};
+_1260 = (frost$core$Int) {143u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s264, _1260, &$s265);
 abort(); // unreachable
 block166:;
@@ -5138,13 +5138,13 @@ _1280 = (frost$core$Bit) {_1279};
 _1281 = _1280.value;
 if (_1281) goto block168; else goto block169;
 block169:;
-_1283 = (frost$core$Int) {185u};
+_1283 = (frost$core$Int) {184u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s266, _1283, &$s267);
 abort(); // unreachable
 block168:;
 _1286 = _1278;
-// begin inline call to function frost.io.File.get_simpleName():frost.core.String from File.frost:185:32
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:158
+// begin inline call to function frost.io.File.get_simpleName():frost.core.String from File.frost:184:32
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:157
 _1289 = frost$io$File$get_name$R$frost$core$String(_1215);
 *(&local48) = ((frost$core$String*) NULL);
 _1291 = ((frost$core$Object*) _1289);
@@ -5155,18 +5155,18 @@ frost$core$Frost$unref$frost$core$Object$Q(_1294);
 *(&local48) = _1289;
 _1297 = ((frost$core$Object*) _1289);
 frost$core$Frost$unref$frost$core$Object$Q(_1297);
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:159
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:158
 _1300 = *(&local48);
 _1301 = frost$core$String$lastIndexOf$frost$core$String$R$frost$core$String$Index$Q(_1300, &$s268);
 *(&local49) = _1301;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:160
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:159
 _1304 = *(&local49);
 _1305 = !_1304.nonnull;
 _1306 = (frost$core$Bit) {_1305};
 _1307 = _1306.value;
 if (_1307) goto block171; else goto block172;
 block171:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:161
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:160
 _1310 = *(&local48);
 _1311 = ((frost$core$Object*) _1310);
 frost$core$Frost$ref$frost$core$Object$Q(_1311);
@@ -5179,7 +5179,7 @@ _1318 = ((frost$core$Object*) _1310);
 frost$core$Frost$ref$frost$core$Object$Q(_1318);
 goto block170;
 block172:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:163
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:162
 _1322 = *(&local48);
 _1323 = *(&local49);
 _1324 = (frost$core$Bit) {false};
@@ -5391,9 +5391,9 @@ abort(); // unreachable
 block195:;
 _1510 = _1502;
 // begin inline call to function frost.io.File.withExtension(ext:frost.core.String):frost.io.File from Main.frost:302:70
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:185
-// begin inline call to function frost.io.File.get_parent():frost.io.File? from File.frost:185:16
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:140
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:184
+// begin inline call to function frost.io.File.get_parent():frost.io.File? from File.frost:184:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:139
 _1515 = frost$io$File$resolve$frost$core$String$R$frost$io$File(_1510, &$s287);
 _1516 = &_1515->path;
 _1517 = *_1516;
@@ -5409,14 +5409,14 @@ _1526 = ((frost$core$Object*) _1518);
 frost$core$Frost$unref$frost$core$Object$Q(_1526);
 _1528 = ((frost$core$Object*) _1515);
 frost$core$Frost$unref$frost$core$Object$Q(_1528);
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:141
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:140
 _1531 = *(&local57);
 _1532 = _1531 == NULL;
 _1533 = (frost$core$Bit) {_1532};
 _1534 = _1533.value;
 if (_1534) goto block199; else goto block200;
 block199:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:142
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:141
 _1537 = ((frost$core$Object*) ((frost$io$File*) NULL));
 frost$core$Frost$ref$frost$core$Object$Q(_1537);
 _1539 = *(&local57);
@@ -5428,7 +5428,7 @@ _1544 = ((frost$core$Object*) ((frost$io$File*) NULL));
 frost$core$Frost$ref$frost$core$Object$Q(_1544);
 goto block198;
 block200:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:144
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:143
 FROST_ASSERT(24 == sizeof(frost$io$File));
 _1548 = (frost$io$File*) frostObjectAlloc(24, (frost$core$Class*) &frost$io$File$class);
 _1549 = *(&local57);
@@ -5437,7 +5437,7 @@ _1551 = (frost$core$Bit) {_1550};
 _1552 = _1551.value;
 if (_1552) goto block201; else goto block202;
 block202:;
-_1554 = (frost$core$Int) {144u};
+_1554 = (frost$core$Int) {143u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s288, _1554, &$s289);
 abort(); // unreachable
 block201:;
@@ -5463,13 +5463,13 @@ _1574 = (frost$core$Bit) {_1573};
 _1575 = _1574.value;
 if (_1575) goto block203; else goto block204;
 block204:;
-_1577 = (frost$core$Int) {185u};
+_1577 = (frost$core$Int) {184u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s290, _1577, &$s291);
 abort(); // unreachable
 block203:;
 _1580 = _1572;
-// begin inline call to function frost.io.File.get_simpleName():frost.core.String from File.frost:185:32
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:158
+// begin inline call to function frost.io.File.get_simpleName():frost.core.String from File.frost:184:32
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:157
 _1583 = frost$io$File$get_name$R$frost$core$String(_1510);
 *(&local59) = ((frost$core$String*) NULL);
 _1585 = ((frost$core$Object*) _1583);
@@ -5480,18 +5480,18 @@ frost$core$Frost$unref$frost$core$Object$Q(_1588);
 *(&local59) = _1583;
 _1591 = ((frost$core$Object*) _1583);
 frost$core$Frost$unref$frost$core$Object$Q(_1591);
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:159
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:158
 _1594 = *(&local59);
 _1595 = frost$core$String$lastIndexOf$frost$core$String$R$frost$core$String$Index$Q(_1594, &$s292);
 *(&local60) = _1595;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:160
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:159
 _1598 = *(&local60);
 _1599 = !_1598.nonnull;
 _1600 = (frost$core$Bit) {_1599};
 _1601 = _1600.value;
 if (_1601) goto block206; else goto block207;
 block206:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:161
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:160
 _1604 = *(&local59);
 _1605 = ((frost$core$Object*) _1604);
 frost$core$Frost$ref$frost$core$Object$Q(_1605);
@@ -5504,7 +5504,7 @@ _1612 = ((frost$core$Object*) _1604);
 frost$core$Frost$ref$frost$core$Object$Q(_1612);
 goto block205;
 block207:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:163
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:162
 _1616 = *(&local59);
 _1617 = *(&local60);
 _1618 = (frost$core$Bit) {false};
@@ -6103,11 +6103,11 @@ frost$core$Frost$unref$frost$core$Object$Q(_2134);
 _2138 = *(&local64);
 _2139 = *(&local68);
 // begin inline call to method org.frostlang.frostc.Compiler.markNonExternal(cl:org.frostlang.frostc.ClassDecl) from Main.frost:342:45
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5838
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5893
 _2142 = (frost$core$Bit) {false};
 _2143 = &_2139->external;
 *_2143 = _2142;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5839
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5894
 _2146 = &_2139->classes;
 _2147 = *_2146;
 _2148 = ((frost$collections$Iterable*) _2147);
@@ -6146,14 +6146,14 @@ _2166 = *(&local69);
 _2167 = ((frost$core$Object*) _2166);
 frost$core$Frost$unref$frost$core$Object$Q(_2167);
 *(&local69) = _2163;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5840
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5895
 _2171 = *(&local69);
-// begin inline call to method org.frostlang.frostc.Compiler.markNonExternal(cl:org.frostlang.frostc.ClassDecl) from Compiler.frost:5840:28
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5838
+// begin inline call to method org.frostlang.frostc.Compiler.markNonExternal(cl:org.frostlang.frostc.ClassDecl) from Compiler.frost:5895:28
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5893
 _2174 = (frost$core$Bit) {false};
 _2175 = &_2171->external;
 *_2175 = _2174;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5839
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5894
 _2178 = &_2171->classes;
 _2179 = *_2178;
 _2180 = ((frost$collections$Iterable*) _2179);
@@ -6192,7 +6192,7 @@ _2198 = *(&local70);
 _2199 = ((frost$core$Object*) _2198);
 frost$core$Frost$unref$frost$core$Object$Q(_2199);
 *(&local70) = _2195;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5840
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5895
 _2203 = *(&local70);
 org$frostlang$frostc$Compiler$markNonExternal$org$frostlang$frostc$ClassDecl(_2138, _2203);
 _2205 = _2194;
@@ -6292,7 +6292,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_2280);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Main.frost:348
 _2283 = *(&local64);
 // begin inline call to method org.frostlang.frostc.Compiler.finish() from Main.frost:348:28
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:6075
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:6131
 goto block269;
 block269:;
 _2287 = &_2283->pendingClasses;
@@ -6312,7 +6312,7 @@ _2296 = (frost$core$Bit) {_2295};
 _2297 = _2296.value;
 if (_2297) goto block270; else goto block271;
 block270:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:6076
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:6132
 _2300 = &_2283->pendingClasses;
 _2301 = *_2300;
 _2302 = _2301;
@@ -6341,7 +6341,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_2319);
 *(&local72) = _2314;
 _2322 = _2313;
 frost$core$Frost$unref$frost$core$Object$Q(_2322);
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:6077
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:6133
 _2325 = *(&local72);
 org$frostlang$frostc$Compiler$compile$org$frostlang$frostc$ClassDecl(_2283, _2325);
 _2327 = *(&local72);
@@ -6350,7 +6350,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_2328);
 *(&local72) = ((org$frostlang$frostc$ClassDecl*) NULL);
 goto block269;
 block271:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:6079
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:6135
 _2333 = &_2283->codeGenerator;
 _2334 = *_2333;
 _2335 = _2334 != NULL;
@@ -6358,7 +6358,7 @@ _2336 = (frost$core$Bit) {_2335};
 _2337 = _2336.value;
 if (_2337) goto block272; else goto block273;
 block273:;
-_2339 = (frost$core$Int) {6079u};
+_2339 = (frost$core$Int) {6135u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s342, _2339, &$s343);
 abort(); // unreachable
 block272:;
@@ -6792,9 +6792,9 @@ abort(); // unreachable
 block315:;
 _2757 = _2749;
 // begin inline call to function frost.io.File.withExtension(ext:frost.core.String):frost.io.File from Main.frost:375:55
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:185
-// begin inline call to function frost.io.File.get_parent():frost.io.File? from File.frost:185:16
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:140
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:184
+// begin inline call to function frost.io.File.get_parent():frost.io.File? from File.frost:184:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:139
 _2762 = frost$io$File$resolve$frost$core$String$R$frost$io$File(_2757, &$s371);
 _2763 = &_2762->path;
 _2764 = *_2763;
@@ -6810,14 +6810,14 @@ _2773 = ((frost$core$Object*) _2765);
 frost$core$Frost$unref$frost$core$Object$Q(_2773);
 _2775 = ((frost$core$Object*) _2762);
 frost$core$Frost$unref$frost$core$Object$Q(_2775);
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:141
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:140
 _2778 = *(&local84);
 _2779 = _2778 == NULL;
 _2780 = (frost$core$Bit) {_2779};
 _2781 = _2780.value;
 if (_2781) goto block319; else goto block320;
 block319:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:142
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:141
 _2784 = ((frost$core$Object*) ((frost$io$File*) NULL));
 frost$core$Frost$ref$frost$core$Object$Q(_2784);
 _2786 = *(&local84);
@@ -6829,7 +6829,7 @@ _2791 = ((frost$core$Object*) ((frost$io$File*) NULL));
 frost$core$Frost$ref$frost$core$Object$Q(_2791);
 goto block318;
 block320:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:144
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:143
 FROST_ASSERT(24 == sizeof(frost$io$File));
 _2795 = (frost$io$File*) frostObjectAlloc(24, (frost$core$Class*) &frost$io$File$class);
 _2796 = *(&local84);
@@ -6838,7 +6838,7 @@ _2798 = (frost$core$Bit) {_2797};
 _2799 = _2798.value;
 if (_2799) goto block321; else goto block322;
 block322:;
-_2801 = (frost$core$Int) {144u};
+_2801 = (frost$core$Int) {143u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s372, _2801, &$s373);
 abort(); // unreachable
 block321:;
@@ -6864,13 +6864,13 @@ _2821 = (frost$core$Bit) {_2820};
 _2822 = _2821.value;
 if (_2822) goto block323; else goto block324;
 block324:;
-_2824 = (frost$core$Int) {185u};
+_2824 = (frost$core$Int) {184u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s374, _2824, &$s375);
 abort(); // unreachable
 block323:;
 _2827 = _2819;
-// begin inline call to function frost.io.File.get_simpleName():frost.core.String from File.frost:185:32
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:158
+// begin inline call to function frost.io.File.get_simpleName():frost.core.String from File.frost:184:32
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:157
 _2830 = frost$io$File$get_name$R$frost$core$String(_2757);
 *(&local86) = ((frost$core$String*) NULL);
 _2832 = ((frost$core$Object*) _2830);
@@ -6881,18 +6881,18 @@ frost$core$Frost$unref$frost$core$Object$Q(_2835);
 *(&local86) = _2830;
 _2838 = ((frost$core$Object*) _2830);
 frost$core$Frost$unref$frost$core$Object$Q(_2838);
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:159
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:158
 _2841 = *(&local86);
 _2842 = frost$core$String$lastIndexOf$frost$core$String$R$frost$core$String$Index$Q(_2841, &$s376);
 *(&local87) = _2842;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:160
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:159
 _2845 = *(&local87);
 _2846 = !_2845.nonnull;
 _2847 = (frost$core$Bit) {_2846};
 _2848 = _2847.value;
 if (_2848) goto block326; else goto block327;
 block326:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:161
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:160
 _2851 = *(&local86);
 _2852 = ((frost$core$Object*) _2851);
 frost$core$Frost$ref$frost$core$Object$Q(_2852);
@@ -6905,7 +6905,7 @@ _2859 = ((frost$core$Object*) _2851);
 frost$core$Frost$ref$frost$core$Object$Q(_2859);
 goto block325;
 block327:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:163
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:162
 _2863 = *(&local86);
 _2864 = *(&local87);
 _2865 = (frost$core$Bit) {false};
@@ -6987,9 +6987,9 @@ abort(); // unreachable
 block332:;
 _2937 = _2929;
 // begin inline call to function frost.io.File.withExtension(ext:frost.core.String):frost.io.File from Main.frost:378:51
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:185
-// begin inline call to function frost.io.File.get_parent():frost.io.File? from File.frost:185:16
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:140
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:184
+// begin inline call to function frost.io.File.get_parent():frost.io.File? from File.frost:184:16
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:139
 _2942 = frost$io$File$resolve$frost$core$String$R$frost$io$File(_2937, &$s382);
 _2943 = &_2942->path;
 _2944 = *_2943;
@@ -7005,14 +7005,14 @@ _2953 = ((frost$core$Object*) _2945);
 frost$core$Frost$unref$frost$core$Object$Q(_2953);
 _2955 = ((frost$core$Object*) _2942);
 frost$core$Frost$unref$frost$core$Object$Q(_2955);
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:141
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:140
 _2958 = *(&local89);
 _2959 = _2958 == NULL;
 _2960 = (frost$core$Bit) {_2959};
 _2961 = _2960.value;
 if (_2961) goto block336; else goto block337;
 block336:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:142
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:141
 _2964 = ((frost$core$Object*) ((frost$io$File*) NULL));
 frost$core$Frost$ref$frost$core$Object$Q(_2964);
 _2966 = *(&local89);
@@ -7024,7 +7024,7 @@ _2971 = ((frost$core$Object*) ((frost$io$File*) NULL));
 frost$core$Frost$ref$frost$core$Object$Q(_2971);
 goto block335;
 block337:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:144
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:143
 FROST_ASSERT(24 == sizeof(frost$io$File));
 _2975 = (frost$io$File*) frostObjectAlloc(24, (frost$core$Class*) &frost$io$File$class);
 _2976 = *(&local89);
@@ -7033,7 +7033,7 @@ _2978 = (frost$core$Bit) {_2977};
 _2979 = _2978.value;
 if (_2979) goto block338; else goto block339;
 block339:;
-_2981 = (frost$core$Int) {144u};
+_2981 = (frost$core$Int) {143u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s383, _2981, &$s384);
 abort(); // unreachable
 block338:;
@@ -7059,13 +7059,13 @@ _3001 = (frost$core$Bit) {_3000};
 _3002 = _3001.value;
 if (_3002) goto block340; else goto block341;
 block341:;
-_3004 = (frost$core$Int) {185u};
+_3004 = (frost$core$Int) {184u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s385, _3004, &$s386);
 abort(); // unreachable
 block340:;
 _3007 = _2999;
-// begin inline call to function frost.io.File.get_simpleName():frost.core.String from File.frost:185:32
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:158
+// begin inline call to function frost.io.File.get_simpleName():frost.core.String from File.frost:184:32
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:157
 _3010 = frost$io$File$get_name$R$frost$core$String(_2937);
 *(&local91) = ((frost$core$String*) NULL);
 _3012 = ((frost$core$Object*) _3010);
@@ -7076,18 +7076,18 @@ frost$core$Frost$unref$frost$core$Object$Q(_3015);
 *(&local91) = _3010;
 _3018 = ((frost$core$Object*) _3010);
 frost$core$Frost$unref$frost$core$Object$Q(_3018);
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:159
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:158
 _3021 = *(&local91);
 _3022 = frost$core$String$lastIndexOf$frost$core$String$R$frost$core$String$Index$Q(_3021, &$s387);
 *(&local92) = _3022;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:160
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:159
 _3025 = *(&local92);
 _3026 = !_3025.nonnull;
 _3027 = (frost$core$Bit) {_3026};
 _3028 = _3027.value;
 if (_3028) goto block343; else goto block344;
 block343:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:161
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:160
 _3031 = *(&local91);
 _3032 = ((frost$core$Object*) _3031);
 frost$core$Frost$ref$frost$core$Object$Q(_3032);
@@ -7100,7 +7100,7 @@ _3039 = ((frost$core$Object*) _3031);
 frost$core$Frost$ref$frost$core$Object$Q(_3039);
 goto block342;
 block344:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:163
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:162
 _3043 = *(&local91);
 _3044 = *(&local92);
 _3045 = (frost$core$Bit) {false};

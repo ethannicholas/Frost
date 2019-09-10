@@ -62,7 +62,7 @@ class Call {
         outer: for raw in methodTypes {
             var m := raw.nonnullable()
             if m.methodRef !== null & m.methodRef.value.genericParameters !== null {
-                def inferred := Call.performTypeInference(compiler, m.methodRef, args)
+                def inferred := Call.performTypeInference(compiler, m.methodRef, args, type)
                 if inferred == null {
                     continue
                 }
@@ -460,9 +460,12 @@ class Call {
     }
 
     @class
-    function getSubtype(type:Type, indices:ListView<Int>):Type {
+    function getSubtype(type:Type, indices:ListView<Int>):Type? {
         var result := type
         for i in indices {
+            if !result.hasSubtypes {
+                return null
+            }
             result := result.subtypes[i]
         }
         return result
@@ -526,9 +529,15 @@ class Call {
             if generics !== null {
                 for g in generics {
                     def parameter := getSubtype(target.nonnullable(), g)
+                    if parameter == null {
+                        break
+                    }
                     assert parameter.typeKind = Type.Kind.GENERIC_METHOD_PARAMETER
-                    def newType := currentMapping[parameter.name].intersection(compiler,
-                            getSubtype(src.nonnullable(), g))
+                    def subtype := getSubtype(src.nonnullable(), g)
+                    if subtype == null {
+                        return ImplicationsResult.NOT_UPDATED
+                    }
+                    def newType := currentMapping[parameter.name].intersection(compiler, subtype)
                     if newType == null {
                         return ImplicationsResult.FAILED
                     }
@@ -591,11 +600,6 @@ class Call {
                 }
             }
         }
--*        def targetRemapped := methodRemap(compiler, target, currentMapping)
-        var argType := compiler.coercionCost(src, targetRemapped)
-        if argType !== null {
-            return determineImplications(compiler, m, argType.first, target, currentMapping)
-        }*-
         def preferred := compiler.preferredType(src)
         if preferred !== null {
             def impl := determineImplications(compiler, m, preferred, target, currentMapping)
@@ -620,11 +624,17 @@ class Call {
                 return determineImplications(compiler, m, type, target, currentMapping)
             }
         }
+        def targetRemapped := methodRemap(compiler, target, currentMapping)
+        var argType := compiler.coercionCost(src, targetRemapped)
+        if argType !== null {
+            return determineImplications(compiler, m, argType.first, target, currentMapping)
+        }
         return ImplicationsResult.NOT_UPDATED
     }
 
     @class
-    method performTypeInference(compiler:Compiler, m:MethodRef, args:ListView<ASTNode>):MethodRef? {
+    method performTypeInference(compiler:Compiler, m:MethodRef, args:ListView<ASTNode>,
+            type:TypeContext):MethodRef? {
         if !m.requiresTypeInference {
             return m
         }
@@ -649,6 +659,21 @@ class Call {
                     }
                     when ImplicationsResult.FAILED {
                         return null
+                    }
+                }
+            }
+            match type {
+                when TypeContext.TYPE(t, _) {
+                    def result := determineImplications(compiler, m.value, t, m.returnType, remaps)
+                    match result {
+                        when ImplicationsResult.UPDATED {
+                            updated := true
+                        }
+                        when ImplicationsResult.NOT_UPDATED {
+                        }
+                        when ImplicationsResult.FAILED {
+                            return null
+                        }
                     }
                 }
             }
@@ -683,6 +708,10 @@ class Call {
             if !compiler.resolve(m) {
                 continue
             }
+            if genericArguments !== null & (m.genericParameters == null |
+                    genericArguments.count != m.genericParameters.count) {
+                continue
+            }
             var ref:MethodRef
             if target !== null {
                 var owner := target.type()
@@ -698,7 +727,7 @@ class Call {
                 ref := MethodRef(compiler, compiler.findType(compiler.currentClass[0].type,
                         m.owner), m, genericArguments)
             }
-            ref := performTypeInference(compiler, ref, args)
+            ref := performTypeInference(compiler, ref, args, type)
             var cost := 0
             for i in 0 .. args.count {
                 def argCost := compiler.coercionCost(args[i], ref.parameterType(i))
@@ -1285,7 +1314,7 @@ class Call {
             }
             return null
         }
-        def inferred := performTypeInference(compiler, m, args)
+        def inferred := performTypeInference(compiler, m, args, type)
         if inferred == null {
             return null
         }

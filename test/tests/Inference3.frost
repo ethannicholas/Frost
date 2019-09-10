@@ -1,0 +1,5 @@
+method main() {
+    Console.printLine([7, 2, 3, 0].map(function(i:Int):String {
+        return "<\{i}>"
+    }).sort(String.>))
+}

@@ -901,7 +901,7 @@ void frost$core$RegularExpression$compile$frost$core$String$frost$core$Int(Regul
         icuFlags |= UREGEX_DOTALL;
     }
     r->nativeHandle = uregex_openUText(ut, icuFlags, &parseStatus, &status);
-    ++allocations;
+    __atomic_add_fetch(&allocations, 1, __ATOMIC_RELAXED);
     utext_close(ut);
     frostFree(text);
     if (U_FAILURE(status)) {
@@ -930,7 +930,7 @@ void frost$core$RegularExpression$compile$frost$core$String$frost$core$Int64(Reg
         icuFlags |= UREGEX_DOTALL;
     }
     r->nativeHandle = uregex_openUText(ut, icuFlags, &parseStatus, &status);
-    ++allocations;
+    __atomic_add_fetch(&allocations, 1, __ATOMIC_RELAXED);
     utext_close(ut);
     frostFree(text);
     if (U_FAILURE(status)) {
@@ -942,7 +942,7 @@ Matcher* frost$core$RegularExpression$matcher$frost$core$String$R$frost$core$Mat
         RegularExpression* self, String* s) {
     Matcher* result = frostObjectAlloc(sizeof(Matcher), &frost$core$Matcher$class);
     UErrorCode status = U_ZERO_ERROR;
-    ++allocations;
+    __atomic_add_fetch(&allocations, 1, __ATOMIC_RELAXED);
     result->nativeHandle = uregex_clone(self->nativeHandle, &status);
     if (U_FAILURE(status)) {
         frostFatalError(u_errorName(status));
@@ -1222,46 +1222,52 @@ String* frostFileErrorMessage(const char* msg, const char* path) {
 }
 
 Object* frost$io$File$openInputStream$R$frost$core$Maybe$LTfrost$io$InputStream$GT(File* self) {
+    char* str = frostGetCString(self->path);
+    FILE* file = fopen(str, "rb");
+    if (!file) {
+        String* error = frostFileErrorMessage("Could not read", str);
+        frostFree(str);
+        return frostMaybeError(error);
+    }
+    frostFree(str);
     FileInputStream* result = frostObjectAlloc(sizeof(FileInputStream),
             &frost$io$FileInputStream$class);
     frost$io$InputStream$init(result);
-    char* str = frostGetCString(self->path);
-    result->file = fopen(str, "rb");
-    if (!result->file) {
-        frostFree(str);
-        return frostMaybeError(frostFileErrorMessage("Could not read", str));
-    }
-    frostFree(str);
+    result->file = file;
     result->closeOnCleanup.value = true;
     return frostMaybeSuccess((Object*) result);
 }
 
 Object* frost$io$File$openOutputStream$R$frost$core$Maybe$LTfrost$io$OutputStream$GT(File* self) {
+    char* str = frostGetCString(self->path);
+    FILE* file = fopen(str, "wb");
+    if (!file) {
+        String* error = frostFileErrorMessage("Could not write", str);
+        frostFree(str);
+        return frostMaybeError(error);
+    }
+    frostFree(str);
     FileOutputStream* result = frostObjectAlloc(sizeof(FileOutputStream),
             &frost$io$FileOutputStream$class);
     frost$io$OutputStream$init(result);
-    char* str = frostGetCString(self->path);
-    result->file = fopen(str, "wb");
-    if (!result->file) {
-        frostFree(str);
-        return frostMaybeError(frostFileErrorMessage("Could not write", str));
-    }
-    frostFree(str);
+    result->file = file;
     result->closeOnCleanup.value = true;
     return frostMaybeSuccess((Object*) result);
 }
 
 Object* frost$io$File$openForAppend$R$frost$core$Maybe$LTfrost$io$OutputStream$GT(File* self) {
+    char* str = frostGetCString(self->path);
+    FILE* file = fopen(str, "ab");
+    if (!file) {
+        String* error = frostFileErrorMessage("Could not write", str);
+        frostFree(str);
+        return frostMaybeError(error);
+    }
+    frostFree(str);
     FileOutputStream* result = frostObjectAlloc(sizeof(FileOutputStream),
             &frost$io$FileOutputStream$class);
     frost$io$OutputStream$init(result);
-    char* str = frostGetCString(self->path);
-    result->file = fopen(str, "ab");
-    if (!result->file) {
-        frostFree(str);
-        return frostMaybeError(frostFileErrorMessage("Could not write", str));
-    }
-    frostFree(str);
+    result->file = file;
     result->closeOnCleanup.value = true;
     return frostMaybeSuccess((Object*) result);
 }

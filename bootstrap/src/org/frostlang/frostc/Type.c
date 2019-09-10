@@ -8755,54 +8755,74 @@ return _946;
 }
 org$frostlang$frostc$Type* org$frostlang$frostc$Type$intersection$org$frostlang$frostc$Compiler$org$frostlang$frostc$Type$R$org$frostlang$frostc$Type$Q(org$frostlang$frostc$Type* param0, org$frostlang$frostc$Compiler* param1, org$frostlang$frostc$Type* param2) {
 
-org$frostlang$frostc$Pair* _1;
-bool _2;
 frost$core$Bit _3;
-bool _4;
+org$frostlang$frostc$Pair* _4;
 frost$core$Object* _5;
-org$frostlang$frostc$Type* _9;
-frost$core$Object* _10;
-org$frostlang$frostc$Pair* _14;
-bool _15;
-frost$core$Bit _16;
-bool _17;
+frost$core$Object* _7;
+bool _10;
+frost$core$Bit _11;
+bool _12;
+frost$core$Object* _13;
+org$frostlang$frostc$Type* _17;
 frost$core$Object* _18;
-org$frostlang$frostc$Type* _22;
-frost$core$Object* _23;
-frost$core$Object* _27;
+frost$core$Bit _24;
+org$frostlang$frostc$Pair* _25;
+frost$core$Object* _26;
+frost$core$Object* _28;
+bool _31;
+frost$core$Bit _32;
+bool _33;
+frost$core$Object* _34;
+org$frostlang$frostc$Type* _38;
+frost$core$Object* _39;
+frost$core$Object* _43;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:540
-_1 = org$frostlang$frostc$Compiler$coercionCost$org$frostlang$frostc$Type$org$frostlang$frostc$Type$R$org$frostlang$frostc$Pair$LTorg$frostlang$frostc$Type$Cfrost$core$Int$GT$Q(param1, param0, param2);
-_2 = _1 != NULL;
-_3 = (frost$core$Bit) {_2};
-_4 = _3.value;
-_5 = ((frost$core$Object*) _1);
-frost$core$Frost$unref$frost$core$Object$Q(_5);
-if (_4) goto block1; else goto block2;
+// begin inline call to method org.frostlang.frostc.Compiler.coercionCost(type:org.frostlang.frostc.Type, target:org.frostlang.frostc.Type):org.frostlang.frostc.Pair<org.frostlang.frostc.Type, frost.core.Int>? from Type.frost:540:33
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:2071
+_3 = (frost$core$Bit) {true};
+_4 = org$frostlang$frostc$Compiler$coercionCost$org$frostlang$frostc$Type$org$frostlang$frostc$Type$frost$core$Bit$R$org$frostlang$frostc$Pair$LTorg$frostlang$frostc$Type$Cfrost$core$Int$GT$Q(param1, param0, param2, _3);
+_5 = ((frost$core$Object*) _4);
+frost$core$Frost$ref$frost$core$Object$Q(_5);
+_7 = ((frost$core$Object*) _4);
+frost$core$Frost$unref$frost$core$Object$Q(_7);
+_10 = _4 != NULL;
+_11 = (frost$core$Bit) {_10};
+_12 = _11.value;
+_13 = ((frost$core$Object*) _4);
+frost$core$Frost$unref$frost$core$Object$Q(_13);
+if (_12) goto block1; else goto block2;
 block1:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:541
-_9 = param0;
-_10 = ((frost$core$Object*) _9);
-frost$core$Frost$ref$frost$core$Object$Q(_10);
-return _9;
+_17 = param0;
+_18 = ((frost$core$Object*) _17);
+frost$core$Frost$ref$frost$core$Object$Q(_18);
+return _17;
 block2:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:543
-_14 = org$frostlang$frostc$Compiler$coercionCost$org$frostlang$frostc$Type$org$frostlang$frostc$Type$R$org$frostlang$frostc$Pair$LTorg$frostlang$frostc$Type$Cfrost$core$Int$GT$Q(param1, param2, param0);
-_15 = _14 != NULL;
-_16 = (frost$core$Bit) {_15};
-_17 = _16.value;
-_18 = ((frost$core$Object*) _14);
-frost$core$Frost$unref$frost$core$Object$Q(_18);
-if (_17) goto block3; else goto block4;
-block3:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:544
-_22 = param2;
-_23 = ((frost$core$Object*) _22);
-frost$core$Frost$ref$frost$core$Object$Q(_23);
-return _22;
+// begin inline call to method org.frostlang.frostc.Compiler.coercionCost(type:org.frostlang.frostc.Type, target:org.frostlang.frostc.Type):org.frostlang.frostc.Pair<org.frostlang.frostc.Type, frost.core.Int>? from Type.frost:543:33
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:2071
+_24 = (frost$core$Bit) {true};
+_25 = org$frostlang$frostc$Compiler$coercionCost$org$frostlang$frostc$Type$org$frostlang$frostc$Type$frost$core$Bit$R$org$frostlang$frostc$Pair$LTorg$frostlang$frostc$Type$Cfrost$core$Int$GT$Q(param1, param2, param0, _24);
+_26 = ((frost$core$Object*) _25);
+frost$core$Frost$ref$frost$core$Object$Q(_26);
+_28 = ((frost$core$Object*) _25);
+frost$core$Frost$unref$frost$core$Object$Q(_28);
+_31 = _25 != NULL;
+_32 = (frost$core$Bit) {_31};
+_33 = _32.value;
+_34 = ((frost$core$Object*) _25);
+frost$core$Frost$unref$frost$core$Object$Q(_34);
+if (_33) goto block4; else goto block5;
 block4:;
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:544
+_38 = param2;
+_39 = ((frost$core$Object*) _38);
+frost$core$Frost$ref$frost$core$Object$Q(_39);
+return _38;
+block5:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:546
-_27 = ((frost$core$Object*) ((org$frostlang$frostc$Type*) NULL));
-frost$core$Frost$ref$frost$core$Object$Q(_27);
+_43 = ((frost$core$Object*) ((org$frostlang$frostc$Type*) NULL));
+frost$core$Frost$ref$frost$core$Object$Q(_43);
 return ((org$frostlang$frostc$Type*) NULL);
 
 }

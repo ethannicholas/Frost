@@ -5,6 +5,8 @@ typedef struct frost$collections$Array frost$collections$Array;
 #include "frost/core/Int_types.h"
 typedef struct frost$collections$CollectionView frost$collections$CollectionView;
 typedef struct frost$core$Object frost$core$Object;
+typedef struct frost$core$MutableMethod frost$core$MutableMethod;
+typedef struct frost$collections$ListView frost$collections$ListView;
 typedef struct frost$core$String frost$core$String;
 
 void frost$collections$Array$init(frost$collections$Array* self);
@@ -22,5 +24,9 @@ void frost$collections$Array$ensureCapacity$frost$core$Int(frost$collections$Arr
 frost$core$Int frost$collections$Array$get_count$R$frost$core$Int(frost$collections$Array* self);
 frost$core$Object* frost$collections$Array$removeIndex$frost$core$Int$R$frost$collections$Array$T(frost$collections$Array* self, frost$core$Int p_index);
 void frost$collections$Array$clear(frost$collections$Array* self);
+frost$collections$Array* frost$collections$Array$filter$$LPfrost$collections$Array$T$RP$EQ$AM$GT$LPfrost$core$Bit$RP$R$frost$collections$Array$LTfrost$collections$Array$T$GT(frost$collections$Array* self, frost$core$MutableMethod* p_predicate);
+frost$collections$Array* frost$collections$Array$combine$frost$collections$ListView$LTfrost$collections$Array$combine$U$GT$R$frost$collections$Array$LT$LPfrost$collections$Array$T$Cfrost$collections$Array$combine$U$RP$GT(frost$collections$Array* self, frost$collections$ListView* p_other);
+frost$collections$Array* frost$collections$Array$combine$frost$collections$ListView$LTfrost$collections$Array$combine$U$GT$$LPfrost$collections$Array$T$Cfrost$collections$Array$combine$U$RP$EQ$GT$LPfrost$collections$Array$combine$V$RP$R$frost$collections$Array$LTfrost$collections$Array$combine$V$GT(frost$collections$Array* self, frost$collections$ListView* p_other, frost$core$MutableMethod* p_f);
+frost$collections$Array* frost$collections$Array$combine$frost$collections$ListView$LTfrost$collections$Array$combine$U$GT$$LPfrost$collections$Array$T$Cfrost$collections$Array$combine$U$RP$EQ$AM$GT$LPfrost$collections$Array$combine$V$RP$R$frost$collections$Array$LTfrost$collections$Array$combine$V$GT(frost$collections$Array* self, frost$collections$ListView* p_other, frost$core$MutableMethod* p_f);
 frost$core$String* frost$collections$Array$get_asString$R$frost$core$String(frost$collections$Array* self);
 

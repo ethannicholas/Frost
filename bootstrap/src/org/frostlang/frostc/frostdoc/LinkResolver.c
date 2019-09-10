@@ -2811,7 +2811,7 @@ _689 = &param0->compiler;
 _690 = *_689;
 _691 = *(&local12);
 // begin inline call to method org.frostlang.frostc.Compiler.resolve(type:org.frostlang.frostc.Type):org.frostlang.frostc.Type? from LinkResolver.frost:136:53
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:891
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:894
 _694 = (frost$core$Bit) {true};
 _695 = org$frostlang$frostc$Compiler$resolve$org$frostlang$frostc$Type$frost$core$Bit$R$org$frostlang$frostc$Type$Q(_690, _691, _694);
 _696 = ((frost$core$Object*) _695);

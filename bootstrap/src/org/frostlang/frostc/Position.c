@@ -638,22 +638,22 @@ _89 = _88;
 frost$core$Frost$ref$frost$core$Object$Q(_89);
 _92 = ((frost$io$File*) _88);
 // begin inline call to function frost.io.File.get_name():frost.core.String from Position.frost:54:39
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:148
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:147
 _95 = &_92->path;
 _96 = *_95;
-// begin inline call to function frost.core.String.lastIndexOf(s:frost.core.String):frost.core.String.Index? from File.frost:148:38
+// begin inline call to function frost.core.String.lastIndexOf(s:frost.core.String):frost.core.String.Index? from File.frost:147:38
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:1012
 _99 = frost$core$String$get_end$R$frost$core$String$Index(_96);
 _100 = frost$core$String$lastIndexOf$frost$core$String$frost$core$String$Index$R$frost$core$String$Index$Q(_96, &$s24, _99);
 *(&local1) = _100;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:149
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:148
 _104 = *(&local1);
 _105 = _104.nonnull;
 _106 = (frost$core$Bit) {_105};
 _107 = _106.value;
 if (_107) goto block12; else goto block14;
 block12:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:150
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:149
 _110 = &_92->path;
 _111 = *_110;
 _112 = &_92->path;
@@ -664,7 +664,7 @@ _116 = (frost$core$Bit) {_115};
 _117 = _116.value;
 if (_117) goto block15; else goto block16;
 block16:;
-_119 = (frost$core$Int) {150u};
+_119 = (frost$core$Int) {149u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s25, _119, &$s26);
 abort(); // unreachable
 block15:;
@@ -684,7 +684,7 @@ frost$core$Frost$ref$frost$core$Object$Q(_133);
 goto block10;
 block14:;
 // <no location>
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:153
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:152
 _138 = &_92->path;
 _139 = *_138;
 _140 = ((frost$core$Object*) _139);

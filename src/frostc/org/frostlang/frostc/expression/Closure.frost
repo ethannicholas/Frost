@@ -277,7 +277,7 @@ class Closure {
         }
         return compile(compiler, position, MethodDecl.Kind.FUNCTION, rawParameters,
                 ASTNode.IR_WRAPPER(position, compiler.literalType(returnType)),
-                [ASTNode.RETURN(position, expr)]->FixedArray<ASTNode>, type)
+                FixedArray<ASTNode>.from([ASTNode.RETURN(position, expr)]), type)
     }
 
     @class

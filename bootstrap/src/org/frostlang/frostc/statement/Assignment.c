@@ -317,7 +317,7 @@ $tmp10 = (org$frostlang$frostc$expression$Binary$Operator$wrapper*) frostObjectA
 $tmp10->value = param3;
 _15 = ((frost$core$Equatable*) $tmp10);
 _16 = _15;
-_17 = (frost$core$Int) {24u};
+_17 = (frost$core$Int) {25u};
 // begin inline call to org.frostlang.frostc.expression.Binary.Operator.init(rv:frost.core.Int):org.frostlang.frostc.expression.Binary.Operator from Assignment.frost:20:32
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Binary.frost:17
 _20 = &(&local1)->$rawValue;
@@ -568,7 +568,7 @@ $tmp19 = (org$frostlang$frostc$expression$Binary$Operator$wrapper*) frostObjectA
 $tmp19->value = param3;
 _234 = ((frost$core$Equatable*) $tmp19);
 _235 = _234;
-_236 = (frost$core$Int) {24u};
+_236 = (frost$core$Int) {25u};
 // begin inline call to org.frostlang.frostc.expression.Binary.Operator.init(rv:frost.core.Int):org.frostlang.frostc.expression.Binary.Operator from Assignment.frost:43:32
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Binary.frost:17
 _239 = &(&local13)->$rawValue;

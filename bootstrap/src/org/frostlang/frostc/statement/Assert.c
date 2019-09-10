@@ -484,22 +484,22 @@ _128 = ((org$frostlang$frostc$ClassDecl*) _122);
 _129 = &_128->source;
 _130 = *_129;
 // begin inline call to function frost.io.File.get_name():frost.core.String from Assert.frost:22:78
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:148
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:147
 _133 = &_130->path;
 _134 = *_133;
-// begin inline call to function frost.core.String.lastIndexOf(s:frost.core.String):frost.core.String.Index? from File.frost:148:38
+// begin inline call to function frost.core.String.lastIndexOf(s:frost.core.String):frost.core.String.Index? from File.frost:147:38
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:1012
 _137 = frost$core$String$get_end$R$frost$core$String$Index(_134);
 _138 = frost$core$String$lastIndexOf$frost$core$String$frost$core$String$Index$R$frost$core$String$Index$Q(_134, &$s16, _137);
 *(&local3) = _138;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:149
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:148
 _142 = *(&local3);
 _143 = _142.nonnull;
 _144 = (frost$core$Bit) {_143};
 _145 = _144.value;
 if (_145) goto block14; else goto block16;
 block14:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:150
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:149
 _148 = &_130->path;
 _149 = *_148;
 _150 = &_130->path;
@@ -510,7 +510,7 @@ _154 = (frost$core$Bit) {_153};
 _155 = _154.value;
 if (_155) goto block17; else goto block18;
 block18:;
-_157 = (frost$core$Int) {150u};
+_157 = (frost$core$Int) {149u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s17, _157, &$s18);
 abort(); // unreachable
 block17:;
@@ -530,7 +530,7 @@ frost$core$Frost$ref$frost$core$Object$Q(_171);
 goto block12;
 block16:;
 // <no location>
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:153
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:152
 _176 = &_130->path;
 _177 = *_176;
 _178 = ((frost$core$Object*) _177);

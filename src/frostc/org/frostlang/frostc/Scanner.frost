@@ -321,7 +321,7 @@ class Scanner {
         -- FIXME provide a visitor in ASTNode when lambdas are in so I can eliminate this mess
         match node {
             when ASTNode.ARRAY(_, elements) {
-                var result := 0
+                var result := 1
                 for e in elements {
                     result += complexity(e)
                 }
@@ -462,6 +462,13 @@ class Scanner {
             when ASTNode.SUPER {
                 return 1
             }
+            when ASTNode.TUPLE(_, elements) {
+                var result := 1
+                for e in elements {
+                    result += complexity(e)
+                }
+                return result
+            }
             when ASTNode.TRY {
                 return INLINE_THRESHOLD + 1
             }
@@ -472,7 +479,7 @@ class Scanner {
                 return INLINE_THRESHOLD + 1
             }
             when ASTNode.UNARY(_, _, base) {
-                return 1->Int + complexity(base)
+                return 1 + complexity(base)
             }
             when ASTNode.UNREACHABLE {
                 return 0
@@ -505,7 +512,7 @@ class Scanner {
                 return result
             }
             otherwise {
-                unreachable
+                unreachable, "scanner found unsupported node \{node}"
             }
         }
     }

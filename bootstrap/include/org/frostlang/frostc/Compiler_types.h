@@ -103,6 +103,7 @@ typedef struct org$frostlang$frostc$Compiler {
     frost$core$Bit reportErrors;
     frost$collections$Array* pendingClasses;
     frost$core$Bit inAtPre;
+    frost$core$Bit resolvingFieldType;
     org$frostlang$frostc$Variable* returnVar;
     org$frostlang$frostc$IR$Block$ID$nullable atPreBlock;
     org$frostlang$frostc$IR$Block$ID$nullable postconditionEntryBlock;
@@ -115,6 +116,6 @@ typedef struct org$frostlang$frostc$Compiler {
     frost$collections$IdentityMap* lambdaTypes;
 } org$frostlang$frostc$Compiler;
 #include "frost/core/Class.h"
-typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[158]; } org$frostlang$frostc$Compiler$class_type;
+typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[160]; } org$frostlang$frostc$Compiler$class_type;
 extern org$frostlang$frostc$Compiler$class_type org$frostlang$frostc$Compiler$class;
 

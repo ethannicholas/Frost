@@ -142,6 +142,46 @@ class Array<T> : List<T> {
         }
     }
 
+    method filter(predicate:(T)=&>(Bit)):Array<T> {
+        def result := Array<T>()
+        for v in self {
+            if predicate(v) {
+                result.add(v)
+            }
+        }
+        return result
+    }
+
+    @priority(2)
+    @pre(count = other.count)
+    function combine<U>(other:ListView<U>):Array<(T, U)> {
+        def result := Array<(T, U)>(count)
+        for i in 0 .. count {
+            result.add((self[i], other[i]))
+        }
+        return result
+    }
+
+    @priority(4)
+    @pre(count = other.count)
+    function combine<U, V>(other:ListView<U>, f:(T, U)=>(V)):Array<V> {
+        def result := Array<V>(count)
+        for i in 0 .. count {
+            result.add(f(self[i], other[i]))
+        }
+        return result
+    }
+
+    @priority(3)
+    @pre(count = other.count)
+    method combine<U, V>(other:ListView<U>, f:(T, U)=&>(V)):Array<V> {
+        def result := Array<V>(count)
+        for i in 0 .. count {
+            result.add(f(self[i], other[i]))
+        }
+        return result
+    }
+
     @override
     function get_asString():String {
         def result := MutableString()

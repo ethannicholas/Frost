@@ -911,19 +911,19 @@ _47 = (frost$core$Int) {0u};
 _48 = &param0->path;
 _49 = *_48;
 // begin inline call to function frost.io.File.get_name():frost.core.String from RegexParser.frost:75:48
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:148
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:147
 _52 = &_49->path;
 _53 = *_52;
 _54 = frost$core$String$lastIndexOf$frost$core$String$R$frost$core$String$Index$Q(_53, &$s33);
 *(&local2) = _54;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:149
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:148
 _57 = *(&local2);
 _58 = _57.nonnull;
 _59 = (frost$core$Bit) {_58};
 _60 = _59.value;
 if (_60) goto block6; else goto block8;
 block6:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:150
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:149
 _63 = &_49->path;
 _64 = *_63;
 _65 = &_49->path;
@@ -934,7 +934,7 @@ _69 = (frost$core$Bit) {_68};
 _70 = _69.value;
 if (_70) goto block9; else goto block10;
 block10:;
-_72 = (frost$core$Int) {150u};
+_72 = (frost$core$Int) {149u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s34, _72, &$s35);
 abort(); // unreachable
 block9:;
@@ -954,7 +954,7 @@ frost$core$Frost$ref$frost$core$Object$Q(_86);
 goto block5;
 block8:;
 // <no location>
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:153
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:152
 _91 = &_49->path;
 _92 = *_91;
 _93 = ((frost$core$Object*) _92);
@@ -1058,22 +1058,22 @@ _5 = (frost$core$Int) {0u};
 _6 = &param0->path;
 _7 = *_6;
 // begin inline call to function frost.io.File.get_name():frost.core.String from RegexParser.frost:75:48
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:148
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:147
 _10 = &_7->path;
 _11 = *_10;
-// begin inline call to function frost.core.String.lastIndexOf(s:frost.core.String):frost.core.String.Index? from File.frost:148:38
+// begin inline call to function frost.core.String.lastIndexOf(s:frost.core.String):frost.core.String.Index? from File.frost:147:38
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:1012
 _14 = frost$core$String$get_end$R$frost$core$String$Index(_11);
 _15 = frost$core$String$lastIndexOf$frost$core$String$frost$core$String$Index$R$frost$core$String$Index$Q(_11, &$s36, _14);
 *(&local1) = _15;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:149
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:148
 _19 = *(&local1);
 _20 = _19.nonnull;
 _21 = (frost$core$Bit) {_20};
 _22 = _21.value;
 if (_22) goto block3; else goto block5;
 block3:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:150
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:149
 _25 = &_7->path;
 _26 = *_25;
 _27 = &_7->path;
@@ -1084,7 +1084,7 @@ _31 = (frost$core$Bit) {_30};
 _32 = _31.value;
 if (_32) goto block6; else goto block7;
 block7:;
-_34 = (frost$core$Int) {150u};
+_34 = (frost$core$Int) {149u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s37, _34, &$s38);
 abort(); // unreachable
 block6:;
@@ -1104,7 +1104,7 @@ frost$core$Frost$ref$frost$core$Object$Q(_48);
 goto block1;
 block5:;
 // <no location>
-// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:153
+// /Users/ethannicholas/Dropbox/Frost/src/frost/io/File.frost:152
 _53 = &_7->path;
 _54 = *_53;
 _55 = ((frost$core$Object*) _54);

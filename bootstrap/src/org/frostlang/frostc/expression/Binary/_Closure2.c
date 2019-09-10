@@ -31,7 +31,7 @@ org$frostlang$frostc$Type** _3;
 org$frostlang$frostc$Type* _4;
 frost$core$Object* _5;
 org$frostlang$frostc$Type** _7;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Binary.frost:215
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Binary.frost:217
 _1 = ((frost$core$Object*) param1);
 frost$core$Frost$ref$frost$core$Object$Q(_1);
 _3 = &param0->left;
@@ -49,7 +49,7 @@ frost$core$Object* _1;
 org$frostlang$frostc$Type** _3;
 org$frostlang$frostc$Type* _4;
 frost$core$Object* _5;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Binary.frost:215
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Binary.frost:217
 _1 = ((frost$core$Object*) param0);
 frost$core$Object$cleanup(_1);
 _3 = &param0->left;
@@ -117,10 +117,10 @@ bool _82;
 bool _83;
 bool _84;
 frost$core$Bit _85;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Binary.frost:215
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Binary.frost:217
 _1 = &param1->annotations;
 _2 = *_1;
-// begin inline call to function org.frostlang.frostc.Annotations.get_isClass():frost.core.Bit from Binary.frost:215:55
+// begin inline call to function org.frostlang.frostc.Annotations.get_isClass():frost.core.Bit from Binary.frost:217:55
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:122
 _5 = &_2->flags;
 _6 = *_5;
@@ -138,7 +138,7 @@ _18 = _16 != _17;
 _19 = (frost$core$Bit) {_18};
 _21 = &param0->left;
 _22 = *_21;
-// begin inline call to function org.frostlang.frostc.Type.get_isClassLiteral():frost.core.Bit from Binary.frost:215:70
+// begin inline call to function org.frostlang.frostc.Type.get_isClassLiteral():frost.core.Bit from Binary.frost:217:70
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:371
 _25 = &_22->typeKind;
 _26 = *_25;
@@ -207,7 +207,7 @@ _75 = ((frost$core$Object*) _38);
 frost$core$Frost$unref$frost$core$Object$Q(_75);
 _77 = ((frost$core$Object*) _27);
 frost$core$Frost$unref$frost$core$Object$Q(_77);
-// begin inline call to function frost.core.Bit.=(other:frost.core.Bit):frost.core.Bit from Binary.frost:215:64
+// begin inline call to function frost.core.Bit.=(other:frost.core.Bit):frost.core.Bit from Binary.frost:217:64
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:25
 _82 = _19.value;
 _83 = _74.value;

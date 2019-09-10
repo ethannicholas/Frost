@@ -334,7 +334,7 @@ class Analyzer {
             when IR.Statement.CAST(position, value, type, explicit) {
                 if !explicit & reportErrors & !type.isNullable &
                         getValue(value, state).type.isNullable {
-                    compiler.warn(position, "value of type '\{value.type()}' may be null")
+--                    compiler.warn(position, "value of type '\{value.type()}' may be null")
                 }
                 if explicit {
                     return DataFlowValue(type, definitionFrom(stmt))
