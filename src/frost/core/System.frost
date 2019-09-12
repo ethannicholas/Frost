@@ -69,14 +69,18 @@ class System {
     }
 
     ================================================================================================
-    Returns the current working directory.
+    Returns the current working directory. As relative file paths are evaluated relative to this
+    directory, changing the current working directory will break path evaluation and Frost therfore
+    does not provide a means to do so.
     ================================================================================================
     @class
     @external
     method workingDirectory():File
 
     ================================================================================================
-    Returns a path to a directory suitable for storing temporary files.
+    Returns a path to a directory suitable for storing temporary files. The operating environment
+    may or may not automatically delete files written to this directory at some point after the
+    program terminates. A well-behaved program will delete any temporary files it writes.
     ================================================================================================
     @class
     @external
@@ -109,9 +113,9 @@ class System {
     variable will be searched to find it.
 
     Returns the resulting process, or an error if it could not be created. Successfully creating the
-    process does not imply that the child program can actually be executed. If the child program
-    cannot not be started, the resulting process will exit immediately with a nonzero exit code, but
-    no error will otherwise be reported.
+    process does not necessarily mean that the child program can actually be executed. If a
+    `Process` is returned, but the child program cannot not be successfully started, the resulting
+    process will exit immediately with a nonzero exit code, but no error will otherwise be reported.
     ================================================================================================
     @class
     @external

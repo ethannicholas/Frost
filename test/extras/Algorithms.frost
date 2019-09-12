@@ -1,0 +1,61 @@
+package extras
+
+class Algorithms {
+    -- note that I didn't bother writing A* in Frost until halfway through the 2016 AoC problems, so
+    -- I'm sure there are some earlier problems that could be rewritten to use this
+    @class
+    function aStar<T:HashKey<T>>(start:T, goal:T, neighbors:(T)=>(Array<T>),
+            travelCost:(T, T)=>(Int), estimatedDistanceToGoal:(T)=>(Int)):Int? {
+        -- FIXME: need to implement a priority queue
+        def openSet := Array<T>()
+        openSet.add(start)
+
+        def closedSet := HashSet<T>()
+
+        -- contains the length of the shortest known path from the start to each known node
+        def gScore := HashMap<T, Int>()
+        gScore[start] := 0
+
+        -- estimated cost of reaching the goal from each known node (gScore[n] + h[n])
+        def fScore := HashMap<T, Int>()
+        fScore[start] := estimatedDistanceToGoal(start)
+
+        while openSet.count > 0 {
+            openSet.sortInPlace((a, b) => fScore[a] < fScore[b])
+            def current := openSet.last
+            if current = goal {
+                return gScore[current]
+            }
+
+            openSet.removeIndex(openSet.count - 1)
+            closedSet.add(current)
+            for neighbor in neighbors(current) {
+                if closedSet.contains(neighbor) {
+                    continue
+                }
+                def tentative_gScore := gScore[current]! + travelCost(current, neighbor)
+                def neighborScore := gScore[neighbor]
+                if neighborScore == null {
+                    neighborScore := Int.MAX
+                }
+                if tentative_gScore < neighborScore {
+                    -- better than any currently-known path
+                    gScore[neighbor] := tentative_gScore
+                    fScore[neighbor] := tentative_gScore + estimatedDistanceToGoal(neighbor)
+                    var found := false
+                    for n in openSet {
+                        if n = neighbor {
+                            found := true
+                            break
+                        }
+                    }
+                    if !found {
+                        openSet.add(neighbor)
+                    }
+                }
+            }
+        }
+        return null
+    }
+   
+}

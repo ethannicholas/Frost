@@ -1,0 +1,7 @@
+method main() {
+    Console.printLine([].powerSet.all())
+    Console.printLine([1].powerSet.all())
+    Console.printLine([1, 2].powerSet.all())
+    Console.printLine([1, 2, 3].powerSet.all())
+    Console.printLine([1, 2, 3, 4].powerSet.all())
+}

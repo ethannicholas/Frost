@@ -1,0 +1,14 @@
+method main() {
+    Console.printLine([].combinations(0).all())
+    Console.printLine([1].combinations(0).all())
+    Console.printLine([1].combinations(1).all())
+    Console.printLine([1, 2].combinations(1).all())
+    Console.printLine([1, 2].combinations(2).all())
+    Console.printLine([1, 2, 3, 4, 5].combinations(0).all())
+    Console.printLine([1, 2, 3, 4, 5].combinations(1).all())
+    Console.printLine([1, 2, 3, 4, 5].combinations(2).all())
+    Console.printLine([1, 2, 3, 4, 5].combinations(3).all())
+    Console.printLine([1, 2, 3, 4, 5].combinations(4).all())
+    Console.printLine([1, 2, 3, 4, 5].combinations(5).all())
+    Console.printLine([null, null, 1].combinations(2).all())
+}

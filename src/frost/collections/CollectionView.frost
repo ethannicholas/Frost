@@ -56,7 +56,8 @@ interface CollectionView<T> : Iterable<T> {
             else {
                 result.append(separator)
             }
-            if v !== null {
+            -- FIXME cast shouldn't be necessary
+            if v->Object? !== null {
                 result.append(v)
             }
             else {

@@ -1336,8 +1336,8 @@ function(create_headers out_var)
         add_custom_command(
             OUTPUT ${output}
             COMMAND ${CMAKE_CURRENT_BINARY_DIR}/frostc -O ${OPTIMIZATION} -S ${SAFETY} -f h
-                    -i ${CMAKE_CURRENT_SOURCE_DIR}/src -i ${frostcInc} -i ${parserInc}
-                    -i ${buildInc} -o ${CMAKE_CURRENT_BINARY_DIR}/updated_bootstrap/include ${input}
+                    -I ${CMAKE_CURRENT_SOURCE_DIR}/src -i ${frostcInc} -i ${parserInc}
+                    -I ${buildInc} -o ${CMAKE_CURRENT_BINARY_DIR}/updated_bootstrap/include ${input}
             DEPENDS ${rawInput} frostc
             WORKING_DIRECTORY ${working}
         )
@@ -1386,8 +1386,8 @@ function(compile_frost_sources_to_c out_var)
         add_custom_command(
             OUTPUT ${output}
             COMMAND ${CMAKE_CURRENT_BINARY_DIR}/frostc -O ${OPTIMIZATION} -S ${SAFETY} -f c
-                    -i ${CMAKE_CURRENT_SOURCE_DIR}/src -i ${frostcInc} -i ${parserInc}
-                    -i ${buildInc} -o ${CMAKE_CURRENT_BINARY_DIR}/updated_bootstrap/src ${input}
+                    -I ${CMAKE_CURRENT_SOURCE_DIR}/src -I ${frostcInc} -I ${parserInc}
+                    -I ${buildInc} -o ${CMAKE_CURRENT_BINARY_DIR}/updated_bootstrap/src ${input}
             DEPENDS ${rawInput} frostc
             WORKING_DIRECTORY ${working}
         )
@@ -1424,10 +1424,20 @@ add_custom_target(frostrun
     DEPENDS frostc src/tools/FrostRun.frost
 )
 
+compile_frost_sources(test_extras_objects
+    ${CMAKE_CURRENT_SOURCE_DIR}/test/extras/Algorithms.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/test/extras/MD5.frost
+)
+
+add_library(test_extras
+    ${test_extras_objects}
+)
+set_target_properties(test_extras PROPERTIES LINKER_LANGUAGE CXX)
+
 add_custom_command(
     OUTPUT TestRunner
     COMMAND ${CMAKE_CURRENT_BINARY_DIR}/frostc -O ${OPTIMIZATION} -S ${SAFETY}
-            -i ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/test/TestRunner.frost
+            -I ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/test/TestRunner.frost
             -o ${CMAKE_CURRENT_BINARY_DIR}/TestRunner
     DEPENDS frostc test/TestRunner.frost
 )

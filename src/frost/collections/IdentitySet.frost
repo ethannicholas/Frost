@@ -60,7 +60,8 @@ class IdentitySet<T> : Collection<T> {
         var separator := ""
         for v in contents.keys {
             result.append(separator)
-            if v !== null {
+            -- FIXME cast shouldn't be necessary
+            if v->Object? !== null {
                 result.append(v)
             }
             else {

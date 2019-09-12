@@ -1,0 +1,7 @@
+method main() {
+    Console.printLine([].permutations.all())
+    Console.printLine([1].permutations.all())
+    Console.printLine([1, 2].permutations.all())
+    Console.printLine([1, 2, null].permutations.all())
+    Console.printLine([1, 2, 3, 4].permutations.all())
+}

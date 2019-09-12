@@ -5,9 +5,9 @@ Represents a file path, providing methods to query, read, and write files. A `Fi
 merely the path to the file, not the actual physical file on disk, so creating a `File` object does
 not in and of itself cause any interaction with the filesystem.
 
-`File` always uses `"/"` as a path separator regardless of operating system. Relative paths (that
-is, those that do not begin with `"/"`) are interpreted relative to [System.workingDirectory()],
-which never changes while a program is running.
+`File` always uses `"/"` as a path separator regardless of the operating environment's native path
+separator. Relative paths (that is, those that do not begin with `"/"`) are interpreted relative to
+[System.workingDirectory()], which never changes while a program is running.
 ====================================================================================================
 @final
 class File : Immutable, HashKey<File> {

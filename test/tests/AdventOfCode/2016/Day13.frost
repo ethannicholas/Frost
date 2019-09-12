@@ -1,0 +1,91 @@
+-*
+
+--- Day 13: A Maze of Twisty Little Cubicles ---
+
+You arrive at the first floor of this new building to discover a much less welcoming environment
+than the shiny atrium of the last one. Instead, you are in a maze of twisty little cubicles, all
+alike.
+
+Every location in this area is addressed by a pair of non-negative integers (x,y). Each such
+coordinate is either a wall or an open space. You can't move diagonally. The cube maze starts at 0,0
+and seems to extend infinitely toward positive x and y; negative values are invalid, as they
+represent a location outside the building. You are in a small waiting area at 1,1.
+
+While it seems chaotic, a nearby morale-boosting poster explains, the layout is actually quite
+logical. You can determine whether a given x,y coordinate will be a wall or an open space using a
+simple system:
+
+Find x*x + 3*x + 2*x*y + y + y*y.
+Add the office designer's favorite number (your puzzle input).
+Find the binary representation of that sum; count the number of bits that are 1.
+If the number of bits that are 1 is even, it's an open space.
+If the number of bits that are 1 is odd, it's a wall.
+For example, if the office designer's favorite number were 10, drawing walls as # and open spaces as
+., the corner of the building containing 0,0 would look like this:
+
+  0123456789
+0 .#.####.##
+1 ..#..#...#
+2 #....##...
+3 ###.#.###.
+4 .##..#..#.
+5 ..##....#.
+6 #...##.###
+
+Now, suppose you wanted to reach 7,4. The shortest route you could take is marked as O:
+
+  0123456789
+0 .#.####.##
+1 .O#..#...#
+2 #OOO.##...
+3 ###O#.###.
+4 .##OO#OO#.
+5 ..##OOO.#.
+6 #...##.###
+
+Thus, reaching 7,4 would take a minimum of 11 steps (starting from your current location, 1,1).
+
+What is the fewest number of steps required for you to reach 31,39?
+
+*-
+
+uses extras.Algorithms
+
+def input := 1364
+
+def visited := Array<Array<Bit>>()
+
+function solid(x:Int, y:Int):Bit {
+    return x < 0 | y < 0 | ((3 + x) * x + 2 * x * y + (y + 1) * y + input).bitCount && 1 = 1
+}
+
+function countVisitedSpaces<T:HashKey<T>>(start:T, neighbors:(T)=>(Array<T>), count:Int):Int {
+    def visited := HashSet<T>()
+    def current := HashSet<T>()
+    current.add(start)
+    for i in 0 .. count {
+        def last := current
+        current := HashSet<T>()
+        for node in last {
+            current.addAll(neighbors(node))
+        }
+        current.filterInPlace(c => !visited.contains(c))
+        visited.addAll(current)
+    }
+    return visited.count
+}
+
+method main() {
+    for y in 0 .. 100 {
+        visited.add(Array<Bit>(100, false))
+    }
+    def neighbors:((Int, Int))=>(Array<(Int, Int)>) := a => [(a[0] - 1, a[1]), (a[0] + 1, a[1]),
+            (a[0], a[1] - 1), (a[0], a[1] + 1)].filter(a => !self.solid(a[0], a[1]))
+    def start := (1, 1)
+    def goal := (31, 39)
+    Console.printLine(Algorithms.aStar<(Int, Int)>(start, goal, 
+            neighbors,
+            (a, b) => 1,
+            (a) => (a[0] - goal[0]).abs + (a[1] - goal[1]).abs))
+    Console.printLine(countVisitedSpaces(start, neighbors, 50))
+}

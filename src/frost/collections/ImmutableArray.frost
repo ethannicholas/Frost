@@ -102,7 +102,8 @@ class ImmutableArray<T:Immutable> : Immutable, ListView<T> {
         for v in self {
             result.append(separator)
             separator := ", "
-            if v !== null {
+            -- FIXME cast shouldn't be necessary
+            if v->Object? !== null {
                 result.append(v)
             }
             else {

@@ -1,0 +1,6 @@
+method main() {
+    -- enumeration returns a tuple, so the map should only take one parameter, not two. It might
+    -- make sense to extend this to actually work in the future, but for right now we make sure we
+    -- get a sensible error out of this.
+    Console.printLine(["Hello", "Goodbye"].enumeration.map((index, string) => "\{index}: \{string}"))
+}

@@ -62,7 +62,7 @@ class Call {
         outer: for raw in methodTypes {
             var m := raw.nonnullable()
             if m.methodRef !== null & m.methodRef.value.genericParameters !== null {
-                def inferred := Call.performTypeInference(compiler, m.methodRef, args, type)
+                def inferred := performTypeInference(compiler, m.methodRef, args, type)
                 if inferred == null {
                     continue
                 }
@@ -301,7 +301,7 @@ class Call {
                 compiler.extractBuiltinInt(position, right), builtinResultType))
         def constructArgs := Array<ASTNode>()
         constructArgs.add(ASTNode.IR_WRAPPER(position, IR.Value.REF(builtin, builtinResultType)))
-        def construct := Call.compile(compiler, position, compiler.literalType(resultType),
+        def construct := compile(compiler, position, compiler.literalType(resultType),
                 constructArgs, TypeContext.TYPE(resultType, false))
         assert construct !== null
         return Pair<Bit, IR.Value?>(true, construct)
@@ -563,39 +563,27 @@ class Call {
             when ASTNode.UNTYPED_LAMBDA(_, parameterNames, expr) {
                 def rawType := target.nonnullable()
                 if rawType.isMethod {
-                    def returnGenerics := findGenericParameters(m, rawType.returnType)
-                    if returnGenerics !== null {
-                        unreachable
+                    if rawType.parameterCount != parameterNames.count {
+                        return ImplicationsResult.FAILED
                     }
-                    else if rawType.returnType.typeKind = Type.Kind.GENERIC_METHOD_PARAMETER {
-                        def parameters := Array<ASTNode>()
-                        for (i, n) in parameterNames.enumeration {
-                            match n {
-                                when ASTNode.IDENTIFIER(position, name) {
-                                    def t := compiler.literalType(rawType.parameterType(i))
-                                    parameters.add(ASTNode.PARAMETER(position,
-                                            name, ASTNode.IR_WRAPPER(position, t)))
-                                }
-                                otherwise {
-                                    unreachable
-                                }
+                    def parameters := Array<ASTNode>()
+                    for (i, n) in parameterNames.enumeration {
+                        match n {
+                            when ASTNode.IDENTIFIER(position, name) {
+                                def t := compiler.literalType(rawType.parameterType(i))
+                                parameters.add(ASTNode.PARAMETER(position,
+                                        name, ASTNode.IR_WRAPPER(position, t)))
+                            }
+                            otherwise {
+                                unreachable
                             }
                         }
-                        def type := Closure.typedLambdaType(compiler, parameters, expr,
-                                TypeContext.NON_VOID)
-                        if type !== null {
-                            def name := rawType.returnType.name
-                            def newType := currentMapping[name].intersection(compiler,
-                                    type.returnType)
-                            if newType == null {
-                                return ImplicationsResult.FAILED
-                            }
-                            if newType != currentMapping[name] {
-                                currentMapping[name] := newType
-                                return ImplicationsResult.UPDATED
-                            }
-                            return ImplicationsResult.NOT_UPDATED
-                        }
+                    }
+                    def type := Closure.typedLambdaType(compiler, parameters, expr,
+                            TypeContext.NON_VOID)
+                    if type !== null {
+                        return determineImplications(compiler, m, type.returnType,
+                                target.returnType, currentMapping)
                     }
                 }
             }
@@ -712,7 +700,7 @@ class Call {
                     genericArguments.count != m.genericParameters.count) {
                 continue
             }
-            var ref:MethodRef
+            var ref:MethodRef?
             if target !== null {
                 var owner := target.type()
                 if owner.typeKind = Type.Kind.GENERIC_METHOD_PARAMETER {
@@ -728,6 +716,9 @@ class Call {
                         m.owner), m, genericArguments)
             }
             ref := performTypeInference(compiler, ref, args, type)
+            if ref == null {
+                return null
+            }
             var cost := 0
             for i in 0 .. args.count {
                 def argCost := compiler.coercionCost(args[i], ref.parameterType(i))

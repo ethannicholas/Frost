@@ -94,13 +94,16 @@ class Main {
         return dest
     }
 
-    method toExecutable(llvm:File, dest:File, preserveTemporaries:Bit):File {
+    method toExecutable(libraryPaths:Array<File>, libraries:Array<String>, llvm:File, dest:File,
+            preserveTemporaries:Bit):File {
         def args := Array<String>() -- FIXME literal
         args.add(llvm.path)
         args.add("-L\{Config.frostLibDir()}")
         args.add("-lfrost")
         args.add("-lm")
         args.add("-lpthread")
+        args.addAll(libraryPaths.map(p => "-L" + p))
+        args.addAll(libraries.map(l => "-l" + l))
         def icuLibs := Config.icuLibraries().split(";")
         for lib in icuLibs {
             def libFile := File(lib)
@@ -161,6 +164,8 @@ class Main {
         def args := Arguments(rawArgs)
         def sources := Array<File>()
         def imports := Array<File>()
+        def libraryPaths := Array<File>()
+        def libraries := Array<String>()
         var outFile:File? := null
         var optimizationLevel := 3
         var safetyLevel := 3
@@ -233,8 +238,14 @@ class Main {
                         }
                     }
                 }
-                when "-i" {
+                when "-I" {
                     imports.add(File(args.next("a path to an import directory")))
+                }
+                when "-L" {
+                    libraryPaths.add(File(args.next("a path to a library directory")))
+                }
+                when "-l" {
+                    libraries.add(args.next("a library name"))
                 }
                 when "--root" {
                     root := args.next("a path")
@@ -372,7 +383,8 @@ class Main {
         if errorCount = 0 {
             match format {
                 when Format.EXECUTABLE {
-                    toExecutable(outFile.withExtension(".ll"), outFile, preserveTemporaries)
+                    toExecutable(libraryPaths, libraries, outFile.withExtension(".ll"), outFile,
+                            preserveTemporaries)
                 }
                 when Format.OBJECT {
                     toObject(outFile.withExtension(".ll"), outFile, preserveTemporaries)

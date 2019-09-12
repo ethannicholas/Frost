@@ -49,8 +49,12 @@ class TestRunner : Immutable {
             args.add(workingDir.resolve(test + ".frost").path)
             args.add("-o")
             args.add(exe.path)
-            args.add("-i")
+            args.add("-I")
             args.add(workingDir.parent!.asString)
+            args.add("-L")
+            args.add(frostc.parent!.asString)
+            args.add("-l")
+            args.add("test_extras")
             def compiler := System.exec(frostc.path, args)
             def compileResult := compiler.standardOutput().readFully() -- FIXME use error stream instead
             compiler.waitFor()

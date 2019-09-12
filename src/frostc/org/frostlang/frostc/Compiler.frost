@@ -933,11 +933,46 @@ class Compiler {
         def parameters := Array<MethodDecl.Parameter>()
         parameters.add(MethodDecl.Parameter("other", cl.type))
         def p := cl.position
+        def whens := Array<ASTNode>()
+        for cc in cl.choiceCases {
+            var test:ASTNode := ASTNode.BIT(p, true)
+            def params1 := Array<ASTNode>()
+            def params2 := Array<ASTNode>()
+            for i in 0 .. cc.fields.count {
+                def name := "field\{i}"
+                params1.add(ASTNode.IDENTIFIER(p, name + "_1"))
+                params2.add(ASTNode.IDENTIFIER(p, name + "_2"))
+                def value1 := ASTNode.IDENTIFIER(p, name + "_1")
+                def value2 := ASTNode.IDENTIFIER(p, name + "_2")
+                def currentTest:ASTNode
+                if cc.fields[i].typeKind = Type.Kind.NULLABLE {
+                    currentTest := ASTNode.CALL(p, ASTNode.DOT(p, ASTNode.DOT(p, ASTNode.DOT(p,
+                            ASTNode.IDENTIFIER(p, "frost"), "core"), "Frost"), "equal"),
+                            FixedArray<ASTNode>.from([value1, value2]))
+                }
+                else {
+                    currentTest := ASTNode.BINARY(p, value1, Binary.Operator.EQ, value2)
+                }
+                if i > 0 {
+                    test := ASTNode.BINARY(p, test, Binary.Operator.AND, currentTest)
+                }
+                else {
+                    test := currentTest
+                }
+            }
+            def when2 := ASTNode.WHEN(p, FixedArray<ASTNode>.from([ASTNode.CALL(p,
+                    ASTNode.IDENTIFIER(p, cc.name), FixedArray<ASTNode>.from(params2))]),
+                    FixedArray<ASTNode>.from([ASTNode.RETURN(p, test)]))
+            def match2 := ASTNode.MATCH(p, ASTNode.IDENTIFIER(p, "other"),
+                FixedArray<ASTNode>.from([when2]),
+                FixedArray<ASTNode>.from([ASTNode.RETURN(p, ASTNode.BIT(p, false))]))
+            whens.add(ASTNode.WHEN(p, FixedArray<ASTNode>.from([ASTNode.CALL(p,
+                    ASTNode.IDENTIFIER(p, cc.name), FixedArray<ASTNode>.from(params1))]),
+                    FixedArray<ASTNode>.from([match2])))
+        }
         def body := Array<ASTNode>()
-        body.add(ASTNode.IF(p, ASTNode.BINARY(p, ASTNode.DOT(p, ASTNode.SELF(p), "$rawValue"),
-                Binary.Operator.NEQ, ASTNode.DOT(p, ASTNode.IDENTIFIER(p, "other"), "$rawValue")),
-                FixedArray<ASTNode>.from([ASTNode.RETURN(p, ASTNode.BIT(p, false))]), null))
-        body.add(ASTNode.RETURN(p, ASTNode.BIT(p, true)))
+        body.add(ASTNode.MATCH(p, ASTNode.SELF(p), FixedArray<ASTNode>.from(whens),
+                FixedArray<ASTNode>.from([ASTNode.UNREACHABLE(p, null)])))
         def eq := MethodDecl(cl, p, null, Annotations(Annotations.Flag.OVERRIDE ||
                     Annotations.Flag.SYNTHETIC),
                 MethodDecl.Kind.FUNCTION, "=", null, parameters, BIT_TYPE,
@@ -1038,11 +1073,11 @@ class Compiler {
         def body := Array<ASTNode>()
         body.add(ASTNode.MATCH(p, ASTNode.SELF(p), FixedArray<ASTNode>.from(whens),
                 FixedArray<ASTNode>.from([ASTNode.UNREACHABLE(p, null)])))
-        def hash := MethodDecl(cl, p, null, Annotations(Annotations.Flag.OVERRIDE ||
+        def asString := MethodDecl(cl, p, null, Annotations(Annotations.Flag.OVERRIDE ||
                     Annotations.Flag.SYNTHETIC),
                 MethodDecl.Kind.FUNCTION, "get_asString", null, [], STRING_TYPE,
                 FixedArray<ASTNode>.from(body))
-        cl.methods.add(hash)
+        cl.methods.add(asString)
     }
 
     @pre(cl.classKind = ClassDecl.Kind.CHOICE)

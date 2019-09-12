@@ -249,7 +249,7 @@ class Frost {
     }
 
     @class
-    function hash<T:Equatable<T>>(o:HashKey<T>?):Int {
+    function hash<T:HashKey<T>>(o:T?):Int {
         if o !== null {
             return o.hash
         }
@@ -262,6 +262,17 @@ class Frost {
             return o.asString
         }
         return "<null>"
+    }
+
+    @class
+    function equal<T:Equatable<T>>(a:T?, b:T?):Bit {
+        if a == null {
+            return b == null
+        }
+        if b == null {
+            return false
+        }
+        return a = b
     }
 
     @class

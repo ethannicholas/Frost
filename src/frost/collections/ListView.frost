@@ -73,7 +73,12 @@ interface ListView<T> : CollectionView<T> {
 
         init(list:ListView<T>) {
             self.list := list
-            self.choices := Array<Int>(list.count, 0)
+            if list.count > 0 {
+                self.choices := Array<Int>(list.count, 0)
+            }
+            else {
+                self.choices := [-1]
+            }
         }
 
         @override
@@ -438,7 +443,14 @@ interface ListView<T> : CollectionView<T> {
     @returns an iterator which produces the `n`-combinations of this list
     ================================================================================================
     @default
+    @pre(count >= n)
     function combinations(n:Int):Iterator<ListView<T>> {
+        if n = 0 {
+            return [[]]->Array<ListView<T>>.iterator
+        }
+        if n = count {
+            return [self].iterator
+        }
         return CombinationIterator<T>(self, n)
     }
 

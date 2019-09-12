@@ -182,6 +182,13 @@ class Array<T> : List<T> {
         return result
     }
 
+    @priority(1)
+    method sort(greater:(T, T)=>(Bit)):Array<T> {
+        def result := Array<T>(self)
+        MergeSort.sort(result, greater)
+        return result
+    }
+
     @override
     function get_asString():String {
         def result := MutableString()
@@ -190,7 +197,8 @@ class Array<T> : List<T> {
         for v in self {
             result.append(separator)
             separator := ", "
-            if v !== null {
+            -- FIXME cast shouldn't be necessary
+            if v->Object? !== null {
                 result.append(v)
             }
             else {

@@ -2,10 +2,13 @@ Frost solutions to the Advent of Code problems at http://adventofcode.com, which
 of programming challenges you should try. 
 
 These programs are generally brief, but not heavily golfed; I have tried to strike a reasonable
-balance between elegance, readability, and performance. There are some spots where I deliberately
-stress Frost out by doing "weird" things; the fancy functional stuff in Day23 is a good example of
-this. It's completely unnecessary and slower than the naive approach, but it was fun to write and is
-a good test.
+balance between elegance, readability, and performance. But, since these are meant to be tests that
+stress Frost out and not examples of beautiful, maintainable code, there's a definite tendency to do
+everything in a fancy functional manner even when a simple for loop would be a lot more practical.
+This was my place to blow off steam and write crazy, ridiculous code that doesn't belong in a real
+program.
 
-I have taken the liberty of including the problem text in each program, in part so these still make
-sense on the off chance that adventofcode.com is no longer available at some point in the future.
+I have taken the liberty of including the problem text in each program so that you can understand
+what each program is doing without having to get the problems from the web yourself (which, given
+that you can't see Part 2 until you have solved Part 1, is easier said than done). I would
+nonetheless encourage you to give it a shot.

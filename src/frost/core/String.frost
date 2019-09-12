@@ -291,7 +291,7 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
 
         var found:Bit
 
-        init(haystack:String, needle:RegularExpression, allowOveraps:Bit) {
+        init(haystack:String, needle:RegularExpression, allowOverlaps:Bit) {
             self.haystack := haystack
             self.allowOverlaps := allowOverlaps
             matcher := needle.matcher(haystack)
@@ -311,7 +311,7 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
                 start := haystack.next(matcher.start)
             }
             else {
-                start := matcher.get_end()
+                start := matcher.end
             }
             found := matcher.find(start)
             return result
@@ -1068,7 +1068,7 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
     @returns a list of the capture groups, or `null` if the string did not match
     ================================================================================================
     -- @safeReturn FIXME
-    function parse(regex:RegularExpression):ListView<String?>? {
+    function parse(regex:RegularExpression):Array<String?>? {
         def matcher := regex.matcher(self)
         if matcher.matches() {
             def result := Array<String?>()

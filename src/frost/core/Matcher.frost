@@ -104,7 +104,7 @@ class Matcher {
             matcher.appendReplacement(result, "|")
         }
         matcher.appendTail(result)
-        Console.writeLine(result)
+        Console.printLine(result)
 
     This will display the text `"Hello,|can|anyone|hear|me?"`.
 

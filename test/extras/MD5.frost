@@ -1,14 +1,36 @@
 package extras
 
+uses frost.unsafe.Pointer
+
 class MD5 {
+    @private
     constant CHUNK_SIZE := 64
 
+    @private
     var a0:Int32 := 0x67452301.asInt32
+
+    @private
     var b0:Int32 := 0xefcdab89.asInt32
+
+    @private
     var c0:Int32 := 0x98badcfe.asInt32
+
+    @private
     var d0:Int32 := 0x10325476.asInt32
-    var count:Int32 := 0
-    def buffer := Array<UInt8>()
+
+    @private
+    var bitLength := 0
+
+    @private
+    var count := 0
+
+    @private
+    def buffer := Pointer<UInt8>.alloc(64)
+
+    @override
+    method cleanup() {
+        buffer.destroy()
+    }
 
     @private
     function leftRotate(x:Int32, c:Int32):Int32 {
@@ -43,13 +65,16 @@ class MD5 {
         return leftRotate(t, s) + b
     }
 
-    method processChunk(chunk:ListView<UInt8>, start:Int) {
-        function word(i:Int):Int32 {
-            return (chunk[start + i * 4 + 3] << 24 ||
-                   chunk[start + i * 4 + 2] << 16 ||
-                   chunk[start + i * 4 + 1] <<  8 ||
-                   chunk[start + i * 4]).asInt32
-        }
+    @private
+    function word(i:Int):Int32 {
+        return (buffer[i * 4 + 3] << 24 ||
+                buffer[i * 4 + 2] << 16 ||
+                buffer[i * 4 + 1] <<  8 ||
+                buffer[i * 4 + 0]).asInt32
+    }
+
+    @private
+    method processChunk() {
         var a := a0
         var b := b0
         var c := c0
@@ -125,102 +150,71 @@ class MD5 {
         d0 += d         
     }
 
-    method update(message:ListView<UInt8>) {
-        update(message, 0, message.count)
+    method update(message:Pointer<UInt8>, length:Int) {
+        for i in 0 .. length {
+            buffer[count] := message[i]
+            count += 1
+            if count = 64 {
+                processChunk()
+                bitLength += 512
+                count := 0
+            }
+        }
     }
 
-    method update(message:ListView<Char8>) {
-        def bytes := message.map(c => c.asUInt8)
-        update(bytes, 0, bytes.count)
-    }
-
-    @pre(offset >= 0 & length <= message.count)
-    method update(message:ListView<UInt8>, offset:Int, length:Int) {
-        if buffer.count + length < CHUNK_SIZE {
-            buffer.addAll(message)
+    method finish():String {
+        if count < 56 {
+            buffer[count] := 0x80
+            for i in count + 1 .. 56 {
+                buffer[i] := 0
+            }
         }
         else {
-            var i := offset
-            if buffer.count > 0 {
-                i := buffer.count
-                if i < CHUNK_SIZE {
-                    buffer.addAll(message[0 .. CHUNK_SIZE - i])
-                }
-                processChunk(buffer, 0)
-                buffer.clear()
+            buffer[count] := 0x80
+            for i in count + 1 .. 64 {
+                buffer[i] := 0
             }
-            while i + CHUNK_SIZE < length {
-                processChunk(message, i)
-                i += CHUNK_SIZE
-            }
-            if i < message.count {
-                buffer.addAll(message[i .. length - i])
+            processChunk()
+            for i in 0 .. 64 {
+                buffer[i] := 0
             }
         }
-        count := (count + length).asInt32
-    }
+        bitLength += count * 8
+        buffer[56] := bitLength.asUInt8
+        buffer[57] := (bitLength >> 8).asUInt8
+        buffer[58] := (bitLength >> 16).asUInt8
+        buffer[59] := (bitLength >> 24).asUInt8
+        buffer[60] := (bitLength >> 32).asUInt8
+        buffer[61] := (bitLength >> 40).asUInt8
+        buffer[62] := (bitLength >> 48).asUInt8
+        buffer[63] := (bitLength >> 56).asUInt8
+        processChunk()
 
-    constant PADDING:ImmutableArray<UInt8> := [0x80, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-            0, 0, 0, 0, 0]
-    method finish():Array<UInt8> {
-        def bits := count << 3
-        def index := count && 0x3f
-        def padLength:Int
-        if index < 56 {
-            padLength := 56 - index
-        }
-        else {
-            padLength := 120 - index
-        }
-        update(PADDING, 0, padLength)
-        def lengthBytes:Array<UInt8> := [0, 0, 0, 0, 0, 0, 0, 0]
-        lengthBytes[0] := bits.asUInt8
-        lengthBytes[1] := (bits >> 8).asUInt8
-        lengthBytes[2] := (bits >> 16).asUInt8
-        lengthBytes[3] := (bits >> 24).asUInt8
-        update(lengthBytes)
-        assert buffer.count = 0, "buffer has \{buffer.count} bytes"
-
-        def result := Array<UInt8>(32)
-        method output(i:Int32) {
-            result.add(i.asUInt8)
-            result.add((i >> 8).asUInt8)
-            result.add((i >> 16).asUInt8)
-            result.add((i >> 24).asUInt8)
-        }
-        output(a0)
-        output(b0)
-        output(c0)
-        output(d0)
-        return result
-    }
-
-    @class
-    function md5(message:ListView<Char8>):Array<UInt8> {
-        def result := MD5()
-        result.update(message)
-        return result.finish()
-    }
-
-    @class
-    function md5(message:ListView<UInt8>):Array<UInt8> {
-        def result := MD5()
-        result.update(message)
-        return result.finish()
-    }
-
-    constant DIGITS := "0123456789ABCDEF"
-    @class
-    function hex(bytes:Array<UInt8>):String {
+        constant DIGITS := "0123456789ABCDEF"
         def result := Array<Char8>(16)
-        for b in bytes {
-            def i1 := (b // 16)
-            result.add(DIGITS[i1].asChar8)
-            def i2 := (b % 16)
-            result.add(DIGITS[i2].asChar8)
+        method outputByte(i:UInt8) {
+            def i1 := (i // 16)
+            result.add(DIGITS[i1.asInt].asChar8)
+            def i2 := (i % 16)
+            result.add(DIGITS[i2.asInt].asChar8)
         }
+        method outputWord(i:Int32) {
+            outputByte(i.asUInt8)
+            outputByte((i >> 8).asUInt8)
+            outputByte((i >> 16).asUInt8)
+            outputByte((i >> 24).asUInt8)
+        }
+        outputWord(a0)
+        outputWord(b0)
+        outputWord(c0)
+        outputWord(d0)
         return String(result)
+    }
+
+    @class
+    function md5(message:String):String {
+        def result := MD5()
+        result.update(message.data->Pointer<UInt8>, message._length)
+        return result.finish()
     }
 }
