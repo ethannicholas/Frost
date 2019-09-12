@@ -190,7 +190,7 @@ class MD5 {
         buffer[63] := (bitLength >> 56).asUInt8
         processChunk()
 
-        constant DIGITS := "0123456789ABCDEF"
+        constant DIGITS := "0123456789abcdef"
         def result := Array<Char8>(16)
         method outputByte(i:UInt8) {
             def i1 := (i // 16)
