@@ -720,6 +720,9 @@ class FrostDoc {
         Console.printLine("Processing \{cl.name}...")
         try {
             compiler.currentClass.push(cl)
+            if !compiler.resolve(cl) {
+                System.exit(1)
+            }
             self.currentClass := cl
             def dest := getPath(cl, ".xml")
             dest.parent.createDirectories()

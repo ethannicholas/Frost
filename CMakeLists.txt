@@ -1482,16 +1482,24 @@ run_markdown(markdown_html
     docs/annotations.md
     docs/arrayLiterals.md
     docs/bareCode.md
+    docs/basicTypes.md
+    docs/choices.md
     docs/classes.md
     docs/comments.md
     docs/constants.md
+    docs/defaultValues.md
     docs/defines.md
     docs/documentationComments.md
     docs/errorHandling.md
     docs/expressions.md
+    docs/fields.md
+    docs/frostc.md
     docs/functions.md
+    docs/generics.md
     docs/gettingStarted.md
+    docs/identifiers.md
     docs/immutability.md
+    docs/implicitCasting.md
     docs/index.md
     docs/initMethods.md
     docs/inlineMethods.md
@@ -1500,24 +1508,26 @@ run_markdown(markdown_html
     docs/keywords.md
     docs/main.md
     docs/memoryManagement.md
-    docs/methods.md
     docs/methodReferences.md
+    docs/methods.md
+    docs/nonNullability.md
     docs/null.md
-    docs/operators.md
     docs/operatorOverloading.md
+    docs/operators.md
     docs/overview.md
     docs/packages.md
     docs/programs.md
     docs/properties.md
     docs/self.md
-    docs/super.md
     docs/statements.md
     docs/stringInterpolation.md
+    docs/super.md
+    docs/threads.md
     docs/tuples.md
     docs/types.md
     docs/values.md
-    docs/variablesAndConstants.md
     docs/variables.md
+    docs/variablesAndConstants.md
     docs/weakReferences.md
 )
 

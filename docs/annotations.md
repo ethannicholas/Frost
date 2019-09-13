@@ -166,7 +166,7 @@ This is important to allow functions to operate on values returned from other me
 `@safeReturn` annotation, the compiler must assume that any mutable value returned from any method
 is potentially visible and therefore cannot be modified.
 
-<a name="unsafeFunction"></a>a>
+<a name="unsafeFunction"></a>
 @unsafeFunction
 ---------------
 

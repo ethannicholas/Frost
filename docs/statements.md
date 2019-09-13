@@ -16,8 +16,7 @@ operator expressions such as `array[0]`. The `assignmentOperator` specifies the 
 to be performed, either simple assignment (`:=`) or one of the compound assignment operators (`+=`,
 `-=`, `*=`, `/=`, `//=`, `%=`, `^=`, `<<=`, `>>=`, `>>>=`, `&=`, `|=`, `~=`, `&&=`, `||=`, or
 `~~=`). Simple assignment makes `<l-value>` equal to `<r-value>`, whereas the compound assignment
-operators make `<l-value>` equal to `<l-value> <operator> <r-value>`. See [Operators](operators.md)
-for full details on compound assignment operators.
+operators make `<l-value>` equal to `<l-value> <operator> <r-value>`.
 
 When the right side of the assignment is a [tuple](tuples.md), you may assign to multiple values at
 once by 'destructuring' it in a multiple assignment. For instance, if we have a function that

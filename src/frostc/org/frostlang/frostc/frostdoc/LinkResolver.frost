@@ -154,7 +154,7 @@ class LinkResolver {
                     def converted := compiler.scanner.convertType(type)
                     def resolved := compiler.resolve(converted)
                     if resolved == null {
-                        Console.printLine("could not resolve2: \{type}")
+                        Console.printLine("could not resolve: \{type}")
                         return null
                     }
                     parameters.add(resolved)

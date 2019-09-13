@@ -12,7 +12,7 @@
                 <li><a href="index.html">Home</a></li>
                 <li><a href="gettingStarted.html">Getting Started</a></li>
                 <li id="documentationBullet" class="open">
-                    <a href="documentation.html">Documentation</a>
+                    Documentation
                     <ul>
                         <li><a href="frostc.html"><code>frostc</code></a></li>
                         <li id="syntaxBullet" class="collapse">
@@ -40,6 +40,7 @@
                                 <li id="expressionsBullet" class="collapse">
                                     <a href="expressions.html">Expressions</a>
                                     <ul>
+                                        <li><a href="identifiers.html">Identifiers</a></li>
                                         <li><a href="operators.html">Operators</a></li>
                                         <li><a href="operatorOverloading.html">Operator Overloading</a></li>
                                         <li><a href="stringInterpolation.html">String Interpolation</a></li>
@@ -69,6 +70,7 @@
                                         <li><a href="packages.html#uses">Uses</a></li>
                                     </ul>
                                 </li>
+                                <li><a href="generics.html">Generics</a></li>
                                 <li><a href="bareCode.html">Bare Code</a></li>
                             </ul>
                         </li>
@@ -81,7 +83,6 @@
                                 <li><a href="inlineMethods.html">Inline Methods</a></li>
                                 <li><a href="innerMethods.html">Inner Methods</a></li>
                                 <li><a href="methodReferences.html">Method References</a></li>
-                                <li><a href="externalMethods.html">External Methods</a></li>
                             </ul>
                         </li>
                         <li><a href="fields.html">Fields</a></li>

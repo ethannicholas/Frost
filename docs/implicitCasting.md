@@ -23,7 +23,7 @@ A type may be implicitly cast to another type in the following cases:
   used where the type `(Int)=>(Object)` is expected, because `Int` can be implicitly cast to
   `Object`).
 * Using an immutable method type where the equivalent mutable method type is expected
-* Using a [type parameter](genericClasses.md) where its bound is expected
+* Using a [type parameter](generics.md) where its bound is expected
   
 For instance, given the method:
 
