@@ -8,6 +8,7 @@ method writeTuple(count:Int, kind:Kind, path:File) {
     try {
         def out := path.openOutputStream()
         out.printLine("package frost.core")
+        out.printLine("@package")
         def name:String
         match kind {
             when Kind.NORMAL    { name := "Tuple\{count}" }

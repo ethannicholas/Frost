@@ -726,28 +726,30 @@ frost$core$Object* _51;
 frost$core$String* _53;
 frost$core$Object* _54;
 frost$core$Immutable* _58;
-frost$core$Bit _59;
+frost$core$Object* _59;
 bool _60;
-frost$core$MutableString* _63;
-frost$core$Immutable* _64;
-frost$core$Object* _65;
-$fn20 _68;
-frost$core$String* _69;
-frost$core$Object* _71;
-frost$core$MutableString* _77;
-frost$core$Object* _80;
-frost$core$Immutable* _82;
-frost$core$Object* _83;
-frost$core$Object* _87;
-frost$core$MutableString* _90;
-frost$core$MutableString* _93;
-frost$core$String* _94;
-frost$core$Object* _95;
+frost$core$Bit _61;
+bool _62;
+frost$core$MutableString* _65;
+frost$core$Immutable* _66;
+frost$core$Object* _67;
+$fn20 _70;
+frost$core$String* _71;
+frost$core$Object* _73;
+frost$core$MutableString* _79;
+frost$core$Object* _82;
+frost$core$Immutable* _84;
+frost$core$Object* _85;
+frost$core$Object* _89;
+frost$core$MutableString* _92;
+frost$core$MutableString* _95;
+frost$core$String* _96;
 frost$core$Object* _97;
-frost$core$String* _99;
-frost$core$Object* _100;
-frost$core$MutableString* _103;
-frost$core$Object* _104;
+frost$core$Object* _99;
+frost$core$String* _101;
+frost$core$Object* _102;
+frost$core$MutableString* _105;
+frost$core$Object* _106;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/ImmutableArray.frost:99
 FROST_ASSERT(48 == sizeof(frost$core$MutableString));
 _1 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
@@ -820,60 +822,62 @@ _53 = *(&local1);
 _54 = ((frost$core$Object*) _53);
 frost$core$Frost$unref$frost$core$Object$Q(_54);
 *(&local1) = &$s28;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/ImmutableArray.frost:105
-_58 = *(&local2);
-_59 = (frost$core$Bit) {true};
-_60 = _59.value;
-if (_60) goto block4; else goto block6;
-block4:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/ImmutableArray.frost:106
-_63 = *(&local0);
-_64 = *(&local2);
-_65 = ((frost$core$Object*) _64);
-// begin inline call to method frost.core.MutableString.append(o:frost.core.Object) from ImmutableArray.frost:106:30
+_58 = *(&local2);
+_59 = ((frost$core$Object*) _58);
+_60 = _59 != NULL;
+_61 = (frost$core$Bit) {_60};
+_62 = _61.value;
+if (_62) goto block4; else goto block6;
+block4:;
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/ImmutableArray.frost:107
+_65 = *(&local0);
+_66 = *(&local2);
+_67 = ((frost$core$Object*) _66);
+// begin inline call to method frost.core.MutableString.append(o:frost.core.Object) from ImmutableArray.frost:107:30
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/MutableString.frost:150
-_68 = ($fn29) _65->$class->vtable[0];
-_69 = _68(_65);
-frost$core$MutableString$append$frost$core$String(_63, _69);
-_71 = ((frost$core$Object*) _69);
-frost$core$Frost$unref$frost$core$Object$Q(_71);
+_70 = ($fn29) _67->$class->vtable[0];
+_71 = _70(_67);
+frost$core$MutableString$append$frost$core$String(_65, _71);
+_73 = ((frost$core$Object*) _71);
+frost$core$Frost$unref$frost$core$Object$Q(_73);
 goto block5;
 block6:;
 // <no location>
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/ImmutableArray.frost:109
-_77 = *(&local0);
-frost$core$MutableString$append$frost$core$String(_77, &$s30);
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/ImmutableArray.frost:110
+_79 = *(&local0);
+frost$core$MutableString$append$frost$core$String(_79, &$s30);
 goto block5;
 block5:;
-_80 = _38;
-frost$core$Frost$unref$frost$core$Object$Q(_80);
-_82 = *(&local2);
-_83 = ((frost$core$Object*) _82);
-frost$core$Frost$unref$frost$core$Object$Q(_83);
+_82 = _38;
+frost$core$Frost$unref$frost$core$Object$Q(_82);
+_84 = *(&local2);
+_85 = ((frost$core$Object*) _84);
+frost$core$Frost$unref$frost$core$Object$Q(_85);
 *(&local2) = ((frost$core$Immutable*) NULL);
 goto block1;
 block3:;
-_87 = ((frost$core$Object*) _27);
-frost$core$Frost$unref$frost$core$Object$Q(_87);
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/ImmutableArray.frost:112
-_90 = *(&local0);
-frost$core$MutableString$append$frost$core$String(_90, &$s31);
+_89 = ((frost$core$Object*) _27);
+frost$core$Frost$unref$frost$core$Object$Q(_89);
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/ImmutableArray.frost:113
-_93 = *(&local0);
-_94 = frost$core$MutableString$finish$R$frost$core$String(_93);
-_95 = ((frost$core$Object*) _94);
-frost$core$Frost$ref$frost$core$Object$Q(_95);
-_97 = ((frost$core$Object*) _94);
-frost$core$Frost$unref$frost$core$Object$Q(_97);
-_99 = *(&local1);
-_100 = ((frost$core$Object*) _99);
-frost$core$Frost$unref$frost$core$Object$Q(_100);
+_92 = *(&local0);
+frost$core$MutableString$append$frost$core$String(_92, &$s31);
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/ImmutableArray.frost:114
+_95 = *(&local0);
+_96 = frost$core$MutableString$finish$R$frost$core$String(_95);
+_97 = ((frost$core$Object*) _96);
+frost$core$Frost$ref$frost$core$Object$Q(_97);
+_99 = ((frost$core$Object*) _96);
+frost$core$Frost$unref$frost$core$Object$Q(_99);
+_101 = *(&local1);
+_102 = ((frost$core$Object*) _101);
+frost$core$Frost$unref$frost$core$Object$Q(_102);
 *(&local1) = ((frost$core$String*) NULL);
-_103 = *(&local0);
-_104 = ((frost$core$Object*) _103);
-frost$core$Frost$unref$frost$core$Object$Q(_104);
+_105 = *(&local0);
+_106 = ((frost$core$Object*) _105);
+frost$core$Frost$unref$frost$core$Object$Q(_106);
 *(&local0) = ((frost$core$MutableString*) NULL);
-return _94;
+return _96;
 
 }
 

@@ -1,7 +1,7 @@
 Init Methods
 ============
 
-An *init method* is a special kind of [method](methods.html) which is used when creating new
+An *init method* is a special kind of [method](methods.md) which is used when creating new
 objects. The syntax for init methods is:
 
     class Foo {
@@ -58,7 +58,7 @@ Init Rules
 
 The object must be *fully initialized* before calling any instance methods on it or returning from
 the `init` method. An object is fully initialized when all of its fields which do not have
-[default values](defaultValues.html) have been initialized and a superclass `init` method has been
+[default values](defaultValues.md) have been initialized and a superclass `init` method has been
 invoked.
 
 Calling Superclass Inits

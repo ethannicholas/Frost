@@ -7,8 +7,6 @@ Immediate
 =========
 
 Detect and error on parameter reassignment
-Documentation (still need: fix bug with * in operators.md, fix links with parentheses...)
-Array literals
 fix command line parsing
 permissions
 handle duplicate classes, more than one public class per file, classes not being in the correct path
@@ -17,7 +15,6 @@ figure out rules for init / cleanup, make sure I'm following them consistently, 
 var parameters
 all tests working (incl. C)
 verify build & run from directories containing spaces
-postfix '!'
 enforce class directory and filename rules
 
 Eventually
@@ -25,7 +22,6 @@ Eventually
 
 Dataflow, null safety, function safety
 Proper native code headers
-Tuples
 Property error reporting
 automatically calculate dependency information during build
 DWARF info
@@ -39,16 +35,10 @@ need to handle pre/postconditions inherited from multiple sources (remember that
     can define the same method with different contracts)
 Need to figure out & enforce init and cleanup rules
 need to report error on @external init / cleanup
-Add tests for things like breaking out of multiple loops w/ memory management
-Initializing a @weak <nullable> with null causes a crash (probably fixed?)
-Not getting error from using instance field in class constant (probably fixed?)
 should we be able to create class method and instance method with identical signatures? currently
     works on creation, being reported as ambiguous on call. Need to figure out how to handle this
     and fix it.
 need to error on duplicate methods
-I/O with System.Process is being indefinitely buffered somewhere; this means interactive programs
-        don't work at all through FrostRun
-
 
 Specializations
 ===============
@@ -74,5 +64,4 @@ possible for multiple specializations to combine when the types are compatible
 pregenerating each possible combination of specializations (any combination of interfaces, plus zero
 or one superclass) and erroring if any of them have conflicts.
 
-Need to use specialization to add Equatable to the container classes when appropriate, also to make
-Stack.pop(T) use '=' instead of '==' when available.
+Need to use specialization to add Equatable to the container classes when appropriate.

@@ -14,6 +14,7 @@ typedef struct frost$collections$HashMap frost$collections$HashMap;
 #include "frost/core/Char32_types.h"
 #include "frost/core/Bit_types.h"
 typedef struct frost$collections$HashKey frost$collections$HashKey;
+typedef struct frost$core$Equatable frost$core$Equatable;
 
 void frost$core$Frost$init(frost$core$Frost* self);
 frost$core$Maybe* frost$core$Frost$success$frost$core$Object$R$frost$core$Maybe$LTfrost$core$Object$GT$Q(frost$core$Object* p_o);
@@ -36,8 +37,9 @@ double frost$core$Frost$sqrt$builtin_float64$R$builtin_float64(double p_v);
 int64_t frost$core$Frost$currentTime$R$builtin_int64();
 frost$core$String* frost$core$Frost$align$frost$core$String$frost$core$String$R$frost$core$String(frost$core$String* p_str, frost$core$String* p_specifier);
 frost$core$String* frost$core$Frost$format$frost$core$Bit$frost$core$UInt64$frost$core$UInt64$frost$core$String$R$frost$core$String(frost$core$Bit p_sign, frost$core$UInt64 p_rawValue, frost$core$UInt64 p_mask, frost$core$String* p_fmt);
-frost$core$Int frost$core$Frost$hash$frost$collections$HashKey$LTfrost$core$Frost$hash$T$GT$Q$R$frost$core$Int(frost$collections$HashKey* p_o);
+frost$core$Int frost$core$Frost$hash$frost$core$Frost$hash$T$Q$R$frost$core$Int(frost$collections$HashKey* p_o);
 frost$core$String* frost$core$Frost$string$frost$core$Object$Q$R$frost$core$String(frost$core$Object* p_o);
+frost$core$Bit frost$core$Frost$equal$frost$core$Frost$equal$T$Q$frost$core$Frost$equal$T$Q$R$frost$core$Bit(frost$core$Equatable* p_a, frost$core$Equatable* p_b);
 void frost$core$Frost$debugPrint$builtin_int64(int64_t p_i);
 void frost$core$Frost$debugPrint$frost$core$Object(frost$core$Object* p_o);
 frost$core$String* frost$core$Frost$pointerConvert$frost$unsafe$Pointer$LTfrost$core$Object$Q$GT$R$frost$core$String(frost$core$Object** p_p);

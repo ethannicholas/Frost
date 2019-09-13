@@ -23,7 +23,7 @@ arguments:
         }
     }
 
-And finally, you may use [bare code](bareCode.html) to put a `main()` method at the top level of a
+And finally, you may use [bare code](bareCode.md) to put a `main()` method at the top level of a
 file, without an enclosing class (and either with or without a `ListView<String>` parameter):
 
     method main() {

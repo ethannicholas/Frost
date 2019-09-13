@@ -11,7 +11,7 @@ separate words. For instance:
 
     constant DAYS_IN_WEEK := 7
 
-To enforce the "cannot change" rule, all constants must have [immutable](immutable.html) types.
+To enforce the "cannot change" rule, all constants must have [immutable](immutability.md) types.
 Constants may appear either in class bodies, at the same level as methods and fields, or within
 methods. Constants in class bodies are scoped to the class, for instance:
 
@@ -22,9 +22,9 @@ methods. Constants in class bodies are scoped to the class, for instance:
 
     Console.writeLine("The speed of light is \{Physics.C} m/s")
 
-Constants appearing in methods are treated much like local [variables](variables.html), except that
+Constants appearing in methods are treated much like local [variables](variables.md), except that
 they are read-only and must be immutable. 
 
-Constants in general are similar to [defines](defines.html); the difference is that constants may be
+Constants in general are similar to [defines](defines.md); the difference is that constants may be
 class-scoped and must be immutable, whereas defines may at most be instance scoped and may be either
 mutable or immutable.

@@ -1,8 +1,8 @@
 Non-nullability
 ===============
 
-[Types](types.html) are [non-nullable](nonNullability.html) by default, meaning that
-[`null`](null.html) is a not a legal value for types by default. The following code therefore will
+[Types](types.md) are [non-nullable](nonNullability.md) by default, meaning that
+[`null`](null.md) is a not a legal value for types by default. The following code therefore will
 not compile:
 
     def s:String := null -- won't compile, as null is not a String
@@ -42,7 +42,7 @@ could also have written:
     Console.printLine(s)
 
 Because we cannot reach the `Console.printLine` without passing through an
-[`assert`](statements.html#assert) that `s` is non-`null`, then if `s` turns out to be `null` the
+[`assert`](statements.md#assert) that `s` is non-`null`, then if `s` turns out to be `null` the
 program will either crash at the `assert` statement (if safety checks are enabled) or enter
 undefined behavior (if safety checks are disabled). Either way, the compiler can assume that `s` is
 non-`null` at the point where it is accessed.
@@ -80,6 +80,6 @@ This analysis will improve over time and we will eventually deal with this situa
 even then, no compiler is as smart as a human. There will always be situations in which it is in
 theory possible to prove that a value cannot be `null`, but the Frost compiler is not actually able
 to do so and will report an error. The easiest way to work around this issue is to use a
-[cast or force non-null operator](operators.html#cast) to cast the value to a non-nullable type at
+[cast or force non-null operator](operators.md#cast) to cast the value to a non-nullable type at
 the point of access.
 

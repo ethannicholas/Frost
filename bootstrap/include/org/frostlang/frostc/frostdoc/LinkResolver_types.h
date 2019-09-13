@@ -4,6 +4,7 @@ typedef struct frost$core$Class frost$core$Class;
 #include "frost/core/Int32_types.h"
 #include "frost/core/UInt8_types.h"
 typedef struct org$frostlang$frostc$Compiler org$frostlang$frostc$Compiler;
+typedef struct frost$io$File frost$io$File;
 typedef struct frost$core$String frost$core$String;
 typedef struct org$frostlang$frostc$ClassDecl org$frostlang$frostc$ClassDecl;
 
@@ -12,6 +13,7 @@ typedef struct org$frostlang$frostc$frostdoc$LinkResolver {
     frost$core$Int32 refCount;
     frost$core$UInt8 $flags;
     org$frostlang$frostc$Compiler* compiler;
+    frost$io$File* docPath;
     frost$core$String* apiRelativePath;
     org$frostlang$frostc$ClassDecl* context;
 } org$frostlang$frostc$frostdoc$LinkResolver;

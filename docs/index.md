@@ -42,5 +42,5 @@ And many other features. This is what a simple Frost program looks like:
     }
 
 For a more comprehensive overview of Frost's syntax and features, see the 
-[Syntax Overview](overview.html) or [API documentation](api/index.html). If you'd like to try Frost
-out for yourself, see the [Getting Started](gettingStarted.html) page.
+[Syntax Overview](overview.md) or [API documentation](api/index.html). If you'd like to try Frost
+out for yourself, see the [Getting Started](gettingStarted.md) page.

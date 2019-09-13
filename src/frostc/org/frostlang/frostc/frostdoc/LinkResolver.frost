@@ -14,17 +14,21 @@ class LinkResolver {
     def compiler:Compiler
 
     @private
+    def docPath:File
+
+    @private
     def apiRelativePath:String
 
     @private
     def context:ClassDecl?
 
-    init(compiler:Compiler, apiRelativePath:String) {
-        init(compiler, apiRelativePath, null)
+    init(compiler:Compiler, docPath:File, apiRelativePath:String) {
+        init(compiler, docPath, apiRelativePath, null)
     }
 
-    init(compiler:Compiler, apiRelativePath:String, context:ClassDecl?) {
+    init(compiler:Compiler, docPath:File, apiRelativePath:String, context:ClassDecl?) {
         self.compiler := compiler
+        self.docPath := docPath
         self.apiRelativePath := apiRelativePath
         self.context := context
     }
@@ -93,8 +97,22 @@ class LinkResolver {
     }
 
     method resolve(link:String):String? {
-        if link.contains("http") | link.contains(".html") {
+        def hash := link.indexOf("#")
+        if hash !== null {
+            def result := resolve(link[..hash])
+            if result == null {
+                return null
+            }
+            return result + link[hash..]
+        }
+        if link.startsWith("http") | link.endsWith(".html") {
             return link
+        }
+        if link.endsWith(".md") {
+            if docPath.resolve(link).exists() {
+                return link.replace(".md", ".html")
+            }
+            return null
         }
         var cl := compiler.tryResolveClass(link)
         if cl !== null {
@@ -113,6 +131,7 @@ class LinkResolver {
                 if cl !== null {
                     def s := compiler.getSymbolTable(cl)[link[link.next(index)..]]
                     if s == null {
+                        Console.printLine("could not resolve1: \{link}")
                         return null
                     }
                     return linkTo(s)
@@ -135,6 +154,7 @@ class LinkResolver {
                     def converted := compiler.scanner.convertType(type)
                     def resolved := compiler.resolve(converted)
                     if resolved == null {
+                        Console.printLine("could not resolve2: \{type}")
                         return null
                     }
                     parameters.add(resolved)

@@ -6,7 +6,7 @@ An *operator* is a special symbol that performs an operation on one or two *oper
 are `7` and `3`, and the result is `10`.
 
 The behaviors described below are how Frost's built-in types define these operators to work. They
-may be [overloaded](operatorOverloading.html), just as they are in the built-in types.
+may be [overloaded](operatorOverloading.md), just as they are in the built-in types.
 
 Frost operators come in several categories:
 
@@ -21,8 +21,8 @@ Arithmetic
 * `//` (integer divide): `9 // 2` is `4`
 * `%` (remainder): `9 % 2` is `1`
 
-Frost's arithmetic operators operate on [numbers](basicTypes.html#numbers), and always produce at
-least an `Int32` value, even if the [types](types.html) you are operating on are smaller than that.
+Frost's arithmetic operators operate on [numbers](basicTypes.md#numbers), and always produce at
+least an `Int32` value, even if the [types](types.md) you are operating on are smaller than that.
 If either of the two operands is `Real`, the result is `Real`. If either of the two operands is 64
 bits long, the result is 64 bits long. Thus `Int8 * Int16 = Int32`, `Int64 * Real32 = Real64`, and 
 `Real32 * Int32 = Real32`. Mixing signed and unsigned integers results in a signed type big enough
@@ -49,7 +49,7 @@ the following ranges are all valid:
 * `10 ... by -1` (equivalent to `SteppedRange<Int?>(10, null, -1, true)`)
 
 `Range` and `SteppedRange` are used in many of Frost's APIs. They are used to specify subranges of
-[List], substrings of [String], and as a target of [`for` loops](statements.html#for).
+[List], substrings of [String], and as a target of [`for` loops](statements.md#for).
 
 <a name="shift"></a>
 Shift
@@ -58,7 +58,7 @@ Shift
 * `<<` (shift left): `5 << 2` is `20`
 * `>>` (shift right): `-20 >> 2` is `-5`
 
-The *shift left* operator shifts the bits in a [number](basicTypes.html#numbers) to the left,
+The *shift left* operator shifts the bits in a [number](basicTypes.md#numbers) to the left,
 inserting zero bits on the right. Left shifting by `n` bits is equivalent to multiplying by 2^n
 with no overflow checking.
 
@@ -100,7 +100,7 @@ characters, but they are not *identical*, because they are two distinct objects.
 seldom-used operation; you will almost always want to compare objects for equality rather than for
 identity.
 
-The identity / not identity operators are not allowed to operate on [value](values.html) objects, as
+The identity / not identity operators are not allowed to operate on [value](values.md) objects, as
 value objects do not have a well-defined identity. If you "trick" Frost into comparing the identity
 of two value objects, for instance:
 
@@ -151,11 +151,11 @@ Cast
 ----
 
 * `->` (cast): `object->(String)` casts `object` to a `String`
-* `!` (force non-null): `object!` casts `object` from a [nullable](nonNullability.html) type to a
+* `!` (force non-null): `object!` casts `object` from a [nullable](nonNullability.md) type to a
                         non-nullable type
 
 The cast operator tells the compiler to treat an object as being a different
-[type](types.html). For instance, in
+[type](types.md). For instance, in
 
     def x:Object := "Hello"
     processString(x)
@@ -173,7 +173,7 @@ this via the *cast* operator:
 This statement *casts* `x` to the type `String`. Casting doesn't actually change the value; 
 it just instructs the compiler to assume that it is a different type. An invalid cast - that is,
 casting an object whose runtime type turns out to not actually match the target type - is a
-[safety violation](safetyViolations.html).
+[safety violation](safetyViolations.md).
 
 The *force non-null* operator (postfix exclamation mark, `!`) is shorthand for casting a nullable
 value to its non-nullable equivalent. If `nullableString` represents a value of type
@@ -209,4 +209,4 @@ list simply by writing:
 Operator Precedence
 -------------------
 
-See [expressions](expressions.html#precedence) for a description of operator precedence.
+See [expressions](expressions.md#precedence) for a description of operator precedence.

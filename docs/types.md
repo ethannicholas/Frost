@@ -2,7 +2,7 @@ Types
 =====
 
 A *type* is a kind of data, such as [String] or [Int]. Every type has an associated
-[class](classes.html), but more than one type may map to the same class: for instance, `String` and
+[class](classes.md), but more than one type may map to the same class: for instance, `String` and
 `String?` are two distinct types, but are the same class (`frost.core.String`).
 
 The full syntax for a class type is:
@@ -12,18 +12,17 @@ The full syntax for a class type is:
 For example, the type `Array<Int64?>?` refers to a nullable array of nullable `Int64`s.
 
 `<class>` is the name of any Frost class, such as `Int32` or `String`. Class names may or may not be
-[fully qualified](packages.html#fullyQualified).
+[fully qualified](packages.md#fullyQualified).
 
 The `<parameters>` are an optional comma-separated list of types, surrounded by angle brackets
-(`<type1, type2>`). Parameters are used by [generic types](genericTypes.html).
+(`<type1, type2>`). Parameters are used by [generic types](generics.md).
 
 The optional question mark at the end of a type name identifies the type as being
-[*nullable*](nonNullability.html). Without a trailing question mark, the type is non-nullable and
-thus [`null`](null.html) is not a legal value for the type.
+[*nullable*](nonNullability.md). Without a trailing question mark, the type is non-nullable and
+thus [`null`](null.md) is not a legal value for the type.
 
-Every [expression](expressions.html) in Frost has a type. Frost uses
-[type inference](typeInference.html) to automatically determine the types of [fields](fields.html)
-and [variables](variables.html).
+Every [expression](expressions.md) in Frost has a type. Frost uses type inference to automatically
+determine the types of [fields](fields.md) and [variables](variables.md).
 
 The run-time type of a value is not necessarily the same as its compile-time type. For instance, in
 the code:
@@ -38,7 +37,7 @@ write:
     processString(str)
 
 because you would be passing an `Object` to a method expecting a `String`. A
-[typecast](operators.html#cast) instructs the compiler to treat an object as a different
+[typecast](operators.md#cast) instructs the compiler to treat an object as a different
 compile-time type; in this case you could write:
 
     processString(tr->String)
@@ -50,7 +49,7 @@ declare `str` as the right type to begin with!
 Method Types
 ------------
 
-In addition to the class types described above, [methods](methods.html) have types. The type of a
+In addition to the class types described above, [methods](methods.md) have types. The type of a
 function encapsulates its parameter types and return type in the form
 `(<parameterTypes>)=>(<returnType>)`, for example:
 
@@ -79,10 +78,10 @@ value.
 Function types such as `(Int)=>(Int)` may be used in contexts where the equivalent method type (in
 this case `(Int)=&>(Int)`) is expected, but the reverse is not true.
 
-Because [method references](methodReferences.html), [inline methods](inlineMethods.html), and
-[lambdas](inlineMethods.html#lambdas) can capture values, and those values may be mutable, the
+Because [method references](methodReferences.md), [inline methods](inlineMethods.md), and
+[lambdas](inlineMethods.md#lambdas) can capture values, and those values may be mutable, the
 resulting method reference can itself be mutable. The types described above permit both mutable
-and [immutable](immutability.html) method references to be assigned to them. To restrict a method
+and [immutable](immutability.md) method references to be assigned to them. To restrict a method
 type to immutable method references only, add an asterisk (`*`) after the arrow. This gives us four
 different method types for any given combination of parameters and return type:
 
@@ -97,7 +96,7 @@ wherever mutable method references are allowed.
 Tuple Types
 -----------
 
-The type of a [tuple](tuples.html) is described by a parenthesized list of type
+The type of a [tuple](tuples.md) is described by a parenthesized list of type
 names:
 
     def tuple:(Object, Int) := ("Tuple", 12)

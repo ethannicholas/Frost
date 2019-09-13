@@ -10,4 +10,4 @@ The type declarations may be omitted to infer the type of the variable from its 
 the assignment may be omitted to leave the variable unitialized. The type and assignment may not
 both be omitted.
 
-The value of a variable may be changed using an [assignment statement](statements.html#assignment).
+The value of a variable may be changed using an [assignment statement](statements.md#assignment).

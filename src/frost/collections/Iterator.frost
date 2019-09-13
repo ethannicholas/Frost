@@ -224,7 +224,7 @@ interface Iterator<T> {
     }
 
     ================================================================================================
-    As [[](Range<Int?>)], but additionally handles a `step`.
+    As [[\](Range<Int?>)], but additionally handles a `step`.
 
     Example:
 

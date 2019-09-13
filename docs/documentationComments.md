@@ -2,7 +2,7 @@ Documentation Comments
 ======================
 
 A *documentation comment* is a special comment that must appear immediately prior to a
-[class](classes.html), [method](methods.html), or [field](fields.html), and provides a formal
+[class](classes.md), [method](methods.md), or [field](fields.md), and provides a formal
 description of the class, method, or field it precedes.
 
 Documentation comments begin and end with three or more equals signs (`===`), as
@@ -20,10 +20,6 @@ in:
 
 While only three equals signs are necessary, it is conventional to extend the row of equals signs to
 the end of the line.
-
-Documentation comments are processed by [`frostc`](frostc.html) when the output format (`-f`) is set
-to `xml`, causing a set of XML documentation files to be produced. These XML files are suitable for
-processing into HTML using the provided `frostdoc.xsl` stylesheet.
 
 Documentation comments consist of three parts. The *summary* is the first "sentence" of the content,
 extending from the beginning of the comment to the first period (`.`). The *description* is the

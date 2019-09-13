@@ -133,7 +133,6 @@ add_library(c_frost
     bootstrap/src/org/frostlang/frostc/Bench.c
     bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure20.c
     bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure24.c
-    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure34.c
     bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/LinkDefinition.c
     bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure30.c
     bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/CodeReplacer.c
@@ -551,7 +550,6 @@ add_executable(bootstrap
     bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure28.c
     bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure30.c
     bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure32.c
-    bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure34.c
     bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure4.c
     bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure6.c
     bootstrap/src/org/frostlang/frostc/frostdoc/Markdown/_Closure9.c
@@ -1086,7 +1084,7 @@ function(compile_plex_sources out_var)
         add_custom_command(
             OUTPUT ${output}
             COMMAND ${CMAKE_CURRENT_BINARY_DIR}/bootstrap ${BOOTSTRAP_ARGS}
-                    -i ${CMAKE_CURRENT_SOURCE_DIR}/src/parser -f o -o ${output} ${input}
+                    -I ${CMAKE_CURRENT_SOURCE_DIR}/src/parser -f o -o ${output} ${input}
             DEPENDS bootstrap ${input}
             WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         )
@@ -1175,9 +1173,9 @@ function(compile_frostc_sources out_var)
         add_custom_command(
             OUTPUT ${output}
             COMMAND ${CMAKE_CURRENT_BINARY_DIR}/bootstrap ${BOOTSTRAP_ARGS}
-                    -i ${CMAKE_CURRENT_SOURCE_DIR}/src/parser
-                    -i ${CMAKE_CURRENT_BINARY_DIR}
-                    -i ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc
+                    -I ${CMAKE_CURRENT_SOURCE_DIR}/src/parser
+                    -I ${CMAKE_CURRENT_BINARY_DIR}
+                    -I ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc
                     -f o -o ${output} ${input}
             DEPENDS bootstrap ${input}
                     ${CMAKE_CURRENT_BINARY_DIR}/org/frostlang/frostc/parser/Token.frost
@@ -1336,7 +1334,7 @@ function(create_headers out_var)
         add_custom_command(
             OUTPUT ${output}
             COMMAND ${CMAKE_CURRENT_BINARY_DIR}/frostc -O ${OPTIMIZATION} -S ${SAFETY} -f h
-                    -I ${CMAKE_CURRENT_SOURCE_DIR}/src -i ${frostcInc} -i ${parserInc}
+                    -I ${CMAKE_CURRENT_SOURCE_DIR}/src -I ${frostcInc} -I ${parserInc}
                     -I ${buildInc} -o ${CMAKE_CURRENT_BINARY_DIR}/updated_bootstrap/include ${input}
             DEPENDS ${rawInput} frostc
             WORKING_DIRECTORY ${working}
@@ -1471,7 +1469,8 @@ function(run_markdown out_var)
         set(output "${CMAKE_CURRENT_BINARY_DIR}/docs/${output}.html")
         add_custom_command(
             OUTPUT ${output}
-            COMMAND ${CMAKE_CURRENT_BINARY_DIR}/frostmd ${input} ${output}
+            COMMAND ${CMAKE_CURRENT_BINARY_DIR}/frostmd ${CMAKE_CURRENT_SOURCE_DIR}/docs ${input}
+                    ${output}
             DEPENDS frostmd ${input}
         )
         list(APPEND result ${output})
@@ -1560,5 +1559,6 @@ syntax_highlight(frost_source_html
 
 add_custom_target(docs
     COMMAND frostdoc ${CMAKE_CURRENT_SOURCE_DIR}/src/frost ${CMAKE_CURRENT_BINARY_DIR}/docs api
+            ${CMAKE_CURRENT_SOURCE_DIR}/docs
     DEPENDS frostdoc ${public_source} ${markdown_html} ${frost_source_html}
 )

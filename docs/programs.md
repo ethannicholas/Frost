@@ -2,8 +2,8 @@ Structure of a Frost Program
 ============================
 
 A Frost program consists of one or more files with the extension `.frost`. A Frost source file
-generally contains a single [package statement](packages.html) and a single public
-[class](classes.html), such as:
+generally contains a single [package statement](packages.md) and a single public
+[class](classes.md), such as:
 
     Contents of `example/Hello.frost`:
 
@@ -23,5 +23,5 @@ source files.
 
 While a Frost source file *generally* contains a single package statement and a single public class,
 they may contain any number of package statements and classes (only one of which may be public).
-Frost source files may also contain [bare fields and methods](bareCode.html), not contained within a
-class, in order to create a bare [main](main.html) file.
+Frost source files may also contain [bare fields and methods](bareCode.md), not contained within a
+class, in order to create a bare [main](main.md) file.

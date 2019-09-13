@@ -1,7 +1,7 @@
 Operator Overloading
 ====================
 
-Frost classes may provide their own implementations of most [operators](operators.html), which is
+Frost classes may provide their own implementations of most [operators](operators.md), which is
 called *operator overloading*.
 
     -- this won't compile, keep reading!

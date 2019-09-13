@@ -16,9 +16,23 @@ operator expressions such as `array[0]`. The `assignmentOperator` specifies the 
 to be performed, either simple assignment (`:=`) or one of the compound assignment operators (`+=`,
 `-=`, `*=`, `/=`, `//=`, `%=`, `^=`, `<<=`, `>>=`, `>>>=`, `&=`, `|=`, `~=`, `&&=`, `||=`, or
 `~~=`). Simple assignment makes `<l-value>` equal to `<r-value>`, whereas the compound assignment
-operators make `<l-value>` equal to `<l-value> <operator> <r-value>`.
+operators make `<l-value>` equal to `<l-value> <operator> <r-value>`. See [Operators](operators.md)
+for full details on compound assignment operators.
 
-See [Operators](operators.html) for full details on compound assignment.
+When the right side of the assignment is a [tuple](tuples.md), you may assign to multiple values at
+once by 'destructuring' it in a multiple assignment. For instance, if we have a function that
+returns a tuple:
+
+    function origin():(Int, Int) { return 0, 0 }
+
+we can pull the tuple apart during assignment by assigning it to a corresponding tuple of
+destinations:
+
+    def (x, y) := origin()
+
+This gives both `x` and `y` the value `0`. See [destructuring tuples](tuples.md#destructuring) for
+more about multiple assignment.
+
 
 <a name="methodCalls"></a>
 Method Calls
@@ -26,11 +40,11 @@ Method Calls
 
     [<object>.]<methodName>(<parameters>)
 
-A method call statement *invokes* a [method](methods.html). If the context `<object>` is omitted,
-the method will be resolved against [`self`](self.html) or the current [class](classes.html). The
+A method call statement *invokes* a [method](methods.md). If the context `<object>` is omitted,
+the method will be resolved against [`self`](self.md) or the current [class](classes.md). The
 return values of methods called as statements are ignored.
 
-[Functions](functions.html) may not be called as statements: the only reason to call a method as a
+[Functions](functions.md) may not be called as statements: the only reason to call a method as a
 statement is for the side effects it may have, and functions do not have side effects.
 
 A method call `<object>` may be the keyword `super`. This is equivalent to `self`, except that the
@@ -106,7 +120,7 @@ The `<target>` may optionally have a type specifier, as in `for i:UInt8 in 1 ...
 The optional `<label>` before the loop allows `break` and `continue` statements to refer to it by
 name. It is otherwise ignored.
 
-If `<collection>` is a collection of [tuples](tuples.html), `<target>` may be a parenthesized list
+If `<collection>` is a collection of [tuples](tuples.md), `<target>` may be a parenthesized list
 of variable names to split the tuple into separate variables:
 
     def list := [("Five", 5), ("Twelve", 12), ("Forty-two", 42)]
@@ -321,7 +335,7 @@ Unlike many other languages, Frost's `match` statement does not have "fall-throu
 statements associated with a `when` finish, execution continues after the end of the match
 statement.
 
-When matching a [`choice`](choices.html), the `when` conditions may *destructure* the choice and
+When matching a [`choice`](choices.md), the `when` conditions may *destructure* the choice and
 extract the values it contains. For example, given the `choice`:
 
     choice Node {

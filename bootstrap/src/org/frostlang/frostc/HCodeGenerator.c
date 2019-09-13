@@ -9633,7 +9633,7 @@ abort(); // unreachable
 block31:;
 _303 = _295;
 // begin inline call to method org.frostlang.frostc.Compiler.isValueInit(m:org.frostlang.frostc.MethodDecl):frost.core.Bit from HCodeGenerator.frost:313:62
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:3832
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:3867
 _306 = &param1->methodKind;
 _307 = *_306;
 org$frostlang$frostc$MethodDecl$Kind$wrapper* $tmp429;
@@ -9642,7 +9642,7 @@ $tmp429->value = _307;
 _308 = ((frost$core$Equatable*) $tmp429);
 _309 = _308;
 _310 = (frost$core$Int) {2u};
-// begin inline call to org.frostlang.frostc.MethodDecl.Kind.init(rv:frost.core.Int):org.frostlang.frostc.MethodDecl.Kind from Compiler.frost:3832:46
+// begin inline call to org.frostlang.frostc.MethodDecl.Kind.init(rv:frost.core.Int):org.frostlang.frostc.MethodDecl.Kind from Compiler.frost:3867:46
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/MethodDecl.frost:7
 _313 = &(&local6)->$rawValue;
 *_313 = _310;
@@ -9665,7 +9665,7 @@ block35:;
 _324 = &param1->owner;
 _325 = *_324;
 _326 = _325;
-// begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Compiler.frost:3832:63
+// begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Compiler.frost:3867:63
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
 _329 = frost$core$Weak$get_valid$R$frost$core$Bit(_326);
 _330 = _329.value;

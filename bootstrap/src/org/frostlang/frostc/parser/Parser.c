@@ -1691,7 +1691,7 @@ _6 = *_5;
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Lexer.frost:21
 FROST_ASSERT(80 == sizeof(org$frostlang$plex$runtime$DFA));
 _9 = (org$frostlang$plex$runtime$DFA*) frostObjectAlloc(80, (frost$core$Class*) &org$frostlang$plex$runtime$DFA$class);
-_10 = (frost$core$Int) {250u};
+_10 = (frost$core$Int) {263u};
 _11 = &_6->transitions;
 _12 = *_11;
 _13 = &_6->accepts;
@@ -2322,15 +2322,15 @@ block2:;
 _88 = &param0->lexer;
 _89 = *_88;
 // begin inline call to method org.frostlang.frostc.parser.Lexer.next():org.frostlang.frostc.parser.Token from Parser.frost:88:33
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Lexer.frost:3422
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Lexer.frost:3448
 _92 = &_89->dfa;
 _93 = *_92;
 _94 = org$frostlang$plex$runtime$DFA$next$R$org$frostlang$plex$runtime$RawToken(_93);
 *(&local2) = _94;
-// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Lexer.frost:3423
+// /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Lexer.frost:3449
 _97 = *(&local2);
 _98 = _97.kind;
-// begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Lexer.frost:3423:88
+// begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Lexer.frost:3449:88
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _101 = &(&local4)->$rawValue;
 *_101 = _98;
@@ -5511,7 +5511,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_111);
 *(&local0) = ((frost$core$MutableString*) NULL);
 return ((frost$core$String*) NULL);
 block13:;
-_115 = (frost$core$Int) {111u};
+_115 = (frost$core$Int) {112u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:254:32
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _118 = _20.value;
@@ -5778,7 +5778,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_357);
 *(&local6) = ((frost$core$String*) NULL);
 goto block3;
 block16:;
-_361 = (frost$core$Int) {105u};
+_361 = (frost$core$Int) {106u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:277:32
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _364 = _20.value;
@@ -6195,7 +6195,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_111);
 *(&local0) = ((frost$core$MutableString*) NULL);
 return ((frost$core$String*) NULL);
 block13:;
-_115 = (frost$core$Int) {111u};
+_115 = (frost$core$Int) {112u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:305:32
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _118 = _20.value;
@@ -6478,7 +6478,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_372);
 *(&local6) = ((frost$core$String*) NULL);
 goto block3;
 block16:;
-_376 = (frost$core$Int) {100u};
+_376 = (frost$core$Int) {101u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:329:32
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _379 = _20.value;
@@ -6505,7 +6505,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_398);
 *(&local0) = ((frost$core$MutableString*) NULL);
 return _392;
 block51:;
-_402 = (frost$core$Int) {105u};
+_402 = (frost$core$Int) {106u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:333:32
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _405 = _20.value;
@@ -7877,7 +7877,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_276);
 *(&local0) = ((org$frostlang$frostc$ASTNode*) NULL);
 goto block1;
 block26:;
-_281 = (frost$core$Int) {111u};
+_281 = (frost$core$Int) {112u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:380:32
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _284 = _168.value;
@@ -8176,7 +8176,7 @@ _554 = ((frost$core$Object*) _553);
 frost$core$Frost$unref$frost$core$Object$Q(_554);
 *(&local21) = ((frost$core$String*) NULL);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:406
-_558 = (frost$core$Int) {110u};
+_558 = (frost$core$Int) {111u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:406:52
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _561 = &(&local23)->$rawValue;
@@ -8246,7 +8246,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_610);
 goto block61;
 block61:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:409
-_614 = (frost$core$Int) {100u};
+_614 = (frost$core$Int) {101u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:409:52
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _617 = &(&local27)->$rawValue;
@@ -8547,7 +8547,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_877);
 goto block67;
 block67:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:424
-_882 = (frost$core$Int) {105u};
+_882 = (frost$core$Int) {106u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:424:49
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _885 = &(&local37)->$rawValue;
@@ -10046,7 +10046,7 @@ frost$core$Object* _1380;
 org$frostlang$frostc$ASTNode* _1382;
 frost$core$Object* _1383;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:471
-_1 = (frost$core$Int) {108u};
+_1 = (frost$core$Int) {109u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:471:39
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _4 = &(&local1)->$rawValue;
@@ -10079,7 +10079,7 @@ $tmp361 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24,
 $tmp361->value = _27;
 _28 = ((frost$core$Equatable*) $tmp361);
 _29 = _28;
-_30 = (frost$core$Int) {53u};
+_30 = (frost$core$Int) {54u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:476:35
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _33 = &(&local5)->$rawValue;
@@ -10111,7 +10111,7 @@ _49 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Toke
 _52 = *(&local6);
 _53 = _52.kind;
 _54 = _53.$rawValue;
-_55 = (frost$core$Int) {100u};
+_55 = (frost$core$Int) {101u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:480:32
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _58 = _54.value;
@@ -10216,7 +10216,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_151);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:488
 goto block17;
 block17:;
-_155 = (frost$core$Int) {110u};
+_155 = (frost$core$Int) {111u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:488:47
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _158 = &(&local10)->$rawValue;
@@ -10273,7 +10273,7 @@ _196 = _195.value;
 if (_196) goto block18; else goto block19;
 block18:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:489
-_199 = (frost$core$Int) {53u};
+_199 = (frost$core$Int) {54u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:489:58
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _202 = &(&local14)->$rawValue;
@@ -10284,7 +10284,7 @@ _207 = *(&local13);
 _208 = org$frostlang$frostc$parser$Parser$expect$org$frostlang$frostc$parser$Token$Kind$frost$core$String$R$org$frostlang$frostc$parser$Token$Q(param0, _207, &$s369);
 *(&local15) = _208;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:490
-_211 = (frost$core$Int) {100u};
+_211 = (frost$core$Int) {101u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:490:45
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _214 = &(&local17)->$rawValue;
@@ -10438,7 +10438,7 @@ _348 = _347.value;
 if (_348) goto block38; else goto block40;
 block38:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:504
-_351 = (frost$core$Int) {109u};
+_351 = (frost$core$Int) {110u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:504:45
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _354 = &(&local21)->$rawValue;
@@ -10472,7 +10472,7 @@ goto block39;
 block40:;
 // <no location>
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:510
-_383 = (frost$core$Int) {109u};
+_383 = (frost$core$Int) {110u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:510:65
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _386 = &(&local23)->$rawValue;
@@ -10529,7 +10529,7 @@ _423 = (frost$core$Bit) {_422};
 goto block39;
 block39:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:512
-_427 = (frost$core$Int) {95u};
+_427 = (frost$core$Int) {96u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:512:41
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _430 = &(&local27)->$rawValue;
@@ -10597,7 +10597,7 @@ _488 = _487.value;
 if (_488) goto block53; else goto block54;
 block53:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:520
-_491 = (frost$core$Int) {109u};
+_491 = (frost$core$Int) {110u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:520:42
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _494 = &(&local30)->$rawValue;
@@ -10661,7 +10661,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_545);
 *(&local7) = ((frost$collections$Array*) NULL);
 return _529;
 block9:;
-_549 = (frost$core$Int) {110u};
+_549 = (frost$core$Int) {111u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:525:32
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _552 = _54.value;
@@ -10802,7 +10802,7 @@ _676 = *(&local33);
 _677 = ((frost$core$Object*) _676);
 frost$core$Frost$unref$frost$core$Object$Q(_677);
 *(&local33) = ((org$frostlang$frostc$ASTNode*) NULL);
-_681 = (frost$core$Int) {110u};
+_681 = (frost$core$Int) {111u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:545:47
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _684 = &(&local35)->$rawValue;
@@ -10859,7 +10859,7 @@ _722 = _721.value;
 if (_722) goto block64; else goto block66;
 block66:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:546
-_725 = (frost$core$Int) {109u};
+_725 = (frost$core$Int) {110u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:546:41
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _728 = &(&local39)->$rawValue;
@@ -10887,7 +10887,7 @@ _748 = *(&local32);
 _749 = _748.value;
 if (_749) goto block86; else goto block85;
 block86:;
-_751 = (frost$core$Int) {95u};
+_751 = (frost$core$Int) {96u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:549:58
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _754 = &(&local41)->$rawValue;
@@ -11057,7 +11057,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_892);
 *(&local31) = ((frost$collections$Array*) NULL);
 return _884;
 block61:;
-_896 = (frost$core$Int) {109u};
+_896 = (frost$core$Int) {110u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:559:32
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _899 = _54.value;
@@ -11068,7 +11068,7 @@ _904 = _902.value;
 if (_904) goto block99; else goto block100;
 block99:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:561
-_907 = (frost$core$Int) {95u};
+_907 = (frost$core$Int) {96u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:561:44
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _910 = &(&local46)->$rawValue;
@@ -11395,7 +11395,7 @@ $tmp417 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24,
 $tmp417->value = _1189;
 _1190 = ((frost$core$Equatable*) $tmp417);
 _1191 = _1190;
-_1192 = (frost$core$Int) {110u};
+_1192 = (frost$core$Int) {111u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:584:36
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _1195 = &(&local53)->$rawValue;
@@ -11452,7 +11452,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_1234);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:587
 goto block131;
 block131:;
-_1238 = (frost$core$Int) {110u};
+_1238 = (frost$core$Int) {111u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:587:39
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _1241 = &(&local56)->$rawValue;
@@ -11604,7 +11604,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_1363);
 goto block119;
 block119:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:596
-_1368 = (frost$core$Int) {109u};
+_1368 = (frost$core$Int) {110u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:596:26
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _1371 = &(&local61)->$rawValue;
@@ -11837,7 +11837,7 @@ frost$core$Object* _348;
 frost$collections$Array* _350;
 frost$core$Object* _351;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:604
-_1 = (frost$core$Int) {106u};
+_1 = (frost$core$Int) {107u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:604:39
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _4 = &(&local1)->$rawValue;
@@ -11862,7 +11862,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_20);
 _23 = ((frost$core$Object*) _13);
 frost$core$Frost$unref$frost$core$Object$Q(_23);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:606
-_26 = (frost$core$Int) {107u};
+_26 = (frost$core$Int) {108u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:606:32
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _29 = &(&local5)->$rawValue;
@@ -11937,7 +11937,7 @@ frost$collections$Array$add$frost$collections$Array$T(_79, _80);
 _83 = _74;
 frost$core$Frost$unref$frost$core$Object$Q(_83);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:608
-_86 = (frost$core$Int) {109u};
+_86 = (frost$core$Int) {110u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:608:36
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _89 = &(&local9)->$rawValue;
@@ -12051,7 +12051,7 @@ frost$collections$Array$add$frost$collections$Array$T(_168, _178);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:615
 goto block19;
 block19:;
-_182 = (frost$core$Int) {110u};
+_182 = (frost$core$Int) {111u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:615:43
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _185 = &(&local14)->$rawValue;
@@ -12164,7 +12164,7 @@ frost$collections$Array$add$frost$collections$Array$T(_263, _273);
 goto block19;
 block21:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:623
-_277 = (frost$core$Int) {107u};
+_277 = (frost$core$Int) {108u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:623:37
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _280 = &(&local18)->$rawValue;
@@ -12497,7 +12497,7 @@ frost$core$Object* _408;
 frost$collections$Array* _411;
 frost$core$Object* _412;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:637
-_1 = (frost$core$Int) {53u};
+_1 = (frost$core$Int) {54u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:637:39
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _4 = &(&local1)->$rawValue;
@@ -12508,7 +12508,7 @@ _9 = *(&local0);
 _10 = org$frostlang$frostc$parser$Parser$expect$org$frostlang$frostc$parser$Token$Kind$frost$core$String$R$org$frostlang$frostc$parser$Token$Q(param0, _9, &$s452);
 *(&local2) = _10;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:638
-_13 = (frost$core$Int) {100u};
+_13 = (frost$core$Int) {101u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:638:32
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _16 = &(&local4)->$rawValue;
@@ -12673,7 +12673,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_152);
 _154 = ((frost$core$Object*) _105);
 frost$core$Frost$unref$frost$core$Object$Q(_154);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:645
-_157 = (frost$core$Int) {95u};
+_157 = (frost$core$Int) {96u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:645:33
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _160 = &(&local10)->$rawValue;
@@ -12852,7 +12852,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_317);
 _319 = ((frost$core$Object*) _279);
 frost$core$Frost$unref$frost$core$Object$Q(_319);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:657
-_322 = (frost$core$Int) {95u};
+_322 = (frost$core$Int) {96u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:657:29
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _325 = &(&local14)->$rawValue;
@@ -13153,7 +13153,7 @@ frost$core$Object* _265;
 org$frostlang$frostc$ASTNode* _267;
 frost$core$Object* _268;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:672
-_1 = (frost$core$Int) {59u};
+_1 = (frost$core$Int) {60u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:672:29
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _4 = &(&local1)->$rawValue;
@@ -13305,7 +13305,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_145);
 return ((org$frostlang$frostc$ASTNode*) NULL);
 block5:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:687
-_150 = (frost$core$Int) {59u};
+_150 = (frost$core$Int) {60u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:687:29
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _153 = &(&local5)->$rawValue;
@@ -13972,7 +13972,7 @@ _1 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Token
 _4 = *(&local0);
 _5 = _4.kind;
 _6 = _5.$rawValue;
-_7 = (frost$core$Int) {53u};
+_7 = (frost$core$Int) {54u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:710:28
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _10 = _6.value;
@@ -14073,7 +14073,7 @@ $tmp504 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24,
 $tmp504->value = _87;
 _88 = ((frost$core$Equatable*) $tmp504);
 _89 = _88;
-_90 = (frost$core$Int) {100u};
+_90 = (frost$core$Int) {101u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:712:54
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _93 = &(&local3)->$rawValue;
@@ -14104,7 +14104,7 @@ $tmp507 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24,
 $tmp507->value = _108;
 _109 = ((frost$core$Equatable*) $tmp507);
 _110 = _109;
-_111 = (frost$core$Int) {95u};
+_111 = (frost$core$Int) {96u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:712:82
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _114 = &(&local5)->$rawValue;
@@ -14626,7 +14626,7 @@ _587 = ((frost$core$Object*) _584);
 frost$core$Frost$unref$frost$core$Object$Q(_587);
 return _584;
 block75:;
-_590 = (frost$core$Int) {108u};
+_590 = (frost$core$Int) {109u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:749:28
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _593 = _6.value;
@@ -14647,7 +14647,7 @@ _607 = ((frost$core$Object*) _604);
 frost$core$Frost$unref$frost$core$Object$Q(_607);
 return _604;
 block78:;
-_610 = (frost$core$Int) {106u};
+_610 = (frost$core$Int) {107u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:753:28
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _613 = _6.value;
@@ -14709,7 +14709,7 @@ _668 = _667.value;
 if (_668) goto block87; else goto block89;
 block87:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:760
-_671 = (frost$core$Int) {108u};
+_671 = (frost$core$Int) {109u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:760:38
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _674 = &(&local12)->$rawValue;
@@ -14750,7 +14750,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_706);
 return ((org$frostlang$frostc$ASTNode*) NULL);
 block92:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:765
-_711 = (frost$core$Int) {109u};
+_711 = (frost$core$Int) {110u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:765:38
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _714 = &(&local15)->$rawValue;
@@ -14866,7 +14866,7 @@ _817 = ((frost$core$Object*) _814);
 frost$core$Frost$unref$frost$core$Object$Q(_817);
 return _814;
 block101:;
-_820 = (frost$core$Int) {59u};
+_820 = (frost$core$Int) {60u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:778:28
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _823 = _6.value;
@@ -15390,7 +15390,7 @@ _1 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Token
 _4 = *(&local0);
 _5 = _4.kind;
 _6 = _5.$rawValue;
-_7 = (frost$core$Int) {53u};
+_7 = (frost$core$Int) {54u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:816:28
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _10 = _6.value;
@@ -15400,7 +15400,7 @@ _13 = (frost$core$Bit) {_12};
 _15 = _13.value;
 if (_15) goto block2; else goto block3;
 block3:;
-_17 = (frost$core$Int) {56u};
+_17 = (frost$core$Int) {57u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:816:51
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _20 = _6.value;
@@ -15410,7 +15410,7 @@ _23 = (frost$core$Bit) {_22};
 _25 = _23.value;
 if (_25) goto block2; else goto block5;
 block5:;
-_27 = (frost$core$Int) {57u};
+_27 = (frost$core$Int) {58u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:816:67
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _30 = _6.value;
@@ -15420,7 +15420,7 @@ _33 = (frost$core$Bit) {_32};
 _35 = _33.value;
 if (_35) goto block2; else goto block7;
 block7:;
-_37 = (frost$core$Int) {58u};
+_37 = (frost$core$Int) {59u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:816:83
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _40 = _6.value;
@@ -15430,7 +15430,7 @@ _43 = (frost$core$Bit) {_42};
 _45 = _43.value;
 if (_45) goto block2; else goto block9;
 block9:;
-_47 = (frost$core$Int) {59u};
+_47 = (frost$core$Int) {60u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:817:31
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _50 = _6.value;
@@ -15440,7 +15440,7 @@ _53 = (frost$core$Bit) {_52};
 _55 = _53.value;
 if (_55) goto block2; else goto block11;
 block11:;
-_57 = (frost$core$Int) {60u};
+_57 = (frost$core$Int) {61u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:817:47
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _60 = _6.value;
@@ -15450,7 +15450,7 @@ _63 = (frost$core$Bit) {_62};
 _65 = _63.value;
 if (_65) goto block2; else goto block13;
 block13:;
-_67 = (frost$core$Int) {62u};
+_67 = (frost$core$Int) {63u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:817:66
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _70 = _6.value;
@@ -15460,7 +15460,7 @@ _73 = (frost$core$Bit) {_72};
 _75 = _73.value;
 if (_75) goto block2; else goto block15;
 block15:;
-_77 = (frost$core$Int) {63u};
+_77 = (frost$core$Int) {64u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:817:82
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _80 = _6.value;
@@ -15470,7 +15470,7 @@ _83 = (frost$core$Bit) {_82};
 _85 = _83.value;
 if (_85) goto block2; else goto block17;
 block17:;
-_87 = (frost$core$Int) {64u};
+_87 = (frost$core$Int) {65u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:818:31
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _90 = _6.value;
@@ -15480,7 +15480,7 @@ _93 = (frost$core$Bit) {_92};
 _95 = _93.value;
 if (_95) goto block2; else goto block19;
 block19:;
-_97 = (frost$core$Int) {67u};
+_97 = (frost$core$Int) {68u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:818:47
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _100 = _6.value;
@@ -15490,7 +15490,7 @@ _103 = (frost$core$Bit) {_102};
 _105 = _103.value;
 if (_105) goto block2; else goto block21;
 block21:;
-_107 = (frost$core$Int) {70u};
+_107 = (frost$core$Int) {71u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:818:62
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _110 = _6.value;
@@ -15500,7 +15500,7 @@ _113 = (frost$core$Bit) {_112};
 _115 = _113.value;
 if (_115) goto block2; else goto block23;
 block23:;
-_117 = (frost$core$Int) {69u};
+_117 = (frost$core$Int) {70u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:818:79
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _120 = _6.value;
@@ -15510,7 +15510,7 @@ _123 = (frost$core$Bit) {_122};
 _125 = _123.value;
 if (_125) goto block2; else goto block25;
 block25:;
-_127 = (frost$core$Int) {61u};
+_127 = (frost$core$Int) {62u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:819:31
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _130 = _6.value;
@@ -15520,7 +15520,7 @@ _133 = (frost$core$Bit) {_132};
 _135 = _133.value;
 if (_135) goto block2; else goto block27;
 block27:;
-_137 = (frost$core$Int) {71u};
+_137 = (frost$core$Int) {72u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:819:47
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _140 = _6.value;
@@ -15530,7 +15530,7 @@ _143 = (frost$core$Bit) {_142};
 _145 = _143.value;
 if (_145) goto block2; else goto block29;
 block29:;
-_147 = (frost$core$Int) {72u};
+_147 = (frost$core$Int) {73u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:819:63
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _150 = _6.value;
@@ -15540,7 +15540,7 @@ _153 = (frost$core$Bit) {_152};
 _155 = _153.value;
 if (_155) goto block2; else goto block31;
 block31:;
-_157 = (frost$core$Int) {73u};
+_157 = (frost$core$Int) {74u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:819:86
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _160 = _6.value;
@@ -15550,7 +15550,7 @@ _163 = (frost$core$Bit) {_162};
 _165 = _163.value;
 if (_165) goto block2; else goto block33;
 block33:;
-_167 = (frost$core$Int) {74u};
+_167 = (frost$core$Int) {75u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:820:31
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _170 = _6.value;
@@ -15560,7 +15560,7 @@ _173 = (frost$core$Bit) {_172};
 _175 = _173.value;
 if (_175) goto block2; else goto block35;
 block35:;
-_177 = (frost$core$Int) {75u};
+_177 = (frost$core$Int) {76u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:820:53
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _180 = _6.value;
@@ -15570,7 +15570,7 @@ _183 = (frost$core$Bit) {_182};
 _185 = _183.value;
 if (_185) goto block2; else goto block37;
 block37:;
-_187 = (frost$core$Int) {76u};
+_187 = (frost$core$Int) {77u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:820:69
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _190 = _6.value;
@@ -15580,7 +15580,7 @@ _193 = (frost$core$Bit) {_192};
 _195 = _193.value;
 if (_195) goto block2; else goto block39;
 block39:;
-_197 = (frost$core$Int) {54u};
+_197 = (frost$core$Int) {55u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:820:92
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _200 = _6.value;
@@ -15590,7 +15590,7 @@ _203 = (frost$core$Bit) {_202};
 _205 = _203.value;
 if (_205) goto block2; else goto block41;
 block41:;
-_207 = (frost$core$Int) {55u};
+_207 = (frost$core$Int) {56u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:821:31
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _210 = _6.value;
@@ -15600,7 +15600,7 @@ _213 = (frost$core$Bit) {_212};
 _215 = _213.value;
 if (_215) goto block2; else goto block43;
 block43:;
-_217 = (frost$core$Int) {77u};
+_217 = (frost$core$Int) {78u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:821:54
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _220 = _6.value;
@@ -15632,7 +15632,7 @@ _246 = ((frost$core$Object*) _237);
 frost$core$Frost$unref$frost$core$Object$Q(_246);
 return _243;
 block45:;
-_249 = (frost$core$Int) {68u};
+_249 = (frost$core$Int) {69u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:824:28
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _252 = _6.value;
@@ -15653,7 +15653,7 @@ $tmp537 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24,
 $tmp537->value = _264;
 _265 = ((frost$core$Equatable*) $tmp537);
 _266 = _265;
-_267 = (frost$core$Int) {68u};
+_267 = (frost$core$Int) {69u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:826:43
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _270 = &(&local3)->$rawValue;
@@ -15696,7 +15696,7 @@ return _295;
 block52:;
 goto block1;
 block49:;
-_300 = (frost$core$Int) {106u};
+_300 = (frost$core$Int) {107u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:834:28
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _303 = _6.value;
@@ -15707,7 +15707,7 @@ _308 = _306.value;
 if (_308) goto block55; else goto block56;
 block55:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:835
-_311 = (frost$core$Int) {107u};
+_311 = (frost$core$Int) {108u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:835:37
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _314 = &(&local5)->$rawValue;
@@ -15727,7 +15727,7 @@ frost$core$Frost$ref$frost$core$Object$Q(_326);
 return ((frost$core$String*) NULL);
 block59:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:838
-_330 = (frost$core$Int) {78u};
+_330 = (frost$core$Int) {79u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:838:40
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _333 = &(&local7)->$rawValue;
@@ -16348,7 +16348,7 @@ frost$core$Object* _850;
 frost$collections$Array* _852;
 frost$core$Object* _853;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:860
-_1 = (frost$core$Int) {108u};
+_1 = (frost$core$Int) {109u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:860:39
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _4 = &(&local1)->$rawValue;
@@ -16385,7 +16385,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_30);
 _33 = ((frost$core$Object*) _23);
 frost$core$Frost$unref$frost$core$Object$Q(_33);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:865
-_36 = (frost$core$Int) {109u};
+_36 = (frost$core$Int) {110u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:865:32
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _39 = &(&local5)->$rawValue;
@@ -16498,7 +16498,7 @@ frost$collections$Array$add$frost$collections$Array$T(_118, _128);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:871
 goto block15;
 block15:;
-_132 = (frost$core$Int) {110u};
+_132 = (frost$core$Int) {111u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:871:39
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _135 = &(&local10)->$rawValue;
@@ -16610,7 +16610,7 @@ frost$collections$Array$add$frost$collections$Array$T(_213, _223);
 goto block15;
 block17:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:878
-_227 = (frost$core$Int) {109u};
+_227 = (frost$core$Int) {110u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:878:33
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _230 = &(&local14)->$rawValue;
@@ -16725,7 +16725,7 @@ _318 = _315[_317];
 _323 = *(&local15);
 _324 = _323.kind;
 _325 = _324.$rawValue;
-_326 = (frost$core$Int) {95u};
+_326 = (frost$core$Int) {96u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:884:28
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _329 = _325.value;
@@ -16735,7 +16735,7 @@ _332 = (frost$core$Bit) {_331};
 _334 = _332.value;
 if (_334) goto block39; else goto block40;
 block40:;
-_336 = (frost$core$Int) {96u};
+_336 = (frost$core$Int) {97u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:884:47
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _339 = _325.value;
@@ -16745,7 +16745,7 @@ _342 = (frost$core$Bit) {_341};
 _344 = _342.value;
 if (_344) goto block39; else goto block42;
 block42:;
-_346 = (frost$core$Int) {97u};
+_346 = (frost$core$Int) {98u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:884:73
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _349 = _325.value;
@@ -16755,7 +16755,7 @@ _352 = (frost$core$Bit) {_351};
 _354 = _352.value;
 if (_354) goto block39; else goto block44;
 block44:;
-_356 = (frost$core$Int) {98u};
+_356 = (frost$core$Int) {99u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:885:31
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _359 = _325.value;
@@ -16768,7 +16768,7 @@ block39:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:886
 _367 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Token(param0);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:887
-_369 = (frost$core$Int) {108u};
+_369 = (frost$core$Int) {109u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:887:37
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _372 = &(&local17)->$rawValue;
@@ -16806,7 +16806,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_399);
 _402 = ((frost$core$Object*) _392);
 frost$core$Frost$unref$frost$core$Object$Q(_402);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:891
-_405 = (frost$core$Int) {109u};
+_405 = (frost$core$Int) {110u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:891:40
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _408 = &(&local20)->$rawValue;
@@ -16923,7 +16923,7 @@ frost$collections$Array$add$frost$collections$Array$T(_491, _501);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:897
 goto block62;
 block62:;
-_505 = (frost$core$Int) {110u};
+_505 = (frost$core$Int) {111u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:897:47
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _508 = &(&local25)->$rawValue;
@@ -17039,7 +17039,7 @@ frost$collections$Array$add$frost$collections$Array$T(_590, _600);
 goto block62;
 block64:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:904
-_604 = (frost$core$Int) {109u};
+_604 = (frost$core$Int) {110u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:904:41
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _607 = &(&local29)->$rawValue;
@@ -18612,7 +18612,7 @@ $tmp642 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24,
 $tmp642->value = _65;
 _66 = ((frost$core$Equatable*) $tmp642);
 _67 = _66;
-_68 = (frost$core$Int) {108u};
+_68 = (frost$core$Int) {109u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:938:36
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _71 = &(&local2)->$rawValue;
@@ -18667,7 +18667,7 @@ goto block2;
 block3:;
 // <no location>
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:945
-_113 = (frost$core$Int) {53u};
+_113 = (frost$core$Int) {54u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:945:43
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _116 = &(&local4)->$rawValue;
@@ -18735,7 +18735,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_173);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:950
 goto block21;
 block21:;
-_177 = (frost$core$Int) {103u};
+_177 = (frost$core$Int) {104u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:950:39
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _180 = &(&local8)->$rawValue;
@@ -18792,7 +18792,7 @@ _218 = _217.value;
 if (_218) goto block22; else goto block23;
 block22:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:951
-_221 = (frost$core$Int) {53u};
+_221 = (frost$core$Int) {54u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:951:44
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _224 = &(&local12)->$rawValue;
@@ -18978,7 +18978,7 @@ $tmp662 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24,
 $tmp662->value = _381;
 _382 = ((frost$core$Equatable*) $tmp662);
 _383 = _382;
-_384 = (frost$core$Int) {67u};
+_384 = (frost$core$Int) {68u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:960:40
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _387 = &(&local16)->$rawValue;
@@ -19539,7 +19539,7 @@ frost$collections$Array$add$frost$collections$Array$T(_857, _867);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:977
 goto block97;
 block97:;
-_871 = (frost$core$Int) {110u};
+_871 = (frost$core$Int) {111u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:977:43
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _874 = &(&local21)->$rawValue;
@@ -20007,7 +20007,7 @@ frost$collections$Array$add$frost$collections$Array$T(_1259, _1269);
 goto block97;
 block99:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:988
-_1273 = (frost$core$Int) {68u};
+_1273 = (frost$core$Int) {69u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:988:37
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _1276 = &(&local26)->$rawValue;
@@ -20466,7 +20466,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_1672);
 goto block2;
 block2:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1002
-_1677 = (frost$core$Int) {99u};
+_1677 = (frost$core$Int) {100u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:1002:32
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _1680 = &(&local29)->$rawValue;
@@ -20700,7 +20700,7 @@ frost$core$Object* _220;
 frost$collections$Array* _222;
 frost$core$Object* _223;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1012
-_1 = (frost$core$Int) {67u};
+_1 = (frost$core$Int) {68u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:1012:29
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _4 = &(&local1)->$rawValue;
@@ -20795,7 +20795,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_85);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1023
 goto block9;
 block9:;
-_90 = (frost$core$Int) {110u};
+_90 = (frost$core$Int) {111u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:1023:35
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _93 = &(&local5)->$rawValue;
@@ -20912,7 +20912,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_185);
 goto block9;
 block11:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1030
-_190 = (frost$core$Int) {68u};
+_190 = (frost$core$Int) {69u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:1030:29
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _193 = &(&local10)->$rawValue;
@@ -23076,7 +23076,7 @@ _28 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Toke
 _31 = *(&local1);
 _32 = _31.kind;
 _33 = _32.$rawValue;
-_34 = (frost$core$Int) {108u};
+_34 = (frost$core$Int) {109u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1054:32
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _37 = _33.value;
@@ -23119,7 +23119,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_68);
 _71 = ((frost$core$Object*) _61);
 frost$core$Frost$unref$frost$core$Object$Q(_71);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1057
-_74 = (frost$core$Int) {109u};
+_74 = (frost$core$Int) {110u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:1057:44
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _77 = &(&local4)->$rawValue;
@@ -23237,7 +23237,7 @@ frost$collections$Array$add$frost$collections$Array$T(_160, _170);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1064
 goto block20;
 block20:;
-_174 = (frost$core$Int) {110u};
+_174 = (frost$core$Int) {111u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:1064:51
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _177 = &(&local9)->$rawValue;
@@ -23354,7 +23354,7 @@ frost$collections$Array$add$frost$collections$Array$T(_259, _269);
 goto block20;
 block22:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1072
-_273 = (frost$core$Int) {109u};
+_273 = (frost$core$Int) {110u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:1072:45
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _276 = &(&local13)->$rawValue;
@@ -23446,7 +23446,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_355);
 *(&local2) = ((frost$collections$Array*) NULL);
 goto block5;
 block7:;
-_359 = (frost$core$Int) {106u};
+_359 = (frost$core$Int) {107u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1081:32
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _362 = _33.value;
@@ -23488,7 +23488,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_394);
 return ((org$frostlang$frostc$ASTNode*) NULL);
 block40:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1086
-_399 = (frost$core$Int) {107u};
+_399 = (frost$core$Int) {108u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:1086:41
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _402 = &(&local16)->$rawValue;
@@ -23567,7 +23567,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_468);
 *(&local14) = ((org$frostlang$frostc$ASTNode*) NULL);
 goto block5;
 block37:;
-_472 = (frost$core$Int) {103u};
+_472 = (frost$core$Int) {104u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1091:32
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _475 = _33.value;
@@ -23809,7 +23809,7 @@ $tmp819 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24,
 $tmp819->value = _672;
 _673 = ((frost$core$Equatable*) $tmp819);
 _674 = _673;
-_675 = (frost$core$Int) {67u};
+_675 = (frost$core$Int) {68u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:1104:48
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _678 = &(&local26)->$rawValue;
@@ -24371,7 +24371,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_1160);
 *(&local19) = ((frost$core$String*) NULL);
 goto block5;
 block50:;
-_1164 = (frost$core$Int) {94u};
+_1164 = (frost$core$Int) {95u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1117:32
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _1167 = _33.value;
@@ -24471,7 +24471,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_1254);
 *(&local29) = ((org$frostlang$frostc$ASTNode*) NULL);
 goto block5;
 block129:;
-_1258 = (frost$core$Int) {54u};
+_1258 = (frost$core$Int) {55u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1124:32
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _1261 = _33.value;
@@ -24518,7 +24518,7 @@ _1299 = ((frost$core$Object*) _1269);
 frost$core$Frost$unref$frost$core$Object$Q(_1299);
 goto block5;
 block140:;
-_1302 = (frost$core$Int) {67u};
+_1302 = (frost$core$Int) {68u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1127:32
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _1305 = _33.value;
@@ -25057,7 +25057,7 @@ frost$collections$Array$add$frost$collections$Array$T(_1761, _1771);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1144
 goto block198;
 block198:;
-_1775 = (frost$core$Int) {110u};
+_1775 = (frost$core$Int) {111u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:1144:51
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _1778 = &(&local39)->$rawValue;
@@ -25492,7 +25492,7 @@ frost$collections$Array$add$frost$collections$Array$T(_2132, _2142);
 goto block198;
 block200:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1152
-_2146 = (frost$core$Int) {68u};
+_2146 = (frost$core$Int) {69u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:1152:52
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _2149 = &(&local44)->$rawValue;
@@ -25984,7 +25984,7 @@ _2563 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$To
 _2566 = *(&local48);
 _2567 = _2566.kind;
 _2568 = _2567.$rawValue;
-_2569 = (frost$core$Int) {103u};
+_2569 = (frost$core$Int) {104u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1188:48
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _2572 = _2568.value;
@@ -25994,7 +25994,7 @@ _2575 = (frost$core$Bit) {_2574};
 _2577 = _2575.value;
 if (_2577) goto block295; else goto block296;
 block296:;
-_2579 = (frost$core$Int) {110u};
+_2579 = (frost$core$Int) {111u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1188:64
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _2582 = _2568.value;
@@ -26004,7 +26004,7 @@ _2585 = (frost$core$Bit) {_2584};
 _2587 = _2585.value;
 if (_2587) goto block295; else goto block298;
 block298:;
-_2589 = (frost$core$Int) {94u};
+_2589 = (frost$core$Int) {95u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1188:82
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _2592 = _2568.value;
@@ -26019,7 +26019,7 @@ _2600 = (frost$core$Bit) {true};
 *(&local47) = _2600;
 goto block294;
 block300:;
-_2603 = (frost$core$Int) {108u};
+_2603 = (frost$core$Int) {109u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1191:48
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _2606 = _2568.value;
@@ -26703,7 +26703,7 @@ block2:;
 goto block3;
 block3:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1236
-_28 = (frost$core$Int) {62u};
+_28 = (frost$core$Int) {63u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:1236:43
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _31 = &(&local2)->$rawValue;
@@ -26989,7 +26989,7 @@ _1 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Token
 _4 = *(&local0);
 _5 = _4.kind;
 _6 = _5.$rawValue;
-_7 = (frost$core$Int) {57u};
+_7 = (frost$core$Int) {58u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1255:28
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _10 = _6.value;
@@ -26999,7 +26999,7 @@ _13 = (frost$core$Bit) {_12};
 _15 = _13.value;
 if (_15) goto block2; else goto block3;
 block3:;
-_17 = (frost$core$Int) {54u};
+_17 = (frost$core$Int) {55u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1255:44
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _20 = _6.value;
@@ -27009,7 +27009,7 @@ _23 = (frost$core$Bit) {_22};
 _25 = _23.value;
 if (_25) goto block2; else goto block5;
 block5:;
-_27 = (frost$core$Int) {55u};
+_27 = (frost$core$Int) {56u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1255:60
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _30 = _6.value;
@@ -27051,7 +27051,7 @@ block10:;
 _64 = *(&local0);
 _65 = _64.kind;
 _66 = _65.$rawValue;
-_67 = (frost$core$Int) {57u};
+_67 = (frost$core$Int) {58u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1262:36
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _70 = _66.value;
@@ -27073,7 +27073,7 @@ _86 = *(&local3);
 *(&local2) = _86;
 goto block11;
 block13:;
-_89 = (frost$core$Int) {54u};
+_89 = (frost$core$Int) {55u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1263:36
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _92 = _66.value;
@@ -27095,7 +27095,7 @@ _108 = *(&local5);
 *(&local2) = _108;
 goto block11;
 block17:;
-_111 = (frost$core$Int) {55u};
+_111 = (frost$core$Int) {56u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1264:36
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _114 = _66.value;
@@ -27396,7 +27396,7 @@ _28 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Toke
 _31 = *(&local1);
 _32 = _31.kind;
 _33 = _32.$rawValue;
-_34 = (frost$core$Int) {58u};
+_34 = (frost$core$Int) {59u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1290:32
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _37 = _33.value;
@@ -27406,7 +27406,7 @@ _40 = (frost$core$Bit) {_39};
 _42 = _40.value;
 if (_42) goto block6; else goto block7;
 block7:;
-_44 = (frost$core$Int) {59u};
+_44 = (frost$core$Int) {60u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1290:48
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _47 = _33.value;
@@ -27416,7 +27416,7 @@ _50 = (frost$core$Bit) {_49};
 _52 = _50.value;
 if (_52) goto block6; else goto block9;
 block9:;
-_54 = (frost$core$Int) {60u};
+_54 = (frost$core$Int) {61u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1290:64
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _57 = _33.value;
@@ -27426,7 +27426,7 @@ _60 = (frost$core$Bit) {_59};
 _62 = _60.value;
 if (_62) goto block6; else goto block11;
 block11:;
-_64 = (frost$core$Int) {61u};
+_64 = (frost$core$Int) {62u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1290:83
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _67 = _33.value;
@@ -27436,7 +27436,7 @@ _70 = (frost$core$Bit) {_69};
 _72 = _70.value;
 if (_72) goto block6; else goto block13;
 block13:;
-_74 = (frost$core$Int) {77u};
+_74 = (frost$core$Int) {78u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1291:35
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _77 = _33.value;
@@ -27523,7 +27523,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_149);
 *(&local2) = ((org$frostlang$frostc$ASTNode*) NULL);
 goto block5;
 block15:;
-_153 = (frost$core$Int) {68u};
+_153 = (frost$core$Int) {69u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1299:32
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _156 = _33.value;
@@ -27544,7 +27544,7 @@ $tmp967 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24,
 $tmp967->value = _168;
 _169 = ((frost$core$Equatable*) $tmp967);
 _170 = _169;
-_171 = (frost$core$Int) {68u};
+_171 = (frost$core$Int) {69u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:1301:51
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _174 = &(&local5)->$rawValue;
@@ -27808,7 +27808,7 @@ _28 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Toke
 _31 = *(&local1);
 _32 = _31.kind;
 _33 = _32.$rawValue;
-_34 = (frost$core$Int) {74u};
+_34 = (frost$core$Int) {75u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1336:32
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _37 = _33.value;
@@ -27818,7 +27818,7 @@ _40 = (frost$core$Bit) {_39};
 _42 = _40.value;
 if (_42) goto block6; else goto block7;
 block7:;
-_44 = (frost$core$Int) {72u};
+_44 = (frost$core$Int) {73u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1336:54
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _47 = _33.value;
@@ -27828,7 +27828,7 @@ _50 = (frost$core$Bit) {_49};
 _52 = _50.value;
 if (_52) goto block6; else goto block9;
 block9:;
-_54 = (frost$core$Int) {76u};
+_54 = (frost$core$Int) {77u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1336:77
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _57 = _33.value;
@@ -28052,7 +28052,7 @@ _28 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Toke
 _31 = *(&local1);
 _32 = _31.kind;
 _33 = _32.$rawValue;
-_34 = (frost$core$Int) {56u};
+_34 = (frost$core$Int) {57u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1364:32
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _37 = _33.value;
@@ -28062,7 +28062,7 @@ _40 = (frost$core$Bit) {_39};
 _42 = _40.value;
 if (_42) goto block6; else goto block7;
 block7:;
-_44 = (frost$core$Int) {57u};
+_44 = (frost$core$Int) {58u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1364:48
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _47 = _33.value;
@@ -28072,7 +28072,7 @@ _50 = (frost$core$Bit) {_49};
 _52 = _50.value;
 if (_52) goto block6; else goto block9;
 block9:;
-_54 = (frost$core$Int) {76u};
+_54 = (frost$core$Int) {77u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1364:64
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _57 = _33.value;
@@ -28630,7 +28630,7 @@ _61 = _60.value;
 _62 = _59[_61];
 _65 = _62.kind;
 _66 = _65.$rawValue;
-_67 = (frost$core$Int) {102u};
+_67 = (frost$core$Int) {103u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1387:28
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _70 = _66.value;
@@ -28640,7 +28640,7 @@ _73 = (frost$core$Bit) {_72};
 _75 = _73.value;
 if (_75) goto block10; else goto block11;
 block11:;
-_77 = (frost$core$Int) {101u};
+_77 = (frost$core$Int) {102u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1387:47
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _80 = _66.value;
@@ -28694,7 +28694,7 @@ _121 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Tok
 _124 = *(&local1);
 _125 = _124.kind;
 _126 = _125.$rawValue;
-_127 = (frost$core$Int) {102u};
+_127 = (frost$core$Int) {103u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1399:28
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _130 = _126.value;
@@ -28704,7 +28704,7 @@ _133 = (frost$core$Bit) {_132};
 _135 = _133.value;
 if (_135) goto block18; else goto block19;
 block19:;
-_137 = (frost$core$Int) {101u};
+_137 = (frost$core$Int) {102u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1399:47
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _140 = _126.value;
@@ -28798,7 +28798,7 @@ _207 = _204[_206];
 _214 = *(&local2);
 _215 = _214.kind;
 _216 = _215.$rawValue;
-_217 = (frost$core$Int) {107u};
+_217 = (frost$core$Int) {108u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1410:36
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _220 = _216.value;
@@ -28808,7 +28808,7 @@ _223 = (frost$core$Bit) {_222};
 _225 = _223.value;
 if (_225) goto block32; else goto block33;
 block33:;
-_227 = (frost$core$Int) {109u};
+_227 = (frost$core$Int) {110u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1410:57
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _230 = _216.value;
@@ -28828,7 +28828,7 @@ _243 = (frost$core$Bit) {_242};
 _245 = _243.value;
 if (_245) goto block32; else goto block37;
 block37:;
-_247 = (frost$core$Int) {104u};
+_247 = (frost$core$Int) {105u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1410:91
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _250 = _216.value;
@@ -28838,7 +28838,7 @@ _253 = (frost$core$Bit) {_252};
 _255 = _253.value;
 if (_255) goto block32; else goto block39;
 block39:;
-_257 = (frost$core$Int) {105u};
+_257 = (frost$core$Int) {106u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1411:39
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _260 = _216.value;
@@ -28848,7 +28848,7 @@ _263 = (frost$core$Bit) {_262};
 _265 = _263.value;
 if (_265) goto block32; else goto block41;
 block41:;
-_267 = (frost$core$Int) {110u};
+_267 = (frost$core$Int) {111u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1411:58
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _270 = _216.value;
@@ -29178,7 +29178,7 @@ $tmp1003 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24
 $tmp1003->value = _569;
 _570 = ((frost$core$Equatable*) $tmp1003);
 _571 = _570;
-_572 = (frost$core$Int) {101u};
+_572 = (frost$core$Int) {102u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:1435:79
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _575 = &(&local10)->$rawValue;
@@ -29389,7 +29389,7 @@ _28 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Toke
 _31 = *(&local1);
 _32 = _31.kind;
 _33 = _32.$rawValue;
-_34 = (frost$core$Int) {63u};
+_34 = (frost$core$Int) {64u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1457:32
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _37 = _33.value;
@@ -29399,7 +29399,7 @@ _40 = (frost$core$Bit) {_39};
 _42 = _40.value;
 if (_42) goto block6; else goto block7;
 block7:;
-_44 = (frost$core$Int) {64u};
+_44 = (frost$core$Int) {65u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1458:35
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _47 = _33.value;
@@ -29409,7 +29409,7 @@ _50 = (frost$core$Bit) {_49};
 _52 = _50.value;
 if (_52) goto block6; else goto block9;
 block9:;
-_54 = (frost$core$Int) {65u};
+_54 = (frost$core$Int) {66u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1459:35
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _57 = _33.value;
@@ -29419,7 +29419,7 @@ _60 = (frost$core$Bit) {_59};
 _62 = _60.value;
 if (_62) goto block6; else goto block11;
 block11:;
-_64 = (frost$core$Int) {66u};
+_64 = (frost$core$Int) {67u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1460:35
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _67 = _33.value;
@@ -29429,7 +29429,7 @@ _70 = (frost$core$Bit) {_69};
 _72 = _70.value;
 if (_72) goto block6; else goto block13;
 block13:;
-_74 = (frost$core$Int) {67u};
+_74 = (frost$core$Int) {68u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1461:35
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _77 = _33.value;
@@ -29439,7 +29439,7 @@ _80 = (frost$core$Bit) {_79};
 _82 = _80.value;
 if (_82) goto block6; else goto block15;
 block15:;
-_84 = (frost$core$Int) {68u};
+_84 = (frost$core$Int) {69u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1462:35
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _87 = _33.value;
@@ -29449,7 +29449,7 @@ _90 = (frost$core$Bit) {_89};
 _92 = _90.value;
 if (_92) goto block6; else goto block17;
 block17:;
-_94 = (frost$core$Int) {69u};
+_94 = (frost$core$Int) {70u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1463:35
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _97 = _33.value;
@@ -29459,7 +29459,7 @@ _100 = (frost$core$Bit) {_99};
 _102 = _100.value;
 if (_102) goto block6; else goto block19;
 block19:;
-_104 = (frost$core$Int) {70u};
+_104 = (frost$core$Int) {71u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1464:35
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _107 = _33.value;
@@ -29677,7 +29677,7 @@ _28 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Toke
 _31 = *(&local1);
 _32 = _31.kind;
 _33 = _32.$rawValue;
-_34 = (frost$core$Int) {71u};
+_34 = (frost$core$Int) {72u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1491:32
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _37 = _33.value;
@@ -29687,7 +29687,7 @@ _40 = (frost$core$Bit) {_39};
 _42 = _40.value;
 if (_42) goto block6; else goto block7;
 block7:;
-_44 = (frost$core$Int) {75u};
+_44 = (frost$core$Int) {76u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1491:48
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _47 = _33.value;
@@ -29919,7 +29919,7 @@ block2:;
 goto block3;
 block3:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1516
-_28 = (frost$core$Int) {73u};
+_28 = (frost$core$Int) {74u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:1516:43
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _31 = &(&local2)->$rawValue;
@@ -30797,7 +30797,7 @@ org$frostlang$frostc$ASTNode* _21;
 frost$core$Object* _22;
 frost$core$Object* _24;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1570
-_1 = (frost$core$Int) {100u};
+_1 = (frost$core$Int) {101u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:1570:29
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _4 = &(&local1)->$rawValue;
@@ -31132,7 +31132,7 @@ frost$core$Object* _499;
 frost$core$Object* _501;
 frost$core$Object* _503;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1580
-_1 = (frost$core$Int) {108u};
+_1 = (frost$core$Int) {109u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:1580:42
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _4 = &(&local1)->$rawValue;
@@ -31255,7 +31255,7 @@ frost$collections$Array$add$frost$collections$Array$T(_91, _101);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1588
 goto block11;
 block11:;
-_105 = (frost$core$Int) {110u};
+_105 = (frost$core$Int) {111u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:1588:39
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _108 = &(&local8)->$rawValue;
@@ -31360,7 +31360,7 @@ frost$collections$Array$add$frost$collections$Array$T(_178, _188);
 goto block11;
 block13:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1595
-_192 = (frost$core$Int) {109u};
+_192 = (frost$core$Int) {110u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:1595:30
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _195 = &(&local12)->$rawValue;
@@ -31411,7 +31411,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_234);
 return _222;
 block6:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1598
-_239 = (frost$core$Int) {53u};
+_239 = (frost$core$Int) {54u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:1598:36
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _242 = &(&local14)->$rawValue;
@@ -31516,7 +31516,7 @@ $tmp1077 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24
 $tmp1077->value = _323;
 _324 = ((frost$core$Equatable*) $tmp1077);
 _325 = _324;
-_326 = (frost$core$Int) {100u};
+_326 = (frost$core$Int) {101u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:1602:36
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _329 = &(&local17)->$rawValue;
@@ -31544,7 +31544,7 @@ block28:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1603
 // begin inline call to method org.frostlang.frostc.parser.Parser.typeDeclaration():org.frostlang.frostc.ASTNode? from Parser.frost:1603:40
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1570
-_347 = (frost$core$Int) {100u};
+_347 = (frost$core$Int) {101u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:1570:29
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _350 = &(&local20)->$rawValue;
@@ -32774,7 +32774,7 @@ block5:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1706
 *(&local4) = ((org$frostlang$frostc$ASTNode*) NULL);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1707
-_50 = (frost$core$Int) {110u};
+_50 = (frost$core$Int) {111u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:1707:32
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _53 = &(&local6)->$rawValue;
@@ -33015,7 +33015,7 @@ block3:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1727
 *(&local3) = ((org$frostlang$frostc$ASTNode*) NULL);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1728
-_25 = (frost$core$Int) {110u};
+_25 = (frost$core$Int) {111u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:1728:32
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _28 = &(&local5)->$rawValue;
@@ -33388,7 +33388,7 @@ frost$collections$Array$add$frost$collections$Array$T(_84, _94);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1756
 goto block13;
 block13:;
-_98 = (frost$core$Int) {110u};
+_98 = (frost$core$Int) {111u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:1756:35
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _101 = &(&local7)->$rawValue;
@@ -33912,7 +33912,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_43);
 return ((org$frostlang$frostc$ASTNode*) NULL);
 block5:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1782
-_48 = (frost$core$Int) {104u};
+_48 = (frost$core$Int) {105u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:1782:29
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _51 = &(&local5)->$rawValue;
@@ -34042,7 +34042,7 @@ _153 = _150[_152];
 _158 = *(&local8);
 _159 = _158.kind;
 _160 = _159.$rawValue;
-_161 = (frost$core$Int) {105u};
+_161 = (frost$core$Int) {106u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1790:32
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _164 = _160.value;
@@ -34210,7 +34210,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_315);
 goto block10;
 block10:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1816
-_321 = (frost$core$Int) {105u};
+_321 = (frost$core$Int) {106u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:1816:29
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _324 = &(&local12)->$rawValue;
@@ -34588,7 +34588,7 @@ frost$core$Object* _390;
 frost$collections$Array* _392;
 frost$core$Object* _393;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1829
-_1 = (frost$core$Int) {104u};
+_1 = (frost$core$Int) {105u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:1829:39
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _4 = &(&local1)->$rawValue;
@@ -34706,7 +34706,7 @@ _96 = _95.value;
 _97 = _94[_96];
 _100 = _97.kind;
 _101 = _100.$rawValue;
-_102 = (frost$core$Int) {105u};
+_102 = (frost$core$Int) {106u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1836:32
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _105 = _101.value;
@@ -34900,7 +34900,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_274);
 return ((org$frostlang$frostc$FixedArray*) NULL);
 block40:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1845
-_279 = (frost$core$Int) {105u};
+_279 = (frost$core$Int) {106u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:1845:41
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _282 = &(&local7)->$rawValue;
@@ -35526,7 +35526,7 @@ _84 = _83.value;
 _85 = _82[_84];
 _88 = _85.kind;
 _89 = _88.$rawValue;
-_90 = (frost$core$Int) {78u};
+_90 = (frost$core$Int) {79u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1883:28
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _93 = _89.value;
@@ -35536,7 +35536,7 @@ _96 = (frost$core$Bit) {_95};
 _98 = _96.value;
 if (_98) goto block12; else goto block13;
 block13:;
-_100 = (frost$core$Int) {79u};
+_100 = (frost$core$Int) {80u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1883:51
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _103 = _89.value;
@@ -35546,7 +35546,7 @@ _106 = (frost$core$Bit) {_105};
 _108 = _106.value;
 if (_108) goto block12; else goto block15;
 block15:;
-_110 = (frost$core$Int) {80u};
+_110 = (frost$core$Int) {81u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1883:69
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _113 = _89.value;
@@ -35556,7 +35556,7 @@ _116 = (frost$core$Bit) {_115};
 _118 = _116.value;
 if (_118) goto block12; else goto block17;
 block17:;
-_120 = (frost$core$Int) {81u};
+_120 = (frost$core$Int) {82u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1883:87
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _123 = _89.value;
@@ -35566,7 +35566,7 @@ _126 = (frost$core$Bit) {_125};
 _128 = _126.value;
 if (_128) goto block12; else goto block19;
 block19:;
-_130 = (frost$core$Int) {82u};
+_130 = (frost$core$Int) {83u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1884:31
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _133 = _89.value;
@@ -35576,7 +35576,7 @@ _136 = (frost$core$Bit) {_135};
 _138 = _136.value;
 if (_138) goto block12; else goto block21;
 block21:;
-_140 = (frost$core$Int) {83u};
+_140 = (frost$core$Int) {84u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1884:49
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _143 = _89.value;
@@ -35586,7 +35586,7 @@ _146 = (frost$core$Bit) {_145};
 _148 = _146.value;
 if (_148) goto block12; else goto block23;
 block23:;
-_150 = (frost$core$Int) {84u};
+_150 = (frost$core$Int) {85u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1884:67
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _153 = _89.value;
@@ -35596,7 +35596,7 @@ _156 = (frost$core$Bit) {_155};
 _158 = _156.value;
 if (_158) goto block12; else goto block25;
 block25:;
-_160 = (frost$core$Int) {85u};
+_160 = (frost$core$Int) {86u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1884:88
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _163 = _89.value;
@@ -35606,7 +35606,7 @@ _166 = (frost$core$Bit) {_165};
 _168 = _166.value;
 if (_168) goto block12; else goto block27;
 block27:;
-_170 = (frost$core$Int) {86u};
+_170 = (frost$core$Int) {87u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1885:31
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _173 = _89.value;
@@ -35616,7 +35616,7 @@ _176 = (frost$core$Bit) {_175};
 _178 = _176.value;
 if (_178) goto block12; else goto block29;
 block29:;
-_180 = (frost$core$Int) {87u};
+_180 = (frost$core$Int) {88u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1885:48
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _183 = _89.value;
@@ -35626,7 +35626,7 @@ _186 = (frost$core$Bit) {_185};
 _188 = _186.value;
 if (_188) goto block12; else goto block31;
 block31:;
-_190 = (frost$core$Int) {88u};
+_190 = (frost$core$Int) {89u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1885:72
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _193 = _89.value;
@@ -35636,7 +35636,7 @@ _196 = (frost$core$Bit) {_195};
 _198 = _196.value;
 if (_198) goto block12; else goto block33;
 block33:;
-_200 = (frost$core$Int) {89u};
+_200 = (frost$core$Int) {90u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1886:31
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _203 = _89.value;
@@ -35646,7 +35646,7 @@ _206 = (frost$core$Bit) {_205};
 _208 = _206.value;
 if (_208) goto block12; else goto block35;
 block35:;
-_210 = (frost$core$Int) {90u};
+_210 = (frost$core$Int) {91u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1886:56
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _213 = _89.value;
@@ -35656,7 +35656,7 @@ _216 = (frost$core$Bit) {_215};
 _218 = _216.value;
 if (_218) goto block12; else goto block37;
 block37:;
-_220 = (frost$core$Int) {91u};
+_220 = (frost$core$Int) {92u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1886:74
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _223 = _89.value;
@@ -35666,7 +35666,7 @@ _226 = (frost$core$Bit) {_225};
 _228 = _226.value;
 if (_228) goto block12; else goto block39;
 block39:;
-_230 = (frost$core$Int) {92u};
+_230 = (frost$core$Int) {93u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1887:31
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _233 = _89.value;
@@ -35676,7 +35676,7 @@ _236 = (frost$core$Bit) {_235};
 _238 = _236.value;
 if (_238) goto block12; else goto block41;
 block41:;
-_240 = (frost$core$Int) {93u};
+_240 = (frost$core$Int) {94u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1887:55
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _243 = _89.value;
@@ -35777,7 +35777,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_327);
 *(&local0) = ((org$frostlang$frostc$ASTNode*) NULL);
 return _317;
 block43:;
-_331 = (frost$core$Int) {63u};
+_331 = (frost$core$Int) {64u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:1896:28
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _334 = _89.value;
@@ -36157,7 +36157,7 @@ block2:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1920
 *(&local1) = ((org$frostlang$frostc$ASTNode*) NULL);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1921
-_28 = (frost$core$Int) {78u};
+_28 = (frost$core$Int) {79u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:1921:32
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _31 = &(&local3)->$rawValue;
@@ -36328,7 +36328,7 @@ $tmp1244 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24
 $tmp1244->value = _163;
 _164 = ((frost$core$Equatable*) $tmp1244);
 _165 = _164;
-_166 = (frost$core$Int) {63u};
+_166 = (frost$core$Int) {64u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:1927:41
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _169 = &(&local7)->$rawValue;
@@ -36770,7 +36770,7 @@ frost$collections$Array$add$frost$collections$Array$T(_144, _154);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1969
 goto block22;
 block22:;
-_158 = (frost$core$Int) {110u};
+_158 = (frost$core$Int) {111u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:1969:35
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _161 = &(&local13)->$rawValue;
@@ -37178,7 +37178,7 @@ frost$core$Frost$ref$frost$core$Object$Q(_19);
 return ((org$frostlang$frostc$ASTNode*) NULL);
 block3:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1987
-_23 = (frost$core$Int) {108u};
+_23 = (frost$core$Int) {109u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:1987:29
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _26 = &(&local4)->$rawValue;
@@ -37282,7 +37282,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_113);
 _116 = ((frost$core$Object*) _106);
 frost$core$Frost$unref$frost$core$Object$Q(_116);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1993
-_119 = (frost$core$Int) {109u};
+_119 = (frost$core$Int) {110u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:1993:32
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _122 = &(&local8)->$rawValue;
@@ -37400,7 +37400,7 @@ frost$collections$Array$add$frost$collections$Array$T(_205, _215);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2000
 goto block23;
 block23:;
-_219 = (frost$core$Int) {110u};
+_219 = (frost$core$Int) {111u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:2000:39
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _222 = &(&local13)->$rawValue;
@@ -37517,7 +37517,7 @@ frost$collections$Array$add$frost$collections$Array$T(_304, _314);
 goto block23;
 block25:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2008
-_318 = (frost$core$Int) {109u};
+_318 = (frost$core$Int) {110u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:2008:33
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _321 = &(&local17)->$rawValue;
@@ -37718,7 +37718,7 @@ frost$core$Frost$ref$frost$core$Object$Q(_19);
 return ((org$frostlang$frostc$ASTNode*) NULL);
 block3:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2025
-_23 = (frost$core$Int) {53u};
+_23 = (frost$core$Int) {54u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:2025:42
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _26 = &(&local4)->$rawValue;
@@ -37961,7 +37961,7 @@ frost$core$Frost$ref$frost$core$Object$Q(_19);
 return ((org$frostlang$frostc$ASTNode*) NULL);
 block3:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2040
-_23 = (frost$core$Int) {53u};
+_23 = (frost$core$Int) {54u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:2040:42
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _26 = &(&local4)->$rawValue;
@@ -38337,7 +38337,7 @@ _81 = _80.value;
 _82 = _79[_81];
 _85 = _82.kind;
 _86 = _85.$rawValue;
-_87 = (frost$core$Int) {105u};
+_87 = (frost$core$Int) {106u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:2056:28
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _90 = _86.value;
@@ -39322,7 +39322,7 @@ _92 = *(&local10);
 goto block6;
 block6:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2116
-_96 = (frost$core$Int) {53u};
+_96 = (frost$core$Int) {54u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:2116:38
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _99 = &(&local13)->$rawValue;
@@ -39456,7 +39456,7 @@ $tmp1354 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24
 $tmp1354->value = _207;
 _208 = ((frost$core$Equatable*) $tmp1354);
 _209 = _208;
-_210 = (frost$core$Int) {100u};
+_210 = (frost$core$Int) {101u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:2125:36
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _213 = &(&local18)->$rawValue;
@@ -39484,7 +39484,7 @@ block18:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2126
 // begin inline call to method org.frostlang.frostc.parser.Parser.typeDeclaration():org.frostlang.frostc.ASTNode? from Parser.frost:2126:42
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1570
-_231 = (frost$core$Int) {100u};
+_231 = (frost$core$Int) {101u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:1570:29
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _234 = &(&local21)->$rawValue;
@@ -39943,7 +39943,7 @@ block7:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2157
 *(&local6) = ((org$frostlang$frostc$ASTNode*) NULL);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2158
-_73 = (frost$core$Int) {108u};
+_73 = (frost$core$Int) {109u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:2158:32
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _76 = &(&local8)->$rawValue;
@@ -40000,7 +40000,7 @@ _114 = _113.value;
 if (_114) goto block9; else goto block11;
 block9:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2159
-_117 = (frost$core$Int) {53u};
+_117 = (frost$core$Int) {54u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:2159:44
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _120 = &(&local12)->$rawValue;
@@ -40083,7 +40083,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_190);
 _192 = ((frost$core$Object*) _147);
 frost$core$Frost$unref$frost$core$Object$Q(_192);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2164
-_195 = (frost$core$Int) {109u};
+_195 = (frost$core$Int) {110u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:2164:33
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _198 = &(&local15)->$rawValue;
@@ -40763,7 +40763,7 @@ _181 = ((frost$core$Object*) _178);
 frost$core$Frost$unref$frost$core$Object$Q(_181);
 return _178;
 block29:;
-_184 = (frost$core$Int) {104u};
+_184 = (frost$core$Int) {105u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:2191:28
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _187 = _64.value;
@@ -40847,7 +40847,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_257);
 *(&local0) = ((org$frostlang$frostc$ASTNode*) NULL);
 return _251;
 block32:;
-_261 = (frost$core$Int) {53u};
+_261 = (frost$core$Int) {54u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:2192:28
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _264 = _64.value;
@@ -40861,7 +40861,7 @@ block39:;
 _272 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Token(param0);
 *(&local2) = _272;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2194
-_275 = (frost$core$Int) {100u};
+_275 = (frost$core$Int) {101u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:2194:50
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _278 = &(&local4)->$rawValue;
@@ -41359,7 +41359,7 @@ frost$core$Frost$ref$frost$core$Object$Q(_19);
 return ((org$frostlang$frostc$ASTNode*) NULL);
 block3:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2243
-_23 = (frost$core$Int) {53u};
+_23 = (frost$core$Int) {54u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:2243:38
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _26 = &(&local4)->$rawValue;
@@ -41424,7 +41424,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_79);
 goto block10;
 block10:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2249
-_84 = (frost$core$Int) {103u};
+_84 = (frost$core$Int) {104u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:2249:41
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _87 = &(&local8)->$rawValue;
@@ -41498,7 +41498,7 @@ block17:;
 _133 = *(&local6);
 frost$core$MutableString$append$frost$core$String(_133, &$s1415);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2254
-_136 = (frost$core$Int) {53u};
+_136 = (frost$core$Int) {54u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:2254:38
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _139 = &(&local12)->$rawValue;
@@ -41728,7 +41728,7 @@ frost$core$Frost$ref$frost$core$Object$Q(_19);
 return ((org$frostlang$frostc$ASTNode*) NULL);
 block3:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2271
-_23 = (frost$core$Int) {53u};
+_23 = (frost$core$Int) {54u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:2271:38
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _26 = &(&local4)->$rawValue;
@@ -41793,7 +41793,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_79);
 goto block10;
 block10:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2277
-_84 = (frost$core$Int) {103u};
+_84 = (frost$core$Int) {104u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:2277:41
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _87 = &(&local8)->$rawValue;
@@ -41867,7 +41867,7 @@ block17:;
 _133 = *(&local6);
 frost$core$MutableString$append$frost$core$String(_133, &$s1429);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2282
-_136 = (frost$core$Int) {53u};
+_136 = (frost$core$Int) {54u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:2282:38
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _139 = &(&local12)->$rawValue;
@@ -42255,7 +42255,7 @@ frost$core$Object* _518;
 frost$collections$Array* _520;
 frost$core$Object* _521;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2295
-_1 = (frost$core$Int) {67u};
+_1 = (frost$core$Int) {68u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:2295:39
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _4 = &(&local1)->$rawValue;
@@ -42278,7 +42278,7 @@ frost$core$Frost$ref$frost$core$Object$Q(_19);
 return ((org$frostlang$frostc$FixedArray*) NULL);
 block3:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2299
-_23 = (frost$core$Int) {53u};
+_23 = (frost$core$Int) {54u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:2299:36
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _26 = &(&local4)->$rawValue;
@@ -42315,7 +42315,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_52);
 _55 = ((frost$core$Object*) _45);
 frost$core$Frost$unref$frost$core$Object$Q(_55);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2304
-_58 = (frost$core$Int) {100u};
+_58 = (frost$core$Int) {101u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:2304:32
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _61 = &(&local8)->$rawValue;
@@ -42520,7 +42520,7 @@ block8:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2314
 goto block27;
 block27:;
-_238 = (frost$core$Int) {110u};
+_238 = (frost$core$Int) {111u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:2314:35
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _241 = &(&local13)->$rawValue;
@@ -42577,7 +42577,7 @@ _279 = _278.value;
 if (_279) goto block28; else goto block29;
 block28:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2315
-_282 = (frost$core$Int) {53u};
+_282 = (frost$core$Int) {54u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:2315:36
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _285 = &(&local17)->$rawValue;
@@ -42604,7 +42604,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_303);
 return ((org$frostlang$frostc$FixedArray*) NULL);
 block36:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2319
-_308 = (frost$core$Int) {100u};
+_308 = (frost$core$Int) {101u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:2319:36
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _311 = &(&local19)->$rawValue;
@@ -42809,7 +42809,7 @@ block38:;
 goto block27;
 block29:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2330
-_488 = (frost$core$Int) {68u};
+_488 = (frost$core$Int) {69u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:2330:29
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _491 = &(&local24)->$rawValue;
@@ -42962,7 +42962,7 @@ frost$core$Object* _193;
 frost$collections$Array* _196;
 frost$core$Object* _197;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2340
-_1 = (frost$core$Int) {100u};
+_1 = (frost$core$Int) {101u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:2340:39
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _4 = &(&local1)->$rawValue;
@@ -43055,7 +43055,7 @@ frost$collections$Array$add$frost$collections$Array$T(_74, _84);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2350
 goto block9;
 block9:;
-_88 = (frost$core$Int) {110u};
+_88 = (frost$core$Int) {111u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:2350:35
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _91 = &(&local6)->$rawValue;
@@ -43344,7 +43344,7 @@ _19 = ((frost$core$Object*) _18);
 frost$core$Frost$unref$frost$core$Object$Q(_19);
 *(&local4) = ((org$frostlang$frostc$ASTNode*) NULL);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2367
-_23 = (frost$core$Int) {108u};
+_23 = (frost$core$Int) {109u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:2367:46
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _26 = &(&local6)->$rawValue;
@@ -43434,7 +43434,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_93);
 return ((org$frostlang$frostc$ASTNode*) NULL);
 block9:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2373
-_98 = (frost$core$Int) {109u};
+_98 = (frost$core$Int) {110u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:2373:45
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _101 = &(&local11)->$rawValue;
@@ -44293,7 +44293,7 @@ _29(_28, _9);
 goto block4;
 block4:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2422
-_34 = (frost$core$Int) {53u};
+_34 = (frost$core$Int) {54u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:2422:36
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _37 = &(&local3)->$rawValue;
@@ -44353,7 +44353,7 @@ block15:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2427
 // begin inline call to method org.frostlang.frostc.parser.Parser.typeDeclaration():org.frostlang.frostc.ASTNode? from Parser.frost:2427:33
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1570
-_91 = (frost$core$Int) {100u};
+_91 = (frost$core$Int) {101u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:1570:29
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _94 = &(&local9)->$rawValue;
@@ -44635,7 +44635,7 @@ frost$core$Object* _250;
 frost$collections$Array* _252;
 frost$core$Object* _253;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2438
-_1 = (frost$core$Int) {108u};
+_1 = (frost$core$Int) {109u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:2438:39
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _4 = &(&local1)->$rawValue;
@@ -44672,7 +44672,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_30);
 _33 = ((frost$core$Object*) _23);
 frost$core$Frost$unref$frost$core$Object$Q(_33);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2443
-_36 = (frost$core$Int) {109u};
+_36 = (frost$core$Int) {110u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:2443:32
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _39 = &(&local5)->$rawValue;
@@ -44778,7 +44778,7 @@ frost$collections$Array$add$frost$collections$Array$T(_110, _120);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2449
 goto block14;
 block14:;
-_124 = (frost$core$Int) {110u};
+_124 = (frost$core$Int) {111u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:2449:39
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _127 = &(&local10)->$rawValue;
@@ -44883,7 +44883,7 @@ frost$collections$Array$add$frost$collections$Array$T(_197, _207);
 goto block14;
 block16:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2456
-_211 = (frost$core$Int) {109u};
+_211 = (frost$core$Int) {110u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:2456:33
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _214 = &(&local14)->$rawValue;
@@ -45639,7 +45639,7 @@ $tmp1578 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24
 $tmp1578->value = _251;
 _252 = ((frost$core$Equatable*) $tmp1578);
 _253 = _252;
-_254 = (frost$core$Int) {67u};
+_254 = (frost$core$Int) {68u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:2487:36
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _257 = &(&local19)->$rawValue;
@@ -45806,7 +45806,7 @@ $tmp1586 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24
 $tmp1586->value = _390;
 _391 = ((frost$core$Equatable*) $tmp1586);
 _392 = _391;
-_393 = (frost$core$Int) {100u};
+_393 = (frost$core$Int) {101u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:2498:36
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _396 = &(&local23)->$rawValue;
@@ -45834,7 +45834,7 @@ block41:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2499
 // begin inline call to method org.frostlang.frostc.parser.Parser.typeDeclaration():org.frostlang.frostc.ASTNode? from Parser.frost:2499:42
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1570
-_414 = (frost$core$Int) {100u};
+_414 = (frost$core$Int) {101u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:1570:29
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _417 = &(&local26)->$rawValue;
@@ -46010,7 +46010,7 @@ $tmp1595 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24
 $tmp1595->value = _564;
 _565 = ((frost$core$Equatable*) $tmp1595);
 _566 = _565;
-_567 = (frost$core$Int) {104u};
+_567 = (frost$core$Int) {105u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:2508:36
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _570 = &(&local29)->$rawValue;
@@ -46595,7 +46595,7 @@ $tmp1618 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24
 $tmp1618->value = _185;
 _186 = ((frost$core$Equatable*) $tmp1618);
 _187 = _186;
-_188 = (frost$core$Int) {100u};
+_188 = (frost$core$Int) {101u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:2542:36
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _191 = &(&local15)->$rawValue;
@@ -46623,7 +46623,7 @@ block15:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2543
 // begin inline call to method org.frostlang.frostc.parser.Parser.typeDeclaration():org.frostlang.frostc.ASTNode? from Parser.frost:2543:42
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1570
-_209 = (frost$core$Int) {100u};
+_209 = (frost$core$Int) {101u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:1570:29
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _212 = &(&local18)->$rawValue;
@@ -47346,7 +47346,7 @@ frost$core$Object* _388;
 frost$collections$Array* _390;
 frost$core$Object* _391;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2594
-_1 = (frost$core$Int) {53u};
+_1 = (frost$core$Int) {54u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:2594:38
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _4 = &(&local1)->$rawValue;
@@ -47383,7 +47383,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_30);
 _33 = ((frost$core$Object*) _23);
 frost$core$Frost$unref$frost$core$Object$Q(_33);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2599
-_36 = (frost$core$Int) {108u};
+_36 = (frost$core$Int) {109u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:2599:32
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _39 = &(&local5)->$rawValue;
@@ -47522,7 +47522,7 @@ $tmp1654 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24
 $tmp1654->value = _142;
 _143 = ((frost$core$Equatable*) $tmp1654);
 _144 = _143;
-_145 = (frost$core$Int) {109u};
+_145 = (frost$core$Int) {110u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:2600:41
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _148 = &(&local9)->$rawValue;
@@ -47604,7 +47604,7 @@ frost$collections$Array$add$frost$collections$Array$T(_202, _212);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2606
 goto block26;
 block26:;
-_216 = (frost$core$Int) {110u};
+_216 = (frost$core$Int) {111u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:2606:43
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _219 = &(&local12)->$rawValue;
@@ -47722,7 +47722,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_311);
 goto block11;
 block11:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2614
-_316 = (frost$core$Int) {109u};
+_316 = (frost$core$Int) {110u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:2614:33
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _319 = &(&local16)->$rawValue;
@@ -48687,7 +48687,7 @@ frost$core$Frost$ref$frost$core$Object$Q(_19);
 return ((org$frostlang$frostc$ASTNode*) NULL);
 block3:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2632
-_23 = (frost$core$Int) {53u};
+_23 = (frost$core$Int) {54u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:2632:38
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _26 = &(&local4)->$rawValue;
@@ -48794,7 +48794,7 @@ $tmp1689 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24
 $tmp1689->value = _109;
 _110 = ((frost$core$Equatable*) $tmp1689);
 _111 = _110;
-_112 = (frost$core$Int) {67u};
+_112 = (frost$core$Int) {68u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:2637:36
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _115 = &(&local8)->$rawValue;
@@ -48858,7 +48858,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_160);
 goto block8;
 block8:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2646
-_165 = (frost$core$Int) {104u};
+_165 = (frost$core$Int) {105u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:2646:29
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _168 = &(&local10)->$rawValue;
@@ -49147,7 +49147,7 @@ _431 = ((frost$core$Object*) _424);
 frost$core$Frost$unref$frost$core$Object$Q(_431);
 goto block34;
 block57:;
-_434 = (frost$core$Int) {53u};
+_434 = (frost$core$Int) {54u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:2665:32
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _437 = _277.value;
@@ -50113,7 +50113,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_1322);
 *(&local21) = ((org$frostlang$frostc$ASTNode*) NULL);
 goto block79;
 block130:;
-_1326 = (frost$core$Int) {105u};
+_1326 = (frost$core$Int) {106u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Parser.frost:2741:32
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _1329 = _593.value;
@@ -50124,7 +50124,7 @@ _1334 = _1332.value;
 if (_1334) goto block143; else goto block144;
 block143:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2742
-_1337 = (frost$core$Int) {105u};
+_1337 = (frost$core$Int) {106u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:2742:38
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _1340 = &(&local25)->$rawValue;
@@ -51472,7 +51472,7 @@ frost$core$Frost$ref$frost$core$Object$Q(_19);
 return ((org$frostlang$frostc$ASTNode*) NULL);
 block3:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2812
-_23 = (frost$core$Int) {53u};
+_23 = (frost$core$Int) {54u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:2812:38
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _26 = &(&local4)->$rawValue;
@@ -51579,7 +51579,7 @@ $tmp1778 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24
 $tmp1778->value = _109;
 _110 = ((frost$core$Equatable*) $tmp1778);
 _111 = _110;
-_112 = (frost$core$Int) {67u};
+_112 = (frost$core$Int) {68u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:2817:36
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _115 = &(&local8)->$rawValue;
@@ -51727,7 +51727,7 @@ $tmp1786 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24
 $tmp1786->value = _229;
 _230 = ((frost$core$Equatable*) $tmp1786);
 _231 = _230;
-_232 = (frost$core$Int) {100u};
+_232 = (frost$core$Int) {101u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:2827:36
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _235 = &(&local11)->$rawValue;
@@ -51795,7 +51795,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_284);
 goto block22;
 block22:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2836
-_289 = (frost$core$Int) {104u};
+_289 = (frost$core$Int) {105u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:2836:29
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _292 = &(&local13)->$rawValue;
@@ -51839,7 +51839,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_326);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2840
 goto block38;
 block38:;
-_330 = (frost$core$Int) {105u};
+_330 = (frost$core$Int) {106u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:2840:35
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _333 = &(&local16)->$rawValue;
@@ -52414,7 +52414,7 @@ frost$core$Frost$ref$frost$core$Object$Q(_19);
 return ((org$frostlang$frostc$ASTNode*) NULL);
 block3:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2860
-_23 = (frost$core$Int) {53u};
+_23 = (frost$core$Int) {54u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:2860:38
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _26 = &(&local4)->$rawValue;
@@ -52521,7 +52521,7 @@ $tmp1813 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24
 $tmp1813->value = _109;
 _110 = ((frost$core$Equatable*) $tmp1813);
 _111 = _110;
-_112 = (frost$core$Int) {67u};
+_112 = (frost$core$Int) {68u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:2865:36
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _115 = &(&local8)->$rawValue;
@@ -52606,7 +52606,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_178);
 _181 = ((frost$core$Object*) _171);
 frost$core$Frost$unref$frost$core$Object$Q(_181);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2875
-_184 = (frost$core$Int) {100u};
+_184 = (frost$core$Int) {101u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:2875:32
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _187 = &(&local11)->$rawValue;
@@ -52723,7 +52723,7 @@ frost$collections$Array$add$frost$collections$Array$T(_270, _280);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2881
 goto block32;
 block32:;
-_284 = (frost$core$Int) {110u};
+_284 = (frost$core$Int) {111u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:2881:39
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _287 = &(&local16)->$rawValue;
@@ -52845,7 +52845,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_383);
 goto block22;
 block22:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2889
-_388 = (frost$core$Int) {104u};
+_388 = (frost$core$Int) {105u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:2889:29
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _391 = &(&local20)->$rawValue;
@@ -52889,7 +52889,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_425);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2893
 goto block47;
 block47:;
-_429 = (frost$core$Int) {105u};
+_429 = (frost$core$Int) {106u};
 // begin inline call to org.frostlang.frostc.parser.Token.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.Token.Kind from Parser.frost:2893:35
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Token.frost:11
 _432 = &(&local23)->$rawValue;

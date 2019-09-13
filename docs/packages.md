@@ -1,8 +1,8 @@
 Packages
 ========
 
-A *package* is a namespace to which [classes](classes.html) may belong. Packages are introduced with
-the `package` [keyword](keywords.html) at the beginning of a file:
+A *package* is a namespace to which [classes](classes.md) may belong. Packages are introduced with
+the `package` [keyword](keywords.md) at the beginning of a file:
 
     package org.frostlang.examples
 

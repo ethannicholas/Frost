@@ -1,8 +1,8 @@
 Classes
 =======
 
-A *class* in Frost represents a kind of object. Classes contain [fields](fields.html) (data values)
-and [methods](methods.html) (actions). Every Frost value other than [`null`](null.html) is an
+A *class* in Frost represents a kind of object. Classes contain [fields](fields.md) (data values)
+and [methods](methods.md) (actions). Every Frost value other than [`null`](null.md) is an
 object, and therefore an instance of a class. Classes are defined using the syntax:
 
     class <name> {
@@ -13,7 +13,7 @@ object, and therefore an instance of a class. Classes are defined using the synt
         <members>
     }
 
-A *member* is a [method](methods.html) or [field](fields.html) contained by the object. For example,
+A *member* is a [method](methods.md) or [field](fields.md) contained by the object. For example,
 here is a simple class containing two fields:
 
     class Point {
@@ -32,7 +32,7 @@ You would create an instance of `Point` using the expression `Point()`, like thi
     Console.writeLine("The point is: \{p.x}, \{p.y}")
 
 It would be more convenient to be able to create and initialize a `Point` in a
-single step. We can define a special kind of method, an [`init` method](initMethods.html), to
+single step. We can define a special kind of method, an [`init` method](initMethods.md), to
 simplify the initialization. Since `Point` is then initialized as soon as it is created, we no
 longer need to allow it to be modified after creation. Our new and improved `Point` class looks
 like:
@@ -77,7 +77,7 @@ Each child class (subclass) inherits all of the fields and methods (other than `
 its parent class (superclass), and may be used anywhere the parent class is expected. That is, all
 `Human` objects are also `Mammal` objects. Subclasses may add additional fields and methods, as well
 as override (replace) methods inherited from their parent classes. Methods are overridden by
-defining a new method with the same signature and the `@override` [annotation](annotations.html),
+defining a new method with the same signature and the `@override` [annotation](annotations.md),
 such as:
 
     class Human : Primate {
@@ -92,4 +92,10 @@ All classes ultimately inherit from [frost.core.Object]. If you do not specify a
 superclass defaults to `Object`.
 
 A class may inherit from multiple types, but only one of these types may be a `class`. The other
-types must all be [`interface`s](interfaces.html).
+types must all be [`interface`s](interfaces.md).
+
+Choices
+-------
+
+A `choice` is a special kind of class, often known as a "sum type" or "tagged union". See the page
+on [choices](choices.md) for details.

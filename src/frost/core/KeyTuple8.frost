@@ -1,4 +1,5 @@
 package frost.core
+@package
 class KeyTuple8<T0:HashKey<T0>, T1:HashKey<T1>, T2:HashKey<T2>, T3:HashKey<T3>, T4:HashKey<T4>, T5:HashKey<T5>, T6:HashKey<T6>, T7:HashKey<T7>> : HashKey<KeyTuple8<T0, T1, T2, T3, T4, T5, T6, T7>> {
     def f0:T0
     def f1:T1

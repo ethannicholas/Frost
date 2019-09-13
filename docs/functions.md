@@ -47,9 +47,9 @@ result in any data visible outside of the function itself changing, and is legal
 In order to comply with the "no side effects" restriction, a function may only call non-function
 methods when:
 
-1. The method is marked [`@self`](annotations.html#self) and the object to which the method belongs
+1. The method is marked [`@self`](annotations.md#self) and the object to which the method belongs
    is not visible outside the function
-2. The method is marked [`@limited`](annotations.html#limited) and neither the object to which the
+2. The method is marked [`@limited`](annotations.md#limited) and neither the object to which the
    method belongs nor any of the method's mutable parameters are visible outside the function
 
 For an object to be "not visible outside the function", it must have been created inside the
@@ -67,4 +67,4 @@ calls and therefore it is safe to simply re-use the resulting string rather than
 Inline Functions
 ----------------
 
-See [inline functions](inlineMethods.html) for more information.
+See [inline functions](inlineMethods.md) for more information.

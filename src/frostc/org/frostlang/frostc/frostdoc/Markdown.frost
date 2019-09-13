@@ -563,7 +563,7 @@ class Markdown {
             s.replace("\\\\", charProtector.encode("\\"))
             if current != SyntaxHighlighter.Kind.COMMENT &
                     current != SyntaxHighlighter.Kind.DOC_COMMENT {
-                result.append("<span class=\"\{t.first.kind}\">")
+                result.append("<span class=\"\{t.first.kind}_TOKEN\">")
             }
             result.append(s)
             if current != SyntaxHighlighter.Kind.COMMENT &
@@ -971,29 +971,42 @@ class Markdown {
                 "[ \\t]*" +
                 "<?(.*?)>?" + -- href = $3
                 "[ \\t]*" +
-                "(" +
-                "(['\"])" + -- Quote character = $5
-                "(.*?)" + -- Title = $6
-                "\\5" +
-                ")?" +
                 "\\)" +
                 ")",
                 RegularExpression.DOTALL)
-        markup.replace(inlineLink, function(groups:ListView<String?>):String {
-            def linkText := groups[2]
-            var url := groups[3]
-            def title := groups[6]
+        def raw := markup.asString
+        def matcher := inlineLink.matcher(raw)
+        markup.clear()
+        var index := raw.start
+        while matcher.find(index) {
+            def linkText := matcher.group(2)
+            var url := matcher.group(3)
+            index := matcher.end
+            while index < raw.end & url.find("(").count() > url.find(")").count() {
+                def next := raw.indexOf(")", index)
+                if next == null {
+                    try {
+                        Console.errorStream().printLine("error: unmatched '(' in '\{url}'")
+                        System.exit(1)
+                    }
+                    fail(error) {
+                        unreachable
+                    }
+                }
+                url += raw.substring(index ... next)
+                index := raw.next(next)
+            }
             -- protect emphasis (* and _) within urls
             if self.linkResolver !== null {
                 def newURL := self.linkResolver(url)
                 if newURL == null {
                     try {
                         Console.errorStream().printLine("error: unable to resolve link '\{url}'")
+                        System.exit(1)
                     }
                     fail(error) {
                         unreachable
                     }
-                    newURL := "(error)"
                 }
                 url := newURL
             }
@@ -1003,20 +1016,10 @@ class Markdown {
             url := url.replace(/\*/, self.charProtector.encode("*"))
             url := url.replace(/_/, self.charProtector.encode("_"))
             def result := MutableString()
-            result.append("<a href=\"\{url}\"")
-            if title !== null {
-                -- protect emphasis (* and _) within urls
-                title := title.replace("\\*", self.charProtector.encode("*"))
-                title := title.replace("_", self.charProtector.encode("_"))
-                title := title.replace("\"", "&quot;")
-                result.append(" title=\"")
-                result.append(title)
-                result.append("\"")
-            }
-            result.append(">\{linkText}")
-            result.append("</a>")
-            return result.asString
-        })
+            result.append("<a href=\"\{url}\">\{linkText}</a>")
+            matcher.appendReplacement(markup, result.finish())
+        }
+        matcher.appendTail(markup)
 
         -- Last, handle reference-style shortcuts: [link text]
         -- These must come last in case you've also got [link test][1]
@@ -1057,7 +1060,7 @@ class Markdown {
                         replacementText := "<a href=\"\{replacementText}\"><code>\{escaped}</code></a>"
                     }
                     else {
-                        replacementText := "(no match:\{linkText})"
+                        replacementText := "(no match)"
                     }
                 }
                 else {

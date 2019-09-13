@@ -57,4 +57,4 @@ Save this file as `hello.frost`. Now compile and run it:
     Hello, World!
 
 Congratulations, you have successfully run your first Frost program! See the
-[overview](overview.html) for a rundown of Frost's basic features.
+[overview](overview.md) for a rundown of Frost's basic features.

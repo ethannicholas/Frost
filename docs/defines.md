@@ -1,7 +1,7 @@
 Defines
 =======
 
-A *define* is like a [variable](variables.html), but it cannot be reassigned. Defines are introduced
+A *define* is like a [variable](variables.md), but it cannot be reassigned. Defines are introduced
 with the syntax:
 
     def x:Int := 12, y:Int := 0
@@ -15,7 +15,7 @@ after this initial assignment they may not be reassigned.
 
 Defines may appear in methods, in which case they are essentially fixed-value local variables, or in
 classes, in which case they are essentially fixed-value instance fields. Unlike
-[constants](constants.html), a define may be of a mutable type: that is, the object stored in a
+[constants](constants.md), a define may be of a mutable type: that is, the object stored in a
 define is allowed to change, but you may not change the define to point to a different object
 altogether. In other words, this is legal:
 

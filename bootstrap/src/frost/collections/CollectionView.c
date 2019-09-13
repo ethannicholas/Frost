@@ -197,25 +197,27 @@ bool _58;
 frost$core$Bit _61;
 frost$core$MutableString* _66;
 frost$core$Object* _70;
-frost$core$Bit _71;
+frost$core$Object* _71;
 bool _72;
-frost$core$MutableString* _75;
-frost$core$Object* _76;
-frost$core$Object* _77;
-$fn13 _80;
-frost$core$String* _81;
-frost$core$Object* _83;
-frost$core$MutableString* _89;
-frost$core$Object* _92;
+frost$core$Bit _73;
+bool _74;
+frost$core$MutableString* _77;
+frost$core$Object* _78;
+frost$core$Object* _79;
+$fn13 _82;
+frost$core$String* _83;
+frost$core$Object* _85;
+frost$core$MutableString* _91;
 frost$core$Object* _94;
-frost$core$Object* _95;
-frost$core$Object* _99;
-frost$core$MutableString* _102;
-frost$core$String* _103;
-frost$core$Object* _104;
+frost$core$Object* _96;
+frost$core$Object* _97;
+frost$core$Object* _101;
+frost$core$MutableString* _104;
+frost$core$String* _105;
 frost$core$Object* _106;
-frost$core$MutableString* _108;
-frost$core$Object* _109;
+frost$core$Object* _108;
+frost$core$MutableString* _110;
+frost$core$Object* _111;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:47
 _1 = param0;
 ITable* $tmp14 = _1->$class->itable;
@@ -308,53 +310,55 @@ _66 = *(&local1);
 frost$core$MutableString$append$frost$core$String(_66, param1);
 goto block8;
 block8:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:59
-_70 = *(&local2);
-_71 = (frost$core$Bit) {true};
-_72 = _71.value;
-if (_72) goto block10; else goto block12;
-block10:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:60
-_75 = *(&local1);
-_76 = *(&local2);
-_77 = _76;
-// begin inline call to method frost.core.MutableString.append(o:frost.core.Object) from CollectionView.frost:60:30
+_70 = *(&local2);
+_71 = _70;
+_72 = _71 != NULL;
+_73 = (frost$core$Bit) {_72};
+_74 = _73.value;
+if (_74) goto block10; else goto block12;
+block10:;
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:61
+_77 = *(&local1);
+_78 = *(&local2);
+_79 = _78;
+// begin inline call to method frost.core.MutableString.append(o:frost.core.Object) from CollectionView.frost:61:30
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/MutableString.frost:150
-_80 = ($fn20) _77->$class->vtable[0];
-_81 = _80(_77);
-frost$core$MutableString$append$frost$core$String(_75, _81);
-_83 = ((frost$core$Object*) _81);
-frost$core$Frost$unref$frost$core$Object$Q(_83);
+_82 = ($fn20) _79->$class->vtable[0];
+_83 = _82(_79);
+frost$core$MutableString$append$frost$core$String(_77, _83);
+_85 = ((frost$core$Object*) _83);
+frost$core$Frost$unref$frost$core$Object$Q(_85);
 goto block11;
 block12:;
 // <no location>
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:63
-_89 = *(&local1);
-frost$core$MutableString$append$frost$core$String(_89, &$s21);
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:64
+_91 = *(&local1);
+frost$core$MutableString$append$frost$core$String(_91, &$s21);
 goto block11;
 block11:;
-_92 = _48;
-frost$core$Frost$unref$frost$core$Object$Q(_92);
-_94 = *(&local2);
-_95 = _94;
-frost$core$Frost$unref$frost$core$Object$Q(_95);
+_94 = _48;
+frost$core$Frost$unref$frost$core$Object$Q(_94);
+_96 = *(&local2);
+_97 = _96;
+frost$core$Frost$unref$frost$core$Object$Q(_97);
 *(&local2) = ((frost$core$Object*) NULL);
 goto block4;
 block6:;
-_99 = ((frost$core$Object*) _37);
-frost$core$Frost$unref$frost$core$Object$Q(_99);
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:66
-_102 = *(&local1);
-_103 = frost$core$MutableString$finish$R$frost$core$String(_102);
-_104 = ((frost$core$Object*) _103);
-frost$core$Frost$ref$frost$core$Object$Q(_104);
-_106 = ((frost$core$Object*) _103);
-frost$core$Frost$unref$frost$core$Object$Q(_106);
-_108 = *(&local1);
-_109 = ((frost$core$Object*) _108);
-frost$core$Frost$unref$frost$core$Object$Q(_109);
+_101 = ((frost$core$Object*) _37);
+frost$core$Frost$unref$frost$core$Object$Q(_101);
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:67
+_104 = *(&local1);
+_105 = frost$core$MutableString$finish$R$frost$core$String(_104);
+_106 = ((frost$core$Object*) _105);
+frost$core$Frost$ref$frost$core$Object$Q(_106);
+_108 = ((frost$core$Object*) _105);
+frost$core$Frost$unref$frost$core$Object$Q(_108);
+_110 = *(&local1);
+_111 = ((frost$core$Object*) _110);
+frost$core$Frost$unref$frost$core$Object$Q(_111);
 *(&local1) = ((frost$core$MutableString*) NULL);
-return _103;
+return _105;
 
 }
 frost$core$Object* frost$collections$CollectionView$fold$$LPfrost$collections$CollectionView$T$Cfrost$collections$CollectionView$T$RP$EQ$GT$LPfrost$collections$CollectionView$T$RP$R$frost$collections$CollectionView$T(frost$collections$CollectionView* param0, frost$core$MutableMethod* param1) {
@@ -440,11 +444,11 @@ _7 = (frost$core$Bit) {_6};
 _8 = _7.value;
 if (_8) goto block1; else goto block2;
 block2:;
-_10 = (frost$core$Int) {95u};
+_10 = (frost$core$Int) {96u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s30, _10, &$s31);
 abort(); // unreachable
 block1:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:97
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:98
 _14 = ((frost$collections$Iterable*) param0);
 ITable* $tmp32 = _14->$class->itable;
 while ($tmp32->$class != (frost$core$Class*) &frost$collections$Iterable$class) {
@@ -462,7 +466,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_22);
 *(&local0) = _17;
 _25 = ((frost$core$Object*) _16);
 frost$core$Frost$unref$frost$core$Object$Q(_25);
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:98
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:99
 _28 = *(&local0);
 _29 = _28;
 ITable* $tmp33 = _29->$class->itable;
@@ -481,7 +485,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_37);
 *(&local1) = _32;
 _40 = _31;
 frost$core$Frost$unref$frost$core$Object$Q(_40);
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:99
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:100
 goto block3;
 block3:;
 _44 = *(&local0);
@@ -492,7 +496,7 @@ while ($tmp34->$class != (frost$core$Class*) &frost$collections$Iterator$class) 
 }
 _46 = $tmp34->methods[0];
 _47 = _46(_45);
-// begin inline call to function frost.core.Bit.!():frost.core.Bit from CollectionView.frost:99:15
+// begin inline call to function frost.core.Bit.!():frost.core.Bit from CollectionView.frost:100:15
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
 _50 = _47.value;
 _51 = !_50;
@@ -500,7 +504,7 @@ _52 = (frost$core$Bit) {_51};
 _54 = _52.value;
 if (_54) goto block4; else goto block5;
 block4:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:100
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:101
 _57 = *(&local1);
 _58 = *(&local0);
 _59 = _58;
@@ -542,7 +546,7 @@ _87 = _61;
 frost$core$Frost$unref$frost$core$Object$Q(_87);
 goto block3;
 block5:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:102
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:103
 _91 = *(&local1);
 _92 = _91;
 frost$core$Frost$ref$frost$core$Object$Q(_92);
@@ -640,11 +644,11 @@ _7 = (frost$core$Bit) {_6};
 _8 = _7.value;
 if (_8) goto block1; else goto block2;
 block2:;
-_10 = (frost$core$Int) {107u};
+_10 = (frost$core$Int) {108u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s46, _10, &$s47);
 abort(); // unreachable
 block1:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:109
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:110
 _14 = ((frost$collections$Iterable*) param0);
 ITable* $tmp48 = _14->$class->itable;
 while ($tmp48->$class != (frost$core$Class*) &frost$collections$Iterable$class) {
@@ -662,7 +666,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_22);
 *(&local0) = _17;
 _25 = ((frost$core$Object*) _16);
 frost$core$Frost$unref$frost$core$Object$Q(_25);
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:110
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:111
 _28 = *(&local0);
 _29 = _28;
 ITable* $tmp49 = _29->$class->itable;
@@ -681,7 +685,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_37);
 *(&local1) = _32;
 _40 = _31;
 frost$core$Frost$unref$frost$core$Object$Q(_40);
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:111
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:112
 goto block3;
 block3:;
 _44 = *(&local0);
@@ -692,7 +696,7 @@ while ($tmp50->$class != (frost$core$Class*) &frost$collections$Iterator$class) 
 }
 _46 = $tmp50->methods[0];
 _47 = _46(_45);
-// begin inline call to function frost.core.Bit.!():frost.core.Bit from CollectionView.frost:111:15
+// begin inline call to function frost.core.Bit.!():frost.core.Bit from CollectionView.frost:112:15
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
 _50 = _47.value;
 _51 = !_50;
@@ -700,7 +704,7 @@ _52 = (frost$core$Bit) {_51};
 _54 = _52.value;
 if (_54) goto block4; else goto block5;
 block4:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:112
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:113
 _57 = *(&local1);
 _58 = *(&local0);
 _59 = _58;
@@ -742,7 +746,7 @@ _87 = _61;
 frost$core$Frost$unref$frost$core$Object$Q(_87);
 goto block3;
 block5:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:114
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:115
 _91 = *(&local1);
 _92 = _91;
 frost$core$Frost$ref$frost$core$Object$Q(_92);
@@ -806,7 +810,7 @@ frost$core$Object* _68;
 frost$core$Object* _69;
 frost$core$Object* _71;
 frost$core$Object* _72;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:130
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:131
 *(&local0) = ((frost$core$Object*) NULL);
 _2 = param2;
 frost$core$Frost$ref$frost$core$Object$Q(_2);
@@ -814,7 +818,7 @@ _4 = *(&local0);
 _5 = _4;
 frost$core$Frost$unref$frost$core$Object$Q(_5);
 *(&local0) = param2;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:131
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:132
 _9 = ((frost$collections$Iterable*) param0);
 _10 = _9;
 ITable* $tmp59 = _10->$class->itable;
@@ -851,7 +855,7 @@ _27 = *(&local1);
 _28 = _27;
 frost$core$Frost$unref$frost$core$Object$Q(_28);
 *(&local1) = _24;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:132
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:133
 _32 = *(&local0);
 _33 = *(&local1);
 _34 = param1;
@@ -891,7 +895,7 @@ goto block1;
 block3:;
 _65 = ((frost$core$Object*) _12);
 frost$core$Frost$unref$frost$core$Object$Q(_65);
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:134
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:135
 _68 = *(&local0);
 _69 = _68;
 frost$core$Frost$ref$frost$core$Object$Q(_69);
@@ -951,7 +955,7 @@ frost$core$Object* _68;
 frost$core$Object* _69;
 frost$core$Object* _71;
 frost$core$Object* _72;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:139
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:140
 *(&local0) = ((frost$core$Object*) NULL);
 _2 = param2;
 frost$core$Frost$ref$frost$core$Object$Q(_2);
@@ -959,7 +963,7 @@ _4 = *(&local0);
 _5 = _4;
 frost$core$Frost$unref$frost$core$Object$Q(_5);
 *(&local0) = param2;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:140
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:141
 _9 = ((frost$collections$Iterable*) param0);
 _10 = _9;
 ITable* $tmp69 = _10->$class->itable;
@@ -996,7 +1000,7 @@ _27 = *(&local1);
 _28 = _27;
 frost$core$Frost$unref$frost$core$Object$Q(_28);
 *(&local1) = _24;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:141
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:142
 _32 = *(&local0);
 _33 = *(&local1);
 _34 = param1;
@@ -1036,7 +1040,7 @@ goto block1;
 block3:;
 _65 = ((frost$core$Object*) _12);
 frost$core$Frost$unref$frost$core$Object$Q(_65);
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:143
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:144
 _68 = *(&local0);
 _69 = _68;
 frost$core$Frost$ref$frost$core$Object$Q(_69);
@@ -1079,7 +1083,7 @@ frost$core$Object* _38;
 frost$core$Object* _40;
 frost$core$Object* _41;
 frost$core$Object* _45;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:156
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:157
 _1 = ((frost$collections$Iterable*) param0);
 _2 = _1;
 ITable* $tmp79 = _2->$class->itable;
@@ -1116,7 +1120,7 @@ _19 = *(&local0);
 _20 = _19;
 frost$core$Frost$unref$frost$core$Object$Q(_20);
 *(&local0) = _16;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:157
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:158
 _24 = *(&local0);
 _25 = param1;
 _26 = &_25->pointer;
@@ -1201,7 +1205,7 @@ frost$collections$Array* _73;
 frost$core$Object* _74;
 frost$collections$Array* _76;
 frost$core$Object* _77;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:164
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:165
 FROST_ASSERT(40 == sizeof(frost$collections$Array));
 _1 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
 _2 = _1;
@@ -1222,7 +1226,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_11);
 *(&local0) = _1;
 _14 = ((frost$core$Object*) _1);
 frost$core$Frost$unref$frost$core$Object$Q(_14);
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:165
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:166
 _17 = ((frost$collections$Iterable*) param0);
 _18 = _17;
 ITable* $tmp91 = _18->$class->itable;
@@ -1259,7 +1263,7 @@ _35 = *(&local1);
 _36 = _35;
 frost$core$Frost$unref$frost$core$Object$Q(_36);
 *(&local1) = _32;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:166
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:167
 _40 = *(&local0);
 _41 = _40;
 _42 = *(&local1);
@@ -1296,7 +1300,7 @@ goto block1;
 block3:;
 _70 = ((frost$core$Object*) _20);
 frost$core$Frost$unref$frost$core$Object$Q(_70);
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:168
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:169
 _73 = *(&local0);
 _74 = ((frost$core$Object*) _73);
 frost$core$Frost$ref$frost$core$Object$Q(_74);
@@ -1361,7 +1365,7 @@ frost$collections$Array* _73;
 frost$core$Object* _74;
 frost$collections$Array* _76;
 frost$core$Object* _77;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:173
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:174
 FROST_ASSERT(40 == sizeof(frost$collections$Array));
 _1 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
 _2 = _1;
@@ -1382,7 +1386,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_11);
 *(&local0) = _1;
 _14 = ((frost$core$Object*) _1);
 frost$core$Frost$unref$frost$core$Object$Q(_14);
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:174
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:175
 _17 = ((frost$collections$Iterable*) param0);
 _18 = _17;
 ITable* $tmp103 = _18->$class->itable;
@@ -1419,7 +1423,7 @@ _35 = *(&local1);
 _36 = _35;
 frost$core$Frost$unref$frost$core$Object$Q(_36);
 *(&local1) = _32;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:175
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:176
 _40 = *(&local0);
 _41 = _40;
 _42 = *(&local1);
@@ -1456,7 +1460,7 @@ goto block1;
 block3:;
 _70 = ((frost$core$Object*) _20);
 frost$core$Frost$unref$frost$core$Object$Q(_70);
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:177
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:178
 _73 = *(&local0);
 _74 = ((frost$core$Object*) _73);
 frost$core$Frost$ref$frost$core$Object$Q(_74);

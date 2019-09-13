@@ -5417,7 +5417,7 @@ _305 = _304;
 frost$core$Frost$ref$frost$core$Object$Q(_305);
 _308 = ((org$frostlang$frostc$ClassDecl*) _304);
 // begin inline call to function org.frostlang.frostc.Compiler.isTuple(cl:org.frostlang.frostc.ClassDecl):frost.core.Bit from Binary.frost:469:62
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:2659
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:2694
 _311 = &_308->name;
 _312 = *_311;
 _313 = frost$core$String$startsWith$frost$core$String$R$frost$core$Bit(_312, &$s178);
@@ -5584,7 +5584,7 @@ _457 = (frost$core$Int) {_456};
 _459 = org$frostlang$frostc$FixedArray$$IDX$frost$core$Int$R$org$frostlang$frostc$FixedArray$T(_451, _457);
 _460 = ((org$frostlang$frostc$Type*) _459);
 // begin inline call to method org.frostlang.frostc.Compiler.cast(position:org.frostlang.frostc.Position, value:org.frostlang.frostc.IR.Value?, target:org.frostlang.frostc.Type):org.frostlang.frostc.IR.Value? from Binary.frost:477:79
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:4161
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:4196
 _463 = (frost$core$Bit) {false};
 _464 = org$frostlang$frostc$Compiler$cast$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Value$Q$org$frostlang$frostc$Type$frost$core$Bit$R$org$frostlang$frostc$IR$Value$Q(param0, param1, _424, _460, _463);
 _465 = ((frost$core$Object*) _464);
@@ -5918,7 +5918,7 @@ _768 = _767;
 frost$core$Frost$ref$frost$core$Object$Q(_768);
 _771 = ((org$frostlang$frostc$ClassDecl*) _767);
 // begin inline call to function org.frostlang.frostc.Compiler.findType(start:frost.collections.CollectionView<org.frostlang.frostc.Type>, target:org.frostlang.frostc.ClassDecl):org.frostlang.frostc.Type? from Binary.frost:500:51
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:4355
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:4390
 _774 = ((frost$collections$Iterable*) _747);
 _775 = _774;
 ITable* $tmp202 = _775->$class->itable;
@@ -5955,7 +5955,7 @@ _792 = *(&local12);
 _793 = ((frost$core$Object*) _792);
 frost$core$Frost$unref$frost$core$Object$Q(_793);
 *(&local12) = _789;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:4356
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:4391
 _797 = *(&local12);
 _798 = org$frostlang$frostc$Compiler$findType$org$frostlang$frostc$Type$org$frostlang$frostc$ClassDecl$R$org$frostlang$frostc$Type$Q(param0, _797, _771);
 *(&local13) = ((org$frostlang$frostc$Type*) NULL);
@@ -5967,14 +5967,14 @@ frost$core$Frost$unref$frost$core$Object$Q(_803);
 *(&local13) = _798;
 _806 = ((frost$core$Object*) _798);
 frost$core$Frost$unref$frost$core$Object$Q(_806);
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:4357
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:4392
 _809 = *(&local13);
 _810 = _809 != NULL;
 _811 = (frost$core$Bit) {_810};
 _812 = _811.value;
 if (_812) goto block87; else goto block88;
 block87:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:4358
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:4393
 _815 = *(&local13);
 _816 = ((frost$core$Object*) _815);
 frost$core$Frost$ref$frost$core$Object$Q(_816);
@@ -6009,7 +6009,7 @@ goto block84;
 block86:;
 _845 = ((frost$core$Object*) _777);
 frost$core$Frost$unref$frost$core$Object$Q(_845);
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:4361
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:4396
 _848 = ((frost$core$Object*) ((org$frostlang$frostc$Type*) NULL));
 frost$core$Frost$ref$frost$core$Object$Q(_848);
 *(&local11) = ((org$frostlang$frostc$Type*) NULL);
@@ -6374,7 +6374,7 @@ _1166 = (frost$core$Int) {_1165};
 _1168 = org$frostlang$frostc$FixedArray$$IDX$frost$core$Int$R$org$frostlang$frostc$FixedArray$T(_1160, _1166);
 _1169 = ((org$frostlang$frostc$Type*) _1168);
 // begin inline call to method org.frostlang.frostc.Compiler.cast(position:org.frostlang.frostc.Position, value:org.frostlang.frostc.IR.Value?, target:org.frostlang.frostc.Type):org.frostlang.frostc.IR.Value? from Binary.frost:516:75
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:4161
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:4196
 _1172 = (frost$core$Bit) {false};
 _1173 = org$frostlang$frostc$Compiler$cast$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Value$Q$org$frostlang$frostc$Type$frost$core$Bit$R$org$frostlang$frostc$IR$Value$Q(param0, param1, _1133, _1169, _1172);
 _1174 = ((frost$core$Object*) _1173);

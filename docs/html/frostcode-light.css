@@ -12,8 +12,8 @@
     font-style: italic;
 }
 
-.frostcode .control, .frostcode .VAR, .frostcode .DEF, .frostcode .CONSTANT, .frostcode .PROPERTY,
-        .frostcode .AT_RETURN, .frostcode .DOT {
+.frostcode .control, .frostcode .VAR_TOKEN, .frostcode .DEF_TOKEN, .frostcode .CONSTANT_TOKEN,
+        .frostcode .PROPERTY_TOKEN, .frostcode .AT_RETURN_TOKEN, .frostcode .DOT_TOKEN {
     color: #C80000;
 }
 

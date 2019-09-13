@@ -1,7 +1,7 @@
 super
 =====
 
-`super` is a [keyword](keywords.html) which can be used as the target of a method call, like this:
+`super` is a [keyword](keywords.md) which can be used as the target of a method call, like this:
 
     method applyDefaultSettings() {
         super.applyDefaultSettings()

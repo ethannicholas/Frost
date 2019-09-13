@@ -10,14 +10,14 @@ A single term, such as:
 * A numeric literal
 * A string literal
 * A `Bit` literal
-* [null](null.html)
-* [self](self.html)
-* [super](super.html)
+* [null](null.md)
+* [self](self.md)
+* [super](super.md)
 * A variable reference
-* An [array literal](arrayLiterals.html#simple)
-* A [tuple](tuples.html#simple)
-* An [inline method](inlineMethods.html)
-* A [method reference](methodReferences.html)
+* An [array literal](arrayLiterals.md#simple)
+* A [tuple](tuples.md#simple)
+* An [inline method](inlineMethods.md)
+* A [method reference](methodReferences.md)
 
 Or a compound expression, such as:
 
@@ -33,7 +33,7 @@ Precedence
 
 In standard mathematics, the expression "1 + 6 * 7" evaluates to 43: you perform the multiplication
 first, and then the addition. This is formalized in the notion of *operator precedence*; that is,
-certain [operators](operators.html) such as multiplication have a higher priority than other
+certain [operators](operators.md) such as multiplication have a higher priority than other
 operators such as addition.
 
 Frost's operator precedence, from highest to lowest, is:

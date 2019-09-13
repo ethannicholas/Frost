@@ -48,6 +48,7 @@ SELF                     := "self"
 SUPER                    := "super"
 LAZY                     := "lazy"
 MODULE                   := "module"
+SPECIALIZATION           := "specialization"
 IDENTIFIER               := /[A-Za-z_$][A-Za-z_$0-9]*/
 NOT                      := "!"
 BITWISENOT               := "!!"

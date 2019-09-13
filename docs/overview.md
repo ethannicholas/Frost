@@ -17,8 +17,8 @@ Comments
     begin and end it, but it looks nicer to fill the entire line up.
     ============================================================================
 
-It is legal to nest block comments. [Documentation comments](doccomments.html) are part of Frost's
-grammar, and thus can only appear in prescribed locations.
+It is legal to nest block comments. [Documentation comments](documentationComments.md) are part of
+Frost's grammar, and thus can only appear in prescribed locations.
 
 Numeric Literals
 ----------------
@@ -38,14 +38,14 @@ instead.
 Strings
 -------
 
-Frost [strings](strings.html) are double-quoted, with support for the same backslashed escape
-sequences as C. (FIXME: figure out Unicode escapes).
+Frost [strings](String) are double-quoted, with support for backslashed escape sequences similar to
+C.
 
 String literals may have expressions embedded into them using the syntax `\{expression}`, e.g.:
 
     Console.printLine("Hello, \{firstName} \{lastName}!")
 
-This is called [string interpolation](stringInterpolation.html), and it has quite a few other tricks
+This is called [string interpolation](stringInterpolation.md), and it has quite a few other tricks
 up its sleeve.
 
 Frost's strings are immutable, but there is a mutable variant called `MutableString`.
@@ -62,11 +62,7 @@ Basic Types
 
 `Bit` is Frost's Boolean type, which has only two values: `true` and `false`.
 
-`Int` is an alias for `Int64`.
-
-`UInt` is an alias for `UInt64`.
-
-`Real` is an alias for `Real64`.
+`Int`, `UInt`, and `Real` are either 32 or 64 bit numbers, depending upon the compilation settings.
 
 Operators
 ---------
@@ -142,7 +138,7 @@ The `def` keyword is similar to `var`, but defines a value which cannot be reass
     hello := "Goodbye!" -- ERROR, cannot reassign a def
 
 You should generally use `def` instead of `var` wherever possible. In idiomatic Frost code, `var` is
-very uncommon.
+uncommon.
 
 The `constant` keyword is similar to `def`, but has the additional requirement that the value must
 be [Immutable]:
@@ -185,6 +181,55 @@ Braces are required, even when there is only one statement in the block.
 
 All conditional statements require an expression of type `Bit`.
 
+For Loops
+---------
+
+    for <variable> in <collection> {
+        ...
+    }
+
+`<collection>` may be an [Iterator], [Iterable], [Range], or [SteppedRange].
+
+To count from 1 to 10:
+
+    for i in 1 ... 10 {
+        Console.printLine(i)
+    }
+
+To count backwards from 100 by 10:
+
+    for i in 100 ... 0 by -10 {
+        Console.printLine(i)
+    }
+
+To iterate over a collection:
+
+    for greeting in ["Hello", "Bonjour", "Hola", "Guten tag"] {
+        Console.printLine(greeting)
+    }
+
+Ranges
+------
+
+You may define a [Range] using the syntax `[start] .. [end]` or `[start] ... [end]`. With two dots,
+the range is *exclusive* and does not include its end. With three dots, it is *inclusive* and does
+include its end.
+
+Ranges are important for iteration, selecting subranges of a list, etc. For instance, to grab the
+first ten elements of a list, you may write either `list[0 .. 10]` or `list[0 ... 9]`.
+
+You may omit the start value to mean "from the beginning", so `list[..10]` is a shorter way to get
+the first ten elements. Omitting the end value means "to the end". You may also omit both the start
+and end, so `list[..]` is a (shallow) copy of the entire list.
+
+Stepped Ranges
+--------------
+
+A [stepped range](SteppedRange) is a range followed by `by <step>`, such as `0 ... 100 by 10`. This
+allows you to do things like select every other value of a list (`list[.. by 2]`) or reverse a list
+(`list[.. by -1]`).
+
+
 Flow Control Statements
 -----------------------
 
@@ -222,57 +267,12 @@ Assertions
 
     unreachable
 
+    unreachable, "failure message"
+
+
 `unreachable` is a special assertion which means "the program will never reach this statement". This
 is commonly expressed as `assert false` in other languages, but an assertion which always fails is a
 compile-time error in Frost and so `assert false` is not actually legal.
-
-Ranges
-------
-
-You may define a [Range] using the syntax `[start] .. [end]` or `[start] ... [end]`. With two dots,
-the range is *exclusive* and does not include its end. With three dots, it is *inclusive* and does
-include its end.
-
-Ranges are important for iteration, selecting subranges of a list, etc. For instance, to grab the
-first ten elements of a list, you may write either `list[0 .. 10]` or `list[0 ... 9]`.
-
-You may omit the start value to mean "from the beginning", so `list[..10]` is a shorter way to get
-the first ten elements. Omitting the end value means "to the end". You may of course also omit both
-the start and end, so `list[..]` is a (shallow) copy of the entire list.
-
-Stepped Ranges
---------------
-
-A [stepped range](SteppedRange) is a range followed by `by <step>`, such as `0 ... 100 by 10`. This
-allows you to do things like select every other value of a list (`list[.. by 2]`) or reverse a list
-(`list[.. by -1]`).
-
-For Loops
----------
-
-    for <variable> in <collection> {
-        ...
-    }
-
-`<collection>` may be an [Iterator], [Iterable], [Range], or [SteppedRange].
-
-To count from 1 to 10:
-
-    for i in 1 ... 10 {
-        Console.printLine(i)
-    }
-
-To count backwards from 100 by 10:
-
-    for i in 100 ... 0 by -10 {
-        Console.printLine(i)
-    }
-
-To iterate over a collection:
-
-    for greeting in ["Hello", "Bonjour", "Hola", "Guten tag"] {
-        Console.printLine(greeting)
-    }
 
 Match
 -----
@@ -320,8 +320,12 @@ for converting to various other types. The appropriate function is chosen based 
     def i16:Int16 := i.convert() -- calls Int.convert():Int16
     def fail      := i.convert() -- ERROR, ambiguous!
 
+[Read more about methods.](methods.md)
+
 Classes
 -------
+
+The syntax for creating classes is similar to most object-oriented languages:
 
     class Adder {
         def x:Int
@@ -338,6 +342,8 @@ Classes
     method main() {
         Console.printLine(Adder(12).add(6)) -- prints 18
     }
+
+[Read more about classes.](classes.md)
 
 Creating Instances
 ------------------
@@ -367,6 +373,8 @@ Interfaces may provide a *default implementation* of a method:
 
 This default implementation will be used if the class that implements the interface does not provide
 its own implementation.
+
+[Read more about interfaces.](interfaces.md)
 
 Inheritance
 -----------
@@ -418,15 +426,17 @@ be extracted using `match`:
 Packages
 --------
 
-A [package](packages.html) is a dotted namespace in which classes reside. Packages are declared by
+A [package](packages.md) is a dotted namespace in which classes reside. Packages are declared by
 a `package` statement at the beginning of a file:
 
     package com.example.foo
 
+[Read more about packages.](packages.md)
+
 Uses
 ----
 
-The [`uses`](packages.html#uses) declaration allows you to refer to a class by its simple name:
+The [`uses`](packages.md#uses) declaration allows you to refer to a class by its simple name:
 
     uses com.example.foo.Example
 
@@ -445,6 +455,8 @@ forth. The most common annotations you will see are:
 * `@final`: method may not be overridden or class may not be subclassed
 * `@pre`: a precondition contract (see "Contracts" below)
 * `@post`: a postcondition contract (see "Contracts" below)
+
+[Read more about annotations.](annotations.md)
 
 Contracts
 ---------
@@ -477,12 +489,16 @@ Value objects are similar to C structs. They are passed by value rather than ref
 a header (they are "plain old data" objects), and do not have a distinct "identity" they way normal
 objects do.
 
+[Read more about values.](values.md)
+
 Immutability
 ------------
 
 Immutability is enforced: a class which subclasses [Immutable] may not contain any mutable fields.
 Only immutable objects may be used as `constant`s, and normally only immutable objects may be shared
 between multiple threads.
+
+[Read more about immutabilitys.](immutability.md)
 
 Everything is an Object
 -----------------------
@@ -498,7 +514,7 @@ same basic processor math instructions you would expect.
 Memory
 ------
 
-Frost features [automatic reference counting](memoryManagement.html). Objects will be promptly
+Frost features [automatic reference counting](memoryManagement.md). Objects will be promptly
 cleaned up when no longer referenced. Objects have a special [`cleanup()`](Object.cleanup) method
 which is called before they are destroyed; unlike with typical garbage collectors, this cleanup is
 guaranteed to happen as soon as the object is no longer referenced. Because of this, `cleanup()` is
@@ -514,15 +530,17 @@ frequently used to tie operations to a particular scope, such as with [ScopedLoc
         -- at this point
     }
 
-Frost provides [weak references](weakReferences.html) to help handle reference cycles.
+Frost provides [weak references](weakReferences.md) to help handle reference cycles.
+
+[Read more about memory management.](memoryManagement.md)
 
 Main and Bare Code
 ------------------
 
-The main entry point into a Frost program is `@class` method named [`main`](main.html), defined on a
+The main entry point into a Frost program is `@class` method named [`main`](main.md), defined on a
 class of your choosing, which may have zero parameters or a single `ListView<String>` parameter (to
 receive its command line arguments). For convenience, you may also define `main` [outside of any
-class](bareCode.html), in which case a class is synthesized to hold it. This means that the simplest
+class](bareCode.md), in which case a class is synthesized to hold it. This means that the simplest
 way to write "Hello, World!" in Frost is:
 
     method main() {
@@ -537,6 +555,8 @@ but you could also write it as:
             Console.printLine("Hello, World!")
         }
     }
+
+[Read more about bare code.](bareCode.md)
 
 Non-Nullability
 ---------------
@@ -558,8 +578,6 @@ be made nullable:
 
 This creates an array which can contain either `Int` or `null` entries.
 
-FIXME: get null safety working again...
-
 You may use a nullable type wherever a non-nullable type is expected, but only if Frost can prove
 that the value cannot actually be `null` at that particular point. For example:
 
@@ -575,6 +593,8 @@ But if we prove that the value can't be `null` at the point where it is referenc
     else {
         Console.printLine("<null>")
     }
+
+[Read more about non-nullability.](nonNullability.md)
 
 Regular Expressions
 -------------------
@@ -592,7 +612,7 @@ syntax for it.
 Array Literals
 --------------
 
-An [array literal](arrayLiterals.html) is an expression of the form:
+An [array literal](arrayLiterals.md) is an expression of the form:
 
     [1, 2, 3, 4, 5]
 
@@ -603,10 +623,12 @@ may be evaluated as another type depending upon the context in which it is used.
 
 produces a mutable `Array` rather than an `ImmutableArray`, because `List` is writable.
 
+[Read more about array literals.](arrayLiterals.md)
+
 Tuples
 ------
 
-A [tuple](tuples.html) is a parenthesized sequence of two or more comma separated values, such as:
+A [tuple](tuples.md) is a parenthesized sequence of two or more comma separated values, such as:
 
     def tuple := (1, 2, "Hi")
 
@@ -616,6 +638,8 @@ Values may be extracted from the tuple by indexing into it:
 
 Tuples are used to implement multiple return types. A method which needs to return more than one
 value can simply return a tuple.
+
+[Read more about tuples.](tuples.md)
 
 Operator Overloading
 --------------------
@@ -642,7 +666,7 @@ Operators are overloaded by defining a function with the operator's name, as in 
         }
     }
 
-See [Operator Overloading](operatorOverloading.html) for more details.
+[Read more about interfaces.](operatorOverloading.md)
 
 Generic Types
 -------------
@@ -699,7 +723,7 @@ the generic type `T` will be inferred to be `String`, and the method will return
 Methods as Values
 -----------------
 
-Methods are [first-class values](methodValues.html) in Frost. You may assign methods to variables,
+Methods are [first-class values](methodReferences.md) in Frost. You may assign methods to variables,
 return them from other methods, etc.
 
 Referring to a method by its name, without arguments, gives you a reference to the method. With
@@ -744,7 +768,9 @@ We could also have referred to `+` as a member of a specific `Int` instance, in 
 
 In addition to function types like `(Int)=>(Int)`, there are method types (`(Int)=&>(Int)`),
 immutable function types (`(Int)=>*(Int)`), and immutable method types (`(Int)=&>*(Int)`). These are
-described on the [Method Types](methodTypes.html) page.
+described on the [Method Types](types.md#methodTypes) page.
+
+[Read more about inline methods.](inlineMethods.md)
 
 Anonymous Methods
 -----------------
@@ -790,12 +816,12 @@ inner methods.
 Lambdas
 -------
 
-[Lambdas](lambdas.html) are a shorthand syntax for creating anonymous functions which return the
-value of an expression.
+[Lambdas](inlineMethods.md#lambdas) are a shorthand syntax for creating anonymous functions which
+return the value of an expression.
 
-    x:Int => x.abs() -- equivalent to function(x:Int):Int { return x.abs() }
+    x:Int => x.abs -- equivalent to function(x:Int):Int { return x.abs }
 
-    (x:Int, y:Int) => x + y
+    (x:Int, y:Int) => x + y -- equivalent to function(x:Int, y:Int):Int { return x + y }
 
 If the type of the lambda is implied by its context (for instance, when passing it to a method which
 expects a particular function type), you may omit the types:
@@ -804,9 +830,30 @@ expects a particular function type), you may omit the types:
 
     (x, y) => x + y
 
+[Read more about lambdas.](inlineMethods.md#lambdas)
+
+Error Handling
+--------------
+
+Frost's error handling looks superficially like the exceptions found in many other languages:
+
+    try {
+        File("/tmp/foo").write("This is a new file!")
+    }
+    fail(error) {
+        Console.printLine(error)
+    }
+
+But it is actually more akin to C's error return codes, in that [File.write(String)] can possibly
+return an [Error]. The `try` block intercepts any error returns that occur inside of it and jumps
+directly to the `fail` block. You *must* (directly or via a `try` block) look at the return value of
+a method that can fail; it is a compile-time error to ignore errors.
+
+[Read more about error handling.](errorHandling.md)
+
 And that's it!
 --------------
 
 That provides at least a brief overview of all of the major features of Frost. If you haven't
-already done so, you may wish to take a look at how to [get started](gettingStarted.html) with
+already done so, you may wish to take a look at how to [get started](gettingStarted.md) with
 Frost programming.

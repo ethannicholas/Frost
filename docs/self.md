@@ -1,7 +1,7 @@
 self
 ====
 
-`self` is a [keyword](keywords.html) which represents the object instance within which an instance
+`self` is a [keyword](keywords.md) which represents the object instance within which an instance
 method is running. 
 
 Example:
@@ -12,7 +12,7 @@ Example:
         }
 
         @override
-        function convert():String {
+        function get_asString():String {
             return "an instance of Example"
         }
 

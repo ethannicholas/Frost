@@ -38,7 +38,7 @@ class Thread : Immutable {
 
         Thread.start(method() {
             loop {
-                Console.writeLine("Hi, I'm a thread!")
+                Console.printLine("Hi, I'm a thread!")
             }
         })
 

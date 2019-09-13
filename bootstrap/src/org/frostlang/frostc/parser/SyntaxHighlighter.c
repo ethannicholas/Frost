@@ -2153,7 +2153,7 @@ _691 = ($fn63) param0->$class->vtable[5];
 _691(param0, param1, _690);
 goto block15;
 block121:;
-_694 = (frost$core$Int) {54u};
+_694 = (frost$core$Int) {55u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:87:28
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _697 = _126.value;
@@ -2163,7 +2163,7 @@ _700 = (frost$core$Bit) {_699};
 _702 = _700.value;
 if (_702) goto block124; else goto block125;
 block125:;
-_704 = (frost$core$Int) {55u};
+_704 = (frost$core$Int) {56u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:87:44
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _707 = _126.value;
@@ -2173,7 +2173,7 @@ _710 = (frost$core$Bit) {_709};
 _712 = _710.value;
 if (_712) goto block124; else goto block127;
 block127:;
-_714 = (frost$core$Int) {56u};
+_714 = (frost$core$Int) {57u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:87:67
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _717 = _126.value;
@@ -2183,7 +2183,7 @@ _720 = (frost$core$Bit) {_719};
 _722 = _720.value;
 if (_722) goto block124; else goto block129;
 block129:;
-_724 = (frost$core$Int) {57u};
+_724 = (frost$core$Int) {58u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:87:83
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _727 = _126.value;
@@ -2193,7 +2193,7 @@ _730 = (frost$core$Bit) {_729};
 _732 = _730.value;
 if (_732) goto block124; else goto block131;
 block131:;
-_734 = (frost$core$Int) {58u};
+_734 = (frost$core$Int) {59u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:88:31
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _737 = _126.value;
@@ -2203,7 +2203,7 @@ _740 = (frost$core$Bit) {_739};
 _742 = _740.value;
 if (_742) goto block124; else goto block133;
 block133:;
-_744 = (frost$core$Int) {59u};
+_744 = (frost$core$Int) {60u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:88:47
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _747 = _126.value;
@@ -2213,7 +2213,7 @@ _750 = (frost$core$Bit) {_749};
 _752 = _750.value;
 if (_752) goto block124; else goto block135;
 block135:;
-_754 = (frost$core$Int) {60u};
+_754 = (frost$core$Int) {61u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:88:63
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _757 = _126.value;
@@ -2223,7 +2223,7 @@ _760 = (frost$core$Bit) {_759};
 _762 = _760.value;
 if (_762) goto block124; else goto block137;
 block137:;
-_764 = (frost$core$Int) {61u};
+_764 = (frost$core$Int) {62u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:88:82
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _767 = _126.value;
@@ -2233,7 +2233,7 @@ _770 = (frost$core$Bit) {_769};
 _772 = _770.value;
 if (_772) goto block124; else goto block139;
 block139:;
-_774 = (frost$core$Int) {63u};
+_774 = (frost$core$Int) {64u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:89:31
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _777 = _126.value;
@@ -2243,7 +2243,7 @@ _780 = (frost$core$Bit) {_779};
 _782 = _780.value;
 if (_782) goto block124; else goto block141;
 block141:;
-_784 = (frost$core$Int) {64u};
+_784 = (frost$core$Int) {65u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:89:46
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _787 = _126.value;
@@ -2253,7 +2253,7 @@ _790 = (frost$core$Bit) {_789};
 _792 = _790.value;
 if (_792) goto block124; else goto block143;
 block143:;
-_794 = (frost$core$Int) {65u};
+_794 = (frost$core$Int) {66u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:89:62
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _797 = _126.value;
@@ -2263,7 +2263,7 @@ _800 = (frost$core$Bit) {_799};
 _802 = _800.value;
 if (_802) goto block124; else goto block145;
 block145:;
-_804 = (frost$core$Int) {66u};
+_804 = (frost$core$Int) {67u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:89:83
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _807 = _126.value;
@@ -2273,7 +2273,7 @@ _810 = (frost$core$Bit) {_809};
 _812 = _810.value;
 if (_812) goto block124; else goto block147;
 block147:;
-_814 = (frost$core$Int) {67u};
+_814 = (frost$core$Int) {68u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:90:31
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _817 = _126.value;
@@ -2283,7 +2283,7 @@ _820 = (frost$core$Bit) {_819};
 _822 = _820.value;
 if (_822) goto block124; else goto block149;
 block149:;
-_824 = (frost$core$Int) {68u};
+_824 = (frost$core$Int) {69u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:90:46
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _827 = _126.value;
@@ -2293,7 +2293,7 @@ _830 = (frost$core$Bit) {_829};
 _832 = _830.value;
 if (_832) goto block124; else goto block151;
 block151:;
-_834 = (frost$core$Int) {69u};
+_834 = (frost$core$Int) {70u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:90:61
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _837 = _126.value;
@@ -2303,7 +2303,7 @@ _840 = (frost$core$Bit) {_839};
 _842 = _840.value;
 if (_842) goto block124; else goto block153;
 block153:;
-_844 = (frost$core$Int) {70u};
+_844 = (frost$core$Int) {71u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:90:78
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _847 = _126.value;
@@ -2313,7 +2313,7 @@ _850 = (frost$core$Bit) {_849};
 _852 = _850.value;
 if (_852) goto block124; else goto block155;
 block155:;
-_854 = (frost$core$Int) {71u};
+_854 = (frost$core$Int) {72u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:90:95
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _857 = _126.value;
@@ -2323,7 +2323,7 @@ _860 = (frost$core$Bit) {_859};
 _862 = _860.value;
 if (_862) goto block124; else goto block157;
 block157:;
-_864 = (frost$core$Int) {72u};
+_864 = (frost$core$Int) {73u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:91:31
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _867 = _126.value;
@@ -2333,7 +2333,7 @@ _870 = (frost$core$Bit) {_869};
 _872 = _870.value;
 if (_872) goto block124; else goto block159;
 block159:;
-_874 = (frost$core$Int) {73u};
+_874 = (frost$core$Int) {74u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:91:54
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _877 = _126.value;
@@ -2343,7 +2343,7 @@ _880 = (frost$core$Bit) {_879};
 _882 = _880.value;
 if (_882) goto block124; else goto block161;
 block161:;
-_884 = (frost$core$Int) {74u};
+_884 = (frost$core$Int) {75u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:91:69
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _887 = _126.value;
@@ -2353,7 +2353,7 @@ _890 = (frost$core$Bit) {_889};
 _892 = _890.value;
 if (_892) goto block124; else goto block163;
 block163:;
-_894 = (frost$core$Int) {75u};
+_894 = (frost$core$Int) {76u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:91:91
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _897 = _126.value;
@@ -2363,7 +2363,7 @@ _900 = (frost$core$Bit) {_899};
 _902 = _900.value;
 if (_902) goto block124; else goto block165;
 block165:;
-_904 = (frost$core$Int) {76u};
+_904 = (frost$core$Int) {77u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:92:31
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _907 = _126.value;
@@ -2373,7 +2373,7 @@ _910 = (frost$core$Bit) {_909};
 _912 = _910.value;
 if (_912) goto block124; else goto block167;
 block167:;
-_914 = (frost$core$Int) {77u};
+_914 = (frost$core$Int) {78u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:92:54
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _917 = _126.value;
@@ -2383,7 +2383,7 @@ _920 = (frost$core$Bit) {_919};
 _922 = _920.value;
 if (_922) goto block124; else goto block169;
 block169:;
-_924 = (frost$core$Int) {78u};
+_924 = (frost$core$Int) {79u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:92:76
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _927 = _126.value;
@@ -2393,7 +2393,7 @@ _930 = (frost$core$Bit) {_929};
 _932 = _930.value;
 if (_932) goto block124; else goto block171;
 block171:;
-_934 = (frost$core$Int) {79u};
+_934 = (frost$core$Int) {80u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:93:31
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _937 = _126.value;
@@ -2403,7 +2403,7 @@ _940 = (frost$core$Bit) {_939};
 _942 = _940.value;
 if (_942) goto block124; else goto block173;
 block173:;
-_944 = (frost$core$Int) {80u};
+_944 = (frost$core$Int) {81u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:93:49
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _947 = _126.value;
@@ -2413,7 +2413,7 @@ _950 = (frost$core$Bit) {_949};
 _952 = _950.value;
 if (_952) goto block124; else goto block175;
 block175:;
-_954 = (frost$core$Int) {81u};
+_954 = (frost$core$Int) {82u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:93:67
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _957 = _126.value;
@@ -2423,7 +2423,7 @@ _960 = (frost$core$Bit) {_959};
 _962 = _960.value;
 if (_962) goto block124; else goto block177;
 block177:;
-_964 = (frost$core$Int) {82u};
+_964 = (frost$core$Int) {83u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:93:85
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _967 = _126.value;
@@ -2433,7 +2433,7 @@ _970 = (frost$core$Bit) {_969};
 _972 = _970.value;
 if (_972) goto block124; else goto block179;
 block179:;
-_974 = (frost$core$Int) {83u};
+_974 = (frost$core$Int) {84u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:94:31
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _977 = _126.value;
@@ -2443,7 +2443,7 @@ _980 = (frost$core$Bit) {_979};
 _982 = _980.value;
 if (_982) goto block124; else goto block181;
 block181:;
-_984 = (frost$core$Int) {84u};
+_984 = (frost$core$Int) {85u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:94:49
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _987 = _126.value;
@@ -2453,7 +2453,7 @@ _990 = (frost$core$Bit) {_989};
 _992 = _990.value;
 if (_992) goto block124; else goto block183;
 block183:;
-_994 = (frost$core$Int) {85u};
+_994 = (frost$core$Int) {86u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:94:70
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _997 = _126.value;
@@ -2463,7 +2463,7 @@ _1000 = (frost$core$Bit) {_999};
 _1002 = _1000.value;
 if (_1002) goto block124; else goto block185;
 block185:;
-_1004 = (frost$core$Int) {86u};
+_1004 = (frost$core$Int) {87u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:94:88
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _1007 = _126.value;
@@ -2473,7 +2473,7 @@ _1010 = (frost$core$Bit) {_1009};
 _1012 = _1010.value;
 if (_1012) goto block124; else goto block187;
 block187:;
-_1014 = (frost$core$Int) {87u};
+_1014 = (frost$core$Int) {88u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:95:31
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _1017 = _126.value;
@@ -2483,7 +2483,7 @@ _1020 = (frost$core$Bit) {_1019};
 _1022 = _1020.value;
 if (_1022) goto block124; else goto block189;
 block189:;
-_1024 = (frost$core$Int) {88u};
+_1024 = (frost$core$Int) {89u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:95:55
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _1027 = _126.value;
@@ -2493,7 +2493,7 @@ _1030 = (frost$core$Bit) {_1029};
 _1032 = _1030.value;
 if (_1032) goto block124; else goto block191;
 block191:;
-_1034 = (frost$core$Int) {89u};
+_1034 = (frost$core$Int) {90u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:95:73
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _1037 = _126.value;
@@ -2503,7 +2503,7 @@ _1040 = (frost$core$Bit) {_1039};
 _1042 = _1040.value;
 if (_1042) goto block124; else goto block193;
 block193:;
-_1044 = (frost$core$Int) {90u};
+_1044 = (frost$core$Int) {91u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:96:31
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _1047 = _126.value;
@@ -2513,7 +2513,7 @@ _1050 = (frost$core$Bit) {_1049};
 _1052 = _1050.value;
 if (_1052) goto block124; else goto block195;
 block195:;
-_1054 = (frost$core$Int) {91u};
+_1054 = (frost$core$Int) {92u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:96:49
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _1057 = _126.value;
@@ -2523,7 +2523,7 @@ _1060 = (frost$core$Bit) {_1059};
 _1062 = _1060.value;
 if (_1062) goto block124; else goto block197;
 block197:;
-_1064 = (frost$core$Int) {92u};
+_1064 = (frost$core$Int) {93u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:96:74
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _1067 = _126.value;
@@ -2533,7 +2533,7 @@ _1070 = (frost$core$Bit) {_1069};
 _1072 = _1070.value;
 if (_1072) goto block124; else goto block199;
 block199:;
-_1074 = (frost$core$Int) {93u};
+_1074 = (frost$core$Int) {94u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:97:31
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _1077 = _126.value;
@@ -2543,7 +2543,7 @@ _1080 = (frost$core$Bit) {_1079};
 _1082 = _1080.value;
 if (_1082) goto block124; else goto block201;
 block201:;
-_1084 = (frost$core$Int) {94u};
+_1084 = (frost$core$Int) {95u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:97:56
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _1087 = _126.value;
@@ -2553,7 +2553,7 @@ _1090 = (frost$core$Bit) {_1089};
 _1092 = _1090.value;
 if (_1092) goto block124; else goto block203;
 block203:;
-_1094 = (frost$core$Int) {95u};
+_1094 = (frost$core$Int) {96u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:97:73
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _1097 = _126.value;
@@ -2563,7 +2563,7 @@ _1100 = (frost$core$Bit) {_1099};
 _1102 = _1100.value;
 if (_1102) goto block124; else goto block205;
 block205:;
-_1104 = (frost$core$Int) {96u};
+_1104 = (frost$core$Int) {97u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:98:31
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _1107 = _126.value;
@@ -2573,7 +2573,7 @@ _1110 = (frost$core$Bit) {_1109};
 _1112 = _1110.value;
 if (_1112) goto block124; else goto block207;
 block207:;
-_1114 = (frost$core$Int) {97u};
+_1114 = (frost$core$Int) {98u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:98:57
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _1117 = _126.value;
@@ -2583,7 +2583,7 @@ _1120 = (frost$core$Bit) {_1119};
 _1122 = _1120.value;
 if (_1122) goto block124; else goto block209;
 block209:;
-_1124 = (frost$core$Int) {98u};
+_1124 = (frost$core$Int) {99u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:99:31
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _1127 = _126.value;
@@ -2593,7 +2593,7 @@ _1130 = (frost$core$Bit) {_1129};
 _1132 = _1130.value;
 if (_1132) goto block124; else goto block211;
 block211:;
-_1134 = (frost$core$Int) {99u};
+_1134 = (frost$core$Int) {100u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:99:67
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _1137 = _126.value;
@@ -2603,7 +2603,7 @@ _1140 = (frost$core$Bit) {_1139};
 _1142 = _1140.value;
 if (_1142) goto block124; else goto block213;
 block213:;
-_1144 = (frost$core$Int) {100u};
+_1144 = (frost$core$Int) {101u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:99:88
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _1147 = _126.value;
@@ -2613,7 +2613,7 @@ _1150 = (frost$core$Bit) {_1149};
 _1152 = _1150.value;
 if (_1152) goto block124; else goto block215;
 block215:;
-_1154 = (frost$core$Int) {101u};
+_1154 = (frost$core$Int) {102u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:100:31
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _1157 = _126.value;
@@ -2623,7 +2623,7 @@ _1160 = (frost$core$Bit) {_1159};
 _1162 = _1160.value;
 if (_1162) goto block124; else goto block217;
 block217:;
-_1164 = (frost$core$Int) {102u};
+_1164 = (frost$core$Int) {103u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from SyntaxHighlighter.frost:100:52
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _1167 = _126.value;

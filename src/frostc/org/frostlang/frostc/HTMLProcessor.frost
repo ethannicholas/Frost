@@ -69,7 +69,7 @@ class HTMLProcessor {
             s.replace(">", "&gt;")
             if current != SyntaxHighlighter.Kind.COMMENT &
                     current != SyntaxHighlighter.Kind.DOC_COMMENT {
-                result.append("<span class=\"\{t.first.kind}\">")
+                result.append("<span class=\"\{t.first.kind}_TOKEN\">")
             }
             result.append(s)
             if current != SyntaxHighlighter.Kind.COMMENT &

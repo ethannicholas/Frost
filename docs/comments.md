@@ -27,8 +27,8 @@ Documentation comments
 ----------------------
 
 Three or more equals signs (`===`) begin and end a *documentation comment*. Documentation comments
-are special comments that must appear immediately prior to a [class](classes.html),
-[method](methods.html), or [field](fields.html), and provide a formal description of the class,
+are special comments that must appear immediately prior to a [class](classes.md),
+[method](methods.md), or [field](fields.md), and provide a formal description of the class,
 method, or field they precede.
 
     ===================================================
@@ -41,6 +41,6 @@ method, or field they precede.
     }
 
 Documentation comments are described in more detail on the
-[documentation comments](documentationComments.html) page. Documentation comments in Frost, unlike
+[documentation comments](documentationComments.md) page. Documentation comments in Frost, unlike
 in many other languages, are actually part of the language's grammar and thus may not appear
 anywhere but immediately before a class, method, or field.

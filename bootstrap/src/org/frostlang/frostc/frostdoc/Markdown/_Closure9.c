@@ -82,7 +82,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_5);
 return;
 
 }
-frost$core$Object* org$frostlang$frostc$frostdoc$Markdown$_Closure9$$anonymous35$frost$collections$ListView$LTfrost$core$String$Q$GT$R$frost$core$Object(frost$collections$ListView* param0) {
+frost$core$Object* org$frostlang$frostc$frostdoc$Markdown$_Closure9$$anonymous33$frost$collections$ListView$LTfrost$core$String$Q$GT$R$frost$core$Object(frost$collections$ListView* param0) {
 
 frost$collections$ListView* _1;
 frost$core$Int _2;
@@ -391,7 +391,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_141);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:416
 _144 = *(&local0);
 _145 = *(&local3);
-_146 = ((frost$core$Int8*) org$frostlang$frostc$frostdoc$Markdown$_Closure9$$anonymous35$frost$collections$ListView$LTfrost$core$String$Q$GT$R$frost$core$Object);
+_146 = ((frost$core$Int8*) org$frostlang$frostc$frostdoc$Markdown$_Closure9$$anonymous33$frost$collections$ListView$LTfrost$core$String$Q$GT$R$frost$core$Object);
 FROST_ASSERT(32 == sizeof(frost$core$Method));
 _147 = (frost$core$Method*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$Method$class);
 // begin inline call to frost.core.Method.init(pointer:frost.unsafe.Pointer<frost.core.Int8>, target:frost.core.Immutable?) from Markdown.frost:416:36

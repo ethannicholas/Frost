@@ -1,8 +1,8 @@
 Interfaces
 ==========
 
-An interface is a special kind of class which only has [methods](methods.html) and
-[constants](constants.html), but no other kinds of fields. A [class](classes.html) may only have one
+An interface is a special kind of class which only has [methods](methods.md) and
+[constants](constants.md), but no other kinds of fields. A [class](classes.md) may only have one
 superclass, but it may have any number of superinterfaces. Interfaces are defined much like classes,
 but with the `interface` keyword and abstract-by-default methods:
 

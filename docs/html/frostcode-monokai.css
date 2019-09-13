@@ -33,13 +33,14 @@ pre {
     font-style: italic;
 }
 
-.frostcode .control, .frostcode .VAR, .frostcode .DEF, .frostcode .CONSTANT, .frostcode .PROPERTY,
-        .frostcode .AT_RETURN, .frostcode .DOT {
+.frostcode .control, .frostcode .VAR_TOKEN, .frostcode .DEF_TOKEN, .frostcode .CONSTANT_TOKEN,
+        .frostcode .PROPERTY_TOKEN, .frostcode .AT_RETURN_TOKEN, .frostcode .DOT_TOKEN {
     color: #F92672;
 }
 
-.frostcode .PACKAGE, .frostcode .CLASS, .frostcode .CHOICE, .frostcode .INTERFACE,
-        .frostcode .FUNCTION, .frostcode .METHOD, .frostcode .INIT {
+.frostcode .PACKAGE_TOKEN, .frostcode .CLASS_TOKEN, .frostcode .CHOICE_TOKEN,
+        .frostcode .INTERFACE_TOKEN, .frostcode .FUNCTION_TOKEN, .frostcode .METHOD,
+        .frostcode .INIT_TOKEN {
     color: #30E1EF;
     font-style: italic;
 }

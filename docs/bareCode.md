@@ -1,7 +1,7 @@
 Bare Code
 =========
 
-Normally, all Frost code is contained inside of [classes](classes.html). A single file in your
+Normally, all Frost code is contained inside of [classes](classes.md). A single file in your
 program, however, may consist of "bare code" which is not part of a class:
 
     def random := Random.default()    
@@ -12,7 +12,7 @@ program, however, may consist of "bare code" which is not part of a class:
 
 Leaving off the class definition like this is purely a means of reducing the boilerplate involved in
 writing simple programs. The compiler still internally creates a class to hold the
-[variables](variables.html) and [methods](methods.html) defined in this file, as if you had written:
+[variables](variables.md) and [methods](methods.md) defined in this file, as if you had written:
 
     class BareCode {
         def random := Random.default()

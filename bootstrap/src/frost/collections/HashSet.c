@@ -549,31 +549,33 @@ frost$core$Object* _42;
 frost$core$MutableString* _46;
 frost$core$String* _47;
 frost$collections$HashKey* _50;
-frost$core$Bit _51;
+frost$core$Object* _51;
 bool _52;
-frost$core$MutableString* _55;
-frost$collections$HashKey* _56;
-frost$core$Object* _57;
-$fn26 _60;
-frost$core$String* _61;
-frost$core$Object* _63;
-frost$core$MutableString* _69;
-frost$core$Object* _73;
-frost$core$String* _75;
-frost$core$Object* _76;
-frost$core$Object* _79;
-frost$collections$HashKey* _81;
-frost$core$Object* _82;
-frost$core$Object* _86;
-frost$core$MutableString* _89;
-frost$core$MutableString* _92;
-frost$core$String* _93;
-frost$core$Object* _94;
+frost$core$Bit _53;
+bool _54;
+frost$core$MutableString* _57;
+frost$collections$HashKey* _58;
+frost$core$Object* _59;
+$fn26 _62;
+frost$core$String* _63;
+frost$core$Object* _65;
+frost$core$MutableString* _71;
+frost$core$Object* _75;
+frost$core$String* _77;
+frost$core$Object* _78;
+frost$core$Object* _81;
+frost$collections$HashKey* _83;
+frost$core$Object* _84;
+frost$core$Object* _88;
+frost$core$MutableString* _91;
+frost$core$MutableString* _94;
+frost$core$String* _95;
 frost$core$Object* _96;
-frost$core$String* _98;
-frost$core$Object* _99;
-frost$core$MutableString* _102;
-frost$core$Object* _103;
+frost$core$Object* _98;
+frost$core$String* _100;
+frost$core$Object* _101;
+frost$core$MutableString* _104;
+frost$core$Object* _105;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashSet.frost:59
 FROST_ASSERT(48 == sizeof(frost$core$MutableString));
 _1 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
@@ -638,67 +640,69 @@ frost$core$Frost$unref$frost$core$Object$Q(_42);
 _46 = *(&local0);
 _47 = *(&local1);
 frost$core$MutableString$append$frost$core$String(_46, _47);
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashSet.frost:63
-_50 = *(&local2);
-_51 = (frost$core$Bit) {true};
-_52 = _51.value;
-if (_52) goto block4; else goto block6;
-block4:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashSet.frost:64
-_55 = *(&local0);
-_56 = *(&local2);
-_57 = ((frost$core$Object*) _56);
-// begin inline call to method frost.core.MutableString.append(o:frost.core.Object) from HashSet.frost:64:30
+_50 = *(&local2);
+_51 = ((frost$core$Object*) _50);
+_52 = _51 != NULL;
+_53 = (frost$core$Bit) {_52};
+_54 = _53.value;
+if (_54) goto block4; else goto block6;
+block4:;
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashSet.frost:65
+_57 = *(&local0);
+_58 = *(&local2);
+_59 = ((frost$core$Object*) _58);
+// begin inline call to method frost.core.MutableString.append(o:frost.core.Object) from HashSet.frost:65:30
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/MutableString.frost:150
-_60 = ($fn33) _57->$class->vtable[0];
-_61 = _60(_57);
-frost$core$MutableString$append$frost$core$String(_55, _61);
-_63 = ((frost$core$Object*) _61);
-frost$core$Frost$unref$frost$core$Object$Q(_63);
+_62 = ($fn33) _59->$class->vtable[0];
+_63 = _62(_59);
+frost$core$MutableString$append$frost$core$String(_57, _63);
+_65 = ((frost$core$Object*) _63);
+frost$core$Frost$unref$frost$core$Object$Q(_65);
 goto block5;
 block6:;
 // <no location>
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashSet.frost:67
-_69 = *(&local0);
-frost$core$MutableString$append$frost$core$String(_69, &$s34);
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashSet.frost:68
+_71 = *(&local0);
+frost$core$MutableString$append$frost$core$String(_71, &$s34);
 goto block5;
 block5:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashSet.frost:69
-_73 = ((frost$core$Object*) &$s35);
-frost$core$Frost$ref$frost$core$Object$Q(_73);
-_75 = *(&local1);
-_76 = ((frost$core$Object*) _75);
-frost$core$Frost$unref$frost$core$Object$Q(_76);
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashSet.frost:70
+_75 = ((frost$core$Object*) &$s35);
+frost$core$Frost$ref$frost$core$Object$Q(_75);
+_77 = *(&local1);
+_78 = ((frost$core$Object*) _77);
+frost$core$Frost$unref$frost$core$Object$Q(_78);
 *(&local1) = &$s36;
-_79 = _37;
-frost$core$Frost$unref$frost$core$Object$Q(_79);
-_81 = *(&local2);
-_82 = ((frost$core$Object*) _81);
-frost$core$Frost$unref$frost$core$Object$Q(_82);
+_81 = _37;
+frost$core$Frost$unref$frost$core$Object$Q(_81);
+_83 = *(&local2);
+_84 = ((frost$core$Object*) _83);
+frost$core$Frost$unref$frost$core$Object$Q(_84);
 *(&local2) = ((frost$collections$HashKey*) NULL);
 goto block1;
 block3:;
-_86 = ((frost$core$Object*) _26);
-frost$core$Frost$unref$frost$core$Object$Q(_86);
-// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashSet.frost:71
-_89 = *(&local0);
-frost$core$MutableString$append$frost$core$String(_89, &$s37);
+_88 = ((frost$core$Object*) _26);
+frost$core$Frost$unref$frost$core$Object$Q(_88);
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashSet.frost:72
-_92 = *(&local0);
-_93 = frost$core$MutableString$finish$R$frost$core$String(_92);
-_94 = ((frost$core$Object*) _93);
-frost$core$Frost$ref$frost$core$Object$Q(_94);
-_96 = ((frost$core$Object*) _93);
-frost$core$Frost$unref$frost$core$Object$Q(_96);
-_98 = *(&local1);
-_99 = ((frost$core$Object*) _98);
-frost$core$Frost$unref$frost$core$Object$Q(_99);
+_91 = *(&local0);
+frost$core$MutableString$append$frost$core$String(_91, &$s37);
+// /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashSet.frost:73
+_94 = *(&local0);
+_95 = frost$core$MutableString$finish$R$frost$core$String(_94);
+_96 = ((frost$core$Object*) _95);
+frost$core$Frost$ref$frost$core$Object$Q(_96);
+_98 = ((frost$core$Object*) _95);
+frost$core$Frost$unref$frost$core$Object$Q(_98);
+_100 = *(&local1);
+_101 = ((frost$core$Object*) _100);
+frost$core$Frost$unref$frost$core$Object$Q(_101);
 *(&local1) = ((frost$core$String*) NULL);
-_102 = *(&local0);
-_103 = ((frost$core$Object*) _102);
-frost$core$Frost$unref$frost$core$Object$Q(_103);
+_104 = *(&local0);
+_105 = ((frost$core$Object*) _104);
+frost$core$Frost$unref$frost$core$Object$Q(_105);
 *(&local0) = ((frost$core$MutableString*) NULL);
-return _93;
+return _95;
 
 }
 void frost$collections$HashSet$cleanup(frost$collections$HashSet* param0) {

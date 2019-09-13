@@ -1,23 +1,23 @@
 Inline Methods
 ==============
 
-In addition to defining [methods](methods.html) as members of a [class](classes.html), you may use
-*inline methods* in [expressions](expressions.html):
+In addition to defining [methods](methods.md) as members of a [class](classes.md), you may use
+*inline methods* in [expressions](expressions.md):
 
     table.setFormatter(function(node:Node):String {
         return "\{node.id} (\{node.children.length})"
     })
 
 Inline methods are defined very similarly to normal class member functions. They may be either
-methods or [functions](functions.html), but they do not have names or annotations. Methods are a
-first-class [type](types.html) in Frost, meaning that you may store methods in variables, return
+methods or [functions](functions.md), but they do not have names or annotations. Methods are a
+first-class [type](types.md) in Frost, meaning that you may store methods in variables, return
 them from methods, create arrays of methods, and otherwise treat them as you would any other Frost
 value.
 
-Methods defined inside of another method may access any visible [defines](defines.html), constants,
+Methods defined inside of another method may access any visible [defines](defines.md), constants,
 non-variable method parameters, or fields of the enclosing class.
 
-See [method types](types.html#methodTypes) for how to describe the [type](type.html) of a method.
+See [method types](types.md#methodTypes) for how to describe the [type](types.md) of a method.
 
 <a name="lambdas"></a>
 Lambdas

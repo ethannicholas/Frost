@@ -17,10 +17,10 @@ Methods
         <statements>
     }
 
-A method is a [named](identifiers.html) block of code which can be invoked by *calling* the method.
+A method is a [named](identifiers.md) block of code which can be invoked by *calling* the method.
 Methods take zero or more *parameters*, which are values passed in to the method that it can
 reference as if they were local variables. Each parameter is a name, a colon (`:`), and a
-[type](types.html), and multiple parameters are separated by a comma (`,`). Methods may *return* a
+[type](types.md), and multiple parameters are separated by a comma (`,`). Methods may *return* a
 value, which becomes the value of the method call expression.
 
 Example:
@@ -46,24 +46,24 @@ This defines a method which returns the value of its argument squared.
 Annotations
 -----------
 
-The following [annotations](annotations.html) are legal on methods:
+The following [annotations](annotations.md) are legal on methods:
 
-* [`@private`](annotations.html#private)
-* [`@protected`](annotations.html#protected)
-* [`@class`](annotations.html#class)
-* [`@abstract`](annotations.html#abstract)
-* [`@final`](annotations.html#final)
-* [`@override`](annotations.html#override)
-* [`@pre(...)`](annotations.html#pre)
-* [`@preOr(...)`](annotations.html#preOr)
-* [`@post(...)`](annotations.html#post)
-* [`@postAnd(...)`](annotations.html#post)
+* [`@private`](annotations.md#private)
+* [`@protected`](annotations.md#protected)
+* [`@class`](annotations.md#class)
+* [`@abstract`](annotations.md#abstract)
+* [`@final`](annotations.md#final)
+* [`@override`](annotations.md#override)
+* [`@pre(...)`](annotations.md#pre)
+* [`@preOr(...)`](annotations.md#preOr)
+* [`@post(...)`](annotations.md#post)
+* [`@postAnd(...)`](annotations.md#post)
 
 <a name="variableParameters"></a>
 Variable Parameters
 -------------------
 
-By default, method parameters behave as [defines](defines.html); that is, the object the method
+By default, method parameters behave as [defines](defines.md); that is, the object the method
 parameter refers to may be modified, but the parameter may not be reassigned to point to a
 different object.
 
@@ -86,18 +86,11 @@ modified:
 Variable method parameters are treated as ordinary local variables, and reassigning the variable
 does not affect anything outside of the method itself.
 
-<a name="varargs"></a>
-Variadic Methods
-----------------
-
-Methods may accept a variable number of parameters (*variable arity* or *variadic* methods). See
-[variadic methods](variadic.html) for details.
-
 self
 ----
 
-Within an instance method (including [functions](functions.html) and [inits](initMethods.html)), you
-may refer to the object on which the method is running using the [`self` keyword](self.html).
+Within an instance method (including [functions](functions.md) and [inits](initMethods.md)), you
+may refer to the object on which the method is running using the [`self` keyword](self.md).
 
 Overriding Methods
 ------------------
@@ -134,7 +127,7 @@ at runtime based on the class of the object:
     object.performFoo() -- displays "subclass method!"
 
 All parameter types and the return type of an override method must match exactly (including
-[nullability](nonNullability.html)).
+[nullability](nonNullability.md)).
 
 Calling superclass methods
 --------------------------
@@ -182,17 +175,17 @@ Methods and functions are *first-class* values in Frost, meaning that they can b
 variables, passed into and returned from methods, and otherwise be used as any other value would be.
 There are three ways to use a method as a value:
 
-[Inline methods](inlineMethods.html), such as:
+[Inline methods](inlineMethods.md), such as:
 
     list.apply(method(s:String) {
         ...
     })
 
-[Lambdas](inlineMethods.html#lambdas), such as:
+[Lambdas](inlineMethods.md#lambdas), such as:
    
     list.fold((x, y) => x.union(y))
 )
 
-[Method References](methodReferences.html), such as:
+[Method References](methodReferences.md), such as:
 
     list.fold(Int.+)

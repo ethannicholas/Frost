@@ -1,8 +1,8 @@
 Annotations
 ===========
 
-Annotations are special tokens attached to [classes](classes.html), [fields](fields.html), or
-[methods](methods.html). These tokens provide additional information about the entities they are
+Annotations are special tokens attached to [classes](classes.md), [fields](fields.md), or
+[methods](methods.md). These tokens provide additional information about the entities they are
 attached to. Annotations come directly before the entity they describe, as in:
 
     @protected
@@ -43,7 +43,7 @@ of the class.
 @thread
 -------
 
-`@thread` fields are shared on a per-[thread](threads.html) basis. Each thread "sees" a different
+`@thread` fields are shared on a per-[thread](threads.md) basis. Each thread "sees" a different
 copy of the field.
 
 <a name="abstract"></a>
@@ -142,7 +142,7 @@ Used on a method to indicate that the method only modifies the containing object
 *wholly owns* (objects which are never visible outside of the containing object), or its parameters.
 
 Because of these restrictions, methods marked `@limited` may safely be used from
-[functions](functions.html), as long as the object the method is being called on was created within
+[functions](functions.md), as long as the object the method is being called on was created within
 the function and is not visible from outside the function, and any mutable parameters are similarly
 only visible from within the function.
 
@@ -170,7 +170,7 @@ is potentially visible and therefore cannot be modified.
 @unsafeFunction
 ---------------
 
-Indicates that a [function](functions.html) performs prohibited operations. Unsafe functions are
+Indicates that a [function](functions.md) performs prohibited operations. Unsafe functions are
 allowed to call methods, modify variables, and otherwise modify state, and the `@unsafeFunction`
 indicates that they should still be treated as functions by the compiler.
 
@@ -183,5 +183,4 @@ potentially result in incorrect behavior in the face of functions which do not "
 ---------
 
 The `@external` annotation marks a method which is implemented by external (non-Frost) code. Like
-abstract methods, external methods do not have a method body. See 
-[external methods](externalMethods.html) for more details.
+abstract methods, external methods do not have a method body.

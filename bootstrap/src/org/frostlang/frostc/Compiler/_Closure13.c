@@ -20,14 +20,14 @@ org$frostlang$frostc$SymbolTable** _3;
 org$frostlang$frostc$SymbolTable* _4;
 frost$core$Object* _5;
 org$frostlang$frostc$SymbolTable** _7;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5800
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5835
 _1 = ((frost$core$Object*) param1);
 frost$core$Frost$ref$frost$core$Object$Q(_1);
-_3 = &param0->$dummy445;
+_3 = &param0->$dummy447;
 _4 = *_3;
 _5 = ((frost$core$Object*) _4);
 frost$core$Frost$unref$frost$core$Object$Q(_5);
-_7 = &param0->$dummy445;
+_7 = &param0->$dummy447;
 *_7 = param1;
 return;
 
@@ -38,10 +38,10 @@ frost$core$Object* _1;
 org$frostlang$frostc$SymbolTable** _3;
 org$frostlang$frostc$SymbolTable* _4;
 frost$core$Object* _5;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5800
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5835
 _1 = ((frost$core$Object*) param0);
 frost$core$Object$cleanup(_1);
-_3 = &param0->$dummy445;
+_3 = &param0->$dummy447;
 _4 = *_3;
 _5 = ((frost$core$Object*) _4);
 frost$core$Frost$unref$frost$core$Object$Q(_5);
@@ -54,10 +54,10 @@ org$frostlang$frostc$SymbolTable** _1;
 org$frostlang$frostc$SymbolTable* _2;
 frost$core$String** _5;
 frost$core$String* _6;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5800
-_1 = &param0->$dummy445;
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5835
+_1 = &param0->$dummy447;
 _2 = *_1;
-// begin inline call to method org.frostlang.frostc.SymbolTable.add(s:org.frostlang.frostc.Symbol) from Compiler.frost:5800:58
+// begin inline call to method org.frostlang.frostc.SymbolTable.add(s:org.frostlang.frostc.Symbol) from Compiler.frost:5835:58
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/SymbolTable.frost:27
 _5 = &param1->name;
 _6 = *_5;

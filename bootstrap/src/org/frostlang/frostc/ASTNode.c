@@ -9655,7 +9655,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_3536);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/ASTNode.frost:503
 _3542 = *(&local94);
 _3543 = _3542.$rawValue;
-_3544 = (frost$core$Int) {95u};
+_3544 = (frost$core$Int) {96u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from ASTNode.frost:504:36
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _3547 = _3543.value;
@@ -9674,7 +9674,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_3558);
 *(&local97) = &$s399;
 goto block275;
 block277:;
-_3562 = (frost$core$Int) {96u};
+_3562 = (frost$core$Int) {97u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from ASTNode.frost:507:36
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _3565 = _3543.value;
@@ -9693,7 +9693,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_3576);
 *(&local97) = &$s401;
 goto block275;
 block280:;
-_3580 = (frost$core$Int) {97u};
+_3580 = (frost$core$Int) {98u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from ASTNode.frost:510:36
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _3583 = _3543.value;
@@ -9712,7 +9712,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_3594);
 *(&local97) = &$s403;
 goto block275;
 block283:;
-_3598 = (frost$core$Int) {98u};
+_3598 = (frost$core$Int) {99u};
 // begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from ASTNode.frost:513:36
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _3601 = _3543.value;
