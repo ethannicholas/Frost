@@ -21,7 +21,8 @@ org$frostlang$regex$RegexLexer$class_type org$frostlang$regex$RegexLexer$class =
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x72\x65\x67\x65\x78\x2e\x52\x65\x67\x65\x78\x4c\x65\x78\x65\x72", 30, -8429808340333666611, NULL };
 
-void org$frostlang$regex$RegexLexer$start$frost$core$String(org$frostlang$regex$RegexLexer* param0, frost$core$String* param1) {
+void org$frostlang$regex$RegexLexer$start$frost$core$String(void* rawSelf, frost$core$String* param1) {
+org$frostlang$regex$RegexLexer* param0 = (org$frostlang$regex$RegexLexer*) rawSelf;
 
 org$frostlang$plex$runtime$DFA* _1;
 frost$core$Int _2;
@@ -36,8 +37,7 @@ frost$core$Object* _12;
 org$frostlang$plex$runtime$DFA** _14;
 frost$core$Object* _16;
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexLexer.frost:21
-FROST_ASSERT(80 == sizeof(org$frostlang$plex$runtime$DFA));
-_1 = (org$frostlang$plex$runtime$DFA*) frostObjectAlloc(80, (frost$core$Class*) &org$frostlang$plex$runtime$DFA$class);
+_1 = (org$frostlang$plex$runtime$DFA*) frostObjectAlloc(sizeof(org$frostlang$plex$runtime$DFA), (frost$core$Class*) &org$frostlang$plex$runtime$DFA$class);
 _2 = (frost$core$Int) {20u};
 _3 = &param0->transitions;
 _4 = *_3;
@@ -109,7 +109,7 @@ frost$core$Int* _60;
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexLexer.frost:26
 _1 = frost$core$Int64$init$frost$core$Int(param0);
 _2 = _1.value;
-_3 = ((frost$core$Int*) frostAlloc(_2 * 8));
+_3 = ((frost$core$Int*) frostAlloc(_2 * sizeof(frost$core$Int)));
 *(&local0) = _3;
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexLexer.frost:27
 _6 = (frost$core$Int) {0u};
@@ -3092,7 +3092,7 @@ frost$core$Int** _3802;
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexLexer.frost:35
 _1 = (frost$core$Int64) {256u};
 _2 = _1.value;
-_3 = ((frost$core$Int**) frostAlloc(_2 * 8));
+_3 = ((frost$core$Int**) frostAlloc(_2 * sizeof(frost$core$Int*)));
 *(&local0) = _3;
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexLexer.frost:36
 _6 = *(&local0);
@@ -3103,7 +3103,7 @@ _9 = (frost$core$Int) {0u};
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexLexer.frost:26
 _12 = frost$core$Int64$init$frost$core$Int(_8);
 _13 = _12.value;
-_14 = ((frost$core$Int*) frostAlloc(_13 * 8));
+_14 = ((frost$core$Int*) frostAlloc(_13 * sizeof(frost$core$Int)));
 *(&local1) = _14;
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexLexer.frost:27
 _17 = (frost$core$Int) {0u};
@@ -3277,7 +3277,7 @@ _178 = (frost$core$Int) {0u};
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexLexer.frost:26
 _181 = frost$core$Int64$init$frost$core$Int(_177);
 _182 = _181.value;
-_183 = ((frost$core$Int*) frostAlloc(_182 * 8));
+_183 = ((frost$core$Int*) frostAlloc(_182 * sizeof(frost$core$Int)));
 *(&local3) = _183;
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexLexer.frost:27
 _186 = (frost$core$Int) {0u};
@@ -3586,7 +3586,7 @@ _482 = (frost$core$Int) {0u};
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexLexer.frost:26
 _485 = frost$core$Int64$init$frost$core$Int(_481);
 _486 = _485.value;
-_487 = ((frost$core$Int*) frostAlloc(_486 * 8));
+_487 = ((frost$core$Int*) frostAlloc(_486 * sizeof(frost$core$Int)));
 *(&local5) = _487;
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexLexer.frost:27
 _490 = (frost$core$Int) {0u};
@@ -3697,7 +3697,7 @@ _588 = (frost$core$Int) {0u};
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexLexer.frost:26
 _591 = frost$core$Int64$init$frost$core$Int(_587);
 _592 = _591.value;
-_593 = ((frost$core$Int*) frostAlloc(_592 * 8));
+_593 = ((frost$core$Int*) frostAlloc(_592 * sizeof(frost$core$Int)));
 *(&local7) = _593;
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexLexer.frost:27
 _596 = (frost$core$Int) {0u};
@@ -3790,7 +3790,7 @@ _676 = (frost$core$Int) {0u};
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexLexer.frost:26
 _679 = frost$core$Int64$init$frost$core$Int(_675);
 _680 = _679.value;
-_681 = ((frost$core$Int*) frostAlloc(_680 * 8));
+_681 = ((frost$core$Int*) frostAlloc(_680 * sizeof(frost$core$Int)));
 *(&local9) = _681;
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexLexer.frost:27
 _684 = (frost$core$Int) {0u};
@@ -3883,7 +3883,7 @@ _764 = (frost$core$Int) {0u};
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexLexer.frost:26
 _767 = frost$core$Int64$init$frost$core$Int(_763);
 _768 = _767.value;
-_769 = ((frost$core$Int*) frostAlloc(_768 * 8));
+_769 = ((frost$core$Int*) frostAlloc(_768 * sizeof(frost$core$Int)));
 *(&local11) = _769;
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexLexer.frost:27
 _772 = (frost$core$Int) {0u};
@@ -3976,7 +3976,7 @@ _852 = (frost$core$Int) {0u};
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexLexer.frost:26
 _855 = frost$core$Int64$init$frost$core$Int(_851);
 _856 = _855.value;
-_857 = ((frost$core$Int*) frostAlloc(_856 * 8));
+_857 = ((frost$core$Int*) frostAlloc(_856 * sizeof(frost$core$Int)));
 *(&local13) = _857;
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexLexer.frost:27
 _860 = (frost$core$Int) {0u};
@@ -4069,7 +4069,7 @@ _940 = (frost$core$Int) {0u};
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexLexer.frost:26
 _943 = frost$core$Int64$init$frost$core$Int(_939);
 _944 = _943.value;
-_945 = ((frost$core$Int*) frostAlloc(_944 * 8));
+_945 = ((frost$core$Int*) frostAlloc(_944 * sizeof(frost$core$Int)));
 *(&local15) = _945;
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexLexer.frost:27
 _948 = (frost$core$Int) {0u};
@@ -4162,7 +4162,7 @@ _1028 = (frost$core$Int) {0u};
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexLexer.frost:26
 _1031 = frost$core$Int64$init$frost$core$Int(_1027);
 _1032 = _1031.value;
-_1033 = ((frost$core$Int*) frostAlloc(_1032 * 8));
+_1033 = ((frost$core$Int*) frostAlloc(_1032 * sizeof(frost$core$Int)));
 *(&local17) = _1033;
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexLexer.frost:27
 _1036 = (frost$core$Int) {0u};
@@ -4273,7 +4273,7 @@ _1134 = (frost$core$Int) {0u};
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexLexer.frost:26
 _1137 = frost$core$Int64$init$frost$core$Int(_1133);
 _1138 = _1137.value;
-_1139 = ((frost$core$Int*) frostAlloc(_1138 * 8));
+_1139 = ((frost$core$Int*) frostAlloc(_1138 * sizeof(frost$core$Int)));
 *(&local19) = _1139;
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexLexer.frost:27
 _1142 = (frost$core$Int) {0u};
@@ -4366,7 +4366,7 @@ _1222 = (frost$core$Int) {0u};
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexLexer.frost:26
 _1225 = frost$core$Int64$init$frost$core$Int(_1221);
 _1226 = _1225.value;
-_1227 = ((frost$core$Int*) frostAlloc(_1226 * 8));
+_1227 = ((frost$core$Int*) frostAlloc(_1226 * sizeof(frost$core$Int)));
 *(&local21) = _1227;
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexLexer.frost:27
 _1230 = (frost$core$Int) {0u};
@@ -4585,7 +4585,7 @@ _1436 = (frost$core$Int) {0u};
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexLexer.frost:26
 _1439 = frost$core$Int64$init$frost$core$Int(_1435);
 _1440 = _1439.value;
-_1441 = ((frost$core$Int*) frostAlloc(_1440 * 8));
+_1441 = ((frost$core$Int*) frostAlloc(_1440 * sizeof(frost$core$Int)));
 *(&local23) = _1441;
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexLexer.frost:27
 _1444 = (frost$core$Int) {0u};
@@ -4921,7 +4921,7 @@ _1767 = (frost$core$Int) {0u};
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexLexer.frost:26
 _1770 = frost$core$Int64$init$frost$core$Int(_1766);
 _1771 = _1770.value;
-_1772 = ((frost$core$Int*) frostAlloc(_1771 * 8));
+_1772 = ((frost$core$Int*) frostAlloc(_1771 * sizeof(frost$core$Int)));
 *(&local25) = _1772;
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexLexer.frost:27
 _1775 = (frost$core$Int) {0u};
@@ -5014,7 +5014,7 @@ _1855 = (frost$core$Int) {0u};
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexLexer.frost:26
 _1858 = frost$core$Int64$init$frost$core$Int(_1854);
 _1859 = _1858.value;
-_1860 = ((frost$core$Int*) frostAlloc(_1859 * 8));
+_1860 = ((frost$core$Int*) frostAlloc(_1859 * sizeof(frost$core$Int)));
 *(&local27) = _1860;
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexLexer.frost:27
 _1863 = (frost$core$Int) {0u};
@@ -5107,7 +5107,7 @@ _1943 = (frost$core$Int) {0u};
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexLexer.frost:26
 _1946 = frost$core$Int64$init$frost$core$Int(_1942);
 _1947 = _1946.value;
-_1948 = ((frost$core$Int*) frostAlloc(_1947 * 8));
+_1948 = ((frost$core$Int*) frostAlloc(_1947 * sizeof(frost$core$Int)));
 *(&local29) = _1948;
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexLexer.frost:27
 _1951 = (frost$core$Int) {0u};
@@ -5200,7 +5200,7 @@ _2031 = (frost$core$Int) {0u};
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexLexer.frost:26
 _2034 = frost$core$Int64$init$frost$core$Int(_2030);
 _2035 = _2034.value;
-_2036 = ((frost$core$Int*) frostAlloc(_2035 * 8));
+_2036 = ((frost$core$Int*) frostAlloc(_2035 * sizeof(frost$core$Int)));
 *(&local31) = _2036;
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexLexer.frost:27
 _2039 = (frost$core$Int) {0u};
@@ -5302,7 +5302,7 @@ _2128 = (frost$core$Int) {0u};
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexLexer.frost:26
 _2131 = frost$core$Int64$init$frost$core$Int(_2127);
 _2132 = _2131.value;
-_2133 = ((frost$core$Int*) frostAlloc(_2132 * 8));
+_2133 = ((frost$core$Int*) frostAlloc(_2132 * sizeof(frost$core$Int)));
 *(&local33) = _2133;
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexLexer.frost:27
 _2136 = (frost$core$Int) {0u};
@@ -5629,7 +5629,7 @@ _2450 = (frost$core$Int) {0u};
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexLexer.frost:26
 _2453 = frost$core$Int64$init$frost$core$Int(_2449);
 _2454 = _2453.value;
-_2455 = ((frost$core$Int*) frostAlloc(_2454 * 8));
+_2455 = ((frost$core$Int*) frostAlloc(_2454 * sizeof(frost$core$Int)));
 *(&local35) = _2455;
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexLexer.frost:27
 _2458 = (frost$core$Int) {0u};
@@ -5731,7 +5731,7 @@ _2547 = (frost$core$Int) {0u};
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexLexer.frost:26
 _2550 = frost$core$Int64$init$frost$core$Int(_2546);
 _2551 = _2550.value;
-_2552 = ((frost$core$Int*) frostAlloc(_2551 * 8));
+_2552 = ((frost$core$Int*) frostAlloc(_2551 * sizeof(frost$core$Int)));
 *(&local37) = _2552;
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexLexer.frost:27
 _2555 = (frost$core$Int) {0u};
@@ -7080,7 +7080,7 @@ frost$core$Int* _126;
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexLexer.frost:334
 _1 = (frost$core$Int64) {20u};
 _2 = _1.value;
-_3 = ((frost$core$Int*) frostAlloc(_2 * 8));
+_3 = ((frost$core$Int*) frostAlloc(_2 * sizeof(frost$core$Int)));
 *(&local0) = _3;
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexLexer.frost:335
 _6 = *(&local0);
@@ -7207,7 +7207,8 @@ _126 = *(&local0);
 return _126;
 
 }
-void org$frostlang$regex$RegexLexer$cleanup(org$frostlang$regex$RegexLexer* param0) {
+void org$frostlang$regex$RegexLexer$cleanup(void* rawSelf) {
+org$frostlang$regex$RegexLexer* param0 = (org$frostlang$regex$RegexLexer*) rawSelf;
 
 frost$core$Int*** _1;
 frost$core$Int** _2;
@@ -7463,7 +7464,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_146);
 return;
 
 }
-org$frostlang$regex$RegexToken org$frostlang$regex$RegexLexer$next$R$org$frostlang$regex$RegexToken(org$frostlang$regex$RegexLexer* param0) {
+org$frostlang$regex$RegexToken org$frostlang$regex$RegexLexer$next$R$org$frostlang$regex$RegexToken(void* rawSelf) {
+org$frostlang$regex$RegexLexer* param0 = (org$frostlang$regex$RegexLexer*) rawSelf;
 
 org$frostlang$plex$runtime$RawToken local0;
 org$frostlang$regex$RegexToken$Kind local1;
@@ -7518,7 +7520,8 @@ _27 = org$frostlang$regex$RegexToken$init$org$frostlang$regex$RegexToken$Kind$fr
 return _27;
 
 }
-void org$frostlang$regex$RegexLexer$init(org$frostlang$regex$RegexLexer* param0) {
+void org$frostlang$regex$RegexLexer$init(void* rawSelf) {
+org$frostlang$regex$RegexLexer* param0 = (org$frostlang$regex$RegexLexer*) rawSelf;
 
 frost$core$Int** _1;
 frost$core$Int*** _2;

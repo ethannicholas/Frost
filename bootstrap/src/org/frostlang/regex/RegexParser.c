@@ -79,7 +79,8 @@ static frost$core$String $s81 = { (frost$core$Class*) &frost$core$String$class, 
 static frost$core$String $s84 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x70\x65\x63\x69\x61\x6c\x69\x7a\x65\x64\x41\x72\x72\x61\x79\x2e\x66\x72\x6f\x73\x74", 22, 6468124764262308515, NULL };
 static frost$core$String $s85 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x6f\x73\x74\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x53\x70\x65\x63\x69\x61\x6c\x69\x7a\x65\x64\x41\x72\x72\x61\x79\x3c\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x72\x65\x67\x65\x78\x2e\x52\x65\x67\x65\x78\x54\x6f\x6b\x65\x6e\x3e\x2e\x63\x6c\x65\x61\x72\x28\x29", 107, -5019524807047093654, NULL };
 
-void org$frostlang$regex$RegexParser$init$frost$threads$MessageQueue$LTorg$frostlang$frostc$Compiler$Message$GT(org$frostlang$regex$RegexParser* param0, frost$threads$MessageQueue* param1) {
+void org$frostlang$regex$RegexParser$init$frost$threads$MessageQueue$LTorg$frostlang$frostc$Compiler$Message$GT(void* rawSelf, frost$threads$MessageQueue* param1) {
+org$frostlang$regex$RegexParser* param0 = (org$frostlang$regex$RegexParser*) rawSelf;
 
 org$frostlang$regex$RegexLexer* _1;
 frost$core$Object* _3;
@@ -101,8 +102,7 @@ frost$threads$MessageQueue* _30;
 frost$core$Object* _31;
 frost$threads$MessageQueue** _33;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:10
-FROST_ASSERT(48 == sizeof(org$frostlang$regex$RegexLexer));
-_1 = (org$frostlang$regex$RegexLexer*) frostObjectAlloc(48, (frost$core$Class*) &org$frostlang$regex$RegexLexer$class);
+_1 = (org$frostlang$regex$RegexLexer*) frostObjectAlloc(sizeof(org$frostlang$regex$RegexLexer), (frost$core$Class*) &org$frostlang$regex$RegexLexer$class);
 org$frostlang$regex$RegexLexer$init(_1);
 _3 = ((frost$core$Object*) _1);
 frost$core$Frost$ref$frost$core$Object$Q(_3);
@@ -115,8 +115,7 @@ _9 = &param0->lexer;
 _11 = ((frost$core$Object*) _1);
 frost$core$Frost$unref$frost$core$Object$Q(_11);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:20
-FROST_ASSERT(40 == sizeof(frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT));
-_14 = (frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$class);
+_14 = (frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT*) frostObjectAlloc(sizeof(frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT), (frost$core$Class*) &frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$class);
 frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$init(_14);
 _16 = ((frost$core$Object*) _14);
 frost$core$Frost$ref$frost$core$Object$Q(_16);
@@ -140,7 +139,8 @@ _33 = &param0->errors;
 return;
 
 }
-void org$frostlang$regex$RegexParser$start$frost$io$File$frost$core$Int$frost$core$String(org$frostlang$regex$RegexParser* param0, frost$io$File* param1, frost$core$Int param2, frost$core$String* param3) {
+void org$frostlang$regex$RegexParser$start$frost$io$File$frost$core$Int$frost$core$String(void* rawSelf, frost$io$File* param1, frost$core$Int param2, frost$core$String* param3) {
+org$frostlang$regex$RegexParser* param0 = (org$frostlang$regex$RegexParser*) rawSelf;
 
 frost$core$Int local0;
 org$frostlang$regex$RegexLexer** _1;
@@ -230,8 +230,7 @@ _1 = &param0->lexer;
 _2 = *_1;
 // begin inline call to method org.frostlang.regex.RegexLexer.start(source:frost.core.String) from RegexParser.frost:27:20
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/regex/RegexLexer.frost:21
-FROST_ASSERT(80 == sizeof(org$frostlang$plex$runtime$DFA));
-_5 = (org$frostlang$plex$runtime$DFA*) frostObjectAlloc(80, (frost$core$Class*) &org$frostlang$plex$runtime$DFA$class);
+_5 = (org$frostlang$plex$runtime$DFA*) frostObjectAlloc(sizeof(org$frostlang$plex$runtime$DFA), (frost$core$Class*) &org$frostlang$plex$runtime$DFA$class);
 _6 = (frost$core$Int) {20u};
 _7 = &_2->transitions;
 _8 = *_7;
@@ -362,7 +361,8 @@ frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$St
 abort(); // unreachable
 
 }
-org$frostlang$regex$RegexToken org$frostlang$regex$RegexParser$next$R$org$frostlang$regex$RegexToken(org$frostlang$regex$RegexParser* param0) {
+org$frostlang$regex$RegexToken org$frostlang$regex$RegexParser$next$R$org$frostlang$regex$RegexToken(void* rawSelf) {
+org$frostlang$regex$RegexParser* param0 = (org$frostlang$regex$RegexParser*) rawSelf;
 
 frost$core$Int local0;
 org$frostlang$regex$RegexToken local1;
@@ -560,7 +560,8 @@ _100 = *(&local5);
 return _100;
 
 }
-void org$frostlang$regex$RegexParser$pushback$org$frostlang$regex$RegexToken(org$frostlang$regex$RegexParser* param0, org$frostlang$regex$RegexToken param1) {
+void org$frostlang$regex$RegexParser$pushback$org$frostlang$regex$RegexToken(void* rawSelf, org$frostlang$regex$RegexToken param1) {
+org$frostlang$regex$RegexParser* param0 = (org$frostlang$regex$RegexParser*) rawSelf;
 
 frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT** _1;
 frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT* _2;
@@ -571,7 +572,8 @@ frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT$add$org$f
 return;
 
 }
-org$frostlang$regex$RegexToken org$frostlang$regex$RegexParser$peek$R$org$frostlang$regex$RegexToken(org$frostlang$regex$RegexParser* param0) {
+org$frostlang$regex$RegexToken org$frostlang$regex$RegexParser$peek$R$org$frostlang$regex$RegexToken(void* rawSelf) {
+org$frostlang$regex$RegexParser* param0 = (org$frostlang$regex$RegexParser*) rawSelf;
 
 frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT** _1;
 frost$collections$SpecializedArray$LTorg$frostlang$regex$RegexToken$GT* _2;
@@ -701,7 +703,8 @@ _63 = _60[_62];
 return _63;
 
 }
-frost$core$Bit org$frostlang$regex$RegexParser$checkNext$org$frostlang$regex$RegexToken$Kind$R$frost$core$Bit(org$frostlang$regex$RegexParser* param0, org$frostlang$regex$RegexToken$Kind param1) {
+frost$core$Bit org$frostlang$regex$RegexParser$checkNext$org$frostlang$regex$RegexToken$Kind$R$frost$core$Bit(void* rawSelf, org$frostlang$regex$RegexToken$Kind param1) {
+org$frostlang$regex$RegexParser* param0 = (org$frostlang$regex$RegexParser*) rawSelf;
 
 org$frostlang$regex$RegexToken local0;
 org$frostlang$regex$RegexToken _1;
@@ -727,12 +730,12 @@ _1 = org$frostlang$regex$RegexParser$next$R$org$frostlang$regex$RegexToken(param
 _4 = *(&local0);
 _5 = _4.kind;
 org$frostlang$regex$RegexToken$Kind$wrapper* $tmp23;
-$tmp23 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
+$tmp23 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$regex$RegexToken$Kind$wrapper), (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
 $tmp23->value = _5;
 _6 = ((frost$core$Equatable*) $tmp23);
 _7 = _6;
 org$frostlang$regex$RegexToken$Kind$wrapper* $tmp24;
-$tmp24 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
+$tmp24 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$regex$RegexToken$Kind$wrapper), (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
 $tmp24->value = param1;
 _8 = ((frost$core$Equatable*) $tmp24);
 ITable* $tmp25 = _7->$class->itable;
@@ -764,7 +767,8 @@ _29 = (frost$core$Bit) {false};
 return _29;
 
 }
-frost$core$Bit org$frostlang$regex$RegexParser$expect$org$frostlang$regex$RegexToken$Kind$frost$core$String$R$frost$core$Bit(org$frostlang$regex$RegexParser* param0, org$frostlang$regex$RegexToken$Kind param1, frost$core$String* param2) {
+frost$core$Bit org$frostlang$regex$RegexParser$expect$org$frostlang$regex$RegexToken$Kind$frost$core$String$R$frost$core$Bit(void* rawSelf, org$frostlang$regex$RegexToken$Kind param1, frost$core$String* param2) {
+org$frostlang$regex$RegexParser* param0 = (org$frostlang$regex$RegexParser*) rawSelf;
 
 org$frostlang$regex$RegexToken local0;
 frost$core$String* local1 = NULL;
@@ -855,12 +859,12 @@ _1 = org$frostlang$regex$RegexParser$next$R$org$frostlang$regex$RegexToken(param
 _4 = *(&local0);
 _5 = _4.kind;
 org$frostlang$regex$RegexToken$Kind$wrapper* $tmp27;
-$tmp27 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
+$tmp27 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$regex$RegexToken$Kind$wrapper), (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
 $tmp27->value = _5;
 _6 = ((frost$core$Equatable*) $tmp27);
 _7 = _6;
 org$frostlang$regex$RegexToken$Kind$wrapper* $tmp28;
-$tmp28 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
+$tmp28 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$regex$RegexToken$Kind$wrapper), (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
 $tmp28->value = param1;
 _8 = ((frost$core$Equatable*) $tmp28);
 ITable* $tmp29 = _7->$class->itable;
@@ -905,8 +909,7 @@ _40 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_39, &$s32);
 _43 = &param0->errors;
 _44 = *_43;
 _45 = _44;
-FROST_ASSERT(56 == sizeof(org$frostlang$frostc$Compiler$Message));
-_46 = (org$frostlang$frostc$Compiler$Message*) frostObjectAlloc(56, (frost$core$Class*) &org$frostlang$frostc$Compiler$Message$class);
+_46 = (org$frostlang$frostc$Compiler$Message*) frostObjectAlloc(sizeof(org$frostlang$frostc$Compiler$Message), (frost$core$Class*) &org$frostlang$frostc$Compiler$Message$class);
 _47 = (frost$core$Int) {0u};
 _48 = &param0->path;
 _49 = *_48;
@@ -997,7 +1000,8 @@ _128 = (frost$core$Bit) {false};
 return _128;
 
 }
-void org$frostlang$regex$RegexParser$error$org$frostlang$regex$RegexToken$frost$core$String(org$frostlang$regex$RegexParser* param0, org$frostlang$regex$RegexToken param1, frost$core$String* param2) {
+void org$frostlang$regex$RegexParser$error$org$frostlang$regex$RegexToken$frost$core$String(void* rawSelf, org$frostlang$regex$RegexToken param1, frost$core$String* param2) {
+org$frostlang$regex$RegexParser* param0 = (org$frostlang$regex$RegexParser*) rawSelf;
 
 frost$core$String* local0 = NULL;
 frost$core$String$Index$nullable local1;
@@ -1052,8 +1056,7 @@ frost$core$Object* _76;
 _1 = &param0->errors;
 _2 = *_1;
 _3 = _2;
-FROST_ASSERT(56 == sizeof(org$frostlang$frostc$Compiler$Message));
-_4 = (org$frostlang$frostc$Compiler$Message*) frostObjectAlloc(56, (frost$core$Class*) &org$frostlang$frostc$Compiler$Message$class);
+_4 = (org$frostlang$frostc$Compiler$Message*) frostObjectAlloc(sizeof(org$frostlang$frostc$Compiler$Message), (frost$core$Class*) &org$frostlang$frostc$Compiler$Message$class);
 _5 = (frost$core$Int) {0u};
 _6 = &param0->path;
 _7 = *_6;
@@ -1135,7 +1138,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_76);
 return;
 
 }
-frost$core$String* org$frostlang$regex$RegexParser$text$org$frostlang$regex$RegexToken$R$frost$core$String(org$frostlang$regex$RegexParser* param0, org$frostlang$regex$RegexToken param1) {
+frost$core$String* org$frostlang$regex$RegexParser$text$org$frostlang$regex$RegexToken$R$frost$core$String(void* rawSelf, org$frostlang$regex$RegexToken param1) {
+org$frostlang$regex$RegexParser* param0 = (org$frostlang$regex$RegexParser*) rawSelf;
 
 frost$core$String** _1;
 frost$core$String* _2;
@@ -1161,7 +1165,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_10);
 return _7;
 
 }
-frost$core$Bit org$frostlang$regex$RegexParser$characterClass$R$frost$core$Bit(org$frostlang$regex$RegexParser* param0) {
+frost$core$Bit org$frostlang$regex$RegexParser$characterClass$R$frost$core$Bit(void* rawSelf) {
+org$frostlang$regex$RegexParser* param0 = (org$frostlang$regex$RegexParser*) rawSelf;
 
 org$frostlang$regex$RegexToken local0;
 org$frostlang$regex$RegexToken$Kind local1;
@@ -1241,7 +1246,7 @@ block4:;
 _38 = *(&local0);
 _39 = _38.kind;
 org$frostlang$regex$RegexToken$Kind$wrapper* $tmp41;
-$tmp41 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
+$tmp41 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$regex$RegexToken$Kind$wrapper), (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
 $tmp41->value = _39;
 _40 = ((frost$core$Equatable*) $tmp41);
 _41 = _40;
@@ -1254,7 +1259,7 @@ _47 = *(&local2);
 *(&local1) = _47;
 _50 = *(&local1);
 org$frostlang$regex$RegexToken$Kind$wrapper* $tmp42;
-$tmp42 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
+$tmp42 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$regex$RegexToken$Kind$wrapper), (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
 $tmp42->value = _50;
 _51 = ((frost$core$Equatable*) $tmp42);
 ITable* $tmp43 = _41->$class->itable;
@@ -1280,7 +1285,8 @@ goto block10;
 block10:;
 
 }
-frost$core$Bit org$frostlang$regex$RegexParser$integer$R$frost$core$Bit(org$frostlang$regex$RegexParser* param0) {
+frost$core$Bit org$frostlang$regex$RegexParser$integer$R$frost$core$Bit(void* rawSelf) {
+org$frostlang$regex$RegexParser* param0 = (org$frostlang$regex$RegexParser*) rawSelf;
 
 org$frostlang$regex$RegexToken$Kind local0;
 org$frostlang$regex$RegexToken$Kind local1;
@@ -1362,12 +1368,12 @@ _35 = org$frostlang$regex$RegexParser$next$R$org$frostlang$regex$RegexToken(para
 _38 = *(&local5);
 _39 = _38.kind;
 org$frostlang$regex$RegexToken$Kind$wrapper* $tmp46;
-$tmp46 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
+$tmp46 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$regex$RegexToken$Kind$wrapper), (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
 $tmp46->value = _39;
 _40 = ((frost$core$Equatable*) $tmp46);
 _41 = _40;
 org$frostlang$regex$RegexToken$Kind$wrapper* $tmp47;
-$tmp47 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
+$tmp47 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$regex$RegexToken$Kind$wrapper), (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
 $tmp47->value = _32;
 _42 = ((frost$core$Equatable*) $tmp47);
 ITable* $tmp48 = _41->$class->itable;
@@ -1411,7 +1417,8 @@ _72 = (frost$core$Bit) {true};
 return _72;
 
 }
-frost$core$Bit org$frostlang$regex$RegexParser$metacharacter$R$frost$core$Bit(org$frostlang$regex$RegexParser* param0) {
+frost$core$Bit org$frostlang$regex$RegexParser$metacharacter$R$frost$core$Bit(void* rawSelf) {
+org$frostlang$regex$RegexParser* param0 = (org$frostlang$regex$RegexParser*) rawSelf;
 
 org$frostlang$regex$RegexToken local0;
 org$frostlang$regex$RegexToken$Kind local1;
@@ -1585,12 +1592,12 @@ _39 = org$frostlang$regex$RegexParser$next$R$org$frostlang$regex$RegexToken(para
 _42 = *(&local4);
 _43 = _42.kind;
 org$frostlang$regex$RegexToken$Kind$wrapper* $tmp53;
-$tmp53 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
+$tmp53 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$regex$RegexToken$Kind$wrapper), (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
 $tmp53->value = _43;
 _44 = ((frost$core$Equatable*) $tmp53);
 _45 = _44;
 org$frostlang$regex$RegexToken$Kind$wrapper* $tmp54;
-$tmp54 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
+$tmp54 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$regex$RegexToken$Kind$wrapper), (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
 $tmp54->value = _36;
 _46 = ((frost$core$Equatable*) $tmp54);
 ITable* $tmp55 = _45->$class->itable;
@@ -1788,7 +1795,8 @@ goto block35;
 block35:;
 
 }
-frost$core$Bit org$frostlang$regex$RegexParser$atom$R$frost$core$Bit(org$frostlang$regex$RegexParser* param0) {
+frost$core$Bit org$frostlang$regex$RegexParser$atom$R$frost$core$Bit(void* rawSelf) {
+org$frostlang$regex$RegexParser* param0 = (org$frostlang$regex$RegexParser*) rawSelf;
 
 org$frostlang$regex$RegexToken local0;
 org$frostlang$regex$RegexToken$Kind local1;
@@ -2158,12 +2166,12 @@ _102 = org$frostlang$regex$RegexParser$next$R$org$frostlang$regex$RegexToken(par
 _105 = *(&local4);
 _106 = _105.kind;
 org$frostlang$regex$RegexToken$Kind$wrapper* $tmp65;
-$tmp65 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
+$tmp65 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$regex$RegexToken$Kind$wrapper), (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
 $tmp65->value = _106;
 _107 = ((frost$core$Equatable*) $tmp65);
 _108 = _107;
 org$frostlang$regex$RegexToken$Kind$wrapper* $tmp66;
-$tmp66 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
+$tmp66 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$regex$RegexToken$Kind$wrapper), (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
 $tmp66->value = _99;
 _109 = ((frost$core$Equatable*) $tmp66);
 ITable* $tmp67 = _108->$class->itable;
@@ -2374,12 +2382,12 @@ _296 = org$frostlang$regex$RegexParser$next$R$org$frostlang$regex$RegexToken(par
 _299 = *(&local18);
 _300 = _299.kind;
 org$frostlang$regex$RegexToken$Kind$wrapper* $tmp71;
-$tmp71 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
+$tmp71 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$regex$RegexToken$Kind$wrapper), (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
 $tmp71->value = _300;
 _301 = ((frost$core$Equatable*) $tmp71);
 _302 = _301;
 org$frostlang$regex$RegexToken$Kind$wrapper* $tmp72;
-$tmp72 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
+$tmp72 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$regex$RegexToken$Kind$wrapper), (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
 $tmp72->value = _293;
 _303 = ((frost$core$Equatable*) $tmp72);
 ITable* $tmp73 = _302->$class->itable;
@@ -2449,12 +2457,12 @@ _355 = org$frostlang$regex$RegexParser$next$R$org$frostlang$regex$RegexToken(par
 _358 = *(&local22);
 _359 = _358.kind;
 org$frostlang$regex$RegexToken$Kind$wrapper* $tmp74;
-$tmp74 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
+$tmp74 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$regex$RegexToken$Kind$wrapper), (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
 $tmp74->value = _359;
 _360 = ((frost$core$Equatable*) $tmp74);
 _361 = _360;
 org$frostlang$regex$RegexToken$Kind$wrapper* $tmp75;
-$tmp75 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
+$tmp75 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$regex$RegexToken$Kind$wrapper), (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
 $tmp75->value = _352;
 _362 = ((frost$core$Equatable*) $tmp75);
 ITable* $tmp76 = _361->$class->itable;
@@ -2535,12 +2543,12 @@ _428 = org$frostlang$regex$RegexParser$next$R$org$frostlang$regex$RegexToken(par
 _431 = *(&local29);
 _432 = _431.kind;
 org$frostlang$regex$RegexToken$Kind$wrapper* $tmp78;
-$tmp78 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
+$tmp78 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$regex$RegexToken$Kind$wrapper), (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
 $tmp78->value = _432;
 _433 = ((frost$core$Equatable*) $tmp78);
 _434 = _433;
 org$frostlang$regex$RegexToken$Kind$wrapper* $tmp79;
-$tmp79 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
+$tmp79 = (org$frostlang$regex$RegexToken$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$regex$RegexToken$Kind$wrapper), (frost$core$Class*) &org$frostlang$regex$RegexToken$Kind$wrapperclass);
 $tmp79->value = _425;
 _435 = ((frost$core$Equatable*) $tmp79);
 ITable* $tmp80 = _434->$class->itable;
@@ -2610,7 +2618,8 @@ goto block85;
 block85:;
 
 }
-frost$core$Bit org$frostlang$regex$RegexParser$factor$R$frost$core$Bit(org$frostlang$regex$RegexParser* param0) {
+frost$core$Bit org$frostlang$regex$RegexParser$factor$R$frost$core$Bit(void* rawSelf) {
+org$frostlang$regex$RegexParser* param0 = (org$frostlang$regex$RegexParser*) rawSelf;
 
 frost$core$Bit _1;
 bool _4;
@@ -2641,7 +2650,8 @@ _16 = (frost$core$Bit) {true};
 return _16;
 
 }
-frost$core$Bit org$frostlang$regex$RegexParser$term$R$frost$core$Bit(org$frostlang$regex$RegexParser* param0) {
+frost$core$Bit org$frostlang$regex$RegexParser$term$R$frost$core$Bit(void* rawSelf) {
+org$frostlang$regex$RegexParser* param0 = (org$frostlang$regex$RegexParser*) rawSelf;
 
 frost$core$Bit local0;
 frost$core$Bit local1;
@@ -2788,7 +2798,8 @@ _90 = (frost$core$Bit) {true};
 return _90;
 
 }
-frost$core$Bit org$frostlang$regex$RegexParser$expression$R$frost$core$Bit(org$frostlang$regex$RegexParser* param0) {
+frost$core$Bit org$frostlang$regex$RegexParser$expression$R$frost$core$Bit(void* rawSelf) {
+org$frostlang$regex$RegexParser* param0 = (org$frostlang$regex$RegexParser*) rawSelf;
 
 frost$core$Bit local0;
 frost$core$Bit local1;
@@ -2987,7 +2998,8 @@ _122 = (frost$core$Bit) {true};
 return _122;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$regex$RegexParser$regex$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$regex$RegexParser* param0) {
+org$frostlang$frostc$ASTNode* org$frostlang$regex$RegexParser$regex$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf) {
+org$frostlang$regex$RegexParser* param0 = (org$frostlang$regex$RegexParser*) rawSelf;
 
 frost$core$Int local0;
 org$frostlang$frostc$Position local1;
@@ -3384,7 +3396,7 @@ _201 = (frost$core$Int) {_200};
 _204 = *(&local7);
 _205 = frost$core$Int64$init$frost$core$Int(_204);
 _206 = _205.value;
-_207 = ((frost$core$Char8*) frostAlloc(_206 * 1));
+_207 = ((frost$core$Char8*) frostAlloc(_206 * sizeof(frost$core$Char8)));
 *(&local8) = _207;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:228
 _210 = *(&local2);
@@ -3463,12 +3475,10 @@ _276 = (frost$core$Int) {_275};
 goto block27;
 block28:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/regex/RegexParser.frost:231
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_280 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_280 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _281 = (frost$core$Int) {37u};
 _282 = *(&local1);
-FROST_ASSERT(48 == sizeof(frost$core$String));
-_283 = (frost$core$String*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$String$class);
+_283 = (frost$core$String*) frostObjectAlloc(sizeof(frost$core$String), (frost$core$Class*) &frost$core$String$class);
 _284 = *(&local8);
 _285 = *(&local7);
 frost$core$String$init$frost$unsafe$Pointer$LTfrost$core$Char8$GT$frost$core$Int(_283, _284, _285);
@@ -3522,7 +3532,8 @@ frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$St
 abort(); // unreachable
 
 }
-void org$frostlang$regex$RegexParser$cleanup(org$frostlang$regex$RegexParser* param0) {
+void org$frostlang$regex$RegexParser$cleanup(void* rawSelf) {
+org$frostlang$regex$RegexParser* param0 = (org$frostlang$regex$RegexParser*) rawSelf;
 
 frost$core$Object* _1;
 org$frostlang$regex$RegexLexer** _3;

@@ -11,7 +11,14 @@ typedef struct org$frostlang$frostc$frostdoc$Markdown$HTMLToken {
     frost$core$Int32 refCount;
     frost$core$UInt8 $flags;
     frost$core$Int $rawValue;
-    int8_t $data[8];
+    union {
+        struct {
+            frost$core$String* field0;
+        } $TAG;
+        struct {
+            frost$core$String* field0;
+        } $TEXT;
+    } $data;
 } org$frostlang$frostc$frostdoc$Markdown$HTMLToken;
 #include "frost/core/Class.h"
 typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[4]; } org$frostlang$frostc$frostdoc$Markdown$HTMLToken$class_type;

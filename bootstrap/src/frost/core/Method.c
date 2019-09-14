@@ -32,7 +32,8 @@ static frost$core$String $s8 = { (frost$core$Class*) &frost$core$String$class, -
 static frost$core$String $s9 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x4d\x65\x74\x68\x6f\x64\x3c", 7, -4865483885953839548, NULL };
 static frost$core$String $s10 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x3e", 1, -5808601953130666271, NULL };
 
-void frost$core$Method$init$frost$unsafe$Pointer$LTfrost$core$Int8$GT$frost$core$Immutable$Q(frost$core$Method* param0, frost$core$Int8* param1, frost$core$Immutable* param2) {
+void frost$core$Method$init$frost$unsafe$Pointer$LTfrost$core$Int8$GT$frost$core$Immutable$Q(void* rawSelf, frost$core$Int8* param1, frost$core$Immutable* param2) {
+frost$core$Method* param0 = (frost$core$Method*) rawSelf;
 
 frost$core$Int8** _1;
 frost$core$Object* _4;
@@ -55,7 +56,8 @@ _10 = &param0->target;
 return;
 
 }
-frost$core$String* frost$core$Method$get_asString$R$frost$core$String(frost$core$Method* param0) {
+frost$core$String* frost$core$Method$get_asString$R$frost$core$String(void* rawSelf) {
+frost$core$Method* param0 = (frost$core$Method*) rawSelf;
 
 frost$core$Immutable** _1;
 frost$core$Immutable* _2;
@@ -171,7 +173,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_64);
 return _57;
 
 }
-void frost$core$Method$cleanup(frost$core$Method* param0) {
+void frost$core$Method$cleanup(void* rawSelf) {
+frost$core$Method* param0 = (frost$core$Method*) rawSelf;
 
 frost$core$Immutable* _1;
 frost$core$Immutable** _3;

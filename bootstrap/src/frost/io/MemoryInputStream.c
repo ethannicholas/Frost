@@ -16,7 +16,8 @@ frost$io$MemoryInputStream$class_type frost$io$MemoryInputStream$class = { (fros
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x69\x6f\x2e\x4d\x65\x6d\x6f\x72\x79\x49\x6e\x70\x75\x74\x53\x74\x72\x65\x61\x6d", 26, 6900884650380365222, NULL };
 
-void frost$io$MemoryInputStream$init$frost$core$String(frost$io$MemoryInputStream* param0, frost$core$String* param1) {
+void frost$io$MemoryInputStream$init$frost$core$String(void* rawSelf, frost$core$String* param1) {
+frost$io$MemoryInputStream* param0 = (frost$io$MemoryInputStream*) rawSelf;
 
 frost$core$Int _1;
 frost$core$Int* _2;
@@ -67,7 +68,8 @@ frost$io$InputStream$init(_29);
 return;
 
 }
-frost$core$UInt8$nullable frost$io$MemoryInputStream$read$R$frost$core$UInt8$Q(frost$io$MemoryInputStream* param0) {
+frost$core$UInt8$nullable frost$io$MemoryInputStream$read$R$frost$core$UInt8$Q(void* rawSelf) {
+frost$io$MemoryInputStream* param0 = (frost$io$MemoryInputStream*) rawSelf;
 
 frost$core$UInt8 local0;
 frost$core$Int* _1;
@@ -136,7 +138,8 @@ block2:;
 return ((frost$core$UInt8$nullable) { .nonnull = false });
 
 }
-void frost$io$MemoryInputStream$cleanup(frost$io$MemoryInputStream* param0) {
+void frost$io$MemoryInputStream$cleanup(void* rawSelf) {
+frost$io$MemoryInputStream* param0 = (frost$io$MemoryInputStream*) rawSelf;
 
 frost$io$InputStream* _1;
 frost$core$String** _3;

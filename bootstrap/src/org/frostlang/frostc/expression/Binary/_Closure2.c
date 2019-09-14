@@ -24,7 +24,8 @@ static frost$core$String $s6 = { (frost$core$Class*) &frost$core$String$class, -
 static frost$core$String $s7 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x46\x69\x78\x65\x64\x41\x72\x72\x61\x79\x3c\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x54\x79\x70\x65\x3e\x3f\x20\x74\x6f\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x46\x69\x78\x65\x64\x41\x72\x72\x61\x79\x3c\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x54\x79\x70\x65\x3e", 155, 85577287644488619, NULL };
 static frost$core$String $s8 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x43\x6c\x61\x73\x73", 16, -6222778858933417332, NULL };
 
-void org$frostlang$frostc$expression$Binary$_Closure2$init$org$frostlang$frostc$Type(org$frostlang$frostc$expression$Binary$_Closure2* param0, org$frostlang$frostc$Type* param1) {
+void org$frostlang$frostc$expression$Binary$_Closure2$init$org$frostlang$frostc$Type(void* rawSelf, org$frostlang$frostc$Type* param1) {
+org$frostlang$frostc$expression$Binary$_Closure2* param0 = (org$frostlang$frostc$expression$Binary$_Closure2*) rawSelf;
 
 frost$core$Object* _1;
 org$frostlang$frostc$Type** _3;
@@ -43,7 +44,8 @@ _7 = &param0->left;
 return;
 
 }
-void org$frostlang$frostc$expression$Binary$_Closure2$cleanup(org$frostlang$frostc$expression$Binary$_Closure2* param0) {
+void org$frostlang$frostc$expression$Binary$_Closure2$cleanup(void* rawSelf) {
+org$frostlang$frostc$expression$Binary$_Closure2* param0 = (org$frostlang$frostc$expression$Binary$_Closure2*) rawSelf;
 
 frost$core$Object* _1;
 org$frostlang$frostc$Type** _3;
@@ -59,7 +61,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_5);
 return;
 
 }
-frost$core$Bit org$frostlang$frostc$expression$Binary$_Closure2$$anonymous1$org$frostlang$frostc$MethodDecl$R$frost$core$Bit(org$frostlang$frostc$expression$Binary$_Closure2* param0, org$frostlang$frostc$MethodDecl* param1) {
+frost$core$Bit org$frostlang$frostc$expression$Binary$_Closure2$$anonymous1$org$frostlang$frostc$MethodDecl$R$frost$core$Bit(void* rawSelf, org$frostlang$frostc$MethodDecl* param1) {
+org$frostlang$frostc$expression$Binary$_Closure2* param0 = (org$frostlang$frostc$expression$Binary$_Closure2*) rawSelf;
 
 frost$core$Bit local0;
 org$frostlang$frostc$Type$Kind local1;
@@ -143,7 +146,7 @@ _22 = *_21;
 _25 = &_22->typeKind;
 _26 = *_25;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp3;
-$tmp3 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp3 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp3->value = _26;
 _27 = ((frost$core$Equatable*) $tmp3);
 _28 = _27;
@@ -156,7 +159,7 @@ _34 = *(&local2);
 *(&local1) = _34;
 _37 = *(&local1);
 org$frostlang$frostc$Type$Kind$wrapper* $tmp4;
-$tmp4 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp4 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp4->value = _37;
 _38 = ((frost$core$Equatable*) $tmp4);
 ITable* $tmp5 = _28->$class->itable;

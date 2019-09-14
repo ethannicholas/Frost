@@ -22,7 +22,8 @@ static frost$core$String $s7 = { (frost$core$Class*) &frost$core$String$class, -
 static frost$core$String $s8 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2c\x20", 2, 563935148934614481, NULL };
 static frost$core$String $s10 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x29", 1, -5808618445805089436, NULL };
 
-void frost$core$Tuple2$init$frost$core$Tuple2$T0$frost$core$Tuple2$T1(frost$core$Tuple2* param0, frost$core$Object* param1, frost$core$Object* param2) {
+void frost$core$Tuple2$init$frost$core$Tuple2$T0$frost$core$Tuple2$T1(void* rawSelf, frost$core$Object* param1, frost$core$Object* param2) {
+frost$core$Tuple2* param0 = (frost$core$Tuple2*) rawSelf;
 
 frost$core$Tuple2* _1;
 frost$core$Object* _2;
@@ -36,7 +37,7 @@ frost$core$Object** _14;
 frost$core$Object* _15;
 frost$core$Object* _16;
 frost$core$Object** _18;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Tuple2.frost:7
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Tuple2.frost:8
 _1 = param0;
 _2 = param1;
 frost$core$Frost$ref$frost$core$Object$Q(_2);
@@ -46,7 +47,7 @@ _6 = _5;
 frost$core$Frost$unref$frost$core$Object$Q(_6);
 _8 = &_1->f0;
 *_8 = param1;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Tuple2.frost:8
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Tuple2.frost:9
 _11 = param0;
 _12 = param2;
 frost$core$Frost$ref$frost$core$Object$Q(_12);
@@ -59,7 +60,8 @@ _18 = &_11->f1;
 return;
 
 }
-frost$core$Object* frost$core$Tuple2$$IDX$frost$core$Int$R$frost$core$Object$Q(frost$core$Tuple2* param0, frost$core$Int param1) {
+frost$core$Object* frost$core$Tuple2$$IDX$frost$core$Int$R$frost$core$Object$Q(void* rawSelf, frost$core$Int param1) {
+frost$core$Tuple2* param0 = (frost$core$Tuple2*) rawSelf;
 
 frost$core$Int _0;
 int64_t _1;
@@ -110,13 +112,13 @@ _11 = (frost$core$Bit) {_10};
 _12 = _11.value;
 if (_12) goto block1; else goto block2;
 block2:;
-_14 = (frost$core$Int) {12u};
+_14 = (frost$core$Int) {13u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s2, _14, &$s3);
 abort(); // unreachable
 block1:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Tuple2.frost:13
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Tuple2.frost:14
 _18 = (frost$core$Int) {0u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Tuple2.frost:14:18
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Tuple2.frost:15:18
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _21 = param1.value;
 _22 = _18.value;
@@ -125,7 +127,7 @@ _24 = (frost$core$Bit) {_23};
 _26 = _24.value;
 if (_26) goto block5; else goto block6;
 block5:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Tuple2.frost:14
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Tuple2.frost:15
 _29 = param0;
 _30 = &_29->f0;
 _31 = *_30;
@@ -134,7 +136,7 @@ frost$core$Frost$ref$frost$core$Object$Q(_32);
 return _32;
 block6:;
 _35 = (frost$core$Int) {1u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Tuple2.frost:15:18
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from Tuple2.frost:16:18
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _38 = param1.value;
 _39 = _35.value;
@@ -143,7 +145,7 @@ _41 = (frost$core$Bit) {_40};
 _43 = _41.value;
 if (_43) goto block8; else goto block4;
 block8:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Tuple2.frost:15
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Tuple2.frost:16
 _46 = param0;
 _47 = &_46->f1;
 _48 = *_47;
@@ -151,12 +153,13 @@ _49 = _48;
 frost$core$Frost$ref$frost$core$Object$Q(_49);
 return _49;
 block4:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Tuple2.frost:17
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Tuple2.frost:18
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) NULL));
 return ((frost$core$Object*) NULL);
 
 }
-frost$core$String* frost$core$Tuple2$get_asString$R$frost$core$String(frost$core$Tuple2* param0) {
+frost$core$String* frost$core$Tuple2$get_asString$R$frost$core$String(void* rawSelf) {
+frost$core$Tuple2* param0 = (frost$core$Tuple2*) rawSelf;
 
 frost$core$Tuple2* _1;
 frost$core$Object** _2;
@@ -185,12 +188,12 @@ frost$core$Object* _37;
 frost$core$Object* _39;
 frost$core$Object* _41;
 frost$core$Object* _43;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Tuple2.frost:22
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Tuple2.frost:23
 _1 = param0;
 _2 = &_1->f0;
 _3 = *_2;
 _4 = _3;
-// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Tuple2.frost:22:16
+// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Tuple2.frost:23:16
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 _7 = ($fn6) _4->$class->vtable[0];
 _8 = _7(_4);
@@ -206,7 +209,7 @@ _18 = param0;
 _19 = &_18->f1;
 _20 = *_19;
 _21 = _20;
-// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Tuple2.frost:22:16
+// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Tuple2.frost:23:16
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 _24 = ($fn9) _21->$class->vtable[0];
 _25 = _24(_21);
@@ -231,7 +234,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_43);
 return _34;
 
 }
-void frost$core$Tuple2$cleanup(frost$core$Tuple2* param0) {
+void frost$core$Tuple2$cleanup(void* rawSelf) {
+frost$core$Tuple2* param0 = (frost$core$Tuple2*) rawSelf;
 
 frost$core$Object* _1;
 frost$core$Tuple2* _3;
@@ -242,7 +246,7 @@ frost$core$Tuple2* _8;
 frost$core$Object** _9;
 frost$core$Object* _10;
 frost$core$Object* _11;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Tuple2.frost:2
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/Tuple2.frost:3
 _1 = ((frost$core$Object*) param0);
 frost$core$Object$cleanup(_1);
 _3 = param0;

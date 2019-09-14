@@ -14,7 +14,8 @@ typedef frost$core$Bit (*$fn2)(frost$core$Equatable*, frost$core$Equatable*);
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x45\x71\x75\x61\x74\x61\x62\x6c\x65", 20, -876306082143790564, NULL };
 
-frost$core$Bit frost$core$Equatable$$NEQ$frost$core$Equatable$T$R$frost$core$Bit(frost$core$Equatable* param0, frost$core$Equatable* param1) {
+frost$core$Bit frost$core$Equatable$$NEQ$frost$core$Equatable$T$R$frost$core$Bit(void* rawSelf, frost$core$Equatable* param1) {
+frost$core$Equatable* param0 = (frost$core$Equatable*) rawSelf;
 
 frost$core$Equatable* _1;
 $fn2 _2;

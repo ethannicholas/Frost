@@ -77,7 +77,8 @@ static frost$core$String $s69 = { (frost$core$Class*) &frost$core$String$class, 
 static frost$core$String $s70 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2c\x20", 2, 563935148934614481, NULL };
 static frost$core$String $s72 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x29", 1, -5808618445805089436, NULL };
 
-void org$frostlang$frostc$pass$Analyzer$State$init(org$frostlang$frostc$pass$Analyzer$State* param0) {
+void org$frostlang$frostc$pass$Analyzer$State$init(void* rawSelf) {
+org$frostlang$frostc$pass$Analyzer$State* param0 = (org$frostlang$frostc$pass$Analyzer$State*) rawSelf;
 
 frost$collections$Array* _1;
 frost$collections$Array* _2;
@@ -96,8 +97,7 @@ frost$core$Object* _22;
 frost$collections$Array** _24;
 frost$core$Object* _26;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/pass/Analyzer.frost:223
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_1 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_1 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _2 = _1;
 frost$collections$Array$init(_2);
 _4 = ((frost$core$Object*) _1);
@@ -111,8 +111,7 @@ _10 = &param0->locals;
 _12 = ((frost$core$Object*) _1);
 frost$core$Frost$unref$frost$core$Object$Q(_12);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/pass/Analyzer.frost:224
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_15 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_15 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _16 = _15;
 frost$collections$Array$init(_16);
 _18 = ((frost$core$Object*) _15);
@@ -278,8 +277,7 @@ frost$core$Object* _198;
 frost$collections$Array* _200;
 frost$core$Object* _201;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/pass/Analyzer.frost:232
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_1 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_1 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _2 = _1;
 _3 = ((frost$collections$CollectionView*) param0);
 _4 = _3;
@@ -378,8 +376,7 @@ block6:;
 _83 = *(&local0);
 _84 = _83;
 _85 = *(&local1);
-FROST_ASSERT(24 == sizeof(frost$collections$IdentitySet));
-_86 = (frost$collections$IdentitySet*) frostObjectAlloc(24, (frost$core$Class*) &frost$collections$IdentitySet$class);
+_86 = (frost$collections$IdentitySet*) frostObjectAlloc(sizeof(frost$collections$IdentitySet), (frost$core$Class*) &frost$collections$IdentitySet$class);
 _87 = _86;
 _88 = *(&local0);
 _89 = _88;
@@ -518,7 +515,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_201);
 return _197;
 
 }
-void org$frostlang$frostc$pass$Analyzer$State$init$org$frostlang$frostc$pass$Analyzer$State(org$frostlang$frostc$pass$Analyzer$State* param0, org$frostlang$frostc$pass$Analyzer$State* param1) {
+void org$frostlang$frostc$pass$Analyzer$State$init$org$frostlang$frostc$pass$Analyzer$State(void* rawSelf, org$frostlang$frostc$pass$Analyzer$State* param1) {
+org$frostlang$frostc$pass$Analyzer$State* param0 = (org$frostlang$frostc$pass$Analyzer$State*) rawSelf;
 
 frost$core$Method* local0 = NULL;
 frost$collections$Array* _1;
@@ -561,8 +559,7 @@ frost$core$Method* _62;
 frost$core$Object* _63;
 frost$core$Object* _66;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/pass/Analyzer.frost:228
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_1 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_1 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _2 = _1;
 _3 = &param1->locals;
 _4 = *_3;
@@ -580,8 +577,7 @@ _14 = &param0->locals;
 _16 = ((frost$core$Object*) _1);
 frost$core$Frost$unref$frost$core$Object$Q(_16);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/pass/Analyzer.frost:229
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_19 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_19 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _20 = _19;
 _21 = &param1->parameters;
 _22 = *_21;
@@ -600,8 +596,7 @@ _34 = ((frost$core$Object*) _19);
 frost$core$Frost$unref$frost$core$Object$Q(_34);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/pass/Analyzer.frost:230
 _37 = ((frost$core$Int8*) org$frostlang$frostc$pass$Analyzer$State$$anonymous2$frost$collections$Array$LTfrost$collections$IdentitySet$LTorg$frostlang$frostc$FieldDecl$GT$Q$GT$R$frost$collections$Array$LTfrost$collections$IdentitySet$LTorg$frostlang$frostc$FieldDecl$GT$Q$GT);
-FROST_ASSERT(32 == sizeof(frost$core$Method));
-_38 = (frost$core$Method*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$Method$class);
+_38 = (frost$core$Method*) frostObjectAlloc(sizeof(frost$core$Method), (frost$core$Class*) &frost$core$Method$class);
 // begin inline call to frost.core.Method.init(pointer:frost.unsafe.Pointer<frost.core.Int8>, target:frost.core.Immutable?) from Analyzer.frost:230:13
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Method.frost:37
 _41 = &_38->pointer;
@@ -633,7 +628,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_66);
 return;
 
 }
-frost$core$Bit org$frostlang$frostc$pass$Analyzer$State$add$org$frostlang$frostc$Compiler$org$frostlang$frostc$pass$Analyzer$State$R$frost$core$Bit(org$frostlang$frostc$pass$Analyzer$State* param0, org$frostlang$frostc$Compiler* param1, org$frostlang$frostc$pass$Analyzer$State* param2) {
+frost$core$Bit org$frostlang$frostc$pass$Analyzer$State$add$org$frostlang$frostc$Compiler$org$frostlang$frostc$pass$Analyzer$State$R$frost$core$Bit(void* rawSelf, org$frostlang$frostc$Compiler* param1, org$frostlang$frostc$pass$Analyzer$State* param2) {
+org$frostlang$frostc$pass$Analyzer$State* param0 = (org$frostlang$frostc$pass$Analyzer$State*) rawSelf;
 
 frost$core$Bit local0;
 frost$core$Int local1;
@@ -1568,7 +1564,8 @@ _484 = *(&local0);
 return _484;
 
 }
-frost$core$String* org$frostlang$frostc$pass$Analyzer$State$get_asString$R$frost$core$String(org$frostlang$frostc$pass$Analyzer$State* param0) {
+frost$core$String* org$frostlang$frostc$pass$Analyzer$State$get_asString$R$frost$core$String(void* rawSelf) {
+org$frostlang$frostc$pass$Analyzer$State* param0 = (org$frostlang$frostc$pass$Analyzer$State*) rawSelf;
 
 frost$collections$Array** _1;
 frost$collections$Array* _2;
@@ -1639,7 +1636,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_41);
 return _32;
 
 }
-void org$frostlang$frostc$pass$Analyzer$State$cleanup(org$frostlang$frostc$pass$Analyzer$State* param0) {
+void org$frostlang$frostc$pass$Analyzer$State$cleanup(void* rawSelf) {
+org$frostlang$frostc$pass$Analyzer$State* param0 = (org$frostlang$frostc$pass$Analyzer$State*) rawSelf;
 
 frost$core$Object* _1;
 frost$collections$Array** _3;

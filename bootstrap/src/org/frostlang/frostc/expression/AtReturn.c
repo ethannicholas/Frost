@@ -184,7 +184,7 @@ _59 = (frost$core$Bit) {_58};
 _61 = _59.value;
 if (_61) goto block10; else goto block9;
 block10:;
-_63 = (frost$core$Int*) (_50->$data + 0);
+_63 = &_50->$data.$LOCAL.field0;
 _64 = *_63;
 *(&local1) = _64;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/AtReturn.frost:30
@@ -195,11 +195,9 @@ block9:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/AtReturn.frost:33
 _71 = &param0->ir;
 _72 = *_71;
-FROST_ASSERT(80 == sizeof(org$frostlang$frostc$IR$Statement));
-_73 = (org$frostlang$frostc$IR$Statement*) frostObjectAlloc(80, (frost$core$Class*) &org$frostlang$frostc$IR$Statement$class);
+_73 = (org$frostlang$frostc$IR$Statement*) frostObjectAlloc(sizeof(org$frostlang$frostc$IR$Statement), (frost$core$Class*) &org$frostlang$frostc$IR$Statement$class);
 _74 = (frost$core$Int) {14u};
-FROST_ASSERT(48 == sizeof(org$frostlang$frostc$IR$Value));
-_75 = (org$frostlang$frostc$IR$Value*) frostObjectAlloc(48, (frost$core$Class*) &org$frostlang$frostc$IR$Value$class);
+_75 = (org$frostlang$frostc$IR$Value*) frostObjectAlloc(sizeof(org$frostlang$frostc$IR$Value), (frost$core$Class*) &org$frostlang$frostc$IR$Value$class);
 _76 = (frost$core$Int) {2u};
 _77 = *(&local0);
 _78 = &param0->returnVar;
@@ -226,8 +224,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_95);
 _97 = ((frost$core$Object*) _73);
 frost$core$Frost$unref$frost$core$Object$Q(_97);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/AtReturn.frost:35
-FROST_ASSERT(48 == sizeof(org$frostlang$frostc$IR$Value));
-_100 = (org$frostlang$frostc$IR$Value*) frostObjectAlloc(48, (frost$core$Class*) &org$frostlang$frostc$IR$Value$class);
+_100 = (org$frostlang$frostc$IR$Value*) frostObjectAlloc(sizeof(org$frostlang$frostc$IR$Value), (frost$core$Class*) &org$frostlang$frostc$IR$Value$class);
 _101 = (frost$core$Int) {7u};
 _102 = *(&local2);
 _103 = &param0->returnVar;
@@ -256,12 +253,14 @@ frost$core$Frost$unref$frost$core$Object$Q(_122);
 return _117;
 
 }
-void org$frostlang$frostc$expression$AtReturn$init(org$frostlang$frostc$expression$AtReturn* param0) {
+void org$frostlang$frostc$expression$AtReturn$init(void* rawSelf) {
+org$frostlang$frostc$expression$AtReturn* param0 = (org$frostlang$frostc$expression$AtReturn*) rawSelf;
 
 return;
 
 }
-void org$frostlang$frostc$expression$AtReturn$cleanup(org$frostlang$frostc$expression$AtReturn* param0) {
+void org$frostlang$frostc$expression$AtReturn$cleanup(void* rawSelf) {
+org$frostlang$frostc$expression$AtReturn* param0 = (org$frostlang$frostc$expression$AtReturn*) rawSelf;
 
 frost$core$Object* _1;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/AtReturn.frost:11

@@ -13,7 +13,7 @@ __attribute__((weak)) frost$core$Object* frost$core$String$UTF8Iterator$next$R$f
     frost$core$Char8 result = frost$core$String$UTF8Iterator$next$R$frost$core$Char8(p0);
 
     frost$core$Char8$wrapper* $tmp2;
-    $tmp2 = (frost$core$Char8$wrapper*) frostObjectAlloc(17, (frost$core$Class*) &frost$core$Char8$wrapperclass);
+    $tmp2 = (frost$core$Char8$wrapper*) frostObjectAlloc(sizeof(frost$core$Char8$wrapper), (frost$core$Class*) &frost$core$Char8$wrapperclass);
     $tmp2->value = result;
     return ((frost$core$Object*) $tmp2);
 }
@@ -29,7 +29,8 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 static frost$core$String $s5 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x74\x72\x69\x6e\x67\x2e\x66\x72\x6f\x73\x74", 12, 7542466198510074048, NULL };
 static frost$core$String $s6 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x55\x54\x46\x38\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x6e\x65\x78\x74\x28\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x43\x68\x61\x72\x38", 86, -6428833713769341293, NULL };
 
-void frost$core$String$UTF8Iterator$init$frost$core$String(frost$core$String$UTF8Iterator* param0, frost$core$String* param1) {
+void frost$core$String$UTF8Iterator$init$frost$core$String(void* rawSelf, frost$core$String* param1) {
+frost$core$String$UTF8Iterator* param0 = (frost$core$String$UTF8Iterator*) rawSelf;
 
 frost$core$Int _1;
 frost$core$Int* _2;
@@ -54,7 +55,8 @@ _11 = &param0->str;
 return;
 
 }
-frost$core$Bit frost$core$String$UTF8Iterator$get_done$R$frost$core$Bit(frost$core$String$UTF8Iterator* param0) {
+frost$core$Bit frost$core$String$UTF8Iterator$get_done$R$frost$core$Bit(void* rawSelf) {
+frost$core$String$UTF8Iterator* param0 = (frost$core$String$UTF8Iterator*) rawSelf;
 
 frost$core$Int* _1;
 frost$core$Int _2;
@@ -80,7 +82,8 @@ _10 = (frost$core$Bit) {_9};
 return _10;
 
 }
-frost$core$Char8 frost$core$String$UTF8Iterator$next$R$frost$core$Char8(frost$core$String$UTF8Iterator* param0) {
+frost$core$Char8 frost$core$String$UTF8Iterator$next$R$frost$core$Char8(void* rawSelf) {
+frost$core$String$UTF8Iterator* param0 = (frost$core$String$UTF8Iterator*) rawSelf;
 
 frost$collections$Iterator* _0;
 $fn3 _1;
@@ -159,7 +162,8 @@ _38 = _28[_37];
 return _38;
 
 }
-void frost$core$String$UTF8Iterator$cleanup(frost$core$String$UTF8Iterator* param0) {
+void frost$core$String$UTF8Iterator$cleanup(void* rawSelf) {
+frost$core$String$UTF8Iterator* param0 = (frost$core$String$UTF8Iterator*) rawSelf;
 
 frost$core$Object* _1;
 frost$core$String** _3;

@@ -14,7 +14,8 @@ org$frostlang$frostc$Compiler$_Closure2$class_type org$frostlang$frostc$Compiler
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x43\x6f\x6d\x70\x69\x6c\x65\x72\x2e\x5f\x43\x6c\x6f\x73\x75\x72\x65\x32", 39, 8885074473716635347, NULL };
 
-void org$frostlang$frostc$Compiler$_Closure2$init$org$frostlang$frostc$Compiler$org$frostlang$frostc$Type(org$frostlang$frostc$Compiler$_Closure2* param0, org$frostlang$frostc$Compiler* param1, org$frostlang$frostc$Type* param2) {
+void org$frostlang$frostc$Compiler$_Closure2$init$org$frostlang$frostc$Compiler$org$frostlang$frostc$Type(void* rawSelf, org$frostlang$frostc$Compiler* param1, org$frostlang$frostc$Type* param2) {
+org$frostlang$frostc$Compiler$_Closure2* param0 = (org$frostlang$frostc$Compiler$_Closure2*) rawSelf;
 
 frost$core$Object* _1;
 org$frostlang$frostc$Compiler** _3;
@@ -47,7 +48,8 @@ _16 = &param0->type;
 return;
 
 }
-void org$frostlang$frostc$Compiler$_Closure2$cleanup(org$frostlang$frostc$Compiler$_Closure2* param0) {
+void org$frostlang$frostc$Compiler$_Closure2$cleanup(void* rawSelf) {
+org$frostlang$frostc$Compiler$_Closure2* param0 = (org$frostlang$frostc$Compiler$_Closure2*) rawSelf;
 
 frost$core$Object* _1;
 org$frostlang$frostc$Compiler** _3;
@@ -70,7 +72,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_9);
 return;
 
 }
-org$frostlang$frostc$MethodDecl$Parameter* org$frostlang$frostc$Compiler$_Closure2$$anonymous1$org$frostlang$frostc$MethodDecl$Parameter$R$org$frostlang$frostc$MethodDecl$Parameter(org$frostlang$frostc$Compiler$_Closure2* param0, org$frostlang$frostc$MethodDecl$Parameter* param1) {
+org$frostlang$frostc$MethodDecl$Parameter* org$frostlang$frostc$Compiler$_Closure2$$anonymous1$org$frostlang$frostc$MethodDecl$Parameter$R$org$frostlang$frostc$MethodDecl$Parameter(void* rawSelf, org$frostlang$frostc$MethodDecl$Parameter* param1) {
+org$frostlang$frostc$Compiler$_Closure2* param0 = (org$frostlang$frostc$Compiler$_Closure2*) rawSelf;
 
 org$frostlang$frostc$MethodDecl$Parameter* _1;
 frost$core$String** _2;
@@ -86,8 +89,7 @@ frost$core$Object* _12;
 frost$core$Object* _14;
 frost$core$Object* _16;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:1666
-FROST_ASSERT(40 == sizeof(org$frostlang$frostc$MethodDecl$Parameter));
-_1 = (org$frostlang$frostc$MethodDecl$Parameter*) frostObjectAlloc(40, (frost$core$Class*) &org$frostlang$frostc$MethodDecl$Parameter$class);
+_1 = (org$frostlang$frostc$MethodDecl$Parameter*) frostObjectAlloc(sizeof(org$frostlang$frostc$MethodDecl$Parameter), (frost$core$Class*) &org$frostlang$frostc$MethodDecl$Parameter$class);
 _2 = &param1->name;
 _3 = *_2;
 _4 = &param0->$self;

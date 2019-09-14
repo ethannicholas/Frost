@@ -26,7 +26,8 @@ static frost$core$String $s11 = { (frost$core$Class*) &frost$core$String$class, 
 static frost$core$String $s13 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x4d\x65\x73\x73\x61\x67\x65\x28", 8, -4760708205025170492, NULL };
 static frost$core$String $s14 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x29", 1, -5808618445805089436, NULL };
 
-void frost$unsafe$UnsafeMessageQueue$Message$init$frost$unsafe$UnsafeMessageQueue$Message$T(frost$unsafe$UnsafeMessageQueue$Message* param0, frost$core$Object* param1) {
+void frost$unsafe$UnsafeMessageQueue$Message$init$frost$unsafe$UnsafeMessageQueue$Message$T(void* rawSelf, frost$core$Object* param1) {
+frost$unsafe$UnsafeMessageQueue$Message* param0 = (frost$unsafe$UnsafeMessageQueue$Message*) rawSelf;
 
 frost$unsafe$UnsafeMessageQueue$Message* _1;
 frost$core$Object* _2;
@@ -47,7 +48,8 @@ _8 = &_1->payload;
 return;
 
 }
-frost$core$String* frost$unsafe$UnsafeMessageQueue$Message$get_asString$R$frost$core$String(frost$unsafe$UnsafeMessageQueue$Message* param0) {
+frost$core$String* frost$unsafe$UnsafeMessageQueue$Message$get_asString$R$frost$core$String(void* rawSelf) {
+frost$unsafe$UnsafeMessageQueue$Message* param0 = (frost$unsafe$UnsafeMessageQueue$Message*) rawSelf;
 
 frost$unsafe$UnsafeMessageQueue$Message* _1;
 frost$unsafe$UnsafeMessageQueue$Message** _2;
@@ -189,7 +191,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_83);
 return _78;
 
 }
-void frost$unsafe$UnsafeMessageQueue$Message$cleanup(frost$unsafe$UnsafeMessageQueue$Message* param0) {
+void frost$unsafe$UnsafeMessageQueue$Message$cleanup(void* rawSelf) {
+frost$unsafe$UnsafeMessageQueue$Message* param0 = (frost$unsafe$UnsafeMessageQueue$Message*) rawSelf;
 
 frost$core$Object* _1;
 frost$unsafe$UnsafeMessageQueue$Message* _3;

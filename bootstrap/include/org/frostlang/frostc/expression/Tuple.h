@@ -16,6 +16,6 @@ org$frostlang$frostc$Type* org$frostlang$frostc$expression$Tuple$indexType$org$f
 frost$collections$CollectionView* org$frostlang$frostc$expression$Tuple$possibleTypes$org$frostlang$frostc$Compiler$org$frostlang$frostc$FixedArray$LTorg$frostlang$frostc$ASTNode$GT$R$frost$collections$CollectionView$LTorg$frostlang$frostc$Type$GT$Q(org$frostlang$frostc$Compiler* p_compiler, org$frostlang$frostc$FixedArray* p_args);
 org$frostlang$frostc$Pair* org$frostlang$frostc$expression$Tuple$coercionCost$org$frostlang$frostc$Compiler$org$frostlang$frostc$FixedArray$LTorg$frostlang$frostc$ASTNode$GT$org$frostlang$frostc$Type$R$org$frostlang$frostc$Pair$LTorg$frostlang$frostc$Type$Cfrost$core$Int$GT$Q(org$frostlang$frostc$Compiler* p_compiler, org$frostlang$frostc$FixedArray* p_args, org$frostlang$frostc$Type* p_target);
 org$frostlang$frostc$IR$Value* org$frostlang$frostc$expression$Tuple$compile$org$frostlang$frostc$Compiler$org$frostlang$frostc$Position$org$frostlang$frostc$FixedArray$LTorg$frostlang$frostc$ASTNode$GT$org$frostlang$frostc$Compiler$TypeContext$R$org$frostlang$frostc$IR$Value$Q(org$frostlang$frostc$Compiler* p_compiler, org$frostlang$frostc$Position p_position, org$frostlang$frostc$FixedArray* p_args, org$frostlang$frostc$Compiler$TypeContext* p_type);
-void org$frostlang$frostc$expression$Tuple$init(org$frostlang$frostc$expression$Tuple* self);
-void org$frostlang$frostc$expression$Tuple$cleanup(org$frostlang$frostc$expression$Tuple* self);
+void org$frostlang$frostc$expression$Tuple$init(void* rawSelf);
+void org$frostlang$frostc$expression$Tuple$cleanup(void* rawSelf);
 

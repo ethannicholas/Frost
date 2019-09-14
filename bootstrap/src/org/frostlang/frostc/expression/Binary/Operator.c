@@ -1465,7 +1465,7 @@ block155:;
 _823 = (frost$core$Int) {101u};
 _824 = param0.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp4;
-$tmp4 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp4 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp4->value = _824;
 _825 = ((frost$core$Object*) $tmp4);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Binary.frost:101:61
@@ -2234,7 +2234,7 @@ block55:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Binary.frost:135
 _297 = (frost$core$Int) {135u};
 org$frostlang$frostc$expression$Binary$Operator$wrapper* $tmp10;
-$tmp10 = (org$frostlang$frostc$expression$Binary$Operator$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$expression$Binary$Operator$wrapperclass);
+$tmp10 = (org$frostlang$frostc$expression$Binary$Operator$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$expression$Binary$Operator$wrapper), (frost$core$Class*) &org$frostlang$frostc$expression$Binary$Operator$wrapperclass);
 $tmp10->value = param0;
 _298 = ((frost$core$Object*) $tmp10);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Binary.frost:135:50

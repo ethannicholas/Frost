@@ -9,6 +9,6 @@ typedef struct org$frostlang$frostc$ASTNode org$frostlang$frostc$ASTNode;
 typedef struct org$frostlang$frostc$statement$Do org$frostlang$frostc$statement$Do;
 
 void org$frostlang$frostc$statement$Do$compile$org$frostlang$frostc$Compiler$org$frostlang$frostc$Position$frost$core$String$Q$org$frostlang$frostc$FixedArray$LTorg$frostlang$frostc$ASTNode$GT$org$frostlang$frostc$ASTNode(org$frostlang$frostc$Compiler* p_compiler, org$frostlang$frostc$Position p_position, frost$core$String* p_label, org$frostlang$frostc$FixedArray* p_statements, org$frostlang$frostc$ASTNode* p_test);
-void org$frostlang$frostc$statement$Do$init(org$frostlang$frostc$statement$Do* self);
-void org$frostlang$frostc$statement$Do$cleanup(org$frostlang$frostc$statement$Do* self);
+void org$frostlang$frostc$statement$Do$init(void* rawSelf);
+void org$frostlang$frostc$statement$Do$cleanup(void* rawSelf);
 

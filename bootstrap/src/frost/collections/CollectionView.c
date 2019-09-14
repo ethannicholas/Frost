@@ -94,7 +94,8 @@ static frost$core$String $s31 = { (frost$core$Class*) &frost$core$String$class, 
 static frost$core$String $s46 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x43\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x56\x69\x65\x77\x2e\x66\x72\x6f\x73\x74", 20, -1009795112068118972, NULL };
 static frost$core$String $s47 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x43\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x56\x69\x65\x77\x2e\x66\x6f\x6c\x64\x28\x66\x3a\x28\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x43\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x56\x69\x65\x77\x2e\x54\x2c\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x43\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x56\x69\x65\x77\x2e\x54\x29\x3d\x26\x3e\x28\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x43\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x56\x69\x65\x77\x2e\x54\x29\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x43\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x56\x69\x65\x77\x2e\x54", 219, -2277848183399103972, NULL };
 
-frost$core$Object* frost$collections$CollectionView$get_first$R$frost$collections$CollectionView$T(frost$collections$CollectionView* param0) {
+frost$core$Object* frost$collections$CollectionView$get_first$R$frost$collections$CollectionView$T(void* rawSelf) {
+frost$collections$CollectionView* param0 = (frost$collections$CollectionView*) rawSelf;
 
 frost$collections$Iterable* _1;
 $fn2 _2;
@@ -133,7 +134,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_13);
 return _8;
 
 }
-frost$core$String* frost$collections$CollectionView$join$R$frost$core$String(frost$collections$CollectionView* param0) {
+frost$core$String* frost$collections$CollectionView$join$R$frost$core$String(void* rawSelf) {
+frost$collections$CollectionView* param0 = (frost$collections$CollectionView*) rawSelf;
 
 frost$collections$CollectionView* _1;
 $fn6 _2;
@@ -155,7 +157,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_6);
 return _3;
 
 }
-frost$core$String* frost$collections$CollectionView$join$frost$core$String$R$frost$core$String(frost$collections$CollectionView* param0, frost$core$String* param1) {
+frost$core$String* frost$collections$CollectionView$join$frost$core$String$R$frost$core$String(void* rawSelf, frost$core$String* param1) {
+frost$collections$CollectionView* param0 = (frost$collections$CollectionView*) rawSelf;
 
 frost$core$Bit local0;
 frost$core$MutableString* local1 = NULL;
@@ -245,8 +248,7 @@ block2:;
 _19 = (frost$core$Bit) {true};
 *(&local0) = _19;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:51
-FROST_ASSERT(48 == sizeof(frost$core$MutableString));
-_22 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
+_22 = (frost$core$MutableString*) frostObjectAlloc(sizeof(frost$core$MutableString), (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init(_22);
 *(&local1) = ((frost$core$MutableString*) NULL);
 _25 = ((frost$core$Object*) _22);
@@ -361,7 +363,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_111);
 return _105;
 
 }
-frost$core$Object* frost$collections$CollectionView$fold$$LPfrost$collections$CollectionView$T$Cfrost$collections$CollectionView$T$RP$EQ$GT$LPfrost$collections$CollectionView$T$RP$R$frost$collections$CollectionView$T(frost$collections$CollectionView* param0, frost$core$MutableMethod* param1) {
+frost$core$Object* frost$collections$CollectionView$fold$$LPfrost$collections$CollectionView$T$Cfrost$collections$CollectionView$T$RP$EQ$GT$LPfrost$collections$CollectionView$T$RP$R$frost$collections$CollectionView$T(void* rawSelf, frost$core$MutableMethod* param1) {
+frost$collections$CollectionView* param0 = (frost$collections$CollectionView*) rawSelf;
 
 frost$collections$Iterator* local0 = NULL;
 frost$core$Object* local1 = NULL;
@@ -561,7 +564,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_99);
 return _91;
 
 }
-frost$core$Object* frost$collections$CollectionView$fold$$LPfrost$collections$CollectionView$T$Cfrost$collections$CollectionView$T$RP$EQ$AM$GT$LPfrost$collections$CollectionView$T$RP$R$frost$collections$CollectionView$T(frost$collections$CollectionView* param0, frost$core$MutableMethod* param1) {
+frost$core$Object* frost$collections$CollectionView$fold$$LPfrost$collections$CollectionView$T$Cfrost$collections$CollectionView$T$RP$EQ$AM$GT$LPfrost$collections$CollectionView$T$RP$R$frost$collections$CollectionView$T(void* rawSelf, frost$core$MutableMethod* param1) {
+frost$collections$CollectionView* param0 = (frost$collections$CollectionView*) rawSelf;
 
 frost$collections$Iterator* local0 = NULL;
 frost$core$Object* local1 = NULL;
@@ -761,7 +765,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_99);
 return _91;
 
 }
-frost$core$Object* frost$collections$CollectionView$fold$$LPfrost$collections$CollectionView$T$Cfrost$collections$CollectionView$T$RP$EQ$GT$LPfrost$collections$CollectionView$T$RP$frost$collections$CollectionView$T$R$frost$collections$CollectionView$T(frost$collections$CollectionView* param0, frost$core$MutableMethod* param1, frost$core$Object* param2) {
+frost$core$Object* frost$collections$CollectionView$fold$$LPfrost$collections$CollectionView$T$Cfrost$collections$CollectionView$T$RP$EQ$GT$LPfrost$collections$CollectionView$T$RP$frost$collections$CollectionView$T$R$frost$collections$CollectionView$T(void* rawSelf, frost$core$MutableMethod* param1, frost$core$Object* param2) {
+frost$collections$CollectionView* param0 = (frost$collections$CollectionView*) rawSelf;
 
 frost$core$Object* local0 = NULL;
 frost$core$Object* local1 = NULL;
@@ -906,7 +911,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_72);
 return _68;
 
 }
-frost$core$Object* frost$collections$CollectionView$fold$$LPfrost$collections$CollectionView$T$Cfrost$collections$CollectionView$T$RP$EQ$AM$GT$LPfrost$collections$CollectionView$T$RP$frost$collections$CollectionView$T$R$frost$collections$CollectionView$T(frost$collections$CollectionView* param0, frost$core$MutableMethod* param1, frost$core$Object* param2) {
+frost$core$Object* frost$collections$CollectionView$fold$$LPfrost$collections$CollectionView$T$Cfrost$collections$CollectionView$T$RP$EQ$AM$GT$LPfrost$collections$CollectionView$T$RP$frost$collections$CollectionView$T$R$frost$collections$CollectionView$T(void* rawSelf, frost$core$MutableMethod* param1, frost$core$Object* param2) {
+frost$collections$CollectionView* param0 = (frost$collections$CollectionView*) rawSelf;
 
 frost$core$Object* local0 = NULL;
 frost$core$Object* local1 = NULL;
@@ -1051,7 +1057,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_72);
 return _68;
 
 }
-void frost$collections$CollectionView$apply$$LPfrost$collections$CollectionView$T$RP$EQ$AM$GT$LP$RP(frost$collections$CollectionView* param0, frost$core$MutableMethod* param1) {
+void frost$collections$CollectionView$apply$$LPfrost$collections$CollectionView$T$RP$EQ$AM$GT$LP$RP(void* rawSelf, frost$core$MutableMethod* param1) {
+frost$collections$CollectionView* param0 = (frost$collections$CollectionView*) rawSelf;
 
 frost$core$Object* local0 = NULL;
 frost$collections$Iterable* _1;
@@ -1151,7 +1158,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_45);
 return;
 
 }
-frost$collections$Array* frost$collections$CollectionView$map$$LPfrost$collections$CollectionView$T$RP$EQ$GT$LPfrost$collections$CollectionView$map$U$RP$R$frost$collections$Array$LTfrost$collections$CollectionView$map$U$GT(frost$collections$CollectionView* param0, frost$core$MutableMethod* param1) {
+frost$collections$Array* frost$collections$CollectionView$map$$LPfrost$collections$CollectionView$T$RP$EQ$GT$LPfrost$collections$CollectionView$map$U$RP$R$frost$collections$Array$LTfrost$collections$CollectionView$map$U$GT(void* rawSelf, frost$core$MutableMethod* param1) {
+frost$collections$CollectionView* param0 = (frost$collections$CollectionView*) rawSelf;
 
 frost$collections$Array* local0 = NULL;
 frost$core$Object* local1 = NULL;
@@ -1206,8 +1214,7 @@ frost$core$Object* _74;
 frost$collections$Array* _76;
 frost$core$Object* _77;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:165
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_1 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_1 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _2 = _1;
 _3 = param0;
 ITable* $tmp90 = _3->$class->itable;
@@ -1311,7 +1318,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_77);
 return _73;
 
 }
-frost$collections$Array* frost$collections$CollectionView$map$$LPfrost$collections$CollectionView$T$RP$EQ$AM$GT$LPfrost$collections$CollectionView$map$U$RP$R$frost$collections$Array$LTfrost$collections$CollectionView$map$U$GT(frost$collections$CollectionView* param0, frost$core$MutableMethod* param1) {
+frost$collections$Array* frost$collections$CollectionView$map$$LPfrost$collections$CollectionView$T$RP$EQ$AM$GT$LPfrost$collections$CollectionView$map$U$RP$R$frost$collections$Array$LTfrost$collections$CollectionView$map$U$GT(void* rawSelf, frost$core$MutableMethod* param1) {
+frost$collections$CollectionView* param0 = (frost$collections$CollectionView*) rawSelf;
 
 frost$collections$Array* local0 = NULL;
 frost$core$Object* local1 = NULL;
@@ -1366,8 +1374,7 @@ frost$core$Object* _74;
 frost$collections$Array* _76;
 frost$core$Object* _77;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/CollectionView.frost:174
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_1 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_1 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _2 = _1;
 _3 = param0;
 ITable* $tmp102 = _3->$class->itable;

@@ -17,7 +17,7 @@ __attribute__((weak)) frost$core$Object* org$frostlang$frost$UIntList$$IDX$frost
     frost$core$UInt result = org$frostlang$frost$UIntList$$IDX$frost$core$Int$R$frost$core$UInt(p0, p1);
 
     frost$core$UInt$wrapper* $tmp2;
-    $tmp2 = (frost$core$UInt$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$UInt$wrapperclass);
+    $tmp2 = (frost$core$UInt$wrapper*) frostObjectAlloc(sizeof(frost$core$UInt$wrapper), (frost$core$Class*) &frost$core$UInt$wrapperclass);
     $tmp2->value = result;
     return ((frost$core$Object*) $tmp2);
 }
@@ -51,7 +51,8 @@ static frost$core$String $s9 = { (frost$core$Class*) &frost$core$String$class, -
 static frost$core$String $s10 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x5b", 1, -5808493101479473382, NULL };
 static frost$core$String $s11 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x5d", 1, -5808499698549242648, NULL };
 
-void org$frostlang$frost$UIntList$init$frost$core$SteppedRange$LTfrost$core$UInt$Cfrost$core$UInt$GT(org$frostlang$frost$UIntList* param0, frost$core$SteppedRange$LTfrost$core$UInt$Cfrost$core$UInt$GT param1) {
+void org$frostlang$frost$UIntList$init$frost$core$SteppedRange$LTfrost$core$UInt$Cfrost$core$UInt$GT(void* rawSelf, frost$core$SteppedRange$LTfrost$core$UInt$Cfrost$core$UInt$GT param1) {
+org$frostlang$frost$UIntList* param0 = (org$frostlang$frost$UIntList*) rawSelf;
 
 frost$core$SteppedRange$LTfrost$core$UInt$Cfrost$core$UInt$GT* _1;
 frost$core$Int _4;
@@ -333,7 +334,8 @@ goto block19;
 block19:;
 
 }
-frost$core$Int org$frostlang$frost$UIntList$get_count$R$frost$core$Int(org$frostlang$frost$UIntList* param0) {
+frost$core$Int org$frostlang$frost$UIntList$get_count$R$frost$core$Int(void* rawSelf) {
+org$frostlang$frost$UIntList* param0 = (org$frostlang$frost$UIntList*) rawSelf;
 
 frost$core$Int* _1;
 frost$core$Int _2;
@@ -343,7 +345,8 @@ _2 = *_1;
 return _2;
 
 }
-frost$core$UInt org$frostlang$frost$UIntList$$IDX$frost$core$Int$R$frost$core$UInt(org$frostlang$frost$UIntList* param0, frost$core$Int param1) {
+frost$core$UInt org$frostlang$frost$UIntList$$IDX$frost$core$Int$R$frost$core$UInt(void* rawSelf, frost$core$Int param1) {
+org$frostlang$frost$UIntList* param0 = (org$frostlang$frost$UIntList*) rawSelf;
 
 frost$core$Int _0;
 int64_t _1;
@@ -426,7 +429,8 @@ _39 = (frost$core$UInt) {_38};
 return _39;
 
 }
-frost$core$String* org$frostlang$frost$UIntList$get_asString$R$frost$core$String(org$frostlang$frost$UIntList* param0) {
+frost$core$String* org$frostlang$frost$UIntList$get_asString$R$frost$core$String(void* rawSelf) {
+org$frostlang$frost$UIntList* param0 = (org$frostlang$frost$UIntList*) rawSelf;
 
 frost$collections$CollectionView* _1;
 $fn7 _2;
@@ -458,7 +462,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_12);
 return _5;
 
 }
-void org$frostlang$frost$UIntList$cleanup(org$frostlang$frost$UIntList* param0) {
+void org$frostlang$frost$UIntList$cleanup(void* rawSelf) {
+org$frostlang$frost$UIntList* param0 = (org$frostlang$frost$UIntList*) rawSelf;
 
 frost$core$Object* _1;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/frost/UIntList.frost:8

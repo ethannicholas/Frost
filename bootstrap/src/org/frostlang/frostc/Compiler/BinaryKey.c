@@ -27,7 +27,8 @@ typedef frost$core$Bit (*$fn2)(frost$core$Equatable*, frost$core$Equatable*);
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x43\x6f\x6d\x70\x69\x6c\x65\x72\x2e\x42\x69\x6e\x61\x72\x79\x4b\x65\x79", 39, 1144513384746375751, NULL };
 
-void org$frostlang$frostc$Compiler$BinaryKey$init$org$frostlang$frostc$ASTNode$org$frostlang$frostc$expression$Binary$Operator$org$frostlang$frostc$ASTNode(org$frostlang$frostc$Compiler$BinaryKey* param0, org$frostlang$frostc$ASTNode* param1, org$frostlang$frostc$expression$Binary$Operator param2, org$frostlang$frostc$ASTNode* param3) {
+void org$frostlang$frostc$Compiler$BinaryKey$init$org$frostlang$frostc$ASTNode$org$frostlang$frostc$expression$Binary$Operator$org$frostlang$frostc$ASTNode(void* rawSelf, org$frostlang$frostc$ASTNode* param1, org$frostlang$frostc$expression$Binary$Operator param2, org$frostlang$frostc$ASTNode* param3) {
+org$frostlang$frostc$Compiler$BinaryKey* param0 = (org$frostlang$frostc$Compiler$BinaryKey*) rawSelf;
 
 frost$core$Object* _1;
 org$frostlang$frostc$ASTNode** _3;
@@ -64,7 +65,8 @@ _19 = &param0->right;
 return;
 
 }
-frost$core$Bit org$frostlang$frostc$Compiler$BinaryKey$$EQ$org$frostlang$frostc$Compiler$BinaryKey$R$frost$core$Bit(org$frostlang$frostc$Compiler$BinaryKey* param0, org$frostlang$frostc$Compiler$BinaryKey* param1) {
+frost$core$Bit org$frostlang$frostc$Compiler$BinaryKey$$EQ$org$frostlang$frostc$Compiler$BinaryKey$R$frost$core$Bit(void* rawSelf, org$frostlang$frostc$Compiler$BinaryKey* param1) {
+org$frostlang$frostc$Compiler$BinaryKey* param0 = (org$frostlang$frostc$Compiler$BinaryKey*) rawSelf;
 
 frost$core$Bit local0;
 frost$core$Bit local1;
@@ -108,14 +110,14 @@ block1:;
 _9 = &param0->op;
 _10 = *_9;
 org$frostlang$frostc$expression$Binary$Operator$wrapper* $tmp3;
-$tmp3 = (org$frostlang$frostc$expression$Binary$Operator$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$expression$Binary$Operator$wrapperclass);
+$tmp3 = (org$frostlang$frostc$expression$Binary$Operator$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$expression$Binary$Operator$wrapper), (frost$core$Class*) &org$frostlang$frostc$expression$Binary$Operator$wrapperclass);
 $tmp3->value = _10;
 _11 = ((frost$core$Equatable*) $tmp3);
 _12 = _11;
 _13 = &param1->op;
 _14 = *_13;
 org$frostlang$frostc$expression$Binary$Operator$wrapper* $tmp4;
-$tmp4 = (org$frostlang$frostc$expression$Binary$Operator$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$expression$Binary$Operator$wrapperclass);
+$tmp4 = (org$frostlang$frostc$expression$Binary$Operator$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$expression$Binary$Operator$wrapper), (frost$core$Class*) &org$frostlang$frostc$expression$Binary$Operator$wrapperclass);
 $tmp4->value = _14;
 _15 = ((frost$core$Equatable*) $tmp4);
 ITable* $tmp5 = _12->$class->itable;
@@ -154,7 +156,8 @@ _39 = *(&local0);
 return _39;
 
 }
-frost$core$Int org$frostlang$frostc$Compiler$BinaryKey$get_hash$R$frost$core$Int(org$frostlang$frostc$Compiler$BinaryKey* param0) {
+frost$core$Int org$frostlang$frostc$Compiler$BinaryKey$get_hash$R$frost$core$Int(void* rawSelf) {
+org$frostlang$frostc$Compiler$BinaryKey* param0 = (org$frostlang$frostc$Compiler$BinaryKey*) rawSelf;
 
 org$frostlang$frostc$ASTNode** _1;
 org$frostlang$frostc$ASTNode* _2;
@@ -186,7 +189,8 @@ _14 = (frost$core$Int) {_13};
 return _14;
 
 }
-void org$frostlang$frostc$Compiler$BinaryKey$cleanup(org$frostlang$frostc$Compiler$BinaryKey* param0) {
+void org$frostlang$frostc$Compiler$BinaryKey$cleanup(void* rawSelf) {
+org$frostlang$frostc$Compiler$BinaryKey* param0 = (org$frostlang$frostc$Compiler$BinaryKey*) rawSelf;
 
 frost$core$Object* _1;
 org$frostlang$frostc$ASTNode** _3;

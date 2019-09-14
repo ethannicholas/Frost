@@ -17,7 +17,8 @@ frost$threads$Notifier$class_type frost$threads$Notifier$class = { (frost$core$C
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x74\x68\x72\x65\x61\x64\x73\x2e\x4e\x6f\x74\x69\x66\x69\x65\x72", 22, 7742414921846839318, NULL };
 
-void frost$threads$Notifier$init$frost$threads$Lock(frost$threads$Notifier* param0, frost$threads$Lock* param1) {
+void frost$threads$Notifier$init$frost$threads$Lock(void* rawSelf, frost$threads$Lock* param1) {
+frost$threads$Notifier* param0 = (frost$threads$Notifier*) rawSelf;
 
 frost$threads$Lock* _1;
 frost$core$Object* _3;
@@ -32,8 +33,7 @@ frost$threads$Lock* _17;
 frost$core$Object* _18;
 frost$threads$Lock** _20;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/threads/Notifier.frost:15
-FROST_ASSERT(24 == sizeof(frost$threads$Lock));
-_1 = (frost$threads$Lock*) frostObjectAlloc(24, (frost$core$Class*) &frost$threads$Lock$class);
+_1 = (frost$threads$Lock*) frostObjectAlloc(sizeof(frost$threads$Lock), (frost$core$Class*) &frost$threads$Lock$class);
 frost$threads$Lock$init(_1);
 _3 = ((frost$core$Object*) _1);
 frost$core$Frost$ref$frost$core$Object$Q(_3);
@@ -59,7 +59,8 @@ frost$threads$Notifier$create(param0);
 return;
 
 }
-void frost$threads$Notifier$cleanup(frost$threads$Notifier* param0) {
+void frost$threads$Notifier$cleanup(void* rawSelf) {
+frost$threads$Notifier* param0 = (frost$threads$Notifier*) rawSelf;
 
 frost$core$Immutable* _3;
 frost$threads$Lock** _5;

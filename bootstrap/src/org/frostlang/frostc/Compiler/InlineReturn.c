@@ -13,7 +13,8 @@ org$frostlang$frostc$Compiler$InlineReturn$class_type org$frostlang$frostc$Compi
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x43\x6f\x6d\x70\x69\x6c\x65\x72\x2e\x49\x6e\x6c\x69\x6e\x65\x52\x65\x74\x75\x72\x6e", 42, -3521398498578902354, NULL };
 
-void org$frostlang$frostc$Compiler$InlineReturn$init$org$frostlang$frostc$Variable$Q(org$frostlang$frostc$Compiler$InlineReturn* param0, org$frostlang$frostc$Variable* param1) {
+void org$frostlang$frostc$Compiler$InlineReturn$init$org$frostlang$frostc$Variable$Q(void* rawSelf, org$frostlang$frostc$Variable* param1) {
+org$frostlang$frostc$Compiler$InlineReturn* param0 = (org$frostlang$frostc$Compiler$InlineReturn*) rawSelf;
 
 frost$core$Object* _1;
 org$frostlang$frostc$Variable** _3;
@@ -32,7 +33,8 @@ _7 = &param0->variable;
 return;
 
 }
-void org$frostlang$frostc$Compiler$InlineReturn$cleanup(org$frostlang$frostc$Compiler$InlineReturn* param0) {
+void org$frostlang$frostc$Compiler$InlineReturn$cleanup(void* rawSelf) {
+org$frostlang$frostc$Compiler$InlineReturn* param0 = (org$frostlang$frostc$Compiler$InlineReturn*) rawSelf;
 
 frost$core$Object* _1;
 org$frostlang$frostc$Variable** _3;

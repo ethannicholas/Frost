@@ -377,7 +377,7 @@ _2 = frost$core$Int$get_asString$R$frost$core$String(_1);
 _3 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_2, &$s5);
 _4 = param0.column;
 frost$core$Int$wrapper* $tmp6;
-$tmp6 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp6 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp6->value = _4;
 _5 = ((frost$core$Object*) $tmp6);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Position.frost:47:19
@@ -548,7 +548,7 @@ block1:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Position.frost:52
 _13 = param0.line;
 frost$core$Int$wrapper* $tmp14;
-$tmp14 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp14 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp14->value = _13;
 _14 = ((frost$core$Object*) $tmp14);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Position.frost:52:20
@@ -565,7 +565,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_24);
 _27 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_19, &$s17);
 _28 = param0.column;
 frost$core$Int$wrapper* $tmp18;
-$tmp18 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp18 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp18->value = _28;
 _29 = ((frost$core$Object*) $tmp18);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Position.frost:52:20
@@ -704,7 +704,7 @@ frost$core$Frost$ref$frost$core$Object$Q(_150);
 _153 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_147, &$s27);
 _154 = param0.line;
 frost$core$Int$wrapper* $tmp28;
-$tmp28 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp28 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp28->value = _154;
 _155 = ((frost$core$Object*) $tmp28);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Position.frost:54:39
@@ -721,7 +721,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_165);
 _168 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_160, &$s30);
 _169 = param0.column;
 frost$core$Int$wrapper* $tmp31;
-$tmp31 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp31 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp31->value = _169;
 _170 = ((frost$core$Object*) $tmp31);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Position.frost:54:39

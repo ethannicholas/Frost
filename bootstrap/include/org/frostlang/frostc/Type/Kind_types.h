@@ -7,7 +7,48 @@ typedef struct frost$core$Class frost$core$Class;
 
 typedef struct org$frostlang$frostc$Type$Kind {
     frost$core$Int $rawValue;
-    int8_t $data[0];
+    union {
+        struct {
+        } $CLASS;
+        struct {
+        } $NULLABLE;
+        struct {
+        } $BUILTIN_INT;
+        struct {
+        } $BUILTIN_UINT;
+        struct {
+        } $VOID;
+        struct {
+        } $INT_LITERAL;
+        struct {
+        } $INVALID;
+        struct {
+        } $BIT_LITERAL;
+        struct {
+        } $BUILTIN_BIT;
+        struct {
+        } $BUILTIN_FLOAT;
+        struct {
+        } $TUPLE;
+        struct {
+        } $GENERIC;
+        struct {
+        } $GENERIC_CLASS_PARAMETER;
+        struct {
+        } $GENERIC_METHOD_PARAMETER;
+        struct {
+        } $NULL;
+        struct {
+        } $FUNCTION;
+        struct {
+        } $METHOD;
+        struct {
+        } $IMMUTABLE_FUNCTION;
+        struct {
+        } $IMMUTABLE_METHOD;
+        struct {
+        } $REAL_LITERAL;
+    } $data;
 } org$frostlang$frostc$Type$Kind;
 #include "frost/core/Class.h"
 typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[5]; } org$frostlang$frostc$Type$Kind$class_type;

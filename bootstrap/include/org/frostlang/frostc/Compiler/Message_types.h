@@ -11,7 +11,20 @@ typedef struct org$frostlang$frostc$Compiler$Message {
     frost$core$Int32 refCount;
     frost$core$UInt8 $flags;
     frost$core$Int $rawValue;
-    int8_t $data[32];
+    union {
+        struct {
+            frost$core$String* field0;
+            frost$core$Int field1;
+            frost$core$Int field2;
+            frost$core$String* field3;
+        } $ERROR;
+        struct {
+            frost$core$String* field0;
+            frost$core$Int field1;
+            frost$core$Int field2;
+            frost$core$String* field3;
+        } $WARNING;
+    } $data;
 } org$frostlang$frostc$Compiler$Message;
 #include "frost/core/Class.h"
 typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[4]; } org$frostlang$frostc$Compiler$Message$class_type;

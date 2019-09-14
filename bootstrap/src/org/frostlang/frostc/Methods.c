@@ -43,7 +43,8 @@ static frost$core$String $s23 = { (frost$core$Class*) &frost$core$String$class, 
 static frost$core$String $s24 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x0a", 1, -5808579962898102051, NULL };
 static frost$core$String $s28 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x0a", 1, -5808579962898102051, NULL };
 
-void org$frostlang$frostc$Methods$init$frost$collections$ListView$LTorg$frostlang$frostc$MethodDecl$GT(org$frostlang$frostc$Methods* param0, frost$collections$ListView* param1) {
+void org$frostlang$frostc$Methods$init$frost$collections$ListView$LTorg$frostlang$frostc$MethodDecl$GT(void* rawSelf, frost$collections$ListView* param1) {
+org$frostlang$frostc$Methods* param0 = (org$frostlang$frostc$Methods*) rawSelf;
 
 org$frostlang$frostc$Symbol$Kind local0;
 org$frostlang$frostc$Symbol$Kind local1;
@@ -141,8 +142,7 @@ org$frostlang$frostc$Symbol$init$org$frostlang$frostc$Symbol$Kind$org$frostlang$
 _43 = _37;
 frost$core$Frost$unref$frost$core$Object$Q(_43);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Methods.frost:10
-FROST_ASSERT(40 == sizeof(org$frostlang$frostc$FixedArray));
-_46 = (org$frostlang$frostc$FixedArray*) frostObjectAlloc(40, (frost$core$Class*) &org$frostlang$frostc$FixedArray$class);
+_46 = (org$frostlang$frostc$FixedArray*) frostObjectAlloc(sizeof(org$frostlang$frostc$FixedArray), (frost$core$Class*) &org$frostlang$frostc$FixedArray$class);
 _47 = _46;
 _48 = param1;
 org$frostlang$frostc$FixedArray$init$frost$collections$ListView$LTorg$frostlang$frostc$FixedArray$T$GT(_47, _48);
@@ -262,8 +262,7 @@ _5 = (frost$core$Bit) {false};
 return _5;
 block2:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Methods.frost:16
-FROST_ASSERT(24 == sizeof(frost$collections$HashSet));
-_8 = (frost$collections$HashSet*) frostObjectAlloc(24, (frost$core$Class*) &frost$collections$HashSet$class);
+_8 = (frost$collections$HashSet*) frostObjectAlloc(sizeof(frost$collections$HashSet), (frost$core$Class*) &frost$collections$HashSet$class);
 _9 = _8;
 frost$collections$HashSet$init(_9);
 *(&local0) = ((frost$collections$HashSet*) NULL);
@@ -457,7 +456,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_153);
 return _151;
 
 }
-void org$frostlang$frostc$Methods$cleanup(org$frostlang$frostc$Methods* param0) {
+void org$frostlang$frostc$Methods$cleanup(void* rawSelf) {
+org$frostlang$frostc$Methods* param0 = (org$frostlang$frostc$Methods*) rawSelf;
 
 org$frostlang$frostc$Symbol* _1;
 org$frostlang$frostc$FixedArray** _3;

@@ -24,7 +24,8 @@ static frost$core$String $s4 = { (frost$core$Class*) &frost$core$String$class, -
 static frost$core$String $s7 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x50\x61\x72\x73\x65\x72\x2e\x66\x72\x6f\x73\x74", 12, 3564038086098955558, NULL };
 static frost$core$String $s8 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x70\x61\x72\x73\x65\x72\x2e\x53\x79\x6e\x74\x61\x78\x48\x69\x67\x68\x6c\x69\x67\x68\x74\x65\x72\x3f\x20\x74\x6f\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x70\x61\x72\x73\x65\x72\x2e\x53\x79\x6e\x74\x61\x78\x48\x69\x67\x68\x6c\x69\x67\x68\x74\x65\x72", 129, 4586254628416497089, NULL };
 
-void org$frostlang$frostc$parser$Parser$AutoSyntaxHighlight$init$org$frostlang$frostc$parser$Parser$org$frostlang$frostc$parser$SyntaxHighlighter$Kind(org$frostlang$frostc$parser$Parser$AutoSyntaxHighlight* param0, org$frostlang$frostc$parser$Parser* param1, org$frostlang$frostc$parser$SyntaxHighlighter$Kind param2) {
+void org$frostlang$frostc$parser$Parser$AutoSyntaxHighlight$init$org$frostlang$frostc$parser$Parser$org$frostlang$frostc$parser$SyntaxHighlighter$Kind(void* rawSelf, org$frostlang$frostc$parser$Parser* param1, org$frostlang$frostc$parser$SyntaxHighlighter$Kind param2) {
+org$frostlang$frostc$parser$Parser$AutoSyntaxHighlight* param0 = (org$frostlang$frostc$parser$Parser$AutoSyntaxHighlight*) rawSelf;
 
 frost$core$Object* _1;
 org$frostlang$frostc$parser$Parser** _3;
@@ -85,7 +86,8 @@ block2:;
 return;
 
 }
-void org$frostlang$frostc$parser$Parser$AutoSyntaxHighlight$cleanup(org$frostlang$frostc$parser$Parser$AutoSyntaxHighlight* param0) {
+void org$frostlang$frostc$parser$Parser$AutoSyntaxHighlight$cleanup(void* rawSelf) {
+org$frostlang$frostc$parser$Parser$AutoSyntaxHighlight* param0 = (org$frostlang$frostc$parser$Parser$AutoSyntaxHighlight*) rawSelf;
 
 org$frostlang$frostc$parser$Parser** _1;
 org$frostlang$frostc$parser$Parser* _2;

@@ -6,11 +6,11 @@ typedef struct frost$core$String frost$core$String;
 #include "frost/core/Int_types.h"
 #include "org/frostlang/frostc/parser/Token_types.h"
 
-void org$frostlang$frostc$parser$Lexer$start$frost$core$String(org$frostlang$frostc$parser$Lexer* self, frost$core$String* p_source);
+void org$frostlang$frostc$parser$Lexer$start$frost$core$String(void* rawSelf, frost$core$String* p_source);
 frost$core$Int* org$frostlang$frostc$parser$Lexer$alloc$frost$core$Int$frost$core$Int$R$frost$unsafe$Pointer$LTfrost$core$Int$GT(frost$core$Int p_count, frost$core$Int p_fill);
 frost$core$Int** org$frostlang$frostc$parser$Lexer$getTransitions$R$frost$unsafe$Pointer$LTfrost$unsafe$Pointer$LTfrost$core$Int$GT$GT();
 frost$core$Int* org$frostlang$frostc$parser$Lexer$getAccepts$R$frost$unsafe$Pointer$LTfrost$core$Int$GT();
-void org$frostlang$frostc$parser$Lexer$cleanup(org$frostlang$frostc$parser$Lexer* self);
-org$frostlang$frostc$parser$Token org$frostlang$frostc$parser$Lexer$next$R$org$frostlang$frostc$parser$Token(org$frostlang$frostc$parser$Lexer* self);
-void org$frostlang$frostc$parser$Lexer$init(org$frostlang$frostc$parser$Lexer* self);
+void org$frostlang$frostc$parser$Lexer$cleanup(void* rawSelf);
+org$frostlang$frostc$parser$Token org$frostlang$frostc$parser$Lexer$next$R$org$frostlang$frostc$parser$Token(void* rawSelf);
+void org$frostlang$frostc$parser$Lexer$init(void* rawSelf);
 

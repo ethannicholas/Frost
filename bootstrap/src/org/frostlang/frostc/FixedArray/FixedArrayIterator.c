@@ -27,7 +27,8 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 static frost$core$String $s6 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x46\x69\x78\x65\x64\x41\x72\x72\x61\x79\x2e\x66\x72\x6f\x73\x74", 16, -6247431822907188018, NULL };
 static frost$core$String $s7 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x46\x69\x78\x65\x64\x41\x72\x72\x61\x79\x2e\x46\x69\x78\x65\x64\x41\x72\x72\x61\x79\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x6e\x65\x78\x74\x28\x29\x3a\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x46\x69\x78\x65\x64\x41\x72\x72\x61\x79\x2e\x46\x69\x78\x65\x64\x41\x72\x72\x61\x79\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x54", 144, -6275393650980415678, NULL };
 
-void org$frostlang$frostc$FixedArray$FixedArrayIterator$init$org$frostlang$frostc$FixedArray$LTorg$frostlang$frostc$FixedArray$FixedArrayIterator$T$GT(org$frostlang$frostc$FixedArray$FixedArrayIterator* param0, org$frostlang$frostc$FixedArray* param1) {
+void org$frostlang$frostc$FixedArray$FixedArrayIterator$init$org$frostlang$frostc$FixedArray$LTorg$frostlang$frostc$FixedArray$FixedArrayIterator$T$GT(void* rawSelf, org$frostlang$frostc$FixedArray* param1) {
+org$frostlang$frostc$FixedArray$FixedArrayIterator* param0 = (org$frostlang$frostc$FixedArray$FixedArrayIterator*) rawSelf;
 
 org$frostlang$frostc$FixedArray$FixedArrayIterator* _1;
 frost$core$Int _2;
@@ -56,7 +57,8 @@ _13 = &_6->array;
 return;
 
 }
-frost$core$Bit org$frostlang$frostc$FixedArray$FixedArrayIterator$get_done$R$frost$core$Bit(org$frostlang$frostc$FixedArray$FixedArrayIterator* param0) {
+frost$core$Bit org$frostlang$frostc$FixedArray$FixedArrayIterator$get_done$R$frost$core$Bit(void* rawSelf) {
+org$frostlang$frostc$FixedArray$FixedArrayIterator* param0 = (org$frostlang$frostc$FixedArray$FixedArrayIterator*) rawSelf;
 
 org$frostlang$frostc$FixedArray$FixedArrayIterator* _1;
 frost$core$Int* _2;
@@ -94,7 +96,8 @@ _15 = (frost$core$Bit) {_14};
 return _15;
 
 }
-frost$core$Object* org$frostlang$frostc$FixedArray$FixedArrayIterator$next$R$org$frostlang$frostc$FixedArray$FixedArrayIterator$T(org$frostlang$frostc$FixedArray$FixedArrayIterator* param0) {
+frost$core$Object* org$frostlang$frostc$FixedArray$FixedArrayIterator$next$R$org$frostlang$frostc$FixedArray$FixedArrayIterator$T(void* rawSelf) {
+org$frostlang$frostc$FixedArray$FixedArrayIterator* param0 = (org$frostlang$frostc$FixedArray$FixedArrayIterator*) rawSelf;
 
 frost$collections$Iterator* _0;
 $fn4 _1;
@@ -181,7 +184,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_42);
 return _39;
 
 }
-void org$frostlang$frostc$FixedArray$FixedArrayIterator$cleanup(org$frostlang$frostc$FixedArray$FixedArrayIterator* param0) {
+void org$frostlang$frostc$FixedArray$FixedArrayIterator$cleanup(void* rawSelf) {
+org$frostlang$frostc$FixedArray$FixedArrayIterator* param0 = (org$frostlang$frostc$FixedArray$FixedArrayIterator*) rawSelf;
 
 frost$core$Object* _1;
 org$frostlang$frostc$FixedArray$FixedArrayIterator* _3;

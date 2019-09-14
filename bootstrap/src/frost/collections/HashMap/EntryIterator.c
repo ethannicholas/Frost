@@ -35,7 +35,8 @@ static frost$core$String $s9 = { (frost$core$Class*) &frost$core$String$class, -
 static frost$core$String $s10 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x48\x61\x73\x68\x4d\x61\x70\x2e\x66\x72\x6f\x73\x74", 13, -4513074356147737087, NULL };
 static frost$core$String $s11 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x48\x61\x73\x68\x4d\x61\x70\x2e\x45\x6e\x74\x72\x79\x3c\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x48\x61\x73\x68\x4d\x61\x70\x2e\x45\x6e\x74\x72\x79\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x4b\x2c\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x48\x61\x73\x68\x4d\x61\x70\x2e\x45\x6e\x74\x72\x79\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x56\x3e\x3f\x20\x74\x6f\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x48\x61\x73\x68\x4d\x61\x70\x2e\x45\x6e\x74\x72\x79\x3c\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x48\x61\x73\x68\x4d\x61\x70\x2e\x45\x6e\x74\x72\x79\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x4b\x2c\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x48\x61\x73\x68\x4d\x61\x70\x2e\x45\x6e\x74\x72\x79\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x56\x3e", 273, 4111340678981763157, NULL };
 
-void frost$collections$HashMap$EntryIterator$init$frost$collections$HashMap$LTfrost$collections$HashMap$EntryIterator$K$Cfrost$collections$HashMap$EntryIterator$V$GT(frost$collections$HashMap$EntryIterator* param0, frost$collections$HashMap* param1) {
+void frost$collections$HashMap$EntryIterator$init$frost$collections$HashMap$LTfrost$collections$HashMap$EntryIterator$K$Cfrost$collections$HashMap$EntryIterator$V$GT(void* rawSelf, frost$collections$HashMap* param1) {
+frost$collections$HashMap$EntryIterator* param0 = (frost$collections$HashMap$EntryIterator*) rawSelf;
 
 frost$collections$HashMap$EntryIterator* _1;
 frost$core$Int _2;
@@ -220,7 +221,8 @@ block6:;
 return;
 
 }
-frost$core$Bit frost$collections$HashMap$EntryIterator$get_done$R$frost$core$Bit(frost$collections$HashMap$EntryIterator* param0) {
+frost$core$Bit frost$collections$HashMap$EntryIterator$get_done$R$frost$core$Bit(void* rawSelf) {
+frost$collections$HashMap$EntryIterator* param0 = (frost$collections$HashMap$EntryIterator*) rawSelf;
 
 frost$core$Bit local0;
 frost$collections$HashMap$EntryIterator* _1;
@@ -277,7 +279,8 @@ _28 = *(&local0);
 return _28;
 
 }
-frost$core$Tuple2* frost$collections$HashMap$EntryIterator$next$R$$LPfrost$collections$HashMap$EntryIterator$K$Cfrost$collections$HashMap$EntryIterator$V$RP(frost$collections$HashMap$EntryIterator* param0) {
+frost$core$Tuple2* frost$collections$HashMap$EntryIterator$next$R$$LPfrost$collections$HashMap$EntryIterator$K$Cfrost$collections$HashMap$EntryIterator$V$RP(void* rawSelf) {
+frost$collections$HashMap$EntryIterator* param0 = (frost$collections$HashMap$EntryIterator*) rawSelf;
 
 frost$collections$HashMap$Entry* local0 = NULL;
 frost$collections$Iterator* _0;
@@ -577,8 +580,7 @@ _150 = &_130->entry;
 goto block12;
 block14:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashMap.frost:74
-FROST_ASSERT(32 == sizeof(frost$core$Tuple2));
-_154 = (frost$core$Tuple2*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$Tuple2$class);
+_154 = (frost$core$Tuple2*) frostObjectAlloc(sizeof(frost$core$Tuple2), (frost$core$Class*) &frost$core$Tuple2$class);
 _155 = _154;
 _156 = *(&local0);
 _157 = _156;
@@ -605,7 +607,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_175);
 return _169;
 
 }
-void frost$collections$HashMap$EntryIterator$cleanup(frost$collections$HashMap$EntryIterator* param0) {
+void frost$collections$HashMap$EntryIterator$cleanup(void* rawSelf) {
+frost$collections$HashMap$EntryIterator* param0 = (frost$collections$HashMap$EntryIterator*) rawSelf;
 
 frost$core$Object* _1;
 frost$collections$HashMap$EntryIterator* _3;

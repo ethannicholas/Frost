@@ -34,7 +34,8 @@ static frost$core$String $s19 = { (frost$core$Class*) &frost$core$String$class, 
 static frost$core$String $s20 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x4d\x61\x69\x6e\x2e\x66\x72\x6f\x73\x74", 10, 4522419808538736080, NULL };
 static frost$core$String $s21 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x72\x65\x74\x75\x72\x6e\x65\x64\x20\x66\x72\x6f\x6d\x20\x40\x6e\x6f\x52\x65\x74\x75\x72\x6e\x20\x6d\x65\x74\x68\x6f\x64", 30, 1170110763298107664, NULL };
 
-void org$frostlang$frostc$Main$Arguments$init$frost$collections$ListView$LTfrost$core$String$GT(org$frostlang$frostc$Main$Arguments* param0, frost$collections$ListView* param1) {
+void org$frostlang$frostc$Main$Arguments$init$frost$collections$ListView$LTfrost$core$String$GT(void* rawSelf, frost$collections$ListView* param1) {
+org$frostlang$frostc$Main$Arguments* param0 = (org$frostlang$frostc$Main$Arguments*) rawSelf;
 
 frost$core$Int _1;
 frost$core$Int* _2;
@@ -59,7 +60,8 @@ _11 = &param0->args;
 return;
 
 }
-frost$core$Bit org$frostlang$frostc$Main$Arguments$get_done$R$frost$core$Bit(org$frostlang$frostc$Main$Arguments* param0) {
+frost$core$Bit org$frostlang$frostc$Main$Arguments$get_done$R$frost$core$Bit(void* rawSelf) {
+org$frostlang$frostc$Main$Arguments* param0 = (org$frostlang$frostc$Main$Arguments*) rawSelf;
 
 frost$core$Int* _1;
 frost$core$Int _2;
@@ -93,7 +95,8 @@ _13 = (frost$core$Bit) {_12};
 return _13;
 
 }
-frost$core$String* org$frostlang$frostc$Main$Arguments$next$R$frost$core$String(org$frostlang$frostc$Main$Arguments* param0) {
+frost$core$String* org$frostlang$frostc$Main$Arguments$next$R$frost$core$String(void* rawSelf) {
+org$frostlang$frostc$Main$Arguments* param0 = (org$frostlang$frostc$Main$Arguments*) rawSelf;
 
 $fn4 _1;
 frost$core$Bit _2;
@@ -175,7 +178,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_40);
 return _37;
 
 }
-frost$core$String* org$frostlang$frostc$Main$Arguments$next$frost$core$String$R$frost$core$String(org$frostlang$frostc$Main$Arguments* param0, frost$core$String* param1) {
+frost$core$String* org$frostlang$frostc$Main$Arguments$next$frost$core$String$R$frost$core$String(void* rawSelf, frost$core$String* param1) {
+org$frostlang$frostc$Main$Arguments* param0 = (org$frostlang$frostc$Main$Arguments*) rawSelf;
 
 $fn9 _1;
 frost$core$Bit _2;
@@ -280,7 +284,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_56);
 return _53;
 
 }
-void org$frostlang$frostc$Main$Arguments$cleanup(org$frostlang$frostc$Main$Arguments* param0) {
+void org$frostlang$frostc$Main$Arguments$cleanup(void* rawSelf) {
+org$frostlang$frostc$Main$Arguments* param0 = (org$frostlang$frostc$Main$Arguments*) rawSelf;
 
 frost$core$Object* _1;
 frost$collections$ListView** _3;

@@ -19,7 +19,8 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 static frost$core$String $s2 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x63\x6c\x61\x73\x73\x65\x73\x20\x6d\x61\x79\x20\x6e\x6f\x74\x20\x62\x65\x20\x61\x6e\x6e\x6f\x74\x61\x74\x65\x64\x20\x77\x69\x74\x68\x20\x27", 35, 842839837407340505, NULL };
 static frost$core$String $s3 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x27", 1, -5808629440921371546, NULL };
 
-void org$frostlang$frostc$Compiler$_Closure15$init$org$frostlang$frostc$Compiler$org$frostlang$frostc$ClassDecl(org$frostlang$frostc$Compiler$_Closure15* param0, org$frostlang$frostc$Compiler* param1, org$frostlang$frostc$ClassDecl* param2) {
+void org$frostlang$frostc$Compiler$_Closure15$init$org$frostlang$frostc$Compiler$org$frostlang$frostc$ClassDecl(void* rawSelf, org$frostlang$frostc$Compiler* param1, org$frostlang$frostc$ClassDecl* param2) {
+org$frostlang$frostc$Compiler$_Closure15* param0 = (org$frostlang$frostc$Compiler$_Closure15*) rawSelf;
 
 frost$core$Object* _1;
 org$frostlang$frostc$Compiler** _3;
@@ -31,7 +32,7 @@ org$frostlang$frostc$ClassDecl** _12;
 org$frostlang$frostc$ClassDecl* _13;
 frost$core$Object* _14;
 org$frostlang$frostc$ClassDecl** _16;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5964
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5847
 _1 = ((frost$core$Object*) param1);
 frost$core$Frost$ref$frost$core$Object$Q(_1);
 _3 = &param0->$self;
@@ -40,7 +41,7 @@ _5 = ((frost$core$Object*) _4);
 frost$core$Frost$unref$frost$core$Object$Q(_5);
 _7 = &param0->$self;
 *_7 = param1;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5964
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5847
 _10 = ((frost$core$Object*) param2);
 frost$core$Frost$ref$frost$core$Object$Q(_10);
 _12 = &param0->cl;
@@ -52,7 +53,8 @@ _16 = &param0->cl;
 return;
 
 }
-void org$frostlang$frostc$Compiler$_Closure15$cleanup(org$frostlang$frostc$Compiler$_Closure15* param0) {
+void org$frostlang$frostc$Compiler$_Closure15$cleanup(void* rawSelf) {
+org$frostlang$frostc$Compiler$_Closure15* param0 = (org$frostlang$frostc$Compiler$_Closure15*) rawSelf;
 
 frost$core$Object* _1;
 org$frostlang$frostc$Compiler** _3;
@@ -61,7 +63,7 @@ frost$core$Object* _5;
 org$frostlang$frostc$ClassDecl** _7;
 org$frostlang$frostc$ClassDecl* _8;
 frost$core$Object* _9;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5964
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5847
 _1 = ((frost$core$Object*) param0);
 frost$core$Object$cleanup(_1);
 _3 = &param0->$self;
@@ -75,7 +77,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_9);
 return;
 
 }
-void org$frostlang$frostc$Compiler$_Closure15$$anonymous14$frost$core$Int$frost$core$String(org$frostlang$frostc$Compiler$_Closure15* param0, frost$core$Int param1, frost$core$String* param2) {
+void org$frostlang$frostc$Compiler$_Closure15$$anonymous14$frost$core$Int$frost$core$String(void* rawSelf, frost$core$Int param1, frost$core$String* param2) {
+org$frostlang$frostc$Compiler$_Closure15* param0 = (org$frostlang$frostc$Compiler$_Closure15*) rawSelf;
 
 org$frostlang$frostc$ClassDecl** _1;
 org$frostlang$frostc$ClassDecl* _2;
@@ -103,14 +106,14 @@ frost$core$String* _28;
 frost$core$String* _29;
 frost$core$Object* _31;
 frost$core$Object* _33;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5965
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5848
 _1 = &param0->cl;
 _2 = *_1;
 _3 = &_2->annotations;
 _4 = *_3;
 _5 = &_4->flags;
 _6 = *_5;
-// begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Compiler.frost:5965:37
+// begin inline call to function frost.core.Int.&&(other:frost.core.Int):frost.core.Int from Compiler.frost:5848:37
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:293
 _9 = _6.value;
 _10 = param1.value;
@@ -124,7 +127,7 @@ _18 = (frost$core$Bit) {_17};
 _19 = _18.value;
 if (_19) goto block1; else goto block2;
 block1:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5966
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5849
 _22 = &param0->$self;
 _23 = *_22;
 _24 = &param0->cl;

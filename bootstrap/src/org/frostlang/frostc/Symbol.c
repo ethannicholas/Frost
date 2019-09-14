@@ -28,7 +28,8 @@ static frost$core$String $s13 = { (frost$core$Class*) &frost$core$String$class, 
 static frost$core$String $s14 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x31", 1, -5808609649712063748, NULL };
 static frost$core$String $s16 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x79\x6d\x62\x6f\x6c\x2e\x66\x72\x6f\x73\x74", 12, -7360959199834389899, NULL };
 
-void org$frostlang$frostc$Symbol$init$org$frostlang$frostc$Symbol$Kind$org$frostlang$frostc$Position$frost$core$String(org$frostlang$frostc$Symbol* param0, org$frostlang$frostc$Symbol$Kind param1, org$frostlang$frostc$Position param2, frost$core$String* param3) {
+void org$frostlang$frostc$Symbol$init$org$frostlang$frostc$Symbol$Kind$org$frostlang$frostc$Position$frost$core$String(void* rawSelf, org$frostlang$frostc$Symbol$Kind param1, org$frostlang$frostc$Position param2, frost$core$String* param3) {
+org$frostlang$frostc$Symbol* param0 = (org$frostlang$frostc$Symbol*) rawSelf;
 
 org$frostlang$frostc$Type$Kind local0;
 org$frostlang$frostc$Type$Kind local1;
@@ -89,7 +90,7 @@ _5 = ((org$frostlang$frostc$Type*) param0);
 _6 = &_5->typeKind;
 _7 = *_6;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp6;
-$tmp6 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp6 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp6->value = _7;
 _8 = ((frost$core$Equatable*) $tmp6);
 _9 = _8;
@@ -102,7 +103,7 @@ _15 = *(&local1);
 *(&local0) = _15;
 _18 = *(&local0);
 org$frostlang$frostc$Type$Kind$wrapper* $tmp7;
-$tmp7 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp7 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp7->value = _18;
 _19 = ((frost$core$Equatable*) $tmp7);
 ITable* $tmp8 = _9->$class->itable;
@@ -120,7 +121,7 @@ _26 = &_25->typeKind;
 _27 = *_26;
 _28 = _27.$rawValue;
 frost$core$Int$wrapper* $tmp9;
-$tmp9 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp9 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp9->value = _28;
 _29 = ((frost$core$Object*) $tmp9);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Symbol.frost:25:78
@@ -185,7 +186,8 @@ block7:;
 return;
 
 }
-frost$core$Bit org$frostlang$frostc$Symbol$get_heritable$R$frost$core$Bit(org$frostlang$frostc$Symbol* param0) {
+frost$core$Bit org$frostlang$frostc$Symbol$get_heritable$R$frost$core$Bit(void* rawSelf) {
+org$frostlang$frostc$Symbol* param0 = (org$frostlang$frostc$Symbol*) rawSelf;
 
 frost$core$Bit _1;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Symbol.frost:34
@@ -193,7 +195,8 @@ _1 = (frost$core$Bit) {true};
 return _1;
 
 }
-void org$frostlang$frostc$Symbol$cleanup(org$frostlang$frostc$Symbol* param0) {
+void org$frostlang$frostc$Symbol$cleanup(void* rawSelf) {
+org$frostlang$frostc$Symbol* param0 = (org$frostlang$frostc$Symbol*) rawSelf;
 
 frost$core$Object* _1;
 frost$core$String** _3;

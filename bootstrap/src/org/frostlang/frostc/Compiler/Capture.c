@@ -26,7 +26,8 @@ static frost$core$String $s10 = { (frost$core$Class*) &frost$core$String$class, 
 static frost$core$String $s11 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x45\x4c\x46", 4, 4758868999504809847, NULL };
 static frost$core$String $s12 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x43\x6f\x6d\x70\x69\x6c\x65\x72\x2e\x66\x72\x6f\x73\x74", 14, -1909310572556369220, NULL };
 
-void org$frostlang$frostc$Compiler$Capture$cleanup(org$frostlang$frostc$Compiler$Capture* param0) {
+void org$frostlang$frostc$Compiler$Capture$cleanup(void* rawSelf) {
+org$frostlang$frostc$Compiler$Capture* param0 = (org$frostlang$frostc$Compiler$Capture*) rawSelf;
 
 org$frostlang$frostc$Variable* local0 = NULL;
 org$frostlang$frostc$FieldDecl* local1 = NULL;
@@ -82,7 +83,7 @@ _9 = (frost$core$Bit) {_8};
 _11 = _9.value;
 if (_11) goto block2; else goto block3;
 block2:;
-_13 = (org$frostlang$frostc$Variable**) (param0->$data + 0);
+_13 = &param0->$data.$VARIABLE.field0;
 _14 = *_13;
 *(&local0) = ((org$frostlang$frostc$Variable*) NULL);
 _16 = ((frost$core$Object*) _14);
@@ -111,7 +112,7 @@ _37 = (frost$core$Bit) {_36};
 _39 = _37.value;
 if (_39) goto block5; else goto block6;
 block5:;
-_41 = (org$frostlang$frostc$FieldDecl**) (param0->$data + 0);
+_41 = &param0->$data.$FIELD.field0;
 _42 = *_41;
 *(&local1) = ((org$frostlang$frostc$FieldDecl*) NULL);
 _44 = ((frost$core$Object*) _42);
@@ -148,7 +149,8 @@ frost$core$Object$cleanup(_71);
 return;
 
 }
-void org$frostlang$frostc$Compiler$Capture$init$frost$core$Int$org$frostlang$frostc$Variable(org$frostlang$frostc$Compiler$Capture* param0, frost$core$Int param1, org$frostlang$frostc$Variable* param2) {
+void org$frostlang$frostc$Compiler$Capture$init$frost$core$Int$org$frostlang$frostc$Variable(void* rawSelf, frost$core$Int param1, org$frostlang$frostc$Variable* param2) {
+org$frostlang$frostc$Compiler$Capture* param0 = (org$frostlang$frostc$Compiler$Capture*) rawSelf;
 
 frost$core$Int* _1;
 frost$core$Object* _4;
@@ -159,12 +161,13 @@ _1 = &param0->$rawValue;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:257
 _4 = ((frost$core$Object*) param2);
 frost$core$Frost$ref$frost$core$Object$Q(_4);
-_6 = (org$frostlang$frostc$Variable**) (param0->$data + 0);
+_6 = &param0->$data.$VARIABLE.field0;
 *_6 = param2;
 return;
 
 }
-void org$frostlang$frostc$Compiler$Capture$init$frost$core$Int$org$frostlang$frostc$FieldDecl(org$frostlang$frostc$Compiler$Capture* param0, frost$core$Int param1, org$frostlang$frostc$FieldDecl* param2) {
+void org$frostlang$frostc$Compiler$Capture$init$frost$core$Int$org$frostlang$frostc$FieldDecl(void* rawSelf, frost$core$Int param1, org$frostlang$frostc$FieldDecl* param2) {
+org$frostlang$frostc$Compiler$Capture* param0 = (org$frostlang$frostc$Compiler$Capture*) rawSelf;
 
 frost$core$Int* _1;
 frost$core$Object* _4;
@@ -175,12 +178,13 @@ _1 = &param0->$rawValue;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:257
 _4 = ((frost$core$Object*) param2);
 frost$core$Frost$ref$frost$core$Object$Q(_4);
-_6 = (org$frostlang$frostc$FieldDecl**) (param0->$data + 0);
+_6 = &param0->$data.$FIELD.field0;
 *_6 = param2;
 return;
 
 }
-void org$frostlang$frostc$Compiler$Capture$init$frost$core$Int(org$frostlang$frostc$Compiler$Capture* param0, frost$core$Int param1) {
+void org$frostlang$frostc$Compiler$Capture$init$frost$core$Int(void* rawSelf, frost$core$Int param1) {
+org$frostlang$frostc$Compiler$Capture* param0 = (org$frostlang$frostc$Compiler$Capture*) rawSelf;
 
 frost$core$Int* _1;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:257
@@ -189,7 +193,8 @@ _1 = &param0->$rawValue;
 return;
 
 }
-frost$core$String* org$frostlang$frostc$Compiler$Capture$get_asString$R$frost$core$String(org$frostlang$frostc$Compiler$Capture* param0) {
+frost$core$String* org$frostlang$frostc$Compiler$Capture$get_asString$R$frost$core$String(void* rawSelf) {
+org$frostlang$frostc$Compiler$Capture* param0 = (org$frostlang$frostc$Compiler$Capture*) rawSelf;
 
 org$frostlang$frostc$Variable* local0 = NULL;
 org$frostlang$frostc$FieldDecl* local1 = NULL;
@@ -266,7 +271,7 @@ _9 = (frost$core$Bit) {_8};
 _11 = _9.value;
 if (_11) goto block2; else goto block3;
 block2:;
-_13 = (org$frostlang$frostc$Variable**) (param0->$data + 0);
+_13 = &param0->$data.$VARIABLE.field0;
 _14 = *_13;
 *(&local0) = ((org$frostlang$frostc$Variable*) NULL);
 _16 = ((frost$core$Object*) _14);
@@ -312,7 +317,7 @@ _55 = (frost$core$Bit) {_54};
 _57 = _55.value;
 if (_57) goto block6; else goto block7;
 block6:;
-_59 = (org$frostlang$frostc$FieldDecl**) (param0->$data + 0);
+_59 = &param0->$data.$FIELD.field0;
 _60 = *_59;
 *(&local1) = ((org$frostlang$frostc$FieldDecl*) NULL);
 _62 = ((frost$core$Object*) _60);

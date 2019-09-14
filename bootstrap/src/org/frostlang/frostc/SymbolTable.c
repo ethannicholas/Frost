@@ -82,7 +82,8 @@ static frost$core$String $s69 = { (frost$core$Class*) &frost$core$String$class, 
 static frost$core$String $s70 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x29\x2c\x20\x73\x79\x6d\x62\x6f\x6c\x73\x3d", 11, -4986810529602041312, NULL };
 static frost$core$String $s72 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x3e", 1, -5808601953130666271, NULL };
 
-void org$frostlang$frostc$SymbolTable$init$org$frostlang$frostc$Compiler(org$frostlang$frostc$SymbolTable* param0, org$frostlang$frostc$Compiler* param1) {
+void org$frostlang$frostc$SymbolTable$init$org$frostlang$frostc$Compiler(void* rawSelf, org$frostlang$frostc$Compiler* param1) {
+org$frostlang$frostc$SymbolTable* param0 = (org$frostlang$frostc$SymbolTable*) rawSelf;
 
 frost$collections$HashMap* _1;
 frost$collections$HashMap* _2;
@@ -119,8 +120,7 @@ frost$core$Object* _52;
 frost$core$Weak** _54;
 frost$core$Object* _56;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/SymbolTable.frost:5
-FROST_ASSERT(56 == sizeof(frost$collections$HashMap));
-_1 = (frost$collections$HashMap*) frostObjectAlloc(56, (frost$core$Class*) &frost$collections$HashMap$class);
+_1 = (frost$collections$HashMap*) frostObjectAlloc(sizeof(frost$collections$HashMap), (frost$core$Class*) &frost$collections$HashMap$class);
 _2 = _1;
 frost$collections$HashMap$init(_2);
 _4 = ((frost$core$Object*) _1);
@@ -134,8 +134,7 @@ _10 = &param0->symbols;
 _12 = ((frost$core$Object*) _1);
 frost$core$Frost$unref$frost$core$Object$Q(_12);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/SymbolTable.frost:12
-FROST_ASSERT(56 == sizeof(frost$collections$HashMap));
-_15 = (frost$collections$HashMap*) frostObjectAlloc(56, (frost$core$Class*) &frost$collections$HashMap$class);
+_15 = (frost$collections$HashMap*) frostObjectAlloc(sizeof(frost$collections$HashMap), (frost$core$Class*) &frost$collections$HashMap$class);
 _16 = _15;
 frost$collections$HashMap$init(_16);
 _18 = ((frost$core$Object*) _15);
@@ -149,8 +148,7 @@ _24 = &param0->merged;
 _26 = ((frost$core$Object*) _15);
 frost$core$Frost$unref$frost$core$Object$Q(_26);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/SymbolTable.frost:15
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_29 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_29 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _30 = _29;
 frost$collections$Array$init(_30);
 _32 = ((frost$core$Object*) _29);
@@ -164,8 +162,7 @@ _38 = &param0->parents;
 _40 = ((frost$core$Object*) _29);
 frost$core$Frost$unref$frost$core$Object$Q(_40);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/SymbolTable.frost:18
-FROST_ASSERT(32 == sizeof(frost$core$Weak));
-_43 = (frost$core$Weak*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$Weak$class);
+_43 = (frost$core$Weak*) frostObjectAlloc(sizeof(frost$core$Weak), (frost$core$Class*) &frost$core$Weak$class);
 _44 = _43;
 _45 = param1;
 _46 = ((frost$core$Object*) _45);
@@ -183,7 +180,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_56);
 return;
 
 }
-void org$frostlang$frostc$SymbolTable$init$org$frostlang$frostc$SymbolTable(org$frostlang$frostc$SymbolTable* param0, org$frostlang$frostc$SymbolTable* param1) {
+void org$frostlang$frostc$SymbolTable$init$org$frostlang$frostc$SymbolTable(void* rawSelf, org$frostlang$frostc$SymbolTable* param1) {
+org$frostlang$frostc$SymbolTable* param0 = (org$frostlang$frostc$SymbolTable*) rawSelf;
 
 frost$collections$HashMap* _1;
 frost$collections$HashMap* _2;
@@ -237,8 +235,7 @@ frost$collections$Array* _85;
 frost$collections$Array* _86;
 frost$core$Object* _87;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/SymbolTable.frost:5
-FROST_ASSERT(56 == sizeof(frost$collections$HashMap));
-_1 = (frost$collections$HashMap*) frostObjectAlloc(56, (frost$core$Class*) &frost$collections$HashMap$class);
+_1 = (frost$collections$HashMap*) frostObjectAlloc(sizeof(frost$collections$HashMap), (frost$core$Class*) &frost$collections$HashMap$class);
 _2 = _1;
 frost$collections$HashMap$init(_2);
 _4 = ((frost$core$Object*) _1);
@@ -252,8 +249,7 @@ _10 = &param0->symbols;
 _12 = ((frost$core$Object*) _1);
 frost$core$Frost$unref$frost$core$Object$Q(_12);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/SymbolTable.frost:12
-FROST_ASSERT(56 == sizeof(frost$collections$HashMap));
-_15 = (frost$collections$HashMap*) frostObjectAlloc(56, (frost$core$Class*) &frost$collections$HashMap$class);
+_15 = (frost$collections$HashMap*) frostObjectAlloc(sizeof(frost$collections$HashMap), (frost$core$Class*) &frost$collections$HashMap$class);
 _16 = _15;
 frost$collections$HashMap$init(_16);
 _18 = ((frost$core$Object*) _15);
@@ -267,8 +263,7 @@ _24 = &param0->merged;
 _26 = ((frost$core$Object*) _15);
 frost$core$Frost$unref$frost$core$Object$Q(_26);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/SymbolTable.frost:15
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_29 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_29 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _30 = _29;
 frost$collections$Array$init(_30);
 _32 = ((frost$core$Object*) _29);
@@ -305,8 +300,7 @@ _61 = _60;
 _62 = _61;
 frost$core$Frost$ref$frost$core$Object$Q(_62);
 _65 = ((org$frostlang$frostc$Compiler*) _61);
-FROST_ASSERT(32 == sizeof(frost$core$Weak));
-_66 = (frost$core$Weak*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$Weak$class);
+_66 = (frost$core$Weak*) frostObjectAlloc(sizeof(frost$core$Weak), (frost$core$Class*) &frost$core$Weak$class);
 _67 = _66;
 _68 = _65;
 _69 = ((frost$core$Object*) _68);
@@ -332,7 +326,8 @@ frost$collections$Array$add$frost$collections$Array$T(_86, _87);
 return;
 
 }
-void org$frostlang$frostc$SymbolTable$add$org$frostlang$frostc$Symbol(org$frostlang$frostc$SymbolTable* param0, org$frostlang$frostc$Symbol* param1) {
+void org$frostlang$frostc$SymbolTable$add$org$frostlang$frostc$Symbol(void* rawSelf, org$frostlang$frostc$Symbol* param1) {
+org$frostlang$frostc$SymbolTable* param0 = (org$frostlang$frostc$SymbolTable*) rawSelf;
 
 frost$core$String** _1;
 frost$core$String* _2;
@@ -343,7 +338,8 @@ org$frostlang$frostc$SymbolTable$add$org$frostlang$frostc$Symbol$frost$core$Stri
 return;
 
 }
-void org$frostlang$frostc$SymbolTable$add$org$frostlang$frostc$Symbol$frost$core$String(org$frostlang$frostc$SymbolTable* param0, org$frostlang$frostc$Symbol* param1, frost$core$String* param2) {
+void org$frostlang$frostc$SymbolTable$add$org$frostlang$frostc$Symbol$frost$core$String(void* rawSelf, org$frostlang$frostc$Symbol* param1, frost$core$String* param2) {
+org$frostlang$frostc$SymbolTable* param0 = (org$frostlang$frostc$SymbolTable*) rawSelf;
 
 org$frostlang$frostc$Symbol* local0 = NULL;
 org$frostlang$frostc$Symbol$Kind local1;
@@ -558,7 +554,7 @@ block2:;
 _42 = &param1->kind;
 _43 = *_42;
 org$frostlang$frostc$Symbol$Kind$wrapper* $tmp5;
-$tmp5 = (org$frostlang$frostc$Symbol$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Symbol$Kind$wrapperclass);
+$tmp5 = (org$frostlang$frostc$Symbol$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Symbol$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Symbol$Kind$wrapperclass);
 $tmp5->value = _43;
 _44 = ((frost$core$Equatable*) $tmp5);
 _45 = _44;
@@ -571,7 +567,7 @@ _51 = *(&local2);
 *(&local1) = _51;
 _54 = *(&local1);
 org$frostlang$frostc$Symbol$Kind$wrapper* $tmp6;
-$tmp6 = (org$frostlang$frostc$Symbol$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Symbol$Kind$wrapperclass);
+$tmp6 = (org$frostlang$frostc$Symbol$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Symbol$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Symbol$Kind$wrapperclass);
 $tmp6->value = _54;
 _55 = ((frost$core$Equatable*) $tmp6);
 ITable* $tmp7 = _45->$class->itable;
@@ -613,8 +609,7 @@ _85 = _83.value;
 if (_85) goto block9; else goto block10;
 block9:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/SymbolTable.frost:40
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_88 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_88 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _89 = _88;
 frost$collections$Array$init(_89);
 *(&local3) = ((frost$collections$Array*) NULL);
@@ -644,8 +639,7 @@ _114 = &param0->symbols;
 _115 = *_114;
 _116 = _115;
 _117 = ((frost$collections$HashKey*) param2);
-FROST_ASSERT(64 == sizeof(org$frostlang$frostc$Methods));
-_118 = (org$frostlang$frostc$Methods*) frostObjectAlloc(64, (frost$core$Class*) &org$frostlang$frostc$Methods$class);
+_118 = (org$frostlang$frostc$Methods*) frostObjectAlloc(sizeof(org$frostlang$frostc$Methods), (frost$core$Class*) &org$frostlang$frostc$Methods$class);
 _119 = *(&local3);
 _120 = ((frost$collections$ListView*) _119);
 org$frostlang$frostc$Methods$init$frost$collections$ListView$LTorg$frostlang$frostc$MethodDecl$GT(_118, _120);
@@ -676,8 +670,7 @@ _145 = _143.value;
 if (_145) goto block12; else goto block8;
 block12:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/SymbolTable.frost:47
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_148 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_148 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _149 = _148;
 frost$collections$Array$init(_149);
 *(&local4) = ((frost$collections$Array*) NULL);
@@ -710,8 +703,7 @@ _177 = &param0->symbols;
 _178 = *_177;
 _179 = _178;
 _180 = ((frost$collections$HashKey*) param2);
-FROST_ASSERT(64 == sizeof(org$frostlang$frostc$Methods));
-_181 = (org$frostlang$frostc$Methods*) frostObjectAlloc(64, (frost$core$Class*) &org$frostlang$frostc$Methods$class);
+_181 = (org$frostlang$frostc$Methods*) frostObjectAlloc(sizeof(org$frostlang$frostc$Methods), (frost$core$Class*) &org$frostlang$frostc$Methods$class);
 _182 = *(&local4);
 _183 = ((frost$collections$ListView*) _182);
 org$frostlang$frostc$Methods$init$frost$collections$ListView$LTorg$frostlang$frostc$MethodDecl$GT(_181, _183);
@@ -775,7 +767,7 @@ _237 = _229;
 _238 = &_237->position;
 _239 = *_238;
 org$frostlang$frostc$Position$wrapper* $tmp15;
-$tmp15 = (org$frostlang$frostc$Position$wrapper*) frostObjectAlloc(40, (frost$core$Class*) &org$frostlang$frostc$Position$wrapperclass);
+$tmp15 = (org$frostlang$frostc$Position$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Position$wrapper), (frost$core$Class*) &org$frostlang$frostc$Position$wrapperclass);
 $tmp15->value = _239;
 _240 = ((frost$core$Object*) $tmp15);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from SymbolTable.frost:55:95
@@ -810,7 +802,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_268);
 return;
 
 }
-void org$frostlang$frostc$SymbolTable$addIfNotOverridden$org$frostlang$frostc$MethodDecl$frost$collections$List$LTorg$frostlang$frostc$MethodDecl$GT(org$frostlang$frostc$SymbolTable* param0, org$frostlang$frostc$MethodDecl* param1, frost$collections$List* param2) {
+void org$frostlang$frostc$SymbolTable$addIfNotOverridden$org$frostlang$frostc$MethodDecl$frost$collections$List$LTorg$frostlang$frostc$MethodDecl$GT(void* rawSelf, org$frostlang$frostc$MethodDecl* param1, frost$collections$List* param2) {
+org$frostlang$frostc$SymbolTable* param0 = (org$frostlang$frostc$SymbolTable*) rawSelf;
 
 org$frostlang$frostc$MethodDecl$Kind local0;
 org$frostlang$frostc$MethodDecl$Kind local1;
@@ -921,7 +914,7 @@ $fn22 _177;
 _3 = &param1->methodKind;
 _4 = *_3;
 org$frostlang$frostc$MethodDecl$Kind$wrapper* $tmp23;
-$tmp23 = (org$frostlang$frostc$MethodDecl$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$MethodDecl$Kind$wrapperclass);
+$tmp23 = (org$frostlang$frostc$MethodDecl$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$MethodDecl$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$MethodDecl$Kind$wrapperclass);
 $tmp23->value = _4;
 _5 = ((frost$core$Equatable*) $tmp23);
 _6 = _5;
@@ -934,7 +927,7 @@ _12 = *(&local1);
 *(&local0) = _12;
 _15 = *(&local0);
 org$frostlang$frostc$MethodDecl$Kind$wrapper* $tmp24;
-$tmp24 = (org$frostlang$frostc$MethodDecl$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$MethodDecl$Kind$wrapperclass);
+$tmp24 = (org$frostlang$frostc$MethodDecl$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$MethodDecl$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$MethodDecl$Kind$wrapperclass);
 $tmp24->value = _15;
 _16 = ((frost$core$Equatable*) $tmp24);
 ITable* $tmp25 = _6->$class->itable;
@@ -1128,7 +1121,8 @@ _177(_175, _176);
 return;
 
 }
-org$frostlang$frostc$Symbol* org$frostlang$frostc$SymbolTable$merge$org$frostlang$frostc$Symbol$Q$org$frostlang$frostc$Symbol$Q$R$org$frostlang$frostc$Symbol$Q(org$frostlang$frostc$SymbolTable* param0, org$frostlang$frostc$Symbol* param1, org$frostlang$frostc$Symbol* param2) {
+org$frostlang$frostc$Symbol* org$frostlang$frostc$SymbolTable$merge$org$frostlang$frostc$Symbol$Q$org$frostlang$frostc$Symbol$Q$R$org$frostlang$frostc$Symbol$Q(void* rawSelf, org$frostlang$frostc$Symbol* param1, org$frostlang$frostc$Symbol* param2) {
+org$frostlang$frostc$SymbolTable* param0 = (org$frostlang$frostc$SymbolTable*) rawSelf;
 
 frost$collections$Array* local0 = NULL;
 org$frostlang$frostc$MethodDecl* local1 = NULL;
@@ -1561,8 +1555,7 @@ _92 = _90.value;
 if (_92) goto block21; else goto block22;
 block21:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/SymbolTable.frost:94
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_95 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_95 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _96 = _95;
 frost$collections$Array$init(_96);
 *(&local0) = ((frost$collections$Array*) NULL);
@@ -1636,8 +1629,7 @@ block26:;
 _151 = ((frost$core$Object*) _120);
 frost$core$Frost$unref$frost$core$Object$Q(_151);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/SymbolTable.frost:99
-FROST_ASSERT(64 == sizeof(org$frostlang$frostc$Methods));
-_154 = (org$frostlang$frostc$Methods*) frostObjectAlloc(64, (frost$core$Class*) &org$frostlang$frostc$Methods$class);
+_154 = (org$frostlang$frostc$Methods*) frostObjectAlloc(sizeof(org$frostlang$frostc$Methods), (frost$core$Class*) &org$frostlang$frostc$Methods$class);
 _155 = *(&local0);
 _156 = ((frost$collections$ListView*) _155);
 org$frostlang$frostc$Methods$init$frost$collections$ListView$LTorg$frostlang$frostc$MethodDecl$GT(_154, _156);
@@ -1826,8 +1818,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_331);
 return param1;
 block44:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/SymbolTable.frost:113
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_336 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_336 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _337 = _336;
 frost$collections$Array$init(_337);
 *(&local4) = ((frost$collections$Array*) NULL);
@@ -1852,8 +1843,7 @@ _357 = ((org$frostlang$frostc$MethodDecl*) param2);
 _358 = ((frost$core$Object*) _357);
 frost$collections$Array$add$frost$collections$Array$T(_356, _358);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/SymbolTable.frost:116
-FROST_ASSERT(64 == sizeof(org$frostlang$frostc$Methods));
-_361 = (org$frostlang$frostc$Methods*) frostObjectAlloc(64, (frost$core$Class*) &org$frostlang$frostc$Methods$class);
+_361 = (org$frostlang$frostc$Methods*) frostObjectAlloc(sizeof(org$frostlang$frostc$Methods), (frost$core$Class*) &org$frostlang$frostc$Methods$class);
 _362 = *(&local4);
 _363 = ((frost$collections$ListView*) _362);
 org$frostlang$frostc$Methods$init$frost$collections$ListView$LTorg$frostlang$frostc$MethodDecl$GT(_361, _363);
@@ -1918,8 +1908,7 @@ _418 = _416.value;
 if (_418) goto block54; else goto block55;
 block54:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/SymbolTable.frost:126
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_421 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_421 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _422 = _421;
 _423 = ((org$frostlang$frostc$Methods*) param1);
 _424 = &_423->methods;
@@ -1992,8 +1981,7 @@ block59:;
 _476 = ((frost$core$Object*) _445);
 frost$core$Frost$unref$frost$core$Object$Q(_476);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/SymbolTable.frost:130
-FROST_ASSERT(64 == sizeof(org$frostlang$frostc$Methods));
-_479 = (org$frostlang$frostc$Methods*) frostObjectAlloc(64, (frost$core$Class*) &org$frostlang$frostc$Methods$class);
+_479 = (org$frostlang$frostc$Methods*) frostObjectAlloc(sizeof(org$frostlang$frostc$Methods), (frost$core$Class*) &org$frostlang$frostc$Methods$class);
 _480 = *(&local5);
 _481 = ((frost$collections$ListView*) _480);
 org$frostlang$frostc$Methods$init$frost$collections$ListView$LTorg$frostlang$frostc$MethodDecl$GT(_479, _481);
@@ -2019,8 +2007,7 @@ _501 = _499.value;
 if (_501) goto block60; else goto block61;
 block60:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/SymbolTable.frost:133
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_504 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_504 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _505 = _504;
 _506 = ((org$frostlang$frostc$Methods*) param1);
 _507 = &_506->methods;
@@ -2043,8 +2030,7 @@ _523 = *(&local7);
 _524 = ((frost$collections$List*) _523);
 org$frostlang$frostc$SymbolTable$addIfNotOverridden$org$frostlang$frostc$MethodDecl$frost$collections$List$LTorg$frostlang$frostc$MethodDecl$GT(param0, _522, _524);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/SymbolTable.frost:135
-FROST_ASSERT(64 == sizeof(org$frostlang$frostc$Methods));
-_527 = (org$frostlang$frostc$Methods*) frostObjectAlloc(64, (frost$core$Class*) &org$frostlang$frostc$Methods$class);
+_527 = (org$frostlang$frostc$Methods*) frostObjectAlloc(sizeof(org$frostlang$frostc$Methods), (frost$core$Class*) &org$frostlang$frostc$Methods$class);
 _528 = *(&local7);
 _529 = ((frost$collections$ListView*) _528);
 org$frostlang$frostc$Methods$init$frost$collections$ListView$LTorg$frostlang$frostc$MethodDecl$GT(_527, _529);
@@ -2075,7 +2061,8 @@ goto block63;
 block63:;
 
 }
-org$frostlang$frostc$Symbol* org$frostlang$frostc$SymbolTable$$IDX$frost$core$String$R$org$frostlang$frostc$Symbol$Q(org$frostlang$frostc$SymbolTable* param0, frost$core$String* param1) {
+org$frostlang$frostc$Symbol* org$frostlang$frostc$SymbolTable$$IDX$frost$core$String$R$org$frostlang$frostc$Symbol$Q(void* rawSelf, frost$core$String* param1) {
+org$frostlang$frostc$SymbolTable* param0 = (org$frostlang$frostc$SymbolTable*) rawSelf;
 
 org$frostlang$frostc$Symbol* local0 = NULL;
 org$frostlang$frostc$SymbolTable* local1 = NULL;
@@ -2295,7 +2282,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_115);
 return _111;
 
 }
-frost$core$String* org$frostlang$frostc$SymbolTable$get_asString$R$frost$core$String(org$frostlang$frostc$SymbolTable* param0) {
+frost$core$String* org$frostlang$frostc$SymbolTable$get_asString$R$frost$core$String(void* rawSelf) {
+org$frostlang$frostc$SymbolTable* param0 = (org$frostlang$frostc$SymbolTable*) rawSelf;
 
 frost$collections$Array** _1;
 frost$collections$Array* _2;
@@ -2337,7 +2325,7 @@ while ($tmp66->$class != (frost$core$Class*) &frost$collections$CollectionView$c
 _4 = $tmp66->methods[0];
 _5 = _4(_3);
 frost$core$Int$wrapper* $tmp67;
-$tmp67 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp67 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp67->value = _5;
 _6 = ((frost$core$Object*) $tmp67);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from SymbolTable.frost:164:16
@@ -2382,7 +2370,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_46);
 return _35;
 
 }
-void org$frostlang$frostc$SymbolTable$cleanup(org$frostlang$frostc$SymbolTable* param0) {
+void org$frostlang$frostc$SymbolTable$cleanup(void* rawSelf) {
+org$frostlang$frostc$SymbolTable* param0 = (org$frostlang$frostc$SymbolTable*) rawSelf;
 
 frost$core$Object* _1;
 frost$collections$HashMap** _3;

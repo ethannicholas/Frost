@@ -1,0 +1,1788 @@
+package org.frostlang.frostc
+
+uses org.frostlang.frostc.expression.Binary
+uses org.frostlang.frostc.parser.Token
+
+@final
+class JSCodeGenerator : CodeGenerator {
+    choice EnclosingContext {
+        LOOP(String? -* label *-, String -* break target *-, String -* continue target *-)
+        FINALLY(String -* label *-,
+                Map<String, Pair<Int, String>> -* map from source label to (block id, return label) *-,
+                String -* variable holding numeric id of block which jumped to finally block *-)
+    }
+
+    class AutoContext {
+        def cg:JSCodeGenerator
+
+        def context:EnclosingContext
+
+        init(cg:JSCodeGenerator, context:EnclosingContext) {
+            self.cg := cg
+            self.context := context
+            cg.enclosingContexts.push(context)
+        }
+
+        @override
+        method cleanup() {
+            assert cg.enclosingContexts[0] == context
+            cg.enclosingContexts.pop()
+        }
+    }
+
+    constant NO_REFCNT := -999
+
+    @weak
+    var compiler:Compiler?
+
+    def outDir:File
+
+    def out:IndentedOutputStream
+
+    def strings := MemoryOutputStream()
+
+    def imports := HashSet<String>()
+
+    var currentClass:ClassDecl? := null
+
+    def llvmCodeGen := LLVMCodeGenerator("", MemoryOutputStream())
+
+    init(outDir:File) {
+        self.outDir := outDir
+        self.out := IndentedOutputStream(MemoryOutputStream())
+    }
+
+    function escapeName(s:String):String {
+        return llvmCodeGen.escapeName(s)
+    }
+
+    function getName(m:MethodDecl):String {
+        return llvmCodeGen.getName(m)
+    }
+
+    function sizeOf(t:Type):Int {
+        return llvmCodeGen.sizeOf(t)
+    }
+
+    function isExternal(cl:ClassDecl):Bit {
+        return cl !== currentClass
+    }
+
+    method writeImport(cl:ClassDecl) {
+        try {
+            if cl.name = "frost.unsafe.Pointer" {
+                return 
+            }
+            def includePath := llvmCodeGen.getRelativePath(cl, ".h")
+            if !imports.contains(includePath) {
+                includes.printLine("#include \"\{includePath}\"")
+                imports.add(includePath)
+            }
+        }
+        fail(error) {
+            unreachable
+        }
+    }
+
+    method cType(t:Type):String {
+        assert t.resolved, "unresolved type \{t}"
+        if t.isClass {
+            def cl := compiler!.getClass(t)
+            assert cl !== null
+            writeImport(cl)
+        }
+        match t.typeKind {
+            when Type.Kind.METHOD, Type.Kind.FUNCTION {
+                return cType(compiler!.MUTABLE_METHOD_TYPE)
+            }
+            when Type.Kind.IMMUTABLE_METHOD, Type.Kind.IMMUTABLE_FUNCTION {
+                return cType(compiler!.METHOD_TYPE)
+            }
+            when Type.Kind.GENERIC {
+                if t.subtypes[0].name = "frost.unsafe.Pointer" & t.subtypes[1].isMethod {
+                    return cMethodType(t.subtypes[1], null)
+                }
+            }
+        }
+        return llvmCodeGen.type(t)
+    }
+
+    @pre(t.typeKind = Type.Kind.FUNCTION | t.typeKind = Type.Kind.METHOD |
+            t.typeKind = Type.Kind.IMMUTABLE_FUNCTION | t.typeKind = Type.Kind.IMMUTABLE_METHOD)
+    method cMethodType(t:Type, selfType:Type?):String {
+        varCount += 1
+        def result := "$fn\{varCount}"
+        def code := MutableString("typedef ")
+        code.append(cType(t.subtypes[t.subtypes.count - 1]))
+        code.append(" (*")
+        code.append(result)
+        code.append(")(")
+        var separator := ""
+        if selfType !== null {
+            code.append(cType(selfType!))
+            separator := ", "
+        }
+        for i in 0 .. t.subtypes.count - 1 {
+            code.append(separator)
+            code.append(cType(t.subtypes[i]))
+            separator := ", "
+        }
+        code.append(");")
+        try {
+            types.printLine(code.finish())
+        }
+        fail(error) {
+            unreachable
+        }
+        return result
+    }
+
+    @override
+    method setCompiler(compiler:Compiler) {
+        self.compiler := compiler
+        llvmCodeGen.setCompiler(compiler)
+    }
+
+    class ClassConstant : Immutable {
+        def name:String
+        def type:String
+
+        init(name:String, type:String) {
+            self.name := name
+            self.type := type
+        }
+    }
+
+    class MethodShim {
+        def name:String
+        def type:String
+
+        init(name:String, type:String) {
+            self.name := name
+            self.type := type
+        }
+    }
+
+    constant POINTER_SIZE        := 8
+    constant OBJECT_FIELD_COUNT  := 2
+    constant CLASS_POINTER_INDEX := 0
+    constant ITABLE_INDEX        := 2
+    constant VTABLE_INDEX        := 3
+
+    constant INT_TYPE  := "i64"
+    constant SIZE_TYPE := "i64"
+
+    def includes := MemoryOutputStream()
+
+    def declarations := MemoryOutputStream()
+
+    def types := MemoryOutputStream()
+
+    def methodsBuffer := MemoryOutputStream()
+
+    def methods := IndentedOutputStream(methodsBuffer)
+
+    def methodHeaderBuffer := MemoryOutputStream()
+
+    def methodHeader := IndentedOutputStream(methodHeaderBuffer)
+
+    def shimsBuffer := MemoryOutputStream()
+
+    def shims := IndentedOutputStream(shimsBuffer)
+
+    def declared := HashSet<String>()
+
+    def writtenTypes := HashSet<String>()
+
+    def writtenWrappers := HashSet<String>()
+
+    def classConstants := HashMap<String, ClassConstant>()
+
+    def variableNames := IdentityMap<Variable, String>()
+
+    var currentBlock:String
+
+    var currentMethod:MethodDecl?
+
+    var returnValueVar:String?
+
+    def enclosingContexts := Stack<EnclosingContext>()
+
+    var varCount := 0
+
+    def methodShims := IdentityMap<MethodDecl, MethodShim>()
+
+    def ir:IR
+
+    method nextVar():String {
+        varCount += 1
+        return "$tmp\{varCount}"
+    }
+
+    method nextLabel():String {
+        varCount += 1
+        return "$l\{varCount}"
+    }
+
+    function fieldSize(t:Type):Int {
+        return llvmCodeGen.llvmCodeGen.fieldSize(t)
+    }
+
+    function alignment(t:Type):Int {
+        return llvmCodeGen.llvmCodeGen.alignment(t)
+    }
+
+    function stride(t:Type):Int {
+        return llvmCodeGen.llvmCodeGen.stride(t)
+    }
+
+    function sizeOfWrapper(t:Type):Int {
+        def cl := compiler!.getClass(t)
+        assert cl !== null & compiler!.isValue(cl)
+        var result := sizeOf(compiler!.OBJECT_TYPE)
+        for f in compiler!.instanceFields(cl) {
+            compiler!.resolve(f)
+            if f.type = compiler!.CHOICE_DATA_TYPE {
+                -- FIXME need to respect alignment!
+                result += llvmCodeGen.llvmCodeGen.getChoiceDataSize(cl)
+            }
+            else {
+                def size := fieldSize(f.type)
+                def align := result % size
+                if align != 0 {
+                    result += size - align
+                }
+                assert result % size = 0
+                result += size
+            }
+        }
+        if t.typeKind = Type.Kind.NULLABLE {
+            result += 1
+        }
+        return result
+    }
+
+    method writeType(t:Type) {
+        if writtenTypes.contains(t.name) {
+            return
+        }
+    }
+
+    function typeName(t:Type):String {
+        return escapeName(t.name)
+    }
+
+    method wrapperTypeName(t:Type):String {
+        def cl := compiler!.getClass(t)
+        assert cl !== null
+        writeImport(cl)
+        if t.typeKind = Type.Kind.NULLABLE {
+            return wrapperTypeName(t.subtypes[0])
+        }
+        return "\{escapeName(t.name)}$wrapper"
+    }
+
+    method wrapperType(t:Type):String {
+        return wrapperTypeName(t) + "*"
+    }
+
+    method wrapperType(m:MethodDecl):String {
+        def inheritedType := compiler!.inheritedType(m)
+        def result := MutableString()
+        result.append(cType(inheritedType.returnType))
+        result.append("(")
+        assert m.isInstance
+        result.append("\{escapeName(m.owner.name)}")
+        if compiler!.isValue(m.owner) {
+            result.append("$wrapper")
+        }
+        result.append("*")
+        for i in 0 .. inheritedType.subtypes.count - 1 { 
+            result.append(", ")
+            result.append(cType(inheritedType.subtypes[i]))
+        }
+        result.append(")*")
+        return result.finish()
+    }
+
+    method nullableType(t:Type):String {
+        assert t.typeKind = Type.Kind.NULLABLE, "\{t} is not nullable"
+        return "\{cType(t.subtypes[0])}$nullable"
+    }
+
+    method getITable(cl:ClassDecl):String {
+        def interfaces := compiler!.allInterfaces(cl.type)
+        var previous := "NULL"
+        for intfType in interfaces {
+            def intf := compiler!.getClass(intfType)!
+            def intfCC := getClassConstant(intf)
+            def methods := compiler!.interfaceMethods(cl, intfType)
+            def name := "\{escapeName(cl.name)}$_\{escapeName(intf.name)}"
+            def result := MutableString("struct { \{cType(compiler!.CLASS_TYPE)} cl; " +
+                    "ITable* next; void* methods[\{methods.count}]; } \{name} = { " +
+                    "(frost$core$Class*) &\{intfCC.name}, \{previous}, { ")
+            var separator := ""
+            for m in methods {
+                result.append(separator)
+                separator := ", "
+                if m.annotations.isAbstract {
+                    result.append("NULL")
+                }
+                else {
+                    result.append(getMethodTableEntry(m))
+                }
+            }
+            result.append("} };\n")
+            try {
+                types.printLine(result.finish())
+            }
+            fail(error) {
+                unreachable
+            }
+            previous := "(ITable*) &\{name}"
+        }
+        return previous
+    }
+
+    @post(out == @pre(out))
+    method createMethodShim(raw:MethodDecl, effective:Type):MethodShim {
+        try {
+            def found := methodShims[raw]
+            if found !== null {
+                return found
+            }
+            def old := out
+            def outBuffer := MemoryOutputStream()
+            out := IndentedOutputStream(outBuffer)
+            assert effective.isMethod
+            assert effective.subtypes.count = raw.parameters.count + 2 -- self and return
+            assert raw.isInstance
+            def indirect := needsStructIndirection(raw)
+            def effectiveReturnType:Type
+            if indirect {
+                effectiveReturnType := compiler!.VOID_TYPE
+            }
+            else {
+                effectiveReturnType := effective.returnType
+            }
+            def resultName := getName(raw) + "$shim"
+            def resultType := MutableString(cType(effectiveReturnType))
+            out.print("__attribute__((weak)) \{cType(effectiveReturnType)} \{resultName}(")
+            resultType.append("(")
+            var separator := ""
+            if indirect {
+                out.print(cType(effective.returnType) + "* sret")
+                resultType.append(cType(effective.returnType))
+                separator := ", "
+            }
+            for i in 0 .. effective.subtypes.count - 1 {
+                def pType := cType(effective.subtypes[i])
+                resultType.append(", ")
+                resultType.append(pType)
+                out.print("\{separator}\{pType} p\{i}")
+                separator := ", "
+            }
+            out.printLine(") {")
+            out.level +=1
+            resultType.append(")*")
+            def unrefs := MemoryOutputStream()
+            def casts := Array<String>()
+            for i in 0 .. effective.subtypes.count - 1 {
+                def p := "p\{i}"
+                def rawType:Type
+                if i = 0 {
+                    rawType := raw.owner.type
+                }
+                else {
+                    rawType := raw.parameters[i - 1].type
+                }
+                if rawType != effective.subtypes[i] {
+                    def cast := getCastReference(p, effective.subtypes[i], rawType)
+                    casts.add(cast)
+                    if compiler!.isValue(effective.subtypes[i]) & !compiler!.isValue(rawType) {
+                        unrefs.printLine("frost$core$Frost$unref$frost$core$Object$Q(" +
+                                "(frost$core$Object*) \{cast});")
+                    }
+                }
+                else {
+                    casts.add(p)
+                }
+            }
+            if effectiveReturnType != compiler!.VOID_TYPE {
+                out.print("\{cType(raw.returnType)} result = ")
+            }
+            out.print("\{getName(raw)}(")
+            separator := ""
+            if indirect {
+                out.print("sret")
+                separator := ", "
+            }
+            for i in 0 .. effective.subtypes.count - 1 {
+                out.print("\{separator}\{casts[i]}")
+                separator := ", "
+            }
+            out.printLine(");")
+            out.printLine(unrefs)
+            if effectiveReturnType != compiler!.VOID_TYPE {
+                out.printLine("return " + getCastReference("result", raw.returnType,
+                        effectiveReturnType) + ";")
+            }
+            out.level -= 1
+            out.printLine("}")
+            def result := MethodShim(resultName, resultType.finish())
+            methodShims[raw] := result
+            shims.print(outBuffer.finish())
+            out := old
+            return result
+        }
+        fail(error) {
+            unreachable
+        }
+    }
+
+    method getWrapperITable(cl:ClassDecl):String {
+        try {
+            def interfaces := compiler!.allInterfaces(cl.type)
+            var previous := "NULL"
+            for intfType in interfaces {
+                def intf := compiler!.getClass(intfType)!
+                def intfCC := getClassConstant(intf)
+                def methods := compiler!.interfaceMethods(cl, intfType)
+                def name := "\{escapeName(cl.name)}$wrapper_\{escapeName(intf.name)}"
+                def result := MutableString("struct { \{cType(compiler!.CLASS_TYPE)} cl; " +
+                        "ITable* itable; void* methods[\{methods.count}]; } \{name} = { " +
+                        "(\{cType(compiler!.CLASS_TYPE)}) &\{intfCC.name}, \{previous}, { ")
+                var separator := ""
+                for m in methods {
+                    result.append(separator)
+                    separator := ", "
+                    if m.annotations.isAbstract {
+                        result.append("NULL")
+                    }
+                    else {
+                        result.append(getMethodTableEntry(m))
+                    }
+                }
+                result.append("} };\n")
+                types.printLine(result.finish())
+                previous := "(ITable*) &\{name}"
+            }
+            return previous
+        }
+        fail(error) {
+            unreachable
+        }
+    }
+
+    function needsStructIndirection(m:MethodDecl):Bit {
+        return llvmCodeGen.needsStructIndirection(m)
+    }
+
+    method getMethodTableEntry(m:MethodDecl):String {
+        compiler!.resolve(m)
+        if isExternal(m.owner) {
+            writeDeclaration(m)
+        }
+        def result:String
+        def declared := compiler!.declaredTypeWithSelf(m, m.owner.type, false)
+        def effectiveSelf:Type
+        if compiler!.isValue(m.owner) {
+            effectiveSelf := compiler!.OBJECT_TYPE
+        }
+        else {
+            effectiveSelf := m.owner.type
+        }
+        def inherited := compiler!.inheritedTypeWithSelf(m, effectiveSelf)
+        if declared != inherited {
+            def shim := createMethodShim(m, inherited)
+            result := shim.name
+        }
+        else {
+            result := getName(m)
+        }
+        return result
+    }
+
+    method getClassConstant(cl:ClassDecl):ClassConstant {
+        try {
+            var result := classConstants[cl.name]
+            if result == null {
+                writeImport(cl)
+                compiler!.resolve(cl)
+                def type:String
+                if isExternal(cl) {
+                    result := ClassConstant("\{escapeName(cl.type.name)}$class",
+                            "%frost$core$Class")
+                    classConstants[cl.name] := result
+                    return classConstants[cl.name]!
+                }
+                compiler!.currentClass.push(cl)
+                def vtable := compiler!.getVTable(cl)
+                result := ClassConstant("\{escapeName(cl.type.name)}$class", "<error>")
+                classConstants[cl.name] := result
+                def superPtr:String
+                if cl.rawSuper !== null {
+                    def superCC := getClassConstant(compiler!.getClass(cl.rawSuper!)!)
+                    superPtr := "(frost$core$Class*) &\{superCC.name}"
+                }
+                else {
+                    superPtr := "NULL"
+                }
+                def clConstant := getClassConstant(compiler!.getClass(compiler!.CLASS_TYPE)!)
+                def name := getStringReference(cl.name)
+                assert name.startsWith("&")
+                def code := MutableString("static frost$core$String \{name[1..]};\n" +
+                        "\{result.name}_type \{result.name} = { " +
+                        "(frost$core$Class*) &\{clConstant.name}, \{NO_REFCNT}, 0, " +
+                        "\{name}, \{superPtr}, \{getITable(cl)}, { ")
+                var separator := ""
+                for m in vtable {
+                    code.append(separator)
+                    if m.annotations.isAbstract {
+                        code.append("NULL")
+                    }
+                    else {
+                        code.append(getMethodTableEntry(m))
+                    }
+                    separator := ", "
+                }
+                code.append("} };\n")
+                types.printLine(code.finish())
+                assert compiler!.currentClass[0] == cl
+                compiler!.currentClass.pop()
+            }
+            return result
+        }
+        fail(error) {
+            unreachable
+        }
+    }
+
+    method getWrapperClassConstant(cl:ClassDecl):ClassConstant {
+        try {
+            def name := "\{escapeName(cl.name)}$wrapperclass"
+            var result := classConstants[name]
+            if result == null {
+                if isExternal(cl) {
+                    cType(compiler!.CLASS_TYPE)
+                    def type := "%frost$core$Class"
+                    types.printLine("\{name} = external global \{type}")
+                    result := ClassConstant(name, type)
+                }
+                else {
+                    def value := compiler!.getClass(compiler!.VALUE_TYPE)!
+                    def valueVTable := compiler!.getVTable(value)
+                    result := ClassConstant("\{escapeName(cl.name)}$wrapperclass", "<error>")
+                    def vtable := compiler!.getVTable(cl)
+                    def superCC := getClassConstant(compiler!.getClass(cl.rawSuper))
+                    def superCast := "(frost$core$Class*) &\{superCC.name}"
+                    def itable := getWrapperITable(cl)
+                    def clConstant := getClassConstant(compiler!.getClass(compiler!.CLASS_TYPE))
+                    def name := getStringReference(cl.name)
+                    assert name.startsWith("&")
+                    def code := MutableString("static frost$core$String \{name[1..]};\n" +
+                            "\{result.name}_type \{result.name} = { " +
+                            "(frost$core$Class*) &\{clConstant.name}, \{NO_REFCNT}, 0, " +
+                            "\{name}, \{superCast}, \{itable}, { ")
+                    var separator := ""
+                    for i in 0 .. valueVTable.count {
+                        code.append("\{separator}\{getMethodTableEntry(vtable[i])}")
+                        separator := ", "
+                    }
+                    code.append("} };")
+                    types.print(code.finish())
+                }
+                classConstants[name] := result
+            }
+            return result
+        }
+        fail(error) {
+            unreachable
+        }
+    }
+
+    function getName(v:Variable):String {
+        match v.storage {
+            when Variable.Storage.PARAMETER {
+                return "p_\{v.name}"
+            }
+        }
+        var result := variableNames[v]
+        if result == null {
+            varCount += 1
+            result := "\{v.name}\{varCount}"
+            variableNames[v] := result
+        }
+        return result
+    }
+
+    function getName(f:FieldDecl):String {
+        assert f.annotations.isClass
+        return "\{escapeName(f.owner.name)}$\{f.name}"
+    }
+
+    choice OpClass {
+        SIGNED
+        UNSIGNED
+        FLOAT
+        CLASS
+    }
+
+    function opClass(t:Type):OpClass {
+        match t.typeKind {
+            when Type.Kind.BUILTIN_INT {
+                return OpClass.SIGNED
+            }
+            when Type.Kind.BUILTIN_UINT, Type.Kind.BUILTIN_BIT {
+                return OpClass.UNSIGNED
+            }
+            when Type.Kind.BUILTIN_FLOAT {
+                return OpClass.FLOAT
+            }
+            otherwise {
+                return OpClass.CLASS
+            }
+        }
+    }
+
+    method getBinaryReference(t:Type, leftRef:String, op:Binary.Operator, rightRef:String,
+            out:IndentedOutputStream):String {
+        try {
+            def cOp:String
+            var logical := false
+            match op {
+                when Binary.Operator.ADD {
+                    cOp := "+"
+                }
+                when Binary.Operator.SUB {
+                    cOp := "-"
+                }
+                when Binary.Operator.MUL {
+                    cOp := "*"
+                }
+                when Binary.Operator.INTDIV {
+                    cOp := "/"
+                }
+                when Binary.Operator.DIV {
+                    cOp := "/"
+                }
+                when Binary.Operator.REM {
+                    cOp := "%"
+                }
+                when Binary.Operator.SHIFTLEFT {
+                    cOp := "<<"
+                }
+                when Binary.Operator.SHIFTRIGHT {
+                    cOp := ">>"
+                }
+                when Binary.Operator.BITWISEAND {
+                    cOp := "&"
+                }
+                when Binary.Operator.BITWISEOR {
+                    cOp := "|"
+                }
+                when Binary.Operator.XOR, Binary.Operator.BITWISEXOR {
+                    cOp := "^"
+                }
+                when Binary.Operator.EQ {
+                    cOp := "=="
+                    logical := true
+                }
+                when Binary.Operator.NEQ {
+                    cOp := "!="
+                    logical := true
+                }
+                when Binary.Operator.GT {
+                    cOp := ">"
+                    logical := true
+                }
+                when Binary.Operator.LT {
+                    cOp := "<"
+                    logical := true
+                }
+                when Binary.Operator.GTEQ {
+                    cOp := ">="
+                    logical := true
+                }
+                when Binary.Operator.LTEQ {
+                    logical := true
+                    cOp := "<="
+                }
+                otherwise {
+                    unreachable
+                }
+            }
+            def result := nextVar()
+            if logical {
+                out.print("bool ")
+            }
+            else {
+                out.print("\{cType(t)} ")
+            }
+            out.printLine("\{result} = \{leftRef} \{cOp} \{rightRef};")
+            return result
+        }
+        fail(error) {
+            unreachable
+        }
+    }
+
+    method getVirtualMethodReference(target:String, m:MethodDecl, out:IndentedOutputStream):String {
+        def cc := getClassConstant(m.owner)
+        var index := -1
+        def vtable := compiler!.getVTable(m.owner)
+        for i in 0 .. vtable.count {
+            if vtable[i]->MethodDecl == m {
+                index := i
+                break
+            }
+        }
+        assert index != -1
+        return "((\{cMethodType(compiler!.inheritedTypeWithSelf(m), null)}) " +
+                "\{target}->$class->vtable[\{index}])"
+    }
+
+    method getInterfaceMethodReference(target:String, m:MethodDecl,
+            out:IndentedOutputStream):String {
+        try {
+            def cc := getClassConstant(m.owner)
+            def itable := nextVar()
+            out.printLine("ITable* \{itable} = \{target}->$class->itable;")
+            out.printLine("while (\{itable}->$class != (frost$core$Class*) &\{cc.name}) {")
+            out.level += 1
+            out.printLine("\{itable} = \{itable}->next;")
+            out.level -= 1
+            out.printLine("}")
+            var index := -1
+            def vtable := compiler!.getVTable(m.owner)
+            for i in 0 .. vtable.count {
+                if vtable[i]->MethodDecl == m {
+                    index := i
+                    break
+                }
+            }
+            index -= compiler!.getVTable(compiler!.getClass(compiler!.OBJECT_TYPE)).count
+            assert index != -1
+            def result := nextVar()
+            def methodType := cMethodType(compiler!.inheritedTypeWithSelf(m), null)
+            out.printLine("\{methodType} \{result} = \{itable}->methods[\{index}];")
+            return result
+        }
+        fail(error) {
+            unreachable
+        }
+    }
+
+    method getMethodReference(target:String?, m:MethodDecl, isSuper:Bit,
+            out:IndentedOutputStream):String {
+        if !isSuper & m.isVirtual {
+            assert target !== null, "calling instance \{m.signature} without a target"
+            if m.owner.classKind = ClassDecl.Kind.INTERFACE {
+                return getInterfaceMethodReference(target, m, out)
+            }
+            else {
+                return getVirtualMethodReference(target, m, out)
+            }
+        }
+        else {
+            if isExternal(m.owner) {
+                writeDeclaration(m)
+            }
+            return getName(m)
+        }
+    }
+
+    method wrapValue(value:String, srcType:Type, dstType:Type, out:IndentedOutputStream):String {
+        try {
+            if srcType.typeKind = Type.Kind.NULLABLE {
+                -- casting nullable value to nullable wrapper, need to special-case null
+                def result := nextVar()
+                out.printLine("\{cType(dstType)} \{result};")
+                out.printLine("if (\{value}.nonnull) {")
+                out.level += 1
+                def unwrapped := toNonNullableValue(value, srcType, srcType.subtypes[0], out)
+                def nonNullValue := wrapValue(unwrapped, srcType.subtypes[0], dstType, out)
+                out.printLine("\{result} = \{nonNullValue};")
+                out.level -= 1
+                out.printLine("}")
+                out.printLine("else {")
+                out.level += 1
+                out.printLine("\{result} = NULL;")
+                out.level -= 1
+                out.printLine("}")
+                return result
+            }
+            def wrapped := nextVar()
+            out.printLine("\{wrapperType(srcType)} \{wrapped};")
+            if srcType.typeKind = Type.Kind.NULLABLE {
+                out.printLine("if (\{value}.nonnull) {")
+                out.level += 1
+            }
+            out.printLine("\{wrapped} = (\{wrapperType(srcType)}) " +
+                    "frostObjectAlloc(\{sizeOfWrapper(srcType)}, (frost$core$Class*) " +
+                    "&\{escapeName(srcType.name)}$wrapperclass);")
+            out.printLine("\{wrapped}->value = \{value};")
+            if srcType.typeKind = Type.Kind.NULLABLE {
+                out.level -= 1
+                out.printLine("}")
+                out.printLine("else {")
+                out.level += 1
+                out.printLine("\{wrapped} = null;")
+                out.level -= 1
+                out.printLine("}")
+            }
+            return "((\{cType(dstType)}) \{wrapped})"
+        }
+        fail(error) {
+            unreachable, error.asString
+        }
+    }
+
+    method unwrapValue(value:String, srcType:Type, dstType:Type, out:IndentedOutputStream):String {
+        def result := "((\{wrapperType(dstType)}) \{value})->value"
+        if dstType.typeKind = Type.Kind.NULLABLE {
+            -- casting nullable wrapper to nullable value, need to special-case null
+            def wrapped := unwrapValue(value, srcType, dstType.subtypes[0], out)
+            def nonNullValue := toNullableValue(wrapped, dstType.subtypes[0], dstType, out)
+            return "(\{value} != NULL ? \{nonNullValue} : (\{cType(dstType)}) { .nonnull = 0 })"
+        }
+        return result
+    }
+
+    method toNullableValue(value:String, srcType:Type, dstType:Type,
+            out:IndentedOutputStream):String {
+        return "((\{nullableType(dstType)}) { \{value}, true })"
+    }
+
+    method toNonNullableValue(value:String, srcType:Type, dstType:Type,
+            out:IndentedOutputStream):String {
+        return "((\{cType(dstType)}) \{value}.value)"
+    }
+
+    method getCastReference(value:String, src:Type, target:Type):String {
+        if target.isBuiltinNumber {
+            assert src.isBuiltinNumber
+            return "((\{cType(target)}) \{value})"
+        }
+        else {
+            def srcClass := compiler!.getClass(src)
+            assert srcClass !== null
+            def targetClass := compiler!.getClass(target)
+            assert targetClass !== null
+            if compiler!.isValue(srcClass) & !compiler!.isValue(targetClass) {
+                return wrapValue(value, src, target, out)
+            }
+            else if !compiler!.isValue(srcClass) & compiler!.isValue(targetClass) {
+                return unwrapValue(value, src, target, out)
+            }
+            else if compiler!.isValue(srcClass) & target.typeKind = Type.Kind.NULLABLE &
+                    target.subtypes[0] = src {
+                return toNullableValue(value, src, target, out)
+            }
+            else if compiler!.isValue(targetClass) & src.typeKind = Type.Kind.NULLABLE &
+                    src.subtypes[0] = target {
+                return toNonNullableValue(value, src, target, out)
+            }
+        }
+        def srcType := cType(src)
+        def dstType := cType(target)
+        if srcType = dstType {
+            return value
+        }
+        return "((\{dstType}) \{value})"
+    }
+
+    method getIntReference(int:UInt64):String {
+        if int > Int64.MAX.asUInt64 {
+            return int + "u"
+        }
+        return int.asString
+    }
+
+    method getRealReference(type:Type, real:Real64):String {
+        def result := real.asString
+        if result.contains(".") {
+            return result
+        }
+        return result + ".0"
+    }
+
+    method getBitReference(bit:Bit, out:IndentedOutputStream):String {
+        if bit {
+            return "true"
+        }
+        return "false"
+    }
+
+    method getStringReference(s:String):String {
+        try {
+            varCount += 1
+            def result := "$s\{varCount}"
+            cType(compiler!.STRING_TYPE)
+            strings.print("static frost$core$String \{result} = { " +
+                    "(frost$core$Class*) &frost$core$String$class, \{NO_REFCNT}, 0, " +
+                    "(frost$core$Char8*) \"")
+            for c in s.utf8 {
+                strings.print("\\x\{c.asUInt8,0>2:x}")
+            }
+            strings.printLine("\", \{s.utf8.count}, \{s.hash.asInt64}, NULL };")
+            return "&\{result}"
+        }
+        fail(error) {
+            unreachable
+        }
+    }
+
+    method getNullReference(t:Type):String {
+        assert t.typeKind = Type.Kind.NULLABLE, "not nullable: \{t}"
+        def cl := compiler!.getClass(t.subtypes[0])
+        assert cl !== null
+        if compiler!.isValue(cl) {
+            return "((\{nullableType(t)}) { .nonnull = false })"
+        }
+        else {
+            return "((\{cType(t)}) NULL)"
+        }
+    }
+
+    function name(id:IR.Statement.ID):String {
+        return "_" + id.value
+    }
+
+    method getReference(v:IR.Value):String {
+        match v {
+            when IR.Value.BIT(value, _) {
+                return value.asString
+            }
+            when IR.Value.INT(value, _) {
+                return value.asString + "u"
+            }
+            when IR.Value.LOCAL(index, _) {
+                return "(&local\{index})"
+            }
+            when IR.Value.METHOD_POINTER(m, _) {
+                if m.owner.external {
+                    writeDeclaration(m)
+                }
+                return getName(m)
+            }
+            when IR.Value.NULL(type) {
+                return getNullReference(type)
+            }
+            when IR.Value.PARAMETER(index, _) {
+                return "param\{index}"
+            }
+            when IR.Value.REAL(value, type) {
+                return getRealReference(type, value)
+            }
+            when IR.Value.REF(id, _) {
+                return name(id)
+            }
+            when IR.Value.STRING(s, _) {
+                return getStringReference(s)
+            }
+            otherwise {
+                unreachable
+            }
+        }
+    }
+
+    method getChoiceFieldOffset(e:ChoiceCase, index:Int):Int {
+        var result := 0
+        for i in 0 .. index {
+            -- FIXME need to respect alignment!
+            result += fieldSize(e.fields[i])
+        }
+        return result
+    }
+
+    method selfType(m:MethodDecl):String {
+        def result := cType(m.owner.type)
+        if m.methodKind = MethodDecl.Kind.INIT & !result.endsWith("*") {
+            return result + "*"
+        }
+        return result
+    }
+
+    method writeIsNull(id:IR.Statement.ID, value:IR.Value) {
+        try {
+            def ref := getReference(value)
+            def cl := compiler!.getClass(value.type())
+            assert cl !== null
+            def bit:String
+            if compiler!.isValue(cl) {
+                if value.type().typeKind != Type.Kind.NULLABLE {
+                    bit := "false"
+                }
+                else {
+                    bit := "!\{ref}.nonnull"
+                }
+            }
+            else {
+                bit := "\{ref} == NULL"
+            }
+            out.printLine("\{name(id)} = \{bit};")
+        }
+        fail(error) {
+            unreachable
+        }
+    }
+
+    method writeIsNonNull(id:IR.Statement.ID, value:IR.Value) {
+        try {
+            def ref := getReference(value)
+            def cl := compiler!.getClass(value.type())
+            assert cl !== null
+            def bit:String
+            if compiler!.isValue(cl) {
+                if value.type().typeKind != Type.Kind.NULLABLE {
+                    bit := "true"
+                }
+                else {
+                    bit := "\{ref}.nonnull"
+                }
+            }
+            else {
+                bit := "\{ref} != NULL"
+            }
+            out.printLine("\{name(id)} = \{bit};")
+        }
+        fail(error) {
+            unreachable
+        }
+    }
+
+    function isNull(v:IR.Value):Bit {
+        match v {
+            when IR.Value.NULL {
+                return true
+            }
+        }
+        return false
+    }
+
+    method writeBinary(id:IR.Statement.ID, left:IR.Value, op:Binary.Operator, right:IR.Value,
+            type:Type) {
+        def leftRef := getReference(left)
+        def rightRef := getReference(right)
+        if left.type().isNullable {
+            match op {
+                when Binary.Operator.IDENTITY {
+                    if isNull(left) {
+                        writeIsNull(id, right)
+                        return
+                    }
+                    if isNull(right) {
+                        writeIsNull(id, left)
+                        return
+                    }
+                }
+                when Binary.Operator.NIDENTITY {
+                    if isNull(left) {
+                        writeIsNonNull(id, right)
+                        return
+                    }
+                    if isNull(right) {
+                        writeIsNonNull(id, left)
+                        return
+                    }
+                }
+            }
+        }
+        def cOp:String
+        match op {
+            when Binary.Operator.ADD {
+                cOp := "+"
+            }
+            when Binary.Operator.SUB {
+                cOp := "-"
+            }
+            when Binary.Operator.MUL {
+                cOp := "*"
+            }
+            when Binary.Operator.DIV, Binary.Operator.INTDIV {
+                cOp := "/"
+            }
+            when Binary.Operator.REM {
+                cOp := "%"
+            }
+            when Binary.Operator.SHIFTLEFT {
+                cOp := "<<"
+            }
+            when Binary.Operator.SHIFTRIGHT {
+                cOp := ">>"
+            }
+            when Binary.Operator.AND, Binary.Operator.BITWISEAND {
+                cOp := "&"
+            }
+            when Binary.Operator.OR, Binary.Operator.BITWISEOR {
+                cOp := "|"
+            }
+            when Binary.Operator.XOR, Binary.Operator.BITWISEXOR {
+                cOp := "^"
+            }
+            when Binary.Operator.EQ, Binary.Operator.IDENTITY {
+                cOp := "=="
+            }
+            when Binary.Operator.NEQ, Binary.Operator.NIDENTITY {
+                cOp := "!="
+            }
+            when Binary.Operator.GT {
+                cOp := ">"
+            }
+            when Binary.Operator.LT {
+                cOp := "<"
+            }
+            when Binary.Operator.GTEQ {
+                cOp := ">="
+            }
+            when Binary.Operator.LTEQ {
+                cOp := "<="
+            }
+            otherwise {
+                unreachable
+            }
+        }
+        try {
+            out.printLine("\{name(id)} = \{leftRef} \{cOp} \{rightRef};")
+        }
+        fail(error) {
+            unreachable
+        }
+    }
+
+    method writeBranch(target:IR.Block.ID) {
+        try {
+            out.printLine("goto \{target};")
+        }
+        fail(error) {
+            unreachable
+        }
+    }
+
+    method writeCast(id:IR.Statement.ID, value:IR.Value, target:Type) {
+        try {
+            def result := getCastReference(getReference(value), value.type(), target)
+            out.printLine("\{name(id)} = \{result};")
+        }
+        fail(error) {
+            unreachable
+        }
+    }
+
+    method writeConditionalBranch(test:IR.Value, ifTrue:IR.Block.ID, ifFalse:IR.Block.ID) {
+        try {
+            out.printLine("if (\{getReference(test)}) goto \{ifTrue}; else goto \{ifFalse};")
+        }
+        fail(error) {
+            unreachable
+        }
+    }
+
+    method writeConstruct(id:IR.Statement.ID, cl:ClassDecl) {
+        try {
+            assert !compiler!.isValue(cl)
+            def cc := getClassConstant(cl)
+            def ccCast:String
+            if cc.type != "frost$core$Class" {
+                ccCast := "(frost$core$Class*) &\{cc.name}"
+            }
+            else {
+                ccCast := "&\{cc.name}"
+            }
+            def target := cl.type
+            out.printLine("FROST_ASSERT(\{sizeOf(target)} == sizeof(\{escapeName(cl.name)}));")
+            out.printLine("\{name(id)} = (\{cType(target)}) frostObjectAlloc(" +
+                    "\{sizeOf(target)}, \{ccCast});")
+        }
+        fail(error) {
+            unreachable
+        }
+    }
+
+    method writeCreateStruct(id:IR.Statement.ID, cl:ClassDecl, args:FixedArray<IR.Value>) {
+        try {
+            assert compiler!.isValue(cl)
+            def target := cl.type
+            out.print("\{name(id)} = (\{cType(target)}) {")
+            var separator := ""
+            for v in args {
+                out.print("\{separator}\{getReference(v)}")
+                separator := ", "
+            }
+            out.printLine("};")
+        }
+        fail(error) {
+            unreachable
+        }
+    }
+
+    method writeDynamicCall(id:IR.Statement.ID, m:IR.Value, args:ListView<IR.Value>) {
+        try {
+            var type := m.type()
+            if type.isPointer {
+                type := type.subtypes[1]
+            }
+            def returnType := type.returnType
+            if returnType != compiler!.VOID_TYPE {
+                out.print("\{name(id)} = ")
+            }
+            out.print("\{getReference(m)}(")
+            var separator := ""
+            for a in args {
+                out.print(separator)
+                out.print(getReference(a))
+                separator := ", "
+            }
+            out.printLine(");")
+        }
+        fail(error) {
+            unreachable
+        }
+    }
+
+    method writeExtractField(id:IR.Statement.ID, target:IR.Value, field:FieldDecl) {
+        try {
+            compiler!.resolve(field)
+            var targetRef := getReference(target)
+            out.printLine("\{name(id)} = \{targetRef}.\{field.name};")
+        }
+        fail(error) {
+            unreachable
+        }
+    }
+
+    method writeGetChoiceFieldPointer(id:IR.Statement.ID, target:IR.Value, cc:ChoiceCase,
+            index:Int) {
+        try {
+            def data := cc.owner.fields[1]
+            assert data.name = ClassDecl.CHOICE_DATA_NAME
+            def targetRef := getReference(target)
+            def fieldIndex := compiler!.getIndex(data)
+            def type := cType(cc.fields[index])
+            def op:String
+            if compiler!.isValue(target.type()) {
+                match target {
+                    when IR.Value.LOCAL { op := "->"}
+                    otherwise { op := "." }
+                }
+            }
+            else {
+                op := "->"
+            }
+            out.printLine("\{name(id)} = (\{type}*) (\{targetRef}\{op}$data + " +
+                    "\{getChoiceFieldOffset(cc, index)});")
+        }
+        fail(error) {
+            unreachable
+        }
+    }
+
+    method writeGetFieldPointer(id:IR.Statement.ID, target:IR.Value, field:FieldDecl) {
+        try {
+            def targetRef := getReference(target)
+            out.printLine("\{name(id)} = &\{targetRef}->\{field.name};")
+        }
+        fail(error) {
+            unreachable
+        }
+    }
+
+    method writeGetInterfaceMethod(id:IR.Statement.ID, value:IR.Value, cl:ClassDecl, index:Int, 
+            type:Type) {
+        try {
+            def cc := getClassConstant(cl)
+            def itable := nextVar()
+            out.printLine("ITable* \{itable} = \{getReference(value)}->$class->itable;")
+            out.printLine("while (\{itable}->$class != (frost$core$Class*) &\{cc.name}) {")
+            out.level += 1
+            out.printLine("\{itable} = \{itable}->next;")
+            out.level -= 1
+            out.printLine("}")
+            out.printLine("\{name(id)} = \{itable}->methods[\{index}];")
+        }
+        fail(error) {
+            unreachable
+        }
+    }
+
+    method writeGetVirtualMethod(id:IR.Statement.ID, value:IR.Value, index:Int, type:Type) {
+        try {
+            def methodType := cMethodType(type, null)
+            out.printLine("\{name(id)} = (\{methodType}) " +
+                    "\{getReference(value)}->$class->vtable[\{index}];")
+        }
+        fail(error) {
+            unreachable
+        }
+    }
+
+    method writeLoad(id:IR.Statement.ID, ptr:IR.Value) {
+        try {
+            out.printLine("\{name(id)} = *\{getReference(ptr)};")
+        }
+        fail(error) {
+            unreachable
+        }
+    }
+
+    method writeNegate(id:IR.Statement.ID, value:IR.Value) {
+        try {
+            out.printLine("\{name(id)} = -\{getReference(value)};")
+        }
+        fail(error) {
+            unreachable
+        }
+    }
+
+    method writeNot(id:IR.Statement.ID, value:IR.Value) {
+        try {
+            out.printLine("\{name(id)} = !\{getReference(value)};")
+        }
+        fail(error) {
+            unreachable
+        }
+    }
+
+    method writePointerAlloc(id:IR.Statement.ID, count:IR.Value, t:Type) {
+        try {
+            def countRef := getReference(count)
+            def elementSize := stride(t)
+            def type := cType(t)
+            out.printLine("\{name(id)} = ((\{type}*) frostAlloc(\{countRef} * " +
+                    "\{elementSize}));")
+        }
+        fail(error) {
+            unreachable
+        }
+    }
+
+    method writePointerDestroy(ptr:IR.Value) {
+        try {
+            def ptrRef := getReference(ptr)
+            out.printLine("frostFree(\{ptrRef});")
+        }
+        fail(error) {
+            unreachable
+        }
+    }
+
+    method writePointerGetIndex(id:IR.Statement.ID, ptr:IR.Value, index:IR.Value) {
+        try {
+            def base := getReference(ptr)
+            def indexRef := getReference(index)
+            out.printLine("\{name(id)} = \{base}[\{indexRef}];")
+        }
+        fail(error) {
+            unreachable
+        }
+    }
+
+    method writePointerOffset(id:IR.Statement.ID, ptr:IR.Value, offset:IR.Value) {
+        try {
+            def base := getReference(ptr)
+            def offsetRef := getReference(offset)
+            out.printLine("\{name(id)} = \{base} + \{offsetRef};")
+        }
+        fail(error) {
+            unreachable
+        }
+    }
+
+    method writePointerRealloc(id:IR.Statement.ID, ptr:IR.Value, oldCount:IR.Value,
+            newCount:IR.Value) {
+        try {
+            def ptrRef := getReference(ptr)
+            def oldCountRef := getReference(oldCount)
+            def newCountRef := getReference(newCount)
+            def elementSize := stride(ptr.type().subtypes[1])
+            assert elementSize > 0, "invalid size for type \{ptr.type()}"
+            out.printLine("\{name(id)} = (\{cType(ptr.type())}) frostRealloc(" +
+                    "\{ptrRef}, \{oldCountRef} * \{elementSize}, \{newCountRef} * \{elementSize});")
+        }
+        fail(error) {
+            unreachable
+        }
+    }
+
+    method writePointerSetIndex(value:IR.Value, ptr:IR.Value, index:IR.Value) {
+        try {
+            def base := getReference(ptr)
+            def indexRef := getReference(index)
+            def valueRef := getReference(value)
+            out.printLine("\{base}[\{indexRef}] = \{valueRef};")
+        }
+        fail(error) {
+            unreachable
+        }
+    }
+
+    method writeReturn(value:IR.Value?) {
+        try {
+            if value !== null {
+                out.printLine("return \{getReference(value)};")
+            }
+            else {
+                out.printLine("return;")
+            }
+        }
+        fail(error) {
+            unreachable
+        }
+    }
+
+    method writeStaticCall(id:IR.Statement.ID, m:MethodDecl, args:ListView<IR.Value>) {
+        try {
+            if m.owner.external {
+                writeDeclaration(m)
+            }
+            def indirect := needsStructIndirection(m)
+            def actualResultType := cType(m.returnType)
+            var separator := ""
+            def result:String?
+            if m.returnType != compiler!.VOID_TYPE {
+                result := name(id)
+                if !indirect {
+                    out.print("\{result} = ")
+                }
+            }
+            out.print("\{getName(m)}(")
+            if indirect {
+                out.print("&\{result}")
+                separator := ", "
+            }
+            for a in args {
+                out.print(separator)
+                out.print(getReference(a))
+                separator := ", "
+            }
+            out.printLine(");")
+        }
+        fail(error) {
+            unreachable
+        }
+    }
+
+    method writeStore(value:IR.Value, ptr:IR.Value) {
+        try {
+            out.printLine("*\{getReference(ptr)} = \{getReference(value)};")
+        }
+        fail(error) {
+            unreachable
+        }
+    }
+
+    method writeStatement(id:IR.Statement.ID, s:IR.Statement) {
+        try {
+            match s {
+                when IR.Statement.BINARY(position, left, op, right, type) {
+                    writeBinary(id, left, op, right, type)
+                }
+                when IR.Statement.BRANCH(position, target) {
+                    writeBranch(target)
+                }
+                when IR.Statement.CAST(position, value, type, _) {
+                    writeCast(id, value, type)
+                }
+                when IR.Statement.COMMENT(_, text) {
+                    out.printLine("// \{text}")
+                }
+                when IR.Statement.CONDITIONAL_BRANCH(position, test, ifTrue, ifFalse) {
+                    writeConditionalBranch(test, ifTrue, ifFalse)
+                }
+                when IR.Statement.CONSTRUCT(position, cl) {
+                    writeConstruct(id, cl)
+                }
+                when IR.Statement.CREATE_STRUCT(position, cl, args) {
+                    writeCreateStruct(id, cl, args)
+                }
+                when IR.Statement.DYNAMIC_CALL(position, m, args) {
+                    writeDynamicCall(id, m, args)
+                }
+                when IR.Statement.END {
+                }
+                when IR.Statement.EXTRACT_FIELD(position, target, field) {
+                    writeExtractField(id, target, field)
+                }
+                when IR.Statement.GET_CHOICE_FIELD_POINTER(position, target, cc, index) {
+                    writeGetChoiceFieldPointer(id, target, cc, index)
+                }
+                when IR.Statement.GET_FIELD_POINTER(position, target, field) {
+                    writeGetFieldPointer(id, target, field)
+                }
+                when IR.Statement.GET_INTERFACE_METHOD(position, value, cl, index, type) {
+                    writeGetInterfaceMethod(id, value, cl, index, type)
+                }
+                when IR.Statement.GET_VIRTUAL_METHOD(position, value, index, type) {
+                    writeGetVirtualMethod(id, value, index, type)
+                }
+                when IR.Statement.LOAD(position, ptr) {
+                    writeLoad(id, ptr)
+                }
+                when IR.Statement.NEGATE(position, value) {
+                    writeNegate(id, value)
+                }
+                when IR.Statement.NOT(position, value) {
+                    writeNot(id, value)
+                }
+                when IR.Statement.POINTER_ALLOC(position, count, type) {
+                    writePointerAlloc(id, count, type)
+                }
+                when IR.Statement.POINTER_DESTROY(position, ptr) {
+                    writePointerDestroy(ptr)
+                }
+                when IR.Statement.POINTER_GET_INDEX(position, ptr, index) {
+                    writePointerGetIndex(id, ptr, index)
+                }
+                when IR.Statement.POINTER_OFFSET(position, ptr, offset) {
+                    writePointerOffset(id, ptr, offset)
+                }
+                when IR.Statement.POINTER_REALLOC(position, ptr, oldCount, newCount) {
+                    writePointerRealloc(id, ptr, oldCount, newCount)
+                }
+                when IR.Statement.POINTER_SET_INDEX(position, value, ptr, index) {
+                    writePointerSetIndex(value, ptr, index)
+                }
+                when IR.Statement.RETURN(position, value) {
+                    writeReturn(value)
+                }
+                when IR.Statement.STATIC_CALL(position, m, args) {
+                    writeStaticCall(id, m, args)
+                }
+                when IR.Statement.STORE(position, value, slot) {
+                    writeStore(value, slot)
+                }
+                when IR.Statement.UNREACHABLE(position) {
+                    out.printLine("abort(); // unreachable")
+                }
+                otherwise {
+                    unreachable
+                }
+            }
+        }
+        fail(error) {
+            unreachable
+        }
+    }
+
+    method writeStatementDeclaration(id:IR.Statement.ID, s:IR.Statement) {
+        method write(type:String) {
+            try {
+                self.out.printLine("\{type} \{self.name(id)};")
+            }
+            fail(error) {
+                unreachable
+            }
+        }
+        try {
+            match s {
+                when IR.Statement.BINARY(_, _, _, _, type) {
+                    write(cType(type))
+                }
+                when IR.Statement.CAST(_, _, type, _) {
+                    write(cType(type))
+                }
+                when IR.Statement.CONSTRUCT(_, cl) {
+                    write(cType(cl.type))
+                }
+                when IR.Statement.CREATE_STRUCT(_, cl, _) {
+                    write(cType(cl.type))
+                }
+                when IR.Statement.DYNAMIC_CALL(_, m, _) {
+                    var type := m.type()
+                    if type.isPointer {
+                        type := type.subtypes[1]
+                    }
+                    if type.returnType != compiler!.VOID_TYPE {
+                        write(cType(type.returnType))
+                    }
+                }
+                when IR.Statement.EXTRACT_FIELD(_, _, field) {
+                    write(cType(field.type))
+                }
+                when IR.Statement.GET_CHOICE_FIELD_POINTER(_, _, cc, index) {
+                    write(cType(cc.fields[index]) + "*")
+                }
+                when IR.Statement.GET_FIELD_POINTER(_, _, field) {
+                    write(cType(field.type) + "*")
+                }
+                when IR.Statement.GET_INTERFACE_METHOD(_, _, _, _, type) {
+                    write(cMethodType(type, null))
+                }
+                when IR.Statement.GET_VIRTUAL_METHOD(_, _, _, type) {
+                    write(cMethodType(type, null))
+                }
+                when IR.Statement.LOAD(_, ptr) {
+                    write(cType(ptr.type()))
+                }
+                when IR.Statement.NEGATE(_, value) {
+                    write(cType(value.type()))
+                }
+                when IR.Statement.NOT(_, value) {
+                    write(cType(value.type()))
+                }
+                when IR.Statement.POINTER_ALLOC(_, _, type) {
+                    write("\{cType(type)}*")
+                }
+                when IR.Statement.POINTER_GET_INDEX(_, ptr, _) {
+                    write("\{cType(ptr.type().subtypes[1])}")
+                }
+                when IR.Statement.POINTER_OFFSET(_, ptr, _) {
+                    write("\{cType(ptr.type())}")
+                }
+                when IR.Statement.POINTER_REALLOC(_, ptr, _, _) {
+                    write("\{cType(ptr.type())}")
+                }
+                when IR.Statement.STATIC_CALL(_, m, _) {
+                    def type := m.type(compiler).returnType
+                    if type != compiler!.VOID_TYPE {
+                        write(cType(type))
+                    }
+                }
+                otherwise {
+                }
+            }
+        }
+        fail(error) {
+            unreachable
+        }
+    }
+
+    @override
+    method writeDeclaration(m:MethodDecl) {
+        writeImport(m.owner)
+    }
+
+    method writeIR(ir:IR) {
+        try {
+            for i in 0 .. ir.locals.count {
+                def name := "local\{i}"
+                def type := cType(ir.locals[i])
+                out.print("\{type} \{name}")
+                if compiler!.isRefCounted(ir.locals[i]) {
+                    out.print(" = NULL")
+                }
+                out.printLine(";")
+            }
+            for i in 0 .. ir.blocks.count {
+                def block := ir.blocks[i]
+                def iter1 := block.ids.iterator
+                def iter2 := block.statements.iterator
+                while !iter1.done {
+                    writeStatementDeclaration(iter1.next(), iter2.next())
+                }
+            }
+            for i in 0 .. ir.blocks.count {
+                def block := ir.blocks[i]
+                if i != 0 {
+                    currentBlock := "\{block.id}"
+                    out.printLine("\{currentBlock}:;")
+                }
+                else {
+                    currentBlock := "0"
+                }
+                def iter1 := block.ids.iterator
+                def iter2 := block.statements.iterator
+                while !iter1.done {
+                    writeStatement(iter1.next(), iter2.next())
+                }
+            }
+        }
+        fail(error) {
+            unreachable
+        }
+    }
+
+    @postAnd(out == @pre(out))
+    @override
+    method write(m:MethodDecl, ir:IR) {
+        try {
+            def old := out
+            out := methods
+            methodHeaderBuffer.clear()
+            self.ir := ir
+            out.print("\{cType(m.returnType)} \{getName(m)}(")
+            var separator := ""
+            var index := 0
+            if compiler!.hasSelfParam(m) {
+                out.print("\{selfType(m)} param\{index}")
+                index += 1
+                separator := ", "
+            }
+            for p in m.parameters {
+                out.print("\{separator}\{cType(p.type)} param\{index}")
+                index += 1
+                separator := ", "
+            }
+            out.printLine(") {")
+            def buffer := MemoryOutputStream()
+            out := IndentedOutputStream(buffer)
+            writeIR(ir)
+            methods.printLine(methodHeaderBuffer)
+            methods.printLine(buffer)
+            methods.printLine("}")
+            out := old
+        }
+        fail(error) {
+            unreachable
+        }
+    }
+
+    @override
+    method start(cl:ClassDecl) {
+        try {
+            assert currentClass == null
+            currentClass := cl
+            imports.clear()
+            strings.clear()
+            declarations.clear()
+            types.clear()
+            methodsBuffer.clear()
+            shimsBuffer.clear()
+            declared.clear()
+            writtenTypes.clear()
+            writtenWrappers.clear()
+            classConstants.clear()
+            variableNames.clear()
+            varCount := 0
+            methodShims.clear()
+            def path := llvmCodeGen.getPath(cl, ".c")
+            path.parent.createDirectories()
+            out := IndentedOutputStream(path.openOutputStream())
+            out.flush()
+            getClassConstant(cl)
+            if compiler!.isValue(cl) {
+                getWrapperClassConstant(cl)
+            }
+        }
+        fail(error) {
+            compiler!.error(cl.position, error.message)
+        }
+    }
+
+    @override
+    method end(cl:ClassDecl) {
+        finish()
+        currentClass := null
+    }
+
+    @override
+    method finish() {
+        try {
+            out.printLine(includes)
+            includes.clear()
+            out.printLine(shimsBuffer)
+            shimsBuffer.clear()
+            out.printLine(types)
+            types.clear()
+            out.printLine(strings)
+            strings.clear()
+            out.printLine(methodsBuffer)
+            methodsBuffer.clear()
+        }
+        fail(error) {
+            Console.printLine(error)
+            System.exit(1)
+        }
+    }
+}

@@ -184,7 +184,7 @@ static frost$core$String $s149 = { (frost$core$Class*) &frost$core$String$class,
 static frost$core$String $s150 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x41\x53\x54\x4e\x6f\x64\x65\x3f\x20\x74\x6f\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x41\x53\x54\x4e\x6f\x64\x65", 95, 7721999553369549811, NULL };
 static frost$core$String $s151 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x4c\x69\x6e\x6b\x52\x65\x73\x6f\x6c\x76\x65\x72\x2e\x66\x72\x6f\x73\x74", 18, 5826254796962425023, NULL };
 static frost$core$String $s152 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x41\x53\x54\x4e\x6f\x64\x65\x3f\x20\x74\x6f\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x4f\x62\x6a\x65\x63\x74", 84, 3244136566661285666, NULL };
-static frost$core$String $s154 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x63\x6f\x75\x6c\x64\x20\x6e\x6f\x74\x20\x72\x65\x73\x6f\x6c\x76\x65\x32\x3a\x20", 20, -8995173295137135839, NULL };
+static frost$core$String $s154 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x63\x6f\x75\x6c\x64\x20\x6e\x6f\x74\x20\x72\x65\x73\x6f\x6c\x76\x65\x3a\x20", 19, -4242886472055272991, NULL };
 static frost$core$String $s155 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "", 0, -3750763034362895579, NULL };
 static frost$core$String $s156 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x0a", 1, -5808579962898102051, NULL };
 static frost$core$String $s157 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x4c\x69\x6e\x6b\x52\x65\x73\x6f\x6c\x76\x65\x72\x2e\x66\x72\x6f\x73\x74", 18, 5826254796962425023, NULL };
@@ -213,14 +213,16 @@ static frost$core$String $s183 = { (frost$core$Class*) &frost$core$String$class,
 static frost$core$String $s185 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x4c\x69\x6e\x6b\x52\x65\x73\x6f\x6c\x76\x65\x72\x2e\x66\x72\x6f\x73\x74", 18, 5826254796962425023, NULL };
 static frost$core$String $s186 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x53\x79\x6d\x62\x6f\x6c\x3f\x20\x74\x6f\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x53\x79\x6d\x62\x6f\x6c", 93, -1793708938165963595, NULL };
 
-void org$frostlang$frostc$frostdoc$LinkResolver$init$org$frostlang$frostc$Compiler$frost$io$File$frost$core$String(org$frostlang$frostc$frostdoc$LinkResolver* param0, org$frostlang$frostc$Compiler* param1, frost$io$File* param2, frost$core$String* param3) {
+void org$frostlang$frostc$frostdoc$LinkResolver$init$org$frostlang$frostc$Compiler$frost$io$File$frost$core$String(void* rawSelf, org$frostlang$frostc$Compiler* param1, frost$io$File* param2, frost$core$String* param3) {
+org$frostlang$frostc$frostdoc$LinkResolver* param0 = (org$frostlang$frostc$frostdoc$LinkResolver*) rawSelf;
 
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/frostdoc/LinkResolver.frost:26
 org$frostlang$frostc$frostdoc$LinkResolver$init$org$frostlang$frostc$Compiler$frost$io$File$frost$core$String$org$frostlang$frostc$ClassDecl$Q(param0, param1, param2, param3, ((org$frostlang$frostc$ClassDecl*) NULL));
 return;
 
 }
-void org$frostlang$frostc$frostdoc$LinkResolver$init$org$frostlang$frostc$Compiler$frost$io$File$frost$core$String$org$frostlang$frostc$ClassDecl$Q(org$frostlang$frostc$frostdoc$LinkResolver* param0, org$frostlang$frostc$Compiler* param1, frost$io$File* param2, frost$core$String* param3, org$frostlang$frostc$ClassDecl* param4) {
+void org$frostlang$frostc$frostdoc$LinkResolver$init$org$frostlang$frostc$Compiler$frost$io$File$frost$core$String$org$frostlang$frostc$ClassDecl$Q(void* rawSelf, org$frostlang$frostc$Compiler* param1, frost$io$File* param2, frost$core$String* param3, org$frostlang$frostc$ClassDecl* param4) {
+org$frostlang$frostc$frostdoc$LinkResolver* param0 = (org$frostlang$frostc$frostdoc$LinkResolver*) rawSelf;
 
 frost$core$Object* _1;
 org$frostlang$frostc$Compiler** _3;
@@ -281,7 +283,8 @@ _34 = &param0->context;
 return;
 
 }
-frost$core$Bit org$frostlang$frostc$frostdoc$LinkResolver$matches$org$frostlang$frostc$MethodDecl$frost$collections$ListView$LTorg$frostlang$frostc$Type$GT$R$frost$core$Bit(org$frostlang$frostc$frostdoc$LinkResolver* param0, org$frostlang$frostc$MethodDecl* param1, frost$collections$ListView* param2) {
+frost$core$Bit org$frostlang$frostc$frostdoc$LinkResolver$matches$org$frostlang$frostc$MethodDecl$frost$collections$ListView$LTorg$frostlang$frostc$Type$GT$R$frost$core$Bit(void* rawSelf, org$frostlang$frostc$MethodDecl* param1, frost$collections$ListView* param2) {
+org$frostlang$frostc$frostdoc$LinkResolver* param0 = (org$frostlang$frostc$frostdoc$LinkResolver*) rawSelf;
 
 frost$core$Int local0;
 frost$collections$Array** _1;
@@ -547,7 +550,8 @@ _126 = (frost$core$Bit) {true};
 return _126;
 
 }
-frost$core$String* org$frostlang$frostc$frostdoc$LinkResolver$linkTo$org$frostlang$frostc$ClassDecl$R$frost$core$String(org$frostlang$frostc$frostdoc$LinkResolver* param0, org$frostlang$frostc$ClassDecl* param1) {
+frost$core$String* org$frostlang$frostc$frostdoc$LinkResolver$linkTo$org$frostlang$frostc$ClassDecl$R$frost$core$String(void* rawSelf, org$frostlang$frostc$ClassDecl* param1) {
+org$frostlang$frostc$frostdoc$LinkResolver* param0 = (org$frostlang$frostc$frostdoc$LinkResolver*) rawSelf;
 
 frost$core$String* local0 = NULL;
 frost$core$MutableString* local1 = NULL;
@@ -684,8 +688,7 @@ _21 = *_20;
 _24 = (frost$core$Bit) {false};
 // begin inline call to function frost.core.String.find(needle:frost.core.String, overlapping:frost.core.Bit):frost.collections.Iterator<frost.core.String.Index> from String.frost:1186:20
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:1190
-FROST_ASSERT(56 == sizeof(frost$core$String$MatchIterator));
-_27 = (frost$core$String$MatchIterator*) frostObjectAlloc(56, (frost$core$Class*) &frost$core$String$MatchIterator$class);
+_27 = (frost$core$String$MatchIterator*) frostObjectAlloc(sizeof(frost$core$String$MatchIterator), (frost$core$Class*) &frost$core$String$MatchIterator$class);
 frost$core$String$MatchIterator$init$frost$core$String$frost$core$String$frost$core$Bit(_27, _21, &$s19, _24);
 _29 = ((frost$collections$Iterator*) _27);
 _30 = ((frost$core$Object*) _29);
@@ -717,8 +720,7 @@ frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$St
 abort(); // unreachable
 block9:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:568
-FROST_ASSERT(48 == sizeof(frost$core$MutableString));
-_55 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
+_55 = (frost$core$MutableString*) frostObjectAlloc(sizeof(frost$core$MutableString), (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init(_55);
 *(&local1) = ((frost$core$MutableString*) NULL);
 _58 = ((frost$core$Object*) _55);
@@ -843,7 +845,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_167);
 return _157;
 
 }
-frost$core$String* org$frostlang$frostc$frostdoc$LinkResolver$linkTo$org$frostlang$frostc$FieldDecl$R$frost$core$String$Q(org$frostlang$frostc$frostdoc$LinkResolver* param0, org$frostlang$frostc$FieldDecl* param1) {
+frost$core$String* org$frostlang$frostc$frostdoc$LinkResolver$linkTo$org$frostlang$frostc$FieldDecl$R$frost$core$String$Q(void* rawSelf, org$frostlang$frostc$FieldDecl* param1) {
+org$frostlang$frostc$frostdoc$LinkResolver* param0 = (org$frostlang$frostc$frostdoc$LinkResolver*) rawSelf;
 
 frost$core$Weak** _1;
 frost$core$Weak* _2;
@@ -920,7 +923,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_43);
 return _32;
 
 }
-frost$core$String* org$frostlang$frostc$frostdoc$LinkResolver$linkTo$org$frostlang$frostc$MethodDecl$R$frost$core$String$Q(org$frostlang$frostc$frostdoc$LinkResolver* param0, org$frostlang$frostc$MethodDecl* param1) {
+frost$core$String* org$frostlang$frostc$frostdoc$LinkResolver$linkTo$org$frostlang$frostc$MethodDecl$R$frost$core$String$Q(void* rawSelf, org$frostlang$frostc$MethodDecl* param1) {
+org$frostlang$frostc$frostdoc$LinkResolver* param0 = (org$frostlang$frostc$frostdoc$LinkResolver*) rawSelf;
 
 frost$core$MutableString* local0 = NULL;
 frost$core$String* local1 = NULL;
@@ -1029,8 +1033,7 @@ _1 = &param0->compiler;
 _2 = *_1;
 _3 = org$frostlang$frostc$Compiler$resolve$org$frostlang$frostc$MethodDecl$R$frost$core$Bit(_2, param1);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/frostdoc/LinkResolver.frost:65
-FROST_ASSERT(48 == sizeof(frost$core$MutableString));
-_5 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
+_5 = (frost$core$MutableString*) frostObjectAlloc(sizeof(frost$core$MutableString), (frost$core$Class*) &frost$core$MutableString$class);
 _6 = &param1->owner;
 _7 = *_6;
 _8 = _7;
@@ -1226,7 +1229,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_176);
 return _166;
 
 }
-frost$core$String* org$frostlang$frostc$frostdoc$LinkResolver$linkTo$org$frostlang$frostc$Symbol$R$frost$core$String$Q(org$frostlang$frostc$frostdoc$LinkResolver* param0, org$frostlang$frostc$Symbol* param1) {
+frost$core$String* org$frostlang$frostc$frostdoc$LinkResolver$linkTo$org$frostlang$frostc$Symbol$R$frost$core$String$Q(void* rawSelf, org$frostlang$frostc$Symbol* param1) {
+org$frostlang$frostc$frostdoc$LinkResolver* param0 = (org$frostlang$frostc$frostdoc$LinkResolver*) rawSelf;
 
 org$frostlang$frostc$Symbol$Kind* _1;
 org$frostlang$frostc$Symbol$Kind _2;
@@ -1307,7 +1311,8 @@ goto block8;
 block8:;
 
 }
-frost$core$String* org$frostlang$frostc$frostdoc$LinkResolver$resolve$frost$core$String$R$frost$core$String$Q(org$frostlang$frostc$frostdoc$LinkResolver* param0, frost$core$String* param1) {
+frost$core$String* org$frostlang$frostc$frostdoc$LinkResolver$resolve$frost$core$String$R$frost$core$String$Q(void* rawSelf, frost$core$String* param1) {
+org$frostlang$frostc$frostdoc$LinkResolver* param0 = (org$frostlang$frostc$frostdoc$LinkResolver*) rawSelf;
 
 frost$core$String$Index$nullable local0;
 frost$core$String* local1 = NULL;
@@ -2421,8 +2426,7 @@ _158 = (frost$core$Bit) {_157};
 _159 = _158.value;
 if (_159) goto block22; else goto block21;
 block22:;
-FROST_ASSERT(24 == sizeof(frost$core$RegularExpression));
-_161 = (frost$core$RegularExpression*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$RegularExpression$class);
+_161 = (frost$core$RegularExpression*) frostObjectAlloc(sizeof(frost$core$RegularExpression), (frost$core$Class*) &frost$core$RegularExpression$class);
 frost$core$RegularExpression$init$frost$core$String(_161, &$s96);
 // begin inline call to function frost.core.String.matches(regex:frost.core.RegularExpression):frost.core.Bit from LinkResolver.frost:121:43
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:1047
@@ -2505,8 +2509,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_232);
 goto block21;
 block21:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/frostdoc/LinkResolver.frost:127
-FROST_ASSERT(24 == sizeof(frost$core$RegularExpression));
-_237 = (frost$core$RegularExpression*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$RegularExpression$class);
+_237 = (frost$core$RegularExpression*) frostObjectAlloc(sizeof(frost$core$RegularExpression), (frost$core$Class*) &frost$core$RegularExpression$class);
 frost$core$RegularExpression$init$frost$core$String(_237, &$s102);
 // begin inline call to function frost.core.String.matches(regex:frost.core.RegularExpression):frost.core.Bit from LinkResolver.frost:127:24
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:1047
@@ -2673,8 +2676,7 @@ block36:;
 goto block31;
 block31:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/frostdoc/LinkResolver.frost:141
-FROST_ASSERT(24 == sizeof(frost$core$RegularExpression));
-_395 = (frost$core$RegularExpression*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$RegularExpression$class);
+_395 = (frost$core$RegularExpression*) frostObjectAlloc(sizeof(frost$core$RegularExpression), (frost$core$Class*) &frost$core$RegularExpression$class);
 frost$core$RegularExpression$init$frost$core$String(_395, &$s114);
 // begin inline call to function frost.core.String.parse(regex:frost.core.RegularExpression):frost.collections.Array<frost.core.String?>? from LinkResolver.frost:141:33
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:1072
@@ -2695,8 +2697,7 @@ _412 = _411.value;
 if (_412) goto block50; else goto block51;
 block50:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:1074
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_415 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_415 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _416 = _415;
 frost$collections$Array$init(_416);
 *(&local8) = ((frost$collections$Array*) NULL);
@@ -2822,8 +2823,7 @@ _529 = _528.value;
 if (_529) goto block60; else goto block61;
 block60:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/frostdoc/LinkResolver.frost:143
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_532 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_532 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _533 = _532;
 frost$collections$Array$init(_533);
 *(&local11) = ((frost$collections$Array*) NULL);
@@ -2913,8 +2913,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_603);
 if (_600) goto block62; else goto block63;
 block62:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/frostdoc/LinkResolver.frost:145
-FROST_ASSERT(24 == sizeof(frost$io$File));
-_607 = (frost$io$File*) frostObjectAlloc(24, (frost$core$Class*) &frost$io$File$class);
+_607 = (frost$io$File*) frostObjectAlloc(sizeof(frost$io$File), (frost$core$Class*) &frost$io$File$class);
 _608 = *(&local10);
 _609 = _608 != NULL;
 _610 = (frost$core$Bit) {_609};
@@ -3377,12 +3376,12 @@ _1027 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$To
 _1030 = *(&local19);
 _1031 = _1030.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp159;
-$tmp159 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp159 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp159->value = _1031;
 _1032 = ((frost$core$Equatable*) $tmp159);
 _1033 = _1032;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp160;
-$tmp160 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp160 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp160->value = _1024;
 _1034 = ((frost$core$Equatable*) $tmp160);
 ITable* $tmp161 = _1033->$class->itable;
@@ -4000,7 +3999,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_1582);
 return ((frost$core$String*) NULL);
 
 }
-void org$frostlang$frostc$frostdoc$LinkResolver$cleanup(org$frostlang$frostc$frostdoc$LinkResolver* param0) {
+void org$frostlang$frostc$frostdoc$LinkResolver$cleanup(void* rawSelf) {
+org$frostlang$frostc$frostdoc$LinkResolver* param0 = (org$frostlang$frostc$frostdoc$LinkResolver*) rawSelf;
 
 frost$core$Object* _1;
 org$frostlang$frostc$Compiler** _3;

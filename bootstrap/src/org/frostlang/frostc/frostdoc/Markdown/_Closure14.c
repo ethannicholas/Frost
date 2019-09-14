@@ -40,7 +40,8 @@ static frost$core$String $s24 = { (frost$core$Class*) &frost$core$String$class, 
 static frost$core$String $s25 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x3c\x2f", 2, 579162285470681020, NULL };
 static frost$core$String $s26 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x3e\x0a", 2, 581129311773172049, NULL };
 
-void org$frostlang$frostc$frostdoc$Markdown$_Closure14$init$org$frostlang$frostc$frostdoc$Markdown(org$frostlang$frostc$frostdoc$Markdown$_Closure14* param0, org$frostlang$frostc$frostdoc$Markdown* param1) {
+void org$frostlang$frostc$frostdoc$Markdown$_Closure14$init$org$frostlang$frostc$frostdoc$Markdown(void* rawSelf, org$frostlang$frostc$frostdoc$Markdown* param1) {
+org$frostlang$frostc$frostdoc$Markdown$_Closure14* param0 = (org$frostlang$frostc$frostdoc$Markdown$_Closure14*) rawSelf;
 
 frost$core$Object* _1;
 org$frostlang$frostc$frostdoc$Markdown** _3;
@@ -59,7 +60,8 @@ _7 = &param0->$self;
 return;
 
 }
-void org$frostlang$frostc$frostdoc$Markdown$_Closure14$cleanup(org$frostlang$frostc$frostdoc$Markdown$_Closure14* param0) {
+void org$frostlang$frostc$frostdoc$Markdown$_Closure14$cleanup(void* rawSelf) {
+org$frostlang$frostc$frostdoc$Markdown$_Closure14* param0 = (org$frostlang$frostc$frostdoc$Markdown$_Closure14*) rawSelf;
 
 frost$core$Object* _1;
 org$frostlang$frostc$frostdoc$Markdown** _3;
@@ -75,7 +77,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_5);
 return;
 
 }
-frost$core$Object* org$frostlang$frostc$frostdoc$Markdown$_Closure14$$anonymous13$frost$collections$ListView$LTfrost$core$String$Q$GT$R$frost$core$Object(org$frostlang$frostc$frostdoc$Markdown$_Closure14* param0, frost$collections$ListView* param1) {
+frost$core$Object* org$frostlang$frostc$frostdoc$Markdown$_Closure14$$anonymous13$frost$collections$ListView$LTfrost$core$String$Q$GT$R$frost$core$Object(void* rawSelf, frost$collections$ListView* param1) {
+org$frostlang$frostc$frostdoc$Markdown$_Closure14* param0 = (org$frostlang$frostc$frostdoc$Markdown$_Closure14*) rawSelf;
 
 frost$core$String* local0 = NULL;
 frost$core$String* local1 = NULL;
@@ -236,8 +239,7 @@ frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$St
 abort(); // unreachable
 block4:;
 _41 = _33;
-FROST_ASSERT(24 == sizeof(frost$core$RegularExpression));
-_42 = (frost$core$RegularExpression*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$RegularExpression$class);
+_42 = (frost$core$RegularExpression*) frostObjectAlloc(sizeof(frost$core$RegularExpression), (frost$core$Class*) &frost$core$RegularExpression$class);
 frost$core$RegularExpression$init$frost$core$String(_42, &$s9);
 // begin inline call to function frost.core.String.matches(regex:frost.core.RegularExpression):frost.core.Bit from Markdown.frost:662:37
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:1047
@@ -281,8 +283,7 @@ frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$St
 abort(); // unreachable
 block7:;
 _81 = _73;
-FROST_ASSERT(24 == sizeof(frost$core$RegularExpression));
-_82 = (frost$core$RegularExpression*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$RegularExpression$class);
+_82 = (frost$core$RegularExpression*) frostObjectAlloc(sizeof(frost$core$RegularExpression), (frost$core$Class*) &frost$core$RegularExpression$class);
 frost$core$RegularExpression$init$frost$core$String(_82, &$s16);
 // begin inline call to function frost.core.String.replace(search:frost.core.RegularExpression, replacement:frost.core.String):frost.core.String from Markdown.frost:671:37
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:1120
@@ -330,8 +331,7 @@ _125 = ((frost$core$Object*) _117);
 frost$core$Frost$unref$frost$core$Object$Q(_125);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:678
 _128 = *(&local3);
-FROST_ASSERT(24 == sizeof(frost$core$RegularExpression));
-_129 = (frost$core$RegularExpression*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$RegularExpression$class);
+_129 = (frost$core$RegularExpression*) frostObjectAlloc(sizeof(frost$core$RegularExpression), (frost$core$Class*) &frost$core$RegularExpression$class);
 frost$core$RegularExpression$init$frost$core$String(_129, &$s21);
 // begin inline call to function frost.core.String.replace(search:frost.core.RegularExpression, replacement:frost.core.String):frost.core.String from Markdown.frost:678:41
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:1120

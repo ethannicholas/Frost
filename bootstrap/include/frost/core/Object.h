@@ -4,7 +4,7 @@
 typedef struct frost$core$String frost$core$String;
 typedef struct frost$core$Object frost$core$Object;
 
-frost$core$String* frost$core$Object$get_asString$R$frost$core$String(frost$core$Object* self);
-void frost$core$Object$cleanup(frost$core$Object* self);
-void frost$core$Object$init(frost$core$Object* self);
+frost$core$String* frost$core$Object$get_asString$R$frost$core$String(void* rawSelf);
+void frost$core$Object$cleanup(void* rawSelf);
+void frost$core$Object$init(void* rawSelf);
 

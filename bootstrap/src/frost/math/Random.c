@@ -44,8 +44,7 @@ frost$math$Random* _5;
 frost$core$Object* _6;
 frost$core$Object* _8;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/math/Random.frost:17
-FROST_ASSERT(32 == sizeof(frost$math$XorShift128Plus));
-_1 = (frost$math$XorShift128Plus*) frostObjectAlloc(32, (frost$core$Class*) &frost$math$XorShift128Plus$class);
+_1 = (frost$math$XorShift128Plus*) frostObjectAlloc(sizeof(frost$math$XorShift128Plus), (frost$core$Class*) &frost$math$XorShift128Plus$class);
 _2 = frost$core$Frost$currentTime$R$builtin_int64();
 _3 = (frost$core$Int64) {_2};
 frost$math$XorShift128Plus$init$frost$core$Int64(_1, _3);
@@ -57,7 +56,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_8);
 return _5;
 
 }
-frost$core$Bit frost$math$Random$bit$R$frost$core$Bit(frost$math$Random* param0) {
+frost$core$Bit frost$math$Random$bit$R$frost$core$Bit(void* rawSelf) {
+frost$math$Random* param0 = (frost$math$Random*) rawSelf;
 
 frost$core$Int64 local0;
 $fn2 _1;
@@ -98,7 +98,8 @@ _18 = (frost$core$Bit) {_17};
 return _18;
 
 }
-frost$core$Int32 frost$math$Random$int32$R$frost$core$Int32(frost$math$Random* param0) {
+frost$core$Int32 frost$math$Random$int32$R$frost$core$Int32(void* rawSelf) {
+frost$math$Random* param0 = (frost$math$Random*) rawSelf;
 
 $fn4 _1;
 frost$core$Int64 _2;
@@ -120,7 +121,8 @@ _7 = (frost$core$Int32) {_6};
 return _7;
 
 }
-frost$core$Int frost$math$Random$int$frost$core$Int$R$frost$core$Int(frost$math$Random* param0, frost$core$Int param1) {
+frost$core$Int frost$math$Random$int$frost$core$Int$R$frost$core$Int(void* rawSelf, frost$core$Int param1) {
+frost$math$Random* param0 = (frost$math$Random*) rawSelf;
 
 frost$core$Int local0;
 frost$core$Bit local1;
@@ -295,7 +297,8 @@ frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$St
 abort(); // unreachable
 
 }
-frost$core$Real32 frost$math$Random$real32$R$frost$core$Real32(frost$math$Random* param0) {
+frost$core$Real32 frost$math$Random$real32$R$frost$core$Real32(void* rawSelf) {
+frost$math$Random* param0 = (frost$math$Random*) rawSelf;
 
 frost$core$Real32 local0;
 frost$core$Bit local1;
@@ -399,7 +402,8 @@ frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$St
 abort(); // unreachable
 
 }
-frost$core$Real64 frost$math$Random$real64$R$frost$core$Real64(frost$math$Random* param0) {
+frost$core$Real64 frost$math$Random$real64$R$frost$core$Real64(void* rawSelf) {
+frost$math$Random* param0 = (frost$math$Random*) rawSelf;
 
 frost$core$Real64 local0;
 frost$core$Bit local1;

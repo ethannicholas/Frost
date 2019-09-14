@@ -76,7 +76,8 @@ static frost$core$String $s59 = { (frost$core$Class*) &frost$core$String$class, 
 static frost$core$String $s70 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x66\x72\x6f\x73\x74", 14, -28151574787386209, NULL };
 static frost$core$String $s71 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x6f\x73\x74\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x66\x6f\x6c\x64\x28\x66\x3a\x28\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x54\x2c\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x54\x29\x3d\x3e\x28\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x54\x29\x2c\x20\x73\x74\x61\x72\x74\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x54\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x54", 225, 176965375957697823, NULL };
 
-frost$core$Int frost$collections$Iterator$count$R$frost$core$Int(frost$collections$Iterator* param0) {
+frost$core$Int frost$collections$Iterator$count$R$frost$core$Int(void* rawSelf) {
+frost$collections$Iterator* param0 = (frost$collections$Iterator*) rawSelf;
 
 frost$core$Int local0;
 frost$core$Int local1;
@@ -167,7 +168,8 @@ frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$St
 abort(); // unreachable
 
 }
-frost$collections$Iterator* frost$collections$Iterator$get_enumeration$R$frost$collections$Iterator$LT$LPfrost$core$Int$Cfrost$collections$Iterator$T$RP$GT(frost$collections$Iterator* param0) {
+frost$collections$Iterator* frost$collections$Iterator$get_enumeration$R$frost$collections$Iterator$LT$LPfrost$core$Int$Cfrost$collections$Iterator$T$RP$GT(void* rawSelf) {
+frost$collections$Iterator* param0 = (frost$collections$Iterator*) rawSelf;
 
 frost$collections$Iterator$EnumerationIterator* _1;
 frost$collections$Iterator$EnumerationIterator* _2;
@@ -176,8 +178,7 @@ frost$collections$Iterator* _5;
 frost$core$Object* _6;
 frost$core$Object* _8;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Iterator.frost:192
-FROST_ASSERT(32 == sizeof(frost$collections$Iterator$EnumerationIterator));
-_1 = (frost$collections$Iterator$EnumerationIterator*) frostObjectAlloc(32, (frost$core$Class*) &frost$collections$Iterator$EnumerationIterator$class);
+_1 = (frost$collections$Iterator$EnumerationIterator*) frostObjectAlloc(sizeof(frost$collections$Iterator$EnumerationIterator), (frost$core$Class*) &frost$collections$Iterator$EnumerationIterator$class);
 _2 = _1;
 _3 = param0;
 frost$collections$Iterator$EnumerationIterator$init$frost$collections$Iterator$LTfrost$collections$Iterator$EnumerationIterator$T$GT(_2, _3);
@@ -189,7 +190,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_8);
 return _5;
 
 }
-frost$collections$Iterator* frost$collections$Iterator$filter$$LPfrost$collections$Iterator$T$RP$EQ$GT$LPfrost$core$Bit$RP$R$frost$collections$Iterator$LTfrost$collections$Iterator$T$GT(frost$collections$Iterator* param0, frost$core$MutableMethod* param1) {
+frost$collections$Iterator* frost$collections$Iterator$filter$$LPfrost$collections$Iterator$T$RP$EQ$GT$LPfrost$core$Bit$RP$R$frost$collections$Iterator$LTfrost$collections$Iterator$T$GT(void* rawSelf, frost$core$MutableMethod* param1) {
+frost$collections$Iterator* param0 = (frost$collections$Iterator*) rawSelf;
 
 frost$collections$Iterator$FilterIterator* _1;
 frost$collections$Iterator$FilterIterator* _2;
@@ -199,8 +201,7 @@ frost$collections$Iterator* _6;
 frost$core$Object* _7;
 frost$core$Object* _9;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Iterator.frost:202
-FROST_ASSERT(48 == sizeof(frost$collections$Iterator$FilterIterator));
-_1 = (frost$collections$Iterator$FilterIterator*) frostObjectAlloc(48, (frost$core$Class*) &frost$collections$Iterator$FilterIterator$class);
+_1 = (frost$collections$Iterator$FilterIterator*) frostObjectAlloc(sizeof(frost$collections$Iterator$FilterIterator), (frost$core$Class*) &frost$collections$Iterator$FilterIterator$class);
 _2 = _1;
 _3 = param0;
 _4 = param1;
@@ -213,7 +214,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_9);
 return _6;
 
 }
-frost$collections$Iterator* frost$collections$Iterator$$IDX$frost$core$Range$LTfrost$core$Int$Q$GT$R$frost$collections$Iterator$LTfrost$collections$Iterator$T$GT(frost$collections$Iterator* param0, frost$core$Range$LTfrost$core$Int$Q$GT param1) {
+frost$collections$Iterator* frost$collections$Iterator$$IDX$frost$core$Range$LTfrost$core$Int$Q$GT$R$frost$collections$Iterator$LTfrost$collections$Iterator$T$GT(void* rawSelf, frost$core$Range$LTfrost$core$Int$Q$GT param1) {
+frost$collections$Iterator* param0 = (frost$collections$Iterator*) rawSelf;
 
 frost$core$Int$nullable _0;
 bool _1;
@@ -313,8 +315,7 @@ frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$St
 abort(); // unreachable
 block1:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Iterator.frost:223
-FROST_ASSERT(72 == sizeof(frost$collections$Iterator$RangeIterator));
-_46 = (frost$collections$Iterator$RangeIterator*) frostObjectAlloc(72, (frost$core$Class*) &frost$collections$Iterator$RangeIterator$class);
+_46 = (frost$collections$Iterator$RangeIterator*) frostObjectAlloc(sizeof(frost$collections$Iterator$RangeIterator), (frost$core$Class*) &frost$collections$Iterator$RangeIterator$class);
 _47 = _46;
 _48 = param0;
 _49 = param1.min;
@@ -330,7 +331,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_57);
 return _54;
 
 }
-frost$collections$Iterator* frost$collections$Iterator$$IDX$frost$core$SteppedRange$LTfrost$core$Int$Q$Cfrost$core$Int$GT$R$frost$collections$Iterator$LTfrost$collections$Iterator$T$GT(frost$collections$Iterator* param0, frost$core$SteppedRange$LTfrost$core$Int$Q$Cfrost$core$Int$GT param1) {
+frost$collections$Iterator* frost$collections$Iterator$$IDX$frost$core$SteppedRange$LTfrost$core$Int$Q$Cfrost$core$Int$GT$R$frost$collections$Iterator$LTfrost$collections$Iterator$T$GT(void* rawSelf, frost$core$SteppedRange$LTfrost$core$Int$Q$Cfrost$core$Int$GT param1) {
+frost$collections$Iterator* param0 = (frost$collections$Iterator*) rawSelf;
 
 frost$core$Int$nullable _0;
 bool _1;
@@ -446,8 +448,7 @@ frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$St
 abort(); // unreachable
 block1:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Iterator.frost:241
-FROST_ASSERT(72 == sizeof(frost$collections$Iterator$RangeIterator));
-_54 = (frost$collections$Iterator$RangeIterator*) frostObjectAlloc(72, (frost$core$Class*) &frost$collections$Iterator$RangeIterator$class);
+_54 = (frost$collections$Iterator$RangeIterator*) frostObjectAlloc(sizeof(frost$collections$Iterator$RangeIterator), (frost$core$Class*) &frost$collections$Iterator$RangeIterator$class);
 _55 = _54;
 _56 = param0;
 _57 = param1.start;
@@ -463,7 +464,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_65);
 return _62;
 
 }
-frost$collections$Array* frost$collections$Iterator$all$R$frost$collections$Array$LTfrost$collections$Iterator$T$GT(frost$collections$Iterator* param0) {
+frost$collections$Array* frost$collections$Iterator$all$R$frost$collections$Array$LTfrost$collections$Iterator$T$GT(void* rawSelf) {
+frost$collections$Iterator* param0 = (frost$collections$Iterator*) rawSelf;
 
 frost$collections$Array* local0 = NULL;
 frost$collections$Array* local1 = NULL;
@@ -502,8 +504,7 @@ bool _6;
 frost$collections$Array* _8;
 frost$core$Int _3;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Iterator.frost:251
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_11 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_11 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _12 = _11;
 frost$collections$Array$init(_12);
 *(&local1) = ((frost$collections$Array*) NULL);
@@ -583,7 +584,8 @@ frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$St
 abort(); // unreachable
 
 }
-void frost$collections$Iterator$apply$$LPfrost$collections$Iterator$T$RP$EQ$AM$GT$LP$RP(frost$collections$Iterator* param0, frost$core$MutableMethod* param1) {
+void frost$collections$Iterator$apply$$LPfrost$collections$Iterator$T$RP$EQ$AM$GT$LP$RP(void* rawSelf, frost$core$MutableMethod* param1) {
+frost$collections$Iterator* param0 = (frost$collections$Iterator*) rawSelf;
 
 frost$core$Object* local0 = NULL;
 frost$collections$Iterator* _11;
@@ -683,7 +685,8 @@ frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$St
 abort(); // unreachable
 
 }
-frost$core$Object* frost$collections$Iterator$fold$$LPfrost$collections$Iterator$T$Cfrost$collections$Iterator$T$RP$EQ$GT$LPfrost$collections$Iterator$T$RP$R$frost$collections$Iterator$T(frost$collections$Iterator* param0, frost$core$MutableMethod* param1) {
+frost$core$Object* frost$collections$Iterator$fold$$LPfrost$collections$Iterator$T$Cfrost$collections$Iterator$T$RP$EQ$GT$LPfrost$collections$Iterator$T$RP$R$frost$collections$Iterator$T(void* rawSelf, frost$core$MutableMethod* param1) {
+frost$collections$Iterator* param0 = (frost$collections$Iterator*) rawSelf;
 
 frost$core$Object* local0 = NULL;
 frost$core$Object* local1 = NULL;
@@ -861,7 +864,8 @@ frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$St
 abort(); // unreachable
 
 }
-frost$core$Object* frost$collections$Iterator$fold$$LPfrost$collections$Iterator$T$Cfrost$collections$Iterator$T$RP$EQ$GT$LPfrost$collections$Iterator$T$RP$frost$collections$Iterator$T$R$frost$collections$Iterator$T(frost$collections$Iterator* param0, frost$core$MutableMethod* param1, frost$core$Object* param2) {
+frost$core$Object* frost$collections$Iterator$fold$$LPfrost$collections$Iterator$T$Cfrost$collections$Iterator$T$RP$EQ$GT$LPfrost$collections$Iterator$T$RP$frost$collections$Iterator$T$R$frost$collections$Iterator$T(void* rawSelf, frost$core$MutableMethod* param1, frost$core$Object* param2) {
+frost$collections$Iterator* param0 = (frost$collections$Iterator*) rawSelf;
 
 frost$core$Object* local0 = NULL;
 frost$core$Object* local1 = NULL;
@@ -999,7 +1003,8 @@ frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$St
 abort(); // unreachable
 
 }
-frost$collections$Iterator* frost$collections$Iterator$map$$LPfrost$collections$Iterator$T$RP$EQ$AM$GT$LPfrost$collections$Iterator$map$U$RP$R$frost$collections$Iterator$LTfrost$collections$Iterator$map$U$GT(frost$collections$Iterator* param0, frost$core$MutableMethod* param1) {
+frost$collections$Iterator* frost$collections$Iterator$map$$LPfrost$collections$Iterator$T$RP$EQ$AM$GT$LPfrost$collections$Iterator$map$U$RP$R$frost$collections$Iterator$LTfrost$collections$Iterator$map$U$GT(void* rawSelf, frost$core$MutableMethod* param1) {
+frost$collections$Iterator* param0 = (frost$collections$Iterator*) rawSelf;
 
 frost$collections$Iterator$MapIterator* _1;
 frost$collections$Iterator$MapIterator* _2;
@@ -1009,8 +1014,7 @@ frost$collections$Iterator* _6;
 frost$core$Object* _7;
 frost$core$Object* _9;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Iterator.frost:340
-FROST_ASSERT(32 == sizeof(frost$collections$Iterator$MapIterator));
-_1 = (frost$collections$Iterator$MapIterator*) frostObjectAlloc(32, (frost$core$Class*) &frost$collections$Iterator$MapIterator$class);
+_1 = (frost$collections$Iterator$MapIterator*) frostObjectAlloc(sizeof(frost$collections$Iterator$MapIterator), (frost$core$Class*) &frost$collections$Iterator$MapIterator$class);
 _2 = _1;
 _3 = param0;
 _4 = param1;

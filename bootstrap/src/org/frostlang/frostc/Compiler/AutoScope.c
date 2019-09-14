@@ -20,15 +20,15 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 static frost$core$String $s2 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x43\x6f\x6d\x70\x69\x6c\x65\x72\x2e\x66\x72\x6f\x73\x74", 14, -1909310572556369220, NULL };
 static frost$core$String $s3 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x43\x6f\x6d\x70\x69\x6c\x65\x72\x2e\x66\x72\x6f\x73\x74", 14, -1909310572556369220, NULL };
 
-void org$frostlang$frostc$Compiler$AutoScope$init$org$frostlang$frostc$Compiler(org$frostlang$frostc$Compiler$AutoScope* param0, org$frostlang$frostc$Compiler* param1) {
+void org$frostlang$frostc$Compiler$AutoScope$init$org$frostlang$frostc$Compiler(void* rawSelf, org$frostlang$frostc$Compiler* param1) {
+org$frostlang$frostc$Compiler$AutoScope* param0 = (org$frostlang$frostc$Compiler$AutoScope*) rawSelf;
 
 org$frostlang$frostc$SymbolTable* _1;
 org$frostlang$frostc$SymbolTable** _2;
 org$frostlang$frostc$SymbolTable* _3;
 frost$core$Object* _6;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:184
-FROST_ASSERT(48 == sizeof(org$frostlang$frostc$SymbolTable));
-_1 = (org$frostlang$frostc$SymbolTable*) frostObjectAlloc(48, (frost$core$Class*) &org$frostlang$frostc$SymbolTable$class);
+_1 = (org$frostlang$frostc$SymbolTable*) frostObjectAlloc(sizeof(org$frostlang$frostc$SymbolTable), (frost$core$Class*) &org$frostlang$frostc$SymbolTable$class);
 _2 = &param1->symbolTable;
 _3 = *_2;
 org$frostlang$frostc$SymbolTable$init$org$frostlang$frostc$SymbolTable(_1, _3);
@@ -38,7 +38,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_6);
 return;
 
 }
-void org$frostlang$frostc$Compiler$AutoScope$init$org$frostlang$frostc$Compiler$org$frostlang$frostc$SymbolTable(org$frostlang$frostc$Compiler$AutoScope* param0, org$frostlang$frostc$Compiler* param1, org$frostlang$frostc$SymbolTable* param2) {
+void org$frostlang$frostc$Compiler$AutoScope$init$org$frostlang$frostc$Compiler$org$frostlang$frostc$SymbolTable(void* rawSelf, org$frostlang$frostc$Compiler* param1, org$frostlang$frostc$SymbolTable* param2) {
+org$frostlang$frostc$Compiler$AutoScope* param0 = (org$frostlang$frostc$Compiler$AutoScope*) rawSelf;
 
 frost$core$Object* _1;
 org$frostlang$frostc$Compiler** _3;
@@ -115,8 +116,7 @@ _36 = &param1->symbolTable;
 _39 = &param1->enclosingContexts;
 _40 = *_39;
 _41 = _40;
-FROST_ASSERT(56 == sizeof(org$frostlang$frostc$Compiler$EnclosingContext));
-_42 = (org$frostlang$frostc$Compiler$EnclosingContext*) frostObjectAlloc(56, (frost$core$Class*) &org$frostlang$frostc$Compiler$EnclosingContext$class);
+_42 = (org$frostlang$frostc$Compiler$EnclosingContext*) frostObjectAlloc(sizeof(org$frostlang$frostc$Compiler$EnclosingContext), (frost$core$Class*) &org$frostlang$frostc$Compiler$EnclosingContext$class);
 _43 = (frost$core$Int) {2u};
 org$frostlang$frostc$Compiler$EnclosingContext$init$frost$core$Int(_42, _43);
 _45 = ((frost$core$Object*) _42);
@@ -132,7 +132,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_54);
 return;
 
 }
-void org$frostlang$frostc$Compiler$AutoScope$cleanup(org$frostlang$frostc$Compiler$AutoScope* param0) {
+void org$frostlang$frostc$Compiler$AutoScope$cleanup(void* rawSelf) {
+org$frostlang$frostc$Compiler$AutoScope* param0 = (org$frostlang$frostc$Compiler$AutoScope*) rawSelf;
 
 org$frostlang$frostc$Compiler$EnclosingContext* local0 = NULL;
 org$frostlang$frostc$Compiler** _3;

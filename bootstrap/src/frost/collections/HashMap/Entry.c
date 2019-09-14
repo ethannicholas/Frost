@@ -12,7 +12,8 @@ frost$collections$HashMap$Entry$class_type frost$collections$HashMap$Entry$class
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x48\x61\x73\x68\x4d\x61\x70\x2e\x45\x6e\x74\x72\x79", 31, -4426476962637377112, NULL };
 
-void frost$collections$HashMap$Entry$init$frost$collections$HashMap$Entry$K$frost$collections$HashMap$Entry$V(frost$collections$HashMap$Entry* param0, frost$collections$HashKey* param1, frost$core$Object* param2) {
+void frost$collections$HashMap$Entry$init$frost$collections$HashMap$Entry$K$frost$collections$HashMap$Entry$V(void* rawSelf, frost$collections$HashKey* param1, frost$core$Object* param2) {
+frost$collections$HashMap$Entry* param0 = (frost$collections$HashMap$Entry*) rawSelf;
 
 frost$collections$HashMap$Entry* _1;
 frost$core$Object* _2;
@@ -49,7 +50,8 @@ _18 = &_11->value;
 return;
 
 }
-void frost$collections$HashMap$Entry$cleanup(frost$collections$HashMap$Entry* param0) {
+void frost$collections$HashMap$Entry$cleanup(void* rawSelf) {
+frost$collections$HashMap$Entry* param0 = (frost$collections$HashMap$Entry*) rawSelf;
 
 frost$core$Object* _1;
 frost$collections$HashMap$Entry* _3;

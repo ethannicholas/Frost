@@ -17,42 +17,50 @@ org$frostlang$frostc$frostdoc$DummyCodeGenerator$class_type org$frostlang$frostc
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x66\x72\x6f\x73\x74\x64\x6f\x63\x2e\x44\x75\x6d\x6d\x79\x43\x6f\x64\x65\x47\x65\x6e\x65\x72\x61\x74\x6f\x72", 48, -1451102528825836648, NULL };
 
-void org$frostlang$frostc$frostdoc$DummyCodeGenerator$setCompiler$org$frostlang$frostc$Compiler(org$frostlang$frostc$frostdoc$DummyCodeGenerator* param0, org$frostlang$frostc$Compiler* param1) {
+void org$frostlang$frostc$frostdoc$DummyCodeGenerator$setCompiler$org$frostlang$frostc$Compiler(void* rawSelf, org$frostlang$frostc$Compiler* param1) {
+org$frostlang$frostc$frostdoc$DummyCodeGenerator* param0 = (org$frostlang$frostc$frostdoc$DummyCodeGenerator*) rawSelf;
 
 return;
 
 }
-void org$frostlang$frostc$frostdoc$DummyCodeGenerator$start$org$frostlang$frostc$ClassDecl(org$frostlang$frostc$frostdoc$DummyCodeGenerator* param0, org$frostlang$frostc$ClassDecl* param1) {
+void org$frostlang$frostc$frostdoc$DummyCodeGenerator$start$org$frostlang$frostc$ClassDecl(void* rawSelf, org$frostlang$frostc$ClassDecl* param1) {
+org$frostlang$frostc$frostdoc$DummyCodeGenerator* param0 = (org$frostlang$frostc$frostdoc$DummyCodeGenerator*) rawSelf;
 
 return;
 
 }
-void org$frostlang$frostc$frostdoc$DummyCodeGenerator$end$org$frostlang$frostc$ClassDecl(org$frostlang$frostc$frostdoc$DummyCodeGenerator* param0, org$frostlang$frostc$ClassDecl* param1) {
+void org$frostlang$frostc$frostdoc$DummyCodeGenerator$end$org$frostlang$frostc$ClassDecl(void* rawSelf, org$frostlang$frostc$ClassDecl* param1) {
+org$frostlang$frostc$frostdoc$DummyCodeGenerator* param0 = (org$frostlang$frostc$frostdoc$DummyCodeGenerator*) rawSelf;
 
 return;
 
 }
-void org$frostlang$frostc$frostdoc$DummyCodeGenerator$writeDeclaration$org$frostlang$frostc$MethodDecl(org$frostlang$frostc$frostdoc$DummyCodeGenerator* param0, org$frostlang$frostc$MethodDecl* param1) {
+void org$frostlang$frostc$frostdoc$DummyCodeGenerator$writeDeclaration$org$frostlang$frostc$MethodDecl(void* rawSelf, org$frostlang$frostc$MethodDecl* param1) {
+org$frostlang$frostc$frostdoc$DummyCodeGenerator* param0 = (org$frostlang$frostc$frostdoc$DummyCodeGenerator*) rawSelf;
 
 return;
 
 }
-void org$frostlang$frostc$frostdoc$DummyCodeGenerator$write$org$frostlang$frostc$MethodDecl$org$frostlang$frostc$IR(org$frostlang$frostc$frostdoc$DummyCodeGenerator* param0, org$frostlang$frostc$MethodDecl* param1, org$frostlang$frostc$IR* param2) {
+void org$frostlang$frostc$frostdoc$DummyCodeGenerator$write$org$frostlang$frostc$MethodDecl$org$frostlang$frostc$IR(void* rawSelf, org$frostlang$frostc$MethodDecl* param1, org$frostlang$frostc$IR* param2) {
+org$frostlang$frostc$frostdoc$DummyCodeGenerator* param0 = (org$frostlang$frostc$frostdoc$DummyCodeGenerator*) rawSelf;
 
 return;
 
 }
-void org$frostlang$frostc$frostdoc$DummyCodeGenerator$finish(org$frostlang$frostc$frostdoc$DummyCodeGenerator* param0) {
+void org$frostlang$frostc$frostdoc$DummyCodeGenerator$finish(void* rawSelf) {
+org$frostlang$frostc$frostdoc$DummyCodeGenerator* param0 = (org$frostlang$frostc$frostdoc$DummyCodeGenerator*) rawSelf;
 
 return;
 
 }
-void org$frostlang$frostc$frostdoc$DummyCodeGenerator$init(org$frostlang$frostc$frostdoc$DummyCodeGenerator* param0) {
+void org$frostlang$frostc$frostdoc$DummyCodeGenerator$init(void* rawSelf) {
+org$frostlang$frostc$frostdoc$DummyCodeGenerator* param0 = (org$frostlang$frostc$frostdoc$DummyCodeGenerator*) rawSelf;
 
 return;
 
 }
-void org$frostlang$frostc$frostdoc$DummyCodeGenerator$cleanup(org$frostlang$frostc$frostdoc$DummyCodeGenerator* param0) {
+void org$frostlang$frostc$frostdoc$DummyCodeGenerator$cleanup(void* rawSelf) {
+org$frostlang$frostc$frostdoc$DummyCodeGenerator* param0 = (org$frostlang$frostc$frostdoc$DummyCodeGenerator*) rawSelf;
 
 frost$core$Object* _1;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/frostdoc/DummyCodeGenerator.frost:10

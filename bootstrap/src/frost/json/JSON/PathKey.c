@@ -59,7 +59,8 @@ static frost$core$String $s26 = { (frost$core$Class*) &frost$core$String$class, 
 static frost$core$String $s29 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x29", 1, -5808618445805089436, NULL };
 static frost$core$String $s30 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x4a\x53\x4f\x4e\x2e\x66\x72\x6f\x73\x74", 10, 6982142459193693139, NULL };
 
-void frost$json$JSON$PathKey$cleanup(frost$json$JSON$PathKey* param0) {
+void frost$json$JSON$PathKey$cleanup(void* rawSelf) {
+frost$json$JSON$PathKey* param0 = (frost$json$JSON$PathKey*) rawSelf;
 
 frost$core$String* local0 = NULL;
 frost$core$String$Index local1;
@@ -108,7 +109,7 @@ _9 = (frost$core$Bit) {_8};
 _11 = _9.value;
 if (_11) goto block2; else goto block3;
 block2:;
-_13 = (frost$core$String**) (param0->$data + 0);
+_13 = &param0->$data.$FIELD.field0;
 _14 = *_13;
 *(&local0) = ((frost$core$String*) NULL);
 _16 = ((frost$core$Object*) _14);
@@ -117,7 +118,7 @@ _18 = *(&local0);
 _19 = ((frost$core$Object*) _18);
 frost$core$Frost$unref$frost$core$Object$Q(_19);
 *(&local0) = _14;
-_22 = (frost$core$String$Index*) (param0->$data + 8);
+_22 = &param0->$data.$FIELD.field1;
 _23 = *_22;
 *(&local1) = _23;
 // <no location>
@@ -140,10 +141,10 @@ _40 = (frost$core$Bit) {_39};
 _42 = _40.value;
 if (_42) goto block5; else goto block1;
 block5:;
-_44 = (frost$core$Int*) (param0->$data + 0);
+_44 = &param0->$data.$INDEX.field0;
 _45 = *_44;
 *(&local2) = _45;
-_47 = (frost$core$String$Index*) (param0->$data + 8);
+_47 = &param0->$data.$INDEX.field1;
 _48 = *_47;
 *(&local3) = _48;
 goto block1;
@@ -154,7 +155,8 @@ frost$core$Immutable$cleanup(_52);
 return;
 
 }
-void frost$json$JSON$PathKey$init$frost$core$Int$frost$core$String$frost$core$String$Index(frost$json$JSON$PathKey* param0, frost$core$Int param1, frost$core$String* param2, frost$core$String$Index param3) {
+void frost$json$JSON$PathKey$init$frost$core$Int$frost$core$String$frost$core$String$Index(void* rawSelf, frost$core$Int param1, frost$core$String* param2, frost$core$String$Index param3) {
+frost$json$JSON$PathKey* param0 = (frost$json$JSON$PathKey*) rawSelf;
 
 frost$core$Int* _1;
 frost$core$Object* _4;
@@ -166,15 +168,16 @@ _1 = &param0->$rawValue;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/json/JSON.frost:43
 _4 = ((frost$core$Object*) param2);
 frost$core$Frost$ref$frost$core$Object$Q(_4);
-_6 = (frost$core$String**) (param0->$data + 0);
+_6 = &param0->$data.$FIELD.field0;
 *_6 = param2;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/json/JSON.frost:43
-_9 = (frost$core$String$Index*) (param0->$data + 8);
+_9 = &param0->$data.$FIELD.field1;
 *_9 = param3;
 return;
 
 }
-void frost$json$JSON$PathKey$init$frost$core$Int$frost$core$Int$frost$core$String$Index(frost$json$JSON$PathKey* param0, frost$core$Int param1, frost$core$Int param2, frost$core$String$Index param3) {
+void frost$json$JSON$PathKey$init$frost$core$Int$frost$core$Int$frost$core$String$Index(void* rawSelf, frost$core$Int param1, frost$core$Int param2, frost$core$String$Index param3) {
+frost$json$JSON$PathKey* param0 = (frost$json$JSON$PathKey*) rawSelf;
 
 frost$core$Int* _1;
 frost$core$Int* _4;
@@ -183,15 +186,16 @@ frost$core$String$Index* _7;
 _1 = &param0->$rawValue;
 *_1 = param1;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/json/JSON.frost:43
-_4 = (frost$core$Int*) (param0->$data + 0);
+_4 = &param0->$data.$INDEX.field0;
 *_4 = param2;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/json/JSON.frost:43
-_7 = (frost$core$String$Index*) (param0->$data + 8);
+_7 = &param0->$data.$INDEX.field1;
 *_7 = param3;
 return;
 
 }
-frost$core$Bit frost$json$JSON$PathKey$$EQ$frost$json$JSON$PathKey$R$frost$core$Bit(frost$json$JSON$PathKey* param0, frost$json$JSON$PathKey* param1) {
+frost$core$Bit frost$json$JSON$PathKey$$EQ$frost$json$JSON$PathKey$R$frost$core$Bit(void* rawSelf, frost$json$JSON$PathKey* param1) {
+frost$json$JSON$PathKey* param0 = (frost$json$JSON$PathKey*) rawSelf;
 
 frost$core$String* local0 = NULL;
 frost$core$String$Index local1;
@@ -308,7 +312,7 @@ _9 = (frost$core$Bit) {_8};
 _11 = _9.value;
 if (_11) goto block2; else goto block3;
 block2:;
-_13 = (frost$core$String**) (param0->$data + 0);
+_13 = &param0->$data.$FIELD.field0;
 _14 = *_13;
 *(&local0) = ((frost$core$String*) NULL);
 _16 = ((frost$core$Object*) _14);
@@ -317,7 +321,7 @@ _18 = *(&local0);
 _19 = ((frost$core$Object*) _18);
 frost$core$Frost$unref$frost$core$Object$Q(_19);
 *(&local0) = _14;
-_22 = (frost$core$String$Index*) (param0->$data + 8);
+_22 = &param0->$data.$FIELD.field1;
 _23 = *_22;
 *(&local1) = _23;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/json/JSON.frost:43
@@ -333,7 +337,7 @@ _34 = (frost$core$Bit) {_33};
 _36 = _34.value;
 if (_36) goto block6; else goto block7;
 block6:;
-_38 = (frost$core$String**) (param1->$data + 0);
+_38 = &param1->$data.$FIELD.field0;
 _39 = *_38;
 *(&local2) = ((frost$core$String*) NULL);
 _41 = ((frost$core$Object*) _39);
@@ -342,7 +346,7 @@ _43 = *(&local2);
 _44 = ((frost$core$Object*) _43);
 frost$core$Frost$unref$frost$core$Object$Q(_44);
 *(&local2) = _39;
-_47 = (frost$core$String$Index*) (param1->$data + 8);
+_47 = &param1->$data.$FIELD.field1;
 _48 = *_47;
 *(&local3) = _48;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/json/JSON.frost:43
@@ -405,10 +409,10 @@ _102 = (frost$core$Bit) {_101};
 _104 = _102.value;
 if (_104) goto block14; else goto block15;
 block14:;
-_106 = (frost$core$Int*) (param0->$data + 0);
+_106 = &param0->$data.$INDEX.field0;
 _107 = *_106;
 *(&local5) = _107;
-_109 = (frost$core$String$Index*) (param0->$data + 8);
+_109 = &param0->$data.$INDEX.field1;
 _110 = *_109;
 *(&local6) = _110;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/json/JSON.frost:43
@@ -424,10 +428,10 @@ _121 = (frost$core$Bit) {_120};
 _123 = _121.value;
 if (_123) goto block18; else goto block19;
 block18:;
-_125 = (frost$core$Int*) (param1->$data + 0);
+_125 = &param1->$data.$INDEX.field0;
 _126 = *_125;
 *(&local7) = _126;
-_128 = (frost$core$String$Index*) (param1->$data + 8);
+_128 = &param1->$data.$INDEX.field1;
 _129 = *_128;
 *(&local8) = _129;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/json/JSON.frost:43
@@ -478,7 +482,8 @@ goto block27;
 block27:;
 
 }
-frost$core$Int frost$json$JSON$PathKey$get_hash$R$frost$core$Int(frost$json$JSON$PathKey* param0) {
+frost$core$Int frost$json$JSON$PathKey$get_hash$R$frost$core$Int(void* rawSelf) {
+frost$json$JSON$PathKey* param0 = (frost$json$JSON$PathKey*) rawSelf;
 
 frost$core$String* local0 = NULL;
 frost$core$String$Index local1;
@@ -562,7 +567,7 @@ _9 = (frost$core$Bit) {_8};
 _11 = _9.value;
 if (_11) goto block2; else goto block3;
 block2:;
-_13 = (frost$core$String**) (param0->$data + 0);
+_13 = &param0->$data.$FIELD.field0;
 _14 = *_13;
 *(&local0) = ((frost$core$String*) NULL);
 _16 = ((frost$core$Object*) _14);
@@ -571,7 +576,7 @@ _18 = *(&local0);
 _19 = ((frost$core$Object*) _18);
 frost$core$Frost$unref$frost$core$Object$Q(_19);
 *(&local0) = _14;
-_22 = (frost$core$String$Index*) (param0->$data + 8);
+_22 = &param0->$data.$FIELD.field1;
 _23 = *_22;
 *(&local1) = _23;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/json/JSON.frost:43
@@ -592,7 +597,7 @@ _35 = _33 ^ _34;
 _36 = (frost$core$Int) {_35};
 _38 = *(&local1);
 frost$core$String$Index$wrapper* $tmp8;
-$tmp8 = (frost$core$String$Index$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$String$Index$wrapperclass);
+$tmp8 = (frost$core$String$Index$wrapper*) frostObjectAlloc(sizeof(frost$core$String$Index$wrapper), (frost$core$Class*) &frost$core$String$Index$wrapperclass);
 $tmp8->value = _38;
 _39 = ((frost$collections$HashKey*) $tmp8);
 ITable* $tmp9 = _39->$class->itable;
@@ -625,17 +630,17 @@ _62 = (frost$core$Bit) {_61};
 _64 = _62.value;
 if (_64) goto block7; else goto block8;
 block7:;
-_66 = (frost$core$Int*) (param0->$data + 0);
+_66 = &param0->$data.$INDEX.field0;
 _67 = *_66;
 *(&local2) = _67;
-_69 = (frost$core$String$Index*) (param0->$data + 8);
+_69 = &param0->$data.$INDEX.field1;
 _70 = *_69;
 *(&local3) = _70;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/json/JSON.frost:43
 _73 = (frost$core$Int) {9815784822884780186u};
 _74 = *(&local2);
 frost$core$Int$wrapper* $tmp10;
-$tmp10 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp10 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp10->value = _74;
 _75 = ((frost$collections$HashKey*) $tmp10);
 ITable* $tmp11 = _75->$class->itable;
@@ -652,7 +657,7 @@ _82 = _80 ^ _81;
 _83 = (frost$core$Int) {_82};
 _85 = *(&local3);
 frost$core$String$Index$wrapper* $tmp12;
-$tmp12 = (frost$core$String$Index$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$String$Index$wrapperclass);
+$tmp12 = (frost$core$String$Index$wrapper*) frostObjectAlloc(sizeof(frost$core$String$Index$wrapper), (frost$core$Class*) &frost$core$String$Index$wrapperclass);
 $tmp12->value = _85;
 _86 = ((frost$collections$HashKey*) $tmp12);
 ITable* $tmp13 = _86->$class->itable;
@@ -682,7 +687,8 @@ goto block12;
 block12:;
 
 }
-frost$core$String* frost$json$JSON$PathKey$get_asString$R$frost$core$String(frost$json$JSON$PathKey* param0) {
+frost$core$String* frost$json$JSON$PathKey$get_asString$R$frost$core$String(void* rawSelf) {
+frost$json$JSON$PathKey* param0 = (frost$json$JSON$PathKey*) rawSelf;
 
 frost$core$String* local0 = NULL;
 frost$core$String$Index local1;
@@ -772,7 +778,7 @@ _9 = (frost$core$Bit) {_8};
 _11 = _9.value;
 if (_11) goto block2; else goto block3;
 block2:;
-_13 = (frost$core$String**) (param0->$data + 0);
+_13 = &param0->$data.$FIELD.field0;
 _14 = *_13;
 *(&local0) = ((frost$core$String*) NULL);
 _16 = ((frost$core$Object*) _14);
@@ -781,7 +787,7 @@ _18 = *(&local0);
 _19 = ((frost$core$Object*) _18);
 frost$core$Frost$unref$frost$core$Object$Q(_19);
 *(&local0) = _14;
-_22 = (frost$core$String$Index*) (param0->$data + 8);
+_22 = &param0->$data.$FIELD.field1;
 _23 = *_22;
 *(&local1) = _23;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/json/JSON.frost:43
@@ -790,7 +796,7 @@ _27 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(&$s18, _26);
 _28 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_27, &$s19);
 _29 = *(&local1);
 frost$core$String$Index$wrapper* $tmp20;
-$tmp20 = (frost$core$String$Index$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$String$Index$wrapperclass);
+$tmp20 = (frost$core$String$Index$wrapper*) frostObjectAlloc(sizeof(frost$core$String$Index$wrapper), (frost$core$Class*) &frost$core$String$Index$wrapperclass);
 $tmp20->value = _29;
 _30 = ((frost$core$Object*) $tmp20);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from JSON.frost:43:5
@@ -833,16 +839,16 @@ _67 = (frost$core$Bit) {_66};
 _69 = _67.value;
 if (_69) goto block6; else goto block7;
 block6:;
-_71 = (frost$core$Int*) (param0->$data + 0);
+_71 = &param0->$data.$INDEX.field0;
 _72 = *_71;
 *(&local2) = _72;
-_74 = (frost$core$String$Index*) (param0->$data + 8);
+_74 = &param0->$data.$INDEX.field1;
 _75 = *_74;
 *(&local3) = _75;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/json/JSON.frost:43
 _78 = *(&local2);
 frost$core$Int$wrapper* $tmp23;
-$tmp23 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp23 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp23->value = _78;
 _79 = ((frost$core$Object*) $tmp23);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from JSON.frost:43:5
@@ -859,7 +865,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_89);
 _92 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_84, &$s26);
 _93 = *(&local3);
 frost$core$String$Index$wrapper* $tmp27;
-$tmp27 = (frost$core$String$Index$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$String$Index$wrapperclass);
+$tmp27 = (frost$core$String$Index$wrapper*) frostObjectAlloc(sizeof(frost$core$String$Index$wrapper), (frost$core$Class*) &frost$core$String$Index$wrapperclass);
 $tmp27->value = _93;
 _94 = ((frost$core$Object*) $tmp27);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from JSON.frost:43:5

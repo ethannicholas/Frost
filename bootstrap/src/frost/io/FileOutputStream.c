@@ -14,7 +14,8 @@ frost$io$FileOutputStream$class_type frost$io$FileOutputStream$class = { (frost$
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x69\x6f\x2e\x46\x69\x6c\x65\x4f\x75\x74\x70\x75\x74\x53\x74\x72\x65\x61\x6d", 25, 5640649218337482570, NULL };
 
-void frost$io$FileOutputStream$init(frost$io$FileOutputStream* param0) {
+void frost$io$FileOutputStream$init(void* rawSelf) {
+frost$io$FileOutputStream* param0 = (frost$io$FileOutputStream*) rawSelf;
 
 frost$io$OutputStream* _1;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/FileOutputStream.frost:15
@@ -23,7 +24,8 @@ frost$io$OutputStream$init(_1);
 return;
 
 }
-void frost$io$FileOutputStream$cleanup(frost$io$FileOutputStream* param0) {
+void frost$io$FileOutputStream$cleanup(void* rawSelf) {
+frost$io$FileOutputStream* param0 = (frost$io$FileOutputStream*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 frost$core$Bit* _1;

@@ -35,7 +35,8 @@ static frost$core$String $s18 = { (frost$core$Class*) &frost$core$String$class, 
 static frost$core$String $s19 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2c\x20\x62\x75\x74\x20\x66\x6f\x75\x6e\x64\x20", 12, 3820956024483964812, NULL };
 static frost$core$String $s21 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x43\x6f\x6d\x70\x69\x6c\x65\x72\x2e\x66\x72\x6f\x73\x74", 14, -1909310572556369220, NULL };
 
-void org$frostlang$frostc$Compiler$AutoContext$init$org$frostlang$frostc$Compiler$org$frostlang$frostc$Compiler$EnclosingContext(org$frostlang$frostc$Compiler$AutoContext* param0, org$frostlang$frostc$Compiler* param1, org$frostlang$frostc$Compiler$EnclosingContext* param2) {
+void org$frostlang$frostc$Compiler$AutoContext$init$org$frostlang$frostc$Compiler$org$frostlang$frostc$Compiler$EnclosingContext(void* rawSelf, org$frostlang$frostc$Compiler* param1, org$frostlang$frostc$Compiler$EnclosingContext* param2) {
+org$frostlang$frostc$Compiler$AutoContext* param0 = (org$frostlang$frostc$Compiler$AutoContext*) rawSelf;
 
 frost$core$Object* _1;
 org$frostlang$frostc$Compiler** _3;
@@ -88,7 +89,8 @@ frost$collections$Array$add$frost$collections$Array$T(_27, _28);
 return;
 
 }
-void org$frostlang$frostc$Compiler$AutoContext$cleanup(org$frostlang$frostc$Compiler$AutoContext* param0) {
+void org$frostlang$frostc$Compiler$AutoContext$cleanup(void* rawSelf) {
+org$frostlang$frostc$Compiler$AutoContext* param0 = (org$frostlang$frostc$Compiler$AutoContext*) rawSelf;
 
 org$frostlang$frostc$Compiler** _1;
 org$frostlang$frostc$Compiler* _2;

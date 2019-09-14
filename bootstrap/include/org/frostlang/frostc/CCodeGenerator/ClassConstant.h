@@ -4,6 +4,6 @@
 typedef struct org$frostlang$frostc$CCodeGenerator$ClassConstant org$frostlang$frostc$CCodeGenerator$ClassConstant;
 typedef struct frost$core$String frost$core$String;
 
-void org$frostlang$frostc$CCodeGenerator$ClassConstant$init$frost$core$String$frost$core$String(org$frostlang$frostc$CCodeGenerator$ClassConstant* self, frost$core$String* p_name, frost$core$String* p_type);
-void org$frostlang$frostc$CCodeGenerator$ClassConstant$cleanup(org$frostlang$frostc$CCodeGenerator$ClassConstant* self);
+void org$frostlang$frostc$CCodeGenerator$ClassConstant$init$frost$core$String$frost$core$String(void* rawSelf, frost$core$String* p_name, frost$core$String* p_type);
+void org$frostlang$frostc$CCodeGenerator$ClassConstant$cleanup(void* rawSelf);
 

@@ -7,7 +7,14 @@ typedef struct frost$core$Class frost$core$Class;
 
 typedef struct org$frostlang$frostc$MethodDecl$Kind {
     frost$core$Int $rawValue;
-    int8_t $data[0];
+    union {
+        struct {
+        } $METHOD;
+        struct {
+        } $FUNCTION;
+        struct {
+        } $INIT;
+    } $data;
 } org$frostlang$frostc$MethodDecl$Kind;
 #include "frost/core/Class.h"
 typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[5]; } org$frostlang$frostc$MethodDecl$Kind$class_type;

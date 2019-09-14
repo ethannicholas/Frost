@@ -8,6 +8,6 @@ typedef struct org$frostlang$frostc$FixedArray org$frostlang$frostc$FixedArray;
 typedef struct org$frostlang$frostc$statement$If org$frostlang$frostc$statement$If;
 
 void org$frostlang$frostc$statement$If$compile$org$frostlang$frostc$Compiler$org$frostlang$frostc$Position$org$frostlang$frostc$ASTNode$org$frostlang$frostc$FixedArray$LTorg$frostlang$frostc$ASTNode$GT$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$Compiler* p_compiler, org$frostlang$frostc$Position p_position, org$frostlang$frostc$ASTNode* p_test, org$frostlang$frostc$FixedArray* p_ifTrue, org$frostlang$frostc$ASTNode* p_ifFalse);
-void org$frostlang$frostc$statement$If$init(org$frostlang$frostc$statement$If* self);
-void org$frostlang$frostc$statement$If$cleanup(org$frostlang$frostc$statement$If* self);
+void org$frostlang$frostc$statement$If$init(void* rawSelf);
+void org$frostlang$frostc$statement$If$cleanup(void* rawSelf);
 

@@ -36,7 +36,8 @@ static frost$core$String $s11 = { (frost$core$Class*) &frost$core$String$class, 
 static frost$core$String $s12 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x49\x64\x65\x6e\x74\x69\x74\x79\x4d\x61\x70\x2e\x66\x72\x6f\x73\x74", 17, 589017117629395195, NULL };
 static frost$core$String $s13 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x49\x64\x65\x6e\x74\x69\x74\x79\x4d\x61\x70\x2e\x45\x6e\x74\x72\x79\x3c\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x49\x64\x65\x6e\x74\x69\x74\x79\x4d\x61\x70\x2e\x45\x6e\x74\x72\x79\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x4b\x2c\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x49\x64\x65\x6e\x74\x69\x74\x79\x4d\x61\x70\x2e\x45\x6e\x74\x72\x79\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x56\x3e\x3f\x20\x74\x6f\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x49\x64\x65\x6e\x74\x69\x74\x79\x4d\x61\x70\x2e\x45\x6e\x74\x72\x79", 203, -4286683860171238074, NULL };
 
-void frost$collections$IdentityMap$EntryIterator$init$frost$collections$IdentityMap$LTfrost$collections$IdentityMap$EntryIterator$K$Cfrost$collections$IdentityMap$EntryIterator$V$GT(frost$collections$IdentityMap$EntryIterator* param0, frost$collections$IdentityMap* param1) {
+void frost$collections$IdentityMap$EntryIterator$init$frost$collections$IdentityMap$LTfrost$collections$IdentityMap$EntryIterator$K$Cfrost$collections$IdentityMap$EntryIterator$V$GT(void* rawSelf, frost$collections$IdentityMap* param1) {
+frost$collections$IdentityMap$EntryIterator* param0 = (frost$collections$IdentityMap$EntryIterator*) rawSelf;
 
 frost$collections$IdentityMap$EntryIterator* _1;
 frost$core$Int _2;
@@ -221,7 +222,8 @@ block6:;
 return;
 
 }
-frost$core$Bit frost$collections$IdentityMap$EntryIterator$get_done$R$frost$core$Bit(frost$collections$IdentityMap$EntryIterator* param0) {
+frost$core$Bit frost$collections$IdentityMap$EntryIterator$get_done$R$frost$core$Bit(void* rawSelf) {
+frost$collections$IdentityMap$EntryIterator* param0 = (frost$collections$IdentityMap$EntryIterator*) rawSelf;
 
 frost$core$Bit local0;
 frost$collections$IdentityMap$EntryIterator* _1;
@@ -278,7 +280,8 @@ _28 = *(&local0);
 return _28;
 
 }
-frost$core$Tuple2* frost$collections$IdentityMap$EntryIterator$next$R$$LPfrost$collections$IdentityMap$EntryIterator$K$Cfrost$collections$IdentityMap$EntryIterator$V$RP(frost$collections$IdentityMap$EntryIterator* param0) {
+frost$core$Tuple2* frost$collections$IdentityMap$EntryIterator$next$R$$LPfrost$collections$IdentityMap$EntryIterator$K$Cfrost$collections$IdentityMap$EntryIterator$V$RP(void* rawSelf) {
+frost$collections$IdentityMap$EntryIterator* param0 = (frost$collections$IdentityMap$EntryIterator*) rawSelf;
 
 frost$collections$IdentityMap$Entry* local0 = NULL;
 frost$collections$Iterator* _0;
@@ -571,8 +574,7 @@ _142 = &_122->entry;
 goto block10;
 block12:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/IdentityMap.frost:68
-FROST_ASSERT(32 == sizeof(frost$core$Tuple2));
-_146 = (frost$core$Tuple2*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$Tuple2$class);
+_146 = (frost$core$Tuple2*) frostObjectAlloc(sizeof(frost$core$Tuple2), (frost$core$Class*) &frost$core$Tuple2$class);
 _147 = _146;
 _148 = *(&local0);
 _149 = _148 != NULL;
@@ -617,7 +619,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_181);
 return _175;
 
 }
-void frost$collections$IdentityMap$EntryIterator$cleanup(frost$collections$IdentityMap$EntryIterator* param0) {
+void frost$collections$IdentityMap$EntryIterator$cleanup(void* rawSelf) {
+frost$collections$IdentityMap$EntryIterator* param0 = (frost$collections$IdentityMap$EntryIterator*) rawSelf;
 
 frost$core$Object* _1;
 frost$collections$IdentityMap$EntryIterator* _3;

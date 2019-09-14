@@ -28,7 +28,8 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 static frost$core$String $s4 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x74\x72\x69\x6e\x67\x2e\x66\x72\x6f\x73\x74", 12, 7542466198510074048, NULL };
 static frost$core$String $s5 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x52\x65\x67\x65\x78\x4d\x61\x74\x63\x68\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x6e\x65\x78\x74\x28\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x4d\x61\x74\x63\x68", 99, 4799945088653928830, NULL };
 
-void frost$core$String$RegexMatchIterator$init$frost$core$String$frost$core$RegularExpression$frost$core$Bit(frost$core$String$RegexMatchIterator* param0, frost$core$String* param1, frost$core$RegularExpression* param2, frost$core$Bit param3) {
+void frost$core$String$RegexMatchIterator$init$frost$core$String$frost$core$RegularExpression$frost$core$Bit(void* rawSelf, frost$core$String* param1, frost$core$RegularExpression* param2, frost$core$Bit param3) {
+frost$core$String$RegexMatchIterator* param0 = (frost$core$String$RegexMatchIterator*) rawSelf;
 
 frost$core$Object* _1;
 frost$core$String** _3;
@@ -80,7 +81,8 @@ _28 = &param0->found;
 return;
 
 }
-frost$core$Bit frost$core$String$RegexMatchIterator$get_done$R$frost$core$Bit(frost$core$String$RegexMatchIterator* param0) {
+frost$core$Bit frost$core$String$RegexMatchIterator$get_done$R$frost$core$Bit(void* rawSelf) {
+frost$core$String$RegexMatchIterator* param0 = (frost$core$String$RegexMatchIterator*) rawSelf;
 
 frost$core$Bit* _1;
 frost$core$Bit _2;
@@ -98,7 +100,8 @@ _7 = (frost$core$Bit) {_6};
 return _7;
 
 }
-frost$core$String$Match* frost$core$String$RegexMatchIterator$next$R$frost$core$String$Match(frost$core$String$RegexMatchIterator* param0) {
+frost$core$String$Match* frost$core$String$RegexMatchIterator$next$R$frost$core$String$Match(void* rawSelf) {
+frost$core$String$RegexMatchIterator* param0 = (frost$core$String$RegexMatchIterator*) rawSelf;
 
 frost$core$String$Match* local0 = NULL;
 frost$core$String$Index local1;
@@ -162,8 +165,7 @@ frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$St
 abort(); // unreachable
 block1:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:308
-FROST_ASSERT(40 == sizeof(frost$core$String$Match));
-_15 = (frost$core$String$Match*) frostObjectAlloc(40, (frost$core$Class*) &frost$core$String$Match$class);
+_15 = (frost$core$String$Match*) frostObjectAlloc(sizeof(frost$core$String$Match), (frost$core$Class*) &frost$core$String$Match$class);
 _16 = &param0->matcher;
 _17 = *_16;
 frost$core$String$Match$init$frost$core$Matcher(_15, _17);
@@ -229,7 +231,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_73);
 return _69;
 
 }
-void frost$core$String$RegexMatchIterator$cleanup(frost$core$String$RegexMatchIterator* param0) {
+void frost$core$String$RegexMatchIterator$cleanup(void* rawSelf) {
+frost$core$String$RegexMatchIterator* param0 = (frost$core$String$RegexMatchIterator*) rawSelf;
 
 frost$core$Object* _1;
 frost$core$Matcher** _3;

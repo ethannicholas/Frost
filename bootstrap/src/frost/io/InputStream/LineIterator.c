@@ -34,7 +34,8 @@ static frost$core$String $s9 = { (frost$core$Class*) &frost$core$String$class, -
 static frost$core$String $s11 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x49\x6e\x70\x75\x74\x53\x74\x72\x65\x61\x6d\x2e\x66\x72\x6f\x73\x74", 17, -3551496725332018301, NULL };
 static frost$core$String $s12 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x3f\x20\x74\x6f\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67", 73, -3541275370151069987, NULL };
 
-void frost$io$InputStream$LineIterator$init$frost$io$InputStream(frost$io$InputStream$LineIterator* param0, frost$io$InputStream* param1) {
+void frost$io$InputStream$LineIterator$init$frost$io$InputStream(void* rawSelf, frost$io$InputStream* param1) {
+frost$io$InputStream$LineIterator* param0 = (frost$io$InputStream$LineIterator*) rawSelf;
 
 frost$core$Object* _1;
 frost$io$InputStream** _3;
@@ -57,7 +58,8 @@ _10(param0);
 return;
 
 }
-frost$core$Bit frost$io$InputStream$LineIterator$get_done$R$frost$core$Bit(frost$io$InputStream$LineIterator* param0) {
+frost$core$Bit frost$io$InputStream$LineIterator$get_done$R$frost$core$Bit(void* rawSelf) {
+frost$io$InputStream$LineIterator* param0 = (frost$io$InputStream$LineIterator*) rawSelf;
 
 frost$core$String** _1;
 frost$core$String* _2;
@@ -71,7 +73,8 @@ _4 = (frost$core$Bit) {_3};
 return _4;
 
 }
-frost$core$String* frost$io$InputStream$LineIterator$next$R$frost$core$String(frost$io$InputStream$LineIterator* param0) {
+frost$core$String* frost$io$InputStream$LineIterator$next$R$frost$core$String(void* rawSelf) {
+frost$io$InputStream$LineIterator* param0 = (frost$io$InputStream$LineIterator*) rawSelf;
 
 frost$core$String* local0 = NULL;
 frost$collections$Iterator* _0;
@@ -168,7 +171,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_50);
 return _46;
 
 }
-void frost$io$InputStream$LineIterator$readNext(frost$io$InputStream$LineIterator* param0) {
+void frost$io$InputStream$LineIterator$readNext(void* rawSelf) {
+frost$io$InputStream$LineIterator* param0 = (frost$io$InputStream$LineIterator*) rawSelf;
 
 frost$io$InputStream** _1;
 frost$io$InputStream* _2;
@@ -198,7 +202,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_13);
 return;
 
 }
-void frost$io$InputStream$LineIterator$cleanup(frost$io$InputStream$LineIterator* param0) {
+void frost$io$InputStream$LineIterator$cleanup(void* rawSelf) {
+frost$io$InputStream$LineIterator* param0 = (frost$io$InputStream$LineIterator*) rawSelf;
 
 frost$core$Object* _1;
 frost$io$InputStream** _3;

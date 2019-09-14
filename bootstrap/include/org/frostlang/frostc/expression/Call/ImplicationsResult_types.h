@@ -7,7 +7,14 @@ typedef struct frost$core$Class frost$core$Class;
 
 typedef struct org$frostlang$frostc$expression$Call$ImplicationsResult {
     frost$core$Int $rawValue;
-    int8_t $data[0];
+    union {
+        struct {
+        } $UPDATED;
+        struct {
+        } $NOT_UPDATED;
+        struct {
+        } $FAILED;
+    } $data;
 } org$frostlang$frostc$expression$Call$ImplicationsResult;
 #include "frost/core/Class.h"
 typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[5]; } org$frostlang$frostc$expression$Call$ImplicationsResult$class_type;

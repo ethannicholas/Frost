@@ -21,7 +21,8 @@ org$frostlang$frostc$Compiler$Settings$class_type org$frostlang$frostc$Compiler$
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x43\x6f\x6d\x70\x69\x6c\x65\x72\x2e\x53\x65\x74\x74\x69\x6e\x67\x73", 38, 7720244119815717860, NULL };
 
-void org$frostlang$frostc$Compiler$Settings$init$frost$io$File$frost$collections$ListView$LTfrost$io$File$GT$frost$core$Int$frost$core$Int$frost$core$Bit(org$frostlang$frostc$Compiler$Settings* param0, frost$io$File* param1, frost$collections$ListView* param2, frost$core$Int param3, frost$core$Int param4, frost$core$Bit param5) {
+void org$frostlang$frostc$Compiler$Settings$init$frost$io$File$frost$collections$ListView$LTfrost$io$File$GT$frost$core$Int$frost$core$Int$frost$core$Bit(void* rawSelf, frost$io$File* param1, frost$collections$ListView* param2, frost$core$Int param3, frost$core$Int param4, frost$core$Bit param5) {
+org$frostlang$frostc$Compiler$Settings* param0 = (org$frostlang$frostc$Compiler$Settings*) rawSelf;
 
 frost$core$Int _1;
 frost$core$Int* _2;
@@ -56,8 +57,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_9);
 _11 = &param0->frostHome;
 *_11 = param1;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:250
-FROST_ASSERT(40 == sizeof(frost$collections$ImmutableArray));
-_14 = (frost$collections$ImmutableArray*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$ImmutableArray$class);
+_14 = (frost$collections$ImmutableArray*) frostObjectAlloc(sizeof(frost$collections$ImmutableArray), (frost$core$Class*) &frost$collections$ImmutableArray$class);
 _15 = _14;
 _16 = param2;
 frost$collections$ImmutableArray$init$frost$collections$ListView$LTfrost$collections$ImmutableArray$T$GT(_15, _16);
@@ -83,7 +83,8 @@ _35 = &param0->debug;
 return;
 
 }
-void org$frostlang$frostc$Compiler$Settings$cleanup(org$frostlang$frostc$Compiler$Settings* param0) {
+void org$frostlang$frostc$Compiler$Settings$cleanup(void* rawSelf) {
+org$frostlang$frostc$Compiler$Settings* param0 = (org$frostlang$frostc$Compiler$Settings*) rawSelf;
 
 frost$core$Immutable* _1;
 frost$io$File** _3;

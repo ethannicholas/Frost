@@ -46,7 +46,8 @@ static frost$core$String $s25 = { (frost$core$Class*) &frost$core$String$class, 
 static frost$core$String $s26 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x2a\x28\x63\x6f\x75\x6e\x74\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67", 93, -6936278265055109166, NULL };
 static frost$core$String $s27 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x20", 1, -5808626142386486913, NULL };
 
-void frost$io$IndentedOutputStream$init$frost$io$OutputStream(frost$io$IndentedOutputStream* param0, frost$io$OutputStream* param1) {
+void frost$io$IndentedOutputStream$init$frost$io$OutputStream(void* rawSelf, frost$io$OutputStream* param1) {
+frost$io$IndentedOutputStream* param0 = (frost$io$IndentedOutputStream*) rawSelf;
 
 frost$core$Int _1;
 frost$core$Int* _2;
@@ -101,7 +102,8 @@ frost$io$OutputStream$init(_31);
 return;
 
 }
-frost$core$Error* frost$io$IndentedOutputStream$write$frost$core$UInt8$R$frost$core$Error$Q(frost$io$IndentedOutputStream* param0, frost$core$UInt8 param1) {
+frost$core$Error* frost$io$IndentedOutputStream$write$frost$core$UInt8$R$frost$core$Error$Q(void* rawSelf, frost$core$UInt8 param1) {
+frost$io$IndentedOutputStream* param0 = (frost$io$IndentedOutputStream*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 frost$core$UInt8 _3;
@@ -246,7 +248,8 @@ goto block15;
 block15:;
 
 }
-frost$core$Error* frost$io$IndentedOutputStream$write$frost$unsafe$Pointer$LTfrost$core$UInt8$GT$frost$core$Int$R$frost$core$Error$Q(frost$io$IndentedOutputStream* param0, frost$core$UInt8* param1, frost$core$Int param2) {
+frost$core$Error* frost$io$IndentedOutputStream$write$frost$unsafe$Pointer$LTfrost$core$UInt8$GT$frost$core$Int$R$frost$core$Error$Q(void* rawSelf, frost$core$UInt8* param1, frost$core$Int param2) {
+frost$io$IndentedOutputStream* param0 = (frost$io$IndentedOutputStream*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 frost$core$Int local1;
@@ -600,7 +603,8 @@ goto block28;
 block28:;
 
 }
-frost$core$Error* frost$io$IndentedOutputStream$indentIfNeeded$R$frost$core$Error$Q(frost$io$IndentedOutputStream* param0) {
+frost$core$Error* frost$io$IndentedOutputStream$indentIfNeeded$R$frost$core$Error$Q(void* rawSelf) {
+frost$io$IndentedOutputStream* param0 = (frost$io$IndentedOutputStream*) rawSelf;
 
 frost$core$MutableString* local0 = NULL;
 frost$core$Int local1;
@@ -757,8 +761,7 @@ frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$St
 abort(); // unreachable
 block6:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:568
-FROST_ASSERT(48 == sizeof(frost$core$MutableString));
-_49 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
+_49 = (frost$core$MutableString*) frostObjectAlloc(sizeof(frost$core$MutableString), (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init(_49);
 *(&local0) = ((frost$core$MutableString*) NULL);
 _52 = ((frost$core$Object*) _49);
@@ -867,7 +870,8 @@ frost$core$Frost$ref$frost$core$Object$Q(_146);
 return ((frost$core$Error*) NULL);
 
 }
-void frost$io$IndentedOutputStream$cleanup(frost$io$IndentedOutputStream* param0) {
+void frost$io$IndentedOutputStream$cleanup(void* rawSelf) {
+frost$io$IndentedOutputStream* param0 = (frost$io$IndentedOutputStream*) rawSelf;
 
 frost$io$OutputStream* _1;
 frost$core$String** _3;

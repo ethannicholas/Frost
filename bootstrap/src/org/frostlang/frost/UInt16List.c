@@ -18,7 +18,7 @@ __attribute__((weak)) frost$core$Object* org$frostlang$frost$UInt16List$$IDX$fro
     frost$core$UInt16 result = org$frostlang$frost$UInt16List$$IDX$frost$core$Int$R$frost$core$UInt16(p0, p1);
 
     frost$core$UInt16$wrapper* $tmp2;
-    $tmp2 = (frost$core$UInt16$wrapper*) frostObjectAlloc(18, (frost$core$Class*) &frost$core$UInt16$wrapperclass);
+    $tmp2 = (frost$core$UInt16$wrapper*) frostObjectAlloc(sizeof(frost$core$UInt16$wrapper), (frost$core$Class*) &frost$core$UInt16$wrapperclass);
     $tmp2->value = result;
     return ((frost$core$Object*) $tmp2);
 }
@@ -52,7 +52,8 @@ static frost$core$String $s9 = { (frost$core$Class*) &frost$core$String$class, -
 static frost$core$String $s10 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x5b", 1, -5808493101479473382, NULL };
 static frost$core$String $s11 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x5d", 1, -5808499698549242648, NULL };
 
-void org$frostlang$frost$UInt16List$init$frost$core$SteppedRange$LTfrost$core$UInt16$Cfrost$core$UInt16$GT(org$frostlang$frost$UInt16List* param0, frost$core$SteppedRange$LTfrost$core$UInt16$Cfrost$core$UInt16$GT param1) {
+void org$frostlang$frost$UInt16List$init$frost$core$SteppedRange$LTfrost$core$UInt16$Cfrost$core$UInt16$GT(void* rawSelf, frost$core$SteppedRange$LTfrost$core$UInt16$Cfrost$core$UInt16$GT param1) {
+org$frostlang$frost$UInt16List* param0 = (org$frostlang$frost$UInt16List*) rawSelf;
 
 frost$core$SteppedRange$LTfrost$core$UInt16$Cfrost$core$UInt16$GT* _1;
 frost$core$Int _4;
@@ -348,7 +349,8 @@ goto block19;
 block19:;
 
 }
-frost$core$Int org$frostlang$frost$UInt16List$get_count$R$frost$core$Int(org$frostlang$frost$UInt16List* param0) {
+frost$core$Int org$frostlang$frost$UInt16List$get_count$R$frost$core$Int(void* rawSelf) {
+org$frostlang$frost$UInt16List* param0 = (org$frostlang$frost$UInt16List*) rawSelf;
 
 frost$core$Int* _1;
 frost$core$Int _2;
@@ -358,7 +360,8 @@ _2 = *_1;
 return _2;
 
 }
-frost$core$UInt16 org$frostlang$frost$UInt16List$$IDX$frost$core$Int$R$frost$core$UInt16(org$frostlang$frost$UInt16List* param0, frost$core$Int param1) {
+frost$core$UInt16 org$frostlang$frost$UInt16List$$IDX$frost$core$Int$R$frost$core$UInt16(void* rawSelf, frost$core$Int param1) {
+org$frostlang$frost$UInt16List* param0 = (org$frostlang$frost$UInt16List*) rawSelf;
 
 frost$core$Int _0;
 int64_t _1;
@@ -455,7 +458,8 @@ _47 = (frost$core$UInt16) {_46};
 return _47;
 
 }
-frost$core$String* org$frostlang$frost$UInt16List$get_asString$R$frost$core$String(org$frostlang$frost$UInt16List* param0) {
+frost$core$String* org$frostlang$frost$UInt16List$get_asString$R$frost$core$String(void* rawSelf) {
+org$frostlang$frost$UInt16List* param0 = (org$frostlang$frost$UInt16List*) rawSelf;
 
 frost$collections$CollectionView* _1;
 $fn7 _2;
@@ -487,7 +491,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_12);
 return _5;
 
 }
-void org$frostlang$frost$UInt16List$cleanup(org$frostlang$frost$UInt16List* param0) {
+void org$frostlang$frost$UInt16List$cleanup(void* rawSelf) {
+org$frostlang$frost$UInt16List* param0 = (org$frostlang$frost$UInt16List*) rawSelf;
 
 frost$core$Object* _1;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/frost/UInt16List.frost:8

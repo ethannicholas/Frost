@@ -32,7 +32,8 @@ static frost$core$String $s9 = { (frost$core$Class*) &frost$core$String$class, -
 static frost$core$String $s10 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x4d\x65\x73\x73\x61\x67\x65\x51\x75\x65\x75\x65\x2e\x66\x72\x6f\x73\x74", 18, 2720112594057563771, NULL };
 static frost$core$String $s11 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x66\x72\x6f\x73\x74\x2e\x74\x68\x72\x65\x61\x64\x73\x2e\x4d\x65\x73\x73\x61\x67\x65\x51\x75\x65\x75\x65\x2e\x4d\x65\x73\x73\x61\x67\x65\x3c\x66\x72\x6f\x73\x74\x2e\x74\x68\x72\x65\x61\x64\x73\x2e\x4d\x65\x73\x73\x61\x67\x65\x51\x75\x65\x75\x65\x2e\x54\x3e\x3f\x20\x74\x6f\x20\x66\x72\x6f\x73\x74\x2e\x74\x68\x72\x65\x61\x64\x73\x2e\x4d\x65\x73\x73\x61\x67\x65\x51\x75\x65\x75\x65\x2e\x4d\x65\x73\x73\x61\x67\x65", 137, 803317612360616006, NULL };
 
-void frost$threads$MessageQueue$post$frost$threads$MessageQueue$T(frost$threads$MessageQueue* param0, frost$core$Immutable* param1) {
+void frost$threads$MessageQueue$post$frost$threads$MessageQueue$T(void* rawSelf, frost$core$Immutable* param1) {
+frost$threads$MessageQueue* param0 = (frost$threads$MessageQueue*) rawSelf;
 
 frost$threads$ScopedLock* local0 = NULL;
 frost$threads$ScopedLock* _1;
@@ -137,8 +138,7 @@ frost$threads$Notifier* _150;
 frost$threads$ScopedLock* _152;
 frost$core$Object* _153;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/threads/MessageQueue.frost:52
-FROST_ASSERT(24 == sizeof(frost$threads$ScopedLock));
-_1 = (frost$threads$ScopedLock*) frostObjectAlloc(24, (frost$core$Class*) &frost$threads$ScopedLock$class);
+_1 = (frost$threads$ScopedLock*) frostObjectAlloc(sizeof(frost$threads$ScopedLock), (frost$core$Class*) &frost$threads$ScopedLock$class);
 _2 = param0;
 _3 = &_2->lock;
 _4 = *_3;
@@ -188,8 +188,7 @@ frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$St
 abort(); // unreachable
 block6:;
 _45 = _37;
-FROST_ASSERT(32 == sizeof(frost$threads$MessageQueue$Message));
-_46 = (frost$threads$MessageQueue$Message*) frostObjectAlloc(32, (frost$core$Class*) &frost$threads$MessageQueue$Message$class);
+_46 = (frost$threads$MessageQueue$Message*) frostObjectAlloc(sizeof(frost$threads$MessageQueue$Message), (frost$core$Class*) &frost$threads$MessageQueue$Message$class);
 _47 = _46;
 _48 = param1;
 frost$threads$MessageQueue$Message$init$frost$threads$MessageQueue$Message$T(_47, _48);
@@ -254,8 +253,7 @@ abort(); // unreachable
 block11:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/threads/MessageQueue.frost:60
 _106 = param0;
-FROST_ASSERT(32 == sizeof(frost$threads$MessageQueue$Message));
-_107 = (frost$threads$MessageQueue$Message*) frostObjectAlloc(32, (frost$core$Class*) &frost$threads$MessageQueue$Message$class);
+_107 = (frost$threads$MessageQueue$Message*) frostObjectAlloc(sizeof(frost$threads$MessageQueue$Message), (frost$core$Class*) &frost$threads$MessageQueue$Message$class);
 _108 = _107;
 _109 = param1;
 frost$threads$MessageQueue$Message$init$frost$threads$MessageQueue$Message$T(_108, _109);
@@ -308,7 +306,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_153);
 return;
 
 }
-frost$core$Int frost$threads$MessageQueue$pendingMessages$R$frost$core$Int(frost$threads$MessageQueue* param0) {
+frost$core$Int frost$threads$MessageQueue$pendingMessages$R$frost$core$Int(void* rawSelf) {
+frost$threads$MessageQueue* param0 = (frost$threads$MessageQueue*) rawSelf;
 
 frost$threads$ScopedLock* local0 = NULL;
 frost$threads$ScopedLock* _1;
@@ -325,8 +324,7 @@ frost$core$Int _18;
 frost$threads$ScopedLock* _19;
 frost$core$Object* _20;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/threads/MessageQueue.frost:76
-FROST_ASSERT(24 == sizeof(frost$threads$ScopedLock));
-_1 = (frost$threads$ScopedLock*) frostObjectAlloc(24, (frost$core$Class*) &frost$threads$ScopedLock$class);
+_1 = (frost$threads$ScopedLock*) frostObjectAlloc(sizeof(frost$threads$ScopedLock), (frost$core$Class*) &frost$threads$ScopedLock$class);
 _2 = param0;
 _3 = &_2->lock;
 _4 = *_3;
@@ -351,7 +349,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_20);
 return _18;
 
 }
-frost$core$Bit frost$threads$MessageQueue$hasMessage$R$frost$core$Bit(frost$threads$MessageQueue* param0) {
+frost$core$Bit frost$threads$MessageQueue$hasMessage$R$frost$core$Bit(void* rawSelf) {
+frost$threads$MessageQueue* param0 = (frost$threads$MessageQueue*) rawSelf;
 
 frost$threads$ScopedLock* local0 = NULL;
 frost$threads$MessageQueue* _1;
@@ -375,8 +374,7 @@ frost$core$Bit _29;
 _1 = param0;
 // begin inline call to method frost.threads.MessageQueue.pendingMessages():frost.core.Int from MessageQueue.frost:89:31
 // /Users/ethannicholas/Dropbox/Frost/src/frost/threads/MessageQueue.frost:76
-FROST_ASSERT(24 == sizeof(frost$threads$ScopedLock));
-_4 = (frost$threads$ScopedLock*) frostObjectAlloc(24, (frost$core$Class*) &frost$threads$ScopedLock$class);
+_4 = (frost$threads$ScopedLock*) frostObjectAlloc(sizeof(frost$threads$ScopedLock), (frost$core$Class*) &frost$threads$ScopedLock$class);
 _5 = &_1->lock;
 _6 = *_5;
 frost$threads$ScopedLock$init$frost$threads$Lock(_4, _6);
@@ -404,7 +402,8 @@ _29 = (frost$core$Bit) {_28};
 return _29;
 
 }
-frost$core$Immutable* frost$threads$MessageQueue$getMessage$R$frost$threads$MessageQueue$T(frost$threads$MessageQueue* param0) {
+frost$core$Immutable* frost$threads$MessageQueue$getMessage$R$frost$threads$MessageQueue$T(void* rawSelf) {
+frost$threads$MessageQueue* param0 = (frost$threads$MessageQueue*) rawSelf;
 
 frost$threads$ScopedLock* local0 = NULL;
 frost$core$Immutable* local1 = NULL;
@@ -484,8 +483,7 @@ frost$core$Object* _111;
 frost$threads$ScopedLock* _114;
 frost$core$Object* _115;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/threads/MessageQueue.frost:99
-FROST_ASSERT(24 == sizeof(frost$threads$ScopedLock));
-_1 = (frost$threads$ScopedLock*) frostObjectAlloc(24, (frost$core$Class*) &frost$threads$ScopedLock$class);
+_1 = (frost$threads$ScopedLock*) frostObjectAlloc(sizeof(frost$threads$ScopedLock), (frost$core$Class*) &frost$threads$ScopedLock$class);
 _2 = param0;
 _3 = &_2->lock;
 _4 = *_3;
@@ -614,7 +612,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_115);
 return _107;
 
 }
-void frost$threads$MessageQueue$clear(frost$threads$MessageQueue* param0) {
+void frost$threads$MessageQueue$clear(void* rawSelf) {
+frost$threads$MessageQueue* param0 = (frost$threads$MessageQueue*) rawSelf;
 
 frost$threads$ScopedLock* local0 = NULL;
 frost$threads$MessageQueue* _2;
@@ -646,8 +645,7 @@ _2 = param0;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/threads/MessageQueue.frost:89
 // begin inline call to method frost.threads.MessageQueue.pendingMessages():frost.core.Int from MessageQueue.frost:89:31
 // /Users/ethannicholas/Dropbox/Frost/src/frost/threads/MessageQueue.frost:76
-FROST_ASSERT(24 == sizeof(frost$threads$ScopedLock));
-_7 = (frost$threads$ScopedLock*) frostObjectAlloc(24, (frost$core$Class*) &frost$threads$ScopedLock$class);
+_7 = (frost$threads$ScopedLock*) frostObjectAlloc(sizeof(frost$threads$ScopedLock), (frost$core$Class*) &frost$threads$ScopedLock$class);
 _8 = &_2->lock;
 _9 = *_8;
 frost$threads$ScopedLock$init$frost$threads$Lock(_7, _9);
@@ -685,7 +683,8 @@ block3:;
 return;
 
 }
-void frost$threads$MessageQueue$init(frost$threads$MessageQueue* param0) {
+void frost$threads$MessageQueue$init(void* rawSelf) {
+frost$threads$MessageQueue* param0 = (frost$threads$MessageQueue*) rawSelf;
 
 frost$threads$MessageQueue* _1;
 frost$threads$Lock* _2;
@@ -711,8 +710,7 @@ frost$core$Int _33;
 frost$core$Int* _34;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/threads/MessageQueue.frost:32
 _1 = param0;
-FROST_ASSERT(24 == sizeof(frost$threads$Lock));
-_2 = (frost$threads$Lock*) frostObjectAlloc(24, (frost$core$Class*) &frost$threads$Lock$class);
+_2 = (frost$threads$Lock*) frostObjectAlloc(sizeof(frost$threads$Lock), (frost$core$Class*) &frost$threads$Lock$class);
 frost$threads$Lock$init(_2);
 _4 = ((frost$core$Object*) _2);
 frost$core$Frost$ref$frost$core$Object$Q(_4);
@@ -726,8 +724,7 @@ _12 = ((frost$core$Object*) _2);
 frost$core$Frost$unref$frost$core$Object$Q(_12);
 // /Users/ethannicholas/Dropbox/Frost/src/frost/threads/MessageQueue.frost:35
 _15 = param0;
-FROST_ASSERT(32 == sizeof(frost$threads$Notifier));
-_16 = (frost$threads$Notifier*) frostObjectAlloc(32, (frost$core$Class*) &frost$threads$Notifier$class);
+_16 = (frost$threads$Notifier*) frostObjectAlloc(sizeof(frost$threads$Notifier), (frost$core$Class*) &frost$threads$Notifier$class);
 _17 = param0;
 _18 = &_17->lock;
 _19 = *_18;
@@ -750,7 +747,8 @@ _34 = &_32->count;
 return;
 
 }
-void frost$threads$MessageQueue$cleanup(frost$threads$MessageQueue* param0) {
+void frost$threads$MessageQueue$cleanup(void* rawSelf) {
+frost$threads$MessageQueue* param0 = (frost$threads$MessageQueue*) rawSelf;
 
 frost$core$Immutable* _1;
 frost$threads$MessageQueue* _3;

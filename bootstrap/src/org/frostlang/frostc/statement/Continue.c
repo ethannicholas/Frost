@@ -111,18 +111,17 @@ _35 = (frost$core$Bit) {_34};
 _37 = _35.value;
 if (_37) goto block6; else goto block7;
 block6:;
-_39 = (frost$core$String**) (_18->$data + 0);
+_39 = &_18->$data.$LOOP.field0;
 _40 = *_39;
-_41 = (org$frostlang$frostc$IR$Block$ID*) (_18->$data + 8);
+_41 = &_18->$data.$LOOP.field1;
 _42 = *_41;
-_43 = (org$frostlang$frostc$IR$Block$ID*) (_18->$data + 16);
+_43 = &_18->$data.$LOOP.field2;
 _44 = *_43;
 *(&local1) = _44;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/statement/Continue.frost:15
 _47 = &param0->ir;
 _48 = *_47;
-FROST_ASSERT(80 == sizeof(org$frostlang$frostc$IR$Statement));
-_49 = (org$frostlang$frostc$IR$Statement*) frostObjectAlloc(80, (frost$core$Class*) &org$frostlang$frostc$IR$Statement$class);
+_49 = (org$frostlang$frostc$IR$Statement*) frostObjectAlloc(sizeof(org$frostlang$frostc$IR$Statement), (frost$core$Class*) &org$frostlang$frostc$IR$Statement$class);
 _50 = (frost$core$Int) {1u};
 _51 = *(&local1);
 org$frostlang$frostc$IR$Statement$init$frost$core$Int$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Block$ID(_49, _50, param1, _51);
@@ -144,12 +143,14 @@ frost$core$Frost$unref$frost$core$Object$Q(_64);
 return;
 
 }
-void org$frostlang$frostc$statement$Continue$init(org$frostlang$frostc$statement$Continue* param0) {
+void org$frostlang$frostc$statement$Continue$init(void* rawSelf) {
+org$frostlang$frostc$statement$Continue* param0 = (org$frostlang$frostc$statement$Continue*) rawSelf;
 
 return;
 
 }
-void org$frostlang$frostc$statement$Continue$cleanup(org$frostlang$frostc$statement$Continue* param0) {
+void org$frostlang$frostc$statement$Continue$cleanup(void* rawSelf) {
+org$frostlang$frostc$statement$Continue* param0 = (org$frostlang$frostc$statement$Continue*) rawSelf;
 
 frost$core$Object* _1;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/statement/Continue.frost:8

@@ -28,14 +28,16 @@ static frost$core$String $s8 = { (frost$core$Class*) &frost$core$String$class, -
 static frost$core$String $s9 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x44\x46\x41\x2e\x66\x72\x6f\x73\x74", 9, -6532934594591490442, NULL };
 static frost$core$String $s10 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x72\x65\x74\x75\x72\x6e\x65\x64\x20\x66\x72\x6f\x6d\x20\x40\x6e\x6f\x52\x65\x74\x75\x72\x6e\x20\x6d\x65\x74\x68\x6f\x64", 30, 1170110763298107664, NULL };
 
-void org$frostlang$plex$runtime$DFA$init$frost$core$Int$frost$unsafe$Pointer$LTfrost$unsafe$Pointer$LTfrost$core$Int$GT$GT$frost$unsafe$Pointer$LTfrost$core$Int$GT(org$frostlang$plex$runtime$DFA* param0, frost$core$Int param1, frost$core$Int** param2, frost$core$Int* param3) {
+void org$frostlang$plex$runtime$DFA$init$frost$core$Int$frost$unsafe$Pointer$LTfrost$unsafe$Pointer$LTfrost$core$Int$GT$GT$frost$unsafe$Pointer$LTfrost$core$Int$GT(void* rawSelf, frost$core$Int param1, frost$core$Int** param2, frost$core$Int* param3) {
+org$frostlang$plex$runtime$DFA* param0 = (org$frostlang$plex$runtime$DFA*) rawSelf;
 
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/plex/runtime/DFA.frost:27
 org$frostlang$plex$runtime$DFA$init$frost$core$String$frost$core$Int$frost$unsafe$Pointer$LTfrost$unsafe$Pointer$LTfrost$core$Int$GT$GT$frost$unsafe$Pointer$LTfrost$core$Int$GT(param0, &$s2, param1, param2, param3);
 return;
 
 }
-void org$frostlang$plex$runtime$DFA$init$frost$core$String$frost$core$Int$frost$unsafe$Pointer$LTfrost$unsafe$Pointer$LTfrost$core$Int$GT$GT$frost$unsafe$Pointer$LTfrost$core$Int$GT(org$frostlang$plex$runtime$DFA* param0, frost$core$String* param1, frost$core$Int param2, frost$core$Int** param3, frost$core$Int* param4) {
+void org$frostlang$plex$runtime$DFA$init$frost$core$String$frost$core$Int$frost$unsafe$Pointer$LTfrost$unsafe$Pointer$LTfrost$core$Int$GT$GT$frost$unsafe$Pointer$LTfrost$core$Int$GT(void* rawSelf, frost$core$String* param1, frost$core$Int param2, frost$core$Int** param3, frost$core$Int* param4) {
+org$frostlang$plex$runtime$DFA* param0 = (org$frostlang$plex$runtime$DFA*) rawSelf;
 
 frost$core$Int _1;
 frost$core$Int* _2;
@@ -88,7 +90,8 @@ _32 = &param0->accepts;
 return;
 
 }
-org$frostlang$plex$runtime$RawToken org$frostlang$plex$runtime$DFA$next$R$org$frostlang$plex$runtime$RawToken(org$frostlang$plex$runtime$DFA* param0) {
+org$frostlang$plex$runtime$RawToken org$frostlang$plex$runtime$DFA$next$R$org$frostlang$plex$runtime$RawToken(void* rawSelf) {
+org$frostlang$plex$runtime$DFA* param0 = (org$frostlang$plex$runtime$DFA*) rawSelf;
 
 frost$core$Int local0;
 frost$core$String$Index local1;
@@ -399,7 +402,7 @@ _100 = *(&local10);
 _103 = _100.value;
 _104 = (frost$core$UInt8) {_103};
 frost$core$UInt8$wrapper* $tmp4;
-$tmp4 = (frost$core$UInt8$wrapper*) frostObjectAlloc(17, (frost$core$Class*) &frost$core$UInt8$wrapperclass);
+$tmp4 = (frost$core$UInt8$wrapper*) frostObjectAlloc(sizeof(frost$core$UInt8$wrapper), (frost$core$Class*) &frost$core$UInt8$wrapperclass);
 $tmp4->value = _104;
 _106 = ((frost$core$Object*) $tmp4);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from DFA.frost:53:35
@@ -611,7 +614,8 @@ _312 = org$frostlang$plex$runtime$RawToken$init$frost$core$Int$frost$core$String
 return _312;
 
 }
-void org$frostlang$plex$runtime$DFA$cleanup(org$frostlang$plex$runtime$DFA* param0) {
+void org$frostlang$plex$runtime$DFA$cleanup(void* rawSelf) {
+org$frostlang$plex$runtime$DFA* param0 = (org$frostlang$plex$runtime$DFA*) rawSelf;
 
 frost$core$Object* _1;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/plex/runtime/DFA.frost:6

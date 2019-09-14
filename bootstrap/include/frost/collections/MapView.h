@@ -8,12 +8,12 @@ typedef struct frost$core$Object frost$core$Object;
 typedef struct frost$collections$Iterator frost$collections$Iterator;
 typedef struct frost$core$Tuple2 frost$core$Tuple2;
 
-frost$core$Int frost$collections$MapView$get_count$R$frost$core$Int(frost$collections$MapView* self);
-frost$core$Object* frost$collections$MapView$$IDX$frost$collections$MapView$K$R$frost$collections$MapView$V$Q(frost$collections$MapView* self, frost$core$Object* p_key);
-frost$core$Bit frost$collections$MapView$contains$frost$collections$MapView$K$R$frost$core$Bit(frost$collections$MapView* self, frost$core$Object* p_key);
-frost$collections$Iterator* frost$collections$MapView$get_entries$R$frost$collections$Iterator$LT$LPfrost$collections$MapView$K$Cfrost$collections$MapView$V$RP$GT(frost$collections$MapView* self);
+frost$core$Int frost$collections$MapView$get_count$R$frost$core$Int(void* rawSelf);
+frost$core$Object* frost$collections$MapView$$IDX$frost$collections$MapView$K$R$frost$collections$MapView$V$Q(void* rawSelf, frost$core$Object* p_key);
+frost$core$Bit frost$collections$MapView$contains$frost$collections$MapView$K$R$frost$core$Bit(void* rawSelf, frost$core$Object* p_key);
+frost$collections$Iterator* frost$collections$MapView$get_entries$R$frost$collections$Iterator$LT$LPfrost$collections$MapView$K$Cfrost$collections$MapView$V$RP$GT(void* rawSelf);
 frost$core$Object* frost$collections$MapView$$anonymous1$$LPfrost$collections$MapView$K$Cfrost$collections$MapView$V$RP$R$frost$collections$MapView$K(frost$core$Tuple2* p_e);
-frost$collections$Iterator* frost$collections$MapView$get_keys$R$frost$collections$Iterator$LTfrost$collections$MapView$K$GT(frost$collections$MapView* self);
+frost$collections$Iterator* frost$collections$MapView$get_keys$R$frost$collections$Iterator$LTfrost$collections$MapView$K$GT(void* rawSelf);
 frost$core$Object* frost$collections$MapView$$anonymous2$$LPfrost$collections$MapView$K$Cfrost$collections$MapView$V$RP$R$frost$collections$MapView$V(frost$core$Tuple2* p_e);
-frost$collections$Iterator* frost$collections$MapView$get_values$R$frost$collections$Iterator$LTfrost$collections$MapView$V$GT(frost$collections$MapView* self);
+frost$collections$Iterator* frost$collections$MapView$get_values$R$frost$collections$Iterator$LTfrost$collections$MapView$V$GT(void* rawSelf);
 

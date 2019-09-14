@@ -47,7 +47,8 @@ static frost$core$String $s25 = { (frost$core$Class*) &frost$core$String$class, 
 static frost$core$String $s26 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x3c\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x41\x6e\x6e\x6f\x74\x61\x74\x69\x6f\x6e\x73\x2e\x45\x78\x70\x72\x65\x73\x73\x69\x6f\x6e\x3e\x3f\x20\x74\x6f\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x3c\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x41\x6e\x6e\x6f\x74\x61\x74\x69\x6f\x6e\x73\x2e\x45\x78\x70\x72\x65\x73\x73\x69\x6f\x6e\x3e", 175, 7470130727508762403, NULL };
 static frost$core$String $s31 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x0a", 1, -5808579962898102051, NULL };
 
-void org$frostlang$frostc$Annotations$init(org$frostlang$frostc$Annotations* param0) {
+void org$frostlang$frostc$Annotations$init(void* rawSelf) {
+org$frostlang$frostc$Annotations* param0 = (org$frostlang$frostc$Annotations*) rawSelf;
 
 frost$core$Int _1;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:88
@@ -56,14 +57,16 @@ org$frostlang$frostc$Annotations$init$frost$core$Int(param0, _1);
 return;
 
 }
-void org$frostlang$frostc$Annotations$init$frost$core$Int(org$frostlang$frostc$Annotations* param0, frost$core$Int param1) {
+void org$frostlang$frostc$Annotations$init$frost$core$Int(void* rawSelf, frost$core$Int param1) {
+org$frostlang$frostc$Annotations* param0 = (org$frostlang$frostc$Annotations*) rawSelf;
 
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:92
 org$frostlang$frostc$Annotations$init$frost$core$Int$frost$collections$ListView$LTorg$frostlang$frostc$Annotations$Expression$GT$Q(param0, param1, ((frost$collections$ListView*) NULL));
 return;
 
 }
-void org$frostlang$frostc$Annotations$init$frost$core$Int$frost$collections$ListView$LTorg$frostlang$frostc$Annotations$Expression$GT$Q(org$frostlang$frostc$Annotations* param0, frost$core$Int param1, frost$collections$ListView* param2) {
+void org$frostlang$frostc$Annotations$init$frost$core$Int$frost$collections$ListView$LTorg$frostlang$frostc$Annotations$Expression$GT$Q(void* rawSelf, frost$core$Int param1, frost$collections$ListView* param2) {
+org$frostlang$frostc$Annotations* param0 = (org$frostlang$frostc$Annotations*) rawSelf;
 
 frost$core$Int* _1;
 bool _4;
@@ -100,8 +103,7 @@ _6 = _5.value;
 if (_6) goto block1; else goto block3;
 block1:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:98
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_9 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_9 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _10 = _9;
 _11 = param2 != NULL;
 _12 = (frost$core$Bit) {_11};
@@ -144,7 +146,8 @@ block2:;
 return;
 
 }
-org$frostlang$frostc$Annotations* org$frostlang$frostc$Annotations$$ADD$frost$core$Int$R$org$frostlang$frostc$Annotations(org$frostlang$frostc$Annotations* param0, frost$core$Int param1) {
+org$frostlang$frostc$Annotations* org$frostlang$frostc$Annotations$$ADD$frost$core$Int$R$org$frostlang$frostc$Annotations(void* rawSelf, frost$core$Int param1) {
+org$frostlang$frostc$Annotations* param0 = (org$frostlang$frostc$Annotations*) rawSelf;
 
 org$frostlang$frostc$Annotations* _1;
 frost$core$Int* _2;
@@ -159,8 +162,7 @@ frost$collections$ListView* _10;
 frost$core$Object* _12;
 frost$core$Object* _14;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:106
-FROST_ASSERT(32 == sizeof(org$frostlang$frostc$Annotations));
-_1 = (org$frostlang$frostc$Annotations*) frostObjectAlloc(32, (frost$core$Class*) &org$frostlang$frostc$Annotations$class);
+_1 = (org$frostlang$frostc$Annotations*) frostObjectAlloc(sizeof(org$frostlang$frostc$Annotations), (frost$core$Class*) &org$frostlang$frostc$Annotations$class);
 _2 = &param0->flags;
 _3 = *_2;
 _4 = _3.value;
@@ -178,7 +180,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_14);
 return _1;
 
 }
-frost$core$Bit org$frostlang$frostc$Annotations$get_isPrivate$R$frost$core$Bit(org$frostlang$frostc$Annotations* param0) {
+frost$core$Bit org$frostlang$frostc$Annotations$get_isPrivate$R$frost$core$Bit(void* rawSelf) {
+org$frostlang$frostc$Annotations* param0 = (org$frostlang$frostc$Annotations*) rawSelf;
 
 frost$core$Int* _1;
 frost$core$Int _2;
@@ -210,7 +213,8 @@ _15 = (frost$core$Bit) {_14};
 return _15;
 
 }
-frost$core$Bit org$frostlang$frostc$Annotations$get_isProtected$R$frost$core$Bit(org$frostlang$frostc$Annotations* param0) {
+frost$core$Bit org$frostlang$frostc$Annotations$get_isProtected$R$frost$core$Bit(void* rawSelf) {
+org$frostlang$frostc$Annotations* param0 = (org$frostlang$frostc$Annotations*) rawSelf;
 
 frost$core$Int* _1;
 frost$core$Int _2;
@@ -242,7 +246,8 @@ _15 = (frost$core$Bit) {_14};
 return _15;
 
 }
-frost$core$Bit org$frostlang$frostc$Annotations$get_isPackage$R$frost$core$Bit(org$frostlang$frostc$Annotations* param0) {
+frost$core$Bit org$frostlang$frostc$Annotations$get_isPackage$R$frost$core$Bit(void* rawSelf) {
+org$frostlang$frostc$Annotations* param0 = (org$frostlang$frostc$Annotations*) rawSelf;
 
 frost$core$Int* _1;
 frost$core$Int _2;
@@ -274,7 +279,8 @@ _15 = (frost$core$Bit) {_14};
 return _15;
 
 }
-frost$core$Bit org$frostlang$frostc$Annotations$get_isClass$R$frost$core$Bit(org$frostlang$frostc$Annotations* param0) {
+frost$core$Bit org$frostlang$frostc$Annotations$get_isClass$R$frost$core$Bit(void* rawSelf) {
+org$frostlang$frostc$Annotations* param0 = (org$frostlang$frostc$Annotations*) rawSelf;
 
 frost$core$Int* _1;
 frost$core$Int _2;
@@ -306,7 +312,8 @@ _15 = (frost$core$Bit) {_14};
 return _15;
 
 }
-frost$core$Bit org$frostlang$frostc$Annotations$get_isOverride$R$frost$core$Bit(org$frostlang$frostc$Annotations* param0) {
+frost$core$Bit org$frostlang$frostc$Annotations$get_isOverride$R$frost$core$Bit(void* rawSelf) {
+org$frostlang$frostc$Annotations* param0 = (org$frostlang$frostc$Annotations*) rawSelf;
 
 frost$core$Int* _1;
 frost$core$Int _2;
@@ -338,7 +345,8 @@ _15 = (frost$core$Bit) {_14};
 return _15;
 
 }
-frost$core$Bit org$frostlang$frostc$Annotations$get_isExternal$R$frost$core$Bit(org$frostlang$frostc$Annotations* param0) {
+frost$core$Bit org$frostlang$frostc$Annotations$get_isExternal$R$frost$core$Bit(void* rawSelf) {
+org$frostlang$frostc$Annotations* param0 = (org$frostlang$frostc$Annotations*) rawSelf;
 
 frost$core$Int* _1;
 frost$core$Int _2;
@@ -370,7 +378,8 @@ _15 = (frost$core$Bit) {_14};
 return _15;
 
 }
-frost$core$Bit org$frostlang$frostc$Annotations$get_isImplicit$R$frost$core$Bit(org$frostlang$frostc$Annotations* param0) {
+frost$core$Bit org$frostlang$frostc$Annotations$get_isImplicit$R$frost$core$Bit(void* rawSelf) {
+org$frostlang$frostc$Annotations* param0 = (org$frostlang$frostc$Annotations*) rawSelf;
 
 frost$core$Int* _1;
 frost$core$Int _2;
@@ -402,7 +411,8 @@ _15 = (frost$core$Bit) {_14};
 return _15;
 
 }
-frost$core$Bit org$frostlang$frostc$Annotations$get_isFinal$R$frost$core$Bit(org$frostlang$frostc$Annotations* param0) {
+frost$core$Bit org$frostlang$frostc$Annotations$get_isFinal$R$frost$core$Bit(void* rawSelf) {
+org$frostlang$frostc$Annotations* param0 = (org$frostlang$frostc$Annotations*) rawSelf;
 
 frost$core$Int* _1;
 frost$core$Int _2;
@@ -434,7 +444,8 @@ _15 = (frost$core$Bit) {_14};
 return _15;
 
 }
-frost$core$Bit org$frostlang$frostc$Annotations$get_isAbstract$R$frost$core$Bit(org$frostlang$frostc$Annotations* param0) {
+frost$core$Bit org$frostlang$frostc$Annotations$get_isAbstract$R$frost$core$Bit(void* rawSelf) {
+org$frostlang$frostc$Annotations* param0 = (org$frostlang$frostc$Annotations*) rawSelf;
 
 frost$core$Int* _1;
 frost$core$Int _2;
@@ -466,7 +477,8 @@ _15 = (frost$core$Bit) {_14};
 return _15;
 
 }
-frost$core$Bit org$frostlang$frostc$Annotations$get_isInline$R$frost$core$Bit(org$frostlang$frostc$Annotations* param0) {
+frost$core$Bit org$frostlang$frostc$Annotations$get_isInline$R$frost$core$Bit(void* rawSelf) {
+org$frostlang$frostc$Annotations* param0 = (org$frostlang$frostc$Annotations*) rawSelf;
 
 frost$core$Int* _1;
 frost$core$Int _2;
@@ -498,7 +510,8 @@ _15 = (frost$core$Bit) {_14};
 return _15;
 
 }
-frost$core$Bit org$frostlang$frostc$Annotations$get_isSpecialize$R$frost$core$Bit(org$frostlang$frostc$Annotations* param0) {
+frost$core$Bit org$frostlang$frostc$Annotations$get_isSpecialize$R$frost$core$Bit(void* rawSelf) {
+org$frostlang$frostc$Annotations* param0 = (org$frostlang$frostc$Annotations*) rawSelf;
 
 frost$core$Int* _1;
 frost$core$Int _2;
@@ -530,7 +543,8 @@ _15 = (frost$core$Bit) {_14};
 return _15;
 
 }
-frost$core$Bit org$frostlang$frostc$Annotations$get_isWeak$R$frost$core$Bit(org$frostlang$frostc$Annotations* param0) {
+frost$core$Bit org$frostlang$frostc$Annotations$get_isWeak$R$frost$core$Bit(void* rawSelf) {
+org$frostlang$frostc$Annotations* param0 = (org$frostlang$frostc$Annotations*) rawSelf;
 
 frost$core$Int* _1;
 frost$core$Int _2;
@@ -562,7 +576,8 @@ _15 = (frost$core$Bit) {_14};
 return _15;
 
 }
-frost$core$Bit org$frostlang$frostc$Annotations$get_isSynthetic$R$frost$core$Bit(org$frostlang$frostc$Annotations* param0) {
+frost$core$Bit org$frostlang$frostc$Annotations$get_isSynthetic$R$frost$core$Bit(void* rawSelf) {
+org$frostlang$frostc$Annotations* param0 = (org$frostlang$frostc$Annotations*) rawSelf;
 
 frost$core$Int* _1;
 frost$core$Int _2;
@@ -594,7 +609,8 @@ _15 = (frost$core$Bit) {_14};
 return _15;
 
 }
-frost$core$Bit org$frostlang$frostc$Annotations$get_isUnsafeImmutable$R$frost$core$Bit(org$frostlang$frostc$Annotations* param0) {
+frost$core$Bit org$frostlang$frostc$Annotations$get_isUnsafeImmutable$R$frost$core$Bit(void* rawSelf) {
+org$frostlang$frostc$Annotations* param0 = (org$frostlang$frostc$Annotations*) rawSelf;
 
 frost$core$Int* _1;
 frost$core$Int _2;
@@ -626,7 +642,8 @@ _15 = (frost$core$Bit) {_14};
 return _15;
 
 }
-frost$core$Bit org$frostlang$frostc$Annotations$get_isDefault$R$frost$core$Bit(org$frostlang$frostc$Annotations* param0) {
+frost$core$Bit org$frostlang$frostc$Annotations$get_isDefault$R$frost$core$Bit(void* rawSelf) {
+org$frostlang$frostc$Annotations* param0 = (org$frostlang$frostc$Annotations*) rawSelf;
 
 frost$core$Int* _1;
 frost$core$Int _2;
@@ -658,7 +675,8 @@ _15 = (frost$core$Bit) {_14};
 return _15;
 
 }
-frost$core$Bit org$frostlang$frostc$Annotations$get_isCapture$R$frost$core$Bit(org$frostlang$frostc$Annotations* param0) {
+frost$core$Bit org$frostlang$frostc$Annotations$get_isCapture$R$frost$core$Bit(void* rawSelf) {
+org$frostlang$frostc$Annotations* param0 = (org$frostlang$frostc$Annotations*) rawSelf;
 
 frost$core$Int* _1;
 frost$core$Int _2;
@@ -690,7 +708,8 @@ _15 = (frost$core$Bit) {_14};
 return _15;
 
 }
-frost$core$Bit org$frostlang$frostc$Annotations$get_isStub$R$frost$core$Bit(org$frostlang$frostc$Annotations* param0) {
+frost$core$Bit org$frostlang$frostc$Annotations$get_isStub$R$frost$core$Bit(void* rawSelf) {
+org$frostlang$frostc$Annotations* param0 = (org$frostlang$frostc$Annotations*) rawSelf;
 
 frost$core$Int* _1;
 frost$core$Int _2;
@@ -722,7 +741,8 @@ _15 = (frost$core$Bit) {_14};
 return _15;
 
 }
-frost$core$Bit org$frostlang$frostc$Annotations$get_isNoReturn$R$frost$core$Bit(org$frostlang$frostc$Annotations* param0) {
+frost$core$Bit org$frostlang$frostc$Annotations$get_isNoReturn$R$frost$core$Bit(void* rawSelf) {
+org$frostlang$frostc$Annotations* param0 = (org$frostlang$frostc$Annotations*) rawSelf;
 
 frost$core$Int* _1;
 frost$core$Int _2;
@@ -754,7 +774,8 @@ _15 = (frost$core$Bit) {_14};
 return _15;
 
 }
-frost$core$String* org$frostlang$frostc$Annotations$get_asString$R$frost$core$String(org$frostlang$frostc$Annotations* param0) {
+frost$core$String* org$frostlang$frostc$Annotations$get_asString$R$frost$core$String(void* rawSelf) {
+org$frostlang$frostc$Annotations* param0 = (org$frostlang$frostc$Annotations*) rawSelf;
 
 frost$core$MutableString* local0 = NULL;
 org$frostlang$frostc$Annotations$Expression* local1 = NULL;
@@ -1047,8 +1068,7 @@ frost$core$Object* _503;
 frost$core$MutableString* _505;
 frost$core$Object* _506;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:183
-FROST_ASSERT(48 == sizeof(frost$core$MutableString));
-_1 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
+_1 = (frost$core$MutableString*) frostObjectAlloc(sizeof(frost$core$MutableString), (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init(_1);
 *(&local0) = ((frost$core$MutableString*) NULL);
 _4 = ((frost$core$Object*) _1);
@@ -1578,7 +1598,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_506);
 return _500;
 
 }
-void org$frostlang$frostc$Annotations$cleanup(org$frostlang$frostc$Annotations* param0) {
+void org$frostlang$frostc$Annotations$cleanup(void* rawSelf) {
+org$frostlang$frostc$Annotations* param0 = (org$frostlang$frostc$Annotations*) rawSelf;
 
 frost$core$Object* _1;
 frost$collections$Array** _3;

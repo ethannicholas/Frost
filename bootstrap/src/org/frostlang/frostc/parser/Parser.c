@@ -1408,7 +1408,8 @@ static frost$core$String $s1876 = { (frost$core$Class*) &frost$core$String$class
 static frost$core$String $s1877 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x50\x61\x72\x73\x65\x72\x2e\x66\x72\x6f\x73\x74", 12, 3564038086098955558, NULL };
 static frost$core$String $s1878 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x41\x53\x54\x4e\x6f\x64\x65\x3f\x20\x74\x6f\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x41\x53\x54\x4e\x6f\x64\x65", 95, 7721999553369549811, NULL };
 
-void org$frostlang$frostc$parser$Parser$init$frost$threads$MessageQueue$LTorg$frostlang$frostc$Compiler$Message$GT(org$frostlang$frostc$parser$Parser* param0, frost$threads$MessageQueue* param1) {
+void org$frostlang$frostc$parser$Parser$init$frost$threads$MessageQueue$LTorg$frostlang$frostc$Compiler$Message$GT(void* rawSelf, frost$threads$MessageQueue* param1) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$parser$Lexer* _1;
 frost$core$Object* _3;
@@ -1467,8 +1468,7 @@ frost$core$Object* _94;
 org$frostlang$regex$RegexParser** _96;
 frost$core$Object* _98;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:37
-FROST_ASSERT(48 == sizeof(org$frostlang$frostc$parser$Lexer));
-_1 = (org$frostlang$frostc$parser$Lexer*) frostObjectAlloc(48, (frost$core$Class*) &org$frostlang$frostc$parser$Lexer$class);
+_1 = (org$frostlang$frostc$parser$Lexer*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Lexer), (frost$core$Class*) &org$frostlang$frostc$parser$Lexer$class);
 org$frostlang$frostc$parser$Lexer$init(_1);
 _3 = ((frost$core$Object*) _1);
 frost$core$Frost$ref$frost$core$Object$Q(_3);
@@ -1481,8 +1481,7 @@ _9 = &param0->lexer;
 _11 = ((frost$core$Object*) _1);
 frost$core$Frost$unref$frost$core$Object$Q(_11);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:47
-FROST_ASSERT(40 == sizeof(frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT));
-_14 = (frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT$class);
+_14 = (frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT*) frostObjectAlloc(sizeof(frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT), (frost$core$Class*) &frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT$class);
 frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT$init(_14);
 _16 = ((frost$core$Object*) _14);
 frost$core$Frost$ref$frost$core$Object$Q(_16);
@@ -1495,8 +1494,7 @@ _22 = &param0->pushbackBuffer;
 _24 = ((frost$core$Object*) _14);
 frost$core$Frost$unref$frost$core$Object$Q(_24);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:49
-FROST_ASSERT(24 == sizeof(frost$collections$Stack));
-_27 = (frost$collections$Stack*) frostObjectAlloc(24, (frost$core$Class*) &frost$collections$Stack$class);
+_27 = (frost$collections$Stack*) frostObjectAlloc(sizeof(frost$collections$Stack), (frost$core$Class*) &frost$collections$Stack$class);
 _28 = _27;
 frost$collections$Stack$init(_28);
 _30 = ((frost$core$Object*) _27);
@@ -1510,8 +1508,7 @@ _36 = &param0->commaSeparatedExpressionContext;
 _38 = ((frost$core$Object*) _27);
 frost$core$Frost$unref$frost$core$Object$Q(_38);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:51
-FROST_ASSERT(24 == sizeof(frost$collections$Stack));
-_41 = (frost$collections$Stack*) frostObjectAlloc(24, (frost$core$Class*) &frost$collections$Stack$class);
+_41 = (frost$collections$Stack*) frostObjectAlloc(sizeof(frost$collections$Stack), (frost$core$Class*) &frost$collections$Stack$class);
 _42 = _41;
 frost$collections$Stack$init(_42);
 _44 = ((frost$core$Object*) _41);
@@ -1547,7 +1544,7 @@ _73 = *_72;
 _74 = _73;
 _75 = (frost$core$Bit) {false};
 frost$core$Bit$wrapper* $tmp2;
-$tmp2 = (frost$core$Bit$wrapper*) frostObjectAlloc(17, (frost$core$Class*) &frost$core$Bit$wrapperclass);
+$tmp2 = (frost$core$Bit$wrapper*) frostObjectAlloc(sizeof(frost$core$Bit$wrapper), (frost$core$Class*) &frost$core$Bit$wrapperclass);
 $tmp2->value = _75;
 _76 = ((frost$core$Object*) $tmp2);
 // begin inline call to method frost.collections.Stack.push(v:frost.collections.Stack.T) from Parser.frost:61:45
@@ -1560,8 +1557,7 @@ frost$collections$Array$add$frost$collections$Array$T(_81, _82);
 _85 = _76;
 frost$core$Frost$unref$frost$core$Object$Q(_85);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:62
-FROST_ASSERT(64 == sizeof(org$frostlang$regex$RegexParser));
-_88 = (org$frostlang$regex$RegexParser*) frostObjectAlloc(64, (frost$core$Class*) &org$frostlang$regex$RegexParser$class);
+_88 = (org$frostlang$regex$RegexParser*) frostObjectAlloc(sizeof(org$frostlang$regex$RegexParser), (frost$core$Class*) &org$frostlang$regex$RegexParser$class);
 org$frostlang$regex$RegexParser$init$frost$threads$MessageQueue$LTorg$frostlang$frostc$Compiler$Message$GT(_88, param1);
 _90 = ((frost$core$Object*) _88);
 frost$core$Frost$ref$frost$core$Object$Q(_90);
@@ -1576,7 +1572,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_98);
 return;
 
 }
-void org$frostlang$frostc$parser$Parser$start$frost$io$File$frost$core$Int$frost$core$String(org$frostlang$frostc$parser$Parser* param0, frost$io$File* param1, frost$core$Int param2, frost$core$String* param3) {
+void org$frostlang$frostc$parser$Parser$start$frost$io$File$frost$core$Int$frost$core$String(void* rawSelf, frost$io$File* param1, frost$core$Int param2, frost$core$String* param3) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 frost$core$Int local0;
 frost$core$Bit _1;
@@ -1689,8 +1686,7 @@ _5 = &param0->lexer;
 _6 = *_5;
 // begin inline call to method org.frostlang.frostc.parser.Lexer.start(source:frost.core.String) from Parser.frost:67:20
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/parser/Lexer.frost:21
-FROST_ASSERT(80 == sizeof(org$frostlang$plex$runtime$DFA));
-_9 = (org$frostlang$plex$runtime$DFA*) frostObjectAlloc(80, (frost$core$Class*) &org$frostlang$plex$runtime$DFA$class);
+_9 = (org$frostlang$plex$runtime$DFA*) frostObjectAlloc(sizeof(org$frostlang$plex$runtime$DFA), (frost$core$Class*) &org$frostlang$plex$runtime$DFA$class);
 _10 = (frost$core$Int) {263u};
 _11 = &_6->transitions;
 _12 = *_11;
@@ -1852,7 +1848,8 @@ frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$St
 abort(); // unreachable
 
 }
-org$frostlang$frostc$parser$Token org$frostlang$frostc$parser$Parser$rawNext$R$org$frostlang$frostc$parser$Token(org$frostlang$frostc$parser$Parser* param0) {
+org$frostlang$frostc$parser$Token org$frostlang$frostc$parser$Parser$rawNext$R$org$frostlang$frostc$parser$Token(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 frost$core$Int local0;
 org$frostlang$frostc$parser$Token local1;
@@ -2362,7 +2359,7 @@ block13:;
 _129 = *(&local5);
 _130 = _129.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp38;
-$tmp38 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp38 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp38->value = _130;
 _131 = ((frost$core$Equatable*) $tmp38);
 _132 = _131;
@@ -2375,7 +2372,7 @@ _138 = *(&local7);
 *(&local6) = _138;
 _141 = *(&local6);
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp39;
-$tmp39 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp39 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp39->value = _141;
 _142 = ((frost$core$Equatable*) $tmp39);
 ITable* $tmp40 = _132->$class->itable;
@@ -2560,7 +2557,7 @@ _287 = _280;
 frost$core$Frost$unref$frost$core$Object$Q(_287);
 _290 = ((org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) _284)->value;
 org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper* $tmp55;
-$tmp55 = (org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapperclass);
+$tmp55 = (org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapperclass);
 $tmp55->value = _290;
 _291 = ((frost$core$Equatable*) $tmp55);
 _292 = _291;
@@ -2573,7 +2570,7 @@ _298 = *(&local9);
 *(&local8) = _298;
 _301 = *(&local8);
 org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper* $tmp56;
-$tmp56 = (org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapperclass);
+$tmp56 = (org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapperclass);
 $tmp56->value = _301;
 _302 = ((frost$core$Equatable*) $tmp56);
 ITable* $tmp57 = _292->$class->itable;
@@ -2816,7 +2813,8 @@ _500 = *(&local5);
 return _500;
 
 }
-org$frostlang$frostc$parser$Token org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Token(org$frostlang$frostc$parser$Parser* param0) {
+org$frostlang$frostc$parser$Token org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Token(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$parser$Token local0;
 org$frostlang$frostc$parser$SyntaxHighlighter$Kind local1;
@@ -2963,8 +2961,7 @@ _29 = _27.value;
 if (_29) goto block7; else goto block8;
 block7:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:115
-FROST_ASSERT(32 == sizeof(org$frostlang$frostc$parser$Parser$AutoSyntaxHighlight));
-_32 = (org$frostlang$frostc$parser$Parser$AutoSyntaxHighlight*) frostObjectAlloc(32, (frost$core$Class*) &org$frostlang$frostc$parser$Parser$AutoSyntaxHighlight$class);
+_32 = (org$frostlang$frostc$parser$Parser$AutoSyntaxHighlight*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Parser$AutoSyntaxHighlight), (frost$core$Class*) &org$frostlang$frostc$parser$Parser$AutoSyntaxHighlight$class);
 _33 = (frost$core$Int) {1u};
 // begin inline call to org.frostlang.frostc.parser.SyntaxHighlighter.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.SyntaxHighlighter.Kind from Parser.frost:115:81
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/SyntaxHighlighter.frost:6
@@ -3071,8 +3068,7 @@ _135 = _133.value;
 if (_135) goto block24; else goto block25;
 block24:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:131
-FROST_ASSERT(32 == sizeof(org$frostlang$frostc$parser$Parser$AutoSyntaxHighlight));
-_138 = (org$frostlang$frostc$parser$Parser$AutoSyntaxHighlight*) frostObjectAlloc(32, (frost$core$Class*) &org$frostlang$frostc$parser$Parser$AutoSyntaxHighlight$class);
+_138 = (org$frostlang$frostc$parser$Parser$AutoSyntaxHighlight*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Parser$AutoSyntaxHighlight), (frost$core$Class*) &org$frostlang$frostc$parser$Parser$AutoSyntaxHighlight$class);
 _139 = (frost$core$Int) {1u};
 // begin inline call to org.frostlang.frostc.parser.SyntaxHighlighter.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.SyntaxHighlighter.Kind from Parser.frost:131:81
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/SyntaxHighlighter.frost:6
@@ -3155,7 +3151,8 @@ goto block36;
 block36:;
 
 }
-void org$frostlang$frostc$parser$Parser$pushback$org$frostlang$frostc$parser$Token(org$frostlang$frostc$parser$Parser* param0, org$frostlang$frostc$parser$Token param1) {
+void org$frostlang$frostc$parser$Parser$pushback$org$frostlang$frostc$parser$Token(void* rawSelf, org$frostlang$frostc$parser$Token param1) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$parser$SyntaxHighlighter** _1;
 org$frostlang$frostc$parser$SyntaxHighlighter* _2;
@@ -3580,7 +3577,8 @@ frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT$add$or
 return;
 
 }
-org$frostlang$frostc$parser$Token org$frostlang$frostc$parser$Parser$peek$R$org$frostlang$frostc$parser$Token(org$frostlang$frostc$parser$Parser* param0) {
+org$frostlang$frostc$parser$Token org$frostlang$frostc$parser$Parser$peek$R$org$frostlang$frostc$parser$Token(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT** _1;
 frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT* _2;
@@ -3704,7 +3702,8 @@ _58 = _55[_57];
 return _58;
 
 }
-org$frostlang$frostc$parser$Token$nullable org$frostlang$frostc$parser$Parser$checkNext$org$frostlang$frostc$parser$Token$Kind$R$org$frostlang$frostc$parser$Token$Q(org$frostlang$frostc$parser$Parser* param0, org$frostlang$frostc$parser$Token$Kind param1) {
+org$frostlang$frostc$parser$Token$nullable org$frostlang$frostc$parser$Parser$checkNext$org$frostlang$frostc$parser$Token$Kind$R$org$frostlang$frostc$parser$Token$Q(void* rawSelf, org$frostlang$frostc$parser$Token$Kind param1) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$parser$Token local0;
 org$frostlang$frostc$parser$Token _1;
@@ -3728,12 +3727,12 @@ _1 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Token
 _4 = *(&local0);
 _5 = _4.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp118;
-$tmp118 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp118 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp118->value = _5;
 _6 = ((frost$core$Equatable*) $tmp118);
 _7 = _6;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp119;
-$tmp119 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp119 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp119->value = param1;
 _8 = ((frost$core$Equatable*) $tmp119);
 ITable* $tmp120 = _7->$class->itable;
@@ -3761,7 +3760,8 @@ org$frostlang$frostc$parser$Parser$pushback$org$frostlang$frostc$parser$Token(pa
 return ((org$frostlang$frostc$parser$Token$nullable) { .nonnull = false });
 
 }
-org$frostlang$frostc$parser$Token$nullable org$frostlang$frostc$parser$Parser$expect$org$frostlang$frostc$parser$Token$Kind$frost$core$String$R$org$frostlang$frostc$parser$Token$Q(org$frostlang$frostc$parser$Parser* param0, org$frostlang$frostc$parser$Token$Kind param1, frost$core$String* param2) {
+org$frostlang$frostc$parser$Token$nullable org$frostlang$frostc$parser$Parser$expect$org$frostlang$frostc$parser$Token$Kind$frost$core$String$R$org$frostlang$frostc$parser$Token$Q(void* rawSelf, org$frostlang$frostc$parser$Token$Kind param1, frost$core$String* param2) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$parser$Token local0;
 org$frostlang$frostc$parser$Token _1;
@@ -3804,12 +3804,12 @@ _1 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Token
 _4 = *(&local0);
 _5 = _4.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp122;
-$tmp122 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp122 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp122->value = _5;
 _6 = ((frost$core$Equatable*) $tmp122);
 _7 = _6;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp123;
-$tmp123 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp123 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp123->value = param1;
 _8 = ((frost$core$Equatable*) $tmp123);
 ITable* $tmp124 = _7->$class->itable;
@@ -3865,7 +3865,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_51);
 return ((org$frostlang$frostc$parser$Token$nullable) { .nonnull = false });
 
 }
-void org$frostlang$frostc$parser$Parser$error$org$frostlang$frostc$parser$Token$frost$core$String(org$frostlang$frostc$parser$Parser* param0, org$frostlang$frostc$parser$Token param1, frost$core$String* param2) {
+void org$frostlang$frostc$parser$Parser$error$org$frostlang$frostc$parser$Token$frost$core$String(void* rawSelf, org$frostlang$frostc$parser$Token param1, frost$core$String* param2) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 frost$core$String* local0 = NULL;
 frost$core$String$Index$nullable local1;
@@ -3967,8 +3968,7 @@ block1:;
 _27 = &param0->errors;
 _28 = *_27;
 _29 = _28;
-FROST_ASSERT(56 == sizeof(org$frostlang$frostc$Compiler$Message));
-_30 = (org$frostlang$frostc$Compiler$Message*) frostObjectAlloc(56, (frost$core$Class*) &org$frostlang$frostc$Compiler$Message$class);
+_30 = (org$frostlang$frostc$Compiler$Message*) frostObjectAlloc(sizeof(org$frostlang$frostc$Compiler$Message), (frost$core$Class*) &org$frostlang$frostc$Compiler$Message$class);
 _31 = (frost$core$Int) {0u};
 _32 = &param0->path;
 _33 = *_32;
@@ -4052,7 +4052,8 @@ block2:;
 return;
 
 }
-void org$frostlang$frostc$parser$Parser$open$org$frostlang$frostc$parser$SyntaxHighlighter$Kind(org$frostlang$frostc$parser$Parser* param0, org$frostlang$frostc$parser$SyntaxHighlighter$Kind param1) {
+void org$frostlang$frostc$parser$Parser$open$org$frostlang$frostc$parser$SyntaxHighlighter$Kind(void* rawSelf, org$frostlang$frostc$parser$SyntaxHighlighter$Kind param1) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$parser$SyntaxHighlighter** _1;
 org$frostlang$frostc$parser$SyntaxHighlighter* _2;
@@ -4095,7 +4096,8 @@ block2:;
 return;
 
 }
-void org$frostlang$frostc$parser$Parser$close$org$frostlang$frostc$parser$SyntaxHighlighter$Kind(org$frostlang$frostc$parser$Parser* param0, org$frostlang$frostc$parser$SyntaxHighlighter$Kind param1) {
+void org$frostlang$frostc$parser$Parser$close$org$frostlang$frostc$parser$SyntaxHighlighter$Kind(void* rawSelf, org$frostlang$frostc$parser$SyntaxHighlighter$Kind param1) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$parser$SyntaxHighlighter** _1;
 org$frostlang$frostc$parser$SyntaxHighlighter* _2;
@@ -4138,7 +4140,8 @@ block2:;
 return;
 
 }
-void org$frostlang$frostc$parser$Parser$startSpeculative(org$frostlang$frostc$parser$Parser* param0) {
+void org$frostlang$frostc$parser$Parser$startSpeculative(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 frost$collections$Stack** _1;
 frost$collections$Stack* _2;
@@ -4232,8 +4235,7 @@ frost$core$Object* _120;
 _1 = &param0->speculativeBuffers;
 _2 = *_1;
 _3 = _2;
-FROST_ASSERT(40 == sizeof(frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT));
-_4 = (frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT$class);
+_4 = (frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT*) frostObjectAlloc(sizeof(frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT), (frost$core$Class*) &frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT$class);
 frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT$init(_4);
 _6 = ((frost$core$Object*) _4);
 // begin inline call to method frost.collections.Stack.push(v:frost.collections.Stack.T) from Parser.frost:211:32
@@ -4374,7 +4376,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_120);
 return;
 
 }
-void org$frostlang$frostc$parser$Parser$accept(org$frostlang$frostc$parser$Parser* param0) {
+void org$frostlang$frostc$parser$Parser$accept(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 frost$collections$Stack** _1;
 frost$collections$Stack* _2;
@@ -4393,7 +4396,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_6);
 return;
 
 }
-void org$frostlang$frostc$parser$Parser$rewind(org$frostlang$frostc$parser$Parser* param0) {
+void org$frostlang$frostc$parser$Parser$rewind(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 frost$core$Int local0;
 frost$collections$Stack** _1;
@@ -5063,7 +5067,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_339);
 return;
 
 }
-frost$core$String* org$frostlang$frostc$parser$Parser$text$org$frostlang$frostc$parser$Token$R$frost$core$String(org$frostlang$frostc$parser$Parser* param0, org$frostlang$frostc$parser$Token param1) {
+frost$core$String* org$frostlang$frostc$parser$Parser$text$org$frostlang$frostc$parser$Token$R$frost$core$String(void* rawSelf, org$frostlang$frostc$parser$Token param1) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 frost$core$String** _1;
 frost$core$String* _2;
@@ -5089,7 +5094,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_10);
 return _7;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$addStringChunk$org$frostlang$frostc$ASTNode$Q$org$frostlang$frostc$ASTNode$R$org$frostlang$frostc$ASTNode(org$frostlang$frostc$parser$Parser* param0, org$frostlang$frostc$ASTNode* param1, org$frostlang$frostc$ASTNode* param2) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$addStringChunk$org$frostlang$frostc$ASTNode$Q$org$frostlang$frostc$ASTNode$R$org$frostlang$frostc$ASTNode(void* rawSelf, org$frostlang$frostc$ASTNode* param1, org$frostlang$frostc$ASTNode* param2) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$expression$Binary$Operator local0;
 org$frostlang$frostc$expression$Binary$Operator local1;
@@ -5129,8 +5135,7 @@ frost$core$Frost$ref$frost$core$Object$Q(_6);
 return param2;
 block2:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:234
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_10 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_10 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _11 = (frost$core$Int) {5u};
 _12 = param1 != NULL;
 _13 = (frost$core$Bit) {_12};
@@ -5170,7 +5175,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_42);
 return _10;
 
 }
-frost$core$String* org$frostlang$frostc$parser$Parser$formatString$org$frostlang$frostc$parser$Token$R$frost$core$String$Q(org$frostlang$frostc$parser$Parser* param0, org$frostlang$frostc$parser$Token param1) {
+frost$core$String* org$frostlang$frostc$parser$Parser$formatString$org$frostlang$frostc$parser$Token$R$frost$core$String$Q(void* rawSelf, org$frostlang$frostc$parser$Token param1) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 frost$core$MutableString* local0 = NULL;
 org$frostlang$frostc$parser$Token local1;
@@ -5394,8 +5400,7 @@ frost$core$Object* _399;
 frost$core$Object* _401;
 frost$core$Object* _405;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:238
-FROST_ASSERT(48 == sizeof(frost$core$MutableString));
-_1 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
+_1 = (frost$core$MutableString*) frostObjectAlloc(sizeof(frost$core$MutableString), (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init(_1);
 *(&local0) = ((frost$core$MutableString*) NULL);
 _4 = ((frost$core$Object*) _1);
@@ -5528,7 +5533,7 @@ _126 = org$frostlang$frostc$parser$Parser$rawNext$R$org$frostlang$frostc$parser$
 _129 = *(&local3);
 _130 = _129.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp197;
-$tmp197 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp197 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp197->value = _130;
 _131 = ((frost$core$Equatable*) $tmp197);
 _132 = _131;
@@ -5541,7 +5546,7 @@ _138 = *(&local5);
 *(&local4) = _138;
 _141 = *(&local4);
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp198;
-$tmp198 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp198 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp198->value = _141;
 _142 = ((frost$core$Equatable*) $tmp198);
 ITable* $tmp199 = _132->$class->itable;
@@ -5597,8 +5602,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_185);
 _188 = *(&local6);
 // begin inline call to function frost.core.String.get_utf8():frost.collections.ListView<frost.core.Char8> from Parser.frost:261:40
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:458
-FROST_ASSERT(24 == sizeof(frost$core$String$UTF8List));
-_191 = (frost$core$String$UTF8List*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$String$UTF8List$class);
+_191 = (frost$core$String$UTF8List*) frostObjectAlloc(sizeof(frost$core$String$UTF8List), (frost$core$Class*) &frost$core$String$UTF8List$class);
 frost$core$String$UTF8List$init$frost$core$String(_191, _188);
 _193 = ((frost$collections$ListView*) _191);
 _194 = ((frost$core$Object*) _193);
@@ -5832,7 +5836,8 @@ goto block51;
 block51:;
 
 }
-frost$core$String* org$frostlang$frostc$parser$Parser$alignmentString$org$frostlang$frostc$parser$Token$R$frost$core$String$Q(org$frostlang$frostc$parser$Parser* param0, org$frostlang$frostc$parser$Token param1) {
+frost$core$String* org$frostlang$frostc$parser$Parser$alignmentString$org$frostlang$frostc$parser$Token$R$frost$core$String$Q(void* rawSelf, org$frostlang$frostc$parser$Token param1) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 frost$core$MutableString* local0 = NULL;
 org$frostlang$frostc$parser$Token local1;
@@ -6078,8 +6083,7 @@ frost$core$Object* _440;
 frost$core$Object* _442;
 frost$core$Object* _446;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:289
-FROST_ASSERT(48 == sizeof(frost$core$MutableString));
-_1 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
+_1 = (frost$core$MutableString*) frostObjectAlloc(sizeof(frost$core$MutableString), (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init(_1);
 *(&local0) = ((frost$core$MutableString*) NULL);
 _4 = ((frost$core$Object*) _1);
@@ -6212,7 +6216,7 @@ _126 = org$frostlang$frostc$parser$Parser$rawNext$R$org$frostlang$frostc$parser$
 _129 = *(&local3);
 _130 = _129.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp215;
-$tmp215 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp215 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp215->value = _130;
 _131 = ((frost$core$Equatable*) $tmp215);
 _132 = _131;
@@ -6225,7 +6229,7 @@ _138 = *(&local5);
 *(&local4) = _138;
 _141 = *(&local4);
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp216;
-$tmp216 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp216 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp216->value = _141;
 _142 = ((frost$core$Equatable*) $tmp216);
 ITable* $tmp217 = _132->$class->itable;
@@ -6281,8 +6285,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_185);
 _188 = *(&local6);
 // begin inline call to function frost.core.String.get_utf8():frost.collections.ListView<frost.core.Char8> from Parser.frost:312:40
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:458
-FROST_ASSERT(24 == sizeof(frost$core$String$UTF8List));
-_191 = (frost$core$String$UTF8List*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$String$UTF8List$class);
+_191 = (frost$core$String$UTF8List*) frostObjectAlloc(sizeof(frost$core$String$UTF8List), (frost$core$Class*) &frost$core$String$UTF8List$class);
 frost$core$String$UTF8List$init$frost$core$String(_191, _188);
 _193 = ((frost$collections$ListView*) _191);
 _194 = ((frost$core$Object*) _193);
@@ -6559,7 +6562,8 @@ goto block57;
 block57:;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$convertToString$org$frostlang$frostc$ASTNode$R$org$frostlang$frostc$ASTNode(org$frostlang$frostc$parser$Parser* param0, org$frostlang$frostc$ASTNode* param1) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$convertToString$org$frostlang$frostc$ASTNode$R$org$frostlang$frostc$ASTNode(void* rawSelf, org$frostlang$frostc$ASTNode* param1) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$ASTNode* local0 = NULL;
 org$frostlang$frostc$ASTNode* local1 = NULL;
@@ -6613,8 +6617,7 @@ frost$core$Object* _77;
 org$frostlang$frostc$ASTNode* _80;
 frost$core$Object* _81;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:346
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_1 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_1 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _2 = (frost$core$Int) {16u};
 _3 = ($fn233) param1->$class->vtable[2];
 _4 = _3(param1);
@@ -6629,14 +6632,12 @@ frost$core$Frost$unref$frost$core$Object$Q(_10);
 _13 = ((frost$core$Object*) _1);
 frost$core$Frost$unref$frost$core$Object$Q(_13);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:347
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_16 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_16 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _17 = (frost$core$Int) {9u};
 _18 = ($fn235) param1->$class->vtable[2];
 _19 = _18(param1);
 _20 = *(&local0);
-FROST_ASSERT(40 == sizeof(org$frostlang$frostc$FixedArray));
-_21 = (org$frostlang$frostc$FixedArray*) frostObjectAlloc(40, (frost$core$Class*) &org$frostlang$frostc$FixedArray$class);
+_21 = (org$frostlang$frostc$FixedArray*) frostObjectAlloc(sizeof(org$frostlang$frostc$FixedArray), (frost$core$Class*) &org$frostlang$frostc$FixedArray$class);
 _22 = _21;
 org$frostlang$frostc$FixedArray$init(_22);
 org$frostlang$frostc$ASTNode$init$frost$core$Int$org$frostlang$frostc$Position$org$frostlang$frostc$ASTNode$org$frostlang$frostc$FixedArray$LTorg$frostlang$frostc$ASTNode$GT(_16, _17, _19, _20, _21);
@@ -6652,8 +6653,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_32);
 _34 = ((frost$core$Object*) _16);
 frost$core$Frost$unref$frost$core$Object$Q(_34);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:348
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_37 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_37 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _38 = (frost$core$Int) {46u};
 _39 = ($fn236) param1->$class->vtable[2];
 _40 = _39(param1);
@@ -6668,8 +6668,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_46);
 _49 = ((frost$core$Object*) _37);
 frost$core$Frost$unref$frost$core$Object$Q(_49);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:349
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_52 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_52 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _53 = (frost$core$Int) {5u};
 _54 = ($fn238) param1->$class->vtable[2];
 _55 = _54(param1);
@@ -6703,7 +6702,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_81);
 return _52;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$string$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$parser$Parser* param0) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$string$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$ASTNode* local0 = NULL;
 org$frostlang$frostc$parser$SyntaxHighlighter$Kind local1;
@@ -7565,8 +7565,7 @@ frost$core$Int _11;
 _2 = &param0->allowLambdas;
 _3 = *_2;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:354
-FROST_ASSERT(32 == sizeof(org$frostlang$frostc$parser$Parser$AutoSyntaxHighlight));
-_19 = (org$frostlang$frostc$parser$Parser$AutoSyntaxHighlight*) frostObjectAlloc(32, (frost$core$Class*) &org$frostlang$frostc$parser$Parser$AutoSyntaxHighlight$class);
+_19 = (org$frostlang$frostc$parser$Parser$AutoSyntaxHighlight*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Parser$AutoSyntaxHighlight), (frost$core$Class*) &org$frostlang$frostc$parser$Parser$AutoSyntaxHighlight$class);
 _20 = (frost$core$Int) {10u};
 // begin inline call to org.frostlang.frostc.parser.SyntaxHighlighter.Kind.init(rv:frost.core.Int):org.frostlang.frostc.parser.SyntaxHighlighter.Kind from Parser.frost:354:69
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/SyntaxHighlighter.frost:6
@@ -7592,7 +7591,7 @@ _40 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Toke
 _43 = *(&local4);
 _44 = _43.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp257;
-$tmp257 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp257 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp257->value = _44;
 _45 = ((frost$core$Equatable*) $tmp257);
 _46 = _45;
@@ -7605,7 +7604,7 @@ _52 = *(&local6);
 *(&local5) = _52;
 _55 = *(&local5);
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp258;
-$tmp258 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp258 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp258->value = _55;
 _56 = ((frost$core$Equatable*) $tmp258);
 ITable* $tmp259 = _46->$class->itable;
@@ -7624,7 +7623,7 @@ block8:;
 _65 = *(&local4);
 _66 = _65.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp260;
-$tmp260 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp260 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp260->value = _66;
 _67 = ((frost$core$Equatable*) $tmp260);
 _68 = _67;
@@ -7637,7 +7636,7 @@ _74 = *(&local8);
 *(&local7) = _74;
 _77 = *(&local7);
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp261;
-$tmp261 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp261 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp261->value = _77;
 _78 = ((frost$core$Equatable*) $tmp261);
 ITable* $tmp262 = _68->$class->itable;
@@ -7697,8 +7696,7 @@ _127 = ((frost$core$Object*) _126);
 frost$core$Frost$unref$frost$core$Object$Q(_127);
 *(&local9) = ((org$frostlang$frostc$ASTNode*) NULL);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:361
-FROST_ASSERT(48 == sizeof(frost$core$MutableString));
-_131 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
+_131 = (frost$core$MutableString*) frostObjectAlloc(sizeof(frost$core$MutableString), (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init(_131);
 *(&local10) = ((frost$core$MutableString*) NULL);
 _134 = ((frost$core$Object*) _131);
@@ -7719,14 +7717,14 @@ _145 = org$frostlang$frostc$parser$Parser$rawNext$R$org$frostlang$frostc$parser$
 _148 = *(&local11);
 _149 = _148.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp265;
-$tmp265 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp265 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp265->value = _149;
 _150 = ((frost$core$Equatable*) $tmp265);
 _151 = _150;
 _152 = *(&local4);
 _153 = _152.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp266;
-$tmp266 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp266 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp266->value = _153;
 _154 = ((frost$core$Equatable*) $tmp266);
 ITable* $tmp267 = _151->$class->itable;
@@ -7745,8 +7743,7 @@ block14:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:365
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:462
 _1410 = *(&local9);
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_1411 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_1411 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _1412 = (frost$core$Int) {40u};
 _1413 = *(&local4);
 _1414 = _1413.position;
@@ -7894,7 +7891,7 @@ _292 = org$frostlang$frostc$parser$Parser$rawNext$R$org$frostlang$frostc$parser$
 _295 = *(&local13);
 _296 = _295.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp271;
-$tmp271 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp271 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp271->value = _296;
 _297 = ((frost$core$Equatable*) $tmp271);
 _298 = _297;
@@ -7907,7 +7904,7 @@ _304 = *(&local15);
 *(&local14) = _304;
 _307 = *(&local14);
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp272;
-$tmp272 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp272 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp272->value = _307;
 _308 = ((frost$core$Equatable*) $tmp272);
 ITable* $tmp273 = _298->$class->itable;
@@ -7972,8 +7969,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_360);
 _363 = *(&local16);
 // begin inline call to function frost.core.String.get_utf8():frost.collections.ListView<frost.core.Char8> from Parser.frost:387:40
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:458
-FROST_ASSERT(24 == sizeof(frost$core$String$UTF8List));
-_366 = (frost$core$String$UTF8List*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$String$UTF8List$class);
+_366 = (frost$core$String$UTF8List*) frostObjectAlloc(sizeof(frost$core$String$UTF8List), (frost$core$Class*) &frost$core$String$UTF8List$class);
 frost$core$String$UTF8List$init$frost$core$String(_366, _363);
 _368 = ((frost$collections$ListView*) _366);
 _369 = ((frost$core$Object*) _368);
@@ -8192,12 +8188,12 @@ _569 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Tok
 _572 = *(&local25);
 _573 = _572.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp282;
-$tmp282 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp282 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp282->value = _573;
 _574 = ((frost$core$Equatable*) $tmp282);
 _575 = _574;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp283;
-$tmp283 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp283 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp283->value = _566;
 _576 = ((frost$core$Equatable*) $tmp283);
 ITable* $tmp284 = _575->$class->itable;
@@ -8262,12 +8258,12 @@ _625 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Tok
 _628 = *(&local29);
 _629 = _628.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp285;
-$tmp285 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp285 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp285->value = _629;
 _630 = ((frost$core$Equatable*) $tmp285);
 _631 = _630;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp286;
-$tmp286 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp286 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp286->value = _622;
 _632 = ((frost$core$Equatable*) $tmp286);
 ITable* $tmp287 = _631->$class->itable;
@@ -8355,8 +8351,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_702);
 goto block1;
 block73:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:414
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_708 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_708 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _709 = (frost$core$Int) {46u};
 _710 = *(&local19);
 _711 = _710 != NULL;
@@ -8382,8 +8377,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_726);
 _729 = ((frost$core$Object*) _708);
 frost$core$Frost$unref$frost$core$Object$Q(_729);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:416
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_732 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_732 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _733 = (frost$core$Int) {5u};
 _734 = *(&local19);
 _735 = _734 != NULL;
@@ -8429,8 +8423,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_769);
 _772 = ((frost$core$Object*) _732);
 frost$core$Frost$unref$frost$core$Object$Q(_772);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:418
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_775 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_775 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _776 = (frost$core$Int) {16u};
 _777 = *(&local19);
 _778 = _777 != NULL;
@@ -8457,8 +8450,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_794);
 _797 = ((frost$core$Object*) _775);
 frost$core$Frost$unref$frost$core$Object$Q(_797);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:419
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_800 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_800 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _801 = _800;
 frost$collections$Array$init(_801);
 *(&local35) = ((frost$collections$Array*) NULL);
@@ -8473,8 +8465,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_810);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:420
 _813 = *(&local35);
 _814 = _813;
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_815 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_815 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _816 = (frost$core$Int) {40u};
 _817 = *(&local4);
 _818 = _817.position;
@@ -8495,8 +8486,7 @@ frost$collections$Array$add$frost$collections$Array$T(_814, _829);
 _831 = ((frost$core$Object*) _815);
 frost$core$Frost$unref$frost$core$Object$Q(_831);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:421
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_834 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_834 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _835 = (frost$core$Int) {9u};
 _836 = *(&local19);
 _837 = _836 != NULL;
@@ -8634,8 +8624,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_959);
 goto block93;
 block93:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:431
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_963 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_963 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _964 = (frost$core$Int) {46u};
 _965 = *(&local19);
 _966 = _965 != NULL;
@@ -8661,8 +8650,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_981);
 _984 = ((frost$core$Object*) _963);
 frost$core$Frost$unref$frost$core$Object$Q(_984);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:432
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_987 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_987 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _988 = (frost$core$Int) {16u};
 _989 = *(&local19);
 _990 = _989 != NULL;
@@ -8689,8 +8677,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_1006);
 _1009 = ((frost$core$Object*) _987);
 frost$core$Frost$unref$frost$core$Object$Q(_1009);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:433
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_1012 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_1012 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _1013 = _1012;
 frost$collections$Array$init(_1013);
 *(&local40) = ((frost$collections$Array*) NULL);
@@ -8721,8 +8708,7 @@ frost$collections$Array$add$frost$collections$Array$T(_1026, _1036);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:435
 _1039 = *(&local40);
 _1040 = _1039;
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_1041 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_1041 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _1042 = (frost$core$Int) {40u};
 _1043 = *(&local4);
 _1044 = _1043.position;
@@ -8743,8 +8729,7 @@ frost$collections$Array$add$frost$collections$Array$T(_1040, _1055);
 _1057 = ((frost$core$Object*) _1041);
 frost$core$Frost$unref$frost$core$Object$Q(_1057);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:436
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_1060 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_1060 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _1061 = (frost$core$Int) {9u};
 _1062 = *(&local19);
 _1063 = _1062 != NULL;
@@ -8803,8 +8788,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_1110);
 _1113 = ((frost$core$Object*) _1105);
 frost$core$Frost$unref$frost$core$Object$Q(_1113);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:440
-FROST_ASSERT(48 == sizeof(frost$core$MutableString));
-_1116 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
+_1116 = (frost$core$MutableString*) frostObjectAlloc(sizeof(frost$core$MutableString), (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init(_1116);
 _1118 = ((frost$core$Object*) _1116);
 frost$core$Frost$ref$frost$core$Object$Q(_1118);
@@ -8836,8 +8820,7 @@ if (_1138) goto block106; else goto block108;
 block106:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:442
 _1141 = *(&local9);
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_1142 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_1142 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _1143 = (frost$core$Int) {40u};
 _1144 = *(&local4);
 _1145 = _1144.position;
@@ -8859,8 +8842,7 @@ frost$core$Frost$ref$frost$core$Object$Q(_1158);
 goto block110;
 block112:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:234
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_1162 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_1162 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _1163 = (frost$core$Int) {5u};
 _1164 = _1141 != NULL;
 _1165 = (frost$core$Bit) {_1164};
@@ -8941,8 +8923,7 @@ frost$core$Frost$ref$frost$core$Object$Q(_1231);
 goto block120;
 block122:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:234
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_1235 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_1235 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _1236 = (frost$core$Int) {5u};
 _1237 = _1211 != NULL;
 _1238 = (frost$core$Bit) {_1237};
@@ -9135,8 +9116,7 @@ frost$core$Frost$ref$frost$core$Object$Q(_1428);
 goto block133;
 block135:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:234
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_1432 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_1432 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _1433 = (frost$core$Int) {5u};
 _1434 = _1410 != NULL;
 _1435 = (frost$core$Bit) {_1434};
@@ -9226,7 +9206,8 @@ frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$St
 abort(); // unreachable
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$parenthesizedExpression$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$parser$Parser* param0) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$parenthesizedExpression$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$parser$Token$Kind local0;
 org$frostlang$frostc$parser$Token$Kind local1;
@@ -10075,7 +10056,7 @@ _23 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Toke
 _26 = *(&local3);
 _27 = _26.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp361;
-$tmp361 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp361 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp361->value = _27;
 _28 = ((frost$core$Equatable*) $tmp361);
 _29 = _28;
@@ -10088,7 +10069,7 @@ _35 = *(&local5);
 *(&local4) = _35;
 _38 = *(&local4);
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp362;
-$tmp362 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp362 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp362->value = _38;
 _39 = ((frost$core$Equatable*) $tmp362);
 ITable* $tmp363 = _29->$class->itable;
@@ -10122,8 +10103,7 @@ _63 = _61.value;
 if (_63) goto block8; else goto block9;
 block8:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:482
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_66 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_66 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _67 = _66;
 frost$collections$Array$init(_67);
 *(&local7) = ((frost$collections$Array*) NULL);
@@ -10176,8 +10156,7 @@ block13:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:487
 _116 = *(&local7);
 _117 = _116;
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_118 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_118 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _119 = (frost$core$Int) {34u};
 _120 = *(&local3);
 _121 = _120.position;
@@ -10232,12 +10211,12 @@ _166 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Tok
 _169 = *(&local12);
 _170 = _169.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp366;
-$tmp366 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp366 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp366->value = _170;
 _171 = ((frost$core$Equatable*) $tmp366);
 _172 = _171;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp367;
-$tmp367 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp367 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp367->value = _163;
 _173 = ((frost$core$Equatable*) $tmp367);
 ITable* $tmp368 = _172->$class->itable;
@@ -10356,8 +10335,7 @@ block30:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:497
 _279 = *(&local7);
 _280 = _279;
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_281 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_281 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _282 = (frost$core$Int) {34u};
 _283 = *(&local15);
 _284 = _283.nonnull;
@@ -10488,12 +10466,12 @@ _394 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Tok
 _397 = *(&local25);
 _398 = _397.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp379;
-$tmp379 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp379 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp379->value = _398;
 _399 = ((frost$core$Equatable*) $tmp379);
 _400 = _399;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp380;
-$tmp380 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp380 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp380->value = _391;
 _401 = ((frost$core$Equatable*) $tmp380);
 ITable* $tmp381 = _400->$class->itable;
@@ -10609,8 +10587,7 @@ _500 = org$frostlang$frostc$parser$Parser$expect$org$frostlang$frostc$parser$Tok
 goto block54;
 block54:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:522
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_503 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_503 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _504 = (frost$core$Int) {47u};
 _505 = *(&local2);
 _506 = _505.nonnull;
@@ -10672,8 +10649,7 @@ _557 = _555.value;
 if (_557) goto block60; else goto block61;
 block60:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:527
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_560 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_560 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _561 = _560;
 frost$collections$Array$init(_561);
 *(&local31) = ((frost$collections$Array*) NULL);
@@ -10688,8 +10664,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_570);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:528
 _573 = *(&local31);
 _574 = _573;
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_575 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_575 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _576 = (frost$core$Int) {22u};
 _577 = *(&local3);
 _578 = _577.position;
@@ -10818,12 +10793,12 @@ _692 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Tok
 _695 = *(&local37);
 _696 = _695.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp392;
-$tmp392 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp392 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp392->value = _696;
 _697 = ((frost$core$Equatable*) $tmp392);
 _698 = _697;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp393;
-$tmp393 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp393 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp393->value = _689;
 _699 = ((frost$core$Equatable*) $tmp393);
 ITable* $tmp394 = _698->$class->itable;
@@ -10903,12 +10878,12 @@ _762 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Tok
 _765 = *(&local43);
 _766 = _765.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp396;
-$tmp396 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp396 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp396->value = _766;
 _767 = ((frost$core$Equatable*) $tmp396);
 _768 = _767;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp397;
-$tmp397 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp397 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp397->value = _759;
 _769 = ((frost$core$Equatable*) $tmp397);
 ITable* $tmp398 = _768->$class->itable;
@@ -10975,8 +10950,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_819);
 return ((org$frostlang$frostc$ASTNode*) NULL);
 block92:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:554
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_824 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_824 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _825 = (frost$core$Int) {51u};
 _826 = *(&local2);
 _827 = _826.nonnull;
@@ -11024,8 +10998,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_862);
 return _850;
 block85:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:557
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_867 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_867 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _868 = (frost$core$Int) {43u};
 _869 = *(&local2);
 _870 = _869.nonnull;
@@ -11084,12 +11057,12 @@ _918 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Tok
 _921 = *(&local48);
 _922 = _921.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp405;
-$tmp405 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp405 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp405->value = _922;
 _923 = ((frost$core$Equatable*) $tmp405);
 _924 = _923;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp406;
-$tmp406 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp406 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp406->value = _915;
 _925 = ((frost$core$Equatable*) $tmp406);
 ITable* $tmp407 = _924->$class->itable;
@@ -11125,8 +11098,7 @@ _948 = _947.value;
 if (_948) goto block102; else goto block103;
 block102:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:562
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_951 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_951 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _952 = _951;
 frost$collections$Array$init(_952);
 *(&local49) = ((frost$collections$Array*) NULL);
@@ -11141,8 +11113,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_961);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:563
 _964 = *(&local49);
 _965 = _964;
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_966 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_966 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _967 = (frost$core$Int) {22u};
 _968 = *(&local3);
 _969 = _968.position;
@@ -11199,8 +11170,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_1017);
 return ((org$frostlang$frostc$ASTNode*) NULL);
 block110:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:568
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_1022 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_1022 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _1023 = (frost$core$Int) {51u};
 _1024 = *(&local2);
 _1025 = _1024.nonnull;
@@ -11248,8 +11218,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_1060);
 return _1048;
 block103:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:572
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_1065 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_1065 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _1066 = (frost$core$Int) {22u};
 _1067 = *(&local3);
 _1068 = _1067.position;
@@ -11391,7 +11360,7 @@ _1185 = _1184.value;
 _1186 = _1183[_1185];
 _1189 = _1186.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp417;
-$tmp417 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp417 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp417->value = _1189;
 _1190 = ((frost$core$Equatable*) $tmp417);
 _1191 = _1190;
@@ -11404,7 +11373,7 @@ _1197 = *(&local53);
 *(&local52) = _1197;
 _1200 = *(&local52);
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp418;
-$tmp418 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp418 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp418->value = _1200;
 _1201 = ((frost$core$Equatable*) $tmp418);
 ITable* $tmp419 = _1191->$class->itable;
@@ -11421,8 +11390,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_1207);
 if (_1204) goto block118; else goto block119;
 block118:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:586
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_1211 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_1211 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _1212 = _1211;
 _1213 = (frost$core$Int) {1u};
 frost$collections$Array$init$frost$core$Int(_1212, _1213);
@@ -11468,12 +11436,12 @@ _1249 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$To
 _1252 = *(&local58);
 _1253 = _1252.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp422;
-$tmp422 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp422 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp422->value = _1253;
 _1254 = ((frost$core$Equatable*) $tmp422);
 _1255 = _1254;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp423;
-$tmp423 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp423 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp423->value = _1246;
 _1256 = ((frost$core$Equatable*) $tmp423);
 ITable* $tmp424 = _1255->$class->itable;
@@ -11566,8 +11534,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_1329);
 goto block131;
 block133:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:594
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_1334 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_1334 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _1335 = (frost$core$Int) {43u};
 _1336 = *(&local2);
 _1337 = _1336.nonnull;
@@ -11624,7 +11591,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_1383);
 return _1379;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$arrayLiteral$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$parser$Parser* param0) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$arrayLiteral$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$parser$Token$Kind local0;
 org$frostlang$frostc$parser$Token$Kind local1;
@@ -11848,8 +11816,7 @@ _9 = *(&local0);
 _10 = org$frostlang$frostc$parser$Parser$expect$org$frostlang$frostc$parser$Token$Kind$frost$core$String$R$org$frostlang$frostc$parser$Token$Q(param0, _9, &$s433);
 *(&local2) = _10;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:605
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_13 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_13 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _14 = _13;
 frost$collections$Array$init(_14);
 *(&local3) = ((frost$collections$Array*) NULL);
@@ -11878,12 +11845,12 @@ _37 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Toke
 _40 = *(&local7);
 _41 = _40.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp434;
-$tmp434 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp434 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp434->value = _41;
 _42 = ((frost$core$Equatable*) $tmp434);
 _43 = _42;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp435;
-$tmp435 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp435 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp435->value = _34;
 _44 = ((frost$core$Equatable*) $tmp435);
 ITable* $tmp436 = _43->$class->itable;
@@ -11924,7 +11891,7 @@ _71 = *_70;
 _72 = _71;
 _73 = (frost$core$Bit) {true};
 frost$core$Bit$wrapper* $tmp437;
-$tmp437 = (frost$core$Bit$wrapper*) frostObjectAlloc(17, (frost$core$Class*) &frost$core$Bit$wrapperclass);
+$tmp437 = (frost$core$Bit$wrapper*) frostObjectAlloc(sizeof(frost$core$Bit$wrapper), (frost$core$Class*) &frost$core$Bit$wrapperclass);
 $tmp437->value = _73;
 _74 = ((frost$core$Object*) $tmp437);
 // begin inline call to method frost.collections.Stack.push(v:frost.collections.Stack.T) from Parser.frost:607:49
@@ -11953,12 +11920,12 @@ _97 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Toke
 _100 = *(&local11);
 _101 = _100.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp438;
-$tmp438 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp438 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp438->value = _101;
 _102 = ((frost$core$Equatable*) $tmp438);
 _103 = _102;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp439;
-$tmp439 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp439 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp439->value = _94;
 _104 = ((frost$core$Equatable*) $tmp439);
 ITable* $tmp440 = _103->$class->itable;
@@ -12067,12 +12034,12 @@ _193 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Tok
 _196 = *(&local16);
 _197 = _196.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp443;
-$tmp443 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp443 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp443->value = _197;
 _198 = ((frost$core$Equatable*) $tmp443);
 _199 = _198;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp444;
-$tmp444 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp444 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp444->value = _190;
 _200 = ((frost$core$Equatable*) $tmp444);
 ITable* $tmp445 = _199->$class->itable;
@@ -12216,8 +12183,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_322);
 goto block3;
 block3:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:630
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_326 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_326 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _327 = (frost$core$Int) {1u};
 _328 = *(&local2);
 _329 = _328.nonnull;
@@ -12250,7 +12216,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_351);
 return _343;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$lambda$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$parser$Parser* param0) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$lambda$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$parser$Token$Kind local0;
 org$frostlang$frostc$parser$Token$Kind local1;
@@ -12524,12 +12491,12 @@ _24 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Toke
 _27 = *(&local6);
 _28 = _27.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp453;
-$tmp453 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp453 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp453->value = _28;
 _29 = ((frost$core$Equatable*) $tmp453);
 _30 = _29;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp454;
-$tmp454 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp454 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp454->value = _21;
 _31 = ((frost$core$Equatable*) $tmp454);
 ITable* $tmp455 = _30->$class->itable;
@@ -12599,8 +12566,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_85);
 return ((org$frostlang$frostc$ASTNode*) NULL);
 block10:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:643
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_90 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_90 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _91 = _90;
 frost$collections$Array$init(_91);
 *(&local8) = ((frost$collections$Array*) NULL);
@@ -12615,8 +12581,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_100);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:644
 _103 = *(&local8);
 _104 = _103;
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_105 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_105 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _106 = (frost$core$Int) {34u};
 _107 = *(&local2);
 _108 = _107.nonnull;
@@ -12736,8 +12701,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_212);
 return ((org$frostlang$frostc$ASTNode*) NULL);
 block22:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:652
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_217 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_217 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _218 = (frost$core$Int) {47u};
 _219 = *(&local2);
 _220 = _219.nonnull;
@@ -12789,8 +12753,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_259);
 return _243;
 block3:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:655
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_264 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_264 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _265 = _264;
 frost$collections$Array$init(_265);
 *(&local12) = ((frost$collections$Array*) NULL);
@@ -12805,8 +12768,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_274);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:656
 _277 = *(&local12);
 _278 = _277;
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_279 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_279 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _280 = (frost$core$Int) {22u};
 _281 = *(&local2);
 _282 = _281.nonnull;
@@ -12907,8 +12869,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_369);
 return ((org$frostlang$frostc$ASTNode*) NULL);
 block36:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:664
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_374 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_374 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _375 = (frost$core$Int) {51u};
 _376 = *(&local2);
 _377 = _376.nonnull;
@@ -12956,7 +12917,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_412);
 return _400;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$regex$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$parser$Parser* param0) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$regex$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$parser$Token$Kind local0;
 org$frostlang$frostc$parser$Token$Kind local1;
@@ -13437,7 +13399,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_268);
 return _264;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$term$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$parser$Parser* param0) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$term$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$parser$Token local0;
 org$frostlang$frostc$parser$Token$Kind local1;
@@ -14069,7 +14032,7 @@ if (_85) goto block16; else goto block15;
 block16:;
 _87 = *(&local1);
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp504;
-$tmp504 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp504 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp504->value = _87;
 _88 = ((frost$core$Equatable*) $tmp504);
 _89 = _88;
@@ -14082,7 +14045,7 @@ _95 = *(&local3);
 *(&local2) = _95;
 _98 = *(&local2);
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp505;
-$tmp505 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp505 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp505->value = _98;
 _99 = ((frost$core$Equatable*) $tmp505);
 ITable* $tmp506 = _89->$class->itable;
@@ -14100,7 +14063,7 @@ if (_102) goto block13; else goto block15;
 block15:;
 _108 = *(&local1);
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp507;
-$tmp507 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp507 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp507->value = _108;
 _109 = ((frost$core$Equatable*) $tmp507);
 _110 = _109;
@@ -14113,7 +14076,7 @@ _116 = *(&local5);
 *(&local4) = _116;
 _119 = *(&local4);
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp508;
-$tmp508 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp508 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp508->value = _119;
 _120 = ((frost$core$Equatable*) $tmp508);
 ITable* $tmp509 = _110->$class->itable;
@@ -14141,8 +14104,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_136);
 return _133;
 block14:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:716
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_140 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_140 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _141 = (frost$core$Int) {22u};
 _142 = *(&local0);
 _143 = _142.position;
@@ -14181,8 +14143,7 @@ _176 = _174.value;
 if (_176) goto block20; else goto block21;
 block20:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:719
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_179 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_179 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _180 = (frost$core$Int) {25u};
 _181 = *(&local0);
 _182 = _181.position;
@@ -14232,8 +14193,7 @@ _224 = _222.value;
 if (_224) goto block26; else goto block27;
 block26:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:722
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_227 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_227 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _228 = (frost$core$Int) {25u};
 _229 = *(&local0);
 _230 = _229.position;
@@ -14331,8 +14291,7 @@ _314 = _312.value;
 if (_314) goto block38; else goto block39;
 block38:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:725
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_317 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_317 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _318 = (frost$core$Int) {25u};
 _319 = *(&local0);
 _320 = _319.position;
@@ -14430,8 +14389,7 @@ _404 = _402.value;
 if (_404) goto block50; else goto block51;
 block50:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:728
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_407 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_407 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _408 = (frost$core$Int) {36u};
 _409 = *(&local0);
 _410 = _409.position;
@@ -14484,8 +14442,7 @@ _456 = _454.value;
 if (_456) goto block57; else goto block58;
 block57:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:731
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_459 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_459 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _460 = (frost$core$Int) {39u};
 _461 = *(&local0);
 _462 = _461.position;
@@ -14508,8 +14465,7 @@ _478 = _476.value;
 if (_478) goto block60; else goto block61;
 block60:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:734
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_481 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_481 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _482 = (frost$core$Int) {41u};
 _483 = *(&local0);
 _484 = _483.position;
@@ -14532,8 +14488,7 @@ _500 = _498.value;
 if (_500) goto block63; else goto block64;
 block63:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:737
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_503 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_503 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _504 = (frost$core$Int) {31u};
 _505 = *(&local0);
 _506 = _505.position;
@@ -14556,8 +14511,7 @@ _522 = _520.value;
 if (_522) goto block66; else goto block67;
 block66:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:740
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_525 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_525 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _526 = (frost$core$Int) {6u};
 _527 = *(&local0);
 _528 = _527.position;
@@ -14581,8 +14535,7 @@ _545 = _543.value;
 if (_545) goto block69; else goto block70;
 block69:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:743
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_548 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_548 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _549 = (frost$core$Int) {6u};
 _550 = *(&local0);
 _551 = _550.position;
@@ -14760,8 +14713,7 @@ _716 = *(&local15);
 _719 = *(&local14);
 _720 = org$frostlang$frostc$parser$Parser$expect$org$frostlang$frostc$parser$Token$Kind$frost$core$String$R$org$frostlang$frostc$parser$Token$Q(param0, _719, &$s524);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:766
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_722 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_722 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _723 = (frost$core$Int) {3u};
 _724 = *(&local0);
 _725 = _724.position;
@@ -14799,8 +14751,7 @@ _753 = _752.value;
 if (_753) goto block96; else goto block97;
 block96:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:769
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_756 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_756 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _757 = (frost$core$Int) {4u};
 _758 = *(&local0);
 _759 = _758.position;
@@ -15012,9 +14963,9 @@ _9 = (frost$core$Bit) {_8};
 _11 = _9.value;
 if (_11) goto block2; else goto block3;
 block2:;
-_13 = (org$frostlang$frostc$Position*) (param0->$data + 0);
+_13 = &param0->$data.$IDENTIFIER.field0;
 _14 = *_13;
-_15 = (frost$core$String**) (param0->$data + 24);
+_15 = &param0->$data.$IDENTIFIER.field1;
 _16 = *_15;
 *(&local0) = ((frost$core$String*) NULL);
 _18 = ((frost$core$Object*) _16);
@@ -15044,9 +14995,9 @@ _40 = (frost$core$Bit) {_39};
 _42 = _40.value;
 if (_42) goto block5; else goto block6;
 block5:;
-_44 = (org$frostlang$frostc$Position*) (param0->$data + 0);
+_44 = &param0->$data.$DOT.field0;
 _45 = *_44;
-_46 = (org$frostlang$frostc$ASTNode**) (param0->$data + 24);
+_46 = &param0->$data.$DOT.field1;
 _47 = *_46;
 *(&local1) = ((org$frostlang$frostc$ASTNode*) NULL);
 _49 = ((frost$core$Object*) _47);
@@ -15055,7 +15006,7 @@ _51 = *(&local1);
 _52 = ((frost$core$Object*) _51);
 frost$core$Frost$unref$frost$core$Object$Q(_52);
 *(&local1) = _47;
-_55 = (frost$core$String**) (param0->$data + 32);
+_55 = &param0->$data.$DOT.field2;
 _56 = *_55;
 *(&local2) = ((frost$core$String*) NULL);
 _58 = ((frost$core$Object*) _56);
@@ -15138,7 +15089,8 @@ goto block12;
 block12:;
 
 }
-frost$core$String* org$frostlang$frostc$parser$Parser$methodName$R$frost$core$String$Q(org$frostlang$frostc$parser$Parser* param0) {
+frost$core$String* org$frostlang$frostc$parser$Parser$methodName$R$frost$core$String$Q(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$parser$Token local0;
 org$frostlang$frostc$parser$Token local1;
@@ -15649,7 +15601,7 @@ _260 = org$frostlang$frostc$parser$Parser$rawNext$R$org$frostlang$frostc$parser$
 _263 = *(&local1);
 _264 = _263.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp537;
-$tmp537 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp537 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp537->value = _264;
 _265 = ((frost$core$Equatable*) $tmp537);
 _266 = _265;
@@ -15662,7 +15614,7 @@ _272 = *(&local3);
 *(&local2) = _272;
 _275 = *(&local2);
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp538;
-$tmp538 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp538 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp538->value = _275;
 _276 = ((frost$core$Equatable*) $tmp538);
 ITable* $tmp539 = _266->$class->itable;
@@ -15743,12 +15695,12 @@ _341 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Tok
 _344 = *(&local9);
 _345 = _344.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp543;
-$tmp543 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp543 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp543->value = _345;
 _346 = ((frost$core$Equatable*) $tmp543);
 _347 = _346;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp544;
-$tmp544 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp544 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp544->value = _338;
 _348 = ((frost$core$Equatable*) $tmp544);
 ITable* $tmp545 = _347->$class->itable;
@@ -15829,7 +15781,8 @@ goto block68;
 block68:;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$type$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$parser$Parser* param0) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$type$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 frost$core$Bit _1;
 org$frostlang$frostc$ASTNode* _2;
@@ -15845,7 +15798,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_5);
 return _2;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$functionOrTupleType$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$parser$Parser* param0) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$functionOrTupleType$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$parser$Token$Kind local0;
 org$frostlang$frostc$parser$Token$Kind local1;
@@ -16371,8 +16325,7 @@ frost$core$Frost$ref$frost$core$Object$Q(_19);
 return ((org$frostlang$frostc$ASTNode*) NULL);
 block3:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:864
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_23 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_23 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _24 = _23;
 frost$collections$Array$init(_24);
 *(&local3) = ((frost$collections$Array*) NULL);
@@ -16401,12 +16354,12 @@ _47 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Toke
 _50 = *(&local7);
 _51 = _50.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp562;
-$tmp562 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp562 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp562->value = _51;
 _52 = ((frost$core$Equatable*) $tmp562);
 _53 = _52;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp563;
-$tmp563 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp563 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp563->value = _44;
 _54 = ((frost$core$Equatable*) $tmp563);
 ITable* $tmp564 = _53->$class->itable;
@@ -16514,12 +16467,12 @@ _143 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Tok
 _146 = *(&local12);
 _147 = _146.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp567;
-$tmp567 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp567 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp567->value = _147;
 _148 = ((frost$core$Equatable*) $tmp567);
 _149 = _148;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp568;
-$tmp568 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp568 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp568->value = _140;
 _150 = ((frost$core$Equatable*) $tmp568);
 ITable* $tmp569 = _149->$class->itable;
@@ -16792,8 +16745,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_387);
 return ((org$frostlang$frostc$ASTNode*) NULL);
 block49:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:890
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_392 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_392 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _393 = _392;
 frost$collections$Array$init(_393);
 *(&local18) = ((frost$collections$Array*) NULL);
@@ -16822,12 +16774,12 @@ _416 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Tok
 _419 = *(&local22);
 _420 = _419.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp579;
-$tmp579 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp579 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp579->value = _420;
 _421 = ((frost$core$Equatable*) $tmp579);
 _422 = _421;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp580;
-$tmp580 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp580 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp580->value = _413;
 _423 = ((frost$core$Equatable*) $tmp580);
 ITable* $tmp581 = _422->$class->itable;
@@ -16939,12 +16891,12 @@ _516 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Tok
 _519 = *(&local27);
 _520 = _519.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp584;
-$tmp584 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp584 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp584->value = _520;
 _521 = ((frost$core$Equatable*) $tmp584);
 _522 = _521;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp585;
-$tmp585 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp585 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp585->value = _513;
 _523 = ((frost$core$Equatable*) $tmp585);
 ITable* $tmp586 = _522->$class->itable;
@@ -17178,8 +17130,7 @@ goto block82;
 block83:;
 // <no location>
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:916
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_725 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_725 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _726 = (frost$core$Int) {45u};
 _727 = *(&local2);
 _728 = _727.nonnull;
@@ -17214,8 +17165,7 @@ block82:;
 goto block78;
 block78:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:919
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_756 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_756 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _757 = (frost$core$Int) {30u};
 _758 = *(&local2);
 _759 = _758.nonnull;
@@ -17298,8 +17248,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_823);
 return ((org$frostlang$frostc$ASTNode*) NULL);
 block94:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:927
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_828 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_828 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _829 = (frost$core$Int) {45u};
 _830 = *(&local2);
 _831 = _830.nonnull;
@@ -17335,7 +17284,8 @@ goto block99;
 block99:;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$type$frost$core$Bit$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$parser$Parser* param0, frost$core$Bit param1) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$type$frost$core$Bit$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf, frost$core$Bit param1) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$ASTNode* local0 = NULL;
 org$frostlang$frostc$parser$Token$Kind local1;
@@ -18608,7 +18558,7 @@ _61 = _60.value;
 _62 = _59[_61];
 _65 = _62.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp642;
-$tmp642 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp642 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp642->value = _65;
 _66 = ((frost$core$Equatable*) $tmp642);
 _67 = _66;
@@ -18621,7 +18571,7 @@ _73 = *(&local2);
 *(&local1) = _73;
 _76 = *(&local1);
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp643;
-$tmp643 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp643 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp643->value = _76;
 _77 = ((frost$core$Equatable*) $tmp643);
 ITable* $tmp644 = _67->$class->itable;
@@ -18694,8 +18644,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_134);
 return ((org$frostlang$frostc$ASTNode*) NULL);
 block17:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:949
-FROST_ASSERT(48 == sizeof(frost$core$MutableString));
-_139 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
+_139 = (frost$core$MutableString*) frostObjectAlloc(sizeof(frost$core$MutableString), (frost$core$Class*) &frost$core$MutableString$class);
 _140 = *(&local5);
 _141 = _140.nonnull;
 _142 = (frost$core$Bit) {_141};
@@ -18751,12 +18700,12 @@ _188 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Tok
 _191 = *(&local10);
 _192 = _191.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp648;
-$tmp648 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp648 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp648->value = _192;
 _193 = ((frost$core$Equatable*) $tmp648);
 _194 = _193;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp649;
-$tmp649 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp649 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp649->value = _185;
 _195 = ((frost$core$Equatable*) $tmp649);
 ITable* $tmp650 = _194->$class->itable;
@@ -18869,8 +18818,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_289);
 _292 = ((frost$core$Object*) _284);
 frost$core$Frost$unref$frost$core$Object$Q(_292);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:959
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_295 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_295 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _296 = (frost$core$Int) {46u};
 _297 = *(&local5);
 _298 = _297.nonnull;
@@ -18974,7 +18922,7 @@ _377 = _376.value;
 _378 = _375[_377];
 _381 = _378.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp662;
-$tmp662 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp662 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp662->value = _381;
 _382 = ((frost$core$Equatable*) $tmp662);
 _383 = _382;
@@ -18987,7 +18935,7 @@ _389 = *(&local16);
 *(&local15) = _389;
 _392 = *(&local15);
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp663;
-$tmp663 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp663 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp663->value = _392;
 _393 = ((frost$core$Equatable*) $tmp663);
 ITable* $tmp664 = _383->$class->itable;
@@ -19013,8 +18961,7 @@ block47:;
 _408 = &param0->speculativeBuffers;
 _409 = *_408;
 _410 = _409;
-FROST_ASSERT(40 == sizeof(frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT));
-_411 = (frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT$class);
+_411 = (frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT*) frostObjectAlloc(sizeof(frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT), (frost$core$Class*) &frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT$class);
 frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT$init(_411);
 _413 = ((frost$core$Object*) _411);
 // begin inline call to method frost.collections.Stack.push(v:frost.collections.Stack.T) from Parser.frost:211:32
@@ -19113,8 +19060,7 @@ block48:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:966
 _497 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Token(param0);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:967
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_499 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_499 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _500 = _499;
 frost$collections$Array$init(_500);
 *(&local17) = ((frost$collections$Array*) NULL);
@@ -19555,12 +19501,12 @@ _882 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Tok
 _885 = *(&local23);
 _886 = _885.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp686;
-$tmp686 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp686 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp686->value = _886;
 _887 = ((frost$core$Equatable*) $tmp686);
 _888 = _887;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp687;
-$tmp687 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp687 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp687->value = _879;
 _889 = ((frost$core$Equatable*) $tmp687);
 ITable* $tmp688 = _888->$class->itable;
@@ -20397,8 +20343,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_1609);
 return ((org$frostlang$frostc$ASTNode*) NULL);
 block145:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:995
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_1614 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_1614 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _1615 = (frost$core$Int) {21u};
 _1616 = *(&local5);
 _1617 = _1616.nonnull;
@@ -20482,12 +20427,12 @@ _1688 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$To
 _1691 = *(&local31);
 _1692 = _1691.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp722;
-$tmp722 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp722 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp722->value = _1692;
 _1693 = ((frost$core$Equatable*) $tmp722);
 _1694 = _1693;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp723;
-$tmp723 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp723 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp723->value = _1685;
 _1695 = ((frost$core$Equatable*) $tmp723);
 ITable* $tmp724 = _1694->$class->itable;
@@ -20523,8 +20468,7 @@ _1718 = _1717.value;
 if (_1718) goto block188; else goto block189;
 block188:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1003
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_1721 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_1721 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _1722 = (frost$core$Int) {32u};
 _1723 = *(&local0);
 _1724 = _1723 != NULL;
@@ -20573,7 +20517,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_1759);
 return _1755;
 
 }
-org$frostlang$frostc$FixedArray* org$frostlang$frostc$parser$Parser$typeSpecifiers$R$org$frostlang$frostc$FixedArray$LTorg$frostlang$frostc$ASTNode$GT$Q(org$frostlang$frostc$parser$Parser* param0) {
+org$frostlang$frostc$FixedArray* org$frostlang$frostc$parser$Parser$typeSpecifiers$R$org$frostlang$frostc$FixedArray$LTorg$frostlang$frostc$ASTNode$GT$Q(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$parser$Token$Kind local0;
 org$frostlang$frostc$parser$Token$Kind local1;
@@ -20720,8 +20665,7 @@ frost$core$Frost$ref$frost$core$Object$Q(_16);
 return ((org$frostlang$frostc$FixedArray*) NULL);
 block2:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1015
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_20 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_20 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _21 = _20;
 frost$collections$Array$init(_21);
 *(&local2) = ((frost$collections$Array*) NULL);
@@ -20811,12 +20755,12 @@ _101 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Tok
 _104 = *(&local7);
 _105 = _104.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp734;
-$tmp734 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp734 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp734->value = _105;
 _106 = ((frost$core$Equatable*) $tmp734);
 _107 = _106;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp735;
-$tmp735 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp735 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp735->value = _98;
 _108 = ((frost$core$Equatable*) $tmp735);
 ITable* $tmp736 = _107->$class->itable;
@@ -20952,7 +20896,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_223);
 return _217;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$postfixExpression$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$parser$Parser* param0) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$postfixExpression$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$ASTNode* local0 = NULL;
 org$frostlang$frostc$parser$Token local1;
@@ -23092,7 +23037,7 @@ _46 = *_45;
 _47 = _46;
 _48 = (frost$core$Bit) {true};
 frost$core$Bit$wrapper* $tmp787;
-$tmp787 = (frost$core$Bit$wrapper*) frostObjectAlloc(17, (frost$core$Class*) &frost$core$Bit$wrapperclass);
+$tmp787 = (frost$core$Bit$wrapper*) frostObjectAlloc(sizeof(frost$core$Bit$wrapper), (frost$core$Class*) &frost$core$Bit$wrapperclass);
 $tmp787->value = _48;
 _49 = ((frost$core$Object*) $tmp787);
 // begin inline call to method frost.collections.Stack.push(v:frost.collections.Stack.T) from Parser.frost:1055:57
@@ -23105,8 +23050,7 @@ frost$collections$Array$add$frost$collections$Array$T(_54, _55);
 _58 = _49;
 frost$core$Frost$unref$frost$core$Object$Q(_58);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1056
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_61 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_61 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _62 = _61;
 frost$collections$Array$init(_62);
 *(&local2) = ((frost$collections$Array*) NULL);
@@ -23135,12 +23079,12 @@ _85 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Toke
 _88 = *(&local6);
 _89 = _88.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp788;
-$tmp788 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp788 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp788->value = _89;
 _90 = ((frost$core$Equatable*) $tmp788);
 _91 = _90;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp789;
-$tmp789 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp789 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp789->value = _82;
 _92 = ((frost$core$Equatable*) $tmp789);
 ITable* $tmp790 = _91->$class->itable;
@@ -23253,12 +23197,12 @@ _185 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Tok
 _188 = *(&local11);
 _189 = _188.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp793;
-$tmp793 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp793 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp793->value = _189;
 _190 = ((frost$core$Equatable*) $tmp793);
 _191 = _190;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp794;
-$tmp794 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp794 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp794->value = _182;
 _192 = ((frost$core$Equatable*) $tmp794);
 ITable* $tmp795 = _191->$class->itable;
@@ -23408,8 +23352,7 @@ _321 = ((frost$core$Bit$wrapper*) _320)->value;
 _322 = _320;
 frost$core$Frost$unref$frost$core$Object$Q(_322);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1078
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_325 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_325 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _326 = (frost$core$Int) {9u};
 _327 = *(&local1);
 _328 = _327.position;
@@ -23516,8 +23459,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_421);
 return ((org$frostlang$frostc$ASTNode*) NULL);
 block42:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1089
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_426 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_426 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _427 = (frost$core$Int) {5u};
 _428 = *(&local1);
 _429 = _428.position;
@@ -23596,12 +23538,12 @@ _496 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Tok
 _499 = *(&local23);
 _500 = _499.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp806;
-$tmp806 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp806 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp806->value = _500;
 _501 = ((frost$core$Equatable*) $tmp806);
 _502 = _501;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp807;
-$tmp807 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp807 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp807->value = _493;
 _503 = ((frost$core$Equatable*) $tmp807);
 ITable* $tmp808 = _502->$class->itable;
@@ -23689,8 +23631,7 @@ _573 = ((frost$core$Object*) _572);
 frost$core$Frost$unref$frost$core$Object$Q(_573);
 *(&local24) = _568;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1103
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_577 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_577 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _578 = (frost$core$Int) {16u};
 _579 = *(&local1);
 _580 = _579.position;
@@ -23805,7 +23746,7 @@ _668 = _667.value;
 _669 = _666[_668];
 _672 = _669.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp819;
-$tmp819 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp819 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp819->value = _672;
 _673 = ((frost$core$Equatable*) $tmp819);
 _674 = _673;
@@ -23818,7 +23759,7 @@ _680 = *(&local26);
 *(&local25) = _680;
 _683 = *(&local25);
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp820;
-$tmp820 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp820 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp820->value = _683;
 _684 = ((frost$core$Equatable*) $tmp820);
 ITable* $tmp821 = _674->$class->itable;
@@ -23840,8 +23781,7 @@ block65:;
 _696 = &param0->speculativeBuffers;
 _697 = *_696;
 _698 = _697;
-FROST_ASSERT(40 == sizeof(frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT));
-_699 = (frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT$class);
+_699 = (frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT*) frostObjectAlloc(sizeof(frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT), (frost$core$Class*) &frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT$class);
 frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT$init(_699);
 _701 = ((frost$core$Object*) _699);
 // begin inline call to method frost.collections.Stack.push(v:frost.collections.Stack.T) from Parser.frost:211:32
@@ -23964,8 +23904,7 @@ _807 = ((frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$
 _808 = _806;
 frost$core$Frost$unref$frost$core$Object$Q(_808);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1109
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_812 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_812 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _813 = (frost$core$Int) {17u};
 _814 = *(&local1);
 _815 = _814.position;
@@ -24420,8 +24359,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_1207);
 return ((org$frostlang$frostc$ASTNode*) NULL);
 block133:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1122
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_1212 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_1212 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _1213 = (frost$core$Int) {5u};
 _1214 = *(&local1);
 _1215 = _1214.position;
@@ -24482,8 +24420,7 @@ _1266 = _1264.value;
 if (_1266) goto block139; else goto block140;
 block139:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1125
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_1269 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_1269 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _1270 = (frost$core$Int) {49u};
 _1271 = *(&local1);
 _1272 = _1271.position;
@@ -24566,8 +24503,7 @@ block150:;
 _1344 = &param0->speculativeBuffers;
 _1345 = *_1344;
 _1346 = _1345;
-FROST_ASSERT(40 == sizeof(frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT));
-_1347 = (frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT$class);
+_1347 = (frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT*) frostObjectAlloc(sizeof(frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT), (frost$core$Class*) &frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT$class);
 frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT$init(_1347);
 _1349 = ((frost$core$Object*) _1347);
 // begin inline call to method frost.collections.Stack.push(v:frost.collections.Stack.T) from Parser.frost:211:32
@@ -24664,8 +24600,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_1428);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1134
 _1432 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Token(param0);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1137
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_1434 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_1434 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _1435 = _1434;
 frost$collections$Array$init(_1435);
 *(&local35) = ((frost$collections$Array*) NULL);
@@ -25073,12 +25008,12 @@ _1786 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$To
 _1789 = *(&local41);
 _1790 = _1789.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp876;
-$tmp876 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp876 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp876->value = _1790;
 _1791 = ((frost$core$Equatable*) $tmp876);
 _1792 = _1791;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp877;
-$tmp877 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp877 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp877->value = _1783;
 _1793 = ((frost$core$Equatable*) $tmp877);
 ITable* $tmp878 = _1792->$class->itable;
@@ -26131,8 +26066,7 @@ _2699 = ((frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token
 _2700 = _2698;
 frost$core$Frost$unref$frost$core$Object$Q(_2700);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1208
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_2704 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_2704 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _2705 = (frost$core$Int) {21u};
 _2706 = *(&local0);
 _2707 = _2706 != NULL;
@@ -26575,7 +26509,8 @@ goto block358;
 block358:;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$exponentExpression$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$parser$Parser* param0) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$exponentExpression$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$ASTNode* local0 = NULL;
 org$frostlang$frostc$parser$Token$Kind local1;
@@ -26719,12 +26654,12 @@ _39 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Toke
 _42 = *(&local4);
 _43 = _42.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp943;
-$tmp943 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp943 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp943->value = _43;
 _44 = ((frost$core$Equatable*) $tmp943);
 _45 = _44;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp944;
-$tmp944 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp944 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp944->value = _36;
 _46 = ((frost$core$Equatable*) $tmp944);
 ITable* $tmp945 = _45->$class->itable;
@@ -26805,8 +26740,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_101);
 return ((org$frostlang$frostc$ASTNode*) NULL);
 block12:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1244
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_106 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_106 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _107 = (frost$core$Int) {5u};
 _108 = *(&local5);
 _109 = _108.nonnull;
@@ -26871,7 +26805,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_157);
 goto block3;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$prefixExpression$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$parser$Parser* param0) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$prefixExpression$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$parser$Token local0;
 org$frostlang$frostc$ASTNode* local1 = NULL;
@@ -27121,7 +27056,7 @@ block21:;
 _134 = (frost$core$Int) {1265u};
 _135 = *(&local0);
 org$frostlang$frostc$parser$Token$wrapper* $tmp955;
-$tmp955 = (org$frostlang$frostc$parser$Token$wrapper*) frostObjectAlloc(72, (frost$core$Class*) &org$frostlang$frostc$parser$Token$wrapperclass);
+$tmp955 = (org$frostlang$frostc$parser$Token$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$wrapperclass);
 $tmp955->value = _135;
 _136 = ((frost$core$Object*) $tmp955);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Parser.frost:1265:63
@@ -27146,8 +27081,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_155);
 abort(); // unreachable
 block11:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1267
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_159 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_159 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _160 = (frost$core$Int) {49u};
 _161 = *(&local0);
 _162 = _161.position;
@@ -27190,7 +27124,8 @@ goto block27;
 block27:;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$multiplicativeExpression$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$parser$Parser* param0) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$multiplicativeExpression$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$ASTNode* local0 = NULL;
 org$frostlang$frostc$parser$Token local1;
@@ -27478,8 +27413,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_109);
 return ((org$frostlang$frostc$ASTNode*) NULL);
 block18:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1296
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_114 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_114 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _115 = (frost$core$Int) {5u};
 _116 = *(&local1);
 _117 = _116.position;
@@ -27540,7 +27474,7 @@ _164 = org$frostlang$frostc$parser$Parser$rawNext$R$org$frostlang$frostc$parser$
 _167 = *(&local3);
 _168 = _167.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp967;
-$tmp967 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp967 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp967->value = _168;
 _169 = ((frost$core$Equatable*) $tmp967);
 _170 = _169;
@@ -27553,7 +27487,7 @@ _176 = *(&local5);
 *(&local4) = _176;
 _179 = *(&local4);
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp968;
-$tmp968 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp968 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp968->value = _179;
 _180 = ((frost$core$Equatable*) $tmp968);
 ITable* $tmp969 = _170->$class->itable;
@@ -27601,8 +27535,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_214);
 return ((org$frostlang$frostc$ASTNode*) NULL);
 block31:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1307
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_219 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_219 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _220 = (frost$core$Int) {5u};
 _221 = *(&local1);
 _222 = _221.position;
@@ -27688,7 +27621,8 @@ goto block37;
 block37:;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$bitwiseExpression$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$parser$Parser* param0) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$bitwiseExpression$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$ASTNode* local0 = NULL;
 org$frostlang$frostc$parser$Token local1;
@@ -27870,8 +27804,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_89);
 return ((org$frostlang$frostc$ASTNode*) NULL);
 block14:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1341
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_94 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_94 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _95 = (frost$core$Int) {5u};
 _96 = *(&local1);
 _97 = _96.position;
@@ -27932,7 +27865,8 @@ goto block19;
 block19:;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$additiveExpression$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$parser$Parser* param0) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$additiveExpression$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$ASTNode* local0 = NULL;
 org$frostlang$frostc$parser$Token local1;
@@ -28114,8 +28048,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_89);
 return ((org$frostlang$frostc$ASTNode*) NULL);
 block14:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1369
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_94 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_94 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _95 = (frost$core$Int) {5u};
 _96 = *(&local1);
 _97 = _96.position;
@@ -28176,7 +28109,8 @@ goto block19;
 block19:;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$rangeExpression$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$parser$Parser* param0) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$rangeExpression$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$ASTNode* local0 = NULL;
 org$frostlang$frostc$parser$Token local1;
@@ -29078,12 +29012,12 @@ _488 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Tok
 _491 = *(&local8);
 _492 = _491.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1000;
-$tmp1000 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1000 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1000->value = _492;
 _493 = ((frost$core$Equatable*) $tmp1000);
 _494 = _493;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1001;
-$tmp1001 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1001 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1001->value = _485;
 _495 = ((frost$core$Equatable*) $tmp1001);
 ITable* $tmp1002 = _494->$class->itable;
@@ -29165,8 +29099,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_558);
 goto block80;
 block80:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1435
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_563 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_563 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _564 = (frost$core$Int) {35u};
 _565 = *(&local1);
 _566 = _565.position;
@@ -29174,7 +29107,7 @@ _567 = *(&local0);
 _568 = *(&local1);
 _569 = _568.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1003;
-$tmp1003 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1003 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1003->value = _569;
 _570 = ((frost$core$Equatable*) $tmp1003);
 _571 = _570;
@@ -29187,7 +29120,7 @@ _577 = *(&local10);
 *(&local9) = _577;
 _580 = *(&local9);
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1004;
-$tmp1004 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1004 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1004->value = _580;
 _581 = ((frost$core$Equatable*) $tmp1004);
 ITable* $tmp1005 = _571->$class->itable;
@@ -29239,7 +29172,8 @@ goto block89;
 block89:;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$comparisonExpression$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$parser$Parser* param0) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$comparisonExpression$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$ASTNode* local0 = NULL;
 org$frostlang$frostc$parser$Token local1;
@@ -29501,8 +29435,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_139);
 return ((org$frostlang$frostc$ASTNode*) NULL);
 block24:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1469
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_144 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_144 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _145 = (frost$core$Int) {5u};
 _146 = *(&local1);
 _147 = _146.position;
@@ -29563,7 +29496,8 @@ goto block29;
 block29:;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$andExpression$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$parser$Parser* param0) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$andExpression$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$ASTNode* local0 = NULL;
 org$frostlang$frostc$parser$Token local1;
@@ -29729,8 +29663,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_79);
 return ((org$frostlang$frostc$ASTNode*) NULL);
 block12:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1496
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_84 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_84 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _85 = (frost$core$Int) {5u};
 _86 = *(&local1);
 _87 = _86.position;
@@ -29791,7 +29724,8 @@ goto block17;
 block17:;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$expression$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$parser$Parser* param0) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$expression$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$ASTNode* local0 = NULL;
 org$frostlang$frostc$parser$Token$Kind local1;
@@ -29935,12 +29869,12 @@ _39 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Toke
 _42 = *(&local4);
 _43 = _42.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1015;
-$tmp1015 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1015 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1015->value = _43;
 _44 = ((frost$core$Equatable*) $tmp1015);
 _45 = _44;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1016;
-$tmp1016 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1016 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1016->value = _36;
 _46 = ((frost$core$Equatable*) $tmp1016);
 ITable* $tmp1017 = _45->$class->itable;
@@ -30021,8 +29955,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_101);
 return ((org$frostlang$frostc$ASTNode*) NULL);
 block12:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1524
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_106 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_106 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _107 = (frost$core$Int) {5u};
 _108 = *(&local5);
 _109 = _108.nonnull;
@@ -30087,7 +30020,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_157);
 goto block3;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$ifStatement$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$parser$Parser* param0) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$ifStatement$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$parser$Token$Kind local0;
 org$frostlang$frostc$parser$Token$Kind local1;
@@ -30416,12 +30350,12 @@ _90 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Toke
 _93 = *(&local9);
 _94 = _93.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1032;
-$tmp1032 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1032 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1032->value = _94;
 _95 = ((frost$core$Equatable*) $tmp1032);
 _96 = _95;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1033;
-$tmp1033 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1033 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1033->value = _87;
 _97 = ((frost$core$Equatable*) $tmp1033);
 ITable* $tmp1034 = _96->$class->itable;
@@ -30535,7 +30469,7 @@ _181 = _180.value;
 _182 = _179[_181];
 _185 = _182.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1040;
-$tmp1040 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1040 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1040->value = _185;
 _186 = ((frost$core$Equatable*) $tmp1040);
 _187 = _186;
@@ -30548,7 +30482,7 @@ _193 = *(&local11);
 *(&local10) = _193;
 _196 = *(&local10);
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1041;
-$tmp1041 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1041 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1041->value = _196;
 _197 = ((frost$core$Equatable*) $tmp1041);
 ITable* $tmp1042 = _187->$class->itable;
@@ -30634,8 +30568,7 @@ frost$core$Frost$ref$frost$core$Object$Q(_267);
 goto block29;
 block31:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1871
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_271 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_271 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _272 = (frost$core$Int) {7u};
 _273 = org$frostlang$frostc$Position$init();
 _274 = *(&local13);
@@ -30720,8 +30653,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_343);
 goto block9;
 block9:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1563
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_348 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_348 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _349 = (frost$core$Int) {24u};
 _350 = *(&local2);
 _351 = _350.nonnull;
@@ -30779,7 +30711,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_394);
 return _380;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$typeDeclaration$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$parser$Parser* param0) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$typeDeclaration$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$parser$Token$Kind local0;
 org$frostlang$frostc$parser$Token$Kind local1;
@@ -30826,7 +30759,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_24);
 return _21;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$target$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$parser$Parser* param0) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$target$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$parser$Token$Kind local0;
 org$frostlang$frostc$parser$Token$Kind local1;
@@ -31148,12 +31082,12 @@ _12 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Toke
 _15 = *(&local3);
 _16 = _15.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1058;
-$tmp1058 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1058 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1058->value = _16;
 _17 = ((frost$core$Equatable*) $tmp1058);
 _18 = _17;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1059;
-$tmp1059 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1059 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1059->value = _9;
 _19 = ((frost$core$Equatable*) $tmp1059);
 ITable* $tmp1060 = _18->$class->itable;
@@ -31192,8 +31126,7 @@ _45 = _44.value;
 if (_45) goto block5; else goto block6;
 block5:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1582
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_48 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_48 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _49 = _48;
 frost$collections$Array$init(_49);
 *(&local5) = ((frost$collections$Array*) NULL);
@@ -31271,12 +31204,12 @@ _116 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Tok
 _119 = *(&local10);
 _120 = _119.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1063;
-$tmp1063 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1063 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1063->value = _120;
 _121 = ((frost$core$Equatable*) $tmp1063);
 _122 = _121;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1064;
-$tmp1064 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1064 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1064->value = _113;
 _123 = ((frost$core$Equatable*) $tmp1064);
 ITable* $tmp1065 = _122->$class->itable;
@@ -31370,8 +31303,7 @@ _197 = *(&local12);
 _200 = *(&local11);
 _201 = org$frostlang$frostc$parser$Parser$expect$org$frostlang$frostc$parser$Token$Kind$frost$core$String$R$org$frostlang$frostc$parser$Token$Q(param0, _200, &$s1068);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1596
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_203 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_203 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _204 = (frost$core$Int) {44u};
 _205 = *(&local4);
 _206 = _205.nonnull;
@@ -31385,8 +31317,7 @@ abort(); // unreachable
 block23:;
 _213 = ((org$frostlang$frostc$parser$Token) _205.value);
 _214 = _213.position;
-FROST_ASSERT(40 == sizeof(org$frostlang$frostc$FixedArray));
-_215 = (org$frostlang$frostc$FixedArray*) frostObjectAlloc(40, (frost$core$Class*) &org$frostlang$frostc$FixedArray$class);
+_215 = (org$frostlang$frostc$FixedArray*) frostObjectAlloc(sizeof(org$frostlang$frostc$FixedArray), (frost$core$Class*) &org$frostlang$frostc$FixedArray$class);
 _216 = _215;
 _217 = *(&local5);
 _218 = ((frost$collections$ListView*) _217);
@@ -31512,7 +31443,7 @@ _319 = _318.value;
 _320 = _317[_319];
 _323 = _320.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1077;
-$tmp1077 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1077 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1077->value = _323;
 _324 = ((frost$core$Equatable*) $tmp1077);
 _325 = _324;
@@ -31525,7 +31456,7 @@ _331 = *(&local17);
 *(&local16) = _331;
 _334 = *(&local16);
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1078;
-$tmp1078 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1078 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1078->value = _334;
 _335 = ((frost$core$Equatable*) $tmp1078);
 ITable* $tmp1079 = _325->$class->itable;
@@ -31609,8 +31540,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_403);
 return ((org$frostlang$frostc$ASTNode*) NULL);
 block44:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1607
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_408 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_408 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _409 = (frost$core$Int) {48u};
 _410 = *(&local15);
 _411 = _410.nonnull;
@@ -31668,8 +31598,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_457);
 return _445;
 block29:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1609
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_462 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_462 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _463 = (frost$core$Int) {22u};
 _464 = *(&local15);
 _465 = _464.nonnull;
@@ -31718,7 +31647,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_503);
 return _498;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$forLoop$frost$core$String$Q$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$parser$Parser* param0, frost$core$String* param1) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$forLoop$frost$core$String$Q$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf, frost$core$String* param1) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$parser$Token$Kind local0;
 org$frostlang$frostc$parser$Token$Kind local1;
@@ -31968,8 +31898,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_128);
 return ((org$frostlang$frostc$ASTNode*) NULL);
 block12:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1635
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_133 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_133 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _134 = (frost$core$Int) {20u};
 _135 = *(&local2);
 _136 = _135.nonnull;
@@ -32037,7 +31966,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_187);
 return _173;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$whileLoop$frost$core$String$Q$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$parser$Parser* param0, frost$core$String* param1) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$whileLoop$frost$core$String$Q$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf, frost$core$String* param1) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$parser$Token$Kind local0;
 org$frostlang$frostc$parser$Token$Kind local1;
@@ -32190,8 +32120,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_72);
 return ((org$frostlang$frostc$ASTNode*) NULL);
 block7:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1654
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_77 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_77 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _78 = (frost$core$Int) {55u};
 _79 = *(&local2);
 _80 = _79.nonnull;
@@ -32244,7 +32173,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_118);
 return _108;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$doLoop$frost$core$String$Q$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$parser$Parser* param0, frost$core$String* param1) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$doLoop$frost$core$String$Q$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf, frost$core$String* param1) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$parser$Token$Kind local0;
 org$frostlang$frostc$parser$Token$Kind local1;
@@ -32434,8 +32364,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_95);
 return ((org$frostlang$frostc$ASTNode*) NULL);
 block10:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1676
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_100 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_100 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _101 = (frost$core$Int) {15u};
 _102 = *(&local2);
 _103 = _102.nonnull;
@@ -32488,7 +32417,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_141);
 return _131;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$loopLoop$frost$core$String$Q$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$parser$Parser* param0, frost$core$String* param1) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$loopLoop$frost$core$String$Q$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf, frost$core$String* param1) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$parser$Token$Kind local0;
 org$frostlang$frostc$parser$Token$Kind local1;
@@ -32587,8 +32517,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_43);
 return ((org$frostlang$frostc$ASTNode*) NULL);
 block5:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1691
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_48 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_48 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _49 = (frost$core$Int) {27u};
 _50 = *(&local2);
 _51 = _50.nonnull;
@@ -32626,7 +32555,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_76);
 return _70;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$assertStatement$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$parser$Parser* param0) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$assertStatement$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$parser$Token$Kind local0;
 org$frostlang$frostc$parser$Token$Kind local1;
@@ -32790,12 +32720,12 @@ _61 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Toke
 _64 = *(&local8);
 _65 = _64.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1121;
-$tmp1121 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1121 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1121->value = _65;
 _66 = ((frost$core$Equatable*) $tmp1121);
 _67 = _66;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1122;
-$tmp1122 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1122 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1122->value = _58;
 _68 = ((frost$core$Equatable*) $tmp1122);
 ITable* $tmp1123 = _67->$class->itable;
@@ -32873,8 +32803,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_127);
 goto block7;
 block7:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1716
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_132 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_132 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _133 = (frost$core$Int) {2u};
 _134 = *(&local2);
 _135 = _134.nonnull;
@@ -32917,7 +32846,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_165);
 return _155;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$unreachableStatement$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$parser$Parser* param0) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$unreachableStatement$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$parser$Token$Kind local0;
 org$frostlang$frostc$parser$Token$Kind local1;
@@ -33031,12 +32961,12 @@ _36 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Toke
 _39 = *(&local7);
 _40 = _39.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1130;
-$tmp1130 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1130 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1130->value = _40;
 _41 = ((frost$core$Equatable*) $tmp1130);
 _42 = _41;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1131;
-$tmp1131 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1131 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1131->value = _33;
 _43 = ((frost$core$Equatable*) $tmp1131);
 ITable* $tmp1132 = _42->$class->itable;
@@ -33110,8 +33040,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_98);
 goto block5;
 block5:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1737
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_103 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_103 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _104 = (frost$core$Int) {50u};
 _105 = *(&local2);
 _106 = _105.nonnull;
@@ -33139,7 +33068,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_123);
 return _117;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$whenClause$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$parser$Parser* param0) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$whenClause$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$ASTNode* local0 = NULL;
 org$frostlang$frostc$parser$Token$Kind local1;
@@ -33324,8 +33254,7 @@ frost$core$Frost$ref$frost$core$Object$Q(_35);
 goto block3;
 block8:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1750
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_40 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_40 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _41 = _40;
 frost$collections$Array$init(_41);
 *(&local4) = ((frost$collections$Array*) NULL);
@@ -33404,12 +33333,12 @@ _109 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Tok
 _112 = *(&local9);
 _113 = _112.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1141;
-$tmp1141 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1141 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1141->value = _113;
 _114 = ((frost$core$Equatable*) $tmp1141);
 _115 = _114;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1142;
-$tmp1142 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1142 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1142->value = _106;
 _116 = ((frost$core$Equatable*) $tmp1142);
 ITable* $tmp1143 = _115->$class->itable;
@@ -33530,8 +33459,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_214);
 goto block3;
 block25:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1767
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_220 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_220 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _221 = (frost$core$Int) {54u};
 _222 = *(&local3);
 _223 = _222.nonnull;
@@ -33596,7 +33524,8 @@ frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$St
 abort(); // unreachable
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$matchStatement$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$parser$Parser* param0) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$matchStatement$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$parser$Token$Kind local0;
 org$frostlang$frostc$parser$Token$Kind local1;
@@ -33936,8 +33865,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_66);
 return ((org$frostlang$frostc$ASTNode*) NULL);
 block7:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1785
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_71 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_71 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _72 = _71;
 frost$collections$Array$init(_72);
 *(&local6) = ((frost$collections$Array*) NULL);
@@ -34249,8 +34177,7 @@ _355 = _354.value;
 if (_355) goto block39; else goto block40;
 block39:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1820
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_358 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_358 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _359 = (frost$core$Int) {28u};
 _360 = *(&local2);
 _361 = _360.nonnull;
@@ -34303,8 +34230,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_401);
 return _385;
 block40:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1822
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_406 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_406 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _407 = (frost$core$Int) {28u};
 _408 = *(&local2);
 _409 = _408.nonnull;
@@ -34356,7 +34282,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_448);
 return _432;
 
 }
-org$frostlang$frostc$FixedArray* org$frostlang$frostc$parser$Parser$blockStatements$R$org$frostlang$frostc$FixedArray$LTorg$frostlang$frostc$ASTNode$GT$Q(org$frostlang$frostc$parser$Parser* param0) {
+org$frostlang$frostc$FixedArray* org$frostlang$frostc$parser$Parser$blockStatements$R$org$frostlang$frostc$FixedArray$LTorg$frostlang$frostc$ASTNode$GT$Q(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$parser$Token$Kind local0;
 org$frostlang$frostc$parser$Token$Kind local1;
@@ -34611,8 +34538,7 @@ frost$core$Frost$ref$frost$core$Object$Q(_19);
 return ((org$frostlang$frostc$FixedArray*) NULL);
 block3:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1833
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_23 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_23 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _24 = _23;
 frost$collections$Array$init(_24);
 *(&local3) = ((frost$collections$Array*) NULL);
@@ -35028,7 +34954,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_393);
 return _387;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$block$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$parser$Parser* param0) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$block$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$FixedArray* local0 = NULL;
 org$frostlang$frostc$FixedArray* _1;
@@ -35085,8 +35012,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_21);
 return ((org$frostlang$frostc$ASTNode*) NULL);
 block2:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1871
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_26 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_26 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _27 = (frost$core$Int) {7u};
 _28 = org$frostlang$frostc$Position$init();
 _29 = *(&local0);
@@ -35113,7 +35039,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_45);
 return _39;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$expressionOrAssignment$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$parser$Parser* param0) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$expressionOrAssignment$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$ASTNode* local0 = NULL;
 org$frostlang$frostc$parser$Token local1;
@@ -35721,8 +35648,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_278);
 return ((org$frostlang$frostc$ASTNode*) NULL);
 block46:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1893
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_283 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_283 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _284 = (frost$core$Int) {5u};
 _285 = *(&local0);
 _286 = _285 != NULL;
@@ -35900,8 +35826,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_433);
 return ((org$frostlang$frostc$ASTNode*) NULL);
 block65:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1903
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_438 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_438 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _439 = (frost$core$Int) {5u};
 _440 = *(&local0);
 _441 = _440 != NULL;
@@ -35970,7 +35895,8 @@ goto block72;
 block72:;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$singleVar$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$parser$Parser* param0) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$singleVar$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$ASTNode* local0 = NULL;
 org$frostlang$frostc$ASTNode* local1 = NULL;
@@ -36173,12 +36099,12 @@ _39 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Toke
 _42 = *(&local5);
 _43 = _42.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1236;
-$tmp1236 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1236 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1236->value = _43;
 _44 = ((frost$core$Equatable*) $tmp1236);
 _45 = _44;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1237;
-$tmp1237 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1237 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1237->value = _36;
 _46 = ((frost$core$Equatable*) $tmp1237);
 ITable* $tmp1238 = _45->$class->itable;
@@ -36324,7 +36250,7 @@ _159 = _158.value;
 _160 = _157[_159];
 _163 = _160.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1244;
-$tmp1244 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1244 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1244->value = _163;
 _164 = ((frost$core$Equatable*) $tmp1244);
 _165 = _164;
@@ -36337,7 +36263,7 @@ _171 = *(&local7);
 *(&local6) = _171;
 _174 = *(&local6);
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1245;
-$tmp1245 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1245 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1245->value = _174;
 _175 = ((frost$core$Equatable*) $tmp1245);
 ITable* $tmp1246 = _165->$class->itable;
@@ -36401,8 +36327,7 @@ block13:;
 goto block4;
 block4:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1937
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_227 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_227 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _228 = (frost$core$Int) {14u};
 _229 = *(&local0);
 _230 = _229 != NULL;
@@ -36446,7 +36371,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_261);
 return _251;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$varDeclaration$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$parser$Parser* param0) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$varDeclaration$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$parser$Token local0;
 org$frostlang$frostc$Variable$Kind local1;
@@ -36707,8 +36633,7 @@ org$frostlang$frostc$parser$Parser$error$org$frostlang$frostc$parser$Token$frost
 goto block1;
 block1:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1963
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_101 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_101 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _102 = _101;
 frost$collections$Array$init(_102);
 *(&local10) = ((frost$collections$Array*) NULL);
@@ -36786,12 +36711,12 @@ _169 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Tok
 _172 = *(&local15);
 _173 = _172.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1257;
-$tmp1257 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1257 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1257->value = _173;
 _174 = ((frost$core$Equatable*) $tmp1257);
 _175 = _174;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1258;
-$tmp1258 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1258 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1258->value = _166;
 _176 = ((frost$core$Equatable*) $tmp1258);
 ITable* $tmp1259 = _175->$class->itable;
@@ -36884,8 +36809,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_249);
 goto block22;
 block24:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1976
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_254 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_254 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _255 = (frost$core$Int) {53u};
 _256 = *(&local0);
 _257 = _256.position;
@@ -36913,7 +36837,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_276);
 return _264;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$initCall$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$parser$Parser* param0) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$initCall$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$parser$Token$Kind local0;
 org$frostlang$frostc$parser$Token$Kind local1;
@@ -37203,7 +37128,7 @@ _43 = *_42;
 _44 = _43;
 _45 = (frost$core$Bit) {true};
 frost$core$Bit$wrapper* $tmp1266;
-$tmp1266 = (frost$core$Bit$wrapper*) frostObjectAlloc(17, (frost$core$Class*) &frost$core$Bit$wrapperclass);
+$tmp1266 = (frost$core$Bit$wrapper*) frostObjectAlloc(sizeof(frost$core$Bit$wrapper), (frost$core$Class*) &frost$core$Bit$wrapperclass);
 $tmp1266->value = _45;
 _46 = ((frost$core$Object*) $tmp1266);
 // begin inline call to method frost.collections.Stack.push(v:frost.collections.Stack.T) from Parser.frost:1990:45
@@ -37216,8 +37141,7 @@ frost$collections$Array$add$frost$collections$Array$T(_51, _52);
 _55 = _46;
 frost$core$Frost$unref$frost$core$Object$Q(_55);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1991
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_58 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_58 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _59 = (frost$core$Int) {22u};
 _60 = *(&local2);
 _61 = _60.nonnull;
@@ -37268,8 +37192,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_101);
 _103 = ((frost$core$Object*) _58);
 frost$core$Frost$unref$frost$core$Object$Q(_103);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1992
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_106 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_106 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _107 = _106;
 frost$collections$Array$init(_107);
 *(&local6) = ((frost$collections$Array*) NULL);
@@ -37298,12 +37221,12 @@ _130 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Tok
 _133 = *(&local10);
 _134 = _133.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1271;
-$tmp1271 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1271 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1271->value = _134;
 _135 = ((frost$core$Equatable*) $tmp1271);
 _136 = _135;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1272;
-$tmp1272 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1272 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1272->value = _127;
 _137 = ((frost$core$Equatable*) $tmp1272);
 ITable* $tmp1273 = _136->$class->itable;
@@ -37416,12 +37339,12 @@ _230 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Tok
 _233 = *(&local15);
 _234 = _233.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1276;
-$tmp1276 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1276 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1276->value = _234;
 _235 = ((frost$core$Equatable*) $tmp1276);
 _236 = _235;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1277;
-$tmp1277 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1277 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1277->value = _227;
 _237 = ((frost$core$Equatable*) $tmp1277);
 ITable* $tmp1278 = _236->$class->itable;
@@ -37571,8 +37494,7 @@ _366 = ((frost$core$Bit$wrapper*) _365)->value;
 _367 = _365;
 frost$core$Frost$unref$frost$core$Object$Q(_367);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2014
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_370 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_370 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _371 = (frost$core$Int) {9u};
 _372 = *(&local2);
 _373 = _372.nonnull;
@@ -37610,7 +37532,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_400);
 return _388;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$breakStatement$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$parser$Parser* param0) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$breakStatement$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$parser$Token$Kind local0;
 org$frostlang$frostc$parser$Token$Kind local1;
@@ -37734,12 +37657,12 @@ _34 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Toke
 _37 = *(&local6);
 _38 = _37.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1286;
-$tmp1286 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1286 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1286->value = _38;
 _39 = ((frost$core$Equatable*) $tmp1286);
 _40 = _39;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1287;
-$tmp1287 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1287 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1287->value = _31;
 _41 = ((frost$core$Equatable*) $tmp1287);
 ITable* $tmp1288 = _40->$class->itable;
@@ -37778,8 +37701,7 @@ _67 = _66.value;
 if (_67) goto block8; else goto block9;
 block8:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2027
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_70 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_70 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _71 = (frost$core$Int) {8u};
 _72 = *(&local2);
 _73 = _72.nonnull;
@@ -37829,8 +37751,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_112);
 return _107;
 block9:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2029
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_116 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_116 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _117 = (frost$core$Int) {8u};
 _118 = *(&local2);
 _119 = _118.nonnull;
@@ -37853,7 +37774,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_132);
 return _129;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$continueStatement$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$parser$Parser* param0) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$continueStatement$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$parser$Token$Kind local0;
 org$frostlang$frostc$parser$Token$Kind local1;
@@ -37977,12 +37899,12 @@ _34 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Toke
 _37 = *(&local6);
 _38 = _37.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1297;
-$tmp1297 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1297 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1297->value = _38;
 _39 = ((frost$core$Equatable*) $tmp1297);
 _40 = _39;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1298;
-$tmp1298 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1298 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1298->value = _31;
 _41 = ((frost$core$Equatable*) $tmp1298);
 ITable* $tmp1299 = _40->$class->itable;
@@ -38021,8 +37943,7 @@ _67 = _66.value;
 if (_67) goto block8; else goto block9;
 block8:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2042
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_70 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_70 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _71 = (frost$core$Int) {13u};
 _72 = *(&local2);
 _73 = _72.nonnull;
@@ -38072,8 +37993,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_112);
 return _107;
 block9:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2044
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_116 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_116 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _117 = (frost$core$Int) {13u};
 _118 = *(&local2);
 _119 = _118.nonnull;
@@ -38096,7 +38016,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_132);
 return _129;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$returnStatement$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$parser$Parser* param0) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$returnStatement$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$parser$Token$Kind local0;
 org$frostlang$frostc$parser$Token$Kind local1;
@@ -38368,8 +38289,7 @@ _115 = _113.value;
 if (_115) goto block13; else goto block18;
 block13:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2057
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_118 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_118 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _119 = (frost$core$Int) {38u};
 _120 = *(&local2);
 _121 = _120.nonnull;
@@ -38392,8 +38312,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_134);
 return _131;
 block18:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2060
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_138 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_138 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _139 = _138;
 frost$collections$Array$init(_139);
 *(&local3) = ((frost$collections$Array*) NULL);
@@ -38453,8 +38372,7 @@ _190 = _182;
 _191 = ((frost$core$Object*) _190);
 frost$collections$Array$add$frost$collections$Array$T(_181, _191);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2066
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_194 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_194 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _195 = (frost$core$Int) {38u};
 _196 = *(&local2);
 _197 = _196.nonnull;
@@ -38489,7 +38407,8 @@ goto block28;
 block28:;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$terminalStatement$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$parser$Parser* param0) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$terminalStatement$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT** _3;
 frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT* _4;
@@ -38707,7 +38626,8 @@ goto block19;
 block19:;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$anyLoop$frost$core$String$Q$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$parser$Parser* param0, frost$core$String* param1) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$anyLoop$frost$core$String$Q$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf, frost$core$String* param1) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$parser$Token$Kind local0;
 org$frostlang$frostc$parser$Token$Kind local1;
@@ -38969,7 +38889,8 @@ goto block23;
 block23:;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$innerMethod$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$parser$Parser* param0) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$innerMethod$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$MethodDecl$Kind local0;
 org$frostlang$frostc$parser$Token$Kind local1;
@@ -39230,12 +39151,12 @@ _13 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Toke
 _16 = *(&local4);
 _17 = _16.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1344;
-$tmp1344 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1344 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1344->value = _17;
 _18 = ((frost$core$Equatable*) $tmp1344);
 _19 = _18;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1345;
-$tmp1345 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1345 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1345->value = _10;
 _20 = ((frost$core$Equatable*) $tmp1345);
 ITable* $tmp1346 = _19->$class->itable;
@@ -39452,7 +39373,7 @@ _203 = _202.value;
 _204 = _201[_203];
 _207 = _204.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1354;
-$tmp1354 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1354 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1354->value = _207;
 _208 = ((frost$core$Equatable*) $tmp1354);
 _209 = _208;
@@ -39465,7 +39386,7 @@ _215 = *(&local18);
 *(&local17) = _215;
 _218 = *(&local17);
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1355;
-$tmp1355 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1355 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1355->value = _218;
 _219 = ((frost$core$Equatable*) $tmp1355);
 ITable* $tmp1356 = _209->$class->itable;
@@ -39603,8 +39524,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_337);
 return ((org$frostlang$frostc$ASTNode*) NULL);
 block37:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2138
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_342 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_342 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _343 = (frost$core$Int) {29u};
 _344 = *(&local5);
 _345 = _344.nonnull;
@@ -39618,8 +39538,7 @@ abort(); // unreachable
 block38:;
 _352 = ((org$frostlang$frostc$parser$Token) _344.value);
 _353 = _352.position;
-FROST_ASSERT(40 == sizeof(org$frostlang$frostc$FixedArray));
-_354 = (org$frostlang$frostc$FixedArray*) frostObjectAlloc(40, (frost$core$Class*) &org$frostlang$frostc$FixedArray$class);
+_354 = (org$frostlang$frostc$FixedArray*) frostObjectAlloc(sizeof(org$frostlang$frostc$FixedArray), (frost$core$Class*) &org$frostlang$frostc$FixedArray$class);
 _355 = _354;
 org$frostlang$frostc$FixedArray$init(_355);
 _357 = *(&local0);
@@ -39685,7 +39604,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_411);
 return _393;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$tryStatement$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$parser$Parser* param0) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$tryStatement$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$parser$Token$Kind local0;
 org$frostlang$frostc$parser$Token$Kind local1;
@@ -39959,12 +39879,12 @@ _84 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Toke
 _87 = *(&local10);
 _88 = _87.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1367;
-$tmp1367 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1367 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1367->value = _88;
 _89 = ((frost$core$Equatable*) $tmp1367);
 _90 = _89;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1368;
-$tmp1368 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1368 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1368->value = _81;
 _91 = ((frost$core$Equatable*) $tmp1368);
 ITable* $tmp1369 = _90->$class->itable;
@@ -40031,8 +39951,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_142);
 return ((org$frostlang$frostc$ASTNode*) NULL);
 block18:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2163
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_147 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_147 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _148 = (frost$core$Int) {22u};
 _149 = *(&local13);
 _150 = _149.nonnull;
@@ -40158,8 +40077,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_260);
 return ((org$frostlang$frostc$ASTNode*) NULL);
 block28:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2175
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_265 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_265 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _266 = (frost$core$Int) {42u};
 _267 = *(&local2);
 _268 = _267.nonnull;
@@ -40217,7 +40135,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_311);
 return _297;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$statement$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$parser$Parser* param0) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$statement$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$ASTNode* local0 = NULL;
 org$frostlang$frostc$FixedArray* local1 = NULL;
@@ -40806,8 +40725,7 @@ frost$core$Frost$ref$frost$core$Object$Q(_221);
 goto block34;
 block36:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:1871
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_225 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_225 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _226 = (frost$core$Int) {7u};
 _227 = org$frostlang$frostc$Position$init();
 _228 = *(&local1);
@@ -40877,12 +40795,12 @@ _286 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Tok
 _289 = *(&local6);
 _290 = _289.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1395;
-$tmp1395 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1395 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1395->value = _290;
 _291 = ((frost$core$Equatable*) $tmp1395);
 _292 = _291;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1396;
-$tmp1396 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1396 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1396->value = _283;
 _293 = ((frost$core$Equatable*) $tmp1396);
 ITable* $tmp1397 = _292->$class->itable;
@@ -41209,7 +41127,8 @@ goto block88;
 block88:;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$packageDeclaration$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$parser$Parser* param0) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$packageDeclaration$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$parser$Token$Kind local0;
 org$frostlang$frostc$parser$Token$Kind local1;
@@ -41382,8 +41301,7 @@ frost$core$Frost$ref$frost$core$Object$Q(_41);
 return ((org$frostlang$frostc$ASTNode*) NULL);
 block6:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2247
-FROST_ASSERT(48 == sizeof(frost$core$MutableString));
-_45 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
+_45 = (frost$core$MutableString*) frostObjectAlloc(sizeof(frost$core$MutableString), (frost$core$Class*) &frost$core$MutableString$class);
 _46 = *(&local5);
 _47 = _46.nonnull;
 _48 = (frost$core$Bit) {_47};
@@ -41440,12 +41358,12 @@ _95 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Toke
 _98 = *(&local10);
 _99 = _98.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1412;
-$tmp1412 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1412 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1412->value = _99;
 _100 = ((frost$core$Equatable*) $tmp1412);
 _101 = _100;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1413;
-$tmp1413 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1413 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1413->value = _92;
 _102 = ((frost$core$Equatable*) $tmp1413);
 ITable* $tmp1414 = _101->$class->itable;
@@ -41485,8 +41403,7 @@ if (_128) goto block16; else goto block17;
 block16:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2251
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2260
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_191 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_191 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _192 = (frost$core$Int) {33u};
 _193 = *(&local2);
 _194 = _193.nonnull;
@@ -41578,7 +41495,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_214);
 return _206;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$usesDeclaration$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$parser$Parser* param0) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$usesDeclaration$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$parser$Token$Kind local0;
 org$frostlang$frostc$parser$Token$Kind local1;
@@ -41751,8 +41669,7 @@ frost$core$Frost$ref$frost$core$Object$Q(_41);
 return ((org$frostlang$frostc$ASTNode*) NULL);
 block6:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2275
-FROST_ASSERT(48 == sizeof(frost$core$MutableString));
-_45 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
+_45 = (frost$core$MutableString*) frostObjectAlloc(sizeof(frost$core$MutableString), (frost$core$Class*) &frost$core$MutableString$class);
 _46 = *(&local5);
 _47 = _46.nonnull;
 _48 = (frost$core$Bit) {_47};
@@ -41809,12 +41726,12 @@ _95 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Toke
 _98 = *(&local10);
 _99 = _98.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1426;
-$tmp1426 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1426 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1426->value = _99;
 _100 = ((frost$core$Equatable*) $tmp1426);
 _101 = _100;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1427;
-$tmp1427 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1427 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1427->value = _92;
 _102 = ((frost$core$Equatable*) $tmp1427);
 ITable* $tmp1428 = _101->$class->itable;
@@ -41854,8 +41771,7 @@ if (_128) goto block16; else goto block17;
 block16:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2279
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2288
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_191 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_191 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _192 = (frost$core$Int) {52u};
 _193 = *(&local2);
 _194 = _193.nonnull;
@@ -41947,7 +41863,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_214);
 return _206;
 
 }
-org$frostlang$frostc$FixedArray* org$frostlang$frostc$parser$Parser$genericsDeclaration$R$org$frostlang$frostc$FixedArray$LTorg$frostlang$frostc$ASTNode$GT$Q(org$frostlang$frostc$parser$Parser* param0) {
+org$frostlang$frostc$FixedArray* org$frostlang$frostc$parser$Parser$genericsDeclaration$R$org$frostlang$frostc$FixedArray$LTorg$frostlang$frostc$ASTNode$GT$Q(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$parser$Token$Kind local0;
 org$frostlang$frostc$parser$Token$Kind local1;
@@ -42301,8 +42218,7 @@ frost$core$Frost$ref$frost$core$Object$Q(_41);
 return ((org$frostlang$frostc$FixedArray*) NULL);
 block6:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2303
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_45 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_45 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _46 = _45;
 frost$collections$Array$init(_46);
 *(&local6) = ((frost$collections$Array*) NULL);
@@ -42331,12 +42247,12 @@ _69 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Toke
 _72 = *(&local10);
 _73 = _72.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1440;
-$tmp1440 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1440 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1440->value = _73;
 _74 = ((frost$core$Equatable*) $tmp1440);
 _75 = _74;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1441;
-$tmp1441 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1441 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1441->value = _66;
 _76 = ((frost$core$Equatable*) $tmp1441);
 ITable* $tmp1442 = _75->$class->itable;
@@ -42412,8 +42328,7 @@ block16:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2309
 _139 = *(&local6);
 _140 = _139;
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_141 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_141 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _142 = (frost$core$Int) {48u};
 _143 = *(&local5);
 _144 = _143.nonnull;
@@ -42469,8 +42384,7 @@ block9:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2312
 _191 = *(&local6);
 _192 = _191;
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_193 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_193 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _194 = (frost$core$Int) {22u};
 _195 = *(&local5);
 _196 = _195.nonnull;
@@ -42536,12 +42450,12 @@ _249 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Tok
 _252 = *(&local15);
 _253 = _252.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1451;
-$tmp1451 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1451 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1451->value = _253;
 _254 = ((frost$core$Equatable*) $tmp1451);
 _255 = _254;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1452;
-$tmp1452 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1452 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1452->value = _246;
 _256 = ((frost$core$Equatable*) $tmp1452);
 ITable* $tmp1453 = _255->$class->itable;
@@ -42620,12 +42534,12 @@ _319 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Tok
 _322 = *(&local21);
 _323 = _322.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1455;
-$tmp1455 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1455 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1455->value = _323;
 _324 = ((frost$core$Equatable*) $tmp1455);
 _325 = _324;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1456;
-$tmp1456 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1456 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1456->value = _316;
 _326 = ((frost$core$Equatable*) $tmp1456);
 ITable* $tmp1457 = _325->$class->itable;
@@ -42701,8 +42615,7 @@ block46:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2324
 _389 = *(&local6);
 _390 = _389;
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_391 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_391 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _392 = (frost$core$Int) {48u};
 _393 = *(&local5);
 _394 = _393.nonnull;
@@ -42758,8 +42671,7 @@ block39:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2327
 _441 = *(&local6);
 _442 = _441;
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_443 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_443 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _444 = (frost$core$Int) {22u};
 _445 = *(&local5);
 _446 = _445.nonnull;
@@ -42849,7 +42761,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_521);
 return _515;
 
 }
-org$frostlang$frostc$FixedArray* org$frostlang$frostc$parser$Parser$supertypes$R$org$frostlang$frostc$FixedArray$LTorg$frostlang$frostc$ASTNode$GT$Q(org$frostlang$frostc$parser$Parser* param0) {
+org$frostlang$frostc$FixedArray* org$frostlang$frostc$parser$Parser$supertypes$R$org$frostlang$frostc$FixedArray$LTorg$frostlang$frostc$ASTNode$GT$Q(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$parser$Token$Kind local0;
 org$frostlang$frostc$parser$Token$Kind local1;
@@ -42985,8 +42898,7 @@ frost$core$Frost$ref$frost$core$Object$Q(_19);
 return ((org$frostlang$frostc$FixedArray*) NULL);
 block3:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2344
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_23 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_23 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _24 = _23;
 frost$collections$Array$init(_24);
 *(&local3) = ((frost$collections$Array*) NULL);
@@ -43071,12 +42983,12 @@ _99 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Toke
 _102 = *(&local8);
 _103 = _102.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1471;
-$tmp1471 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1471 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1471->value = _103;
 _104 = ((frost$core$Equatable*) $tmp1471);
 _105 = _104;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1472;
-$tmp1472 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1472 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1472->value = _96;
 _106 = ((frost$core$Equatable*) $tmp1472);
 ITable* $tmp1473 = _105->$class->itable;
@@ -43187,7 +43099,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_197);
 return _187;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$annotation$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$parser$Parser* param0) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$annotation$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$parser$Token$Kind local0;
 org$frostlang$frostc$parser$Token$Kind local1;
@@ -43360,12 +43273,12 @@ _34 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Toke
 _37 = *(&local8);
 _38 = _37.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1478;
-$tmp1478 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1478 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1478->value = _38;
 _39 = ((frost$core$Equatable*) $tmp1478);
 _40 = _39;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1479;
-$tmp1479 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1479 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1479->value = _31;
 _41 = ((frost$core$Equatable*) $tmp1479);
 ITable* $tmp1480 = _40->$class->itable;
@@ -43509,8 +43422,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_163);
 goto block7;
 block7:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2379
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_167 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_167 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _168 = (frost$core$Int) {0u};
 _169 = *(&local2);
 _170 = _169.nonnull;
@@ -43569,7 +43481,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_217);
 return _205;
 
 }
-org$frostlang$frostc$FixedArray* org$frostlang$frostc$parser$Parser$annotations$R$org$frostlang$frostc$FixedArray$LTorg$frostlang$frostc$ASTNode$GT(org$frostlang$frostc$parser$Parser* param0) {
+org$frostlang$frostc$FixedArray* org$frostlang$frostc$parser$Parser$annotations$R$org$frostlang$frostc$FixedArray$LTorg$frostlang$frostc$ASTNode$GT(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 frost$collections$Array* local0 = NULL;
 org$frostlang$frostc$parser$Token$Kind local1;
@@ -43669,8 +43582,7 @@ frost$core$Object* _147;
 frost$collections$Array* _149;
 frost$core$Object* _150;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2386
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_1 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_1 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _2 = _1;
 frost$collections$Array$init(_2);
 *(&local0) = ((frost$collections$Array*) NULL);
@@ -43763,7 +43675,7 @@ _73 = _72.value;
 _74 = _71[_73];
 _77 = _74.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1499;
-$tmp1499 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1499 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1499->value = _77;
 _78 = ((frost$core$Equatable*) $tmp1499);
 _79 = _78;
@@ -43776,7 +43688,7 @@ _85 = *(&local2);
 *(&local1) = _85;
 _88 = *(&local1);
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1500;
-$tmp1500 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1500 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1500->value = _88;
 _89 = ((frost$core$Equatable*) $tmp1500);
 ITable* $tmp1501 = _79->$class->itable;
@@ -43855,7 +43767,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_150);
 return _144;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$doccomment$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$parser$Parser* param0) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$doccomment$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$parser$Token$Kind local0;
 org$frostlang$frostc$parser$Token$Kind local1;
@@ -43972,8 +43885,7 @@ frost$core$Frost$ref$frost$core$Object$Q(_19);
 return ((org$frostlang$frostc$ASTNode*) NULL);
 block3:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2402
-FROST_ASSERT(48 == sizeof(frost$core$MutableString));
-_23 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
+_23 = (frost$core$MutableString*) frostObjectAlloc(sizeof(frost$core$MutableString), (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init(_23);
 *(&local3) = ((frost$core$MutableString*) NULL);
 _26 = ((frost$core$Object*) _23);
@@ -43994,7 +43906,7 @@ _37 = org$frostlang$frostc$parser$Parser$rawNext$R$org$frostlang$frostc$parser$T
 _40 = *(&local4);
 _41 = _40.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1507;
-$tmp1507 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1507 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1507->value = _41;
 _42 = ((frost$core$Equatable*) $tmp1507);
 _43 = _42;
@@ -44007,7 +43919,7 @@ _49 = *(&local6);
 *(&local5) = _49;
 _52 = *(&local5);
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1508;
-$tmp1508 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1508 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1508->value = _52;
 _53 = ((frost$core$Equatable*) $tmp1508);
 ITable* $tmp1509 = _43->$class->itable;
@@ -44025,8 +43937,7 @@ if (_56) goto block6; else goto block7;
 block6:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2406
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2414
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_128 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_128 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _129 = (frost$core$Int) {40u};
 _130 = *(&local2);
 _131 = _130.nonnull;
@@ -44038,7 +43949,7 @@ block7:;
 _65 = *(&local4);
 _66 = _65.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1510;
-$tmp1510 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1510 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1510->value = _66;
 _67 = ((frost$core$Equatable*) $tmp1510);
 _68 = _67;
@@ -44051,7 +43962,7 @@ _74 = *(&local8);
 *(&local7) = _74;
 _77 = *(&local7);
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1511;
-$tmp1511 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1511 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1511->value = _77;
 _78 = ((frost$core$Equatable*) $tmp1511);
 ITable* $tmp1512 = _68->$class->itable;
@@ -44133,7 +44044,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_151);
 return _143;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$parameter$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$parser$Parser* param0) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$parameter$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$parser$SyntaxHighlighter$Kind local0;
 org$frostlang$frostc$parser$SyntaxHighlighter$Kind local1;
@@ -44418,8 +44330,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_147);
 return ((org$frostlang$frostc$ASTNode*) NULL);
 block21:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2431
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_152 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_152 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _153 = (frost$core$Int) {34u};
 _154 = *(&local4);
 _155 = _154.nonnull;
@@ -44487,7 +44398,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_209);
 return _197;
 
 }
-org$frostlang$frostc$FixedArray* org$frostlang$frostc$parser$Parser$parameters$R$org$frostlang$frostc$FixedArray$LTorg$frostlang$frostc$ASTNode$GT$Q(org$frostlang$frostc$parser$Parser* param0) {
+org$frostlang$frostc$FixedArray* org$frostlang$frostc$parser$Parser$parameters$R$org$frostlang$frostc$FixedArray$LTorg$frostlang$frostc$ASTNode$GT$Q(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$parser$Token$Kind local0;
 org$frostlang$frostc$parser$Token$Kind local1;
@@ -44658,8 +44570,7 @@ frost$core$Frost$ref$frost$core$Object$Q(_19);
 return ((org$frostlang$frostc$FixedArray*) NULL);
 block3:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2442
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_23 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_23 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _24 = _23;
 frost$collections$Array$init(_24);
 *(&local3) = ((frost$collections$Array*) NULL);
@@ -44688,12 +44599,12 @@ _47 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Toke
 _50 = *(&local7);
 _51 = _50.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1537;
-$tmp1537 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1537 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1537->value = _51;
 _52 = ((frost$core$Equatable*) $tmp1537);
 _53 = _52;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1538;
-$tmp1538 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1538 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1538->value = _44;
 _54 = ((frost$core$Equatable*) $tmp1538);
 ITable* $tmp1539 = _53->$class->itable;
@@ -44794,12 +44705,12 @@ _135 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Tok
 _138 = *(&local12);
 _139 = _138.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1542;
-$tmp1542 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1542 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1542->value = _139;
 _140 = ((frost$core$Equatable*) $tmp1542);
 _141 = _140;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1543;
-$tmp1543 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1543 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1543->value = _132;
 _142 = ((frost$core$Equatable*) $tmp1543);
 ITable* $tmp1544 = _141->$class->itable;
@@ -44933,7 +44844,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_253);
 return _247;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$methodDeclaration$org$frostlang$frostc$ASTNode$Q$org$frostlang$frostc$FixedArray$LTorg$frostlang$frostc$ASTNode$GT$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$parser$Parser* param0, org$frostlang$frostc$ASTNode* param1, org$frostlang$frostc$FixedArray* param2) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$methodDeclaration$org$frostlang$frostc$ASTNode$Q$org$frostlang$frostc$FixedArray$LTorg$frostlang$frostc$ASTNode$GT$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf, org$frostlang$frostc$ASTNode* param1, org$frostlang$frostc$FixedArray* param2) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$MethodDecl$Kind local0;
 org$frostlang$frostc$parser$Token$Kind local1;
@@ -45366,12 +45278,12 @@ _13 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Toke
 _16 = *(&local4);
 _17 = _16.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1563;
-$tmp1563 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1563 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1563->value = _17;
 _18 = ((frost$core$Equatable*) $tmp1563);
 _19 = _18;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1564;
-$tmp1564 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1564 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1564->value = _10;
 _20 = ((frost$core$Equatable*) $tmp1564);
 ITable* $tmp1565 = _19->$class->itable;
@@ -45635,7 +45547,7 @@ _247 = _246.value;
 _248 = _245[_247];
 _251 = _248.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1578;
-$tmp1578 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1578 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1578->value = _251;
 _252 = ((frost$core$Equatable*) $tmp1578);
 _253 = _252;
@@ -45648,7 +45560,7 @@ _259 = *(&local19);
 *(&local18) = _259;
 _262 = *(&local18);
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1579;
-$tmp1579 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1579 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1579->value = _262;
 _263 = ((frost$core$Equatable*) $tmp1579);
 ITable* $tmp1580 = _253->$class->itable;
@@ -45802,7 +45714,7 @@ _386 = _385.value;
 _387 = _384[_386];
 _390 = _387.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1586;
-$tmp1586 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1586 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1586->value = _390;
 _391 = ((frost$core$Equatable*) $tmp1586);
 _392 = _391;
@@ -45815,7 +45727,7 @@ _398 = *(&local23);
 *(&local22) = _398;
 _401 = *(&local22);
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1587;
-$tmp1587 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1587 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1587->value = _401;
 _402 = ((frost$core$Equatable*) $tmp1587);
 ITable* $tmp1588 = _392->$class->itable;
@@ -46006,7 +45918,7 @@ _560 = _559.value;
 _561 = _558[_560];
 _564 = _561.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1595;
-$tmp1595 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1595 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1595->value = _564;
 _565 = ((frost$core$Equatable*) $tmp1595);
 _566 = _565;
@@ -46019,7 +45931,7 @@ _572 = *(&local29);
 *(&local28) = _572;
 _575 = *(&local28);
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1596;
-$tmp1596 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1596 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1596->value = _575;
 _576 = ((frost$core$Equatable*) $tmp1596);
 ITable* $tmp1597 = _566->$class->itable;
@@ -46090,8 +46002,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_631);
 goto block60;
 block60:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2517
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_636 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_636 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _637 = (frost$core$Int) {29u};
 _638 = *(&local5);
 _639 = _638.nonnull;
@@ -46160,7 +46071,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_693);
 return _671;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$anonymousMethod$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$parser$Parser* param0) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$anonymousMethod$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$MethodDecl$Kind local0;
 org$frostlang$frostc$parser$Token$Kind local1;
@@ -46392,12 +46304,12 @@ _13 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Toke
 _16 = *(&local4);
 _17 = _16.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1609;
-$tmp1609 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1609 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1609->value = _17;
 _18 = ((frost$core$Equatable*) $tmp1609);
 _19 = _18;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1610;
-$tmp1610 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1610 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1610->value = _10;
 _20 = ((frost$core$Equatable*) $tmp1610);
 ITable* $tmp1611 = _19->$class->itable;
@@ -46591,7 +46503,7 @@ _181 = _180.value;
 _182 = _179[_181];
 _185 = _182.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1618;
-$tmp1618 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1618 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1618->value = _185;
 _186 = ((frost$core$Equatable*) $tmp1618);
 _187 = _186;
@@ -46604,7 +46516,7 @@ _193 = *(&local15);
 *(&local14) = _193;
 _196 = *(&local14);
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1619;
-$tmp1619 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1619 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1619->value = _196;
 _197 = ((frost$core$Equatable*) $tmp1619);
 ITable* $tmp1620 = _187->$class->itable;
@@ -46742,8 +46654,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_315);
 return ((org$frostlang$frostc$ASTNode*) NULL);
 block34:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2555
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_320 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_320 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _321 = (frost$core$Int) {29u};
 _322 = *(&local5);
 _323 = _322.nonnull;
@@ -46757,8 +46668,7 @@ abort(); // unreachable
 block35:;
 _330 = ((org$frostlang$frostc$parser$Token) _322.value);
 _331 = _330.position;
-FROST_ASSERT(40 == sizeof(org$frostlang$frostc$FixedArray));
-_332 = (org$frostlang$frostc$FixedArray*) frostObjectAlloc(40, (frost$core$Class*) &org$frostlang$frostc$FixedArray$class);
+_332 = (org$frostlang$frostc$FixedArray*) frostObjectAlloc(sizeof(org$frostlang$frostc$FixedArray), (frost$core$Class*) &org$frostlang$frostc$FixedArray$class);
 _333 = _332;
 org$frostlang$frostc$FixedArray$init(_333);
 _335 = *(&local0);
@@ -46798,7 +46708,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_364);
 return _348;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$initDeclaration$org$frostlang$frostc$ASTNode$Q$org$frostlang$frostc$FixedArray$LTorg$frostlang$frostc$ASTNode$GT$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$parser$Parser* param0, org$frostlang$frostc$ASTNode* param1, org$frostlang$frostc$FixedArray* param2) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$initDeclaration$org$frostlang$frostc$ASTNode$Q$org$frostlang$frostc$FixedArray$LTorg$frostlang$frostc$ASTNode$GT$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf, org$frostlang$frostc$ASTNode* param1, org$frostlang$frostc$FixedArray* param2) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$parser$Token$Kind local0;
 org$frostlang$frostc$parser$Token$Kind local1;
@@ -46952,8 +46863,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_72);
 return ((org$frostlang$frostc$ASTNode*) NULL);
 block7:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2575
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_77 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_77 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _78 = (frost$core$Int) {29u};
 _79 = *(&local2);
 _80 = _79.nonnull;
@@ -47004,7 +46914,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_119);
 return _109;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$fieldDeclaration$org$frostlang$frostc$ASTNode$Q$org$frostlang$frostc$FixedArray$LTorg$frostlang$frostc$ASTNode$GT$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$parser$Parser* param0, org$frostlang$frostc$ASTNode* param1, org$frostlang$frostc$FixedArray* param2) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$fieldDeclaration$org$frostlang$frostc$ASTNode$Q$org$frostlang$frostc$FixedArray$LTorg$frostlang$frostc$ASTNode$GT$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf, org$frostlang$frostc$ASTNode* param1, org$frostlang$frostc$FixedArray* param2) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$ASTNode* local0 = NULL;
 org$frostlang$frostc$ASTNode* _1;
@@ -47068,8 +46979,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_21);
 return ((org$frostlang$frostc$ASTNode*) NULL);
 block2:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2587
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_26 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_26 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _27 = (frost$core$Int) {18u};
 _28 = *(&local0);
 _29 = _28 != NULL;
@@ -47108,7 +47018,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_55);
 return _49;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$choiceCase$org$frostlang$frostc$ASTNode$Q$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$parser$Parser* param0, org$frostlang$frostc$ASTNode* param1) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$choiceCase$org$frostlang$frostc$ASTNode$Q$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf, org$frostlang$frostc$ASTNode* param1) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$parser$Token$Kind local0;
 org$frostlang$frostc$parser$Token$Kind local1;
@@ -47369,8 +47280,7 @@ frost$core$Frost$ref$frost$core$Object$Q(_19);
 return ((org$frostlang$frostc$ASTNode*) NULL);
 block3:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2598
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_23 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_23 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _24 = _23;
 frost$collections$Array$init(_24);
 *(&local3) = ((frost$collections$Array*) NULL);
@@ -47399,12 +47309,12 @@ _47 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Toke
 _50 = *(&local7);
 _51 = _50.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1646;
-$tmp1646 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1646 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1646->value = _51;
 _52 = ((frost$core$Equatable*) $tmp1646);
 _53 = _52;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1647;
-$tmp1647 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1647 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1647->value = _44;
 _54 = ((frost$core$Equatable*) $tmp1647);
 ITable* $tmp1648 = _53->$class->itable;
@@ -47518,7 +47428,7 @@ _138 = _137.value;
 _139 = _136[_138];
 _142 = _139.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1654;
-$tmp1654 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1654 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1654->value = _142;
 _143 = ((frost$core$Equatable*) $tmp1654);
 _144 = _143;
@@ -47531,7 +47441,7 @@ _150 = *(&local9);
 *(&local8) = _150;
 _153 = *(&local8);
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1655;
-$tmp1655 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1655 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1655->value = _153;
 _154 = ((frost$core$Equatable*) $tmp1655);
 ITable* $tmp1656 = _144->$class->itable;
@@ -47620,12 +47530,12 @@ _227 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Tok
 _230 = *(&local14);
 _231 = _230.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1659;
-$tmp1659 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1659 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1659->value = _231;
 _232 = ((frost$core$Equatable*) $tmp1659);
 _233 = _232;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1660;
-$tmp1660 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1660 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1660->value = _224;
 _234 = ((frost$core$Equatable*) $tmp1660);
 ITable* $tmp1661 = _233->$class->itable;
@@ -47748,8 +47658,7 @@ block39:;
 goto block5;
 block5:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2618
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_340 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_340 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _341 = (frost$core$Int) {10u};
 _342 = *(&local2);
 _343 = _342.nonnull;
@@ -47809,7 +47718,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_391);
 return _381;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$choiceDeclaration$org$frostlang$frostc$ASTNode$Q$org$frostlang$frostc$FixedArray$LTorg$frostlang$frostc$ASTNode$GT$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$parser$Parser* param0, org$frostlang$frostc$ASTNode* param1, org$frostlang$frostc$FixedArray* param2) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$choiceDeclaration$org$frostlang$frostc$ASTNode$Q$org$frostlang$frostc$FixedArray$LTorg$frostlang$frostc$ASTNode$GT$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf, org$frostlang$frostc$ASTNode* param1, org$frostlang$frostc$FixedArray* param2) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$parser$Token$Kind local0;
 org$frostlang$frostc$parser$Token$Kind local1;
@@ -48790,7 +48700,7 @@ _105 = _104.value;
 _106 = _103[_105];
 _109 = _106.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1689;
-$tmp1689 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1689 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1689->value = _109;
 _110 = ((frost$core$Equatable*) $tmp1689);
 _111 = _110;
@@ -48803,7 +48713,7 @@ _117 = *(&local8);
 *(&local7) = _117;
 _120 = *(&local7);
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1690;
-$tmp1690 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1690 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1690->value = _120;
 _121 = ((frost$core$Equatable*) $tmp1690);
 ITable* $tmp1691 = _111->$class->itable;
@@ -48882,8 +48792,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_183);
 return ((org$frostlang$frostc$ASTNode*) NULL);
 block22:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2649
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_188 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_188 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _189 = _188;
 frost$collections$Array$init(_189);
 *(&local11) = ((frost$collections$Array*) NULL);
@@ -49232,8 +49141,7 @@ block34:;
 goto block24;
 block25:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2678
-FROST_ASSERT(40 == sizeof(org$frostlang$frostc$FixedArray));
-_512 = (org$frostlang$frostc$FixedArray*) frostObjectAlloc(40, (frost$core$Class*) &org$frostlang$frostc$FixedArray$class);
+_512 = (org$frostlang$frostc$FixedArray*) frostObjectAlloc(sizeof(org$frostlang$frostc$FixedArray), (frost$core$Class*) &org$frostlang$frostc$FixedArray$class);
 _513 = _512;
 org$frostlang$frostc$FixedArray$init(_513);
 *(&local15) = ((org$frostlang$frostc$FixedArray*) NULL);
@@ -49585,8 +49493,7 @@ _828 = ((frost$core$Object*) _827);
 frost$core$Frost$unref$frost$core$Object$Q(_828);
 *(&local12) = ((org$frostlang$frostc$ASTNode*) NULL);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2703
-FROST_ASSERT(40 == sizeof(org$frostlang$frostc$FixedArray));
-_832 = (org$frostlang$frostc$FixedArray*) frostObjectAlloc(40, (frost$core$Class*) &org$frostlang$frostc$FixedArray$class);
+_832 = (org$frostlang$frostc$FixedArray*) frostObjectAlloc(sizeof(org$frostlang$frostc$FixedArray), (frost$core$Class*) &org$frostlang$frostc$FixedArray$class);
 _833 = _832;
 org$frostlang$frostc$FixedArray$init(_833);
 _835 = ((frost$core$Object*) _832);
@@ -49682,8 +49589,7 @@ _919 = ((frost$core$Object*) _918);
 frost$core$Frost$unref$frost$core$Object$Q(_919);
 *(&local12) = ((org$frostlang$frostc$ASTNode*) NULL);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2712
-FROST_ASSERT(40 == sizeof(org$frostlang$frostc$FixedArray));
-_923 = (org$frostlang$frostc$FixedArray*) frostObjectAlloc(40, (frost$core$Class*) &org$frostlang$frostc$FixedArray$class);
+_923 = (org$frostlang$frostc$FixedArray*) frostObjectAlloc(sizeof(org$frostlang$frostc$FixedArray), (frost$core$Class*) &org$frostlang$frostc$FixedArray$class);
 _924 = _923;
 org$frostlang$frostc$FixedArray$init(_924);
 _926 = ((frost$core$Object*) _923);
@@ -49779,8 +49685,7 @@ _1010 = ((frost$core$Object*) _1009);
 frost$core$Frost$unref$frost$core$Object$Q(_1010);
 *(&local12) = ((org$frostlang$frostc$ASTNode*) NULL);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2721
-FROST_ASSERT(40 == sizeof(org$frostlang$frostc$FixedArray));
-_1014 = (org$frostlang$frostc$FixedArray*) frostObjectAlloc(40, (frost$core$Class*) &org$frostlang$frostc$FixedArray$class);
+_1014 = (org$frostlang$frostc$FixedArray*) frostObjectAlloc(sizeof(org$frostlang$frostc$FixedArray), (frost$core$Class*) &org$frostlang$frostc$FixedArray$class);
 _1015 = _1014;
 org$frostlang$frostc$FixedArray$init(_1015);
 _1017 = ((frost$core$Object*) _1014);
@@ -49886,8 +49791,7 @@ _1111 = ((frost$core$Object*) _1110);
 frost$core$Frost$unref$frost$core$Object$Q(_1111);
 *(&local12) = ((org$frostlang$frostc$ASTNode*) NULL);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2730
-FROST_ASSERT(40 == sizeof(org$frostlang$frostc$FixedArray));
-_1115 = (org$frostlang$frostc$FixedArray*) frostObjectAlloc(40, (frost$core$Class*) &org$frostlang$frostc$FixedArray$class);
+_1115 = (org$frostlang$frostc$FixedArray*) frostObjectAlloc(sizeof(org$frostlang$frostc$FixedArray), (frost$core$Class*) &org$frostlang$frostc$FixedArray$class);
 _1116 = _1115;
 org$frostlang$frostc$FixedArray$init(_1116);
 _1118 = ((frost$core$Object*) _1115);
@@ -49979,8 +49883,7 @@ frost$core$Frost$ref$frost$core$Object$Q(_1200);
 goto block132;
 block134:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2587
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_1204 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_1204 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _1205 = (frost$core$Int) {18u};
 _1206 = *(&local22);
 _1207 = _1206 != NULL;
@@ -50091,8 +49994,7 @@ _1302 = ((frost$core$Object*) _1301);
 frost$core$Frost$unref$frost$core$Object$Q(_1302);
 *(&local12) = ((org$frostlang$frostc$ASTNode*) NULL);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2739
-FROST_ASSERT(40 == sizeof(org$frostlang$frostc$FixedArray));
-_1306 = (org$frostlang$frostc$FixedArray*) frostObjectAlloc(40, (frost$core$Class*) &org$frostlang$frostc$FixedArray$class);
+_1306 = (org$frostlang$frostc$FixedArray*) frostObjectAlloc(sizeof(org$frostlang$frostc$FixedArray), (frost$core$Class*) &org$frostlang$frostc$FixedArray$class);
 _1307 = _1306;
 org$frostlang$frostc$FixedArray$init(_1307);
 _1309 = ((frost$core$Object*) _1306);
@@ -50135,8 +50037,7 @@ _1345 = *(&local24);
 _1346 = org$frostlang$frostc$parser$Parser$expect$org$frostlang$frostc$parser$Token$Kind$frost$core$String$R$org$frostlang$frostc$parser$Token$Q(param0, _1345, &$s1728);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2743
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2752
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_1399 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_1399 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _1400 = (frost$core$Int) {12u};
 _1401 = *(&local2);
 _1402 = _1401.nonnull;
@@ -50266,7 +50167,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_1471);
 return _1449;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$declaration$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$parser$Parser* param0) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$declaration$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$parser$Token local0;
 org$frostlang$frostc$ASTNode* local1 = NULL;
@@ -50654,7 +50556,7 @@ _60 = _57[_59];
 _67 = *(&local0);
 _68 = _67.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1748;
-$tmp1748 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1748 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1748->value = _68;
 _69 = ((frost$core$Equatable*) $tmp1748);
 _70 = _69;
@@ -50667,7 +50569,7 @@ _76 = *(&local3);
 *(&local2) = _76;
 _79 = *(&local2);
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1749;
-$tmp1749 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1749 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1749->value = _79;
 _80 = ((frost$core$Equatable*) $tmp1749);
 ITable* $tmp1750 = _70->$class->itable;
@@ -51055,8 +50957,7 @@ frost$core$Frost$ref$frost$core$Object$Q(_430);
 goto block52;
 block54:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2587
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_434 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_434 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _435 = (frost$core$Int) {18u};
 _436 = *(&local6);
 _437 = _436 != NULL;
@@ -51143,7 +51044,8 @@ goto block60;
 block60:;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$classDeclaration$org$frostlang$frostc$ASTNode$Q$org$frostlang$frostc$FixedArray$LTorg$frostlang$frostc$ASTNode$GT$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$parser$Parser* param0, org$frostlang$frostc$ASTNode* param1, org$frostlang$frostc$FixedArray* param2) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$classDeclaration$org$frostlang$frostc$ASTNode$Q$org$frostlang$frostc$FixedArray$LTorg$frostlang$frostc$ASTNode$GT$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf, org$frostlang$frostc$ASTNode* param1, org$frostlang$frostc$FixedArray* param2) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$parser$Token$Kind local0;
 org$frostlang$frostc$parser$Token$Kind local1;
@@ -51575,7 +51477,7 @@ _105 = _104.value;
 _106 = _103[_105];
 _109 = _106.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1778;
-$tmp1778 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1778 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1778->value = _109;
 _110 = ((frost$core$Equatable*) $tmp1778);
 _111 = _110;
@@ -51588,7 +51490,7 @@ _117 = *(&local8);
 *(&local7) = _117;
 _120 = *(&local7);
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1779;
-$tmp1779 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1779 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1779->value = _120;
 _121 = ((frost$core$Equatable*) $tmp1779);
 ITable* $tmp1780 = _111->$class->itable;
@@ -51723,7 +51625,7 @@ _225 = _224.value;
 _226 = _223[_225];
 _229 = _226.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1786;
-$tmp1786 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1786 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1786->value = _229;
 _230 = ((frost$core$Equatable*) $tmp1786);
 _231 = _230;
@@ -51736,7 +51638,7 @@ _237 = *(&local11);
 *(&local10) = _237;
 _240 = *(&local10);
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1787;
-$tmp1787 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1787 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1787->value = _240;
 _241 = ((frost$core$Equatable*) $tmp1787);
 ITable* $tmp1788 = _231->$class->itable;
@@ -51823,8 +51725,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_311);
 return ((org$frostlang$frostc$ASTNode*) NULL);
 block36:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2839
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_316 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_316 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _317 = _316;
 frost$collections$Array$init(_317);
 *(&local14) = ((frost$collections$Array*) NULL);
@@ -51855,12 +51756,12 @@ _341 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Tok
 _344 = *(&local18);
 _345 = _344.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1790;
-$tmp1790 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1790 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1790->value = _345;
 _346 = ((frost$core$Equatable*) $tmp1790);
 _347 = _346;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1791;
-$tmp1791 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1791 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1791->value = _338;
 _348 = ((frost$core$Equatable*) $tmp1791);
 ITable* $tmp1792 = _347->$class->itable;
@@ -51957,8 +51858,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_425);
 goto block38;
 block40:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2847
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_430 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_430 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _431 = (frost$core$Int) {12u};
 _432 = *(&local2);
 _433 = _432.nonnull;
@@ -52035,7 +51935,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_499);
 return _481;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$interfaceDeclaration$org$frostlang$frostc$ASTNode$Q$org$frostlang$frostc$FixedArray$LTorg$frostlang$frostc$ASTNode$GT$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$parser$Parser* param0, org$frostlang$frostc$ASTNode* param1, org$frostlang$frostc$FixedArray* param2) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$interfaceDeclaration$org$frostlang$frostc$ASTNode$Q$org$frostlang$frostc$FixedArray$LTorg$frostlang$frostc$ASTNode$GT$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf, org$frostlang$frostc$ASTNode* param1, org$frostlang$frostc$FixedArray* param2) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 org$frostlang$frostc$parser$Token$Kind local0;
 org$frostlang$frostc$parser$Token$Kind local1;
@@ -52517,7 +52418,7 @@ _105 = _104.value;
 _106 = _103[_105];
 _109 = _106.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1813;
-$tmp1813 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1813 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1813->value = _109;
 _110 = ((frost$core$Equatable*) $tmp1813);
 _111 = _110;
@@ -52530,7 +52431,7 @@ _117 = *(&local8);
 *(&local7) = _117;
 _120 = *(&local7);
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1814;
-$tmp1814 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1814 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1814->value = _120;
 _121 = ((frost$core$Equatable*) $tmp1814);
 ITable* $tmp1815 = _111->$class->itable;
@@ -52576,8 +52477,7 @@ goto block8;
 block9:;
 // <no location>
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2872
-FROST_ASSERT(40 == sizeof(org$frostlang$frostc$FixedArray));
-_157 = (org$frostlang$frostc$FixedArray*) frostObjectAlloc(40, (frost$core$Class*) &org$frostlang$frostc$FixedArray$class);
+_157 = (org$frostlang$frostc$FixedArray*) frostObjectAlloc(sizeof(org$frostlang$frostc$FixedArray), (frost$core$Class*) &org$frostlang$frostc$FixedArray$class);
 _158 = _157;
 org$frostlang$frostc$FixedArray$init(_158);
 _160 = _157;
@@ -52592,8 +52492,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_167);
 goto block8;
 block8:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2874
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_171 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_171 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _172 = _171;
 frost$collections$Array$init(_172);
 *(&local9) = ((frost$collections$Array*) NULL);
@@ -52622,12 +52521,12 @@ _195 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Tok
 _198 = *(&local13);
 _199 = _198.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1816;
-$tmp1816 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1816 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1816->value = _199;
 _200 = ((frost$core$Equatable*) $tmp1816);
 _201 = _200;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1817;
-$tmp1817 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1817 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1817->value = _192;
 _202 = ((frost$core$Equatable*) $tmp1817);
 ITable* $tmp1818 = _201->$class->itable;
@@ -52739,12 +52638,12 @@ _295 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Tok
 _298 = *(&local18);
 _299 = _298.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1821;
-$tmp1821 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1821 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1821->value = _299;
 _300 = ((frost$core$Equatable*) $tmp1821);
 _301 = _300;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1822;
-$tmp1822 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1822 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1822->value = _292;
 _302 = ((frost$core$Equatable*) $tmp1822);
 ITable* $tmp1823 = _301->$class->itable;
@@ -52873,8 +52772,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_410);
 return ((org$frostlang$frostc$ASTNode*) NULL);
 block45:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2892
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_415 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_415 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _416 = _415;
 frost$collections$Array$init(_416);
 *(&local21) = ((frost$collections$Array*) NULL);
@@ -52905,12 +52803,12 @@ _440 = org$frostlang$frostc$parser$Parser$next$R$org$frostlang$frostc$parser$Tok
 _443 = *(&local25);
 _444 = _443.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1827;
-$tmp1827 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1827 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1827->value = _444;
 _445 = ((frost$core$Equatable*) $tmp1827);
 _446 = _445;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1828;
-$tmp1828 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1828 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1828->value = _437;
 _447 = ((frost$core$Equatable*) $tmp1828);
 ITable* $tmp1829 = _446->$class->itable;
@@ -53007,8 +52905,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_524);
 goto block47;
 block49:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2900
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_529 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_529 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _530 = (frost$core$Int) {12u};
 _531 = *(&local2);
 _532 = _531.nonnull;
@@ -53091,7 +52988,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_604);
 return _584;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$bodyEntry$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$parser$Parser* param0) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$bodyEntry$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT** _3;
 frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT* _4;
@@ -53260,7 +53158,8 @@ goto block13;
 block13:;
 
 }
-org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$file$R$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$parser$Parser* param0) {
+org$frostlang$frostc$ASTNode* org$frostlang$frostc$parser$Parser$file$R$org$frostlang$frostc$ASTNode$Q(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 frost$collections$Array* local0 = NULL;
 org$frostlang$frostc$parser$Token$Kind local1;
@@ -53505,8 +53404,7 @@ frost$core$Object* _378;
 frost$collections$Array* _380;
 frost$core$Object* _381;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2923
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_1 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_1 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _2 = _1;
 frost$collections$Array$init(_2);
 *(&local0) = ((frost$collections$Array*) NULL);
@@ -53597,7 +53495,7 @@ _72 = _71.value;
 _73 = _70[_72];
 _76 = _73.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1860;
-$tmp1860 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1860 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1860->value = _76;
 _77 = ((frost$core$Equatable*) $tmp1860);
 _78 = _77;
@@ -53610,7 +53508,7 @@ _84 = *(&local2);
 *(&local1) = _84;
 _87 = *(&local1);
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1861;
-$tmp1861 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1861 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1861->value = _87;
 _88 = ((frost$core$Equatable*) $tmp1861);
 ITable* $tmp1862 = _78->$class->itable;
@@ -53749,7 +53647,7 @@ _194 = _193.value;
 _195 = _192[_194];
 _198 = _195.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1870;
-$tmp1870 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1870 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1870->value = _198;
 _199 = ((frost$core$Equatable*) $tmp1870);
 _200 = _199;
@@ -53762,7 +53660,7 @@ _206 = *(&local5);
 *(&local4) = _206;
 _209 = *(&local4);
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp1871;
-$tmp1871 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp1871 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp1871->value = _209;
 _210 = ((frost$core$Equatable*) $tmp1871);
 ITable* $tmp1872 = _200->$class->itable;
@@ -53946,8 +53844,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_361);
 goto block16;
 block18:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/Parser.frost:2938
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_366 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_366 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _367 = (frost$core$Int) {19u};
 _368 = *(&local0);
 _369 = _368;
@@ -53968,7 +53865,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_381);
 return _373;
 
 }
-void org$frostlang$frostc$parser$Parser$cleanup(org$frostlang$frostc$parser$Parser* param0) {
+void org$frostlang$frostc$parser$Parser$cleanup(void* rawSelf) {
+org$frostlang$frostc$parser$Parser* param0 = (org$frostlang$frostc$parser$Parser*) rawSelf;
 
 frost$core$Object* _1;
 org$frostlang$frostc$parser$Lexer** _3;

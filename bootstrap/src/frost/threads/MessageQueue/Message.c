@@ -36,7 +36,8 @@ static frost$core$String $s11 = { (frost$core$Class*) &frost$core$String$class, 
 static frost$core$String $s13 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x4d\x65\x73\x73\x61\x67\x65\x28", 8, -4760708205025170492, NULL };
 static frost$core$String $s14 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x29", 1, -5808618445805089436, NULL };
 
-void frost$threads$MessageQueue$Message$init$frost$threads$MessageQueue$Message$T(frost$threads$MessageQueue$Message* param0, frost$core$Immutable* param1) {
+void frost$threads$MessageQueue$Message$init$frost$threads$MessageQueue$Message$T(void* rawSelf, frost$core$Immutable* param1) {
+frost$threads$MessageQueue$Message* param0 = (frost$threads$MessageQueue$Message*) rawSelf;
 
 frost$threads$MessageQueue$Message* _1;
 frost$core$Object* _2;
@@ -57,7 +58,8 @@ _8 = &_1->payload;
 return;
 
 }
-frost$core$String* frost$threads$MessageQueue$Message$get_asString$R$frost$core$String(frost$threads$MessageQueue$Message* param0) {
+frost$core$String* frost$threads$MessageQueue$Message$get_asString$R$frost$core$String(void* rawSelf) {
+frost$threads$MessageQueue$Message* param0 = (frost$threads$MessageQueue$Message*) rawSelf;
 
 frost$threads$MessageQueue$Message* _1;
 frost$threads$MessageQueue$Message** _2;
@@ -199,7 +201,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_83);
 return _78;
 
 }
-void frost$threads$MessageQueue$Message$cleanup(frost$threads$MessageQueue$Message* param0) {
+void frost$threads$MessageQueue$Message$cleanup(void* rawSelf) {
+frost$threads$MessageQueue$Message* param0 = (frost$threads$MessageQueue$Message*) rawSelf;
 
 frost$core$Immutable* _1;
 frost$threads$MessageQueue$Message* _3;

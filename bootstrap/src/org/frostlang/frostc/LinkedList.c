@@ -101,7 +101,8 @@ static frost$core$String $s64 = { (frost$core$Class*) &frost$core$String$class, 
 static frost$core$String $s66 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x3c\x6e\x75\x6c\x6c\x3e", 6, -6229636012469849280, NULL };
 static frost$core$String $s67 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x5d", 1, -5808499698549242648, NULL };
 
-frost$core$Int org$frostlang$frostc$LinkedList$get_count$R$frost$core$Int(org$frostlang$frostc$LinkedList* param0) {
+frost$core$Int org$frostlang$frostc$LinkedList$get_count$R$frost$core$Int(void* rawSelf) {
+org$frostlang$frostc$LinkedList* param0 = (org$frostlang$frostc$LinkedList*) rawSelf;
 
 org$frostlang$frostc$LinkedList* _1;
 frost$core$Int* _2;
@@ -113,7 +114,8 @@ _3 = *_2;
 return _3;
 
 }
-frost$collections$Iterator* org$frostlang$frostc$LinkedList$get_iterator$R$frost$collections$Iterator$LTorg$frostlang$frostc$LinkedList$T$GT(org$frostlang$frostc$LinkedList* param0) {
+frost$collections$Iterator* org$frostlang$frostc$LinkedList$get_iterator$R$frost$collections$Iterator$LTorg$frostlang$frostc$LinkedList$T$GT(void* rawSelf) {
+org$frostlang$frostc$LinkedList* param0 = (org$frostlang$frostc$LinkedList*) rawSelf;
 
 org$frostlang$frostc$LinkedList$LinkedListIterator* _1;
 org$frostlang$frostc$LinkedList$LinkedListIterator* _2;
@@ -130,8 +132,7 @@ frost$collections$Iterator* _16;
 frost$core$Object* _17;
 frost$core$Object* _19;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LinkedList.frost:54
-FROST_ASSERT(24 == sizeof(org$frostlang$frostc$LinkedList$LinkedListIterator));
-_1 = (org$frostlang$frostc$LinkedList$LinkedListIterator*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$LinkedList$LinkedListIterator$class);
+_1 = (org$frostlang$frostc$LinkedList$LinkedListIterator*) frostObjectAlloc(sizeof(org$frostlang$frostc$LinkedList$LinkedListIterator), (frost$core$Class*) &org$frostlang$frostc$LinkedList$LinkedListIterator$class);
 _2 = _1;
 _3 = param0;
 _4 = &_3->head;
@@ -156,7 +157,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_19);
 return _16;
 
 }
-void org$frostlang$frostc$LinkedList$add$org$frostlang$frostc$LinkedList$T(org$frostlang$frostc$LinkedList* param0, frost$core$Object* param1) {
+void org$frostlang$frostc$LinkedList$add$org$frostlang$frostc$LinkedList$T(void* rawSelf, frost$core$Object* param1) {
+org$frostlang$frostc$LinkedList* param0 = (org$frostlang$frostc$LinkedList*) rawSelf;
 
 org$frostlang$frostc$LinkedList* _1;
 org$frostlang$frostc$LinkedList$Node** _2;
@@ -321,8 +323,7 @@ frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$St
 abort(); // unreachable
 block6:;
 _33 = _25;
-FROST_ASSERT(40 == sizeof(org$frostlang$frostc$LinkedList$Node));
-_34 = (org$frostlang$frostc$LinkedList$Node*) frostObjectAlloc(40, (frost$core$Class*) &org$frostlang$frostc$LinkedList$Node$class);
+_34 = (org$frostlang$frostc$LinkedList$Node*) frostObjectAlloc(sizeof(org$frostlang$frostc$LinkedList$Node), (frost$core$Class*) &org$frostlang$frostc$LinkedList$Node$class);
 _35 = _34;
 _36 = param1;
 org$frostlang$frostc$LinkedList$Node$init$org$frostlang$frostc$LinkedList$Node$T(_35, _36);
@@ -368,8 +369,7 @@ _72 = _64;
 _73 = param0;
 _74 = &_73->tail;
 _75 = *_74;
-FROST_ASSERT(32 == sizeof(frost$core$Weak));
-_76 = (frost$core$Weak*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$Weak$class);
+_76 = (frost$core$Weak*) frostObjectAlloc(sizeof(frost$core$Weak), (frost$core$Class*) &frost$core$Weak$class);
 _77 = _76;
 _78 = ((frost$core$Object*) _75);
 frost$core$Weak$init$frost$core$Weak$T$Q(_77, _78);
@@ -437,8 +437,7 @@ abort(); // unreachable
 block15:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LinkedList.frost:67
 _135 = param0;
-FROST_ASSERT(40 == sizeof(org$frostlang$frostc$LinkedList$Node));
-_136 = (org$frostlang$frostc$LinkedList$Node*) frostObjectAlloc(40, (frost$core$Class*) &org$frostlang$frostc$LinkedList$Node$class);
+_136 = (org$frostlang$frostc$LinkedList$Node*) frostObjectAlloc(sizeof(org$frostlang$frostc$LinkedList$Node), (frost$core$Class*) &org$frostlang$frostc$LinkedList$Node$class);
 _137 = _136;
 _138 = param1;
 org$frostlang$frostc$LinkedList$Node$init$org$frostlang$frostc$LinkedList$Node$T(_137, _138);
@@ -482,7 +481,8 @@ _174 = &_166->_count;
 return;
 
 }
-void org$frostlang$frostc$LinkedList$merge$org$frostlang$frostc$LinkedList$LTorg$frostlang$frostc$LinkedList$T$GT(org$frostlang$frostc$LinkedList* param0, org$frostlang$frostc$LinkedList* param1) {
+void org$frostlang$frostc$LinkedList$merge$org$frostlang$frostc$LinkedList$LTorg$frostlang$frostc$LinkedList$T$GT(void* rawSelf, org$frostlang$frostc$LinkedList* param1) {
+org$frostlang$frostc$LinkedList* param0 = (org$frostlang$frostc$LinkedList*) rawSelf;
 
 frost$collections$CollectionView* _1;
 $fn18 _2;
@@ -637,8 +637,7 @@ _46 = _38;
 _47 = param0;
 _48 = &_47->tail;
 _49 = *_48;
-FROST_ASSERT(32 == sizeof(frost$core$Weak));
-_50 = (frost$core$Weak*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$Weak$class);
+_50 = (frost$core$Weak*) frostObjectAlloc(sizeof(frost$core$Weak), (frost$core$Class*) &frost$core$Weak$class);
 _51 = _50;
 _52 = ((frost$core$Object*) _49);
 frost$core$Weak$init$frost$core$Weak$T$Q(_51, _52);
@@ -728,7 +727,8 @@ block2:;
 return;
 
 }
-frost$core$Object* org$frostlang$frostc$LinkedList$get_last$R$org$frostlang$frostc$LinkedList$T(org$frostlang$frostc$LinkedList* param0) {
+frost$core$Object* org$frostlang$frostc$LinkedList$get_last$R$org$frostlang$frostc$LinkedList$T(void* rawSelf) {
+org$frostlang$frostc$LinkedList* param0 = (org$frostlang$frostc$LinkedList*) rawSelf;
 
 frost$collections$CollectionView* _0;
 $fn28 _1;
@@ -793,7 +793,8 @@ frost$core$Frost$ref$frost$core$Object$Q(_28);
 return _27;
 
 }
-void org$frostlang$frostc$LinkedList$removeLast(org$frostlang$frostc$LinkedList* param0) {
+void org$frostlang$frostc$LinkedList$removeLast(void* rawSelf) {
+org$frostlang$frostc$LinkedList* param0 = (org$frostlang$frostc$LinkedList*) rawSelf;
 
 frost$collections$CollectionView* _0;
 $fn34 _1;
@@ -1048,7 +1049,8 @@ block4:;
 return;
 
 }
-void org$frostlang$frostc$LinkedList$clear(org$frostlang$frostc$LinkedList* param0) {
+void org$frostlang$frostc$LinkedList$clear(void* rawSelf) {
+org$frostlang$frostc$LinkedList* param0 = (org$frostlang$frostc$LinkedList*) rawSelf;
 
 org$frostlang$frostc$LinkedList* _18;
 frost$core$Object* _19;
@@ -1124,7 +1126,8 @@ frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$St
 abort(); // unreachable
 
 }
-void org$frostlang$frostc$LinkedList$filterInPlace$$LPorg$frostlang$frostc$LinkedList$T$RP$EQ$GT$LPfrost$core$Bit$RP(org$frostlang$frostc$LinkedList* param0, frost$core$MutableMethod* param1) {
+void org$frostlang$frostc$LinkedList$filterInPlace$$LPorg$frostlang$frostc$LinkedList$T$RP$EQ$GT$LPfrost$core$Bit$RP(void* rawSelf, frost$core$MutableMethod* param1) {
+org$frostlang$frostc$LinkedList* param0 = (org$frostlang$frostc$LinkedList*) rawSelf;
 
 frost$core$Int _1;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LinkedList.frost:121
@@ -1133,7 +1136,8 @@ frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s52, _1);
 abort(); // unreachable
 
 }
-frost$core$String* org$frostlang$frostc$LinkedList$get_asString$R$frost$core$String(org$frostlang$frostc$LinkedList* param0) {
+frost$core$String* org$frostlang$frostc$LinkedList$get_asString$R$frost$core$String(void* rawSelf) {
+org$frostlang$frostc$LinkedList* param0 = (org$frostlang$frostc$LinkedList*) rawSelf;
 
 frost$core$MutableString* local0 = NULL;
 frost$core$String* local1 = NULL;
@@ -1192,8 +1196,7 @@ frost$core$Object* _100;
 frost$core$MutableString* _103;
 frost$core$Object* _104;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LinkedList.frost:126
-FROST_ASSERT(48 == sizeof(frost$core$MutableString));
-_1 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
+_1 = (frost$core$MutableString*) frostObjectAlloc(sizeof(frost$core$MutableString), (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init(_1);
 *(&local0) = ((frost$core$MutableString*) NULL);
 _4 = ((frost$core$Object*) _1);
@@ -1319,7 +1322,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_104);
 return _94;
 
 }
-void org$frostlang$frostc$LinkedList$init(org$frostlang$frostc$LinkedList* param0) {
+void org$frostlang$frostc$LinkedList$init(void* rawSelf) {
+org$frostlang$frostc$LinkedList* param0 = (org$frostlang$frostc$LinkedList*) rawSelf;
 
 org$frostlang$frostc$LinkedList* _1;
 frost$core$Int _2;
@@ -1332,7 +1336,8 @@ _3 = &_1->_count;
 return;
 
 }
-void org$frostlang$frostc$LinkedList$cleanup(org$frostlang$frostc$LinkedList* param0) {
+void org$frostlang$frostc$LinkedList$cleanup(void* rawSelf) {
+org$frostlang$frostc$LinkedList* param0 = (org$frostlang$frostc$LinkedList*) rawSelf;
 
 frost$core$Object* _1;
 org$frostlang$frostc$LinkedList* _3;

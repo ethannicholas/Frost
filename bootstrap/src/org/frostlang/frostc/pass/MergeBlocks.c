@@ -65,7 +65,8 @@ static frost$core$String $s38 = { (frost$core$Class*) &frost$core$String$class, 
 static frost$core$String $s40 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x4d\x65\x72\x67\x65\x42\x6c\x6f\x63\x6b\x73\x2e\x66\x72\x6f\x73\x74", 17, -6522198512651000971, NULL };
 static frost$core$String $s41 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x49\x52\x2e\x42\x6c\x6f\x63\x6b\x3f\x20\x74\x6f\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x49\x52\x2e\x42\x6c\x6f\x63\x6b", 97, 2843296977023527325, NULL };
 
-frost$core$Bit org$frostlang$frostc$pass$MergeBlocks$process$org$frostlang$frostc$IR$org$frostlang$frostc$pass$Analyzer$R$frost$core$Bit(org$frostlang$frostc$pass$MergeBlocks* param0, org$frostlang$frostc$IR* param1, org$frostlang$frostc$pass$Analyzer* param2) {
+frost$core$Bit org$frostlang$frostc$pass$MergeBlocks$process$org$frostlang$frostc$IR$org$frostlang$frostc$pass$Analyzer$R$frost$core$Bit(void* rawSelf, org$frostlang$frostc$IR* param1, org$frostlang$frostc$pass$Analyzer* param2) {
+org$frostlang$frostc$pass$MergeBlocks* param0 = (org$frostlang$frostc$pass$MergeBlocks*) rawSelf;
 
 frost$core$Bit local0;
 frost$core$Int local1;
@@ -484,7 +485,7 @@ _111 = *(&local2);
 _112 = &_111->id;
 _113 = *_112;
 org$frostlang$frostc$IR$Block$ID$wrapper* $tmp17;
-$tmp17 = (org$frostlang$frostc$IR$Block$ID$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$IR$Block$ID$wrapperclass);
+$tmp17 = (org$frostlang$frostc$IR$Block$ID$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$IR$Block$ID$wrapper), (frost$core$Class*) &org$frostlang$frostc$IR$Block$ID$wrapperclass);
 $tmp17->value = _113;
 _114 = ((frost$collections$HashKey*) $tmp17);
 _115 = frost$collections$HashMap$$IDX$frost$collections$HashMap$K$R$frost$collections$HashMap$V$Q(_110, _114);
@@ -566,7 +567,7 @@ _173 = _172(_171);
 _174 = ((org$frostlang$frostc$pass$Analyzer$BlockExit$wrapper*) _173)->value;
 _175 = _174.id;
 org$frostlang$frostc$IR$Block$ID$wrapper* $tmp25;
-$tmp25 = (org$frostlang$frostc$IR$Block$ID$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$IR$Block$ID$wrapperclass);
+$tmp25 = (org$frostlang$frostc$IR$Block$ID$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$IR$Block$ID$wrapper), (frost$core$Class*) &org$frostlang$frostc$IR$Block$ID$wrapperclass);
 $tmp25->value = _175;
 _176 = ((frost$collections$HashKey*) $tmp25);
 _177 = frost$collections$HashMap$$IDX$frost$collections$HashMap$K$R$frost$collections$HashMap$V$Q(_158, _176);
@@ -627,10 +628,10 @@ _227 = (frost$core$Bit) {_226};
 _229 = _227.value;
 if (_229) goto block28; else goto block27;
 block28:;
-_231 = (org$frostlang$frostc$Position*) (_218->$data + 0);
+_231 = &_218->$data.$BRANCH.field0;
 _232 = *_231;
 *(&local5) = _232;
-_234 = (org$frostlang$frostc$IR$Block$ID*) (_218->$data + 24);
+_234 = &_218->$data.$BRANCH.field1;
 _235 = *_234;
 *(&local6) = _235;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/pass/MergeBlocks.frost:16
@@ -736,8 +737,7 @@ _328 = *(&local2);
 _329 = &_328->statements;
 _330 = *_329;
 _331 = _330;
-FROST_ASSERT(80 == sizeof(org$frostlang$frostc$IR$Statement));
-_332 = (org$frostlang$frostc$IR$Statement*) frostObjectAlloc(80, (frost$core$Class*) &org$frostlang$frostc$IR$Statement$class);
+_332 = (org$frostlang$frostc$IR$Statement*) frostObjectAlloc(sizeof(org$frostlang$frostc$IR$Statement), (frost$core$Class*) &org$frostlang$frostc$IR$Statement$class);
 _333 = (frost$core$Int) {28u};
 _334 = *(&local5);
 org$frostlang$frostc$IR$Statement$init$frost$core$Int$org$frostlang$frostc$Position(_332, _333, _334);
@@ -822,12 +822,14 @@ _404 = *(&local0);
 return _404;
 
 }
-void org$frostlang$frostc$pass$MergeBlocks$init(org$frostlang$frostc$pass$MergeBlocks* param0) {
+void org$frostlang$frostc$pass$MergeBlocks$init(void* rawSelf) {
+org$frostlang$frostc$pass$MergeBlocks* param0 = (org$frostlang$frostc$pass$MergeBlocks*) rawSelf;
 
 return;
 
 }
-void org$frostlang$frostc$pass$MergeBlocks$cleanup(org$frostlang$frostc$pass$MergeBlocks* param0) {
+void org$frostlang$frostc$pass$MergeBlocks$cleanup(void* rawSelf) {
+org$frostlang$frostc$pass$MergeBlocks* param0 = (org$frostlang$frostc$pass$MergeBlocks*) rawSelf;
 
 frost$core$Object* _1;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/pass/MergeBlocks.frost:5

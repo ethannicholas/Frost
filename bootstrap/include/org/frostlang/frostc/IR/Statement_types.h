@@ -4,14 +4,167 @@ typedef struct frost$core$Class frost$core$Class;
 #include "frost/core/Int32_types.h"
 #include "frost/core/UInt8_types.h"
 #include "frost/core/Int_types.h"
+#include "org/frostlang/frostc/Position_types.h"
+typedef struct org$frostlang$frostc$IR$Value org$frostlang$frostc$IR$Value;
+#include "org/frostlang/frostc/expression/Binary/Operator_types.h"
+typedef struct org$frostlang$frostc$Type org$frostlang$frostc$Type;
+#include "org/frostlang/frostc/IR/Block/ID_types.h"
+#include "frost/core/Bit_types.h"
 typedef struct frost$core$String frost$core$String;
+typedef struct org$frostlang$frostc$ChoiceCase org$frostlang$frostc$ChoiceCase;
+typedef struct org$frostlang$frostc$ClassDecl org$frostlang$frostc$ClassDecl;
+typedef struct org$frostlang$frostc$FixedArray org$frostlang$frostc$FixedArray;
+typedef struct org$frostlang$frostc$FieldDecl org$frostlang$frostc$FieldDecl;
+typedef struct org$frostlang$frostc$MethodDecl org$frostlang$frostc$MethodDecl;
 
 typedef struct org$frostlang$frostc$IR$Statement {
     frost$core$Class* $class;
     frost$core$Int32 refCount;
     frost$core$UInt8 $flags;
     frost$core$Int $rawValue;
-    int8_t $data[56];
+    union {
+        struct {
+            org$frostlang$frostc$Position field0;
+            org$frostlang$frostc$IR$Value* field1;
+            org$frostlang$frostc$expression$Binary$Operator field2;
+            org$frostlang$frostc$IR$Value* field3;
+            org$frostlang$frostc$Type* field4;
+        } $BINARY;
+        struct {
+            org$frostlang$frostc$Position field0;
+            org$frostlang$frostc$IR$Block$ID field1;
+        } $BRANCH;
+        struct {
+            org$frostlang$frostc$Position field0;
+            org$frostlang$frostc$IR$Value* field1;
+            org$frostlang$frostc$Type* field2;
+            frost$core$Bit field3;
+        } $CAST;
+        struct {
+            org$frostlang$frostc$Position field0;
+            frost$core$String* field1;
+        } $COMMENT;
+        struct {
+            org$frostlang$frostc$Position field0;
+            org$frostlang$frostc$IR$Value* field1;
+            org$frostlang$frostc$ChoiceCase* field2;
+            frost$core$Int field3;
+        } $GET_CHOICE_FIELD_POINTER;
+        struct {
+            org$frostlang$frostc$Position field0;
+            org$frostlang$frostc$IR$Value* field1;
+            org$frostlang$frostc$IR$Block$ID field2;
+            org$frostlang$frostc$IR$Block$ID field3;
+        } $CONDITIONAL_BRANCH;
+        struct {
+            org$frostlang$frostc$Position field0;
+            org$frostlang$frostc$ClassDecl* field1;
+        } $CONSTRUCT;
+        struct {
+            org$frostlang$frostc$Position field0;
+            org$frostlang$frostc$ClassDecl* field1;
+            org$frostlang$frostc$FixedArray* field2;
+        } $CREATE_STRUCT;
+        struct {
+            org$frostlang$frostc$Position field0;
+            org$frostlang$frostc$IR$Value* field1;
+            org$frostlang$frostc$FixedArray* field2;
+        } $DYNAMIC_CALL;
+        struct {
+        } $END;
+        struct {
+            org$frostlang$frostc$Position field0;
+            org$frostlang$frostc$IR$Value* field1;
+            org$frostlang$frostc$FieldDecl* field2;
+        } $EXTRACT_FIELD;
+        struct {
+            org$frostlang$frostc$Position field0;
+            org$frostlang$frostc$IR$Value* field1;
+            org$frostlang$frostc$FieldDecl* field2;
+        } $GET_FIELD_POINTER;
+        struct {
+            org$frostlang$frostc$Position field0;
+            org$frostlang$frostc$IR$Value* field1;
+            frost$core$Int field2;
+            org$frostlang$frostc$Type* field3;
+        } $GET_VIRTUAL_METHOD;
+        struct {
+            org$frostlang$frostc$Position field0;
+            org$frostlang$frostc$IR$Value* field1;
+            org$frostlang$frostc$ClassDecl* field2;
+            frost$core$Int field3;
+            org$frostlang$frostc$Type* field4;
+        } $GET_INTERFACE_METHOD;
+        struct {
+            org$frostlang$frostc$Position field0;
+            org$frostlang$frostc$IR$Value* field1;
+        } $LOAD;
+        struct {
+            org$frostlang$frostc$Position field0;
+            org$frostlang$frostc$IR$Value* field1;
+        } $NEGATE;
+        struct {
+            org$frostlang$frostc$Position field0;
+            org$frostlang$frostc$IR$Value* field1;
+        } $NOT;
+        struct {
+            org$frostlang$frostc$Position field0;
+            org$frostlang$frostc$IR$Value* field1;
+            org$frostlang$frostc$Type* field2;
+        } $POINTER_ALLOC;
+        struct {
+            org$frostlang$frostc$Position field0;
+            org$frostlang$frostc$IR$Value* field1;
+        } $POINTER_DESTROY;
+        struct {
+            org$frostlang$frostc$Position field0;
+            org$frostlang$frostc$IR$Value* field1;
+        } $POINTER_GET;
+        struct {
+            org$frostlang$frostc$Position field0;
+            org$frostlang$frostc$IR$Value* field1;
+            org$frostlang$frostc$IR$Value* field2;
+        } $POINTER_GET_INDEX;
+        struct {
+            org$frostlang$frostc$Position field0;
+            org$frostlang$frostc$IR$Value* field1;
+            org$frostlang$frostc$IR$Value* field2;
+        } $POINTER_OFFSET;
+        struct {
+            org$frostlang$frostc$Position field0;
+            org$frostlang$frostc$IR$Value* field1;
+            org$frostlang$frostc$IR$Value* field2;
+            org$frostlang$frostc$IR$Value* field3;
+        } $POINTER_REALLOC;
+        struct {
+            org$frostlang$frostc$Position field0;
+            org$frostlang$frostc$IR$Value* field1;
+            org$frostlang$frostc$IR$Value* field2;
+        } $POINTER_SET;
+        struct {
+            org$frostlang$frostc$Position field0;
+            org$frostlang$frostc$IR$Value* field1;
+            org$frostlang$frostc$IR$Value* field2;
+            org$frostlang$frostc$IR$Value* field3;
+        } $POINTER_SET_INDEX;
+        struct {
+            org$frostlang$frostc$Position field0;
+            org$frostlang$frostc$IR$Value* field1;
+        } $RETURN;
+        struct {
+            org$frostlang$frostc$Position field0;
+            org$frostlang$frostc$MethodDecl* field1;
+            org$frostlang$frostc$FixedArray* field2;
+        } $STATIC_CALL;
+        struct {
+            org$frostlang$frostc$Position field0;
+            org$frostlang$frostc$IR$Value* field1;
+            org$frostlang$frostc$IR$Value* field2;
+        } $STORE;
+        struct {
+            org$frostlang$frostc$Position field0;
+        } $UNREACHABLE;
+    } $data;
 } org$frostlang$frostc$IR$Statement;
 #include "frost/core/Class.h"
 typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[3]; } org$frostlang$frostc$IR$Statement$class_type;

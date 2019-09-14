@@ -215,7 +215,7 @@ _66 = _58;
 _67 = &_66->kind;
 _68 = *_67;
 org$frostlang$frostc$Symbol$Kind$wrapper* $tmp9;
-$tmp9 = (org$frostlang$frostc$Symbol$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Symbol$Kind$wrapperclass);
+$tmp9 = (org$frostlang$frostc$Symbol$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Symbol$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Symbol$Kind$wrapperclass);
 $tmp9->value = _68;
 _69 = ((frost$core$Equatable*) $tmp9);
 _70 = _69;
@@ -228,7 +228,7 @@ _76 = *(&local3);
 *(&local2) = _76;
 _79 = *(&local2);
 org$frostlang$frostc$Symbol$Kind$wrapper* $tmp10;
-$tmp10 = (org$frostlang$frostc$Symbol$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Symbol$Kind$wrapperclass);
+$tmp10 = (org$frostlang$frostc$Symbol$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Symbol$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Symbol$Kind$wrapperclass);
 $tmp10->value = _79;
 _80 = ((frost$core$Equatable*) $tmp10);
 ITable* $tmp11 = _70->$class->itable;
@@ -466,16 +466,14 @@ abort(); // unreachable
 block7:;
 _60 = _52;
 // begin inline call to function org.frostlang.frostc.Compiler.literalType(t:org.frostlang.frostc.Type):org.frostlang.frostc.IR.Value from Dot.frost:35:72
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:3599
-FROST_ASSERT(48 == sizeof(org$frostlang$frostc$IR$Value));
-_63 = (org$frostlang$frostc$IR$Value*) frostObjectAlloc(48, (frost$core$Class*) &org$frostlang$frostc$IR$Value$class);
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:3482
+_63 = (org$frostlang$frostc$IR$Value*) frostObjectAlloc(sizeof(org$frostlang$frostc$IR$Value), (frost$core$Class*) &org$frostlang$frostc$IR$Value$class);
 _64 = (frost$core$Int) {14u};
-// begin inline call to method org.frostlang.frostc.Type.ClassLiteral(compiler:org.frostlang.frostc.Compiler, t:org.frostlang.frostc.Type):org.frostlang.frostc.Type from Compiler.frost:3599:50
+// begin inline call to method org.frostlang.frostc.Type.ClassLiteral(compiler:org.frostlang.frostc.Compiler, t:org.frostlang.frostc.Type):org.frostlang.frostc.Type from Compiler.frost:3482:50
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:274
 _67 = &param0->CLASS_TYPE;
 _68 = *_67;
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_69 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_69 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _70 = _69;
 _71 = (frost$core$Int) {1u};
 frost$collections$Array$init$frost$core$Int(_70, _71);
@@ -512,9 +510,8 @@ return _93;
 block1:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Dot.frost:38
 // begin inline call to method org.frostlang.frostc.Compiler.compileExpression(expr:org.frostlang.frostc.ASTNode):org.frostlang.frostc.IR.Value? from Dot.frost:38:55
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5058
-FROST_ASSERT(40 == sizeof(org$frostlang$frostc$Compiler$TypeContext));
-_108 = (org$frostlang$frostc$Compiler$TypeContext*) frostObjectAlloc(40, (frost$core$Class*) &org$frostlang$frostc$Compiler$TypeContext$class);
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:4941
+_108 = (org$frostlang$frostc$Compiler$TypeContext*) frostObjectAlloc(sizeof(org$frostlang$frostc$Compiler$TypeContext), (frost$core$Class*) &org$frostlang$frostc$Compiler$TypeContext$class);
 _109 = (frost$core$Int) {0u};
 org$frostlang$frostc$Compiler$TypeContext$init$frost$core$Int(_108, _109);
 _111 = org$frostlang$frostc$Compiler$compileExpression$org$frostlang$frostc$ASTNode$org$frostlang$frostc$Compiler$TypeContext$R$org$frostlang$frostc$IR$Value$Q(param0, param2, _108);
@@ -573,12 +570,14 @@ frost$core$Frost$unref$frost$core$Object$Q(_158);
 return _152;
 
 }
-void org$frostlang$frostc$expression$Dot$init(org$frostlang$frostc$expression$Dot* param0) {
+void org$frostlang$frostc$expression$Dot$init(void* rawSelf) {
+org$frostlang$frostc$expression$Dot* param0 = (org$frostlang$frostc$expression$Dot*) rawSelf;
 
 return;
 
 }
-void org$frostlang$frostc$expression$Dot$cleanup(org$frostlang$frostc$expression$Dot* param0) {
+void org$frostlang$frostc$expression$Dot$cleanup(void* rawSelf) {
+org$frostlang$frostc$expression$Dot* param0 = (org$frostlang$frostc$expression$Dot*) rawSelf;
 
 frost$core$Object* _1;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Dot.frost:10

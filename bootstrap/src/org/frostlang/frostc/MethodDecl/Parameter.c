@@ -18,7 +18,8 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 static frost$core$String $s3 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x3a", 1, -5808597555084153427, NULL };
 static frost$core$String $s5 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "", 0, -3750763034362895579, NULL };
 
-void org$frostlang$frostc$MethodDecl$Parameter$init$frost$core$String$org$frostlang$frostc$Type(org$frostlang$frostc$MethodDecl$Parameter* param0, frost$core$String* param1, org$frostlang$frostc$Type* param2) {
+void org$frostlang$frostc$MethodDecl$Parameter$init$frost$core$String$org$frostlang$frostc$Type(void* rawSelf, frost$core$String* param1, org$frostlang$frostc$Type* param2) {
+org$frostlang$frostc$MethodDecl$Parameter* param0 = (org$frostlang$frostc$MethodDecl$Parameter*) rawSelf;
 
 frost$core$Weak* _1;
 frost$core$Weak* _2;
@@ -40,8 +41,7 @@ org$frostlang$frostc$Type* _28;
 frost$core$Object* _29;
 org$frostlang$frostc$Type** _31;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/MethodDecl.frost:19
-FROST_ASSERT(32 == sizeof(frost$core$Weak));
-_1 = (frost$core$Weak*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$Weak$class);
+_1 = (frost$core$Weak*) frostObjectAlloc(sizeof(frost$core$Weak), (frost$core$Class*) &frost$core$Weak$class);
 _2 = _1;
 _3 = ((frost$core$Object*) ((org$frostlang$frostc$MethodDecl*) NULL));
 frost$core$Weak$init$frost$core$Weak$T$Q(_2, _3);
@@ -76,7 +76,8 @@ _31 = &param0->type;
 return;
 
 }
-frost$core$String* org$frostlang$frostc$MethodDecl$Parameter$get_asString$R$frost$core$String(org$frostlang$frostc$MethodDecl$Parameter* param0) {
+frost$core$String* org$frostlang$frostc$MethodDecl$Parameter$get_asString$R$frost$core$String(void* rawSelf) {
+org$frostlang$frostc$MethodDecl$Parameter* param0 = (org$frostlang$frostc$MethodDecl$Parameter*) rawSelf;
 
 frost$core$String** _1;
 frost$core$String* _2;
@@ -133,7 +134,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_33);
 return _24;
 
 }
-void org$frostlang$frostc$MethodDecl$Parameter$cleanup(org$frostlang$frostc$MethodDecl$Parameter* param0) {
+void org$frostlang$frostc$MethodDecl$Parameter$cleanup(void* rawSelf) {
+org$frostlang$frostc$MethodDecl$Parameter* param0 = (org$frostlang$frostc$MethodDecl$Parameter*) rawSelf;
 
 frost$core$Object* _1;
 frost$core$String** _3;

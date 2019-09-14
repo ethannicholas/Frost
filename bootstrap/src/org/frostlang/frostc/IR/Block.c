@@ -36,7 +36,8 @@ static frost$core$String $s14 = { (frost$core$Class*) &frost$core$String$class, 
 static frost$core$String $s21 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x3a\x20", 2, 584909432750204567, NULL };
 static frost$core$String $s24 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x0a", 1, -5808579962898102051, NULL };
 
-void org$frostlang$frostc$IR$Block$init$org$frostlang$frostc$IR$Block$ID(org$frostlang$frostc$IR$Block* param0, org$frostlang$frostc$IR$Block$ID param1) {
+void org$frostlang$frostc$IR$Block$init$org$frostlang$frostc$IR$Block$ID(void* rawSelf, org$frostlang$frostc$IR$Block$ID param1) {
+org$frostlang$frostc$IR$Block* param0 = (org$frostlang$frostc$IR$Block*) rawSelf;
 
 frost$core$Bit _1;
 frost$core$Bit* _2;
@@ -64,8 +65,7 @@ _1 = (frost$core$Bit) {false};
 _2 = &param0->forceReachable;
 *_2 = _1;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/IR.frost:400
-FROST_ASSERT(40 == sizeof(org$frostlang$frostc$LinkedList));
-_5 = (org$frostlang$frostc$LinkedList*) frostObjectAlloc(40, (frost$core$Class*) &org$frostlang$frostc$LinkedList$class);
+_5 = (org$frostlang$frostc$LinkedList*) frostObjectAlloc(sizeof(org$frostlang$frostc$LinkedList), (frost$core$Class*) &org$frostlang$frostc$LinkedList$class);
 _6 = _5;
 org$frostlang$frostc$LinkedList$init(_6);
 _8 = ((frost$core$Object*) _5);
@@ -79,8 +79,7 @@ _14 = &param0->ids;
 _16 = ((frost$core$Object*) _5);
 frost$core$Frost$unref$frost$core$Object$Q(_16);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/IR.frost:402
-FROST_ASSERT(40 == sizeof(org$frostlang$frostc$LinkedList));
-_19 = (org$frostlang$frostc$LinkedList*) frostObjectAlloc(40, (frost$core$Class*) &org$frostlang$frostc$LinkedList$class);
+_19 = (org$frostlang$frostc$LinkedList*) frostObjectAlloc(sizeof(org$frostlang$frostc$LinkedList), (frost$core$Class*) &org$frostlang$frostc$LinkedList$class);
 _20 = _19;
 org$frostlang$frostc$LinkedList$init(_20);
 _22 = ((frost$core$Object*) _19);
@@ -103,7 +102,8 @@ _37 = &param0->id;
 return;
 
 }
-frost$core$String* org$frostlang$frostc$IR$Block$get_asString$R$frost$core$String(org$frostlang$frostc$IR$Block* param0) {
+frost$core$String* org$frostlang$frostc$IR$Block$get_asString$R$frost$core$String(void* rawSelf) {
+org$frostlang$frostc$IR$Block* param0 = (org$frostlang$frostc$IR$Block*) rawSelf;
 
 frost$core$MutableString* local0 = NULL;
 frost$collections$Iterator* local1 = NULL;
@@ -195,15 +195,14 @@ frost$core$Object* _148;
 frost$core$MutableString* _151;
 frost$core$Object* _152;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/IR.frost:416
-FROST_ASSERT(48 == sizeof(frost$core$MutableString));
-_1 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
+_1 = (frost$core$MutableString*) frostObjectAlloc(sizeof(frost$core$MutableString), (frost$core$Class*) &frost$core$MutableString$class);
 _2 = &param0->id;
 _3 = *_2;
 // begin inline call to function org.frostlang.frostc.IR.Block.ID.get_asString():frost.core.String from IR.frost:416:44
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/IR.frost:392
 _6 = _3.value;
 frost$core$Int$wrapper* $tmp10;
-$tmp10 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp10 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp10->value = _6;
 _7 = ((frost$core$Object*) $tmp10);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from IR.frost:392:24
@@ -312,7 +311,7 @@ _95 = $tmp18->methods[1];
 _96 = _95(_94);
 _97 = ((org$frostlang$frostc$IR$Statement$ID$wrapper*) _96)->value;
 org$frostlang$frostc$IR$Statement$ID$wrapper* $tmp19;
-$tmp19 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
+$tmp19 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$IR$Statement$ID$wrapper), (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
 $tmp19->value = _97;
 _98 = ((frost$core$Object*) $tmp19);
 // begin inline call to method frost.core.MutableString.append(o:frost.core.Object) from IR.frost:420:30
@@ -377,7 +376,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_152);
 return _138;
 
 }
-void org$frostlang$frostc$IR$Block$cleanup(org$frostlang$frostc$IR$Block* param0) {
+void org$frostlang$frostc$IR$Block$cleanup(void* rawSelf) {
+org$frostlang$frostc$IR$Block* param0 = (org$frostlang$frostc$IR$Block*) rawSelf;
 
 frost$core$Object* _1;
 org$frostlang$frostc$LinkedList** _3;

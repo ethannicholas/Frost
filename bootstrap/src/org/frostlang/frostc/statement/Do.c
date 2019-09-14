@@ -174,10 +174,8 @@ _23 = _22(_21, &$s19);
 *(&local3) = _23;
 // <no location>
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/statement/Do.frost:24
-FROST_ASSERT(32 == sizeof(org$frostlang$frostc$Compiler$AutoContext));
-_27 = (org$frostlang$frostc$Compiler$AutoContext*) frostObjectAlloc(32, (frost$core$Class*) &org$frostlang$frostc$Compiler$AutoContext$class);
-FROST_ASSERT(56 == sizeof(org$frostlang$frostc$Compiler$EnclosingContext));
-_28 = (org$frostlang$frostc$Compiler$EnclosingContext*) frostObjectAlloc(56, (frost$core$Class*) &org$frostlang$frostc$Compiler$EnclosingContext$class);
+_27 = (org$frostlang$frostc$Compiler$AutoContext*) frostObjectAlloc(sizeof(org$frostlang$frostc$Compiler$AutoContext), (frost$core$Class*) &org$frostlang$frostc$Compiler$AutoContext$class);
+_28 = (org$frostlang$frostc$Compiler$EnclosingContext*) frostObjectAlloc(sizeof(org$frostlang$frostc$Compiler$EnclosingContext), (frost$core$Class*) &org$frostlang$frostc$Compiler$EnclosingContext$class);
 _29 = (frost$core$Int) {1u};
 _30 = *(&local3);
 _31 = *(&local2);
@@ -195,8 +193,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_41);
 _43 = ((frost$core$Object*) _27);
 frost$core$Frost$unref$frost$core$Object$Q(_43);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/statement/Do.frost:25
-FROST_ASSERT(40 == sizeof(org$frostlang$frostc$Compiler$AutoScope));
-_46 = (org$frostlang$frostc$Compiler$AutoScope*) frostObjectAlloc(40, (frost$core$Class*) &org$frostlang$frostc$Compiler$AutoScope$class);
+_46 = (org$frostlang$frostc$Compiler$AutoScope*) frostObjectAlloc(sizeof(org$frostlang$frostc$Compiler$AutoScope), (frost$core$Class*) &org$frostlang$frostc$Compiler$AutoScope$class);
 org$frostlang$frostc$Compiler$AutoScope$init$org$frostlang$frostc$Compiler(_46, param0);
 *(&local5) = ((org$frostlang$frostc$Compiler$AutoScope*) NULL);
 _49 = ((frost$core$Object*) _46);
@@ -209,8 +206,7 @@ _55 = ((frost$core$Object*) _46);
 frost$core$Frost$unref$frost$core$Object$Q(_55);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/statement/Do.frost:26
 _58 = *(&local0);
-FROST_ASSERT(80 == sizeof(org$frostlang$frostc$IR$Statement));
-_59 = (org$frostlang$frostc$IR$Statement*) frostObjectAlloc(80, (frost$core$Class*) &org$frostlang$frostc$IR$Statement$class);
+_59 = (org$frostlang$frostc$IR$Statement*) frostObjectAlloc(sizeof(org$frostlang$frostc$IR$Statement), (frost$core$Class*) &org$frostlang$frostc$IR$Statement$class);
 _60 = (frost$core$Int) {1u};
 _61 = *(&local1);
 org$frostlang$frostc$IR$Statement$init$frost$core$Int$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Block$ID(_59, _60, param1, _61);
@@ -295,8 +291,7 @@ if (_125) goto block4; else goto block5;
 block4:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/statement/Do.frost:33
 _128 = *(&local0);
-FROST_ASSERT(80 == sizeof(org$frostlang$frostc$IR$Statement));
-_129 = (org$frostlang$frostc$IR$Statement*) frostObjectAlloc(80, (frost$core$Class*) &org$frostlang$frostc$IR$Statement$class);
+_129 = (org$frostlang$frostc$IR$Statement*) frostObjectAlloc(sizeof(org$frostlang$frostc$IR$Statement), (frost$core$Class*) &org$frostlang$frostc$IR$Statement$class);
 _130 = (frost$core$Int) {1u};
 _131 = *(&local2);
 org$frostlang$frostc$IR$Statement$init$frost$core$Int$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Block$ID(_129, _130, param1, _131);
@@ -327,12 +322,14 @@ frost$core$Frost$unref$frost$core$Object$Q(_153);
 return;
 
 }
-void org$frostlang$frostc$statement$Do$init(org$frostlang$frostc$statement$Do* param0) {
+void org$frostlang$frostc$statement$Do$init(void* rawSelf) {
+org$frostlang$frostc$statement$Do* param0 = (org$frostlang$frostc$statement$Do*) rawSelf;
 
 return;
 
 }
-void org$frostlang$frostc$statement$Do$cleanup(org$frostlang$frostc$statement$Do* param0) {
+void org$frostlang$frostc$statement$Do$cleanup(void* rawSelf) {
+org$frostlang$frostc$statement$Do* param0 = (org$frostlang$frostc$statement$Do*) rawSelf;
 
 frost$core$Object* _1;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/statement/Do.frost:15

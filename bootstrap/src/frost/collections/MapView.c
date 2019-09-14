@@ -41,7 +41,8 @@ frost$core$Frost$ref$frost$core$Object$Q(_5);
 return _4;
 
 }
-frost$collections$Iterator* frost$collections$MapView$get_keys$R$frost$collections$Iterator$LTfrost$collections$MapView$K$GT(frost$collections$MapView* param0) {
+frost$collections$Iterator* frost$collections$MapView$get_keys$R$frost$collections$Iterator$LTfrost$collections$MapView$K$GT(void* rawSelf) {
+frost$collections$MapView* param0 = (frost$collections$MapView*) rawSelf;
 
 frost$collections$MapView* _1;
 $fn2 _2;
@@ -75,8 +76,7 @@ _2 = $tmp4->methods[3];
 _3 = _2(_1);
 _4 = _3;
 _5 = ((frost$core$Int8*) frost$collections$MapView$$anonymous1$$LPfrost$collections$MapView$K$Cfrost$collections$MapView$V$RP$R$frost$collections$MapView$K);
-FROST_ASSERT(32 == sizeof(frost$core$Method));
-_6 = (frost$core$Method*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$Method$class);
+_6 = (frost$core$Method*) frostObjectAlloc(sizeof(frost$core$Method), (frost$core$Class*) &frost$core$Method$class);
 // begin inline call to frost.core.Method.init(pointer:frost.unsafe.Pointer<frost.core.Int8>, target:frost.core.Immutable?) from MapView.frost:51:31
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Method.frost:37
 _9 = &_6->pointer;
@@ -128,7 +128,8 @@ frost$core$Frost$ref$frost$core$Object$Q(_5);
 return _4;
 
 }
-frost$collections$Iterator* frost$collections$MapView$get_values$R$frost$collections$Iterator$LTfrost$collections$MapView$V$GT(frost$collections$MapView* param0) {
+frost$collections$Iterator* frost$collections$MapView$get_values$R$frost$collections$Iterator$LTfrost$collections$MapView$V$GT(void* rawSelf) {
+frost$collections$MapView* param0 = (frost$collections$MapView*) rawSelf;
 
 frost$collections$MapView* _1;
 $fn7 _2;
@@ -162,8 +163,7 @@ _2 = $tmp9->methods[3];
 _3 = _2(_1);
 _4 = _3;
 _5 = ((frost$core$Int8*) frost$collections$MapView$$anonymous2$$LPfrost$collections$MapView$K$Cfrost$collections$MapView$V$RP$R$frost$collections$MapView$V);
-FROST_ASSERT(32 == sizeof(frost$core$Method));
-_6 = (frost$core$Method*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$Method$class);
+_6 = (frost$core$Method*) frostObjectAlloc(sizeof(frost$core$Method), (frost$core$Class*) &frost$core$Method$class);
 // begin inline call to frost.core.Method.init(pointer:frost.unsafe.Pointer<frost.core.Int8>, target:frost.core.Immutable?) from MapView.frost:57:31
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Method.frost:37
 _9 = &_6->pointer;

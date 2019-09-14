@@ -13,7 +13,11 @@
 #include <sys/wait.h>
 #include <errno.h>
 
+#ifdef __EMSCRIPTEN__
+#include <emscripten.h>
+#else
 #include "unicode/uregex.h"
+#endif
 
 #ifdef __APPLE__
 #define MACH_TIMER
@@ -72,6 +76,10 @@ typedef struct Int64 {
     int64_t value;
 } Int64;
 
+typedef struct Int {
+    int64_t value;
+} Int;
+
 typedef struct UInt8 {
     uint8_t value;
 } UInt8;
@@ -87,6 +95,10 @@ typedef struct UInt32 {
 typedef struct UInt64 {
     uint64_t value;
 } UInt64;
+
+typedef struct UInt {
+    uint64_t value;
+} UInt;
 
 typedef struct Real32 {
     double value;
@@ -177,9 +189,9 @@ typedef struct Process {
     bool flags;
     int64_t pid;
     // FIXME unsafe assumption that Object* and int64_t are the same size
-    FileOutputStream* stdin;
-    FileInputStream* stdout;
-    FileInputStream* stderr;
+    FileOutputStream* _stdin;
+    FileInputStream* _stdout;
+    FileInputStream* _stderr;
 } Process;
 
 typedef struct Thread {
@@ -279,7 +291,7 @@ Object* frost$core$Frost$createWeakReferenceMap$R$frost$collections$HashMap$LTfr
 
 void frost$core$Frost$_addWeakReference$frost$core$Weak$LTfrost$core$Object$GT$frost$collections$HashMap$LTfrost$core$Int$Cfrost$collections$Array$LTfrost$core$Weak$LTfrost$core$Object$GT$GT$GT(Object*, Object*);
 
-void frost$core$Frost$weakReferentDestroyed$frost$core$Int$frost$collections$HashMap$LTfrost$core$Int$Cfrost$collections$Array$LTfrost$core$Weak$LTfrost$core$Object$GT$GT$GT(Object*, Object*);
+void frost$core$Frost$weakReferentDestroyed$frost$core$Int$frost$collections$HashMap$LTfrost$core$Int$Cfrost$collections$Array$LTfrost$core$Weak$LTfrost$core$Object$GT$GT$GT(Int, Object*);
 
 char* frostGetCString(String* s);
 
@@ -348,7 +360,9 @@ void frostFree(void* ptr) {
 void frostObjectFree(Object* o) {
     if (o->flags & FROST_WEAK_REFERENCE_FLAG) {
         pthread_mutex_lock(&weakReferenceMutex);
-        frost$core$Frost$weakReferentDestroyed$frost$core$Int$frost$collections$HashMap$LTfrost$core$Int$Cfrost$collections$Array$LTfrost$core$Weak$LTfrost$core$Object$GT$GT$GT(o, weakReferences);
+        Int cast;
+        cast.value = (int64_t) o;
+        frost$core$Frost$weakReferentDestroyed$frost$core$Int$frost$collections$HashMap$LTfrost$core$Int$Cfrost$collections$Array$LTfrost$core$Weak$LTfrost$core$Object$GT$GT$GT(cast, weakReferences);
         pthread_mutex_unlock(&weakReferenceMutex);
     }
     o->refcnt = -100000;
@@ -455,11 +469,6 @@ void frost$core$System$exit$frost$core$Int(Int64 code) {
     exit(code.value);
 }
 
-// FIXME delete
-void frost$core$System$exit$frost$core$Int64(Int64 code) {
-    exit(code.value);
-}
-
 void frost$core$System$crash() {
     fflush(stdout);
     fflush(stderr);
@@ -533,53 +542,53 @@ Object* frost$core$System$exec$frost$core$String$frost$collections$ListView$LTfr
         Process* result = frostObjectAlloc(sizeof(Process), &frost$core$System$Process$class);
         result->pid = pid;
 
-        result->stdin = frostObjectAlloc(sizeof(FileOutputStream),
+        result->_stdin = frostObjectAlloc(sizeof(FileOutputStream),
                 &frost$io$FileOutputStream$class);
-        frost$io$OutputStream$init(result->stdin);
-        result->stdin->file = fdopen(stdinPipe[1], "wb");
-        frostAssert(result->stdin->file != NULL);
-        result->stdin->closeOnCleanup.value = true;
+        frost$io$OutputStream$init(result->_stdin);
+        result->_stdin->file = fdopen(stdinPipe[1], "wb");
+        frostAssert(result->_stdin->file != NULL);
+        result->_stdin->closeOnCleanup.value = true;
 
-        result->stdout = frostObjectAlloc(sizeof(FileInputStream),
+        result->_stdout = frostObjectAlloc(sizeof(FileInputStream),
                 &frost$io$FileInputStream$class);
-        frost$io$InputStream$init(result->stdout);
-        result->stdout->file = fdopen(stdoutPipe[0], "rb");
-        frostAssert(result->stdout->file != NULL);
-        result->stdout->closeOnCleanup.value = true;
+        frost$io$InputStream$init(result->_stdout);
+        result->_stdout->file = fdopen(stdoutPipe[0], "rb");
+        frostAssert(result->_stdout->file != NULL);
+        result->_stdout->closeOnCleanup.value = true;
 
-        result->stderr = frostObjectAlloc(sizeof(FileInputStream),
+        result->_stderr = frostObjectAlloc(sizeof(FileInputStream),
                 &frost$io$FileInputStream$class);
-        frost$io$InputStream$init(result->stderr);
-        result->stderr->file = fdopen(stderrPipe[0], "rb");
-        frostAssert(result->stderr->file != NULL);
-        result->stderr->closeOnCleanup.value = true;
+        frost$io$InputStream$init(result->_stderr);
+        result->_stderr->file = fdopen(stderrPipe[0], "rb");
+        frostAssert(result->_stderr->file != NULL);
+        result->_stderr->closeOnCleanup.value = true;
 
         return frostMaybeSuccess((Object*) result);
     }
 }
 
 Object* frost$core$System$Process$standardInput$R$frost$io$OutputStream(Process* p) {
-    Object* result = (Object*) p->stdin;
+    Object* result = (Object*) p->_stdin;
     frost$core$Frost$ref$frost$core$Object$Q(result);
     return result;
 }
 
 Object* frost$core$System$Process$standardOutput$R$frost$io$InputStream(Process* p) {
-    Object* result = (Object*) p->stdout;
+    Object* result = (Object*) p->_stdout;
     frost$core$Frost$ref$frost$core$Object$Q(result);
     return result;
 }
 
 Object* frost$core$System$Process$standardError$R$frost$io$InputStream(Process* p) {
-    Object* result = (Object*) p->stderr;
+    Object* result = (Object*) p->_stderr;
     frost$core$Frost$ref$frost$core$Object$Q(result);
     return result;
 }
 
 void frost$core$System$Process$_cleanup(Process* p) {
-    frost$core$Frost$unref$frost$core$Object$Q((Object*) p->stdin);
-    frost$core$Frost$unref$frost$core$Object$Q((Object*) p->stdout);
-    frost$core$Frost$unref$frost$core$Object$Q((Object*) p->stderr);
+    frost$core$Frost$unref$frost$core$Object$Q((Object*) p->_stdin);
+    frost$core$Frost$unref$frost$core$Object$Q((Object*) p->_stdout);
+    frost$core$Frost$unref$frost$core$Object$Q((Object*) p->_stderr);
 }
 
 void frost$core$System$Process$exitCode$R$frost$core$Int$Q(NullableInt* result, Process* p) {
@@ -594,27 +603,7 @@ void frost$core$System$Process$exitCode$R$frost$core$Int$Q(NullableInt* result, 
     }
 }
 
-// FIXME delete 
-void frost$core$System$Process$exitCode$R$frost$core$Int64$Q(NullableInt* result, Process* p) {
-    int status;
-    waitpid(p->pid, &status, WNOHANG);
-    if (WIFEXITED(status)) {
-        result->nonnull = true;
-        result->value = WEXITSTATUS(status);
-    }
-    else {
-        result->nonnull = false;
-    }
-}
-
 void frost$core$System$Process$waitFor$R$frost$core$Int(Int64* result, Process* p) {
-    int status;
-    waitpid(p->pid, &status, 0);
-    result->value = WEXITSTATUS(status);
-}
-
-// FIXME delete
-void frost$core$System$Process$waitFor$R$frost$core$Int64(Int64* result, Process* p) {
     int status;
     waitpid(p->pid, &status, 0);
     result->value = WEXITSTATUS(status);
@@ -881,8 +870,97 @@ void frost$core$Frost$addWeakReference$frost$core$Weak$LTfrost$core$Frost$addWea
 
 // RegularExpression
 
+#ifdef __EMSCRIPTEN__
+    // under Emscripten, we use the JavaScript regex engine. FIXME: it's going to need some work
+    // to handle non-ASCII characters.
+    EM_JS(int, createRegex, (const char* str), {
+        var re = Module['regularExpressions'];
+        if (!re) {
+            re = [];
+            Module['regularExpressions'] = re;
+        }
+        var index = re.length;
+        // FIXME implement a free list rather than a linear search
+        for (var i = 0; i < index; ++i) {
+            if (!re[i]) {
+                index = i;
+            }
+        }
+        re[i] = new RegExp(UTF8ToString(str), "g");
+        return i;
+    });
+
+    EM_JS(int, createMatcher, (int regex, const char* str), {
+        var re = Module['regularExpressions'];
+        var index = re.length;
+        // FIXME implement a free list rather than a linear search
+        for (var i = 0; i < index; ++i) {
+            if (!re[i]) {
+                index = i;
+            }
+        }
+        re[i] = { regexp:re[regex], str:UTF8ToString(str) };
+        return i;
+    });
+
+    EM_JS(void, destroyRegex, (int regex), {
+        Module['regularExpressions'][regex] = null;
+    });
+
+    EM_JS(int, matcherFind, (int matcher, int start), {
+        var re = Module['regularExpressions'];
+        var m = re[matcher];
+        m.regexp.lastIndex = start;
+        var result = m.regexp.exec(m.str);
+        if (result) {
+            m.groups = result;
+            return 1;
+        }
+        return 0;
+    });
+
+    EM_JS(int, matcherMatches, (int matcher), {
+        var re = Module['regularExpressions'];
+        var m = re[matcher];
+        m.regexp.lastIndex = 0;
+        var result = m.regexp.exec(m.str);
+        if (result && result.index == 0 & result[0].length == m.str.length) {
+            m.groups = result;
+            return 1;
+        }
+        return 0;
+    });
+
+    EM_JS(int, matcherStart, (int matcher), {
+        var m = Module['regularExpressions'][matcher];
+        return m.regexp.lastIndex - m.groups[0].length;
+    });
+
+    EM_JS(int, matcherEnd, (int matcher), {
+        return Module['regularExpressions'][matcher].regexp.lastIndex;
+    });
+
+    EM_JS(int, matcherGroupCount, (int matcher), {
+        return Module['regularExpressions'][matcher].groups.length;
+    });
+
+    EM_JS(const char*, matcherGroup, (int matcher, int group), {
+        var result = Module['regularExpressions'][matcher].groups[group];
+        var lengthBytes = lengthBytesUTF8(result) + 1;
+        var dest = _malloc(lengthBytes);
+        stringToUTF8(result, dest, lengthBytes);
+        return dest;
+    })
+#endif
+
 void frost$core$RegularExpression$compile$frost$core$String$frost$core$Int(RegularExpression* r,
         String* regex, Int64 flags) {
+#ifdef __EMSCRIPTEN__
+    frostAssert(flags.value == 0); // flags NYI
+    char* str = frostGetCString(regex);
+    r->nativeHandle = (void*) createRegex(str);
+    frostFree(str);
+#else
     UErrorCode status = U_ZERO_ERROR;
     char* text = frostGetCString(regex);
     UText* ut = utext_openUTF8(NULL, text, regex->size, &status);
@@ -907,48 +985,25 @@ void frost$core$RegularExpression$compile$frost$core$String$frost$core$Int(Regul
     if (U_FAILURE(status)) {
         frostFatalError(u_errorName(status));
     }
-}
-
-// FIXME delete
-void frost$core$RegularExpression$compile$frost$core$String$frost$core$Int64(RegularExpression* r,
-        String* regex, Int64 flags) {
-    UErrorCode status = U_ZERO_ERROR;
-    char* text = frostGetCString(regex);
-    UText* ut = utext_openUTF8(NULL, text, regex->size, &status);
-    if (U_FAILURE(status)) {
-        frostFatalError(u_errorName(status));
-    }
-    UParseError parseStatus;
-    int icuFlags = 0;
-    if (flags.value & 1) {
-        icuFlags |= UREGEX_MULTILINE;
-    }
-    if (flags.value & 2) {
-        icuFlags |= UREGEX_CASE_INSENSITIVE;
-    }
-    if (flags.value & 4) {
-        icuFlags |= UREGEX_DOTALL;
-    }
-    r->nativeHandle = uregex_openUText(ut, icuFlags, &parseStatus, &status);
-    __atomic_add_fetch(&allocations, 1, __ATOMIC_RELAXED);
-    utext_close(ut);
-    frostFree(text);
-    if (U_FAILURE(status)) {
-        frostFatalError(u_errorName(status));
-    }
+#endif
 }
 
 Matcher* frost$core$RegularExpression$matcher$frost$core$String$R$frost$core$Matcher(
         RegularExpression* self, String* s) {
     Matcher* result = frostObjectAlloc(sizeof(Matcher), &frost$core$Matcher$class);
+    result->searchText = s;
+    frost$core$Frost$ref$frost$core$Object$Q((Object*) s);
+#ifdef __EMSCRIPTEN__
+    char* str = frostGetCString(s);
+    result->nativeHandle = (void*) createMatcher((int) self->nativeHandle, str);
+    frostFree(str);
+#else
     UErrorCode status = U_ZERO_ERROR;
     __atomic_add_fetch(&allocations, 1, __ATOMIC_RELAXED);
     result->nativeHandle = uregex_clone(self->nativeHandle, &status);
     if (U_FAILURE(status)) {
         frostFatalError(u_errorName(status));
     }
-    result->searchText = s;
-    frost$core$Frost$ref$frost$core$Object$Q((Object*) s);    
     UText* ut = utext_openUTF8(NULL, (const char*) s->data, s->size, &status);
     if (U_FAILURE(status)) {
         frostFatalError(u_errorName(status));
@@ -958,15 +1013,23 @@ Matcher* frost$core$RegularExpression$matcher$frost$core$String$R$frost$core$Mat
         frostFatalError(u_errorName(status));
     }
     utext_close(ut);
+#endif
     return result;
 }
 
 void frost$core$RegularExpression$destroy(RegularExpression* self) {
+#ifdef __EMSCRIPTEN__
+    destroyRegex((int) self->nativeHandle);
+#else
     uregex_close(self->nativeHandle);
     __atomic_sub_fetch(&allocations, 1, __ATOMIC_RELAXED);
+#endif
 }
 
 void frost$core$Matcher$matches$R$frost$core$Bit(Bit* result, Matcher* self) {
+#ifdef __EMSCRIPTEN__
+    result->value = matcherMatches((int) self->nativeHandle);
+#else
     UErrorCode status = U_ZERO_ERROR;
     self->matched.value = uregex_matches(self->nativeHandle, 0, &status);
     *result = self->matched;
@@ -974,54 +1037,68 @@ void frost$core$Matcher$matches$R$frost$core$Bit(Bit* result, Matcher* self) {
     if (U_FAILURE(status)) {
         frostFatalError(u_errorName(status));
     }
+#endif
 }
 
 void frost$core$Matcher$nativeFind$frost$core$String$Index$R$frost$core$Bit(Bit* result,
         Matcher* self, StringIndex startIndex) {
+#ifdef __EMSCRIPTEN__
+    result->value = matcherFind((int) self->nativeHandle, startIndex.value.value);
+#else
     UErrorCode status = U_ZERO_ERROR;
     result->value = uregex_find(self->nativeHandle, startIndex.value.value, &status);
     if (U_FAILURE(status)) {
         frostFatalError(u_errorName(status));
     }
+#endif
 }
 
 void frost$core$Matcher$get_start$R$frost$core$String$Index(Int64* result, Matcher* self) {
+#ifdef __EMSCRIPTEN__
+    result->value = matcherStart((int) self->nativeHandle);
+#else
     UErrorCode status = U_ZERO_ERROR;
     result->value = uregex_start(self->nativeHandle, 0, &status);
     if (U_FAILURE(status)) {
         frostFatalError(u_errorName(status));
     }
-
+#endif
 }
 
 void frost$core$Matcher$get_end$R$frost$core$String$Index(Int64* result, Matcher* self) {
+#ifdef __EMSCRIPTEN__
+    result->value = matcherEnd((int) self->nativeHandle);
+#else
     UErrorCode status = U_ZERO_ERROR;
     result->value = uregex_end(self->nativeHandle, 0, &status);
     if (U_FAILURE(status)) {
         frostFatalError(u_errorName(status));
     }
-
+#endif
 }
 
 void frost$core$Matcher$get_groupCount$R$frost$core$Int(Int64* result, Matcher* self) {
+#ifdef __EMSCRIPTEN__
+    result->value = matcherGroupCount((int) self->nativeHandle);
+#else
     UErrorCode status = U_ZERO_ERROR;
     result->value = uregex_groupCount(self->nativeHandle, &status) + 1;
     if (U_FAILURE(status)) {
         frostFatalError(u_errorName(status));
     }
-}
-
-// FIXME delete
-void frost$core$Matcher$get_groupCount$R$frost$core$Int64(Int64* result, Matcher* self) {
-    UErrorCode status = U_ZERO_ERROR;
-    result->value = uregex_groupCount(self->nativeHandle, &status) + 1;
-    if (U_FAILURE(status)) {
-        frostFatalError(u_errorName(status));
-    }
+#endif
 }
 
 String* frost$core$Matcher$group$frost$core$Int$R$frost$core$String$Q(Matcher* self,
         Int64 group) {
+#ifdef __EMSCRIPTEN__
+    const char* str = matcherGroup((int) self->nativeHandle, group.value);
+    String* result = frostNewString(str, strlen(str));
+    // the use of free instead of frostFree is deliberate, as this pointer was allocated with
+    // Emscripten's _malloc
+    free((void*) str);
+    return result;
+#else
     UErrorCode status = U_ZERO_ERROR;
     int64_t length;
     UText* ut = uregex_groupUText(self->nativeHandle, group.value, NULL, &length, &status);
@@ -1032,26 +1109,16 @@ String* frost$core$Matcher$group$frost$core$Int$R$frost$core$String$Q(Matcher* s
     String* result = frostNewString(utf8, length);
     utext_close(ut);
     return result;
-}
-
-// FIXME delete
-String* frost$core$Matcher$group$frost$core$Int64$R$frost$core$String$Q(Matcher* self,
-        Int64 group) {
-    UErrorCode status = U_ZERO_ERROR;
-    int64_t length;
-    UText* ut = uregex_groupUText(self->nativeHandle, group.value, NULL, &length, &status);
-    if (U_FAILURE(status)) {
-        frostFatalError(u_errorName(status));
-    }
-    const char* utf8 = (ut->context + (int) UTEXT_GETNATIVEINDEX(ut));
-    String* result = frostNewString(utf8, length);
-    utext_close(ut);
-    return result;
+#endif
 }
 
 void frost$core$Matcher$destroy(Matcher* self) {
+#ifdef __EMSCRIPTEN__
+    destroyRegex((int) self->nativeHandle);
+#else
     uregex_close(self->nativeHandle);
     __atomic_sub_fetch(&allocations, 1, __ATOMIC_RELAXED);
+#endif
 }
 
 // Thread
@@ -1336,10 +1403,12 @@ Error* frost$io$File$createDirectory$R$frost$core$Error$Q(File* file) {
     if (!directoryExists.value) {
         char* path = frostGetCString(file->path);
         int result = mkdir(path, 0755);
-        frostFree(path);
         if (result) {
-            return frostError(frostFileErrorMessage("Could not create directory", path));
+            String* result = frostFileErrorMessage("Could not create directory", path);
+            frostFree(path);
+            return frostError(result);
         }
+        frostFree(path);
     }
     return NULL;
 }
@@ -1395,14 +1464,8 @@ void frost$io$FileInputStream$readImpl$R$frost$core$UInt8$Q(NullableUInt8* resul
 }
 
 void frost$io$FileInputStream$readImpl$frost$unsafe$Pointer$LTfrost$core$UInt8$GT$frost$core$Int$R$frost$core$Int(
-        int64_t* result, FileInputStream* self, void* buffer, int max) {
-    *result = fread(buffer, 1, max, self->file);
-}
-
-// FIXME delete
-void frost$io$FileInputStream$readImpl$frost$unsafe$Pointer$LTfrost$core$UInt8$GT$frost$core$Int64$R$frost$core$Int64(
-        int64_t* result, FileInputStream* self, void* buffer, int max) {
-    *result = fread(buffer, 1, max, self->file);
+        int64_t* result, FileInputStream* self, void* buffer, Int max) {
+    *result = fread(buffer, 1, max.value, self->file);
 }
 
 Error* frost$io$FileInputStream$close$R$frost$core$Error$Q(FileInputStream* self) {
@@ -1424,16 +1487,6 @@ Error* frost$io$FileOutputStream$write$frost$core$UInt8$R$frost$core$Error$Q(Fil
 }
 
 Error* frost$io$FileOutputStream$write$frost$unsafe$Pointer$LTfrost$core$UInt8$GT$frost$core$Int$R$frost$core$Error$Q(
-        FileOutputStream* self, void* src, int64_t count) {
-    if (fwrite(src, 1, count, self->file) != count) {
-        const char* msg = "Error writing to stream";
-        return frostError(frostNewString(msg, strlen(msg)));
-    }
-    return NULL;
-}
-
-// FIXME delete
-Error* frost$io$FileOutputStream$write$frost$unsafe$Pointer$LTfrost$core$UInt8$GT$frost$core$Int64$R$frost$core$Error$Q(
         FileOutputStream* self, void* src, int64_t count) {
     if (fwrite(src, 1, count, self->file) != count) {
         const char* msg = "Error writing to stream";

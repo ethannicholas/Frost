@@ -174,10 +174,8 @@ _23 = _22(_21, &$s19);
 *(&local3) = _23;
 // <no location>
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/statement/While.frost:24
-FROST_ASSERT(32 == sizeof(org$frostlang$frostc$Compiler$AutoContext));
-_27 = (org$frostlang$frostc$Compiler$AutoContext*) frostObjectAlloc(32, (frost$core$Class*) &org$frostlang$frostc$Compiler$AutoContext$class);
-FROST_ASSERT(56 == sizeof(org$frostlang$frostc$Compiler$EnclosingContext));
-_28 = (org$frostlang$frostc$Compiler$EnclosingContext*) frostObjectAlloc(56, (frost$core$Class*) &org$frostlang$frostc$Compiler$EnclosingContext$class);
+_27 = (org$frostlang$frostc$Compiler$AutoContext*) frostObjectAlloc(sizeof(org$frostlang$frostc$Compiler$AutoContext), (frost$core$Class*) &org$frostlang$frostc$Compiler$AutoContext$class);
+_28 = (org$frostlang$frostc$Compiler$EnclosingContext*) frostObjectAlloc(sizeof(org$frostlang$frostc$Compiler$EnclosingContext), (frost$core$Class*) &org$frostlang$frostc$Compiler$EnclosingContext$class);
 _29 = (frost$core$Int) {1u};
 _30 = *(&local3);
 _31 = *(&local1);
@@ -195,8 +193,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_41);
 _43 = ((frost$core$Object*) _27);
 frost$core$Frost$unref$frost$core$Object$Q(_43);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/statement/While.frost:25
-FROST_ASSERT(40 == sizeof(org$frostlang$frostc$Compiler$AutoScope));
-_46 = (org$frostlang$frostc$Compiler$AutoScope*) frostObjectAlloc(40, (frost$core$Class*) &org$frostlang$frostc$Compiler$AutoScope$class);
+_46 = (org$frostlang$frostc$Compiler$AutoScope*) frostObjectAlloc(sizeof(org$frostlang$frostc$Compiler$AutoScope), (frost$core$Class*) &org$frostlang$frostc$Compiler$AutoScope$class);
 org$frostlang$frostc$Compiler$AutoScope$init$org$frostlang$frostc$Compiler(_46, param0);
 *(&local5) = ((org$frostlang$frostc$Compiler$AutoScope*) NULL);
 _49 = ((frost$core$Object*) _46);
@@ -209,8 +206,7 @@ _55 = ((frost$core$Object*) _46);
 frost$core$Frost$unref$frost$core$Object$Q(_55);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/statement/While.frost:26
 _58 = *(&local0);
-FROST_ASSERT(80 == sizeof(org$frostlang$frostc$IR$Statement));
-_59 = (org$frostlang$frostc$IR$Statement*) frostObjectAlloc(80, (frost$core$Class*) &org$frostlang$frostc$IR$Statement$class);
+_59 = (org$frostlang$frostc$IR$Statement*) frostObjectAlloc(sizeof(org$frostlang$frostc$IR$Statement), (frost$core$Class*) &org$frostlang$frostc$IR$Statement$class);
 _60 = (frost$core$Int) {1u};
 _61 = *(&local1);
 org$frostlang$frostc$IR$Statement$init$frost$core$Int$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Block$ID(_59, _60, param1, _61);
@@ -304,8 +300,7 @@ if (_134) goto block4; else goto block5;
 block4:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/statement/While.frost:35
 _137 = *(&local0);
-FROST_ASSERT(80 == sizeof(org$frostlang$frostc$IR$Statement));
-_138 = (org$frostlang$frostc$IR$Statement*) frostObjectAlloc(80, (frost$core$Class*) &org$frostlang$frostc$IR$Statement$class);
+_138 = (org$frostlang$frostc$IR$Statement*) frostObjectAlloc(sizeof(org$frostlang$frostc$IR$Statement), (frost$core$Class*) &org$frostlang$frostc$IR$Statement$class);
 _139 = (frost$core$Int) {1u};
 _140 = *(&local1);
 org$frostlang$frostc$IR$Statement$init$frost$core$Int$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Block$ID(_138, _139, param1, _140);
@@ -327,12 +322,14 @@ frost$core$Frost$unref$frost$core$Object$Q(_153);
 return;
 
 }
-void org$frostlang$frostc$statement$While$init(org$frostlang$frostc$statement$While* param0) {
+void org$frostlang$frostc$statement$While$init(void* rawSelf) {
+org$frostlang$frostc$statement$While* param0 = (org$frostlang$frostc$statement$While*) rawSelf;
 
 return;
 
 }
-void org$frostlang$frostc$statement$While$cleanup(org$frostlang$frostc$statement$While* param0) {
+void org$frostlang$frostc$statement$While$cleanup(void* rawSelf) {
+org$frostlang$frostc$statement$While* param0 = (org$frostlang$frostc$statement$While*) rawSelf;
 
 frost$core$Object* _1;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/statement/While.frost:15

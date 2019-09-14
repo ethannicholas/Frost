@@ -36,7 +36,8 @@ static frost$core$String $s10 = { (frost$core$Class*) &frost$core$String$class, 
 static frost$core$String $s14 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x55\x49\x6e\x74\x36\x34\x2e\x66\x72\x6f\x73\x74", 12, -1926602429048847549, NULL };
 static frost$core$String $s15 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x55\x49\x6e\x74\x36\x34\x2e\x5b\x5d\x28\x69\x6e\x64\x65\x78\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x42\x69\x74", 91, -4057673255977011726, NULL };
 
-void frost$collections$ListView$PowerSetIterator$init$frost$collections$ListView$LTfrost$collections$ListView$PowerSetIterator$T$GT(frost$collections$ListView$PowerSetIterator* param0, frost$collections$ListView* param1) {
+void frost$collections$ListView$PowerSetIterator$init$frost$collections$ListView$LTfrost$collections$ListView$PowerSetIterator$T$GT(void* rawSelf, frost$collections$ListView* param1) {
+frost$collections$ListView$PowerSetIterator* param0 = (frost$collections$ListView$PowerSetIterator*) rawSelf;
 
 frost$collections$ListView$PowerSetIterator* _1;
 frost$core$UInt64 _2;
@@ -101,7 +102,8 @@ _34 = &_16->stop;
 return;
 
 }
-frost$core$Bit frost$collections$ListView$PowerSetIterator$get_done$R$frost$core$Bit(frost$collections$ListView$PowerSetIterator* param0) {
+frost$core$Bit frost$collections$ListView$PowerSetIterator$get_done$R$frost$core$Bit(void* rawSelf) {
+frost$collections$ListView$PowerSetIterator* param0 = (frost$collections$ListView$PowerSetIterator*) rawSelf;
 
 frost$collections$ListView$PowerSetIterator* _1;
 frost$core$UInt64* _2;
@@ -129,7 +131,8 @@ _12 = (frost$core$Bit) {_11};
 return _12;
 
 }
-frost$collections$ListView* frost$collections$ListView$PowerSetIterator$next$R$frost$collections$ListView$LTfrost$collections$ListView$PowerSetIterator$T$GT(frost$collections$ListView$PowerSetIterator* param0) {
+frost$collections$ListView* frost$collections$ListView$PowerSetIterator$next$R$frost$collections$ListView$LTfrost$collections$ListView$PowerSetIterator$T$GT(void* rawSelf) {
+frost$collections$ListView$PowerSetIterator* param0 = (frost$collections$ListView$PowerSetIterator*) rawSelf;
 
 frost$collections$Array* local0 = NULL;
 frost$core$Int local1;
@@ -273,8 +276,7 @@ frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$St
 abort(); // unreachable
 block1:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/ListView.frost:192
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_15 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_15 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _16 = _15;
 frost$collections$Array$init(_16);
 *(&local0) = ((frost$collections$Array*) NULL);
@@ -337,7 +339,7 @@ _67 = _66.value;
 if (_67) goto block14; else goto block13;
 block14:;
 frost$core$UInt64$wrapper* $tmp12;
-$tmp12 = (frost$core$UInt64$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$UInt64$wrapperclass);
+$tmp12 = (frost$core$UInt64$wrapper*) frostObjectAlloc(sizeof(frost$core$UInt64$wrapper), (frost$core$Class*) &frost$core$UInt64$wrapperclass);
 $tmp12->value = _59;
 _69 = ((frost$collections$CollectionView*) $tmp12);
 ITable* $tmp13 = _69->$class->itable;
@@ -455,7 +457,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_167);
 return _163;
 
 }
-void frost$collections$ListView$PowerSetIterator$cleanup(frost$collections$ListView$PowerSetIterator* param0) {
+void frost$collections$ListView$PowerSetIterator$cleanup(void* rawSelf) {
+frost$collections$ListView$PowerSetIterator* param0 = (frost$collections$ListView$PowerSetIterator*) rawSelf;
 
 frost$core$Object* _1;
 frost$collections$ListView$PowerSetIterator* _3;

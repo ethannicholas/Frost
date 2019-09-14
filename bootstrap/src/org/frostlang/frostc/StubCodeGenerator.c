@@ -410,7 +410,8 @@ static frost$core$String $s405 = { (frost$core$Class*) &frost$core$String$class,
 static frost$core$String $s406 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x72\x65\x74\x75\x72\x6e\x65\x64\x20\x66\x72\x6f\x6d\x20\x40\x6e\x6f\x52\x65\x74\x75\x72\x6e\x20\x6d\x65\x74\x68\x6f\x64", 30, 1170110763298107664, NULL };
 static frost$core$String $s407 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x66\x72\x6f\x73\x74", 10, -4036851284011595059, NULL };
 
-void org$frostlang$frostc$StubCodeGenerator$init$frost$io$OutputStream(org$frostlang$frostc$StubCodeGenerator* param0, frost$io$OutputStream* param1) {
+void org$frostlang$frostc$StubCodeGenerator$init$frost$io$OutputStream(void* rawSelf, frost$io$OutputStream* param1) {
+org$frostlang$frostc$StubCodeGenerator* param0 = (org$frostlang$frostc$StubCodeGenerator*) rawSelf;
 
 frost$core$Weak* _1;
 frost$core$Weak* _2;
@@ -427,8 +428,7 @@ frost$io$OutputStream* _19;
 frost$core$Object* _20;
 frost$io$OutputStream** _22;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/StubCodeGenerator.frost:6
-FROST_ASSERT(32 == sizeof(frost$core$Weak));
-_1 = (frost$core$Weak*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$Weak$class);
+_1 = (frost$core$Weak*) frostObjectAlloc(sizeof(frost$core$Weak), (frost$core$Class*) &frost$core$Weak$class);
 _2 = _1;
 _3 = ((frost$core$Object*) ((org$frostlang$frostc$Compiler*) NULL));
 frost$core$Weak$init$frost$core$Weak$T$Q(_2, _3);
@@ -454,7 +454,8 @@ _22 = &param0->out;
 return;
 
 }
-void org$frostlang$frostc$StubCodeGenerator$setCompiler$org$frostlang$frostc$Compiler(org$frostlang$frostc$StubCodeGenerator* param0, org$frostlang$frostc$Compiler* param1) {
+void org$frostlang$frostc$StubCodeGenerator$setCompiler$org$frostlang$frostc$Compiler(void* rawSelf, org$frostlang$frostc$Compiler* param1) {
+org$frostlang$frostc$StubCodeGenerator* param0 = (org$frostlang$frostc$StubCodeGenerator*) rawSelf;
 
 org$frostlang$frostc$Compiler* _1;
 frost$core$Weak* _2;
@@ -468,8 +469,7 @@ frost$core$Weak** _12;
 frost$core$Object* _14;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/StubCodeGenerator.frost:16
 _1 = param1;
-FROST_ASSERT(32 == sizeof(frost$core$Weak));
-_2 = (frost$core$Weak*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$Weak$class);
+_2 = (frost$core$Weak*) frostObjectAlloc(sizeof(frost$core$Weak), (frost$core$Class*) &frost$core$Weak$class);
 _3 = _2;
 _4 = ((frost$core$Object*) _1);
 frost$core$Weak$init$frost$core$Weak$T$Q(_3, _4);
@@ -486,7 +486,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_14);
 return;
 
 }
-frost$core$String* org$frostlang$frostc$StubCodeGenerator$methodType$frost$collections$ListView$LTorg$frostlang$frostc$Type$GT$frost$core$String$R$frost$core$String(org$frostlang$frostc$StubCodeGenerator* param0, frost$collections$ListView* param1, frost$core$String* param2) {
+frost$core$String* org$frostlang$frostc$StubCodeGenerator$methodType$frost$collections$ListView$LTorg$frostlang$frostc$Type$GT$frost$core$String$R$frost$core$String(void* rawSelf, frost$collections$ListView* param1, frost$core$String* param2) {
+org$frostlang$frostc$StubCodeGenerator* param0 = (org$frostlang$frostc$StubCodeGenerator*) rawSelf;
 
 frost$core$String* local0 = NULL;
 org$frostlang$frostc$Type* local1 = NULL;
@@ -623,12 +624,10 @@ _13 = $tmp10->methods[2];
 _14 = _13(_1, _12);
 _15 = _14;
 _16 = ((frost$collections$CollectionView*) _15);
-FROST_ASSERT(24 == sizeof(org$frostlang$frostc$StubCodeGenerator$_Closure2));
-_17 = (org$frostlang$frostc$StubCodeGenerator$_Closure2*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$StubCodeGenerator$_Closure2$class);
+_17 = (org$frostlang$frostc$StubCodeGenerator$_Closure2*) frostObjectAlloc(sizeof(org$frostlang$frostc$StubCodeGenerator$_Closure2), (frost$core$Class*) &org$frostlang$frostc$StubCodeGenerator$_Closure2$class);
 org$frostlang$frostc$StubCodeGenerator$_Closure2$init$org$frostlang$frostc$StubCodeGenerator(_17, param0);
 _19 = ((frost$core$Int8*) org$frostlang$frostc$StubCodeGenerator$_Closure2$$anonymous1$org$frostlang$frostc$Type$R$frost$core$String);
-FROST_ASSERT(32 == sizeof(frost$core$MutableMethod));
-_20 = (frost$core$MutableMethod*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$MutableMethod$class);
+_20 = (frost$core$MutableMethod*) frostObjectAlloc(sizeof(frost$core$MutableMethod), (frost$core$Class*) &frost$core$MutableMethod$class);
 _21 = ((frost$core$Object*) _17);
 // begin inline call to frost.core.MutableMethod.init(pointer:frost.unsafe.Pointer<frost.core.Int8>, target:frost.core.Object?) from StubCodeGenerator.frost:20:58
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/MutableMethod.frost:32
@@ -802,7 +801,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_165);
 return _155;
 
 }
-frost$core$String* org$frostlang$frostc$StubCodeGenerator$type$org$frostlang$frostc$Type$R$frost$core$String(org$frostlang$frostc$StubCodeGenerator* param0, org$frostlang$frostc$Type* param1) {
+frost$core$String* org$frostlang$frostc$StubCodeGenerator$type$org$frostlang$frostc$Type$R$frost$core$String(void* rawSelf, org$frostlang$frostc$Type* param1) {
+org$frostlang$frostc$StubCodeGenerator* param0 = (org$frostlang$frostc$StubCodeGenerator*) rawSelf;
 
 org$frostlang$frostc$Type$Kind* _1;
 org$frostlang$frostc$Type$Kind _2;
@@ -1191,12 +1191,10 @@ _120 = $tmp38->methods[2];
 _121 = _120(_115, _119);
 _122 = _121;
 _123 = ((frost$collections$CollectionView*) _122);
-FROST_ASSERT(24 == sizeof(org$frostlang$frostc$StubCodeGenerator$_Closure4));
-_124 = (org$frostlang$frostc$StubCodeGenerator$_Closure4*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$StubCodeGenerator$_Closure4$class);
+_124 = (org$frostlang$frostc$StubCodeGenerator$_Closure4*) frostObjectAlloc(sizeof(org$frostlang$frostc$StubCodeGenerator$_Closure4), (frost$core$Class*) &org$frostlang$frostc$StubCodeGenerator$_Closure4$class);
 org$frostlang$frostc$StubCodeGenerator$_Closure4$init$org$frostlang$frostc$StubCodeGenerator(_124, param0);
 _126 = ((frost$core$Int8*) org$frostlang$frostc$StubCodeGenerator$_Closure4$$anonymous3$org$frostlang$frostc$Type$R$frost$core$String);
-FROST_ASSERT(32 == sizeof(frost$core$MutableMethod));
-_127 = (frost$core$MutableMethod*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$MutableMethod$class);
+_127 = (frost$core$MutableMethod*) frostObjectAlloc(sizeof(frost$core$MutableMethod), (frost$core$Class*) &frost$core$MutableMethod$class);
 _128 = ((frost$core$Object*) _124);
 // begin inline call to frost.core.MutableMethod.init(pointer:frost.unsafe.Pointer<frost.core.Int8>, target:frost.core.Object?) from StubCodeGenerator.frost:35:71
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/MutableMethod.frost:32
@@ -1285,12 +1283,10 @@ _202 = _194;
 _203 = ((frost$core$Object*) _202);
 frost$core$Frost$ref$frost$core$Object$Q(_203);
 _206 = ((frost$collections$CollectionView*) _202);
-FROST_ASSERT(24 == sizeof(org$frostlang$frostc$StubCodeGenerator$_Closure6));
-_207 = (org$frostlang$frostc$StubCodeGenerator$_Closure6*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$StubCodeGenerator$_Closure6$class);
+_207 = (org$frostlang$frostc$StubCodeGenerator$_Closure6*) frostObjectAlloc(sizeof(org$frostlang$frostc$StubCodeGenerator$_Closure6), (frost$core$Class*) &org$frostlang$frostc$StubCodeGenerator$_Closure6$class);
 org$frostlang$frostc$StubCodeGenerator$_Closure6$init$org$frostlang$frostc$StubCodeGenerator(_207, param0);
 _209 = ((frost$core$Int8*) org$frostlang$frostc$StubCodeGenerator$_Closure6$$anonymous5$org$frostlang$frostc$Type$R$frost$core$String);
-FROST_ASSERT(32 == sizeof(frost$core$MutableMethod));
-_210 = (frost$core$MutableMethod*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$MutableMethod$class);
+_210 = (frost$core$MutableMethod*) frostObjectAlloc(sizeof(frost$core$MutableMethod), (frost$core$Class*) &frost$core$MutableMethod$class);
 _211 = ((frost$core$Object*) _207);
 // begin inline call to frost.core.MutableMethod.init(pointer:frost.unsafe.Pointer<frost.core.Int8>, target:frost.core.Object?) from StubCodeGenerator.frost:38:43
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/MutableMethod.frost:32
@@ -1544,7 +1540,8 @@ goto block59;
 block59:;
 
 }
-void org$frostlang$frostc$StubCodeGenerator$write$org$frostlang$frostc$ChoiceCase(org$frostlang$frostc$StubCodeGenerator* param0, org$frostlang$frostc$ChoiceCase* param1) {
+void org$frostlang$frostc$StubCodeGenerator$write$org$frostlang$frostc$ChoiceCase(void* rawSelf, org$frostlang$frostc$ChoiceCase* param1) {
+org$frostlang$frostc$StubCodeGenerator* param0 = (org$frostlang$frostc$StubCodeGenerator*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 frost$io$OutputStream** _3;
@@ -1698,12 +1695,10 @@ _43 = *_42;
 _44 = &param1->fields;
 _45 = *_44;
 _46 = ((frost$collections$CollectionView*) _45);
-FROST_ASSERT(24 == sizeof(org$frostlang$frostc$StubCodeGenerator$_Closure8));
-_47 = (org$frostlang$frostc$StubCodeGenerator$_Closure8*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$StubCodeGenerator$_Closure8$class);
+_47 = (org$frostlang$frostc$StubCodeGenerator$_Closure8*) frostObjectAlloc(sizeof(org$frostlang$frostc$StubCodeGenerator$_Closure8), (frost$core$Class*) &org$frostlang$frostc$StubCodeGenerator$_Closure8$class);
 org$frostlang$frostc$StubCodeGenerator$_Closure8$init$org$frostlang$frostc$StubCodeGenerator(_47, param0);
 _49 = ((frost$core$Int8*) org$frostlang$frostc$StubCodeGenerator$_Closure8$$anonymous7$org$frostlang$frostc$Type$R$frost$core$String);
-FROST_ASSERT(32 == sizeof(frost$core$MutableMethod));
-_50 = (frost$core$MutableMethod*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$MutableMethod$class);
+_50 = (frost$core$MutableMethod*) frostObjectAlloc(sizeof(frost$core$MutableMethod), (frost$core$Class*) &frost$core$MutableMethod$class);
 _51 = ((frost$core$Object*) _47);
 // begin inline call to frost.core.MutableMethod.init(pointer:frost.unsafe.Pointer<frost.core.Int8>, target:frost.core.Object?) from StubCodeGenerator.frost:65:47
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/MutableMethod.frost:32
@@ -1842,7 +1837,8 @@ frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$St
 abort(); // unreachable
 
 }
-void org$frostlang$frostc$StubCodeGenerator$write$org$frostlang$frostc$FieldDecl(org$frostlang$frostc$StubCodeGenerator* param0, org$frostlang$frostc$FieldDecl* param1) {
+void org$frostlang$frostc$StubCodeGenerator$write$org$frostlang$frostc$FieldDecl(void* rawSelf, org$frostlang$frostc$FieldDecl* param1) {
+org$frostlang$frostc$StubCodeGenerator* param0 = (org$frostlang$frostc$StubCodeGenerator*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 org$frostlang$frostc$FieldDecl$Kind local1;
@@ -2410,7 +2406,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_289);
 _292 = &param1->fieldKind;
 _293 = *_292;
 org$frostlang$frostc$FieldDecl$Kind$wrapper* $tmp134;
-$tmp134 = (org$frostlang$frostc$FieldDecl$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$FieldDecl$Kind$wrapperclass);
+$tmp134 = (org$frostlang$frostc$FieldDecl$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$FieldDecl$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$FieldDecl$Kind$wrapperclass);
 $tmp134->value = _293;
 _294 = ((frost$core$Equatable*) $tmp134);
 _295 = _294;
@@ -2423,7 +2419,7 @@ _301 = *(&local2);
 *(&local1) = _301;
 _304 = *(&local1);
 org$frostlang$frostc$FieldDecl$Kind$wrapper* $tmp135;
-$tmp135 = (org$frostlang$frostc$FieldDecl$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$FieldDecl$Kind$wrapperclass);
+$tmp135 = (org$frostlang$frostc$FieldDecl$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$FieldDecl$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$FieldDecl$Kind$wrapperclass);
 $tmp135->value = _304;
 _305 = ((frost$core$Equatable*) $tmp135);
 ITable* $tmp136 = _295->$class->itable;
@@ -2562,7 +2558,8 @@ frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$St
 abort(); // unreachable
 
 }
-void org$frostlang$frostc$StubCodeGenerator$write$org$frostlang$frostc$MethodDecl(org$frostlang$frostc$StubCodeGenerator* param0, org$frostlang$frostc$MethodDecl* param1) {
+void org$frostlang$frostc$StubCodeGenerator$write$org$frostlang$frostc$MethodDecl(void* rawSelf, org$frostlang$frostc$MethodDecl* param1) {
+org$frostlang$frostc$StubCodeGenerator* param0 = (org$frostlang$frostc$StubCodeGenerator*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 frost$core$String* local1 = NULL;
@@ -3337,12 +3334,10 @@ frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$St
 abort(); // unreachable
 block44:;
 _230 = ((frost$collections$CollectionView*) _222);
-FROST_ASSERT(24 == sizeof(org$frostlang$frostc$StubCodeGenerator$_Closure10));
-_231 = (org$frostlang$frostc$StubCodeGenerator$_Closure10*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$StubCodeGenerator$_Closure10$class);
+_231 = (org$frostlang$frostc$StubCodeGenerator$_Closure10*) frostObjectAlloc(sizeof(org$frostlang$frostc$StubCodeGenerator$_Closure10), (frost$core$Class*) &org$frostlang$frostc$StubCodeGenerator$_Closure10$class);
 org$frostlang$frostc$StubCodeGenerator$_Closure10$init$org$frostlang$frostc$StubCodeGenerator(_231, param0);
 _233 = ((frost$core$Int8*) org$frostlang$frostc$StubCodeGenerator$_Closure10$$anonymous9$org$frostlang$frostc$MethodDecl$GenericParameter$R$frost$core$String);
-FROST_ASSERT(32 == sizeof(frost$core$MutableMethod));
-_234 = (frost$core$MutableMethod*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$MutableMethod$class);
+_234 = (frost$core$MutableMethod*) frostObjectAlloc(sizeof(frost$core$MutableMethod), (frost$core$Class*) &frost$core$MutableMethod$class);
 _235 = ((frost$core$Object*) _231);
 // begin inline call to frost.core.MutableMethod.init(pointer:frost.unsafe.Pointer<frost.core.Int8>, target:frost.core.Object?) from StubCodeGenerator.frost:131:49
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/MutableMethod.frost:32
@@ -3633,7 +3628,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_481);
 _484 = &param1->methodKind;
 _485 = *_484;
 org$frostlang$frostc$MethodDecl$Kind$wrapper* $tmp227;
-$tmp227 = (org$frostlang$frostc$MethodDecl$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$MethodDecl$Kind$wrapperclass);
+$tmp227 = (org$frostlang$frostc$MethodDecl$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$MethodDecl$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$MethodDecl$Kind$wrapperclass);
 $tmp227->value = _485;
 _486 = ((frost$core$Equatable*) $tmp227);
 _487 = _486;
@@ -3646,7 +3641,7 @@ _493 = *(&local4);
 *(&local3) = _493;
 _496 = *(&local3);
 org$frostlang$frostc$MethodDecl$Kind$wrapper* $tmp228;
-$tmp228 = (org$frostlang$frostc$MethodDecl$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$MethodDecl$Kind$wrapperclass);
+$tmp228 = (org$frostlang$frostc$MethodDecl$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$MethodDecl$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$MethodDecl$Kind$wrapperclass);
 $tmp228->value = _496;
 _497 = ((frost$core$Equatable*) $tmp228);
 ITable* $tmp229 = _487->$class->itable;
@@ -4102,7 +4097,8 @@ frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$St
 abort(); // unreachable
 
 }
-void org$frostlang$frostc$StubCodeGenerator$write$org$frostlang$frostc$ClassDecl(org$frostlang$frostc$StubCodeGenerator* param0, org$frostlang$frostc$ClassDecl* param1) {
+void org$frostlang$frostc$StubCodeGenerator$write$org$frostlang$frostc$ClassDecl(void* rawSelf, org$frostlang$frostc$ClassDecl* param1) {
+org$frostlang$frostc$StubCodeGenerator* param0 = (org$frostlang$frostc$StubCodeGenerator*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 frost$core$String* local1 = NULL;
@@ -4935,8 +4931,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_58);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/StubCodeGenerator.frost:174
 _62 = &param1->name;
 _63 = *_62;
-FROST_ASSERT(24 == sizeof(frost$core$RegularExpression));
-_64 = (frost$core$RegularExpression*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$RegularExpression$class);
+_64 = (frost$core$RegularExpression*) frostObjectAlloc(sizeof(frost$core$RegularExpression), (frost$core$Class*) &frost$core$RegularExpression$class);
 frost$core$RegularExpression$init$frost$core$String(_64, &$s304);
 // begin inline call to function frost.core.String.parse(regex:frost.core.RegularExpression):frost.collections.Array<frost.core.String?>? from StubCodeGenerator.frost:174:40
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:1072
@@ -4957,8 +4952,7 @@ _81 = _80.value;
 if (_81) goto block13; else goto block14;
 block13:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:1074
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_84 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_84 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _85 = _84;
 frost$collections$Array$init(_85);
 *(&local4) = ((frost$collections$Array*) NULL);
@@ -5614,12 +5608,10 @@ _668 = *_667;
 _669 = &param1->parameters;
 _670 = *_669;
 _671 = ((frost$collections$CollectionView*) _670);
-FROST_ASSERT(24 == sizeof(org$frostlang$frostc$StubCodeGenerator$_Closure12));
-_672 = (org$frostlang$frostc$StubCodeGenerator$_Closure12*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$StubCodeGenerator$_Closure12$class);
+_672 = (org$frostlang$frostc$StubCodeGenerator$_Closure12*) frostObjectAlloc(sizeof(org$frostlang$frostc$StubCodeGenerator$_Closure12), (frost$core$Class*) &org$frostlang$frostc$StubCodeGenerator$_Closure12$class);
 org$frostlang$frostc$StubCodeGenerator$_Closure12$init$org$frostlang$frostc$StubCodeGenerator(_672, param0);
 _674 = ((frost$core$Int8*) org$frostlang$frostc$StubCodeGenerator$_Closure12$$anonymous11$org$frostlang$frostc$ClassDecl$GenericParameter$R$frost$core$String);
-FROST_ASSERT(32 == sizeof(frost$core$MutableMethod));
-_675 = (frost$core$MutableMethod*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$MutableMethod$class);
+_675 = (frost$core$MutableMethod*) frostObjectAlloc(sizeof(frost$core$MutableMethod), (frost$core$Class*) &frost$core$MutableMethod$class);
 _676 = ((frost$core$Object*) _672);
 // begin inline call to frost.core.MutableMethod.init(pointer:frost.unsafe.Pointer<frost.core.Int8>, target:frost.core.Object?) from StubCodeGenerator.frost:191:43
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/MutableMethod.frost:32
@@ -5726,7 +5718,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_763);
 _767 = &param1->classKind;
 _768 = *_767;
 org$frostlang$frostc$ClassDecl$Kind$wrapper* $tmp359;
-$tmp359 = (org$frostlang$frostc$ClassDecl$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$ClassDecl$Kind$wrapperclass);
+$tmp359 = (org$frostlang$frostc$ClassDecl$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$ClassDecl$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$ClassDecl$Kind$wrapperclass);
 $tmp359->value = _768;
 _769 = ((frost$core$Equatable*) $tmp359);
 _770 = _769;
@@ -5739,7 +5731,7 @@ _776 = *(&local9);
 *(&local8) = _776;
 _779 = *(&local8);
 org$frostlang$frostc$ClassDecl$Kind$wrapper* $tmp360;
-$tmp360 = (org$frostlang$frostc$ClassDecl$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$ClassDecl$Kind$wrapperclass);
+$tmp360 = (org$frostlang$frostc$ClassDecl$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$ClassDecl$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$ClassDecl$Kind$wrapperclass);
 $tmp360->value = _779;
 _780 = ((frost$core$Equatable*) $tmp360);
 ITable* $tmp361 = _770->$class->itable;
@@ -5766,7 +5758,7 @@ block96:;
 _796 = &param1->classKind;
 _797 = *_796;
 org$frostlang$frostc$ClassDecl$Kind$wrapper* $tmp362;
-$tmp362 = (org$frostlang$frostc$ClassDecl$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$ClassDecl$Kind$wrapperclass);
+$tmp362 = (org$frostlang$frostc$ClassDecl$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$ClassDecl$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$ClassDecl$Kind$wrapperclass);
 $tmp362->value = _797;
 _798 = ((frost$core$Equatable*) $tmp362);
 _799 = _798;
@@ -5779,7 +5771,7 @@ _805 = *(&local11);
 *(&local10) = _805;
 _808 = *(&local10);
 org$frostlang$frostc$ClassDecl$Kind$wrapper* $tmp363;
-$tmp363 = (org$frostlang$frostc$ClassDecl$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$ClassDecl$Kind$wrapperclass);
+$tmp363 = (org$frostlang$frostc$ClassDecl$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$ClassDecl$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$ClassDecl$Kind$wrapperclass);
 $tmp363->value = _808;
 _809 = ((frost$core$Equatable*) $tmp363);
 ITable* $tmp364 = _799->$class->itable;
@@ -6375,7 +6367,8 @@ frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$St
 abort(); // unreachable
 
 }
-void org$frostlang$frostc$StubCodeGenerator$start$org$frostlang$frostc$ClassDecl(org$frostlang$frostc$StubCodeGenerator* param0, org$frostlang$frostc$ClassDecl* param1) {
+void org$frostlang$frostc$StubCodeGenerator$start$org$frostlang$frostc$ClassDecl(void* rawSelf, org$frostlang$frostc$ClassDecl* param1) {
+org$frostlang$frostc$StubCodeGenerator* param0 = (org$frostlang$frostc$StubCodeGenerator*) rawSelf;
 
 frost$core$Weak** _1;
 frost$core$Weak* _2;
@@ -6475,27 +6468,32 @@ block2:;
 return;
 
 }
-void org$frostlang$frostc$StubCodeGenerator$end$org$frostlang$frostc$ClassDecl(org$frostlang$frostc$StubCodeGenerator* param0, org$frostlang$frostc$ClassDecl* param1) {
+void org$frostlang$frostc$StubCodeGenerator$end$org$frostlang$frostc$ClassDecl(void* rawSelf, org$frostlang$frostc$ClassDecl* param1) {
+org$frostlang$frostc$StubCodeGenerator* param0 = (org$frostlang$frostc$StubCodeGenerator*) rawSelf;
 
 return;
 
 }
-void org$frostlang$frostc$StubCodeGenerator$writeDeclaration$org$frostlang$frostc$MethodDecl(org$frostlang$frostc$StubCodeGenerator* param0, org$frostlang$frostc$MethodDecl* param1) {
+void org$frostlang$frostc$StubCodeGenerator$writeDeclaration$org$frostlang$frostc$MethodDecl(void* rawSelf, org$frostlang$frostc$MethodDecl* param1) {
+org$frostlang$frostc$StubCodeGenerator* param0 = (org$frostlang$frostc$StubCodeGenerator*) rawSelf;
 
 return;
 
 }
-void org$frostlang$frostc$StubCodeGenerator$write$org$frostlang$frostc$MethodDecl$org$frostlang$frostc$IR(org$frostlang$frostc$StubCodeGenerator* param0, org$frostlang$frostc$MethodDecl* param1, org$frostlang$frostc$IR* param2) {
+void org$frostlang$frostc$StubCodeGenerator$write$org$frostlang$frostc$MethodDecl$org$frostlang$frostc$IR(void* rawSelf, org$frostlang$frostc$MethodDecl* param1, org$frostlang$frostc$IR* param2) {
+org$frostlang$frostc$StubCodeGenerator* param0 = (org$frostlang$frostc$StubCodeGenerator*) rawSelf;
 
 return;
 
 }
-void org$frostlang$frostc$StubCodeGenerator$finish(org$frostlang$frostc$StubCodeGenerator* param0) {
+void org$frostlang$frostc$StubCodeGenerator$finish(void* rawSelf) {
+org$frostlang$frostc$StubCodeGenerator* param0 = (org$frostlang$frostc$StubCodeGenerator*) rawSelf;
 
 return;
 
 }
-void org$frostlang$frostc$StubCodeGenerator$cleanup(org$frostlang$frostc$StubCodeGenerator* param0) {
+void org$frostlang$frostc$StubCodeGenerator$cleanup(void* rawSelf) {
+org$frostlang$frostc$StubCodeGenerator* param0 = (org$frostlang$frostc$StubCodeGenerator*) rawSelf;
 
 frost$core$Object* _1;
 frost$core$Weak** _3;

@@ -129,7 +129,7 @@ static frost$core$String $s46 = { (frost$core$Class*) &frost$core$String$class, 
 static frost$core$String $s47 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x3e", 1, -5808601953130666271, NULL };
 static frost$core$String $s48 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x26\x67\x74\x3b", 4, 8779067523193954595, NULL };
 static frost$core$String $s57 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x3c\x73\x70\x61\x6e\x20\x63\x6c\x61\x73\x73\x3d\x22", 13, 4264447674952797972, NULL };
-static frost$core$String $s58 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x22\x3e", 2, 561975819213520929, NULL };
+static frost$core$String $s58 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x5f\x54\x4f\x4b\x45\x4e\x22\x3e", 8, 4569710556078843455, NULL };
 static frost$core$String $s66 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x3c\x2f\x73\x70\x61\x6e\x3e", 7, 8018166017091831374, NULL };
 static frost$core$String $s70 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x3c\x2f\x73\x70\x61\x6e\x3e", 7, 8018166017091831374, NULL };
 static frost$core$String $s71 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x3c\x2f\x73\x70\x61\x6e\x3e", 7, 8018166017091831374, NULL };
@@ -195,7 +195,8 @@ static frost$core$String $s185 = { (frost$core$Class*) &frost$core$String$class,
 static frost$core$String $s187 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x48\x54\x4d\x4c\x50\x72\x6f\x63\x65\x73\x73\x6f\x72\x2e\x66\x72\x6f\x73\x74", 19, -5100149063075526860, NULL };
 static frost$core$String $s188 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x72\x65\x74\x75\x72\x6e\x65\x64\x20\x66\x72\x6f\x6d\x20\x40\x6e\x6f\x52\x65\x74\x75\x72\x6e\x20\x6d\x65\x74\x68\x6f\x64", 30, 1170110763298107664, NULL };
 
-void org$frostlang$frostc$HTMLProcessor$init$org$frostlang$frostc$Compiler(org$frostlang$frostc$HTMLProcessor* param0, org$frostlang$frostc$Compiler* param1) {
+void org$frostlang$frostc$HTMLProcessor$init$org$frostlang$frostc$Compiler(void* rawSelf, org$frostlang$frostc$Compiler* param1) {
+org$frostlang$frostc$HTMLProcessor* param0 = (org$frostlang$frostc$HTMLProcessor*) rawSelf;
 
 frost$core$Object* _1;
 org$frostlang$frostc$Compiler** _3;
@@ -214,7 +215,8 @@ _7 = &param0->compiler;
 return;
 
 }
-frost$core$String* org$frostlang$frostc$HTMLProcessor$prettyPrint$org$frostlang$frostc$parser$Parser$R$frost$core$String(org$frostlang$frostc$HTMLProcessor* param0, org$frostlang$frostc$parser$Parser* param1) {
+frost$core$String* org$frostlang$frostc$HTMLProcessor$prettyPrint$org$frostlang$frostc$parser$Parser$R$frost$core$String(void* rawSelf, org$frostlang$frostc$parser$Parser* param1) {
+org$frostlang$frostc$HTMLProcessor* param0 = (org$frostlang$frostc$HTMLProcessor*) rawSelf;
 
 frost$core$MutableString* local0 = NULL;
 org$frostlang$frostc$parser$SyntaxHighlighter$Kind local1;
@@ -535,8 +537,7 @@ frost$core$Object* _530;
 frost$core$MutableString* _532;
 frost$core$Object* _533;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/HTMLProcessor.frost:16
-FROST_ASSERT(48 == sizeof(frost$core$MutableString));
-_1 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
+_1 = (frost$core$MutableString*) frostObjectAlloc(sizeof(frost$core$MutableString), (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init$frost$core$String(_1, &$s15);
 *(&local0) = ((frost$core$MutableString*) NULL);
 _4 = ((frost$core$Object*) _1);
@@ -615,13 +616,13 @@ _61 = &_60->second;
 _62 = *_61;
 _63 = ((org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) _62)->value;
 org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper* $tmp21;
-$tmp21 = (org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapperclass);
+$tmp21 = (org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapperclass);
 $tmp21->value = _63;
 _64 = ((frost$core$Equatable*) $tmp21);
 _65 = _64;
 _66 = *(&local3);
 org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper* $tmp22;
-$tmp22 = (org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapperclass);
+$tmp22 = (org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapperclass);
 $tmp22->value = _66;
 _67 = ((frost$core$Equatable*) $tmp22);
 ITable* $tmp23 = _65->$class->itable;
@@ -639,7 +640,7 @@ if (_70) goto block9; else goto block8;
 block9:;
 _76 = *(&local3);
 org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper* $tmp24;
-$tmp24 = (org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapperclass);
+$tmp24 = (org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapperclass);
 $tmp24->value = _76;
 _77 = ((frost$core$Equatable*) $tmp24);
 _78 = _77;
@@ -652,7 +653,7 @@ _84 = *(&local6);
 *(&local5) = _84;
 _87 = *(&local5);
 org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper* $tmp25;
-$tmp25 = (org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapperclass);
+$tmp25 = (org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapperclass);
 $tmp25->value = _87;
 _88 = ((frost$core$Equatable*) $tmp25);
 ITable* $tmp26 = _78->$class->itable;
@@ -680,13 +681,13 @@ _104 = &_103->second;
 _105 = *_104;
 _106 = ((org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) _105)->value;
 org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper* $tmp28;
-$tmp28 = (org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapperclass);
+$tmp28 = (org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapperclass);
 $tmp28->value = _106;
 _107 = ((frost$core$Equatable*) $tmp28);
 _108 = _107;
 _109 = *(&local3);
 org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper* $tmp29;
-$tmp29 = (org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapperclass);
+$tmp29 = (org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapperclass);
 $tmp29->value = _109;
 _110 = ((frost$core$Equatable*) $tmp29);
 ITable* $tmp30 = _108->$class->itable;
@@ -907,8 +908,7 @@ block13:;
 goto block12;
 block12:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/HTMLProcessor.frost:66
-FROST_ASSERT(48 == sizeof(frost$core$MutableString));
-_310 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
+_310 = (frost$core$MutableString*) frostObjectAlloc(sizeof(frost$core$MutableString), (frost$core$Class*) &frost$core$MutableString$class);
 _311 = *(&local4);
 _312 = _311;
 _313 = &_312->first;
@@ -951,7 +951,7 @@ frost$core$MutableString$replace$frost$core$String$frost$core$String(_349, &$s47
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/HTMLProcessor.frost:70
 _352 = *(&local3);
 org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper* $tmp49;
-$tmp49 = (org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapperclass);
+$tmp49 = (org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapperclass);
 $tmp49->value = _352;
 _353 = ((frost$core$Equatable*) $tmp49);
 _354 = _353;
@@ -964,7 +964,7 @@ _360 = *(&local9);
 *(&local8) = _360;
 _363 = *(&local8);
 org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper* $tmp50;
-$tmp50 = (org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapperclass);
+$tmp50 = (org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapperclass);
 $tmp50->value = _363;
 _364 = ((frost$core$Equatable*) $tmp50);
 ITable* $tmp51 = _354->$class->itable;
@@ -982,7 +982,7 @@ if (_367) goto block55; else goto block54;
 block55:;
 _373 = *(&local3);
 org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper* $tmp52;
-$tmp52 = (org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapperclass);
+$tmp52 = (org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapperclass);
 $tmp52->value = _373;
 _374 = ((frost$core$Equatable*) $tmp52);
 _375 = _374;
@@ -995,7 +995,7 @@ _381 = *(&local11);
 *(&local10) = _381;
 _384 = *(&local10);
 org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper* $tmp53;
-$tmp53 = (org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapperclass);
+$tmp53 = (org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapperclass);
 $tmp53->value = _384;
 _385 = ((frost$core$Equatable*) $tmp53);
 ITable* $tmp54 = _375->$class->itable;
@@ -1020,7 +1020,7 @@ _399 = *_398;
 _400 = ((org$frostlang$frostc$parser$Token$wrapper*) _399)->value;
 _401 = _400.kind;
 org$frostlang$frostc$parser$Token$Kind$wrapper* $tmp55;
-$tmp55 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
+$tmp55 = (org$frostlang$frostc$parser$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$Kind$wrapperclass);
 $tmp55->value = _401;
 _402 = ((frost$core$Object*) $tmp55);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from HTMLProcessor.frost:72:31
@@ -1058,7 +1058,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_433);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/HTMLProcessor.frost:75
 _437 = *(&local3);
 org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper* $tmp60;
-$tmp60 = (org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapperclass);
+$tmp60 = (org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapperclass);
 $tmp60->value = _437;
 _438 = ((frost$core$Equatable*) $tmp60);
 _439 = _438;
@@ -1071,7 +1071,7 @@ _445 = *(&local13);
 *(&local12) = _445;
 _448 = *(&local12);
 org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper* $tmp61;
-$tmp61 = (org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapperclass);
+$tmp61 = (org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapperclass);
 $tmp61->value = _448;
 _449 = ((frost$core$Equatable*) $tmp61);
 ITable* $tmp62 = _439->$class->itable;
@@ -1089,7 +1089,7 @@ if (_452) goto block62; else goto block61;
 block62:;
 _458 = *(&local3);
 org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper* $tmp63;
-$tmp63 = (org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapperclass);
+$tmp63 = (org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapperclass);
 $tmp63->value = _458;
 _459 = ((frost$core$Equatable*) $tmp63);
 _460 = _459;
@@ -1102,7 +1102,7 @@ _466 = *(&local15);
 *(&local14) = _466;
 _469 = *(&local14);
 org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper* $tmp64;
-$tmp64 = (org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapperclass);
+$tmp64 = (org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapperclass);
 $tmp64->value = _469;
 _470 = ((frost$core$Equatable*) $tmp64);
 ITable* $tmp65 = _460->$class->itable;
@@ -1140,7 +1140,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_494);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/HTMLProcessor.frost:80
 _497 = *(&local3);
 org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper* $tmp67;
-$tmp67 = (org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapperclass);
+$tmp67 = (org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapperclass);
 $tmp67->value = _497;
 _498 = ((frost$core$Equatable*) $tmp67);
 _499 = _498;
@@ -1153,7 +1153,7 @@ _505 = *(&local17);
 *(&local16) = _505;
 _508 = *(&local16);
 org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper* $tmp68;
-$tmp68 = (org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapperclass);
+$tmp68 = (org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapperclass);
 $tmp68->value = _508;
 _509 = ((frost$core$Equatable*) $tmp68);
 ITable* $tmp69 = _499->$class->itable;
@@ -1191,7 +1191,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_533);
 return _527;
 
 }
-void org$frostlang$frostc$HTMLProcessor$process$frost$io$File$frost$io$File$frost$core$String(org$frostlang$frostc$HTMLProcessor* param0, frost$io$File* param1, frost$io$File* param2, frost$core$String* param3) {
+void org$frostlang$frostc$HTMLProcessor$process$frost$io$File$frost$io$File$frost$core$String(void* rawSelf, frost$io$File* param1, frost$io$File* param2, frost$core$String* param3) {
+org$frostlang$frostc$HTMLProcessor* param0 = (org$frostlang$frostc$HTMLProcessor*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 frost$threads$MessageQueue* local1 = NULL;
@@ -1869,8 +1870,7 @@ frost$core$Int _1199;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/HTMLProcessor.frost:88
 *(&local0) = ((frost$core$Error*) NULL);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/HTMLProcessor.frost:89
-FROST_ASSERT(56 == sizeof(frost$threads$MessageQueue));
-_3 = (frost$threads$MessageQueue*) frostObjectAlloc(56, (frost$core$Class*) &frost$threads$MessageQueue$class);
+_3 = (frost$threads$MessageQueue*) frostObjectAlloc(sizeof(frost$threads$MessageQueue), (frost$core$Class*) &frost$threads$MessageQueue$class);
 _4 = _3;
 frost$threads$MessageQueue$init(_4);
 *(&local1) = ((frost$threads$MessageQueue*) NULL);
@@ -1883,8 +1883,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_10);
 _13 = ((frost$core$Object*) _3);
 frost$core$Frost$unref$frost$core$Object$Q(_13);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/HTMLProcessor.frost:90
-FROST_ASSERT(96 == sizeof(org$frostlang$frostc$parser$Parser));
-_16 = (org$frostlang$frostc$parser$Parser*) frostObjectAlloc(96, (frost$core$Class*) &org$frostlang$frostc$parser$Parser$class);
+_16 = (org$frostlang$frostc$parser$Parser*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Parser), (frost$core$Class*) &org$frostlang$frostc$parser$Parser$class);
 _17 = *(&local1);
 org$frostlang$frostc$parser$Parser$init$frost$threads$MessageQueue$LTorg$frostlang$frostc$Compiler$Message$GT(_16, _17);
 *(&local2) = ((org$frostlang$frostc$parser$Parser*) NULL);
@@ -1898,8 +1897,7 @@ _26 = ((frost$core$Object*) _16);
 frost$core$Frost$unref$frost$core$Object$Q(_26);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/HTMLProcessor.frost:91
 _29 = *(&local2);
-FROST_ASSERT(32 == sizeof(org$frostlang$frostc$parser$SyntaxHighlighter));
-_30 = (org$frostlang$frostc$parser$SyntaxHighlighter*) frostObjectAlloc(32, (frost$core$Class*) &org$frostlang$frostc$parser$SyntaxHighlighter$class);
+_30 = (org$frostlang$frostc$parser$SyntaxHighlighter*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$SyntaxHighlighter), (frost$core$Class*) &org$frostlang$frostc$parser$SyntaxHighlighter$class);
 org$frostlang$frostc$parser$SyntaxHighlighter$init(_30);
 _32 = _30;
 _33 = ((frost$core$Object*) _32);
@@ -1933,7 +1931,7 @@ _56 = _55.value;
 _57 = _56 == 0u;
 if (_57) goto block3; else goto block4;
 block4:;
-_59 = (frost$core$Error**) (_52->$data + 0);
+_59 = &_52->$data.$ERROR.field0;
 _60 = *_59;
 _61 = ((frost$core$Object*) _60);
 frost$core$Frost$ref$frost$core$Object$Q(_61);
@@ -1950,7 +1948,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_71);
 *(&local1) = ((frost$threads$MessageQueue*) NULL);
 goto block1;
 block3:;
-_75 = (frost$core$Object**) (_52->$data + 0);
+_75 = &_52->$data.$SUCCESS.field0;
 _76 = *_75;
 _77 = ((frost$core$String*) _76);
 org$frostlang$frostc$parser$Parser$start$frost$io$File$frost$core$Int$frost$core$String(_44, param1, _51, _77);
@@ -1983,8 +1981,7 @@ _101 = _100;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/threads/MessageQueue.frost:89
 // begin inline call to method frost.threads.MessageQueue.pendingMessages():frost.core.Int from MessageQueue.frost:89:31
 // /Users/ethannicholas/Dropbox/Frost/src/frost/threads/MessageQueue.frost:76
-FROST_ASSERT(24 == sizeof(frost$threads$ScopedLock));
-_106 = (frost$threads$ScopedLock*) frostObjectAlloc(24, (frost$core$Class*) &frost$threads$ScopedLock$class);
+_106 = (frost$threads$ScopedLock*) frostObjectAlloc(sizeof(frost$threads$ScopedLock), (frost$core$Class*) &frost$threads$ScopedLock$class);
 _107 = &_101->lock;
 _108 = *_107;
 frost$threads$ScopedLock$init$frost$threads$Lock(_106, _108);
@@ -2072,7 +2069,7 @@ while ($tmp102->$class != (frost$core$Class*) &frost$collections$CollectionView$
 _190 = $tmp102->methods[0];
 _191 = _190(_189);
 frost$core$Int$wrapper* $tmp103;
-$tmp103 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp103 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp103->value = _191;
 _192 = ((frost$core$Object*) $tmp103);
 _193 = ($fn104) _192->$class->vtable[0];
@@ -2102,8 +2099,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_208);
 _210 = _192;
 frost$core$Frost$unref$frost$core$Object$Q(_210);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/HTMLProcessor.frost:101
-FROST_ASSERT(48 == sizeof(frost$core$MutableString));
-_213 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
+_213 = (frost$core$MutableString*) frostObjectAlloc(sizeof(frost$core$MutableString), (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init(_213);
 *(&local6) = ((frost$core$MutableString*) NULL);
 _216 = ((frost$core$Object*) _213);
@@ -2156,7 +2152,7 @@ _255 = _253.value;
 _256 = _254 + _255;
 _257 = (frost$core$Int) {_256};
 frost$core$Int$wrapper* $tmp108;
-$tmp108 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp108 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp108->value = _257;
 _258 = ((frost$core$Object*) $tmp108);
 _259 = ($fn109) _258->$class->vtable[0];
@@ -2282,7 +2278,7 @@ _370 = _369.value;
 _371 = _370 == 0u;
 if (_371) goto block30; else goto block31;
 block31:;
-_373 = (frost$core$Error**) (_366->$data + 0);
+_373 = &_366->$data.$ERROR.field0;
 _374 = *_373;
 _375 = ((frost$core$Object*) _374);
 frost$core$Frost$ref$frost$core$Object$Q(_375);
@@ -2307,7 +2303,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_393);
 *(&local1) = ((frost$threads$MessageQueue*) NULL);
 goto block1;
 block30:;
-_397 = (frost$core$Object**) (_366->$data + 0);
+_397 = &_366->$data.$SUCCESS.field0;
 _398 = *_397;
 _399 = ((frost$io$OutputStream*) _398);
 *(&local9) = ((frost$io$OutputStream*) NULL);
@@ -3185,7 +3181,8 @@ frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$St
 abort(); // unreachable
 
 }
-void org$frostlang$frostc$HTMLProcessor$cleanup(org$frostlang$frostc$HTMLProcessor* param0) {
+void org$frostlang$frostc$HTMLProcessor$cleanup(void* rawSelf) {
+org$frostlang$frostc$HTMLProcessor* param0 = (org$frostlang$frostc$HTMLProcessor*) rawSelf;
 
 frost$core$Object* _1;
 org$frostlang$frostc$Compiler** _3;

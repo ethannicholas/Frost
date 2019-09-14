@@ -13,7 +13,8 @@ org$frostlang$frostc$StubCodeGenerator$_Closure6$class_type org$frostlang$frostc
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x53\x74\x75\x62\x43\x6f\x64\x65\x47\x65\x6e\x65\x72\x61\x74\x6f\x72\x2e\x5f\x43\x6c\x6f\x73\x75\x72\x65\x36", 48, -7049753733025649172, NULL };
 
-void org$frostlang$frostc$StubCodeGenerator$_Closure6$init$org$frostlang$frostc$StubCodeGenerator(org$frostlang$frostc$StubCodeGenerator$_Closure6* param0, org$frostlang$frostc$StubCodeGenerator* param1) {
+void org$frostlang$frostc$StubCodeGenerator$_Closure6$init$org$frostlang$frostc$StubCodeGenerator(void* rawSelf, org$frostlang$frostc$StubCodeGenerator* param1) {
+org$frostlang$frostc$StubCodeGenerator$_Closure6* param0 = (org$frostlang$frostc$StubCodeGenerator$_Closure6*) rawSelf;
 
 frost$core$Object* _1;
 org$frostlang$frostc$StubCodeGenerator** _3;
@@ -32,7 +33,8 @@ _7 = &param0->$self;
 return;
 
 }
-void org$frostlang$frostc$StubCodeGenerator$_Closure6$cleanup(org$frostlang$frostc$StubCodeGenerator$_Closure6* param0) {
+void org$frostlang$frostc$StubCodeGenerator$_Closure6$cleanup(void* rawSelf) {
+org$frostlang$frostc$StubCodeGenerator$_Closure6* param0 = (org$frostlang$frostc$StubCodeGenerator$_Closure6*) rawSelf;
 
 frost$core$Object* _1;
 org$frostlang$frostc$StubCodeGenerator** _3;
@@ -48,7 +50,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_5);
 return;
 
 }
-frost$core$String* org$frostlang$frostc$StubCodeGenerator$_Closure6$$anonymous5$org$frostlang$frostc$Type$R$frost$core$String(org$frostlang$frostc$StubCodeGenerator$_Closure6* param0, org$frostlang$frostc$Type* param1) {
+frost$core$String* org$frostlang$frostc$StubCodeGenerator$_Closure6$$anonymous5$org$frostlang$frostc$Type$R$frost$core$String(void* rawSelf, org$frostlang$frostc$Type* param1) {
+org$frostlang$frostc$StubCodeGenerator$_Closure6* param0 = (org$frostlang$frostc$StubCodeGenerator$_Closure6*) rawSelf;
 
 org$frostlang$frostc$StubCodeGenerator** _1;
 org$frostlang$frostc$StubCodeGenerator* _2;

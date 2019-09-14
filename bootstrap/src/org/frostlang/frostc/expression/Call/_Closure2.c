@@ -27,7 +27,8 @@ static frost$core$String $s4 = { (frost$core$Class*) &frost$core$String$class, -
 static frost$core$String $s5 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x43\x61\x6c\x6c\x2e\x66\x72\x6f\x73\x74", 10, -7895598607751292851, NULL };
 static frost$core$String $s6 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x54\x79\x70\x65\x3f\x20\x74\x6f\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x54\x79\x70\x65", 89, 6559565496330182789, NULL };
 
-void org$frostlang$frostc$expression$Call$_Closure2$init$org$frostlang$frostc$MethodRef$frost$collections$HashMap$LTfrost$core$String$Corg$frostlang$frostc$Type$GT(org$frostlang$frostc$expression$Call$_Closure2* param0, org$frostlang$frostc$MethodRef* param1, frost$collections$HashMap* param2) {
+void org$frostlang$frostc$expression$Call$_Closure2$init$org$frostlang$frostc$MethodRef$frost$collections$HashMap$LTfrost$core$String$Corg$frostlang$frostc$Type$GT(void* rawSelf, org$frostlang$frostc$MethodRef* param1, frost$collections$HashMap* param2) {
+org$frostlang$frostc$expression$Call$_Closure2* param0 = (org$frostlang$frostc$expression$Call$_Closure2*) rawSelf;
 
 frost$core$Object* _1;
 org$frostlang$frostc$MethodRef** _3;
@@ -60,7 +61,8 @@ _16 = &param0->remaps;
 return;
 
 }
-void org$frostlang$frostc$expression$Call$_Closure2$cleanup(org$frostlang$frostc$expression$Call$_Closure2* param0) {
+void org$frostlang$frostc$expression$Call$_Closure2$cleanup(void* rawSelf) {
+org$frostlang$frostc$expression$Call$_Closure2* param0 = (org$frostlang$frostc$expression$Call$_Closure2*) rawSelf;
 
 frost$core$Object* _1;
 org$frostlang$frostc$MethodRef** _3;
@@ -83,7 +85,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_9);
 return;
 
 }
-org$frostlang$frostc$Type* org$frostlang$frostc$expression$Call$_Closure2$$anonymous1$org$frostlang$frostc$MethodDecl$GenericParameter$R$org$frostlang$frostc$Type(org$frostlang$frostc$expression$Call$_Closure2* param0, org$frostlang$frostc$MethodDecl$GenericParameter* param1) {
+org$frostlang$frostc$Type* org$frostlang$frostc$expression$Call$_Closure2$$anonymous1$org$frostlang$frostc$MethodDecl$GenericParameter$R$org$frostlang$frostc$Type(void* rawSelf, org$frostlang$frostc$MethodDecl$GenericParameter* param1) {
+org$frostlang$frostc$expression$Call$_Closure2* param0 = (org$frostlang$frostc$expression$Call$_Closure2*) rawSelf;
 
 frost$collections$HashMap** _1;
 frost$collections$HashMap* _2;

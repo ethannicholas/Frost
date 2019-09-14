@@ -17,7 +17,8 @@ typedef frost$core$Bit (*$fn5)(frost$core$Object*, frost$core$Object*);
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x49\x64\x65\x6e\x74\x69\x74\x79\x53\x65\x74\x2e\x5f\x43\x6c\x6f\x73\x75\x72\x65\x32", 39, 4710045827721624792, NULL };
 
-void frost$collections$IdentitySet$_Closure2$init$$LPfrost$collections$IdentitySet$T$RP$EQ$GT$LPfrost$core$Bit$RP(frost$collections$IdentitySet$_Closure2* param0, frost$core$MutableMethod* param1) {
+void frost$collections$IdentitySet$_Closure2$init$$LPfrost$collections$IdentitySet$T$RP$EQ$GT$LPfrost$core$Bit$RP(void* rawSelf, frost$core$MutableMethod* param1) {
+frost$collections$IdentitySet$_Closure2* param0 = (frost$collections$IdentitySet$_Closure2*) rawSelf;
 
 frost$core$Object* _1;
 frost$core$MutableMethod** _3;
@@ -36,7 +37,8 @@ _7 = &param0->test;
 return;
 
 }
-void frost$collections$IdentitySet$_Closure2$cleanup(frost$collections$IdentitySet$_Closure2* param0) {
+void frost$collections$IdentitySet$_Closure2$cleanup(void* rawSelf) {
+frost$collections$IdentitySet$_Closure2* param0 = (frost$collections$IdentitySet$_Closure2*) rawSelf;
 
 frost$core$Object* _1;
 frost$core$MutableMethod** _3;
@@ -52,7 +54,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_5);
 return;
 
 }
-frost$core$Bit frost$collections$IdentitySet$_Closure2$$anonymous1$frost$collections$IdentitySet$T$frost$collections$IdentitySet$T$R$frost$core$Bit(frost$collections$IdentitySet$_Closure2* param0, frost$core$Object* param1, frost$core$Object* param2) {
+frost$core$Bit frost$collections$IdentitySet$_Closure2$$anonymous1$frost$collections$IdentitySet$T$frost$collections$IdentitySet$T$R$frost$core$Bit(void* rawSelf, frost$core$Object* param1, frost$core$Object* param2) {
+frost$collections$IdentitySet$_Closure2* param0 = (frost$collections$IdentitySet$_Closure2*) rawSelf;
 
 frost$core$Bit local0;
 frost$core$MutableMethod** _1;

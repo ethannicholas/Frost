@@ -141,7 +141,8 @@ static frost$core$String $s123 = { (frost$core$Class*) &frost$core$String$class,
 static frost$core$String $s130 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x0a", 1, -5808579962898102051, NULL };
 static frost$core$String $s131 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x0a", 1, -5808579962898102051, NULL };
 
-frost$core$Error* frost$io$OutputStream$write$frost$core$UInt16$R$frost$core$Error$Q(frost$io$OutputStream* param0, frost$core$UInt16 param1) {
+frost$core$Error* frost$io$OutputStream$write$frost$core$UInt16$R$frost$core$Error$Q(void* rawSelf, frost$core$UInt16 param1) {
+frost$io$OutputStream* param0 = (frost$io$OutputStream*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 frost$io$ByteOrder local1;
@@ -246,7 +247,7 @@ frost$core$Object* _175;
 _3 = &param0->byteOrder;
 _4 = *_3;
 frost$io$ByteOrder$wrapper* $tmp7;
-$tmp7 = (frost$io$ByteOrder$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$io$ByteOrder$wrapperclass);
+$tmp7 = (frost$io$ByteOrder$wrapper*) frostObjectAlloc(sizeof(frost$io$ByteOrder$wrapper), (frost$core$Class*) &frost$io$ByteOrder$wrapperclass);
 $tmp7->value = _4;
 _5 = ((frost$core$Equatable*) $tmp7);
 _6 = _5;
@@ -259,7 +260,7 @@ _12 = *(&local2);
 *(&local1) = _12;
 _15 = *(&local1);
 frost$io$ByteOrder$wrapper* $tmp8;
-$tmp8 = (frost$io$ByteOrder$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$io$ByteOrder$wrapperclass);
+$tmp8 = (frost$io$ByteOrder$wrapper*) frostObjectAlloc(sizeof(frost$io$ByteOrder$wrapper), (frost$core$Class*) &frost$io$ByteOrder$wrapperclass);
 $tmp8->value = _15;
 _16 = ((frost$core$Equatable*) $tmp8);
 ITable* $tmp9 = _6->$class->itable;
@@ -446,7 +447,8 @@ goto block29;
 block29:;
 
 }
-frost$core$Error* frost$io$OutputStream$write$frost$core$UInt32$R$frost$core$Error$Q(frost$io$OutputStream* param0, frost$core$UInt32 param1) {
+frost$core$Error* frost$io$OutputStream$write$frost$core$UInt32$R$frost$core$Error$Q(void* rawSelf, frost$core$UInt32 param1) {
+frost$io$OutputStream* param0 = (frost$io$OutputStream*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 frost$io$ByteOrder local1;
@@ -547,7 +549,7 @@ frost$core$Object* _171;
 _3 = &param0->byteOrder;
 _4 = *_3;
 frost$io$ByteOrder$wrapper* $tmp27;
-$tmp27 = (frost$io$ByteOrder$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$io$ByteOrder$wrapperclass);
+$tmp27 = (frost$io$ByteOrder$wrapper*) frostObjectAlloc(sizeof(frost$io$ByteOrder$wrapper), (frost$core$Class*) &frost$io$ByteOrder$wrapperclass);
 $tmp27->value = _4;
 _5 = ((frost$core$Equatable*) $tmp27);
 _6 = _5;
@@ -560,7 +562,7 @@ _12 = *(&local2);
 *(&local1) = _12;
 _15 = *(&local1);
 frost$io$ByteOrder$wrapper* $tmp28;
-$tmp28 = (frost$io$ByteOrder$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$io$ByteOrder$wrapperclass);
+$tmp28 = (frost$io$ByteOrder$wrapper*) frostObjectAlloc(sizeof(frost$io$ByteOrder$wrapper), (frost$core$Class*) &frost$io$ByteOrder$wrapperclass);
 $tmp28->value = _15;
 _16 = ((frost$core$Equatable*) $tmp28);
 ITable* $tmp29 = _6->$class->itable;
@@ -743,7 +745,8 @@ goto block29;
 block29:;
 
 }
-frost$core$Error* frost$io$OutputStream$write$frost$core$UInt64$R$frost$core$Error$Q(frost$io$OutputStream* param0, frost$core$UInt64 param1) {
+frost$core$Error* frost$io$OutputStream$write$frost$core$UInt64$R$frost$core$Error$Q(void* rawSelf, frost$core$UInt64 param1) {
+frost$io$OutputStream* param0 = (frost$io$OutputStream*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 frost$io$ByteOrder local1;
@@ -844,7 +847,7 @@ frost$core$Object* _171;
 _3 = &param0->byteOrder;
 _4 = *_3;
 frost$io$ByteOrder$wrapper* $tmp47;
-$tmp47 = (frost$io$ByteOrder$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$io$ByteOrder$wrapperclass);
+$tmp47 = (frost$io$ByteOrder$wrapper*) frostObjectAlloc(sizeof(frost$io$ByteOrder$wrapper), (frost$core$Class*) &frost$io$ByteOrder$wrapperclass);
 $tmp47->value = _4;
 _5 = ((frost$core$Equatable*) $tmp47);
 _6 = _5;
@@ -857,7 +860,7 @@ _12 = *(&local2);
 *(&local1) = _12;
 _15 = *(&local1);
 frost$io$ByteOrder$wrapper* $tmp48;
-$tmp48 = (frost$io$ByteOrder$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$io$ByteOrder$wrapperclass);
+$tmp48 = (frost$io$ByteOrder$wrapper*) frostObjectAlloc(sizeof(frost$io$ByteOrder$wrapper), (frost$core$Class*) &frost$io$ByteOrder$wrapperclass);
 $tmp48->value = _15;
 _16 = ((frost$core$Equatable*) $tmp48);
 ITable* $tmp49 = _6->$class->itable;
@@ -1040,7 +1043,8 @@ goto block29;
 block29:;
 
 }
-frost$core$Error* frost$io$OutputStream$write$frost$core$Int8$R$frost$core$Error$Q(frost$io$OutputStream* param0, frost$core$Int8 param1) {
+frost$core$Error* frost$io$OutputStream$write$frost$core$Int8$R$frost$core$Error$Q(void* rawSelf, frost$core$Int8 param1) {
+frost$io$OutputStream* param0 = (frost$io$OutputStream*) rawSelf;
 
 int8_t _3;
 uint8_t _4;
@@ -1064,7 +1068,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_11);
 return _8;
 
 }
-frost$core$Error* frost$io$OutputStream$write$frost$core$Int16$R$frost$core$Error$Q(frost$io$OutputStream* param0, frost$core$Int16 param1) {
+frost$core$Error* frost$io$OutputStream$write$frost$core$Int16$R$frost$core$Error$Q(void* rawSelf, frost$core$Int16 param1) {
+frost$io$OutputStream* param0 = (frost$io$OutputStream*) rawSelf;
 
 int16_t _3;
 uint16_t _4;
@@ -1088,7 +1093,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_11);
 return _8;
 
 }
-frost$core$Error* frost$io$OutputStream$write$frost$core$Int32$R$frost$core$Error$Q(frost$io$OutputStream* param0, frost$core$Int32 param1) {
+frost$core$Error* frost$io$OutputStream$write$frost$core$Int32$R$frost$core$Error$Q(void* rawSelf, frost$core$Int32 param1) {
+frost$io$OutputStream* param0 = (frost$io$OutputStream*) rawSelf;
 
 int32_t _3;
 uint32_t _4;
@@ -1112,7 +1118,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_11);
 return _8;
 
 }
-frost$core$Error* frost$io$OutputStream$write$frost$core$Int64$R$frost$core$Error$Q(frost$io$OutputStream* param0, frost$core$Int64 param1) {
+frost$core$Error* frost$io$OutputStream$write$frost$core$Int64$R$frost$core$Error$Q(void* rawSelf, frost$core$Int64 param1) {
+frost$io$OutputStream* param0 = (frost$io$OutputStream*) rawSelf;
 
 int64_t _3;
 uint64_t _4;
@@ -1136,7 +1143,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_11);
 return _8;
 
 }
-frost$core$Error* frost$io$OutputStream$write$frost$unsafe$Pointer$LTfrost$core$UInt8$GT$frost$core$Int$R$frost$core$Error$Q(frost$io$OutputStream* param0, frost$core$UInt8* param1, frost$core$Int param2) {
+frost$core$Error* frost$io$OutputStream$write$frost$unsafe$Pointer$LTfrost$core$UInt8$GT$frost$core$Int$R$frost$core$Error$Q(void* rawSelf, frost$core$UInt8* param1, frost$core$Int param2) {
+frost$io$OutputStream* param0 = (frost$io$OutputStream*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 frost$core$Int local1;
@@ -1313,7 +1321,8 @@ goto block15;
 block15:;
 
 }
-frost$core$Error* frost$io$OutputStream$write$frost$unsafe$Pointer$LTfrost$core$Int8$GT$frost$core$Int$R$frost$core$Error$Q(frost$io$OutputStream* param0, frost$core$Int8* param1, frost$core$Int param2) {
+frost$core$Error* frost$io$OutputStream$write$frost$unsafe$Pointer$LTfrost$core$Int8$GT$frost$core$Int$R$frost$core$Error$Q(void* rawSelf, frost$core$Int8* param1, frost$core$Int param2) {
+frost$io$OutputStream* param0 = (frost$io$OutputStream*) rawSelf;
 
 frost$core$UInt8* _1;
 $fn74 _2;
@@ -1331,7 +1340,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_6);
 return _3;
 
 }
-frost$core$Error* frost$io$OutputStream$write$frost$unsafe$Pointer$LTfrost$core$Char8$GT$frost$core$Int$R$frost$core$Error$Q(frost$io$OutputStream* param0, frost$core$Char8* param1, frost$core$Int param2) {
+frost$core$Error* frost$io$OutputStream$write$frost$unsafe$Pointer$LTfrost$core$Char8$GT$frost$core$Int$R$frost$core$Error$Q(void* rawSelf, frost$core$Char8* param1, frost$core$Int param2) {
+frost$io$OutputStream* param0 = (frost$io$OutputStream*) rawSelf;
 
 frost$core$UInt8* _1;
 $fn76 _2;
@@ -1349,7 +1359,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_6);
 return _3;
 
 }
-frost$core$Error* frost$io$OutputStream$write$frost$collections$Array$LTfrost$core$UInt8$GT$frost$core$Int$R$frost$core$Error$Q(frost$io$OutputStream* param0, frost$collections$Array* param1, frost$core$Int param2) {
+frost$core$Error* frost$io$OutputStream$write$frost$collections$Array$LTfrost$core$UInt8$GT$frost$core$Int$R$frost$core$Error$Q(void* rawSelf, frost$collections$Array* param1, frost$core$Int param2) {
+frost$io$OutputStream* param0 = (frost$io$OutputStream*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 frost$core$UInt8 local1;
@@ -1487,7 +1498,8 @@ goto block10;
 block10:;
 
 }
-frost$core$Error* frost$io$OutputStream$write$frost$collections$Array$LTfrost$core$Int8$GT$frost$core$Int$R$frost$core$Error$Q(frost$io$OutputStream* param0, frost$collections$Array* param1, frost$core$Int param2) {
+frost$core$Error* frost$io$OutputStream$write$frost$collections$Array$LTfrost$core$Int8$GT$frost$core$Int$R$frost$core$Error$Q(void* rawSelf, frost$collections$Array* param1, frost$core$Int param2) {
+frost$io$OutputStream* param0 = (frost$io$OutputStream*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 frost$core$Int8 local1;
@@ -1641,7 +1653,8 @@ goto block12;
 block12:;
 
 }
-frost$core$Error* frost$io$OutputStream$write$frost$collections$Array$LTfrost$core$Char8$GT$frost$core$Int$R$frost$core$Error$Q(frost$io$OutputStream* param0, frost$collections$Array* param1, frost$core$Int param2) {
+frost$core$Error* frost$io$OutputStream$write$frost$collections$Array$LTfrost$core$Char8$GT$frost$core$Int$R$frost$core$Error$Q(void* rawSelf, frost$collections$Array* param1, frost$core$Int param2) {
+frost$io$OutputStream* param0 = (frost$io$OutputStream*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 frost$core$Char8 local1;
@@ -1779,7 +1792,8 @@ goto block10;
 block10:;
 
 }
-frost$core$Error* frost$io$OutputStream$write$frost$core$Char8$R$frost$core$Error$Q(frost$io$OutputStream* param0, frost$core$Char8 param1) {
+frost$core$Error* frost$io$OutputStream$write$frost$core$Char8$R$frost$core$Error$Q(void* rawSelf, frost$core$Char8 param1) {
+frost$io$OutputStream* param0 = (frost$io$OutputStream*) rawSelf;
 
 uint8_t _1;
 frost$core$UInt8 _2;
@@ -1799,7 +1813,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_7);
 return _4;
 
 }
-frost$core$Error* frost$io$OutputStream$print$frost$core$String$R$frost$core$Error$Q(frost$io$OutputStream* param0, frost$core$String* param1) {
+frost$core$Error* frost$io$OutputStream$print$frost$core$String$R$frost$core$Error$Q(void* rawSelf, frost$core$String* param1) {
+frost$io$OutputStream* param0 = (frost$io$OutputStream*) rawSelf;
 
 frost$core$Char8** _1;
 frost$core$Char8* _2;
@@ -1833,7 +1848,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_17);
 return _9;
 
 }
-frost$core$Error* frost$io$OutputStream$print$frost$core$Object$R$frost$core$Error$Q(frost$io$OutputStream* param0, frost$core$Object* param1) {
+frost$core$Error* frost$io$OutputStream$print$frost$core$Object$R$frost$core$Error$Q(void* rawSelf, frost$core$Object* param1) {
+frost$io$OutputStream* param0 = (frost$io$OutputStream*) rawSelf;
 
 $fn112 _1;
 frost$core$String* _2;
@@ -1856,7 +1872,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_9);
 return _4;
 
 }
-frost$core$Error* frost$io$OutputStream$printLine$frost$core$String$R$frost$core$Error$Q(frost$io$OutputStream* param0, frost$core$String* param1) {
+frost$core$Error* frost$io$OutputStream$printLine$frost$core$String$R$frost$core$Error$Q(void* rawSelf, frost$core$String* param1) {
+frost$io$OutputStream* param0 = (frost$io$OutputStream*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 $fn116 _3;
@@ -1971,7 +1988,8 @@ goto block11;
 block11:;
 
 }
-frost$core$Error* frost$io$OutputStream$printLine$frost$core$Object$R$frost$core$Error$Q(frost$io$OutputStream* param0, frost$core$Object* param1) {
+frost$core$Error* frost$io$OutputStream$printLine$frost$core$Object$R$frost$core$Error$Q(void* rawSelf, frost$core$Object* param1) {
+frost$io$OutputStream* param0 = (frost$io$OutputStream*) rawSelf;
 
 $fn124 _1;
 frost$core$String* _2;
@@ -1994,7 +2012,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_9);
 return _4;
 
 }
-frost$core$Error* frost$io$OutputStream$printLine$R$frost$core$Error$Q(frost$io$OutputStream* param0) {
+frost$core$Error* frost$io$OutputStream$printLine$R$frost$core$Error$Q(void* rawSelf) {
+frost$io$OutputStream* param0 = (frost$io$OutputStream*) rawSelf;
 
 frost$core$String** _1;
 frost$core$String* _2;
@@ -2014,7 +2033,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_7);
 return _4;
 
 }
-frost$core$Error* frost$io$OutputStream$flush$R$frost$core$Error$Q(frost$io$OutputStream* param0) {
+frost$core$Error* frost$io$OutputStream$flush$R$frost$core$Error$Q(void* rawSelf) {
+frost$io$OutputStream* param0 = (frost$io$OutputStream*) rawSelf;
 
 frost$core$Object* _1;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/OutputStream.frost:309
@@ -2023,7 +2043,8 @@ frost$core$Frost$ref$frost$core$Object$Q(_1);
 return ((frost$core$Error*) NULL);
 
 }
-frost$core$Error* frost$io$OutputStream$close$R$frost$core$Error$Q(frost$io$OutputStream* param0) {
+frost$core$Error* frost$io$OutputStream$close$R$frost$core$Error$Q(void* rawSelf) {
+frost$io$OutputStream* param0 = (frost$io$OutputStream*) rawSelf;
 
 frost$core$Object* _1;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/OutputStream.frost:313
@@ -2032,7 +2053,8 @@ frost$core$Frost$ref$frost$core$Object$Q(_1);
 return ((frost$core$Error*) NULL);
 
 }
-void frost$io$OutputStream$init(frost$io$OutputStream* param0) {
+void frost$io$OutputStream$init(void* rawSelf) {
+frost$io$OutputStream* param0 = (frost$io$OutputStream*) rawSelf;
 
 frost$io$ByteOrder local0;
 frost$io$ByteOrder local1;
@@ -2069,7 +2091,8 @@ _19 = &param0->lineEnding;
 return;
 
 }
-void frost$io$OutputStream$cleanup(frost$io$OutputStream* param0) {
+void frost$io$OutputStream$cleanup(void* rawSelf) {
+frost$io$OutputStream* param0 = (frost$io$OutputStream*) rawSelf;
 
 frost$core$Object* _1;
 frost$core$String** _3;

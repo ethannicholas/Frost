@@ -87,8 +87,7 @@ frost$core$Object* _93;
 org$frostlang$frostc$IR$Value* _96;
 frost$core$Object* _97;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/statement/InnerMethod.frost:17
-FROST_ASSERT(40 == sizeof(org$frostlang$frostc$Compiler$TypeContext));
-_1 = (org$frostlang$frostc$Compiler$TypeContext*) frostObjectAlloc(40, (frost$core$Class*) &org$frostlang$frostc$Compiler$TypeContext$class);
+_1 = (org$frostlang$frostc$Compiler$TypeContext*) frostObjectAlloc(sizeof(org$frostlang$frostc$Compiler$TypeContext), (frost$core$Class*) &org$frostlang$frostc$Compiler$TypeContext$class);
 _2 = (frost$core$Int) {1u};
 org$frostlang$frostc$Compiler$TypeContext$init$frost$core$Int(_1, _2);
 _4 = org$frostlang$frostc$expression$Closure$compile$org$frostlang$frostc$Compiler$org$frostlang$frostc$Position$org$frostlang$frostc$MethodDecl$Kind$org$frostlang$frostc$FixedArray$LTorg$frostlang$frostc$ASTNode$GT$org$frostlang$frostc$ASTNode$Q$org$frostlang$frostc$FixedArray$LTorg$frostlang$frostc$ASTNode$GT$org$frostlang$frostc$Compiler$TypeContext$R$org$frostlang$frostc$IR$Value$Q(param0, param1, param2, param4, param5, param6, _1);
@@ -118,15 +117,12 @@ frost$core$Frost$unref$frost$core$Object$Q(_24);
 return;
 block2:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/statement/InnerMethod.frost:22
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_29 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_29 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _30 = (frost$core$Int) {14u};
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_31 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_31 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _32 = (frost$core$Int) {22u};
 org$frostlang$frostc$ASTNode$init$frost$core$Int$org$frostlang$frostc$Position$frost$core$String(_31, _32, param1, param3);
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_34 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_34 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _35 = (frost$core$Int) {26u};
 _36 = *(&local0);
 _37 = _36 != NULL;
@@ -156,8 +152,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_57);
 _59 = ((frost$core$Object*) _29);
 frost$core$Frost$unref$frost$core$Object$Q(_59);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/statement/InnerMethod.frost:24
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_62 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_62 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _63 = (frost$core$Int) {53u};
 _64 = (frost$core$Int) {1u};
 // begin inline call to org.frostlang.frostc.Variable.Kind.init(rv:frost.core.Int):org.frostlang.frostc.Variable.Kind from InnerMethod.frost:24:70
@@ -167,8 +162,7 @@ _67 = &(&local3)->$rawValue;
 _69 = *(&local3);
 *(&local2) = _69;
 _72 = *(&local2);
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_73 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_73 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _74 = _73;
 _75 = (frost$core$Int) {1u};
 frost$collections$Array$init$frost$core$Int(_74, _75);
@@ -198,12 +192,14 @@ frost$core$Frost$unref$frost$core$Object$Q(_97);
 return;
 
 }
-void org$frostlang$frostc$statement$InnerMethod$init(org$frostlang$frostc$statement$InnerMethod* param0) {
+void org$frostlang$frostc$statement$InnerMethod$init(void* rawSelf) {
+org$frostlang$frostc$statement$InnerMethod* param0 = (org$frostlang$frostc$statement$InnerMethod*) rawSelf;
 
 return;
 
 }
-void org$frostlang$frostc$statement$InnerMethod$cleanup(org$frostlang$frostc$statement$InnerMethod* param0) {
+void org$frostlang$frostc$statement$InnerMethod$cleanup(void* rawSelf) {
+org$frostlang$frostc$statement$InnerMethod* param0 = (org$frostlang$frostc$statement$InnerMethod*) rawSelf;
 
 frost$core$Object* _1;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/statement/InnerMethod.frost:12

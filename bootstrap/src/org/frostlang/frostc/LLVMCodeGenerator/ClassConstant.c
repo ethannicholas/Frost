@@ -16,7 +16,8 @@ org$frostlang$frostc$LLVMCodeGenerator$ClassConstant$class_type org$frostlang$fr
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x4c\x4c\x56\x4d\x43\x6f\x64\x65\x47\x65\x6e\x65\x72\x61\x74\x6f\x72\x2e\x43\x6c\x61\x73\x73\x43\x6f\x6e\x73\x74\x61\x6e\x74", 52, 7758253970784930035, NULL };
 
-void org$frostlang$frostc$LLVMCodeGenerator$ClassConstant$init$frost$core$String$frost$core$String(org$frostlang$frostc$LLVMCodeGenerator$ClassConstant* param0, frost$core$String* param1, frost$core$String* param2) {
+void org$frostlang$frostc$LLVMCodeGenerator$ClassConstant$init$frost$core$String$frost$core$String(void* rawSelf, frost$core$String* param1, frost$core$String* param2) {
+org$frostlang$frostc$LLVMCodeGenerator$ClassConstant* param0 = (org$frostlang$frostc$LLVMCodeGenerator$ClassConstant*) rawSelf;
 
 frost$core$Object* _1;
 frost$core$String** _3;
@@ -49,7 +50,8 @@ _16 = &param0->type;
 return;
 
 }
-void org$frostlang$frostc$LLVMCodeGenerator$ClassConstant$cleanup(org$frostlang$frostc$LLVMCodeGenerator$ClassConstant* param0) {
+void org$frostlang$frostc$LLVMCodeGenerator$ClassConstant$cleanup(void* rawSelf) {
+org$frostlang$frostc$LLVMCodeGenerator$ClassConstant* param0 = (org$frostlang$frostc$LLVMCodeGenerator$ClassConstant*) rawSelf;
 
 frost$core$Immutable* _1;
 frost$core$String** _3;

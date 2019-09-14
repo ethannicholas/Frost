@@ -7,7 +7,40 @@ typedef struct frost$core$Class frost$core$Class;
 
 typedef struct org$frostlang$json$Token$Kind {
     frost$core$Int $rawValue;
-    int8_t $data[0];
+    union {
+        struct {
+        } $EOF;
+        struct {
+        } $SHIFTRIGHT;
+        struct {
+        } $REGEX;
+        struct {
+        } $STRING;
+        struct {
+        } $INT;
+        struct {
+        } $REAL;
+        struct {
+        } $WS;
+        struct {
+        } $TRUE;
+        struct {
+        } $FALSE;
+        struct {
+        } $NULL;
+        struct {
+        } $LBRACE;
+        struct {
+        } $RBRACE;
+        struct {
+        } $LBRACKET;
+        struct {
+        } $RBRACKET;
+        struct {
+        } $COMMA;
+        struct {
+        } $COLON;
+    } $data;
 } org$frostlang$json$Token$Kind;
 #include "frost/core/Class.h"
 typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[5]; } org$frostlang$json$Token$Kind$class_type;

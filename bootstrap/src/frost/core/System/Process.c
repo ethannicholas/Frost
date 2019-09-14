@@ -15,7 +15,8 @@ frost$core$System$Process$class_type frost$core$System$Process$class = { (frost$
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x79\x73\x74\x65\x6d\x2e\x50\x72\x6f\x63\x65\x73\x73", 25, 3487741446673138742, NULL };
 
-void frost$core$System$Process$cleanup(frost$core$System$Process* param0) {
+void frost$core$System$Process$cleanup(void* rawSelf) {
+frost$core$System$Process* param0 = (frost$core$System$Process*) rawSelf;
 
 frost$core$Immutable* _3;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/System.frost:63
@@ -26,7 +27,8 @@ frost$core$Immutable$cleanup(_3);
 return;
 
 }
-void frost$core$System$Process$init(frost$core$System$Process* param0) {
+void frost$core$System$Process$init(void* rawSelf) {
+frost$core$System$Process* param0 = (frost$core$System$Process*) rawSelf;
 
 return;
 

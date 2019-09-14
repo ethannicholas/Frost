@@ -285,16 +285,14 @@ _113 = _105;
 _114 = &_113->type;
 _115 = *_114;
 // begin inline call to function org.frostlang.frostc.Compiler.literalType(t:org.frostlang.frostc.Type):org.frostlang.frostc.IR.Value from Identifier.frost:23:44
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:3599
-FROST_ASSERT(48 == sizeof(org$frostlang$frostc$IR$Value));
-_118 = (org$frostlang$frostc$IR$Value*) frostObjectAlloc(48, (frost$core$Class*) &org$frostlang$frostc$IR$Value$class);
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:3482
+_118 = (org$frostlang$frostc$IR$Value*) frostObjectAlloc(sizeof(org$frostlang$frostc$IR$Value), (frost$core$Class*) &org$frostlang$frostc$IR$Value$class);
 _119 = (frost$core$Int) {14u};
-// begin inline call to method org.frostlang.frostc.Type.ClassLiteral(compiler:org.frostlang.frostc.Compiler, t:org.frostlang.frostc.Type):org.frostlang.frostc.Type from Compiler.frost:3599:50
+// begin inline call to method org.frostlang.frostc.Type.ClassLiteral(compiler:org.frostlang.frostc.Compiler, t:org.frostlang.frostc.Type):org.frostlang.frostc.Type from Compiler.frost:3482:50
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:274
 _122 = &param0->CLASS_TYPE;
 _123 = *_122;
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_124 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_124 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _125 = _124;
 _126 = (frost$core$Int) {1u};
 frost$collections$Array$init$frost$core$Int(_125, _126);
@@ -379,12 +377,14 @@ frost$core$Frost$unref$frost$core$Object$Q(_199);
 return ((org$frostlang$frostc$IR$Value*) NULL);
 
 }
-void org$frostlang$frostc$expression$Identifier$init(org$frostlang$frostc$expression$Identifier* param0) {
+void org$frostlang$frostc$expression$Identifier$init(void* rawSelf) {
+org$frostlang$frostc$expression$Identifier* param0 = (org$frostlang$frostc$expression$Identifier*) rawSelf;
 
 return;
 
 }
-void org$frostlang$frostc$expression$Identifier$cleanup(org$frostlang$frostc$expression$Identifier* param0) {
+void org$frostlang$frostc$expression$Identifier$cleanup(void* rawSelf) {
+org$frostlang$frostc$expression$Identifier* param0 = (org$frostlang$frostc$expression$Identifier*) rawSelf;
 
 frost$core$Object* _1;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Identifier.frost:10

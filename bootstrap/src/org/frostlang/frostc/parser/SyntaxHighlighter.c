@@ -73,7 +73,8 @@ static frost$core$String $s49 = { (frost$core$Class*) &frost$core$String$class, 
 static frost$core$String $s52 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x41\x72\x72\x61\x79\x2e\x66\x72\x6f\x73\x74", 11, -1919842861654168654, NULL };
 static frost$core$String $s53 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x5b\x5d\x28\x69\x6e\x64\x65\x78\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x54", 108, 4065685528380894665, NULL };
 
-void org$frostlang$frostc$parser$SyntaxHighlighter$reset(org$frostlang$frostc$parser$SyntaxHighlighter* param0) {
+void org$frostlang$frostc$parser$SyntaxHighlighter$reset(void* rawSelf) {
+org$frostlang$frostc$parser$SyntaxHighlighter* param0 = (org$frostlang$frostc$parser$SyntaxHighlighter*) rawSelf;
 
 frost$core$Int local0;
 frost$core$Int local1;
@@ -394,7 +395,8 @@ frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$St
 abort(); // unreachable
 
 }
-void org$frostlang$frostc$parser$SyntaxHighlighter$open$org$frostlang$frostc$parser$SyntaxHighlighter$Kind(org$frostlang$frostc$parser$SyntaxHighlighter* param0, org$frostlang$frostc$parser$SyntaxHighlighter$Kind param1) {
+void org$frostlang$frostc$parser$SyntaxHighlighter$open$org$frostlang$frostc$parser$SyntaxHighlighter$Kind(void* rawSelf, org$frostlang$frostc$parser$SyntaxHighlighter$Kind param1) {
+org$frostlang$frostc$parser$SyntaxHighlighter* param0 = (org$frostlang$frostc$parser$SyntaxHighlighter*) rawSelf;
 
 frost$collections$Stack** _1;
 frost$collections$Stack* _2;
@@ -410,7 +412,7 @@ _1 = &param0->stack;
 _2 = *_1;
 _3 = _2;
 org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper* $tmp10;
-$tmp10 = (org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapperclass);
+$tmp10 = (org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapperclass);
 $tmp10->value = param1;
 _4 = ((frost$core$Object*) $tmp10);
 // begin inline call to method frost.collections.Stack.push(v:frost.collections.Stack.T) from SyntaxHighlighter.frost:34:19
@@ -425,7 +427,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_13);
 return;
 
 }
-void org$frostlang$frostc$parser$SyntaxHighlighter$close$org$frostlang$frostc$parser$SyntaxHighlighter$Kind(org$frostlang$frostc$parser$SyntaxHighlighter* param0, org$frostlang$frostc$parser$SyntaxHighlighter$Kind param1) {
+void org$frostlang$frostc$parser$SyntaxHighlighter$close$org$frostlang$frostc$parser$SyntaxHighlighter$Kind(void* rawSelf, org$frostlang$frostc$parser$SyntaxHighlighter$Kind param1) {
+org$frostlang$frostc$parser$SyntaxHighlighter* param0 = (org$frostlang$frostc$parser$SyntaxHighlighter*) rawSelf;
 
 frost$collections$Stack** _1;
 frost$collections$Stack* _2;
@@ -664,7 +667,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_121);
 return;
 
 }
-void org$frostlang$frostc$parser$SyntaxHighlighter$add$org$frostlang$frostc$parser$Token$org$frostlang$frostc$parser$SyntaxHighlighter$Kind(org$frostlang$frostc$parser$SyntaxHighlighter* param0, org$frostlang$frostc$parser$Token param1, org$frostlang$frostc$parser$SyntaxHighlighter$Kind param2) {
+void org$frostlang$frostc$parser$SyntaxHighlighter$add$org$frostlang$frostc$parser$Token$org$frostlang$frostc$parser$SyntaxHighlighter$Kind(void* rawSelf, org$frostlang$frostc$parser$Token param1, org$frostlang$frostc$parser$SyntaxHighlighter$Kind param2) {
+org$frostlang$frostc$parser$SyntaxHighlighter* param0 = (org$frostlang$frostc$parser$SyntaxHighlighter*) rawSelf;
 
 frost$collections$Array** _1;
 frost$collections$Array* _2;
@@ -681,15 +685,14 @@ frost$core$Object* _15;
 _1 = &param0->tokens;
 _2 = *_1;
 _3 = _2;
-FROST_ASSERT(32 == sizeof(org$frostlang$frostc$Pair));
-_4 = (org$frostlang$frostc$Pair*) frostObjectAlloc(32, (frost$core$Class*) &org$frostlang$frostc$Pair$class);
+_4 = (org$frostlang$frostc$Pair*) frostObjectAlloc(sizeof(org$frostlang$frostc$Pair), (frost$core$Class*) &org$frostlang$frostc$Pair$class);
 _5 = _4;
 org$frostlang$frostc$parser$Token$wrapper* $tmp25;
-$tmp25 = (org$frostlang$frostc$parser$Token$wrapper*) frostObjectAlloc(72, (frost$core$Class*) &org$frostlang$frostc$parser$Token$wrapperclass);
+$tmp25 = (org$frostlang$frostc$parser$Token$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$wrapperclass);
 $tmp25->value = param1;
 _6 = ((frost$core$Object*) $tmp25);
 org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper* $tmp26;
-$tmp26 = (org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapperclass);
+$tmp26 = (org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$SyntaxHighlighter$Kind$wrapperclass);
 $tmp26->value = param2;
 _7 = ((frost$core$Object*) $tmp26);
 org$frostlang$frostc$Pair$init$org$frostlang$frostc$Pair$A$org$frostlang$frostc$Pair$B(_5, _6, _7);
@@ -704,7 +707,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_15);
 return;
 
 }
-void org$frostlang$frostc$parser$SyntaxHighlighter$add$org$frostlang$frostc$parser$Token(org$frostlang$frostc$parser$SyntaxHighlighter* param0, org$frostlang$frostc$parser$Token param1) {
+void org$frostlang$frostc$parser$SyntaxHighlighter$add$org$frostlang$frostc$parser$Token(void* rawSelf, org$frostlang$frostc$parser$Token param1) {
+org$frostlang$frostc$parser$SyntaxHighlighter* param0 = (org$frostlang$frostc$parser$SyntaxHighlighter*) rawSelf;
 
 org$frostlang$frostc$parser$SyntaxHighlighter$Kind local0;
 org$frostlang$frostc$parser$SyntaxHighlighter$Kind local1;
@@ -2662,7 +2666,8 @@ block15:;
 return;
 
 }
-void org$frostlang$frostc$parser$SyntaxHighlighter$rewind(org$frostlang$frostc$parser$SyntaxHighlighter* param0) {
+void org$frostlang$frostc$parser$SyntaxHighlighter$rewind(void* rawSelf) {
+org$frostlang$frostc$parser$SyntaxHighlighter* param0 = (org$frostlang$frostc$parser$SyntaxHighlighter*) rawSelf;
 
 frost$collections$Array** _1;
 frost$collections$Array* _2;
@@ -2705,7 +2710,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_16);
 return;
 
 }
-void org$frostlang$frostc$parser$SyntaxHighlighter$init(org$frostlang$frostc$parser$SyntaxHighlighter* param0) {
+void org$frostlang$frostc$parser$SyntaxHighlighter$init(void* rawSelf) {
+org$frostlang$frostc$parser$SyntaxHighlighter* param0 = (org$frostlang$frostc$parser$SyntaxHighlighter*) rawSelf;
 
 frost$collections$Stack* _1;
 frost$collections$Stack* _2;
@@ -2724,8 +2730,7 @@ frost$core$Object* _22;
 frost$collections$Array** _24;
 frost$core$Object* _26;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/SyntaxHighlighter.frost:23
-FROST_ASSERT(24 == sizeof(frost$collections$Stack));
-_1 = (frost$collections$Stack*) frostObjectAlloc(24, (frost$core$Class*) &frost$collections$Stack$class);
+_1 = (frost$collections$Stack*) frostObjectAlloc(sizeof(frost$collections$Stack), (frost$core$Class*) &frost$collections$Stack$class);
 _2 = _1;
 frost$collections$Stack$init(_2);
 _4 = ((frost$core$Object*) _1);
@@ -2739,8 +2744,7 @@ _10 = &param0->stack;
 _12 = ((frost$core$Object*) _1);
 frost$core$Frost$unref$frost$core$Object$Q(_12);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/parser/SyntaxHighlighter.frost:26
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_15 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_15 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _16 = _15;
 frost$collections$Array$init(_16);
 _18 = ((frost$core$Object*) _15);
@@ -2756,7 +2760,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_26);
 return;
 
 }
-void org$frostlang$frostc$parser$SyntaxHighlighter$cleanup(org$frostlang$frostc$parser$SyntaxHighlighter* param0) {
+void org$frostlang$frostc$parser$SyntaxHighlighter$cleanup(void* rawSelf) {
+org$frostlang$frostc$parser$SyntaxHighlighter* param0 = (org$frostlang$frostc$parser$SyntaxHighlighter*) rawSelf;
 
 frost$core$Object* _1;
 frost$collections$Stack** _3;

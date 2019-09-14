@@ -17,7 +17,8 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 static frost$core$String $s2 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x3a", 1, -5808597555084153427, NULL };
 static frost$core$String $s3 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "", 0, -3750763034362895579, NULL };
 
-void org$frostlang$frostc$StubCodeGenerator$_Closure10$init$org$frostlang$frostc$StubCodeGenerator(org$frostlang$frostc$StubCodeGenerator$_Closure10* param0, org$frostlang$frostc$StubCodeGenerator* param1) {
+void org$frostlang$frostc$StubCodeGenerator$_Closure10$init$org$frostlang$frostc$StubCodeGenerator(void* rawSelf, org$frostlang$frostc$StubCodeGenerator* param1) {
+org$frostlang$frostc$StubCodeGenerator$_Closure10* param0 = (org$frostlang$frostc$StubCodeGenerator$_Closure10*) rawSelf;
 
 frost$core$Object* _1;
 org$frostlang$frostc$StubCodeGenerator** _3;
@@ -36,7 +37,8 @@ _7 = &param0->$self;
 return;
 
 }
-void org$frostlang$frostc$StubCodeGenerator$_Closure10$cleanup(org$frostlang$frostc$StubCodeGenerator$_Closure10* param0) {
+void org$frostlang$frostc$StubCodeGenerator$_Closure10$cleanup(void* rawSelf) {
+org$frostlang$frostc$StubCodeGenerator$_Closure10* param0 = (org$frostlang$frostc$StubCodeGenerator$_Closure10*) rawSelf;
 
 frost$core$Object* _1;
 org$frostlang$frostc$StubCodeGenerator** _3;
@@ -52,7 +54,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_5);
 return;
 
 }
-frost$core$String* org$frostlang$frostc$StubCodeGenerator$_Closure10$$anonymous9$org$frostlang$frostc$MethodDecl$GenericParameter$R$frost$core$String(org$frostlang$frostc$StubCodeGenerator$_Closure10* param0, org$frostlang$frostc$MethodDecl$GenericParameter* param1) {
+frost$core$String* org$frostlang$frostc$StubCodeGenerator$_Closure10$$anonymous9$org$frostlang$frostc$MethodDecl$GenericParameter$R$frost$core$String(void* rawSelf, org$frostlang$frostc$MethodDecl$GenericParameter* param1) {
+org$frostlang$frostc$StubCodeGenerator$_Closure10* param0 = (org$frostlang$frostc$StubCodeGenerator$_Closure10*) rawSelf;
 
 org$frostlang$frostc$Symbol* _1;
 frost$core$String** _2;

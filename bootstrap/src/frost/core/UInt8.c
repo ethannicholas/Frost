@@ -35,7 +35,7 @@ __attribute__((weak)) frost$core$Object* frost$core$UInt8$$IDX$frost$core$Int$R$
     frost$core$Bit result = frost$core$UInt8$$IDX$frost$core$Int$R$frost$core$Bit(((frost$core$UInt8$wrapper*) p0)->value, p1);
 
     frost$core$Bit$wrapper* $tmp2;
-    $tmp2 = (frost$core$Bit$wrapper*) frostObjectAlloc(17, (frost$core$Class*) &frost$core$Bit$wrapperclass);
+    $tmp2 = (frost$core$Bit$wrapper*) frostObjectAlloc(sizeof(frost$core$Bit$wrapper), (frost$core$Class*) &frost$core$Bit$wrapperclass);
     $tmp2->value = result;
     return ((frost$core$Object*) $tmp2);
 }
@@ -2097,7 +2097,7 @@ uint8_t _2;
 frost$core$UInt8 _3;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/UInt8.frost:395
 _1 = param0.value;
-_2 = !_1;
+_2 = ~_1;
 _3 = (frost$core$UInt8) {_2};
 return _3;
 
@@ -4260,8 +4260,7 @@ frost$collections$ListView* _8;
 frost$core$Object* _9;
 frost$core$Object* _11;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/UInt8.frost:1111
-FROST_ASSERT(32 == sizeof(org$frostlang$frost$UInt8List));
-_1 = (org$frostlang$frost$UInt8List*) frostObjectAlloc(32, (frost$core$Class*) &org$frostlang$frost$UInt8List$class);
+_1 = (org$frostlang$frost$UInt8List*) frostObjectAlloc(sizeof(org$frostlang$frost$UInt8List), (frost$core$Class*) &org$frostlang$frost$UInt8List$class);
 _2 = param0.min;
 _3 = param0.max;
 _4 = (frost$core$UInt8) {1u};
@@ -4283,8 +4282,7 @@ frost$collections$ListView* _3;
 frost$core$Object* _4;
 frost$core$Object* _6;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/UInt8.frost:1116
-FROST_ASSERT(32 == sizeof(org$frostlang$frost$UInt8List));
-_1 = (org$frostlang$frost$UInt8List*) frostObjectAlloc(32, (frost$core$Class*) &org$frostlang$frost$UInt8List$class);
+_1 = (org$frostlang$frost$UInt8List*) frostObjectAlloc(sizeof(org$frostlang$frost$UInt8List), (frost$core$Class*) &org$frostlang$frost$UInt8List$class);
 org$frostlang$frost$UInt8List$init$frost$core$SteppedRange$LTfrost$core$UInt8$Cfrost$core$UInt8$GT(_1, param0);
 _3 = ((frost$collections$ListView*) _1);
 _4 = ((frost$core$Object*) _3);
@@ -4336,7 +4334,7 @@ _5 = _4.value;
 if (_5) goto block3; else goto block2;
 block3:;
 frost$core$UInt8$wrapper* $tmp5;
-$tmp5 = (frost$core$UInt8$wrapper*) frostObjectAlloc(17, (frost$core$Class*) &frost$core$UInt8$wrapperclass);
+$tmp5 = (frost$core$UInt8$wrapper*) frostObjectAlloc(sizeof(frost$core$UInt8$wrapper), (frost$core$Class*) &frost$core$UInt8$wrapperclass);
 $tmp5->value = param0;
 _7 = ((frost$collections$CollectionView*) $tmp5);
 ITable* $tmp6 = _7->$class->itable;
@@ -4400,8 +4398,7 @@ frost$collections$Iterator* _10;
 frost$core$Object* _11;
 frost$core$Object* _13;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/UInt8.frost:1138
-FROST_ASSERT(32 == sizeof(org$frostlang$frost$IntBitIterator));
-_1 = (org$frostlang$frost$IntBitIterator*) frostObjectAlloc(32, (frost$core$Class*) &org$frostlang$frost$IntBitIterator$class);
+_1 = (org$frostlang$frost$IntBitIterator*) frostObjectAlloc(sizeof(org$frostlang$frost$IntBitIterator), (frost$core$Class*) &org$frostlang$frost$IntBitIterator$class);
 // begin inline call to function frost.core.UInt8.get_asUInt64():frost.core.UInt64 from UInt8.frost:1138:55
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/UInt8.frost:1208
 _4 = param0.value;
@@ -4842,7 +4839,7 @@ _1 = (frost$core$Int) {3u};
 _4 = *(&local0);
 _5 = frost$core$Int64$init$frost$core$Int(_4);
 _6 = _5.value;
-_7 = ((frost$core$Char8*) frostAlloc(_6 * 1));
+_7 = ((frost$core$Char8*) frostAlloc(_6 * sizeof(frost$core$Char8)));
 *(&local1) = _7;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/UInt8.frost:1228
 _10 = *(&local0);
@@ -5087,8 +5084,7 @@ _243 = (frost$core$Int) {_242};
 goto block16;
 block17:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/UInt8.frost:1252
-FROST_ASSERT(48 == sizeof(frost$core$String));
-_247 = (frost$core$String*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$String$class);
+_247 = (frost$core$String*) frostObjectAlloc(sizeof(frost$core$String), (frost$core$Class*) &frost$core$String$class);
 _248 = *(&local1);
 _249 = *(&local4);
 frost$core$String$init$frost$unsafe$Pointer$LTfrost$core$Char8$GT$frost$core$Int(_247, _248, _249);

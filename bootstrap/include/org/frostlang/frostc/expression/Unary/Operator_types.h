@@ -7,7 +7,16 @@ typedef struct frost$core$Class frost$core$Class;
 
 typedef struct org$frostlang$frostc$expression$Unary$Operator {
     frost$core$Int $rawValue;
-    int8_t $data[0];
+    union {
+        struct {
+        } $NOT;
+        struct {
+        } $BITWISENOT;
+        struct {
+        } $NEGATE;
+        struct {
+        } $NONNULL;
+    } $data;
 } org$frostlang$frostc$expression$Unary$Operator;
 #include "frost/core/Class.h"
 typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[5]; } org$frostlang$frostc$expression$Unary$Operator$class_type;

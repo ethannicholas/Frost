@@ -3807,7 +3807,8 @@ static frost$core$String $s4261 = { (frost$core$Class*) &frost$core$String$class
 static frost$core$String $s4262 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x45\x72\x72\x6f\x72\x3f\x20\x74\x6f\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x45\x72\x72\x6f\x72", 71, 9037405806934484915, NULL };
 static frost$core$String $s4264 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x4c\x4c\x56\x4d\x43\x6f\x64\x65\x47\x65\x6e\x65\x72\x61\x74\x6f\x72\x2e\x66\x72\x6f\x73\x74", 23, -8650323694612132486, NULL };
 
-void org$frostlang$frostc$LLVMCodeGenerator$init$frost$core$String$frost$io$OutputStream(org$frostlang$frostc$LLVMCodeGenerator* param0, frost$core$String* param1, frost$io$OutputStream* param2) {
+void org$frostlang$frostc$LLVMCodeGenerator$init$frost$core$String$frost$io$OutputStream(void* rawSelf, frost$core$String* param1, frost$io$OutputStream* param2) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 frost$core$Object* _1;
@@ -4119,8 +4120,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_5);
 _7 = &param0->INT_CLASS;
 *_7 = &$s12;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:48
-FROST_ASSERT(32 == sizeof(frost$core$Weak));
-_10 = (frost$core$Weak*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$Weak$class);
+_10 = (frost$core$Weak*) frostObjectAlloc(sizeof(frost$core$Weak), (frost$core$Class*) &frost$core$Weak$class);
 _11 = _10;
 _12 = ((frost$core$Object*) ((org$frostlang$frostc$Compiler*) NULL));
 frost$core$Weak$init$frost$core$Weak$T$Q(_11, _12);
@@ -4135,8 +4135,7 @@ _20 = &param0->compiler;
 _22 = ((frost$core$Object*) _10);
 frost$core$Frost$unref$frost$core$Object$Q(_22);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:50
-FROST_ASSERT(40 == sizeof(frost$io$MemoryOutputStream));
-_25 = (frost$io$MemoryOutputStream*) frostObjectAlloc(40, (frost$core$Class*) &frost$io$MemoryOutputStream$class);
+_25 = (frost$io$MemoryOutputStream*) frostObjectAlloc(sizeof(frost$io$MemoryOutputStream), (frost$core$Class*) &frost$io$MemoryOutputStream$class);
 frost$io$MemoryOutputStream$init(_25);
 _27 = ((frost$core$Object*) _25);
 frost$core$Frost$ref$frost$core$Object$Q(_27);
@@ -4149,8 +4148,7 @@ _33 = &param0->declarations;
 _35 = ((frost$core$Object*) _25);
 frost$core$Frost$unref$frost$core$Object$Q(_35);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:52
-FROST_ASSERT(40 == sizeof(frost$io$MemoryOutputStream));
-_38 = (frost$io$MemoryOutputStream*) frostObjectAlloc(40, (frost$core$Class*) &frost$io$MemoryOutputStream$class);
+_38 = (frost$io$MemoryOutputStream*) frostObjectAlloc(sizeof(frost$io$MemoryOutputStream), (frost$core$Class*) &frost$io$MemoryOutputStream$class);
 frost$io$MemoryOutputStream$init(_38);
 _40 = ((frost$core$Object*) _38);
 frost$core$Frost$ref$frost$core$Object$Q(_40);
@@ -4163,8 +4161,7 @@ _46 = &param0->types;
 _48 = ((frost$core$Object*) _38);
 frost$core$Frost$unref$frost$core$Object$Q(_48);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:54
-FROST_ASSERT(40 == sizeof(frost$io$MemoryOutputStream));
-_51 = (frost$io$MemoryOutputStream*) frostObjectAlloc(40, (frost$core$Class*) &frost$io$MemoryOutputStream$class);
+_51 = (frost$io$MemoryOutputStream*) frostObjectAlloc(sizeof(frost$io$MemoryOutputStream), (frost$core$Class*) &frost$io$MemoryOutputStream$class);
 frost$io$MemoryOutputStream$init(_51);
 _53 = ((frost$core$Object*) _51);
 frost$core$Frost$ref$frost$core$Object$Q(_53);
@@ -4177,8 +4174,7 @@ _59 = &param0->methods;
 _61 = ((frost$core$Object*) _51);
 frost$core$Frost$unref$frost$core$Object$Q(_61);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:56
-FROST_ASSERT(40 == sizeof(frost$io$MemoryOutputStream));
-_64 = (frost$io$MemoryOutputStream*) frostObjectAlloc(40, (frost$core$Class*) &frost$io$MemoryOutputStream$class);
+_64 = (frost$io$MemoryOutputStream*) frostObjectAlloc(sizeof(frost$io$MemoryOutputStream), (frost$core$Class*) &frost$io$MemoryOutputStream$class);
 frost$io$MemoryOutputStream$init(_64);
 _66 = ((frost$core$Object*) _64);
 frost$core$Frost$ref$frost$core$Object$Q(_66);
@@ -4191,8 +4187,7 @@ _72 = &param0->methodHeader;
 _74 = ((frost$core$Object*) _64);
 frost$core$Frost$unref$frost$core$Object$Q(_74);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:58
-FROST_ASSERT(40 == sizeof(frost$io$MemoryOutputStream));
-_77 = (frost$io$MemoryOutputStream*) frostObjectAlloc(40, (frost$core$Class*) &frost$io$MemoryOutputStream$class);
+_77 = (frost$io$MemoryOutputStream*) frostObjectAlloc(sizeof(frost$io$MemoryOutputStream), (frost$core$Class*) &frost$io$MemoryOutputStream$class);
 frost$io$MemoryOutputStream$init(_77);
 _79 = ((frost$core$Object*) _77);
 frost$core$Frost$ref$frost$core$Object$Q(_79);
@@ -4205,8 +4200,7 @@ _85 = &param0->shims;
 _87 = ((frost$core$Object*) _77);
 frost$core$Frost$unref$frost$core$Object$Q(_87);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:60
-FROST_ASSERT(40 == sizeof(frost$io$MemoryOutputStream));
-_90 = (frost$io$MemoryOutputStream*) frostObjectAlloc(40, (frost$core$Class*) &frost$io$MemoryOutputStream$class);
+_90 = (frost$io$MemoryOutputStream*) frostObjectAlloc(sizeof(frost$io$MemoryOutputStream), (frost$core$Class*) &frost$io$MemoryOutputStream$class);
 frost$io$MemoryOutputStream$init(_90);
 _92 = ((frost$core$Object*) _90);
 frost$core$Frost$ref$frost$core$Object$Q(_92);
@@ -4219,8 +4213,7 @@ _98 = &param0->strings;
 _100 = ((frost$core$Object*) _90);
 frost$core$Frost$unref$frost$core$Object$Q(_100);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:62
-FROST_ASSERT(40 == sizeof(frost$io$MemoryOutputStream));
-_103 = (frost$io$MemoryOutputStream*) frostObjectAlloc(40, (frost$core$Class*) &frost$io$MemoryOutputStream$class);
+_103 = (frost$io$MemoryOutputStream*) frostObjectAlloc(sizeof(frost$io$MemoryOutputStream), (frost$core$Class*) &frost$io$MemoryOutputStream$class);
 frost$io$MemoryOutputStream$init(_103);
 _105 = ((frost$core$Object*) _103);
 frost$core$Frost$ref$frost$core$Object$Q(_105);
@@ -4233,8 +4226,7 @@ _111 = &param0->metadata;
 _113 = ((frost$core$Object*) _103);
 frost$core$Frost$unref$frost$core$Object$Q(_113);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:64
-FROST_ASSERT(24 == sizeof(frost$collections$HashSet));
-_116 = (frost$collections$HashSet*) frostObjectAlloc(24, (frost$core$Class*) &frost$collections$HashSet$class);
+_116 = (frost$collections$HashSet*) frostObjectAlloc(sizeof(frost$collections$HashSet), (frost$core$Class*) &frost$collections$HashSet$class);
 _117 = _116;
 frost$collections$HashSet$init(_117);
 _119 = ((frost$core$Object*) _116);
@@ -4248,8 +4240,7 @@ _125 = &param0->declared;
 _127 = ((frost$core$Object*) _116);
 frost$core$Frost$unref$frost$core$Object$Q(_127);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:66
-FROST_ASSERT(24 == sizeof(frost$collections$HashSet));
-_130 = (frost$collections$HashSet*) frostObjectAlloc(24, (frost$core$Class*) &frost$collections$HashSet$class);
+_130 = (frost$collections$HashSet*) frostObjectAlloc(sizeof(frost$collections$HashSet), (frost$core$Class*) &frost$collections$HashSet$class);
 _131 = _130;
 frost$collections$HashSet$init(_131);
 _133 = ((frost$core$Object*) _130);
@@ -4263,8 +4254,7 @@ _139 = &param0->writtenTypes;
 _141 = ((frost$core$Object*) _130);
 frost$core$Frost$unref$frost$core$Object$Q(_141);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:68
-FROST_ASSERT(24 == sizeof(frost$collections$HashSet));
-_144 = (frost$collections$HashSet*) frostObjectAlloc(24, (frost$core$Class*) &frost$collections$HashSet$class);
+_144 = (frost$collections$HashSet*) frostObjectAlloc(sizeof(frost$collections$HashSet), (frost$core$Class*) &frost$collections$HashSet$class);
 _145 = _144;
 frost$collections$HashSet$init(_145);
 _147 = ((frost$core$Object*) _144);
@@ -4278,8 +4268,7 @@ _153 = &param0->writtenWrappers;
 _155 = ((frost$core$Object*) _144);
 frost$core$Frost$unref$frost$core$Object$Q(_155);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:70
-FROST_ASSERT(56 == sizeof(frost$collections$HashMap));
-_158 = (frost$collections$HashMap*) frostObjectAlloc(56, (frost$core$Class*) &frost$collections$HashMap$class);
+_158 = (frost$collections$HashMap*) frostObjectAlloc(sizeof(frost$collections$HashMap), (frost$core$Class*) &frost$collections$HashMap$class);
 _159 = _158;
 frost$collections$HashMap$init(_159);
 _161 = ((frost$core$Object*) _158);
@@ -4327,8 +4316,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_201);
 _203 = &param0->currentBlock;
 *_203 = &$s16;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:86
-FROST_ASSERT(56 == sizeof(frost$collections$IdentityMap));
-_206 = (frost$collections$IdentityMap*) frostObjectAlloc(56, (frost$core$Class*) &frost$collections$IdentityMap$class);
+_206 = (frost$collections$IdentityMap*) frostObjectAlloc(sizeof(frost$collections$IdentityMap), (frost$core$Class*) &frost$collections$IdentityMap$class);
 _207 = _206;
 frost$collections$IdentityMap$init(_207);
 _209 = ((frost$core$Object*) _206);
@@ -4342,8 +4330,7 @@ _215 = &param0->sizes;
 _217 = ((frost$core$Object*) _206);
 frost$core$Frost$unref$frost$core$Object$Q(_217);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:88
-FROST_ASSERT(56 == sizeof(frost$collections$IdentityMap));
-_220 = (frost$collections$IdentityMap*) frostObjectAlloc(56, (frost$core$Class*) &frost$collections$IdentityMap$class);
+_220 = (frost$collections$IdentityMap*) frostObjectAlloc(sizeof(frost$collections$IdentityMap), (frost$core$Class*) &frost$collections$IdentityMap$class);
 _221 = _220;
 frost$collections$IdentityMap$init(_221);
 _223 = ((frost$core$Object*) _220);
@@ -4357,8 +4344,7 @@ _229 = &param0->alignments;
 _231 = ((frost$core$Object*) _220);
 frost$core$Frost$unref$frost$core$Object$Q(_231);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:90
-FROST_ASSERT(56 == sizeof(frost$collections$IdentityMap));
-_234 = (frost$collections$IdentityMap*) frostObjectAlloc(56, (frost$core$Class*) &frost$collections$IdentityMap$class);
+_234 = (frost$collections$IdentityMap*) frostObjectAlloc(sizeof(frost$collections$IdentityMap), (frost$core$Class*) &frost$collections$IdentityMap$class);
 _235 = _234;
 frost$collections$IdentityMap$init(_235);
 _237 = ((frost$core$Object*) _234);
@@ -4372,8 +4358,7 @@ _243 = &param0->choiceDataSizes;
 _245 = ((frost$core$Object*) _234);
 frost$core$Frost$unref$frost$core$Object$Q(_245);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:92
-FROST_ASSERT(56 == sizeof(frost$collections$IdentityMap));
-_248 = (frost$collections$IdentityMap*) frostObjectAlloc(56, (frost$core$Class*) &frost$collections$IdentityMap$class);
+_248 = (frost$collections$IdentityMap*) frostObjectAlloc(sizeof(frost$collections$IdentityMap), (frost$core$Class*) &frost$collections$IdentityMap$class);
 _249 = _248;
 frost$collections$IdentityMap$init(_249);
 _251 = ((frost$core$Object*) _248);
@@ -4387,8 +4372,7 @@ _257 = &param0->methodShims;
 _259 = ((frost$core$Object*) _248);
 frost$core$Frost$unref$frost$core$Object$Q(_259);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:94
-FROST_ASSERT(56 == sizeof(frost$collections$IdentityMap));
-_262 = (frost$collections$IdentityMap*) frostObjectAlloc(56, (frost$core$Class*) &frost$collections$IdentityMap$class);
+_262 = (frost$collections$IdentityMap*) frostObjectAlloc(sizeof(frost$collections$IdentityMap), (frost$core$Class*) &frost$collections$IdentityMap$class);
 _263 = _262;
 frost$collections$IdentityMap$init(_263);
 _265 = ((frost$core$Object*) _262);
@@ -4402,8 +4386,7 @@ _271 = &param0->nameCache;
 _273 = ((frost$core$Object*) _262);
 frost$core$Frost$unref$frost$core$Object$Q(_273);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:96
-FROST_ASSERT(56 == sizeof(frost$collections$IdentityMap));
-_276 = (frost$collections$IdentityMap*) frostObjectAlloc(56, (frost$core$Class*) &frost$collections$IdentityMap$class);
+_276 = (frost$collections$IdentityMap*) frostObjectAlloc(sizeof(frost$collections$IdentityMap), (frost$core$Class*) &frost$collections$IdentityMap$class);
 _277 = _276;
 frost$collections$IdentityMap$init(_277);
 _279 = ((frost$core$Object*) _276);
@@ -4715,7 +4698,8 @@ frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$St
 abort(); // unreachable
 
 }
-void org$frostlang$frostc$LLVMCodeGenerator$setCompiler$org$frostlang$frostc$Compiler(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$Compiler* param1) {
+void org$frostlang$frostc$LLVMCodeGenerator$setCompiler$org$frostlang$frostc$Compiler(void* rawSelf, org$frostlang$frostc$Compiler* param1) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 org$frostlang$frostc$Compiler* _1;
 frost$core$Weak* _2;
@@ -4729,8 +4713,7 @@ frost$core$Weak** _12;
 frost$core$Object* _14;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:121
 _1 = param1;
-FROST_ASSERT(32 == sizeof(frost$core$Weak));
-_2 = (frost$core$Weak*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$Weak$class);
+_2 = (frost$core$Weak*) frostObjectAlloc(sizeof(frost$core$Weak), (frost$core$Class*) &frost$core$Weak$class);
 _3 = _2;
 _4 = ((frost$core$Object*) _1);
 frost$core$Weak$init$frost$core$Weak$T$Q(_3, _4);
@@ -4747,7 +4730,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_14);
 return;
 
 }
-void org$frostlang$frostc$LLVMCodeGenerator$finish(org$frostlang$frostc$LLVMCodeGenerator* param0) {
+void org$frostlang$frostc$LLVMCodeGenerator$finish(void* rawSelf) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 frost$core$Weak** _3;
@@ -5276,7 +5260,8 @@ frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$St
 abort(); // unreachable
 
 }
-frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$name$org$frostlang$frostc$IR$Statement$ID$R$frost$core$String(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$IR$Statement$ID param1) {
+frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$name$org$frostlang$frostc$IR$Statement$ID$R$frost$core$String(void* rawSelf, org$frostlang$frostc$IR$Statement$ID param1) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Object* _1;
 $fn98 _4;
@@ -5292,7 +5277,7 @@ frost$core$Object* _19;
 frost$core$Object* _21;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:143
 org$frostlang$frostc$IR$Statement$ID$wrapper* $tmp99;
-$tmp99 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
+$tmp99 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$IR$Statement$ID$wrapper), (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
 $tmp99->value = param1;
 _1 = ((frost$core$Object*) $tmp99);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:143:16
@@ -5318,7 +5303,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_21);
 return _14;
 
 }
-frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$nextVar$R$frost$core$String(org$frostlang$frostc$LLVMCodeGenerator* param0) {
+frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$nextVar$R$frost$core$String(void* rawSelf) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Int* _1;
 frost$core$Int _2;
@@ -5356,7 +5342,7 @@ _8 = &param0->varCount;
 _11 = &param0->varCount;
 _12 = *_11;
 frost$core$Int$wrapper* $tmp104;
-$tmp104 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp104 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp104->value = _12;
 _13 = ((frost$core$Object*) $tmp104);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:148:16
@@ -5382,7 +5368,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_33);
 return _26;
 
 }
-frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$nextLabel$R$frost$core$String(org$frostlang$frostc$LLVMCodeGenerator* param0) {
+frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$nextLabel$R$frost$core$String(void* rawSelf) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Int* _1;
 frost$core$Int _2;
@@ -5420,7 +5407,7 @@ _8 = &param0->labelCount;
 _11 = &param0->labelCount;
 _12 = *_11;
 frost$core$Int$wrapper* $tmp109;
-$tmp109 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp109 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp109->value = _12;
 _13 = ((frost$core$Object*) $tmp109);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:153:16
@@ -5446,7 +5433,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_33);
 return _26;
 
 }
-frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$nextMetadata$R$frost$core$String(org$frostlang$frostc$LLVMCodeGenerator* param0) {
+frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$nextMetadata$R$frost$core$String(void* rawSelf) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Int* _1;
 frost$core$Int _2;
@@ -5484,7 +5472,7 @@ _8 = &param0->metadataCount;
 _11 = &param0->metadataCount;
 _12 = *_11;
 frost$core$Int$wrapper* $tmp114;
-$tmp114 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp114 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp114->value = _12;
 _13 = ((frost$core$Object*) $tmp114);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:158:16
@@ -5510,7 +5498,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_33);
 return _26;
 
 }
-void org$frostlang$frostc$LLVMCodeGenerator$createBlock$frost$core$String$frost$io$OutputStream(org$frostlang$frostc$LLVMCodeGenerator* param0, frost$core$String* param1, frost$io$OutputStream* param2) {
+void org$frostlang$frostc$LLVMCodeGenerator$createBlock$frost$core$String$frost$io$OutputStream(void* rawSelf, frost$core$String* param1, frost$io$OutputStream* param2) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 frost$core$String* _3;
@@ -5605,7 +5594,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_54);
 return;
 
 }
-frost$core$Int org$frostlang$frostc$LLVMCodeGenerator$fieldSize$org$frostlang$frostc$Type$R$frost$core$Int(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$Type* param1) {
+frost$core$Int org$frostlang$frostc$LLVMCodeGenerator$fieldSize$org$frostlang$frostc$Type$R$frost$core$Int(void* rawSelf, org$frostlang$frostc$Type* param1) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Bit local0;
 frost$core$Bit local1;
@@ -6155,14 +6145,14 @@ block13:;
 _71 = &param1->typeKind;
 _72 = *_71;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp142;
-$tmp142 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp142 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp142->value = _72;
 _73 = ((frost$core$Equatable*) $tmp142);
 _74 = _73;
 _75 = &_59->typeKind;
 _76 = *_75;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp143;
-$tmp143 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp143 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp143->value = _76;
 _77 = ((frost$core$Equatable*) $tmp143);
 ITable* $tmp144 = _74->$class->itable;
@@ -6337,14 +6327,14 @@ block41:;
 _225 = &param1->typeKind;
 _226 = *_225;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp155;
-$tmp155 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp155 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp155->value = _226;
 _227 = ((frost$core$Equatable*) $tmp155);
 _228 = _227;
 _229 = &_213->typeKind;
 _230 = *_229;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp156;
-$tmp156 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp156 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp156->value = _230;
 _231 = ((frost$core$Equatable*) $tmp156);
 ITable* $tmp157 = _228->$class->itable;
@@ -6724,14 +6714,14 @@ block97:;
 _564 = &_519->typeKind;
 _565 = *_564;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp183;
-$tmp183 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp183 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp183->value = _565;
 _566 = ((frost$core$Equatable*) $tmp183);
 _567 = _566;
 _568 = &_552->typeKind;
 _569 = *_568;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp184;
-$tmp184 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp184 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp184->value = _569;
 _570 = ((frost$core$Equatable*) $tmp184);
 ITable* $tmp185 = _567->$class->itable;
@@ -6870,7 +6860,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_689);
 _692 = &param1->typeKind;
 _693 = *_692;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp189;
-$tmp189 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp189 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp189->value = _693;
 _694 = ((frost$core$Equatable*) $tmp189);
 _695 = _694;
@@ -6883,7 +6873,7 @@ _701 = *(&local9);
 *(&local8) = _701;
 _704 = *(&local8);
 org$frostlang$frostc$Type$Kind$wrapper* $tmp190;
-$tmp190 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp190 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp190->value = _704;
 _705 = ((frost$core$Equatable*) $tmp190);
 ITable* $tmp191 = _695->$class->itable;
@@ -6960,7 +6950,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_768);
 return _766;
 
 }
-frost$core$Int org$frostlang$frostc$LLVMCodeGenerator$alignment$org$frostlang$frostc$Type$R$frost$core$Int(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$Type* param1) {
+frost$core$Int org$frostlang$frostc$LLVMCodeGenerator$alignment$org$frostlang$frostc$Type$R$frost$core$Int(void* rawSelf, org$frostlang$frostc$Type* param1) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 org$frostlang$frostc$ClassDecl* local0 = NULL;
 frost$core$Int$nullable local1;
@@ -7719,14 +7710,14 @@ block73:;
 _405 = &_360->typeKind;
 _406 = *_405;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp231;
-$tmp231 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp231 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp231->value = _406;
 _407 = ((frost$core$Equatable*) $tmp231);
 _408 = _407;
 _409 = &_393->typeKind;
 _410 = *_409;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp232;
-$tmp232 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp232 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp232->value = _410;
 _411 = ((frost$core$Equatable*) $tmp232);
 ITable* $tmp233 = _408->$class->itable;
@@ -7843,7 +7834,7 @@ _505 = _497;
 _506 = ((frost$core$Object*) _505);
 _507 = *(&local2);
 frost$core$Int$wrapper* $tmp236;
-$tmp236 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp236 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp236->value = _507;
 _508 = ((frost$core$Object*) $tmp236);
 frost$collections$IdentityMap$$IDXEQ$frost$collections$IdentityMap$K$frost$collections$IdentityMap$V(_496, _506, _508);
@@ -7858,7 +7849,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_515);
 return _513;
 
 }
-frost$core$Int org$frostlang$frostc$LLVMCodeGenerator$sizeOf$org$frostlang$frostc$Type$R$frost$core$Int(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$Type* param1) {
+frost$core$Int org$frostlang$frostc$LLVMCodeGenerator$sizeOf$org$frostlang$frostc$Type$R$frost$core$Int(void* rawSelf, org$frostlang$frostc$Type* param1) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 org$frostlang$frostc$ClassDecl* local0 = NULL;
 org$frostlang$frostc$Compiler$Resolution local1;
@@ -8376,7 +8368,7 @@ _75 = _67;
 _76 = &_75->resolved;
 _77 = *_76;
 org$frostlang$frostc$Compiler$Resolution$wrapper* $tmp252;
-$tmp252 = (org$frostlang$frostc$Compiler$Resolution$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Compiler$Resolution$wrapperclass);
+$tmp252 = (org$frostlang$frostc$Compiler$Resolution$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Compiler$Resolution$wrapper), (frost$core$Class*) &org$frostlang$frostc$Compiler$Resolution$wrapperclass);
 $tmp252->value = _77;
 _78 = ((frost$core$Equatable*) $tmp252);
 _79 = _78;
@@ -8389,7 +8381,7 @@ _85 = *(&local2);
 *(&local1) = _85;
 _88 = *(&local1);
 org$frostlang$frostc$Compiler$Resolution$wrapper* $tmp253;
-$tmp253 = (org$frostlang$frostc$Compiler$Resolution$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Compiler$Resolution$wrapperclass);
+$tmp253 = (org$frostlang$frostc$Compiler$Resolution$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Compiler$Resolution$wrapper), (frost$core$Class*) &org$frostlang$frostc$Compiler$Resolution$wrapperclass);
 $tmp253->value = _88;
 _89 = ((frost$core$Equatable*) $tmp253);
 ITable* $tmp254 = _79->$class->itable;
@@ -8694,14 +8686,14 @@ block59:;
 _347 = &_302->typeKind;
 _348 = *_347;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp281;
-$tmp281 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp281 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp281->value = _348;
 _349 = ((frost$core$Equatable*) $tmp281);
 _350 = _349;
 _351 = &_335->typeKind;
 _352 = *_351;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp282;
-$tmp282 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp282 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp282->value = _352;
 _353 = ((frost$core$Equatable*) $tmp282);
 ITable* $tmp283 = _350->$class->itable;
@@ -8848,7 +8840,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_486);
 _489 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_481, &$s290);
 _490 = *(&local4);
 frost$core$Int$wrapper* $tmp291;
-$tmp291 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp291 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp291->value = _490;
 _491 = ((frost$core$Object*) $tmp291);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:295:25
@@ -8961,7 +8953,7 @@ block77:;
 _592 = &param1->typeKind;
 _593 = *_592;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp300;
-$tmp300 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp300 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp300->value = _593;
 _594 = ((frost$core$Equatable*) $tmp300);
 _595 = _594;
@@ -8974,7 +8966,7 @@ _601 = *(&local9);
 *(&local8) = _601;
 _604 = *(&local8);
 org$frostlang$frostc$Type$Kind$wrapper* $tmp301;
-$tmp301 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp301 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp301->value = _604;
 _605 = ((frost$core$Equatable*) $tmp301);
 ITable* $tmp302 = _595->$class->itable;
@@ -9060,7 +9052,7 @@ _677 = _669;
 _678 = ((frost$core$Object*) _677);
 _679 = *(&local4);
 frost$core$Int$wrapper* $tmp305;
-$tmp305 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp305 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp305->value = _679;
 _680 = ((frost$core$Object*) $tmp305);
 frost$collections$IdentityMap$$IDXEQ$frost$collections$IdentityMap$K$frost$collections$IdentityMap$V(_668, _678, _680);
@@ -9075,7 +9067,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_687);
 return _685;
 
 }
-frost$core$Int org$frostlang$frostc$LLVMCodeGenerator$stride$org$frostlang$frostc$Type$R$frost$core$Int(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$Type* param1) {
+frost$core$Int org$frostlang$frostc$LLVMCodeGenerator$stride$org$frostlang$frostc$Type$R$frost$core$Int(void* rawSelf, org$frostlang$frostc$Type* param1) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Int _1;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:311
@@ -9083,7 +9076,8 @@ _1 = org$frostlang$frostc$LLVMCodeGenerator$fieldSize$org$frostlang$frostc$Type$
 return _1;
 
 }
-frost$core$Int org$frostlang$frostc$LLVMCodeGenerator$sizeOfWrapper$org$frostlang$frostc$Type$R$frost$core$Int(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$Type* param1) {
+frost$core$Int org$frostlang$frostc$LLVMCodeGenerator$sizeOfWrapper$org$frostlang$frostc$Type$R$frost$core$Int(void* rawSelf, org$frostlang$frostc$Type* param1) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 org$frostlang$frostc$ClassDecl* local0 = NULL;
 frost$core$Bit local1;
@@ -9690,14 +9684,14 @@ block53:;
 _289 = &_244->typeKind;
 _290 = *_289;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp337;
-$tmp337 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp337 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp337->value = _290;
 _291 = ((frost$core$Equatable*) $tmp337);
 _292 = _291;
 _293 = &_277->typeKind;
 _294 = *_293;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp338;
-$tmp338 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp338 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp338->value = _294;
 _295 = ((frost$core$Equatable*) $tmp338);
 ITable* $tmp339 = _292->$class->itable;
@@ -9836,7 +9830,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_414);
 _417 = &param1->typeKind;
 _418 = *_417;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp343;
-$tmp343 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp343 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp343->value = _418;
 _419 = ((frost$core$Equatable*) $tmp343);
 _420 = _419;
@@ -9849,7 +9843,7 @@ _426 = *(&local8);
 *(&local7) = _426;
 _429 = *(&local7);
 org$frostlang$frostc$Type$Kind$wrapper* $tmp344;
-$tmp344 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp344 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp344->value = _429;
 _430 = ((frost$core$Equatable*) $tmp344);
 ITable* $tmp345 = _420->$class->itable;
@@ -9884,7 +9878,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_451);
 return _449;
 
 }
-frost$core$Int org$frostlang$frostc$LLVMCodeGenerator$getChoiceDataSize$org$frostlang$frostc$ClassDecl$R$frost$core$Int(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$ClassDecl* param1) {
+frost$core$Int org$frostlang$frostc$LLVMCodeGenerator$getChoiceDataSize$org$frostlang$frostc$ClassDecl$R$frost$core$Int(void* rawSelf, org$frostlang$frostc$ClassDecl* param1) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Int$nullable local0;
 org$frostlang$frostc$ChoiceCase* local1 = NULL;
@@ -10236,7 +10231,7 @@ abort(); // unreachable
 block20:;
 _182 = ((frost$core$Int) _174.value);
 frost$core$Int$wrapper* $tmp365;
-$tmp365 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp365 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp365->value = _182;
 _183 = ((frost$core$Object*) $tmp365);
 frost$collections$IdentityMap$$IDXEQ$frost$collections$IdentityMap$K$frost$collections$IdentityMap$V(_172, _173, _183);
@@ -10259,7 +10254,8 @@ _197 = ((frost$core$Int) _189.value);
 return _197;
 
 }
-void org$frostlang$frostc$LLVMCodeGenerator$writeType$org$frostlang$frostc$Type(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$Type* param1) {
+void org$frostlang$frostc$LLVMCodeGenerator$writeType$org$frostlang$frostc$Type(void* rawSelf, org$frostlang$frostc$Type* param1) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 org$frostlang$frostc$ClassDecl* local1 = NULL;
@@ -11357,7 +11353,7 @@ _371 = _363;
 _372 = &_371->resolved;
 _373 = *_372;
 org$frostlang$frostc$Compiler$Resolution$wrapper* $tmp411;
-$tmp411 = (org$frostlang$frostc$Compiler$Resolution$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Compiler$Resolution$wrapperclass);
+$tmp411 = (org$frostlang$frostc$Compiler$Resolution$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Compiler$Resolution$wrapper), (frost$core$Class*) &org$frostlang$frostc$Compiler$Resolution$wrapperclass);
 $tmp411->value = _373;
 _374 = ((frost$core$Equatable*) $tmp411);
 _375 = _374;
@@ -11370,7 +11366,7 @@ _381 = *(&local3);
 *(&local2) = _381;
 _384 = *(&local2);
 org$frostlang$frostc$Compiler$Resolution$wrapper* $tmp412;
-$tmp412 = (org$frostlang$frostc$Compiler$Resolution$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Compiler$Resolution$wrapperclass);
+$tmp412 = (org$frostlang$frostc$Compiler$Resolution$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Compiler$Resolution$wrapper), (frost$core$Class*) &org$frostlang$frostc$Compiler$Resolution$wrapperclass);
 $tmp412->value = _384;
 _385 = ((frost$core$Equatable*) $tmp412);
 ITable* $tmp413 = _375->$class->itable;
@@ -11450,8 +11446,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_449);
 goto block1;
 block58:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:377
-FROST_ASSERT(48 == sizeof(frost$core$MutableString));
-_454 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
+_454 = (frost$core$MutableString*) frostObjectAlloc(sizeof(frost$core$MutableString), (frost$core$Class*) &frost$core$MutableString$class);
 _455 = ((org$frostlang$frostc$Symbol*) param1);
 _456 = &_455->name;
 _457 = *_456;
@@ -12007,14 +12002,14 @@ block135:;
 _966 = &_921->typeKind;
 _967 = *_966;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp458;
-$tmp458 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp458 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp458->value = _967;
 _968 = ((frost$core$Equatable*) $tmp458);
 _969 = _968;
 _970 = &_954->typeKind;
 _971 = *_970;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp459;
-$tmp459 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp459 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp459->value = _971;
 _972 = ((frost$core$Equatable*) $tmp459);
 ITable* $tmp460 = _969->$class->itable;
@@ -12060,7 +12055,7 @@ block139:;
 _1006 = _998;
 _1007 = org$frostlang$frostc$LLVMCodeGenerator$getChoiceDataSize$org$frostlang$frostc$ClassDecl$R$frost$core$Int(param0, _1006);
 frost$core$Int$wrapper* $tmp464;
-$tmp464 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp464 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp464->value = _1007;
 _1008 = ((frost$core$Object*) $tmp464);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:404:36
@@ -12199,14 +12194,14 @@ block152:;
 _1139 = &param1->typeKind;
 _1140 = *_1139;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp476;
-$tmp476 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp476 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp476->value = _1140;
 _1141 = ((frost$core$Equatable*) $tmp476);
 _1142 = _1141;
 _1143 = &_1127->typeKind;
 _1144 = *_1143;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp477;
-$tmp477 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp477 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp477->value = _1144;
 _1145 = ((frost$core$Equatable*) $tmp477);
 ITable* $tmp478 = _1142->$class->itable;
@@ -12493,7 +12488,8 @@ frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$St
 abort(); // unreachable
 
 }
-void org$frostlang$frostc$LLVMCodeGenerator$writeWrapperType$org$frostlang$frostc$Type(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$Type* param1) {
+void org$frostlang$frostc$LLVMCodeGenerator$writeWrapperType$org$frostlang$frostc$Type(void* rawSelf, org$frostlang$frostc$Type* param1) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 frost$core$MutableString* local1 = NULL;
@@ -12801,8 +12797,7 @@ _39 = _33;
 _40 = ((frost$core$Object*) _33);
 frost$collections$HashMap$$IDXEQ$frost$collections$HashMap$K$frost$collections$HashMap$V(_38, _39, _40);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:433
-FROST_ASSERT(48 == sizeof(frost$core$MutableString));
-_44 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
+_44 = (frost$core$MutableString*) frostObjectAlloc(sizeof(frost$core$MutableString), (frost$core$Class*) &frost$core$MutableString$class);
 _45 = org$frostlang$frostc$LLVMCodeGenerator$llvmType$org$frostlang$frostc$Type$R$frost$core$String(param0, param1);
 // begin inline call to function frost.core.String.get_asString():frost.core.String from LLVMCodeGenerator.frost:433:50
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:390
@@ -13257,7 +13252,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_457);
 abort(); // unreachable
 
 }
-frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$typeName$org$frostlang$frostc$Type$R$frost$core$String(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$Type* param1) {
+frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$typeName$org$frostlang$frostc$Type$R$frost$core$String(void* rawSelf, org$frostlang$frostc$Type* param1) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 org$frostlang$frostc$Symbol* _1;
 frost$core$String** _2;
@@ -13282,7 +13278,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_10);
 return _5;
 
 }
-frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$llvmType$org$frostlang$frostc$Type$R$frost$core$String(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$Type* param1) {
+frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$llvmType$org$frostlang$frostc$Type$R$frost$core$String(void* rawSelf, org$frostlang$frostc$Type* param1) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$String* local0 = NULL;
 frost$core$String* local1 = NULL;
@@ -14171,7 +14168,7 @@ _102 = _100.value;
 _103 = _101 * _102;
 _104 = (frost$core$Int) {_103};
 frost$core$Int$wrapper* $tmp555;
-$tmp555 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp555 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp555->value = _104;
 _105 = ((frost$core$Object*) $tmp555);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:467:31
@@ -15548,7 +15545,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_1394);
 return _1390;
 
 }
-frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$llvmMethodType$org$frostlang$frostc$Type$org$frostlang$frostc$Type$Q$R$frost$core$String(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$Type* param1, org$frostlang$frostc$Type* param2) {
+frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$llvmMethodType$org$frostlang$frostc$Type$org$frostlang$frostc$Type$Q$R$frost$core$String(void* rawSelf, org$frostlang$frostc$Type* param1, org$frostlang$frostc$Type* param2) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 org$frostlang$frostc$Type$Kind local0;
 org$frostlang$frostc$Type$Kind local1;
@@ -15777,7 +15775,7 @@ frost$core$Object* _341;
 _0 = &param1->typeKind;
 _1 = *_0;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp650;
-$tmp650 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp650 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp650->value = _1;
 _2 = ((frost$core$Equatable*) $tmp650);
 _3 = _2;
@@ -15790,7 +15788,7 @@ _9 = *(&local1);
 *(&local0) = _9;
 _12 = *(&local0);
 org$frostlang$frostc$Type$Kind$wrapper* $tmp651;
-$tmp651 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp651 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp651->value = _12;
 _13 = ((frost$core$Equatable*) $tmp651);
 ITable* $tmp652 = _3->$class->itable;
@@ -15809,7 +15807,7 @@ block6:;
 _22 = &param1->typeKind;
 _23 = *_22;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp653;
-$tmp653 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp653 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp653->value = _23;
 _24 = ((frost$core$Equatable*) $tmp653);
 _25 = _24;
@@ -15822,7 +15820,7 @@ _31 = *(&local3);
 *(&local2) = _31;
 _34 = *(&local2);
 org$frostlang$frostc$Type$Kind$wrapper* $tmp654;
-$tmp654 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp654 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp654->value = _34;
 _35 = ((frost$core$Equatable*) $tmp654);
 ITable* $tmp655 = _25->$class->itable;
@@ -15841,7 +15839,7 @@ block5:;
 _44 = &param1->typeKind;
 _45 = *_44;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp656;
-$tmp656 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp656 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp656->value = _45;
 _46 = ((frost$core$Equatable*) $tmp656);
 _47 = _46;
@@ -15854,7 +15852,7 @@ _53 = *(&local5);
 *(&local4) = _53;
 _56 = *(&local4);
 org$frostlang$frostc$Type$Kind$wrapper* $tmp657;
-$tmp657 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp657 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp657->value = _56;
 _57 = ((frost$core$Equatable*) $tmp657);
 ITable* $tmp658 = _47->$class->itable;
@@ -15873,7 +15871,7 @@ block4:;
 _66 = &param1->typeKind;
 _67 = *_66;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp659;
-$tmp659 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp659 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp659->value = _67;
 _68 = ((frost$core$Equatable*) $tmp659);
 _69 = _68;
@@ -15886,7 +15884,7 @@ _75 = *(&local7);
 *(&local6) = _75;
 _78 = *(&local6);
 org$frostlang$frostc$Type$Kind$wrapper* $tmp660;
-$tmp660 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp660 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp660->value = _78;
 _79 = ((frost$core$Equatable*) $tmp660);
 ITable* $tmp661 = _69->$class->itable;
@@ -15905,7 +15903,7 @@ block3:;
 _88 = &param1->typeKind;
 _89 = *_88;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp662;
-$tmp662 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp662 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp662->value = _89;
 _90 = ((frost$core$Equatable*) $tmp662);
 _91 = _90;
@@ -15918,7 +15916,7 @@ _97 = *(&local9);
 *(&local8) = _97;
 _100 = *(&local8);
 org$frostlang$frostc$Type$Kind$wrapper* $tmp663;
-$tmp663 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp663 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp663->value = _100;
 _101 = ((frost$core$Equatable*) $tmp663);
 ITable* $tmp664 = _91->$class->itable;
@@ -15939,8 +15937,7 @@ frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$St
 abort(); // unreachable
 block1:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:563
-FROST_ASSERT(48 == sizeof(frost$core$MutableString));
-_114 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
+_114 = (frost$core$MutableString*) frostObjectAlloc(sizeof(frost$core$MutableString), (frost$core$Class*) &frost$core$MutableString$class);
 // begin inline call to function org.frostlang.frostc.Type.get_subtypes():org.frostlang.frostc.FixedArray<org.frostlang.frostc.Type> from LLVMCodeGenerator.frost:563:47
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:244
 _117 = &param1->_subtypes;
@@ -16195,7 +16192,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_341);
 return _331;
 
 }
-frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$wrapperTypeName$org$frostlang$frostc$Type$R$frost$core$String(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$Type* param1) {
+frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$wrapperTypeName$org$frostlang$frostc$Type$R$frost$core$String(void* rawSelf, org$frostlang$frostc$Type* param1) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 org$frostlang$frostc$Type$Kind local0;
 org$frostlang$frostc$Type$Kind local1;
@@ -16244,7 +16242,7 @@ frost$core$Object* _68;
 _1 = &param1->typeKind;
 _2 = *_1;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp688;
-$tmp688 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp688 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp688->value = _2;
 _3 = ((frost$core$Equatable*) $tmp688);
 _4 = _3;
@@ -16257,7 +16255,7 @@ _10 = *(&local1);
 *(&local0) = _10;
 _13 = *(&local0);
 org$frostlang$frostc$Type$Kind$wrapper* $tmp689;
-$tmp689 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp689 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp689->value = _13;
 _14 = ((frost$core$Equatable*) $tmp689);
 ITable* $tmp690 = _4->$class->itable;
@@ -16325,7 +16323,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_68);
 return _61;
 
 }
-frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$wrapperType$org$frostlang$frostc$Type$R$frost$core$String(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$Type* param1) {
+frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$wrapperType$org$frostlang$frostc$Type$R$frost$core$String(void* rawSelf, org$frostlang$frostc$Type* param1) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$String* _1;
 frost$core$String* _2;
@@ -16344,7 +16343,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_7);
 return _2;
 
 }
-frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$wrapperType$org$frostlang$frostc$MethodDecl$R$frost$core$String(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$MethodDecl* param1) {
+frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$wrapperType$org$frostlang$frostc$MethodDecl$R$frost$core$String(void* rawSelf, org$frostlang$frostc$MethodDecl* param1) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 org$frostlang$frostc$Type* local0 = NULL;
 org$frostlang$frostc$MethodDecl* local1 = NULL;
@@ -16716,7 +16716,7 @@ abort(); // unreachable
 block5:;
 _31 = _23;
 // begin inline call to function org.frostlang.frostc.Compiler.inheritedType(m:org.frostlang.frostc.MethodDecl):org.frostlang.frostc.Type from LLVMCodeGenerator.frost:592:53
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:3579
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:3462
 _34 = org$frostlang$frostc$Compiler$getOverriddenMethod$org$frostlang$frostc$MethodDecl$R$org$frostlang$frostc$MethodDecl$Q(_31, param1);
 *(&local1) = ((org$frostlang$frostc$MethodDecl*) NULL);
 _36 = ((frost$core$Object*) _34);
@@ -16727,14 +16727,14 @@ frost$core$Frost$unref$frost$core$Object$Q(_39);
 *(&local1) = _34;
 _42 = ((frost$core$Object*) _34);
 frost$core$Frost$unref$frost$core$Object$Q(_42);
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:3580
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:3463
 _45 = *(&local1);
 _46 = _45 == NULL;
 _47 = (frost$core$Bit) {_46};
 _48 = _47.value;
 if (_48) goto block8; else goto block9;
 block8:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:3581
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:3464
 _51 = org$frostlang$frostc$Compiler$declaredType$org$frostlang$frostc$MethodDecl$R$org$frostlang$frostc$Type(_31, param1);
 _52 = ((frost$core$Object*) _51);
 frost$core$Frost$ref$frost$core$Object$Q(_52);
@@ -16749,20 +16749,20 @@ _61 = ((frost$core$Object*) _51);
 frost$core$Frost$ref$frost$core$Object$Q(_61);
 goto block7;
 block9:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:3583
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:3466
 _65 = *(&local1);
 _66 = _65 != NULL;
 _67 = (frost$core$Bit) {_66};
 _68 = _67.value;
 if (_68) goto block10; else goto block11;
 block11:;
-_70 = (frost$core$Int) {3583u};
+_70 = (frost$core$Int) {3466u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s705, _70, &$s706);
 abort(); // unreachable
 block10:;
 _73 = _65;
-// begin inline call to function org.frostlang.frostc.Compiler.inheritedType(m:org.frostlang.frostc.MethodDecl):org.frostlang.frostc.Type from Compiler.frost:3583:29
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:3579
+// begin inline call to function org.frostlang.frostc.Compiler.inheritedType(m:org.frostlang.frostc.MethodDecl):org.frostlang.frostc.Type from Compiler.frost:3466:29
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:3462
 _76 = org$frostlang$frostc$Compiler$getOverriddenMethod$org$frostlang$frostc$MethodDecl$R$org$frostlang$frostc$MethodDecl$Q(_31, _73);
 *(&local3) = ((org$frostlang$frostc$MethodDecl*) NULL);
 _78 = ((frost$core$Object*) _76);
@@ -16773,14 +16773,14 @@ frost$core$Frost$unref$frost$core$Object$Q(_81);
 *(&local3) = _76;
 _84 = ((frost$core$Object*) _76);
 frost$core$Frost$unref$frost$core$Object$Q(_84);
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:3580
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:3463
 _87 = *(&local3);
 _88 = _87 == NULL;
 _89 = (frost$core$Bit) {_88};
 _90 = _89.value;
 if (_90) goto block13; else goto block14;
 block13:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:3581
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:3464
 _93 = org$frostlang$frostc$Compiler$declaredType$org$frostlang$frostc$MethodDecl$R$org$frostlang$frostc$Type(_31, _73);
 _94 = ((frost$core$Object*) _93);
 frost$core$Frost$ref$frost$core$Object$Q(_94);
@@ -16795,14 +16795,14 @@ _103 = ((frost$core$Object*) _93);
 frost$core$Frost$ref$frost$core$Object$Q(_103);
 goto block12;
 block14:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:3583
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:3466
 _107 = *(&local3);
 _108 = _107 != NULL;
 _109 = (frost$core$Bit) {_108};
 _110 = _109.value;
 if (_110) goto block15; else goto block16;
 block16:;
-_112 = (frost$core$Int) {3583u};
+_112 = (frost$core$Int) {3466u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s707, _112, &$s708);
 abort(); // unreachable
 block15:;
@@ -16850,8 +16850,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_151);
 _154 = ((frost$core$Object*) _146);
 frost$core$Frost$unref$frost$core$Object$Q(_154);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:593
-FROST_ASSERT(48 == sizeof(frost$core$MutableString));
-_157 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
+_157 = (frost$core$MutableString*) frostObjectAlloc(sizeof(frost$core$MutableString), (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init(_157);
 *(&local5) = ((frost$core$MutableString*) NULL);
 _160 = ((frost$core$Object*) _157);
@@ -16869,7 +16868,7 @@ _170 = *(&local4);
 _172 = &_170->typeKind;
 _173 = *_172;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp709;
-$tmp709 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp709 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp709->value = _173;
 _174 = ((frost$core$Equatable*) $tmp709);
 _175 = _174;
@@ -16882,7 +16881,7 @@ _181 = *(&local7);
 *(&local6) = _181;
 _184 = *(&local6);
 org$frostlang$frostc$Type$Kind$wrapper* $tmp710;
-$tmp710 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp710 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp710->value = _184;
 _185 = ((frost$core$Equatable*) $tmp710);
 ITable* $tmp711 = _175->$class->itable;
@@ -16901,7 +16900,7 @@ block22:;
 _194 = &_170->typeKind;
 _195 = *_194;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp712;
-$tmp712 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp712 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp712->value = _195;
 _196 = ((frost$core$Equatable*) $tmp712);
 _197 = _196;
@@ -16914,7 +16913,7 @@ _203 = *(&local9);
 *(&local8) = _203;
 _206 = *(&local8);
 org$frostlang$frostc$Type$Kind$wrapper* $tmp713;
-$tmp713 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp713 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp713->value = _206;
 _207 = ((frost$core$Equatable*) $tmp713);
 ITable* $tmp714 = _197->$class->itable;
@@ -16933,7 +16932,7 @@ block21:;
 _216 = &_170->typeKind;
 _217 = *_216;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp715;
-$tmp715 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp715 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp715->value = _217;
 _218 = ((frost$core$Equatable*) $tmp715);
 _219 = _218;
@@ -16946,7 +16945,7 @@ _225 = *(&local11);
 *(&local10) = _225;
 _228 = *(&local10);
 org$frostlang$frostc$Type$Kind$wrapper* $tmp716;
-$tmp716 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp716 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp716->value = _228;
 _229 = ((frost$core$Equatable*) $tmp716);
 ITable* $tmp717 = _219->$class->itable;
@@ -16965,7 +16964,7 @@ block20:;
 _238 = &_170->typeKind;
 _239 = *_238;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp718;
-$tmp718 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp718 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp718->value = _239;
 _240 = ((frost$core$Equatable*) $tmp718);
 _241 = _240;
@@ -16978,7 +16977,7 @@ _247 = *(&local13);
 *(&local12) = _247;
 _250 = *(&local12);
 org$frostlang$frostc$Type$Kind$wrapper* $tmp719;
-$tmp719 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp719 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp719->value = _250;
 _251 = ((frost$core$Equatable*) $tmp719);
 ITable* $tmp720 = _241->$class->itable;
@@ -17324,7 +17323,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_565);
 return _548;
 
 }
-frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$nullableType$org$frostlang$frostc$Type$R$frost$core$String(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$Type* param1) {
+frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$nullableType$org$frostlang$frostc$Type$R$frost$core$String(void* rawSelf, org$frostlang$frostc$Type* param1) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 org$frostlang$frostc$Type$Kind local0;
 org$frostlang$frostc$Type$Kind local1;
@@ -17389,7 +17389,7 @@ frost$core$Object* _101;
 _1 = &param1->typeKind;
 _2 = *_1;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp745;
-$tmp745 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp745 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp745->value = _2;
 _3 = ((frost$core$Equatable*) $tmp745);
 _4 = _3;
@@ -17402,7 +17402,7 @@ _10 = *(&local1);
 *(&local0) = _10;
 _13 = *(&local0);
 org$frostlang$frostc$Type$Kind$wrapper* $tmp746;
-$tmp746 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp746 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp746->value = _13;
 _14 = ((frost$core$Equatable*) $tmp746);
 ITable* $tmp747 = _4->$class->itable;
@@ -17502,7 +17502,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_101);
 return _90;
 
 }
-frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$getITable$org$frostlang$frostc$ClassDecl$R$frost$core$String(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$ClassDecl* param1) {
+frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$getITable$org$frostlang$frostc$ClassDecl$R$frost$core$String(void* rawSelf, org$frostlang$frostc$ClassDecl* param1) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 frost$collections$HashSet* local1 = NULL;
@@ -18288,7 +18289,7 @@ while ($tmp793->$class != (frost$core$Class*) &frost$collections$CollectionView$
 _281 = $tmp793->methods[0];
 _282 = _281(_280);
 frost$core$Int$wrapper* $tmp794;
-$tmp794 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp794 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp794->value = _282;
 _283 = ((frost$core$Object*) $tmp794);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:626:26
@@ -18426,8 +18427,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_406);
 goto block36;
 block36:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:634
-FROST_ASSERT(48 == sizeof(frost$core$MutableString));
-_411 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
+_411 = (frost$core$MutableString*) frostObjectAlloc(sizeof(frost$core$MutableString), (frost$core$Class*) &frost$core$MutableString$class);
 _412 = *(&local7);
 // begin inline call to function frost.core.String.get_asString():frost.core.String from LLVMCodeGenerator.frost:634:48
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:390
@@ -18489,7 +18489,7 @@ while ($tmp813->$class != (frost$core$Class*) &frost$collections$CollectionView$
 _467 = $tmp813->methods[0];
 _468 = _467(_466);
 frost$core$Int$wrapper* $tmp814;
-$tmp814 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp814 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp814->value = _468;
 _469 = ((frost$core$Object*) $tmp814);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:639:25
@@ -18854,7 +18854,8 @@ goto block62;
 block62:;
 
 }
-org$frostlang$frostc$LLVMCodeGenerator$MethodShim* org$frostlang$frostc$LLVMCodeGenerator$createMethodShim$org$frostlang$frostc$MethodDecl$org$frostlang$frostc$Type$R$org$frostlang$frostc$LLVMCodeGenerator$MethodShim(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$MethodDecl* param1, org$frostlang$frostc$Type* param2) {
+org$frostlang$frostc$LLVMCodeGenerator$MethodShim* org$frostlang$frostc$LLVMCodeGenerator$createMethodShim$org$frostlang$frostc$MethodDecl$org$frostlang$frostc$Type$R$org$frostlang$frostc$LLVMCodeGenerator$MethodShim(void* rawSelf, org$frostlang$frostc$MethodDecl* param1, org$frostlang$frostc$Type* param2) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 org$frostlang$frostc$LLVMCodeGenerator$MethodShim* local1 = NULL;
@@ -20972,8 +20973,7 @@ frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s898, _197)
 abort(); // unreachable
 block29:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:674
-FROST_ASSERT(40 == sizeof(frost$io$MemoryOutputStream));
-_201 = (frost$io$MemoryOutputStream*) frostObjectAlloc(40, (frost$core$Class*) &frost$io$MemoryOutputStream$class);
+_201 = (frost$io$MemoryOutputStream*) frostObjectAlloc(sizeof(frost$io$MemoryOutputStream), (frost$core$Class*) &frost$io$MemoryOutputStream$class);
 frost$io$MemoryOutputStream$init(_201);
 *(&local4) = ((frost$io$MemoryOutputStream*) NULL);
 _204 = ((frost$core$Object*) _201);
@@ -21046,7 +21046,7 @@ block33:;
 _267 = &param2->typeKind;
 _268 = *_267;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp902;
-$tmp902 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp902 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp902->value = _268;
 _269 = ((frost$core$Equatable*) $tmp902);
 _270 = _269;
@@ -21059,7 +21059,7 @@ _276 = *(&local8);
 *(&local7) = _276;
 _279 = *(&local7);
 org$frostlang$frostc$Type$Kind$wrapper* $tmp903;
-$tmp903 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp903 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp903->value = _279;
 _280 = ((frost$core$Equatable*) $tmp903);
 ITable* $tmp904 = _270->$class->itable;
@@ -21078,7 +21078,7 @@ block45:;
 _289 = &param2->typeKind;
 _290 = *_289;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp905;
-$tmp905 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp905 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp905->value = _290;
 _291 = ((frost$core$Equatable*) $tmp905);
 _292 = _291;
@@ -21091,7 +21091,7 @@ _298 = *(&local10);
 *(&local9) = _298;
 _301 = *(&local9);
 org$frostlang$frostc$Type$Kind$wrapper* $tmp906;
-$tmp906 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp906 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp906->value = _301;
 _302 = ((frost$core$Equatable*) $tmp906);
 ITable* $tmp907 = _292->$class->itable;
@@ -21110,7 +21110,7 @@ block44:;
 _311 = &param2->typeKind;
 _312 = *_311;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp908;
-$tmp908 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp908 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp908->value = _312;
 _313 = ((frost$core$Equatable*) $tmp908);
 _314 = _313;
@@ -21123,7 +21123,7 @@ _320 = *(&local12);
 *(&local11) = _320;
 _323 = *(&local11);
 org$frostlang$frostc$Type$Kind$wrapper* $tmp909;
-$tmp909 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp909 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp909->value = _323;
 _324 = ((frost$core$Equatable*) $tmp909);
 ITable* $tmp910 = _314->$class->itable;
@@ -21142,7 +21142,7 @@ block43:;
 _333 = &param2->typeKind;
 _334 = *_333;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp911;
-$tmp911 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp911 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp911->value = _334;
 _335 = ((frost$core$Equatable*) $tmp911);
 _336 = _335;
@@ -21155,7 +21155,7 @@ _342 = *(&local14);
 *(&local13) = _342;
 _345 = *(&local13);
 org$frostlang$frostc$Type$Kind$wrapper* $tmp912;
-$tmp912 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp912 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp912->value = _345;
 _346 = ((frost$core$Equatable*) $tmp912);
 ITable* $tmp913 = _336->$class->itable;
@@ -21231,8 +21231,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_404);
 _406 = ((frost$core$Object*) _395);
 frost$core$Frost$unref$frost$core$Object$Q(_406);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:684
-FROST_ASSERT(48 == sizeof(frost$core$MutableString));
-_409 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
+_409 = (frost$core$MutableString*) frostObjectAlloc(sizeof(frost$core$MutableString), (frost$core$Class*) &frost$core$MutableString$class);
 _410 = *(&local6);
 _411 = org$frostlang$frostc$LLVMCodeGenerator$llvmType$org$frostlang$frostc$Type$R$frost$core$String(param0, _410);
 frost$core$MutableString$init$frost$core$String(_409, _411);
@@ -21394,7 +21393,7 @@ _557 = *_556;
 _559 = &param2->typeKind;
 _560 = *_559;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp932;
-$tmp932 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp932 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp932->value = _560;
 _561 = ((frost$core$Equatable*) $tmp932);
 _562 = _561;
@@ -21407,7 +21406,7 @@ _568 = *(&local19);
 *(&local18) = _568;
 _571 = *(&local18);
 org$frostlang$frostc$Type$Kind$wrapper* $tmp933;
-$tmp933 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp933 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp933->value = _571;
 _572 = ((frost$core$Equatable*) $tmp933);
 ITable* $tmp934 = _562->$class->itable;
@@ -21426,7 +21425,7 @@ block68:;
 _581 = &param2->typeKind;
 _582 = *_581;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp935;
-$tmp935 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp935 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp935->value = _582;
 _583 = ((frost$core$Equatable*) $tmp935);
 _584 = _583;
@@ -21439,7 +21438,7 @@ _590 = *(&local21);
 *(&local20) = _590;
 _593 = *(&local20);
 org$frostlang$frostc$Type$Kind$wrapper* $tmp936;
-$tmp936 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp936 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp936->value = _593;
 _594 = ((frost$core$Equatable*) $tmp936);
 ITable* $tmp937 = _584->$class->itable;
@@ -21458,7 +21457,7 @@ block67:;
 _603 = &param2->typeKind;
 _604 = *_603;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp938;
-$tmp938 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp938 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp938->value = _604;
 _605 = ((frost$core$Equatable*) $tmp938);
 _606 = _605;
@@ -21471,7 +21470,7 @@ _612 = *(&local23);
 *(&local22) = _612;
 _615 = *(&local22);
 org$frostlang$frostc$Type$Kind$wrapper* $tmp939;
-$tmp939 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp939 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp939->value = _615;
 _616 = ((frost$core$Equatable*) $tmp939);
 ITable* $tmp940 = _606->$class->itable;
@@ -21490,7 +21489,7 @@ block66:;
 _625 = &param2->typeKind;
 _626 = *_625;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp941;
-$tmp941 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp941 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp941->value = _626;
 _627 = ((frost$core$Equatable*) $tmp941);
 _628 = _627;
@@ -21503,7 +21502,7 @@ _634 = *(&local25);
 *(&local24) = _634;
 _637 = *(&local24);
 org$frostlang$frostc$Type$Kind$wrapper* $tmp942;
-$tmp942 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp942 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp942->value = _637;
 _638 = ((frost$core$Equatable*) $tmp942);
 ITable* $tmp943 = _628->$class->itable;
@@ -21626,7 +21625,7 @@ _740 = *(&local16);
 _742 = &param2->typeKind;
 _743 = *_742;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp953;
-$tmp953 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp953 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp953->value = _743;
 _744 = ((frost$core$Equatable*) $tmp953);
 _745 = _744;
@@ -21639,7 +21638,7 @@ _751 = *(&local27);
 *(&local26) = _751;
 _754 = *(&local26);
 org$frostlang$frostc$Type$Kind$wrapper* $tmp954;
-$tmp954 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp954 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp954->value = _754;
 _755 = ((frost$core$Equatable*) $tmp954);
 ITable* $tmp955 = _745->$class->itable;
@@ -21658,7 +21657,7 @@ block85:;
 _764 = &param2->typeKind;
 _765 = *_764;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp956;
-$tmp956 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp956 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp956->value = _765;
 _766 = ((frost$core$Equatable*) $tmp956);
 _767 = _766;
@@ -21671,7 +21670,7 @@ _773 = *(&local29);
 *(&local28) = _773;
 _776 = *(&local28);
 org$frostlang$frostc$Type$Kind$wrapper* $tmp957;
-$tmp957 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp957 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp957->value = _776;
 _777 = ((frost$core$Equatable*) $tmp957);
 ITable* $tmp958 = _767->$class->itable;
@@ -21690,7 +21689,7 @@ block84:;
 _786 = &param2->typeKind;
 _787 = *_786;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp959;
-$tmp959 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp959 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp959->value = _787;
 _788 = ((frost$core$Equatable*) $tmp959);
 _789 = _788;
@@ -21703,7 +21702,7 @@ _795 = *(&local31);
 *(&local30) = _795;
 _798 = *(&local30);
 org$frostlang$frostc$Type$Kind$wrapper* $tmp960;
-$tmp960 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp960 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp960->value = _798;
 _799 = ((frost$core$Equatable*) $tmp960);
 ITable* $tmp961 = _789->$class->itable;
@@ -21722,7 +21721,7 @@ block83:;
 _808 = &param2->typeKind;
 _809 = *_808;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp962;
-$tmp962 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp962 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp962->value = _809;
 _810 = ((frost$core$Equatable*) $tmp962);
 _811 = _810;
@@ -21735,7 +21734,7 @@ _817 = *(&local33);
 *(&local32) = _817;
 _820 = *(&local32);
 org$frostlang$frostc$Type$Kind$wrapper* $tmp963;
-$tmp963 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp963 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp963->value = _820;
 _821 = ((frost$core$Equatable*) $tmp963);
 ITable* $tmp964 = _811->$class->itable;
@@ -21911,7 +21910,7 @@ _972 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_970, _971);
 _973 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_972, &$s979);
 _974 = *(&local34);
 frost$core$Int$wrapper* $tmp980;
-$tmp980 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp980 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp980->value = _974;
 _975 = ((frost$core$Object*) $tmp980);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:698:30
@@ -22121,8 +22120,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_1168);
 _1170 = &param0->currentBlock;
 *_1170 = &$s994;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:704
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_1173 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_1173 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _1174 = _1173;
 frost$collections$Array$init(_1174);
 *(&local36) = ((frost$collections$Array*) NULL);
@@ -22191,7 +22189,7 @@ block120:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:706
 _1232 = *(&local37);
 frost$core$Int$wrapper* $tmp998;
-$tmp998 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp998 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp998->value = _1232;
 _1233 = ((frost$core$Object*) $tmp998);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:706:26
@@ -22535,7 +22533,7 @@ _1549 = &param0->labelCount;
 _1552 = &param0->labelCount;
 _1553 = *_1552;
 frost$core$Int$wrapper* $tmp1019;
-$tmp1019 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp1019 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp1019->value = _1553;
 _1554 = ((frost$core$Object*) $tmp1019);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:719:43
@@ -22907,7 +22905,7 @@ _1899 = &param0->varCount;
 _1902 = &param0->varCount;
 _1903 = *_1902;
 frost$core$Int$wrapper* $tmp1040;
-$tmp1040 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp1040 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp1040->value = _1903;
 _1904 = ((frost$core$Object*) $tmp1040);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:148:16
@@ -23333,7 +23331,7 @@ _2301 = *_2300;
 _2303 = &param2->typeKind;
 _2304 = *_2303;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp1067;
-$tmp1067 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp1067 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp1067->value = _2304;
 _2305 = ((frost$core$Equatable*) $tmp1067);
 _2306 = _2305;
@@ -23346,7 +23344,7 @@ _2312 = *(&local44);
 *(&local43) = _2312;
 _2315 = *(&local43);
 org$frostlang$frostc$Type$Kind$wrapper* $tmp1068;
-$tmp1068 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp1068 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp1068->value = _2315;
 _2316 = ((frost$core$Equatable*) $tmp1068);
 ITable* $tmp1069 = _2306->$class->itable;
@@ -23365,7 +23363,7 @@ block222:;
 _2325 = &param2->typeKind;
 _2326 = *_2325;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp1070;
-$tmp1070 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp1070 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp1070->value = _2326;
 _2327 = ((frost$core$Equatable*) $tmp1070);
 _2328 = _2327;
@@ -23378,7 +23376,7 @@ _2334 = *(&local46);
 *(&local45) = _2334;
 _2337 = *(&local45);
 org$frostlang$frostc$Type$Kind$wrapper* $tmp1071;
-$tmp1071 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp1071 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp1071->value = _2337;
 _2338 = ((frost$core$Equatable*) $tmp1071);
 ITable* $tmp1072 = _2328->$class->itable;
@@ -23397,7 +23395,7 @@ block221:;
 _2347 = &param2->typeKind;
 _2348 = *_2347;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp1073;
-$tmp1073 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp1073 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp1073->value = _2348;
 _2349 = ((frost$core$Equatable*) $tmp1073);
 _2350 = _2349;
@@ -23410,7 +23408,7 @@ _2356 = *(&local48);
 *(&local47) = _2356;
 _2359 = *(&local47);
 org$frostlang$frostc$Type$Kind$wrapper* $tmp1074;
-$tmp1074 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp1074 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp1074->value = _2359;
 _2360 = ((frost$core$Equatable*) $tmp1074);
 ITable* $tmp1075 = _2350->$class->itable;
@@ -23429,7 +23427,7 @@ block220:;
 _2369 = &param2->typeKind;
 _2370 = *_2369;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp1076;
-$tmp1076 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp1076 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp1076->value = _2370;
 _2371 = ((frost$core$Equatable*) $tmp1076);
 _2372 = _2371;
@@ -23442,7 +23440,7 @@ _2378 = *(&local50);
 *(&local49) = _2378;
 _2381 = *(&local49);
 org$frostlang$frostc$Type$Kind$wrapper* $tmp1077;
-$tmp1077 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp1077 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp1077->value = _2381;
 _2382 = ((frost$core$Equatable*) $tmp1077);
 ITable* $tmp1078 = _2372->$class->itable;
@@ -24278,8 +24276,7 @@ block286:;
 _3146 = ((frost$core$Object*) _3093);
 frost$core$Frost$unref$frost$core$Object$Q(_3146);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:772
-FROST_ASSERT(32 == sizeof(org$frostlang$frostc$LLVMCodeGenerator$MethodShim));
-_3149 = (org$frostlang$frostc$LLVMCodeGenerator$MethodShim*) frostObjectAlloc(32, (frost$core$Class*) &org$frostlang$frostc$LLVMCodeGenerator$MethodShim$class);
+_3149 = (org$frostlang$frostc$LLVMCodeGenerator$MethodShim*) frostObjectAlloc(sizeof(org$frostlang$frostc$LLVMCodeGenerator$MethodShim), (frost$core$Class*) &org$frostlang$frostc$LLVMCodeGenerator$MethodShim$class);
 _3150 = *(&local15);
 _3151 = *(&local16);
 _3152 = frost$core$MutableString$finish$R$frost$core$String(_3151);
@@ -24376,7 +24373,8 @@ goto block290;
 block290:;
 
 }
-frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$getWrapperITable$org$frostlang$frostc$ClassDecl$R$frost$core$String(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$ClassDecl* param1) {
+frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$getWrapperITable$org$frostlang$frostc$ClassDecl$R$frost$core$String(void* rawSelf, org$frostlang$frostc$ClassDecl* param1) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$collections$HashSet* local0 = NULL;
 frost$core$String* local1 = NULL;
@@ -25159,7 +25157,7 @@ while ($tmp1169->$class != (frost$core$Class*) &frost$collections$CollectionView
 _266 = $tmp1169->methods[0];
 _267 = _266(_265);
 frost$core$Int$wrapper* $tmp1170;
-$tmp1170 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp1170 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp1170->value = _267;
 _268 = ((frost$core$Object*) $tmp1170);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:790:22
@@ -25340,8 +25338,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_432);
 goto block34;
 block34:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:798
-FROST_ASSERT(48 == sizeof(frost$core$MutableString));
-_437 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
+_437 = (frost$core$MutableString*) frostObjectAlloc(sizeof(frost$core$MutableString), (frost$core$Class*) &frost$core$MutableString$class);
 _438 = *(&local6);
 // begin inline call to function frost.core.String.get_asString():frost.core.String from LLVMCodeGenerator.frost:798:44
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:390
@@ -25438,7 +25435,7 @@ while ($tmp1195->$class != (frost$core$Class*) &frost$collections$CollectionView
 _526 = $tmp1195->methods[0];
 _527 = _526(_525);
 frost$core$Int$wrapper* $tmp1196;
-$tmp1196 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp1196 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp1196->value = _527;
 _528 = ((frost$core$Object*) $tmp1196);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:803:21
@@ -25752,7 +25749,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_816);
 return _808;
 
 }
-frost$core$Bit org$frostlang$frostc$LLVMCodeGenerator$needsStructIndirection$org$frostlang$frostc$MethodDecl$R$frost$core$Bit(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$MethodDecl* param1) {
+frost$core$Bit org$frostlang$frostc$LLVMCodeGenerator$needsStructIndirection$org$frostlang$frostc$MethodDecl$R$frost$core$Bit(void* rawSelf, org$frostlang$frostc$MethodDecl* param1) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Bit local0;
 frost$core$Bit local1;
@@ -26161,7 +26159,8 @@ _244 = *(&local2);
 return _244;
 
 }
-org$frostlang$frostc$Pair* org$frostlang$frostc$LLVMCodeGenerator$getMethodTableEntry$org$frostlang$frostc$MethodDecl$R$org$frostlang$frostc$Pair$LTfrost$core$String$Cfrost$core$String$GT(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$MethodDecl* param1) {
+org$frostlang$frostc$Pair* org$frostlang$frostc$LLVMCodeGenerator$getMethodTableEntry$org$frostlang$frostc$MethodDecl$R$org$frostlang$frostc$Pair$LTfrost$core$String$Cfrost$core$String$GT(void* rawSelf, org$frostlang$frostc$MethodDecl* param1) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$String* local0 = NULL;
 org$frostlang$frostc$Type* local1 = NULL;
@@ -26581,8 +26580,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_40);
 if (_39) goto block1; else goto block2;
 block1:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:861
-FROST_ASSERT(32 == sizeof(org$frostlang$frostc$Pair));
-_44 = (org$frostlang$frostc$Pair*) frostObjectAlloc(32, (frost$core$Class*) &org$frostlang$frostc$Pair$class);
+_44 = (org$frostlang$frostc$Pair*) frostObjectAlloc(sizeof(org$frostlang$frostc$Pair), (frost$core$Class*) &org$frostlang$frostc$Pair$class);
 _45 = _44;
 _46 = ((frost$core$Object*) &$s1237);
 _47 = ((frost$core$Object*) &$s1238);
@@ -26963,8 +26961,7 @@ _400 = _399.value;
 if (_400) goto block58; else goto block59;
 block58:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:884
-FROST_ASSERT(48 == sizeof(frost$core$MutableString));
-_403 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
+_403 = (frost$core$MutableString*) frostObjectAlloc(sizeof(frost$core$MutableString), (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init$frost$core$String(_403, &$s1256);
 *(&local5) = ((frost$core$MutableString*) NULL);
 _406 = ((frost$core$Object*) _403);
@@ -27162,8 +27159,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_577);
 _580 = *(&local5);
 frost$core$MutableString$append$frost$core$String(_580, &$s1269);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:892
-FROST_ASSERT(32 == sizeof(org$frostlang$frostc$Pair));
-_583 = (org$frostlang$frostc$Pair*) frostObjectAlloc(32, (frost$core$Class*) &org$frostlang$frostc$Pair$class);
+_583 = (org$frostlang$frostc$Pair*) frostObjectAlloc(sizeof(org$frostlang$frostc$Pair), (frost$core$Class*) &org$frostlang$frostc$Pair$class);
 _584 = _583;
 _585 = *(&local0);
 _586 = ((frost$core$Object*) _585);
@@ -27200,8 +27196,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_614);
 return _583;
 block59:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:894
-FROST_ASSERT(32 == sizeof(org$frostlang$frostc$Pair));
-_619 = (org$frostlang$frostc$Pair*) frostObjectAlloc(32, (frost$core$Class*) &org$frostlang$frostc$Pair$class);
+_619 = (org$frostlang$frostc$Pair*) frostObjectAlloc(sizeof(org$frostlang$frostc$Pair), (frost$core$Class*) &org$frostlang$frostc$Pair$class);
 _620 = _619;
 _621 = *(&local0);
 _622 = ((frost$core$Object*) _621);
@@ -27234,7 +27229,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_646);
 return _619;
 
 }
-org$frostlang$frostc$LLVMCodeGenerator$ClassConstant* org$frostlang$frostc$LLVMCodeGenerator$getClassConstant$org$frostlang$frostc$ClassDecl$R$org$frostlang$frostc$LLVMCodeGenerator$ClassConstant(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$ClassDecl* param1) {
+org$frostlang$frostc$LLVMCodeGenerator$ClassConstant* org$frostlang$frostc$LLVMCodeGenerator$getClassConstant$org$frostlang$frostc$ClassDecl$R$org$frostlang$frostc$LLVMCodeGenerator$ClassConstant(void* rawSelf, org$frostlang$frostc$ClassDecl* param1) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 org$frostlang$frostc$LLVMCodeGenerator$ClassConstant* local1 = NULL;
@@ -27932,8 +27928,7 @@ _98 = _97.value;
 if (_98) goto block16; else goto block17;
 block16:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:905
-FROST_ASSERT(32 == sizeof(org$frostlang$frostc$LLVMCodeGenerator$ClassConstant));
-_101 = (org$frostlang$frostc$LLVMCodeGenerator$ClassConstant*) frostObjectAlloc(32, (frost$core$Class*) &org$frostlang$frostc$LLVMCodeGenerator$ClassConstant$class);
+_101 = (org$frostlang$frostc$LLVMCodeGenerator$ClassConstant*) frostObjectAlloc(sizeof(org$frostlang$frostc$LLVMCodeGenerator$ClassConstant), (frost$core$Class*) &org$frostlang$frostc$LLVMCodeGenerator$ClassConstant$class);
 _102 = &param1->type;
 _103 = *_102;
 _104 = ((org$frostlang$frostc$Symbol*) _103);
@@ -28147,8 +28142,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_296);
 _298 = _275;
 frost$core$Frost$unref$frost$core$Object$Q(_298);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:912
-FROST_ASSERT(32 == sizeof(org$frostlang$frostc$LLVMCodeGenerator$ClassConstant));
-_301 = (org$frostlang$frostc$LLVMCodeGenerator$ClassConstant*) frostObjectAlloc(32, (frost$core$Class*) &org$frostlang$frostc$LLVMCodeGenerator$ClassConstant$class);
+_301 = (org$frostlang$frostc$LLVMCodeGenerator$ClassConstant*) frostObjectAlloc(sizeof(org$frostlang$frostc$LLVMCodeGenerator$ClassConstant), (frost$core$Class*) &org$frostlang$frostc$LLVMCodeGenerator$ClassConstant$class);
 _302 = &param1->type;
 _303 = *_302;
 _304 = ((org$frostlang$frostc$Symbol*) _303);
@@ -28168,7 +28162,7 @@ while ($tmp1308->$class != (frost$core$Class*) &frost$collections$CollectionView
 _314 = $tmp1308->methods[0];
 _315 = _314(_313);
 frost$core$Int$wrapper* $tmp1309;
-$tmp1309 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp1309 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp1309->value = _315;
 _316 = ((frost$core$Object*) $tmp1309);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:914:25
@@ -28451,8 +28445,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_576);
 _578 = _509;
 frost$core$Frost$unref$frost$core$Object$Q(_578);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:925
-FROST_ASSERT(48 == sizeof(frost$core$MutableString));
-_581 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
+_581 = (frost$core$MutableString*) frostObjectAlloc(sizeof(frost$core$MutableString), (frost$core$Class*) &frost$core$MutableString$class);
 _582 = *(&local1);
 _583 = _582 != NULL;
 _584 = (frost$core$Bit) {_583};
@@ -28535,7 +28528,7 @@ _657 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(&$s1347, &$s
 _658 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_657, &$s1349);
 _659 = (frost$core$Int) {18446744073709550617u};
 frost$core$Int$wrapper* $tmp1350;
-$tmp1350 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp1350 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp1350->value = _659;
 _660 = ((frost$core$Object*) $tmp1350);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:931:25
@@ -28574,7 +28567,7 @@ while ($tmp1356->$class != (frost$core$Class*) &frost$collections$CollectionView
 _692 = $tmp1356->methods[0];
 _693 = _692(_691);
 frost$core$Int$wrapper* $tmp1357;
-$tmp1357 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp1357 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp1357->value = _693;
 _694 = ((frost$core$Object*) $tmp1357);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:933:37
@@ -28908,7 +28901,8 @@ goto block93;
 block93:;
 
 }
-org$frostlang$frostc$LLVMCodeGenerator$ClassConstant* org$frostlang$frostc$LLVMCodeGenerator$getWrapperClassConstant$org$frostlang$frostc$ClassDecl$R$org$frostlang$frostc$LLVMCodeGenerator$ClassConstant(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$ClassDecl* param1) {
+org$frostlang$frostc$LLVMCodeGenerator$ClassConstant* org$frostlang$frostc$LLVMCodeGenerator$getWrapperClassConstant$org$frostlang$frostc$ClassDecl$R$org$frostlang$frostc$LLVMCodeGenerator$ClassConstant(void* rawSelf, org$frostlang$frostc$ClassDecl* param1) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 frost$core$String* local1 = NULL;
@@ -29746,8 +29740,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_71);
 if (_70) goto block7; else goto block8;
 block7:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:960
-FROST_ASSERT(32 == sizeof(org$frostlang$frostc$LLVMCodeGenerator$ClassConstant));
-_75 = (org$frostlang$frostc$LLVMCodeGenerator$ClassConstant*) frostObjectAlloc(32, (frost$core$Class*) &org$frostlang$frostc$LLVMCodeGenerator$ClassConstant$class);
+_75 = (org$frostlang$frostc$LLVMCodeGenerator$ClassConstant*) frostObjectAlloc(sizeof(org$frostlang$frostc$LLVMCodeGenerator$ClassConstant), (frost$core$Class*) &org$frostlang$frostc$LLVMCodeGenerator$ClassConstant$class);
 org$frostlang$frostc$LLVMCodeGenerator$ClassConstant$init$frost$core$String$frost$core$String(_75, &$s1395, &$s1396);
 _77 = ((frost$core$Object*) _75);
 frost$core$Frost$ref$frost$core$Object$Q(_77);
@@ -29923,8 +29916,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_238);
 _240 = ((frost$core$Object*) _184);
 frost$core$Frost$unref$frost$core$Object$Q(_240);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:969
-FROST_ASSERT(32 == sizeof(org$frostlang$frostc$LLVMCodeGenerator$ClassConstant));
-_243 = (org$frostlang$frostc$LLVMCodeGenerator$ClassConstant*) frostObjectAlloc(32, (frost$core$Class*) &org$frostlang$frostc$LLVMCodeGenerator$ClassConstant$class);
+_243 = (org$frostlang$frostc$LLVMCodeGenerator$ClassConstant*) frostObjectAlloc(sizeof(org$frostlang$frostc$LLVMCodeGenerator$ClassConstant), (frost$core$Class*) &org$frostlang$frostc$LLVMCodeGenerator$ClassConstant$class);
 _244 = *(&local1);
 _245 = *(&local3);
 org$frostlang$frostc$LLVMCodeGenerator$ClassConstant$init$frost$core$String$frost$core$String(_243, _244, _245);
@@ -30104,8 +30096,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_407);
 _409 = _377;
 frost$core$Frost$unref$frost$core$Object$Q(_409);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:975
-FROST_ASSERT(32 == sizeof(org$frostlang$frostc$LLVMCodeGenerator$ClassConstant));
-_412 = (org$frostlang$frostc$LLVMCodeGenerator$ClassConstant*) frostObjectAlloc(32, (frost$core$Class*) &org$frostlang$frostc$LLVMCodeGenerator$ClassConstant$class);
+_412 = (org$frostlang$frostc$LLVMCodeGenerator$ClassConstant*) frostObjectAlloc(sizeof(org$frostlang$frostc$LLVMCodeGenerator$ClassConstant), (frost$core$Class*) &org$frostlang$frostc$LLVMCodeGenerator$ClassConstant$class);
 _413 = &param1->name;
 _414 = *_413;
 _415 = org$frostlang$frostc$LLVMCodeGenerator$escapeName$frost$core$String$R$frost$core$String(param0, _414);
@@ -30122,7 +30113,7 @@ while ($tmp1427->$class != (frost$core$Class*) &frost$collections$CollectionView
 _422 = $tmp1427->methods[0];
 _423 = _422(_421);
 frost$core$Int$wrapper* $tmp1428;
-$tmp1428 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp1428 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp1428->value = _423;
 _424 = ((frost$core$Object*) $tmp1428);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:977:29
@@ -30508,8 +30499,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_779);
 _781 = _712;
 frost$core$Frost$unref$frost$core$Object$Q(_781);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:990
-FROST_ASSERT(48 == sizeof(frost$core$MutableString));
-_784 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
+_784 = (frost$core$MutableString*) frostObjectAlloc(sizeof(frost$core$MutableString), (frost$core$Class*) &frost$core$MutableString$class);
 _785 = *(&local2);
 _786 = _785 != NULL;
 _787 = (frost$core$Bit) {_786};
@@ -30592,7 +30582,7 @@ _860 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(&$s1471, &$s
 _861 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_860, &$s1473);
 _862 = (frost$core$Int) {18446744073709550617u};
 frost$core$Int$wrapper* $tmp1474;
-$tmp1474 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp1474 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp1474->value = _862;
 _863 = ((frost$core$Object*) $tmp1474);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:996:29
@@ -30673,7 +30663,7 @@ while ($tmp1484->$class != (frost$core$Class*) &frost$collections$CollectionView
 _936 = $tmp1484->methods[0];
 _937 = _936(_935);
 frost$core$Int$wrapper* $tmp1485;
-$tmp1485 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp1485 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp1485->value = _937;
 _938 = ((frost$core$Object*) $tmp1485);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:998:32
@@ -31062,7 +31052,8 @@ goto block130;
 block130:;
 
 }
-frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$escapeName$frost$core$String$R$frost$core$String(org$frostlang$frostc$LLVMCodeGenerator* param0, frost$core$String* param1) {
+frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$escapeName$frost$core$String$R$frost$core$String(void* rawSelf, frost$core$String* param1) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$MutableString* local0 = NULL;
 frost$core$String$Index local1;
@@ -31204,8 +31195,7 @@ frost$core$Object* _249;
 frost$core$MutableString* _251;
 frost$core$Object* _252;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:1018
-FROST_ASSERT(48 == sizeof(frost$core$MutableString));
-_1 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
+_1 = (frost$core$MutableString*) frostObjectAlloc(sizeof(frost$core$MutableString), (frost$core$Class*) &frost$core$MutableString$class);
 // begin inline call to function frost.core.String.get_byteLength():frost.core.Int from LLVMCodeGenerator.frost:1018:38
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:492
 _4 = &param1->_length;
@@ -31255,13 +31245,13 @@ goto block6;
 block6:;
 _53 = *(&local3);
 frost$core$String$Index$wrapper* $tmp1505;
-$tmp1505 = (frost$core$String$Index$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$String$Index$wrapperclass);
+$tmp1505 = (frost$core$String$Index$wrapper*) frostObjectAlloc(sizeof(frost$core$String$Index$wrapper), (frost$core$Class*) &frost$core$String$Index$wrapperclass);
 $tmp1505->value = _53;
 _54 = ((frost$core$Equatable*) $tmp1505);
 _55 = _54;
 _56 = *(&local6);
 frost$core$String$Index$wrapper* $tmp1506;
-$tmp1506 = (frost$core$String$Index$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$String$Index$wrapperclass);
+$tmp1506 = (frost$core$String$Index$wrapper*) frostObjectAlloc(sizeof(frost$core$String$Index$wrapper), (frost$core$Class*) &frost$core$String$Index$wrapperclass);
 $tmp1506->value = _56;
 _57 = ((frost$core$Equatable*) $tmp1506);
 ITable* $tmp1507 = _55->$class->itable;
@@ -31482,7 +31472,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_252);
 return _246;
 
 }
-frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$getName$org$frostlang$frostc$Variable$R$frost$core$String(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$Variable* param1) {
+frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$getName$org$frostlang$frostc$Variable$R$frost$core$String(void* rawSelf, org$frostlang$frostc$Variable* param1) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 org$frostlang$frostc$Symbol* _1;
 frost$core$String** _2;
@@ -31507,7 +31498,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_10);
 return _5;
 
 }
-frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$getName$org$frostlang$frostc$MethodDecl$R$frost$core$String(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$MethodDecl* param1) {
+frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$getName$org$frostlang$frostc$MethodDecl$R$frost$core$String(void* rawSelf, org$frostlang$frostc$MethodDecl* param1) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$String* local0 = NULL;
 frost$core$MutableString* local1 = NULL;
@@ -31803,8 +31795,7 @@ goto block4;
 block5:;
 // <no location>
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:1053
-FROST_ASSERT(48 == sizeof(frost$core$MutableString));
-_40 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
+_40 = (frost$core$MutableString*) frostObjectAlloc(sizeof(frost$core$MutableString), (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init$frost$core$String(_40, &$s1527);
 *(&local1) = ((frost$core$MutableString*) NULL);
 _43 = ((frost$core$Object*) _40);
@@ -32162,7 +32153,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_326);
 _329 = &param1->methodKind;
 _330 = *_329;
 org$frostlang$frostc$MethodDecl$Kind$wrapper* $tmp1585;
-$tmp1585 = (org$frostlang$frostc$MethodDecl$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$MethodDecl$Kind$wrapperclass);
+$tmp1585 = (org$frostlang$frostc$MethodDecl$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$MethodDecl$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$MethodDecl$Kind$wrapperclass);
 $tmp1585->value = _330;
 _331 = ((frost$core$Equatable*) $tmp1585);
 _332 = _331;
@@ -32175,7 +32166,7 @@ _338 = *(&local4);
 *(&local3) = _338;
 _341 = *(&local3);
 org$frostlang$frostc$MethodDecl$Kind$wrapper* $tmp1586;
-$tmp1586 = (org$frostlang$frostc$MethodDecl$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$MethodDecl$Kind$wrapperclass);
+$tmp1586 = (org$frostlang$frostc$MethodDecl$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$MethodDecl$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$MethodDecl$Kind$wrapperclass);
 $tmp1586->value = _341;
 _342 = ((frost$core$Equatable*) $tmp1586);
 ITable* $tmp1587 = _332->$class->itable;
@@ -32317,7 +32308,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_457);
 return _453;
 
 }
-frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$getName$org$frostlang$frostc$FieldDecl$R$frost$core$String(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$FieldDecl* param1) {
+frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$getName$org$frostlang$frostc$FieldDecl$R$frost$core$String(void* rawSelf, org$frostlang$frostc$FieldDecl* param1) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 org$frostlang$frostc$Annotations** _1;
 org$frostlang$frostc$Annotations* _2;
@@ -32441,7 +32433,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_72);
 return _59;
 
 }
-org$frostlang$frostc$LLVMCodeGenerator$OpClass org$frostlang$frostc$LLVMCodeGenerator$opClass$org$frostlang$frostc$Type$R$org$frostlang$frostc$LLVMCodeGenerator$OpClass(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$Type* param1) {
+org$frostlang$frostc$LLVMCodeGenerator$OpClass org$frostlang$frostc$LLVMCodeGenerator$opClass$org$frostlang$frostc$Type$R$org$frostlang$frostc$LLVMCodeGenerator$OpClass(void* rawSelf, org$frostlang$frostc$Type* param1) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 org$frostlang$frostc$LLVMCodeGenerator$OpClass local0;
 org$frostlang$frostc$LLVMCodeGenerator$OpClass local1;
@@ -32586,7 +32579,8 @@ goto block17;
 block17:;
 
 }
-void org$frostlang$frostc$LLVMCodeGenerator$wrapValue$org$frostlang$frostc$Position$frost$core$String$frost$core$String$org$frostlang$frostc$Type$org$frostlang$frostc$Type$frost$io$OutputStream(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$Position param1, frost$core$String* param2, frost$core$String* param3, org$frostlang$frostc$Type* param4, org$frostlang$frostc$Type* param5, frost$io$OutputStream* param6) {
+void org$frostlang$frostc$LLVMCodeGenerator$wrapValue$org$frostlang$frostc$Position$frost$core$String$frost$core$String$org$frostlang$frostc$Type$org$frostlang$frostc$Type$frost$io$OutputStream(void* rawSelf, org$frostlang$frostc$Position param1, frost$core$String* param2, frost$core$String* param3, org$frostlang$frostc$Type* param4, org$frostlang$frostc$Type* param5, frost$io$OutputStream* param6) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 org$frostlang$frostc$ClassDecl* local1 = NULL;
@@ -33602,7 +33596,7 @@ block9:;
 _56 = &param4->typeKind;
 _57 = *_56;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp1629;
-$tmp1629 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp1629 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp1629->value = _57;
 _58 = ((frost$core$Equatable*) $tmp1629);
 _59 = _58;
@@ -33615,7 +33609,7 @@ _65 = *(&local3);
 *(&local2) = _65;
 _68 = *(&local2);
 org$frostlang$frostc$Type$Kind$wrapper* $tmp1630;
-$tmp1630 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp1630 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp1630->value = _68;
 _69 = ((frost$core$Equatable*) $tmp1630);
 ITable* $tmp1631 = _59->$class->itable;
@@ -33657,7 +33651,7 @@ _98 = &param0->varCount;
 _101 = &param0->varCount;
 _102 = *_101;
 frost$core$Int$wrapper* $tmp1632;
-$tmp1632 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp1632 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp1632->value = _102;
 _103 = ((frost$core$Object*) $tmp1632);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:148:16
@@ -33791,7 +33785,7 @@ _228 = &param0->labelCount;
 _231 = &param0->labelCount;
 _232 = *_231;
 frost$core$Int$wrapper* $tmp1642;
-$tmp1642 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp1642 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp1642->value = _232;
 _233 = ((frost$core$Object*) $tmp1642);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:153:16
@@ -33839,7 +33833,7 @@ _275 = &param0->labelCount;
 _278 = &param0->labelCount;
 _279 = *_278;
 frost$core$Int$wrapper* $tmp1646;
-$tmp1646 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp1646 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp1646->value = _279;
 _280 = ((frost$core$Object*) $tmp1646);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:153:16
@@ -33978,7 +33972,7 @@ _409 = &param0->varCount;
 _412 = &param0->varCount;
 _413 = *_412;
 frost$core$Int$wrapper* $tmp1657;
-$tmp1657 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp1657 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp1657->value = _413;
 _414 = ((frost$core$Object*) $tmp1657);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:148:16
@@ -34053,7 +34047,7 @@ _482 = &param0->varCount;
 _485 = &param0->varCount;
 _486 = *_485;
 frost$core$Int$wrapper* $tmp1663;
-$tmp1663 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp1663 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp1663->value = _486;
 _487 = ((frost$core$Object*) $tmp1663);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:148:16
@@ -34445,7 +34439,7 @@ _855 = &param0->varCount;
 _858 = &param0->varCount;
 _859 = *_858;
 frost$core$Int$wrapper* $tmp1691;
-$tmp1691 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp1691 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp1691->value = _859;
 _860 = ((frost$core$Object*) $tmp1691);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:148:16
@@ -34499,7 +34493,7 @@ _909 = &_908->type;
 _910 = *_909;
 _911 = org$frostlang$frostc$LLVMCodeGenerator$sizeOfWrapper$org$frostlang$frostc$Type$R$frost$core$Int(param0, _910);
 frost$core$Int$wrapper* $tmp1698;
-$tmp1698 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp1698 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp1698->value = _911;
 _912 = ((frost$core$Object*) $tmp1698);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:1163:21
@@ -34692,7 +34686,7 @@ _1086 = &param0->varCount;
 _1089 = &param0->varCount;
 _1090 = *_1089;
 frost$core$Int$wrapper* $tmp1712;
-$tmp1712 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp1712 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp1712->value = _1090;
 _1091 = ((frost$core$Object*) $tmp1712);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:148:16
@@ -34850,7 +34844,7 @@ _1238 = &param0->varCount;
 _1241 = &param0->varCount;
 _1242 = *_1241;
 frost$core$Int$wrapper* $tmp1722;
-$tmp1722 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp1722 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp1722->value = _1242;
 _1243 = ((frost$core$Object*) $tmp1722);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:148:16
@@ -34903,7 +34897,7 @@ _1294 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_1292, _129
 _1295 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_1294, &$s1729);
 _1296 = (frost$core$Int) {3u};
 frost$core$Int$wrapper* $tmp1730;
-$tmp1730 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp1730 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp1730->value = _1296;
 _1297 = ((frost$core$Object*) $tmp1730);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:1178:24
@@ -35326,7 +35320,8 @@ frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s1751, _169
 abort(); // unreachable
 
 }
-void org$frostlang$frostc$LLVMCodeGenerator$unwrapValue$org$frostlang$frostc$Position$frost$core$String$frost$core$String$org$frostlang$frostc$Type$org$frostlang$frostc$Type$frost$io$OutputStream(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$Position param1, frost$core$String* param2, frost$core$String* param3, org$frostlang$frostc$Type* param4, org$frostlang$frostc$Type* param5, frost$io$OutputStream* param6) {
+void org$frostlang$frostc$LLVMCodeGenerator$unwrapValue$org$frostlang$frostc$Position$frost$core$String$frost$core$String$org$frostlang$frostc$Type$org$frostlang$frostc$Type$frost$io$OutputStream(void* rawSelf, org$frostlang$frostc$Position param1, frost$core$String* param2, frost$core$String* param3, org$frostlang$frostc$Type* param4, org$frostlang$frostc$Type* param5, frost$io$OutputStream* param6) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 org$frostlang$frostc$ClassDecl* local1 = NULL;
@@ -36119,7 +36114,7 @@ block9:;
 _56 = &param5->typeKind;
 _57 = *_56;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp1771;
-$tmp1771 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp1771 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp1771->value = _57;
 _58 = ((frost$core$Equatable*) $tmp1771);
 _59 = _58;
@@ -36132,7 +36127,7 @@ _65 = *(&local3);
 *(&local2) = _65;
 _68 = *(&local2);
 org$frostlang$frostc$Type$Kind$wrapper* $tmp1772;
-$tmp1772 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp1772 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp1772->value = _68;
 _69 = ((frost$core$Equatable*) $tmp1772);
 ITable* $tmp1773 = _59->$class->itable;
@@ -36174,7 +36169,7 @@ _98 = &param0->varCount;
 _101 = &param0->varCount;
 _102 = *_101;
 frost$core$Int$wrapper* $tmp1774;
-$tmp1774 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp1774 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp1774->value = _102;
 _103 = ((frost$core$Object*) $tmp1774);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:148:16
@@ -36308,7 +36303,7 @@ _228 = &param0->labelCount;
 _231 = &param0->labelCount;
 _232 = *_231;
 frost$core$Int$wrapper* $tmp1784;
-$tmp1784 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp1784 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp1784->value = _232;
 _233 = ((frost$core$Object*) $tmp1784);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:153:16
@@ -36356,7 +36351,7 @@ _275 = &param0->labelCount;
 _278 = &param0->labelCount;
 _279 = *_278;
 frost$core$Int$wrapper* $tmp1788;
-$tmp1788 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp1788 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp1788->value = _279;
 _280 = ((frost$core$Object*) $tmp1788);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:153:16
@@ -36495,7 +36490,7 @@ _409 = &param0->varCount;
 _412 = &param0->varCount;
 _413 = *_412;
 frost$core$Int$wrapper* $tmp1799;
-$tmp1799 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp1799 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp1799->value = _413;
 _414 = ((frost$core$Object*) $tmp1799);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:148:16
@@ -36570,7 +36565,7 @@ _482 = &param0->varCount;
 _485 = &param0->varCount;
 _486 = *_485;
 frost$core$Int$wrapper* $tmp1805;
-$tmp1805 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp1805 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp1805->value = _486;
 _487 = ((frost$core$Object*) $tmp1805);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:148:16
@@ -36972,7 +36967,7 @@ _874 = &param0->varCount;
 _877 = &param0->varCount;
 _878 = *_877;
 frost$core$Int$wrapper* $tmp1831;
-$tmp1831 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp1831 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp1831->value = _878;
 _879 = ((frost$core$Object*) $tmp1831);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:148:16
@@ -37125,7 +37120,7 @@ _1023 = &param0->varCount;
 _1026 = &param0->varCount;
 _1027 = *_1026;
 frost$core$Int$wrapper* $tmp1842;
-$tmp1842 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp1842 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp1842->value = _1027;
 _1028 = ((frost$core$Object*) $tmp1842);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:148:16
@@ -37414,7 +37409,8 @@ frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s1861, _130
 abort(); // unreachable
 
 }
-void org$frostlang$frostc$LLVMCodeGenerator$toNullableValue$org$frostlang$frostc$Position$frost$core$String$frost$core$String$org$frostlang$frostc$Type$org$frostlang$frostc$Type$frost$io$OutputStream(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$Position param1, frost$core$String* param2, frost$core$String* param3, org$frostlang$frostc$Type* param4, org$frostlang$frostc$Type* param5, frost$io$OutputStream* param6) {
+void org$frostlang$frostc$LLVMCodeGenerator$toNullableValue$org$frostlang$frostc$Position$frost$core$String$frost$core$String$org$frostlang$frostc$Type$org$frostlang$frostc$Type$frost$io$OutputStream(void* rawSelf, org$frostlang$frostc$Position param1, frost$core$String* param2, frost$core$String* param3, org$frostlang$frostc$Type* param4, org$frostlang$frostc$Type* param5, frost$io$OutputStream* param6) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 frost$core$String* local1 = NULL;
@@ -37622,7 +37618,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_128);
 return;
 
 }
-void org$frostlang$frostc$LLVMCodeGenerator$toNonNullableValue$org$frostlang$frostc$Position$frost$core$String$frost$core$String$org$frostlang$frostc$Type$org$frostlang$frostc$Type$frost$io$OutputStream(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$Position param1, frost$core$String* param2, frost$core$String* param3, org$frostlang$frostc$Type* param4, org$frostlang$frostc$Type* param5, frost$io$OutputStream* param6) {
+void org$frostlang$frostc$LLVMCodeGenerator$toNonNullableValue$org$frostlang$frostc$Position$frost$core$String$frost$core$String$org$frostlang$frostc$Type$org$frostlang$frostc$Type$frost$io$OutputStream(void* rawSelf, org$frostlang$frostc$Position param1, frost$core$String* param2, frost$core$String* param3, org$frostlang$frostc$Type* param4, org$frostlang$frostc$Type* param5, frost$io$OutputStream* param6) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 frost$core$Object* _5;
@@ -37751,7 +37748,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_78);
 return;
 
 }
-frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$getCastReference$org$frostlang$frostc$Position$frost$core$String$org$frostlang$frostc$Type$org$frostlang$frostc$Type$R$frost$core$String(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$Position param1, frost$core$String* param2, org$frostlang$frostc$Type* param3, org$frostlang$frostc$Type* param4) {
+frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$getCastReference$org$frostlang$frostc$Position$frost$core$String$org$frostlang$frostc$Type$org$frostlang$frostc$Type$R$frost$core$String(void* rawSelf, org$frostlang$frostc$Position param1, frost$core$String* param2, org$frostlang$frostc$Type* param3, org$frostlang$frostc$Type* param4) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Bit local0;
 frost$core$String* local1 = NULL;
@@ -37824,14 +37822,14 @@ block4:;
 _12 = &param3->typeKind;
 _13 = *_12;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp1883;
-$tmp1883 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp1883 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp1883->value = _13;
 _14 = ((frost$core$Equatable*) $tmp1883);
 _15 = _14;
 _16 = &param4->typeKind;
 _17 = *_16;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp1884;
-$tmp1884 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp1884 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp1884->value = _17;
 _18 = ((frost$core$Equatable*) $tmp1884);
 ITable* $tmp1885 = _15->$class->itable;
@@ -37875,7 +37873,7 @@ _47 = &param0->varCount;
 _50 = &param0->varCount;
 _51 = *_50;
 frost$core$Int$wrapper* $tmp1886;
-$tmp1886 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp1886 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp1886->value = _51;
 _52 = ((frost$core$Object*) $tmp1886);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:148:16
@@ -37921,7 +37919,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_92);
 return _88;
 
 }
-void org$frostlang$frostc$LLVMCodeGenerator$writeCast$org$frostlang$frostc$Position$frost$core$String$frost$core$String$org$frostlang$frostc$Type$org$frostlang$frostc$Type(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$Position param1, frost$core$String* param2, frost$core$String* param3, org$frostlang$frostc$Type* param4, org$frostlang$frostc$Type* param5) {
+void org$frostlang$frostc$LLVMCodeGenerator$writeCast$org$frostlang$frostc$Position$frost$core$String$frost$core$String$org$frostlang$frostc$Type$org$frostlang$frostc$Type(void* rawSelf, org$frostlang$frostc$Position param1, frost$core$String* param2, frost$core$String* param3, org$frostlang$frostc$Type* param4, org$frostlang$frostc$Type* param5) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 frost$core$String* local1 = NULL;
@@ -38715,7 +38714,7 @@ _19 = org$frostlang$frostc$LLVMCodeGenerator$sizeOf$org$frostlang$frostc$Type$R$
 _22 = &param4->typeKind;
 _23 = *_22;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp1909;
-$tmp1909 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp1909 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp1909->value = _23;
 _24 = ((frost$core$Equatable*) $tmp1909);
 _25 = _24;
@@ -38728,7 +38727,7 @@ _31 = *(&local5);
 *(&local4) = _31;
 _34 = *(&local4);
 org$frostlang$frostc$Type$Kind$wrapper* $tmp1910;
-$tmp1910 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp1910 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp1910->value = _34;
 _35 = ((frost$core$Equatable*) $tmp1910);
 ITable* $tmp1911 = _25->$class->itable;
@@ -38748,7 +38747,7 @@ block8:;
 _45 = &param5->typeKind;
 _46 = *_45;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp1912;
-$tmp1912 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp1912 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp1912->value = _46;
 _47 = ((frost$core$Equatable*) $tmp1912);
 _48 = _47;
@@ -38761,7 +38760,7 @@ _54 = *(&local7);
 *(&local6) = _54;
 _57 = *(&local6);
 org$frostlang$frostc$Type$Kind$wrapper* $tmp1913;
-$tmp1913 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp1913 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp1913->value = _57;
 _58 = ((frost$core$Equatable*) $tmp1913);
 ITable* $tmp1914 = _48->$class->itable;
@@ -38902,7 +38901,7 @@ block14:;
 _181 = &param5->typeKind;
 _182 = *_181;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp1925;
-$tmp1925 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp1925 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp1925->value = _182;
 _183 = ((frost$core$Equatable*) $tmp1925);
 _184 = _183;
@@ -38915,7 +38914,7 @@ _190 = *(&local9);
 *(&local8) = _190;
 _193 = *(&local8);
 org$frostlang$frostc$Type$Kind$wrapper* $tmp1926;
-$tmp1926 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp1926 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp1926->value = _193;
 _194 = ((frost$core$Equatable*) $tmp1926);
 ITable* $tmp1927 = _184->$class->itable;
@@ -38945,7 +38944,7 @@ block29:;
 _213 = &param5->typeKind;
 _214 = *_213;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp1930;
-$tmp1930 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp1930 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp1930->value = _214;
 _215 = ((frost$core$Equatable*) $tmp1930);
 _216 = _215;
@@ -38958,7 +38957,7 @@ _222 = *(&local11);
 *(&local10) = _222;
 _225 = *(&local10);
 org$frostlang$frostc$Type$Kind$wrapper* $tmp1931;
-$tmp1931 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp1931 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp1931->value = _225;
 _226 = ((frost$core$Equatable*) $tmp1931);
 ITable* $tmp1932 = _216->$class->itable;
@@ -38995,7 +38994,7 @@ block10:;
 _249 = &param5->typeKind;
 _250 = *_249;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp1936;
-$tmp1936 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp1936 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp1936->value = _250;
 _251 = ((frost$core$Equatable*) $tmp1936);
 _252 = _251;
@@ -39008,7 +39007,7 @@ _258 = *(&local13);
 *(&local12) = _258;
 _261 = *(&local12);
 org$frostlang$frostc$Type$Kind$wrapper* $tmp1937;
-$tmp1937 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp1937 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp1937->value = _261;
 _262 = ((frost$core$Equatable*) $tmp1937);
 ITable* $tmp1938 = _252->$class->itable;
@@ -39028,7 +39027,7 @@ block34:;
 _272 = &param4->typeKind;
 _273 = *_272;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp1939;
-$tmp1939 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp1939 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp1939->value = _273;
 _274 = ((frost$core$Equatable*) $tmp1939);
 _275 = _274;
@@ -39041,7 +39040,7 @@ _281 = *(&local15);
 *(&local14) = _281;
 _284 = *(&local14);
 org$frostlang$frostc$Type$Kind$wrapper* $tmp1940;
-$tmp1940 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp1940 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp1940->value = _284;
 _285 = ((frost$core$Equatable*) $tmp1940);
 ITable* $tmp1941 = _275->$class->itable;
@@ -39071,7 +39070,7 @@ block40:;
 _304 = &param4->typeKind;
 _305 = *_304;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp1944;
-$tmp1944 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp1944 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp1944->value = _305;
 _306 = ((frost$core$Equatable*) $tmp1944);
 _307 = _306;
@@ -39084,7 +39083,7 @@ _313 = *(&local17);
 *(&local16) = _313;
 _316 = *(&local16);
 org$frostlang$frostc$Type$Kind$wrapper* $tmp1945;
-$tmp1945 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp1945 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp1945->value = _316;
 _317 = ((frost$core$Equatable*) $tmp1945);
 ITable* $tmp1946 = _307->$class->itable;
@@ -39149,7 +39148,7 @@ block48:;
 _366 = &param4->typeKind;
 _367 = *_366;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp1952;
-$tmp1952 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp1952 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp1952->value = _367;
 _368 = ((frost$core$Equatable*) $tmp1952);
 _369 = _368;
@@ -39162,7 +39161,7 @@ _375 = *(&local19);
 *(&local18) = _375;
 _378 = *(&local18);
 org$frostlang$frostc$Type$Kind$wrapper* $tmp1953;
-$tmp1953 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp1953 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp1953->value = _378;
 _379 = ((frost$core$Equatable*) $tmp1953);
 ITable* $tmp1954 = _369->$class->itable;
@@ -39775,7 +39774,7 @@ block130:;
 _941 = &param5->typeKind;
 _942 = *_941;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp2008;
-$tmp2008 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp2008 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp2008->value = _942;
 _943 = ((frost$core$Equatable*) $tmp2008);
 _944 = _943;
@@ -39788,7 +39787,7 @@ _950 = *(&local23);
 *(&local22) = _950;
 _953 = *(&local22);
 org$frostlang$frostc$Type$Kind$wrapper* $tmp2009;
-$tmp2009 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp2009 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp2009->value = _953;
 _954 = ((frost$core$Equatable*) $tmp2009);
 ITable* $tmp2010 = _944->$class->itable;
@@ -39839,14 +39838,14 @@ block144:;
 _993 = &_981->typeKind;
 _994 = *_993;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp2013;
-$tmp2013 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp2013 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp2013->value = _994;
 _995 = ((frost$core$Equatable*) $tmp2013);
 _996 = _995;
 _997 = &param4->typeKind;
 _998 = *_997;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp2014;
-$tmp2014 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp2014 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp2014->value = _998;
 _999 = ((frost$core$Equatable*) $tmp2014);
 ITable* $tmp2015 = _996->$class->itable;
@@ -39950,7 +39949,7 @@ block150:;
 _1086 = &param4->typeKind;
 _1087 = *_1086;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp2021;
-$tmp2021 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp2021 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp2021->value = _1087;
 _1088 = ((frost$core$Equatable*) $tmp2021);
 _1089 = _1088;
@@ -39963,7 +39962,7 @@ _1095 = *(&local26);
 *(&local25) = _1095;
 _1098 = *(&local25);
 org$frostlang$frostc$Type$Kind$wrapper* $tmp2022;
-$tmp2022 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp2022 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp2022->value = _1098;
 _1099 = ((frost$core$Equatable*) $tmp2022);
 ITable* $tmp2023 = _1089->$class->itable;
@@ -40014,14 +40013,14 @@ block164:;
 _1138 = &_1126->typeKind;
 _1139 = *_1138;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp2026;
-$tmp2026 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp2026 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp2026->value = _1139;
 _1140 = ((frost$core$Equatable*) $tmp2026);
 _1141 = _1140;
 _1142 = &param5->typeKind;
 _1143 = *_1142;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp2027;
-$tmp2027 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp2027 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp2027->value = _1143;
 _1144 = ((frost$core$Equatable*) $tmp2027);
 ITable* $tmp2028 = _1141->$class->itable;
@@ -40247,7 +40246,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_1349);
 abort(); // unreachable
 
 }
-frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$getRealReference$org$frostlang$frostc$Type$frost$core$Real64$R$frost$core$String(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$Type* param1, frost$core$Real64 param2) {
+frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$getRealReference$org$frostlang$frostc$Type$frost$core$Real64$R$frost$core$String(void* rawSelf, org$frostlang$frostc$Type* param1, frost$core$Real64 param2) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Real64 local0;
 frost$core$Int _1;
@@ -40314,7 +40314,7 @@ _23 = (frost$core$Real64) {_22};
 _27 = *(&local0);
 frost$core$Frost$floatToIntBits$frost$core$Real64$R$frost$core$Int64(&_28, _27);
 frost$core$Int64$wrapper* $tmp2043;
-$tmp2043 = (frost$core$Int64$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int64$wrapperclass);
+$tmp2043 = (frost$core$Int64$wrapper*) frostObjectAlloc(sizeof(frost$core$Int64$wrapper), (frost$core$Class*) &frost$core$Int64$wrapperclass);
 $tmp2043->value = _28;
 _29 = ((frost$core$Formattable*) $tmp2043);
 ITable* $tmp2044 = _29->$class->itable;
@@ -40340,7 +40340,7 @@ block2:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:1372
 frost$core$Frost$floatToIntBits$frost$core$Real64$R$frost$core$Int64(&_46, param2);
 frost$core$Int64$wrapper* $tmp2048;
-$tmp2048 = (frost$core$Int64$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int64$wrapperclass);
+$tmp2048 = (frost$core$Int64$wrapper*) frostObjectAlloc(sizeof(frost$core$Int64$wrapper), (frost$core$Class*) &frost$core$Int64$wrapperclass);
 $tmp2048->value = _46;
 _47 = ((frost$core$Formattable*) $tmp2048);
 ITable* $tmp2049 = _47->$class->itable;
@@ -40364,7 +40364,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_60);
 return _51;
 
 }
-frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$getStringReference$frost$core$String$R$frost$core$String(org$frostlang$frostc$LLVMCodeGenerator* param0, frost$core$String* param1) {
+frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$getStringReference$frost$core$String$R$frost$core$String(void* rawSelf, frost$core$String* param1) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 frost$core$String* local1 = NULL;
@@ -40836,7 +40837,7 @@ _10 = &param0->labelCount;
 _13 = &param0->labelCount;
 _14 = *_13;
 frost$core$Int$wrapper* $tmp2070;
-$tmp2070 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp2070 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp2070->value = _14;
 _15 = ((frost$core$Object*) $tmp2070);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:1378:26
@@ -40867,8 +40868,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_40);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:1379
 // begin inline call to function frost.core.String.get_utf8():frost.collections.ListView<frost.core.Char8> from LLVMCodeGenerator.frost:1379:35
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:458
-FROST_ASSERT(24 == sizeof(frost$core$String$UTF8List));
-_45 = (frost$core$String$UTF8List*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$String$UTF8List$class);
+_45 = (frost$core$String$UTF8List*) frostObjectAlloc(sizeof(frost$core$String$UTF8List), (frost$core$Class*) &frost$core$String$UTF8List$class);
 frost$core$String$UTF8List$init$frost$core$String(_45, param1);
 _47 = ((frost$collections$ListView*) _45);
 _48 = ((frost$core$Object*) _47);
@@ -40883,7 +40883,7 @@ while ($tmp2074->$class != (frost$core$Class*) &frost$collections$CollectionView
 _54 = $tmp2074->methods[0];
 _55 = _54(_53);
 frost$core$Int$wrapper* $tmp2075;
-$tmp2075 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp2075 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp2075->value = _55;
 _56 = ((frost$core$Object*) $tmp2075);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:1379:30
@@ -40985,8 +40985,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_148);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:1382
 // begin inline call to function frost.core.String.get_utf8():frost.collections.ListView<frost.core.Char8> from LLVMCodeGenerator.frost:1382:23
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:458
-FROST_ASSERT(24 == sizeof(frost$core$String$UTF8List));
-_154 = (frost$core$String$UTF8List*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$String$UTF8List$class);
+_154 = (frost$core$String$UTF8List*) frostObjectAlloc(sizeof(frost$core$String$UTF8List), (frost$core$Class*) &frost$core$String$UTF8List$class);
 frost$core$String$UTF8List$init$frost$core$String(_154, param1);
 _156 = ((frost$collections$ListView*) _154);
 _157 = ((frost$core$Object*) _156);
@@ -41040,7 +41039,7 @@ _192 = _189.value;
 _193 = ((int8_t) _192);
 _194 = (frost$core$Int8) {_193};
 frost$core$Int8$wrapper* $tmp2090;
-$tmp2090 = (frost$core$Int8$wrapper*) frostObjectAlloc(17, (frost$core$Class*) &frost$core$Int8$wrapperclass);
+$tmp2090 = (frost$core$Int8$wrapper*) frostObjectAlloc(sizeof(frost$core$Int8$wrapper), (frost$core$Class*) &frost$core$Int8$wrapperclass);
 $tmp2090->value = _194;
 _196 = ((frost$core$Object*) $tmp2090);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:1383:34
@@ -41186,7 +41185,7 @@ _326 = &param0->labelCount;
 _329 = &param0->labelCount;
 _330 = *_329;
 frost$core$Int$wrapper* $tmp2102;
-$tmp2102 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp2102 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp2102->value = _330;
 _331 = ((frost$core$Object*) $tmp2102);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:1388:27
@@ -41354,7 +41353,7 @@ _487 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_476, _486);
 _488 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_487, &$s2119);
 _489 = (frost$core$Int) {18446744073709550617u};
 frost$core$Int$wrapper* $tmp2120;
-$tmp2120 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp2120 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp2120->value = _489;
 _490 = ((frost$core$Object*) $tmp2120);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:1395:21
@@ -41386,8 +41385,7 @@ _517 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_516, &$s213
 _518 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_517, &$s2131);
 // begin inline call to function frost.core.String.get_utf8():frost.collections.ListView<frost.core.Char8> from LLVMCodeGenerator.frost:1398:76
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:458
-FROST_ASSERT(24 == sizeof(frost$core$String$UTF8List));
-_521 = (frost$core$String$UTF8List*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$String$UTF8List$class);
+_521 = (frost$core$String$UTF8List*) frostObjectAlloc(sizeof(frost$core$String$UTF8List), (frost$core$Class*) &frost$core$String$UTF8List$class);
 frost$core$String$UTF8List$init$frost$core$String(_521, param1);
 _523 = ((frost$collections$ListView*) _521);
 _524 = ((frost$core$Object*) _523);
@@ -41402,7 +41400,7 @@ while ($tmp2132->$class != (frost$core$Class*) &frost$collections$CollectionView
 _530 = $tmp2132->methods[0];
 _531 = _530(_529);
 frost$core$Int$wrapper* $tmp2133;
-$tmp2133 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp2133 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp2133->value = _531;
 _532 = ((frost$core$Object*) $tmp2133);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:1398:21
@@ -41440,7 +41438,7 @@ _562 = _559.value;
 _563 = ((int64_t) _562);
 _564 = (frost$core$Int64) {_563};
 frost$core$Int64$wrapper* $tmp2140;
-$tmp2140 = (frost$core$Int64$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int64$wrapperclass);
+$tmp2140 = (frost$core$Int64$wrapper*) frostObjectAlloc(sizeof(frost$core$Int64$wrapper), (frost$core$Class*) &frost$core$Int64$wrapperclass);
 $tmp2140->value = _564;
 _566 = ((frost$core$Object*) $tmp2140);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:1399:24
@@ -41691,7 +41689,8 @@ goto block54;
 block54:;
 
 }
-frost$core$Bit org$frostlang$frostc$LLVMCodeGenerator$haveSelfValuePointer$R$frost$core$Bit(org$frostlang$frostc$LLVMCodeGenerator* param0) {
+frost$core$Bit org$frostlang$frostc$LLVMCodeGenerator$haveSelfValuePointer$R$frost$core$Bit(void* rawSelf) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Bit local0;
 org$frostlang$frostc$MethodDecl$Kind local1;
@@ -42085,7 +42084,7 @@ _129 = ((org$frostlang$frostc$MethodDecl*) _123);
 _130 = &_129->methodKind;
 _131 = *_130;
 org$frostlang$frostc$MethodDecl$Kind$wrapper* $tmp2168;
-$tmp2168 = (org$frostlang$frostc$MethodDecl$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$MethodDecl$Kind$wrapperclass);
+$tmp2168 = (org$frostlang$frostc$MethodDecl$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$MethodDecl$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$MethodDecl$Kind$wrapperclass);
 $tmp2168->value = _131;
 _132 = ((frost$core$Equatable*) $tmp2168);
 _133 = _132;
@@ -42098,7 +42097,7 @@ _139 = *(&local2);
 *(&local1) = _139;
 _142 = *(&local1);
 org$frostlang$frostc$MethodDecl$Kind$wrapper* $tmp2169;
-$tmp2169 = (org$frostlang$frostc$MethodDecl$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$MethodDecl$Kind$wrapperclass);
+$tmp2169 = (org$frostlang$frostc$MethodDecl$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$MethodDecl$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$MethodDecl$Kind$wrapperclass);
 $tmp2169->value = _142;
 _143 = ((frost$core$Equatable*) $tmp2169);
 ITable* $tmp2170 = _133->$class->itable;
@@ -42345,7 +42344,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_351);
 return _344;
 
 }
-frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$getSelfPointer$R$frost$core$String(org$frostlang$frostc$LLVMCodeGenerator* param0) {
+frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$getSelfPointer$R$frost$core$String(void* rawSelf) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Bit local0;
 org$frostlang$frostc$MethodDecl$Kind local1;
@@ -42846,7 +42846,7 @@ _129 = ((org$frostlang$frostc$MethodDecl*) _123);
 _130 = &_129->methodKind;
 _131 = *_130;
 org$frostlang$frostc$MethodDecl$Kind$wrapper* $tmp2212;
-$tmp2212 = (org$frostlang$frostc$MethodDecl$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$MethodDecl$Kind$wrapperclass);
+$tmp2212 = (org$frostlang$frostc$MethodDecl$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$MethodDecl$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$MethodDecl$Kind$wrapperclass);
 $tmp2212->value = _131;
 _132 = ((frost$core$Equatable*) $tmp2212);
 _133 = _132;
@@ -42859,7 +42859,7 @@ _139 = *(&local2);
 *(&local1) = _139;
 _142 = *(&local1);
 org$frostlang$frostc$MethodDecl$Kind$wrapper* $tmp2213;
-$tmp2213 = (org$frostlang$frostc$MethodDecl$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$MethodDecl$Kind$wrapperclass);
+$tmp2213 = (org$frostlang$frostc$MethodDecl$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$MethodDecl$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$MethodDecl$Kind$wrapperclass);
 $tmp2213->value = _142;
 _143 = ((frost$core$Equatable*) $tmp2213);
 ITable* $tmp2214 = _133->$class->itable;
@@ -43289,7 +43289,8 @@ frost$core$Frost$ref$frost$core$Object$Q(_510);
 return &$s2248;
 
 }
-frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$getSelfValue$frost$io$OutputStream$R$frost$core$String(org$frostlang$frostc$LLVMCodeGenerator* param0, frost$io$OutputStream* param1) {
+frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$getSelfValue$frost$io$OutputStream$R$frost$core$String(void* rawSelf, frost$io$OutputStream* param1) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 frost$core$String* local1 = NULL;
@@ -43889,7 +43890,7 @@ _156 = &param0->varCount;
 _159 = &param0->varCount;
 _160 = *_159;
 frost$core$Int$wrapper* $tmp2276;
-$tmp2276 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp2276 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp2276->value = _160;
 _161 = ((frost$core$Object*) $tmp2276);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:148:16
@@ -44429,7 +44430,8 @@ goto block74;
 block74:;
 
 }
-frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$getNullReference$org$frostlang$frostc$Type$R$frost$core$String(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$Type* param1) {
+frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$getNullReference$org$frostlang$frostc$Type$R$frost$core$String(void* rawSelf, org$frostlang$frostc$Type* param1) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 org$frostlang$frostc$Type$Kind local0;
 org$frostlang$frostc$Type$Kind local1;
@@ -44547,7 +44549,7 @@ frost$core$Object* _193;
 _1 = &param1->typeKind;
 _2 = *_1;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp2317;
-$tmp2317 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp2317 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp2317->value = _2;
 _3 = ((frost$core$Equatable*) $tmp2317);
 _4 = _3;
@@ -44560,7 +44562,7 @@ _10 = *(&local1);
 *(&local0) = _10;
 _13 = *(&local0);
 org$frostlang$frostc$Type$Kind$wrapper* $tmp2318;
-$tmp2318 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp2318 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp2318->value = _13;
 _14 = ((frost$core$Equatable*) $tmp2318);
 ITable* $tmp2319 = _4->$class->itable;
@@ -44768,7 +44770,8 @@ goto block29;
 block29:;
 
 }
-frost$core$Int org$frostlang$frostc$LLVMCodeGenerator$getChoiceFieldOffset$org$frostlang$frostc$ChoiceCase$frost$core$Int$R$frost$core$Int(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$ChoiceCase* param1, frost$core$Int param2) {
+frost$core$Int org$frostlang$frostc$LLVMCodeGenerator$getChoiceFieldOffset$org$frostlang$frostc$ChoiceCase$frost$core$Int$R$frost$core$Int(void* rawSelf, org$frostlang$frostc$ChoiceCase* param1, frost$core$Int param2) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Int local0;
 frost$core$Int local1;
@@ -44956,7 +44959,8 @@ _96 = *(&local0);
 return _96;
 
 }
-frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$selfType$org$frostlang$frostc$MethodDecl$R$frost$core$String(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$MethodDecl* param1) {
+frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$selfType$org$frostlang$frostc$MethodDecl$R$frost$core$String(void* rawSelf, org$frostlang$frostc$MethodDecl* param1) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$String* local0 = NULL;
 org$frostlang$frostc$MethodDecl$Kind local1;
@@ -45053,7 +45057,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_36);
 _39 = &param1->methodKind;
 _40 = *_39;
 org$frostlang$frostc$MethodDecl$Kind$wrapper* $tmp2344;
-$tmp2344 = (org$frostlang$frostc$MethodDecl$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$MethodDecl$Kind$wrapperclass);
+$tmp2344 = (org$frostlang$frostc$MethodDecl$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$MethodDecl$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$MethodDecl$Kind$wrapperclass);
 $tmp2344->value = _40;
 _41 = ((frost$core$Equatable*) $tmp2344);
 _42 = _41;
@@ -45066,7 +45070,7 @@ _48 = *(&local2);
 *(&local1) = _48;
 _51 = *(&local1);
 org$frostlang$frostc$MethodDecl$Kind$wrapper* $tmp2345;
-$tmp2345 = (org$frostlang$frostc$MethodDecl$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$MethodDecl$Kind$wrapperclass);
+$tmp2345 = (org$frostlang$frostc$MethodDecl$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$MethodDecl$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$MethodDecl$Kind$wrapperclass);
 $tmp2345->value = _51;
 _52 = ((frost$core$Equatable*) $tmp2345);
 ITable* $tmp2346 = _42->$class->itable;
@@ -45116,7 +45120,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_88);
 return _84;
 
 }
-void org$frostlang$frostc$LLVMCodeGenerator$writeDeclaration$org$frostlang$frostc$MethodDecl(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$MethodDecl* param1) {
+void org$frostlang$frostc$LLVMCodeGenerator$writeDeclaration$org$frostlang$frostc$MethodDecl(void* rawSelf, org$frostlang$frostc$MethodDecl* param1) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 frost$core$String* local1 = NULL;
@@ -45843,16 +45848,16 @@ abort(); // unreachable
 block43:;
 _330 = _322;
 // begin inline call to method org.frostlang.frostc.Compiler.isValueInit(m:org.frostlang.frostc.MethodDecl):frost.core.Bit from LLVMCodeGenerator.frost:1499:63
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:3867
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:3750
 _333 = &param1->methodKind;
 _334 = *_333;
 org$frostlang$frostc$MethodDecl$Kind$wrapper* $tmp2389;
-$tmp2389 = (org$frostlang$frostc$MethodDecl$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$MethodDecl$Kind$wrapperclass);
+$tmp2389 = (org$frostlang$frostc$MethodDecl$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$MethodDecl$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$MethodDecl$Kind$wrapperclass);
 $tmp2389->value = _334;
 _335 = ((frost$core$Equatable*) $tmp2389);
 _336 = _335;
 _337 = (frost$core$Int) {2u};
-// begin inline call to org.frostlang.frostc.MethodDecl.Kind.init(rv:frost.core.Int):org.frostlang.frostc.MethodDecl.Kind from Compiler.frost:3867:46
+// begin inline call to org.frostlang.frostc.MethodDecl.Kind.init(rv:frost.core.Int):org.frostlang.frostc.MethodDecl.Kind from Compiler.frost:3750:46
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/MethodDecl.frost:7
 _340 = &(&local6)->$rawValue;
 *_340 = _337;
@@ -45860,7 +45865,7 @@ _342 = *(&local6);
 *(&local5) = _342;
 _345 = *(&local5);
 org$frostlang$frostc$MethodDecl$Kind$wrapper* $tmp2390;
-$tmp2390 = (org$frostlang$frostc$MethodDecl$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$MethodDecl$Kind$wrapperclass);
+$tmp2390 = (org$frostlang$frostc$MethodDecl$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$MethodDecl$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$MethodDecl$Kind$wrapperclass);
 $tmp2390->value = _345;
 _346 = ((frost$core$Equatable*) $tmp2390);
 ITable* $tmp2391 = _336->$class->itable;
@@ -45875,7 +45880,7 @@ block47:;
 _351 = &param1->owner;
 _352 = *_351;
 _353 = _352;
-// begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Compiler.frost:3867:63
+// begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Compiler.frost:3750:63
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
 _356 = frost$core$Weak$get_valid$R$frost$core$Bit(_353);
 _357 = _356.value;
@@ -46202,7 +46207,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_643);
 abort(); // unreachable
 
 }
-frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$getReference$org$frostlang$frostc$IR$Value$R$frost$core$String(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$IR$Value* param1) {
+frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$getReference$org$frostlang$frostc$IR$Value$R$frost$core$String(void* rawSelf, org$frostlang$frostc$IR$Value* param1) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Bit local0;
 frost$core$UInt64 local1;
@@ -46428,15 +46434,15 @@ _9 = (frost$core$Bit) {_8};
 _11 = _9.value;
 if (_11) goto block2; else goto block3;
 block2:;
-_13 = (frost$core$Bit*) (param1->$data + 0);
+_13 = &param1->$data.$BIT.field0;
 _14 = *_13;
 *(&local0) = _14;
-_16 = (org$frostlang$frostc$Type**) (param1->$data + 1);
+_16 = &param1->$data.$BIT.field1;
 _17 = *_16;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:1517
 _19 = *(&local0);
 frost$core$Bit$wrapper* $tmp2422;
-$tmp2422 = (frost$core$Bit$wrapper*) frostObjectAlloc(17, (frost$core$Class*) &frost$core$Bit$wrapperclass);
+$tmp2422 = (frost$core$Bit$wrapper*) frostObjectAlloc(sizeof(frost$core$Bit$wrapper), (frost$core$Class*) &frost$core$Bit$wrapperclass);
 $tmp2422->value = _19;
 _20 = ((frost$core$Object*) $tmp2422);
 _21 = ($fn2423) _20->$class->vtable[0];
@@ -46459,15 +46465,15 @@ _36 = (frost$core$Bit) {_35};
 _38 = _36.value;
 if (_38) goto block5; else goto block6;
 block5:;
-_40 = (frost$core$UInt64*) (param1->$data + 0);
+_40 = &param1->$data.$INT.field0;
 _41 = *_40;
 *(&local1) = _41;
-_43 = (org$frostlang$frostc$Type**) (param1->$data + 8);
+_43 = &param1->$data.$INT.field1;
 _44 = *_43;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:1520
 _46 = *(&local1);
 frost$core$UInt64$wrapper* $tmp2424;
-$tmp2424 = (frost$core$UInt64$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$UInt64$wrapperclass);
+$tmp2424 = (frost$core$UInt64$wrapper*) frostObjectAlloc(sizeof(frost$core$UInt64$wrapper), (frost$core$Class*) &frost$core$UInt64$wrapperclass);
 $tmp2424->value = _46;
 _47 = ((frost$core$Object*) $tmp2424);
 _48 = ($fn2425) _47->$class->vtable[0];
@@ -46490,15 +46496,15 @@ _63 = (frost$core$Bit) {_62};
 _65 = _63.value;
 if (_65) goto block8; else goto block9;
 block8:;
-_67 = (frost$core$Int*) (param1->$data + 0);
+_67 = &param1->$data.$LOCAL.field0;
 _68 = *_67;
 *(&local2) = _68;
-_70 = (org$frostlang$frostc$Type**) (param1->$data + 8);
+_70 = &param1->$data.$LOCAL.field1;
 _71 = *_70;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:1523
 _73 = *(&local2);
 frost$core$Int$wrapper* $tmp2426;
-$tmp2426 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp2426 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp2426->value = _73;
 _74 = ((frost$core$Object*) $tmp2426);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:1523:24
@@ -46533,7 +46539,7 @@ _103 = (frost$core$Bit) {_102};
 _105 = _103.value;
 if (_105) goto block12; else goto block13;
 block12:;
-_107 = (org$frostlang$frostc$MethodDecl**) (param1->$data + 0);
+_107 = &param1->$data.$METHOD_POINTER.field0;
 _108 = *_107;
 *(&local3) = ((org$frostlang$frostc$MethodDecl*) NULL);
 _110 = ((frost$core$Object*) _108);
@@ -46542,7 +46548,7 @@ _112 = *(&local3);
 _113 = ((frost$core$Object*) _112);
 frost$core$Frost$unref$frost$core$Object$Q(_113);
 *(&local3) = _108;
-_116 = (org$frostlang$frostc$Type**) (param1->$data + 8);
+_116 = &param1->$data.$METHOD_POINTER.field1;
 _117 = *_116;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:1526
 _119 = *(&local3);
@@ -46604,7 +46610,7 @@ _171 = (frost$core$Bit) {_170};
 _173 = _171.value;
 if (_173) goto block21; else goto block22;
 block21:;
-_175 = (org$frostlang$frostc$Type**) (param1->$data + 0);
+_175 = &param1->$data.$NULL.field0;
 _176 = *_175;
 *(&local4) = ((org$frostlang$frostc$Type*) NULL);
 _178 = ((frost$core$Object*) _176);
@@ -46636,15 +46642,15 @@ _202 = (frost$core$Bit) {_201};
 _204 = _202.value;
 if (_204) goto block24; else goto block25;
 block24:;
-_206 = (frost$core$Int*) (param1->$data + 0);
+_206 = &param1->$data.$PARAMETER.field0;
 _207 = *_206;
 *(&local5) = _207;
-_209 = (org$frostlang$frostc$Type**) (param1->$data + 8);
+_209 = &param1->$data.$PARAMETER.field1;
 _210 = *_209;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:1535
 _212 = *(&local5);
 frost$core$Int$wrapper* $tmp2431;
-$tmp2431 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp2431 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp2431->value = _212;
 _213 = ((frost$core$Object*) $tmp2431);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:1535:24
@@ -46679,10 +46685,10 @@ _242 = (frost$core$Bit) {_241};
 _244 = _242.value;
 if (_244) goto block28; else goto block29;
 block28:;
-_246 = (frost$core$Real64*) (param1->$data + 0);
+_246 = &param1->$data.$REAL.field0;
 _247 = *_246;
 *(&local6) = _247;
-_249 = (org$frostlang$frostc$Type**) (param1->$data + 8);
+_249 = &param1->$data.$REAL.field1;
 _250 = *_249;
 *(&local7) = ((org$frostlang$frostc$Type*) NULL);
 _252 = ((frost$core$Object*) _250);
@@ -46715,17 +46721,17 @@ _277 = (frost$core$Bit) {_276};
 _279 = _277.value;
 if (_279) goto block31; else goto block32;
 block31:;
-_281 = (org$frostlang$frostc$IR$Statement$ID*) (param1->$data + 0);
+_281 = &param1->$data.$REF.field0;
 _282 = *_281;
 *(&local8) = _282;
-_284 = (org$frostlang$frostc$Type**) (param1->$data + 8);
+_284 = &param1->$data.$REF.field1;
 _285 = *_284;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:1541
 _287 = *(&local8);
 // begin inline call to method org.frostlang.frostc.LLVMCodeGenerator.name(id:org.frostlang.frostc.IR.Statement.ID):frost.core.String from LLVMCodeGenerator.frost:1541:28
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:143
 org$frostlang$frostc$IR$Statement$ID$wrapper* $tmp2435;
-$tmp2435 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
+$tmp2435 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$IR$Statement$ID$wrapper), (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
 $tmp2435->value = _287;
 _290 = ((frost$core$Object*) $tmp2435);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:143:16
@@ -46764,7 +46770,7 @@ _324 = (frost$core$Bit) {_323};
 _326 = _324.value;
 if (_326) goto block36; else goto block37;
 block36:;
-_328 = (frost$core$String**) (param1->$data + 0);
+_328 = &param1->$data.$STRING.field0;
 _329 = *_328;
 *(&local9) = ((frost$core$String*) NULL);
 _331 = ((frost$core$Object*) _329);
@@ -46773,7 +46779,7 @@ _333 = *(&local9);
 _334 = ((frost$core$Object*) _333);
 frost$core$Frost$unref$frost$core$Object$Q(_334);
 *(&local9) = _329;
-_337 = (org$frostlang$frostc$Type**) (param1->$data + 8);
+_337 = &param1->$data.$STRING.field1;
 _338 = *_337;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:1544
 _340 = *(&local9);
@@ -46797,7 +46803,8 @@ goto block39;
 block39:;
 
 }
-frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$getTypedReference$org$frostlang$frostc$IR$Value$R$frost$core$String(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$IR$Value* param1) {
+frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$getTypedReference$org$frostlang$frostc$IR$Value$R$frost$core$String(void* rawSelf, org$frostlang$frostc$IR$Value* param1) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 $fn2440 _1;
 org$frostlang$frostc$Type* _2;
@@ -46846,7 +46853,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_27);
 return _12;
 
 }
-frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$debugInfo$org$frostlang$frostc$Position$R$frost$core$String(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$Position param1) {
+frost$core$String* org$frostlang$frostc$LLVMCodeGenerator$debugInfo$org$frostlang$frostc$Position$R$frost$core$String(void* rawSelf, org$frostlang$frostc$Position param1) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 frost$core$String* local1 = NULL;
@@ -47038,14 +47046,14 @@ frost$core$Frost$unref$frost$core$Object$Q(_39);
 if (_38) goto block7; else goto block5;
 block7:;
 org$frostlang$frostc$Position$wrapper* $tmp2451;
-$tmp2451 = (org$frostlang$frostc$Position$wrapper*) frostObjectAlloc(40, (frost$core$Class*) &org$frostlang$frostc$Position$wrapperclass);
+$tmp2451 = (org$frostlang$frostc$Position$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Position$wrapper), (frost$core$Class*) &org$frostlang$frostc$Position$wrapperclass);
 $tmp2451->value = param1;
 _42 = ((frost$core$Equatable*) $tmp2451);
 _43 = _42;
 _44 = &param0->lastDebugPosition;
 _45 = *_44;
 org$frostlang$frostc$Position$wrapper* $tmp2452;
-$tmp2452 = (org$frostlang$frostc$Position$wrapper*) frostObjectAlloc(40, (frost$core$Class*) &org$frostlang$frostc$Position$wrapperclass);
+$tmp2452 = (org$frostlang$frostc$Position$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Position$wrapper), (frost$core$Class*) &org$frostlang$frostc$Position$wrapperclass);
 $tmp2452->value = _45;
 _46 = ((frost$core$Equatable*) $tmp2452);
 ITable* $tmp2453 = _43->$class->itable;
@@ -47084,7 +47092,7 @@ _71 = &param0->metadataCount;
 _74 = &param0->metadataCount;
 _75 = *_74;
 frost$core$Int$wrapper* $tmp2454;
-$tmp2454 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp2454 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp2454->value = _75;
 _76 = ((frost$core$Object*) $tmp2454);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:158:16
@@ -47128,7 +47136,7 @@ frost$core$Frost$ref$frost$core$Object$Q(_115);
 _118 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_112, &$s2458);
 _119 = param1.line;
 frost$core$Int$wrapper* $tmp2459;
-$tmp2459 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp2459 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp2459->value = _119;
 _120 = ((frost$core$Object*) $tmp2459);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:1561:35
@@ -47275,7 +47283,8 @@ goto block24;
 block24:;
 
 }
-void org$frostlang$frostc$LLVMCodeGenerator$writeIsNull$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Statement$ID$org$frostlang$frostc$IR$Value(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$Position param1, org$frostlang$frostc$IR$Statement$ID param2, org$frostlang$frostc$IR$Value* param3) {
+void org$frostlang$frostc$LLVMCodeGenerator$writeIsNull$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Statement$ID$org$frostlang$frostc$IR$Value(void* rawSelf, org$frostlang$frostc$Position param1, org$frostlang$frostc$IR$Statement$ID param2, org$frostlang$frostc$IR$Value* param3) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 frost$core$String* local1 = NULL;
@@ -47712,7 +47721,7 @@ _149 = &param0->varCount;
 _152 = &param0->varCount;
 _153 = *_152;
 frost$core$Int$wrapper* $tmp2495;
-$tmp2495 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp2495 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp2495->value = _153;
 _154 = ((frost$core$Object*) $tmp2495);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:148:16
@@ -47833,7 +47842,7 @@ _268 = *_267;
 // begin inline call to method org.frostlang.frostc.LLVMCodeGenerator.name(id:org.frostlang.frostc.IR.Statement.ID):frost.core.String from LLVMCodeGenerator.frost:1583:38
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:143
 org$frostlang$frostc$IR$Statement$ID$wrapper* $tmp2505;
-$tmp2505 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
+$tmp2505 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$IR$Statement$ID$wrapper), (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
 $tmp2505->value = param2;
 _271 = ((frost$core$Object*) $tmp2505);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:143:16
@@ -47952,7 +47961,7 @@ _382 = *_381;
 // begin inline call to method org.frostlang.frostc.LLVMCodeGenerator.name(id:org.frostlang.frostc.IR.Statement.ID):frost.core.String from LLVMCodeGenerator.frost:1586:38
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:143
 org$frostlang$frostc$IR$Statement$ID$wrapper* $tmp2515;
-$tmp2515 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
+$tmp2515 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$IR$Statement$ID$wrapper), (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
 $tmp2515->value = param2;
 _385 = ((frost$core$Object*) $tmp2515);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:143:16
@@ -48086,7 +48095,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_505);
 abort(); // unreachable
 
 }
-void org$frostlang$frostc$LLVMCodeGenerator$writeIsNonNull$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Statement$ID$org$frostlang$frostc$IR$Value(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$Position param1, org$frostlang$frostc$IR$Statement$ID param2, org$frostlang$frostc$IR$Value* param3) {
+void org$frostlang$frostc$LLVMCodeGenerator$writeIsNonNull$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Statement$ID$org$frostlang$frostc$IR$Value(void* rawSelf, org$frostlang$frostc$Position param1, org$frostlang$frostc$IR$Statement$ID param2, org$frostlang$frostc$IR$Value* param3) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 frost$core$String* local1 = NULL;
@@ -48429,7 +48439,7 @@ _139 = *_138;
 // begin inline call to method org.frostlang.frostc.LLVMCodeGenerator.name(id:org.frostlang.frostc.IR.Statement.ID):frost.core.String from LLVMCodeGenerator.frost:1599:38
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:143
 org$frostlang$frostc$IR$Statement$ID$wrapper* $tmp2546;
-$tmp2546 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
+$tmp2546 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$IR$Statement$ID$wrapper), (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
 $tmp2546->value = param2;
 _142 = ((frost$core$Object*) $tmp2546);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:143:16
@@ -48536,7 +48546,7 @@ _241 = *_240;
 // begin inline call to method org.frostlang.frostc.LLVMCodeGenerator.name(id:org.frostlang.frostc.IR.Statement.ID):frost.core.String from LLVMCodeGenerator.frost:1602:38
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:143
 org$frostlang$frostc$IR$Statement$ID$wrapper* $tmp2556;
-$tmp2556 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
+$tmp2556 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$IR$Statement$ID$wrapper), (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
 $tmp2556->value = param2;
 _244 = ((frost$core$Object*) $tmp2556);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:143:16
@@ -48662,7 +48672,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_356);
 abort(); // unreachable
 
 }
-frost$core$Bit org$frostlang$frostc$LLVMCodeGenerator$isNull$org$frostlang$frostc$IR$Value$R$frost$core$Bit(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$IR$Value* param1) {
+frost$core$Bit org$frostlang$frostc$LLVMCodeGenerator$isNull$org$frostlang$frostc$IR$Value$R$frost$core$Bit(void* rawSelf, org$frostlang$frostc$IR$Value* param1) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Int* _1;
 frost$core$Int _2;
@@ -48696,7 +48707,8 @@ _17 = (frost$core$Bit) {false};
 return _17;
 
 }
-void org$frostlang$frostc$LLVMCodeGenerator$writeBinary$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Statement$ID$org$frostlang$frostc$IR$Value$org$frostlang$frostc$expression$Binary$Operator$org$frostlang$frostc$IR$Value$org$frostlang$frostc$Type(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$Position param1, org$frostlang$frostc$IR$Statement$ID param2, org$frostlang$frostc$IR$Value* param3, org$frostlang$frostc$expression$Binary$Operator param4, org$frostlang$frostc$IR$Value* param5, org$frostlang$frostc$Type* param6) {
+void org$frostlang$frostc$LLVMCodeGenerator$writeBinary$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Statement$ID$org$frostlang$frostc$IR$Value$org$frostlang$frostc$expression$Binary$Operator$org$frostlang$frostc$IR$Value$org$frostlang$frostc$Type(void* rawSelf, org$frostlang$frostc$Position param1, org$frostlang$frostc$IR$Statement$ID param2, org$frostlang$frostc$IR$Value* param3, org$frostlang$frostc$expression$Binary$Operator param4, org$frostlang$frostc$IR$Value* param5, org$frostlang$frostc$Type* param6) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$String* local0 = NULL;
 org$frostlang$frostc$LLVMCodeGenerator$OpClass local1;
@@ -49873,7 +49885,7 @@ block71:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:1643
 _412 = (frost$core$Int) {1643u};
 org$frostlang$frostc$expression$Binary$Operator$wrapper* $tmp2611;
-$tmp2611 = (org$frostlang$frostc$expression$Binary$Operator$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$expression$Binary$Operator$wrapperclass);
+$tmp2611 = (org$frostlang$frostc$expression$Binary$Operator$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$expression$Binary$Operator$wrapper), (frost$core$Class*) &org$frostlang$frostc$expression$Binary$Operator$wrapperclass);
 $tmp2611->value = param4;
 _413 = ((frost$core$Object*) $tmp2611);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:1643:38
@@ -50248,7 +50260,7 @@ block130:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:1669
 _767 = (frost$core$Int) {1669u};
 org$frostlang$frostc$expression$Binary$Operator$wrapper* $tmp2648;
-$tmp2648 = (org$frostlang$frostc$expression$Binary$Operator$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$expression$Binary$Operator$wrapperclass);
+$tmp2648 = (org$frostlang$frostc$expression$Binary$Operator$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$expression$Binary$Operator$wrapper), (frost$core$Class*) &org$frostlang$frostc$expression$Binary$Operator$wrapperclass);
 $tmp2648->value = param4;
 _768 = ((frost$core$Object*) $tmp2648);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:1669:38
@@ -50479,7 +50491,7 @@ block165:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:1686
 _984 = (frost$core$Int) {1686u};
 org$frostlang$frostc$expression$Binary$Operator$wrapper* $tmp2673;
-$tmp2673 = (org$frostlang$frostc$expression$Binary$Operator$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$expression$Binary$Operator$wrapperclass);
+$tmp2673 = (org$frostlang$frostc$expression$Binary$Operator$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$expression$Binary$Operator$wrapper), (frost$core$Class*) &org$frostlang$frostc$expression$Binary$Operator$wrapperclass);
 $tmp2673->value = param4;
 _985 = ((frost$core$Object*) $tmp2673);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:1686:38
@@ -50718,7 +50730,7 @@ block187:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:1715
 _1201 = (frost$core$Int) {1715u};
 org$frostlang$frostc$expression$Binary$Operator$wrapper* $tmp2682;
-$tmp2682 = (org$frostlang$frostc$expression$Binary$Operator$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$expression$Binary$Operator$wrapperclass);
+$tmp2682 = (org$frostlang$frostc$expression$Binary$Operator$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$expression$Binary$Operator$wrapper), (frost$core$Class*) &org$frostlang$frostc$expression$Binary$Operator$wrapperclass);
 $tmp2682->value = param4;
 _1202 = ((frost$core$Object*) $tmp2682);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:1715:38
@@ -50762,7 +50774,7 @@ _1237 = &param0->varCount;
 _1240 = &param0->varCount;
 _1241 = *_1240;
 frost$core$Int$wrapper* $tmp2687;
-$tmp2687 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp2687 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp2687->value = _1241;
 _1242 = ((frost$core$Object*) $tmp2687);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:148:16
@@ -50824,7 +50836,7 @@ _1300 = *_1299;
 // begin inline call to method org.frostlang.frostc.LLVMCodeGenerator.name(id:org.frostlang.frostc.IR.Statement.ID):frost.core.String from LLVMCodeGenerator.frost:1724:34
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:143
 org$frostlang$frostc$IR$Statement$ID$wrapper* $tmp2691;
-$tmp2691 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
+$tmp2691 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$IR$Statement$ID$wrapper), (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
 $tmp2691->value = param2;
 _1303 = ((frost$core$Object*) $tmp2691);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:143:16
@@ -50979,7 +50991,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_1451);
 return;
 
 }
-void org$frostlang$frostc$LLVMCodeGenerator$writeBranch$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Block$ID(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$Position param1, org$frostlang$frostc$IR$Block$ID param2) {
+void org$frostlang$frostc$LLVMCodeGenerator$writeBranch$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Block$ID(void* rawSelf, org$frostlang$frostc$Position param1, org$frostlang$frostc$IR$Block$ID param2) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 frost$io$OutputStream** _3;
@@ -51032,7 +51045,7 @@ frost$core$Object* _78;
 _3 = &param0->out;
 _4 = *_3;
 org$frostlang$frostc$IR$Block$ID$wrapper* $tmp2708;
-$tmp2708 = (org$frostlang$frostc$IR$Block$ID$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$IR$Block$ID$wrapperclass);
+$tmp2708 = (org$frostlang$frostc$IR$Block$ID$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$IR$Block$ID$wrapper), (frost$core$Class*) &org$frostlang$frostc$IR$Block$ID$wrapperclass);
 $tmp2708->value = param2;
 _5 = ((frost$core$Object*) $tmp2708);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:1734:27
@@ -51114,7 +51127,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_78);
 return;
 
 }
-void org$frostlang$frostc$LLVMCodeGenerator$writeCast$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Statement$ID$org$frostlang$frostc$IR$Value$org$frostlang$frostc$Type(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$Position param1, org$frostlang$frostc$IR$Statement$ID param2, org$frostlang$frostc$IR$Value* param3, org$frostlang$frostc$Type* param4) {
+void org$frostlang$frostc$LLVMCodeGenerator$writeCast$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Statement$ID$org$frostlang$frostc$IR$Value$org$frostlang$frostc$Type(void* rawSelf, org$frostlang$frostc$Position param1, org$frostlang$frostc$IR$Statement$ID param2, org$frostlang$frostc$IR$Value* param3, org$frostlang$frostc$Type* param4) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Object* _3;
 $fn2718 _6;
@@ -51138,7 +51152,7 @@ frost$core$Object* _34;
 // begin inline call to method org.frostlang.frostc.LLVMCodeGenerator.name(id:org.frostlang.frostc.IR.Statement.ID):frost.core.String from LLVMCodeGenerator.frost:1742:33
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:143
 org$frostlang$frostc$IR$Statement$ID$wrapper* $tmp2720;
-$tmp2720 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
+$tmp2720 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$IR$Statement$ID$wrapper), (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
 $tmp2720->value = param2;
 _3 = ((frost$core$Object*) $tmp2720);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:143:16
@@ -51174,7 +51188,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_34);
 return;
 
 }
-void org$frostlang$frostc$LLVMCodeGenerator$writeConditionalBranch$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Value$org$frostlang$frostc$IR$Block$ID$org$frostlang$frostc$IR$Block$ID(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$Position param1, org$frostlang$frostc$IR$Value* param2, org$frostlang$frostc$IR$Block$ID param3, org$frostlang$frostc$IR$Block$ID param4) {
+void org$frostlang$frostc$LLVMCodeGenerator$writeConditionalBranch$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Value$org$frostlang$frostc$IR$Block$ID$org$frostlang$frostc$IR$Block$ID(void* rawSelf, org$frostlang$frostc$Position param1, org$frostlang$frostc$IR$Value* param2, org$frostlang$frostc$IR$Block$ID param3, org$frostlang$frostc$IR$Block$ID param4) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 frost$io$OutputStream** _3;
@@ -51299,7 +51314,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_33);
 _36 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(&$s2733, _18);
 _37 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_36, &$s2734);
 org$frostlang$frostc$IR$Block$ID$wrapper* $tmp2735;
-$tmp2735 = (org$frostlang$frostc$IR$Block$ID$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$IR$Block$ID$wrapperclass);
+$tmp2735 = (org$frostlang$frostc$IR$Block$ID$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$IR$Block$ID$wrapper), (frost$core$Class*) &org$frostlang$frostc$IR$Block$ID$wrapperclass);
 $tmp2735->value = param3;
 _38 = ((frost$core$Object*) $tmp2735);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:1748:27
@@ -51315,7 +51330,7 @@ _48 = ((frost$core$Object*) _42);
 frost$core$Frost$unref$frost$core$Object$Q(_48);
 _51 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_43, &$s2737);
 org$frostlang$frostc$IR$Block$ID$wrapper* $tmp2738;
-$tmp2738 = (org$frostlang$frostc$IR$Block$ID$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$IR$Block$ID$wrapperclass);
+$tmp2738 = (org$frostlang$frostc$IR$Block$ID$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$IR$Block$ID$wrapper), (frost$core$Class*) &org$frostlang$frostc$IR$Block$ID$wrapperclass);
 $tmp2738->value = param4;
 _52 = ((frost$core$Object*) $tmp2738);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:1749:21
@@ -51426,7 +51441,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_154);
 return;
 
 }
-void org$frostlang$frostc$LLVMCodeGenerator$writeConstruct$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Statement$ID$org$frostlang$frostc$ClassDecl(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$Position param1, org$frostlang$frostc$IR$Statement$ID param2, org$frostlang$frostc$ClassDecl* param3) {
+void org$frostlang$frostc$LLVMCodeGenerator$writeConstruct$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Statement$ID$org$frostlang$frostc$ClassDecl(void* rawSelf, org$frostlang$frostc$Position param1, org$frostlang$frostc$IR$Statement$ID param2, org$frostlang$frostc$ClassDecl* param3) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 org$frostlang$frostc$Compiler$Resolution local0;
 org$frostlang$frostc$Compiler$Resolution local1;
@@ -51688,7 +51704,7 @@ frost$core$Object* _448;
 _0 = &param3->resolved;
 _1 = *_0;
 org$frostlang$frostc$Compiler$Resolution$wrapper* $tmp2756;
-$tmp2756 = (org$frostlang$frostc$Compiler$Resolution$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Compiler$Resolution$wrapperclass);
+$tmp2756 = (org$frostlang$frostc$Compiler$Resolution$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Compiler$Resolution$wrapper), (frost$core$Class*) &org$frostlang$frostc$Compiler$Resolution$wrapperclass);
 $tmp2756->value = _1;
 _2 = ((frost$core$Equatable*) $tmp2756);
 _3 = _2;
@@ -51701,7 +51717,7 @@ _9 = *(&local1);
 *(&local0) = _9;
 _12 = *(&local0);
 org$frostlang$frostc$Compiler$Resolution$wrapper* $tmp2757;
-$tmp2757 = (org$frostlang$frostc$Compiler$Resolution$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Compiler$Resolution$wrapperclass);
+$tmp2757 = (org$frostlang$frostc$Compiler$Resolution$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Compiler$Resolution$wrapper), (frost$core$Class*) &org$frostlang$frostc$Compiler$Resolution$wrapperclass);
 $tmp2757->value = _12;
 _13 = ((frost$core$Equatable*) $tmp2757);
 ITable* $tmp2758 = _3->$class->itable;
@@ -51857,7 +51873,7 @@ _145 = &param0->varCount;
 _148 = &param0->varCount;
 _149 = *_148;
 frost$core$Int$wrapper* $tmp2770;
-$tmp2770 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp2770 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp2770->value = _149;
 _150 = ((frost$core$Object*) $tmp2770);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:148:16
@@ -51911,7 +51927,7 @@ _201 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_195, &$s277
 _202 = *(&local6);
 _203 = org$frostlang$frostc$LLVMCodeGenerator$sizeOf$org$frostlang$frostc$Type$R$frost$core$Int(param0, _202);
 frost$core$Int$wrapper* $tmp2775;
-$tmp2775 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp2775 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp2775->value = _203;
 _204 = ((frost$core$Object*) $tmp2775);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:1770:30
@@ -52023,7 +52039,7 @@ _307 = *_306;
 // begin inline call to method org.frostlang.frostc.LLVMCodeGenerator.name(id:org.frostlang.frostc.IR.Statement.ID):frost.core.String from LLVMCodeGenerator.frost:1772:34
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:143
 org$frostlang$frostc$IR$Statement$ID$wrapper* $tmp2784;
-$tmp2784 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
+$tmp2784 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$IR$Statement$ID$wrapper), (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
 $tmp2784->value = param2;
 _310 = ((frost$core$Object*) $tmp2784);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:143:16
@@ -52174,7 +52190,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_448);
 abort(); // unreachable
 
 }
-void org$frostlang$frostc$LLVMCodeGenerator$writeCreateStruct$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Statement$ID$org$frostlang$frostc$ClassDecl$org$frostlang$frostc$FixedArray$LTorg$frostlang$frostc$IR$Value$GT(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$Position param1, org$frostlang$frostc$IR$Statement$ID param2, org$frostlang$frostc$ClassDecl* param3, org$frostlang$frostc$FixedArray* param4) {
+void org$frostlang$frostc$LLVMCodeGenerator$writeCreateStruct$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Statement$ID$org$frostlang$frostc$ClassDecl$org$frostlang$frostc$FixedArray$LTorg$frostlang$frostc$IR$Value$GT(void* rawSelf, org$frostlang$frostc$Position param1, org$frostlang$frostc$IR$Statement$ID param2, org$frostlang$frostc$ClassDecl* param3, org$frostlang$frostc$FixedArray* param4) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 frost$core$String* local1 = NULL;
@@ -52622,7 +52639,7 @@ block20:;
 // begin inline call to method org.frostlang.frostc.LLVMCodeGenerator.name(id:org.frostlang.frostc.IR.Statement.ID):frost.core.String from LLVMCodeGenerator.frost:1791:33
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:143
 org$frostlang$frostc$IR$Statement$ID$wrapper* $tmp2818;
-$tmp2818 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
+$tmp2818 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$IR$Statement$ID$wrapper), (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
 $tmp2818->value = param2;
 _174 = ((frost$core$Object*) $tmp2818);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:143:16
@@ -52672,7 +52689,7 @@ _217 = &param0->varCount;
 _220 = &param0->varCount;
 _221 = *_220;
 frost$core$Int$wrapper* $tmp2822;
-$tmp2822 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp2822 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp2822->value = _221;
 _222 = ((frost$core$Object*) $tmp2822);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:148:16
@@ -52725,7 +52742,7 @@ _271 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_269, _270);
 _272 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_271, &$s2829);
 _273 = *(&local3);
 frost$core$Int$wrapper* $tmp2830;
-$tmp2830 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp2830 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp2830->value = _273;
 _274 = ((frost$core$Object*) $tmp2830);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:1796:34
@@ -52892,7 +52909,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_429);
 return;
 
 }
-void org$frostlang$frostc$LLVMCodeGenerator$writeDynamicCall$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Statement$ID$org$frostlang$frostc$IR$Value$frost$collections$ListView$LTorg$frostlang$frostc$IR$Value$GT(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$Position param1, org$frostlang$frostc$IR$Statement$ID param2, org$frostlang$frostc$IR$Value* param3, frost$collections$ListView* param4) {
+void org$frostlang$frostc$LLVMCodeGenerator$writeDynamicCall$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Statement$ID$org$frostlang$frostc$IR$Value$frost$collections$ListView$LTorg$frostlang$frostc$IR$Value$GT(void* rawSelf, org$frostlang$frostc$Position param1, org$frostlang$frostc$IR$Statement$ID param2, org$frostlang$frostc$IR$Value* param3, frost$collections$ListView* param4) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 org$frostlang$frostc$Type* local1 = NULL;
@@ -53313,7 +53331,7 @@ _58 = *(&local1);
 _60 = &_58->typeKind;
 _61 = *_60;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp2860;
-$tmp2860 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp2860 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp2860->value = _61;
 _62 = ((frost$core$Equatable*) $tmp2860);
 _63 = _62;
@@ -53326,7 +53344,7 @@ _69 = *(&local3);
 *(&local2) = _69;
 _72 = *(&local2);
 org$frostlang$frostc$Type$Kind$wrapper* $tmp2861;
-$tmp2861 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp2861 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp2861->value = _72;
 _73 = ((frost$core$Equatable*) $tmp2861);
 ITable* $tmp2862 = _63->$class->itable;
@@ -53345,7 +53363,7 @@ block14:;
 _82 = &_58->typeKind;
 _83 = *_82;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp2863;
-$tmp2863 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp2863 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp2863->value = _83;
 _84 = ((frost$core$Equatable*) $tmp2863);
 _85 = _84;
@@ -53358,7 +53376,7 @@ _91 = *(&local5);
 *(&local4) = _91;
 _94 = *(&local4);
 org$frostlang$frostc$Type$Kind$wrapper* $tmp2864;
-$tmp2864 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp2864 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp2864->value = _94;
 _95 = ((frost$core$Equatable*) $tmp2864);
 ITable* $tmp2865 = _85->$class->itable;
@@ -53377,7 +53395,7 @@ block13:;
 _104 = &_58->typeKind;
 _105 = *_104;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp2866;
-$tmp2866 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp2866 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp2866->value = _105;
 _106 = ((frost$core$Equatable*) $tmp2866);
 _107 = _106;
@@ -53390,7 +53408,7 @@ _113 = *(&local7);
 *(&local6) = _113;
 _116 = *(&local6);
 org$frostlang$frostc$Type$Kind$wrapper* $tmp2867;
-$tmp2867 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp2867 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp2867->value = _116;
 _117 = ((frost$core$Equatable*) $tmp2867);
 ITable* $tmp2868 = _107->$class->itable;
@@ -53409,7 +53427,7 @@ block12:;
 _126 = &_58->typeKind;
 _127 = *_126;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp2869;
-$tmp2869 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp2869 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp2869->value = _127;
 _128 = ((frost$core$Equatable*) $tmp2869);
 _129 = _128;
@@ -53422,7 +53440,7 @@ _135 = *(&local9);
 *(&local8) = _135;
 _138 = *(&local8);
 org$frostlang$frostc$Type$Kind$wrapper* $tmp2870;
-$tmp2870 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp2870 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp2870->value = _138;
 _139 = ((frost$core$Equatable*) $tmp2870);
 ITable* $tmp2871 = _129->$class->itable;
@@ -53539,7 +53557,7 @@ _233 = *_232;
 // begin inline call to method org.frostlang.frostc.LLVMCodeGenerator.name(id:org.frostlang.frostc.IR.Statement.ID):frost.core.String from LLVMCodeGenerator.frost:1814:34
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:143
 org$frostlang$frostc$IR$Statement$ID$wrapper* $tmp2881;
-$tmp2881 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
+$tmp2881 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$IR$Statement$ID$wrapper), (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
 $tmp2881->value = param2;
 _236 = ((frost$core$Object*) $tmp2881);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:143:16
@@ -53954,7 +53972,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_608);
 abort(); // unreachable
 
 }
-void org$frostlang$frostc$LLVMCodeGenerator$writeEnd(org$frostlang$frostc$LLVMCodeGenerator* param0) {
+void org$frostlang$frostc$LLVMCodeGenerator$writeEnd(void* rawSelf) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 frost$core$Bit local1;
@@ -54335,14 +54354,14 @@ block30:;
 _178 = &_133->typeKind;
 _179 = *_178;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp2941;
-$tmp2941 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp2941 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp2941->value = _179;
 _180 = ((frost$core$Equatable*) $tmp2941);
 _181 = _180;
 _182 = &_166->typeKind;
 _183 = *_182;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp2942;
-$tmp2942 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp2942 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp2942->value = _183;
 _184 = ((frost$core$Equatable*) $tmp2942);
 ITable* $tmp2943 = _181->$class->itable;
@@ -54448,7 +54467,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_262);
 abort(); // unreachable
 
 }
-void org$frostlang$frostc$LLVMCodeGenerator$writeExtractField$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Statement$ID$org$frostlang$frostc$IR$Value$org$frostlang$frostc$FieldDecl(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$Position param1, org$frostlang$frostc$IR$Statement$ID param2, org$frostlang$frostc$IR$Value* param3, org$frostlang$frostc$FieldDecl* param4) {
+void org$frostlang$frostc$LLVMCodeGenerator$writeExtractField$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Statement$ID$org$frostlang$frostc$IR$Value$org$frostlang$frostc$FieldDecl(void* rawSelf, org$frostlang$frostc$Position param1, org$frostlang$frostc$IR$Statement$ID param2, org$frostlang$frostc$IR$Value* param3, org$frostlang$frostc$FieldDecl* param4) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 frost$core$String* local1 = NULL;
@@ -54756,11 +54776,11 @@ abort(); // unreachable
 block9:;
 _74 = _66;
 // begin inline call to method org.frostlang.frostc.Compiler.getIndex(f:org.frostlang.frostc.FieldDecl):frost.core.Int from LLVMCodeGenerator.frost:1848:44
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:3720
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:3603
 _77 = &param4->owner;
 _78 = *_77;
 _79 = _78;
-// begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Compiler.frost:3720:39
+// begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Compiler.frost:3603:39
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
 _82 = frost$core$Weak$get_valid$R$frost$core$Bit(_79);
 _83 = _82.value;
@@ -54789,7 +54809,7 @@ _104 = ((frost$core$Object*) _96);
 frost$core$Frost$unref$frost$core$Object$Q(_104);
 _106 = _91;
 frost$core$Frost$unref$frost$core$Object$Q(_106);
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:3721
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:3604
 _109 = (frost$core$Int) {0u};
 _110 = *(&local2);
 _111 = ((frost$collections$CollectionView*) _110);
@@ -54823,7 +54843,7 @@ _132 = (frost$core$Bit) {_131};
 _133 = _132.value;
 if (_133) goto block15; else goto block16;
 block15:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:3722
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:3605
 _136 = *(&local2);
 _137 = _136;
 _138 = *(&local3);
@@ -54841,7 +54861,7 @@ _145 = _140;
 frost$core$Frost$unref$frost$core$Object$Q(_145);
 if (_144) goto block20; else goto block21;
 block20:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:3723
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:3606
 _149 = *(&local3);
 _150 = *(&local2);
 _151 = ((frost$core$Object*) _150);
@@ -54856,7 +54876,7 @@ _255 = *_254;
 // begin inline call to method org.frostlang.frostc.LLVMCodeGenerator.name(id:org.frostlang.frostc.IR.Statement.ID):frost.core.String from LLVMCodeGenerator.frost:1849:34
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:143
 org$frostlang$frostc$IR$Statement$ID$wrapper* $tmp2972;
-$tmp2972 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
+$tmp2972 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$IR$Statement$ID$wrapper), (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
 $tmp2972->value = param2;
 _258 = ((frost$core$Object*) $tmp2972);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:143:16
@@ -54889,7 +54909,7 @@ _288 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_286, _287);
 _289 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_288, &$s2977);
 _290 = *(&local4);
 frost$core$Int$wrapper* $tmp2978;
-$tmp2978 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp2978 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp2978->value = _290;
 _291 = ((frost$core$Object*) $tmp2978);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:1849:34
@@ -54940,10 +54960,10 @@ _177 = (frost$core$Int) {_176};
 *(&local3) = _177;
 goto block15;
 block16:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:3726
-_181 = (frost$core$Int) {3726u};
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:3609
+_181 = (frost$core$Int) {3609u};
 _182 = ((frost$core$Object*) param4);
-// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Compiler.frost:3726:22
+// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Compiler.frost:3609:22
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 _185 = ($fn2983) _182->$class->vtable[0];
 _186 = _185(_182);
@@ -54958,7 +54978,7 @@ _195 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_187, &$s298
 _196 = &param4->owner;
 _197 = *_196;
 _198 = _197;
-// begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Compiler.frost:3726:51
+// begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Compiler.frost:3609:51
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
 _201 = frost$core$Weak$get_valid$R$frost$core$Bit(_198);
 _202 = _201.value;
@@ -54981,7 +55001,7 @@ _217 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_195, _216);
 _218 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_217, &$s2987);
 _219 = *(&local2);
 _220 = ((frost$core$Object*) _219);
-// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Compiler.frost:3726:22
+// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Compiler.frost:3609:22
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 _223 = ($fn2988) _220->$class->vtable[0];
 _224 = _223(_220);
@@ -55097,7 +55117,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_392);
 return;
 
 }
-void org$frostlang$frostc$LLVMCodeGenerator$writeGetChoiceFieldPointer$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Statement$ID$org$frostlang$frostc$IR$Value$org$frostlang$frostc$ChoiceCase$frost$core$Int(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$Position param1, org$frostlang$frostc$IR$Statement$ID param2, org$frostlang$frostc$IR$Value* param3, org$frostlang$frostc$ChoiceCase* param4, frost$core$Int param5) {
+void org$frostlang$frostc$LLVMCodeGenerator$writeGetChoiceFieldPointer$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Statement$ID$org$frostlang$frostc$IR$Value$org$frostlang$frostc$ChoiceCase$frost$core$Int(void* rawSelf, org$frostlang$frostc$Position param1, org$frostlang$frostc$IR$Statement$ID param2, org$frostlang$frostc$IR$Value* param3, org$frostlang$frostc$ChoiceCase* param4, frost$core$Int param5) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 org$frostlang$frostc$FieldDecl* local1 = NULL;
@@ -55885,11 +55906,11 @@ block17:;
 _124 = _116;
 _125 = *(&local1);
 // begin inline call to method org.frostlang.frostc.Compiler.getIndex(f:org.frostlang.frostc.FieldDecl):frost.core.Int from LLVMCodeGenerator.frost:1862:49
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:3720
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:3603
 _128 = &_125->owner;
 _129 = *_128;
 _130 = _129;
-// begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Compiler.frost:3720:39
+// begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Compiler.frost:3603:39
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
 _133 = frost$core$Weak$get_valid$R$frost$core$Bit(_130);
 _134 = _133.value;
@@ -55918,7 +55939,7 @@ _155 = ((frost$core$Object*) _147);
 frost$core$Frost$unref$frost$core$Object$Q(_155);
 _157 = _142;
 frost$core$Frost$unref$frost$core$Object$Q(_157);
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:3721
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:3604
 _160 = (frost$core$Int) {0u};
 _161 = *(&local3);
 _162 = ((frost$collections$CollectionView*) _161);
@@ -55952,7 +55973,7 @@ _183 = (frost$core$Bit) {_182};
 _184 = _183.value;
 if (_184) goto block23; else goto block24;
 block23:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:3722
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:3605
 _187 = *(&local3);
 _188 = _187;
 _189 = *(&local4);
@@ -55970,7 +55991,7 @@ _196 = _191;
 frost$core$Frost$unref$frost$core$Object$Q(_196);
 if (_195) goto block28; else goto block29;
 block28:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:3723
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:3606
 _200 = *(&local4);
 _201 = *(&local3);
 _202 = ((frost$core$Object*) _201);
@@ -55995,7 +56016,7 @@ _314 = &param0->varCount;
 _317 = &param0->varCount;
 _318 = *_317;
 frost$core$Int$wrapper* $tmp3025;
-$tmp3025 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp3025 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp3025->value = _318;
 _319 = ((frost$core$Object*) $tmp3025);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:148:16
@@ -56076,10 +56097,10 @@ _228 = (frost$core$Int) {_227};
 *(&local4) = _228;
 goto block23;
 block24:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:3726
-_232 = (frost$core$Int) {3726u};
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:3609
+_232 = (frost$core$Int) {3609u};
 _233 = ((frost$core$Object*) _125);
-// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Compiler.frost:3726:22
+// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Compiler.frost:3609:22
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 _236 = ($fn3030) _233->$class->vtable[0];
 _237 = _236(_233);
@@ -56094,7 +56115,7 @@ _246 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_238, &$s303
 _247 = &_125->owner;
 _248 = *_247;
 _249 = _248;
-// begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Compiler.frost:3726:51
+// begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Compiler.frost:3609:51
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
 _252 = frost$core$Weak$get_valid$R$frost$core$Bit(_249);
 _253 = _252.value;
@@ -56117,7 +56138,7 @@ _268 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_246, _267);
 _269 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_268, &$s3034);
 _270 = *(&local3);
 _271 = ((frost$core$Object*) _270);
-// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Compiler.frost:3726:22
+// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Compiler.frost:3609:22
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 _274 = ($fn3035) _271->$class->vtable[0];
 _275 = _274(_271);
@@ -56222,7 +56243,7 @@ _448 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_446, _447);
 _449 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_448, &$s3044);
 _450 = *(&local5);
 frost$core$Int$wrapper* $tmp3045;
-$tmp3045 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp3045 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp3045->value = _450;
 _451 = ((frost$core$Object*) $tmp3045);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:1865:32
@@ -56392,7 +56413,7 @@ _610 = &param0->varCount;
 _613 = &param0->varCount;
 _614 = *_613;
 frost$core$Int$wrapper* $tmp3052;
-$tmp3052 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp3052 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp3052->value = _614;
 _615 = ((frost$core$Object*) $tmp3052);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:148:16
@@ -56435,7 +56456,7 @@ frost$core$Frost$ref$frost$core$Object$Q(_653);
 _656 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_650, &$s3056);
 _657 = *(&local7);
 frost$core$Int$wrapper* $tmp3057;
-$tmp3057 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp3057 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp3057->value = _657;
 _658 = ((frost$core$Object*) $tmp3057);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:1869:30
@@ -56452,7 +56473,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_668);
 _671 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_663, &$s3059);
 _672 = *(&local7);
 frost$core$Int$wrapper* $tmp3060;
-$tmp3060 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp3060 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp3060->value = _672;
 _673 = ((frost$core$Object*) $tmp3060);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:1869:30
@@ -56584,7 +56605,7 @@ block69:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:1466
 _791 = *(&local9);
 frost$core$Int$wrapper* $tmp3067;
-$tmp3067 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp3067 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp3067->value = _791;
 _793 = ((frost$core$Object*) $tmp3067);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:1870:24
@@ -56712,7 +56733,7 @@ _912 = *_911;
 // begin inline call to method org.frostlang.frostc.LLVMCodeGenerator.name(id:org.frostlang.frostc.IR.Statement.ID):frost.core.String from LLVMCodeGenerator.frost:1872:34
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:143
 org$frostlang$frostc$IR$Statement$ID$wrapper* $tmp3073;
-$tmp3073 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
+$tmp3073 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$IR$Statement$ID$wrapper), (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
 $tmp3073->value = param2;
 _915 = ((frost$core$Object*) $tmp3073);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:143:16
@@ -56905,7 +56926,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_1089);
 abort(); // unreachable
 
 }
-void org$frostlang$frostc$LLVMCodeGenerator$writeGetFieldPointer$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Statement$ID$org$frostlang$frostc$IR$Value$org$frostlang$frostc$FieldDecl(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$Position param1, org$frostlang$frostc$IR$Statement$ID param2, org$frostlang$frostc$IR$Value* param3, org$frostlang$frostc$FieldDecl* param4) {
+void org$frostlang$frostc$LLVMCodeGenerator$writeGetFieldPointer$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Statement$ID$org$frostlang$frostc$IR$Value$org$frostlang$frostc$FieldDecl(void* rawSelf, org$frostlang$frostc$Position param1, org$frostlang$frostc$IR$Statement$ID param2, org$frostlang$frostc$IR$Value* param3, org$frostlang$frostc$FieldDecl* param4) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 frost$core$String* local1 = NULL;
@@ -57334,11 +57356,11 @@ abort(); // unreachable
 block7:;
 _44 = _36;
 // begin inline call to method org.frostlang.frostc.Compiler.getIndex(f:org.frostlang.frostc.FieldDecl):frost.core.Int from LLVMCodeGenerator.frost:1884:44
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:3720
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:3603
 _47 = &param4->owner;
 _48 = *_47;
 _49 = _48;
-// begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Compiler.frost:3720:39
+// begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Compiler.frost:3603:39
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
 _52 = frost$core$Weak$get_valid$R$frost$core$Bit(_49);
 _53 = _52.value;
@@ -57367,7 +57389,7 @@ _74 = ((frost$core$Object*) _66);
 frost$core$Frost$unref$frost$core$Object$Q(_74);
 _76 = _61;
 frost$core$Frost$unref$frost$core$Object$Q(_76);
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:3721
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:3604
 _79 = (frost$core$Int) {0u};
 _80 = *(&local2);
 _81 = ((frost$collections$CollectionView*) _80);
@@ -57401,7 +57423,7 @@ _102 = (frost$core$Bit) {_101};
 _103 = _102.value;
 if (_103) goto block13; else goto block14;
 block13:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:3722
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:3605
 _106 = *(&local2);
 _107 = _106;
 _108 = *(&local3);
@@ -57419,7 +57441,7 @@ _115 = _110;
 frost$core$Frost$unref$frost$core$Object$Q(_115);
 if (_114) goto block18; else goto block19;
 block18:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:3723
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:3606
 _119 = *(&local3);
 _120 = *(&local2);
 _121 = ((frost$core$Object*) _120);
@@ -57469,10 +57491,10 @@ _147 = (frost$core$Int) {_146};
 *(&local3) = _147;
 goto block13;
 block14:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:3726
-_151 = (frost$core$Int) {3726u};
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:3609
+_151 = (frost$core$Int) {3609u};
 _152 = ((frost$core$Object*) param4);
-// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Compiler.frost:3726:22
+// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Compiler.frost:3609:22
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 _155 = ($fn3107) _152->$class->vtable[0];
 _156 = _155(_152);
@@ -57487,7 +57509,7 @@ _165 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_157, &$s310
 _166 = &param4->owner;
 _167 = *_166;
 _168 = _167;
-// begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Compiler.frost:3726:51
+// begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Compiler.frost:3609:51
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
 _171 = frost$core$Weak$get_valid$R$frost$core$Bit(_168);
 _172 = _171.value;
@@ -57510,7 +57532,7 @@ _187 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_165, _186);
 _188 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_187, &$s3111);
 _189 = *(&local2);
 _190 = ((frost$core$Object*) _189);
-// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Compiler.frost:3726:22
+// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Compiler.frost:3609:22
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 _193 = ($fn3112) _190->$class->vtable[0];
 _194 = _193(_190);
@@ -57577,7 +57599,7 @@ block34:;
 // begin inline call to method org.frostlang.frostc.LLVMCodeGenerator.name(id:org.frostlang.frostc.IR.Statement.ID):frost.core.String from LLVMCodeGenerator.frost:1888:28
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:143
 org$frostlang$frostc$IR$Statement$ID$wrapper* $tmp3118;
-$tmp3118 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
+$tmp3118 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$IR$Statement$ID$wrapper), (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
 $tmp3118->value = param2;
 _270 = ((frost$core$Object*) $tmp3118);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:143:16
@@ -57627,7 +57649,7 @@ _313 = &param0->varCount;
 _316 = &param0->varCount;
 _317 = *_316;
 frost$core$Int$wrapper* $tmp3122;
-$tmp3122 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp3122 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp3122->value = _317;
 _318 = ((frost$core$Object*) $tmp3122);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:148:16
@@ -57711,7 +57733,7 @@ _401 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_399, _400);
 _402 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_401, &$s3133);
 _403 = *(&local4);
 frost$core$Int$wrapper* $tmp3134;
-$tmp3134 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp3134 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp3134->value = _403;
 _404 = ((frost$core$Object*) $tmp3134);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:1894:32
@@ -57849,7 +57871,7 @@ _533 = *_532;
 // begin inline call to method org.frostlang.frostc.LLVMCodeGenerator.name(id:org.frostlang.frostc.IR.Statement.ID):frost.core.String from LLVMCodeGenerator.frost:1897:38
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:143
 org$frostlang$frostc$IR$Statement$ID$wrapper* $tmp3140;
-$tmp3140 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
+$tmp3140 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$IR$Statement$ID$wrapper), (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
 $tmp3140->value = param2;
 _536 = ((frost$core$Object*) $tmp3140);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:143:16
@@ -57987,7 +58009,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_660);
 abort(); // unreachable
 
 }
-void org$frostlang$frostc$LLVMCodeGenerator$writeGetInterfaceMethod$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Statement$ID$org$frostlang$frostc$IR$Value$org$frostlang$frostc$ClassDecl$frost$core$Int$org$frostlang$frostc$Type(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$Position param1, org$frostlang$frostc$IR$Statement$ID param2, org$frostlang$frostc$IR$Value* param3, org$frostlang$frostc$ClassDecl* param4, frost$core$Int param5, org$frostlang$frostc$Type* param6) {
+void org$frostlang$frostc$LLVMCodeGenerator$writeGetInterfaceMethod$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Statement$ID$org$frostlang$frostc$IR$Value$org$frostlang$frostc$ClassDecl$frost$core$Int$org$frostlang$frostc$Type(void* rawSelf, org$frostlang$frostc$Position param1, org$frostlang$frostc$IR$Statement$ID param2, org$frostlang$frostc$IR$Value* param3, org$frostlang$frostc$ClassDecl* param4, frost$core$Int param5, org$frostlang$frostc$Type* param6) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 frost$core$String* local1 = NULL;
@@ -59800,7 +59823,7 @@ _23 = &param0->labelCount;
 _26 = &param0->labelCount;
 _27 = *_26;
 frost$core$Int$wrapper* $tmp3191;
-$tmp3191 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp3191 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp3191->value = _27;
 _28 = ((frost$core$Object*) $tmp3191);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:153:16
@@ -59899,7 +59922,7 @@ _117 = &param0->varCount;
 _120 = &param0->varCount;
 _121 = *_120;
 frost$core$Int$wrapper* $tmp3200;
-$tmp3200 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp3200 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp3200->value = _121;
 _122 = ((frost$core$Object*) $tmp3200);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:148:16
@@ -59995,7 +60018,7 @@ _219 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_218, &$s321
 _220 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_219, &$s3212);
 _221 = (frost$core$Int) {0u};
 frost$core$Int$wrapper* $tmp3213;
-$tmp3213 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp3213 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp3213->value = _221;
 _222 = ((frost$core$Object*) $tmp3213);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:1916:41
@@ -60129,7 +60152,7 @@ _345 = &param0->varCount;
 _348 = &param0->varCount;
 _349 = *_348;
 frost$core$Int$wrapper* $tmp3219;
-$tmp3219 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp3219 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp3219->value = _349;
 _350 = ((frost$core$Object*) $tmp3219);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:148:16
@@ -60330,7 +60353,7 @@ _541 = &param0->varCount;
 _544 = &param0->varCount;
 _545 = *_544;
 frost$core$Int$wrapper* $tmp3233;
-$tmp3233 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp3233 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp3233->value = _545;
 _546 = ((frost$core$Object*) $tmp3233);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:148:16
@@ -60486,7 +60509,7 @@ _693 = &param0->varCount;
 _696 = &param0->varCount;
 _697 = *_696;
 frost$core$Int$wrapper* $tmp3244;
-$tmp3244 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp3244 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp3244->value = _697;
 _698 = ((frost$core$Object*) $tmp3244);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:148:16
@@ -60543,7 +60566,7 @@ _753 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_752, &$s325
 _754 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_753, &$s3253);
 _755 = (frost$core$Int) {5u};
 frost$core$Int$wrapper* $tmp3254;
-$tmp3254 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp3254 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp3254->value = _755;
 _756 = ((frost$core$Object*) $tmp3254);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:1927:24
@@ -60698,7 +60721,7 @@ _900 = &param0->labelCount;
 _903 = &param0->labelCount;
 _904 = *_903;
 frost$core$Int$wrapper* $tmp3261;
-$tmp3261 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp3261 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp3261->value = _904;
 _905 = ((frost$core$Object*) $tmp3261);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:153:16
@@ -60829,7 +60852,7 @@ _1026 = &param0->labelCount;
 _1029 = &param0->labelCount;
 _1030 = *_1029;
 frost$core$Int$wrapper* $tmp3270;
-$tmp3270 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp3270 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp3270->value = _1030;
 _1031 = ((frost$core$Object*) $tmp3270);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:1933:31
@@ -60873,7 +60896,7 @@ _1068 = &param0->varCount;
 _1071 = &param0->varCount;
 _1072 = *_1071;
 frost$core$Int$wrapper* $tmp3274;
-$tmp3274 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp3274 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp3274->value = _1072;
 _1073 = ((frost$core$Object*) $tmp3274);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:148:16
@@ -60921,7 +60944,7 @@ _1115 = &param0->labelCount;
 _1118 = &param0->labelCount;
 _1119 = *_1118;
 frost$core$Int$wrapper* $tmp3278;
-$tmp3278 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp3278 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp3278->value = _1119;
 _1120 = ((frost$core$Object*) $tmp3278);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:153:16
@@ -61107,7 +61130,7 @@ _1297 = &param0->varCount;
 _1300 = &param0->varCount;
 _1301 = *_1300;
 frost$core$Int$wrapper* $tmp3291;
-$tmp3291 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp3291 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp3291->value = _1301;
 _1302 = ((frost$core$Object*) $tmp3291);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:148:16
@@ -61269,7 +61292,7 @@ _1455 = &param0->varCount;
 _1458 = &param0->varCount;
 _1459 = *_1458;
 frost$core$Int$wrapper* $tmp3300;
-$tmp3300 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp3300 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp3300->value = _1459;
 _1460 = ((frost$core$Object*) $tmp3300);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:148:16
@@ -61458,7 +61481,7 @@ _1641 = &param0->varCount;
 _1644 = &param0->varCount;
 _1645 = *_1644;
 frost$core$Int$wrapper* $tmp3312;
-$tmp3312 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp3312 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp3312->value = _1645;
 _1646 = ((frost$core$Object*) $tmp3312);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:148:16
@@ -61650,7 +61673,7 @@ _1829 = &param0->varCount;
 _1832 = &param0->varCount;
 _1833 = *_1832;
 frost$core$Int$wrapper* $tmp3323;
-$tmp3323 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp3323 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp3323->value = _1833;
 _1834 = ((frost$core$Object*) $tmp3323);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:148:16
@@ -61900,7 +61923,7 @@ _2076 = &param0->labelCount;
 _2079 = &param0->labelCount;
 _2080 = *_2079;
 frost$core$Int$wrapper* $tmp3337;
-$tmp3337 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp3337 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp3337->value = _2080;
 _2081 = ((frost$core$Object*) $tmp3337);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:153:16
@@ -62377,7 +62400,7 @@ _2542 = &param0->varCount;
 _2545 = &param0->varCount;
 _2546 = *_2545;
 frost$core$Int$wrapper* $tmp3363;
-$tmp3363 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp3363 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp3363->value = _2546;
 _2547 = ((frost$core$Object*) $tmp3363);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:148:16
@@ -62427,7 +62450,7 @@ _2595 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_2589, &$s3
 _2596 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_2595, &$s3369);
 _2597 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_2596, &$s3370);
 frost$core$Int$wrapper* $tmp3371;
-$tmp3371 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp3371 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp3371->value = param5;
 _2598 = ((frost$core$Object*) $tmp3371);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:1963:24
@@ -62614,7 +62637,7 @@ _2774 = &param0->varCount;
 _2777 = &param0->varCount;
 _2778 = *_2777;
 frost$core$Int$wrapper* $tmp3378;
-$tmp3378 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp3378 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp3378->value = _2778;
 _2779 = ((frost$core$Object*) $tmp3378);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:148:16
@@ -62805,7 +62828,7 @@ _2963 = *_2962;
 // begin inline call to method org.frostlang.frostc.LLVMCodeGenerator.name(id:org.frostlang.frostc.IR.Statement.ID):frost.core.String from LLVMCodeGenerator.frost:1967:34
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:143
 org$frostlang$frostc$IR$Statement$ID$wrapper* $tmp3388;
-$tmp3388 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
+$tmp3388 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$IR$Statement$ID$wrapper), (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
 $tmp3388->value = param2;
 _2966 = ((frost$core$Object*) $tmp3388);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:143:16
@@ -63090,7 +63113,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_3238);
 abort(); // unreachable
 
 }
-void org$frostlang$frostc$LLVMCodeGenerator$writeGetVirtualMethod$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Statement$ID$org$frostlang$frostc$IR$Value$frost$core$Int$org$frostlang$frostc$Type(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$Position param1, org$frostlang$frostc$IR$Statement$ID param2, org$frostlang$frostc$IR$Value* param3, frost$core$Int param4, org$frostlang$frostc$Type* param5) {
+void org$frostlang$frostc$LLVMCodeGenerator$writeGetVirtualMethod$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Statement$ID$org$frostlang$frostc$IR$Value$frost$core$Int$org$frostlang$frostc$Type(void* rawSelf, org$frostlang$frostc$Position param1, org$frostlang$frostc$IR$Statement$ID param2, org$frostlang$frostc$IR$Value* param3, frost$core$Int param4, org$frostlang$frostc$Type* param5) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 frost$core$String* local1 = NULL;
@@ -63672,7 +63696,7 @@ _12 = &param0->varCount;
 _15 = &param0->varCount;
 _16 = *_15;
 frost$core$Int$wrapper* $tmp3418;
-$tmp3418 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp3418 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp3418->value = _16;
 _17 = ((frost$core$Object*) $tmp3418);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:148:16
@@ -63864,7 +63888,7 @@ _204 = &param0->varCount;
 _207 = &param0->varCount;
 _208 = *_207;
 frost$core$Int$wrapper* $tmp3434;
-$tmp3434 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp3434 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp3434->value = _208;
 _209 = ((frost$core$Object*) $tmp3434);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:148:16
@@ -63987,7 +64011,7 @@ _323 = &param0->varCount;
 _326 = &param0->varCount;
 _327 = *_326;
 frost$core$Int$wrapper* $tmp3444;
-$tmp3444 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp3444 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp3444->value = _327;
 _328 = ((frost$core$Object*) $tmp3444);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:148:16
@@ -64184,7 +64208,7 @@ _515 = &param0->varCount;
 _518 = &param0->varCount;
 _519 = *_518;
 frost$core$Int$wrapper* $tmp3458;
-$tmp3458 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp3458 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp3458->value = _519;
 _520 = ((frost$core$Object*) $tmp3458);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:148:16
@@ -64236,7 +64260,7 @@ _569 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_567, _568);
 _570 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_569, &$s3465);
 _571 = (frost$core$Int) {6u};
 frost$core$Int$wrapper* $tmp3466;
-$tmp3466 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp3466 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp3466->value = _571;
 _572 = ((frost$core$Object*) $tmp3466);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:1989:21
@@ -64252,7 +64276,7 @@ _582 = ((frost$core$Object*) _576);
 frost$core$Frost$unref$frost$core$Object$Q(_582);
 _585 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_577, &$s3469);
 frost$core$Int$wrapper* $tmp3470;
-$tmp3470 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp3470 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp3470->value = param4;
 _586 = ((frost$core$Object*) $tmp3470);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:1989:21
@@ -64403,7 +64427,7 @@ _726 = &param0->varCount;
 _729 = &param0->varCount;
 _730 = *_729;
 frost$core$Int$wrapper* $tmp3477;
-$tmp3477 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp3477 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp3477->value = _730;
 _731 = ((frost$core$Object*) $tmp3477);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:148:16
@@ -64532,7 +64556,7 @@ _853 = *_852;
 // begin inline call to method org.frostlang.frostc.LLVMCodeGenerator.name(id:org.frostlang.frostc.IR.Statement.ID):frost.core.String from LLVMCodeGenerator.frost:1992:34
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:143
 org$frostlang$frostc$IR$Statement$ID$wrapper* $tmp3487;
-$tmp3487 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
+$tmp3487 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$IR$Statement$ID$wrapper), (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
 $tmp3487->value = param2;
 _856 = ((frost$core$Object*) $tmp3487);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:143:16
@@ -64698,7 +64722,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_1009);
 abort(); // unreachable
 
 }
-void org$frostlang$frostc$LLVMCodeGenerator$writeLoad$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Statement$ID$org$frostlang$frostc$IR$Value(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$Position param1, org$frostlang$frostc$IR$Statement$ID param2, org$frostlang$frostc$IR$Value* param3) {
+void org$frostlang$frostc$LLVMCodeGenerator$writeLoad$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Statement$ID$org$frostlang$frostc$IR$Value(void* rawSelf, org$frostlang$frostc$Position param1, org$frostlang$frostc$IR$Statement$ID param2, org$frostlang$frostc$IR$Value* param3) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 frost$io$OutputStream** _3;
@@ -64788,7 +64813,7 @@ _4 = *_3;
 // begin inline call to method org.frostlang.frostc.LLVMCodeGenerator.name(id:org.frostlang.frostc.IR.Statement.ID):frost.core.String from LLVMCodeGenerator.frost:2002:34
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:143
 org$frostlang$frostc$IR$Statement$ID$wrapper* $tmp3504;
-$tmp3504 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
+$tmp3504 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$IR$Statement$ID$wrapper), (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
 $tmp3504->value = param2;
 _7 = ((frost$core$Object*) $tmp3504);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:143:16
@@ -64930,7 +64955,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_142);
 return;
 
 }
-void org$frostlang$frostc$LLVMCodeGenerator$writeNegate$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Statement$ID$org$frostlang$frostc$IR$Value(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$Position param1, org$frostlang$frostc$IR$Statement$ID param2, org$frostlang$frostc$IR$Value* param3) {
+void org$frostlang$frostc$LLVMCodeGenerator$writeNegate$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Statement$ID$org$frostlang$frostc$IR$Value(void* rawSelf, org$frostlang$frostc$Position param1, org$frostlang$frostc$IR$Statement$ID param2, org$frostlang$frostc$IR$Value* param3) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 org$frostlang$frostc$Type$Kind local1;
@@ -65102,7 +65128,7 @@ _4 = _3(param3);
 _5 = &_4->typeKind;
 _6 = *_5;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp3528;
-$tmp3528 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp3528 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp3528->value = _6;
 _7 = ((frost$core$Equatable*) $tmp3528);
 _8 = _7;
@@ -65115,7 +65141,7 @@ _14 = *(&local2);
 *(&local1) = _14;
 _17 = *(&local1);
 org$frostlang$frostc$Type$Kind$wrapper* $tmp3529;
-$tmp3529 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp3529 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp3529->value = _17;
 _18 = ((frost$core$Equatable*) $tmp3529);
 ITable* $tmp3530 = _8->$class->itable;
@@ -65139,7 +65165,7 @@ _31 = *_30;
 // begin inline call to method org.frostlang.frostc.LLVMCodeGenerator.name(id:org.frostlang.frostc.IR.Statement.ID):frost.core.String from LLVMCodeGenerator.frost:2013:38
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:143
 org$frostlang$frostc$IR$Statement$ID$wrapper* $tmp3531;
-$tmp3531 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
+$tmp3531 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$IR$Statement$ID$wrapper), (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
 $tmp3531->value = param2;
 _34 = ((frost$core$Object*) $tmp3531);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:143:16
@@ -65271,7 +65297,7 @@ _159 = *_158;
 // begin inline call to method org.frostlang.frostc.LLVMCodeGenerator.name(id:org.frostlang.frostc.IR.Statement.ID):frost.core.String from LLVMCodeGenerator.frost:2017:38
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:143
 org$frostlang$frostc$IR$Statement$ID$wrapper* $tmp3543;
-$tmp3543 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
+$tmp3543 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$IR$Statement$ID$wrapper), (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
 $tmp3543->value = param2;
 _162 = ((frost$core$Object*) $tmp3543);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:143:16
@@ -65414,7 +65440,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_292);
 abort(); // unreachable
 
 }
-void org$frostlang$frostc$LLVMCodeGenerator$writeNot$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Statement$ID$org$frostlang$frostc$IR$Value(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$Position param1, org$frostlang$frostc$IR$Statement$ID param2, org$frostlang$frostc$IR$Value* param3) {
+void org$frostlang$frostc$LLVMCodeGenerator$writeNot$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Statement$ID$org$frostlang$frostc$IR$Value(void* rawSelf, org$frostlang$frostc$Position param1, org$frostlang$frostc$IR$Statement$ID param2, org$frostlang$frostc$IR$Value* param3) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 frost$io$OutputStream** _3;
@@ -65499,7 +65526,7 @@ _4 = *_3;
 // begin inline call to method org.frostlang.frostc.LLVMCodeGenerator.name(id:org.frostlang.frostc.IR.Statement.ID):frost.core.String from LLVMCodeGenerator.frost:2028:34
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:143
 org$frostlang$frostc$IR$Statement$ID$wrapper* $tmp3561;
-$tmp3561 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
+$tmp3561 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$IR$Statement$ID$wrapper), (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
 $tmp3561->value = param2;
 _7 = ((frost$core$Object*) $tmp3561);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:143:16
@@ -65637,7 +65664,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_140);
 return;
 
 }
-void org$frostlang$frostc$LLVMCodeGenerator$writePointerAlloc$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Statement$ID$org$frostlang$frostc$IR$Value$org$frostlang$frostc$Type(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$Position param1, org$frostlang$frostc$IR$Statement$ID param2, org$frostlang$frostc$IR$Value* param3, org$frostlang$frostc$Type* param4) {
+void org$frostlang$frostc$LLVMCodeGenerator$writePointerAlloc$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Statement$ID$org$frostlang$frostc$IR$Value$org$frostlang$frostc$Type(void* rawSelf, org$frostlang$frostc$Position param1, org$frostlang$frostc$IR$Statement$ID param2, org$frostlang$frostc$IR$Value* param3, org$frostlang$frostc$Type* param4) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 frost$core$String* local1 = NULL;
@@ -66039,7 +66067,7 @@ _89 = &param0->varCount;
 _92 = &param0->varCount;
 _93 = *_92;
 frost$core$Int$wrapper* $tmp3593;
-$tmp3593 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp3593 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp3593->value = _93;
 _94 = ((frost$core$Object*) $tmp3593);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:148:16
@@ -66085,7 +66113,7 @@ _137 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_135, _136);
 _138 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_137, &$s3598);
 _139 = *(&local2);
 frost$core$Int$wrapper* $tmp3599;
-$tmp3599 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp3599 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp3599->value = _139;
 _140 = ((frost$core$Object*) $tmp3599);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:2041:30
@@ -66191,7 +66219,7 @@ _235 = &param0->varCount;
 _238 = &param0->varCount;
 _239 = *_238;
 frost$core$Int$wrapper* $tmp3606;
-$tmp3606 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp3606 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp3606->value = _239;
 _240 = ((frost$core$Object*) $tmp3606);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:148:16
@@ -66313,7 +66341,7 @@ _355 = *_354;
 // begin inline call to method org.frostlang.frostc.LLVMCodeGenerator.name(id:org.frostlang.frostc.IR.Statement.ID):frost.core.String from LLVMCodeGenerator.frost:2045:34
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:143
 org$frostlang$frostc$IR$Statement$ID$wrapper* $tmp3617;
-$tmp3617 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
+$tmp3617 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$IR$Statement$ID$wrapper), (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
 $tmp3617->value = param2;
 _358 = ((frost$core$Object*) $tmp3617);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:143:16
@@ -66381,8 +66409,7 @@ _420 = _412;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:285
 _423 = &_420->POINTER_TYPE;
 _424 = *_423;
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_425 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_425 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _426 = _425;
 _427 = (frost$core$Int) {1u};
 frost$collections$Array$init$frost$core$Int(_426, _427);
@@ -66521,7 +66548,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_551);
 abort(); // unreachable
 
 }
-void org$frostlang$frostc$LLVMCodeGenerator$writePointerDestroy$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Value(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$Position param1, org$frostlang$frostc$IR$Value* param2) {
+void org$frostlang$frostc$LLVMCodeGenerator$writePointerDestroy$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Value(void* rawSelf, org$frostlang$frostc$Position param1, org$frostlang$frostc$IR$Value* param2) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 frost$core$String* local1 = NULL;
@@ -66714,7 +66742,7 @@ _53 = &param0->varCount;
 _56 = &param0->varCount;
 _57 = *_56;
 frost$core$Int$wrapper* $tmp3641;
-$tmp3641 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp3641 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp3641->value = _57;
 _58 = ((frost$core$Object*) $tmp3641);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:148:16
@@ -66908,7 +66936,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_235);
 abort(); // unreachable
 
 }
-void org$frostlang$frostc$LLVMCodeGenerator$writePointerGetIndex$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Statement$ID$org$frostlang$frostc$IR$Value$org$frostlang$frostc$IR$Value(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$Position param1, org$frostlang$frostc$IR$Statement$ID param2, org$frostlang$frostc$IR$Value* param3, org$frostlang$frostc$IR$Value* param4) {
+void org$frostlang$frostc$LLVMCodeGenerator$writePointerGetIndex$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Statement$ID$org$frostlang$frostc$IR$Value$org$frostlang$frostc$IR$Value(void* rawSelf, org$frostlang$frostc$Position param1, org$frostlang$frostc$IR$Statement$ID param2, org$frostlang$frostc$IR$Value* param3, org$frostlang$frostc$IR$Value* param4) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 frost$core$String* local1 = NULL;
@@ -67289,7 +67318,7 @@ _132 = &param0->varCount;
 _135 = &param0->varCount;
 _136 = *_135;
 frost$core$Int$wrapper* $tmp3676;
-$tmp3676 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp3676 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp3676->value = _136;
 _137 = ((frost$core$Object*) $tmp3676);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:148:16
@@ -67440,7 +67469,7 @@ _282 = *_281;
 // begin inline call to method org.frostlang.frostc.LLVMCodeGenerator.name(id:org.frostlang.frostc.IR.Statement.ID):frost.core.String from LLVMCodeGenerator.frost:2074:34
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:143
 org$frostlang$frostc$IR$Statement$ID$wrapper* $tmp3688;
-$tmp3688 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
+$tmp3688 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$IR$Statement$ID$wrapper), (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
 $tmp3688->value = param2;
 _285 = ((frost$core$Object*) $tmp3688);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:143:16
@@ -67610,7 +67639,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_443);
 abort(); // unreachable
 
 }
-void org$frostlang$frostc$LLVMCodeGenerator$writePointerOffset$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Statement$ID$org$frostlang$frostc$IR$Value$org$frostlang$frostc$IR$Value(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$Position param1, org$frostlang$frostc$IR$Statement$ID param2, org$frostlang$frostc$IR$Value* param3, org$frostlang$frostc$IR$Value* param4) {
+void org$frostlang$frostc$LLVMCodeGenerator$writePointerOffset$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Statement$ID$org$frostlang$frostc$IR$Value$org$frostlang$frostc$IR$Value(void* rawSelf, org$frostlang$frostc$Position param1, org$frostlang$frostc$IR$Statement$ID param2, org$frostlang$frostc$IR$Value* param3, org$frostlang$frostc$IR$Value* param4) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 frost$core$String* local1 = NULL;
@@ -67889,7 +67919,7 @@ _124 = *_123;
 // begin inline call to method org.frostlang.frostc.LLVMCodeGenerator.name(id:org.frostlang.frostc.IR.Statement.ID):frost.core.String from LLVMCodeGenerator.frost:2088:34
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:143
 org$frostlang$frostc$IR$Statement$ID$wrapper* $tmp3717;
-$tmp3717 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
+$tmp3717 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$IR$Statement$ID$wrapper), (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
 $tmp3717->value = param2;
 _127 = ((frost$core$Object*) $tmp3717);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:143:16
@@ -68049,7 +68079,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_281);
 return;
 
 }
-void org$frostlang$frostc$LLVMCodeGenerator$writePointerRealloc$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Statement$ID$org$frostlang$frostc$IR$Value$org$frostlang$frostc$IR$Value$org$frostlang$frostc$IR$Value(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$Position param1, org$frostlang$frostc$IR$Statement$ID param2, org$frostlang$frostc$IR$Value* param3, org$frostlang$frostc$IR$Value* param4, org$frostlang$frostc$IR$Value* param5) {
+void org$frostlang$frostc$LLVMCodeGenerator$writePointerRealloc$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Statement$ID$org$frostlang$frostc$IR$Value$org$frostlang$frostc$IR$Value$org$frostlang$frostc$IR$Value(void* rawSelf, org$frostlang$frostc$Position param1, org$frostlang$frostc$IR$Statement$ID param2, org$frostlang$frostc$IR$Value* param3, org$frostlang$frostc$IR$Value* param4, org$frostlang$frostc$IR$Value* param5) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 frost$core$String* local1 = NULL;
@@ -68658,7 +68689,7 @@ _53 = &param0->varCount;
 _56 = &param0->varCount;
 _57 = *_56;
 frost$core$Int$wrapper* $tmp3754;
-$tmp3754 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp3754 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp3754->value = _57;
 _58 = ((frost$core$Object*) $tmp3754);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:148:16
@@ -68927,7 +68958,7 @@ _321 = &param0->varCount;
 _324 = &param0->varCount;
 _325 = *_324;
 frost$core$Int$wrapper* $tmp3778;
-$tmp3778 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp3778 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp3778->value = _325;
 _326 = ((frost$core$Object*) $tmp3778);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:148:16
@@ -68973,7 +69004,7 @@ _369 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_367, _368);
 _370 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_369, &$s3783);
 _371 = *(&local5);
 frost$core$Int$wrapper* $tmp3784;
-$tmp3784 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp3784 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp3784->value = _371;
 _372 = ((frost$core$Object*) $tmp3784);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:2107:30
@@ -69091,7 +69122,7 @@ _479 = &param0->varCount;
 _482 = &param0->varCount;
 _483 = *_482;
 frost$core$Int$wrapper* $tmp3791;
-$tmp3791 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp3791 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp3791->value = _483;
 _484 = ((frost$core$Object*) $tmp3791);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:148:16
@@ -69137,7 +69168,7 @@ _527 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_525, _526);
 _528 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_527, &$s3796);
 _529 = *(&local5);
 frost$core$Int$wrapper* $tmp3797;
-$tmp3797 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp3797 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp3797->value = _529;
 _530 = ((frost$core$Object*) $tmp3797);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:2109:30
@@ -69259,7 +69290,7 @@ _641 = &param0->varCount;
 _644 = &param0->varCount;
 _645 = *_644;
 frost$core$Int$wrapper* $tmp3804;
-$tmp3804 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp3804 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp3804->value = _645;
 _646 = ((frost$core$Object*) $tmp3804);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:148:16
@@ -69442,7 +69473,7 @@ _823 = *_822;
 // begin inline call to method org.frostlang.frostc.LLVMCodeGenerator.name(id:org.frostlang.frostc.IR.Statement.ID):frost.core.String from LLVMCodeGenerator.frost:2113:34
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:143
 org$frostlang$frostc$IR$Statement$ID$wrapper* $tmp3823;
-$tmp3823 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
+$tmp3823 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$IR$Statement$ID$wrapper), (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
 $tmp3823->value = param2;
 _826 = ((frost$core$Object*) $tmp3823);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:143:16
@@ -69622,7 +69653,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_993);
 abort(); // unreachable
 
 }
-void org$frostlang$frostc$LLVMCodeGenerator$writePointerSetIndex$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Value$org$frostlang$frostc$IR$Value$org$frostlang$frostc$IR$Value(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$Position param1, org$frostlang$frostc$IR$Value* param2, org$frostlang$frostc$IR$Value* param3, org$frostlang$frostc$IR$Value* param4) {
+void org$frostlang$frostc$LLVMCodeGenerator$writePointerSetIndex$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Value$org$frostlang$frostc$IR$Value$org$frostlang$frostc$IR$Value(void* rawSelf, org$frostlang$frostc$Position param1, org$frostlang$frostc$IR$Value* param2, org$frostlang$frostc$IR$Value* param3, org$frostlang$frostc$IR$Value* param4) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 frost$core$String* local1 = NULL;
@@ -70040,7 +70072,7 @@ _173 = &param0->varCount;
 _176 = &param0->varCount;
 _177 = *_176;
 frost$core$Int$wrapper* $tmp3856;
-$tmp3856 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp3856 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp3856->value = _177;
 _178 = ((frost$core$Object*) $tmp3856);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:148:16
@@ -70309,7 +70341,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_430);
 abort(); // unreachable
 
 }
-void org$frostlang$frostc$LLVMCodeGenerator$writeReturn$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Value$Q(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$Position param1, org$frostlang$frostc$IR$Value* param2) {
+void org$frostlang$frostc$LLVMCodeGenerator$writeReturn$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Value$Q(void* rawSelf, org$frostlang$frostc$Position param1, org$frostlang$frostc$IR$Value* param2) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 bool _3;
@@ -70564,7 +70597,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_147);
 abort(); // unreachable
 
 }
-void org$frostlang$frostc$LLVMCodeGenerator$writeStaticCall$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Statement$ID$org$frostlang$frostc$MethodDecl$frost$collections$ListView$LTorg$frostlang$frostc$IR$Value$GT(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$Position param1, org$frostlang$frostc$IR$Statement$ID param2, org$frostlang$frostc$MethodDecl* param3, frost$collections$ListView* param4) {
+void org$frostlang$frostc$LLVMCodeGenerator$writeStaticCall$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Statement$ID$org$frostlang$frostc$MethodDecl$frost$collections$ListView$LTorg$frostlang$frostc$IR$Value$GT(void* rawSelf, org$frostlang$frostc$Position param1, org$frostlang$frostc$IR$Statement$ID param2, org$frostlang$frostc$MethodDecl* param3, frost$collections$ListView* param4) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 frost$core$Bit local1;
@@ -71087,7 +71121,7 @@ block9:;
 // begin inline call to method org.frostlang.frostc.LLVMCodeGenerator.name(id:org.frostlang.frostc.IR.Statement.ID):frost.core.String from LLVMCodeGenerator.frost:2162:31
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:143
 org$frostlang$frostc$IR$Statement$ID$wrapper* $tmp3919;
-$tmp3919 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
+$tmp3919 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$IR$Statement$ID$wrapper), (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
 $tmp3919->value = param2;
 _68 = ((frost$core$Object*) $tmp3919);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:143:16
@@ -71350,7 +71384,7 @@ _308 = *_307;
 // begin inline call to method org.frostlang.frostc.LLVMCodeGenerator.name(id:org.frostlang.frostc.IR.Statement.ID):frost.core.String from LLVMCodeGenerator.frost:2168:34
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:143
 org$frostlang$frostc$IR$Statement$ID$wrapper* $tmp3946;
-$tmp3946 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
+$tmp3946 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$IR$Statement$ID$wrapper), (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
 $tmp3946->value = param2;
 _311 = ((frost$core$Object*) $tmp3946);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:143:16
@@ -71761,7 +71795,7 @@ _682 = *_681;
 // begin inline call to method org.frostlang.frostc.LLVMCodeGenerator.name(id:org.frostlang.frostc.IR.Statement.ID):frost.core.String from LLVMCodeGenerator.frost:2180:38
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:143
 org$frostlang$frostc$IR$Statement$ID$wrapper* $tmp3980;
-$tmp3980 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
+$tmp3980 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$IR$Statement$ID$wrapper), (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
 $tmp3980->value = param2;
 _685 = ((frost$core$Object*) $tmp3980);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:143:16
@@ -71907,7 +71941,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_815);
 abort(); // unreachable
 
 }
-void org$frostlang$frostc$LLVMCodeGenerator$writeStore$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Value$org$frostlang$frostc$IR$Value(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$Position param1, org$frostlang$frostc$IR$Value* param2, org$frostlang$frostc$IR$Value* param3) {
+void org$frostlang$frostc$LLVMCodeGenerator$writeStore$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Value$org$frostlang$frostc$IR$Value(void* rawSelf, org$frostlang$frostc$Position param1, org$frostlang$frostc$IR$Value* param2, org$frostlang$frostc$IR$Value* param3) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 frost$io$OutputStream** _3;
@@ -72109,7 +72144,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_123);
 return;
 
 }
-void org$frostlang$frostc$LLVMCodeGenerator$writeStatement$org$frostlang$frostc$IR$Statement$ID$org$frostlang$frostc$IR$Statement(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$IR$Statement$ID param1, org$frostlang$frostc$IR$Statement* param2) {
+void org$frostlang$frostc$LLVMCodeGenerator$writeStatement$org$frostlang$frostc$IR$Statement$ID$org$frostlang$frostc$IR$Statement(void* rawSelf, org$frostlang$frostc$IR$Statement$ID param1, org$frostlang$frostc$IR$Statement* param2) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 org$frostlang$frostc$Position local1;
@@ -72896,10 +72932,10 @@ _11 = (frost$core$Bit) {_10};
 _13 = _11.value;
 if (_13) goto block4; else goto block5;
 block4:;
-_15 = (org$frostlang$frostc$Position*) (param2->$data + 0);
+_15 = &param2->$data.$BINARY.field0;
 _16 = *_15;
 *(&local1) = _16;
-_18 = (org$frostlang$frostc$IR$Value**) (param2->$data + 24);
+_18 = &param2->$data.$BINARY.field1;
 _19 = *_18;
 *(&local2) = ((org$frostlang$frostc$IR$Value*) NULL);
 _21 = ((frost$core$Object*) _19);
@@ -72908,10 +72944,10 @@ _23 = *(&local2);
 _24 = ((frost$core$Object*) _23);
 frost$core$Frost$unref$frost$core$Object$Q(_24);
 *(&local2) = _19;
-_27 = (org$frostlang$frostc$expression$Binary$Operator*) (param2->$data + 32);
+_27 = &param2->$data.$BINARY.field2;
 _28 = *_27;
 *(&local3) = _28;
-_30 = (org$frostlang$frostc$IR$Value**) (param2->$data + 40);
+_30 = &param2->$data.$BINARY.field3;
 _31 = *_30;
 *(&local4) = ((org$frostlang$frostc$IR$Value*) NULL);
 _33 = ((frost$core$Object*) _31);
@@ -72920,7 +72956,7 @@ _35 = *(&local4);
 _36 = ((frost$core$Object*) _35);
 frost$core$Frost$unref$frost$core$Object$Q(_36);
 *(&local4) = _31;
-_39 = (org$frostlang$frostc$Type**) (param2->$data + 48);
+_39 = &param2->$data.$BINARY.field4;
 _40 = *_39;
 *(&local5) = ((org$frostlang$frostc$Type*) NULL);
 _42 = ((frost$core$Object*) _40);
@@ -72960,10 +72996,10 @@ _74 = (frost$core$Bit) {_73};
 _76 = _74.value;
 if (_76) goto block7; else goto block8;
 block7:;
-_78 = (org$frostlang$frostc$Position*) (param2->$data + 0);
+_78 = &param2->$data.$BRANCH.field0;
 _79 = *_78;
 *(&local6) = _79;
-_81 = (org$frostlang$frostc$IR$Block$ID*) (param2->$data + 24);
+_81 = &param2->$data.$BRANCH.field1;
 _82 = *_81;
 *(&local7) = _82;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:2206
@@ -72982,10 +73018,10 @@ _95 = (frost$core$Bit) {_94};
 _97 = _95.value;
 if (_97) goto block10; else goto block11;
 block10:;
-_99 = (org$frostlang$frostc$Position*) (param2->$data + 0);
+_99 = &param2->$data.$CAST.field0;
 _100 = *_99;
 *(&local8) = _100;
-_102 = (org$frostlang$frostc$IR$Value**) (param2->$data + 24);
+_102 = &param2->$data.$CAST.field1;
 _103 = *_102;
 *(&local9) = ((org$frostlang$frostc$IR$Value*) NULL);
 _105 = ((frost$core$Object*) _103);
@@ -72994,7 +73030,7 @@ _107 = *(&local9);
 _108 = ((frost$core$Object*) _107);
 frost$core$Frost$unref$frost$core$Object$Q(_108);
 *(&local9) = _103;
-_111 = (org$frostlang$frostc$Type**) (param2->$data + 32);
+_111 = &param2->$data.$CAST.field2;
 _112 = *_111;
 *(&local10) = ((org$frostlang$frostc$Type*) NULL);
 _114 = ((frost$core$Object*) _112);
@@ -73003,7 +73039,7 @@ _116 = *(&local10);
 _117 = ((frost$core$Object*) _116);
 frost$core$Frost$unref$frost$core$Object$Q(_117);
 *(&local10) = _112;
-_120 = (frost$core$Bit*) (param2->$data + 40);
+_120 = &param2->$data.$CAST.field3;
 _121 = *_120;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:2209
 _123 = *(&local8);
@@ -73014,7 +73050,7 @@ _125 = *(&local10);
 // begin inline call to method org.frostlang.frostc.LLVMCodeGenerator.name(id:org.frostlang.frostc.IR.Statement.ID):frost.core.String from LLVMCodeGenerator.frost:1742:33
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:143
 org$frostlang$frostc$IR$Statement$ID$wrapper* $tmp4015;
-$tmp4015 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
+$tmp4015 = (org$frostlang$frostc$IR$Statement$ID$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$IR$Statement$ID$wrapper), (frost$core$Class*) &org$frostlang$frostc$IR$Statement$ID$wrapperclass);
 $tmp4015->value = param1;
 _130 = ((frost$core$Object*) $tmp4015);
 _131 = frost$core$String$$ADD$frost$core$Object$R$frost$core$String(&$s4016, _130);
@@ -73057,9 +73093,9 @@ _168 = (frost$core$Bit) {_167};
 _170 = _168.value;
 if (_170) goto block15; else goto block16;
 block15:;
-_172 = (org$frostlang$frostc$Position*) (param2->$data + 0);
+_172 = &param2->$data.$COMMENT.field0;
 _173 = *_172;
-_174 = (frost$core$String**) (param2->$data + 24);
+_174 = &param2->$data.$COMMENT.field1;
 _175 = *_174;
 *(&local11) = ((frost$core$String*) NULL);
 _177 = ((frost$core$Object*) _175);
@@ -73126,10 +73162,10 @@ _232 = (frost$core$Bit) {_231};
 _234 = _232.value;
 if (_234) goto block22; else goto block23;
 block22:;
-_236 = (org$frostlang$frostc$Position*) (param2->$data + 0);
+_236 = &param2->$data.$CONDITIONAL_BRANCH.field0;
 _237 = *_236;
 *(&local12) = _237;
-_239 = (org$frostlang$frostc$IR$Value**) (param2->$data + 24);
+_239 = &param2->$data.$CONDITIONAL_BRANCH.field1;
 _240 = *_239;
 *(&local13) = ((org$frostlang$frostc$IR$Value*) NULL);
 _242 = ((frost$core$Object*) _240);
@@ -73138,10 +73174,10 @@ _244 = *(&local13);
 _245 = ((frost$core$Object*) _244);
 frost$core$Frost$unref$frost$core$Object$Q(_245);
 *(&local13) = _240;
-_248 = (org$frostlang$frostc$IR$Block$ID*) (param2->$data + 32);
+_248 = &param2->$data.$CONDITIONAL_BRANCH.field2;
 _249 = *_248;
 *(&local14) = _249;
-_251 = (org$frostlang$frostc$IR$Block$ID*) (param2->$data + 40);
+_251 = &param2->$data.$CONDITIONAL_BRANCH.field3;
 _252 = *_251;
 *(&local15) = _252;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:2215
@@ -73166,10 +73202,10 @@ _271 = (frost$core$Bit) {_270};
 _273 = _271.value;
 if (_273) goto block25; else goto block26;
 block25:;
-_275 = (org$frostlang$frostc$Position*) (param2->$data + 0);
+_275 = &param2->$data.$CONSTRUCT.field0;
 _276 = *_275;
 *(&local16) = _276;
-_278 = (org$frostlang$frostc$ClassDecl**) (param2->$data + 24);
+_278 = &param2->$data.$CONSTRUCT.field1;
 _279 = *_278;
 *(&local17) = ((org$frostlang$frostc$ClassDecl*) NULL);
 _281 = ((frost$core$Object*) _279);
@@ -73198,10 +73234,10 @@ _302 = (frost$core$Bit) {_301};
 _304 = _302.value;
 if (_304) goto block28; else goto block29;
 block28:;
-_306 = (org$frostlang$frostc$Position*) (param2->$data + 0);
+_306 = &param2->$data.$CREATE_STRUCT.field0;
 _307 = *_306;
 *(&local18) = _307;
-_309 = (org$frostlang$frostc$ClassDecl**) (param2->$data + 24);
+_309 = &param2->$data.$CREATE_STRUCT.field1;
 _310 = *_309;
 *(&local19) = ((org$frostlang$frostc$ClassDecl*) NULL);
 _312 = ((frost$core$Object*) _310);
@@ -73210,7 +73246,7 @@ _314 = *(&local19);
 _315 = ((frost$core$Object*) _314);
 frost$core$Frost$unref$frost$core$Object$Q(_315);
 *(&local19) = _310;
-_318 = (org$frostlang$frostc$FixedArray**) (param2->$data + 32);
+_318 = &param2->$data.$CREATE_STRUCT.field2;
 _319 = *_318;
 *(&local20) = ((org$frostlang$frostc$FixedArray*) NULL);
 _321 = ((frost$core$Object*) _319);
@@ -73244,10 +73280,10 @@ _347 = (frost$core$Bit) {_346};
 _349 = _347.value;
 if (_349) goto block31; else goto block32;
 block31:;
-_351 = (org$frostlang$frostc$Position*) (param2->$data + 0);
+_351 = &param2->$data.$DYNAMIC_CALL.field0;
 _352 = *_351;
 *(&local21) = _352;
-_354 = (org$frostlang$frostc$IR$Value**) (param2->$data + 24);
+_354 = &param2->$data.$DYNAMIC_CALL.field1;
 _355 = *_354;
 *(&local22) = ((org$frostlang$frostc$IR$Value*) NULL);
 _357 = ((frost$core$Object*) _355);
@@ -73256,7 +73292,7 @@ _359 = *(&local22);
 _360 = ((frost$core$Object*) _359);
 frost$core$Frost$unref$frost$core$Object$Q(_360);
 *(&local22) = _355;
-_363 = (org$frostlang$frostc$FixedArray**) (param2->$data + 32);
+_363 = &param2->$data.$DYNAMIC_CALL.field2;
 _364 = *_363;
 *(&local23) = ((org$frostlang$frostc$FixedArray*) NULL);
 _366 = ((frost$core$Object*) _364);
@@ -73305,10 +73341,10 @@ _406 = (frost$core$Bit) {_405};
 _408 = _406.value;
 if (_408) goto block37; else goto block38;
 block37:;
-_410 = (org$frostlang$frostc$Position*) (param2->$data + 0);
+_410 = &param2->$data.$EXTRACT_FIELD.field0;
 _411 = *_410;
 *(&local24) = _411;
-_413 = (org$frostlang$frostc$IR$Value**) (param2->$data + 24);
+_413 = &param2->$data.$EXTRACT_FIELD.field1;
 _414 = *_413;
 *(&local25) = ((org$frostlang$frostc$IR$Value*) NULL);
 _416 = ((frost$core$Object*) _414);
@@ -73317,7 +73353,7 @@ _418 = *(&local25);
 _419 = ((frost$core$Object*) _418);
 frost$core$Frost$unref$frost$core$Object$Q(_419);
 *(&local25) = _414;
-_422 = (org$frostlang$frostc$FieldDecl**) (param2->$data + 32);
+_422 = &param2->$data.$EXTRACT_FIELD.field2;
 _423 = *_422;
 *(&local26) = ((org$frostlang$frostc$FieldDecl*) NULL);
 _425 = ((frost$core$Object*) _423);
@@ -73351,10 +73387,10 @@ _451 = (frost$core$Bit) {_450};
 _453 = _451.value;
 if (_453) goto block40; else goto block41;
 block40:;
-_455 = (org$frostlang$frostc$Position*) (param2->$data + 0);
+_455 = &param2->$data.$GET_CHOICE_FIELD_POINTER.field0;
 _456 = *_455;
 *(&local27) = _456;
-_458 = (org$frostlang$frostc$IR$Value**) (param2->$data + 24);
+_458 = &param2->$data.$GET_CHOICE_FIELD_POINTER.field1;
 _459 = *_458;
 *(&local28) = ((org$frostlang$frostc$IR$Value*) NULL);
 _461 = ((frost$core$Object*) _459);
@@ -73363,7 +73399,7 @@ _463 = *(&local28);
 _464 = ((frost$core$Object*) _463);
 frost$core$Frost$unref$frost$core$Object$Q(_464);
 *(&local28) = _459;
-_467 = (org$frostlang$frostc$ChoiceCase**) (param2->$data + 32);
+_467 = &param2->$data.$GET_CHOICE_FIELD_POINTER.field2;
 _468 = *_467;
 *(&local29) = ((org$frostlang$frostc$ChoiceCase*) NULL);
 _470 = ((frost$core$Object*) _468);
@@ -73372,7 +73408,7 @@ _472 = *(&local29);
 _473 = ((frost$core$Object*) _472);
 frost$core$Frost$unref$frost$core$Object$Q(_473);
 *(&local29) = _468;
-_476 = (frost$core$Int*) (param2->$data + 40);
+_476 = &param2->$data.$GET_CHOICE_FIELD_POINTER.field3;
 _477 = *_476;
 *(&local30) = _477;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:2233
@@ -73401,10 +73437,10 @@ _500 = (frost$core$Bit) {_499};
 _502 = _500.value;
 if (_502) goto block43; else goto block44;
 block43:;
-_504 = (org$frostlang$frostc$Position*) (param2->$data + 0);
+_504 = &param2->$data.$GET_FIELD_POINTER.field0;
 _505 = *_504;
 *(&local31) = _505;
-_507 = (org$frostlang$frostc$IR$Value**) (param2->$data + 24);
+_507 = &param2->$data.$GET_FIELD_POINTER.field1;
 _508 = *_507;
 *(&local32) = ((org$frostlang$frostc$IR$Value*) NULL);
 _510 = ((frost$core$Object*) _508);
@@ -73413,7 +73449,7 @@ _512 = *(&local32);
 _513 = ((frost$core$Object*) _512);
 frost$core$Frost$unref$frost$core$Object$Q(_513);
 *(&local32) = _508;
-_516 = (org$frostlang$frostc$FieldDecl**) (param2->$data + 32);
+_516 = &param2->$data.$GET_FIELD_POINTER.field2;
 _517 = *_516;
 *(&local33) = ((org$frostlang$frostc$FieldDecl*) NULL);
 _519 = ((frost$core$Object*) _517);
@@ -73447,10 +73483,10 @@ _545 = (frost$core$Bit) {_544};
 _547 = _545.value;
 if (_547) goto block46; else goto block47;
 block46:;
-_549 = (org$frostlang$frostc$Position*) (param2->$data + 0);
+_549 = &param2->$data.$GET_INTERFACE_METHOD.field0;
 _550 = *_549;
 *(&local34) = _550;
-_552 = (org$frostlang$frostc$IR$Value**) (param2->$data + 24);
+_552 = &param2->$data.$GET_INTERFACE_METHOD.field1;
 _553 = *_552;
 *(&local35) = ((org$frostlang$frostc$IR$Value*) NULL);
 _555 = ((frost$core$Object*) _553);
@@ -73459,7 +73495,7 @@ _557 = *(&local35);
 _558 = ((frost$core$Object*) _557);
 frost$core$Frost$unref$frost$core$Object$Q(_558);
 *(&local35) = _553;
-_561 = (org$frostlang$frostc$ClassDecl**) (param2->$data + 32);
+_561 = &param2->$data.$GET_INTERFACE_METHOD.field2;
 _562 = *_561;
 *(&local36) = ((org$frostlang$frostc$ClassDecl*) NULL);
 _564 = ((frost$core$Object*) _562);
@@ -73468,10 +73504,10 @@ _566 = *(&local36);
 _567 = ((frost$core$Object*) _566);
 frost$core$Frost$unref$frost$core$Object$Q(_567);
 *(&local36) = _562;
-_570 = (frost$core$Int*) (param2->$data + 40);
+_570 = &param2->$data.$GET_INTERFACE_METHOD.field3;
 _571 = *_570;
 *(&local37) = _571;
-_573 = (org$frostlang$frostc$Type**) (param2->$data + 48);
+_573 = &param2->$data.$GET_INTERFACE_METHOD.field4;
 _574 = *_573;
 *(&local38) = ((org$frostlang$frostc$Type*) NULL);
 _576 = ((frost$core$Object*) _574);
@@ -73511,10 +73547,10 @@ _608 = (frost$core$Bit) {_607};
 _610 = _608.value;
 if (_610) goto block49; else goto block50;
 block49:;
-_612 = (org$frostlang$frostc$Position*) (param2->$data + 0);
+_612 = &param2->$data.$GET_VIRTUAL_METHOD.field0;
 _613 = *_612;
 *(&local39) = _613;
-_615 = (org$frostlang$frostc$IR$Value**) (param2->$data + 24);
+_615 = &param2->$data.$GET_VIRTUAL_METHOD.field1;
 _616 = *_615;
 *(&local40) = ((org$frostlang$frostc$IR$Value*) NULL);
 _618 = ((frost$core$Object*) _616);
@@ -73523,10 +73559,10 @@ _620 = *(&local40);
 _621 = ((frost$core$Object*) _620);
 frost$core$Frost$unref$frost$core$Object$Q(_621);
 *(&local40) = _616;
-_624 = (frost$core$Int*) (param2->$data + 32);
+_624 = &param2->$data.$GET_VIRTUAL_METHOD.field2;
 _625 = *_624;
 *(&local41) = _625;
-_627 = (org$frostlang$frostc$Type**) (param2->$data + 40);
+_627 = &param2->$data.$GET_VIRTUAL_METHOD.field3;
 _628 = *_627;
 *(&local42) = ((org$frostlang$frostc$Type*) NULL);
 _630 = ((frost$core$Object*) _628);
@@ -73561,10 +73597,10 @@ _657 = (frost$core$Bit) {_656};
 _659 = _657.value;
 if (_659) goto block52; else goto block53;
 block52:;
-_661 = (org$frostlang$frostc$Position*) (param2->$data + 0);
+_661 = &param2->$data.$LOAD.field0;
 _662 = *_661;
 *(&local43) = _662;
-_664 = (org$frostlang$frostc$IR$Value**) (param2->$data + 24);
+_664 = &param2->$data.$LOAD.field1;
 _665 = *_664;
 *(&local44) = ((org$frostlang$frostc$IR$Value*) NULL);
 _667 = ((frost$core$Object*) _665);
@@ -73593,10 +73629,10 @@ _688 = (frost$core$Bit) {_687};
 _690 = _688.value;
 if (_690) goto block55; else goto block56;
 block55:;
-_692 = (org$frostlang$frostc$Position*) (param2->$data + 0);
+_692 = &param2->$data.$NEGATE.field0;
 _693 = *_692;
 *(&local45) = _693;
-_695 = (org$frostlang$frostc$IR$Value**) (param2->$data + 24);
+_695 = &param2->$data.$NEGATE.field1;
 _696 = *_695;
 *(&local46) = ((org$frostlang$frostc$IR$Value*) NULL);
 _698 = ((frost$core$Object*) _696);
@@ -73625,10 +73661,10 @@ _719 = (frost$core$Bit) {_718};
 _721 = _719.value;
 if (_721) goto block58; else goto block59;
 block58:;
-_723 = (org$frostlang$frostc$Position*) (param2->$data + 0);
+_723 = &param2->$data.$NOT.field0;
 _724 = *_723;
 *(&local47) = _724;
-_726 = (org$frostlang$frostc$IR$Value**) (param2->$data + 24);
+_726 = &param2->$data.$NOT.field1;
 _727 = *_726;
 *(&local48) = ((org$frostlang$frostc$IR$Value*) NULL);
 _729 = ((frost$core$Object*) _727);
@@ -73657,10 +73693,10 @@ _750 = (frost$core$Bit) {_749};
 _752 = _750.value;
 if (_752) goto block61; else goto block62;
 block61:;
-_754 = (org$frostlang$frostc$Position*) (param2->$data + 0);
+_754 = &param2->$data.$POINTER_ALLOC.field0;
 _755 = *_754;
 *(&local49) = _755;
-_757 = (org$frostlang$frostc$IR$Value**) (param2->$data + 24);
+_757 = &param2->$data.$POINTER_ALLOC.field1;
 _758 = *_757;
 *(&local50) = ((org$frostlang$frostc$IR$Value*) NULL);
 _760 = ((frost$core$Object*) _758);
@@ -73669,7 +73705,7 @@ _762 = *(&local50);
 _763 = ((frost$core$Object*) _762);
 frost$core$Frost$unref$frost$core$Object$Q(_763);
 *(&local50) = _758;
-_766 = (org$frostlang$frostc$Type**) (param2->$data + 32);
+_766 = &param2->$data.$POINTER_ALLOC.field2;
 _767 = *_766;
 *(&local51) = ((org$frostlang$frostc$Type*) NULL);
 _769 = ((frost$core$Object*) _767);
@@ -73703,10 +73739,10 @@ _795 = (frost$core$Bit) {_794};
 _797 = _795.value;
 if (_797) goto block64; else goto block65;
 block64:;
-_799 = (org$frostlang$frostc$Position*) (param2->$data + 0);
+_799 = &param2->$data.$POINTER_DESTROY.field0;
 _800 = *_799;
 *(&local52) = _800;
-_802 = (org$frostlang$frostc$IR$Value**) (param2->$data + 24);
+_802 = &param2->$data.$POINTER_DESTROY.field1;
 _803 = *_802;
 *(&local53) = ((org$frostlang$frostc$IR$Value*) NULL);
 _805 = ((frost$core$Object*) _803);
@@ -73735,10 +73771,10 @@ _826 = (frost$core$Bit) {_825};
 _828 = _826.value;
 if (_828) goto block67; else goto block68;
 block67:;
-_830 = (org$frostlang$frostc$Position*) (param2->$data + 0);
+_830 = &param2->$data.$POINTER_GET_INDEX.field0;
 _831 = *_830;
 *(&local54) = _831;
-_833 = (org$frostlang$frostc$IR$Value**) (param2->$data + 24);
+_833 = &param2->$data.$POINTER_GET_INDEX.field1;
 _834 = *_833;
 *(&local55) = ((org$frostlang$frostc$IR$Value*) NULL);
 _836 = ((frost$core$Object*) _834);
@@ -73747,7 +73783,7 @@ _838 = *(&local55);
 _839 = ((frost$core$Object*) _838);
 frost$core$Frost$unref$frost$core$Object$Q(_839);
 *(&local55) = _834;
-_842 = (org$frostlang$frostc$IR$Value**) (param2->$data + 32);
+_842 = &param2->$data.$POINTER_GET_INDEX.field2;
 _843 = *_842;
 *(&local56) = ((org$frostlang$frostc$IR$Value*) NULL);
 _845 = ((frost$core$Object*) _843);
@@ -73781,10 +73817,10 @@ _871 = (frost$core$Bit) {_870};
 _873 = _871.value;
 if (_873) goto block70; else goto block71;
 block70:;
-_875 = (org$frostlang$frostc$Position*) (param2->$data + 0);
+_875 = &param2->$data.$POINTER_OFFSET.field0;
 _876 = *_875;
 *(&local57) = _876;
-_878 = (org$frostlang$frostc$IR$Value**) (param2->$data + 24);
+_878 = &param2->$data.$POINTER_OFFSET.field1;
 _879 = *_878;
 *(&local58) = ((org$frostlang$frostc$IR$Value*) NULL);
 _881 = ((frost$core$Object*) _879);
@@ -73793,7 +73829,7 @@ _883 = *(&local58);
 _884 = ((frost$core$Object*) _883);
 frost$core$Frost$unref$frost$core$Object$Q(_884);
 *(&local58) = _879;
-_887 = (org$frostlang$frostc$IR$Value**) (param2->$data + 32);
+_887 = &param2->$data.$POINTER_OFFSET.field2;
 _888 = *_887;
 *(&local59) = ((org$frostlang$frostc$IR$Value*) NULL);
 _890 = ((frost$core$Object*) _888);
@@ -73827,10 +73863,10 @@ _916 = (frost$core$Bit) {_915};
 _918 = _916.value;
 if (_918) goto block73; else goto block74;
 block73:;
-_920 = (org$frostlang$frostc$Position*) (param2->$data + 0);
+_920 = &param2->$data.$POINTER_REALLOC.field0;
 _921 = *_920;
 *(&local60) = _921;
-_923 = (org$frostlang$frostc$IR$Value**) (param2->$data + 24);
+_923 = &param2->$data.$POINTER_REALLOC.field1;
 _924 = *_923;
 *(&local61) = ((org$frostlang$frostc$IR$Value*) NULL);
 _926 = ((frost$core$Object*) _924);
@@ -73839,7 +73875,7 @@ _928 = *(&local61);
 _929 = ((frost$core$Object*) _928);
 frost$core$Frost$unref$frost$core$Object$Q(_929);
 *(&local61) = _924;
-_932 = (org$frostlang$frostc$IR$Value**) (param2->$data + 32);
+_932 = &param2->$data.$POINTER_REALLOC.field2;
 _933 = *_932;
 *(&local62) = ((org$frostlang$frostc$IR$Value*) NULL);
 _935 = ((frost$core$Object*) _933);
@@ -73848,7 +73884,7 @@ _937 = *(&local62);
 _938 = ((frost$core$Object*) _937);
 frost$core$Frost$unref$frost$core$Object$Q(_938);
 *(&local62) = _933;
-_941 = (org$frostlang$frostc$IR$Value**) (param2->$data + 40);
+_941 = &param2->$data.$POINTER_REALLOC.field3;
 _942 = *_941;
 *(&local63) = ((org$frostlang$frostc$IR$Value*) NULL);
 _944 = ((frost$core$Object*) _942);
@@ -73887,10 +73923,10 @@ _975 = (frost$core$Bit) {_974};
 _977 = _975.value;
 if (_977) goto block76; else goto block77;
 block76:;
-_979 = (org$frostlang$frostc$Position*) (param2->$data + 0);
+_979 = &param2->$data.$POINTER_SET_INDEX.field0;
 _980 = *_979;
 *(&local64) = _980;
-_982 = (org$frostlang$frostc$IR$Value**) (param2->$data + 24);
+_982 = &param2->$data.$POINTER_SET_INDEX.field1;
 _983 = *_982;
 *(&local65) = ((org$frostlang$frostc$IR$Value*) NULL);
 _985 = ((frost$core$Object*) _983);
@@ -73899,7 +73935,7 @@ _987 = *(&local65);
 _988 = ((frost$core$Object*) _987);
 frost$core$Frost$unref$frost$core$Object$Q(_988);
 *(&local65) = _983;
-_991 = (org$frostlang$frostc$IR$Value**) (param2->$data + 32);
+_991 = &param2->$data.$POINTER_SET_INDEX.field2;
 _992 = *_991;
 *(&local66) = ((org$frostlang$frostc$IR$Value*) NULL);
 _994 = ((frost$core$Object*) _992);
@@ -73908,7 +73944,7 @@ _996 = *(&local66);
 _997 = ((frost$core$Object*) _996);
 frost$core$Frost$unref$frost$core$Object$Q(_997);
 *(&local66) = _992;
-_1000 = (org$frostlang$frostc$IR$Value**) (param2->$data + 40);
+_1000 = &param2->$data.$POINTER_SET_INDEX.field3;
 _1001 = *_1000;
 *(&local67) = ((org$frostlang$frostc$IR$Value*) NULL);
 _1003 = ((frost$core$Object*) _1001);
@@ -73947,10 +73983,10 @@ _1034 = (frost$core$Bit) {_1033};
 _1036 = _1034.value;
 if (_1036) goto block79; else goto block80;
 block79:;
-_1038 = (org$frostlang$frostc$Position*) (param2->$data + 0);
+_1038 = &param2->$data.$RETURN.field0;
 _1039 = *_1038;
 *(&local68) = _1039;
-_1041 = (org$frostlang$frostc$IR$Value**) (param2->$data + 24);
+_1041 = &param2->$data.$RETURN.field1;
 _1042 = *_1041;
 *(&local69) = ((org$frostlang$frostc$IR$Value*) NULL);
 _1044 = ((frost$core$Object*) _1042);
@@ -73979,10 +74015,10 @@ _1065 = (frost$core$Bit) {_1064};
 _1067 = _1065.value;
 if (_1067) goto block82; else goto block83;
 block82:;
-_1069 = (org$frostlang$frostc$Position*) (param2->$data + 0);
+_1069 = &param2->$data.$STATIC_CALL.field0;
 _1070 = *_1069;
 *(&local70) = _1070;
-_1072 = (org$frostlang$frostc$MethodDecl**) (param2->$data + 24);
+_1072 = &param2->$data.$STATIC_CALL.field1;
 _1073 = *_1072;
 *(&local71) = ((org$frostlang$frostc$MethodDecl*) NULL);
 _1075 = ((frost$core$Object*) _1073);
@@ -73991,7 +74027,7 @@ _1077 = *(&local71);
 _1078 = ((frost$core$Object*) _1077);
 frost$core$Frost$unref$frost$core$Object$Q(_1078);
 *(&local71) = _1073;
-_1081 = (org$frostlang$frostc$FixedArray**) (param2->$data + 32);
+_1081 = &param2->$data.$STATIC_CALL.field2;
 _1082 = *_1081;
 *(&local72) = ((org$frostlang$frostc$FixedArray*) NULL);
 _1084 = ((frost$core$Object*) _1082);
@@ -74026,10 +74062,10 @@ _1111 = (frost$core$Bit) {_1110};
 _1113 = _1111.value;
 if (_1113) goto block85; else goto block86;
 block85:;
-_1115 = (org$frostlang$frostc$Position*) (param2->$data + 0);
+_1115 = &param2->$data.$STORE.field0;
 _1116 = *_1115;
 *(&local73) = _1116;
-_1118 = (org$frostlang$frostc$IR$Value**) (param2->$data + 24);
+_1118 = &param2->$data.$STORE.field1;
 _1119 = *_1118;
 *(&local74) = ((org$frostlang$frostc$IR$Value*) NULL);
 _1121 = ((frost$core$Object*) _1119);
@@ -74038,7 +74074,7 @@ _1123 = *(&local74);
 _1124 = ((frost$core$Object*) _1123);
 frost$core$Frost$unref$frost$core$Object$Q(_1124);
 *(&local74) = _1119;
-_1127 = (org$frostlang$frostc$IR$Value**) (param2->$data + 32);
+_1127 = &param2->$data.$STORE.field2;
 _1128 = *_1127;
 *(&local75) = ((org$frostlang$frostc$IR$Value*) NULL);
 _1130 = ((frost$core$Object*) _1128);
@@ -74072,7 +74108,7 @@ _1156 = (frost$core$Bit) {_1155};
 _1158 = _1156.value;
 if (_1158) goto block88; else goto block89;
 block88:;
-_1160 = (org$frostlang$frostc$Position*) (param2->$data + 0);
+_1160 = &param2->$data.$UNREACHABLE.field0;
 _1161 = *_1160;
 *(&local76) = _1161;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:2281
@@ -74160,7 +74196,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_1233);
 abort(); // unreachable
 
 }
-void org$frostlang$frostc$LLVMCodeGenerator$writeIR$org$frostlang$frostc$IR(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$IR* param1) {
+void org$frostlang$frostc$LLVMCodeGenerator$writeIR$org$frostlang$frostc$IR(void* rawSelf, org$frostlang$frostc$IR* param1) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 frost$core$Int local1;
@@ -74614,7 +74651,7 @@ block3:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:2296
 _31 = *(&local1);
 frost$core$Int$wrapper* $tmp4052;
-$tmp4052 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp4052 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp4052->value = _31;
 _32 = ((frost$core$Object*) $tmp4052);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:2296:29
@@ -75072,7 +75109,7 @@ _443 = *_442;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/IR.frost:392
 _446 = _443.value;
 frost$core$Int$wrapper* $tmp4081;
-$tmp4081 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp4081 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp4081->value = _446;
 _447 = ((frost$core$Object*) $tmp4081);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from IR.frost:392:24
@@ -75305,7 +75342,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_639);
 abort(); // unreachable
 
 }
-void org$frostlang$frostc$LLVMCodeGenerator$write$org$frostlang$frostc$MethodDecl$org$frostlang$frostc$IR(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$MethodDecl* param1, org$frostlang$frostc$IR* param2) {
+void org$frostlang$frostc$LLVMCodeGenerator$write$org$frostlang$frostc$MethodDecl$org$frostlang$frostc$IR(void* rawSelf, org$frostlang$frostc$MethodDecl* param1, org$frostlang$frostc$IR* param2) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 frost$core$String* local1 = NULL;
@@ -76058,10 +76096,10 @@ abort(); // unreachable
 block31:;
 _219 = _211;
 // begin inline call to method org.frostlang.frostc.Compiler.hasSelfParam(m:org.frostlang.frostc.MethodDecl):frost.core.Bit from LLVMCodeGenerator.frost:2337:38
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5482
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5365
 _222 = &param1->annotations;
 _223 = *_222;
-// begin inline call to function org.frostlang.frostc.Annotations.get_isClass():frost.core.Bit from Compiler.frost:5482:25
+// begin inline call to function org.frostlang.frostc.Annotations.get_isClass():frost.core.Bit from Compiler.frost:5365:25
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:122
 _226 = &_223->flags;
 _227 = *_226;
@@ -76075,21 +76113,21 @@ _234 = (frost$core$Bit) {_233};
 _236 = _234.value;
 if (_236) goto block34; else goto block35;
 block34:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5483
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5366
 _239 = (frost$core$Bit) {false};
 *(&local3) = _239;
 goto block33;
 block35:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5485
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5368
 _243 = &param1->methodKind;
 _244 = *_243;
 org$frostlang$frostc$MethodDecl$Kind$wrapper* $tmp4138;
-$tmp4138 = (org$frostlang$frostc$MethodDecl$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$MethodDecl$Kind$wrapperclass);
+$tmp4138 = (org$frostlang$frostc$MethodDecl$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$MethodDecl$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$MethodDecl$Kind$wrapperclass);
 $tmp4138->value = _244;
 _245 = ((frost$core$Equatable*) $tmp4138);
 _246 = _245;
 _247 = (frost$core$Int) {2u};
-// begin inline call to org.frostlang.frostc.MethodDecl.Kind.init(rv:frost.core.Int):org.frostlang.frostc.MethodDecl.Kind from Compiler.frost:5485:43
+// begin inline call to org.frostlang.frostc.MethodDecl.Kind.init(rv:frost.core.Int):org.frostlang.frostc.MethodDecl.Kind from Compiler.frost:5368:43
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/MethodDecl.frost:7
 _250 = &(&local5)->$rawValue;
 *_250 = _247;
@@ -76097,7 +76135,7 @@ _252 = *(&local5);
 *(&local4) = _252;
 _255 = *(&local4);
 org$frostlang$frostc$MethodDecl$Kind$wrapper* $tmp4139;
-$tmp4139 = (org$frostlang$frostc$MethodDecl$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$MethodDecl$Kind$wrapperclass);
+$tmp4139 = (org$frostlang$frostc$MethodDecl$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$MethodDecl$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$MethodDecl$Kind$wrapperclass);
 $tmp4139->value = _255;
 _256 = ((frost$core$Equatable*) $tmp4139);
 ITable* $tmp4140 = _246->$class->itable;
@@ -76113,16 +76151,16 @@ _262 = ((frost$core$Object*) _245);
 frost$core$Frost$unref$frost$core$Object$Q(_262);
 if (_259) goto block37; else goto block38;
 block37:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5486
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5369
 _266 = (frost$core$Bit) {true};
 *(&local3) = _266;
 goto block33;
 block38:;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5488
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Compiler.frost:5371
 _270 = &param1->owner;
 _271 = *_270;
 _272 = _271;
-// begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Compiler.frost:5488:26
+// begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Compiler.frost:5371:26
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
 _275 = frost$core$Weak$get_valid$R$frost$core$Bit(_272);
 _276 = _275.value;
@@ -76140,7 +76178,7 @@ _285 = _284;
 frost$core$Frost$ref$frost$core$Object$Q(_285);
 _288 = ((org$frostlang$frostc$ClassDecl*) _284);
 _289 = org$frostlang$frostc$Compiler$isValue$org$frostlang$frostc$ClassDecl$R$frost$core$Bit(_219, _288);
-// begin inline call to function frost.core.Bit.!():frost.core.Bit from Compiler.frost:5488:16
+// begin inline call to function frost.core.Bit.!():frost.core.Bit from Compiler.frost:5371:16
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Bit.frost:42
 _292 = _289.value;
 _293 = !_292;
@@ -76167,7 +76205,7 @@ frost$core$Frost$ref$frost$core$Object$Q(_311);
 _314 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_308, &$s4142);
 _315 = *(&local2);
 frost$core$Int$wrapper* $tmp4143;
-$tmp4143 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp4143 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp4143->value = _315;
 _316 = ((frost$core$Object*) $tmp4143);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:2338:38
@@ -76307,7 +76345,7 @@ _433 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_428, _432);
 _434 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_433, &$s4155);
 _435 = *(&local2);
 frost$core$Int$wrapper* $tmp4156;
-$tmp4156 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp4156 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp4156->value = _435;
 _436 = ((frost$core$Object*) $tmp4156);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:2343:30
@@ -76505,7 +76543,7 @@ _615 = &param0->metadataCount;
 _618 = &param0->metadataCount;
 _619 = *_618;
 frost$core$Int$wrapper* $tmp4171;
-$tmp4171 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp4171 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp4171->value = _619;
 _620 = ((frost$core$Object*) $tmp4171);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:158:16
@@ -76679,8 +76717,7 @@ block80:;
 _781 = ((frost$core$Object*) _760);
 frost$core$Frost$unref$frost$core$Object$Q(_781);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LLVMCodeGenerator.frost:2355
-FROST_ASSERT(40 == sizeof(frost$io$MemoryOutputStream));
-_784 = (frost$io$MemoryOutputStream*) frostObjectAlloc(40, (frost$core$Class*) &frost$io$MemoryOutputStream$class);
+_784 = (frost$io$MemoryOutputStream*) frostObjectAlloc(sizeof(frost$io$MemoryOutputStream), (frost$core$Class*) &frost$io$MemoryOutputStream$class);
 frost$io$MemoryOutputStream$init(_784);
 _786 = ((frost$io$OutputStream*) _784);
 _787 = ((frost$core$Object*) _786);
@@ -76819,7 +76856,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_901);
 abort(); // unreachable
 
 }
-void org$frostlang$frostc$LLVMCodeGenerator$start$org$frostlang$frostc$ClassDecl(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$ClassDecl* param1) {
+void org$frostlang$frostc$LLVMCodeGenerator$start$org$frostlang$frostc$ClassDecl(void* rawSelf, org$frostlang$frostc$ClassDecl* param1) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 frost$core$String* local1 = NULL;
@@ -77230,7 +77268,7 @@ _81 = &param0->metadataCount;
 _84 = &param0->metadataCount;
 _85 = *_84;
 frost$core$Int$wrapper* $tmp4216;
-$tmp4216 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp4216 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp4216->value = _85;
 _86 = ((frost$core$Object*) $tmp4216);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:158:16
@@ -77461,7 +77499,7 @@ _301 = &param0->metadataCount;
 _304 = &param0->metadataCount;
 _305 = *_304;
 frost$core$Int$wrapper* $tmp4241;
-$tmp4241 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp4241 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp4241->value = _305;
 _306 = ((frost$core$Object*) $tmp4241);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:158:16
@@ -77555,7 +77593,7 @@ _391 = &param0->metadataCount;
 _394 = &param0->metadataCount;
 _395 = *_394;
 frost$core$Int$wrapper* $tmp4249;
-$tmp4249 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp4249 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp4249->value = _395;
 _396 = ((frost$core$Object*) $tmp4249);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from LLVMCodeGenerator.frost:158:16
@@ -77733,12 +77771,14 @@ frost$core$Frost$unref$frost$core$Object$Q(_555);
 abort(); // unreachable
 
 }
-void org$frostlang$frostc$LLVMCodeGenerator$end$org$frostlang$frostc$ClassDecl(org$frostlang$frostc$LLVMCodeGenerator* param0, org$frostlang$frostc$ClassDecl* param1) {
+void org$frostlang$frostc$LLVMCodeGenerator$end$org$frostlang$frostc$ClassDecl(void* rawSelf, org$frostlang$frostc$ClassDecl* param1) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 return;
 
 }
-void org$frostlang$frostc$LLVMCodeGenerator$cleanup(org$frostlang$frostc$LLVMCodeGenerator* param0) {
+void org$frostlang$frostc$LLVMCodeGenerator$cleanup(void* rawSelf) {
+org$frostlang$frostc$LLVMCodeGenerator* param0 = (org$frostlang$frostc$LLVMCodeGenerator*) rawSelf;
 
 frost$core$Object* _1;
 frost$core$String** _3;

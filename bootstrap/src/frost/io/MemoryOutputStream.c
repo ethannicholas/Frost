@@ -19,7 +19,8 @@ typedef frost$core$String* (*$fn3)(frost$core$Object*);
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x69\x6f\x2e\x4d\x65\x6d\x6f\x72\x79\x4f\x75\x74\x70\x75\x74\x53\x74\x72\x65\x61\x6d", 27, 2804558444258481915, NULL };
 
-void frost$io$MemoryOutputStream$init(frost$io$MemoryOutputStream* param0) {
+void frost$io$MemoryOutputStream$init(void* rawSelf) {
+frost$io$MemoryOutputStream* param0 = (frost$io$MemoryOutputStream*) rawSelf;
 
 frost$core$Int _1;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/MemoryOutputStream.frost:20
@@ -28,7 +29,8 @@ frost$io$MemoryOutputStream$init$frost$core$Int(param0, _1);
 return;
 
 }
-void frost$io$MemoryOutputStream$init$frost$core$Int(frost$io$MemoryOutputStream* param0, frost$core$Int param1) {
+void frost$io$MemoryOutputStream$init$frost$core$Int(void* rawSelf, frost$core$Int param1) {
+frost$io$MemoryOutputStream* param0 = (frost$io$MemoryOutputStream*) rawSelf;
 
 frost$core$MutableString* _1;
 frost$core$Object* _3;
@@ -39,8 +41,7 @@ frost$core$MutableString** _9;
 frost$core$Object* _11;
 frost$io$OutputStream* _14;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/MemoryOutputStream.frost:27
-FROST_ASSERT(48 == sizeof(frost$core$MutableString));
-_1 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
+_1 = (frost$core$MutableString*) frostObjectAlloc(sizeof(frost$core$MutableString), (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init$frost$core$Int(_1, param1);
 _3 = ((frost$core$Object*) _1);
 frost$core$Frost$ref$frost$core$Object$Q(_3);
@@ -58,7 +59,8 @@ frost$io$OutputStream$init(_14);
 return;
 
 }
-frost$core$Error* frost$io$MemoryOutputStream$write$frost$core$UInt8$R$frost$core$Error$Q(frost$io$MemoryOutputStream* param0, frost$core$UInt8 param1) {
+frost$core$Error* frost$io$MemoryOutputStream$write$frost$core$UInt8$R$frost$core$Error$Q(void* rawSelf, frost$core$UInt8 param1) {
+frost$io$MemoryOutputStream* param0 = (frost$io$MemoryOutputStream*) rawSelf;
 
 frost$core$MutableString** _1;
 frost$core$MutableString* _2;
@@ -75,7 +77,8 @@ frost$core$Frost$ref$frost$core$Object$Q(_6);
 return ((frost$core$Error*) NULL);
 
 }
-frost$core$Error* frost$io$MemoryOutputStream$write$frost$unsafe$Pointer$LTfrost$core$UInt8$GT$frost$core$Int$R$frost$core$Error$Q(frost$io$MemoryOutputStream* param0, frost$core$UInt8* param1, frost$core$Int param2) {
+frost$core$Error* frost$io$MemoryOutputStream$write$frost$unsafe$Pointer$LTfrost$core$UInt8$GT$frost$core$Int$R$frost$core$Error$Q(void* rawSelf, frost$core$UInt8* param1, frost$core$Int param2) {
+frost$io$MemoryOutputStream* param0 = (frost$io$MemoryOutputStream*) rawSelf;
 
 frost$core$MutableString** _1;
 frost$core$MutableString* _2;
@@ -92,7 +95,8 @@ frost$core$Frost$ref$frost$core$Object$Q(_6);
 return ((frost$core$Error*) NULL);
 
 }
-void frost$io$MemoryOutputStream$clear(frost$io$MemoryOutputStream* param0) {
+void frost$io$MemoryOutputStream$clear(void* rawSelf) {
+frost$io$MemoryOutputStream* param0 = (frost$io$MemoryOutputStream*) rawSelf;
 
 frost$core$MutableString** _1;
 frost$core$MutableString* _2;
@@ -103,7 +107,8 @@ frost$core$MutableString$clear(_2);
 return;
 
 }
-frost$core$String* frost$io$MemoryOutputStream$get_asString$R$frost$core$String(frost$io$MemoryOutputStream* param0) {
+frost$core$String* frost$io$MemoryOutputStream$get_asString$R$frost$core$String(void* rawSelf) {
+frost$io$MemoryOutputStream* param0 = (frost$io$MemoryOutputStream*) rawSelf;
 
 frost$core$MutableString** _1;
 frost$core$MutableString* _2;
@@ -125,7 +130,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_8);
 return _5;
 
 }
-frost$core$String* frost$io$MemoryOutputStream$finish$R$frost$core$String(frost$io$MemoryOutputStream* param0) {
+frost$core$String* frost$io$MemoryOutputStream$finish$R$frost$core$String(void* rawSelf) {
+frost$io$MemoryOutputStream* param0 = (frost$io$MemoryOutputStream*) rawSelf;
 
 frost$core$MutableString** _1;
 frost$core$MutableString* _2;
@@ -143,7 +149,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_6);
 return _3;
 
 }
-void frost$io$MemoryOutputStream$cleanup(frost$io$MemoryOutputStream* param0) {
+void frost$io$MemoryOutputStream$cleanup(void* rawSelf) {
+frost$io$MemoryOutputStream* param0 = (frost$io$MemoryOutputStream*) rawSelf;
 
 frost$io$OutputStream* _1;
 frost$core$MutableString** _3;

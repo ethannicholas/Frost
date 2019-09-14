@@ -438,6 +438,124 @@ class Binary {
     }
 
     @class
+    function binaryType(compiler:Compiler, left:ASTNode, op:Operator,
+            right:ASTNode):ListView<Type>? {
+        match op {
+            when Operator.CAST {
+                def rawTarget := compiler.scanner.convertType(right)
+                def index := rawTarget.name.lastIndexOf(".")
+                if rawTarget.typeKind = Type.Kind.CLASS & index !== null {
+                    -- we have a dotted name which might not be entirely a type - for example we
+                    -- might have 'o->String.length'. This is obviously meant to be a cast to String
+                    -- followed by a call to get_length(), but syntactically it could just as easily
+                    -- be a cast to a class named String.length. We need to disambiguate these cases
+                    -- here.
+                    def old := compiler.reportErrors
+                    compiler.reportErrors := false
+                    def type := compiler.resolve(rawTarget)
+                    compiler.reportErrors := old
+                    if type == null {
+                        def base := binaryType(compiler, left, op,
+                                ASTNode.TYPE(rawTarget.position, rawTarget.name[..index]))
+                        if base == null {
+                            return null
+                        }
+                        def result := Array<Type>()
+                        for t in base {
+                            def types := compiler.dotTypes(t,
+                                    rawTarget.name[rawTarget.name.next(index)..])
+                            if types !== null {
+                                result.addAll(types)
+                            }
+                        }
+                        if result.count = 0 {
+                            return null
+                        }
+                        return result
+                    }
+                }
+                def target := compiler.tryResolveType(right)
+                if target == null {
+                    return null
+                }
+                def types := compiler.possibleTypes(left)
+                if types == null {
+                    return null
+                }
+                var found := false
+                for t in types {
+                    if compiler.canCast(t, target) {
+                        found := true
+                        break
+                    }
+                }
+                if !found {
+                    if target.isBuiltinNumber {
+                        def preferred := compiler.preferredType(left)
+                        if preferred == null | !preferred.isBuiltinNumber {
+                            return null
+                        }
+                    }
+                    else {
+                        return null
+                    }
+                }
+                return [target]
+            }
+            when Operator.IDENTITY, Operator.NIDENTITY {
+                return [compiler.BIT_TYPE]
+            }
+            otherwise {
+                def matches := findOverloadedOperator(compiler, left, op, right,
+                        TypeContext.NON_VOID)
+                if matches !== null {
+                    if op = Operator.INDEX & matches.first.count = 1 &
+                            compiler.isTuple(matches.first[0].value.owner) {
+                        return [Tuple.indexType(compiler, matches.first[0].target, right)]
+                    }
+                    def result := Array<Type>()
+                    for m in matches.first { -- FIXME map
+                        result.add(m.returnType)
+                    }
+                    return result
+                }
+                def type := compiler.preferredType(left)
+                if type == null {
+                    return null
+                }
+                if compiler.coercionCost(right, type) == null {
+                    return null
+                }
+                if type = compiler.BUILTIN_BIT_TYPE {
+                    match op {
+                        when Operator.AND, Operator.OR, Operator.XOR, Operator.EQ, Operator.NEQ {
+                            return [compiler.BUILTIN_BIT_TYPE]
+                        }
+                    }
+                }
+                -- this is a bit sloppy and allows for illegal operations like Real32 << Real32,
+                -- but since nobody outside of the compiler itself should be using builtin
+                -- types, it's not a big deal
+                if type.isBuiltinNumber {
+                    match op {
+                        when Operator.ADD, Operator.SUB, Operator.MUL, Operator.DIV,
+                                Operator.INTDIV, Operator.REM, Operator.BITWISEOR,
+                                Operator.BITWISEAND, Operator.BITWISEXOR, Operator.SHIFTLEFT,
+                                Operator.SHIFTRIGHT {
+                            return [type]
+                        }
+                        when Operator.EQ, Operator.NEQ, Operator.GT, Operator.LT, Operator.GTEQ,
+                                Operator.LTEQ {
+                            return [compiler.BUILTIN_BIT_TYPE]
+                        }
+                    }
+                }
+                return null
+            }
+        }
+    }
+
+    @class
     method compile(compiler:Compiler, position:Position, left:ASTNode, op:Operator, right:ASTNode,
             type:TypeContext):IR.Value? {
         def folded := fold(compiler, left, op, right)

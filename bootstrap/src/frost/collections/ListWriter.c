@@ -23,7 +23,8 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 static frost$core$String $s6 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x4c\x69\x73\x74\x57\x72\x69\x74\x65\x72\x2e\x66\x72\x6f\x73\x74", 16, 3453561446996316058, NULL };
 static frost$core$String $s7 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x4c\x69\x73\x74\x57\x72\x69\x74\x65\x72\x2e\x72\x65\x6d\x6f\x76\x65\x4c\x61\x73\x74\x28\x29", 73, -1113832679694248644, NULL };
 
-void frost$collections$ListWriter$removeLast(frost$collections$ListWriter* param0) {
+void frost$collections$ListWriter$removeLast(void* rawSelf) {
+frost$collections$ListWriter* param0 = (frost$collections$ListWriter*) rawSelf;
 
 frost$collections$CollectionWriter* _0;
 $fn2 _1;

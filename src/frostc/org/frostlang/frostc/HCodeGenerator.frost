@@ -60,10 +60,6 @@ class HCodeGenerator : CodeGenerator {
         return llvmName[1..]
     }
 
-    function sizeOf(t:Type):Int {
-        return llvmCodeGen.sizeOf(t)
-    }
-
     function getRelativePath(cl:ClassDecl, extension:String):String {
         return cl.name.replace(".", "/").replace("<", ".LT").replace(">", ".GT")
                 .replace("?", ".Q").replace(",", ".C").replace(" ", "") + extension
@@ -79,18 +75,18 @@ class HCodeGenerator : CodeGenerator {
                     return "void"
                 }
                 when Type.Kind.BUILTIN_INT {
-                    return "int\{sizeOf(t) * 8}_t"
+                    return "int\{t.size}_t"
                 }
                 when Type.Kind.BUILTIN_UINT {
-                    return "uint\{sizeOf(t) * 8}_t"
+                    return "uint\{t.size}_t"
                 }
                 when Type.Kind.BUILTIN_BIT {
                     return "bool"
                 }
                 when Type.Kind.BUILTIN_FLOAT {
-                    match sizeOf(t) {
-                        when 4    { return "float" }
-                        when 8    { return "double" }
+                    match t.size {
+                        when 32   { return "float" }
+                        when 64   { return "double" }
                         otherwise { unreachable }
                     }
                 }
@@ -210,7 +206,19 @@ class HCodeGenerator : CodeGenerator {
             for f in compiler.instanceFields(cl) {
                 compiler.resolve(f)
                 if f.type = compiler.CHOICE_DATA_TYPE {
-                    types.printLine("int8_t \{f.name}[\{llvmCodeGen.getChoiceDataSize(cl)}];")
+                    types.printLine("union {")
+                    types.level += 1
+                    for cc in cl.choiceCases {
+                        types.printLine("struct {")
+                        types.level += 1
+                        for i in 0 .. cc.fields.count {
+                            types.printLine("\{type(cc.fields[i])} field\{i};")
+                        }
+                        types.level -= 1
+                        types.printLine("} $\{cc.name};")
+                    }
+                    types.level -= 1
+                    types.printLine("} \{f.name};")
                 }
                 else {
                     types.printLine("\{type(f.type)} \{f.name};")
@@ -311,7 +319,12 @@ class HCodeGenerator : CodeGenerator {
                 body.print("\{type(m.returnType)} \{getName(m)}(")
             }
             if !m.annotations.isClass & !compiler.isValueInit(m) {
-                body.print("\{separator}\{selfType(m)} self")
+                if selfType(m).endsWith("*") {
+                    body.print("\{separator}void* rawSelf")
+                }
+                else {
+                    body.print("\{separator}\{selfType(m)} self")
+                }
                 separator := ", "
             }
             for p in m.parameters {

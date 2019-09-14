@@ -32,7 +32,8 @@ static frost$core$String $s17 = { (frost$core$Class*) &frost$core$String$class, 
 static frost$core$String $s18 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x29", 1, -5808618445805089436, NULL };
 static frost$core$String $s19 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x43\x43\x6f\x64\x65\x47\x65\x6e\x65\x72\x61\x74\x6f\x72\x2e\x66\x72\x6f\x73\x74", 20, 4580239808655160548, NULL };
 
-void org$frostlang$frostc$CCodeGenerator$EnclosingContext$cleanup(org$frostlang$frostc$CCodeGenerator$EnclosingContext* param0) {
+void org$frostlang$frostc$CCodeGenerator$EnclosingContext$cleanup(void* rawSelf) {
+org$frostlang$frostc$CCodeGenerator$EnclosingContext* param0 = (org$frostlang$frostc$CCodeGenerator$EnclosingContext*) rawSelf;
 
 frost$core$String* local0 = NULL;
 frost$core$String* local1 = NULL;
@@ -122,7 +123,7 @@ _9 = (frost$core$Bit) {_8};
 _11 = _9.value;
 if (_11) goto block2; else goto block3;
 block2:;
-_13 = (frost$core$String**) (param0->$data + 0);
+_13 = &param0->$data.$LOOP.field0;
 _14 = *_13;
 *(&local0) = ((frost$core$String*) NULL);
 _16 = ((frost$core$Object*) _14);
@@ -131,7 +132,7 @@ _18 = *(&local0);
 _19 = ((frost$core$Object*) _18);
 frost$core$Frost$unref$frost$core$Object$Q(_19);
 *(&local0) = _14;
-_22 = (frost$core$String**) (param0->$data + 8);
+_22 = &param0->$data.$LOOP.field1;
 _23 = *_22;
 *(&local1) = ((frost$core$String*) NULL);
 _25 = ((frost$core$Object*) _23);
@@ -140,7 +141,7 @@ _27 = *(&local1);
 _28 = ((frost$core$Object*) _27);
 frost$core$Frost$unref$frost$core$Object$Q(_28);
 *(&local1) = _23;
-_31 = (frost$core$String**) (param0->$data + 16);
+_31 = &param0->$data.$LOOP.field2;
 _32 = *_31;
 *(&local2) = ((frost$core$String*) NULL);
 _34 = ((frost$core$Object*) _32);
@@ -185,7 +186,7 @@ _71 = (frost$core$Bit) {_70};
 _73 = _71.value;
 if (_73) goto block5; else goto block1;
 block5:;
-_75 = (frost$core$String**) (param0->$data + 0);
+_75 = &param0->$data.$FINALLY.field0;
 _76 = *_75;
 *(&local3) = ((frost$core$String*) NULL);
 _78 = ((frost$core$Object*) _76);
@@ -194,7 +195,7 @@ _80 = *(&local3);
 _81 = ((frost$core$Object*) _80);
 frost$core$Frost$unref$frost$core$Object$Q(_81);
 *(&local3) = _76;
-_84 = (frost$collections$Map**) (param0->$data + 8);
+_84 = &param0->$data.$FINALLY.field1;
 _85 = *_84;
 *(&local4) = ((frost$collections$Map*) NULL);
 _87 = ((frost$core$Object*) _85);
@@ -203,7 +204,7 @@ _89 = *(&local4);
 _90 = ((frost$core$Object*) _89);
 frost$core$Frost$unref$frost$core$Object$Q(_90);
 *(&local4) = _85;
-_93 = (frost$core$String**) (param0->$data + 16);
+_93 = &param0->$data.$FINALLY.field2;
 _94 = *_93;
 *(&local5) = ((frost$core$String*) NULL);
 _96 = ((frost$core$Object*) _94);
@@ -244,7 +245,8 @@ frost$core$Object$cleanup(_128);
 return;
 
 }
-void org$frostlang$frostc$CCodeGenerator$EnclosingContext$init$frost$core$Int$frost$core$String$Q$frost$core$String$frost$core$String(org$frostlang$frostc$CCodeGenerator$EnclosingContext* param0, frost$core$Int param1, frost$core$String* param2, frost$core$String* param3, frost$core$String* param4) {
+void org$frostlang$frostc$CCodeGenerator$EnclosingContext$init$frost$core$Int$frost$core$String$Q$frost$core$String$frost$core$String(void* rawSelf, frost$core$Int param1, frost$core$String* param2, frost$core$String* param3, frost$core$String* param4) {
+org$frostlang$frostc$CCodeGenerator$EnclosingContext* param0 = (org$frostlang$frostc$CCodeGenerator$EnclosingContext*) rawSelf;
 
 frost$core$Int* _1;
 frost$core$Object* _4;
@@ -259,22 +261,23 @@ _1 = &param0->$rawValue;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/CCodeGenerator.frost:13
 _4 = ((frost$core$Object*) param2);
 frost$core$Frost$ref$frost$core$Object$Q(_4);
-_6 = (frost$core$String**) (param0->$data + 0);
+_6 = &param0->$data.$LOOP.field0;
 *_6 = param2;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/CCodeGenerator.frost:13
 _9 = ((frost$core$Object*) param3);
 frost$core$Frost$ref$frost$core$Object$Q(_9);
-_11 = (frost$core$String**) (param0->$data + 8);
+_11 = &param0->$data.$LOOP.field1;
 *_11 = param3;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/CCodeGenerator.frost:13
 _14 = ((frost$core$Object*) param4);
 frost$core$Frost$ref$frost$core$Object$Q(_14);
-_16 = (frost$core$String**) (param0->$data + 16);
+_16 = &param0->$data.$LOOP.field2;
 *_16 = param4;
 return;
 
 }
-void org$frostlang$frostc$CCodeGenerator$EnclosingContext$init$frost$core$Int$frost$core$String$frost$collections$Map$LTfrost$core$String$Corg$frostlang$frostc$Pair$LTfrost$core$Int$Cfrost$core$String$GT$GT$frost$core$String(org$frostlang$frostc$CCodeGenerator$EnclosingContext* param0, frost$core$Int param1, frost$core$String* param2, frost$collections$Map* param3, frost$core$String* param4) {
+void org$frostlang$frostc$CCodeGenerator$EnclosingContext$init$frost$core$Int$frost$core$String$frost$collections$Map$LTfrost$core$String$Corg$frostlang$frostc$Pair$LTfrost$core$Int$Cfrost$core$String$GT$GT$frost$core$String(void* rawSelf, frost$core$Int param1, frost$core$String* param2, frost$collections$Map* param3, frost$core$String* param4) {
+org$frostlang$frostc$CCodeGenerator$EnclosingContext* param0 = (org$frostlang$frostc$CCodeGenerator$EnclosingContext*) rawSelf;
 
 frost$core$Int* _1;
 frost$core$Object* _4;
@@ -289,22 +292,23 @@ _1 = &param0->$rawValue;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/CCodeGenerator.frost:13
 _4 = ((frost$core$Object*) param2);
 frost$core$Frost$ref$frost$core$Object$Q(_4);
-_6 = (frost$core$String**) (param0->$data + 0);
+_6 = &param0->$data.$FINALLY.field0;
 *_6 = param2;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/CCodeGenerator.frost:13
 _9 = ((frost$core$Object*) param3);
 frost$core$Frost$ref$frost$core$Object$Q(_9);
-_11 = (frost$collections$Map**) (param0->$data + 8);
+_11 = &param0->$data.$FINALLY.field1;
 *_11 = param3;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/CCodeGenerator.frost:13
 _14 = ((frost$core$Object*) param4);
 frost$core$Frost$ref$frost$core$Object$Q(_14);
-_16 = (frost$core$String**) (param0->$data + 16);
+_16 = &param0->$data.$FINALLY.field2;
 *_16 = param4;
 return;
 
 }
-frost$core$String* org$frostlang$frostc$CCodeGenerator$EnclosingContext$get_asString$R$frost$core$String(org$frostlang$frostc$CCodeGenerator$EnclosingContext* param0) {
+frost$core$String* org$frostlang$frostc$CCodeGenerator$EnclosingContext$get_asString$R$frost$core$String(void* rawSelf) {
+org$frostlang$frostc$CCodeGenerator$EnclosingContext* param0 = (org$frostlang$frostc$CCodeGenerator$EnclosingContext*) rawSelf;
 
 frost$core$String* local0 = NULL;
 frost$core$String* local1 = NULL;
@@ -441,7 +445,7 @@ _9 = (frost$core$Bit) {_8};
 _11 = _9.value;
 if (_11) goto block2; else goto block3;
 block2:;
-_13 = (frost$core$String**) (param0->$data + 0);
+_13 = &param0->$data.$LOOP.field0;
 _14 = *_13;
 *(&local0) = ((frost$core$String*) NULL);
 _16 = ((frost$core$Object*) _14);
@@ -450,7 +454,7 @@ _18 = *(&local0);
 _19 = ((frost$core$Object*) _18);
 frost$core$Frost$unref$frost$core$Object$Q(_19);
 *(&local0) = _14;
-_22 = (frost$core$String**) (param0->$data + 8);
+_22 = &param0->$data.$LOOP.field1;
 _23 = *_22;
 *(&local1) = ((frost$core$String*) NULL);
 _25 = ((frost$core$Object*) _23);
@@ -459,7 +463,7 @@ _27 = *(&local1);
 _28 = ((frost$core$Object*) _27);
 frost$core$Frost$unref$frost$core$Object$Q(_28);
 *(&local1) = _23;
-_31 = (frost$core$String**) (param0->$data + 16);
+_31 = &param0->$data.$LOOP.field2;
 _32 = *_31;
 *(&local2) = ((frost$core$String*) NULL);
 _34 = ((frost$core$Object*) _32);
@@ -561,7 +565,7 @@ _123 = (frost$core$Bit) {_122};
 _125 = _123.value;
 if (_125) goto block10; else goto block11;
 block10:;
-_127 = (frost$core$String**) (param0->$data + 0);
+_127 = &param0->$data.$FINALLY.field0;
 _128 = *_127;
 *(&local4) = ((frost$core$String*) NULL);
 _130 = ((frost$core$Object*) _128);
@@ -570,7 +574,7 @@ _132 = *(&local4);
 _133 = ((frost$core$Object*) _132);
 frost$core$Frost$unref$frost$core$Object$Q(_133);
 *(&local4) = _128;
-_136 = (frost$collections$Map**) (param0->$data + 8);
+_136 = &param0->$data.$FINALLY.field1;
 _137 = *_136;
 *(&local5) = ((frost$collections$Map*) NULL);
 _139 = ((frost$core$Object*) _137);
@@ -579,7 +583,7 @@ _141 = *(&local5);
 _142 = ((frost$core$Object*) _141);
 frost$core$Frost$unref$frost$core$Object$Q(_142);
 *(&local5) = _137;
-_145 = (frost$core$String**) (param0->$data + 16);
+_145 = &param0->$data.$FINALLY.field2;
 _146 = *_145;
 *(&local6) = ((frost$core$String*) NULL);
 _148 = ((frost$core$Object*) _146);

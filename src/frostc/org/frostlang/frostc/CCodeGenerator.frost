@@ -74,10 +74,6 @@ class CCodeGenerator : CodeGenerator {
         return hCodeGen.getName(m)
     }
 
-    function sizeOf(t:Type):Int {
-        return hCodeGen.sizeOf(t)
-    }
-
     function isExternal(cl:ClassDecl):Bit {
         return cl !== currentClass
     }
@@ -236,44 +232,6 @@ class CCodeGenerator : CodeGenerator {
     method nextLabel():String {
         varCount += 1
         return "$l\{varCount}"
-    }
-
-    function fieldSize(t:Type):Int {
-        return hCodeGen.llvmCodeGen.fieldSize(t)
-    }
-
-    function alignment(t:Type):Int {
-        return hCodeGen.llvmCodeGen.alignment(t)
-    }
-
-    function stride(t:Type):Int {
-        return hCodeGen.llvmCodeGen.stride(t)
-    }
-
-    function sizeOfWrapper(t:Type):Int {
-        def cl := compiler!.getClass(t)
-        assert cl !== null & compiler!.isValue(cl)
-        var result := sizeOf(compiler!.OBJECT_TYPE)
-        for f in compiler!.instanceFields(cl) {
-            compiler!.resolve(f)
-            if f.type = compiler!.CHOICE_DATA_TYPE {
-                -- FIXME need to respect alignment!
-                result += hCodeGen.llvmCodeGen.getChoiceDataSize(cl)
-            }
-            else {
-                def size := fieldSize(f.type)
-                def align := result % size
-                if align != 0 {
-                    result += size - align
-                }
-                assert result % size = 0
-                result += size
-            }
-        }
-        if t.typeKind = Type.Kind.NULLABLE {
-            result += 1
-        }
-        return result
     }
 
     method writeType(t:Type) {
@@ -833,7 +791,7 @@ class CCodeGenerator : CodeGenerator {
                 out.level += 1
             }
             out.printLine("\{wrapped} = (\{wrapperType(srcType)}) " +
-                    "frostObjectAlloc(\{sizeOfWrapper(srcType)}, (frost$core$Class*) " +
+                    "frostObjectAlloc(sizeof(\{wrapperTypeName(srcType)}), (frost$core$Class*) " +
                     "&\{escapeName(srcType.name)}$wrapperclass);")
             out.printLine("\{wrapped}->value = \{value};")
             if srcType.typeKind = Type.Kind.NULLABLE {
@@ -1001,21 +959,8 @@ class CCodeGenerator : CodeGenerator {
         }
     }
 
-    method getChoiceFieldOffset(e:ChoiceCase, index:Int):Int {
-        var result := 0
-        for i in 0 .. index {
-            -- FIXME need to respect alignment!
-            result += fieldSize(e.fields[i])
-        }
-        return result
-    }
-
     method selfType(m:MethodDecl):String {
-        def result := cType(m.owner.type)
-        if m.methodKind = MethodDecl.Kind.INIT & !result.endsWith("*") {
-            return result + "*"
-        }
-        return result
+        return hCodeGen.selfType(m)
     }
 
     method writeIsNull(id:IR.Statement.ID, value:IR.Value) {
@@ -1205,9 +1150,8 @@ class CCodeGenerator : CodeGenerator {
                 ccCast := "&\{cc.name}"
             }
             def target := cl.type
-            out.printLine("FROST_ASSERT(\{sizeOf(target)} == sizeof(\{escapeName(cl.name)}));")
             out.printLine("\{name(id)} = (\{cType(target)}) frostObjectAlloc(" +
-                    "\{sizeOf(target)}, \{ccCast});")
+                    "sizeof(\{typeName(target)}), \{ccCast});")
         }
         fail(error) {
             unreachable
@@ -1269,11 +1213,7 @@ class CCodeGenerator : CodeGenerator {
     method writeGetChoiceFieldPointer(id:IR.Statement.ID, target:IR.Value, cc:ChoiceCase,
             index:Int) {
         try {
-            def data := cc.owner.fields[1]
-            assert data.name = ClassDecl.CHOICE_DATA_NAME
             def targetRef := getReference(target)
-            def fieldIndex := compiler!.getIndex(data)
-            def type := cType(cc.fields[index])
             def op:String
             if compiler!.isValue(target.type()) {
                 match target {
@@ -1284,8 +1224,7 @@ class CCodeGenerator : CodeGenerator {
             else {
                 op := "->"
             }
-            out.printLine("\{name(id)} = (\{type}*) (\{targetRef}\{op}$data + " +
-                    "\{getChoiceFieldOffset(cc, index)});")
+            out.printLine("\{name(id)} = &\{targetRef}\{op}$data.$\{cc.name}.field\{index};")
         }
         fail(error) {
             unreachable
@@ -1351,7 +1290,12 @@ class CCodeGenerator : CodeGenerator {
 
     method writeNot(id:IR.Statement.ID, value:IR.Value) {
         try {
-            out.printLine("\{name(id)} = !\{getReference(value)};")
+            if value.type().typeKind = Type.Kind.BUILTIN_BIT {
+                out.printLine("\{name(id)} = !\{getReference(value)};")
+            }
+            else {
+                out.printLine("\{name(id)} = ~\{getReference(value)};")
+            }
         }
         fail(error) {
             unreachable
@@ -1361,10 +1305,9 @@ class CCodeGenerator : CodeGenerator {
     method writePointerAlloc(id:IR.Statement.ID, count:IR.Value, t:Type) {
         try {
             def countRef := getReference(count)
-            def elementSize := stride(t)
             def type := cType(t)
             out.printLine("\{name(id)} = ((\{type}*) frostAlloc(\{countRef} * " +
-                    "\{elementSize}));")
+                    "sizeof(\{type})));")
         }
         fail(error) {
             unreachable
@@ -1409,10 +1352,9 @@ class CCodeGenerator : CodeGenerator {
             def ptrRef := getReference(ptr)
             def oldCountRef := getReference(oldCount)
             def newCountRef := getReference(newCount)
-            def elementSize := stride(ptr.type().subtypes[1])
-            assert elementSize > 0, "invalid size for type \{ptr.type()}"
-            out.printLine("\{name(id)} = (\{cType(ptr.type())}) frostRealloc(" +
-                    "\{ptrRef}, \{oldCountRef} * \{elementSize}, \{newCountRef} * \{elementSize});")
+            def type := cType(ptr.type().subtypes[1])
+            out.printLine("\{name(id)} = (\{type}*) frostRealloc(\{ptrRef}, \{oldCountRef} * " +
+                    "sizeof(\{type}), \{newCountRef} * sizeof(\{type}));")
         }
         fail(error) {
             unreachable
@@ -1718,8 +1660,22 @@ class CCodeGenerator : CodeGenerator {
             out.print("\{cType(m.returnType)} \{getName(m)}(")
             var separator := ""
             var index := 0
+            def st := selfType(m)
             if compiler!.hasSelfParam(m) {
-                out.print("\{selfType(m)} param\{index}")
+                -- If we declare 'self' as the correct type, then when we override a method the
+                -- derived method self and overridden method self types don't match. Then when we
+                -- cast the derived method's function pointer to the base function pointer type, we
+                -- are calling a function by the wrong type, which is technically undefined
+                -- behavior. It almost always works anyway because pointer types are all the same to
+                -- the underlying machine, but it turns out at least one environment (emscripten)
+                -- gets very upset about this. So, to avoid undefined behavior we declare all self's
+                -- as void* and cast within the method.
+                if st.endsWith("*") {
+                    out.print("void* rawSelf")
+                }
+                else {
+                    out.print("\{st} param\{index}")
+                }
                 index += 1
                 separator := ", "
             }
@@ -1729,6 +1685,9 @@ class CCodeGenerator : CodeGenerator {
                 separator := ", "
             }
             out.printLine(") {")
+            if compiler!.hasSelfParam(m) & st.endsWith("*") {
+                out.printLine("\{st} param0 = (\{st}) rawSelf;")
+            }
             def buffer := MemoryOutputStream()
             out := IndentedOutputStream(buffer)
             writeIR(ir)

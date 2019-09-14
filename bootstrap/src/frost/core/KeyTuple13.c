@@ -92,7 +92,8 @@ static frost$core$String $s91 = { (frost$core$Class*) &frost$core$String$class, 
 static frost$core$String $s93 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2c\x20", 2, 563935148934614481, NULL };
 static frost$core$String $s95 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x29", 1, -5808618445805089436, NULL };
 
-void frost$core$KeyTuple13$init$frost$core$KeyTuple13$T0$frost$core$KeyTuple13$T1$frost$core$KeyTuple13$T2$frost$core$KeyTuple13$T3$frost$core$KeyTuple13$T4$frost$core$KeyTuple13$T5$frost$core$KeyTuple13$T6$frost$core$KeyTuple13$T7$frost$core$KeyTuple13$T8$frost$core$KeyTuple13$T9$frost$core$KeyTuple13$T10$frost$core$KeyTuple13$T11$frost$core$KeyTuple13$T12(frost$core$KeyTuple13* param0, frost$collections$HashKey* param1, frost$collections$HashKey* param2, frost$collections$HashKey* param3, frost$collections$HashKey* param4, frost$collections$HashKey* param5, frost$collections$HashKey* param6, frost$collections$HashKey* param7, frost$collections$HashKey* param8, frost$collections$HashKey* param9, frost$collections$HashKey* param10, frost$collections$HashKey* param11, frost$collections$HashKey* param12, frost$collections$HashKey* param13) {
+void frost$core$KeyTuple13$init$frost$core$KeyTuple13$T0$frost$core$KeyTuple13$T1$frost$core$KeyTuple13$T2$frost$core$KeyTuple13$T3$frost$core$KeyTuple13$T4$frost$core$KeyTuple13$T5$frost$core$KeyTuple13$T6$frost$core$KeyTuple13$T7$frost$core$KeyTuple13$T8$frost$core$KeyTuple13$T9$frost$core$KeyTuple13$T10$frost$core$KeyTuple13$T11$frost$core$KeyTuple13$T12(void* rawSelf, frost$collections$HashKey* param1, frost$collections$HashKey* param2, frost$collections$HashKey* param3, frost$collections$HashKey* param4, frost$collections$HashKey* param5, frost$collections$HashKey* param6, frost$collections$HashKey* param7, frost$collections$HashKey* param8, frost$collections$HashKey* param9, frost$collections$HashKey* param10, frost$collections$HashKey* param11, frost$collections$HashKey* param12, frost$collections$HashKey* param13) {
+frost$core$KeyTuple13* param0 = (frost$core$KeyTuple13*) rawSelf;
 
 frost$core$KeyTuple13* _1;
 frost$core$Object* _2;
@@ -172,7 +173,7 @@ frost$collections$HashKey** _124;
 frost$collections$HashKey* _125;
 frost$core$Object* _126;
 frost$collections$HashKey** _128;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:18
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:19
 _1 = param0;
 _2 = ((frost$core$Object*) param1);
 frost$core$Frost$ref$frost$core$Object$Q(_2);
@@ -182,7 +183,7 @@ _6 = ((frost$core$Object*) _5);
 frost$core$Frost$unref$frost$core$Object$Q(_6);
 _8 = &_1->f0;
 *_8 = param1;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:19
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:20
 _11 = param0;
 _12 = ((frost$core$Object*) param2);
 frost$core$Frost$ref$frost$core$Object$Q(_12);
@@ -192,7 +193,7 @@ _16 = ((frost$core$Object*) _15);
 frost$core$Frost$unref$frost$core$Object$Q(_16);
 _18 = &_11->f1;
 *_18 = param2;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:20
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:21
 _21 = param0;
 _22 = ((frost$core$Object*) param3);
 frost$core$Frost$ref$frost$core$Object$Q(_22);
@@ -202,7 +203,7 @@ _26 = ((frost$core$Object*) _25);
 frost$core$Frost$unref$frost$core$Object$Q(_26);
 _28 = &_21->f2;
 *_28 = param3;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:21
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:22
 _31 = param0;
 _32 = ((frost$core$Object*) param4);
 frost$core$Frost$ref$frost$core$Object$Q(_32);
@@ -212,7 +213,7 @@ _36 = ((frost$core$Object*) _35);
 frost$core$Frost$unref$frost$core$Object$Q(_36);
 _38 = &_31->f3;
 *_38 = param4;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:22
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:23
 _41 = param0;
 _42 = ((frost$core$Object*) param5);
 frost$core$Frost$ref$frost$core$Object$Q(_42);
@@ -222,7 +223,7 @@ _46 = ((frost$core$Object*) _45);
 frost$core$Frost$unref$frost$core$Object$Q(_46);
 _48 = &_41->f4;
 *_48 = param5;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:23
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:24
 _51 = param0;
 _52 = ((frost$core$Object*) param6);
 frost$core$Frost$ref$frost$core$Object$Q(_52);
@@ -232,7 +233,7 @@ _56 = ((frost$core$Object*) _55);
 frost$core$Frost$unref$frost$core$Object$Q(_56);
 _58 = &_51->f5;
 *_58 = param6;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:24
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:25
 _61 = param0;
 _62 = ((frost$core$Object*) param7);
 frost$core$Frost$ref$frost$core$Object$Q(_62);
@@ -242,7 +243,7 @@ _66 = ((frost$core$Object*) _65);
 frost$core$Frost$unref$frost$core$Object$Q(_66);
 _68 = &_61->f6;
 *_68 = param7;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:25
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:26
 _71 = param0;
 _72 = ((frost$core$Object*) param8);
 frost$core$Frost$ref$frost$core$Object$Q(_72);
@@ -252,7 +253,7 @@ _76 = ((frost$core$Object*) _75);
 frost$core$Frost$unref$frost$core$Object$Q(_76);
 _78 = &_71->f7;
 *_78 = param8;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:26
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:27
 _81 = param0;
 _82 = ((frost$core$Object*) param9);
 frost$core$Frost$ref$frost$core$Object$Q(_82);
@@ -262,7 +263,7 @@ _86 = ((frost$core$Object*) _85);
 frost$core$Frost$unref$frost$core$Object$Q(_86);
 _88 = &_81->f8;
 *_88 = param9;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:27
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:28
 _91 = param0;
 _92 = ((frost$core$Object*) param10);
 frost$core$Frost$ref$frost$core$Object$Q(_92);
@@ -272,7 +273,7 @@ _96 = ((frost$core$Object*) _95);
 frost$core$Frost$unref$frost$core$Object$Q(_96);
 _98 = &_91->f9;
 *_98 = param10;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:28
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:29
 _101 = param0;
 _102 = ((frost$core$Object*) param11);
 frost$core$Frost$ref$frost$core$Object$Q(_102);
@@ -282,7 +283,7 @@ _106 = ((frost$core$Object*) _105);
 frost$core$Frost$unref$frost$core$Object$Q(_106);
 _108 = &_101->f10;
 *_108 = param11;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:29
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:30
 _111 = param0;
 _112 = ((frost$core$Object*) param12);
 frost$core$Frost$ref$frost$core$Object$Q(_112);
@@ -292,7 +293,7 @@ _116 = ((frost$core$Object*) _115);
 frost$core$Frost$unref$frost$core$Object$Q(_116);
 _118 = &_111->f11;
 *_118 = param12;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:30
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:31
 _121 = param0;
 _122 = ((frost$core$Object*) param13);
 frost$core$Frost$ref$frost$core$Object$Q(_122);
@@ -305,7 +306,8 @@ _128 = &_121->f12;
 return;
 
 }
-frost$core$Object* frost$core$KeyTuple13$$IDX$frost$core$Int$R$frost$core$Object$Q(frost$core$KeyTuple13* param0, frost$core$Int param1) {
+frost$core$Object* frost$core$KeyTuple13$$IDX$frost$core$Int$R$frost$core$Object$Q(void* rawSelf, frost$core$Int param1) {
+frost$core$KeyTuple13* param0 = (frost$core$KeyTuple13*) rawSelf;
 
 frost$core$Int _0;
 int64_t _1;
@@ -466,13 +468,13 @@ _11 = (frost$core$Bit) {_10};
 _12 = _11.value;
 if (_12) goto block1; else goto block2;
 block2:;
-_14 = (frost$core$Int) {34u};
+_14 = (frost$core$Int) {35u};
 frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s2, _14, &$s3);
 abort(); // unreachable
 block1:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:35
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:36
 _18 = (frost$core$Int) {0u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from KeyTuple13.frost:36:18
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from KeyTuple13.frost:37:18
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _21 = param1.value;
 _22 = _18.value;
@@ -481,7 +483,7 @@ _24 = (frost$core$Bit) {_23};
 _26 = _24.value;
 if (_26) goto block5; else goto block6;
 block5:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:36
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:37
 _29 = param0;
 _30 = &_29->f0;
 _31 = *_30;
@@ -490,7 +492,7 @@ frost$core$Frost$ref$frost$core$Object$Q(_32);
 return _32;
 block6:;
 _35 = (frost$core$Int) {1u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from KeyTuple13.frost:37:18
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from KeyTuple13.frost:38:18
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _38 = param1.value;
 _39 = _35.value;
@@ -499,7 +501,7 @@ _41 = (frost$core$Bit) {_40};
 _43 = _41.value;
 if (_43) goto block8; else goto block9;
 block8:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:37
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:38
 _46 = param0;
 _47 = &_46->f1;
 _48 = *_47;
@@ -508,7 +510,7 @@ frost$core$Frost$ref$frost$core$Object$Q(_49);
 return _49;
 block9:;
 _52 = (frost$core$Int) {2u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from KeyTuple13.frost:38:18
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from KeyTuple13.frost:39:18
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _55 = param1.value;
 _56 = _52.value;
@@ -517,7 +519,7 @@ _58 = (frost$core$Bit) {_57};
 _60 = _58.value;
 if (_60) goto block11; else goto block12;
 block11:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:38
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:39
 _63 = param0;
 _64 = &_63->f2;
 _65 = *_64;
@@ -526,7 +528,7 @@ frost$core$Frost$ref$frost$core$Object$Q(_66);
 return _66;
 block12:;
 _69 = (frost$core$Int) {3u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from KeyTuple13.frost:39:18
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from KeyTuple13.frost:40:18
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _72 = param1.value;
 _73 = _69.value;
@@ -535,7 +537,7 @@ _75 = (frost$core$Bit) {_74};
 _77 = _75.value;
 if (_77) goto block14; else goto block15;
 block14:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:39
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:40
 _80 = param0;
 _81 = &_80->f3;
 _82 = *_81;
@@ -544,7 +546,7 @@ frost$core$Frost$ref$frost$core$Object$Q(_83);
 return _83;
 block15:;
 _86 = (frost$core$Int) {4u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from KeyTuple13.frost:40:18
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from KeyTuple13.frost:41:18
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _89 = param1.value;
 _90 = _86.value;
@@ -553,7 +555,7 @@ _92 = (frost$core$Bit) {_91};
 _94 = _92.value;
 if (_94) goto block17; else goto block18;
 block17:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:40
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:41
 _97 = param0;
 _98 = &_97->f4;
 _99 = *_98;
@@ -562,7 +564,7 @@ frost$core$Frost$ref$frost$core$Object$Q(_100);
 return _100;
 block18:;
 _103 = (frost$core$Int) {5u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from KeyTuple13.frost:41:18
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from KeyTuple13.frost:42:18
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _106 = param1.value;
 _107 = _103.value;
@@ -571,7 +573,7 @@ _109 = (frost$core$Bit) {_108};
 _111 = _109.value;
 if (_111) goto block20; else goto block21;
 block20:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:41
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:42
 _114 = param0;
 _115 = &_114->f5;
 _116 = *_115;
@@ -580,7 +582,7 @@ frost$core$Frost$ref$frost$core$Object$Q(_117);
 return _117;
 block21:;
 _120 = (frost$core$Int) {6u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from KeyTuple13.frost:42:18
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from KeyTuple13.frost:43:18
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _123 = param1.value;
 _124 = _120.value;
@@ -589,7 +591,7 @@ _126 = (frost$core$Bit) {_125};
 _128 = _126.value;
 if (_128) goto block23; else goto block24;
 block23:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:42
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:43
 _131 = param0;
 _132 = &_131->f6;
 _133 = *_132;
@@ -598,7 +600,7 @@ frost$core$Frost$ref$frost$core$Object$Q(_134);
 return _134;
 block24:;
 _137 = (frost$core$Int) {7u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from KeyTuple13.frost:43:18
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from KeyTuple13.frost:44:18
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _140 = param1.value;
 _141 = _137.value;
@@ -607,7 +609,7 @@ _143 = (frost$core$Bit) {_142};
 _145 = _143.value;
 if (_145) goto block26; else goto block27;
 block26:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:43
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:44
 _148 = param0;
 _149 = &_148->f7;
 _150 = *_149;
@@ -616,7 +618,7 @@ frost$core$Frost$ref$frost$core$Object$Q(_151);
 return _151;
 block27:;
 _154 = (frost$core$Int) {8u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from KeyTuple13.frost:44:18
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from KeyTuple13.frost:45:18
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _157 = param1.value;
 _158 = _154.value;
@@ -625,7 +627,7 @@ _160 = (frost$core$Bit) {_159};
 _162 = _160.value;
 if (_162) goto block29; else goto block30;
 block29:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:44
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:45
 _165 = param0;
 _166 = &_165->f8;
 _167 = *_166;
@@ -634,7 +636,7 @@ frost$core$Frost$ref$frost$core$Object$Q(_168);
 return _168;
 block30:;
 _171 = (frost$core$Int) {9u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from KeyTuple13.frost:45:18
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from KeyTuple13.frost:46:18
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _174 = param1.value;
 _175 = _171.value;
@@ -643,7 +645,7 @@ _177 = (frost$core$Bit) {_176};
 _179 = _177.value;
 if (_179) goto block32; else goto block33;
 block32:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:45
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:46
 _182 = param0;
 _183 = &_182->f9;
 _184 = *_183;
@@ -652,7 +654,7 @@ frost$core$Frost$ref$frost$core$Object$Q(_185);
 return _185;
 block33:;
 _188 = (frost$core$Int) {10u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from KeyTuple13.frost:46:18
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from KeyTuple13.frost:47:18
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _191 = param1.value;
 _192 = _188.value;
@@ -661,7 +663,7 @@ _194 = (frost$core$Bit) {_193};
 _196 = _194.value;
 if (_196) goto block35; else goto block36;
 block35:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:46
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:47
 _199 = param0;
 _200 = &_199->f10;
 _201 = *_200;
@@ -670,7 +672,7 @@ frost$core$Frost$ref$frost$core$Object$Q(_202);
 return _202;
 block36:;
 _205 = (frost$core$Int) {11u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from KeyTuple13.frost:47:18
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from KeyTuple13.frost:48:18
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _208 = param1.value;
 _209 = _205.value;
@@ -679,7 +681,7 @@ _211 = (frost$core$Bit) {_210};
 _213 = _211.value;
 if (_213) goto block38; else goto block39;
 block38:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:47
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:48
 _216 = param0;
 _217 = &_216->f11;
 _218 = *_217;
@@ -688,7 +690,7 @@ frost$core$Frost$ref$frost$core$Object$Q(_219);
 return _219;
 block39:;
 _222 = (frost$core$Int) {12u};
-// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from KeyTuple13.frost:48:18
+// begin inline call to function frost.core.Int.=(other:frost.core.Int):frost.core.Bit from KeyTuple13.frost:49:18
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:426
 _225 = param1.value;
 _226 = _222.value;
@@ -697,7 +699,7 @@ _228 = (frost$core$Bit) {_227};
 _230 = _228.value;
 if (_230) goto block41; else goto block4;
 block41:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:48
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:49
 _233 = param0;
 _234 = &_233->f12;
 _235 = *_234;
@@ -705,12 +707,13 @@ _236 = ((frost$core$Object*) _235);
 frost$core$Frost$ref$frost$core$Object$Q(_236);
 return _236;
 block4:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:50
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:51
 frost$core$Frost$ref$frost$core$Object$Q(((frost$core$Object*) NULL));
 return ((frost$core$Object*) NULL);
 
 }
-frost$core$Bit frost$core$KeyTuple13$$EQ$frost$core$KeyTuple13$LTfrost$core$KeyTuple13$T0$Cfrost$core$KeyTuple13$T1$Cfrost$core$KeyTuple13$T2$Cfrost$core$KeyTuple13$T3$Cfrost$core$KeyTuple13$T4$Cfrost$core$KeyTuple13$T5$Cfrost$core$KeyTuple13$T6$Cfrost$core$KeyTuple13$T7$Cfrost$core$KeyTuple13$T8$Cfrost$core$KeyTuple13$T9$Cfrost$core$KeyTuple13$T10$Cfrost$core$KeyTuple13$T11$Cfrost$core$KeyTuple13$T12$GT$R$frost$core$Bit(frost$core$KeyTuple13* param0, frost$core$KeyTuple13* param1) {
+frost$core$Bit frost$core$KeyTuple13$$EQ$frost$core$KeyTuple13$LTfrost$core$KeyTuple13$T0$Cfrost$core$KeyTuple13$T1$Cfrost$core$KeyTuple13$T2$Cfrost$core$KeyTuple13$T3$Cfrost$core$KeyTuple13$T4$Cfrost$core$KeyTuple13$T5$Cfrost$core$KeyTuple13$T6$Cfrost$core$KeyTuple13$T7$Cfrost$core$KeyTuple13$T8$Cfrost$core$KeyTuple13$T9$Cfrost$core$KeyTuple13$T10$Cfrost$core$KeyTuple13$T11$Cfrost$core$KeyTuple13$T12$GT$R$frost$core$Bit(void* rawSelf, frost$core$KeyTuple13* param1) {
+frost$core$KeyTuple13* param0 = (frost$core$KeyTuple13*) rawSelf;
 
 frost$core$KeyTuple13* _1;
 frost$collections$HashKey** _2;
@@ -882,7 +885,7 @@ frost$core$Bit _215;
 bool _216;
 frost$core$Bit _219;
 frost$core$Bit _222;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:55
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:56
 _1 = param0;
 _2 = &_1->f0;
 _3 = *_2;
@@ -901,11 +904,11 @@ _11 = _10(_5, _9);
 _12 = _11.value;
 if (_12) goto block1; else goto block2;
 block1:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:55
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:56
 _15 = (frost$core$Bit) {false};
 return _15;
 block2:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:56
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:57
 _18 = param0;
 _19 = &_18->f1;
 _20 = *_19;
@@ -924,11 +927,11 @@ _28 = _27(_22, _26);
 _29 = _28.value;
 if (_29) goto block3; else goto block4;
 block3:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:56
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:57
 _32 = (frost$core$Bit) {false};
 return _32;
 block4:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:57
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:58
 _35 = param0;
 _36 = &_35->f2;
 _37 = *_36;
@@ -947,11 +950,11 @@ _45 = _44(_39, _43);
 _46 = _45.value;
 if (_46) goto block5; else goto block6;
 block5:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:57
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:58
 _49 = (frost$core$Bit) {false};
 return _49;
 block6:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:58
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:59
 _52 = param0;
 _53 = &_52->f3;
 _54 = *_53;
@@ -970,11 +973,11 @@ _62 = _61(_56, _60);
 _63 = _62.value;
 if (_63) goto block7; else goto block8;
 block7:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:58
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:59
 _66 = (frost$core$Bit) {false};
 return _66;
 block8:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:59
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:60
 _69 = param0;
 _70 = &_69->f4;
 _71 = *_70;
@@ -993,11 +996,11 @@ _79 = _78(_73, _77);
 _80 = _79.value;
 if (_80) goto block9; else goto block10;
 block9:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:59
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:60
 _83 = (frost$core$Bit) {false};
 return _83;
 block10:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:60
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:61
 _86 = param0;
 _87 = &_86->f5;
 _88 = *_87;
@@ -1016,11 +1019,11 @@ _96 = _95(_90, _94);
 _97 = _96.value;
 if (_97) goto block11; else goto block12;
 block11:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:60
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:61
 _100 = (frost$core$Bit) {false};
 return _100;
 block12:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:61
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:62
 _103 = param0;
 _104 = &_103->f6;
 _105 = *_104;
@@ -1039,11 +1042,11 @@ _113 = _112(_107, _111);
 _114 = _113.value;
 if (_114) goto block13; else goto block14;
 block13:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:61
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:62
 _117 = (frost$core$Bit) {false};
 return _117;
 block14:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:62
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:63
 _120 = param0;
 _121 = &_120->f7;
 _122 = *_121;
@@ -1062,11 +1065,11 @@ _130 = _129(_124, _128);
 _131 = _130.value;
 if (_131) goto block15; else goto block16;
 block15:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:62
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:63
 _134 = (frost$core$Bit) {false};
 return _134;
 block16:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:63
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:64
 _137 = param0;
 _138 = &_137->f8;
 _139 = *_138;
@@ -1085,11 +1088,11 @@ _147 = _146(_141, _145);
 _148 = _147.value;
 if (_148) goto block17; else goto block18;
 block17:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:63
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:64
 _151 = (frost$core$Bit) {false};
 return _151;
 block18:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:64
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:65
 _154 = param0;
 _155 = &_154->f9;
 _156 = *_155;
@@ -1108,11 +1111,11 @@ _164 = _163(_158, _162);
 _165 = _164.value;
 if (_165) goto block19; else goto block20;
 block19:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:64
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:65
 _168 = (frost$core$Bit) {false};
 return _168;
 block20:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:65
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:66
 _171 = param0;
 _172 = &_171->f10;
 _173 = *_172;
@@ -1131,11 +1134,11 @@ _181 = _180(_175, _179);
 _182 = _181.value;
 if (_182) goto block21; else goto block22;
 block21:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:65
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:66
 _185 = (frost$core$Bit) {false};
 return _185;
 block22:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:66
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:67
 _188 = param0;
 _189 = &_188->f11;
 _190 = *_189;
@@ -1154,11 +1157,11 @@ _198 = _197(_192, _196);
 _199 = _198.value;
 if (_199) goto block23; else goto block24;
 block23:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:66
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:67
 _202 = (frost$core$Bit) {false};
 return _202;
 block24:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:67
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:68
 _205 = param0;
 _206 = &_205->f12;
 _207 = *_206;
@@ -1177,16 +1180,17 @@ _215 = _214(_209, _213);
 _216 = _215.value;
 if (_216) goto block25; else goto block26;
 block25:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:67
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:68
 _219 = (frost$core$Bit) {false};
 return _219;
 block26:;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:68
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:69
 _222 = (frost$core$Bit) {true};
 return _222;
 
 }
-frost$core$Int frost$core$KeyTuple13$get_hash$R$frost$core$Int(frost$core$KeyTuple13* param0) {
+frost$core$Int frost$core$KeyTuple13$get_hash$R$frost$core$Int(void* rawSelf) {
+frost$core$KeyTuple13* param0 = (frost$core$KeyTuple13*) rawSelf;
 
 frost$core$Int local0;
 frost$core$Int _1;
@@ -1334,10 +1338,10 @@ int64_t _206;
 int64_t _207;
 frost$core$Int _208;
 frost$core$Int _212;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:72
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:73
 _1 = (frost$core$Int) {0u};
 *(&local0) = _1;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:73
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:74
 _4 = *(&local0);
 _5 = param0;
 _6 = &_5->f0;
@@ -1349,14 +1353,14 @@ while ($tmp43->$class != (frost$core$Class*) &frost$collections$HashKey$class) {
 }
 _9 = $tmp43->methods[0];
 _10 = _9(_8);
-// begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from KeyTuple13.frost:73:9
+// begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from KeyTuple13.frost:74:9
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:365
 _13 = _4.value;
 _14 = _10.value;
 _15 = _13 ^ _14;
 _16 = (frost$core$Int) {_15};
 *(&local0) = _16;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:74
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:75
 _20 = *(&local0);
 _21 = param0;
 _22 = &_21->f1;
@@ -1368,14 +1372,14 @@ while ($tmp44->$class != (frost$core$Class*) &frost$collections$HashKey$class) {
 }
 _25 = $tmp44->methods[0];
 _26 = _25(_24);
-// begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from KeyTuple13.frost:74:9
+// begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from KeyTuple13.frost:75:9
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:365
 _29 = _20.value;
 _30 = _26.value;
 _31 = _29 ^ _30;
 _32 = (frost$core$Int) {_31};
 *(&local0) = _32;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:75
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:76
 _36 = *(&local0);
 _37 = param0;
 _38 = &_37->f2;
@@ -1387,14 +1391,14 @@ while ($tmp45->$class != (frost$core$Class*) &frost$collections$HashKey$class) {
 }
 _41 = $tmp45->methods[0];
 _42 = _41(_40);
-// begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from KeyTuple13.frost:75:9
+// begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from KeyTuple13.frost:76:9
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:365
 _45 = _36.value;
 _46 = _42.value;
 _47 = _45 ^ _46;
 _48 = (frost$core$Int) {_47};
 *(&local0) = _48;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:76
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:77
 _52 = *(&local0);
 _53 = param0;
 _54 = &_53->f3;
@@ -1406,14 +1410,14 @@ while ($tmp46->$class != (frost$core$Class*) &frost$collections$HashKey$class) {
 }
 _57 = $tmp46->methods[0];
 _58 = _57(_56);
-// begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from KeyTuple13.frost:76:9
+// begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from KeyTuple13.frost:77:9
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:365
 _61 = _52.value;
 _62 = _58.value;
 _63 = _61 ^ _62;
 _64 = (frost$core$Int) {_63};
 *(&local0) = _64;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:77
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:78
 _68 = *(&local0);
 _69 = param0;
 _70 = &_69->f4;
@@ -1425,14 +1429,14 @@ while ($tmp47->$class != (frost$core$Class*) &frost$collections$HashKey$class) {
 }
 _73 = $tmp47->methods[0];
 _74 = _73(_72);
-// begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from KeyTuple13.frost:77:9
+// begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from KeyTuple13.frost:78:9
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:365
 _77 = _68.value;
 _78 = _74.value;
 _79 = _77 ^ _78;
 _80 = (frost$core$Int) {_79};
 *(&local0) = _80;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:78
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:79
 _84 = *(&local0);
 _85 = param0;
 _86 = &_85->f5;
@@ -1444,14 +1448,14 @@ while ($tmp48->$class != (frost$core$Class*) &frost$collections$HashKey$class) {
 }
 _89 = $tmp48->methods[0];
 _90 = _89(_88);
-// begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from KeyTuple13.frost:78:9
+// begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from KeyTuple13.frost:79:9
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:365
 _93 = _84.value;
 _94 = _90.value;
 _95 = _93 ^ _94;
 _96 = (frost$core$Int) {_95};
 *(&local0) = _96;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:79
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:80
 _100 = *(&local0);
 _101 = param0;
 _102 = &_101->f6;
@@ -1463,14 +1467,14 @@ while ($tmp49->$class != (frost$core$Class*) &frost$collections$HashKey$class) {
 }
 _105 = $tmp49->methods[0];
 _106 = _105(_104);
-// begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from KeyTuple13.frost:79:9
+// begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from KeyTuple13.frost:80:9
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:365
 _109 = _100.value;
 _110 = _106.value;
 _111 = _109 ^ _110;
 _112 = (frost$core$Int) {_111};
 *(&local0) = _112;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:80
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:81
 _116 = *(&local0);
 _117 = param0;
 _118 = &_117->f7;
@@ -1482,14 +1486,14 @@ while ($tmp50->$class != (frost$core$Class*) &frost$collections$HashKey$class) {
 }
 _121 = $tmp50->methods[0];
 _122 = _121(_120);
-// begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from KeyTuple13.frost:80:9
+// begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from KeyTuple13.frost:81:9
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:365
 _125 = _116.value;
 _126 = _122.value;
 _127 = _125 ^ _126;
 _128 = (frost$core$Int) {_127};
 *(&local0) = _128;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:81
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:82
 _132 = *(&local0);
 _133 = param0;
 _134 = &_133->f8;
@@ -1501,14 +1505,14 @@ while ($tmp51->$class != (frost$core$Class*) &frost$collections$HashKey$class) {
 }
 _137 = $tmp51->methods[0];
 _138 = _137(_136);
-// begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from KeyTuple13.frost:81:9
+// begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from KeyTuple13.frost:82:9
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:365
 _141 = _132.value;
 _142 = _138.value;
 _143 = _141 ^ _142;
 _144 = (frost$core$Int) {_143};
 *(&local0) = _144;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:82
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:83
 _148 = *(&local0);
 _149 = param0;
 _150 = &_149->f9;
@@ -1520,14 +1524,14 @@ while ($tmp52->$class != (frost$core$Class*) &frost$collections$HashKey$class) {
 }
 _153 = $tmp52->methods[0];
 _154 = _153(_152);
-// begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from KeyTuple13.frost:82:9
+// begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from KeyTuple13.frost:83:9
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:365
 _157 = _148.value;
 _158 = _154.value;
 _159 = _157 ^ _158;
 _160 = (frost$core$Int) {_159};
 *(&local0) = _160;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:83
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:84
 _164 = *(&local0);
 _165 = param0;
 _166 = &_165->f10;
@@ -1539,14 +1543,14 @@ while ($tmp53->$class != (frost$core$Class*) &frost$collections$HashKey$class) {
 }
 _169 = $tmp53->methods[0];
 _170 = _169(_168);
-// begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from KeyTuple13.frost:83:9
+// begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from KeyTuple13.frost:84:9
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:365
 _173 = _164.value;
 _174 = _170.value;
 _175 = _173 ^ _174;
 _176 = (frost$core$Int) {_175};
 *(&local0) = _176;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:84
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:85
 _180 = *(&local0);
 _181 = param0;
 _182 = &_181->f11;
@@ -1558,14 +1562,14 @@ while ($tmp54->$class != (frost$core$Class*) &frost$collections$HashKey$class) {
 }
 _185 = $tmp54->methods[0];
 _186 = _185(_184);
-// begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from KeyTuple13.frost:84:9
+// begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from KeyTuple13.frost:85:9
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:365
 _189 = _180.value;
 _190 = _186.value;
 _191 = _189 ^ _190;
 _192 = (frost$core$Int) {_191};
 *(&local0) = _192;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:85
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:86
 _196 = *(&local0);
 _197 = param0;
 _198 = &_197->f12;
@@ -1577,19 +1581,20 @@ while ($tmp55->$class != (frost$core$Class*) &frost$collections$HashKey$class) {
 }
 _201 = $tmp55->methods[0];
 _202 = _201(_200);
-// begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from KeyTuple13.frost:85:9
+// begin inline call to function frost.core.Int.~~(other:frost.core.Int):frost.core.Int from KeyTuple13.frost:86:9
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int.frost:365
 _205 = _196.value;
 _206 = _202.value;
 _207 = _205 ^ _206;
 _208 = (frost$core$Int) {_207};
 *(&local0) = _208;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:86
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:87
 _212 = *(&local0);
 return _212;
 
 }
-frost$core$String* frost$core$KeyTuple13$get_asString$R$frost$core$String(frost$core$KeyTuple13* param0) {
+frost$core$String* frost$core$KeyTuple13$get_asString$R$frost$core$String(void* rawSelf) {
+frost$core$KeyTuple13* param0 = (frost$core$KeyTuple13*) rawSelf;
 
 frost$core$KeyTuple13* _1;
 frost$collections$HashKey** _2;
@@ -1761,12 +1766,12 @@ frost$core$Object* _268;
 frost$core$Object* _270;
 frost$core$Object* _272;
 frost$core$Object* _274;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:90
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:91
 _1 = param0;
 _2 = &_1->f0;
 _3 = *_2;
 _4 = ((frost$core$Object*) _3);
-// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from KeyTuple13.frost:90:16
+// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from KeyTuple13.frost:91:16
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 _7 = ($fn69) _4->$class->vtable[0];
 _8 = _7(_4);
@@ -1782,7 +1787,7 @@ _18 = param0;
 _19 = &_18->f1;
 _20 = *_19;
 _21 = ((frost$core$Object*) _20);
-// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from KeyTuple13.frost:90:16
+// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from KeyTuple13.frost:91:16
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 _24 = ($fn72) _21->$class->vtable[0];
 _25 = _24(_21);
@@ -1798,7 +1803,7 @@ _35 = param0;
 _36 = &_35->f2;
 _37 = *_36;
 _38 = ((frost$core$Object*) _37);
-// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from KeyTuple13.frost:90:16
+// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from KeyTuple13.frost:91:16
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 _41 = ($fn74) _38->$class->vtable[0];
 _42 = _41(_38);
@@ -1814,7 +1819,7 @@ _52 = param0;
 _53 = &_52->f3;
 _54 = *_53;
 _55 = ((frost$core$Object*) _54);
-// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from KeyTuple13.frost:90:16
+// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from KeyTuple13.frost:91:16
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 _58 = ($fn76) _55->$class->vtable[0];
 _59 = _58(_55);
@@ -1830,7 +1835,7 @@ _69 = param0;
 _70 = &_69->f4;
 _71 = *_70;
 _72 = ((frost$core$Object*) _71);
-// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from KeyTuple13.frost:90:16
+// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from KeyTuple13.frost:91:16
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 _75 = ($fn78) _72->$class->vtable[0];
 _76 = _75(_72);
@@ -1846,7 +1851,7 @@ _86 = param0;
 _87 = &_86->f5;
 _88 = *_87;
 _89 = ((frost$core$Object*) _88);
-// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from KeyTuple13.frost:90:16
+// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from KeyTuple13.frost:91:16
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 _92 = ($fn80) _89->$class->vtable[0];
 _93 = _92(_89);
@@ -1862,7 +1867,7 @@ _103 = param0;
 _104 = &_103->f6;
 _105 = *_104;
 _106 = ((frost$core$Object*) _105);
-// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from KeyTuple13.frost:90:16
+// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from KeyTuple13.frost:91:16
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 _109 = ($fn82) _106->$class->vtable[0];
 _110 = _109(_106);
@@ -1878,7 +1883,7 @@ _120 = param0;
 _121 = &_120->f7;
 _122 = *_121;
 _123 = ((frost$core$Object*) _122);
-// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from KeyTuple13.frost:90:16
+// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from KeyTuple13.frost:91:16
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 _126 = ($fn84) _123->$class->vtable[0];
 _127 = _126(_123);
@@ -1894,7 +1899,7 @@ _137 = param0;
 _138 = &_137->f8;
 _139 = *_138;
 _140 = ((frost$core$Object*) _139);
-// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from KeyTuple13.frost:90:16
+// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from KeyTuple13.frost:91:16
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 _143 = ($fn86) _140->$class->vtable[0];
 _144 = _143(_140);
@@ -1910,7 +1915,7 @@ _154 = param0;
 _155 = &_154->f9;
 _156 = *_155;
 _157 = ((frost$core$Object*) _156);
-// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from KeyTuple13.frost:90:16
+// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from KeyTuple13.frost:91:16
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 _160 = ($fn88) _157->$class->vtable[0];
 _161 = _160(_157);
@@ -1926,7 +1931,7 @@ _171 = param0;
 _172 = &_171->f10;
 _173 = *_172;
 _174 = ((frost$core$Object*) _173);
-// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from KeyTuple13.frost:90:16
+// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from KeyTuple13.frost:91:16
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 _177 = ($fn90) _174->$class->vtable[0];
 _178 = _177(_174);
@@ -1942,7 +1947,7 @@ _188 = param0;
 _189 = &_188->f11;
 _190 = *_189;
 _191 = ((frost$core$Object*) _190);
-// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from KeyTuple13.frost:90:16
+// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from KeyTuple13.frost:91:16
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 _194 = ($fn92) _191->$class->vtable[0];
 _195 = _194(_191);
@@ -1958,7 +1963,7 @@ _205 = param0;
 _206 = &_205->f12;
 _207 = *_206;
 _208 = ((frost$core$Object*) _207);
-// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from KeyTuple13.frost:90:16
+// begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from KeyTuple13.frost:91:16
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:560
 _211 = ($fn94) _208->$class->vtable[0];
 _212 = _211(_208);
@@ -2027,7 +2032,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_274);
 return _221;
 
 }
-void frost$core$KeyTuple13$cleanup(frost$core$KeyTuple13* param0) {
+void frost$core$KeyTuple13$cleanup(void* rawSelf) {
+frost$core$KeyTuple13* param0 = (frost$core$KeyTuple13*) rawSelf;
 
 frost$core$Object* _1;
 frost$core$KeyTuple13* _3;
@@ -2082,7 +2088,7 @@ frost$core$KeyTuple13* _63;
 frost$collections$HashKey** _64;
 frost$collections$HashKey* _65;
 frost$core$Object* _66;
-// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:2
+// /Users/ethannicholas/Dropbox/Frost/src/frost/core/KeyTuple13.frost:3
 _1 = ((frost$core$Object*) param0);
 frost$core$Object$cleanup(_1);
 _3 = param0;

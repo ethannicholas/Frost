@@ -44,7 +44,8 @@ static frost$core$String $s4 = { (frost$core$Class*) &frost$core$String$class, -
 static frost$core$String $s14 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x41\x72\x72\x61\x79\x2e\x66\x72\x6f\x73\x74", 11, -1919842861654168654, NULL };
 static frost$core$String $s15 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x5b\x5d\x28\x69\x6e\x64\x65\x78\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x54", 108, 4065685528380894665, NULL };
 
-frost$core$Bit org$frostlang$frostc$pass$RemoveAsserts$isAssertionFail$org$frostlang$frostc$IR$Statement$R$frost$core$Bit(org$frostlang$frostc$pass$RemoveAsserts* param0, org$frostlang$frostc$IR$Statement* param1) {
+frost$core$Bit org$frostlang$frostc$pass$RemoveAsserts$isAssertionFail$org$frostlang$frostc$IR$Statement$R$frost$core$Bit(void* rawSelf, org$frostlang$frostc$IR$Statement* param1) {
+org$frostlang$frostc$pass$RemoveAsserts* param0 = (org$frostlang$frostc$pass$RemoveAsserts*) rawSelf;
 
 org$frostlang$frostc$MethodDecl* local0 = NULL;
 frost$core$Bit local1;
@@ -105,9 +106,9 @@ _9 = (frost$core$Bit) {_8};
 _11 = _9.value;
 if (_11) goto block2; else goto block3;
 block2:;
-_13 = (org$frostlang$frostc$Position*) (param1->$data + 0);
+_13 = &param1->$data.$STATIC_CALL.field0;
 _14 = *_13;
-_15 = (org$frostlang$frostc$MethodDecl**) (param1->$data + 24);
+_15 = &param1->$data.$STATIC_CALL.field1;
 _16 = *_15;
 *(&local0) = ((org$frostlang$frostc$MethodDecl*) NULL);
 _18 = ((frost$core$Object*) _16);
@@ -116,7 +117,7 @@ _20 = *(&local0);
 _21 = ((frost$core$Object*) _20);
 frost$core$Frost$unref$frost$core$Object$Q(_21);
 *(&local0) = _16;
-_24 = (org$frostlang$frostc$FixedArray**) (param1->$data + 32);
+_24 = &param1->$data.$STATIC_CALL.field2;
 _25 = *_24;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/pass/RemoveAsserts.frost:9
 _27 = *(&local0);
@@ -177,7 +178,8 @@ goto block12;
 block12:;
 
 }
-frost$core$Bit org$frostlang$frostc$pass$RemoveAsserts$process$org$frostlang$frostc$IR$org$frostlang$frostc$pass$Analyzer$R$frost$core$Bit(org$frostlang$frostc$pass$RemoveAsserts* param0, org$frostlang$frostc$IR* param1, org$frostlang$frostc$pass$Analyzer* param2) {
+frost$core$Bit org$frostlang$frostc$pass$RemoveAsserts$process$org$frostlang$frostc$IR$org$frostlang$frostc$pass$Analyzer$R$frost$core$Bit(void* rawSelf, org$frostlang$frostc$IR* param1, org$frostlang$frostc$pass$Analyzer* param2) {
+org$frostlang$frostc$pass$RemoveAsserts* param0 = (org$frostlang$frostc$pass$RemoveAsserts*) rawSelf;
 
 frost$core$Bit local0;
 frost$core$Int local1;
@@ -586,12 +588,14 @@ _211 = *(&local0);
 return _211;
 
 }
-void org$frostlang$frostc$pass$RemoveAsserts$init(org$frostlang$frostc$pass$RemoveAsserts* param0) {
+void org$frostlang$frostc$pass$RemoveAsserts$init(void* rawSelf) {
+org$frostlang$frostc$pass$RemoveAsserts* param0 = (org$frostlang$frostc$pass$RemoveAsserts*) rawSelf;
 
 return;
 
 }
-void org$frostlang$frostc$pass$RemoveAsserts$cleanup(org$frostlang$frostc$pass$RemoveAsserts* param0) {
+void org$frostlang$frostc$pass$RemoveAsserts$cleanup(void* rawSelf) {
+org$frostlang$frostc$pass$RemoveAsserts* param0 = (org$frostlang$frostc$pass$RemoveAsserts*) rawSelf;
 
 frost$core$Object* _1;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/pass/RemoveAsserts.frost:5

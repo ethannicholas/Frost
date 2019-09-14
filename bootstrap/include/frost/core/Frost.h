@@ -16,7 +16,7 @@ typedef struct frost$collections$HashMap frost$collections$HashMap;
 typedef struct frost$collections$HashKey frost$collections$HashKey;
 typedef struct frost$core$Equatable frost$core$Equatable;
 
-void frost$core$Frost$init(frost$core$Frost* self);
+void frost$core$Frost$init(void* rawSelf);
 frost$core$Maybe* frost$core$Frost$success$frost$core$Object$R$frost$core$Maybe$LTfrost$core$Object$GT$Q(frost$core$Object* p_o);
 frost$core$Maybe* frost$core$Frost$error$frost$core$String$R$frost$core$Maybe$LTfrost$core$Object$GT$Q(frost$core$String* p_msg);
 void frost$core$Frost$ref$frost$core$Object$Q(frost$core$Object* p_o);
@@ -44,5 +44,5 @@ void frost$core$Frost$debugPrint$builtin_int64(int64_t p_i);
 void frost$core$Frost$debugPrint$frost$core$Object(frost$core$Object* p_o);
 frost$core$String* frost$core$Frost$pointerConvert$frost$unsafe$Pointer$LTfrost$core$Object$Q$GT$R$frost$core$String(frost$core$Object** p_p);
 void frost$core$Frost$disableRefErrorReporting();
-void frost$core$Frost$cleanup(frost$core$Frost* self);
+void frost$core$Frost$cleanup(void* rawSelf);
 

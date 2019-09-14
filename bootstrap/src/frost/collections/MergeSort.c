@@ -817,8 +817,7 @@ _13 = _11 - _12;
 _14 = (frost$core$Int) {_13};
 *(&local1) = _14;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/MergeSort.frost:34
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_17 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_17 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _18 = _17;
 _19 = *(&local0);
 frost$collections$Array$init$frost$core$Int(_18, _19);
@@ -832,8 +831,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_25);
 _28 = ((frost$core$Object*) _17);
 frost$core$Frost$unref$frost$core$Object$Q(_28);
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/MergeSort.frost:35
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_31 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_31 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _32 = _31;
 _33 = *(&local1);
 frost$collections$Array$init$frost$core$Int(_32, _33);
@@ -2059,12 +2057,14 @@ block23:;
 return;
 
 }
-void frost$collections$MergeSort$init(frost$collections$MergeSort* param0) {
+void frost$collections$MergeSort$init(void* rawSelf) {
+frost$collections$MergeSort* param0 = (frost$collections$MergeSort*) rawSelf;
 
 return;
 
 }
-void frost$collections$MergeSort$cleanup(frost$collections$MergeSort* param0) {
+void frost$collections$MergeSort$cleanup(void* rawSelf) {
+frost$collections$MergeSort* param0 = (frost$collections$MergeSort*) rawSelf;
 
 frost$core$Object* _1;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/MergeSort.frost:4

@@ -91,8 +91,7 @@ frost$core$Object* _70;
 frost$core$MutableString* _72;
 frost$core$Object* _73;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Range.frost:37
-FROST_ASSERT(48 == sizeof(frost$core$MutableString));
-_1 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
+_1 = (frost$core$MutableString*) frostObjectAlloc(sizeof(frost$core$MutableString), (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init(_1);
 *(&local0) = ((frost$core$MutableString*) NULL);
 _4 = ((frost$core$Object*) _1);
@@ -113,7 +112,7 @@ block1:;
 _18 = *(&local0);
 _19 = param0.min;
 frost$core$Int16$wrapper* $tmp5;
-$tmp5 = (frost$core$Int16$wrapper*) frostObjectAlloc(18, (frost$core$Class*) &frost$core$Int16$wrapperclass);
+$tmp5 = (frost$core$Int16$wrapper*) frostObjectAlloc(sizeof(frost$core$Int16$wrapper), (frost$core$Class*) &frost$core$Int16$wrapperclass);
 $tmp5->value = _19;
 _20 = ((frost$core$Object*) $tmp5);
 // begin inline call to method frost.core.MutableString.append(o:frost.core.Object) from Range.frost:39:26
@@ -153,7 +152,7 @@ block7:;
 _51 = *(&local0);
 _52 = param0.max;
 frost$core$Int16$wrapper* $tmp9;
-$tmp9 = (frost$core$Int16$wrapper*) frostObjectAlloc(18, (frost$core$Class*) &frost$core$Int16$wrapperclass);
+$tmp9 = (frost$core$Int16$wrapper*) frostObjectAlloc(sizeof(frost$core$Int16$wrapper), (frost$core$Class*) &frost$core$Int16$wrapperclass);
 $tmp9->value = _52;
 _53 = ((frost$core$Object*) $tmp9);
 // begin inline call to method frost.core.MutableString.append(o:frost.core.Object) from Range.frost:48:26

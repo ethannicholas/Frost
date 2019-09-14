@@ -30,7 +30,8 @@ static frost$core$String $s10 = { (frost$core$Class*) &frost$core$String$class, 
 static frost$core$String $s16 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x3c\x6c\x69\x3e", 4, 7822534959663603838, NULL };
 static frost$core$String $s17 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x3c\x2f\x6c\x69\x3e\x0a", 6, 2267778754110432527, NULL };
 
-void org$frostlang$frostc$frostdoc$Markdown$_Closure18$init$org$frostlang$frostc$frostdoc$Markdown(org$frostlang$frostc$frostdoc$Markdown$_Closure18* param0, org$frostlang$frostc$frostdoc$Markdown* param1) {
+void org$frostlang$frostc$frostdoc$Markdown$_Closure18$init$org$frostlang$frostc$frostdoc$Markdown(void* rawSelf, org$frostlang$frostc$frostdoc$Markdown* param1) {
+org$frostlang$frostc$frostdoc$Markdown$_Closure18* param0 = (org$frostlang$frostc$frostdoc$Markdown$_Closure18*) rawSelf;
 
 frost$core$Object* _1;
 org$frostlang$frostc$frostdoc$Markdown** _3;
@@ -49,7 +50,8 @@ _7 = &param0->$self;
 return;
 
 }
-void org$frostlang$frostc$frostdoc$Markdown$_Closure18$cleanup(org$frostlang$frostc$frostdoc$Markdown$_Closure18* param0) {
+void org$frostlang$frostc$frostdoc$Markdown$_Closure18$cleanup(void* rawSelf) {
+org$frostlang$frostc$frostdoc$Markdown$_Closure18* param0 = (org$frostlang$frostc$frostdoc$Markdown$_Closure18*) rawSelf;
 
 frost$core$Object* _1;
 org$frostlang$frostc$frostdoc$Markdown** _3;
@@ -65,7 +67,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_5);
 return;
 
 }
-frost$core$String* org$frostlang$frostc$frostdoc$Markdown$_Closure18$$anonymous17$frost$collections$ListView$LTfrost$core$String$Q$GT$R$frost$core$String(org$frostlang$frostc$frostdoc$Markdown$_Closure18* param0, frost$collections$ListView* param1) {
+frost$core$String* org$frostlang$frostc$frostdoc$Markdown$_Closure18$$anonymous17$frost$collections$ListView$LTfrost$core$String$Q$GT$R$frost$core$String(void* rawSelf, frost$collections$ListView* param1) {
+org$frostlang$frostc$frostdoc$Markdown$_Closure18* param0 = (org$frostlang$frostc$frostdoc$Markdown$_Closure18*) rawSelf;
 
 frost$core$String* local0 = NULL;
 frost$core$MutableString* local1 = NULL;
@@ -161,8 +164,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_10);
 _13 = _4;
 frost$core$Frost$unref$frost$core$Object$Q(_13);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:738
-FROST_ASSERT(48 == sizeof(frost$core$MutableString));
-_16 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
+_16 = (frost$core$MutableString*) frostObjectAlloc(sizeof(frost$core$MutableString), (frost$core$Class*) &frost$core$MutableString$class);
 _17 = *(&local0);
 _18 = _17 != NULL;
 _19 = (frost$core$Bit) {_18};

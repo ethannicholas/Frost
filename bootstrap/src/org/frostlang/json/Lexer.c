@@ -21,7 +21,8 @@ org$frostlang$json$Lexer$class_type org$frostlang$json$Lexer$class = { (frost$co
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x6a\x73\x6f\x6e\x2e\x4c\x65\x78\x65\x72", 24, 5960953331362814559, NULL };
 
-void org$frostlang$json$Lexer$start$frost$core$String(org$frostlang$json$Lexer* param0, frost$core$String* param1) {
+void org$frostlang$json$Lexer$start$frost$core$String(void* rawSelf, frost$core$String* param1) {
+org$frostlang$json$Lexer* param0 = (org$frostlang$json$Lexer*) rawSelf;
 
 org$frostlang$plex$runtime$DFA* _1;
 frost$core$Int _2;
@@ -36,8 +37,7 @@ frost$core$Object* _12;
 org$frostlang$plex$runtime$DFA** _14;
 frost$core$Object* _16;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:20
-FROST_ASSERT(80 == sizeof(org$frostlang$plex$runtime$DFA));
-_1 = (org$frostlang$plex$runtime$DFA*) frostObjectAlloc(80, (frost$core$Class*) &org$frostlang$plex$runtime$DFA$class);
+_1 = (org$frostlang$plex$runtime$DFA*) frostObjectAlloc(sizeof(org$frostlang$plex$runtime$DFA), (frost$core$Class*) &org$frostlang$plex$runtime$DFA$class);
 _2 = (frost$core$Int) {31u};
 _3 = &param0->transitions;
 _4 = *_3;
@@ -109,7 +109,7 @@ frost$core$Int* _60;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
 _1 = frost$core$Int64$init$frost$core$Int(param0);
 _2 = _1.value;
-_3 = ((frost$core$Int*) frostAlloc(_2 * 8));
+_3 = ((frost$core$Int*) frostAlloc(_2 * sizeof(frost$core$Int)));
 *(&local0) = _3;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
 _6 = (frost$core$Int) {0u};
@@ -3579,7 +3579,7 @@ frost$core$Int** _4447;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:34
 _1 = (frost$core$Int64) {256u};
 _2 = _1.value;
-_3 = ((frost$core$Int**) frostAlloc(_2 * 8));
+_3 = ((frost$core$Int**) frostAlloc(_2 * sizeof(frost$core$Int*)));
 *(&local0) = _3;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:35
 _6 = *(&local0);
@@ -3590,7 +3590,7 @@ _9 = (frost$core$Int) {0u};
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
 _12 = frost$core$Int64$init$frost$core$Int(_8);
 _13 = _12.value;
-_14 = ((frost$core$Int*) frostAlloc(_13 * 8));
+_14 = ((frost$core$Int*) frostAlloc(_13 * sizeof(frost$core$Int)));
 *(&local1) = _14;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
 _17 = (frost$core$Int) {0u};
@@ -3746,7 +3746,7 @@ _160 = (frost$core$Int) {0u};
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
 _163 = frost$core$Int64$init$frost$core$Int(_159);
 _164 = _163.value;
-_165 = ((frost$core$Int*) frostAlloc(_164 * 8));
+_165 = ((frost$core$Int*) frostAlloc(_164 * sizeof(frost$core$Int)));
 *(&local3) = _165;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
 _168 = (frost$core$Int) {0u};
@@ -4064,7 +4064,7 @@ _473 = (frost$core$Int) {0u};
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
 _476 = frost$core$Int64$init$frost$core$Int(_472);
 _477 = _476.value;
-_478 = ((frost$core$Int*) frostAlloc(_477 * 8));
+_478 = ((frost$core$Int*) frostAlloc(_477 * sizeof(frost$core$Int)));
 *(&local5) = _478;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
 _481 = (frost$core$Int) {0u};
@@ -4238,7 +4238,7 @@ _642 = (frost$core$Int) {0u};
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
 _645 = frost$core$Int64$init$frost$core$Int(_641);
 _646 = _645.value;
-_647 = ((frost$core$Int*) frostAlloc(_646 * 8));
+_647 = ((frost$core$Int*) frostAlloc(_646 * sizeof(frost$core$Int)));
 *(&local7) = _647;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
 _650 = (frost$core$Int) {0u};
@@ -4331,7 +4331,7 @@ _730 = (frost$core$Int) {0u};
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
 _733 = frost$core$Int64$init$frost$core$Int(_729);
 _734 = _733.value;
-_735 = ((frost$core$Int*) frostAlloc(_734 * 8));
+_735 = ((frost$core$Int*) frostAlloc(_734 * sizeof(frost$core$Int)));
 *(&local9) = _735;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
 _738 = (frost$core$Int) {0u};
@@ -4424,7 +4424,7 @@ _818 = (frost$core$Int) {0u};
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
 _821 = frost$core$Int64$init$frost$core$Int(_817);
 _822 = _821.value;
-_823 = ((frost$core$Int*) frostAlloc(_822 * 8));
+_823 = ((frost$core$Int*) frostAlloc(_822 * sizeof(frost$core$Int)));
 *(&local11) = _823;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
 _826 = (frost$core$Int) {0u};
@@ -4526,7 +4526,7 @@ _915 = (frost$core$Int) {0u};
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
 _918 = frost$core$Int64$init$frost$core$Int(_914);
 _919 = _918.value;
-_920 = ((frost$core$Int*) frostAlloc(_919 * 8));
+_920 = ((frost$core$Int*) frostAlloc(_919 * sizeof(frost$core$Int)));
 *(&local13) = _920;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
 _923 = (frost$core$Int) {0u};
@@ -4637,7 +4637,7 @@ _1021 = (frost$core$Int) {0u};
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
 _1024 = frost$core$Int64$init$frost$core$Int(_1020);
 _1025 = _1024.value;
-_1026 = ((frost$core$Int*) frostAlloc(_1025 * 8));
+_1026 = ((frost$core$Int*) frostAlloc(_1025 * sizeof(frost$core$Int)));
 *(&local15) = _1026;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
 _1029 = (frost$core$Int) {0u};
@@ -4865,7 +4865,7 @@ _1244 = (frost$core$Int) {0u};
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
 _1247 = frost$core$Int64$init$frost$core$Int(_1243);
 _1248 = _1247.value;
-_1249 = ((frost$core$Int*) frostAlloc(_1248 * 8));
+_1249 = ((frost$core$Int*) frostAlloc(_1248 * sizeof(frost$core$Int)));
 *(&local17) = _1249;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
 _1252 = (frost$core$Int) {0u};
@@ -5048,7 +5048,7 @@ _1422 = (frost$core$Int) {0u};
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
 _1425 = frost$core$Int64$init$frost$core$Int(_1421);
 _1426 = _1425.value;
-_1427 = ((frost$core$Int*) frostAlloc(_1426 * 8));
+_1427 = ((frost$core$Int*) frostAlloc(_1426 * sizeof(frost$core$Int)));
 *(&local19) = _1427;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
 _1430 = (frost$core$Int) {0u};
@@ -5330,7 +5330,7 @@ _1699 = (frost$core$Int) {0u};
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
 _1702 = frost$core$Int64$init$frost$core$Int(_1698);
 _1703 = _1702.value;
-_1704 = ((frost$core$Int*) frostAlloc(_1703 * 8));
+_1704 = ((frost$core$Int*) frostAlloc(_1703 * sizeof(frost$core$Int)));
 *(&local21) = _1704;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
 _1707 = (frost$core$Int) {0u};
@@ -5423,7 +5423,7 @@ _1787 = (frost$core$Int) {0u};
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
 _1790 = frost$core$Int64$init$frost$core$Int(_1786);
 _1791 = _1790.value;
-_1792 = ((frost$core$Int*) frostAlloc(_1791 * 8));
+_1792 = ((frost$core$Int*) frostAlloc(_1791 * sizeof(frost$core$Int)));
 *(&local23) = _1792;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
 _1795 = (frost$core$Int) {0u};
@@ -5516,7 +5516,7 @@ _1875 = (frost$core$Int) {0u};
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
 _1878 = frost$core$Int64$init$frost$core$Int(_1874);
 _1879 = _1878.value;
-_1880 = ((frost$core$Int*) frostAlloc(_1879 * 8));
+_1880 = ((frost$core$Int*) frostAlloc(_1879 * sizeof(frost$core$Int)));
 *(&local25) = _1880;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
 _1883 = (frost$core$Int) {0u};
@@ -5636,7 +5636,7 @@ _1990 = (frost$core$Int) {0u};
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
 _1993 = frost$core$Int64$init$frost$core$Int(_1989);
 _1994 = _1993.value;
-_1995 = ((frost$core$Int*) frostAlloc(_1994 * 8));
+_1995 = ((frost$core$Int*) frostAlloc(_1994 * sizeof(frost$core$Int)));
 *(&local27) = _1995;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
 _1998 = (frost$core$Int) {0u};
@@ -5729,7 +5729,7 @@ _2078 = (frost$core$Int) {0u};
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
 _2081 = frost$core$Int64$init$frost$core$Int(_2077);
 _2082 = _2081.value;
-_2083 = ((frost$core$Int*) frostAlloc(_2082 * 8));
+_2083 = ((frost$core$Int*) frostAlloc(_2082 * sizeof(frost$core$Int)));
 *(&local29) = _2083;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
 _2086 = (frost$core$Int) {0u};
@@ -5840,7 +5840,7 @@ _2184 = (frost$core$Int) {0u};
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
 _2187 = frost$core$Int64$init$frost$core$Int(_2183);
 _2188 = _2187.value;
-_2189 = ((frost$core$Int*) frostAlloc(_2188 * 8));
+_2189 = ((frost$core$Int*) frostAlloc(_2188 * sizeof(frost$core$Int)));
 *(&local31) = _2189;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
 _2192 = (frost$core$Int) {0u};
@@ -5951,7 +5951,7 @@ _2290 = (frost$core$Int) {0u};
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
 _2293 = frost$core$Int64$init$frost$core$Int(_2289);
 _2294 = _2293.value;
-_2295 = ((frost$core$Int*) frostAlloc(_2294 * 8));
+_2295 = ((frost$core$Int*) frostAlloc(_2294 * sizeof(frost$core$Int)));
 *(&local33) = _2295;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
 _2298 = (frost$core$Int) {0u};
@@ -6098,7 +6098,7 @@ _2432 = (frost$core$Int) {0u};
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
 _2435 = frost$core$Int64$init$frost$core$Int(_2431);
 _2436 = _2435.value;
-_2437 = ((frost$core$Int*) frostAlloc(_2436 * 8));
+_2437 = ((frost$core$Int*) frostAlloc(_2436 * sizeof(frost$core$Int)));
 *(&local35) = _2437;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
 _2440 = (frost$core$Int) {0u};
@@ -6218,7 +6218,7 @@ _2547 = (frost$core$Int) {0u};
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
 _2550 = frost$core$Int64$init$frost$core$Int(_2546);
 _2551 = _2550.value;
-_2552 = ((frost$core$Int*) frostAlloc(_2551 * 8));
+_2552 = ((frost$core$Int*) frostAlloc(_2551 * sizeof(frost$core$Int)));
 *(&local37) = _2552;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
 _2555 = (frost$core$Int) {0u};
@@ -6347,7 +6347,7 @@ _2671 = (frost$core$Int) {0u};
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
 _2674 = frost$core$Int64$init$frost$core$Int(_2670);
 _2675 = _2674.value;
-_2676 = ((frost$core$Int*) frostAlloc(_2675 * 8));
+_2676 = ((frost$core$Int*) frostAlloc(_2675 * sizeof(frost$core$Int)));
 *(&local39) = _2676;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
 _2679 = (frost$core$Int) {0u};
@@ -6449,7 +6449,7 @@ _2768 = (frost$core$Int) {0u};
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
 _2771 = frost$core$Int64$init$frost$core$Int(_2767);
 _2772 = _2771.value;
-_2773 = ((frost$core$Int*) frostAlloc(_2772 * 8));
+_2773 = ((frost$core$Int*) frostAlloc(_2772 * sizeof(frost$core$Int)));
 *(&local41) = _2773;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
 _2776 = (frost$core$Int) {0u};
@@ -6542,7 +6542,7 @@ _2856 = (frost$core$Int) {0u};
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
 _2859 = frost$core$Int64$init$frost$core$Int(_2855);
 _2860 = _2859.value;
-_2861 = ((frost$core$Int*) frostAlloc(_2860 * 8));
+_2861 = ((frost$core$Int*) frostAlloc(_2860 * sizeof(frost$core$Int)));
 *(&local43) = _2861;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
 _2864 = (frost$core$Int) {0u};
@@ -6644,7 +6644,7 @@ _2953 = (frost$core$Int) {0u};
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
 _2956 = frost$core$Int64$init$frost$core$Int(_2952);
 _2957 = _2956.value;
-_2958 = ((frost$core$Int*) frostAlloc(_2957 * 8));
+_2958 = ((frost$core$Int*) frostAlloc(_2957 * sizeof(frost$core$Int)));
 *(&local45) = _2958;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
 _2961 = (frost$core$Int) {0u};
@@ -6791,7 +6791,7 @@ _3095 = (frost$core$Int) {0u};
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
 _3098 = frost$core$Int64$init$frost$core$Int(_3094);
 _3099 = _3098.value;
-_3100 = ((frost$core$Int*) frostAlloc(_3099 * 8));
+_3100 = ((frost$core$Int*) frostAlloc(_3099 * sizeof(frost$core$Int)));
 *(&local47) = _3100;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
 _3103 = (frost$core$Int) {0u};
@@ -6893,7 +6893,7 @@ _3192 = (frost$core$Int) {0u};
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:25
 _3195 = frost$core$Int64$init$frost$core$Int(_3191);
 _3196 = _3195.value;
-_3197 = ((frost$core$Int*) frostAlloc(_3196 * 8));
+_3197 = ((frost$core$Int*) frostAlloc(_3196 * sizeof(frost$core$Int)));
 *(&local49) = _3197;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:26
 _3200 = (frost$core$Int) {0u};
@@ -8286,7 +8286,7 @@ frost$core$Int* _192;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:364
 _1 = (frost$core$Int64) {31u};
 _2 = _1.value;
-_3 = ((frost$core$Int*) frostAlloc(_2 * 8));
+_3 = ((frost$core$Int*) frostAlloc(_2 * sizeof(frost$core$Int)));
 *(&local0) = _3;
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:365
 _6 = *(&local0);
@@ -8479,7 +8479,8 @@ _192 = *(&local0);
 return _192;
 
 }
-void org$frostlang$json$Lexer$cleanup(org$frostlang$json$Lexer* param0) {
+void org$frostlang$json$Lexer$cleanup(void* rawSelf) {
+org$frostlang$json$Lexer* param0 = (org$frostlang$json$Lexer*) rawSelf;
 
 frost$core$Int*** _1;
 frost$core$Int** _2;
@@ -8807,7 +8808,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_188);
 return;
 
 }
-org$frostlang$json$Token org$frostlang$json$Lexer$next$R$org$frostlang$json$Token(org$frostlang$json$Lexer* param0) {
+org$frostlang$json$Token org$frostlang$json$Lexer$next$R$org$frostlang$json$Token(void* rawSelf) {
+org$frostlang$json$Lexer* param0 = (org$frostlang$json$Lexer*) rawSelf;
 
 org$frostlang$plex$runtime$RawToken local0;
 org$frostlang$json$Token$Kind local1;
@@ -8858,7 +8860,8 @@ _25 = org$frostlang$json$Token$init$org$frostlang$json$Token$Kind$frost$core$Str
 return _25;
 
 }
-void org$frostlang$json$Lexer$init(org$frostlang$json$Lexer* param0) {
+void org$frostlang$json$Lexer$init(void* rawSelf) {
+org$frostlang$json$Lexer* param0 = (org$frostlang$json$Lexer*) rawSelf;
 
 frost$core$Int** _1;
 frost$core$Int*** _2;

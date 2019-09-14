@@ -107,8 +107,7 @@ frost$core$Object* _88;
 frost$core$MutableString* _90;
 frost$core$Object* _91;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Range.frost:37
-FROST_ASSERT(48 == sizeof(frost$core$MutableString));
-_1 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
+_1 = (frost$core$MutableString*) frostObjectAlloc(sizeof(frost$core$MutableString), (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init(_1);
 *(&local0) = ((frost$core$MutableString*) NULL);
 _4 = ((frost$core$Object*) _1);
@@ -140,7 +139,7 @@ abort(); // unreachable
 block3:;
 _28 = ((frost$core$Int) _20.value);
 frost$core$Int$wrapper* $tmp7;
-$tmp7 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp7 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp7->value = _28;
 _29 = ((frost$core$Object*) $tmp7);
 // begin inline call to method frost.core.MutableString.append(o:frost.core.Object) from Range.frost:39:26
@@ -191,7 +190,7 @@ abort(); // unreachable
 block11:;
 _70 = ((frost$core$Int) _62.value);
 frost$core$Int$wrapper* $tmp13;
-$tmp13 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp13 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp13->value = _70;
 _71 = ((frost$core$Object*) $tmp13);
 // begin inline call to method frost.core.MutableString.append(o:frost.core.Object) from Range.frost:48:26

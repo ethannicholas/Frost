@@ -37,12 +37,14 @@ static frost$core$String $s19 = { (frost$core$Class*) &frost$core$String$class, 
 static frost$core$String $s20 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x3f\x20\x74\x6f\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67", 73, -3541275370151069987, NULL };
 static frost$core$String $s21 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x24", 1, -5808630540432999757, NULL };
 
-void frost$core$Matcher$init(frost$core$Matcher* param0) {
+void frost$core$Matcher$init(void* rawSelf) {
+frost$core$Matcher* param0 = (frost$core$Matcher*) rawSelf;
 
 return;
 
 }
-frost$core$Bit frost$core$Matcher$find$R$frost$core$Bit(frost$core$Matcher* param0) {
+frost$core$Bit frost$core$Matcher$find$R$frost$core$Bit(void* rawSelf) {
+frost$core$Matcher* param0 = (frost$core$Matcher*) rawSelf;
 
 frost$core$String$Index local0;
 frost$core$String$Index local1;
@@ -189,7 +191,7 @@ _67 = frost$core$String$next$frost$core$String$Index$R$frost$core$String$Index(_
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:61
 _70 = *(&local2);
 frost$core$String$Index$wrapper* $tmp5;
-$tmp5 = (frost$core$String$Index$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$String$Index$wrapperclass);
+$tmp5 = (frost$core$String$Index$wrapper*) frostObjectAlloc(sizeof(frost$core$String$Index$wrapper), (frost$core$Class*) &frost$core$String$Index$wrapperclass);
 $tmp5->value = _70;
 _71 = ((frost$core$Comparable*) $tmp5);
 _72 = _71;
@@ -207,7 +209,7 @@ _83 = *(&local4);
 *(&local3) = _83;
 _86 = *(&local3);
 frost$core$String$Index$wrapper* $tmp6;
-$tmp6 = (frost$core$String$Index$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$String$Index$wrapperclass);
+$tmp6 = (frost$core$String$Index$wrapper*) frostObjectAlloc(sizeof(frost$core$String$Index$wrapper), (frost$core$Class*) &frost$core$String$Index$wrapperclass);
 $tmp6->value = _86;
 _88 = ((frost$core$Comparable*) $tmp6);
 ITable* $tmp7 = _72->$class->itable;
@@ -264,7 +266,8 @@ _132 = *_131;
 return _132;
 
 }
-frost$core$Bit frost$core$Matcher$find$frost$core$String$Index$R$frost$core$Bit(frost$core$Matcher* param0, frost$core$String$Index param1) {
+frost$core$Bit frost$core$Matcher$find$frost$core$String$Index$R$frost$core$Bit(void* rawSelf, frost$core$String$Index param1) {
+frost$core$Matcher* param0 = (frost$core$Matcher*) rawSelf;
 
 frost$core$String$Index* _1;
 frost$core$Bit _4;
@@ -284,7 +287,8 @@ _9 = *_8;
 return _9;
 
 }
-void frost$core$Matcher$appendReplacement$frost$core$MutableString$frost$core$String(frost$core$Matcher* param0, frost$core$MutableString* param1, frost$core$String* param2) {
+void frost$core$Matcher$appendReplacement$frost$core$MutableString$frost$core$String(void* rawSelf, frost$core$MutableString* param1, frost$core$String* param2) {
+frost$core$Matcher* param0 = (frost$core$Matcher*) rawSelf;
 
 frost$core$Bit* _0;
 frost$core$Bit _1;
@@ -306,7 +310,8 @@ frost$core$Matcher$appendReplacement$frost$core$MutableString$frost$core$String$
 return;
 
 }
-void frost$core$Matcher$appendReplacement$frost$core$MutableString$frost$core$String$frost$core$Bit(frost$core$Matcher* param0, frost$core$MutableString* param1, frost$core$String* param2, frost$core$Bit param3) {
+void frost$core$Matcher$appendReplacement$frost$core$MutableString$frost$core$String$frost$core$Bit(void* rawSelf, frost$core$MutableString* param1, frost$core$String* param2, frost$core$Bit param3) {
+frost$core$Matcher* param0 = (frost$core$Matcher*) rawSelf;
 
 frost$core$Matcher* local0 = NULL;
 frost$core$String$Index local1;
@@ -463,8 +468,7 @@ _20 = param3.value;
 if (_20) goto block3; else goto block5;
 block3:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Matcher.frost:136
-FROST_ASSERT(24 == sizeof(frost$core$RegularExpression));
-_23 = (frost$core$RegularExpression*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$RegularExpression$class);
+_23 = (frost$core$RegularExpression*) frostObjectAlloc(sizeof(frost$core$RegularExpression), (frost$core$Class*) &frost$core$RegularExpression$class);
 frost$core$RegularExpression$init$frost$core$String(_23, &$s12);
 _25 = frost$core$RegularExpression$matcher$frost$core$String$R$frost$core$Matcher(_23, param2);
 *(&local0) = ((frost$core$Matcher*) NULL);
@@ -685,7 +689,8 @@ _220 = &param0->replacementIndex;
 return;
 
 }
-void frost$core$Matcher$appendTail$frost$core$MutableString(frost$core$Matcher* param0, frost$core$MutableString* param1) {
+void frost$core$Matcher$appendTail$frost$core$MutableString(void* rawSelf, frost$core$MutableString* param1) {
+frost$core$Matcher* param0 = (frost$core$Matcher*) rawSelf;
 
 frost$core$String** _1;
 frost$core$String* _2;
@@ -711,7 +716,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_10);
 return;
 
 }
-void frost$core$Matcher$cleanup(frost$core$Matcher* param0) {
+void frost$core$Matcher$cleanup(void* rawSelf) {
+frost$core$Matcher* param0 = (frost$core$Matcher*) rawSelf;
 
 frost$core$Object* _3;
 frost$core$String** _5;

@@ -9,6 +9,6 @@ typedef struct org$frostlang$frostc$Compiler$TypeContext org$frostlang$frostc$Co
 typedef struct org$frostlang$frostc$expression$AtPre org$frostlang$frostc$expression$AtPre;
 
 org$frostlang$frostc$IR$Value* org$frostlang$frostc$expression$AtPre$compile$org$frostlang$frostc$Compiler$org$frostlang$frostc$Position$org$frostlang$frostc$ASTNode$org$frostlang$frostc$Compiler$TypeContext$R$org$frostlang$frostc$IR$Value$Q(org$frostlang$frostc$Compiler* p_compiler, org$frostlang$frostc$Position p_position, org$frostlang$frostc$ASTNode* p_expr, org$frostlang$frostc$Compiler$TypeContext* p_type);
-void org$frostlang$frostc$expression$AtPre$init(org$frostlang$frostc$expression$AtPre* self);
-void org$frostlang$frostc$expression$AtPre$cleanup(org$frostlang$frostc$expression$AtPre* self);
+void org$frostlang$frostc$expression$AtPre$init(void* rawSelf);
+void org$frostlang$frostc$expression$AtPre$cleanup(void* rawSelf);
 

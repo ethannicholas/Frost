@@ -17,7 +17,8 @@ frost$threads$ScopedLock$class_type frost$threads$ScopedLock$class = { (frost$co
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x74\x68\x72\x65\x61\x64\x73\x2e\x53\x63\x6f\x70\x65\x64\x4c\x6f\x63\x6b", 24, -7716745767815268293, NULL };
 
-void frost$threads$ScopedLock$init$frost$threads$Lock(frost$threads$ScopedLock* param0, frost$threads$Lock* param1) {
+void frost$threads$ScopedLock$init$frost$threads$Lock(void* rawSelf, frost$threads$Lock* param1) {
+frost$threads$ScopedLock* param0 = (frost$threads$ScopedLock*) rawSelf;
 
 frost$core$Object* _1;
 frost$threads$Lock** _3;
@@ -38,7 +39,8 @@ frost$threads$Lock$lock(param1);
 return;
 
 }
-void frost$threads$ScopedLock$cleanup(frost$threads$ScopedLock* param0) {
+void frost$threads$ScopedLock$cleanup(void* rawSelf) {
+frost$threads$ScopedLock* param0 = (frost$threads$ScopedLock*) rawSelf;
 
 frost$threads$Lock** _1;
 frost$threads$Lock* _2;

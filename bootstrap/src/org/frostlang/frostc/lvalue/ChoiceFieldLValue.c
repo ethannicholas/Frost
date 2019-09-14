@@ -51,7 +51,8 @@ static frost$core$String $s15 = { (frost$core$Class*) &frost$core$String$class, 
 static frost$core$String $s23 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x41\x72\x72\x61\x79\x2e\x66\x72\x6f\x73\x74", 11, -1919842861654168654, NULL };
 static frost$core$String $s24 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x5b\x5d\x28\x69\x6e\x64\x65\x78\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x54", 108, 4065685528380894665, NULL };
 
-void org$frostlang$frostc$lvalue$ChoiceFieldLValue$init$org$frostlang$frostc$Compiler$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Value$org$frostlang$frostc$ChoiceCase$frost$core$Int(org$frostlang$frostc$lvalue$ChoiceFieldLValue* param0, org$frostlang$frostc$Compiler* param1, org$frostlang$frostc$Position param2, org$frostlang$frostc$IR$Value* param3, org$frostlang$frostc$ChoiceCase* param4, frost$core$Int param5) {
+void org$frostlang$frostc$lvalue$ChoiceFieldLValue$init$org$frostlang$frostc$Compiler$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Value$org$frostlang$frostc$ChoiceCase$frost$core$Int(void* rawSelf, org$frostlang$frostc$Compiler* param1, org$frostlang$frostc$Position param2, org$frostlang$frostc$IR$Value* param3, org$frostlang$frostc$ChoiceCase* param4, frost$core$Int param5) {
+org$frostlang$frostc$lvalue$ChoiceFieldLValue* param0 = (org$frostlang$frostc$lvalue$ChoiceFieldLValue*) rawSelf;
 
 frost$core$Bit local0;
 $fn2 _0;
@@ -152,14 +153,14 @@ block8:;
 _38 = &_1->typeKind;
 _39 = *_38;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp6;
-$tmp6 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp6 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp6->value = _39;
 _40 = ((frost$core$Equatable*) $tmp6);
 _41 = _40;
 _42 = &_26->typeKind;
 _43 = *_42;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp7;
-$tmp7 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp7 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp7->value = _43;
 _44 = ((frost$core$Equatable*) $tmp7);
 ITable* $tmp8 = _41->$class->itable;
@@ -223,7 +224,8 @@ _94 = &param0->index;
 return;
 
 }
-org$frostlang$frostc$Type* org$frostlang$frostc$lvalue$ChoiceFieldLValue$type$R$org$frostlang$frostc$Type(org$frostlang$frostc$lvalue$ChoiceFieldLValue* param0) {
+org$frostlang$frostc$Type* org$frostlang$frostc$lvalue$ChoiceFieldLValue$type$R$org$frostlang$frostc$Type(void* rawSelf) {
+org$frostlang$frostc$lvalue$ChoiceFieldLValue* param0 = (org$frostlang$frostc$lvalue$ChoiceFieldLValue*) rawSelf;
 
 org$frostlang$frostc$ChoiceCase** _1;
 org$frostlang$frostc$ChoiceCase* _2;
@@ -307,7 +309,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_40);
 return _37;
 
 }
-org$frostlang$frostc$IR$Value* org$frostlang$frostc$lvalue$ChoiceFieldLValue$compileLoad$R$org$frostlang$frostc$IR$Value$Q(org$frostlang$frostc$lvalue$ChoiceFieldLValue* param0) {
+org$frostlang$frostc$IR$Value* org$frostlang$frostc$lvalue$ChoiceFieldLValue$compileLoad$R$org$frostlang$frostc$IR$Value$Q(void* rawSelf) {
+org$frostlang$frostc$lvalue$ChoiceFieldLValue* param0 = (org$frostlang$frostc$lvalue$ChoiceFieldLValue*) rawSelf;
 
 frost$core$Int _1;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/lvalue/ChoiceFieldLValue.frost:36
@@ -316,7 +319,8 @@ frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s15, _1);
 abort(); // unreachable
 
 }
-void org$frostlang$frostc$lvalue$ChoiceFieldLValue$compileStore$org$frostlang$frostc$IR$Value(org$frostlang$frostc$lvalue$ChoiceFieldLValue* param0, org$frostlang$frostc$IR$Value* param1) {
+void org$frostlang$frostc$lvalue$ChoiceFieldLValue$compileStore$org$frostlang$frostc$IR$Value(void* rawSelf, org$frostlang$frostc$IR$Value* param1) {
+org$frostlang$frostc$lvalue$ChoiceFieldLValue* param0 = (org$frostlang$frostc$lvalue$ChoiceFieldLValue*) rawSelf;
 
 frost$core$Bit local0;
 org$frostlang$frostc$IR$Statement$ID local1;
@@ -449,8 +453,7 @@ _41 = &param0->compiler;
 _42 = *_41;
 _43 = &_42->ir;
 _44 = *_43;
-FROST_ASSERT(80 == sizeof(org$frostlang$frostc$IR$Statement));
-_45 = (org$frostlang$frostc$IR$Statement*) frostObjectAlloc(80, (frost$core$Class*) &org$frostlang$frostc$IR$Statement$class);
+_45 = (org$frostlang$frostc$IR$Statement*) frostObjectAlloc(sizeof(org$frostlang$frostc$IR$Statement), (frost$core$Class*) &org$frostlang$frostc$IR$Statement$class);
 _46 = (frost$core$Int) {4u};
 _47 = &param0->position;
 _48 = *_47;
@@ -471,13 +474,11 @@ _62 = &param0->compiler;
 _63 = *_62;
 _64 = &_63->ir;
 _65 = *_64;
-FROST_ASSERT(80 == sizeof(org$frostlang$frostc$IR$Statement));
-_66 = (org$frostlang$frostc$IR$Statement*) frostObjectAlloc(80, (frost$core$Class*) &org$frostlang$frostc$IR$Statement$class);
+_66 = (org$frostlang$frostc$IR$Statement*) frostObjectAlloc(sizeof(org$frostlang$frostc$IR$Statement), (frost$core$Class*) &org$frostlang$frostc$IR$Statement$class);
 _67 = (frost$core$Int) {27u};
 _68 = &param0->position;
 _69 = *_68;
-FROST_ASSERT(48 == sizeof(org$frostlang$frostc$IR$Value));
-_70 = (org$frostlang$frostc$IR$Value*) frostObjectAlloc(48, (frost$core$Class*) &org$frostlang$frostc$IR$Value$class);
+_70 = (org$frostlang$frostc$IR$Value*) frostObjectAlloc(sizeof(org$frostlang$frostc$IR$Value), (frost$core$Class*) &org$frostlang$frostc$IR$Value$class);
 _71 = (frost$core$Int) {7u};
 _72 = *(&local1);
 _73 = &param0->choiceCase;
@@ -536,7 +537,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_118);
 return;
 
 }
-void org$frostlang$frostc$lvalue$ChoiceFieldLValue$cleanup(org$frostlang$frostc$lvalue$ChoiceFieldLValue* param0) {
+void org$frostlang$frostc$lvalue$ChoiceFieldLValue$cleanup(void* rawSelf) {
+org$frostlang$frostc$lvalue$ChoiceFieldLValue* param0 = (org$frostlang$frostc$lvalue$ChoiceFieldLValue*) rawSelf;
 
 frost$core$Object* _1;
 org$frostlang$frostc$Compiler** _3;

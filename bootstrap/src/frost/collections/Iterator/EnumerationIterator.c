@@ -27,7 +27,8 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 static frost$core$String $s7 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x66\x72\x6f\x73\x74", 14, -28151574787386209, NULL };
 static frost$core$String $s8 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x45\x6e\x75\x6d\x65\x72\x61\x74\x69\x6f\x6e\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x6e\x65\x78\x74\x28\x29\x3a\x28\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x2c\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x45\x6e\x75\x6d\x65\x72\x61\x74\x69\x6f\x6e\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x54\x29", 152, -7078141578672242078, NULL };
 
-void frost$collections$Iterator$EnumerationIterator$init$frost$collections$Iterator$LTfrost$collections$Iterator$EnumerationIterator$T$GT(frost$collections$Iterator$EnumerationIterator* param0, frost$collections$Iterator* param1) {
+void frost$collections$Iterator$EnumerationIterator$init$frost$collections$Iterator$LTfrost$collections$Iterator$EnumerationIterator$T$GT(void* rawSelf, frost$collections$Iterator* param1) {
+frost$collections$Iterator$EnumerationIterator* param0 = (frost$collections$Iterator$EnumerationIterator*) rawSelf;
 
 frost$collections$Iterator$EnumerationIterator* _1;
 frost$core$Int _2;
@@ -56,7 +57,8 @@ _13 = &_6->base;
 return;
 
 }
-frost$core$Bit frost$collections$Iterator$EnumerationIterator$get_done$R$frost$core$Bit(frost$collections$Iterator$EnumerationIterator* param0) {
+frost$core$Bit frost$collections$Iterator$EnumerationIterator$get_done$R$frost$core$Bit(void* rawSelf) {
+frost$collections$Iterator$EnumerationIterator* param0 = (frost$collections$Iterator$EnumerationIterator*) rawSelf;
 
 frost$collections$Iterator$EnumerationIterator* _1;
 frost$collections$Iterator** _2;
@@ -78,7 +80,8 @@ _6 = _5(_4);
 return _6;
 
 }
-frost$core$Tuple2* frost$collections$Iterator$EnumerationIterator$next$R$$LPfrost$core$Int$Cfrost$collections$Iterator$EnumerationIterator$T$RP(frost$collections$Iterator$EnumerationIterator* param0) {
+frost$core$Tuple2* frost$collections$Iterator$EnumerationIterator$next$R$$LPfrost$core$Int$Cfrost$collections$Iterator$EnumerationIterator$T$RP(void* rawSelf) {
+frost$collections$Iterator$EnumerationIterator* param0 = (frost$collections$Iterator$EnumerationIterator*) rawSelf;
 
 frost$collections$Iterator* _0;
 $fn4 _1;
@@ -147,14 +150,13 @@ _22 = (frost$core$Int) {_21};
 _23 = &_15->index;
 *_23 = _22;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Iterator.frost:153
-FROST_ASSERT(32 == sizeof(frost$core$Tuple2));
-_26 = (frost$core$Tuple2*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$Tuple2$class);
+_26 = (frost$core$Tuple2*) frostObjectAlloc(sizeof(frost$core$Tuple2), (frost$core$Class*) &frost$core$Tuple2$class);
 _27 = _26;
 _28 = param0;
 _29 = &_28->index;
 _30 = *_29;
 frost$core$Int$wrapper* $tmp9;
-$tmp9 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp9 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp9->value = _30;
 _31 = ((frost$core$Object*) $tmp9);
 _32 = param0;
@@ -182,7 +184,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_48);
 return _41;
 
 }
-void frost$collections$Iterator$EnumerationIterator$cleanup(frost$collections$Iterator$EnumerationIterator* param0) {
+void frost$collections$Iterator$EnumerationIterator$cleanup(void* rawSelf) {
+frost$collections$Iterator$EnumerationIterator* param0 = (frost$collections$Iterator$EnumerationIterator*) rawSelf;
 
 frost$core$Object* _1;
 frost$collections$Iterator$EnumerationIterator* _3;

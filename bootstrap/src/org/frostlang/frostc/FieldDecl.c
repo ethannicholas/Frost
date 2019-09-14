@@ -38,7 +38,8 @@ static frost$core$String $s12 = { (frost$core$Class*) &frost$core$String$class, 
 static frost$core$String $s13 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x46\x69\x65\x6c\x64\x44\x65\x63\x6c\x2e\x66\x72\x6f\x73\x74", 15, 6034765482031789227, NULL };
 static frost$core$String $s14 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x41\x53\x54\x4e\x6f\x64\x65\x3f\x20\x74\x6f\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x4f\x62\x6a\x65\x63\x74", 84, 3244136566661285666, NULL };
 
-void org$frostlang$frostc$FieldDecl$init$org$frostlang$frostc$ClassDecl$org$frostlang$frostc$Position$frost$core$String$Q$org$frostlang$frostc$Annotations$org$frostlang$frostc$FieldDecl$Kind$frost$core$String$org$frostlang$frostc$Type$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$FieldDecl* param0, org$frostlang$frostc$ClassDecl* param1, org$frostlang$frostc$Position param2, frost$core$String* param3, org$frostlang$frostc$Annotations* param4, org$frostlang$frostc$FieldDecl$Kind param5, frost$core$String* param6, org$frostlang$frostc$Type* param7, org$frostlang$frostc$ASTNode* param8) {
+void org$frostlang$frostc$FieldDecl$init$org$frostlang$frostc$ClassDecl$org$frostlang$frostc$Position$frost$core$String$Q$org$frostlang$frostc$Annotations$org$frostlang$frostc$FieldDecl$Kind$frost$core$String$org$frostlang$frostc$Type$org$frostlang$frostc$ASTNode$Q(void* rawSelf, org$frostlang$frostc$ClassDecl* param1, org$frostlang$frostc$Position param2, frost$core$String* param3, org$frostlang$frostc$Annotations* param4, org$frostlang$frostc$FieldDecl$Kind param5, frost$core$String* param6, org$frostlang$frostc$Type* param7, org$frostlang$frostc$ASTNode* param8) {
+org$frostlang$frostc$FieldDecl* param0 = (org$frostlang$frostc$FieldDecl*) rawSelf;
 
 org$frostlang$frostc$Compiler$Resolution local0;
 org$frostlang$frostc$Compiler$Resolution local1;
@@ -97,8 +98,7 @@ _9 = *(&local0);
 _10 = &param0->resolved;
 *_10 = _9;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/FieldDecl.frost:29
-FROST_ASSERT(32 == sizeof(frost$core$Weak));
-_13 = (frost$core$Weak*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$Weak$class);
+_13 = (frost$core$Weak*) frostObjectAlloc(sizeof(frost$core$Weak), (frost$core$Class*) &frost$core$Weak$class);
 _14 = _13;
 _15 = param1;
 _16 = ((frost$core$Object*) _15);
@@ -166,7 +166,8 @@ org$frostlang$frostc$Symbol$init$org$frostlang$frostc$Symbol$Kind$org$frostlang$
 return;
 
 }
-frost$core$String* org$frostlang$frostc$FieldDecl$get_asString$R$frost$core$String(org$frostlang$frostc$FieldDecl* param0) {
+frost$core$String* org$frostlang$frostc$FieldDecl$get_asString$R$frost$core$String(void* rawSelf) {
+org$frostlang$frostc$FieldDecl* param0 = (org$frostlang$frostc$FieldDecl*) rawSelf;
 
 frost$core$MutableString* local0 = NULL;
 frost$core$MutableString* _1;
@@ -247,8 +248,7 @@ frost$core$Object* _137;
 frost$core$MutableString* _139;
 frost$core$Object* _140;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/FieldDecl.frost:40
-FROST_ASSERT(48 == sizeof(frost$core$MutableString));
-_1 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
+_1 = (frost$core$MutableString*) frostObjectAlloc(sizeof(frost$core$MutableString), (frost$core$Class*) &frost$core$MutableString$class);
 _2 = &param0->annotations;
 _3 = *_2;
 _4 = ((frost$core$Object*) _3);
@@ -399,7 +399,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_140);
 return _134;
 
 }
-void org$frostlang$frostc$FieldDecl$cleanup(org$frostlang$frostc$FieldDecl* param0) {
+void org$frostlang$frostc$FieldDecl$cleanup(void* rawSelf) {
+org$frostlang$frostc$FieldDecl* param0 = (org$frostlang$frostc$FieldDecl*) rawSelf;
 
 org$frostlang$frostc$Symbol* _1;
 frost$core$Weak** _3;

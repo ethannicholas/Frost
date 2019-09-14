@@ -41,7 +41,7 @@ __attribute__((weak)) frost$core$Object* frost$collections$SpecializedArray$LTor
     org$frostlang$frostc$parser$Token result = frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT$$IDX$frost$core$Int$R$org$frostlang$frostc$parser$Token(p0, p1);
 
     org$frostlang$frostc$parser$Token$wrapper* $tmp2;
-    $tmp2 = (org$frostlang$frostc$parser$Token$wrapper*) frostObjectAlloc(72, (frost$core$Class*) &org$frostlang$frostc$parser$Token$wrapperclass);
+    $tmp2 = (org$frostlang$frostc$parser$Token$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$wrapperclass);
     $tmp2->value = result;
     return ((frost$core$Object*) $tmp2);
 }
@@ -62,7 +62,7 @@ __attribute__((weak)) frost$core$Object* frost$collections$SpecializedArray$LTor
     org$frostlang$frostc$parser$Token result = frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT$removeIndex$frost$core$Int$R$org$frostlang$frostc$parser$Token(p0, p1);
 
     org$frostlang$frostc$parser$Token$wrapper* $tmp3;
-    $tmp3 = (org$frostlang$frostc$parser$Token$wrapper*) frostObjectAlloc(72, (frost$core$Class*) &org$frostlang$frostc$parser$Token$wrapperclass);
+    $tmp3 = (org$frostlang$frostc$parser$Token$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$wrapperclass);
     $tmp3->value = result;
     return ((frost$core$Object*) $tmp3);
 }
@@ -134,7 +134,8 @@ static frost$core$String $s68 = { (frost$core$Class*) &frost$core$String$class, 
 static frost$core$String $s71 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x3c\x6e\x75\x6c\x6c\x3e", 6, -6229636012469849280, NULL };
 static frost$core$String $s72 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x5d", 1, -5808499698549242648, NULL };
 
-void frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT$init(frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT* param0) {
+void frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT$init(void* rawSelf) {
+frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT* param0 = (frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT*) rawSelf;
 
 frost$core$Int _1;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:32
@@ -143,7 +144,8 @@ frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT$init$f
 return;
 
 }
-void frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT$init$frost$core$Int(frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT* param0, frost$core$Int param1) {
+void frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT$init$frost$core$Int(void* rawSelf, frost$core$Int param1) {
+frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT* param0 = (frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT*) rawSelf;
 
 frost$core$Int _1;
 frost$core$Int* _2;
@@ -162,13 +164,14 @@ _5 = &param0->capacity;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:41
 _8 = frost$core$Int64$init$frost$core$Int(param1);
 _9 = _8.value;
-_10 = ((org$frostlang$frostc$parser$Token*) frostAlloc(_9 * 48));
+_10 = ((org$frostlang$frostc$parser$Token*) frostAlloc(_9 * sizeof(org$frostlang$frostc$parser$Token)));
 _11 = &param0->data;
 *_11 = _10;
 return;
 
 }
-void frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT$init$frost$collections$ListView$LTorg$frostlang$frostc$parser$Token$GT(frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT* param0, frost$collections$ListView* param1) {
+void frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT$init$frost$collections$ListView$LTorg$frostlang$frostc$parser$Token$GT(void* rawSelf, frost$collections$ListView* param1) {
+frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT* param0 = (frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT*) rawSelf;
 
 frost$core$Int local0;
 org$frostlang$frostc$parser$Token local1;
@@ -277,7 +280,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_48);
 return;
 
 }
-void frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT$init$frost$unsafe$Pointer$LTorg$frostlang$frostc$parser$Token$GT$frost$core$Int(frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT* param0, org$frostlang$frostc$parser$Token* param1, frost$core$Int param2) {
+void frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT$init$frost$unsafe$Pointer$LTorg$frostlang$frostc$parser$Token$GT$frost$core$Int(void* rawSelf, org$frostlang$frostc$parser$Token* param1, frost$core$Int param2) {
+frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT* param0 = (frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT*) rawSelf;
 
 frost$core$Int _1;
 frost$core$Int* _2;
@@ -300,7 +304,8 @@ _11 = &param0->capacity;
 return;
 
 }
-void frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT$cleanup(frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT* param0) {
+void frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT$cleanup(void* rawSelf) {
+frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT* param0 = (frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT*) rawSelf;
 
 org$frostlang$frostc$parser$Token** _1;
 org$frostlang$frostc$parser$Token* _2;
@@ -315,7 +320,8 @@ frost$core$Object$cleanup(_5);
 return;
 
 }
-org$frostlang$frostc$parser$Token frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT$$IDX$frost$core$Int$R$org$frostlang$frostc$parser$Token(frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT* param0, frost$core$Int param1) {
+org$frostlang$frostc$parser$Token frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT$$IDX$frost$core$Int$R$org$frostlang$frostc$parser$Token(void* rawSelf, frost$core$Int param1) {
+frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT* param0 = (frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT*) rawSelf;
 
 frost$core$Int _0;
 int64_t _1;
@@ -372,7 +378,8 @@ _24 = _21[_23];
 return _24;
 
 }
-void frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT$$IDXEQ$frost$core$Int$org$frostlang$frostc$parser$Token(frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT* param0, frost$core$Int param1, org$frostlang$frostc$parser$Token param2) {
+void frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT$$IDXEQ$frost$core$Int$org$frostlang$frostc$parser$Token(void* rawSelf, frost$core$Int param1, org$frostlang$frostc$parser$Token param2) {
+frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT* param0 = (frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT*) rawSelf;
 
 frost$core$Int _0;
 int64_t _1;
@@ -428,7 +435,8 @@ _21[_23] = param2;
 return;
 
 }
-void frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT$insert$frost$core$Int$org$frostlang$frostc$parser$Token(frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT* param0, frost$core$Int param1, org$frostlang$frostc$parser$Token param2) {
+void frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT$insert$frost$core$Int$org$frostlang$frostc$parser$Token(void* rawSelf, frost$core$Int param1, org$frostlang$frostc$parser$Token param2) {
+frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT* param0 = (frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT*) rawSelf;
 
 frost$core$Int local0;
 frost$core$Int _0;
@@ -744,7 +752,8 @@ _154[_156] = param2;
 return;
 
 }
-void frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT$add$org$frostlang$frostc$parser$Token(frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT* param0, org$frostlang$frostc$parser$Token param1) {
+void frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT$add$org$frostlang$frostc$parser$Token(void* rawSelf, org$frostlang$frostc$parser$Token param1) {
+frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT* param0 = (frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT*) rawSelf;
 
 frost$core$Int* _1;
 frost$core$Int _2;
@@ -797,7 +806,8 @@ _25 = &param0->_count;
 return;
 
 }
-void frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT$addAll$frost$collections$CollectionView$LTorg$frostlang$frostc$parser$Token$GT(frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT* param0, frost$collections$CollectionView* param1) {
+void frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT$addAll$frost$collections$CollectionView$LTorg$frostlang$frostc$parser$Token$GT(void* rawSelf, frost$collections$CollectionView* param1) {
+frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT* param0 = (frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT*) rawSelf;
 
 org$frostlang$frostc$parser$Token local0;
 frost$core$Int* _1;
@@ -913,7 +923,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_50);
 return;
 
 }
-void frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT$ensureCapacity$frost$core$Int(frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT* param0, frost$core$Int param1) {
+void frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT$ensureCapacity$frost$core$Int(void* rawSelf, frost$core$Int param1) {
+frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT* param0 = (frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT*) rawSelf;
 
 frost$core$Int local0;
 frost$core$Int local1;
@@ -1069,13 +1080,14 @@ _80 = *_79;
 _81 = frost$core$Int64$init$frost$core$Int(_80);
 _82 = _78.value;
 _83 = _81.value;
-_84 = (org$frostlang$frostc$parser$Token*) frostRealloc(_76, _82 * 48, _83 * 48);
+_84 = (org$frostlang$frostc$parser$Token*) frostRealloc(_76, _82 * sizeof(org$frostlang$frostc$parser$Token), _83 * sizeof(org$frostlang$frostc$parser$Token));
 _85 = &param0->data;
 *_85 = _84;
 return;
 
 }
-frost$core$Int frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT$get_count$R$frost$core$Int(frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT* param0) {
+frost$core$Int frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT$get_count$R$frost$core$Int(void* rawSelf) {
+frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT* param0 = (frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT*) rawSelf;
 
 frost$core$Int* _1;
 frost$core$Int _2;
@@ -1085,7 +1097,8 @@ _2 = *_1;
 return _2;
 
 }
-org$frostlang$frostc$parser$Token frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT$removeIndex$frost$core$Int$R$org$frostlang$frostc$parser$Token(frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT* param0, frost$core$Int param1) {
+org$frostlang$frostc$parser$Token frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT$removeIndex$frost$core$Int$R$org$frostlang$frostc$parser$Token(void* rawSelf, frost$core$Int param1) {
+frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT* param0 = (frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT*) rawSelf;
 
 org$frostlang$frostc$parser$Token local0;
 frost$core$Int local1;
@@ -1443,7 +1456,8 @@ _181 = *(&local0);
 return _181;
 
 }
-void frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT$clear(frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT* param0) {
+void frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT$clear(void* rawSelf) {
+frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT* param0 = (frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT*) rawSelf;
 
 frost$core$Int local0;
 frost$core$Int _18;
@@ -1590,7 +1604,8 @@ frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$St
 abort(); // unreachable
 
 }
-frost$core$String* frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT$get_asString$R$frost$core$String(frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT* param0) {
+frost$core$String* frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT$get_asString$R$frost$core$String(void* rawSelf) {
+frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT* param0 = (frost$collections$SpecializedArray$LTorg$frostlang$frostc$parser$Token$GT*) rawSelf;
 
 frost$core$MutableString* local0 = NULL;
 frost$core$String* local1 = NULL;
@@ -1645,8 +1660,7 @@ frost$core$Object* _92;
 frost$core$MutableString* _95;
 frost$core$Object* _96;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/SpecializedArray.frost:141
-FROST_ASSERT(48 == sizeof(frost$core$MutableString));
-_1 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
+_1 = (frost$core$MutableString*) frostObjectAlloc(sizeof(frost$core$MutableString), (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init(_1);
 *(&local0) = ((frost$core$MutableString*) NULL);
 _4 = ((frost$core$Object*) _1);
@@ -1720,7 +1734,7 @@ block4:;
 _57 = *(&local0);
 _58 = *(&local2);
 org$frostlang$frostc$parser$Token$wrapper* $tmp69;
-$tmp69 = (org$frostlang$frostc$parser$Token$wrapper*) frostObjectAlloc(72, (frost$core$Class*) &org$frostlang$frostc$parser$Token$wrapperclass);
+$tmp69 = (org$frostlang$frostc$parser$Token$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$parser$Token$wrapper), (frost$core$Class*) &org$frostlang$frostc$parser$Token$wrapperclass);
 $tmp69->value = _58;
 _59 = ((frost$core$Object*) $tmp69);
 // begin inline call to method frost.core.MutableString.append(o:frost.core.Object) from SpecializedArray.frost:148:30

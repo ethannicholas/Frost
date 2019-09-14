@@ -330,8 +330,7 @@ org$frostlang$frostc$IR$Statement$ID _392;
 frost$core$Object* _393;
 // <no location>
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/statement/Assert.frost:20
-FROST_ASSERT(32 == sizeof(org$frostlang$frostc$Compiler$AutoUnrefs));
-_2 = (org$frostlang$frostc$Compiler$AutoUnrefs*) frostObjectAlloc(32, (frost$core$Class*) &org$frostlang$frostc$Compiler$AutoUnrefs$class);
+_2 = (org$frostlang$frostc$Compiler$AutoUnrefs*) frostObjectAlloc(sizeof(org$frostlang$frostc$Compiler$AutoUnrefs), (frost$core$Class*) &org$frostlang$frostc$Compiler$AutoUnrefs$class);
 org$frostlang$frostc$Compiler$AutoUnrefs$init$org$frostlang$frostc$Compiler(_2, param0);
 *(&local0) = ((org$frostlang$frostc$Compiler$AutoUnrefs*) NULL);
 _5 = ((frost$core$Object*) _2);
@@ -343,8 +342,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_8);
 _11 = ((frost$core$Object*) _2);
 frost$core$Frost$unref$frost$core$Object$Q(_11);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/statement/Assert.frost:21
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_14 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_14 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _15 = _14;
 frost$collections$Array$init(_15);
 *(&local1) = ((frost$collections$Array*) NULL);
@@ -359,8 +357,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_24);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/statement/Assert.frost:22
 _27 = *(&local1);
 _28 = _27;
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_29 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_29 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _30 = (frost$core$Int) {40u};
 _31 = &param0->currentClass;
 _32 = *_31;
@@ -551,8 +548,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_189);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/statement/Assert.frost:23
 _192 = *(&local1);
 _193 = _192;
-FROST_ASSERT(112 == sizeof(org$frostlang$frostc$ASTNode));
-_194 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(112, (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
+_194 = (org$frostlang$frostc$ASTNode*) frostObjectAlloc(sizeof(org$frostlang$frostc$ASTNode), (frost$core$Class*) &org$frostlang$frostc$ASTNode$class);
 _195 = (frost$core$Int) {25u};
 _196 = param1.line;
 // begin inline call to function frost.core.Int.get_asUInt64():frost.core.UInt64 from Assert.frost:23:57
@@ -711,16 +707,14 @@ frost$core$Frost$unref$frost$core$Object$Q(_339);
 return;
 block30:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/statement/Assert.frost:36
-FROST_ASSERT(48 == sizeof(org$frostlang$frostc$MethodRef));
-_344 = (org$frostlang$frostc$MethodRef*) frostObjectAlloc(48, (frost$core$Class*) &org$frostlang$frostc$MethodRef$class);
+_344 = (org$frostlang$frostc$MethodRef*) frostObjectAlloc(sizeof(org$frostlang$frostc$MethodRef), (frost$core$Class*) &org$frostlang$frostc$MethodRef$class);
 _345 = &param0->FROST_TYPE;
 _346 = *_345;
 _347 = *(&local5);
 org$frostlang$frostc$MethodRef$init$org$frostlang$frostc$Compiler$org$frostlang$frostc$Type$org$frostlang$frostc$MethodDecl(_344, param0, _346, _347);
 _349 = *(&local1);
 _350 = ((frost$collections$ListView*) _349);
-FROST_ASSERT(40 == sizeof(org$frostlang$frostc$Compiler$TypeContext));
-_351 = (org$frostlang$frostc$Compiler$TypeContext*) frostObjectAlloc(40, (frost$core$Class*) &org$frostlang$frostc$Compiler$TypeContext$class);
+_351 = (org$frostlang$frostc$Compiler$TypeContext*) frostObjectAlloc(sizeof(org$frostlang$frostc$Compiler$TypeContext), (frost$core$Class*) &org$frostlang$frostc$Compiler$TypeContext$class);
 _352 = (frost$core$Int) {0u};
 org$frostlang$frostc$Compiler$TypeContext$init$frost$core$Int(_351, _352);
 _354 = org$frostlang$frostc$expression$Call$compile$org$frostlang$frostc$Compiler$org$frostlang$frostc$Position$org$frostlang$frostc$IR$Value$Q$org$frostlang$frostc$MethodRef$frost$collections$ListView$LTorg$frostlang$frostc$ASTNode$GT$org$frostlang$frostc$Compiler$TypeContext$R$org$frostlang$frostc$IR$Value$Q(param0, param1, ((org$frostlang$frostc$IR$Value*) NULL), _344, _350, _351);
@@ -757,8 +751,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_382);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/statement/Assert.frost:39
 _386 = &param0->ir;
 _387 = *_386;
-FROST_ASSERT(80 == sizeof(org$frostlang$frostc$IR$Statement));
-_388 = (org$frostlang$frostc$IR$Statement*) frostObjectAlloc(80, (frost$core$Class*) &org$frostlang$frostc$IR$Statement$class);
+_388 = (org$frostlang$frostc$IR$Statement*) frostObjectAlloc(sizeof(org$frostlang$frostc$IR$Statement), (frost$core$Class*) &org$frostlang$frostc$IR$Statement$class);
 _389 = (frost$core$Int) {28u};
 org$frostlang$frostc$IR$Statement$init$frost$core$Int$org$frostlang$frostc$Position(_388, _389, param1);
 _391 = ($fn27) _387->$class->vtable[2];
@@ -841,8 +834,7 @@ _7 = ((frost$core$Object*) _6);
 frost$core$Frost$unref$frost$core$Object$Q(_7);
 *(&local0) = _2;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/statement/Assert.frost:45
-FROST_ASSERT(40 == sizeof(org$frostlang$frostc$Compiler$TypeContext));
-_11 = (org$frostlang$frostc$Compiler$TypeContext*) frostObjectAlloc(40, (frost$core$Class*) &org$frostlang$frostc$Compiler$TypeContext$class);
+_11 = (org$frostlang$frostc$Compiler$TypeContext*) frostObjectAlloc(sizeof(org$frostlang$frostc$Compiler$TypeContext), (frost$core$Class*) &org$frostlang$frostc$Compiler$TypeContext$class);
 _12 = (frost$core$Int) {3u};
 _13 = &param0->BIT_TYPE;
 _14 = *_13;
@@ -890,8 +882,7 @@ _53 = _52(_51, &$s36);
 *(&local3) = _53;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/statement/Assert.frost:52
 _56 = *(&local0);
-FROST_ASSERT(80 == sizeof(org$frostlang$frostc$IR$Statement));
-_57 = (org$frostlang$frostc$IR$Statement*) frostObjectAlloc(80, (frost$core$Class*) &org$frostlang$frostc$IR$Statement$class);
+_57 = (org$frostlang$frostc$IR$Statement*) frostObjectAlloc(sizeof(org$frostlang$frostc$IR$Statement), (frost$core$Class*) &org$frostlang$frostc$IR$Statement$class);
 _58 = (frost$core$Int) {5u};
 _59 = *(&local1);
 _60 = _59 != NULL;
@@ -937,12 +928,14 @@ frost$core$Frost$unref$frost$core$Object$Q(_95);
 return;
 
 }
-void org$frostlang$frostc$statement$Assert$init(org$frostlang$frostc$statement$Assert* param0) {
+void org$frostlang$frostc$statement$Assert$init(void* rawSelf) {
+org$frostlang$frostc$statement$Assert* param0 = (org$frostlang$frostc$statement$Assert*) rawSelf;
 
 return;
 
 }
-void org$frostlang$frostc$statement$Assert$cleanup(org$frostlang$frostc$statement$Assert* param0) {
+void org$frostlang$frostc$statement$Assert$cleanup(void* rawSelf) {
+org$frostlang$frostc$statement$Assert* param0 = (org$frostlang$frostc$statement$Assert*) rawSelf;
 
 frost$core$Object* _1;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/statement/Assert.frost:16

@@ -26,7 +26,8 @@ static frost$core$String $s3 = { (frost$core$Class*) &frost$core$String$class, -
 static frost$core$String $s5 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x56\x61\x72\x69\x61\x62\x6c\x65\x2e\x66\x72\x6f\x73\x74", 14, 4449036271541915161, NULL };
 static frost$core$String $s6 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x56\x61\x72\x69\x61\x62\x6c\x65\x2e\x69\x6e\x69\x74\x28\x70\x6f\x73\x69\x74\x69\x6f\x6e\x3a\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x50\x6f\x73\x69\x74\x69\x6f\x6e\x2c\x20\x6b\x69\x6e\x64\x3a\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x56\x61\x72\x69\x61\x62\x6c\x65\x2e\x4b\x69\x6e\x64\x2c\x20\x6e\x61\x6d\x65\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2c\x20\x74\x79\x70\x65\x3a\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x54\x79\x70\x65\x2c\x20\x73\x74\x6f\x72\x61\x67\x65\x3a\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x56\x61\x72\x69\x61\x62\x6c\x65\x2e\x53\x74\x6f\x72\x61\x67\x65\x29", 243, 8633673692106961677, NULL };
 
-void org$frostlang$frostc$Variable$init$org$frostlang$frostc$Position$org$frostlang$frostc$Variable$Kind$frost$core$String$org$frostlang$frostc$Type$org$frostlang$frostc$Variable$Storage(org$frostlang$frostc$Variable* param0, org$frostlang$frostc$Position param1, org$frostlang$frostc$Variable$Kind param2, frost$core$String* param3, org$frostlang$frostc$Type* param4, org$frostlang$frostc$Variable$Storage* param5) {
+void org$frostlang$frostc$Variable$init$org$frostlang$frostc$Position$org$frostlang$frostc$Variable$Kind$frost$core$String$org$frostlang$frostc$Type$org$frostlang$frostc$Variable$Storage(void* rawSelf, org$frostlang$frostc$Position param1, org$frostlang$frostc$Variable$Kind param2, frost$core$String* param3, org$frostlang$frostc$Type* param4, org$frostlang$frostc$Variable$Storage* param5) {
+org$frostlang$frostc$Variable* param0 = (org$frostlang$frostc$Variable*) rawSelf;
 
 org$frostlang$frostc$Symbol$Kind local0;
 org$frostlang$frostc$Symbol$Kind local1;
@@ -66,8 +67,7 @@ frost$core$Int* _54;
 org$frostlang$frostc$Symbol$Kind _56;
 org$frostlang$frostc$Symbol$Kind _59;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Variable.frost:28
-FROST_ASSERT(32 == sizeof(frost$core$Weak));
-_1 = (frost$core$Weak*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$Weak$class);
+_1 = (frost$core$Weak*) frostObjectAlloc(sizeof(frost$core$Weak), (frost$core$Class*) &frost$core$Weak$class);
 _2 = _1;
 _3 = ((frost$core$Object*) ((org$frostlang$frostc$MethodDecl*) NULL));
 frost$core$Weak$init$frost$core$Weak$T$Q(_2, _3);
@@ -135,7 +135,8 @@ org$frostlang$frostc$Symbol$init$org$frostlang$frostc$Symbol$Kind$org$frostlang$
 return;
 
 }
-frost$core$String* org$frostlang$frostc$Variable$get_asString$R$frost$core$String(org$frostlang$frostc$Variable* param0) {
+frost$core$String* org$frostlang$frostc$Variable$get_asString$R$frost$core$String(void* rawSelf) {
+org$frostlang$frostc$Variable* param0 = (org$frostlang$frostc$Variable*) rawSelf;
 
 org$frostlang$frostc$Symbol* _1;
 frost$core$String** _2;
@@ -150,7 +151,8 @@ frost$core$Frost$ref$frost$core$Object$Q(_4);
 return _3;
 
 }
-void org$frostlang$frostc$Variable$cleanup(org$frostlang$frostc$Variable* param0) {
+void org$frostlang$frostc$Variable$cleanup(void* rawSelf) {
+org$frostlang$frostc$Variable* param0 = (org$frostlang$frostc$Variable*) rawSelf;
 
 org$frostlang$frostc$Symbol* _1;
 org$frostlang$frostc$Type** _3;

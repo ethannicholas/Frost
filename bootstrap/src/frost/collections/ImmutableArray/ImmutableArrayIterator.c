@@ -28,7 +28,8 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 static frost$core$String $s6 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x49\x6d\x6d\x75\x74\x61\x62\x6c\x65\x41\x72\x72\x61\x79\x2e\x66\x72\x6f\x73\x74", 20, -9038773420437697548, NULL };
 static frost$core$String $s7 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x49\x6d\x6d\x75\x74\x61\x62\x6c\x65\x41\x72\x72\x61\x79\x2e\x49\x6d\x6d\x75\x74\x61\x62\x6c\x65\x41\x72\x72\x61\x79\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x6e\x65\x78\x74\x28\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x49\x6d\x6d\x75\x74\x61\x62\x6c\x65\x41\x72\x72\x61\x79\x2e\x49\x6d\x6d\x75\x74\x61\x62\x6c\x65\x41\x72\x72\x61\x79\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x54", 154, -7055647265229292788, NULL };
 
-void frost$collections$ImmutableArray$ImmutableArrayIterator$init$frost$collections$ImmutableArray$LTfrost$collections$ImmutableArray$ImmutableArrayIterator$T$GT(frost$collections$ImmutableArray$ImmutableArrayIterator* param0, frost$collections$ImmutableArray* param1) {
+void frost$collections$ImmutableArray$ImmutableArrayIterator$init$frost$collections$ImmutableArray$LTfrost$collections$ImmutableArray$ImmutableArrayIterator$T$GT(void* rawSelf, frost$collections$ImmutableArray* param1) {
+frost$collections$ImmutableArray$ImmutableArrayIterator* param0 = (frost$collections$ImmutableArray$ImmutableArrayIterator*) rawSelf;
 
 frost$collections$ImmutableArray$ImmutableArrayIterator* _1;
 frost$core$Int _2;
@@ -57,7 +58,8 @@ _13 = &_6->array;
 return;
 
 }
-frost$core$Bit frost$collections$ImmutableArray$ImmutableArrayIterator$get_done$R$frost$core$Bit(frost$collections$ImmutableArray$ImmutableArrayIterator* param0) {
+frost$core$Bit frost$collections$ImmutableArray$ImmutableArrayIterator$get_done$R$frost$core$Bit(void* rawSelf) {
+frost$collections$ImmutableArray$ImmutableArrayIterator* param0 = (frost$collections$ImmutableArray$ImmutableArrayIterator*) rawSelf;
 
 frost$collections$ImmutableArray$ImmutableArrayIterator* _1;
 frost$core$Int* _2;
@@ -95,7 +97,8 @@ _15 = (frost$core$Bit) {_14};
 return _15;
 
 }
-frost$core$Immutable* frost$collections$ImmutableArray$ImmutableArrayIterator$next$R$frost$collections$ImmutableArray$ImmutableArrayIterator$T(frost$collections$ImmutableArray$ImmutableArrayIterator* param0) {
+frost$core$Immutable* frost$collections$ImmutableArray$ImmutableArrayIterator$next$R$frost$collections$ImmutableArray$ImmutableArrayIterator$T(void* rawSelf) {
+frost$collections$ImmutableArray$ImmutableArrayIterator* param0 = (frost$collections$ImmutableArray$ImmutableArrayIterator*) rawSelf;
 
 frost$collections$Iterator* _0;
 $fn4 _1;
@@ -182,7 +185,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_42);
 return _39;
 
 }
-void frost$collections$ImmutableArray$ImmutableArrayIterator$cleanup(frost$collections$ImmutableArray$ImmutableArrayIterator* param0) {
+void frost$collections$ImmutableArray$ImmutableArrayIterator$cleanup(void* rawSelf) {
+frost$collections$ImmutableArray$ImmutableArrayIterator* param0 = (frost$collections$ImmutableArray$ImmutableArrayIterator*) rawSelf;
 
 frost$core$Object* _1;
 frost$collections$ImmutableArray$ImmutableArrayIterator* _3;

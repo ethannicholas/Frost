@@ -34,7 +34,8 @@ static frost$core$String $s17 = { (frost$core$Class*) &frost$core$String$class, 
 static frost$core$String $s18 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x43\x6f\x6e\x73\x6f\x6c\x65\x2e\x66\x72\x6f\x73\x74", 13, 397585341085301174, NULL };
 static frost$core$String $s19 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x43\x68\x61\x72\x38\x3f\x20\x74\x6f\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x43\x68\x61\x72\x38", 71, -5598996583363859745, NULL };
 
-void frost$io$Console$init(frost$io$Console* param0) {
+void frost$io$Console$init(void* rawSelf) {
+frost$io$Console* param0 = (frost$io$Console*) rawSelf;
 
 return;
 
@@ -197,8 +198,7 @@ frost$core$Object* _89;
 frost$core$MutableString* _91;
 frost$core$Object* _92;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/Console.frost:127
-FROST_ASSERT(48 == sizeof(frost$core$MutableString));
-_1 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
+_1 = (frost$core$MutableString*) frostObjectAlloc(sizeof(frost$core$MutableString), (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init(_1);
 *(&local0) = ((frost$core$MutableString*) NULL);
 _4 = ((frost$core$Object*) _1);
@@ -305,7 +305,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_92);
 return _86;
 
 }
-void frost$io$Console$cleanup(frost$io$Console* param0) {
+void frost$io$Console$cleanup(void* rawSelf) {
+frost$io$Console* param0 = (frost$io$Console*) rawSelf;
 
 frost$core$Object* _1;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/Console.frost:7

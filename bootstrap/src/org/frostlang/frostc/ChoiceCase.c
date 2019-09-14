@@ -26,7 +26,8 @@ static frost$core$String $s2 = { (frost$core$Class*) &frost$core$String$class, -
 static frost$core$String $s3 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2e", 1, -5808619545316717647, NULL };
 static frost$core$String $s4 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "", 0, -3750763034362895579, NULL };
 
-void org$frostlang$frostc$ChoiceCase$init$org$frostlang$frostc$ClassDecl$org$frostlang$frostc$Position$frost$core$String$frost$core$String$Q$frost$core$Int$frost$collections$ListView$LTorg$frostlang$frostc$Type$GT(org$frostlang$frostc$ChoiceCase* param0, org$frostlang$frostc$ClassDecl* param1, org$frostlang$frostc$Position param2, frost$core$String* param3, frost$core$String* param4, frost$core$Int param5, frost$collections$ListView* param6) {
+void org$frostlang$frostc$ChoiceCase$init$org$frostlang$frostc$ClassDecl$org$frostlang$frostc$Position$frost$core$String$frost$core$String$Q$frost$core$Int$frost$collections$ListView$LTorg$frostlang$frostc$Type$GT(void* rawSelf, org$frostlang$frostc$ClassDecl* param1, org$frostlang$frostc$Position param2, frost$core$String* param3, frost$core$String* param4, frost$core$Int param5, frost$collections$ListView* param6) {
+org$frostlang$frostc$ChoiceCase* param0 = (org$frostlang$frostc$ChoiceCase*) rawSelf;
 
 org$frostlang$frostc$Compiler$Resolution local0;
 org$frostlang$frostc$Compiler$Resolution local1;
@@ -78,8 +79,7 @@ frost$core$Int* _76;
 org$frostlang$frostc$Symbol$Kind _78;
 org$frostlang$frostc$Symbol$Kind _81;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/ChoiceCase.frost:15
-FROST_ASSERT(32 == sizeof(frost$core$Weak));
-_1 = (frost$core$Weak*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$Weak$class);
+_1 = (frost$core$Weak*) frostObjectAlloc(sizeof(frost$core$Weak), (frost$core$Class*) &frost$core$Weak$class);
 _2 = _1;
 _3 = ((frost$core$Object*) ((org$frostlang$frostc$MethodDecl*) NULL));
 frost$core$Weak$init$frost$core$Weak$T$Q(_2, _3);
@@ -105,8 +105,7 @@ _24 = *(&local0);
 _25 = &param0->resolved;
 *_25 = _24;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/ChoiceCase.frost:21
-FROST_ASSERT(32 == sizeof(frost$core$Weak));
-_28 = (frost$core$Weak*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$Weak$class);
+_28 = (frost$core$Weak*) frostObjectAlloc(sizeof(frost$core$Weak), (frost$core$Class*) &frost$core$Weak$class);
 _29 = _28;
 _30 = param1;
 _31 = ((frost$core$Object*) _30);
@@ -134,8 +133,7 @@ _50 = &param0->doccomment;
 _53 = &param0->rawValue;
 *_53 = param5;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/ChoiceCase.frost:24
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_56 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_56 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _57 = _56;
 _58 = ((frost$collections$CollectionView*) param6);
 _59 = _58;
@@ -164,7 +162,8 @@ org$frostlang$frostc$Symbol$init$org$frostlang$frostc$Symbol$Kind$org$frostlang$
 return;
 
 }
-frost$core$String* org$frostlang$frostc$ChoiceCase$get_asString$R$frost$core$String(org$frostlang$frostc$ChoiceCase* param0) {
+frost$core$String* org$frostlang$frostc$ChoiceCase$get_asString$R$frost$core$String(void* rawSelf) {
+org$frostlang$frostc$ChoiceCase* param0 = (org$frostlang$frostc$ChoiceCase*) rawSelf;
 
 frost$core$Weak** _1;
 frost$core$Weak* _2;
@@ -244,7 +243,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_47);
 return _36;
 
 }
-void org$frostlang$frostc$ChoiceCase$cleanup(org$frostlang$frostc$ChoiceCase* param0) {
+void org$frostlang$frostc$ChoiceCase$cleanup(void* rawSelf) {
+org$frostlang$frostc$ChoiceCase* param0 = (org$frostlang$frostc$ChoiceCase*) rawSelf;
 
 org$frostlang$frostc$Symbol* _1;
 frost$core$Weak** _3;

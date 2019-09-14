@@ -21,7 +21,8 @@ static frost$core$String $s3 = { (frost$core$Class*) &frost$core$String$class, -
 static frost$core$String $s4 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x3a", 1, -5808597555084153427, NULL };
 static frost$core$String $s6 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "", 0, -3750763034362895579, NULL };
 
-void org$frostlang$frostc$ClassDecl$GenericParameter$init$org$frostlang$frostc$Position$frost$core$String$frost$core$String$org$frostlang$frostc$Type(org$frostlang$frostc$ClassDecl$GenericParameter* param0, org$frostlang$frostc$Position param1, frost$core$String* param2, frost$core$String* param3, org$frostlang$frostc$Type* param4) {
+void org$frostlang$frostc$ClassDecl$GenericParameter$init$org$frostlang$frostc$Position$frost$core$String$frost$core$String$org$frostlang$frostc$Type(void* rawSelf, org$frostlang$frostc$Position param1, frost$core$String* param2, frost$core$String* param3, org$frostlang$frostc$Type* param4) {
+org$frostlang$frostc$ClassDecl$GenericParameter* param0 = (org$frostlang$frostc$ClassDecl$GenericParameter*) rawSelf;
 
 org$frostlang$frostc$Symbol$Kind local0;
 org$frostlang$frostc$Symbol$Kind local1;
@@ -72,7 +73,8 @@ org$frostlang$frostc$Symbol$init$org$frostlang$frostc$Symbol$Kind$org$frostlang$
 return;
 
 }
-frost$core$String* org$frostlang$frostc$ClassDecl$GenericParameter$get_asString$R$frost$core$String(org$frostlang$frostc$ClassDecl$GenericParameter* param0) {
+frost$core$String* org$frostlang$frostc$ClassDecl$GenericParameter$get_asString$R$frost$core$String(void* rawSelf) {
+org$frostlang$frostc$ClassDecl$GenericParameter* param0 = (org$frostlang$frostc$ClassDecl$GenericParameter*) rawSelf;
 
 frost$core$String** _1;
 frost$core$String* _2;
@@ -145,7 +147,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_42);
 return _29;
 
 }
-void org$frostlang$frostc$ClassDecl$GenericParameter$cleanup(org$frostlang$frostc$ClassDecl$GenericParameter* param0) {
+void org$frostlang$frostc$ClassDecl$GenericParameter$cleanup(void* rawSelf) {
+org$frostlang$frostc$ClassDecl$GenericParameter* param0 = (org$frostlang$frostc$ClassDecl$GenericParameter*) rawSelf;
 
 org$frostlang$frostc$Symbol* _1;
 frost$core$String** _3;

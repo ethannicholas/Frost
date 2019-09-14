@@ -156,7 +156,7 @@ frost$core$Object* _43;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/pass/Analyzer.frost:208
 _1 = param0.id;
 org$frostlang$frostc$IR$Block$ID$wrapper* $tmp5;
-$tmp5 = (org$frostlang$frostc$IR$Block$ID$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$IR$Block$ID$wrapperclass);
+$tmp5 = (org$frostlang$frostc$IR$Block$ID$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$IR$Block$ID$wrapper), (frost$core$Class*) &org$frostlang$frostc$IR$Block$ID$wrapperclass);
 $tmp5->value = _1;
 _2 = ((frost$core$Object*) $tmp5);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Analyzer.frost:208:20
@@ -173,7 +173,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_12);
 _15 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_7, &$s8);
 _16 = param0.exit;
 frost$core$Int$wrapper* $tmp9;
-$tmp9 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp9 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp9->value = _16;
 _17 = ((frost$core$Object*) $tmp9);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Analyzer.frost:208:20

@@ -73,7 +73,8 @@ static frost$core$String $s18 = { (frost$core$Class*) &frost$core$String$class, 
 static frost$core$String $s19 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x4c\x69\x73\x74\x2e\x66\x72\x6f\x73\x74", 10, 5900027631537538501, NULL };
 static frost$core$String $s20 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x3f\x20\x74\x6f\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74", 67, 6831135569071847533, NULL };
 
-void frost$collections$List$$IDXEQ$frost$core$Range$LTfrost$core$Int$GT$frost$collections$ListView$LTfrost$collections$List$T$GT(frost$collections$List* param0, frost$core$Range$LTfrost$core$Int$GT param1, frost$collections$ListView* param2) {
+void frost$collections$List$$IDXEQ$frost$core$Range$LTfrost$core$Int$GT$frost$collections$ListView$LTfrost$collections$List$T$GT(void* rawSelf, frost$core$Range$LTfrost$core$Int$GT param1, frost$collections$ListView* param2) {
+frost$collections$List* param0 = (frost$collections$List*) rawSelf;
 
 frost$core$Int local0;
 frost$core$Int local1;
@@ -436,7 +437,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_183);
 return;
 
 }
-void frost$collections$List$$IDXEQ$frost$core$Range$LTfrost$core$Int$Q$GT$frost$collections$ListView$LTfrost$collections$List$T$GT(frost$collections$List* param0, frost$core$Range$LTfrost$core$Int$Q$GT param1, frost$collections$ListView* param2) {
+void frost$collections$List$$IDXEQ$frost$core$Range$LTfrost$core$Int$Q$GT$frost$collections$ListView$LTfrost$collections$List$T$GT(void* rawSelf, frost$core$Range$LTfrost$core$Int$Q$GT param1, frost$collections$ListView* param2) {
+frost$collections$List* param0 = (frost$collections$List*) rawSelf;
 
 frost$core$Int$nullable local0;
 frost$core$Int$nullable local1;
@@ -545,7 +547,8 @@ _52(_31, _51, param2);
 return;
 
 }
-void frost$collections$List$filterInPlace$$LPfrost$collections$List$T$RP$EQ$GT$LPfrost$core$Bit$RP(frost$collections$List* param0, frost$core$MutableMethod* param1) {
+void frost$collections$List$filterInPlace$$LPfrost$collections$List$T$RP$EQ$GT$LPfrost$core$Bit$RP(void* rawSelf, frost$core$MutableMethod* param1) {
+frost$collections$List* param0 = (frost$collections$List*) rawSelf;
 
 frost$core$Int local0;
 frost$core$Bit local1;
@@ -831,7 +834,8 @@ block3:;
 return;
 
 }
-void frost$collections$List$sortInPlace$$LPfrost$collections$List$T$Cfrost$collections$List$T$RP$EQ$GT$LPfrost$core$Bit$RP(frost$collections$List* param0, frost$core$MutableMethod* param1) {
+void frost$collections$List$sortInPlace$$LPfrost$collections$List$T$Cfrost$collections$List$T$RP$EQ$GT$LPfrost$core$Bit$RP(void* rawSelf, frost$core$MutableMethod* param1) {
+frost$collections$List* param0 = (frost$collections$List*) rawSelf;
 
 frost$collections$List* _1;
 frost$core$MutableMethod* _2;

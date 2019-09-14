@@ -148,7 +148,8 @@ static frost$core$String $s90 = { (frost$core$Class*) &frost$core$String$class, 
 static frost$core$String $s91 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2c\x20", 2, 563935148934614481, NULL };
 static frost$core$String $s92 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x7d", 1, -5808534882921345400, NULL };
 
-void frost$collections$IdentityMap$init(frost$collections$IdentityMap* param0) {
+void frost$collections$IdentityMap$init(void* rawSelf) {
+frost$collections$IdentityMap* param0 = (frost$collections$IdentityMap*) rawSelf;
 
 frost$core$Int local0;
 frost$collections$IdentityMap* _1;
@@ -274,7 +275,7 @@ _29 = &_28->bucketCount;
 _30 = *_29;
 _31 = frost$core$Int64$init$frost$core$Int(_30);
 _32 = _31.value;
-_33 = ((frost$collections$IdentityMap$Entry**) frostAlloc(_32 * 8));
+_33 = ((frost$collections$IdentityMap$Entry**) frostAlloc(_32 * sizeof(frost$collections$IdentityMap$Entry*)));
 _34 = &_27->contents;
 *_34 = _33;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/IdentityMap.frost:99
@@ -367,7 +368,8 @@ _115 = &_101->threshold;
 return;
 
 }
-void frost$collections$IdentityMap$cleanup(frost$collections$IdentityMap* param0) {
+void frost$collections$IdentityMap$cleanup(void* rawSelf) {
+frost$collections$IdentityMap* param0 = (frost$collections$IdentityMap*) rawSelf;
 
 frost$core$Int local0;
 frost$core$Int _1;
@@ -525,7 +527,8 @@ frost$core$Object$cleanup(_80);
 return;
 
 }
-frost$core$Int frost$collections$IdentityMap$indexFor$frost$collections$IdentityMap$K$R$frost$core$Int(frost$collections$IdentityMap* param0, frost$core$Object* param1) {
+frost$core$Int frost$collections$IdentityMap$indexFor$frost$collections$IdentityMap$K$R$frost$core$Int(void* rawSelf, frost$core$Object* param1) {
+frost$collections$IdentityMap* param0 = (frost$collections$IdentityMap*) rawSelf;
 
 frost$core$Object* _1;
 frost$core$Int _2;
@@ -551,7 +554,8 @@ _11 = (frost$core$Int) {_10};
 return _11;
 
 }
-frost$core$Object* frost$collections$IdentityMap$$IDX$frost$collections$IdentityMap$K$R$frost$collections$IdentityMap$V$Q(frost$collections$IdentityMap* param0, frost$core$Object* param1) {
+frost$core$Object* frost$collections$IdentityMap$$IDX$frost$collections$IdentityMap$K$R$frost$collections$IdentityMap$V$Q(void* rawSelf, frost$core$Object* param1) {
+frost$collections$IdentityMap* param0 = (frost$collections$IdentityMap*) rawSelf;
 
 frost$core$Int local0;
 frost$collections$IdentityMap$Entry* local1 = NULL;
@@ -748,7 +752,8 @@ goto block16;
 block16:;
 
 }
-frost$core$Bit frost$collections$IdentityMap$contains$frost$collections$IdentityMap$K$R$frost$core$Bit(frost$collections$IdentityMap* param0, frost$core$Object* param1) {
+frost$core$Bit frost$collections$IdentityMap$contains$frost$collections$IdentityMap$K$R$frost$core$Bit(void* rawSelf, frost$core$Object* param1) {
+frost$collections$IdentityMap* param0 = (frost$collections$IdentityMap*) rawSelf;
 
 frost$core$Int local0;
 frost$collections$IdentityMap$Entry* local1 = NULL;
@@ -896,7 +901,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_80);
 return _78;
 
 }
-void frost$collections$IdentityMap$$IDXEQ$frost$collections$IdentityMap$K$frost$collections$IdentityMap$V(frost$collections$IdentityMap* param0, frost$core$Object* param1, frost$core$Object* param2) {
+void frost$collections$IdentityMap$$IDXEQ$frost$collections$IdentityMap$K$frost$collections$IdentityMap$V(void* rawSelf, frost$core$Object* param1, frost$core$Object* param2) {
+frost$collections$IdentityMap* param0 = (frost$collections$IdentityMap*) rawSelf;
 
 frost$core$Int local0;
 frost$collections$IdentityMap$Entry* local1 = NULL;
@@ -1145,8 +1151,7 @@ _104 = ((frost$core$Object*) _103);
 frost$core$Frost$unref$frost$core$Object$Q(_104);
 *(&local2) = _99;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/IdentityMap.frost:158
-FROST_ASSERT(40 == sizeof(frost$collections$IdentityMap$Entry));
-_108 = (frost$collections$IdentityMap$Entry*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$IdentityMap$Entry$class);
+_108 = (frost$collections$IdentityMap$Entry*) frostObjectAlloc(sizeof(frost$collections$IdentityMap$Entry), (frost$core$Class*) &frost$collections$IdentityMap$Entry$class);
 _109 = _108;
 _110 = param1;
 _111 = param2;
@@ -1254,7 +1259,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_205);
 return;
 
 }
-void frost$collections$IdentityMap$remove$frost$collections$IdentityMap$K(frost$collections$IdentityMap* param0, frost$core$Object* param1) {
+void frost$collections$IdentityMap$remove$frost$collections$IdentityMap$K(void* rawSelf, frost$core$Object* param1) {
+frost$collections$IdentityMap* param0 = (frost$collections$IdentityMap*) rawSelf;
 
 frost$core$Int local0;
 frost$collections$IdentityMap$Entry* local1 = NULL;
@@ -1753,7 +1759,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_292);
 return;
 
 }
-void frost$collections$IdentityMap$clear(frost$collections$IdentityMap* param0) {
+void frost$collections$IdentityMap$clear(void* rawSelf) {
+frost$collections$IdentityMap* param0 = (frost$collections$IdentityMap*) rawSelf;
 
 frost$core$Int local0;
 frost$core$Int local1;
@@ -2030,7 +2037,7 @@ _103 = &_102->bucketCount;
 _104 = *_103;
 _105 = frost$core$Int64$init$frost$core$Int(_104);
 _106 = _105.value;
-_107 = ((frost$collections$IdentityMap$Entry**) frostAlloc(_106 * 8));
+_107 = ((frost$collections$IdentityMap$Entry**) frostAlloc(_106 * sizeof(frost$collections$IdentityMap$Entry*)));
 _108 = &_101->contents;
 *_108 = _107;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/IdentityMap.frost:215
@@ -2138,7 +2145,8 @@ _202 = &_188->threshold;
 return;
 
 }
-void frost$collections$IdentityMap$incrementCount(frost$collections$IdentityMap* param0) {
+void frost$collections$IdentityMap$incrementCount(void* rawSelf) {
+frost$collections$IdentityMap* param0 = (frost$collections$IdentityMap*) rawSelf;
 
 frost$collections$IdentityMap$Entry** local0;
 frost$core$Int local1;
@@ -2439,7 +2447,7 @@ _48 = &_47->bucketCount;
 _49 = *_48;
 _50 = frost$core$Int64$init$frost$core$Int(_49);
 _51 = _50.value;
-_52 = ((frost$collections$IdentityMap$Entry**) frostAlloc(_51 * 8));
+_52 = ((frost$collections$IdentityMap$Entry**) frostAlloc(_51 * sizeof(frost$collections$IdentityMap$Entry*)));
 _53 = &_46->contents;
 *_53 = _52;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/IdentityMap.frost:231
@@ -2747,7 +2755,8 @@ block2:;
 return;
 
 }
-frost$core$Int frost$collections$IdentityMap$get_count$R$frost$core$Int(frost$collections$IdentityMap* param0) {
+frost$core$Int frost$collections$IdentityMap$get_count$R$frost$core$Int(void* rawSelf) {
+frost$collections$IdentityMap* param0 = (frost$collections$IdentityMap*) rawSelf;
 
 frost$collections$IdentityMap* _1;
 frost$core$Int* _2;
@@ -2759,7 +2768,8 @@ _3 = *_2;
 return _3;
 
 }
-frost$collections$Iterator* frost$collections$IdentityMap$get_entries$R$frost$collections$Iterator$LT$LPfrost$collections$IdentityMap$K$Cfrost$collections$IdentityMap$V$RP$GT(frost$collections$IdentityMap* param0) {
+frost$collections$Iterator* frost$collections$IdentityMap$get_entries$R$frost$collections$Iterator$LT$LPfrost$collections$IdentityMap$K$Cfrost$collections$IdentityMap$V$RP$GT(void* rawSelf) {
+frost$collections$IdentityMap* param0 = (frost$collections$IdentityMap*) rawSelf;
 
 frost$collections$IdentityMap$EntryIterator* _1;
 frost$collections$IdentityMap$EntryIterator* _2;
@@ -2768,8 +2778,7 @@ frost$collections$Iterator* _5;
 frost$core$Object* _6;
 frost$core$Object* _8;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/IdentityMap.frost:259
-FROST_ASSERT(40 == sizeof(frost$collections$IdentityMap$EntryIterator));
-_1 = (frost$collections$IdentityMap$EntryIterator*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$IdentityMap$EntryIterator$class);
+_1 = (frost$collections$IdentityMap$EntryIterator*) frostObjectAlloc(sizeof(frost$collections$IdentityMap$EntryIterator), (frost$core$Class*) &frost$collections$IdentityMap$EntryIterator$class);
 _2 = _1;
 _3 = param0;
 frost$collections$IdentityMap$EntryIterator$init$frost$collections$IdentityMap$LTfrost$collections$IdentityMap$EntryIterator$K$Cfrost$collections$IdentityMap$EntryIterator$V$GT(_2, _3);
@@ -2781,7 +2790,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_8);
 return _5;
 
 }
-void frost$collections$IdentityMap$filterInPlace$$LPfrost$collections$IdentityMap$K$Cfrost$collections$IdentityMap$V$RP$EQ$GT$LPfrost$core$Bit$RP(frost$collections$IdentityMap* param0, frost$core$MutableMethod* param1) {
+void frost$collections$IdentityMap$filterInPlace$$LPfrost$collections$IdentityMap$K$Cfrost$collections$IdentityMap$V$RP$EQ$GT$LPfrost$core$Bit$RP(void* rawSelf, frost$core$MutableMethod* param1) {
+frost$collections$IdentityMap* param0 = (frost$collections$IdentityMap*) rawSelf;
 
 frost$core$Int local0;
 frost$collections$IdentityMap$Entry* local1 = NULL;
@@ -3293,7 +3303,8 @@ block2:;
 return;
 
 }
-frost$core$String* frost$collections$IdentityMap$get_asString$R$frost$core$String(frost$collections$IdentityMap* param0) {
+frost$core$String* frost$collections$IdentityMap$get_asString$R$frost$core$String(void* rawSelf) {
+frost$collections$IdentityMap* param0 = (frost$collections$IdentityMap*) rawSelf;
 
 frost$core$MutableString* local0 = NULL;
 frost$core$String* local1 = NULL;
@@ -3444,8 +3455,7 @@ frost$core$Object* _235;
 frost$core$MutableString* _238;
 frost$core$Object* _239;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/IdentityMap.frost:288
-FROST_ASSERT(48 == sizeof(frost$core$MutableString));
-_1 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
+_1 = (frost$core$MutableString*) frostObjectAlloc(sizeof(frost$core$MutableString), (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init(_1);
 *(&local0) = ((frost$core$MutableString*) NULL);
 _4 = ((frost$core$Object*) _1);

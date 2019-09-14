@@ -38,7 +38,8 @@ static frost$core$String $s16 = { (frost$core$Class*) &frost$core$String$class, 
 static frost$core$String $s19 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x41\x72\x72\x61\x79\x2e\x66\x72\x6f\x73\x74", 11, -1919842861654168654, NULL };
 static frost$core$String $s20 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x5b\x5d\x28\x69\x6e\x64\x65\x78\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x54", 108, 4065685528380894665, NULL };
 
-void frost$collections$Stack$StackIterator$init$frost$collections$Stack$LTfrost$collections$Stack$StackIterator$T$GT(frost$collections$Stack$StackIterator* param0, frost$collections$Stack* param1) {
+void frost$collections$Stack$StackIterator$init$frost$collections$Stack$LTfrost$collections$Stack$StackIterator$T$GT(void* rawSelf, frost$collections$Stack* param1) {
+frost$collections$Stack$StackIterator* param0 = (frost$collections$Stack$StackIterator*) rawSelf;
 
 frost$collections$Stack$StackIterator* _1;
 frost$core$Int _2;
@@ -67,7 +68,8 @@ _13 = &_6->stack;
 return;
 
 }
-frost$core$Bit frost$collections$Stack$StackIterator$get_done$R$frost$core$Bit(frost$collections$Stack$StackIterator* param0) {
+frost$core$Bit frost$collections$Stack$StackIterator$get_done$R$frost$core$Bit(void* rawSelf) {
+frost$collections$Stack$StackIterator* param0 = (frost$collections$Stack$StackIterator*) rawSelf;
 
 frost$collections$Stack$StackIterator* _1;
 frost$core$Int* _2;
@@ -111,7 +113,8 @@ _19 = (frost$core$Bit) {_18};
 return _19;
 
 }
-frost$core$Object* frost$collections$Stack$StackIterator$next$R$frost$collections$Stack$StackIterator$T(frost$collections$Stack$StackIterator* param0) {
+frost$core$Object* frost$collections$Stack$StackIterator$next$R$frost$collections$Stack$StackIterator$T(void* rawSelf) {
+frost$collections$Stack$StackIterator* param0 = (frost$collections$Stack$StackIterator*) rawSelf;
 
 frost$core$Object* local0 = NULL;
 frost$collections$Iterator* _0;
@@ -389,7 +392,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_141);
 return _137;
 
 }
-void frost$collections$Stack$StackIterator$cleanup(frost$collections$Stack$StackIterator* param0) {
+void frost$collections$Stack$StackIterator$cleanup(void* rawSelf) {
+frost$collections$Stack$StackIterator* param0 = (frost$collections$Stack$StackIterator*) rawSelf;
 
 frost$core$Object* _1;
 frost$collections$Stack$StackIterator* _3;

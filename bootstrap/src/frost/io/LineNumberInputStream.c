@@ -21,7 +21,8 @@ static frost$core$String $s5 = { (frost$core$Class*) &frost$core$String$class, -
 static frost$core$String $s6 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x4c\x69\x6e\x65\x4e\x75\x6d\x62\x65\x72\x49\x6e\x70\x75\x74\x53\x74\x72\x65\x61\x6d\x2e\x66\x72\x6f\x73\x74", 27, -4697261567984210418, NULL };
 static frost$core$String $s7 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x55\x49\x6e\x74\x38\x3f\x20\x74\x6f\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x55\x49\x6e\x74\x38", 71, 6614696324120396559, NULL };
 
-void frost$io$LineNumberInputStream$init$frost$io$InputStream(frost$io$LineNumberInputStream* param0, frost$io$InputStream* param1) {
+void frost$io$LineNumberInputStream$init$frost$io$InputStream(void* rawSelf, frost$io$InputStream* param1) {
+frost$io$LineNumberInputStream* param0 = (frost$io$LineNumberInputStream*) rawSelf;
 
 frost$core$Int _1;
 frost$core$Int* _2;
@@ -62,7 +63,8 @@ frost$io$InputStream$init(_22);
 return;
 
 }
-frost$core$UInt8$nullable frost$io$LineNumberInputStream$read$R$frost$core$UInt8$Q(frost$io$LineNumberInputStream* param0) {
+frost$core$UInt8$nullable frost$io$LineNumberInputStream$read$R$frost$core$UInt8$Q(void* rawSelf) {
+frost$io$LineNumberInputStream* param0 = (frost$io$LineNumberInputStream*) rawSelf;
 
 frost$core$UInt8$nullable local0;
 frost$io$InputStream** _1;
@@ -254,7 +256,8 @@ _106 = *(&local0);
 return _106;
 
 }
-void frost$io$LineNumberInputStream$cleanup(frost$io$LineNumberInputStream* param0) {
+void frost$io$LineNumberInputStream$cleanup(void* rawSelf) {
+frost$io$LineNumberInputStream* param0 = (frost$io$LineNumberInputStream*) rawSelf;
 
 frost$io$InputStream* _1;
 frost$io$InputStream** _3;

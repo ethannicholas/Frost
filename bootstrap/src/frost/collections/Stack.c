@@ -54,7 +54,8 @@ static frost$core$String $s33 = { (frost$core$Class*) &frost$core$String$class, 
 static frost$core$String $s36 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x41\x72\x72\x61\x79\x2e\x66\x72\x6f\x73\x74", 11, -1919842861654168654, NULL };
 static frost$core$String $s37 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x6f\x73\x74\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x63\x6c\x65\x61\x72\x28\x29", 64, -2314003985062190716, NULL };
 
-void frost$collections$Stack$push$frost$collections$Stack$T(frost$collections$Stack* param0, frost$core$Object* param1) {
+void frost$collections$Stack$push$frost$collections$Stack$T(void* rawSelf, frost$core$Object* param1) {
+frost$collections$Stack* param0 = (frost$collections$Stack*) rawSelf;
 
 frost$collections$Stack* _1;
 frost$collections$Array** _2;
@@ -71,7 +72,8 @@ frost$collections$Array$add$frost$collections$Array$T(_4, _5);
 return;
 
 }
-frost$core$Object* frost$collections$Stack$pop$R$frost$collections$Stack$T(frost$collections$Stack* param0) {
+frost$core$Object* frost$collections$Stack$pop$R$frost$collections$Stack$T(void* rawSelf) {
+frost$collections$Stack* param0 = (frost$collections$Stack*) rawSelf;
 
 frost$core$Object* local0 = NULL;
 frost$collections$Stack* _0;
@@ -310,7 +312,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_116);
 return _112;
 
 }
-void frost$collections$Stack$insert$frost$core$Int$frost$collections$Stack$T(frost$collections$Stack* param0, frost$core$Int param1, frost$core$Object* param2) {
+void frost$collections$Stack$insert$frost$core$Int$frost$collections$Stack$T(void* rawSelf, frost$core$Int param1, frost$core$Object* param2) {
+frost$collections$Stack* param0 = (frost$collections$Stack*) rawSelf;
 
 frost$collections$Stack* _1;
 frost$collections$Array** _2;
@@ -361,7 +364,8 @@ frost$collections$Array$insert$frost$core$Int$frost$collections$Array$T(_4, _19,
 return;
 
 }
-frost$core$Object* frost$collections$Stack$removeIndex$frost$core$Int$R$frost$collections$Stack$T(frost$collections$Stack* param0, frost$core$Int param1) {
+frost$core$Object* frost$collections$Stack$removeIndex$frost$core$Int$R$frost$collections$Stack$T(void* rawSelf, frost$core$Int param1) {
+frost$collections$Stack* param0 = (frost$collections$Stack*) rawSelf;
 
 frost$collections$Stack* _1;
 frost$collections$Array** _2;
@@ -419,7 +423,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_24);
 return _21;
 
 }
-frost$core$Object* frost$collections$Stack$$IDX$frost$core$Int$R$frost$collections$Stack$T(frost$collections$Stack* param0, frost$core$Int param1) {
+frost$core$Object* frost$collections$Stack$$IDX$frost$core$Int$R$frost$collections$Stack$T(void* rawSelf, frost$core$Int param1) {
+frost$collections$Stack* param0 = (frost$collections$Stack*) rawSelf;
 
 frost$core$Int _0;
 int64_t _1;
@@ -614,7 +619,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_93);
 return _90;
 
 }
-void frost$collections$Stack$clear(frost$collections$Stack* param0) {
+void frost$collections$Stack$clear(void* rawSelf) {
+frost$collections$Stack* param0 = (frost$collections$Stack*) rawSelf;
 
 frost$core$Int local0;
 frost$collections$Stack* _1;
@@ -779,7 +785,8 @@ frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$St
 abort(); // unreachable
 
 }
-frost$collections$Iterator* frost$collections$Stack$get_iterator$R$frost$collections$Iterator$LTfrost$collections$Stack$T$GT(frost$collections$Stack* param0) {
+frost$collections$Iterator* frost$collections$Stack$get_iterator$R$frost$collections$Iterator$LTfrost$collections$Stack$T$GT(void* rawSelf) {
+frost$collections$Stack* param0 = (frost$collections$Stack*) rawSelf;
 
 frost$collections$Stack$StackIterator* _1;
 frost$collections$Stack$StackIterator* _2;
@@ -788,8 +795,7 @@ frost$collections$Iterator* _5;
 frost$core$Object* _6;
 frost$core$Object* _8;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Stack.frost:89
-FROST_ASSERT(32 == sizeof(frost$collections$Stack$StackIterator));
-_1 = (frost$collections$Stack$StackIterator*) frostObjectAlloc(32, (frost$core$Class*) &frost$collections$Stack$StackIterator$class);
+_1 = (frost$collections$Stack$StackIterator*) frostObjectAlloc(sizeof(frost$collections$Stack$StackIterator), (frost$core$Class*) &frost$collections$Stack$StackIterator$class);
 _2 = _1;
 _3 = param0;
 frost$collections$Stack$StackIterator$init$frost$collections$Stack$LTfrost$collections$Stack$StackIterator$T$GT(_2, _3);
@@ -801,7 +807,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_8);
 return _5;
 
 }
-frost$core$Int frost$collections$Stack$get_count$R$frost$core$Int(frost$collections$Stack* param0) {
+frost$core$Int frost$collections$Stack$get_count$R$frost$core$Int(void* rawSelf) {
+frost$collections$Stack* param0 = (frost$collections$Stack*) rawSelf;
 
 frost$collections$Stack* _1;
 frost$collections$Array** _2;
@@ -823,7 +830,8 @@ _6 = _5(_4);
 return _6;
 
 }
-frost$core$String* frost$collections$Stack$get_asString$R$frost$core$String(frost$collections$Stack* param0) {
+frost$core$String* frost$collections$Stack$get_asString$R$frost$core$String(void* rawSelf) {
+frost$collections$Stack* param0 = (frost$collections$Stack*) rawSelf;
 
 frost$collections$Stack* _1;
 frost$collections$Array** _2;
@@ -847,7 +855,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_9);
 return _6;
 
 }
-void frost$collections$Stack$init(frost$collections$Stack* param0) {
+void frost$collections$Stack$init(void* rawSelf) {
+frost$collections$Stack* param0 = (frost$collections$Stack*) rawSelf;
 
 frost$collections$Stack* _1;
 frost$collections$Array* _2;
@@ -860,8 +869,7 @@ frost$collections$Array** _11;
 frost$core$Object* _13;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Stack.frost:34
 _1 = param0;
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_2 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_2 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _3 = _2;
 frost$collections$Array$init(_3);
 _5 = ((frost$core$Object*) _2);
@@ -877,7 +885,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_13);
 return;
 
 }
-void frost$collections$Stack$cleanup(frost$collections$Stack* param0) {
+void frost$collections$Stack$cleanup(void* rawSelf) {
+frost$collections$Stack* param0 = (frost$collections$Stack*) rawSelf;
 
 frost$core$Object* _1;
 frost$collections$Stack* _3;

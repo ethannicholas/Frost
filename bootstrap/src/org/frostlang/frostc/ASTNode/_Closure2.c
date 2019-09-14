@@ -14,7 +14,8 @@ typedef frost$core$String* (*$fn3)(frost$core$Object*);
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x41\x53\x54\x4e\x6f\x64\x65\x2e\x5f\x43\x6c\x6f\x73\x75\x72\x65\x32", 38, 7134155981402944006, NULL };
 
-void org$frostlang$frostc$ASTNode$_Closure2$init$frost$core$MutableString(org$frostlang$frostc$ASTNode$_Closure2* param0, frost$core$MutableString* param1) {
+void org$frostlang$frostc$ASTNode$_Closure2$init$frost$core$MutableString(void* rawSelf, frost$core$MutableString* param1) {
+org$frostlang$frostc$ASTNode$_Closure2* param0 = (org$frostlang$frostc$ASTNode$_Closure2*) rawSelf;
 
 frost$core$Object* _1;
 frost$core$MutableString** _3;
@@ -33,7 +34,8 @@ _7 = &param0->$dummy2;
 return;
 
 }
-void org$frostlang$frostc$ASTNode$_Closure2$cleanup(org$frostlang$frostc$ASTNode$_Closure2* param0) {
+void org$frostlang$frostc$ASTNode$_Closure2$cleanup(void* rawSelf) {
+org$frostlang$frostc$ASTNode$_Closure2* param0 = (org$frostlang$frostc$ASTNode$_Closure2*) rawSelf;
 
 frost$core$Object* _1;
 frost$core$MutableString** _3;
@@ -49,7 +51,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_5);
 return;
 
 }
-void org$frostlang$frostc$ASTNode$_Closure2$$anonymous1$frost$core$Object(org$frostlang$frostc$ASTNode$_Closure2* param0, frost$core$Object* param1) {
+void org$frostlang$frostc$ASTNode$_Closure2$$anonymous1$frost$core$Object(void* rawSelf, frost$core$Object* param1) {
+org$frostlang$frostc$ASTNode$_Closure2* param0 = (org$frostlang$frostc$ASTNode$_Closure2*) rawSelf;
 
 frost$core$MutableString** _1;
 frost$core$MutableString* _2;

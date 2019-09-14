@@ -30,7 +30,8 @@ typedef frost$core$Int (*$fn6)(frost$collections$HashKey*);
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x43\x6f\x6d\x70\x69\x6c\x65\x72\x2e\x43\x6f\x65\x72\x63\x69\x6f\x6e\x4b\x65\x79", 41, -6870882282179802560, NULL };
 
-void org$frostlang$frostc$Compiler$CoercionKey$init$org$frostlang$frostc$ASTNode$org$frostlang$frostc$Type(org$frostlang$frostc$Compiler$CoercionKey* param0, org$frostlang$frostc$ASTNode* param1, org$frostlang$frostc$Type* param2) {
+void org$frostlang$frostc$Compiler$CoercionKey$init$org$frostlang$frostc$ASTNode$org$frostlang$frostc$Type(void* rawSelf, org$frostlang$frostc$ASTNode* param1, org$frostlang$frostc$Type* param2) {
+org$frostlang$frostc$Compiler$CoercionKey* param0 = (org$frostlang$frostc$Compiler$CoercionKey*) rawSelf;
 
 frost$core$Object* _1;
 org$frostlang$frostc$ASTNode** _3;
@@ -63,7 +64,8 @@ _16 = &param0->target;
 return;
 
 }
-frost$core$Bit org$frostlang$frostc$Compiler$CoercionKey$$EQ$org$frostlang$frostc$Compiler$CoercionKey$R$frost$core$Bit(org$frostlang$frostc$Compiler$CoercionKey* param0, org$frostlang$frostc$Compiler$CoercionKey* param1) {
+frost$core$Bit org$frostlang$frostc$Compiler$CoercionKey$$EQ$org$frostlang$frostc$Compiler$CoercionKey$R$frost$core$Bit(void* rawSelf, org$frostlang$frostc$Compiler$CoercionKey* param1) {
+org$frostlang$frostc$Compiler$CoercionKey* param0 = (org$frostlang$frostc$Compiler$CoercionKey*) rawSelf;
 
 frost$core$Bit local0;
 frost$core$Bit local1;
@@ -128,14 +130,14 @@ block5:;
 _24 = &_10->typeKind;
 _25 = *_24;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp3;
-$tmp3 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp3 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp3->value = _25;
 _26 = ((frost$core$Equatable*) $tmp3);
 _27 = _26;
 _28 = &_12->typeKind;
 _29 = *_28;
 org$frostlang$frostc$Type$Kind$wrapper* $tmp4;
-$tmp4 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
+$tmp4 = (org$frostlang$frostc$Type$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$frostc$Type$Kind$wrapper), (frost$core$Class*) &org$frostlang$frostc$Type$Kind$wrapperclass);
 $tmp4->value = _29;
 _30 = ((frost$core$Equatable*) $tmp4);
 ITable* $tmp5 = _27->$class->itable;
@@ -165,7 +167,8 @@ _47 = *(&local0);
 return _47;
 
 }
-frost$core$Int org$frostlang$frostc$Compiler$CoercionKey$get_hash$R$frost$core$Int(org$frostlang$frostc$Compiler$CoercionKey* param0) {
+frost$core$Int org$frostlang$frostc$Compiler$CoercionKey$get_hash$R$frost$core$Int(void* rawSelf) {
+org$frostlang$frostc$Compiler$CoercionKey* param0 = (org$frostlang$frostc$Compiler$CoercionKey*) rawSelf;
 
 org$frostlang$frostc$ASTNode** _1;
 org$frostlang$frostc$ASTNode* _2;
@@ -203,7 +206,8 @@ _15 = (frost$core$Int) {_14};
 return _15;
 
 }
-void org$frostlang$frostc$Compiler$CoercionKey$cleanup(org$frostlang$frostc$Compiler$CoercionKey* param0) {
+void org$frostlang$frostc$Compiler$CoercionKey$cleanup(void* rawSelf) {
+org$frostlang$frostc$Compiler$CoercionKey* param0 = (org$frostlang$frostc$Compiler$CoercionKey*) rawSelf;
 
 frost$core$Object* _1;
 org$frostlang$frostc$ASTNode** _3;

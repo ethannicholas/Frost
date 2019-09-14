@@ -20,7 +20,8 @@ frost$threads$Thread$class_type frost$threads$Thread$class = { (frost$core$Class
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x74\x68\x72\x65\x61\x64\x73\x2e\x54\x68\x72\x65\x61\x64", 20, 8775502690324861764, NULL };
 
-void frost$threads$Thread$init(frost$threads$Thread* param0) {
+void frost$threads$Thread$init(void* rawSelf) {
+frost$threads$Thread* param0 = (frost$threads$Thread*) rawSelf;
 
 return;
 
@@ -40,8 +41,7 @@ frost$core$Object* _19;
 frost$threads$Thread* _21;
 frost$core$Object* _22;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/threads/Thread.frost:50
-FROST_ASSERT(24 == sizeof(frost$threads$Thread));
-_1 = (frost$threads$Thread*) frostObjectAlloc(24, (frost$core$Class*) &frost$threads$Thread$class);
+_1 = (frost$threads$Thread*) frostObjectAlloc(sizeof(frost$threads$Thread), (frost$core$Class*) &frost$threads$Thread$class);
 // begin inline call to frost.threads.Thread.init() from Thread.frost:50:29
 *(&local0) = ((frost$threads$Thread*) NULL);
 _5 = ((frost$core$Object*) _1);
@@ -83,8 +83,7 @@ frost$core$Object* _20;
 frost$threads$Thread* _22;
 frost$core$Object* _23;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/threads/Thread.frost:57
-FROST_ASSERT(24 == sizeof(frost$threads$Thread));
-_1 = (frost$threads$Thread*) frostObjectAlloc(24, (frost$core$Class*) &frost$threads$Thread$class);
+_1 = (frost$threads$Thread*) frostObjectAlloc(sizeof(frost$threads$Thread), (frost$core$Class*) &frost$threads$Thread$class);
 // begin inline call to frost.threads.Thread.init() from Thread.frost:57:29
 *(&local0) = ((frost$threads$Thread*) NULL);
 _5 = ((frost$core$Object*) _1);
@@ -125,8 +124,7 @@ frost$core$Object* _18;
 frost$threads$Thread* _20;
 frost$core$Object* _21;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/threads/Thread.frost:64
-FROST_ASSERT(24 == sizeof(frost$threads$Thread));
-_1 = (frost$threads$Thread*) frostObjectAlloc(24, (frost$core$Class*) &frost$threads$Thread$class);
+_1 = (frost$threads$Thread*) frostObjectAlloc(sizeof(frost$threads$Thread), (frost$core$Class*) &frost$threads$Thread$class);
 // begin inline call to frost.threads.Thread.init() from Thread.frost:64:29
 *(&local0) = ((frost$threads$Thread*) NULL);
 _5 = ((frost$core$Object*) _1);
@@ -166,8 +164,7 @@ frost$core$Object* _19;
 frost$threads$Thread* _21;
 frost$core$Object* _22;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/threads/Thread.frost:71
-FROST_ASSERT(24 == sizeof(frost$threads$Thread));
-_1 = (frost$threads$Thread*) frostObjectAlloc(24, (frost$core$Class*) &frost$threads$Thread$class);
+_1 = (frost$threads$Thread*) frostObjectAlloc(sizeof(frost$threads$Thread), (frost$core$Class*) &frost$threads$Thread$class);
 // begin inline call to frost.threads.Thread.init() from Thread.frost:71:29
 *(&local0) = ((frost$threads$Thread*) NULL);
 _5 = ((frost$core$Object*) _1);
@@ -201,7 +198,8 @@ _1 = (frost$core$Int) {8u};
 return _1;
 
 }
-void frost$threads$Thread$cleanup(frost$threads$Thread* param0) {
+void frost$threads$Thread$cleanup(void* rawSelf) {
+frost$threads$Thread* param0 = (frost$threads$Thread*) rawSelf;
 
 frost$core$Immutable* _1;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/threads/Thread.frost:23

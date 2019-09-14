@@ -32,7 +32,8 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 static frost$core$String $s12 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x41\x72\x72\x61\x79\x2e\x66\x72\x6f\x73\x74", 11, -1919842861654168654, NULL };
 static frost$core$String $s13 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x5b\x5d\x28\x69\x6e\x64\x65\x78\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x54", 108, 4065685528380894665, NULL };
 
-frost$core$Bit org$frostlang$frostc$pass$RemoveUnreachableBlocks$isUnreachable$org$frostlang$frostc$IR$Block$org$frostlang$frostc$pass$Analyzer$R$frost$core$Bit(org$frostlang$frostc$pass$RemoveUnreachableBlocks* param0, org$frostlang$frostc$IR$Block* param1, org$frostlang$frostc$pass$Analyzer* param2) {
+frost$core$Bit org$frostlang$frostc$pass$RemoveUnreachableBlocks$isUnreachable$org$frostlang$frostc$IR$Block$org$frostlang$frostc$pass$Analyzer$R$frost$core$Bit(void* rawSelf, org$frostlang$frostc$IR$Block* param1, org$frostlang$frostc$pass$Analyzer* param2) {
+org$frostlang$frostc$pass$RemoveUnreachableBlocks* param0 = (org$frostlang$frostc$pass$RemoveUnreachableBlocks*) rawSelf;
 
 org$frostlang$frostc$LinkedList** _1;
 org$frostlang$frostc$LinkedList* _2;
@@ -121,7 +122,8 @@ _44 = (frost$core$Bit) {false};
 return _44;
 
 }
-frost$core$Bit org$frostlang$frostc$pass$RemoveUnreachableBlocks$process$org$frostlang$frostc$IR$org$frostlang$frostc$pass$Analyzer$R$frost$core$Bit(org$frostlang$frostc$pass$RemoveUnreachableBlocks* param0, org$frostlang$frostc$IR* param1, org$frostlang$frostc$pass$Analyzer* param2) {
+frost$core$Bit org$frostlang$frostc$pass$RemoveUnreachableBlocks$process$org$frostlang$frostc$IR$org$frostlang$frostc$pass$Analyzer$R$frost$core$Bit(void* rawSelf, org$frostlang$frostc$IR* param1, org$frostlang$frostc$pass$Analyzer* param2) {
+org$frostlang$frostc$pass$RemoveUnreachableBlocks* param0 = (org$frostlang$frostc$pass$RemoveUnreachableBlocks*) rawSelf;
 
 frost$core$Bit local0;
 frost$core$Int local1;
@@ -446,12 +448,14 @@ _169 = *(&local0);
 return _169;
 
 }
-void org$frostlang$frostc$pass$RemoveUnreachableBlocks$init(org$frostlang$frostc$pass$RemoveUnreachableBlocks* param0) {
+void org$frostlang$frostc$pass$RemoveUnreachableBlocks$init(void* rawSelf) {
+org$frostlang$frostc$pass$RemoveUnreachableBlocks* param0 = (org$frostlang$frostc$pass$RemoveUnreachableBlocks*) rawSelf;
 
 return;
 
 }
-void org$frostlang$frostc$pass$RemoveUnreachableBlocks$cleanup(org$frostlang$frostc$pass$RemoveUnreachableBlocks* param0) {
+void org$frostlang$frostc$pass$RemoveUnreachableBlocks$cleanup(void* rawSelf) {
+org$frostlang$frostc$pass$RemoveUnreachableBlocks* param0 = (org$frostlang$frostc$pass$RemoveUnreachableBlocks*) rawSelf;
 
 frost$core$Object* _1;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/pass/RemoveUnreachableBlocks.frost:5

@@ -8,9 +8,9 @@ typedef struct frost$core$Object frost$core$Object;
 #include "frost/core/Bit_types.h"
 typedef struct frost$core$String frost$core$String;
 
-void frost$core$EquatableTuple3$init$frost$core$EquatableTuple3$T0$frost$core$EquatableTuple3$T1$frost$core$EquatableTuple3$T2(frost$core$EquatableTuple3* self, frost$core$Equatable* p_f0, frost$core$Equatable* p_f1, frost$core$Equatable* p_f2);
-frost$core$Object* frost$core$EquatableTuple3$$IDX$frost$core$Int$R$frost$core$Object$Q(frost$core$EquatableTuple3* self, frost$core$Int p_i);
-frost$core$Bit frost$core$EquatableTuple3$$EQ$frost$core$EquatableTuple3$LTfrost$core$EquatableTuple3$T0$Cfrost$core$EquatableTuple3$T1$Cfrost$core$EquatableTuple3$T2$GT$R$frost$core$Bit(frost$core$EquatableTuple3* self, frost$core$EquatableTuple3* p_other);
-frost$core$String* frost$core$EquatableTuple3$get_asString$R$frost$core$String(frost$core$EquatableTuple3* self);
-void frost$core$EquatableTuple3$cleanup(frost$core$EquatableTuple3* self);
+void frost$core$EquatableTuple3$init$frost$core$EquatableTuple3$T0$frost$core$EquatableTuple3$T1$frost$core$EquatableTuple3$T2(void* rawSelf, frost$core$Equatable* p_f0, frost$core$Equatable* p_f1, frost$core$Equatable* p_f2);
+frost$core$Object* frost$core$EquatableTuple3$$IDX$frost$core$Int$R$frost$core$Object$Q(void* rawSelf, frost$core$Int p_i);
+frost$core$Bit frost$core$EquatableTuple3$$EQ$frost$core$EquatableTuple3$LTfrost$core$EquatableTuple3$T0$Cfrost$core$EquatableTuple3$T1$Cfrost$core$EquatableTuple3$T2$GT$R$frost$core$Bit(void* rawSelf, frost$core$EquatableTuple3* p_other);
+frost$core$String* frost$core$EquatableTuple3$get_asString$R$frost$core$String(void* rawSelf);
+void frost$core$EquatableTuple3$cleanup(void* rawSelf);
 

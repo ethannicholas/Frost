@@ -12,7 +12,7 @@ __attribute__((weak)) frost$core$Object* frost$core$String$MatchIterator$next$R$
     frost$core$String$Index result = frost$core$String$MatchIterator$next$R$frost$core$String$Index(p0);
 
     frost$core$String$Index$wrapper* $tmp2;
-    $tmp2 = (frost$core$String$Index$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$String$Index$wrapperclass);
+    $tmp2 = (frost$core$String$Index$wrapper*) frostObjectAlloc(sizeof(frost$core$String$Index$wrapper), (frost$core$Class*) &frost$core$String$Index$wrapperclass);
     $tmp2->value = result;
     return ((frost$core$Object*) $tmp2);
 }
@@ -32,7 +32,8 @@ static frost$core$String $s8 = { (frost$core$Class*) &frost$core$String$class, -
 static frost$core$String $s9 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x74\x72\x69\x6e\x67\x2e\x66\x72\x6f\x73\x74", 12, 7542466198510074048, NULL };
 static frost$core$String $s10 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x49\x6e\x64\x65\x78\x3f\x20\x74\x6f\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x49\x6e\x64\x65\x78", 85, -1074977990553908571, NULL };
 
-void frost$core$String$MatchIterator$init$frost$core$String$frost$core$String$frost$core$Bit(frost$core$String$MatchIterator* param0, frost$core$String* param1, frost$core$String* param2, frost$core$Bit param3) {
+void frost$core$String$MatchIterator$init$frost$core$String$frost$core$String$frost$core$Bit(void* rawSelf, frost$core$String* param1, frost$core$String* param2, frost$core$Bit param3) {
+frost$core$String$MatchIterator* param0 = (frost$core$String$MatchIterator*) rawSelf;
 
 frost$core$Object* _1;
 frost$core$String** _3;
@@ -87,7 +88,8 @@ _33 = &param0->nextMatch;
 return;
 
 }
-frost$core$Bit frost$core$String$MatchIterator$get_done$R$frost$core$Bit(frost$core$String$MatchIterator* param0) {
+frost$core$Bit frost$core$String$MatchIterator$get_done$R$frost$core$Bit(void* rawSelf) {
+frost$core$String$MatchIterator* param0 = (frost$core$String$MatchIterator*) rawSelf;
 
 frost$core$String$Index$nullable* _1;
 frost$core$String$Index$nullable _2;
@@ -101,7 +103,8 @@ _4 = (frost$core$Bit) {_3};
 return _4;
 
 }
-frost$core$String$Index frost$core$String$MatchIterator$next$R$frost$core$String$Index(frost$core$String$MatchIterator* param0) {
+frost$core$String$Index frost$core$String$MatchIterator$next$R$frost$core$String$Index(void* rawSelf) {
+frost$core$String$MatchIterator* param0 = (frost$core$String$MatchIterator*) rawSelf;
 
 frost$core$String$Index$nullable local0;
 frost$core$String$Index local1;
@@ -253,7 +256,8 @@ _83 = ((frost$core$String$Index) _75.value);
 return _83;
 
 }
-void frost$core$String$MatchIterator$cleanup(frost$core$String$MatchIterator* param0) {
+void frost$core$String$MatchIterator$cleanup(void* rawSelf) {
+frost$core$String$MatchIterator* param0 = (frost$core$String$MatchIterator*) rawSelf;
 
 frost$core$Object* _1;
 frost$core$String** _3;

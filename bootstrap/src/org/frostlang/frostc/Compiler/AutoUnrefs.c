@@ -31,7 +31,8 @@ static frost$core$String $s14 = { (frost$core$Class*) &frost$core$String$class, 
 static frost$core$String $s17 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x41\x72\x72\x61\x79\x2e\x66\x72\x6f\x73\x74", 11, -1919842861654168654, NULL };
 static frost$core$String $s18 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x5b\x5d\x28\x69\x6e\x64\x65\x78\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x54", 108, 4065685528380894665, NULL };
 
-void org$frostlang$frostc$Compiler$AutoUnrefs$init$org$frostlang$frostc$Compiler(org$frostlang$frostc$Compiler$AutoUnrefs* param0, org$frostlang$frostc$Compiler* param1) {
+void org$frostlang$frostc$Compiler$AutoUnrefs$init$org$frostlang$frostc$Compiler(void* rawSelf, org$frostlang$frostc$Compiler* param1) {
+org$frostlang$frostc$Compiler$AutoUnrefs* param0 = (org$frostlang$frostc$Compiler$AutoUnrefs*) rawSelf;
 
 frost$core$Object* _1;
 org$frostlang$frostc$Compiler** _3;
@@ -76,7 +77,8 @@ _21 = &param0->depth;
 return;
 
 }
-void org$frostlang$frostc$Compiler$AutoUnrefs$cleanup(org$frostlang$frostc$Compiler$AutoUnrefs* param0) {
+void org$frostlang$frostc$Compiler$AutoUnrefs$cleanup(void* rawSelf) {
+org$frostlang$frostc$Compiler$AutoUnrefs* param0 = (org$frostlang$frostc$Compiler$AutoUnrefs*) rawSelf;
 
 org$frostlang$frostc$Compiler$EnclosingContext* local0 = NULL;
 org$frostlang$frostc$IR$Value* local1 = NULL;
@@ -385,7 +387,7 @@ _143 = (frost$core$Bit) {_142};
 _145 = _143.value;
 if (_145) goto block17; else goto block18;
 block17:;
-_147 = (org$frostlang$frostc$IR$Value**) (_134->$data + 0);
+_147 = &_134->$data.$VALUE_SCOPE.field0;
 _148 = *_147;
 *(&local1) = ((org$frostlang$frostc$IR$Value*) NULL);
 _150 = ((frost$core$Object*) _148);

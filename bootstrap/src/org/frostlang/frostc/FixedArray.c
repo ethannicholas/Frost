@@ -69,7 +69,8 @@ static frost$core$String $s28 = { (frost$core$Class*) &frost$core$String$class, 
 static frost$core$String $s30 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x3c\x6e\x75\x6c\x6c\x3e", 6, -6229636012469849280, NULL };
 static frost$core$String $s31 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x5d", 1, -5808499698549242648, NULL };
 
-void org$frostlang$frostc$FixedArray$init(org$frostlang$frostc$FixedArray* param0) {
+void org$frostlang$frostc$FixedArray$init(void* rawSelf) {
+org$frostlang$frostc$FixedArray* param0 = (org$frostlang$frostc$FixedArray*) rawSelf;
 
 org$frostlang$frostc$FixedArray* _1;
 frost$core$Int _2;
@@ -88,13 +89,14 @@ _3 = &_1->_count;
 _6 = param0;
 _7 = (frost$core$Int64) {0u};
 _8 = _7.value;
-_9 = ((frost$core$Object**) frostAlloc(_8 * 8));
+_9 = ((frost$core$Object**) frostAlloc(_8 * sizeof(frost$core$Object*)));
 _10 = &_6->data;
 *_10 = _9;
 return;
 
 }
-void org$frostlang$frostc$FixedArray$init$frost$collections$ListView$LTorg$frostlang$frostc$FixedArray$T$GT(org$frostlang$frostc$FixedArray* param0, frost$collections$ListView* param1) {
+void org$frostlang$frostc$FixedArray$init$frost$collections$ListView$LTorg$frostlang$frostc$FixedArray$T$GT(void* rawSelf, frost$collections$ListView* param1) {
+org$frostlang$frostc$FixedArray* param0 = (org$frostlang$frostc$FixedArray*) rawSelf;
 
 frost$core$Int local0;
 org$frostlang$frostc$FixedArray* _1;
@@ -184,7 +186,7 @@ _10 = &_9->_count;
 _11 = *_10;
 _12 = frost$core$Int64$init$frost$core$Int(_11);
 _13 = _12.value;
-_14 = ((frost$core$Object**) frostAlloc(_13 * 8));
+_14 = ((frost$core$Object**) frostAlloc(_13 * sizeof(frost$core$Object*)));
 _15 = &_8->data;
 *_15 = _14;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/FixedArray.frost:46
@@ -276,7 +278,8 @@ block2:;
 return;
 
 }
-void org$frostlang$frostc$FixedArray$init$frost$unsafe$Pointer$LTorg$frostlang$frostc$FixedArray$T$GT$frost$core$Int(org$frostlang$frostc$FixedArray* param0, frost$core$Object** param1, frost$core$Int param2) {
+void org$frostlang$frostc$FixedArray$init$frost$unsafe$Pointer$LTorg$frostlang$frostc$FixedArray$T$GT$frost$core$Int(void* rawSelf, frost$core$Object** param1, frost$core$Int param2) {
+org$frostlang$frostc$FixedArray* param0 = (org$frostlang$frostc$FixedArray*) rawSelf;
 
 org$frostlang$frostc$FixedArray* _1;
 frost$core$Object** _2;
@@ -349,14 +352,13 @@ _12 = *_11;
 _13 = frost$core$Int64$init$frost$core$Int(_12);
 _14 = _9.value;
 _15 = _13.value;
-_16 = (frost$core$Object**) frostRealloc(_5, _14 * 8, _15 * 8);
+_16 = (frost$core$Object**) frostRealloc(_5, _14 * sizeof(frost$core$Object*), _15 * sizeof(frost$core$Object*));
 _17 = _16;
 _18 = &_1->data;
 *_18 = _17;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/FixedArray.frost:68
 _21 = ((frost$core$Object*) param0);
-FROST_ASSERT(40 == sizeof(org$frostlang$frostc$FixedArray));
-_22 = (org$frostlang$frostc$FixedArray*) frostObjectAlloc(40, (frost$core$Class*) &org$frostlang$frostc$FixedArray$class);
+_22 = (org$frostlang$frostc$FixedArray*) frostObjectAlloc(sizeof(org$frostlang$frostc$FixedArray), (frost$core$Class*) &org$frostlang$frostc$FixedArray$class);
 _23 = _22;
 org$frostlang$frostc$FixedArray$init(_23);
 _25 = ((frost$core$Object*) _22);
@@ -385,7 +387,8 @@ frost$core$Frost$ref$frost$core$Object$Q(_46);
 return _45;
 
 }
-void org$frostlang$frostc$FixedArray$cleanup(org$frostlang$frostc$FixedArray* param0) {
+void org$frostlang$frostc$FixedArray$cleanup(void* rawSelf) {
+org$frostlang$frostc$FixedArray* param0 = (org$frostlang$frostc$FixedArray*) rawSelf;
 
 frost$core$Int local0;
 frost$core$Int _1;
@@ -526,7 +529,8 @@ frost$core$Object$cleanup(_70);
 return;
 
 }
-frost$core$Object* org$frostlang$frostc$FixedArray$$IDX$frost$core$Int$R$org$frostlang$frostc$FixedArray$T(org$frostlang$frostc$FixedArray* param0, frost$core$Int param1) {
+frost$core$Object* org$frostlang$frostc$FixedArray$$IDX$frost$core$Int$R$org$frostlang$frostc$FixedArray$T(void* rawSelf, frost$core$Int param1) {
+org$frostlang$frostc$FixedArray* param0 = (org$frostlang$frostc$FixedArray*) rawSelf;
 
 frost$core$Bit local0;
 frost$core$Int _0;
@@ -641,7 +645,8 @@ frost$core$Frost$ref$frost$core$Object$Q(_52);
 return _51;
 
 }
-frost$core$Int org$frostlang$frostc$FixedArray$get_count$R$frost$core$Int(org$frostlang$frostc$FixedArray* param0) {
+frost$core$Int org$frostlang$frostc$FixedArray$get_count$R$frost$core$Int(void* rawSelf) {
+org$frostlang$frostc$FixedArray* param0 = (org$frostlang$frostc$FixedArray*) rawSelf;
 
 org$frostlang$frostc$FixedArray* _1;
 frost$core$Int* _2;
@@ -653,7 +658,8 @@ _3 = *_2;
 return _3;
 
 }
-frost$collections$Iterator* org$frostlang$frostc$FixedArray$get_iterator$R$frost$collections$Iterator$LTorg$frostlang$frostc$FixedArray$T$GT(org$frostlang$frostc$FixedArray* param0) {
+frost$collections$Iterator* org$frostlang$frostc$FixedArray$get_iterator$R$frost$collections$Iterator$LTorg$frostlang$frostc$FixedArray$T$GT(void* rawSelf) {
+org$frostlang$frostc$FixedArray* param0 = (org$frostlang$frostc$FixedArray*) rawSelf;
 
 org$frostlang$frostc$FixedArray$FixedArrayIterator* _1;
 org$frostlang$frostc$FixedArray$FixedArrayIterator* _2;
@@ -662,8 +668,7 @@ frost$collections$Iterator* _5;
 frost$core$Object* _6;
 frost$core$Object* _8;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/FixedArray.frost:94
-FROST_ASSERT(32 == sizeof(org$frostlang$frostc$FixedArray$FixedArrayIterator));
-_1 = (org$frostlang$frostc$FixedArray$FixedArrayIterator*) frostObjectAlloc(32, (frost$core$Class*) &org$frostlang$frostc$FixedArray$FixedArrayIterator$class);
+_1 = (org$frostlang$frostc$FixedArray$FixedArrayIterator*) frostObjectAlloc(sizeof(org$frostlang$frostc$FixedArray$FixedArrayIterator), (frost$core$Class*) &org$frostlang$frostc$FixedArray$FixedArrayIterator$class);
 _2 = _1;
 _3 = param0;
 org$frostlang$frostc$FixedArray$FixedArrayIterator$init$org$frostlang$frostc$FixedArray$LTorg$frostlang$frostc$FixedArray$FixedArrayIterator$T$GT(_2, _3);
@@ -675,7 +680,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_8);
 return _5;
 
 }
-frost$core$String* org$frostlang$frostc$FixedArray$get_asString$R$frost$core$String(org$frostlang$frostc$FixedArray* param0) {
+frost$core$String* org$frostlang$frostc$FixedArray$get_asString$R$frost$core$String(void* rawSelf) {
+org$frostlang$frostc$FixedArray* param0 = (org$frostlang$frostc$FixedArray*) rawSelf;
 
 frost$core$MutableString* local0 = NULL;
 frost$core$String* local1 = NULL;
@@ -734,8 +740,7 @@ frost$core$Object* _100;
 frost$core$MutableString* _103;
 frost$core$Object* _104;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/FixedArray.frost:99
-FROST_ASSERT(48 == sizeof(frost$core$MutableString));
-_1 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
+_1 = (frost$core$MutableString*) frostObjectAlloc(sizeof(frost$core$MutableString), (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init(_1);
 *(&local0) = ((frost$core$MutableString*) NULL);
 _4 = ((frost$core$Object*) _1);

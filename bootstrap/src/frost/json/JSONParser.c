@@ -65,7 +65,8 @@ static frost$core$String $s55 = { (frost$core$Class*) &frost$core$String$class, 
 static frost$core$String $s56 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x3c\x65\x72\x72\x6f\x72\x3e", 7, 9069627162064264103, NULL };
 static frost$core$String $s57 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x3c\x65\x72\x72\x6f\x72\x3e", 7, 9069627162064264103, NULL };
 
-frost$json$JSON* frost$json$JSONParser$parse$frost$core$String$R$frost$json$JSON$Q(frost$json$JSONParser* param0, frost$core$String* param1) {
+frost$json$JSON* frost$json$JSONParser$parse$frost$core$String$R$frost$json$JSON$Q(void* rawSelf, frost$core$String* param1) {
+frost$json$JSONParser* param0 = (frost$json$JSONParser*) rawSelf;
 
 frost$core$Object* _1;
 frost$core$String** _3;
@@ -104,8 +105,7 @@ _10 = &param0->lexer;
 _11 = *_10;
 // begin inline call to method org.frostlang.json.Lexer.start(source:frost.core.String) from JSONParser.frost:29:20
 // /Users/ethannicholas/Dropbox/Frost/src/org/frostlang/json/Lexer.frost:20
-FROST_ASSERT(80 == sizeof(org$frostlang$plex$runtime$DFA));
-_14 = (org$frostlang$plex$runtime$DFA*) frostObjectAlloc(80, (frost$core$Class*) &org$frostlang$plex$runtime$DFA$class);
+_14 = (org$frostlang$plex$runtime$DFA*) frostObjectAlloc(sizeof(org$frostlang$plex$runtime$DFA), (frost$core$Class*) &org$frostlang$plex$runtime$DFA$class);
 _15 = (frost$core$Int) {31u};
 _16 = &_11->transitions;
 _17 = *_16;
@@ -132,7 +132,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_37);
 return _34;
 
 }
-org$frostlang$json$Token frost$json$JSONParser$next$R$org$frostlang$json$Token(frost$json$JSONParser* param0) {
+org$frostlang$json$Token frost$json$JSONParser$next$R$org$frostlang$json$Token(void* rawSelf) {
+frost$json$JSONParser* param0 = (frost$json$JSONParser*) rawSelf;
 
 org$frostlang$json$Token$nullable local0;
 org$frostlang$plex$runtime$RawToken local1;
@@ -278,7 +279,7 @@ block7:;
 _59 = *(&local4);
 _60 = _59.kind;
 org$frostlang$json$Token$Kind$wrapper* $tmp5;
-$tmp5 = (org$frostlang$json$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$json$Token$Kind$wrapperclass);
+$tmp5 = (org$frostlang$json$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$json$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$json$Token$Kind$wrapperclass);
 $tmp5->value = _60;
 _61 = ((frost$core$Equatable*) $tmp5);
 _62 = _61;
@@ -291,7 +292,7 @@ _68 = *(&local6);
 *(&local5) = _68;
 _71 = *(&local5);
 org$frostlang$json$Token$Kind$wrapper* $tmp6;
-$tmp6 = (org$frostlang$json$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$json$Token$Kind$wrapperclass);
+$tmp6 = (org$frostlang$json$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$json$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$json$Token$Kind$wrapperclass);
 $tmp6->value = _71;
 _72 = ((frost$core$Equatable*) $tmp6);
 ITable* $tmp7 = _62->$class->itable;
@@ -344,7 +345,8 @@ _115 = *(&local4);
 return _115;
 
 }
-void frost$json$JSONParser$pushback$org$frostlang$json$Token(frost$json$JSONParser* param0, org$frostlang$json$Token param1) {
+void frost$json$JSONParser$pushback$org$frostlang$json$Token(void* rawSelf, org$frostlang$json$Token param1) {
+frost$json$JSONParser* param0 = (frost$json$JSONParser*) rawSelf;
 
 org$frostlang$json$Token$nullable* _1;
 org$frostlang$json$Token$nullable _2;
@@ -373,7 +375,8 @@ _12 = &param0->pushbackToken;
 return;
 
 }
-org$frostlang$json$Token frost$json$JSONParser$peek$R$org$frostlang$json$Token(frost$json$JSONParser* param0) {
+org$frostlang$json$Token frost$json$JSONParser$peek$R$org$frostlang$json$Token(void* rawSelf) {
+frost$json$JSONParser* param0 = (frost$json$JSONParser*) rawSelf;
 
 org$frostlang$json$Token local0;
 org$frostlang$json$Token _1;
@@ -414,7 +417,8 @@ _22 = *(&local0);
 return _22;
 
 }
-org$frostlang$json$Token$nullable frost$json$JSONParser$checkNext$org$frostlang$json$Token$Kind$R$org$frostlang$json$Token$Q(frost$json$JSONParser* param0, org$frostlang$json$Token$Kind param1) {
+org$frostlang$json$Token$nullable frost$json$JSONParser$checkNext$org$frostlang$json$Token$Kind$R$org$frostlang$json$Token$Q(void* rawSelf, org$frostlang$json$Token$Kind param1) {
+frost$json$JSONParser* param0 = (frost$json$JSONParser*) rawSelf;
 
 org$frostlang$json$Token local0;
 org$frostlang$json$Token _1;
@@ -446,12 +450,12 @@ _1 = frost$json$JSONParser$next$R$org$frostlang$json$Token(param0);
 _4 = *(&local0);
 _5 = _4.kind;
 org$frostlang$json$Token$Kind$wrapper* $tmp11;
-$tmp11 = (org$frostlang$json$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$json$Token$Kind$wrapperclass);
+$tmp11 = (org$frostlang$json$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$json$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$json$Token$Kind$wrapperclass);
 $tmp11->value = _5;
 _6 = ((frost$core$Equatable*) $tmp11);
 _7 = _6;
 org$frostlang$json$Token$Kind$wrapper* $tmp12;
-$tmp12 = (org$frostlang$json$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$json$Token$Kind$wrapperclass);
+$tmp12 = (org$frostlang$json$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$json$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$json$Token$Kind$wrapperclass);
 $tmp12->value = param1;
 _8 = ((frost$core$Equatable*) $tmp12);
 ITable* $tmp13 = _7->$class->itable;
@@ -495,7 +499,8 @@ _36 = &param0->pushbackToken;
 return ((org$frostlang$json$Token$nullable) { .nonnull = false });
 
 }
-frost$core$String* frost$json$JSONParser$text$org$frostlang$json$Token$R$frost$core$String(frost$json$JSONParser* param0, org$frostlang$json$Token param1) {
+frost$core$String* frost$json$JSONParser$text$org$frostlang$json$Token$R$frost$core$String(void* rawSelf, org$frostlang$json$Token param1) {
+frost$json$JSONParser* param0 = (frost$json$JSONParser*) rawSelf;
 
 frost$core$String** _1;
 frost$core$String* _2;
@@ -521,7 +526,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_10);
 return _7;
 
 }
-frost$json$JSON* frost$json$JSONParser$list$R$frost$json$JSON(frost$json$JSONParser* param0) {
+frost$json$JSON* frost$json$JSONParser$list$R$frost$json$JSON(void* rawSelf) {
+frost$json$JSONParser* param0 = (frost$json$JSONParser*) rawSelf;
 
 org$frostlang$json$Token$Kind local0;
 org$frostlang$json$Token$Kind local1;
@@ -619,12 +625,12 @@ _12 = frost$json$JSONParser$next$R$org$frostlang$json$Token(param0);
 _15 = *(&local3);
 _16 = _15.kind;
 org$frostlang$json$Token$Kind$wrapper* $tmp16;
-$tmp16 = (org$frostlang$json$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$json$Token$Kind$wrapperclass);
+$tmp16 = (org$frostlang$json$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$json$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$json$Token$Kind$wrapperclass);
 $tmp16->value = _16;
 _17 = ((frost$core$Equatable*) $tmp16);
 _18 = _17;
 org$frostlang$json$Token$Kind$wrapper* $tmp17;
-$tmp17 = (org$frostlang$json$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$json$Token$Kind$wrapperclass);
+$tmp17 = (org$frostlang$json$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$json$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$json$Token$Kind$wrapperclass);
 $tmp17->value = _9;
 _19 = ((frost$core$Equatable*) $tmp17);
 ITable* $tmp18 = _18->$class->itable;
@@ -676,11 +682,9 @@ _57 = _56.value;
 if (_57) goto block1; else goto block2;
 block1:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/json/JSONParser.frost:78
-FROST_ASSERT(32 == sizeof(frost$json$JSON));
-_60 = (frost$json$JSON*) frostObjectAlloc(32, (frost$core$Class*) &frost$json$JSON$class);
+_60 = (frost$json$JSON*) frostObjectAlloc(sizeof(frost$json$JSON), (frost$core$Class*) &frost$json$JSON$class);
 _61 = (frost$core$Int) {5u};
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_62 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_62 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _63 = _62;
 _64 = (frost$core$Int) {0u};
 frost$collections$Array$init$frost$core$Int(_63, _64);
@@ -695,8 +699,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_72);
 return _60;
 block2:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/json/JSONParser.frost:80
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_76 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_76 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _77 = _76;
 frost$collections$Array$init(_77);
 *(&local4) = ((frost$collections$Array*) NULL);
@@ -734,8 +737,7 @@ _110 = _108.value;
 if (_110) goto block13; else goto block14;
 block13:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/json/JSONParser.frost:85
-FROST_ASSERT(32 == sizeof(frost$json$JSON));
-_113 = (frost$json$JSON*) frostObjectAlloc(32, (frost$core$Class*) &frost$json$JSON$class);
+_113 = (frost$json$JSON*) frostObjectAlloc(sizeof(frost$json$JSON), (frost$core$Class*) &frost$json$JSON$class);
 _114 = (frost$core$Int) {5u};
 _115 = *(&local4);
 _116 = ((frost$collections$ListView*) _115);
@@ -774,7 +776,8 @@ goto block19;
 block19:;
 
 }
-frost$json$JSON* frost$json$JSONParser$map$R$frost$json$JSON(frost$json$JSONParser* param0) {
+frost$json$JSON* frost$json$JSONParser$map$R$frost$json$JSON(void* rawSelf) {
+frost$json$JSONParser* param0 = (frost$json$JSONParser*) rawSelf;
 
 org$frostlang$json$Token$Kind local0;
 org$frostlang$json$Token$Kind local1;
@@ -971,12 +974,12 @@ _12 = frost$json$JSONParser$next$R$org$frostlang$json$Token(param0);
 _15 = *(&local3);
 _16 = _15.kind;
 org$frostlang$json$Token$Kind$wrapper* $tmp25;
-$tmp25 = (org$frostlang$json$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$json$Token$Kind$wrapperclass);
+$tmp25 = (org$frostlang$json$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$json$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$json$Token$Kind$wrapperclass);
 $tmp25->value = _16;
 _17 = ((frost$core$Equatable*) $tmp25);
 _18 = _17;
 org$frostlang$json$Token$Kind$wrapper* $tmp26;
-$tmp26 = (org$frostlang$json$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$json$Token$Kind$wrapperclass);
+$tmp26 = (org$frostlang$json$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$json$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$json$Token$Kind$wrapperclass);
 $tmp26->value = _9;
 _19 = ((frost$core$Equatable*) $tmp26);
 ITable* $tmp27 = _18->$class->itable;
@@ -1028,11 +1031,9 @@ _57 = _56.value;
 if (_57) goto block1; else goto block2;
 block1:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/json/JSONParser.frost:100
-FROST_ASSERT(32 == sizeof(frost$json$JSON));
-_60 = (frost$json$JSON*) frostObjectAlloc(32, (frost$core$Class*) &frost$json$JSON$class);
+_60 = (frost$json$JSON*) frostObjectAlloc(sizeof(frost$json$JSON), (frost$core$Class*) &frost$json$JSON$class);
 _61 = (frost$core$Int) {4u};
-FROST_ASSERT(56 == sizeof(frost$collections$HashMap));
-_62 = (frost$collections$HashMap*) frostObjectAlloc(56, (frost$core$Class*) &frost$collections$HashMap$class);
+_62 = (frost$collections$HashMap*) frostObjectAlloc(sizeof(frost$collections$HashMap), (frost$core$Class*) &frost$collections$HashMap$class);
 _63 = _62;
 frost$collections$HashMap$init(_63);
 _65 = ((frost$collections$MapView*) _62);
@@ -1046,8 +1047,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_71);
 return _60;
 block2:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/json/JSONParser.frost:102
-FROST_ASSERT(56 == sizeof(frost$collections$HashMap));
-_75 = (frost$collections$HashMap*) frostObjectAlloc(56, (frost$core$Class*) &frost$collections$HashMap$class);
+_75 = (frost$collections$HashMap*) frostObjectAlloc(sizeof(frost$collections$HashMap), (frost$core$Class*) &frost$collections$HashMap$class);
 _76 = _75;
 frost$collections$HashMap$init(_76);
 *(&local4) = ((frost$collections$HashMap*) NULL);
@@ -1071,7 +1071,7 @@ _92 = frost$json$JSONParser$next$R$org$frostlang$json$Token(param0);
 _95 = *(&local5);
 _96 = _95.kind;
 org$frostlang$json$Token$Kind$wrapper* $tmp29;
-$tmp29 = (org$frostlang$json$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$json$Token$Kind$wrapperclass);
+$tmp29 = (org$frostlang$json$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$json$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$json$Token$Kind$wrapperclass);
 $tmp29->value = _96;
 _97 = ((frost$core$Equatable*) $tmp29);
 _98 = _97;
@@ -1084,7 +1084,7 @@ _104 = *(&local7);
 *(&local6) = _104;
 _107 = *(&local6);
 org$frostlang$json$Token$Kind$wrapper* $tmp30;
-$tmp30 = (org$frostlang$json$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$json$Token$Kind$wrapperclass);
+$tmp30 = (org$frostlang$json$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$json$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$json$Token$Kind$wrapperclass);
 $tmp30->value = _107;
 _108 = ((frost$core$Equatable*) $tmp30);
 ITable* $tmp31 = _98->$class->itable;
@@ -1195,7 +1195,7 @@ _210 = frost$json$JSONParser$next$R$org$frostlang$json$Token(param0);
 _213 = *(&local10);
 _214 = _213.kind;
 org$frostlang$json$Token$Kind$wrapper* $tmp35;
-$tmp35 = (org$frostlang$json$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$json$Token$Kind$wrapperclass);
+$tmp35 = (org$frostlang$json$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$json$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$json$Token$Kind$wrapperclass);
 $tmp35->value = _214;
 _215 = ((frost$core$Equatable*) $tmp35);
 _216 = _215;
@@ -1208,7 +1208,7 @@ _222 = *(&local12);
 *(&local11) = _222;
 _225 = *(&local11);
 org$frostlang$json$Token$Kind$wrapper* $tmp36;
-$tmp36 = (org$frostlang$json$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$json$Token$Kind$wrapperclass);
+$tmp36 = (org$frostlang$json$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$json$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$json$Token$Kind$wrapperclass);
 $tmp36->value = _225;
 _226 = ((frost$core$Equatable*) $tmp36);
 ITable* $tmp37 = _216->$class->itable;
@@ -1254,8 +1254,7 @@ _261 = _259.value;
 if (_261) goto block24; else goto block25;
 block24:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/json/JSONParser.frost:112
-FROST_ASSERT(32 == sizeof(frost$json$JSON));
-_264 = (frost$json$JSON*) frostObjectAlloc(32, (frost$core$Class*) &frost$json$JSON$class);
+_264 = (frost$json$JSON*) frostObjectAlloc(sizeof(frost$json$JSON), (frost$core$Class*) &frost$json$JSON$class);
 _265 = (frost$core$Int) {4u};
 _266 = *(&local4);
 _267 = ((frost$collections$MapView*) _266);
@@ -1306,7 +1305,8 @@ goto block30;
 block30:;
 
 }
-frost$core$String* frost$json$JSONParser$string$R$frost$core$String(frost$json$JSONParser* param0) {
+frost$core$String* frost$json$JSONParser$string$R$frost$core$String(void* rawSelf) {
+frost$json$JSONParser* param0 = (frost$json$JSONParser*) rawSelf;
 
 org$frostlang$json$Token local0;
 org$frostlang$json$Token$Kind local1;
@@ -1391,7 +1391,7 @@ _1 = frost$json$JSONParser$next$R$org$frostlang$json$Token(param0);
 _4 = *(&local0);
 _5 = _4.kind;
 org$frostlang$json$Token$Kind$wrapper* $tmp43;
-$tmp43 = (org$frostlang$json$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$json$Token$Kind$wrapperclass);
+$tmp43 = (org$frostlang$json$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$json$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$json$Token$Kind$wrapperclass);
 $tmp43->value = _5;
 _6 = ((frost$core$Equatable*) $tmp43);
 _7 = _6;
@@ -1404,7 +1404,7 @@ _13 = *(&local2);
 *(&local1) = _13;
 _16 = *(&local1);
 org$frostlang$json$Token$Kind$wrapper* $tmp44;
-$tmp44 = (org$frostlang$json$Token$Kind$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$json$Token$Kind$wrapperclass);
+$tmp44 = (org$frostlang$json$Token$Kind$wrapper*) frostObjectAlloc(sizeof(org$frostlang$json$Token$Kind$wrapper), (frost$core$Class*) &org$frostlang$json$Token$Kind$wrapperclass);
 $tmp44->value = _16;
 _17 = ((frost$core$Equatable*) $tmp44);
 ITable* $tmp45 = _7->$class->itable;
@@ -1514,7 +1514,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_119);
 return _113;
 
 }
-frost$json$JSON* frost$json$JSONParser$node$R$frost$json$JSON(frost$json$JSONParser* param0) {
+frost$json$JSON* frost$json$JSONParser$node$R$frost$json$JSON(void* rawSelf) {
+frost$json$JSONParser* param0 = (frost$json$JSONParser*) rawSelf;
 
 org$frostlang$json$Token local0;
 frost$core$String* local1 = NULL;
@@ -1773,8 +1774,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_71);
 _74 = ((frost$core$Object*) _61);
 frost$core$Frost$unref$frost$core$Object$Q(_74);
 // /Users/ethannicholas/Dropbox/Frost/src/frost/json/JSONParser.frost:146
-FROST_ASSERT(32 == sizeof(frost$json$JSON));
-_77 = (frost$json$JSON*) frostObjectAlloc(32, (frost$core$Class*) &frost$json$JSON$class);
+_77 = (frost$json$JSON*) frostObjectAlloc(sizeof(frost$json$JSON), (frost$core$Class*) &frost$json$JSON$class);
 _78 = (frost$core$Int) {2u};
 _79 = *(&local1);
 _80 = *(&local1);
@@ -1831,8 +1831,7 @@ _134 = _132.value;
 if (_134) goto block16; else goto block17;
 block16:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/json/JSONParser.frost:149
-FROST_ASSERT(32 == sizeof(frost$json$JSON));
-_137 = (frost$json$JSON*) frostObjectAlloc(32, (frost$core$Class*) &frost$json$JSON$class);
+_137 = (frost$json$JSON*) frostObjectAlloc(sizeof(frost$json$JSON), (frost$core$Class*) &frost$json$JSON$class);
 _138 = (frost$core$Int) {0u};
 _139 = *(&local0);
 // begin inline call to function frost.json.JSONParser.text(token:org.frostlang.json.Token):frost.core.String from JSONParser.frost:149:37
@@ -1915,8 +1914,7 @@ _211 = _209.value;
 if (_211) goto block28; else goto block29;
 block28:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/json/JSONParser.frost:152
-FROST_ASSERT(32 == sizeof(frost$json$JSON));
-_214 = (frost$json$JSON*) frostObjectAlloc(32, (frost$core$Class*) &frost$json$JSON$class);
+_214 = (frost$json$JSON*) frostObjectAlloc(sizeof(frost$json$JSON), (frost$core$Class*) &frost$json$JSON$class);
 _215 = (frost$core$Int) {1u};
 _216 = *(&local0);
 // begin inline call to function frost.json.JSONParser.text(token:org.frostlang.json.Token):frost.core.String from JSONParser.frost:152:38
@@ -1966,8 +1964,7 @@ _260 = _258.value;
 if (_260) goto block35; else goto block36;
 block35:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/json/JSONParser.frost:155
-FROST_ASSERT(32 == sizeof(frost$json$JSON));
-_263 = (frost$json$JSON*) frostObjectAlloc(32, (frost$core$Class*) &frost$json$JSON$class);
+_263 = (frost$json$JSON*) frostObjectAlloc(sizeof(frost$json$JSON), (frost$core$Class*) &frost$json$JSON$class);
 _264 = (frost$core$Int) {3u};
 _265 = (frost$core$Bit) {true};
 frost$json$JSON$init$frost$core$Int$frost$core$Bit(_263, _264, _265);
@@ -1988,8 +1985,7 @@ _280 = _278.value;
 if (_280) goto block38; else goto block39;
 block38:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/json/JSONParser.frost:158
-FROST_ASSERT(32 == sizeof(frost$json$JSON));
-_283 = (frost$json$JSON*) frostObjectAlloc(32, (frost$core$Class*) &frost$json$JSON$class);
+_283 = (frost$json$JSON*) frostObjectAlloc(sizeof(frost$json$JSON), (frost$core$Class*) &frost$json$JSON$class);
 _284 = (frost$core$Int) {3u};
 _285 = (frost$core$Bit) {false};
 frost$json$JSON$init$frost$core$Int$frost$core$Bit(_283, _284, _285);
@@ -2010,8 +2006,7 @@ _300 = _298.value;
 if (_300) goto block41; else goto block42;
 block41:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/json/JSONParser.frost:161
-FROST_ASSERT(32 == sizeof(frost$json$JSON));
-_303 = (frost$json$JSON*) frostObjectAlloc(32, (frost$core$Class*) &frost$json$JSON$class);
+_303 = (frost$json$JSON*) frostObjectAlloc(sizeof(frost$json$JSON), (frost$core$Class*) &frost$json$JSON$class);
 _304 = (frost$core$Int) {6u};
 frost$json$JSON$init$frost$core$Int(_303, _304);
 _306 = ((frost$core$Object*) _303);
@@ -2029,7 +2024,8 @@ goto block44;
 block44:;
 
 }
-void frost$json$JSONParser$init(frost$json$JSONParser* param0) {
+void frost$json$JSONParser$init(void* rawSelf) {
+frost$json$JSONParser* param0 = (frost$json$JSONParser*) rawSelf;
 
 frost$core$Object* _1;
 frost$core$String** _3;
@@ -2054,8 +2050,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_5);
 _7 = &param0->source;
 *_7 = &$s57;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/json/JSONParser.frost:17
-FROST_ASSERT(40 == sizeof(org$frostlang$json$Lexer));
-_10 = (org$frostlang$json$Lexer*) frostObjectAlloc(40, (frost$core$Class*) &org$frostlang$json$Lexer$class);
+_10 = (org$frostlang$json$Lexer*) frostObjectAlloc(sizeof(org$frostlang$json$Lexer), (frost$core$Class*) &org$frostlang$json$Lexer$class);
 org$frostlang$json$Lexer$init(_10);
 _12 = ((frost$core$Object*) _10);
 frost$core$Frost$ref$frost$core$Object$Q(_12);
@@ -2073,7 +2068,8 @@ _23 = &param0->pushbackToken;
 return;
 
 }
-void frost$json$JSONParser$cleanup(frost$json$JSONParser* param0) {
+void frost$json$JSONParser$cleanup(void* rawSelf) {
+frost$json$JSONParser* param0 = (frost$json$JSONParser*) rawSelf;
 
 frost$core$Object* _1;
 frost$core$String** _3;

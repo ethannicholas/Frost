@@ -9,6 +9,6 @@ frost$core$String* org$frostlang$frostc$Config$frostLibDir$R$frost$core$String()
 frost$core$String* org$frostlang$frostc$Config$llvmDir$R$frost$core$String();
 frost$core$String* org$frostlang$frostc$Config$llvmTriple$R$frost$core$String();
 frost$core$String* org$frostlang$frostc$Config$icuLibraries$R$frost$core$String();
-void org$frostlang$frostc$Config$init(org$frostlang$frostc$Config* self);
-void org$frostlang$frostc$Config$cleanup(org$frostlang$frostc$Config* self);
+void org$frostlang$frostc$Config$init(void* rawSelf);
+void org$frostlang$frostc$Config$cleanup(void* rawSelf);
 

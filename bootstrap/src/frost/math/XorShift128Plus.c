@@ -15,7 +15,8 @@ frost$math$XorShift128Plus$class_type frost$math$XorShift128Plus$class = { (fros
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x6d\x61\x74\x68\x2e\x58\x6f\x72\x53\x68\x69\x66\x74\x31\x32\x38\x50\x6c\x75\x73", 26, 4029058821734976825, NULL };
 
-void frost$math$XorShift128Plus$init$frost$core$Int64(frost$math$XorShift128Plus* param0, frost$core$Int64 param1) {
+void frost$math$XorShift128Plus$init$frost$core$Int64(void* rawSelf, frost$core$Int64 param1) {
+frost$math$XorShift128Plus* param0 = (frost$math$XorShift128Plus*) rawSelf;
 
 frost$core$Int64 _1;
 int64_t _2;
@@ -82,14 +83,15 @@ _33 = *_32;
 // begin inline call to function frost.core.Int64.!!():frost.core.Int64 from XorShift128Plus.frost:34:19
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Int64.frost:172
 _36 = _33.value;
-_37 = !_36;
+_37 = ~_36;
 _38 = (frost$core$Int64) {_37};
 _40 = &param0->state2;
 *_40 = _38;
 return;
 
 }
-frost$core$Int64 frost$math$XorShift128Plus$int64$R$frost$core$Int64(frost$math$XorShift128Plus* param0) {
+frost$core$Int64 frost$math$XorShift128Plus$int64$R$frost$core$Int64(void* rawSelf) {
+frost$math$XorShift128Plus* param0 = (frost$math$XorShift128Plus*) rawSelf;
 
 frost$core$Int64 local0;
 frost$core$Int64 local1;
@@ -223,7 +225,8 @@ _82 = (frost$core$Int64) {_81};
 return _82;
 
 }
-void frost$math$XorShift128Plus$cleanup(frost$math$XorShift128Plus* param0) {
+void frost$math$XorShift128Plus$cleanup(void* rawSelf) {
+frost$math$XorShift128Plus* param0 = (frost$math$XorShift128Plus*) rawSelf;
 
 frost$core$Object* _1;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/math/XorShift128Plus.frost:10

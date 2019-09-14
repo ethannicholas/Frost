@@ -31,7 +31,8 @@ static frost$core$String $s9 = { (frost$core$Class*) &frost$core$String$class, -
 static frost$core$String $s11 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x41\x42\x43\x44\x45\x46\x47\x48\x49\x4a\x4b\x4c\x4d\x4e\x4f\x50\x51\x52\x53\x54\x55\x56\x57\x58\x59\x5a\x61\x62\x63\x64\x65\x66\x67\x68\x69\x6a\x6b\x6c\x6d\x6e\x6f\x70\x71\x72\x73\x74\x75\x76\x77\x78\x79\x7a\x30\x31\x32\x33\x34\x35\x36\x37\x38\x39\x2d\x2f\x2c\x2e", 66, -6663281110466647188, NULL };
 static frost$core$String $s12 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x41\x42\x43\x44\x45\x46\x47\x48\x49\x4a\x4b\x4c\x4d\x4e\x4f\x50\x51\x52\x53\x54\x55\x56\x57\x58\x59\x5a\x61\x62\x63\x64\x65\x66\x67\x68\x69\x6a\x6b\x6c\x6d\x6e\x6f\x70\x71\x72\x73\x74\x75\x76\x77\x78\x79\x7a\x30\x31\x32\x33\x34\x35\x36\x37\x38\x39\x2d\x2f\x2c\x2e", 66, -6663281110466647188, NULL };
 
-frost$core$String* org$frostlang$frostc$frostdoc$Protector$encode$frost$core$String$R$frost$core$String(org$frostlang$frostc$frostdoc$Protector* param0, frost$core$String* param1) {
+frost$core$String* org$frostlang$frostc$frostdoc$Protector$encode$frost$core$String$R$frost$core$String(void* rawSelf, frost$core$String* param1) {
+org$frostlang$frostc$frostdoc$Protector* param0 = (org$frostlang$frostc$frostdoc$Protector*) rawSelf;
 
 frost$core$String* local0 = NULL;
 frost$collections$HashMap** _1;
@@ -180,7 +181,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_80);
 return _76;
 
 }
-frost$core$String* org$frostlang$frostc$frostdoc$Protector$decode$frost$core$String$R$frost$core$String$Q(org$frostlang$frostc$frostdoc$Protector* param0, frost$core$String* param1) {
+frost$core$String* org$frostlang$frostc$frostdoc$Protector$decode$frost$core$String$R$frost$core$String$Q(void* rawSelf, frost$core$String* param1) {
+org$frostlang$frostc$frostdoc$Protector* param0 = (org$frostlang$frostc$frostdoc$Protector*) rawSelf;
 
 frost$collections$HashMap** _1;
 frost$collections$HashMap* _2;
@@ -204,7 +206,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_9);
 return _6;
 
 }
-frost$core$String* org$frostlang$frostc$frostdoc$Protector$randomToken$R$frost$core$String(org$frostlang$frostc$frostdoc$Protector* param0) {
+frost$core$String* org$frostlang$frostc$frostdoc$Protector$randomToken$R$frost$core$String(void* rawSelf) {
+org$frostlang$frostc$frostdoc$Protector* param0 = (org$frostlang$frostc$frostdoc$Protector*) rawSelf;
 
 frost$core$Int local0;
 frost$core$String* local1 = NULL;
@@ -290,8 +293,7 @@ _8 = ((frost$core$Object*) _7);
 frost$core$Frost$unref$frost$core$Object$Q(_8);
 *(&local1) = &$s12;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:75
-FROST_ASSERT(48 == sizeof(frost$core$MutableString));
-_12 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
+_12 = (frost$core$MutableString*) frostObjectAlloc(sizeof(frost$core$MutableString), (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init(_12);
 *(&local2) = ((frost$core$MutableString*) NULL);
 _15 = ((frost$core$Object*) _12);
@@ -400,7 +402,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_108);
 return _98;
 
 }
-void org$frostlang$frostc$frostdoc$Protector$init(org$frostlang$frostc$frostdoc$Protector* param0) {
+void org$frostlang$frostc$frostdoc$Protector$init(void* rawSelf) {
+org$frostlang$frostc$frostdoc$Protector* param0 = (org$frostlang$frostc$frostdoc$Protector*) rawSelf;
 
 frost$collections$HashMap* _1;
 frost$collections$HashMap* _2;
@@ -426,8 +429,7 @@ frost$core$Object* _34;
 frost$math$Random** _36;
 frost$core$Object* _38;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:52
-FROST_ASSERT(56 == sizeof(frost$collections$HashMap));
-_1 = (frost$collections$HashMap*) frostObjectAlloc(56, (frost$core$Class*) &frost$collections$HashMap$class);
+_1 = (frost$collections$HashMap*) frostObjectAlloc(sizeof(frost$collections$HashMap), (frost$core$Class*) &frost$collections$HashMap$class);
 _2 = _1;
 frost$collections$HashMap$init(_2);
 _4 = ((frost$core$Object*) _1);
@@ -441,8 +443,7 @@ _10 = &param0->encodeMap;
 _12 = ((frost$core$Object*) _1);
 frost$core$Frost$unref$frost$core$Object$Q(_12);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:54
-FROST_ASSERT(56 == sizeof(frost$collections$HashMap));
-_15 = (frost$collections$HashMap*) frostObjectAlloc(56, (frost$core$Class*) &frost$collections$HashMap$class);
+_15 = (frost$collections$HashMap*) frostObjectAlloc(sizeof(frost$collections$HashMap), (frost$core$Class*) &frost$collections$HashMap$class);
 _16 = _15;
 frost$collections$HashMap$init(_16);
 _18 = ((frost$core$Object*) _15);
@@ -470,7 +471,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_38);
 return;
 
 }
-void org$frostlang$frostc$frostdoc$Protector$cleanup(org$frostlang$frostc$frostdoc$Protector* param0) {
+void org$frostlang$frostc$frostdoc$Protector$cleanup(void* rawSelf) {
+org$frostlang$frostc$frostdoc$Protector* param0 = (org$frostlang$frostc$frostdoc$Protector*) rawSelf;
 
 frost$core$Object* _1;
 frost$collections$HashMap** _3;

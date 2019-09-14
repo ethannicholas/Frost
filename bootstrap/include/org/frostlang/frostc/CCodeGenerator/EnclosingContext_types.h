@@ -5,13 +5,25 @@ typedef struct frost$core$Class frost$core$Class;
 #include "frost/core/UInt8_types.h"
 #include "frost/core/Int_types.h"
 typedef struct frost$core$String frost$core$String;
+typedef struct frost$collections$Map frost$collections$Map;
 
 typedef struct org$frostlang$frostc$CCodeGenerator$EnclosingContext {
     frost$core$Class* $class;
     frost$core$Int32 refCount;
     frost$core$UInt8 $flags;
     frost$core$Int $rawValue;
-    int8_t $data[24];
+    union {
+        struct {
+            frost$core$String* field0;
+            frost$core$String* field1;
+            frost$core$String* field2;
+        } $LOOP;
+        struct {
+            frost$core$String* field0;
+            frost$collections$Map* field1;
+            frost$core$String* field2;
+        } $FINALLY;
+    } $data;
 } org$frostlang$frostc$CCodeGenerator$EnclosingContext;
 #include "frost/core/Class.h"
 typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[2]; } org$frostlang$frostc$CCodeGenerator$EnclosingContext$class_type;

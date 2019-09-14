@@ -130,10 +130,10 @@ _33 = (frost$core$Bit) {_32};
 _35 = _33.value;
 if (_35) goto block5; else goto block6;
 block5:;
-_37 = (org$frostlang$frostc$Position*) (_24->$data + 0);
+_37 = &_24->$data.$DECLARATION.field0;
 _38 = *_37;
 *(&local1) = _38;
-_40 = (org$frostlang$frostc$ASTNode**) (_24->$data + 24);
+_40 = &_24->$data.$DECLARATION.field1;
 _41 = *_40;
 *(&local2) = ((org$frostlang$frostc$ASTNode*) NULL);
 _43 = ((frost$core$Object*) _41);
@@ -142,7 +142,7 @@ _45 = *(&local2);
 _46 = ((frost$core$Object*) _45);
 frost$core$Frost$unref$frost$core$Object$Q(_46);
 *(&local2) = _41;
-_49 = (org$frostlang$frostc$ASTNode**) (_24->$data + 32);
+_49 = &_24->$data.$DECLARATION.field2;
 _50 = *_49;
 *(&local3) = ((org$frostlang$frostc$ASTNode*) NULL);
 _52 = ((frost$core$Object*) _50);
@@ -182,12 +182,14 @@ frost$core$Frost$unref$frost$core$Object$Q(_83);
 return;
 
 }
-void org$frostlang$frostc$statement$Var$init(org$frostlang$frostc$statement$Var* param0) {
+void org$frostlang$frostc$statement$Var$init(void* rawSelf) {
+org$frostlang$frostc$statement$Var* param0 = (org$frostlang$frostc$statement$Var*) rawSelf;
 
 return;
 
 }
-void org$frostlang$frostc$statement$Var$cleanup(org$frostlang$frostc$statement$Var* param0) {
+void org$frostlang$frostc$statement$Var$cleanup(void* rawSelf) {
+org$frostlang$frostc$statement$Var* param0 = (org$frostlang$frostc$statement$Var*) rawSelf;
 
 frost$core$Object* _1;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/statement/Var.frost:9

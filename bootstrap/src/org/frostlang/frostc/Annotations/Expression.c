@@ -35,7 +35,8 @@ static frost$core$String $s20 = { (frost$core$Class*) &frost$core$String$class, 
 static frost$core$String $s21 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x29", 1, -5808618445805089436, NULL };
 static frost$core$String $s22 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x41\x6e\x6e\x6f\x74\x61\x74\x69\x6f\x6e\x73\x2e\x66\x72\x6f\x73\x74", 17, 6603721120407380261, NULL };
 
-frost$core$String* org$frostlang$frostc$Annotations$Expression$get_asString$R$frost$core$String(org$frostlang$frostc$Annotations$Expression* param0) {
+frost$core$String* org$frostlang$frostc$Annotations$Expression$get_asString$R$frost$core$String(void* rawSelf) {
+org$frostlang$frostc$Annotations$Expression* param0 = (org$frostlang$frostc$Annotations$Expression*) rawSelf;
 
 org$frostlang$frostc$ASTNode* local0 = NULL;
 org$frostlang$frostc$ASTNode* local1 = NULL;
@@ -193,9 +194,9 @@ _9 = (frost$core$Bit) {_8};
 _11 = _9.value;
 if (_11) goto block2; else goto block3;
 block2:;
-_13 = (frost$core$String**) (param0->$data + 0);
+_13 = &param0->$data.$PRE.field0;
 _14 = *_13;
-_15 = (org$frostlang$frostc$ASTNode**) (param0->$data + 8);
+_15 = &param0->$data.$PRE.field1;
 _16 = *_15;
 *(&local0) = ((org$frostlang$frostc$ASTNode*) NULL);
 _18 = ((frost$core$Object*) _16);
@@ -241,9 +242,9 @@ _57 = (frost$core$Bit) {_56};
 _59 = _57.value;
 if (_59) goto block6; else goto block7;
 block6:;
-_61 = (frost$core$String**) (param0->$data + 0);
+_61 = &param0->$data.$PRE_OR.field0;
 _62 = *_61;
-_63 = (org$frostlang$frostc$ASTNode**) (param0->$data + 8);
+_63 = &param0->$data.$PRE_OR.field1;
 _64 = *_63;
 *(&local1) = ((org$frostlang$frostc$ASTNode*) NULL);
 _66 = ((frost$core$Object*) _64);
@@ -289,9 +290,9 @@ _105 = (frost$core$Bit) {_104};
 _107 = _105.value;
 if (_107) goto block10; else goto block11;
 block10:;
-_109 = (frost$core$String**) (param0->$data + 0);
+_109 = &param0->$data.$POST.field0;
 _110 = *_109;
-_111 = (org$frostlang$frostc$ASTNode**) (param0->$data + 8);
+_111 = &param0->$data.$POST.field1;
 _112 = *_111;
 *(&local2) = ((org$frostlang$frostc$ASTNode*) NULL);
 _114 = ((frost$core$Object*) _112);
@@ -337,9 +338,9 @@ _153 = (frost$core$Bit) {_152};
 _155 = _153.value;
 if (_155) goto block14; else goto block15;
 block14:;
-_157 = (frost$core$String**) (param0->$data + 0);
+_157 = &param0->$data.$POST_AND.field0;
 _158 = *_157;
-_159 = (org$frostlang$frostc$ASTNode**) (param0->$data + 8);
+_159 = &param0->$data.$POST_AND.field1;
 _160 = *_159;
 *(&local3) = ((org$frostlang$frostc$ASTNode*) NULL);
 _162 = ((frost$core$Object*) _160);
@@ -385,9 +386,9 @@ _201 = (frost$core$Bit) {_200};
 _203 = _201.value;
 if (_203) goto block18; else goto block1;
 block18:;
-_205 = (frost$core$String**) (param0->$data + 0);
+_205 = &param0->$data.$PRIORITY.field0;
 _206 = *_205;
-_207 = (org$frostlang$frostc$ASTNode**) (param0->$data + 8);
+_207 = &param0->$data.$PRIORITY.field1;
 _208 = *_207;
 *(&local4) = ((org$frostlang$frostc$ASTNode*) NULL);
 _210 = ((frost$core$Object*) _208);
@@ -429,7 +430,8 @@ frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s22, _244);
 abort(); // unreachable
 
 }
-void org$frostlang$frostc$Annotations$Expression$cleanup(org$frostlang$frostc$Annotations$Expression* param0) {
+void org$frostlang$frostc$Annotations$Expression$cleanup(void* rawSelf) {
+org$frostlang$frostc$Annotations$Expression* param0 = (org$frostlang$frostc$Annotations$Expression*) rawSelf;
 
 frost$core$String* local0 = NULL;
 org$frostlang$frostc$ASTNode* local1 = NULL;
@@ -577,7 +579,7 @@ _9 = (frost$core$Bit) {_8};
 _11 = _9.value;
 if (_11) goto block2; else goto block3;
 block2:;
-_13 = (frost$core$String**) (param0->$data + 0);
+_13 = &param0->$data.$PRE.field0;
 _14 = *_13;
 *(&local0) = ((frost$core$String*) NULL);
 _16 = ((frost$core$Object*) _14);
@@ -586,7 +588,7 @@ _18 = *(&local0);
 _19 = ((frost$core$Object*) _18);
 frost$core$Frost$unref$frost$core$Object$Q(_19);
 *(&local0) = _14;
-_22 = (org$frostlang$frostc$ASTNode**) (param0->$data + 8);
+_22 = &param0->$data.$PRE.field1;
 _23 = *_22;
 *(&local1) = ((org$frostlang$frostc$ASTNode*) NULL);
 _25 = ((frost$core$Object*) _23);
@@ -623,7 +625,7 @@ _54 = (frost$core$Bit) {_53};
 _56 = _54.value;
 if (_56) goto block5; else goto block6;
 block5:;
-_58 = (frost$core$String**) (param0->$data + 0);
+_58 = &param0->$data.$PRE_OR.field0;
 _59 = *_58;
 *(&local2) = ((frost$core$String*) NULL);
 _61 = ((frost$core$Object*) _59);
@@ -632,7 +634,7 @@ _63 = *(&local2);
 _64 = ((frost$core$Object*) _63);
 frost$core$Frost$unref$frost$core$Object$Q(_64);
 *(&local2) = _59;
-_67 = (org$frostlang$frostc$ASTNode**) (param0->$data + 8);
+_67 = &param0->$data.$PRE_OR.field1;
 _68 = *_67;
 *(&local3) = ((org$frostlang$frostc$ASTNode*) NULL);
 _70 = ((frost$core$Object*) _68);
@@ -669,7 +671,7 @@ _99 = (frost$core$Bit) {_98};
 _101 = _99.value;
 if (_101) goto block8; else goto block9;
 block8:;
-_103 = (frost$core$String**) (param0->$data + 0);
+_103 = &param0->$data.$POST.field0;
 _104 = *_103;
 *(&local4) = ((frost$core$String*) NULL);
 _106 = ((frost$core$Object*) _104);
@@ -678,7 +680,7 @@ _108 = *(&local4);
 _109 = ((frost$core$Object*) _108);
 frost$core$Frost$unref$frost$core$Object$Q(_109);
 *(&local4) = _104;
-_112 = (org$frostlang$frostc$ASTNode**) (param0->$data + 8);
+_112 = &param0->$data.$POST.field1;
 _113 = *_112;
 *(&local5) = ((org$frostlang$frostc$ASTNode*) NULL);
 _115 = ((frost$core$Object*) _113);
@@ -715,7 +717,7 @@ _144 = (frost$core$Bit) {_143};
 _146 = _144.value;
 if (_146) goto block11; else goto block12;
 block11:;
-_148 = (frost$core$String**) (param0->$data + 0);
+_148 = &param0->$data.$POST_AND.field0;
 _149 = *_148;
 *(&local6) = ((frost$core$String*) NULL);
 _151 = ((frost$core$Object*) _149);
@@ -724,7 +726,7 @@ _153 = *(&local6);
 _154 = ((frost$core$Object*) _153);
 frost$core$Frost$unref$frost$core$Object$Q(_154);
 *(&local6) = _149;
-_157 = (org$frostlang$frostc$ASTNode**) (param0->$data + 8);
+_157 = &param0->$data.$POST_AND.field1;
 _158 = *_157;
 *(&local7) = ((org$frostlang$frostc$ASTNode*) NULL);
 _160 = ((frost$core$Object*) _158);
@@ -761,7 +763,7 @@ _189 = (frost$core$Bit) {_188};
 _191 = _189.value;
 if (_191) goto block14; else goto block1;
 block14:;
-_193 = (frost$core$String**) (param0->$data + 0);
+_193 = &param0->$data.$PRIORITY.field0;
 _194 = *_193;
 *(&local8) = ((frost$core$String*) NULL);
 _196 = ((frost$core$Object*) _194);
@@ -770,7 +772,7 @@ _198 = *(&local8);
 _199 = ((frost$core$Object*) _198);
 frost$core$Frost$unref$frost$core$Object$Q(_199);
 *(&local8) = _194;
-_202 = (org$frostlang$frostc$ASTNode**) (param0->$data + 8);
+_202 = &param0->$data.$PRIORITY.field1;
 _203 = *_202;
 *(&local9) = ((org$frostlang$frostc$ASTNode*) NULL);
 _205 = ((frost$core$Object*) _203);
@@ -803,7 +805,8 @@ frost$core$Object$cleanup(_229);
 return;
 
 }
-void org$frostlang$frostc$Annotations$Expression$init$frost$core$Int$frost$core$String$org$frostlang$frostc$ASTNode(org$frostlang$frostc$Annotations$Expression* param0, frost$core$Int param1, frost$core$String* param2, org$frostlang$frostc$ASTNode* param3) {
+void org$frostlang$frostc$Annotations$Expression$init$frost$core$Int$frost$core$String$org$frostlang$frostc$ASTNode(void* rawSelf, frost$core$Int param1, frost$core$String* param2, org$frostlang$frostc$ASTNode* param3) {
+org$frostlang$frostc$Annotations$Expression* param0 = (org$frostlang$frostc$Annotations$Expression*) rawSelf;
 
 frost$core$Int* _1;
 frost$core$Object* _4;
@@ -816,12 +819,12 @@ _1 = &param0->$rawValue;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:27
 _4 = ((frost$core$Object*) param2);
 frost$core$Frost$ref$frost$core$Object$Q(_4);
-_6 = (frost$core$String**) (param0->$data + 0);
+_6 = &param0->$data.$PRE.field0;
 *_6 = param2;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Annotations.frost:27
 _9 = ((frost$core$Object*) param3);
 frost$core$Frost$ref$frost$core$Object$Q(_9);
-_11 = (org$frostlang$frostc$ASTNode**) (param0->$data + 8);
+_11 = &param0->$data.$PRE.field1;
 *_11 = param3;
 return;
 

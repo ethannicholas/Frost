@@ -34,7 +34,8 @@ static frost$core$String $s19 = { (frost$core$Class*) &frost$core$String$class, 
 static frost$core$String $s20 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x29", 1, -5808618445805089436, NULL };
 static frost$core$String $s21 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x4d\x61\x79\x62\x65\x2e\x66\x72\x6f\x73\x74", 11, 6602866763541444411, NULL };
 
-frost$core$Object* frost$core$Maybe$get$R$frost$core$Maybe$T(frost$core$Maybe* param0) {
+frost$core$Object* frost$core$Maybe$get$R$frost$core$Maybe$T(void* rawSelf) {
+frost$core$Maybe* param0 = (frost$core$Maybe*) rawSelf;
 
 frost$core$Object* local0 = NULL;
 frost$core$Maybe* _0;
@@ -85,7 +86,7 @@ _18 = (frost$core$Bit) {_17};
 _20 = _18.value;
 if (_20) goto block4; else goto block3;
 block4:;
-_22 = (frost$core$Object**) (param0->$data + 0);
+_22 = &param0->$data.$SUCCESS.field0;
 _23 = *_22;
 *(&local0) = ((frost$core$Object*) NULL);
 _25 = _23;
@@ -110,7 +111,8 @@ frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s6, _41);
 abort(); // unreachable
 
 }
-frost$core$Error* frost$core$Maybe$error$R$frost$core$Error(frost$core$Maybe* param0) {
+frost$core$Error* frost$core$Maybe$error$R$frost$core$Error(void* rawSelf) {
+frost$core$Maybe* param0 = (frost$core$Maybe*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 frost$core$Maybe* _0;
@@ -169,7 +171,7 @@ _24 = (frost$core$Bit) {_23};
 _26 = _24.value;
 if (_26) goto block5; else goto block4;
 block5:;
-_28 = (frost$core$Error**) (param0->$data + 0);
+_28 = &param0->$data.$ERROR.field0;
 _29 = *_28;
 *(&local0) = ((frost$core$Error*) NULL);
 _31 = ((frost$core$Object*) _29);
@@ -194,7 +196,8 @@ frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s11, _47);
 abort(); // unreachable
 
 }
-frost$core$Bit frost$core$Maybe$succeeded$R$frost$core$Bit(frost$core$Maybe* param0) {
+frost$core$Bit frost$core$Maybe$succeeded$R$frost$core$Bit(void* rawSelf) {
+frost$core$Maybe* param0 = (frost$core$Maybe*) rawSelf;
 
 frost$core$Maybe* _1;
 frost$core$Int* _2;
@@ -252,7 +255,8 @@ frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s12, _31);
 abort(); // unreachable
 
 }
-void frost$core$Maybe$cleanup(frost$core$Maybe* param0) {
+void frost$core$Maybe$cleanup(void* rawSelf) {
+frost$core$Maybe* param0 = (frost$core$Maybe*) rawSelf;
 
 frost$core$Object* local0 = NULL;
 frost$core$Error* local1 = NULL;
@@ -304,7 +308,7 @@ _10 = (frost$core$Bit) {_9};
 _12 = _10.value;
 if (_12) goto block2; else goto block3;
 block2:;
-_14 = (frost$core$Object**) (param0->$data + 0);
+_14 = &param0->$data.$SUCCESS.field0;
 _15 = *_14;
 *(&local0) = ((frost$core$Object*) NULL);
 _17 = _15;
@@ -333,7 +337,7 @@ _38 = (frost$core$Bit) {_37};
 _40 = _38.value;
 if (_40) goto block5; else goto block1;
 block5:;
-_42 = (frost$core$Error**) (param0->$data + 0);
+_42 = &param0->$data.$ERROR.field0;
 _43 = *_42;
 *(&local1) = ((frost$core$Error*) NULL);
 _45 = ((frost$core$Object*) _43);
@@ -358,7 +362,8 @@ frost$core$Object$cleanup(_61);
 return;
 
 }
-void frost$core$Maybe$init$frost$core$Int$frost$core$Maybe$T(frost$core$Maybe* param0, frost$core$Int param1, frost$core$Object* param2) {
+void frost$core$Maybe$init$frost$core$Int$frost$core$Maybe$T(void* rawSelf, frost$core$Int param1, frost$core$Object* param2) {
+frost$core$Maybe* param0 = (frost$core$Maybe*) rawSelf;
 
 frost$core$Maybe* _1;
 frost$core$Int* _2;
@@ -373,12 +378,13 @@ _2 = &_1->$rawValue;
 _5 = param0;
 _6 = param2;
 frost$core$Frost$ref$frost$core$Object$Q(_6);
-_8 = (frost$core$Object**) (_5->$data + 0);
+_8 = &_5->$data.$SUCCESS.field0;
 *_8 = param2;
 return;
 
 }
-void frost$core$Maybe$init$frost$core$Int$frost$core$Error(frost$core$Maybe* param0, frost$core$Int param1, frost$core$Error* param2) {
+void frost$core$Maybe$init$frost$core$Int$frost$core$Error(void* rawSelf, frost$core$Int param1, frost$core$Error* param2) {
+frost$core$Maybe* param0 = (frost$core$Maybe*) rawSelf;
 
 frost$core$Maybe* _1;
 frost$core$Int* _2;
@@ -393,12 +399,13 @@ _2 = &_1->$rawValue;
 _5 = param0;
 _6 = ((frost$core$Object*) param2);
 frost$core$Frost$ref$frost$core$Object$Q(_6);
-_8 = (frost$core$Error**) (_5->$data + 0);
+_8 = &_5->$data.$ERROR.field0;
 *_8 = param2;
 return;
 
 }
-frost$core$String* frost$core$Maybe$get_asString$R$frost$core$String(frost$core$Maybe* param0) {
+frost$core$String* frost$core$Maybe$get_asString$R$frost$core$String(void* rawSelf) {
+frost$core$Maybe* param0 = (frost$core$Maybe*) rawSelf;
 
 frost$core$Object* local0 = NULL;
 frost$core$Error* local1 = NULL;
@@ -470,7 +477,7 @@ _10 = (frost$core$Bit) {_9};
 _12 = _10.value;
 if (_12) goto block2; else goto block3;
 block2:;
-_14 = (frost$core$Object**) (param0->$data + 0);
+_14 = &param0->$data.$SUCCESS.field0;
 _15 = *_14;
 *(&local0) = ((frost$core$Object*) NULL);
 _17 = _15;
@@ -516,7 +523,7 @@ _56 = (frost$core$Bit) {_55};
 _58 = _56.value;
 if (_58) goto block6; else goto block7;
 block6:;
-_60 = (frost$core$Error**) (param0->$data + 0);
+_60 = &param0->$data.$ERROR.field0;
 _61 = *_60;
 *(&local1) = ((frost$core$Error*) NULL);
 _63 = ((frost$core$Object*) _61);

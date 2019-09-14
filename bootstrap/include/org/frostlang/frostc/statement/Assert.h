@@ -8,6 +8,6 @@ typedef struct org$frostlang$frostc$statement$Assert org$frostlang$frostc$statem
 
 void org$frostlang$frostc$statement$Assert$compileFail$org$frostlang$frostc$Compiler$org$frostlang$frostc$Position$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$Compiler* p_compiler, org$frostlang$frostc$Position p_position, org$frostlang$frostc$ASTNode* p_msg);
 void org$frostlang$frostc$statement$Assert$compile$org$frostlang$frostc$Compiler$org$frostlang$frostc$Position$org$frostlang$frostc$ASTNode$org$frostlang$frostc$ASTNode$Q(org$frostlang$frostc$Compiler* p_compiler, org$frostlang$frostc$Position p_position, org$frostlang$frostc$ASTNode* p_test, org$frostlang$frostc$ASTNode* p_msg);
-void org$frostlang$frostc$statement$Assert$init(org$frostlang$frostc$statement$Assert* self);
-void org$frostlang$frostc$statement$Assert$cleanup(org$frostlang$frostc$statement$Assert* self);
+void org$frostlang$frostc$statement$Assert$init(void* rawSelf);
+void org$frostlang$frostc$statement$Assert$cleanup(void* rawSelf);
 

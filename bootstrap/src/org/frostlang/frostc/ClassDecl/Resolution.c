@@ -13,7 +13,8 @@ org$frostlang$frostc$ClassDecl$Resolution$class_type org$frostlang$frostc$ClassD
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x43\x6c\x61\x73\x73\x44\x65\x63\x6c\x2e\x52\x65\x73\x6f\x6c\x75\x74\x69\x6f\x6e", 41, 418069668677381812, NULL };
 
-void org$frostlang$frostc$ClassDecl$Resolution$init$org$frostlang$frostc$ClassDecl$Q(org$frostlang$frostc$ClassDecl$Resolution* param0, org$frostlang$frostc$ClassDecl* param1) {
+void org$frostlang$frostc$ClassDecl$Resolution$init$org$frostlang$frostc$ClassDecl$Q(void* rawSelf, org$frostlang$frostc$ClassDecl* param1) {
+org$frostlang$frostc$ClassDecl$Resolution* param0 = (org$frostlang$frostc$ClassDecl$Resolution*) rawSelf;
 
 frost$core$Weak* _1;
 frost$core$Weak* _2;
@@ -34,8 +35,7 @@ frost$core$Object* _24;
 frost$core$Weak** _26;
 frost$core$Object* _28;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/ClassDecl.frost:41
-FROST_ASSERT(32 == sizeof(frost$core$Weak));
-_1 = (frost$core$Weak*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$Weak$class);
+_1 = (frost$core$Weak*) frostObjectAlloc(sizeof(frost$core$Weak), (frost$core$Class*) &frost$core$Weak$class);
 _2 = _1;
 _3 = ((frost$core$Object*) ((org$frostlang$frostc$ClassDecl*) NULL));
 frost$core$Weak$init$frost$core$Weak$T$Q(_2, _3);
@@ -50,8 +50,7 @@ _11 = &param0->value;
 _13 = ((frost$core$Object*) _1);
 frost$core$Frost$unref$frost$core$Object$Q(_13);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/ClassDecl.frost:44
-FROST_ASSERT(32 == sizeof(frost$core$Weak));
-_16 = (frost$core$Weak*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$Weak$class);
+_16 = (frost$core$Weak*) frostObjectAlloc(sizeof(frost$core$Weak), (frost$core$Class*) &frost$core$Weak$class);
 _17 = _16;
 _18 = ((frost$core$Object*) param1);
 frost$core$Weak$init$frost$core$Weak$T$Q(_17, _18);
@@ -68,7 +67,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_28);
 return;
 
 }
-void org$frostlang$frostc$ClassDecl$Resolution$cleanup(org$frostlang$frostc$ClassDecl$Resolution* param0) {
+void org$frostlang$frostc$ClassDecl$Resolution$cleanup(void* rawSelf) {
+org$frostlang$frostc$ClassDecl$Resolution* param0 = (org$frostlang$frostc$ClassDecl$Resolution*) rawSelf;
 
 frost$core$Object* _1;
 frost$core$Weak** _3;

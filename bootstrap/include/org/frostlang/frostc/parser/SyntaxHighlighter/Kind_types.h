@@ -7,7 +7,34 @@ typedef struct frost$core$Class frost$core$Class;
 
 typedef struct org$frostlang$frostc$parser$SyntaxHighlighter$Kind {
     frost$core$Int $rawValue;
-    int8_t $data[0];
+    union {
+        struct {
+        } $DEFAULT;
+        struct {
+        } $COMMENT;
+        struct {
+        } $DOC_COMMENT;
+        struct {
+        } $ANNOTATION;
+        struct {
+        } $METHOD_NAME;
+        struct {
+        } $METHOD_PARAMETER;
+        struct {
+        } $TYPE;
+        struct {
+        } $KEYWORD;
+        struct {
+        } $CONTROL_KEYWORD;
+        struct {
+        } $LITERAL;
+        struct {
+        } $STRING;
+        struct {
+        } $OPERATOR;
+        struct {
+        } $LABEL;
+    } $data;
 } org$frostlang$frostc$parser$SyntaxHighlighter$Kind;
 #include "frost/core/Class.h"
 typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[5]; } org$frostlang$frostc$parser$SyntaxHighlighter$Kind$class_type;

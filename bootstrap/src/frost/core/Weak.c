@@ -56,7 +56,8 @@ _16 = *(&local0);
 return _16;
 
 }
-void frost$core$Weak$init$frost$core$Weak$T$Q(frost$core$Weak* param0, frost$core$Object* param1) {
+void frost$core$Weak$init$frost$core$Weak$T$Q(void* rawSelf, frost$core$Object* param1) {
+frost$core$Weak* param0 = (frost$core$Weak*) rawSelf;
 
 frost$core$Weak* _1;
 frost$core$Bit _2;
@@ -125,7 +126,8 @@ block2:;
 return;
 
 }
-frost$core$Object* frost$core$Weak$get$R$frost$core$Weak$T(frost$core$Weak* param0) {
+frost$core$Object* frost$core$Weak$get$R$frost$core$Weak$T(void* rawSelf) {
+frost$core$Weak* param0 = (frost$core$Weak*) rawSelf;
 
 frost$core$Weak* _1;
 frost$core$Bit* _4;
@@ -160,7 +162,8 @@ frost$core$Frost$ref$frost$core$Object$Q(_17);
 return _16;
 
 }
-frost$core$Bit frost$core$Weak$get_valid$R$frost$core$Bit(frost$core$Weak* param0) {
+frost$core$Bit frost$core$Weak$get_valid$R$frost$core$Bit(void* rawSelf) {
+frost$core$Weak* param0 = (frost$core$Weak*) rawSelf;
 
 frost$core$Weak* _1;
 frost$core$Bit* _2;
@@ -172,7 +175,8 @@ _3 = *_2;
 return _3;
 
 }
-frost$core$String* frost$core$Weak$get_asString$R$frost$core$String(frost$core$Weak* param0) {
+frost$core$String* frost$core$Weak$get_asString$R$frost$core$String(void* rawSelf) {
+frost$core$Weak* param0 = (frost$core$Weak*) rawSelf;
 
 frost$core$Weak* _1;
 frost$core$Object** _2;
@@ -227,7 +231,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_29);
 return _24;
 
 }
-void frost$core$Weak$cleanup(frost$core$Weak* param0) {
+void frost$core$Weak$cleanup(void* rawSelf) {
+frost$core$Weak* param0 = (frost$core$Weak*) rawSelf;
 
 return;
 

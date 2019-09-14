@@ -30,7 +30,8 @@ static frost$core$String $s8 = { (frost$core$Class*) &frost$core$String$class, -
 static frost$core$String $s9 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x4c\x69\x6e\x6b\x65\x64\x4c\x69\x73\x74\x2e\x66\x72\x6f\x73\x74", 16, 5729708155239154352, NULL };
 static frost$core$String $s10 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x4c\x69\x6e\x6b\x65\x64\x4c\x69\x73\x74\x2e\x4e\x6f\x64\x65\x3c\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x4c\x69\x6e\x6b\x65\x64\x4c\x69\x73\x74\x2e\x4c\x69\x6e\x6b\x65\x64\x4c\x69\x73\x74\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x54\x3e\x3f\x20\x74\x6f\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x4c\x69\x6e\x6b\x65\x64\x4c\x69\x73\x74\x2e\x4e\x6f\x64\x65", 165, 434639595046643102, NULL };
 
-void org$frostlang$frostc$LinkedList$LinkedListIterator$init$org$frostlang$frostc$LinkedList$Node$LTorg$frostlang$frostc$LinkedList$LinkedListIterator$T$GT(org$frostlang$frostc$LinkedList$LinkedListIterator* param0, org$frostlang$frostc$LinkedList$Node* param1) {
+void org$frostlang$frostc$LinkedList$LinkedListIterator$init$org$frostlang$frostc$LinkedList$Node$LTorg$frostlang$frostc$LinkedList$LinkedListIterator$T$GT(void* rawSelf, org$frostlang$frostc$LinkedList$Node* param1) {
+org$frostlang$frostc$LinkedList$LinkedListIterator* param0 = (org$frostlang$frostc$LinkedList$LinkedListIterator*) rawSelf;
 
 org$frostlang$frostc$LinkedList$LinkedListIterator* _1;
 org$frostlang$frostc$LinkedList$Node* _2;
@@ -53,7 +54,8 @@ _9 = &_1->current;
 return;
 
 }
-frost$core$Object* org$frostlang$frostc$LinkedList$LinkedListIterator$next$R$org$frostlang$frostc$LinkedList$LinkedListIterator$T(org$frostlang$frostc$LinkedList$LinkedListIterator* param0) {
+frost$core$Object* org$frostlang$frostc$LinkedList$LinkedListIterator$next$R$org$frostlang$frostc$LinkedList$LinkedListIterator$T(void* rawSelf) {
+org$frostlang$frostc$LinkedList$LinkedListIterator* param0 = (org$frostlang$frostc$LinkedList$LinkedListIterator*) rawSelf;
 
 frost$core$Object* local0 = NULL;
 frost$collections$Iterator* _0;
@@ -199,7 +201,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_76);
 return _72;
 
 }
-frost$core$Bit org$frostlang$frostc$LinkedList$LinkedListIterator$get_done$R$frost$core$Bit(org$frostlang$frostc$LinkedList$LinkedListIterator* param0) {
+frost$core$Bit org$frostlang$frostc$LinkedList$LinkedListIterator$get_done$R$frost$core$Bit(void* rawSelf) {
+org$frostlang$frostc$LinkedList$LinkedListIterator* param0 = (org$frostlang$frostc$LinkedList$LinkedListIterator*) rawSelf;
 
 org$frostlang$frostc$LinkedList$LinkedListIterator* _1;
 org$frostlang$frostc$LinkedList$Node** _2;
@@ -215,7 +218,8 @@ _5 = (frost$core$Bit) {_4};
 return _5;
 
 }
-void org$frostlang$frostc$LinkedList$LinkedListIterator$cleanup(org$frostlang$frostc$LinkedList$LinkedListIterator* param0) {
+void org$frostlang$frostc$LinkedList$LinkedListIterator$cleanup(void* rawSelf) {
+org$frostlang$frostc$LinkedList$LinkedListIterator* param0 = (org$frostlang$frostc$LinkedList$LinkedListIterator*) rawSelf;
 
 frost$core$Object* _1;
 org$frostlang$frostc$LinkedList$LinkedListIterator* _3;

@@ -7,7 +7,7 @@ typedef struct org$frostlang$frostc$Symbol org$frostlang$frostc$Symbol;
 typedef struct frost$core$String frost$core$String;
 #include "frost/core/Bit_types.h"
 
-void org$frostlang$frostc$Symbol$init$org$frostlang$frostc$Symbol$Kind$org$frostlang$frostc$Position$frost$core$String(org$frostlang$frostc$Symbol* self, org$frostlang$frostc$Symbol$Kind p_kind, org$frostlang$frostc$Position p_position, frost$core$String* p_name);
-frost$core$Bit org$frostlang$frostc$Symbol$get_heritable$R$frost$core$Bit(org$frostlang$frostc$Symbol* self);
-void org$frostlang$frostc$Symbol$cleanup(org$frostlang$frostc$Symbol* self);
+void org$frostlang$frostc$Symbol$init$org$frostlang$frostc$Symbol$Kind$org$frostlang$frostc$Position$frost$core$String(void* rawSelf, org$frostlang$frostc$Symbol$Kind p_kind, org$frostlang$frostc$Position p_position, frost$core$String* p_name);
+frost$core$Bit org$frostlang$frostc$Symbol$get_heritable$R$frost$core$Bit(void* rawSelf);
+void org$frostlang$frostc$Symbol$cleanup(void* rawSelf);
 

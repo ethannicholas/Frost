@@ -21,7 +21,8 @@ static frost$core$String $s3 = { (frost$core$Class*) &frost$core$String$class, -
 static frost$core$String $s4 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2d\x3e", 2, 562958782608952338, NULL };
 static frost$core$String $s6 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x29", 1, -5808618445805089436, NULL };
 
-void org$frostlang$frostc$Alias$init$frost$core$String$org$frostlang$frostc$Type(org$frostlang$frostc$Alias* param0, frost$core$String* param1, org$frostlang$frostc$Type* param2) {
+void org$frostlang$frostc$Alias$init$frost$core$String$org$frostlang$frostc$Type(void* rawSelf, frost$core$String* param1, org$frostlang$frostc$Type* param2) {
+org$frostlang$frostc$Alias* param0 = (org$frostlang$frostc$Alias*) rawSelf;
 
 org$frostlang$frostc$Symbol$Kind local0;
 org$frostlang$frostc$Symbol$Kind local1;
@@ -64,7 +65,8 @@ _22 = &param0->type;
 return;
 
 }
-frost$core$String* org$frostlang$frostc$Alias$get_asString$R$frost$core$String(org$frostlang$frostc$Alias* param0) {
+frost$core$String* org$frostlang$frostc$Alias$get_asString$R$frost$core$String(void* rawSelf) {
+org$frostlang$frostc$Alias* param0 = (org$frostlang$frostc$Alias*) rawSelf;
 
 org$frostlang$frostc$Symbol* _1;
 frost$core$String** _2;
@@ -120,7 +122,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_30);
 return _21;
 
 }
-void org$frostlang$frostc$Alias$cleanup(org$frostlang$frostc$Alias* param0) {
+void org$frostlang$frostc$Alias$cleanup(void* rawSelf) {
+org$frostlang$frostc$Alias* param0 = (org$frostlang$frostc$Alias*) rawSelf;
 
 org$frostlang$frostc$Symbol* _1;
 org$frostlang$frostc$Type** _3;

@@ -35,6 +35,6 @@ typedef struct org$frostlang$frostc$HCodeGenerator {
     org$frostlang$frostc$CCodeGenerator* cCodeGenRetain;
 } org$frostlang$frostc$HCodeGenerator;
 #include "frost/core/Class.h"
-typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[17]; } org$frostlang$frostc$HCodeGenerator$class_type;
+typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[16]; } org$frostlang$frostc$HCodeGenerator$class_type;
 extern org$frostlang$frostc$HCodeGenerator$class_type org$frostlang$frostc$HCodeGenerator$class;
 

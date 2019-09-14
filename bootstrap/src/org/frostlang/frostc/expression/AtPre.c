@@ -144,8 +144,7 @@ frost$core$Frost$unref$frost$core$Object$Q(_38);
 return ((org$frostlang$frostc$IR$Value*) NULL);
 block4:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/AtPre.frost:22
-FROST_ASSERT(24 == sizeof(org$frostlang$frostc$Compiler$AutoAtPreFlag));
-_43 = (org$frostlang$frostc$Compiler$AutoAtPreFlag*) frostObjectAlloc(24, (frost$core$Class*) &org$frostlang$frostc$Compiler$AutoAtPreFlag$class);
+_43 = (org$frostlang$frostc$Compiler$AutoAtPreFlag*) frostObjectAlloc(sizeof(org$frostlang$frostc$Compiler$AutoAtPreFlag), (frost$core$Class*) &org$frostlang$frostc$Compiler$AutoAtPreFlag$class);
 org$frostlang$frostc$Compiler$AutoAtPreFlag$init$org$frostlang$frostc$Compiler(_43, param0);
 *(&local1) = ((org$frostlang$frostc$Compiler$AutoAtPreFlag*) NULL);
 _46 = ((frost$core$Object*) _43);
@@ -223,12 +222,14 @@ frost$core$Frost$unref$frost$core$Object$Q(_113);
 return _101;
 
 }
-void org$frostlang$frostc$expression$AtPre$init(org$frostlang$frostc$expression$AtPre* param0) {
+void org$frostlang$frostc$expression$AtPre$init(void* rawSelf) {
+org$frostlang$frostc$expression$AtPre* param0 = (org$frostlang$frostc$expression$AtPre*) rawSelf;
 
 return;
 
 }
-void org$frostlang$frostc$expression$AtPre$cleanup(org$frostlang$frostc$expression$AtPre* param0) {
+void org$frostlang$frostc$expression$AtPre$cleanup(void* rawSelf) {
+org$frostlang$frostc$expression$AtPre* param0 = (org$frostlang$frostc$expression$AtPre*) rawSelf;
 
 frost$core$Object* _1;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/AtPre.frost:10

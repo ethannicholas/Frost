@@ -7,7 +7,28 @@ typedef struct frost$core$Class frost$core$Class;
 
 typedef struct org$frostlang$frostc$Symbol$Kind {
     frost$core$Int $rawValue;
-    int8_t $data[0];
+    union {
+        struct {
+        } $ALIAS;
+        struct {
+        } $CHOICE_CASE;
+        struct {
+        } $FIELD;
+        struct {
+        } $GENERIC_CLASS_PARAMETER;
+        struct {
+        } $GENERIC_METHOD_PARAMETER;
+        struct {
+        } $METHOD;
+        struct {
+        } $METHODS;
+        struct {
+        } $PACKAGE;
+        struct {
+        } $TYPE;
+        struct {
+        } $VARIABLE;
+    } $data;
 } org$frostlang$frostc$Symbol$Kind;
 #include "frost/core/Class.h"
 typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[5]; } org$frostlang$frostc$Symbol$Kind$class_type;

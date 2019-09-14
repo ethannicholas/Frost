@@ -12,7 +12,8 @@ org$frostlang$frostc$LinkedList$Node$class_type org$frostlang$frostc$LinkedList$
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x4c\x69\x6e\x6b\x65\x64\x4c\x69\x73\x74\x2e\x4e\x6f\x64\x65", 36, -3688922123338486519, NULL };
 
-void org$frostlang$frostc$LinkedList$Node$init$org$frostlang$frostc$LinkedList$Node$T(org$frostlang$frostc$LinkedList$Node* param0, frost$core$Object* param1) {
+void org$frostlang$frostc$LinkedList$Node$init$org$frostlang$frostc$LinkedList$Node$T(void* rawSelf, frost$core$Object* param1) {
+org$frostlang$frostc$LinkedList$Node* param0 = (org$frostlang$frostc$LinkedList$Node*) rawSelf;
 
 org$frostlang$frostc$LinkedList$Node* _1;
 frost$core$Weak* _2;
@@ -32,8 +33,7 @@ frost$core$Object* _22;
 frost$core$Object** _24;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/LinkedList.frost:9
 _1 = param0;
-FROST_ASSERT(32 == sizeof(frost$core$Weak));
-_2 = (frost$core$Weak*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$Weak$class);
+_2 = (frost$core$Weak*) frostObjectAlloc(sizeof(frost$core$Weak), (frost$core$Class*) &frost$core$Weak$class);
 _3 = _2;
 _4 = ((frost$core$Object*) ((org$frostlang$frostc$LinkedList$Node*) NULL));
 frost$core$Weak$init$frost$core$Weak$T$Q(_3, _4);
@@ -60,7 +60,8 @@ _24 = &_17->value;
 return;
 
 }
-void org$frostlang$frostc$LinkedList$Node$cleanup(org$frostlang$frostc$LinkedList$Node* param0) {
+void org$frostlang$frostc$LinkedList$Node$cleanup(void* rawSelf) {
+org$frostlang$frostc$LinkedList$Node* param0 = (org$frostlang$frostc$LinkedList$Node*) rawSelf;
 
 frost$core$Object* _1;
 org$frostlang$frostc$LinkedList$Node* _3;

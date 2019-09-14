@@ -18,7 +18,8 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 static frost$core$String $s2 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x46\x69\x6c\x65\x49\x6e\x70\x75\x74\x53\x74\x72\x65\x61\x6d\x2e\x66\x72\x6f\x73\x74", 21, 6617104028383100701, NULL };
 static frost$core$String $s3 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x6f\x73\x74\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x66\x72\x6f\x73\x74\x2e\x69\x6f\x2e\x46\x69\x6c\x65\x49\x6e\x70\x75\x74\x53\x74\x72\x65\x61\x6d\x2e\x72\x65\x61\x64\x28\x62\x75\x66\x66\x65\x72\x3a\x66\x72\x6f\x73\x74\x2e\x75\x6e\x73\x61\x66\x65\x2e\x50\x6f\x69\x6e\x74\x65\x72\x3c\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x55\x49\x6e\x74\x38\x3e\x2c\x20\x6d\x61\x78\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74", 144, 7822379495546044427, NULL };
 
-void frost$io$FileInputStream$init(frost$io$FileInputStream* param0) {
+void frost$io$FileInputStream$init(void* rawSelf) {
+frost$io$FileInputStream* param0 = (frost$io$FileInputStream*) rawSelf;
 
 frost$io$InputStream* _1;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/FileInputStream.frost:15
@@ -27,7 +28,8 @@ frost$io$InputStream$init(_1);
 return;
 
 }
-void frost$io$FileInputStream$cleanup(frost$io$FileInputStream* param0) {
+void frost$io$FileInputStream$cleanup(void* rawSelf) {
+frost$io$FileInputStream* param0 = (frost$io$FileInputStream*) rawSelf;
 
 frost$core$Error* local0 = NULL;
 frost$core$Bit* _1;
@@ -70,7 +72,8 @@ frost$io$InputStream$cleanup(_22);
 return;
 
 }
-frost$core$UInt8$nullable frost$io$FileInputStream$read$R$frost$core$UInt8$Q(frost$io$FileInputStream* param0) {
+frost$core$UInt8$nullable frost$io$FileInputStream$read$R$frost$core$UInt8$Q(void* rawSelf) {
+frost$io$FileInputStream* param0 = (frost$io$FileInputStream*) rawSelf;
 
 frost$core$UInt8$nullable _1;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/FileInputStream.frost:32
@@ -78,7 +81,8 @@ frost$io$FileInputStream$readImpl$R$frost$core$UInt8$Q(&_1, param0);
 return _1;
 
 }
-frost$core$Int frost$io$FileInputStream$read$frost$unsafe$Pointer$LTfrost$core$UInt8$GT$frost$core$Int$R$frost$core$Int(frost$io$FileInputStream* param0, frost$core$UInt8* param1, frost$core$Int param2) {
+frost$core$Int frost$io$FileInputStream$read$frost$unsafe$Pointer$LTfrost$core$UInt8$GT$frost$core$Int$R$frost$core$Int(void* rawSelf, frost$core$UInt8* param1, frost$core$Int param2) {
+frost$io$FileInputStream* param0 = (frost$io$FileInputStream*) rawSelf;
 
 frost$core$Int local0;
 frost$core$Int _14;

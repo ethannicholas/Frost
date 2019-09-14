@@ -31,7 +31,8 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 static frost$core$String $s9 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x66\x72\x6f\x73\x74", 14, -28151574787386209, NULL };
 static frost$core$String $s10 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x4d\x61\x70\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x6e\x65\x78\x74\x28\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x4d\x61\x70\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x55", 118, -4698360555464701590, NULL };
 
-void frost$collections$Iterator$MapIterator$init$frost$collections$Iterator$LTfrost$collections$Iterator$MapIterator$T$GT$$LPfrost$collections$Iterator$MapIterator$T$RP$EQ$AM$GT$LPfrost$collections$Iterator$MapIterator$U$RP(frost$collections$Iterator$MapIterator* param0, frost$collections$Iterator* param1, frost$core$MutableMethod* param2) {
+void frost$collections$Iterator$MapIterator$init$frost$collections$Iterator$LTfrost$collections$Iterator$MapIterator$T$GT$$LPfrost$collections$Iterator$MapIterator$T$RP$EQ$AM$GT$LPfrost$collections$Iterator$MapIterator$U$RP(void* rawSelf, frost$collections$Iterator* param1, frost$core$MutableMethod* param2) {
+frost$collections$Iterator$MapIterator* param0 = (frost$collections$Iterator$MapIterator*) rawSelf;
 
 frost$collections$Iterator$MapIterator* _1;
 frost$core$Object* _2;
@@ -68,7 +69,8 @@ _18 = &_11->map;
 return;
 
 }
-frost$core$Bit frost$collections$Iterator$MapIterator$get_done$R$frost$core$Bit(frost$collections$Iterator$MapIterator* param0) {
+frost$core$Bit frost$collections$Iterator$MapIterator$get_done$R$frost$core$Bit(void* rawSelf) {
+frost$collections$Iterator$MapIterator* param0 = (frost$collections$Iterator$MapIterator*) rawSelf;
 
 frost$collections$Iterator$MapIterator* _1;
 frost$collections$Iterator** _2;
@@ -90,7 +92,8 @@ _6 = _5(_4);
 return _6;
 
 }
-frost$core$Object* frost$collections$Iterator$MapIterator$next$R$frost$collections$Iterator$MapIterator$U(frost$collections$Iterator$MapIterator* param0) {
+frost$core$Object* frost$collections$Iterator$MapIterator$next$R$frost$collections$Iterator$MapIterator$U(void* rawSelf) {
+frost$collections$Iterator$MapIterator* param0 = (frost$collections$Iterator$MapIterator*) rawSelf;
 
 frost$core$Object* local0 = NULL;
 frost$collections$Iterator* _0;
@@ -187,7 +190,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_45);
 return _40;
 
 }
-void frost$collections$Iterator$MapIterator$cleanup(frost$collections$Iterator$MapIterator* param0) {
+void frost$collections$Iterator$MapIterator$cleanup(void* rawSelf) {
+frost$collections$Iterator$MapIterator* param0 = (frost$collections$Iterator$MapIterator*) rawSelf;
 
 frost$core$Object* _1;
 frost$collections$Iterator$MapIterator* _3;

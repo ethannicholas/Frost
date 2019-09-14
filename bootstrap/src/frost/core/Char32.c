@@ -415,8 +415,7 @@ frost$core$Object* _68;
 frost$core$MutableString* _70;
 frost$core$Object* _71;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char32.frost:64
-FROST_ASSERT(48 == sizeof(frost$core$MutableString));
-_1 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
+_1 = (frost$core$MutableString*) frostObjectAlloc(sizeof(frost$core$MutableString), (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init(_1);
 *(&local0) = ((frost$core$MutableString*) NULL);
 _4 = ((frost$core$Object*) _1);
@@ -556,8 +555,7 @@ frost$core$Object* _79;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char32.frost:76
 // begin inline call to function frost.core.Char32.*(count:frost.core.Int):frost.core.String from Char32.frost:76:21
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char32.frost:64
-FROST_ASSERT(48 == sizeof(frost$core$MutableString));
-_3 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
+_3 = (frost$core$MutableString*) frostObjectAlloc(sizeof(frost$core$MutableString), (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init(_3);
 *(&local0) = ((frost$core$MutableString*) NULL);
 _6 = ((frost$core$Object*) _3);
@@ -958,7 +956,7 @@ block1:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char32.frost:150
 _7 = (frost$core$Int64) {1u};
 _8 = _7.value;
-_9 = ((frost$core$Char8*) frostAlloc(_8 * 1));
+_9 = ((frost$core$Char8*) frostAlloc(_8 * sizeof(frost$core$Char8)));
 *(&local0) = _9;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char32.frost:151
 _12 = *(&local0);
@@ -970,8 +968,7 @@ _17 = frost$core$Char8$init$frost$core$UInt8(_16);
 _18 = _13.value;
 _12[_18] = _17;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char32.frost:152
-FROST_ASSERT(48 == sizeof(frost$core$String));
-_21 = (frost$core$String*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$String$class);
+_21 = (frost$core$String*) frostObjectAlloc(sizeof(frost$core$String), (frost$core$Class*) &frost$core$String$class);
 _22 = *(&local0);
 _23 = (frost$core$Int) {1u};
 frost$core$String$init$frost$unsafe$Pointer$LTfrost$core$Char8$GT$frost$core$Int(_21, _22, _23);
@@ -991,7 +988,7 @@ block3:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char32.frost:155
 _37 = (frost$core$Int64) {2u};
 _38 = _37.value;
-_39 = ((frost$core$Char8*) frostAlloc(_38 * 1));
+_39 = ((frost$core$Char8*) frostAlloc(_38 * sizeof(frost$core$Char8)));
 *(&local1) = _39;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char32.frost:156
 _42 = *(&local1);
@@ -1016,8 +1013,7 @@ _60 = frost$core$Char8$init$frost$core$UInt8(_59);
 _61 = _54.value;
 _53[_61] = _60;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char32.frost:158
-FROST_ASSERT(48 == sizeof(frost$core$String));
-_64 = (frost$core$String*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$String$class);
+_64 = (frost$core$String*) frostObjectAlloc(sizeof(frost$core$String), (frost$core$Class*) &frost$core$String$class);
 _65 = *(&local1);
 _66 = (frost$core$Int) {2u};
 frost$core$String$init$frost$unsafe$Pointer$LTfrost$core$Char8$GT$frost$core$Int(_64, _65, _66);
@@ -1037,7 +1033,7 @@ block5:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char32.frost:161
 _80 = (frost$core$Int64) {3u};
 _81 = _80.value;
-_82 = ((frost$core$Char8*) frostAlloc(_81 * 1));
+_82 = ((frost$core$Char8*) frostAlloc(_81 * sizeof(frost$core$Char8)));
 *(&local2) = _82;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char32.frost:162
 _85 = *(&local2);
@@ -1074,8 +1070,7 @@ _115 = frost$core$Char8$init$frost$core$UInt8(_114);
 _116 = _109.value;
 _108[_116] = _115;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char32.frost:165
-FROST_ASSERT(48 == sizeof(frost$core$String));
-_119 = (frost$core$String*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$String$class);
+_119 = (frost$core$String*) frostObjectAlloc(sizeof(frost$core$String), (frost$core$Class*) &frost$core$String$class);
 _120 = *(&local2);
 _121 = (frost$core$Int) {3u};
 frost$core$String$init$frost$unsafe$Pointer$LTfrost$core$Char8$GT$frost$core$Int(_119, _120, _121);
@@ -1088,7 +1083,7 @@ block6:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char32.frost:167
 _129 = (frost$core$Int64) {4u};
 _130 = _129.value;
-_131 = ((frost$core$Char8*) frostAlloc(_130 * 1));
+_131 = ((frost$core$Char8*) frostAlloc(_130 * sizeof(frost$core$Char8)));
 *(&local3) = _131;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char32.frost:168
 _134 = *(&local3);
@@ -1137,8 +1132,7 @@ _176 = frost$core$Char8$init$frost$core$UInt8(_175);
 _177 = _170.value;
 _169[_177] = _176;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Char32.frost:172
-FROST_ASSERT(48 == sizeof(frost$core$String));
-_180 = (frost$core$String*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$String$class);
+_180 = (frost$core$String*) frostObjectAlloc(sizeof(frost$core$String), (frost$core$Class*) &frost$core$String$class);
 _181 = *(&local3);
 _182 = (frost$core$Int) {4u};
 frost$core$String$init$frost$unsafe$Pointer$LTfrost$core$Char8$GT$frost$core$Int(_180, _181, _182);

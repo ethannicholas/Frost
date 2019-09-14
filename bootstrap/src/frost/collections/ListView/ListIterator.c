@@ -28,7 +28,8 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 static frost$core$String $s7 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x4c\x69\x73\x74\x56\x69\x65\x77\x2e\x66\x72\x6f\x73\x74", 14, -625725483312209580, NULL };
 static frost$core$String $s8 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x4c\x69\x73\x74\x56\x69\x65\x77\x2e\x4c\x69\x73\x74\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x6e\x65\x78\x74\x28\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x4c\x69\x73\x74\x56\x69\x65\x77\x2e\x4c\x69\x73\x74\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x54", 122, -4626430657070765822, NULL };
 
-void frost$collections$ListView$ListIterator$init$frost$collections$ListView$LTfrost$collections$ListView$ListIterator$T$GT(frost$collections$ListView$ListIterator* param0, frost$collections$ListView* param1) {
+void frost$collections$ListView$ListIterator$init$frost$collections$ListView$LTfrost$collections$ListView$ListIterator$T$GT(void* rawSelf, frost$collections$ListView* param1) {
+frost$collections$ListView$ListIterator* param0 = (frost$collections$ListView$ListIterator*) rawSelf;
 
 frost$collections$ListView$ListIterator* _1;
 frost$core$Int _2;
@@ -57,7 +58,8 @@ _13 = &_6->list;
 return;
 
 }
-frost$core$Bit frost$collections$ListView$ListIterator$get_done$R$frost$core$Bit(frost$collections$ListView$ListIterator* param0) {
+frost$core$Bit frost$collections$ListView$ListIterator$get_done$R$frost$core$Bit(void* rawSelf) {
+frost$collections$ListView$ListIterator* param0 = (frost$collections$ListView$ListIterator*) rawSelf;
 
 frost$collections$ListView$ListIterator* _1;
 frost$core$Int* _2;
@@ -95,7 +97,8 @@ _15 = (frost$core$Bit) {_14};
 return _15;
 
 }
-frost$core$Object* frost$collections$ListView$ListIterator$next$R$frost$collections$ListView$ListIterator$T(frost$collections$ListView$ListIterator* param0) {
+frost$core$Object* frost$collections$ListView$ListIterator$next$R$frost$collections$ListView$ListIterator$T(void* rawSelf) {
+frost$collections$ListView$ListIterator* param0 = (frost$collections$ListView$ListIterator*) rawSelf;
 
 frost$collections$Iterator* _0;
 $fn4 _1;
@@ -188,7 +191,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_43);
 return _40;
 
 }
-void frost$collections$ListView$ListIterator$cleanup(frost$collections$ListView$ListIterator* param0) {
+void frost$collections$ListView$ListIterator$cleanup(void* rawSelf) {
+frost$collections$ListView$ListIterator* param0 = (frost$collections$ListView$ListIterator*) rawSelf;
 
 frost$core$Object* _1;
 frost$collections$ListView$ListIterator* _3;

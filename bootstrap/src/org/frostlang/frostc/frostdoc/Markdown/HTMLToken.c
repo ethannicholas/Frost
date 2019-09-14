@@ -48,7 +48,8 @@ static frost$core$String $s10 = { (frost$core$Class*) &frost$core$String$class, 
 static frost$core$String $s11 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x29", 1, -5808618445805089436, NULL };
 static frost$core$String $s12 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x4d\x61\x72\x6b\x64\x6f\x77\x6e\x2e\x66\x72\x6f\x73\x74", 14, -4595392010584278012, NULL };
 
-void org$frostlang$frostc$frostdoc$Markdown$HTMLToken$cleanup(org$frostlang$frostc$frostdoc$Markdown$HTMLToken* param0) {
+void org$frostlang$frostc$frostdoc$Markdown$HTMLToken$cleanup(void* rawSelf) {
+org$frostlang$frostc$frostdoc$Markdown$HTMLToken* param0 = (org$frostlang$frostc$frostdoc$Markdown$HTMLToken*) rawSelf;
 
 frost$core$String* local0 = NULL;
 frost$core$String* local1 = NULL;
@@ -98,7 +99,7 @@ _9 = (frost$core$Bit) {_8};
 _11 = _9.value;
 if (_11) goto block2; else goto block3;
 block2:;
-_13 = (frost$core$String**) (param0->$data + 0);
+_13 = &param0->$data.$TAG.field0;
 _14 = *_13;
 *(&local0) = ((frost$core$String*) NULL);
 _16 = ((frost$core$Object*) _14);
@@ -127,7 +128,7 @@ _37 = (frost$core$Bit) {_36};
 _39 = _37.value;
 if (_39) goto block5; else goto block1;
 block5:;
-_41 = (frost$core$String**) (param0->$data + 0);
+_41 = &param0->$data.$TEXT.field0;
 _42 = *_41;
 *(&local1) = ((frost$core$String*) NULL);
 _44 = ((frost$core$Object*) _42);
@@ -152,7 +153,8 @@ frost$core$Immutable$cleanup(_60);
 return;
 
 }
-void org$frostlang$frostc$frostdoc$Markdown$HTMLToken$init$frost$core$Int$frost$core$String(org$frostlang$frostc$frostdoc$Markdown$HTMLToken* param0, frost$core$Int param1, frost$core$String* param2) {
+void org$frostlang$frostc$frostdoc$Markdown$HTMLToken$init$frost$core$Int$frost$core$String(void* rawSelf, frost$core$Int param1, frost$core$String* param2) {
+org$frostlang$frostc$frostdoc$Markdown$HTMLToken* param0 = (org$frostlang$frostc$frostdoc$Markdown$HTMLToken*) rawSelf;
 
 frost$core$Int* _1;
 frost$core$Object* _4;
@@ -163,12 +165,13 @@ _1 = &param0->$rawValue;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/frostdoc/Markdown.frost:813
 _4 = ((frost$core$Object*) param2);
 frost$core$Frost$ref$frost$core$Object$Q(_4);
-_6 = (frost$core$String**) (param0->$data + 0);
+_6 = &param0->$data.$TAG.field0;
 *_6 = param2;
 return;
 
 }
-frost$core$Bit org$frostlang$frostc$frostdoc$Markdown$HTMLToken$$EQ$org$frostlang$frostc$frostdoc$Markdown$HTMLToken$R$frost$core$Bit(org$frostlang$frostc$frostdoc$Markdown$HTMLToken* param0, org$frostlang$frostc$frostdoc$Markdown$HTMLToken* param1) {
+frost$core$Bit org$frostlang$frostc$frostdoc$Markdown$HTMLToken$$EQ$org$frostlang$frostc$frostdoc$Markdown$HTMLToken$R$frost$core$Bit(void* rawSelf, org$frostlang$frostc$frostdoc$Markdown$HTMLToken* param1) {
+org$frostlang$frostc$frostdoc$Markdown$HTMLToken* param0 = (org$frostlang$frostc$frostdoc$Markdown$HTMLToken*) rawSelf;
 
 frost$core$String* local0 = NULL;
 frost$core$String* local1 = NULL;
@@ -262,7 +265,7 @@ _9 = (frost$core$Bit) {_8};
 _11 = _9.value;
 if (_11) goto block2; else goto block3;
 block2:;
-_13 = (frost$core$String**) (param0->$data + 0);
+_13 = &param0->$data.$TAG.field0;
 _14 = *_13;
 *(&local0) = ((frost$core$String*) NULL);
 _16 = ((frost$core$Object*) _14);
@@ -284,7 +287,7 @@ _31 = (frost$core$Bit) {_30};
 _33 = _31.value;
 if (_33) goto block6; else goto block7;
 block6:;
-_35 = (frost$core$String**) (param1->$data + 0);
+_35 = &param1->$data.$TAG.field0;
 _36 = *_35;
 *(&local1) = ((frost$core$String*) NULL);
 _38 = ((frost$core$Object*) _36);
@@ -331,7 +334,7 @@ _75 = (frost$core$Bit) {_74};
 _77 = _75.value;
 if (_77) goto block9; else goto block10;
 block9:;
-_79 = (frost$core$String**) (param0->$data + 0);
+_79 = &param0->$data.$TEXT.field0;
 _80 = *_79;
 *(&local2) = ((frost$core$String*) NULL);
 _82 = ((frost$core$Object*) _80);
@@ -353,7 +356,7 @@ _97 = (frost$core$Bit) {_96};
 _99 = _97.value;
 if (_99) goto block13; else goto block14;
 block13:;
-_101 = (frost$core$String**) (param1->$data + 0);
+_101 = &param1->$data.$TEXT.field0;
 _102 = *_101;
 *(&local3) = ((frost$core$String*) NULL);
 _104 = ((frost$core$Object*) _102);
@@ -399,7 +402,8 @@ goto block16;
 block16:;
 
 }
-frost$core$Int org$frostlang$frostc$frostdoc$Markdown$HTMLToken$get_hash$R$frost$core$Int(org$frostlang$frostc$frostdoc$Markdown$HTMLToken* param0) {
+frost$core$Int org$frostlang$frostc$frostdoc$Markdown$HTMLToken$get_hash$R$frost$core$Int(void* rawSelf) {
+org$frostlang$frostc$frostdoc$Markdown$HTMLToken* param0 = (org$frostlang$frostc$frostdoc$Markdown$HTMLToken*) rawSelf;
 
 frost$core$String* local0 = NULL;
 frost$core$String* local1 = NULL;
@@ -463,7 +467,7 @@ _9 = (frost$core$Bit) {_8};
 _11 = _9.value;
 if (_11) goto block2; else goto block3;
 block2:;
-_13 = (frost$core$String**) (param0->$data + 0);
+_13 = &param0->$data.$TAG.field0;
 _14 = *_13;
 *(&local0) = ((frost$core$String*) NULL);
 _16 = ((frost$core$Object*) _14);
@@ -504,7 +508,7 @@ _46 = (frost$core$Bit) {_45};
 _48 = _46.value;
 if (_48) goto block6; else goto block7;
 block6:;
-_50 = (frost$core$String**) (param0->$data + 0);
+_50 = &param0->$data.$TEXT.field0;
 _51 = *_50;
 *(&local1) = ((frost$core$String*) NULL);
 _53 = ((frost$core$Object*) _51);
@@ -544,7 +548,8 @@ goto block10;
 block10:;
 
 }
-frost$core$String* org$frostlang$frostc$frostdoc$Markdown$HTMLToken$get_asString$R$frost$core$String(org$frostlang$frostc$frostdoc$Markdown$HTMLToken* param0) {
+frost$core$String* org$frostlang$frostc$frostdoc$Markdown$HTMLToken$get_asString$R$frost$core$String(void* rawSelf) {
+org$frostlang$frostc$frostdoc$Markdown$HTMLToken* param0 = (org$frostlang$frostc$frostdoc$Markdown$HTMLToken*) rawSelf;
 
 frost$core$String* local0 = NULL;
 frost$core$String* local1 = NULL;
@@ -602,7 +607,7 @@ _9 = (frost$core$Bit) {_8};
 _11 = _9.value;
 if (_11) goto block2; else goto block3;
 block2:;
-_13 = (frost$core$String**) (param0->$data + 0);
+_13 = &param0->$data.$TAG.field0;
 _14 = *_13;
 *(&local0) = ((frost$core$String*) NULL);
 _16 = ((frost$core$Object*) _14);
@@ -637,7 +642,7 @@ _43 = (frost$core$Bit) {_42};
 _45 = _43.value;
 if (_45) goto block5; else goto block6;
 block5:;
-_47 = (frost$core$String**) (param0->$data + 0);
+_47 = &param0->$data.$TEXT.field0;
 _48 = *_47;
 *(&local1) = ((frost$core$String*) NULL);
 _50 = ((frost$core$Object*) _48);

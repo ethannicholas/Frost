@@ -66,12 +66,14 @@ frost$core$Frost$ref$frost$core$Object$Q(_1);
 return &$s11;
 
 }
-void org$frostlang$frostc$Config$init(org$frostlang$frostc$Config* param0) {
+void org$frostlang$frostc$Config$init(void* rawSelf) {
+org$frostlang$frostc$Config* param0 = (org$frostlang$frostc$Config*) rawSelf;
 
 return;
 
 }
-void org$frostlang$frostc$Config$cleanup(org$frostlang$frostc$Config* param0) {
+void org$frostlang$frostc$Config$cleanup(void* rawSelf) {
+org$frostlang$frostc$Config* param0 = (org$frostlang$frostc$Config*) rawSelf;
 
 frost$core$Object* _1;
 // /Users/ethannicholas/Dropbox/Frost/build/org/frostlang/frostc/Config.frost:2

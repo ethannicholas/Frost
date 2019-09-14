@@ -39,7 +39,8 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 static frost$core$String $s10 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x41\x72\x72\x61\x79\x2e\x66\x72\x6f\x73\x74", 11, -1919842861654168654, NULL };
 static frost$core$String $s11 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x5b\x5d\x28\x69\x6e\x64\x65\x78\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x54", 108, 4065685528380894665, NULL };
 
-void frost$io$PushbackInputStream$init$frost$io$InputStream(frost$io$PushbackInputStream* param0, frost$io$InputStream* param1) {
+void frost$io$PushbackInputStream$init$frost$io$InputStream(void* rawSelf, frost$io$InputStream* param1) {
+frost$io$PushbackInputStream* param0 = (frost$io$PushbackInputStream*) rawSelf;
 
 frost$collections$Array* _1;
 frost$collections$Array* _2;
@@ -56,8 +57,7 @@ frost$core$Object* _19;
 frost$io$InputStream** _21;
 frost$io$InputStream* _24;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/PushbackInputStream.frost:21
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_1 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_1 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _2 = _1;
 frost$collections$Array$init(_2);
 _4 = ((frost$core$Object*) _1);
@@ -85,7 +85,8 @@ frost$io$InputStream$init(_24);
 return;
 
 }
-frost$core$UInt8$nullable frost$io$PushbackInputStream$read$R$frost$core$UInt8$Q(frost$io$PushbackInputStream* param0) {
+frost$core$UInt8$nullable frost$io$PushbackInputStream$read$R$frost$core$UInt8$Q(void* rawSelf) {
+frost$io$PushbackInputStream* param0 = (frost$io$PushbackInputStream*) rawSelf;
 
 frost$core$UInt8 local0;
 frost$collections$Array** _1;
@@ -267,7 +268,8 @@ _86 = _85(_84);
 return _86;
 
 }
-void frost$io$PushbackInputStream$pushback$frost$core$UInt8(frost$io$PushbackInputStream* param0, frost$core$UInt8 param1) {
+void frost$io$PushbackInputStream$pushback$frost$core$UInt8(void* rawSelf, frost$core$UInt8 param1) {
+frost$io$PushbackInputStream* param0 = (frost$io$PushbackInputStream*) rawSelf;
 
 frost$collections$Array** _1;
 frost$collections$Array* _2;
@@ -279,7 +281,7 @@ _1 = &param0->pushbackBuffer;
 _2 = *_1;
 _3 = _2;
 frost$core$UInt8$wrapper* $tmp14;
-$tmp14 = (frost$core$UInt8$wrapper*) frostObjectAlloc(17, (frost$core$Class*) &frost$core$UInt8$wrapperclass);
+$tmp14 = (frost$core$UInt8$wrapper*) frostObjectAlloc(sizeof(frost$core$UInt8$wrapper), (frost$core$Class*) &frost$core$UInt8$wrapperclass);
 $tmp14->value = param1;
 _4 = ((frost$core$Object*) $tmp14);
 frost$collections$Array$add$frost$collections$Array$T(_3, _4);
@@ -288,7 +290,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_6);
 return;
 
 }
-void frost$io$PushbackInputStream$pushback$frost$core$Int8(frost$io$PushbackInputStream* param0, frost$core$Int8 param1) {
+void frost$io$PushbackInputStream$pushback$frost$core$Int8(void* rawSelf, frost$core$Int8 param1) {
+frost$io$PushbackInputStream* param0 = (frost$io$PushbackInputStream*) rawSelf;
 
 frost$collections$Array** _1;
 frost$collections$Array* _2;
@@ -308,7 +311,7 @@ _6 = param1.value;
 _7 = ((uint8_t) _6);
 _8 = (frost$core$UInt8) {_7};
 frost$core$UInt8$wrapper* $tmp15;
-$tmp15 = (frost$core$UInt8$wrapper*) frostObjectAlloc(17, (frost$core$Class*) &frost$core$UInt8$wrapperclass);
+$tmp15 = (frost$core$UInt8$wrapper*) frostObjectAlloc(sizeof(frost$core$UInt8$wrapper), (frost$core$Class*) &frost$core$UInt8$wrapperclass);
 $tmp15->value = _8;
 _10 = ((frost$core$Object*) $tmp15);
 frost$collections$Array$add$frost$collections$Array$T(_3, _10);
@@ -317,7 +320,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_12);
 return;
 
 }
-void frost$io$PushbackInputStream$pushback$frost$collections$ListView$LTfrost$core$UInt8$GT(frost$io$PushbackInputStream* param0, frost$collections$ListView* param1) {
+void frost$io$PushbackInputStream$pushback$frost$collections$ListView$LTfrost$core$UInt8$GT(void* rawSelf, frost$collections$ListView* param1) {
+frost$io$PushbackInputStream* param0 = (frost$io$PushbackInputStream*) rawSelf;
 
 frost$core$Int local0;
 frost$collections$CollectionView* _1;
@@ -494,7 +498,7 @@ _66 = &param0->pushbackBuffer;
 _67 = *_66;
 _68 = _67;
 frost$core$UInt8$wrapper* $tmp20;
-$tmp20 = (frost$core$UInt8$wrapper*) frostObjectAlloc(17, (frost$core$Class*) &frost$core$UInt8$wrapperclass);
+$tmp20 = (frost$core$UInt8$wrapper*) frostObjectAlloc(sizeof(frost$core$UInt8$wrapper), (frost$core$Class*) &frost$core$UInt8$wrapperclass);
 $tmp20->value = _63;
 _69 = ((frost$core$Object*) $tmp20);
 frost$collections$Array$add$frost$collections$Array$T(_68, _69);
@@ -555,7 +559,8 @@ block3:;
 return;
 
 }
-void frost$io$PushbackInputStream$pushback$frost$collections$ListView$LTfrost$core$Int8$GT(frost$io$PushbackInputStream* param0, frost$collections$ListView* param1) {
+void frost$io$PushbackInputStream$pushback$frost$collections$ListView$LTfrost$core$Int8$GT(void* rawSelf, frost$collections$ListView* param1) {
+frost$io$PushbackInputStream* param0 = (frost$io$PushbackInputStream*) rawSelf;
 
 frost$core$Int local0;
 frost$collections$CollectionView* _1;
@@ -740,7 +745,7 @@ _71 = _63.value;
 _72 = ((uint8_t) _71);
 _73 = (frost$core$UInt8) {_72};
 frost$core$UInt8$wrapper* $tmp25;
-$tmp25 = (frost$core$UInt8$wrapper*) frostObjectAlloc(17, (frost$core$Class*) &frost$core$UInt8$wrapperclass);
+$tmp25 = (frost$core$UInt8$wrapper*) frostObjectAlloc(sizeof(frost$core$UInt8$wrapper), (frost$core$Class*) &frost$core$UInt8$wrapperclass);
 $tmp25->value = _73;
 _75 = ((frost$core$Object*) $tmp25);
 frost$collections$Array$add$frost$collections$Array$T(_68, _75);
@@ -801,7 +806,8 @@ block3:;
 return;
 
 }
-void frost$io$PushbackInputStream$pushback$frost$core$Char8(frost$io$PushbackInputStream* param0, frost$core$Char8 param1) {
+void frost$io$PushbackInputStream$pushback$frost$core$Char8(void* rawSelf, frost$core$Char8 param1) {
+frost$io$PushbackInputStream* param0 = (frost$io$PushbackInputStream*) rawSelf;
 
 uint8_t _3;
 frost$core$UInt8 _4;
@@ -821,7 +827,7 @@ _8 = &param0->pushbackBuffer;
 _9 = *_8;
 _10 = _9;
 frost$core$UInt8$wrapper* $tmp26;
-$tmp26 = (frost$core$UInt8$wrapper*) frostObjectAlloc(17, (frost$core$Class*) &frost$core$UInt8$wrapperclass);
+$tmp26 = (frost$core$UInt8$wrapper*) frostObjectAlloc(sizeof(frost$core$UInt8$wrapper), (frost$core$Class*) &frost$core$UInt8$wrapperclass);
 $tmp26->value = _4;
 _11 = ((frost$core$Object*) $tmp26);
 frost$collections$Array$add$frost$collections$Array$T(_10, _11);
@@ -830,7 +836,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_13);
 return;
 
 }
-void frost$io$PushbackInputStream$pushback$frost$collections$ListView$LTfrost$core$Char8$GT(frost$io$PushbackInputStream* param0, frost$collections$ListView* param1) {
+void frost$io$PushbackInputStream$pushback$frost$collections$ListView$LTfrost$core$Char8$GT(void* rawSelf, frost$collections$ListView* param1) {
+frost$io$PushbackInputStream* param0 = (frost$io$PushbackInputStream*) rawSelf;
 
 frost$core$Int local0;
 frost$collections$CollectionView* _1;
@@ -1015,7 +1022,7 @@ _73 = &param0->pushbackBuffer;
 _74 = *_73;
 _75 = _74;
 frost$core$UInt8$wrapper* $tmp31;
-$tmp31 = (frost$core$UInt8$wrapper*) frostObjectAlloc(17, (frost$core$Class*) &frost$core$UInt8$wrapperclass);
+$tmp31 = (frost$core$UInt8$wrapper*) frostObjectAlloc(sizeof(frost$core$UInt8$wrapper), (frost$core$Class*) &frost$core$UInt8$wrapperclass);
 $tmp31->value = _69;
 _76 = ((frost$core$Object*) $tmp31);
 frost$collections$Array$add$frost$collections$Array$T(_75, _76);
@@ -1076,7 +1083,8 @@ block3:;
 return;
 
 }
-void frost$io$PushbackInputStream$pushback$frost$core$String(frost$io$PushbackInputStream* param0, frost$core$String* param1) {
+void frost$io$PushbackInputStream$pushback$frost$core$String(void* rawSelf, frost$core$String* param1) {
+frost$io$PushbackInputStream* param0 = (frost$io$PushbackInputStream*) rawSelf;
 
 frost$core$Int local0;
 frost$core$String$UTF8List* _3;
@@ -1173,8 +1181,7 @@ frost$core$Object* _127;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/io/PushbackInputStream.frost:111
 // begin inline call to function frost.core.String.get_utf8():frost.collections.ListView<frost.core.Char8> from PushbackInputStream.frost:111:19
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:458
-FROST_ASSERT(24 == sizeof(frost$core$String$UTF8List));
-_3 = (frost$core$String$UTF8List*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$String$UTF8List$class);
+_3 = (frost$core$String$UTF8List*) frostObjectAlloc(sizeof(frost$core$String$UTF8List), (frost$core$Class*) &frost$core$String$UTF8List$class);
 frost$core$String$UTF8List$init$frost$core$String(_3, param1);
 _5 = ((frost$collections$ListView*) _3);
 _6 = ((frost$core$Object*) _5);
@@ -1321,7 +1328,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_127);
 return;
 
 }
-void frost$io$PushbackInputStream$cleanup(frost$io$PushbackInputStream* param0) {
+void frost$io$PushbackInputStream$cleanup(void* rawSelf) {
+frost$io$PushbackInputStream* param0 = (frost$io$PushbackInputStream*) rawSelf;
 
 frost$io$InputStream* _1;
 frost$io$InputStream** _3;

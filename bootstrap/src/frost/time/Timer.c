@@ -11,7 +11,8 @@ frost$time$Timer$class_type frost$time$Timer$class = { (frost$core$Class*) &fros
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x74\x69\x6d\x65\x2e\x54\x69\x6d\x65\x72", 16, -8526916439102428213, NULL };
 
-void frost$time$Timer$init(frost$time$Timer* param0) {
+void frost$time$Timer$init(void* rawSelf) {
+frost$time$Timer* param0 = (frost$time$Timer*) rawSelf;
 
 frost$core$Real64 _1;
 frost$core$Real64* _2;
@@ -24,7 +25,8 @@ frost$time$Timer$setup(param0);
 return;
 
 }
-void frost$time$Timer$cleanup(frost$time$Timer* param0) {
+void frost$time$Timer$cleanup(void* rawSelf) {
+frost$time$Timer* param0 = (frost$time$Timer*) rawSelf;
 
 frost$core$Object* _3;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/time/Timer.frost:20
@@ -35,7 +37,8 @@ frost$core$Object$cleanup(_3);
 return;
 
 }
-frost$core$Real64 frost$time$Timer$elapsed$R$frost$core$Real64(frost$time$Timer* param0) {
+frost$core$Real64 frost$time$Timer$elapsed$R$frost$core$Real64(void* rawSelf) {
+frost$time$Timer* param0 = (frost$time$Timer*) rawSelf;
 
 double _1;
 frost$core$Real64 _2;
@@ -57,7 +60,8 @@ _8 = (frost$core$Real64) {_7};
 return _8;
 
 }
-void frost$time$Timer$reset(frost$time$Timer* param0) {
+void frost$time$Timer$reset(void* rawSelf) {
+frost$time$Timer* param0 = (frost$time$Timer*) rawSelf;
 
 double _1;
 frost$core$Real64 _2;

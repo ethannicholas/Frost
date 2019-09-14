@@ -32,7 +32,8 @@ static frost$core$String $s3 = { (frost$core$Class*) &frost$core$String$class, -
 static frost$core$String $s4 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x4d\x61\x74\x63\x68\x28", 6, -3203041817595402214, NULL };
 static frost$core$String $s5 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x29", 1, -5808618445805089436, NULL };
 
-void frost$core$String$Match$init$frost$core$Matcher(frost$core$String$Match* param0, frost$core$Matcher* param1) {
+void frost$core$String$Match$init$frost$core$Matcher(void* rawSelf, frost$core$Matcher* param1) {
+frost$core$String$Match* param0 = (frost$core$String$Match*) rawSelf;
 
 frost$collections$Array* local0 = NULL;
 frost$core$Int local1;
@@ -116,8 +117,7 @@ frost$core$Matcher$get_end$R$frost$core$String$Index(&_5, param1);
 _6 = &param0->end;
 *_6 = _5;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:271
-FROST_ASSERT(40 == sizeof(frost$collections$Array));
-_9 = (frost$collections$Array*) frostObjectAlloc(40, (frost$core$Class*) &frost$collections$Array$class);
+_9 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _10 = _9;
 frost$collections$Array$init(_10);
 *(&local0) = ((frost$collections$Array*) NULL);
@@ -225,7 +225,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_103);
 return;
 
 }
-frost$core$String* frost$core$String$Match$get_asString$R$frost$core$String(frost$core$String$Match* param0) {
+frost$core$String* frost$core$String$Match$get_asString$R$frost$core$String(void* rawSelf) {
+frost$core$String$Match* param0 = (frost$core$String$Match*) rawSelf;
 
 frost$collections$ImmutableArray** _1;
 frost$collections$ImmutableArray* _2;
@@ -259,7 +260,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_15);
 return _8;
 
 }
-void frost$core$String$Match$cleanup(frost$core$String$Match* param0) {
+void frost$core$String$Match$cleanup(void* rawSelf) {
+frost$core$String$Match* param0 = (frost$core$String$Match*) rawSelf;
 
 frost$core$Immutable* _1;
 frost$collections$ImmutableArray** _3;

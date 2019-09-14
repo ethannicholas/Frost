@@ -8,7 +8,7 @@ typedef struct frost$core$String frost$core$String;
 typedef struct frost$core$Object frost$core$Object;
 #include "frost/core/Char8_types.h"
 
-void frost$io$Console$init(frost$io$Console* self);
+void frost$io$Console$init(void* rawSelf);
 frost$io$InputStream* frost$io$Console$inputStream$R$frost$io$InputStream();
 frost$io$OutputStream* frost$io$Console$outputStream$R$frost$io$OutputStream();
 frost$io$OutputStream* frost$io$Console$errorStream$R$frost$io$OutputStream();
@@ -24,5 +24,5 @@ void frost$io$Console$printErrorLine$frost$core$Object(frost$core$Object* p_o);
 void frost$io$Console$printErrorLine();
 void frost$io$Console$read$R$frost$core$Char8$Q(frost$core$Char8$nullable* result);
 frost$core$String* frost$io$Console$readLine$R$frost$core$String$Q();
-void frost$io$Console$cleanup(frost$io$Console* self);
+void frost$io$Console$cleanup(void* rawSelf);
 

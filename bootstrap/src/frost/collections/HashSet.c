@@ -73,7 +73,8 @@ static frost$core$String $s35 = { (frost$core$Class*) &frost$core$String$class, 
 static frost$core$String $s36 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2c\x20", 2, 563935148934614481, NULL };
 static frost$core$String $s37 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x5d", 1, -5808499698549242648, NULL };
 
-void frost$collections$HashSet$init(frost$collections$HashSet* param0) {
+void frost$collections$HashSet$init(void* rawSelf) {
+frost$collections$HashSet* param0 = (frost$collections$HashSet*) rawSelf;
 
 frost$collections$HashSet* _1;
 frost$collections$HashMap* _2;
@@ -86,8 +87,7 @@ frost$collections$HashMap** _11;
 frost$core$Object* _13;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashSet.frost:8
 _1 = param0;
-FROST_ASSERT(56 == sizeof(frost$collections$HashMap));
-_2 = (frost$collections$HashMap*) frostObjectAlloc(56, (frost$core$Class*) &frost$collections$HashMap$class);
+_2 = (frost$collections$HashMap*) frostObjectAlloc(sizeof(frost$collections$HashMap), (frost$core$Class*) &frost$collections$HashMap$class);
 _3 = _2;
 frost$collections$HashMap$init(_3);
 _5 = ((frost$core$Object*) _2);
@@ -103,7 +103,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_13);
 return;
 
 }
-void frost$collections$HashSet$init$frost$collections$CollectionView$LTfrost$collections$HashSet$T$GT(frost$collections$HashSet* param0, frost$collections$CollectionView* param1) {
+void frost$collections$HashSet$init$frost$collections$CollectionView$LTfrost$collections$HashSet$T$GT(void* rawSelf, frost$collections$CollectionView* param1) {
+frost$collections$HashSet* param0 = (frost$collections$HashSet*) rawSelf;
 
 frost$collections$HashKey* local0 = NULL;
 frost$collections$HashSet* _1;
@@ -144,8 +145,7 @@ frost$core$Object* _55;
 frost$core$Object* _59;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashSet.frost:8
 _1 = param0;
-FROST_ASSERT(56 == sizeof(frost$collections$HashMap));
-_2 = (frost$collections$HashMap*) frostObjectAlloc(56, (frost$core$Class*) &frost$collections$HashMap$class);
+_2 = (frost$collections$HashMap*) frostObjectAlloc(sizeof(frost$collections$HashMap), (frost$core$Class*) &frost$collections$HashMap$class);
 _3 = _2;
 frost$collections$HashMap$init(_3);
 _5 = ((frost$core$Object*) _2);
@@ -221,7 +221,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_59);
 return;
 
 }
-void frost$collections$HashSet$add$frost$collections$HashSet$T(frost$collections$HashSet* param0, frost$collections$HashKey* param1) {
+void frost$collections$HashSet$add$frost$collections$HashSet$T(void* rawSelf, frost$collections$HashKey* param1) {
+frost$collections$HashSet* param0 = (frost$collections$HashSet*) rawSelf;
 
 frost$collections$HashSet* _1;
 frost$collections$HashMap** _2;
@@ -240,7 +241,8 @@ frost$collections$HashMap$$IDXEQ$frost$collections$HashMap$K$frost$collections$H
 return;
 
 }
-void frost$collections$HashSet$addAll$frost$collections$CollectionView$LTfrost$collections$HashSet$T$GT(frost$collections$HashSet* param0, frost$collections$CollectionView* param1) {
+void frost$collections$HashSet$addAll$frost$collections$CollectionView$LTfrost$collections$HashSet$T$GT(void* rawSelf, frost$collections$CollectionView* param1) {
+frost$collections$HashSet* param0 = (frost$collections$HashSet*) rawSelf;
 
 frost$collections$HashKey* local0 = NULL;
 frost$collections$Iterable* _1;
@@ -331,7 +333,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_42);
 return;
 
 }
-void frost$collections$HashSet$remove$frost$collections$HashSet$T(frost$collections$HashSet* param0, frost$collections$HashKey* param1) {
+void frost$collections$HashSet$remove$frost$collections$HashSet$T(void* rawSelf, frost$collections$HashKey* param1) {
+frost$collections$HashSet* param0 = (frost$collections$HashSet*) rawSelf;
 
 frost$collections$HashSet* _1;
 frost$collections$HashMap** _2;
@@ -348,7 +351,8 @@ frost$collections$HashMap$remove$frost$collections$HashMap$K(_4, _5);
 return;
 
 }
-frost$core$Int frost$collections$HashSet$get_count$R$frost$core$Int(frost$collections$HashSet* param0) {
+frost$core$Int frost$collections$HashSet$get_count$R$frost$core$Int(void* rawSelf) {
+frost$collections$HashSet* param0 = (frost$collections$HashSet*) rawSelf;
 
 frost$collections$HashSet* _1;
 frost$collections$HashMap** _2;
@@ -370,7 +374,8 @@ _6 = _5(_4);
 return _6;
 
 }
-void frost$collections$HashSet$clear(frost$collections$HashSet* param0) {
+void frost$collections$HashSet$clear(void* rawSelf) {
+frost$collections$HashSet* param0 = (frost$collections$HashSet*) rawSelf;
 
 frost$collections$HashSet* _18;
 frost$collections$HashMap** _19;
@@ -416,7 +421,8 @@ frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$St
 abort(); // unreachable
 
 }
-frost$collections$Iterator* frost$collections$HashSet$get_iterator$R$frost$collections$Iterator$LTfrost$collections$HashSet$T$GT(frost$collections$HashSet* param0) {
+frost$collections$Iterator* frost$collections$HashSet$get_iterator$R$frost$collections$Iterator$LTfrost$collections$HashSet$T$GT(void* rawSelf) {
+frost$collections$HashSet* param0 = (frost$collections$HashSet*) rawSelf;
 
 frost$collections$HashSet* _1;
 frost$collections$HashMap** _2;
@@ -446,7 +452,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_10);
 return _7;
 
 }
-frost$core$Bit frost$collections$HashSet$contains$frost$collections$HashSet$T$R$frost$core$Bit(frost$collections$HashSet* param0, frost$collections$HashKey* param1) {
+frost$core$Bit frost$collections$HashSet$contains$frost$collections$HashSet$T$R$frost$core$Bit(void* rawSelf, frost$collections$HashKey* param1) {
+frost$collections$HashSet* param0 = (frost$collections$HashSet*) rawSelf;
 
 frost$collections$HashSet* _1;
 frost$collections$HashMap** _2;
@@ -464,7 +471,8 @@ _6 = frost$collections$HashMap$contains$frost$collections$HashMap$K$R$frost$core
 return _6;
 
 }
-void frost$collections$HashSet$filterInPlace$$LPfrost$collections$HashSet$T$RP$EQ$GT$LPfrost$core$Bit$RP(frost$collections$HashSet* param0, frost$core$MutableMethod* param1) {
+void frost$collections$HashSet$filterInPlace$$LPfrost$collections$HashSet$T$RP$EQ$GT$LPfrost$core$Bit$RP(void* rawSelf, frost$core$MutableMethod* param1) {
+frost$collections$HashSet* param0 = (frost$collections$HashSet*) rawSelf;
 
 frost$collections$HashSet* _1;
 frost$collections$HashMap** _2;
@@ -487,12 +495,10 @@ _1 = param0;
 _2 = &_1->contents;
 _3 = *_2;
 _4 = _3;
-FROST_ASSERT(24 == sizeof(frost$collections$HashSet$_Closure2));
-_5 = (frost$collections$HashSet$_Closure2*) frostObjectAlloc(24, (frost$core$Class*) &frost$collections$HashSet$_Closure2$class);
+_5 = (frost$collections$HashSet$_Closure2*) frostObjectAlloc(sizeof(frost$collections$HashSet$_Closure2), (frost$core$Class*) &frost$collections$HashSet$_Closure2$class);
 frost$collections$HashSet$_Closure2$init$$LPfrost$collections$HashSet$T$RP$EQ$GT$LPfrost$core$Bit$RP(_5, param1);
 _7 = ((frost$core$Int8*) frost$collections$HashSet$_Closure2$$anonymous1$frost$collections$HashSet$T$frost$collections$HashSet$T$R$frost$core$Bit);
-FROST_ASSERT(32 == sizeof(frost$core$MutableMethod));
-_8 = (frost$core$MutableMethod*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$MutableMethod$class);
+_8 = (frost$core$MutableMethod*) frostObjectAlloc(sizeof(frost$core$MutableMethod), (frost$core$Class*) &frost$core$MutableMethod$class);
 _9 = ((frost$core$Object*) _5);
 // begin inline call to frost.core.MutableMethod.init(pointer:frost.unsafe.Pointer<frost.core.Int8>, target:frost.core.Object?) from HashSet.frost:54:32
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/MutableMethod.frost:32
@@ -515,7 +521,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_27);
 return;
 
 }
-frost$core$String* frost$collections$HashSet$get_asString$R$frost$core$String(frost$collections$HashSet* param0) {
+frost$core$String* frost$collections$HashSet$get_asString$R$frost$core$String(void* rawSelf) {
+frost$collections$HashSet* param0 = (frost$collections$HashSet*) rawSelf;
 
 frost$core$MutableString* local0 = NULL;
 frost$core$String* local1 = NULL;
@@ -577,8 +584,7 @@ frost$core$Object* _101;
 frost$core$MutableString* _104;
 frost$core$Object* _105;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/HashSet.frost:59
-FROST_ASSERT(48 == sizeof(frost$core$MutableString));
-_1 = (frost$core$MutableString*) frostObjectAlloc(48, (frost$core$Class*) &frost$core$MutableString$class);
+_1 = (frost$core$MutableString*) frostObjectAlloc(sizeof(frost$core$MutableString), (frost$core$Class*) &frost$core$MutableString$class);
 frost$core$MutableString$init$frost$core$String(_1, &$s27);
 *(&local0) = ((frost$core$MutableString*) NULL);
 _4 = ((frost$core$Object*) _1);
@@ -705,7 +711,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_105);
 return _95;
 
 }
-void frost$collections$HashSet$cleanup(frost$collections$HashSet* param0) {
+void frost$collections$HashSet$cleanup(void* rawSelf) {
+frost$collections$HashSet* param0 = (frost$collections$HashSet*) rawSelf;
 
 frost$core$Object* _1;
 frost$collections$HashSet* _3;

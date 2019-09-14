@@ -17,7 +17,7 @@ __attribute__((weak)) frost$core$Object* frost$core$String$UTF8List$$IDX$frost$c
     frost$core$Char8 result = frost$core$String$UTF8List$$IDX$frost$core$Int$R$frost$core$Char8(p0, p1);
 
     frost$core$Char8$wrapper* $tmp2;
-    $tmp2 = (frost$core$Char8$wrapper*) frostObjectAlloc(17, (frost$core$Class*) &frost$core$Char8$wrapperclass);
+    $tmp2 = (frost$core$Char8$wrapper*) frostObjectAlloc(sizeof(frost$core$Char8$wrapper), (frost$core$Class*) &frost$core$Char8$wrapperclass);
     $tmp2->value = result;
     return ((frost$core$Object*) $tmp2);
 }
@@ -52,7 +52,8 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 static frost$core$String $s5 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x53\x74\x72\x69\x6e\x67\x2e\x66\x72\x6f\x73\x74", 12, 7542466198510074048, NULL };
 static frost$core$String $s6 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x55\x54\x46\x38\x4c\x69\x73\x74\x2e\x5b\x5d\x28\x69\x6e\x64\x65\x78\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x43\x68\x61\x72\x38", 102, 6538971543095969619, NULL };
 
-void frost$core$String$UTF8List$init$frost$core$String(frost$core$String$UTF8List* param0, frost$core$String* param1) {
+void frost$core$String$UTF8List$init$frost$core$String(void* rawSelf, frost$core$String* param1) {
+frost$core$String$UTF8List* param0 = (frost$core$String$UTF8List*) rawSelf;
 
 frost$core$Object* _1;
 frost$core$String** _3;
@@ -71,7 +72,8 @@ _7 = &param0->str;
 return;
 
 }
-frost$core$Char8 frost$core$String$UTF8List$$IDX$frost$core$Int$R$frost$core$Char8(frost$core$String$UTF8List* param0, frost$core$Int param1) {
+frost$core$Char8 frost$core$String$UTF8List$$IDX$frost$core$Int$R$frost$core$Char8(void* rawSelf, frost$core$Int param1) {
+frost$core$String$UTF8List* param0 = (frost$core$String$UTF8List*) rawSelf;
 
 frost$core$Int _0;
 int64_t _1;
@@ -132,7 +134,8 @@ _26 = _23[_25];
 return _26;
 
 }
-frost$core$Int frost$core$String$UTF8List$get_count$R$frost$core$Int(frost$core$String$UTF8List* param0) {
+frost$core$Int frost$core$String$UTF8List$get_count$R$frost$core$Int(void* rawSelf) {
+frost$core$String$UTF8List* param0 = (frost$core$String$UTF8List*) rawSelf;
 
 frost$core$String** _1;
 frost$core$String* _2;
@@ -146,7 +149,8 @@ _4 = *_3;
 return _4;
 
 }
-frost$collections$Iterator* frost$core$String$UTF8List$get_iterator$R$frost$collections$Iterator$LTfrost$core$Char8$GT(frost$core$String$UTF8List* param0) {
+frost$collections$Iterator* frost$core$String$UTF8List$get_iterator$R$frost$collections$Iterator$LTfrost$core$Char8$GT(void* rawSelf) {
+frost$core$String$UTF8List* param0 = (frost$core$String$UTF8List*) rawSelf;
 
 frost$core$String$UTF8Iterator* _1;
 frost$core$String** _2;
@@ -155,8 +159,7 @@ frost$collections$Iterator* _5;
 frost$core$Object* _6;
 frost$core$Object* _8;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/String.frost:103
-FROST_ASSERT(32 == sizeof(frost$core$String$UTF8Iterator));
-_1 = (frost$core$String$UTF8Iterator*) frostObjectAlloc(32, (frost$core$Class*) &frost$core$String$UTF8Iterator$class);
+_1 = (frost$core$String$UTF8Iterator*) frostObjectAlloc(sizeof(frost$core$String$UTF8Iterator), (frost$core$Class*) &frost$core$String$UTF8Iterator$class);
 _2 = &param0->str;
 _3 = *_2;
 frost$core$String$UTF8Iterator$init$frost$core$String(_1, _3);
@@ -168,7 +171,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_8);
 return _5;
 
 }
-void frost$core$String$UTF8List$cleanup(frost$core$String$UTF8List* param0) {
+void frost$core$String$UTF8List$cleanup(void* rawSelf) {
+frost$core$String$UTF8List* param0 = (frost$core$String$UTF8List*) rawSelf;
 
 frost$core$Object* _1;
 frost$core$String** _3;

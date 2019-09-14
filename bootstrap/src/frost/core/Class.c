@@ -15,12 +15,14 @@ frost$core$Class$class_type frost$core$Class$class = { (frost$core$Class*) &fros
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x43\x6c\x61\x73\x73", 16, -6222778858933417332, NULL };
 
-void frost$core$Class$init(frost$core$Class* param0) {
+void frost$core$Class$init(void* rawSelf) {
+frost$core$Class* param0 = (frost$core$Class*) rawSelf;
 
 return;
 
 }
-void frost$core$Class$cleanup(frost$core$Class* param0) {
+void frost$core$Class$cleanup(void* rawSelf) {
+frost$core$Class* param0 = (frost$core$Class*) rawSelf;
 
 frost$core$Immutable* _1;
 frost$core$String** _3;

@@ -41,7 +41,8 @@ static frost$core$String $s23 = { (frost$core$Class*) &frost$core$String$class, 
 static frost$core$String $s24 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x66\x72\x6f\x73\x74", 14, -28151574787386209, NULL };
 static frost$core$String $s25 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x3f\x20\x74\x6f\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74", 67, 6831135569071847533, NULL };
 
-void frost$collections$Iterator$RangeIterator$init$frost$collections$Iterator$LTfrost$collections$Iterator$RangeIterator$T$GT$frost$core$Int$Q$frost$core$Int$Q$frost$core$Bit$frost$core$Int(frost$collections$Iterator$RangeIterator* param0, frost$collections$Iterator* param1, frost$core$Int$nullable param2, frost$core$Int$nullable param3, frost$core$Bit param4, frost$core$Int param5) {
+void frost$collections$Iterator$RangeIterator$init$frost$collections$Iterator$LTfrost$collections$Iterator$RangeIterator$T$GT$frost$core$Int$Q$frost$core$Int$Q$frost$core$Bit$frost$core$Int(void* rawSelf, frost$collections$Iterator* param1, frost$core$Int$nullable param2, frost$core$Int$nullable param3, frost$core$Bit param4, frost$core$Int param5) {
+frost$collections$Iterator$RangeIterator* param0 = (frost$collections$Iterator$RangeIterator*) rawSelf;
 
 frost$core$Int local0;
 frost$collections$Iterator$RangeIterator* _1;
@@ -415,7 +416,8 @@ block29:;
 return;
 
 }
-frost$core$Bit frost$collections$Iterator$RangeIterator$get_done$R$frost$core$Bit(frost$collections$Iterator$RangeIterator* param0) {
+frost$core$Bit frost$collections$Iterator$RangeIterator$get_done$R$frost$core$Bit(void* rawSelf) {
+frost$collections$Iterator$RangeIterator* param0 = (frost$collections$Iterator$RangeIterator*) rawSelf;
 
 frost$collections$Iterator$RangeIterator* _1;
 frost$core$Bit* _2;
@@ -427,7 +429,8 @@ _3 = *_2;
 return _3;
 
 }
-frost$core$Object* frost$collections$Iterator$RangeIterator$next$R$frost$collections$Iterator$RangeIterator$T(frost$collections$Iterator$RangeIterator* param0) {
+frost$core$Object* frost$collections$Iterator$RangeIterator$next$R$frost$collections$Iterator$RangeIterator$T(void* rawSelf) {
+frost$collections$Iterator$RangeIterator* param0 = (frost$collections$Iterator$RangeIterator*) rawSelf;
 
 frost$core$Object* local0 = NULL;
 frost$core$Int local1;
@@ -771,7 +774,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_178);
 return _174;
 
 }
-void frost$collections$Iterator$RangeIterator$cleanup(frost$collections$Iterator$RangeIterator* param0) {
+void frost$collections$Iterator$RangeIterator$cleanup(void* rawSelf) {
+frost$collections$Iterator$RangeIterator* param0 = (frost$collections$Iterator$RangeIterator*) rawSelf;
 
 frost$core$Object* _1;
 frost$collections$Iterator$RangeIterator* _3;

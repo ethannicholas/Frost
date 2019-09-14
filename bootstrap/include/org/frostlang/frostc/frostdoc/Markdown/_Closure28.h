@@ -6,7 +6,7 @@ typedef struct org$frostlang$frostc$frostdoc$Markdown org$frostlang$frostc$frost
 typedef struct frost$core$Object frost$core$Object;
 typedef struct frost$collections$ListView frost$collections$ListView;
 
-void org$frostlang$frostc$frostdoc$Markdown$_Closure28$init$org$frostlang$frostc$frostdoc$Markdown(org$frostlang$frostc$frostdoc$Markdown$_Closure28* self, org$frostlang$frostc$frostdoc$Markdown* p_$self);
-void org$frostlang$frostc$frostdoc$Markdown$_Closure28$cleanup(org$frostlang$frostc$frostdoc$Markdown$_Closure28* self);
-frost$core$Object* org$frostlang$frostc$frostdoc$Markdown$_Closure28$$anonymous27$frost$collections$ListView$LTfrost$core$String$Q$GT$R$frost$core$Object(org$frostlang$frostc$frostdoc$Markdown$_Closure28* self, frost$collections$ListView* p_groups);
+void org$frostlang$frostc$frostdoc$Markdown$_Closure28$init$org$frostlang$frostc$frostdoc$Markdown(void* rawSelf, org$frostlang$frostc$frostdoc$Markdown* p_$self);
+void org$frostlang$frostc$frostdoc$Markdown$_Closure28$cleanup(void* rawSelf);
+frost$core$Object* org$frostlang$frostc$frostdoc$Markdown$_Closure28$$anonymous27$frost$collections$ListView$LTfrost$core$String$Q$GT$R$frost$core$Object(void* rawSelf, frost$collections$ListView* p_groups);
 

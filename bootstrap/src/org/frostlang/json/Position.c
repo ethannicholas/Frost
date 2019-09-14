@@ -135,7 +135,7 @@ _2 = frost$core$Int$get_asString$R$frost$core$String(_1);
 _3 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_2, &$s5);
 _4 = param0.column;
 frost$core$Int$wrapper* $tmp6;
-$tmp6 = (frost$core$Int$wrapper*) frostObjectAlloc(24, (frost$core$Class*) &frost$core$Int$wrapperclass);
+$tmp6 = (frost$core$Int$wrapper*) frostObjectAlloc(sizeof(frost$core$Int$wrapper), (frost$core$Class*) &frost$core$Int$wrapperclass);
 $tmp6->value = _4;
 _5 = ((frost$core$Object*) $tmp6);
 // begin inline call to function frost.core.String.+(other:frost.core.Object):frost.core.String from Position.frost:22:19

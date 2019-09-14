@@ -21,7 +21,8 @@ typedef void (*$fn5)(frost$collections$CollectionWriter*, frost$core$Object*);
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x43\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x57\x72\x69\x74\x65\x72", 34, 4280469431822817607, NULL };
 
-void frost$collections$CollectionWriter$addAll$frost$collections$CollectionView$LTfrost$collections$CollectionWriter$T$GT(frost$collections$CollectionWriter* param0, frost$collections$CollectionView* param1) {
+void frost$collections$CollectionWriter$addAll$frost$collections$CollectionView$LTfrost$collections$CollectionWriter$T$GT(void* rawSelf, frost$collections$CollectionView* param1) {
+frost$collections$CollectionWriter* param0 = (frost$collections$CollectionWriter*) rawSelf;
 
 frost$core$Object* local0 = NULL;
 frost$collections$Iterable* _1;

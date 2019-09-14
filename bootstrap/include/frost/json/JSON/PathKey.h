@@ -7,10 +7,10 @@ typedef struct frost$core$String frost$core$String;
 #include "frost/core/String/Index_types.h"
 #include "frost/core/Bit_types.h"
 
-void frost$json$JSON$PathKey$cleanup(frost$json$JSON$PathKey* self);
-void frost$json$JSON$PathKey$init$frost$core$Int$frost$core$String$frost$core$String$Index(frost$json$JSON$PathKey* self, frost$core$Int p_rv, frost$core$String* p_f0, frost$core$String$Index p_f1);
-void frost$json$JSON$PathKey$init$frost$core$Int$frost$core$Int$frost$core$String$Index(frost$json$JSON$PathKey* self, frost$core$Int p_rv, frost$core$Int p_f0, frost$core$String$Index p_f1);
-frost$core$Bit frost$json$JSON$PathKey$$EQ$frost$json$JSON$PathKey$R$frost$core$Bit(frost$json$JSON$PathKey* self, frost$json$JSON$PathKey* p_other);
-frost$core$Int frost$json$JSON$PathKey$get_hash$R$frost$core$Int(frost$json$JSON$PathKey* self);
-frost$core$String* frost$json$JSON$PathKey$get_asString$R$frost$core$String(frost$json$JSON$PathKey* self);
+void frost$json$JSON$PathKey$cleanup(void* rawSelf);
+void frost$json$JSON$PathKey$init$frost$core$Int$frost$core$String$frost$core$String$Index(void* rawSelf, frost$core$Int p_rv, frost$core$String* p_f0, frost$core$String$Index p_f1);
+void frost$json$JSON$PathKey$init$frost$core$Int$frost$core$Int$frost$core$String$Index(void* rawSelf, frost$core$Int p_rv, frost$core$Int p_f0, frost$core$String$Index p_f1);
+frost$core$Bit frost$json$JSON$PathKey$$EQ$frost$json$JSON$PathKey$R$frost$core$Bit(void* rawSelf, frost$json$JSON$PathKey* p_other);
+frost$core$Int frost$json$JSON$PathKey$get_hash$R$frost$core$Int(void* rawSelf);
+frost$core$String* frost$json$JSON$PathKey$get_asString$R$frost$core$String(void* rawSelf);
 

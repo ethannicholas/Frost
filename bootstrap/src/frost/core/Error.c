@@ -22,7 +22,8 @@ frost$core$Error$class_type frost$core$Error$class = { (frost$core$Class*) &fros
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x45\x72\x72\x6f\x72", 16, -2245513124245986350, NULL };
 static frost$core$String $s2 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "", 0, -3750763034362895579, NULL };
 
-void frost$core$Error$init$frost$core$String(frost$core$Error* param0, frost$core$String* param1) {
+void frost$core$Error$init$frost$core$String(void* rawSelf, frost$core$String* param1) {
+frost$core$Error* param0 = (frost$core$Error*) rawSelf;
 
 frost$core$Object* _1;
 frost$core$String** _3;
@@ -41,7 +42,8 @@ _7 = &param0->message;
 return;
 
 }
-frost$core$String* frost$core$Error$get_asString$R$frost$core$String(frost$core$Error* param0) {
+frost$core$String* frost$core$Error$get_asString$R$frost$core$String(void* rawSelf) {
+frost$core$Error* param0 = (frost$core$Error*) rawSelf;
 
 frost$core$String** _1;
 frost$core$String* _2;
@@ -67,7 +69,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_13);
 return _8;
 
 }
-void frost$core$Error$cleanup(frost$core$Error* param0) {
+void frost$core$Error$cleanup(void* rawSelf) {
+frost$core$Error* param0 = (frost$core$Error*) rawSelf;
 
 frost$core$Immutable* _1;
 frost$core$String** _3;

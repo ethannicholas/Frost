@@ -19,7 +19,8 @@ typedef frost$core$Bit (*$fn6)(frost$core$Comparable*, frost$core$Comparable*);
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x43\x6f\x6d\x70\x61\x72\x61\x62\x6c\x65", 21, -9060234412520564052, NULL };
 
-frost$core$Bit frost$core$Comparable$$LT$frost$core$Comparable$T$R$frost$core$Bit(frost$core$Comparable* param0, frost$core$Comparable* param1) {
+frost$core$Bit frost$core$Comparable$$LT$frost$core$Comparable$T$R$frost$core$Bit(void* rawSelf, frost$core$Comparable* param1) {
+frost$core$Comparable* param0 = (frost$core$Comparable*) rawSelf;
 
 frost$core$Comparable* _1;
 frost$core$Comparable* _2;
@@ -39,7 +40,8 @@ _5 = _4(_2, _3);
 return _5;
 
 }
-frost$core$Bit frost$core$Comparable$$GE$frost$core$Comparable$T$R$frost$core$Bit(frost$core$Comparable* param0, frost$core$Comparable* param1) {
+frost$core$Bit frost$core$Comparable$$GE$frost$core$Comparable$T$R$frost$core$Bit(void* rawSelf, frost$core$Comparable* param1) {
+frost$core$Comparable* param0 = (frost$core$Comparable*) rawSelf;
 
 frost$core$Comparable* _1;
 $fn4 _2;
@@ -63,7 +65,8 @@ _8 = (frost$core$Bit) {_7};
 return _8;
 
 }
-frost$core$Bit frost$core$Comparable$$LE$frost$core$Comparable$T$R$frost$core$Bit(frost$core$Comparable* param0, frost$core$Comparable* param1) {
+frost$core$Bit frost$core$Comparable$$LE$frost$core$Comparable$T$R$frost$core$Bit(void* rawSelf, frost$core$Comparable* param1) {
+frost$core$Comparable* param0 = (frost$core$Comparable*) rawSelf;
 
 frost$core$Comparable* _1;
 $fn6 _2;

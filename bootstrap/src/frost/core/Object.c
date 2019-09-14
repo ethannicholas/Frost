@@ -12,7 +12,8 @@ static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -
 static frost$core$String $s2 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x3c", 1, -5808604152153922693, NULL };
 static frost$core$String $s3 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x3e", 1, -5808601953130666271, NULL };
 
-frost$core$String* frost$core$Object$get_asString$R$frost$core$String(frost$core$Object* param0) {
+frost$core$String* frost$core$Object$get_asString$R$frost$core$String(void* rawSelf) {
+frost$core$Object* param0 = (frost$core$Object*) rawSelf;
 
 frost$core$Class** _1;
 frost$core$Class* _2;
@@ -39,7 +40,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_11);
 return _6;
 
 }
-void frost$core$Object$cleanup(frost$core$Object* param0) {
+void frost$core$Object$cleanup(void* rawSelf) {
+frost$core$Object* param0 = (frost$core$Object*) rawSelf;
 
 frost$core$Class** _0;
 frost$core$Class* _1;
@@ -51,7 +53,8 @@ frost$core$Frost$unref$frost$core$Object$Q(_2);
 return;
 
 }
-void frost$core$Object$init(frost$core$Object* param0) {
+void frost$core$Object$init(void* rawSelf) {
+frost$core$Object* param0 = (frost$core$Object*) rawSelf;
 
 return;
 
