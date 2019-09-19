@@ -1,0 +1,651 @@
+package org.frostlang.frostc
+
+uses frost.unsafe.Pointer
+uses org.frostlang.frostc.expression.Binary
+
+====================================================================================================
+Incredibly slow, even for an interpreter. Just a proof of concept at this point.
+====================================================================================================
+class Interpreter : CodeGenerator {
+    def strings := HashMap<String, Int64>()
+
+    def stackSize := 10240
+
+    def stackBase := Pointer<UInt8>.alloc(stackSize)
+
+    def stack := stackBase
+
+    def maxId:Int
+
+    class Code {
+        def locals:Array<Type>
+
+        def blocks:Array<Int>
+
+        def ids:Array<Array<IR.Statement.ID>>
+
+        def ir:Array<Array<IR.Statement>>
+
+        def maxId:Int
+
+        init(locals:Array<Type>, blocks:Array<Int>, ids:Array<Array<IR.Statement.ID>>,
+                ir:Array<Array<IR.Statement>>, maxId:Int) {
+            self.locals := locals
+            self.blocks := blocks
+            self.ids := ids
+            self.ir := ir
+            self.maxId := maxId
+        }
+    }
+
+    class Context {
+        @weak
+        def interpreter:Interpreter
+
+        def code:Code
+
+        def locals:Array<Int>
+
+        -- if the value fits into an Int64, contains the value. Otherwise, contains a pointer to
+        -- the value.
+        def arguments:Array<Int64>
+
+        -- if the value fits into an Int64, contains the value. Otherwise, contains a pointer to
+        -- the value.
+        def statements:Array<Int64?>
+
+        init(interpreter:Interpreter, code:Code) {
+            self.interpreter := interpreter
+            self.code := code
+
+            locals := Array<Int>(code.locals.count)
+            for i in 0 .. code.locals.count {
+                def t := code.locals[i]
+                locals.add(interpreter.alloca(t).asInt)
+            }
+
+            arguments := Array<Int64>()
+
+            statements := Array<Int64?>(code.maxId + 1, null)
+        }
+
+        method value(value:IR.Value):Int64 {
+            match value {
+                when IR.Value.BIT(b, _) {
+                    return b.choose(1, 0)
+                }
+                when IR.Value.INT(i, _) {
+                    return i.asInt64
+                }
+                when IR.Value.LOCAL(idx, _) {
+                    return locals[idx].asInt64
+                }
+                when IR.Value.METHOD_POINTER(MethodDecl, Type) {
+                    System.crash()
+                }
+                when IR.Value.NULL(Type) {
+                    return 0
+                }
+                when IR.Value.PARAMETER(idx, _) {
+                    return arguments[idx]
+                }
+                when IR.Value.REAL(r, _) {
+                    return Frost.floatToIntBits(r)
+                }
+                when IR.Value.REF(id, _) {
+                    return statements[id.value]
+                }
+                when IR.Value.STRING(s, _) {
+                    var result := interpreter.strings[s]
+                    if result == null {
+                        def compiler := interpreter.compiler
+                        assert LLVMCodeGenerator.POINTER_SIZE = LLVMCodeGenerator.INT_SIZE
+                        def base := Pointer<UInt8>.alloc(interpreter.llvmCodeGen.sizeOf(
+                                compiler.STRING_TYPE))
+                        def string := compiler.getClass(compiler.STRING_TYPE)
+                        var current := base
+
+                        -- class
+                        assert compiler.instanceFields(string)[0].name = "$class"
+                        assert current.asInt - base.asInt =
+                                compiler.instanceFields(string)[0].offset
+                        current->Pointer<ClassDecl>.set(string)
+                        current := current.offset(LLVMCodeGenerator.POINTER_SIZE)
+
+                        -- refCount
+                        assert compiler.instanceFields(string)[1].name = "refCount"
+                        assert current.asInt - base.asInt =
+                                compiler.instanceFields(string)[1].offset
+                        current->Pointer<Int32>.set(LLVMCodeGenerator.NO_REFCNT.asInt32)
+                        current := current.offset(4)
+
+                        -- flags
+                        assert compiler.instanceFields(string)[2].name = "$flags"
+                        assert current.asInt - base.asInt =
+                                compiler.instanceFields(string)[2].offset
+                        current->Pointer<Int8>.set(0)
+                        current := current.offset(4)
+
+                        -- data
+                        assert compiler.instanceFields(string)[3].name = "data"
+                        assert current.asInt - base.asInt =
+                                compiler.instanceFields(string)[3].offset, "expected \{compiler.instanceFields(string)[3].offset}, have \{current.asInt - base.asInt}"
+                        def data := Pointer<Char8>.alloc(s._length)
+                        for i in 0 .. s._length {
+                            data[i] := s.data[i]
+                        }
+                        current->Pointer<Int>.set(data.asInt)
+                        current := current.offset(LLVMCodeGenerator.POINTER_SIZE)
+
+                        -- _length
+                        assert compiler.instanceFields(string)[4].name = "_length"
+                        assert current.asInt - base.asInt =
+                                compiler.instanceFields(string)[4].offset
+                        current->Pointer<Int>.set(s._length)
+                        current := current.offset(LLVMCodeGenerator.INT_SIZE)
+
+                        -- dummy
+                        assert compiler.instanceFields(string)[5].name = "dummy"
+                        assert current.asInt - base.asInt =
+                                compiler.instanceFields(string)[5].offset
+                        current := current.offset(LLVMCodeGenerator.INT_SIZE)
+
+                        -- owner
+                        assert compiler.instanceFields(string)[6].name = "owner"
+                        assert current.asInt - base.asInt =
+                                compiler.instanceFields(string)[6].offset
+                        current->Pointer<Int>.set(0)
+                        current := current.offset(LLVMCodeGenerator.INT_SIZE)
+
+                        assert current.asInt - base.asInt =
+                                interpreter.llvmCodeGen.sizeOf(string.type)
+                        result := base.asInt.asInt64
+                        interpreter.strings[s] := result
+                    }
+                    return result
+                }
+                otherwise {
+                    unreachable
+                }
+            }
+        }
+    }
+
+    @weak
+    def compiler:Compiler?
+
+    def llvmCodeGen := LLVMCodeGenerator("", MemoryOutputStream())
+
+    def methodCode := IdentityMap<MethodDecl, Code>()
+
+    def builtins := IdentityMap<MethodDecl, (Context, FixedArray<IR.Value>)=&>(Int64)>()
+
+    def contexts := Stack<Context>()
+
+    def main:MethodDecl?
+
+    @override
+    method setCompiler(compiler:Compiler) {
+        self.compiler := compiler
+        llvmCodeGen.setCompiler(compiler)
+    }
+
+    @override
+    method start(cl:ClassDecl) {
+    }
+
+    @override
+    method end(cl:ClassDecl) {
+    }
+
+    @override
+    method writeDeclaration(m:MethodDecl) {
+    }
+
+    @override
+    method write(m:MethodDecl, ir:IR) {
+        if m.name = "main" & m.annotations.isClass {
+            main := m
+        }
+        def blockIds := Array<Int>(ir.blocks.count)
+        for i in 0 .. ir.blocks.count {
+            def b := ir.blocks[i].id.value
+            while blockIds.count <= b {
+                blockIds.add(-1)
+            }
+            blockIds[b] := i
+        }
+        methodCode[m] := Code(ir.locals, blockIds,
+                ir.blocks.map(b => Array<IR.Statement.ID>(b.ids)),
+                ir.blocks.map(b => Array<IR.Statement>(b.statements)),
+                ir.blocks.map(b => b.ids.map(id => id.value).fold(Int.max)).fold(Int.max))
+    }
+
+    @override
+    method finish() {
+    }
+
+    function align(p:Pointer<UInt8>, alignment:Int):Pointer<UInt8> {
+        def rem := p.asInt % alignment
+        if rem != 0 {
+            return Pointer<UInt8>.from(p.asInt + alignment - rem)
+        } 
+        return p
+    }
+
+    -- we reserve 8 bytes of working stack space
+    @pre(stack.asInt - stackBase.asInt + llvmCodeGen.sizeOf(t) < stackSize - 8)
+    method alloca(t:Type):Pointer<UInt8> {
+        stack := align(stack, llvmCodeGen.alignment(t))
+        def result := stack
+        stack := Pointer<UInt8>.from(stack.asInt + llvmCodeGen.sizeOf(t))
+        return result
+    }
+
+    ================================================================================================
+    Returns true if the type in question can be passed around inside an `Int64`. This is true only
+    for [Value]s which are greater than 8 bytes in size (non-`Value` objects are handled as
+    pointers.)
+    ================================================================================================
+    function needsStructPointer(t:Type):Bit {
+        return compiler.isValue(t) & llvmCodeGen.sizeOf(t) > 8
+    }
+
+    method destroyObject(o:Pointer<UInt8>) {
+        -- call cleanup
+        def cl := Pointer<Int>.from(o->Pointer<Int>.get()).convertTo<ClassDecl>()
+        def cleanup := compiler.getVTable(cl)[1]
+        call(cleanup, FixedArray<IR.Value>.from([IR.Value.INT(o.asInt.asUInt64,
+                compiler.INVALID_TYPE)]))
+
+        o.destroy()
+    }
+
+    method ref(o:Pointer<UInt8>) {
+        if o.asInt = 0 {
+            return
+        }
+        def refCntPtr := o.offset(LLVMCodeGenerator.POINTER_SIZE)->Pointer<Int32>
+        def refCnt := refCntPtr.get()
+        if refCnt = LLVMCodeGenerator.NO_REFCNT.asInt32 {
+            return
+        }
+        refCntPtr.set(refCnt + 1)
+    }
+
+    method unref(o:Pointer<UInt8>) {
+        if o.asInt = 0 {
+            return
+        }
+        def refCntPtr := o.offset(LLVMCodeGenerator.POINTER_SIZE)->Pointer<Int32>
+        def refCnt := refCntPtr.get()
+        if refCnt = LLVMCodeGenerator.NO_REFCNT.asInt32 {
+            return
+        }
+        if refCnt = 1 {
+            destroyObject(o)
+        }
+        else {
+            refCntPtr.set(refCnt - 1)
+        }
+    }
+
+    method getBuiltin(m:MethodDecl):(Context, FixedArray<IR.Value>)=&>(Int64) {
+        var builtin := builtins[m]
+        if builtin == null {
+            def signature := m.owner.name + " " + m.declaration
+            match signature {
+                when "frost.core.Frost method frost.core.Frost.ref(o:frost.core.Object?)" {
+                    builtin := method(context:Context, args:FixedArray<IR.Value>):Int64 {
+                        self.ref(Pointer<UInt8>.from(context.value(args[0]).asInt))
+                        return -1
+                    }
+                }
+                when "frost.core.Frost method frost.core.Frost.unref(o:frost.core.Object?)" {
+                    builtin := method(context:Context, args:FixedArray<IR.Value>):Int64 {
+                        self.unref(Pointer<UInt8>.from(context.value(args[0]).asInt))
+                        return -1
+                    }
+                }
+                when "frost.io.Console method frost.io.Console.print(s:frost.core.String)" {
+                    builtin := method(context:Context, args:FixedArray<IR.Value>):Int64 {
+                        def p := context.value(args[0]).asInt
+                        def s := Pointer<UInt8>.from(p).convertTo<String>()
+                        Console.print(s)
+                        return -1
+                    }
+                }
+                otherwise {
+                    Console.printLine("Fatal error: \{signature} is not supported by the " +
+                            "interpreter")
+                    System.exit(1)
+                }
+            }
+            builtins[m] := builtin
+        }
+        return builtin
+    }    
+
+    method callBuiltin(context:Context, m:MethodDecl, args:FixedArray<IR.Value>):Int64 {
+        return getBuiltin(m)(context, args)
+    }
+
+    method cast(context:Context, id:IR.Statement.ID, v:IR.Value, t:Type) {
+        def srcType := v.type()
+        def value := context.value(v)
+        if compiler.isValue(srcType) & !compiler.isValue(t) {
+            def raw := Pointer<UInt8>.alloc(llvmCodeGen.sizeOfWrapper(srcType))
+            def cl := compiler.getClass(srcType)!
+            raw->Pointer<ClassDecl>.set(cl)
+            var dest := raw.offset(LLVMCodeGenerator.POINTER_SIZE)
+            dest->Pointer<Int32>.set(1)
+            dest := dest.offset(5)
+            var src:Pointer<UInt8>
+            if needsStructPointer(v.type()) {
+                src := Pointer<UInt8>.from(value.asInt)
+            }
+            else {
+                stack->Pointer<Int64>.set(value)
+                src := stack
+            }
+            -- FIXME need memcpy
+            for i in 0 .. llvmCodeGen.sizeOf(cl.type) {
+                dest[i] := src[i]
+            }
+            context.statements[id.value] := raw.asInt.asInt64
+            return
+        }
+        if srcType.isBuiltinInt & t.isBuiltinInt {
+            if srcType.size > t.size {
+                context.statements[id.value] := (value.asUInt64 &&
+                        UInt64.MAX >> (64 - t.size).asUInt64).asInt64
+                return
+            }
+            if srcType.size = t.size {
+                context.statements[id.value] := value
+                return
+            }
+        }
+        context.statements[id.value] := value
+    }
+
+    method createStruct(context:Context, id:IR.Statement.ID, cl:ClassDecl,
+            args:FixedArray<IR.Value>) {
+        def size := llvmCodeGen.sizeOf(cl.type)
+        var current := stack
+        for a in args {
+            def v := context.value(a)
+            match llvmCodeGen.sizeOf(a.type()) {
+                -- FIXME ALIGNMENT
+                when 1 {
+                    current.set(v.asUInt8)
+                    current := current.offset(1)
+                }
+                when 2 {
+                    current->Pointer<Int16>.set(v.asInt16)
+                    current := current.offset(2)
+                }
+                when 4 {
+                    current->Pointer<Int32>.set(v.asInt32)
+                    current := current.offset(4)
+                }
+                when 8 {
+                    current->Pointer<Int64>.set(v)
+                    current := current.offset(8)
+                }
+                otherwise {
+                    unreachable, "unsupported value \{a}"
+                }
+            }
+        }
+        if needsStructPointer(cl.type) {
+            context.statements[id.value] := stack.asInt
+            stack := current
+        }
+        else {
+            for i in current.asInt .. stack.asInt + 8 {
+                Pointer<UInt8>.from(i).set(0)
+            }
+            context.statements[id.value] := stack->Pointer<Int64>.get()
+        }
+    }
+
+    method extractField(context:Context, id:IR.Statement.ID, value:IR.Value, field:FieldDecl) {
+        if needsStructPointer(field.owner.type) {
+            def p := Pointer<UInt8>.from(getFieldPointer(context, value, field))
+            match llvmCodeGen.sizeOf(field.type) {
+                when 1 {
+                    context.statements[id.value] := p.get().asInt64
+                }
+                when 2 {
+                    context.statements[id.value] := p->Pointer<UInt16>.get().asInt64
+                }
+                when 4 {
+                    context.statements[id.value] := p->Pointer<UInt32>.get().asInt64
+                }
+                when 8 {
+                    context.statements[id.value] := p->Pointer<UInt64>.get().asInt64
+                }
+                otherwise {
+                    unreachable, "unsupported field size"
+                }
+            }
+        }
+        else {
+            -- need to implement the full behavior...
+            assert compiler.instanceFields(field.owner).count = 1
+            context.statements[id.value] := context.value(value)
+        }
+    }
+
+    method getFieldPointer(context:Context, value:IR.Value, field:FieldDecl):Int {
+        -- force offset to be calculated
+        if field.offset < 0 {
+            -- FIXME: create MemoryModel
+            llvmCodeGen.sizeOf(field.owner.type)
+            assert field.offset >= 0
+        }
+        return context.value(value).asInt + field.offset
+    }
+
+    method getFieldPointer(context:Context, id:IR.Statement.ID, value:IR.Value, field:FieldDecl) {
+        context.statements[id.value] := getFieldPointer(context, value, field)
+    }
+
+    function bit(b:Bit):Int64 {
+        if b {
+            return 1
+        }
+        return 0
+    }
+
+    method binary(context:Context, id:IR.Statement.ID, left:IR.Value, op:Binary.Operator,
+            right:IR.Value) {
+        def leftValue := context.value(left)
+        def rightValue := context.value(right)
+        match op {
+            when Binary.Operator.ADD {
+                context.statements[id.value] := leftValue + rightValue
+            }
+            when Binary.Operator.SUB {
+                context.statements[id.value] := leftValue - rightValue
+            }
+            when Binary.Operator.INTDIV {
+                context.statements[id.value] := leftValue // rightValue
+            }
+            when Binary.Operator.REM {
+                context.statements[id.value] := leftValue % rightValue
+            }
+            when Binary.Operator.GT {
+                context.statements[id.value] := bit(leftValue > rightValue)
+            }
+            when Binary.Operator.GTEQ {
+                context.statements[id.value] := bit(leftValue >= rightValue)
+            }
+            when Binary.Operator.LT {
+                context.statements[id.value] := bit(leftValue < rightValue)
+            }
+            when Binary.Operator.LTEQ {
+                context.statements[id.value] := bit(leftValue <= rightValue)
+            }
+            when Binary.Operator.IDENTITY {
+                if leftValue = rightValue {
+                    context.statements[id.value] := 1
+                }
+                else {
+                    context.statements[id.value] := 0
+                }
+            }
+            otherwise {
+                unreachable, "unsupported binary operator '\{op}'"
+            }
+        }
+    }
+
+    method call(m:MethodDecl, args:FixedArray<IR.Value>):Int64 {
+        var code := methodCode[m]
+        if code == null {
+            if m.body !== null {
+                compiler.compile(m.owner)
+                code := methodCode[m]
+                assert code !== null
+            }
+            else {
+                return callBuiltin(contexts[0], m, args)
+            }
+        }
+        def context := Context(self, code)
+        for a in args {
+            context.arguments.add(contexts[0].value(a))
+        }
+        contexts.push(context)
+        var block := 0
+        var statement := 0
+        loop {
+            def id := code.ids[block][statement]
+            def stmt := code.ir[block][statement]
+            match stmt {
+                when IR.Statement.BINARY(_, left, op, right, _) {
+                    binary(context, id, left, op, right)
+                }
+                when IR.Statement.BRANCH(_, target) {
+                    block := code.blocks[target.value]
+                    statement := 0
+                    continue
+                }
+                when IR.Statement.CAST(_, v, t, _) {
+                    cast(context, id, v, t)
+                }
+                when IR.Statement.COMMENT {
+                }
+                when IR.Statement.CONDITIONAL_BRANCH(_, test, target1, target2) {
+                    if context.value(test) != 0 {
+                        block := code.blocks[target1.value]
+                    }
+                    else {
+                        block := code.blocks[target2.value]
+                    }
+                    statement := 0
+                    continue
+                }
+                when IR.Statement.CONSTRUCT(_, cl) {
+                    def raw := Pointer<UInt8>.alloc(llvmCodeGen.sizeOf(cl.type))
+                    raw->Pointer<ClassDecl>.set(cl)
+                    raw.offset(LLVMCodeGenerator.POINTER_SIZE)->Pointer<Int32>.set(1)
+                    context.statements[id.value] := raw.asInt.asInt64
+                }
+                when IR.Statement.CREATE_STRUCT(_, cl, args) {
+                    createStruct(context, id, cl, args)
+                }
+                when IR.Statement.DYNAMIC_CALL(_, value, args) {
+                    def target := Pointer<UInt8>.from(context.value(value).asInt).convertTo<MethodDecl>()
+                    context.statements[id.value] := call(target, args)
+                }
+                when IR.Statement.EXTRACT_FIELD(_, value, field) {
+                    extractField(context, id, value, field)
+                }
+                when IR.Statement.GET_FIELD_POINTER(_, value, field) {
+                    getFieldPointer(context, id, value, field)
+                }
+                when IR.Statement.GET_VIRTUAL_METHOD(_, target, index, _) {
+                    def p := Pointer<Int>.from(context.value(target).asInt)
+                    def cl := Pointer<UInt8>.from(p.get()).convertTo<ClassDecl>()
+                    def m := compiler.getVTable(cl)[index]
+                    context.statements[id.value] := Frost.addressOf(m)
+                }
+                when IR.Statement.LOAD(_, source) {
+                    def p := Pointer<Int>.from(context.value(source).asInt)
+                    if needsStructPointer(source.type()) {
+                        context.statements[id.value] := p.asInt
+                    }
+                    else {
+                        context.statements[id.value] := p.get()
+                    }
+                }
+                when IR.Statement.POINTER_ALLOC(_, s, t) {
+                     context.statements[id.value] := Pointer<UInt8>.alloc(context.value(s).asInt *
+                            llvmCodeGen.sizeOf(t)).asInt
+                }
+                when IR.Statement.POINTER_GET_INDEX(_, p, index) {
+                    def type := p.type().subtypes[1]
+                    def src := Pointer<UInt8>.from((context.value(p) + context.value(index) *
+                            llvmCodeGen.sizeOf(type)).asInt)
+                    stack->Pointer<Int64>.set(0)
+                    for i in 0 .. llvmCodeGen.sizeOf(type).min(8) {
+                        stack[i] := src[i]
+                    }
+                    context.statements[id.value] := stack->Pointer<Int64>.get()
+                }
+                when IR.Statement.POINTER_SET_INDEX(_, value, p, index) {
+                    def dest := Pointer<UInt8>.from((context.value(p) + context.value(index) *
+                            llvmCodeGen.sizeOf(value.type())).asInt)
+                    def v := context.value(value)
+                    stack->Pointer<Int64>.set(v)
+                    for i in 0 .. llvmCodeGen.sizeOf(value.type()).min(8) {
+                        dest[i] := stack[i]
+                    }
+                }
+                when IR.Statement.POINTER_DESTROY(_, p) {
+                    Pointer<Int>.from(context.value(p).asInt).destroy()
+                }
+                when IR.Statement.RETURN(_, value) {
+                    contexts.pop()
+                    if value !== null {
+                        return context.value(value)
+                    }
+                    return -1
+                }
+                when IR.Statement.STATIC_CALL(_, target, args) {
+                    context.statements[id.value] := call(target, args)
+                }
+                when IR.Statement.STORE(_, source, dest) {
+                    def v := context.value(source)
+                    def p := context.value(dest)
+                    Pointer<Int64>.from(p.asInt).set(v)
+                }
+                otherwise {
+                    unreachable, "unsupported statement: \{stmt}"
+                }
+            }
+            statement += 1
+        }
+    }
+
+    method run() {
+        if main == null {
+            Console.printLine("no main method")
+            System.exit(1)
+        }
+        call(main, FixedArray<IR.Value>())
+        contexts.push(Context(self, Code([], [], [], [], 0)))
+        for v in strings.values {
+            destroyObject(Pointer<UInt8>.from(v.asInt))
+        }
+        strings.clear()
+        contexts.pop()
+        builtins.clear()
+        assert contexts.count = 0
+        llvmCodeGen.sizes.clear()
+        llvmCodeGen.alignments.clear()
+    }
+}

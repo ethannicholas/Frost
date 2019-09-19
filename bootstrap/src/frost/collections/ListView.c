@@ -528,7 +528,7 @@ block17:;
 _185 = (frost$collections$Array*) frostObjectAlloc(sizeof(frost$collections$Array), (frost$core$Class*) &frost$collections$Array$class);
 _186 = _185;
 _187 = *(&local2);
-_188 = _187;
+_188 = ((frost$core$Object**) _187);
 _189 = *(&local1);
 // begin inline call to frost.collections.Array.init(data:frost.unsafe.Pointer<frost.collections.Array.T>, count:frost.core.Int) from ListView.frost:231:24
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Array.frost:19

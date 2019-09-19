@@ -327,6 +327,12 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
     @private
     def dummy:Int := 0
    
+    ================================================================================================
+    For dependent substrings, points to the parent String.
+    ================================================================================================
+    @private
+    def owner:String?
+
     property utf8:ListView<Char8>
 
     property utf16:Iterator<Char16>
@@ -340,12 +346,6 @@ class String : Immutable, HashKey<String>, Comparable<String>, Iterable<Char32>,
     property end:Index
 
     property trimmed:String
-
-    ================================================================================================
-    For dependent substrings, points to the parent String.
-    ================================================================================================
-    @private
-    def owner:String?
 
     init(data:Pointer<Char8>, length:Int) {
         self.data := data

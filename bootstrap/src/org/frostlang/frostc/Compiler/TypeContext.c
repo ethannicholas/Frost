@@ -645,7 +645,7 @@ _138 = *_137;
 _141 = *(&local0);
 _142 = *(&local2);
 // begin inline call to function org.frostlang.frostc.Type.=(other:org.frostlang.frostc.Type):frost.core.Bit from Compiler.frost:59:5
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:254
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/Type.frost:256
 _145 = ((org$frostlang$frostc$Symbol*) _141);
 _146 = &_145->name;
 _147 = *_146;

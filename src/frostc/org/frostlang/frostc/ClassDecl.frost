@@ -49,7 +49,11 @@ class ClassDecl {
 
     def position:Position
 
+    def TEST1 := 0x0102030405060708
+
     def name:String
+
+    def TEST2 := 0x0807060504030201
 
     def type:Type
 

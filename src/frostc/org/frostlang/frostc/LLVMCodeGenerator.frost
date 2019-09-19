@@ -31,6 +31,7 @@ class LLVMCodeGenerator : CodeGenerator {
     }
 
     constant POINTER_SIZE        := 8
+    constant INT_SIZE            := 8
     constant OBJECT_FIELD_COUNT  := 3
     constant CLASS_POINTER_INDEX := 0
     constant ITABLE_INDEX        := 5
@@ -293,6 +294,7 @@ class LLVMCodeGenerator : CodeGenerator {
                 }
                 assert result % alignment(f.type) = 0,
                         "field \{f} has alignment \{f.type} but is at offset \{result}"
+                f.offset := result
                 result += fieldSize(f.type)
             }
         }
@@ -1270,7 +1272,7 @@ class LLVMCodeGenerator : CodeGenerator {
         try {
             def op:String
             if target.isBuiltinNumber {
-                assert src.isBuiltinNumber
+                assert src.isBuiltinNumber | src.isPointer
                 def size1 := sizeOf(src)
                 def size2 := sizeOf(target)
                 if src.typeKind = Type.Kind.BUILTIN_FLOAT {
@@ -1304,6 +1306,9 @@ class LLVMCodeGenerator : CodeGenerator {
                         op := "uitofp"
                     }
                 }
+                else if src.isPointer {
+                    op := "ptrtoint"
+                }
                 else {
                     if size1 > size2 {
                         op := "trunc"
@@ -1323,8 +1328,11 @@ class LLVMCodeGenerator : CodeGenerator {
                     }
                 }
             }
-            else if src.isPointer | target.isPointer {
+            else if src.isPointer {
                 op := "bitcast"
+            }
+            else if target.isPointer  {
+                op := "inttoptr"
             }
             else {
                 def srcClass := compiler!.getClass(src)
@@ -2062,6 +2070,17 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
+    method writePointerGet(position:Position, id:IR.Statement.ID, ptr:IR.Value) {
+        try {
+            def ptrRef := getTypedReference(ptr)
+            def baseType := llvmType(ptr.type().subtypes[1])
+            out.printLine("\{name(id)} = load \{baseType}, \{ptrRef}\{debugInfo(position)}")
+        }
+        fail(error) {
+            unreachable, error.asString
+        }
+    }
+
     method writePointerGetIndex(position:Position, id:IR.Statement.ID, ptr:IR.Value,
             index:IR.Value) {
         try {
@@ -2112,6 +2131,18 @@ class LLVMCodeGenerator : CodeGenerator {
                     "\{SIZE_TYPE} \{oldSize}, \{SIZE_TYPE} \{newSize})\{debugInfo(position)}")
             out.printLine("\{name(id)} = bitcast i8* \{realloc} to \{llvmType(ptr.type())}" +
                     debugInfo(position))
+        }
+        fail(error) {
+            unreachable, error.asString
+        }
+    }
+
+    method writePointerSet(position:Position, value:IR.Value, ptr:IR.Value) {
+        try {
+            def ptrRef := getTypedReference(ptr)
+            def valueRef := getTypedReference(value)
+            def baseType := llvmType(ptr.type().subtypes[1])
+            out.printLine("store \{valueRef}, \{ptrRef}\{debugInfo(position)}")
         }
         fail(error) {
             unreachable, error.asString
@@ -2256,6 +2287,9 @@ class LLVMCodeGenerator : CodeGenerator {
                 when IR.Statement.POINTER_DESTROY(position, ptr) {
                     writePointerDestroy(position, ptr)
                 }
+                when IR.Statement.POINTER_GET(position, ptr) {
+                    writePointerGet(position, id, ptr)
+                }
                 when IR.Statement.POINTER_GET_INDEX(position, ptr, index) {
                     writePointerGetIndex(position, id, ptr, index)
                 }
@@ -2264,6 +2298,9 @@ class LLVMCodeGenerator : CodeGenerator {
                 }
                 when IR.Statement.POINTER_REALLOC(position, ptr, oldCount, newCount) {
                     writePointerRealloc(position, id, ptr, oldCount, newCount)
+                }
+                when IR.Statement.POINTER_SET(position, value, ptr) {
+                    writePointerSet(position, value, ptr)
                 }
                 when IR.Statement.POINTER_SET_INDEX(position, value, ptr, index) {
                     writePointerSetIndex(position, value, ptr, index)

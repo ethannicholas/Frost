@@ -54,23 +54,22 @@ typedef frost$core$Object* (*$fn10)(frost$collections$Iterator*);
 typedef frost$core$Int (*$fn14)(frost$collections$MapView*);
 typedef frost$core$Int (*$fn16)(frost$collections$CollectionView*);
 typedef frost$collections$Iterator* (*$fn20)(frost$collections$MapView*);
-typedef frost$core$Bit (*$fn22)(frost$collections$IdentitySet$_Closure2*, frost$core$Object*, frost$core$Object*);
-typedef frost$collections$Iterator* (*$fn23)(frost$collections$MapView*);
-typedef frost$core$Bit (*$fn24)(frost$collections$Iterator*);
-typedef frost$core$Object* (*$fn25)(frost$collections$Iterator*);
-typedef frost$core$String* (*$fn26)(frost$core$Object*);
-typedef frost$core$String* (*$fn33)(frost$core$Object*);
+typedef frost$collections$Iterator* (*$fn22)(frost$collections$MapView*);
+typedef frost$core$Bit (*$fn23)(frost$collections$Iterator*);
+typedef frost$core$Object* (*$fn24)(frost$collections$Iterator*);
+typedef frost$core$String* (*$fn25)(frost$core$Object*);
+typedef frost$core$String* (*$fn32)(frost$core$Object*);
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x49\x64\x65\x6e\x74\x69\x74\x79\x53\x65\x74", 29, 8222350284374010094, NULL };
 static frost$core$String $s18 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x49\x64\x65\x6e\x74\x69\x74\x79\x53\x65\x74\x2e\x66\x72\x6f\x73\x74", 17, -1392138543838629683, NULL };
 static frost$core$String $s19 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x6f\x73\x74\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x49\x64\x65\x6e\x74\x69\x74\x79\x53\x65\x74\x2e\x63\x6c\x65\x61\x72\x28\x29", 70, -392296642857557969, NULL };
-static frost$core$String $s27 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x5b", 1, -5808493101479473382, NULL };
+static frost$core$String $s26 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x5b", 1, -5808493101479473382, NULL };
+static frost$core$String $s27 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "", 0, -3750763034362895579, NULL };
 static frost$core$String $s28 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "", 0, -3750763034362895579, NULL };
-static frost$core$String $s29 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "", 0, -3750763034362895579, NULL };
-static frost$core$String $s34 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x3c\x6e\x75\x6c\x6c\x3e", 6, -6229636012469849280, NULL };
+static frost$core$String $s33 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x3c\x6e\x75\x6c\x6c\x3e", 6, -6229636012469849280, NULL };
+static frost$core$String $s34 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2c\x20", 2, 563935148934614481, NULL };
 static frost$core$String $s35 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2c\x20", 2, 563935148934614481, NULL };
-static frost$core$String $s36 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2c\x20", 2, 563935148934614481, NULL };
-static frost$core$String $s37 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x5d", 1, -5808499698549242648, NULL };
+static frost$core$String $s36 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x5d", 1, -5808499698549242648, NULL };
 
 void frost$collections$IdentitySet$init(void* rawSelf) {
 frost$collections$IdentitySet* param0 = (frost$collections$IdentitySet*) rawSelf;
@@ -538,15 +537,15 @@ frost$collections$IdentitySet* _21;
 frost$collections$IdentityMap** _22;
 frost$collections$IdentityMap* _23;
 frost$collections$MapView* _24;
-$fn23 _25;
+$fn22 _25;
 frost$collections$Iterator* _26;
 frost$collections$Iterator* _27;
 frost$collections$Iterator* _29;
-$fn24 _30;
+$fn23 _30;
 frost$core$Bit _31;
 bool _32;
 frost$collections$Iterator* _35;
-$fn25 _36;
+$fn24 _36;
 frost$core$Object* _37;
 frost$core$Object* _38;
 frost$core$Object* _39;
@@ -562,7 +561,7 @@ bool _54;
 frost$core$MutableString* _57;
 frost$core$Object* _58;
 frost$core$Object* _59;
-$fn26 _62;
+$fn25 _62;
 frost$core$String* _63;
 frost$core$Object* _65;
 frost$core$MutableString* _71;
@@ -584,7 +583,7 @@ frost$core$MutableString* _104;
 frost$core$Object* _105;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/IdentitySet.frost:59
 _1 = (frost$core$MutableString*) frostObjectAlloc(sizeof(frost$core$MutableString), (frost$core$Class*) &frost$core$MutableString$class);
-frost$core$MutableString$init$frost$core$String(_1, &$s27);
+frost$core$MutableString$init$frost$core$String(_1, &$s26);
 *(&local0) = ((frost$core$MutableString*) NULL);
 _4 = ((frost$core$Object*) _1);
 frost$core$Frost$ref$frost$core$Object$Q(_4);
@@ -596,43 +595,43 @@ _10 = ((frost$core$Object*) _1);
 frost$core$Frost$unref$frost$core$Object$Q(_10);
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/IdentitySet.frost:60
 *(&local1) = ((frost$core$String*) NULL);
-_14 = ((frost$core$Object*) &$s28);
+_14 = ((frost$core$Object*) &$s27);
 frost$core$Frost$ref$frost$core$Object$Q(_14);
 _16 = *(&local1);
 _17 = ((frost$core$Object*) _16);
 frost$core$Frost$unref$frost$core$Object$Q(_17);
-*(&local1) = &$s29;
+*(&local1) = &$s28;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/IdentitySet.frost:61
 _21 = param0;
 _22 = &_21->contents;
 _23 = *_22;
 _24 = ((frost$collections$MapView*) _23);
-ITable* $tmp30 = _24->$class->itable;
-while ($tmp30->$class != (frost$core$Class*) &frost$collections$MapView$class) {
-    $tmp30 = $tmp30->next;
+ITable* $tmp29 = _24->$class->itable;
+while ($tmp29->$class != (frost$core$Class*) &frost$collections$MapView$class) {
+    $tmp29 = $tmp29->next;
 }
-_25 = $tmp30->methods[4];
+_25 = $tmp29->methods[4];
 _26 = _25(_24);
 _27 = _26;
 goto block1;
 block1:;
 _29 = _27;
-ITable* $tmp31 = _29->$class->itable;
-while ($tmp31->$class != (frost$core$Class*) &frost$collections$Iterator$class) {
-    $tmp31 = $tmp31->next;
+ITable* $tmp30 = _29->$class->itable;
+while ($tmp30->$class != (frost$core$Class*) &frost$collections$Iterator$class) {
+    $tmp30 = $tmp30->next;
 }
-_30 = $tmp31->methods[0];
+_30 = $tmp30->methods[0];
 _31 = _30(_29);
 _32 = _31.value;
 if (_32) goto block3; else goto block2;
 block2:;
 *(&local2) = ((frost$core$Object*) NULL);
 _35 = _27;
-ITable* $tmp32 = _35->$class->itable;
-while ($tmp32->$class != (frost$core$Class*) &frost$collections$Iterator$class) {
-    $tmp32 = $tmp32->next;
+ITable* $tmp31 = _35->$class->itable;
+while ($tmp31->$class != (frost$core$Class*) &frost$collections$Iterator$class) {
+    $tmp31 = $tmp31->next;
 }
-_36 = $tmp32->methods[1];
+_36 = $tmp31->methods[1];
 _37 = _36(_35);
 _38 = _37;
 _39 = _38;
@@ -659,7 +658,7 @@ _58 = *(&local2);
 _59 = _58;
 // begin inline call to method frost.core.MutableString.append(o:frost.core.Object) from IdentitySet.frost:65:30
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/MutableString.frost:150
-_62 = ($fn33) _59->$class->vtable[0];
+_62 = ($fn32) _59->$class->vtable[0];
 _63 = _62(_59);
 frost$core$MutableString$append$frost$core$String(_57, _63);
 _65 = ((frost$core$Object*) _63);
@@ -669,16 +668,16 @@ block6:;
 // <no location>
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/IdentitySet.frost:68
 _71 = *(&local0);
-frost$core$MutableString$append$frost$core$String(_71, &$s34);
+frost$core$MutableString$append$frost$core$String(_71, &$s33);
 goto block5;
 block5:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/IdentitySet.frost:70
-_75 = ((frost$core$Object*) &$s35);
+_75 = ((frost$core$Object*) &$s34);
 frost$core$Frost$ref$frost$core$Object$Q(_75);
 _77 = *(&local1);
 _78 = ((frost$core$Object*) _77);
 frost$core$Frost$unref$frost$core$Object$Q(_78);
-*(&local1) = &$s36;
+*(&local1) = &$s35;
 _81 = _37;
 frost$core$Frost$unref$frost$core$Object$Q(_81);
 _83 = *(&local2);
@@ -691,7 +690,7 @@ _88 = ((frost$core$Object*) _26);
 frost$core$Frost$unref$frost$core$Object$Q(_88);
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/IdentitySet.frost:72
 _91 = *(&local0);
-frost$core$MutableString$append$frost$core$String(_91, &$s37);
+frost$core$MutableString$append$frost$core$String(_91, &$s36);
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/IdentitySet.frost:73
 _94 = *(&local0);
 _95 = frost$core$MutableString$finish$R$frost$core$String(_94);

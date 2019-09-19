@@ -5,6 +5,7 @@ typedef struct frost$core$Class frost$core$Class;
 #include "frost/core/UInt8_types.h"
 typedef struct frost$io$File frost$io$File;
 #include "org/frostlang/frostc/Position_types.h"
+#include "frost/core/Int_types.h"
 typedef struct frost$core$String frost$core$String;
 typedef struct org$frostlang$frostc$Type org$frostlang$frostc$Type;
 typedef struct frost$collections$MapView frost$collections$MapView;
@@ -24,7 +25,9 @@ typedef struct org$frostlang$frostc$ClassDecl {
     frost$core$UInt8 $flags;
     frost$io$File* source;
     org$frostlang$frostc$Position position;
+    frost$core$Int TEST1;
     frost$core$String* name;
+    frost$core$Int TEST2;
     org$frostlang$frostc$Type* type;
     frost$collections$MapView* aliases;
     frost$core$String* doccomment;

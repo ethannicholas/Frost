@@ -188,6 +188,33 @@ class Call {
                 return Pair<Bit, IR.Value?>(true,
                         IR.Value.REF(alloc, Type.pointerTo(compiler, pointerType)))
             }
+            when "from" {
+                def value := compiler.compileExpression(args[0],
+                        TypeContext.TYPE(compiler.INT_TYPE, false))
+                if value == null {
+                    return Pair<Bit, IR.Value?>(false, null)
+                }
+                def type := Type.pointerTo(compiler, pointerType)
+                def cast := ir.add(IR.Statement.CAST(position, 
+                        compiler.extractBuiltinInt(position, value), type, false))
+                return Pair<Bit, IR.Value?>(true, IR.Value.REF(cast, type))
+            }
+            when "get_asInt" {
+                assert target !== null
+                def builtin := ir.add(IR.Statement.CAST(position, target, compiler.BUILTIN_INT_TYPE,
+                        false))
+                def result := compiler.ir.add(IR.Statement.CREATE_STRUCT(position,
+                        compiler.getClass(compiler.INT_TYPE)!,
+                        FixedArray<IR.Value>.from([IR.Value.REF(builtin,
+                                compiler.BUILTIN_INT_TYPE)])))
+                return Pair<Bit, IR.Value?>(true, IR.Value.REF(result, compiler.INT_TYPE))
+            }
+            when "convertTo" {
+                assert target !== null
+                def result := ir.add(IR.Statement.CAST(position, target, m.returnType,
+                        false))
+                return Pair<Bit, IR.Value?>(true, IR.Value.REF(result, m.returnType))
+            }
             when "destroy" {
                 assert target !== null
                 ir.add(IR.Statement.POINTER_DESTROY(position, target))
@@ -216,10 +243,28 @@ class Call {
                 def get := ir.add(IR.Statement.POINTER_GET(position, target))
                 return Pair<Bit, IR.Value?>(true, IR.Value.REF(get, pointerType))
             }
+            when "set" {
+                assert target !== null
+                def value := compiler.compileExpression(args[0],
+                        TypeContext.TYPE(pointerType, false))
+                if value !== null {
+                    if compiler.isRefCounted(pointerType) {
+                        compiler.compileRef(value)
+                        def load := ir.add(IR.Statement.POINTER_GET(position, target))
+                        compiler.compileUnref(IR.Value.REF(load, pointerType))
+                    }
+                    ir.add(IR.Statement.POINTER_SET(position, value, target))
+                }
+                return Pair<Bit, IR.Value?>(true, null)
+            }
+
             when "offset" {
                 assert target !== null
                 def value := compiler.compileExpression(args[0],
                         TypeContext.TYPE(compiler.INT64_TYPE, false))
+                if value == null {
+                    return Pair<Bit, IR.Value?>(false, null)
+                }
                 def offset := ir.add(IR.Statement.POINTER_OFFSET(position, target,
                         compiler.extractBuiltinInt(position, value)))
                 return Pair<Bit, IR.Value?>(true, IR.Value.REF(offset,

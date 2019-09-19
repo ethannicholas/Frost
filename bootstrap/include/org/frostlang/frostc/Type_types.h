@@ -29,6 +29,6 @@ typedef struct org$frostlang$frostc$Type {
     org$frostlang$frostc$MethodRef* methodRef;
 } org$frostlang$frostc$Type;
 #include "frost/core/Class.h"
-typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[31]; } org$frostlang$frostc$Type$class_type;
+typedef struct { frost$core$Class* cl; int32_t refCount; uint8_t flags;frost$core$String* name; frost$core$Class* super; ITable* itable; void* vtable[32]; } org$frostlang$frostc$Type$class_type;
 extern org$frostlang$frostc$Type$class_type org$frostlang$frostc$Type$class;
 

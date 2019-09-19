@@ -1341,7 +1341,7 @@ class Compiler {
         }
         else if f.resolved = Resolution.UNRESOLVED {
             f.resolved := Resolution.IN_PROGRESS
-            if f.owner.classKind != ClassDecl.Kind.INTERFACE {
+            if f.owner.classKind != ClassDecl.Kind.INTERFACE & !f.owner.type.isPointer {
                 -- we need to mark that we are in an instance context so 'self' works. Since the
                 -- class is guaranteed to have at least one init method, we just pretend we're in
                 -- one of those.

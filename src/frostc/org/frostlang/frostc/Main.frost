@@ -15,6 +15,7 @@ class Main {
         C
         HTML
         STUB
+        RUN
     }
 
     var clang:File
@@ -232,6 +233,7 @@ class Main {
                         when "c"    { format := Format.C }
                         when "html" { format := Format.HTML }
                         when "stub" { format := Format.STUB }
+                        when "run"  { format := Format.RUN }
                         otherwise {
                             Console.printErrorLine("unsupported output format '\{f}'")
                             System.exit(1)
@@ -275,7 +277,7 @@ class Main {
         if format == null {
             format := Format.EXECUTABLE
         }
-        if outFile == null {
+        if outFile == null & format != Format.RUN {
             if sources.count = 1 {
                 def extension:String
                 match format {
@@ -332,6 +334,9 @@ class Main {
                         System.exit(1)
                     }
                 }
+                when Format.RUN {
+                    cg := Interpreter()
+                }
             }
             def settings := Compiler.Settings(frostHome, imports, optimizationLevel, safetyLevel,
                     debug)
@@ -355,6 +360,10 @@ class Main {
             }
             for s in sources {
                 compiler.compile(s)
+            }
+            if format = Format.RUN {
+                cg->Interpreter.run()
+                return
             }
             compiler.finish()
             while errorQueue.hasMessage() {

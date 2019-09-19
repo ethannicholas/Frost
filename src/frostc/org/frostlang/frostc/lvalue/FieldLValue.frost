@@ -60,7 +60,14 @@ class FieldLValue : LValue {
             effectiveType := base
         }
         if self.target !== null {
-            self.target := compiler.coerce(position, self.target, field.owner.type)
+            def targetType:Type
+            if self.target.type().isPointer {
+                targetType := compiler.findType(self.target.type(), field.owner)
+            }
+            else {
+                targetType := field.owner.type
+            }
+            self.target := compiler.coerce(position, self.target, targetType)
         }
     }
 

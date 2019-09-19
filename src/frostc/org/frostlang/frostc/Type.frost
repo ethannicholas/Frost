@@ -51,6 +51,8 @@ class Type : Symbol, HashKey<Type> {
 
     property size:Int
 
+    property isBuiltinInt:Bit
+
     property isBuiltinNumber:Bit
 
     property isSigned:Bit
@@ -332,6 +334,12 @@ class Type : Symbol, HashKey<Type> {
                 name.startsWith("frost.core.Real") | typeKind = Kind.INT_LITERAL |
                 typeKind = Kind.REAL_LITERAL
     }
+
+    function get_isBuiltinInt():Bit {
+        return typeKind = Kind.BUILTIN_INT | typeKind = Kind.BUILTIN_UINT |
+                typeKind = Kind.INT_LITERAL
+    }
+
 
     function get_isBuiltinNumber():Bit {
         return typeKind = Kind.BUILTIN_INT | typeKind = Kind.BUILTIN_UINT |

@@ -27,22 +27,23 @@
 static frost$core$String $s1;
 org$frostlang$frostc$pass$RemoveAsserts$class_type org$frostlang$frostc$pass$RemoveAsserts$class = { (frost$core$Class*) &frost$core$Class$class, -999, 0, &$s1, (frost$core$Class*) &frost$core$Object$class, NULL, { frost$core$Object$get_asString$R$frost$core$String, org$frostlang$frostc$pass$RemoveAsserts$cleanup, org$frostlang$frostc$pass$RemoveAsserts$isAssertionFail$org$frostlang$frostc$IR$Statement$R$frost$core$Bit, org$frostlang$frostc$pass$RemoveAsserts$process$org$frostlang$frostc$IR$org$frostlang$frostc$pass$Analyzer$R$frost$core$Bit} };
 
-typedef frost$core$Int (*$fn5)(frost$collections$CollectionView*);
 typedef frost$core$Int (*$fn6)(frost$collections$CollectionView*);
-typedef frost$collections$Iterator* (*$fn7)(frost$collections$Iterable*);
-typedef frost$core$Bit (*$fn8)(frost$collections$Iterator*);
-typedef frost$core$Object* (*$fn9)(frost$collections$Iterator*);
-typedef frost$core$Bit (*$fn10)(org$frostlang$frostc$pass$RemoveAsserts*, org$frostlang$frostc$IR$Statement*);
-typedef void (*$fn11)(org$frostlang$frostc$pass$Analyzer*, org$frostlang$frostc$IR$Block*);
-typedef frost$core$Bit (*$fn19)(org$frostlang$frostc$pass$RemoveAsserts*, org$frostlang$frostc$IR$Statement*);
-typedef void (*$fn20)(org$frostlang$frostc$pass$Analyzer*, org$frostlang$frostc$IR$Block*);
+typedef frost$core$Int (*$fn7)(frost$collections$CollectionView*);
+typedef frost$collections$Iterator* (*$fn8)(frost$collections$Iterable*);
+typedef frost$core$Bit (*$fn9)(frost$collections$Iterator*);
+typedef frost$core$Object* (*$fn10)(frost$collections$Iterator*);
+typedef frost$core$Bit (*$fn11)(org$frostlang$frostc$pass$RemoveAsserts*, org$frostlang$frostc$IR$Statement*);
+typedef void (*$fn12)(org$frostlang$frostc$pass$Analyzer*, org$frostlang$frostc$IR$Block*);
+typedef frost$core$Bit (*$fn20)(org$frostlang$frostc$pass$RemoveAsserts*, org$frostlang$frostc$IR$Statement*);
+typedef void (*$fn21)(org$frostlang$frostc$pass$Analyzer*, org$frostlang$frostc$IR$Block*);
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x70\x61\x73\x73\x2e\x52\x65\x6d\x6f\x76\x65\x41\x73\x73\x65\x72\x74\x73", 39, 2675365451163764056, NULL };
 static frost$core$String $s2 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x61\x73\x73\x65\x72\x74\x69\x6f\x6e\x46\x61\x69\x6c\x75\x72\x65", 16, -1047342833001589897, NULL };
 static frost$core$String $s3 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x66\x72\x6f\x73\x74", 10, -4036851284011595059, NULL };
-static frost$core$String $s4 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x46\x72\x6f\x73\x74", 16, 4237142976622831502, NULL };
-static frost$core$String $s14 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x41\x72\x72\x61\x79\x2e\x66\x72\x6f\x73\x74", 11, -1919842861654168654, NULL };
-static frost$core$String $s15 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x5b\x5d\x28\x69\x6e\x64\x65\x78\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x54", 108, 4065685528380894665, NULL };
+static frost$core$String $s4 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x64\x65\x72\x65\x66\x65\x72\x65\x6e\x63\x69\x6e\x67\x20\x77\x65\x61\x6b\x20\x70\x6f\x69\x6e\x74\x65\x72\x20\x61\x66\x74\x65\x72\x20\x69\x74\x73\x20\x72\x65\x66\x65\x72\x65\x6e\x74\x20\x77\x61\x73\x20\x64\x65\x73\x74\x72\x6f\x79\x65\x64", 59, 1822743730076196218, NULL };
+static frost$core$String $s5 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x46\x72\x6f\x73\x74", 16, 4237142976622831502, NULL };
+static frost$core$String $s15 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x41\x72\x72\x61\x79\x2e\x66\x72\x6f\x73\x74", 11, -1919842861654168654, NULL };
+static frost$core$String $s16 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x5b\x5d\x28\x69\x6e\x64\x65\x78\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x29\x3a\x66\x72\x6f\x73\x74\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x41\x72\x72\x61\x79\x2e\x54", 108, 4065685528380894665, NULL };
 
 frost$core$Bit org$frostlang$frostc$pass$RemoveAsserts$isAssertionFail$org$frostlang$frostc$IR$Statement$R$frost$core$Bit(void* rawSelf, org$frostlang$frostc$IR$Statement* param1) {
 org$frostlang$frostc$pass$RemoveAsserts* param0 = (org$frostlang$frostc$pass$RemoveAsserts*) rawSelf;
@@ -142,7 +143,7 @@ _45 = _43.value;
 if (_45) goto block10; else goto block11;
 block11:;
 _47 = (frost$core$Int) {40u};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s3, _47);
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s3, _47, &$s4);
 abort(); // unreachable
 block10:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:41
@@ -154,7 +155,7 @@ frost$core$Frost$ref$frost$core$Object$Q(_54);
 _57 = ((org$frostlang$frostc$ClassDecl*) _53);
 _58 = &_57->name;
 _59 = *_58;
-_60 = frost$core$String$$EQ$frost$core$String$R$frost$core$Bit(_59, &$s4);
+_60 = frost$core$String$$EQ$frost$core$String$R$frost$core$Bit(_59, &$s5);
 _61 = _53;
 frost$core$Frost$unref$frost$core$Object$Q(_61);
 *(&local1) = _60;
@@ -189,7 +190,7 @@ frost$core$Bit _1;
 frost$collections$Array** _4;
 frost$collections$Array* _5;
 frost$collections$CollectionView* _6;
-$fn5 _7;
+$fn6 _7;
 frost$core$Int _8;
 frost$core$Int _9;
 int64_t _10;
@@ -245,7 +246,7 @@ bool _72;
 frost$core$Bit _73;
 bool _74;
 frost$collections$CollectionView* _76;
-$fn6 _77;
+$fn7 _77;
 frost$core$Int _78;
 int64_t _79;
 int64_t _80;
@@ -269,26 +270,26 @@ org$frostlang$frostc$LinkedList** _109;
 org$frostlang$frostc$LinkedList* _110;
 frost$collections$Iterable* _111;
 frost$collections$Iterable* _112;
-$fn7 _113;
+$fn8 _113;
 frost$collections$Iterator* _114;
 frost$collections$Iterator* _115;
 frost$collections$Iterator* _117;
-$fn8 _118;
+$fn9 _118;
 frost$core$Bit _119;
 bool _120;
 frost$collections$Iterator* _123;
-$fn9 _124;
+$fn10 _124;
 frost$core$Object* _125;
 org$frostlang$frostc$IR$Statement* _126;
 frost$core$Object* _127;
 org$frostlang$frostc$IR$Statement* _129;
 frost$core$Object* _130;
 org$frostlang$frostc$IR$Statement* _134;
-$fn10 _135;
+$fn11 _135;
 frost$core$Bit _136;
 bool _137;
 org$frostlang$frostc$IR$Block* _140;
-$fn11 _141;
+$fn12 _141;
 frost$core$Bit _144;
 frost$core$Object* _147;
 org$frostlang$frostc$IR$Statement* _149;
@@ -340,11 +341,11 @@ _1 = (frost$core$Bit) {false};
 _4 = &param1->blocks;
 _5 = *_4;
 _6 = ((frost$collections$CollectionView*) _5);
-ITable* $tmp12 = _6->$class->itable;
-while ($tmp12->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
-    $tmp12 = $tmp12->next;
+ITable* $tmp13 = _6->$class->itable;
+while ($tmp13->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
+    $tmp13 = $tmp13->next;
 }
-_7 = $tmp12->methods[0];
+_7 = $tmp13->methods[0];
 _8 = _7(_6);
 _9 = (frost$core$Int) {1u};
 _10 = _8.value;
@@ -421,11 +422,11 @@ _74 = _73.value;
 if (_74) goto block14; else goto block13;
 block14:;
 _76 = ((frost$collections$CollectionView*) _66);
-ITable* $tmp13 = _76->$class->itable;
-while ($tmp13->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
-    $tmp13 = $tmp13->next;
+ITable* $tmp14 = _76->$class->itable;
+while ($tmp14->$class != (frost$core$Class*) &frost$collections$CollectionView$class) {
+    $tmp14 = $tmp14->next;
 }
-_77 = $tmp13->methods[0];
+_77 = $tmp14->methods[0];
 _78 = _77(_76);
 _79 = _67.value;
 _80 = _78.value;
@@ -435,7 +436,7 @@ _83 = _82.value;
 if (_83) goto block12; else goto block13;
 block13:;
 _85 = (frost$core$Int) {74u};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s14, _85, &$s15);
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s15, _85, &$s16);
 abort(); // unreachable
 block12:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/Array.frost:75
@@ -462,32 +463,32 @@ _109 = &_108->statements;
 _110 = *_109;
 _111 = ((frost$collections$Iterable*) _110);
 _112 = _111;
-ITable* $tmp16 = _112->$class->itable;
-while ($tmp16->$class != (frost$core$Class*) &frost$collections$Iterable$class) {
-    $tmp16 = $tmp16->next;
+ITable* $tmp17 = _112->$class->itable;
+while ($tmp17->$class != (frost$core$Class*) &frost$collections$Iterable$class) {
+    $tmp17 = $tmp17->next;
 }
-_113 = $tmp16->methods[0];
+_113 = $tmp17->methods[0];
 _114 = _113(_112);
 _115 = _114;
 goto block15;
 block15:;
 _117 = _115;
-ITable* $tmp17 = _117->$class->itable;
-while ($tmp17->$class != (frost$core$Class*) &frost$collections$Iterator$class) {
-    $tmp17 = $tmp17->next;
+ITable* $tmp18 = _117->$class->itable;
+while ($tmp18->$class != (frost$core$Class*) &frost$collections$Iterator$class) {
+    $tmp18 = $tmp18->next;
 }
-_118 = $tmp17->methods[0];
+_118 = $tmp18->methods[0];
 _119 = _118(_117);
 _120 = _119.value;
 if (_120) goto block17; else goto block16;
 block16:;
 *(&local3) = ((org$frostlang$frostc$IR$Statement*) NULL);
 _123 = _115;
-ITable* $tmp18 = _123->$class->itable;
-while ($tmp18->$class != (frost$core$Class*) &frost$collections$Iterator$class) {
-    $tmp18 = $tmp18->next;
+ITable* $tmp19 = _123->$class->itable;
+while ($tmp19->$class != (frost$core$Class*) &frost$collections$Iterator$class) {
+    $tmp19 = $tmp19->next;
 }
-_124 = $tmp18->methods[1];
+_124 = $tmp19->methods[1];
 _125 = _124(_123);
 _126 = ((org$frostlang$frostc$IR$Statement*) _125);
 _127 = ((frost$core$Object*) _126);
@@ -498,14 +499,14 @@ frost$core$Frost$unref$frost$core$Object$Q(_130);
 *(&local3) = _126;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/pass/RemoveAsserts.frost:22
 _134 = *(&local3);
-_135 = ($fn19) param0->$class->vtable[2];
+_135 = ($fn20) param0->$class->vtable[2];
 _136 = _135(param0, _134);
 _137 = _136.value;
 if (_137) goto block18; else goto block19;
 block18:;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/pass/RemoveAsserts.frost:23
 _140 = *(&local2);
-_141 = ($fn20) param2->$class->vtable[13];
+_141 = ($fn21) param2->$class->vtable[13];
 _141(param2, _140);
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/pass/RemoveAsserts.frost:24
 _144 = (frost$core$Bit) {true};

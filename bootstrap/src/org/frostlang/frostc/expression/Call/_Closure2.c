@@ -22,10 +22,11 @@ org$frostlang$frostc$expression$Call$_Closure2$class_type org$frostlang$frostc$e
 
 static frost$core$String $s1 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x65\x78\x70\x72\x65\x73\x73\x69\x6f\x6e\x2e\x43\x61\x6c\x6c\x2e\x5f\x43\x6c\x6f\x73\x75\x72\x65\x32", 46, -3670043225117352222, NULL };
 static frost$core$String $s2 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x57\x65\x61\x6b\x2e\x66\x72\x6f\x73\x74", 10, -4036851284011595059, NULL };
-static frost$core$String $s3 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2e", 1, -5808619545316717647, NULL };
+static frost$core$String $s3 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x64\x65\x72\x65\x66\x65\x72\x65\x6e\x63\x69\x6e\x67\x20\x77\x65\x61\x6b\x20\x70\x6f\x69\x6e\x74\x65\x72\x20\x61\x66\x74\x65\x72\x20\x69\x74\x73\x20\x72\x65\x66\x65\x72\x65\x6e\x74\x20\x77\x61\x73\x20\x64\x65\x73\x74\x72\x6f\x79\x65\x64", 59, 1822743730076196218, NULL };
 static frost$core$String $s4 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2e", 1, -5808619545316717647, NULL };
-static frost$core$String $s5 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x43\x61\x6c\x6c\x2e\x66\x72\x6f\x73\x74", 10, -7895598607751292851, NULL };
-static frost$core$String $s6 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x54\x79\x70\x65\x3f\x20\x74\x6f\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x54\x79\x70\x65", 89, 6559565496330182789, NULL };
+static frost$core$String $s5 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x2e", 1, -5808619545316717647, NULL };
+static frost$core$String $s6 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x43\x61\x6c\x6c\x2e\x66\x72\x6f\x73\x74", 10, -7895598607751292851, NULL };
+static frost$core$String $s7 = { (frost$core$Class*) &frost$core$String$class, -999, 0, (frost$core$Char8*) "\x75\x6e\x65\x78\x70\x65\x63\x74\x65\x64\x20\x6e\x75\x6c\x6c\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x63\x61\x73\x74\x69\x6e\x67\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x54\x79\x70\x65\x3f\x20\x74\x6f\x20\x6f\x72\x67\x2e\x66\x72\x6f\x73\x74\x6c\x61\x6e\x67\x2e\x66\x72\x6f\x73\x74\x63\x2e\x54\x79\x70\x65", 89, 6559565496330182789, NULL };
 
 void org$frostlang$frostc$expression$Call$_Closure2$init$org$frostlang$frostc$MethodRef$frost$collections$HashMap$LTfrost$core$String$Corg$frostlang$frostc$Type$GT(void* rawSelf, org$frostlang$frostc$MethodRef* param1, frost$collections$HashMap* param2) {
 org$frostlang$frostc$expression$Call$_Closure2* param0 = (org$frostlang$frostc$expression$Call$_Closure2*) rawSelf;
@@ -40,7 +41,7 @@ frost$collections$HashMap** _12;
 frost$collections$HashMap* _13;
 frost$core$Object* _14;
 frost$collections$HashMap** _16;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Call.frost:670
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Call.frost:715
 _1 = ((frost$core$Object*) param1);
 frost$core$Frost$ref$frost$core$Object$Q(_1);
 _3 = &param0->m;
@@ -49,7 +50,7 @@ _5 = ((frost$core$Object*) _4);
 frost$core$Frost$unref$frost$core$Object$Q(_5);
 _7 = &param0->m;
 *_7 = param1;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Call.frost:670
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Call.frost:715
 _10 = ((frost$core$Object*) param2);
 frost$core$Frost$ref$frost$core$Object$Q(_10);
 _12 = &param0->remaps;
@@ -71,7 +72,7 @@ frost$core$Object* _5;
 frost$collections$HashMap** _7;
 frost$collections$HashMap* _8;
 frost$core$Object* _9;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Call.frost:670
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Call.frost:715
 _1 = ((frost$core$Object*) param0);
 frost$core$Object$cleanup(_1);
 _3 = &param0->m;
@@ -138,7 +139,7 @@ frost$core$Object* _64;
 frost$core$Object* _66;
 frost$core$Object* _68;
 frost$core$Object* _70;
-// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Call.frost:670
+// /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/expression/Call.frost:715
 _1 = &param0->remaps;
 _2 = *_1;
 _3 = _2;
@@ -149,7 +150,7 @@ _7 = *_6;
 _8 = &_7->owner;
 _9 = *_8;
 _10 = _9;
-// begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Call.frost:670:72
+// begin inline call to method frost.core.Weak.get():frost.core.Weak.T from Call.frost:715:72
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:40
 // begin inline call to function frost.core.Weak.get_valid():frost.core.Bit from Weak.frost:40:16
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:45
@@ -159,7 +160,7 @@ _18 = _16.value;
 if (_18) goto block3; else goto block4;
 block4:;
 _20 = (frost$core$Int) {40u};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int(&$s2, _20);
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s2, _20, &$s3);
 abort(); // unreachable
 block3:;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/core/Weak.frost:41
@@ -171,7 +172,7 @@ frost$core$Frost$ref$frost$core$Object$Q(_27);
 _30 = ((org$frostlang$frostc$ClassDecl*) _26);
 _31 = &_30->name;
 _32 = *_31;
-_33 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_32, &$s3);
+_33 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_32, &$s4);
 _34 = &param0->m;
 _35 = *_34;
 _36 = &_35->value;
@@ -180,7 +181,7 @@ _38 = ((org$frostlang$frostc$Symbol*) _37);
 _39 = &_38->name;
 _40 = *_39;
 _41 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_33, _40);
-_42 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_41, &$s4);
+_42 = frost$core$String$$ADD$frost$core$String$R$frost$core$String(_41, &$s5);
 _43 = ((org$frostlang$frostc$Symbol*) param1);
 _44 = &_43->name;
 _45 = *_44;
@@ -193,8 +194,8 @@ _51 = (frost$core$Bit) {_50};
 _52 = _51.value;
 if (_52) goto block5; else goto block6;
 block6:;
-_54 = (frost$core$Int) {671u};
-frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s5, _54, &$s6);
+_54 = (frost$core$Int) {716u};
+frost$core$Frost$assertionFailure$frost$core$String$frost$core$Int$frost$core$String(&$s6, _54, &$s7);
 abort(); // unreachable
 block5:;
 _57 = _49;

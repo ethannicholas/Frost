@@ -399,12 +399,12 @@ class Analyzer {
             }
             when IR.Statement.POINTER_GET(_, p) {
                 def value := getValue(p, state)
-                assert value.type.isPointer
+                assert value.type.isPointer, "POINTER_GET_INDEX on non-pointer \{value}"
                 return DataFlowValue(value.type.subtypes[1], definitionFrom(stmt))
             }
             when IR.Statement.POINTER_GET_INDEX(_, p, _) {
                 def value := getValue(p, state)
-                assert value.type.isPointer
+                assert value.type.isPointer, "POINTER_GET_INDEX on non-pointer \{value}"
                 return DataFlowValue(value.type.subtypes[1], definitionFrom(stmt))
             }
             when IR.Statement.POINTER_OFFSET(_, p, _) {

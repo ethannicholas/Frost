@@ -303,7 +303,7 @@ frost$collections$ImmutableArray* _6;
 frost$core$Int* _7;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/ImmutableArray.frost:53
 _1 = param0;
-_2 = param1;
+_2 = ((frost$core$Immutable**) param1);
 _3 = &_1->data;
 *_3 = _2;
 // /Users/ethannicholas/Dropbox/Frost/src/frost/collections/ImmutableArray.frost:54

@@ -44,6 +44,7 @@ org$frostlang$frostc$Type* org$frostlang$frostc$Type$RangeOf$org$frostlang$frost
 org$frostlang$frostc$Type* org$frostlang$frostc$Type$SteppedRangeOf$org$frostlang$frostc$Compiler$org$frostlang$frostc$Type$R$org$frostlang$frostc$Type(org$frostlang$frostc$Compiler* p_compiler, org$frostlang$frostc$Type* p_t);
 org$frostlang$frostc$Type* org$frostlang$frostc$Type$SteppedRangeOf$org$frostlang$frostc$Compiler$org$frostlang$frostc$Type$org$frostlang$frostc$Type$R$org$frostlang$frostc$Type(org$frostlang$frostc$Compiler* p_compiler, org$frostlang$frostc$Type* p_endpoint, org$frostlang$frostc$Type* p_step);
 frost$core$Bit org$frostlang$frostc$Type$get_isNumber$R$frost$core$Bit(void* rawSelf);
+frost$core$Bit org$frostlang$frostc$Type$get_isBuiltinInt$R$frost$core$Bit(void* rawSelf);
 frost$core$Bit org$frostlang$frostc$Type$get_isBuiltinNumber$R$frost$core$Bit(void* rawSelf);
 frost$core$Bit org$frostlang$frostc$Type$get_isSigned$R$frost$core$Bit(void* rawSelf);
 frost$core$Bit org$frostlang$frostc$Type$get_isReal$R$frost$core$Bit(void* rawSelf);

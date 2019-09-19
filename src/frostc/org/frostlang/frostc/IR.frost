@@ -584,6 +584,7 @@ class IR {
     @pre(!currentBlockFinished)
     method add(s:Statement):Statement.ID {
         currentStatementId += 1
+        assert s.asString != "cast REF($6:frost.unsafe.Pointer<frost.core.Int>)->frost.unsafe.Pointer (implicit)"
         def result := Statement.ID(currentStatementId)
         currentBlock.ids.add(result)
         currentBlock.statements.add(s)

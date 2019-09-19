@@ -5,10 +5,25 @@ Represents a system-level pointer to a block of memory. Pointers are inherently 
 all of the standard dangers of C pointers with them into Frost. They are primarily used internally
 by Frost in the implementation of various data structures, and should generally be avoided in favor
 of these high-level data structures.
+
+The normal rules for typecasting do not apply to Pointers. A Pointer of any type may be cast into a
+Pointer of any other type. Since non-value types are represented internally as pointers, a Pointer
+to a non-value type (such as `Pointer<Object>`) is actually a pointer to a pointer to an `Object`.
+This means it is safe to cast e.g. `Pointer<Object>` to `Pointer<String>`, or vice versa, despite
+the fact that `String` and `Object` are different sizes (so long as the underlying objects being
+pointed to are in fact `String`s, of course).
 ====================================================================================================
 @final
 class Pointer<T> : Value {
     -* Pointer is implemented directly by the CodeGenerator; there is no actual code backing it *-
+
+    ================================================================================================
+    Creates a pointer with a specific integer value.
+    ================================================================================================
+    @class
+    @external
+    function from(value:Int):Pointer<T>
+
     ================================================================================================
     Allocates a zero-filled block of memory big enough to hold `count` instances of its type and
     returns a pointer to it. For instance, `Pointer<Int64>.alloc(8)` is equivalent to the C code
@@ -81,4 +96,31 @@ class Pointer<T> : Value {
     ================================================================================================
     @external
     method destroy()
+
+    property asInt:frost.core.Int
+    @external
+    function get_asInt():Int
+
+    ================================================================================================
+    Asks Frost to treat the memory pointed to by the Pointer as if it were an instance of the type
+    in question, returning the value pointed to by the pointer. This is *not the same* as the
+    typecasting described above. With normal pointer typecasts, such as
+    `Pointer<Object>->Pointer<String>`, the Pointer points to a block of memory containing a pointer
+    to an object. The actual object lives elsewhere on the heap, and it is safe to simply treat the
+    pointer as a different (compatible) type. But this method tells Frost that the pointer points
+    *directly* to an object of that type, not to a pointer which points to an object of that type.
+    This is, effectively, the difference between performing `Pointer<Object>->Pointer<String>`
+    (directly supported) and `Pointer<UInt8>->String` (this is what `convertTo` does).
+
+    The correct usage of this method is something along the lines of:
+
+        def memory := Pointer<UInt8>.alloc(<enough memory to hold the object's fields>)
+        <fill in memory with the object's fields>
+        def finalPointer := memory.convertTo<Type>()
+
+    Since there are no publicly-exposed facilities for figuring out the size and layout of a class,
+    this method is for internal use only.
+    ================================================================================================
+    @external
+    function convertTo<T>():T
 }

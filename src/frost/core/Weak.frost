@@ -37,7 +37,7 @@ class Weak<T> {
     are disabled.
     ================================================================================================
     method get():T {
-        assert valid
+        assert valid, "dereferencing weak pointer after its referent was destroyed"
         return value!
     }
 

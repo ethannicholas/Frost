@@ -22,6 +22,8 @@ typedef struct org$frostlang$frostc$Main$Format {
         } $HTML;
         struct {
         } $STUB;
+        struct {
+        } $RUN;
     } $data;
 } org$frostlang$frostc$Main$Format;
 #include "frost/core/Class.h"

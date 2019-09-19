@@ -288,7 +288,7 @@ org$frostlang$frostc$FixedArray* _6;
 frost$core$Int* _7;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/FixedArray.frost:53
 _1 = param0;
-_2 = param1;
+_2 = ((frost$core$Object**) param1);
 _3 = &_1->data;
 *_3 = _2;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/FixedArray.frost:54
@@ -341,7 +341,7 @@ _1 = param0;
 _2 = param0;
 _3 = &_2->data;
 _4 = *_3;
-_5 = _4;
+_5 = ((frost$core$Object**) _4);
 _6 = param0;
 _7 = &_6->capacity;
 _8 = *_7;
@@ -353,7 +353,7 @@ _13 = frost$core$Int64$init$frost$core$Int(_12);
 _14 = _9.value;
 _15 = _13.value;
 _16 = (frost$core$Object**) frostRealloc(_5, _14 * sizeof(frost$core$Object*), _15 * sizeof(frost$core$Object*));
-_17 = _16;
+_17 = ((frost$core$Object**) _16);
 _18 = &_1->data;
 *_18 = _17;
 // /Users/ethannicholas/Dropbox/Frost/src/frostc/org/frostlang/frostc/FixedArray.frost:68

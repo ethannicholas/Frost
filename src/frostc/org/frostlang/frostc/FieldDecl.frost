@@ -22,6 +22,8 @@ class FieldDecl : Symbol {
 
     def rawValue:ASTNode?
 
+    var offset := -1
+
     var resolved := Compiler.Resolution.UNRESOLVED
     
     init(owner:ClassDecl, position:Position, doccomment:String?, annotations:Annotations,

@@ -181,6 +181,10 @@ add_library(c_frost
     bootstrap/src/org/frostlang/frostc/Main/Format.c
     bootstrap/src/org/frostlang/frostc/Main/Arguments.c
     bootstrap/src/org/frostlang/frostc/LLVMCodeGenerator.c
+    bootstrap/src/org/frostlang/frostc/Interpreter.c
+    bootstrap/src/org/frostlang/frostc/Interpreter/Code.c
+    bootstrap/src/org/frostlang/frostc/Interpreter/Context.c
+    bootstrap/src/org/frostlang/frostc/Interpreter/_Closure4.c
     bootstrap/src/org/frostlang/frostc/SymbolTable.c
     bootstrap/src/org/frostlang/frostc/StubCodeGenerator/_Closure12.c
     bootstrap/src/org/frostlang/frostc/StubCodeGenerator/_Closure8.c
@@ -1217,6 +1221,7 @@ set(frostc_source
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/expression/Unary.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/FieldDecl.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/FixedArray.frost
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/Interpreter.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/HCodeGenerator.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/HTMLProcessor.frost
     ${CMAKE_CURRENT_SOURCE_DIR}/src/frostc/org/frostlang/frostc/IR.frost

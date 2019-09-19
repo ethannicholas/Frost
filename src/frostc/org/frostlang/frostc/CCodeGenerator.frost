@@ -832,15 +832,14 @@ class CCodeGenerator : CodeGenerator {
     }
 
     method getCastReference(value:String, src:Type, target:Type):String {
-        if target.isBuiltinNumber {
-            assert src.isBuiltinNumber
+        if src.isBuiltinNumber | src.isPointer | target.isBuiltinNumber | target.isPointer {
             return "((\{cType(target)}) \{value})"
         }
         else {
             def srcClass := compiler!.getClass(src)
-            assert srcClass !== null
+            assert srcClass !== null, "failed to load cast source class '\{src}'"
             def targetClass := compiler!.getClass(target)
-            assert targetClass !== null
+            assert targetClass !== null, "failed to load cast target class '\{target}'"
             if compiler!.isValue(srcClass) & !compiler!.isValue(targetClass) {
                 return wrapValue(value, src, target, out)
             }
@@ -1324,6 +1323,15 @@ class CCodeGenerator : CodeGenerator {
         }
     }
 
+    method writePointerGet(id:IR.Statement.ID, ptr:IR.Value) {
+        try {
+            out.printLine("\{name(id)} = *\{getReference(ptr)};")
+        }
+        fail(error) {
+            unreachable
+        }
+    }
+
     method writePointerGetIndex(id:IR.Statement.ID, ptr:IR.Value, index:IR.Value) {
         try {
             def base := getReference(ptr)
@@ -1355,6 +1363,17 @@ class CCodeGenerator : CodeGenerator {
             def type := cType(ptr.type().subtypes[1])
             out.printLine("\{name(id)} = (\{type}*) frostRealloc(\{ptrRef}, \{oldCountRef} * " +
                     "sizeof(\{type}), \{newCountRef} * sizeof(\{type}));")
+        }
+        fail(error) {
+            unreachable
+        }
+    }
+
+    method writePointerSet(value:IR.Value, ptr:IR.Value) {
+        try {
+            def ptrRef := getReference(ptr)
+            def valueRef := getReference(value)
+            out.printLine("*\{ptrRef} = \{valueRef};")
         }
         fail(error) {
             unreachable
@@ -1487,6 +1506,9 @@ class CCodeGenerator : CodeGenerator {
                 when IR.Statement.POINTER_DESTROY(position, ptr) {
                     writePointerDestroy(ptr)
                 }
+                when IR.Statement.POINTER_GET(position, ptr) {
+                    writePointerGet(id, ptr)
+                }
                 when IR.Statement.POINTER_GET_INDEX(position, ptr, index) {
                     writePointerGetIndex(id, ptr, index)
                 }
@@ -1495,6 +1517,9 @@ class CCodeGenerator : CodeGenerator {
                 }
                 when IR.Statement.POINTER_REALLOC(position, ptr, oldCount, newCount) {
                     writePointerRealloc(id, ptr, oldCount, newCount)
+                }
+                when IR.Statement.POINTER_SET(position, value, ptr) {
+                    writePointerSet(value, ptr)
                 }
                 when IR.Statement.POINTER_SET_INDEX(position, value, ptr, index) {
                     writePointerSetIndex(value, ptr, index)
@@ -1581,6 +1606,9 @@ class CCodeGenerator : CodeGenerator {
                     write("\{cType(type)}*")
                 }
                 when IR.Statement.POINTER_GET_INDEX(_, ptr, _) {
+                    write("\{cType(ptr.type().subtypes[1])}")
+                }
+                when IR.Statement.POINTER_GET(_, ptr) {
                     write("\{cType(ptr.type().subtypes[1])}")
                 }
                 when IR.Statement.POINTER_OFFSET(_, ptr, _) {

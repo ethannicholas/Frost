@@ -11,6 +11,7 @@ typedef struct org$frostlang$frostc$Annotations org$frostlang$frostc$Annotations
 #include "org/frostlang/frostc/FieldDecl/Kind_types.h"
 typedef struct org$frostlang$frostc$Type org$frostlang$frostc$Type;
 typedef struct org$frostlang$frostc$ASTNode org$frostlang$frostc$ASTNode;
+#include "frost/core/Int_types.h"
 #include "org/frostlang/frostc/Compiler/Resolution_types.h"
 
 typedef struct org$frostlang$frostc$FieldDecl {
@@ -26,6 +27,7 @@ typedef struct org$frostlang$frostc$FieldDecl {
     org$frostlang$frostc$FieldDecl$Kind fieldKind;
     org$frostlang$frostc$Type* type;
     org$frostlang$frostc$ASTNode* rawValue;
+    frost$core$Int offset;
     org$frostlang$frostc$Compiler$Resolution resolved;
 } org$frostlang$frostc$FieldDecl;
 #include "frost/core/Class.h"
